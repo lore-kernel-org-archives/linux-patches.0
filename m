@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA52A205E3B;
-	Tue, 30 Sep 2025 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0423F846F;
+	Tue, 30 Sep 2025 15:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245721; cv=none; b=JWeCeomOEpEayCx26Vc3BCzbNZjKMi58ljAVN+JQMV88ZaUCEfvyNKpWXfvC2e4sLpiyZMGf/MlP2o8rQLrWdewubdgqa88bmru6xC8Jy0aJ5l01emt2xarWqrm7FeXNStT5adCayzERMToSEurUnxIirqFCNcbm7JRN30/oz/s=
+	t=1759245726; cv=none; b=h4b/uPAHr32xXnt5Q70MwRY7b+2S20qZYoQodq+SL1AnQAa1KcA4isq2dGKftmhRFHe1QKTLUUudO27V7Axs1pjIgMDxxhU6vA7jonqaF2/n1XOkWDcCw/Es1ic4odSAQfKKNVLBbgbFlrzoY7LFyqmjklZoYQ8rAFG+S5+FGoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245721; c=relaxed/simple;
-	bh=03ov9LKUEljRiZEs2sCb2z5P7MMlRiHJ1ESpXar3idA=;
+	s=arc-20240116; t=1759245726; c=relaxed/simple;
+	bh=cyNeyF2x50e1fOlOyU94DBJNsCvdPNfEoeMIQnV4Eqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5VAKODQoX/v3GpgXov/7eppFH4BfTRfuX6Tog9xkQs5UgXiXu6vH7JH+7VZAO7TackCN4OBShoRkSSPefTzoTZcYpv9ECMF+7G1d5ZgWB0OnayDut4c/cooH+gj4f7B9lIZbclyl43vrtJDFLWxZQIcd53cZCFnv9Hsx0I9xic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hT1ZQEb2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzSI+dR3xnmPp2cxo3tsAenT8CEYNJzBaiQ4c9q+f153ykNORu1XF7fYhtCA4G5VoBbVA9ZcPNKFHRcJ+Owo+v0Y8U2vobfejkywZZTDWyQ0Q4Bd0G/Mz6VgqE2mj1/v2jht8PbL28TYY38zs8Ag78MZQFSz/HVvLHkt6ugX4AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1m08cZoA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hT1ZQEb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B92DC4CEF0;
-	Tue, 30 Sep 2025 15:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1m08cZoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DCEC4CEF0;
+	Tue, 30 Sep 2025 15:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245721;
-	bh=03ov9LKUEljRiZEs2sCb2z5P7MMlRiHJ1ESpXar3idA=;
+	s=korg; t=1759245725;
+	bh=cyNeyF2x50e1fOlOyU94DBJNsCvdPNfEoeMIQnV4Eqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hT1ZQEb2bquxHl72q6tdYu7oNUYK95EVexqX7cg2s68RAGvWmwC2YYmN4OZQdd53E
-	 ITzrvGYhBNiS57biZ3c25HEQxqQiMXF91uev2wxexcyV+cyS3CZE10sKA1Ol7lwaaJ
-	 eOvtidjoe6IqDbIFhK/YUMBP/qFQ82/6zspDt/sA=
+	b=1m08cZoAMs1ySdr7oabqq6uZQE+6uFFGj2UpdLOZuspFmBiErXBwrmFqXlNEQ/Rhl
+	 QMPDW3qqklH/0n+y/5dHqj6P8zbDIEW27B562kqWKmXv4OyLL8cKKm5LwMEVXi233P
+	 HgJuFP/JaKkTH9tQVb9nF7I6iAEWTjYxDhP9oS2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Guan <guan_yufei@163.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/91] wifi: virt_wifi: Fix page fault on connect
-Date: Tue, 30 Sep 2025 16:47:30 +0200
-Message-ID: <20250930143822.441417399@linuxfoundation.org>
+Subject: [PATCH 6.6 32/91] can: rcar_can: rcar_can_resume(): fix s2ram with PSCI
+Date: Tue, 30 Sep 2025 16:47:31 +0200
+Message-ID: <20250930143822.486103781@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -51,41 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Guan <guan_yufei@163.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 9c600589e14f5fc01b8be9a5d0ad1f094b8b304b ]
+[ Upstream commit 5c793afa07da6d2d4595f6c73a2a543a471bb055 ]
 
-This patch prevents page fault in __cfg80211_connect_result()[1]
-when connecting a virt_wifi device, while ensuring that virt_wifi
-can connect properly.
+On R-Car Gen3 using PSCI, s2ram powers down the SoC.  After resume, the
+CAN interface no longer works, until it is brought down and up again.
 
-[1] https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
+Fix this by calling rcar_can_start() from the PM resume callback, to
+fully initialize the controller instead of just restarting it.
 
-Closes: https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
-Signed-off-by: James Guan <guan_yufei@163.com>
-Link: https://patch.msgid.link/20250910111929.137049-1-guan_yufei@163.com
-[remove irrelevant network-manager instructions]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/699b2f7fcb60b31b6f976a37f08ce99c5ffccb31.1755165227.git.geert+renesas@glider.be
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/virt_wifi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/rcar/rcar_can.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
-index fb4d95a027fef..2977b30c6d593 100644
---- a/drivers/net/wireless/virtual/virt_wifi.c
-+++ b/drivers/net/wireless/virtual/virt_wifi.c
-@@ -277,7 +277,9 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		priv->is_connected = true;
+diff --git a/drivers/net/can/rcar/rcar_can.c b/drivers/net/can/rcar/rcar_can.c
+index f5aa5dbacaf21..1f26aba620b98 100644
+--- a/drivers/net/can/rcar/rcar_can.c
++++ b/drivers/net/can/rcar/rcar_can.c
+@@ -861,7 +861,6 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
+ {
+ 	struct net_device *ndev = dev_get_drvdata(dev);
+ 	struct rcar_can_priv *priv = netdev_priv(ndev);
+-	u16 ctlr;
+ 	int err;
  
- 	/* Schedules an event that acquires the rtnl lock. */
--	cfg80211_connect_result(priv->upperdev, requested_bss, NULL, 0, NULL, 0,
-+	cfg80211_connect_result(priv->upperdev,
-+				priv->is_connected ? fake_router_bssid : NULL,
-+				NULL, 0, NULL, 0,
- 				status, GFP_KERNEL);
- 	netif_carrier_on(priv->upperdev);
- }
+ 	if (!netif_running(ndev))
+@@ -873,12 +872,7 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
+ 		return err;
+ 	}
+ 
+-	ctlr = readw(&priv->regs->ctlr);
+-	ctlr &= ~RCAR_CAN_CTLR_SLPM;
+-	writew(ctlr, &priv->regs->ctlr);
+-	ctlr &= ~RCAR_CAN_CTLR_CANM;
+-	writew(ctlr, &priv->regs->ctlr);
+-	priv->can.state = CAN_STATE_ERROR_ACTIVE;
++	rcar_can_start(ndev);
+ 
+ 	netif_device_attach(ndev);
+ 	netif_start_queue(ndev);
 -- 
 2.51.0
 
