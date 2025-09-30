@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029772FD1DD;
-	Tue, 30 Sep 2025 15:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C0F2F5301;
+	Tue, 30 Sep 2025 15:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245227; cv=none; b=Pi492GqcRpmTHOaiNy1zNwIq1LLko1nue0sRPADfXidQRI57CbLPqoOkTn87idCM2lMk6cV7FBh8mGwkMuVV7dI/sxp6U04IT6rZHyNPyeAHW9l0J5MJvDLAQYdBgP3lK1aZKTLW9A9oR70yFK7L78X/dmCiSkYZgcymagYDBrg=
+	t=1759245229; cv=none; b=LndQM8MPdxnuCkTpIbxvh6X0+LwoBhbVzsBX5GNdU+rhvC3wAOfHiZdRdGTZWoZwYcIgUH97BqXaKbAUj1svQePGgqiUqp5miASBf6iHwqDax9SP+tRAQpN5mBAqRLk9iilQvqXcywjNroF25YWEUCQUOETy07SRjNnNyuxBZNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245227; c=relaxed/simple;
-	bh=S38bVnM6Mxeg02kYSXXIN6ORKn2Yemz5bjQ0Fy/IO50=;
+	s=arc-20240116; t=1759245229; c=relaxed/simple;
+	bh=oWjsiEKn23pWXVN/m0hpQu4RL65TliQ11zW+3N/W3lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaTi/HOl+UHb8rXEGxCXaAvFQxv380lcgE3W+LcLKW27706BR+6XT4yQsJhR+ZyXc1kHMSeuFxFvYSefzmx8oNrXnwLs5YiEpr9OhAryGPM5mDOdYS63Ql5QC0pG1siXgQlezGIY38+JoIShNvzVUBAUmFEaV9+NQd9ZBh0B54I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T8nRg0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pixo+bierdp02kkCuCNFQTwhGL16qsPkWde9zV73hMpXUMPpc/ONXHPShX12dmR7twxNaEWa5MUIAEqSqA0pQuMe99MMgSO9uDdTC11eKM2NkFD5hM8jap3L3KFG/u+nr5QurYi9jozUZoMxvlHzVVXg6Y56N6ZIZqNWjDm4jWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVT6uGpx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T8nRg0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FC8C4CEF0;
-	Tue, 30 Sep 2025 15:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVT6uGpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46300C4CEF0;
+	Tue, 30 Sep 2025 15:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245226;
-	bh=S38bVnM6Mxeg02kYSXXIN6ORKn2Yemz5bjQ0Fy/IO50=;
+	s=korg; t=1759245229;
+	bh=oWjsiEKn23pWXVN/m0hpQu4RL65TliQ11zW+3N/W3lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0T8nRg0fW/yaA9arLTywVsnXGvRsmXvA1wrG08lT2C1xmi6fbSxdWbHrdjw88Vadq
-	 fa6vH7GB+JlehswbxsTutABIaJtQeok0uEGq5lOEAjz5R3AGW3Tx46/Xm3Pwoxh9iw
-	 V8Ehirefgwf7fahehdFjHlib/SziGrlPowuEZCzE=
+	b=NVT6uGpxrlsEB8IdvT4mbVX5NiBszyoJNENNCkOGeyVpgHV5dO6/o1klkrdw2PtK9
+	 h7s8W9z58zXNWmGgXhnHE58+JcoPgfDPijrpNnvX5wRo+wmzLCBwK9UNKX+tLoE3Uu
+	 NR9QR4OcbzGKakxqjIW9laIG+QopUVf1OaxDx8H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/151] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
-Date: Tue, 30 Sep 2025 16:46:57 +0200
-Message-ID: <20250930143831.063587157@linuxfoundation.org>
+Subject: [PATCH 5.15 105/151] ALSA: usb-audio: Avoid multiple assignments in mixer_quirks
+Date: Tue, 30 Sep 2025 16:47:15 +0200
+Message-ID: <20250930143831.789965881@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,37 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
+[ Upstream commit 03ddd3bdb94df3edb1f2408b57cfb00b3d92a208 ]
 
-The dev_err message is reporting an error about capture streams however
-it is using the incorrect variable num_playback instead of num_capture.
-Fix this by using the correct variable num_capture.
+Handle report from checkpatch.pl:
 
-Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  CHECK: multiple assignments should be avoided
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-6-1a821463b632@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
-index 63c367478f1c9..bf91ac39af1c7 100644
---- a/sound/soc/sof/intel/hda-stream.c
-+++ b/sound/soc/sof/intel/hda-stream.c
-@@ -776,7 +776,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 866d309454aa3..4ab57ef56330d 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1734,7 +1734,8 @@ static int snd_microii_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	unsigned int pval, pval_old;
+ 	int err;
  
- 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
- 		dev_err(sdev->dev, "error: too many capture streams %d\n",
--			num_playback);
-+			num_capture);
- 		return -EINVAL;
- 	}
- 
+-	pval = pval_old = kcontrol->private_value;
++	pval = kcontrol->private_value;
++	pval_old = pval;
+ 	pval &= 0xfffff0f0;
+ 	pval |= (ucontrol->value.iec958.status[1] & 0x0f) << 8;
+ 	pval |= (ucontrol->value.iec958.status[0] & 0x0f);
 -- 
 2.51.0
 
