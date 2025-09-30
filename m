@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0C716A956;
-	Tue, 30 Sep 2025 15:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3B323A995;
+	Tue, 30 Sep 2025 15:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245853; cv=none; b=OOwsGN/NbnBljGMMfFy2a0dcURHgOuDtxoOUfNk5k95LCDS+PeC/mD9mNeBc/g2YnsyhH5n1OFc1lvNWLYq0T9GtqNuEmZxPmthBJ/i6KMYcUD1ZnCMjRNJDN0uA9ltkI77qSwhV/K470OxLbUoIWIXarmFPkKdCtOW+fGnqhR4=
+	t=1759245853; cv=none; b=tARMDiDPCMqQX1fpEVL0u2tHWABHzfA0BGtj+snJ7C10gmnYn1IW4w57ieHN9o408kz+G/M9nnvftdP41BTduCDmbU8keSRL6rxtFiAs/5UYiM4IjCZ9+6n6/WT2qcXI8bbc33OJ9O+6Yi36390jMRmoP9vzKD9L2AWWROSvlhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759245853; c=relaxed/simple;
-	bh=fzF81w2NBWRKQfaro8xtwpdLF6fmhXtNrWoC/bfSBTQ=;
+	bh=pLx0jorEQnAfS8dwoW3HtcJxm/HnLBd8jT0nBluVP8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XDKDWELVCKOuP5YyktxxLU2+mbZKV0lJhPJO2SLy2fuYwzY+plL75c2ikSmmrwtGL7+8TWy8bD/mJRu2Zw9Zl/l82fK3PQXr4vRAq1LHHz2VHq67BlBEdYXsU9SeeMTh6x6rtMBIwdwHDeFD8sNjD4HATP0Ur5RhvpHqM+72TZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jstqFTUd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ABBj0VyUWJL4bMfPa3z3u6Kg9qW3eOZz92DBQonjcmmFCcpy4pbwMvu+Vtchb3D9anq7Sg6xOSLZfqY6+4PEBCVtBiRGAQP0voaebTSs39gCuv7ZX6OvFz9eGFI3Y9+C7x4qNjAsLrIz62oq8b2E1DyBvlrxd8mXRb7HkjsjZ4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvoHm4QQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jstqFTUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDC1C4CEF0;
-	Tue, 30 Sep 2025 15:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvoHm4QQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92617C113D0;
+	Tue, 30 Sep 2025 15:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245849;
-	bh=fzF81w2NBWRKQfaro8xtwpdLF6fmhXtNrWoC/bfSBTQ=;
+	s=korg; t=1759245853;
+	bh=pLx0jorEQnAfS8dwoW3HtcJxm/HnLBd8jT0nBluVP8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jstqFTUdGb3zDY3HMRMvKIknr5xJLIuEAmCFMMbs03iv6e/NBl0BgPMTu0xw2clIz
-	 D7G1fyI5fwSvKjlR7aJW36s3sn6SpAVYLKGWIZ+pCRTMRF/TzGKkDBxdh33SpaxeqO
-	 gtFO+9GezNKGIdOGZOCZ5X9eFcdxlZYqPxNIdefg=
+	b=nvoHm4QQveEtAacltg6Uk1VkZ15odt/+bcKbhZw5elrAboBj5kDL5FEVJ6Q9y/oGP
+	 X78Au+kHpbtEbxT4FptQt9fTItB18bkESOzXkyTSI9wLCrlLOkdHaXv8ctXAGbF2iD
+	 FZuBX6CAW99l7Isshwyd91WQEMYq5IJarwDTLgdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
 	George Kennedy <george.kennedy@oracle.com>,
-	syzbot+38a3699c7eaf165b97a6@syzkaller.appspotmail.com,
 	Simona Vetter <simona@ffwll.ch>,
 	Helge Deller <deller@gmx.de>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sam Ravnborg <sam@ravnborg.org>,
 	Qianqiang Liu <qianqiang.liu@163.com>,
 	Shixiong Ou <oushixiong@kylinos.cn>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.6 69/91] fbcon: fix integer overflow in fbcon_do_set_font
-Date: Tue, 30 Sep 2025 16:48:08 +0200
-Message-ID: <20250930143824.050293077@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Zsolt Kajtar <soci@c64.rulez.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.6 70/91] fbcon: Fix OOB access in font allocation
+Date: Tue, 30 Sep 2025 16:48:09 +0200
+Message-ID: <20250930143824.092961622@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -60,66 +62,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 1a194e6c8e1ee745e914b0b7f50fa86c89ed13fe upstream.
+commit 9b2f5ef00e852f8e8902a4d4f73aeedc60220c12 upstream.
 
-Fix integer overflow vulnerabilities in fbcon_do_set_font() where font
-size calculations could overflow when handling user-controlled font
-parameters.
+Commit 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
+introduced an out-of-bounds access by storing data and allocation sizes
+in the same variable. Restore the old size calculation and use the new
+variable 'alloc_size' for the allocation.
 
-The vulnerabilities occur when:
-1. CALC_FONTSZ(h, pitch, charcount) performs h * pith * charcount
-   multiplication with user-controlled values that can overflow.
-2. FONT_EXTRA_WORDS * sizeof(int) + size addition can also overflow
-3. This results in smaller allocations than expected, leading to buffer
-   overflows during font data copying.
-
-Add explicit overflow checking using check_mul_overflow() and
-check_add_overflow() kernel helpers to safety validate all size
-calculations before allocation.
-
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 39b3cffb8cf3 ("fbcon: prevent user font height or width change from causing potential out-of-bounds access")
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
+Reported-by: Jani Nikula <jani.nikula@linux.intel.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15020
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6201
+Cc: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
 Cc: George Kennedy <george.kennedy@oracle.com>
-Cc: stable <stable@vger.kernel.org>
-Cc: syzbot+38a3699c7eaf165b97a6@syzkaller.appspotmail.com
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Simona Vetter <simona@ffwll.ch>
 Cc: Helge Deller <deller@gmx.de>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
 Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
 Cc: Sam Ravnborg <sam@ravnborg.org>
 Cc: Qianqiang Liu <qianqiang.liu@163.com>
 Cc: Shixiong Ou <oushixiong@kylinos.cn>
 Cc: Kees Cook <kees@kernel.org>
 Cc: <stable@vger.kernel.org> # v5.9+
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250912170023.3931881-1-samasth.norway.ananda@oracle.com
+Cc: Zsolt Kajtar <soci@c64.rulez.org>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Qianqiang Liu <qianqiang.liu@163.com>
+Link: https://lore.kernel.org/r/20250922134619.257684-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/video/fbdev/core/fbcon.c
 +++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2510,9 +2510,16 @@ static int fbcon_set_font(struct vc_data
- 	if (fbcon_invalid_charcount(info, charcount))
+@@ -2483,7 +2483,7 @@ static int fbcon_set_font(struct vc_data
+ 	unsigned charcount = font->charcount;
+ 	int w = font->width;
+ 	int h = font->height;
+-	int size;
++	int size, alloc_size;
+ 	int i, csum;
+ 	u8 *new_data, *data = font->data;
+ 	int pitch = PITCH(font->width);
+@@ -2516,10 +2516,10 @@ static int fbcon_set_font(struct vc_data
  		return -EINVAL;
  
--	size = CALC_FONTSZ(h, pitch, charcount);
-+	/* Check for integer overflow in font size calculation */
-+	if (check_mul_overflow(h, pitch, &size) ||
-+	    check_mul_overflow(size, charcount, &size))
-+		return -EINVAL;
-+
-+	/* Check for overflow in allocation size calculation */
-+	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &size))
-+		return -EINVAL;
+ 	/* Check for overflow in allocation size calculation */
+-	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &size))
++	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &alloc_size))
+ 		return -EINVAL;
  
--	new_data = kmalloc(FONT_EXTRA_WORDS * sizeof(int) + size, GFP_USER);
-+	new_data = kmalloc(size, GFP_USER);
+-	new_data = kmalloc(size, GFP_USER);
++	new_data = kmalloc(alloc_size, GFP_USER);
  
  	if (!new_data)
  		return -ENOMEM;
