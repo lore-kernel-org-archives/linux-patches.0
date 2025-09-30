@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DA61F3FED;
-	Tue, 30 Sep 2025 15:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4241B3C465;
+	Tue, 30 Sep 2025 15:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246065; cv=none; b=jYB4e/s3JFSwrvRZBLtgGNgxywT3nsS4sRP7+d/bsgmhKAFgMtfJVWvYj2vrn0BGMj1t91J5vQxsd02e+fFQTAm03nusHNFTAge8Y8hHZHK2lLK4iCg5i28itVgecyNHnuGUPnb8hkWhVPifMHJvYHIBMup8PqKVq/krAP4zhKQ=
+	t=1759246069; cv=none; b=qi3Dyt0lvyc8XrYMRLoq2htzMe/JsBjytmoSFdupqcmYfoaI/Ui/VQDucxChG/GhAjp5ajTHPzNbsp3fIfTYUemxgjOvOSD8SKWbn19gjC1arlIptWRzbufBI0FTpqRPCH0gJ98R+UGqodGCda/xPpvaMU3Jrv/vARXOSm7SNNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246065; c=relaxed/simple;
-	bh=9Q4NochpvzBTKu62yfwOk6ef6UN4+dKxCJ6/oZBaeCg=;
+	s=arc-20240116; t=1759246069; c=relaxed/simple;
+	bh=J2meybfbKLzo+eD+vmXtmWyuXDX/pfqsvi/E1kVzYTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcKIGRp+E6nFcrWlGeyxdtyCgXI8S/3QghU2QqdksLZonbm9Nebb191k1F5LhTsXI1ZA1tQQdw7sB2Wm3OFnjgmW4EFaF8uL0SNhNk6I/chdzjFtuam12NNXW2XOQgnRMc3QN/wHm1xQwmHiVRmwkxWFf+ap8awjDvnxQXAgPTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03BEScfF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IDKb9LKUar/IAAZ+B8VLvGSL4vnbx3nPUpEyWgPLSnJ1IAmVIfujuzb6oJSVqYhH58rKeNN9sdNgwZgFRUiNAJEGTlOcC9+nWKCEjFVI/8zx4MDwQgngj6R9l7bFObgmkNwoJd7gq6+OOhvUKhmdrzh5TDfaApMkFllFsY3teOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlGaxqEJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03BEScfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D304C4CEF0;
-	Tue, 30 Sep 2025 15:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlGaxqEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A519EC4CEF0;
+	Tue, 30 Sep 2025 15:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246065;
-	bh=9Q4NochpvzBTKu62yfwOk6ef6UN4+dKxCJ6/oZBaeCg=;
+	s=korg; t=1759246069;
+	bh=J2meybfbKLzo+eD+vmXtmWyuXDX/pfqsvi/E1kVzYTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03BEScfF3b6bsB8du4FZJ4a0QIwB9r1JLyWq5viMiv8wusM3RqXCCoUdgb/WsKQoL
-	 F8Ti44sck360Z5ZCUqMNqURklMLXn4iCBIKjOg0nqtiWNtfZAYrKenjYUHEn5eNdee
-	 drD+GEvoapFVczlEal/TwMK9y+coC79kgZhgWNAk=
+	b=XlGaxqEJXemn6nH6SxDJ76S5SQ6HEjvo2cdClrJwIC5qhVvaKxs9pMpaADxzo9N8L
+	 +gG+nDDgOa/W+LCJMsNwAwkFvoX7ETtn9V/apKe7GGGiQgveNQhBqE386BMPrvV6DI
+	 aK8n7o+xkyXPCO0mHHX4yvCGgII1oWaXFZNgiIZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vincent Mailhol <mailhol@kernel.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 42/89] can: sun4i_can: populate ndo_change_mtu() to prevent buffer overflow
-Date: Tue, 30 Sep 2025 16:47:56 +0200
-Message-ID: <20250930143823.664003953@linuxfoundation.org>
+Subject: [PATCH 6.12 43/89] can: mcba_usb: populate ndo_change_mtu() to prevent buffer overflow
+Date: Tue, 30 Sep 2025 16:47:57 +0200
+Message-ID: <20250930143823.704974369@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -53,14 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit 61da0bd4102c459823fbe6b8b43b01fb6ace4a22 ]
+[ Upstream commit 17c8d794527f01def0d1c8b7dc2d7b8d34fed0e6 ]
 
 Sending an PF_PACKET allows to bypass the CAN framework logic and to
 directly reach the xmit() function of a CAN driver. The only check
 which is performed by the PF_PACKET framework is to make sure that
 skb->len fits the interface's MTU.
 
-Unfortunately, because the sun4i_can driver does not populate its
+Unfortunately, because the mcba_usb driver does not populate its
 net_device_ops->ndo_change_mtu(), it is possible for an attacker to
 configure an invalid MTU by doing, for example:
 
@@ -87,47 +87,45 @@ malicious packet is able to go through can_dev_dropped_skb() checks:
 
   2. the length is a valid CAN XL length.
 
-And so, sun4ican_start_xmit() receives a CAN XL frame which it is not
+And so, mcba_usb_start_xmit() receives a CAN XL frame which it is not
 able to correctly handle and will thus misinterpret it as a CAN frame.
 
 This can result in a buffer overflow. The driver will consume cf->len
-as-is with no further checks on this line:
+as-is with no further checks on these lines:
 
-	dlc = cf->len;
+	usb_msg.dlc = cf->len;
+
+	memcpy(usb_msg.data, cf->data, usb_msg.dlc);
 
 Here, cf->len corresponds to the flags field of the CAN XL frame. In
 our previous example, we set canxl_frame->flags to 0xff. Because the
-maximum expected length is 8, a buffer overflow of 247 bytes occurs a
-couple line below when doing:
-
-	for (i = 0; i < dlc; i++)
-		writel(cf->data[i], priv->base + (dreg + i * 4));
+maximum expected length is 8, a buffer overflow of 247 bytes occurs!
 
 Populate net_device_ops->ndo_change_mtu() to ensure that the
 interface's MTU can not be set to anything bigger than CAN_MTU. By
 fixing the root cause, this prevents the buffer overflow.
 
-Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
+Fixes: 51f3baad7de9 ("can: mcba_usb: Add support for Microchip CAN BUS Analyzer")
 Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-3-0d1cada9393b@kernel.org
+Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-4-0d1cada9393b@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/sun4i_can.c | 1 +
+ drivers/net/can/usb/mcba_usb.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
-index 4311c1f0eafd8..30b30fdbcae9c 100644
---- a/drivers/net/can/sun4i_can.c
-+++ b/drivers/net/can/sun4i_can.c
-@@ -768,6 +768,7 @@ static const struct net_device_ops sun4ican_netdev_ops = {
- 	.ndo_open = sun4ican_open,
- 	.ndo_stop = sun4ican_close,
- 	.ndo_start_xmit = sun4ican_start_xmit,
+diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
+index 41c0a1c399bf3..1f9b915094e64 100644
+--- a/drivers/net/can/usb/mcba_usb.c
++++ b/drivers/net/can/usb/mcba_usb.c
+@@ -761,6 +761,7 @@ static const struct net_device_ops mcba_netdev_ops = {
+ 	.ndo_open = mcba_usb_open,
+ 	.ndo_stop = mcba_usb_close,
+ 	.ndo_start_xmit = mcba_usb_start_xmit,
 +	.ndo_change_mtu = can_change_mtu,
  };
  
- static const struct ethtool_ops sun4ican_ethtool_ops = {
+ static const struct ethtool_ops mcba_ethtool_ops = {
 -- 
 2.51.0
 
