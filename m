@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B811F1302;
-	Tue, 30 Sep 2025 15:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9F2223DD6;
+	Tue, 30 Sep 2025 15:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245106; cv=none; b=RgmW2yyMiCKRLe+0Hc73SZVMPfdmA6UwpRutUE11kwin4TsyKq5s/CXBFPf27833q/9MQWYWqpZgRuzEW/IT65RbTa9Vzwoqpl5I1K7wVBWx3jPBHFdFwZRQo7+ZVR/3B38swzTpAcFlzNJ/dwF7Zq8a3nfBOztWC7WgQYqzIlo=
+	t=1759245109; cv=none; b=Nf9Ux+URePyqE3qHZ5/UFdrTSgNMH45fRD+il8wfgnJzL0KUHH5yWbGMSaQsBrHfx/YfyHoU8g88CKJYVbtBhedkcwjSfmoFnksad1B38NOOMQ2k2sZCiel6mLeg97ThVDnH+TMgFzceaCEU5yGYpju9Y6dBkD7QNe9Z23YQvDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245106; c=relaxed/simple;
-	bh=k8znFv3zxCBpStJWdXunUOlLrTrpZL2YOKeNix52QX0=;
+	s=arc-20240116; t=1759245109; c=relaxed/simple;
+	bh=ZGXgjI9AOfpUSInHqUygFVpaBDz6U9fRE+AGdMi7BrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgAOjaWW/6lKcG9pE5GpBLBJCoYI285CX4nko6XISQ8o8UypD8BP37EUC67ycsox/BF9mXwntR5bnnzlCfwN37zwMhy+QisOVIe5QUyY1Am3GkJyql9rOebcm3NcaHAIgwf/gfS6CIYnV7u1KbpnmLf7aOsnFzKVQ7v0MZTPaAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2rO3b/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkYX6dkZ/4DnC1sjNjmdIszEZ63GH56lds0nrn7NNJQbxgjUsWMs9pScTz3UJgRLu9YUYg7fdijIBzcHgeIeZrSkVqDtOfM/Wr9JmK0T54kjvreuV9IqFblBMba33mvW2Mfh1PHnvXjv4FZrCkfyJ2L9UbEf2KeLhJPXd33Hn60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KADOQSUV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2rO3b/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A9AC4CEF0;
-	Tue, 30 Sep 2025 15:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KADOQSUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7F2C4CEF0;
+	Tue, 30 Sep 2025 15:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245106;
-	bh=k8znFv3zxCBpStJWdXunUOlLrTrpZL2YOKeNix52QX0=;
+	s=korg; t=1759245108;
+	bh=ZGXgjI9AOfpUSInHqUygFVpaBDz6U9fRE+AGdMi7BrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2rO3b/g7EEhkAZ3Io6fqjrPKffE7cD1Bdft/zP1rikPbxtiuvQPg+Jfq1Gq3fZ4K
-	 SE3aH2jAzHUURnmRfqe95JEgwVxxqbTafdOLqvBG1yjZUOrb3npDkoeIw0YUTyNRmE
-	 TlY8qr13IOK7NI6fdSvNEXHogzJavm6IAJDlIQXg=
+	b=KADOQSUVDMOBfzvh65ZhQxa0VJSpQ0ScE0lLj+jlDVQBFGIA3WkAg77dYyN8Q8xQw
+	 Zl2kJi6fJvq01+K7ZaWaJ/2rYVCQ4072gptN5j/CagQpN+CS5DJYPlp6gBrHInQ3f7
+	 oIQ6AZLR8Hk+55d6XZsGVYoxWgvpSJtLIeG2kxyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <akemnade@kernel.org>,
-	Alistair Francis <alistair@alistair23.me>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/151] regulator: sy7636a: fix lifecycle of power good gpio
-Date: Tue, 30 Sep 2025 16:46:23 +0200
-Message-ID: <20250930143829.718498052@linuxfoundation.org>
+Subject: [PATCH 5.15 071/151] qed: Dont collect too many protection override GRC elements
+Date: Tue, 30 Sep 2025 16:46:41 +0200
+Message-ID: <20250930143830.426081303@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -53,51 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <akemnade@kernel.org>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit c05d0b32eebadc8be6e53196e99c64cf2bed1d99 ]
+[ Upstream commit 56c0a2a9ddc2f5b5078c5fb0f81ab76bbc3d4c37 ]
 
-Attach the power good gpio to the regulator device devres instead of the
-parent device to fix problems if probe is run multiple times
-(rmmod/insmod or some deferral).
+In the protection override dump path, the firmware can return far too
+many GRC elements, resulting in attempting to write past the end of the
+previously-kmalloc'ed dump buffer.
 
-Fixes: 8c485bedfb785 ("regulator: sy7636a: Initial commit")
-Signed-off-by: Andreas Kemnade <akemnade@kernel.org>
-Reviewed-by: Alistair Francis <alistair@alistair23.me>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Message-ID: <20250906-sy7636-rsrc-v1-2-e2886a9763a7@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This will result in a kernel panic with reason:
+
+ BUG: unable to handle kernel paging request at ADDRESS
+
+where "ADDRESS" is just past the end of the protection override dump
+buffer. The start address of the buffer is:
+ p_hwfn->cdev->dbg_features[DBG_FEATURE_PROTECTION_OVERRIDE].dump_buf
+and the size of the buffer is buf_size in the same data structure.
+
+The panic can be arrived at from either the qede Ethernet driver path:
+
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc02662ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc0267792 [qed]
+ qed_dbg_feature at ffffffffc026aa8f [qed]
+ qed_dbg_all_data at ffffffffc026b211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc027298a [qed]
+ devlink_health_do_dump at ffffffff82497f61
+ devlink_health_report at ffffffff8249cf29
+ qed_report_fatal_error at ffffffffc0272baf [qed]
+ qede_sp_task at ffffffffc045ed32 [qede]
+ process_one_work at ffffffff81d19783
+
+or the qedf storage driver path:
+
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc068b2ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc068c792 [qed]
+ qed_dbg_feature at ffffffffc068fa8f [qed]
+ qed_dbg_all_data at ffffffffc0690211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc069798a [qed]
+ devlink_health_do_dump at ffffffff8aa95e51
+ devlink_health_report at ffffffff8aa9ae19
+ qed_report_fatal_error at ffffffffc0697baf [qed]
+ qed_hw_err_notify at ffffffffc06d32d7 [qed]
+ qed_spq_post at ffffffffc06b1011 [qed]
+ qed_fcoe_destroy_conn at ffffffffc06b2e91 [qed]
+ qedf_cleanup_fcport at ffffffffc05e7597 [qedf]
+ qedf_rport_event_handler at ffffffffc05e7bf7 [qedf]
+ fc_rport_work at ffffffffc02da715 [libfc]
+ process_one_work at ffffffff8a319663
+
+Resolve this by clamping the firmware's return value to the maximum
+number of legal elements the firmware should return.
+
+Fixes: d52c89f120de8 ("qed*: Utilize FW 8.37.2.0")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Link: https://patch.msgid.link/f8e1182934aa274c18d0682a12dbaf347595469c.1757485536.git.jamie.bainbridge@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/sy7636a-regulator.c | 7 ++++---
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/sy7636a-regulator.c b/drivers/regulator/sy7636a-regulator.c
-index 8360b3947eada..e29ea02f65424 100644
---- a/drivers/regulator/sy7636a-regulator.c
-+++ b/drivers/regulator/sy7636a-regulator.c
-@@ -80,9 +80,11 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
- 	if (!regmap)
- 		return -EPROBE_DEFER;
- 
--	gdp = devm_gpiod_get(pdev->dev.parent, "epd-pwr-good", GPIOD_IN);
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
-+
-+	gdp = devm_gpiod_get(&pdev->dev, "epd-pwr-good", GPIOD_IN);
- 	if (IS_ERR(gdp)) {
--		dev_err(pdev->dev.parent, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
-+		dev_err(&pdev->dev, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
- 		return PTR_ERR(gdp);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index 4b4077cf2d266..b4e108d3ec945 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -4374,10 +4374,11 @@ static enum dbg_status qed_protection_override_dump(struct qed_hwfn *p_hwfn,
+ 		goto out;
  	}
  
-@@ -102,7 +104,6 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
- 	}
- 
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.regmap = regmap;
- 
- 	rdev = devm_regulator_register(&pdev->dev, &desc, &config);
+-	/* Add override window info to buffer */
++	/* Add override window info to buffer, preventing buffer overflow */
+ 	override_window_dwords =
+-		qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
+-		PROTECTION_OVERRIDE_ELEMENT_DWORDS;
++		min(qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
++		PROTECTION_OVERRIDE_ELEMENT_DWORDS,
++		PROTECTION_OVERRIDE_DEPTH_DWORDS);
+ 	if (override_window_dwords) {
+ 		addr = BYTES_TO_DWORDS(GRC_REG_PROTECTION_OVERRIDE_WINDOW);
+ 		offset += qed_grc_dump_addr_range(p_hwfn,
 -- 
 2.51.0
 
