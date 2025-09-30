@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE240846F;
-	Tue, 30 Sep 2025 15:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EA1846F;
+	Tue, 30 Sep 2025 15:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244762; cv=none; b=PAPFXuWeWkYFR5OqoDt024Ac+Sva92XVDkK6N03qbVkajoaIAQtZB4a/QTkRAunWqNGiqWZ2M25vXBbMbduDziCvetAIpfOmf9OFy65Zb9UpuwOy0CTwPbqsKym5dZktOwF2rl3P+FxfSO4B14F1gr/lDaC0FOKOAWc+NAkt8Ek=
+	t=1759244765; cv=none; b=FCxN3LfZYOLugE2UoBc0SQ7GWMDuqQY3CiiH10AeVbFVKTvtIe4wi+iitgsrRivCUt5z6FaF1wFMcjDMtLZ/4wBwKxZsodjII5FYItIna+L8yiAHsofN3ZSbaH763wN3xNSu7wDvs93oJ9QvHOxpsOOozGksaaeBDOOsBqCRCH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244762; c=relaxed/simple;
-	bh=S/Z+2m+Qd9VO6T8tVY1C1HzZF3B/CDjtC5ZXNgID5Os=;
+	s=arc-20240116; t=1759244765; c=relaxed/simple;
+	bh=/8gJ1YE9DZFzWi2fdL7R5ul1dEPx0z2iiKYmVU8J6tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBw0EXtLb3/eWhjJOp3EPxXKt4O7pFxme9oHq8ULi59MBen6HT0z+f8vD9M5PE4dteukPbNpLIs5+cVgP48CHYtsV2icxQVb443wYasj8QQok0IOJLJLvAAouhRLjQZ2NBWNCr+taCU1cG8QrdDHofgyhaIt/X+n9yYCQg2MxeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prah/3vd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vA41xdDCDIUZ5GQ4/XUJEzVY60NoTNoucSS9ngxGO4AOhCexmAE8TCkJEW7MEzQOFGbcO7zr+ejHd3NZ8eJX04R8Sl51FkLr+jnCyS31SLVPUbFEfBW9CcYee0rSsxZXfsVjJfzML6R6xJZfk11rPeBwjqPeRDLCJawxaXq+uoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvvuCE1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prah/3vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C971C4CEF0;
-	Tue, 30 Sep 2025 15:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvvuCE1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22634C4CEF0;
+	Tue, 30 Sep 2025 15:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244762;
-	bh=S/Z+2m+Qd9VO6T8tVY1C1HzZF3B/CDjtC5ZXNgID5Os=;
+	s=korg; t=1759244765;
+	bh=/8gJ1YE9DZFzWi2fdL7R5ul1dEPx0z2iiKYmVU8J6tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prah/3vdWw7cPhzLWcrCOL+qgGpmFfUkKX756sTapsVEhXYv0iiK7d8hL+ckt9+pE
-	 dl+H5irIFxu6Gl/PEi+BlWsEacpyqzIuq/llpw5FPlBfxyPxulVz/P8cfdJAJCRr2G
-	 LOLWK+ukmBYzIb2zY5vGzPAcWKeel8ukOXH6ZvU4=
+	b=vvvuCE1FMoZ9NhqrCDo8BpJLODt7whU3Su6s+STSDmU5AV3HcF+69dFG+QqBH7Ohg
+	 KyVW5cg/nBh/W0jHk+keQW5gyOuBJHqiPkjFUDGutvB2/ir5ps2hTnpMGvvJOwaT+e
+	 a+frjL66lO20Y7cvRtoHr96fMPR9/gCqtGEjPcb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Lukasz Laguna <lukasz.laguna@intel.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 089/143] drm/xe/vf: Dont expose sysfs attributes not applicable for VFs
-Date: Tue, 30 Sep 2025 16:46:53 +0200
-Message-ID: <20250930143834.777688925@linuxfoundation.org>
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.16 107/143] i40e: add max boundary check for VF filters
+Date: Tue, 30 Sep 2025 16:47:11 +0200
+Message-ID: <20250930143835.497094332@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,54 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit 500dad428e5b0de4c1bdfa893822a6e06ddad0b5 ]
+commit cb79fa7118c150c3c76a327894bb2eb878c02619 upstream.
 
-VFs can't read BMG_PCIE_CAP(0x138340) register nor access PCODE
-(already guarded by the info.skip_pcode flag) so we shouldn't
-expose attributes that require any of them to avoid errors like:
+There is no check for max filters that VF can request. Add it.
 
- [] xe 0000:03:00.1: [drm] Tile0: GT0: VF is trying to read an \
-                     inaccessible register 0x138340+0x0
- [] RIP: 0010:xe_gt_sriov_vf_read32+0x6c2/0x9a0 [xe]
- [] Call Trace:
- []  xe_mmio_read32+0x110/0x280 [xe]
- []  auto_link_downgrade_capable_show+0x2e/0x70 [xe]
- []  dev_attr_show+0x1a/0x70
- []  sysfs_kf_seq_show+0xaa/0x120
- []  kernfs_seq_show+0x41/0x60
-
-Fixes: 0e414bf7ad01 ("drm/xe: Expose PCIe link downgrade attributes")
-Fixes: cdc36b66cd41 ("drm/xe: Expose fan control and voltage regulator version")
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Lukasz Laguna <lukasz.laguna@intel.com>
-Reviewed-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250916170029.3313-2-michal.wajdeczko@intel.com
-(cherry picked from commit a2d6223d224f333f705ed8495bf8bebfbc585c35)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_device_sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_device_sysfs.c b/drivers/gpu/drm/xe/xe_device_sysfs.c
-index b9440f8c781e3..652da4d294c0b 100644
---- a/drivers/gpu/drm/xe/xe_device_sysfs.c
-+++ b/drivers/gpu/drm/xe/xe_device_sysfs.c
-@@ -166,7 +166,7 @@ int xe_device_sysfs_init(struct xe_device *xe)
- 			return ret;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -3908,6 +3908,8 @@ err:
+ 				       aq_ret);
+ }
+ 
++#define I40E_MAX_VF_CLOUD_FILTER 0xFF00
++
+ /**
+  * i40e_vc_add_cloud_filter
+  * @vf: pointer to the VF info
+@@ -3947,6 +3949,14 @@ static int i40e_vc_add_cloud_filter(stru
+ 		goto err_out;
  	}
  
--	if (xe->info.platform == XE_BATTLEMAGE) {
-+	if (xe->info.platform == XE_BATTLEMAGE && !IS_SRIOV_VF(xe)) {
- 		ret = sysfs_create_files(&dev->kobj, auto_link_downgrade_attrs);
- 		if (ret)
- 			return ret;
--- 
-2.51.0
-
++	if (vf->num_cloud_filters >= I40E_MAX_VF_CLOUD_FILTER) {
++		dev_warn(&pf->pdev->dev,
++			 "VF %d: Max number of filters reached, can't apply cloud filter\n",
++			 vf->vf_id);
++		aq_ret = -ENOSPC;
++		goto err_out;
++	}
++
+ 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
+ 	if (!cfilter) {
+ 		aq_ret = -ENOMEM;
 
 
