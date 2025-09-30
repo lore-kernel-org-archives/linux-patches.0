@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D1E2F6167;
-	Tue, 30 Sep 2025 15:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE23266B65;
+	Tue, 30 Sep 2025 15:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244826; cv=none; b=mD3934pMPmVhlRVwVtdWxUakD6alJE3gWA3UPscu6UnVmE1Re54oAsVeapqwh++1PO1PWNhXKkJxsrswBUqqU4+jd158+TJ5Exwpw/X9fuyfTFJgLuolzNzbKRtWDpbHMyx4ifVHmRIbcxl7IJ7wYJckP9uw/lcED5emDZu77KU=
+	t=1759244830; cv=none; b=j6Nbpv2vqjL1xHPCbWGpRmZ1SXslbMQejmFCBip9HAUsKdL9Efpn6dAkib7cnhnkpdr834Xgp25FwdV/VML00N+8otEQ99g4s0f+PgDr0u5Jg8+nJhandNWrid+to1rK3a00w2vhzYt2aGWp12aJPReduUpDieAUXy3Kl7kF9Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244826; c=relaxed/simple;
-	bh=fG2WSxqhzefKadTaM8ytUR0GT4yNtvlCTxDt4Ahz2Kc=;
+	s=arc-20240116; t=1759244830; c=relaxed/simple;
+	bh=Tr++jJKBcqMghUM5qkZEX4+zh6nVNfGbiwEqkINYaCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R+y9unpNqsnm497b/SNTqP5sS9vt81nKhQ2o1avQddiG3PiJ0YRc0ndaD+LLCZiZBYxhn5TtXxCq2yJEAQ0G3L1FriNhC/tKMqKMsNndy6DU66fVpim50Sxdbkq7KOrybfVaX5MB4JiaKJXj7xZ3N1FLMErjzjJoQgl0OvGSVSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSrXNxwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b2UlX5o7ZHzI8DeEpdoPDAPUUyudbZSN40tYB0510XYnuFDm4EkC0wqTH9Fp9FKASSLdmFp0l8rXvgKWqDIOiSXvqQ3aaPiN5QfEbQLyb4xwbJ8ZSqWxCKhdMMozQxuGadcpxPFrm7PtKUaZT6JEG6ICkV4XRRJkRbfcCsUjJaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlPDYrn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSrXNxwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19035C4CEF0;
-	Tue, 30 Sep 2025 15:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlPDYrn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EA6C4CEF0;
+	Tue, 30 Sep 2025 15:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244825;
-	bh=fG2WSxqhzefKadTaM8ytUR0GT4yNtvlCTxDt4Ahz2Kc=;
+	s=korg; t=1759244829;
+	bh=Tr++jJKBcqMghUM5qkZEX4+zh6nVNfGbiwEqkINYaCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSrXNxwbVY+hPYStAXsX9enn4hK4Usa0XHFpBhXSXMi+1rzC3V0xqextb962AWrVe
-	 ifTKrCXYY9D1fKSkguhn4kV1bnFATmZ2d6VWiTufmWIGMGI9qKPMJ6Zzuihc1sC5x2
-	 NQ3ABiu4Mi7pbmNfWmfydZ/anBIkTDGw5/naI+Hk=
+	b=OlPDYrn4m5UC2g8E1E/5jEE3Zg+MfoNwI71bIR+zcNSiVj0fT3zCckAKgE0wuT9vO
+	 cfkCzyv9Vse0vJPdWM2heDlarfxylcuCxVaRREnCmRXNMtA9HaVMq9xrMO9h+O08L6
+	 /6TD/t2SqrbHZ4Z+eLY0DU8v4rEPDVQ//vHuT//k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Daniel Lee <dany97@live.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 094/143] drm/panthor: Defer scheduler entitiy destruction to queue release
-Date: Tue, 30 Sep 2025 16:46:58 +0200
-Message-ID: <20250930143834.974065287@linuxfoundation.org>
+Subject: [PATCH 6.16 095/143] platform/x86: lg-laptop: Fix WMAB call in fan_mode_store()
+Date: Tue, 30 Sep 2025 16:46:59 +0200
+Message-ID: <20250930143835.014741344@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -53,59 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Daniel Lee <dany97@live.ca>
 
-[ Upstream commit 7d9c3442b02ab7dd3c44e20095a178fd57d2eccb ]
+[ Upstream commit 3ed17349f18774c24505b0c21dfbd3cc4f126518 ]
 
-Commit de8548813824 ("drm/panthor: Add the scheduler logical block")
-handled destruction of a group's queues' drm scheduler entities early
-into the group destruction procedure.
+When WMAB is called to set the fan mode, the new mode is read from either
+bits 0-1 or bits 4-5 (depending on the value of some other EC register).
+Thus when WMAB is called with bits 4-5 zeroed and called again with
+bits 0-1 zeroed, the second call undoes the effect of the first call.
+This causes writes to /sys/devices/platform/lg-laptop/fan_mode to have
+no effect (and causes reads to always report a status of zero).
 
-However, that races with the group submit ioctl, because by the time
-entities are destroyed (through the group destroy ioctl), the submission
-procedure might've already obtained a group handle, and therefore the
-ability to push jobs into entities. This is met with a DRM error message
-within the drm scheduler core as a situation that should never occur.
+Fix this by calling WMAB once, with the mode set in bits 0,1 and 4,5.
+When the fan mode is returned from WMAB it always has this form, so
+there is no need to preserve the other bits.  As a bonus, the driver
+now supports the "Performance" fan mode seen in the LG-provided Windows
+control app, which provides less aggressive CPU throttling but louder
+fan noise and shorter battery life.
 
-Fix by deferring drm scheduler entity destruction to queue release time.
+Also, correct the documentation to reflect that 0 corresponds to the
+default mode (what the Windows app calls "Optimal") and 1 corresponds
+to the silent mode.
 
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250919164436.531930-1-adrian.larumbe@collabora.com
+Fixes: dbf0c5a6b1f8 ("platform/x86: Add LG Gram laptop special features driver")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=204913#c4
+Signed-off-by: Daniel Lee <dany97@live.ca>
+Link: https://patch.msgid.link/MN2PR06MB55989CB10E91C8DA00EE868DDC1CA@MN2PR06MB5598.namprd06.prod.outlook.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ .../admin-guide/laptops/lg-laptop.rst         |  4 +--
+ drivers/platform/x86/lg-laptop.c              | 34 ++++++++-----------
+ 2 files changed, 16 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 43ee57728de54..e927d80d6a2af 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -886,8 +886,7 @@ static void group_free_queue(struct panthor_group *group, struct panthor_queue *
- 	if (IS_ERR_OR_NULL(queue))
- 		return;
+diff --git a/Documentation/admin-guide/laptops/lg-laptop.rst b/Documentation/admin-guide/laptops/lg-laptop.rst
+index 67fd6932cef4f..c4dd534f91edd 100644
+--- a/Documentation/admin-guide/laptops/lg-laptop.rst
++++ b/Documentation/admin-guide/laptops/lg-laptop.rst
+@@ -48,8 +48,8 @@ This value is reset to 100 when the kernel boots.
+ Fan mode
+ --------
  
--	if (queue->entity.fence_context)
--		drm_sched_entity_destroy(&queue->entity);
-+	drm_sched_entity_destroy(&queue->entity);
+-Writing 1/0 to /sys/devices/platform/lg-laptop/fan_mode disables/enables
+-the fan silent mode.
++Writing 0/1/2 to /sys/devices/platform/lg-laptop/fan_mode sets fan mode to
++Optimal/Silent/Performance respectively.
  
- 	if (queue->scheduler.ops)
- 		drm_sched_fini(&queue->scheduler);
-@@ -3558,11 +3557,6 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
- 	if (!group)
- 		return -EINVAL;
  
--	for (u32 i = 0; i < group->queue_count; i++) {
--		if (group->queues[i])
--			drm_sched_entity_destroy(&group->queues[i]->entity);
+ USB charge
+diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
+index 4b57102c7f627..6af6cf477c5b5 100644
+--- a/drivers/platform/x86/lg-laptop.c
++++ b/drivers/platform/x86/lg-laptop.c
+@@ -8,6 +8,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/acpi.h>
++#include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/device.h>
+ #include <linux/dev_printk.h>
+@@ -75,6 +76,9 @@ MODULE_PARM_DESC(fw_debug, "Enable printing of firmware debug messages");
+ #define WMBB_USB_CHARGE 0x10B
+ #define WMBB_BATT_LIMIT 0x10C
+ 
++#define FAN_MODE_LOWER GENMASK(1, 0)
++#define FAN_MODE_UPPER GENMASK(5, 4)
++
+ #define PLATFORM_NAME   "lg-laptop"
+ 
+ MODULE_ALIAS("wmi:" WMI_EVENT_GUID0);
+@@ -274,29 +278,19 @@ static ssize_t fan_mode_store(struct device *dev,
+ 			      struct device_attribute *attr,
+ 			      const char *buffer, size_t count)
+ {
+-	bool value;
++	unsigned long value;
+ 	union acpi_object *r;
+-	u32 m;
+ 	int ret;
+ 
+-	ret = kstrtobool(buffer, &value);
++	ret = kstrtoul(buffer, 10, &value);
+ 	if (ret)
+ 		return ret;
++	if (value >= 3)
++		return -EINVAL;
+ 
+-	r = lg_wmab(dev, WM_FAN_MODE, WM_GET, 0);
+-	if (!r)
+-		return -EIO;
+-
+-	if (r->type != ACPI_TYPE_INTEGER) {
+-		kfree(r);
+-		return -EIO;
 -	}
 -
- 	mutex_lock(&sched->reset.lock);
- 	mutex_lock(&sched->lock);
- 	group->destroyed = true;
+-	m = r->integer.value;
+-	kfree(r);
+-	r = lg_wmab(dev, WM_FAN_MODE, WM_SET, (m & 0xffffff0f) | (value << 4));
+-	kfree(r);
+-	r = lg_wmab(dev, WM_FAN_MODE, WM_SET, (m & 0xfffffff0) | value);
++	r = lg_wmab(dev, WM_FAN_MODE, WM_SET,
++		FIELD_PREP(FAN_MODE_LOWER, value) |
++		FIELD_PREP(FAN_MODE_UPPER, value));
+ 	kfree(r);
+ 
+ 	return count;
+@@ -305,7 +299,7 @@ static ssize_t fan_mode_store(struct device *dev,
+ static ssize_t fan_mode_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buffer)
+ {
+-	unsigned int status;
++	unsigned int mode;
+ 	union acpi_object *r;
+ 
+ 	r = lg_wmab(dev, WM_FAN_MODE, WM_GET, 0);
+@@ -317,10 +311,10 @@ static ssize_t fan_mode_show(struct device *dev,
+ 		return -EIO;
+ 	}
+ 
+-	status = r->integer.value & 0x01;
++	mode = FIELD_GET(FAN_MODE_LOWER, r->integer.value);
+ 	kfree(r);
+ 
+-	return sysfs_emit(buffer, "%d\n", status);
++	return sysfs_emit(buffer, "%d\n", mode);
+ }
+ 
+ static ssize_t usb_charge_store(struct device *dev,
 -- 
 2.51.0
 
