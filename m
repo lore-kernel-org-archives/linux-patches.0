@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE49D1F3FED;
-	Tue, 30 Sep 2025 15:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030F0306B05;
+	Tue, 30 Sep 2025 15:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245999; cv=none; b=Jk1z9Rri9vfFRtDp+WYNyereVsRpUwsnS1Wb1bQmxaRjIv/2uUw/TUhq/1uokIrA6OU/LE2zHMAYJRr7T+d/3Lg4/gNSsxLhbeOcwvlUkyUebZMNhpY42hvfEnhhbaOcOoH8VZISfkFhXrBzx1UDj3pJqXwzLVFVjLaQYlwpGuw=
+	t=1759246003; cv=none; b=B5wf+M5cJgb8CJlT6/lZ8I/Ga6vwmI/BczrWZre3ClmpwITjc7XLd50MJB6h9wG3VrDgqsmxwi4eGEjGEfJNw4ZNs/6Hb0N62IcjzzdqRGW1TvXycZ+D9T/UswTJlBkXSXAfjCQ45Z0JwWJtie76ZUPlByIu/Phi6pUzaeBn7wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245999; c=relaxed/simple;
-	bh=J3NuxUzIDu+RlU87PWWPTVXHKMdCKM8qt22PaUX2vO0=;
+	s=arc-20240116; t=1759246003; c=relaxed/simple;
+	bh=WvZv5JTJLW0XGCKd49GPBC/PdVT+FNQEaZq2T+cs818=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mrt0sNkwMRZxG9ALGjSpABNqQnfLqzPHK7HWo3WWm3ze/VF5yGhsKcDiinNBUPEqNrGQwO3pemeZ+LqomcmIJG3fEI/hf6SViF6Y2psukFE+cAejkuqdQ3qiX0qyOVLlhQEEUvuBeDy07nGz1eqs5UZXsACqUAE6+YFMgPNANaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3iJP0Il; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iAdY/1B1QrTxClCCpl/7hP6mWjsFYkLcnU/zYR8lCe7toBseuf+INrjEnku4hLIbUvkKvGtlTQOlnJJDQ2eQIaZhl4Di/Vtcfg3W4EcqGBM1GF1TKTmw5h6wfoT6n+qh/yF5HhnpzxZabZPug3Q59pd8SHjPsstQMyNp+05OytA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuS7afFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3iJP0Il"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31611C4CEF0;
-	Tue, 30 Sep 2025 15:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuS7afFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B8C4CEF0;
+	Tue, 30 Sep 2025 15:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245999;
-	bh=J3NuxUzIDu+RlU87PWWPTVXHKMdCKM8qt22PaUX2vO0=;
+	s=korg; t=1759246002;
+	bh=WvZv5JTJLW0XGCKd49GPBC/PdVT+FNQEaZq2T+cs818=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3iJP0IlDeuPZka+V6SLs5ky37UfadYutCMngW79TonT3cYc/Gp1Yod5E7VqZaVD+
-	 O2ZYlA2FrBmMLKbWqoknN15fLKN7tfySt/0upAgIHX5L8255S72Bs3dZ+L+wQkAYVQ
-	 qd6l9VR90dor6HwDYard5+IalEF/EvC7+lfRaGNk=
+	b=TuS7afFWjXRoXGIk074KMOQYBbtdMB3sP5rfXnDX5sal1hOIlMtPCrwvO3Hw3vd0M
+	 ak8rpA2+7m3IC0apKkNIo8WL90H+ayCpVmAjmRghMbf6B++tvHS9Wujj8oP7lolirw
+	 BUllLmQyKfC8lgFqKxRXxkXU9yVNG1pgasFJwEJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"noble.yang" <noble.yang@comtrue-inc.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 21/89] i2c: designware: Add quirk for Intel Xe
-Date: Tue, 30 Sep 2025 16:47:35 +0200
-Message-ID: <20250930143822.771030193@linuxfoundation.org>
+Subject: [PATCH 6.12 22/89] ALSA: usb-audio: Add DSD support for Comtrue USB Audio device
+Date: Tue, 30 Sep 2025 16:47:36 +0200
+Message-ID: <20250930143822.813095822@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -54,56 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: noble.yang <noble.yang@comtrue-inc.com>
 
-[ Upstream commit f6a8e9f3de4567c71ef9f5f13719df69a8b96081 ]
+[ Upstream commit e9df1755485dd90a89656e8a21ec4d71c909fa30 ]
 
-The regmap is coming from the parent also in case of Xe
-GPUs. Reusing the Wangxun quirk for that.
+The vendor Comtrue Inc. (0x2fc6) produces USB audio chipsets like
+the CT7601 which are capable of Native DSD playback.
 
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Co-developed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250701122252.2590230-3-heikki.krogerus@linux.intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo fixed the co-developed tags while merging]
+This patch adds QUIRK_FLAG_DSD_RAW for Comtrue (VID 0x2fc6), which enables
+native DSD playback (DSD_U32_LE) on their USB Audio device. This has been
+verified under Ubuntu 25.04 with JRiver.
+
+Signed-off-by: noble.yang <noble.yang@comtrue-inc.com>
+Link: https://patch.msgid.link/20250731110614.4070-1-noble228@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-platdrv.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index a3e86930bf418..ef9bed2f2dccb 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -101,7 +101,7 @@ static int bt1_i2c_request_regs(struct dw_i2c_dev *dev)
- }
- #endif
- 
--static int txgbe_i2c_request_regs(struct dw_i2c_dev *dev)
-+static int dw_i2c_get_parent_regmap(struct dw_i2c_dev *dev)
- {
- 	dev->map = dev_get_regmap(dev->dev->parent, NULL);
- 	if (!dev->map)
-@@ -123,12 +123,15 @@ static int dw_i2c_plat_request_regs(struct dw_i2c_dev *dev)
- 	struct platform_device *pdev = to_platform_device(dev->dev);
- 	int ret;
- 
-+	if (device_is_compatible(dev->dev, "intel,xe-i2c"))
-+		return dw_i2c_get_parent_regmap(dev);
-+
- 	switch (dev->flags & MODEL_MASK) {
- 	case MODEL_BAIKAL_BT1:
- 		ret = bt1_i2c_request_regs(dev);
- 		break;
- 	case MODEL_WANGXUN_SP:
--		ret = txgbe_i2c_request_regs(dev);
-+		ret = dw_i2c_get_parent_regmap(dev);
- 		break;
- 	default:
- 		dev->base = devm_platform_ioremap_resource(pdev, 0);
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 0da4ee9757c01..de57cf35d8258 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2405,6 +2405,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x2d87, /* Cayin device */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2fc6, /* Comture-inc devices */
++		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x3336, /* HEM devices */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x3353, /* Khadas devices */
 -- 
 2.51.0
 
