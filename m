@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CB42236EB;
-	Tue, 30 Sep 2025 15:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029772FD1DD;
+	Tue, 30 Sep 2025 15:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245224; cv=none; b=uDcLIaLgbjuZVZv5tAZI8kOGu8+CaK2oJoXHoKgT4A1ZBz8SD21yVhSOLfOBOyGtfHQKHkNFsEdDeO7lc8/31m/cf0IZOvVkoa+5G0XQT7ze0imuCjoaQA6yW3f0pRpH/F3tsGD2zJpwtHeQOKhwQ5Qoz6joDuHHWvbeF3GmoZM=
+	t=1759245227; cv=none; b=Pi492GqcRpmTHOaiNy1zNwIq1LLko1nue0sRPADfXidQRI57CbLPqoOkTn87idCM2lMk6cV7FBh8mGwkMuVV7dI/sxp6U04IT6rZHyNPyeAHW9l0J5MJvDLAQYdBgP3lK1aZKTLW9A9oR70yFK7L78X/dmCiSkYZgcymagYDBrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245224; c=relaxed/simple;
-	bh=pQtLG+y5tVNNOONFJnU1Pm2X/ImJN8/gWrASx5ybz34=;
+	s=arc-20240116; t=1759245227; c=relaxed/simple;
+	bh=S38bVnM6Mxeg02kYSXXIN6ORKn2Yemz5bjQ0Fy/IO50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pc/cE9UhSgsKJATYvaBs8Mrnn7DLhfwwJwkpT2OS/FYK1WY8ejmIIDZqVpnuTwTuLyuwJJ6LdmgN3YVqKcjc7d1cvnyzdvfs7CxsOLLMc3U9U671jmm5ZoRSB4hVRYmMnXLxAVf30P+BwrVj7GgglWr6cztdrMaVKUcbJFUChpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymY0heIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QaTi/HOl+UHb8rXEGxCXaAvFQxv380lcgE3W+LcLKW27706BR+6XT4yQsJhR+ZyXc1kHMSeuFxFvYSefzmx8oNrXnwLs5YiEpr9OhAryGPM5mDOdYS63Ql5QC0pG1siXgQlezGIY38+JoIShNvzVUBAUmFEaV9+NQd9ZBh0B54I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T8nRg0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymY0heIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FA1C4CEF0;
-	Tue, 30 Sep 2025 15:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T8nRg0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FC8C4CEF0;
+	Tue, 30 Sep 2025 15:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245223;
-	bh=pQtLG+y5tVNNOONFJnU1Pm2X/ImJN8/gWrASx5ybz34=;
+	s=korg; t=1759245226;
+	bh=S38bVnM6Mxeg02kYSXXIN6ORKn2Yemz5bjQ0Fy/IO50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ymY0heImEPdgXCKmI88QweMi2+UTGTgp2/bKt1actCtFCxmd4O1SgfIgL6PeVO1XV
-	 Wa1cYiQxezpTOvGbFDVeU/9HJgTsH7fcga+mUOz7866v7d5qub7K7wUDFtgmzdMARg
-	 yq1wFFDDOx0kG6eaawqClTOBwvCk9yTEL8cMsMJI=
+	b=0T8nRg0fW/yaA9arLTywVsnXGvRsmXvA1wrG08lT2C1xmi6fbSxdWbHrdjw88Vadq
+	 fa6vH7GB+JlehswbxsTutABIaJtQeok0uEGq5lOEAjz5R3AGW3Tx46/Xm3Pwoxh9iw
+	 V8Ehirefgwf7fahehdFjHlib/SziGrlPowuEZCzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/151] ALSA: usb-audio: Drop unnecessary parentheses in mixer_quirks
-Date: Tue, 30 Sep 2025 16:47:14 +0200
-Message-ID: <20250930143831.745289048@linuxfoundation.org>
+Subject: [PATCH 5.15 087/151] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
+Date: Tue, 30 Sep 2025 16:46:57 +0200
+Message-ID: <20250930143831.063587157@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,47 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit c0495cef8b43ad61efbd4019e3573742e0e63c67 ]
+[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
 
-Fix multiple 'CHECK: Unnecessary parentheses around ...' reports from
-checkpatch.pl.
+The dev_err message is reporting an error about capture streams however
+it is using the incorrect variable num_playback instead of num_capture.
+Fix this by using the correct variable num_capture.
 
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-5-1a821463b632@collabora.com
+Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/sof/intel/hda-stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 0e8cf8b06b8ad..866d309454aa3 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -376,10 +376,10 @@ static int snd_audigy2nx_controls_create(struct usb_mixer_interface *mixer)
- 		struct snd_kcontrol_new knew;
+diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
+index 63c367478f1c9..bf91ac39af1c7 100644
+--- a/sound/soc/sof/intel/hda-stream.c
++++ b/sound/soc/sof/intel/hda-stream.c
+@@ -776,7 +776,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
  
- 		/* USB X-Fi S51 doesn't have a CMSS LED */
--		if ((mixer->chip->usb_id == USB_ID(0x041e, 0x3042)) && i == 0)
-+		if (mixer->chip->usb_id == USB_ID(0x041e, 0x3042) && i == 0)
- 			continue;
- 		/* USB X-Fi S51 Pro doesn't have one either */
--		if ((mixer->chip->usb_id == USB_ID(0x041e, 0x30df)) && i == 0)
-+		if (mixer->chip->usb_id == USB_ID(0x041e, 0x30df) && i == 0)
- 			continue;
- 		if (i > 1 && /* Live24ext has 2 LEDs only */
- 			(mixer->chip->usb_id == USB_ID(0x041e, 0x3040) ||
-@@ -3254,7 +3254,7 @@ static int snd_djm_controls_update(struct usb_mixer_interface *mixer,
- 	int err;
- 	const struct snd_djm_device *device = &snd_djm_devices[device_idx];
- 
--	if ((group >= device->ncontrols) || value >= device->controls[group].noptions)
-+	if (group >= device->ncontrols || value >= device->controls[group].noptions)
+ 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
+ 		dev_err(sdev->dev, "error: too many capture streams %d\n",
+-			num_playback);
++			num_capture);
  		return -EINVAL;
+ 	}
  
- 	err = snd_usb_lock_shutdown(mixer->chip);
 -- 
 2.51.0
 
