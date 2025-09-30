@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE99C2F9D88;
-	Tue, 30 Sep 2025 15:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58FD2236EB;
+	Tue, 30 Sep 2025 15:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245159; cv=none; b=GRdgYJHQh9EQ9A9nfYx1xLjae05Wr9nL3WFi2V2/PnstGC9XsOiNXNd0zUCWJQL/mQCknTxfbWgvFkTPijs3rdz+R9KNgRk91HGA+JjbX5wjgDV1qVFVbPHZx6+G8uRdSKhic0mUUJLmOYI/90ICUMo+h2hOdEtvOAPz+Ezw6jM=
+	t=1759245161; cv=none; b=a1Jtc5I/6mzxr5mR5+EcrJydoLK20JhdAPWln1+yrr4ihZdVROUXdpNUr4bskxDuWGek2DjhJbBVmNGeBqLwCRhgMuBvcIHMyxCuKqTQwdQExEaqicla2EGua6bC6t3knMU09DYTQqNCgd+rY9UIQVmzWYjhCANxh4kqE4TXn18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245159; c=relaxed/simple;
-	bh=TuoxS7gvonhSGv9OaUhGqRgPVhJliINhjD5VnwGbOVM=;
+	s=arc-20240116; t=1759245161; c=relaxed/simple;
+	bh=WeY0apsem8TIVe/gmmWpl4q0RXBOiyoKirPagEioanc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJknpWkJtPlbZgXK8bIEmjf8aXAYEjjF8jhj4kEoKBNwwrlHbRbO8JPFqutIRbU1zHfu4u3KPeLHrEJ2tWeWQhPuqpT3wxaUqUc5d+/pKn/nufMkKQ/X3cGSQ/3R+UbyFIclNRRKmrJVibcN00WiFXPRsDn4V+mBuIKU/vCWitA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXAnPTj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzePq/iwnRx94ARSemG0zdHZ2U1dxnDCw/TSB3N0N45STFL45tu8ZQ4b81MfvLdIeA/ZP1vWPphyVdG08dGMVFDZKA+rRLIY4yT2yPxbvchizpWwyVGQtAm1FvMnIe+ovwbBjJcmBnHlW8zhriJ3B/rxkbt+UAvAGo9R+cBWJ28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYnnRGls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXAnPTj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73602C4CEF0;
-	Tue, 30 Sep 2025 15:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYnnRGls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439ACC4CEF0;
+	Tue, 30 Sep 2025 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245158;
-	bh=TuoxS7gvonhSGv9OaUhGqRgPVhJliINhjD5VnwGbOVM=;
+	s=korg; t=1759245161;
+	bh=WeY0apsem8TIVe/gmmWpl4q0RXBOiyoKirPagEioanc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXAnPTj9PjPe5VYa75obNtQnBEw/Xlg9A0LKOHCq+dt5bBVVtnHVaKG9hJDJL3dxQ
-	 lPpDYr+bvKmJ+irH3lCnGMhzbwQTkx0uuyfVAuQ/RssIPiUEIukGaLjhUev8qnFQeR
-	 D1tEn08wZid9OLUeiWsu6ZN2E8z450EfN9dPkDLo=
+	b=GYnnRGls7HpsgWv5FHvlCJ4MhP4Tg+lpN+d3qxVSsaq10U0lsCwlUJbq7Oqpdnsux
+	 5+qt4K4A8ae0OADJ+yeFN3P/k7JTgxsoQ6OsdmLKMWi3TOFhN6hAhUyW6b1uetFltv
+	 ZY+FKQGpSsEht6ZhgUmB4h39yexDyjrp1k277zYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 081/151] btrfs: tree-checker: fix the incorrect inode ref size check
-Date: Tue, 30 Sep 2025 16:46:51 +0200
-Message-ID: <20250930143830.817215196@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 082/151] mmc: mvsdio: Fix dma_unmap_sg() nents value
+Date: Tue, 30 Sep 2025 16:46:52 +0200
+Message-ID: <20250930143830.862443835@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,52 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 96fa515e70f3e4b98685ef8cac9d737fc62f10e1 upstream.
+commit 8ab2f1c35669bff7d7ed1bb16bf5cc989b3e2e17 upstream.
 
-[BUG]
-Inside check_inode_ref(), we need to make sure every structure,
-including the btrfs_inode_extref header, is covered by the item.  But
-our code is incorrectly using "sizeof(iref)", where @iref is just a
-pointer.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-This means "sizeof(iref)" will always be "sizeof(void *)", which is much
-smaller than "sizeof(struct btrfs_inode_extref)".
-
-This will allow some bad inode extrefs to sneak in, defeating tree-checker.
-
-[FIX]
-Fix the typo by calling "sizeof(*iref)", which is the same as
-"sizeof(struct btrfs_inode_extref)", and will be the correct behavior we
-want.
-
-Fixes: 71bf92a9b877 ("btrfs: tree-checker: Add check for INODE_REF")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 236caa7cc351 ("mmc: SDIO driver for Marvell SoCs")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/mvsdio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1595,10 +1595,10 @@ static int check_inode_ref(struct extent
- 	while (ptr < end) {
- 		u16 namelen;
- 
--		if (unlikely(ptr + sizeof(iref) > end)) {
-+		if (unlikely(ptr + sizeof(*iref) > end)) {
- 			inode_ref_err(leaf, slot,
- 			"inode ref overflow, ptr %lu end %lu inode_ref_size %zu",
--				ptr, end, sizeof(iref));
-+				ptr, end, sizeof(*iref));
- 			return -EUCLEAN;
- 		}
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -292,7 +292,7 @@ static u32 mvsd_finish_data(struct mvsd_
+ 		host->pio_ptr = NULL;
+ 		host->pio_size = 0;
+ 	} else {
+-		dma_unmap_sg(mmc_dev(host->mmc), data->sg, host->sg_frags,
++		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
+ 			     mmc_get_dma_dir(data));
+ 	}
  
 
 
