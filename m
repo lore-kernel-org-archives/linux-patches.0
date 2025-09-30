@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4241B3C465;
-	Tue, 30 Sep 2025 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801F53C465;
+	Tue, 30 Sep 2025 15:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246069; cv=none; b=qi3Dyt0lvyc8XrYMRLoq2htzMe/JsBjytmoSFdupqcmYfoaI/Ui/VQDucxChG/GhAjp5ajTHPzNbsp3fIfTYUemxgjOvOSD8SKWbn19gjC1arlIptWRzbufBI0FTpqRPCH0gJ98R+UGqodGCda/xPpvaMU3Jrv/vARXOSm7SNNM=
+	t=1759246072; cv=none; b=UT0sDussJnGNHm53/PMKr8L4AO9jjvEUiiZMz3hq1iu53O545j5vyZFRdzqIDVenMjSRk1n575BKeBgAad6mwzzOx5P/zDIzUsNIgkLtJJ0SDgxWDcX7y4q7NNE9odMSR0bk2ULU/zsGVOdmSdPW/NfacM42wobg6nkogI1BDGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246069; c=relaxed/simple;
-	bh=J2meybfbKLzo+eD+vmXtmWyuXDX/pfqsvi/E1kVzYTU=;
+	s=arc-20240116; t=1759246072; c=relaxed/simple;
+	bh=vIjWWBXgXl8bwPjI/dksCsAoy3G2yP6y2eJAx3d1TBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDKb9LKUar/IAAZ+B8VLvGSL4vnbx3nPUpEyWgPLSnJ1IAmVIfujuzb6oJSVqYhH58rKeNN9sdNgwZgFRUiNAJEGTlOcC9+nWKCEjFVI/8zx4MDwQgngj6R9l7bFObgmkNwoJd7gq6+OOhvUKhmdrzh5TDfaApMkFllFsY3teOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlGaxqEJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LHL1r1rv6OEfnZ0zNQsDqIhBOreleJ8NvUVCpk/IWDxcAO/nA/4GnxCphJ0KWjZUWhe6PKmjdvNmE+fNqL7eFAOJpfImyxAxusgngwifNHo8AeUUfiWlZq+gfxN2cFF6V93jxefNmlc7gDL8jZCZpQdgFc29FqTZ8F00nAa9ugw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brEYr9qF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlGaxqEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A519EC4CEF0;
-	Tue, 30 Sep 2025 15:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brEYr9qF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A53C113D0;
+	Tue, 30 Sep 2025 15:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246069;
-	bh=J2meybfbKLzo+eD+vmXtmWyuXDX/pfqsvi/E1kVzYTU=;
+	s=korg; t=1759246072;
+	bh=vIjWWBXgXl8bwPjI/dksCsAoy3G2yP6y2eJAx3d1TBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlGaxqEJXemn6nH6SxDJ76S5SQ6HEjvo2cdClrJwIC5qhVvaKxs9pMpaADxzo9N8L
-	 +gG+nDDgOa/W+LCJMsNwAwkFvoX7ETtn9V/apKe7GGGiQgveNQhBqE386BMPrvV6DI
-	 aK8n7o+xkyXPCO0mHHX4yvCGgII1oWaXFZNgiIZA=
+	b=brEYr9qFAdQRK6g0P4meuQvfzFyAaVhHZtuH2/tRI3AFxBeSgL7uBh0uqgMIJtxxD
+	 5Aufg67WliH/Kjdj/YT6pzB2pl8NDaLEGRbJUJL+eNu3syAg/u0jCZBePsVOk1fo//
+	 wZrl7F40b10359jULbu0N1p/fwqsX/pbRM4Ym3LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
+	=?UTF-8?q?St=C3=A9phane=20Grosjean?= <stephane.grosjean@hms-networks.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 43/89] can: mcba_usb: populate ndo_change_mtu() to prevent buffer overflow
-Date: Tue, 30 Sep 2025 16:47:57 +0200
-Message-ID: <20250930143823.704974369@linuxfoundation.org>
+Subject: [PATCH 6.12 44/89] can: peak_usb: fix shift-out-of-bounds issue
+Date: Tue, 30 Sep 2025 16:47:58 +0200
+Message-ID: <20250930143823.744998581@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -45,87 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
 
-[ Upstream commit 17c8d794527f01def0d1c8b7dc2d7b8d34fed0e6 ]
+[ Upstream commit c443be70aaee42c2d1d251e0329e0a69dd96ae54 ]
 
-Sending an PF_PACKET allows to bypass the CAN framework logic and to
-directly reach the xmit() function of a CAN driver. The only check
-which is performed by the PF_PACKET framework is to make sure that
-skb->len fits the interface's MTU.
+Explicitly uses a 64-bit constant when the number of bits used for its
+shifting is 32 (which is the case for PC CAN FD interfaces supported by
+this driver).
 
-Unfortunately, because the mcba_usb driver does not populate its
-net_device_ops->ndo_change_mtu(), it is possible for an attacker to
-configure an invalid MTU by doing, for example:
-
-  $ ip link set can0 mtu 9999
-
-After doing so, the attacker could open a PF_PACKET socket using the
-ETH_P_CANXL protocol:
-
-	socket(PF_PACKET, SOCK_RAW, htons(ETH_P_CANXL))
-
-to inject a malicious CAN XL frames. For example:
-
-	struct canxl_frame frame = {
-		.flags = 0xff,
-		.len = 2048,
-	};
-
-The CAN drivers' xmit() function are calling can_dev_dropped_skb() to
-check that the skb is valid, unfortunately under above conditions, the
-malicious packet is able to go through can_dev_dropped_skb() checks:
-
-  1. the skb->protocol is set to ETH_P_CANXL which is valid (the
-     function does not check the actual device capabilities).
-
-  2. the length is a valid CAN XL length.
-
-And so, mcba_usb_start_xmit() receives a CAN XL frame which it is not
-able to correctly handle and will thus misinterpret it as a CAN frame.
-
-This can result in a buffer overflow. The driver will consume cf->len
-as-is with no further checks on these lines:
-
-	usb_msg.dlc = cf->len;
-
-	memcpy(usb_msg.data, cf->data, usb_msg.dlc);
-
-Here, cf->len corresponds to the flags field of the CAN XL frame. In
-our previous example, we set canxl_frame->flags to 0xff. Because the
-maximum expected length is 8, a buffer overflow of 247 bytes occurs!
-
-Populate net_device_ops->ndo_change_mtu() to ensure that the
-interface's MTU can not be set to anything bigger than CAN_MTU. By
-fixing the root cause, this prevents the buffer overflow.
-
-Fixes: 51f3baad7de9 ("can: mcba_usb: Add support for Microchip CAN BUS Analyzer")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-4-0d1cada9393b@kernel.org
+Signed-off-by: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
+Link: https://patch.msgid.link/20250918132413.30071-1-stephane.grosjean@free.fr
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/20250917-aboriginal-refined-honeybee-82b1aa-mkl@pengutronix.de
+Fixes: bb4785551f64 ("can: usb: PEAK-System Technik USB adapters driver core")
+[mkl: update subject, apply manually]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/mcba_usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/usb/peak_usb/pcan_usb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
-index 41c0a1c399bf3..1f9b915094e64 100644
---- a/drivers/net/can/usb/mcba_usb.c
-+++ b/drivers/net/can/usb/mcba_usb.c
-@@ -761,6 +761,7 @@ static const struct net_device_ops mcba_netdev_ops = {
- 	.ndo_open = mcba_usb_open,
- 	.ndo_stop = mcba_usb_close,
- 	.ndo_start_xmit = mcba_usb_start_xmit,
-+	.ndo_change_mtu = can_change_mtu,
- };
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_core.c b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
+index 59f7cd8ceb397..69c44f675ff1c 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_core.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
+@@ -111,7 +111,7 @@ void peak_usb_update_ts_now(struct peak_time_ref *time_ref, u32 ts_now)
+ 		u32 delta_ts = time_ref->ts_dev_2 - time_ref->ts_dev_1;
  
- static const struct ethtool_ops mcba_ethtool_ops = {
+ 		if (time_ref->ts_dev_2 < time_ref->ts_dev_1)
+-			delta_ts &= (1 << time_ref->adapter->ts_used_bits) - 1;
++			delta_ts &= (1ULL << time_ref->adapter->ts_used_bits) - 1;
+ 
+ 		time_ref->ts_total += delta_ts;
+ 	}
 -- 
 2.51.0
 
