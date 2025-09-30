@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030F0306B05;
-	Tue, 30 Sep 2025 15:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9AF3C465;
+	Tue, 30 Sep 2025 15:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246003; cv=none; b=B5wf+M5cJgb8CJlT6/lZ8I/Ga6vwmI/BczrWZre3ClmpwITjc7XLd50MJB6h9wG3VrDgqsmxwi4eGEjGEfJNw4ZNs/6Hb0N62IcjzzdqRGW1TvXycZ+D9T/UswTJlBkXSXAfjCQ45Z0JwWJtie76ZUPlByIu/Phi6pUzaeBn7wQ=
+	t=1759246006; cv=none; b=NONXK0QnRDbf8EjDYFn6vIEC85+oi3QTfmUirFdyVCY1SFRELSIZyxejbfzHJnMXPcXuxy6u9cLWXwcffGSiJLQkASVgzhb6ItGTbci+fg8/ATWuX+tDWqZSNKM9oFf2izGor3WXfW2+CjcRmCBaWP/2BAPzC3ir1xn8Ea58taQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246003; c=relaxed/simple;
-	bh=WvZv5JTJLW0XGCKd49GPBC/PdVT+FNQEaZq2T+cs818=;
+	s=arc-20240116; t=1759246006; c=relaxed/simple;
+	bh=xniwHLRAiiP7luNYLnB6EbmCA1mvEBGZ7+7FtZ1y89E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAdY/1B1QrTxClCCpl/7hP6mWjsFYkLcnU/zYR8lCe7toBseuf+INrjEnku4hLIbUvkKvGtlTQOlnJJDQ2eQIaZhl4Di/Vtcfg3W4EcqGBM1GF1TKTmw5h6wfoT6n+qh/yF5HhnpzxZabZPug3Q59pd8SHjPsstQMyNp+05OytA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuS7afFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KvHb8tpgb7MHCp1KgSxEaGU2a9ew/CAwzCt1BtQ2v4yF4ZhX27a7gcNo0CIk7Hzwu5V6iignXmMdlFKqZzRulyMHWnr4gRsCQmtzEN1npnWvuUnm6PdWxPSnvu/YfeOXezPIgjWJrzkvla8k0O9rQhmfb8GHXr2OPLHlm+3SmIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNHxnN/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuS7afFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B8C4CEF0;
-	Tue, 30 Sep 2025 15:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNHxnN/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A15C4CEF0;
+	Tue, 30 Sep 2025 15:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246002;
-	bh=WvZv5JTJLW0XGCKd49GPBC/PdVT+FNQEaZq2T+cs818=;
+	s=korg; t=1759246006;
+	bh=xniwHLRAiiP7luNYLnB6EbmCA1mvEBGZ7+7FtZ1y89E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TuS7afFWjXRoXGIk074KMOQYBbtdMB3sP5rfXnDX5sal1hOIlMtPCrwvO3Hw3vd0M
-	 ak8rpA2+7m3IC0apKkNIo8WL90H+ayCpVmAjmRghMbf6B++tvHS9Wujj8oP7lolirw
-	 BUllLmQyKfC8lgFqKxRXxkXU9yVNG1pgasFJwEJE=
+	b=uNHxnN/cxsD+zgb3Vy65Bznm4yhdCTPa1oyNICT6iABi8qwAR283i/mw4ucdt7/Ap
+	 gkaisADEV/nxOIRR9hyHnLTLV07jgn+gfNyXcqANyoTCs6o3//3sdoTheTuKAisJSO
+	 TK8QtZjB2WvYb6Gdc2JSUkOHYOeXY2eUs7Y+3OD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"noble.yang" <noble.yang@comtrue-inc.com>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 22/89] ALSA: usb-audio: Add DSD support for Comtrue USB Audio device
-Date: Tue, 30 Sep 2025 16:47:36 +0200
-Message-ID: <20250930143822.813095822@linuxfoundation.org>
+Subject: [PATCH 6.12 23/89] ALSA: usb-audio: move mixer_quirks min_mute into common quirk
+Date: Tue, 30 Sep 2025 16:47:37 +0200
+Message-ID: <20250930143822.857713535@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -51,38 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: noble.yang <noble.yang@comtrue-inc.com>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit e9df1755485dd90a89656e8a21ec4d71c909fa30 ]
+[ Upstream commit 2c3ca8cc55a3afc7a4fa99ed8f5f5d05dd2e65b3 ]
 
-The vendor Comtrue Inc. (0x2fc6) produces USB audio chipsets like
-the CT7601 which are capable of Native DSD playback.
+We have found more and more devices that have the same problem, that
+the mixer's minimum value is muted. Accroding to pipewire's MR[1]
+and Arch Linux wiki[2], this should be a very common problem in USB
+audio devices. Move the quirk into common quirk,as a preparation of
+more devices' quirk's patch coming on the road[3].
 
-This patch adds QUIRK_FLAG_DSD_RAW for Comtrue (VID 0x2fc6), which enables
-native DSD playback (DSD_U32_LE) on their USB Audio device. This has been
-verified under Ubuntu 25.04 with JRiver.
+1. https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
+2. https://wiki.archlinux.org/index.php?title=PipeWire&oldid=804138#No_sound_from_USB_DAC_until_30%_volume
+3. On the road, in the physical sense. We have been buying ton of
+   these devices for testing the problem.
 
-Signed-off-by: noble.yang <noble.yang@comtrue-inc.com>
-Link: https://patch.msgid.link/20250731110614.4070-1-noble228@gmail.com
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Link: https://patch.msgid.link/20250827-sound-quirk-min-mute-v1-1-4717aa8a4f6a@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/mixer_quirks.c | 10 +++-------
+ sound/usb/quirks.c       | 12 ++++++++++--
+ sound/usb/usbaudio.h     |  4 ++++
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 8d7fc6edc8c79..b663764644cd8 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -4484,16 +4484,12 @@ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
+ 		if (unitid == 7 && cval->control == UAC_FU_VOLUME)
+ 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
+ 		break;
++	}
++
+ 	/* lowest playback value is muted on some devices */
+-	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
+-	case USB_ID(0x0d8c, 0x000c): /* C-Media */
+-	case USB_ID(0x0d8c, 0x0014): /* C-Media */
+-	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
+-	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
++	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_MIN_MUTE)
+ 		if (strstr(kctl->id.name, "Playback"))
+ 			cval->min_mute = 1;
+-		break;
+-	}
+ 
+ 	/* ALSA-ify some Plantronics headset control names */
+ 	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
 diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 0da4ee9757c01..de57cf35d8258 100644
+index de57cf35d8258..03962b3e3bd58 100644
 --- a/sound/usb/quirks.c
 +++ b/sound/usb/quirks.c
-@@ -2405,6 +2405,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x2d87, /* Cayin device */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2fc6, /* Comture-inc devices */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x3336, /* HEM devices */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x3353, /* Khadas devices */
+@@ -2196,6 +2196,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x05a7, 0x1020, /* Bose Companion 5 */
+@@ -2242,8 +2244,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+-	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
+-		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x0d8c, 0x000c, /* C-Media */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
++	DEVICE_FLG(0x0d8c, 0x0014, /* C-Media */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+@@ -2290,6 +2294,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x19f7, 0x0003, /* RODE NT-USB */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
+@@ -2350,6 +2356,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 158ec053dc44d..1ef4d39978df3 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -196,6 +196,9 @@ extern bool snd_usb_skip_validation;
+  *  for the given endpoint.
+  * QUIRK_FLAG_MIC_RES_16 and QUIRK_FLAG_MIC_RES_384
+  *  Set the fixed resolution for Mic Capture Volume (mostly for webcams)
++ * QUIRK_FLAG_MIXER_MIN_MUTE
++ *  Set minimum volume control value as mute for devices where the lowest
++ *  playback value represents muted state instead of minimum audible volume
+  */
+ 
+ #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
+@@ -222,5 +225,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_FIXED_RATE		(1U << 21)
+ #define QUIRK_FLAG_MIC_RES_16		(1U << 22)
+ #define QUIRK_FLAG_MIC_RES_384		(1U << 23)
++#define QUIRK_FLAG_MIXER_MIN_MUTE	(1U << 24)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.51.0
 
