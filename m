@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D179246BB0;
-	Tue, 30 Sep 2025 15:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3717A308F0B;
+	Tue, 30 Sep 2025 15:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245262; cv=none; b=V5Wiz9++88mQA9sH2BEr3+qK81RQVNDEohqnqx8PYnQ8eH7ADbgULzTBkCZz4jFJK2vj0dir4qN/dtvAXclfIWZbGrbDYbekR8VSbMpw2d3kPX9WWLV/NkXcIZhGGjcnKj9G6onxfJueCNFJI+slJ715KR8FcmG3e6GPP2xco/A=
+	t=1759245265; cv=none; b=AxJebvQcK0q0FqYu1GQNuwyLn5EKb8If6LzhAmmjk9VLQbNTrrzQt0Rf8FB5FPBFfQOh1u6vW3kJW8TqZb0R8GpZpGV+z+xs8fM64nuTqtfzyPBHJgPw1v/KmP1YJiW7cagyrtNq2SeVIS7gpRlfJMcSX2MXvLaUhVg11Op6aSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245262; c=relaxed/simple;
-	bh=wRwhBpN7Ww++z8CsCIEShk+LfZhyC4jd5fZOa+hNTdM=;
+	s=arc-20240116; t=1759245265; c=relaxed/simple;
+	bh=OHAzn37fHH/Q/yP53y6dQCdF2xmpw+1sxvsCEA8hthM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUUXO1VPYEjObidFCoAYziyJec2NfQ0EKQC92ef08VZm7nTEsrCZiIMhvx9QdPYlbBPNITJy7F0khp/2ZyIsksGj1EX6/M3f916IYpd9EGxQCgP0X750srinURbonGHu/BSaAl5UsePkI/KbX0w6//bE0nhut2AjUWcTDeItVFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9SVjwyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PO5w5022vwbkjER/AUa/FLv6M/4AkuzJnGAQAzZRKYsNDEIzn+LQ+vkA0Rro+E8NRd8PxZSbCk5pkJW1mcL03QG1P2R/DCpq53MjIdoTJASD15k3XaUCAswTvIU8qP7lXkBYVNzbZNlex/OWgzOK2A/QQk3FfLcVbVZFacNGEno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6oLFNAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9SVjwyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B58FC4CEF0;
-	Tue, 30 Sep 2025 15:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6oLFNAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0E5C113D0;
+	Tue, 30 Sep 2025 15:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245261;
-	bh=wRwhBpN7Ww++z8CsCIEShk+LfZhyC4jd5fZOa+hNTdM=;
+	s=korg; t=1759245265;
+	bh=OHAzn37fHH/Q/yP53y6dQCdF2xmpw+1sxvsCEA8hthM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9SVjwyhNeFDOF8JnTNg4I94ihrIaTY+KlsT58RJfNyq6cESbgJdRhKem00yNUts6
-	 jKBXGnzdo1aBcM3gXaskgQg3TQp2cpnZ4StRAftUC8eZ3L77CeNB/cS0YFoAhE5yom
-	 T9eZrPSRb8g9QGyDpYSVhgfd3gnQSplIHJyfz6sY=
+	b=j6oLFNAC8e0sA9cJgzxdjB/nXXiZtgCGxG7scEVrfhu3EZZbSUXDA22N9eQr4RodP
+	 whYEVQww3IVcmZ1zAY/svdogJFgVqTvDpaWVfIyp1WNP5oHQRZSyGyQs+HTrhqwuXx
+	 jSLsvklnUZI82NtLzQtbnYp++jvczloql3wrdhl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/151] drm: bridge: anx7625: Fix NULL pointer dereference with early IRQ
-Date: Tue, 30 Sep 2025 16:46:58 +0200
-Message-ID: <20250930143831.103383810@linuxfoundation.org>
+Subject: [PATCH 5.15 115/151] can: rcar_can: rcar_can_resume(): fix s2ram with PSCI
+Date: Tue, 30 Sep 2025 16:47:25 +0200
+Message-ID: <20250930143832.188564608@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,49 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit a10f910c77f280327b481e77eab909934ec508f0 ]
+[ Upstream commit 5c793afa07da6d2d4595f6c73a2a543a471bb055 ]
 
-If the interrupt occurs before resource initialization is complete, the
-interrupt handler/worker may access uninitialized data such as the I2C
-tcpc_client device, potentially leading to NULL pointer dereference.
+On R-Car Gen3 using PSCI, s2ram powers down the SoC.  After resume, the
+CAN interface no longer works, until it is brought down and up again.
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250709085438.56188-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fix this by calling rcar_can_start() from the PM resume callback, to
+fully initialize the controller instead of just restarting it.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/699b2f7fcb60b31b6f976a37f08ce99c5ffccb31.1755165227.git.geert+renesas@glider.be
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/can/rcar/rcar_can.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 257f69b5e1783..4b3b6969da75f 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1822,7 +1822,7 @@ static int anx7625_i2c_probe(struct i2c_client *client,
- 		ret = devm_request_threaded_irq(dev, platform->pdata.intp_irq,
- 						NULL, anx7625_intr_hpd_isr,
- 						IRQF_TRIGGER_FALLING |
--						IRQF_ONESHOT,
-+						IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 						"anx7625-intp", platform);
- 		if (ret) {
- 			DRM_DEV_ERROR(dev, "fail to request irq\n");
-@@ -1844,8 +1844,10 @@ static int anx7625_i2c_probe(struct i2c_client *client,
+diff --git a/drivers/net/can/rcar/rcar_can.c b/drivers/net/can/rcar/rcar_can.c
+index 68ad7da5c07e0..e21b73315b986 100644
+--- a/drivers/net/can/rcar/rcar_can.c
++++ b/drivers/net/can/rcar/rcar_can.c
+@@ -863,7 +863,6 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
+ {
+ 	struct net_device *ndev = dev_get_drvdata(dev);
+ 	struct rcar_can_priv *priv = netdev_priv(ndev);
+-	u16 ctlr;
+ 	int err;
+ 
+ 	if (!netif_running(ndev))
+@@ -875,12 +874,7 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
+ 		return err;
  	}
  
- 	/* Add work function */
--	if (platform->pdata.intp_irq)
-+	if (platform->pdata.intp_irq) {
-+		enable_irq(platform->pdata.intp_irq);
- 		queue_work(platform->workqueue, &platform->work);
-+	}
+-	ctlr = readw(&priv->regs->ctlr);
+-	ctlr &= ~RCAR_CAN_CTLR_SLPM;
+-	writew(ctlr, &priv->regs->ctlr);
+-	ctlr &= ~RCAR_CAN_CTLR_CANM;
+-	writew(ctlr, &priv->regs->ctlr);
+-	priv->can.state = CAN_STATE_ERROR_ACTIVE;
++	rcar_can_start(ndev);
  
- 	platform->bridge.funcs = &anx7625_bridge_funcs;
- 	platform->bridge.of_node = client->dev.of_node;
+ 	netif_device_attach(ndev);
+ 	netif_start_queue(ndev);
 -- 
 2.51.0
 
