@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165DA303C9B;
-	Tue, 30 Sep 2025 14:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3BF303C9B;
+	Tue, 30 Sep 2025 14:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244118; cv=none; b=E88ZniY/kiVKJYAK4s+q8otBzLsbHqA1vj/PLaG5+zSdRbFv1JqeEYZN14MNWanfhATU9J9KU2f29JplDtUX9YkByBjFzr65IYT7ksZmjYSz8W48xIQHT+JEMdXHG1EYwqCDXqwZKP1oHuC+1+uYI9c8ClOmbB7MDbVwzARVuSo=
+	t=1759244121; cv=none; b=bPFRt7W+lMyIZwKSRXFzFPoEEQjY1TzX6CIXrA7EPdmEUVBzBaTPDqnZfoc1mrT9BQMgPyODzKsuFzna/0virRdo2DmL+3ioepvzaCzUb/o2gkNL3SymC9jrY2SmU8RLRz5qk6ixw8HgbMi7IFxll2WQE2ANOAJ9QFe/8yudPKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244118; c=relaxed/simple;
-	bh=UgU6X0FQ2uuWoBs5vUOkPA8O/5GmMuq1/SrS1WrsE80=;
+	s=arc-20240116; t=1759244121; c=relaxed/simple;
+	bh=c0xffjRR196/vrfYSr47BvPaHPURKGSxG5+f6Si0dMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jd7XqPNASV7jYX3+f2/4Hx1YkX1ePQhS8uU6hEkmA36lFhEcG6LqoV9j0H+1Lrpf8On6/vtLnLONYJZhINOqIgD34AAA/vbV1a1BA0cJE+jPM/GSTUXKJryDFlq43hTNnt/GxcKsEiEOAs5Fr8qNLkqenBIyDT9o4kG0UU05fhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g40F/sJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hogQwxzXhUlIMPmMkrXOxgMl1wcwqplsUZbt5wS379C3kD1CSG5lmkD8UDAkQsE9S08zW49lTE5RmEyXimmF10P00DjgzzIDM31Gn8BFEcFZk9QWvk92aSqIDeWpYf2byryHSxCpxIv9x9qd5xeHMKopkW6GS4/vrbCxHCKUMwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbqfH4Xv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g40F/sJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EA0C4CEF0;
-	Tue, 30 Sep 2025 14:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbqfH4Xv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AB7C4CEF0;
+	Tue, 30 Sep 2025 14:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244118;
-	bh=UgU6X0FQ2uuWoBs5vUOkPA8O/5GmMuq1/SrS1WrsE80=;
+	s=korg; t=1759244121;
+	bh=c0xffjRR196/vrfYSr47BvPaHPURKGSxG5+f6Si0dMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g40F/sJynbPDv0M994K+gHTF0nZG0RIUKLKviJcEbx17qOdRewof9RWJfMXNSwyNU
-	 B046gCztITOzZihy35kmpTAab0a7CESRoQcsdCsr3DWRfKo1UnMG9MLR5L3vchj0UD
-	 4MyJQkH+yqsDz3ib2VB9VOIUnnCgfytKFGdvDW0s=
+	b=YbqfH4Xv0x89XgTyNZlm1Th9zf7jgNqc72v8PPmSIzKYJ1U8t/pIuISZTvKE0ZsRQ
+	 Sr+D+5PNk87RXG0vPEnFDLgKdCf3phgQc5qyjLQ/qHAAN2o86BHHaYnRCR02Mr2rUL
+	 qsN8iI3880b2jDDRD6T5uazEAXOlGq7Aw9RIVC/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Garry <john.garry@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/122] genirq/affinity: Add irq_update_affinity_desc()
-Date: Tue, 30 Sep 2025 16:46:04 +0200
-Message-ID: <20250930143824.362592070@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 016/122] compiler-clang.h: define __SANITIZE_*__ macros only when undefined
+Date: Tue, 30 Sep 2025 16:45:47 +0200
+Message-ID: <20250930143823.656035493@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -52,143 +57,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1d3aec89286254487df7641c30f1b14ad1d127a5 ]
+commit 3fac212fe489aa0dbe8d80a42a7809840ca7b0f9 upstream.
 
-Add a function to allow the affinity of an interrupt be switched to
-managed, such that interrupts allocated for platform devices may be
-managed.
+Clang 22 recently added support for defining __SANITIZE__ macros similar
+to GCC [1], which causes warnings (or errors with CONFIG_WERROR=y or W=e)
+with the existing defines that the kernel creates to emulate this behavior
+with existing clang versions.
 
-This new interface has certain limitations, and attempts to use it in the
-following circumstances will fail:
-- For when the kernel is configured for generic IRQ reservation mode (in
-  config GENERIC_IRQ_RESERVATION_MODE). The reason being that it could
-  conflict with managed vs. non-managed interrupt accounting.
-- The interrupt is already started, which should not be the case during
-  init
-- The interrupt is already configured as managed, which means double init
+  In file included from <built-in>:3:
+  In file included from include/linux/compiler_types.h:171:
+  include/linux/compiler-clang.h:37:9: error: '__SANITIZE_THREAD__' macro redefined [-Werror,-Wmacro-redefined]
+     37 | #define __SANITIZE_THREAD__
+        |         ^
+  <built-in>:352:9: note: previous definition is here
+    352 | #define __SANITIZE_THREAD__ 1
+        |         ^
 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: John Garry <john.garry@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/1606905417-183214-2-git-send-email-john.garry@huawei.com
-Stable-dep-of: 915470e1b44e ("i40e: fix IRQ freeing in i40e_vsi_request_irq_msix error path")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Refactor compiler-clang.h to only define the sanitizer macros when they
+are undefined and adjust the rest of the code to use these macros for
+checking if the sanitizers are enabled, clearing up the warnings and
+allowing the kernel to easily drop these defines when the minimum
+supported version of LLVM for building the kernel becomes 22.0.0 or newer.
+
+Link: https://lkml.kernel.org/r/20250902-clang-update-sanitize-defines-v1-1-cf3702ca3d92@kernel.org
+Link: https://github.com/llvm/llvm-project/commit/568c23bbd3303518c5056d7f03444dae4fdc8a9c [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/interrupt.h |  8 +++++
- kernel/irq/manage.c       | 70 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+)
+ include/linux/compiler-clang.h |   29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 71d3fa7f02655..d6f833b403d59 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -356,6 +356,8 @@ extern int irq_can_set_affinity(unsigned int irq);
- extern int irq_select_affinity(unsigned int irq);
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -24,23 +24,42 @@
+ #define KASAN_ABI_VERSION 5
  
- extern int irq_set_affinity_hint(unsigned int irq, const struct cpumask *m);
-+extern int irq_update_affinity_desc(unsigned int irq,
-+				    struct irq_affinity_desc *affinity);
- 
- extern int
- irq_set_affinity_notifier(unsigned int irq, struct irq_affinity_notify *notify);
-@@ -391,6 +393,12 @@ static inline int irq_set_affinity_hint(unsigned int irq,
- 	return -EINVAL;
- }
- 
-+static inline int irq_update_affinity_desc(unsigned int irq,
-+					   struct irq_affinity_desc *affinity)
-+{
-+	return -EINVAL;
-+}
-+
- static inline int
- irq_set_affinity_notifier(unsigned int irq, struct irq_affinity_notify *notify)
- {
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index c7f4f948f17e4..4ca4ab8ef2a5f 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -386,6 +386,76 @@ int irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask,
- 	return ret;
- }
- 
-+/**
-+ * irq_update_affinity_desc - Update affinity management for an interrupt
-+ * @irq:	The interrupt number to update
-+ * @affinity:	Pointer to the affinity descriptor
+ /*
++ * Clang 22 added preprocessor macros to match GCC, in hopes of eventually
++ * dropping __has_feature support for sanitizers:
++ * https://github.com/llvm/llvm-project/commit/568c23bbd3303518c5056d7f03444dae4fdc8a9c
++ * Create these macros for older versions of clang so that it is easy to clean
++ * up once the minimum supported version of LLVM for building the kernel always
++ * creates these macros.
 + *
-+ * This interface can be used to configure the affinity management of
-+ * interrupts which have been allocated already.
-+ *
-+ * There are certain limitations on when it may be used - attempts to use it
-+ * for when the kernel is configured for generic IRQ reservation mode (in
-+ * config GENERIC_IRQ_RESERVATION_MODE) will fail, as it may conflict with
-+ * managed/non-managed interrupt accounting. In addition, attempts to use it on
-+ * an interrupt which is already started or which has already been configured
-+ * as managed will also fail, as these mean invalid init state or double init.
+  * Note: Checking __has_feature(*_sanitizer) is only true if the feature is
+  * enabled. Therefore it is not required to additionally check defined(CONFIG_*)
+  * to avoid adding redundant attributes in other configurations.
+  */
++#if __has_feature(address_sanitizer) && !defined(__SANITIZE_ADDRESS__)
++#define __SANITIZE_ADDRESS__
++#endif
++#if __has_feature(hwaddress_sanitizer) && !defined(__SANITIZE_HWADDRESS__)
++#define __SANITIZE_HWADDRESS__
++#endif
++#if __has_feature(thread_sanitizer) && !defined(__SANITIZE_THREAD__)
++#define __SANITIZE_THREAD__
++#endif
+ 
+-#if __has_feature(address_sanitizer) || __has_feature(hwaddress_sanitizer)
+-/* Emulate GCC's __SANITIZE_ADDRESS__ flag */
++/*
++ * Treat __SANITIZE_HWADDRESS__ the same as __SANITIZE_ADDRESS__ in the kernel.
 + */
-+int irq_update_affinity_desc(unsigned int irq,
-+			     struct irq_affinity_desc *affinity)
-+{
-+	struct irq_desc *desc;
-+	unsigned long flags;
-+	bool activated;
-+	int ret = 0;
++#ifdef __SANITIZE_HWADDRESS__
+ #define __SANITIZE_ADDRESS__
++#endif
 +
-+	/*
-+	 * Supporting this with the reservation scheme used by x86 needs
-+	 * some more thought. Fail it for now.
-+	 */
-+	if (IS_ENABLED(CONFIG_GENERIC_IRQ_RESERVATION_MODE))
-+		return -EOPNOTSUPP;
-+
-+	desc = irq_get_desc_buslock(irq, &flags, 0);
-+	if (!desc)
-+		return -EINVAL;
-+
-+	/* Requires the interrupt to be shut down */
-+	if (irqd_is_started(&desc->irq_data)) {
-+		ret = -EBUSY;
-+		goto out_unlock;
-+	}
-+
-+	/* Interrupts which are already managed cannot be modified */
-+	if (irqd_affinity_is_managed(&desc->irq_data)) {
-+		ret = -EBUSY;
-+		goto out_unlock;
-+	}
-+
-+	/*
-+	 * Deactivate the interrupt. That's required to undo
-+	 * anything an earlier activation has established.
-+	 */
-+	activated = irqd_is_activated(&desc->irq_data);
-+	if (activated)
-+		irq_domain_deactivate_irq(&desc->irq_data);
-+
-+	if (affinity->is_managed) {
-+		irqd_set(&desc->irq_data, IRQD_AFFINITY_MANAGED);
-+		irqd_set(&desc->irq_data, IRQD_MANAGED_SHUTDOWN);
-+	}
-+
-+	cpumask_copy(desc->irq_common_data.affinity, &affinity->mask);
-+
-+	/* Restore the activation state */
-+	if (activated)
-+		irq_domain_activate_irq(&desc->irq_data, false);
-+
-+out_unlock:
-+	irq_put_desc_busunlock(desc, flags);
-+	return ret;
-+}
-+
- int __irq_set_affinity(unsigned int irq, const struct cpumask *mask, bool force)
- {
- 	struct irq_desc *desc = irq_to_desc(irq);
--- 
-2.51.0
-
++#ifdef __SANITIZE_ADDRESS__
+ #define __no_sanitize_address \
+ 		__attribute__((no_sanitize("address", "hwaddress")))
+ #else
+ #define __no_sanitize_address
+ #endif
+ 
+-#if __has_feature(thread_sanitizer)
+-/* emulate gcc's __SANITIZE_THREAD__ flag */
+-#define __SANITIZE_THREAD__
++#ifdef __SANITIZE_THREAD__
+ #define __no_sanitize_thread \
+ 		__attribute__((no_sanitize("thread")))
+ #else
 
 
