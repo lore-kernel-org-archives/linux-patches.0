@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EA1846F;
-	Tue, 30 Sep 2025 15:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF59E217F55;
+	Tue, 30 Sep 2025 15:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244765; cv=none; b=FCxN3LfZYOLugE2UoBc0SQ7GWMDuqQY3CiiH10AeVbFVKTvtIe4wi+iitgsrRivCUt5z6FaF1wFMcjDMtLZ/4wBwKxZsodjII5FYItIna+L8yiAHsofN3ZSbaH763wN3xNSu7wDvs93oJ9QvHOxpsOOozGksaaeBDOOsBqCRCH0=
+	t=1759244769; cv=none; b=OYIKMhncegRBvQUZYzc4+Vw5gQo8CsSaHn2FBCNuALOyh4KvZFu2snxtMNDiwcqZd+WlCP2kyCOd1qQulxAa1qScwru9F8eoNPeCK1LQsaYn80EGp9g4G3/xbY+D7nkG/fflSV059TMhkQ76oQ/PELEFcZkyvgyNcTuqVqJ9DSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244765; c=relaxed/simple;
-	bh=/8gJ1YE9DZFzWi2fdL7R5ul1dEPx0z2iiKYmVU8J6tc=;
+	s=arc-20240116; t=1759244769; c=relaxed/simple;
+	bh=+HYUXWKHt68cHzhldUrPmt8vAql7ptLMRd4TI3DDYQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vA41xdDCDIUZ5GQ4/XUJEzVY60NoTNoucSS9ngxGO4AOhCexmAE8TCkJEW7MEzQOFGbcO7zr+ejHd3NZ8eJX04R8Sl51FkLr+jnCyS31SLVPUbFEfBW9CcYee0rSsxZXfsVjJfzML6R6xJZfk11rPeBwjqPeRDLCJawxaXq+uoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvvuCE1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d9QCgyHz3bVBcFmShKnn2MChtWTfMtPi6XqfHTiDoVVStPBKNOaWX4dum0LuHgaN7sagj4N8i+Z4BeuSBncvfaFjwNbZJMYvoIGjvW9wmdHVWzXICXCe/YI5HWSLetFFHOyPUmv50Q6ydw4g/yG5PRFnHNZnLwp8mtqWeC2NTFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pn/xdDp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvvuCE1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22634C4CEF0;
-	Tue, 30 Sep 2025 15:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pn/xdDp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBACC4CEF0;
+	Tue, 30 Sep 2025 15:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244765;
-	bh=/8gJ1YE9DZFzWi2fdL7R5ul1dEPx0z2iiKYmVU8J6tc=;
+	s=korg; t=1759244769;
+	bh=+HYUXWKHt68cHzhldUrPmt8vAql7ptLMRd4TI3DDYQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvvuCE1FMoZ9NhqrCDo8BpJLODt7whU3Su6s+STSDmU5AV3HcF+69dFG+QqBH7Ohg
-	 KyVW5cg/nBh/W0jHk+keQW5gyOuBJHqiPkjFUDGutvB2/ir5ps2hTnpMGvvJOwaT+e
-	 a+frjL66lO20Y7cvRtoHr96fMPR9/gCqtGEjPcb4=
+	b=Pn/xdDp1oNqrr0f90jBtgWugmAwO4E1PhjU5zLGOi4QfTI/yqWdA59hd+l526LM1o
+	 xLt4K8olhCDYpnZLoJNYlE0B8O/t4xyV14gAAlaasAwtCDp9dJxCBJ7VwBZHK14Iib
+	 Rd0NXCOhKXu6zMxPYNMV7ie2CvIhm7ueVvL9oeho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.16 107/143] i40e: add max boundary check for VF filters
-Date: Tue, 30 Sep 2025 16:47:11 +0200
-Message-ID: <20250930143835.497094332@linuxfoundation.org>
+Subject: [PATCH 6.16 108/143] i40e: add mask to apply valid bits for itr_idx
+Date: Tue, 30 Sep 2025 16:47:12 +0200
+Message-ID: <20250930143835.537399802@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -56,11 +56,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-commit cb79fa7118c150c3c76a327894bb2eb878c02619 upstream.
+commit eac04428abe9f9cb203ffae4600791ea1d24eb18 upstream.
 
-There is no check for max filters that VF can request. Add it.
+The ITR index (itr_idx) is only 2 bits wide. When constructing the
+register value for QINT_RQCTL, all fields are ORed together. Without
+masking, higher bits from itr_idx may overwrite adjacent fields in the
+register.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Apply I40E_QINT_RQCTL_ITR_INDX_MASK to ensure only the intended bits are
+set.
+
+Fixes: 5c3c48ac6bf5 ("i40e: implement virtual device interface")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
@@ -70,34 +76,19 @@ Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3908,6 +3908,8 @@ err:
- 				       aq_ret);
- }
- 
-+#define I40E_MAX_VF_CLOUD_FILTER 0xFF00
-+
- /**
-  * i40e_vc_add_cloud_filter
-  * @vf: pointer to the VF info
-@@ -3947,6 +3949,14 @@ static int i40e_vc_add_cloud_filter(stru
- 		goto err_out;
+@@ -448,7 +448,7 @@ static void i40e_config_irq_link_list(st
+ 		    (qtype << I40E_QINT_RQCTL_NEXTQ_TYPE_SHIFT) |
+ 		    (pf_queue_id << I40E_QINT_RQCTL_NEXTQ_INDX_SHIFT) |
+ 		    BIT(I40E_QINT_RQCTL_CAUSE_ENA_SHIFT) |
+-		    (itr_idx << I40E_QINT_RQCTL_ITR_INDX_SHIFT);
++		    FIELD_PREP(I40E_QINT_RQCTL_ITR_INDX_MASK, itr_idx);
+ 		wr32(hw, reg_idx, reg);
  	}
  
-+	if (vf->num_cloud_filters >= I40E_MAX_VF_CLOUD_FILTER) {
-+		dev_warn(&pf->pdev->dev,
-+			 "VF %d: Max number of filters reached, can't apply cloud filter\n",
-+			 vf->vf_id);
-+		aq_ret = -ENOSPC;
-+		goto err_out;
-+	}
-+
- 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
- 	if (!cfilter) {
- 		aq_ret = -ENOMEM;
 
 
