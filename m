@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14991D6188;
-	Tue, 30 Sep 2025 15:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8482FD1DD;
+	Tue, 30 Sep 2025 15:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245324; cv=none; b=Z1MOKFEbjAsz7zE2cHb5Lboqdug3mLcAKC4o6/KtRhj9RDo2MZ5rZXO3aq+UYIcJLGUTJ2b4VRb1lLTTkpK+fVB6yRu8tnR4g8+g3NCLzEq2St59rVbxIqKmaifeiNLRc3Iv66E4+6losIwp4KA/NbmbOY/sdj73yR3feM6XRnk=
+	t=1759245327; cv=none; b=ZPWiarDwDPRHqpWmnVWe1MJMFWowfnFhkF2FiG5TOxkVy+VnoMgwxQv/MLn9ns4qvCCxkHF1+UpYg2iotbbHwaXMoOv4WK2cEb6/mKbI1xg86byDLnXcuzpGaVgPbGvpTrzakCObR3a8cLrmaBizCYvTndVzR0xiKg4F8n4YulY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245324; c=relaxed/simple;
-	bh=Br1Q8qsFJGDXqzNRBi+L2COm7O6h30gmulb758vYhBs=;
+	s=arc-20240116; t=1759245327; c=relaxed/simple;
+	bh=p5I6cKm8PngDhq8J9y8YubLrosmSQJwi2VMjUsrqz40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSRouiTs/NUShKKYmVCPMmMqZAVgWeReFF6UcKwnr48AgJSDX7iVVPQbFVnOwLRNwK+2SwsjwvTXazmSuhQQJ+WWbsO/agvE08WV3PEL9BTJChyHA8kbENbvNMkY/Q+r5S9nkrqt5q6iK9884A1ikGPNgWFbm9pnahiO8uDDARY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EI26JCG2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEiQnFkiMr8el024pZJAjpB91xDsiFiUiYm0nHAqPYvaq/zMFliJFQ+N4ZLYJCqfKtmbnn4NjNANiPh9Wg7gYhPTEPxnkwNRKkM6FsiebmLk9jRMoT8vlITBnSMbboqOGM9oLNqZOKmxjSU36pBCE1tWCYKRnq3f3MA+eDtUQZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyn0IjSJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EI26JCG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F129CC113D0;
-	Tue, 30 Sep 2025 15:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyn0IjSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516A3C4CEF0;
+	Tue, 30 Sep 2025 15:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245323;
-	bh=Br1Q8qsFJGDXqzNRBi+L2COm7O6h30gmulb758vYhBs=;
+	s=korg; t=1759245326;
+	bh=p5I6cKm8PngDhq8J9y8YubLrosmSQJwi2VMjUsrqz40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EI26JCG2p8V/QE7nIz7jqJbLSUz0g18s0XB2P9+Fc92OI1l4StNwtDVV2yxOJe/JT
-	 vGPo5+4JkzcIpq/PcBrkzKjv4s5Oy59AdEZISeGVbh4jMidFRLRS5eLRa5x1ghxn/L
-	 7TsJuGRxYnMW46Q0zJc1A+z1zlL0E6esnnhy3U+s=
+	b=tyn0IjSJedpPQUuaw2RZT4Tnjiw6553AIclCLXdHtiOXDoUhvTPq9RtcA88lFHNMa
+	 sTuou4yMQZ9XbQD6FId89yarCjlsYPgawp5CdANEbXW4noqqsrQ7w6rZXkkWE2TZ4y
+	 Phq/k86eDyhfW7YIp2p5O/6deu02gczZ2GPXpoaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zabelin Nikita <n.zabelin@mt-integration.ru>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/151] drm/gma500: Fix null dereference in hdmi teardown
-Date: Tue, 30 Sep 2025 16:47:45 +0200
-Message-ID: <20250930143832.977045227@linuxfoundation.org>
+Subject: [PATCH 5.15 136/151] crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg
+Date: Tue, 30 Sep 2025 16:47:46 +0200
+Message-ID: <20250930143833.015740346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,40 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zabelin Nikita <n.zabelin@mt-integration.ru>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 352e66900cde63f3dadb142364d3c35170bbaaff ]
+[ Upstream commit 1b34cbbf4f011a121ef7b2d7d6e6920a036d5285 ]
 
-pci_set_drvdata sets the value of pdev->driver_data to NULL,
-after which the driver_data obtained from the same dev is
-dereferenced in oaktrail_hdmi_i2c_exit, and the i2c_dev is
-extracted from it. To prevent this, swap these calls.
+Issuing two writes to the same af_alg socket is bogus as the
+data will be interleaved in an unpredictable fashion.  Furthermore,
+concurrent writes may create inconsistencies in the internal
+socket state.
 
-Found by Linux Verification Center (linuxtesting.org) with Svacer.
+Disallow this by adding a new ctx->write field that indiciates
+exclusive ownership for writing.
 
-Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
-Signed-off-by: Zabelin Nikita <n.zabelin@mt-integration.ru>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://lore.kernel.org/r/20250918150703.2562604-1-n.zabelin@mt-integration.ru
+Fixes: 8ff590903d5 ("crypto: algif_skcipher - User-space interface for skcipher operations")
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/af_alg.c         |  7 +++++++
+ include/crypto/if_alg.h | 10 ++++++----
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi.c b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-index a097a59a9eaec..08e83b7513197 100644
---- a/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-@@ -724,8 +724,8 @@ void oaktrail_hdmi_teardown(struct drm_device *dev)
+diff --git a/crypto/af_alg.c b/crypto/af_alg.c
+index aa93501e27b95..24c273f53e90a 100644
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -862,6 +862,12 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 	}
  
- 	if (hdmi_dev) {
- 		pdev = hdmi_dev->dev;
--		pci_set_drvdata(pdev, NULL);
- 		oaktrail_hdmi_i2c_exit(pdev);
-+		pci_set_drvdata(pdev, NULL);
- 		iounmap(hdmi_dev->regs);
- 		kfree(hdmi_dev);
- 		pci_dev_put(pdev);
+ 	lock_sock(sk);
++	if (ctx->write) {
++		release_sock(sk);
++		return -EBUSY;
++	}
++	ctx->write = true;
++
+ 	if (ctx->init && !ctx->more) {
+ 		if (ctx->used) {
+ 			err = -EINVAL;
+@@ -969,6 +975,7 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 
+ unlock:
+ 	af_alg_data_wakeup(sk);
++	ctx->write = false;
+ 	release_sock(sk);
+ 
+ 	return copied ?: err;
+diff --git a/include/crypto/if_alg.h b/include/crypto/if_alg.h
+index a406e281ae571..1424200fe88cf 100644
+--- a/include/crypto/if_alg.h
++++ b/include/crypto/if_alg.h
+@@ -136,6 +136,7 @@ struct af_alg_async_req {
+  *			SG?
+  * @enc:		Cryptographic operation to be performed when
+  *			recvmsg is invoked.
++ * @write:		True if we are in the middle of a write.
+  * @init:		True if metadata has been sent.
+  * @len:		Length of memory allocated for this data structure.
+  * @inflight:		Non-zero when AIO requests are in flight.
+@@ -151,10 +152,11 @@ struct af_alg_ctx {
+ 	size_t used;
+ 	atomic_t rcvused;
+ 
+-	bool more;
+-	bool merge;
+-	bool enc;
+-	bool init;
++	u32		more:1,
++			merge:1,
++			enc:1,
++			write:1,
++			init:1;
+ 
+ 	unsigned int len;
+ 
 -- 
 2.51.0
 
