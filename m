@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB9F238D3A;
-	Tue, 30 Sep 2025 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3958F7D;
+	Tue, 30 Sep 2025 14:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243988; cv=none; b=KLTKD1+0muFhWpskG8CssIXtoNg4oRkidyXsfwfRHsFJ9MmIqvO/FcsJELVlMXOuG8QcH/YmpXz+wwkbjHzMuM7x1DsRofgjUNsoa2X5pim8erVvd9LVb13ooZ4YFcByHWh6Ung7EqPu6WlBFslLV/FjR/L/WfFo2gNvtVDnbfU=
+	t=1759243991; cv=none; b=gkFdMq+tdMuESiPQU/hy3XIqFz/AT0VR1mejpSUBs0OHSlb7IRQpU6Cdra51Q+w7DkxJKvXrgo12Jmd3SuvANKDpFJZfyEM5OkLKp1yhlqCNeWc9bp54+pCQHMFiQZAdpaOBebC8Ns+DJXvCy8qjLHxviMorpkT8UCgKINhyd6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243988; c=relaxed/simple;
-	bh=YMwoJGh1e6K+hXllKfWED5C2Zj6jQ4wvMQDsq+CUp5A=;
+	s=arc-20240116; t=1759243991; c=relaxed/simple;
+	bh=709BWBZhJCd+qc7HNP/yD21ZWt40rVqPZu/cWsPx6Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2o0fAkggm0qb4mYVpCAHfLan6xh2eyfGFxv9+cpbiLk4MSuD/LYHGTzU5eEfiiAIm9Vh95zsoGbFDIVsOfB87g4ueYRemDSN2OKTq4RaNUOcjQakMdWODenX2z/ftp6tuUXqf5IJN/7a2gBQfdc58imjO2ScnXBs1YoMCCIFoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjgdLZ3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIqIDGyDntKCKgfR89I0YR1GaJz9V8HHl+SGxwnaCFCI0Y4yjaXQd4aKfj1thOLA2xx/skwdnZpMi5otp801KKcITyiztCaJvhjTeGJNfiWS0NnSoUml7wu+5TiTUTawxZEgy37tmYmxYCazAc+iaNyqMme0gRg5IVKgzvRzQ7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Akhb04Hd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjgdLZ3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB81C4CEF0;
-	Tue, 30 Sep 2025 14:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Akhb04Hd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9F5C4CEF0;
+	Tue, 30 Sep 2025 14:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243984;
-	bh=YMwoJGh1e6K+hXllKfWED5C2Zj6jQ4wvMQDsq+CUp5A=;
+	s=korg; t=1759243991;
+	bh=709BWBZhJCd+qc7HNP/yD21ZWt40rVqPZu/cWsPx6Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UjgdLZ3X8zQOo3L2Xv4flGsv0P5HAc4BrkJZ7bEbfQSiVk4Hczdffv/ObdXQKhYOZ
-	 Dp7MtM5Jll7D8wTW+BnQSNM8+S9dbgghF07/EYcnYraUjhk65vCykmUoikVyYQ3K4J
-	 CxCgh9YxKxRoJjGyuPBvsU225BEokZj7USMbWoeQ=
+	b=Akhb04HdnQ9Hf8M+5duBv3iszYhIYijF65evTemAr0Tktr6OF9H9EBN3PG0PwXU+Q
+	 Z5+fPtOiMeugTM/IOg5rfs20TzQuDmnMLtthKrlzxfLPklSaATXgWNCGWHt6QXsR9U
+	 Lk/6QoIvNRNA8L4wy2F7S9OQm+CGAixgsfxsQM/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Bronder <jsbronder@cold-front.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.4 76/81] i40e: increase max descriptors for XL710
-Date: Tue, 30 Sep 2025 16:47:18 +0200
-Message-ID: <20250930143822.886829795@linuxfoundation.org>
+	Kamakshi Nellore <nellorex.kamakshi@intel.com>
+Subject: [PATCH 5.4 78/81] i40e: fix idx validation in config queues msg
+Date: Tue, 30 Sep 2025 16:47:20 +0200
+Message-ID: <20250930143822.981890745@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -54,102 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Bronder <jsbronder@cold-front.org>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit aa6908ca3bd1e713fd6cd8d7193a008f060bf7d9 ]
+[ Upstream commit f1ad24c5abe1eaef69158bac1405a74b3c365115 ]
 
-In Tables 8-12 and 8-22 in the X710/XXV710/XL710 datasheet, the QLEN
-description states that the maximum size of the descriptor queue is 8k
-minus 32, or 8160.
+Ensure idx is within range of active/initialized TCs when iterating over
+vf->ch[idx] in i40e_vc_config_queues_msg().
 
-Signed-off-by: Justin Bronder <jsbronder@cold-front.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20231113231047.548659-2-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 55d225670def ("i40e: add validation for ring_len param")
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h         |    1 +
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c |   25 +++++++++++++++++++------
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -48,6 +48,7 @@
- #define I40E_MAX_VEB			16
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2320,7 +2320,7 @@ static int i40e_vc_config_queues_msg(str
+ 		}
  
- #define I40E_MAX_NUM_DESCRIPTORS	4096
-+#define I40E_MAX_NUM_DESCRIPTORS_XL710	8160
- #define I40E_MAX_CSR_SPACE		(4 * 1024 * 1024 - 64 * 1024)
- #define I40E_DEFAULT_NUM_DESCRIPTORS	512
- #define I40E_REQ_DESCRIPTOR_MULTIPLE	32
---- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-@@ -1914,6 +1914,18 @@ static void i40e_get_drvinfo(struct net_
- 		drvinfo->n_priv_flags += I40E_GL_PRIV_FLAGS_STR_LEN;
- }
- 
-+static u32 i40e_get_max_num_descriptors(struct i40e_pf *pf)
-+{
-+	struct i40e_hw *hw = &pf->hw;
-+
-+	switch (hw->mac.type) {
-+	case I40E_MAC_XL710:
-+		return I40E_MAX_NUM_DESCRIPTORS_XL710;
-+	default:
-+		return I40E_MAX_NUM_DESCRIPTORS;
-+	}
-+}
-+
- static void i40e_get_ringparam(struct net_device *netdev,
- 			       struct ethtool_ringparam *ring)
- {
-@@ -1921,8 +1933,8 @@ static void i40e_get_ringparam(struct ne
- 	struct i40e_pf *pf = np->vsi->back;
- 	struct i40e_vsi *vsi = pf->vsi[pf->lan_vsi];
- 
--	ring->rx_max_pending = I40E_MAX_NUM_DESCRIPTORS;
--	ring->tx_max_pending = I40E_MAX_NUM_DESCRIPTORS;
-+	ring->rx_max_pending = i40e_get_max_num_descriptors(pf);
-+	ring->tx_max_pending = i40e_get_max_num_descriptors(pf);
- 	ring->rx_mini_max_pending = 0;
- 	ring->rx_jumbo_max_pending = 0;
- 	ring->rx_pending = vsi->rx_rings[0]->count;
-@@ -1945,12 +1957,12 @@ static bool i40e_active_tx_ring_index(st
- static int i40e_set_ringparam(struct net_device *netdev,
- 			      struct ethtool_ringparam *ring)
- {
-+	u32 new_rx_count, new_tx_count, max_num_descriptors;
- 	struct i40e_ring *tx_rings = NULL, *rx_rings = NULL;
- 	struct i40e_netdev_priv *np = netdev_priv(netdev);
- 	struct i40e_hw *hw = &np->vsi->back->hw;
- 	struct i40e_vsi *vsi = np->vsi;
- 	struct i40e_pf *pf = vsi->back;
--	u32 new_rx_count, new_tx_count;
- 	u16 tx_alloc_queue_pairs;
- 	int timeout = 50;
- 	int i, err = 0;
-@@ -1958,14 +1970,15 @@ static int i40e_set_ringparam(struct net
- 	if ((ring->rx_mini_pending) || (ring->rx_jumbo_pending))
- 		return -EINVAL;
- 
--	if (ring->tx_pending > I40E_MAX_NUM_DESCRIPTORS ||
-+	max_num_descriptors = i40e_get_max_num_descriptors(pf);
-+	if (ring->tx_pending > max_num_descriptors ||
- 	    ring->tx_pending < I40E_MIN_NUM_DESCRIPTORS ||
--	    ring->rx_pending > I40E_MAX_NUM_DESCRIPTORS ||
-+	    ring->rx_pending > max_num_descriptors ||
- 	    ring->rx_pending < I40E_MIN_NUM_DESCRIPTORS) {
- 		netdev_info(netdev,
- 			    "Descriptors requested (Tx: %d / Rx: %d) out of range [%d-%d]\n",
- 			    ring->tx_pending, ring->rx_pending,
--			    I40E_MIN_NUM_DESCRIPTORS, I40E_MAX_NUM_DESCRIPTORS);
-+			    I40E_MIN_NUM_DESCRIPTORS, max_num_descriptors);
- 		return -EINVAL;
- 	}
- 
+ 		if (vf->adq_enabled) {
+-			if (idx >= ARRAY_SIZE(vf->ch)) {
++			if (idx >= vf->num_tc) {
+ 				aq_ret = I40E_ERR_NO_AVAILABLE_VSI;
+ 				goto error_param;
+ 			}
+@@ -2341,7 +2341,7 @@ static int i40e_vc_config_queues_msg(str
+ 		 * to its appropriate VSIs based on TC mapping
+ 		 */
+ 		if (vf->adq_enabled) {
+-			if (idx >= ARRAY_SIZE(vf->ch)) {
++			if (idx >= vf->num_tc) {
+ 				aq_ret = I40E_ERR_NO_AVAILABLE_VSI;
+ 				goto error_param;
+ 			}
 
 
