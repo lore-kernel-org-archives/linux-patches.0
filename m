@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE051487F4;
-	Tue, 30 Sep 2025 15:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AF41487F4;
+	Tue, 30 Sep 2025 15:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244797; cv=none; b=pxU71VIHT5OgUw14kS4k+FRO2zCCMlFXZdYTMpMzfb06vnBFkjpjK7gxqx6DgYiOPoFjEsok76nMRuaVhePu11L96/E2IeFwiokBHOAPzCORCyZ5Owv7l3BNBQA78cZFD1OyBsxcIihrLHYtZs8pufPSONudrIU91S13Gl/qP6Y=
+	t=1759244800; cv=none; b=A7t19Nrp5qtNIyH5v6dLPJDZR5y/DWQ6uSpMQNtTkF0MGp4Bu+VNeDjdivD5Ry74KtkgkPrxZPZRSDmu4K44gp+BCaIukggrLP+UGTo4B1nu2JNkbr1+4SiktFDhqtCIKBlQd6wc0T41WO85qT4V5W4QG9bNzlh6+rrBuim046U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244797; c=relaxed/simple;
-	bh=PbPoiT0gEnRxgy5pXeFipt6ejA0tfyyBPbOzcGtQg24=;
+	s=arc-20240116; t=1759244800; c=relaxed/simple;
+	bh=da6Atef4b+A7nbZOBGlGbpdtYp4HTgHMv/1tW7mGtko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWe/4RdIrvfRkGsQMbARIsaGj5oopUNIcASUA4zJd5M/d0PgQZf8+/mvn99eX7nbosCt9u2pZhXVO3RwnWdoiN3EL1nyPXJdHBESCzbLnMrgC7ioE8BjX0SBlWHKVPQNTxQjLsvIvcOTXfcWlm/tvfamxcfeQXYs5lLaKFepzoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBPfqJ3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tdUjz/AccEEGpwmE2uLJ6JQ3RgqrwjJsHm6n/mvYsBCHWt5vuHD69A+skE74rsuINIOWKChrAZAN17qfWEzYkl3me0nSnQdx4N3KGT/7BycK6btlUqfT1hx90SDXJ/Vu1zeqDVHRFQ2+XhydtYslb1e9EvMEFBDQ+Qm+8uaY7dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujq8KCap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBPfqJ3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4962DC4CEF0;
-	Tue, 30 Sep 2025 15:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujq8KCap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62077C4CEF0;
+	Tue, 30 Sep 2025 15:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244796;
-	bh=PbPoiT0gEnRxgy5pXeFipt6ejA0tfyyBPbOzcGtQg24=;
+	s=korg; t=1759244799;
+	bh=da6Atef4b+A7nbZOBGlGbpdtYp4HTgHMv/1tW7mGtko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBPfqJ3MV8PDlrLZ4BKmnWHI3G4rwYhnkb2AotawhEUqd1vNQbnxvkkcKhBU0Zw4K
-	 1rBDyynZwDdUxgA+R6MTsNbOnW3D2nIoj2KqDnh82RIUPCIONQzzftgrsFSzCXHE8T
-	 eZEHR1tiw5JLLdS26FcxktGK1rEPl4sJQrJMyggk=
+	b=ujq8KCapXDB4HfMKz7Mc7hDgVojkbsnnWBUgbQQTs2wl6VFDg92HdCANvdgtHBNKL
+	 wui0nBJNTQopeWWbv1r+9GtVBdZRamSUm6SOc/N+DrRh1NwEyxv72r29WFDAnDUxC5
+	 HBIEc3+RX8HFYCR6csZSBw6Q2tUW3kmFNV4Exclg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>
-Subject: [PATCH 6.16 116/143] arm64: dts: marvell: cn9132-clearfog: disable eMMC high-speed modes
-Date: Tue, 30 Sep 2025 16:47:20 +0200
-Message-ID: <20250930143835.855007681@linuxfoundation.org>
+	Riana Tauro <riana.tauro@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 090/143] drm/xe: Fix build with CONFIG_MODULES=n
+Date: Tue, 30 Sep 2025 16:46:54 +0200
+Message-ID: <20250930143834.816833542@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -50,43 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit 48b51799a5461707705454568453618cdd7307f4 upstream.
+[ Upstream commit b67e7422d229dead0dddaad7e7c05558f24d552f ]
 
-Similar to MacchiatoBIN the high-speed modes are unstable on the CN9132
-CEX-7 module, leading to failed transactions under normal use.
+When building with CONFIG_MODULES=n, the __exit functions are dropped.
+However our init functions may call them for error handling, so they are
+not good candidates for the exit sections.
 
-Disable all high-speed modes including UHS.
+Fix this error reported by 0day:
 
-Additionally add no-sdio and non-removable properties as appropriate for
-eMMC.
+	ld.lld: error: relocation refers to a symbol in a discarded section: xe_configfs_exit
+	>>> defined in vmlinux.a(drivers/gpu/drm/xe/xe_configfs.o)
+	>>> referenced by xe_module.c
+	>>>               drivers/gpu/drm/xe/xe_module.o:(init_funcs) in archive vmlinux.a
 
-Fixes: e9ff907f4076 ("arm64: dts: add description for solidrun cn9132 cex7 module and clearfog board")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is the only exit function using __exit. Drop it to fix the build.
+
+Cc: Riana Tauro <riana.tauro@intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506092221.1FmUQmI8-lkp@intel.com/
+Fixes: 16280ded45fb ("drm/xe: Add configfs to enable survivability mode")
+Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Link: https://lore.kernel.org/r/20250912-fix-nomodule-build-v1-1-d11b70a92516@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit d9b2623319fa20c2206754284291817488329648)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/xe/xe_configfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi
-+++ b/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi
-@@ -137,6 +137,14 @@
- 	pinctrl-0 = <&ap_mmc0_pins>;
- 	pinctrl-names = "default";
- 	vqmmc-supply = <&v_1_8>;
-+	/*
-+	 * Not stable in HS modes - phy needs "more calibration", so disable
-+	 * UHS (by preventing voltage switch), SDR104, SDR50 and DDR50 modes.
-+	 */
-+	no-1-8-v;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
- 	status = "okay";
- };
+diff --git a/drivers/gpu/drm/xe/xe_configfs.c b/drivers/gpu/drm/xe/xe_configfs.c
+index 9a2b96b111ef5..2b591ed055612 100644
+--- a/drivers/gpu/drm/xe/xe_configfs.c
++++ b/drivers/gpu/drm/xe/xe_configfs.c
+@@ -244,7 +244,7 @@ int __init xe_configfs_init(void)
+ 	return 0;
+ }
  
+-void __exit xe_configfs_exit(void)
++void xe_configfs_exit(void)
+ {
+ 	configfs_unregister_subsystem(&xe_configfs);
+ }
+-- 
+2.51.0
+
 
 
