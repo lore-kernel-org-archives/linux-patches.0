@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C143A3054C5;
-	Tue, 30 Sep 2025 14:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F7830594A;
+	Tue, 30 Sep 2025 14:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244083; cv=none; b=GDbxISuJRWXcKeUpHxQ7vJHXn2JfthfKNnG4+vExCHf6gNWZ1iBHWiZ4EEdOYiWCy9NWycj05vdrS5h5fQJT9oQN2s0JgbUDBGGmv2r94d/DJUkcz6bDiijiheAPNjDNLxTwaDPXBQPp0z7QvQvd+EQrjZ5ZAaUZP6f0hBW3Qe4=
+	t=1759244087; cv=none; b=r8RwDxCdlXd7GV1QLSJruPD3t0dY9WcFtmYR3XBvqj3x72PLoGq7qLAmMxMhFPNS07NU9ltKb0a8cE6xE/hSk/zqm27VBtLK1K6i2Ax0oPWVSMjbX80T7ILQbvIgNFfLfwOuLyZKYLKgZ/zn2U1W41eRMpmQYnkNTpAryzPQTo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244083; c=relaxed/simple;
-	bh=aFMfQjF1UppqHhbkmR6OvVWPpiKbk3fEAi2DI8a062s=;
+	s=arc-20240116; t=1759244087; c=relaxed/simple;
+	bh=94MhCkolALjao50/9AS+K9oqJSVTYn/ooTNszmnHcbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldAGXQoxlAYFtL28uteESYWexDVCqdDsuyx+F3iy+/oiptUnhAjgGKfg70cBDUHoJrtXia4J8mNOZVrq6ywiZPEm8LOioaA3aJRMGCm1Fuw5o8Z0A0ADOwdbDEjBkfg0ILINJMDA/i8kjiM85ZW+0yBplde6uhGTW8sQYqFW0ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrYI7TmO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QREj9CKmRbMWorLtgJUCtULAzXdggqFgxnn3IJfpSU66tSxCrEM5dVgfcSVqzXbMOFKqamyODdT5HXoK7hpg0gnOMvDYTl60/U7692ct2HTqVmnFgWdfTnnK2mzuLB7JczjbxSrQkpieOBVOU2NHMDdDLS9nT6NK3fOVFDQ/9Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMqHCSw3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrYI7TmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4841FC4CEF0;
-	Tue, 30 Sep 2025 14:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMqHCSw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A992BC4CEF0;
+	Tue, 30 Sep 2025 14:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244083;
-	bh=aFMfQjF1UppqHhbkmR6OvVWPpiKbk3fEAi2DI8a062s=;
+	s=korg; t=1759244087;
+	bh=94MhCkolALjao50/9AS+K9oqJSVTYn/ooTNszmnHcbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrYI7TmOusqyWXmpKzdXGdE0f7szvhOt8P9HDnjRffdPmlPkANAc0dEAlJyu5eJrX
-	 yIXWqHu7Lrl/UQoUvNzRaIGxkj12R9wunNvtN/VWaE4i08mVFr/hbc/wXhA82dl+7b
-	 qZl4GhFKSmNEiMxuni4xHnoXIevZqD8vTYrpWlRo=
+	b=mMqHCSw3tOK6CqAlTSzCn3nhV88SzaQR33WwKbBls8RoNOf3DHBU6NL44+AGQCpLq
+	 kZvXWqQ52E7rFP9ZlXIwt3EPLoSqj3ScMOVfzy4a+06gyTbXVcxv+d79hGgy8i8DXy
+	 lqyeVwDxR++7HiEGuhLwWejEmIfxNj960BjMFaCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 5.10 015/122] EDAC/altera: Delete an inappropriate dma_free_coherent() call
-Date: Tue, 30 Sep 2025 16:45:46 +0200
-Message-ID: <20250930143823.614980087@linuxfoundation.org>
+	Alexander Dahl <ada@thorsis.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 024/122] mtd: nand: raw: atmel: Fix comment in timings preparation
+Date: Tue, 30 Sep 2025 16:45:55 +0200
+Message-ID: <20250930143823.988658659@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Alexander Dahl <ada@thorsis.com>
 
-commit ff2a66d21fd2364ed9396d151115eec59612b200 upstream.
+[ Upstream commit 1c60e027ffdebd36f4da766d9c9abbd1ea4dd8f9 ]
 
-dma_free_coherent() must only be called if the corresponding
-dma_alloc_coherent() call has succeeded. Calling it when the allocation fails
-leads to undefined behavior.
+Looks like a copy'n'paste mistake introduced when initially adding the
+dynamic timings feature with commit f9ce2eddf176 ("mtd: nand: atmel: Add
+->setup_data_interface() hooks").  The context around this and
+especially the code itself suggests 'read' is meant instead of write.
 
-Delete the wrong call.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 71bcada88b0f3 ("edac: altera: Add Altera SDRAM EDAC support")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/aIrfzzqh4IzYtDVC@pc
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Reviewed-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240226122537.75097-1-ada@thorsis.com
+Stable-dep-of: fd779eac2d65 ("mtd: nand: raw: atmel: Respect tAR, tCLR in read setup timing")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -126,7 +126,6 @@ static ssize_t altr_sdr_mc_err_inject_wr
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -1378,7 +1378,7 @@ static int atmel_smc_nand_prepare_smccon
+ 		return ret;
  
- 	ptemp = dma_alloc_coherent(mci->pdev, 16, &dma_handle, GFP_KERNEL);
- 	if (!ptemp) {
--		dma_free_coherent(mci->pdev, 16, ptemp, dma_handle);
- 		edac_printk(KERN_ERR, EDAC_MC,
- 			    "Inject: Buffer Allocation error\n");
- 		return -ENOMEM;
+ 	/*
+-	 * The write cycle timing is directly matching tWC, but is also
++	 * The read cycle timing is directly matching tRC, but is also
+ 	 * dependent on the setup and hold timings we calculated earlier,
+ 	 * which gives:
+ 	 *
 
 
