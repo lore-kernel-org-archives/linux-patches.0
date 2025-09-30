@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817F42236EB;
-	Tue, 30 Sep 2025 15:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACD52236EB;
+	Tue, 30 Sep 2025 15:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244912; cv=none; b=EDBIddTj/Vqjz21wkhxRp1SGVd0HYAT/GC8AyQTKRFFdmkz9ovp/3X1eHSvRLglvd3Q1t7SeDZriX3MM4fjTHgph0prQirMSF7mwGW54ugniuSBwLF0JZKE2VgUEumHwFlI3xloZRQW/BFI9OnBgFX4czqfQtLb+yzwsrckbdi4=
+	t=1759244915; cv=none; b=m9qZLcaAn1OaBbNe9TdtlHGgUjoQTR/KKlhMeJAW85Wu3rvo5PHcOE0VpV5Gi8rZqEacCX+3Cv3W1Snc3NImg/wiriy4ydDdbwu2PkjfOVIzsYFEmiY8BbkzPzBkxSNLzAPvjD7XQ0fidl4GIwccaMd4FHo0Zi1NbibyNuag/lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244912; c=relaxed/simple;
-	bh=U1S67C5Kd8pJXkzkH/YAv5SUYhoIZMq6g6VP29wZOMc=;
+	s=arc-20240116; t=1759244915; c=relaxed/simple;
+	bh=9ccPQt89yuacaV6ZKtLxmx0vUwun2hCz5cCZ20F8PSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmnY2d3n/4cN1Kj0mQa0uqTW1UDDI1aRzVd7xvW+BwlM3orqD+deBkgql3ZRIocfAPWGMOebG4RzWzCfQUeAWv3IWNzCzxHCo69oYDBfhqk1oO6CiuDzkhJrhQaqFLMPYeByIN+jePtdLltYdu8nEq0YUCFsIiFFpCT8Y/lHXP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4IbJTZq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcYTDFT0HxlLk0DymVfe9WzQ5FZYfmFeuNT8ZLEFrxEeOaNeb9k7+NYyhVypnhJqyclcfS+D5xT904K3/FhxTVGiCVPMsIPr+vrfIo8GSFAs4YdXFACt4sS0d5CTuQa2tiRHdLbioy3ouxrUKGcW/UGI0MEvH/M9gOJQ/PvEDlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv8S8dBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4IbJTZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A35C4CEF0;
-	Tue, 30 Sep 2025 15:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv8S8dBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34648C4CEF0;
+	Tue, 30 Sep 2025 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244912;
-	bh=U1S67C5Kd8pJXkzkH/YAv5SUYhoIZMq6g6VP29wZOMc=;
+	s=korg; t=1759244915;
+	bh=9ccPQt89yuacaV6ZKtLxmx0vUwun2hCz5cCZ20F8PSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4IbJTZqDmcYxlSpHHFmYty35/gJg7xTGWxKTy09IZMH+j4rCdSjvy3TziLQFc1Fs
-	 XuMGbVp+D/a8tdv2gvw9rsebzHSQuw3+ii126G9+lp8OoP/8n4PmY5FY11qwNReSSJ
-	 +EDtY40Mttym6C/o9YA0JakmZxsnu/QXPAPze0eg=
+	b=fv8S8dBot18T/lYmijwcm3lBtDBa6nZGzMsdg+ANqUS4uWYprykk3lTRubK7EmBY4
+	 RTHS5G5gaX0rm87qE4SHwZiFa+R/+hZEyF1sC21NWi2+vVtqbBWsrUWU99wTbaz8zf
+	 PVWIi2vUCRD2LOcRMoChA80g4RxqB5O5fKSkj6jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.16 121/143] pinctrl: airoha: fix wrong PHY LED mux value for LED1 GPIO46
-Date: Tue, 30 Sep 2025 16:47:25 +0200
-Message-ID: <20250930143836.055468878@linuxfoundation.org>
+	Brett A C Sheffield <bacs@librecast.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/151] Revert "fbdev: Disable sysfb device registration when removing conflicting FBs"
+Date: Tue, 30 Sep 2025 16:45:31 +0200
+Message-ID: <20250930143827.647977268@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
-References: <20250930143831.236060637@linuxfoundation.org>
+In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
+References: <20250930143827.587035735@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.16-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Brett A C Sheffield <bacs@librecast.net>
 
-commit 6f9674aa69ad0178ca8fc6995942ba9848c324f4 upstream.
+This reverts commit 13d28e0c79cbf69fc6f145767af66905586c1249.
 
-In all the MUX value for LED1 GPIO46 there is a Copy-Paste error where
-the MUX value is set to LED0_MODE_MASK instead of LED1_MODE_MASK.
+Commit ee7a69aa38d8 ("fbdev: Disable sysfb device registration when
+removing conflicting FBs") was backported to 5.15.y LTS. This causes a
+regression where all virtual consoles stop responding during boot at:
 
-This wasn't notice as there were no board that made use of the
-secondary PHY LED but looking at the internal Documentation the actual
-value should be LED1_MODE_MASK similar to the other GPIO entry.
+"Populating /dev with existing devices through uevents ..."
 
-Fix the wrong value to apply the correct MUX configuration.
+Reverting the commit fixes the regression.
 
-Cc: stable@vger.kernel.org
-Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Brett A C Sheffield <bacs@librecast.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/video/fbdev/core/fbmem.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 1b2f132d76f0..ee5b9bab4552 100644
---- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -1752,8 +1752,8 @@ static const struct airoha_pinctrl_func_group phy1_led1_func_group[] = {
- 		.regmap[0] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
-+			GPIO_LAN3_LED1_MODE_MASK,
-+			GPIO_LAN3_LED1_MODE_MASK
- 		},
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
-@@ -1816,8 +1816,8 @@ static const struct airoha_pinctrl_func_group phy2_led1_func_group[] = {
- 		.regmap[0] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
-+			GPIO_LAN3_LED1_MODE_MASK,
-+			GPIO_LAN3_LED1_MODE_MASK
- 		},
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
-@@ -1880,8 +1880,8 @@ static const struct airoha_pinctrl_func_group phy3_led1_func_group[] = {
- 		.regmap[0] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
-+			GPIO_LAN3_LED1_MODE_MASK,
-+			GPIO_LAN3_LED1_MODE_MASK
- 		},
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
-@@ -1944,8 +1944,8 @@ static const struct airoha_pinctrl_func_group phy4_led1_func_group[] = {
- 		.regmap[0] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
-+			GPIO_LAN3_LED1_MODE_MASK,
-+			GPIO_LAN3_LED1_MODE_MASK
- 		},
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index d938c31e8f90a..3b52ddfe03506 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -19,7 +19,6 @@
+ #include <linux/kernel.h>
+ #include <linux/major.h>
+ #include <linux/slab.h>
+-#include <linux/sysfb.h>
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/vt.h>
+@@ -1795,17 +1794,6 @@ int remove_conflicting_framebuffers(struct apertures_struct *a,
+ 		do_free = true;
+ 	}
+ 
+-	/*
+-	 * If a driver asked to unregister a platform device registered by
+-	 * sysfb, then can be assumed that this is a driver for a display
+-	 * that is set up by the system firmware and has a generic driver.
+-	 *
+-	 * Drivers for devices that don't have a generic driver will never
+-	 * ask for this, so let's assume that a real driver for the display
+-	 * was already probed and prevent sysfb to register devices later.
+-	 */
+-	sysfb_disable();
+-
+ 	mutex_lock(&registration_lock);
+ 	do_remove_conflicting_framebuffers(a, name, primary);
+ 	mutex_unlock(&registration_lock);
 -- 
 2.51.0
 
