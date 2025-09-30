@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D5527B328;
-	Tue, 30 Sep 2025 15:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864D0217F55;
+	Tue, 30 Sep 2025 15:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245468; cv=none; b=BmPaIRxIJtoEblE3hkNGB4Qr1+MEpGrnXZ1c1zu9zE+nyGzzhpFcf9dysZJEAwLHCUreJRpnpeQklguSLm7nCdGrzl38jPqQ7iZ9tz5rk1wx+d9/YBI85SSq4qkYVpuNhVAoXo+fORVCClihVp59n/sCoiYEhAmzAA2SFSZgnng=
+	t=1759245471; cv=none; b=Dcf19sHJsyTrJtGfimpyCg8wys7fiKjqp0b1nPoYxMnTSJ10zrQ4m8PqcPE7ptpR6wC0uVpA4RfX/rQqhcq99D66XLr5YIrt+zgq60EuiV90FiDWszTeRmRB1/iYhwhQ07kYf7qhjLdl4tbrBvUm0LDsguDaW91O/STNmEFOeU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245468; c=relaxed/simple;
-	bh=VrJZuDBuSTfcsf45xOBQvmpWSkOdSpXgRFKudgsBRJA=;
+	s=arc-20240116; t=1759245471; c=relaxed/simple;
+	bh=VELBvQ0lcTioq3cOcEkULi35E/Z1+3R+NBp2u8b1N1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKCZ4yfUR/8RgwJysm8mpoCo9kIHWE63CRzCUfJmkHdViP4oyWTUi7LOIYFXyKLexQ/BFYdBj+VPhvk8C6dLb0fIdgA1yA/SlQrtkljPES8spbrhObxH9WMQqpPOUvtqld/THgYlkB/x2m7PpJrEMdgVwIAlDLcIRz8xyW6jK9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrx72hab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iz2br4n6Zm7+X1Mx8YAOhSjQPy8aHcmViuBlOo8JlqaoE/FLjQKoO55b6d/q53v+GK/6frMtgKN9JeXv/TQ0gqGseh8fyodHYvsD9ZQuzrr1avFf6op9m/Wgn+snW5schM5fh3YoQuiFR7WOxnHQptDhOUP8dRH+YVu1OvTsN6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4mLLSdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrx72hab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FB7C4CEF0;
-	Tue, 30 Sep 2025 15:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4mLLSdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DC7C4CEF0;
+	Tue, 30 Sep 2025 15:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245468;
-	bh=VrJZuDBuSTfcsf45xOBQvmpWSkOdSpXgRFKudgsBRJA=;
+	s=korg; t=1759245471;
+	bh=VELBvQ0lcTioq3cOcEkULi35E/Z1+3R+NBp2u8b1N1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrx72habS7QEERTqxlx6OiGtB+MYojtoiR/hUoQhq/CWZILs91aHpPfwgbW0APPxd
-	 xjV7nrDI/LUb9+MoGMbLPjBGDNZ+4hVsxA/RfZYFfy8sSvr9l5ksXt8NOC0SWwP2Tk
-	 yDqfsOXV2g9W30Z6c1+CLjnGi5egK0B4z/NdPOyg=
+	b=l4mLLSdKHY2CbMnor9TORHHd0Covynn6ebkbsKGkrE4W4BttECu7U5ntmkuZDIECU
+	 991zAvGE80CAsD7Wq2v09hUTbJA/T13RFUAJuFfBFiF7/fQbmjoLIHhsAlliswrY5o
+	 7zfPi74l4cwoLQqbpHmnF60Pk79lUhGrDb4pvwiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 26/73] can: rcar_can: rcar_can_resume(): fix s2ram with PSCI
-Date: Tue, 30 Sep 2025 16:47:30 +0200
-Message-ID: <20250930143821.662193863@linuxfoundation.org>
+Subject: [PATCH 6.1 03/73] ALSA: usb-audio: Avoid multiple assignments in mixer_quirks
+Date: Tue, 30 Sep 2025 16:47:07 +0200
+Message-ID: <20250930143820.681641036@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -51,50 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 5c793afa07da6d2d4595f6c73a2a543a471bb055 ]
+[ Upstream commit 03ddd3bdb94df3edb1f2408b57cfb00b3d92a208 ]
 
-On R-Car Gen3 using PSCI, s2ram powers down the SoC.  After resume, the
-CAN interface no longer works, until it is brought down and up again.
+Handle report from checkpatch.pl:
 
-Fix this by calling rcar_can_start() from the PM resume callback, to
-fully initialize the controller instead of just restarting it.
+  CHECK: multiple assignments should be avoided
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/699b2f7fcb60b31b6f976a37f08ce99c5ffccb31.1755165227.git.geert+renesas@glider.be
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-6-1a821463b632@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rcar/rcar_can.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ sound/usb/mixer_quirks.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/rcar/rcar_can.c b/drivers/net/can/rcar/rcar_can.c
-index cc43c9c5e38c5..92a3f28bea87a 100644
---- a/drivers/net/can/rcar/rcar_can.c
-+++ b/drivers/net/can/rcar/rcar_can.c
-@@ -862,7 +862,6 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
- {
- 	struct net_device *ndev = dev_get_drvdata(dev);
- 	struct rcar_can_priv *priv = netdev_priv(ndev);
--	u16 ctlr;
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index a1ab517e26b36..f91dbc9255f12 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1734,7 +1734,8 @@ static int snd_microii_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	unsigned int pval, pval_old;
  	int err;
  
- 	if (!netif_running(ndev))
-@@ -874,12 +873,7 @@ static int __maybe_unused rcar_can_resume(struct device *dev)
- 		return err;
- 	}
- 
--	ctlr = readw(&priv->regs->ctlr);
--	ctlr &= ~RCAR_CAN_CTLR_SLPM;
--	writew(ctlr, &priv->regs->ctlr);
--	ctlr &= ~RCAR_CAN_CTLR_CANM;
--	writew(ctlr, &priv->regs->ctlr);
--	priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+	rcar_can_start(ndev);
- 
- 	netif_device_attach(ndev);
- 	netif_start_queue(ndev);
+-	pval = pval_old = kcontrol->private_value;
++	pval = kcontrol->private_value;
++	pval_old = pval;
+ 	pval &= 0xfffff0f0;
+ 	pval |= (ucontrol->value.iec958.status[1] & 0x0f) << 8;
+ 	pval |= (ucontrol->value.iec958.status[0] & 0x0f);
 -- 
 2.51.0
 
