@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B251F1302;
-	Tue, 30 Sep 2025 15:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538261EE02F;
+	Tue, 30 Sep 2025 15:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245077; cv=none; b=FUrXtNXmkFZXcPJTIERlYxIVvfvND1XLsVcLzxeelh84WvE4nYkGIE9VSpAGDQR9p9JDGDSh4VwqVehX0U845NSR3NZMDTtEeDId8w++SFDmbEFIVZTngDxjwCNv67VrquOmnCubnodjVddNGTHUHSLh4PISAoD+WWg9AbKzhqg=
+	t=1759245082; cv=none; b=W3yKmCN5qbcFiV6U2zqdOtEh3l/8zN1XLCfpRGPA0lq3GHAoKI7XUOg2UbGzDl5hGrMQgbwpZslSmlA+cbIDs0BYB1SsPF/iJpusEfqqniQqp5QeTck5iuRLDzYKy3veb5SZXpSIA9i9kXcnsxATlMWHesnL4RMdN7Auk6ICw0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245077; c=relaxed/simple;
-	bh=LPodH74C+F8Ptoic6q14VTfitzk7lq6cj9U8bNTTeGk=;
+	s=arc-20240116; t=1759245082; c=relaxed/simple;
+	bh=xDxzcJkEU8QqLEYOJFuCDap79UXZ5OR9jIxALuWyEyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CeJyFAVF13KQ1NtMt+9LMfMUqNNUeakgdwEgiuQkqP+u+bUcU2P+MR+SX7Vg7yDCGhgzXrChSJxN9INfoyfS3ofslUNiPcSwVW6CtXA1JEeoiglylKeE0wKlyqanOX3B1jGVV51p5JwUic9Y6c0rg5fOtn6cF9tMuq6pqGPhoE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ypan8qFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uVrCUGnuazObwwsTYxDb42v2xbeW0I339CMCr+TGVNBRxhziZyJw7PLg60WVhWaH7UGU08bhnwjijLndbDKLyQHdtPrz3IreOy2vZIMwm8DEMjly2RTTC1kVb7I7g2TOVcJqZU4/VuucUvjZ8g5ElJJFGqZPQxxBFSJGLc9RMR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKqhmscy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ypan8qFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD66CC4CEF0;
-	Tue, 30 Sep 2025 15:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKqhmscy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7561FC4CEF0;
+	Tue, 30 Sep 2025 15:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245077;
-	bh=LPodH74C+F8Ptoic6q14VTfitzk7lq6cj9U8bNTTeGk=;
+	s=korg; t=1759245079;
+	bh=xDxzcJkEU8QqLEYOJFuCDap79UXZ5OR9jIxALuWyEyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ypan8qFtOLPHxcdR/DuicU2y/mFQgkhs0Ei/Q+VZqC7sfoGLo7nC/6eaqduwH7S1M
-	 3RMhxGiWXKjbN4UPZ6mdXHCVCcE2rHF1W9+gvzFPj+JT+J4gk786M5dXl7WWAqcmWT
-	 yDe2z+oD7BOK2ZzyuwIEhsE2+Z344YBt5XmKvQho=
+	b=JKqhmscyg5Em9SuXJBqV6doAucgOi5Hn8+63iYm1SmxlhHXk+ajqRdfXlOCkG+TDF
+	 sC/m9PYqVxAiJInPS26uZLhv7+oI3MKGy7HqaZffGI56NlukiCnvWxcRi2uOLw06K3
+	 N2NUqIUzQAxk96CO9B9B02+juahgK8CDIHBpZKyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/151] drm/amdgpu: fix a memory leak in fence cleanup when unloading
-Date: Tue, 30 Sep 2025 16:46:31 +0200
-Message-ID: <20250930143830.031349401@linuxfoundation.org>
+Subject: [PATCH 5.15 062/151] drm/i915/power: fix size for for_each_set_bit() in abox iteration
+Date: Tue, 30 Sep 2025 16:46:32 +0200
+Message-ID: <20250930143830.071553812@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -54,41 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 7838fb5f119191403560eca2e23613380c0e425e ]
+[ Upstream commit cfa7b7659757f8d0fc4914429efa90d0d2577dd7 ]
 
-Commit b61badd20b44 ("drm/amdgpu: fix usage slab after free")
-reordered when amdgpu_fence_driver_sw_fini() was called after
-that patch, amdgpu_fence_driver_sw_fini() effectively became
-a no-op as the sched entities we never freed because the
-ring pointers were already set to NULL.  Remove the NULL
-setting.
+for_each_set_bit() expects size to be in bits, not bytes. The abox mask
+iteration uses bytes, but it works by coincidence, because the local
+variable holding the mask is unsigned long, and the mask only ever has
+bit 2 as the highest bit. Using a smaller type could lead to subtle and
+very hard to track bugs.
 
-Reported-by: Lin.Cao <lincao12@amd.com>
-Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Fixes: b61badd20b44 ("drm/amdgpu: fix usage slab after free")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a525fa37aac36c4591cc8b07ae8957862415fbd5)
-Cc: stable@vger.kernel.org
+Fixes: 62afef2811e4 ("drm/i915/rkl: RKL uses ABOX0 for pixel transfers")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: stable@vger.kernel.org # v5.9+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://lore.kernel.org/r/20250905104149.1144751-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7ea3baa6efe4bb93d11e1c0e6528b1468d7debf6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+[ adapted struct intel_display *display parameters to struct drm_i915_private *dev_priv ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_power.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -302,8 +302,6 @@ void amdgpu_ring_fini(struct amdgpu_ring
- 	dma_fence_put(ring->vmid_wait);
- 	ring->vmid_wait = NULL;
- 	ring->me = 0;
--
--	ring->adev->rings[ring->idx] = NULL;
+--- a/drivers/gpu/drm/i915/display/intel_display_power.c
++++ b/drivers/gpu/drm/i915/display/intel_display_power.c
+@@ -5293,7 +5293,7 @@ static void icl_mbus_init(struct drm_i91
+ 	if (DISPLAY_VER(dev_priv) == 12)
+ 		abox_regs |= BIT(0);
+ 
+-	for_each_set_bit(i, &abox_regs, sizeof(abox_regs))
++	for_each_set_bit(i, &abox_regs, BITS_PER_TYPE(abox_regs))
+ 		intel_de_rmw(dev_priv, MBUS_ABOX_CTL(i), mask, val);
  }
  
- /**
+@@ -5754,11 +5754,11 @@ static void tgl_bw_buddy_init(struct drm
+ 	if (table[config].page_mask == 0) {
+ 		drm_dbg(&dev_priv->drm,
+ 			"Unknown memory configuration; disabling address buddy logic.\n");
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask))
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask))
+ 			intel_de_write(dev_priv, BW_BUDDY_CTL(i),
+ 				       BW_BUDDY_DISABLE);
+ 	} else {
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask)) {
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask)) {
+ 			intel_de_write(dev_priv, BW_BUDDY_PAGE_MASK(i),
+ 				       table[config].page_mask);
+ 
 
 
