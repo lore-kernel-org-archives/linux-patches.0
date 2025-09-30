@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873884D8CE;
-	Tue, 30 Sep 2025 14:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC168F7D;
+	Tue, 30 Sep 2025 14:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243971; cv=none; b=qWxcmitefhaFJsbABG+wdOXz3Lzofz+4N+Kp+x6OilG3oJBCUZkJEJ6eOI3GUQCPCJN1VVpOPzVsgc9TcRiDkyE7sFQx2kItf5SHlBnHKz25evL5qShwEFu+oM8wqk6vEWcZ59rkRYe6l8KrIieyBYQOvBBBjiY/y2w05FomfL8=
+	t=1759243974; cv=none; b=tV6qXvNKzx1h45rtokOjPk7e+2LbvCg89OPOkhpykhgL6UE+XyPfNBqKupOXC4oDqPo3CandilA7hcUU3jcZrKYEk8KhS4ZL2y8LmkooslAjO+aVRpfbHzdv1gH7jvD2lW0rWRGZcB52DpJ0Ez2HJzfpw/4ijMBa9nMEJ2F6E+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243971; c=relaxed/simple;
-	bh=SqSDhe/IncZyMKu/hO9YC+w6givzcOXtpylNCmGyXK0=;
+	s=arc-20240116; t=1759243974; c=relaxed/simple;
+	bh=54qlCFXQ+6ihPuFlpAGhkFi5nSfgjArMCPvY+j43RVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKY4lSqqC4Pby/KZaD2r5Uvl5Q6utE3Sp6r3H/uo28Aty6ncwFoVTSvrlFfDNf+GNyLATVr9R1dTTPxtEcy3gqVNTwhSu1l6KmiYw7jQPPsmx50rxiFqVgu/75GqZqnZd+351x8iHmAB9k9yA90bHVrLox8n8oaeNzSzk/LPCDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTMFcdtb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CbT+SHGSHLibgDf2lHbY1VZtP55+EXyAgYaKeU61M8o8Y+69xk1VjQNApvRdAzSJKkuFV4yOXKBd7con43StzR3I38nJeoK6n411IzoxZLHJwDD9cE3O4/xPkNJRdEU1sKyCkEqpkRRsA2qF+zFVFa2JK1JnNtYcbwckas647MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sflZlo80; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTMFcdtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E887EC4CEF0;
-	Tue, 30 Sep 2025 14:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sflZlo80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39BDC4CEF0;
+	Tue, 30 Sep 2025 14:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243971;
-	bh=SqSDhe/IncZyMKu/hO9YC+w6givzcOXtpylNCmGyXK0=;
+	s=korg; t=1759243974;
+	bh=54qlCFXQ+6ihPuFlpAGhkFi5nSfgjArMCPvY+j43RVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTMFcdtbfbODHak+KMjXJ8jUwXfMPp1rwLMLsfxM5zahR31RFSAML3jCzbhwdQ/+J
-	 d6WV1GfXdm/zY0igVx5Bq7kRi9cwAmX9A01UCcX0GZbYf9B12k9zfQ6uE0f4YYDd7X
-	 oopHMFSlhx4XIwBhJ2PDm2HQJ7nusxdOIu3ZUc8Y=
+	b=sflZlo80HoIc6GgEhdwGF7AXO/Frh9XpS4IiqJH+UyFEi1HImlLwuVrxveT8q4RxS
+	 Vfxt5KR7Ocnm2Eb0aR9xqeV9JgFYKaSkKPIlezl3WYb2O9XNj8tqnz++I0bTaWVEdF
+	 84KUj/ZlPHb0jPrk64M/SRRyOb8fR/poUkjv4+gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czapnik <lukasz.czapnik@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.4 72/81] i40e: add max boundary check for VF filters
-Date: Tue, 30 Sep 2025 16:47:14 +0200
-Message-ID: <20250930143822.718441499@linuxfoundation.org>
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	George Kennedy <george.kennedy@oracle.com>,
+	syzbot+38a3699c7eaf165b97a6@syzkaller.appspotmail.com,
+	Simona Vetter <simona@ffwll.ch>,
+	Helge Deller <deller@gmx.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 5.4 73/81] fbcon: fix integer overflow in fbcon_do_set_font
+Date: Tue, 30 Sep 2025 16:47:15 +0200
+Message-ID: <20250930143822.759716444@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -48,56 +53,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukasz Czapnik <lukasz.czapnik@intel.com>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-commit cb79fa7118c150c3c76a327894bb2eb878c02619 upstream.
+commit 1a194e6c8e1ee745e914b0b7f50fa86c89ed13fe upstream.
 
-There is no check for max filters that VF can request. Add it.
+Fix integer overflow vulnerabilities in fbcon_do_set_font() where font
+size calculations could overflow when handling user-controlled font
+parameters.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+The vulnerabilities occur when:
+1. CALC_FONTSZ(h, pitch, charcount) performs h * pith * charcount
+   multiplication with user-controlled values that can overflow.
+2. FONT_EXTRA_WORDS * sizeof(int) + size addition can also overflow
+3. This results in smaller allocations than expected, leading to buffer
+   overflows during font data copying.
+
+Add explicit overflow checking using check_mul_overflow() and
+check_add_overflow() kernel helpers to safety validate all size
+calculations before allocation.
+
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 39b3cffb8cf3 ("fbcon: prevent user font height or width change from causing potential out-of-bounds access")
+Cc: George Kennedy <george.kennedy@oracle.com>
+Cc: stable <stable@vger.kernel.org>
+Cc: syzbot+38a3699c7eaf165b97a6@syzkaller.appspotmail.com
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Qianqiang Liu <qianqiang.liu@163.com>
+Cc: Shixiong Ou <oushixiong@kylinos.cn>
+Cc: Kees Cook <kees@kernel.org>
+Cc: <stable@vger.kernel.org> # v5.9+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250912170023.3931881-1-samasth.norway.ananda@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/video/fbdev/core/fbcon.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3665,6 +3665,8 @@ err:
- 				       aq_ret);
- }
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2509,9 +2509,16 @@ static int fbcon_set_font(struct vc_data
+ 	if (fbcon_invalid_charcount(info, charcount))
+ 		return -EINVAL;
  
-+#define I40E_MAX_VF_CLOUD_FILTER 0xFF00
+-	size = CALC_FONTSZ(h, pitch, charcount);
++	/* Check for integer overflow in font size calculation */
++	if (check_mul_overflow(h, pitch, &size) ||
++	    check_mul_overflow(size, charcount, &size))
++		return -EINVAL;
 +
- /**
-  * i40e_vc_add_cloud_filter
-  * @vf: pointer to the VF info
-@@ -3704,6 +3706,14 @@ static int i40e_vc_add_cloud_filter(stru
- 		goto err_out;
- 	}
++	/* Check for overflow in allocation size calculation */
++	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &size))
++		return -EINVAL;
  
-+	if (vf->num_cloud_filters >= I40E_MAX_VF_CLOUD_FILTER) {
-+		dev_warn(&pf->pdev->dev,
-+			 "VF %d: Max number of filters reached, can't apply cloud filter\n",
-+			 vf->vf_id);
-+		aq_ret = -ENOSPC;
-+		goto err_out;
-+	}
-+
- 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
- 	if (!cfilter)
+-	new_data = kmalloc(FONT_EXTRA_WORDS * sizeof(int) + size, GFP_USER);
++	new_data = kmalloc(size, GFP_USER);
+ 
+ 	if (!new_data)
  		return -ENOMEM;
 
 
