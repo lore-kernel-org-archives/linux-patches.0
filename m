@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9AF3C465;
-	Tue, 30 Sep 2025 15:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64D32FD1DD;
+	Tue, 30 Sep 2025 15:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246006; cv=none; b=NONXK0QnRDbf8EjDYFn6vIEC85+oi3QTfmUirFdyVCY1SFRELSIZyxejbfzHJnMXPcXuxy6u9cLWXwcffGSiJLQkASVgzhb6ItGTbci+fg8/ATWuX+tDWqZSNKM9oFf2izGor3WXfW2+CjcRmCBaWP/2BAPzC3ir1xn8Ea58taQ=
+	t=1759246010; cv=none; b=TMs/yYz5uNgDG0rckn3RbHiMwZJTz7uX5KnigeJDdT0gTrDuqPe51bbQRsmtRmuMoFVzIm40l/K40GRc9bokwb2dvhSaMz+nyjbnZxIjGVQdEV7HpxkCMFh/cGdHPBJCBxiOo2nC9V9DswuOZjqWSn+0p/pdSerNZ6T/anYdkCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246006; c=relaxed/simple;
-	bh=xniwHLRAiiP7luNYLnB6EbmCA1mvEBGZ7+7FtZ1y89E=;
+	s=arc-20240116; t=1759246010; c=relaxed/simple;
+	bh=De4+DVObdvqCMNghhyOWI1NXg5h8OsA2aUDQWYyphVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvHb8tpgb7MHCp1KgSxEaGU2a9ew/CAwzCt1BtQ2v4yF4ZhX27a7gcNo0CIk7Hzwu5V6iignXmMdlFKqZzRulyMHWnr4gRsCQmtzEN1npnWvuUnm6PdWxPSnvu/YfeOXezPIgjWJrzkvla8k0O9rQhmfb8GHXr2OPLHlm+3SmIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNHxnN/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnitrCAayoRYlOuEgtwPgsidCxxTlq6XXSn7SRhX+1nPH5l5xUi3gP2z/Njf3MyXbVwmH8nG1AKmX7Hf3uQTH0sah/V9tHPCfNxzmz+q2lCrZJRFrv+vn807VcRR7DCc8cdpeeIPems3MNAqrCEQGFZ6FwjUJsjYHBRdha88+tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inlo/RM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNHxnN/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A15C4CEF0;
-	Tue, 30 Sep 2025 15:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inlo/RM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1109C4CEF0;
+	Tue, 30 Sep 2025 15:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246006;
-	bh=xniwHLRAiiP7luNYLnB6EbmCA1mvEBGZ7+7FtZ1y89E=;
+	s=korg; t=1759246009;
+	bh=De4+DVObdvqCMNghhyOWI1NXg5h8OsA2aUDQWYyphVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNHxnN/cxsD+zgb3Vy65Bznm4yhdCTPa1oyNICT6iABi8qwAR283i/mw4ucdt7/Ap
-	 gkaisADEV/nxOIRR9hyHnLTLV07jgn+gfNyXcqANyoTCs6o3//3sdoTheTuKAisJSO
-	 TK8QtZjB2WvYb6Gdc2JSUkOHYOeXY2eUs7Y+3OD4=
+	b=inlo/RM8xW4IZLh9ri9qtf8SXplCfDXD/SpC0ghnoiKtY+tUaRbDlq5iV35kpE5C4
+	 nK7cRnnmWG/wqg9AymAmUWzPUHq4Bz8bdR5e7nWAIjkukEuzWnnKCmX+uyclxE1Slr
+	 oY81u4ORALBN84dBfe4H0scoWrHkeOVrl12N2GsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoli An <anguoli@uniontech.com>,
 	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	qaqland <anguoli@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 23/89] ALSA: usb-audio: move mixer_quirks min_mute into common quirk
-Date: Tue, 30 Sep 2025 16:47:37 +0200
-Message-ID: <20250930143822.857713535@linuxfoundation.org>
+Subject: [PATCH 6.12 24/89] ALSA: usb-audio: Add mute TLV for playback volumes on more devices
+Date: Tue, 30 Sep 2025 16:47:38 +0200
+Message-ID: <20250930143822.898384314@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -52,121 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia@uniontech.com>
+From: qaqland <anguoli@uniontech.com>
 
-[ Upstream commit 2c3ca8cc55a3afc7a4fa99ed8f5f5d05dd2e65b3 ]
+[ Upstream commit 2cbe4ac193ed7172cfd825c0cc46ce4a41be4ba1 ]
 
-We have found more and more devices that have the same problem, that
-the mixer's minimum value is muted. Accroding to pipewire's MR[1]
-and Arch Linux wiki[2], this should be a very common problem in USB
-audio devices. Move the quirk into common quirk,as a preparation of
-more devices' quirk's patch coming on the road[3].
+Applying the quirk of that, the lowest Playback mixer volume setting
+mutes the audio output, on more devices.
 
-1. https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
-2. https://wiki.archlinux.org/index.php?title=PipeWire&oldid=804138#No_sound_from_USB_DAC_until_30%_volume
-3. On the road, in the physical sense. We have been buying ton of
-   these devices for testing the problem.
-
-Tested-by: Guoli An <anguoli@uniontech.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Link: https://patch.msgid.link/20250827-sound-quirk-min-mute-v1-1-4717aa8a4f6a@uniontech.com
+Suggested-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: qaqland <anguoli@uniontech.com>
+Link: https://patch.msgid.link/20250829-sound_quirk-v1-1-745529b44440@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 10 +++-------
- sound/usb/quirks.c       | 12 ++++++++++--
- sound/usb/usbaudio.h     |  4 ++++
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ sound/usb/quirks.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 8d7fc6edc8c79..b663764644cd8 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -4484,16 +4484,12 @@ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
- 		if (unitid == 7 && cval->control == UAC_FU_VOLUME)
- 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
- 		break;
-+	}
-+
- 	/* lowest playback value is muted on some devices */
--	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
--	case USB_ID(0x0d8c, 0x000c): /* C-Media */
--	case USB_ID(0x0d8c, 0x0014): /* C-Media */
--	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
--	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
-+	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_MIN_MUTE)
- 		if (strstr(kctl->id.name, "Playback"))
- 			cval->min_mute = 1;
--		break;
--	}
- 
- 	/* ALSA-ify some Plantronics headset control names */
- 	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
 diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index de57cf35d8258..03962b3e3bd58 100644
+index 03962b3e3bd58..8a20508e055a3 100644
 --- a/sound/usb/quirks.c
 +++ b/sound/usb/quirks.c
 @@ -2196,6 +2196,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
  		   QUIRK_FLAG_SET_IFACE_FIRST),
  	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
  		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
++	DEVICE_FLG(0x0572, 0x1b08, /* Conexant Systems (Rockwell), Inc. */
 +		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
+ 		   QUIRK_FLAG_MIXER_MIN_MUTE),
  	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x05a7, 0x1020, /* Bose Companion 5 */
-@@ -2242,8 +2244,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+@@ -2240,6 +2242,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x0bda, 0x498a, /* Realtek Semiconductor Corp. */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
  		   QUIRK_FLAG_GET_SAMPLE_RATE),
  	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
+@@ -2256,6 +2260,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
+ 	DEVICE_FLG(0x1101, 0x0003, /* Audioengine D1 */
  		   QUIRK_FLAG_GET_SAMPLE_RATE),
--	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
--		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x0d8c, 0x000c, /* C-Media */
++	DEVICE_FLG(0x12d1, 0x3a07, /* Huawei Technologies Co., Ltd. */
 +		   QUIRK_FLAG_MIXER_MIN_MUTE),
-+	DEVICE_FLG(0x0d8c, 0x0014, /* C-Media */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
- 		   QUIRK_FLAG_FIXED_RATE),
- 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
-@@ -2290,6 +2294,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 	DEVICE_FLG(0x1224, 0x2a25, /* Jieli Technology USB PHY 2.0 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
+ 	DEVICE_FLG(0x1395, 0x740a, /* Sennheiser DECT */
+@@ -2346,6 +2352,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
  		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x19f7, 0x0003, /* RODE NT-USB */
++	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
 +		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
-@@ -2350,6 +2356,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 	DEVICE_FLG(0x2b53, 0x0023, /* Fiero SC-01 (firmware v1.0.0 @ 48 kHz) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0024, /* Fiero SC-01 (firmware v1.0.0 @ 96 kHz) */
+@@ -2362,6 +2370,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
  		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
  	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
-diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
-index 158ec053dc44d..1ef4d39978df3 100644
---- a/sound/usb/usbaudio.h
-+++ b/sound/usb/usbaudio.h
-@@ -196,6 +196,9 @@ extern bool snd_usb_skip_validation;
-  *  for the given endpoint.
-  * QUIRK_FLAG_MIC_RES_16 and QUIRK_FLAG_MIC_RES_384
-  *  Set the fixed resolution for Mic Capture Volume (mostly for webcams)
-+ * QUIRK_FLAG_MIXER_MIN_MUTE
-+ *  Set minimum volume control value as mute for devices where the lowest
-+ *  playback value represents muted state instead of minimum audible volume
-  */
- 
- #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
-@@ -222,5 +225,6 @@ extern bool snd_usb_skip_validation;
- #define QUIRK_FLAG_FIXED_RATE		(1U << 21)
- #define QUIRK_FLAG_MIC_RES_16		(1U << 22)
- #define QUIRK_FLAG_MIC_RES_384		(1U << 23)
-+#define QUIRK_FLAG_MIXER_MIN_MUTE	(1U << 24)
- 
- #endif /* __USBAUDIO_H */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x534d, 0x0021, /* MacroSilicon MS2100/MS2106 */
 -- 
 2.51.0
 
