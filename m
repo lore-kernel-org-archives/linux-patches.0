@@ -1,158 +1,171 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013034.outbound.protection.outlook.com [40.107.201.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AFA2F7AD4;
-	Tue, 30 Sep 2025 12:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.34
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759234417; cv=fail; b=h7JFJbz2Keg8EzS7UJ0wqsgqsFWEqtJhb4htVatynkqYtJdAHJgdOBCk2O++2knA4/soxGthkf+uC4fzFE0YKlYCwdFLAwPCyTuaaeSenazdPmkExd63L9k9pJ7E1vTwukKfvKTyYoJyGblsWST0VV5rr0DiSqg1IS/ttW3wb10=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759234417; c=relaxed/simple;
-	bh=SwAPxpJy3MNIzeshDlHs4VZyQwPYhWtgMl1n4RucoqU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TjKlHziNNTnIYXbxIDD7DNw9XJ71HaYOAdmhEHptcKVcHTxQi9Yf7nNO37PUAbfDQG1yJh4/fvM6s5yUGvqddlw6O4MDXzv7n9VwjwXBUZhc9B2E+yqyfeBEs2JG9Os0d9Utu7UbOUBWTesOIe874laLAMqHlm4CmydYOUrGf/Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=twzY4Qp3; arc=fail smtp.client-ip=40.107.201.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B3C2D24AD;
+	Tue, 30 Sep 2025 14:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759243759; cv=none; b=WPC4kUcdB0/stMAXNg5oyhbVws3VMajW4r+QxKPNtuLfvgXxCwr42MyROxKknjcWZ/Hc1Bgib1bmfRrvCibNyCsD9xBaDkTtJy5sr7gXgnIuLsxzXdCVs6BhXD5pVVMakCdpvvMlHxUjMmDo6fw/z0cGhVA2rJbBVMusYovbe0Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759243759; c=relaxed/simple;
+	bh=5BD4u/LtVCexcNkbyx1eRxxxrP6t+0MGEJ5cqUwzSi4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QDBkWROaa4LqVDQdkBS/Cdc2YRWG5Z73enBkBmlcLtWyMUDVLIRBi0d/IR15N3EC6AfI1FYj1zHckE14fxrtKn9dVWLvi/o2If6aD95AejmFisBlb7kt3u9xKMfgJNWlyZNzVN4T9vkMgp99qj7qyYbJ2TdA8Xg1kpLEBoKLhYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrm6hza7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="twzY4Qp3"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XUKU1L777SuiJElqb7MoMH1aWPqIpAWi3rPjkBOqLeOjSmtGxZIZy0au9Gt3kzTSZKVb2J1gGA4LxgrrAlDoX2NOFeqU+oacM067vXXvW3Bb8TmeMTRWg91V4dCHNKw+yQJxOIr+5bpRzN1flHVnqnoWcW+F+Fcic0uYwqCjJ3xMPxb4OCxvAjOI3VZzXlfhHF4NMy13cl4CruRxaE1GSd/R7q+CFaoXvA0HFGXttYO3CIku4OPAIcjB1z1zCN8hoh0jY7lbMD46HpiZNKpFxAi3+7Tv6dmgWJSkiTIoAgR2NOukxCL7IGCjsrOi8CTFXFsQCONJkaY23oAXaeZ6tQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MbxZy7RewsYgzE2ciivJXpX1SJO2drVIjYO5yoF7ZMc=;
- b=ytdR0UNeqClVHfrMGteL/1WWEwJkJaZHWwhneeTBsVzl2sgEVG7Q1TAXSMcU+l98JJ35UucVNCOIv6Zer/7moCBNJ9OOAqOdGBi9F2aYGLzBVwPcjIG9oHrRyXv42wORdxckarx167sQ7IyS+Ah7OBtXOx/Wvde4Mb6m+Scv4WkBtty+GjK0Z70xma6HOh2CacivH6lm4Nj7adukXhCej0WasBOY+3n6F0jCfXjXEzUudUG7yr49HqwB+eq5s7fN3SF1oEEQ9jKX/AMA9e131nDCNDZn7UnJBVfADreHQzHyYgmN3KZaDeeaPYInZBJKNZwk66OUihD0bKOhjfYb8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MbxZy7RewsYgzE2ciivJXpX1SJO2drVIjYO5yoF7ZMc=;
- b=twzY4Qp36jNi9EWtSz6CC+PblyZqtvRycBCpRhAdBIRikaQPl2/fDRu+leQqBc8xVHcO35R+wT9BT6t1WyBbHyfAiXMVvc7u9A0UqTuIXYjZTsotfJ2zxyRA2/5JzOtSmYHJJTaRJt/BThD1pWWcRekNTDvzJSTXGaJqyH9WwBbwUwHBJfWEHTmCDfFnsUedNdPk0yoDJoIcvRXrUiIpvo0gAnK9g7EN6clUq05lEsilZfnCptvj/81OxdL1csbKaaKJZBGYHx2HjDDZM30mBHTNPZpE+r9O9eiRtip2E9MavhC4sds/5amzH1j4INa3eNkio1S+0Eoerk/7KHL41w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
- by MN2PR12MB4045.namprd12.prod.outlook.com (2603:10b6:208:1d6::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.18; Tue, 30 Sep
- 2025 12:13:31 +0000
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9160.014; Tue, 30 Sep 2025
- 12:13:31 +0000
-Date: Tue, 30 Sep 2025 09:13:29 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-	jean-philippe@linaro.org, miko.lenczewski@arm.com,
-	balbirs@nvidia.com, peterz@infradead.org, smostafa@google.com,
-	kevin.tian@intel.com, praan@google.com,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH rfcv2 4/8] iommu/arm-smmu-v3: Introduce a per-domain
- arm_smmu_invs array
-Message-ID: <20250930121329.GH2942991@nvidia.com>
-References: <cover.1757373449.git.nicolinc@nvidia.com>
- <80310b98efa4bd7e95d7b3ca302f40d4d69e59c5.1757373449.git.nicolinc@nvidia.com>
- <20250924212912.GP2617119@nvidia.com>
- <aNrVWfF69EU1xvBB@Asurada-Nvidia>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aNrVWfF69EU1xvBB@Asurada-Nvidia>
-X-ClientProxiedBy: SJ0PR05CA0061.namprd05.prod.outlook.com
- (2603:10b6:a03:332::6) To PH7PR12MB5757.namprd12.prod.outlook.com
- (2603:10b6:510:1d0::13)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrm6hza7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EBEC4CEF0;
+	Tue, 30 Sep 2025 14:49:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1759243757;
+	bh=5BD4u/LtVCexcNkbyx1eRxxxrP6t+0MGEJ5cqUwzSi4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=nrm6hza7BT+9YJDqYBRGZTJxlXnclRy0gsiTh8yKg92YxpsCqJ4HdY1z2RA9XAX5V
+	 V/84n+RblP89fA0+0E6gjvFaNWJ38FHe6SWKw2Id5fjmlAme/ERp5Daxgv/x8px/05
+	 qDrNnm6Cjq0v3h3qIvS7rB2iNxDcGsCR8O4No+vo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 5.4 01/81] usb: hub: Fix flushing of delayed work used for post resume purposes
+Date: Tue, 30 Sep 2025 16:46:03 +0200
+Message-ID: <20250930143819.718239053@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
+References: <20250930143819.654157320@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|MN2PR12MB4045:EE_
-X-MS-Office365-Filtering-Correlation-Id: b9774283-0bba-420e-aa5f-08de001ac51c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?KbFTPoDshY7fXLWkim7CU9uip/AGKtAMiWClXIewOxJ5kTXYWMZeLEpymizZ?=
- =?us-ascii?Q?20TKpm2enpF4bF0CBJPN7RMtlEUnHMqthTBdg2Xlztw7eYEJlaWDCXM/cxbR?=
- =?us-ascii?Q?0k1V7oOjomeUVe/322ns611LeiB8eiyfw3l9EfkMgyvcTYj8xOq8mfSQyuV3?=
- =?us-ascii?Q?3OG0t6Mvlz7lHDnIODYgW1vo1GrL6Cx7rwgGfwQlBrublhrJl9a7kbvcwVBV?=
- =?us-ascii?Q?mRC3Z53Os/waLVSE4nPYTRmO3ip8hffayOoGl2GpL7MD4agi41x8EI1ECnpC?=
- =?us-ascii?Q?fBDGIClsCrDwmRi9aj+678blxIb6pnoUB/PvxoPx0TfkuJngihUyGGzQh3h0?=
- =?us-ascii?Q?97Do1Pkp92dze2tBIPzPU8JDAn6DrJ3+3CyDHHrpIenIKxnd+9xrraphIWW6?=
- =?us-ascii?Q?XRjCTBXIo3WgfhItDoqzvIDFqFFbdG/qH5ce6M3+BywincNT1g3IV4hgBjTb?=
- =?us-ascii?Q?1LUQPf5T9GxpTwbDwUYJfs5CKm7Ts1u5NV7m3/by2bcjkQppoUA3uh1RyNdn?=
- =?us-ascii?Q?n2WmBrHWcTDn5OQgAwJeMMgZOaaRCcCr/Hcj2gwkNr3fU1hrE7pUAwZXWfi7?=
- =?us-ascii?Q?hx7MFEJglAjQqJM+CZBbP+mZubbAh4oxXUmHuP6S8g1OUxX6aE6wA9l0y7ga?=
- =?us-ascii?Q?DHFf3EDSs/qPeVg+Y2j0LrrdsgeNyNmlkYnaEUdMWI8Evl07lDC1szTKsYOe?=
- =?us-ascii?Q?QyQA3IJKd2wt3+obDZkirCKlCDlZqMJ7MUJkw/afUR1XoXuwckw2szQMFjfu?=
- =?us-ascii?Q?0oxTbTHKuHTQclcv9ivq/+ZiBsbgfQgAOsvPRCzWs876cFtDYy735gT7vsE4?=
- =?us-ascii?Q?7VTJO2HU4lQ4s6K9FfbUI+SYa+LfEwmih16aEo8dhOxJldr5EWbbIgzjWGTJ?=
- =?us-ascii?Q?aVDtpnj2tf/CycohVwbD4KOBBJ1vCWr6AwqnrwNPm07NobImR7luIiFP2PIN?=
- =?us-ascii?Q?CHO7ZFh/ph4Qf4pnw1o1r+KVhkPFJb1EBLxBM2HUkiKE1BXMO0BEiWmx3wo5?=
- =?us-ascii?Q?tdUzYNfx3jCva3vdQWgTg0PW8qxTn4lORSCvv5HgdcPw94UhgN2dAMdpWGop?=
- =?us-ascii?Q?21YdsdMBVp+dxAlKnC21zYqiHHEqrcKeqXnIhpW/UipWOIJVCoD43HGpNVRG?=
- =?us-ascii?Q?mHx2S/oFlJXNbxta21SMfaupslqQrI3kKR0Rgc/MXcqHFeVkvFwVcKQv8Cfg?=
- =?us-ascii?Q?mAxyNR7tawLuHLeFn2Bn7+fT6NOD9vifzrSUn6uTI+KAtDOjhP20L0fSP3AL?=
- =?us-ascii?Q?qAPb52suUzZDhrCSg8MKzIfhFR+aSYSCCd1jJ6MpD4Z6Q4AUYbTwx2cIqqGi?=
- =?us-ascii?Q?6NHAci00KepvoFMRwffPQpNvcQS4eLoEKBpUtVfnS9wjiWC5jNiKwSdblmsG?=
- =?us-ascii?Q?FE+hdmV8ximhxznRQ37RreCs3ztcdvK3N4z9tfJ0wMSuC7/42qN8Qb5z8BjV?=
- =?us-ascii?Q?pp9Sgwky6Y6ho8XX8bnhNwZuv0mPele1?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Qbeb3vtDasNci9bqtZs3nhb7g/EFiEkAtdWVs3jnntQn727ckVnT2m3T4CXt?=
- =?us-ascii?Q?rbOtx88HHYYKOcS/kFeGBCgwHyPQkgBOmzFStuUxSK611xdZQXchle99mmvq?=
- =?us-ascii?Q?13g2DM9QSpFXwB+B0MK00cRF+g0GoVbXAFcjPOaCr5fxxaNaEuYR/jr6OzFc?=
- =?us-ascii?Q?ltfu35XONDYb00UxdE48EI58oUbAx97e5+t5N7H7T6+kzd+4zVg9pZUkRSHX?=
- =?us-ascii?Q?Sid1lEbCzrXnSkCpj7cL6NTpk+9+JhYjQt5h7NK9Ukny+Yjhf5VAN/BjmI++?=
- =?us-ascii?Q?KCUdYSGYV/SDK+KKdeNt+YcKzRgSjK8LqpBaLcOTqUwocbzzVWENlZW7JLji?=
- =?us-ascii?Q?BtZtE47rJ9QWVyLtnxBFKqm8Sm0pVTvO1N0PgLl4YxUnwYWxKbdO0jWBEO4G?=
- =?us-ascii?Q?vrSO92SbcCnKgXFswByQfXCQxtA8/pBmRaU+CLArDTUJLwDut8VH65ceUaYS?=
- =?us-ascii?Q?6kl91tV+e8dVlRrqYDbOILQIh06OgGGihB5djIucnOrVnlsavrSdc/WdjerO?=
- =?us-ascii?Q?ZKFncwfAFAuKdPF3utp3dor/Dc4LLqRMGD73kOGxC5z1NMB1PiajoW/9c7eA?=
- =?us-ascii?Q?Uh862iHwRVD4/z9fEDglmBupzrDiZ/SxukyRUND9A9CexB7Po6Rpaw4SBvYP?=
- =?us-ascii?Q?gpANMkzUG5dr2K7pjUHxlipmKqmxBc0x7WSX1lXNxsRpchP3w2IzUwfhgOEe?=
- =?us-ascii?Q?hExu5D7ckHcvs/MVUp+7iCBThWPieTbE0LdyxlKLPGAW4cO7cqC5hP4BPGLQ?=
- =?us-ascii?Q?00VkDlbe0zFUrcyfYoYNvMIHcGmvjzIsf/SzK+zi3L/s6zSWW/KB1/CZJ7zB?=
- =?us-ascii?Q?IbOxvpsZmmYBEB0azSdV46nkO08NHQtycIGb33bVT6hSd/3GPDHTFUyuwdfn?=
- =?us-ascii?Q?RvVHkjbJLnUHSFUXQYoi5+OoxVs9SZIUA3nxoAgHc+KRLYhzCovZJ7vtJd/U?=
- =?us-ascii?Q?YqMNWJNWcpt1Xt51LonKT+TzjzTnk/6gXJ8y1ku95iLL6LU4Jj08+Mg1YP6Z?=
- =?us-ascii?Q?FftpWAhPsPSDx9N8EDdp7eOkod3xKYoY6AYWcaQwSOtG94IYQdfOv//QpL7z?=
- =?us-ascii?Q?v4NmU5O0pztf1mHuFIxD/nqB58SanOxn2ax8prnEZngq8GO2h2AHplM8R8Z5?=
- =?us-ascii?Q?fgWhawyRmqKh6jxSSjm6kQreB8PKO8tQE37OWNUQz3n/ewCrWTUfvKI3FL57?=
- =?us-ascii?Q?CHMslRerSO6TdcICWIZ76FK9xHydDIgYzODBoOwnU5wVlH+9mlBgP/E2ZEXI?=
- =?us-ascii?Q?ytvxVxLkmzBw1WWkF+yPMRyDhryzLlbJGQeTvYJ48+pPdj/xfwocQ6O6JZro?=
- =?us-ascii?Q?keOn2ceaevpfnoPUd2fZDh9b6tNh9VvwMWnwzEgkxN/0v0P/ondDDC/UV03s?=
- =?us-ascii?Q?FZ/WEUke9x2vkcH+a9tjnSjOEf17L066b6tEPQ8rvonRk88N3RS+XkrJWYPY?=
- =?us-ascii?Q?8w3KzKEWMqv4JovvfHhpgLCGyX1o7i25qA7Q4KSFzJder8j4RFsdycZxpxXU?=
- =?us-ascii?Q?8qvKERMklZRfUp6v+4IJwonqHhcn43160opBN8/XY2lNw33iJncuzsaFlOVd?=
- =?us-ascii?Q?MsJoXAwtlRecyfkYn50ECco03ytQ0LxDJxixCyXw?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b9774283-0bba-420e-aa5f-08de001ac51c
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2025 12:13:31.1042
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Nu1RBpov+gF6oafrsjL39xoH1w7XYBFtz68yVYzF+7Tr3KjpF2mUANTj7w0nR+aa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4045
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 29, 2025 at 11:52:09AM -0700, Nicolin Chen wrote:
-> > I've been thinking about generalizing it to core code and I think it
-> > would hold up well there as well?
-> 
-> How would you like it to be written in the core: a generalized
-> structure or a general macro that generates driver structures?
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
-I'm thinking to leave this here for now and revisit it with another
-driver someday.
+------------------
 
-Jason
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+
+commit 9bd9c8026341f75f25c53104eb7e656e357ca1a2 upstream.
+
+Delayed work that prevents USB3 hubs from runtime-suspending too early
+needed to be flushed in hub_quiesce() to resolve issues detected on
+QC SC8280XP CRD board during suspend resume testing.
+
+This flushing did however trigger new issues on Raspberry Pi 3B+, which
+doesn't have USB3 ports, and doesn't queue any post resume delayed work.
+
+The flushed 'hub->init_work' item is used for several purposes, and
+is originally initialized with a 'NULL' work function. The work function
+is also changed on the fly, which may contribute to the issue.
+
+Solve this by creating a dedicated delayed work item for post resume work,
+and flush that delayed work in hub_quiesce()
+
+Cc: stable <stable@kernel.org>
+Fixes: a49e1e2e785f ("usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm")
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/linux-usb/aF5rNp1l0LWITnEB@finisterre.sirena.org.uk
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SC8280XP CRD
+Tested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250627164348.3982628-2-mathias.nyman@linux.intel.com
+[florian: adjust for lack of hub_{get,put} and timer_delete_sync]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/core/hub.c |   21 ++++++++-------------
+ drivers/usb/core/hub.h |    1 +
+ 2 files changed, 9 insertions(+), 13 deletions(-)
+
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -1030,12 +1030,11 @@ int usb_remove_device(struct usb_device
+ 
+ enum hub_activation_type {
+ 	HUB_INIT, HUB_INIT2, HUB_INIT3,		/* INITs must come first */
+-	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME, HUB_POST_RESUME,
++	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME,
+ };
+ 
+ static void hub_init_func2(struct work_struct *ws);
+ static void hub_init_func3(struct work_struct *ws);
+-static void hub_post_resume(struct work_struct *ws);
+ 
+ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
+ {
+@@ -1059,12 +1058,6 @@ static void hub_activate(struct usb_hub
+ 		goto init3;
+ 	}
+ 
+-	if (type == HUB_POST_RESUME) {
+-		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
+-		kref_put(&hub->kref, hub_release);
+-		return;
+-	}
+-
+ 	kref_get(&hub->kref);
+ 
+ 	/* The superspeed hub except for root hub has to use Hub Depth
+@@ -1318,8 +1311,8 @@ static void hub_activate(struct usb_hub
+ 		usb_autopm_get_interface_no_resume(
+ 			to_usb_interface(hub->intfdev));
+ 
+-		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
+-		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
++		queue_delayed_work(system_power_efficient_wq,
++				   &hub->post_resume_work,
+ 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
+ 		return;
+ 	}
+@@ -1344,9 +1337,10 @@ static void hub_init_func3(struct work_s
+ 
+ static void hub_post_resume(struct work_struct *ws)
+ {
+-	struct usb_hub *hub = container_of(ws, struct usb_hub, init_work.work);
++	struct usb_hub *hub = container_of(ws, struct usb_hub, post_resume_work.work);
+ 
+-	hub_activate(hub, HUB_POST_RESUME);
++	usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
++	kref_put(&hub->kref, hub_release);
+ }
+ 
+ enum hub_quiescing_type {
+@@ -1374,7 +1368,7 @@ static void hub_quiesce(struct usb_hub *
+ 
+ 	/* Stop hub_wq and related activity */
+ 	del_timer_sync(&hub->irq_urb_retry);
+-	flush_delayed_work(&hub->init_work);
++	flush_delayed_work(&hub->post_resume_work);
+ 	usb_kill_urb(hub->urb);
+ 	if (hub->has_indicators)
+ 		cancel_delayed_work_sync(&hub->leds);
+@@ -1921,6 +1915,7 @@ static int hub_probe(struct usb_interfac
+ 	hub->hdev = hdev;
+ 	INIT_DELAYED_WORK(&hub->leds, led_work);
+ 	INIT_DELAYED_WORK(&hub->init_work, NULL);
++	INIT_DELAYED_WORK(&hub->post_resume_work, hub_post_resume);
+ 	INIT_WORK(&hub->events, hub_event);
+ 	spin_lock_init(&hub->irq_urb_lock);
+ 	timer_setup(&hub->irq_urb_retry, hub_retry_irq_urb, 0);
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -69,6 +69,7 @@ struct usb_hub {
+ 	u8			indicator[USB_MAXCHILDREN];
+ 	struct delayed_work	leds;
+ 	struct delayed_work	init_work;
++	struct delayed_work	post_resume_work;
+ 	struct work_struct      events;
+ 	spinlock_t		irq_urb_lock;
+ 	struct timer_list	irq_urb_retry;
+
+
