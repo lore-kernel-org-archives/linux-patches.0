@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F0F2236EB;
-	Tue, 30 Sep 2025 15:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B673A3081A1;
+	Tue, 30 Sep 2025 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245041; cv=none; b=SndXlPp63UPxXPkVwAxi40fo3Wl5f9fl22FZ/7A1E+8ZCBZVI8du+6fJ1kRmawa/m6wIxfOWm6kbWZM2iMD/1lYrFyynG6tMEtCe9VeEcXySxWk+MueRC2GnMn5gs8lJqBlgvY48NjhK3kT9eBAT1bpINIoE6g//eLRNuhMQBNQ=
+	t=1759245044; cv=none; b=k6+WqJB2S8CP6wLorNZfM1dtj0We0LDPFUt0P0eHp/g7QPUhtJ95x8+FmHgUZjFGOlPg9R7j66eO8BEWb39kFwUYFnTs9X3s92Jt87NKozl+OdICpeuqyuKI1glHiosAhnusfpaUr0ei2NR3m/3R6CUkeATNGhiNPonO7VLPDIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245041; c=relaxed/simple;
-	bh=FNemlHQubb2vUNf4eFWT71HP6NW8vDbd4dW5XVws0TQ=;
+	s=arc-20240116; t=1759245044; c=relaxed/simple;
+	bh=ljWpEEzDqEBj0MCHEgj7YQJ6EyMVFdixLDOy/OY+zeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jszPUc+/0knbbME6rbiEhbcod4OTVXVKocOnmk2xx8qT9uMHV5LCBDmReL7njMc5aqpGoHKdG8Q6dresxNyOcbDZ7ZWV6Qa86lqFrPVym03AVLStr5O3K0cNcKxTvPrl7W9sBtsHlsTXeAAvE+OKFyk8vYovamCndmu2T4mS8hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJPTe8Rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUjvCqbcS1QYi82kRLWpkSX2GPrenGpanB5nuZtHCy/ejqf9LPUaBP2Gi17q+qRqIGZlJ+Tb7Ri4Na6PrBcAAD8ShclLkkNNktYDvtr2pKEvBfAxLABzhW1CWDeQSFpqAwfj4+waVfqatzQAgQkXHZsvb2gsJWwg+wSaFia5ims=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6Rett9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJPTe8Rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4E3C4CEF0;
-	Tue, 30 Sep 2025 15:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6Rett9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAF0C113D0;
+	Tue, 30 Sep 2025 15:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245041;
-	bh=FNemlHQubb2vUNf4eFWT71HP6NW8vDbd4dW5XVws0TQ=;
+	s=korg; t=1759245044;
+	bh=ljWpEEzDqEBj0MCHEgj7YQJ6EyMVFdixLDOy/OY+zeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJPTe8RjQ5CudmDu3EoXRJwpi13d+a5zLRsmD/tdmON5broX/devf7XhTSNteal70
-	 PO/yM0kNownrfX45U8oiO3V6F7gtoYCopmdR4cwn1jt4SWOQIR3ceZgdbk3XWO/vAc
-	 OMAT/6jtVRgDPrGQEYoydHp0cXLI6qwr/R1rWGrA=
+	b=m6Rett9H56HLeBeoLnPNBnEYDIX6Jy3eECvEyrBRDydyp/TgJHLBgncE2Kv123v4m
+	 16PPr1tHRwnMku4dXxy0ZWiennSyFuCEPKTGANc463JrBHd8+n/1UPCYEm9hoEuDgM
+	 a+9OB9Vm6HZYfhFmqqzJ+MLyl8hfdi2uIVX+i9BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Murali Karicheri <m-karicheri2@ti.com>,
 	Ravi Gunasekaran <r-gunasekaran@ti.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/151] net: hsr: Disable promiscuous mode in offload mode
-Date: Tue, 30 Sep 2025 16:46:17 +0200
-Message-ID: <20250930143829.485434348@linuxfoundation.org>
+Subject: [PATCH 5.15 048/151] net: hsr: Add support for MC filtering at the slave device
+Date: Tue, 30 Sep 2025 16:46:18 +0200
+Message-ID: <20250930143829.523443042@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,87 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Gunasekaran <r-gunasekaran@ti.com>
+From: Murali Karicheri <m-karicheri2@ti.com>
 
-[ Upstream commit e748d0fd66abc4b1c136022e4e053004fce2b792 ]
+[ Upstream commit 36b20fcdd9663ced36d3aef96f0eff8eb79de4b8 ]
 
-When port-to-port forwarding for interfaces in HSR node is enabled,
-disable promiscuous mode since L2 frame forward happens at the
-offloaded hardware.
+When MC (multicast) list is updated by the networking layer due to a
+user command and as well as when allmulti flag is set, it needs to be
+passed to the enslaved Ethernet devices. This patch allows this
+to happen by implementing ndo_change_rx_flags() and ndo_set_rx_mode()
+API calls that in turns pass it to the slave devices using
+existing API calls.
 
+Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
 Signed-off-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230614114710.31400-1-r-gunasekaran@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 8884c6939913 ("hsr: use rtnl lock when iterating over ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c |  5 +++++
- net/hsr/hsr_main.h   |  1 +
- net/hsr/hsr_slave.c  | 15 +++++++++++----
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ net/hsr/hsr_device.c | 67 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
 
 diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 0ffb28406fdc0..4967dc22824c7 100644
+index 4967dc22824c7..5b7bca9e7e5ae 100644
 --- a/net/hsr/hsr_device.c
 +++ b/net/hsr/hsr_device.c
-@@ -532,6 +532,11 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
- 	if (res)
- 		goto err_add_master;
+@@ -173,7 +173,24 @@ static int hsr_dev_open(struct net_device *dev)
  
-+	/* HSR forwarding offload supported in lower device? */
-+	if ((slave[0]->features & NETIF_F_HW_HSR_FWD) &&
-+	    (slave[1]->features & NETIF_F_HW_HSR_FWD))
-+		hsr->fwd_offloaded = true;
+ static int hsr_dev_close(struct net_device *dev)
+ {
+-	/* Nothing to do here. */
++	struct hsr_port *port;
++	struct hsr_priv *hsr;
 +
- 	res = register_netdevice(hsr_dev);
- 	if (res)
- 		goto err_unregister;
-diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
-index 53d1f7a824630..4188516cde5da 100644
---- a/net/hsr/hsr_main.h
-+++ b/net/hsr/hsr_main.h
-@@ -212,6 +212,7 @@ struct hsr_priv {
- 	u8 net_id;		/* for PRP, it occupies most significant 3 bits
- 				 * of lan_id
- 				 */
-+	bool fwd_offloaded;	/* Forwarding offloaded to HW */
- 	unsigned char		sup_multicast_addr[ETH_ALEN] __aligned(sizeof(u16));
- 				/* Align to u16 boundary to avoid unaligned access
- 				 * in ether_addr_equal
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 0e6daee488b4f..52302a0546133 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -137,9 +137,14 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- 	struct hsr_port *master;
- 	int res;
- 
--	res = dev_set_promiscuity(dev, 1);
--	if (res)
--		return res;
-+	/* Don't use promiscuous mode for offload since L2 frame forward
-+	 * happens at the offloaded hardware.
-+	 */
-+	if (!port->hsr->fwd_offloaded) {
-+		res = dev_set_promiscuity(dev, 1);
-+		if (res)
-+			return res;
++	hsr = netdev_priv(dev);
++	hsr_for_each_port(hsr, port) {
++		if (port->type == HSR_PT_MASTER)
++			continue;
++		switch (port->type) {
++		case HSR_PT_SLAVE_A:
++		case HSR_PT_SLAVE_B:
++			dev_uc_unsync(port->dev, dev);
++			dev_mc_unsync(port->dev, dev);
++			break;
++		default:
++			break;
++		}
 +	}
- 
- 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
- 	hsr_dev = master->dev;
-@@ -158,7 +163,9 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- fail_rx_handler:
- 	netdev_upper_dev_unlink(dev, hsr_dev);
- fail_upper_dev_link:
--	dev_set_promiscuity(dev, -1);
-+	if (!port->hsr->fwd_offloaded)
-+		dev_set_promiscuity(dev, -1);
 +
- 	return res;
+ 	return 0;
  }
  
+@@ -404,12 +421,60 @@ void hsr_del_ports(struct hsr_priv *hsr)
+ 		hsr_del_port(port);
+ }
+ 
++static void hsr_set_rx_mode(struct net_device *dev)
++{
++	struct hsr_port *port;
++	struct hsr_priv *hsr;
++
++	hsr = netdev_priv(dev);
++
++	hsr_for_each_port(hsr, port) {
++		if (port->type == HSR_PT_MASTER)
++			continue;
++		switch (port->type) {
++		case HSR_PT_SLAVE_A:
++		case HSR_PT_SLAVE_B:
++			dev_mc_sync_multiple(port->dev, dev);
++			dev_uc_sync_multiple(port->dev, dev);
++			break;
++		default:
++			break;
++		}
++	}
++}
++
++static void hsr_change_rx_flags(struct net_device *dev, int change)
++{
++	struct hsr_port *port;
++	struct hsr_priv *hsr;
++
++	hsr = netdev_priv(dev);
++
++	hsr_for_each_port(hsr, port) {
++		if (port->type == HSR_PT_MASTER)
++			continue;
++		switch (port->type) {
++		case HSR_PT_SLAVE_A:
++		case HSR_PT_SLAVE_B:
++			if (change & IFF_ALLMULTI)
++				dev_set_allmulti(port->dev,
++						 dev->flags &
++						 IFF_ALLMULTI ? 1 : -1);
++			break;
++		default:
++			break;
++		}
++	}
++}
++
+ static const struct net_device_ops hsr_device_ops = {
+ 	.ndo_change_mtu = hsr_dev_change_mtu,
+ 	.ndo_open = hsr_dev_open,
+ 	.ndo_stop = hsr_dev_close,
+ 	.ndo_start_xmit = hsr_dev_xmit,
++	.ndo_change_rx_flags = hsr_change_rx_flags,
+ 	.ndo_fix_features = hsr_fix_features,
++	.ndo_set_rx_mode = hsr_set_rx_mode,
+ };
+ 
+ static struct device_type hsr_type = {
 -- 
 2.51.0
 
