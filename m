@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579BE29827E;
-	Tue, 30 Sep 2025 15:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32E217F55;
+	Tue, 30 Sep 2025 15:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245401; cv=none; b=SYFvgUzUaPSXE1aZtVI6WaED0w+WjzUW7Id/zxtrHKVZT/JKmRZs5/7R9jPmSbWYQGMH2IsZ3aEsfQVMLCbkTdheMN0+AjDt5xXx/73vbodZ62jDcjfJ6SWgcC8h8De4YGrQsAzpKU2E+9fac+C9xlPWt7ooSs6bax1WKa+Dpbw=
+	t=1759245404; cv=none; b=Tkt8lI/fzWiynqqzlPhfMB3ZYRREAT+7csiCzje6aCgY/GJEsPamO1KlBb6Ly9HkzsQrSuKtOeORoyn1IoKUboaTaJdtH0lQthQDvQqbuO/5VCQYvCD+HqYNMqdi6Ijvas52UGbTFKbgvqJ5Eqn+XM6q/ERNF/bhTaKUslEEp1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245401; c=relaxed/simple;
-	bh=FGpYr5jFf4+KCRFp4zS8v2WKJxQNlE6/8FcT6j4CI7s=;
+	s=arc-20240116; t=1759245404; c=relaxed/simple;
+	bh=hvzPtjosgf9uvB/G/J2/w1+WxgHzvjPjXy7ItL9HU5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFLJN/3A37kcqIwPvVkdanJODbhrzz3gnsrW4nS4hNS87Vx8a5bJVtPbNSzW/dmQUMLsq3gT2GuvTyN1twesSWheLeQNCbMteGdZ4HzDuaXsI6EQdCfZqGMMoyJWNnqg4qYJwnt3deqTX0FhzLl7xzbtKTPiUJVJ43F7WVgr1Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVDmP4Q3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6aVanDCalZ+eOOomtt/lnZRBpEZwbKiltTVqHz1P9QrX0T0Cqra9CaUL10+B8wSc+UbCPb5pSp2EjqvU2X5hpq0REBLVJxmMS2rrzsaL8MhZ5T119QKDkW0+N+tR2bjH8oHi63X+2FenomlSLyczIWjA1MiJ6wkMdEfaj6ROr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dh1eZzEw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVDmP4Q3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841D3C113D0;
-	Tue, 30 Sep 2025 15:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dh1eZzEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA9DC4CEF0;
+	Tue, 30 Sep 2025 15:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245400;
-	bh=FGpYr5jFf4+KCRFp4zS8v2WKJxQNlE6/8FcT6j4CI7s=;
+	s=korg; t=1759245403;
+	bh=hvzPtjosgf9uvB/G/J2/w1+WxgHzvjPjXy7ItL9HU5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVDmP4Q3s0P41iXJJTNjnB4crtOHmo01fx5ihqxoOdwCqUfo4i41hv8ORdsaO02zg
-	 zgQspz627ju4TSuk7UOYqE9O0Dr2/utyRs9x72qbmPHq077LDAwtExk2EeKlGnOoD+
-	 fcgXhVldM67SQ4RtVnYhTH+BlNMGgiiK0jGhAVrw=
+	b=Dh1eZzEwpiLy5usHFcgSg/xu+6eVg51MMU3mIrpJBNmsXqr0gCaZRDhtx+RZ7kf1I
+	 C8dZDdTRHKQeSkzzVrPw530A/Shvok/xnXyz5n/Yo1VDMCreiAMPhlsVFItctZjjdW
+	 kM1Z6gFiXp+V+miHTWnpPx+L2z8pi5CW0jIry+zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/151] bnxt_en: correct offset handling for IPv6 destination address
-Date: Tue, 30 Sep 2025 16:47:39 +0200
-Message-ID: <20250930143832.741346289@linuxfoundation.org>
+Subject: [PATCH 5.15 120/151] can: dev: add generic function can_eth_ioctl_hwts()
+Date: Tue, 30 Sep 2025 16:47:30 +0200
+Message-ID: <20250930143832.386675419@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,41 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit 3d3aa9472c6dd0704e9961ed4769caac5b1c8d52 ]
+[ Upstream commit 90f942c5a6d775bad1be33ba214755314105da4a ]
 
-In bnxt_tc_parse_pedit(), the code incorrectly writes IPv6
-destination values to the source address field (saddr) when
-processing pedit offsets within the destination address range.
+Tools based on libpcap (such as tcpdump) expect the SIOCSHWTSTAMP
+ioctl call to be supported. This is also specified in the kernel doc
+[1]. The purpose of this ioctl is to toggle the hardware timestamps.
 
-This patch corrects the assignment to use daddr instead of saddr,
-ensuring that pedit operations on IPv6 destination addresses are
-applied correctly.
+Currently, CAN devices which support hardware timestamping have those
+always activated. can_eth_ioctl_hwts() is a dumb function that will
+always succeed when requested to set tx_type to HWTSTAMP_TX_ON or
+rx_filter to HWTSTAMP_FILTER_ALL.
 
-Fixes: 9b9eb518e338 ("bnxt_en: Add support for NAT(L3/L4 rewrite)")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Link: https://patch.msgid.link/20250920121157.351921-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[1] Kernel doc: Timestamping, section 3.1 "Hardware Timestamping
+Implementation: Device Drivers"
+Link: https://docs.kernel.org/networking/timestamping.html#hardware-timestamping-implementation-device-drivers
+
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/20220727101641.198847-9-mailhol.vincent@wanadoo.fr
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 38c0abad45b1 ("can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/dev/dev.c | 29 +++++++++++++++++++++++++++++
+ include/linux/can/dev.h   |  1 +
+ 2 files changed, 30 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-index b3473883eae6b..0dd393a4fa80c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-@@ -244,7 +244,7 @@ bnxt_tc_parse_pedit(struct bnxt *bp, struct bnxt_tc_actions *actions,
- 			   offset < offset_of_ip6_daddr + 16) {
- 			actions->nat.src_xlate = false;
- 			idx = (offset - offset_of_ip6_daddr) / 4;
--			actions->nat.l3.ipv6.saddr.s6_addr32[idx] = htonl(val);
-+			actions->nat.l3.ipv6.daddr.s6_addr32[idx] = htonl(val);
- 		} else {
- 			netdev_err(bp->dev,
- 				   "%s: IPv6_hdr: Invalid pedit field\n",
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index d429a2940e83f..645564b9bff00 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -331,6 +331,35 @@ int can_change_mtu(struct net_device *dev, int new_mtu)
+ }
+ EXPORT_SYMBOL_GPL(can_change_mtu);
+ 
++/* generic implementation of netdev_ops::ndo_eth_ioctl for CAN devices
++ * supporting hardware timestamps
++ */
++int can_eth_ioctl_hwts(struct net_device *netdev, struct ifreq *ifr, int cmd)
++{
++	struct hwtstamp_config hwts_cfg = { 0 };
++
++	switch (cmd) {
++	case SIOCSHWTSTAMP: /* set */
++		if (copy_from_user(&hwts_cfg, ifr->ifr_data, sizeof(hwts_cfg)))
++			return -EFAULT;
++		if (hwts_cfg.tx_type == HWTSTAMP_TX_ON &&
++		    hwts_cfg.rx_filter == HWTSTAMP_FILTER_ALL)
++			return 0;
++		return -ERANGE;
++
++	case SIOCGHWTSTAMP: /* get */
++		hwts_cfg.tx_type = HWTSTAMP_TX_ON;
++		hwts_cfg.rx_filter = HWTSTAMP_FILTER_ALL;
++		if (copy_to_user(ifr->ifr_data, &hwts_cfg, sizeof(hwts_cfg)))
++			return -EFAULT;
++		return 0;
++
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++EXPORT_SYMBOL(can_eth_ioctl_hwts);
++
+ /* generic implementation of ethtool_ops::get_ts_info for CAN devices
+  * supporting hardware timestamps
+  */
+diff --git a/include/linux/can/dev.h b/include/linux/can/dev.h
+index 23f1c9f0109d7..c439735dce6a7 100644
+--- a/include/linux/can/dev.h
++++ b/include/linux/can/dev.h
+@@ -133,6 +133,7 @@ struct can_priv *safe_candev_priv(struct net_device *dev);
+ int open_candev(struct net_device *dev);
+ void close_candev(struct net_device *dev);
+ int can_change_mtu(struct net_device *dev, int new_mtu);
++int can_eth_ioctl_hwts(struct net_device *netdev, struct ifreq *ifr, int cmd);
+ int can_ethtool_op_get_ts_info_hwts(struct net_device *dev,
+ 				    struct ethtool_ts_info *info);
+ 
 -- 
 2.51.0
 
