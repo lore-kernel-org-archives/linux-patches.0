@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F367A1EE02F;
-	Tue, 30 Sep 2025 15:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB151FF1C8;
+	Tue, 30 Sep 2025 15:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244608; cv=none; b=s1LNFe2jlQS9M5sZH/DZYoQDhA5nkupis5JXoTYwIqmPicdpk2vKQ+hBtusTptmVGQ1GPW4e5TqqOTVpPtyKyEfUlHsD1VoX3Zhr1sul7GOXfYcqSqZMqBP8G+m3DDAgoWPScfpcSbFCvdLbU5F/mERnZ/n9gsIHvJi2zFUm0vY=
+	t=1759244611; cv=none; b=PyS4eQj1UDUO2pDMRPqdAf6UgYNd13k6+/Am2FUnyfwbR5JH9O/JxeFpMm+10fd2u12ds60cgWlAi10Ual61A6eOQG83A5qj9TDPrqsMky4zr/4GUKdZQ9w6iFpqX9ajsZMX+fbbh7cQCfidJrMuau9l2+MeAELxXtSzqDOrdTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244608; c=relaxed/simple;
-	bh=3Rnrdf6RqMkbWCmnSRgspBQORXYYvLmMaYuwYjlRIsk=;
+	s=arc-20240116; t=1759244611; c=relaxed/simple;
+	bh=EnPtj/ddQj5jZBQYLejAubFMoIcTOrTX7JfnXHeQn5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C86Z6nqV2ysbYeG2OJhb/jqZdu3qaWyBvHTUjCB3dgQehgwu/GAQojS7oPxATTCWrrCi04Dw8ac9LyoQr555i0su04bfgAix3WrBjxA8eJ3TlMy+XsCiw+JhPwHHmeJdLhjq7+9zRiWXy0NWGIsymG4EUdkTR+gRxwCqVo7I5EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6mjlDt6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihw00BhuQyIe6qQPB5taAUT8s9Ttp+jSIHY2b4MJnHS/D6zwkIj1zT6W81oF52npJWGus/IdVyXSnDIaKbCq912uhAk6ggKY93uulkEi7dAdsQrB3V+e03PV2z7NL4/SGD/gQp6fRWruoLs5yNuizHqPnNFxd/uT5zlILUObXIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG+5E6g0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6mjlDt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650C9C4CEF0;
-	Tue, 30 Sep 2025 15:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG+5E6g0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721A9C4CEF0;
+	Tue, 30 Sep 2025 15:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244607;
-	bh=3Rnrdf6RqMkbWCmnSRgspBQORXYYvLmMaYuwYjlRIsk=;
+	s=korg; t=1759244610;
+	bh=EnPtj/ddQj5jZBQYLejAubFMoIcTOrTX7JfnXHeQn5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6mjlDt6v8pJvhnQfNfxpfaUw0F4A8mRqiIqw5GoM6Rn3zS0Qw72FkP4NXE2FuWAv
-	 5dlM1i1NIszzBdHSSazA2q1Ju7Tx+iVEyFi5n+5Z/tcdzcQlNRGs3tbsQD6athvWWV
-	 F+RcUKsxk4GRmYZkbhn0VC1ep+f3vRnUetVWsc3w=
+	b=RG+5E6g0y712JjfzLkZJK88+U2ABNLCuVJOeD8yvNkGh7YA9NCNV6pLrXvXdc1t32
+	 FoLMTGx+jH44x+wYy9eSokye0RCnt/00dzFVhjYPFPI5UXnRIEUXEVn/DqN5Lc5Kou
+	 /zbWaQ5cvrYsX24xquImn3XN/4vyHX5nmDCjoyiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 018/143] usb: core: Add 0x prefix to quirks debug output
-Date: Tue, 30 Sep 2025 16:45:42 +0200
-Message-ID: <20250930143831.971150687@linuxfoundation.org>
+Subject: [PATCH 6.16 053/143] amd/amdkfd: correct mem limit calculation for small APUs
+Date: Tue, 30 Sep 2025 16:46:17 +0200
+Message-ID: <20250930143833.346996651@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -50,34 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit 47c428fce0b41b15ab321d8ede871f780ccd038f ]
+[ Upstream commit 53503556273a5ead8b75534085e2dcb46e96f883 ]
 
-Use "0x%x" format for quirks debug print to clarify it's a hexadecimal
-value. Improves readability and consistency with other hex outputs.
+Current mem limit check leaks some GTT memory (reserved_for_pt
+reserved_for_ras + adev->vram_pin_size) for small APUs.
 
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Link: https://lore.kernel.org/r/20250603071045.3243699-1-lijiayi@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since carveout VRAM is tunable on APUs, there are three case
+regarding the carveout VRAM size relative to GTT:
+
+1. 0 < carveout < gtt
+   apu_prefer_gtt = true, is_app_apu = false
+
+2. carveout > gtt / 2
+   apu_prefer_gtt = false, is_app_apu = false
+
+3. 0 = carveout
+   apu_prefer_gtt = true, is_app_apu = true
+
+It doesn't make sense to check below limitation in case 1
+(default case, small carveout) because the values in the below
+expression are mixed with carveout and gtt.
+
+adev->kfd.vram_used[xcp_id] + vram_needed >
+    vram_size - reserved_for_pt - reserved_for_ras -
+    atomic64_read(&adev->vram_pin_size)
+
+gtt: kfd.vram_used, vram_needed, vram_size
+carveout: reserved_for_pt, reserved_for_ras, adev->vram_pin_size
+
+In case 1, vram allocation will go to gtt domain, skip vram check
+since ttm_mem_limit check already cover this allocation.
+
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fa7c99f04f6dd299388e9282812b14e95558ac8e)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c  | 44 ++++++++++++++-----
+ 1 file changed, 32 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index d6daad39491b7..f5bc538753301 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -737,7 +737,7 @@ void usb_detect_quirks(struct usb_device *udev)
- 	udev->quirks ^= usb_detect_dynamic_quirks(udev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 260165bbe3736..b16cce7c22c37 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -213,19 +213,35 @@ int amdgpu_amdkfd_reserve_mem_limit(struct amdgpu_device *adev,
+ 	spin_lock(&kfd_mem_limit.mem_limit_lock);
  
- 	if (udev->quirks)
--		dev_dbg(&udev->dev, "USB quirks for this device: %x\n",
-+		dev_dbg(&udev->dev, "USB quirks for this device: 0x%x\n",
- 			udev->quirks);
+ 	if (kfd_mem_limit.system_mem_used + system_mem_needed >
+-	    kfd_mem_limit.max_system_mem_limit)
++	    kfd_mem_limit.max_system_mem_limit) {
+ 		pr_debug("Set no_system_mem_limit=1 if using shared memory\n");
++		if (!no_system_mem_limit) {
++			ret = -ENOMEM;
++			goto release;
++		}
++	}
  
- #ifdef CONFIG_USB_DEFAULT_PERSIST
+-	if ((kfd_mem_limit.system_mem_used + system_mem_needed >
+-	     kfd_mem_limit.max_system_mem_limit && !no_system_mem_limit) ||
+-	    (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
+-	     kfd_mem_limit.max_ttm_mem_limit) ||
+-	    (adev && xcp_id >= 0 && adev->kfd.vram_used[xcp_id] + vram_needed >
+-	     vram_size - reserved_for_pt - reserved_for_ras - atomic64_read(&adev->vram_pin_size))) {
++	if (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
++		kfd_mem_limit.max_ttm_mem_limit) {
+ 		ret = -ENOMEM;
+ 		goto release;
+ 	}
+ 
++	/*if is_app_apu is false and apu_prefer_gtt is true, it is an APU with
++	 * carve out < gtt. In that case, VRAM allocation will go to gtt domain, skip
++	 * VRAM check since ttm_mem_limit check already cover this allocation
++	 */
++
++	if (adev && xcp_id >= 0 && (!adev->apu_prefer_gtt || adev->gmc.is_app_apu)) {
++		uint64_t vram_available =
++			vram_size - reserved_for_pt - reserved_for_ras -
++			atomic64_read(&adev->vram_pin_size);
++		if (adev->kfd.vram_used[xcp_id] + vram_needed > vram_available) {
++			ret = -ENOMEM;
++			goto release;
++		}
++	}
++
+ 	/* Update memory accounting by decreasing available system
+ 	 * memory, TTM memory and GPU memory as computed above
+ 	 */
+@@ -1626,11 +1642,15 @@ size_t amdgpu_amdkfd_get_available_memory(struct amdgpu_device *adev,
+ 	uint64_t vram_available, system_mem_available, ttm_mem_available;
+ 
+ 	spin_lock(&kfd_mem_limit.mem_limit_lock);
+-	vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
+-		- adev->kfd.vram_used_aligned[xcp_id]
+-		- atomic64_read(&adev->vram_pin_size)
+-		- reserved_for_pt
+-		- reserved_for_ras;
++	if (adev->apu_prefer_gtt && !adev->gmc.is_app_apu)
++		vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
++			- adev->kfd.vram_used_aligned[xcp_id];
++	else
++		vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
++			- adev->kfd.vram_used_aligned[xcp_id]
++			- atomic64_read(&adev->vram_pin_size)
++			- reserved_for_pt
++			- reserved_for_ras;
+ 
+ 	if (adev->apu_prefer_gtt) {
+ 		system_mem_available = no_system_mem_limit ?
 -- 
 2.51.0
 
