@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A206173;
-	Tue, 30 Sep 2025 15:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01B51F152D;
+	Tue, 30 Sep 2025 15:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244581; cv=none; b=M2TQ62N7KsUOzhfXqn4ZO2abvNqG4rXjOnLpm+r9LwwuI6ltEdYHgEFqQhLSA17JpUPX0ac971/uM2GqPzbmvmsDASjtNHn6AC/QHLVULZ+FgajbYo2WaasODvBgwPo7YCeZOUSAsBG8R33c24IXLuGeGGZrlGyQhq0tiutNjpo=
+	t=1759244584; cv=none; b=S7xnxP5H7JHVdPOrjP3NdXGDy+S0ZSZ5lji7Ihqnht6ArG5c7YoLCZOATvVdn8i05cJsNMZlKuYQKflXGbIZV7hsT7JADhdJUPlygD4ZsPinf6L+g8erkWwhcoUotrr6vBflEyBpKuPsb+NzIv0swqz7upAN40dsWB8onBmYK1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244581; c=relaxed/simple;
-	bh=eqhsu5UTIWgWhKw7gw9+4eJH0uk/vnvEKnjnHbrQq6g=;
+	s=arc-20240116; t=1759244584; c=relaxed/simple;
+	bh=ZjaCtzEmBv870xO83511dfONb0AJoKDtZNq3gd/8h30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkeyYxmMg0wgPS7y/EBhdHKb3z3A6/zO9AlA2DY0xXHLsWDJBUbFtb2xfPRsrvR5jdOsPPmAbebIRl6jjEVF1fHTyxaQeYcoDMFrzpVRiADdrT4qZydXq7XjaVNiuqmFxqQyLOGYFsheDxMDGcsNTpE5YT8NNnpkaCk2MTctAt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7JadRc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WvtFAzE9tpi62lGnLgLzOE1U0pgPlVsm62KGdy34kjgJ2LdFdFBK7/AN9ap9+kHL8aPWsLJOhw8PsIbAxUl8xALeIjWaejDXk1qBVRtfDP0CyDeoSKSHwDc3Q6y3FNG+z8rnSEdJCoOJaM6pWQ9TlZD8ihPQVAVI/YuIAiS4tpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEXppYOJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7JadRc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C74CC116B1;
-	Tue, 30 Sep 2025 15:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEXppYOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79801C113D0;
+	Tue, 30 Sep 2025 15:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244580;
-	bh=eqhsu5UTIWgWhKw7gw9+4eJH0uk/vnvEKnjnHbrQq6g=;
+	s=korg; t=1759244583;
+	bh=ZjaCtzEmBv870xO83511dfONb0AJoKDtZNq3gd/8h30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7JadRc32GjymYDvzsm7hai/e568t3tArgt7KH9D9d5ogq0xAWvgLTjwDTGzMrOFG
-	 PfEsQC1RBuwQg33uKwir+W2onrNUpji22jN0WGL9LDaxucOLMJ6xVX4X2fzyDRkS7g
-	 lTOydWyl/2WACyMkgwujriyuNQ4BIYd7S7gSA2+Q=
+	b=pEXppYOJ9KuE3vPnMy/owSextHau4D1ym7XT89WVnTMAfS7zv49u1pTyyfnQLby3y
+	 QMoRdasCexK+hYR/wgdigtjnJJrXfb+f86b+sI1obsI1W8Lx3fN+g1SQeAIr5A3PTP
+	 Ium9XCnuUgJsgFEQNfJ5JkTAvOLyVsuaMPgwUFSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 049/143] btrfs: dont allow adding block device of less than 1 MB
-Date: Tue, 30 Sep 2025 16:46:13 +0200
-Message-ID: <20250930143833.187330982@linuxfoundation.org>
+Subject: [PATCH 6.16 050/143] NFS: Protect against eof page pollution
+Date: Tue, 30 Sep 2025 16:46:14 +0200
+Message-ID: <20250930143833.225304456@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,52 +50,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 3d1267475b94b3df7a61e4ea6788c7c5d9e473c4 ]
+[ Upstream commit b1817b18ff20e69f5accdccefaf78bf5454bede2 ]
 
-Commit 15ae0410c37a79 ("btrfs-progs: add error handling for
-device_get_partition_size_fd_stat()") in btrfs-progs inadvertently
-changed it so that if the BLKGETSIZE64 ioctl on a block device returned
-a size of 0, this was no longer seen as an error condition.
+This commit fixes the failing xfstest 'generic/363'.
 
-Unfortunately this is how disconnected NBD devices behave, meaning that
-with btrfs-progs 6.16 it's now possible to add a device you can't
-remove:
+When the user mmaps() an area that extends beyond the end of file, and
+proceeds to write data into the folio that straddles that eof, we're
+required to discard that folio data if the user calls some function that
+extends the file length.
 
-  # btrfs device add /dev/nbd0 /root/temp
-  # btrfs device remove /dev/nbd0 /root/temp
-  ERROR: error removing device '/dev/nbd0': Invalid argument
-
-This check should always have been done kernel-side anyway, so add a
-check in btrfs_init_new_device() that the new device doesn't have a size
-less than BTRFS_DEVICE_RANGE_RESERVED (i.e. 1 MB).
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfs/file.c      | 33 +++++++++++++++++++++++++++++++++
+ fs/nfs/inode.c     |  9 +++++++--
+ fs/nfs/internal.h  |  2 ++
+ fs/nfs/nfs42proc.c | 14 +++++++++++---
+ fs/nfs/nfstrace.h  |  1 +
+ 5 files changed, 54 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index f475b4b7c4578..817d3ef501ec4 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2714,6 +2714,11 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 		goto error;
- 	}
+diff --git a/fs/nfs/file.c b/fs/nfs/file.c
+index a16a619fb8c33..8cc39a73faff8 100644
+--- a/fs/nfs/file.c
++++ b/fs/nfs/file.c
+@@ -28,6 +28,7 @@
+ #include <linux/mm.h>
+ #include <linux/pagemap.h>
+ #include <linux/gfp.h>
++#include <linux/rmap.h>
+ #include <linux/swap.h>
+ #include <linux/compaction.h>
  
-+	if (bdev_nr_bytes(file_bdev(bdev_file)) <= BTRFS_DEVICE_RANGE_RESERVED) {
-+		ret = -EINVAL;
-+		goto error;
+@@ -279,6 +280,37 @@ nfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
+ }
+ EXPORT_SYMBOL_GPL(nfs_file_fsync);
+ 
++void nfs_truncate_last_folio(struct address_space *mapping, loff_t from,
++			     loff_t to)
++{
++	struct folio *folio;
++
++	if (from >= to)
++		return;
++
++	folio = filemap_lock_folio(mapping, from >> PAGE_SHIFT);
++	if (IS_ERR(folio))
++		return;
++
++	if (folio_mkclean(folio))
++		folio_mark_dirty(folio);
++
++	if (folio_test_uptodate(folio)) {
++		loff_t fpos = folio_pos(folio);
++		size_t offset = from - fpos;
++		size_t end = folio_size(folio);
++
++		if (to - fpos < end)
++			end = to - fpos;
++		folio_zero_segment(folio, offset, end);
++		trace_nfs_size_truncate_folio(mapping->host, to);
 +	}
 +
- 	if (fs_devices->seeding) {
- 		seeding_dev = true;
- 		down_write(&sb->s_umount);
++	folio_unlock(folio);
++	folio_put(folio);
++}
++EXPORT_SYMBOL_GPL(nfs_truncate_last_folio);
++
+ /*
+  * Decide whether a read/modify/write cycle may be more efficient
+  * then a modify/write/read cycle when writing to a page in the
+@@ -353,6 +385,7 @@ static int nfs_write_begin(struct file *file, struct address_space *mapping,
+ 
+ 	dfprintk(PAGECACHE, "NFS: write_begin(%pD2(%lu), %u@%lld)\n",
+ 		file, mapping->host->i_ino, len, (long long) pos);
++	nfs_truncate_last_folio(mapping, i_size_read(mapping->host), pos);
+ 
+ 	fgp |= fgf_set_order(len);
+ start:
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index a32cc45425e28..f6b448666d419 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -710,6 +710,7 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ {
+ 	struct inode *inode = d_inode(dentry);
+ 	struct nfs_fattr *fattr;
++	loff_t oldsize = i_size_read(inode);
+ 	int error = 0;
+ 
+ 	nfs_inc_stats(inode, NFSIOS_VFSSETATTR);
+@@ -725,7 +726,7 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		if (error)
+ 			return error;
+ 
+-		if (attr->ia_size == i_size_read(inode))
++		if (attr->ia_size == oldsize)
+ 			attr->ia_valid &= ~ATTR_SIZE;
+ 	}
+ 
+@@ -773,8 +774,12 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	}
+ 
+ 	error = NFS_PROTO(inode)->setattr(dentry, fattr, attr);
+-	if (error == 0)
++	if (error == 0) {
++		if (attr->ia_valid & ATTR_SIZE)
++			nfs_truncate_last_folio(inode->i_mapping, oldsize,
++						attr->ia_size);
+ 		error = nfs_refresh_inode(inode, fattr);
++	}
+ 	nfs_free_fattr(fattr);
+ out:
+ 	trace_nfs_setattr_exit(inode, error);
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 0ef0fc6aba3b3..ae4d039c10d3a 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -438,6 +438,8 @@ int nfs_file_release(struct inode *, struct file *);
+ int nfs_lock(struct file *, int, struct file_lock *);
+ int nfs_flock(struct file *, int, struct file_lock *);
+ int nfs_check_flags(int);
++void nfs_truncate_last_folio(struct address_space *mapping, loff_t from,
++			     loff_t to);
+ 
+ /* inode.c */
+ extern struct workqueue_struct *nfsiod_workqueue;
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 48ee3d5d89c4a..4b0e35a0d89dd 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -138,6 +138,7 @@ int nfs42_proc_allocate(struct file *filep, loff_t offset, loff_t len)
+ 		.rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_ALLOCATE],
+ 	};
+ 	struct inode *inode = file_inode(filep);
++	loff_t oldsize = i_size_read(inode);
+ 	int err;
+ 
+ 	if (!nfs_server_capable(inode, NFS_CAP_ALLOCATE))
+@@ -146,7 +147,11 @@ int nfs42_proc_allocate(struct file *filep, loff_t offset, loff_t len)
+ 	inode_lock(inode);
+ 
+ 	err = nfs42_proc_fallocate(&msg, filep, offset, len);
+-	if (err == -EOPNOTSUPP)
++
++	if (err == 0)
++		nfs_truncate_last_folio(inode->i_mapping, oldsize,
++					offset + len);
++	else if (err == -EOPNOTSUPP)
+ 		NFS_SERVER(inode)->caps &= ~(NFS_CAP_ALLOCATE |
+ 					     NFS_CAP_ZERO_RANGE);
+ 
+@@ -184,6 +189,7 @@ int nfs42_proc_zero_range(struct file *filep, loff_t offset, loff_t len)
+ 		.rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_ZERO_RANGE],
+ 	};
+ 	struct inode *inode = file_inode(filep);
++	loff_t oldsize = i_size_read(inode);
+ 	int err;
+ 
+ 	if (!nfs_server_capable(inode, NFS_CAP_ZERO_RANGE))
+@@ -192,9 +198,11 @@ int nfs42_proc_zero_range(struct file *filep, loff_t offset, loff_t len)
+ 	inode_lock(inode);
+ 
+ 	err = nfs42_proc_fallocate(&msg, filep, offset, len);
+-	if (err == 0)
++	if (err == 0) {
++		nfs_truncate_last_folio(inode->i_mapping, oldsize,
++					offset + len);
+ 		truncate_pagecache_range(inode, offset, (offset + len) -1);
+-	if (err == -EOPNOTSUPP)
++	} else if (err == -EOPNOTSUPP)
+ 		NFS_SERVER(inode)->caps &= ~NFS_CAP_ZERO_RANGE;
+ 
+ 	inode_unlock(inode);
+diff --git a/fs/nfs/nfstrace.h b/fs/nfs/nfstrace.h
+index 7a058bd8c566e..1e4dc632f1800 100644
+--- a/fs/nfs/nfstrace.h
++++ b/fs/nfs/nfstrace.h
+@@ -267,6 +267,7 @@ DECLARE_EVENT_CLASS(nfs_update_size_class,
+ 			TP_ARGS(inode, new_size))
+ 
+ DEFINE_NFS_UPDATE_SIZE_EVENT(truncate);
++DEFINE_NFS_UPDATE_SIZE_EVENT(truncate_folio);
+ DEFINE_NFS_UPDATE_SIZE_EVENT(wcc);
+ DEFINE_NFS_UPDATE_SIZE_EVENT(update);
+ DEFINE_NFS_UPDATE_SIZE_EVENT(grow);
 -- 
 2.51.0
 
