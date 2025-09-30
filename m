@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F4372617;
-	Tue, 30 Sep 2025 14:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3D7265CCD;
+	Tue, 30 Sep 2025 14:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243932; cv=none; b=XlhO+C6+Jb7KQMfovdOSPcc+TgVdYqyWRIo9A3t6zPQRFDahgReb/KLFduJ9xFKIbVUzd4yNY7zBGCqlTN4byNk3T1f8RiSuQRUTnq4D8kFCoK5FXlIIeQi0GhEFn8VpGcg8cBRwHhxioytzd6IIeVWCX3wjDqWiyeiFOkUIl7I=
+	t=1759243934; cv=none; b=jvqJd2dHv7gUa6fAS1MrXZgUafkwCLf6s0ORT7fcERSop7AkKjNiBYxPeOi4F9YBBmnaJo4ddm71ahjdcDwE/SStpzMMdVhSZKYqJLuW+45nwoXMSI9A8NDWaxkqbTFpMhwacC5cEOSjGLBS4gd59LKDmP1x0M1Q20LBJduQQEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243932; c=relaxed/simple;
-	bh=PB/HDRzaatK5VQDBI/W20iP1WNGjeaX/6cYTxExFOnk=;
+	s=arc-20240116; t=1759243934; c=relaxed/simple;
+	bh=+VsETWWpp0FCF81YojyfwdwhrP3wI/mlDu9Omwn5C5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlVUOtGr4mCRbdMwCKN6fnpXMJcTSG6OGIcxL1kSDsyOgpyeKI3hru3ax2JWdVwVtmtOBBjjwktmBo0zl4JueKSPUEHZDuV/jjxYUP7P8L5fDY3KEQRTQOnlZXoD5bHCdeRi+fvYcp+qLwvNS8EKzidvxMSTVZXh6lvEWkKASL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vF/G7cKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J20T8SE3W10e/MPjPEepqozNZoIFe12CRjscoaGHtsG0WMdJ+HnOactE7Ve//VdjHcTK69hJiR9Jp1lRtURsNVUFsLB8rOuVEpvnB8R4laj+LHtEhZEDIyIIG5U+/5CIBuPEx3i9Hwxoo7YeBFVCZjlORO4I/feYtauQUNFh73c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5RVYQ8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF/G7cKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514FAC4CEF0;
-	Tue, 30 Sep 2025 14:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5RVYQ8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D29C4CEF0;
+	Tue, 30 Sep 2025 14:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243930;
-	bh=PB/HDRzaatK5VQDBI/W20iP1WNGjeaX/6cYTxExFOnk=;
+	s=korg; t=1759243934;
+	bh=+VsETWWpp0FCF81YojyfwdwhrP3wI/mlDu9Omwn5C5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vF/G7cKkH9xazv1KdVz0CZYdAkVNBFfPxK9aqDGOCLqftx2E+GwpeM+pfLNkp0QXw
-	 xJyZ/6t3QTcTB7FKqtPGWbQ6pHvtMjrR8DrUVux3lh/rmOcN0ZFxuELyQrqF9kLgWO
-	 ajNRKrJFkvxYx8mYB6VlSPVfP4B3y0u2ehBSgbe0=
+	b=E5RVYQ8cjlpK/QKrZGqVGisUWiuR//+WCImkYtPQjJdFD+Pt2rWNFZjB0D+kYRkaP
+	 7wdtErEk7AAACGRwq2vX7ebQRAfwMvIe+YI+hOi+V66LqWrVvyQsB0/CEc5abowMir
+	 VzBnUZjuKME4c5btBk5WfZfjujtHJRd2fhr+HVQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 58/81] ALSA: usb-audio: Remove unneeded wmb() in mixer_quirks
-Date: Tue, 30 Sep 2025 16:47:00 +0200
-Message-ID: <20250930143822.104103451@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>
+Subject: [PATCH 5.4 29/81] soc: qcom: mdt_loader: Deal with zero e_shentsize
+Date: Tue, 30 Sep 2025 16:46:31 +0200
+Message-ID: <20250930143820.883820292@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -51,46 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 9cea7425595697802e8d55a322a251999554b8b1 ]
+commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
 
-Adding a memory barrier before wake_up() in
-snd_usb_soundblaster_remote_complete() is supposed to ensure the write
-to mixer->rc_code is visible in wait_event_interruptible() from
-snd_usb_sbrc_hwdep_read().
+Firmware that doesn't provide section headers leave both e_shentsize and
+e_shnum 0, which obvious isn't compatible with the newly introduced
+stricter checks.
 
-However, this is not really necessary, since wake_up() is just a wrapper
-over __wake_up() which already executes a full memory barrier before
-accessing the state of the task to be waken up.
+Make the section-related checks conditional on either of these values
+being non-zero.
 
-Drop the redundant call to wmb() and implicitly fix the checkpatch
-complaint:
-
-  WARNING: memory barrier without comment
-
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-8-1a821463b632@collabora.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
+Reported-by: Val Packett <val@packett.cool>
+Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Yongqin Liu <yongqin.liu@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index f318b80d646d5..03d49d4c5141d 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -207,7 +207,6 @@ static void snd_usb_soundblaster_remote_complete(struct urb *urb)
- 	if (code == rc->mute_code)
- 		snd_usb_mixer_notify_id(mixer, rc->mute_mixer_id);
- 	mixer->rc_code = code;
--	wmb();
- 	wake_up(&mixer->rc_waitq);
- }
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -39,12 +39,14 @@ static bool mdt_header_valid(const struc
+ 	if (phend > fw->size)
+ 		return false;
  
--- 
-2.51.0
-
+-	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
+-		return false;
++	if (ehdr->e_shentsize || ehdr->e_shnum) {
++		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
++			return false;
+ 
+-	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+-	if (shend > fw->size)
+-		return false;
++		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
++		if (shend > fw->size)
++			return false;
++	}
+ 
+ 	return true;
+ }
 
 
