@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7D8307AF8;
-	Tue, 30 Sep 2025 15:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579362FFDE6;
+	Tue, 30 Sep 2025 15:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245207; cv=none; b=k4WVDworbJu+eYw+T98fXoctoZX7cu8FNugjCNJzdrVBilyxwonChMmVtmS+aVzc0AubyPJbIG0Q8eDap29PfUEGl1xjeZk8j28hw6b7yNCNXRlfPjXjyAW0sral5/RkJElXbJ8a7ms6zHwM0ka+plf/I3NyjDcLNNe+8M8u/Ds=
+	t=1759245210; cv=none; b=XULIx+T40Y9bMwjZvzDnKq9uP0O01rggnH7AKjtddnKoaZIcIumcNrqc26IpJxIVjFsQ3Hr0g6Uxco7g41D7t3xTkgGqMXy8js7LniZlfFPkhTUmhS9VNhi0gLcAi1IK8mA4hFYdnkMF8LDIBPNmzFu39BTURkeNR2wBQfcUbv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245207; c=relaxed/simple;
-	bh=pDrz+WaQon+1pycsrb+6HTB1yiWWD6ZZbv8KYSJE7vE=;
+	s=arc-20240116; t=1759245210; c=relaxed/simple;
+	bh=6peGh7Hp6WdCqz9eVeH4l9t5DQrKwtvGg3UvS8rzSWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1dEQNO/SzQzIXcJQ6PFV3PZS9E4jndkN3nIdRfINYwbTRK3yaLZDU0qEKruDFjzC5lrBLATf3GmrmHV+pNbWUZ+H8AcwwIyECuSAhjrAbIFs95fM1aIqPHBJlrm2KcLilJLfrlWP88b5jZ+qo8+AP+aBQ0HOMkPxKEM5d5w7YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2lwkwrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQPzRgGtFqVFC641a3jmJp9+MF0kU1fDQy5WFdNMizezVDvcXQ363vjuGl+R+8VU1SWzB/jRGGhGurCodSEU6DADXjf76C83yTFiXJDGASYQ35WD4RaPrVrcPluR+3CIKTsaUUot9m8/J0+WxxIjyUdWOiZlJG+eA/rxtX+5ulc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPJCHPXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2lwkwrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64BEC113D0;
-	Tue, 30 Sep 2025 15:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPJCHPXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FD9C4CEF0;
+	Tue, 30 Sep 2025 15:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245207;
-	bh=pDrz+WaQon+1pycsrb+6HTB1yiWWD6ZZbv8KYSJE7vE=;
+	s=korg; t=1759245210;
+	bh=6peGh7Hp6WdCqz9eVeH4l9t5DQrKwtvGg3UvS8rzSWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2lwkwrWUiYaekvjKWFoRo2NrPBO+fHclQr7a4XRynTJSBb8ju5LLbkVjeK6oiiqr
-	 W0r9+8+YGGHfSbhn99UorPcmGacigAzcAWeFbOYX+W8iD2PhjSQZ3fwlXIMj2Y70w5
-	 Z4ojH6WfLa93wqbrfIHWqKB13jVS6IzRAQ1cEJFk=
+	b=oPJCHPXkPyAJaDXoxmkg/s8C6iamip8XViRVZg/laivhxk2nzxSaeLQP5Kbw8PlbO
+	 CykDAsOjjGclkxPxSBj5KoXPTX36ER+mkmsv/olO5y2q925TndFBxk4az6yQzk8yQ7
+	 oCJyzSIU0dJBbW/eLNhzIkozg5ra9THObfLT8/hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	"Luigino Camastra, Aisle Research" <luigino.camastra@aisle.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/151] ksmbd: smbdirect: validate data_offset and data_length field of smb_direct_data_transfer
-Date: Tue, 30 Sep 2025 16:47:09 +0200
-Message-ID: <20250930143831.540614578@linuxfoundation.org>
+Subject: [PATCH 5.15 100/151] mptcp: propagate shutdown to subflows when possible
+Date: Tue, 30 Sep 2025 16:47:10 +0200
+Message-ID: <20250930143831.581421085@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -53,60 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 5282491fc49d5614ac6ddcd012e5743eecb6a67c ]
+[ Upstream commit f755be0b1ff429a2ecf709beeb1bcd7abc111c2b ]
 
-If data_offset and data_length of smb_direct_data_transfer struct are
-invalid, out of bounds issue could happen.
-This patch validate data_offset and data_length field in recv_done.
+When the MPTCP DATA FIN have been ACKed, there is no more MPTCP related
+metadata to exchange, and all subflows can be safely shutdown.
 
+Before this patch, the subflows were actually terminated at 'close()'
+time. That's certainly fine most of the time, but not when the userspace
+'shutdown()' a connection, without close()ing it. When doing so, the
+subflows were staying in LAST_ACK state on one side -- and consequently
+in FIN_WAIT2 on the other side -- until the 'close()' of the MPTCP
+socket.
+
+Now, when the DATA FIN have been ACKed, all subflows are shutdown. A
+consequence of this is that the TCP 'FIN' flag can be set earlier now,
+but the end result is the same. This affects the packetdrill tests
+looking at the end of the MPTCP connections, but for a good reason.
+
+Note that tcp_shutdown() will check the subflow state, so no need to do
+that again before calling it.
+
+Fixes: 3721b9b64676 ("mptcp: Track received DATA_FIN sequence number and add related helpers")
 Cc: stable@vger.kernel.org
-Fixes: 2ea086e35c3d ("ksmbd: add buffer validation for smb direct")
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Reported-by: Luigino Camastra, Aisle Research <luigino.camastra@aisle.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Applied to fs/ksmbd/transport_rdma.c instead of fs/smb/server/transport_rdma.c ]
+Fixes: 16a9a9da1723 ("mptcp: Add helper to process acks of DATA_FIN")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-fix-sft-connect-v1-1-d40e77cbbf02@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/mptcp/protocol.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -548,7 +548,7 @@ static void recv_done(struct ib_cq *cq,
- 	case SMB_DIRECT_MSG_DATA_TRANSFER: {
- 		struct smb_direct_data_transfer *data_transfer =
- 			(struct smb_direct_data_transfer *)recvmsg->packet;
--		unsigned int data_length;
-+		unsigned int data_offset, data_length;
- 		int avail_recvmsg_count, receive_credits;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -354,6 +354,19 @@ static void mptcp_close_wake_up(struct s
+ 		sk_wake_async(sk, SOCK_WAKE_WAITD, POLL_IN);
+ }
  
- 		if (wc->byte_len <
-@@ -559,14 +559,15 @@ static void recv_done(struct ib_cq *cq,
++static void mptcp_shutdown_subflows(struct mptcp_sock *msk)
++{
++	struct mptcp_subflow_context *subflow;
++
++	mptcp_for_each_subflow(msk, subflow) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		bool slow;
++
++		slow = lock_sock_fast(ssk);
++		tcp_shutdown(ssk, SEND_SHUTDOWN);
++		unlock_sock_fast(ssk, slow);
++	}
++}
+ static bool mptcp_pending_data_fin_ack(struct sock *sk)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+@@ -377,6 +390,7 @@ static void mptcp_check_data_fin_ack(str
+ 			break;
+ 		case TCP_CLOSING:
+ 		case TCP_LAST_ACK:
++			mptcp_shutdown_subflows(msk);
+ 			inet_sk_state_store(sk, TCP_CLOSE);
+ 			break;
  		}
- 
- 		data_length = le32_to_cpu(data_transfer->data_length);
--		if (data_length) {
--			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
--			    (u64)data_length) {
--				put_recvmsg(t, recvmsg);
--				smb_direct_disconnect_rdma_connection(t);
--				return;
--			}
-+		data_offset = le32_to_cpu(data_transfer->data_offset);
-+		if (wc->byte_len < data_offset ||
-+		    wc->byte_len < (u64)data_offset + data_length) {
-+			put_recvmsg(t, recvmsg);
-+			smb_direct_disconnect_rdma_connection(t);
-+			return;
-+		}
- 
-+		if (data_length) {
- 			if (t->full_packet_received)
- 				recvmsg->first_segment = true;
- 
+@@ -539,6 +553,7 @@ static bool mptcp_check_data_fin(struct
+ 			inet_sk_state_store(sk, TCP_CLOSING);
+ 			break;
+ 		case TCP_FIN_WAIT2:
++			mptcp_shutdown_subflows(msk);
+ 			inet_sk_state_store(sk, TCP_CLOSE);
+ 			break;
+ 		default:
 
 
