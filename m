@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AF41487F4;
-	Tue, 30 Sep 2025 15:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0701487F4;
+	Tue, 30 Sep 2025 15:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244800; cv=none; b=A7t19Nrp5qtNIyH5v6dLPJDZR5y/DWQ6uSpMQNtTkF0MGp4Bu+VNeDjdivD5Ry74KtkgkPrxZPZRSDmu4K44gp+BCaIukggrLP+UGTo4B1nu2JNkbr1+4SiktFDhqtCIKBlQd6wc0T41WO85qT4V5W4QG9bNzlh6+rrBuim046U=
+	t=1759244803; cv=none; b=QOn3Jh8aOAwh/L8UitHIOTv95/68uhEbqD4rHfhZHK0Ht2I2o8drBMLg1ktNCDjZmNhU/vFlNetAFJnthYLdatkET/hJ/3Pd5dpucjxa2vgQePqba2+mosomVlg8a/wvf9lYlttOk74w4L7ZqlgY2B3sOykGUyu6xHraV7EEJIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244800; c=relaxed/simple;
-	bh=da6Atef4b+A7nbZOBGlGbpdtYp4HTgHMv/1tW7mGtko=;
+	s=arc-20240116; t=1759244803; c=relaxed/simple;
+	bh=OuERbUtzBYlOjw+Is4ti/TZD36pfqwtFTmd2qHkyICE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdUjz/AccEEGpwmE2uLJ6JQ3RgqrwjJsHm6n/mvYsBCHWt5vuHD69A+skE74rsuINIOWKChrAZAN17qfWEzYkl3me0nSnQdx4N3KGT/7BycK6btlUqfT1hx90SDXJ/Vu1zeqDVHRFQ2+XhydtYslb1e9EvMEFBDQ+Qm+8uaY7dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujq8KCap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W5cZQZnvFu9qsAlC04wKGFyQM+5q1t99y/Qa8v97NmnrrKmpP0M9S3aBd3sARS5LaNNn9yzmRcCOLm3iCXK6Xw04oA1uVpJb4zoSWWuEW92FmfouPaTAv4BzS0pvv6jkl5SpYwSkV8sRfUHeOf9nkrLnsspdOq1ez6hlDE4ljbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnJuuVJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujq8KCap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62077C4CEF0;
-	Tue, 30 Sep 2025 15:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnJuuVJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63D2C4CEF0;
+	Tue, 30 Sep 2025 15:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244799;
-	bh=da6Atef4b+A7nbZOBGlGbpdtYp4HTgHMv/1tW7mGtko=;
+	s=korg; t=1759244803;
+	bh=OuERbUtzBYlOjw+Is4ti/TZD36pfqwtFTmd2qHkyICE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujq8KCapXDB4HfMKz7Mc7hDgVojkbsnnWBUgbQQTs2wl6VFDg92HdCANvdgtHBNKL
-	 wui0nBJNTQopeWWbv1r+9GtVBdZRamSUm6SOc/N+DrRh1NwEyxv72r29WFDAnDUxC5
-	 HBIEc3+RX8HFYCR6csZSBw6Q2tUW3kmFNV4Exclg=
+	b=cnJuuVJ+76gAJuqMl3h0ZGRWUuNDLVQOtUqV9MlBVl1P/skxfCTzSpva4sNXRPdGm
+	 slak+FkV5CarM4gB307JUoIWaa2WKdPD5Sz+EiyhMG9C9WpOQHPNkakOajWbkoHYJi
+	 EUwJCEO0lMcjtPJyEclKnDECr+PjK6vOvldjIEpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riana Tauro <riana.tauro@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 090/143] drm/xe: Fix build with CONFIG_MODULES=n
-Date: Tue, 30 Sep 2025 16:46:54 +0200
-Message-ID: <20250930143834.816833542@linuxfoundation.org>
+	Josua Mayer <josua@solid-run.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>
+Subject: [PATCH 6.16 117/143] arm64: dts: marvell: cn9132-clearfog: fix multi-lane pci x2 and x4 ports
+Date: Tue, 30 Sep 2025 16:47:21 +0200
+Message-ID: <20250930143835.893003496@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,52 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit b67e7422d229dead0dddaad7e7c05558f24d552f ]
+commit 794a066688038df46c01e177cc6faebded0acba4 upstream.
 
-When building with CONFIG_MODULES=n, the __exit functions are dropped.
-However our init functions may call them for error handling, so they are
-not good candidates for the exit sections.
+The mvebu-comphy driver does not currently know how to pass correct
+lane-count to ATF while configuring the serdes lanes.
 
-Fix this error reported by 0day:
+This causes the system to hard reset during reconfiguration, if a pci
+card is present and has established a link during bootloader.
 
-	ld.lld: error: relocation refers to a symbol in a discarded section: xe_configfs_exit
-	>>> defined in vmlinux.a(drivers/gpu/drm/xe/xe_configfs.o)
-	>>> referenced by xe_module.c
-	>>>               drivers/gpu/drm/xe/xe_module.o:(init_funcs) in archive vmlinux.a
+Remove the comphy handles from the respective pci nodes to avoid runtime
+reconfiguration, relying solely on bootloader configuration - while
+avoiding the hard reset.
 
-This is the only exit function using __exit. Drop it to fix the build.
+When bootloader has configured the lanes correctly, the pci ports are
+functional under Linux.
 
-Cc: Riana Tauro <riana.tauro@intel.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506092221.1FmUQmI8-lkp@intel.com/
-Fixes: 16280ded45fb ("drm/xe: Add configfs to enable survivability mode")
-Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Link: https://lore.kernel.org/r/20250912-fix-nomodule-build-v1-1-d11b70a92516@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit d9b2623319fa20c2206754284291817488329648)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This issue may be addressed in the comphy driver at a future point.
+
+Fixes: e9ff907f4076 ("arm64: dts: add description for solidrun cn9132 cex7 module and clearfog board")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_configfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/marvell/cn9132-clearfog.dts |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_configfs.c b/drivers/gpu/drm/xe/xe_configfs.c
-index 9a2b96b111ef5..2b591ed055612 100644
---- a/drivers/gpu/drm/xe/xe_configfs.c
-+++ b/drivers/gpu/drm/xe/xe_configfs.c
-@@ -244,7 +244,7 @@ int __init xe_configfs_init(void)
- 	return 0;
- }
+--- a/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts
++++ b/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts
+@@ -413,7 +413,13 @@
+ /* SRDS #0,#1,#2,#3 - PCIe */
+ &cp0_pcie0 {
+ 	num-lanes = <4>;
+-	phys = <&cp0_comphy0 0>, <&cp0_comphy1 0>, <&cp0_comphy2 0>, <&cp0_comphy3 0>;
++	/*
++	 * The mvebu-comphy driver does not currently know how to pass correct
++	 * lane-count to ATF while configuring the serdes lanes.
++	 * Rely on bootloader configuration only.
++	 *
++	 * phys = <&cp0_comphy0 0>, <&cp0_comphy1 0>, <&cp0_comphy2 0>, <&cp0_comphy3 0>;
++	 */
+ 	status = "okay";
+ };
  
--void __exit xe_configfs_exit(void)
-+void xe_configfs_exit(void)
- {
- 	configfs_unregister_subsystem(&xe_configfs);
- }
--- 
-2.51.0
-
+@@ -475,7 +481,13 @@
+ /* SRDS #0,#1 - PCIe */
+ &cp1_pcie0 {
+ 	num-lanes = <2>;
+-	phys = <&cp1_comphy0 0>, <&cp1_comphy1 0>;
++	/*
++	 * The mvebu-comphy driver does not currently know how to pass correct
++	 * lane-count to ATF while configuring the serdes lanes.
++	 * Rely on bootloader configuration only.
++	 *
++	 * phys = <&cp1_comphy0 0>, <&cp1_comphy1 0>;
++	 */
+ 	status = "okay";
+ };
+ 
 
 
