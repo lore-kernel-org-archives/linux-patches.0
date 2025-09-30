@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314F61EE02F;
-	Tue, 30 Sep 2025 15:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D981EE02F;
+	Tue, 30 Sep 2025 15:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244624; cv=none; b=Vl/woG/kvijPN3VVu7gLbYfAlkmpIggCwsCK7UACYLX7V8hFqVJ4FQxQJHvA3LGJOpzeAD/4MyL06+M7jS81nNQbCDPWxsxXmp7qQJ0RZSAMHBAFiWsicSxu7AYEF5i78Ok4vr1IdLhDQruvScBL86ZNk0gSjXgiudROQBvuM2I=
+	t=1759244627; cv=none; b=eQAY6deQ5suMGO4ctXXSACbVkoDWFxxuaZZmlVONLJd5+a2E6oXyBh7GzxRdoUgDI0fY9fscY1qQtxssZP1K63RVMU50evC/PDpv1iqu1L2P8T+lEHJgkRQE7YHLNtRT5LUkTR+4+OST4Dqi66zSOaIx324Y5ZjLNN9ag8G3REw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244624; c=relaxed/simple;
-	bh=rn5DSqe9TVMrErglLhBdGyEyiA1zCxc0vf/pg1Mqvlw=;
+	s=arc-20240116; t=1759244627; c=relaxed/simple;
+	bh=HKxpE/lHiBVXt8D5ON61NSoZnlp2oeGztgnobqID6No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duWVYDieJ5+WHjEVm14lQdV7WH0CfoqOs1OG5As9Opo8aiaBN/DMtRpN7T6p7kkboY0YnWrIlOxqxRfc28iq1Yn1fqcXtyFsXVC4m71BW1OG6sCsQuadhOd7bMTyAb0cZEzjby9ZNREly2XyFJVIZvBsPehQuzy+o4/L5Lt9wWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+/J8cKg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AyEyN7BYiLySUxZV2NIc/uX6SjFy7slVPIChzbHIivZgv3WBWGqgB2MIXJGITPkhMmKeUtEFs0Ld8T4eOyeTBg4Nb0PMQxvDK5hfkDyWWi+9aRInHKjuMlptlNmFWDqIJ732k4nVCyXGX+pcyFAEe27m59fyg1jLNYnopq/vmYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mD6ajzI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+/J8cKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8D3C4CEF0;
-	Tue, 30 Sep 2025 15:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mD6ajzI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4EC4CEF0;
+	Tue, 30 Sep 2025 15:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244623;
-	bh=rn5DSqe9TVMrErglLhBdGyEyiA1zCxc0vf/pg1Mqvlw=;
+	s=korg; t=1759244626;
+	bh=HKxpE/lHiBVXt8D5ON61NSoZnlp2oeGztgnobqID6No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+/J8cKgxS/ZRM+qDGdG4CVanNsHC3nhyPgaacSUVE6ZOqNO0K+ZQFT2jL3BXpz9F
-	 +dPylM3ZYtp+fcn9G7VhyWssvfLYU+GlvNMZrFiozvK2ep3oe+ET6G0ficMQGam3Fw
-	 rRszoZOQBdZyHQC5GlhJ26Gwqm4hZTtqoi3muDjY=
+	b=2mD6ajzIP/UDCiZwWVhvrCadLzwHcpzi+FAEPrafq4zWB4Y86Ln4FaOvwWjVQMyDb
+	 hXRTbAgvlxmQR+6Sjx7CV1a5+s0gbGdGjXeKb/NkyR49Cb15UF6T6SPJTa0fvfUivh
+	 uD95Ufe66qpGd+haRiK3gpK3Acr12ZjDwRCdWn2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+64e24275ad95a915a313@syzkaller.appspotmail.com,
-	Wang Liang <wangliang74@huawei.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 065/143] net: tun: Update napi->skb after XDP process
-Date: Tue, 30 Sep 2025 16:46:29 +0200
-Message-ID: <20250930143833.826641745@linuxfoundation.org>
+Subject: [PATCH 6.16 066/143] net/smc: fix warning in smc_rx_splice() when calling get_page()
+Date: Tue, 30 Sep 2025 16:46:30 +0200
+Message-ID: <20250930143833.866459449@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -53,111 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit 1091860a16a86ccdd77c09f2b21a5f634f5ab9ec ]
+[ Upstream commit a35c04de2565db191726b5741e6b66a35002c652 ]
 
-The syzbot report a UAF issue:
+smc_lo_register_dmb() allocates DMB buffers with kzalloc(), which are
+later passed to get_page() in smc_rx_splice(). Since kmalloc memory is
+not page-backed, this triggers WARN_ON_ONCE() in get_page() and prevents
+holding a refcount on the buffer. This can lead to use-after-free if
+the memory is released before splice_to_pipe() completes.
 
-  BUG: KASAN: slab-use-after-free in skb_reset_mac_header include/linux/skbuff.h:3150 [inline]
-  BUG: KASAN: slab-use-after-free in napi_frags_skb net/core/gro.c:723 [inline]
-  BUG: KASAN: slab-use-after-free in napi_gro_frags+0x6e/0x1030 net/core/gro.c:758
-  Read of size 8 at addr ffff88802ef22c18 by task syz.0.17/6079
-  CPU: 0 UID: 0 PID: 6079 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
-   print_address_description mm/kasan/report.c:378 [inline]
-   print_report+0xca/0x240 mm/kasan/report.c:482
-   kasan_report+0x118/0x150 mm/kasan/report.c:595
-   skb_reset_mac_header include/linux/skbuff.h:3150 [inline]
-   napi_frags_skb net/core/gro.c:723 [inline]
-   napi_gro_frags+0x6e/0x1030 net/core/gro.c:758
-   tun_get_user+0x28cb/0x3e20 drivers/net/tun.c:1920
-   tun_chr_write_iter+0x113/0x200 drivers/net/tun.c:1996
-   new_sync_write fs/read_write.c:593 [inline]
-   vfs_write+0x5c9/0xb30 fs/read_write.c:686
-   ksys_write+0x145/0x250 fs/read_write.c:738
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+Use folio_alloc() instead, ensuring DMBs are page-backed and safe for
+get_page().
 
-  Allocated by task 6079:
-   kasan_save_stack mm/kasan/common.c:47 [inline]
-   kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
-   unpoison_slab_object mm/kasan/common.c:330 [inline]
-   __kasan_mempool_unpoison_object+0xa0/0x170 mm/kasan/common.c:558
-   kasan_mempool_unpoison_object include/linux/kasan.h:388 [inline]
-   napi_skb_cache_get+0x37b/0x6d0 net/core/skbuff.c:295
-   __alloc_skb+0x11e/0x2d0 net/core/skbuff.c:657
-   napi_alloc_skb+0x84/0x7d0 net/core/skbuff.c:811
-   napi_get_frags+0x69/0x140 net/core/gro.c:673
-   tun_napi_alloc_frags drivers/net/tun.c:1404 [inline]
-   tun_get_user+0x77c/0x3e20 drivers/net/tun.c:1784
-   tun_chr_write_iter+0x113/0x200 drivers/net/tun.c:1996
-   new_sync_write fs/read_write.c:593 [inline]
-   vfs_write+0x5c9/0xb30 fs/read_write.c:686
-   ksys_write+0x145/0x250 fs/read_write.c:738
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+WARNING: CPU: 18 PID: 12152 at ./include/linux/mm.h:1330 smc_rx_splice+0xaf8/0xe20 [smc]
+CPU: 18 UID: 0 PID: 12152 Comm: smcapp Kdump: loaded Not tainted 6.17.0-rc3-11705-g9cf4672ecfee #10 NONE
+Hardware name: IBM 3931 A01 704 (z/VM 7.4.0)
+Krnl PSW : 0704e00180000000 000793161032696c (smc_rx_splice+0xafc/0xe20 [smc])
+           R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
+Krnl GPRS: 0000000000000000 001cee80007d3001 00077400000000f8 0000000000000005
+           0000000000000001 001cee80007d3006 0007740000001000 001c000000000000
+           000000009b0c99e0 0000000000001000 001c0000000000f8 001c000000000000
+           000003ffcc6f7c88 0007740003e98000 0007931600000005 000792969b2ff7b8
+Krnl Code: 0007931610326960: af000000		mc	0,0
+           0007931610326964: a7f4ff43		brc	15,00079316103267ea
+          #0007931610326968: af000000		mc	0,0
+          >000793161032696c: a7f4ff3f		brc	15,00079316103267ea
+           0007931610326970: e320f1000004	lg	%r2,256(%r15)
+           0007931610326976: c0e53fd1b5f5	brasl	%r14,000793168fd5d560
+           000793161032697c: a7f4fbb5		brc	15,00079316103260e6
+           0007931610326980: b904002b		lgr	%r2,%r11
+Call Trace:
+ smc_rx_splice+0xafc/0xe20 [smc]
+ smc_rx_splice+0x756/0xe20 [smc])
+ smc_rx_recvmsg+0xa74/0xe00 [smc]
+ smc_splice_read+0x1ce/0x3b0 [smc]
+ sock_splice_read+0xa2/0xf0
+ do_splice_read+0x198/0x240
+ splice_file_to_pipe+0x7e/0x110
+ do_splice+0x59e/0xde0
+ __do_splice+0x11a/0x2d0
+ __s390x_sys_splice+0x140/0x1f0
+ __do_syscall+0x122/0x280
+ system_call+0x6e/0x90
+Last Breaking-Event-Address:
+smc_rx_splice+0x960/0xe20 [smc]
+---[ end trace 0000000000000000 ]---
 
-  Freed by task 6079:
-   kasan_save_stack mm/kasan/common.c:47 [inline]
-   kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
-   kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
-   poison_slab_object mm/kasan/common.c:243 [inline]
-   __kasan_slab_free+0x5b/0x80 mm/kasan/common.c:275
-   kasan_slab_free include/linux/kasan.h:233 [inline]
-   slab_free_hook mm/slub.c:2422 [inline]
-   slab_free mm/slub.c:4695 [inline]
-   kmem_cache_free+0x18f/0x400 mm/slub.c:4797
-   skb_pp_cow_data+0xdd8/0x13e0 net/core/skbuff.c:969
-   netif_skb_check_for_xdp net/core/dev.c:5390 [inline]
-   netif_receive_generic_xdp net/core/dev.c:5431 [inline]
-   do_xdp_generic+0x699/0x11a0 net/core/dev.c:5499
-   tun_get_user+0x2523/0x3e20 drivers/net/tun.c:1872
-   tun_chr_write_iter+0x113/0x200 drivers/net/tun.c:1996
-   new_sync_write fs/read_write.c:593 [inline]
-   vfs_write+0x5c9/0xb30 fs/read_write.c:686
-   ksys_write+0x145/0x250 fs/read_write.c:738
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-After commit e6d5dbdd20aa ("xdp: add multi-buff support for xdp running in
-generic mode"), the original skb may be freed in skb_pp_cow_data() when
-XDP program was attached, which was allocated in tun_napi_alloc_frags().
-However, the napi->skb still point to the original skb, update it after
-XDP process.
-
-Reported-by: syzbot+64e24275ad95a915a313@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=64e24275ad95a915a313
-Fixes: e6d5dbdd20aa ("xdp: add multi-buff support for xdp running in generic mode")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250917113919.3991267-1-wangliang74@huawei.com
+Fixes: f7a22071dbf3 ("net/smc: implement DMB-related operations of loopback-ism")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Link: https://patch.msgid.link/20250917184220.801066-1-sidraya@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/smc/smc_loopback.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index f8c5e2fd04dfa..0fffa023cb736 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1863,6 +1863,9 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
- 				local_bh_enable();
- 				goto unlock_frags;
- 			}
+diff --git a/net/smc/smc_loopback.c b/net/smc/smc_loopback.c
+index 3c5f64ca41153..85f0b7853b173 100644
+--- a/net/smc/smc_loopback.c
++++ b/net/smc/smc_loopback.c
+@@ -56,6 +56,7 @@ static int smc_lo_register_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb,
+ {
+ 	struct smc_lo_dmb_node *dmb_node, *tmp_node;
+ 	struct smc_lo_dev *ldev = smcd->priv;
++	struct folio *folio;
+ 	int sba_idx, rc;
+ 
+ 	/* check space for new dmb */
+@@ -74,13 +75,16 @@ static int smc_lo_register_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb,
+ 
+ 	dmb_node->sba_idx = sba_idx;
+ 	dmb_node->len = dmb->dmb_len;
+-	dmb_node->cpu_addr = kzalloc(dmb_node->len, GFP_KERNEL |
+-				     __GFP_NOWARN | __GFP_NORETRY |
+-				     __GFP_NOMEMALLOC);
+-	if (!dmb_node->cpu_addr) {
 +
-+			if (frags && skb != tfile->napi.skb)
-+				tfile->napi.skb = skb;
- 		}
- 		rcu_read_unlock();
- 		local_bh_enable();
++	/* not critical; fail under memory pressure and fallback to TCP */
++	folio = folio_alloc(GFP_KERNEL | __GFP_NOWARN | __GFP_NOMEMALLOC |
++			    __GFP_NORETRY | __GFP_ZERO,
++			    get_order(dmb_node->len));
++	if (!folio) {
+ 		rc = -ENOMEM;
+ 		goto err_node;
+ 	}
++	dmb_node->cpu_addr = folio_address(folio);
+ 	dmb_node->dma_addr = SMC_DMA_ADDR_INVALID;
+ 	refcount_set(&dmb_node->refcnt, 1);
+ 
+@@ -122,7 +126,7 @@ static void __smc_lo_unregister_dmb(struct smc_lo_dev *ldev,
+ 	write_unlock_bh(&ldev->dmb_ht_lock);
+ 
+ 	clear_bit(dmb_node->sba_idx, ldev->sba_idx_mask);
+-	kvfree(dmb_node->cpu_addr);
++	folio_put(virt_to_folio(dmb_node->cpu_addr));
+ 	kfree(dmb_node);
+ 
+ 	if (atomic_dec_and_test(&ldev->dmb_cnt))
 -- 
 2.51.0
 
