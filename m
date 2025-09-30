@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671AB30597A;
-	Tue, 30 Sep 2025 15:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D1E2F6167;
+	Tue, 30 Sep 2025 15:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244822; cv=none; b=PlcFhxTzvfCftO3B6tA9e4V1dTCr4mAEFHTcMmeG2zxT45sRsPqwlWixPeK77s+bjW/rUFryzqM4V+d418wXO8EKD5e/V7ipEBBUfw9vlg9Xu6am1eK4PgUyLM++TtfhBEjmXCPLNwgicnUGNk4hjiYeX4P+xLC4LVywzCrOs3c=
+	t=1759244826; cv=none; b=mD3934pMPmVhlRVwVtdWxUakD6alJE3gWA3UPscu6UnVmE1Re54oAsVeapqwh++1PO1PWNhXKkJxsrswBUqqU4+jd158+TJ5Exwpw/X9fuyfTFJgLuolzNzbKRtWDpbHMyx4ifVHmRIbcxl7IJ7wYJckP9uw/lcED5emDZu77KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244822; c=relaxed/simple;
-	bh=0BFoZnQIkeeq00+Hkrr16pacwT5bs7cKpItliJhnKUM=;
+	s=arc-20240116; t=1759244826; c=relaxed/simple;
+	bh=fG2WSxqhzefKadTaM8ytUR0GT4yNtvlCTxDt4Ahz2Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZXdifgEeI45qCSVFjHVTHjn46e53EW+VoEDG6sX/kSXYaiKo5PiET3ZzMsKu7skpoy7fB6BZb5+ds8sB9v3B3fhBGFHubBAYt1+LKZQN7pdY+wV9wGP4uoSKYDwrnRYqhzCo/ZVBBfgd0HtgICWqKp7bGwy+f8hXh/5lQj/CF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrQxDY1P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R+y9unpNqsnm497b/SNTqP5sS9vt81nKhQ2o1avQddiG3PiJ0YRc0ndaD+LLCZiZBYxhn5TtXxCq2yJEAQ0G3L1FriNhC/tKMqKMsNndy6DU66fVpim50Sxdbkq7KOrybfVaX5MB4JiaKJXj7xZ3N1FLMErjzjJoQgl0OvGSVSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSrXNxwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrQxDY1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E06C4CEF0;
-	Tue, 30 Sep 2025 15:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSrXNxwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19035C4CEF0;
+	Tue, 30 Sep 2025 15:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244822;
-	bh=0BFoZnQIkeeq00+Hkrr16pacwT5bs7cKpItliJhnKUM=;
+	s=korg; t=1759244825;
+	bh=fG2WSxqhzefKadTaM8ytUR0GT4yNtvlCTxDt4Ahz2Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrQxDY1PCgoYUAM1p+pvMwTm8/wIH4GweAeTsyGonTPUYnGJk/GeGN8dx+1hvn9Ih
-	 OUF2MmB1WwoeTg1cwojWF4kJ8iEBq+64N/04CBfIruuUB8ro9akGbw4lAUOyTGykMo
-	 KG1LPLxRTgCE7G91HhJIaBiSUe30N0wikMqAEIo0=
+	b=jSrXNxwbVY+hPYStAXsX9enn4hK4Usa0XHFpBhXSXMi+1rzC3V0xqextb962AWrVe
+	 ifTKrCXYY9D1fKSkguhn4kV1bnFATmZ2d6VWiTufmWIGMGI9qKPMJ6Zzuihc1sC5x2
+	 NQ3ABiu4Mi7pbmNfWmfydZ/anBIkTDGw5/naI+Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+80cb3cc5c14fad191a10@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 093/143] futex: Use correct exit on failure from futex_hash_allocate_default()
-Date: Tue, 30 Sep 2025 16:46:57 +0200
-Message-ID: <20250930143834.934720951@linuxfoundation.org>
+Subject: [PATCH 6.16 094/143] drm/panthor: Defer scheduler entitiy destruction to queue release
+Date: Tue, 30 Sep 2025 16:46:58 +0200
+Message-ID: <20250930143834.974065287@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -47,50 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 4ec3c15462b9f44562f45723a92e2807746ba7d1 ]
+[ Upstream commit 7d9c3442b02ab7dd3c44e20095a178fd57d2eccb ]
 
-copy_process() uses the wrong error exit path from futex_hash_allocate_default().
-After exiting from futex_hash_allocate_default(), neither tasklist_lock
-nor siglock has been acquired. The exit label bad_fork_core_free unlocks
-both of these locks which is wrong.
+Commit de8548813824 ("drm/panthor: Add the scheduler logical block")
+handled destruction of a group's queues' drm scheduler entities early
+into the group destruction procedure.
 
-The next exit label, bad_fork_cancel_cgroup, is the correct exit.
-sched_cgroup_fork() did not allocate any resources that need to freed.
+However, that races with the group submit ioctl, because by the time
+entities are destroyed (through the group destroy ioctl), the submission
+procedure might've already obtained a group handle, and therefore the
+ability to push jobs into entities. This is met with a DRM error message
+within the drm scheduler core as a situation that should never occur.
 
-Use bad_fork_cancel_cgroup on error exit from futex_hash_allocate_default().
+Fix by deferring drm scheduler entity destruction to queue release time.
 
-Fixes: 7c4f75a21f636 ("futex: Allow automatic allocation of process wide futex hash")
-Reported-by: syzbot+80cb3cc5c14fad191a10@syzkaller.appspotmail.com
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/all/68cb1cbd.050a0220.2ff435.0599.GAE@google.com
+Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250919164436.531930-1-adrian.larumbe@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 1ee8eb11f38ba..0cbc174da76ac 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -2289,7 +2289,7 @@ __latent_entropy struct task_struct *copy_process(
- 	if (need_futex_hash_allocate_default(clone_flags)) {
- 		retval = futex_hash_allocate_default();
- 		if (retval)
--			goto bad_fork_core_free;
-+			goto bad_fork_cancel_cgroup;
- 		/*
- 		 * If we fail beyond this point we don't free the allocated
- 		 * futex hash map. We assume that another thread will be created
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index 43ee57728de54..e927d80d6a2af 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -886,8 +886,7 @@ static void group_free_queue(struct panthor_group *group, struct panthor_queue *
+ 	if (IS_ERR_OR_NULL(queue))
+ 		return;
+ 
+-	if (queue->entity.fence_context)
+-		drm_sched_entity_destroy(&queue->entity);
++	drm_sched_entity_destroy(&queue->entity);
+ 
+ 	if (queue->scheduler.ops)
+ 		drm_sched_fini(&queue->scheduler);
+@@ -3558,11 +3557,6 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
+ 	if (!group)
+ 		return -EINVAL;
+ 
+-	for (u32 i = 0; i < group->queue_count; i++) {
+-		if (group->queues[i])
+-			drm_sched_entity_destroy(&group->queues[i]->entity);
+-	}
+-
+ 	mutex_lock(&sched->reset.lock);
+ 	mutex_lock(&sched->lock);
+ 	group->destroyed = true;
 -- 
 2.51.0
 
