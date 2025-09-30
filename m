@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE90F30506C;
-	Tue, 30 Sep 2025 14:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B5302755;
+	Tue, 30 Sep 2025 14:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244382; cv=none; b=NfnFf61RZvS5c9X2zAYXtl8WOg79LxSae9kN/x1dr4YVwt8ul4k18/WciwbhlFy4nMIv3dtbu0UFGIhUaDrgY043QU/UbeIzvtvcd7Yl95dIGE+EplmweGqvAzqBteEdcVRsH64d84R0RfS9lbV35f5HrlJL8Pve2IzD3UMmiTw=
+	t=1759244385; cv=none; b=kjwRGSaRvv8j9WCMvTgE8KAC+HfwAqkGQCsObcoha97mfoPv3o5ZUIYWmkwLN5KwLFKK+4daACfdAKLgwDJHOHL+OyETs4Mp1V4UsgijAc0Q4vM7u3T4lcdtb8PQ+JaB6Dmzh6+KW9+5NTLeLrkorvykbMph23LWMPnf1V+RZa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244382; c=relaxed/simple;
-	bh=OUdHSepfytE91AmfqpQiFh1LnXRf+dmu2oVQCuirG9I=;
+	s=arc-20240116; t=1759244385; c=relaxed/simple;
+	bh=mAuKMu5mh3HF8g6Eg/rxNO7m/+GMEm/DpEK4mwTQwkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDQZ5dm1TIqayltaSdo3EVKl0kgFyDT6kDeEXcpmZpc9/E2jzW8Cu7qKi1c2QCPj8OaaL2Qs9q9J/3RXKxQHyMupOy79v3ZfbuqV6fYEbZ823YW57K8KsO17ofCMUqSqR+ava5/oBNWTpG4nTRVz4KNpnG95XC+ovb8tfAygr44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agWsbHid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WHIt4eheN1UDzgGE+wHWYRvrlXuXfDJ3YMIO9jLqInuCmfISX6nuzQLk8nhGiiSRXXJOIEv2/37Wovf/xoen9J6ekr1L3XEBGsr6+mtBSQQAs5jOxMKQJTFgqPMk+Z3nmQOOmxvBJ4nb/JeA/ObfVZoCVb0eBKw3jWvQDgG4WMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6SbN0wo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agWsbHid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA56C4CEF0;
-	Tue, 30 Sep 2025 14:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6SbN0wo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FB2C4CEF0;
+	Tue, 30 Sep 2025 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244382;
-	bh=OUdHSepfytE91AmfqpQiFh1LnXRf+dmu2oVQCuirG9I=;
+	s=korg; t=1759244385;
+	bh=mAuKMu5mh3HF8g6Eg/rxNO7m/+GMEm/DpEK4mwTQwkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agWsbHidbhiiKqyidjhnZerVvWfTsMjIHkzCE7PcbwTsRXHGYZXCejIcTHT17qThM
-	 7F6d1PBVItqupIRIS5dS5l+KczTjsbBWxltNym+IuKcS8p8isxxZhEluiHYn+JwdKR
-	 5AcZtN72u+gp9oI0fDpTTvUXgBVZtcOZqHLappbc=
+	b=g6SbN0woXLPf/JkeoqN5TnPtymNLEOjYApnK/RKdtwUVtpkJKY2Bqn1bPVTXOZt1i
+	 04u97PchjI83ndd13MdhFWSa956UGO5zGOXnMSrNiMnbOUK5RDzs/hJ/X7taqIunxl
+	 AFDMNVNaa1Qf8ORcCIatTeDNDxRanr+pmn09F9Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czapnik <lukasz.czapnik@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.10 112/122] i40e: add max boundary check for VF filters
-Date: Tue, 30 Sep 2025 16:47:23 +0200
-Message-ID: <20250930143827.552429890@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 086/122] ALSA: usb-audio: Avoid multiple assignments in mixer_quirks
+Date: Tue, 30 Sep 2025 16:46:57 +0200
+Message-ID: <20250930143826.518265386@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -54,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Czapnik <lukasz.czapnik@intel.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit cb79fa7118c150c3c76a327894bb2eb878c02619 upstream.
+[ Upstream commit 03ddd3bdb94df3edb1f2408b57cfb00b3d92a208 ]
 
-There is no check for max filters that VF can request. Add it.
+Handle report from checkpatch.pl:
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  CHECK: multiple assignments should be avoided
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-6-1a821463b632@collabora.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/usb/mixer_quirks.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3710,6 +3710,8 @@ err:
- 				       aq_ret);
- }
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 8a84e89890772..715b0922243c1 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1593,7 +1593,8 @@ static int snd_microii_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	unsigned int pval, pval_old;
+ 	int err;
  
-+#define I40E_MAX_VF_CLOUD_FILTER 0xFF00
-+
- /**
-  * i40e_vc_add_cloud_filter
-  * @vf: pointer to the VF info
-@@ -3749,6 +3751,14 @@ static int i40e_vc_add_cloud_filter(stru
- 		goto err_out;
- 	}
- 
-+	if (vf->num_cloud_filters >= I40E_MAX_VF_CLOUD_FILTER) {
-+		dev_warn(&pf->pdev->dev,
-+			 "VF %d: Max number of filters reached, can't apply cloud filter\n",
-+			 vf->vf_id);
-+		aq_ret = -ENOSPC;
-+		goto err_out;
-+	}
-+
- 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
- 	if (!cfilter)
- 		return -ENOMEM;
+-	pval = pval_old = kcontrol->private_value;
++	pval = kcontrol->private_value;
++	pval_old = pval;
+ 	pval &= 0xfffff0f0;
+ 	pval |= (ucontrol->value.iec958.status[1] & 0x0f) << 8;
+ 	pval |= (ucontrol->value.iec958.status[0] & 0x0f);
+-- 
+2.51.0
+
 
 
