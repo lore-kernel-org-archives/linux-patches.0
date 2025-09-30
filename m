@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2472264AB;
-	Tue, 30 Sep 2025 15:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EA61F3FED;
+	Tue, 30 Sep 2025 15:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245993; cv=none; b=fyqtjcIIDaRGwJcd76UkvSx0+auiqgepPDw6JoaAwmgMy5hFeImBWMYnljRdZeRaIs/XILSxTk+uu5zbqpscZ2TbLhsmzwMlMT6xswFkLO6uDI/RRwNx/wr8i0prOk0hTlmU6nYMswfqxYTQ8j+gWmiZLE/3B0AuSJZfYmEgVys=
+	t=1759245996; cv=none; b=EOIMdXpx7m+A8+imD9FbCMrRl4WUHbk6Do3hlQLrqKOj++kcCE8U3JLRUPUSvNN8pinZGtyZZj8+rNurEBYR3OMdxAWwP0tLgKh7sQdt+wf9i43pWwJ7Cnn0ayHi/J31UtISGoE/sdwx2a06AMNMa+BnNBVJKcHvXzmf7FjlXFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245993; c=relaxed/simple;
-	bh=5kXv3iE7Hb/IIhtFe4TS0rgwRDvyhDVsjoAlKW3EZ18=;
+	s=arc-20240116; t=1759245996; c=relaxed/simple;
+	bh=D7RHVwTT3GViuNNwawXYyWl/IFOz/KmdrqWT26fxOHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIh8ARYz64KzxFzdoJE2REbCOS3hYbsEhW9CS3L3N5s0lcG2TF+NJ3QP84vgy6NJ9z6Cu9gzEeRMnWgjTG5UUOhu9lKnKF+wELcVfQ8UeZmk1Z6zRypdpJtIqluHqwMp/s8Rbkx6E1puCgHA8FVi6Q/v4EQEN03yKsMPqCR5G2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7FEDJUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hDdY4PBBDvf4nmJObtJGeXQgPnpGJ5/vAPY29Op8Z/i4BPOPkf00/SZW/m2zSMkWa6thRJd757NynFegmhOuK6iU+yAA12WRC0NpfxdRB2lQxY/X01U04lLDIlul7KcX30GfjwUxWeIpFOV0lTpqi2llDbglhUj8EoCAAWqZdTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgzVejD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7FEDJUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9930C4CEF0;
-	Tue, 30 Sep 2025 15:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgzVejD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D215DC113D0;
+	Tue, 30 Sep 2025 15:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245993;
-	bh=5kXv3iE7Hb/IIhtFe4TS0rgwRDvyhDVsjoAlKW3EZ18=;
+	s=korg; t=1759245996;
+	bh=D7RHVwTT3GViuNNwawXYyWl/IFOz/KmdrqWT26fxOHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7FEDJUi75iJHiMcAiW77Oito/L+OGc91tnsyJ8hvkDpf6RDXjq94N/EjEkXeVQLi
-	 CG7JkMV72NVQYD8E0E23zSjqmakXsWMsd/LHtjXFI1PMiIEEE6sASbg02+ZKIxcXNZ
-	 7Uv2LuCVEUWS0LcGNac1/2eLfe68C8GD/tMehsso=
+	b=kgzVejD0jZJSvWlajXj9Ustxg1GrOrCenWTXcinRgjBF+/VQ035D5h8cOya2BTWp7
+	 aveCpPr61VTdLZUT4qg46CKpkHnHLPPpeBeBKsQi+I0osfYKpTq90LpD5olL8PrIat
+	 1KfOBTASruytePeS7UQ33UCYgmg+2PycV0h1uabA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 02/89] firewire: core: fix overlooked update of subsystem ABI version
-Date: Tue, 30 Sep 2025 16:47:16 +0200
-Message-ID: <20250930143821.964180779@linuxfoundation.org>
+Subject: [PATCH 6.12 20/89] mmc: sdhci-cadence: add Mobileye eyeQ support
+Date: Tue, 30 Sep 2025 16:47:34 +0200
+Message-ID: <20250930143822.727545393@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -44,43 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Benoît Monin <benoit.monin@bootlin.com>
 
-[ Upstream commit 853a57ba263adfecf4430b936d6862bc475b4bb5 ]
+[ Upstream commit 120ffe250dd95b5089d032f582c5be9e3a04b94b ]
 
-In kernel v6.5, several functions were added to the cdev layer. This
-required updating the default version of subsystem ABI up to 6, but
-this requirement was overlooked.
+The MMC/SDHCI controller implemented by Mobileye needs the preset value
+quirks to configure the clock properly at speed slower than HS200.
+It otherwise works as a standard sd4hc controller.
 
-This commit updates the version accordingly.
-
-Fixes: 6add87e9764d ("firewire: cdev: add new version of ABI to notify time stamp at request/response subaction of transaction#")
-Link: https://lore.kernel.org/r/20250920025148.163402-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+Link: https://lore.kernel.org/r/e97f409650495791e07484589e1666ead570fa12.1750156323.git.benoit.monin@bootlin.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-cdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-cadence.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
-index b360dca2c69e8..cc9731c3616c1 100644
---- a/drivers/firewire/core-cdev.c
-+++ b/drivers/firewire/core-cdev.c
-@@ -41,7 +41,7 @@
- /*
-  * ABI version history is documented in linux/firewire-cdev.h.
-  */
--#define FW_CDEV_KERNEL_VERSION			5
-+#define FW_CDEV_KERNEL_VERSION			6
- #define FW_CDEV_VERSION_EVENT_REQUEST2		4
- #define FW_CDEV_VERSION_ALLOCATE_REGION_END	4
- #define FW_CDEV_VERSION_AUTO_FLUSH_ISO_OVERFLOW	5
+diff --git a/drivers/mmc/host/sdhci-cadence.c b/drivers/mmc/host/sdhci-cadence.c
+index be1505e8c536e..7759531ccca70 100644
+--- a/drivers/mmc/host/sdhci-cadence.c
++++ b/drivers/mmc/host/sdhci-cadence.c
+@@ -433,6 +433,13 @@ static const struct sdhci_cdns_drv_data sdhci_elba_drv_data = {
+ 	},
+ };
+ 
++static const struct sdhci_cdns_drv_data sdhci_eyeq_drv_data = {
++	.pltfm_data = {
++		.ops = &sdhci_cdns_ops,
++		.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
++	},
++};
++
+ static const struct sdhci_cdns_drv_data sdhci_cdns_drv_data = {
+ 	.pltfm_data = {
+ 		.ops = &sdhci_cdns_ops,
+@@ -595,6 +602,10 @@ static const struct of_device_id sdhci_cdns_match[] = {
+ 		.compatible = "amd,pensando-elba-sd4hc",
+ 		.data = &sdhci_elba_drv_data,
+ 	},
++	{
++		.compatible = "mobileye,eyeq-sd4hc",
++		.data = &sdhci_eyeq_drv_data,
++	},
+ 	{ .compatible = "cdns,sd4hc" },
+ 	{ /* sentinel */ }
+ };
 -- 
 2.51.0
 
