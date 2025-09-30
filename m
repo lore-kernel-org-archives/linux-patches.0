@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DBB2F9D88;
-	Tue, 30 Sep 2025 15:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A120223DD6;
+	Tue, 30 Sep 2025 15:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245186; cv=none; b=MS9xP5ul2SrHMXsvx5DpWt7zTKqDfcEqOQOaEw1kMSW2fbxUGsY0zHdspjZBMRLGchyRAOJiNpKLmU+lxNAvsUryjMNGHDftmTm0e/l54ESQgk6ItvZQXkHnF5syzruVk3UxBQBSx6UcJ7yiS9nUwtEZOCMDozoGgmBhY2/u5ZA=
+	t=1759245189; cv=none; b=CSyaDvUFZxhy+1TT1HO4sLZIHMBc9my2ho0sWcyQO+jdlMqgEcqMAqUrJeWQqKJTM0GS16ZTZamNIpi7r4j1TzjDXR5QWO+LhqMp5uV0ZuMdEkEpfw0HquOPp63pd0PXJ6nRyblLeenVvlSv5fIIibwnn1qUmU8tB3EOL3bkFGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245186; c=relaxed/simple;
-	bh=5bbP9VQDoMexk3/4EHXtur82VfTZ85Y9phsLKhuMvRo=;
+	s=arc-20240116; t=1759245189; c=relaxed/simple;
+	bh=tQhoWgXAOf0bfMsLZv6B8SluWfXi6lhGVlk/0G/yqlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtPbu7dR/B7nnvKMTHfwnmQI1yqRLj664Prea2AaYWtXTU8N/wb8CgfpiTFqmD9dtY4CAj2wshDYS0cGsXqQcgPsjSaBu6TRbiffqVV39Vf75VoJauR7JoqUE/C4sT937Y28LqP63WqZjnO4tlO1gUskuv8W14fVEIcI49KStlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUmFBsVk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KikOTCbRdmwWCEAOPSmktXDhC9vMyUdDpgeeG7jRz1FImNGQhNKyaKesLRIIPJSJi8hzXL7iFE9YIhXbuaGiY130ILbOA5gmFHAG1rB0p5dVCjHE2cbn+tsnVEyMbCYg7r3HR6ier+9xBCRni9KIg2ZaEaoOSRajkmvkNM+AsVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYILFf7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUmFBsVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562B3C4CEF0;
-	Tue, 30 Sep 2025 15:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYILFf7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD48C4CEF0;
+	Tue, 30 Sep 2025 15:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245185;
-	bh=5bbP9VQDoMexk3/4EHXtur82VfTZ85Y9phsLKhuMvRo=;
+	s=korg; t=1759245189;
+	bh=tQhoWgXAOf0bfMsLZv6B8SluWfXi6lhGVlk/0G/yqlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUmFBsVkkZgpJ4zrM2iK0xnsbY6ifOl4v3wFS83ofiKjH60cRjqPWVrWv0TdL4aRs
-	 jhpSImRhKm00htdOAmK+tvGnB92mnYSTGfuUaPkyeCHGUSz6li/Kqvvvk+Ho2aueQo
-	 BIwY2MQNU4XTJ6Cw4zGeXDP1J+Ss4u3Q/m/6TnN0=
+	b=mYILFf7pnarY0+O5wuz8PO8RyqJ0gN18EmOFMXZaDl0yQKM02N+CY2c1RsGEin65F
+	 qfmbltXLF5Gp0ajJfxhYR6pgI5yEknHNKs5d684vAA7ED/LqErIAYtb0GK7Km/Becw
+	 j4YEQyXQDQ6fxAitLrrdASDD6PRXlM0fvg00pKOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Yongqin Liu <yongqin.liu@linaro.org>
-Subject: [PATCH 5.15 060/151] soc: qcom: mdt_loader: Deal with zero e_shentsize
-Date: Tue, 30 Sep 2025 16:46:30 +0200
-Message-ID: <20250930143829.991965126@linuxfoundation.org>
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 051/151] hsr: use hsr_for_each_port_rtnl in hsr_port_get_hsr
+Date: Tue, 30 Sep 2025 16:46:21 +0200
+Message-ID: <20250930143829.640661245@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -54,56 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
+[ Upstream commit 393c841fe4333cdd856d0ca37b066d72746cfaa6 ]
 
-Firmware that doesn't provide section headers leave both e_shentsize and
-e_shnum 0, which obvious isn't compatible with the newly introduced
-stricter checks.
+hsr_port_get_hsr() iterates over ports using hsr_for_each_port(),
+but many of its callers do not hold the required RCU lock.
 
-Make the section-related checks conditional on either of these values
-being non-zero.
+Switch to hsr_for_each_port_rtnl(), since most callers already hold
+the rtnl lock. After review, all callers are covered by either the rtnl
+lock or the RCU lock, except hsr_dev_xmit(). Fix this by adding an
+RCU read lock there.
 
-Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Cc: Yongqin Liu <yongqin.liu@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5a759117210 ("net/hsr: Use list_head (and rcu) instead of array for slave devices.")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250905091533.377443-3-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/hsr/hsr_device.c | 3 +++
+ net/hsr/hsr_main.c   | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -39,12 +39,14 @@ static bool mdt_header_valid(const struc
- 	if (phend > fw->size)
- 		return false;
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index ff27935a29523..503f2064e7323 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -231,6 +231,7 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct hsr_priv *hsr = netdev_priv(dev);
+ 	struct hsr_port *master;
  
--	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
--		return false;
-+	if (ehdr->e_shentsize || ehdr->e_shnum) {
-+		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+			return false;
- 
--	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
--	if (shend > fw->size)
--		return false;
-+		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+		if (shend > fw->size)
-+			return false;
-+	}
- 
- 	return true;
++	rcu_read_lock();
+ 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	if (master) {
+ 		skb->dev = master->dev;
+@@ -243,6 +244,8 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		atomic_long_inc(&dev->tx_dropped);
+ 		dev_kfree_skb_any(skb);
+ 	}
++	rcu_read_unlock();
++
+ 	return NETDEV_TX_OK;
  }
+ 
+diff --git a/net/hsr/hsr_main.c b/net/hsr/hsr_main.c
+index c325ddad539a7..76a1958609e29 100644
+--- a/net/hsr/hsr_main.c
++++ b/net/hsr/hsr_main.c
+@@ -125,7 +125,7 @@ struct hsr_port *hsr_port_get_hsr(struct hsr_priv *hsr, enum hsr_port_type pt)
+ {
+ 	struct hsr_port *port;
+ 
+-	hsr_for_each_port(hsr, port)
++	hsr_for_each_port_rtnl(hsr, port)
+ 		if (port->type == pt)
+ 			return port;
+ 	return NULL;
+-- 
+2.51.0
+
 
 
