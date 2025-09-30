@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175231EE02F;
-	Tue, 30 Sep 2025 15:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5E9FBF6;
+	Tue, 30 Sep 2025 15:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246224; cv=none; b=mI+G+EIV62Gzok7+MAQ1gq91OhTA4JKsIES/VadebU3fp1jmAXTi5xYv0hBT8d/9ocbNZE6i7e6hBrOCTZJmcKfcrC9fmEcOX3ORwoN8fQpqlQo77eGywz11G5hK+p1yD3TN6+rzDXL71sXSX0Hp4Qd7Z/89NgmHDmNMvu/mUys=
+	t=1759246226; cv=none; b=mIdwtUiHa9qFP3G12U67zNDyJiVSmYykSp4U4JZhfAQr8S87ADS6lUcM94a81GBi0WuRhn5k0exkNhb/B+5nhO3ycWsAgWiR3TClT2c5kYLm3VFnLqAQDXDKPPe7x/vY9CnrCxqR1rxqf8VGC8AougrASZYB7YOV6SdFsaqpn2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246224; c=relaxed/simple;
-	bh=0f0n+iLkVO7WDQxuD5E/AJOrQBiRX5gSnk42rEN6xzQ=;
+	s=arc-20240116; t=1759246226; c=relaxed/simple;
+	bh=rZ3yiCnLqML2YCFmrxeoNhJNNDIvOhRrL7FFVrxEP4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keyh32j6DpW98TUmvPpzqcahmwI3egeXVDJN9KGQG+PhRvdwNNFm1YPIn5rTs6PZVBatk2ELxEVJIabHV/irKkAWxw/+NAjzWY73prFvh/r86laEIzvJKKBnmQ2epZD4wSr/2AACb7c/hoF1Z+Sn3r90e7lANPrna56sDHNIanI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6eNjx8n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZ+toKdFZZjJ0k51b+JXFfRDJmTI7zVYB7+TlVzNXwYR/gTgyIKESNEPo4PAyj+o+Ur3vE8RoaXhZQd64Z8K6ZFeDWqSr7BEppOR2NQgQh8H1h+ZQV0hbnIhknzbbhvwnXn5fquM3olVcZoHjdoLluYGQ8Nw2q6pOFqSre6EeKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDHNd7Yd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6eNjx8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9328AC4CEF0;
-	Tue, 30 Sep 2025 15:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDHNd7Yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58416C4CEF0;
+	Tue, 30 Sep 2025 15:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246224;
-	bh=0f0n+iLkVO7WDQxuD5E/AJOrQBiRX5gSnk42rEN6xzQ=;
+	s=korg; t=1759246226;
+	bh=rZ3yiCnLqML2YCFmrxeoNhJNNDIvOhRrL7FFVrxEP4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6eNjx8nxiZS+2koEL/EgOpYnKisCKD8idJ4a0NiVqkgWZCsv8HOGBwJ+RzgXaW42
-	 lhmbQH2NXNAbffaW9tp2ZVBH2cPQuXtAP2vEcK7KnobBSnDO5GtvifFK8S14kCRwDP
-	 LwZUXZ8nVmI1Kb6OHOgTmoqXgyA81aVMugvKO6Rs=
+	b=mDHNd7YdaIcZbpDvQhH7fi4uT6xkivNCR2OC9L/qmmGi7HAMG76GaiY97FzcS/4pC
+	 1yFD9sqO73eMVxgg3DFQewQF9HGgulSngTdZ4V6Ve/b3h+EeKP6TyNABiyF0ZRTSMF
+	 5SRCSOZ0UgZCYNErlcvO6ogL2HsxILZNL2+9QHBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,11 +31,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Kamakshi Nellore <nellorex.kamakshi@intel.com>
-Subject: [PATCH 6.12 69/89] i40e: fix idx validation in config queues msg
-Date: Tue, 30 Sep 2025 16:48:23 +0200
-Message-ID: <20250930143824.761673314@linuxfoundation.org>
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 70/89] i40e: fix input validation logic for action_meta
+Date: Tue, 30 Sep 2025 16:48:24 +0200
+Message-ID: <20250930143824.805568432@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -56,43 +56,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-commit f1ad24c5abe1eaef69158bac1405a74b3c365115 upstream.
+commit 9739d5830497812b0bdeaee356ddefbe60830b88 upstream.
 
-Ensure idx is within range of active/initialized TCs when iterating over
-vf->ch[idx] in i40e_vc_config_queues_msg().
+Fix condition to check 'greater or equal' to prevent OOB dereference.
 
-Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2398,7 +2398,7 @@ static int i40e_vc_config_queues_msg(str
- 		}
+@@ -3605,7 +3605,7 @@ static int i40e_validate_cloud_filter(st
  
- 		if (vf->adq_enabled) {
--			if (idx >= ARRAY_SIZE(vf->ch)) {
-+			if (idx >= vf->num_tc) {
- 				aq_ret = -ENODEV;
- 				goto error_param;
- 			}
-@@ -2419,7 +2419,7 @@ static int i40e_vc_config_queues_msg(str
- 		 * to its appropriate VSIs based on TC mapping
- 		 */
- 		if (vf->adq_enabled) {
--			if (idx >= ARRAY_SIZE(vf->ch)) {
-+			if (idx >= vf->num_tc) {
- 				aq_ret = -ENODEV;
- 				goto error_param;
- 			}
+ 	/* action_meta is TC number here to which the filter is applied */
+ 	if (!tc_filter->action_meta ||
+-	    tc_filter->action_meta > vf->num_tc) {
++	    tc_filter->action_meta >= vf->num_tc) {
+ 		dev_info(&pf->pdev->dev, "VF %d: Invalid TC number %u\n",
+ 			 vf->vf_id, tc_filter->action_meta);
+ 		goto err;
 
 
