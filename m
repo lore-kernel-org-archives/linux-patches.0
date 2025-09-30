@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102A625D1F7;
-	Tue, 30 Sep 2025 15:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7A51F3FED;
+	Tue, 30 Sep 2025 15:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245977; cv=none; b=JKnmbTCjmRwM3bLOSMOX1qrWpIYkN5rA5cKDSI31eHDZOuKUJ8kQLcoWbsCkYXxhpV8ogeeLE1ZdmIT3B1iACDxplXzSS+yVf/76CG7x+nfbICPr855o9SQ7FhEmYvmhbtVlQCFYgCU3nbxqOIZgWoAWED2LNwSzXqSi27rTBiA=
+	t=1759245980; cv=none; b=P6awONgJzJ2L7n0RQ7hFy8Ylhj+K+9sqF3J/hnN0IanHJn9ejobHkwyWSw91feQJBd2jIqrD1i/j2GcUstxoWKugGGq86Qy/cVYuXVXId8wU5ZzxeXsfMknN3xv72qGKqxUHuWV+HlvBjkxN69uYYs8gg7oaxvcOSVwLPzFWsEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245977; c=relaxed/simple;
-	bh=Uq5ozdFwyteRSOrRrAYkx0lqgwBqvbQ/ZRWHEGvWH3Q=;
+	s=arc-20240116; t=1759245980; c=relaxed/simple;
+	bh=jCyNTj+CGLSGgQoCiK0p1vegiw8iREFD19yXSP+UeD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9QHjjyMuH03XI++gxXCoAOm3hftoS6gGGl4wu1Urk5+tLa+SROGU+VTWmtU2PQrwV4qj6vHf6QfqUzC3t9QEqdcbGRT8pX/ScHr54wEi3J5/WZ/7ImOyCLTaBgtokCGHdLc7WLXZj+safSv5c0Qi6PUTkR86Ci9WMrfFrX99Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHazV7to; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BqxHhoXRdp7a/oHNmJwlq3DqcwjrQzdDA109OX3auP47F6c92HMkOBeFyxxKpj/c6D1PiRVVk9+rPy7w0DTSGEBK2thNMHxaNNGkCNmN+6o87h6cQ3YchNVr9wD2GiCsRv1IDTIRvRNH0YQs57TW/wA+LUhezXUCN9AoAtOVo2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbT9TZlI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHazV7to"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CDAC113D0;
-	Tue, 30 Sep 2025 15:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbT9TZlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2F4C4CEF0;
+	Tue, 30 Sep 2025 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245976;
-	bh=Uq5ozdFwyteRSOrRrAYkx0lqgwBqvbQ/ZRWHEGvWH3Q=;
+	s=korg; t=1759245980;
+	bh=jCyNTj+CGLSGgQoCiK0p1vegiw8iREFD19yXSP+UeD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHazV7toyWR7kghUFkBcMN1h/9SezoReCBroywk0k7sQbYPWMJ1HnC6G8AX2Y7UMW
-	 mL/eIeBjI+87MylTZheWZ06IGMk2q9bUbxzSQoTEvAS9hn0wP3rX5SoIILKkxFolzR
-	 ubkinFLJ3Tr9Cz3AakDLpm5s3HVj9HeAaUncux7I=
+	b=HbT9TZlI1fiC1ZpmFXnUu6QlZCkHbuGofhwqeWjr+eQ9NHo3Ju2xhMC1yUXnNfMrK
+	 en9AI758ocreE2fgUTShb8SUldJ1KCmo9WoN1NqZUCWD0jE6reqLDVhVvntlmOH2Ut
+	 mJTOqGgiR1I83+TcSgbJN1IvkNsaI+j2nTNuOfPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
+	kernel test robot <lkp@intel.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 15/89] ALSA: hda/realtek: Add support for ASUS NUC using CS35L41 HDA
-Date: Tue, 30 Sep 2025 16:47:29 +0200
-Message-ID: <20250930143822.502017013@linuxfoundation.org>
+Subject: [PATCH 6.12 16/89] ALSA: usb-audio: Fix build with CONFIG_INPUT=n
+Date: Tue, 30 Sep 2025 16:47:30 +0200
+Message-ID: <20250930143822.540555584@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -51,66 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 84fc8896f0d9d1c075e0e08a416faedbd73907fa ]
+[ Upstream commit d0630a0b80c08530857146e3bf183a7d6b743847 ]
 
-Add support for ASUS NUC14LNS.
+The recent addition of DualSense mixer quirk relies on the input
+device handle, and the build can fail if CONFIG_INPUT isn't set.
+Put (rather ugly) workarounds to wrap with IS_REACHABLE() for avoiding
+the build error.
 
-This NUC uses a single CS35L41 Amp in using Internal Boost with SPI.
-To support the Single Amp, a new quirk is required.
-
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250612160029.848104-3-sbinding@opensource.cirrus.com
+Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506130733.gnPKw2l3-lkp@intel.com/
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20250613081543.7404-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/usb/mixer_quirks.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 5f061d2d9fc96..a41df821e15f7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7272,6 +7272,11 @@ static void cs35l41_fixup_spi_two(struct hda_codec *codec, const struct hda_fixu
- 	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 2);
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 2ee91469e6f73..8d7fc6edc8c79 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -531,6 +531,7 @@ static int snd_emu0204_controls_create(struct usb_mixer_interface *mixer)
+ 					  &snd_emu0204_control, NULL);
  }
  
-+static void cs35l41_fixup_spi_one(struct hda_codec *codec, const struct hda_fixup *fix, int action)
-+{
-+	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 1);
-+}
-+
- static void cs35l41_fixup_spi_four(struct hda_codec *codec, const struct hda_fixup *fix, int action)
- {
- 	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 4);
-@@ -7956,6 +7961,7 @@ enum {
- 	ALC287_FIXUP_CS35L41_I2C_2,
- 	ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED,
- 	ALC287_FIXUP_CS35L41_I2C_4,
-+	ALC245_FIXUP_CS35L41_SPI_1,
- 	ALC245_FIXUP_CS35L41_SPI_2,
- 	ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED,
- 	ALC245_FIXUP_CS35L41_SPI_4,
-@@ -10067,6 +10073,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cs35l41_fixup_spi_two,
- 	},
-+	[ALC245_FIXUP_CS35L41_SPI_1] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_spi_one,
-+	},
- 	[ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cs35l41_fixup_spi_two,
-@@ -11001,6 +11011,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x8398, "ASUS P1005", ALC269_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x83ce, "ASUS P1005", ALC269_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x8516, "ASUS X101CH", ALC269_FIXUP_ASUS_X101),
-+	SND_PCI_QUIRK(0x1043, 0x88f4, "ASUS NUC14LNS", ALC245_FIXUP_CS35L41_SPI_1),
- 	SND_PCI_QUIRK(0x104d, 0x9073, "Sony VAIO", ALC275_FIXUP_SONY_VAIO_GPIO2),
- 	SND_PCI_QUIRK(0x104d, 0x907b, "Sony VAIO", ALC275_FIXUP_SONY_HWEQ),
- 	SND_PCI_QUIRK(0x104d, 0x9084, "Sony VAIO", ALC275_FIXUP_SONY_HWEQ),
++#if IS_REACHABLE(CONFIG_INPUT)
+ /*
+  * Sony DualSense controller (PS5) jack detection
+  *
+@@ -787,6 +788,7 @@ static int snd_dualsense_controls_create(struct usb_mixer_interface *mixer)
+ 
+ 	return snd_dualsense_jack_create(mixer, "Headset Mic Jack", false);
+ }
++#endif /* IS_REACHABLE(CONFIG_INPUT) */
+ 
+ /* ASUS Xonar U1 / U3 controls */
+ 
+@@ -4222,10 +4224,12 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
+ 		err = snd_emu0204_controls_create(mixer);
+ 		break;
+ 
++#if IS_REACHABLE(CONFIG_INPUT)
+ 	case USB_ID(0x054c, 0x0ce6): /* Sony DualSense controller (PS5) */
+ 	case USB_ID(0x054c, 0x0df2): /* Sony DualSense Edge controller (PS5) */
+ 		err = snd_dualsense_controls_create(mixer);
+ 		break;
++#endif /* IS_REACHABLE(CONFIG_INPUT) */
+ 
+ 	case USB_ID(0x0763, 0x2030): /* M-Audio Fast Track C400 */
+ 	case USB_ID(0x0763, 0x2031): /* M-Audio Fast Track C400 */
 -- 
 2.51.0
 
