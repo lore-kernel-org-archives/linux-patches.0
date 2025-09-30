@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6605306B3B;
-	Tue, 30 Sep 2025 15:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05E330506C;
+	Tue, 30 Sep 2025 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244403; cv=none; b=Az/ugeUZtAjI6zNcnnPPRw18noCuPgiN29AbggF0FNmfper8XaNiZjQ6QQOK+v9vzPcYsJOzaMrUzCsZvZBgeeRDNTTzuhhRGpC2dZmBTkmToXfOAN43Hk7XdGLegIU+vfRpgxZ1wFot4DKFOejagNjSBI8XedLJHRPNrarRsRg=
+	t=1759244405; cv=none; b=h+72bOTMpbXwxYxhQvShlBSdHXffwS6EjEeGkpNgIJ/GGDQvZKp/Zp26C2mL3Bk8nOoFToCEZFCuwkcKF4f/70jA9KTbsNtTxgRzvRM7xTgWOk+L4iI0KFX5wCgjNIxfyPfNiV09eooxP5r0FOubi5UPPMBCORuxClcDYzfrP1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244403; c=relaxed/simple;
-	bh=UwC2tjoWZ6u8Ime2UwaOuA2kEP//oibDcLBrJXWMnmM=;
+	s=arc-20240116; t=1759244405; c=relaxed/simple;
+	bh=0DkEjN08FXjPwlrGIkQTaFGgAfmyz0BLHANnMZ/XIr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=erW2BC/wy2ydw0m/6At/TC/k10rdKvShrQ6QlPODydWUqxA3zscWznrMJKpwsrKWN95NJPfdoF/7Clj7kNaZyxgTOHXKYRHtwTPmkCRgLeb0tC+XKYLZ9W4749GEfJ7OE0L2wzQ24lSlNYkwJvvcsQrSxFaaqCdkmF+F9JJXJWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7lfbye9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDdLWjNdkFPuUFKhhaEQpiagbJjhdCZHcjNIFq3X0z/bjZMu+M7i5Ctx4rEsU/2wkdpBVRKDpmUiPm6Z4LwzPUQXtsmEbAg3W3o/ceMKCkh8K4obyfvvMuqiLUgC/eY5c6XqjhaCPDA50pP1Obw7cU+17uz6YX89nVY2MT7oi7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPteIkFP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7lfbye9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3824C4CEF0;
-	Tue, 30 Sep 2025 15:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPteIkFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA36C4CEF0;
+	Tue, 30 Sep 2025 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244402;
-	bh=UwC2tjoWZ6u8Ime2UwaOuA2kEP//oibDcLBrJXWMnmM=;
+	s=korg; t=1759244405;
+	bh=0DkEjN08FXjPwlrGIkQTaFGgAfmyz0BLHANnMZ/XIr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7lfbye9LAYBa4VFcyIh+hK5zwKxwLl7Bw5Qy3xRS0QqEHWwRpk/Uxk8zQyE6U/Uz
-	 6AXsQvphv/1yL2DZOQIpUB2cRyYmcLUgnJWRebrO0G8uNbKBMHMX03XOfWObhBeu3j
-	 ReR/Z6lD/htB23xf5qwInxepUP+q2wL1hV3LEGl0=
+	b=zPteIkFPK+LG6XKVZM0uRnzEzyMERmV/9J2qKFp7LjZMxgRQWunbpLeQsGdo/fpEq
+	 T+4XImF3n64ZEZGAfy+l0NwlxjnceQehFplhxHauo5++f+p4iBRWiLq2lTMQnzG/Vk
+	 7sS41IPvTQ5qdEYwLGolSg68MrtS+6HhSgAsmAvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/122] ALSA: usb-audio: Simplify NULL comparison in mixer_quirks
-Date: Tue, 30 Sep 2025 16:46:58 +0200
-Message-ID: <20250930143826.556799157@linuxfoundation.org>
+Subject: [PATCH 5.10 088/122] ALSA: usb-audio: Remove unneeded wmb() in mixer_quirks
+Date: Tue, 30 Sep 2025 16:46:59 +0200
+Message-ID: <20250930143826.595638426@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -53,33 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit f2d6d660e8fd5f4467e80743f82119201e67fa9c ]
+[ Upstream commit 9cea7425595697802e8d55a322a251999554b8b1 ]
 
-Handle report from checkpatch.pl:
+Adding a memory barrier before wake_up() in
+snd_usb_soundblaster_remote_complete() is supposed to ensure the write
+to mixer->rc_code is visible in wait_event_interruptible() from
+snd_usb_sbrc_hwdep_read().
 
-  CHECK: Comparison to NULL could be written "t->name"
+However, this is not really necessary, since wake_up() is just a wrapper
+over __wake_up() which already executes a full memory barrier before
+accessing the state of the task to be waken up.
+
+Drop the redundant call to wmb() and implicitly fix the checkpatch
+complaint:
+
+  WARNING: memory barrier without comment
 
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-7-1a821463b632@collabora.com
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-8-1a821463b632@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 715b0922243c1..9243094cc0637 100644
+index 9243094cc0637..29ef56323a7a2 100644
 --- a/sound/usb/mixer_quirks.c
 +++ b/sound/usb/mixer_quirks.c
-@@ -126,7 +126,7 @@ static int snd_create_std_mono_table(struct usb_mixer_interface *mixer,
- {
- 	int err;
+@@ -208,7 +208,6 @@ static void snd_usb_soundblaster_remote_complete(struct urb *urb)
+ 	if (code == rc->mute_code)
+ 		snd_usb_mixer_notify_id(mixer, rc->mute_mixer_id);
+ 	mixer->rc_code = code;
+-	wmb();
+ 	wake_up(&mixer->rc_waitq);
+ }
  
--	while (t->name != NULL) {
-+	while (t->name) {
- 		err = snd_create_std_mono_ctl(mixer, t->unitid, t->control,
- 				t->cmask, t->val_type, t->name, t->tlv_callback);
- 		if (err < 0)
 -- 
 2.51.0
 
