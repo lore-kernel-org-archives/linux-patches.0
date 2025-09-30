@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FD6262FF3;
-	Tue, 30 Sep 2025 14:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3101F03C5;
+	Tue, 30 Sep 2025 14:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244269; cv=none; b=djVGQ0H7UUu0ZvHIPidxxMs60mVPDzfcLla7r0+Wr9gPKukI/JGDDxoYLWn3rNAdFPXh6Fbn/vJAb2315R7+ck47VMM9FH2iNPacWXA3VPSwP6xeF7swIBYb80NHy5QM/WJ6hvXK7uCi4yL9MOyMavKlXyFmWgZFIZ1rXBfvWg0=
+	t=1759244270; cv=none; b=lbbHVQJQhM74tAPuIhTne73SIpWvG6tQT879u2xyZjk4aEGh+DeWEefsb5o4Yg3IkHAMnatA9PFtpAE+AqO+yaxwJ7R0clZ9XdHV2pvfjMq3tcYc/EMzkIw0aN/T/nXlQSed4+TYvpR4F8xm9rRarg4twlZEMUQUS6b4gjWORHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244269; c=relaxed/simple;
-	bh=r3/Zb73f+fAzRm7lX0Gem9wUiiwA54howe4J1V7iEjI=;
+	s=arc-20240116; t=1759244270; c=relaxed/simple;
+	bh=j8Vm4X1DoMyyD0NiA/FffDJRgAPprceb21A1lsUAnLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmOPZZd5B1ViMl0JRpsxNb6e72dXJeXQpw2PyyUYD77ul7q5qR1ZP9mQl6I2ax1Q3uEc0IDMPpV112mGle+dIZ8eLnEBln1NVhf0Wyq1hXefA0C4UlpvazegW6ZXK8lpD9Gm1LLrsyIy+9/tZbVgsGmZ15lmjBp7lcr2VDN7TQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eW3iYFMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYkplNLPa2lwjU8xsGyKnnzxjy5xs1acqFxN3I9qUy6QGVHmK9K2xH6v8LfGjLcQs8yBJYmCJY5CIK2KSylJIaM6lfEKaph3n8+0QYohmhVPvPYlq3CpwfyyPDCHJ53Znr3revnms7Ig3BbcJ5OpFFIxAtly8cb0OeQnAvXjhus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkqFg3GO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eW3iYFMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BC5C4CEF0;
-	Tue, 30 Sep 2025 14:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkqFg3GO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE114C4CEF0;
+	Tue, 30 Sep 2025 14:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244267;
-	bh=r3/Zb73f+fAzRm7lX0Gem9wUiiwA54howe4J1V7iEjI=;
+	s=korg; t=1759244270;
+	bh=j8Vm4X1DoMyyD0NiA/FffDJRgAPprceb21A1lsUAnLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eW3iYFMZ4LtL/eQ0pda41MGauzELiCtKK4yUeInv3fhXq8dUxE7woap3amXfW56XT
-	 TgT7BvDBA+pqB28UXgIPlcu4bCb9XmYEMBhtoNtDi6Pi4LDimTY5flDM1vckril50R
-	 i+ydtpBtVZ72YEbcMXcAtp37i5lzYn49ddowIEWc=
+	b=WkqFg3GOipp92zFHrq5KZCrmVnZhNX5Sla/qN9fOe3KtlsIfNTSZY/KKh6vtLGvuS
+	 oq+w8YedRoownPcjBP+j209oVuqFn3HVudZA7zgucHFzz01OrTHy7K+W7oHjBw81dy
+	 HgKn1NkqVywLRye87cCx/OoJ/ruSdyu9oqC+WDtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/122] phy: broadcom: ns-usb3: fix Wvoid-pointer-to-enum-cast warning
-Date: Tue, 30 Sep 2025 16:46:48 +0200
-Message-ID: <20250930143826.152234477@linuxfoundation.org>
+Subject: [PATCH 5.10 051/122] qed: Dont collect too many protection override GRC elements
+Date: Tue, 30 Sep 2025 16:46:22 +0200
+Message-ID: <20250930143825.091649586@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,35 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit bd6e74a2f0a0c76dda8e44d26f9b91a797586c3b ]
+[ Upstream commit 56c0a2a9ddc2f5b5078c5fb0f81ab76bbc3d4c37 ]
 
-'family' is an enum, thus cast of pointer on 64-bit compile test with
-W=1 causes:
+In the protection override dump path, the firmware can return far too
+many GRC elements, resulting in attempting to write past the end of the
+previously-kmalloc'ed dump buffer.
 
-  drivers/phy/broadcom/phy-bcm-ns-usb3.c:209:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+This will result in a kernel panic with reason:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230810111958.205705-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 64961557efa1 ("phy: ti: omap-usb2: fix device leak at unbind")
+ BUG: unable to handle kernel paging request at ADDRESS
+
+where "ADDRESS" is just past the end of the protection override dump
+buffer. The start address of the buffer is:
+ p_hwfn->cdev->dbg_features[DBG_FEATURE_PROTECTION_OVERRIDE].dump_buf
+and the size of the buffer is buf_size in the same data structure.
+
+The panic can be arrived at from either the qede Ethernet driver path:
+
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc02662ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc0267792 [qed]
+ qed_dbg_feature at ffffffffc026aa8f [qed]
+ qed_dbg_all_data at ffffffffc026b211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc027298a [qed]
+ devlink_health_do_dump at ffffffff82497f61
+ devlink_health_report at ffffffff8249cf29
+ qed_report_fatal_error at ffffffffc0272baf [qed]
+ qede_sp_task at ffffffffc045ed32 [qede]
+ process_one_work at ffffffff81d19783
+
+or the qedf storage driver path:
+
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc068b2ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc068c792 [qed]
+ qed_dbg_feature at ffffffffc068fa8f [qed]
+ qed_dbg_all_data at ffffffffc0690211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc069798a [qed]
+ devlink_health_do_dump at ffffffff8aa95e51
+ devlink_health_report at ffffffff8aa9ae19
+ qed_report_fatal_error at ffffffffc0697baf [qed]
+ qed_hw_err_notify at ffffffffc06d32d7 [qed]
+ qed_spq_post at ffffffffc06b1011 [qed]
+ qed_fcoe_destroy_conn at ffffffffc06b2e91 [qed]
+ qedf_cleanup_fcport at ffffffffc05e7597 [qedf]
+ qedf_rport_event_handler at ffffffffc05e7bf7 [qedf]
+ fc_rport_work at ffffffffc02da715 [libfc]
+ process_one_work at ffffffff8a319663
+
+Resolve this by clamping the firmware's return value to the maximum
+number of legal elements the firmware should return.
+
+Fixes: d52c89f120de8 ("qed*: Utilize FW 8.37.2.0")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Link: https://patch.msgid.link/f8e1182934aa274c18d0682a12dbaf347595469c.1757485536.git.jamie.bainbridge@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/broadcom/phy-bcm-ns-usb3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-@@ -206,7 +206,7 @@ static int bcm_ns_usb3_mdio_probe(struct
- 	of_id = of_match_device(bcm_ns_usb3_id_table, dev);
- 	if (!of_id)
- 		return -EINVAL;
--	usb3->family = (enum bcm_ns_family)of_id->data;
-+	usb3->family = (uintptr_t)of_id->data;
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index 4b4077cf2d266..b4e108d3ec945 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -4374,10 +4374,11 @@ static enum dbg_status qed_protection_override_dump(struct qed_hwfn *p_hwfn,
+ 		goto out;
+ 	}
  
- 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
- 	err = of_address_to_resource(syscon_np, 0, &res);
+-	/* Add override window info to buffer */
++	/* Add override window info to buffer, preventing buffer overflow */
+ 	override_window_dwords =
+-		qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
+-		PROTECTION_OVERRIDE_ELEMENT_DWORDS;
++		min(qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
++		PROTECTION_OVERRIDE_ELEMENT_DWORDS,
++		PROTECTION_OVERRIDE_DEPTH_DWORDS);
+ 	if (override_window_dwords) {
+ 		addr = BYTES_TO_DWORDS(GRC_REG_PROTECTION_OVERRIDE_WINDOW);
+ 		offset += qed_grc_dump_addr_range(p_hwfn,
+-- 
+2.51.0
+
 
 
