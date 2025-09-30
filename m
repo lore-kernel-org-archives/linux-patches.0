@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B44A173;
-	Tue, 30 Sep 2025 15:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EED223DD6;
+	Tue, 30 Sep 2025 15:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245567; cv=none; b=VcQN5caG03PwQHuuuWXNNajW5/g9Ex/osE+iNFqsnsEIYYqW//gPqhkr1c6A2YQPW9ZB5sqxGYA0CY5Ej89lfgHdxja0hJNmkWG9mNDXOmxdGPk8nul7u7nCSRE6VBfF/5Egpx2Ks8m+ybFeCf+m/9ZPOYvhe79mLzsvthV4dts=
+	t=1759245570; cv=none; b=Qcz5V9fCrTW7U8ytnbXayADk7VUjlNUt52K7r/NTodD7zWU8o8ekkeDv3rTIdi4oQkcb5/307pRQ/y7afGbp9vbyLOgRf0yil4o9O4lNI+hL5j0pDl50NdMcirsULm9iK7DRT0GB4wh6gFaRxt2iIuJjGvFdGQbghMXs6z0ixlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245567; c=relaxed/simple;
-	bh=eFIPeiFUiuVqpR82O+7D5Y1N1DVYXDn5v+Xx9sQpQ/g=;
+	s=arc-20240116; t=1759245570; c=relaxed/simple;
+	bh=ZffQflqysoIE+QNUxuYAYG6D+I4cvO3xCM/IhMrzwlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LEhqTiknZLKozwQ8LOnf38vYzqLg+XZCaBQS120lxGmkyvaMjFrSBVUqfr1MN5qYTpV83nea1s1KoPmqyTW7hMV9LGJfz/V/lO+ivLFGu3IyCwU5uXVdwhfk6BecK8oP3wDXF5jU9984O4VvRUOG6JpiYQVrZ/Fy1qUR2eFLD8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/asW4K7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpS9UVusD/lH96QPo17CyGVS7IA8T+xjY4YWItLsvFCq1qHL2E68tdrvXlcRTjQCsorcfQ2DbKxzK5OEZZ8LIVJyMz7Woj7oqvUTLTxKzLoAU8CN/ahXxm0G+SB78wCX6tm9K+f18dR1F0Z1xskqJLs5e5D3v72Fev8DydzgNEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykM8VXG+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/asW4K7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAAAC4CEF0;
-	Tue, 30 Sep 2025 15:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykM8VXG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C32C4CEF0;
+	Tue, 30 Sep 2025 15:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245567;
-	bh=eFIPeiFUiuVqpR82O+7D5Y1N1DVYXDn5v+Xx9sQpQ/g=;
+	s=korg; t=1759245570;
+	bh=ZffQflqysoIE+QNUxuYAYG6D+I4cvO3xCM/IhMrzwlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/asW4K7At/HVXPku2I1STP2phHjO97gvPliGazjrCRcQ+udvKRCbEtoQuv2PcECV
-	 5XaL0TgwsrhSIpzyeLeudO1qrsByz/1YFz1HannZr9B/0Fgx8nlmVM1+4uEIhDoK6G
-	 nmA8tslZ5wr46EFM7sua6vvoQJr5R8ixvBgd+uUM=
+	b=ykM8VXG+/LzsvSkZWfeV7MWeR4hh3R+dfonjQAaqA1bIgTU4E5pamA20xeZ6pG2Gb
+	 mQWn891Ww6me9L6EVsHF6QGXEUggV5T4fO0uYBlmKWefuR3lQ28re1v0fmi4ERJut5
+	 amhDFV+naoyK5uMrSdPzosqYvl0FiR0t89+YoZuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Qianqiang Liu <qianqiang.liu@163.com>,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Kees Cook <kees@kernel.org>,
-	Zsolt Kajtar <soci@c64.rulez.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.1 56/73] fbcon: Fix OOB access in font allocation
-Date: Tue, 30 Sep 2025 16:48:00 +0200
-Message-ID: <20250930143822.968849206@linuxfoundation.org>
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 30/73] can: hi311x: populate ndo_change_mtu() to prevent buffer overflow
+Date: Tue, 30 Sep 2025 16:47:34 +0200
+Message-ID: <20250930143821.832537566@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -55,71 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-commit 9b2f5ef00e852f8e8902a4d4f73aeedc60220c12 upstream.
+[ Upstream commit ac1c7656fa717f29fac3ea073af63f0b9919ec9a ]
 
-Commit 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
-introduced an out-of-bounds access by storing data and allocation sizes
-in the same variable. Restore the old size calculation and use the new
-variable 'alloc_size' for the allocation.
+Sending an PF_PACKET allows to bypass the CAN framework logic and to
+directly reach the xmit() function of a CAN driver. The only check
+which is performed by the PF_PACKET framework is to make sure that
+skb->len fits the interface's MTU.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
-Reported-by: Jani Nikula <jani.nikula@linux.intel.com>
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15020
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6201
-Cc: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: George Kennedy <george.kennedy@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Qianqiang Liu <qianqiang.liu@163.com>
-Cc: Shixiong Ou <oushixiong@kylinos.cn>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org> # v5.9+
-Cc: Zsolt Kajtar <soci@c64.rulez.org>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Qianqiang Liu <qianqiang.liu@163.com>
-Link: https://lore.kernel.org/r/20250922134619.257684-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Unfortunately, because the sun4i_can driver does not populate its
+net_device_ops->ndo_change_mtu(), it is possible for an attacker to
+configure an invalid MTU by doing, for example:
+
+  $ ip link set can0 mtu 9999
+
+After doing so, the attacker could open a PF_PACKET socket using the
+ETH_P_CANXL protocol:
+
+	socket(PF_PACKET, SOCK_RAW, htons(ETH_P_CANXL))
+
+to inject a malicious CAN XL frames. For example:
+
+	struct canxl_frame frame = {
+		.flags = 0xff,
+		.len = 2048,
+	};
+
+The CAN drivers' xmit() function are calling can_dev_dropped_skb() to
+check that the skb is valid, unfortunately under above conditions, the
+malicious packet is able to go through can_dev_dropped_skb() checks:
+
+  1. the skb->protocol is set to ETH_P_CANXL which is valid (the
+     function does not check the actual device capabilities).
+
+  2. the length is a valid CAN XL length.
+
+And so, hi3110_hard_start_xmit() receives a CAN XL frame which it is
+not able to correctly handle and will thus misinterpret it as a CAN
+frame. The driver will consume frame->len as-is with no further
+checks.
+
+This can result in a buffer overflow later on in hi3110_hw_tx() on
+this line:
+
+	memcpy(buf + HI3110_FIFO_EXT_DATA_OFF,
+	       frame->data, frame->len);
+
+Here, frame->len corresponds to the flags field of the CAN XL frame.
+In our previous example, we set canxl_frame->flags to 0xff. Because
+the maximum expected length is 8, a buffer overflow of 247 bytes
+occurs!
+
+Populate net_device_ops->ndo_change_mtu() to ensure that the
+interface's MTU can not be set to anything bigger than CAN_MTU. By
+fixing the root cause, this prevents the buffer overflow.
+
+Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-2-0d1cada9393b@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/can/spi/hi311x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2489,7 +2489,7 @@ static int fbcon_set_font(struct vc_data
- 	unsigned charcount = font->charcount;
- 	int w = font->width;
- 	int h = font->height;
--	int size;
-+	int size, alloc_size;
- 	int i, csum;
- 	u8 *new_data, *data = font->data;
- 	int pitch = PITCH(font->width);
-@@ -2522,10 +2522,10 @@ static int fbcon_set_font(struct vc_data
- 		return -EINVAL;
+diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
+index b757555ed4c4f..57ea7dfe8a596 100644
+--- a/drivers/net/can/spi/hi311x.c
++++ b/drivers/net/can/spi/hi311x.c
+@@ -813,6 +813,7 @@ static const struct net_device_ops hi3110_netdev_ops = {
+ 	.ndo_open = hi3110_open,
+ 	.ndo_stop = hi3110_stop,
+ 	.ndo_start_xmit = hi3110_hard_start_xmit,
++	.ndo_change_mtu = can_change_mtu,
+ };
  
- 	/* Check for overflow in allocation size calculation */
--	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &size))
-+	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &alloc_size))
- 		return -EINVAL;
- 
--	new_data = kmalloc(size, GFP_USER);
-+	new_data = kmalloc(alloc_size, GFP_USER);
- 
- 	if (!new_data)
- 		return -ENOMEM;
+ static const struct ethtool_ops hi3110_ethtool_ops = {
+-- 
+2.51.0
+
 
 
