@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EAC1F4C8E;
-	Tue, 30 Sep 2025 15:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668292FD1DD;
+	Tue, 30 Sep 2025 15:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246174; cv=none; b=RpaaE3zyHdWOHLVF1AERCC36lwAgKlvHdCXQBmNlUCUKla2SWhXRF8MEOMehjG5+MPYF6NdizEweXn/nRNQV9LjV6nJ37J5xgNtXm40TvUSP86K2aXDpdiUOh60R80vjtYc5xzfCchdPm8zgUtevJ5uwpYx+RYHbMEvYPgQRfVY=
+	t=1759246177; cv=none; b=awQ45bwEpZ866WCyuf2c9FMkdsiTNPI2Z0Mb4oOUPhOIXcgPQcPq1x1gO7JQCYFGy9/1Rgb5BqzevS5q2I/kYkXDGQIQ5uiE1eG3LlrdMRYxZBT0DgmDt3GhCzAX+lNcUyEs9kNw2Hpep34T9PTQtAHj96Ey72Cz9r3nBDBoONc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246174; c=relaxed/simple;
-	bh=ZqGdCLWTBp+F6s1rqqnSVTQppExbOvjFgzp+51KUDpg=;
+	s=arc-20240116; t=1759246177; c=relaxed/simple;
+	bh=ruPdbUvT0D11jBdxCF/wP6+NVJ9CFx2+YMV1OFzK7XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYH7K0liLgyjLcCcRhOl/v7EhdveTXgtDIO2G5aBP2rDU8NYGmlO+yy2sr01Cm0ZvtAglnYktVl9piq1T3gy8CUbGKqHhZCECJsplfREOLG0kaw+AChsHFAupUye9eV9WULYWVbNcekFtBM/cqR5DDkCLOwFeC1LmrqN/vON6no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXo5Ypx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQV1sXML94t+cLt558yVmy9f6ULb2wTOHsZ++e6ZtHSQhp1sgisRH06qahoHLryJK5WH46y+B55PvfR16OAIzO2sQYckmZOaF1d7OKXlIyBIZ5noze4UFBV925OQQaj/1MPNpLrnOf6Wu6GhGQrnEWOhfT8s4plhpdYb0a8j/S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbPvVtVg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXo5Ypx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75B7C4CEF0;
-	Tue, 30 Sep 2025 15:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbPvVtVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE49C4CEF0;
+	Tue, 30 Sep 2025 15:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246174;
-	bh=ZqGdCLWTBp+F6s1rqqnSVTQppExbOvjFgzp+51KUDpg=;
+	s=korg; t=1759246177;
+	bh=ruPdbUvT0D11jBdxCF/wP6+NVJ9CFx2+YMV1OFzK7XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXo5Ypx0NRFU4yqs0wCGu6SFdUU9HZZ7Ng8Don9Z5gnxpvd6++7zDnIaWi5rSSdIq
-	 ffyH6Ar9f0kFmMDCuyWM9RccDQfY7wCqOcGxxi3M6UrvZKqjucI3GXEBa7ptrh+CO0
-	 9z2iN8sDlIxe89cxFGMTxpmZqCkEpHqsgCG1R5r0=
+	b=sbPvVtVgX/3JqUZmSi+WrJlTmsP40k4rEZkgr5yG7LVcYJ3+96kISrNkZbtKiUYcp
+	 qzwnDGmIzMO1DEIn4KbaylKgIY5qA4ai+8w/7CBN2HUOn2b4EF+e/mUQjupeHNUP0/
+	 YyU8uMtJBarGaRkHfC4sOoOtcJkiglIzheEktHBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 76/89] tracing: dynevent: Add a missing lockdown check on dynevent
-Date: Tue, 30 Sep 2025 16:48:30 +0200
-Message-ID: <20250930143825.048438504@linuxfoundation.org>
+	Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.12 77/89] ARM: dts: socfpga: sodia: Fix mdio bus probe and PHY address
+Date: Tue, 30 Sep 2025 16:48:31 +0200
+Message-ID: <20250930143825.087703681@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -49,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
 
-commit 456c32e3c4316654f95f9d49c12cbecfb77d5660 upstream.
+commit ea9da67e2add7bd5f1e4b38dc2404480e711f4d8 upstream.
 
-Since dynamic_events interface on tracefs is compatible with
-kprobe_events and uprobe_events, it should also check the lockdown
-status and reject if it is set.
+On SoCFPGA/Sodia board, mdio bus cannot be probed, so the PHY cannot be
+found and the network device does not work.
 
-Link: https://lore.kernel.org/all/175824455687.45175.3734166065458520748.stgit@devnote2/
+```
+stmmaceth ff702000.ethernet eth0: __stmmac_open: Cannot attach to PHY (error: -19)
+```
 
-Fixes: 17911ff38aa5 ("tracing: Add locked_down checks to the open calls of files created for tracefs")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: stable@vger.kernel.org
+To probe the mdio bus, add "snps,dwmac-mdio" as compatible string of the
+mdio bus. Also the PHY address connected to this board is 4. Therefore,
+change to 4.
+
+Cc: stable@vger.kernel.org # 6.3+
+Signed-off-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_dynevent.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_sodia.dts |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_dynevent.c
-+++ b/kernel/trace/trace_dynevent.c
-@@ -239,6 +239,10 @@ static int dyn_event_open(struct inode *
- {
- 	int ret;
- 
-+	ret = security_locked_down(LOCKDOWN_TRACEFS);
-+	if (ret)
-+		return ret;
+--- a/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_sodia.dts
++++ b/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_sodia.dts
+@@ -66,8 +66,10 @@
+ 	mdio0 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+-		phy0: ethernet-phy@0 {
+-			reg = <0>;
++		compatible = "snps,dwmac-mdio";
 +
- 	ret = tracing_check_open_get_tr(NULL);
- 	if (ret)
- 		return ret;
++		phy0: ethernet-phy@4 {
++			reg = <4>;
+ 			rxd0-skew-ps = <0>;
+ 			rxd1-skew-ps = <0>;
+ 			rxd2-skew-ps = <0>;
 
 
