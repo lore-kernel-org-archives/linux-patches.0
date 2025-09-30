@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803A9305968;
-	Tue, 30 Sep 2025 14:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6605306B3B;
+	Tue, 30 Sep 2025 15:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244399; cv=none; b=RIL/PS0mRB92mld07jCiZzf48jREQ/aC7zGoCbO8W7uaXTYoDSd6jiksCrVS9mmejxHEQq8c4UKZMuPJMdfcz+jbVkOTS7FEbAL0gptwe7IUZ3I7BDRqjZfw3zIGSpcMGuIivkrkNoul4KvsN0b60P6H874v2QqoWdStpRKr8eo=
+	t=1759244403; cv=none; b=Az/ugeUZtAjI6zNcnnPPRw18noCuPgiN29AbggF0FNmfper8XaNiZjQ6QQOK+v9vzPcYsJOzaMrUzCsZvZBgeeRDNTTzuhhRGpC2dZmBTkmToXfOAN43Hk7XdGLegIU+vfRpgxZ1wFot4DKFOejagNjSBI8XedLJHRPNrarRsRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244399; c=relaxed/simple;
-	bh=qHESSQwh6iUf5uQw/Hq88BNhGYYj4BvnVSK+gXQpau0=;
+	s=arc-20240116; t=1759244403; c=relaxed/simple;
+	bh=UwC2tjoWZ6u8Ime2UwaOuA2kEP//oibDcLBrJXWMnmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O5q0cXXxaICRLAUBLrLPZdE5/CIWf/vTxQbl2foHgcgAHvGTTfd5tC2SkCJd4w02oLxk1kKoyqsXRrrgfjk63yaHDF05eQ/G6SnHrhmvcJKaPbSy5fBDQeGo1w84NH0KmHa6+S+wElqg3iOeUga6W2FXMn5283wFW35vkCMHaVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3zTW5gs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=erW2BC/wy2ydw0m/6At/TC/k10rdKvShrQ6QlPODydWUqxA3zscWznrMJKpwsrKWN95NJPfdoF/7Clj7kNaZyxgTOHXKYRHtwTPmkCRgLeb0tC+XKYLZ9W4749GEfJ7OE0L2wzQ24lSlNYkwJvvcsQrSxFaaqCdkmF+F9JJXJWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7lfbye9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3zTW5gs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E5FC113D0;
-	Tue, 30 Sep 2025 14:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7lfbye9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3824C4CEF0;
+	Tue, 30 Sep 2025 15:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244399;
-	bh=qHESSQwh6iUf5uQw/Hq88BNhGYYj4BvnVSK+gXQpau0=;
+	s=korg; t=1759244402;
+	bh=UwC2tjoWZ6u8Ime2UwaOuA2kEP//oibDcLBrJXWMnmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3zTW5gsjJU/zjm6ioursH/kpoh3ff1ASg+ACby3DuUsVNsX++hTUY/gGw0IXW/Ze
-	 wCgMTPw5WHO0r6mXhU4gPveH0bMWcIDYWcdhnZYiKGUkm9CSq8qCPimhUaV/AwvEDo
-	 ZRSS+H8jzqXKcZ5YPz8Uy/QRkKFz2obYncQGwykI=
+	b=Y7lfbye9LAYBa4VFcyIh+hK5zwKxwLl7Bw5Qy3xRS0QqEHWwRpk/Uxk8zQyE6U/Uz
+	 6AXsQvphv/1yL2DZOQIpUB2cRyYmcLUgnJWRebrO0G8uNbKBMHMX03XOfWObhBeu3j
+	 ReR/Z6lD/htB23xf5qwInxepUP+q2wL1hV3LEGl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Qianqiang Liu <qianqiang.liu@163.com>,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Kees Cook <kees@kernel.org>,
-	Zsolt Kajtar <soci@c64.rulez.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 5.10 116/122] fbcon: Fix OOB access in font allocation
-Date: Tue, 30 Sep 2025 16:47:27 +0200
-Message-ID: <20250930143827.711648453@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 087/122] ALSA: usb-audio: Simplify NULL comparison in mixer_quirks
+Date: Tue, 30 Sep 2025 16:46:58 +0200
+Message-ID: <20250930143826.556799157@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -55,71 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit 9b2f5ef00e852f8e8902a4d4f73aeedc60220c12 upstream.
+[ Upstream commit f2d6d660e8fd5f4467e80743f82119201e67fa9c ]
 
-Commit 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
-introduced an out-of-bounds access by storing data and allocation sizes
-in the same variable. Restore the old size calculation and use the new
-variable 'alloc_size' for the allocation.
+Handle report from checkpatch.pl:
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 1a194e6c8e1e ("fbcon: fix integer overflow in fbcon_do_set_font")
-Reported-by: Jani Nikula <jani.nikula@linux.intel.com>
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15020
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6201
-Cc: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: George Kennedy <george.kennedy@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Qianqiang Liu <qianqiang.liu@163.com>
-Cc: Shixiong Ou <oushixiong@kylinos.cn>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org> # v5.9+
-Cc: Zsolt Kajtar <soci@c64.rulez.org>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Qianqiang Liu <qianqiang.liu@163.com>
-Link: https://lore.kernel.org/r/20250922134619.257684-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  CHECK: Comparison to NULL could be written "t->name"
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-7-1a821463b632@collabora.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/mixer_quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2500,7 +2500,7 @@ static int fbcon_set_font(struct vc_data
- 	unsigned charcount = font->charcount;
- 	int w = font->width;
- 	int h = font->height;
--	int size;
-+	int size, alloc_size;
- 	int i, csum;
- 	u8 *new_data, *data = font->data;
- 	int pitch = PITCH(font->width);
-@@ -2533,10 +2533,10 @@ static int fbcon_set_font(struct vc_data
- 		return -EINVAL;
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 715b0922243c1..9243094cc0637 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -126,7 +126,7 @@ static int snd_create_std_mono_table(struct usb_mixer_interface *mixer,
+ {
+ 	int err;
  
- 	/* Check for overflow in allocation size calculation */
--	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &size))
-+	if (check_add_overflow(FONT_EXTRA_WORDS * sizeof(int), size, &alloc_size))
- 		return -EINVAL;
- 
--	new_data = kmalloc(size, GFP_USER);
-+	new_data = kmalloc(alloc_size, GFP_USER);
- 
- 	if (!new_data)
- 		return -ENOMEM;
+-	while (t->name != NULL) {
++	while (t->name) {
+ 		err = snd_create_std_mono_ctl(mixer, t->unitid, t->control,
+ 				t->cmask, t->val_type, t->name, t->tlv_callback);
+ 		if (err < 0)
+-- 
+2.51.0
+
 
 
