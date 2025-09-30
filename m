@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8D41F3BAC;
-	Tue, 30 Sep 2025 14:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549D3199939;
+	Tue, 30 Sep 2025 14:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244329; cv=none; b=G86CcJcPyaxVMK4TGaIb/hBThLh1j8tERIOISQtWk/pseNO9ldlhRrM/0MR3ixzt7hRPCmKlPtqCz8gUAiFKMRrjJLwXC3eN3Q52gUrJsC2EvOEL84mw5kN9GDlYeQwJJjh1uRutx5qZa48dp5z7OnbO+NcXFwPLO/CCr+pF2cg=
+	t=1759244332; cv=none; b=bsQ3YSQ1k0CdO5k6KgvpxIjvmdBGc6RALdkzP+n8WfpKGB/O7woW4U8A632SA63+VuN3ZEFmJ4yY43yIyO4of0dcNZ+YVrlFDb0dM6nRylOaawQaf/cKPO8rPsEznL0GMF3HoTcyQLlfFHT2qIsLsx4r6ddyxB6W05bbWTq9Yjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244329; c=relaxed/simple;
-	bh=hzmCAELExdt/vlKFxQrzWgZzk+zGClDbwTMYot9Pdmo=;
+	s=arc-20240116; t=1759244332; c=relaxed/simple;
+	bh=uNkF/Bx+mYk6pzq+Aziy+rShD4xeFBZ42aN+fcFR3VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRsiJK6wzbF8i5JpXkberjL08CesGiOIIOdBi4sORqF61odoaFIjK4MXAfjDLvA/t10x+E9pfQaq6dJUryGuMf4qWNMd0vjlhDyNdrdcVKV83pLvii0broV1CaN89sRcL1vcx4utpQZ1wMZtA8yrNOUd1Jfep96dbx5YZI0J9L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2t+3AEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHmU2X+na3DJRHYjLNA+0GeAM35AnGUnDeNgYIuAA5IzGM9NsDdo457kmcssN/d6dFj7xrl4LTLloprQW4LJMYEfdQN0sZZyiVtgXquz7hLW47GFa0F49RMN8XK0c1wKBXP6+z41xzpX2xLMY17Ol2NXtZSy0lJQJBLM8eoz3LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyHLGXH+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2t+3AEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7102CC4CEF0;
-	Tue, 30 Sep 2025 14:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyHLGXH+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0676C4CEF0;
+	Tue, 30 Sep 2025 14:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244328;
-	bh=hzmCAELExdt/vlKFxQrzWgZzk+zGClDbwTMYot9Pdmo=;
+	s=korg; t=1759244332;
+	bh=uNkF/Bx+mYk6pzq+Aziy+rShD4xeFBZ42aN+fcFR3VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2t+3AEzi3+3TC8puj4NG0+HTxJepI0wMPbyJD84f5KAozIBSfMVb4vVVja71jysd
-	 xFXdLq9RsMvM30Xe1zXjQL0/NyWrw6Sw9QryHaZV2uPsKR1M/H+/LWLngvUzp5HEUv
-	 qHqcBv+Gh6SSYrgEPXyf1k+PAqvN7QwyaaFGvgiQ=
+	b=iyHLGXH+0cf7rcO8jUhVfBXfYjEVtmbNc1bQsZTw4H8S6Xu/H8F5aPLJllJ3WoAoc
+	 +TviOSPaEi8sOJ3qUPQoAbwIGg2rztzJMd4qpYON+rnRnUbMRy+GS1yVmLwcypyixe
+	 Sr/CAEjcQtmHxwdZJym+3qRDuy+2DFKEQ0L2IuPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vincent Mailhol <mailhol@kernel.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/122] can: hi311x: populate ndo_change_mtu() to prevent buffer overflow
-Date: Tue, 30 Sep 2025 16:47:08 +0200
-Message-ID: <20250930143826.961707185@linuxfoundation.org>
+Subject: [PATCH 5.10 098/122] can: sun4i_can: populate ndo_change_mtu() to prevent buffer overflow
+Date: Tue, 30 Sep 2025 16:47:09 +0200
+Message-ID: <20250930143827.000757683@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit ac1c7656fa717f29fac3ea073af63f0b9919ec9a ]
+[ Upstream commit 61da0bd4102c459823fbe6b8b43b01fb6ace4a22 ]
 
 Sending an PF_PACKET allows to bypass the CAN framework logic and to
 directly reach the xmit() function of a CAN driver. The only check
@@ -87,47 +87,47 @@ malicious packet is able to go through can_dev_dropped_skb() checks:
 
   2. the length is a valid CAN XL length.
 
-And so, hi3110_hard_start_xmit() receives a CAN XL frame which it is
-not able to correctly handle and will thus misinterpret it as a CAN
-frame. The driver will consume frame->len as-is with no further
-checks.
+And so, sun4ican_start_xmit() receives a CAN XL frame which it is not
+able to correctly handle and will thus misinterpret it as a CAN frame.
 
-This can result in a buffer overflow later on in hi3110_hw_tx() on
-this line:
+This can result in a buffer overflow. The driver will consume cf->len
+as-is with no further checks on this line:
 
-	memcpy(buf + HI3110_FIFO_EXT_DATA_OFF,
-	       frame->data, frame->len);
+	dlc = cf->len;
 
-Here, frame->len corresponds to the flags field of the CAN XL frame.
-In our previous example, we set canxl_frame->flags to 0xff. Because
-the maximum expected length is 8, a buffer overflow of 247 bytes
-occurs!
+Here, cf->len corresponds to the flags field of the CAN XL frame. In
+our previous example, we set canxl_frame->flags to 0xff. Because the
+maximum expected length is 8, a buffer overflow of 247 bytes occurs a
+couple line below when doing:
+
+	for (i = 0; i < dlc; i++)
+		writel(cf->data[i], priv->base + (dreg + i * 4));
 
 Populate net_device_ops->ndo_change_mtu() to ensure that the
 interface's MTU can not be set to anything bigger than CAN_MTU. By
 fixing the root cause, this prevents the buffer overflow.
 
-Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
+Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
 Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-2-0d1cada9393b@kernel.org
+Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-3-0d1cada9393b@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/hi311x.c | 1 +
+ drivers/net/can/sun4i_can.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
-index 28273e84171a2..a7d594a5ad36f 100644
---- a/drivers/net/can/spi/hi311x.c
-+++ b/drivers/net/can/spi/hi311x.c
-@@ -807,6 +807,7 @@ static const struct net_device_ops hi3110_netdev_ops = {
- 	.ndo_open = hi3110_open,
- 	.ndo_stop = hi3110_stop,
- 	.ndo_start_xmit = hi3110_hard_start_xmit,
+diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
+index 89796691917b3..1f2402f027742 100644
+--- a/drivers/net/can/sun4i_can.c
++++ b/drivers/net/can/sun4i_can.c
+@@ -751,6 +751,7 @@ static const struct net_device_ops sun4ican_netdev_ops = {
+ 	.ndo_open = sun4ican_open,
+ 	.ndo_stop = sun4ican_close,
+ 	.ndo_start_xmit = sun4ican_start_xmit,
 +	.ndo_change_mtu = can_change_mtu,
  };
  
- static const struct of_device_id hi3110_of_match[] = {
+ static const struct of_device_id sun4ican_of_match[] = {
 -- 
 2.51.0
 
