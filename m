@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDA51F152D;
-	Tue, 30 Sep 2025 15:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADFB2FCBFC;
+	Tue, 30 Sep 2025 15:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244528; cv=none; b=tl/L+4+CT/+RyZoZIGtCUSh0ZT2X0t3mlvQxjps748FzHQqc2hd+eO022AiASnhibdbSqF/i7cNcfLsZbtQ9UlCGusRPPv362JL+sVwuu0M73aHWSw9mkuMmchXbT5jQfoXee/+CRFxsvdd5nnOCydYbbZX+MiySaDH4YtGTgPQ=
+	t=1759244534; cv=none; b=iAqaPyjKVm7MqeCD7Tttndb6bZ6KjMutoUxHZLxYqeockfU5Ek+ftCr1d/p3pZC3A4HpaK5Py8ayi8SoB/zWYz3ohd54nT8Ab0D8/Q72d8HSmtYBjumQlqlPwn2vpC5V4404+wQkHX3ZzbMJRH9tX588hHPxbw6Vk97o6eHeL/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244528; c=relaxed/simple;
-	bh=nAHaC4lFmHhqKAWujhZzuIPKYSZTP/M2cHb9AMizF2g=;
+	s=arc-20240116; t=1759244534; c=relaxed/simple;
+	bh=40qdXbUqlFv2Dqnl2+0ijBe+DlQ1nmGuypY3aWTsVkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+r98HrCCAfJONkN/srX5OL/asXwKBy9o/Z96WsrNrYiA8vw4ZvNalnlwXJXY2M0+K5D5j7MwfyLABCLrL08L+ERodhdvPmuOYAd2kNVpjbjjGS3Jcnn0fogYj2qgCi0XHKyXXzqTIMRdO20frDBPvD81jO1CVphNFhdF6yAQMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o70NwOLo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O8KHj38+y7+9afg7qJxqoFe5b6I4Jz1emimgDbmpOtpWk1tOL7nx4Z9wkxAiWgKeGRtfWrBXMrtNzBvFuYCwxuFygK03gJlxrtTaG+qW1IpPPkd3kVoQY+IurHrlN9umFe2xnW+Q7YTELQ0byN+tNmkJ14J59P6hedQD8qdyT2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3N7Ex1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o70NwOLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB19C4CEF0;
-	Tue, 30 Sep 2025 15:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3N7Ex1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCCCC4CEF0;
+	Tue, 30 Sep 2025 15:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244528;
-	bh=nAHaC4lFmHhqKAWujhZzuIPKYSZTP/M2cHb9AMizF2g=;
+	s=korg; t=1759244531;
+	bh=40qdXbUqlFv2Dqnl2+0ijBe+DlQ1nmGuypY3aWTsVkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o70NwOLonDymKC+sANwqyMroPr/o92G6RViZrrvusQ4X9P4zWe8rFny4EMsmtIZeo
-	 KvJ29oKhZePoYd39zWrPDgzhjvkKEd2EwPzMC4p7f5AvoKr2c6idSB629dcrxzIUQX
-	 lbkBxn8Ha2hI7LcEdgWpVwV3ZP3ycmd5mQoNvsII=
+	b=e3N7Ex1UtDVYjGXc0Os/wrJzb7lD6bF9W2K5RV8V3w/M9yPb0NTQSeX4ay/5b+IaC
+	 SHAIYoEIvlXynUvDJSuzyGMB0LSj1j3Ql1l6Rk73nA/oigu0T/iPeMHs1Bnb8i1n/J
+	 MABz2ZLgNSAIiD8DXtbSGJGGAWzbu2DYTEH62Oqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 035/143] IB/mlx5: Fix obj_type mismatch for SRQ event subscriptions
-Date: Tue, 30 Sep 2025 16:45:59 +0200
-Message-ID: <20250930143832.640760363@linuxfoundation.org>
+Subject: [PATCH 6.16 036/143] HID: cp2112: fix setter callbacks return value
+Date: Tue, 30 Sep 2025 16:46:00 +0200
+Message-ID: <20250930143832.681310511@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -47,54 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
 
-[ Upstream commit 85fe9f565d2d5af95ac2bbaa5082b8ce62b039f5 ]
+[ Upstream commit 2a5e76b9a0efc44807ff0e6b141649fac65a55ac ]
 
-Fix a bug where the driver's event subscription logic for SRQ-related
-events incorrectly sets obj_type for RMP objects.
+Since commit 6485543488a6 ("HID: cp2112: use new line value setter
+callbacks"), setting a GPIO value always fails with error -EBADE.
 
-When subscribing to SRQ events, get_legacy_obj_type() did not handle
-the MLX5_CMD_OP_CREATE_RMP case, which caused obj_type to be 0
-(default).
-This led to a mismatch between the obj_type used during subscription
-(0) and the value used during notification (1, taken from the event's
-type field). As a result, event mapping for SRQ objects could fail and
-event notification would not be delivered correctly.
+That's because the returned value by the setter callbacks is the
+returned value by the hid_hw_raw_request() function which is the number of
+bytes sent on success or a negative value on error. The function
+gpiochip_set() returns -EBADE if the setter callbacks return a value >
+0.
 
-This fix adds handling for MLX5_CMD_OP_CREATE_RMP in get_legacy_obj_type,
-returning MLX5_EVENT_QUEUE_TYPE_RQ so obj_type is consistent between
-subscription and notification.
+Fix this by making the setter callbacks return 0 on success or a negative
+value on error.
 
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Link: https://patch.msgid.link/r/8f1048e3fdd1fde6b90607ce0ed251afaf8a148c.1755088962.git.leon@kernel.org
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+While at it, use the returned value by cp2112_gpio_set_unlocked() in the
+direction_output callback.
+
+Fixes: 6485543488a6 ("HID: cp2112: use new line value setter callbacks")
+Signed-off-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-cp2112.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index c369fee335621..00727472c8738 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -233,6 +233,7 @@ static u16 get_legacy_obj_type(u16 opcode)
- {
- 	switch (opcode) {
- 	case MLX5_CMD_OP_CREATE_RQ:
-+	case MLX5_CMD_OP_CREATE_RMP:
- 		return MLX5_EVENT_QUEUE_TYPE_RQ;
- 	case MLX5_CMD_OP_CREATE_QP:
- 		return MLX5_EVENT_QUEUE_TYPE_QP;
+diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+index 234fa82eab079..b5f2b6356f512 100644
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -229,10 +229,12 @@ static int cp2112_gpio_set_unlocked(struct cp2112_device *dev,
+ 	ret = hid_hw_raw_request(hdev, CP2112_GPIO_SET, buf,
+ 				 CP2112_GPIO_SET_LENGTH, HID_FEATURE_REPORT,
+ 				 HID_REQ_SET_REPORT);
+-	if (ret < 0)
++	if (ret != CP2112_GPIO_SET_LENGTH) {
+ 		hid_err(hdev, "error setting GPIO values: %d\n", ret);
++		return ret < 0 ? ret : -EIO;
++	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int cp2112_gpio_set(struct gpio_chip *chip, unsigned int offset,
+@@ -309,9 +311,7 @@ static int cp2112_gpio_direction_output(struct gpio_chip *chip,
+ 	 * Set gpio value when output direction is already set,
+ 	 * as specified in AN495, Rev. 0.2, cpt. 4.4
+ 	 */
+-	cp2112_gpio_set_unlocked(dev, offset, value);
+-
+-	return 0;
++	return cp2112_gpio_set_unlocked(dev, offset, value);
+ }
+ 
+ static int cp2112_hid_get(struct hid_device *hdev, unsigned char report_number,
 -- 
 2.51.0
 
