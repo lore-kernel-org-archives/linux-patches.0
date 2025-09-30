@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7E23043C4;
-	Tue, 30 Sep 2025 14:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841FB199939;
+	Tue, 30 Sep 2025 14:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244240; cv=none; b=rOvYTdcurAhfxjtZVxlVCh73kaV+hyitBQcRt/tbvs3ZwcPey2qLtK+eUlX7SMX9qiNsS2IQCRDSY6l2iTqFyoxyBLJcB/Hn86pNaejLELpv9F2Ovcg3oad5QlgLvVYKGgc6oj+jJsWRyjC9J4/F4E+IkLc1RmiWGBhe44Yw4ok=
+	t=1759244243; cv=none; b=LGEx6tse4nXweAmuNMDD+WiO4Qg5EoGaFz/WnNJ3OAZuVh7+yrzlznerKieqvFpOIPvw2265KA851xu0CcwZ3gPgpLp38j89CB7NRlqe3qdcrvOofH9qaEmpybjCWU+rzU8yaLh3n0aM8mgi1TU2HXgiMN8dKJquOac+xIHxuJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244240; c=relaxed/simple;
-	bh=YqoL4CIkX0M9zD+JKbu7JabAuFCbuzjsbchhLeW2hik=;
+	s=arc-20240116; t=1759244243; c=relaxed/simple;
+	bh=ZD2z8/EvdxbXSetYeboL+XPwacGtP9i/yzavsbqozhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtyN8b30abxGUpYAlECuQHGX7kzC1Ctty3vJeFKTLAu820DzzpPPEew0vTS7LBgB5hMdx8bdibQpTQtNIkCoJbWwxazdj/ov0qv4F+h1dnIn9h6n8MaSNXQMk4VCcUmmK31R0LKC5a0JSaAk3fxH5KvW3tuwvzHmn9X3NJwxf2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gcwp/xTO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKDWoax2QF5cuPtMZUctIA7+5CJobHby2K1PNDDLBbwK4Seij+QnsAv9aNIfPTssXoeG9b2FWNa6T04CouagQDRSRmZ9+8LvC2Dd3HHOUK48cpGk/okymyR0bOSOULs8jMSeVd1BcdZ2ggmfGJ4KzKLyA4CItj2oH6i6KXPh1tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbjgMh8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gcwp/xTO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CB1C4CEF0;
-	Tue, 30 Sep 2025 14:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbjgMh8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67BFC4CEF0;
+	Tue, 30 Sep 2025 14:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244240;
-	bh=YqoL4CIkX0M9zD+JKbu7JabAuFCbuzjsbchhLeW2hik=;
+	s=korg; t=1759244243;
+	bh=ZD2z8/EvdxbXSetYeboL+XPwacGtP9i/yzavsbqozhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gcwp/xTOvoMYbGl1Dftv0UfMaerkltfVWV/plThWVqdoNmQryJ+djVkNko7ybEYQg
-	 wmlkRv65sPN65ofmaxY43GjiS9PXvm1zCstT4u7iitUxAIBLwbofuLCQKlzyHycmLs
-	 BqxRxl22rdBlbZAOdwKLWpd42nVPl1c1F9ZjE3Qo=
+	b=PbjgMh8E7WQebNzELOvGkOtw1LNov9X1KQ2Qd1tmRNrASbST8YZSkeX/PShHy+9Iq
+	 H2+86TTB6mdXKGENRPSV1VWnqxEYcMIY5DcQM7j4+ad5PLQv9WpkPVtP0A/Tvo7xTj
+	 YhqJ1FD81aFy33hmfEeHMR5/9C/KTsuFYndR398Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/122] serial: sc16is7xx: fix bug in flow control levels init
-Date: Tue, 30 Sep 2025 16:46:40 +0200
-Message-ID: <20250930143825.825755632@linuxfoundation.org>
+Subject: [PATCH 5.10 070/122] usb: gadget: dummy_hcd: remove usage of list iterator past the loop body
+Date: Tue, 30 Sep 2025 16:46:41 +0200
+Message-ID: <20250930143825.866264672@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -50,93 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jakob Koschel <jakobkoschel@gmail.com>
 
-[ Upstream commit 535fd4c98452c87537a40610abba45daf5761ec6 ]
+[ Upstream commit 7975f080d3557725160a878b1a64339043ba3d91 ]
 
-When trying to set MCR[2], XON1 is incorrectly accessed instead. And when
-writing to the TCR register to configure flow control levels, we are
-incorrectly writing to the MSR register. The default value of $00 is then
-used for TCR, which means that selectable trigger levels in FCR are used
-in place of TCR.
+To move the list iterator variable into the list_for_each_entry_*()
+macro in the future it should be avoided to use the list iterator
+variable after the loop body.
 
-TCR/TLR access requires EFR[4] (enable enhanced functions) and MCR[2]
-to be set. EFR[4] is already set in probe().
+To *never* use the list iterator variable after the loop it was
+concluded to use a separate iterator variable [1].
 
-MCR access requires LCR[7] to be zero.
-
-Since LCR is set to $BF when trying to set MCR[2], XON1 is incorrectly
-accessed instead because MCR shares the same address space as XON1.
-
-Since MCR[2] is unmodified and still zero, when writing to TCR we are in
-fact writing to MSR because TCR/TLR registers share the same address space
-as MSR/SPR.
-
-Fix by first removing useless reconfiguration of EFR[4] (enable enhanced
-functions), as it is already enabled in sc16is7xx_probe() since commit
-43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed").
-Now LCR is $00, which means that MCR access is enabled.
-
-Also remove regcache_cache_bypass() calls since we no longer access the
-enhanced registers set, and TCR is already declared as volatile (in fact
-by declaring MSR as volatile, which shares the same address).
-
-Finally disable access to TCR/TLR registers after modifying them by
-clearing MCR[2].
-
-Note: the comment about "... and internal clock div" is wrong and can be
-      ignored/removed as access to internal clock div registers (DLL/DLH)
-      is permitted only when LCR[7] is logic 1, not when enhanced features
-      is enabled. And DLL/DLH access is not needed in sc16is7xx_startup().
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20250731124451.1108864-1-hugo@hugovil.com
+Link: https://lore.kernel.org/all/YhdfEIwI4EdtHdym@kroah.com/
+Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Link: https://lore.kernel.org/r/20220308171818.384491-26-jakobkoschel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ changed regmap variable from one->regmap to s->regmap ]
+Stable-dep-of: 8d63c83d8eb9 ("USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1018,7 +1018,6 @@ static int sc16is7xx_config_rs485(struct
- static int sc16is7xx_startup(struct uart_port *port)
- {
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	unsigned int val;
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -749,7 +749,7 @@ static int dummy_dequeue(struct usb_ep *
+ 	struct dummy		*dum;
+ 	int			retval = -EINVAL;
+ 	unsigned long		flags;
+-	struct dummy_request	*req = NULL;
++	struct dummy_request	*req = NULL, *iter;
  
- 	sc16is7xx_power(port, 1);
-@@ -1030,16 +1029,6 @@ static int sc16is7xx_startup(struct uart
- 	sc16is7xx_port_write(port, SC16IS7XX_FCR_REG,
- 			     SC16IS7XX_FCR_FIFO_BIT);
+ 	if (!_ep || !_req)
+ 		return retval;
+@@ -761,13 +761,14 @@ static int dummy_dequeue(struct usb_ep *
  
--	/* Enable EFR */
--	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
--			     SC16IS7XX_LCR_CONF_MODE_B);
--
--	regcache_cache_bypass(s->regmap, true);
--
--	/* Enable write access to enhanced features and internal clock div */
--	sc16is7xx_port_write(port, SC16IS7XX_EFR_REG,
--			     SC16IS7XX_EFR_ENABLE_BIT);
--
- 	/* Enable TCR/TLR */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_TCRTLR_BIT,
-@@ -1051,7 +1040,8 @@ static int sc16is7xx_startup(struct uart
- 			     SC16IS7XX_TCR_RX_RESUME(24) |
- 			     SC16IS7XX_TCR_RX_HALT(48));
+ 	local_irq_save(flags);
+ 	spin_lock(&dum->lock);
+-	list_for_each_entry(req, &ep->queue, queue) {
+-		if (&req->req == _req) {
+-			list_del_init(&req->queue);
+-			_req->status = -ECONNRESET;
+-			retval = 0;
+-			break;
+-		}
++	list_for_each_entry(iter, &ep->queue, queue) {
++		if (&iter->req != _req)
++			continue;
++		list_del_init(&iter->queue);
++		_req->status = -ECONNRESET;
++		req = iter;
++		retval = 0;
++		break;
+ 	}
+ 	spin_unlock(&dum->lock);
  
--	regcache_cache_bypass(s->regmap, false);
-+	/* Disable TCR/TLR access */
-+	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
- 
- 	/* Now, initialize the UART */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, SC16IS7XX_LCR_WORD_LEN_8);
 
 
