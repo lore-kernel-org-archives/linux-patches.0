@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A59F2FD1DD;
-	Tue, 30 Sep 2025 15:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DBB2F9D88;
+	Tue, 30 Sep 2025 15:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245182; cv=none; b=uuOHyLMCwcxuUAYIXzPUjJjv1/v0GZdsjP+bGsdG0nASbAMgXy+fmQBPbmEI/wxCgM9newtL62lkvMQFfJqToe6anQbjASmmt2EbWqeQamEog5rhv01gu6cMnfD3s+K3hhNQOICPdn8De8kgPtbfO70ugT5k0qm3K/Dp7myCy2w=
+	t=1759245186; cv=none; b=MS9xP5ul2SrHMXsvx5DpWt7zTKqDfcEqOQOaEw1kMSW2fbxUGsY0zHdspjZBMRLGchyRAOJiNpKLmU+lxNAvsUryjMNGHDftmTm0e/l54ESQgk6ItvZQXkHnF5syzruVk3UxBQBSx6UcJ7yiS9nUwtEZOCMDozoGgmBhY2/u5ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245182; c=relaxed/simple;
-	bh=C8Gts0J4sGQgYD7T+gvInGeRe8P6yNYGA8ulGCvBRAo=;
+	s=arc-20240116; t=1759245186; c=relaxed/simple;
+	bh=5bbP9VQDoMexk3/4EHXtur82VfTZ85Y9phsLKhuMvRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qK/wDsR2H4UrKMPvYupguIifqt7MRgeM9xbinAmh0yCrLwzrMxFH4QC4zDtOuXFjAoEsEKHXobiAXSMxFXoDugRV+X+TfRSypivtY5nskAIap2gh+i1XBD7RVes+OpS04aDqZeW5/VfjwgILWEtjtPriMKznfaBPJIbk5cbJeRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBin3OIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qtPbu7dR/B7nnvKMTHfwnmQI1yqRLj664Prea2AaYWtXTU8N/wb8CgfpiTFqmD9dtY4CAj2wshDYS0cGsXqQcgPsjSaBu6TRbiffqVV39Vf75VoJauR7JoqUE/C4sT937Y28LqP63WqZjnO4tlO1gUskuv8W14fVEIcI49KStlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUmFBsVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBin3OIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6D5C4CEF0;
-	Tue, 30 Sep 2025 15:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUmFBsVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562B3C4CEF0;
+	Tue, 30 Sep 2025 15:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245182;
-	bh=C8Gts0J4sGQgYD7T+gvInGeRe8P6yNYGA8ulGCvBRAo=;
+	s=korg; t=1759245185;
+	bh=5bbP9VQDoMexk3/4EHXtur82VfTZ85Y9phsLKhuMvRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBin3OIem8JCyqX4PQitfPZcN7cAvxJaPMjQAFqobR606LAcJ4O+AGrvazd86sZGN
-	 71jkaqbfypwqvUHRQUeTs4ko93xPZf3VSGqsantwtIyrVbpVtpJzdvyQ6OWNp1GtCb
-	 0j1WnEJec2Z14mILHpsfr2xzbc/2lIM0qF7hmqNw=
+	b=UUmFBsVkkZgpJ4zrM2iK0xnsbY6ifOl4v3wFS83ofiKjH60cRjqPWVrWv0TdL4aRs
+	 jhpSImRhKm00htdOAmK+tvGnB92mnYSTGfuUaPkyeCHGUSz6li/Kqvvvk+Ho2aueQo
+	 BIwY2MQNU4XTJ6Cw4zGeXDP1J+Ss4u3Q/m/6TnN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 059/151] phy: ti-pipe3: fix device leak at unbind
-Date: Tue, 30 Sep 2025 16:46:29 +0200
-Message-ID: <20250930143829.952805198@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>
+Subject: [PATCH 5.15 060/151] soc: qcom: mdt_loader: Deal with zero e_shentsize
+Date: Tue, 30 Sep 2025 16:46:30 +0200
+Message-ID: <20250930143829.991965126@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,58 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-commit e19bcea99749ce8e8f1d359f68ae03210694ad56 upstream.
+commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
 
-Make sure to drop the reference to the control device taken by
-of_find_device_by_node() during probe when the driver is unbound.
+Firmware that doesn't provide section headers leave both e_shentsize and
+e_shnum 0, which obvious isn't compatible with the newly introduced
+stricter checks.
 
-Fixes: 918ee0d21ba4 ("usb: phy: omap-usb3: Don't use omap_get_control_dev()")
-Cc: stable@vger.kernel.org	# 3.13
-Cc: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250724131206.2211-4-johan@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Make the section-related checks conditional on either of these values
+being non-zero.
+
+Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
+Reported-by: Val Packett <val@packett.cool>
+Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Yongqin Liu <yongqin.liu@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/ti/phy-ti-pipe3.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/phy/ti/phy-ti-pipe3.c
-+++ b/drivers/phy/ti/phy-ti-pipe3.c
-@@ -666,12 +666,20 @@ static int ti_pipe3_get_clk(struct ti_pi
- 	return 0;
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -39,12 +39,14 @@ static bool mdt_header_valid(const struc
+ 	if (phend > fw->size)
+ 		return false;
+ 
+-	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
+-		return false;
++	if (ehdr->e_shentsize || ehdr->e_shnum) {
++		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
++			return false;
+ 
+-	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+-	if (shend > fw->size)
+-		return false;
++		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
++		if (shend > fw->size)
++			return false;
++	}
+ 
+ 	return true;
  }
- 
-+static void ti_pipe3_put_device(void *_dev)
-+{
-+	struct device *dev = _dev;
-+
-+	put_device(dev);
-+}
-+
- static int ti_pipe3_get_sysctrl(struct ti_pipe3 *phy)
- {
- 	struct device *dev = phy->dev;
- 	struct device_node *node = dev->of_node;
- 	struct device_node *control_node;
- 	struct platform_device *control_pdev;
-+	int ret;
- 
- 	phy->phy_power_syscon = syscon_regmap_lookup_by_phandle(node,
- 							"syscon-phy-power");
-@@ -702,6 +710,11 @@ static int ti_pipe3_get_sysctrl(struct t
- 		}
- 
- 		phy->control_dev = &control_pdev->dev;
-+
-+		ret = devm_add_action_or_reset(dev, ti_pipe3_put_device,
-+					       phy->control_dev);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	if (phy->mode == PIPE3_MODE_PCIE) {
 
 
