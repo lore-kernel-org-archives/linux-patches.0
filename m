@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24C12236EB;
-	Tue, 30 Sep 2025 15:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F0F2236EB;
+	Tue, 30 Sep 2025 15:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245038; cv=none; b=fm1a+PK2QgUBuoyv+MTMjS+BUfTM7HsjZPbYzz219dtRzxshU60yN4mBUA44db9YIgWIF4PDo4r0TYo6bbGdgt9WG+st7U+RuNA/PgFQwS78IexSliTOoUeGNmzvbAs5SEA4m/PAnwbHeem33x5A630D3t+KZSG24cS15FtP9nY=
+	t=1759245041; cv=none; b=SndXlPp63UPxXPkVwAxi40fo3Wl5f9fl22FZ/7A1E+8ZCBZVI8du+6fJ1kRmawa/m6wIxfOWm6kbWZM2iMD/1lYrFyynG6tMEtCe9VeEcXySxWk+MueRC2GnMn5gs8lJqBlgvY48NjhK3kT9eBAT1bpINIoE6g//eLRNuhMQBNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245038; c=relaxed/simple;
-	bh=EfwP+73d/Rq+v93ATjheJL0XA9K44d5vY6+zzqoDCuU=;
+	s=arc-20240116; t=1759245041; c=relaxed/simple;
+	bh=FNemlHQubb2vUNf4eFWT71HP6NW8vDbd4dW5XVws0TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuP+yzikk3bCo4+9OIRfkE4DquKtzcgnxvKtVbvJwcchtpP5coxqiryooRwZgaPOSEnTQb1wsSTnXaoq9I/oZLr9w1UHV+CQAXV8aa/8FRkE1jbhLFx2ZR8HqUAPjx27tNNe84fDecTlB+WiurPJzpuL+6uAB4UkYD0dXjRPO3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miQrqRIX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jszPUc+/0knbbME6rbiEhbcod4OTVXVKocOnmk2xx8qT9uMHV5LCBDmReL7njMc5aqpGoHKdG8Q6dresxNyOcbDZ7ZWV6Qa86lqFrPVym03AVLStr5O3K0cNcKxTvPrl7W9sBtsHlsTXeAAvE+OKFyk8vYovamCndmu2T4mS8hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJPTe8Rj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miQrqRIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07341C4CEF0;
-	Tue, 30 Sep 2025 15:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJPTe8Rj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4E3C4CEF0;
+	Tue, 30 Sep 2025 15:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245038;
-	bh=EfwP+73d/Rq+v93ATjheJL0XA9K44d5vY6+zzqoDCuU=;
+	s=korg; t=1759245041;
+	bh=FNemlHQubb2vUNf4eFWT71HP6NW8vDbd4dW5XVws0TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miQrqRIXOnt4qRsI77he+coy329BpFahWTAUjF7mzEmg99VTeWxw8V5oWbA2E6MTR
-	 Pjj/4f6LEMijL9nKE448U789Ic91JM5NKgUPOATcx+RWHGHlQifYbQsi4v64liz3Ke
-	 IWlkKIJJHfvwJoxtbzGGDagNq3UHivhxsmxdk6NU=
+	b=VJPTe8RjQ5CudmDu3EoXRJwpi13d+a5zLRsmD/tdmON5broX/devf7XhTSNteal70
+	 PO/yM0kNownrfX45U8oiO3V6F7gtoYCopmdR4cwn1jt4SWOQIR3ceZgdbk3XWO/vAc
+	 OMAT/6jtVRgDPrGQEYoydHp0cXLI6qwr/R1rWGrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/151] can: xilinx_can: xcan_write_frame(): fix use-after-free of transmitted SKB
-Date: Tue, 30 Sep 2025 16:46:16 +0200
-Message-ID: <20250930143829.446929467@linuxfoundation.org>
+Subject: [PATCH 5.15 047/151] net: hsr: Disable promiscuous mode in offload mode
+Date: Tue, 30 Sep 2025 16:46:17 +0200
+Message-ID: <20250930143829.485434348@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,70 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Ravi Gunasekaran <r-gunasekaran@ti.com>
 
-[ Upstream commit ef79f00be72bd81d2e1e6f060d83cf7e425deee4 ]
+[ Upstream commit e748d0fd66abc4b1c136022e4e053004fce2b792 ]
 
-can_put_echo_skb() takes ownership of the SKB and it may be freed
-during or after the call.
+When port-to-port forwarding for interfaces in HSR node is enabled,
+disable promiscuous mode since L2 frame forward happens at the
+offloaded hardware.
 
-However, xilinx_can xcan_write_frame() keeps using SKB after the call.
-
-Fix that by only calling can_put_echo_skb() after the code is done
-touching the SKB.
-
-The tx_lock is held for the entire xcan_write_frame() execution and
-also on the can_get_echo_skb() side so the order of operations does not
-matter.
-
-An earlier fix commit 3d3c817c3a40 ("can: xilinx_can: Fix usage of skb
-memory") did not move the can_put_echo_skb() call far enough.
-
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Fixes: 1598efe57b3e ("can: xilinx_can: refactor code in preparation for CAN FD support")
-Link: https://patch.msgid.link/20250822095002.168389-1-anssi.hannula@bitwise.fi
-[mkl: add "commit" in front of sha1 in patch description]
-[mkl: fix indention]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230614114710.31400-1-r-gunasekaran@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8884c6939913 ("hsr: use rtnl lock when iterating over ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/xilinx_can.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/hsr/hsr_device.c |  5 +++++
+ net/hsr/hsr_main.h   |  1 +
+ net/hsr/hsr_slave.c  | 15 +++++++++++----
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/xilinx_can.c b/drivers/net/can/xilinx_can.c
-index cb48598e32ad8..ac63e89397774 100644
---- a/drivers/net/can/xilinx_can.c
-+++ b/drivers/net/can/xilinx_can.c
-@@ -590,14 +590,6 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
- 		dlc |= XCAN_DLCR_EDL_MASK;
- 	}
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 0ffb28406fdc0..4967dc22824c7 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -532,6 +532,11 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
+ 	if (res)
+ 		goto err_add_master;
  
--	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
--	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
--		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
--	else
--		can_put_echo_skb(skb, ndev, 0, 0);
--
--	priv->tx_head++;
--
- 	priv->write_reg(priv, XCAN_FRAME_ID_OFFSET(frame_offset), id);
- 	/* If the CAN frame is RTR frame this write triggers transmission
- 	 * (not on CAN FD)
-@@ -630,6 +622,14 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
- 					data[1]);
- 		}
- 	}
++	/* HSR forwarding offload supported in lower device? */
++	if ((slave[0]->features & NETIF_F_HW_HSR_FWD) &&
++	    (slave[1]->features & NETIF_F_HW_HSR_FWD))
++		hsr->fwd_offloaded = true;
 +
-+	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
-+	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
-+		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
-+	else
-+		can_put_echo_skb(skb, ndev, 0, 0);
+ 	res = register_netdevice(hsr_dev);
+ 	if (res)
+ 		goto err_unregister;
+diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
+index 53d1f7a824630..4188516cde5da 100644
+--- a/net/hsr/hsr_main.h
++++ b/net/hsr/hsr_main.h
+@@ -212,6 +212,7 @@ struct hsr_priv {
+ 	u8 net_id;		/* for PRP, it occupies most significant 3 bits
+ 				 * of lan_id
+ 				 */
++	bool fwd_offloaded;	/* Forwarding offloaded to HW */
+ 	unsigned char		sup_multicast_addr[ETH_ALEN] __aligned(sizeof(u16));
+ 				/* Align to u16 boundary to avoid unaligned access
+ 				 * in ether_addr_equal
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index 0e6daee488b4f..52302a0546133 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -137,9 +137,14 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
+ 	struct hsr_port *master;
+ 	int res;
+ 
+-	res = dev_set_promiscuity(dev, 1);
+-	if (res)
+-		return res;
++	/* Don't use promiscuous mode for offload since L2 frame forward
++	 * happens at the offloaded hardware.
++	 */
++	if (!port->hsr->fwd_offloaded) {
++		res = dev_set_promiscuity(dev, 1);
++		if (res)
++			return res;
++	}
+ 
+ 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	hsr_dev = master->dev;
+@@ -158,7 +163,9 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
+ fail_rx_handler:
+ 	netdev_upper_dev_unlink(dev, hsr_dev);
+ fail_upper_dev_link:
+-	dev_set_promiscuity(dev, -1);
++	if (!port->hsr->fwd_offloaded)
++		dev_set_promiscuity(dev, -1);
 +
-+	priv->tx_head++;
+ 	return res;
  }
  
- /**
 -- 
 2.51.0
 
