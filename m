@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39049205E3B;
-	Tue, 30 Sep 2025 15:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA52A205E3B;
+	Tue, 30 Sep 2025 15:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245718; cv=none; b=nEerdgL9TwJUDFD5gUeq64LpBLKlCGe3vcHz3ON86JxV8GoqlkQFCLhxP304Yk7SqFoDgNSP+HkFGoY67ielyGBM/F9aDYP2hf2awa55JP9F4NPK2iNBzRjl9ZZiBkCouoHAP0CYTx5GCGuakAG9yaZEjcTdtiGulbwgAdvjfE8=
+	t=1759245721; cv=none; b=JWeCeomOEpEayCx26Vc3BCzbNZjKMi58ljAVN+JQMV88ZaUCEfvyNKpWXfvC2e4sLpiyZMGf/MlP2o8rQLrWdewubdgqa88bmru6xC8Jy0aJ5l01emt2xarWqrm7FeXNStT5adCayzERMToSEurUnxIirqFCNcbm7JRN30/oz/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245718; c=relaxed/simple;
-	bh=e3LhdmCnmHKP+Qd/lhEJFrbMenFHkYyiuFr1/W6EDc0=;
+	s=arc-20240116; t=1759245721; c=relaxed/simple;
+	bh=03ov9LKUEljRiZEs2sCb2z5P7MMlRiHJ1ESpXar3idA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4u8CM0Wq1H0wy2X2IRZLbkzU0huFgugQsA2uF0K6rSN4P41OV0Sf1z+FbRuwGfa6uGKygYPLbPco0Bd580j+/rmfEH98yWrZ7H8C/j7r3MZ4vmnX2UPHPJq8R1DAdORIVrGVtWJkpftpj1lDkKBE0uJGuNOBqnL/JS4ozfq8f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn+jIIoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5VAKODQoX/v3GpgXov/7eppFH4BfTRfuX6Tog9xkQs5UgXiXu6vH7JH+7VZAO7TackCN4OBShoRkSSPefTzoTZcYpv9ECMF+7G1d5ZgWB0OnayDut4c/cooH+gj4f7B9lIZbclyl43vrtJDFLWxZQIcd53cZCFnv9Hsx0I9xic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hT1ZQEb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn+jIIoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B370BC116C6;
-	Tue, 30 Sep 2025 15:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hT1ZQEb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B92DC4CEF0;
+	Tue, 30 Sep 2025 15:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245718;
-	bh=e3LhdmCnmHKP+Qd/lhEJFrbMenFHkYyiuFr1/W6EDc0=;
+	s=korg; t=1759245721;
+	bh=03ov9LKUEljRiZEs2sCb2z5P7MMlRiHJ1ESpXar3idA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn+jIIojtt85uiZU6fo0yWIILivnS+cSgi75P/qK/JJTZYVbqRCaehpsnqyaLDDLM
-	 NNCw44vqFGZWsebNkVZUvHdOXFwi5jx+DEBrj4368BDMnfF7nTLaahElTE34Ilmnmy
-	 oL4wEBFvrplHYsFvKq0Ch8GFBKDUk+37JD7SRp5A=
+	b=hT1ZQEb2bquxHl72q6tdYu7oNUYK95EVexqX7cg2s68RAGvWmwC2YYmN4OZQdd53E
+	 ITzrvGYhBNiS57biZ3c25HEQxqQiMXF91uev2wxexcyV+cyS3CZE10sKA1Ol7lwaaJ
+	 eOvtidjoe6IqDbIFhK/YUMBP/qFQ82/6zspDt/sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	James Guan <guan_yufei@163.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 30/91] smb: server: dont use delayed_work for post_recv_credits_work
-Date: Tue, 30 Sep 2025 16:47:29 +0200
-Message-ID: <20250930143822.399146501@linuxfoundation.org>
+Subject: [PATCH 6.6 31/91] wifi: virt_wifi: Fix page fault on connect
+Date: Tue, 30 Sep 2025 16:47:30 +0200
+Message-ID: <20250930143822.441417399@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -56,101 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: James Guan <guan_yufei@163.com>
 
-[ Upstream commit 1cde0a74a7a8951b3097417847a458e557be0b5b ]
+[ Upstream commit 9c600589e14f5fc01b8be9a5d0ad1f094b8b304b ]
 
-If we are using a hardcoded delay of 0 there's no point in
-using delayed_work it only adds confusion.
+This patch prevents page fault in __cfg80211_connect_result()[1]
+when connecting a virt_wifi device, while ensuring that virt_wifi
+can connect properly.
 
-The client also uses a normal work_struct and now
-it is easier to move it to the common smbdirect_socket.
+[1] https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Closes: https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
+Signed-off-by: James Guan <guan_yufei@163.com>
+Link: https://patch.msgid.link/20250910111929.137049-1-guan_yufei@163.com
+[remove irrelevant network-manager instructions]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/net/wireless/virtual/virt_wifi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 3720304d67929..504e2a1cf33b8 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -147,7 +147,7 @@ struct smb_direct_transport {
- 	wait_queue_head_t	wait_send_pending;
- 	atomic_t		send_pending;
+diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
+index fb4d95a027fef..2977b30c6d593 100644
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -277,7 +277,9 @@ static void virt_wifi_connect_complete(struct work_struct *work)
+ 		priv->is_connected = true;
  
--	struct delayed_work	post_recv_credits_work;
-+	struct work_struct	post_recv_credits_work;
- 	struct work_struct	send_immediate_work;
- 	struct work_struct	disconnect_work;
- 
-@@ -366,8 +366,8 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
- 
- 	spin_lock_init(&t->lock_new_recv_credits);
- 
--	INIT_DELAYED_WORK(&t->post_recv_credits_work,
--			  smb_direct_post_recv_credits);
-+	INIT_WORK(&t->post_recv_credits_work,
-+		  smb_direct_post_recv_credits);
- 	INIT_WORK(&t->send_immediate_work, smb_direct_send_immediate_work);
- 	INIT_WORK(&t->disconnect_work, smb_direct_disconnect_rdma_work);
- 
-@@ -399,7 +399,7 @@ static void free_transport(struct smb_direct_transport *t)
- 		   atomic_read(&t->send_pending) == 0);
- 
- 	cancel_work_sync(&t->disconnect_work);
--	cancel_delayed_work_sync(&t->post_recv_credits_work);
-+	cancel_work_sync(&t->post_recv_credits_work);
- 	cancel_work_sync(&t->send_immediate_work);
- 
- 	if (t->qp) {
-@@ -614,8 +614,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			wake_up_interruptible(&t->wait_send_credits);
- 
- 		if (is_receive_credit_post_required(receive_credits, avail_recvmsg_count))
--			mod_delayed_work(smb_direct_wq,
--					 &t->post_recv_credits_work, 0);
-+			queue_work(smb_direct_wq, &t->post_recv_credits_work);
- 
- 		if (data_length) {
- 			enqueue_reassembly(t, recvmsg, (int)data_length);
-@@ -772,8 +771,7 @@ static int smb_direct_read(struct ksmbd_transport *t, char *buf,
- 		st->count_avail_recvmsg += queue_removed;
- 		if (is_receive_credit_post_required(st->recv_credits, st->count_avail_recvmsg)) {
- 			spin_unlock(&st->receive_credit_lock);
--			mod_delayed_work(smb_direct_wq,
--					 &st->post_recv_credits_work, 0);
-+			queue_work(smb_direct_wq, &st->post_recv_credits_work);
- 		} else {
- 			spin_unlock(&st->receive_credit_lock);
- 		}
-@@ -800,7 +798,7 @@ static int smb_direct_read(struct ksmbd_transport *t, char *buf,
- static void smb_direct_post_recv_credits(struct work_struct *work)
- {
- 	struct smb_direct_transport *t = container_of(work,
--		struct smb_direct_transport, post_recv_credits_work.work);
-+		struct smb_direct_transport, post_recv_credits_work);
- 	struct smb_direct_recvmsg *recvmsg;
- 	int receive_credits, credits = 0;
- 	int ret;
-@@ -1681,7 +1679,7 @@ static int smb_direct_prepare_negotiation(struct smb_direct_transport *t)
- 		goto out_err;
- 	}
- 
--	smb_direct_post_recv_credits(&t->post_recv_credits_work.work);
-+	smb_direct_post_recv_credits(&t->post_recv_credits_work);
- 	return 0;
- out_err:
- 	put_recvmsg(t, recvmsg);
+ 	/* Schedules an event that acquires the rtnl lock. */
+-	cfg80211_connect_result(priv->upperdev, requested_bss, NULL, 0, NULL, 0,
++	cfg80211_connect_result(priv->upperdev,
++				priv->is_connected ? fake_router_bssid : NULL,
++				NULL, 0, NULL, 0,
+ 				status, GFP_KERNEL);
+ 	netif_carrier_on(priv->upperdev);
+ }
 -- 
 2.51.0
 
