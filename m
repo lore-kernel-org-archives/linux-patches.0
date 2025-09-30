@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52155205E3B;
-	Tue, 30 Sep 2025 15:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6563D1D6188;
+	Tue, 30 Sep 2025 15:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245360; cv=none; b=jmH37ETvs8KTrshgLxpgjabQoMqCzHxz4LBomnQWF5i8G9UidyBnC8HcA6EIvEkT0ziKCvBfgHrOWJKEc+TP8625g0WjFwgvGldSTUd8xQqsN1artqAQCe8jQhX9OOJNdxTtqU2vJF8WVCstrG9Xnws7VhzXFZcIsD9bey/A7g8=
+	t=1759245363; cv=none; b=IzVw7q8Jgboy8N1pDeTEYCWQoofpip7NNa10RfgWQFWsKUkW8r8itJYYlbNyYlAMA+rEYPyvz9srVi6CysToAy1OgA/auS0kbOi77PVyqlhu3NdSh4cybziC2O861EbpjjBw9NFJxsfz4dNoVZnle9jmBQ1Mh57S5qxD3Biy5hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245360; c=relaxed/simple;
-	bh=bR1NuZsk5QpMMY/VRjZWKqGNcEaYZ1WqbXRFawHcVjA=;
+	s=arc-20240116; t=1759245363; c=relaxed/simple;
+	bh=1cGCg7fJAyWaEX3m+sHybbuWqyUTTni8QC3toFpAf+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXu6CUvVXYVVh1862gp7ea6S+dPCCIZHhBLMLN1xuOMOINSqfUFTIe7P2sFK6Xp6eiZb8y7wty3b8FLB/GbpxKTyHn9TQ1GQRj4wjt03LkKFMnyAYEb0cOTsyqs77D3LfrBuugkcS1P6aUF4gMb3Tm/0LYbxURzYtxLhhgvxqi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZmhsBXU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pzGo454JQUnTAjSiCpA2HD+rY9y0xhmRl5kiTpjVALoRrqU4F9ljNdxbswB63ZDPwRnDwx9Vfgg/lXjKlgEwxdKK4rvJF/QarDVo8ey+FRqIy5HpkPgdWtFVDuTNoP2lEVduEagQbEFVh4C/GDJ97C11kzECTQws0ngKpobAc5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Rrcjrqi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZmhsBXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2A0C4CEF0;
-	Tue, 30 Sep 2025 15:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Rrcjrqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB4BC4CEF0;
+	Tue, 30 Sep 2025 15:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245360;
-	bh=bR1NuZsk5QpMMY/VRjZWKqGNcEaYZ1WqbXRFawHcVjA=;
+	s=korg; t=1759245363;
+	bh=1cGCg7fJAyWaEX3m+sHybbuWqyUTTni8QC3toFpAf+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZmhsBXULbuHlX/ozAyITiiY9ENLbXpoQcrihHW5TdUDdB+VjmbjpHWGTxdvVg6Qc
-	 IEXwlU4YoTUmsEkXxbelQMlHo6ZgiWuXzFygTjpEVkwkIT0AVQDQg/6iM9tY6WKMKz
-	 KNao4ul12OD2lAEMpj/hoh50wuSjYDGZL3oVQ9fQ=
+	b=2RrcjrqiAltTgg5uONTUBd+A/qExHoQKjtbAeZtUBWrU/sUCUY0dqyhmtCAnyRqGR
+	 zMVffHJXFxOL1zjEnV28OXxT5cZL3Tyxk1d8Gf/5PqGCfyPk/uS6csDATl6Z2mVGcZ
+	 gcR1Jlq9w8QXNpRv4wiJkSE6AEuKz0ouJaVi0QsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 145/151] af_unix: Dont leave consecutive consumed OOB skbs.
-Date: Tue, 30 Sep 2025 16:47:55 +0200
-Message-ID: <20250930143833.370162187@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 146/151] mm/migrate_device: dont add folio to be freed to LRU in migrate_device_finalize()
+Date: Tue, 30 Sep 2025 16:47:56 +0200
+Message-ID: <20250930143833.411055544@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -46,208 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 32ca245464e1479bfea8592b9db227fdc1641705 upstream.
+commit 41cddf83d8b00f29fd105e7a0777366edc69a5cf upstream.
 
-Jann Horn reported a use-after-free in unix_stream_read_generic().
+If migration succeeded, we called
+folio_migrate_flags()->mem_cgroup_migrate() to migrate the memcg from the
+old to the new folio.  This will set memcg_data of the old folio to 0.
 
-The following sequences reproduce the issue:
+Similarly, if migration failed, memcg_data of the dst folio is left unset.
 
-  $ python3
-  from socket import *
-  s1, s2 = socketpair(AF_UNIX, SOCK_STREAM)
-  s1.send(b'x', MSG_OOB)
-  s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-  s1.send(b'y', MSG_OOB)
-  s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-  s1.send(b'z', MSG_OOB)
-  s2.recv(1)              # recv 'z' illegally
-  s2.recv(1, MSG_OOB)     # access 'z' skb (use-after-free)
+If we call folio_putback_lru() on such folios (memcg_data == 0), we will
+add the folio to be freed to the LRU, making memcg code unhappy.  Running
+the hmm selftests:
 
-Even though a user reads OOB data, the skb holding the data stays on
-the recv queue to mark the OOB boundary and break the next recv().
+  # ./hmm-tests
+  ...
+  #  RUN           hmm.hmm_device_private.migrate ...
+  [  102.078007][T14893] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7ff27d200 pfn:0x13cc00
+  [  102.079974][T14893] anon flags: 0x17ff00000020018(uptodate|dirty|swapbacked|node=0|zone=2|lastcpupid=0x7ff)
+  [  102.082037][T14893] raw: 017ff00000020018 dead000000000100 dead000000000122 ffff8881353896c9
+  [  102.083687][T14893] raw: 00000007ff27d200 0000000000000000 00000001ffffffff 0000000000000000
+  [  102.085331][T14893] page dumped because: VM_WARN_ON_ONCE_FOLIO(!memcg && !mem_cgroup_disabled())
+  [  102.087230][T14893] ------------[ cut here ]------------
+  [  102.088279][T14893] WARNING: CPU: 0 PID: 14893 at ./include/linux/memcontrol.h:726 folio_lruvec_lock_irqsave+0x10e/0x170
+  [  102.090478][T14893] Modules linked in:
+  [  102.091244][T14893] CPU: 0 UID: 0 PID: 14893 Comm: hmm-tests Not tainted 6.13.0-09623-g6c216bc522fd #151
+  [  102.093089][T14893] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
+  [  102.094848][T14893] RIP: 0010:folio_lruvec_lock_irqsave+0x10e/0x170
+  [  102.096104][T14893] Code: ...
+  [  102.099908][T14893] RSP: 0018:ffffc900236c37b0 EFLAGS: 00010293
+  [  102.101152][T14893] RAX: 0000000000000000 RBX: ffffea0004f30000 RCX: ffffffff8183f426
+  [  102.102684][T14893] RDX: ffff8881063cb880 RSI: ffffffff81b8117f RDI: ffff8881063cb880
+  [  102.104227][T14893] RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
+  [  102.105757][T14893] R10: 0000000000000001 R11: 0000000000000002 R12: ffffc900236c37d8
+  [  102.107296][T14893] R13: ffff888277a2bcb0 R14: 000000000000001f R15: 0000000000000000
+  [  102.108830][T14893] FS:  00007ff27dbdd740(0000) GS:ffff888277a00000(0000) knlGS:0000000000000000
+  [  102.110643][T14893] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [  102.111924][T14893] CR2: 00007ff27d400000 CR3: 000000010866e000 CR4: 0000000000750ef0
+  [  102.113478][T14893] PKRU: 55555554
+  [  102.114172][T14893] Call Trace:
+  [  102.114805][T14893]  <TASK>
+  [  102.115397][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
+  [  102.116547][T14893]  ? __warn.cold+0x110/0x210
+  [  102.117461][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
+  [  102.118667][T14893]  ? report_bug+0x1b9/0x320
+  [  102.119571][T14893]  ? handle_bug+0x54/0x90
+  [  102.120494][T14893]  ? exc_invalid_op+0x17/0x50
+  [  102.121433][T14893]  ? asm_exc_invalid_op+0x1a/0x20
+  [  102.122435][T14893]  ? __wake_up_klogd.part.0+0x76/0xd0
+  [  102.123506][T14893]  ? dump_page+0x4f/0x60
+  [  102.124352][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
+  [  102.125500][T14893]  folio_batch_move_lru+0xd4/0x200
+  [  102.126577][T14893]  ? __pfx_lru_add+0x10/0x10
+  [  102.127505][T14893]  __folio_batch_add_and_move+0x391/0x720
+  [  102.128633][T14893]  ? __pfx_lru_add+0x10/0x10
+  [  102.129550][T14893]  folio_putback_lru+0x16/0x80
+  [  102.130564][T14893]  migrate_device_finalize+0x9b/0x530
+  [  102.131640][T14893]  dmirror_migrate_to_device.constprop.0+0x7c5/0xad0
+  [  102.133047][T14893]  dmirror_fops_unlocked_ioctl+0x89b/0xc80
 
-After the last send() in the scenario above, the sk2's recv queue has
-2 leading consumed OOB skbs and 1 real OOB skb.
+Likely, nothing else goes wrong: putting the last folio reference will
+remove the folio from the LRU again.  So besides memcg complaining, adding
+the folio to be freed to the LRU is just an unnecessary step.
 
-Then, the following happens during the next recv() without MSG_OOB
+The new flow resembles what we have in migrate_folio_move(): add the dst
+to the lru, remove migration ptes, unlock and unref dst.
 
-  1. unix_stream_read_generic() peeks the first consumed OOB skb
-  2. manage_oob() returns the next consumed OOB skb
-  3. unix_stream_read_generic() fetches the next not-yet-consumed OOB skb
-  4. unix_stream_read_generic() reads and frees the OOB skb
-
-, and the last recv(MSG_OOB) triggers KASAN splat.
-
-The 3. above occurs because of the SO_PEEK_OFF code, which does not
-expect unix_skb_len(skb) to be 0, but this is true for such consumed
-OOB skbs.
-
-  while (skip >= unix_skb_len(skb)) {
-    skip -= unix_skb_len(skb);
-    skb = skb_peek_next(skb, &sk->sk_receive_queue);
-    ...
-  }
-
-In addition to this use-after-free, there is another issue that
-ioctl(SIOCATMARK) does not function properly with consecutive consumed
-OOB skbs.
-
-So, nothing good comes out of such a situation.
-
-Instead of complicating manage_oob(), ioctl() handling, and the next
-ECONNRESET fix by introducing a loop for consecutive consumed OOB skbs,
-let's not leave such consecutive OOB unnecessarily.
-
-Now, while receiving an OOB skb in unix_stream_recv_urg(), if its
-previous skb is a consumed OOB skb, it is freed.
-
-[0]:
-BUG: KASAN: slab-use-after-free in unix_stream_read_actor (net/unix/af_unix.c:3027)
-Read of size 4 at addr ffff888106ef2904 by task python3/315
-
-CPU: 2 UID: 0 PID: 315 Comm: python3 Not tainted 6.16.0-rc1-00407-gec315832f6f9 #8 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:409 mm/kasan/report.c:521)
- kasan_report (mm/kasan/report.c:636)
- unix_stream_read_actor (net/unix/af_unix.c:3027)
- unix_stream_read_generic (net/unix/af_unix.c:2708 net/unix/af_unix.c:2847)
- unix_stream_recvmsg (net/unix/af_unix.c:3048)
- sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
- __sys_recvfrom (net/socket.c:2278)
- __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-RIP: 0033:0x7f8911fcea06
-Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
-RSP: 002b:00007fffdb0dccb0 EFLAGS: 00000202 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 00007fffdb0dcdc8 RCX: 00007f8911fcea06
-RDX: 0000000000000001 RSI: 00007f8911a5e060 RDI: 0000000000000006
-RBP: 00007fffdb0dccd0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000202 R12: 00007f89119a7d20
-R13: ffffffffc4653600 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Allocated by task 315:
- kasan_save_stack (mm/kasan/common.c:48)
- kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
- __kasan_slab_alloc (mm/kasan/common.c:348)
- kmem_cache_alloc_node_noprof (./include/linux/kasan.h:250 mm/slub.c:4148 mm/slub.c:4197 mm/slub.c:4249)
- __alloc_skb (net/core/skbuff.c:660 (discriminator 4))
- alloc_skb_with_frags (./include/linux/skbuff.h:1336 net/core/skbuff.c:6668)
- sock_alloc_send_pskb (net/core/sock.c:2993)
- unix_stream_sendmsg (./include/net/sock.h:1847 net/unix/af_unix.c:2256 net/unix/af_unix.c:2418)
- __sys_sendto (net/socket.c:712 (discriminator 20) net/socket.c:727 (discriminator 20) net/socket.c:2226 (discriminator 20))
- __x64_sys_sendto (net/socket.c:2233 (discriminator 1) net/socket.c:2229 (discriminator 1) net/socket.c:2229 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 315:
- kasan_save_stack (mm/kasan/common.c:48)
- kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
- kasan_save_free_info (mm/kasan/generic.c:579 (discriminator 1))
- __kasan_slab_free (mm/kasan/common.c:271)
- kmem_cache_free (mm/slub.c:4643 (discriminator 3) mm/slub.c:4745 (discriminator 3))
- unix_stream_read_generic (net/unix/af_unix.c:3010)
- unix_stream_recvmsg (net/unix/af_unix.c:3048)
- sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
- __sys_recvfrom (net/socket.c:2278)
- __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-The buggy address belongs to the object at ffff888106ef28c0
- which belongs to the cache skbuff_head_cache of size 224
-The buggy address is located 68 bytes inside of
- freed 224-byte region [ffff888106ef28c0, ffff888106ef29a0)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888106ef3cc0 pfn:0x106ef2
-head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0x200000000000040(head|node=0|zone=2)
-page_type: f5(slab)
-raw: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-raw: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-head: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-head: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-head: 0200000000000001 ffffea00041bbc81 00000000ffffffff 00000000ffffffff
-head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff888106ef2800: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
- ffff888106ef2880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
->ffff888106ef2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                   ^
- ffff888106ef2980: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
- ffff888106ef2a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20250619041457.1132791-2-kuni1840@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[Lee: Shifted hunk inside the if() statement and surrounded the else with {}'s)
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lkml.kernel.org/r/20250210161317.717936-1-david@redhat.com
+Fixes: 8763cb45ab96 ("mm/migrate: new memory migration helper for use with device memory")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/unix/af_unix.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+--
+ mm/migrate.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2504,11 +2504,11 @@ struct unix_stream_read_state {
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- static int unix_stream_recv_urg(struct unix_stream_read_state *state)
- {
-+	struct sk_buff *oob_skb, *read_skb = NULL;
- 	struct socket *sock = state->socket;
- 	struct sock *sk = sock->sk;
- 	struct unix_sock *u = unix_sk(sk);
- 	int chunk = 1;
--	struct sk_buff *oob_skb;
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -3065,20 +3065,16 @@ void migrate_vma_finalize(struct migrate
+ 			newpage = page;
+ 		}
  
- 	mutex_lock(&u->iolock);
- 	unix_state_lock(sk);
-@@ -2523,10 +2523,17 @@ static int unix_stream_recv_urg(struct u
++		if (!is_zone_device_page(newpage))
++			lru_cache_add(newpage);
+ 		remove_migration_ptes(page, newpage, false);
+ 		unlock_page(page);
  
- 	oob_skb = u->oob_skb;
+-		if (is_zone_device_page(page))
+-			put_page(page);
+-		else
+-			putback_lru_page(page);
++		put_page(page);
  
--	if (!(state->flags & MSG_PEEK))
-+	if (!(state->flags & MSG_PEEK)) {
- 		WRITE_ONCE(u->oob_skb, NULL);
--	else
-+
-+		if (oob_skb->prev != (struct sk_buff *)&sk->sk_receive_queue &&
-+		    !unix_skb_len(oob_skb->prev)) {
-+			read_skb = oob_skb->prev;
-+			__skb_unlink(read_skb, &sk->sk_receive_queue);
-+		}
-+	} else {
- 		skb_get(oob_skb);
-+	}
- 
- 	spin_unlock(&sk->sk_receive_queue.lock);
- 	unix_state_unlock(sk);
-@@ -2540,6 +2547,8 @@ static int unix_stream_recv_urg(struct u
- 
- 	mutex_unlock(&u->iolock);
- 
-+	consume_skb(read_skb);
-+
- 	if (chunk < 0)
- 		return -EFAULT;
- 
+ 		if (newpage != page) {
+ 			unlock_page(newpage);
+-			if (is_zone_device_page(newpage))
+-				put_page(newpage);
+-			else
+-				putback_lru_page(newpage);
++			put_page(newpage);
+ 		}
+ 	}
+ }
 
 
