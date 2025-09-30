@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A24205E3B;
-	Tue, 30 Sep 2025 15:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D401D6188;
+	Tue, 30 Sep 2025 15:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245334; cv=none; b=rOh7VtLo8UYeMS1BYsPhXDFUGWarR17yFD2KmTpM8UEnLHNYPZuUOI+BhDjk8MGH7JRQjHVfW+B0kJtOkxtTmU7PJLn6ECGLTzyybvNukwlaJf710J056T+H3giJh4txKdfvRqQ7fjR2jGGiWFso/q3GpL0npbreg31+OglIYKA=
+	t=1759245336; cv=none; b=ei9NLpqRxPMJiHtGLHy9hoJaRzCbYYzdcwr8LALOucGouvwrqEef0kiE0H2P8uSuTr9H6sCNGvqRq0fJoUk4bVM8/XExt4JR7Otd3fWDvALVk2atYshOH5G6YQL409pKHs7wmDgalLU0dfdfugSNcqYfFFFZNd6Z9Zw7+Kj+nY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245334; c=relaxed/simple;
-	bh=E3KgQfwXM9LzHhEsuM3x/LyuMYUUJ8qAQZ1PiMSUfqs=;
+	s=arc-20240116; t=1759245336; c=relaxed/simple;
+	bh=J3Z/SfV2m147K3A671RIE393WSHvNCRqWf+MM1tc3AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lT3dwrvIeci5Q2YBOkW133CQxVHw1V6+XenTZILOR9oJUOG2RCiAwn6FYjHYzNxWFwpbbLUg8DP2k0eA34NEuYH4TC+zZuymldTqgY7WcqBz/nStaVubipXXDTL6kN99DIFHOyebLfWRbBRrBF0kPsz/V4zfCN1uMBmPWGlqU0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSaa0aaR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=blIdfo4m6SJTXNCfJW3XaASx9issNWq9xbdnppdyEFdGfXKgEOqEsGnvP9pOjdUTU2E4GK0gYTXnXKccLza//NMNFz0VO58yprUOH5VtNgkWi5K8jn/Xow1sZAT4PsH5tv4/VI4ABVl1ckzdEBTvYDPHjYumXbecB2K4Dkhg7mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij2MzUdv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSaa0aaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE219C4CEF0;
-	Tue, 30 Sep 2025 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij2MzUdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16803C4CEF0;
+	Tue, 30 Sep 2025 15:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245333;
-	bh=E3KgQfwXM9LzHhEsuM3x/LyuMYUUJ8qAQZ1PiMSUfqs=;
+	s=korg; t=1759245336;
+	bh=J3Z/SfV2m147K3A671RIE393WSHvNCRqWf+MM1tc3AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSaa0aaRL+gTluc+IGaPB8bFi0PHIAPOt8+4QcsQUbEEW68ozB29scY4bAVNfWK9E
-	 pRkycbVzM8HB/pXHjMlU6vbdmL9M0DCye13M463fFWbkAK+RyrKYfPpC75CBnBxBjc
-	 /SIUJ9NJLObbn1Wp/lk9x6xF1CXnpY/O1ayaFQJs=
+	b=Ij2MzUdvIyuIectkVssi/AVsFzl3wrhaN6kFzQTji1awIXsD+Dt2zD9BEjpLwGy9j
+	 qc2iw4uOcNVbjaov35gwvRQ8sBCFJOXodYOJC8ouH3RSWWZuLoDW3AVF5HgmXY+3XA
+	 v4MHJ/pqYOuO/q+s71zu7lz32eT82KmJkgunSsrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,11 +31,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Kamakshi Nellore <nellorex.kamakshi@intel.com>
-Subject: [PATCH 5.15 138/151] i40e: fix idx validation in i40e_validate_queue_map
-Date: Tue, 30 Sep 2025 16:47:48 +0200
-Message-ID: <20250930143833.094107061@linuxfoundation.org>
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.15 139/151] i40e: fix input validation logic for action_meta
+Date: Tue, 30 Sep 2025 16:47:49 +0200
+Message-ID: <20250930143833.132099614@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -56,38 +56,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-commit aa68d3c3ac8d1dcec40d52ae27e39f6d32207009 upstream.
+commit 9739d5830497812b0bdeaee356ddefbe60830b88 upstream.
 
-Ensure idx is within range of active/initialized TCs when iterating over
-vf->ch[idx] in i40e_validate_queue_map().
+Fix condition to check 'greater or equal' to prevent OOB dereference.
 
-Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2457,8 +2457,10 @@ static int i40e_validate_queue_map(struc
- 	u16 vsi_queue_id, queue_id;
+@@ -3472,7 +3472,7 @@ static int i40e_validate_cloud_filter(st
  
- 	for_each_set_bit(vsi_queue_id, &queuemap, I40E_MAX_VSI_QP) {
--		if (vf->adq_enabled) {
--			vsi_id = vf->ch[vsi_queue_id / I40E_MAX_VF_VSI].vsi_id;
-+		u16 idx = vsi_queue_id / I40E_MAX_VF_VSI;
-+
-+		if (vf->adq_enabled && idx < vf->num_tc) {
-+			vsi_id = vf->ch[idx].vsi_id;
- 			queue_id = (vsi_queue_id % I40E_DEFAULT_QUEUES_PER_VF);
- 		} else {
- 			queue_id = vsi_queue_id;
+ 	/* action_meta is TC number here to which the filter is applied */
+ 	if (!tc_filter->action_meta ||
+-	    tc_filter->action_meta > vf->num_tc) {
++	    tc_filter->action_meta >= vf->num_tc) {
+ 		dev_info(&pf->pdev->dev, "VF %d: Invalid TC number %u\n",
+ 			 vf->vf_id, tc_filter->action_meta);
+ 		goto err;
 
 
