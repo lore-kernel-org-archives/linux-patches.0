@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEF6173;
-	Tue, 30 Sep 2025 15:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAFB27B328;
+	Tue, 30 Sep 2025 15:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245628; cv=none; b=NRufUF+PNvNBvor/vqCCOuBDFaYn6SFvxUp+vpfbbetUy+f9CC9JN8bCC0esLdZhFjaZnexbKr54GJD47JbWO1ScvduAdViAZRhIfJouene/leJdGIqOf0zaqTdIrjh+LBwegLTrV0sfTgu4Sr3/n/7AHBFdGgc3AI8AxHEI8Z0=
+	t=1759245632; cv=none; b=QG784N3R7dU3wVV3eOba6tEa65wPYnTMCtcSUzfa+5jYMZt//7bS/uF+JonGS8iYfcKY8fmVcJRwgCB1YEm3ee3rvVHwPfZPgV+LafJS3vwhedGHJRcL1dVLxHiic+cQDAK5KpuaTy7vaMl6qSnSjiLyXJietAFXZGSaoUrdgow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245628; c=relaxed/simple;
-	bh=8/3DhC5onrZs2Umkjp8b9fSWM/L4JsvuXQeNMFDvABI=;
+	s=arc-20240116; t=1759245632; c=relaxed/simple;
+	bh=PRJhag8nfMoa4keA28wBL1IKGCvWYL8/pLgFwfWcF4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMdpDUZQra06yR9SbF0h+rXKuHdCtYtZA9bJWD/Nhp/5yzl5Bn93LTOjrL5QtDzMfqoCe/U7UG3jLXZMtU45mZ9Acfie+tCIc1lk/QskGbKpYHr05L0xxLtT2Xx042c76uCD3sUL2JE6jlZwvvv0ZywuxdGgoehE5WX54BUO67E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNz5AnRN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiSPHGaVECLap2hb4kZJI8p8NJzcmuWgFfTpvwwRWClCjXmX2SGcTtoWo3sWjhI3wxGBm3jaghHfqsktPJonUYxxW0Wq4JPTPgKgaBYxz4fmEtZ4JJwc/n3U+YExHZO47lngiCtoh9gJz771WPvZ2086P7SVq3IlbRNzkU2jIRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKwspP5T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNz5AnRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082E6C4CEF0;
-	Tue, 30 Sep 2025 15:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKwspP5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E45AC4CEF0;
+	Tue, 30 Sep 2025 15:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245628;
-	bh=8/3DhC5onrZs2Umkjp8b9fSWM/L4JsvuXQeNMFDvABI=;
+	s=korg; t=1759245632;
+	bh=PRJhag8nfMoa4keA28wBL1IKGCvWYL8/pLgFwfWcF4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNz5AnRNP5KyUjEJtoR2V7ToP1bFRhtyBdd3gURj0tou0qGN2LHhYHeinjKVgqcmM
-	 Y4Kjl5uO++QZeAQPJq7Fh11+Gsurdu46UaRNFox5ymiR74k6+MBIP+bxweySvtrUOh
-	 un8vLg88vr3Q6aKrOL+60D9I51sTPz/GcYnWi9sk=
+	b=wKwspP5T9a3h/5TBFNUDTX07jpNtbG9xcXL78cd8viu+oVXz7mG/05c45HNyP3k2B
+	 rHBjnBif9Y1CqbDSpdfwA70PpRfCPbx5Ksc9pUQWnaUCFnFo+DJDBC5TKQ6cx6qMyH
+	 OPMwr5NC7G9MhuAj1EVuhvHyi7ZNf3AZaMSE25Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoyd@nvidia.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	dri-devel@lists.freedesktop.org,
-	Sasha Levin <sashal@kernel.org>,
-	"Carol L Soto csoto@nvidia.com" <mailto:csoto@nvidia.com>
-Subject: [PATCH 6.1 65/73] drm/ast: Use msleep instead of mdelay for edid read
-Date: Tue, 30 Sep 2025 16:48:09 +0200
-Message-ID: <20250930143823.368711315@linuxfoundation.org>
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 66/73] i40e: fix validation of VF state in get resources
+Date: Tue, 30 Sep 2025 16:48:10 +0200
+Message-ID: <20250930143823.415354696@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -56,42 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoyd@nvidia.com>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit c7c31f8dc54aa3c9b2c994b5f1ff7e740a654e97 ]
+[ Upstream commit 877b7e6ffc23766448236e8732254534c518ba42 ]
 
-The busy-waiting in `mdelay()` can cause CPU stalls and kernel timeouts
-during boot.
+VF state I40E_VF_STATE_ACTIVE is not the only state in which
+VF is actually active so it should not be used to determine
+if a VF is allowed to obtain resources.
 
-Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Carol L Soto csoto@nvidia.com<mailto:csoto@nvidia.com>
-Fixes: 594e9c04b586 ("drm/ast: Create the driver for ASPEED proprietory Display-Port")
-Cc: KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.19+
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250917194346.2905522-1-nirmoyd@nvidia.com
-[ Applied change to ast_astdp_read_edid() instead of ast_astdp_read_edid_block() ]
+Use I40E_VF_STATE_RESOURCES_LOADED that is set only in
+i40e_vc_get_vf_resources_msg() and cleared during reset.
+
+Fixes: 61125b8be85d ("i40e: Fix failed opcode appearing if handling messages from VF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_dp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    7 ++++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h |    3 ++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/ast/ast_dp.c
-+++ b/drivers/gpu/drm/ast/ast_dp.c
-@@ -51,7 +51,7 @@ int ast_astdp_read_edid(struct drm_devic
- 			 *	  of right-click of mouse.
- 			 * 2. The Delays are often longer a lot when system resume from S3/S4.
- 			 */
--			mdelay(j+1);
-+			msleep(j + 1);
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1455,6 +1455,7 @@ static void i40e_trigger_vf_reset(struct
+ 	 * functions that may still be running at this point.
+ 	 */
+ 	clear_bit(I40E_VF_STATE_INIT, &vf->vf_states);
++	clear_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
  
- 			if (!(ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xD1,
- 							ASTDP_MCU_FW_EXECUTING) &&
+ 	/* In the case of a VFLR, the HW has already reset the VF and we
+ 	 * just need to clean up, so don't hit the VFRTRIG register.
+@@ -2121,7 +2122,10 @@ static int i40e_vc_get_vf_resources_msg(
+ 	size_t len = 0;
+ 	int ret;
+ 
+-	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_INIT)) {
++	i40e_sync_vf_state(vf, I40E_VF_STATE_INIT);
++
++	if (!test_bit(I40E_VF_STATE_INIT, &vf->vf_states) ||
++	    test_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states)) {
+ 		aq_ret = I40E_ERR_PARAM;
+ 		goto err;
+ 	}
+@@ -2224,6 +2228,7 @@ static int i40e_vc_get_vf_resources_msg(
+ 				vf->default_lan_addr.addr);
+ 	}
+ 	set_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states);
++	set_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
+ 
+ err:
+ 	/* send the response back to the VF */
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
+@@ -39,7 +39,8 @@ enum i40e_vf_states {
+ 	I40E_VF_STATE_MC_PROMISC,
+ 	I40E_VF_STATE_UC_PROMISC,
+ 	I40E_VF_STATE_PRE_ENABLE,
+-	I40E_VF_STATE_RESETTING
++	I40E_VF_STATE_RESETTING,
++	I40E_VF_STATE_RESOURCES_LOADED,
+ };
+ 
+ /* VF capabilities */
 
 
