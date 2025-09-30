@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692001D6188;
-	Tue, 30 Sep 2025 15:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14991D6188;
+	Tue, 30 Sep 2025 15:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245322; cv=none; b=MEfadCwQYmM/kKnmHpV3qUCBWPmhTkw45KH9raLDccaBtHjX+1WNmA4c2G0j5RQc76Z53Z/f01aO9YmM2xf0Zf2kPixBq38aAPBqI15VrrEU+pzewIajRSMqQx8oqPrEBKDtrAmRpjyyZpDOYNQZ5omznUFwfgw0MC3XzatntH0=
+	t=1759245324; cv=none; b=Z1MOKFEbjAsz7zE2cHb5Lboqdug3mLcAKC4o6/KtRhj9RDo2MZ5rZXO3aq+UYIcJLGUTJ2b4VRb1lLTTkpK+fVB6yRu8tnR4g8+g3NCLzEq2St59rVbxIqKmaifeiNLRc3Iv66E4+6losIwp4KA/NbmbOY/sdj73yR3feM6XRnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245322; c=relaxed/simple;
-	bh=JWh5iDocfDenRB4TAT2UqkOe8mOXI4v319YbOAq09Xk=;
+	s=arc-20240116; t=1759245324; c=relaxed/simple;
+	bh=Br1Q8qsFJGDXqzNRBi+L2COm7O6h30gmulb758vYhBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmlpsXlWAPpOTV0AGe6NW0ulQ9yMQrUoVOguTlNZ4UFSDcHqJVhRmtoZ5qGMVLbYMtMHd4woUciEfkOJDZA4rBldgCM1P/4C5mWg6LuP//dhBtKAmRE3dlPeULQCjWJXdO42rlFotDQ4lJMyEAAqts+ItIqEBAFAZUhoNOavRr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACauneM7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSRouiTs/NUShKKYmVCPMmMqZAVgWeReFF6UcKwnr48AgJSDX7iVVPQbFVnOwLRNwK+2SwsjwvTXazmSuhQQJ+WWbsO/agvE08WV3PEL9BTJChyHA8kbENbvNMkY/Q+r5S9nkrqt5q6iK9884A1ikGPNgWFbm9pnahiO8uDDARY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EI26JCG2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACauneM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BB4C4CEF0;
-	Tue, 30 Sep 2025 15:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EI26JCG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F129CC113D0;
+	Tue, 30 Sep 2025 15:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245320;
-	bh=JWh5iDocfDenRB4TAT2UqkOe8mOXI4v319YbOAq09Xk=;
+	s=korg; t=1759245323;
+	bh=Br1Q8qsFJGDXqzNRBi+L2COm7O6h30gmulb758vYhBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACauneM7XVjBioi31DG6QYak6GgDkm4kuUNA6yKpDmmqyTpTb+u9CYtsJe2Bk8Ufn
-	 c/lPzwv9YWVO+qJ0G2/xV85+U2pbqHCfa47+QYhB+fu02ZpRubNKLy2+DZ3UEtIeDG
-	 s65yA2nTlNzy/xq3UhALHVoReNwL+sNfmS74oU0I=
+	b=EI26JCG2p8V/QE7nIz7jqJbLSUz0g18s0XB2P9+Fc92OI1l4StNwtDVV2yxOJe/JT
+	 vGPo5+4JkzcIpq/PcBrkzKjv4s5Oy59AdEZISeGVbh4jMidFRLRS5eLRa5x1ghxn/L
+	 7TsJuGRxYnMW46Q0zJc1A+z1zlL0E6esnnhy3U+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zabelin Nikita <n.zabelin@mt-integration.ru>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/151] net: dsa: lantiq_gswip: suppress -EINVAL errors for bridge FDB entries added to the CPU port
-Date: Tue, 30 Sep 2025 16:47:44 +0200
-Message-ID: <20250930143832.936608897@linuxfoundation.org>
+Subject: [PATCH 5.15 135/151] drm/gma500: Fix null dereference in hdmi teardown
+Date: Tue, 30 Sep 2025 16:47:45 +0200
+Message-ID: <20250930143832.977045227@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,66 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Zabelin Nikita <n.zabelin@mt-integration.ru>
 
-[ Upstream commit 987afe147965ef7a8e7d144ffef0d70af14bb1d4 ]
+[ Upstream commit 352e66900cde63f3dadb142364d3c35170bbaaff ]
 
-The blamed commit and others in that patch set started the trend
-of reusing existing DSA driver API for a new purpose: calling
-ds->ops->port_fdb_add() on the CPU port.
+pci_set_drvdata sets the value of pdev->driver_data to NULL,
+after which the driver_data obtained from the same dev is
+dereferenced in oaktrail_hdmi_i2c_exit, and the i2c_dev is
+extracted from it. To prevent this, swap these calls.
 
-The lantiq_gswip driver was not prepared to handle that, as can be seen
-from the many errors that Daniel presents in the logs:
+Found by Linux Verification Center (linuxtesting.org) with Svacer.
 
-[  174.050000] gswip 1e108000.switch: port 2 failed to add fa:aa:72:f4:8b:1e vid 1 to fdb: -22
-[  174.060000] gswip 1e108000.switch lan2: entered promiscuous mode
-[  174.070000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 0 to fdb: -22
-[  174.090000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 1 to fdb: -22
-[  174.090000] gswip 1e108000.switch: port 2 failed to delete fa:aa:72:f4:8b:1e vid 1 from fdb: -2
-
-The errors are because gswip_port_fdb() wants to get a handle to the
-bridge that originated these FDB events, to associate it with a FID.
-Absolutely honourable purpose, however this only works for user ports.
-
-To get the bridge that generated an FDB entry for the CPU port, one
-would need to look at the db.bridge.dev argument. But this was
-introduced in commit c26933639b54 ("net: dsa: request drivers to perform
-FDB isolation"), first appeared in v5.18, and when the blamed commit was
-introduced in v5.14, no such API existed.
-
-So the core DSA feature was introduced way too soon for lantiq_gswip.
-Not acting on these host FDB entries and suppressing any errors has no
-other negative effect, and practically returns us to not supporting the
-host filtering feature at all - peacefully, this time.
-
-Fixes: 10fae4ac89ce ("net: dsa: include bridge addresses which are local in the host fdb list")
-Reported-by: Daniel Golle <daniel@makrotopia.org>
-Closes: https://lore.kernel.org/netdev/aJfNMLNoi1VOsPrN@pidgin.makrotopia.org/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250918072142.894692-3-vladimir.oltean@nxp.com
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
+Signed-off-by: Zabelin Nikita <n.zabelin@mt-integration.ru>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://lore.kernel.org/r/20250918150703.2562604-1-n.zabelin@mt-integration.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/gma500/oaktrail_hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index 97d88c25fc992..c40fd7dd153e8 100644
---- a/drivers/net/dsa/lantiq_gswip.c
-+++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -1337,8 +1337,9 @@ static int gswip_port_fdb(struct dsa_switch *ds, int port,
- 	int i;
- 	int err;
+diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi.c b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
+index a097a59a9eaec..08e83b7513197 100644
+--- a/drivers/gpu/drm/gma500/oaktrail_hdmi.c
++++ b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
+@@ -724,8 +724,8 @@ void oaktrail_hdmi_teardown(struct drm_device *dev)
  
-+	/* Operation not supported on the CPU port, don't throw errors */
- 	if (!bridge)
--		return -EINVAL;
-+		return 0;
- 
- 	for (i = cpu_port; i < ARRAY_SIZE(priv->vlans); i++) {
- 		if (priv->vlans[i].bridge == bridge) {
+ 	if (hdmi_dev) {
+ 		pdev = hdmi_dev->dev;
+-		pci_set_drvdata(pdev, NULL);
+ 		oaktrail_hdmi_i2c_exit(pdev);
++		pci_set_drvdata(pdev, NULL);
+ 		iounmap(hdmi_dev->regs);
+ 		kfree(hdmi_dev);
+ 		pci_dev_put(pdev);
 -- 
 2.51.0
 
