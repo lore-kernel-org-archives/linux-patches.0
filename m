@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EF41EB5E3;
-	Tue, 30 Sep 2025 15:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D86A302CD6;
+	Tue, 30 Sep 2025 15:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245518; cv=none; b=XoAEHgRywLRs59xsgx+yJItWOx3N+21JqQjO3ywGgWQBD/Av209+qfUUb/LlZ5ilqh3katGnRiHYdC+G+uv0UK2U1CuYqAyTNYe7tYobKB/GQ8ExdFHt3VdEVPm+j7aI/v+ry50x3pnpszwl7kCr1CLc5ufBgsPCTjB2GUqWlpo=
+	t=1759245522; cv=none; b=LwJpMQXKGQLKkEHUcrLds0qCGIHU5VEdGmu/VB0wXE1qQjtInudair+q3D2Fx3aRK8q8tv/lue/LKnLHQnnNFBAkv6pQeP1RVtdtHfX2dKCf1u/ZobamQUzH0Kz3MRxhmyFZ6aoAgZaEdiVfdaPX6ydTcgaKRP/RigFr8aSBriw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245518; c=relaxed/simple;
-	bh=LOd4+Pxp4pTO+lI632YqNWoi4jGZOjHZK+SUxPIXbBo=;
+	s=arc-20240116; t=1759245522; c=relaxed/simple;
+	bh=dFxI714c8OfyzaheSIYKqVVpTqQWnPPV/kO9rlKb1Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXTQYgvUWwHg/dtTRc1bj0lAShPiUqH71J5CuXX1RwHQ0u8BeQb61f1NVuAINq36yfVXkvGy9M+a82AOEhTQZQ+rKzhcSUsZztEhN9jgQz1ITNK2HB8VuX4mrnP+b/roEQYAOxHdqPm60TKhUX5qNPalZQaiX3wLZRy74BL2irU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXfKNU48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGJDxU2vghpziMw1TflDPkJyHphtMtDyjvn8WBeICZgNfFoNVk/ZeubVNaHCcfv7RIS6uDSdHzJw9ixY16vdADhaL+WMc1uYIgXn/qZ5q+r46drdyhigN8A13HywsjLTzTgUIxzoJSZhSjEjJDalrnauwuvUDHBcnkt2HgBAvVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZJzhl6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXfKNU48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6265C4CEF0;
-	Tue, 30 Sep 2025 15:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZJzhl6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A907C4CEF0;
+	Tue, 30 Sep 2025 15:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245518;
-	bh=LOd4+Pxp4pTO+lI632YqNWoi4jGZOjHZK+SUxPIXbBo=;
+	s=korg; t=1759245521;
+	bh=dFxI714c8OfyzaheSIYKqVVpTqQWnPPV/kO9rlKb1Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXfKNU48u79DJs/elZa+sIbHcyaz4auXh9WWPqdrmJoNAdPY8F0CGfsrKSK2i9Eu6
-	 n/MU3T2UrN56N6MYwe96Alk+myLeORGnLHO9AXU64TeU2YNCbcMq8glPjQVB7WHUqJ
-	 veziwUU2/u/wDqw3XXEujnDW/5/mVVZfXp28wIB0=
+	b=BZJzhl6+3BmUwVZo2B7jSMKxDJZLFeL5TeovTunEmo7dOToolmULDORj2AFAnMXf5
+	 0jnMt2P8k0F7RhUnku2/775IBChAFoCpmNdBGLE0uU+pOqUYZSIWuJdJTPrCHchTfk
+	 o932HgSSTsJL7tmGUU33QOCX6BT5M8SlsNUFmJ04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/73] net: dsa: lantiq_gswip: suppress -EINVAL errors for bridge FDB entries added to the CPU port
-Date: Tue, 30 Sep 2025 16:47:46 +0200
-Message-ID: <20250930143822.345588893@linuxfoundation.org>
+Subject: [PATCH 6.1 43/73] octeontx2-pf: Fix potential use after free in otx2_tc_add_flow()
+Date: Tue, 30 Sep 2025 16:47:47 +0200
+Message-ID: <20250930143822.388422447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -52,66 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 987afe147965ef7a8e7d144ffef0d70af14bb1d4 ]
+[ Upstream commit d9c70e93ec5988ab07ad2a92d9f9d12867f02c56 ]
 
-The blamed commit and others in that patch set started the trend
-of reusing existing DSA driver API for a new purpose: calling
-ds->ops->port_fdb_add() on the CPU port.
+This code calls kfree_rcu(new_node, rcu) and then dereferences "new_node"
+and then dereferences it on the next line.  Two lines later, we take
+a mutex so I don't think this is an RCU safe region.  Re-order it to do
+the dereferences before queuing up the free.
 
-The lantiq_gswip driver was not prepared to handle that, as can be seen
-from the many errors that Daniel presents in the logs:
-
-[  174.050000] gswip 1e108000.switch: port 2 failed to add fa:aa:72:f4:8b:1e vid 1 to fdb: -22
-[  174.060000] gswip 1e108000.switch lan2: entered promiscuous mode
-[  174.070000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 0 to fdb: -22
-[  174.090000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 1 to fdb: -22
-[  174.090000] gswip 1e108000.switch: port 2 failed to delete fa:aa:72:f4:8b:1e vid 1 from fdb: -2
-
-The errors are because gswip_port_fdb() wants to get a handle to the
-bridge that originated these FDB events, to associate it with a FID.
-Absolutely honourable purpose, however this only works for user ports.
-
-To get the bridge that generated an FDB entry for the CPU port, one
-would need to look at the db.bridge.dev argument. But this was
-introduced in commit c26933639b54 ("net: dsa: request drivers to perform
-FDB isolation"), first appeared in v5.18, and when the blamed commit was
-introduced in v5.14, no such API existed.
-
-So the core DSA feature was introduced way too soon for lantiq_gswip.
-Not acting on these host FDB entries and suppressing any errors has no
-other negative effect, and practically returns us to not supporting the
-host filtering feature at all - peacefully, this time.
-
-Fixes: 10fae4ac89ce ("net: dsa: include bridge addresses which are local in the host fdb list")
-Reported-by: Daniel Golle <daniel@makrotopia.org>
-Closes: https://lore.kernel.org/netdev/aJfNMLNoi1VOsPrN@pidgin.makrotopia.org/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250918072142.894692-3-vladimir.oltean@nxp.com
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Fixes: 68fbff68dbea ("octeontx2-pf: Add police action for TC flower")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/aNKCL1jKwK8GRJHh@stanley.mountain
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index dd01470cd5dde..d899ebb902a0c 100644
---- a/drivers/net/dsa/lantiq_gswip.c
-+++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -1366,8 +1366,9 @@ static int gswip_port_fdb(struct dsa_switch *ds, int port,
- 	int i;
- 	int err;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+index bb77ab7ddfefd..6833cbf853445 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -1039,7 +1039,6 @@ static int otx2_tc_add_flow(struct otx2_nic *nic,
  
-+	/* Operation not supported on the CPU port, don't throw errors */
- 	if (!bridge)
--		return -EINVAL;
-+		return 0;
+ free_leaf:
+ 	otx2_tc_del_from_flow_list(flow_cfg, new_node);
+-	kfree_rcu(new_node, rcu);
+ 	if (new_node->is_act_police) {
+ 		mutex_lock(&nic->mbox.lock);
  
- 	for (i = max_ports; i < ARRAY_SIZE(priv->vlans); i++) {
- 		if (priv->vlans[i].bridge == bridge) {
+@@ -1059,6 +1058,7 @@ static int otx2_tc_add_flow(struct otx2_nic *nic,
+ 
+ 		mutex_unlock(&nic->mbox.lock);
+ 	}
++	kfree_rcu(new_node, rcu);
+ 
+ 	return rc;
+ }
 -- 
 2.51.0
 
