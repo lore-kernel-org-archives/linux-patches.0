@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D82276046;
-	Tue, 30 Sep 2025 15:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158923043DD;
+	Tue, 30 Sep 2025 15:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246190; cv=none; b=gfq6VCB5EHMOs13v6G03CA/aov2wPUNFDVbcFNgrlFEGqrwqqgE9fnuI87yyC8VcZTekO6lAH9LYnhO4MmoXUk9oTJmjHFShEZM8p7beUHSxPoXsHBP10iAQVDV/n5GOMLCtd8xmHmC6bOIp7E8QE6c1E/EFYW0xbK6Td2nVpvo=
+	t=1759246194; cv=none; b=GvLYLo1KWeeJ4aQv648YUc3/FJZWVt0pP+XpMTe8lbKNXyWJSFvqkz1IXD4Zv23BHpPR+3BJ7sR6ezTyz4fDJsqEhulINUXkBE9CASVH3ojHR7eTgMJgxU4qeielyfcVjeEftVJwLeiyFtdZMAUL22cbq741liLU7u+/8RiIbY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246190; c=relaxed/simple;
-	bh=30yukShz67Y/BIlcx9uUTLxEFZHQqhuQhXwQgdjZv5o=;
+	s=arc-20240116; t=1759246194; c=relaxed/simple;
+	bh=ThXWgm0oz4wxkOI/7aH9icv2d2wjXCRdHy+7iUQoN1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rfsz1zzB2Ud0Sarpp27TE7mBCHqh+nQb4VKqhsDzfAn5f74SDqsBckxvEch+3l+kDHjhzAj2xAIZEH3T1+8oyoThIO3bISpa5u9VKbpRl2ToiuM1qvgWqGhA4BOBtI0B88ffcgR1XtnlMJm8+zcVAdof0eXOMDAuE6V//7qf/+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDcOc5LO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hyvckxkJIDmqayJqFAkuB9c3VA8mxyNKrbyBbQ+El0cGoSS8bvpq9jwxolc/XhP62C3UD6qQH665/pzNCG2g09uAVXjfJcki0j44TXlJ03U7c8wwK4TmVrBlLiGf2MaDjwejDDh7wvUPOkKSegkkhY/YXHgtDox8xHb8DzYnTJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJrFpN8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDcOc5LO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF31C4CEF0;
-	Tue, 30 Sep 2025 15:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJrFpN8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F73AC4CEF0;
+	Tue, 30 Sep 2025 15:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246190;
-	bh=30yukShz67Y/BIlcx9uUTLxEFZHQqhuQhXwQgdjZv5o=;
+	s=korg; t=1759246193;
+	bh=ThXWgm0oz4wxkOI/7aH9icv2d2wjXCRdHy+7iUQoN1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDcOc5LOg1nd0SMJ058kauEgLYGwOuEbv/lRPdMCa8dy7ukeg6n5IMNyfZXIk+cym
-	 6lj5ta2tcm8iByP4aJVT5czu1Y1qT+ASxJoJKYz30X7roZ4k1ob2T/uALyQ1oji1ZT
-	 pT1tYbWJ5Qcy2kcrxlS1N6qN4Ti7KqD0KDDS5XQ4=
+	b=xJrFpN8aWvZdQWNIvCO16Q4z8Cv5zJhMZmUjPti6Clfo3a2FE6U0hk8IF+oi9uzt8
+	 NbApEgZrZE+TI/AcKuuJ8uLvUB01UC1yNpDQxUQRqPOnE0dXYp5NbJRFAEEjhtdv+4
+	 hS7lAy0eXVBah4e32tu5XTJsEVHBWeRbtGL5hT5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 81/89] afs: Fix potential null pointer dereference in afs_put_server
-Date: Tue, 30 Sep 2025 16:48:35 +0200
-Message-ID: <20250930143825.246931403@linuxfoundation.org>
+	Jakub Acs <acsjakub@amazon.de>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Penglei Jiang <superman.xpt@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 82/89] fs/proc/task_mmu: check p->vec_buf for NULL
+Date: Tue, 30 Sep 2025 16:48:36 +0200
+Message-ID: <20250930143825.288941793@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -46,48 +57,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Jakub Acs <acsjakub@amazon.de>
 
-commit 9158c6bb245113d4966df9b2ba602197a379412e upstream.
+commit 28aa29986dde79e8466bc87569141291053833f5 upstream.
 
-afs_put_server() accessed server->debug_id before the NULL check, which
-could lead to a null pointer dereference. Move the debug_id assignment,
-ensuring we never dereference a NULL server pointer.
+When the PAGEMAP_SCAN ioctl is invoked with vec_len = 0 reaches
+pagemap_scan_backout_range(), kernel panics with null-ptr-deref:
 
-Fixes: 2757a4dc1849 ("afs: Fix access after dec in put functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Acked-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+[   44.936808] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
+[   44.937797] KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+[   44.938391] CPU: 1 UID: 0 PID: 2480 Comm: reproducer Not tainted 6.17.0-rc6 #22 PREEMPT(none)
+[   44.939062] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   44.939935] RIP: 0010:pagemap_scan_thp_entry.isra.0+0x741/0xa80
+
+<snip registers, unreliable trace>
+
+[   44.946828] Call Trace:
+[   44.947030]  <TASK>
+[   44.949219]  pagemap_scan_pmd_entry+0xec/0xfa0
+[   44.952593]  walk_pmd_range.isra.0+0x302/0x910
+[   44.954069]  walk_pud_range.isra.0+0x419/0x790
+[   44.954427]  walk_p4d_range+0x41e/0x620
+[   44.954743]  walk_pgd_range+0x31e/0x630
+[   44.955057]  __walk_page_range+0x160/0x670
+[   44.956883]  walk_page_range_mm+0x408/0x980
+[   44.958677]  walk_page_range+0x66/0x90
+[   44.958984]  do_pagemap_scan+0x28d/0x9c0
+[   44.961833]  do_pagemap_cmd+0x59/0x80
+[   44.962484]  __x64_sys_ioctl+0x18d/0x210
+[   44.962804]  do_syscall_64+0x5b/0x290
+[   44.963111]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+vec_len = 0 in pagemap_scan_init_bounce_buffer() means no buffers are
+allocated and p->vec_buf remains set to NULL.
+
+This breaks an assumption made later in pagemap_scan_backout_range(), that
+page_region is always allocated for p->vec_buf_index.
+
+Fix it by explicitly checking p->vec_buf for NULL before dereferencing.
+
+Other sites that might run into same deref-issue are already (directly or
+transitively) protected by checking p->vec_buf.
+
+Note:
+>From PAGEMAP_SCAN man page, it seems vec_len = 0 is valid when no output
+is requested and it's only the side effects caller is interested in,
+hence it passes check in pagemap_scan_get_args().
+
+This issue was found by syzkaller.
+
+Link: https://lkml.kernel.org/r/20250922082206.6889-1-acsjakub@amazon.de
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Penglei Jiang <superman.xpt@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: "Michał Mirosław" <mirq-linux@rere.qmqm.pl>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/server.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/proc/task_mmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -394,13 +394,14 @@ struct afs_server *afs_use_server(struct
- void afs_put_server(struct afs_net *net, struct afs_server *server,
- 		    enum afs_server_trace reason)
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2259,6 +2259,9 @@ static void pagemap_scan_backout_range(s
  {
--	unsigned int a, debug_id = server->debug_id;
-+	unsigned int a, debug_id;
- 	bool zero;
- 	int r;
+ 	struct page_region *cur_buf = &p->vec_buf[p->vec_buf_index];
  
- 	if (!server)
- 		return;
- 
-+	debug_id = server->debug_id;
- 	a = atomic_read(&server->active);
- 	zero = __refcount_dec_and_test(&server->ref, &r);
- 	trace_afs_server(debug_id, r - 1, a, reason);
++	if (!p->vec_buf)
++		return;
++
+ 	if (cur_buf->start != addr)
+ 		cur_buf->end = addr;
+ 	else
 
 
