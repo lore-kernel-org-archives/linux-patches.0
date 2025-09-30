@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D330303CA8;
-	Tue, 30 Sep 2025 15:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB212505AA;
+	Tue, 30 Sep 2025 15:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245303; cv=none; b=jfqXy39AL9Th4S0ms7eNC2qQlhKhVEn9c7HkUV0NhBx3wzf1HwfD1tNmi08jAd9qHhTxm9CLLfvSz/GH0QwVUel0ZWXMtjsab7GBjDbTT94UrlHeJB8J0uQNRn8x7cqRLx5WCrYzLr3HOWlxIgNbUwsvI4LDKm7KEmw06p4dRpk=
+	t=1759245306; cv=none; b=P18NG37Jab2E28dc1S0ijwnzult/Wo45imew5GRi4CV54/LMMo/7bY+yQYSpJqL2b7zFB2q4HhI4I0EPT51uxIljNm2C3+5EO3PBBkDlNXDodKsg2zckFx2uVuMHB2hk5SGvAw8qwgmrv1PO+0JObgDM6uA5BunQRQ/LWTW5obc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245303; c=relaxed/simple;
-	bh=BbIQExRH/gkwmYiZRFEpvVYj6ble4ubE3EW6lf3MTiY=;
+	s=arc-20240116; t=1759245306; c=relaxed/simple;
+	bh=2VMD5UT1EApDyzpvib1Az4NUa+wwIl5b775PwlZdSFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4rWScAEHzgn0t4ZUAcVFodOJwxO8O0Ka8XH0N91vhNR8y1XULCkIn7+CqGQSUZcyvqFhVn8ncA1/oMlnSR3reXTCx0zmoYj+k9WzcUzBT31gVFeWFis4aov5ze2OwkPDimNudwPx4N8LC9trJ6Q6WZeR3/qNL3JZJ7fK3KX3k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMd8cy5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=feNZluNRJES0DwQRJ+/zsI0eHEX0jmkJgnsq9A9xijM0bo5p4poDAK6+geiBztQ0oDIcsoD1mlC5US4jCAWLjnggG5iVRIRj5Nro2JEbmUHnYgkQGrzPEwcIamjTOTsEGdZFLELyVN+mHAV1dL4r2hPzLF3TxFxZWtafitXTAPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DRh4lF2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMd8cy5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C26C4CEF0;
-	Tue, 30 Sep 2025 15:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DRh4lF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0579C4CEF0;
+	Tue, 30 Sep 2025 15:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245303;
-	bh=BbIQExRH/gkwmYiZRFEpvVYj6ble4ubE3EW6lf3MTiY=;
+	s=korg; t=1759245306;
+	bh=2VMD5UT1EApDyzpvib1Az4NUa+wwIl5b775PwlZdSFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMd8cy5LRcaJ6HUGz0D92YNfgS3ltz4LIL+PJ6VTUWaCF8FpUx34h15rmfbxAqLrZ
-	 m4sTw4TX8umQCwKHMhsoKy4xosViN1a7/6s+FNyArlwLu7Ktm4JsxdFRxtjsXnsas9
-	 cupXsZwYjDUiXAOT6jKRbMMbl24mWTZNNqrNIHMs=
+	b=0DRh4lF2NYrHA5fny3ERnlyFHlbp/psXrmt7SvKPMQdavC4HN3bOMZE96+qIoHfO7
+	 FpbyWZeQoWYKd7i1n/jlsa5dzJd64p/OjwP06HARm0zJzw3uPjG8lZ20mvrL/TGBW0
+	 wpqKfi8YkbMREn5iYSsI1BKqY53C67yK1o+Op0vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/151] can: etas_es58x: advertise timestamping capabilities and add ioctl support
-Date: Tue, 30 Sep 2025 16:47:31 +0200
-Message-ID: <20250930143832.428463480@linuxfoundation.org>
+Subject: [PATCH 5.15 130/151] nexthop: Forbid FDB status change while nexthop is in a group
+Date: Tue, 30 Sep 2025 16:47:40 +0200
+Message-ID: <20250930143832.780288937@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,72 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 1d46efa0008a6d73dad40e78a2b3fa6d3cfb74e4 ]
+[ Upstream commit 390b3a300d7872cef9588f003b204398be69ce08 ]
 
-Currently, userland has no method to query which timestamping features
-are supported by the etas_es58x driver (aside maybe of getting RX
-messages and observe whether or not hardware timestamps stay at zero).
+The kernel forbids the creation of non-FDB nexthop groups with FDB
+nexthops:
 
-The canonical way for a network driver to advertise what kind of
-timestamping is supports is to implement
-ethtool_ops::get_ts_info(). Here, we use the CAN specific
-can_ethtool_op_get_ts_info_hwts() function to achieve this.
+ # ip nexthop add id 1 via 192.0.2.1 fdb
+ # ip nexthop add id 2 group 1
+ Error: Non FDB nexthop group cannot have fdb nexthops.
 
-In addition, the driver currently does not support the hardware
-timestamps ioctls. According to [1], SIOCSHWTSTAMP is "must" and
-SIOCGHWTSTAMP is "should". This patch fills up that gap by
-implementing net_device_ops::ndo_eth_ioctl() using the CAN specific
-function can_eth_ioctl_hwts().
+And vice versa:
 
-[1] kernel doc Timestamping, section 3.1: "Hardware Timestamping
-Implementation: Device Drivers"
-Link: https://docs.kernel.org/networking/timestamping.html#hardware-timestamping-implementation-device-drivers
+ # ip nexthop add id 3 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 4 group 3 fdb
+ Error: FDB nexthop group can only have fdb nexthops.
 
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/all/20220727101641.198847-11-mailhol.vincent@wanadoo.fr
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 38c0abad45b1 ("can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow")
+However, as long as no routes are pointing to a non-FDB nexthop group,
+the kernel allows changing the type of a nexthop from FDB to non-FDB and
+vice versa:
+
+ # ip nexthop add id 5 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 6 group 5
+ # ip nexthop replace id 5 via 192.0.2.2 fdb
+ # echo $?
+ 0
+
+This configuration is invalid and can result in a NPD [1] since FDB
+nexthops are not associated with a nexthop device:
+
+ # ip route add 198.51.100.1/32 nhid 6
+ # ping 198.51.100.1
+
+Fix by preventing nexthop FDB status change while the nexthop is in a
+group:
+
+ # ip nexthop add id 7 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 8 group 7
+ # ip nexthop replace id 7 via 192.0.2.2 fdb
+ Error: Cannot change nexthop FDB status while in a group.
+
+[1]
+BUG: kernel NULL pointer dereference, address: 00000000000003c0
+[...]
+Oops: Oops: 0000 [#1] SMP
+CPU: 6 UID: 0 PID: 367 Comm: ping Not tainted 6.17.0-rc6-virtme-gb65678cacc03 #1 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+RIP: 0010:fib_lookup_good_nhc+0x1e/0x80
+[...]
+Call Trace:
+ <TASK>
+ fib_table_lookup+0x541/0x650
+ ip_route_output_key_hash_rcu+0x2ea/0x970
+ ip_route_output_key_hash+0x55/0x80
+ __ip4_datagram_connect+0x250/0x330
+ udp_connect+0x2b/0x60
+ __sys_connect+0x9c/0xd0
+ __x64_sys_connect+0x18/0x20
+ do_syscall_64+0xa4/0x2a0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 38428d68719c ("nexthop: support for fdb ecmp nexthops")
+Reported-by: syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68c9a4d2.050a0220.3c6139.0e63.GAE@google.com/
+Tested-by: syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250921150824.149157-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/etas_es58x/es58x_core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/ipv4/nexthop.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
-index 34d374d301e50..0c0e2363f674b 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -10,6 +10,7 @@
-  * Copyright (c) 2020, 2021 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-  */
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 633eab6ff55dd..4a8fdaae6bf21 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2114,6 +2114,13 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
+ 		return -EINVAL;
+ 	}
  
-+#include <linux/ethtool.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/usb.h>
-@@ -1981,7 +1982,12 @@ static netdev_tx_t es58x_start_xmit(struct sk_buff *skb,
- static const struct net_device_ops es58x_netdev_ops = {
- 	.ndo_open = es58x_open,
- 	.ndo_stop = es58x_stop,
--	.ndo_start_xmit = es58x_start_xmit
-+	.ndo_start_xmit = es58x_start_xmit,
-+	.ndo_eth_ioctl = can_eth_ioctl_hwts,
-+};
++	if (!list_empty(&old->grp_list) &&
++	    rtnl_dereference(new->nh_info)->fdb_nh !=
++	    rtnl_dereference(old->nh_info)->fdb_nh) {
++		NL_SET_ERR_MSG(extack, "Cannot change nexthop FDB status while in a group");
++		return -EINVAL;
++	}
 +
-+static const struct ethtool_ops es58x_ethtool_ops = {
-+	.get_ts_info = can_ethtool_op_get_ts_info_hwts,
- };
- 
- /**
-@@ -2088,6 +2094,7 @@ static int es58x_init_netdev(struct es58x_device *es58x_dev, int channel_idx)
- 	es58x_init_priv(es58x_dev, es58x_priv(netdev), channel_idx);
- 
- 	netdev->netdev_ops = &es58x_netdev_ops;
-+	netdev->ethtool_ops = &es58x_ethtool_ops;
- 	netdev->flags |= IFF_ECHO;	/* We support local echo */
- 
- 	ret = register_candev(netdev);
+ 	err = call_nexthop_notifiers(net, NEXTHOP_EVENT_REPLACE, new, extack);
+ 	if (err)
+ 		return err;
 -- 
 2.51.0
 
