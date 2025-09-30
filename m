@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0D71D61B7;
-	Tue, 30 Sep 2025 15:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A52303A05;
+	Tue, 30 Sep 2025 15:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244432; cv=none; b=moabIk7xqkLV4DqrGLbBApwdi/dfhlXNmUe5Oh6/t+ON+E/HB7Hj3nLo1QvlgLkudSjHR5ZNHUwFxJxMjRXMzmjRouXgyDO5nMG9BzaMo5g2kIvlwjOtoZk+ISwh7yrLu2vP+xC/GHwqzieJIs7XXnmPPEPnMfKW5YvVcR9kMi8=
+	t=1759244435; cv=none; b=MPUNpmLWj/I9dX9/cCjnBrWPtxBhMfbA2H7giq6F8ZSvUwD0b4AyHbpFZtIsUU/MOFIwITZVTBVOiGl1pEA3YTZB3burJ4fweDhDckj62fu0SVzQu2bcIPGgV3W0GjHgu2Rs3z3evlITFyJr4StN/wjkVFlkjsKBbADSrhz7sec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244432; c=relaxed/simple;
-	bh=T7AU73MIs/S3r/HkMKATErldhK3ofWWJK6IH2VIsxvg=;
+	s=arc-20240116; t=1759244435; c=relaxed/simple;
+	bh=R2Q1PFWkMdXbZA3F/xnqdlmjHEGzH35qIJnYAwqh7wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2jcz9v6P+lumHiTSxlseTRMNlMjDBb7BsC/Sn+xxrbd/J1HWgUk0ea/4E74LdN5o/0T6xG5y17OfHa/CmX1xHswzNgPBLHhGMsHuwkk8SqYPLpopkjoMAwqjBjusdUz05aJj2MtUVTogiivv5mXheY33KWsTdW76XRoJmKHMIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OneWuxn6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWfVMSbDmQP3TvbjxLOCbNZ02+OR78pFbUjJL2k5vBilSj+pYTOEzte/h5RM+yGaXC/bSwk1qkuU9ecXQeaf2Bdb/0SucqGPwiVxvrKCCLqkjx1oeBkBqiJvpVWjKNVf3sLEJmImYUIVXV4FtkngGf/RiptZqPiVskbgu08KU+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IiMWPaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OneWuxn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3E7C4CEF0;
-	Tue, 30 Sep 2025 15:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IiMWPaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF007C4CEF0;
+	Tue, 30 Sep 2025 15:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244432;
-	bh=T7AU73MIs/S3r/HkMKATErldhK3ofWWJK6IH2VIsxvg=;
+	s=korg; t=1759244435;
+	bh=R2Q1PFWkMdXbZA3F/xnqdlmjHEGzH35qIJnYAwqh7wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OneWuxn6WzZCFWDhLxz3Uc6KXSKTO+0U7Qf5b3gFNwUzgjmLB02E/EMOhMnMqhInw
-	 WGv7fuqzZ0dCWwJ/QyarbNzGtDHD7sV38PndsR5nvrJFtXTYNv1d8keaMR4JuMyvy6
-	 6l5kgKKuarSQZrSTBpIHnWySa+8+1awhTuPrzIo8=
+	b=1IiMWPazBo3zH93ZaysjbnaVh+e6vPqdEbFcxiNDh7QxZwZ93iBF75nE7N5ie4iiX
+	 3H+UqeZn8eWpcHTaLQMg6UR8WG0k01H59rxhODbohuAVNnE8kZ4D5eTZ2x51DXbkT7
+	 wtStSXJWSbNM/+Ph5lOGokkTd4/UcIs4BS4BfVxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Kamakshi Nellore <nellorex.kamakshi@intel.com>
-Subject: [PATCH 5.10 120/122] i40e: fix idx validation in config queues msg
-Date: Tue, 30 Sep 2025 16:47:31 +0200
-Message-ID: <20250930143827.874036325@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 121/122] i40e: fix validation of VF state in get resources
+Date: Tue, 30 Sep 2025 16:47:32 +0200
+Message-ID: <20250930143827.913523080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -57,45 +57,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit f1ad24c5abe1eaef69158bac1405a74b3c365115 ]
+[ Upstream commit 877b7e6ffc23766448236e8732254534c518ba42 ]
 
-Ensure idx is within range of active/initialized TCs when iterating over
-vf->ch[idx] in i40e_vc_config_queues_msg().
+VF state I40E_VF_STATE_ACTIVE is not the only state in which
+VF is actually active so it should not be used to determine
+if a VF is allowed to obtain resources.
 
-Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
+Use I40E_VF_STATE_RESOURCES_LOADED that is set only in
+i40e_vc_get_vf_resources_msg() and cleared during reset.
+
+Fixes: 61125b8be85d ("i40e: Fix failed opcode appearing if handling messages from VF")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 [ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    7 ++++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h |    3 ++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2340,7 +2340,7 @@ static int i40e_vc_config_queues_msg(str
- 		}
+@@ -1416,6 +1416,7 @@ static void i40e_trigger_vf_reset(struct
+ 	 * functions that may still be running at this point.
+ 	 */
+ 	clear_bit(I40E_VF_STATE_INIT, &vf->vf_states);
++	clear_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
  
- 		if (vf->adq_enabled) {
--			if (idx >= ARRAY_SIZE(vf->ch)) {
-+			if (idx >= vf->num_tc) {
- 				aq_ret = I40E_ERR_NO_AVAILABLE_VSI;
- 				goto error_param;
- 			}
-@@ -2361,7 +2361,7 @@ static int i40e_vc_config_queues_msg(str
- 		 * to its appropriate VSIs based on TC mapping
- 		 */
- 		if (vf->adq_enabled) {
--			if (idx >= ARRAY_SIZE(vf->ch)) {
-+			if (idx >= vf->num_tc) {
- 				aq_ret = I40E_ERR_NO_AVAILABLE_VSI;
- 				goto error_param;
- 			}
+ 	/* In the case of a VFLR, the HW has already reset the VF and we
+ 	 * just need to clean up, so don't hit the VFRTRIG register.
+@@ -2082,7 +2083,10 @@ static int i40e_vc_get_vf_resources_msg(
+ 	size_t len = 0;
+ 	int ret;
+ 
+-	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_INIT)) {
++	i40e_sync_vf_state(vf, I40E_VF_STATE_INIT);
++
++	if (!test_bit(I40E_VF_STATE_INIT, &vf->vf_states) ||
++	    test_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states)) {
+ 		aq_ret = I40E_ERR_PARAM;
+ 		goto err;
+ 	}
+@@ -2178,6 +2182,7 @@ static int i40e_vc_get_vf_resources_msg(
+ 				vf->default_lan_addr.addr);
+ 	}
+ 	set_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states);
++	set_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
+ 
+ err:
+ 	/* send the response back to the VF */
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
+@@ -39,7 +39,8 @@ enum i40e_vf_states {
+ 	I40E_VF_STATE_MC_PROMISC,
+ 	I40E_VF_STATE_UC_PROMISC,
+ 	I40E_VF_STATE_PRE_ENABLE,
+-	I40E_VF_STATE_RESETTING
++	I40E_VF_STATE_RESETTING,
++	I40E_VF_STATE_RESOURCES_LOADED,
+ };
+ 
+ /* VF capabilities */
 
 
