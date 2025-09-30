@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB331EE02F;
-	Tue, 30 Sep 2025 15:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F395327C872;
+	Tue, 30 Sep 2025 15:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244599; cv=none; b=f03bwKeOXtn7tVKjB8QX2mdtIS5Rh7KcTbKrVRFfQASXifJ2TlNhRLskDlpIh3hIkxigpqCAAut6aca3c3yte5nX1+pMdN2tkPI1DJIf6ozKgOmgKkb/yIdMuh4cWwkXJ8iW21ltI7p9LI8PWVnBP/CMRvPKuU1AjIoBODNdaq4=
+	t=1759244602; cv=none; b=VA8llEd0tPyiUhnpOsUoNBqeNMsDKFVMtwsfKOrJcQRzGgP608xyLRMWkcNvnv75ZzuKnptCp/u0RdNGfteim8GhPKXUscirK5R9C2nKie7vAR5RFZzBCCRJGJ9ESZduUXzpXOLIc0j3h/TL2NGJUc3Q1B53qJFMvmQD1ouRr18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244599; c=relaxed/simple;
-	bh=EBOJzsAccVQlNz6HrERFVYkqzgXAdYgimiCP5woVZo8=;
+	s=arc-20240116; t=1759244602; c=relaxed/simple;
+	bh=fIMvwjogKBvHo8d5yph9HcZmBAohQtuZXd+IfRS16tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aM15GxVmKTJGrzyYS6Wgc3tnhun+EuTdHP3Qd8Y8OU9gU7f9qdTw7mJoX92UTwRI93uD6g9ulB2EfRP6jnNHzJx8rQK2zm+AIEEvq2QMcNTpHME0AId6AM5Yvhg/X2Se6GifX52gVhMbHeOhKQNi+e0sbmgsKYfMXopxl34rRPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxmVYPea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awVHyqa00BrfgkQwSVDWaJijTTHOrJs+4OlxRIDKo7XUwjzfAlL6YhKxdMr3BKaKLZLOD9U/Sf15XWswQFeAgxDmqJseQxcTkDcuG7ru1AQrtaDxUfBKTd8e8XD4j7d8+J4uQRr5D0kTNR9B9Wb0ZMUG2OaFZJQ1oWexTzPs01E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2joNX6AH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxmVYPea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFB2C116C6;
-	Tue, 30 Sep 2025 15:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2joNX6AH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77867C4CEF0;
+	Tue, 30 Sep 2025 15:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244598;
-	bh=EBOJzsAccVQlNz6HrERFVYkqzgXAdYgimiCP5woVZo8=;
+	s=korg; t=1759244601;
+	bh=fIMvwjogKBvHo8d5yph9HcZmBAohQtuZXd+IfRS16tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxmVYPeaRBoo4awnZi5opKc1guHvvheWTwE4bOuxz3S/ZZyoShMkh5LpiLpOx0i2I
-	 vVmTa4y7/VVOkbZeLoXBYvj35FZ4NuLjWcWc4lrsUQJis5/LM1L9JWCjpixBPOIFSO
-	 XkdxghiUo94dYhFRwbv3DHZSVGxo7+UWgN4P0W6k=
+	b=2joNX6AHyWwiznpz/6viWDJlOeIXFxWDwkm/imxSrMiTx5BYvVHfigWfTk9iXJaHf
+	 ls8d9rnT5xdjWlwueEwIf+LDsKK/nFqjml8tQSTU+UHfH5+4974b2fKK3ErvwHlss+
+	 sGLLtqcFQiMGx8k/bMbBBjDeHLsr0J4gJtrVrQoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Balamurugan C <balamurugan.c@intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 025/143] i2c: designware: Add quirk for Intel Xe
-Date: Tue, 30 Sep 2025 16:45:49 +0200
-Message-ID: <20250930143832.245046838@linuxfoundation.org>
+Subject: [PATCH 6.16 026/143] ASoC: Intel: soc-acpi: Add entry for sof_es8336 in PTL match table.
+Date: Tue, 30 Sep 2025 16:45:50 +0200
+Message-ID: <20250930143832.284639082@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,56 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Balamurugan C <balamurugan.c@intel.com>
 
-[ Upstream commit f6a8e9f3de4567c71ef9f5f13719df69a8b96081 ]
+[ Upstream commit 2813f535b5847771d9e56df678c523a7e64f860e ]
 
-The regmap is coming from the parent also in case of Xe
-GPUs. Reusing the Wangxun quirk for that.
+Adding ES83x6 I2S codec support for PTL platforms and entry in match table.
 
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Co-developed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250701122252.2590230-3-heikki.krogerus@linux.intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo fixed the co-developed tags while merging]
+Signed-off-by: Balamurugan C <balamurugan.c@intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250708080030.1257790-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 03aa2ed9e187 ("ASoC: Intel: sof_rt5682: Add HDMI-In capture with rt5682 support for PTL.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-platdrv.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/intel/common/soc-acpi-intel-ptl-match.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index 879719e91df2a..c1262df02cdb2 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -101,7 +101,7 @@ static int bt1_i2c_request_regs(struct dw_i2c_dev *dev)
- }
- #endif
+diff --git a/sound/soc/intel/common/soc-acpi-intel-ptl-match.c b/sound/soc/intel/common/soc-acpi-intel-ptl-match.c
+index eae75f3f0fa40..ff4f2fbf9271d 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-ptl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-ptl-match.c
+@@ -21,6 +21,11 @@ static const struct snd_soc_acpi_codecs ptl_rt5682_rt5682s_hp = {
+ 	.codecs = {RT5682_ACPI_HID, RT5682S_ACPI_HID},
+ };
  
--static int txgbe_i2c_request_regs(struct dw_i2c_dev *dev)
-+static int dw_i2c_get_parent_regmap(struct dw_i2c_dev *dev)
- {
- 	dev->map = dev_get_regmap(dev->dev->parent, NULL);
- 	if (!dev->map)
-@@ -123,12 +123,15 @@ static int dw_i2c_plat_request_regs(struct dw_i2c_dev *dev)
- 	struct platform_device *pdev = to_platform_device(dev->dev);
- 	int ret;
- 
-+	if (device_is_compatible(dev->dev, "intel,xe-i2c"))
-+		return dw_i2c_get_parent_regmap(dev);
++static const struct snd_soc_acpi_codecs ptl_essx_83x6 = {
++	.num_codecs = 3,
++	.codecs = { "ESSX8316", "ESSX8326", "ESSX8336"},
++};
 +
- 	switch (dev->flags & MODEL_MASK) {
- 	case MODEL_BAIKAL_BT1:
- 		ret = bt1_i2c_request_regs(dev);
- 		break;
- 	case MODEL_WANGXUN_SP:
--		ret = txgbe_i2c_request_regs(dev);
-+		ret = dw_i2c_get_parent_regmap(dev);
- 		break;
- 	default:
- 		dev->base = devm_platform_ioremap_resource(pdev, 0);
+ struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_machines[] = {
+ 	{
+ 		.comp_ids = &ptl_rt5682_rt5682s_hp,
+@@ -29,6 +34,14 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_machines[] = {
+ 		.tplg_quirk_mask = SND_SOC_ACPI_TPLG_INTEL_AMP_NAME |
+ 					SND_SOC_ACPI_TPLG_INTEL_CODEC_NAME,
+ 	},
++	{
++		.comp_ids = &ptl_essx_83x6,
++		.drv_name = "sof-essx8336",
++		.sof_tplg_filename = "sof-ptl-es8336", /* the tplg suffix is added at run time */
++		.tplg_quirk_mask = SND_SOC_ACPI_TPLG_INTEL_SSP_NUMBER |
++					SND_SOC_ACPI_TPLG_INTEL_SSP_MSB |
++					SND_SOC_ACPI_TPLG_INTEL_DMIC_NUMBER,
++	},
+ 	{},
+ };
+ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_ptl_machines);
 -- 
 2.51.0
 
