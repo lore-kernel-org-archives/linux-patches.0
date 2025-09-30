@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628C3173;
-	Tue, 30 Sep 2025 15:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7EE27B328;
+	Tue, 30 Sep 2025 15:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245508; cv=none; b=f3uHuqFWoqLg4lVoa5gGjS0yua7TwJhnfT3aBvMs3CxNcYJOX9DVGsVVRwdKxBwk8AgvCN+XnQk/sAbDVbeQJn4gbLMpDd3UpyH03zxoB1JSL6uPiITYvKklwIaMM36iLqRp3bKJ98ZGlrw4qK7R3xRYt3AzxoZzwE9/RZ7CGHQ=
+	t=1759245512; cv=none; b=D5T7Jh/mGYj+VPtHFeZJLB5y5dEtvAb2GgryRCFAz0R1z/OXAUfQvH4+Agaegf2hwHEd1x8YCORqTAgdw0YuXvOq9r4xRgmq/1eUdoclTq5BgfF0OWyaVKwMCeu+Yt8OzNytVS4EKN65Y/yrlwTXyEacKoNm/6Sdl5AALDJghUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245508; c=relaxed/simple;
-	bh=DBMbzNCTwev6qeyWciXoYCGjO9zeY0D8TNygsSWBuog=;
+	s=arc-20240116; t=1759245512; c=relaxed/simple;
+	bh=vxXn96wwGc1v+LlzLpceuOGhHOy/XVBeInR0Z1kkvTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9Gwa7uyFVErXvosRrHeiKZsE8x1il+LTwMOBTbt24HyyEFaAaKP7H8RQPe1kg6+Hj36l6v38xHowXVpa5WKbu462jQlBEUPyLbhz1OU2XplUqY0nPtZRA8jOkmNsRwHY9mBI6jXRtCvFpQhjFfUs4gPAHO1HlQaLKSV8goDfBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8JoNV7Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UX//VGRLEfX/UaVw2/WCNa0SPKe+YROgq1WmsVdDiaurJAo/6bWpjAXlsiuWR3MJfiYn3xk2o3f7AcOBTW9wR+zVpf27hE1Vo3iqV83yFDv9UH8MJo04iStjaa8WBCh46Nq5Rb8xszoH2ErUwxoLzBwrzHwNtbBjlwRY8OalSYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSA8tQoK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8JoNV7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7323C4CEF0;
-	Tue, 30 Sep 2025 15:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSA8tQoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5D1C4CEF0;
+	Tue, 30 Sep 2025 15:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245508;
-	bh=DBMbzNCTwev6qeyWciXoYCGjO9zeY0D8TNygsSWBuog=;
+	s=korg; t=1759245511;
+	bh=vxXn96wwGc1v+LlzLpceuOGhHOy/XVBeInR0Z1kkvTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8JoNV7Zf6TsQbkk8hk9fO+Vf2NmO+O5bzgYVeMfwFTH4LBEOIPj42BqOodrxtclg
-	 MBNHrkCNp+5uu9Y1jETUYbmRcIBX2GmvcudFa8AxPHAdcHFSa5qMqYZ1rznt0l9C4a
-	 2oNd7NJvaOrF6qPUKzur4eqhhvJFEgb0AK4lsuc4=
+	b=TSA8tQoKTao4FKWDglc0f8Ac/mOJiRHueKq178YEXGhTIF4Fwe8N6l1zAGnRQW7wP
+	 voITMYGeAk7ibj/tDaXGbyFihHJZnY6erJW/vgNRyR77qSqWyaP8fsV67jyfRqe8Ag
+	 vMmOn3qW4oqQsD4Eu9rGfdf9Jg/MSUbDQr/3KeVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 39/73] selftests: fib_nexthops: Fix creation of non-FDB nexthops
-Date: Tue, 30 Sep 2025 16:47:43 +0200
-Message-ID: <20250930143822.217579647@linuxfoundation.org>
+Subject: [PATCH 6.1 40/73] net: dsa: lantiq_gswip: do also enable or disable cpu port
+Date: Tue, 30 Sep 2025 16:47:44 +0200
+Message-ID: <20250930143822.259007980@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -52,147 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Martin Schiller <ms@dev.tdt.de>
 
-[ Upstream commit c29913109c70383cdf90b6fc792353e1009f24f5 ]
+[ Upstream commit 86b9ea6412af41914ef6549f85a849c3b987f4f3 ]
 
-The test creates non-FDB nexthops without a nexthop device which leads
-to the expected failure, but for the wrong reason:
+Before commit 74be4babe72f ("net: dsa: do not enable or disable non user
+ports"), gswip_port_enable/disable() were also executed for the cpu port
+in gswip_setup() which disabled the cpu port during initialization.
 
- # ./fib_nexthops.sh -t "ipv6_fdb_grp_fcnal ipv4_fdb_grp_fcnal" -v
+Let's restore this by removing the dsa_is_user_port checks. Also, let's
+clean up the gswip_port_enable() function so that we only have to check
+for the cpu port once. The operation reordering done here is safe.
 
- IPv6 fdb groups functional
- --------------------------
- [...]
- COMMAND: ip -netns me-nRsN3E nexthop add id 63 via 2001:db8:91::4
- Error: Device attribute required for non-blackhole and non-fdb nexthops.
- COMMAND: ip -netns me-nRsN3E nexthop add id 64 via 2001:db8:91::5
- Error: Device attribute required for non-blackhole and non-fdb nexthops.
- COMMAND: ip -netns me-nRsN3E nexthop add id 103 group 63/64 fdb
- Error: Invalid nexthop id.
- TEST: Fdb Nexthop group with non-fdb nexthops                       [ OK ]
- [...]
-
- IPv4 fdb groups functional
- --------------------------
- [...]
- COMMAND: ip -netns me-nRsN3E nexthop add id 14 via 172.16.1.2
- Error: Device attribute required for non-blackhole and non-fdb nexthops.
- COMMAND: ip -netns me-nRsN3E nexthop add id 15 via 172.16.1.3
- Error: Device attribute required for non-blackhole and non-fdb nexthops.
- COMMAND: ip -netns me-nRsN3E nexthop add id 103 group 14/15 fdb
- Error: Invalid nexthop id.
- TEST: Fdb Nexthop group with non-fdb nexthops                       [ OK ]
-
- COMMAND: ip -netns me-nRsN3E nexthop add id 16 via 172.16.1.2 fdb
- COMMAND: ip -netns me-nRsN3E nexthop add id 17 via 172.16.1.3 fdb
- COMMAND: ip -netns me-nRsN3E nexthop add id 104 group 14/15
- Error: Invalid nexthop id.
- TEST: Non-Fdb Nexthop group with fdb nexthops                       [ OK ]
- [...]
- COMMAND: ip -netns me-0dlhyd ro add 172.16.0.0/22 nhid 15
- Error: Nexthop id does not exist.
- TEST: Route add with fdb nexthop                                    [ OK ]
-
-In addition, as can be seen in the above output, a couple of IPv4 test
-cases used the non-FDB nexthops (14 and 15) when they intended to use
-the FDB nexthops (16 and 17). These test cases only passed because
-failure was expected, but they failed for the wrong reason.
-
-Fix the test to create the non-FDB nexthops with a nexthop device and
-adjust the IPv4 test cases to use the FDB nexthops instead of the
-non-FDB nexthops.
-
-Output after the fix:
-
- # ./fib_nexthops.sh -t "ipv6_fdb_grp_fcnal ipv4_fdb_grp_fcnal" -v
-
- IPv6 fdb groups functional
- --------------------------
- [...]
- COMMAND: ip -netns me-lNzfHP nexthop add id 63 via 2001:db8:91::4 dev veth1
- COMMAND: ip -netns me-lNzfHP nexthop add id 64 via 2001:db8:91::5 dev veth1
- COMMAND: ip -netns me-lNzfHP nexthop add id 103 group 63/64 fdb
- Error: FDB nexthop group can only have fdb nexthops.
- TEST: Fdb Nexthop group with non-fdb nexthops                       [ OK ]
- [...]
-
- IPv4 fdb groups functional
- --------------------------
- [...]
- COMMAND: ip -netns me-lNzfHP nexthop add id 14 via 172.16.1.2 dev veth1
- COMMAND: ip -netns me-lNzfHP nexthop add id 15 via 172.16.1.3 dev veth1
- COMMAND: ip -netns me-lNzfHP nexthop add id 103 group 14/15 fdb
- Error: FDB nexthop group can only have fdb nexthops.
- TEST: Fdb Nexthop group with non-fdb nexthops                       [ OK ]
-
- COMMAND: ip -netns me-lNzfHP nexthop add id 16 via 172.16.1.2 fdb
- COMMAND: ip -netns me-lNzfHP nexthop add id 17 via 172.16.1.3 fdb
- COMMAND: ip -netns me-lNzfHP nexthop add id 104 group 16/17
- Error: Non FDB nexthop group cannot have fdb nexthops.
- TEST: Non-Fdb Nexthop group with fdb nexthops                       [ OK ]
- [...]
- COMMAND: ip -netns me-lNzfHP ro add 172.16.0.0/22 nhid 16
- Error: Route cannot point to a fdb nexthop.
- TEST: Route add with fdb nexthop                                    [ OK ]
- [...]
- Tests passed:  30
- Tests failed:   0
- Tests skipped:  0
-
-Fixes: 0534c5489c11 ("selftests: net: add fdb nexthop tests")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250921150824.149157-3-idosch@nvidia.com
+Signed-off-by: Martin Schiller <ms@dev.tdt.de>
+Acked-by: Hauke Mehrtens <hauke@hauke-m.de>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20240611135434.3180973-7-ms@dev.tdt.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c0054b25e2f1 ("net: dsa: lantiq_gswip: move gswip_add_single_port_br() call to port_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_nexthops.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/dsa/lantiq_gswip.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index df8d90b51867a..543a35e5c9dfe 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -441,8 +441,8 @@ ipv6_fdb_grp_fcnal()
- 	log_test $? 0 "Get Fdb nexthop group by id"
+diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
+index 05ecaa007ab18..ee80446802af4 100644
+--- a/drivers/net/dsa/lantiq_gswip.c
++++ b/drivers/net/dsa/lantiq_gswip.c
+@@ -688,13 +688,18 @@ static int gswip_port_enable(struct dsa_switch *ds, int port,
+ 	struct gswip_priv *priv = ds->priv;
+ 	int err;
  
- 	# fdb nexthop group can only contain fdb nexthops
--	run_cmd "$IP nexthop add id 63 via 2001:db8:91::4"
--	run_cmd "$IP nexthop add id 64 via 2001:db8:91::5"
-+	run_cmd "$IP nexthop add id 63 via 2001:db8:91::4 dev veth1"
-+	run_cmd "$IP nexthop add id 64 via 2001:db8:91::5 dev veth1"
- 	run_cmd "$IP nexthop add id 103 group 63/64 fdb"
- 	log_test $? 2 "Fdb Nexthop group with non-fdb nexthops"
+-	if (!dsa_is_user_port(ds, port))
+-		return 0;
+-
+ 	if (!dsa_is_cpu_port(ds, port)) {
++		u32 mdio_phy = 0;
++
+ 		err = gswip_add_single_port_br(priv, port, true);
+ 		if (err)
+ 			return err;
++
++		if (phydev)
++			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
++
++		gswip_mdio_mask(priv, GSWIP_MDIO_PHY_ADDR_MASK, mdio_phy,
++				GSWIP_MDIO_PHYp(port));
+ 	}
  
-@@ -521,15 +521,15 @@ ipv4_fdb_grp_fcnal()
- 	log_test $? 0 "Get Fdb nexthop group by id"
+ 	/* RMON Counter Enable for port */
+@@ -707,16 +712,6 @@ static int gswip_port_enable(struct dsa_switch *ds, int port,
+ 	gswip_switch_mask(priv, 0, GSWIP_SDMA_PCTRL_EN,
+ 			  GSWIP_SDMA_PCTRLp(port));
  
- 	# fdb nexthop group can only contain fdb nexthops
--	run_cmd "$IP nexthop add id 14 via 172.16.1.2"
--	run_cmd "$IP nexthop add id 15 via 172.16.1.3"
-+	run_cmd "$IP nexthop add id 14 via 172.16.1.2 dev veth1"
-+	run_cmd "$IP nexthop add id 15 via 172.16.1.3 dev veth1"
- 	run_cmd "$IP nexthop add id 103 group 14/15 fdb"
- 	log_test $? 2 "Fdb Nexthop group with non-fdb nexthops"
+-	if (!dsa_is_cpu_port(ds, port)) {
+-		u32 mdio_phy = 0;
+-
+-		if (phydev)
+-			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
+-
+-		gswip_mdio_mask(priv, GSWIP_MDIO_PHY_ADDR_MASK, mdio_phy,
+-				GSWIP_MDIO_PHYp(port));
+-	}
+-
+ 	return 0;
+ }
  
- 	# Non fdb nexthop group can not contain fdb nexthops
- 	run_cmd "$IP nexthop add id 16 via 172.16.1.2 fdb"
- 	run_cmd "$IP nexthop add id 17 via 172.16.1.3 fdb"
--	run_cmd "$IP nexthop add id 104 group 14/15"
-+	run_cmd "$IP nexthop add id 104 group 16/17"
- 	log_test $? 2 "Non-Fdb Nexthop group with fdb nexthops"
+@@ -724,9 +719,6 @@ static void gswip_port_disable(struct dsa_switch *ds, int port)
+ {
+ 	struct gswip_priv *priv = ds->priv;
  
- 	# fdb nexthop cannot have blackhole
-@@ -556,7 +556,7 @@ ipv4_fdb_grp_fcnal()
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 12 self"
- 	log_test $? 255 "Fdb mac add with nexthop"
- 
--	run_cmd "$IP ro add 172.16.0.0/22 nhid 15"
-+	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
- 	log_test $? 2 "Route add with fdb nexthop"
- 
- 	run_cmd "$IP ro add 172.16.0.0/22 nhid 103"
+-	if (!dsa_is_user_port(ds, port))
+-		return;
+-
+ 	gswip_switch_mask(priv, GSWIP_FDMA_PCTRL_EN, 0,
+ 			  GSWIP_FDMA_PCTRLp(port));
+ 	gswip_switch_mask(priv, GSWIP_SDMA_PCTRL_EN, 0,
 -- 
 2.51.0
 
