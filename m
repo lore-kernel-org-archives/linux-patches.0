@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241561FF1C8;
-	Tue, 30 Sep 2025 15:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B11F152D;
+	Tue, 30 Sep 2025 15:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244630; cv=none; b=M9s/RK4xd4cJA/K4yW2OSHfRfWS9KhtGyrz0f2fckJTlExn5+gSdMlkx7HXOZevYd7HL10SjnD+3gEaQ/d2Qbg9GNNQMzfKMN+ZixXUWMotcvGWklfmHyP43YiQ/tlljVtadrg+GkCiYlY9ODGDDTrydLyk1+q0wjFoGmBJrieE=
+	t=1759244633; cv=none; b=dmeHlX03I0NRUxNWamyUrA/00EK9yz16fLs9igPeRkaCUv+NbtaNQhMyEt/DwIm8aHa/Q3Jv0ZudlroxW7Gwpnvp/vhM78EvvY6S3zxHgSZy7anzYJHqgXVxMUlNgoCY/CWiRmzZUd8HS0Fw3Nh1F8dDMqHHmu3wCq/oXdo2gfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244630; c=relaxed/simple;
-	bh=Oj1cr1jMAQBN1DtaC65qgN7ZohgzIqyrkEWhcpAxyiM=;
+	s=arc-20240116; t=1759244633; c=relaxed/simple;
+	bh=A83HdLlteLYqFPiNIdFRa6oJoNEGErnYtejRrn9zGrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciptVacyX+q+pwIK0/1brsPEZBnuzneWn0jD8imfuJuEqEL3/wuLsw/GGUxzeZiHJCeTZ0ayrPCWzhMjP/e932oRsvYoaYXFLg5cKquqDNvWry0xzfDEDJ9L/WWMVFwUxdzeZ1eh4FyRdhQy5cyu5/Wkwq1KJiPq3hpVkjG7Kl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=praBKhpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m1ZfYoGTHoYtiEWUxhdU9W5dE+gZ+QC1MLuoRdLJeFQqNQdMIX7yYglnJBh9jVhTVB0797LazSUBGyVkTobz5LR5/2DOvnjRBUZ807AaFbFVmx1tpy7s2vR7gSVvXtjZwA2NG7ct44fkcKWq1+LcaGQ2uCnfAhKQ6GAw45sWYm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qaQrNpR9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="praBKhpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A456AC16AAE;
-	Tue, 30 Sep 2025 15:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaQrNpR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE476C4CEF0;
+	Tue, 30 Sep 2025 15:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244630;
-	bh=Oj1cr1jMAQBN1DtaC65qgN7ZohgzIqyrkEWhcpAxyiM=;
+	s=korg; t=1759244633;
+	bh=A83HdLlteLYqFPiNIdFRa6oJoNEGErnYtejRrn9zGrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=praBKhpFKhRWRRcHYg7ygjN2NyQ2qzlsfakNAPS1d6Lly1U0r0sRdpTR2xBmauC7b
-	 6/s3SedxCQwW8o7HyDBgfCXYvsAQc0c7jyw2aMC4kFB6v8uhPDaHaxGADSs/l3EVMN
-	 O18H4TPWlQpKowunO0SYZrWUJTMs8JPyjniWIifU=
+	b=qaQrNpR9GFfF1RBVkWrSnWzm1jfqi63BN899C3k15XV+pUwQC85Tc9w1wbux8WBv/
+	 1q2bZw5MeB8K1q96UHeb01Y3QdeWpzHIcj29AWS+j3N7YgScXlPv1YEaoFX0VwHHzy
+	 zHBZGPVXNsBNuJ4EXevXdQ+SzlTzfHhPNZnCbSUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 067/143] ethernet: rvu-af: Remove slash from the driver name
-Date: Tue, 30 Sep 2025 16:46:31 +0200
-Message-ID: <20250930143833.908048580@linuxfoundation.org>
+Subject: [PATCH 6.16 068/143] Bluetooth: hci_sync: Fix hci_resume_advertising_sync
+Date: Tue, 30 Sep 2025 16:46:32 +0200
+Message-ID: <20250930143833.948658258@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,39 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b65678cacc030efd53c38c089fb9b741a2ee34c8 ]
+[ Upstream commit 1488af7b8b5f9896ea88ee35aa3301713f72737c ]
 
-Having a slash in the driver name leads to EIO being returned while
-reading /sys/module/rvu_af/drivers content.
+hci_resume_advertising_sync is suppose to resume all instance paused by
+hci_pause_advertising_sync, this logic is used for procedures are only
+allowed when not advertising, but instance 0x00 was not being
+re-enabled.
 
-Remove DRV_STRING as it's not used anywhere.
-
-Fixes: 91c6945ea1f9 ("octeontx2-af: cn10k: Add RPM MAC support")
-Signed-off-by: Petr Malat <oss@malat.biz>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250918152106.1798299-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 442305463cc0a..21161711c579f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -21,8 +21,7 @@
- #include "rvu.h"
- #include "lmac_common.h"
- 
--#define DRV_NAME	"Marvell-CGX/RPM"
--#define DRV_STRING      "Marvell CGX/RPM Driver"
-+#define DRV_NAME	"Marvell-CGX-RPM"
- 
- #define CGX_RX_STAT_GLOBAL_INDEX	9
- 
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index a25439f1eeac2..7ca544d7791f4 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2594,6 +2594,13 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
+ 			hci_remove_ext_adv_instance_sync(hdev, adv->instance,
+ 							 NULL);
+ 		}
++
++		/* If current advertising instance is set to instance 0x00
++		 * then we need to re-enable it.
++		 */
++		if (!hdev->cur_adv_instance)
++			err = hci_enable_ext_advertising_sync(hdev,
++							      hdev->cur_adv_instance);
+ 	} else {
+ 		/* Schedule for most recent instance to be restarted and begin
+ 		 * the software rotation loop
 -- 
 2.51.0
 
