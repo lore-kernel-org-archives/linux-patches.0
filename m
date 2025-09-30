@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6993C465;
-	Tue, 30 Sep 2025 15:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A53C465;
+	Tue, 30 Sep 2025 15:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246165; cv=none; b=pYGOBC9i0NeOlNx1mz5e97UMxi+i2dREEFAiBx9LiFjjwF9NR7iWVEuDxjLuQ4W1Aog1vqUOJvQEX8+0pO1LrHYmhsVrpkKbzlX5HkKWdqSP9QC7yyUQUOefsbQY7H3dyp2EMEIlmYTSW/Ffr0n1yr7myrcwPW9QCVrS0hG5R/c=
+	t=1759246168; cv=none; b=iNB7CZdx9aZAlqa3Wey1BmIWvGf1MFnDR2U4+UYgbiXQwpljtXJsDY/owhEkJENCFHUOt/j3RmoTZH+21JJoYlABsLABjeT941dVb9xUsIKNIMI8GfkXNyEEGP2A5mTVv6q6HS7gGlKrE1mnUU8mkdSSLmbnTSmqRojb7T1biSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246165; c=relaxed/simple;
-	bh=20I2FaF1mhMmYRgl9fjEkUJKjgtalInRnP43biReI9c=;
+	s=arc-20240116; t=1759246168; c=relaxed/simple;
+	bh=mx4SL4xl0mjzX1o/DH6tFjKU6PF3XsZFuU4rePQVcvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDIYx+agZn6bx61HB7OlBwpIXuTUZPq68XQ7x4FUPmUz1z9wUA9xJTQlJprCVsGQAIjyefaq/bWUER9cTqfyTXapKKw8NwJP8tH/oKOvK8ChUJtyuvmZW431LBVy4+zGyi5Kj86fkpqOMG6r6CYvJhXkjV1bWQ/YeEmTS4LeXkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTgjqakL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL8yzayLdnxh78YaCe4enTEp1ghTLfTmWT6AVE9ON4izZYFOH/qLbxuhegNbpk020YOwTUsMe6T5b4HinlYuK2StWYhtxCxmy/vOfWtXlUdF/eBe7P+V4+UFMD8xvvYYBlfCu9ZeUeYUGaDTxjIj0ZQC8xYoDWW0+Kn/a8tXN6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHgbPC5/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTgjqakL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDBFC4CEF0;
-	Tue, 30 Sep 2025 15:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHgbPC5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D33C4CEF0;
+	Tue, 30 Sep 2025 15:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246165;
-	bh=20I2FaF1mhMmYRgl9fjEkUJKjgtalInRnP43biReI9c=;
+	s=korg; t=1759246168;
+	bh=mx4SL4xl0mjzX1o/DH6tFjKU6PF3XsZFuU4rePQVcvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTgjqakLrf4MBtXBFxrto5X3TQl4KY8pftf4qZc6oHFoten/pMT9lKVFtlTC97zfP
-	 s8vT00lSs+mIQcSjoKV4La+MKVRe4Ot6E9uJn/0aKXVU7Cx0lc5r92Yd+GbL6WEL2p
-	 TEP2m9TN3VOD1jyh/dZ/jlLh6u+KxrtnBjy+gEoY=
+	b=QHgbPC5/cY51aaC5RmiYclCzmPOpPJ6sbWw3ga076/sH1V1S7kqHHiO7iPGo7SeNu
+	 Xzpsh2Q+r+iPAl5GQOcFBAK+m8L+4bCT3oipf5GpHpD3cImxyStLgRfCx5qApc1J1Z
+	 nGXIBvnNr1ISb+ZLCQ23WtZ2aDdTAtcp5oq8VUsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 65/89] smb: client: fix wrong index reference in smb2_compound_op()
-Date: Tue, 30 Sep 2025 16:48:19 +0200
-Message-ID: <20250930143824.601884685@linuxfoundation.org>
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 74/89] i40e: improve VF MAC filters accounting
+Date: Tue, 30 Sep 2025 16:48:28 +0200
+Message-ID: <20250930143824.968567900@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -52,41 +54,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit fbe2dc6a9c7318f7263f5e4d50f6272b931c5756 ]
+commit b99dd77076bd3fddac6f7f1cbfa081c38fde17f5 upstream.
 
-In smb2_compound_op(), the loop that processes each command's response
-uses wrong indices when accessing response bufferes.
+When adding new VM MAC, driver checks only *active* filters in
+vsi->mac_filter_hash. Each MAC, even in non-active state is using resources.
 
-This incorrect indexing leads to improper handling of command results.
-Also, if incorrectly computed index is greather than or equal to
-MAX_COMPOUND, it can cause out-of-bounds accesses.
+To determine number of MACs VM uses, count VSI filters in *any* state.
 
-Fixes: 3681c74d342d ("smb: client: handle lack of EA support in smb2_query_path_info()") # 6.14
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add i40e_count_all_filters() to simply count all filters, and rename
+i40e_count_filters() to i40e_count_active_filters() to avoid ambiguity.
+
+Fixes: cfb1d572c986 ("i40e: Add ensurance of MacVlan resources for every trusted VF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e.h             |    3 
+ drivers/net/ethernet/intel/i40e/i40e_main.c        |   26 +++++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   65 ++++++++-------------
+ 3 files changed, 50 insertions(+), 44 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index b51ccfb884394..104a563dc317f 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -641,7 +641,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -1277,7 +1277,8 @@ struct i40e_mac_filter *i40e_add_mac_fil
+ 					    const u8 *macaddr);
+ int i40e_del_mac_filter(struct i40e_vsi *vsi, const u8 *macaddr);
+ bool i40e_is_vsi_in_vlan(struct i40e_vsi *vsi);
+-int i40e_count_filters(struct i40e_vsi *vsi);
++int i40e_count_all_filters(struct i40e_vsi *vsi);
++int i40e_count_active_filters(struct i40e_vsi *vsi);
+ struct i40e_mac_filter *i40e_find_mac(struct i40e_vsi *vsi, const u8 *macaddr);
+ void i40e_vlan_stripping_enable(struct i40e_vsi *vsi);
+ static inline bool i40e_is_sw_dcb(struct i40e_pf *pf)
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -1241,12 +1241,30 @@ void i40e_update_stats(struct i40e_vsi *
+ }
  
- 	tmp_rc = rc;
- 	for (i = 0; i < num_cmds; i++) {
--		char *buf = rsp_iov[i + i].iov_base;
-+		char *buf = rsp_iov[i + 1].iov_base;
+ /**
+- * i40e_count_filters - counts VSI mac filters
++ * i40e_count_all_filters - counts VSI MAC filters
+  * @vsi: the VSI to be searched
+  *
+- * Returns count of mac filters
+- **/
+-int i40e_count_filters(struct i40e_vsi *vsi)
++ * Return: count of MAC filters in any state.
++ */
++int i40e_count_all_filters(struct i40e_vsi *vsi)
++{
++	struct i40e_mac_filter *f;
++	struct hlist_node *h;
++	int bkt, cnt = 0;
++
++	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist)
++		cnt++;
++
++	return cnt;
++}
++
++/**
++ * i40e_count_active_filters - counts VSI MAC filters
++ * @vsi: the VSI to be searched
++ *
++ * Return: count of active MAC filters.
++ */
++int i40e_count_active_filters(struct i40e_vsi *vsi)
+ {
+ 	struct i40e_mac_filter *f;
+ 	struct hlist_node *h;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2865,24 +2865,6 @@ error_param:
+ 				      (u8 *)&stats, sizeof(stats));
+ }
  
- 		if (buf && resp_buftype[i + 1] != CIFS_NO_BUFFER)
- 			rc = server->ops->map_error(buf, false);
--- 
-2.51.0
-
+-/**
+- * i40e_can_vf_change_mac
+- * @vf: pointer to the VF info
+- *
+- * Return true if the VF is allowed to change its MAC filters, false otherwise
+- */
+-static bool i40e_can_vf_change_mac(struct i40e_vf *vf)
+-{
+-	/* If the VF MAC address has been set administratively (via the
+-	 * ndo_set_vf_mac command), then deny permission to the VF to
+-	 * add/delete unicast MAC addresses, unless the VF is trusted
+-	 */
+-	if (vf->pf_set_mac && !vf->trusted)
+-		return false;
+-
+-	return true;
+-}
+-
+ #define I40E_MAX_MACVLAN_PER_HW 3072
+ #define I40E_MAX_MACVLAN_PER_PF(num_ports) (I40E_MAX_MACVLAN_PER_HW /	\
+ 	(num_ports))
+@@ -2921,8 +2903,10 @@ static inline int i40e_check_vf_permissi
+ 	struct i40e_pf *pf = vf->pf;
+ 	struct i40e_vsi *vsi = pf->vsi[vf->lan_vsi_idx];
+ 	struct i40e_hw *hw = &pf->hw;
+-	int mac2add_cnt = 0;
+-	int i;
++	int i, mac_add_max, mac_add_cnt = 0;
++	bool vf_trusted;
++
++	vf_trusted = test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps);
+ 
+ 	for (i = 0; i < al->num_elements; i++) {
+ 		struct i40e_mac_filter *f;
+@@ -2942,9 +2926,8 @@ static inline int i40e_check_vf_permissi
+ 		 * The VF may request to set the MAC address filter already
+ 		 * assigned to it so do not return an error in that case.
+ 		 */
+-		if (!i40e_can_vf_change_mac(vf) &&
+-		    !is_multicast_ether_addr(addr) &&
+-		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
++		if (!vf_trusted && !is_multicast_ether_addr(addr) &&
++		    vf->pf_set_mac && !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
+ 			dev_err(&pf->pdev->dev,
+ 				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
+ 			return -EPERM;
+@@ -2953,29 +2936,33 @@ static inline int i40e_check_vf_permissi
+ 		/*count filters that really will be added*/
+ 		f = i40e_find_mac(vsi, addr);
+ 		if (!f)
+-			++mac2add_cnt;
++			++mac_add_cnt;
+ 	}
+ 
+ 	/* If this VF is not privileged, then we can't add more than a limited
+-	 * number of addresses. Check to make sure that the additions do not
+-	 * push us over the limit.
+-	 */
+-	if (!test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps)) {
+-		if ((i40e_count_filters(vsi) + mac2add_cnt) >
+-		    I40E_VC_MAX_MAC_ADDR_PER_VF) {
+-			dev_err(&pf->pdev->dev,
+-				"Cannot add more MAC addresses, VF is not trusted, switch the VF to trusted to add more functionality\n");
+-			return -EPERM;
+-		}
+-	/* If this VF is trusted, it can use more resources than untrusted.
++	 * number of addresses.
++	 *
++	 * If this VF is trusted, it can use more resources than untrusted.
+ 	 * However to ensure that every trusted VF has appropriate number of
+ 	 * resources, divide whole pool of resources per port and then across
+ 	 * all VFs.
+ 	 */
+-	} else {
+-		if ((i40e_count_filters(vsi) + mac2add_cnt) >
+-		    I40E_VC_MAX_MACVLAN_PER_TRUSTED_VF(pf->num_alloc_vfs,
+-						       hw->num_ports)) {
++	if (!vf_trusted)
++		mac_add_max = I40E_VC_MAX_MAC_ADDR_PER_VF;
++	else
++		mac_add_max = I40E_VC_MAX_MACVLAN_PER_TRUSTED_VF(pf->num_alloc_vfs, hw->num_ports);
++
++	/* VF can replace all its filters in one step, in this case mac_add_max
++	 * will be added as active and another mac_add_max will be in
++	 * a to-be-removed state. Account for that.
++	 */
++	if ((i40e_count_active_filters(vsi) + mac_add_cnt) > mac_add_max ||
++	    (i40e_count_all_filters(vsi) + mac_add_cnt) > 2 * mac_add_max) {
++		if (!vf_trusted) {
++			dev_err(&pf->pdev->dev,
++				"Cannot add more MAC addresses, VF is not trusted, switch the VF to trusted to add more functionality\n");
++			return -EPERM;
++		} else {
+ 			dev_err(&pf->pdev->dev,
+ 				"Cannot add more MAC addresses, trusted VF exhausted it's resources\n");
+ 			return -EPERM;
 
 
