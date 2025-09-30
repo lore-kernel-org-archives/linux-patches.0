@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64D32FD1DD;
-	Tue, 30 Sep 2025 15:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146213C465;
+	Tue, 30 Sep 2025 15:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246010; cv=none; b=TMs/yYz5uNgDG0rckn3RbHiMwZJTz7uX5KnigeJDdT0gTrDuqPe51bbQRsmtRmuMoFVzIm40l/K40GRc9bokwb2dvhSaMz+nyjbnZxIjGVQdEV7HpxkCMFh/cGdHPBJCBxiOo2nC9V9DswuOZjqWSn+0p/pdSerNZ6T/anYdkCo=
+	t=1759246013; cv=none; b=WBaokLjCsgzfVNjc+B49RJsVU6XMbF2qpaowHnm300u9348feNqGNjj86gO0LiaHZg54CGNByMSl+5jyA9/aas56JE4xvUsE35TkgId3OJRrfuYESzIjMK8LhXf3mnYEtrYtFLS+8ImF8IQwC9JMw6I6lZvQN1R5RRjBunV5htI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246010; c=relaxed/simple;
-	bh=De4+DVObdvqCMNghhyOWI1NXg5h8OsA2aUDQWYyphVI=;
+	s=arc-20240116; t=1759246013; c=relaxed/simple;
+	bh=OtBSJVkDmHuEBgrpUa0m7JyZJjyslrZEocHsXBcCvuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DnitrCAayoRYlOuEgtwPgsidCxxTlq6XXSn7SRhX+1nPH5l5xUi3gP2z/Njf3MyXbVwmH8nG1AKmX7Hf3uQTH0sah/V9tHPCfNxzmz+q2lCrZJRFrv+vn807VcRR7DCc8cdpeeIPems3MNAqrCEQGFZ6FwjUJsjYHBRdha88+tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inlo/RM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUb7GtB9D9e7wItZEekU/V9VmVidoPbW9xc9yTDGKl2YWJzsTYmRp6S4BDNH3TZ4kc42JyeFMNdqvC17U3QVoGllIGAUzCJxivslDXkMEhzoGbM1H62bCZbZ+s/oxnsOsxs44vELuHbigoA5c7+/IprVKMAVLps0d+BYjNedLXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nu33rZma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inlo/RM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1109C4CEF0;
-	Tue, 30 Sep 2025 15:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nu33rZma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1976AC4CEF0;
+	Tue, 30 Sep 2025 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246009;
-	bh=De4+DVObdvqCMNghhyOWI1NXg5h8OsA2aUDQWYyphVI=;
+	s=korg; t=1759246012;
+	bh=OtBSJVkDmHuEBgrpUa0m7JyZJjyslrZEocHsXBcCvuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inlo/RM8xW4IZLh9ri9qtf8SXplCfDXD/SpC0ghnoiKtY+tUaRbDlq5iV35kpE5C4
-	 nK7cRnnmWG/wqg9AymAmUWzPUHq4Bz8bdR5e7nWAIjkukEuzWnnKCmX+uyclxE1Slr
-	 oY81u4ORALBN84dBfe4H0scoWrHkeOVrl12N2GsI=
+	b=nu33rZmaE68TBr16wKFNDcdD1oO0vmf6Z2x7Hri2rVWSxx5JpmG8qBvZG8zlwTZn6
+	 IH7r3HqR7aOUREZLUpNydBhNXsV/kLpuPSLfO7llhoaUvV5+d+MSfd6K8uNyYhvwr0
+	 6ZMUBZmVgNFUbTSvUC6xd30DsLafr7gs4i5WOPD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	qaqland <anguoli@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 24/89] ALSA: usb-audio: Add mute TLV for playback volumes on more devices
-Date: Tue, 30 Sep 2025 16:47:38 +0200
-Message-ID: <20250930143822.898384314@linuxfoundation.org>
+Subject: [PATCH 6.12 25/89] net: sfp: add quirk for FLYPRO copper SFP+ module
+Date: Tue, 30 Sep 2025 16:47:39 +0200
+Message-ID: <20250930143822.943468004@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -52,71 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: qaqland <anguoli@uniontech.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 2cbe4ac193ed7172cfd825c0cc46ce4a41be4ba1 ]
+[ Upstream commit ddbf0e78a8b20ec18d314d31336a0230fdc9b394 ]
 
-Applying the quirk of that, the lowest Playback mixer volume setting
-mutes the audio output, on more devices.
+Add quirk for a copper SFP that identifies itself as "FLYPRO"
+"SFP-10GT-CS-30M". It uses RollBall protocol to talk to the PHY.
 
-Suggested-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Signed-off-by: qaqland <anguoli@uniontech.com>
-Link: https://patch.msgid.link/20250829-sound_quirk-v1-1-745529b44440@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20250831105910.3174-1-olek2@wp.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/phy/sfp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 03962b3e3bd58..8a20508e055a3 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2196,6 +2196,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_SET_IFACE_FIRST),
- 	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x0572, 0x1b08, /* Conexant Systems (Rockwell), Inc. */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
- 		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
-@@ -2240,6 +2242,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x0bda, 0x498a, /* Realtek Semiconductor Corp. */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
-@@ -2256,6 +2260,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x1101, 0x0003, /* Audioengine D1 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x12d1, 0x3a07, /* Huawei Technologies Co., Ltd. */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x1224, 0x2a25, /* Jieli Technology USB PHY 2.0 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
- 	DEVICE_FLG(0x1395, 0x740a, /* Sennheiser DECT */
-@@ -2346,6 +2352,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x2b53, 0x0023, /* Fiero SC-01 (firmware v1.0.0 @ 48 kHz) */
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x2b53, 0x0024, /* Fiero SC-01 (firmware v1.0.0 @ 96 kHz) */
-@@ -2362,6 +2370,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
-+		   QUIRK_FLAG_MIXER_MIN_MUTE),
- 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x534d, 0x0021, /* MacroSilicon MS2100/MS2106 */
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index e8670249d32c1..f1827a1bd7a59 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -491,6 +491,9 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	SFP_QUIRK("ALCATELLUCENT", "3FE46541AA", sfp_quirk_2500basex,
+ 		  sfp_fixup_nokia),
+ 
++	// FLYPRO SFP-10GT-CS-30M uses Rollball protocol to talk to the PHY.
++	SFP_QUIRK_F("FLYPRO", "SFP-10GT-CS-30M", sfp_fixup_rollball),
++
+ 	// Fiberstore SFP-10G-T doesn't identify as copper, uses the Rollball
+ 	// protocol to talk to the PHY and needs 4 sec wait before probing the
+ 	// PHY.
 -- 
 2.51.0
 
