@@ -1,168 +1,107 @@
-Received: from e234-55.smtp-out.ap-northeast-1.amazonses.com (e234-55.smtp-out.ap-northeast-1.amazonses.com [23.251.234.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAA32773C2
-	for <patches@lists.linux.dev>; Wed,  1 Oct 2025 15:24:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.251.234.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807DC27FD4A
+	for <patches@lists.linux.dev>; Wed,  1 Oct 2025 16:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759332254; cv=none; b=Qrk6NnN0xwS5ge7AWq1pg0ksEJPGK7mvvsB/IDGl0L4jdHaturiEddUzwBvUMEqYP82Qp1TbPPNS5o6igqx2eUICkxFUV64RzEtow9+Ed92sfhgOyLEUu7e8/xALCGq9XP5+dm59dsegQsF2vfRjgvOghMOqk534KQX2ZnelyNo=
+	t=1759334582; cv=none; b=ZINT8ti7KQBva8dde/vey2Od92nlUGb0RjH/1API+OB8QMZbT81lgQUUXmzyMFGfAGVP2mWE6Te7WgmLyAF9pUCXVY+jCks/SUIhWE+LQIHHWP64Azze8/9qMd8BfnhF+oBAf2JHge+MH5HDkzR0P8UQ6o0xthh3GeYcAobYhCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759332254; c=relaxed/simple;
-	bh=6C7qSeatUbSbIjZrcIO6xX5H86QxO7nvz3Snz3AG+I8=;
-	h=In-Reply-To:From:To:Cc:Subject:Message-ID:Date:MIME-Version:
-	 Content-Type; b=YFIvog2pIBvNGEG3SH/wXQu4FmTlD8qpPNbcOxpq8KK+Z9q83ilhFJKsgzxIgB4SSygjfHZDXsR1LmNB6OsRArqISj39d9Z6w4Dz6Nh1XNvPCniBG/JL5zsWu4moF1DbW+kNc1bhQ2kIQfB7pZkBb64SWQQdjhjctW01VmRwtrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mgml.me; spf=pass smtp.mailfrom=send.mgml.me; dkim=pass (1024-bit key) header.d=mgml.me header.i=@mgml.me header.b=T94KSpaE; dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b=GgRd06SE; arc=none smtp.client-ip=23.251.234.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mgml.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.mgml.me
+	s=arc-20240116; t=1759334582; c=relaxed/simple;
+	bh=TN08qxdXNdkLvHt7/wPIeKRCTg39xHBh9iRLNP8f/0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a/DJQdCTQ5stRsaEzkxPYnKnwF6zuBd7g/+n18QVNdp3RXiA31Xkh0D5rYm8RY1JL13rVJOi755YYGv7CQMzMHDPr0lKQ+dF85rkOjFYZsNVhctWSGhwWip0O2H9fzivrYGACR1zDIOng01/SlQwFRNnqWCpasMRARKUWy8ASVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COquHvY/; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mgml.me header.i=@mgml.me header.b="T94KSpaE";
-	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="GgRd06SE"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
-	d=mgml.me; t=1759332249;
-	h=In-Reply-To:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
-	bh=6C7qSeatUbSbIjZrcIO6xX5H86QxO7nvz3Snz3AG+I8=;
-	b=T94KSpaEO34L7g/OlnNpYenLUItI4+85bEbV8j6Aano0tGbzLaP4Cd2BzRqK/tdH
-	DEmevv7tWx2suVusOmhdP2Ior90UzTW0kQeQyhqFQLL5f+bI2El9k8fHFuNQuwa8xSg
-	VQV1PhYoownYFi0S00nz1JXNJmATnEVwQ8OHpIJQ=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=suwteswkahkjx5z3rgaujjw4zqymtlt2; d=amazonses.com; t=1759332249;
-	h=In-Reply-To:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
-	bh=6C7qSeatUbSbIjZrcIO6xX5H86QxO7nvz3Snz3AG+I8=;
-	b=GgRd06SEu9MlRhFlsGnxPsb4qZXCv2P8FWC1ktAC2OcYvI7gimDAeEYabPx58Ckn
-	2Vn2Pjo8ah3+JoRy7d8KTNEyC1+Cpi6V1ibkXA6gWCfENh9DI2qcokEUwa7/lZEjMPM
-	7IOhhORW1nKABChMUV2dHiCtaWnkipRbOEBxpPlo=
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-In-Reply-To: <292570c0-4aca-4e1a-9ac6-70d377909ecf@kernel.org>
-From: Kenta Akagi <k@mgml.me>
-To: matttbe@kernel.org, gregkh@linuxfoundation.org, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, martineau@kernel.org, geliang@kernel.org, 
-	kuba@kernel.org, sashal@kernel.org
-Subject: Re: [PATCH 6.1 54/61] selftests: mptcp: connect: catch IO errors
- on listen side
-Message-ID: <01060199a05fae4d-e68e8329-e6a2-4139-8562-6ab61e181711-000000@ap-northeast-1.amazonses.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 1 Oct 2025 15:24:09 +0000
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COquHvY/"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-9194a0241aaso212955339f.3
+        for <patches@lists.linux.dev>; Wed, 01 Oct 2025 09:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1759334578; x=1759939378; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mR7FRFOp6wmlPMEQNaFmkailzNE5Cfn80QOSCcb0KCo=;
+        b=COquHvY/O8DEFa1PfrYrx+m5EnFMaq7LxjgY8tkxtbXaYstHQ5ilzRV1ehVnIIlzaV
+         Rmxu8EnZucLK+x12vt7XkmyRg8t3ulcv34uku/b2yJGAvcpSJgpDDXcYHcieVC7K6owc
+         5M9DjSNLq5RF9gAgPQXrZyH/E2PAq30hDFKh4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759334578; x=1759939378;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mR7FRFOp6wmlPMEQNaFmkailzNE5Cfn80QOSCcb0KCo=;
+        b=ixTBfAe5VrTZpStVAzot6JgLOxrxDRBjTzZiqWaj6UzAiB6ehgccNlHxB7JmCn7YUw
+         Al8J91DQwb/ZEIpHK1avnzTujo1A1C3U1JHZeJpucLtVrDSgorRjgsKqNn6qGrwae7s2
+         NJeP+ETYl3KsY+Zk9jJ0GUdglUQhfa9n8Zvs+7/BHbVR1KD2kZ6iwabIPEYVqKvKCGKh
+         DzXJKcPO9eGYjhMkKbBnw4hkMmhb1la3aFksovMb/zpkurUFpNZV2bZa/nDIxk/aOyvs
+         GwvYbu2/tRlMUJnRibnNIh4uDwBVJgpEETGrQl5SRvbf/T9neqbn0t1YkS8YvDLgXz2A
+         /DqQ==
+X-Gm-Message-State: AOJu0YxTQpubpcZ1xLP7UH3/EtpYvwUGBXmxcjMa6v+UEWOuldKOCHiZ
+	NXPYJPdddzYnp2nMkFngkUMPjc6iJIMtH5avjf90nl31W1dnY+YX6laav4ff8WR8wAE=
+X-Gm-Gg: ASbGncviyIG0IE3vAcoh2psVI3piJ+jp46MJEI1Svtj91X5qwidNnIvd82zVVMY9ZyC
+	1DyKg3RiL+o7J6ipHfK8W23OZ4EI8/aWP1Nq5VKr5nfsY/1AjWM1wookd/C5pafd5r+tn4iW03q
+	P9xAYRe162MdZfzf8PyY5qkm1mL9a+6f4JdylY6Ko1KqnsuJf+ibtDCxbqNBEMNwmW8Bk4D3V4q
+	uFAoiTOYY0KO8Xhia08tJbrU4FEyspVZh9N4DML3GiIJu2M0NJRqNs0un2suk0K5sSvKuX1DIfF
+	pIXHads4VUyKLTnaEVpCzf6QHV5Ba7trHtqaUM5iPzRhvqTLeL+xYRvBzs7Ex8rGAXq5FkBipKS
+	xmeRK7iiF12ClIhtLYsq8PY3yZUrTaxh9lbqxujVMojU3mlLHne+oh+azLpU=
+X-Google-Smtp-Source: AGHT+IHgdySDqIv8Jt6z7mJDygOJ39o7HwA2I1QtCXMXZ8x1/OJj6ga6XsCXSQpUzQE8TPPwtX9h9A==
+X-Received: by 2002:a05:6602:26c7:b0:92a:4e19:197d with SMTP id ca18e2360f4ac-937a70f0ef2mr638019939f.4.1759334575525;
+        Wed, 01 Oct 2025 09:02:55 -0700 (PDT)
+Received: from [192.168.1.14] ([38.175.187.108])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5764f341b2esm2373807173.0.2025.10.01.09.02.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Oct 2025 09:02:54 -0700 (PDT)
+Message-ID: <111e47e1-b03f-4d24-a234-0d64c2792447@linuxfoundation.org>
+Date: Wed, 1 Oct 2025 10:02:53 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Feedback-ID: ::1.ap-northeast-1.TOS0vxEE3Ar6ai29fkp2i/jb+l2iigajCGeLfF7S3sk=:AmazonSES
-X-SES-Outgoing: 2025.10.01-23.251.234.55
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.16 000/143] 6.16.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20250930143831.236060637@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 9/30/25 08:45, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.16.10 release.
+> There are 143 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 Oct 2025 14:37:59 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-On 2025/10/01 16:56, Matthieu Baerts wrote:
-> Hi Kenta,
->=20
-> On 30/09/2025 17:30, Kenta Akagi wrote:
->> Hi,
->>
->> On 2025/09/23 4:29, Greg Kroah-Hartman wrote:
->>> 6.1-stable review =
-patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>> From: "Matthieu Baerts (NGI0)" =
-<matttbe@kernel.org>
->>>
->>> [ Upstream commit 14e22b43df25dbd4301351b88248=
-6ea38892ae4f ]
->>>
->>> IO errors were correctly printed to stderr, and =
-propagated up to the
->>> main loop for the server side, but the returned =
-value was ignored. As a
->>> consequence, the program for the listener side =
-was no longer exiting
->>> with an error code in case of IO issues.
->>>
->>> Because of that, some issues might not have been seen. But very likely,
->>> most issues either had an effect on the client side, or the file
->>> transfer was not the expected one, e.g. the connection got reset before
->>> the end. Still, it is better to fix this.
->>>
->>> The main consequence =
-of this issue is the error that was reported by the
->>> selftests: the received and sent files were different, and the MIB
->>> counters were not printed. Also, when such errors happened during the
->>> 'disconnect' tests, the program tried to continue until the timeout.
->>>
->>> Now when an IO error is detected, the program exits directly with =
-an
->>> error.
->>>
->>> Fixes: 05be5e273c84 ("selftests: mptcp: add =
-disconnect tests")
->>> Cc: stable@vger.kernel.org
->>> Reviewed-by: Mat =
-Martineau <martineau@kernel.org>
->>> Reviewed-by: Geliang Tang =
-<geliang@kernel.org>
->>> Signed-off-by: Matthieu Baerts (NGI0) =
-<matttbe@kernel.org>
->>> Link: https://patch.msgid.link/20250912-net-mptcp-=
-fix-sft-connect-v1-2-d40e77cbbf02@kernel.org
->>> Signed-off-by: Jakub =
-Kicinski <kuba@kernel.org>
->>> Signed-off-by: Sasha Levin <sashal@kernel.=
-org>
->>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>> ---
->>>  tools/testing/selftests/net/mptcp/mptcp_connect.c |    7 =
-++++---
->>>  1 file changed, 4 insertions(+), 3 deletions(-)
->>>
->>> --- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
->>> +++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
->>> @@ -1005,6 +1005,7 @@ int main_loop_s(int listensock)
->>>  	struct pollfd polls;
->>>  	socklen_t salen;
->>>  	int remotesock;
->>> +	int err =3D 0;
->>>  	int fd =3D 0;
->>> =20
->>>  again:
->>> @@ -1036,7 +1037,7 @@ again:
->>> =20
->>>  		SOCK_TEST_TCPULP(remotesock=
-, 0);
->>> =20
->>> -		copyfd_io(fd, remotesock, 1, true);
->>> +		err =3D copyfd_io(fd, remotesock, 1, true, &winfo);
->>
->> The winfo in function main_loop_s was added in
->> commit ca7ae8916043 =
-("selftests: mptcp: mptfo Initiator/Listener")
->> but not present in v6.1.y=
-.
->> As a result, mptcp selftests will fail to compile from v6.1.154.
->> I'm not sure whether I should send a revert patch, a patch that removes =
-&winfo,
->> or ask for the prereq patch to be applied. So, I'm reporting it =
-for now.
->=20
-> Thank you for reporting the error!
->=20
-> I think the best is a patch removing "&winfo": the goal of 14e22b43df25
-> ("selftests: mptcp: connect: catch IO errors on listen side") is to stop
-> in case of errors with copyfd_io(). No need to add commit ca7ae8916043
-> ("selftests: mptcp: mptfo Initiator/Listener") as prereq.
->=20
-> Do you plan to send such patch for v6.1, or do you prefer if I do it?
+Compiled and booted on my test system. No dmesg regressions.
 
-Thank you for checking.
-I'll send PATCH for v6.1.y.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-
-> Cheers,
-> Matt
-> --=20
-> Sponsored by the NGI0 Core fund.
->=20
->=20
-
+thanks,
+-- Shuah
