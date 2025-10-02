@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224D91D554;
-	Thu,  2 Oct 2025 15:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1FA4D8CE;
+	Thu,  2 Oct 2025 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419033; cv=none; b=OxZN4MJvSm9X9aJai99BgOgu0bFwBB41FdLUHDo6MoBY9Jkwa7TSEy8GQniGvMs19i0jy1zuy23Fgm8WZWrJMjO2xm3YJLTAbu4CGM/KzJokemhlxbsPgvujI6uV012f6zg/mmrdqvg9oignxW4jqrrrP3I1RJ9nOJFXFN166Kw=
+	t=1759419034; cv=none; b=rnzDSGsQ1UYxphTd9wstTeUixXzpgXBeLs1P6X4DYoXqvLVfXz396u///WK/cL4XfLkMs+Pe+XYBxyuBoSiPh6xUOZFmsb1otuMoN9zF6lAJNRSonHl6Un0hv0USpmaslL/91uGx2EB5cTIhhlJrh7ksxbi4K3dVAl4I9B3BCr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419033; c=relaxed/simple;
-	bh=upnWHDZ9XEAQMJ+CB6M8ILyapcszeOIyzGUsytDgMPw=;
+	s=arc-20240116; t=1759419034; c=relaxed/simple;
+	bh=z47ApIfRBuF0MsiY1k02WYL31pu6dZDtuwiSQsfCCpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dH1PnLiW9Y9ZZx50Cg2E6vJQ0aOBus6IIgY6/U/fMoIOqgAV4ts0KpRzWVT4Uz/lN5ZWQsdE4OUhboOhMCEDerk74HUJ39wJ1SymOwlHOsRxtJZlCbckXi72OXDS8mSlqI1gAw1VEqHdgNB/NO+B3Z12foVRap2IRzLG8mgTXXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=csfYMDHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g8v/Rp9OirnxLAt+vWcepiUnFbVkmGxY2Qg2QN+bOSojui0JxizZuj7YINkeAlgJfCccM6L/NUq2CPvCC4Ok/VTr8WSmsUoq3EbThctJdMATEnMUjFXOMApWcYlfLD9XhqFLakPI1CTh0xb1ZXzGrNReqWPLxtErELrfNBLhseU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jhcm0UcR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="csfYMDHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B159FC4CEFB;
-	Thu,  2 Oct 2025 15:30:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jhcm0UcR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE56C4CEF4;
+	Thu,  2 Oct 2025 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419032;
-	bh=upnWHDZ9XEAQMJ+CB6M8ILyapcszeOIyzGUsytDgMPw=;
+	s=k20201202; t=1759419033;
+	bh=z47ApIfRBuF0MsiY1k02WYL31pu6dZDtuwiSQsfCCpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csfYMDHCXD0tVBWnddPJ4VHz9z7LTpqAAVGGfSz5F1jMGt3C3r1difwwirwqax4Wy
-	 rvRTXSSHSVoU8ma8Wt4XNPJ4Y56XMghWgk8mTa8yYNLByXw9gS1iOCVBE5lGG1bcww
-	 kVckZCOf7Pldo6J2q0m9MVtONAr4N+dvdiW1DdRx0LLhELfs1B+Poj9+vvDT2HbvmX
-	 qmHfZ05RJCBLzFKgEQDheFf0fCrW8+uj9VXw3wsrxhagXdHknQvQ/DsbSm4CFzzqaF
-	 q5+gBbN8YGXLSZpXqgbzJYDu14/LLHLCT5gDMiFPy/jN1gN3NJngFYUZnJMK3D3OYO
-	 2vwnrMLg4RSzA==
+	b=Jhcm0UcRfFzwoDO4Bj+S7E7/AE9yyHzOzt+bhbWR859LITl6vg8ySv3W1uU0l8SVC
+	 IPDOCgGVkRgk4FSdpFhxHZeUxN3fwzDm9cOeHv4IArkT0vwFWnyF0yXop3s3M0Ds7f
+	 PcARqYobpEQzMmCas1uPnR6v0RL6s2dD8951AS6B6U1OjbPqgSQAPJkhVSpomNIUhg
+	 Km+ehA7q6v9tFOFFoovCnu6RA9EE4a8gBhC8rUJg2Khv9vj2rdEuBKMlaLLTogb4ft
+	 zqSonJcsUe7wg1iSRL1JedqEjHrDp7Mn+MaqJ1b8aqoZmXpPYgumVzl4Tp9wvbj7wm
+	 JUixG4rReKVsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-6.1] powerpc/32: Remove PAGE_KERNEL_TEXT to fix startup failure
-Date: Thu,  2 Oct 2025 11:29:52 -0400
-Message-ID: <20251002153025.2209281-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-5.4] m68k: bitops: Fix find_*_bit() signatures
+Date: Thu,  2 Oct 2025 11:29:53 -0400
+Message-ID: <20251002153025.2209281-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -52,242 +51,239 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 9316512b717f6f25c4649b3fdb0a905b6a318e9f ]
+[ Upstream commit 6d5674090543b89aac0c177d67e5fb32ddc53804 ]
 
-PAGE_KERNEL_TEXT is an old macro that is used to tell kernel whether
-kernel text has to be mapped read-only or read-write based on build
-time options.
+The function signatures of the m68k-optimized implementations of the
+find_{first,next}_{,zero_}bit() helpers do not match the generic
+variants.
 
-But nowadays, with functionnalities like jump_labels, static links,
-etc ... more only less all kernels need to be read-write at some
-point, and some combinations of configs failed to work due to
-innacurate setting of PAGE_KERNEL_TEXT. On the other hand, today
-we have CONFIG_STRICT_KERNEL_RWX which implements a more controlled
-access to kernel modifications.
+Fix this by changing all non-pointer inputs and outputs to "unsigned
+long", and updating a few local variables.
 
-Instead of trying to keep PAGE_KERNEL_TEXT accurate with all
-possible options that may imply kernel text modification, always
-set kernel text read-write at startup and rely on
-CONFIG_STRICT_KERNEL_RWX to provide accurate protection.
-
-Do this by passing PAGE_KERNEL_X to map_kernel_page() in
-__maping_ram_chunk() instead of passing PAGE_KERNEL_TEXT. Once
-this is done, the only remaining user of PAGE_KERNEL_TEXT is
-mmu_mark_initmem_nx() which uses it in a call to setibat().
-As setibat() ignores the RW/RO, we can seamlessly replace
-PAGE_KERNEL_TEXT by PAGE_KERNEL_X here as well and get rid of
-PAGE_KERNEL_TEXT completely.
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/342b4120-911c-4723-82ec-d8c9b03a8aef@mailbox.org/
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8e2d793abf87ae3efb8f6dce10f974ac0eda61b8.1757412205.git.christophe.leroy@csgroup.eu
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202509092305.ncd9mzaZ-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Acked-by: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
+Link: https://patch.msgid.link/de6919554fbb4cd1427155c6bafbac8a9df822c8.1757517135.git.geert@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my assessment:
+Based on my thorough analysis of this commit, here is my assessment:
 
-## **YES** - This commit should be backported to stable kernel trees.
+## Backport Recommendation: **YES**
 
-### **Detailed Analysis:**
+### Extensive Analysis
 
-#### **Critical Bug Being Fixed:**
-The commit fixes a **startup failure** on PowerMac G4 Dual Processor
-systems with certain kernel configurations (specifically
-`CONFIG_STATIC_CALL_SELFTEST=y`). According to the bug report from
-Erhard Furtner, affected systems fail to boot completely, displaying
-only partial OpenFirmware output:
-```
-done
-found display   : /pci@f0000000/ATY,AlteracParent@10/ATY,Alterac_B@1,
-opening...
-```
+#### 1. **Nature of the Bug**
 
-This is a **complete boot failure** - the system cannot start at all.
+This commit fixes an **API signature mismatch** between m68k-specific
+implementations of `find_{first,next}_{,zero_}bit()` and the generic
+variants defined in `include/linux/find.h`.
 
-#### **Root Cause Analysis:**
-The `PAGE_KERNEL_TEXT` macro in **arch/powerpc/include/asm/pgtable.h**
-(lines 23-33) attempted to determine at compile-time whether kernel text
-should be mapped read-only (`PAGE_KERNEL_ROX`) or read-write
-(`PAGE_KERNEL_X`) based on CONFIG options:
+**Specific Issues Fixed:**
+- **Return type mismatch**: m68k returned `int` instead of `unsigned
+  long`
+- **Parameter type mismatch**: m68k used `int`/`unsigned int` for
+  size/offset parameters instead of `unsigned long`
+- **Internal variable types**: Updated `res` from `int` to `unsigned
+  long` and `words` from `unsigned int` to `unsigned long` for
+  consistency
+
+**Code Changes:**
 ```c
-#if defined(CONFIG_KGDB) || defined(CONFIG_XMON) ||
-defined(CONFIG_BDI_SWITCH) || \
-    defined(CONFIG_KPROBES) || defined(CONFIG_DYNAMIC_FTRACE)
-#define PAGE_KERNEL_TEXT    PAGE_KERNEL_X
-#else
-#define PAGE_KERNEL_TEXT    PAGE_KERNEL_ROX
-#endif
+// Before (incorrect):
+static inline int find_first_zero_bit(const unsigned long *vaddr,
+unsigned size)
+{
+    int res = 32;
+    unsigned int words;
+    ...
+}
+
+// After (correct):
+static inline unsigned long find_first_zero_bit(const unsigned long
+*vaddr, unsigned long size)
+{
+    unsigned long res = 32;
+    unsigned long words;
+    ...
+}
 ```
 
-However, this list became **incomplete and inaccurate** with modern
-kernel features:
-- **jump_labels** - requires runtime code patching
-- **static_call** - requires runtime code modification
-- **static keys** - requires runtime patching
-- Other runtime code modification features
+#### 2. **Root Cause and Discovery**
 
-When `PAGE_KERNEL_TEXT` incorrectly resolved to `PAGE_KERNEL_ROX` (read-
-only), code patching operations during boot would fail, causing startup
-failures.
+**Historical Context:**
+- The generic `find_*_bit()` API has used `unsigned long` for return
+  values and size/offset parameters since at least **May 2021** (commit
+  2cc7b6a44ac21d)
+- In **June 2022**, commit 0e862838f2901 unified non-atomic bitops
+  prototypes across architectures, but m68k's `find_*_bit()` functions
+  were missed
+- m68k did update `__fls()` to return `unsigned long` in 2022, but
+  `find_*_bit()` was overlooked
 
-#### **The Fix - Code Changes:**
+**Discovery:**
+- Reported by kernel test robot on **September 9, 2025**
+- Triggered by the `gpio-mpsse` driver (introduced in v6.13) when
+  compiled for m68k with GCC 15.1.0
+- Build warning: `warning: format '%ld' expects argument of type 'long
+  int', but argument 3 has type 'int' [-Wformat=]`
+- The gpio-mpsse driver correctly assumed `find_first_bit()` returns
+  `unsigned long` and used `%ld` format specifier
 
-1. **arch/powerpc/include/asm/pgtable.h**: Removes the entire
-   `PAGE_KERNEL_TEXT` macro definition (12 lines deleted)
+#### 3. **Impact Assessment**
 
-2. **arch/powerpc/mm/pgtable_32.c** (line 107):
-  ```c
-   - ktext = core_kernel_text(v);
-   - map_kernel_page(v, p, ktext ? PAGE_KERNEL_TEXT : PAGE_KERNEL);
-   + map_kernel_page(v, p, ktext ? PAGE_KERNEL_X : PAGE_KERNEL);
-   ```
-   Always maps kernel text as read-write-execute at startup.
+**Build Impact:**
+- Causes `-Wformat` warnings with modern compilers (GCC 15.1.0+)
+- Breaks W=1 builds (extra warnings enabled)
+- Affects m68k-allmodconfig builds
 
-3. **arch/powerpc/mm/book3s32/mmu.c** (lines 207, 218):
-  ```c
-   - setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
-   + setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
-   ```
-   Note: The commit message explicitly states "setibat() ignores the
-RW/RO" bits, so this change is functionally equivalent but maintains
-consistency.
+**Runtime Impact:**
+- **On m68k (32-bit)**: Both `int` and `long` are 32 bits, so no data
+  corruption or truncation at runtime
+- **Type safety**: Violates API contract and breaks type safety
+  guarantees
+- **Future-proofing**: Could cause issues with future compiler
+  optimizations or analysis tools
 
-#### **Security Implications - THOROUGHLY ANALYZED:**
+**Affected Code:**
+- Any code using these functions with format strings (like gpio-mpsse)
+- Any code relying on proper type signatures for static analysis
 
-**This change does NOT weaken kernel security.** Here's why:
+#### 4. **Fix Quality Assessment**
 
-1. **CONFIG_STRICT_KERNEL_RWX provides proper protection**: The kernel
-   text is mapped as RWX initially, but `mmu_mark_rodata_ro()` (in
-   **arch/powerpc/mm/pgtable_32.c:162**, **book3s32/mmu.c:238**) is
-   called later during boot to convert text sections from RWX to RX
-   (read-execute only). This function:
-   - Modifies BAT (Block Address Translation) entries to set `BPP_RX`
-     (read-execute, not write)
-   - Is controlled by `CONFIG_STRICT_KERNEL_RWX` which has been
-     available since ~2017
-   - Is called from `mark_rodata_ro()` in **init/main.c:1443** after
-     kernel initialization
+**Strengths:**
+- **Small and focused**: Only changes type signatures, no logic changes
+- **Self-contained**: No dependencies on other commits
+- **Low risk**: On m68k, `int` and `unsigned long` have identical size
+  and alignment
+- **Well-tested**: The generic API with these signatures has been used
+  successfully across all other architectures since 2021
+- **Maintainer approval**: Acked by Yury Norov (NVIDIA), the maintainer
+  of bitmap/find_bit subsystem
 
-2. **Modern kernel security model**: This approach aligns with how
-   modern kernels handle code patching across architectures:
-   - Early boot: Text is writable to allow necessary code patching (jump
-     labels, static calls, ftrace, etc.)
-   - Post-init: Text is locked down via STRICT_KERNEL_RWX
+**Changes Made:**
+1. Function return types: `int` → `unsigned long` (4 functions)
+2. Size parameters: `unsigned size` → `unsigned long size`
+3. Offset parameters: `int offset` → `unsigned long offset`
+4. Internal variables: `int res` → `unsigned long res`, `unsigned int
+   words` → `unsigned long words`
 
-3. **The window of vulnerability is minimal**: Text is only writable
-   during early boot when code patching is necessary, then immediately
-   locked down.
+#### 5. **Consistency with Kernel Standards**
 
-4. **Extensive code patching infrastructure exists**: The PowerPC
-   architecture has sophisticated code-patching infrastructure
-   (**arch/powerpc/lib/code-patching.c**) with many recent commits
-   ensuring safe text modification.
+This fix brings m68k in line with:
+- The generic API defined in `include/linux/find.h` (lines 385, 179,
+  206, 60)
+- All other architecture-specific implementations
+- The kernel's bitmap subsystem standards established in 2021-2022
 
-#### **Backport Suitability Assessment:**
+#### 6. **Backport Suitability**
 
-**✅ STRONG YES - Excellent backport candidate:**
+**Meets Stable Kernel Criteria:**
+✅ **Fixes important bug**: API signature mismatch causing build warnings
+✅ **Small and contained**: ~20 lines changed, type-only modifications
+✅ **No architectural changes**: Pure signature corrections
+✅ **Minimal regression risk**: Same size types on target architecture
+✅ **No new features**: Only fixes existing API compliance
 
-1. **Fixes critical bug**: Complete boot failure on real hardware
-2. **User-reported**: Erhard Furtner reported the issue with specific
-   hardware (PowerMac G4 DP)
-3. **Tested**: Andrew Donnellan provided `Tested-by` tag
-4. **Small and contained**: 3 files changed, 3 insertions(+), 15
-   deletions(-)
-5. **No regressions**: No follow-up fixes or reverts found
-6. **Simplifies code**: Removes problematic conditional logic
-7. **Architecture-isolated**: Only affects PowerPC 32-bit (book3s32,
-   nohash/8xx)
-8. **Low regression risk**: Change is well-understood and tested
-9. **No dependencies**: `PAGE_KERNEL_X` and `CONFIG_STRICT_KERNEL_RWX`
-   exist in all modern stable kernels
-10. **Already backported**: Commit 27e9cfa74706c shows this was already
-    picked for stable by Sasha Levin with `[ Upstream commit
-    9316512b717f6 ]`
+**Priority by Kernel Version:**
+- **High priority for 6.13+**: Contains gpio-mpsse driver that exposes
+  the bug
+- **Medium priority for 6.6-6.12**: No immediate triggering code, but
+  bug exists
+- **Low priority for <6.6**: Older compilers less likely to catch the
+  issue, but correctness still matters
 
-#### **Stable Kernel Rules Compliance:**
+**Dependencies:**
+None - the fix is self-contained and applies cleanly to any kernel with
+the current m68k bitops.h structure (present since at least 2021).
 
-- ✅ Fixes important bug (boot failure)
-- ✅ Does not introduce new features
-- ✅ Does not make architectural changes (actually simplifies
-  architecture)
-- ✅ Minimal risk of regression
-- ✅ Confined to PowerPC subsystem
-- ✅ Clear, well-documented change
+#### 7. **Potential Risks**
 
-**Recommendation**: This commit is an ideal candidate for stable
-backporting and addresses the exact type of critical bug that stable
-trees are meant to fix.
+**Minimal risks identified:**
+- On m68k, `int` and `unsigned long` are both 32-bit, so binary
+  compatibility is preserved
+- No ABI changes (inline functions)
+- No performance impact
+- No behavior changes
 
- arch/powerpc/include/asm/pgtable.h | 12 ------------
- arch/powerpc/mm/book3s32/mmu.c     |  4 ++--
- arch/powerpc/mm/pgtable_32.c       |  2 +-
- 3 files changed, 3 insertions(+), 15 deletions(-)
+### Conclusion
 
-diff --git a/arch/powerpc/include/asm/pgtable.h b/arch/powerpc/include/asm/pgtable.h
-index 93d77ad5a92fa..d8f944a5a0378 100644
---- a/arch/powerpc/include/asm/pgtable.h
-+++ b/arch/powerpc/include/asm/pgtable.h
-@@ -20,18 +20,6 @@ struct mm_struct;
- #include <asm/nohash/pgtable.h>
- #endif /* !CONFIG_PPC_BOOK3S */
+This commit is an **excellent candidate for backporting** to stable
+kernel trees. It fixes a long-standing API compliance bug with minimal
+risk, improves type safety, resolves build warnings with modern
+compilers, and aligns m68k with kernel-wide standards. The fix is small,
+focused, well-reviewed, and has no dependencies, making it ideal for
+stable tree inclusion.
+
+ arch/m68k/include/asm/bitops.h | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
+
+diff --git a/arch/m68k/include/asm/bitops.h b/arch/m68k/include/asm/bitops.h
+index 14c64a6f12176..50ec92651d5a5 100644
+--- a/arch/m68k/include/asm/bitops.h
++++ b/arch/m68k/include/asm/bitops.h
+@@ -350,12 +350,12 @@ static inline bool xor_unlock_is_negative_byte(unsigned long mask,
+ #include <asm-generic/bitops/ffz.h>
+ #else
  
--/*
-- * Protection used for kernel text. We want the debuggers to be able to
-- * set breakpoints anywhere, so don't write protect the kernel text
-- * on platforms where such control is possible.
-- */
--#if defined(CONFIG_KGDB) || defined(CONFIG_XMON) || defined(CONFIG_BDI_SWITCH) || \
--	defined(CONFIG_KPROBES) || defined(CONFIG_DYNAMIC_FTRACE)
--#define PAGE_KERNEL_TEXT	PAGE_KERNEL_X
--#else
--#define PAGE_KERNEL_TEXT	PAGE_KERNEL_ROX
--#endif
--
- /* Make modules code happy. We don't set RO yet */
- #define PAGE_KERNEL_EXEC	PAGE_KERNEL_X
+-static inline int find_first_zero_bit(const unsigned long *vaddr,
+-				      unsigned size)
++static inline unsigned long find_first_zero_bit(const unsigned long *vaddr,
++						unsigned long size)
+ {
+ 	const unsigned long *p = vaddr;
+-	int res = 32;
+-	unsigned int words;
++	unsigned long res = 32;
++	unsigned long words;
+ 	unsigned long num;
  
-diff --git a/arch/powerpc/mm/book3s32/mmu.c b/arch/powerpc/mm/book3s32/mmu.c
-index be9c4106e22f0..c42ecdf94e48c 100644
---- a/arch/powerpc/mm/book3s32/mmu.c
-+++ b/arch/powerpc/mm/book3s32/mmu.c
-@@ -204,7 +204,7 @@ int mmu_mark_initmem_nx(void)
+ 	if (!size)
+@@ -376,8 +376,9 @@ static inline int find_first_zero_bit(const unsigned long *vaddr,
+ }
+ #define find_first_zero_bit find_first_zero_bit
  
- 	for (i = 0; i < nb - 1 && base < top;) {
- 		size = bat_block_size(base, top);
--		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
-+		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
- 		base += size;
- 	}
- 	if (base < top) {
-@@ -215,7 +215,7 @@ int mmu_mark_initmem_nx(void)
- 				pr_warn("Some RW data is getting mapped X. "
- 					"Adjust CONFIG_DATA_SHIFT to avoid that.\n");
- 		}
--		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
-+		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
- 		base += size;
- 	}
- 	for (; i < nb; i++)
-diff --git a/arch/powerpc/mm/pgtable_32.c b/arch/powerpc/mm/pgtable_32.c
-index 15276068f657d..0c9ef705803e9 100644
---- a/arch/powerpc/mm/pgtable_32.c
-+++ b/arch/powerpc/mm/pgtable_32.c
-@@ -104,7 +104,7 @@ static void __init __mapin_ram_chunk(unsigned long offset, unsigned long top)
- 	p = memstart_addr + s;
- 	for (; s < top; s += PAGE_SIZE) {
- 		ktext = core_kernel_text(v);
--		map_kernel_page(v, p, ktext ? PAGE_KERNEL_TEXT : PAGE_KERNEL);
-+		map_kernel_page(v, p, ktext ? PAGE_KERNEL_X : PAGE_KERNEL);
- 		v += PAGE_SIZE;
- 		p += PAGE_SIZE;
- 	}
+-static inline int find_next_zero_bit(const unsigned long *vaddr, int size,
+-				     int offset)
++static inline unsigned long find_next_zero_bit(const unsigned long *vaddr,
++					       unsigned long size,
++					       unsigned long offset)
+ {
+ 	const unsigned long *p = vaddr + (offset >> 5);
+ 	int bit = offset & 31UL, res;
+@@ -406,11 +407,12 @@ static inline int find_next_zero_bit(const unsigned long *vaddr, int size,
+ }
+ #define find_next_zero_bit find_next_zero_bit
+ 
+-static inline int find_first_bit(const unsigned long *vaddr, unsigned size)
++static inline unsigned long find_first_bit(const unsigned long *vaddr,
++					   unsigned long size)
+ {
+ 	const unsigned long *p = vaddr;
+-	int res = 32;
+-	unsigned int words;
++	unsigned long res = 32;
++	unsigned long words;
+ 	unsigned long num;
+ 
+ 	if (!size)
+@@ -431,8 +433,9 @@ static inline int find_first_bit(const unsigned long *vaddr, unsigned size)
+ }
+ #define find_first_bit find_first_bit
+ 
+-static inline int find_next_bit(const unsigned long *vaddr, int size,
+-				int offset)
++static inline unsigned long find_next_bit(const unsigned long *vaddr,
++					  unsigned long size,
++					  unsigned long offset)
+ {
+ 	const unsigned long *p = vaddr + (offset >> 5);
+ 	int bit = offset & 31UL, res;
 -- 
 2.51.0
 
