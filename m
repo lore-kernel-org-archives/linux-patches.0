@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DB821D3E6;
-	Thu,  2 Oct 2025 15:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E02421D3E6;
+	Thu,  2 Oct 2025 15:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419062; cv=none; b=t1U8eS0p3zjxz3I272YRigADwENLD7fGPzvZTZAwbpY7Uds1eLEWuim8M6cfpKwLr3r6hLkfxGbtv/1PHWcnmathO4bsHtKpRyMcym7yFYyovQCPxcTKdtrHt0AbreJ/J6u5lNthctGOvGl53/gissgBGFa3d13maMBxBwTnI9E=
+	t=1759419063; cv=none; b=nstaT/8zITye0z0ywQPUPysEtVvWYrFs61X9MqLBGW83d9NViEwA3qIcye73hKpEwDoejXeAVX6UX8S8h6VkPG6KZBFAUEM4UlFmv3URagLW/hmFw1s1Z1OP+WO25ExE3swrYtZB9iRk465SuxwrRi+Ij/sOOaS4D+XcfE2FXE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419062; c=relaxed/simple;
-	bh=jiHHeTdxwr2NtyZ8m2KBDe2yqAXM7KaYp/7I4+o8Xp8=;
+	s=arc-20240116; t=1759419063; c=relaxed/simple;
+	bh=0vEpvlpGMilWtBF8Fq5EQjm4ceeFw+nZ2cMdX+YvsFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BP8aC0T2qaAllW+IeWc1x8ms5SYCKV0ecWQ2QmxLQn/OuswwknrofuUmUOavcR9h7BgdcsHffHttvyb1PYweV03T2/7Ehci2iK512itIn/wZQspjzYhH4Qi4RawkEAqRRiH5lIp8Y/wB/AUCqZPWW+qwWMgmWfkDh98Fk6H0Ruo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQBpLVhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fT2TrpgEVbaKBJy8+vuLM6iiZl/53+plFh2/7FZUQQvPOw1tx4Wg6aYMkp/K901Iidj/S8l9MgHWYzpMhMBfqLa9mdwxzTCCVrjkUg998CwFuUQlt/NrIS6w2E6mWrqW/02Daa+dxE3tyPEmHYXP0H8wYNgJge0ndp1uY5hlJDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aMmGt+/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQBpLVhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3190C4CEF4;
-	Thu,  2 Oct 2025 15:31:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aMmGt+/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F9DC4CEFD;
+	Thu,  2 Oct 2025 15:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419061;
-	bh=jiHHeTdxwr2NtyZ8m2KBDe2yqAXM7KaYp/7I4+o8Xp8=;
+	s=k20201202; t=1759419063;
+	bh=0vEpvlpGMilWtBF8Fq5EQjm4ceeFw+nZ2cMdX+YvsFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQBpLVhDiEqSk4lPguy9G1poualkJ80DwG6QvO/5ZUHYcJaKCthw5mQrK2mcXDVpA
-	 nqsvS/oKkRldXAXO8kvsjCcgk/eCUUZP0xNb36TDzcLTQiinAjT0B1E8YD4wyADbe8
-	 MFMrxajTcC5PUUZMoS7r29Em3iZaFGxGKKGMc93kYz5qWyjDs/MwPYDniQgYRkY7An
-	 3gEurfyhWGYg1eB5f8B687xXPnaW9uGtkqhgNyscU4mEAleppi9RnLypG9Y+GgArUb
-	 M3rHP9h6tNWnKgMOKIazpYYQUVmTonz+60FBHnTB47yjXlSI9Ze0TK4+yUZ6Rii/5/
-	 Dbo3deDBQMLUA==
+	b=aMmGt+/JIp7lrTcwst0AZJIEXmFvcLQhvadEgLTPQU/knuCft0X4Nc5IdlQQdSEHR
+	 6XlHnNzprFpHSxbH48P2kgu6QBQmDkRLRrjH0ihYgKVl7QKJMvmxa7zGMSk7EU6x7H
+	 jw3dWrlYlon8G84vuNuT3ZCVtXledWl13yUf6x6XqWBVIOEbJMNQ52nI+rCG7hMSCw
+	 dVyy8DIpm10fA4VwOhrvmDrOCwCUlCLu/kB/pvJWwZ5vBVe/V2JjAVHu3FA3llop1f
+	 pET8xGq7eDnwO1LFzcylF8+conXF9e5YpwyPfiZKfpeiIidjJ6MaYRJqTwCC4Exnyr
+	 p+c0yuis7+LTg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Harald Freudenberger <freude@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+Cc: Yicong Yang <yangyicong@hisilicon.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Yushan Wang <wangyushan12@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-s390@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] s390/pkey: Forward keygenflags to ep11_unwrapkey
-Date: Thu,  2 Oct 2025 11:30:13 -0400
-Message-ID: <20251002153025.2209281-26-sashal@kernel.org>
+	zhangshaokun@hisilicon.com
+Subject: [PATCH AUTOSEL 6.17-6.6] drivers/perf: hisi: Relax the event ID check in the framework
+Date: Thu,  2 Oct 2025 11:30:14 -0400
+Message-ID: <20251002153025.2209281-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -52,204 +53,173 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 11aa54ba4cfa5390ea47c9a1fc62502abce1f6b9 ]
+[ Upstream commit 43de0ac332b815cf56dbdce63687de9acfd35d49 ]
 
-The pkey ioctl PKEY_CLR2SECK2 describes in the pkey.h header file
-the parameter 'keygenflags' which is forwarded to the handler
-functions which actually deal with the clear key to secure key
-operation. The ep11 handler module function ep11_clr2keyblob()
-function receives this parameter but does not forward it to the
-underlying function ep11_unwrapkey() on invocation. So in the end
-the user of this ioctl could not forward additional key generation
-flags to the ep11 implementation and thus was unable to modify the
-key generation process in any way. So now call ep11_unwrapkey()
-with the real keygenflags instead of 0 and thus the user of this
-ioctl can for example via keygenflags provide valid combinations
-of XCP_BLOB_* flags.
+Event ID is only using the attr::config bit [7, 0] but we check the
+event range using the whole 64bit field. It blocks the usage of the
+rest field of attr::config. Relax the check by only using the
+bit [7, 0].
 
-Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Yushan Wang <wangyushan12@huawei.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: **YES**
+## Backport Analysis: HiSilicon PMU Event ID Check Fix
 
-## EXTENSIVE ANALYSIS
+**Backport Recommendation: YES**
 
-### Bug Description and Impact
+### Detailed Analysis
 
-This commit fixes a **functional bug** in the s390 pkey subsystem where
-the `keygenflags` parameter provided by users through the
-`PKEY_CLR2SECK2` ioctl is ignored and not forwarded to the underlying
-EP11 implementation.
+#### Bug Being Fixed
 
-**Specific Code Change Analysis**
-(drivers/s390/crypto/zcrypt_ep11misc.c:1406-1408):
+The commit fixes an overly restrictive validation bug in
+`hisi_uncore_pmu_event_init()` at
+**drivers/perf/hisilicon/hisi_uncore_pmu.c:237**.
 
-The bug is at line 1408 in the `ep11_clr2keyblob()` function, where
-`ep11_unwrapkey()` is called. The problematic code was:
+**Original code:**
 ```c
-rc = ep11_unwrapkey(card, domain, kek, keklen,
-                    encbuf, encbuflen, 0, def_iv,
-                    keybitsize, 0, keybuf, keybufsize, keytype, xflags);
-                             ^^
-                    Hardcoded 0 instead of keygenflags parameter
+if (event->attr.config > hisi_pmu->check_event)
+    return -EINVAL;
 ```
 
-The fix changes this to:
+**Fixed code:**
 ```c
-rc = ep11_unwrapkey(card, domain, kek, keklen,
-                    encbuf, encbuflen, 0, def_iv,
-                    keybitsize, keygenflags,
-                    keybuf, keybufsize,
-                    keytype, xflags);
+if ((event->attr.config & HISI_EVENTID_MASK) > hisi_pmu->check_event)
+    return -EINVAL;
 ```
 
-### User Impact Analysis
+Where `HISI_EVENTID_MASK = GENMASK(7, 0) = 0xFF`.
 
-**What Users Cannot Do (Before Fix):**
-1. **Cannot customize EP11 AES key attributes** - Users calling
-   PKEY_CLR2SECK2 ioctl cannot specify custom XCP_BLOB_* flags (e.g.,
-   XCP_BLOB_ENCRYPT, XCP_BLOB_DECRYPT, XCP_BLOB_PROTKEY_EXTRACTABLE
-   combinations)
-2. **Stuck with default attributes** - All generated keys use the
-   hardcoded defaults (0x00200c00 = XCP_BLOB_ENCRYPT | XCP_BLOB_DECRYPT
-   | XCP_BLOB_PROTKEY_EXTRACTABLE)
-3. **API version selection may be suboptimal** - The EP11 API version
-   selection in `_ep11_unwrapkey()` (zcrypt_ep11misc.c:1100-1101)
-   depends on keygenflags, and passing 0 always selects EP11_API_V4
+#### Root Cause Analysis
 
-**What the Fix Enables:**
-- Users can now properly control key generation attributes via the
-  documented PKEY_CLR2SECK2 ioctl interface
-- Correct API version selection based on user-provided flags
-- Full functionality as documented in
-  arch/s390/include/uapi/asm/pkey.h:290-292
+1. **Event ID Layout:** HiSilicon uncore PMUs use only bits [7:0] of
+   `attr.config` for the event ID. This is evident from format
+   attributes across all drivers:
+   - `hisi_uncore_l3c_pmu.c:386`: `"config:0-7"`
+   - `hisi_uncore_hha_pmu.c:336`: `"config:0-7"`
+   - `hisi_uncore_pa_pmu.c:304`: `"config:0-7"`
+   - `hisi_uncore_sllc_pmu.c:368`: `"config:0-7"`
+   - `hisi_uncore_uc_pmu.c:402`: `"config:0-7"`
+   - `hisi_uncore_ddrc_pmu.c:272`: `"config:0-4"` (V1) and
+     `"config:0-7"` (V2)
+   - `hisi_uncore_cpa_pmu.c:205`: `"config:0-15"` (exception)
 
-### Historical Context
+2. **Incorrect Validation:** The validation was comparing the entire
+   64-bit `attr.config` value against `check_event` (typically 0xFF for
+   8-bit event IDs), which would incorrectly reject valid event
+   configurations if any upper bits were set.
 
-**Bug Introduction:** Commit 55d0a513a0e202 (December 6, 2019) -
-"s390/pkey/zcrypt: Support EP11 AES secure keys"
-- This was a major feature addition (1007 insertions) that added EP11
-  AES secure key support
-- The bug existed from day one - the keygenflags parameter was received
-  but never forwarded
-- **Bug age: Nearly 6 years** (2019-12-06 to 2025-08-13)
-- **Affected versions: v5.10 onwards** (all stable kernels from v5.10 to
-  v6.17+)
+3. **Blocking Future Extensions:** The commit message explicitly states:
+   "It blocks the usage of the rest field of attr::config." This
+   indicates that upper bits of `attr.config` may be needed for
+   additional configuration parameters beyond the base event ID.
 
-**Similar Bug Pattern:** Commit deffa48fb014f (August 29, 2019) fixed an
-identical issue for CCA cipher keys where keygenflags were not handled
-correctly, showing this is a recurring pattern in the s390 crypto
-subsystem.
+#### Scope of Impact
 
-### Backport Suitability Assessment
+This fix affects all HiSilicon uncore PMU drivers that use the shared
+`hisi_pmu_init()` function, which sets `pmu->event_init =
+hisi_uncore_pmu_event_init` (at **hisi_uncore_pmu.c:610**):
 
-**✓ Fixes Important User-Visible Bug:**
-- YES - Breaks documented ioctl interface functionality
-- Users cannot access advertised EP11 key generation customization
-  features
+- L3C PMU (L3 Cache)
+- HHA PMU (Hydra Home Agent)
+- DDRC PMU (DDR Controller)
+- PA PMU (Protocol Adapter)
+- SLLC PMU (Super L3 Cache)
+- UC PMU (Uncore)
+- CPA PMU (Coherent Protocol Agent)
 
-**✓ Small and Contained Change:**
-- YES - Only **1 functional line changed** (passing keygenflags instead
-  of 0)
-- Additional changes are just code reformatting (line breaks for
-  readability)
-- Change is in drivers/s390/crypto/zcrypt_ep11misc.c:1408 only
+#### Code Changes Analysis
 
-**✓ Minimal Regression Risk:**
-- **VERY LOW RISK** - The change makes the code do what it was supposed
-  to do from the beginning
-- Forwards an existing parameter that was already being received but
-  ignored
-- No new code paths introduced
-- No changes to data structures or API signatures
-- Default behavior preserved (when keygenflags=0, defaults are still
-  used via ternary in _ep11_unwrapkey)
+**File 1: drivers/perf/hisilicon/hisi_uncore_pmu.c**
+- **Line 237:** Mask `attr.config` with `HISI_EVENTID_MASK` before
+  comparison
+- **Impact:** Only validates event ID bits [7:0], allowing upper bits
+  for other purposes
 
-**✓ No Architectural Changes:**
-- YES - Pure parameter forwarding fix
-- No changes to subsystem architecture
+**File 2: drivers/perf/hisilicon/hisi_uncore_pmu.h**
+- **Line 46:** Define `HISI_EVENTID_MASK` as `GENMASK(7, 0)`
+- **Line 47:** Update `HISI_GET_EVENTID` macro to use the new mask
+  (consistency improvement)
+- **Impact:** Provides centralized, self-documenting definition of event
+  ID field
 
-**✓ Confined to Subsystem:**
-- YES - Only affects s390 pkey/zcrypt EP11 crypto subsystem
-- No cross-subsystem dependencies
+#### Backport Suitability Assessment
 
-**✗ Explicit Stable Tree Marking:**
-- NO "Cc: stable@vger.kernel.org" tag present
-- NO "Fixes:" tag present
-- However, this is likely an oversight given the clear bug fix nature
+**Positive Factors:**
+1. ✅ **Fixes a clear bug:** Incorrect validation logic blocking
+   legitimate use cases
+2. ✅ **Small and contained:** Only 5 lines changed across 2 files
+3. ✅ **Low regression risk:** The change makes validation less strict,
+   not more strict
+4. ✅ **Well-reviewed:** Acked by Jonathan Cameron (prominent kernel
+   maintainer)
+5. ✅ **No dependencies:** Self-contained fix with no related commits
+6. ✅ **Driver-level fix:** Affects only HiSilicon PMU drivers, not core
+   kernel
+7. ✅ **Minimal side effects:** Only affects event validation path during
+   initialization
 
-### Security Implications
+**Risk Assessment:**
+- **Regression risk:** Very low - relaxing validation cannot break
+  working configurations
+- **Functional risk:** None - the fix enables correct behavior
+- **Architectural risk:** None - no architectural changes
+- **Dependency risk:** None - no follow-up fixes or related patches
+  required
 
-**Low Security Risk, Potential Security Enhancement:**
-1. **No new vulnerabilities introduced** - The fix enables intended
-   functionality
-2. **May improve security posture** - Users can now properly configure
-   key attributes like encryption/decryption capabilities and
-   extractability
-3. **Restores documented interface contract** - Users get the security
-   controls they were promised in the API
+**Follows Stable Tree Rules:**
+- ✅ Fixes an important bug affecting users of HiSilicon hardware
+- ✅ Small, obvious, and correct change
+- ✅ No new features introduced
+- ✅ Minimal risk of regression
+- ✅ Confined to specific driver subsystem
 
-### Dependencies and Prerequisites
-
-**No prerequisites identified:**
-- Function signature of `ep11_clr2keyblob()` has included keygenflags
-  parameter since v5.10
-- Function signature of `ep11_unwrapkey()` has included keygenflags
-  parameter since v5.10
-- No ABI changes
-- No new kernel features required
-- Clean application to stable trees expected
-
-### Related Work
-
-The fix commit (11aa54ba4cfa5390ea47c9a1fc62502abce1f6b9) was authored
-on 2025-08-13 and committed to mainline on 2025-08-28, making it very
-recent. It has already been backported to at least one stable tree
-(commit 6b78f84e140b4a3e with "Upstream commit" marker).
-
-### Recommendation Summary
+### Conclusion
 
 This commit is an **excellent candidate for backporting** to stable
-kernel trees because:
+kernel trees. It fixes a genuine validation bug that prevents legitimate
+usage of the perf event configuration interface on HiSilicon hardware.
+The fix is minimal, well-contained, properly reviewed, and carries
+virtually no regression risk.
 
-1. ✅ Fixes a clear, long-standing functional bug (6 years)
-2. ✅ Extremely small, surgical change (1 line functional change)
-3. ✅ Affects documented user-facing API (PKEY_CLR2SECK2 ioctl)
-4. ✅ Zero architectural impact
-5. ✅ Very low regression risk
-6. ✅ Restores intended functionality without breaking existing users
-7. ✅ Confined to s390 crypto subsystem
-8. ✅ Follows stable tree best practices (important bugfix, minimal risk)
+ drivers/perf/hisilicon/hisi_uncore_pmu.c | 2 +-
+ drivers/perf/hisilicon/hisi_uncore_pmu.h | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-**Backport Target:** All stable trees containing the original bug
-(v5.10+, specifically kernels containing commit 55d0a513a0e202)
-
- drivers/s390/crypto/zcrypt_ep11misc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
-index 3bf09a89a0894..e92e2fd8ce5da 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.c
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.c
-@@ -1405,7 +1405,9 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	/* Step 3: import the encrypted key value as a new key */
- 	rc = ep11_unwrapkey(card, domain, kek, keklen,
- 			    encbuf, encbuflen, 0, def_iv,
--			    keybitsize, 0, keybuf, keybufsize, keytype, xflags);
-+			    keybitsize, keygenflags,
-+			    keybuf, keybufsize,
-+			    keytype, xflags);
- 	if (rc) {
- 		ZCRYPT_DBF_ERR("%s importing key value as new key failed, rc=%d\n",
- 			       __func__, rc);
+diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+index a449651f79c9f..6594d64b03a9e 100644
+--- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
++++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+@@ -234,7 +234,7 @@ int hisi_uncore_pmu_event_init(struct perf_event *event)
+ 		return -EINVAL;
+ 
+ 	hisi_pmu = to_hisi_pmu(event->pmu);
+-	if (event->attr.config > hisi_pmu->check_event)
++	if ((event->attr.config & HISI_EVENTID_MASK) > hisi_pmu->check_event)
+ 		return -EINVAL;
+ 
+ 	if (hisi_pmu->on_cpu == -1)
+diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.h b/drivers/perf/hisilicon/hisi_uncore_pmu.h
+index 777675838b808..e69660f72be67 100644
+--- a/drivers/perf/hisilicon/hisi_uncore_pmu.h
++++ b/drivers/perf/hisilicon/hisi_uncore_pmu.h
+@@ -43,7 +43,8 @@
+ 		return FIELD_GET(GENMASK_ULL(hi, lo), event->attr.config);  \
+ 	}
+ 
+-#define HISI_GET_EVENTID(ev) (ev->hw.config_base & 0xff)
++#define HISI_EVENTID_MASK		GENMASK(7, 0)
++#define HISI_GET_EVENTID(ev)		((ev)->hw.config_base & HISI_EVENTID_MASK)
+ 
+ #define HISI_PMU_EVTYPE_BITS		8
+ #define HISI_PMU_EVTYPE_SHIFT(idx)	((idx) % 4 * HISI_PMU_EVTYPE_BITS)
 -- 
 2.51.0
 
