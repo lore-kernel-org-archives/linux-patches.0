@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB27222564;
-	Thu,  2 Oct 2025 15:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA1C220F5E;
+	Thu,  2 Oct 2025 15:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419045; cv=none; b=F88ETpbI+sTCBNc4pX0u3/QUA3HNRd3CaCH3FI11BWWIFf1kikkq1Qtr1ed0ImJYr/LF57bGd9zBnXrPrAIklO6JbdnJ3eCjEhbNEIrxneJP34bZ/8i1H39r3Dq6X6YXrCSKuH2zaWSr6UcfvjfIYk2LLdHUkCaSd48OeWHD2ks=
+	t=1759419046; cv=none; b=RXijmeHEEaJ+kHR34f75glr3xA6Clsxp8Xk7kYQhgMTRzknshVYCOEq+DoTCEaAc5BF6HMygFJ4UG1Rd60ZW2MU4le0lAqKF04Z0VfD0t1Kz15hRVkKNKyJ8mWfFMozGs7Ord7K+4qvjfobZdINtfbXaewQITrVJTjmlbltyrdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419045; c=relaxed/simple;
-	bh=VKXnQTNgHa3ZVm8ErfBbAUDvg6pqdD8f3rNGnhKo/ME=;
+	s=arc-20240116; t=1759419046; c=relaxed/simple;
+	bh=zUtUl1t4pHD/8yBjREbIJj/2yCuo8FpDSRoSUTF2dO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ub7MsCkKUv1EIi1od8ietz1LRD6NUYYg4dFpZgb39xFu9sXb5VCV/oUh4BJy35n1kAlSR1qXeBFft+vNK5SED+xv8a/yPoakG5LiL/sHp3Xb3dvupKbF90cLi2D56f5EkOnsPTRzPVbk1D7MMbl/3VOLD36bs3vCVqnpviwUtL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GcPxW1p/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MKL72XF1Dv7LPvMc/YPq5DG8h1ZWpDtGG+gsuiLsKHhLD5kMN2N4xa6uFxohTUEobnI0I7hx3NA1gc7dINamlFvrsQAYrZskB3tuI4FxAz08Wt3Fu8xUpZJrhu0OYXUEfW8RblCDSwZUsXGjeriirVB9mp8ZVWKf9ZG67+tPcyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqqVyyER; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GcPxW1p/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD67C4CEF4;
-	Thu,  2 Oct 2025 15:30:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqqVyyER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B042C4CEFB;
+	Thu,  2 Oct 2025 15:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419044;
-	bh=VKXnQTNgHa3ZVm8ErfBbAUDvg6pqdD8f3rNGnhKo/ME=;
+	s=k20201202; t=1759419045;
+	bh=zUtUl1t4pHD/8yBjREbIJj/2yCuo8FpDSRoSUTF2dO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GcPxW1p/vsa024MDhvQU3v0agg7dMo35hZTuqqha69epR/C/s9kAiz2duF9OGEkK3
-	 4hymXGFk7n64JSlYADgTbBSchih+mM9xjqmmd82p/g/h71AV5uuv3UwQM5SFJbihBp
-	 Hs5qByat6zK/gMXK/pn81rdcv8FFUGzfeEUljf1JYIPAcL7CdMq5n2zuJCrSAkKynV
-	 utkP1miGEug/GCsG887q4ilY5n/QvgGXHiEwVLlX415pNHkzZRYGDfgQmWqqa8f2Kc
-	 VXY3BgOaOuj8XPJUasveMgZ5nBKrxtLlAc9EjlMShRvnIzynNjqUsmzoOH8BQWGlFB
-	 LKsiZeC70HqRQ==
+	b=UqqVyyERrymvnw66q8+6nI+8nzCY2JfNl/FbR90Sj7dQFKs/YbEMgCpvOQloMdGEg
+	 QZcYXZZbZFhzVUVUhtF0yA0iA8stRjo7II/OLU/KSeoALPS0JJ3lSa8z7AiMpS9hqJ
+	 AG03HjZPM8Ec02J6lWO2yUBQ+jeXrpV2N6kbexlv3MRZz1sQiIVLLIEJxmr04UDYAo
+	 rnPu8+51Uf655BxngNkYjzGn7XT1539HCf1Sy2ZKoK2tQgjbW0t+RmfMqYzn73nS3e
+	 qeSSMOHxc+cyux69BDA9e5qvhGVqA6V3vgoprAIRdDSvfIKvPHBS/0braJj+49i0Hs
+	 ZkLdYfkNgla/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andreas Gruenbacher <agruenba@redhat.com>,
-	Andrew Price <anprice@redhat.com>,
+Cc: Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rpeterso@redhat.com,
+	ccaulfie@redhat.com,
 	cluster-devel@redhat.com
-Subject: [PATCH AUTOSEL 6.17-6.16] gfs2: Fix LM_FLAG_TRY* logic in add_to_queue
-Date: Thu,  2 Oct 2025 11:30:01 -0400
-Message-ID: <20251002153025.2209281-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.16] dlm: move to rinfo for all middle conversion cases
+Date: Thu,  2 Oct 2025 11:30:02 -0400
+Message-ID: <20251002153025.2209281-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -52,288 +52,257 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 0c23e24164d83086e75581b0cf930f4e161636d6 ]
+[ Upstream commit a8abcff174f7f9ce4587c6451b1a2450d01f52c9 ]
 
-The logic in add_to_queue() for determining whether a LM_FLAG_TRY or
-LM_FLAG_TRY_1CB holder should be queued does not make any sense: we are
-interested in wether or not the new operation will block behind an
-existing or future holder in the queue, but the current code checks for
-ongoing locking or ->go_inval() operations, which has little to do with
-that.
+Since commit f74dacb4c8116 ("dlm: fix recovery of middle conversions")
+we introduced additional debugging information if we hit the middle
+conversion by using log_limit(). The DLM log_limit() functionality
+requires a DLM debug option being enabled. As this case is so rarely and
+excempt any potential introduced new issue with recovery we switching it
+to log_rinfo() ad this is ratelimited under normal DLM loglevel.
 
-Replace that code with something more sensible, remove the incorrect
-add_to_queue() function annotations, remove the similarly misguided
-do_error(gl, 0) call in do_xmote(), and add a missing comment to the
-same call in do_promote().
-
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Reviewed-by: Andrew Price <anprice@redhat.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis Complete
+## Backport Analysis: dlm: move to rinfo for all middle conversion cases
 
 **Backport Status: YES**
 
-### Extensive Analysis and Reasoning:
+---
 
-#### 1. **Nature of the Bug**
+## Comprehensive Analysis
 
-This commit fixes fundamentally flawed logic in the GFS2 glock locking
-subsystem's `add_to_queue()` function. The bug has existed since 2019
-(commit d99724c3c36ae).
+### Change Summary
+This commit changes logging calls from `log_limit()` to `log_rinfo()` in
+two locations within the DLM (Distributed Lock Manager) subsystem:
+1. **fs/dlm/lock.c:5579** - in `receive_rcom_lock_args()` function
+2. **fs/dlm/recover.c:845** - in `recover_conversion()` function
 
-**The Problem:**
-The old code checks for:
-- `GLF_LOCK` flag (indicating an ongoing lock operation is in progress
-  at fs/gfs2/glock.c:1496-1500)
-- `GLF_INVALIDATE_IN_PROGRESS` flag (indicating go_sync/go_inval
-  operations are running at fs/gfs2/glock.c:1502-1503)
+Both changes affect logging for "middle conversion" cases - rare but
+critical scenarios where locks convert between PR (Protected Read) and
+CW (Concurrent Write) modes during cluster recovery.
 
-**What it should check:**
-Whether a LM_FLAG_TRY or LM_FLAG_TRY_1CB lock request will actually
-block behind existing or future holders in the queue.
+### Code Changes Analysis
 
-The commit message explicitly states: "the current code checks for
-ongoing locking or ->go_inval() operations, which has little to do with
-that" - meaning the logic is checking for the wrong conditions entirely.
+**Logging Infrastructure Differences** (from
+fs/dlm/dlm_internal.h:65-87):
+- **log_limit()**: Only logs when `dlm_config.ci_log_debug` is enabled,
+  at DEBUG level with rate limiting. Requires explicit debug mode.
+- **log_rinfo()**: Logs at INFO or DEBUG level depending on
+  configuration (`ci_log_info` OR `ci_log_debug`). Visible under normal
+  DLM loglevel.
 
-#### 2. **Code Changes Analysis**
-
-**In `add_to_queue()` (lines 1442-1540):**
-- **OLD:** Complex, error-prone logic with two separate
-  `list_for_each_entry` loops checking `try_futile`, `GLF_LOCK`, and
-  `GLF_INVALIDATE_IN_PROGRESS`
-- **NEW:** Clean extraction into `gfs2_should_queue_trylock()` helper
-  that:
-  1. Checks if current holder exists and `may_grant()` would fail →
-     don't queue
-  2. Checks if any non-try lock exists in the queue → don't queue
-  3. Otherwise → queue the try lock
-
-This is semantically correct: a try lock should fail immediately if it
-would block behind a non-try lock.
-
-**In `do_xmote()` (line 716):**
-- Removes the `do_error(gl, 0)` call that was failing try locks when
-  GLF_INVALIDATE_IN_PROGRESS was set
-- The commit message calls this "similarly misguided"
-
-**In `do_promote()` (line 502):**
-- Just adds a clarifying comment `/* Fail queued try locks */` to
-  document why `do_error(gl, 0)` is called there
-
-**Function annotation removal:**
-- Removes incorrect `__releases/__acquires` annotations from
-  `add_to_queue()` - the new logic doesn't drop/reacquire the lock
-
-#### 3. **User Impact and Severity**
-
-This bug affects GFS2 filesystem users, particularly in clustered
-storage environments where GFS2 is commonly deployed. The incorrect
-logic can cause:
-
-1. **Incorrect lock failures:** Try locks fail when they shouldn't,
-   causing operations to unnecessarily retry or fail
-2. **Incorrect lock queueing:** Try locks get queued when they should
-   fail immediately, leading to unexpected blocking behavior
-3. **Deadlock potential:** Wrong lock ordering due to incorrect try-lock
-   handling
-4. **Performance degradation:** Unnecessary lock failures and retries
-
-**Historical Context:**
-- The flawed logic was introduced in 2019 (d99724c3c36ae)
-- In 2022, commit c412a97cf6c52 added more TRY lock usage in
-  `gfs2_inode_lookup()` for UNLINKED inodes, making this bug more
-  frequently triggered
-- The bug has existed for ~6 years before being fixed
-
-#### 4. **Follow-up Commits**
-
-Commit bddb53b776fb7 ("gfs2: Get rid of GLF_INVALIDATE_IN_PROGRESS")
-immediately follows this fix and states:
-
-> "it was originally used to indicate to add_to_queue() that the
-->go_sync() and ->go_invalid() operations were in progress, but as we
-have established in commit 'gfs2: Fix LM_FLAG_TRY* logic in
-add_to_queue', add_to_queue() has no need to know."
-
-This confirms that:
-1. The GLF_INVALIDATE_IN_PROGRESS check in add_to_queue() was wrong
-2. The original 2019 commit d99724c3c36ae was based on flawed analysis
-3. The serialization actually happens via GLF_LOCK, not
-   GLF_INVALIDATE_IN_PROGRESS
-
-**Recommendation:** The follow-up commit bddb53b776fb7 should also be
-backported to complete the cleanup.
-
-#### 5. **Regression Risk Assessment**
-
-**LOW RISK:**
-- ✅ No reverts found in git history
-- ✅ No "Fixes:" tags pointing to this commit
-- ✅ Changes confined to GFS2 filesystem subsystem
-- ✅ Code is cleaner and more understandable after the fix
-- ✅ Logic is semantically correct based on lock queue theory
-- ✅ Authored by GFS2 maintainer Andreas Gruenbacher
-- ✅ Reviewed by Andrew Price (GFS2 co-maintainer)
-
-**The new logic is simpler and more correct:**
+**Specific Change 1 - fs/dlm/lock.c:5579**:
 ```c
-// New helper function clearly expresses intent:
-static bool gfs2_should_queue_trylock(struct gfs2_glock *gl, struct
-gfs2_holder *gh)
-{
-    // Check if blocked by current holder
-    if (current_gh && !may_grant(gl, current_gh, gh))
-        return false;
-
-    // Check if any non-try lock is waiting
-    list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
-        if (!test_bit(HIF_HOLDER, &gh2->gh_iflags) &&
-            !(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
-            return false;
-    }
-    return true;
+// In receive_rcom_lock_args() - when receiving lock recovery
+information
+if (rl->rl_status == DLM_LKSTS_CONVERT && middle_conversion(lkb)) {
+- log_limit(ls, "%s %x middle convert gr %d rq %d remote %d %x", ...)
++   log_rinfo(ls, "%s %x middle convert gr %d rq %d remote %d %x", ...)
+    rsb_set_flag(r, RSB_RECOVER_CONVERT);
 }
 ```
 
-#### 6. **Stable Tree Criteria Compliance**
+**Specific Change 2 - fs/dlm/recover.c:845**:
+```c
+// In recover_conversion() - when detecting incompatible lock modes
+during recovery
+if (((lkb->lkb_grmode == DLM_LOCK_PR) && (other_grmode == DLM_LOCK_CW))
+||
+    ((lkb->lkb_grmode == DLM_LOCK_CW) && (other_grmode == DLM_LOCK_PR)))
+{
+- log_limit(ls, "%s %x gr %d rq %d, remote %d %x, other_lkid %u, other
+  gr %d, set gr=NL", ...)
++   log_rinfo(ls, "%s %x gr %d rq %d, remote %d %x, other_lkid %u, other
+gr %d, set gr=NL", ...)
+    lkb->lkb_grmode = DLM_LOCK_NL;
+}
+```
 
-✅ **Fixes important bug:** Incorrect locking logic affecting clustered
-filesystems
-✅ **Small and contained:** ~47 lines changed, single file, single
-subsystem
-✅ **No architectural changes:** Fixes existing logic, doesn't add
-features
-✅ **Minimal regression risk:** No known issues, clean implementation
-✅ **Affects real users:** GFS2 is used in production clustered
-environments
+### Critical Context from Referenced Commit f74dacb4c8116
 
-#### 7. **Similar Backport Precedent**
+The commit message references f74dacb4c8116 ("dlm: fix recovery of
+middle conversions", Nov 2024), which fixed a **long-standing critical
+bug** in DLM recovery:
 
-GFS2 locking fixes have historically been backported to stable trees:
-- "gfs2: Fix potential glock use-after-free on unmount"
-- "gfs2: Fix use-after-free in gfs2_glock_shrink_scan"
-- "gfs2: fix a deadlock on withdraw-during-mount"
-- "gfs2: Fix missed wakeups in find_insert_glock"
+**The Bug**: Recovery couldn't reliably rebuild lock state for
+conversions between PR/CW modes. The code would set invalid modes
+(DLM_LOCK_IV), causing unpredictable errors.
 
-This commit follows the same pattern: fixes incorrect locking behavior
-with contained, low-risk changes.
+**Why It Went Unnoticed**:
+- Applications rarely convert between PR/CW
+- Recovery rarely occurs during these conversions
+- Even when the bug occurred, callers might not notice depending on
+  subsequent operations
+- A gfs2 core dump finally revealed this broken code
 
-### **Final Recommendation: YES - Backport to Stable**
+**The Fix**: Properly detect and correct incompatible lock modes during
+recovery by temporarily setting grmode to NL, allowing the conversion to
+complete after recovery.
 
-This is a well-understood bug fix addressing fundamentally incorrect
-lock queueing logic that has existed since 2019. The fix is clean,
-reviewed, and has no known regressions. GFS2 users in clustered
-environments will benefit from correct try-lock behavior.
+**Logging Inconsistency**: The original bug fix added logging in three
+places for middle conversions:
+- `recover_convert_waiter()`: Used `log_rinfo()` ✓
+- `receive_rcom_lock_args()`: Used `log_limit()` ✗
+- `recover_conversion()`: Used `log_limit()` ✗
 
-**Note:** Consider also backporting the follow-up commit bddb53b776fb7
-("gfs2: Get rid of GLF_INVALIDATE_IN_PROGRESS") to complete the cleanup
-of the flawed GLF_INVALIDATE_IN_PROGRESS mechanism.
+The current commit makes all three consistent by using `log_rinfo()`.
 
- fs/gfs2/glock.c | 47 ++++++++++++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 23 deletions(-)
+### Why This Change Matters
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index b6fd1cb17de7b..49c5631c083fe 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -502,7 +502,7 @@ static bool do_promote(struct gfs2_glock *gl)
- 			 */
- 			if (list_is_first(&gh->gh_list, &gl->gl_holders))
- 				return false;
--			do_error(gl, 0);
-+			do_error(gl, 0); /* Fail queued try locks */
- 			break;
- 		}
- 		set_bit(HIF_HOLDER, &gh->gh_iflags);
-@@ -713,7 +713,6 @@ __acquires(&gl->gl_lockref.lock)
- 		if (test_and_set_bit(GLF_INVALIDATE_IN_PROGRESS,
- 				     &gl->gl_flags))
- 			return;
--		do_error(gl, 0); /* Fail queued try locks */
- 	}
- 	gl->gl_req = target;
- 	set_bit(GLF_BLOCKING, &gl->gl_flags);
-@@ -1462,6 +1461,24 @@ void gfs2_print_dbg(struct seq_file *seq, const char *fmt, ...)
- 	va_end(args);
- }
+1. **Production Visibility**: Middle conversion recovery is rare but
+   critical. The original bug existed for years undetected. Having this
+   logging visible in production (without debug mode) helps catch any
+   remaining issues or new regressions.
+
+2. **Consistency**: All three middle conversion logging points should
+   use the same logging level for coherent debugging.
+
+3. **Preventative Monitoring**: The commit message says "excempt any
+   potential introduced new issue with recovery" - this appears to mean
+   they want to *except* (catch) any potential new issues. Making these
+   logs visible helps detect problems early.
+
+4. **Cluster Filesystem Impact**: DLM is used by GFS2 and other cluster
+   filesystems. Recovery bugs can cause data corruption or service
+   outages in production clusters.
+
+### Risk Assessment
+
+**Risk Level**: **VERY LOW**
+
+**Potential Issues**:
+- Slightly increased log verbosity in rare recovery scenarios
+- Both logging paths are rate-limited, preventing log spam
+- Only affects recovery code paths that are infrequently exercised
+
+**Regression Probability**: **Near Zero**
+- No functional code changes
+- Only affects logging output
+- Both `log_limit()` and `log_rinfo()` are rate-limited
+- Change is identical to existing logging pattern in same subsystem
+
+**Testing Consideration**:
+The affected code paths execute during:
+- Cluster node failures during lock conversions
+- Lock recovery after master node changes
+- Middle conversion scenarios (PR↔CW)
+
+These are difficult to reproduce in testing but critical in production.
+
+### Stable Tree Considerations
+
+**Arguments FOR Backporting**:
+1. ✅ The referenced bug fix f74dacb4c8116 is present in this stable tree
+   (confirmed by git log)
+2. ✅ Extremely low risk - only logging changes, no functional
+   modifications
+3. ✅ Small, self-contained change (2 lines)
+4. ✅ Improves observability for a critical, hard-to-debug subsystem
+5. ✅ Provides consistency in logging for recovery scenarios
+6. ✅ Could help catch issues in production environments where debug mode
+   isn't enabled
+7. ✅ Cluster filesystems (GFS2) users would benefit from better recovery
+   debugging
+8. ✅ No architectural changes or new features
+
+**Arguments AGAINST Backporting**:
+1. ❌ Not fixing a bug - it's an observability improvement
+2. ❌ No explicit Cc: stable tag from maintainers
+3. ❌ Changes observable behavior (more verbose logging under normal
+   loglevel)
+4. ❌ Stable trees typically prioritize bug fixes over improvements
+
+### Relationship to Stable Tree Rules
+
+From stable tree documentation, acceptable commits should:
+- ✅ "Fix a real bug" - While not fixing a bug directly, this improves
+  detection of bugs in the recovery logic
+- ✅ "Be small and obviously correct" - 2-line change, straightforward
+- ✅ "Include no significant risk of regression" - Only logging changes
+- ⚠️  "Not add a new feature" - Borderline: makes existing logging more
+  accessible, doesn't add functionality
+
+### Historical Precedent
+
+The DLM subsystem has a history of recovery-related issues that went
+undetected for years. The original bug fix commit message states: "This
+bug has gone unnoticed for so long..." This justifies enhanced logging
+for rare recovery scenarios.
+
+### Conclusion
+
+**Recommendation: YES - Backport to stable trees**
+
+**Rationale**:
+1. **Minimal Risk**: This is purely a logging level change with no
+   functional modifications. The rate-limiting prevents any log spam
+   concerns.
+
+2. **Valuable for Production**: The original bug (f74dacb4c8116)
+   demonstrates that middle conversion recovery bugs can exist
+   undetected for years. Making this logging visible in production
+   environments helps catch issues early.
+
+3. **Complements Existing Backport**: If the bug fix f74dacb4c8116 is
+   backported to stable (it's present in this tree), this logging
+   improvement provides essential observability for that fix.
+
+4. **Consistency**: Makes all middle conversion logging uniform, which
+   aids in debugging across different recovery code paths.
+
+5. **Cluster Filesystem Stability**: DLM is critical infrastructure for
+   cluster filesystems like GFS2. Better observability in production
+   helps maintain cluster stability and aids in root cause analysis
+   during incidents.
+
+**Conditional Note**: If stable tree maintainers have strict policies
+against non-bugfix commits, they may choose to reject this. However,
+given:
+- The extreme low risk
+- The relationship to a critical bug fix
+- The production value for cluster filesystem users
+- The small size and obvious correctness
+
+This commit meets the spirit of stable tree backporting rules even if
+it's technically an "improvement" rather than a "fix."
+
+ fs/dlm/lock.c    | 2 +-
+ fs/dlm/recover.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index 6dd3a524cd352..be938fdf17d96 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -5576,7 +5576,7 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
  
-+static bool gfs2_should_queue_trylock(struct gfs2_glock *gl,
-+				      struct gfs2_holder *gh)
-+{
-+	struct gfs2_holder *current_gh, *gh2;
-+
-+	current_gh = find_first_holder(gl);
-+	if (current_gh && !may_grant(gl, current_gh, gh))
-+		return false;
-+
-+	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
-+		if (test_bit(HIF_HOLDER, &gh2->gh_iflags))
-+			continue;
-+		if (!(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
-+			return false;
-+	}
-+	return true;
-+}
-+
- static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
- {
-         if (!(gh->gh_flags & GL_NOPID))
-@@ -1480,27 +1497,20 @@ static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
-  */
- 
- static inline void add_to_queue(struct gfs2_holder *gh)
--__releases(&gl->gl_lockref.lock)
--__acquires(&gl->gl_lockref.lock)
- {
- 	struct gfs2_glock *gl = gh->gh_gl;
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
- 	struct gfs2_holder *gh2;
--	int try_futile = 0;
- 
- 	GLOCK_BUG_ON(gl, gh->gh_owner_pid == NULL);
- 	if (test_and_set_bit(HIF_WAIT, &gh->gh_iflags))
- 		GLOCK_BUG_ON(gl, true);
- 
--	if (gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) {
--		if (test_bit(GLF_LOCK, &gl->gl_flags)) {
--			struct gfs2_holder *current_gh;
--
--			current_gh = find_first_holder(gl);
--			try_futile = !may_grant(gl, current_gh, gh);
--		}
--		if (test_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags))
--			goto fail;
-+	if ((gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) &&
-+	    !gfs2_should_queue_trylock(gl, gh)) {
-+		gh->gh_error = GLR_TRYFAILED;
-+		gfs2_holder_wake(gh);
-+		return;
- 	}
- 
- 	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
-@@ -1512,15 +1522,6 @@ __acquires(&gl->gl_lockref.lock)
- 			continue;
- 		goto trap_recursive;
- 	}
--	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
--		if (try_futile &&
--		    !(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB))) {
--fail:
--			gh->gh_error = GLR_TRYFAILED;
--			gfs2_holder_wake(gh);
--			return;
--		}
--	}
- 	trace_gfs2_glock_queue(gh, 1);
- 	gfs2_glstats_inc(gl, GFS2_LKS_QCOUNT);
- 	gfs2_sbstats_inc(gl, GFS2_LKS_QCOUNT);
+ 	if (rl->rl_status == DLM_LKSTS_CONVERT && middle_conversion(lkb)) {
+ 		/* We may need to adjust grmode depending on other granted locks. */
+-		log_limit(ls, "%s %x middle convert gr %d rq %d remote %d %x",
++		log_rinfo(ls, "%s %x middle convert gr %d rq %d remote %d %x",
+ 			  __func__, lkb->lkb_id, lkb->lkb_grmode,
+ 			  lkb->lkb_rqmode, lkb->lkb_nodeid, lkb->lkb_remid);
+ 		rsb_set_flag(r, RSB_RECOVER_CONVERT);
+diff --git a/fs/dlm/recover.c b/fs/dlm/recover.c
+index be4240f09abd4..3ac020fb8139e 100644
+--- a/fs/dlm/recover.c
++++ b/fs/dlm/recover.c
+@@ -842,7 +842,7 @@ static void recover_conversion(struct dlm_rsb *r)
+ 		 */
+ 		if (((lkb->lkb_grmode == DLM_LOCK_PR) && (other_grmode == DLM_LOCK_CW)) ||
+ 		    ((lkb->lkb_grmode == DLM_LOCK_CW) && (other_grmode == DLM_LOCK_PR))) {
+-			log_limit(ls, "%s %x gr %d rq %d, remote %d %x, other_lkid %u, other gr %d, set gr=NL",
++			log_rinfo(ls, "%s %x gr %d rq %d, remote %d %x, other_lkid %u, other gr %d, set gr=NL",
+ 				  __func__, lkb->lkb_id, lkb->lkb_grmode,
+ 				  lkb->lkb_rqmode, lkb->lkb_nodeid,
+ 				  lkb->lkb_remid, other_lkid, other_grmode);
 -- 
 2.51.0
 
