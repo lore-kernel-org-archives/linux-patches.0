@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D257D1F19A;
-	Thu,  2 Oct 2025 15:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA80C1D554;
+	Thu,  2 Oct 2025 15:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419040; cv=none; b=k6WYO4cdGCn8zTetSWQzEphuZ883ac1BHYB3hUGt/EAeUxt9wQwwB6d45mKP6+dKwrqBju0W5NDWDfF/ZNF4EL6dEUhdq8YtoOo6ZiKGfipJYlkR5tCH/F5NVsj4cdtzVZ7ZoH4qmty9hbUMBPG6yWpb4WE20gj70LqrOzb7jLg=
+	t=1759419041; cv=none; b=hXPRTs9EFNqpYi27ar5fh5/8q7hOirLrw9YfeQJzMmIgdAdM+78ufRPDU3z3GC7lS11Jmm0iBxrmSO0oW8m+NBLQk8n3a/u8+jxfBpXlcfbvehhrpZPVWtmXkhtp1WubUMoxbU2KZW/qeHfTd2OhhuyI8Mh3ZbqEa8PNRmc8pfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419040; c=relaxed/simple;
-	bh=jXFvqADOXhoMBxDmKNZjCgPHb2ho0Ydepvi1UXzuC+M=;
+	s=arc-20240116; t=1759419041; c=relaxed/simple;
+	bh=6pG7b6kdNvu2x4osmYuTKXNOjx2NpAADrJmcVozw7/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKtLk07qEdC+lPowEUxDSA5VDJj2moBRHhlPyuk89ZsbMAch+D1CuTIr9HzkRhQoB2fncEdA2h0cOeLg1PRk1EHYal10dO7PbJvmmlWR9uG9rm5vpHyS+X9voJArNX5y5dc/wOlX2SqXeJF/prsL4kduk8IP7fH1C6v1arG9EMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=alJXUrmf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zlzc6govNhvjtPD1GdFVaIgdr3QFMPhm/evCo13myOEsMvz0LTgjX7TlxmCeqPR27e5IRJ9iJtopUPzhzgSYCQ6mmUWBrRM6eTh14W2APH87fHcPWV/IAkpK/KmN/T7snZNCic0vJl8T+k7eLrSBlH62dW4P0jio+/XCD/reIcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iyBfqBTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="alJXUrmf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D4CC4CEF9;
-	Thu,  2 Oct 2025 15:30:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iyBfqBTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E1CC4CEF9;
+	Thu,  2 Oct 2025 15:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419040;
-	bh=jXFvqADOXhoMBxDmKNZjCgPHb2ho0Ydepvi1UXzuC+M=;
+	s=k20201202; t=1759419041;
+	bh=6pG7b6kdNvu2x4osmYuTKXNOjx2NpAADrJmcVozw7/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alJXUrmf95I8heIuO7zt8RADFO/5+6S4FJaPix5nefsjIzRshZ3AQFgx80NLV9DXk
-	 9nR4RteOdoIjKmTnhzGCRQDtVeh/OrncPDzhMe3V3cs1w2HAn2VO3hsnyjw1+8HiRK
-	 YzthvKQMWnpa7OFHyQ517kdb+b9fesHoqryoBiV6LAdbZsJ0QTN9rjjbcKt0OcW/2c
-	 yEooYMqxGIymQd2uBfcwTZsM2x9T5lssRTpckdjjPIZqZ96vy1P3sopuaQkBuJPnAs
-	 oGjW8yRQLvbQih2JxDjd6c3LTNQbGfB4tFACY/4xXaCH6E/02Sm2vPpb6LyA5P3866
-	 dkmezmJzm6uEg==
+	b=iyBfqBTmBZJa4TTikI7GsG9rodDN6j3nWoufJ1ydxTMSdIcb7tJrLdsrlVz5uQJ81
+	 9NZCAv/kTSZld59vpwjvLSWgZ45VoAXGwAfgHJz+Iz6ZrB4VlMI6oLEipDQmBepRem
+	 8DcDtw/Xa8Qh+jEZdadCAnJRu606ZvVz041+5nM95Lq8HBAdF5uKeQUDpk4UQuMcLR
+	 c2mopGUlgHDSQuvYeLznVB1SwVfb5HkpQNWzNO+ozdlMyQ9FL0tPUjzki+A6EyogpI
+	 mN2Bsa5p3idZo5CX5Idhc9Gr/b2B6LKcBoUhnhfi0R3OgQExBSHaBug7BXawo+l2ul
+	 YThzRPiyI4RQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Simon Schuster <schuster.simon@siemens-energy.com>,
-	Andreas Oetken <andreas.oetken@siemens-energy.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-5.15] nios2: ensure that memblock.current_limit is set when setting pfn limits
-Date: Thu,  2 Oct 2025 11:29:58 -0400
-Message-ID: <20251002153025.2209281-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] s390/mm: Use __GFP_ACCOUNT for user page table allocations
+Date: Thu,  2 Oct 2025 11:29:59 -0400
+Message-ID: <20251002153025.2209281-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -48,146 +47,204 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
+[ Upstream commit 5671ce2a1fc6b4a16cff962423bc416b92cac3c8 ]
 
-On nios2, with CONFIG_FLATMEM set, the kernel relies on
-memblock_get_current_limit() to determine the limits of mem_map, in
-particular for max_low_pfn.
-Unfortunately, memblock.current_limit is only default initialized to
-MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
-to situations where max_low_pfn can erroneously exceed the value of
-max_pfn and, thus, the valid range of available DRAM.
+Add missing kmemcg accounting of user page table allocations.
 
-This can in turn cause kernel-level paging failures, e.g.:
-
-[   76.900000] Unable to handle kernel paging request at virtual address 20303000
-[   76.900000] ea = c0080890, ra = c000462c, cause = 14
-[   76.900000] Kernel panic - not syncing: Oops
-[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
-
-This patch fixes this by pre-calculating memblock.current_limit
-based on the upper limits of the available memory ranges via
-adjust_lowmem_bounds, a simplified version of the equivalent
-implementation within the arm architecture.
-
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my determination:
+## Backport Analysis Complete
 
-## Backport Recommendation: **YES**
+**Backport Status: YES**
 
-### Analysis
+### Extensive Analysis
 
-**Bug Description:**
-The commit fixes a critical memory initialization bug in nios2
-architecture with CONFIG_FLATMEM. The `find_limits()` function
-(introduced in 2021 via commit 7f7bc20bc41a4) uses
-`memblock_get_current_limit()` to calculate `max_low_pfn` at
-arch/nios2/kernel/setup.c:140:
+#### 1. Code Changes Analysis
 
-```c
-*max_low_pfn = PFN_DOWN(memblock_get_current_limit());
-```
+The commit makes three specific changes to `arch/s390/mm/pgalloc.c`:
 
-However, `memblock.current_limit` is only default-initialized to
-`MEMBLOCK_ALLOC_ANYWHERE` (defined as `~(phys_addr_t)0` in
-include/linux/memblock.h:408, essentially ULONG_MAX). This causes
-`max_low_pfn` to be set to an enormous value that exceeds `max_pfn`,
-violating the critical invariant `max_low_pfn <= max_pfn`.
+**Change 1 - `crst_table_alloc()` (lines 17-27):**
+- Switches from `GFP_KERNEL` to `GFP_KERNEL_ACCOUNT`
+- Adds check: if `mm == &init_mm`, removes `__GFP_ACCOUNT` flag
+- This ensures kernel page tables for init_mm are NOT accounted (correct
+  behavior)
 
-**Impact:**
-When the kernel attempts memory operations using the incorrect
-`max_low_pfn`, it accesses memory beyond actual DRAM, resulting in
-kernel paging failures:
-```
-Unable to handle kernel paging request at virtual address 20303000
-Kernel panic - not syncing: Oops
-```
+**Change 2 - `page_table_alloc_pgste()` (line 120):**
+- Under `CONFIG_PGSTE` (KVM guest support)
+- Changes `GFP_KERNEL` to `GFP_KERNEL_ACCOUNT`
+- No init_mm check here (pgste tables are always for user processes)
 
-**The Fix:**
-The commit adds `adjust_lowmem_bounds()`
-(arch/nios2/kernel/setup.c:145-157) which:
-1. Iterates through all memory ranges using `for_each_mem_range()`
-2. Finds the highest `block_end` address
-3. Calls `memblock_set_current_limit(memblock_limit)` to set the actual
-   memory limit
+**Change 3 - `page_table_alloc()` (lines 137-148):**
+- Similar to Change 1: uses `GFP_KERNEL_ACCOUNT` with init_mm exception
+- This is the main user page table allocation path
 
-This function is called at line 174 before `find_limits()`, ensuring
-correct initialization. The implementation follows the proven pattern
-from ARM architecture (arch/arm/mm/mmu.c:1185).
+#### 2. Historical Context
 
-**Backporting Justification:**
+Through extensive kernel repository investigation, I found:
 
-1. **Critical bug with clear user impact**: Causes kernel panics on
-   affected systems
-2. **Small and well-contained**: Only 15 lines of code added
-3. **Minimal regression risk**:
-   - Architecture-specific (nios2 only) - zero risk to other systems
-   - Pattern proven in ARM for years (since commit 985626564eedc from
-     2017)
-   - Only affects boot-time initialization
-4. **Follows stable tree rules**: Important bugfix, no new features, no
-   architectural changes
-5. **Similar issues in other architectures**: MIPS had a similar
-   `max_low_pfn` bug fixed in commit 0f5cc249ff735 (2023)
-6. **Long-lived bug**: Latent since 2021, affects all kernels with
-   commit 7f7bc20bc41a4
+- **x86 got this in v4.10 (July 2016)** via commit 3e79ec7ddc33e by
+  Vladimir Davydov
+- **powerpc got this in v4.13 (May 2017)** via commits abd667be1502f and
+  de3b87611dd1f
+- **s390 is getting it NOW (September 2025)** - **9 years after x86!**
 
-**Historical Context:**
-- Bug introduced: 2021-02-19 (commit 7f7bc20bc41a4)
-- Bug fixed: 2025-08-21 (commit a20b83cf45be2)
-- Same author (Andreas Oetken) involved in both commits
+The original x86 commit message explains the rationale clearly:
+> "Page tables can bite a relatively big chunk off system memory and
+their allocations are easy to trigger from userspace, so they should be
+accounted to kmemcg."
 
-**Target Stable Trees:**
-Should be backported to all stable trees containing commit 7f7bc20bc41a4
-(February 2021 onwards).
+The pattern established in commit 3e79ec7ddc33e is identical to what
+s390 implements: use `GFP_KERNEL_ACCOUNT` but clear `__GFP_ACCOUNT` for
+init_mm because kernel page tables can be shared across cgroups.
 
- arch/nios2/kernel/setup.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+#### 3. Impact of Missing Accounting
 
-diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
-index 2a40150142c36..f43f01c4ab934 100644
---- a/arch/nios2/kernel/setup.c
-+++ b/arch/nios2/kernel/setup.c
-@@ -142,6 +142,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
- 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
- }
+**Without this patch:**
+- s390 systems running with memory cgroups cannot properly account page
+  table memory
+- Users can bypass memory limits by creating many page tables (fork
+  bombs, etc.)
+- OOM killer may make incorrect decisions due to unaccounted memory
+- Memory accounting is incomplete and incorrect for containerized
+  workloads
+
+**With this patch:**
+- Page tables are properly charged to the cgroup that allocates them
+- Memory limits are enforced correctly
+- OOM decisions are based on complete memory usage information
+
+#### 4. Risk Assessment
+
+**Regression Risk: VERY LOW**
+
+- Change is architecture-specific (s390 only)
+- Only modifies GFP flags in 3 functions
+- Pattern proven by 9 years of use on x86 (since v4.10)
+- Pattern proven by 8 years of use on powerpc (since v4.13)
+- Code is straightforward and follows established kernel patterns
+
+**Potential Side Effect:**
+Workloads that were previously hitting high page table usage without
+hitting memory limits might now hit those limits. However, this is
+**correct behavior** - the accounting was missing before, and limits
+were being bypassed incorrectly.
+
+#### 5. Backport Evidence
+
+**Critical finding:** This commit has ALREADY been selected for backport
+to stable 6.17:
+- Found as commit dc70c002dd2df in linux-autosel-6.17-2 tree
+- Contains "[ Upstream commit 5671ce2a1fc6b... ]" tag
+- Signed-off-by: Sasha Levin <sashal@kernel.org>
+- This indicates the AUTOSEL process identified it as backport-worthy
+
+#### 6. Why This Should Be Backported
+
+**Meets all stable tree criteria:**
+
+1. ✅ **Fixes a bug:** Missing kmemcg accounting is a correctness bug
+2. ✅ **Important for users:** Affects anyone using memory cgroups on
+   s390 (containers, systemd, cloud)
+3. ✅ **Small and contained:** Only 3 functions changed, all in one file
+4. ✅ **Low regression risk:** Pattern proven for 9 years on other
+   architectures
+5. ✅ **No architectural changes:** Just GFP flag modifications
+6. ✅ **Brings s390 to parity:** Other architectures have had this for
+   years
+
+**Comparison with similar backports:**
+Neither the x86 (3e79ec7ddc33e) nor powerpc (abd667be1502f) commits had
+explicit `Cc: stable` tags, yet this represents a clear correctness
+issue that affects real workloads using cgroups.
+
+#### 7. Specific Code Path Analysis
+
+Looking at the modified functions:
+
+- `crst_table_alloc()`: Called during page table upgrades (66:73,
+  expanding address space)
+- `page_table_alloc_pgste()`: KVM guest page tables (CONFIG_PGSTE)
+- `page_table_alloc()`: Main PTE allocation path (called for every new
+  page mapping)
+
+All three are in the hot path for memory allocation and MUST account to
+cgroups for proper resource control.
+
+### Conclusion
+
+**YES, this commit should be backported** because:
+
+1. It fixes missing functionality that has been standard on other
+   architectures since 2016-2017
+2. It affects correctness of memory accounting in production systems
+   using cgroups
+3. The change is minimal, well-understood, and low-risk
+4. It has already been identified by AUTOSEL as worthy of backporting to
+   6.17
+5. s390 users running containers or using systemd (which uses cgroups
+   extensively) need accurate memory accounting
+
+The 9-year delay in adding this to s390 makes it even more important to
+backport, as it brings s390 to parity with other architectures for a
+fundamental memory management feature.
+
+ arch/s390/mm/pgalloc.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/arch/s390/mm/pgalloc.c b/arch/s390/mm/pgalloc.c
+index d2f6f1f6d2fcb..ad3e0f7f7fc1f 100644
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -16,9 +16,13 @@
  
-+static void __init adjust_lowmem_bounds(void)
-+{
-+	phys_addr_t block_start, block_end;
-+	u64 i;
-+	phys_addr_t memblock_limit = 0;
-+
-+	for_each_mem_range(i, &block_start, &block_end) {
-+		if (block_end > memblock_limit)
-+			memblock_limit = block_end;
-+	}
-+
-+	memblock_set_current_limit(memblock_limit);
-+}
-+
- void __init setup_arch(char **cmdline_p)
+ unsigned long *crst_table_alloc(struct mm_struct *mm)
  {
- 	console_verbose();
-@@ -157,6 +171,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Keep a copy of command line */
- 	*cmdline_p = boot_command_line;
+-	struct ptdesc *ptdesc = pagetable_alloc(GFP_KERNEL, CRST_ALLOC_ORDER);
++	gfp_t gfp = GFP_KERNEL_ACCOUNT;
++	struct ptdesc *ptdesc;
+ 	unsigned long *table;
  
-+	adjust_lowmem_bounds();
- 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
++	if (mm == &init_mm)
++		gfp &= ~__GFP_ACCOUNT;
++	ptdesc = pagetable_alloc(gfp, CRST_ALLOC_ORDER);
+ 	if (!ptdesc)
+ 		return NULL;
+ 	table = ptdesc_to_virt(ptdesc);
+@@ -117,7 +121,7 @@ struct ptdesc *page_table_alloc_pgste(struct mm_struct *mm)
+ 	struct ptdesc *ptdesc;
+ 	u64 *table;
  
- 	memblock_reserve(__pa_symbol(_stext), _end - _stext);
+-	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
++	ptdesc = pagetable_alloc(GFP_KERNEL_ACCOUNT, 0);
+ 	if (ptdesc) {
+ 		table = (u64 *)ptdesc_to_virt(ptdesc);
+ 		__arch_set_page_dat(table, 1);
+@@ -136,10 +140,13 @@ void page_table_free_pgste(struct ptdesc *ptdesc)
+ 
+ unsigned long *page_table_alloc(struct mm_struct *mm)
+ {
++	gfp_t gfp = GFP_KERNEL_ACCOUNT;
+ 	struct ptdesc *ptdesc;
+ 	unsigned long *table;
+ 
+-	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
++	if (mm == &init_mm)
++		gfp &= ~__GFP_ACCOUNT;
++	ptdesc = pagetable_alloc(gfp, 0);
+ 	if (!ptdesc)
+ 		return NULL;
+ 	if (!pagetable_pte_ctor(mm, ptdesc)) {
 -- 
 2.51.0
 
