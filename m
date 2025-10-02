@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3E6231832;
-	Thu,  2 Oct 2025 15:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DB821D3E6;
+	Thu,  2 Oct 2025 15:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419060; cv=none; b=f0RT6Tl/9Vx492XhHsrnT5M/jvN/lIuvPuigvFd0S1m4pOU1Y81asDaLU5mb58oK+w5ZUsb5LL7lB7bx9MUhUM3dN2ISqf1rVSDKGr552nBEfw8SbK0gMkTlHc2lGkt9fWVUPDWfzjGm7eYSNzZjjOUKcS+oFBVBI3UiLwaWNL8=
+	t=1759419062; cv=none; b=t1U8eS0p3zjxz3I272YRigADwENLD7fGPzvZTZAwbpY7Uds1eLEWuim8M6cfpKwLr3r6hLkfxGbtv/1PHWcnmathO4bsHtKpRyMcym7yFYyovQCPxcTKdtrHt0AbreJ/J6u5lNthctGOvGl53/gissgBGFa3d13maMBxBwTnI9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419060; c=relaxed/simple;
-	bh=g+fY7Z++hADQkJDHrFpELN8lkmzMeAn0Bo+wPSzdUp8=;
+	s=arc-20240116; t=1759419062; c=relaxed/simple;
+	bh=jiHHeTdxwr2NtyZ8m2KBDe2yqAXM7KaYp/7I4+o8Xp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EAoDdBk2hlu/o6jNKg2sjzMXxrX0oI9koAZ5/t0ZQ4JXPLMWnyWw1K2EnmPE9ILuHS96/UsAHdBUme8VJ9qhi4LJaFjtul3ZsHhvYSxNqKs8IUW4CF0CZ74k8njBN0shjhQiuJPi+n1wuk7SL9ZdRumPKuAw+uZZL85Ofs5rdVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGh2gGLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BP8aC0T2qaAllW+IeWc1x8ms5SYCKV0ecWQ2QmxLQn/OuswwknrofuUmUOavcR9h7BgdcsHffHttvyb1PYweV03T2/7Ehci2iK512itIn/wZQspjzYhH4Qi4RawkEAqRRiH5lIp8Y/wB/AUCqZPWW+qwWMgmWfkDh98Fk6H0Ruo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQBpLVhD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGh2gGLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA69C4CEF4;
-	Thu,  2 Oct 2025 15:30:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQBpLVhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3190C4CEF4;
+	Thu,  2 Oct 2025 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419060;
-	bh=g+fY7Z++hADQkJDHrFpELN8lkmzMeAn0Bo+wPSzdUp8=;
+	s=k20201202; t=1759419061;
+	bh=jiHHeTdxwr2NtyZ8m2KBDe2yqAXM7KaYp/7I4+o8Xp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGh2gGLezUtH/xKN1jTwFYa4KdD41FZM6mA9Oqfq/ja/OykZr/Vv03BSaO6wo7lsu
-	 u0UADqnDzVBEi7Z/98yF2CHfNE6Gj6Z4bh7MhqPMz5FlVkGlqU+Dxio3Bbh154gK5P
-	 N5cpbuv/tXj5mZBnUZxuE0Fe/M0ixwwsMbrh4mD8R6lAaK56Vpa+frfVP3z0/8y4E9
-	 o4bX+s1QWSF69ffEwUf2aAZKDIs5WgdcqbXV9bhIVPO8WfNdEWRNsO5yiJrn6GXfI1
-	 2H7n0bZQSG9Q1IKqM85RCYTMTr6FhSCApUW67qda1nUdjDwlGMRT4togUlGNkxvBt0
-	 1inEywy7M0S/Q==
+	b=rQBpLVhDiEqSk4lPguy9G1poualkJ80DwG6QvO/5ZUHYcJaKCthw5mQrK2mcXDVpA
+	 nqsvS/oKkRldXAXO8kvsjCcgk/eCUUZP0xNb36TDzcLTQiinAjT0B1E8YD4wyADbe8
+	 MFMrxajTcC5PUUZMoS7r29Em3iZaFGxGKKGMc93kYz5qWyjDs/MwPYDniQgYRkY7An
+	 3gEurfyhWGYg1eB5f8B687xXPnaW9uGtkqhgNyscU4mEAleppi9RnLypG9Y+GgArUb
+	 M3rHP9h6tNWnKgMOKIazpYYQUVmTonz+60FBHnTB47yjXlSI9Ze0TK4+yUZ6Rii/5/
+	 Dbo3deDBQMLUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kees Cook <kees@kernel.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+Cc: Harald Freudenberger <freude@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	linux-pci@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.12] PCI: Test for bit underflow in pcie_set_readrq()
-Date: Thu,  2 Oct 2025 11:30:12 -0400
-Message-ID: <20251002153025.2209281-25-sashal@kernel.org>
+	linux-s390@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] s390/pkey: Forward keygenflags to ep11_unwrapkey
+Date: Thu,  2 Oct 2025 11:30:13 -0400
+Message-ID: <20251002153025.2209281-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -57,158 +52,204 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <kees@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 00e58ff924b3a684b076f9512fe2753be87b50e1 ]
+[ Upstream commit 11aa54ba4cfa5390ea47c9a1fc62502abce1f6b9 ]
 
-In preparation for the future commit ("bitops: Add __attribute_const__ to generic
-ffs()-family implementations"), which allows GCC's value range tracker
-to see past ffs(), GCC 8 on ARM thinks that it might be possible that
-"ffs(rq) - 8" used here:
+The pkey ioctl PKEY_CLR2SECK2 describes in the pkey.h header file
+the parameter 'keygenflags' which is forwarded to the handler
+functions which actually deal with the clear key to secure key
+operation. The ep11 handler module function ep11_clr2keyblob()
+function receives this parameter but does not forward it to the
+underlying function ep11_unwrapkey() on invocation. So in the end
+the user of this ioctl could not forward additional key generation
+flags to the ep11 implementation and thus was unable to modify the
+key generation process in any way. So now call ep11_unwrapkey()
+with the real keygenflags instead of 0 and thus the user of this
+ioctl can for example via keygenflags provide valid combinations
+of XCP_BLOB_* flags.
 
-	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
-
-could wrap below 0, leading to a very large value, which would be out of
-range for the FIELD_PREP() usage:
-
-drivers/pci/pci.c: In function 'pcie_set_readrq':
-include/linux/compiler_types.h:572:38: error: call to '__compiletime_assert_471' declared with attribute error: FIELD_PREP: value too large for the field
-...
-drivers/pci/pci.c:5896:6: note: in expansion of macro 'FIELD_PREP'
-  v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
-      ^~~~~~~~~~
-
-If the result of the ffs() is bounds checked before being used in
-FIELD_PREP(), the value tracker seems happy again. :)
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/linux-pci/CA+G9fYuysVr6qT8bjF6f08WLyCJRG7aXAeSd2F7=zTaHHd7L+Q@mail.gmail.com/
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20250905052836.work.425-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my determination:
+## BACKPORT RECOMMENDATION: **YES**
 
-## Backport Status: **YES**
+## EXTENSIVE ANALYSIS
 
-### Extensive Analysis:
+### Bug Description and Impact
 
-#### Nature of the Fix:
-This commit adds a defensive check in `pcie_set_readrq()` to prevent a
-potential bit underflow when computing `ffs(rq) - 8`. Specifically, it:
-1. Stores the result of `ffs(rq)` in a new variable `firstbit`
-2. Adds a check: `if (firstbit < 8) return -EINVAL;`
-3. Uses `firstbit - 8` instead of `ffs(rq) - 8` in the FIELD_PREP macro
+This commit fixes a **functional bug** in the s390 pkey subsystem where
+the `keygenflags` parameter provided by users through the
+`PKEY_CLR2SECK2` ioctl is ignored and not forwarded to the underlying
+EP11 implementation.
 
-#### Root Cause & Context:
-This is **not a runtime bug fix** - it's a **build fix** triggered by
-another optimization commit. The bitops commit (50675b8f5bd4e "bitops:
-Add __attribute_const__ to generic ffs()-family implementations") adds
-`__attribute_const__` to ffs() functions, enabling GCC's value range
-tracker to perform better static analysis. However, GCC-8's conservative
-analysis on ARM, RISCV, and MIPS architectures incorrectly determines
-that `ffs(rq) - 8` could underflow, causing a **compilation error** (not
-a warning):
+**Specific Code Change Analysis**
+(drivers/s390/crypto/zcrypt_ep11misc.c:1406-1408):
 
-```
-drivers/pci/pci.c: In function 'pcie_set_readrq':
-include/linux/compiler_types.h:572:38: error: call to
-'__compiletime_assert_471'
-declared with attribute error: FIELD_PREP: value too large for the field
+The bug is at line 1408 in the `ep11_clr2keyblob()` function, where
+`ep11_unwrapkey()` is called. The problematic code was:
+```c
+rc = ep11_unwrapkey(card, domain, kek, keklen,
+                    encbuf, encbuflen, 0, def_iv,
+                    keybitsize, 0, keybuf, keybufsize, keytype, xflags);
+                             ^^
+                    Hardcoded 0 instead of keygenflags parameter
 ```
 
-#### Why the Compiler is Wrong (but we still need to fix it):
-Examining the code flow in `pcie_set_readrq()`
-(drivers/pci/pci.c:5931-5968):
-1. Initial validation: `if (rq < 128 || rq > 4096 ||
-   !is_power_of_2(rq))` ensures rq ≥ 128
-2. Performance mode clamping: `if (mps < rq) rq = mps;` where mps comes
-   from `pcie_get_mps()`
-3. `pcie_get_mps()` returns `128 << FIELD_GET(...)`, which is always ≥
-   128 (verified at line 5976-5984)
-4. Therefore, `ffs(rq) >= ffs(128) = 8`, so underflow is impossible
+The fix changes this to:
+```c
+rc = ep11_unwrapkey(card, domain, kek, keklen,
+                    encbuf, encbuflen, 0, def_iv,
+                    keybitsize, keygenflags,
+                    keybuf, keybufsize,
+                    keytype, xflags);
+```
 
-However, since commit f67577118d115 (2013), `pcie_get_mps()` never
-returns an error, always returning valid values ≥ 128. The compiler
-cannot prove this through interprocedural analysis.
+### User Impact Analysis
 
-#### Critical Dependency:
-This commit is **tightly coupled** with the bitops commit. Evidence:
-- Both commits are signed off by Sasha Levin (autosel backports)
-- They appear consecutively in the git history (50675b8f5bd4e →
-  5385aceb86f2f)
-- The commit message explicitly states: "In preparation for the future
-  commit"
-- Without this fix, **builds will fail** on GCC-8 ARM/RISCV/MIPS after
-  bitops changes
+**What Users Cannot Do (Before Fix):**
+1. **Cannot customize EP11 AES key attributes** - Users calling
+   PKEY_CLR2SECK2 ioctl cannot specify custom XCP_BLOB_* flags (e.g.,
+   XCP_BLOB_ENCRYPT, XCP_BLOB_DECRYPT, XCP_BLOB_PROTKEY_EXTRACTABLE
+   combinations)
+2. **Stuck with default attributes** - All generated keys use the
+   hardcoded defaults (0x00200c00 = XCP_BLOB_ENCRYPT | XCP_BLOB_DECRYPT
+   | XCP_BLOB_PROTKEY_EXTRACTABLE)
+3. **API version selection may be suboptimal** - The EP11 API version
+   selection in `_ep11_unwrapkey()` (zcrypt_ep11misc.c:1100-1101)
+   depends on keygenflags, and passing 0 always selects EP11_API_V4
 
-#### Risk Assessment:
-**Minimal Risk:**
-- Small, localized change (6 lines added in one function)
-- Adds defensive validation that cannot break existing functionality
-- For all valid inputs (rq ≥ 128), the check passes through
-- Only rejects values that would have caused incorrect behavior anyway
-- No performance impact
-- No changes to critical kernel subsystems beyond PCI
+**What the Fix Enables:**
+- Users can now properly control key generation attributes via the
+  documented PKEY_CLR2SECK2 ioctl interface
+- Correct API version selection based on user-provided flags
+- Full functionality as documented in
+  arch/s390/include/uapi/asm/pkey.h:290-292
 
-#### Backporting Justification:
-1. **Mandatory dependency**: Required if bitops commit is backported
-   (which it is - commit 50675b8f5bd4e)
-2. **Build fix**: Prevents compilation failures on supported compiler
-   configurations
-3. **Low risk**: Defensive check with no behavior change for valid
-   inputs
-4. **Follows stable rules**: Small, contained fix with clear purpose
-5. **Multiple architectures affected**: ARM, RISCV, MIPS with GCC-8
-6. **Upstream acceptance**: Acked by PCI maintainer (Bjorn Helgaas) and
-   Arnd Bergmann
+### Historical Context
 
-#### Supporting Evidence:
-- Reported by: Linux Kernel Functional Testing (LKFT)
-- Affects: GCC-8 on arm, riscv, mips architectures
-- First seen: Linux 6.17.0-rc3-next-20250828
-- Bisected to: bitops __attribute_const__ commit
-- Acked-by: Bjorn Helgaas, Arnd Bergmann
+**Bug Introduction:** Commit 55d0a513a0e202 (December 6, 2019) -
+"s390/pkey/zcrypt: Support EP11 AES secure keys"
+- This was a major feature addition (1007 insertions) that added EP11
+  AES secure key support
+- The bug existed from day one - the keygenflags parameter was received
+  but never forwarded
+- **Bug age: Nearly 6 years** (2019-12-06 to 2025-08-13)
+- **Affected versions: v5.10 onwards** (all stable kernels from v5.10 to
+  v6.17+)
 
-### Conclusion:
-**YES - This commit should be backported** as it's a necessary build fix
-that must accompany the bitops optimization commit. Without it, stable
-kernels with the bitops changes will fail to build on GCC-8
-ARM/RISCV/MIPS configurations, breaking supported build environments.
-The fix is minimal, defensive, and poses negligible regression risk.
+**Similar Bug Pattern:** Commit deffa48fb014f (August 29, 2019) fixed an
+identical issue for CCA cipher keys where keygenflags were not handled
+correctly, showing this is a recurring pattern in the s390 crypto
+subsystem.
 
- drivers/pci/pci.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+### Backport Suitability Assessment
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index b0f4d98036cdd..005b92e6585e9 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5932,6 +5932,7 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
- {
- 	u16 v;
- 	int ret;
-+	unsigned int firstbit;
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(dev->bus);
- 
- 	if (rq < 128 || rq > 4096 || !is_power_of_2(rq))
-@@ -5949,7 +5950,10 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
- 			rq = mps;
- 	}
- 
--	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
-+	firstbit = ffs(rq);
-+	if (firstbit < 8)
-+		return -EINVAL;
-+	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, firstbit - 8);
- 
- 	if (bridge->no_inc_mrrs) {
- 		int max_mrrs = pcie_get_readrq(dev);
+**✓ Fixes Important User-Visible Bug:**
+- YES - Breaks documented ioctl interface functionality
+- Users cannot access advertised EP11 key generation customization
+  features
+
+**✓ Small and Contained Change:**
+- YES - Only **1 functional line changed** (passing keygenflags instead
+  of 0)
+- Additional changes are just code reformatting (line breaks for
+  readability)
+- Change is in drivers/s390/crypto/zcrypt_ep11misc.c:1408 only
+
+**✓ Minimal Regression Risk:**
+- **VERY LOW RISK** - The change makes the code do what it was supposed
+  to do from the beginning
+- Forwards an existing parameter that was already being received but
+  ignored
+- No new code paths introduced
+- No changes to data structures or API signatures
+- Default behavior preserved (when keygenflags=0, defaults are still
+  used via ternary in _ep11_unwrapkey)
+
+**✓ No Architectural Changes:**
+- YES - Pure parameter forwarding fix
+- No changes to subsystem architecture
+
+**✓ Confined to Subsystem:**
+- YES - Only affects s390 pkey/zcrypt EP11 crypto subsystem
+- No cross-subsystem dependencies
+
+**✗ Explicit Stable Tree Marking:**
+- NO "Cc: stable@vger.kernel.org" tag present
+- NO "Fixes:" tag present
+- However, this is likely an oversight given the clear bug fix nature
+
+### Security Implications
+
+**Low Security Risk, Potential Security Enhancement:**
+1. **No new vulnerabilities introduced** - The fix enables intended
+   functionality
+2. **May improve security posture** - Users can now properly configure
+   key attributes like encryption/decryption capabilities and
+   extractability
+3. **Restores documented interface contract** - Users get the security
+   controls they were promised in the API
+
+### Dependencies and Prerequisites
+
+**No prerequisites identified:**
+- Function signature of `ep11_clr2keyblob()` has included keygenflags
+  parameter since v5.10
+- Function signature of `ep11_unwrapkey()` has included keygenflags
+  parameter since v5.10
+- No ABI changes
+- No new kernel features required
+- Clean application to stable trees expected
+
+### Related Work
+
+The fix commit (11aa54ba4cfa5390ea47c9a1fc62502abce1f6b9) was authored
+on 2025-08-13 and committed to mainline on 2025-08-28, making it very
+recent. It has already been backported to at least one stable tree
+(commit 6b78f84e140b4a3e with "Upstream commit" marker).
+
+### Recommendation Summary
+
+This commit is an **excellent candidate for backporting** to stable
+kernel trees because:
+
+1. ✅ Fixes a clear, long-standing functional bug (6 years)
+2. ✅ Extremely small, surgical change (1 line functional change)
+3. ✅ Affects documented user-facing API (PKEY_CLR2SECK2 ioctl)
+4. ✅ Zero architectural impact
+5. ✅ Very low regression risk
+6. ✅ Restores intended functionality without breaking existing users
+7. ✅ Confined to s390 crypto subsystem
+8. ✅ Follows stable tree best practices (important bugfix, minimal risk)
+
+**Backport Target:** All stable trees containing the original bug
+(v5.10+, specifically kernels containing commit 55d0a513a0e202)
+
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 3bf09a89a0894..e92e2fd8ce5da 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -1405,7 +1405,9 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	/* Step 3: import the encrypted key value as a new key */
+ 	rc = ep11_unwrapkey(card, domain, kek, keklen,
+ 			    encbuf, encbuflen, 0, def_iv,
+-			    keybitsize, 0, keybuf, keybufsize, keytype, xflags);
++			    keybitsize, keygenflags,
++			    keybuf, keybufsize,
++			    keytype, xflags);
+ 	if (rc) {
+ 		ZCRYPT_DBF_ERR("%s importing key value as new key failed, rc=%d\n",
+ 			       __func__, rc);
 -- 
 2.51.0
 
