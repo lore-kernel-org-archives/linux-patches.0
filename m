@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8858E21CC43;
-	Thu,  2 Oct 2025 15:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB27222564;
+	Thu,  2 Oct 2025 15:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419043; cv=none; b=n1FkY0OiYNCmJX8ANMnWna9c1ZSHhMaveonrV0ZoLuoelYGSA7gVFY6xoh6jOhl6aKJYMXvYxo5SVzPhz9f1M3oC5qYovC4WEbkNUa9SGPr7MII91QIxjmw/7Seuxx6ewhlBe8hcVsoGSnepq2YbCdgPm7utJnuHUteRiOEGeaI=
+	t=1759419045; cv=none; b=F88ETpbI+sTCBNc4pX0u3/QUA3HNRd3CaCH3FI11BWWIFf1kikkq1Qtr1ed0ImJYr/LF57bGd9zBnXrPrAIklO6JbdnJ3eCjEhbNEIrxneJP34bZ/8i1H39r3Dq6X6YXrCSKuH2zaWSr6UcfvjfIYk2LLdHUkCaSd48OeWHD2ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419043; c=relaxed/simple;
-	bh=h6k+Nnl7KCqJB4WMcYNUaBEbIVUSbrYTxL/+Vy0+N8g=;
+	s=arc-20240116; t=1759419045; c=relaxed/simple;
+	bh=VKXnQTNgHa3ZVm8ErfBbAUDvg6pqdD8f3rNGnhKo/ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ktPjy1qtCoanboCtSM1P1SAn0EuNE/sEagidMjGXiWQ//KomcHVHjqXVl36WpMY+nOnVo9h1/6bz40EOYbW/JF0Lvi7VMB/hMINVg/h3LNM1HadIIuNPeQ3bKt4zrSn9QnCJqweG/5HcZ53WLu5bwuURtV6zCbGZ+mQWwUEePgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kYAIEwPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ub7MsCkKUv1EIi1od8ietz1LRD6NUYYg4dFpZgb39xFu9sXb5VCV/oUh4BJy35n1kAlSR1qXeBFft+vNK5SED+xv8a/yPoakG5LiL/sHp3Xb3dvupKbF90cLi2D56f5EkOnsPTRzPVbk1D7MMbl/3VOLD36bs3vCVqnpviwUtL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GcPxW1p/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kYAIEwPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A27DC4CEF4;
-	Thu,  2 Oct 2025 15:30:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GcPxW1p/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD67C4CEF4;
+	Thu,  2 Oct 2025 15:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419043;
-	bh=h6k+Nnl7KCqJB4WMcYNUaBEbIVUSbrYTxL/+Vy0+N8g=;
+	s=k20201202; t=1759419044;
+	bh=VKXnQTNgHa3ZVm8ErfBbAUDvg6pqdD8f3rNGnhKo/ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYAIEwPMqqRUEsVSKjSI0JDkm/dHUoxELDumfNytlToq8UYAVuNybxwjhpahwlYDY
-	 Kh/dN1cSvGjjm+e2U9uwSgaMNVLaXOOb35m1LtD1JxUGl1BJqtMHGt9uWKpq0Z7xuW
-	 fvvNh7l4vweKExbK3HHRFZn4iZSo9FRu4pSjljvq5eT2yDnDeZppvLm+kszKb01CTx
-	 cWwcpUsdWy7sJ4BdMo7qifDkJv3o5RXnkJxiNx1Zf5FHaJu1PgWWGLzsVASfR/YSHh
-	 hqIm5OGD1QGm0UeBS+EOWT/jHXRklzjRUDpt2SyhiDuZFVTI0+XyQ/fDmyfPJVxlxB
-	 FMyOqMSEFq+yA==
+	b=GcPxW1p/vsa024MDhvQU3v0agg7dMo35hZTuqqha69epR/C/s9kAiz2duF9OGEkK3
+	 4hymXGFk7n64JSlYADgTbBSchih+mM9xjqmmd82p/g/h71AV5uuv3UwQM5SFJbihBp
+	 Hs5qByat6zK/gMXK/pn81rdcv8FFUGzfeEUljf1JYIPAcL7CdMq5n2zuJCrSAkKynV
+	 utkP1miGEug/GCsG887q4ilY5n/QvgGXHiEwVLlX415pNHkzZRYGDfgQmWqqa8f2Kc
+	 VXY3BgOaOuj8XPJUasveMgZ5nBKrxtLlAc9EjlMShRvnIzynNjqUsmzoOH8BQWGlFB
+	 LKsiZeC70HqRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Junhui Liu <junhui.liu@pigmoral.tech>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Nutty Liu <liujingqi@lanxincomputing.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Andreas Gruenbacher <agruenba@redhat.com>,
+	Andrew Price <anprice@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.16] riscv: mm: Return intended SATP mode for noXlvl options
-Date: Thu,  2 Oct 2025 11:30:00 -0400
-Message-ID: <20251002153025.2209281-13-sashal@kernel.org>
+	rpeterso@redhat.com,
+	cluster-devel@redhat.com
+Subject: [PATCH AUTOSEL 6.17-6.16] gfs2: Fix LM_FLAG_TRY* logic in add_to_queue
+Date: Thu,  2 Oct 2025 11:30:01 -0400
+Message-ID: <20251002153025.2209281-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -56,145 +52,288 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit f3243bed39c26ce0f13e6392a634f91d409b2d02 ]
+[ Upstream commit 0c23e24164d83086e75581b0cf930f4e161636d6 ]
 
-Change the return value of match_noXlvl() to return the SATP mode that
-will be used, rather than the mode being disabled. This enables unified
-logic for return value judgement with the function that obtains mmu-type
-from the fdt, avoiding extra conversion. This only changes the naming,
-with no functional impact.
+The logic in add_to_queue() for determining whether a LM_FLAG_TRY or
+LM_FLAG_TRY_1CB holder should be queued does not make any sense: we are
+interested in wether or not the new operation will block behind an
+existing or future holder in the queue, but the current code checks for
+ongoing locking or ->go_inval() operations, which has little to do with
+that.
 
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Link: https://lore.kernel.org/r/20250722-satp-from-fdt-v1-1-5ba22218fa5f@pigmoral.tech
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Replace that code with something more sensible, remove the incorrect
+add_to_queue() function annotations, remove the similarly misguided
+do_error(gl, 0) call in do_xmote(), and add a missing comment to the
+same call in do_promote().
+
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Reviewed-by: Andrew Price <anprice@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive investigation of this commit and its context,
-here is my analysis:
-
-## Analysis Summary
+## Backport Analysis Complete
 
 **Backport Status: YES**
 
-## Detailed Explanation
+### Extensive Analysis and Reasoning:
 
-### 1. **This is a prerequisite for an important bug fix**
+#### 1. **Nature of the Bug**
 
-While the commit message states "This only changes the naming, with no
-functional impact," this refactoring is **part 1 of a 2-patch series**.
-The follow-up commit (17e9521044c9b "riscv: mm: Use mmu-type from FDT to
-limit SATP mode") fixes a real hardware issue:
+This commit fixes fundamentally flawed logic in the GFS2 glock locking
+subsystem's `add_to_queue()` function. The bug has existed since 2019
+(commit d99724c3c36ae).
 
-> "Some RISC-V implementations may hang when attempting to write an
-unsupported SATP mode, even though the latest RISC-V specification
-states such writes should have no effect."
+**The Problem:**
+The old code checks for:
+- `GLF_LOCK` flag (indicating an ongoing lock operation is in progress
+  at fs/gfs2/glock.c:1496-1500)
+- `GLF_INVALIDATE_IN_PROGRESS` flag (indicating go_sync/go_inval
+  operations are running at fs/gfs2/glock.c:1502-1503)
 
-The bug fix depends on this refactoring to work correctly.
+**What it should check:**
+Whether a LM_FLAG_TRY or LM_FLAG_TRY_1CB lock request will actually
+block behind existing or future holders in the queue.
 
-### 2. **Code changes are functionally equivalent**
+The commit message explicitly states: "the current code checks for
+ongoing locking or ->go_inval() operations, which has little to do with
+that" - meaning the logic is checking for the wrong conditions entirely.
 
-Examining the specific changes:
+#### 2. **Code Changes Analysis**
 
-**In `arch/riscv/kernel/pi/cmdline_early.c`:**
-- OLD: `no4lvl` returns `SATP_MODE_48` (the mode being disabled)
-- NEW: `no4lvl` returns `SATP_MODE_39` (the mode to actually use)
-- OLD: `no5lvl` returns `SATP_MODE_57` (the mode being disabled)
-- NEW: `no5lvl` returns `SATP_MODE_48` (the mode to actually use)
+**In `add_to_queue()` (lines 1442-1540):**
+- **OLD:** Complex, error-prone logic with two separate
+  `list_for_each_entry` loops checking `try_futile`, `GLF_LOCK`, and
+  `GLF_INVALIDATE_IN_PROGRESS`
+- **NEW:** Clean extraction into `gfs2_should_queue_trylock()` helper
+  that:
+  1. Checks if current holder exists and `may_grant()` would fail →
+     don't queue
+  2. Checks if any non-try lock exists in the queue → don't queue
+  3. Otherwise → queue the try lock
 
-**In `arch/riscv/mm/init.c`:**
-- The comparison logic changes accordingly to match the new semantics
-- OLD: `if (satp_mode_cmdline == SATP_MODE_57)` → disable L5
-- NEW: `if (satp_mode_cmdline == SATP_MODE_48)` → disable L5
+This is semantically correct: a try lock should fail immediately if it
+would block behind a non-try lock.
 
-The end result is identical - both code paths result in the same page
-table configuration.
+**In `do_xmote()` (line 716):**
+- Removes the `do_error(gl, 0)` call that was failing try locks when
+  GLF_INVALIDATE_IN_PROGRESS was set
+- The commit message calls this "similarly misguided"
 
-### 3. **Enables unified logic with FDT mmu-type**
+**In `do_promote()` (line 502):**
+- Just adds a clarifying comment `/* Fail queued try locks */` to
+  document why `do_error(gl, 0)` is called there
 
-The refactoring allows the follow-up patch to use
-`min_not_zero(__pi_set_satp_mode_from_cmdline(),
-__pi_set_satp_mode_from_fdt())` to combine both sources of SATP mode
-limits. This unified approach prevents writing unsupported SATP modes
-that cause hardware hangs.
+**Function annotation removal:**
+- Removes incorrect `__releases/__acquires` annotations from
+  `add_to_queue()` - the new logic doesn't drop/reacquire the lock
 
-### 4. **Low regression risk**
+#### 3. **User Impact and Severity**
 
-- Self-contained changes to only 2 files
-- Both files modified consistently with matching semantics
-- No change to external APIs or behavior
-- Simple, straightforward logic transformation
+This bug affects GFS2 filesystem users, particularly in clustered
+storage environments where GFS2 is commonly deployed. The incorrect
+logic can cause:
 
-### 5. **Affects stable kernels 6.4+**
+1. **Incorrect lock failures:** Try locks fail when they shouldn't,
+   causing operations to unnecessarily retry or fail
+2. **Incorrect lock queueing:** Try locks get queued when they should
+   fail immediately, leading to unexpected blocking behavior
+3. **Deadlock potential:** Wrong lock ordering due to incorrect try-lock
+   handling
+4. **Performance degradation:** Unnecessary lock failures and retries
 
-The `no4lvl`/`no5lvl` command line options were introduced in v6.4
-(commit 26e7aacb83dfd), so any stable kernel from 6.4 onwards would
-benefit from having both patches backported together.
+**Historical Context:**
+- The flawed logic was introduced in 2019 (d99724c3c36ae)
+- In 2022, commit c412a97cf6c52 added more TRY lock usage in
+  `gfs2_inode_lookup()` for UNLINKED inodes, making this bug more
+  frequently triggered
+- The bug has existed for ~6 years before being fixed
 
-### 6. **Already being backported together**
+#### 4. **Follow-up Commits**
 
-I can confirm that both commits are already being backported to
-6.17-stable as a pair:
-- f3243bed39c26 → b222a93bf5294 (this refactoring)
-- 17e9521044c9b → f64e5a29ae1a2 (the bug fix)
+Commit bddb53b776fb7 ("gfs2: Get rid of GLF_INVALIDATE_IN_PROGRESS")
+immediately follows this fix and states:
 
-This indicates the maintainers recognized these should be backported
-together.
+> "it was originally used to indicate to add_to_queue() that the
+->go_sync() and ->go_invalid() operations were in progress, but as we
+have established in commit 'gfs2: Fix LM_FLAG_TRY* logic in
+add_to_queue', add_to_queue() has no need to know."
 
-## Conclusion
+This confirms that:
+1. The GLF_INVALIDATE_IN_PROGRESS check in add_to_queue() was wrong
+2. The original 2019 commit d99724c3c36ae was based on flawed analysis
+3. The serialization actually happens via GLF_LOCK, not
+   GLF_INVALIDATE_IN_PROGRESS
 
-**YES**, this commit should be backported to stable trees because:
-1. It's a necessary prerequisite for fixing hardware hangs on some
-   RISC-V implementations
-2. The refactoring is functionally equivalent with no behavior change
-3. It has minimal regression risk
-4. It should be backported together with its follow-up patch
-   17e9521044c9b
-5. It benefits all stable kernels 6.4+ that have the no4lvl/no5lvl
-   feature
+**Recommendation:** The follow-up commit bddb53b776fb7 should also be
+backported to complete the cleanup.
 
- arch/riscv/kernel/pi/cmdline_early.c | 4 ++--
- arch/riscv/mm/init.c                 | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+#### 5. **Regression Risk Assessment**
 
-diff --git a/arch/riscv/kernel/pi/cmdline_early.c b/arch/riscv/kernel/pi/cmdline_early.c
-index fbcdc9e4e1432..389d086a07187 100644
---- a/arch/riscv/kernel/pi/cmdline_early.c
-+++ b/arch/riscv/kernel/pi/cmdline_early.c
-@@ -41,9 +41,9 @@ static char *get_early_cmdline(uintptr_t dtb_pa)
- static u64 match_noXlvl(char *cmdline)
- {
- 	if (strstr(cmdline, "no4lvl"))
--		return SATP_MODE_48;
-+		return SATP_MODE_39;
- 	else if (strstr(cmdline, "no5lvl"))
--		return SATP_MODE_57;
-+		return SATP_MODE_48;
- 
- 	return 0;
+**LOW RISK:**
+- ✅ No reverts found in git history
+- ✅ No "Fixes:" tags pointing to this commit
+- ✅ Changes confined to GFS2 filesystem subsystem
+- ✅ Code is cleaner and more understandable after the fix
+- ✅ Logic is semantically correct based on lock queue theory
+- ✅ Authored by GFS2 maintainer Andreas Gruenbacher
+- ✅ Reviewed by Andrew Price (GFS2 co-maintainer)
+
+**The new logic is simpler and more correct:**
+```c
+// New helper function clearly expresses intent:
+static bool gfs2_should_queue_trylock(struct gfs2_glock *gl, struct
+gfs2_holder *gh)
+{
+    // Check if blocked by current holder
+    if (current_gh && !may_grant(gl, current_gh, gh))
+        return false;
+
+    // Check if any non-try lock is waiting
+    list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
+        if (!test_bit(HIF_HOLDER, &gh2->gh_iflags) &&
+            !(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
+            return false;
+    }
+    return true;
+}
+```
+
+#### 6. **Stable Tree Criteria Compliance**
+
+✅ **Fixes important bug:** Incorrect locking logic affecting clustered
+filesystems
+✅ **Small and contained:** ~47 lines changed, single file, single
+subsystem
+✅ **No architectural changes:** Fixes existing logic, doesn't add
+features
+✅ **Minimal regression risk:** No known issues, clean implementation
+✅ **Affects real users:** GFS2 is used in production clustered
+environments
+
+#### 7. **Similar Backport Precedent**
+
+GFS2 locking fixes have historically been backported to stable trees:
+- "gfs2: Fix potential glock use-after-free on unmount"
+- "gfs2: Fix use-after-free in gfs2_glock_shrink_scan"
+- "gfs2: fix a deadlock on withdraw-during-mount"
+- "gfs2: Fix missed wakeups in find_insert_glock"
+
+This commit follows the same pattern: fixes incorrect locking behavior
+with contained, low-risk changes.
+
+### **Final Recommendation: YES - Backport to Stable**
+
+This is a well-understood bug fix addressing fundamentally incorrect
+lock queueing logic that has existed since 2019. The fix is clean,
+reviewed, and has no known regressions. GFS2 users in clustered
+environments will benefit from correct try-lock behavior.
+
+**Note:** Consider also backporting the follow-up commit bddb53b776fb7
+("gfs2: Get rid of GLF_INVALIDATE_IN_PROGRESS") to complete the cleanup
+of the flawed GLF_INVALIDATE_IN_PROGRESS mechanism.
+
+ fs/gfs2/glock.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
+
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index b6fd1cb17de7b..49c5631c083fe 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -502,7 +502,7 @@ static bool do_promote(struct gfs2_glock *gl)
+ 			 */
+ 			if (list_is_first(&gh->gh_list, &gl->gl_holders))
+ 				return false;
+-			do_error(gl, 0);
++			do_error(gl, 0); /* Fail queued try locks */
+ 			break;
+ 		}
+ 		set_bit(HIF_HOLDER, &gh->gh_iflags);
+@@ -713,7 +713,6 @@ __acquires(&gl->gl_lockref.lock)
+ 		if (test_and_set_bit(GLF_INVALIDATE_IN_PROGRESS,
+ 				     &gl->gl_flags))
+ 			return;
+-		do_error(gl, 0); /* Fail queued try locks */
+ 	}
+ 	gl->gl_req = target;
+ 	set_bit(GLF_BLOCKING, &gl->gl_flags);
+@@ -1462,6 +1461,24 @@ void gfs2_print_dbg(struct seq_file *seq, const char *fmt, ...)
+ 	va_end(args);
  }
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 15683ae13fa5d..054265b3f2680 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -864,9 +864,9 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
  
- 	kernel_map.page_offset = PAGE_OFFSET_L5;
++static bool gfs2_should_queue_trylock(struct gfs2_glock *gl,
++				      struct gfs2_holder *gh)
++{
++	struct gfs2_holder *current_gh, *gh2;
++
++	current_gh = find_first_holder(gl);
++	if (current_gh && !may_grant(gl, current_gh, gh))
++		return false;
++
++	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
++		if (test_bit(HIF_HOLDER, &gh2->gh_iflags))
++			continue;
++		if (!(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
++			return false;
++	}
++	return true;
++}
++
+ static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
+ {
+         if (!(gh->gh_flags & GL_NOPID))
+@@ -1480,27 +1497,20 @@ static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
+  */
  
--	if (satp_mode_cmdline == SATP_MODE_57) {
-+	if (satp_mode_cmdline == SATP_MODE_48) {
- 		disable_pgtable_l5();
--	} else if (satp_mode_cmdline == SATP_MODE_48) {
-+	} else if (satp_mode_cmdline == SATP_MODE_39) {
- 		disable_pgtable_l5();
- 		disable_pgtable_l4();
- 		return;
+ static inline void add_to_queue(struct gfs2_holder *gh)
+-__releases(&gl->gl_lockref.lock)
+-__acquires(&gl->gl_lockref.lock)
+ {
+ 	struct gfs2_glock *gl = gh->gh_gl;
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+ 	struct gfs2_holder *gh2;
+-	int try_futile = 0;
+ 
+ 	GLOCK_BUG_ON(gl, gh->gh_owner_pid == NULL);
+ 	if (test_and_set_bit(HIF_WAIT, &gh->gh_iflags))
+ 		GLOCK_BUG_ON(gl, true);
+ 
+-	if (gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) {
+-		if (test_bit(GLF_LOCK, &gl->gl_flags)) {
+-			struct gfs2_holder *current_gh;
+-
+-			current_gh = find_first_holder(gl);
+-			try_futile = !may_grant(gl, current_gh, gh);
+-		}
+-		if (test_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags))
+-			goto fail;
++	if ((gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) &&
++	    !gfs2_should_queue_trylock(gl, gh)) {
++		gh->gh_error = GLR_TRYFAILED;
++		gfs2_holder_wake(gh);
++		return;
+ 	}
+ 
+ 	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
+@@ -1512,15 +1522,6 @@ __acquires(&gl->gl_lockref.lock)
+ 			continue;
+ 		goto trap_recursive;
+ 	}
+-	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
+-		if (try_futile &&
+-		    !(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB))) {
+-fail:
+-			gh->gh_error = GLR_TRYFAILED;
+-			gfs2_holder_wake(gh);
+-			return;
+-		}
+-	}
+ 	trace_gfs2_glock_queue(gh, 1);
+ 	gfs2_glstats_inc(gl, GFS2_LKS_QCOUNT);
+ 	gfs2_sbstats_inc(gl, GFS2_LKS_QCOUNT);
 -- 
 2.51.0
 
