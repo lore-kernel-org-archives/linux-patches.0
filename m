@@ -1,81 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF9C34BA32;
-	Wed,  1 Oct 2025 17:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C95A59;
+	Thu,  2 Oct 2025 07:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759340963; cv=none; b=dh3LOIVc1KjHFO8nRl7kooaIwXaIIP9xUmrTapFDrZrc8AnnVFLKQFrfYsPKt8WhkS/v1bKMaCBw2WcK24XZZ5i4ChvloH4xwZIVAjqYAxguDor/mUfYUxQmqwESnLdx+i6WP1TyEzdjSFXlCoA/ISVL41oS3wV3DI99Tj83A8U=
+	t=1759388993; cv=none; b=tM9ItL7YdDMNdR25ePA5wqK5CLzWWDvvYw5QBZlJs3axHjXVu9iBbtxtU3jZ3kJ99B94hPanl+J/dnpEZ/nnJ8lXQJwh33/AFxDM8BIrH5ZXa/6wy8brLQtqX9ZIhKYvo+6B3W7m5buVpADBjHbqADaTBZ+RQ2TZpt8WzaYjNIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759340963; c=relaxed/simple;
-	bh=1GvNcdgjbr2SIE/4k8eA9UYSFmQT77JSBWNinbvuMms=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kw+kJou5tbXiezAteLeK0rMQzkr8FYxd6RxYAQKiN+YSlMGAQFybO24Nigtag1ZiOcAM+LugFxBpEZGTfvcL1WgX1HhZMNcAWriTceRdLh1EYUoNNzNuwmuC9Cp98nAY7AYOANk6EqXwcGFyzvNmnySYt6LtuOkx+MJgkTKQB2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gk0Z7EV7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759388993; c=relaxed/simple;
+	bh=qd03jEKdRKh9WJLAKjCIv/ylrq9qbmYcLZEjH4jmla4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M3PhoBKvL7yA7oRQRtODrSvbaOa8gBanMkScr46F5hu3l+YFJPSlZPJvn8UJ8aCsbPE8WhqeFt0IvlcD5tNb3t28Mf/o5eEVwjRHbcgKdCCTbP5O2TiK7THN0SoD1JijuYB0COdQEOqdAvedAQEaLUzo4t3eA2GPybs21XSwgQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=003wUiyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gk0Z7EV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE37BC4CEF1;
-	Wed,  1 Oct 2025 17:49:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759340962;
-	bh=1GvNcdgjbr2SIE/4k8eA9UYSFmQT77JSBWNinbvuMms=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gk0Z7EV72toUA0VP4TOWJ6YG7NL70LQF8Fo54VGVFUqVNUNdQgaMtMkQB1dVU04NE
-	 B6jhFasQqHvFlRAVV9quV1G5rOj4t19On5+GYXx3BHzMWaGK3QhXbUqL3pUMVJhWj5
-	 o+GGzctGogeJSk3fHfKQ3yTsdYrYUNhfm3/WmgvCxdVh9Wv23CKOHrRjCKDqhpvLTl
-	 p0XXJ0BjL+FQRK/ywwmuVLwhwFu5LOpdLxnJv2K7Nfx3Y0lGxEySYbiMmaNbbnWvLe
-	 mAVXI1VCD8a7QZIVnQWMP5zR0DZM//fdcHBx2zmbPGcAMQGntglVzAbKuffm3x5UrT
-	 AJnuQe+Q2oFOA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.16 000/143] 6.16.10-rc1 review
-Date: Wed,  1 Oct 2025 19:49:14 +0200
-Message-ID: <20251001174914.48153-1-ojeda@kernel.org>
-In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
-References: <20250930143831.236060637@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="003wUiyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6D3C4CEF4;
+	Thu,  2 Oct 2025 07:09:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1759388993;
+	bh=qd03jEKdRKh9WJLAKjCIv/ylrq9qbmYcLZEjH4jmla4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=003wUiyYdLVHmPXN7UvYVblqn3RqCgiPpbCvydv/FLR8WWyloZ6RNLtFujg/yqbK3
+	 iZYRKK2YZEC46mFWHfW6pLJaQcNwRUGjAAkkOlc8OwhAecWSASn2tCXX+ozLAOD5d9
+	 qrtpwuvRYkJHwtbCxnNbFxllIZbFAzIfzY8+ExhI=
+Date: Thu, 2 Oct 2025 09:09:50 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Kerem Karabay <kekrby@gmail.com>, Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 07/73] HID: multitouch: Get the contact ID from
+ HID_DG_TRANSDUCER_INDEX fields in case of Apple Touch Bar
+Message-ID: <2025100237-reprint-siesta-f3fb@gregkh>
+References: <20250930143820.537407601@linuxfoundation.org>
+ <20250930143820.858284690@linuxfoundation.org>
+ <MAUPR01MB11546CD5BF3C073E67FEE70BCB81AA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <MAUPR01MB11546CD5BF3C073E67FEE70BCB81AA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
 
-On Tue, 30 Sep 2025 16:45:24 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.16.10 release.
-> There are 143 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 02 Oct 2025 14:37:59 +0000.
-> Anything received after that time might be too late.
+On Tue, Sep 30, 2025 at 08:53:35PM +0530, Aditya Garg wrote:
+> 
+> 
+> On 30/09/25 8:17 pm, Greg Kroah-Hartman wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Kerem Karabay <kekrby@gmail.com>
+> > 
+> > [ Upstream commit f41d736acc039d86512951f4e874b0f5e666babf ]
+> > 
+> > In Apple Touch Bar, the contact ID is contained in fields with the
+> > HID_DG_TRANSDUCER_INDEX usage rather than HID_DG_CONTACTID, thus differing
+> > from the HID spec. Add a quirk for the same.
+> > 
+> 
+> All these hid-multitouch patches were a part of appletbdrm driver upstreamed since kernel 6.15.
+> 
+> Due to 2 different trees, and some delay in review by hid maintainers, these got upstreamed in 6.17.
+> 
+> So, in case you wish to backport to stable, IMO, backport only till 6.15, which in practicality is just 6.16 as of today.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for arm and loongarch64:
+Thanks, I'll drop this from everything except the 6.16.y tree.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+greg k-h
 
-Thanks!
-
-Cheers,
-Miguel
