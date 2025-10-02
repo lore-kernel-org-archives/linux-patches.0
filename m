@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB276221578;
-	Thu,  2 Oct 2025 15:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9341D554;
+	Thu,  2 Oct 2025 15:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419027; cv=none; b=rGQBW6dVwYOX4nc3yMMtdUsgtccgFfuz12Zm1DR6oyHvx6g0rtY2QALj1ttz1ienm8xN2A8bP3d8agqyFSj/77Zodxp1qVJKPqmSoTS9umSYciTBnhLxlIFsCP10H9ksn+KKvIugvTKQ26YcgQdB/v5k7FUk50cXB70vIL9uA6g=
+	t=1759419029; cv=none; b=sb5MZUqfajUmZbEQVVcBWIEc5uMQpe1sYL5htBYmJfuS0SsWT72d2M1vnIFStU8P6g+jDR5/aYdDKH74XHXJA0DGmt/pB5C9Ck4OThjNyOrMk+hTNcuvt85jTqwBfGjWTG4hEerfbA5qXtW4m3T72tg3lDZu0zpV8FoyUHw88d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419027; c=relaxed/simple;
-	bh=84+fXUarvr3Enprp6hwG5EfeATJ9lH9UeXfbN3RkF6c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ehFaKZFQ4HaVXRxj9e1z5YN1KNo1SwDnfwLLxFFX77Q8L5bozvy1DwpcSzJuyAfrLy4tohNUL+kCFTCqqnlxorIQJxKqJAdeh9Wis0eCJFmS6Ti2pXt+heTLor2ezu+FCIa/zc9I4a4g0CM3LjQK0CY0QndY4gknyBul5ecqpaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A+MaR8Rz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759419029; c=relaxed/simple;
+	bh=nS+BtJipqvbOUU0MjmcPCD0O/fWPAbAUkRbnOo3ijCY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=esTYAHsygiMCwLg6BlNOEJYwqXyd8LdcJWsDHSY6DqwEdpTZdfFZwrg47Sf3EjKNWknGcRn7hzlk+8v2AtqqSKvDKGZsAy+kPRGmw1EPHJhVuOAajFP7OPGlkCvn6lCm1k63cQCYzPo63bSgO8/ag4bgO/lAbNZC7Nl3KIIw1ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OR1a+qdd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A+MaR8Rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECF1C4CEF4;
-	Thu,  2 Oct 2025 15:30:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OR1a+qdd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF288C4CEF9;
+	Thu,  2 Oct 2025 15:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419027;
-	bh=84+fXUarvr3Enprp6hwG5EfeATJ9lH9UeXfbN3RkF6c=;
-	h=From:To:Cc:Subject:Date:From;
-	b=A+MaR8RzvFfqN7OkpkznhE37Ho1bT7H75RhyL5GmGbFiBqIjWU82BrWwSSBOTF4QI
-	 HHXNlom8IyoT8qunz153nqahSvxOeevOPtGnAlsHYFFdQkuM0ELrrJYuYUtTVJk5W9
-	 00MvS4MIVQCgPMuOR8eYZavuYJiOVEfAdpxAInM31JlT49Nvjo7rD0jqnLvRn96ZCY
-	 AjHn3QLLMwRQ0C1HJjK+3Hbwsk1U4rfWGkC0c37NeMWWf0nTA5S7IPRTQLZc7AcHqY
-	 ts3BCY3iYqaypOIej1+6ffvUAeTMihmOvVL+AQupGQQbhKlkC5pLCyrhzzhQLOJoi/
-	 OhPCPzElR/nIA==
+	s=k20201202; t=1759419028;
+	bh=nS+BtJipqvbOUU0MjmcPCD0O/fWPAbAUkRbnOo3ijCY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OR1a+qddhRsut7YUCTqVx+2PjP+tWVxoaxoM7pkA5t6x83daB+6I04ZJOZ5mKdFb/
+	 qgFeFlelJtnCC+gr+iAqGee1/QMVizXX8BBskeKhWzCIUEgxRm65JNnGZ9JoeQqbZ5
+	 +Sa63+z/1VFito6px8AHZBvhgtqxaXxL6ygHbVl+r13nJGacMMbhhJH9uLDLM3S4jC
+	 znwhTx3FH/AfsiKfUqFJCHU8GsSqa9/3Ssbl1Li0hKyCKwCChMxNE4X/J8uqKBbi+h
+	 P5ebUuUQytLr1jCqX3fJGsT2tiDiKMSYb51ZNi7D9y9lUUEx0jnRuB74r6PBrUYMtP
+	 h9NsBsBP655mg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
-	syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
+Cc: Fuad Tabba <tabba@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-5.4] hfs: fix KMSAN uninit-value issue in hfs_find_set_zero_bits()
-Date: Thu,  2 Oct 2025 11:29:48 -0400
-Message-ID: <20251002153025.2209281-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] arm64: sysreg: Correct sign definitions for EIESB and DoubleLock
+Date: Thu,  2 Oct 2025 11:29:49 -0400
+Message-ID: <20251002153025.2209281-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
+References: <20251002153025.2209281-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,202 +51,196 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 2048ec5b98dbdfe0b929d2e42dc7a54c389c53dd ]
+[ Upstream commit f4d4ebc84995178273740f3e601e97fdefc561d2 ]
 
-The syzbot reported issue in hfs_find_set_zero_bits():
+The `ID_AA64MMFR4_EL1.EIESB` field, is an unsigned enumeration, but was
+incorrectly defined as a `SignedEnum` when introduced in commit
+cfc680bb04c5 ("arm64: sysreg: Add layout for ID_AA64MMFR4_EL1"). This is
+corrected to `UnsignedEnum`.
 
-=====================================================
-BUG: KMSAN: uninit-value in hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
- hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
- hfs_vbm_search_free+0x13c/0x5b0 fs/hfs/bitmap.c:151
- hfs_extend_file+0x6a5/0x1b00 fs/hfs/extent.c:408
- hfs_get_block+0x435/0x1150 fs/hfs/extent.c:353
- __block_write_begin_int+0xa76/0x3030 fs/buffer.c:2151
- block_write_begin fs/buffer.c:2262 [inline]
- cont_write_begin+0x10e1/0x1bc0 fs/buffer.c:2601
- hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
- cont_expand_zero fs/buffer.c:2528 [inline]
- cont_write_begin+0x35a/0x1bc0 fs/buffer.c:2591
- hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
- hfs_file_truncate+0x1d6/0xe60 fs/hfs/extent.c:494
- hfs_inode_setattr+0x964/0xaa0 fs/hfs/inode.c:654
- notify_change+0x1993/0x1aa0 fs/attr.c:552
- do_truncate+0x28f/0x310 fs/open.c:68
- do_ftruncate+0x698/0x730 fs/open.c:195
- do_sys_ftruncate fs/open.c:210 [inline]
- __do_sys_ftruncate fs/open.c:215 [inline]
- __se_sys_ftruncate fs/open.c:213 [inline]
- __x64_sys_ftruncate+0x11b/0x250 fs/open.c:213
- x64_sys_call+0xfe3/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:78
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Conversely, the `ID_AA64DFR0_EL1.DoubleLock` field, is a signed
+enumeration, but was incorrectly defined as an `UnsignedEnum`. This is
+corrected to `SignedEnum`, which wasn't correctly set when annotated as
+such in commit ad16d4cf0b4f ("arm64/sysreg: Initial unsigned annotations
+for ID registers").
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4154 [inline]
- slab_alloc_node mm/slub.c:4197 [inline]
- __kmalloc_cache_noprof+0x7f7/0xed0 mm/slub.c:4354
- kmalloc_noprof include/linux/slab.h:905 [inline]
- hfs_mdb_get+0x1cc8/0x2a90 fs/hfs/mdb.c:175
- hfs_fill_super+0x3d0/0xb80 fs/hfs/super.c:337
- get_tree_bdev_flags+0x6e3/0x920 fs/super.c:1681
- get_tree_bdev+0x38/0x50 fs/super.c:1704
- hfs_get_tree+0x35/0x40 fs/hfs/super.c:388
- vfs_get_tree+0xb0/0x5c0 fs/super.c:1804
- do_new_mount+0x738/0x1610 fs/namespace.c:3902
- path_mount+0x6db/0x1e90 fs/namespace.c:4226
- do_mount fs/namespace.c:4239 [inline]
- __do_sys_mount fs/namespace.c:4450 [inline]
- __se_sys_mount+0x6eb/0x7d0 fs/namespace.c:4427
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:4427
- x64_sys_call+0xfa7/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:166
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 1 UID: 0 PID: 12609 Comm: syz.1.2692 Not tainted 6.16.0-syzkaller #0 PREEMPT(none)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-=====================================================
-
-The HFS_SB(sb)->bitmap buffer is allocated in hfs_mdb_get():
-
-HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
-
-Finally, it can trigger the reported issue because kmalloc()
-doesn't clear the allocated memory. If allocated memory contains
-only zeros, then everything will work pretty fine.
-But if the allocated memory contains the "garbage", then
-it can affect the bitmap operations and it triggers
-the reported issue.
-
-This patch simply exchanges the kmalloc() on kzalloc()
-with the goal to guarantee the correctness of bitmap operations.
-Because, newly created allocation bitmap should have all
-available blocks free. Potentially, initialization bitmap's read
-operation could not fill the whole allocated memory and
-"garbage" in the not initialized memory will be the reason of
-volume coruptions and file system driver bugs.
-
-Reported-by: syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=773fa9d79b29bd8b6831
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20250820230636.179085-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## YES
+Based on my comprehensive analysis, here is my determination:
 
-This commit should be backported to stable kernel trees and **has
-already been backported** (commit 71929d4dcb5ed in the current tree is
-the backported version).
+## Backport Status: **YES**
 
-### Detailed Analysis
+## Extensive Analysis
 
-#### Bug Severity and Impact
+### Overview
+This commit corrects sign definitions for two ARM64 system register
+fields:
+1. **ID_AA64MMFR4_EL1.EIESB** (bits 7:4): Incorrectly defined as
+   `SignedEnum`, should be `UnsignedEnum`
+2. **ID_AA64DFR0_EL1.DoubleLock** (bits 39:36): Incorrectly defined as
+   `UnsignedEnum`, should be `SignedEnum`
 
-**Critical filesystem corruption bug** present since 2016 (commit
-80f8dccf95147f):
+### Technical Deep Dive
 
-1. **Uninitialized Memory Issue**: The HFS bitmap buffer is allocated
-   with `kmalloc(8192, GFP_KERNEL)` at fs/hfs/mdb.c:175, but `kmalloc()`
-   does not zero memory. The subsequent bitmap read operation (lines
-   179-197) only reads `(fs_ablocks + 8) / 8` bytes from disk,
-   potentially leaving a large portion of the 8192-byte buffer
-   uninitialized.
+#### How Sign Definitions Matter
 
-2. **Quantified Impact**:
-   - Small filesystem (10,000 blocks): **84.7%** of bitmap uninitialized
-     (6,941 bytes)
-   - Medium filesystem (50,000 blocks): **23.7%** uninitialized (1,941
-     bytes)
-   - Only filesystems near 65,528 blocks fully initialize the buffer
+The `arch/arm64/tools/gen-sysreg.awk` script processes these definitions
+(lines 277-301) to generate `_SIGNED` macros:
+- `SignedEnum` → `#define REG_FIELD_SIGNED true`
+- `UnsignedEnum` → `#define REG_FIELD_SIGNED false`
 
-3. **Real-World Consequences**:
-   - When `hfs_find_set_zero_bits()` (fs/hfs/bitmap.c:44) accesses the
-     bitmap at `val = *curr`, it reads uninitialized garbage
-   - This causes incorrect block allocation decisions during file
-     operations (extend, truncate, write)
-   - Can lead to filesystem corruption, data loss, or allocation
-     failures
-   - Detected by KMSAN during syzbot fuzzing, indicating real
-     exploitability
-
-#### The Fix
-
-**Perfect minimal fix** - single line change at fs/hfs/mdb.c:175:
+These macros control critical behavior in
+`arch/arm64/include/asm/kvm_host.h:1541-1544`:
 ```c
-- HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
-+ HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
+#define kvm_cmp_feat(kvm, id, fld, op, limit)
+    (id##_##fld##_SIGNED ?
+     kvm_cmp_feat_signed(kvm, id, fld, op, limit) :
+     kvm_cmp_feat_unsigned(kvm, id, fld, op, limit))
 ```
 
-`kzalloc()` guarantees zero-initialized memory, ensuring the bitmap
-starts in a correct state where unread regions are treated as free (zero
-bits).
+The signed vs unsigned distinction affects:
+- **Field extraction**: Signed fields get sign-extended via
+  `sign_extend64()` (line 1529)
+- **Comparison values**: Signed limits get sign-extended (line 1517)
+- **Feature detection logic**: Used by `kvm_has_feat()` macro for
+  capability checks
 
-#### Stable Backport Criteria Evaluation
+#### ARM Architecture Context
 
-✅ **Fixes user-affecting bug**: Prevents filesystem corruption and
-incorrect block allocation
-✅ **Small and contained**: Single line change, no side effects
-✅ **No architectural changes**: Simple allocation function swap
-✅ **Minimal regression risk**: Zero risk - only makes behavior more
-correct
-✅ **Confined to subsystem**: Only affects HFS filesystem code
-✅ **Follows stable rules**: Important bugfix, minimal change, well-
-tested (syzbot reported)
+Following ARM conventions:
+- **Signed enumerations**: Use `0b1111` to represent "Not Implemented"
+  (interpreted as -1 in 4-bit signed)
+- **Unsigned enumerations**: Count up from 0, with higher values
+  indicating more capabilities
 
-#### Context and History
+**DoubleLock** (should be signed):
+- Values: `0b0000` (IMP), `0b1111` (NI)
+- Pattern matches other signed fields like MTPMU, FP, AdvSIMD (all using
+  0b1111=NI)
+- The 0b1111=-1 pattern indicates "feature not present"
 
-- **Bug introduced**: 2016-01-02 by Al Viro (80f8dccf95147f) when
-  replacing `__get_free_pages()` with `kmalloc()`
-- **Mainline fix**: 2025-08-20 (commit
-  2048ec5b98dbdfe0b929d2e42dc7a54c389c53dd)
-- **Backport status**: Already backported to this tree (71929d4dcb5ed)
-  by Sasha Levin
-- **Similar fixes**: Recent HFS bug fixes (slab-out-of-bounds, GPF
-  issues) typically include `Cc: stable@vger.kernel.org` and get
-  backported
-- **Active maintenance**: 155 commits to fs/hfs/ since 2022, showing
-  continued bugfixing effort
+**EIESB** (should be unsigned):
+- Values: `0b0000` (NI), `0b0001` (ToEL3), `0b0010` (ToELx), `0b1111`
+  (ANY)
+- Here 0b1111=15 means "applies to ANY exception level" (maximum
+  capability)
+- This is an ascending enumeration, not a "not implemented" marker
 
-#### Technical Review
+### Active Bug Impact
 
-The commit message correctly explains the issue and references the
-syzkaller report. The fix is architecturally sound - the bitmap should
-logically start with all blocks free (zero bits), so zero-initializing
-the buffer is the correct approach rather than relying on disk data to
-fill all 8192 bytes.
+#### DoubleLock Bug (CRITICAL)
 
-**Performance impact**: Negligible one-time cost of zeroing 8KB during
-mount operation.
+The incorrect definition causes **real bugs** in
+`arch/arm64/kvm/hyp/nvhe/pkvm.c:109` (added December 16, 2024, commit
+0401f7e76d707):
 
-**Backport recommendation**: **STRONGLY RECOMMENDED** for all stable
-trees supporting HFS filesystem.
+```c
+if (!kvm_has_feat(kvm, ID_AA64DFR0_EL1, DoubleLock, IMP))
+    val |= MDCR_EL2_TDOSA;
+```
 
- fs/hfs/mdb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**Bug behavior** (with incorrect unsigned definition):
+- When DoubleLock = `0b1111` (not implemented)
+- Incorrectly interpreted as unsigned 15
+- Check: `15 >= 0` (IMP) → **TRUE** (wrong!)
+- Result: **Does NOT set MDCR_EL2_TDOSA trap**
+- Impact: **Incorrect hypervisor behavior** - fails to trap debug
+  operations that should be trapped
 
-diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
-index 8082eb01127cd..bf811347bb07d 100644
---- a/fs/hfs/mdb.c
-+++ b/fs/hfs/mdb.c
-@@ -172,7 +172,7 @@ int hfs_mdb_get(struct super_block *sb)
- 		pr_warn("continuing without an alternate MDB\n");
- 	}
- 
--	HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
-+	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
- 	if (!HFS_SB(sb)->bitmap)
- 		goto out;
- 
+**Correct behavior** (after fix):
+- When DoubleLock = `0b1111` (not implemented)
+- Correctly interpreted as signed -1
+- Check: `-1 >= 0` (IMP) → **FALSE** (correct!)
+- Result: **Correctly sets MDCR_EL2_TDOSA trap**
+
+#### EIESB Bug (LATENT)
+
+Not actively used in feature detection yet, but the incorrect definition
+would cause failures if code checks `kvm_has_feat(kvm, ID_AA64MMFR4_EL1,
+EIESB, ToELx)`:
+- Wrong: `-1 >= 2` → FALSE (incorrectly thinks feature unsupported)
+- Right: `15 >= 2` → TRUE (correctly detects ANY exception level
+  support)
+
+### Code References
+
+Key usage locations:
+- **DoubleLock**: `arch/arm64/kvm/hyp/nvhe/pkvm.c:109` - Active bug in
+  KVM trap configuration
+- **DoubleLock**: `arch/arm64/kvm/config.c` - Feature configuration
+- **DoubleLock**: `arch/arm64/kvm/sys_regs.c` - System register field
+  preparation
+- **Sign logic**: `arch/arm64/kernel/cpufeature.c:191-208` - FTR_BITS
+  macros use sign field
+
+### Commit History
+
+- **Jan 31, 2023** (ad16d4cf0b4f): DoubleLock incorrectly marked as
+  unsigned
+- **Jan 22, 2024** (cfc680bb04c5): EIESB incorrectly introduced as
+  signed
+- **Dec 16, 2024** (0401f7e76d707): KVM code starts using DoubleLock -
+  **bug becomes active**
+- **Aug 29, 2025** (f4d4ebc84995): This fix corrects both sign
+  definitions
+- Acked by Mark Rutland (ARM maintainer)
+- No reverts or follow-up fixes found
+
+### Backport Justification
+
+✅ **Fixes important bug**: Active DoubleLock bug causes incorrect KVM
+trap configuration
+✅ **Small and contained**: Only changes two type annotations in metadata
+file
+✅ **No architectural changes**: Pure correctness fix
+✅ **Minimal regression risk**: Aligns with ARM architecture
+specifications
+✅ **Affects critical subsystem**: KVM hypervisor trap configuration
+✅ **Clean backport**: Changes apply to stable kernel versions
+✅ **Maintainer approved**: Acked-by from ARM maintainer Mark Rutland
+
+### Affected Kernel Versions
+
+Should backport to stable kernels containing:
+1. The incorrect definitions (since 6.3+ for DoubleLock, 6.8+ for EIESB)
+2. **Especially critical** for kernels with the KVM usage code (6.13+)
+
+This commit fixes incorrect metadata that causes real runtime bugs in
+ARM64 virtualization code.
+
+ arch/arm64/tools/sysreg | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index 696ab1f32a674..2a37d4c26d870 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -1693,7 +1693,7 @@ UnsignedEnum	43:40	TraceFilt
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-UnsignedEnum	39:36	DoubleLock
++SignedEnum	39:36	DoubleLock
+ 	0b0000	IMP
+ 	0b1111	NI
+ EndEnum
+@@ -2409,7 +2409,7 @@ UnsignedEnum	11:8	ASID2
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-SignedEnum	7:4	EIESB
++UnsignedEnum	7:4	EIESB
+ 	0b0000	NI
+ 	0b0001	ToEL3
+ 	0b0010	ToELx
 -- 
 2.51.0
 
