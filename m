@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED4A4D8CE;
-	Thu,  2 Oct 2025 15:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E86E1D554;
+	Thu,  2 Oct 2025 15:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419035; cv=none; b=Wyz9NVEGn9PQK92FZd2f7Szy6OMJ9mlOYoLO5BFDgtsk+BJCneF/0KUV4cbju7PZyn9qLaZXnPVPEeRq5SJOoobsXw+KU5yiybVMzbAxbsKH2iRl5glPF82KcPGuOTvVAdAX2WUHZMhM1u0WzgLh/Or//TZmvLDiK4xZsFWmzlA=
+	t=1759419037; cv=none; b=jWmYITwBw5q7y756MZOHzpW8AJrhqiXMsA0cl9+yGCHw7qd5DrNV1C316mDcN4kh/pucd0O3jouVJuCm1vucfZmcWhqdHRKTJ+02p8RVlbeoJmKFNKBZPEnwQVvME2zHQ9zm4dI0Sk7n5/L69J/TjmFbK1mDvGjrjl+mz39lHUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419035; c=relaxed/simple;
-	bh=wUknlYPzcIAtcubuB1mkhuqr2wJsmkhIeg9CBWmrvPE=;
+	s=arc-20240116; t=1759419037; c=relaxed/simple;
+	bh=o/uLA398BYfKlbY0pdWtj3IwxtO2zQxajL77FWEY6To=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eSNFVomH4KHufMexgoOjeES8WNCDwgx/Z+pxHAGKhQpdEAGdm+NRWQe58qjvwznK7QgIWP/JECWAk4AdFLOo9wEsilm6xvode/hZ1wZVgA+xa3fjKfeVH/YVCJpaVP2ATsUryWzesWotMYD57VT3cDaZIK4DOWANUeODLb3M0co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rLRJ+6AI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G0dQz4EGuG1rP77g4xlvCXDRoE3+GWLZTq40Upb0hR2qREqTxJ6E3moNZiCvB3cCheUyrinPD4IG/m7BHoejqaRdr2R1IhOjJ+9Y8IkRkjm74uz2mHh/zxG1c753DyuV2IvNZqOyfMzf9Vl6x5sRmbNqbz8ASX0wNq9yAHgWKEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSzVD0a1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rLRJ+6AI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D01C4CEF9;
-	Thu,  2 Oct 2025 15:30:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSzVD0a1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F45C4CEFB;
+	Thu,  2 Oct 2025 15:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419035;
-	bh=wUknlYPzcIAtcubuB1mkhuqr2wJsmkhIeg9CBWmrvPE=;
+	s=k20201202; t=1759419036;
+	bh=o/uLA398BYfKlbY0pdWtj3IwxtO2zQxajL77FWEY6To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLRJ+6AI+yFZtYBbidf5XV4D835qNaj2oRfbcyz5VN8h1NkVUzB/Ntv6z11zZ27df
-	 jxuVqzviZMnyl/vsEI4EilqaqtF+V4i7QSbTxpTSellRUENldCoKR//p+ElC9YOPYF
-	 1ZzvYic6icI40qBVxSCUrqUU71MGf3pR1c9H4wU4I6/Q3BF3SA5U5ItBcz/lF/wa7K
-	 BNP4tZAmYQGpCU6zeItBkvAsX8dmU3d0Vcu9e9psDUuVfHB/p8PCGr2BxNoNsafjJH
-	 772udg+z/Shd49IZYP77omHuIQQfCR0dXMgk5Bu2gtQuWRciDq0+bO+KX2h8h3Tf4S
-	 1GRydygZ+kAYQ==
+	b=KSzVD0a1XLzUcU/ZLkl3/IQwPsot1DngFpzyX/xcZM8HXYybe4lbM25GIZr8HmOSQ
+	 MwOfRKit1wszXeyCF8c5gvTY/lnUUbiZrBB3w8r3VJo236B6PupUjDuPFzIKOGvurf
+	 3bRsOIWC7+heUwbGoppkhwLs4AYRgdgo8ESCiqohDkW+WmQD4M307cLQKS3d7LxnDa
+	 Htq6Ner0kmTtbfyKRWc3GPD4oI7+FzNsi9JNS2XBcAt6sV7Wnxf+Y4cwZIArd/er6J
+	 8J32kOvit64ACX4C6oJstKf3HEEiT+1tVIJaQWdP/kYHOI6DBxWBGduheWYGc7Xkj6
+	 6cE/mrJ3eJHxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Metzmacher <metze@samba.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sami Mujawar <sami.mujawar@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17] smb: client: make use of ib_wc_status_msg() and skip IB_WC_WR_FLUSH_ERR logging
-Date: Thu,  2 Oct 2025 11:29:54 -0400
-Message-ID: <20251002153025.2209281-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.16] arm64: realm: ioremap: Allow mapping memory as encrypted
+Date: Thu,  2 Oct 2025 11:29:55 -0400
+Message-ID: <20251002153025.2209281-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -56,213 +55,211 @@ X-stable-base: Linux 6.17
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit a8e970358b31a5abba8b5737a67ba7b8d26f4258 ]
+[ Upstream commit fa84e534c3ec2904d8718a83180294f7b5afecc7 ]
 
-There's no need to get log message for every IB_WC_WR_FLUSH_ERR
-completion, but any other error should be logged at level ERR.
+For ioremap(), so far we only checked if it was a device (RIPAS_DEV) to choose
+an encrypted vs decrypted mapping. However, we may have firmware reserved memory
+regions exposed to the OS (e.g., EFI Coco Secret Securityfs, ACPI CCEL).
+We need to make sure that anything that is RIPAS_RAM (i.e., Guest
+protected memory with RMM guarantees) are also mapped as encrypted.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Rephrasing the above, anything that is not RIPAS_EMPTY is guaranteed to be
+protected by the RMM. Thus we choose encrypted mapping for anything that is not
+RIPAS_EMPTY. While at it, rename the helper function
+
+  __arm64_is_protected_mmio => arm64_rsi_is_protected
+
+to clearly indicate that this not an arm64 generic helper, but something to do
+with Realms.
+
+Cc: Sami Mujawar <sami.mujawar@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+Cc: Steven Price <steven.price@arm.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Tested-by: Sami Mujawar <sami.mujawar@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my exhaustive analysis, here is my recommendation:
+Based on my comprehensive analysis of this commit, I can now provide my
+determination.
 
-## **Backport Status: YES**
+## Analysis Summary
 
-### Extensive Analysis:
+### Code Change Analysis
 
-#### **What This Commit Does:**
+The commit makes a **critical logic change** in
+`arch/arm64/kernel/rsi.c:104`:
 
-This commit makes two logging improvements to the SMB Direct (RDMA)
-code:
+**Before**: `if (ripas != RSI_RIPAS_DEV) break;`
+- Only returns true if **all** regions are RIPAS_DEV (device memory)
+- Other states (RIPAS_RAM, RIPAS_DESTROYED) cause early exit → mapped as
+  **decrypted**
 
-1. **Human-readable error messages**: Changes from numeric status codes
-   (`wc->status=%d`) to descriptive strings using
-   `ib_wc_status_msg(wc->status)` (e.g., "WR flushed" instead of "6")
+**After**: `if (ripas == RSI_RIPAS_EMPTY) break;`
+- Returns true for RIPAS_RAM, RIPAS_DESTROYED, and RIPAS_DEV
+- Only RIPAS_EMPTY (unprotected/shared) regions are mapped as
+  **decrypted**
 
-2. **Reduces log spam**: Adds conditional checks (`if (wc->status !=
-   IB_WC_WR_FLUSH_ERR)`) to skip logging for `IB_WC_WR_FLUSH_ERR`
-   errors, which are benign and occur frequently during normal RDMA
-   operations
+### Problem Being Fixed
 
-3. **Better error visibility**: In `recv_done()` (line 607-608), changes
-   the log level from INFO to ERR for real errors
+The original implementation from commit 371589437616f (Oct 2024) only
+encrypted RIPAS_DEV regions. However, **firmware-reserved memory
+regions** use RIPAS_RAM state:
 
-#### **Deep Technical Context:**
+- **EFI Coco Secret Securityfs** areas
+- **ACPI CCEL** (Confidential Computing Event Log) tables
 
-**`IB_WC_WR_FLUSH_ERR` Background:**
-- This is a standard InfiniBand/RDMA work completion status indicating
-  that work requests were flushed from the queue
-- Occurs during normal operations: QP (Queue Pair) error state
-  transitions, connection teardown, and error recovery
-- **NOT an actionable error** - it's expected behavior that doesn't
-  require logging
-- Other kernel RDMA drivers follow this pattern:
-  `drivers/infiniband/core/mad.c:2366` has `if (wc->status ==
-  IB_WC_WR_FLUSH_ERR)` with special handling and no error logging
+Without this fix, these RIPAS_RAM regions are incorrectly mapped with
+`pgprot_decrypted()`, which sets `PROT_NS_SHARED`, making them
+**accessible to the untrusted hypervisor**.
 
-**SMB Client Logging History:**
-- Multiple commits address log spam in SMB client: d7cb986425ce2 "stop
-  flooding dmesg in smb2_calc_signature()", 6bbed0b3ad8b2 "fix noisy
-  when tree connecting"
-- This commit follows the same pattern - reducing noise while preserving
-  important error information
+### Security Impact
 
-#### **Backport Suitability Analysis:**
+This is a **security and data integrity bug**:
+1. **Confidential data leakage**: Hypervisor can read protected firmware
+   secrets
+2. **Data corruption**: Hypervisor can modify what should be protected
+   memory
+3. **Violation of ARM CCA guarantees**: Breaks confidential computing
+   promises
 
-**✅ STRONG POSITIVE FACTORS:**
+### Dependencies
 
-1. **Very small and safe**: Only 20 lines changed (12 insertions, 8
-   deletions) in a single file
-2. **Logging-only changes**: No functional code paths altered - only
-   what gets logged and how
-3. **Zero dependencies**: Both `ib_wc_status_msg()` (introduced v4.2,
-   2015) and `IB_WC_WR_FLUSH_ERR` exist in v6.17
-4. **Code compatibility**: The v6.17 send_done():275 and recv_done():450
-   functions match the pre-patch state exactly
-5. **Trusted author**: Stefan Metzmacher is a Samba core developer with
-   extensive SMB/CIFS expertise
-6. **Maintainer approval**: Acked-by Namjae Jeon, Signed-off-by Steve
-   French (CIFS maintainer)
-7. **Real user benefit**: Reduces log spam that obscures real errors,
-   improves observability for system administrators
-8. **Industry best practice**: Aligns with how other RDMA drivers in the
-   kernel handle IB_WC_WR_FLUSH_ERR
-9. **Minimal testing burden**: Can be verified simply by observing logs
-   during RDMA operations
+Two related commits were **already backported** (based on "Upstream
+commit" tags):
+- `bda90416d53f`: "arm64: Enable EFI secret area Securityfs support"
+- `09b8e2bf3bf1`: "arm64: acpi: Enable ACPI CCEL support"
 
-**⚠️ CONSIDERATIONS:**
+Both depend on this fix to function correctly.
 
-1. No explicit `Cc: stable@` tag (though this is common for QOL
-   improvements)
-2. Not a critical bugfix - it's a usability/observability enhancement
-3. Doesn't fix crashes, data corruption, or security issues
+### Risk Assessment
 
-#### **Regression Risk Assessment:**
+**LOW RISK**:
+- Isolated to ARM64 Realm subsystem (v6.13+)
+- Only affects ARM CCA Realm guests
+- Simple, well-understood logic inversion
+- Multiple reviewers (Gavin Shan, Steven Price) and testers (Sami
+  Mujawar)
+- No follow-up fixes or reverts found
+- Function rename improves code clarity
 
-**Risk Level: VERY LOW**
+### Stable Tree Rules
 
-- Changes only affect logging statements
-- No changes to control flow, data structures, or RDMA operations
-- If something did go wrong (highly unlikely), worst case is missing log
-  messages
-- The logic is straightforward: `if (status != FLUSH_ERR) log_error()`
+✅ Fixes important security/correctness bug
+✅ Small and contained (3 files, ~30 lines)
+✅ No new features or architectural changes
+✅ Minimal regression risk
+✅ Well-tested and reviewed
 
-#### **Specific Code Changes Analyzed:**
+---
 
-**send_done() fs/smb/client/smbdirect.c:415-429:**
-```c
-- log_rdma_send(INFO, "...wc->status=%d", wc->status);
-+ log_rdma_send(INFO, "...wc->status=%s", ib_wc_status_msg(wc->status));
+## **Answer: YES**
 
-- log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n", wc->status,
-  wc->opcode);
-+ if (wc->status != IB_WC_WR_FLUSH_ERR)
-+     log_rdma_send(ERR, "wc->status=%s wc->opcode=%d\n",
-+                   ib_wc_status_msg(wc->status), wc->opcode);
-```
+**This commit should be backported to stable kernel trees that include
+ARM64 Realm support (v6.13+).**
 
-**recv_done() fs/smb/client/smbdirect.c:597-608:**
-```c
-- log_rdma_recv(INFO, "...wc status=%d...", wc->status, ...);
-+ log_rdma_recv(INFO, "...wc status=%s...",
-ib_wc_status_msg(wc->status), ...);
+**Rationale**: This fixes a security vulnerability where firmware-
+reserved protected memory (RIPAS_RAM) is incorrectly mapped as decrypted
+instead of encrypted, violating ARM CCA confidential computing
+guarantees. The bug allows the untrusted hypervisor to access or corrupt
+protected firmware data (EFI secrets, ACPI CCEL tables). The fix is
+small, contained, well-tested, and has minimal regression risk.
+Additionally, two dependent features (EFI Secret and ACPI CCEL support)
+were already backported and require this fix to work correctly.
 
-- log_rdma_recv(INFO, "wc->status=%d opcode=%d\n", wc->status,
-  wc->opcode);
-+ if (wc->status != IB_WC_WR_FLUSH_ERR)
-+     log_rdma_recv(ERR, "wc->status=%s opcode=%d\n",
-+                   ib_wc_status_msg(wc->status), wc->opcode);
-```
+ arch/arm64/include/asm/io.h  |  2 +-
+ arch/arm64/include/asm/rsi.h |  2 +-
+ arch/arm64/kernel/rsi.c      | 26 ++++++++++++++++++++++----
+ 3 files changed, 24 insertions(+), 6 deletions(-)
 
-Note the important change: ERROR level logging for recv_done (was INFO,
-now ERR) - this ensures real errors are more visible.
-
-#### **Why This Should Be Backported:**
-
-1. **Improves user experience**: System administrators using SMB Direct
-   over RDMA will see cleaner logs with readable error messages
-2. **Reduces support burden**: Less noise in logs means real errors are
-   easier to identify
-3. **Safe change**: Extremely low risk of introducing regressions
-4. **Already backported elsewhere**: Evidence shows this commit
-   (624cc9eac4e69) was already backported to another stable tree
-5. **Aligns with stable tree philosophy**: Small, safe improvements that
-   benefit users without risk
-
-#### **Conclusion:**
-
-While not a critical fix, this commit provides tangible benefits
-(reduced log spam, better error messages) with virtually zero risk. It
-improves the operational experience for anyone using SMB Direct with
-RDMA, which is important for high-performance SMB deployments. The
-change is small, safe, and comes from trusted maintainers.
-
-**Recommendation: YES - suitable for backporting to stable trees, though
-not urgent priority.**
-
- fs/smb/client/smbdirect.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 3fc5d2cebea5d..723f79f38364d 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -281,8 +281,8 @@ static void send_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct smbd_connection *info =
- 		container_of(sc, struct smbd_connection, socket);
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index 9b96840fb979b..82276282a3c72 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -311,7 +311,7 @@ extern bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ static inline bool arm64_is_protected_mmio(phys_addr_t phys_addr, size_t size)
+ {
+ 	if (unlikely(is_realm_world()))
+-		return __arm64_is_protected_mmio(phys_addr, size);
++		return arm64_rsi_is_protected(phys_addr, size);
+ 	return false;
+ }
  
--	log_rdma_send(INFO, "smbdirect_send_io 0x%p completed wc->status=%d\n",
--		request, wc->status);
-+	log_rdma_send(INFO, "smbdirect_send_io 0x%p completed wc->status=%s\n",
-+		request, ib_wc_status_msg(wc->status));
+diff --git a/arch/arm64/include/asm/rsi.h b/arch/arm64/include/asm/rsi.h
+index b42aeac05340e..88b50d660e85a 100644
+--- a/arch/arm64/include/asm/rsi.h
++++ b/arch/arm64/include/asm/rsi.h
+@@ -16,7 +16,7 @@ DECLARE_STATIC_KEY_FALSE(rsi_present);
  
- 	for (i = 0; i < request->num_sge; i++)
- 		ib_dma_unmap_single(sc->ib.dev,
-@@ -291,8 +291,9 @@ static void send_done(struct ib_cq *cq, struct ib_wc *wc)
- 			DMA_TO_DEVICE);
+ void __init arm64_rsi_init(void);
  
- 	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
--		log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n",
--			wc->status, wc->opcode);
-+		if (wc->status != IB_WC_WR_FLUSH_ERR)
-+			log_rdma_send(ERR, "wc->status=%s wc->opcode=%d\n",
-+				ib_wc_status_msg(wc->status), wc->opcode);
- 		mempool_free(request, sc->send_io.mem.pool);
- 		smbd_disconnect_rdma_connection(info);
- 		return;
-@@ -462,13 +463,16 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	u32 data_length = 0;
- 	u32 remaining_data_length = 0;
+-bool __arm64_is_protected_mmio(phys_addr_t base, size_t size);
++bool arm64_rsi_is_protected(phys_addr_t base, size_t size);
  
--	log_rdma_recv(INFO, "response=0x%p type=%d wc status=%d wc opcode %d byte_len=%d pkey_index=%u\n",
--		      response, sc->recv_io.expected, wc->status, wc->opcode,
-+	log_rdma_recv(INFO,
-+		      "response=0x%p type=%d wc status=%s wc opcode %d byte_len=%d pkey_index=%u\n",
-+		      response, sc->recv_io.expected,
-+		      ib_wc_status_msg(wc->status), wc->opcode,
- 		      wc->byte_len, wc->pkey_index);
+ static inline bool is_realm_world(void)
+ {
+diff --git a/arch/arm64/kernel/rsi.c b/arch/arm64/kernel/rsi.c
+index ce4778141ec7b..c64a06f58c0bc 100644
+--- a/arch/arm64/kernel/rsi.c
++++ b/arch/arm64/kernel/rsi.c
+@@ -84,7 +84,25 @@ static void __init arm64_rsi_setup_memory(void)
+ 	}
+ }
  
- 	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV) {
--		log_rdma_recv(INFO, "wc->status=%d opcode=%d\n",
--			wc->status, wc->opcode);
-+		if (wc->status != IB_WC_WR_FLUSH_ERR)
-+			log_rdma_recv(ERR, "wc->status=%s opcode=%d\n",
-+				ib_wc_status_msg(wc->status), wc->opcode);
- 		goto error;
+-bool __arm64_is_protected_mmio(phys_addr_t base, size_t size)
++/*
++ * Check if a given PA range is Trusted (e.g., Protected memory, a Trusted Device
++ * mapping, or an MMIO emulated in the Realm world).
++ *
++ * We can rely on the RIPAS value of the region to detect if a given region is
++ * protected.
++ *
++ *  RIPAS_DEV - A trusted device memory or a trusted emulated MMIO (in the Realm
++ *		world
++ *  RIPAS_RAM - Memory (RAM), protected by the RMM guarantees. (e.g., Firmware
++ *		reserved regions for data sharing).
++ *
++ *  RIPAS_DESTROYED is a special case of one of the above, where the host did
++ *  something without our permission and as such we can't do anything about it.
++ *
++ * The only case where something is emulated by the untrusted hypervisor or is
++ * backed by shared memory is indicated by RSI_RIPAS_EMPTY.
++ */
++bool arm64_rsi_is_protected(phys_addr_t base, size_t size)
+ {
+ 	enum ripas ripas;
+ 	phys_addr_t end, top;
+@@ -101,18 +119,18 @@ bool __arm64_is_protected_mmio(phys_addr_t base, size_t size)
+ 			break;
+ 		if (WARN_ON(top <= base))
+ 			break;
+-		if (ripas != RSI_RIPAS_DEV)
++		if (ripas == RSI_RIPAS_EMPTY)
+ 			break;
+ 		base = top;
  	}
  
+ 	return base >= end;
+ }
+-EXPORT_SYMBOL(__arm64_is_protected_mmio);
++EXPORT_SYMBOL(arm64_rsi_is_protected);
+ 
+ static int realm_ioremap_hook(phys_addr_t phys, size_t size, pgprot_t *prot)
+ {
+-	if (__arm64_is_protected_mmio(phys, size))
++	if (arm64_rsi_is_protected(phys, size))
+ 		*prot = pgprot_encrypted(*prot);
+ 	else
+ 		*prot = pgprot_decrypted(*prot);
 -- 
 2.51.0
 
