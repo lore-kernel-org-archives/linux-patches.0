@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7B122E3E9;
-	Thu,  2 Oct 2025 15:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3E6231832;
+	Thu,  2 Oct 2025 15:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419059; cv=none; b=F6ZGgWZg1qPuZH+STsu1SPNxUUAtJa8R8tIDs9/xg5acr4A/y54E0s3n27znDzaamSWF5tsv9H04AyyqChm089uaQik968xiO8JTYiXcoDMKiqZ6BZ4atXPhlKdcI/7I0v/TsrZ9U3tylXIxHPWvGiI77Vre87uCLtJ9kjeasZI=
+	t=1759419060; cv=none; b=f0RT6Tl/9Vx492XhHsrnT5M/jvN/lIuvPuigvFd0S1m4pOU1Y81asDaLU5mb58oK+w5ZUsb5LL7lB7bx9MUhUM3dN2ISqf1rVSDKGr552nBEfw8SbK0gMkTlHc2lGkt9fWVUPDWfzjGm7eYSNzZjjOUKcS+oFBVBI3UiLwaWNL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419059; c=relaxed/simple;
-	bh=RZRhAPwruDBinADBth5fXOP0gpo3S6ZqgzdwnXe25xI=;
+	s=arc-20240116; t=1759419060; c=relaxed/simple;
+	bh=g+fY7Z++hADQkJDHrFpELN8lkmzMeAn0Bo+wPSzdUp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pV7KgiKdW9ruPcHbbsplAZg/0OZYZEdbTazIulF9xPkyi3WfNKAfEBy97C2X/bhW/5GniONSuxbakBa+tP0gAZbnl9Z+JtbFPq39IKzem39gic+EPKHyRlr5nKZG4DtlBUXTriwpmk3PXp3wfpaZwCQQ7YYezRLR9sOYsF6qUD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJTg+Rgy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EAoDdBk2hlu/o6jNKg2sjzMXxrX0oI9koAZ5/t0ZQ4JXPLMWnyWw1K2EnmPE9ILuHS96/UsAHdBUme8VJ9qhi4LJaFjtul3ZsHhvYSxNqKs8IUW4CF0CZ74k8njBN0shjhQiuJPi+n1wuk7SL9ZdRumPKuAw+uZZL85Ofs5rdVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGh2gGLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJTg+Rgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B894DC4CEF9;
-	Thu,  2 Oct 2025 15:30:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGh2gGLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA69C4CEF4;
+	Thu,  2 Oct 2025 15:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759419058;
-	bh=RZRhAPwruDBinADBth5fXOP0gpo3S6ZqgzdwnXe25xI=;
+	s=k20201202; t=1759419060;
+	bh=g+fY7Z++hADQkJDHrFpELN8lkmzMeAn0Bo+wPSzdUp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJTg+RgyOKe6pmjDZTGHq0zizZAAoDeqBotApCpsd2WDYvaVCNKq5H6yh3nTaBy3a
-	 evmdGCY4u5b4+xYM3ShAc2jFOaY8swmesZWGoD0OJpAeo9p6xsDACB44VXMpIay9kv
-	 FoU20f2l6465CRrLSAKE5M8eJ/GLs3EUe6AepiJKYubbStqedW9wJ+qXo9aTa+M89B
-	 lhZN+gAFXCIo/QEc8fizQFVf6k2qQqbgXxGy/UpKB6QTSrZQpw+T9WhIR+lPN3U8Tr
-	 7Psn53rwGqR+79pV7YG0NlEA3CX4vOYLeYiwmm/BUZPh6ixt/ruTACc/fc2tRGYNJe
-	 WkRwR3/yMAhmw==
+	b=EGh2gGLezUtH/xKN1jTwFYa4KdD41FZM6mA9Oqfq/ja/OykZr/Vv03BSaO6wo7lsu
+	 u0UADqnDzVBEi7Z/98yF2CHfNE6Gj6Z4bh7MhqPMz5FlVkGlqU+Dxio3Bbh154gK5P
+	 N5cpbuv/tXj5mZBnUZxuE0Fe/M0ixwwsMbrh4mD8R6lAaK56Vpa+frfVP3z0/8y4E9
+	 o4bX+s1QWSF69ffEwUf2aAZKDIs5WgdcqbXV9bhIVPO8WfNdEWRNsO5yiJrn6GXfI1
+	 2H7n0bZQSG9Q1IKqM85RCYTMTr6FhSCApUW67qda1nUdjDwlGMRT4togUlGNkxvBt0
+	 1inEywy7M0S/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Kees Cook <kees@kernel.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>,
 	paul.walmsley@sifive.com,
 	palmer@dabbelt.com,
 	aou@eecs.berkeley.edu,
+	linux-pci@vger.kernel.org,
 	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.16] riscv: cpufeature: add validation for zfa, zfh and zfhmin
-Date: Thu,  2 Oct 2025 11:30:11 -0400
-Message-ID: <20251002153025.2209281-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] PCI: Test for bit underflow in pcie_set_readrq()
+Date: Thu,  2 Oct 2025 11:30:12 -0400
+Message-ID: <20251002153025.2209281-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251002153025.2209281-1-sashal@kernel.org>
 References: <20251002153025.2209281-1-sashal@kernel.org>
@@ -49,178 +51,164 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 2e2cf5581fccc562f7faf174ffb9866fed5cafbd ]
+[ Upstream commit 00e58ff924b3a684b076f9512fe2753be87b50e1 ]
 
-These extensions depends on the F one. Add a validation callback
-checking for the F extension to be present. Now that extensions are
-correctly reported using the F/D presence, we can remove the
-has_fpu() check in hwprobe_isa_ext0().
+In preparation for the future commit ("bitops: Add __attribute_const__ to generic
+ffs()-family implementations"), which allows GCC's value range tracker
+to see past ffs(), GCC 8 on ARM thinks that it might be possible that
+"ffs(rq) - 8" used here:
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20250527100001.33284-1-cleger@rivosinc.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
+
+could wrap below 0, leading to a very large value, which would be out of
+range for the FIELD_PREP() usage:
+
+drivers/pci/pci.c: In function 'pcie_set_readrq':
+include/linux/compiler_types.h:572:38: error: call to '__compiletime_assert_471' declared with attribute error: FIELD_PREP: value too large for the field
+...
+drivers/pci/pci.c:5896:6: note: in expansion of macro 'FIELD_PREP'
+  v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
+      ^~~~~~~~~~
+
+If the result of the ffs() is bounds checked before being used in
+FIELD_PREP(), the value tracker seems happy again. :)
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/linux-pci/CA+G9fYuysVr6qT8bjF6f08WLyCJRG7aXAeSd2F7=zTaHHd7L+Q@mail.gmail.com/
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250905052836.work.425-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit, here is my
-assessment:
+Based on my comprehensive analysis, here is my determination:
 
-**Backport Status: YES**
+## Backport Status: **YES**
 
-## Extensive Analysis
+### Extensive Analysis:
 
-### What This Commit Fixes
+#### Nature of the Fix:
+This commit adds a defensive check in `pcie_set_readrq()` to prevent a
+potential bit underflow when computing `ffs(rq) - 8`. Specifically, it:
+1. Stores the result of `ffs(rq)` in a new variable `firstbit`
+2. Adds a check: `if (firstbit < 8) return -EINVAL;`
+3. Uses `firstbit - 8` instead of `ffs(rq) - 8` in the FIELD_PREP macro
 
-This commit addresses **incorrect CPU feature reporting** for three
-RISC-V floating-point extensions (ZFA, ZFH, ZFHMIN) that were being
-exposed to userspace without proper validation that their required
-dependency (the F extension) is present.
+#### Root Cause & Context:
+This is **not a runtime bug fix** - it's a **build fix** triggered by
+another optimization commit. The bitops commit (50675b8f5bd4e "bitops:
+Add __attribute_const__ to generic ffs()-family implementations") adds
+`__attribute_const__` to ffs() functions, enabling GCC's value range
+tracker to perform better static analysis. However, GCC-8's conservative
+analysis on ARM, RISCV, and MIPS architectures incorrectly determines
+that `ffs(rq) - 8` could underflow, causing a **compilation error** (not
+a warning):
 
-### Code Changes Analysis
+```
+drivers/pci/pci.c: In function 'pcie_set_readrq':
+include/linux/compiler_types.h:572:38: error: call to
+'__compiletime_assert_471'
+declared with attribute error: FIELD_PREP: value too large for the field
+```
 
-The commit makes two key changes:
+#### Why the Compiler is Wrong (but we still need to fix it):
+Examining the code flow in `pcie_set_readrq()`
+(drivers/pci/pci.c:5931-5968):
+1. Initial validation: `if (rq < 128 || rq > 4096 ||
+   !is_power_of_2(rq))` ensures rq ≥ 128
+2. Performance mode clamping: `if (mps < rq) rq = mps;` where mps comes
+   from `pcie_get_mps()`
+3. `pcie_get_mps()` returns `128 << FIELD_GET(...)`, which is always ≥
+   128 (verified at line 5976-5984)
+4. Therefore, `ffs(rq) >= ffs(128) = 8`, so underflow is impossible
 
-1. **In arch/riscv/kernel/cpufeature.c (lines 477-480)**:
-   - Changes ZFA, ZFH, and ZFHMIN from `__RISCV_ISA_EXT_DATA` to
-     `__RISCV_ISA_EXT_DATA_VALIDATE`
-   - Adds `riscv_ext_f_depends` validation callback (lines 83-90) which
-     checks that the F extension is available before allowing these
-     extensions to be reported
-   - The validation function returns `-EPROBE_DEFER` if F is not
-     present, preventing incorrect feature reporting
+However, since commit f67577118d115 (2013), `pcie_get_mps()` never
+returns an error, always returning valid values ≥ 128. The compiler
+cannot prove this through interprocedural analysis.
 
-2. **In arch/riscv/kernel/sys_hwprobe.c (lines 156-163)**:
-   - Removes the `has_fpu()` conditional check that was previously
-     gating these extensions
-   - This is safe because the validation is now properly handled in
-     cpufeature.c through the validation callbacks
+#### Critical Dependency:
+This commit is **tightly coupled** with the bitops commit. Evidence:
+- Both commits are signed off by Sasha Levin (autosel backports)
+- They appear consecutively in the git history (50675b8f5bd4e →
+  5385aceb86f2f)
+- The commit message explicitly states: "In preparation for the future
+  commit"
+- Without this fix, **builds will fail** on GCC-8 ARM/RISCV/MIPS after
+  bitops changes
 
-### Why This is a Bug Fix
+#### Risk Assessment:
+**Minimal Risk:**
+- Small, localized change (6 lines added in one function)
+- Adds defensive validation that cannot break existing functionality
+- For all valid inputs (rq ≥ 128), the check passes through
+- Only rejects values that would have caused incorrect behavior anyway
+- No performance impact
+- No changes to critical kernel subsystems beyond PCI
 
-According to the RISC-V ISA specification:
-- **ZFA** (Additional Floating-Point Instructions) requires F
-- **ZFH** (Half-Precision Floating-Point) requires F
-- **ZFHMIN** (Minimal Half-Precision Floating-Point) requires F
+#### Backporting Justification:
+1. **Mandatory dependency**: Required if bitops commit is backported
+   (which it is - commit 50675b8f5bd4e)
+2. **Build fix**: Prevents compilation failures on supported compiler
+   configurations
+3. **Low risk**: Defensive check with no behavior change for valid
+   inputs
+4. **Follows stable rules**: Small, contained fix with clear purpose
+5. **Multiple architectures affected**: ARM, RISCV, MIPS with GCC-8
+6. **Upstream acceptance**: Acked by PCI maintainer (Bjorn Helgaas) and
+   Arnd Bergmann
 
-Without this fix, the kernel could incorrectly report these extensions
-as available even when the base F extension is not present. This
-violates the ISA specification and could lead to:
+#### Supporting Evidence:
+- Reported by: Linux Kernel Functional Testing (LKFT)
+- Affects: GCC-8 on arm, riscv, mips architectures
+- First seen: Linux 6.17.0-rc3-next-20250828
+- Bisected to: bitops __attribute_const__ commit
+- Acked-by: Bjorn Helgaas, Arnd Bergmann
 
-1. **Incorrect userspace behavior**: Applications using hwprobe() might
-   detect these extensions and attempt to use instructions that aren't
-   supported
-2. **Illegal instruction exceptions**: If userspace tries to execute
-   these instructions without F support
-3. **Inconsistent CPU capability reporting**: The kernel would report
-   capabilities that the hardware doesn't actually support
+### Conclusion:
+**YES - This commit should be backported** as it's a necessary build fix
+that must accompany the bitops optimization commit. Without it, stable
+kernels with the bitops changes will fail to build on GCC-8
+ARM/RISCV/MIPS configurations, breaking supported build environments.
+The fix is minimal, defensive, and poses negligible regression risk.
 
-### Context from Related Commits
+ drivers/pci/pci.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-This commit is part of a larger validation effort:
-- **e186c28dda11e** (Feb 2025): Introduced `riscv_ext_f_depends`
-  validation for ZFBFMIN
-- **12e7fbb6a84e6** (Mar 2025): Added F & D extension validation checks
-- **004961843389e** (Apr 2025): Merged the validation series
-- **2e2cf5581fccc** (May 2025): This commit - completes the validation
-  by adding it for ZFA/ZFH/ZFHMIN which were missed
-
-The commit message states: "Now that extensions are correctly reported
-using the F/D presence, we can remove the has_fpu() check" - indicating
-this is cleanup that follows the proper validation infrastructure being
-put in place.
-
-### Backporting Criteria Assessment
-
-✅ **Fixes a bug affecting users**: Yes - incorrect CPU feature reporting
-can cause userspace applications to malfunction
-
-✅ **Small and contained**: Yes - only 14 lines changed across 2 files,
-following an established pattern
-
-✅ **Clear side effects**: No unexpected side effects - makes reporting
-more correct
-
-✅ **No architectural changes**: No - uses existing validation
-infrastructure
-
-✅ **Minimal regression risk**: Very low - the change makes feature
-reporting more conservative (won't report features unless dependencies
-are met)
-
-✅ **Confined to subsystem**: Yes - only affects RISC-V architecture code
-
-### Conclusion
-
-This commit should be backported because it:
-1. Fixes incorrect CPU capability reporting that violates the RISC-V ISA
-   specification
-2. Prevents potential illegal instruction exceptions in userspace
-3. Is small, focused, and low-risk
-4. Follows the stable tree rules for important bug fixes with minimal
-   risk
-5. Completes a validation series that was already merged upstream
-
-The fix ensures RISC-V systems correctly report their capabilities to
-userspace, which is critical for proper system operation.
-
- arch/riscv/kernel/cpufeature.c  |  6 +++---
- arch/riscv/kernel/sys_hwprobe.c | 14 ++++++--------
- 2 files changed, 9 insertions(+), 11 deletions(-)
-
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index 743d53415572e..67b59699357da 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -474,10 +474,10 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
- 	__RISCV_ISA_EXT_DATA(zacas, RISCV_ISA_EXT_ZACAS),
- 	__RISCV_ISA_EXT_DATA(zalrsc, RISCV_ISA_EXT_ZALRSC),
- 	__RISCV_ISA_EXT_DATA(zawrs, RISCV_ISA_EXT_ZAWRS),
--	__RISCV_ISA_EXT_DATA(zfa, RISCV_ISA_EXT_ZFA),
-+	__RISCV_ISA_EXT_DATA_VALIDATE(zfa, RISCV_ISA_EXT_ZFA, riscv_ext_f_depends),
- 	__RISCV_ISA_EXT_DATA_VALIDATE(zfbfmin, RISCV_ISA_EXT_ZFBFMIN, riscv_ext_f_depends),
--	__RISCV_ISA_EXT_DATA(zfh, RISCV_ISA_EXT_ZFH),
--	__RISCV_ISA_EXT_DATA(zfhmin, RISCV_ISA_EXT_ZFHMIN),
-+	__RISCV_ISA_EXT_DATA_VALIDATE(zfh, RISCV_ISA_EXT_ZFH, riscv_ext_f_depends),
-+	__RISCV_ISA_EXT_DATA_VALIDATE(zfhmin, RISCV_ISA_EXT_ZFHMIN, riscv_ext_f_depends),
- 	__RISCV_ISA_EXT_DATA(zca, RISCV_ISA_EXT_ZCA),
- 	__RISCV_ISA_EXT_DATA_VALIDATE(zcb, RISCV_ISA_EXT_ZCB, riscv_ext_zca_depends),
- 	__RISCV_ISA_EXT_DATA_VALIDATE(zcd, RISCV_ISA_EXT_ZCD, riscv_ext_zcd_validate),
-diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
-index 0b170e18a2beb..3e9259790816e 100644
---- a/arch/riscv/kernel/sys_hwprobe.c
-+++ b/arch/riscv/kernel/sys_hwprobe.c
-@@ -153,14 +153,12 @@ static void hwprobe_isa_ext0(struct riscv_hwprobe *pair,
- 			EXT_KEY(ZVKT);
- 		}
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index b0f4d98036cdd..005b92e6585e9 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5932,6 +5932,7 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
+ {
+ 	u16 v;
+ 	int ret;
++	unsigned int firstbit;
+ 	struct pci_host_bridge *bridge = pci_find_host_bridge(dev->bus);
  
--		if (has_fpu()) {
--			EXT_KEY(ZCD);
--			EXT_KEY(ZCF);
--			EXT_KEY(ZFA);
--			EXT_KEY(ZFBFMIN);
--			EXT_KEY(ZFH);
--			EXT_KEY(ZFHMIN);
--		}
-+		EXT_KEY(ZCD);
-+		EXT_KEY(ZCF);
-+		EXT_KEY(ZFA);
-+		EXT_KEY(ZFBFMIN);
-+		EXT_KEY(ZFH);
-+		EXT_KEY(ZFHMIN);
+ 	if (rq < 128 || rq > 4096 || !is_power_of_2(rq))
+@@ -5949,7 +5950,10 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
+ 			rq = mps;
+ 	}
  
- 		if (IS_ENABLED(CONFIG_RISCV_ISA_SUPM))
- 			EXT_KEY(SUPM);
+-	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, ffs(rq) - 8);
++	firstbit = ffs(rq);
++	if (firstbit < 8)
++		return -EINVAL;
++	v = FIELD_PREP(PCI_EXP_DEVCTL_READRQ, firstbit - 8);
+ 
+ 	if (bridge->no_inc_mrrs) {
+ 		int max_mrrs = pcie_get_readrq(dev);
 -- 
 2.51.0
 
