@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E928414A8B;
-	Fri,  3 Oct 2025 16:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028D335962;
+	Fri,  3 Oct 2025 16:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507739; cv=none; b=rG6wA3B4UupT1rdoK4F3Ekcbv56hLCprQSoAoaQ+C3H/+kXJ3sQFTdOUC0d4sh6Q/NA8vFiV1UJh9n1bJz7aOBrLqvgerSQvyVvEgaKuwfNKrWfj5kyD7wEfpdFbEs15Kf4vMGVcV7rCXZf8w49OH/+bQcqnwTc5VVRG+HQw5pc=
+	t=1759507742; cv=none; b=QoYzXWR1ITGfiMWDuhQl7GhPChPOUvabzaAg9btUVcAORT8a6knzJpm/vvkLM70Bq154f7Qw1VqDstrMSBUSIPiKfjFdUzOcsQzkRTZCfBvTNYSLookSw4Nfq4ip4bx2WUm8lyRqGqkj0Atqht0+ZpjgH3FdiyB6hn9zXpn53s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507739; c=relaxed/simple;
-	bh=+ySP6rEc8hi+NJWX5JwVY7SaJqhoFRPeKE60+DQCUOs=;
+	s=arc-20240116; t=1759507742; c=relaxed/simple;
+	bh=b6DtyNeSJ7rifq9y7mNo3NDlj5N6uVglN/WhX3yvdww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kfis/NYbDFN8XBFjKfErlv2aRM2l7ry1YzPOOYvaq87cnVSUrxYpU1jSpMnM1f47Js7lelLV2g9ENDImOIfuPCwDQ1N9OlMlqGQ0S54nRF8EVFjYIXpZRmwdtqFm53T1IMoKh/y/YGowY1RlmqbgEU/BWo4aDLPJrkMK/uh9jzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIekz/Sd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2FaXNzV70vMLMq+5+PfrZizMgD+iYNy6uvdhbC55OQmXHptXm6+9Ck6hkGjz+5cAbHCw3h7pw5QrfBS4pjEsjNZqWRRM/YayfxPi8KYuLm46wGhOOavHm6npGIz9/kagA6QydhipKtZaYVneVLDv75iwz7sD4YHBGYq8sZBVNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPLf6SQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIekz/Sd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74ED6C4CEF5;
-	Fri,  3 Oct 2025 16:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPLf6SQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3F7C4CEF5;
+	Fri,  3 Oct 2025 16:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507738;
-	bh=+ySP6rEc8hi+NJWX5JwVY7SaJqhoFRPeKE60+DQCUOs=;
+	s=korg; t=1759507741;
+	bh=b6DtyNeSJ7rifq9y7mNo3NDlj5N6uVglN/WhX3yvdww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIekz/Sd9BTq2PEFEPnJ9miri+zhByvsqr/x43yNXLQNFYvqsH9g/17cZXnbcnNrr
-	 lvbRpjPWg1ZtA+l9l4Y6iPIQSILGD5YRprBhQhby3DWBjTRU1fQwdTut1cAorjUpQy
-	 KG/5+V5EQa8gQaBYXpLw0rK1B52w/mw9UbwPBncA=
+	b=HPLf6SQH7bQrzYeEdkgE0FCOxT65kJy5jIxDWDGrCMbbkx8lOi5IRJ8h9tbfgwj7N
+	 pjt1PVC6aSHxwwLX8N6SimMxdwPQpNVx63tYDu/GBHs1SthZSk9nHMaaretGUSEcaY
+	 CMZCB+3oEmw19fmtVCuXjC0QL864AH8xu5L+KJZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
+	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 4/7] media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
-Date: Fri,  3 Oct 2025 18:06:12 +0200
-Message-ID: <20251003160331.618858311@linuxfoundation.org>
+Subject: [PATCH 6.6 5/7] media: rc: fix races with imon_disconnect()
+Date: Fri,  3 Oct 2025 18:06:13 +0200
+Message-ID: <20251003160331.647625074@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160331.487313415@linuxfoundation.org>
 References: <20251003160331.487313415@linuxfoundation.org>
@@ -50,119 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
 
-commit 01e03fb7db419d39e18d6090d4873c1bff103914 upstream.
+commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
 
-The original code uses cancel_delayed_work() in flexcop_pci_remove(), which
-does not guarantee that the delayed work item irq_check_work has fully
-completed if it was already running. This leads to use-after-free scenarios
-where flexcop_pci_remove() may free the flexcop_device while irq_check_work
-is still active and attempts to dereference the device.
+Syzbot reports a KASAN issue as below:
+BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
+BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
 
-A typical race condition is illustrated below:
-
-CPU 0 (remove)                         | CPU 1 (delayed work callback)
-flexcop_pci_remove()                   | flexcop_pci_irq_check_work()
-  cancel_delayed_work()                |
-  flexcop_device_kfree(fc_pci->fc_dev) |
-                                       |   fc = fc_pci->fc_dev; // UAF
-
-This is confirmed by a KASAN report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
-Write of size 8 at addr ffff8880093aa8c8 by task bash/135
-...
+CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
 Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_report+0xcf/0x610
- ? __run_timer_base.part.0+0x7d7/0x8c0
- kasan_report+0xb8/0xf0
- ? __run_timer_base.part.0+0x7d7/0x8c0
- __run_timer_base.part.0+0x7d7/0x8c0
- ? __pfx___run_timer_base.part.0+0x10/0x10
- ? __pfx_read_tsc+0x10/0x10
- ? ktime_get+0x60/0x140
- ? lapic_next_event+0x11/0x20
- ? clockevents_program_event+0x1d4/0x2a0
- run_timer_softirq+0xd1/0x190
- handle_softirqs+0x16a/0x550
- irq_exit_rcu+0xaf/0xe0
- sysvec_apic_timer_interrupt+0x70/0x80
- </IRQ>
+ <TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+print_address_description mm/kasan/report.c:317 [inline]
+print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
+kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+__create_pipe include/linux/usb.h:1945 [inline]
+send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
+vfs_write+0x2d7/0xdd0 fs/read_write.c:576
+ksys_write+0x127/0x250 fs/read_write.c:631
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The iMON driver improperly releases the usb_device reference in
+imon_disconnect without coordinating with active users of the
+device.
+
+Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
+protected by the users counter (ictx->users). During probe,
+imon_init_intf0 or imon_init_intf1 increments the usb_device
+reference count depending on the interface. However, during
+disconnect, usb_put_dev is called unconditionally, regardless of
+actual usage.
+
+As a result, if vfd_write or other operations are still in
+progress after disconnect, this can lead to a use-after-free of
+the usb_device pointer.
+
+Thread 1 vfd_write                      Thread 2 imon_disconnect
+                                        ...
+                                        if
+                                          usb_put_dev(ictx->usbdev_intf0)
+                                        else
+                                          usb_put_dev(ictx->usbdev_intf1)
 ...
+while
+  send_packet
+    if
+      pipe = usb_sndintpipe(
+        ictx->usbdev_intf0) UAF
+    else
+      pipe = usb_sndctrlpipe(
+        ictx->usbdev_intf0, 0) UAF
 
-Allocated by task 1:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- __kmalloc_noprof+0x1be/0x460
- flexcop_device_kmalloc+0x54/0xe0
- flexcop_pci_probe+0x1f/0x9d0
- local_pci_probe+0xdc/0x190
- pci_device_probe+0x2fe/0x470
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __driver_attach+0xd2/0x310
- bus_for_each_dev+0xed/0x170
- bus_add_driver+0x208/0x500
- driver_register+0x132/0x460
- do_one_initcall+0x89/0x300
- kernel_init_freeable+0x40d/0x720
- kernel_init+0x1a/0x150
- ret_from_fork+0x10c/0x1a0
- ret_from_fork_asm+0x1a/0x30
+Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
+checking ictx->disconnected in all writer paths. Add early return
+with -ENODEV in send_packet(), vfd_write(), lcd_write() and
+display_open() if the device is no longer present.
 
-Freed by task 135:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x3f/0x50
- kfree+0x137/0x370
- flexcop_device_kfree+0x32/0x50
- pci_device_remove+0xa6/0x1d0
- device_release_driver_internal+0xf8/0x210
- pci_stop_bus_device+0x105/0x150
- pci_stop_and_remove_bus_device_locked+0x15/0x30
- remove_store+0xcc/0xe0
- kernfs_fop_write_iter+0x2c3/0x440
- vfs_write+0x871/0xd70
- ksys_write+0xee/0x1c0
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
+Set and read ictx->disconnected under ictx->lock to ensure memory
+synchronization. Acquire the lock in imon_disconnect() before setting
+the flag to synchronize with any ongoing operations.
 
-Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the delayed work item is properly canceled and any executing delayed
-work has finished before the device memory is deallocated.
+Ensure writers exit early and safely after disconnect before the USB
+core proceeds with cleanup.
 
-This bug was initially identified through static analysis. To reproduce
-and test it, I simulated the B2C2 FlexCop PCI device in QEMU and introduced
-artificial delays within the flexcop_pci_irq_check_work() function to
-increase the likelihood of triggering the bug.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 382c5546d618 ("V4L/DVB (10694): [PATCH] software IRQ watchdog for Flexcop B2C2 DVB PCI cards")
+Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+
+Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/b2c2/flexcop-pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/drivers/media/pci/b2c2/flexcop-pci.c
-+++ b/drivers/media/pci/b2c2/flexcop-pci.c
-@@ -411,7 +411,7 @@ static void flexcop_pci_remove(struct pc
- 	struct flexcop_pci *fc_pci = pci_get_drvdata(pdev);
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -536,7 +536,9 @@ static int display_open(struct inode *in
  
- 	if (irq_chk_intv > 0)
--		cancel_delayed_work(&fc_pci->irq_check_work);
-+		cancel_delayed_work_sync(&fc_pci->irq_check_work);
+ 	mutex_lock(&ictx->lock);
  
- 	flexcop_pci_dma_exit(fc_pci);
- 	flexcop_device_exit(fc_pci->fc_dev);
+-	if (!ictx->display_supported) {
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++	} else if (!ictx->display_supported) {
+ 		pr_err("display not supported by device\n");
+ 		retval = -ENODEV;
+ 	} else if (ictx->display_isopen) {
+@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
+ 	int retval = 0;
+ 	struct usb_ctrlrequest *control_req = NULL;
+ 
++	if (ictx->disconnected)
++		return -ENODEV;
++
+ 	/* Check if we need to use control or interrupt urb */
+ 	if (!ictx->tx_control) {
+ 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
+@@ -949,12 +954,14 @@ static ssize_t vfd_write(struct file *fi
+ 	static const unsigned char vfd_packet6[] = {
+ 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	if (mutex_lock_interruptible(&ictx->lock))
+ 		return -ERESTARTSYS;
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
+ 		retval = -ENODEV;
+@@ -1029,11 +1036,13 @@ static ssize_t lcd_write(struct file *fi
+ 	int retval = 0;
+ 	struct imon_context *ictx = file->private_data;
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	mutex_lock(&ictx->lock);
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->display_supported) {
+ 		pr_err_ratelimited("no iMON display present\n");
+ 		retval = -ENODEV;
+@@ -2499,7 +2508,11 @@ static void imon_disconnect(struct usb_i
+ 	int ifnum;
+ 
+ 	ictx = usb_get_intfdata(interface);
++
++	mutex_lock(&ictx->lock);
+ 	ictx->disconnected = true;
++	mutex_unlock(&ictx->lock);
++
+ 	dev = ictx->dev;
+ 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
+ 
 
 
