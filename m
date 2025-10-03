@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A1D29BDB5;
-	Fri,  3 Oct 2025 16:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3AC292B4B;
+	Fri,  3 Oct 2025 16:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507596; cv=none; b=SILCwcXzEP/ctM5XMQ8i47qFbvmF7bCqd8BobsJciIWp+kOyOG6CNjd1+ngg/aACK2URAI/ITPDS029ooSO7bH0PfgiRCYXYBA9fBgV+i29j87ggMl1AvytQPKmwi42yCye0JWwSSfCa1QYD34QSNMYHHqRmkAD1/HbubeIgjbY=
+	t=1759507599; cv=none; b=BSKYm7jhECiFtZdrqTOvo2J47aF4aPT7ixD8DPlmmnMKc38ZzhiPgdo6eqaCatbcsvzlQ8ZOSI+egJw7i7K8aYzb2Wa+7uFZvNL5VuG6hZaL+xMcWvz+JvoTsPDV2mMWnbOc+M3SN/UjAJPLD27U887kiG3rS65+x6moSCvqdQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507596; c=relaxed/simple;
-	bh=XtEaZgSi9b7P+7G2hbE5mNOPGxnSm9soGqfAQoqi2gs=;
+	s=arc-20240116; t=1759507599; c=relaxed/simple;
+	bh=3590jyp8FGq4teNtAa7tQyQco7YjrO1Z9QVcR7oe6t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tyg+UPtcoI83tB7WBKwwIPKuggWDBEOB1aU/uXr8brmwjmCRCA/WQOMCJV2cU/z0V5Hnbobge78ZFzJzKl6actWRADPf4QMHH0J3NFiUJsCsoaqLndH0Q0XncK3Fh00VRCkctu9/Hm3BfW+WICulXoSv8KXuuGl0nXGsMjT+Uzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzYxcc0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nw8McNYjkE8fGuaykXak9U/A4V9ObgI0i7YuirP2+0w7d8LKDPj2rZrIdlGCBVNXiONl9ns1+RoJXKGhwljFlIee94B/AAzotJc7UZuXIAJUZWBJO9ltBuBXllbaU4FmKHY3rgxQjTRIUgEonG8XN6+/cR6hC5bm/Ut7P4nFBuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWAIRo2l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzYxcc0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127F3C4CEF5;
-	Fri,  3 Oct 2025 16:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWAIRo2l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279EAC4CEF5;
+	Fri,  3 Oct 2025 16:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507595;
-	bh=XtEaZgSi9b7P+7G2hbE5mNOPGxnSm9soGqfAQoqi2gs=;
+	s=korg; t=1759507598;
+	bh=3590jyp8FGq4teNtAa7tQyQco7YjrO1Z9QVcR7oe6t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzYxcc0p1nEzSaWu+210ZU/uWoo7//RkGKL5EHTmRK/P2UFiusyXo2zNhIF4kY1mG
-	 iJZfitUQQa3XbuaNWGV6LSqUTCB4GWZEau4OSE1VZ+KjdCXh/4hHnG44LS99UUy8L0
-	 Mm78UK3X4mu6u/e6SOl/iyKwcFBBNgJPdOfF+PT8=
+	b=RWAIRo2lBpU8WByVxfybX30imqUBIioTQyXYZE7alrCHRwrrQD0+uHKWWj9AfAeep
+	 9RDoC/Ac/Ny5b4GNlnQMZyaI5KHyJbOAFAW8GeAHMv9MA7NadxXS5JymmBnG8ZSXwL
+	 M5EjFQxI4oRRmuLvjyDsvoyg4Dupp0k5/+CrPtLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com,
-	syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 10/15] media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
-Date: Fri,  3 Oct 2025 18:05:34 +0200
-Message-ID: <20251003160400.289741051@linuxfoundation.org>
+	Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 11/15] mm: swap: check for stable address space before operating on the VMA
+Date: Fri,  3 Oct 2025 18:05:35 +0200
+Message-ID: <20251003160400.320506100@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160359.831046052@linuxfoundation.org>
 References: <20251003160359.831046052@linuxfoundation.org>
@@ -56,309 +60,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
 
-commit 0e2ee70291e64a30fe36960c85294726d34a103e upstream.
+commit 1367da7eb875d01102d2ed18654b24d261ff5393 upstream.
 
-Per UVC 1.1+ specification 3.7.2, units and terminals must have a non-zero
-unique ID.
+It is possible to hit a zero entry while traversing the vmas in unuse_mm()
+called from swapoff path and accessing it causes the OOPS:
 
-```
-Each Unit and Terminal within the video function is assigned a unique
-identification number, the Unit ID (UID) or Terminal ID (TID), contained in
-the bUnitID or bTerminalID field of the descriptor. The value 0x00 is
-reserved for undefined ID,
-```
+Unable to handle kernel NULL pointer dereference at virtual address
+0000000000000446--> Loading the memory from offset 0x40 on the
+XA_ZERO_ENTRY as address.
+Mem abort info:
+  ESR = 0x0000000096000005
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x05: level 1 translation fault
 
-If we add a new entity with id 0 or a duplicated ID, it will be marked
-as UVC_INVALID_ENTITY_ID.
+The issue is manifested from the below race between the fork() on a
+process and swapoff:
+fork(dup_mmap())			swapoff(unuse_mm)
+---------------                         -----------------
+1) Identical mtree is built using
+   __mt_dup().
 
-In a previous attempt commit 3dd075fe8ebb ("media: uvcvideo: Require
-entities to have a non-zero unique ID"), we ignored all the invalid units,
-this broke a lot of non-compatible cameras. Hopefully we are more lucky
-this time.
+2) copy_pte_range()-->
+	copy_nonpresent_pte():
+       The dst mm is added into the
+    mmlist to be visible to the
+    swapoff operation.
 
-This also prevents some syzkaller reproducers from triggering warnings due
-to a chain of entities referring to themselves. In one particular case, an
-Output Unit is connected to an Input Unit, both with the same ID of 1. But
-when looking up for the source ID of the Output Unit, that same entity is
-found instead of the input entity, which leads to such warnings.
+3) Fatal signal is sent to the parent
+process(which is the current during the
+fork) thus skip the duplication of the
+vmas and mark the vma range with
+XA_ZERO_ENTRY as a marker for this process
+that helps during exit_mmap().
 
-In another case, a backward chain was considered finished as the source ID
-was 0. Later on, that entity was found, but its pads were not valid.
+				     4) swapoff is tried on the
+					'mm' added to the 'mmlist' as
+					part of the 2.
 
-Here is a sample stack trace for one of those cases.
+				     5) unuse_mm(), that iterates
+					through the vma's of this 'mm'
+					will hit the non-NULL zero entry
+					and operating on this zero entry
+					as a vma is resulting into the
+					oops.
 
-[   20.650953] usb 1-1: new high-speed USB device number 2 using dummy_hcd
-[   20.830206] usb 1-1: Using ep0 maxpacket: 8
-[   20.833501] usb 1-1: config 0 descriptor??
-[   21.038518] usb 1-1: string descriptor 0 read error: -71
-[   21.038893] usb 1-1: Found UVC 0.00 device <unnamed> (2833:0201)
-[   21.039299] uvcvideo 1-1:0.0: Entity type for entity Output 1 was not initialized!
-[   21.041583] uvcvideo 1-1:0.0: Entity type for entity Input 1 was not initialized!
-[   21.042218] ------------[ cut here ]------------
-[   21.042536] WARNING: CPU: 0 PID: 9 at drivers/media/mc/mc-entity.c:1147 media_create_pad_link+0x2c4/0x2e0
-[   21.043195] Modules linked in:
-[   21.043535] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:1 Not tainted 6.11.0-rc7-00030-g3480e43aeccf #444
-[   21.044101] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-[   21.044639] Workqueue: usb_hub_wq hub_event
-[   21.045100] RIP: 0010:media_create_pad_link+0x2c4/0x2e0
-[   21.045508] Code: fe e8 20 01 00 00 b8 f4 ff ff ff 48 83 c4 30 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 0f 0b eb e9 0f 0b eb 0a 0f 0b eb 06 <0f> 0b eb 02 0f 0b b8 ea ff ff ff eb d4 66 2e 0f 1f 84 00 00 00 00
-[   21.046801] RSP: 0018:ffffc9000004b318 EFLAGS: 00010246
-[   21.047227] RAX: ffff888004e5d458 RBX: 0000000000000000 RCX: ffffffff818fccf1
-[   21.047719] RDX: 000000000000007b RSI: 0000000000000000 RDI: ffff888004313290
-[   21.048241] RBP: ffff888004313290 R08: 0001ffffffffffff R09: 0000000000000000
-[   21.048701] R10: 0000000000000013 R11: 0001888004313290 R12: 0000000000000003
-[   21.049138] R13: ffff888004313080 R14: ffff888004313080 R15: 0000000000000000
-[   21.049648] FS:  0000000000000000(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
-[   21.050271] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   21.050688] CR2: 0000592cc27635b0 CR3: 000000000431c000 CR4: 0000000000750ef0
-[   21.051136] PKRU: 55555554
-[   21.051331] Call Trace:
-[   21.051480]  <TASK>
-[   21.051611]  ? __warn+0xc4/0x210
-[   21.051861]  ? media_create_pad_link+0x2c4/0x2e0
-[   21.052252]  ? report_bug+0x11b/0x1a0
-[   21.052540]  ? trace_hardirqs_on+0x31/0x40
-[   21.052901]  ? handle_bug+0x3d/0x70
-[   21.053197]  ? exc_invalid_op+0x1a/0x50
-[   21.053511]  ? asm_exc_invalid_op+0x1a/0x20
-[   21.053924]  ? media_create_pad_link+0x91/0x2e0
-[   21.054364]  ? media_create_pad_link+0x2c4/0x2e0
-[   21.054834]  ? media_create_pad_link+0x91/0x2e0
-[   21.055131]  ? _raw_spin_unlock+0x1e/0x40
-[   21.055441]  ? __v4l2_device_register_subdev+0x202/0x210
-[   21.055837]  uvc_mc_register_entities+0x358/0x400
-[   21.056144]  uvc_register_chains+0x1fd/0x290
-[   21.056413]  uvc_probe+0x380e/0x3dc0
-[   21.056676]  ? __lock_acquire+0x5aa/0x26e0
-[   21.056946]  ? find_held_lock+0x33/0xa0
-[   21.057196]  ? kernfs_activate+0x70/0x80
-[   21.057533]  ? usb_match_dynamic_id+0x1b/0x70
-[   21.057811]  ? find_held_lock+0x33/0xa0
-[   21.058047]  ? usb_match_dynamic_id+0x55/0x70
-[   21.058330]  ? lock_release+0x124/0x260
-[   21.058657]  ? usb_match_one_id_intf+0xa2/0x100
-[   21.058997]  usb_probe_interface+0x1ba/0x330
-[   21.059399]  really_probe+0x1ba/0x4c0
-[   21.059662]  __driver_probe_device+0xb2/0x180
-[   21.059944]  driver_probe_device+0x5a/0x100
-[   21.060170]  __device_attach_driver+0xe9/0x160
-[   21.060427]  ? __pfx___device_attach_driver+0x10/0x10
-[   21.060872]  bus_for_each_drv+0xa9/0x100
-[   21.061312]  __device_attach+0xed/0x190
-[   21.061812]  device_initial_probe+0xe/0x20
-[   21.062229]  bus_probe_device+0x4d/0xd0
-[   21.062590]  device_add+0x308/0x590
-[   21.062912]  usb_set_configuration+0x7b6/0xaf0
-[   21.063403]  usb_generic_driver_probe+0x36/0x80
-[   21.063714]  usb_probe_device+0x7b/0x130
-[   21.063936]  really_probe+0x1ba/0x4c0
-[   21.064111]  __driver_probe_device+0xb2/0x180
-[   21.064577]  driver_probe_device+0x5a/0x100
-[   21.065019]  __device_attach_driver+0xe9/0x160
-[   21.065403]  ? __pfx___device_attach_driver+0x10/0x10
-[   21.065820]  bus_for_each_drv+0xa9/0x100
-[   21.066094]  __device_attach+0xed/0x190
-[   21.066535]  device_initial_probe+0xe/0x20
-[   21.066992]  bus_probe_device+0x4d/0xd0
-[   21.067250]  device_add+0x308/0x590
-[   21.067501]  usb_new_device+0x347/0x610
-[   21.067817]  hub_event+0x156b/0x1e30
-[   21.068060]  ? process_scheduled_works+0x48b/0xaf0
-[   21.068337]  process_scheduled_works+0x5a3/0xaf0
-[   21.068668]  worker_thread+0x3cf/0x560
-[   21.068932]  ? kthread+0x109/0x1b0
-[   21.069133]  kthread+0x197/0x1b0
-[   21.069343]  ? __pfx_worker_thread+0x10/0x10
-[   21.069598]  ? __pfx_kthread+0x10/0x10
-[   21.069908]  ret_from_fork+0x32/0x40
-[   21.070169]  ? __pfx_kthread+0x10/0x10
-[   21.070424]  ret_from_fork_asm+0x1a/0x30
-[   21.070737]  </TASK>
+The proper fix would be around not exposing this partially-valid tree to
+others when droping the mmap lock, which is being solved with [1].  A
+simpler solution would be checking for MMF_UNSTABLE, as it is set if
+mm_struct is not fully initialized in dup_mmap().
 
-Reported-by: syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0584f746fde3d52b4675
-Reported-by: syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dd320d114deb3f5bb79b
-Reported-by: Youngjun Lee <yjjuny.lee@samsung.com>
-Fixes: a3fbc2e6bb05 ("media: mc-entity.c: use WARN_ON, validate link pads")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Co-developed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Thanks to Liam/Lorenzo/David for all the suggestions in fixing this
+issue.
+
+Link: https://lkml.kernel.org/r/20250924181138.1762750-1-charan.kalla@oss.qualcomm.com
+Link: https://lore.kernel.org/all/20250815191031.3769540-1-Liam.Howlett@oracle.com/ [1]
+Fixes: d24062914837 ("fork: use __mt_dup() to duplicate maple tree in dup_mmap()")
+Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Peng Zhang <zhangpeng.00@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |   73 +++++++++++++++++++++++--------------
- drivers/media/usb/uvc/uvcvideo.h   |    2 +
- 2 files changed, 48 insertions(+), 27 deletions(-)
+ mm/swapfile.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -137,6 +137,9 @@ struct uvc_entity *uvc_entity_by_id(stru
- {
- 	struct uvc_entity *entity;
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2243,6 +2243,8 @@ static int unuse_mm(struct mm_struct *mm
+ 	VMA_ITERATOR(vmi, mm, 0);
  
-+	if (id == UVC_INVALID_ENTITY_ID)
-+		return NULL;
-+
- 	list_for_each_entry(entity, &dev->entities, list) {
- 		if (entity->id == id)
- 			return entity;
-@@ -795,14 +798,27 @@ static const u8 uvc_media_transport_inpu
- 	UVC_GUID_UVC_MEDIA_TRANSPORT_INPUT;
- static const u8 uvc_processing_guid[16] = UVC_GUID_UVC_PROCESSING;
+ 	mmap_read_lock(mm);
++	if (check_stable_address_space(mm))
++		goto unlock;
+ 	for_each_vma(vmi, vma) {
+ 		if (vma->anon_vma && !is_vm_hugetlb_page(vma)) {
+ 			ret = unuse_vma(vma, type);
+@@ -2252,6 +2254,7 @@ static int unuse_mm(struct mm_struct *mm
  
--static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
--		unsigned int num_pads, unsigned int extra_size)
-+static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
-+					       u16 id, unsigned int num_pads,
-+					       unsigned int extra_size)
- {
- 	struct uvc_entity *entity;
- 	unsigned int num_inputs;
- 	unsigned int size;
- 	unsigned int i;
- 
-+	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
-+	if (id == 0) {
-+		dev_err(&dev->intf->dev, "Found Unit with invalid ID 0\n");
-+		id = UVC_INVALID_ENTITY_ID;
-+	}
-+
-+	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
-+	if (uvc_entity_by_id(dev, id)) {
-+		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n", id);
-+		id = UVC_INVALID_ENTITY_ID;
-+	}
-+
- 	extra_size = roundup(extra_size, sizeof(*entity->pads));
- 	if (num_pads)
- 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
-@@ -812,7 +828,7 @@ static struct uvc_entity *uvc_alloc_enti
- 	     + num_inputs;
- 	entity = kzalloc(size, GFP_KERNEL);
- 	if (entity == NULL)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	entity->id = id;
- 	entity->type = type;
-@@ -924,10 +940,10 @@ static int uvc_parse_vendor_control(stru
- 			break;
- 		}
- 
--		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
--					p + 1, 2*n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
-+					    buffer[3], p + 1, 2 * n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->guid, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
-@@ -1036,10 +1052,10 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
--					1, n + p);
--		if (term == NULL)
--			return -ENOMEM;
-+		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
-+					    buffer[3], 1, n + p);
-+		if (IS_ERR(term))
-+			return PTR_ERR(term);
- 
- 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
- 			term->camera.bControlSize = n;
-@@ -1095,10 +1111,10 @@ static int uvc_parse_standard_control(st
- 			return 0;
- 		}
- 
--		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
--					1, 0);
--		if (term == NULL)
--			return -ENOMEM;
-+		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
-+					    buffer[3], 1, 0);
-+		if (IS_ERR(term))
-+			return PTR_ERR(term);
- 
- 		memcpy(term->baSourceID, &buffer[7], 1);
- 
-@@ -1117,9 +1133,10 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-+					    p + 1, 0);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->baSourceID, &buffer[5], p);
- 
-@@ -1139,9 +1156,9 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->baSourceID, &buffer[4], 1);
- 		unit->processing.wMaxMultiplier =
-@@ -1168,9 +1185,10 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-+					    p + 1, n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->guid, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
-@@ -1315,9 +1333,10 @@ static int uvc_gpio_parse(struct uvc_dev
- 		return dev_err_probe(&dev->intf->dev, irq,
- 				     "No IRQ for privacy GPIO\n");
- 
--	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
--	if (!unit)
--		return -ENOMEM;
-+	unit = uvc_alloc_new_entity(dev, UVC_EXT_GPIO_UNIT,
-+				    UVC_EXT_GPIO_UNIT_ID, 0, 1);
-+	if (IS_ERR(unit))
-+		return PTR_ERR(unit);
- 
- 	unit->gpio.gpio_privacy = gpio_privacy;
- 	unit->gpio.irq = irq;
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -41,6 +41,8 @@
- #define UVC_EXT_GPIO_UNIT		0x7ffe
- #define UVC_EXT_GPIO_UNIT_ID		0x100
- 
-+#define UVC_INVALID_ENTITY_ID          0xffff
-+
- /* ------------------------------------------------------------------------
-  * Driver specific constants.
-  */
+ 		cond_resched();
+ 	}
++unlock:
+ 	mmap_read_unlock(mm);
+ 	return ret;
+ }
 
 
