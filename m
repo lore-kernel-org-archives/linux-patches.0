@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619FC35962;
-	Fri,  3 Oct 2025 16:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7E335962;
+	Fri,  3 Oct 2025 16:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507636; cv=none; b=mJkZrcgg2aibrECdpsqsbzUIvbLC1WgTJtoOlSgIwj2YsvVrO6A4vPzah/iKoIOFdH56cM/JcUTPv6nhIcnWf3tFHoWMOCoM59kJCpxMp2+QFB9CcR+EFoT2L317ry1Jzg0VGycOmz6RyySFdrMk9oFFf32Z5f1TCgUlsD0AO90=
+	t=1759507638; cv=none; b=f5223GH6zYNqL+cE+zLVIHjLl5ceHAB2vISPgT07wDAi00e7PSX8GW7rJvwtl8EcAw+UxU5JPJQEmRsJSKU2clTrvj1nj2pWyNTbqhwQuymEY8xxHPNfg2J8Wi4LAeiux1DHuJSg+JWr//UAEPDJOLonKk5ISKU65HxyE8tympE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507636; c=relaxed/simple;
-	bh=CzRy7RfsIHY6/5ylKx9/uhO8hmMfc7tlKJrNp83omdM=;
+	s=arc-20240116; t=1759507638; c=relaxed/simple;
+	bh=ee4dVTy8104V0eIfIEHjyIr0KVmFbub8W/xJwXkRw00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdBs4p31ktplaakt/h1iz59PoQHLrmOQAr6IwN7LcK+xeAhbJFeGnQ8/nSSlKqqkibuoOq5swnwhSa7S55OEnCzj7+ZgSt4GYDiOsFbLcmza9UHED3Rn+eeEo63oqlDiytEzxaoiT7QukcRkHf++NEyWFnyjmHUoVKQQPfve93I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dudt63Av; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L4xmtMMhQUz/t7UWGStrX/G4+80wY+x7AicJEbbBs9cuk7p4fleXNQxGwkJeqVr2l//ne/8CNWGnDoSGP8I9lVWv1mRt1X78JZKPj3kgw8uTjANE3C3/IzqtH6VxF91G7YMiIo952fP2gDGvTuVEKgNAzlT7sJBTIiGGgNat2DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diXdcRaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dudt63Av"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B590C4CEF5;
-	Fri,  3 Oct 2025 16:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diXdcRaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EA8C4CEF7;
+	Fri,  3 Oct 2025 16:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507633;
-	bh=CzRy7RfsIHY6/5ylKx9/uhO8hmMfc7tlKJrNp83omdM=;
+	s=korg; t=1759507636;
+	bh=ee4dVTy8104V0eIfIEHjyIr0KVmFbub8W/xJwXkRw00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dudt63Av7zdgK63+RVeNs9trksZ9pc1L6UNk4+KhSmNxdotGWu/KtAcmibQcgDEah
-	 6inkcOPiPJExEIVGPMk/kzlok5WcdDgRu21munZVrflf5EhJArxuYOoC4x4vrbhV/a
-	 nrA8gomoKAgem1U+R0ZVJ5l8FrdAYdDjhs6E/3Eg=
+	b=diXdcRaBoYwHsqEgbJ6uvpLN8L4cGl0BmoQMabtQs1XMhplvMxn4XiWvq5CJ4u0XS
+	 G5UyY1VK+8K9AZsAk3G8KcF6d2Ym/hPjgsxsnX34HXsMdTrzbavYugynbww1neJnnt
+	 FExKB/qjbmxjZYmt/AS7ibq+o1RIFnop1TuqcjRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
+	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 08/15] media: tuner: xc5000: Fix use-after-free in xc5000_release
-Date: Fri,  3 Oct 2025 18:05:32 +0200
-Message-ID: <20251003160400.212985750@linuxfoundation.org>
+Subject: [PATCH 6.17 09/15] media: rc: fix races with imon_disconnect()
+Date: Fri,  3 Oct 2025 18:05:33 +0200
+Message-ID: <20251003160400.255334444@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160359.831046052@linuxfoundation.org>
 References: <20251003160359.831046052@linuxfoundation.org>
@@ -50,55 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
 
-commit 40b7a19f321e65789612ebaca966472055dab48c upstream.
+commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
 
-The original code uses cancel_delayed_work() in xc5000_release(), which
-does not guarantee that the delayed work item timer_sleep has fully
-completed if it was already running. This leads to use-after-free scenarios
-where xc5000_release() may free the xc5000_priv while timer_sleep is still
-active and attempts to dereference the xc5000_priv.
+Syzbot reports a KASAN issue as below:
+BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
+BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
 
-A typical race condition is illustrated below:
+CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
+Call Trace:
+ <TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+print_address_description mm/kasan/report.c:317 [inline]
+print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
+kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+__create_pipe include/linux/usb.h:1945 [inline]
+send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
+vfs_write+0x2d7/0xdd0 fs/read_write.c:576
+ksys_write+0x127/0x250 fs/read_write.c:631
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-CPU 0 (release thread)                 | CPU 1 (delayed work callback)
-xc5000_release()                       | xc5000_do_timer_sleep()
-  cancel_delayed_work()                |
-  hybrid_tuner_release_state(priv)     |
-    kfree(priv)                        |
-                                       |   priv = container_of() // UAF
+The iMON driver improperly releases the usb_device reference in
+imon_disconnect without coordinating with active users of the
+device.
 
-Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the timer_sleep is properly canceled before the xc5000_priv memory
-is deallocated.
+Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
+protected by the users counter (ictx->users). During probe,
+imon_init_intf0 or imon_init_intf1 increments the usb_device
+reference count depending on the interface. However, during
+disconnect, usb_put_dev is called unconditionally, regardless of
+actual usage.
 
-A deadlock concern was considered: xc5000_release() is called in a process
-context and is not holding any locks that the timer_sleep work item might
-also need. Therefore, the use of the _sync() variant is safe here.
+As a result, if vfd_write or other operations are still in
+progress after disconnect, this can lead to a use-after-free of
+the usb_device pointer.
 
-This bug was initially identified through static analysis.
+Thread 1 vfd_write                      Thread 2 imon_disconnect
+                                        ...
+                                        if
+                                          usb_put_dev(ictx->usbdev_intf0)
+                                        else
+                                          usb_put_dev(ictx->usbdev_intf1)
+...
+while
+  send_packet
+    if
+      pipe = usb_sndintpipe(
+        ictx->usbdev_intf0) UAF
+    else
+      pipe = usb_sndctrlpipe(
+        ictx->usbdev_intf0, 0) UAF
 
-Fixes: f7a27ff1fb77 ("[media] xc5000: delay tuner sleep to 5 seconds")
+Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
+checking ictx->disconnected in all writer paths. Add early return
+with -ENODEV in send_packet(), vfd_write(), lcd_write() and
+display_open() if the device is no longer present.
+
+Set and read ictx->disconnected under ictx->lock to ensure memory
+synchronization. Acquire the lock in imon_disconnect() before setting
+the flag to synchronize with any ongoing operations.
+
+Ensure writers exit early and safely after disconnect before the USB
+core proceeds with cleanup.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+
+Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[hverkuil: fix typo in Subject: tunner -> tuner]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/tuners/xc5000.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/drivers/media/tuners/xc5000.c
-+++ b/drivers/media/tuners/xc5000.c
-@@ -1304,7 +1304,7 @@ static void xc5000_release(struct dvb_fr
- 	mutex_lock(&xc5000_list_mutex);
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -536,7 +536,9 @@ static int display_open(struct inode *in
  
- 	if (priv) {
--		cancel_delayed_work(&priv->timer_sleep);
-+		cancel_delayed_work_sync(&priv->timer_sleep);
- 		hybrid_tuner_release_state(priv);
- 	}
+ 	mutex_lock(&ictx->lock);
+ 
+-	if (!ictx->display_supported) {
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++	} else if (!ictx->display_supported) {
+ 		pr_err("display not supported by device\n");
+ 		retval = -ENODEV;
+ 	} else if (ictx->display_isopen) {
+@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
+ 	int retval = 0;
+ 	struct usb_ctrlrequest *control_req = NULL;
+ 
++	if (ictx->disconnected)
++		return -ENODEV;
++
+ 	/* Check if we need to use control or interrupt urb */
+ 	if (!ictx->tx_control) {
+ 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
+@@ -949,12 +954,14 @@ static ssize_t vfd_write(struct file *fi
+ 	static const unsigned char vfd_packet6[] = {
+ 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	if (mutex_lock_interruptible(&ictx->lock))
+ 		return -ERESTARTSYS;
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
+ 		retval = -ENODEV;
+@@ -1029,11 +1036,13 @@ static ssize_t lcd_write(struct file *fi
+ 	int retval = 0;
+ 	struct imon_context *ictx = file->private_data;
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	mutex_lock(&ictx->lock);
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->display_supported) {
+ 		pr_err_ratelimited("no iMON display present\n");
+ 		retval = -ENODEV;
+@@ -2499,7 +2508,11 @@ static void imon_disconnect(struct usb_i
+ 	int ifnum;
+ 
+ 	ictx = usb_get_intfdata(interface);
++
++	mutex_lock(&ictx->lock);
+ 	ictx->disconnected = true;
++	mutex_unlock(&ictx->lock);
++
+ 	dev = ictx->dev;
+ 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
  
 
 
