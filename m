@@ -1,127 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672A414A8B;
-	Fri,  3 Oct 2025 16:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from vmicros1.altlinux.org (vmicros1.altlinux.org [194.107.17.57])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66A082D0602;
+	Fri,  3 Oct 2025 16:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.107.17.57
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507752; cv=none; b=EOaGEzRJf85+HSjlYxpTC/wVqsCIS8kkwmTxTqQJ4kW00MRFT682PIlhnlmu1B6wUPttnGrSMBtDGgxubgc4wXHMeznYARJZK2AEhxZlCq4/q6Ofw9fKH+NJP79VOLTobh6fDY0s5W9xOXIkO9LmiSGyMWlhT8WpZp5jRv9/0HU=
+	t=1759509921; cv=none; b=TwkH4dAC9BpLJkQaPOClDNtnDPLuidxrEzjP+9sQnlXmK8S4ojKsMAtPwmi5ejPcCTsVZsvzTqAHfqZJINbRKdaYJODnql6viCC8qmZpzjS06/kJvqTt12UKEHtb4roJYd6vSKG4vhhPIz1NvLiL2zfOhA213cyatRYE1P+fUJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507752; c=relaxed/simple;
-	bh=S4YPweji9yCv6gFmP1x6JDNbUY/FdmbUMq2v2P3kYH4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TL3zX/RKXPzaB16diFn1BFz57GPkuHUnLsue7Tt/unqbPAgL1TiR9N4FU2wLxrebzddoBCKaj9wE/rXmZaYBs1GNAXT9gAlFxnZ1H2H0R+V50obO5BYOBjr0lS5yhbTtwkgrTAmTufH93Zobweld9PG6xUQZ5hNYsMlxiejKnjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5zUXEYV; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5zUXEYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBF1C4CEF5;
-	Fri,  3 Oct 2025 16:09:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507750;
-	bh=S4YPweji9yCv6gFmP1x6JDNbUY/FdmbUMq2v2P3kYH4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=K5zUXEYV1MHqdIMuAu+lIOu57RBsIsSYcj+lv1GHy/j5MNvu7JSldlHuENXBQM5Cw
-	 xEXEsS9rl3hkKXGMdSlXMe8FVoTQ6dXnGh3xx17WHeABr/wrZftQTYY7QWuk4p+9Vb
-	 QWmYlfkaIqVlIklnyL96RDOieLxVTG337ytu72ow=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org
-Subject: [PATCH 6.6 0/7] 6.6.110-rc1 review
-Date: Fri,  3 Oct 2025 18:06:08 +0200
-Message-ID: <20251003160331.487313415@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1759509921; c=relaxed/simple;
+	bh=dssgCzltttWWVbtDuxXyHlgcBj3U4zXAPU0QQmfapf0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EE/zFoBMAYWKX9ARW0jzbFqr9yIaTAtvCWUiJ/upGfzMH7/57oVz7jfF0RKaK1spqTVF/Es7ttmryZ440GJU5FIQH/kehXIRL4oum+OMDN3/JHjfHk/JuLpUk8noREr1PHOw3fqIs/44fkBQPmWdtzykhS/fpfd8wzbaWuVjtXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org; spf=pass smtp.mailfrom=altlinux.org; arc=none smtp.client-ip=194.107.17.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altlinux.org
+Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
+	by vmicros1.altlinux.org (Postfix) with ESMTP id 5C5AC72C8CC;
+	Fri,  3 Oct 2025 19:45:11 +0300 (MSK)
+Received: by imap.altlinux.org (Postfix, from userid 705)
+	id 4F2B736D070F; Fri,  3 Oct 2025 19:45:11 +0300 (MSK)
+Date: Fri, 3 Oct 2025 19:45:11 +0300
+From: Michael Shigorin <mike@altlinux.org>
+To: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Michael Shigorin <mike@altlinux.ru>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tor Vic <torvic9@mailbox.org>, Kexy Biscuit <kexybiscuit@aosc.io>,
+	jeffbai@aosc.io, gregkh@linuxfoundation.org, wangyuli@uniontech.com,
+	aospan@netup.ru, conor.dooley@microchip.com,
+	ddrokosov@sberdevices.ru, dmaengine@vger.kernel.org,
+	dushistov@mail.ru, fancer.lancer@gmail.com, geert@linux-m68k.org,
+	hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru,
+	linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org,
+	linux-iio@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org,
+	mattst88@gmail.com, netdev@vger.kernel.org, nikita@trvn.ru,
+	ntb@lists.linux.dev, patches@lists.linux.dev,
+	richard.henderson@linaro.org, s.shtylyov@omp.ru, serjk@netup.ru,
+	shc_work@mail.ru, tsbogend@alpha.franken.de, v.georgiev@metrotek.ru,
+	wsa+renesas@sang-engineering.com, xeb@mail.ru
+Subject: Re: what about CoC?
+Message-ID: <20251003164511.GK7291@imap.altlinux.org>
+References: <a08dc31ab773604d8f206ba005dc4c7a@aosc.io>
+ <20241023080935.2945-2-kexybiscuit@aosc.io>
+ <124c1b03-24c9-4f19-99a9-6eb2241406c2@mailbox.org>
+ <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+ <20241024095339.GA32487@imap.altlinux.org>
+ <20251001101148.GA30625@imap.altlinux.org>
+ <87371abc-e43f-4afb-83d0-b9a04fc015c0@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.110-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.110-rc1
-X-KernelTest-Deadline: 2025-10-05T16:03+00:00
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87371abc-e43f-4afb-83d0-b9a04fc015c0@intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-This is the start of the stable review cycle for the 6.6.110 release.
-There are 7 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+On Fri, Oct 03, 2025 at 05:48:40PM +0200, Alexander Lobakin wrote:
+> It's about companies that sponsor the war or are a part of it.
 
-Responses should be made by Sun, 05 Oct 2025 16:02:25 +0000.
-Anything received after that time might be too late.
+So ban Intel.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.110-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.110-rc1
-
-Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-    ASoC: qcom: audioreach: fix potential null pointer dereference
-
-Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-    media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
-
-Larshin Sergey <Sergey.Larshin@kaspersky.com>
-    media: rc: fix races with imon_disconnect()
-
-Duoming Zhou <duoming@zju.edu.cn>
-    media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
-
-Wang Haoran <haoranwangsec@gmail.com>
-    scsi: target: target_core_configfs: Add length check to avoid buffer overflow
-
-Kees Cook <kees@kernel.org>
-    gcc-plugins: Remove TODO_verify_il for GCC >= 16
-
-Breno Leitao <leitao@debian.org>
-    crypto: sha256 - fix crash at kexec
-
-
--------------
-
-Diffstat:
-
- Makefile                              |  4 +-
- drivers/media/pci/b2c2/flexcop-pci.c  |  2 +-
- drivers/media/rc/imon.c               | 27 +++++++++----
- drivers/media/usb/uvc/uvc_driver.c    | 73 ++++++++++++++++++++++-------------
- drivers/media/usb/uvc/uvcvideo.h      |  2 +
- drivers/target/target_core_configfs.c |  2 +-
- include/crypto/sha256_base.h          |  2 +-
- scripts/gcc-plugins/gcc-common.h      |  7 ++++
- sound/soc/qcom/qdsp6/topology.c       |  4 +-
- 9 files changed, 82 insertions(+), 41 deletions(-)
-
-
+-- 
+Michael Shigorin
+...хотя вырусь не поймёт даже почему
