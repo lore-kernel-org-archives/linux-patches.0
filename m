@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB6B29E0E1;
-	Fri,  3 Oct 2025 16:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E62292B4B;
+	Fri,  3 Oct 2025 16:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507602; cv=none; b=MHAAG1Yc9Nm4BMxd4QsQiGIDJeBlikmHL9Yj7FApT0n4qh1QrIJggnm5Xn2PRpgW8nufB5/+EJD6fKX3ufYT5w46M6LH/xVickXT10n4GFCOXw5HeFEeicddCHm5bzrYgPp3zDBtoEx9E4nGetD/k4KycfqLCqsDPO1cDw3FlAk=
+	t=1759507605; cv=none; b=sC0ZQRzLjogvWFgGSO0eX5J4unsS0tPM2WuKo4HTUA68zoNYwbX461lD+sAVSpYf6EwamtbaVOqAjCzyN2fMw0CBkYQrGSPUeT4sL0TIINcVdiQobP2kkR8pqEiuFUwc83rt+CcgzNntBIafyJ4DhfI5UImkLOdCuxkPvzFIBls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507602; c=relaxed/simple;
-	bh=pBbUHsnhIYTRbKwRpZiKVGT7/aQCl7yW7sojJmEfG8M=;
+	s=arc-20240116; t=1759507605; c=relaxed/simple;
+	bh=krmdEmS7xvf9VIovwgejhhVMB7sgHTPmx/oRbjcXu3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZDJBkOLz8MN7WAyHOOU9u6GcI3vV6jC98jnNWyOg05DSlPVEpwkuWPiHip5aIYIvGw052X+RPJj3tv3zcB6KGNEfCq2kfzRKUOA9AinVzyVH0U5GaA3Oc1/sWjS1pnaC4Ka/8cFEFQb8l5Rd5L0BWa2Cvb2dfIlv05q7V60bP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdPBOJ2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Er+eob5u+QnzA9s2ovNq41Vcm/US5CMMJPc5gxp/O5d+SHJXUQ/U1Oq2lPiwL6aYfQzZdaRqqsB7aNI6mG3P3xX/SQ/fRtsHxyvm0DFW7BwOTxzzmGmw0MsPsjrAQpS25n4pSQqS4znedDjrFkTPFevebSSa3IBKZcZigU11O28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9l92i21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdPBOJ2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FD1C4CEF5;
-	Fri,  3 Oct 2025 16:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9l92i21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BACFC4CEF5;
+	Fri,  3 Oct 2025 16:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507601;
-	bh=pBbUHsnhIYTRbKwRpZiKVGT7/aQCl7yW7sojJmEfG8M=;
+	s=korg; t=1759507604;
+	bh=krmdEmS7xvf9VIovwgejhhVMB7sgHTPmx/oRbjcXu3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdPBOJ2gX1CBFuLZTI1BHQwpKKCypHoOlZtqZluKgQJz1frMBNJKliN4JtJVNMKIq
-	 eJleY48EiKCI9jol6bRcjp1Un7obn1WvPkt2I8zmW42qIzvFKjMhQPqqCHanrTWoXN
-	 4doZ6wUIIZgCQbnb7CkCGQhFSG6fQCVsKHbnRNOQ=
+	b=c9l92i214Gm1c0CcipXX1DMqiTD8sQLQPI1YNb56mFVp/wZ37GEiqCiXEkvd1foPB
+	 ZWlFXqxBzA0nho9yBJrBiexiyw+RZUuAN87yhQUZrOObQmlcGuFXVWY8daeqHM6Dx1
+	 WJNKsn+U/kbigdWl+z8QN/HXNCSiP95OeRGFQ+yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matvey Kovalev <matvey.kovalev@ispras.ru>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.17 12/15] wifi: ath11k: fix NULL dereference in ath11k_qmi_m3_load()
-Date: Fri,  3 Oct 2025 18:05:36 +0200
-Message-ID: <20251003160400.347316135@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 6.17 13/15] media: iris: Fix memory leak by freeing untracked persist buffer
+Date: Fri,  3 Oct 2025 18:05:37 +0200
+Message-ID: <20251003160400.374921685@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160359.831046052@linuxfoundation.org>
 References: <20251003160359.831046052@linuxfoundation.org>
@@ -52,40 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matvey Kovalev <matvey.kovalev@ispras.ru>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-commit 3fd2ef2ae2b5c955584a3bee8e83ae7d7a98f782 upstream.
+commit 02a24f13b3a1d9da9f3de56aa5fdb7cc1fe167a2 upstream.
 
-If ab->fw.m3_data points to data, then fw pointer remains null.
-Further, if m3_mem is not allocated, then fw is dereferenced to be
-passed to ath11k_err function.
+One internal buffer which is allocated only once per session was not
+being freed during session close because it was not being tracked as
+part of internal buffer list which resulted in a memory leak.
 
-Replace fw->size by m3_len.
+Add the necessary logic to explicitly free the untracked internal buffer
+during session close to ensure all allocated memory is released
+properly.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 7db88b962f06 ("wifi: ath11k: add firmware-2.bin support")
+Fixes: 73702f45db81 ("media: iris: allocate, initialize and queue internal buffers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250917192020.1340-1-matvey.kovalev@ispras.ru
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # X1E80100
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x1e80100-crd
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_buffer.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -2557,7 +2557,7 @@ static int ath11k_qmi_m3_load(struct ath
- 					   GFP_KERNEL);
- 	if (!m3_mem->vaddr) {
- 		ath11k_err(ab, "failed to allocate memory for M3 with size %zu\n",
--			   fw->size);
-+			   m3_len);
- 		ret = -ENOMEM;
- 		goto out;
+--- a/drivers/media/platform/qcom/iris/iris_buffer.c
++++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+@@ -413,6 +413,16 @@ static int iris_destroy_internal_buffers
+ 		}
  	}
+ 
++	if (force) {
++		buffers = &inst->buffers[BUF_PERSIST];
++
++		list_for_each_entry_safe(buf, next, &buffers->list, list) {
++			ret = iris_destroy_internal_buffer(inst, buf);
++			if (ret)
++				return ret;
++		}
++	}
++
+ 	return 0;
+ }
+ 
 
 
