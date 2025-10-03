@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD13335962;
-	Fri,  3 Oct 2025 16:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF6D35962;
+	Fri,  3 Oct 2025 16:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507693; cv=none; b=AJ0cgYjfYHXB8OdlyHfA9Bi1B1Sbjt890OF8yLiyi7TvW73UHQoPeX4KJbgO+nEBgy6xjQZuHKi0iOzVE+G5G+4uvH1fxlX67IkT0DXAAVWQUOv2ogGy18y/uOiIYr0d06gA735KjD9My7E1b2OVhav9CAgxw7FiW74HmCxV/fM=
+	t=1759507697; cv=none; b=asNHNL5E/KpVErkNvfHRVg7cSmtxMdRsptNmrfq/Tm9N8enV6mJNX4kKiEzinrglWoeJJ8vp8pw69g2p0li5Nl8QlpnW4QczcLaEVO+AAS9lxOhGKBckp2IZxUdQhKGCcStSW9RzIZFuWdopYL1NTSCexGSBeM9glB+LSfdodvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507693; c=relaxed/simple;
-	bh=ZUUiLPJ3c+xgSXUwgj/CK9MveF4AoPt+UXCHtU4niHk=;
+	s=arc-20240116; t=1759507697; c=relaxed/simple;
+	bh=UkLAhO4tHT/8KG+iyMhRMPIPjMrq7C4M9yBXwFGq0uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNLC7tcPktAdf97+cvU9T7GlnuQedb6jWxHEn6gj83Cxy24ryNsDz6aL2pAiAWDPUE12yaNhAtjfFUwKIFa8KSv5ws+2aMhTqqjKWh2WFqINzcWsazRUs9jA5SnSSBwCurGKdAqrdvQdBzrP+xF5qTrufyVa+0O68PA0Uwh9d2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btq8XavA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDd4lheHSVUpWBNGVNT6UZmwDxhF0wjXVkwLB0V00hwGS+ONpkXvnFIAXEoYPvzaGW455XTlDX1sbQiJTiU3sQa+FekEe8c6Jm7tcp6Td+RqChP8qIF6BhYvS9FmilhTqQRkbRnyoiE8PnLHOT4+i/s3mI8OfhG2uQtWcE+G1zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqTcwQoi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btq8XavA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3883AC4CEFB;
-	Fri,  3 Oct 2025 16:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqTcwQoi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7184C4CEF5;
+	Fri,  3 Oct 2025 16:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507693;
-	bh=ZUUiLPJ3c+xgSXUwgj/CK9MveF4AoPt+UXCHtU4niHk=;
+	s=korg; t=1759507697;
+	bh=UkLAhO4tHT/8KG+iyMhRMPIPjMrq7C4M9yBXwFGq0uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btq8XavA24HyS6bgezOTIREzrsoOYvq62pq3SnRjruHm6OWZPGYmld+vvvxnoTS3G
-	 uQRptEVtFdpovJDv6gItPhBTm4/Q6A4z9bOSLQ9qLy5R0ZPNK4E3Ft8WPAD7OKYDi0
-	 AGdh0cedFR5aD569LR/wMxowy6VXxh63qxAsgBig=
+	b=cqTcwQoi8B1S1rV3F4sKDS9AEMRn8lMl8Twboi+bkj3O7pogol+EmWRNXDvIMi5pP
+	 umM11m1laENY24TpwwzI7ExFqoOttU8D67ywm5Znh1OG2tVD6MstiiHYuU+mbMHnYP
+	 XtJUn+J2PJumOTqGeDs7fh0t2gWESllKG9a7b7vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Tobias Fleig <tfleig@meta.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 01/10] crypto: sha256 - fix crash at kexec
-Date: Fri,  3 Oct 2025 18:05:48 +0200
-Message-ID: <20251003160338.506948730@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 10/10] ASoC: qcom: audioreach: fix potential null pointer dereference
+Date: Fri,  3 Oct 2025 18:05:57 +0200
+Message-ID: <20251003160338.756682185@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160338.463688162@linuxfoundation.org>
 References: <20251003160338.463688162@linuxfoundation.org>
@@ -52,62 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-Loading a large (~2.1G) files with kexec crashes the host with when
-running:
+commit 8318e04ab2526b155773313b66a1542476ce1106 upstream.
 
-  # kexec --load kernel --initrd initrd_with_2G_or_more
+It is possible that the topology parsing function
+audioreach_widget_load_module_common() could return NULL or an error
+pointer. Add missing NULL check so that we do not dereference it.
 
-  UBSAN: signed-integer-overflow in ./include/crypto/sha256_base.h:64:19
-  34152083 * 64 cannot be represented in type 'int'
-  ...
-  BUG: unable to handle page fault for address: ff9fffff83b624c0
-  sha256_update (lib/crypto/sha256.c:137)
-  crypto_sha256_update (crypto/sha256_generic.c:40)
-  kexec_calculate_store_digests (kernel/kexec_file.c:769)
-  __se_sys_kexec_file_load (kernel/kexec_file.c:397 kernel/kexec_file.c:332)
-  ...
-
-(Line numbers based on commit da274362a7bd9 ("Linux 6.12.49")
-
-This started happening after commit f4da7afe07523f
-("kexec_file: increase maximum file size to 4G") that landed in v6.0,
-which increased the file size for kexec.
-
-This is not happening upstream (v6.16+), given that `block` type was
-upgraded from "int" to "size_t" in commit 74a43a2cf5e8 ("crypto:
-lib/sha256 - Move partial block handling out")
-
-Upgrade the block type similar to the commit above, avoiding hitting the
-overflow.
-
-This patch is only suitable for the stable tree, and before 6.16, which
-got commit 74a43a2cf5e8 ("crypto: lib/sha256 - Move partial block
-handling out"). This is not required before f4da7afe07523f ("kexec_file:
-increase maximum file size to 4G"). In other words, this fix is required
-between versions v6.0 and v6.16.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: f4da7afe07523f ("kexec_file: increase maximum file size to 4G") # Before v6.16
-Reported-by: Michael van der Westhuizen <rmikey@meta.com>
-Reported-by: Tobias Fleig <tfleig@meta.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Stable@vger.kernel.org
+Fixes: 36ad9bf1d93d ("ASoC: qdsp6: audioreach: add topology support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250825101247.152619-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/crypto/sha256_base.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/topology.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/crypto/sha256_base.h
-+++ b/include/crypto/sha256_base.h
-@@ -44,7 +44,7 @@ static inline int lib_sha256_base_do_upd
- 	sctx->count += len;
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -587,8 +587,8 @@ static int audioreach_widget_load_module
+ 		return PTR_ERR(cont);
  
- 	if (unlikely((partial + len) >= SHA256_BLOCK_SIZE)) {
--		int blocks;
-+		unsigned int blocks;
+ 	mod = audioreach_parse_common_tokens(apm, cont, &tplg_w->priv, w);
+-	if (IS_ERR(mod))
+-		return PTR_ERR(mod);
++	if (IS_ERR_OR_NULL(mod))
++		return mod ? PTR_ERR(mod) : -ENODEV;
  
- 		if (partial) {
- 			int p = SHA256_BLOCK_SIZE - partial;
+ 	dobj = &w->dobj;
+ 	dobj->private = mod;
 
 
