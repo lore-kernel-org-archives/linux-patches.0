@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87C035962;
-	Fri,  3 Oct 2025 16:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2063329D26D;
+	Fri,  3 Oct 2025 16:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507670; cv=none; b=obBow3aqnfpk36++7FvrwUFNERVVQg/tQNxP2aLkU3wjA/s1gqqzDvFuJVcCs8u2I/jg07Gds4aDLFZ4KfHgLI5P91Ja2ct4Ck54cWaU7nDnROGEmjSFsHFVCdCXafia0ZfqbZG4I1mPmrXSl0F/cM+fJgWAOAYTFXiwi303HXk=
+	t=1759507674; cv=none; b=eJRkuq7SYzetqdlAEzwscXVldIkLkS+g34X6yptwmZ6HhM2JLxME50DuLz/kOq5FCdyAz21x3QoxMfaDfYCGJp5CnnSELMP/3XmE6gHaCiIlgJjmahnkybUPgC+0XfCd7i04JmfjZ4FtToGv4IIf+UaO6ljwF6Dkohs2mHNXzSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507670; c=relaxed/simple;
-	bh=X+GizAEOl54bOfX/Ni7TKTVQNmcTSrEoKi7iPxhHplo=;
+	s=arc-20240116; t=1759507674; c=relaxed/simple;
+	bh=k4AvCd4ggkBULYBi0n5vahcsFvdHF9ibEH5y6GAIT64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6h89/cW5splv3zbW+E4q/3PeMuj1wfIY6jS37S0C78iZh+41SEcebcEygoahOpOWXvJqb90G/dvnEXEznIfMn4GJM3PEJPelfZkvtUzql1yL3Rto5y6RoDuv7qYceSXe1KxcSIMHGPEUdr+UOEMcbEU7ZiV3t2xCaHWq/1cx2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecuNBO2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEbfLXTeWNw+TAqjqcr4rb/LcSBeX1lE6lL9165qZgUcYYlmH2DAvlktE0pC3mFEPnx61DmN78yfLb4DbjveuB5B/+KQwZjJwx+K1tEXOCPr0ZkIu5a97eTSkq2MN4xxq6pRLg6Vya7sue6rTLxiu7H2hCvSFYh1O4wDm3ZuWgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZPf4jgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecuNBO2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26663C4CEF5;
-	Fri,  3 Oct 2025 16:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZPf4jgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E121C4CEF5;
+	Fri,  3 Oct 2025 16:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507670;
-	bh=X+GizAEOl54bOfX/Ni7TKTVQNmcTSrEoKi7iPxhHplo=;
+	s=korg; t=1759507674;
+	bh=k4AvCd4ggkBULYBi0n5vahcsFvdHF9ibEH5y6GAIT64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecuNBO2TtRBbmw0UYZ8wZAdLCBeeUbKRbk9aa8NC2ME8rQeBz5d8JJq0qV+dt3DkS
-	 XyqfvwC3svVh19mnOTPWWQ1tuy3YkHS76f7XTbwteorp6H4n5C9Q1hKDS7mrJuAWOa
-	 LTBan8Ce6eMFZd8J4HlxGGa76gLTvQBP+Sq+Vcsk=
+	b=OZPf4jgY8oMnYkJ+MzDwK2III7adIFDWauysbTHS7f0cEM6oCGRrhUnaL2n8L5CfU
+	 LdlsRIIE/GntAkl8GDe7SfnqMLHE1swtAA927edZdVm2w2Z0yaYMAgQEW6oAZyqhpi
+	 Hr6uYnGgSVJMSzYAJI//zw8isqwj/Xp7zIka+6Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f02665daa2abeef4a947@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.16 04/14] ALSA: usb-audio: fix race condition to UAF in snd_usbmidi_free
-Date: Fri,  3 Oct 2025 18:05:38 +0200
-Message-ID: <20251003160352.839770244@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.16 05/14] media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
+Date: Fri,  3 Oct 2025 18:05:39 +0200
+Message-ID: <20251003160352.866716823@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160352.713189598@linuxfoundation.org>
 References: <20251003160352.713189598@linuxfoundation.org>
@@ -51,59 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 9f2c0ac1423d5f267e7f1d1940780fc764b0fee3 upstream.
+commit 01e03fb7db419d39e18d6090d4873c1bff103914 upstream.
 
-The previous commit 0718a78f6a9f ("ALSA: usb-audio: Kill timer properly at
-removal") patched a UAF issue caused by the error timer.
+The original code uses cancel_delayed_work() in flexcop_pci_remove(), which
+does not guarantee that the delayed work item irq_check_work has fully
+completed if it was already running. This leads to use-after-free scenarios
+where flexcop_pci_remove() may free the flexcop_device while irq_check_work
+is still active and attempts to dereference the device.
 
-However, because the error timer kill added in this patch occurs after the
-endpoint delete, a race condition to UAF still occurs, albeit rarely.
+A typical race condition is illustrated below:
 
-Additionally, since kill-cleanup for urb is also missing, freed memory can
-be accessed in interrupt context related to urb, which can cause UAF.
+CPU 0 (remove)                         | CPU 1 (delayed work callback)
+flexcop_pci_remove()                   | flexcop_pci_irq_check_work()
+  cancel_delayed_work()                |
+  flexcop_device_kfree(fc_pci->fc_dev) |
+                                       |   fc = fc_pci->fc_dev; // UAF
 
-Therefore, to prevent this, error timer and urb must be killed before
-freeing the heap memory.
+This is confirmed by a KASAN report:
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+f02665daa2abeef4a947@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f02665daa2abeef4a947
-Fixes: 0718a78f6a9f ("ALSA: usb-audio: Kill timer properly at removal")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+==================================================================
+BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
+Write of size 8 at addr ffff8880093aa8c8 by task bash/135
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_report+0xcf/0x610
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ kasan_report+0xb8/0xf0
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ __run_timer_base.part.0+0x7d7/0x8c0
+ ? __pfx___run_timer_base.part.0+0x10/0x10
+ ? __pfx_read_tsc+0x10/0x10
+ ? ktime_get+0x60/0x140
+ ? lapic_next_event+0x11/0x20
+ ? clockevents_program_event+0x1d4/0x2a0
+ run_timer_softirq+0xd1/0x190
+ handle_softirqs+0x16a/0x550
+ irq_exit_rcu+0xaf/0xe0
+ sysvec_apic_timer_interrupt+0x70/0x80
+ </IRQ>
+...
+
+Allocated by task 1:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x7f/0x90
+ __kmalloc_noprof+0x1be/0x460
+ flexcop_device_kmalloc+0x54/0xe0
+ flexcop_pci_probe+0x1f/0x9d0
+ local_pci_probe+0xdc/0x190
+ pci_device_probe+0x2fe/0x470
+ really_probe+0x1ca/0x5c0
+ __driver_probe_device+0x248/0x310
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xd2/0x310
+ bus_for_each_dev+0xed/0x170
+ bus_add_driver+0x208/0x500
+ driver_register+0x132/0x460
+ do_one_initcall+0x89/0x300
+ kernel_init_freeable+0x40d/0x720
+ kernel_init+0x1a/0x150
+ ret_from_fork+0x10c/0x1a0
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 135:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3a/0x60
+ __kasan_slab_free+0x3f/0x50
+ kfree+0x137/0x370
+ flexcop_device_kfree+0x32/0x50
+ pci_device_remove+0xa6/0x1d0
+ device_release_driver_internal+0xf8/0x210
+ pci_stop_bus_device+0x105/0x150
+ pci_stop_and_remove_bus_device_locked+0x15/0x30
+ remove_store+0xcc/0xe0
+ kernfs_fop_write_iter+0x2c3/0x440
+ vfs_write+0x871/0xd70
+ ksys_write+0xee/0x1c0
+ do_syscall_64+0xac/0x280
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+
+Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
+that the delayed work item is properly canceled and any executing delayed
+work has finished before the device memory is deallocated.
+
+This bug was initially identified through static analysis. To reproduce
+and test it, I simulated the B2C2 FlexCop PCI device in QEMU and introduced
+artificial delays within the flexcop_pci_irq_check_work() function to
+increase the likelihood of triggering the bug.
+
+Fixes: 382c5546d618 ("V4L/DVB (10694): [PATCH] software IRQ watchdog for Flexcop B2C2 DVB PCI cards")
+Cc: stable@vger.kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/media/pci/b2c2/flexcop-pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index acb3bf92857c..97e7e7662b12 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1522,15 +1522,14 @@ static void snd_usbmidi_free(struct snd_usb_midi *umidi)
- {
- 	int i;
+--- a/drivers/media/pci/b2c2/flexcop-pci.c
++++ b/drivers/media/pci/b2c2/flexcop-pci.c
+@@ -411,7 +411,7 @@ static void flexcop_pci_remove(struct pc
+ 	struct flexcop_pci *fc_pci = pci_get_drvdata(pdev);
  
-+	if (!umidi->disconnected)
-+		snd_usbmidi_disconnect(&umidi->list);
-+
- 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i) {
- 		struct snd_usb_midi_endpoint *ep = &umidi->endpoints[i];
--		if (ep->out)
--			snd_usbmidi_out_endpoint_delete(ep->out);
--		if (ep->in)
--			snd_usbmidi_in_endpoint_delete(ep->in);
-+		kfree(ep->out);
- 	}
- 	mutex_destroy(&umidi->mutex);
--	timer_shutdown_sync(&umidi->error_timer);
- 	kfree(umidi);
- }
+ 	if (irq_chk_intv > 0)
+-		cancel_delayed_work(&fc_pci->irq_check_work);
++		cancel_delayed_work_sync(&fc_pci->irq_check_work);
  
--- 
-2.51.0
-
+ 	flexcop_pci_dma_exit(fc_pci);
+ 	flexcop_device_exit(fc_pci->fc_dev);
 
 
