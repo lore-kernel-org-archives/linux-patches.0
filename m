@@ -1,211 +1,162 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7E335962;
-	Fri,  3 Oct 2025 16:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB9735962;
+	Fri,  3 Oct 2025 16:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507638; cv=none; b=f5223GH6zYNqL+cE+zLVIHjLl5ceHAB2vISPgT07wDAi00e7PSX8GW7rJvwtl8EcAw+UxU5JPJQEmRsJSKU2clTrvj1nj2pWyNTbqhwQuymEY8xxHPNfg2J8Wi4LAeiux1DHuJSg+JWr//UAEPDJOLonKk5ISKU65HxyE8tympE=
+	t=1759507639; cv=none; b=skw2tzJo0TBYX7IBHSYzywxvtgkTj9BPcf9FKOCL/t8zFpSqP1XsfVEWS+C6oAWHP4lZE7RLGv+/KPqdRxK4Q0MNZ4sr4FnNG2ytWtmUbNRPT2EWdOKBkt/MFNqsCfOkpbj+gnTzwqFA3gUpOc4ikPMQsNk9MN9x37QqeRxnSr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507638; c=relaxed/simple;
-	bh=ee4dVTy8104V0eIfIEHjyIr0KVmFbub8W/xJwXkRw00=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4xmtMMhQUz/t7UWGStrX/G4+80wY+x7AicJEbbBs9cuk7p4fleXNQxGwkJeqVr2l//ne/8CNWGnDoSGP8I9lVWv1mRt1X78JZKPj3kgw8uTjANE3C3/IzqtH6VxF91G7YMiIo952fP2gDGvTuVEKgNAzlT7sJBTIiGGgNat2DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diXdcRaB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759507639; c=relaxed/simple;
+	bh=J3MGq/FaN7XOOtlg9H9SfFKM1jle0JiNqsdBNb1rD38=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YN71tjsKPH1fTK+3DYKkzESd18YRoP+STTejKtSsVvFlYZO0f+DuzmTyA3d2n6KDjI4NXCKANU23OS2Olw93j2CEM4sX5ySxAfLXfQKxnoWIzP3fvvQoaazrvreVkBLEWAB46vDnU3Z6TcnqNEJ8KBlYSBrZNfou6eAQdYRhbOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zie57fIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diXdcRaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EA8C4CEF7;
-	Fri,  3 Oct 2025 16:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zie57fIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7BFC4CEF5;
+	Fri,  3 Oct 2025 16:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507636;
-	bh=ee4dVTy8104V0eIfIEHjyIr0KVmFbub8W/xJwXkRw00=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diXdcRaBoYwHsqEgbJ6uvpLN8L4cGl0BmoQMabtQs1XMhplvMxn4XiWvq5CJ4u0XS
-	 G5UyY1VK+8K9AZsAk3G8KcF6d2Ym/hPjgsxsnX34HXsMdTrzbavYugynbww1neJnnt
-	 FExKB/qjbmxjZYmt/AS7ibq+o1RIFnop1TuqcjRc=
+	s=korg; t=1759507639;
+	bh=J3MGq/FaN7XOOtlg9H9SfFKM1jle0JiNqsdBNb1rD38=;
+	h=From:To:Cc:Subject:Date:From;
+	b=zie57fItF4cnbTxjdwfmdB80iQUgVccy1u99DSUPbc9D8CE9KXb3yLsNSdPKPW5Sk
+	 4sexRsH5o7Pu9oFE7YMFGJI7jFhtCf+SUG747aXRpGn5r+bQhfCpv3y+Fh+UBC0crx
+	 FSInsanC5tS0XWxeP27mG5mg9/gACjqY4aB0K68A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
-	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 09/15] media: rc: fix races with imon_disconnect()
-Date: Fri,  3 Oct 2025 18:05:33 +0200
-Message-ID: <20251003160400.255334444@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org
+Subject: [PATCH 6.17 00/15] 6.17.1-rc1 review
+Date: Fri,  3 Oct 2025 18:05:24 +0200
+Message-ID: <20251003160359.831046052@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251003160359.831046052@linuxfoundation.org>
-References: <20251003160359.831046052@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.1-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.17.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.17.1-rc1
+X-KernelTest-Deadline: 2025-10-05T16:04+00:00
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.17.1 release.
+There are 15 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sun, 05 Oct 2025 16:02:25 +0000.
+Anything received after that time might be too late.
 
-From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.1-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+and the diffstat can be found below.
 
-commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
+thanks,
 
-Syzbot reports a KASAN issue as below:
-BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
-BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
+greg k-h
 
-CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
-Call Trace:
- <TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-__create_pipe include/linux/usb.h:1945 [inline]
-send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
-vfs_write+0x2d7/0xdd0 fs/read_write.c:576
-ksys_write+0x127/0x250 fs/read_write.c:631
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+-------------
+Pseudo-Shortlog of commits:
 
-The iMON driver improperly releases the usb_device reference in
-imon_disconnect without coordinating with active users of the
-device.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.17.1-rc1
 
-Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
-protected by the users counter (ictx->users). During probe,
-imon_init_intf0 or imon_init_intf1 increments the usb_device
-reference count depending on the interface. However, during
-disconnect, usb_put_dev is called unconditionally, regardless of
-actual usage.
+Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+    ASoC: qcom: audioreach: fix potential null pointer dereference
 
-As a result, if vfd_write or other operations are still in
-progress after disconnect, this can lead to a use-after-free of
-the usb_device pointer.
+Chandra Mohan Sundar <chandramohan.explore@gmail.com>
+    media: stm32-csi: Fix dereference before NULL check
 
-Thread 1 vfd_write                      Thread 2 imon_disconnect
-                                        ...
-                                        if
-                                          usb_put_dev(ictx->usbdev_intf0)
-                                        else
-                                          usb_put_dev(ictx->usbdev_intf1)
-...
-while
-  send_packet
-    if
-      pipe = usb_sndintpipe(
-        ictx->usbdev_intf0) UAF
-    else
-      pipe = usb_sndctrlpipe(
-        ictx->usbdev_intf0, 0) UAF
+Dikshita Agarwal <quic_dikshita@quicinc.com>
+    media: iris: Fix memory leak by freeing untracked persist buffer
 
-Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
-checking ictx->disconnected in all writer paths. Add early return
-with -ENODEV in send_packet(), vfd_write(), lcd_write() and
-display_open() if the device is no longer present.
+Matvey Kovalev <matvey.kovalev@ispras.ru>
+    wifi: ath11k: fix NULL dereference in ath11k_qmi_m3_load()
 
-Set and read ictx->disconnected under ictx->lock to ensure memory
-synchronization. Acquire the lock in imon_disconnect() before setting
-the flag to synchronize with any ongoing operations.
+Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+    mm: swap: check for stable address space before operating on the VMA
 
-Ensure writers exit early and safely after disconnect before the USB
-core proceeds with cleanup.
+Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+    media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Larshin Sergey <Sergey.Larshin@kaspersky.com>
+    media: rc: fix races with imon_disconnect()
 
-Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Cc: stable@vger.kernel.org
+Duoming Zhou <duoming@zju.edu.cn>
+    media: tuner: xc5000: Fix use-after-free in xc5000_release
 
-Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+Duoming Zhou <duoming@zju.edu.cn>
+    media: i2c: tc358743: Fix use-after-free bugs caused by orphan timer in probe
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -536,7 +536,9 @@ static int display_open(struct inode *in
- 
- 	mutex_lock(&ictx->lock);
- 
--	if (!ictx->display_supported) {
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+	} else if (!ictx->display_supported) {
- 		pr_err("display not supported by device\n");
- 		retval = -ENODEV;
- 	} else if (ictx->display_isopen) {
-@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
- 	int retval = 0;
- 	struct usb_ctrlrequest *control_req = NULL;
- 
-+	if (ictx->disconnected)
-+		return -ENODEV;
-+
- 	/* Check if we need to use control or interrupt urb */
- 	if (!ictx->tx_control) {
- 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
-@@ -949,12 +954,14 @@ static ssize_t vfd_write(struct file *fi
- 	static const unsigned char vfd_packet6[] = {
- 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
- 
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	if (mutex_lock_interruptible(&ictx->lock))
- 		return -ERESTARTSYS;
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
- 		retval = -ENODEV;
-@@ -1029,11 +1036,13 @@ static ssize_t lcd_write(struct file *fi
- 	int retval = 0;
- 	struct imon_context *ictx = file->private_data;
- 
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	mutex_lock(&ictx->lock);
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->display_supported) {
- 		pr_err_ratelimited("no iMON display present\n");
- 		retval = -ENODEV;
-@@ -2499,7 +2508,11 @@ static void imon_disconnect(struct usb_i
- 	int ifnum;
- 
- 	ictx = usb_get_intfdata(interface);
-+
-+	mutex_lock(&ictx->lock);
- 	ictx->disconnected = true;
-+	mutex_unlock(&ictx->lock);
-+
- 	dev = ictx->dev;
- 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
- 
+Duoming Zhou <duoming@zju.edu.cn>
+    media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
+
+Fedor Pchelkin <pchelkin@ispras.ru>
+    wifi: rtw89: fix use-after-free in rtw89_core_tx_kick_off_and_wait()
+
+Jeongjun Park <aha310510@gmail.com>
+    ALSA: usb-audio: fix race condition to UAF in snd_usbmidi_free
+
+Wang Haoran <haoranwangsec@gmail.com>
+    scsi: target: target_core_configfs: Add length check to avoid buffer overflow
+
+Kees Cook <kees@kernel.org>
+    gcc-plugins: Remove TODO_verify_il for GCC >= 16
+
+Yu Kuai <yukuai3@huawei.com>
+    blk-mq: fix blk_mq_tags double free while nr_requests grown
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                       |  4 +-
+ block/blk-mq-tag.c                             |  1 +
+ drivers/media/i2c/tc358743.c                   |  4 +-
+ drivers/media/pci/b2c2/flexcop-pci.c           |  2 +-
+ drivers/media/platform/qcom/iris/iris_buffer.c | 10 ++++
+ drivers/media/platform/st/stm32/stm32-csi.c    |  4 +-
+ drivers/media/rc/imon.c                        | 27 +++++++---
+ drivers/media/tuners/xc5000.c                  |  2 +-
+ drivers/media/usb/uvc/uvc_driver.c             | 73 ++++++++++++++++----------
+ drivers/media/usb/uvc/uvcvideo.h               |  2 +
+ drivers/net/wireless/ath/ath11k/qmi.c          |  2 +-
+ drivers/net/wireless/realtek/rtw89/core.c      | 30 ++++++++---
+ drivers/net/wireless/realtek/rtw89/core.h      | 35 +++++++++++-
+ drivers/net/wireless/realtek/rtw89/pci.c       |  3 +-
+ drivers/net/wireless/realtek/rtw89/ser.c       |  2 +
+ drivers/target/target_core_configfs.c          |  2 +-
+ mm/swapfile.c                                  |  3 ++
+ scripts/gcc-plugins/gcc-common.h               |  7 +++
+ sound/soc/qcom/qdsp6/topology.c                |  4 +-
+ sound/usb/midi.c                               |  9 ++--
+ 20 files changed, 166 insertions(+), 60 deletions(-)
 
 
