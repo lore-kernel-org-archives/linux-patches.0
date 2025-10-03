@@ -1,139 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C7435962;
-	Fri,  3 Oct 2025 16:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEFC35962;
+	Fri,  3 Oct 2025 16:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507726; cv=none; b=aWfkorLFwsaGU9itFC4jVZ53qOdkLdbxLMilxDS319NxOnbSAzLnv51+43BX62F0drYGxpMzIZRoYWpDemWHpTC6WrdXerrznlTDmevBIPxulXFsOaXJjx+o0gjwsskWk5mdivrNfxKfXdgE2NY86ZZDFD+dqb/yGKZmMN9Zns8=
+	t=1759507729; cv=none; b=dTaUbkYwyIZT4Nssmetm0RQKb6JAmnZD4uYkIucEkxG5uZVqRsyT5c4cVOwMZZEfTKQQh7/36zb2h+xHOFgsAWZ0b3OX9Hm13NmdPUIO8gLtl5E1mJr+UV7edPBPIK44sHhYlZ+KHq5JCwDBWzR1Tlzl6buNfNhJPTfYSNVK+co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507726; c=relaxed/simple;
-	bh=TcV7MiW8Fesu8TxlwA3xge3zckML+YWn2RsDatupFwU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cge2FBsnRHFxJgqtZwQ5e7jraQFNYdsF0MqBiBaKh5A8EyS01GxOY6BcCOrVHKmEQazo0iMAq98u7Z7YgHFbkYSx809KA6U2h/yBGXzKi08e1n1OhPa7mZpHpUS4uHAh4sY+y37ZGxKcua+HFEuRhK2tJEloXlCps0WK5ZobH4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXOD/weF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759507729; c=relaxed/simple;
+	bh=/CqUqbS7XWVd0eZB+R1ast799af3Z8u8QVYs6Q0qHuw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KQQNrYcl0JPLzypm4ZHSV74Qa6rICy5LKQKuBarU0kx5gtc8TLsyA25Y5QJLLKQiyMEsNboc0aktiB1rN5g2dWiZYrDackPVDKw5D6VyiNbFORxePqbFYVNY5AJ6OpY5g4kcPNhw/v3qF4D7A6Yzjc0js6rnPMoT+1//6nW+SJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJUuojee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXOD/weF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156BDC4CEF5;
-	Fri,  3 Oct 2025 16:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJUuojee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D7FC4CEF7;
+	Fri,  3 Oct 2025 16:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507725;
-	bh=TcV7MiW8Fesu8TxlwA3xge3zckML+YWn2RsDatupFwU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=CXOD/weF98+ogSfcE7tVf7+YiqBWgH0xh5GOAOS+3SmKM4UyzxeQD/ggFKrzDyPIt
-	 H+/pMF5D7TmfTZFJTqVE8iXu0aMBeVj6NFqons/4s4RL2Yap8THd55fT4EU/laS6dq
-	 pChD25RXCdveOAOxrr9Xo1+oflQbneYQnMHB9MMw=
+	s=korg; t=1759507729;
+	bh=/CqUqbS7XWVd0eZB+R1ast799af3Z8u8QVYs6Q0qHuw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=MJUuojee3JDrkxr4mVzTXxNsxeGc/V617/nZhNHesNpS3ief0hvzpBd414nAHNv1w
+	 uLTvf3vIqiSk74+dhZi3uVUfNCaP/jGjRuQ4aLnJMTt4pCrEpSqIOVnn4XggRXBCH2
+	 4Dr/X//0n2AYJQQbrG9otLo1ioISbn7spnWROryI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org
-Subject: [PATCH 6.12 00/10] 6.12.51-rc1 review
-Date: Fri,  3 Oct 2025 18:05:47 +0200
-Message-ID: <20251003160338.463688162@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Tobias Fleig <tfleig@meta.com>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.6 1/7] crypto: sha256 - fix crash at kexec
+Date: Fri,  3 Oct 2025 18:06:09 +0200
+Message-ID: <20251003160331.533677677@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251003160331.487313415@linuxfoundation.org>
+References: <20251003160331.487313415@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.51-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.12.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.12.51-rc1
-X-KernelTest-Deadline: 2025-10-05T16:03+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.12.51 release.
-There are 10 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sun, 05 Oct 2025 16:02:25 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.51-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-and the diffstat can be found below.
+From: Breno Leitao <leitao@debian.org>
 
-thanks,
+Loading a large (~2.1G) files with kexec crashes the host with when
+running:
 
-greg k-h
+  # kexec --load kernel --initrd initrd_with_2G_or_more
 
--------------
-Pseudo-Shortlog of commits:
+  UBSAN: signed-integer-overflow in ./include/crypto/sha256_base.h:64:19
+  34152083 * 64 cannot be represented in type 'int'
+  ...
+  BUG: unable to handle page fault for address: ff9fffff83b624c0
+  sha256_update (lib/crypto/sha256.c:137)
+  crypto_sha256_update (crypto/sha256_generic.c:40)
+  kexec_calculate_store_digests (kernel/kexec_file.c:769)
+  __se_sys_kexec_file_load (kernel/kexec_file.c:397 kernel/kexec_file.c:332)
+  ...
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.12.51-rc1
+(Line numbers based on commit da274362a7bd9 ("Linux 6.12.49")
 
-Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-    ASoC: qcom: audioreach: fix potential null pointer dereference
+This started happening after commit f4da7afe07523f
+("kexec_file: increase maximum file size to 4G") that landed in v6.0,
+which increased the file size for kexec.
 
-Matvey Kovalev <matvey.kovalev@ispras.ru>
-    wifi: ath11k: fix NULL dereference in ath11k_qmi_m3_load()
+This is not happening upstream (v6.16+), given that `block` type was
+upgraded from "int" to "size_t" in commit 74a43a2cf5e8 ("crypto:
+lib/sha256 - Move partial block handling out")
 
-Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-    mm: swap: check for stable address space before operating on the VMA
+Upgrade the block type similar to the commit above, avoiding hitting the
+overflow.
 
-Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-    media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
+This patch is only suitable for the stable tree, and before 6.16, which
+got commit 74a43a2cf5e8 ("crypto: lib/sha256 - Move partial block
+handling out"). This is not required before f4da7afe07523f ("kexec_file:
+increase maximum file size to 4G"). In other words, this fix is required
+between versions v6.0 and v6.16.
 
-Larshin Sergey <Sergey.Larshin@kaspersky.com>
-    media: rc: fix races with imon_disconnect()
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: f4da7afe07523f ("kexec_file: increase maximum file size to 4G") # Before v6.16
+Reported-by: Michael van der Westhuizen <rmikey@meta.com>
+Reported-by: Tobias Fleig <tfleig@meta.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/crypto/sha256_base.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Duoming Zhou <duoming@zju.edu.cn>
-    media: tuner: xc5000: Fix use-after-free in xc5000_release
-
-Duoming Zhou <duoming@zju.edu.cn>
-    media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
-
-Wang Haoran <haoranwangsec@gmail.com>
-    scsi: target: target_core_configfs: Add length check to avoid buffer overflow
-
-Kees Cook <kees@kernel.org>
-    gcc-plugins: Remove TODO_verify_il for GCC >= 16
-
-Breno Leitao <leitao@debian.org>
-    crypto: sha256 - fix crash at kexec
-
-
--------------
-
-Diffstat:
-
- Makefile                              |  4 +-
- drivers/media/pci/b2c2/flexcop-pci.c  |  2 +-
- drivers/media/rc/imon.c               | 27 +++++++++----
- drivers/media/tuners/xc5000.c         |  2 +-
- drivers/media/usb/uvc/uvc_driver.c    | 73 ++++++++++++++++++++++-------------
- drivers/media/usb/uvc/uvcvideo.h      |  2 +
- drivers/net/wireless/ath/ath11k/qmi.c |  2 +-
- drivers/target/target_core_configfs.c |  2 +-
- include/crypto/sha256_base.h          |  2 +-
- mm/swapfile.c                         |  3 ++
- scripts/gcc-plugins/gcc-common.h      |  7 ++++
- sound/soc/qcom/qdsp6/topology.c       |  4 +-
- 12 files changed, 87 insertions(+), 43 deletions(-)
+--- a/include/crypto/sha256_base.h
++++ b/include/crypto/sha256_base.h
+@@ -44,7 +44,7 @@ static inline int lib_sha256_base_do_upd
+ 	sctx->count += len;
+ 
+ 	if (unlikely((partial + len) >= SHA256_BLOCK_SIZE)) {
+-		int blocks;
++		unsigned int blocks;
+ 
+ 		if (partial) {
+ 			int p = SHA256_BLOCK_SIZE - partial;
 
 
