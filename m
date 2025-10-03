@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AE429BDB5;
-	Fri,  3 Oct 2025 16:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5785C29BDB5;
+	Fri,  3 Oct 2025 16:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759507664; cv=none; b=kgxIJEHnX1KbqTYu2iGJEaW083CJbSovELtQC6+enYi0eWnAQy+rei1swlPM2xm0KfO4VUoww+7ZKS+A6TEcbCGh3Ic+B3cEVJmqAeHYgj48OJTerq+Wm3mteGjJKexthE9qBKS3wKvHfcDepnd59AKUVcolzeJFdnbxxy7f9i0=
+	t=1759507667; cv=none; b=FjvtZY8fgskropE1w2RvRyYJ1StJfYTKoQLbiNI22M4dx5miYuSTWt8/yZTsRjuFAQ5SDTS7VQ3OW4ictQlZgsca8qm5v+vs3/plWnTuJrVT8FR/3xA4MsdsMyWrVtRR3TvD+0ITi17PejQaWreef5f9MbmhOFV8VXgZ4bi/+T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759507664; c=relaxed/simple;
-	bh=wLbfskF9ilofgWRa85Vq/NfnP8zYoBMT2HhU6yIf10Q=;
+	s=arc-20240116; t=1759507667; c=relaxed/simple;
+	bh=HKH7QflExSEnUPWaml+61x1uFfmEwsukei87a+hI68c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCEQew11Krfe4khhPVo9hpX4s6HPV/4/sQiCGb0DCHa03lh3mJwKYbys9+BVQNP1Y5MkUA7b4fofXaQq5XOQOaYzIH/E3kFaFdxazy3IdIc0Jt8F8Ma8SNHFUQ2Odwy7FYaxIK1OSsXW+g/E/yNoWHLYoZpXCeE36uxdWFD/7Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2y0I7u3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCG4ZZX/IRLcT2+qX2oRt2SX9lKA/3fM+NQng/eLsJjG1B3qo5J1+hv+uOfMxrc32xwaoi6EE2hbnZBj9YN3iqxTCUckFO06kTINoUvT14uUbqndMcknqew9KPC78T9T6nlCTzCKN7nrJACz5KYTNXa1SoGBkjOu/+VI1Tc7xyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojEMoRkF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2y0I7u3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707D6C4CEF5;
-	Fri,  3 Oct 2025 16:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojEMoRkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C56C4CEF5;
+	Fri,  3 Oct 2025 16:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759507663;
-	bh=wLbfskF9ilofgWRa85Vq/NfnP8zYoBMT2HhU6yIf10Q=;
+	s=korg; t=1759507666;
+	bh=HKH7QflExSEnUPWaml+61x1uFfmEwsukei87a+hI68c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2y0I7u3+ZwkvN1tNX1TIOPAOMy2q82kMOM2hDEcfJNgGzQ63SNE8CwiZJzIijwnN
-	 UOlGzEwIcljvQ9v2/R2O7b84rESKEbIY13dJK3hBevsyRp8tyqjIUETqEnXGpY9oOe
-	 0SOiSk01YAhlQiYoNvnlr3eB4PM1b65J4WeCMyp0=
+	b=ojEMoRkFEqhR5m050aPPGfgb+XbjnkG6rxKASy6pMQGFPtvw2cnTWOEOEzp8ZC4fu
+	 az3jPdId932GpQ448xTP6xouMHiy6oUBfZYAsDxG/RTfzY1CpnzjOEyyzgUoU9SV3t
+	 1zK4S2NugZ9ICdQ7xq8eW6ZLeHOeEJ/jf6OfTnTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Fore <csfore@posteo.net>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.16 02/14] gcc-plugins: Remove TODO_verify_il for GCC >= 16
-Date: Fri,  3 Oct 2025 18:05:36 +0200
-Message-ID: <20251003160352.783394369@linuxfoundation.org>
+	Wang Haoran <haoranwangsec@gmail.com>,
+	ziiiro <yuanmingbuaa@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.16 03/14] scsi: target: target_core_configfs: Add length check to avoid buffer overflow
+Date: Fri,  3 Oct 2025 18:05:37 +0200
+Message-ID: <20251003160352.812079206@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251003160352.713189598@linuxfoundation.org>
 References: <20251003160352.713189598@linuxfoundation.org>
@@ -50,41 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-commit a40282dd3c484e6c882e93f4680e0a3ef3814453 upstream.
+commit 27e06650a5eafe832a90fd2604f0c5e920857fae upstream.
 
-GCC now runs TODO_verify_il automatically[1], so it is no longer exposed to
-plugins. Only use the flag on GCC < 16.
+A buffer overflow arises from the usage of snprintf to write into the
+buffer "buf" in target_lu_gp_members_show function located in
+/drivers/target/target_core_configfs.c. This buffer is allocated with
+size LU_GROUP_NAME_BUF (256 bytes).
 
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=9739ae9384dd7cd3bb1c7683d6b80b7a9116eaf8 [1]
-Suggested-by: Christopher Fore <csfore@posteo.net>
-Link: https://lore.kernel.org/r/20250920234519.work.915-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+snprintf(...) formats multiple strings into buf with the HBA name
+(hba->hba_group.cg_item), a slash character, a devicename (dev->
+dev_group.cg_item) and a newline character, the total formatted string
+length may exceed the buffer size of 256 bytes.
+
+Since snprintf() returns the total number of bytes that would have been
+written (the length of %s/%sn ), this value may exceed the buffer length
+(256 bytes) passed to memcpy(), this will ultimately cause function
+memcpy reporting a buffer overflow error.
+
+An additional check of the return value of snprintf() can avoid this
+buffer overflow.
+
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: ziiiro <yuanmingbuaa@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/gcc-common.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/target/target_core_configfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/gcc-plugins/gcc-common.h
-+++ b/scripts/gcc-plugins/gcc-common.h
-@@ -173,10 +173,17 @@ static inline opt_pass *get_pass_for_id(
- 	return g->get_passes()->get_pass_for_id(id);
- }
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -2774,7 +2774,7 @@ static ssize_t target_lu_gp_members_show
+ 			config_item_name(&dev->dev_group.cg_item));
+ 		cur_len++; /* Extra byte for NULL terminator */
  
-+#if BUILDING_GCC_VERSION < 16000
- #define TODO_verify_ssa TODO_verify_il
- #define TODO_verify_flow TODO_verify_il
- #define TODO_verify_stmts TODO_verify_il
- #define TODO_verify_rtl_sharing TODO_verify_il
-+#else
-+#define TODO_verify_ssa 0
-+#define TODO_verify_flow 0
-+#define TODO_verify_stmts 0
-+#define TODO_verify_rtl_sharing 0
-+#endif
- 
- #define INSN_DELETED_P(insn) (insn)->deleted()
- 
+-		if ((cur_len + len) > PAGE_SIZE) {
++		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
+ 				"_members buffer\n");
+ 			break;
 
 
