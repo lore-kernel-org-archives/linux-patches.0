@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEFE246766;
-	Mon,  6 Oct 2025 18:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FF82DFF33;
+	Mon,  6 Oct 2025 18:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774772; cv=none; b=NaP4DS1L08XUVJ1a6CWNSdN8k68Jwa+cQPG6J6wn7wnOD1UHOdDUT7Wr3zb4rCF5VFiXKNKEYPi/XOFZ3OSE/IrcPUWUqsYa5HWwGvAQlL0/yWJSZVVnf3udAI5M24z1Y3jKRCzWoefz6nLhd8FERsHpV9HRLfnl23PNA+HSBII=
+	t=1759774773; cv=none; b=pzQo3E5eQrV3l4a+yraAcd5koMWkCGbWEM1eqRI0NpTYTEzH8p3yop/BRv8Rmnp4N7u7wlk7DN/7gKqMwV+EY5RliFfSz/qvcWHmSRSj4VAHLHh3D32OBWNepWu2lhJjgkDH8kTYnpWuUjI4rOAOYeId+yWKmYyLjEhn9lchMko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759774772; c=relaxed/simple;
-	bh=CvfGgEBl25MOW5xHddb76nDW1uClv4FoaxzRoD4emQU=;
+	s=arc-20240116; t=1759774773; c=relaxed/simple;
+	bh=ii8PPEjk/4/DgRiIWepm+fW7yCRaehzXtUUPe7Xy4rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LQNE30f0+POBXe/dKaBgjvxvhUhdgdR/rlj/rXfuRaurkxDsNNXEj9y3x/fQoO7X6gGjfmMZrH/ds6Rqeog5B9/NJzCDJuswlG/S0ThTPIezMXfS/EaGUTupBTx5FfKxPTJS3P+Rm8cAjqdEagOQBMXYvl3jq/Hb1/ol4jwsAYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMks/9Hs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cksWdRGXoKpfdYrKalOgNnz3yShmvUdO22wKGoIp99APGToiEkkcuSG1xd9MM7apoP33P/PkGk53lA1SD+tq5/6nOXO0OqQgPrNOxbl7emWTIie7cAjfQV8TfXYy81B87fgy2VrZtFI3RPgk6j/QOHObhhyVEE4L8DoytNKj408=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jy3Ic8Qu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMks/9Hs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44920C4CEF7;
-	Mon,  6 Oct 2025 18:19:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jy3Ic8Qu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEA2C4CEF7;
+	Mon,  6 Oct 2025 18:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774772;
-	bh=CvfGgEBl25MOW5xHddb76nDW1uClv4FoaxzRoD4emQU=;
+	s=k20201202; t=1759774773;
+	bh=ii8PPEjk/4/DgRiIWepm+fW7yCRaehzXtUUPe7Xy4rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMks/9Hs6HhlqnzM9rZHCQaDxZnMJMV2r5FicJystjyBCJ7BmDFbjGF0vv2cHvLy1
-	 4+giO9PSCEKj0h/cOwj15zEwD5ta1o3pIgOlfZNwYgkxmeS/avGBFkl6SMaqqn37VM
-	 RoLQ/U1hX1qamWfM5ioNRJDy56hxKFYPuiLoTt6Dp2mEb0Vz4CiduqH0lLtgL3Mbgs
-	 /bLVjUzKzlsvshg1rNEaXo5fFMRh8j59fIS3fJgXjwy9I4KOsCl3ovGd+j2siLH1cd
-	 6dLWd6hD5fqUBJFYieA3loAJX2oCCuYuD8SHfWJ3t/yij2AN3zbasIViJ89oJhlXXb
-	 cH5eIaNJaq6Iw==
+	b=jy3Ic8QuOeF1AphMlxLkEAW8FwFYiZ4k5ajJjPVKvmFn4TE4oDCThY8F90Dhm7o73
+	 IIvSPxaDzae1OkwnoyotGgoeZPJNA4OfaaYr7Z1jrBYLzZgIMMIIJnp7mjOtPrZlnF
+	 21g8Vj0Vz056eplg3XFaJKyvSv0zByYAsQhjb8DsSBSP9ow2e+pYgMeQR2ltAnjuok
+	 ixt9Xfe+LpORrlhodQXJFjewWAvqYmRLgzquAkGnBXy5fJJVqQ+5jCsQYxFNZildjZ
+	 Ra8jxtoWLTgswZy7wX5eDKofQFea9ecx5N4JTxXcidZiDeC+da3Pj7gQY1IuIV+wAg
+	 GCi/f39Pi+BEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aaron Lu <ziqianlu@bytedance.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] sched/fair: update_cfs_group() for throttled cfs_rqs
-Date: Mon,  6 Oct 2025 14:17:54 -0400
-Message-ID: <20251006181835.1919496-22-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] btrfs: scrub: replace max_t()/min_t() with clamp() in scrub_throttle_dev_io()
+Date: Mon,  6 Oct 2025 14:17:55 -0400
+Message-ID: <20251006181835.1919496-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -54,225 +52,106 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Lu <ziqianlu@bytedance.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit fcd394866e3db344cbe0bb485d7e3f741ac07245 ]
+[ Upstream commit a7f3dfb8293c4cee99743132d69863a92e8f4875 ]
 
-With task based throttle model, tasks in a throttled hierarchy are
-allowed to continue to run if they are running in kernel mode. For this
-reason, PELT clock is not stopped for these cfs_rqs in throttled
-hierarchy when they still have tasks running or queued.
+Replace max_t() followed by min_t() with a single clamp().
 
-Since PELT clock is not stopped, whether to allow update_cfs_group()
-doing its job for cfs_rqs which are in throttled hierarchy but still
-have tasks running/queued is a question.
+As was pointed by David Laight in
+https://lore.kernel.org/linux-btrfs/20250906122458.75dfc8f0@pumpkin/
+the calculation may overflow u32 when the input value is too large, so
+clamp_t() is not used.  In practice the expected values are in range of
+megabytes to gigabytes (throughput limit) so the bug would not happen.
 
-The good side is, continue to run update_cfs_group() can get these
-cfs_rq entities with an up2date weight and that up2date weight can be
-useful to derive an accurate load for the CPU as well as ensure fairness
-if multiple tasks of different cgroups are running on the same CPU.
-OTOH, as Benjamin Segall pointed: when unthrottle comes around the most
-likely correct distribution is the distribution we had at the time of
-throttle.
-
-In reality, either way may not matter that much if tasks in throttled
-hierarchy don't run in kernel mode for too long. But in case that
-happens, let these cfs_rq entities have an up2date weight seems a good
-thing to do.
-
-Signed-off-by: Aaron Lu <ziqianlu@bytedance.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ Use clamp() and add explanation. ]
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Status: YES (with critical dependencies)
+**Backport Status: YES**
 
-### Executive Summary
+## Analysis
 
-This commit **should be backported** to stable kernel trees, but **only
-as part of the complete task-based throttle model series**. In fact,
-this commit has **already been backported** to Linux 6.17 stable tree
-(commit 4ee521004f8ef) by stable maintainer Sasha Levin, which is strong
-evidence of its suitability for stable backporting.
+### Change Classification
+This commit is a **code quality improvement** that also addresses a
+**theoretical overflow bug**. It replaces two lines with a single,
+cleaner `clamp()` call:
 
-### Code Change Analysis
-
-The commit makes a minimal code change in `kernel/sched/fair.c`,
-removing 3 lines from `update_cfs_group()`:
-
+**Before (fs/btrfs/scrub.c:1372-1373):**
 ```c
-- if (throttled_hierarchy(gcfs_rq))
-- return;
--
+div = max_t(u32, 1, (u32)(bwlimit / (16 * 1024 * 1024)));
+div = min_t(u32, 64, div);
 ```
 
-This removal allows `update_cfs_group()` to continue updating group
-entity weights even for cgroups in throttled hierarchies. Previously,
-line 3960-3961 would cause an early return, preventing weight
-recalculation for any throttled cfs_rq.
+**After:**
+```c
+div = clamp(bwlimit / (16 * 1024 * 1024), 1, 64);
+```
 
-### Context and Dependencies
+### Key Points
 
-**Critical Finding**: This commit is **NOT standalone**. It is part 5 of
-a 7-commit series implementing the task-based throttle model:
+1. **Already Backported**: This commit has already been backported to
+   stable (commit 185af233e0914) by Sasha Levin on Oct 1, 2025,
+   confirming it meets stable backport criteria.
 
-1. **e1fad12dcb66b** - "Switch to task based throttle model" (341 line
-   change - the base)
-2. **eb962f251fbba** - "Task based throttle time accounting"
-3. **5b726e9bf9544** - "Get rid of throttled_lb_pair()"
-4. **fe8d238e646e1** - "Propagate load for throttled cfs_rq"
-5. **fcd394866e3db** - "update_cfs_group() for throttled cfs_rqs" ←
-   **This commit**
-6. **253b3f5872419** - "Do not special case tasks in throttled
-   hierarchy" (follow-up fix)
-7. **0d4eaf8caf8cd** - "Do not balance task to a throttled cfs_rq"
-   (follow-up performance fix)
+2. **Bug Fixed (Theoretical)**: The original code casts `(bwlimit / (16
+   * 1024 * 1024))` to u32, which could overflow if bwlimit exceeds ~64
+   PiB/s. However, as the commit message explicitly states: "In practice
+   the expected values are in range of megabytes to gigabytes
+   (throughput limit) so the bug would not happen."
 
-All 7 commits were backported together to Linux 6.17 stable tree.
+3. **Real Improvement**: By using `clamp()` instead of `clamp_t()`, the
+   code avoids the explicit u32 cast, allowing the macro to handle types
+   correctly. This was specifically recommended by David Laight in the
+   mailing list discussion.
 
-### Why This Change Is Necessary
+4. **Low Risk**:
+   - Minimal code change (3 lines: +1, -2)
+   - Functionality remains identical for all realistic values
+   - No regression reports or follow-up fixes found
+   - Reviewed by David Sterba (btrfs maintainer)
 
-Under the **old throttle model**: When a cfs_rq was throttled, its
-entity was dequeued from the CPU's runqueue, preventing all tasks from
-running. The PELT clock stopped, so updating group weights was
-unnecessary and prevented by the `throttled_hierarchy()` check at line
-3960.
+5. **Code Quality**: Improves readability by consolidating the min/max
+   pattern into a single, more expressive `clamp()` call - a common
+   kernel code modernization.
 
-Under the **new task-based throttle model** (introduced by commit
-e1fad12dcb66b):
-- Tasks in throttled hierarchies **continue running if in kernel mode**
-- PELT clock **remains active** while throttled tasks still run/queue
-- The `throttled_hierarchy()` check at line 3960 becomes **incorrect** -
-  it prevents weight updates even though PELT is still running
+6. **Stable Tree Criteria**:
+   - ✓ Small, contained change
+   - ✓ No architectural modifications
+   - ✓ Minimal regression risk
+   - ✓ Fixes a (theoretical) bug
+   - ✓ Already proven safe through upstream testing
 
-**The fix**: Remove lines 3960-3961 to allow `calc_group_shares()` (line
-3963) and `reweight_entity()` (line 3965) to execute, giving throttled
-cfs_rq entities up-to-date weights for accurate CPU load calculation and
-cross-cgroup fairness.
+### Conclusion
+While this primarily improves code quality rather than fixing a critical
+bug, it addresses a legitimate (if theoretical) overflow issue
+identified during code review. The fact that it has already been
+selected for stable backport by the stable tree maintainer confirms its
+suitability. The change is extremely low-risk and represents the type of
+defensive programming improvement appropriate for stable trees.
 
-### Benefits and Trade-offs
+ fs/btrfs/scrub.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-**Benefits** (from commit message):
-- Up-to-date weights enable accurate CPU load derivation
-- Ensures fairness when multiple tasks from different cgroups run on
-  same CPU
-- Prevents stale weight values during extended kernel-mode execution
-
-**Trade-offs** (acknowledged in commit):
-- As Benjamin Segall noted: "the most likely correct distribution is the
-  distribution we had at the time of throttle"
-- May not matter much if tasks don't run in kernel mode for long periods
-- Performance tuning was needed (see follow-up commit 0d4eaf8caf8cd
-  which addresses hackbench regression by preventing load balancing to
-  throttled cfs_rqs)
-
-### What Problems Does This Solve?
-
-The base task-based throttle model (e1fad12dcb66b) solves a **real
-bug**: With the old model, a task holding a percpu_rwsem as reader in a
-throttled cgroup couldn't run until the next period, causing:
-- Writers waiting longer
-- Reader build-up
-- **Task hung warnings**
-
-This specific commit ensures the new model works correctly by keeping
-weight calculations accurate during kernel-mode execution of throttled
-tasks.
-
-### Risk Assessment
-
-**Low to Medium Risk** for the following reasons:
-
-**Mitigating factors**:
-- Small code change (3 lines removed)
-- Already backported to 6.17 stable by experienced maintainer
-- Well-tested by multiple developers (Valentin Schneider, Chen Yu,
-  Matteo Martelli, K Prateek Nayak)
-- Part of thoroughly reviewed patch series linked at
-  https://lore.kernel.org/r/20250829081120.806-4-ziqianlu@bytedance.com
-
-**Risk factors**:
-- Modifies core scheduler behavior in subtle ways
-- Requires entire series (cannot be cherry-picked alone)
-- Follow-up performance fixes needed (commit 0d4eaf8caf8cd mentions AMD
-  Genoa performance degradation with hackbench that required additional
-  checks)
-- Affects PELT weight calculations during throttling edge cases
-
-**No evidence of**:
-- Reverts
-- CVE assignments
-- Major regression reports
-- Security implications
-
-### Backporting Requirements
-
-If backporting to stable trees **without** the task-based throttle
-model:
-
-**DO NOT BACKPORT** - This commit will break things. The
-`throttled_hierarchy()` check at line 3960 exists for a reason in the
-old throttle model where PELT clocks stop on throttle.
-
-If backporting to stable trees **with** the task-based throttle model:
-
-**MUST BACKPORT** as part of the complete series:
-1. Base commit e1fad12dcb66b (341 lines - major change)
-2. Commits eb962f251fbba, 5b726e9bf9544, fe8d238e646e1
-3. **This commit** (fcd394866e3db)
-4. **Follow-up fixes** 253b3f5872419 and 0d4eaf8caf8cd
-
-### Stable Tree Rules Compliance
-
-- ✅ **Fixes important bugs**: Yes (task hung due to percpu_rwsem
-  interactions)
-- ✅ **Relatively small change**: Yes for this commit (3 lines), but
-  series is large
-- ✅ **Minimal side effects**: When backported with complete series
-- ❌ **No major architectural changes**: No - this IS part of a major
-  architectural change
-- ✅ **Clear benefits**: Yes - prevents task hangs, improves fairness
-- ⚠️ **Explicit stable tag**: No "Cc: stable" tag, but manually selected
-  by stable maintainer
-- ✅ **Minimal regression risk**: When backported with complete series
-  and follow-ups
-
-### Recommendation
-
-**YES - Backport this commit**, with the following requirements:
-
-1. **MUST include the entire task-based throttle series** (commits 1-7
-   listed above)
-2. **MUST include follow-up performance fixes** (especially
-   0d4eaf8caf8cd)
-3. **Target kernel version**: 6.17+ (already done) or newer LTS versions
-   planning major scheduler updates
-4. **Not suitable for**: Older stable trees without appetite for the
-   341-line base architectural change
-
-The fact that Sasha Levin already backported this entire series to 6.17
-stable is the strongest indicator this is appropriate for stable
-backporting.
-
- kernel/sched/fair.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 8ce56a8d507f9..eea0b6571af5a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3957,9 +3957,6 @@ static void update_cfs_group(struct sched_entity *se)
- 	if (!gcfs_rq || !gcfs_rq->load.weight)
- 		return;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 6776e6ab8d108..fd4c1ca34b5e4 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1369,8 +1369,7 @@ static void scrub_throttle_dev_io(struct scrub_ctx *sctx, struct btrfs_device *d
+ 	 * Slice is divided into intervals when the IO is submitted, adjust by
+ 	 * bwlimit and maximum of 64 intervals.
+ 	 */
+-	div = max_t(u32, 1, (u32)(bwlimit / (16 * 1024 * 1024)));
+-	div = min_t(u32, 64, div);
++	div = clamp(bwlimit / (16 * 1024 * 1024), 1, 64);
  
--	if (throttled_hierarchy(gcfs_rq))
--		return;
--
- 	shares = calc_group_shares(gcfs_rq);
- 	if (unlikely(se->load.weight != shares))
- 		reweight_entity(cfs_rq_of(se), se, shares);
+ 	/* Start new epoch, set deadline */
+ 	now = ktime_get();
 -- 
 2.51.0
 
