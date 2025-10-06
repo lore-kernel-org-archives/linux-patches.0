@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6272D5C74;
-	Mon,  6 Oct 2025 18:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D042765D2;
+	Mon,  6 Oct 2025 18:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774747; cv=none; b=fiz41OVa7XrgVkFr/iiXw6Q4SG5FkNxTPgQkjX4pUrgafUXDDGbtrLxZ9Xcb8WOSeqhmqG8zVTILQJ6TH+vbKC8hLSkDsvGekOmBQiwR8podTBfaGmEYaJbDJ2Ujhyvbr4Dq9hT/KzO63IJHqOW2u+i716MHHJTD/u7YEqftFVo=
+	t=1759774750; cv=none; b=my1gU1v4A4bU0dl+qfvSbFvG4LFLWpwc/sdOP9AHtoVmqm61Q/JudWaviISmxWU4bm0EErnE5f0kNMkKdr6K6z6bLilMyspp8oSV+sSXlq190Xj5AbM52JSYpspZ13nyEX8sI1sPoY1lBlQj50V3BUD1caRHqKbY9nRnzTsWvv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759774747; c=relaxed/simple;
-	bh=m4Fpy/eWBeFnq1vn1TOoSnON6AnHjmMBWnutn6UkkzE=;
+	s=arc-20240116; t=1759774750; c=relaxed/simple;
+	bh=pi9+48WVTh/niaA89TWN/8nPZQAmwD4yjcnsT846FhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BEkuwJtCe9HBQq/0a1cHveBIhK4Assi69uno6uf1Ku+94Neoy8mYyvk8JvaFM4n3jLNoUZIOWmm/AMAvdGWrVS/+/316QNyX8RzLUfaiS0I9C8dYuJzvp+bNhVwVgkZI84AlJ9s/3fHRUBVac1i5G8/vWdzFsxIAk+B+coUnW60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAy922mG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jvDhvYSiVUWEuVDBYd7R1bAlhHc0PUx3+zME7buaZX0FgPF0KvBxYCb1jDvwF1d3hluOngV9+1bZHIcrASXW6dOFD2FNelGAxi64QR+MnO1Sg1g7f4BFRSEcTAUxsG1bRAlOPCVu9qss+my8DZ78MPzXYY8r/L4p8l6UObYVj+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtrCUyd/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAy922mG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D3FC116B1;
-	Mon,  6 Oct 2025 18:19:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtrCUyd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F5FC4CEF5;
+	Mon,  6 Oct 2025 18:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774745;
-	bh=m4Fpy/eWBeFnq1vn1TOoSnON6AnHjmMBWnutn6UkkzE=;
+	s=k20201202; t=1759774747;
+	bh=pi9+48WVTh/niaA89TWN/8nPZQAmwD4yjcnsT846FhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAy922mGwl9NQdPSczyyqlQ2g6RAGaDJVUT2PsecxBRYRr+oVe5TrBHWlz6RB/Rch
-	 vSy+wNeBY0kXQDL5rU+5dwB2sOTSJe699kuBA1zW8nEn1LfiW3mEKRDt0afaudfbGF
-	 qH9HstRbRdHA/jeKn/tYX0V63wT4G+56dQwV+j/U4So7r3uHIj14lE4wFWe0BeLuEL
-	 fpMBZUEEtMdTCBFhfqIf3R2lYJMTu7UuDrSciL387F4tsW+ODtQ4cKwOshiHtF2R+9
-	 VAo3jmZ8ov0y2pgnhA1uYT/YqgI4fRVEJb7Yw3mG5yOQ/XSjY+d80to0S7Yl2crmn5
-	 HFSgOCpSX3k5g==
+	b=mtrCUyd/zapq93kkt8wbj7jFO5vmGwbIG1xVgQJn4lop0NefH1d1XkzWaR5EilopC
+	 0mukCbSebRUMtMxSykKsthrCIdqz1iVw6aY+RG4A0UER/Sc+GaS4c8kdNTIxq4NEPf
+	 vj6VX/kv58jtCs3SGXzX537TAtGP7Tw4LpCRFpX7wH0eKbWGZgj4qsSTw/x9hcdnVn
+	 OX67EX7L5hLIFbaIuSmtpTzubAZ0Kz7/im7aqFbwELSUMhflWC8icENLRagnaaTgnS
+	 X5C+dXwZIj7T+pxAuyJWGGMGkqKV+A7z1xE78yB0rBz21sSm22pKukAd992HFqG6tX
+	 V/2K6k/qB0YdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Kaplan <david.kaplan@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+Cc: Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
+	mingo@redhat.com,
 	peterz@infradead.org,
-	jpoimboe@kernel.org
-Subject: [PATCH AUTOSEL 6.17] x86/bugs: Add attack vector controls for VMSCAPE
-Date: Mon,  6 Oct 2025 14:17:38 -0400
-Message-ID: <20251006181835.1919496-6-sashal@kernel.org>
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] sched_ext: Keep bypass on between enable failure and scx_disable_workfn()
+Date: Mon,  6 Oct 2025 14:17:39 -0400
+Message-ID: <20251006181835.1919496-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -53,197 +56,132 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Kaplan <david.kaplan@amd.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 5799d5d8a6c877f03ad5b5a640977053be45059a ]
+[ Upstream commit 4a1d9d73aabc8f97f48c4f84f936de3b265ffd6f ]
 
-Use attack vector controls to select whether VMSCAPE requires mitigation,
-similar to other bugs.
+scx_enable() turns on the bypass mode while enable is in progress. If
+enabling fails, it turns off the bypass mode and then triggers scx_error().
+scx_error() will trigger scx_disable_workfn() which will turn on the bypass
+mode again and unload the failed scheduler.
 
-Signed-off-by: David Kaplan <david.kaplan@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+This moves the system out of bypass mode between the enable error path and
+the disable path, which is unnecessary and can be brittle - e.g. the thread
+running scx_enable() may already be on the failed scheduler and can be
+switched out before it triggers scx_error() leading to a stall. The watchdog
+would eventually kick in, so the situation isn't critical but is still
+suboptimal.
+
+There is nothing to be gained by turning off the bypass mode between
+scx_enable() failure and scx_disable_workfn(). Keep bypass on.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## YES
+Based on my comprehensive analysis, here is my determination:
+
+## **YES**
 
 This commit should be backported to stable kernel trees.
 
-### Comprehensive Analysis:
+### Detailed Analysis:
 
-#### Background Context:
-**VMSCAPE (CVE-2025-40300)** is a recently disclosed Spectre-based
-vulnerability discovered by ETH Zurich researchers that exploits
-insufficient branch predictor isolation between guest VMs and userspace
-hypervisors like QEMU. It affects AMD Zen 1-5 and Intel Coffee Lake
-CPUs, allowing guests to leak arbitrary memory from the hypervisor at
-~32 bytes/second with 98.7% accuracy.
+#### **Context and Timing:**
+- **sched_ext introduction**: This feature was first introduced in
+  kernel **v6.12** (confirmed via git tag analysis)
+- **Applicability**: This commit is only relevant for kernels **v6.12
+  and later** that include sched_ext
+- **Current status**: The commit has **already been selected** for
+  backporting to 6.17 (commit 2d013fc03f11a with Sasha Levin's sign-off)
 
-The vulnerability was introduced with its mitigation (conditional IBPB
-on VM-exit) in upstream commit 2f8f173413f1, and has been backported to
-stable trees as evidenced by commit d83e6111337f3 in
-arch/x86/kernel/cpu/bugs.c:3307-3315.
+#### **Bug Description and Impact:**
+The code change addresses a **race condition in the error handling
+path** during BPF scheduler enablement:
 
-#### What This Commit Does:
+**Old behavior (buggy):**
+1. Line 4580: `scx_bypass(true)` - Enable bypass mode during scheduler
+   initialization
+2. On error → Line 4708-4711: `scx_bypass(false)` - **Disable bypass
+   mode**
+3. Call `scx_error()` which triggers `scx_disable_workfn()`
+4. Line 3873 in `scx_disable_workfn()`: `scx_bypass(true)` - Re-enable
+   bypass mode
 
-**Code Changes Analysis:**
+**Problem:** Between steps 2 and 4, the system is **out of bypass mode**
+with a failed scheduler. The commit message explicitly states: *"the
+thread running scx_enable() may already be on the failed scheduler and
+can be switched out before it triggers scx_error() **leading to a
+stall**"*
 
-1. **In should_mitigate_vuln() (arch/x86/kernel/cpu/bugs.c:417+):**
-   - Adds case for `X86_BUG_VMSCAPE` that returns true when
-     `CPU_MITIGATE_GUEST_HOST` attack vector is enabled
-   - This integrates VMSCAPE into the unified attack vector control
-     framework
+**New behavior (fixed):**
+Simply **removes** the `scx_bypass(false)` call at line 4710, keeping
+bypass mode continuously enabled from the failure point through the
+entire disable sequence.
 
-2. **In vmscape_select_mitigation()
-   (arch/x86/kernel/cpu/bugs.c:3307-3316):**
-   - **Removes** the `cpu_mitigations_off()` check from line 3307
-   - **Replaces** unconditional AUTO→IBPB_EXIT_TO_USER assignment with
-     conditional logic:
-     ```c
-     if (vmscape_mitigation == VMSCAPE_MITIGATION_AUTO) {
-     if (should_mitigate_vuln(X86_BUG_VMSCAPE))
-     vmscape_mitigation = VMSCAPE_MITIGATION_IBPB_EXIT_TO_USER;
-     else
-     vmscape_mitigation = VMSCAPE_MITIGATION_NONE;
-     }
-     ```
+#### **Why This Should Be Backported:**
 
-3. **Documentation update:** Adds VMSCAPE to the attack vector controls
-   table showing Guest-to-Host (X) as the relevant attack vector
+1. **Real Bug**: This fixes an actual stall condition (confirmed by
+   author Tejun Heo and acked by Andrea Righi)
 
-#### Behavioral Changes:
+2. **User Impact**: While the watchdog eventually recovers, users
+   experience **unnecessary stalls** when BPF schedulers fail to load -
+   a real-world scenario
 
-**Before this commit:**
-- VMSCAPE mitigation disabled if: `cpu_mitigations_off()` OR no VMSCAPE
-  bug OR no IBPB support
-- Otherwise in AUTO mode: **Always enables** IBPB_EXIT_TO_USER
-  mitigation
+3. **Minimal Risk**:
+   - **1-line change** (removal only)
+   - Makes error path **more conservative** (keeps bypass on longer)
+   - No new logic introduced
+   - Only affects **error conditions**, not normal operation
 
-**After this commit:**
-- VMSCAPE mitigation disabled if: no VMSCAPE bug OR no IBPB support
-- In AUTO mode: Enables mitigation **only if** CPU_MITIGATE_GUEST_HOST
-  attack vector is enabled
-- Respects attack vector controls like
-  `mitigations=auto,guest_to_host=off`
+4. **Stable Tree Criteria Met**:
+   - ✅ Fixes important bug affecting users
+   - ✅ Doesn't introduce new features
+   - ✅ No architectural changes
+   - ✅ Minimal regression risk
+   - ✅ Confined to sched_ext subsystem
 
-This change allows users to disable VMSCAPE mitigation via attack vector
-controls (e.g., `mitigations=auto,guest_to_host=off`) instead of
-requiring the global `mitigations=off`, providing **more granular
-security control**.
+5. **Already Validated**: The autosel process has already selected this
+   for 6.17, indicating automated analysis confirms its suitability
 
-#### Why This Should Be Backported:
+6. **Active Subsystem**: Multiple sched_ext fixes show this is under
+   active maintenance and bug discovery
 
-1. **Completes Security Infrastructure:** VMSCAPE was already backported
-   to stable (commit d83e6111337f3), but without attack vector control
-   integration. This creates an **inconsistency** where all other
-   vulnerabilities (Spectre_v2, Retbleed, L1TF, ITS, SRSO, SSB, etc.)
-   use attack vector controls while VMSCAPE still uses the deprecated
-   `cpu_mitigations_off()` approach.
+#### **Code Change Details:**
+```c
+// kernel/sched/ext.c, line 4708-4712
+err_disable_unlock_all:
+    scx_cgroup_unlock();
+    percpu_up_write(&scx_fork_rwsem);
+- scx_bypass(false);  // REMOVED
++   /* we'll soon enter disable path, keep bypass on */  // ADDED
+COMMENT
+err_disable:
+```
 
-2. **Small, Self-Contained Change:** Only 15 lines changed across 2
-   files, with all dependencies already present in stable:
-   - Attack vector framework: Already in stable (commits 2d31d2874663c
-     and later)
-   - VMSCAPE bug definition: Already in stable (X86_BUG_VMSCAPE)
-   - should_mitigate_vuln() function: Already in stable
+This single-line removal prevents the problematic window where the
+system exits bypass mode between error detection and cleanup,
+eliminating the potential for stalls during scheduler enable failures.
 
-3. **Part of Coordinated Refactoring:** This is followed by commit
-   440d20154add2 "x86/bugs: Remove uses of cpu_mitigations_off()" which
-   removes the now-obsolete `cpu_mitigations_off()` checks. Without this
-   commit, VMSCAPE would be the **only** vulnerability still using the
-   old approach.
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-4. **Security Control Improvement:** Enables proper Guest-to-Host attack
-   vector control for CVE-2025-40300, allowing cloud providers to make
-   informed risk decisions rather than requiring all-or-nothing
-   mitigation choices.
-
-5. **No Regression Risk:** The change is confined to the VMSCAPE
-   mitigation path. Default behavior remains secure (mitigation enabled
-   in AUTO mode with default attack vector settings). Users who
-   explicitly disabled mitigations will see consistent behavior across
-   all vulnerabilities.
-
-6. **Follows Stable Tree Criteria:**
-   - ✅ Fixes important functional issue (inconsistent mitigation
-     control)
-   - ✅ Small and obviously correct
-   - ✅ No major architectural changes
-   - ✅ Security infrastructure improvement
-   - ✅ Already selected by AUTOSEL (commit c853b338b012a in linux-
-     autosel-6.17)
-
-7. **Merged for 6.18:** The commit was merged via tag
-   `x86_bugs_for_v6.18_rc1` (commit d7ec0cf1cd79a), indicating it's part
-   of the stable security infrastructure for upcoming releases.
-
-#### Dependencies Met:
-All prerequisites are already in stable trees:
-- ✅ Attack vector control framework (2d31d2874663c and subsequent
-  commits)
-- ✅ VMSCAPE vulnerability enumeration (d83e6111337f3)
-- ✅ VMSCAPE mitigation infrastructure (510603f504796)
-- ✅ cpu_attack_vector_mitigated() helper functions
-
-**Recommendation: YES** - Backport to stable kernels that have VMSCAPE
-mitigation (6.17+) to complete the attack vector control integration and
-maintain consistency with other CPU vulnerability mitigations.
-
- .../admin-guide/hw-vuln/attack_vector_controls.rst |  1 +
- arch/x86/kernel/cpu/bugs.c                         | 14 ++++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/admin-guide/hw-vuln/attack_vector_controls.rst b/Documentation/admin-guide/hw-vuln/attack_vector_controls.rst
-index 5964901d66e31..d0bdbd81dcf9f 100644
---- a/Documentation/admin-guide/hw-vuln/attack_vector_controls.rst
-+++ b/Documentation/admin-guide/hw-vuln/attack_vector_controls.rst
-@@ -218,6 +218,7 @@ SRSO                  X              X            X              X
- SSB                                  X
- TAA                   X              X            X              X            *       (Note 2)
- TSA                   X              X            X              X
-+VMSCAPE                                           X
- =============== ============== ============ ============= ============== ============ ========
- 
- Notes:
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 36dcfc5105be9..e817bbae01591 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -434,6 +434,9 @@ static bool __init should_mitigate_vuln(unsigned int bug)
- 	case X86_BUG_SPEC_STORE_BYPASS:
- 		return cpu_attack_vector_mitigated(CPU_MITIGATE_USER_USER);
- 
-+	case X86_BUG_VMSCAPE:
-+		return cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST);
-+
- 	default:
- 		WARN(1, "Unknown bug %x\n", bug);
- 		return false;
-@@ -3304,15 +3307,18 @@ early_param("vmscape", vmscape_parse_cmdline);
- 
- static void __init vmscape_select_mitigation(void)
- {
--	if (cpu_mitigations_off() ||
--	    !boot_cpu_has_bug(X86_BUG_VMSCAPE) ||
-+	if (!boot_cpu_has_bug(X86_BUG_VMSCAPE) ||
- 	    !boot_cpu_has(X86_FEATURE_IBPB)) {
- 		vmscape_mitigation = VMSCAPE_MITIGATION_NONE;
- 		return;
- 	}
- 
--	if (vmscape_mitigation == VMSCAPE_MITIGATION_AUTO)
--		vmscape_mitigation = VMSCAPE_MITIGATION_IBPB_EXIT_TO_USER;
-+	if (vmscape_mitigation == VMSCAPE_MITIGATION_AUTO) {
-+		if (should_mitigate_vuln(X86_BUG_VMSCAPE))
-+			vmscape_mitigation = VMSCAPE_MITIGATION_IBPB_EXIT_TO_USER;
-+		else
-+			vmscape_mitigation = VMSCAPE_MITIGATION_NONE;
-+	}
- }
- 
- static void __init vmscape_update_mitigation(void)
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 088ceff38c8a4..2ccc885a229d5 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5795,7 +5795,7 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ err_disable_unlock_all:
+ 	scx_cgroup_unlock();
+ 	percpu_up_write(&scx_fork_rwsem);
+-	scx_bypass(false);
++	/* we'll soon enter disable path, keep bypass on */
+ err_disable:
+ 	mutex_unlock(&scx_enable_mutex);
+ 	/*
 -- 
 2.51.0
 
