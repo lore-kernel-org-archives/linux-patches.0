@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D042765D2;
-	Mon,  6 Oct 2025 18:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C962376EB;
+	Mon,  6 Oct 2025 18:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774750; cv=none; b=my1gU1v4A4bU0dl+qfvSbFvG4LFLWpwc/sdOP9AHtoVmqm61Q/JudWaviISmxWU4bm0EErnE5f0kNMkKdr6K6z6bLilMyspp8oSV+sSXlq190Xj5AbM52JSYpspZ13nyEX8sI1sPoY1lBlQj50V3BUD1caRHqKbY9nRnzTsWvv8=
+	t=1759774750; cv=none; b=RQfbPDtjbn/UDIRLUGsEzwYJ1g9Wms8Bds78b9HNZWD/RQSRQ0tUs92siFxWjIMw9u2qckfrFYV4eDOfCpPhVSXX1Xeb6CNPDvuIHd/gS9h/ssNRD758TUX3vV/nAiQQEr3JNzYae+kXAjIIyY36KHCTzllVBoEsV1hRMQ8XKpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759774750; c=relaxed/simple;
-	bh=pi9+48WVTh/niaA89TWN/8nPZQAmwD4yjcnsT846FhE=;
+	bh=o0BM9Rulk2fLONymVwALWm16NrAkLNqYnt/EXRkq9nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jvDhvYSiVUWEuVDBYd7R1bAlhHc0PUx3+zME7buaZX0FgPF0KvBxYCb1jDvwF1d3hluOngV9+1bZHIcrASXW6dOFD2FNelGAxi64QR+MnO1Sg1g7f4BFRSEcTAUxsG1bRAlOPCVu9qss+my8DZ78MPzXYY8r/L4p8l6UObYVj+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtrCUyd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JdAFu8TJAwO57apLfrMtfJ5j24lXyrKewY2CcfQsyPHq8v1RVC80gBSaYR8LbQAWN2J9fXwtd97/+IEZ8/GpCMW6phhH+Q6eLjOdwCCWpDFwD2BtmC+MPuzvyLhzXuOuRidCJ2m5fUSlVFv9lSsDQJkaltv7SUFhWh4vV9OZvNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J5LGxLsV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtrCUyd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F5FC4CEF5;
-	Mon,  6 Oct 2025 18:19:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J5LGxLsV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA33C4CEFE;
+	Mon,  6 Oct 2025 18:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774747;
-	bh=pi9+48WVTh/niaA89TWN/8nPZQAmwD4yjcnsT846FhE=;
+	s=k20201202; t=1759774749;
+	bh=o0BM9Rulk2fLONymVwALWm16NrAkLNqYnt/EXRkq9nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtrCUyd/zapq93kkt8wbj7jFO5vmGwbIG1xVgQJn4lop0NefH1d1XkzWaR5EilopC
-	 0mukCbSebRUMtMxSykKsthrCIdqz1iVw6aY+RG4A0UER/Sc+GaS4c8kdNTIxq4NEPf
-	 vj6VX/kv58jtCs3SGXzX537TAtGP7Tw4LpCRFpX7wH0eKbWGZgj4qsSTw/x9hcdnVn
-	 OX67EX7L5hLIFbaIuSmtpTzubAZ0Kz7/im7aqFbwELSUMhflWC8icENLRagnaaTgnS
-	 X5C+dXwZIj7T+pxAuyJWGGMGkqKV+A7z1xE78yB0rBz21sSm22pKukAd992HFqG6tX
-	 V/2K6k/qB0YdQ==
+	b=J5LGxLsVscglG0g+KjaUbodNN4mFIj+Zx0Du1U+vT28nno1qK1KCcwIeHDHC6/OnR
+	 YFJlwm4wts27HsTQqFPIA0iqIUoOyLZesaQ/Z9X3QR1Pzo/SGjfw2Y6GpLvmWP5Mzg
+	 9h2uK6F6Wj4mwU3jZA+QWnEkZ1lUu2+6h8at9YbOjUksv1E9nBJ7zU6IugaU6Q2VEg
+	 ghv73kG6b4ljZbCPSeDzcYByyuq67mNlO2UbW1m8s+ieUI6eWUe95jRfZ3cTJNFS/+
+	 2c8tPtQqpTj28TuweG9CLVnvxWZAwk+cRDsNtG0NMGTWfoR1UxPdTyaoMXoB9pkxeK
+	 sjHJyn6lAbUhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Yi Lai <yi1.lai@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] sched_ext: Keep bypass on between enable failure and scx_disable_workfn()
-Date: Mon,  6 Oct 2025 14:17:39 -0400
-Message-ID: <20251006181835.1919496-7-sashal@kernel.org>
+	acme@kernel.org,
+	namhyung@kernel.org,
+	seanjc@google.com,
+	pbonzini@redhat.com,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] perf/x86/intel: Add ICL_FIXED_0_ADAPTIVE bit into INTEL_FIXED_BITS_MASK
+Date: Mon,  6 Oct 2025 14:17:40 -0400
+Message-ID: <20251006181835.1919496-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -56,132 +60,211 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 4a1d9d73aabc8f97f48c4f84f936de3b265ffd6f ]
+[ Upstream commit 2676dbf9f4fb7f6739d1207c0f1deaf63124642a ]
 
-scx_enable() turns on the bypass mode while enable is in progress. If
-enabling fails, it turns off the bypass mode and then triggers scx_error().
-scx_error() will trigger scx_disable_workfn() which will turn on the bypass
-mode again and unload the failed scheduler.
+ICL_FIXED_0_ADAPTIVE is missed to be added into INTEL_FIXED_BITS_MASK,
+add it.
 
-This moves the system out of bypass mode between the enable error path and
-the disable path, which is unnecessary and can be brittle - e.g. the thread
-running scx_enable() may already be on the failed scheduler and can be
-switched out before it triggers scx_error() leading to a stall. The watchdog
-would eventually kick in, so the situation isn't critical but is still
-suboptimal.
+With help of this new INTEL_FIXED_BITS_MASK, intel_pmu_enable_fixed() can
+be optimized. The old fixed counter control bits can be unconditionally
+cleared with INTEL_FIXED_BITS_MASK and then set new control bits base on
+new configuration.
 
-There is nothing to be gained by turning off the bypass mode between
-scx_enable() failure and scx_disable_workfn(). Keep bypass on.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Link: https://lore.kernel.org/r/20250820023032.17128-7-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my determination:
+**YES**
 
-## **YES**
+This commit should definitely be backported to stable kernel trees.
 
-This commit should be backported to stable kernel trees.
+## Extensive Analysis
 
-### Detailed Analysis:
+### Nature of the Bug
 
-#### **Context and Timing:**
-- **sched_ext introduction**: This feature was first introduced in
-  kernel **v6.12** (confirmed via git tag analysis)
-- **Applicability**: This commit is only relevant for kernels **v6.12
-  and later** that include sched_ext
-- **Current status**: The commit has **already been selected** for
-  backporting to 6.17 (commit 2d013fc03f11a with Sasha Levin's sign-off)
+This commit fixes a **real and significant bug** in the Intel PMU
+(Performance Monitoring Unit) fixed counter handling. The bug has
+existed since kernel v6.5 when `INTEL_FIXED_BITS_MASK` was introduced in
+commit 10d95a317ec12 (May 2023).
 
-#### **Bug Description and Impact:**
-The code change addresses a **race condition in the error handling
-path** during BPF scheduler enablement:
+### Technical Details of the Bug
 
-**Old behavior (buggy):**
-1. Line 4580: `scx_bypass(true)` - Enable bypass mode during scheduler
-   initialization
-2. On error → Line 4708-4711: `scx_bypass(false)` - **Disable bypass
-   mode**
-3. Call `scx_error()` which triggers `scx_disable_workfn()`
-4. Line 3873 in `scx_disable_workfn()`: `scx_bypass(true)` - Re-enable
-   bypass mode
+**In arch/x86/include/asm/perf_event.h:18-35:**
 
-**Problem:** Between steps 2 and 4, the system is **out of bypass mode**
-with a failed scheduler. The commit message explicitly states: *"the
-thread running scx_enable() may already be on the failed scheduler and
-can be switched out before it triggers scx_error() **leading to a
-stall**"*
-
-**New behavior (fixed):**
-Simply **removes** the `scx_bypass(false)` call at line 4710, keeping
-bypass mode continuously enabled from the failure point through the
-entire disable sequence.
-
-#### **Why This Should Be Backported:**
-
-1. **Real Bug**: This fixes an actual stall condition (confirmed by
-   author Tejun Heo and acked by Andrea Righi)
-
-2. **User Impact**: While the watchdog eventually recovers, users
-   experience **unnecessary stalls** when BPF schedulers fail to load -
-   a real-world scenario
-
-3. **Minimal Risk**:
-   - **1-line change** (removal only)
-   - Makes error path **more conservative** (keeps bypass on longer)
-   - No new logic introduced
-   - Only affects **error conditions**, not normal operation
-
-4. **Stable Tree Criteria Met**:
-   - ✅ Fixes important bug affecting users
-   - ✅ Doesn't introduce new features
-   - ✅ No architectural changes
-   - ✅ Minimal regression risk
-   - ✅ Confined to sched_ext subsystem
-
-5. **Already Validated**: The autosel process has already selected this
-   for 6.17, indicating automated analysis confirms its suitability
-
-6. **Active Subsystem**: Multiple sched_ext fixes show this is under
-   active maintenance and bug discovery
-
-#### **Code Change Details:**
+The original `INTEL_FIXED_BITS_MASK` was defined as `0xFULL` (binary
+1111), covering only bits 0-3:
 ```c
-// kernel/sched/ext.c, line 4708-4712
-err_disable_unlock_all:
-    scx_cgroup_unlock();
-    percpu_up_write(&scx_fork_rwsem);
-- scx_bypass(false);  // REMOVED
-+   /* we'll soon enter disable path, keep bypass on */  // ADDED
-COMMENT
-err_disable:
+-#define INTEL_FIXED_BITS_MASK                          0xFULL
 ```
 
-This single-line removal prevents the problematic window where the
-system exits bypass mode between error detection and cleanup,
-eliminating the potential for stalls during scheduler enable failures.
+However, the mask was missing `ICL_FIXED_0_ADAPTIVE` (bit 32), which has
+existed since 2019 for Ice Lake adaptive PEBS v4 support (commit
+c22497f5838c2). The fix correctly includes all relevant bits:
+```c
++#define INTEL_FIXED_BITS_MASK                                  \
++       (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER |            \
++        INTEL_FIXED_0_ANYTHREAD | INTEL_FIXED_0_ENABLE_PMI |   \
++        ICL_FIXED_0_ADAPTIVE)
+```
 
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**In arch/x86/events/intel/core.c:2844-2896:**
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 088ceff38c8a4..2ccc885a229d5 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5795,7 +5795,7 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
- err_disable_unlock_all:
- 	scx_cgroup_unlock();
- 	percpu_up_write(&scx_fork_rwsem);
--	scx_bypass(false);
-+	/* we'll soon enter disable path, keep bypass on */
- err_disable:
- 	mutex_unlock(&scx_enable_mutex);
- 	/*
+The bug manifests in `intel_pmu_enable_fixed()` at lines 2888-2895. When
+reconfiguring a fixed counter:
+
+**Before the fix:**
+- Line 2888 creates `mask` with only bits 0-3
+- Lines 2890-2893 conditionally add `ICL_FIXED_0_ADAPTIVE` to both
+  `bits` and `mask` only if PEBS is enabled
+- Line 2895 clears bits using the incomplete mask
+- **Problem:** If a counter previously had `ICL_FIXED_0_ADAPTIVE` set
+  but the new configuration doesn't need it, the bit won't be cleared
+  because it's not in the mask
+
+**After the fix:**
+- The mask always includes `ICL_FIXED_0_ADAPTIVE`
+- Line 2890 unconditionally clears all relevant bits (including
+  `ICL_FIXED_0_ADAPTIVE`)
+- Lines 2890-2891 set `ICL_FIXED_0_ADAPTIVE` only when needed
+- The code is cleaner and bug-free
+
+### Impact Analysis
+
+1. **Affected Hardware:** Intel Ice Lake (ICL) and newer processors with
+   adaptive PEBS support
+
+2. **Symptom:** The `ICL_FIXED_0_ADAPTIVE` bit can remain incorrectly
+   set after reconfiguring performance counters, causing:
+   - Incorrect PMU behavior
+   - Adaptive PEBS being enabled when it should be disabled
+   - Performance monitoring data corruption
+
+3. **Severity:** This bug was explicitly identified as **"Bug #3"** in
+   KVM commit 9e985cbf2942a (March 2024), which stated:
+  > "Bug #3 is in perf. intel_pmu_disable_fixed() doesn't clear the
+  upper bits either, i.e. leaves ICL_FIXED_0_ADAPTIVE set, and
+  intel_pmu_enable_fixed() effectively doesn't clear
+  ICL_FIXED_0_ADAPTIVE either. I.e. perf _always_ enables ADAPTIVE
+  counters, regardless of what KVM requests."
+
+4. **Security Context:** KVM had to **completely disable adaptive PEBS
+   support** (with a Cc: stable tag) as a workaround for multiple bugs,
+   including this one. The KVM commit mentioned potential security
+   implications including LBR leaks.
+
+### Why This Should Be Backported
+
+1. ✅ **Fixes an important bug** affecting Intel processors since 2019
+   (Ice Lake)
+2. ✅ **Small, contained change** - only modifies a constant definition
+   and simplifies existing code
+3. ✅ **Low regression risk** - the change makes the mask complete and
+   correct
+4. ✅ **Well-reviewed and tested** - Reviewed-by: Kan Liang, Tested-by:
+   Yi Lai (both from Intel)
+5. ✅ **Addresses known issue** - this was explicitly identified in a
+   previous security-related commit
+6. ✅ **Affects both enable and disable paths** - also fixes
+   `intel_pmu_disable_fixed()` at line 2562 which uses the same mask
+7. ✅ **No architectural changes** - pure bug fix
+8. ✅ **Stable since v6.5** - applies cleanly to all kernels since the
+   mask was introduced
+
+### Dependencies
+
+This fix requires that `INTEL_FIXED_BITS_MASK` exists, which was
+introduced in kernel v6.5. The fix should be backported to all stable
+trees from **v6.5 onwards**.
+
+### Conclusion
+
+This is a textbook example of a commit suitable for stable backporting:
+it fixes a real bug with clear symptoms, is small and low-risk, and has
+been properly reviewed and tested. The fact that it addresses an issue
+severe enough to warrant disabling an entire feature in KVM further
+underscores its importance.
+
+ arch/x86/events/intel/core.c      | 10 +++-------
+ arch/x86/include/asm/perf_event.h |  6 +++++-
+ arch/x86/kvm/pmu.h                |  2 +-
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index c2fb729c270ec..af47d266f8064 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2845,8 +2845,8 @@ static void intel_pmu_enable_fixed(struct perf_event *event)
+ {
+ 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+ 	struct hw_perf_event *hwc = &event->hw;
+-	u64 mask, bits = 0;
+ 	int idx = hwc->idx;
++	u64 bits = 0;
+ 
+ 	if (is_topdown_idx(idx)) {
+ 		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+@@ -2885,14 +2885,10 @@ static void intel_pmu_enable_fixed(struct perf_event *event)
+ 
+ 	idx -= INTEL_PMC_IDX_FIXED;
+ 	bits = intel_fixed_bits_by_idx(idx, bits);
+-	mask = intel_fixed_bits_by_idx(idx, INTEL_FIXED_BITS_MASK);
+-
+-	if (x86_pmu.intel_cap.pebs_baseline && event->attr.precise_ip) {
++	if (x86_pmu.intel_cap.pebs_baseline && event->attr.precise_ip)
+ 		bits |= intel_fixed_bits_by_idx(idx, ICL_FIXED_0_ADAPTIVE);
+-		mask |= intel_fixed_bits_by_idx(idx, ICL_FIXED_0_ADAPTIVE);
+-	}
+ 
+-	cpuc->fixed_ctrl_val &= ~mask;
++	cpuc->fixed_ctrl_val &= ~intel_fixed_bits_by_idx(idx, INTEL_FIXED_BITS_MASK);
+ 	cpuc->fixed_ctrl_val |= bits;
+ }
+ 
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index 70d1d94aca7e6..ee943bd1595af 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -35,7 +35,6 @@
+ #define ARCH_PERFMON_EVENTSEL_EQ			(1ULL << 36)
+ #define ARCH_PERFMON_EVENTSEL_UMASK2			(0xFFULL << 40)
+ 
+-#define INTEL_FIXED_BITS_MASK				0xFULL
+ #define INTEL_FIXED_BITS_STRIDE			4
+ #define INTEL_FIXED_0_KERNEL				(1ULL << 0)
+ #define INTEL_FIXED_0_USER				(1ULL << 1)
+@@ -48,6 +47,11 @@
+ #define ICL_EVENTSEL_ADAPTIVE				(1ULL << 34)
+ #define ICL_FIXED_0_ADAPTIVE				(1ULL << 32)
+ 
++#define INTEL_FIXED_BITS_MASK					\
++	(INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER |		\
++	 INTEL_FIXED_0_ANYTHREAD | INTEL_FIXED_0_ENABLE_PMI |	\
++	 ICL_FIXED_0_ADAPTIVE)
++
+ #define intel_fixed_bits_by_idx(_idx, _bits)			\
+ 	((_bits) << ((_idx) * INTEL_FIXED_BITS_STRIDE))
+ 
+diff --git a/arch/x86/kvm/pmu.h b/arch/x86/kvm/pmu.h
+index ad89d0bd60058..103604c4b33b5 100644
+--- a/arch/x86/kvm/pmu.h
++++ b/arch/x86/kvm/pmu.h
+@@ -13,7 +13,7 @@
+ #define MSR_IA32_MISC_ENABLE_PMU_RO_MASK (MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL |	\
+ 					  MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
+ 
+-/* retrieve the 4 bits for EN and PMI out of IA32_FIXED_CTR_CTRL */
++/* retrieve a fixed counter bits out of IA32_FIXED_CTR_CTRL */
+ #define fixed_ctrl_field(ctrl_reg, idx) \
+ 	(((ctrl_reg) >> ((idx) * INTEL_FIXED_BITS_STRIDE)) & INTEL_FIXED_BITS_MASK)
+ 
 -- 
 2.51.0
 
