@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544282DF12F;
-	Mon,  6 Oct 2025 18:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8B02DF15D;
+	Mon,  6 Oct 2025 18:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774760; cv=none; b=bI9Eb3yPb4yMCkY+R5uLfWP+H5p4/S0paBDbdGWYsTpC6JmZ5MiR5fYRz14VGZJFOvHD8sgOOVqqk+oywmPQRW66Xl9jJI2GdGI4NA+VBkjDfJ73MTN6hsmETvYsGdcdGBZ3GA7vcmlnkxMN+VIlMl6OBHUJhBQQOgsLmrKgt9w=
+	t=1759774762; cv=none; b=pmxbk9cQ7bMarxFBJASCXxu5rYg6gbkPrfy2O7BHUvkyW59PqN+hrL0GabRMzvZyDNqyR56CU/S5n3N6j70hF/TrnzlYG6f463zQZuJQH1+R8MoTKnKsPc7Yv2kpG6iBCJfbaONOb43RRWVkjosdGGn67VkxN985c2atzlHq2yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759774760; c=relaxed/simple;
-	bh=SKdfKZrsd+F/Of0hsEmeSQ7Or68WUL1QI92IkMewJEM=;
+	s=arc-20240116; t=1759774762; c=relaxed/simple;
+	bh=4QHmMm0HnvC1UzoVVe0fnLdsw+rEJP3mgwGZEQk65qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z8jw/rRrjrn+rMOCBxPNvA2MYf2BY2r1k9NXq8hg2WWfZMNeDk16ep1sFuBNC9a9TKjf77aXFp5V5IzI8qmQ5lbfzjkXjRbg8O/8PRqFOQAHlNBJ3aCPom4S1byU85cnnyNL4ER0MNYC4dnTEU7b5xYO1PNMZ4f1Fa35k9XppF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XpPnbSBT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aUdO4f5d1k8QAgxo2sIZfY5kG+SqgqHyl1QI2Fd0dTgycb8zPndoh4lIpWXgzze/+nSOZwiluB8gAFct0zxBatG/q0HEvP8obmHotNmQWJr2228lp15DU79ig1/hBApbOLxknQvUXpXfY8ApEyJGBqLGj4u7HUSObeWOqvDoz74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ux6Zgv8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XpPnbSBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDF5C4CEF7;
-	Mon,  6 Oct 2025 18:19:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ux6Zgv8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52C4C113D0;
+	Mon,  6 Oct 2025 18:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774760;
-	bh=SKdfKZrsd+F/Of0hsEmeSQ7Or68WUL1QI92IkMewJEM=;
+	s=k20201202; t=1759774761;
+	bh=4QHmMm0HnvC1UzoVVe0fnLdsw+rEJP3mgwGZEQk65qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpPnbSBT8JPjqbaGrowpwZwcrwK5/1GMEcbxVHxf9MNNzrWq4MTr0/i+E2LnFrkD+
-	 18s5q3bHYCw5MpL0pniya5+bQKI44qiIdP1sL5+hj+K5VGKhc9Se495ZrmkdK2iG56
-	 oPGMS390uyhfPLc2ubF+qwBovkMkd9TtJqPnL1jYBiFZrT2u5EdYJbV9FbJYjhmOic
-	 KVk5i+ipeIFV3UfPcggzS8RQIil1uw26rrMvUPodihtbwaf8PpOJ8OGzJqRpDT9hqt
-	 amut/49Sgr8PBDLUzxnP+bgK3esL/v7CuMPlNL7Qre4PIPRNzQbmuGm9P0sO7Dwang
-	 kzwgliB0o5R+w==
+	b=Ux6Zgv8ydcoo9QTJ/xd0HBf6AklVTsjk0mteTN3kFC8WqurQS8iSqKD6R90sVLJhq
+	 qHZDofc4lU99HRehhx5/MGvCZYNBTQ2BUfpCDwqlmKqvCHRTQBFuTkT/0G8MlFHtco
+	 qFkxpx/kuoENYj3XlFe6AHdsu+UNTLK91KCukxAcJIWFHqo5Fq0+bG0Nglf+IGtUrp
+	 blOBC6RahIjMD9jtFsjmQdFvrEJJvbjlXmZfU8p2n4POzrIfoNbMjOd2gPPqOvEaWr
+	 39+Q52gircHn08HgbQbWvw8mKP2p/a5tBmGYh/DNEvwAVHXBj2HMQe+xct1PfwOqQj
+	 k2QK//ZdPqo3w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-edac@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] EDAC: Fix wrong executable file modes for C source files
-Date: Mon,  6 Oct 2025 14:17:47 -0400
-Message-ID: <20251006181835.1919496-15-sashal@kernel.org>
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] perf: Use current->flags & PF_KTHREAD|PF_USER_WORKER instead of current->mm == NULL
+Date: Mon,  6 Oct 2025 14:17:48 -0400
+Message-ID: <20251006181835.1919496-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -48,131 +52,171 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 71965cae7db394ff5ba3b2d2befe4e136ceec268 ]
+[ Upstream commit 90942f9fac05702065ff82ed0bade0d08168d4ea ]
 
-Three EDAC source files were mistakenly marked as executable when adding the
-EDAC scrub controls.
+To determine if a task is a kernel thread or not, it is more reliable to
+use (current->flags & (PF_KTHREAD|PF_USER_WORKERi)) than to rely on
+current->mm being NULL.  That is because some kernel tasks (io_uring
+helpers) may have a mm field.
 
-These are plain C source files and should not carry the executable bit.
-Correcting their modes follows the principle of least privilege and avoids
-unnecessary execute permissions in the repository.
-
-  [ bp: Massage commit message. ]
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250828191954.903125-1-visitorckw@gmail.com
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250820180428.592367294@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough investigation of this commit, I can now provide a
-comprehensive analysis.
+Based on my comprehensive analysis, here is my determination:
 
-## Backport Status: YES
+## **Backport Status: YES**
 
-**This commit has ALREADY BEEN BACKPORTED to stable kernel trees by
-Sasha Levin on September 30, 2025.**
+### Extensive Analysis:
 
-### Evidence of Backporting:
+#### **Context and Problem Being Fixed:**
 
-The upstream commit **71965cae7db394ff5ba3b2d2befe4e136ceec268**
-(committed August 30, 2025) was backported as commit
-**4827b7f8b81a266b3f44055440ab6cd06b1f5d64** (September 30, 2025) with
-the stable team's approval.
+This commit addresses a **correctness bug** in how the perf subsystem
+identifies kernel threads. The issue is that the code was using
+`current->mm == NULL` to determine if a task is a kernel thread, but
+this assumption is incorrect for **io_uring helper threads and other
+PF_USER_WORKER threads**, which have a non-NULL mm field despite being
+kernel-side workers.
 
-### Detailed Analysis:
+#### **Evidence from Code Investigation:**
 
-#### 1. **Nature of the Change**
-The commit is a metadata-only fix that changes file permissions from 755
-(executable) to 644 (regular file) for three C source files:
-- `drivers/edac/ecs.c`
-- `drivers/edac/mem_repair.c`
-- `drivers/edac/scrub.c`
+1. **This is part of a fix series**: I found three related commits in
+   upstream:
+   - `16ed389227651`: "perf: Skip user unwind if the task is a kernel
+     thread" (already being backported to stable as `823d7b9ec8616`)
+   - `d77e3319e3109`: "perf: Simplify get_perf_callchain() user logic"
+     (already in stable as `96681d3b99282`)
+   - `90942f9fac057`: **This commit** - completes the fix by updating
+     remaining locations
 
-These files were incorrectly added with executable permissions when the
-EDAC scrub control features were introduced in Linux 6.15 (February
-2025).
+2. **Historical context**: PF_USER_WORKER was introduced in commit
+   `54e6842d0775b` (March 2023) to handle io_uring and vhost workers
+   that behave differently from regular kernel threads. These threads
+   have mm contexts but shouldn't be treated as user threads for
+   operations like register sampling.
 
-#### 2. **Verification of the Problem**
-I confirmed that all three files were initially committed with mode
-100755 (executable):
-```bash
-git ls-tree f90b738166fe drivers/edac/scrub.c     # 100755
-git ls-tree 699ea5219c4b1 drivers/edac/mem_repair.c # 100755
-git ls-tree bcbd069b11b02 drivers/edac/ecs.c       # 100755
-```
+3. **Real-world impact**: PowerPC already experienced crashes (commit
+   `01849382373b8`) when trying to access pt_regs for PF_IO_WORKER tasks
+   during coredump generation, demonstrating this class of bugs is real.
 
-#### 3. **Affected Stable Branches**
-All three stable branches containing these EDAC features have the files
-with incorrect permissions:
-- **linux-6.15.y**: All three files are mode 100755
-- **linux-6.16.y**: All three files are mode 100755
-- **linux-6.17.y**: All three files are mode 100755
+#### **Specific Code Changes Analysis:**
 
-#### 4. **Why This Should Be Backported**
+1. **kernel/events/callchain.c:247-250** (currently at line 245 in
+   autosel-6.17):
+   - **OLD**: `if (current->mm)` then use `task_pt_regs(current)`
+   - **NEW**: `if (current->flags & (PF_KTHREAD | PF_USER_WORKER))` then
+     skip user unwinding
+   - **Impact**: Prevents perf from attempting to unwind user stack for
+     io_uring helpers
 
-**Repository Hygiene and Consistency:** While this doesn't affect
-runtime behavior, it corrects a clear mistake where C source files were
-given execute permissions. This is incorrect and inconsistent with
-kernel repository standards.
+2. **kernel/events/core.c:7455** (currently at line 7443 in
+   autosel-6.17):
+   - **OLD**: `!(current->flags & PF_KTHREAD)`
+   - **NEW**: `!(current->flags & (PF_KTHREAD | PF_USER_WORKER))`
+   - **Impact**: Correctly excludes user worker threads from user
+     register sampling
 
-**Historical Precedent:** Linus Torvalds himself committed a similar fix
-in 2018 (commit 90fda63fa1156 "treewide: fix up files incorrectly marked
-executable"), demonstrating that the kernel community considers file
-permission corrections important enough to fix.
+3. **kernel/events/core.c:8095** (currently at line 8083 in
+   autosel-6.17):
+   - **OLD**: `if (current->mm != NULL)`
+   - **NEW**: `if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER)))`
+   - **Impact**: Prevents incorrect page table walks for user worker
+     threads in `perf_virt_to_phys()`
 
-**Stable Team Approval:** The fact that Sasha Levin backported this
-indicates the stable maintainers consider it appropriate for stable
-trees, even though it's not a functional bug.
+#### **Why This Qualifies for Backporting:**
 
-**Minimal Risk:** This change has:
-- Zero risk of regression (no code changes)
-- Obvious correctness (C files should not be executable)
-- Tiny size (just permission changes)
+1. **Fixes a real bug**: Perf incorrectly handles io_uring helper
+   threads, leading to:
+   - Incorrect callchain collection
+   - Wrong register samples
+   - Potential crashes or data corruption when walking page tables
 
-#### 5. **Compliance with Stable Rules**
+2. **Affects widely-used functionality**: io_uring is heavily used in
+   modern applications (databases, proxies, async I/O workloads), and
+   perf profiling of these workloads would hit this bug
 
-From Documentation/process/stable-kernel-rules.rst:
-- ✅ Already exists in mainline (commit 71965cae7db39)
-- ✅ Obviously correct (removing execute bit from .c files)
-- ✅ Smaller than 100 lines (just file mode changes)
-- ✅ While not a "functional bug," it fixes incorrect metadata in the
-  repository
+3. **Small and contained**: Only 3 conditional checks changed across 2
+   files - minimal risk
 
-### Conclusion
+4. **Part of an upstream series already being backported**: The first
+   commit in the series (`16ed389227651`) is already marked for stable
+   backport, making this a natural follow-up
 
-**YES**, this commit should be and has been backported to stable kernel
-trees (6.15.y, 6.16.y, 6.17.y). The stable team's decision to backport
-this demonstrates that repository hygiene fixes for clear mistakes are
-considered appropriate for stable trees, even when they don't affect
-runtime behavior. The change corrects an obvious error where C source
-files were incorrectly marked executable, ensuring consistency across
-kernel versions.
+5. **No architectural changes**: Pure bug fix with no API changes or
+   feature additions
 
- drivers/edac/ecs.c        | 0
- drivers/edac/mem_repair.c | 0
- drivers/edac/scrub.c      | 0
- 3 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100755 => 100644 drivers/edac/ecs.c
- mode change 100755 => 100644 drivers/edac/mem_repair.c
- mode change 100755 => 100644 drivers/edac/scrub.c
+6. **Low regression risk**: The new flag-based check is more correct
+   than the mm-based check; any behavioral changes would be fixing
+   incorrect behavior
 
-diff --git a/drivers/edac/ecs.c b/drivers/edac/ecs.c
-old mode 100755
-new mode 100644
-diff --git a/drivers/edac/mem_repair.c b/drivers/edac/mem_repair.c
-old mode 100755
-new mode 100644
-diff --git a/drivers/edac/scrub.c b/drivers/edac/scrub.c
-old mode 100755
-new mode 100644
+#### **Verification in Current Tree:**
+
+I confirmed that linux-autosel-6.17 still has the old buggy code:
+- Line 7443: Missing PF_USER_WORKER in the check
+- Line 8083: Still uses `current->mm != NULL`
+- callchain.c:245: Still uses `if (current->mm)`
+
+This confirms the fix is needed and not yet applied.
+
+#### **Conclusion:**
+
+This is a **clear YES for backporting**. It's a well-understood
+correctness fix for a real bug affecting perf profiling of io_uring
+workloads, with minimal risk and part of an ongoing stable backport
+series.
+
+ kernel/events/callchain.c | 6 +++---
+ kernel/events/core.c      | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/kernel/events/callchain.c b/kernel/events/callchain.c
+index 6c83ad674d010..decff7266cfbd 100644
+--- a/kernel/events/callchain.c
++++ b/kernel/events/callchain.c
+@@ -242,10 +242,10 @@ get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
+ 
+ 	if (user) {
+ 		if (!user_mode(regs)) {
+-			if  (current->mm)
+-				regs = task_pt_regs(current);
+-			else
++			if (current->flags & (PF_KTHREAD | PF_USER_WORKER))
+ 				regs = NULL;
++			else
++				regs = task_pt_regs(current);
+ 		}
+ 
+ 		if (regs) {
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 820127536e62b..ea9ff856770be 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7440,7 +7440,7 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
+ 	if (user_mode(regs)) {
+ 		regs_user->abi = perf_reg_abi(current);
+ 		regs_user->regs = regs;
+-	} else if (!(current->flags & PF_KTHREAD)) {
++	} else if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 		perf_get_regs_user(regs_user, regs);
+ 	} else {
+ 		regs_user->abi = PERF_SAMPLE_REGS_ABI_NONE;
+@@ -8080,7 +8080,7 @@ static u64 perf_virt_to_phys(u64 virt)
+ 		 * Try IRQ-safe get_user_page_fast_only first.
+ 		 * If failed, leave phys_addr as 0.
+ 		 */
+-		if (current->mm != NULL) {
++		if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 			struct page *p;
+ 
+ 			pagefault_disable();
 -- 
 2.51.0
 
