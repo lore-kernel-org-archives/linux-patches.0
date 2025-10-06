@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72102DCBFA;
-	Mon,  6 Oct 2025 18:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41C32D879A;
+	Mon,  6 Oct 2025 18:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774766; cv=none; b=JdaYeEWD/99Tlp5ikqGosvsFWyKPsTh98H/PMv+5Xdn0Ypa5qOzHrJIcZwif5yCrzeYoPnLwLwO5wE07tJSpLZnkyjk11TP0308DnJOXC7YSbklP9Pj+SfMMclEMJiBe5SEAvBjmjVMD7h92Sd//zffy/alLNf9Lu5h53MCvmYs=
+	t=1759774768; cv=none; b=Aj2W4lJU7fzxK/5isJara3tXmaY4yQ+lDkCVNbohIzz5WV7pT6kFFdRc4LRUXkpzmYku67LC9zCX211cqDpiHSIDXdOcNgDSWMhUatOvwiIa0oPrm1+iGoaFE935wwdoAGOzyFbp99q/T/prBOOOs9f3Yk/N//Zri50ycp961Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759774766; c=relaxed/simple;
-	bh=5PAMSdqpznyRIDro+mhrKwqraYqge29gpObzkd+H/KY=;
+	s=arc-20240116; t=1759774768; c=relaxed/simple;
+	bh=1P+CJTJygY01uW0JAUHdzn0iYW3JbrFQUXteys6rnCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vEdQFp1Y70kyV/6VmfdF3WXZW8l8ZpUEGz1aeJudEKv5JJMu5H5AxzIakVcQr2l9bry5zNx+7BwR4JRwSo72Isnb3lCMaxvcsE5Cou4OfzOQtJfD/vuHICDNalQ+4CmF4in+2WAeMUUQgCCQLAUSKRJvxEUA1Zb53YPv38RnKGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzRtzlHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViCd9SewbJp2l+m9UfxJ/pwIzKKmWmFWWJo/GeO5OpeZprF9Q/xwTWDIW1jBeuRZLX4MXZ7bl0lMiRsk0UxS2FveBPexZ5L/7SrxW7YHSePrgqCZZkXhwXUaMYN0tuk67xSqhZmhRS7amQj9qDXyPNiHH71OGrW9ojoipgLGy8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/puwpj7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzRtzlHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B3AC4CEF5;
-	Mon,  6 Oct 2025 18:19:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/puwpj7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100F8C4CEF5;
+	Mon,  6 Oct 2025 18:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774766;
-	bh=5PAMSdqpznyRIDro+mhrKwqraYqge29gpObzkd+H/KY=;
+	s=k20201202; t=1759774767;
+	bh=1P+CJTJygY01uW0JAUHdzn0iYW3JbrFQUXteys6rnCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzRtzlHExe7K4JiGtGjLcW5fhCNF6CaTgT+fhhTPKOF2rxZYcvL62vDJ+U6qM6j7t
-	 ZlvXtRsupVLFXoP4lsNC6pxy+WCaJ6e1j9L8UO6IpvVgao+e2LSfSN0ov29k4GEUsg
-	 Joch2JAnyh2rjYSTVO9i1Jt/H2tcD5dXa2xCJOnJkEdtdPhJ7KvB2lxlK7CSVI9kq9
-	 G5Yw82q05pNZQJRDNEV6/UU5YWqt6u9mxftsMfLqlXw6XM2weeRB0Qh0G7FWG/kKAO
-	 jVbiJHvJRokcVIMQGU9JSiSgdy3pJeGtnWBG/pzWyB2uZn7rMElngmCunLRWGjm9pG
-	 z3HeITgtBC86g==
+	b=I/puwpj7Ev2J6AUXqAWvwsUrNQpmcU/zdjE9kNX3Ba2o7Bmz6Q+ba+kM8ZBHi883n
+	 FI93R3uGUFeZ9j+bUFkTpJR3V4u/imHPd4um/FN+t4X4wzzcROA0d+DVOXDbP1XMia
+	 bsUmY3eYnT8wHzGk+X/y+tfu3/gah6XlCGAaltMDJUnjZxkRwo6TKCjRD1+VHd5o7h
+	 3XYOi6yVx9GyuejeU3yYn6NY6XWwvtLv/MyMgFaGm2j6QKgNGwnIBkqC5Xav4tXKyn
+	 wkPGKKBLvaKbSE/QT+XsrXS/6FBRR11PqNqH22Lp/Q0cASr4uf/FrVcvi+sQomRv8P
+	 46onCq4RiebpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	changwoo@igalia.com,
-	me@mostlynerdless.de,
-	ggherdovich@suse.com,
-	jameshongleiwang@126.com,
-	sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] sched_ext: Make qmap dump operation non-destructive
-Date: Mon,  6 Oct 2025 14:17:50 -0400
-Message-ID: <20251006181835.1919496-18-sashal@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] seccomp: passthrough uprobe systemcall without filtering
+Date: Mon,  6 Oct 2025 14:17:51 -0400
+Message-ID: <20251006181835.1919496-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -53,201 +48,186 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit d452972858e5cfa4262320ab74fe8f016460b96f ]
+[ Upstream commit 89d1d8434d246c96309a6068dfcf9e36dc61227b ]
 
-The qmap dump operation was destructively consuming queue entries while
-displaying them. As dump can be triggered anytime, this can easily lead to
-stalls. Add a temporary dump_store queue and modify the dump logic to pop
-entries, display them, and then restore them back to the original queue.
-This allows dump operations to be performed without affecting the
-scheduler's queue state.
+Adding uprobe as another exception to the seccomp filter alongside
+with the uretprobe syscall.
 
-Note that if racing against new enqueues during dump, ordering can get
-mixed up, but this is acceptable for debugging purposes.
+Same as the uretprobe the uprobe syscall is installed by kernel as
+replacement for the breakpoint exception and is limited to x86_64
+arch and isn't expected to ever be supported in i386.
 
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250720112133.244369-21-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis: YES
+Based on my thorough research, I can now provide a comprehensive
+analysis of this commit.
 
-**This commit SHOULD be backported to stable kernel trees** (and
-notably, it has already been backported to 6.17 stable as commit
-2f64156df4204 by Sasha Levin on Oct 1, 2025).
+## Analysis Summary
 
-### Detailed Analysis
+**Backport Status: YES**
 
-#### 1. **Nature of the Bug (Critical Factor)**
+### Detailed Explanation
 
-The bug is **real and impactful**, not theoretical:
+#### 1. Context and Dependency
 
-- **Location**: `tools/sched_ext/scx_qmap.bpf.c` lines 567-588
-  (qmap_dump function)
-- **Problem**: The dump operation uses `bpf_map_pop_elem(fifo, &pid)` to
-  display queue contents but **never restores the entries**
-- **Impact**: Tasks are permanently removed from scheduler queues,
-  causing **system stalls**
-- **Trigger**: Can be invoked at any time via SysRq-D (as documented in
-  commit 07814a9439a3b) or during error exits
+This commit adds seccomp passthrough support for the **uprobe syscall**,
+which is a NEW system call introduced to optimize uprobe performance. My
+research shows that:
 
-From the old code (lines 581-586):
+- The uprobe syscall was added in commit `56101b69c9190` (July 2025) as
+  part of a performance optimization effort
+- The seccomp passthrough commit (`89d1d8434d246`) was included in the
+  **same patch series** (patch 21/22) as a necessary companion change
+- Both commits were merged together into mainline in August 2025
+
+#### 2. Critical Historical Precedent - The uretprobe Bug
+
+The most important finding is that a nearly identical issue occurred
+with the **uretprobe syscall**:
+
+- The uretprobe syscall was added in **June 2024** without seccomp
+  passthrough
+- This caused **real-world failures**: processes in Docker containers
+  **segfaulted** when uretprobe was triggered because Docker's seccomp
+  filters blocked the unknown syscall
+- A fix was required **8 months later** (February 2025) in commit
+  `cf6cb56ef2441`:
+  - **Fixes tag**: `Fixes: ff474a78cef5 ("uprobe: Add uretprobe syscall
+    to speed up return probe")`
+  - **Marked for stable**: `Cc: stable@vger.kernel.org`
+  - **Bug report**: https://lore.kernel.org/lkml/CAHsH6Gs3Eh8DFU0wq58c_L
+    F8A4_+o6z456J7BidmcVY2AqOnHQ@mail.gmail.com/
+
+The commit message stated: *"When attaching uretprobes to processes
+running inside docker, the attached process is segfaulted when
+encountering the retprobe... the default seccomp filters in docker block
+it as they only allow a specific set of known syscalls."*
+
+#### 3. Why This Commit MUST Be Backported
+
+The code changes show that:
+
+**In `seccomp_uprobe_exception()` (lines 744-762):**
 ```c
-bpf_repeat(4096) {
-    if (bpf_map_pop_elem(fifo, &pid))
-        break;
-    scx_bpf_dump(" %d", pid);  // ← Never restored!
-}
++#ifdef __NR_uprobe
++               if (sd->nr == __NR_uprobe)
++                       return true;
++#endif
 ```
 
-This is a destructive read that removes tasks from the runnable queue,
-effectively "losing" them from the scheduler.
-
-#### 2. **The Fix is Simple and Safe**
-
-The fix adds 17 insertions, 1 deletion (well under the 100-line limit):
-
-- Adds one new queue map (`dump_store`) for temporary storage
-- Modifies dump logic to: pop → store → display → restore
-- Two `bpf_repeat` loops: first to pop and display, second to restore
-- Low regression risk: only affects dump operations, not scheduling path
-
-**Code changes at lines 579-600:**
+**In `mode1_syscalls[]` array (lines 1042-1046):**
 ```c
-// First loop: pop from queue, save to dump_store, display
-bpf_map_push_elem(&dump_store, &pid, 0);  // ← Save for restoration
-scx_bpf_dump(" %d", pid);
-
-// Second loop: restore from dump_store back to original queue
-bpf_map_push_elem(fifo, &pid, 0);  // ← Restore to scheduler queue
++#ifdef __NR_uprobe
++       __NR_uprobe,
++#endif
 ```
 
-#### 3. **Meets Stable Kernel Criteria**
+These changes ensure that:
+1. The uprobe syscall bypasses seccomp filtering (just like uretprobe)
+2. It's allowed in SECCOMP_MODE_STRICT (mode 1)
 
-Per `Documentation/process/stable-kernel-rules.rst`:
+**If the uprobe syscall is backported WITHOUT this seccomp change:**
+- Any process using seccomp filters (Docker, systemd services, sandboxed
+  applications) will crash when uprobe is triggered
+- This is the **exact same bug** that affected uretprobe for 8 months
 
-✅ **Already in mainline**: Upstream commit d452972858e5c
-✅ **Obviously correct**: Simple save-restore pattern
-✅ **Small size**: 41 total lines of diff
-✅ **Fixes real bug**: Prevents stalls from destructive dump operations
-✅ **User impact**: Anyone triggering dumps (SysRq-D, error exits) on
-systems running scx_qmap would experience task loss
+#### 4. Dependency Analysis
 
-#### 4. **Why This Qualifies Despite Being in tools/**
+Checking the 6.17 stable tree shows:
+- The uprobe syscall (commit `408018bc8438e`) **IS present** in commits
+  after the 6.17 release
+- The seccomp passthrough **must accompany it** to prevent the
+  Docker/container crash issue
 
-While `tools/` changes are typically not backported, this case is
-exceptional:
+#### 5. Change Characteristics
 
-1. **BPF programs run in kernel space**: `scx_qmap.bpf.c` is not
-   userspace tooling—it's a BPF program loaded into the kernel that
-   implements actual scheduling decisions
-
-2. **sched_ext schedulers are functional**: Although documented as
-   "example schedulers" in the README (lines 6-15), they are
-   **production-capable**. The README states: "Some of the examples are
-   performant, production-ready schedulers" (line 11)
-
-3. **Debugging is critical infrastructure**: The dump operation (added
-   in commit 07814a9439a3b "Print debug dump after an error exit") is
-   essential for debugging BPF scheduler failures. A broken dump that
-   causes stalls defeats its purpose
-
-4. **Already validated by stable maintainer**: Sasha Levin backported
-   this on Oct 1, 2025, confirming it meets stable criteria
-
-#### 5. **Historical Context**
-
-- **sched_ext introduced**: v6.12-rc1 (commit f0e1a0643a59b)
-- **Dump operations added**: June 18, 2024 (commit 07814a9439a3b)
-- **Bug window**: ~15 months of potential stalls from dump operations
-- **Fix date**: September 23, 2025 (upstream d452972858e5c)
-
-#### 6. **No Security CVE, But Real Impact**
-
-My search specialist agent found no CVE assigned to this issue, but that
-doesn't diminish its importance:
-
-- Stalls impact system availability
-- Debugging a broken scheduler with a broken dump tool compounds
-  problems
-- Users investigating scheduler issues via SysRq-D would inadvertently
-  cause more stalls
-
-#### 7. **Risk Assessment**
-
-**Regression risk**: **Very Low**
-- Only modifies dump operations (debugging path)
-- Does not touch scheduling hot paths
-- Temporary storage pattern is standard and safe
-- Race condition with concurrent enqueues is explicitly acceptable (per
-  commit message: "ordering can get mixed up, but this is acceptable for
-  debugging purposes")
-
-**Benefit**: **High for affected users**
-- Makes dump operations actually usable
-- Prevents cascading failures during debugging
-- Enables proper root cause analysis of scheduler issues
+- **Small and contained**: Only 32 lines changed in kernel/seccomp.c
+- **Low regression risk**: Follows the exact pattern established by
+  uretprobe
+- **No architectural changes**: Simple exception list addition
+- **Reviewed by security maintainer**: Kees Cook (seccomp maintainer)
+  provided `Reviewed-by`
 
 ### Conclusion
 
-**YES - This commit should be backported.** It fixes a real bug causing
-system stalls, is small and safe, and affects functionality that users
-rely on for debugging. The fact that it has already been accepted into
-6.17 stable by Sasha Levin validates this assessment. This is an
-appropriate stable backport that improves system reliability for users
-of sched_ext schedulers.
+This commit is a **required dependency fix** for the uprobe syscall
+feature. Based on the uretprobe precedent, omitting this change would
+cause production failures in containerized environments. The commit
+should be backported to any stable kernel that includes the uprobe
+syscall (`56101b69c9190`) to prevent repeating the same issue that
+required a stable backport for uretprobe.
 
- tools/sched_ext/scx_qmap.bpf.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ kernel/seccomp.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 69d877501cb72..cd50a94326e3a 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -56,7 +56,8 @@ struct qmap {
-   queue1 SEC(".maps"),
-   queue2 SEC(".maps"),
-   queue3 SEC(".maps"),
--  queue4 SEC(".maps");
-+  queue4 SEC(".maps"),
-+  dump_store SEC(".maps");
- 
- struct {
- 	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
-@@ -578,11 +579,26 @@ void BPF_STRUCT_OPS(qmap_dump, struct scx_dump_ctx *dctx)
- 			return;
- 
- 		scx_bpf_dump("QMAP FIFO[%d]:", i);
-+
-+		/*
-+		 * Dump can be invoked anytime and there is no way to iterate in
-+		 * a non-destructive way. Pop and store in dump_store and then
-+		 * restore afterwards. If racing against new enqueues, ordering
-+		 * can get mixed up.
-+		 */
- 		bpf_repeat(4096) {
- 			if (bpf_map_pop_elem(fifo, &pid))
- 				break;
-+			bpf_map_push_elem(&dump_store, &pid, 0);
- 			scx_bpf_dump(" %d", pid);
- 		}
-+
-+		bpf_repeat(4096) {
-+			if (bpf_map_pop_elem(&dump_store, &pid))
-+				break;
-+			bpf_map_push_elem(fifo, &pid, 0);
-+		}
-+
- 		scx_bpf_dump("\n");
- 	}
+diff --git a/kernel/seccomp.c b/kernel/seccomp.c
+index 41aa761c7738c..7daf2da09e8e1 100644
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -741,6 +741,26 @@ seccomp_prepare_user_filter(const char __user *user_filter)
  }
+ 
+ #ifdef SECCOMP_ARCH_NATIVE
++static bool seccomp_uprobe_exception(struct seccomp_data *sd)
++{
++#if defined __NR_uretprobe || defined __NR_uprobe
++#ifdef SECCOMP_ARCH_COMPAT
++	if (sd->arch == SECCOMP_ARCH_NATIVE)
++#endif
++	{
++#ifdef __NR_uretprobe
++		if (sd->nr == __NR_uretprobe)
++			return true;
++#endif
++#ifdef __NR_uprobe
++		if (sd->nr == __NR_uprobe)
++			return true;
++#endif
++	}
++#endif
++	return false;
++}
++
+ /**
+  * seccomp_is_const_allow - check if filter is constant allow with given data
+  * @fprog: The BPF programs
+@@ -758,13 +778,8 @@ static bool seccomp_is_const_allow(struct sock_fprog_kern *fprog,
+ 		return false;
+ 
+ 	/* Our single exception to filtering. */
+-#ifdef __NR_uretprobe
+-#ifdef SECCOMP_ARCH_COMPAT
+-	if (sd->arch == SECCOMP_ARCH_NATIVE)
+-#endif
+-		if (sd->nr == __NR_uretprobe)
+-			return true;
+-#endif
++	if (seccomp_uprobe_exception(sd))
++		return true;
+ 
+ 	for (pc = 0; pc < fprog->len; pc++) {
+ 		struct sock_filter *insn = &fprog->filter[pc];
+@@ -1042,6 +1057,9 @@ static const int mode1_syscalls[] = {
+ 	__NR_seccomp_read, __NR_seccomp_write, __NR_seccomp_exit, __NR_seccomp_sigreturn,
+ #ifdef __NR_uretprobe
+ 	__NR_uretprobe,
++#endif
++#ifdef __NR_uprobe
++	__NR_uprobe,
+ #endif
+ 	-1, /* negative terminated */
+ };
 -- 
 2.51.0
 
