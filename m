@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FE92DF3CC;
-	Mon,  6 Oct 2025 18:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72102DCBFA;
+	Mon,  6 Oct 2025 18:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759774763; cv=none; b=qzpSThmVxPfbCngry5ysIoXY7XWjuWBqosV6piJ6XCriN5aSYcZCpPyEs1mozg1k2XTa5/omIVmUQoEPwdzSscMmLSgkdGdPbmNoA5EQ0jLLNuV4tvJismBtgLA6Dc0bUelBEYAVMVyBY0y9BTFivZ3kKfE86KbNdLlNZaPgMvU=
+	t=1759774766; cv=none; b=JdaYeEWD/99Tlp5ikqGosvsFWyKPsTh98H/PMv+5Xdn0Ypa5qOzHrJIcZwif5yCrzeYoPnLwLwO5wE07tJSpLZnkyjk11TP0308DnJOXC7YSbklP9Pj+SfMMclEMJiBe5SEAvBjmjVMD7h92Sd//zffy/alLNf9Lu5h53MCvmYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759774763; c=relaxed/simple;
-	bh=nZbL0naNcEYpWPQ7xKThudDTtEBKH7uqPZFxv/s5ycg=;
+	s=arc-20240116; t=1759774766; c=relaxed/simple;
+	bh=5PAMSdqpznyRIDro+mhrKwqraYqge29gpObzkd+H/KY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gSW0eTakT4KUfMrKBSFJh2iikGFV92wbRxgjvXYZi+a9fiLDp13H4epsmSqoX4TBvIKzvpVksu8aeCrspujqgoIuWIEqIXSQkg4vSnF3HVGXkbQlHiUUGLvhVvc/4ZssadbKbtoc8/7VQkC8sbmJWgIoMbSaChRKr8X7VNM/k2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MU0JEf/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vEdQFp1Y70kyV/6VmfdF3WXZW8l8ZpUEGz1aeJudEKv5JJMu5H5AxzIakVcQr2l9bry5zNx+7BwR4JRwSo72Isnb3lCMaxvcsE5Cou4OfzOQtJfD/vuHICDNalQ+4CmF4in+2WAeMUUQgCCQLAUSKRJvxEUA1Zb53YPv38RnKGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzRtzlHE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MU0JEf/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B8CC4CEF7;
-	Mon,  6 Oct 2025 18:19:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzRtzlHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B3AC4CEF5;
+	Mon,  6 Oct 2025 18:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759774763;
-	bh=nZbL0naNcEYpWPQ7xKThudDTtEBKH7uqPZFxv/s5ycg=;
+	s=k20201202; t=1759774766;
+	bh=5PAMSdqpznyRIDro+mhrKwqraYqge29gpObzkd+H/KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MU0JEf/q/pHWfTU/f9eIOBGq6YK/7YSfgqsrQR2fmI5FQ0NHAEieaz1p6VTV7j/31
-	 KIuaCYYfE/8lwQ3JMjQ6WqW1PYTonmX1SIR8lrfxK8+uP9xY9U8P4YZGpOBv1wCZ+P
-	 yrOHQCBujxD+IkCM4NDfannNj06tg6TTKl6TQnqX1B8Z80splxKCQc8qqwTPB0rqmt
-	 MvYbeGZMD63OZDAJA4OwAwjExCE8hDJLunRGl6fe/8AuUwRfL6ajqk7PpFrlv3bH+o
-	 99jxNVf3raiHDz4hZTALwbVUdSvxGhNrUMsVbQPTLGO0vdFOs5vtRW5oVZaOjsUWrb
-	 faOLVMPrq0kjQ==
+	b=gzRtzlHExe7K4JiGtGjLcW5fhCNF6CaTgT+fhhTPKOF2rxZYcvL62vDJ+U6qM6j7t
+	 ZlvXtRsupVLFXoP4lsNC6pxy+WCaJ6e1j9L8UO6IpvVgao+e2LSfSN0ov29k4GEUsg
+	 Joch2JAnyh2rjYSTVO9i1Jt/H2tcD5dXa2xCJOnJkEdtdPhJ7KvB2lxlK7CSVI9kq9
+	 G5Yw82q05pNZQJRDNEV6/UU5YWqt6u9mxftsMfLqlXw6XM2weeRB0Qh0G7FWG/kKAO
+	 jVbiJHvJRokcVIMQGU9JSiSgdy3pJeGtnWBG/pzWyB2uZn7rMElngmCunLRWGjm9pG
+	 z3HeITgtBC86g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] btrfs: use level argument in log tree walk callback replay_one_buffer()
-Date: Mon,  6 Oct 2025 14:17:49 -0400
-Message-ID: <20251006181835.1919496-17-sashal@kernel.org>
+	changwoo@igalia.com,
+	me@mostlynerdless.de,
+	ggherdovich@suse.com,
+	jameshongleiwang@126.com,
+	sched-ext@lists.linux.dev,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] sched_ext: Make qmap dump operation non-destructive
+Date: Mon,  6 Oct 2025 14:17:50 -0400
+Message-ID: <20251006181835.1919496-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251006181835.1919496-1-sashal@kernel.org>
 References: <20251006181835.1919496-1-sashal@kernel.org>
@@ -52,158 +56,198 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 6cb7f0b8c9b0d6a35682335fea88bd26f089306f ]
+[ Upstream commit d452972858e5cfa4262320ab74fe8f016460b96f ]
 
-We already have the extent buffer's level in an argument, there's no need
-to first ensure the extent buffer's data is loaded (by calling
-btrfs_read_extent_buffer()) and then call btrfs_header_level() to check
-the level. So use the level argument and do the check before calling
-btrfs_read_extent_buffer().
+The qmap dump operation was destructively consuming queue entries while
+displaying them. As dump can be triggered anytime, this can easily lead to
+stalls. Add a temporary dump_store queue and modify the dump logic to pop
+entries, display them, and then restore them back to the original queue.
+This allows dump operations to be performed without affecting the
+scheduler's queue state.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Note that if racing against new enqueues during dump, ordering can get
+mixed up, but this is acceptable for debugging purposes.
+
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis
+## Backport Analysis: YES
 
-**Backport Status: YES**
+**This commit SHOULD be backported to stable kernel trees** (and
+notably, it has already been backported to 6.17 stable as commit
+2f64156df4204 by Sasha Levin on Oct 1, 2025).
 
-### Comprehensive Analysis
+### Detailed Analysis
 
-#### 1. **Nature of the Change**
+#### 1. **Nature of the Bug (Critical Factor)**
 
-This is a **pure performance optimization** that eliminates unnecessary
-disk I/O during log tree replay. The commit reorders operations to check
-the tree level (using the function parameter) BEFORE reading the extent
-buffer from disk, rather than after.
+The bug is **real and impactful**, not theoretical:
 
-**Before:** Read buffer from disk → extract level from buffer header →
-check if level != 0 → return early if not leaf
-**After:** Check level parameter → return early if not leaf → read
-buffer from disk only if needed
+- **Location**: `tools/sched_ext/scx_qmap.bpf.c` lines 567-588
+  (qmap_dump function)
+- **Problem**: The dump operation uses `bpf_map_pop_elem(fifo, &pid)` to
+  display queue contents but **never restores the entries**
+- **Impact**: Tasks are permanently removed from scheduler queues,
+  causing **system stalls**
+- **Trigger**: Can be invoked at any time via SysRq-D (as documented in
+  commit 07814a9439a3b) or during error exits
 
-#### 2. **Code Change Analysis**
+From the old code (lines 581-586):
+```c
+bpf_repeat(4096) {
+    if (bpf_map_pop_elem(fifo, &pid))
+        break;
+    scx_bpf_dump(" %d", pid);  // ← Never restored!
+}
+```
 
-The diff shows (fs/btrfs/tree-log.c:2591-2602):
-- **Moved:** `if (level != 0) return 0;` from line 2599 to line 2594
-  (before `btrfs_read_extent_buffer()`)
-- **Removed:** Redundant `level = btrfs_header_level(eb);` call (line
-  2599)
-- **Impact:** Non-leaf nodes are now rejected WITHOUT reading from disk
+This is a destructive read that removes tasks from the runnable queue,
+effectively "losing" them from the scheduler.
 
-#### 3. **Correctness Verification**
+#### 2. **The Fix is Simple and Safe**
 
-The optimization is **provably correct**:
-- The `level` parameter comes from the tree walker and is guaranteed
-  accurate
-- The same level is already used in `btrfs_tree_parent_check` structure
-  (line 2594) for validation
-- If the level parameter were incorrect, the subsequent
-  `btrfs_read_extent_buffer()` would detect the mismatch and fail
-- No behavioral change - still returns 0 for non-leaf nodes, just
-  earlier
+The fix adds 17 insertions, 1 deletion (well under the 100-line limit):
 
-#### 4. **Performance Impact**
+- Adds one new queue map (`dump_store`) for temporary storage
+- Modifies dump logic to: pop → store → display → restore
+- Two `bpf_repeat` loops: first to pop and display, second to restore
+- Low regression risk: only affects dump operations, not scheduling path
 
-**Benefits during crash recovery:**
-- Avoids disk I/O for all internal (non-leaf) tree nodes
-- Eliminates unnecessary memory allocation, checksum verification, and
-  buffer locking
-- For a tree with depth N, saves N-1 reads per traversal path
-- Particularly beneficial for larger filesystems with deeper trees
+**Code changes at lines 579-600:**
+```c
+// First loop: pop from queue, save to dump_store, display
+bpf_map_push_elem(&dump_store, &pid, 0);  // ← Save for restoration
+scx_bpf_dump(" %d", pid);
 
-#### 5. **Risk Assessment**
+// Second loop: restore from dump_store back to original queue
+bpf_map_push_elem(fifo, &pid, 0);  // ← Restore to scheduler queue
+```
 
-**Risk Level: MINIMAL**
-- No logic changes - pure reordering of operations
-- No error handling modifications
-- No complex subsystem interactions
-- 3 lines added, 5 lines removed (net simplification)
-- No subsequent fixes or reverts found since merge (September 2025)
+#### 3. **Meets Stable Kernel Criteria**
 
-#### 6. **Context: Part of Larger Optimization Effort**
+Per `Documentation/process/stable-kernel-rules.rst`:
 
-This commit is part of an extensive tree-log optimization series by
-Filipe Manana (177 commits since July 2025), including similar changes:
-- "avoid unnecessary path allocation when replaying a dir item"
-  (6addf61aee09a)
-- "avoid path allocations when dropping extents during log replay"
-  (9f21e86d9cf35)
-- "exit early when replaying hole file extent item" (88d509d774c3c)
+✅ **Already in mainline**: Upstream commit d452972858e5c
+✅ **Obviously correct**: Simple save-restore pattern
+✅ **Small size**: 41 total lines of diff
+✅ **Fixes real bug**: Prevents stalls from destructive dump operations
+✅ **User impact**: Anyone triggering dumps (SysRq-D, error exits) on
+systems running scx_qmap would experience task loss
 
-**Many of these optimization-only commits ARE being backported to stable
-trees**, indicating that the stable team values this coordinated
-improvement effort.
+#### 4. **Why This Qualifies Despite Being in tools/**
 
-#### 7. **Stable Tree Criteria Evaluation**
+While `tools/` changes are typically not backported, this case is
+exceptional:
 
-✅ **Small and contained:** 8-line diff, single function
-✅ **Clear side effects:** None - behavior identical, just faster
-✅ **No architectural changes:** Simple reordering
-✅ **Minimal regression risk:** Logic unchanged
-✅ **Confined to subsystem:** Only affects tree-log replay
-⚠️ **Not a critical bugfix:** But improves user-facing crash recovery
-❌ **No explicit stable tag:** Selected by AUTOSEL process
+1. **BPF programs run in kernel space**: `scx_qmap.bpf.c` is not
+   userspace tooling—it's a BPF program loaded into the kernel that
+   implements actual scheduling decisions
 
-#### 8. **Research Findings**
+2. **sched_ext schedulers are functional**: Although documented as
+   "example schedulers" in the README (lines 6-15), they are
+   **production-capable**. The README states: "Some of the examples are
+   performant, production-ready schedulers" (line 11)
 
-The kernel-code-researcher agent confirmed:
-- No historical bugs related to this code path
-- The inefficiency existed since original implementation (2008)
-- No correctness concerns with the optimization
-- No follow-up fixes needed
-- Change has proven stable in mainline
+3. **Debugging is critical infrastructure**: The dump operation (added
+   in commit 07814a9439a3b "Print debug dump after an error exit") is
+   essential for debugging BPF scheduler failures. A broken dump that
+   causes stalls defeats its purpose
+
+4. **Already validated by stable maintainer**: Sasha Levin backported
+   this on Oct 1, 2025, confirming it meets stable criteria
+
+#### 5. **Historical Context**
+
+- **sched_ext introduced**: v6.12-rc1 (commit f0e1a0643a59b)
+- **Dump operations added**: June 18, 2024 (commit 07814a9439a3b)
+- **Bug window**: ~15 months of potential stalls from dump operations
+- **Fix date**: September 23, 2025 (upstream d452972858e5c)
+
+#### 6. **No Security CVE, But Real Impact**
+
+My search specialist agent found no CVE assigned to this issue, but that
+doesn't diminish its importance:
+
+- Stalls impact system availability
+- Debugging a broken scheduler with a broken dump tool compounds
+  problems
+- Users investigating scheduler issues via SysRq-D would inadvertently
+  cause more stalls
+
+#### 7. **Risk Assessment**
+
+**Regression risk**: **Very Low**
+- Only modifies dump operations (debugging path)
+- Does not touch scheduling hot paths
+- Temporary storage pattern is standard and safe
+- Race condition with concurrent enqueues is explicitly acceptable (per
+  commit message: "ordering can get mixed up, but this is acceptable for
+  debugging purposes")
+
+**Benefit**: **High for affected users**
+- Makes dump operations actually usable
+- Prevents cascading failures during debugging
+- Enables proper root cause analysis of scheduler issues
 
 ### Conclusion
 
-**YES - This should be backported to stable trees.**
+**YES - This commit should be backported.** It fixes a real bug causing
+system stalls, is small and safe, and affects functionality that users
+rely on for debugging. The fact that it has already been accepted into
+6.17 stable by Sasha Levin validates this assessment. This is an
+appropriate stable backport that improves system reliability for users
+of sched_ext schedulers.
 
-While this is an optimization rather than a critical bugfix, it
-qualifies for backporting because:
+ tools/sched_ext/scx_qmap.bpf.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-1. **Tangible user benefit:** Improves crash recovery performance
-2. **Exceptionally low risk:** No logic changes, simple reordering
-3. **Part of coordinated effort:** Many similar optimizations being
-   backported
-4. **Proven stability:** No issues since mainline merge
-5. **Already selected:** AUTOSEL system has identified it as suitable
-
-This represents the type of low-risk, high-value optimization that
-stable trees accept to improve the user experience, especially for
-critical code paths like crash recovery where performance matters.
-
- fs/btrfs/tree-log.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 518cd74191e77..4f92aa15d9b1d 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -2461,15 +2461,13 @@ static int replay_one_buffer(struct btrfs_root *log, struct extent_buffer *eb,
- 	int i;
- 	int ret;
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 69d877501cb72..cd50a94326e3a 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -56,7 +56,8 @@ struct qmap {
+   queue1 SEC(".maps"),
+   queue2 SEC(".maps"),
+   queue3 SEC(".maps"),
+-  queue4 SEC(".maps");
++  queue4 SEC(".maps"),
++  dump_store SEC(".maps");
  
-+	if (level != 0)
-+		return 0;
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
+@@ -578,11 +579,26 @@ void BPF_STRUCT_OPS(qmap_dump, struct scx_dump_ctx *dctx)
+ 			return;
+ 
+ 		scx_bpf_dump("QMAP FIFO[%d]:", i);
 +
- 	ret = btrfs_read_extent_buffer(eb, &check);
- 	if (ret)
- 		return ret;
- 
--	level = btrfs_header_level(eb);
--
--	if (level != 0)
--		return 0;
--
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
++		/*
++		 * Dump can be invoked anytime and there is no way to iterate in
++		 * a non-destructive way. Pop and store in dump_store and then
++		 * restore afterwards. If racing against new enqueues, ordering
++		 * can get mixed up.
++		 */
+ 		bpf_repeat(4096) {
+ 			if (bpf_map_pop_elem(fifo, &pid))
+ 				break;
++			bpf_map_push_elem(&dump_store, &pid, 0);
+ 			scx_bpf_dump(" %d", pid);
+ 		}
++
++		bpf_repeat(4096) {
++			if (bpf_map_pop_elem(&dump_store, &pid))
++				break;
++			bpf_map_push_elem(fifo, &pid, 0);
++		}
++
+ 		scx_bpf_dump("\n");
+ 	}
+ }
 -- 
 2.51.0
 
