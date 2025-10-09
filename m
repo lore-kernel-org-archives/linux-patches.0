@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0722B2FA0D3;
-	Thu,  9 Oct 2025 15:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A13229B18;
+	Thu,  9 Oct 2025 15:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025559; cv=none; b=iaqiQMPNDGG4Lf55zshQvtXgaWBpDkCJ0xCCORzgkosErQV8HvcGt/2pXx2/8g8FTku8QjtvPTXBWX0w9uImVrcLLRCUea/mCQfG7odQBz4q1jWRowTej2p5Ej33Pnwgj41BdEHu66ecyhr/cpZdNK3T29qOaPLqqeOFJtujl0Y=
+	t=1760025561; cv=none; b=CzveZnwxemlPgHSXJPcubAp7VD2l7GKMQIjs0o8MKLoqK2TnwuHjXvV6JFEeZmvH8zu1yyWoWBZ6ylkRjG/uNiVdzCEISgt7q6uo1QWhpTsHpbybkDB2PzWRWbGPnRTLPVvpL6Dh5bC7gLooAt4xbdVpkJgoCOxF3m+WvTVFWKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025559; c=relaxed/simple;
-	bh=kakDyfPV2orZiCF9NvOHlrtjbYvU+q15powmNkwZrBM=;
+	s=arc-20240116; t=1760025561; c=relaxed/simple;
+	bh=PQIxaLpgLpFo0Awl76vdL8xdsvsx4lBd3yvYlHPbNHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bw3+8zi3QJmjTRTffL7en0SuTMNA2G3C+3v/aYCb4aMstf8bBPfOi1JGuYQGZ+0ahJhhGMh0/w5rDNu3Yi98HMRZN/3N1qkNQq59B6Zv2rQQWaaaSHbjDFLQoWTU2y3urMtSQgpWuW5IhXDBP5baiUG262QZO3y0mHOOZrSAYL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+fC3SiB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OYGBRrQo1oXsoWnfbz4/Yl4njs/8B2GswDtT+tXZvMju6xZsAsLiZD5MXvtIkX4KxoJhzl6jCzkEte+C39ZDik9ZFnHyBBUyJEI5qz0iluqRZe0hjbYjDLfW1osajMwNTMCyfKfxzR/h7WrcspAyp/4gy6zL+RFLutPhUypPbbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8agNBzN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+fC3SiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F76C4CEE7;
-	Thu,  9 Oct 2025 15:59:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8agNBzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43AEC4CEE7;
+	Thu,  9 Oct 2025 15:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025558;
-	bh=kakDyfPV2orZiCF9NvOHlrtjbYvU+q15powmNkwZrBM=;
+	s=k20201202; t=1760025561;
+	bh=PQIxaLpgLpFo0Awl76vdL8xdsvsx4lBd3yvYlHPbNHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+fC3SiBXzzJhdig9szoAqaCW18iP9MjlX6igZxSQV8BEKFN+OTHiPJ747RrHXars
-	 A+Y93MRZ5s01KRseyjqwBSql+Eryp+nelsukVFE8NgWW7qbDS2m5oqfKRUloAb4Gcd
-	 hJXw0vO6aDQ3lyY4eQSZE3qQoYX8XwFdLd2BAhmhZX5/FjcldwGdPf8Fb1FlFEq1gO
-	 8Zh1YBZzLP/JAaf/IR2OX7HpA3wazyEM22AlqnfyP45P6W7/hGLR8AFCZgP7RKkznt
-	 qzPYmaQbuTR5XnogVUaroYEW+H3WdbDuF5Mdnv6HZHjgc0fVOQOku4/lY+RDvtx1pd
-	 XHuMbgJkuJkeg==
+	b=p8agNBzNpxyCtKPwrBtA1miDO/Sr8RpyYSDA05qRwFk90QhrhJ/ulqKJi+M7VYoU+
+	 IMCH2mubtArOIBpRyM+OSupaThmLyjNpvO0/YqVBI9j0am1s8/GqY+XxlgQrwCyrUX
+	 X2GRJg3ftDv2WIqTrURqloqj0sdOH2bCXgTyGOrI7x7i9ctifhiUKasgb/QGys/rVW
+	 f03ZOOkBkzkPBuN04LCT0oWpVhzu/C4CICsPEP9BAex0aomfx0s9kVYtxIqXaRk7fT
+	 46pTLOUY1cm8fNzNpC5hYxCf1bFIuLlik6t9YDeinQ80O5kz7N9S46wjPe/nsBH9mN
+	 0j9OVzoy/ieBw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Len Brown <len.brown@intel.com>,
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kaushlendra.kumar@intel.com
-Subject: [PATCH AUTOSEL 6.17-5.4] tools/power x86_energy_perf_policy: Enhance HWP enable
-Date: Thu,  9 Oct 2025 11:55:12 -0400
-Message-ID: <20251009155752.773732-46-sashal@kernel.org>
+	jwyatt@redhat.com
+Subject: [PATCH AUTOSEL 6.17-5.15] tools/cpupower: fix error return value in cpupower_write_sysfs()
+Date: Thu,  9 Oct 2025 11:55:13 -0400
+Message-ID: <20251009155752.773732-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -50,15 +51,24 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Len Brown <len.brown@intel.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit c97c057d357c4b39b153e9e430bbf8976e05bd4e ]
+[ Upstream commit 57b100d4cf14276e0340eecb561005c07c129eb8 ]
 
-On enabling HWP, preserve the reserved bits in MSR_PM_ENABLE.
+The cpupower_write_sysfs() function currently returns -1 on
+write failure, but the function signature indicates it should
+return an unsigned int. Returning -1 from an unsigned function
+results in a large positive value rather than indicating
+an error condition.
 
-Also, skip writing the MSR_PM_ENABLE if HWP is already enabled.
+Fix this by returning 0 on failure, which is more appropriate
+for an unsigned return type and maintains consistency with typical
+success/failure semantics where 0 indicates failure and non-zero
+indicates success (bytes written).
 
-Signed-off-by: Len Brown <len.brown@intel.com>
+Link: https://lore.kernel.org/r/20250828063000.803229-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -67,83 +77,65 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 **What It Fixes**
-- Preserves IA32_PM_ENABLE reserved bits instead of zeroing them:
-  - Old behavior wrote a literal `1` unconditionally, clearing all other
-    bits: `put_msr(cpu, MSR_PM_ENABLE, 1)` (tools/power/x86/x86_energy_p
-    erf_policy/x86_energy_perf_policy.c:1169 in the pre-change context
-    shown in the diff).
-  - New behavior reads the MSR, ORs in the enable bit, and writes back:
-    `get_msr(...) -> new_msr = old_msr | 1 -> put_msr(...)` (tools/power
-    /x86/x86_energy_perf_policy/x86_energy_perf_policy.c:1176, 1182).
-    This avoids clobbering reserved bits that firmware/hardware may set.
-- Skips redundant writes when HWP is already enabled:
-  - Adds early return if `old_msr & 1` is set (tools/power/x86/x86_energ
-    y_perf_policy/x86_energy_perf_policy.c:1179). This prevents
-    unnecessary MSR writes and reduces potential races.
+- Corrects an unsigned return error path in `cpupower_write_sysfs()`:
+  changes `return -1;` to `return 0;` inside the failure branch `if
+  (numwritten < 1)` in `tools/power/cpupower/lib/cpupower.c:56-60`. This
+  prevents `-1` from wrapping to a large unsigned value that looks like
+  success.
+- Aligns write semantics with read: `cpupower_read_sysfs()` already
+  returns `0` on failure (`tools/power/cpupower/lib/cpupower.c:30-38`),
+  and `cpupower_write_sysfs()` already returns `0` when `open()` fails
+  (`tools/power/cpupower/lib/cpupower.c:51-53`).
 
-**Why It Matters**
-- IA32_PM_ENABLE (MSR 0x770) has bit 0 for HWP enable, with other bits
-  reserved. Writing a raw `1` previously cleared those bits, which risks
-  undoing firmware-initialized or future-defined bits. Preserving them
-  (`old_msr | 1`) is the correct, robust pattern.
-- Reducing writes when already enabled avoids touching MSRs
-  unnecessarily, which is generally safer and can avoid subtle
-  interactions with concurrent management agents or firmware.
+**User-Visible Impact**
+- Current callers interpret `<= 0` as failure. With the buggy `-1`
+  (wrapped to large unsigned), failures are silently treated as success.
+  Examples:
+  - `tools/power/cpupower/utils/helpers/misc.c:83`
+  - `tools/power/cpupower/utils/helpers/misc.c:102`
+  - `tools/power/cpupower/utils/helpers/misc.c:120`
+  - `tools/power/cpupower/utils/helpers/misc.c:289`
+- After this fix, these checks correctly detect write failures
+  (permission denied, invalid sysfs paths, etc.), improving reliability
+  of cpupower operations like setting EPP, turbo boost, or perf bias.
 
 **Scope and Risk**
-- Change is small and self-contained to `enable_hwp_on_cpu()` in the
-  userspace tool, not a kernel subsystem:
-  - A few lines changed, no architectural refactor, no new features.
-  - No API/ABI changes; only verbose logging format changes from decimal
-    to hex (`%llX`) (tools/power/x86/x86_energy_perf_policy/x86_energy_p
-    erf_policy.c:1185). This is developer-facing and gated by `verbose`.
-- Aligns with standard MSR handling practice: read-modify-write for
-  registers with reserved bits.
-- Regression risk is minimal. If reserved bits were zero (as they should
-  be on some parts), preserving them keeps them zero; if firmware set
-  them, they won’t be inadvertently cleared.
+- One-line change; no API/signature change; no architectural changes.
+- Confined to `tools/` (cpupower userspace library). No kernel subsystem
+  touched.
+- Behavior change is limited to failure paths, converting a silent
+  false-success into proper failure detection. Low regression risk and
+  consistent with existing read/write patterns.
 
-**Backport Considerations**
-- Independent of other recent refactoring in this tool. The function and
-  helpers (`get_msr`, `put_msr`) exist across older branches.
-- No dependency on kernel internal changes; applies cleanly to the tool.
-- Improves correctness and robustness without adding new behavior.
+**Stable Criteria**
+- Fixes a real bug affecting users of the cpupower tool (error paths not
+  detected).
+- Small, contained patch with minimal risk and no new features.
+- Consistent semantics across the cpupower lib.
+- Although the commit message does not include an explicit Cc: stable,
+  the change clearly fits stable backport rules.
 
-**Conclusion**
-- This is a clear bug fix that prevents reserved-bit clobbering and
-  avoids unnecessary writes. It is small, low risk, and confined to the
-  userspace tool. It fits stable rules and should be backported.
+In summary, updating `return -1;` to `return 0;` in
+`tools/power/cpupower/lib/cpupower.c:59` ensures callers’ `<= 0` checks
+work as intended and aligns with existing cpupower I/O conventions. This
+is a good candidate for backporting.
 
- .../x86_energy_perf_policy/x86_energy_perf_policy.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/power/cpupower/lib/cpupower.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index c883f211dbcc9..0bda8e3ae7f77 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -1166,13 +1166,18 @@ int update_hwp_request_pkg(int pkg)
+diff --git a/tools/power/cpupower/lib/cpupower.c b/tools/power/cpupower/lib/cpupower.c
+index ce8dfb8e46abd..d7f7ec6f151c2 100644
+--- a/tools/power/cpupower/lib/cpupower.c
++++ b/tools/power/cpupower/lib/cpupower.c
+@@ -56,7 +56,7 @@ unsigned int cpupower_write_sysfs(const char *path, char *buf, size_t buflen)
+ 	if (numwritten < 1) {
+ 		perror(path);
+ 		close(fd);
+-		return -1;
++		return 0;
+ 	}
  
- int enable_hwp_on_cpu(int cpu)
- {
--	unsigned long long msr;
-+	unsigned long long old_msr, new_msr;
-+
-+	get_msr(cpu, MSR_PM_ENABLE, &old_msr);
-+
-+	if (old_msr & 1)
-+		return 0;	/* already enabled */
- 
--	get_msr(cpu, MSR_PM_ENABLE, &msr);
--	put_msr(cpu, MSR_PM_ENABLE, 1);
-+	new_msr = old_msr | 1;
-+	put_msr(cpu, MSR_PM_ENABLE, new_msr);
- 
- 	if (verbose)
--		printf("cpu%d: MSR_PM_ENABLE old: %d new: %d\n", cpu, (unsigned int) msr, 1);
-+		printf("cpu%d: MSR_PM_ENABLE old: %llX new: %llX\n", cpu, old_msr, new_msr);
- 
- 	return 0;
- }
+ 	close(fd);
 -- 
 2.51.0
 
