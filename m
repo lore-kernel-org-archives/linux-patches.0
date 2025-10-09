@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5656C1A267;
-	Thu,  9 Oct 2025 16:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F471A267;
+	Thu,  9 Oct 2025 16:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025629; cv=none; b=oO5AurGNkEbpimlCurN5joFRR4ltC8N7NBOJ0sSz7dv4P9DymzW7ywfOrw1sAmfgLFPrSLf9LmETomxwY2D/2qygk0E/IjhnSUgN4E6HMjahKYNvAl91/PcrtHa+7XKJjkgJVnc2f96tyfdedL4l0DqzIpkwtnmbDujVjuaA0l8=
+	t=1760025630; cv=none; b=M872+IVOpRRlFbKvA/85Fp1zdxzwWVJ4ueQFvREMFgTy2zf9ISUYoOQF15ETpB33kuHwt7PmkNrtublY8D8Ra0xDHQpbrk6TgrXoN0Ckj8mTLjHoHsmZAmqO5izy0Rkmu1JX8968gpdHlf8wfNZeDUy6KpHstz6iOEVC5vkNWak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025629; c=relaxed/simple;
-	bh=OcyNC9NoDpZNhUHkNf6IfJ4u/amp5gT+MV20DSySR3A=;
+	s=arc-20240116; t=1760025630; c=relaxed/simple;
+	bh=11Wfki1lzai+tC0pkS7NvwICxtb0xRF4vios80pZDgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N5rsIs9pVZ2bHlxa4A7Hp15RdU4ckOXFYOHRdWMHc0xiO/uW7JhIhtdjW+elyw/cUgra2E9tapbjBFKe1ifDthFX3qIyg7SQ01F2MFsmweG02FPLyImo2xWlbR8Hvb/qYf1ATHzBEhOpAisKWWDoaiWhHVkI4yNlo/YGW3x8gEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5Jsxj/X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GV8noO9p2PKynKRzTR+F0vJxUDfV08XA+NdPIGzMIBWMPYXXKKUjYebbMN089SG2zkZB2s6hxk4TcwIfWm9IbEd3scy3dg/t6u2rBu69hn8bOlFB7wOG7q461XN49JxtJfxjfs58v3+l9ewZL0HOQ1t8hrxkprsFReWl5aQcFUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zeb5WqLy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5Jsxj/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A72C4CEFE;
-	Thu,  9 Oct 2025 16:00:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zeb5WqLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E56C4CEF8;
+	Thu,  9 Oct 2025 16:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025629;
-	bh=OcyNC9NoDpZNhUHkNf6IfJ4u/amp5gT+MV20DSySR3A=;
+	s=k20201202; t=1760025630;
+	bh=11Wfki1lzai+tC0pkS7NvwICxtb0xRF4vios80pZDgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5Jsxj/X81vRkIcYt4j6qn90GN9WIfHRfQtIE/WROnm+S6F/Lp8J1G8VsXaIIG0Wc
-	 y99nyltVQg8y9IUPjXpb3f/haRhFwOZq+4Pjon41qImFHeDi6di8KEQy5DJBqd5WYj
-	 /aYQHd2EB9rB47M9c/An/6JkkHr0TuVNdPrzlBH1dONYaWOL5dGDxPkGSyStxf8n6s
-	 Ql/ek1pZk4AkLZdmU8vdWJR0LbTK4SV/eHvrlMa+Udeg6yd5792BJp7bF2XNo97b2x
-	 8CQeitt65hCH0h5EnE4qmCTLvTopNnkpAvYN3dja7dd1GRfy3eR/gc6PRb8XIkIivI
-	 izY2h3xewQO4w==
+	b=Zeb5WqLycnF1ZpvNQUCHMXAHptJSzMznX/86gnqjCQucNDEAiLlGV+3xodQi1KJXe
+	 rzOI5kViNQhpEZxx+yHeeiyjosbPnqnQ0ArPMX0CKRj/62hHG6YW3W1z6fCLDeqdsf
+	 Jy/Fox8QfApHbiTzoiYFZq7jBorIjoBYrhO56GN2eFc3lWr+whko/8Ho8jdNGsgPDP
+	 ClegWciqPZDQUlUh0+jjlo+FXRZRAb5Dj/nNV/ZtaN1M3OtQ737FVUdALNHqpWAKZu
+	 wm6ME8TUmkf/9P9gfN4oF/DO+1LXzdE8YPOAKzkd09BdaTYWEVNsr5rwGvndJixzPi
+	 RUCe+2PMZuI4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Wilson Alvarez <wilson.e.alvarez@rubonnek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Bibo Mao <maobibo@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] ACPI: video: force native for Lenovo 82K8
-Date: Thu,  9 Oct 2025 11:55:49 -0400
-Message-ID: <20251009155752.773732-83-sashal@kernel.org>
+	chenhuacai@kernel.org,
+	jiaxun.yang@flygoat.com,
+	linux-mips@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] irqchip/loongson-eiointc: Route interrupt parsed from bios table
+Date: Thu,  9 Oct 2025 11:55:50 -0400
+Message-ID: <20251009155752.773732-84-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -53,198 +54,202 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Mario Limonciello (AMD)" <superm1@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit f144bc21befdcf8e54d2f19b23b4e84f13be01f9 ]
+[ Upstream commit 7fb83eb664e9b3a0438dd28859e9f0fd49d4c165 ]
 
-Lenovo 82K8 has a broken brightness control provided by nvidia_wmi_ec.
-Add a quirk to prevent using it.
+Interrupt controller eiointc routes interrupts to CPU interface IP0 - IP7.
 
-Reported-by: Wilson Alvarez <wilson.e.alvarez@rubonnek.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4512
-Tested-by: Wilson Alvarez <wilson.e.alvarez@rubonnek.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20250820170927.895573-1-superm1@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+It is currently hard-coded that eiointc routes interrupts to the CPU
+starting from IP1, but it should base that decision on the parent
+interrupt, which is provided by ACPI or DTS.
+
+Retrieve the parent's hardware interrupt number and store it in the
+descriptor of the eointc instance, so that the routing function can utilize
+it for the correct route settings.
+
+[ tglx: Massaged change log ]
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250804081946.1456573-2-maobibo@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my determination:
+Now let me compile my comprehensive analysis.
 
-## **YES** - This commit should be backported to stable kernel trees.
+## COMPREHENSIVE ANALYSIS
 
-### Extensive Analysis:
+Based on my extensive investigation of this commit, here is my
+determination:
 
-#### **1. Code Change Analysis**
+**Backport Status: YES**
 
-The commit adds exactly **8 lines** to `drivers/acpi/video_detect.c`
-(well under the 100-line limit):
+## Detailed Analysis
 
-```c
-+       /* https://gitlab.freedesktop.org/drm/amd/-/issues/4512 */
-+       {
-+        .callback = video_detect_force_native,
-+        .matches = {
-+               DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+               DMI_MATCH(DMI_PRODUCT_NAME, "82K8"),
-+               },
-+       },
-```
+### What This Commit Fixes
 
-This is a pure DMI quirk table addition with:
-- **No logic changes** to existing code
-- **No new functions** or modifications to existing functions
-- **Surgical precision** - only affects systems matching both DMI
-  strings exactly
-- **Standard pattern** matching dozens of other entries in the same file
-  (lines 145-951)
+The Loongson eiointc (Extended I/O Interrupt Controller) driver was
+**hardcoding interrupt routing** to CPU interface pins using the formula
+`BIT(1 + index)`, which routes interrupts starting from IP1. However,
+the **correct routing information is provided by ACPI/DTS** in the
+`cascade` field (for ACPI) or parent interrupt hwirq (for device tree).
 
-#### **2. Compliance with Stable Kernel Rules**
-(Documentation/process/stable-kernel-rules.rst)
+**Code Evidence:**
+- Line 214 in drivers/irqchip/irq-loongson-eiointc.c (before fix): `bit
+  = BIT(1 + index); /* Route to IP[1 + index] */`
+- After fix: `bit = BIT(eiointc_priv[index]->parent_hwirq - INT_HWI0);`
+- The ACPI structure at include/acpi/actbl2.h:1479-1485 defines
+  `cascade` field (u8) which specifies the correct interrupt pin
+- INT_HWI0 through INT_HWI7 are defined at
+  arch/loongarch/include/asm/loongarch.h:1462-1469
 
-✅ **Rule: "It must either fix a real bug that bothers people or just add
-a device ID"** (Line 15)
-- Fixes broken brightness control on Lenovo 82K8 laptops
-- Has bug report: https://gitlab.freedesktop.org/drm/amd/-/issues/4512
-- Reported-by and Tested-by tags confirm real user impact
+### Real-World Impact
 
-✅ **Rule: "It fixes a problem like... a hardware quirk"** (Line 19)
-- Explicitly documented as a hardware quirk in commit message
-- Placed in DMI quirk table section for nvidia-wmi-ec workarounds (lines
-  882-901)
+1. **Incorrect Interrupt Routing:** On systems where ACPI/DTS specifies
+   a different CPU interrupt pin than the hardcoded value, interrupts
+   would be routed to the wrong pin. This could cause:
+   - Interrupts not being received at all
+   - System hangs or device malfunctions
+   - Hardware that doesn't work correctly
 
-✅ **Rule: "It cannot be bigger than 100 lines, with context"** (Line 11)
-- Only 19 lines total in diff (8 lines of actual code added)
+2. **Prerequisite for Optimization:** The follow-up commit
+   (8ff1c16c753e2) explains that correct routing enables an important VM
+   optimization: routing different interrupt vectors to different CPU
+   pins reduces VM exits by allowing the handler to read only one
+   EIOINTC_REG_ISR register instead of all four.
 
-✅ **Rule: "It must be obviously correct and tested"** (Line 10)
-- Contains "Tested-by: Wilson Alvarez" tag
-- Pattern matches 100+ similar quirks in same file
-- Cannot affect any other hardware (DMI matching is exact)
+3. **Affected Systems:** All Loongson systems using eiointc:
+   - LS2K0500, LS2K2000 (device tree)
+   - Loongson-3A5000, Loongson-3C5000 (ACPI)
 
-#### **3. Historical Precedent from Git Analysis**
+### Why This Bug Existed
 
-I examined 300+ commits to `drivers/acpi/video_detect.c` and found
-**strong backporting precedent**:
+The hardcoded routing was present **from the initial driver commit**
+(dd281e1a1a937 from July 2022). It likely went undetected because:
+- Reference/common platforms happened to use IP1, matching the hardcoded
+  value
+- Limited deployment of Loongson architecture
+- New hardware configurations or firmware changes exposed the issue
 
-**Similar nvidia_wmi_ec quirks already backported:**
+### Backporting Assessment
 
-1. **Dell G15 5515** (commit f46acc1efd4b5 → 00d290579798d):
-   - Same issue: "nvidia-wmi-ec-backlight driver does not actually work"
-   - Same solution: Force native backlight
-   - Same section: nvidia-wmi-ec workarounds
-   - **Backported to stable** (Signed-off-by: Sasha Levin)
+**✓ Fixes a bug affecting users:** Yes - incorrect hardware programming
+that can cause device malfunctions
 
-2. **Dell OptiPlex 5480 AIO** (commit ac78288fe062b):
-   - Similar brightness control fix
-   - Explicitly tagged: `Cc: All applicable <stable@vger.kernel.org>`
-   - **Backported to stable**
+**✓ Small and contained:** Yes - adds one struct field, modifies routing
+logic in one place, updates two init functions
 
-3. **Lenovo Ideapad Z470** (commit 96b709be183c5):
-   - Lenovo brightness quirk
-   - Force native backlight
-   - **Backported to stable** (no explicit stable tag required)
+**✓ No architectural changes:** Correct - just fixes the routing to
+match hardware specification
 
-4. **Dell Studio 1569** (commit 23d28cc0444be):
-   - Brightness control quirk
-   - **Backported to stable** (no explicit stable tag)
+**✓ Minimal risk:** Low risk because:
+- Makes behavior match what ACPI/DTS specifies (hardware specification)
+- Part of a tested two-commit series (both commits already merged and
+  backported)
+- No subsequent fixes found (checked commits after 2025-08-04)
+- Already successfully backported to 6.17 (ec1317ec5082f)
 
-**Pattern observed:** DMI quirks for brightness control are routinely
-backported regardless of whether they have explicit "Cc: stable@" tags,
-because they meet the stable criteria automatically.
+**✓ No explicit stable tag:** Commit lacks `Cc: stable` tag, but fits
+stable tree criteria
 
-#### **4. Risk Assessment**
+**✗ Critical subsystem:** Yes, but the change is localized to Loongson-
+specific driver
 
-**Risk Level: MINIMAL**
+### Verification of Backport Quality
 
-- ✅ **Hardware-specific:** Only triggers on exact DMI match
-  (SYS_VENDOR="LENOVO" AND PRODUCT_NAME="82K8")
-- ✅ **Isolated change:** No modification to control flow, just data
-  table addition
-- ✅ **No dependencies:** nvidia_wmi_ec infrastructure present since
-  v5.19 (June 2022, commit fe7aebb40d42b)
-- ✅ **Tested configuration:** Has Tested-by tag from bug reporter
-- ✅ **Well-understood pattern:** Matches 134+ similar
-  force_native/force_vendor quirks in file
-- ✅ **Cannot break other hardware:** DMI matching prevents any side
-  effects on other systems
+- Commit was authored: Mon Aug 4 16:19:45 2025
+- Merged to mainline: Sun Aug 24 12:51:04 2025
+- Already backported to 6.17 by Sasha Levin
+- No fixes found targeting this commit (searched with git log
+  --grep="Fixes.*7fb83eb664e9b")
+- Follow-up commit (8ff1c16c753e2) builds on this fix and should be
+  backported together
 
-**Regression potential:** Effectively zero - the change only activates
-on one specific laptop model that is currently broken.
+## Conclusion
 
-#### **5. User Impact**
+**YES - This commit should be backported to stable kernel trees.**
 
-**Without this backport:**
-- Users of Lenovo 82K8 on stable kernels cannot adjust screen brightness
-- Critical usability issue - screen brightness control is essential
-- Forces users to either:
-  - Stay on broken stable kernel with unusable brightness
-  - Upgrade to newer kernel (not always possible in enterprise/LTS
-    environments)
-  - Apply manual patches
+This is a clear bugfix that corrects incorrect hardware programming. The
+driver was routing interrupts to hardcoded CPU interrupt pins instead of
+using the routing information from firmware (ACPI/DTS). This could cause
+device malfunctions on systems where firmware specifies different
+interrupt pins. The fix is small, contained, has no known regressions,
+and is a prerequisite for important virtualization optimizations. It
+meets all stable tree criteria for backporting.
 
-**With this backport:**
-- Brightness control works properly on Lenovo 82K8
-- Aligns stable kernel behavior with mainline
-- No impact on any other hardware
+ drivers/irqchip/irq-loongson-eiointc.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-#### **6. Evidence of Existing Backport**
-
-The commit appears **twice** in the repository:
-1. `f144bc21befdc` - Original mainline commit (Aug 2025 datestamp)
-2. `35b6a190dc6a7` - Backported version with `Signed-off-by: Sasha Levin
-   <sashal@kernel.org>`
-
-This suggests the commit has **already been identified for backporting**
-through automated stable selection processes (AUTOSEL).
-
-#### **7. Subsystem Context**
-
-The `drivers/acpi/video_detect.c` file serves a critical role:
-- Determines which backlight control method to use on laptops
-- Contains hundreds of hardware-specific quirks (300+ commits)
-- Maintained by Rafael J. Wysocki (signed this commit)
-- Active area with frequent quirk additions for new hardware
-
-This commit fits perfectly into the established pattern of continuous
-quirk additions that get backported to ensure hardware compatibility in
-stable kernels.
-
-### **Conclusion**
-
-This is a **textbook stable backport candidate** that:
-1. Fixes a real user-visible bug (broken brightness control)
-2. Has minimal risk (hardware-specific quirk)
-3. Follows established patterns (100+ similar backported quirks)
-4. Meets all stable kernel rules
-5. Has been tested by the affected user
-6. Cannot cause regressions on other hardware
-
-**Recommendation:** **YES** - Backport to all applicable stable kernel
-trees that include nvidia_wmi_ec support (v5.19+).
-
- drivers/acpi/video_detect.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index d507d5e084354..4cf74f173c785 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -948,6 +948,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
- 		},
- 	},
-+	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4512 */
-+	{
-+	 .callback = video_detect_force_native,
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "82K8"),
-+		},
-+	},
- 	{ },
+diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
+index b2860eb2d32c5..baa406904de55 100644
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -68,6 +68,7 @@ struct eiointc_priv {
+ 	struct fwnode_handle	*domain_handle;
+ 	struct irq_domain	*eiointc_domain;
+ 	int			flags;
++	irq_hw_number_t		parent_hwirq;
  };
+ 
+ static struct eiointc_priv *eiointc_priv[MAX_IO_PICS];
+@@ -211,7 +212,12 @@ static int eiointc_router_init(unsigned int cpu)
+ 		}
+ 
+ 		for (i = 0; i < eiointc_priv[0]->vec_count / 32 / 4; i++) {
+-			bit = BIT(1 + index); /* Route to IP[1 + index] */
++			/*
++			 * Route to interrupt pin, relative offset used here
++			 * Offset 0 means routing to IP0 and so on
++			 * Every 32 vector routing to one interrupt pin
++			 */
++			bit = BIT(eiointc_priv[index]->parent_hwirq - INT_HWI0);
+ 			data = bit | (bit << 8) | (bit << 16) | (bit << 24);
+ 			iocsr_write32(data, EIOINTC_REG_IPMAP + i * 4);
+ 		}
+@@ -495,7 +501,7 @@ int __init eiointc_acpi_init(struct irq_domain *parent,
+ 
+ 	priv->vec_count = VEC_COUNT;
+ 	priv->node = acpi_eiointc->node;
+-
++	priv->parent_hwirq = acpi_eiointc->cascade;
+ 	parent_irq = irq_create_mapping(parent, acpi_eiointc->cascade);
+ 
+ 	ret = eiointc_init(priv, parent_irq, acpi_eiointc->node_map);
+@@ -527,8 +533,9 @@ int __init eiointc_acpi_init(struct irq_domain *parent,
+ static int __init eiointc_of_init(struct device_node *of_node,
+ 				  struct device_node *parent)
+ {
+-	int parent_irq, ret;
+ 	struct eiointc_priv *priv;
++	struct irq_data *irq_data;
++	int parent_irq, ret;
+ 
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -544,6 +551,12 @@ static int __init eiointc_of_init(struct device_node *of_node,
+ 	if (ret < 0)
+ 		goto out_free_priv;
+ 
++	irq_data = irq_get_irq_data(parent_irq);
++	if (!irq_data) {
++		ret = -ENODEV;
++		goto out_free_priv;
++	}
++
+ 	/*
+ 	 * In particular, the number of devices supported by the LS2K0500
+ 	 * extended I/O interrupt vector is 128.
+@@ -552,7 +565,7 @@ static int __init eiointc_of_init(struct device_node *of_node,
+ 		priv->vec_count = 128;
+ 	else
+ 		priv->vec_count = VEC_COUNT;
+-
++	priv->parent_hwirq = irqd_to_hwirq(irq_data);
+ 	priv->node = 0;
+ 	priv->domain_handle = of_fwnode_handle(of_node);
  
 -- 
 2.51.0
