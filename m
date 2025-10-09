@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D362F5468;
-	Thu,  9 Oct 2025 16:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ACC238C3A;
+	Thu,  9 Oct 2025 16:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025651; cv=none; b=dnALH4IL0EtQmtNP6j6v3LZfW9cG9WTxBEvC5W13CMOM6aEP9Zthw7MgAeHowDMVfBc8O7XQ8dPlkUFI7K+5MnIGO5YRmC7yRQSYcY7FaKI5dLzMMNpQib+VB1+Z+0c7D+ShK73WLADqIhNCKsQOFwsZAXGCa7ejUh/G89mwVEY=
+	t=1760025653; cv=none; b=MCzC8rEH3mwaXEsSwsFTad+Ym5kbfEjk3wT6k21BuQqyKFXlGPEvo8BrpKyTUE7NjK46nnNnoOQF1B/JflxJvT2mobbAv+4cl10i9JAHArNPB+dp/WD8ljsUPQVFebfLbRCPF8uRATSToW08/dfo9HWhQ2KWEksxTDd3BQ8kPkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025651; c=relaxed/simple;
-	bh=egzDP3QBGzqV9GDz82HkQPHKLRF4naIRKYNiIzbx2nw=;
+	s=arc-20240116; t=1760025653; c=relaxed/simple;
+	bh=MVoBzAEYlPRnNMLBLiTkWbNSSGr6diM4mluzmcJguo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jMxR3OQYLoxi+yXsU69Tx5NjNFgOexLVxf20vvpgnNNFlZ9cE5Zt1LQCVA6VUgUQTenYNQqtrNnDX6B7stagLWSgF+XYYfWOXtaDVFZoyUGiobHBPD0/6Yf+G1UGirxEBptD+N6n1FkTlNlRzbMQEVCb7vi27uKwFwuA4kQcSMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EnjbgKqm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tVTKy9aMQJqc2huYEKavrGvE6yC8jT9CaafnLTXfnWrI8rew7IB0+JX/mRNtmoNnS3E1NFNiXDPVeFv3n6b9L9tOzLLOmLrw3RL154ra5GXFxxiv2j69Sf147AsdZDb7FC887XB773lI43V1Bi4Ze4tqfqcgRthN9cXfG9jBHnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltamw5L9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EnjbgKqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80908C4CEE7;
-	Thu,  9 Oct 2025 16:00:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ltamw5L9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB749C4CEF7;
+	Thu,  9 Oct 2025 16:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025650;
-	bh=egzDP3QBGzqV9GDz82HkQPHKLRF4naIRKYNiIzbx2nw=;
+	s=k20201202; t=1760025653;
+	bh=MVoBzAEYlPRnNMLBLiTkWbNSSGr6diM4mluzmcJguo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnjbgKqmzNNNZLDMhqb1oMRdscSRP48jA6juHScRm/2B/OHKRvCbwg+y/SGFOvGsn
-	 ND5KzI45INZ+XoKYfpHcb7rMIADFM6Dezv8daXPumT9KdkT2L2IHQntHaciSyitFdn
-	 YLpiaItAvUCWPSHZ+vn5BvmA0TeB76EgyT30KJfE4arJ2aRojsNgfiMRyrD0V69lLC
-	 hmw1xew0tEBwBH3vhSxRQUQ0i0HqMumjeFK0tfrBnSjVGXK4Hg+zt03HxPsrG8US6a
-	 n3I7/A67v9YijeMXewgbQz/SKuDR3JXAPezA1AnP0jDCWWGbwfXVN4JriBC7s/g+xs
-	 VEVialaErl+6Q==
+	b=ltamw5L9ec+p54tglftuCnNWQlnagdgol6lXlxSYFDyyIqYGHhTQEhj1C2HKBqgjK
+	 wZlvyElrTkbR5geZCUCMwME5fN47xU2+3/12vuNRryiG1aqh+iA4aDVC3p91UVQ+Fs
+	 6aQxRXhex46jSiD4QKZ3ou2TnX6DX+1zIRNtn2plZnH1tHeJN/J56uojsznCWjbL2p
+	 akBbTAfXvGXGhlqQE0mwUfnXOdy+m1yAS86s58dxTldzBaLUQuH7jTH+EWzBsqLc3l
+	 kT8UqjFGL5Fzu2/LodtULJ594JJ/4c0r7cVQQozsbYdUbHZWPCgQaiKqKRES75+/Ij
+	 jLRKuOzm2ZVNw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
-	Winona Schroeer-Smith <wolfizen@wolfizen.net>,
-	Antoni Aloy Torrens <aaloytorrens@gmail.com>,
+Cc: =?UTF-8?q?Jonas=20Schw=C3=B6bel?= <jonasschwoebel@yahoo.de>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
 	thierry.reding@gmail.com,
 	jonathanh@nvidia.com,
 	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] ARM: tegra: transformer-20: fix audio-codec interrupt
-Date: Thu,  9 Oct 2025 11:56:01 -0400
-Message-ID: <20251009155752.773732-95-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] ARM: tegra: p880: set correct touchscreen clipping
+Date: Thu,  9 Oct 2025 11:56:02 -0400
+Message-ID: <20251009155752.773732-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -49,21 +48,20 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Jonas Schwöbel <jonasschwoebel@yahoo.de>
 
-[ Upstream commit 3f973d78d176768fa7456def97f0b9824235024f ]
+[ Upstream commit b49a73a08100ab139e07cfa7ca36e9b15787d0ab ]
 
-Correct audio-codec interrupt should be PX3 while PX1 is used for external
-microphone detection.
+Existing touchscreen clipping is too small and causes problems with
+touchscreen accuracy.
 
-Tested-by: Winona Schroeer-Smith <wolfizen@wolfizen.net> # ASUS SL101
-Tested-by: Antoni Aloy Torrens <aaloytorrens@gmail.com> # ASUS TF101
+Signed-off-by: Jonas Schwöbel <jonasschwoebel@yahoo.de>
 Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -71,48 +69,52 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-YES - routing the WM8903 IRQ to PX3 fixes a long-standing wiring bug
-without side effects.
+YES – raising the Synaptics clip limits stops the driver from clipping
+real touch coordinates on the LG P880 and restores edge accuracy.
 
-- `arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts:518` currently binds
-  the codec IRQ to `TEGRA_GPIO(X, 1)`, yet `nvidia,mic-det-gpios`
-  already consumes that pin (`arch/arm/boot/dts/nvidia/tegra20-asus-
-  tf101.dts:1210`), so the SoC sees mic-detect instead of codec
-  interrupts and jack events fail.
-- The Tegra audio machine driver requires a separate GPIO for mic detect
-  (`sound/soc/tegra/tegra_asoc_machine.c:459`), while the WM8903 driver
-  depends on its IRQ line for microphone/short detection
-  (`sound/soc/codecs/wm8903.c:1604-1710`); misrouting the IRQ leaves
-  these user-facing features broken.
-- `git blame` traces the bad mapping back to the TF101 DTS introduction
-  in commit `b405066bd3e04`, so every stable release that includes this
-  board inherits the bug.
-- Other Tegra20 WM8903 boards already wire the codec IRQ to PX3 (e.g.
-  `arch/arm/boot/dts/nvidia/tegra20-acer-a500-picasso.dts:445`,
-  `arch/arm/boot/dts/nvidia/tegra20-seaboard.dts:344`), matching the
-  hardware layout described by the TF101 maintainers and the commit’s
-  Tested-by reports.
-- The fix is a single DTS line change with verified testers, no
-  dependency on new infrastructure, and aligns with existing pinmux
-  defaults, making it safe to backport while restoring microphone/jack
-  functionality for users.
+- **Bug impact**: The DTS currently caps the touchscreen to 1110×1973
+  (`arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts:111-112`), below what
+  the Synaptics S3203B actually reports, so touches near the screen
+  edges get clamped, matching the commit message’s “accuracy” complaint.
+- **How the fix helps**: The rmi4 stack takes these values to bound
+  `sensor->max_x/y` (`drivers/input/rmi4/rmi_2d_sensor.c:147-154`);
+  increasing them to 1440×2560 lets the driver expose the full hardware
+  range while still clamping against the real controller limits,
+  eliminating the compression.
+- **Historical context**: The limiting values came from the original
+  board bring-up (`ea5e97e9ce0466`), and no later commits touch this
+  area; P895 already uses larger limits
+  (`arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts:109-110`), so the new
+  numbers align with existing practice.
+- **Risk assessment**: Change is confined to two DTS constants; no
+  bindings or drivers change, and higher clip limits cannot harm because
+  the driver already min()s them with the hardware-reported maxima. No
+  regressions expected beyond the targeted board.
+- **Backport fit**: Clear user-visible bug fix, self-contained, no
+  functional dependencies, and consistent with stable policy for
+  correcting board descriptions.
 
- arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Suggested follow-up: Once merged, verify on-device that touches now
+reach the physical bezel across both axes.
 
-diff --git a/arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts b/arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts
-index 39008816fe5ee..efd8838f9644f 100644
---- a/arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts
-+++ b/arch/arm/boot/dts/nvidia/tegra20-asus-tf101.dts
-@@ -518,7 +518,7 @@ wm8903: audio-codec@1a {
- 			reg = <0x1a>;
+ arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+index 2f7754fd42a16..c6ef0a20c19f3 100644
+--- a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
++++ b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+@@ -108,8 +108,8 @@ sub-mic-ldo {
+ 	i2c@7000c400 {
+ 		touchscreen@20 {
+ 			rmi4-f11@11 {
+-				syna,clip-x-high = <1110>;
+-				syna,clip-y-high = <1973>;
++				syna,clip-x-high = <1440>;
++				syna,clip-y-high = <2560>;
  
- 			interrupt-parent = <&gpio>;
--			interrupts = <TEGRA_GPIO(X, 1) IRQ_TYPE_EDGE_BOTH>;
-+			interrupts = <TEGRA_GPIO(X, 3) IRQ_TYPE_EDGE_BOTH>;
- 
- 			gpio-controller;
- 			#gpio-cells = <2>;
+ 				touchscreen-inverted-y;
+ 			};
 -- 
 2.51.0
 
