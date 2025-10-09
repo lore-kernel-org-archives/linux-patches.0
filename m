@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDA3226CF7;
-	Thu,  9 Oct 2025 15:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42B92FAC07;
+	Thu,  9 Oct 2025 15:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025573; cv=none; b=QTiBVmfps5gpLf40gWkj2M+eMNw3Ve/uo2tDk2b1NUQtpZsqmXgchKA3826pQnfBtr0Pcbrud6+wK9e13Up9AgyGDsRlAovgR4O9+e6H/lfaCHhPneSVVSGyOBEkNhds0RmjrHu+JIN9Wx3I1BLGX4LOQ2tgdd2Ih9FqLvo/nZs=
+	t=1760025575; cv=none; b=Oc6jk7vEPfkc8CN+GOrzlrfF6A63UgUhqP7z0cKAWOzhdEXo3ireGU1mZZG1wjvTBn5m65AU+6ovsQ5/z74edZm8M4+wXtfygZrUICewcRIbA83zhjVafx7fYDQhou8RWG0YdEhtaycy94dmlp7mQUgwZUxJs+a6Q4TubMD7Uh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025573; c=relaxed/simple;
-	bh=V8rolBw0oQaz2sAdlVgAzCyo+rSvP44j/wQMeNC0iLM=;
+	s=arc-20240116; t=1760025575; c=relaxed/simple;
+	bh=td/9rpfVL5kc3539pOIYKE9FDVHoZjxCJ/AWHY0bREw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iocFy4S5TJmeFrhP6NptE+jd2aJSy2izNJLH2hed6iY52n4omDbfJa5KqpSo7SZC0TUA70CT0YMVhFDuXFoxqw6FP87SkMk+0tvO6A8loIBnpeEN6AQU8LhUqtYqYH36GQ6UVJbxiGTM420q72aA5hcgJPZYRjKSXq7plv87RPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aswWDgk+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n9nB0yKQn1IfY4x6UOseLLgv291qq92JgIZClSk8cMoxgllOecQ9nIUsSdej0TMbH9i9iVA9G0Zr5a4T28BrvkIApLW8fQQ/VxTCmk32LktrJD1tpVaJpOfAf4xdtpz2GbJqNKE+DzrwteY/PpqeFIdu7zUB/yroVpm03Q99yik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCqfnEUx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aswWDgk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FA6C4CEE7;
-	Thu,  9 Oct 2025 15:59:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCqfnEUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AFAC4CEF8;
+	Thu,  9 Oct 2025 15:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025573;
-	bh=V8rolBw0oQaz2sAdlVgAzCyo+rSvP44j/wQMeNC0iLM=;
+	s=k20201202; t=1760025575;
+	bh=td/9rpfVL5kc3539pOIYKE9FDVHoZjxCJ/AWHY0bREw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aswWDgk+nhsEA/lezNNhWy0Km+hZLsa+ETAGomK70KElKU5crm+egpLawgdNcaQMv
-	 AH+plrYd0NUfagqbB63Dc03J+wxyifDWk18kT8t6criwU5tmvHOtUs1SFfz9rQEJxr
-	 b9man+mn9GWGq9Yg18oCJ658SP/abFAoEJh+ZKb4QD0jZIkXEMt1KdYgcHqJvCu1Ru
-	 JPG1sLeonn0Y6LRuBAkA0Sc1oHK16n+i9oifjgSIgGllP8XWRji39MWqT+IpjAbw4j
-	 8gk+NiDlsfIL57Gt4szreJ1CzZY1FSSXNT39c4IFFSTpcQedLu2FtFsoHQcHHXefiu
-	 wGsrDYy98nCrw==
+	b=LCqfnEUxrDI+O+kg04A+r/81yBrBhLpEpLoH6HmMOlylAVBsbp4ee/MkJDp81/9Cn
+	 w9cvu9dg8BB6Wu1F2xFbvsny2pr+UbUnWhUtdUa9Jz9nIgEZFpBC7bHMA0p//IotW/
+	 susBnhGJu5T/R1xZ555hBA6dVaT4oRs3684sJ7RN3pPehD9IJybTalO4PJG+MZMGI7
+	 RsL6lCOMQ9f8nFkQTkwFuHdvOqNAsg6U4ywdDrFo1murksUavk/zaGR3/G3vgt6fUl
+	 18MUOphYnYT+riMDS4Did/9tlrf2FJUTNvjmVXiGFSt42dSLigsrfkVZuJOh99nB+Y
+	 BkZgvPj9m3e7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dennis Beier <nanovim@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.4] cpufreq/longhaul: handle NULL policy in longhaul_exit
-Date: Thu,  9 Oct 2025 11:55:20 -0400
-Message-ID: <20251009155752.773732-54-sashal@kernel.org>
+	bigeasy@linutronix.de,
+	clrkwllms@kernel.org,
+	rostedt@goodmis.org,
+	linux-spi@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-5.4] spi: loopback-test: Don't use %pK through printk
+Date: Thu,  9 Oct 2025 11:55:21 -0400
+Message-ID: <20251009155752.773732-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,186 +49,173 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dennis Beier <nanovim@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 592532a77b736b5153e0c2e4c74aa50af0a352ab ]
+[ Upstream commit b832b19318534bb4f1673b24d78037fee339c679 ]
 
-longhaul_exit() was calling cpufreq_cpu_get(0) without checking
-for a NULL policy pointer. On some systems, this could lead to a
-NULL dereference and a kernel warning or panic.
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-This patch adds a check using unlikely() and returns early if the
-policy is NULL.
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
+There are still a few users of %pK left, but these use it through seq_file,
+for which its usage is safe.
 
-Bugzilla: #219962
-
-Signed-off-by: Dennis Beier <nanovim@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20250811-restricted-pointers-spi-v1-1-32c47f954e4d@linutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my comprehensive analysis of this commit and the broader
+context, here is my determination:
+
 **Backport Status: YES**
 
-## Comprehensive Analysis
+## Analysis
 
-### Executive Summary
-This commit fixes a **critical NULL pointer dereference bug** in the
-longhaul cpufreq driver that has existed since 2014. The fix is a
-minimal defensive check that prevents kernel crashes when unloading the
-module. This is an **excellent candidate for stable backporting**.
+### Nature of the Change
+This commit replaces the `%pK` (restricted pointer) format specifier
+with `%p` (regular pointer) in debugging output functions within the SPI
+loopback test driver. The changes affect:
+- `spi_test_dump_message()` - debugging output for SPI messages (lines
+  449, 459, 461, 467)
+- `spi_check_rx_ranges()` - error reporting (line 561)
+- `spi_test_translate()` - error reporting (line 699)
 
-### Bug Analysis
+### Technical Justification for Backporting
 
-#### Root Cause
-The bug was introduced in **commit 7aa0557fae5ce (2014)** when Srivatsa
-S. Bhat added code to `longhaul_exit()` that directly dereferences the
-policy pointer at **line 960**:
+**1. Real Bug Fix - Sleeping Locks in Atomic Context**
 
-```c
-freqs.old = policy->cur;  // NULL dereference if policy is NULL!
-```
+The commit message's claim about "acquiring sleeping locks in atomic
+contexts" is accurate and documented. My investigation reveals:
 
-This code assumes `cpufreq_cpu_get(0)` always returns a valid pointer,
-but that's not guaranteed.
+- `%pK` implementation (lib/vsprintf.c:863-904) calls
+  `has_capability_noaudit()` which invokes `security_capable()` through
+  the LSM framework
+- Under CONFIG_PREEMPT_RT with SELinux and kptr_restrict=1, this
+  triggers "sleeping function called from invalid context" warnings
+- The code explicitly checks for atomic context (lib/vsprintf.c:874) and
+  returns "pK-error" if in hardirq, softirq, or NMI context
+- This is a real correctness issue, not just theoretical
 
-#### When NULL Can Be Returned
-Based on my analysis of `cpufreq_cpu_get()` in
-**drivers/cpufreq/cpufreq.c:226-242**:
+**2. Security Improvement**
 
-1. **No cpufreq driver registered** (`cpufreq_driver` is NULL)
-2. **No policy exists for CPU 0** (`cpufreq_cpu_get_raw()` returns NULL)
-3. **Invalid CPU number** (though unlikely for CPU 0)
+Since commit ad67b74d2469 (v4.15-rc2, November 2017), `%p` already
+hashes addresses and doesn't leak raw pointers. The commit message
+correctly notes that `%pK` through printk() can "still unintentionally
+leak raw pointers" depending on kptr_restrict settings, whereas `%p`
+consistently hashes addresses.
 
-In the module exit path, this can occur if:
-- The driver registration partially failed
-- The cpufreq core removed the policy due to runtime errors
-- Race conditions during module unload
+**3. Part of Tree-Wide Cleanup**
 
-#### Impact
-Without this fix, calling `policy->cur` at line 960 causes:
-- **NULL pointer dereference** → immediate kernel crash
-- **Kernel warning or panic** as documented in the commit message
-- Additionally, `cpufreq_cpu_put(policy)` at line 971 would also crash
-  since it calls `kobject_put(&policy->kobj)` without NULL checking
+This is part of a coordinated effort to remove `%pK` from printk() paths
+across the entire kernel:
+- Similar commits already backported: BPF (c2f48cb89b76f), SCSI, WiFi,
+  remoteproc, DRM, crypto, etc.
+- All authored by Thomas Weißschuh with identical commit messages
+- Shows this is recognized as a kernel-wide issue requiring systematic
+  fixing
 
-### Code Changes Analysis
+**4. Low Regression Risk**
 
-The fix adds exactly **3 lines** at drivers/cpufreq/longhaul.c:956-958:
+- Only changes format specifiers, no logic changes
+- Confined to test/debugging driver (spi-loopback-test.c) used for
+  regression testing, not production code
+- Changes 6 format strings across 3 functions
+- Output remains functionally equivalent (both show pointer addresses,
+  just hashed differently)
 
-```c
-+       if (unlikely(!policy))
-+               return;
-+
-```
+**5. Stable Tree Criteria Compliance**
 
-**Analysis of the fix:**
-1. **Minimal and surgical** - Only adds a defensive NULL check
-2. **Uses `unlikely()`** - Correctly hints to compiler this is an error
-   path
-3. **Early return pattern** - Clean exit without side effects
-4. **No functional change** when policy is valid - Zero impact on normal
-   operation
+✓ Fixes important bug (sleeping locks in atomic context under RT
+kernels)
+✓ No new features introduced
+✓ No architectural changes
+✓ Minimal regression risk
+✓ Small and contained change (12 lines, 1 file)
+✓ Part of security hardening effort
 
-### Pattern Consistency
+### Evidence of Backport Intent
 
-My research found that **many other cpufreq drivers already implement
-this exact pattern**:
-
-- **drivers/cpufreq/tegra186-cpufreq.c:113**: `if (!policy)`
-- **drivers/cpufreq/amd-pstate-ut.c:126**: `if (!policy)`
-- **drivers/cpufreq/s5pv210-cpufreq.c:561**: `if (!policy)`
-- **drivers/cpufreq/mediatek-cpufreq-hw.c:64**: `if (!policy)`
-- **drivers/cpufreq/powernv-cpufreq.c:900,933**: `if (!cpu_policy)` /
-  `if (!policy)`
-- **drivers/cpufreq/apple-soc-cpufreq.c:143**: `if (unlikely(!policy))`
-- **drivers/cpufreq/scmi-cpufreq.c:46**: `if (unlikely(!policy))`
-
-The longhaul driver was an **outlier** - it should have had this check
-all along.
-
-### Historical Context
-
-The vulnerable code path was created across two commits:
-- **2013 (b43a7ffbf33be7)**: Viresh Kumar added `cpufreq_cpu_get(0)`
-  without NULL check
-- **2014 (7aa0557fae5ce2)**: Srivatsa S. Bhat added `policy->cur`
-  dereference, making the bug exploitable
-
-The bug has existed for **~11 years** across **33 commits** to this
-file. The longhaul driver targets legacy VIA processors, which explains
-why this wasn't caught earlier - limited hardware deployment.
-
-### Backport Suitability Assessment
-
-**Criteria Analysis:**
-
-1. ✅ **Fixes a bug affecting users** - YES: Prevents kernel crashes
-2. ✅ **Small and contained** - YES: Only 3 lines added
-3. ✅ **Clear side effects** - NO unwanted side effects; purely defensive
-4. ✅ **No architectural changes** - NO: Simple NULL check only
-5. ✅ **Not touching critical subsystems** - Only affects longhaul driver
-6. ⚠️ **Explicit stable mention** - NO Cc: stable tag, but should have
-   one
-7. ✅ **Follows stable rules** - YES: Important bugfix, minimal risk
-
-**Risk Assessment:**
-- **Regression risk**: **VERY LOW** - The check only triggers on error
-  paths
-- **Testing impact**: Minimal - Only affects VIA C5/C6 processors
-- **Code complexity**: Trivial - Standard NULL pointer check
-- **Dependency risk**: None - Self-contained change
-
-### Recommendations
-
-1. **BACKPORT to all stable trees** where commit 7aa0557fae5ce2 exists
-   (v3.15+)
-2. **Priority**: MEDIUM-HIGH (fixes crashes, but affects legacy
-   hardware)
-3. **Add Fixes tag**: Should reference `Fixes: 7aa0557fae5ce ("cpufreq:
-   longhaul: Fix double invocation...")`
-4. **Add Cc: stable** tag in backport
+The commit has already been queued for backport to this stable tree
+(commit c51f79c2aadcd with "Signed-off-by: Sasha Levin"), indicating it
+has passed stable tree review criteria. It's currently 66 commits ahead
+of the v6.17 release tag.
 
 ### Conclusion
 
-This is a **textbook example** of a good stable backport candidate:
-- Fixes a real crash bug
-- Minimal code change with zero regression risk
-- Follows established kernel patterns
-- No architectural or functional changes
-- Self-contained to a single driver
+This commit should definitively be backported to stable trees. It fixes
+a real correctness bug affecting RT kernel configurations, improves
+security posture, carries minimal risk, and is part of a systematic
+kernel-wide cleanup that's already being backported across subsystems.
 
-The only reason this hasn't caused more reports is the limited
-deployment of VIA C5/C6 processors. However, for users with this
-hardware, this bug can cause **immediate kernel crashes** on module
-unload, making it a significant reliability issue.
+ drivers/spi/spi-loopback-test.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-**STRONGLY RECOMMEND: YES for stable backport**
-
- drivers/cpufreq/longhaul.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/cpufreq/longhaul.c b/drivers/cpufreq/longhaul.c
-index ba0e08c8486a6..49e76b44468aa 100644
---- a/drivers/cpufreq/longhaul.c
-+++ b/drivers/cpufreq/longhaul.c
-@@ -953,6 +953,9 @@ static void __exit longhaul_exit(void)
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(0);
+diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
+index 7dd92deffe3fb..e0b131aa29b62 100644
+--- a/drivers/spi/spi-loopback-test.c
++++ b/drivers/spi/spi-loopback-test.c
+@@ -446,7 +446,7 @@ static void spi_test_dump_message(struct spi_device *spi,
  	int i;
+ 	u8 b;
  
-+	if (unlikely(!policy))
-+		return;
-+
- 	for (i = 0; i < numscales; i++) {
- 		if (mults[i] == maxmult) {
- 			struct cpufreq_freqs freqs;
+-	dev_info(&spi->dev, "  spi_msg@%pK\n", msg);
++	dev_info(&spi->dev, "  spi_msg@%p\n", msg);
+ 	if (msg->status)
+ 		dev_info(&spi->dev, "    status:        %i\n",
+ 			 msg->status);
+@@ -456,15 +456,15 @@ static void spi_test_dump_message(struct spi_device *spi,
+ 		 msg->actual_length);
+ 
+ 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
+-		dev_info(&spi->dev, "    spi_transfer@%pK\n", xfer);
++		dev_info(&spi->dev, "    spi_transfer@%p\n", xfer);
+ 		dev_info(&spi->dev, "      len:    %i\n", xfer->len);
+-		dev_info(&spi->dev, "      tx_buf: %pK\n", xfer->tx_buf);
++		dev_info(&spi->dev, "      tx_buf: %p\n", xfer->tx_buf);
+ 		if (dump_data && xfer->tx_buf)
+ 			spi_test_print_hex_dump("          TX: ",
+ 						xfer->tx_buf,
+ 						xfer->len);
+ 
+-		dev_info(&spi->dev, "      rx_buf: %pK\n", xfer->rx_buf);
++		dev_info(&spi->dev, "      rx_buf: %p\n", xfer->rx_buf);
+ 		if (dump_data && xfer->rx_buf)
+ 			spi_test_print_hex_dump("          RX: ",
+ 						xfer->rx_buf,
+@@ -558,7 +558,7 @@ static int spi_check_rx_ranges(struct spi_device *spi,
+ 		/* if still not found then something has modified too much */
+ 		/* we could list the "closest" transfer here... */
+ 		dev_err(&spi->dev,
+-			"loopback strangeness - rx changed outside of allowed range at: %pK\n",
++			"loopback strangeness - rx changed outside of allowed range at: %p\n",
+ 			addr);
+ 		/* do not return, only set ret,
+ 		 * so that we list all addresses
+@@ -696,7 +696,7 @@ static int spi_test_translate(struct spi_device *spi,
+ 	}
+ 
+ 	dev_err(&spi->dev,
+-		"PointerRange [%pK:%pK[ not in range [%pK:%pK[ or [%pK:%pK[\n",
++		"PointerRange [%p:%p[ not in range [%p:%p[ or [%p:%p[\n",
+ 		*ptr, *ptr + len,
+ 		RX(0), RX(SPI_TEST_MAX_SIZE),
+ 		TX(0), TX(SPI_TEST_MAX_SIZE));
 -- 
 2.51.0
 
