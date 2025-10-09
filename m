@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448AD2F3C13;
-	Thu,  9 Oct 2025 16:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171762FB99B;
+	Thu,  9 Oct 2025 16:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025603; cv=none; b=U6FyoRarh/fWburJ9krS9onh6KpoE1Ooh+2u41zbcnvv5nLjYJtFbQvDDKh6iOLyhlaHClgwZ3YqAxon3IuejfxjN+2IGl/tkaUQUKk4UAMDhGieao1py/v8pK0vAdC8USUpiqz1XFhQt605lkOgM8i7JfskJS6iqhYrmpmHMO8=
+	t=1760025604; cv=none; b=QqmXdgPOFqXYNKoyI2I8yA27iC4SGBCB5yKTDXEXdPPhXrnzeKcEGp2245pRv8vH2PlSMBPDc+mUw+fH8AXU4Fda3QIKO8p7d4KU3Ov0qz//r9CTq8IKq1tDkzjdi4o4YL6yVHNiJtHBuSnV6g2ofQ5RgGEdIuZyawOuT8dHl98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025603; c=relaxed/simple;
-	bh=Uw2zzNDBC9Vexn3nS2g+O2Ta5jH8YxIB7tM2uwsQn/Q=;
+	s=arc-20240116; t=1760025604; c=relaxed/simple;
+	bh=iGPfhXstUEtIPxlrGq/8WGl8mFp+xaycxoQGPc3q3CQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iLW4mRgZ1Qf2H7HUnfvIUaCBJgykuMVrp3veRCBPn3mkl66k0BWdZoQBw3p8T5TukT/Lk2L3wYp4Ew7RCEb0jA1pOrYRR16GsFxMNj84Cg2SsFMJ13DVw7TeuXIOLo7nz9ncIqjuUerG3991VZ7Th5AvGGF9ODT1EMcIQSOkrXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwiNNFDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c82CcgO6E+TjW5lCJD1RUKDn1cSa+hsH+W4xRNjcTlTjzgaSmF/l070Mhp1ZH4moJKROGnzumrQbV+PuUD+f0JVICvGU+/t0L1ys8yddFRjZfNvMnab+SFyXJsy96GTTtIQIjNyUbnksVfHqQe1nZ0h93Vba0oa0wtNUtNrpm40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qzvkb0cb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwiNNFDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2020DC4CEF8;
-	Thu,  9 Oct 2025 16:00:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qzvkb0cb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2122FC4CEE7;
+	Thu,  9 Oct 2025 16:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025600;
-	bh=Uw2zzNDBC9Vexn3nS2g+O2Ta5jH8YxIB7tM2uwsQn/Q=;
+	s=k20201202; t=1760025604;
+	bh=iGPfhXstUEtIPxlrGq/8WGl8mFp+xaycxoQGPc3q3CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwiNNFDfIUtPxSPPXuP9uh1YnYL+5JeacnN1rC64P1JF6/8MGRkhdQxlVaDTmz+Gh
-	 vqsdB+NiptPDXY2M7zMXuWNWxRKCvc+QZVkgPieZyhd0O1JsE6oltyLGxPppaZ0nTF
-	 ASrgDE43trDOgQcfQAEAiHgqzmvr6VLMqaW5vCIcyxSzuUTjGCriGsd/Avc5toha/D
-	 +ZzUL9vBfOxwoY2L/HibXlrIM7ZdZUhPe8jqha1vQzTl427rL7DlraCJgoXsu6Oe9j
-	 ZQaLDzxjjZHUJTtgRPxxorG5BKczveyMFAaTPG/3WISIthcNhbWncdR1vgkPXOvBCq
-	 /t/HWJs82MrlA==
+	b=qzvkb0cbZJ5m5WmeCn5YlzRxuDz4NAE81VPSKugzHBth1kBeqlIOtqf8gMSP8DnBA
+	 Cerd1AvEbNbPEIRk8bE6ewFBUCy48vf00u9BAFPg1VopfMAxvPqF7aac0rB0TymuUY
+	 jV5P6rbmsj/gOwA3GYZAneywRpereu+p+c3QncFE5lUKyl2/wkTposum09fEQZxMqO
+	 MEZTCZHnnj5p60Rebw/9Io4SrImXUixh24N5fh/qZ9bXgA3ueobefjUY5wHQwLh1/T
+	 BVcQ1xe+6GU7RcJieIQBdZ2w1qir/iQXMibvgIpani5H/7M83qsYdh4AHUlOMuaubY
+	 N6ZLALdknmU3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Gabor Juhos <j4g8y7@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] io_uring/rsrc: respect submitter_task in io_register_clone_buffers()
-Date: Thu,  9 Oct 2025 11:55:34 -0400
-Message-ID: <20251009155752.773732-68-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] spi: spi-qpic-snand: handle 'use_ecc' parameter of qcom_spi_config_cw_read()
+Date: Thu,  9 Oct 2025 11:55:36 -0400
+Message-ID: <20251009155752.773732-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,95 +52,126 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 2f076a453f75de691a081c89bce31b530153d53b ]
+[ Upstream commit 9c45f95222beecd6a284fd1284d54dd7a772cf59 ]
 
-io_ring_ctx's enabled with IORING_SETUP_SINGLE_ISSUER are only allowed
-a single task submitting to the ctx. Although the documentation only
-mentions this restriction applying to io_uring_enter() syscalls,
-commit d7cce96c449e ("io_uring: limit registration w/ SINGLE_ISSUER")
-extends it to io_uring_register(). Ensuring only one task interacts
-with the io_ring_ctx will be important to allow this task to avoid
-taking the uring_lock.
-There is, however, one gap in these checks: io_register_clone_buffers()
-may take the uring_lock on a second (source) io_ring_ctx, but
-__io_uring_register() only checks the current thread against the
-*destination* io_ring_ctx's submitter_task. Fail the
-IORING_REGISTER_CLONE_BUFFERS with -EEXIST if the source io_ring_ctx has
-a registered submitter_task other than the current task.
+During raw read, neither the status of the ECC correction nor the erased
+state of the codeword gets checked by the qcom_spi_read_cw_raw() function,
+so in case of raw access reading the corresponding registers via DMA is
+superfluous.
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Extend the qcom_spi_config_cw_read() function to evaluate the existing
+(but actually unused) 'use_ecc' parameter, and configure reading only
+the flash status register when ECC is not used.
+
+With the change, the code gets in line with the corresponding part of
+the config_nand_cw_read() function in the qcom_nandc driver.
+
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250808-qpic-snand-handle-use_ecc-v1-1-67289fbb5e2f@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-**Why Backport**
-- `io_uring/register.c:646` already enforces
-  `IORING_SETUP_SINGLE_ISSUER` by rejecting registrations issued by any
-  task other than `ctx->submitter_task`, but
-  `io_register_clone_buffers()` still grabs `src_ctx->uring_lock`
-  without checking `src_ctx->submitter_task` (see current flow in
-  `io_uring/rsrc.c:1296-1305`). This lets a non-owner thread interact
-  with the source ring, breaking the SINGLE_ISSUER contract introduced
-  by d7cce96c449e.
-- The patch plugs that only gap by validating `src_ctx->submitter_task
-  == current` immediately after `lock_two_rings(ctx, src_ctx)` in
-  `io_uring/rsrc.c`, and returning `-EEXIST` when another task tries to
-  clone buffers. That keeps all rings with SINGLE_ISSUER consistent with
-  the locking and lockdep assumptions documented in
-  `io_uring/io_uring.h:136-144`.
+Based on my comprehensive analysis of this commit, here is my
+assessment:
 
-**Impact Without Fix**
-- A second task can still take `src_ctx->uring_lock` through cloning,
-  undermining the guarantee that only the designated submitter ever
-  touches that ring. Upcoming optimizations that skip `uring_lock` for
-  the submitter rely on this guarantee; leaving the hole risks future
-  functional regressions or lockdep splats once those changes land.
-- Even today, the gap lets another thread stall a SINGLE_ISSUER ring by
-  holding its lock via `IORING_REGISTER_CLONE_BUFFERS`, which
-  contradicts users’ expectations after enabling SINGLE_ISSUER.
+## Backport Recommendation: **YES**
 
-**Risk & Scope**
-- Change is tiny and self-contained (one extra guard plus an early exit)
-  with no data structure churn or ABI impact. Rings that are not flagged
-  SINGLE_ISSUER have `submitter_task == NULL`, so behaviour is
-  unchanged; legitimate same-thread clones still succeed.
+### Analysis Summary:
 
-**Backport Notes**
-- Needs to go only into trees that already contain the clone-buffer
-  support (`7cc2a6eadcd7` / `636119af94f2f`) and the SINGLE_ISSUER
-  registration gating (`d7cce96c449e`). No further prerequisites
-  identified.
+**Context & History:**
+This commit fixes a code correctness issue in the spi-qpic-snand driver
+(added in v6.17, Feb 2025). The `qcom_spi_config_cw_read()` function had
+a `use_ecc` parameter since the driver's inception, but it was
+completely ignored - the function always read both ECC-related registers
+regardless of whether ECC was being used.
 
- io_uring/rsrc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+**Technical Details:**
+The change modifies lines 491-500 in `drivers/spi/spi-qpic-snand.c`:
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index f75f5e43fa4aa..e1e5f0fb0f56d 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -1299,10 +1299,17 @@ int io_register_clone_buffers(struct io_ring_ctx *ctx, void __user *arg)
- 	if (src_ctx != ctx) {
- 		mutex_unlock(&ctx->uring_lock);
- 		lock_two_rings(ctx, src_ctx);
-+
-+		if (src_ctx->submitter_task &&
-+		    src_ctx->submitter_task != current) {
-+			ret = -EEXIST;
-+			goto out;
-+		}
- 	}
+**Before:** Always reads 3 registers via DMA:
+- `NAND_FLASH_STATUS` + `NAND_BUFFER_STATUS` (2 registers)
+- `NAND_ERASED_CW_DETECT_STATUS` (1 register)
+
+**After:** Conditionally reads based on `use_ecc`:
+- When `use_ecc=true`: Reads all 3 registers (normal ECC-enabled reads)
+- When `use_ecc=false`: Reads only `NAND_FLASH_STATUS` (raw reads)
+
+**Why This Matters:**
+1. **Code Correctness:** During raw reads (`use_ecc=false`), the
+   `qcom_spi_check_raw_flash_errors()` function (line 557-571) only
+   checks the flash status register, never the ECC registers. Reading
+   those ECC registers via DMA is "superfluous" as the commit message
+   states.
+
+2. **Established Pattern:** This aligns with the qcom_nandc driver's
+   `config_nand_cw_read()` function, which has had this exact same
+   conditional logic since 2018 (commit 5bc36b2bf6e2c8). That commit's
+   message explained: "For raw reads, there won't be any ECC failure but
+   the operational failures are possible, so schedule the
+   NAND_FLASH_STATUS read."
+
+3. **Already Backported:** The commit shows `[ Upstream commit
+   9c45f95222bee ]` and `Signed-off-by: Sasha Levin
+   <sashal@kernel.org>`, indicating it was already selected by AUTOSEL.
+
+**Backport Justification:**
+
+✅ **Pros:**
+- Small, contained change (11 lines, 1 file)
+- Fixes code correctness (parameter was being ignored)
+- Removes unnecessary DMA operations (optimization)
+- Aligns with well-established pattern from related driver
+- Very low regression risk
+- Already reviewed and approved by Konrad Dybcio and Mark Brown
+- No follow-up fixes or reverts since Aug 8, 2025
+
+❌ **Cons:**
+- No explicit `Fixes:` tag
+- No `Cc: stable@vger.kernel.org` tag
+- Not fixing a critical user-visible bug
+- More optimization/cleanup than bug fix
+- Limited impact (Qualcomm-specific hardware only)
+
+**Conclusion:**
+While this doesn't fix a critical bug, it fixes a code correctness issue
+where a function parameter was being completely ignored. The unnecessary
+DMA operations during raw reads waste resources and could potentially
+cause subtle timing or performance issues. The change is safe, well-
+reviewed, and follows the established pattern from the mature qcom_nandc
+driver. The fact that AUTOSEL has already selected it confirms its
+suitability for stable backporting.
+
+ drivers/spi/spi-qpic-snand.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 780abb967822a..5a247eebde4d9 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -494,9 +494,14 @@ qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int c
+ 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+ 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
  
- 	ret = io_clone_buffers(ctx, src_ctx, &buf);
+-	qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
+-	qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
+-			  NAND_BAM_NEXT_SGL);
++	if (use_ecc) {
++		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
++		qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
++				  NAND_BAM_NEXT_SGL);
++	} else {
++		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 1,
++				  NAND_BAM_NEXT_SGL);
++	}
+ }
  
-+out:
- 	if (src_ctx != ctx)
- 		mutex_unlock(&src_ctx->uring_lock);
- 
+ static int qcom_spi_block_erase(struct qcom_nand_controller *snandc)
 -- 
 2.51.0
 
