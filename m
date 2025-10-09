@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEEC235045;
-	Thu,  9 Oct 2025 16:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B032FB614;
+	Thu,  9 Oct 2025 16:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025646; cv=none; b=DGc6YQ7DutHDPGKxnLhJRpvm+ygAYYc/+M6T77y0RMdDw9zPhwBy31c94CSbVVtLDlF9tDlaRSP/b+Q0f7FYHqKea7sc8RNRYzuxo3UK8JFXtAD2l3YtqJaHvQ0eHSoxaHiNsyZjA5JDGLygnM2ust4rwKQGxLTMP05yylfBKz8=
+	t=1760025647; cv=none; b=I+d4CmvoTSVO3y3WyBreiIti7uJZZ6+gMmnoJaWgImpvc0VsocIb8Y8/3uFhYlLRkb20z3xiUrhKUu2i4WzdXhEh2k4t4gVrx7BSYhOHeqWnpFcLlgCUwyibNAkNdvkSVu3ptv0fDxF2jIahgCZ9bqsgkc5zUxMmQXD5uD6H8T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025646; c=relaxed/simple;
-	bh=3ddmq0SpXLemPFO6TxFKmdptKIsO1mwPG/RIEq8UZao=;
+	s=arc-20240116; t=1760025647; c=relaxed/simple;
+	bh=I3XVcHHeXBgmKSqbpjjMJBCBfyKHzLlJJavBhAHaEYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I75Kct7+IWzFpNym27fIwwk9UE1TGaUtwHff0gbgZ7JpVUcHhbEgY7s9Bf0d1teq4CitrY75n5FafYQoKWrHe+vhNxu59SHt64lceyJV8lV5mFRnkqtGT8qw9LT9kQJAc7dgUsq/v+1dEJNZsK9snPkMIflwIdgLmYGVXj8Ofsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENp15NjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U8G0Bs39Pjbw7qGzpBxwQy7z80EgEmLuyb4H4Mpi61AnpfawMuf9k0obitveCkYhZ6M7EEES0SfeV7dlChbwbFaN/PDBBbu4f5DTHp6K+TZFeqLtCjRJByKAmFt8O5KKc+sezYasnlrU1QLhkLQm1jSg3Hay6M4gVEaIAzWQcfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SpnBGlXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENp15NjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1954C4CEF7;
-	Thu,  9 Oct 2025 16:00:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SpnBGlXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37849C4CEFE;
+	Thu,  9 Oct 2025 16:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025645;
-	bh=3ddmq0SpXLemPFO6TxFKmdptKIsO1mwPG/RIEq8UZao=;
+	s=k20201202; t=1760025647;
+	bh=I3XVcHHeXBgmKSqbpjjMJBCBfyKHzLlJJavBhAHaEYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENp15NjWZ7c3r/ooTpZPWuysh+hJs9E5LY+4KDecmDTRISkEmDS9GFPv/SMFD9kZg
-	 J4ZxI23GW9yhQVB5jJwPPp692oWZ7InwoDv2NwyPCgjaTscyw2k3kWLD8wwrVnjKk8
-	 7OdPY7ZwGwvLbD7U+URS7AlZFMn37Guh/1nhbBaC1iABRrAWkuC0eGcU1odgq9zVNg
-	 6e05ex80CAIYjQCMhA8N6it/iB4aTX5qjB2Skyijgy4XSF9sSCeunSHaaf3OK6JwyG
-	 7eeWGZ3ZugK21CJXYknXzVdcVO0vVBov3FXyM9dAjoWxhrj6g5ycCmakE85EczSf/e
-	 62TJenjaLC3jw==
+	b=SpnBGlXCalV3sAmXITt6Uo1NhSuTqmNB4wLtOiuZU2v4ngvOJ6HsE/yxiClQ6cU6V
+	 JPI05PejyYWSk+tXbuwxIP6v8fSXx0vwMqSSwGXKyIqqS47Tsyh5AZFMfujcnYyJlm
+	 jQuOckfdfHUQhJYn/jmfLavPkyC4MQQD209OMvjy+vvaE0WjLUzJkCx4oDNkPALlIK
+	 tDGvlRP9T0zT0hMiWLfKnsurmrsaphlFnDQDA5Erzs+WwR1UC4Ohyaoh+I+rUCZLXB
+	 WPgk5gc1uAPHBI5Zo/dNRb6QVl4x7+oaoUqYNHNBGv6QA8b1GqMn6ud8wNOt1CfSCS
+	 gHYNA9FOUfDUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	memxor@gmail.com,
-	iii@linux.ibm.com,
-	andrii@kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] selftests/bpf: Fix arena_spin_lock selftest failure
-Date: Thu,  9 Oct 2025 11:55:58 -0400
-Message-ID: <20251009155752.773732-92-sashal@kernel.org>
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] pinctrl: keembay: release allocated memory in detach path
+Date: Thu,  9 Oct 2025 11:55:59 -0400
+Message-ID: <20251009155752.773732-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,116 +49,89 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a9d4e9f0e871352a48a82da11a50df7196fe567a ]
+[ Upstream commit aae7a2876c3b39d07aa7655ea082af8e7862f3a5 ]
 
-For systems having CONFIG_NR_CPUS set to > 1024 in kernel config
-the selftest fails as arena_spin_lock_irqsave() returns EOPNOTSUPP.
-(eg - incase of powerpc default value for CONFIG_NR_CPUS is 8192)
+Unlike all the other allocations in this driver, the memory for storing
+the pin function descriptions allocated with kcalloc() and later resized
+with krealloc() is never freed. Use devres like elsewhere to handle
+that. While at it - replace krealloc() with more suitable
+devm_krealloc_array().
 
-The selftest is skipped incase bpf program returns EOPNOTSUPP,
-with a descriptive message logged.
+Note: the logic in this module is pretty convoluted and could probably
+use some revisiting, we should probably be able to calculate the exact
+amount of memory needed in advance or even skip the allocation
+altogether and just add each function to the radix tree separately.
 
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250913091337.1841916-1-skb99@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `arena_spin_lock` returns `-EOPNOTSUPP` once `CONFIG_NR_CPUS` exceeds
-  1024 (`tools/testing/selftests/bpf/progs/bpf_arena_spin_lock.h:497`),
-  so on platforms like powerpc (default 8192 CPUs) every test run exits
-  early and the user space harness currently asserts that the retval
-  must be zero
-  (`tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c:41-47`
-  before this change), causing the subtests to fail outright.
-- The patch teaches the harness to recognize that specific failure mode:
-  `spin_lock_thread()` now short‑circuits when it sees `-EOPNOTSUPP`
-  instead of tripping the ASSERT
-  (`tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c:44-50`),
-  and the BPF program annotates the condition by setting `test_skip = 3`
-  before returning
-  (`tools/testing/selftests/bpf/progs/arena_spin_lock.c:40-44`).
-- After all worker threads complete, the host test checks that flag,
-  prints an explicit skip message, and marks the subtest as skipped
-  instead of comparing the counter and failing
-  (`tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c:94-101`).
-  This lets kselftest succeed on high-NR_CPUS systems while still
-  reporting the unsupported configuration.
-- The change is entirely confined to selftests, has no runtime or ABI
-  impact, and aligns the tests with the documented hardware limitation,
-  making it a low-risk fix for a real, reproducible failure on existing
-  platforms.
+- `keembay_build_functions()` currently grabs `kcalloc()`ed storage for
+  the temporary `struct function_desc` array and then drops the pointer
+  once `keembay_add_functions()` runs, so nothing ever frees that memory
+  on driver unload (`drivers/pinctrl/pinctrl-keembay.c:1609`). The
+  original driver commit (`ffd4e739358be`) introduced this leak, so all
+  released kernels inherit it.
+- The patch converts that allocation to `devm_kcalloc()` and the resize
+  step to `devm_krealloc_array()` (`drivers/pinctrl/pinctrl-
+  keembay.c:1609` and `drivers/pinctrl/pinctrl-keembay.c:1640`), letting
+  devres reclaim the buffer automatically on probe failure or device
+  detach instead of leaking `npins * 8 * sizeof(struct function_desc)`
+  bytes each cycle. The explicit `kfree()` in the error path is removed
+  because devm now owns the buffer (`drivers/pinctrl/pinctrl-
+  keembay.c:1642`).
+- The driver already relies on devres for all other dynamic allocations
+  (see the existing `devm_kcalloc()` for function group names at
+  `drivers/pinctrl/pinctrl-keembay.c:1569`), so this aligns the
+  remaining allocation with the established pattern. No behavioural or
+  ABI changes accompany the fix, and `devm_krealloc_array()` is
+  available in current stable code.
+- The bug affects real users whenever the pinctrl device is unbound
+  (module reloads, hotplugged firmware, suspend failures, etc.),
+  steadily leaking kernel memory. The fix is self-contained, low risk,
+  and directly targets that leak without touching shared pinctrl
+  infrastructure.
 
- .../selftests/bpf/prog_tests/arena_spin_lock.c      | 13 +++++++++++++
- tools/testing/selftests/bpf/progs/arena_spin_lock.c |  5 ++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+Given the tangible bugfix, limited scope, and minimal regression risk,
+this is a solid candidate for stable backporting.
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-index 0223fce4db2bc..693fd86fbde62 100644
---- a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-+++ b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-@@ -40,8 +40,13 @@ static void *spin_lock_thread(void *arg)
+ drivers/pinctrl/pinctrl-keembay.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/pinctrl/pinctrl-keembay.c b/drivers/pinctrl/pinctrl-keembay.c
+index 60cf017498b32..6aefcbc313099 100644
+--- a/drivers/pinctrl/pinctrl-keembay.c
++++ b/drivers/pinctrl/pinctrl-keembay.c
+@@ -1603,7 +1603,8 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
+ 	 * being part of 8 (hw maximum) globally unique muxes.
+ 	 */
+ 	kpc->nfuncs = 0;
+-	keembay_funcs = kcalloc(kpc->npins * 8, sizeof(*keembay_funcs), GFP_KERNEL);
++	keembay_funcs = devm_kcalloc(kpc->dev, kpc->npins * 8,
++				     sizeof(*keembay_funcs), GFP_KERNEL);
+ 	if (!keembay_funcs)
+ 		return -ENOMEM;
  
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
- 	ASSERT_OK(err, "test_run err");
-+
-+	if (topts.retval == -EOPNOTSUPP)
-+		goto end;
-+
- 	ASSERT_EQ((int)topts.retval, 0, "test_run retval");
- 
-+end:
- 	pthread_exit(arg);
- }
- 
-@@ -63,6 +68,7 @@ static void test_arena_spin_lock_size(int size)
- 	skel = arena_spin_lock__open_and_load();
- 	if (!ASSERT_OK_PTR(skel, "arena_spin_lock__open_and_load"))
- 		return;
-+
- 	if (skel->data->test_skip == 2) {
- 		test__skip();
- 		goto end;
-@@ -86,6 +92,13 @@ static void test_arena_spin_lock_size(int size)
- 			goto end_barrier;
+@@ -1634,7 +1635,9 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
  	}
  
-+	if (skel->data->test_skip == 3) {
-+		printf("%s:SKIP: CONFIG_NR_CPUS exceed the maximum supported by arena spinlock\n",
-+		       __func__);
-+		test__skip();
-+		goto end_barrier;
-+	}
-+
- 	ASSERT_EQ(skel->bss->counter, repeat * nthreads, "check counter value");
- 
- end_barrier:
-diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-index c4500c37f85e0..086b57a426cf5 100644
---- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-+++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-@@ -37,8 +37,11 @@ int prog(void *ctx)
- #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CAST)
- 	unsigned long flags;
- 
--	if ((ret = arena_spin_lock_irqsave(&lock, flags)))
-+	if ((ret = arena_spin_lock_irqsave(&lock, flags))) {
-+		if (ret == -EOPNOTSUPP)
-+			test_skip = 3;
- 		return ret;
-+	}
- 	if (counter != limit)
- 		counter++;
- 	bpf_repeat(cs_count);
+ 	/* Reallocate memory based on actual number of functions */
+-	new_funcs = krealloc(keembay_funcs, kpc->nfuncs * sizeof(*new_funcs), GFP_KERNEL);
++	new_funcs = devm_krealloc_array(kpc->dev, keembay_funcs,
++					kpc->nfuncs, sizeof(*new_funcs),
++					GFP_KERNEL);
+ 	if (!new_funcs) {
+ 		kfree(keembay_funcs);
+ 		return -ENOMEM;
 -- 
 2.51.0
 
