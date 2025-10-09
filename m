@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE66E2F3C08;
-	Thu,  9 Oct 2025 16:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448AD2F3C13;
+	Thu,  9 Oct 2025 16:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025602; cv=none; b=kstXCsMfVLTT2m7cgkYl+UpDUjp4BQwXgQszkGOTZ/u+DPX60FSszKZ5VKkulsbvKN6B8d91CqygUeBiVvqEEHAiYaWbYEmpEl/WteeaoV5sJ6lManVRD1rBbwdnmit6mFRFY+u6ZVKEVN0OWfFzWvMSbrnJBbG+4NOu2F9XERc=
+	t=1760025603; cv=none; b=U6FyoRarh/fWburJ9krS9onh6KpoE1Ooh+2u41zbcnvv5nLjYJtFbQvDDKh6iOLyhlaHClgwZ3YqAxon3IuejfxjN+2IGl/tkaUQUKk4UAMDhGieao1py/v8pK0vAdC8USUpiqz1XFhQt605lkOgM8i7JfskJS6iqhYrmpmHMO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025602; c=relaxed/simple;
-	bh=F1FqzWXtuPtaRyeU2V6dAFIZKGQOW+Hcqx9BB7Zc0sY=;
+	s=arc-20240116; t=1760025603; c=relaxed/simple;
+	bh=Uw2zzNDBC9Vexn3nS2g+O2Ta5jH8YxIB7tM2uwsQn/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CvJC0fB+cqIS5cw22NuXW3+eTD6mZldt8jtuNLRJ4siC1ads8sAoD5GBSI+I8OoCFDdtYfRiSo60piKWZPPGkEWwR5T16TX9qkwIiniIzYzpBFCIRKxFJlJwiKTUHQiCCVXuz36o6Xw5N31MW+3Dno17bLiyjQ9Mwbx0jO8cz9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCFAq3nX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iLW4mRgZ1Qf2H7HUnfvIUaCBJgykuMVrp3veRCBPn3mkl66k0BWdZoQBw3p8T5TukT/Lk2L3wYp4Ew7RCEb0jA1pOrYRR16GsFxMNj84Cg2SsFMJ13DVw7TeuXIOLo7nz9ncIqjuUerG3991VZ7Th5AvGGF9ODT1EMcIQSOkrXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwiNNFDf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCFAq3nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4520DC4CEFE;
-	Thu,  9 Oct 2025 16:00:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwiNNFDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2020DC4CEF8;
+	Thu,  9 Oct 2025 16:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025602;
-	bh=F1FqzWXtuPtaRyeU2V6dAFIZKGQOW+Hcqx9BB7Zc0sY=;
+	s=k20201202; t=1760025600;
+	bh=Uw2zzNDBC9Vexn3nS2g+O2Ta5jH8YxIB7tM2uwsQn/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCFAq3nX4HfpIwfR9bjnkCRThrt8pYALPlzrJPtbt+uIVr+OkcGxS0Los4Tv6Ld3B
-	 GpfNBVBVNM0N0j6+tqETTemwg25JuSwQmAB9odN52E4qEtodCuS4hwutzJaU+h01vZ
-	 od54biIaiv8wXZRcCv+HFUXwZ1JWYe2hBfaM3nI1txtzHI0R3NTi5rfsrq4xLm7lHZ
-	 umOsAHY9ZImhJx11e3tTyZ97YRFYljrMQjgyhjiY/ChnQUYM5quNZDi7ewc/M87qMa
-	 cX5RW7QelqNTXwDH0yzPCD+br+Y4aWjGWCKJEufB7YEQMGOK0+0H+k+5oht65Ug36W
-	 hYrk4Dww1SNug==
+	b=YwiNNFDfIUtPxSPPXuP9uh1YnYL+5JeacnN1rC64P1JF6/8MGRkhdQxlVaDTmz+Gh
+	 vqsdB+NiptPDXY2M7zMXuWNWxRKCvc+QZVkgPieZyhd0O1JsE6oltyLGxPppaZ0nTF
+	 ASrgDE43trDOgQcfQAEAiHgqzmvr6VLMqaW5vCIcyxSzuUTjGCriGsd/Avc5toha/D
+	 +ZzUL9vBfOxwoY2L/HibXlrIM7ZdZUhPe8jqha1vQzTl427rL7DlraCJgoXsu6Oe9j
+	 ZQaLDzxjjZHUJTtgRPxxorG5BKczveyMFAaTPG/3WISIthcNhbWncdR1vgkPXOvBCq
+	 /t/HWJs82MrlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Icenowy Zheng <uwu@icenowy.me>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	fustini@kernel.org,
-	guoren@kernel.org,
-	wefu@redhat.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17] pmdomain: thead: create auxiliary device for rebooting
-Date: Thu,  9 Oct 2025 11:55:35 -0400
-Message-ID: <20251009155752.773732-69-sashal@kernel.org>
+	io-uring@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] io_uring/rsrc: respect submitter_task in io_register_clone_buffers()
+Date: Thu,  9 Oct 2025 11:55:34 -0400
+Message-ID: <20251009155752.773732-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -54,107 +51,95 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 64581f41f4c4aa1845edeee6bb0c8f2a7103d9aa ]
+[ Upstream commit 2f076a453f75de691a081c89bce31b530153d53b ]
 
-The reboot / power off operations require communication with the AON
-firmware too.
+io_ring_ctx's enabled with IORING_SETUP_SINGLE_ISSUER are only allowed
+a single task submitting to the ctx. Although the documentation only
+mentions this restriction applying to io_uring_enter() syscalls,
+commit d7cce96c449e ("io_uring: limit registration w/ SINGLE_ISSUER")
+extends it to io_uring_register(). Ensuring only one task interacts
+with the io_ring_ctx will be important to allow this task to avoid
+taking the uring_lock.
+There is, however, one gap in these checks: io_register_clone_buffers()
+may take the uring_lock on a second (source) io_ring_ctx, but
+__io_uring_register() only checks the current thread against the
+*destination* io_ring_ctx's submitter_task. Fail the
+IORING_REGISTER_CLONE_BUFFERS with -EEXIST if the source io_ring_ctx has
+a registered submitter_task other than the current task.
 
-As the driver is already present, create an auxiliary device with name
-"reboot" to match that driver, and pass the AON channel by using
-platform_data.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+**Why Backport**
+- `io_uring/register.c:646` already enforces
+  `IORING_SETUP_SINGLE_ISSUER` by rejecting registrations issued by any
+  task other than `ctx->submitter_task`, but
+  `io_register_clone_buffers()` still grabs `src_ctx->uring_lock`
+  without checking `src_ctx->submitter_task` (see current flow in
+  `io_uring/rsrc.c:1296-1305`). This lets a non-owner thread interact
+  with the source ring, breaking the SINGLE_ISSUER contract introduced
+  by d7cce96c449e.
+- The patch plugs that only gap by validating `src_ctx->submitter_task
+  == current` immediately after `lock_two_rings(ctx, src_ctx)` in
+  `io_uring/rsrc.c`, and returning `-EEXIST` when another task tries to
+  clone buffers. That keeps all rings with SINGLE_ISSUER consistent with
+  the locking and lockdep assumptions documented in
+  `io_uring/io_uring.h:136-144`.
 
-- User-visible bugfix: Without this, TH1520 systems cannot register
-  platform reboot/poweroff handlers via the AON firmware, so
-  reboot/poweroff won’t work even though the AON protocol and the reboot
-  driver exist. This commit wires them up by instantiating the auxiliary
-  device that the reboot driver matches on.
-- Small and contained: Adds a tiny helper and one call in the TH1520 PM
-  domain driver; no architectural changes.
-- Specific code changes
-  - Adds `th1520_pd_reboot_init()` which creates an auxiliary device
-    named `reboot` and passes the AON channel through `platform_data` so
-    the reboot driver can use it: drivers/pmdomain/thead/th1520-pm-
-    domains.c:176
-    - `adev = devm_auxiliary_device_create(dev, "reboot", aon_chan);`
-  - Hooks it into probe after setting up PM domains and the optional GPU
-    pwrseq: drivers/pmdomain/thead/th1520-pm-domains.c:250
-    - `ret = th1520_pd_reboot_init(dev, aon_chan);`
-  - Error path is correctly routed back to the provider cleanup.
-- Correct driver pairing: The created device name matches the existing
-  driver’s ID table
-  - Reboot driver expects `th1520_pm_domains.reboot` and consumes
-    `adev->dev.platform_data` as the `th1520_aon_chan` to issue AON RPCs
-    for poweroff/restart: drivers/power/reset/th1520-aon-reboot.c:51 and
-    drivers/power/reset/th1520-aon-reboot.c:82
-- Risk and scope:
-  - TH1520-specific; no impact on other platforms.
-  - Only instantiates an auxiliary device; safe if the reboot driver
-    isn’t present.
-  - No ABI/uAPI changes.
-- Important follow-up fix to include: The original change used
-  `PTR_ERR_OR_ZERO(adev)` with `devm_auxiliary_device_create()`, which
-  returns NULL on failure (not an error pointer). That was fixed by
-  “pmdomain: thead: Fix error pointer vs NULL bug in
-  th1520_pd_reboot_init()” (bbc3110823eca), which changes the return to
-  `-ENODEV` on NULL and returns 0 otherwise:
-  drivers/pmdomain/thead/th1520-pm-domains.c:181. For stable
-  backporting, include this fix alongside the main commit to avoid
-  silently succeeding when the aux device creation fails.
-- Stable policy fit:
-  - Fixes a real functionality gap (reboot/poweroff) for TH1520 users.
-  - Minimal code, clear intent, and contained to the TH1520 PM domain
-    driver.
-  - No feature creep or architectural refactoring.
+**Impact Without Fix**
+- A second task can still take `src_ctx->uring_lock` through cloning,
+  undermining the guarantee that only the designated submitter ever
+  touches that ring. Upcoming optimizations that skip `uring_lock` for
+  the submitter rely on this guarantee; leaving the hole risks future
+  functional regressions or lockdep splats once those changes land.
+- Even today, the gap lets another thread stall a SINGLE_ISSUER ring by
+  holding its lock via `IORING_REGISTER_CLONE_BUFFERS`, which
+  contradicts users’ expectations after enabling SINGLE_ISSUER.
 
-Recommendation: Backport this commit together with the follow-up fix
-bbc3110823eca to ensure correct error handling.
+**Risk & Scope**
+- Change is tiny and self-contained (one extra guard plus an early exit)
+  with no data structure churn or ABI impact. Rings that are not flagged
+  SINGLE_ISSUER have `submitter_task == NULL`, so behaviour is
+  unchanged; legitimate same-thread clones still succeed.
 
- drivers/pmdomain/thead/th1520-pm-domains.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+**Backport Notes**
+- Needs to go only into trees that already contain the clone-buffer
+  support (`7cc2a6eadcd7` / `636119af94f2f`) and the SINGLE_ISSUER
+  registration gating (`d7cce96c449e`). No further prerequisites
+  identified.
 
-diff --git a/drivers/pmdomain/thead/th1520-pm-domains.c b/drivers/pmdomain/thead/th1520-pm-domains.c
-index 9040b698e7f7f..5213994101a59 100644
---- a/drivers/pmdomain/thead/th1520-pm-domains.c
-+++ b/drivers/pmdomain/thead/th1520-pm-domains.c
-@@ -173,6 +173,16 @@ static int th1520_pd_pwrseq_gpu_init(struct device *dev)
- 					adev);
- }
+ io_uring/rsrc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
+index f75f5e43fa4aa..e1e5f0fb0f56d 100644
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1299,10 +1299,17 @@ int io_register_clone_buffers(struct io_ring_ctx *ctx, void __user *arg)
+ 	if (src_ctx != ctx) {
+ 		mutex_unlock(&ctx->uring_lock);
+ 		lock_two_rings(ctx, src_ctx);
++
++		if (src_ctx->submitter_task &&
++		    src_ctx->submitter_task != current) {
++			ret = -EEXIST;
++			goto out;
++		}
+ 	}
  
-+static int th1520_pd_reboot_init(struct device *dev,
-+				 struct th1520_aon_chan *aon_chan)
-+{
-+	struct auxiliary_device *adev;
-+
-+	adev = devm_auxiliary_device_create(dev, "reboot", aon_chan);
-+
-+	return PTR_ERR_OR_ZERO(adev);
-+}
-+
- static int th1520_pd_probe(struct platform_device *pdev)
- {
- 	struct generic_pm_domain **domains;
-@@ -235,6 +245,10 @@ static int th1520_pd_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_clean_provider;
+ 	ret = io_clone_buffers(ctx, src_ctx, &buf);
  
-+	ret = th1520_pd_reboot_init(dev, aon_chan);
-+	if (ret)
-+		goto err_clean_provider;
-+
- 	return 0;
++out:
+ 	if (src_ctx != ctx)
+ 		mutex_unlock(&src_ctx->uring_lock);
  
- err_clean_provider:
 -- 
 2.51.0
 
