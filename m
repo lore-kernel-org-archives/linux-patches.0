@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A13229B18;
-	Thu,  9 Oct 2025 15:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DC222688C;
+	Thu,  9 Oct 2025 15:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025561; cv=none; b=CzveZnwxemlPgHSXJPcubAp7VD2l7GKMQIjs0o8MKLoqK2TnwuHjXvV6JFEeZmvH8zu1yyWoWBZ6ylkRjG/uNiVdzCEISgt7q6uo1QWhpTsHpbybkDB2PzWRWbGPnRTLPVvpL6Dh5bC7gLooAt4xbdVpkJgoCOxF3m+WvTVFWKg=
+	t=1760025563; cv=none; b=Wp8yc47teR/b4BEsQB03sNIwm0mlYmSIc4xZW0LoSL5epvH/TnFri1oscWsUiDGQ9nwY5bx6GDEtHtrkFfwJSn0KG0MzSBrTHpBGhsWODET/zzG09Kwz9tSDLcEIiaJMsxah1pmLcI6yEWVVdz7zCDIYBFslGaUHHAqPniGNnuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025561; c=relaxed/simple;
-	bh=PQIxaLpgLpFo0Awl76vdL8xdsvsx4lBd3yvYlHPbNHQ=;
+	s=arc-20240116; t=1760025563; c=relaxed/simple;
+	bh=TpkvX25yGwR/JxwIpFijDFZ154Awx6hGAs5N9knz/8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OYGBRrQo1oXsoWnfbz4/Yl4njs/8B2GswDtT+tXZvMju6xZsAsLiZD5MXvtIkX4KxoJhzl6jCzkEte+C39ZDik9ZFnHyBBUyJEI5qz0iluqRZe0hjbYjDLfW1osajMwNTMCyfKfxzR/h7WrcspAyp/4gy6zL+RFLutPhUypPbbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8agNBzN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M7W1Isux0VMWwgBE/2kx8Lyd/pTcWLWR69OsiT4p7ewXIB/Z+MgyxqX+UMq9aiECOsTi+4MwL2SHYAYOglW1yQI+/1KOAVlstsj/R+/HdBxZA/m7+utzxFcyFphOuSV3vB0lSZ2WCC7tAPrnt/XVWMcdQoCPjhOG7PLL3rZvl7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kMn5za8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8agNBzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43AEC4CEE7;
-	Thu,  9 Oct 2025 15:59:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kMn5za8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F50EC4CEE7;
+	Thu,  9 Oct 2025 15:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025561;
-	bh=PQIxaLpgLpFo0Awl76vdL8xdsvsx4lBd3yvYlHPbNHQ=;
+	s=k20201202; t=1760025563;
+	bh=TpkvX25yGwR/JxwIpFijDFZ154Awx6hGAs5N9knz/8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8agNBzNpxyCtKPwrBtA1miDO/Sr8RpyYSDA05qRwFk90QhrhJ/ulqKJi+M7VYoU+
-	 IMCH2mubtArOIBpRyM+OSupaThmLyjNpvO0/YqVBI9j0am1s8/GqY+XxlgQrwCyrUX
-	 X2GRJg3ftDv2WIqTrURqloqj0sdOH2bCXgTyGOrI7x7i9ctifhiUKasgb/QGys/rVW
-	 f03ZOOkBkzkPBuN04LCT0oWpVhzu/C4CICsPEP9BAex0aomfx0s9kVYtxIqXaRk7fT
-	 46pTLOUY1cm8fNzNpC5hYxCf1bFIuLlik6t9YDeinQ80O5kz7N9S46wjPe/nsBH9mN
-	 0j9OVzoy/ieBw==
+	b=kMn5za8Dlddpmd1vkzV989ByBIlp+C3WZEiyjPVkPPu9uncJn0lNSqhiQJQpA5ryw
+	 Gv1OyD1Fp3yoJX67me5fm0v/Gh+ObB6bwd2rRFGmrjqpI2DMKEE+A6m3z0x7Lvl6pJ
+	 1HabGBCj0gMDa9zmELPu2sP0JiJZVIwOiRNIVezcp4cZ/jkwf45qrewSvYVbUPDS27
+	 kifhphZb7rwh4/OPHU6PLIpkHVVNoOc66yOgSN4y9/kUbzZ5WD7PhEiBSWwVIIccEv
+	 AUJeVo+ljpp/CQIBzJ7gpQxT+WirJ0BjEOSaTd9PGILKuP11kBv9U3olmyhtJvyG/p
+	 0crVWE0IKI81g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: =?UTF-8?q?Ricardo=20B=2E=20Marli=C3=A8re?= <rbm@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jwyatt@redhat.com
-Subject: [PATCH AUTOSEL 6.17-5.15] tools/cpupower: fix error return value in cpupower_write_sysfs()
-Date: Thu,  9 Oct 2025 11:55:13 -0400
-Message-ID: <20251009155752.773732-47-sashal@kernel.org>
+	eddyz87@gmail.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] selftests/bpf: Fix bpf_prog_detach2 usage in test_lirc_mode2
+Date: Thu,  9 Oct 2025 11:55:14 -0400
+Message-ID: <20251009155752.773732-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -45,97 +48,166 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 57b100d4cf14276e0340eecb561005c07c129eb8 ]
+[ Upstream commit 98857d111c53954aa038fcbc4cf48873e4240f7c ]
 
-The cpupower_write_sysfs() function currently returns -1 on
-write failure, but the function signature indicates it should
-return an unsigned int. Returning -1 from an unsigned function
-results in a large positive value rather than indicating
-an error condition.
+Commit e9fc3ce99b34 ("libbpf: Streamline error reporting for high-level
+APIs") redefined the way that bpf_prog_detach2() returns. Therefore, adapt
+the usage in test_lirc_mode2_user.c.
 
-Fix this by returning 0 on failure, which is more appropriate
-for an unsigned return type and maintains consistency with typical
-success/failure semantics where 0 indicates failure and non-zero
-indicates success (bytes written).
-
-Link: https://lore.kernel.org/r/20250828063000.803229-1-kaushlendra.kumar@intel.com
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250828-selftests-bpf-v1-1-c7811cd8b98c@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+## Analysis Complete
 
-**What It Fixes**
-- Corrects an unsigned return error path in `cpupower_write_sysfs()`:
-  changes `return -1;` to `return 0;` inside the failure branch `if
-  (numwritten < 1)` in `tools/power/cpupower/lib/cpupower.c:56-60`. This
-  prevents `-1` from wrapping to a large unsigned value that looks like
-  success.
-- Aligns write semantics with read: `cpupower_read_sysfs()` already
-  returns `0` on failure (`tools/power/cpupower/lib/cpupower.c:30-38`),
-  and `cpupower_write_sysfs()` already returns `0` when `open()` fails
-  (`tools/power/cpupower/lib/cpupower.c:51-53`).
+**Backport Status: YES**
 
-**User-Visible Impact**
-- Current callers interpret `<= 0` as failure. With the buggy `-1`
-  (wrapped to large unsigned), failures are silently treated as success.
-  Examples:
-  - `tools/power/cpupower/utils/helpers/misc.c:83`
-  - `tools/power/cpupower/utils/helpers/misc.c:102`
-  - `tools/power/cpupower/utils/helpers/misc.c:120`
-  - `tools/power/cpupower/utils/helpers/misc.c:289`
-- After this fix, these checks correctly detect write failures
-  (permission denied, invalid sysfs paths, etc.), improving reliability
-  of cpupower operations like setting EPP, turbo boost, or perf bias.
+### Extensive Technical Explanation
 
-**Scope and Risk**
-- One-line change; no API/signature change; no architectural changes.
-- Confined to `tools/` (cpupower userspace library). No kernel subsystem
-  touched.
-- Behavior change is limited to failure paths, converting a silent
-  false-success into proper failure detection. Low regression risk and
-  consistent with existing read/write patterns.
+#### The Bug and Its Context
 
-**Stable Criteria**
-- Fixes a real bug affecting users of the cpupower tool (error paths not
-  detected).
-- Small, contained patch with minimal risk and no new features.
-- Consistent semantics across the cpupower lib.
-- Although the commit message does not include an explicit Cc: stable,
-  the change clearly fits stable backport rules.
+This commit fixes a **broken selftest** in `test_lirc_mode2_user.c` that
+has been failing since Linux kernel v6.0 (June 2022) - a period of
+approximately **3 years**.
 
-In summary, updating `return -1;` to `return 0;` in
-`tools/power/cpupower/lib/cpupower.c:59` ensures callers’ `<= 0` checks
-work as intended and aligns with existing cpupower I/O conventions. This
-is a good candidate for backporting.
+#### Historical Timeline of the API Change
 
- tools/power/cpupower/lib/cpupower.c | 2 +-
+**Phase 1 - May 2021 (v5.14)**: Commit e9fc3ce99b34 ("libbpf: Streamline
+error reporting for high-level APIs") introduced a new error handling
+model for libbpf:
+
+- **Legacy mode (default before v6.0)**: Integer-returning functions
+  like `bpf_prog_detach2()` returned `-1` on error and set `errno`
+- **Strict mode (LIBBPF_STRICT_DIRECT_ERRS)**: Functions return negative
+  error codes directly (e.g., `-ENOENT` instead of `-1`)
+
+The implementation in `libbpf_internal.h` showed:
+```c
+static inline int libbpf_err_errno(int ret)
+{
+    if (libbpf_mode & LIBBPF_STRICT_DIRECT_ERRS)
+        return ret < 0 ? -errno : ret;  // New behavior
+    return ret;  // Legacy: return -1
+}
+```
+
+**Phase 2 - June 2022 (v6.0)**: Commit bd054102a8c7f ("libbpf: enforce
+strict libbpf 1.0 behaviors") **made strict mode the mandatory default**
+by removing the conditional logic:
+
+```c
+static inline int libbpf_err_errno(int ret)
+{
+    /* errno is already assumed to be set on error */
+    return ret < 0 ? -errno : ret;  // Always strict mode now
+}
+```
+
+This change is in all stable branches from **v6.0 onwards** (6.0.y,
+6.1.y, 6.6.y, 6.12.y, 6.17.y, etc.).
+
+#### The Actual Code Problem
+(tools/testing/selftests/bpf/test_lirc_mode2_user.c:77)
+
+**Before the fix** (broken since v6.0):
+```c
+ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
+if (ret != -1 || errno != ENOENT) {  // WRONG: expects ret == -1
+    printf("bpf_prog_detach2 not attached should fail: %m\n");
+    return 1;
+}
+```
+
+**After the fix**:
+```c
+ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
+if (ret != -ENOENT) {  // CORRECT: expects ret == -ENOENT
+    printf("bpf_prog_detach2 not attached should fail: %m\n");
+    return 1;
+}
+```
+
+#### Why The Test Was Broken
+
+**Execution flow in v6.0+**:
+1. `bpf_prog_detach2()` calls `sys_bpf(BPF_PROG_DETACH, ...)`
+2. `sys_bpf()` → `syscall(__NR_bpf, ...)` returns `-1`, sets `errno =
+   ENOENT`
+3. `libbpf_err_errno(-1)` converts: `ret < 0 ? -errno : ret` → returns
+   `-ENOENT` (value: -2)
+4. Test checks `if (ret != -1 || errno != ENOENT)`:
+   - `ret` is `-2` (not `-1`) ✗
+   - Condition evaluates to `TRUE`
+   - **Test incorrectly fails**
+
+#### Why This Should Be Backported
+
+1. **Fixes a Real Problem**: The test has been incorrectly failing for 3
+   years on all v6.0+ kernels, potentially misleading developers who run
+   BPF selftests
+
+2. **Minimal Risk**: This is a **1-line change** in a selftest (not
+   kernel code), changing only the expected return value check from `-1`
+   to `-ENOENT`
+
+3. **Meets Stable Criteria**:
+   - ✅ Small (1 line changed)
+   - ✅ Obviously correct (adapts test to match documented API behavior)
+   - ✅ Fixes a genuine bug (broken test)
+   - ✅ Already in mainline (v6.18)
+
+4. **Selftest Policy**: My research shows selftests ARE regularly
+   backported to stable kernels. Example commits in stable/linux-6.1.y:
+   - `138749a8ff619 selftests/bpf: Fix a user_ringbuf failure with arm64
+     64KB page size`
+   - `5f3d693861c71 selftests/bpf: Mitigate sockmap_ktls
+     disconnect_after_delete failure`
+
+5. **Affects All Active Stable Branches**: Every stable kernel from v6.0
+   onwards (including LTS 6.1, 6.6, and 6.12) has the broken test
+
+#### Scope of Backport
+
+This fix should be backported to **all stable kernels v6.0 and later**
+that contain commit bd054102a8c7f (libbpf 1.0 enforcement). This
+includes:
+- linux-6.0.y
+- linux-6.1.y (LTS)
+- linux-6.6.y (LTS)
+- linux-6.12.y (LTS)
+- linux-6.13.y through linux-6.17.y
+
+Kernels v5.19 and earlier do NOT need this fix because they still use
+legacy mode where `bpf_prog_detach2()` returns `-1`.
+
+ tools/testing/selftests/bpf/test_lirc_mode2_user.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/cpupower/lib/cpupower.c b/tools/power/cpupower/lib/cpupower.c
-index ce8dfb8e46abd..d7f7ec6f151c2 100644
---- a/tools/power/cpupower/lib/cpupower.c
-+++ b/tools/power/cpupower/lib/cpupower.c
-@@ -56,7 +56,7 @@ unsigned int cpupower_write_sysfs(const char *path, char *buf, size_t buflen)
- 	if (numwritten < 1) {
- 		perror(path);
- 		close(fd);
--		return -1;
-+		return 0;
- 	}
+diff --git a/tools/testing/selftests/bpf/test_lirc_mode2_user.c b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
+index 4694422aa76c3..88e4aeab21b7b 100644
+--- a/tools/testing/selftests/bpf/test_lirc_mode2_user.c
++++ b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
+@@ -74,7 +74,7 @@ int main(int argc, char **argv)
  
- 	close(fd);
+ 	/* Let's try detach it before it was ever attached */
+ 	ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
+-	if (ret != -1 || errno != ENOENT) {
++	if (ret != -ENOENT) {
+ 		printf("bpf_prog_detach2 not attached should fail: %m\n");
+ 		return 1;
+ 	}
 -- 
 2.51.0
 
