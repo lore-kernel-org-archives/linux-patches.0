@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E453323ABBD;
-	Thu,  9 Oct 2025 16:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4526C221544;
+	Thu,  9 Oct 2025 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025661; cv=none; b=hDr4xR1cBvKpUVqJIIk4iT3a+YfiyB90K9h71yu7sONwbweC7sQmMeZ9yEh/I2X18E0hz+EnQ1E5h8fXhgpCMgKCkHbciuCvcF3klIWQOV+J76m2C+j5cV7sXNwYTgPzY3xU6AdH8PGGjbyGrRyBW/6hDB2FWwH+jES1JyKTbIE=
+	t=1760025662; cv=none; b=goJyydRkb+l7oR6Oj8GeDI/+vNZLrn2xLkTStPF9miOwP1sy5WSSwhvkHf3SwqS2JPiGqS0jKrvhBvcSy9zWNatbF8AvR1f/YVjY4bAF/55cYQ2nvfYS/mhhUQsQ8my4Vhuw63WMUilYolJvXD9o6w+8Tke8ApSTmWRg83jmsmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025661; c=relaxed/simple;
-	bh=/u7xZPgrxhBNqQjQKhrCPq2MmiyuHzrA8lnhrH6GZpA=;
+	s=arc-20240116; t=1760025662; c=relaxed/simple;
+	bh=pZ5iSjnl7IFtvZOvbOhVVWEWOEfZWQ5lgVju+ZpL+dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hh1T1AouHhwq2IEYCy5K1sGbu4NvXzV9Fge8vAgYnURBIpVcRi+V8scwKrnc0KMnJ/3nP/fR0D11+ZupYueijAnIldp5t+6sZrWYIR4S9coM3yRPScMG9qWyj5+p/PZCyYzU+3QeKXtgxb2cs5oHXVaCl8xfsi9vtc/3MT8ETLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c93JGQkW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s6PuHLpfIAZmx+yp8/9DS24oaawVQKaby6SprC4FZ1C/iIPZF/ODI/3N+3PnXwQ6CGRfbRsj4rqX7mV0lI6F5wcYWCfPC655zfR2wpfPgL3OM+hoCJYs10nNHD898UlxnJlEwEWLK7TUUZDD9kfceiRzP7cvu2VVSFsuGdvRQ10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KMFUlz2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c93JGQkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AB4C4CEE7;
-	Thu,  9 Oct 2025 16:00:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KMFUlz2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38101C4CEE7;
+	Thu,  9 Oct 2025 16:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025660;
-	bh=/u7xZPgrxhBNqQjQKhrCPq2MmiyuHzrA8lnhrH6GZpA=;
+	s=k20201202; t=1760025662;
+	bh=pZ5iSjnl7IFtvZOvbOhVVWEWOEfZWQ5lgVju+ZpL+dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c93JGQkWmiWRWcwLQo8fG5vprYkI1XKPmZP8W+NBSL89YAhy0iY/RMQnLnpw8iVCl
-	 k5SzQtqn/qQlEjQOHJGups+Y0iYseoug0I6k728ucL1TyHrox5V7KGVpaKM3pJeIfN
-	 d7dVTsETpFM/ibV8qY1TEr6Zc9Ff1bc4Qb8wKqNkmRKW3qUZylz61F/8LKcXOTLiH0
-	 Eo6FFvEftNwpEekntG4jpsCVCBC2cHWERa6kAfgerk73uXUWuM/ANL84JpWzZA+1XJ
-	 vP3xi62IXcwYE/ngnjX22MbXOPxZ3pM0TzbUph2KNIIguttyVdLSz0v+uY544DPuLj
-	 v+wHgWg1PebwA==
+	b=KMFUlz2ALfwQIIkYD90KgAf19Mv1kNqeWByE0ZcsD/0LohmFYKtjio9gt0sPdYW2V
+	 Hv7tzXkeK/454E98oC92fs+SeO1kb96iI9Kgm+0KBwcZKO5xpYcg6H/uneGEeMs3P+
+	 4SyT0DClC6He/yxwR06FKWQPza+iOOAjZKEzjhmy4HnQCsqlN3VvjdhtjSmhxEycne
+	 Yz+Iwlg8tHoEgkYECcn1uBYabnS1OZanW5bX2Mkt2v9CTG8ISYlUZv9ni4sZf79r0t
+	 eDWR6ZRIVYGcGCP5z4QFUCGKTQRlG3oT19lP45E/75S5xB5lCb4eii4gGUn5HZYuaB
+	 RW8V/rU3UchMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Harini T <harini.t@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.16] arm64: versal-net: Update rtc calibration value
-Date: Thu,  9 Oct 2025 11:56:05 -0400
-Message-ID: <20251009155752.773732-99-sashal@kernel.org>
+	rafael@kernel.org,
+	daniel.lezcano@linaro.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] thermal: gov_step_wise: Allow cooling level to be reduced earlier
+Date: Thu,  9 Oct 2025 11:56:06 -0400
+Message-ID: <20251009155752.773732-100-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,175 +53,250 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harini T <harini.t@amd.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b60b74f82e3ed4910a5f96a412e89bdd44875842 ]
+[ Upstream commit 2e82368359f63567862a0d438710ddffcb1ace83 ]
 
-As per the design specification
-"The 16-bit Seconds Calibration Value represents the number of
-Oscillator Ticks that are required to measure the largest time period
-that is less than or equal to 1 second.
-For an oscillator that is 32.768kHz, this value will be 0x7FFF."
+The current behavior of the Step-wise thermal governor is to increase
+the cooling level one step at a time after trip point threshold passing
+by thermal zone temperature until the temperature stops to rise.  Then,
+nothing is done until the temperature decreases below the (possibly
+updated) trip point threshold, at which point the cooling level is
+reduced straight to the applicable minimum.
 
-Signed-off-by: Harini T <harini.t@amd.com>
-Link: https://lore.kernel.org/r/20250710061309.25601-1-harini.t@amd.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+While this generally works, it is not in agreement with the throttling
+logic description comment in step_wise_manage() any more after some
+relatively recent changes, and in the case of passive cooling, it may
+lead to undesirable performance oscillations between high and low
+levels.
+
+For this reason, modify the governor's cooling device state selection
+function, get_target_state(), to reduce cooling by one level even if
+the temperature is still above the thermal zone threshold, but the
+temperature has started to fall down.  However, ensure that the cooling
+level will remain above the applicable minimum in that case to pull
+the zone temperature further down, possibly until it falls below the
+trip threshold (which may now be equal to the low temperature of the
+trip).
+
+Doing so should help higher performance to be restored earlier in some
+cases which is desirable especially for passive trip points with
+relatively high hysteresis values.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/1947735.tdWV9SEqCh@rafael.j.wysocki
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Based on my comprehensive analysis of this commit and the thermal
+governor code evolution, here is my assessment:
 
-## Executive Summary
+## **Answer: YES**
 
-This commit corrects a critical RTC calibration value error in the
-Xilinx Versal-Net device tree that causes measurable timekeeping
-inaccuracy. The fix is minimal, low-risk, and should definitely be
-backported to stable kernel trees. **Note: This commit has already been
-backported** (commit d016fdc2ce28a references upstream b60b74f82e3ed).
+This commit should be backported to stable kernel trees.
 
-## Detailed Analysis
+## Extensive Analysis
 
-### Bug Description
+### Context and History
 
-**File Modified:** arch/arm64/boot/dts/xilinx/versal-net.dtsi:559
+This commit is part of a series of thermal governor behavior changes:
 
-**Change:** `calibration = <0x8000>;` → `calibration = <0x7FFF>;` (32768
-→ 32767)
+1. **June 11, 2024 (b6846826982b9)**: "Restore passive polling
+   management" - Fixed an issue where cooling devices weren't being
+   reset properly after commit 042a3d80f118 moved passive polling to the
+   core.
 
-The RTC calibration register was initialized with an incorrect value of
-0x8000 (32768) instead of the hardware-specified value of 0x7FFF (32767)
-for a 32.768 kHz oscillator.
+2. **June 22, 2024 (529038146ba18)**: "Go straight to instance->lower
+   when mitigation is over" - Reverted the passive polling restoration
+   and took a different approach: jumping straight to `instance->lower`
+   when `throttle=false`. This fixed the immediate problem but created a
+   new issue.
 
-### Technical Impact
+3. **August 25, 2025 (2e82368359f63 - this commit)**: Addresses the
+   unintended consequence of 529038146ba18 by allowing gradual cooling
+   reduction even when temperature is still above threshold but trending
+   downward.
 
-Based on my investigation of drivers/rtc/rtc-zynqmp.c:
+### What the Code Change Does
 
-1. **Register Layout** (RTC_CALIB register):
-   - Bits 0-15: Seconds tick counter (16-bit calibration value)
-   - Bits 16-19: Fractional tick counter
-   - Bit 20: Fractional tick enable
-
-2. **Driver Default:** `RTC_CALIB_DEF = 0x7FFF` (rtc-zynqmp.c:40)
-
-3. **Calibration Algorithm** (commit 07dcc6f9c7627):
-  ```c
-  offset_val = (calibval & RTC_TICK_MASK) - RTC_CALIB_DEF;
-  ```
-  The driver uses 0x7FFF as the reference point for offset calculations.
-
-4. **Timekeeping Error** with 0x8000:
-   - Per-tick error: 1 tick = 1/32768 seconds ≈ 30.5 microseconds
-   - Error accumulation per second: ~30.5 µs
-   - Error per hour: ~110 milliseconds
-   - **Error per day: ~2.6 seconds**
-   - **Error per month: ~78 seconds**
-
-### Historical Context
-
-1. **2021:** Same bug fixed for ZynqMP platform (commit a787716afe82a):
-  ```
-  arm64: zynqmp: Update rtc calibration value
-  As per the design specification... For an oscillator that is
-  32.768 KHz, this value will be 0x7FFF.
-  ```
-
-2. **2022:** Driver default updated to match specification (commit
-   85cab027d4e31):
-  ```
-  rtc: zynqmp: Updated calibration value
-  As per RTC spec default calibration value is 0x7FFF.
-  We are in process to update the 0x7FFF as default value in
-  the next version of TRM.
-  ```
-
-3. **2025-02:** Versal-Net support added with incorrect value 0x8000
-   (commit 99adc5299f7a1)
-
-4. **2025-07:** This fix corrects the Versal-Net calibration value
-   (commit b60b74f82e3ed)
-
-### Hardware Specification Compliance
-
-The commit message quotes the design specification:
-> "The 16-bit Seconds Calibration Value represents the number of
-Oscillator Ticks that are required to measure the largest time period
-that is less than or equal to 1 second. For an oscillator that is
-32.768kHz, this value will be 0x7FFF."
-
-**Why 0x7FFF (32767) instead of 0x8000 (32768)?**
-- For a 32.768 kHz oscillator: exactly 32768 ticks = 1 second
-- The specification requires 0x7FFF = 32767 ticks as the reference
-  calibration point
-- This is the architectural design of the RTC hardware
-- The value 0x7FFF is the maximum positive value for a signed 16-bit
-  integer, allowing symmetric offset adjustments
-
-### Verification Against Device Trees
-
-Current calibration values in Xilinx device trees:
-```bash
-$ grep "calibration = <0x" arch/arm64/boot/dts/xilinx/*.dtsi
-versal-net.dtsi: calibration = <0x8000>;  ← WRONG (before fix)
-zynqmp.dtsi:     calibration = <0x7FFF>;  ← CORRECT (fixed in 2021)
+**Before this commit:**
+```c
+if (throttle) {
+    if (trend == THERMAL_TREND_RAISING)
+        return clamp(cur_state + 1, instance->lower, instance->upper);
+    // THERMAL_TREND_DROPPING: do nothing, fall through to return
+instance->target
+}
 ```
 
-### Backporting Justification
+When temperature is above the trip threshold (`throttle=true`) but
+falling (`THERMAL_TREND_DROPPING`), the code does nothing - cooling
+stays at the current high level.
 
-**STRONG YES for backporting:**
+**After this commit:**
+```c
+if (throttle) {
+    if (trend == THERMAL_TREND_RAISING)
+        return clamp(cur_state + 1, instance->lower, instance->upper);
 
-1. ✅ **Fixes important user-visible bug:** RTC timekeeping error of ~2.6
-   seconds/day
-2. ✅ **Minimal and contained:** Single-line device tree value change
-3. ✅ **Hardware specification compliance:** Aligns with vendor
-   documentation
-4. ✅ **Zero regression risk:** Only affects Versal-Net platform RTC
-   users
-5. ✅ **Matches stable tree rules:** Important bugfix, minimal code
-   change
-6. ✅ **Proven fix pattern:** Identical fix applied to ZynqMP in 2021
-   without issues
-7. ✅ **No architectural changes:** Pure configuration correction
-8. ✅ **Platform-specific:** Cannot affect other systems
+    if (trend == THERMAL_TREND_DROPPING)
+        return clamp(cur_state - 1,
+                     min(instance->lower + 1, instance->upper),
+                     instance->upper);
+}
+```
 
-### Affected Users
+Now when temperature is above threshold but falling, cooling is reduced
+by one level, but kept at least at `instance->lower + 1` to continue
+pulling temperature down.
 
-- Xilinx Versal-Net ARM64 platform users
-- Systems requiring accurate RTC timekeeping
-- Impact: Measurable time drift affecting logs, timestamps, scheduled
-  tasks
+### Analysis of the Code Logic
 
-### Backport Status
+The new code at **lines 63-66**:
+```c
+return clamp(cur_state - 1,
+             min(instance->lower + 1, instance->upper),
+             instance->upper);
+```
 
-**Already backported:** Commit d016fdc2ce28a in stable trees references
-upstream commit b60b74f82e3ed.
+This ensures:
+- Cooling is reduced by 1 step when temperature starts falling
+- Cooling never goes below `instance->lower + 1` while still above
+  threshold
+- This prevents the "do nothing until threshold, then jump to minimum"
+  behavior that caused oscillations
 
-## Recommendation
+**Example scenario:**
+- Trip threshold: 80°C, Current temp: 85°C
+- Cooling states: lower=0, upper=10, current=8
+- Old behavior: Stay at 8 until temp drops below 80°C, then jump to 0
+- New behavior: As temp falls (85→84→83...), cooling reduces gradually
+  (8→7→6...) but stays ≥1 until below 80°C
+- Result: Performance restored more smoothly, avoiding oscillations
+  between heavily throttled and no throttling
 
-**BACKPORT: YES**
+### Problem Being Fixed
 
-This is an exemplary stable kernel candidate: it fixes a clear hardware
-specification violation causing measurable user impact, with zero risk
-of regression. The fix follows an established pattern (ZynqMP 2021 fix)
-and has already been successfully backported to stable trees.
+The commit message explicitly states this fixes:
+1. **Disagreement with throttling logic description** - The code comment
+   said one thing, but behavior did another
+2. **Undesirable performance oscillations** - In passive cooling
+   scenarios, especially with high hysteresis values, the system would
+   oscillate between high throttling and no throttling
 
- arch/arm64/boot/dts/xilinx/versal-net.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is a real user-facing issue affecting system performance and user
+experience.
 
-diff --git a/arch/arm64/boot/dts/xilinx/versal-net.dtsi b/arch/arm64/boot/dts/xilinx/versal-net.dtsi
-index fc9f49e57385a..c037a78199670 100644
---- a/arch/arm64/boot/dts/xilinx/versal-net.dtsi
-+++ b/arch/arm64/boot/dts/xilinx/versal-net.dtsi
-@@ -556,7 +556,7 @@ rtc: rtc@f12a0000 {
- 			reg = <0 0xf12a0000 0 0x100>;
- 			interrupts = <0 200 4>, <0 201 4>;
- 			interrupt-names = "alarm", "sec";
--			calibration = <0x8000>;
-+			calibration = <0x7FFF>;
- 		};
- 
- 		sdhci0: mmc@f1040000 {
+### Assessment Against Stable Kernel Criteria
+
+✅ **Fixes important bug**: Yes - performance oscillations are a real
+problem affecting user experience
+
+✅ **Small and contained**: Yes - 11 lines added in a single function
+(`get_target_state`)
+
+✅ **No architectural changes**: Yes - modifies only thermal governor
+policy logic
+
+✅ **Minimal regression risk**: Yes - well-contained change with clear
+logic; thermal subsystem expert (Lukasz Luba) reviewed it
+
+✅ **Confined to subsystem**: Yes - only affects
+`drivers/thermal/gov_step_wise.c`
+
+⚠️ **Not a new feature**: Borderline - it's a behavior improvement, but
+framed as fixing oscillations, not adding capability
+
+### Dependencies Verified
+
+All prerequisites are present in the 6.17 stable tree:
+- ✅ `529038146ba18` - "Go straight to instance->lower when mitigation is
+  over"
+- ✅ `0dc23567c2063` - "Move lists of thermal instances to trip
+  descriptors" (structural change)
+- ✅ `a5a98a786e5e3` - "Add and use cooling device guard"
+
+The commit applies cleanly with its preparatory commits:
+- `28cef1632339a` - Variable initialization cleanup
+- `6b4decef4c945` - Comment clarification
+
+### Risk Analysis
+
+**Low risk because:**
+1. No reverts found in kernel history
+2. No follow-up fixes needed
+3. Change is in well-understood thermal governor logic
+4. Already backported to stable (commit ec91ecce71123) with no reported
+   issues
+5. Reviewed by thermal subsystem expert
+6. Logic is straightforward: gradual reduction instead of sudden jump
+
+**Potential concerns addressed:**
+- Could change thermal behavior on systems? Yes, but in a beneficial way
+  - smoother performance restoration
+- Could cause thermal runaway? No - still maintains cooling at `lower +
+  1` minimum while above threshold
+- Could affect other governors? No - change is isolated to step_wise
+  governor
+
+### Conclusion
+
+This commit addresses a real performance issue (oscillations) introduced
+by the previous fix (529038146ba18). While it lacks a formal `Fixes:`
+tag or specific bug report, the commit message clearly describes the
+problem: "undesirable performance oscillations between high and low
+levels" that affect user experience, especially with passive cooling and
+high hysteresis values.
+
+The change is small, well-reviewed, has all dependencies in place, and
+carries minimal regression risk. It improves the thermal governor's
+behavior to match its design intent and provides smoother performance
+restoration.
+
+**Recommendation: YES** - This should be backported to stable kernel
+trees.
+
+ drivers/thermal/gov_step_wise.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/thermal/gov_step_wise.c b/drivers/thermal/gov_step_wise.c
+index d1bb59f1dfbd3..b7938bddd9a6a 100644
+--- a/drivers/thermal/gov_step_wise.c
++++ b/drivers/thermal/gov_step_wise.c
+@@ -20,7 +20,9 @@
+  * If the temperature is higher than a trip point,
+  *    a. if the trend is THERMAL_TREND_RAISING, use higher cooling
+  *       state for this trip point
+- *    b. if the trend is THERMAL_TREND_DROPPING, do nothing
++ *    b. if the trend is THERMAL_TREND_DROPPING, use a lower cooling state
++ *       for this trip point, but keep the cooling state above the applicable
++ *       minimum
+  * If the temperature is lower than a trip point,
+  *    a. if the trend is THERMAL_TREND_RAISING, do nothing
+  *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
+@@ -51,6 +53,17 @@ static unsigned long get_target_state(struct thermal_instance *instance,
+ 	if (throttle) {
+ 		if (trend == THERMAL_TREND_RAISING)
+ 			return clamp(cur_state + 1, instance->lower, instance->upper);
++
++		/*
++		 * If the zone temperature is falling, the cooling level can
++		 * be reduced, but it should still be above the lower state of
++		 * the given thermal instance to pull the temperature further
++		 * down.
++		 */
++		if (trend == THERMAL_TREND_DROPPING)
++			return clamp(cur_state - 1,
++				     min(instance->lower + 1, instance->upper),
++				     instance->upper);
+ 	} else if (trend == THERMAL_TREND_DROPPING) {
+ 		if (cur_state <= instance->lower)
+ 			return THERMAL_NO_TARGET;
 -- 
 2.51.0
 
