@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A052F3C03;
-	Thu,  9 Oct 2025 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25152F3C08;
+	Thu,  9 Oct 2025 15:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025597; cv=none; b=mrGusU9vDlZ3Lg/fCTL/qGyrOfsk3cQNyXCvNUigB/kqn7eW06OKN8mAzyS1PLR4AzDoF4ivUX5EwVtWzmCINDS47Endw10lrL2gZ+EdEHej/VsHLu8wOXssC2genTjL1yu6G+rMvPIJ9tqoPamZpotoKnifOX8Fo9pdSPsONXo=
+	t=1760025599; cv=none; b=u9nqsiS7j9OK8eakElSzwg436w8Neq6Fuc1dSsxF7gUe0kfN/aqtnDkNhTyE83/wt4qT38ZpdQyAwznRu8Cu+hBOs9jnQAcWU88kpPKfk+uRtbBis2SO8iAwBkCveKTnqeEJU1cvq/eTkKDiQEvzcCKXP5TtempXvT1eDZ8V864=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025597; c=relaxed/simple;
-	bh=WLdmCNtYS0oVxQKnJ3+KGrYys0exaEebQlzllpyVNzc=;
+	s=arc-20240116; t=1760025599; c=relaxed/simple;
+	bh=lPM1YBZADVg/ysU1qDCn+/3SC2trH32e6mG4B0qcwek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MlkVeA/QBTc9NI4aLP1qVkCgI4JnI1lgRphjlcUaHESetUm1kjB8oRTLfHtsomS/n9vUP4No+6uqPissJGTzEyQYS39mtfp58VhKjCf2FlA3MijHAlsE3cuRTI7V7DUSQITl4WCYKozcguDN48sx4VWwhSfRmFHrOkn0nVEDH+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWUKieIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nXmKLAMd3Y7Tr9IonrH1ETZPFoNcfhrhVDJx8k38UWxoV07zOFOqHO1QWxWYVYYK3JXV66p3A4FiGHfe8edH5n1q2U5zpAD6mb1VQAqghD1g2i3FWhO9pOBcuwUVuHd0N+Q2M9/Kmq7YgxRhK0Adi1eVLhW/jFOy7xumWJjrs98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZAC3Dh7s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWUKieIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2A2C4CEF7;
-	Thu,  9 Oct 2025 15:59:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZAC3Dh7s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC92C4CEE7;
+	Thu,  9 Oct 2025 15:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025597;
-	bh=WLdmCNtYS0oVxQKnJ3+KGrYys0exaEebQlzllpyVNzc=;
+	s=k20201202; t=1760025599;
+	bh=lPM1YBZADVg/ysU1qDCn+/3SC2trH32e6mG4B0qcwek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWUKieImLex8WslorkP72hUvqvIkaDGcOan0RYCb3E8Q5rV3Nk2R5vBfqv5WjeGfW
-	 epaxDcROLfVvpdJSkxmABJgqwidq7c75aqvFT/l358Xue6NT5TOhmIfUS5jexf5FDP
-	 VOD3d077BFa9HzIJ0YrhhLp1KMjmckwXD2ZgPUkhfcv4BS36XGhiBoqpGrr7zerIEx
-	 p+b62kQ7G7xUNsiwK9bJz2Hpn9CuhLllCYCnydShnHDzRPklo26rWYCq8gnL82HSD1
-	 JLOKiTpiMl3DaU0cmY9t9IIZF6oK9BuUohKbJM3xZgFULrwx1PimbESsyqrfmCRNlJ
-	 zalqMP3uadq7Q==
+	b=ZAC3Dh7sC0VP/9d3zwdTicszclt22rVYUX4yfG5sRxGZCu54cbRCBp0z2LwuTD10g
+	 e95waYOZf7rxZnXOWoD5YPNBv/PnsNJXfAQJE1UJIA5j75YwdLCUJSFRE+pZn7hVUA
+	 S1tmYhsMTIAnF5f1sRXOl036B/u4fLSEbpo9G71wPVB6gAxKqZC+i7qDkPHAeeMr4p
+	 ZKIVM1gQy+sYfmnXzDtK5AKJr9GSt/sPj5N5gZiKOW18HusZZdQMkFHR6TR1qxQZtC
+	 aiP7J4uYQSEHeR9DGQamoltTNzD1O2CWFnZsruNJyL+mGdKA45TU0GMq6bC+L2LviP
+	 qMXJImG51Bw1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jens Kehne <jens.kehne@agilent.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	support.opensource@diasemi.com
-Subject: [PATCH AUTOSEL 6.17-5.10] mfd: da9063: Split chip variant reading in two bus transactions
-Date: Thu,  9 Oct 2025 11:55:32 -0400
-Message-ID: <20251009155752.773732-66-sashal@kernel.org>
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-5.4] tools/cpupower: Fix incorrect size in cpuidle_state_disable()
+Date: Thu,  9 Oct 2025 11:55:33 -0400
+Message-ID: <20251009155752.773732-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,39 +50,28 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Kehne <jens.kehne@agilent.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 9ac4890ac39352ccea132109e32911495574c3ec ]
+[ Upstream commit 23199d2aa6dcaf6dd2da772f93d2c94317d71459 ]
 
-We observed the initial probe of the da9063 failing in
-da9063_get_device_type in about 30% of boots on a Xilinx ZynqMP based
-board. The problem originates in da9063_i2c_blockreg_read, which uses
-a single bus transaction to turn the register page and then read a
-register. On the bus, this should translate to a write to register 0,
-followed by a read to the target register, separated by a repeated
-start. However, we found that after the write to register 0, the
-controller sometimes continues directly with the register address of
-the read request, without sending the chip address or a repeated start
-in between, which makes the read request invalid.
+Fix incorrect size parameter passed to cpuidle_state_write_file() in
+cpuidle_state_disable().
 
-To fix this, separate turning the page and reading the register into
-two separate transactions. This brings the initialization code in line
-with the rest of the driver, which uses register maps (which to my
-knowledge do not use repeated starts after turning the page). This has
-been included in our kernel for several months and was recently
-included in a shipped product. For us, it reliably fixes the issue,
-and we have not observed any new issues.
+The function was incorrectly using sizeof(disable) which returns the
+size of the unsigned int variable (4 bytes) instead of the actual
+length of the string stored in the 'value' buffer.
 
-While the underlying problem is probably with the i2c controller or
-its driver, I still propose a change here in the interest of
-robustness: First, I'm not sure this issue can be fixed on the
-controller side, since there are other issues related to repeated
-start which can't (AR# 60695, AR# 61664). Second, similar problems
-might exist with other controllers.
+Since 'value' is populated with snprintf() to contain the string
+representation of the disable value, we should use the length
+returned by snprintf() to get the correct string length for
+writing to the sysfs file.
 
-Signed-off-by: Jens Kehne <jens.kehne@agilent.com>
-Link: https://lore.kernel.org/r/20250804133754.3496718-1-jens.kehne@agilent.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+This ensures the correct number of bytes is written to the cpuidle
+state disable file in sysfs.
+
+Link: https://lore.kernel.org/r/20250917050820.1785377-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -92,119 +80,114 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Addresses intermittent probe failures (~30% boots) during early chip
-    identification reads on some I2C controllers (e.g., ZynqMP) where a
-    combined transaction with a repeated start is mishandled, causing
-    the read to be invalid. This is a user‑visible reliability bug in
-    device bring‑up, not a feature change.
+  - The patch corrects the length passed to the sysfs write helper from
+    a fixed, incorrect size to the actual string length:
+    - Before: `cpuidle_state_disable()` used `sizeof(disable)` (always
+      4) when writing the textual value to sysfs, causing 4 bytes to be
+      written regardless of the actual string length.
+      - See old call site changed in
+        `tools/power/cpupower/lib/cpuidle.c:247` (post‑patch numbering):
+        `value, sizeof(disable)` → `value, len`
+    - After: It computes `len = snprintf(value, SYSFS_PATH_MAX, "%u",
+      disable);` and passes that `len` to the writer, ensuring only the
+      intended number of bytes is written:
+      - New local `int len;` added at
+        `tools/power/cpupower/lib/cpuidle.c:236`.
+      - `len = snprintf(...)` at
+        `tools/power/cpupower/lib/cpuidle.c:245`.
+      - Correct write length used at
+        `tools/power/cpupower/lib/cpuidle.c:247-248`.
 
-- Precise change
-  - Adds a separate 1‑message transfer for page selection, then a
-    2‑message transfer for register address + read:
-    - New `da9063_page_sel_msgs` for the standalone page select
-      transfer: drivers/mfd/da9063-i2c.c:40–43
-    - Adjusts `da9063_paged_read_msgs` to start at the register select
-      phase: drivers/mfd/da9063-i2c.c:45–49
-    - First transaction (page switch): set up
-      `xfer[DA9063_PAGE_SEL_MSG]` then call `i2c_transfer(...,
-      DA9063_PAGE_SEL_CNT)` with robust error checks:
-      drivers/mfd/da9063-i2c.c:71–86
-    - Second transaction (register select + read): set up
-      `xfer[DA9063_PAGED_READ_MSG_REG_SEL]` and
-      `xfer[DA9063_PAGED_READ_MSG_DATA]`, then `i2c_transfer(...,
-      DA9063_PAGED_READ_MSG_CNT)`: drivers/mfd/da9063-i2c.c:88–111
-  - The only user of this helper is the early device/variant read in
-    `da9063_get_device_type()`: drivers/mfd/da9063-i2c.c:125–131
-
-- Why this is safer
-  - Many I2C controllers have quirks with repeated starts across a
-    write‑then‑read sequence targeting different internal device
-    behaviors (here, page register write followed by a read). Splitting
-    the sequence issues a STOP between page switch and read address
-    selection, avoiding controller bugs while remaining compliant with
-    the device’s register paging model.
-  - Matches how the rest of the driver operates via regmap, which uses
-    page windows and does not rely on a repeated start immediately after
-    page switching (see `selector_reg = DA9063_REG_PAGE_CON` and range
-    config): drivers/mfd/da9063-i2c.c:341–351
+- Why it matters
+  - The writer `cpuidle_state_write_file()` is a thin wrapper around
+    `write(2)` that takes a `len` and writes it verbatim to the sysfs
+    attribute `disable`:
+    - See `tools/power/cpupower/lib/cpuidle.c:85-111`.
+  - The backing kernel sysfs store for `stateX/disable` parses a
+    NUL/newline-terminated string using `kstrtouint()` (see
+    `drivers/cpuidle/sysfs.c:281-306`). While the kernfs write path
+    guarantees NUL termination for the internal buffer, passing a length
+    larger than the actual string (e.g., 4 for “0”) causes extra bytes
+    beyond the first NUL to be sent. This is conceptually incorrect and
+    can lead to surprising behavior (e.g., stray bytes copied into the
+    sysfs buffer), even if parsing usually succeeds due to the early
+    NUL.
+  - In practice, cpupower only writes “0” or “1”, so `sizeof(unsigned
+    int)` = 4 led to writing “1\0??” instead of just “1”. That typically
+    works today because:
+    - Kernfs appends a NUL at position `count` and `kstrtouint()` stops
+      at the first NUL, so the extra bytes after the embedded NUL are
+      ignored in most cases.
+    - However, this is still a correctness bug and fragile across
+      attribute implementations and future changes.
 
 - Scope and risk
-  - Change is small, self‑contained to one function used only during
-    probe; no architectural changes.
-  - Adds clearer error logging for page switch failures without altering
-    normal data paths.
-  - Potential concern (atomicity between page set and read) is minimal
-    here: this path runs during probe, before other clients of the
-    device exist; typical single‑master systems are unaffected. Even on
-    multi‑master, the benefit of avoiding known controller bugs
-    outweighs the negligible race risk at probe time.
+  - Scope is minimal and fully contained to the cpupower userspace
+    library:
+    - Only `tools/power/cpupower/lib/cpuidle.c` is changed.
+    - No ABI changes; only a local variable and corrected length usage.
+  - No architectural changes; no kernel/runtime impact beyond how many
+    bytes userspace writes.
+  - Regression risk is negligible:
+    - Success semantics in `cpuidle_state_disable()` remain the same
+      (returns 0 if any positive byte count is written; see
+      `tools/power/cpupower/lib/cpuidle.c:247-251`).
+    - Downstream callers (cpupower `cpuidle-set`, Python bindings, and
+      `rtla`) do not depend on writing exactly 4 bytes and will continue
+      to work; see callers such as `tools/power/cpupower/utils/cpuidle-
+      set.c:117,130` and `tools/tracing/rtla/src/utils.c:596,661`.
 
-- Backport considerations
-  - Older stable trees (e.g., v6.10, v6.6, v6.1) still use the single
-    `i2c_transfer` with 3 messages for this path; applying this patch is
-    straightforward and does not depend on other recent infrastructure
-    changes. The change only introduces a new small enum and splits the
-    existing message sequence with added error checks.
-  - No ABI changes, no feature additions, no cross‑subsystem
-    dependencies.
+- Affected history
+  - The incorrect `sizeof(disable)` usage dates back to the introduction
+    of the cpuidle library to cpupower in 2016 (commit `ac5a181d065d7`),
+    so all stable series carrying cpupower’s cpuidle library are
+    affected.
+  - The fix is already in mainline as `23199d2aa6dca` (“tools/cpupower:
+    Fix incorrect size in cpuidle_state_disable()”), authored
+    2025-09-17.
 
-- Stable policy fit
-  - Fixes a real, observed boot‑time reliability bug.
-  - Minimal, localized patch with low regression risk.
-  - No new features or behavior changes beyond making the transaction
-    sequence more robust.
-  - Although there’s no explicit “Cc: stable”, the nature and scope make
-    it an appropriate stable backport.
+- Stable backport criteria
+  - Important bugfix: Yes — corrects wrong write length to sysfs,
+    eliminating stray bytes and making behavior robust and explicit.
+  - Small and contained: Yes — one function, a few lines in a single
+    file.
+  - No new features or architectural changes: Correct.
+  - Minimal regression risk: Correct.
+  - Critical subsystem: It’s in `tools/` (userspace cpupower), which
+    stable regularly backports fixes for.
 
- drivers/mfd/da9063-i2c.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+Given the above, this is a low-risk correctness fix confined to
+cpupower, addressing a long-standing bug. It should be backported to
+stable trees.
 
-diff --git a/drivers/mfd/da9063-i2c.c b/drivers/mfd/da9063-i2c.c
-index c6235cd0dbdc4..1ec9ab56442df 100644
---- a/drivers/mfd/da9063-i2c.c
-+++ b/drivers/mfd/da9063-i2c.c
-@@ -37,9 +37,13 @@ enum da9063_page_sel_buf_fmt {
- 	DA9063_PAGE_SEL_BUF_SIZE,
- };
+ tools/power/cpupower/lib/cpuidle.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/tools/power/cpupower/lib/cpuidle.c b/tools/power/cpupower/lib/cpuidle.c
+index 0ecac009273ce..f2c1139adf716 100644
+--- a/tools/power/cpupower/lib/cpuidle.c
++++ b/tools/power/cpupower/lib/cpuidle.c
+@@ -233,6 +233,7 @@ int cpuidle_state_disable(unsigned int cpu,
+ {
+ 	char value[SYSFS_PATH_MAX];
+ 	int bytes_written;
++	int len;
  
-+enum da9063_page_sel_msgs {
-+	DA9063_PAGE_SEL_MSG = 0,
-+	DA9063_PAGE_SEL_CNT,
-+};
-+
- enum da9063_paged_read_msgs {
--	DA9063_PAGED_READ_MSG_PAGE_SEL = 0,
--	DA9063_PAGED_READ_MSG_REG_SEL,
-+	DA9063_PAGED_READ_MSG_REG_SEL = 0,
- 	DA9063_PAGED_READ_MSG_DATA,
- 	DA9063_PAGED_READ_MSG_CNT,
- };
-@@ -65,10 +69,21 @@ static int da9063_i2c_blockreg_read(struct i2c_client *client, u16 addr,
- 		(page_num << DA9063_I2C_PAGE_SEL_SHIFT) & DA9063_REG_PAGE_MASK;
+ 	if (cpuidle_state_count(cpu) <= idlestate)
+ 		return -1;
+@@ -241,10 +242,10 @@ int cpuidle_state_disable(unsigned int cpu,
+ 				 idlestate_value_files[IDLESTATE_DISABLE]))
+ 		return -2;
  
- 	/* Write reg address, page selection */
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].addr = client->addr;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].flags = 0;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].len = DA9063_PAGE_SEL_BUF_SIZE;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].buf = page_sel_buf;
-+	xfer[DA9063_PAGE_SEL_MSG].addr = client->addr;
-+	xfer[DA9063_PAGE_SEL_MSG].flags = 0;
-+	xfer[DA9063_PAGE_SEL_MSG].len = DA9063_PAGE_SEL_BUF_SIZE;
-+	xfer[DA9063_PAGE_SEL_MSG].buf = page_sel_buf;
-+
-+	ret = i2c_transfer(client->adapter, xfer, DA9063_PAGE_SEL_CNT);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Page switch failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	if (ret != DA9063_PAGE_SEL_CNT) {
-+		dev_err(&client->dev, "Page switch failed to complete\n");
-+		return -EIO;
-+	}
+-	snprintf(value, SYSFS_PATH_MAX, "%u", disable);
++	len = snprintf(value, SYSFS_PATH_MAX, "%u", disable);
  
- 	/* Select register address */
- 	xfer[DA9063_PAGED_READ_MSG_REG_SEL].addr = client->addr;
+ 	bytes_written = cpuidle_state_write_file(cpu, idlestate, "disable",
+-						   value, sizeof(disable));
++						   value, len);
+ 	if (bytes_written)
+ 		return 0;
+ 	return -3;
 -- 
 2.51.0
 
