@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0409E2FBE09;
-	Thu,  9 Oct 2025 16:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D2E2F5324;
+	Thu,  9 Oct 2025 16:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025638; cv=none; b=nDHwh9vklQ/7XbBQXClaetMFs0KdyR5R7Yguh4HPpmqZRENqVuahfuyUcxexDjlJIqoTKaUVkXckImAjHeEGa3iTR4tSBSFG1TikQ6456XO7eF3L2f9R4goZbXfKIBoGR/G0xoFd/NCokCb4p4KOHBjb3Y+Hkpjpz1mJAQ7Wj8g=
+	t=1760025639; cv=none; b=kpS9vi4EMrGsFdPyOyUgaPt9gPe2giico9ZC+snZHhM9j5pbwxCyS4gyN0P1X1+DPFyMtwdAUc0XRS8XW0K4MDwwU5XuAZntgxUoNcUD+qA5drK+Uf299vAIrwyrxGLQW3d4ctp7tEkkQQYCub9BYnGzffjW9C+9snoaSOTb7AA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025638; c=relaxed/simple;
-	bh=ALThAbtUaT72qVaCD2dRMI9yWcRKFS93pvx7JXbR47M=;
+	s=arc-20240116; t=1760025639; c=relaxed/simple;
+	bh=4devUkiUJ45SxtTYFgo9akTiO+CNe1YAFZ2rg7soOG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QDBk6wC1khdinIO1wwZdM+gd2+T0zcpqGtHu4qz11poX10EcOnc6XO4hrIWUuZgr4MSDUF5GwVSJyu6w6N5AmtF75Hzi/nYn3r8vm4eV+IYdVCdVvVmuFYO2qJwelTR8ChPlRSXLUP34F8BPGGVFcKadUQXFB0LMspJiDa+eWN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IhXRQidw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QPkS1BzFm6ad6ZVqI3sXVBdRAaK6HnR2vREfP+MFojNiXuK2mgbkSxLOjxu5FEOkXKBvG23LSEISHbamNFwWqJuL49GrXMV+IrPpjYBH3gZRyp1yeCb3jaswSqMzDu1ByoZb1EbhZXbwJL4sDe7pjQwBdJlL2Tmjn8JWs37Rbt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhR/Yw1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IhXRQidw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6178C4CEE7;
-	Thu,  9 Oct 2025 16:00:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhR/Yw1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF05C4CEF7;
+	Thu,  9 Oct 2025 16:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025637;
-	bh=ALThAbtUaT72qVaCD2dRMI9yWcRKFS93pvx7JXbR47M=;
+	s=k20201202; t=1760025639;
+	bh=4devUkiUJ45SxtTYFgo9akTiO+CNe1YAFZ2rg7soOG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhXRQidww2WXw5y5l5wJAu+aLeXMytEbRgl7OR8Uuzm7/sU+HiyVjWtrbGWc/kbwG
-	 uH7wQrd5K0jGL7MXnLQc8LrWXdKIMCse5S++sW9UxxFvzwrk6v7vScl2sdVxwBX4G+
-	 iRUfk/iXxrptgEHQEsyBZIc44k/U6H9HU8cxS81F3GJnMOV9F4CGk71iDnueWO9RA8
-	 nC6pf73As63lhcLjaDOAEYnBMVKplCueIhwtpP36sxXpMEES3phH7l2jFtmrVVFFwo
-	 NGVyaG8F56L8NZHq35wN+V9OeE27sIIu/TG7hZgbyBiOnu2viRsg+WXoR9xi36tqnJ
-	 ZA+rJtjiUCnOQ==
+	b=VhR/Yw1Me7FBGrHAnWdE7k+o6g4EiqvHMMTL/zTh3qh4KaKDBy/OPM5Gj349NO5Mg
+	 6Jg4HQwa5NN94DDQbOAWGguPUdMVxe5Jw6bWIG5AP7CUh1VUsVxfVrkJfRCym/SxOE
+	 fCR0OmntjhCSR69pBozkTKAMJye7Om7o/Jx1k46AZ4dCYHzsUBjq+kx7Mb8nqxLknw
+	 n3Jb13KbhQof5C3iSBmIZ5zC5BHuJAQgRxed3yAqUOiyCi5ezr0H8g9PWRwAer9E6x
+	 2tDPsk/iPsT4EOVOrtb8dvlLl8Wu0PiZuDPbvEHBl3cvs7EjrXyz67ZjfDbGZcJcIG
+	 atSaP9lzYgJvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Janne Grunau <j@jannau.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Neal Gompa <neal@gompa.dev>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Sven Peter <sven@kernel.org>,
+Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	asahi@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] pmdomain: apple: Add "apple,t8103-pmgr-pwrstate"
-Date: Thu,  9 Oct 2025 11:55:55 -0400
-Message-ID: <20251009155752.773732-89-sashal@kernel.org>
+	jingoohan1@gmail.com,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-5.4] video: backlight: lp855x_bl: Set correct EPROM start for LP8556
+Date: Thu,  9 Oct 2025 11:55:56 -0400
+Message-ID: <20251009155752.773732-90-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -55,22 +53,17 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 442816f97a4f84cb321d3359177a3b9b0ce48a60 ]
+[ Upstream commit 07c7efda24453e05951fb2879f5452b720b91169 ]
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,pmgr-pwrstate" anymore [1]. Use
-"apple,t8103-pmgr-pwrstate" as base compatible as it is the SoC the
-driver and bindings were written for.
+According to LP8556 datasheet EPROM region starts at 0x98 so adjust value
+in the driver accordingly.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
-
-Signed-off-by: Janne Grunau <j@jannau.net>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250909074304.92135-2-clamor95@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,68 +71,83 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed: The patch adds a single OF compatible to the driver
-  match table to explicitly support the Apple M1 (t8103) PMGR power-
-  state nodes. Concretely, it inserts `{ .compatible =
-  "apple,t8103-pmgr-pwrstate" }` in `drivers/pmdomain/apple/pmgr-
-  pwrstate.c:309`, keeping the existing generic fallback `{ .compatible
-  = "apple,pmgr-pwrstate" }` just below it (drivers/pmdomain/apple/pmgr-
-  pwrstate.c:310).
-- Rationale from commit message: DT maintainers agreed to stop extending
-  nodes with the generic `"apple,pmgr-pwrstate"` and instead use the
-  SoC-specific string as the base compatible. Without this addition, a
-  DT using only `"apple,t8103-pmgr-pwrstate"` would fail to bind the
-  driver.
-- Scope and risk: The change is a single-line device-ID addition to the
-  OF match table. It does not touch runtime logic, data structures,
-  Kconfig, or probe/remove paths. There are no architectural changes.
-  This kind of “add a new compatible ID” patch is routinely accepted for
-  stable because it’s low-risk and purely affects device binding.
-- User impact fixed: On systems providing a DTB that omits the generic
-  fallback (aligned with the new binding guidance), the driver would not
-  probe, leaving PM domains and reset control unmanaged. Adding the
-  t8103 compatible restores functionality. This is a real, user-visible
-  failure mode when booting older kernels with newer DTBs or bootloader-
-  provided DTBs following updated conventions.
-- Alignment with bindings: The bindings already enumerate SoC-specific
-  compatibles, including `"apple,t8103-pmgr-pwrstate"`
-  (Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml:41).
-  The driver now matches that SoC-specific string directly, which aligns
-  the implementation with binding expectations going forward.
-- No regressions expected: Existing DTs that list both
-  `"apple,t8103-pmgr-pwrstate", "apple,pmgr-pwrstate"` continue to bind
-  identically, only preferring the SoC-specific match. DTs that still
-  only have the generic string continue to work via the unchanged `{
-  .compatible = "apple,pmgr-pwrstate" }` entry
-  (drivers/pmdomain/apple/pmgr-pwrstate.c:310).
-- Stable policy fit: This is a minimal, contained, non-feature change
-  that enables correct binding for an existing driver on an existing SoC
-  and prevents regressions with evolving DTs. There’s no security
-  implication and no interaction with critical core subsystems beyond OF
-  matching.
-- Backport note: On older stable series, the file may reside under a
-  different path (pre-“pmdomain” rename). The change remains a trivial
-  OF-ID addition to the same match table in that file.
+Explanation
+- What changed: The LP8556 EPROM start constant is corrected from 0xA0
+  to 0x98. See drivers/video/backlight/lp855x_bl.c:25 (old 0xA0; commit
+  changes to 0x98). The end remains 0xAF
+  (drivers/video/backlight/lp855x_bl.c:26).
+- How it’s used: The valid ROM window for a given chip is enforced by
+  lp855x_is_valid_rom_area(), which selects the [start, end] range based
+  on chip ID and filters all ROM writes against it:
+  - Range selection for LP8556 uses these macros
+    (drivers/video/backlight/lp855x_bl.c:114-116).
+  - The write loop applies this filter when programming platform/DT-
+    provided ROM entries (drivers/video/backlight/lp855x_bl.c:193-204),
+    skipping any address outside the range.
+  - DT parsing populates the ROM programming list
+    (drivers/video/backlight/lp855x_bl.c:342-360), so the incorrect
+    start value causes any LP8556 ROM entries in 0x98–0x9F to be
+    silently ignored.
 
-Given the above, this is a textbook low-risk backport that prevents real
-breakage with newer DTBs and should be backported to stable trees that
-already contain the Apple PMGR power-state driver.
+Why this matters
+- Functional bug for LP8556: According to the commit message (datasheet
+  reference), the LP8556 ROM region begins at 0x98. With the current
+  code, addresses 0x98–0x9F are wrongly rejected by
+  lp855x_is_valid_rom_area(), so intended ROM configuration may not be
+  applied to LP8556 devices. This can lead to misconfiguration of
+  backlight behavior on boards that rely on these addresses.
+- The change is strictly a correction: It expands the accepted range for
+  LP8556 to the true datasheet range [0x98..0xAF]. It does not alter
+  behavior for other chips (LP8550/1/2/3 use LP855X_EEPROM_START/END at
+  0xA0–0xA7, and LP8555/7 use their own ranges; see
+  drivers/video/backlight/lp855x_bl.c:23-24,35-38).
 
- drivers/pmdomain/apple/pmgr-pwrstate.c | 1 +
- 1 file changed, 1 insertion(+)
+Risk and regression assessment
+- Small, contained fix: One-line macro change in a single driver file;
+  no API/ABI or architectural changes.
+- Low regression risk:
+  - Only affects LP8556 and only the ROM programming acceptance window.
+  - In-tree DTs for LP8556 commonly use 0xA0+ (e.g.,
+    arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-
+    castor.dts:41), so existing configurations remain unaffected.
+  - ACPI-enumerated LP8556 systems do not use ROM programming path (they
+    read back registers), so they are unaffected by the range check.
+  - Security impact: none; this is a correctness change to permitted I2C
+    write addresses for the device’s configuration space.
 
-diff --git a/drivers/pmdomain/apple/pmgr-pwrstate.c b/drivers/pmdomain/apple/pmgr-pwrstate.c
-index 9467235110f46..82c33cf727a82 100644
---- a/drivers/pmdomain/apple/pmgr-pwrstate.c
-+++ b/drivers/pmdomain/apple/pmgr-pwrstate.c
-@@ -306,6 +306,7 @@ static int apple_pmgr_ps_probe(struct platform_device *pdev)
- }
+Stable backport criteria
+- Fixes a real bug: Corrects the ROM region mapping for LP8556 so valid
+  configuration writes are no longer dropped.
+- Minimal and clearly scoped: One constant change; code paths only in a
+  leaf driver.
+- No feature addition or architectural refactor.
+- Touches a non-critical subsystem (backlight), and the behavior change
+  is limited to enabling previously valid writes per datasheet.
+- Reviewed-by and signed-off chain present; commit rationale is clear
+  and tied to the datasheet.
+
+Conclusion
+- This is a safe, data-sheet-backed correctness fix that can affect
+  actual device behavior for LP8556 users relying on 0x98–0x9F
+  configuration. It is small, low risk, and appropriate for stable
+  backporting.
+
+ drivers/video/backlight/lp855x_bl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
+index 7075bfab59c4d..d191560ce285f 100644
+--- a/drivers/video/backlight/lp855x_bl.c
++++ b/drivers/video/backlight/lp855x_bl.c
+@@ -22,7 +22,7 @@
+ #define LP855X_DEVICE_CTRL		0x01
+ #define LP855X_EEPROM_START		0xA0
+ #define LP855X_EEPROM_END		0xA7
+-#define LP8556_EPROM_START		0xA0
++#define LP8556_EPROM_START		0x98
+ #define LP8556_EPROM_END		0xAF
  
- static const struct of_device_id apple_pmgr_ps_of_match[] = {
-+	{ .compatible = "apple,t8103-pmgr-pwrstate" },
- 	{ .compatible = "apple,pmgr-pwrstate" },
- 	{}
- };
+ /* LP8555/7 Registers */
 -- 
 2.51.0
 
