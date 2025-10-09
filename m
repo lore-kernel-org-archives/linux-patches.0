@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E68E1C84CB;
-	Thu,  9 Oct 2025 16:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCCA230BEC;
+	Thu,  9 Oct 2025 16:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025610; cv=none; b=I8BiKjY+F8M/QyCWIGo3ZNujyQKmVNY5x3XDpPw0DU443vHWJwwz/JLeYkelGk6212fgE3o4xaee56ildD4tSSxgRPLILPt16JtDN5foEgJhP3hEY9fMzdjbNynnwd1hRI8mXz0d2QkjQ7O5ujDnZIexhoJqYPb7Ep6QMA81quU=
+	t=1760025612; cv=none; b=Y9agvMkqhtpnCUC2Fb7hRjVfdOjnijWz7MBiMrWGaH25wI0qmNVv0WFHoigJ79vVRsB0fPIQq7RVoxmZ0+mO7oxltcGY3bEglmrovdq5Gy/4zqnJabLPp4Q3yQieMEZPm6ajlGMh2+vr3zEjSMU4zgxIVRTIbVs/SwJBtonr1TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025610; c=relaxed/simple;
-	bh=PFQ0pWULKOnJS7MiNCPcj8bi1fB18R/7ZrXadRgKnG4=;
+	s=arc-20240116; t=1760025612; c=relaxed/simple;
+	bh=NMWhqpztKsNMnHx4nh4GQe9VPNSbedFScB58mPNOEKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WP89GwIgrNRHRa0EJvMmksOSgybCaMMTqG/KVQ1bPim40vlCYvek8bnjAG/XSfu1La8arjKzVzWZNvWw7OafwqsF6R2thpSs7CG6GOTDNPNnW8vKtxpbunieikyCxn55G2EStDLOe9Pm9UbnOzfAdn2/vX4A42zluIJNl5Deae0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WW34872i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KIB5kHNZKVuiblWOjdGFS5SuNJIJqmfEer2ceQmYVjelwK32Yq2oNnDh7qnb/MicTg7Gez2boMZvNkt9qSqiTtxx60u9stRFjlGggCheqhqBs+/C8/59PHBq60/OcSs3iT3+azvI/r8YvMkGy+HANznsMcmB5nvVkE4DBYKcAgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vQ6Y2Nc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WW34872i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69439C4CEE7;
-	Thu,  9 Oct 2025 16:00:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vQ6Y2Nc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9691BC4CEF7;
+	Thu,  9 Oct 2025 16:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025610;
-	bh=PFQ0pWULKOnJS7MiNCPcj8bi1fB18R/7ZrXadRgKnG4=;
+	s=k20201202; t=1760025612;
+	bh=NMWhqpztKsNMnHx4nh4GQe9VPNSbedFScB58mPNOEKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW34872iSFr+jgVJFjfLqkyZYRI24MyRFr7TMmqjuIHb2GCWRgUUdyQA5ZzLHx71X
-	 cdRslwtiAKlzUeY4mFcPSFiWOkInC0rmOtX3yQqR8/B9yIklUd9M3LfYzLbJbhVRdH
-	 zhO1QOUzyhA9vB6vJBjbweLAVoYzuSnd7x7eaq6fMb/aqhkeWJUd52ytvh/1tpg17O
-	 nnMO0QTlsrFQ/XtN6aUjIDfoonjoC7cRWKfdThk5XQ9ECrcpEGs3mMVzHIgMSmN4t2
-	 wiTp0MI5XRnR8/nqL34Tp6ZJ50Rta6eVtRFzXxmnOGHMImQgWaJ3l6BZCb987Dmyot
-	 Gsf+e1iUaMz4g==
+	b=vQ6Y2Nc3E5Ker5SrKnQcpTm/0pxfnVziosQKN71skA0fbcTOMC/UX8wN6aVSHbpRb
+	 tFAqYQcwV9Qh4Jb6hJzHfIgN5eJaV6A2xOWzPUq1T1JffduBWxjc6VwL78T6QESs8M
+	 RqagDqo7IksaEvodbezhi/hwnSyyaIKBvm+76GbFvMlLzE2rR+0HXxjNTCS/0wHCcS
+	 LJChqPJsTjr5qys7U872ZpVVauSddl6bhPwYyDlFX224Zuwk93oLdvazJj3qhxSC/L
+	 EqgRSBAmMa0Als1VWWsCKRPOQkE2FozJzPhwBlOvoV9Z7wVu/avzWJ0wEdhG3TcxB5
+	 2SB3Ig4BxsKtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-6.12] i3c: mipi-i3c-hci-pci: Add support for Intel Wildcat Lake-U I3C
-Date: Thu,  9 Oct 2025 11:55:39 -0400
-Message-ID: <20251009155752.773732-73-sashal@kernel.org>
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Dan Schatzberg <dschatzberg@meta.com>,
+	Tejun Heo <tj@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	hannes@cmpxchg.org,
+	mkoutny@suse.com,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	cgroups@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] bpf: Do not limit bpf_cgroup_from_id to current's namespace
+Date: Thu,  9 Oct 2025 11:55:40 -0400
+Message-ID: <20251009155752.773732-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,93 +58,164 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d515503f3c8a8475b2f78782534aad09722904e1 ]
+[ Upstream commit 2c895133950646f45e5cf3900b168c952c8dbee8 ]
 
-Add I3C controller PCI IDs on Intel Wildcat Lake-U.
+The bpf_cgroup_from_id kfunc relies on cgroup_get_from_id to obtain the
+cgroup corresponding to a given cgroup ID. This helper can be called in
+a lot of contexts where the current thread can be random. A recent
+example was its use in sched_ext's ops.tick(), to obtain the root cgroup
+pointer. Since the current task can be whatever random user space task
+preempted by the timer tick, this makes the behavior of the helper
+unreliable.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250808131732.1213227-1-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Refactor out __cgroup_get_from_id as the non-namespace aware version of
+cgroup_get_from_id, and change bpf_cgroup_from_id to make use of it.
+
+There is no compatibility breakage here, since changing the namespace
+against which the lookup is being done to the root cgroup namespace only
+permits a wider set of lookups to succeed now. The cgroup IDs across
+namespaces are globally unique, and thus don't need to be retranslated.
+
+Reported-by: Dan Schatzberg <dschatzberg@meta.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20250915032618.1551762-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES - This patch fixes a real functional bug in `bpf_cgroup_from_id()`
+that breaks sched_ext and other BPF users when the helper runs from
+contexts where `current` lives in an unrelated cgroup namespace.
 
-- What changed: Only two new PCI IDs were added to the Intel entry list
-  in `drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:126` to allow
-  binding on Wildcat Lake-U:
-  - `/* Wildcat Lake-U */` with `0x4d7c` and `0x4d6f` mapped to
-    `intel_info` (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-
-    pci.c:127-129`).
-  - No probe/remove logic or resource handling changed; the rest of the
-    table remains for Panther Lake-H/P
-    (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:130-136`).
+**Bug Details**
+- Today `bpf_cgroup_from_id()` simply calls `cgroup_get_from_id()`
+  (`kernel/bpf/helpers.c:2539`), and that helper rejects IDs not visible
+  from `current`’s namespace via the `cgroup_is_descendant()` check
+  (`kernel/cgroup/cgroup.c:6407`). When the kfunc is invoked from timer
+  and irq contexts (e.g. sched_ext `ops.tick()`), `current` is just
+  whatever user task was interrupted, so the lookup spuriously returns
+  `NULL` and the BPF scheduler treats valid cgroups as gone.
+- Documentation already describes the ID lookup as global
+  (`Documentation/bpf/kfuncs.rst:653`), so current behaviour contradicts
+  the documented contract and leads to unpredictable failures for BPF
+  programs that cache cgroup IDs.
 
-- Binding behavior: The new IDs use the same `driver_data`
-  (`intel_info`) as existing Panther Lake entries, which runs the Intel-
-  specific init reset sequence (`mipi_i3c_hci_pci_intel_init`) that
-  ioremaps a small private window and toggles the reset bit
-  (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:28-50`). This is
-  a contained and proven path already used for Panther Lake.
+**Fix Mechanics**
+- The patch factors the namespace-agnostic portion of the lookup into a
+  new `__cgroup_get_from_id()` placed directly above the existing helper
+  in `kernel/cgroup/cgroup.c` (~6376 after applying the change). That
+  routine mirrors the old code path but returns as soon as the
+  refcounted `struct cgroup` is acquired, skipping the namespace filter.
+- `bpf_cgroup_from_id()` is switched to call the new helper
+  (`kernel/bpf/helpers.c:2539` post-patch), so BPF programs always see
+  the globally unique ID mapping they rely on. The public declaration in
+  `include/linux/cgroup.h:653` is added so other in-kernel users can opt
+  into the unrestricted lookup if they intentionally need it.
+- The original `cgroup_get_from_id()` continues to enforce namespace
+  visibility for existing callers (block layer, memcg, BPF iterators),
+  so their semantics are unchanged.
 
-- Scope and risk:
-  - No functional changes, no API/ABI changes, no control flow changes;
-    strictly a device-ID enablement in a leaf driver.
-  - Risk of regression is minimal because the driver will only bind on
-    systems with those exact Intel vendor/device IDs. Systems without
-    this hardware are unaffected.
-  - Architectural impact is nil; this does not touch core I3C, PCI, or
-    shared subsystems—only the HCI PCI glue driver’s ID table.
+**Risk Assessment**
+- Behaviour only widens the set of IDs that succeed for this BPF kfunc;
+  no kernel data structures or locking rules change. The lookup and
+  refcount handling remain identical, so regression risk is low.
+- The broader visibility is acceptable because accessing kfuncs of this
+  class already requires privileged BPF programs; the cgroup maintainers
+  (Acked-by: Tejun Heo) agreed the helper should operate on the global
+  namespace.
+- No new exports or user-visible ABI are introduced—the change is
+  confined to in-kernel helpers and a single BPF kfunc.
 
-- User impact: Without these IDs, Wildcat Lake-U systems with MIPI I3C
-  HCI on PCI will not have the I3C controller bound by this driver,
-  reducing functionality. Adding the IDs enables existing code paths for
-  a new platform, which is a classic stable backport case.
+**Stable Backport Notes**
+- The patch is self-contained and applies cleanly as long as commit
+  332ea1f697be (“bpf: Add bpf_cgroup_from_id() kfunc”) is present, which
+  is true for current stable lines. No follow-up fixes are required.
+- Without it, sched_ext BPF schedulers and other consumers that cache
+  cgroup IDs will continue to misbehave whenever executed from
+  asynchronous contexts, so backporting is warranted.
 
-- Stable policy alignment:
-  - This is not a new feature; it’s device-ID enablement for existing
-    support. Such ID additions are routinely accepted into stable as
-    low-risk hardware enablement.
-  - No “Fixes”/“Cc: stable” tags, but stable trees regularly take ID-
-    only patches when they unlock existing drivers for shipping
-    hardware.
+ include/linux/cgroup.h |  1 +
+ kernel/bpf/helpers.c   |  2 +-
+ kernel/cgroup/cgroup.c | 24 ++++++++++++++++++++----
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
-- Dependencies/constraints:
-  - Backport only to stable branches that already contain
-    `MIPI_I3C_HCI_PCI` and this PCI glue driver (initially added with
-    Panther Lake support). For branches older than that introduction,
-    this would imply pulling in the entire driver, which exceeds
-    minimal-risk backporting.
-  - In branches where `intel_info` and the Intel init/reset sequence are
-    present and in use for Panther Lake, these IDs integrate cleanly.
-
-Conclusion: The patch is a small, contained, low-risk device-ID addition
-enabling existing functionality on Wildcat Lake-U. It fits stable
-backport criteria and should be backported to applicable stable trees
-that already include the MIPI I3C HCI PCI driver.
-
- drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
-index c6c3a3ec11eae..08e6cbdf89cea 100644
---- a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
-@@ -124,6 +124,9 @@ static void mipi_i3c_hci_pci_remove(struct pci_dev *pci)
+diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
+index b18fb5fcb38e2..b08c8e62881cd 100644
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -650,6 +650,7 @@ static inline void cgroup_kthread_ready(void)
  }
  
- static const struct pci_device_id mipi_i3c_hci_pci_devices[] = {
-+	/* Wildcat Lake-U */
-+	{ PCI_VDEVICE(INTEL, 0x4d7c), (kernel_ulong_t)&intel_info},
-+	{ PCI_VDEVICE(INTEL, 0x4d6f), (kernel_ulong_t)&intel_info},
- 	/* Panther Lake-H */
- 	{ PCI_VDEVICE(INTEL, 0xe37c), (kernel_ulong_t)&intel_info},
- 	{ PCI_VDEVICE(INTEL, 0xe36f), (kernel_ulong_t)&intel_info},
+ void cgroup_path_from_kernfs_id(u64 id, char *buf, size_t buflen);
++struct cgroup *__cgroup_get_from_id(u64 id);
+ struct cgroup *cgroup_get_from_id(u64 id);
+ #else /* !CONFIG_CGROUPS */
+ 
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 8af62cb243d9e..0bde01edf5e6e 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2540,7 +2540,7 @@ __bpf_kfunc struct cgroup *bpf_cgroup_from_id(u64 cgid)
+ {
+ 	struct cgroup *cgrp;
+ 
+-	cgrp = cgroup_get_from_id(cgid);
++	cgrp = __cgroup_get_from_id(cgid);
+ 	if (IS_ERR(cgrp))
+ 		return NULL;
+ 	return cgrp;
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 77d02f87f3f12..c62b98f027f99 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6373,15 +6373,15 @@ void cgroup_path_from_kernfs_id(u64 id, char *buf, size_t buflen)
+ }
+ 
+ /*
+- * cgroup_get_from_id : get the cgroup associated with cgroup id
++ * __cgroup_get_from_id : get the cgroup associated with cgroup id
+  * @id: cgroup id
+  * On success return the cgrp or ERR_PTR on failure
+- * Only cgroups within current task's cgroup NS are valid.
++ * There are no cgroup NS restrictions.
+  */
+-struct cgroup *cgroup_get_from_id(u64 id)
++struct cgroup *__cgroup_get_from_id(u64 id)
+ {
+ 	struct kernfs_node *kn;
+-	struct cgroup *cgrp, *root_cgrp;
++	struct cgroup *cgrp;
+ 
+ 	kn = kernfs_find_and_get_node_by_id(cgrp_dfl_root.kf_root, id);
+ 	if (!kn)
+@@ -6403,6 +6403,22 @@ struct cgroup *cgroup_get_from_id(u64 id)
+ 
+ 	if (!cgrp)
+ 		return ERR_PTR(-ENOENT);
++	return cgrp;
++}
++
++/*
++ * cgroup_get_from_id : get the cgroup associated with cgroup id
++ * @id: cgroup id
++ * On success return the cgrp or ERR_PTR on failure
++ * Only cgroups within current task's cgroup NS are valid.
++ */
++struct cgroup *cgroup_get_from_id(u64 id)
++{
++	struct cgroup *cgrp, *root_cgrp;
++
++	cgrp = __cgroup_get_from_id(id);
++	if (IS_ERR(cgrp))
++		return cgrp;
+ 
+ 	root_cgrp = current_cgns_cgroup_dfl();
+ 	if (!cgroup_is_descendant(cgrp, root_cgrp)) {
 -- 
 2.51.0
 
