@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606422ECE82;
-	Thu,  9 Oct 2025 15:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B1E2F069E;
+	Thu,  9 Oct 2025 15:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025526; cv=none; b=i/kxULov4/0S5/kP0fLYHPr+uWSPThVop99DQCvJKcM4lg5GY3DTQzTX81AyO8iPyLX8U3KKjBK/KgVN+QdafRcTNW7OfR7AjXWPJD3tJ5uwIKrUoZRHQUnYnf/0X37+l+lKrSxCbiTDGfAPVPjnaqsf0CxROmlzYz5ZtCIZmec=
+	t=1760025529; cv=none; b=fcbSXXB4rcAQfnTvDdp6/BoDzwh+a6wfhAl0wWLW4mvt9D+sM0NNbb8EG27DycgaSS1CvDBfZkLlZhvbb1bhuKVAYc7zA9iabR8BmVW3vpMJSmN41/98prsMF1J9aSLK8R2MMvjlUSJkzRWyedhIlehJuag1oRvkjCxPGAFj8Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025526; c=relaxed/simple;
-	bh=QCsXN+2MwVIE/kMj/+64HJt1HbB8Ev1JwllW9t42zFY=;
+	s=arc-20240116; t=1760025529; c=relaxed/simple;
+	bh=ZZIxBFUcwOaK5MRt4WZlCsfrNjmgd3wlboFkVO2mY9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkAbpSHa0Noa7uzTDFEiWr3jS4Kg3NV8b8KDJwYttdmZROp2e2juQCzd8NcSy50tPfMggibq/j6ew0dYdCqA2hRj5tVmqRB+84k9qCe9HdhNrg4O+TdpcSNd1GxIc6v9KWp2IzEHloNyKNEaIFkwwp2djiMcBJ+Nzj+/HDtjYfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFx6YcvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WnmCn9LbLA3TqQea545pJ/RT6HoF5avxBfWgFe29q507GasJDc7sQNbCG1GHpuGRRWCpbuuPitZ8QNWoPx9xhix3E6d8dtq3QdHa49pOj6o3lnOEzZuyCo2lsaLxle1xo6feRJ/+/0nAln3AfFb54O4Nm4kgUTkOsVhlEyBv6mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BsaPI34R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFx6YcvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A142C4CEE7;
-	Thu,  9 Oct 2025 15:58:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BsaPI34R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52E7C4CEE7;
+	Thu,  9 Oct 2025 15:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025526;
-	bh=QCsXN+2MwVIE/kMj/+64HJt1HbB8Ev1JwllW9t42zFY=;
+	s=k20201202; t=1760025529;
+	bh=ZZIxBFUcwOaK5MRt4WZlCsfrNjmgd3wlboFkVO2mY9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFx6YcvD05RvMT6iqZMZuT+mU6tJG2R31+04hEnSTIiZkTBU2aJqAWJYtuK9stqO+
-	 8QqX0bsBvqjWeBE5BOxwtejWWkSZ51YlaK7dmyPF3IcsI+OCj2FyK7wyNdsqFNTYXY
-	 2i7AzErcrb2lStLKyUGq4YyrLJfh4/UM7mjQ/k4beK54i2pPLmZ5eLaaTJODIzt4Gi
-	 2h4ncyHW4pyG+tl7sn6jNNZSV2b3vxOHGn0OWVzt0XvNha64HQ2q6iV5tZlFZTg1UH
-	 4KtDMnra4D+EQBoAifdx8VnbllXiX7pVhPiqyug2k67KbexyPWpRV8EtrjjaEwsN8G
-	 3WcsO8fLKjb4g==
+	b=BsaPI34RbiTERwpZkaONtoptYt1RA0gXMurCUAz7nkoKG7av1EQxvOOX0TlOnpbdh
+	 x86k/Y1EKtg9uEMSlgaa+DOUqP4in1AXufjGC8J5g+B4UFD6AoaLaLw679GsliPj3Q
+	 nXY2lx80UiKKkruVgLgWjA/r7nsfspoTJpGALMYIZrGUqa315b/LJganL196nBBdZ9
+	 bM4q/AYcd1u12SpT8ORrONoAupn5QpAxSrIMR7D329+L7nkDWWIZAAWkEr/3heyOwJ
+	 HmAECfOfYhpKl9G3o/rPmtt1KGnXTcHqEB+CxcwTof9mgYUX7tvWbcBbHgWcMPN6yE
+	 fE1Jj6X/7VXPw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Biju Das <biju.das.jz@bp.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] spi: rpc-if: Add resume support for RZ/G3E
-Date: Thu,  9 Oct 2025 11:54:56 -0400
-Message-ID: <20251009155752.773732-30-sashal@kernel.org>
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	kkartik@nvidia.com,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.10] soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
+Date: Thu,  9 Oct 2025 11:54:57 -0400
+Message-ID: <20251009155752.773732-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,100 +55,186 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit ad4728740bd68d74365a43acc25a65339a9b2173 ]
+[ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
 
-On RZ/G3E using PSCI, s2ram powers down the SoC. After resume,
-reinitialize the hardware for SPI operations.
+Add missing Tegra114 nvmem cells and fuse lookups which were added for
+Tegra124+ but omitted for Tegra114.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20250921112649.104516-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES - Restores the Tegra114 nvmem coverage that regressed when the
+driver switched to SoC-specific cell tables.
+- `drivers/soc/tegra/fuse/fuse-tegra30.c:120-236` now defines the
+  Tegra114 fuse cells and lookup table, re-exposing the TSENSOR and XUSB
+  calibration words that lived in the old global list before commit
+  bea06d776d8b2 (“Use SoC specific nvmem cells”). Without these entries
+  the Tegra114 nvmem provider registers with zero cells, so every
+  `nvmem_cell_get()` for legacy device-trees (the whole reason for
+  `nvmem_add_cell_lookups()` in 9f94fadd75d34) falls back to `-ENOENT`,
+  breaking thermal/xusb calibration access that previously worked.
+- `drivers/soc/tegra/fuse/fuse-tegra30.c:244-252` wires those tables
+  into `tegra114_fuse_soc`, so early boot (`tegra_init_fuse()`) and the
+  runtime probe both repopulate the lookups; the offsets match what
+  existing Tegra114 code already reads directly (e.g. speedo data at
+  0x12c/0x134), so the fix is consistent with the silicon layout.
+- Change is data-only for `CONFIG_ARCH_TEGRA_114_SOC`, touching no other
+  SoCs, so the regression fix is low risk and backports cleanly to any
+  stable branch that already has bea06d776d8b2.
 
-- What changed: The resume callback now reinitializes the underlying
-  RPC-IF hardware by calling `rpcif_hw_init(dev, false)` before resuming
-  the SPI controller queue. See drivers/spi/spi-rpc-if.c:210. The rest
-  of the resume path remains unchanged and returns
-  `spi_controller_resume(ctlr)` (drivers/spi/spi-rpc-if.c:212). The
-  patch is a small, contained 2-line addition in a single driver file.
+This is a straight bug fix with clear user impact (loss of nvmem cells
+on Tegra114) and should be backported.
 
-- Why it’s needed: On RZ/G3E systems using PSCI, s2ram powers the SoC
-  off, so the RPC-IF/xSPI controller loses register state. The SPI
-  core’s `spi_controller_resume()` does not reconfigure hardware
-  (drivers/spi/spi.c:3519), it only restarts the message queue. Without
-  reinitialization, resumed SPI operations can fail or misbehave. The
-  added `rpcif_hw_init()` reprograms controller registers and ensures
-  the hardware is ready post-resume.
+ drivers/soc/tegra/fuse/fuse-tegra30.c | 122 ++++++++++++++++++++++++++
+ 1 file changed, 122 insertions(+)
 
-- Correctness of the reinit: `rpcif_hw_init()` is the standard hardware
-  bring-up routine used in probe; it resumes runtime PM, reconfigures
-  the controller for the appropriate mode, and then drops the PM
-  reference. See drivers/memory/renesas-rpc-if.c:315. It’s already
-  invoked during probe for the SPI path (drivers/spi/spi-rpc-if.c:173),
-  so reusing it on resume is appropriate and consistent.
-
-- Scope and risk: The change is isolated to RPC-IF SPI driver resume. It
-  does not alter normal operation, only system-suspend resume behavior.
-  The call is idempotent and guarded by runtime PM
-  (pm_runtime_resume_and_get/put inside rpcif_hw_init), minimizing risk.
-  It doesn’t introduce features or architectural changes.
-
-- Impacted platforms: Although the commit message highlights RZ/G3E
-  (xSPI), the reinit is generally safe for other RPC-IF variants too and
-  can only improve robustness after system suspend.
-
-- Stable-tree suitability:
-  - Fixes a real user-visible bug (SPI transactions can fail after S2RAM
-    on RZ/G3E).
-  - Minimal change (two added lines), fully contained in the driver.
-  - Low regression risk and no API or architectural churn.
-  - Touches a specific subsystem driver (SPI/Renesas RPC-IF), not core
-    kernel paths.
-
-- Backport notes (API/context):
-  - `rpcif_hw_init()` currently takes a `struct device *`
-    (drivers/memory/renesas-rpc-if.c:315; include/memory/renesas-rpc-
-    if.h:75). On older stable trees that predate commit a198fcd1d53cb
-    (which changed RPC-IF APIs to pass a device instead of an internal
-    handle), the signature may differ. In such trees, adapt the call
-    accordingly (e.g., pass `rpc->dev` or the older handle type).
-  - Ensure the device passed to `rpcif_hw_init()` is the one holding
-    `rpcif_priv` (in probe we pass `rpc->dev`, which is the parent RPC-
-    IF device). If the stable branch still uses the older arrangement,
-    the backport should call `rpcif_hw_init(rpc->dev, false)` after
-    obtaining `struct rpcif *rpc = spi_controller_get_devdata(ctlr)` in
-    resume.
-  - Macro context (SIMPLE_DEV_PM_OPS vs DEFINE_SIMPLE_DEV_PM_OPS) may
-    differ between branches; this is mechanical and does not affect the
-    substance of the fix.
-
-In summary, this is a classic, low-risk, correctness fix for resume on
-RZ/G3E that should be backported to stable kernels that include the RPC-
-IF xSPI support, with trivial API/context adjustments as needed.
-
- drivers/spi/spi-rpc-if.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
-index 627cffea5d5c7..300a7c10b3d40 100644
---- a/drivers/spi/spi-rpc-if.c
-+++ b/drivers/spi/spi-rpc-if.c
-@@ -207,6 +207,8 @@ static int __maybe_unused rpcif_spi_resume(struct device *dev)
- {
- 	struct spi_controller *ctlr = dev_get_drvdata(dev);
+diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
+index e24ab5f7d2bf1..524fa1b0cd3d6 100644
+--- a/drivers/soc/tegra/fuse/fuse-tegra30.c
++++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
+@@ -117,6 +117,124 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
+ #endif
  
-+	rpcif_hw_init(dev, false);
+ #ifdef CONFIG_ARCH_TEGRA_114_SOC
++static const struct nvmem_cell_info tegra114_fuse_cells[] = {
++	{
++		.name = "tsensor-cpu1",
++		.offset = 0x084,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu2",
++		.offset = 0x088,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-common",
++		.offset = 0x08c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu0",
++		.offset = 0x098,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "xusb-pad-calibration",
++		.offset = 0x0f0,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu3",
++		.offset = 0x12c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-gpu",
++		.offset = 0x154,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem0",
++		.offset = 0x158,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem1",
++		.offset = 0x15c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-pllx",
++		.offset = 0x160,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	},
++};
 +
- 	return spi_controller_resume(ctlr);
- }
- 
++static const struct nvmem_cell_lookup tegra114_fuse_lookups[] = {
++	{
++		.nvmem_name = "fuse",
++		.cell_name = "xusb-pad-calibration",
++		.dev_id = "7009f000.padctl",
++		.con_id = "calibration",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-common",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "common",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu2",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu2",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu3",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu3",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-gpu",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "gpu",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-pllx",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "pllx",
++	},
++};
++
+ static const struct tegra_fuse_info tegra114_fuse_info = {
+ 	.read = tegra30_fuse_read,
+ 	.size = 0x2a0,
+@@ -127,6 +245,10 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
+ 	.init = tegra30_fuse_init,
+ 	.speedo_init = tegra114_init_speedo_data,
+ 	.info = &tegra114_fuse_info,
++	.lookups = tegra114_fuse_lookups,
++	.num_lookups = ARRAY_SIZE(tegra114_fuse_lookups),
++	.cells = tegra114_fuse_cells,
++	.num_cells = ARRAY_SIZE(tegra114_fuse_cells),
+ 	.soc_attr_group = &tegra_soc_attr_group,
+ 	.clk_suspend_on = false,
+ };
 -- 
 2.51.0
 
