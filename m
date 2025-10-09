@@ -1,52 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4868E17BEBF;
-	Thu,  9 Oct 2025 16:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F11231830;
+	Thu,  9 Oct 2025 16:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025624; cv=none; b=h0ahb7r5Dy50kG8V3NbC8mtDY4E8Q81uxqXvgs68GuImSvNpGeaJu+04KdJdjD71FvM0e6w4kTXlwS57eU8xe/scUxFt2CpsAwNXll/UmAnPuilr8TntfB00yqAoCJWRCiWaZGRrAEXpfUk2LYth1ingxVMEmr/W7yL3p8qFLOY=
+	t=1760025625; cv=none; b=ZOMBUUyUjxgH+BfzstnEcOnvqND5zom1/l1cc2mZM33eE4baZp4k0nrOYFxNW1EK+7ijdj3R5VMPZqz6vf3tUZ8pLXSCErtXcbIJYyoZSsb5zjtKGj3MzmvPiPVdMaGvreoqZ19Mp4p15JAUq2PL+rSU5LGZ73/eeVghKnpZvMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025624; c=relaxed/simple;
-	bh=MCNxpi+gF6PTmf5YyW3vdrmaJPLrMMYRhaKG3vK96KM=;
+	s=arc-20240116; t=1760025625; c=relaxed/simple;
+	bh=smqM7IfJYbOM3LA97TKRF0RTFPNqepnOx+Rf4R8Kglw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5aVX7+2OT75eRjJ4NCXlzd//fxR8EhFsly2s3aWP2Gw6H8ijH53X4NhstyWtrSXruCDqhNtqOhzidBtND2eaJt9bP018nyHATCQ5beToh3IQmhvsPYxOKmOPms6LirAOoZ4AYPkDyj558PWrAkNgWTbUb0ioRoCcSHc2aQOwGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BxxmwFll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ajbz5zYttdZHuDiGr5C4P426QlZ/4ibzVRG25LV9aA68uVxH57Ix5BEZD2HpG2Nu/0iA7xZPYjJ5ueuEaUTjjHmuFI6zPlFqJ9DNU7aXC3xP6lpWILLD7rHYl8ar0NpdCAunm8AcCyvntYYPCcmJD9CtbNNDt7Ek4vu7+FJuv2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ecJTauXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BxxmwFll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6940DC4CEE7;
-	Thu,  9 Oct 2025 16:00:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ecJTauXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DB5C4CEF8;
+	Thu,  9 Oct 2025 16:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025624;
-	bh=MCNxpi+gF6PTmf5YyW3vdrmaJPLrMMYRhaKG3vK96KM=;
+	s=k20201202; t=1760025625;
+	bh=smqM7IfJYbOM3LA97TKRF0RTFPNqepnOx+Rf4R8Kglw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxxmwFlleINccwRJwlagBcAT/KyUxqu0bQWZzzfN5tj0ICdkoWeYC3Xa43FGBS8SQ
-	 a6WeKUYe8fpL1X3uGulfEEQcVOLPqO//OzsX0puG/wmpV5u9Q58cNpjNJz9fMvnzbJ
-	 9oNxk13oACJkhK8m8qtXarW5irOmdhVnNogBcLmb3XT8HtYNhBHh+mz/EEveI+K/Ea
-	 PMkxdftK+gjpyvCU7mKuwTitA0Hh9Wxeo8eAQlx83N2FTohQhsdMqxeGGwvVl6zxgU
-	 h9+8BaARZoYvW+i9pSkOhFE/66l+Lq6eQUWDJsa5mnjOifxhDkD9FHD7UdqjQkXvg+
-	 OO2tBnRpl4Dmg==
+	b=ecJTauXMb5a1GnvfoaIGhf5xkh75lJ1llfR3/sE4QmgZmUp0Xwkr7j0EkPVHACs/6
+	 HcMbc2mG9y1HJqpf4TzuAdBQXtEqGIITP3tMOkCVBQEcOQoRB6AKUM9m6JQqur1d9W
+	 /RYDDT9DCdd6wchMyvneM1mJZ/sSPWm7WgB40jDALErJ1jEP3KM3oXVrxdV/wQLDt4
+	 zzhwzwZNnItHgXcWQPLNZOBWcf1/GatJF3jFTRJRYl6Y+EFZ+FrAyNbacbmdR2mrhK
+	 ta4t13+Ve9864iDJ632voOoNxohgyds8ZJGOnA78dpSsa3D7OnuCPeEfv2N2zsabDh
+	 xMuvm9JFWUWqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dan Carpenter <dan.carpenter@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Anders Roxell <anders.roxell@linaro.org>,
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	peterz@infradead.org,
-	usama.anjum@collabora.com,
-	tglx@linutronix.de,
-	ben717@andestech.com,
-	cynthia@andestech.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.16] selftests/futex: Fix futex_wait() for 32bit ARM
-Date: Thu,  9 Oct 2025 11:55:45 -0400
-Message-ID: <20251009155752.773732-79-sashal@kernel.org>
+	lenb@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] tools/power turbostat: Fix incorrect sorting of PMT telemetry
+Date: Thu,  9 Oct 2025 11:55:46 -0400
+Message-ID: <20251009155752.773732-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -56,223 +46,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 237bfb76c90b184f57bb18fe35ff366c19393dc8 ]
+[ Upstream commit cafb47be3f38ad81306bf894e743bebc2ccf66ab ]
 
-On 32bit ARM systems gcc-12 will use 32bit timestamps while gcc-13 and later
-will use 64bit timestamps.  The problem is that SYS_futex will continue
-pointing at the 32bit system call.  This makes the futex_wait test fail like
-this:
+The pmt_telemdir_sort() comparison function was returning a boolean
+value (0 or 1) instead of the required negative, zero, or positive
+value for proper sorting. This caused unpredictable and incorrect
+ordering of telemetry directories named telem0, telem1, ..., telemN.
+Update the comparison logic to return -1, 0, or 1 based on the
+numerical value extracted from the directory name, ensuring correct
+numerical ordering when using scandir.
 
-  waiter failed errno 110
-  not ok 1 futex_wake private returned: 0 Success
-  waiter failed errno 110
-  not ok 2 futex_wake shared (page anon) returned: 0 Success
-  waiter failed errno 110
-  not ok 3 futex_wake shared (file backed) returned: 0 Success
+This change improves stability and correctness when iterating PMT
+telemetry directories.
 
-Instead of compiling differently depending on the gcc version, use the
--D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 options to ensure that 64bit timestamps
-are used.  Then use ifdefs to make SYS_futex point to the 64bit system call.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Link: https://lore.kernel.org/20250827130011.677600-6-bigeasy@linutronix.de
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Recommendation: **YES**
+YES
 
-### Executive Summary
-This commit **SHOULD be backported** to stable kernel trees. In fact, it
-has **ALREADY been backported** by the stable kernel maintainers, which
-serves as the strongest validation of this recommendation.
+- What it fixes
+  - The comparator `pmt_telemdir_sort()` returned a boolean (`0`/`1`)
+    instead of a strict ordering value (<0, 0, >0). This violates the
+    `scandir()`/`qsort()` contract and can produce non-deterministic and
+    incorrect ordering. In 6.17 the buggy line is `return aidx >= bidx;`
+    in `tools/power/x86/turbostat/turbostat.c:1893`.
+  - The fix changes it to return -1/0/1 based on numeric comparison of
+    the index in the `telem%u` name, ensuring proper ascending numeric
+    order. Mainline shows the corrected code as `return (aidx > bidx) ?
+    1 : (aidx < bidx) ? -1 : 0;` in the same function.
 
-### Evidence of Existing Backports
-The upstream commit **237bfb76c90b184f57bb18fe35ff366c19393dc8** has
-already been backported:
-- **1b6a649fe5a94** - Backported by Sasha Levin (Oct 2, 2025) as a
-  dependency of commit ed323aeda5e0
-- **b0217a75057d5** - Another backport by Sasha Levin
+- Why it matters to users
+  - Turbostat iterates PMT telemetry directories with `scandir()` using
+    this comparator at `tools/power/x86/turbostat/turbostat.c:1921`.
+    With an invalid comparator, entries like `telem10` vs `telem2` can
+    be mis-ordered.
+  - The order is used to construct a linked list of PMT MMIO regions
+    “preserving the ordering from sysfs” in `pmt_mmio_open()` at
+    `tools/power/x86/turbostat/turbostat.c:9668` and
+    `tools/power/x86/turbostat/turbostat.c:9688`. Wrong order can
+    misassociate telemetry regions with the intended domains.
+  - The order is also used to compute a “sequence” for identifying a
+    specific PMT instance in `pmt_parse_from_path()` at
+    `tools/power/x86/turbostat/turbostat.c:10526`. Mis-ordering yields
+    wrong `seq` values and incorrect counter selection.
 
-This demonstrates that the stable kernel maintainers have already deemed
-this fix critical enough for backporting.
+- Scope and risk
+  - Change is a one-line, localized fix in a user-space tool
+    (`tools/power/x86/turbostat/turbostat.c`), no architectural changes,
+    no ABI impact, and no dependency on new kernel features.
+  - It directly corrects comparator semantics expected by `scandir()`;
+    risk of regression is minimal and behavior becomes deterministic.
+  - Security impact is negligible; this corrects ordering logic for
+    sysfs directories, not privilege or memory handling.
 
-### Technical Analysis of the Fix
+- History and applicability
+  - The bug was introduced when the PMT directory iterator helper landed
+    (commit “Add PMT directory iterator helper”); 6.17’s turbostat has
+    the buggy `return aidx >= bidx;` line
+    (tools/power/x86/turbostat/turbostat.c:1893).
+  - The mainline fix (“tools/power turbostat: Fix incorrect sorting of
+    PMT telemetry”) updates the comparator to return -1/0/1.
+  - Any stable branch that includes the PMT directory iterator helper
+    should take this fix.
 
-#### Problem Being Solved
-The commit fixes a **real, reproducible test failure** on 32-bit ARM
-systems caused by compiler toolchain evolution:
+- Stable backport criteria
+  - Fixes a user-visible correctness bug in turbostat’s PMT handling.
+  - Small, self-contained, and low risk.
+  - No features added; purely a bug fix improving stability/correctness.
+  - Touches only a userspace tool under `tools/`, not core kernel
+    subsystems.
 
-1. **gcc-12** uses 32-bit timestamps (`time_t`)
-2. **gcc-13+** uses 64-bit timestamps
-3. The `SYS_futex` syscall number remains pointed at the 32-bit syscall
-   even when using 64-bit timestamps
-4. This mismatch causes futex_wait tests to fail with **errno 110
-   (ETIMEDOUT)**
+Given the clear correctness fix, minimal scope, and direct user impact
+in PMT telemetry iteration, this is a strong candidate for stable
+backport.
 
-**Specific failure output from
-tools/testing/selftests/futex/functional/Makefile:3**:
-```
-waiter failed errno 110
-not ok 1 futex_wake private returned: 0 Success
-waiter failed errno 110
-not ok 2 futex_wake shared (page anon) returned: 0 Success
-waiter failed errno 110
-not ok 3 futex_wake shared (file backed) returned: 0 Success
-```
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-#### Code Changes Analysis
-
-**1. Makefile change
-(tools/testing/selftests/futex/functional/Makefile:3)**:
-```c
--CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread $(INCLUDES) $(KHDR_INCLUDES)
-+CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread -D_FILE_OFFSET_BITS=64
--D_TIME_BITS=64 $(INCLUDES) $(KHDR_INCLUDES)
-```
-- Adds `-D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64` to ensure consistent
-  64-bit timestamp usage
-- Eliminates gcc version-dependent behavior
-- Makes the build predictable and reproducible
-
-**2. Header file change
-(tools/testing/selftests/futex/include/futextest.h:61-71)**:
-```c
-+/*
-+ * On 32bit systems if we use "-D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64"
-or if
-+ * we are using a newer compiler then the size of the timestamps will
-be 64bit,
-+ * however, the SYS_futex will still point to the 32bit futex system
-call.
-+ */
-+#if __SIZEOF_POINTER__ == 4 && defined(SYS_futex_time64) && \
-+       defined(_TIME_BITS) && _TIME_BITS == 64
-+# undef SYS_futex
-+# define SYS_futex SYS_futex_time64
-+#endif
-```
-- Adds conditional redirection for 32-bit systems using 64-bit
-  timestamps
-- Builds on top of existing fix from commit 04850819c65c8 (lines 47-58)
-- Handles the specific case where `-D_TIME_BITS=64` forces 64-bit time
-
-### Historical Context
-
-This is the **second fix** in a series addressing futex time64 issues:
-
-1. **First fix** (04850819c65c8 by Cynthia Huang, July 2025): Basic
-   SYS_futex_time64 handling for riscv32
-   - Already backported to: v6.6.103, v6.1.149, v5.15.190, v5.10.241,
-     v5.4.297, v6.16.2, v6.12.43
-
-2. **This fix** (237bfb76c90b1 by Dan Carpenter, Aug 2025):
-   Comprehensive fix for 32-bit ARM with explicit time64 flags
-   - Already backported as dependency of ed323aeda5e0
-
-### Backporting Precedent
-
-Research shows **strong precedent** for backporting selftest fixes:
-- **32% of selftest fixes** (523 out of 1616) in the past year were
-  tagged for stable
-- Similar examples:
-  - **a001cd248ab24**: rseq selftest fix for segfaults with weak symbols
-    (Cc: stable)
-  - **008385efd05e0**: mptcp selftest validation fix (Cc: stable)
-
-### Risk Assessment
-
-**Risk Level: MINIMAL**
-
-**Why this is low risk:**
-1. ✅ **No kernel runtime code changed** - only affects selftests in
-   tools/ directory
-2. ✅ **Small, contained changes** - 2 files, simple compilation flag and
-   conditional
-3. ✅ **Well-tested** - Tested-by: Anders Roxell
-   <anders.roxell@linaro.org>
-4. ✅ **Well-reviewed** - Reviewed-by: André Almeida
-   <andrealmeid@igalia.com>
-5. ✅ **Prevents false failures** - enables correct kernel validation on
-   32-bit ARM
-6. ✅ **Already proven stable** - backported by Sasha Levin without
-   issues
-
-**Benefits of backporting:**
-- ✅ Fixes broken CI/testing infrastructure for 32-bit ARM stable kernels
-- ✅ Ensures accurate kernel validation across different gcc versions
-- ✅ Prevents false negative test results that could hide real bugs
-- ✅ Critical for distributions using gcc-13+ on 32-bit ARM platforms
-
-### Conclusion
-
-**This commit strongly qualifies for stable backporting** based on:
-1. **Fixes important bug**: Real test failures preventing kernel
-   validation
-2. **Small and contained**: Minimal changes, low regression risk
-3. **No architectural changes**: Simple build flag and conditional
-   compilation
-4. **Follows stable rules**: Important bugfix with minimal risk
-5. **Already backported**: Stable maintainers have already approved this
-   fix
-6. **Strong precedent**: Aligns with 32% of selftest fixes being
-   backported
-
-The fact that this has **already been backported by Sasha Levin**
-(stable kernel maintainer) is definitive proof that this commit meets
-all stable kernel criteria.
-
- tools/testing/selftests/futex/functional/Makefile |  2 +-
- tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index 8cfb87f7f7c50..ddfa61d857b9b 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- INCLUDES := -I../include -I../../ $(KHDR_INCLUDES)
--CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread $(INCLUDES) $(KHDR_INCLUDES)
-+CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 $(INCLUDES) $(KHDR_INCLUDES)
- LDLIBS := -lpthread -lrt -lnuma
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 72a280e7a9d59..931bad99277fe 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1890,7 +1890,7 @@ int pmt_telemdir_sort(const struct dirent **a, const struct dirent **b)
+ 	sscanf((*a)->d_name, "telem%u", &aidx);
+ 	sscanf((*b)->d_name, "telem%u", &bidx);
  
- LOCAL_HDRS := \
-diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
-index 7a5fd1d5355e7..3d48e9789d9fe 100644
---- a/tools/testing/selftests/futex/include/futextest.h
-+++ b/tools/testing/selftests/futex/include/futextest.h
-@@ -58,6 +58,17 @@ typedef volatile u_int32_t futex_t;
- #define SYS_futex SYS_futex_time64
- #endif
+-	return aidx >= bidx;
++	return (aidx > bidx) ? 1 : (aidx < bidx) ? -1 : 0;
+ }
  
-+/*
-+ * On 32bit systems if we use "-D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64" or if
-+ * we are using a newer compiler then the size of the timestamps will be 64bit,
-+ * however, the SYS_futex will still point to the 32bit futex system call.
-+ */
-+#if __SIZEOF_POINTER__ == 4 && defined(SYS_futex_time64) && \
-+	defined(_TIME_BITS) && _TIME_BITS == 64
-+# undef SYS_futex
-+# define SYS_futex SYS_futex_time64
-+#endif
-+
- /**
-  * futex() - SYS_futex syscall wrapper
-  * @uaddr:	address of first futex
+ const struct dirent *pmt_diriter_next(struct pmt_diriter_t *iter)
 -- 
 2.51.0
 
