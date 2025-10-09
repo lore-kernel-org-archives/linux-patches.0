@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38342ED843;
-	Thu,  9 Oct 2025 15:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DCF2264AD;
+	Thu,  9 Oct 2025 15:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025531; cv=none; b=VTnU7aggNUcD6LTbF6RxRqjsS09Y6HyxbQzd1JJpjb81LSxZ9fI3tR+GcdQLOyRKqBehlhLNycASufUGisGaP/pOeQG4gK4xJv6WPZaHRN/5NHzImMKfZbTVx+WQAiQGVtRP3qHdt7xzZnfSoiYFGzfGZo32QdXLJiUszF27UFE=
+	t=1760025533; cv=none; b=MhMolcotAZg94x+ItZ2yEDlfNG/ZPRW5ZuZ7EuHkUXcCFS0Gqq9SxPLuIs0G0HSooXrzw3tmuCQWkNf5aX4UktYPmVkHBMwxNTWfAPO88/jh6St9+DL6HXVQmREeCRz7h7JL13eoCbK4yLe0WeH4XxT662E5TOBeM2DwXVlvq1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025531; c=relaxed/simple;
-	bh=cWfVExySnxg9HveIFDJ5+KXFgjKH4j/0JNkeqQkZ+4g=;
+	s=arc-20240116; t=1760025533; c=relaxed/simple;
+	bh=BBv3zfKH3TzdKDHUiZ1Ut8tcytgcXAoCLB3EFatxfr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qfnHkFW+NfF9gjlMvHrpFQGz9OP2aFFxnqu5uoUHru32Cg0+F6Unkliw/PHerTqJJQfmzujL7aXxUZp96MA0oZM7SPHOYQGIxzx91sZg+9ljt8//guyWNPbCLHGQQOTpDt2AR06IaQ6fbInAjDLc1l+9KXG0dmYWuGPiSutH2JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FGfWLkcz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ieGJP2GbQwWfboUo0ofOc/UCXRlBpe6F2RrYOaoTdUnKCB2I+x4eusal0359A9pMTijKTnsMfIbu/LgaDUUXmu3nhugVh5Sw77NsLd1CV1IDAU36wbi9I5e3oDWim5bidxaCVcmfDtC3NTOawgaJ46UQISLkk2hxPihlN6qZUHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEhZuFFE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FGfWLkcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52425C4CEE7;
-	Thu,  9 Oct 2025 15:58:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEhZuFFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4B0C4CEF8;
+	Thu,  9 Oct 2025 15:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025531;
-	bh=cWfVExySnxg9HveIFDJ5+KXFgjKH4j/0JNkeqQkZ+4g=;
+	s=k20201202; t=1760025533;
+	bh=BBv3zfKH3TzdKDHUiZ1Ut8tcytgcXAoCLB3EFatxfr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGfWLkczKgq0uPQeq+LHAi839mJ8de+3Bf4laRrDURJwec87Nyk7LP6sb0KhNjSkx
-	 3+CWb0P7b1dXz8BqABwYlAiSJU+hgueQIpZmBSeYnb5wM68G/oiaf8XSGsfctMeBsi
-	 1Glv2yrLgHxjaCXrJj1dhdBHuNFymhKxyGGb362UL5G6zmJy5Bm7UIVUPQ+zlsPw8j
-	 o6ZLuD3uwaF4Y7fb0PNxj2AJaSUfomABjswe6wORTAV/1ugCG+F2LsjYkX0PxGwX5x
-	 ZBEX3u0IwACU5MenKNBAF/Hgdr2T/fMCcYvdkVcsuPVhA4z81fY+TQLXkDBQAbS57n
-	 BfOpJlLkuD+8A==
+	b=SEhZuFFEOQ24fDPrsMX8YRw/QXs/yo9dJ17QTUejj7D3HmGWXZ8J5e8dBRTS6HNHN
+	 eVd3/2llaWGaNb2TZEItK+WasojKQv5roWaQcViJ+MDzI9wskjH3w/q7naFVZibVV6
+	 9ipLhn14WhvJc7yPBM0rXIdvrdTpOuqPfOLvnIw9J6N6jZqzUGP2euYocQTdYNkfvH
+	 eZIqFPIcP+W0YvvYLn1gn3u1v0PYAzC88k2dlqVpZ3WC2domGZoPH6XToEoays8j5m
+	 SrJb0vRjxuNYhEnTejETOqr1MaVHFKQ0wYA7qVwk5bFum/Vc8FSgMtcfmpSXvEahlc
+	 GyerX6a+yHjZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kaibo Ma <ent3rm4n@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	brendan.higgins@linux.dev,
-	alex.gaynor@gmail.com,
-	linux-kselftest@vger.kernel.org,
-	kunit-dev@googlegroups.com,
-	rust-for-linux@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] rust: kunit: allow `cfg` on `test`s
-Date: Thu,  9 Oct 2025 11:54:58 -0400
-Message-ID: <20251009155752.773732-32-sashal@kernel.org>
+	sre@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] power: supply: qcom_battmgr: handle charging state change notifications
+Date: Thu,  9 Oct 2025 11:54:59 -0400
+Message-ID: <20251009155752.773732-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -57,27 +53,32 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kaibo Ma <ent3rm4n@gmail.com>
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 
-[ Upstream commit c652dc44192d96820d73a7ecd89d275ca7e4355d ]
+[ Upstream commit 41307ec7df057239aae3d0f089cc35a0d735cdf8 ]
 
-The `kunit_test` proc macro only checks for the `test` attribute
-immediately preceding a `fn`. If the function is disabled via a `cfg`,
-the generated code would result in a compile error referencing a
-non-existent function [1].
+The X1E80100 battery management firmware sends a notification with
+code 0x83 when the battery charging state changes, such as switching
+between fast charge, taper charge, end of charge, or any other error
+charging states.
 
-This collects attributes and specifically cherry-picks `cfg` attributes
-to be duplicated inside KUnit wrapper functions such that a test function
-disabled via `cfg` compiles and is marked as skipped in KUnit correctly.
+The same notification code is used with bit[8] set when charging stops
+because the charge control end threshold is reached. Additionally,
+a 2-bit value is included in bit[10:9] with the same code to indicate
+the charging source capability, which is determined by the calculated
+power from voltage and current readings from PDOs: 2 means a strong
+charger over 60W, 1 indicates a weak charger, and 0 means there is no
+charging source.
 
-Link: https://lore.kernel.org/r/20250916021259.115578-1-ent3rm4n@gmail.com
-Link: https://lore.kernel.org/rust-for-linux/CANiq72==48=69hYiDo1321pCzgn_n1_jg=ez5UYXX91c+g5JVQ@mail.gmail.com/ [1]
-Closes: https://github.com/Rust-for-Linux/linux/issues/1185
-Suggested-by: Miguel Ojeda <ojeda@kernel.org>
-Suggested-by: David Gow <davidgow@google.com>
-Signed-off-by: Kaibo Ma <ent3rm4n@gmail.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+These 3-MSB [10:8] in the notification code is not much useful for now,
+hence just ignore them and trigger a power supply change event whenever
+0x83 notification code is received. This helps to eliminate the unknown
+notification error messages.
+
+Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Closes: https://lore.kernel.org/all/r65idyc4of5obo6untebw4iqfj2zteiggnnzabrqtlcinvtddx@xc4aig5abesu/
+Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -85,192 +86,120 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- User-visible bug fixed. Without this change, a Rust KUnit test
-  function annotated with a cfg which disables the function causes a
-  compile error because the generated wrapper still references a non-
-  existent function. In v6.17, the macro only looks for a “[test]”
-  immediately followed by “fn” and blindly emits a wrapper which calls
-  the function (see rust/macros/kunit.rs:1-80 and
-  rust/macros/kunit.rs:112-132 in v6.17). The tree itself even carries a
-  workaround comment noting “Kunit #[test]s do not support `cfg` yet”
-  and gates inside the function body instead of on the attribute
-  (rust/kernel/bitmap.rs:554-569).
+- What it fixes
+  - Unhandled firmware notifications: On X1E80100 the PMIC GLINK
+    firmware emits notification code 0x83 for charging state changes
+    (fast/taper/EOC/error). Today, the driver does not recognize 0x83
+    and logs “unknown notification” without notifying userspace. See
+    default case logging in the current tree:
+    `drivers/power/supply/qcom_battmgr.c:965`.
+  - Bit-extended notifications misparsed: Firmware also sets the 3 MSBs
+    [10:8] on this code for EOC (bit 8) and charging source capability
+    (bits [10:9]), which causes values like 0x183/0x283 to miss all
+    known cases and be treated as unknown. The change masks these bits
+    before the switch.
 
-- Small, contained fix in the Rust KUnit macro. The patch augments only
-  the KUnit proc-macro and sample tests:
-  - Attribute collection: It now collects consecutive attributes and
-    tracks them by name, specifically picking up “cfg” next to “test” so
-    it can be reused (rust/macros/kunit.rs:42-71). This makes test
-    detection tolerant to attribute ordering while still requiring a
-    “test” attribute.
-  - Wrapper guarding + skip semantics: The generated wrapper sets the
-    test status to SKIPPED by default, then encloses the test call
-    inside the copied cfg-guard. If the cfg disables the test, the
-    guarded block is not compiled and the wrapper reports SKIPPED;
-    otherwise it sets SUCCESS and runs the test, with failures correctly
-    recorded via KUnit’s assert mapping (rust/macros/kunit.rs:116-133).
-    The array size computation is slightly refactored but functionally
-    identical (rust/macros/kunit.rs:162-168).
-  - A disabled example test is added to validate the behavior
-    (rust/kernel/kunit.rs:365-371).
+- Code changes and why they are correct
+  - New code constant: Adds `#define NOTIF_BAT_CHARGING_STATE 0x83` so
+    charging-state change notifications are recognized as first-class
+    events (`drivers/power/supply/qcom_battmgr.c:39` in upstream).
+  - Mask unusable MSBs: In `qcom_battmgr_notification()`, masks the
+    notification to the low 8 bits: `notification &= 0xff;` so
+    0x183/0x283 collapse to 0x83 and match the new case
+    (`drivers/power/supply/qcom_battmgr.c:1212` in upstream). This
+    matches the commit message rationale that bits [10:8] carry
+    auxiliary info not used by the driver today.
+  - Trigger userspace update: Adds a switch case for
+    `NOTIF_BAT_CHARGING_STATE` to call
+    `power_supply_changed(battmgr->bat_psy)`, same as other battery-
+    related notifications (`drivers/power/supply/qcom_battmgr.c:1218`).
+    This ensures userspace observes charging state transitions.
+  - Eliminates spurious errors: With masking + case, the default branch
+    which logs “unknown notification: %#x” (seen in current code at
+    `drivers/power/supply/qcom_battmgr.c:965`) is no longer hit for 0x83
+    variants, addressing the reported log spam.
 
-- No architectural or ABI changes; limited blast radius.
-  - This affects only the Rust KUnit test infrastructure and is active
-    only when KUnit is enabled: the module is `#[cfg(CONFIG_KUNIT="y")]`
-    (rust/macros/kunit.rs:73-78).
-  - Production kernels without KUnit are unaffected. Runtime code paths
-    are unchanged; only test wrappers and macro expansion change.
+- Scope and dependencies
+  - Single-file, minimal delta: Only
+    `drivers/power/supply/qcom_battmgr.c` is touched with 1 new define,
+    1 mask line, and 1 new switch case arm. No ABI or architectural
+    changes.
+  - Self-contained: No new APIs, headers, or cross-driver dependencies.
+    The driver already processes other notifications and calls
+    `power_supply_changed()` in the same function, so behavior is
+    consistent.
+  - Platform relevance: The tree already contains X1E80100 support
+    (e.g., compatible present in this driver), so affected systems exist
+    in stable lines and will benefit immediately.
 
-- Correctness and behavior details.
-  - The new wrapper’s pre-set status to SUCCESS before the assert is
-    benign: KUnit assert macros report failures and abort the test,
-    overriding status (see kunit_assert! and related handling in
-    rust/kernel/kunit.rs:55-151). When cfg is false, the function symbol
-    is not referenced because the guarded block is not compiled,
-    avoiding the previous compile error entirely.
-  - Only cfg attributes are duplicated into the wrapper, leaving other
-    attributes intact on the original function; the macro still strips
-    only the #[test] attribute from the function body
-    (rust/macros/kunit.rs:176-195).
+- Risk assessment
+  - Low regression risk: Masking to 8 bits only affects notification
+    decoding and only for codes using upper bits as flags. All existing
+    known codes in this driver are within 1 byte; masking does not
+    collide with other codes. If a different notification someday uses
+    MSBs meaningfully, it will still be decoded to its base 8-bit code,
+    which is how the driver already categorizes notifications.
+  - Correct functional behavior: Treating charging state changes like
+    other battery property/status notifications by calling
+    `power_supply_changed()` is aligned with existing patterns and will
+    simply refresh properties from firmware.
+  - No behavioral change on platforms that do not emit 0x83 or do not
+    set the MSBs; the new case just won’t be hit.
 
-- Stable backport considerations.
-  - Clean backport target: v6.17.y and newer. v6.17 already has KUnit’s
-    Rust assert mapping and the `is_test_result_ok()` plumbing that this
-    wrapper uses (rust/macros/kunit.rs:112-156 in v6.17;
-    rust/kernel/kunit.rs:169-192). The patch slots in cleanly there.
-  - Older stable series (e.g., v6.15.y/v6.16.y) use an earlier version
-    of the macro (e.g., rust/macros/kunit.rs in v6.15) lacking assert
-    mapping and absolute paths. Backporting to those would require
-    additional prerequisite commits (“use absolute paths in macros
-    referencing core and kernel”, KUnit assert mapping, and Result
-    support). Without those prerequisites, this patch won’t apply or
-    compile as-is. For those older trees, either adapt the patch to that
-    macro baseline or avoid backporting.
-  - No explicit “Cc: stable@vger.kernel.org” in the commit, but this is
-    a low-risk build fix for KUnit/Rust that prevents compile errors and
-    reports disabled tests correctly as SKIPPED. It aligns with stable
-    policies for important, contained fixes in test infrastructure.
+- User impact
+  - Fixes stale charging state in user space that otherwise would not
+    update on state transitions without some other event.
+  - Removes persistent “unknown notification” error messages that
+    confuse users and integrate logs.
 
-- Risk assessment.
-  - Low regression risk: confined to test macro expansion with KUnit
-    enabled; no impact on production code paths.
-  - Attribute scanning remains conservative: it still requires a #[test]
-    attribute and does not broaden test discovery beyond that. It only
-    improves tolerance to preceding attributes and adds cfg duplication
-    for correctness.
+- Stable backport criteria
+  - Fixes a real user-visible bug (missing updates + log spam) on
+    hardware supported by stable trees.
+  - Change is small, contained, and non-invasive; no features or
+    architecture changes.
+  - Touches a driver in the power supply subsystem (not a core/critical
+    kernel subsystem), further reducing risk.
+  - Upstream rationale is clear; commit includes a report and a public
+    discussion link (“Closes:” tag), consistent with a corrective change
+    rather than a feature.
 
-Given the above, this is a good candidate for backporting to stable
-trees which already contain the modern Rust KUnit macro (notably
-v6.17.y+).
+Conclusion: This is a textbook, low-risk bug fix that improves
+correctness and logging. It should be backported to stable trees that
+include `qcom_battmgr` and X1E80100/SC8280XP variants.
 
- rust/kernel/kunit.rs |  7 +++++++
- rust/macros/kunit.rs | 48 +++++++++++++++++++++++++++++++++-----------
- 2 files changed, 43 insertions(+), 12 deletions(-)
+ drivers/power/supply/qcom_battmgr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-index 41efd87595d6e..32640dfc968fe 100644
---- a/rust/kernel/kunit.rs
-+++ b/rust/kernel/kunit.rs
-@@ -357,4 +357,11 @@ fn rust_test_kunit_example_test() {
-     fn rust_test_kunit_in_kunit_test() {
-         assert!(in_kunit_test());
-     }
-+
-+    #[test]
-+    #[cfg(not(all()))]
-+    fn rust_test_kunit_always_disabled_test() {
-+        // This test should never run because of the `cfg`.
-+        assert!(false);
-+    }
- }
-diff --git a/rust/macros/kunit.rs b/rust/macros/kunit.rs
-index 81d18149a0cc9..b395bb0536959 100644
---- a/rust/macros/kunit.rs
-+++ b/rust/macros/kunit.rs
-@@ -5,6 +5,7 @@
- //! Copyright (c) 2023 José Expósito <jose.exposito89@gmail.com>
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index fdb2d1b883fc5..c9dc8b378aa1e 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -30,8 +30,9 @@ enum qcom_battmgr_variant {
+ #define NOTIF_BAT_PROPERTY		0x30
+ #define NOTIF_USB_PROPERTY		0x32
+ #define NOTIF_WLS_PROPERTY		0x34
+-#define NOTIF_BAT_INFO			0x81
+ #define NOTIF_BAT_STATUS		0x80
++#define NOTIF_BAT_INFO			0x81
++#define NOTIF_BAT_CHARGING_STATE	0x83
  
- use proc_macro::{Delimiter, Group, TokenStream, TokenTree};
-+use std::collections::HashMap;
- use std::fmt::Write;
+ #define BATTMGR_BAT_INFO		0x9
  
- pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
-@@ -41,20 +42,32 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
-     // Get the functions set as tests. Search for `[test]` -> `fn`.
-     let mut body_it = body.stream().into_iter();
-     let mut tests = Vec::new();
-+    let mut attributes: HashMap<String, TokenStream> = HashMap::new();
-     while let Some(token) = body_it.next() {
-         match token {
--            TokenTree::Group(ident) if ident.to_string() == "[test]" => match body_it.next() {
--                Some(TokenTree::Ident(ident)) if ident.to_string() == "fn" => {
--                    let test_name = match body_it.next() {
--                        Some(TokenTree::Ident(ident)) => ident.to_string(),
--                        _ => continue,
--                    };
--                    tests.push(test_name);
-+            TokenTree::Punct(ref p) if p.as_char() == '#' => match body_it.next() {
-+                Some(TokenTree::Group(g)) if g.delimiter() == Delimiter::Bracket => {
-+                    if let Some(TokenTree::Ident(name)) = g.stream().into_iter().next() {
-+                        // Collect attributes because we need to find which are tests. We also
-+                        // need to copy `cfg` attributes so tests can be conditionally enabled.
-+                        attributes
-+                            .entry(name.to_string())
-+                            .or_default()
-+                            .extend([token, TokenTree::Group(g)]);
-+                    }
-+                    continue;
-                 }
--                _ => continue,
-+                _ => (),
-             },
-+            TokenTree::Ident(i) if i.to_string() == "fn" && attributes.contains_key("test") => {
-+                if let Some(TokenTree::Ident(test_name)) = body_it.next() {
-+                    tests.push((test_name, attributes.remove("cfg").unwrap_or_default()))
-+                }
-+            }
-+
-             _ => (),
-         }
-+        attributes.clear();
-     }
+@@ -947,12 +948,14 @@ static void qcom_battmgr_notification(struct qcom_battmgr *battmgr,
+ 	}
  
-     // Add `#[cfg(CONFIG_KUNIT="y")]` before the module declaration.
-@@ -100,11 +113,22 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
-     let mut test_cases = "".to_owned();
-     let mut assert_macros = "".to_owned();
-     let path = crate::helpers::file();
--    for test in &tests {
-+    let num_tests = tests.len();
-+    for (test, cfg_attr) in tests {
-         let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{test}");
--        // An extra `use` is used here to reduce the length of the message.
-+        // Append any `cfg` attributes the user might have written on their tests so we don't
-+        // attempt to call them when they are `cfg`'d out. An extra `use` is used here to reduce
-+        // the length of the assert message.
-         let kunit_wrapper = format!(
--            "unsafe extern \"C\" fn {kunit_wrapper_fn_name}(_test: *mut ::kernel::bindings::kunit) {{ use ::kernel::kunit::is_test_result_ok; assert!(is_test_result_ok({test}())); }}",
-+            r#"unsafe extern "C" fn {kunit_wrapper_fn_name}(_test: *mut ::kernel::bindings::kunit)
-+            {{
-+                (*_test).status = ::kernel::bindings::kunit_status_KUNIT_SKIPPED;
-+                {cfg_attr} {{
-+                    (*_test).status = ::kernel::bindings::kunit_status_KUNIT_SUCCESS;
-+                    use ::kernel::kunit::is_test_result_ok;
-+                    assert!(is_test_result_ok({test}()));
-+                }}
-+            }}"#,
-         );
-         writeln!(kunit_macros, "{kunit_wrapper}").unwrap();
-         writeln!(
-@@ -139,7 +163,7 @@ macro_rules! assert_eq {{
-     writeln!(
-         kunit_macros,
-         "static mut TEST_CASES: [::kernel::bindings::kunit_case; {}] = [\n{test_cases}    ::kernel::kunit::kunit_case_null(),\n];",
--        tests.len() + 1
-+        num_tests + 1
-     )
-     .unwrap();
- 
+ 	notification = le32_to_cpu(msg->notification);
++	notification &= 0xff;
+ 	switch (notification) {
+ 	case NOTIF_BAT_INFO:
+ 		battmgr->info.valid = false;
+ 		fallthrough;
+ 	case NOTIF_BAT_STATUS:
+ 	case NOTIF_BAT_PROPERTY:
++	case NOTIF_BAT_CHARGING_STATE:
+ 		power_supply_changed(battmgr->bat_psy);
+ 		break;
+ 	case NOTIF_USB_PROPERTY:
 -- 
 2.51.0
 
