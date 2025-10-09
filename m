@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E62C2ED858;
-	Thu,  9 Oct 2025 15:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9374A2EDD70;
+	Thu,  9 Oct 2025 15:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025497; cv=none; b=Et+o4VXiLmAsI/0tRg6CMgX9CSfMMTpcYJs9NO4+ndib3TbZerJEwd8n4hufp94hVLHoIzkrYFztld4QwnoV7vXeZrxekompWsbQtOAA1lbVO0ERoP1Cx1K5Wx1E4NngPI9NM+1z9UU1XW5Yp/QwV97S8UglUBbcFW3A0v6j4OQ=
+	t=1760025498; cv=none; b=pvOf3mpO/GCexJxEtAH4c/BD8HmkCqH1BkUMCjR4zNYSObAwtrQgHSnPxrKWK6k59G2Pis0WPNlhgsE020Rarompil7zT68nvDMYx6yKWlqN3FvueDMwEouKsqShFwv7qLI3LIbmPJVcsXcbz9tFHaWb8ruX6C1xRm8awb9jLvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025497; c=relaxed/simple;
-	bh=Imkb1krffdVd9dUc09lqWgoj2DlYbxNjjKJINgipLvg=;
+	s=arc-20240116; t=1760025498; c=relaxed/simple;
+	bh=/zi2aVQzp8sZDTKmYDXGH0CHry7hR1X6vhNpVVpgwNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G2otF5HREUM2S9JpNH9mahP6drepM+UeHiUB2JJGEPQ55qxZPzoOx81py7aJ4twM6wMMIWa4slzSNMPkYl299jDD/OOP+Ghs18mYAvOk2bLRkjyPuRzUic2QZdphH+suzlozBG7wFsbECDujrOCWMEy/7ja7UsADt6dkUO66nqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRdyzqP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B1cHWMefdQm11JCEy6K07foIerV4AHnwzp/eRL8QUxf65Jl+pO5HJUFbuv+B8WpbvIX62vzidBwQcyRoJueMIdmdeM0GKxJ1tZZYG8RYanYvH+Zw2/R3JGmpCYiAtxXwT4E/3DvB+wVhK0Utefp+efAjXCyHDtItwScT84RDbHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEysMRCM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRdyzqP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92594C4CEF7;
-	Thu,  9 Oct 2025 15:58:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEysMRCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C23C4CEE7;
+	Thu,  9 Oct 2025 15:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025497;
-	bh=Imkb1krffdVd9dUc09lqWgoj2DlYbxNjjKJINgipLvg=;
+	s=k20201202; t=1760025498;
+	bh=/zi2aVQzp8sZDTKmYDXGH0CHry7hR1X6vhNpVVpgwNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRdyzqP2AVdoeZlxsAclgqFZOB4VtkHSnzycFOaiS/xMJCeOHs8TgMRfjByDr5x2w
-	 /2guxGe80fb8+Ix3Tme7z8b1ocKI8hqoTGjRpCxSj6+KcqHdkMaQ81ypWfs0ObH/2P
-	 Qlarzxe2BLmT20UbPo2BTOEPY4vXZ3UddDKpQ/2d7bcwfdt4YfLr4EbGDDYFO0WcmK
-	 n1S7esDEDL9XsS9aDze5oeZhC8FwUKqX4hQFaDVh6w9hsYBva/DGc8NlfPvC4S1XiZ
-	 NHPkELdT18iOhyAKzPhH93Ddyp6WsvSfry9cQ0yNRekXdbYCjCGd5OQ1a4HrvOg7F0
-	 eSVW7C7m/HRwQ==
+	b=gEysMRCMpxM1Z30D5iyD17FgzqjZldBQ80HhrT6O3UR/k3xMRkWHMJS/O2ga1ZnGj
+	 PInt5fuZn/Imq3SkXX3j4Ccu/MYDvOTw26x6j9nvepwZAmcn2sAQ/6iyVWRTiOb8fB
+	 g3my2gaNRCvFWvqbGxQ2kzlngJUUPWG/aScbbeLWFH4dB0ceVopPV1/osUWmBIKCrl
+	 NfRodSSruaNcrDtknuTvA3KutHSMRP/MyaIVuBmb7ak4UuOR/5lbun+/Y7VhesTy4q
+	 EvRQ3meJdd3zDkfSnABqlDSTBi/RvfkFH+3leM7KkBF6h4qKwMWQ7He1UhFKgNp/K8
+	 YR0pUtTbBUWfQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	daniel.lezcano@linaro.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] cpuidle: Fail cpuidle device registration if there is one already
-Date: Thu,  9 Oct 2025 11:54:43 -0400
-Message-ID: <20251009155752.773732-17-sashal@kernel.org>
+	linux1394-devel@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.17-6.12] firewire: ohci: move self_id_complete tracepoint after validating register
+Date: Thu,  9 Oct 2025 11:54:44 -0400
+Message-ID: <20251009155752.773732-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,122 +50,157 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 7b1b7961170e4fcad488755e5ffaaaf9bd527e8f ]
+[ Upstream commit 696968262aeee51e1c0529c3c060ddd180702e02 ]
 
-Refuse to register a cpuidle device if the given CPU has a cpuidle
-device already and print a message regarding it.
+The value of OHCI1394_SelfIDCount register includes an error-indicating
+bit. It is safer to place the tracepoint probe after validating the
+register value.
 
-Without this, an attempt to register a new cpuidle device without
-unregistering the existing one leads to the removal of the existing
-cpuidle device without removing its sysfs interface.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20250823030954.268412-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my thorough analysis of this commit, here is my assessment:
 
-Explanation
+## Backport Analysis: firewire: ohci: move self_id_complete tracepoint
+after validating register
 
-- What it fixes
-  - The patch adds an explicit per-CPU guard in the core registration
-    path to prevent registering a second cpuidle device for a CPU that
-    already has one. Specifically, it introduces an early check in
-    __cpuidle_register_device:
-    - drivers/cpuidle/cpuidle.c:641
-      - if (per_cpu(cpuidle_devices, cpu)) { pr_info(...); return
-        -EEXIST; }
-  - Before this, the code unconditionally replaced the per-CPU pointer
-    with the new device:
-    - drivers/cpuidle/cpuidle.c:657
-      - per_cpu(cpuidle_devices, cpu) = dev;
-  - This “silent replacement” makes the prior device unreachable to the
-    core (and duplicates entries on cpuidle_detected_devices), while its
-    sysfs state remains present and bound to the old device object. The
-    sysfs layer allocates a kobject that keeps a backpointer to the
-    cpuidle_device:
-    - drivers/cpuidle/sysfs.c:697 (cpuidle_add_sysfs) sets kdev->dev =
-      dev and publishes it
-    - drivers/cpuidle/sysfs.c:740 (cpuidle_remove_sysfs) tears it down
-      for the same dev
-  - If a new device is registered without first unregistering the old
-    one, the old sysfs instance is never removed, leaving stale sysfs
-    entries referencing the old cpuidle_device. That is at best user-
-    visible breakage (stale sysfs) and at worst a lifetime hazard if
-    that device is later freed by its owner.
+**ANSWER: YES** (with conditions)
 
-- Why the change is correct and minimal-risk
-  - The new guard is small, contained, and runs under the existing
-    cpuidle_lock (as required by the function’s contract), so it’s race-
-    safe with the unregister path.
-    - The function comment already requires the lock;
-      cpuidle_register_device holds it before calling
-      __cpuidle_register_device (drivers/cpuidle/cpuidle.c:680).
-  - It complements the existing check that only prevents double-
-    registering the same struct (dev->registered):
-    - drivers/cpuidle/cpuidle.c:682
-    - That check does not cover the case of a different struct
-      cpuidle_device for the same CPU. The new per-CPU check closes that
-      gap.
-  - The behavior change is limited to returning -EEXIST instead of
-    proceeding to corrupt state. Callers already treat non-zero returns
-    as failure and back out cleanly (see drivers like ACPI, intel_idle,
-    etc., which unregister the driver or bail on error).
-  - No architectural changes, no new features, no ABI changes. The only
-    user-visible change is a pr_info() when misuse occurs.
+### Detailed Analysis
 
-- Stable backport considerations
-  - It fixes a real bug with observable user impact (stale sysfs
-    interface) and potential lifetime issues.
-  - The fix is tiny (7 insertions and one trivial local-variable use)
-    and self-contained to drivers/cpuidle/cpuidle.c: no dependencies on
-    new APIs, no cross-subsystem changes.
-  - It aligns with stable rules: important bugfix, minimal risk,
-    confined to the cpuidle core.
-  - It leverages existing per-CPU tracking (include/linux/cpuidle.h:116)
-    and existing unregister semantics that clear the pointer and
-    dev->registered, so it should apply cleanly across maintained stable
-    branches.
+#### What the Commit Does:
 
-Conclusion: This is a clear, contained bug fix that prevents a subtle
-but serious state/lifetime problem in cpuidle registration. It is well-
-suited for stable backport.
+**Code Changes (drivers/firewire/ohci.c:1846-2010):**
 
- drivers/cpuidle/cpuidle.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+1. **Removes tracepoint from IRQ handler** (`irq_handler` function,
+   lines 2027-2039 in old code):
+   - Previously called `trace_self_id_complete()` immediately upon
+     `OHCI1394_selfIDComplete` event
+   - Read `OHCI1394_SelfIDCount` register WITHOUT validation
+   - Traced potentially invalid data if error bit (bit 31) was set
 
-diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-index 0835da449db8b..56132e843c991 100644
---- a/drivers/cpuidle/cpuidle.c
-+++ b/drivers/cpuidle/cpuidle.c
-@@ -635,8 +635,14 @@ static void __cpuidle_device_init(struct cpuidle_device *dev)
- static int __cpuidle_register_device(struct cpuidle_device *dev)
- {
- 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
-+	unsigned int cpu = dev->cpu;
- 	int i, ret;
- 
-+	if (per_cpu(cpuidle_devices, cpu)) {
-+		pr_info("CPU%d: cpuidle device already registered\n", cpu);
-+		return -EEXIST;
-+	}
-+
- 	if (!try_module_get(drv->owner))
- 		return -EINVAL;
- 
-@@ -648,7 +654,7 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
- 			dev->states_usage[i].disable |= CPUIDLE_STATE_DISABLED_BY_USER;
+2. **Adds tracepoint to bus_reset_work** (after line 1863):
+   - Now placed AFTER `ohci1394_self_id_count_is_error(reg)` validation
+     check
+   - Only traces when register value is confirmed valid
+   - Ensures tracepoint records accurate debugging information
+
+#### Bug Analysis:
+
+**The Issue:**
+The `OHCI1394_SelfIDCount` register (defined in
+drivers/firewire/ohci.h:358-363) has bit 31
+(`OHCI1394_SelfIDCount_selfIDError_MASK = 0x80000000`) as an error-
+indicating bit. When this bit is set, the register contents are
+invalid/erroneous.
+
+**Before the fix:**
+```c
+// In IRQ handler - NO VALIDATION
+if (trace_self_id_complete_enabled()) {
+    u32 reg = reg_read(ohci, OHCI1394_SelfIDCount);
+    trace_self_id_complete(..., reg, ...);  // May trace invalid data!
+}
+```
+
+**After the fix:**
+```c
+// In bus_reset_work - WITH VALIDATION
+reg = reg_read(ohci, OHCI1394_SelfIDCount);
+if (ohci1394_self_id_count_is_error(reg)) {
+    ohci_notice(ohci, "self ID receive error\n");
+    return;  // Exit before tracing
+}
+trace_self_id_complete(..., reg, ...);  // Only trace valid data
+```
+
+#### Backport Suitability Assessment:
+
+**Pros:**
+1. ✅ **Small and contained**: Only 12 lines changed (4 added, 8 removed)
+2. ✅ **Low regression risk**: Moves tracepoint location without changing
+   logic
+3. ✅ **Fixes data integrity issue**: Prevents recording
+   invalid/misleading debug data
+4. ✅ **Clean, understandable fix**: Clear improvement in defensive
+   programming
+5. ✅ **No external dependencies**: Standalone change
+6. ✅ **Already auto-selected**: Present in linux-autosel-6.17 (commit
+   8f18fd692fdfb)
+
+**Cons:**
+1. ⚠️ **No explicit stable tag**: Author didn't add `Cc:
+   stable@vger.kernel.org`
+2. ⚠️ **No Fixes tag**: Doesn't reference the commit it improves
+   (526e21a2aa6fa)
+3. ⚠️ **Debug-only impact**: Only affects tracing, not functional
+   behavior
+4. ⚠️ **Recent tracepoint**: Original tracepoint added in v6.11-rc1, so
+   only relevant for 6.11+
+
+**Critical Constraint:**
+- **ONLY backport to kernels 6.11 and newer** - the tracepoint being
+  fixed was added in commit 526e21a2aa6fa (v6.11-rc1~92^2~2)
+- Kernels 6.10 and older don't have this tracepoint, so this patch is
+  irrelevant
+
+#### Recommendation:
+
+**YES - Backport to stable 6.11+ kernels**
+
+**Rationale:**
+While this doesn't fix a critical functional bug, it prevents a real
+data integrity issue in the tracing infrastructure. Users debugging
+FireWire issues could be misled by invalid trace data, potentially
+wasting significant time chasing phantom problems. The fix is extremely
+low-risk and improves the reliability of debugging tools.
+
+**Target kernels:** 6.11.x, 6.12.x, and any future stable branches that
+include the original tracepoint
+
+**Priority:** Low-Medium (improves debugging reliability but doesn't fix
+crashes or data corruption)
+
+ drivers/firewire/ohci.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
+index 5d8301b0f3aa8..421cf87e93c1f 100644
+--- a/drivers/firewire/ohci.c
++++ b/drivers/firewire/ohci.c
+@@ -2063,6 +2063,9 @@ static void bus_reset_work(struct work_struct *work)
+ 		ohci_notice(ohci, "self ID receive error\n");
+ 		return;
  	}
++
++	trace_self_id_complete(ohci->card.index, reg, ohci->self_id, has_be_header_quirk(ohci));
++
+ 	/*
+ 	 * The count in the SelfIDCount register is the number of
+ 	 * bytes in the self ID receive buffer.  Since we also receive
+@@ -2231,15 +2234,8 @@ static irqreturn_t irq_handler(int irq, void *data)
+ 	if (event & OHCI1394_busReset)
+ 		reg_write(ohci, OHCI1394_IntMaskClear, OHCI1394_busReset);
  
--	per_cpu(cpuidle_devices, dev->cpu) = dev;
-+	per_cpu(cpuidle_devices, cpu) = dev;
- 	list_add(&dev->device_list, &cpuidle_detected_devices);
+-	if (event & OHCI1394_selfIDComplete) {
+-		if (trace_self_id_complete_enabled()) {
+-			u32 reg = reg_read(ohci, OHCI1394_SelfIDCount);
+-
+-			trace_self_id_complete(ohci->card.index, reg, ohci->self_id,
+-					       has_be_header_quirk(ohci));
+-		}
++	if (event & OHCI1394_selfIDComplete)
+ 		queue_work(selfid_workqueue, &ohci->bus_reset_work);
+-	}
  
- 	ret = cpuidle_coupled_register_device(dev);
+ 	if (event & OHCI1394_RQPkt)
+ 		queue_work(ohci->card.async_wq, &ohci->ar_request_ctx.work);
 -- 
 2.51.0
 
