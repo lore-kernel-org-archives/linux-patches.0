@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D2E2F5324;
-	Thu,  9 Oct 2025 16:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8857F2F532C;
+	Thu,  9 Oct 2025 16:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025639; cv=none; b=kpS9vi4EMrGsFdPyOyUgaPt9gPe2giico9ZC+snZHhM9j5pbwxCyS4gyN0P1X1+DPFyMtwdAUc0XRS8XW0K4MDwwU5XuAZntgxUoNcUD+qA5drK+Uf299vAIrwyrxGLQW3d4ctp7tEkkQQYCub9BYnGzffjW9C+9snoaSOTb7AA=
+	t=1760025640; cv=none; b=C9dtOPcH3oM8Htjl7Rl2D1QdvgEywsuThUToEkh05yyGEBg7zfaiulC+32BvZVuTixq9Ko7DqpOE3Cniw17l9ORVOkkaPKhIl71IiPDPnfmTl0aKuEeCJHeetUsLl2xvHxEXhlbvW6g/tdzcG0Pg0+9OOpLqrBkTiMOo8GZxlJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025639; c=relaxed/simple;
-	bh=4devUkiUJ45SxtTYFgo9akTiO+CNe1YAFZ2rg7soOG8=;
+	s=arc-20240116; t=1760025640; c=relaxed/simple;
+	bh=H7pIu2nrF3o5LhSEUg5bYRN/KyD+62BDc7EyqLzyrv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QPkS1BzFm6ad6ZVqI3sXVBdRAaK6HnR2vREfP+MFojNiXuK2mgbkSxLOjxu5FEOkXKBvG23LSEISHbamNFwWqJuL49GrXMV+IrPpjYBH3gZRyp1yeCb3jaswSqMzDu1ByoZb1EbhZXbwJL4sDe7pjQwBdJlL2Tmjn8JWs37Rbt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhR/Yw1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YmthXFiaD7nLOb+DOVH0DA2L+sy9UAHRulZqvRpSuYbsN8NOmaV0qVjJV6xOsqdYpydt6R9KYr2foP53T0aGaHTY1OUt7dBwSaFQnUGLty3Lg7koL8eNP6ZRUOJ+K5Zy9siaAFNY6n7nplQXmasV7lQwhXq6ep9PpslbwEMvq6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLaOyy1N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhR/Yw1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF05C4CEF7;
-	Thu,  9 Oct 2025 16:00:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLaOyy1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9E5C4CEFE;
+	Thu,  9 Oct 2025 16:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025639;
-	bh=4devUkiUJ45SxtTYFgo9akTiO+CNe1YAFZ2rg7soOG8=;
+	s=k20201202; t=1760025640;
+	bh=H7pIu2nrF3o5LhSEUg5bYRN/KyD+62BDc7EyqLzyrv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhR/Yw1Me7FBGrHAnWdE7k+o6g4EiqvHMMTL/zTh3qh4KaKDBy/OPM5Gj349NO5Mg
-	 6Jg4HQwa5NN94DDQbOAWGguPUdMVxe5Jw6bWIG5AP7CUh1VUsVxfVrkJfRCym/SxOE
-	 fCR0OmntjhCSR69pBozkTKAMJye7Om7o/Jx1k46AZ4dCYHzsUBjq+kx7Mb8nqxLknw
-	 n3Jb13KbhQof5C3iSBmIZ5zC5BHuJAQgRxed3yAqUOiyCi5ezr0H8g9PWRwAer9E6x
-	 2tDPsk/iPsT4EOVOrtb8dvlLl8Wu0PiZuDPbvEHBl3cvs7EjrXyz67ZjfDbGZcJcIG
-	 atSaP9lzYgJvg==
+	b=LLaOyy1NDZkO9IQpiphxxy1CRhcwO66nNv0ARdTZwb6yBqKxKxej5bs/6+sJnG2va
+	 SjuPqxfhB/qLkjXAkXJxxuVAWrxRVdR48KKGsXZR3CVOBV+nHReK8wsj/zADAjCP/m
+	 QNcWCpH+iKnxLU+vInuOGRY4fZSdAxierDcfq/BJAcJFhRL8af38nJVyEiOoK55Bnc
+	 0CzmkB53RaJqIVa6iaB67Ki7pPUr/Ou+tJqWBN2beBcxs4DKmIpaQIQ2gyFB69ZWjZ
+	 eAfg7898B2R1Cek9evQ7tRmPGYXubVyLl9ZXJGWZjHtOlHPdWUw4xkdWxUYffcma/W
+	 ckqJl+TJj8Now==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jingoohan1@gmail.com,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-5.4] video: backlight: lp855x_bl: Set correct EPROM start for LP8556
-Date: Thu,  9 Oct 2025 11:55:56 -0400
-Message-ID: <20251009155752.773732-90-sashal@kernel.org>
+	tglx@linutronix.de,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] clocksource/drivers/vf-pit: Replace raw_readl/writel to readl/writel
+Date: Thu,  9 Oct 2025 11:55:57 -0400
+Message-ID: <20251009155752.773732-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -53,17 +52,19 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-[ Upstream commit 07c7efda24453e05951fb2879f5452b720b91169 ]
+[ Upstream commit 0b781f527d6f99e68e5b3780ae03cd69a7cb5c0c ]
 
-According to LP8556 datasheet EPROM region starts at 0x98 so adjust value
-in the driver accordingly.
+The driver uses the raw_readl() and raw_writel() functions. Those are
+not for MMIO devices. Replace them with readl() and writel()
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
-Link: https://lore.kernel.org/r/20250909074304.92135-2-clamor95@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+[ dlezcano: Fixed typo in the subject s/reald/readl/ ]
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250804152344.1109310-2-daniel.lezcano@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,83 +72,144 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
-- What changed: The LP8556 EPROM start constant is corrected from 0xA0
-  to 0x98. See drivers/video/backlight/lp855x_bl.c:25 (old 0xA0; commit
-  changes to 0x98). The end remains 0xAF
-  (drivers/video/backlight/lp855x_bl.c:26).
-- How it’s used: The valid ROM window for a given chip is enforced by
-  lp855x_is_valid_rom_area(), which selects the [start, end] range based
-  on chip ID and filters all ROM writes against it:
-  - Range selection for LP8556 uses these macros
-    (drivers/video/backlight/lp855x_bl.c:114-116).
-  - The write loop applies this filter when programming platform/DT-
-    provided ROM entries (drivers/video/backlight/lp855x_bl.c:193-204),
-    skipping any address outside the range.
-  - DT parsing populates the ROM programming list
-    (drivers/video/backlight/lp855x_bl.c:342-360), so the incorrect
-    start value causes any LP8556 ROM entries in 0x98–0x9F to be
-    silently ignored.
+- What changed: The commit replaces all `__raw_readl/__raw_writel` uses
+  with `readl/writel` in the VF610 PIT timer driver, ensuring proper
+  MMIO semantics. Affected spots in `drivers/clocksource/timer-vf-pit.c`
+  include:
+  - `pit_timer_enable`: `__raw_writel(...)` → `writel(...)`
+    (drivers/clocksource/timer-vf-pit.c)
+  - `pit_timer_disable`: `__raw_writel(0, ...)` → `writel(0, ...)`
+    (drivers/clocksource/timer-vf-pit.c)
+  - `pit_irq_acknowledge`: `__raw_writel(PITTFLG_TIF, ...)` →
+    `writel(...)` (drivers/clocksource/timer-vf-pit.c)
+  - `pit_read_sched_clock`: `~__raw_readl(clksrc_base + PITCVAL)` →
+    `~readl(...)` (drivers/clocksource/timer-vf-pit.c)
+  - `pit_clocksource_init`: three writes to `PITTCTRL`/`PITLDVAL` switch
+    to `writel(...)` (drivers/clocksource/timer-vf-pit.c)
+  - `pit_set_next_event`: `__raw_writel(delta - 1, ...)` → `writel(...)`
+    (drivers/clocksource/timer-vf-pit.c)
+  - `pit_clockevent_init`: writes to `PITTCTRL`/`PITTFLG` switch to
+    `writel(...)` (drivers/clocksource/timer-vf-pit.c)
+  - `pit_timer_init`: module enable write `__raw_writel(~PITMCR_MDIS,
+    ...)` → `writel(...)` (drivers/clocksource/timer-vf-pit.c)
 
-Why this matters
-- Functional bug for LP8556: According to the commit message (datasheet
-  reference), the LP8556 ROM region begins at 0x98. With the current
-  code, addresses 0x98–0x9F are wrongly rejected by
-  lp855x_is_valid_rom_area(), so intended ROM configuration may not be
-  applied to LP8556 devices. This can lead to misconfiguration of
-  backlight behavior on boards that rely on these addresses.
-- The change is strictly a correction: It expands the accepted range for
-  LP8556 to the true datasheet range [0x98..0xAF]. It does not alter
-  behavior for other chips (LP8550/1/2/3 use LP855X_EEPROM_START/END at
-  0xA0–0xA7, and LP8555/7 use their own ranges; see
-  drivers/video/backlight/lp855x_bl.c:23-24,35-38).
+- Why this is a bug fix: `__raw_readl/__raw_writel` are explicitly
+  documented as low-level accessors without ordering or byte-order
+  semantics and “not for MMIO registers.” Using them on MMIO can lead to
+  reordering/posting issues on weakly ordered architectures. This can
+  cause:
+  - Timer enable occurring before the new `LDVAL` write reaches hardware
+    in `pit_set_next_event`, producing incorrect next-event timing.
+  - IRQ acknowledge in `pit_timer_interrupt` not being ordered with
+    respect to subsequent code, potentially leading to spurious or
+    missed interrupts.
+  - Sched_clock reads using `__raw_readl` lacking ordering guarantees.
+  The correct `readl/writel` include the architecture-defined ordering
+required for MMIO and fix these subtle, real-world bugs. See
+documentation: `Documentation/driver-api/device-io.rst` (section
+describing `__raw_*` accessors).
 
-Risk and regression assessment
-- Small, contained fix: One-line macro change in a single driver file;
-  no API/ABI or architectural changes.
-- Low regression risk:
-  - Only affects LP8556 and only the ROM programming acceptance window.
-  - In-tree DTs for LP8556 commonly use 0xA0+ (e.g.,
-    arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-
-    castor.dts:41), so existing configurations remain unaffected.
-  - ACPI-enumerated LP8556 systems do not use ROM programming path (they
-    read back registers), so they are unaffected by the range check.
-  - Security impact: none; this is a correctness change to permitted I2C
-    write addresses for the device’s configuration space.
+- Scope and risk: The change is small, mechanical, and confined to a
+  single driver file. It does not alter logic, APIs, or data structures.
+  It only corrects the MMIO accessor choice. While the timer/clocksource
+  subsystem is critical, this is the minimally invasive, intended API
+  usage and aligns with how other clocksource drivers operate.
 
-Stable backport criteria
-- Fixes a real bug: Corrects the ROM region mapping for LP8556 so valid
-  configuration writes are no longer dropped.
-- Minimal and clearly scoped: One constant change; code paths only in a
-  leaf driver.
-- No feature addition or architectural refactor.
-- Touches a non-critical subsystem (backlight), and the behavior change
-  is limited to enabling previously valid writes per datasheet.
-- Reviewed-by and signed-off chain present; commit rationale is clear
-  and tied to the datasheet.
+- Upstream context: This exact change is upstream as commit
+  0b781f527d6f9 (“clocksource/drivers/vf-pit: Replace raw_readl/writel
+  to readl/writel”), acknowledged by the timekeeping maintainer. The
+  driver later evolves/renames to `drivers/clocksource/timer-nxp-pit.c`,
+  which consistently uses `readl/writel`, reinforcing that this is the
+  intended, correct pattern.
 
-Conclusion
-- This is a safe, data-sheet-backed correctness fix that can affect
-  actual device behavior for LP8556 users relying on 0x98–0x9F
-  configuration. It is small, low risk, and appropriate for stable
-  backporting.
+- Stable backport criteria:
+  - Fixes a real bug that can affect users (ordering on MMIO timer
+    registers).
+  - Minimal and contained patch; no feature additions or architectural
+    changes.
+  - Low regression risk; behavior becomes more robust per documented
+    MMIO rules.
+  - No explicit “Cc: stable”, but it corrects improper API usage present
+    since the driver’s introduction (initial support commit
+    c19672492d233), making it broadly applicable to stable trees that
+    still have `timer-vf-pit.c`.
 
- drivers/video/backlight/lp855x_bl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Given the above, this is a good candidate for stable backport.
 
-diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
-index 7075bfab59c4d..d191560ce285f 100644
---- a/drivers/video/backlight/lp855x_bl.c
-+++ b/drivers/video/backlight/lp855x_bl.c
-@@ -22,7 +22,7 @@
- #define LP855X_DEVICE_CTRL		0x01
- #define LP855X_EEPROM_START		0xA0
- #define LP855X_EEPROM_END		0xA7
--#define LP8556_EPROM_START		0xA0
-+#define LP8556_EPROM_START		0x98
- #define LP8556_EPROM_END		0xAF
+ drivers/clocksource/timer-vf-pit.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/clocksource/timer-vf-pit.c b/drivers/clocksource/timer-vf-pit.c
+index 911c92146eca6..8041a8f62d1fa 100644
+--- a/drivers/clocksource/timer-vf-pit.c
++++ b/drivers/clocksource/timer-vf-pit.c
+@@ -35,30 +35,30 @@ static unsigned long cycle_per_jiffy;
  
- /* LP8555/7 Registers */
+ static inline void pit_timer_enable(void)
+ {
+-	__raw_writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
++	writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
+ }
+ 
+ static inline void pit_timer_disable(void)
+ {
+-	__raw_writel(0, clkevt_base + PITTCTRL);
++	writel(0, clkevt_base + PITTCTRL);
+ }
+ 
+ static inline void pit_irq_acknowledge(void)
+ {
+-	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
++	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
+ }
+ 
+ static u64 notrace pit_read_sched_clock(void)
+ {
+-	return ~__raw_readl(clksrc_base + PITCVAL);
++	return ~readl(clksrc_base + PITCVAL);
+ }
+ 
+ static int __init pit_clocksource_init(unsigned long rate)
+ {
+ 	/* set the max load value and start the clock source counter */
+-	__raw_writel(0, clksrc_base + PITTCTRL);
+-	__raw_writel(~0UL, clksrc_base + PITLDVAL);
+-	__raw_writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
++	writel(0, clksrc_base + PITTCTRL);
++	writel(~0UL, clksrc_base + PITLDVAL);
++	writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
+ 
+ 	sched_clock_register(pit_read_sched_clock, 32, rate);
+ 	return clocksource_mmio_init(clksrc_base + PITCVAL, "vf-pit", rate,
+@@ -76,7 +76,7 @@ static int pit_set_next_event(unsigned long delta,
+ 	 * hardware requirement.
+ 	 */
+ 	pit_timer_disable();
+-	__raw_writel(delta - 1, clkevt_base + PITLDVAL);
++	writel(delta - 1, clkevt_base + PITLDVAL);
+ 	pit_timer_enable();
+ 
+ 	return 0;
+@@ -125,8 +125,8 @@ static struct clock_event_device clockevent_pit = {
+ 
+ static int __init pit_clockevent_init(unsigned long rate, int irq)
+ {
+-	__raw_writel(0, clkevt_base + PITTCTRL);
+-	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
++	writel(0, clkevt_base + PITTCTRL);
++	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
+ 
+ 	BUG_ON(request_irq(irq, pit_timer_interrupt, IRQF_TIMER | IRQF_IRQPOLL,
+ 			   "VF pit timer", &clockevent_pit));
+@@ -183,7 +183,7 @@ static int __init pit_timer_init(struct device_node *np)
+ 	cycle_per_jiffy = clk_rate / (HZ);
+ 
+ 	/* enable the pit module */
+-	__raw_writel(~PITMCR_MDIS, timer_base + PITMCR);
++	writel(~PITMCR_MDIS, timer_base + PITMCR);
+ 
+ 	ret = pit_clocksource_init(clk_rate);
+ 	if (ret)
 -- 
 2.51.0
 
