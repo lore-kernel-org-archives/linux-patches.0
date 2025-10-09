@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB8E2FD1DC;
-	Thu,  9 Oct 2025 16:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291332FD1C6;
+	Thu,  9 Oct 2025 16:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025681; cv=none; b=bNBKkeQ3Dr+U/4si8Bkfx2KRKjd4wMHzZAgSjXTTUBR2CQSOlAfqSg6AWlO2ht2wpJu4rndtrBfOBNBrjGoMM22z+H92lDEcltikgb5UQsJifGfpyfm5I4LAwdv2o5uBJtGQCaPHodM8S4Id7mmOxdGI7sqNnEpApGknR0TfI40=
+	t=1760025683; cv=none; b=DH2Kvst/Qj8Q+b1BM7tWuwXaCievS7vql8yH1rn5ZDyOcu9Q44FS4YcQUp8cMLZDRyWu2a7w5EQUCs0bzJ8RuKVBEYLCkYgOnZsTT/mzzX3GLv283mi3o1sypq7POmcz8ZqvcLiGQkYh27TjvlwRQI67y4Q4rDq4v68Yg9lblnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025681; c=relaxed/simple;
-	bh=sR+fB4loXJxQiF/88sIzg65sFKZEeojUQoye/QYw8AU=;
+	s=arc-20240116; t=1760025683; c=relaxed/simple;
+	bh=5GQW4BTVVGIA11a77VNxVUsz3AV1PVIa49c3M8dJv14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=otosDdfk97dtFqBSI5UyRImh74unqNU6pJC9dNAn1lUplXQzvigcG/KUmt6bLUpWWljRAkX9wqsV5Bo6yDhtfX4TcUy5ikGzYt2O/J0mdPxH/gkP92vCeQg7UfxXlRzuhJRs1NpXTjYmiHoXGilTEvu/5TX01ynOPpt6bKKoEWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YiZi1uJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YXImHOzlgRfGWtHADBh0EJd4n+5+CwOPlbJYY8kThd5iGOcYhzaqGvqt0Zvf9QS2j364gk9Exc7vSHvScLkBFhWrdtlwzvbXg5SQoWWn+TSnnJDtLmcgLIVBvffavhLoeMSXDPwcGvzl06Gvxtu9f2XKmvsS4pRFA7rXAz4lzmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liCXkWYS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YiZi1uJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29BAC4CEF8;
-	Thu,  9 Oct 2025 16:01:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liCXkWYS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EE7C4CEE7;
+	Thu,  9 Oct 2025 16:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025681;
-	bh=sR+fB4loXJxQiF/88sIzg65sFKZEeojUQoye/QYw8AU=;
+	s=k20201202; t=1760025683;
+	bh=5GQW4BTVVGIA11a77VNxVUsz3AV1PVIa49c3M8dJv14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YiZi1uJ8T8PB2BGcsPrUDypDP0ZgNhFUSorSvn8RIKQNsEHjOHCSxYvxoRvfuQeiw
-	 nGrSBaG6r1sa/2RfLGXHg+gdqTO191LoIH0BlDT2Hu/2KfSkVMDfaI3ytoOW4ZcAbj
-	 gcxjDJkIY91/usl1x+JedpENI/QT66IgXsJ+pyJUzxFVdAdSfM2pMJY1n9ABqi8+Q2
-	 QRxEIryXq0Smx5u3Ue5nXGLCBD8Pkty6yKYeJez6iIaJyokOslZAcHAQzwrCpBSvmK
-	 lby/IvjxGpBOFTjUEguVN28AeaAiGLbjLZKXckp3uuI/xOs2Mgpbsqn3VyNE9Nx+ed
-	 eZ7spYyZ9c5fw==
+	b=liCXkWYSylS9X0Muas6fekD9KhvPp5AFOu3cK7/pN7eoJZMU44NRvrgXuyUVsL7mD
+	 kY+0e4Phc/fAEA5qDlXWfWZJoJsWpVP5LcmBWCI+mfY/WFpbOck6JIA9sVo7mNpk+N
+	 Bf708xFUOIKTUxHW3liFewiwu779I+9KEUxayj7W31C6igHhCzLCeOwCFfBfoUWE9S
+	 JphmR3oksXO/wQkktRecNOwdovmF7W5u3y6Iz9GbxGJz/NOdpfTBQAwqM9xJBRnwdW
+	 Al2apLH43IjgPDJOXQFyfRzsdVrABGa7LGHJnw+fGJrPchLtkN1zetJjIHlXoLQvmx
+	 V3sQBw2wk5GPQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Ober <dober6023@gmail.com>,
-	David Ober <dober@lenovo.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] hwmon: (lenovo-ec-sensors) Update P8 supprt
-Date: Thu,  9 Oct 2025 11:56:19 -0400
-Message-ID: <20251009155752.773732-113-sashal@kernel.org>
+	wsa+renesas@sang-engineering.com,
+	linux-mmc@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] mmc: host: renesas_sdhi: Fix the actual clock
+Date: Thu,  9 Oct 2025 11:56:20 -0400
+Message-ID: <20251009155752.773732-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,152 +53,174 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Ober <dober6023@gmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 43c056ac85b60232861005765153707f1b0354b6 ]
+[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
 
-This fixes differences for the P8 system that was initially set to
-the same thermal values as the P7, also adds in the PSU sensor for
-all of the supported systems
+Wrong actual clock reported, if the SD clock division ratio is other
+than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
 
-Signed-off-by: David Ober <dober@lenovo.com>
-Signed-off-by: David Ober <dober6023@gmail.com>
-Link: https://lore.kernel.org/r/20250807103228.10465-1-dober6023@gmail.com
-[groeck: Update subject]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+On high speed mode, cat /sys/kernel/debug/mmc1/ios
+Without the patch:
+clock:          50000000 Hz
+actual clock:   200000000 Hz
+
+After the fix:
+clock:          50000000 Hz
+actual clock:   50000000 Hz
+
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-- Corrects the EC register map and labels so P8 machines stop reusing
-  the P7 layout; the new `p8_temp_map` and dedicated label table at
-  `drivers/hwmon/lenovo-ec-sensors.c:91` feed the right offsets to
-  `lenovo_ec_do_read_temp`, fixing the bogus readings and misnamed
-  DIMM/PCI sensors that users currently see.
-- Adds the missing PSU temperature channels by wiring the indices into
-  every platform map (`px_temp_map` with PSU1/PSU2 at
-  `drivers/hwmon/lenovo-ec-sensors.c:69`, and the generic PSU entry at
-  `drivers/hwmon/lenovo-ec-sensors.c:109`), and exposes them through the
-  hwmon descriptors (`lenovo_ec_hwmon_info_*` blocks beginning at
-  `drivers/hwmon/lenovo-ec-sensors.c:301`). This closes the gap where
-  the EC already provided data but the driver silently dropped it.
-- Updates the P8 probe path to select the new map/labels
-  (`drivers/hwmon/lenovo-ec-sensors.c:571`), so only that SKU sees the
-  remapped channels while P5/P7 keep the shared generic table plus the
-  newly exposed PSU sensor.
-- I checked the driver’s short history (only the initial add in
-  70118f85e6538) and the surrounding hwmon subsystem; the change stays
-  confined to this new platform driver, aligns array sizes, and avoids
-  architectural churn, so regression risk is low. The only user-visible
-  difference is the appearance/renaming of sensors to match the
-  hardware, which is expected for a bug fix.
+Based on my comprehensive analysis of this commit, here is my
+assessment:
 
-Given it fixes incorrect sensor data and restores missing thermal
-telemetry on shipping systems, while touching only this young driver, it
-fits the stable inclusion guidelines.
+## Backport Status: **YES**
 
- drivers/hwmon/lenovo-ec-sensors.c | 34 +++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+### Extensive Analysis
 
-diff --git a/drivers/hwmon/lenovo-ec-sensors.c b/drivers/hwmon/lenovo-ec-sensors.c
-index 143fb79713f7d..8681bbf6665b1 100644
---- a/drivers/hwmon/lenovo-ec-sensors.c
-+++ b/drivers/hwmon/lenovo-ec-sensors.c
-@@ -66,7 +66,7 @@ enum systems {
- 	LENOVO_P8,
- };
+#### Bug Description and Impact
+
+The commit fixes an incorrect `actual_clock` reporting bug in the
+Renesas SDHI MMC driver that has existed since v5.4 (commit
+75eaf49f5d3d8 from 2019).
+
+**The Problem:**
+When the SD clock division ratio is not 1:1 (i.e., DIV[7:0] bits in
+SD_CLK_CTRL register are not 0xff), the driver incorrectly reports
+`actual_clock` as the parent clock frequency instead of the divided
+frequency.
+
+From the commit message example:
+- Requested: 50 MHz
+- Parent clock set to: 200 MHz
+- Hardware divider: 1/4 (to get 50 MHz)
+- **Bug**: `actual_clock` reports 200 MHz instead of 50 MHz
+
+**Functional Impact Beyond Debugging:**
+
+While this appears to be a debugfs reporting issue, it has **real
+functional consequences**. The `actual_clock` value is used in
+`drivers/mmc/core/block.c:1056` (`mmc_blk_clock_khz()`) to calculate
+timeout values:
+
+```c
+if (data->timeout_clks) {
+    khz = mmc_blk_clock_khz(host);  // Uses actual_clock
+    ms += DIV_ROUND_UP(data->timeout_clks, khz);
+}
+```
+
+With incorrect `actual_clock` (e.g., 200 MHz instead of 50 MHz),
+timeouts are calculated **4x too short**, potentially causing premature
+timeout errors and data transfer failures.
+
+#### Code Analysis
+
+**The Hardware Divider Mechanism:**
+
+From commit 0196c8db8363f7 (2018), the SD_CLK_CTRL register DIV[7:0]
+bits work as follows:
+- `0x80` (bit 7): 1/512 divider
+- `0x40` (bit 6): 1/256 divider
+- `0x20` (bit 5): 1/128 divider
+- ... (each bit represents a power-of-2 division)
+- `0x01` (bit 0): 1/4 divider
+- `0x00` (all clear): 1/2 divider
+- `0xff` (Renesas extension): 1/1 (no division)
+
+**The Fix - Mathematical Verification:**
+
+The fix adds lines 224-226 in `renesas_sdhi_core.c:205`:
+
+```c
+clock = clk & CLK_CTL_DIV_MASK;
+if (clock != 0xff)
+    host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
+```
+
+Formula verification for all divider values:
+- `clock=0x80`: `ffs(0x80)=8` → `(1<<9)=512` → divides by 512 ✓
+- `clock=0x40`: `ffs(0x40)=7` → `(1<<8)=256` → divides by 256 ✓
+- `clock=0x01`: `ffs(0x01)=1` → `(1<<2)=4` → divides by 4 ✓
+- `clock=0x00`: `ffs(0x00)=0` → `(1<<1)=2` → divides by 2 ✓
+- `clock=0xff`: skips division (1:1 ratio) ✓
+
+The formula is **mathematically correct** for all possible hardware
+divider configurations.
+
+#### Backporting Criteria Assessment
+
+**Positive Factors:**
+1. ✅ **Fixes real functional bug**: Incorrect timeout calculations, not
+   just cosmetic
+2. ✅ **Small and contained**: Only 3 lines added, affecting one function
+3. ✅ **No architectural changes**: Simple calculation fix
+4. ✅ **Minimal regression risk**: Mathematically sound, verified formula
+5. ✅ **Hardware-specific**: Limited to Renesas SDHI driver (contained
+   blast radius)
+6. ✅ **No known issues**: No reverts or subsequent fixes (only a cleanup
+   commit 5d0702dc9c2f6 replacing magic number with macro)
+7. ✅ **Stable in mainline**: Merged August 19, 2025, no problems
+   reported
+
+**Considerations:**
+- ⚠️ **No explicit Fixes: tag** (though it clearly fixes commit
+  75eaf49f5d3d8)
+- ⚠️ **No Cc: stable tag**
+- ⚠️ **Author couldn't test HS400 mode** (mentioned in lore.kernel.org
+  thread)
+- ℹ️ **Long-standing bug** (since v5.4, 2019) without major reports
+  suggests real-world impact may be limited
+
+**Dependencies:**
+- Requires `actual_clock` field (present since v5.4)
+- Requires current `renesas_sdhi_set_clock()` structure (present since
+  v4.19)
+- Should apply cleanly to kernels v5.4+
+
+#### Conclusion
+
+This commit **should be backported** to stable trees (v5.4+) because:
+
+1. It fixes a **functional bug with real-world consequences** (timeout
+   calculation errors leading to potential data transfer failures)
+2. The fix is **small, simple, and mathematically verified**
+3. **Very low regression risk** - the formula correctly implements the
+   hardware specification
+4. **Confined scope** - only affects Renesas SDHI hardware
+5. **Stable in mainline** - no issues found since merge
+
+The absence of Fixes:/Cc:stable tags is not disqualifying given the
+clear functional impact and the quality of the fix. The commit already
+has been staged for backport (6693c63ffc49e in linux-autosel-6.17),
+which is appropriate.
+
+ drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index fb8ca03f661d7..a41291a28e9bd 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -222,7 +222,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
+ 			clk &= ~0xff;
+ 	}
  
--static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 32};
- 
- static const char * const lenovo_px_ec_temp_label[] = {
- 	"CPU1",
-@@ -84,9 +84,29 @@ static const char * const lenovo_px_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU1",
-+	"PSU2",
- };
- 
--static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int p8_temp_map[] = {0, 1, 2, 8, 9, 13, 14, 15, 16, 17, 19, 20, 33};
+-	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
++	clock = clk & CLK_CTL_DIV_MASK;
++	if (clock != 0xff)
++		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
 +
-+static const char * const lenovo_p8_ec_temp_label[] = {
-+	"CPU1",
-+	"CPU_DIMM_BANK1",
-+	"CPU_DIMM_BANK2",
-+	"M2_Z2R",
-+	"M2_Z3R",
-+	"DIMM_RIGHT",
-+	"DIMM_LEFT",
-+	"PCI_Z1",
-+	"PCI_Z2",
-+	"PCI_Z3",
-+	"AMB",
-+	"REAR_VR",
-+	"PSU",
-+};
-+
-+static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31};
++	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
+ 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
+ 		usleep_range(10000, 11000);
  
- static const char * const lenovo_gen_ec_temp_label[] = {
- 	"CPU1",
-@@ -101,6 +121,7 @@ static const char * const lenovo_gen_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU",
- };
- 
- static int px_fan_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-@@ -293,6 +314,8 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_px[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -327,6 +350,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p8[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -359,6 +383,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p7[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -388,6 +413,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p5[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -545,9 +571,9 @@ static int lenovo_ec_probe(struct platform_device *pdev)
- 		break;
- 	case 3:
- 		ec_data->fan_labels = p8_ec_fan_label;
--		ec_data->temp_labels = lenovo_gen_ec_temp_label;
-+		ec_data->temp_labels = lenovo_p8_ec_temp_label;
- 		ec_data->fan_map = p8_fan_map;
--		ec_data->temp_map = gen_temp_map;
-+		ec_data->temp_map = p8_temp_map;
- 		lenovo_ec_chip_info.info = lenovo_ec_hwmon_info_p8;
- 		break;
- 	default:
 -- 
 2.51.0
 
