@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687E22FB0AE;
-	Thu,  9 Oct 2025 15:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA892FB0BB;
+	Thu,  9 Oct 2025 15:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025590; cv=none; b=pVr38qnWHQMoIWUQuZEXVZVX0rVVtTK22fqMVwSSNGzUEJqxPNaMH/Dgpz+jWfwk/bQCCoPh0zObH/3aPvIfL4jnKexGIVXtTCMo3QsIYlF97m6cqOBDH2PzY/0eSEwL5eWMQSB05WIxS12hDbk3zW66VYVVMhLV4LAOIR8i4/A=
+	t=1760025591; cv=none; b=pUJUvBwT1RXTDvuAxhNH9Rq6aqr7mjtM4He1SwnUhnxqf+aI4z7tHFpUppnSvgMZNFMGoTElEdRUjmP6K+9DoziehJq9Wihq5f/xm4HFVl29nBVubPA9WJ1hq01qGwC4AP+QxTMh8htZMe5R6fe1ibHmlx1NRCt5E1fAoBeFcXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025590; c=relaxed/simple;
-	bh=nd1wa/cp2/P1e0jXzTDqfpVAMUOzv7R/1WIlKHMuY2Q=;
+	s=arc-20240116; t=1760025591; c=relaxed/simple;
+	bh=vYT7tI9E7sWWtZlSoDWPwRiSkT4HiL7H4uoZ9V70nkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o9QpKO4B3QuBSJbL/bAxG968jCE6MY5No1EOiXrR0vyf3JRTm2WCb6mYxygQp/Hch37/iCUjuXE9BLgXZ9E/4ZBcmdbsJ7GqCi/Mp87CCHVHjZmdKdBpq6XiLU+OtMzrecSvvLM85zE54sPTdVKEPGj8xPj9R0mUC8lbB683Ino=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l5f8mYJi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I3fy5feAsQwx1YZV45OnSzr5JJ3D4S/Cl5u12QyV+RjS6SG1sS66mq62+zP8LXoqoKmRjc5CgwDs/YWlXqWJv1V51h7OxvHJsIfv4RbbN980PfdOKwEx9277BKSmRmXt1LkkWpXjKikPpA046/0w/6p0cVT97yOZK1C/w80ee94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgbkwATd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l5f8mYJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECF2C4CEFE;
-	Thu,  9 Oct 2025 15:59:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgbkwATd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE03C116B1;
+	Thu,  9 Oct 2025 15:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025590;
-	bh=nd1wa/cp2/P1e0jXzTDqfpVAMUOzv7R/1WIlKHMuY2Q=;
+	s=k20201202; t=1760025591;
+	bh=vYT7tI9E7sWWtZlSoDWPwRiSkT4HiL7H4uoZ9V70nkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5f8mYJiTyAORYI74It40JL5jbQiQujWArucaFeh6V/6HNsiJlFw2YYh/IZUQltuV
-	 UGcEP9AyWuO1LoGV9di03jB/AdniEghcQCWHyzLeZy/dkR5SNgf8DPFM0PvFEn7fpB
-	 JQI8aPowgsR7zWLoxJ5400LeB8tliii9BEMpIoEG0JKUufBONHAZT/w3xs3D8fwKkz
-	 OPYGLsNm55LQ1YSU17FJmZTQ/dfMMQokA66Qx8Dha3+mI13FjOF50e6iMMWwsI+INa
-	 RVHxzSag2vz9gcMNL7f0qC3WQr3avg7z9P3J8nt675JMJIUqEG09uZRb2LX2XkoPio
-	 EC05cj2XM0QDA==
+	b=LgbkwATd7MW7y0V93XnwqcB5m9tfWAi5W1N5C0fAetND4EycRcG41IzwdN9Ww2b6H
+	 WDBRj6A3PFIOe0/AAfbe6W8qEeGYT2lN8qEg2ZxFRwYVoskvhoiEGv7xrIehXBGHA1
+	 22HTf5AI+y2dlHRFXJIwSAfSGguipXP7KS37ThxIVwboEbxl0yOKrszHUN5FM+p7PS
+	 xfMV6qQCBJRqVRTjEZ0SCPqJuofV4lTvqAOKmbhRtZyp3R3um5nhgzUchfWPcSiDwH
+	 njFdsrS6Ar2yvx5CgAZjm//WtckUvc/DZ/V8XDlRiFKzoW6MGS2I08gDw/gsyxuxJf
+	 LFDv3NogUsejg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiawei Zhao <phoenix500526@163.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+Cc: Ming Wang <wangming01@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	eddyz87@gmail.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] libbpf: Fix USDT SIB argument handling causing unrecognized register error
-Date: Thu,  9 Oct 2025 11:55:27 -0400
-Message-ID: <20251009155752.773732-61-sashal@kernel.org>
+	chenhuacai@kernel.org,
+	jiaxun.yang@flygoat.com,
+	linux-mips@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] irqchip/loongson-pch-lpc: Use legacy domain for PCH-LPC IRQ controller
+Date: Thu,  9 Oct 2025 11:55:28 -0400
+Message-ID: <20251009155752.773732-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -54,263 +54,97 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiawei Zhao <phoenix500526@163.com>
+From: Ming Wang <wangming01@loongson.cn>
 
-[ Upstream commit 758acb9ccfdbf854b55abaceaf1f3f229cde3d19 ]
+[ Upstream commit c33c43f71bda362b292a6e57ac41b64342dc87b3 ]
 
-On x86-64, USDT arguments can be specified using Scale-Index-Base (SIB)
-addressing, e.g. "1@-96(%rbp,%rax,8)". The current USDT implementation
-in libbpf cannot parse this format, causing `bpf_program__attach_usdt()`
-to fail with -ENOENT (unrecognized register).
+On certain Loongson platforms, drivers attempting to request a legacy
+ISA IRQ directly via request_irq() (e.g., IRQ 4) may fail. The
+virtual IRQ descriptor is not fully initialized and lacks a valid irqchip.
 
-This patch fixes this by implementing the necessary changes:
-- add correct handling for SIB-addressed arguments in `bpf_usdt_arg`.
-- add adaptive support to `__bpf_usdt_arg_type` and
-  `__bpf_usdt_arg_spec` to represent SIB addressing parameters.
+This issue does not affect ACPI-enumerated devices described in DSDT,
+as their interrupts are properly mapped via the GSI translation path.
+This indicates the LPC irqdomain itself is functional but is not correctly
+handling direct VIRQ-to-HWIRQ mappings.
 
-Signed-off-by: Jiawei Zhao <phoenix500526@163.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250827053128.1301287-2-phoenix500526@163.com
+The root cause is the use of irq_domain_create_linear(). This API sets
+up a domain for dynamic, on-demand mapping, typically triggered by a GSI
+request. It does not pre-populate the mappings for the legacy VIRQ range
+(0-15). Consequently, if no ACPI device claims a specific GSI
+(e.g., GSI 4), the corresponding VIRQ (e.g., VIRQ 4) is never mapped to
+the LPC domain. A direct call to request_irq(4, ...) then fails because
+the kernel cannot resolve this VIRQ to a hardware interrupt managed by
+the LPC controller.
+
+The PCH-LPC interrupt controller is an i8259-compatible legacy device
+that requires a deterministic, static 1-to-1 mapping for IRQs 0-15 to
+support legacy drivers.
+
+Fix this by replacing irq_domain_create_linear() with
+irq_domain_create_legacy(). This API is specifically designed for such
+controllers. It establishes the required static 1-to-1 VIRQ-to-HWIRQ
+mapping for the entire legacy range (0-15) immediately upon domain
+creation. This ensures that any VIRQ in this range is always resolvable,
+making direct calls to request_irq() for legacy IRQs function correctly.
+
+Signed-off-by: Ming Wang <wangming01@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit, here is my
-assessment:
+YES: Switching the Loongson PCH-LPC domain from
+`irq_domain_create_linear()` to `irq_domain_create_legacy()` removes a
+long-standing bug that prevents legacy ISA interrupts from working when
+drivers call `request_irq()` directly.
 
-## **Backport Status: YES**
+- The current code at `drivers/irqchip/irq-loongson-pch-lpc.c:203`
+  creates a linear domain, which only instantiates mappings on demand.
+  That leaves IRQs 0‑15 unmapped unless an ACPI GSI translation happens
+  first, so `request_irq(4, …)` sees an uninitialized descriptor and
+  fails exactly as described in the commit message.
+- The fix replaces that call with `irq_domain_create_legacy(…,
+  LPC_COUNT, 0, 0, …)` (same location) and adds a clarifying comment.
+  Legacy domains eagerly map the whole 0‑15 range, invoking
+  `pch_lpc_map()` for each slot so the chip/handler is set up before any
+  driver requests the IRQ. This mirrors how other i8259-compatible
+  controllers (e.g. `irq-i8259.c`) are wired.
+- The regression was introduced when the controller first landed (Fixes:
+  ee73f14ee9eb7, v6.0), so every stable kernel carrying Loongson support
+  can hit it. Impact is high: legacy ISA drivers or firmware that still
+  rely on numeric IRQs can never bind on affected systems.
+- The change is tiny, localized to one driver, and does not alter the
+  hardware programming model—only the domain helper is swapped. No new
+  features, no ABI changes, and it parallels existing upstream practice,
+  so regression risk is minimal.
 
-### **Analysis Summary:**
+Given the clear user-visible failure mode and the contained, well-
+understood fix, this is an excellent candidate for stable backporting.
 
-**1. Nature of the Fix:**
-This commit fixes a **longstanding bug** in libbpf's USDT (User
-Statically-Defined Tracing) implementation. The bug has existed since
-the original x86 USDT support was added in April 2022 (commit
-4c59e584d1581).
+ drivers/irqchip/irq-loongson-pch-lpc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-**2. User Impact:**
-- **High Impact:** When GCC compiles USDT programs with `-O1` or higher
-  optimization, it generates SIB (Scale-Index-Base) addressing mode for
-  global array access, e.g., `"1@-96(%rbp,%rax,8)"`
-- **Failure Mode:** `bpf_program__attach_usdt()` fails with `-ENOENT`
-  (unrecognized register) when encountering SIB addressing
-- **Common Scenario:** This affects any optimized build using USDT
-  probes with array access, which is a standard use case
-
-**3. Fix Quality:**
-- **Well-designed:** The struct changes are explicitly designed for
-  backward/forward compatibility
-- **Tested:** Includes comprehensive test coverage (commit 69424097ee106
-  / 080e6de1c87ef)
-- **Contained:** Changes are confined to USDT subsystem in libbpf
-  (tools/lib/bpf/)
-- **No regression risk:** Only affects USDT argument parsing; existing
-  functionality preserved
-
-**4. Technical Details of Fix:**
-```
-tools/lib/bpf/usdt.bpf.h:17-38 - Adds BPF_USDT_ARG_SIB enum value
-tools/lib/bpf/usdt.bpf.h:42-66 - Modifies struct with bitfields for
-idx_reg_off and scale_bitshift
-tools/lib/bpf/usdt.bpf.h:204-244 - Implements SIB calculation: base +
-(index << scale) + offset
-tools/lib/bpf/usdt.c:1277-1326 - Adds sscanf patterns to parse SIB
-formats
-```
-
-**5. Stable Kernel Criteria:**
-✅ **Fixes important bug affecting users** - Yes, prevents USDT
-attachment failures
-✅ **Small and contained** - Changes isolated to USDT subsystem
-✅ **Minimal regression risk** - Compatibility designed in, well-tested
-✅ **No architectural changes** - Follows existing ARG_REG_DEREF pattern
-✅ **Not a new feature** - Fixes missing support for standard x86
-addressing mode
-
-**6. Compatibility Considerations:**
-- The comment states: "ARG_SIB requires libbpf v1.7+"
-- Struct layout uses bitfields with conditional compilation for
-  endianness
-- Designed to maintain offset stability for `reg_off` field
-- Old code reading old specs continues to work
-- New spec type only used when SIB addressing is detected
-
-**Note:** This commit has already been backported to this tree as
-**b70c5bb3cd541**, confirming its suitability for stable kernels.
-
- tools/lib/bpf/usdt.bpf.h | 44 ++++++++++++++++++++++++++--
- tools/lib/bpf/usdt.c     | 62 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 99 insertions(+), 7 deletions(-)
-
-diff --git a/tools/lib/bpf/usdt.bpf.h b/tools/lib/bpf/usdt.bpf.h
-index 2a7865c8e3fe3..43deb05a51970 100644
---- a/tools/lib/bpf/usdt.bpf.h
-+++ b/tools/lib/bpf/usdt.bpf.h
-@@ -34,13 +34,32 @@ enum __bpf_usdt_arg_type {
- 	BPF_USDT_ARG_CONST,
- 	BPF_USDT_ARG_REG,
- 	BPF_USDT_ARG_REG_DEREF,
-+	BPF_USDT_ARG_SIB,
- };
+diff --git a/drivers/irqchip/irq-loongson-pch-lpc.c b/drivers/irqchip/irq-loongson-pch-lpc.c
+index 2d4c3ec128b8f..912bf50a5c7ca 100644
+--- a/drivers/irqchip/irq-loongson-pch-lpc.c
++++ b/drivers/irqchip/irq-loongson-pch-lpc.c
+@@ -200,8 +200,13 @@ int __init pch_lpc_acpi_init(struct irq_domain *parent,
+ 		goto iounmap_base;
+ 	}
  
-+/*
-+ * This struct layout is designed specifically to be backwards/forward
-+ * compatible between libbpf versions for ARG_CONST, ARG_REG, and
-+ * ARG_REG_DEREF modes. ARG_SIB requires libbpf v1.7+.
-+ */
- struct __bpf_usdt_arg_spec {
- 	/* u64 scalar interpreted depending on arg_type, see below */
- 	__u64 val_off;
-+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
- 	/* arg location case, see bpf_usdt_arg() for details */
--	enum __bpf_usdt_arg_type arg_type;
-+	enum __bpf_usdt_arg_type arg_type: 8;
-+	/* index register offset within struct pt_regs */
-+	__u16 idx_reg_off: 12;
-+	/* scale factor for index register (1, 2, 4, or 8) */
-+	__u16 scale_bitshift: 4;
-+	/* reserved for future use, keeps reg_off offset stable */
-+	__u8 __reserved: 8;
-+#else
-+	__u8 __reserved: 8;
-+	__u16 idx_reg_off: 12;
-+	__u16 scale_bitshift: 4;
-+	enum __bpf_usdt_arg_type arg_type: 8;
-+#endif
- 	/* offset of referenced register within struct pt_regs */
- 	short reg_off;
- 	/* whether arg should be interpreted as signed value */
-@@ -149,7 +168,7 @@ int bpf_usdt_arg(struct pt_regs *ctx, __u64 arg_num, long *res)
- {
- 	struct __bpf_usdt_spec *spec;
- 	struct __bpf_usdt_arg_spec *arg_spec;
--	unsigned long val;
-+	unsigned long val, idx;
- 	int err, spec_id;
- 
- 	*res = 0;
-@@ -202,6 +221,27 @@ int bpf_usdt_arg(struct pt_regs *ctx, __u64 arg_num, long *res)
- 			return err;
- #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
- 		val >>= arg_spec->arg_bitshift;
-+#endif
-+		break;
-+	case BPF_USDT_ARG_SIB:
-+		/* Arg is in memory addressed by SIB (Scale-Index-Base) mode
-+		 * (e.g., "-1@-96(%rbp,%rax,8)" in USDT arg spec). We first
-+		 * fetch the base register contents and the index register
-+		 * contents from pt_regs. Then we calculate the final address
-+		 * as base + (index * scale) + offset, and do a user-space
-+		 * probe read to fetch the argument value.
-+		 */
-+		err = bpf_probe_read_kernel(&val, sizeof(val), (void *)ctx + arg_spec->reg_off);
-+		if (err)
-+			return err;
-+		err = bpf_probe_read_kernel(&idx, sizeof(idx), (void *)ctx + arg_spec->idx_reg_off);
-+		if (err)
-+			return err;
-+		err = bpf_probe_read_user(&val, sizeof(val), (void *)(val + (idx << arg_spec->scale_bitshift) + arg_spec->val_off));
-+		if (err)
-+			return err;
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-+		val >>= arg_spec->arg_bitshift;
- #endif
- 		break;
- 	default:
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index 3373b9d45ac44..867bff6b06990 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -200,12 +200,23 @@ enum usdt_arg_type {
- 	USDT_ARG_CONST,
- 	USDT_ARG_REG,
- 	USDT_ARG_REG_DEREF,
-+	USDT_ARG_SIB,
- };
- 
- /* should match exactly struct __bpf_usdt_arg_spec from usdt.bpf.h */
- struct usdt_arg_spec {
- 	__u64 val_off;
--	enum usdt_arg_type arg_type;
-+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-+	enum usdt_arg_type arg_type: 8;
-+	__u16	idx_reg_off: 12;
-+	__u16	scale_bitshift: 4;
-+	__u8 __reserved: 8;     /* keep reg_off offset stable */
-+#else
-+	__u8 __reserved: 8;     /* keep reg_off offset stable */
-+	__u16	idx_reg_off: 12;
-+	__u16	scale_bitshift: 4;
-+	enum usdt_arg_type arg_type: 8;
-+#endif
- 	short reg_off;
- 	bool arg_signed;
- 	char arg_bitshift;
-@@ -1283,11 +1294,51 @@ static int calc_pt_regs_off(const char *reg_name)
- 
- static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec *arg, int *arg_sz)
- {
--	char reg_name[16];
--	int len, reg_off;
--	long off;
-+	char reg_name[16] = {0}, idx_reg_name[16] = {0};
-+	int len, reg_off, idx_reg_off, scale = 1;
-+	long off = 0;
-+
-+	if (sscanf(arg_str, " %d @ %ld ( %%%15[^,] , %%%15[^,] , %d ) %n",
-+		   arg_sz, &off, reg_name, idx_reg_name, &scale, &len) == 5 ||
-+		sscanf(arg_str, " %d @ ( %%%15[^,] , %%%15[^,] , %d ) %n",
-+		       arg_sz, reg_name, idx_reg_name, &scale, &len) == 4 ||
-+		sscanf(arg_str, " %d @ %ld ( %%%15[^,] , %%%15[^)] ) %n",
-+		       arg_sz, &off, reg_name, idx_reg_name, &len) == 4 ||
-+		sscanf(arg_str, " %d @ ( %%%15[^,] , %%%15[^)] ) %n",
-+		       arg_sz, reg_name, idx_reg_name, &len) == 3
-+		) {
-+		/*
-+		 * Scale Index Base case:
-+		 * 1@-96(%rbp,%rax,8)
-+		 * 1@(%rbp,%rax,8)
-+		 * 1@-96(%rbp,%rax)
-+		 * 1@(%rbp,%rax)
-+		 */
-+		arg->arg_type = USDT_ARG_SIB;
-+		arg->val_off = off;
- 
--	if (sscanf(arg_str, " %d @ %ld ( %%%15[^)] ) %n", arg_sz, &off, reg_name, &len) == 3) {
-+		reg_off = calc_pt_regs_off(reg_name);
-+		if (reg_off < 0)
-+			return reg_off;
-+		arg->reg_off = reg_off;
-+
-+		idx_reg_off = calc_pt_regs_off(idx_reg_name);
-+		if (idx_reg_off < 0)
-+			return idx_reg_off;
-+		arg->idx_reg_off = idx_reg_off;
-+
-+		/* validate scale factor and set fields directly */
-+		switch (scale) {
-+		case 1: arg->scale_bitshift = 0; break;
-+		case 2: arg->scale_bitshift = 1; break;
-+		case 4: arg->scale_bitshift = 2; break;
-+		case 8: arg->scale_bitshift = 3; break;
-+		default:
-+			pr_warn("usdt: invalid SIB scale %d, expected 1, 2, 4, 8\n", scale);
-+			return -EINVAL;
-+		}
-+	} else if (sscanf(arg_str, " %d @ %ld ( %%%15[^)] ) %n",
-+				arg_sz, &off, reg_name, &len) == 3) {
- 		/* Memory dereference case, e.g., -4@-20(%rbp) */
- 		arg->arg_type = USDT_ARG_REG_DEREF;
- 		arg->val_off = off;
-@@ -1306,6 +1357,7 @@ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec
- 	} else if (sscanf(arg_str, " %d @ %%%15s %n", arg_sz, reg_name, &len) == 2) {
- 		/* Register read case, e.g., -4@%eax */
- 		arg->arg_type = USDT_ARG_REG;
-+		/* register read has no memory offset */
- 		arg->val_off = 0;
- 
- 		reg_off = calc_pt_regs_off(reg_name);
+-	priv->lpc_domain = irq_domain_create_linear(irq_handle, LPC_COUNT,
+-					&pch_lpc_domain_ops, priv);
++	/*
++	 * The LPC interrupt controller is a legacy i8259-compatible device,
++	 * which requires a static 1:1 mapping for IRQs 0-15.
++	 * Use irq_domain_create_legacy to establish this static mapping early.
++	 */
++	priv->lpc_domain = irq_domain_create_legacy(irq_handle, LPC_COUNT, 0, 0,
++						    &pch_lpc_domain_ops, priv);
+ 	if (!priv->lpc_domain) {
+ 		pr_err("Failed to create IRQ domain\n");
+ 		goto free_irq_handle;
 -- 
 2.51.0
 
