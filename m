@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D6917BEBF;
-	Thu,  9 Oct 2025 16:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E68E1C84CB;
+	Thu,  9 Oct 2025 16:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025606; cv=none; b=et7A3BHqc+lW8/X5OZXqoHrTzGBRE+6CvSt5KX3GiWJjDvVJwbz7JnVZhon/5AeX9rMbnIP5xB3UiJdA3agsIsCQDBrFZKYpBnYbelnuNvYl3/uDGanOC0kBp4UAdePhfIUckZTtZgfVvJdeFqGugSBLZRUpNpv8bmxQM8RXLz8=
+	t=1760025610; cv=none; b=I8BiKjY+F8M/QyCWIGo3ZNujyQKmVNY5x3XDpPw0DU443vHWJwwz/JLeYkelGk6212fgE3o4xaee56ildD4tSSxgRPLILPt16JtDN5foEgJhP3hEY9fMzdjbNynnwd1hRI8mXz0d2QkjQ7O5ujDnZIexhoJqYPb7Ep6QMA81quU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025606; c=relaxed/simple;
-	bh=O+brzHWlxnwfRnX93cEP2ZYbS4jDAdUaU80R0fiNVlw=;
+	s=arc-20240116; t=1760025610; c=relaxed/simple;
+	bh=PFQ0pWULKOnJS7MiNCPcj8bi1fB18R/7ZrXadRgKnG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SdIiWyPOehh3tDSMJUua3gJP5eDppEUukgJtr27uVJTHQHTe5AckLs/1Ste5koIgi9TY6X8fFjybnhXORtRAT5sedpfLOqIN9IC+eSFojaKmqsucRJ0kBp7wQOsqN0r8/bkK2X6UASuvuqGdsy86EgWocyqedy2tlMo0fZEMPm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3asP9bu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WP89GwIgrNRHRa0EJvMmksOSgybCaMMTqG/KVQ1bPim40vlCYvek8bnjAG/XSfu1La8arjKzVzWZNvWw7OafwqsF6R2thpSs7CG6GOTDNPNnW8vKtxpbunieikyCxn55G2EStDLOe9Pm9UbnOzfAdn2/vX4A42zluIJNl5Deae0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WW34872i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3asP9bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FEEC4CEF8;
-	Thu,  9 Oct 2025 16:00:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WW34872i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69439C4CEE7;
+	Thu,  9 Oct 2025 16:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025606;
-	bh=O+brzHWlxnwfRnX93cEP2ZYbS4jDAdUaU80R0fiNVlw=;
+	s=k20201202; t=1760025610;
+	bh=PFQ0pWULKOnJS7MiNCPcj8bi1fB18R/7ZrXadRgKnG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3asP9bu403iMwGvsq2DOr7DMpU9ht8ZEuv4Q1EI+7toY2KVPPSnoMTzRe468Agzd
-	 +qfY5uHJltn7HpAjld7to9vBCo/3Tsise0jWFr5XF0vpI5KcymzHbryT6VYsSUmWwS
-	 8WNwY22FIIQqKKMxsWsg6f2AceF29S9l5EGcJkBWuv5SOxjbX4Cg9v4f/2FcVu3WD4
-	 fAvliLXsgpy4YSrSTvm6svEDR5sxcW3ZPNoVIan6HQuElwY7BVJkdz9VI3aimWHkEx
-	 6QIBJ6pJP52yyojlks3tI61xvAfpG3lCB0PaWH0i1jfKjUdmcINNDVnyzk7fEGpdve
-	 DpZeLsb8JwzUA==
+	b=WW34872iSFr+jgVJFjfLqkyZYRI24MyRFr7TMmqjuIHb2GCWRgUUdyQA5ZzLHx71X
+	 cdRslwtiAKlzUeY4mFcPSFiWOkInC0rmOtX3yQqR8/B9yIklUd9M3LfYzLbJbhVRdH
+	 zhO1QOUzyhA9vB6vJBjbweLAVoYzuSnd7x7eaq6fMb/aqhkeWJUd52ytvh/1tpg17O
+	 nnMO0QTlsrFQ/XtN6aUjIDfoonjoC7cRWKfdThk5XQ9ECrcpEGs3mMVzHIgMSmN4t2
+	 wiTp0MI5XRnR8/nqL34Tp6ZJ50Rta6eVtRFzXxmnOGHMImQgWaJ3l6BZCb987Dmyot
+	 Gsf+e1iUaMz4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] firmware: qcom: scm: preserve assign_mem() error return value
-Date: Thu,  9 Oct 2025 11:55:38 -0400
-Message-ID: <20251009155752.773732-72-sashal@kernel.org>
+Cc: Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] i3c: mipi-i3c-hci-pci: Add support for Intel Wildcat Lake-U I3C
+Date: Thu,  9 Oct 2025 11:55:39 -0400
+Message-ID: <20251009155752.773732-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -53,132 +51,93 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 121fcf3c871181edce0708a49d2397cedd6ad21f ]
+[ Upstream commit d515503f3c8a8475b2f78782534aad09722904e1 ]
 
-When qcom_scm_assign_mem() fails, the error value is currently being
-overwritten after it is logged, resulting in the loss of the original
-error code. Fix this by retaining and returning the original error value
-as intended.
+Add I3C controller PCI IDs on Intel Wildcat Lake-U.
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250807124451.2623019-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250808131732.1213227-1-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, here is my assessment:
+YES
 
-## **Backport Status: YES**
+- What changed: Only two new PCI IDs were added to the Intel entry list
+  in `drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:126` to allow
+  binding on Wildcat Lake-U:
+  - `/* Wildcat Lake-U */` with `0x4d7c` and `0x4d6f` mapped to
+    `intel_info` (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-
+    pci.c:127-129`).
+  - No probe/remove logic or resource handling changed; the rest of the
+    table remains for Panther Lake-H/P
+    (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:130-136`).
 
-### Summary of Analysis
+- Binding behavior: The new IDs use the same `driver_data`
+  (`intel_info`) as existing Panther Lake entries, which runs the Intel-
+  specific init reset sequence (`mipi_i3c_hci_pci_intel_init`) that
+  ioremaps a small private window and toggles the reset bit
+  (`drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c:28-50`). This is
+  a contained and proven path already used for Panther Lake.
 
-This commit fixes a **7-year-old bug** in error handling for Qualcomm
-Secure Channel Manager memory assignment operations. The bug was
-introduced in commit d82bd359972a7f (Oct 2017) and has persisted across
-all kernel versions since then.
+- Scope and risk:
+  - No functional changes, no API/ABI changes, no control flow changes;
+    strictly a device-ID enablement in a leaf driver.
+  - Risk of regression is minimal because the driver will only bind on
+    systems with those exact Intel vendor/device IDs. Systems without
+    this hardware are unaffected.
+  - Architectural impact is nil; this does not touch core I3C, PCI, or
+    shared subsystems—only the HCI PCI glue driver’s ID table.
 
-### Bug Description
+- User impact: Without these IDs, Wildcat Lake-U systems with MIPI I3C
+  HCI on PCI will not have the I3C controller bound by this driver,
+  reducing functionality. Adding the IDs enables existing code paths for
+  a new platform, which is a classic stable backport case.
 
-In `qcom_scm_assign_mem()` at **drivers/firmware/qcom/qcom_scm.c:1122**,
-when the secure call `__qcom_scm_assign_mem()` fails:
-- The actual error code is logged: `"Assign memory protection call
-  failed %d\n", ret`
-- But then **-EINVAL is hardcoded** in the return: `return -EINVAL;`
-- The fix changes this to: `return ret;`
+- Stable policy alignment:
+  - This is not a new feature; it’s device-ID enablement for existing
+    support. Such ID additions are routinely accepted into stable as
+    low-risk hardware enablement.
+  - No “Fixes”/“Cc: stable” tags, but stable trees regularly take ID-
+    only patches when they unlock existing drivers for shipping
+    hardware.
 
-This means callers lose critical diagnostic information about *why* the
-memory assignment failed.
+- Dependencies/constraints:
+  - Backport only to stable branches that already contain
+    `MIPI_I3C_HCI_PCI` and this PCI glue driver (initially added with
+    Panther Lake support). For branches older than that introduction,
+    this would imply pulling in the entire driver, which exceeds
+    minimal-risk backporting.
+  - In branches where `intel_info` and the Intel init/reset sequence are
+    present and in use for Panther Lake, these IDs integrate cleanly.
 
-### Impact Assessment
+Conclusion: The patch is a small, contained, low-risk device-ID addition
+enabling existing functionality on Wildcat Lake-U. It fits stable
+backport criteria and should be backported to applicable stable trees
+that already include the MIPI I3C HCI PCI driver.
 
-**Affected Subsystems** (verified via code search):
-- **drivers/misc/fastrpc.c** - FastRPC DSP communication (6 call sites)
-- **drivers/net/wireless/ath/ath10k/qmi.c** - WiFi driver (2 call sites)
-- **drivers/remoteproc/qcom_q6v5_mss.c** - Modem remoteproc (1 call
-  site)
-- **drivers/remoteproc/qcom_q6v5_pas.c** - Peripheral remoteproc (2 call
-  sites)
-- **drivers/soc/qcom/rmtfs_mem.c** - Remote filesystem memory (2 call
-  sites)
+ drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-All these subsystems need accurate error codes to distinguish between:
-- `-ENOMEM` - Memory allocation failures
-- `-ETIMEDOUT` - Secure call timeout
-- Firmware-specific error codes from `res.result[0]`
-
-Currently, all failures return `-EINVAL`, making debugging Qualcomm
-platform issues significantly harder.
-
-### Stable Kernel Criteria Compliance
-
-✅ **Fixes a real bug**: Yes - error codes are incorrectly reported,
-affecting debugging
-✅ **Small and contained**: Yes - single line change
-✅ **Obviously correct**: Yes - preserves the actual error instead of
-overwriting it
-✅ **No architectural changes**: Correct - purely error handling
-✅ **Minimal regression risk**: Extremely low - only changes error return
-value
-✅ **Already in mainline**: Yes - commit
-121fcf3c871181edce0708a49d2397cedd6ad21f (Aug 2025)
-✅ **Applies to all stable trees**: Verified present in v4.19, v5.10,
-v5.15, v6.6, v6.17
-
-### Code Change Analysis
-
-**Before:**
-```c
-ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
-                            ptr_phys, src_sz, dest_phys, dest_sz);
-if (ret) {
-    dev_err(__scm->dev,
-            "Assign memory protection call failed %d\n", ret);
-    return -EINVAL;  // ❌ Wrong - loses actual error
-}
-```
-
-**After:**
-```c
-return ret;  // ✅ Correct - preserves actual error
-```
-
-### Why This Should Be Backported
-
-1. **Debugging improvement**: Users and developers debugging WiFi,
-   modem, or DSP issues on Qualcomm platforms will get accurate error
-   codes
-2. **No behavior change for success case**: Only affects error paths
-3. **No dependencies**: Applies cleanly across all kernel versions since
-   2017
-4. **Consistent with kernel practices**: Error codes should be
-   propagated, not overwritten
-5. **Long-standing issue**: Bug has existed since initial implementation
-   - affects many kernel versions in production
-
-**Recommendation**: Backport to all active stable trees (6.12+, 6.6.x,
-6.1.x, 5.15.x, 5.10.x, 5.4.x, 4.19.x).
-
- drivers/firmware/qcom/qcom_scm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 26cd0458aacd6..5243d5abbbe99 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1119,7 +1119,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	if (ret) {
- 		dev_err(__scm->dev,
- 			"Assign memory protection call failed %d\n", ret);
--		return -EINVAL;
-+		return ret;
- 	}
+diff --git a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
+index c6c3a3ec11eae..08e6cbdf89cea 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
++++ b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
+@@ -124,6 +124,9 @@ static void mipi_i3c_hci_pci_remove(struct pci_dev *pci)
+ }
  
- 	*srcvm = next_vm;
+ static const struct pci_device_id mipi_i3c_hci_pci_devices[] = {
++	/* Wildcat Lake-U */
++	{ PCI_VDEVICE(INTEL, 0x4d7c), (kernel_ulong_t)&intel_info},
++	{ PCI_VDEVICE(INTEL, 0x4d6f), (kernel_ulong_t)&intel_info},
+ 	/* Panther Lake-H */
+ 	{ PCI_VDEVICE(INTEL, 0xe37c), (kernel_ulong_t)&intel_info},
+ 	{ PCI_VDEVICE(INTEL, 0xe36f), (kernel_ulong_t)&intel_info},
 -- 
 2.51.0
 
