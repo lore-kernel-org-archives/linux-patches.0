@@ -1,90 +1,112 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598DB2EA490
-	for <patches@lists.linux.dev>; Thu,  9 Oct 2025 14:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3D122157F;
+	Thu,  9 Oct 2025 15:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760019820; cv=none; b=Drg3fVx4/yFB+lETNSlQrRFXgDrC/9NwwRN19guCCDVWub+q1Ag6MUdD4OJPZuyUtTJouvwj8+Q1UXTRF5WfwXtcY+Yf6E6bzAO0wlUGNLST2GkN7luOiHJllOCKG9MdTh5Nfj+g1cdY+LM1YxCjih7loP/2wjB9zQutl70YdzQ=
+	t=1760025475; cv=none; b=CWaoyBYJNKbsVMQrOdYZ8e+Kzc7YhcIFEJYPiUoKpKveRj1uTS+HT0rtKD2tIsYBRY4PXOINuUmcGSQ+nlztWKW1TONaxtMayJjP6ie4ijdEG78OWFh+mk4nw6S9sxaPozoqpd930MZnuvFocJ1/G6jBNo8Cg5oR07n26dReweM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760019820; c=relaxed/simple;
-	bh=tKsf4rNNLhAUy8cx/s+Zj+MAaKVikS0yGc2U8lMqRPo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BOX/THvKl5kUqSXvku8yZaMid8O0Ml6KvBetY7Hyv9dVC8W5/U3jfOpojvEEfKhvsyCOlH7igsY0NIUVrs6TxLeu0O1O0Lqvk6IzCa3L/0Y9g904ouQQu5p6P2EwpOrJt1kRZbnmhOsCk0O+c5/1yE8RvOEfbLIswwDCnwo6CDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=ad+sySV3; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1760025475; c=relaxed/simple;
+	bh=GnBLVdctQ6Mn4VK9shgxomf1x++ifJGHmduqS2Rf2hU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ktMxjI/8m5if0ABQ15zLgWNKNqL7JwWgg6wJTx9zvEVP5/mcxCvFP6NcDp+sRN098jDSA2TB7kAik1914/dUqKhCaFdcdJpPmibraTRsK4o3RsOnJMshNVZ6z97o0g1Xpq0WRr/LE3/EfsnUuKmlwFBdlWFZsZcC+TnuX2iW0Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qOi23cCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="ad+sySV3"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A8AAA101DB814;
-	Thu,  9 Oct 2025 16:23:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1760019813; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=0A5K/PIrYFfczp2p7aBd8MOP+eifTgY270bvBsYk9ws=;
-	b=ad+sySV3WNJRwtSW7u2Zn0uLB+SSMg4Zh+KL6VJ8fPKYLhm0CABTN3K/dOTG4k+ZHrB4F7
-	ZBJYeoZRyh1LBFnneelIJHWrbpsP/p8jdgoavwEn4ux1OTx8CLsrCgSTQgiNH8mf8C8cGH
-	Tz3tACg8aSPInLyXJD8GI24dPLdsVtTksQ4/MFhZS9f7AapfVASxVJXJJrPcYYmD3p/FFU
-	htoV/P1+/uJleBe8Ue88S+c8NicjxUT6luGlugkX/Rg933olcImIRi1b+8LiaPddYSHW/U
-	vl0nS3L/Nfw14Ptt9CqyDFdj2mZtFwUmRAr++F3+m7Em5agceOu6jqcjrPCBPw==
-Date: Thu, 9 Oct 2025 16:23:28 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-Subject: Re: [PATCH 6.12 00/10] 6.12.51-rc1 review
-Message-ID: <aOfFYDUuTPkgEqQp@duo.ucw.cz>
-References: <20251003160338.463688162@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qOi23cCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935A1C4CEE7;
+	Thu,  9 Oct 2025 15:57:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760025474;
+	bh=GnBLVdctQ6Mn4VK9shgxomf1x++ifJGHmduqS2Rf2hU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qOi23cCqSHHdWp6vevmDBup6sFX++OPm/db+vofRtiGSLrKNGyM/nC7/dRKPGMzvf
+	 q+8/qyVxvLY2W2ySQn7xgGcsZI+9wpnu+5lH+jDQYh+uH/VeULEcbI7zOmPSJ1V9FG
+	 g8j5ONhSV4ZxpGY99V8yEauFHC0VjDN7xiVoaTFp8w3XPM78LjTpehHuOZk6Rh152z
+	 u68hoi+eYOppLPMhFVaP17nPO2Aw6BoOT9CZPaUus1Xx8KXBoFe3FrrhqWqlQhMeoT
+	 qV6Na32gJ7uUglmRSO15aQiSTJM36xLqaHyqdIpZeQ8if0nfoQ2KVJjtH75ImiZNu+
+	 s5adgOdUkYKdw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Rong Zhang <i@rong.moe>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>,
+	clemens@ladisch.de,
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] hwmon: (k10temp) Add device ID for Strix Halo
+Date: Thu,  9 Oct 2025 11:54:27 -0400
+Message-ID: <20251009155752.773732-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8dWd9aYyb2y9MZlB"
-Content-Disposition: inline
-In-Reply-To: <20251003160338.463688162@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+From: Rong Zhang <i@rong.moe>
 
---8dWd9aYyb2y9MZlB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[ Upstream commit e5d1e313d7b6272d6dfda983906d99f97ad9062b ]
 
-Hi!
+The device ID of Strix Halo Data Fabric Function 3 has been in the tree
+since commit 0e640f0a47d8 ("x86/amd_nb: Add new PCI IDs for AMD family
+0x1a"), but is somehow missing from k10temp_id_table.
 
-> This is the start of the stable review cycle for the 6.12.51 release.
-> There are 10 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Add it so that it works out of the box.
 
-CIP testing did not find any problems here:
+Tested on Beelink GTR9 Pro Mini PC.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.12.y
+Signed-off-by: Rong Zhang <i@rong.moe>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250823180443.85512-1-i@rong.moe
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+LLM Generated explanations, may be completely bogus:
 
-Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+YES – the added ID lets the existing k10temp driver bind to Strix Halo’s
+DF3 device so users get temperature readings on that platform.
 
---8dWd9aYyb2y9MZlB
-Content-Type: application/pgp-signature; name="signature.asc"
+- `drivers/hwmon/k10temp.c:560` gains
+  `PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3`, fixing the current omission that
+  prevents the module from attaching to Strix Halo’s Data Fabric
+  function 3 and leaves its sensors unavailable.
+- The constant already exists in released kernels
+  (`include/linux/pci_ids.h:587`) and is used by the AMD northbridge
+  driver (`arch/x86/kernel/amd_nb.c:98`), so the new table entry simply
+  connects existing infrastructure; no functional code paths change.
+- Scope is minimal (one ID entry, no new logic), making regression risk
+  negligible; the patch has been verified on shipping hardware (Beelink
+  GTR9 Pro).
+- For stable backports, this applies cleanly to branches ≥ v6.10 where
+  the PCI ID is defined; older long-term trees would first need commit
+  0e640f0a47d8 (or an equivalent definition).
 
------BEGIN PGP SIGNATURE-----
+Natural next step: backport to the relevant stable lines that already
+carry the Strix Halo PCI ID definition (6.10.y, upcoming 6.11.y, etc.).
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaOfFYAAKCRAw5/Bqldv6
-8pCxAJ42fMNsmC9JjCmiJtNjG84lVoY2sgCgnH0MwALItQyJ3oYlt+cMtue1vjw=
-=hvkj
------END PGP SIGNATURE-----
+ drivers/hwmon/k10temp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---8dWd9aYyb2y9MZlB--
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index 2f90a2e9ad496..b98d5ec72c4ff 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -565,6 +565,7 @@ static const struct pci_device_id k10temp_id_table[] = {
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
+ 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
+ 	{}
+-- 
+2.51.0
+
