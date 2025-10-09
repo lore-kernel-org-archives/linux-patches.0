@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9A2F3C11;
-	Thu,  9 Oct 2025 16:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDFD2F49E0;
+	Thu,  9 Oct 2025 16:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025632; cv=none; b=C8ha9+zfaHBTJ/c5bwKnqtuP0x+8qMy/WBbRoDFCzSZBMypZRZoCl9CWVrPNXLe0s3qeR+zEnXasAIDR/zO4aa8HVbyLrdzSg0548vk6XQeru2nr7is9mMS+RnF8cykqe7DVtEKXC2PfEZXWujz7kcofNLtl3U6DrPHhOuITjnY=
+	t=1760025633; cv=none; b=GGfBtGJE5O/9CScARrZ4qLc25CMoiULnPq5S6Wai7nr/JCaYjxvXb5rl4pmyk6CV2GIi2GTfYidz8uLKznIYUT8xcf3wkYpr9rWplCAoh8Jyf1aPi4Sy8lvsiMG184iWkTpmD9hZNBHNUmz+ut5S5ogpidtDnMAynwOZadglt5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025632; c=relaxed/simple;
-	bh=w0lL11a4isY3KVINmF2py0wl6uiuhSRVRIWX6J7UIGM=;
+	s=arc-20240116; t=1760025633; c=relaxed/simple;
+	bh=yxRS0gKNBTbFJ6hM5audxgolRkFAftUgg65f7Wb+Qo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rH/bT6Uwx3Ml2+Iwq5f7aiJzShkHjrflKxw/82BqWn2orV5hjROkeD08vxboqdAFN1BeFhPLxPFdZSXT/FQJSE6svZT+h8AIdh57uYgKhk+w8QBpXD6iakDPMvBTBGIHCp0yNQ7/y29OXFbfwUAsGnmOj2S5taXyBj+FK70AA0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kDsXOx8E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F+v0EKO8Tf+rdFplBhG4Kn61/pCyLLd6T6g48rDadnqvxnt3jT447OfWhp86PpTkgknwBMpQ6i9b7QTOef6ijE1cysItO2VJI6pjJl5VshkZWeOMZiDcBISCUtRVAF72eRp2aRV9BwLFu3iIBhaWaV/QHQSTaCx+xbO/Qp31Lqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZdORUXiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDsXOx8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3BDC4CEF7;
-	Thu,  9 Oct 2025 16:00:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZdORUXiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B38C4CEF8;
+	Thu,  9 Oct 2025 16:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025631;
-	bh=w0lL11a4isY3KVINmF2py0wl6uiuhSRVRIWX6J7UIGM=;
+	s=k20201202; t=1760025633;
+	bh=yxRS0gKNBTbFJ6hM5audxgolRkFAftUgg65f7Wb+Qo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDsXOx8EemIDZuiq1NZmH0se0ut/7R9FTdT+Q5lJQrC5oY0cfqj0xJTRYYq6Q/lsc
-	 jXZ2rifu1Xvi0OR17BS2fM4Q9yNuvUfrHmi43vx2VG1FjIAHovltIsJwkZWCfOVUPT
-	 4XoVmeo6fvM3kHqKw3OCZPjalTXkTsJVgv8KEGAix2HSuiLC4GMgYXD6Lddn/zzNwq
-	 IIHcTSyrwGHe1/eNAgJXgKUzADKrJOMVIwoujHzAm0c8zmSrlIAxJzVMnbcqCvZaNe
-	 B770Q4qDULvFhFjE7QKK7QJL9FHNTuXCopJs4/+2DEVTU4/7G0XifMPCAiUPsMlqm6
-	 aFSX+y7p3y8Sw==
+	b=ZdORUXiPjvcoINvMp3Ehx0e2AzQuABwDLS1gFfoBkyFnG74CFpYJx8MdUAZo4IAK+
+	 zrNbyA9xqfc9VuledOSKijxywUh/TWs23v6xs29rUbHvzwkDk3BnzPVu6ziZrt1de1
+	 qSmI9G68PkFOa0PrZ6quoa098fzGUVRH8NwGsq0QJkAb7Oqw50t+3Cn+TIGrvCn8CK
+	 Au6ycyCjqhiCXbcy36M0J2420jePjPIzhOJ2vINYwQR6kL9re3aZOvL1WlKcT9QZvc
+	 /sVMjFMmcksA9rqv1V2RANUjpuKlDSoMWGGywoX6aM8he6FxzYO9Pl0lCXt2N+tMo7
+	 j8SuDia0YJYLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paresh Bhagat <p-bhagat@ti.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] cpufreq: ti: Add support for AM62D2
-Date: Thu,  9 Oct 2025 11:55:51 -0400
-Message-ID: <20251009155752.773732-85-sashal@kernel.org>
+	david.rhodes@cirrus.com,
+	rf@opensource.cirrus.com,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.17-6.16] mfd: cs42l43: Move IRQ enable/disable to encompass force suspend
+Date: Thu,  9 Oct 2025 11:55:52 -0400
+Message-ID: <20251009155752.773732-86-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -49,114 +51,162 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paresh Bhagat <p-bhagat@ti.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit b5af45302ebc141662b2b60c713c9202e88c943c ]
+[ Upstream commit 62aec8a0a5b61f149bbe518c636e38e484812499 ]
 
-Add support for TI K3 AM62D2 SoC to read speed and revision values
-from hardware and pass to OPP layer. AM62D shares the same configuations
-as AM62A so use existing am62a7_soc_data.
+As pm_runtime_force_suspend() will force the device state to suspend,
+the driver needs to ensure no IRQ handlers are currently running. If not
+those handlers may find they are now running on suspended hardware
+despite holding a PM runtime reference. disable_irq() will sync any
+currently running handlers, so move the IRQ disabling to cover the whole
+of the forced suspend state to avoid such race conditions.
 
-Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20250903094549.271068-6-ckeepax@opensource.cirrus.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit and the stable kernel
-backporting policies, here is my assessment:
+YES
 
-## Backport Status: YES
+- What it fixes: The change prevents a race where an IRQ handler can
+  still be running (or be scheduled) while
+  `pm_runtime_force_suspend(dev)` forcibly suspends the device, causing
+  the handler to operate on suspended hardware despite holding a PM-
+  runtime reference. Moving `disable_irq()` earlier synchronizes with
+  any in-flight handler and prevents new ones from running until the
+  device is safely resumed.
 
-### Detailed Analysis
+- Precise code movement (suspend): In `cs42l43_suspend()`,
+  `disable_irq(cs42l43->irq)` is moved to precede
+  `pm_runtime_force_suspend(dev)`, guaranteeing that all IRQ handling is
+  quiesced before the forced suspend runs. See
+  `drivers/mfd/cs42l43.c:1128` (disable) and
+  `drivers/mfd/cs42l43.c:1130` (force suspend). Previously, the disable
+  was after the power-down path, which left a window for the race.
 
-#### 1. **Explicit Policy Support**
-The Linux stable kernel rules (Documentation/process/stable-kernel-
-rules.rst, line 15) **explicitly allow device ID additions**:
-> "It must either fix a real bug that bothers people or **just add a
-device ID**."
+- Precise code movement (resume): In `cs42l43_resume()`,
+  `enable_irq(cs42l43->irq)` is moved to after
+  `pm_runtime_force_resume(dev)`, ensuring the device is fully resumed
+  (including regcache sync and device state restoration) before IRQ
+  handlers can run. See `drivers/mfd/cs42l43.c:1173` (force resume) and
+  `drivers/mfd/cs42l43.c:1179` (enable).
 
-This commit adds device IDs for the AM62D2 SoC in two locations:
-- **Line 313** in `k3_cpufreq_soc[]`: Adds `{ .family = "AM62DX",
-  .revision = "SR1.0" }`
-- **Line 461** in `ti_cpufreq_of_match[]`: Adds `{ .compatible =
-  "ti,am62d2", .data = &am62a7_soc_data, }`
+- Noirq stage unchanged and still consistent: The noirq callbacks
+  continue to flip the line as before to align with system-wide
+  interrupt state during suspend/resume:
+  - `cs42l43_suspend_noirq()` enables the IRQ line just before the noirq
+    phase begins to preserve wake semantics;
+    `drivers/mfd/cs42l43.c:1146` and `drivers/mfd/cs42l43.c:1150`.
+  - `cs42l43_resume_noirq()` disables it during noirq resume, deferring
+    final enabling until the device is fully resumed;
+    `drivers/mfd/cs42l43.c:1155` and `drivers/mfd/cs42l43.c:1159`.
 
-#### 2. **Strong Historical Precedent**
-Similar commits for the AM62 SoC family were backported to stable trees:
+- Why the ordering matters: `pm_runtime_force_suspend()` explicitly
+  ignores usage counts and can suspend while other code holds PM-runtime
+  references. `disable_irq()` is synchronous and waits for any running
+  threaded IRQ handler to complete, closing the race window.
+  Symmetrically, deferring `enable_irq()` until after
+  `pm_runtime_force_resume()` ensures the device is configured and
+  regcache-synced before any handler runs.
 
-- **AM625 support** (aac0293a8f1cd): No Cc: stable tag, but present in
-  stable branches linux-6.10.y through 6.17.y
-- **AM62A7 support** (5008e4c8c31c6): No Cc: stable tag, but present in
-  stable branches linux-6.10.y through 6.17.y
-- **AM625 blacklist** (e66e20d71d79e): Also backported to stable
-- **AM62A7 blacklist** (b2b2029eb1788): Also backported to stable
+- Scope and risk: The change is tiny (4 insertions, 4 deletions) and
+  fully contained to `drivers/mfd/cs42l43.c`. It does not alter
+  interfaces or introduce new features. It only adjusts IRQ mask timing
+  around force suspend/resume, reducing the risk of handlers touching
+  suspended hardware. This is precisely the kind of correctness fix that
+  the stable tree seeks.
 
-#### 3. **Minimal Risk Profile**
-- **Only 2 lines changed** (1 file, +2 insertions)
-- **Reuses existing configuration**: Uses `am62a7_soc_data` as stated in
-  commit message - no new code paths
-- **Isolated change**: Only affects AM62D2 hardware, no impact on other
-  SoCs
-- **Well-tested pattern**: Follows the exact same pattern as AM625,
-  AM62A7, and AM62P5 additions
+- Subsystem impact: It touches only the cs42l43 MFD driver, not core PM
+  or IRQ subsystems. The driver uses regmap-IRQ and SoundWire; the fix
+  is local and does not change those frameworks’ behavior.
 
-#### 4. **User Benefit**
-- Enables CPU frequency scaling on AM62D2 hardware
-- Users with AM62D2 boards (device tree support added in v6.17 via
-  commit 1544bca2f188e) need this for proper power management
-- Without this commit, AM62D2 systems cannot adjust CPU frequencies
-  based on load
+- Historical context: The driver began disabling IRQs around system
+  suspend in an earlier change (“mfd: cs42l43: Disable IRQs during
+  suspend”, 2bb0106db90f8, v6.13-rc1 era). This commit corrects the
+  exact placement to cover the `pm_runtime_force_suspend()` window. A
+  later cleanup (“mfd: cs42l43: Remove IRQ masking in suspend”,
+  afe0f94992dbe) only removes device-level register masking and is
+  independent of this ordering fix; it’s not needed to realize this bug
+  fix.
 
-#### 5. **Companion Commit**
-There's a companion commit **fa40cbe1c86b6** "cpufreq: dt-platdev:
-Blacklist ti,am62d2 SoC" by the same author on the same date. Both
-should be backported together to prevent the generic cpufreq-dt driver
-from conflicting with ti-cpufreq.
+- Dependencies and backport nuances: This patch relies on the driver
+  already managing the IRQ line in system suspend/resume paths (present
+  since 2bb0106db90f8). For stable series that include cs42l43 with MFD-
+  level IRQ handling (e.g., 6.13+), this applies cleanly and fixes a
+  real race. Older series where IRQ masking lived in the CODEC driver
+  may not need this exact change or may require backport coordination
+  with the earlier IRQ-management shift.
 
-#### 6. **No Architectural Changes**
-- No new features beyond hardware enablement
-- No refactoring or code restructuring
-- No changes to existing functionality
-- Meets stable tree criteria: small, contained, low regression risk
+- Security and regression risk assessment:
+  - Security: Prevents potential misbehavior on suspended hardware
+    (timeouts, bus errors), but not a direct memory corruption or
+    privilege escalation. Low security impact, but improves robustness.
+  - Regression risk: Very low. Using `disable_irq()` before suspend and
+    `enable_irq()` after resume is a common, safe pattern to serialize
+    handlers around device power transitions.
 
-### Conclusion
-This commit should be backported to stable kernel trees because it:
-1. Falls under the explicit "device ID addition" exception in stable
-   rules
-2. Has strong precedent with similar AM62 family commits being
-   backported
-3. Provides essential functionality for AM62D2 hardware owners
-4. Has minimal regression risk (2 lines, reuses existing data
-   structures)
-5. Follows the established stable backporting pattern for this driver
+- Stable tree criteria:
+  - Fixes a real user-visible race condition with IRQ handling during
+    suspend.
+  - Small and contained; no architectural changes.
+  - No side effects beyond making suspend/resume sequencing correct.
+  - No new features.
+  - Clear rationale in commit message; aligns with stable policy.
 
- drivers/cpufreq/ti-cpufreq.c | 2 ++
- 1 file changed, 2 insertions(+)
+Conclusion: This is a solid, minimal bug fix with low risk and clear
+correctness benefits for cs42l43 users. It should be backported to
+stable trees that contain the cs42l43 MFD IRQ-management suspend/resume
+logic.
 
-diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
-index 5a5147277cd0a..9a912d3093153 100644
---- a/drivers/cpufreq/ti-cpufreq.c
-+++ b/drivers/cpufreq/ti-cpufreq.c
-@@ -310,6 +310,7 @@ static const struct soc_device_attribute k3_cpufreq_soc[] = {
- 	{ .family = "AM62X", .revision = "SR1.0" },
- 	{ .family = "AM62AX", .revision = "SR1.0" },
- 	{ .family = "AM62PX", .revision = "SR1.0" },
-+	{ .family = "AM62DX", .revision = "SR1.0" },
- 	{ /* sentinel */ }
- };
+ drivers/mfd/cs42l43.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/mfd/cs42l43.c b/drivers/mfd/cs42l43.c
+index 07c8f1b8183ee..959298c8232f4 100644
+--- a/drivers/mfd/cs42l43.c
++++ b/drivers/mfd/cs42l43.c
+@@ -1151,6 +1151,8 @@ static int cs42l43_suspend(struct device *dev)
+ 		return ret;
+ 	}
  
-@@ -457,6 +458,7 @@ static const struct of_device_id ti_cpufreq_of_match[]  __maybe_unused = {
- 	{ .compatible = "ti,omap36xx", .data = &omap36xx_soc_data, },
- 	{ .compatible = "ti,am625", .data = &am625_soc_data, },
- 	{ .compatible = "ti,am62a7", .data = &am62a7_soc_data, },
-+	{ .compatible = "ti,am62d2", .data = &am62a7_soc_data, },
- 	{ .compatible = "ti,am62p5", .data = &am62p5_soc_data, },
- 	/* legacy */
- 	{ .compatible = "ti,omap3430", .data = &omap34xx_soc_data, },
++	disable_irq(cs42l43->irq);
++
+ 	ret = pm_runtime_force_suspend(dev);
+ 	if (ret) {
+ 		dev_err(cs42l43->dev, "Failed to force suspend: %d\n", ret);
+@@ -1164,8 +1166,6 @@ static int cs42l43_suspend(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	disable_irq(cs42l43->irq);
+-
+ 	return 0;
+ }
+ 
+@@ -1196,14 +1196,14 @@ static int cs42l43_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	enable_irq(cs42l43->irq);
+-
+ 	ret = pm_runtime_force_resume(dev);
+ 	if (ret) {
+ 		dev_err(cs42l43->dev, "Failed to force resume: %d\n", ret);
+ 		return ret;
+ 	}
+ 
++	enable_irq(cs42l43->irq);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
