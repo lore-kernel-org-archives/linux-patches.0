@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997F922688C;
-	Thu,  9 Oct 2025 15:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99A12F3601;
+	Thu,  9 Oct 2025 15:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025564; cv=none; b=U07JGe4P1d/JOA8zyL690EU/0HWFITbKzbxJLXrNz0oBkTP+VCAIxR3u8ywavATdj+zU5tbK2it25SbjYag12nhYKKaph+9sRSBH81RZ1VMZtjeTgv2f1nhS4x1jTOVKt9a8uRYpuLDpDQFCWh53HvN+P9n8Yu6DD2j0K+/K6V4=
+	t=1760025567; cv=none; b=cCnbb/pY2rvNcmBxZLgqyYc1TbBgJ9Hh0LXsIgw6xCK/uo3ePNsVUE9qRJB1eQ+YLJk7msLPB1W5HpfX76GMlm0o26o+cReO6j9edPgx6LttMZCul4RJTMKK+lthnL104lfm3vgGiCRZiDxG+uUxC+5YZibFey/y1n3pGfPMM/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025564; c=relaxed/simple;
-	bh=W0q9E9dwLuU2298rxDy314pKXPzdQyQMN2XcPsthuwQ=;
+	s=arc-20240116; t=1760025567; c=relaxed/simple;
+	bh=3YpwRTuzmT94Iue3ShsfIYd3qkqteimIuLQhSwcdQ0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cG0DG7OFlobnQg/OFBvCDxPZY5lbwMfQqPAEbdtCIz9QeeReQkv3EZwzhJqTukfKohBbFfvYUdKSIUoGTXlYOjNRV559Eit7MrS94jIRy4smKljQreokq6iPmnVo/arboN6wQY3rZ7qcPpF7DXZDqSfecdZhEBCS9/nWKE5YWaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cv7t7SIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LlfHB/ejf/wveekjGZ84r3wr2nS/A1dS88kaO6aj4gbTfHrCozDDq1vF8ED8c5iiqcKZlT9d0RzSdUpNVdhUo+DlijINfcTRGNBLyBB/11Sns2wg95k/ifPVguOHeXL71MQPpUm1paGRiDOywOfb0rbtxY7x9n5XldBtoKzo6Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=roW6l21S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cv7t7SIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D726C4CEFE;
-	Thu,  9 Oct 2025 15:59:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="roW6l21S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823E4C4CEE7;
+	Thu,  9 Oct 2025 15:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025564;
-	bh=W0q9E9dwLuU2298rxDy314pKXPzdQyQMN2XcPsthuwQ=;
+	s=k20201202; t=1760025567;
+	bh=3YpwRTuzmT94Iue3ShsfIYd3qkqteimIuLQhSwcdQ0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv7t7SIK3rrd2jfqLzFqg7GD/K6Y+ks9E5yb3llp+7l7FbEXzkslhmFHM1kHMm8M/
-	 WSR6QKtSWw1pJ6yBjhdr/52KuiGrI4DuoFSrLfCrZ1sRMMktigDb9nAu11TbBNpvu0
-	 sDRhs9nv26JdHr06P4WTmOKvb60Lg7Ns1ZrjRid6Dpv5ob8xSyu6PWrSyLaX5eLrBD
-	 5bL6wGdlUYy/5h9mw7EWeSKJDQ7aUsxrCsaLbmBvIX/xwmQZaTNnHccL6iwWvzooZQ
-	 G4LkSrXZt0ewcvcWBU1OoTwPmwU1rKloKztl2hjXAOcKyYWLtGQPRF9Vn/1bl4ZE++
-	 hVmiLlru22m/Q==
+	b=roW6l21SlOgpJxxzPBzlsrF5sGvdGGN5teSD/IgEdhWmpcyVgC0q7en9dae2cS21c
+	 9YXAbZOB5bzKE6OjHyFcHuZFvebv3lqA0Q8rzmaXvz/6HdHAi5+Pt+lhjR35+2MvDz
+	 blxvH+oN9mJVqfvIcaGj3p0e5FM5WfWjyz6KLR0C60ZgretrOjpD5+gMKwdhgXHKt1
+	 A3jzkDJudQcf2UhMpGTxyXlTA8wRyeCikswEZuBpJcXDLBa3ZZkbDuGqKUUSd3crrB
+	 WBtrSV2DQxVqeriSp5T5K1mWm16l14E2pgM7R26mp6wtkqR4G9vYHzChdVcvAFy26p
+	 WeDhc5X/A2WyA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nikita Travkin <nikita@trvn.ru>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	bartosz.golaszewski@linaro.org,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] firmware: qcom: tzmem: disable sc7180 platform
-Date: Thu,  9 Oct 2025 11:55:15 -0400
-Message-ID: <20251009155752.773732-49-sashal@kernel.org>
+	will@kernel.org,
+	mark.rutland@arm.com,
+	anshuman.khandual@arm.com,
+	reddybalavignesh9979@gmail.com
+Subject: [PATCH AUTOSEL 6.17] kselftest/arm64: tpidr2: Switch to waitpid() over wait4()
+Date: Thu,  9 Oct 2025 11:55:16 -0400
+Message-ID: <20251009155752.773732-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -48,78 +49,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 3cc9a8cadaf66e1a53e5fee48f8bcdb0a3fd5075 ]
+[ Upstream commit 61a3cf7934b6da3c926cd9961860dd94eb7192ba ]
 
-When SHM bridge is enabled, assigning RMTFS memory causes the calling
-core to hang if the system is running in EL1.
+wait4() is deprecated, non-standard and about to be removed from nolibc.
 
-Disable SHM bridge on sc7180 devices to avoid that hang.
+Switch to the equivalent waitpid() call.
 
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250821-nolibc-enosys-v1-6-4b63f2caaa89@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – Disabling the SHM bridge for sc7180 is a focused bug fix that
-should be backported.
+Based on my comprehensive analysis of the commit and related changes,
+here is my determination:
 
-- `drivers/firmware/qcom/qcom_tzmem.c:79-86` keeps a blacklist of SoCs
-  where SHM bridge must not be activated. Adding `"qcom,sc7180"` there
-  makes the `for` loop in `qcom_tzmem_init()` bail out early
-  (`drivers/firmware/qcom/qcom_tzmem.c:93-109`), leaving
-  `qcom_tzmem_using_shm_bridge` false so the allocator stays in the safe
-  generic mode.
-- Without this change, sc7180 boots with SHM bridge enabled (arm64
-  defconfig selects `CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y`, see
-  `arch/arm64/configs/defconfig:265`), so `qcom_scm_shm_bridge_enable()`
-  (`drivers/firmware/qcom/qcom_scm.c:1612-1636`) runs on every boot. On
-  EL1-only firmware this causes the subsequent `qcom_scm_assign_mem()`
-  from the RMTFS driver (`drivers/soc/qcom/rmtfs_mem.c:272-276`) to hang
-  the CPU when it shares the modem buffer—an unrecoverable failure
-  affecting common sc7180 Chromebooks and reference boards.
-- The fix is consistent with earlier stable backports that blacklisted
-  other SoCs for the same hazard (e.g. commits `55751d3e9e96d`,
-  `8342009efa2a5`, `db3de3ff2611f`), underscoring that the risk is real
-  and the mitigation is accepted practice.
-- Impact is tightly scoped: only SHM-bridge builds on sc7180 change
-  behaviour, falling back to the pre-existing generic allocator. No API,
-  ABI, or architectural changes are involved, so regression risk is
-  minimal while it prevents a hard hang.
-- The underlying bug dates back to the SHM-bridge enablement
-  (`f86c61498a573`, in v6.11-rc1), so all stable lines derived from 6.11
-  (and newer) can be affected and benefit from the blacklist entry.
+## Backport Status: YES (conditional)
 
-This satisfies stable-tree criteria: it fixes a severe runtime hang, the
-patch is tiny and self-contained, and it simply restores the proven-safe
-allocation mode on the affected hardware.
+### Analysis
 
- drivers/firmware/qcom/qcom_tzmem.c | 1 +
- 1 file changed, 1 insertion(+)
+**Commit Summary:**
+This commit replaces `wait4()` with `waitpid()` in the ARM64 TPIDR2
+selftest. The change is part of a coordinated nolibc cleanup series that
+removes deprecated syscall wrappers.
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index ea0a353556570..12e448669b8bd 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -77,6 +77,7 @@ static bool qcom_tzmem_using_shm_bridge;
+**Code Changes Analysis:**
+The commit makes a functionally equivalent substitution:
+- **Before**: `wait4(ret, &status, __WCLONE, NULL)`
+- **After**: `waitpid(ret, &status, __WCLONE)`
+
+Since the `rusage` parameter to `wait4()` was NULL, this is semantically
+identical to `waitpid()`. The man page explicitly states wait4() is
+"nonstandard" and "deprecated," recommending waitpid() for new programs.
+
+**Why This Should Be Backported:**
+
+1. **Build Dependency**: This commit (61a3cf7934b6d) is patch 6/7 of the
+   nolibc-enosys series, immediately followed by patch 7/7
+   (4c2ef951cfe68) which removes wait4() from nolibc. Both commits are
+   already backported to this 6.17 tree, indicating stable maintainers
+   have decided to keep nolibc synchronized.
+
+2. **Infrastructure Maintenance**: Without this change, the tpidr2 test
+   will fail to compile once wait4() is removed from nolibc, breaking
+   the ARM64 selftest suite.
+
+3. **Low Risk**: The change is trivial, well-reviewed (Mark Brown,
+   Catalin Marinas), and functionally equivalent. Only test code is
+   affected, not kernel runtime code.
+
+4. **No Regression Risk**: waitpid() with these arguments behaves
+   identically to wait4() with NULL rusage parameter.
+
+**Stable Tree Criteria:**
+- ✓ Small and contained (5 lines changed)
+- ✓ No side effects or architectural changes
+- ✓ Minimal regression risk
+- ✗ Not a traditional bug fix (no user-facing bug)
+- ✗ No explicit Cc: stable tag
+- ✓ Required for test infrastructure when nolibc is updated
+
+**Conclusion:**
+This is a **conditional YES** - it MUST be backported if and only if the
+corresponding nolibc wait4() removal (commit 4c2ef951cfe68) is also
+backported. The two commits form an inseparable pair for maintaining
+build compatibility. Since both are already present in this 6.17 stable
+tree, the backporting decision was correct for maintaining test
+infrastructure alongside nolibc updates.
+
+ tools/testing/selftests/arm64/abi/tpidr2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tools/testing/selftests/arm64/abi/tpidr2.c b/tools/testing/selftests/arm64/abi/tpidr2.c
+index f58a9f89b952c..3b520b7efa49e 100644
+--- a/tools/testing/selftests/arm64/abi/tpidr2.c
++++ b/tools/testing/selftests/arm64/abi/tpidr2.c
+@@ -182,16 +182,16 @@ static int write_clone_read(void)
+ 	}
  
- /* List of machines that are known to not support SHM bridge correctly. */
- static const char *const qcom_tzmem_blacklist[] = {
-+	"qcom,sc7180", /* hang in rmtfs memory assignment */
- 	"qcom,sc8180x",
- 	"qcom,sdm670", /* failure in GPU firmware loading */
- 	"qcom,sdm845", /* reset in rmtfs memory assignment */
+ 	for (;;) {
+-		waiting = wait4(ret, &status, __WCLONE, NULL);
++		waiting = waitpid(ret, &status, __WCLONE);
+ 
+ 		if (waiting < 0) {
+ 			if (errno == EINTR)
+ 				continue;
+-			ksft_print_msg("wait4() failed: %d\n", errno);
++			ksft_print_msg("waitpid() failed: %d\n", errno);
+ 			return 0;
+ 		}
+ 		if (waiting != ret) {
+-			ksft_print_msg("wait4() returned wrong PID %d\n",
++			ksft_print_msg("waitpid() returned wrong PID %d\n",
+ 				       waiting);
+ 			return 0;
+ 		}
 -- 
 2.51.0
 
