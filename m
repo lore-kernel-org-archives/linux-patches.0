@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7422FC869;
-	Thu,  9 Oct 2025 16:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12B62FC880;
+	Thu,  9 Oct 2025 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025669; cv=none; b=A/XD4BhFyg+GMwuqVaKRvMZGQTIVriHudAxC/VZ3WgMf2PNZc5G1oSM206gLX/hlKD7r501dRA+uwEaqPirxvh4ikLtjW0T+owcVT+jjkehq99DCV/DG929+mm0t3GK6KVhAiGxP/dVPzlON4RXVW2ngNIy4A8iB32q6vh3X9UA=
+	t=1760025671; cv=none; b=Exov2X6IMC9zitGCoJSvh2l1/u29nQIQtlGPjDeKUj6jkaE6SeXKrTzjvHBE8wBPoe61a4NbzXkS8d8qwJl54hhOIyVJwe5OaGM9T36nKUmeDbsYOal4SbZpoCBC5p2fbwrcW8h5aNXpjZf4/UHFJ7eOevt+5yOMC0L0xqnBJw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025669; c=relaxed/simple;
-	bh=rnM9C5ciw8KHlWwe0+yd9sUniD1HWQyWJ+pwcqcmOfQ=;
+	s=arc-20240116; t=1760025671; c=relaxed/simple;
+	bh=JmNmYM0sle+eRlh6oYsgYdwed+dwDlN+QOKLYbR0ZY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tkdzu47nvIdOnUG09OGO5y9F5trdZBYBKpgCaWFLIkwsR5DR9ZhToE83AO5SWO2id+nJns372PDuj/cXa7lBsgFcPFezy2ffM1A3fyub7Y76d8E374cUyp4Vg/zwPOrQo2CMfQIn4HrhZNfl2DaE7/C+vyGIE0R016pTGRZKXPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NW1ISmQH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bzP3VFSFuCi+W6lfosePBzL0/vtKqizo4Pjxj/JiY/ebI/duFiT7X0Ee71lcVxYM6FUpiY0EzCuOETLHnAo3ptVC06RIDpNM05/Bdhh69HvbBwASy0tu0QcEFXbYMZZNp2o88ymYnoip8nxPs8Wa6THPVUf/FZvlPg3qCqzg/r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CvOD74FC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NW1ISmQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F5FC4CEF7;
-	Thu,  9 Oct 2025 16:01:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CvOD74FC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6F5C4CEE7;
+	Thu,  9 Oct 2025 16:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025669;
-	bh=rnM9C5ciw8KHlWwe0+yd9sUniD1HWQyWJ+pwcqcmOfQ=;
+	s=k20201202; t=1760025670;
+	bh=JmNmYM0sle+eRlh6oYsgYdwed+dwDlN+QOKLYbR0ZY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NW1ISmQHkM0Z1U/+XNxAyDi7kGIpZZEOit0JB4bbPtWuII5T58eRFC4qAasD3DiKT
-	 XCbU8yjvbnCNf9LZyVv2cJidN/9flcbqVvosdqa+MrjYxfLL5HT/SItz4ep+XUuSBe
-	 TU/MbPbBWQebg6DuSDgZjV3w0CzJaV8i/fvFmDNl9c1cYz5vXJn3UrM7BgXSrGw8kn
-	 6r3Hf0IJVn/11EM9Uii5nYuSgqaLyeZzDJFnPtUt55I87hmMMBnse/jVnbrDEl3Q6t
-	 0FkY/VfnBFZBymf0oJTmtds6l3o41fh3McxqTqyu5J+EUuyMs8WfUsKX/+25IacUsf
-	 tsmlErLjv9SVg==
+	b=CvOD74FC4nF/PmmApTLnL7115dpv2lEvD0IwYyGlzEH/YR19sSWfDDVsvgYTWZcwq
+	 2dWqyppkYDgZOVsXrysH21b71arMixIMECcoaXqusLVvSZcifHTFzbvEsGiKgpjzgR
+	 Rt0XLga5vI7kWaUE+K9hO4uMNJF8EbLlGAuz4H5Bd1HxkZ/eqqlviGmgNBtsIqlUme
+	 FCodlTy6Atg8pWBUN2xESBH9cOZVZijNNTBvq4VOgAD5aqwZg+E2EeGk1qvwlTJU6b
+	 6mxvqToJ29ajQZaJ/wpG0H3VQ53YRAcdqBOUMCM4ccp039HzC22JzVcx2SXZmX+7X+
+	 rFzwiqWjrik9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+Cc: Avadhut Naik <avadhut.naik@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pwm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] pwm: pca9685: Use bulk write to atomicially update registers
-Date: Thu,  9 Oct 2025 11:56:10 -0400
-Message-ID: <20251009155752.773732-104-sashal@kernel.org>
+	clemens@ladisch.de,
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] hwmon: (k10temp) Add thermal support for AMD Family 1Ah-based models
+Date: Thu,  9 Oct 2025 11:56:11 -0400
+Message-ID: <20251009155752.773732-105-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -45,159 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Avadhut Naik <avadhut.naik@amd.com>
 
-[ Upstream commit de5855613263b426ee697dd30224322f2e634dec ]
+[ Upstream commit f116af2eb51ed9df24911537fda32a033f1c58da ]
 
-The output of a PWM channel is configured by four register values. Write
-them in a single i2c transaction to ensure glitch free updates.
+Add thermal info support for newer AMD Family 1Ah-based models.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/bfa8c0267c9ec059d0d77f146998d564654c75ca.1753784092.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
+Link: https://lore.kernel.org/r/20250729001644.257645-1-avadhut.naik@amd.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The driver currently programs each PCA9685 channel by four independent
-  I²C writes, so the hardware latches intermediate ON/OFF values and the
-  output glitches whenever duty/phase changes. The commit fixes that by
-  introducing `pca9685_write_4reg()` and switching the two callsites in
-  `pca9685_pwm_set_duty()` to a single `regmap_bulk_write()` transaction
-  (`drivers/pwm/pwm-pca9685.c:136-183`), eliminating the observable
-  glitch for both PWM and the GPIO shim users.
-- To make the bulk write possible, the probe code now enables the
-  device’s auto-increment bit and clears the OCH latch mode (`MODE1_AI`
-  and rewrites of MODE2 in `drivers/pwm/pwm-pca9685.c:557-586`). This
-  guarantees that the four-byte transfer is accepted as one atomic
-  update and keeps the controller in its documented default signalling
-  modes (invert/open-drain remain governed by the same DT properties).
-- The reset path for the “all LED” channel is moved to the same helper
-  (`drivers/pwm/pwm-pca9685.c:584-586`), so the fix also covers the
-  initial state and any error paths that need to reinitialise the chip.
-- The change is tightly scoped to `drivers/pwm/pwm-pca9685.c`, does not
-  add features, and relies only on long-standing regmap APIs, so it
-  backports cleanly without extra dependencies. The only behavioural
-  change beyond glitch avoidance is that MODE2 is no longer inherited
-  from firmware, but the new value matches the datasheet defaults; no
-  existing in-kernel consumer depends on custom OUTNE/OCH bits, keeping
-  regression risk low compared to the very visible glitch it resolves.
+- Adds missing device IDs for AMD Family 1Ah model 50h/90h locally in
+  `drivers/hwmon/k10temp.c:86` so the stable tree doesn’t need header
+  updates, keeping the change self‑contained and under the “just add a
+  device ID” rule.
+- Extends `k10temp_id_table` to match those IDs
+  (`drivers/hwmon/k10temp.c:563` and `drivers/hwmon/k10temp.c:565`),
+  letting the existing probe path bind on the new desktop parts; without
+  it, users on those CPUs lose all `k10temp` temperature readouts.
+- The runtime logic for Family 1Ah CPUs was already upstreamed earlier
+  (see the 2023 support commit still present in this tree at
+  `drivers/hwmon/k10temp.c:482`), so the new entries simply reuse a
+  proven Zen5/1Ah code path with no behavioral changes for older
+  systems.
+- No collateral effects: no register programming changes, no new flows,
+  and the driver keeps using the same SMN readouts, so regression risk
+  is negligible while hardware coverage noticeably improves.
 
-Given the real user-facing malfunction it corrects and the limited,
-well-understood impact area, this is a solid candidate for the stable
-trees.
+ drivers/hwmon/k10temp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
- drivers/pwm/pwm-pca9685.c | 46 ++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/pwm/pwm-pca9685.c b/drivers/pwm/pwm-pca9685.c
-index 9ce75704a15f8..91f96b28ce1b5 100644
---- a/drivers/pwm/pwm-pca9685.c
-+++ b/drivers/pwm/pwm-pca9685.c
-@@ -61,6 +61,8 @@
- #define MODE1_SUB2		BIT(2)
- #define MODE1_SUB1		BIT(3)
- #define MODE1_SLEEP		BIT(4)
-+#define MODE1_AI		BIT(5)
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index babf2413d666f..2f90a2e9ad496 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -84,6 +84,13 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
+  */
+ #define AMD_I3255_STR				"3255"
+ 
++/*
++ * PCI Device IDs for AMD's Family 1Ah-based SOCs.
++ * Defining locally as IDs are not shared.
++ */
++#define PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3	0x12cb
++#define PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3	0x127b
 +
- #define MODE2_INVRT		BIT(4)
- #define MODE2_OUTDRV		BIT(2)
- 
-@@ -131,6 +133,19 @@ static int pca9685_write_reg(struct pwm_chip *chip, unsigned int reg, unsigned i
- 	return err;
- }
- 
-+static int pca9685_write_4reg(struct pwm_chip *chip, unsigned int reg, u8 val[4])
-+{
-+	struct pca9685 *pca = to_pca(chip);
-+	struct device *dev = pwmchip_parent(chip);
-+	int err;
-+
-+	err = regmap_bulk_write(pca->regmap, reg, val, 4);
-+	if (err)
-+		dev_err(dev, "regmap_write to register 0x%x failed: %pe\n", reg, ERR_PTR(err));
-+
-+	return err;
-+}
-+
- /* Helper function to set the duty cycle ratio to duty/4096 (e.g. duty=2048 -> 50%) */
- static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned int duty)
- {
-@@ -143,12 +158,10 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
- 		return;
- 	} else if (duty >= PCA9685_COUNTER_RANGE) {
- 		/* Set the full ON bit and clear the full OFF bit */
--		pca9685_write_reg(chip, REG_ON_H(channel), LED_FULL);
--		pca9685_write_reg(chip, REG_OFF_H(channel), 0);
-+		pca9685_write_4reg(chip, REG_ON_L(channel), (u8[4]){ 0, LED_FULL, 0, 0 });
- 		return;
- 	}
- 
--
- 	if (pwm->state.usage_power && channel < PCA9685_MAXCHAN) {
- 		/*
- 		 * If usage_power is set, the pca9685 driver will phase shift
-@@ -163,12 +176,9 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
- 
- 	off = (on + duty) % PCA9685_COUNTER_RANGE;
- 
--	/* Set ON time (clears full ON bit) */
--	pca9685_write_reg(chip, REG_ON_L(channel), on & 0xff);
--	pca9685_write_reg(chip, REG_ON_H(channel), (on >> 8) & 0xf);
--	/* Set OFF time (clears full OFF bit) */
--	pca9685_write_reg(chip, REG_OFF_L(channel), off & 0xff);
--	pca9685_write_reg(chip, REG_OFF_H(channel), (off >> 8) & 0xf);
-+	/* implicitly clear full ON and full OFF bit */
-+	pca9685_write_4reg(chip, REG_ON_L(channel),
-+			   (u8[4]){ on & 0xff, (on >> 8) & 0xf, off & 0xff, (off >> 8) & 0xf });
- }
- 
- static unsigned int pca9685_pwm_get_duty(struct pwm_chip *chip, int channel)
-@@ -544,9 +554,8 @@ static int pca9685_pwm_probe(struct i2c_client *client)
- 
- 	mutex_init(&pca->lock);
- 
--	ret = pca9685_read_reg(chip, PCA9685_MODE2, &reg);
--	if (ret)
--		return ret;
-+	/* clear MODE2_OCH */
-+	reg = 0;
- 
- 	if (device_property_read_bool(&client->dev, "invert"))
- 		reg |= MODE2_INVRT;
-@@ -562,16 +571,19 @@ static int pca9685_pwm_probe(struct i2c_client *client)
- 	if (ret)
- 		return ret;
- 
--	/* Disable all LED ALLCALL and SUBx addresses to avoid bus collisions */
-+	/*
-+	 * Disable all LED ALLCALL and SUBx addresses to avoid bus collisions,
-+	 * enable Auto-Increment.
-+	 */
- 	pca9685_read_reg(chip, PCA9685_MODE1, &reg);
- 	reg &= ~(MODE1_ALLCALL | MODE1_SUB1 | MODE1_SUB2 | MODE1_SUB3);
-+	reg |= MODE1_AI;
- 	pca9685_write_reg(chip, PCA9685_MODE1, reg);
- 
- 	/* Reset OFF/ON registers to POR default */
--	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_L, 0);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_H, LED_FULL);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_L, 0);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_H, LED_FULL);
-+	ret = pca9685_write_4reg(chip, PCA9685_ALL_LED_ON_L, (u8[]){ 0, LED_FULL, 0, LED_FULL });
-+	if (ret < 0)
-+		return dev_err_probe(&client->dev, ret, "Failed to reset ON/OFF registers\n");
- 
- 	chip->ops = &pca9685_pwm_ops;
- 
+ struct k10temp_data {
+ 	struct pci_dev *pdev;
+ 	void (*read_htcreg)(struct pci_dev *pdev, u32 *regval);
+@@ -556,7 +563,9 @@ static const struct pci_device_id k10temp_id_table[] = {
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
+ 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
+ 	{}
+ };
 -- 
 2.51.0
 
