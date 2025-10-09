@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0DB2ED843;
-	Thu,  9 Oct 2025 15:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606422ECE82;
+	Thu,  9 Oct 2025 15:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025525; cv=none; b=NndI3Q5QWWyZ7B7tARQERU74f6143QUt/SHUQXa5Ehq5nfSkbdJ52TzIMdcJ3SuZDwJirfgrW1XjgB8OI3mL+vgdk3oegtc1aIGY6XNwPZhKhT1sd/sJY1xTdiqBWda+X+4uEbRviC/c0Zpnikf/80bzoW2mw3jnapUy7OYKwjo=
+	t=1760025526; cv=none; b=i/kxULov4/0S5/kP0fLYHPr+uWSPThVop99DQCvJKcM4lg5GY3DTQzTX81AyO8iPyLX8U3KKjBK/KgVN+QdafRcTNW7OfR7AjXWPJD3tJ5uwIKrUoZRHQUnYnf/0X37+l+lKrSxCbiTDGfAPVPjnaqsf0CxROmlzYz5ZtCIZmec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025525; c=relaxed/simple;
-	bh=c0/yRtuZB6nBDaoZ+fv+2NsdU6TXVA1P0+fsZjZuOls=;
+	s=arc-20240116; t=1760025526; c=relaxed/simple;
+	bh=QCsXN+2MwVIE/kMj/+64HJt1HbB8Ev1JwllW9t42zFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WkEU9Gq22yBTHnmz5McHqfrEjGkfvPXJliVM4zyw4iQKnW2Tfg1kbJ9a+U9FbBQxq7WzFx4X5oQwudzKNwgViYwszUMMk55vxK/03czU2ia64wXm8ca+YVls94e5RFTd81vO39wH4I8/z50kKv+qgR4tAfaai7Mz5lKU2vYT7Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VRdsyckx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lkAbpSHa0Noa7uzTDFEiWr3jS4Kg3NV8b8KDJwYttdmZROp2e2juQCzd8NcSy50tPfMggibq/j6ew0dYdCqA2hRj5tVmqRB+84k9qCe9HdhNrg4O+TdpcSNd1GxIc6v9KWp2IzEHloNyKNEaIFkwwp2djiMcBJ+Nzj+/HDtjYfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFx6YcvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VRdsyckx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4220CC4CEE7;
-	Thu,  9 Oct 2025 15:58:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFx6YcvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A142C4CEE7;
+	Thu,  9 Oct 2025 15:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025525;
-	bh=c0/yRtuZB6nBDaoZ+fv+2NsdU6TXVA1P0+fsZjZuOls=;
+	s=k20201202; t=1760025526;
+	bh=QCsXN+2MwVIE/kMj/+64HJt1HbB8Ev1JwllW9t42zFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRdsyckxe79GzY+WgOZ/lD4ihRmWBiEqmctQitu3YMj48/m//Wgy2FprK3c7Zkh9+
-	 PT/wKkosaX/WupFDW+6pj+M/n5zkKPYLi7VXh5q/9ZgGVHVZnPLVZvwK3CVKBU7OjV
-	 UFznXJCQxc/NzLy3YNJgybaKnTCRmveBRich2BSK3GW3w6j0HZUQ26g+xgoMq6Kmw2
-	 BRKa/niPlKITlWZwTfRgC+isW4c/hZ0sAcLHOxv4gWwIidduQt/zjJwTzZCSV1JQhR
-	 jGky6/F56AZvyJREvKpJbwAboIVg14kaBFXu6NpdT6fhyYPQQkwP9HaIVnaMN4WIYO
-	 Gl+0v7xuTqkhw==
+	b=WFx6YcvD05RvMT6iqZMZuT+mU6tJG2R31+04hEnSTIiZkTBU2aJqAWJYtuK9stqO+
+	 8QqX0bsBvqjWeBE5BOxwtejWWkSZ51YlaK7dmyPF3IcsI+OCj2FyK7wyNdsqFNTYXY
+	 2i7AzErcrb2lStLKyUGq4YyrLJfh4/UM7mjQ/k4beK54i2pPLmZ5eLaaTJODIzt4Gi
+	 2h4ncyHW4pyG+tl7sn6jNNZSV2b3vxOHGn0OWVzt0XvNha64HQ2q6iV5tZlFZTg1UH
+	 4KtDMnra4D+EQBoAifdx8VnbllXiX7pVhPiqyug2k67KbexyPWpRV8EtrjjaEwsN8G
+	 3WcsO8fLKjb4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Shang song (Lenovo)" <shangsong2@foxmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] ACPI: PRM: Skip handlers with NULL handler_address or NULL VA
-Date: Thu,  9 Oct 2025 11:54:55 -0400
-Message-ID: <20251009155752.773732-29-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] spi: rpc-if: Add resume support for RZ/G3E
+Date: Thu,  9 Oct 2025 11:54:56 -0400
+Message-ID: <20251009155752.773732-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,203 +51,100 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Shang song (Lenovo)" <shangsong2@foxmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 311942ce763e21dacef7e53996d5a1e19b8adab1 ]
+[ Upstream commit ad4728740bd68d74365a43acc25a65339a9b2173 ]
 
-If handler_address or mapped VA is NULL, the related buffer address and
-VA can be ignored, so make acpi_parse_prmt() skip the current handler
-in those cases.
+On RZ/G3E using PSCI, s2ram powers down the SoC. After resume,
+reinitialize the hardware for SPI operations.
 
-Signed-off-by: Shang song (Lenovo) <shangsong2@foxmail.com>
-Link: https://patch.msgid.link/20250826030229.834901-1-shangsong2@foxmail.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patch.msgid.link/20250921112649.104516-3-biju.das.jz@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## **Backport Status: YES**
+YES
 
-### Extensive Analysis
+- What changed: The resume callback now reinitializes the underlying
+  RPC-IF hardware by calling `rpcif_hw_init(dev, false)` before resuming
+  the SPI controller queue. See drivers/spi/spi-rpc-if.c:210. The rest
+  of the resume path remains unchanged and returns
+  `spi_controller_resume(ctlr)` (drivers/spi/spi-rpc-if.c:212). The
+  patch is a small, contained 2-line addition in a single driver file.
 
-#### **Commit Context and Subsystem History**
+- Why it’s needed: On RZ/G3E systems using PSCI, s2ram powers the SoC
+  off, so the RPC-IF/xSPI controller loses register state. The SPI
+  core’s `spi_controller_resume()` does not reconfigure hardware
+  (drivers/spi/spi.c:3519), it only restarts the message queue. Without
+  reinitialization, resumed SPI operations can fail or misbehave. The
+  added `rpcif_hw_init()` reprograms controller registers and ensures
+  the hardware is ready post-resume.
 
-This commit is part of a series of fixes and improvements to the ACPI
-PRM (Platform Runtime Mechanism) subsystem that has been actively
-maintained throughout 2024-2025:
+- Correctness of the reinit: `rpcif_hw_init()` is the standard hardware
+  bring-up routine used in probe; it resumes runtime PM, reconfigures
+  the controller for the appropriate mode, and then drops the PM
+  reference. See drivers/memory/renesas-rpc-if.c:315. It’s already
+  invoked during probe for the SPI path (drivers/spi/spi-rpc-if.c:173),
+  so reusing it on resume is appropriate and consistent.
 
-1. **October 2024** - Commit 088984c8d54c: Fixed critical bug where PRM
-   handlers caused paging errors due to incorrect memory type usage
-   (marked for stable, had Fixes tag)
+- Scope and risk: The change is isolated to RPC-IF SPI driver resume. It
+  does not alter normal operation, only system-suspend resume behavior.
+  The call is idempotent and guarded by runtime PM
+  (pm_runtime_resume_and_get/put inside rpcif_hw_init), minimizing risk.
+  It doesn’t introduce features or architectural changes.
 
-2. **January 2025** - Commit 7f5704b6a143b: Fixed regression from above
-   where overly strict NULL checks broke real hardware. According to PRM
-   specification section 4.1.2, `static_data_buffer_address` and
-   `acpi_param_buffer_address` can legitimately be NULL. This was a real
-   bug reported by Shi Liu from Tencent (marked Cc: stable)
+- Impacted platforms: Although the commit message highlights RZ/G3E
+  (xSPI), the reinit is generally safe for other RPC-IF variants too and
+  can only improve robustness after system suspend.
 
-3. **July 2025** - Commit aae68a5f4844e/3db5648c4d608: Reduced
-   unnecessary warning messages that confused users when legitimate NULL
-   addresses were encountered per PRM spec
+- Stable-tree suitability:
+  - Fixes a real user-visible bug (SPI transactions can fail after S2RAM
+    on RZ/G3E).
+  - Minimal change (two added lines), fully contained in the driver.
+  - Low regression risk and no API or architectural churn.
+  - Touches a specific subsystem driver (SPI/Renesas RPC-IF), not core
+    kernel paths.
 
-4. **August 2025** - Current commit 311942ce763e2: Adds handler skipping
-   logic for NULL addresses
+- Backport notes (API/context):
+  - `rpcif_hw_init()` currently takes a `struct device *`
+    (drivers/memory/renesas-rpc-if.c:315; include/memory/renesas-rpc-
+    if.h:75). On older stable trees that predate commit a198fcd1d53cb
+    (which changed RPC-IF APIs to pass a device instead of an internal
+    handle), the signature may differ. In such trees, adapt the call
+    accordingly (e.g., pass `rpc->dev` or the older handle type).
+  - Ensure the device passed to `rpcif_hw_init()` is the one holding
+    `rpcif_priv` (in probe we pass `rpc->dev`, which is the parent RPC-
+    IF device). If the stable branch still uses the older arrangement,
+    the backport should call `rpcif_hw_init(rpc->dev, false)` after
+    obtaining `struct rpcif *rpc = spi_controller_get_devdata(ctlr)` in
+    resume.
+  - Macro context (SIMPLE_DEV_PM_OPS vs DEFINE_SIMPLE_DEV_PM_OPS) may
+    differ between branches; this is mechanical and does not affect the
+    substance of the fix.
 
-#### **What This Commit Actually Fixes**
+In summary, this is a classic, low-risk, correctness fix for resume on
+RZ/G3E that should be backported to stable kernels that include the RPC-
+IF xSPI support, with trivial API/context adjustments as needed.
 
-The commit adds two defensive checks in `acpi_parse_prmt()` at
-drivers/acpi/prmt.c:133-186:
+ drivers/spi/spi-rpc-if.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-**First Check (lines 150+):**
-```c
-if (unlikely(!handler_info->handler_address)) {
-    pr_info("Skipping handler with NULL address for GUID: %pUL", ...);
-    continue;
-}
-```
-Detects when ACPI firmware table provides a handler with NULL physical
-address - indicates buggy/malformed firmware.
-
-**Second Check (lines 159+):**
-```c
-if (unlikely(!th->handler_addr)) {
-    pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-...);
-    continue;  // <-- NEW
-}
-```
-Adds `continue` statement when VA lookup fails (previously just printed
-warning and continued processing).
-
-#### **Current vs. New Behavior**
-
-**Before this fix:**
-- Handlers with NULL physical addresses or failed VA lookups are added
-  to the `tm->handlers[]` array
-- They waste memory allocation
-- Warning messages are printed during initialization
-- Later runtime check at line 312 in `acpi_platformrt_space_handler()`
-  catches attempts to use NULL handlers and returns error
-- Potentially confusing for users/debugging
-
-**After this fix:**
-- Handlers with NULL addresses are still partially added (GUID is copied
-  before the check), but VA lookup and buffer address initialization are
-  skipped
-- Clearer, more specific error messages (pr_info for NULL PA, pr_warn
-  for failed VA lookup)
-- Slightly more efficient initialization (skips unnecessary
-  efi_pa_va_lookup calls)
-- Better fail-fast behavior during parsing vs. runtime
-
-#### **Why This Should Be Backported**
-
-**1. Robustness Improvement in Active Bugfix Area**
-The ACPI PRM subsystem has had multiple real-world bugs requiring stable
-backports (commits 088984c8d54c and 7f5704b6a143b both marked for
-stable). This continues the pattern of hardening this code against edge
-cases and firmware bugs.
-
-**2. Handles Real-World Firmware Issues**
-While the code comment states NULL handler_addr "is not expected to ever
-happen," the fact that this check exists and multiple firmware-related
-fixes have been needed suggests buggy ACPI tables do exist in the field.
-The author (from Lenovo) likely encountered this on actual hardware.
-
-**3. Improves Error Reporting**
-Users encountering this condition get clearer, more actionable messages:
-- "Skipping handler with NULL address" (pr_info) vs. just a warning
-- Distinguishes between NULL PA from firmware vs. failed VA lookup
-
-**4. Low Regression Risk**
-- Changes are minimal (adds 2 checks with `continue` statements)
-- Only affects edge case error path (NULL handlers)
-- Existing runtime check at line 312 provides safety net
-- Code is well-commented and reviewed by subsystem maintainer Rafael
-  Wysocki
-
-**5. Prevents Wasted Resources**
-Skips unnecessary efi_pa_va_lookup() calls and buffer address setup for
-handlers that will never be usable.
-
-**6. Follows Stable Backport Criteria**
-- ✓ Obviously correct and contained
-- ✓ Fixes handling of buggy firmware (real issue users may encounter)
-- ✓ Doesn't introduce new features
-- ✓ No architectural changes
-- ✓ Minimal risk
-- ✓ Confined to ACPI PRM subsystem
-
-#### **Potential Concerns**
-
-The implementation has a minor quirk: handlers are partially initialized
-(GUID copied before checks) before being skipped, leaving "holes" in the
-handlers array. However, this doesn't cause functional problems because:
-- The `find_guid_info()` function searches by GUID matching
-- Incomplete handlers won't match lookup requests (or will fail runtime
-  check if somehow matched)
-- This is actually similar to existing behavior
-
-#### **Evidence of Selection for Backporting**
-
-The commit was authored Aug 25, 2025 and committed Sep 4, 2025 by Rafael
-Wysocki (ACPI subsystem maintainer), indicating it passed review and was
-deemed important enough for mainline. While there's no explicit "Cc:
-stable" tag, the pattern of recent PRM fixes being backported suggests
-this fits the stable criteria.
-
-#### **Conclusion**
-
-**YES - This commit should be backported to stable kernel trees.**
-
-While not fixing a critical crash or security vulnerability, it improves
-robustness and error handling in a subsystem with documented real-world
-firmware issues. The change is small, safe, well-contained, and follows
-recent patterns of PRM hardening that have been successfully backported.
-The improvement in error detection and reporting provides value to users
-encountering buggy ACPI firmware implementations.
-
- drivers/acpi/prmt.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index be033bbb126a4..6792d4385eee4 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -150,15 +150,28 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		th = &tm->handlers[cur_handler];
+diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
+index 627cffea5d5c7..300a7c10b3d40 100644
+--- a/drivers/spi/spi-rpc-if.c
++++ b/drivers/spi/spi-rpc-if.c
+@@ -207,6 +207,8 @@ static int __maybe_unused rpcif_spi_resume(struct device *dev)
+ {
+ 	struct spi_controller *ctlr = dev_get_drvdata(dev);
  
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
++	rpcif_hw_init(dev, false);
 +
-+		/*
-+		 * Print an error message if handler_address is NULL, the parse of VA also
-+		 * can be skipped.
-+		 */
-+		if (unlikely(!handler_info->handler_address)) {
-+			pr_info("Skipping handler with NULL address for GUID: %pUL",
-+					(guid_t *)handler_info->handler_guid);
-+			continue;
-+		}
-+
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
- 		/*
--		 * Print a warning message if handler_addr is zero which is not expected to
--		 * ever happen.
-+		 * Print a warning message and skip the parse of VA if handler_addr is zero
-+		 * which is not expected to ever happen.
- 		 */
--		if (unlikely(!th->handler_addr))
-+		if (unlikely(!th->handler_addr)) {
- 			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
- 				&th->guid, handler_info->handler_address);
-+			continue;
-+		}
+ 	return spi_controller_resume(ctlr);
+ }
  
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
 -- 
 2.51.0
 
