@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA892FB0BB;
-	Thu,  9 Oct 2025 15:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FA22FB620;
+	Thu,  9 Oct 2025 15:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025591; cv=none; b=pUJUvBwT1RXTDvuAxhNH9Rq6aqr7mjtM4He1SwnUhnxqf+aI4z7tHFpUppnSvgMZNFMGoTElEdRUjmP6K+9DoziehJq9Wihq5f/xm4HFVl29nBVubPA9WJ1hq01qGwC4AP+QxTMh8htZMe5R6fe1ibHmlx1NRCt5E1fAoBeFcXA=
+	t=1760025593; cv=none; b=bjyILI8DgeBSrqzjnAB54nrL64iSYiMEAn2iZ6yFFQydEPN7AZwJlZKu6dN42rPfSrlOhCBK3AmklBEVdxPobNwPIVVQXnPp7aimgxfIw48FrwLyYCZcRvRpIabx5ZWF/dp7NSawwMx4dygSRy+2QSuN/XRWZtR5VA3FG9H7Tp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025591; c=relaxed/simple;
-	bh=vYT7tI9E7sWWtZlSoDWPwRiSkT4HiL7H4uoZ9V70nkw=;
+	s=arc-20240116; t=1760025593; c=relaxed/simple;
+	bh=cFghnHm6DMl6Pt9AEUG5rzDt7SAd9usE0hg1RbT6xsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3fy5feAsQwx1YZV45OnSzr5JJ3D4S/Cl5u12QyV+RjS6SG1sS66mq62+zP8LXoqoKmRjc5CgwDs/YWlXqWJv1V51h7OxvHJsIfv4RbbN980PfdOKwEx9277BKSmRmXt1LkkWpXjKikPpA046/0w/6p0cVT97yOZK1C/w80ee94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgbkwATd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=loiQ8NNCh9TA9Tb8pcsdWUmQh/Vwn2GsaQe1ULVUcNILQsV06RfYWe3dfQIo/C5sFaq167C+SOCbdjEvLwnk2baKuzeEY5Unw20zQWGx3ffRZg1n0JT184gDFyb6V2z14fR9J5biZ41/iwWBEpf1jVsdvswjUj3Q35cacS/KhfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bgTLqmg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgbkwATd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE03C116B1;
-	Thu,  9 Oct 2025 15:59:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bgTLqmg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01171C4CEE7;
+	Thu,  9 Oct 2025 15:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025591;
-	bh=vYT7tI9E7sWWtZlSoDWPwRiSkT4HiL7H4uoZ9V70nkw=;
+	s=k20201202; t=1760025593;
+	bh=cFghnHm6DMl6Pt9AEUG5rzDt7SAd9usE0hg1RbT6xsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgbkwATd7MW7y0V93XnwqcB5m9tfWAi5W1N5C0fAetND4EycRcG41IzwdN9Ww2b6H
-	 WDBRj6A3PFIOe0/AAfbe6W8qEeGYT2lN8qEg2ZxFRwYVoskvhoiEGv7xrIehXBGHA1
-	 22HTf5AI+y2dlHRFXJIwSAfSGguipXP7KS37ThxIVwboEbxl0yOKrszHUN5FM+p7PS
-	 xfMV6qQCBJRqVRTjEZ0SCPqJuofV4lTvqAOKmbhRtZyp3R3um5nhgzUchfWPcSiDwH
-	 njFdsrS6Ar2yvx5CgAZjm//WtckUvc/DZ/V8XDlRiFKzoW6MGS2I08gDw/gsyxuxJf
-	 LFDv3NogUsejg==
+	b=bgTLqmg92rhSvMwukpAle3dvfpyxp7x6x1BAZXxo5TO2PMrm1w+k7Ycn3m3i3/fH3
+	 EyEwoqzXCXt1JHSI9WdhgJIcn7v2MnjUgm3gbASCfozb2SnowohWCoP9mnXQ2KPZVg
+	 7bqUPg+Q01mjXjK24lT9aCV0+jrxfEl1g7scWwZoivlb1jFIjSMcMPRz38pd8zdTAd
+	 S163rJIua8xk7VvAwc7q3csbHfR1KAO/BacT4Rge0W4ZqmRhKRD1bsJIU/KYy7p2mI
+	 NMBwbcih2U0y0Yf8LglzFN5YKBJ065SYNRk2ZZPHK8k0bax8PcqRqjaUH0w7XFUBE7
+	 er28DpYTk7sfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ming Wang <wangming01@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
+Cc: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org,
-	jiaxun.yang@flygoat.com,
-	linux-mips@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] irqchip/loongson-pch-lpc: Use legacy domain for PCH-LPC IRQ controller
-Date: Thu,  9 Oct 2025 11:55:28 -0400
-Message-ID: <20251009155752.773732-62-sashal@kernel.org>
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.6] arm64: zynqmp: Revert usb node drive strength and slew rate for zcu106
+Date: Thu,  9 Oct 2025 11:55:29 -0400
+Message-ID: <20251009155752.773732-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -54,97 +51,69 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit c33c43f71bda362b292a6e57ac41b64342dc87b3 ]
+[ Upstream commit 767ecf9da7b31e5c0c22c273001cb2784705fe8c ]
 
-On certain Loongson platforms, drivers attempting to request a legacy
-ISA IRQ directly via request_irq() (e.g., IRQ 4) may fail. The
-virtual IRQ descriptor is not fully initialized and lacks a valid irqchip.
+On a few zcu106 boards USB devices (Dell MS116 USB Optical Mouse, Dell USB
+Entry Keyboard) are not enumerated on linux boot due to commit
+'b8745e7eb488 ("arm64: zynqmp: Fix usb node drive strength and slew
+rate")'.
 
-This issue does not affect ACPI-enumerated devices described in DSDT,
-as their interrupts are properly mapped via the GSI translation path.
-This indicates the LPC irqdomain itself is functional but is not correctly
-handling direct VIRQ-to-HWIRQ mappings.
+To fix it as a workaround revert to working version and then investigate
+at board level why drive strength from 12mA to 4mA and slew from fast to
+slow is not working.
 
-The root cause is the use of irq_domain_create_linear(). This API sets
-up a domain for dynamic, on-demand mapping, typically triggered by a GSI
-request. It does not pre-populate the mappings for the legacy VIRQ range
-(0-15). Consequently, if no ACPI device claims a specific GSI
-(e.g., GSI 4), the corresponding VIRQ (e.g., VIRQ 4) is never mapped to
-the LPC domain. A direct call to request_irq(4, ...) then fails because
-the kernel cannot resolve this VIRQ to a hardware interrupt managed by
-the LPC controller.
-
-The PCH-LPC interrupt controller is an i8259-compatible legacy device
-that requires a deterministic, static 1-to-1 mapping for IRQs 0-15 to
-support legacy drivers.
-
-Fix this by replacing irq_domain_create_linear() with
-irq_domain_create_legacy(). This API is specifically designed for such
-controllers. It establishes the required static 1-to-1 VIRQ-to-HWIRQ
-mapping for the entire legacy range (0-15) immediately upon domain
-creation. This ensures that any VIRQ in this range is always resolvable,
-making direct calls to request_irq() for legacy IRQs function correctly.
-
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/85a70cb014ec1f07972fccb60b875596eeaa6b5c.1756799774.git.michal.simek@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES: Switching the Loongson PCH-LPC domain from
-`irq_domain_create_linear()` to `irq_domain_create_legacy()` removes a
-long-standing bug that prevents legacy ISA interrupts from working when
-drivers call `request_irq()` directly.
+YES – this revert should go to stable because it undoes a regression
+that breaks USB enumeration on real hardware.
 
-- The current code at `drivers/irqchip/irq-loongson-pch-lpc.c:203`
-  creates a linear domain, which only instantiates mappings on demand.
-  That leaves IRQs 0‑15 unmapped unless an ACPI GSI translation happens
-  first, so `request_irq(4, …)` sees an uninitialized descriptor and
-  fails exactly as described in the commit message.
-- The fix replaces that call with `irq_domain_create_legacy(…,
-  LPC_COUNT, 0, 0, …)` (same location) and adds a clarifying comment.
-  Legacy domains eagerly map the whole 0‑15 range, invoking
-  `pch_lpc_map()` for each slot so the chip/handler is set up before any
-  driver requests the IRQ. This mirrors how other i8259-compatible
-  controllers (e.g. `irq-i8259.c`) are wired.
-- The regression was introduced when the controller first landed (Fixes:
-  ee73f14ee9eb7, v6.0), so every stable kernel carrying Loongson support
-  can hit it. Impact is high: legacy ISA drivers or firmware that still
-  rely on numeric IRQs can never bind on affected systems.
-- The change is tiny, localized to one driver, and does not alter the
-  hardware programming model—only the domain helper is swapped. No new
-  features, no ABI changes, and it parallels existing upstream practice,
-  so regression risk is minimal.
+- Regression context: the offending change (`arm64: zynqmp: Fix usb node
+  drive strength and slew rate`, commit f8673fd570025) landed in v6.6
+  and later; it forces the USB0 TX pins on zcu106 to `drive-strength =
+  <4>`/`slew-rate = <SLEW_RATE_SLOW>`, and several boards stop
+  enumerating basic USB HID devices as a result (confirmed in the linked
+  report).
+- Fix details: the new commit restores the TX pin mux entry to the
+  previous working values (`drive-strength = <12>`, `slew-rate =
+  <SLEW_RATE_FAST>` in `arch/arm64/boot/dts/xilinx/zynqmp-
+  zcu106-revA.dts:811`), while leaving the RX pins unchanged, which
+  matches the configuration that shipped (and worked) before
+  f8673fd570025.
+- Scope and risk: the patch is a board-specific device-tree tweak; no
+  drivers or shared subsystems are touched, so the blast radius is
+  contained to zcu106 USB0, making the change low risk and
+  straightforward to backport.
+- Stable criteria: it fixes a user-visible regression (USB devices fail
+  to enumerate) without introducing new features or architectural
+  changes, so it fits the stable rules and should be applied to all
+  branches that picked up the offending commit (v6.6+).
 
-Given the clear user-visible failure mode and the contained, well-
-understood fix, this is an excellent candidate for stable backporting.
+ arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- drivers/irqchip/irq-loongson-pch-lpc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/irqchip/irq-loongson-pch-lpc.c b/drivers/irqchip/irq-loongson-pch-lpc.c
-index 2d4c3ec128b8f..912bf50a5c7ca 100644
---- a/drivers/irqchip/irq-loongson-pch-lpc.c
-+++ b/drivers/irqchip/irq-loongson-pch-lpc.c
-@@ -200,8 +200,13 @@ int __init pch_lpc_acpi_init(struct irq_domain *parent,
- 		goto iounmap_base;
- 	}
+diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts b/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
+index 7beedd730f940..9dd63cc384e6e 100644
+--- a/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
++++ b/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
+@@ -808,8 +808,8 @@ conf-tx {
+ 			pins = "MIO54", "MIO56", "MIO57", "MIO58", "MIO59",
+ 			       "MIO60", "MIO61", "MIO62", "MIO63";
+ 			bias-disable;
+-			drive-strength = <4>;
+-			slew-rate = <SLEW_RATE_SLOW>;
++			drive-strength = <12>;
++			slew-rate = <SLEW_RATE_FAST>;
+ 		};
+ 	};
  
--	priv->lpc_domain = irq_domain_create_linear(irq_handle, LPC_COUNT,
--					&pch_lpc_domain_ops, priv);
-+	/*
-+	 * The LPC interrupt controller is a legacy i8259-compatible device,
-+	 * which requires a static 1:1 mapping for IRQs 0-15.
-+	 * Use irq_domain_create_legacy to establish this static mapping early.
-+	 */
-+	priv->lpc_domain = irq_domain_create_legacy(irq_handle, LPC_COUNT, 0, 0,
-+						    &pch_lpc_domain_ops, priv);
- 	if (!priv->lpc_domain) {
- 		pr_err("Failed to create IRQ domain\n");
- 		goto free_irq_handle;
 -- 
 2.51.0
 
