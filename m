@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5432F3615;
-	Thu,  9 Oct 2025 15:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF99B2EF655;
+	Thu,  9 Oct 2025 15:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025568; cv=none; b=Wc9fg3JpBwv1I02It7jzLxwhHNV/5V6UUdFyy5f9gMPz2aE3RD+q43YtFGnTrLe9gx/eifRxmAZb9+T+zKBFvAiWc5BMCyPaAT8R1ZGsUIT5V1x512LAoQ6YGfunhljlrCOnokv5RdEgZPvf+jyN4rYBl/IFe/0j1lWrm3z0usA=
+	t=1760025570; cv=none; b=Owvdexyp4wJsl49D1cH/KR0XOm+oimK4fr/xQrNKjGaPEcOi1Nc5L+ZbWHME5JicMwyiEcpohoIo9ptEulbrbpsuIGfOx1mn9Xiob0KtUsgmnef19gMnrWdskV2MMTrf9KhTc2X/pIwN6Z3oG/7s/y1w2VOlQK9+0i+uJAWN4A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025568; c=relaxed/simple;
-	bh=HhK2IJFNOuj9oMTXEyfV/LylryGPe9C8fZDPFRwl/Tg=;
+	s=arc-20240116; t=1760025570; c=relaxed/simple;
+	bh=GmcTaTF8RNclO7yRzpSlmGBF5rADwZQUifSfhyoe5NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hclRcSCHLUvepQD8YPTrpYZiyqZDD9FZnh3qvzq5zvchIxyRLl/b3OFeCNcskgcJwYpZAxHwG8Wevz8wf5NRfHzJKmsZjIdqUQ/SdNFPLm194BNVgAgCE9uEhrpk8Q0swpq2QKHt95vel3evHvhjPvw+jjJ6sDKbIC+VlYlP9dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZEtJRVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NCrjvofPstYGXSCPmwOnKlI53z/Ft8/Q5R0qGSNb7xgHX46QJ5d8d9w7SLgizR5UYMvWo9hnAGuO1SCf7yWULklHT6+4CcCb0hXqFMQw4nMuWKAh4XCHoK9ctX0nnsIY55BbpDRpjWKnE9vJO0p4ix52/+6GxG9YfuLU7RBgK0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlGZBJww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZEtJRVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14794C4CEE7;
-	Thu,  9 Oct 2025 15:59:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlGZBJww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E988C4CEE7;
+	Thu,  9 Oct 2025 15:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025568;
-	bh=HhK2IJFNOuj9oMTXEyfV/LylryGPe9C8fZDPFRwl/Tg=;
+	s=k20201202; t=1760025570;
+	bh=GmcTaTF8RNclO7yRzpSlmGBF5rADwZQUifSfhyoe5NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZEtJRVPlLe1jkkj97AnsxkRjdffFsAQMRBQKs0MtmUrM1c0mYDHfRqLUphT+Cbmt
-	 YTublzkkckObelablNAPctyYkdrxpQhpJJYoQ7Vo6/XmHpRmfknQfbmk/YjhWSEn+T
-	 kbfKLxEatKhFlrCEV7gG7fGNimIqFR0h8uaeoe/GK1VZe0q6Rp6W0pZi7l8oVFSZ7l
-	 QTQFftycOdJPzeog+rYRGbWJBDB4SqVm0g2e9FxWGyz24i0jSntLcHghOxYBQ7DWAE
-	 UpA2GPyPCy6cldv9YJkXFyZ09JMuPiawC9YOBPSjB2rrJFdpG7c4g7fz3JkwXsE1q5
-	 q8Nh44ux8FXKg==
+	b=KlGZBJwwf5OoNDYIA216z+O8IiBoo+NCNFo5BRsAEOWDyAxkavqvD5zZO2yrKYgcv
+	 rR07ihKxYdE5JkPbVQpWOD8m8KnhFLry5Mn8nF66a7kvTXudsH12tw7bdj8+Tx9TzA
+	 A8wONMqCS10OpMSjxZQi1PnvEYCTsVSLXjcEgq/YCHFfXsh8IbgNNNzUtJucUry6ah
+	 Jacty9BotfgQAHVTEN4NWVkN25Z0oBUC5KZTa/600RglXXiF8OLRo+uVzXwcWH41xx
+	 Jfy+2zc/evhzVrcB7g3E91GjJkT3VGwL395g0c8QJwZe1hKXafQXKq6H44BA26pXdM
+	 6LE/FgX9gP09A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bastien Curutchet <bastien.curutchet@bootlin.com>,
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-6.12] mfd: core: Increment of_node's refcount before linking it to the platform device
-Date: Thu,  9 Oct 2025 11:55:17 -0400
-Message-ID: <20251009155752.773732-51-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.4] mfd: stmpe: Remove IRQ domain upon removal
+Date: Thu,  9 Oct 2025 11:55:18 -0400
+Message-ID: <20251009155752.773732-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -50,21 +54,15 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Curutchet <bastien.curutchet@bootlin.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 5f4bbee069836e51ed0b6d7e565a292f070ababc ]
+[ Upstream commit 57bf2a312ab2d0bc8ee0f4e8a447fa94a2fc877d ]
 
-When an MFD device is added, a platform_device is allocated. If this
-device is linked to a DT description, the corresponding OF node is linked
-to the new platform device but the OF node's refcount isn't incremented.
-As of_node_put() is called during the platform device release, it leads
-to a refcount underflow.
+The IRQ domain is (optionally) added during stmpe_probe, but never removed.
+Add the call to stmpe_remove.
 
-Call of_node_get() to increment the OF node's refcount when the node is
-linked to the newly created platform device.
-
-Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
-Link: https://lore.kernel.org/r/20250820-mfd-refcount-v1-1-6dcb5eb41756@bootlin.com
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250725070752.338376-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -73,79 +71,81 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**Why This Is A Bugfix**
-- Root cause: `mfd_match_of_node_to_dev()` links a DT node to a new
-  `platform_device` using `device_set_node(&pdev->dev,
-  of_fwnode_handle(np));` but does not take a reference on the OF node.
-  Later, the `platform_device` release path drops a reference
-  unconditionally, causing an underflow.
-  - Current linking without ref: drivers/mfd/mfd-core.c:134
-  - Platform device release drops the ref: drivers/base/platform.c:556
-  - `device_set_node()` does not acquire a reference; it only assigns:
-    drivers/base/core.c:5274
-- Correct pattern elsewhere: OF-based platform devices explicitly
-  increment the node ref before linking:
-  - Example: `device_set_node(&dev->dev,
-    of_fwnode_handle(of_node_get(np)));` in drivers/of/platform.c:129
+- What changed
+  - Adds missing cleanup in `stmpe_remove()` to tear down the IRQ
+    domain: `drivers/mfd/stmpe.c:1486`
+    - New lines: `if (stmpe->domain) irq_domain_remove(stmpe->domain);`
+  - The IRQ domain is created in probe via
+    `irq_domain_create_simple(...)` in `stmpe_irq_init()`:
+    `drivers/mfd/stmpe.c:1222`
+  - The domain is passed to children via MFD core (`mfd_add_devices(...,
+    stmpe->domain)`), so it persists beyond probe:
+    `drivers/mfd/stmpe.c:1295`
 
-**What The Commit Changes**
-- Adds `of_node_get(np);` immediately before
-  `device_set_node(&pdev->dev, of_fwnode_handle(np));` in
-  `mfd_match_of_node_to_dev()`, balancing the unconditional
-  `of_node_put()` at `platform_device` release.
-  - New line added right before the existing call: drivers/mfd/mfd-
-    core.c:134
-- This matches how other subsystems handle device-tree node linkage and
-  ensures the `of_node` refcount is correct when the device is
-  unregistered.
+- Why it matters
+  - Bug: Resource leak and stale IRQ domain on device removal/module
+    unload. The driver creates an IRQ domain during probe but never
+    removes it, leaving mappings/structures alive after unbind/unload.
+  - User impact: Rebind/unload scenarios can accumulate leaked IRQ
+    resources; at minimum this is a memory/resource leak, at worst it
+    risks stale references in debug/introspection paths.
 
-**Evidence In Current Code Path**
-- During device creation, after a successful match, MFD code drops the
-  loop’s reference to `np`:
-  - `of_node_put(np);` in drivers/mfd/mfd-core.c:195
-- Without an extra `of_node_get()` for the device itself, the platform
-  device’s release path performs one more put than gets, leading to a
-  refcount underflow (and potentially a UAF if overlays or dynamic DT
-  are involved).
+- Scope and risk
+  - Minimal change (3 LOC), confined to removal path in
+    `stmpe_remove()`.
+  - No functional/architectural changes; no runtime behavior changes
+    while device is active.
+  - Standard API usage: `irq_domain_remove()` is the canonical teardown
+    for domains created with `irq_domain_create_*()`.
+  - Children devices don’t require `stmpe->domain` during removal;
+    `mfd_remove_devices()` triggers child driver unbinds using Linux IRQ
+    numbers, and `free_irq()` does not depend on the domain object. So
+    calling `irq_domain_remove()` at the start of `stmpe_remove()` is
+    safe.
 
-**Risk, Scope, and Stable Suitability**
-- Small, contained fix: a single additional `of_node_get()` call in a
-  narrow path.
-- No architectural changes; only balances reference counting.
-- Aligns MFD behavior with the broader kernel conventions for DT-backed
-  devices.
-- Touches a core MFD helper but with minimal regression risk; it only
-  affects CONFIG_OF cases.
-- Fix addresses a real bug that can manifest at device removal/teardown,
-  producing refcount warnings or worse under dynamic DT.
+- Historical/context checks
+  - Domain creation present: `stmpe_irq_init()` uses
+    `irq_domain_create_simple(...)`: `drivers/mfd/stmpe.c:1222`.
+  - MFD children use the domain only at registration time for IRQ
+    mapping: `mfd_add_devices(..., stmpe->domain)`:
+    `drivers/mfd/stmpe.c:1295`.
+  - Upstream commit already merged (57bf2a312ab2d), indicating
+    maintainer review and acceptance.
 
-**Backport Considerations**
-- APIs used (`of_node_get`, `device_set_node`, `of_fwnode_handle`) exist
-  in stable series.
-- No dependency on recent reworks; the bug predates switching to
-  `device_set_node` (earlier code also omitted the ref get).
-- While the commit message does not explicitly carry a “Cc: stable”, it
-  is a classic stable-eligible bugfix: important correctness issue,
-  minimal change, clear benefit, low risk.
+- Stable backport criteria
+  - Fixes a real bug (resource leak on driver removal) that can affect
+    users in unbind/rebind or module unload workflows.
+  - Small, self-contained, and low risk.
+  - No new features or architectural changes.
+  - Touches an MFD driver only; not a critical core subsystem.
+  - No external dependencies beyond long‑standing IRQ domain APIs.
 
-In summary, the patch balances OF node refcounting for MFD-created
-platform devices and should be backported to stable trees.
+- Notes
+  - This commit doesn’t address probe-failure paths (domain created then
+    probe fails before `stmpe_remove()`); that’s a separate improvement,
+    but not required for this backport.
+  - If any stable branch differs in function signatures/locations, the
+    change still trivially adapts: just add the
+    `irq_domain_remove(stmpe->domain)` in that branch’s `stmpe_remove()`
+    implementation.
 
- drivers/mfd/mfd-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/stmpe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
-index 76bd316a50afc..7d14a1e7631ee 100644
---- a/drivers/mfd/mfd-core.c
-+++ b/drivers/mfd/mfd-core.c
-@@ -131,6 +131,7 @@ static int mfd_match_of_node_to_dev(struct platform_device *pdev,
- 	of_entry->np = np;
- 	list_add_tail(&of_entry->list, &mfd_of_node_list);
+diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
+index 819d19dc9b4a9..e1165f63aedae 100644
+--- a/drivers/mfd/stmpe.c
++++ b/drivers/mfd/stmpe.c
+@@ -1485,6 +1485,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
  
-+	of_node_get(np);
- 	device_set_node(&pdev->dev, of_fwnode_handle(np));
- #endif
- 	return 0;
+ void stmpe_remove(struct stmpe *stmpe)
+ {
++	if (stmpe->domain)
++		irq_domain_remove(stmpe->domain);
++
+ 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+ 		regulator_disable(stmpe->vio);
+ 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
 -- 
 2.51.0
 
