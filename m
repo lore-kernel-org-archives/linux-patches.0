@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF502EFD98;
-	Thu,  9 Oct 2025 15:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0B42EF64C;
+	Thu,  9 Oct 2025 15:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025514; cv=none; b=UZh1kzIVfn38ax2EEuhHSLKI/t2NRaVko80tIom9BecfJU0QSUXnofulxn6Fb3Uzl22qnWKldHeHWij9/whoh4GZqP4iLjy66ilVZqalA/wFxT4U4CUSDYs8bqVZmG4wpr0Doa5fnXPxVyRNTUZnNm0yrIwTuhMXGuOpOs4p10k=
+	t=1760025515; cv=none; b=XJorkoIbgGP5OznXd6KrHZckO3TwS0x3ak3AVzTWC+VwY44Ukv+y9UVpHzZOTBJki9BMw2Zv2mGh8G7+Tma9aA8LuZsd6hmznDA9OKsMh542UXgZMtm7UNB1gHntncYWZ2UOmtZPRxD0OKrbgu3fYidPs5c507oR1xfpcmc5tHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025514; c=relaxed/simple;
-	bh=7Y8n+ObxSsW3XgRqwjBSqj6g6ZQ087u2cr5KpN5eOFs=;
+	s=arc-20240116; t=1760025515; c=relaxed/simple;
+	bh=1iRDjH71Xort7nzuEJ/Yj6ipa0Fw7mhO9+8jp/KYEQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=udxuLvEg44L8+mr15HDck50KqZ9hd8hce5j3TdtYeHw5p555nyVE6EJ8wBP5GmGTLGegc+M+A8A6MUD6zVFD/U3NHqTCB3ohHzoyrnhW7q3DLoJZ0U8MGttpsz2AXKZZEW53FOtuBdCE7yChoJoVc6WnGjzhPq+lGCK091IAk28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RKpqS30a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fhs7a5WsJKLGmQCbtqcDUj+e5TMEWIeKZKeWdpdh+JitiqXVTOZGdC/8OWIC4dYGxfsdW0sV2GZMkVY3xLLtd0tiqUPBi/iuFdQKRbEe9P1NvTPIP27oITsKzFlx4iWZL+uG3eTgmEXRfFA0yhYJn+6A9G+cxDSXf9r9X2iBKO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCKWNiRJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RKpqS30a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A33C4CEE7;
-	Thu,  9 Oct 2025 15:58:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCKWNiRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65E7C4CEF7;
+	Thu,  9 Oct 2025 15:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025511;
-	bh=7Y8n+ObxSsW3XgRqwjBSqj6g6ZQ087u2cr5KpN5eOFs=;
+	s=k20201202; t=1760025515;
+	bh=1iRDjH71Xort7nzuEJ/Yj6ipa0Fw7mhO9+8jp/KYEQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKpqS30a0IJhJBXs9NkmBnRxqbEqdLvpZ7aCmGbKca8q8CgWSdHKtSPuQ+k8mFMpM
-	 QS6SXb5u+sdQlZcNBRFCr9xbvHaDA1PMkwEJ4m92TURYyCBDNcF/vq88zFXMXytOiD
-	 rvB+xWAAJ5JFiIIcFdnos3Wrb1QYE+xLQGrXCNo92VifwiSoIf0YY7XccujeSc/rbl
-	 AUSYhgn52BbRSMF8cY/cR6sMnQJGnUeptD7Evlz7zZw4IjSYSkggVIar2vpnWdtf8R
-	 hGIqONHut4XiV5trIvyGYNPiCzbE7v7CphaSr3HEGMC/+ZMeUetZsRma1B0/PIasdl
-	 Cm+SRyDhPl22g==
+	b=RCKWNiRJENLlbumPe7yr1G0RGPArbzW3csd8f7F0pVj3VqJIKTH+ZgRUDBPPUZiyV
+	 q6xSZj8/XoDDEkvYKvq8YYkyCGCF0r3D8Tz22ZuKD2RTJFnn37ZtWVuaxE0ANI5WZu
+	 uM00EMya8K51lRv+QTjimtwnwc0Eoh3OKB80hNgXGB4Q2x5GALt0Qo2V3tlhoOqOMe
+	 wjdL21LUTlHdlXU1W5qjTenTLPA/hqsjcqfUcaCtgN+YhQp6ozECicAM+vj+QEbILf
+	 T1TeaPH9NpqhVyQA5VheNIVt85/vOF8gLVDkYZXXWgDEIzEAaVl+KgilUP0HZYxkzg
+	 fTdJRxKLDfx+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Yonghong Song <yonghong.song@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tj@kernel.org,
-	josef@toxicpanda.com,
-	cgroups@vger.kernel.org,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] blk-cgroup: fix possible deadlock while configuring policy
-Date: Thu,  9 Oct 2025 11:54:49 -0400
-Message-ID: <20251009155752.773732-23-sashal@kernel.org>
+	nathan@kernel.org,
+	memxor@gmail.com,
+	andrii@kernel.org,
+	emil@etsalapatis.com,
+	bpf@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-6.12] selftests/bpf: Fix selftest verifier_arena_large failure
+Date: Thu,  9 Oct 2025 11:54:50 -0400
+Message-ID: <20251009155752.773732-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -55,119 +57,64 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 5d726c4dbeeddef612e6bed27edd29733f4d13af ]
+[ Upstream commit 5a427fddec5e76360725a0f03df3a2a003efbe2e ]
 
-Following deadlock can be triggered easily by lockdep:
+With latest llvm22, I got the following verification failure:
 
-WARNING: possible circular locking dependency detected
-6.17.0-rc3-00124-ga12c2658ced0 #1665 Not tainted
-------------------------------------------------------
-check/1334 is trying to acquire lock:
-ff1100011d9d0678 (&q->sysfs_lock){+.+.}-{4:4}, at: blk_unregister_queue+0x53/0x180
+  ...
+  ; int big_alloc2(void *ctx) @ verifier_arena_large.c:207
+  0: (b4) w6 = 1                        ; R6_w=1
+  ...
+  ; if (err) @ verifier_arena_large.c:233
+  53: (56) if w6 != 0x0 goto pc+62      ; R6=0
+  54: (b7) r7 = -4                      ; R7_w=-4
+  55: (18) r8 = 0x7f4000000000          ; R8_w=scalar()
+  57: (bf) r9 = addr_space_cast(r8, 0, 1)       ; R8_w=scalar() R9_w=arena
+  58: (b4) w6 = 5                       ; R6_w=5
+  ; pg = page[i]; @ verifier_arena_large.c:238
+  59: (bf) r1 = r7                      ; R1_w=-4 R7_w=-4
+  60: (07) r1 += 4                      ; R1_w=0
+  61: (79) r2 = *(u64 *)(r9 +0)         ; R2_w=scalar() R9_w=arena
+  ; if (*pg != i) @ verifier_arena_large.c:239
+  62: (bf) r3 = addr_space_cast(r2, 0, 1)       ; R2_w=scalar() R3_w=arena
+  63: (71) r3 = *(u8 *)(r3 +0)          ; R3_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+  64: (5d) if r1 != r3 goto pc+51       ; R1_w=0 R3_w=0
+  ; bpf_arena_free_pages(&arena, (void __arena *)pg, 2); @ verifier_arena_large.c:241
+  65: (18) r1 = 0xff11000114548000      ; R1_w=map_ptr(map=arena,ks=0,vs=0)
+  67: (b4) w3 = 2                       ; R3_w=2
+  68: (85) call bpf_arena_free_pages#72675      ;
+  69: (b7) r1 = 0                       ; R1_w=0
+  ; page[i + 1] = NULL; @ verifier_arena_large.c:243
+  70: (7b) *(u64 *)(r8 +8) = r1
+  R8 invalid mem access 'scalar'
+  processed 61 insns (limit 1000000) max_states_per_insn 0 total_states 6 peak_states 6 mark_read 2
+  =============
+  #489/5   verifier_arena_large/big_alloc2:FAIL
 
-but task is already holding lock:
-ff1100011d9d00e0 (&q->q_usage_counter(queue)#3){++++}-{0:0}, at: del_gendisk+0xba/0x110
+The main reason is that 'r8' in insn '70' is not an arena pointer.
+Further debugging at llvm side shows that llvm commit ([1]) caused
+the failure. For the original code:
+  page[i] = NULL;
+  page[i + 1] = NULL;
+the llvm transformed it to something like below at source level:
+  __builtin_memset(&page[i], 0, 16)
+Such transformation prevents llvm BPFCheckAndAdjustIR pass from
+generating proper addr_space_cast insns ([2]).
 
-which lock already depends on the new lock.
+Adding support in llvm BPFCheckAndAdjustIR pass should work, but
+not sure that such a pattern exists or not in real applications.
+At the same time, simply adding a memory barrier between two 'page'
+assignment can fix the issue.
 
-the existing dependency chain (in reverse order) is:
+  [1] https://github.com/llvm/llvm-project/pull/155415
+  [2] https://github.com/llvm/llvm-project/pull/84410
 
--> #2 (&q->q_usage_counter(queue)#3){++++}-{0:0}:
-       blk_queue_enter+0x40b/0x470
-       blkg_conf_prep+0x7b/0x3c0
-       tg_set_limit+0x10a/0x3e0
-       cgroup_file_write+0xc6/0x420
-       kernfs_fop_write_iter+0x189/0x280
-       vfs_write+0x256/0x490
-       ksys_write+0x83/0x190
-       __x64_sys_write+0x21/0x30
-       x64_sys_call+0x4608/0x4630
-       do_syscall_64+0xdb/0x6b0
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
--> #1 (&q->rq_qos_mutex){+.+.}-{4:4}:
-       __mutex_lock+0xd8/0xf50
-       mutex_lock_nested+0x2b/0x40
-       wbt_init+0x17e/0x280
-       wbt_enable_default+0xe9/0x140
-       blk_register_queue+0x1da/0x2e0
-       __add_disk+0x38c/0x5d0
-       add_disk_fwnode+0x89/0x250
-       device_add_disk+0x18/0x30
-       virtblk_probe+0x13a3/0x1800
-       virtio_dev_probe+0x389/0x610
-       really_probe+0x136/0x620
-       __driver_probe_device+0xb3/0x230
-       driver_probe_device+0x2f/0xe0
-       __driver_attach+0x158/0x250
-       bus_for_each_dev+0xa9/0x130
-       driver_attach+0x26/0x40
-       bus_add_driver+0x178/0x3d0
-       driver_register+0x7d/0x1c0
-       __register_virtio_driver+0x2c/0x60
-       virtio_blk_init+0x6f/0xe0
-       do_one_initcall+0x94/0x540
-       kernel_init_freeable+0x56a/0x7b0
-       kernel_init+0x2b/0x270
-       ret_from_fork+0x268/0x4c0
-       ret_from_fork_asm+0x1a/0x30
-
--> #0 (&q->sysfs_lock){+.+.}-{4:4}:
-       __lock_acquire+0x1835/0x2940
-       lock_acquire+0xf9/0x450
-       __mutex_lock+0xd8/0xf50
-       mutex_lock_nested+0x2b/0x40
-       blk_unregister_queue+0x53/0x180
-       __del_gendisk+0x226/0x690
-       del_gendisk+0xba/0x110
-       sd_remove+0x49/0xb0 [sd_mod]
-       device_remove+0x87/0xb0
-       device_release_driver_internal+0x11e/0x230
-       device_release_driver+0x1a/0x30
-       bus_remove_device+0x14d/0x220
-       device_del+0x1e1/0x5a0
-       __scsi_remove_device+0x1ff/0x2f0
-       scsi_remove_device+0x37/0x60
-       sdev_store_delete+0x77/0x100
-       dev_attr_store+0x1f/0x40
-       sysfs_kf_write+0x65/0x90
-       kernfs_fop_write_iter+0x189/0x280
-       vfs_write+0x256/0x490
-       ksys_write+0x83/0x190
-       __x64_sys_write+0x21/0x30
-       x64_sys_call+0x4608/0x4630
-       do_syscall_64+0xdb/0x6b0
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-other info that might help us debug this:
-
-Chain exists of:
-  &q->sysfs_lock --> &q->rq_qos_mutex --> &q->q_usage_counter(queue)#3
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&q->q_usage_counter(queue)#3);
-                               lock(&q->rq_qos_mutex);
-                               lock(&q->q_usage_counter(queue)#3);
-  lock(&q->sysfs_lock);
-
-Root cause is that queue_usage_counter is grabbed with rq_qos_mutex
-held in blkg_conf_prep(), while queue should be freezed before
-rq_qos_mutex from other context.
-
-The blk_queue_enter() from blkg_conf_prep() is used to protect against
-policy deactivation, which is already protected with blkcg_mutex, hence
-convert blk_queue_enter() to blkcg_mutex to fix this problem. Meanwhile,
-consider that blkcg_mutex is held after queue is freezed from policy
-deactivation, also convert blkg_alloc() to use GFP_NOIO.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250920045805.3288551-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -175,156 +122,97 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation:
+**Why this matters**
+- Fixes a real, reproducible selftest failure with LLVM 22 where two
+  adjacent pointer stores get optimized into a memset, breaking BPF
+  verifier expectations and causing “R8 invalid mem access 'scalar'”
+  during big_alloc2.
+- Keeps BPF selftests reliable across toolchains without changing
+  kernel/runtime behavior.
 
-- Fixes a real deadlock. The report shows a lockdep-proven circular
-  dependency involving `&q->sysfs_lock`, `&q->rq_qos_mutex`, and
-  `&q->q_usage_counter`, triggered during blkcg policy configuration
-  while devices are being removed. The root cause is explicitly
-  identified in the commit message: `blkg_conf_prep()` took
-  `rq_qos_mutex` (indirectly via open) and then grabbed
-  `q_usage_counter` via `blk_queue_enter()`, but other paths freeze the
-  queue before taking `rq_qos_mutex`, creating an inversion.
+**What changed**
+- Adds a single compiler barrier between two consecutive NULL
+  assignments to break LLVM’s store-combining optimization:
+  - Before: `page[i] = NULL;` immediately followed by `page[i + 1] =
+    NULL;`
+  - After: inserts `barrier();` between them to prevent transformation
+    into `__builtin_memset(...)`.
+- Location in tree:
+  `tools/testing/selftests/bpf/progs/verifier_arena_large.c`
+  - In the “Free pairs of pages” loop: after freeing 2 pages
+    (`bpf_arena_free_pages`), the code does:
+    - `page[i] = NULL;` at
+      tools/testing/selftests/bpf/progs/verifier_arena_large.c:242
+    - [PATCH] `barrier();` added between the two stores
+    - `page[i + 1] = NULL;` at
+      tools/testing/selftests/bpf/progs/verifier_arena_large.c:243
+- The barrier macro is available via the already-included
+  `bpf/bpf_helpers.h` (`barrier()` is defined as an empty inline asm
+  memory clobber), used elsewhere in BPF selftests, and is safe for BPF.
 
-- Core change eliminates the lock inversion without changing semantics:
-  - Replaces `blk_queue_enter(q, 0)` with `mutex_lock(&q->blkcg_mutex)`
-    to prevent concurrent policy deactivation, matching the protection
-    already used by `blkcg_deactivate_policy()`.
-    - Before: `blk_queue_enter()` grabbed `q_usage_counter` while
-      `rq_qos_mutex` was already held (bad ordering).
-    - After: Take `q->blkcg_mutex` instead, which is the correct lock to
-      serialize with policy deactivation and does not participate in the
-      problematic chain.
-    - Code reference (new behavior at the commit): block/blk-
-      cgroup.c:880 acquires `mutex_lock(&q->blkcg_mutex)`; block/blk-
-      cgroup.c:fail_exit and success paths unlock it instead of
-      `blk_queue_exit()`.
-  - Drops the corresponding `blk_queue_exit(q)` calls since
-    `blk_queue_enter()` is no longer used (block/blk-
-    cgroup.c:success/fail paths).
+**Root cause and effect**
+- LLVM 22 transforms two adjacent stores into a 16-byte memset when it
+  sees:
+  - `page[i] = NULL;`
+  - `page[i + 1] = NULL;`
+- This prevents LLVM’s BPFCheckAndAdjustIR pass from inserting necessary
+  `addr_space_cast` for arena pointers, leading to the verifier seeing a
+  scalar pointer (R8) on the subsequent store and rejecting the program.
+- The inserted `barrier()` prevents that transformation, ensuring LLVM
+  keeps separate stores and the IR pass emits `addr_space_cast`, fixing
+  the verifier error.
 
-- Allocation context adjusted for freeze safety:
-  - Changes `blkg_alloc(..., GFP_KERNEL)` to `GFP_NOIO` while
-    `blkcg_mutex` is held, because policy deactivation holds
-    `blkcg_mutex` after freezing the queue; `GFP_NOIO` avoids potential
-    IO/reclaim that could deadlock while the queue is frozen.
-    - Code reference: block/blk-cgroup.c:911 switches to `GFP_NOIO`.
+**Risk and scope**
+- Minimal risk:
+  - Single-line change in a selftest program.
+  - No ABI changes, no functional changes to kernel subsystems.
+  - Barrier only affects compiler optimization; runtime semantics remain
+    identical.
+- Selftest-only change:
+  - Does not affect production kernel behavior.
+  - Improves test robustness across compilers.
 
-- Locking contract to callers is preserved:
-  - `blkg_conf_prep()` still returns with `queue_lock` held as annotated
-    (`__acquires(&bdev->bd_queue->queue_lock)`), and `blkg_conf_exit()`
-    remains responsible for releasing `rq_qos_mutex` and `queue_lock`
-    (block/blk-cgroup.c:992-1007). The new `blkcg_mutex` is released
-    inside `blkg_conf_prep()` before returning, so external APIs don’t
-    change.
+**Stable criteria fit**
+- Important bugfix: prevents a deterministic selftest failure with a
+  widely used toolchain (LLVM 22).
+- Small and contained: one-line addition in a single selftest file.
+- No architectural changes and no cross-subsystem impact.
+- No side effects beyond keeping IR and verifier expectations aligned
+  for this test.
+- Even without an explicit “Cc: stable”, selftest fixes like this are
+  commonly accepted to keep CI and developer workflows healthy across
+  toolchains.
 
-- Small, contained change in a single subsystem file:
-  - Only touches `block/blk-cgroup.c` and only the `blkg_conf_prep()`
-    path. No UAPI or architectural shifts; minimal surface area.
+**Dependencies and compatibility**
+- The code path is guarded by `__BPF_FEATURE_ADDR_SPACE_CAST` (see block
+  starting at
+  tools/testing/selftests/bpf/progs/verifier_arena_large.c:168), so it
+  only builds where the feature is available, reducing risk on older
+  compilers.
+- `barrier()` is already defined for BPF programs via `bpf_helpers.h`,
+  which is included at
+  tools/testing/selftests/bpf/progs/verifier_arena_large.c:6, ensuring
+  portability across supported clang versions.
 
-- Aligns with existing design:
-  - `blkcg_deactivate_policy()` already uses `q->blkcg_mutex` to
-    serialize policy teardown with queue freeze (e.g., v6.6 has
-    `mutex_lock(&q->blkcg_mutex)` in block/blk-cgroup.c:1625). Using the
-    same mutex in `blkg_conf_prep()` is consistent and resolves the
-    ordering with `rq_qos_mutex`.
+Given the above, this is a low-risk, self-contained fix for a real
+breakage in selftests caused by a compiler change. It should be
+backported to stable trees that contain this selftest.
 
-- Applicability to stable:
-  - Affects stable branches that:
-    - Hold `rq_qos_mutex` in `blkg_conf_open_bdev()` and use
-      `blk_queue_enter()` in `blkg_conf_prep()` (e.g., v6.6).
-    - Have `q->blkcg_mutex` and use it in `blkcg_deactivate_policy()`.
-  - Not directly applicable to much older series (e.g., v6.1) where the
-    blkcg prep logic and locks differ (no `blkcg_mutex` field there, and
-    `blkg_conf_prep()` is structured differently). Those branches may
-    not exhibit the same lock chain or would need a different
-    adaptation.
+ tools/testing/selftests/bpf/progs/verifier_arena_large.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-- Risk of regression is low:
-  - The switch from `q_usage_counter` to `blkcg_mutex` is targeted to
-    the specific policy update path and matches existing deactivate-
-    policy synchronization.
-  - The `GFP_NOIO` change is safer under queue freeze; allocation
-    failure is handled with existing error paths (-ENOMEM) and retry
-    logic for -EBUSY remains intact for other sources.
-
-- Process signals quality:
-  - Reviewed-by: Ming Lei; Signed-off-by: Jens Axboe. This is a well-
-    scoped block layer fix.
-
-Conclusion: This is a clear bug fix that removes a proven deadlock with
-a minimal, well-aligned locking change. It should be backported to
-stable trees where the affected locking and function structure exist
-(e.g., 6.6+). It is not a straightforward backport to older trees
-lacking `blkcg_mutex` and the newer prep/open split, so applicability
-should be limited to branches that already have `rq_qos_mutex` in
-`blkg_conf_open_bdev()` and `blk_queue_enter()` in `blkg_conf_prep()`.
-
- block/blk-cgroup.c | 23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
-
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index fe9ebd6a2e14d..6e89e64c71be0 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -883,14 +883,8 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 	disk = ctx->bdev->bd_disk;
- 	q = disk->queue;
- 
--	/*
--	 * blkcg_deactivate_policy() requires queue to be frozen, we can grab
--	 * q_usage_counter to prevent concurrent with blkcg_deactivate_policy().
--	 */
--	ret = blk_queue_enter(q, 0);
--	if (ret)
--		goto fail;
--
-+	/* Prevent concurrent with blkcg_deactivate_policy() */
-+	mutex_lock(&q->blkcg_mutex);
- 	spin_lock_irq(&q->queue_lock);
- 
- 	if (!blkcg_policy_enabled(q, pol)) {
-@@ -920,16 +914,16 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 		/* Drop locks to do new blkg allocation with GFP_KERNEL. */
- 		spin_unlock_irq(&q->queue_lock);
- 
--		new_blkg = blkg_alloc(pos, disk, GFP_KERNEL);
-+		new_blkg = blkg_alloc(pos, disk, GFP_NOIO);
- 		if (unlikely(!new_blkg)) {
- 			ret = -ENOMEM;
--			goto fail_exit_queue;
-+			goto fail_exit;
- 		}
- 
- 		if (radix_tree_preload(GFP_KERNEL)) {
- 			blkg_free(new_blkg);
- 			ret = -ENOMEM;
--			goto fail_exit_queue;
-+			goto fail_exit;
- 		}
- 
- 		spin_lock_irq(&q->queue_lock);
-@@ -957,7 +951,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			goto success;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_arena_large.c b/tools/testing/selftests/bpf/progs/verifier_arena_large.c
+index 9dbdf123542d3..f19e15400b3e1 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_arena_large.c
++++ b/tools/testing/selftests/bpf/progs/verifier_arena_large.c
+@@ -240,6 +240,7 @@ int big_alloc2(void *ctx)
+ 			return 5;
+ 		bpf_arena_free_pages(&arena, (void __arena *)pg, 2);
+ 		page[i] = NULL;
++		barrier();
+ 		page[i + 1] = NULL;
+ 		cond_break;
  	}
- success:
--	blk_queue_exit(q);
-+	mutex_unlock(&q->blkcg_mutex);
- 	ctx->blkg = blkg;
- 	return 0;
- 
-@@ -965,9 +959,8 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 	radix_tree_preload_end();
- fail_unlock:
- 	spin_unlock_irq(&q->queue_lock);
--fail_exit_queue:
--	blk_queue_exit(q);
--fail:
-+fail_exit:
-+	mutex_unlock(&q->blkcg_mutex);
- 	/*
- 	 * If queue was bypassing, we should retry.  Do so after a
- 	 * short msleep().  It isn't strictly necessary but queue
 -- 
 2.51.0
 
