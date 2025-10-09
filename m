@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42B92FAC07;
-	Thu,  9 Oct 2025 15:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7DB2F39A5;
+	Thu,  9 Oct 2025 15:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025575; cv=none; b=Oc6jk7vEPfkc8CN+GOrzlrfF6A63UgUhqP7z0cKAWOzhdEXo3ireGU1mZZG1wjvTBn5m65AU+6ovsQ5/z74edZm8M4+wXtfygZrUICewcRIbA83zhjVafx7fYDQhou8RWG0YdEhtaycy94dmlp7mQUgwZUxJs+a6Q4TubMD7Uh0=
+	t=1760025580; cv=none; b=jwUi8L3xh0b7fFL/5HLEGSN3OC2nGd8ZenUcswYj4NrFcxbpArhcT48oReUQQhIQNelAGoJMOFLDCHXN3SABlyviKxdgHguAVRSl5KKaQiyJZUlnqywcOA+YCSJs34gSk8y8w5JiclKLQBXlGCT7243HpK9uwTLGC1E8KHj2m7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025575; c=relaxed/simple;
-	bh=td/9rpfVL5kc3539pOIYKE9FDVHoZjxCJ/AWHY0bREw=;
+	s=arc-20240116; t=1760025580; c=relaxed/simple;
+	bh=7vflYb0Tp3hdHkbkwb0Yn0MilZJJ5l31bW5Qvd+w75I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n9nB0yKQn1IfY4x6UOseLLgv291qq92JgIZClSk8cMoxgllOecQ9nIUsSdej0TMbH9i9iVA9G0Zr5a4T28BrvkIApLW8fQQ/VxTCmk32LktrJD1tpVaJpOfAf4xdtpz2GbJqNKE+DzrwteY/PpqeFIdu7zUB/yroVpm03Q99yik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCqfnEUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lbknUdsM4iS3rr9hnLNEGHhqbNe19WU5XSNyHbWXvVnncO3Encw0X7YQDnbHhA2s5Lmxmz0igZKhuJMcc9NAOawC0Uv54fFKhShNPZ/8xQ/l7sWeJc/ZbOg8GUPTn/ta6RQ2cDVTP3M3rukpQ+DqnjHqCImGm7J+nQTKEx5cDyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2klmbNO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCqfnEUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AFAC4CEF8;
-	Thu,  9 Oct 2025 15:59:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2klmbNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E609C4CEF8;
+	Thu,  9 Oct 2025 15:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025575;
-	bh=td/9rpfVL5kc3539pOIYKE9FDVHoZjxCJ/AWHY0bREw=;
+	s=k20201202; t=1760025578;
+	bh=7vflYb0Tp3hdHkbkwb0Yn0MilZJJ5l31bW5Qvd+w75I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCqfnEUxrDI+O+kg04A+r/81yBrBhLpEpLoH6HmMOlylAVBsbp4ee/MkJDp81/9Cn
-	 w9cvu9dg8BB6Wu1F2xFbvsny2pr+UbUnWhUtdUa9Jz9nIgEZFpBC7bHMA0p//IotW/
-	 susBnhGJu5T/R1xZ555hBA6dVaT4oRs3684sJ7RN3pPehD9IJybTalO4PJG+MZMGI7
-	 RsL6lCOMQ9f8nFkQTkwFuHdvOqNAsg6U4ywdDrFo1murksUavk/zaGR3/G3vgt6fUl
-	 18MUOphYnYT+riMDS4Did/9tlrf2FJUTNvjmVXiGFSt42dSLigsrfkVZuJOh99nB+Y
-	 BkZgvPj9m3e7g==
+	b=h2klmbNOqnmAhlfk1lCXHPBbCQ1vRUc8yS3JK03ZhIcrzS/8V3Jo96pJPaCG+HNLx
+	 KEA7Utt7j5yL2pKCiVc90QfCAL7nwhQlHZ5s2LQKJ+thr3fOaU06uZrcXBTHVOSIvN
+	 qxTmTLRWDVuLdANamSSR3AK++oUwhoE+ti/JBt93kd34ctbZ1hxouZLVAiF4bfkqho
+	 /LKTeanRtfHfY9nqFt+eHTrN/LfqDB6EFR4MM9YMOINfmE6OGXKHSJcquskbqN5ZZn
+	 wwp+Aq91PdHVwrPg7wdYiZOJBRyYj7Wrjf30fYyGdUq1XVlauaxTfj66tI7UzsDxbi
+	 DgYI+SalRp78Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Mykyta Yatsenko <yatsenko@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	bigeasy@linutronix.de,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	linux-spi@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17-5.4] spi: loopback-test: Don't use %pK through printk
-Date: Thu,  9 Oct 2025 11:55:21 -0400
-Message-ID: <20251009155752.773732-55-sashal@kernel.org>
+	jolsa@kernel.org,
+	chen.dylane@linux.dev,
+	memxor@gmail.com,
+	ast@kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] selftests/bpf: Fix flaky bpf_cookie selftest
+Date: Thu,  9 Oct 2025 11:55:22 -0400
+Message-ID: <20251009155752.773732-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -49,173 +49,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit b832b19318534bb4f1673b24d78037fee339c679 ]
+[ Upstream commit 105eb5dc74109a9f53c2f26c9a918d9347a73595 ]
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log.
-Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
-the regular %p has been improved to avoid this issue.
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping locks in atomic contexts.
+bpf_cookie can fail on perf_event_open(), when it runs after the task_work
+selftest. The task_work test causes perf to lower
+sysctl_perf_event_sample_rate, and bpf_cookie uses sample_freq,
+which is validated against that sysctl. As a result,
+perf_event_open() rejects the attr if the (now tighter) limit is
+exceeded.
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
-There are still a few users of %pK left, but these use it through seq_file,
-for which its usage is safe.
+>From perf_event_open():
+if (attr.freq) {
+	if (attr.sample_freq > sysctl_perf_event_sample_rate)
+		return -EINVAL;
+} else {
+	if (attr.sample_period & (1ULL << 63))
+		return -EINVAL;
+}
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20250811-restricted-pointers-spi-v1-1-32c47f954e4d@linutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Switch bpf_cookie to use sample_period, which is not checked against
+sysctl_perf_event_sample_rate.
+
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250925215230.265501-1-mykyta.yatsenko5@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit and the broader
-context, here is my determination:
+YES
 
-**Backport Status: YES**
+- What it fixes and why it matters
+  - The perf-event subtest in bpf_cookie can fail with -EINVAL when run
+    after tests that cause perf to throttle sampling (e.g., task_work
+    stress), because the test uses frequency mode and sets
+    `attr.sample_freq` above the current global limit. The kernel
+    validates frequency mode against `sysctl_perf_event_sample_rate` and
+    rejects it when exceeded (kernel/events/core.c:13403). In contrast,
+    period mode only rejects if the high bit is set
+    (kernel/events/core.c:13406), so it avoids this global-throttling
+    pitfall.
+  - Perf can dynamically lower `sysctl_perf_event_sample_rate` under
+    high overhead (see assignment in kernel/events/core.c:654), so this
+    flakiness can affect real test runs on slower systems or after heavy
+    tests.
 
-## Analysis
+- Specific code change
+  - In `tools/testing/selftests/bpf/prog_tests/bpf_cookie.c:453-454`,
+    the test currently sets:
+    - `attr.freq = 1;`
+    - `attr.sample_freq = 10000;`
+  - The commit switches to period mode by replacing those with:
+    - `attr.sample_period = 100000;`
+  - This removes reliance on `sysctl_perf_event_sample_rate` entirely
+    for this test, eliminating the spurious -EINVAL from
+    `perf_event_open()` and making the selftest deterministic.
 
-### Nature of the Change
-This commit replaces the `%pK` (restricted pointer) format specifier
-with `%p` (regular pointer) in debugging output functions within the SPI
-loopback test driver. The changes affect:
-- `spi_test_dump_message()` - debugging output for SPI messages (lines
-  449, 459, 461, 467)
-- `spi_check_rx_ranges()` - error reporting (line 561)
-- `spi_test_translate()` - error reporting (line 699)
+- Scope, risk, and stable criteria
+  - Selftests-only change; no kernel runtime code touched.
+  - Minimal and contained (1 insertion, 2 deletions in a single file).
+  - No API or architectural changes; uses long-supported perf_event_attr
+    fields.
+  - Purpose is purely to fix test flakiness, not to add features.
+  - Low regression risk: switching from frequency to period mode is
+    semantically equivalent for this test’s goal (ensuring perf samples
+    fire to trigger the attached BPF program during `burn_cpu()`), while
+    avoiding global sysctl dependency.
+  - The issue exists in this stable tree: the local file still uses
+    `attr.freq`/`attr.sample_freq` at
+    `tools/testing/selftests/bpf/prog_tests/bpf_cookie.c:453-454`.
 
-### Technical Justification for Backporting
+- Additional context
+  - The upstream kernel already contains this exact fix (commit
+    105eb5dc74109 “selftests/bpf: Fix flaky bpf_cookie selftest”).
+  - Earlier attempts at hardening tests by lowering frequency (e.g., to
+    1000) still risk hitting the dynamic throttle; period mode is the
+    robust approach.
 
-**1. Real Bug Fix - Sleeping Locks in Atomic Context**
+Given this is a small, targeted selftest flakiness fix with negligible
+risk and clear benefit to stable testing reliability, it is suitable for
+backporting.
 
-The commit message's claim about "acquiring sleeping locks in atomic
-contexts" is accurate and documented. My investigation reveals:
+ tools/testing/selftests/bpf/prog_tests/bpf_cookie.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-- `%pK` implementation (lib/vsprintf.c:863-904) calls
-  `has_capability_noaudit()` which invokes `security_capable()` through
-  the LSM framework
-- Under CONFIG_PREEMPT_RT with SELinux and kptr_restrict=1, this
-  triggers "sleeping function called from invalid context" warnings
-- The code explicitly checks for atomic context (lib/vsprintf.c:874) and
-  returns "pK-error" if in hardirq, softirq, or NMI context
-- This is a real correctness issue, not just theoretical
-
-**2. Security Improvement**
-
-Since commit ad67b74d2469 (v4.15-rc2, November 2017), `%p` already
-hashes addresses and doesn't leak raw pointers. The commit message
-correctly notes that `%pK` through printk() can "still unintentionally
-leak raw pointers" depending on kptr_restrict settings, whereas `%p`
-consistently hashes addresses.
-
-**3. Part of Tree-Wide Cleanup**
-
-This is part of a coordinated effort to remove `%pK` from printk() paths
-across the entire kernel:
-- Similar commits already backported: BPF (c2f48cb89b76f), SCSI, WiFi,
-  remoteproc, DRM, crypto, etc.
-- All authored by Thomas Weißschuh with identical commit messages
-- Shows this is recognized as a kernel-wide issue requiring systematic
-  fixing
-
-**4. Low Regression Risk**
-
-- Only changes format specifiers, no logic changes
-- Confined to test/debugging driver (spi-loopback-test.c) used for
-  regression testing, not production code
-- Changes 6 format strings across 3 functions
-- Output remains functionally equivalent (both show pointer addresses,
-  just hashed differently)
-
-**5. Stable Tree Criteria Compliance**
-
-✓ Fixes important bug (sleeping locks in atomic context under RT
-kernels)
-✓ No new features introduced
-✓ No architectural changes
-✓ Minimal regression risk
-✓ Small and contained change (12 lines, 1 file)
-✓ Part of security hardening effort
-
-### Evidence of Backport Intent
-
-The commit has already been queued for backport to this stable tree
-(commit c51f79c2aadcd with "Signed-off-by: Sasha Levin"), indicating it
-has passed stable tree review criteria. It's currently 66 commits ahead
-of the v6.17 release tag.
-
-### Conclusion
-
-This commit should definitively be backported to stable trees. It fixes
-a real correctness bug affecting RT kernel configurations, improves
-security posture, carries minimal risk, and is part of a systematic
-kernel-wide cleanup that's already being backported across subsystems.
-
- drivers/spi/spi-loopback-test.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
-index 7dd92deffe3fb..e0b131aa29b62 100644
---- a/drivers/spi/spi-loopback-test.c
-+++ b/drivers/spi/spi-loopback-test.c
-@@ -446,7 +446,7 @@ static void spi_test_dump_message(struct spi_device *spi,
- 	int i;
- 	u8 b;
- 
--	dev_info(&spi->dev, "  spi_msg@%pK\n", msg);
-+	dev_info(&spi->dev, "  spi_msg@%p\n", msg);
- 	if (msg->status)
- 		dev_info(&spi->dev, "    status:        %i\n",
- 			 msg->status);
-@@ -456,15 +456,15 @@ static void spi_test_dump_message(struct spi_device *spi,
- 		 msg->actual_length);
- 
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		dev_info(&spi->dev, "    spi_transfer@%pK\n", xfer);
-+		dev_info(&spi->dev, "    spi_transfer@%p\n", xfer);
- 		dev_info(&spi->dev, "      len:    %i\n", xfer->len);
--		dev_info(&spi->dev, "      tx_buf: %pK\n", xfer->tx_buf);
-+		dev_info(&spi->dev, "      tx_buf: %p\n", xfer->tx_buf);
- 		if (dump_data && xfer->tx_buf)
- 			spi_test_print_hex_dump("          TX: ",
- 						xfer->tx_buf,
- 						xfer->len);
- 
--		dev_info(&spi->dev, "      rx_buf: %pK\n", xfer->rx_buf);
-+		dev_info(&spi->dev, "      rx_buf: %p\n", xfer->rx_buf);
- 		if (dump_data && xfer->rx_buf)
- 			spi_test_print_hex_dump("          RX: ",
- 						xfer->rx_buf,
-@@ -558,7 +558,7 @@ static int spi_check_rx_ranges(struct spi_device *spi,
- 		/* if still not found then something has modified too much */
- 		/* we could list the "closest" transfer here... */
- 		dev_err(&spi->dev,
--			"loopback strangeness - rx changed outside of allowed range at: %pK\n",
-+			"loopback strangeness - rx changed outside of allowed range at: %p\n",
- 			addr);
- 		/* do not return, only set ret,
- 		 * so that we list all addresses
-@@ -696,7 +696,7 @@ static int spi_test_translate(struct spi_device *spi,
- 	}
- 
- 	dev_err(&spi->dev,
--		"PointerRange [%pK:%pK[ not in range [%pK:%pK[ or [%pK:%pK[\n",
-+		"PointerRange [%p:%p[ not in range [%p:%p[ or [%p:%p[\n",
- 		*ptr, *ptr + len,
- 		RX(0), RX(SPI_TEST_MAX_SIZE),
- 		TX(0), TX(SPI_TEST_MAX_SIZE));
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c b/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
+index 4a0670c056bad..75f4dff7d0422 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
+@@ -450,8 +450,7 @@ static void pe_subtest(struct test_bpf_cookie *skel)
+ 	attr.size = sizeof(attr);
+ 	attr.type = PERF_TYPE_SOFTWARE;
+ 	attr.config = PERF_COUNT_SW_CPU_CLOCK;
+-	attr.freq = 1;
+-	attr.sample_freq = 10000;
++	attr.sample_period = 100000;
+ 	pfd = syscall(__NR_perf_event_open, &attr, -1, 0, -1, PERF_FLAG_FD_CLOEXEC);
+ 	if (!ASSERT_GE(pfd, 0, "perf_fd"))
+ 		goto cleanup;
 -- 
 2.51.0
 
