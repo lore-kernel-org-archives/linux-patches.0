@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9374A2EDD70;
-	Thu,  9 Oct 2025 15:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E194A205E25;
+	Thu,  9 Oct 2025 15:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025498; cv=none; b=pvOf3mpO/GCexJxEtAH4c/BD8HmkCqH1BkUMCjR4zNYSObAwtrQgHSnPxrKWK6k59G2Pis0WPNlhgsE020Rarompil7zT68nvDMYx6yKWlqN3FvueDMwEouKsqShFwv7qLI3LIbmPJVcsXcbz9tFHaWb8ruX6C1xRm8awb9jLvs=
+	t=1760025500; cv=none; b=AyqT/3TjUN6Cz1CsL++sUnZQFwrplk7oZlYYsCLgNYfJ64d1fgfqcKc5COwY03Q6WavgvB7zDR0mc3YwuaTwv8e6vElWierlFXZ4QyLSgkC1y7HTDn3C4bG19VDasxP5jYlxBWe5VdHI5JcyiyfDsjsqhnAFZHa/I6EMchbvPYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025498; c=relaxed/simple;
-	bh=/zi2aVQzp8sZDTKmYDXGH0CHry7hR1X6vhNpVVpgwNo=;
+	s=arc-20240116; t=1760025500; c=relaxed/simple;
+	bh=ZdYtTT8vgPBSyoT1JT9Zmani2NF7yqTrLJhHnDSg+og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B1cHWMefdQm11JCEy6K07foIerV4AHnwzp/eRL8QUxf65Jl+pO5HJUFbuv+B8WpbvIX62vzidBwQcyRoJueMIdmdeM0GKxJ1tZZYG8RYanYvH+Zw2/R3JGmpCYiAtxXwT4E/3DvB+wVhK0Utefp+efAjXCyHDtItwScT84RDbHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEysMRCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=anMwzzcnAI2HDKuu9O6uyLV28YkZ2ai8ZMDVVLAznv4h82tlVmzEID47ggTHfDffhtjsqpBylV1E7EyePs4V/sa5ksoj06y+kiCfjcgiOHUfgdJFBItz1iJQoLIhezOFFi8i57AInLoMpj/EJQQGYcFs0KKAcPrpHW697vfSjhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8jYx6GJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEysMRCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C23C4CEE7;
-	Thu,  9 Oct 2025 15:58:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8jYx6GJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1912C4CEE7;
+	Thu,  9 Oct 2025 15:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025498;
-	bh=/zi2aVQzp8sZDTKmYDXGH0CHry7hR1X6vhNpVVpgwNo=;
+	s=k20201202; t=1760025499;
+	bh=ZdYtTT8vgPBSyoT1JT9Zmani2NF7yqTrLJhHnDSg+og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEysMRCMpxM1Z30D5iyD17FgzqjZldBQ80HhrT6O3UR/k3xMRkWHMJS/O2ga1ZnGj
-	 PInt5fuZn/Imq3SkXX3j4Ccu/MYDvOTw26x6j9nvepwZAmcn2sAQ/6iyVWRTiOb8fB
-	 g3my2gaNRCvFWvqbGxQ2kzlngJUUPWG/aScbbeLWFH4dB0ceVopPV1/osUWmBIKCrl
-	 NfRodSSruaNcrDtknuTvA3KutHSMRP/MyaIVuBmb7ak4UuOR/5lbun+/Y7VhesTy4q
-	 EvRQ3meJdd3zDkfSnABqlDSTBi/RvfkFH+3leM7KkBF6h4qKwMWQ7He1UhFKgNp/K8
-	 YR0pUtTbBUWfQ==
+	b=L8jYx6GJhMl/IBc2nsjzA+J04KU1aFyzf2grz5XliBszwMZ0qeBeJmee4aoWpf93Q
+	 kIVcfnis5ZWijz+jPDrdmgkDm0ouXPcWRpBz5WrgoWhlqbndhuJJjsG+Lj3XFOG8sN
+	 NZNLqyRurSNQ8QI64xxQQKdt4ad/wrth6ocu0IOPrnHoUoGuQe8eLEouISbrmPBbAZ
+	 oH0/Jj61y5elGe3Q7iJCSDS+cjiTxhtli3F6TR4Hvq1/bY7WZmEdGxK80j99Fehh5V
+	 jGqaoEhdiglq/dqCb8X6LqukVgHeHhTWDyeI6AtQTsauXZZs9eLOcecSi1H9xTWC/C
+	 H+6vZ1Xx6N7eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
-	linux1394-devel@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.17-6.12] firewire: ohci: move self_id_complete tracepoint after validating register
-Date: Thu,  9 Oct 2025 11:54:44 -0400
-Message-ID: <20251009155752.773732-18-sashal@kernel.org>
+	linux-renesas-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.16] pinctrl: renesas: rzg2l: Add suspend/resume support for Schmitt control registers
+Date: Thu,  9 Oct 2025 11:54:45 -0400
+Message-ID: <20251009155752.773732-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -50,157 +52,118 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 696968262aeee51e1c0529c3c060ddd180702e02 ]
+[ Upstream commit 837afa592c6234be82acb5d23e0a39e9befdaa85 ]
 
-The value of OHCI1394_SelfIDCount register includes an error-indicating
-bit. It is safer to place the tracepoint probe after validating the
-register value.
+Renesas RZ/G3E supports a power-saving mode where power to most of the
+SoC components is lost, including the PIN controller.  Save and restore
+the Schmitt control register contents to ensure the functionality is
+preserved after a suspend/resume cycle.
 
-Link: https://lore.kernel.org/r/20250823030954.268412-2-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com> # on RZ/G3S
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250819084022.20512-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough analysis of this commit, here is my assessment:
+YES — the patch fixes a suspend/resume regression on RZ/G3E-class parts
+without introducing risky behaviour.
 
-## Backport Analysis: firewire: ohci: move self_id_complete tracepoint
-after validating register
+**Key Points**
+- Extends the suspend cache to cover Schmitt-trigger registers so their
+  runtime configuration survives deep sleep
+  (`drivers/pinctrl/renesas/pinctrl-rzg2l.c:318`).
+- Allocates `cache->smt` for every port and captures the live register
+  contents during suspend (`drivers/pinctrl/renesas/pinctrl-
+  rzg2l.c:2711`), mirroring how pull-up/down and IOLH state are already
+  handled.
+- Restores the saved Schmitt values only on ports advertising
+  `PIN_CFG_SMT`, preventing writes on hardware that lacks the block
+  (`drivers/pinctrl/renesas/pinctrl-rzg2l.c:2986` and
+  `drivers/pinctrl/renesas/pinctrl-rzg2l.c:3026`).
+- Without this change, any pin configured with
+  `PIN_CONFIG_INPUT_SCHMITT_ENABLE` (see support added in commit
+  725933a54f71) reverts to the default after system suspend because the
+  controller loses power in RZ/G3E low-power modes; that is a user-
+  visible functional bug.
 
-**ANSWER: YES** (with conditions)
+**Dependencies**
+- Requires prior Schmitt-trigger support (commit 725933a54f71) and the
+  existing suspend cache framework for pull-up/down registers (commit
+  b2bd65fbb6173) so that the new field fits cleanly.
 
-### Detailed Analysis
+**Next Steps**
+- 1) Cherry-pick this change together with the prerequisites above into
+  any stable branch shipping RZ/G3E/RZ/V2H pinctrl support so Schmitt-
+  trigger inputs keep working across suspend.
 
-#### What the Commit Does:
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-**Code Changes (drivers/firewire/ohci.c:1846-2010):**
-
-1. **Removes tracepoint from IRQ handler** (`irq_handler` function,
-   lines 2027-2039 in old code):
-   - Previously called `trace_self_id_complete()` immediately upon
-     `OHCI1394_selfIDComplete` event
-   - Read `OHCI1394_SelfIDCount` register WITHOUT validation
-   - Traced potentially invalid data if error bit (bit 31) was set
-
-2. **Adds tracepoint to bus_reset_work** (after line 1863):
-   - Now placed AFTER `ohci1394_self_id_count_is_error(reg)` validation
-     check
-   - Only traces when register value is confirmed valid
-   - Ensures tracepoint records accurate debugging information
-
-#### Bug Analysis:
-
-**The Issue:**
-The `OHCI1394_SelfIDCount` register (defined in
-drivers/firewire/ohci.h:358-363) has bit 31
-(`OHCI1394_SelfIDCount_selfIDError_MASK = 0x80000000`) as an error-
-indicating bit. When this bit is set, the register contents are
-invalid/erroneous.
-
-**Before the fix:**
-```c
-// In IRQ handler - NO VALIDATION
-if (trace_self_id_complete_enabled()) {
-    u32 reg = reg_read(ohci, OHCI1394_SelfIDCount);
-    trace_self_id_complete(..., reg, ...);  // May trace invalid data!
-}
-```
-
-**After the fix:**
-```c
-// In bus_reset_work - WITH VALIDATION
-reg = reg_read(ohci, OHCI1394_SelfIDCount);
-if (ohci1394_self_id_count_is_error(reg)) {
-    ohci_notice(ohci, "self ID receive error\n");
-    return;  // Exit before tracing
-}
-trace_self_id_complete(..., reg, ...);  // Only trace valid data
-```
-
-#### Backport Suitability Assessment:
-
-**Pros:**
-1. ✅ **Small and contained**: Only 12 lines changed (4 added, 8 removed)
-2. ✅ **Low regression risk**: Moves tracepoint location without changing
-   logic
-3. ✅ **Fixes data integrity issue**: Prevents recording
-   invalid/misleading debug data
-4. ✅ **Clean, understandable fix**: Clear improvement in defensive
-   programming
-5. ✅ **No external dependencies**: Standalone change
-6. ✅ **Already auto-selected**: Present in linux-autosel-6.17 (commit
-   8f18fd692fdfb)
-
-**Cons:**
-1. ⚠️ **No explicit stable tag**: Author didn't add `Cc:
-   stable@vger.kernel.org`
-2. ⚠️ **No Fixes tag**: Doesn't reference the commit it improves
-   (526e21a2aa6fa)
-3. ⚠️ **Debug-only impact**: Only affects tracing, not functional
-   behavior
-4. ⚠️ **Recent tracepoint**: Original tracepoint added in v6.11-rc1, so
-   only relevant for 6.11+
-
-**Critical Constraint:**
-- **ONLY backport to kernels 6.11 and newer** - the tracepoint being
-  fixed was added in commit 526e21a2aa6fa (v6.11-rc1~92^2~2)
-- Kernels 6.10 and older don't have this tracepoint, so this patch is
-  irrelevant
-
-#### Recommendation:
-
-**YES - Backport to stable 6.11+ kernels**
-
-**Rationale:**
-While this doesn't fix a critical functional bug, it prevents a real
-data integrity issue in the tracing infrastructure. Users debugging
-FireWire issues could be misled by invalid trace data, potentially
-wasting significant time chasing phantom problems. The fix is extremely
-low-risk and improves the reliability of debugging tools.
-
-**Target kernels:** 6.11.x, 6.12.x, and any future stable branches that
-include the original tracepoint
-
-**Priority:** Low-Medium (improves debugging reliability but doesn't fix
-crashes or data corruption)
-
- drivers/firewire/ohci.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
-index 5d8301b0f3aa8..421cf87e93c1f 100644
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -2063,6 +2063,9 @@ static void bus_reset_work(struct work_struct *work)
- 		ohci_notice(ohci, "self ID receive error\n");
- 		return;
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index c52263c2a7b09..4c25d2a7966a0 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -320,6 +320,7 @@ struct rzg2l_pinctrl_pin_settings {
+  * @iolh: IOLH registers cache
+  * @pupd: PUPD registers cache
+  * @ien: IEN registers cache
++ * @smt: SMT registers cache
+  * @sd_ch: SD_CH registers cache
+  * @eth_poc: ET_POC registers cache
+  * @eth_mode: ETH_MODE register cache
+@@ -333,6 +334,7 @@ struct rzg2l_pinctrl_reg_cache {
+ 	u32	*iolh[2];
+ 	u32	*ien[2];
+ 	u32	*pupd[2];
++	u32	*smt;
+ 	u8	sd_ch[2];
+ 	u8	eth_poc[2];
+ 	u8	eth_mode;
+@@ -2719,6 +2721,10 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
+ 	if (!cache->pfc)
+ 		return -ENOMEM;
+ 
++	cache->smt = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->smt), GFP_KERNEL);
++	if (!cache->smt)
++		return -ENOMEM;
++
+ 	for (u8 i = 0; i < 2; i++) {
+ 		u32 n_dedicated_pins = pctrl->data->n_dedicated_pins;
+ 
+@@ -2980,7 +2986,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
+ 	struct rzg2l_pinctrl_reg_cache *cache = pctrl->cache;
+ 
+ 	for (u32 port = 0; port < nports; port++) {
+-		bool has_iolh, has_ien, has_pupd;
++		bool has_iolh, has_ien, has_pupd, has_smt;
+ 		u32 off, caps;
+ 		u8 pincnt;
+ 		u64 cfg;
+@@ -2993,6 +2999,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
+ 		has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B | PIN_CFG_IOLH_C));
+ 		has_ien = !!(caps & PIN_CFG_IEN);
+ 		has_pupd = !!(caps & PIN_CFG_PUPD);
++		has_smt = !!(caps & PIN_CFG_SMT);
+ 
+ 		if (suspend)
+ 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PFC(off), cache->pfc[port]);
+@@ -3031,6 +3038,9 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
+ 							 cache->ien[1][port]);
+ 			}
+ 		}
++
++		if (has_smt)
++			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off), cache->smt[port]);
  	}
-+
-+	trace_self_id_complete(ohci->card.index, reg, ohci->self_id, has_be_header_quirk(ohci));
-+
- 	/*
- 	 * The count in the SelfIDCount register is the number of
- 	 * bytes in the self ID receive buffer.  Since we also receive
-@@ -2231,15 +2234,8 @@ static irqreturn_t irq_handler(int irq, void *data)
- 	if (event & OHCI1394_busReset)
- 		reg_write(ohci, OHCI1394_IntMaskClear, OHCI1394_busReset);
+ }
  
--	if (event & OHCI1394_selfIDComplete) {
--		if (trace_self_id_complete_enabled()) {
--			u32 reg = reg_read(ohci, OHCI1394_SelfIDCount);
--
--			trace_self_id_complete(ohci->card.index, reg, ohci->self_id,
--					       has_be_header_quirk(ohci));
--		}
-+	if (event & OHCI1394_selfIDComplete)
- 		queue_work(selfid_workqueue, &ohci->bus_reset_work);
--	}
- 
- 	if (event & OHCI1394_RQPkt)
- 		queue_work(ohci->card.async_wq, &ohci->ar_request_ctx.work);
 -- 
 2.51.0
 
