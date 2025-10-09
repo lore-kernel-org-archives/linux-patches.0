@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4888721C9E5;
-	Thu,  9 Oct 2025 16:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F7C2FCBF7;
+	Thu,  9 Oct 2025 16:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025676; cv=none; b=qr9Anq8QfUHYMf3uGIWnSUjQOBavgdfvdk2E+e9dfB9gLBV4K2z5l/l0FijUaN5vHoCgbV7+A3XOVDoj/3T9V0qQUZnXCmPy074IwGbNIQZ007HPVyNw9SlzJVEw5qXIBn7uvuAtN1Nnr5fDzhVwPsrB2xAmdXdNQZEuzAMtDwI=
+	t=1760025678; cv=none; b=YW9DOGxRgAYkdYWDPO1QBuXjkRQN5x95wUlSzVgAZUdQO4arHS/3H50CR5K2tc1PnqqrQQm6hJw/ryBdnfQv86qFWkOgIJHxDiLtg96QuRBhH74mcKZ0oC+h8sbxH1/9ZFP7dLjkXyDOdEx2cyM2wAFodkP+Tk2Nbm3HGd9jbeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025676; c=relaxed/simple;
-	bh=fnycNGwfec3l+SsjOOItCXsCXGjvx0s17N4BpESMjrc=;
+	s=arc-20240116; t=1760025678; c=relaxed/simple;
+	bh=bihbgTF2TGoEjbEUqXNjtSwj7Jb47wUUHQ4FbuwxonM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=drvfZ7urWj1tPFCHZ6F8WwEHGVQaVLp7Zs8UFPuHRAFT939LIyOWeEW7w/drUVwfF3xXJU3jZH3LXhu2jP5/b1FQYKG/dx5Sw+zcBVTVJRkNaCv+T3Yyk/4pI10Do7RxKMQ1s0pitEBloHoxO/XTNSBlEfA7wEnDkzAp+VslHMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fhgqtzrc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gu/3oC/AewPy9FegZNAyInA37OAVV/VR7mMd6wgkC7t3LDx4nGq8sicmu1XWrSQdnN/ngliZDKMZ01jO0zNUgeTYxiimtecRyljQfPxmX3MaPY8Pu13m8JTVryw1aFRKmIu24XGNTegzzZe8ghYR9LoCjQemHk1WfBi4DJZMs2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tKXOtb6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fhgqtzrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F2AC4CEF7;
-	Thu,  9 Oct 2025 16:01:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tKXOtb6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D032C4CEE7;
+	Thu,  9 Oct 2025 16:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025676;
-	bh=fnycNGwfec3l+SsjOOItCXsCXGjvx0s17N4BpESMjrc=;
+	s=k20201202; t=1760025678;
+	bh=bihbgTF2TGoEjbEUqXNjtSwj7Jb47wUUHQ4FbuwxonM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fhgqtzrc4Gz10XKF8u866Wj9z+ZRpvHgOyL6MiSZG19WN/daY49uodHRDVzNhdHEb
-	 YBPdyFAFDdjjrrgxm+iUjdPkiRlc2hXaGCZtk4tIYw9M8Qh+lIvtepIxOG2e74xXmn
-	 +27tC4X9w3dHaXjALjUQimXZEOW0MqcMX4o9aFKoZb8aLzZfjpMRVqrPux+s/5Zlr4
-	 Hd2Xh+1uga3UzdWpx0vpEW3hufZODWbwu+wTAlO1dDtSluDSIsoPimbfDrKwG7gz74
-	 XDl0nFwn+sX4Eu2f29woJP3RT183cKcpIJEkzMIhtkPhCM2nVVnzSjDI4XtiVgxmnP
-	 VUBQfz/djNSBw==
+	b=tKXOtb6nZrffDbmZT2j2Y88POvOYV/cdH4HiXEsFJV5CKq8kL8Kbszq4lUnxjpsS3
+	 GgOlTRSBQuK3WmqsfU8UY6JvFOKyh3syZ00aoQ3qNVi+NqT18w5I1WdRDclbKrU69I
+	 ubIzbVC+cXVFsrYdfqPDjurVmQkysRgtbNueXF9Plhc6s4V8xdIzxeq390/QZaxCkm
+	 0r5hzDAQkvr4hCGxbSvo6p7lQH9aOzMQL9uXx1vrLhIa6kg5kHmA+IelOahz8zzwqq
+	 vBLCQk9XOW6NeqnCmQ+9GJtQHzx6jjfDFO2v1NZqDgUwIXjzF2kdYWbHlCR+GxG9Ne
+	 LvQiJETAWt8tA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Markus Stockhausen <markus.stockhausen@gmx.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Stephen Howell <howels@allthatwemight.be>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+Cc: Chenghao Duan <duanchenghao@kylinos.cn>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] clocksource/drivers/timer-rtl-otto: Do not interfere with interrupts
-Date: Thu,  9 Oct 2025 11:56:15 -0400
-Message-ID: <20251009155752.773732-109-sashal@kernel.org>
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	bjorn@kernel.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	bpf@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.6] riscv: bpf: Fix uninitialized symbol 'retval_off'
+Date: Thu,  9 Oct 2025 11:56:16 -0400
+Message-ID: <20251009155752.773732-110-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -48,35 +53,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Stockhausen <markus.stockhausen@gmx.de>
+From: Chenghao Duan <duanchenghao@kylinos.cn>
 
-[ Upstream commit c445bffbf28f721e05d0ce06895045fc62aaff7c ]
+[ Upstream commit d0bf7cd5df18466d969bb60e8890b74cf96081ca ]
 
-During normal operation the timers are reprogrammed including an
-interrupt acknowledgement. This has no effect as the whole timer
-is setup from scratch afterwards. Especially in an interrupt this
-has already been done by rttm_timer_interrupt().
+In the __arch_prepare_bpf_trampoline() function, retval_off is only
+meaningful when save_ret is true, so the current logic is correct.
+However, in the original logic, retval_off is only initialized under
+certain conditions; for example, in the fmod_ret logic, the compiler is
+not aware that the flags of the fmod_ret program (prog) have set
+BPF_TRAMP_F_CALL_ORIG, which results in an uninitialized symbol
+compilation warning.
 
-Change the behaviour as follows:
+So initialize retval_off unconditionally to fix it.
 
-- Use rttm_disable_timer() during reprogramming
-- Keep rttm_stop_timer() for all other use cases.
-
-Downstream has already tested and confirmed a patch. See
-https://github.com/openwrt/openwrt/pull/19468
-https://forum.openwrt.org/t/support-for-rtl838x-based-managed-switches/57875/3788
-
-Signed-off-by: Markus Stockhausen <markus.stockhausen@gmx.de>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Tested-by: Stephen Howell <howels@allthatwemight.be>
-Tested-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20250804080328.2609287-4-markus.stockhausen@gmx.de
+Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/r/20250922062244.822937-2-duanchenghao@kylinos.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -84,136 +84,93 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The driver was acknowledging the interrupt (“W1C” PENDING bit) as
-    part of routine timer reprogramming, not just in the interrupt
-    handler. That read-modify-write ack can race with new pending
-    interrupts and clear them, leading to occasional lost timer
-    interrupts. The change confines IRQ acknowledgement to the interrupt
-    handler and explicit stop/shutdown paths, preventing interference
-    with in-flight or newly arriving interrupts.
+- What changed: The patch moves `retval_off = stack_size;` out of the
+  `if (save_ret)` block so it’s always initialized. Previously
+  `retval_off` was only assigned when `save_ret` was true.
+  - Before: `retval_off` assigned only inside `if (save_ret) { ... }`
+  - After: `retval_off` assigned unconditionally immediately after the
+    optional `stack_size += 16`
+  - Reference: arch/riscv/net/bpf_jit_comp64.c:1066
 
-- Exact code changes
-  - In the reprogramming paths, `rttm_stop_timer()` (which disables the
-    timer and acks the IRQ) is replaced with `rttm_disable_timer()`
-    (disable only), so the PENDING bit is no longer touched during
-    normal reprogramming:
-    - `drivers/clocksource/timer-rtl-otto.c:141-146` changes
-      reprogramming for oneshot next-event (now disable → set period →
-      start, without ack).
-    - `drivers/clocksource/timer-rtl-otto.c:153-159` changes
-      `rttm_state_oneshot()` similarly.
-    - `drivers/clocksource/timer-rtl-otto.c:166-172` changes
-      `rttm_state_periodic()` similarly.
-  - IRQ acknowledgement remains where it belongs:
-    - Interrupt handler acks before invoking the event handler:
-      `drivers/clocksource/timer-rtl-otto.c:97-106` and specifically the
-      ack helper at `drivers/clocksource/timer-rtl-otto.c:77-80`.
-    - Stop/shutdown/init paths still ack via `rttm_stop_timer()`:
-      - Shutdown: `drivers/clocksource/timer-rtl-otto.c:175-182`
-      - Setup: `drivers/clocksource/timer-rtl-otto.c:185-190`
-      - `rttm_stop_timer()` itself still does disable + ack:
-        `drivers/clocksource/timer-rtl-otto.c:125-129`.
+- Why it matters: `retval_off` is used in code paths not explicitly
+  guarded by `save_ret`, which makes compilers think it can be used
+  uninitialized and emit a warning (e.g., -Wmaybe-uninitialized), even
+  though, logically, those paths only occur with flags that imply
+  `save_ret` must be true.
+  - Unconditional uses in fmod_ret path:
+    - Zeroing return value slot: arch/riscv/net/bpf_jit_comp64.c:1157
+    - Loading return value: arch/riscv/net/bpf_jit_comp64.c:1163
+  - Unconditional uses in call-orig path:
+    - Store original function’s return in reserved slot:
+      arch/riscv/net/bpf_jit_comp64.c:1176
+    - Store BPF R0: arch/riscv/net/bpf_jit_comp64.c:1177
+  - Final restore guarded by `save_ret`, confirming the semantic intent:
+    arch/riscv/net/bpf_jit_comp64.c:1209
 
-- Why the original behavior is problematic
-  - The ack function is implemented as a read-modify-write to a W1C bit:
-    `ioread32(base + RTTM_INT) | RTTM_INT_PENDING` followed by a write
-    (`drivers/clocksource/timer-rtl-otto.c:77-80`). If a new interrupt
-    becomes pending between the read and the write, the write will still
-    set the PENDING bit in the value and clear it on write, effectively
-    dropping that freshly latched interrupt. Calling this sequence
-    outside the ISR (e.g., during reprogramming) can therefore interfere
-    with normal interrupt delivery.
+- Bug scope and user impact:
+  - This is a build correctness fix that eliminates spurious “maybe-
+    uninitialized” warnings that can be promoted to errors in some
+    configurations or toolchains. It does not change runtime behavior
+    because the only meaningful use of `retval_off` (e.g., restoring
+    return values) is already guarded by `save_ret`. When `save_ret` is
+    false, `retval_off`’s value is ignored by the logic that matters.
+  - The warning can affect users building with stricter warning settings
+    or newer compilers; resolving it improves build reliability for
+    RISC-V with BPF trampolines.
 
-- Why this change is safe
-  - In-ISR reprogramming: The handler already acknowledges the interrupt
-    at entry (`drivers/clocksource/timer-rtl-otto.c:102`). Removing a
-    second ack during reprogramming eliminates a window where a new
-    pending interrupt could be inadvertently cleared.
-  - Non-ISR reprogramming: If a pending bit exists, not acking ensures
-    it will be properly handled by the ISR when it fires, rather than
-    being silently cleared by a stray reprogramming ack.
-  - Ack is still performed at shutdown/setup where it is appropriate to
-    clear stale state (`drivers/clocksource/timer-rtl-otto.c:175-190`),
-    so there is no accumulation of stale flags.
+- Containment and risk:
+  - The change is tiny and contained to a single file/function in the
+    RISC-V BPF JIT trampoline.
+  - No new features, APIs, or architectural changes; no functional logic
+    changed for valid flag combinations.
+  - Safe even if misused flags were ever passed: `retval_off` now has a
+    defined value, avoiding UB from uninitialized use.
 
-- Context and related fixes
-  - This change is part of a small, focused series addressing timer
-    reliability on Realtek Otto platforms:
-    - “Work around dying timers” added `rttm_bounce_timer()` to avoid
-      reprogramming in a critical ~5us window before expiry (hardware
-      peculiarity) and is used directly before reprogramming in all the
-      altered paths (`drivers/clocksource/timer-rtl-otto.c:109-123` and
-      calls at 141, 154, 167).
-    - “Drop set_counter” cleaned up a no-op write to the current
-      counter.
-  - The series was tested downstream (OpenWrt) and carries multiple
-    Tested-by tags; the commit under review also notes downstream
-    confirmation.
+- Applicability to stable trees:
+  - The affected pattern exists in stable series that have the RISC-V
+    BPF trampoline (e.g., v6.6 shows the same conditional
+    initialization, with unconditional uses later). See v6.6 code where
+    `retval_off` is only set under `if (save_ret)` and is used in the
+    fmod_ret block and call-orig sequence without an explicit `save_ret`
+    guard, mirroring the warning scenario.
+  - Mainline commit: d0bf7cd5df184 (“riscv: bpf: Fix uninitialized
+    symbol 'retval_off'”).
+  - Likely Fixes: 25ad10658dc10 (“riscv, bpf: Adapt bpf trampoline to
+    optimized riscv ftrace framework”), which introduced the trampoline
+    structure that uses `retval_off` this way.
 
-- Backport considerations
-  - Scope: Single driver file; changes are three substitutions of
-    `rttm_stop_timer()` with `rttm_disable_timer()` in reprogramming
-    paths. No functional/ABI changes outside this driver.
-  - Dependencies: None strict. If a stable branch does not yet have
-    `rttm_bounce_timer()`, the underlying correctness argument for using
-    `rttm_disable_timer()` instead of `rttm_stop_timer()` during
-    reprogramming still holds. For branches already including the bounce
-    patch (as in newer stables), this applies cleanly.
-  - Risk: Low. Potential for an extra immediate interrupt if a PENDING
-    bit remained set is mitigated because the ISR acks and the
-    clockevents layer tolerates such re-entries; conversely, the change
-    removes a race that could drop interrupts, which is more severe.
+- Stable criteria check:
+  - Fixes a real build issue (warnings that can become errors).
+  - Small, self-contained change in one function and one file.
+  - No functional side effects; does not alter behavior except removing
+    undefined initialization state.
+  - Not a feature or refactor; low regression risk; localized to RISC-V
+    BPF trampoline.
 
-- Stable policy fit
-  - Fixes a real bug affecting users (lost or interfered interrupts on
-    rtl-otto platforms).
-  - Small, contained, and without architectural changes.
-  - Confined to `drivers/clocksource/timer-rtl-otto.c`.
-  - Already tested downstream and reviewed/merged upstream (commit
-    c445bffbf28f7).
-  - While there is no explicit “Cc: stable” in the commit message, the
-    change meets stable backport criteria and aligns with the prior
-    reliability fix series for this driver.
+Conclusion: This is a good and safe candidate for backporting to all
+stable trees that include the RISC-V BPF trampoline code path (e.g.,
+6.6.y and newer where applicable).
 
-Conclusion: Backporting this patch reduces the risk of lost timer
-interrupts by avoiding unnecessary and racy IRQ acknowledgements during
-reprogramming, with minimal regression risk and limited scope.
+ arch/riscv/net/bpf_jit_comp64.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
- drivers/clocksource/timer-rtl-otto.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clocksource/timer-rtl-otto.c b/drivers/clocksource/timer-rtl-otto.c
-index 8be45a11fb8b6..24c4aa6a30131 100644
---- a/drivers/clocksource/timer-rtl-otto.c
-+++ b/drivers/clocksource/timer-rtl-otto.c
-@@ -147,7 +147,7 @@ static int rttm_next_event(unsigned long delta, struct clock_event_device *clkev
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 9883a55d61b5b..8475a8ab57151 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -1079,10 +1079,9 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 	stack_size += 16;
  
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_COUNTER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, delta);
- 	rttm_start_timer(to, RTTM_CTRL_COUNTER);
+ 	save_ret = flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET);
+-	if (save_ret) {
++	if (save_ret)
+ 		stack_size += 16; /* Save both A5 (BPF R0) and A0 */
+-		retval_off = stack_size;
+-	}
++	retval_off = stack_size;
  
-@@ -160,7 +160,7 @@ static int rttm_state_oneshot(struct clock_event_device *clkevt)
- 
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_COUNTER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, RTTM_TICKS_PER_SEC / HZ);
- 	rttm_start_timer(to, RTTM_CTRL_COUNTER);
- 
-@@ -173,7 +173,7 @@ static int rttm_state_periodic(struct clock_event_device *clkevt)
- 
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_TIMER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, RTTM_TICKS_PER_SEC / HZ);
- 	rttm_start_timer(to, RTTM_CTRL_TIMER);
- 
+ 	stack_size += nr_arg_slots * 8;
+ 	args_off = stack_size;
 -- 
 2.51.0
 
