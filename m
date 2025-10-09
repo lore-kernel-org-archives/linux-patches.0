@@ -1,137 +1,136 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A9D23183A
-	for <patches@lists.linux.dev>; Thu,  9 Oct 2025 16:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F5D22127A;
+	Thu,  9 Oct 2025 16:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760026091; cv=none; b=BO4ihK1XQ4exVVlNdEXkeBGElp+1x/QyB3RKyeAsYe2lb2KDV3PSRe57vZlToR38hcTUhz/1sID5NZm74MKn+UZnnkTAe63ITo4nTHDBaW3UbTbW3cCpfZKZwHYJYGGGV7OmRHcJ5zI6lE+HvQpWO1cM6qtTKkHqQMO5RLUFDBk=
+	t=1760027890; cv=none; b=iUGBwdq/kYJeXJZ6MkIiqSyHXTuqNfHuNqAAXEfnpxmJ618JG+fQ0UO+0M39uElfxaPIBNWVpeki/5aFwDBDTSp35ny/meNskEm3d1jfdvrd4aCNIE28MWJ5t5mTnHusjg7rZbghBZj5bISDk1eNvlIfk/bJ9jtn4Jpgj7T8cSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760026091; c=relaxed/simple;
-	bh=wnjQVG+egmK2IXhzGH82IGBpeDw+1s4hu8UVsW7/sgo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oRUb+PiASa+19IclcCNadXCzR4mzahguyw44via0V4HvCOJ14Y6LNwDJGc1kFs6pJO+vqXS0v6sUGtMg+CKRn3Cr9ARCPukXfXMzX9Y0Qgb2HJB/uQQwLFbZdokuEwZm2d1PLOTU7Jtkgxu+eyq0gkI2SNmD6ilQl9c2oLYtEdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hv+H5D2O; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hv+H5D2O"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 599EfrVo005152
-	for <patches@lists.linux.dev>; Thu, 9 Oct 2025 16:08:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jJ9LcKuZ6RaI0QjDWk+WPpGF97bOBxFsnMcVmm6o4g0=; b=hv+H5D2OfGlqf+y9
-	/PSpdxaTYKMxoVN4k62FgqHz1rxKKD8aXMnTm/nVgPli+9kzdF44iNUMObioxUbj
-	81cbqg9t+GtCxT/kARnXsIFKqQwGytBQHCZfqy0otpD5b+uoUX+uPbywnlDzmk5G
-	vw0FOBA6ArmpQ0crQLT9aZnnNypjRA/Wd35s4/CnTjlHoRLMHRlhx3JcTikYmg6y
-	DP6wonghk3cJ1loKcHTIWJDFYNHFakUtzQVKr1PTDn2rtQVXGxA3y3mbULJZP+xd
-	X+aqo9oerBPPRCgRTORlwaNY9JKoOU0hexPP7SCdAOETGhicUqnfkvO8wPNkdDyS
-	jNCbvw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4u3htc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Thu, 09 Oct 2025 16:08:08 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4dc37a99897so4320931cf.3
-        for <patches@lists.linux.dev>; Thu, 09 Oct 2025 09:08:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760026088; x=1760630888;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jJ9LcKuZ6RaI0QjDWk+WPpGF97bOBxFsnMcVmm6o4g0=;
-        b=SJBpvxT4mtkBeAeGNPb/qDOrgrX1Czy+PFCLIYSB5+Ruv5IrFFV17bn2b+tzm/2gIN
-         e8wFdY3rF/qKPKLu7ochUjqnaDVyfmXbWkuSF6r9qwNxs/KaCg3RZiY9njWoOjY0u/yL
-         w+5oCxsFhNMUnRhx0MceIJVvQ8ZjoNkGCXK6Wq5fGuWkLb4p4qKJITzR9GljpgPa9Eqd
-         31TynC1Rl4vfUMVlJplD/4M3qeY1oUdBjIfwXVbGwEn6K1Fd3uCjygAnXdNXa0nfwGIz
-         33KwZ0aZiWo2kUONUTScbjtWddjIpw6Uo4olPN4j/ApedK/EOJ+JOMh/77VjCY91c7Zw
-         HepQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUb+320UyixApBqQCI5EeVf9yzIM6dXPmq6QKCT0Wqf/c4Fqmm5NMgH/v0zGxgmosuSFOYrS3Jq@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx+wg5FFLRQf+KUtdXGRljE6da9wpceJhkwdJKegz1UHugzQiBy
-	6yclAuds1wJfPDH058XpWOvN8vaHedWWnd1RHa3VhSG7ZMeq1Z/F84T4XsgbxKXwDGfq9Mi4T0N
-	a7kcduuT1XK76qF/bKnMbRMDFXA6g91O2RViiy9i7LH6Mo7cUYNiFKKgC9gyX
-X-Gm-Gg: ASbGncso9rvUluUPc7W2mJ8E0M1DCy5PwE25Hsz4xZnZ1/vw3r7BidbgDqLQc6h+6YC
-	EXyiMMTLhO2HC9qx9QoGf1qlfDvdVwfMw8gLWjQ2+/jLOyRTHp2kpHjHn6McNkSACoksYqZBo+p
-	h+frRxfbr/DR2Z11bu+bqx7WawymKF1dfVCAOUsuGhDSHVjGvZTO+Ujc4A8gVPRhQJgPjoDS52s
-	ZypcbZmm7DfoijP976oj+dcZPVZBH6YgD4ztAetDDItTCQNFClk4LX8jyf/k8PrrYqfNOHxqVJj
-	KMvaBk8yeYs/VzrZU3U95Ta+tkcHHyIW3tq2ZSBsDh9UH+3JBdNry+HRJSuebqzHoZZwC+XRplB
-	bemP5RpAw52T8wav92xkswL+EdFY=
-X-Received: by 2002:ac8:58d2:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e6eacd4f8cmr74888191cf.2.1760026087638;
-        Thu, 09 Oct 2025 09:08:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2+Z2nuPl0CiMPeaV1ZrBJxe7W45K0/bsiPvQVl/aLb1IdSFCEiGmt6XM4B2I/2P+tfM8wiQ==
-X-Received: by 2002:ac8:58d2:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e6eacd4f8cmr74887731cf.2.1760026087092;
-        Thu, 09 Oct 2025 09:08:07 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b71503sm86363a12.27.2025.10.09.09.08.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 09:08:06 -0700 (PDT)
-Message-ID: <1cd57f5c-d829-4dbd-aac9-b07d0e155e4e@oss.qualcomm.com>
-Date: Thu, 9 Oct 2025 18:08:03 +0200
+	s=arc-20240116; t=1760027890; c=relaxed/simple;
+	bh=Z6CkqxnnUfmkgbMvPoujJuaf91jki7GVcRE735THLT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AZrtSC/AmDEd/JxY3W1NWyxCjUWP6O5YC7QRM9m9RoIiaJv6a1LN9V4TZVXdL/Kx/UrRnSc/9NAZ4fzpgFPp9fNw2uIXVtgMlEk2vykQCnHqkN5R/Bx/cvZ6y4aSpFAtFkNk/oUTWAqt5UXuY9CeE7IBxcP2JqCH2XQXh08zRu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 531701762;
+	Thu,  9 Oct 2025 09:37:57 -0700 (PDT)
+Received: from donnerap.manchester.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2BE7B3F66E;
+	Thu,  9 Oct 2025 09:38:04 -0700 (PDT)
+Date: Thu, 9 Oct 2025 17:38:01 +0100
+From: Andre Przywara <andre.przywara@arm.com>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, Chen-Yu Tsai
+ <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ samuel@sholland.org, linux-arm-kernel@lists.infradead.org,
+ linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH AUTOSEL 6.17-6.12] soc: sunxi: sram: add entry for a523
+Message-ID: <20251009173801.13c133a4@donnerap.manchester.arm.com>
+In-Reply-To: <20251009155752.773732-11-sashal@kernel.org>
+References: <20251009155752.773732-1-sashal@kernel.org>
+	<20251009155752.773732-11-sashal@kernel.org>
+Organization: ARM
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.32; aarch64-unknown-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.17-5.4] pinctrl: qcom: make the pinmuxing strict
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
-        stable@vger.kernel.org
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20251009155752.773732-1-sashal@kernel.org>
- <20251009155752.773732-60-sashal@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251009155752.773732-60-sashal@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Vrcuwu2n c=1 sm=1 tr=0 ts=68e7dde8 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=VwQbUJbxAAAA:8 a=FGwjZpymIQ_i5ujK4VkA:9 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 6RIvTBZbeOy1r22lTlKhrP0wJgWhGlgq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX0xJrGTxWZK+0
- pFiOeXcBfQcEpawV7AEjTgSeOsCKKC9ECajK5gFWAnVzRJ+utF9do/+Pwwjh5ROXerFBAEY2uml
- L8EQhvC3ChEzyrpSgxzYl4vW+uT95HRn5ev6rXYchhUNaGORvUVxWsNjByWv+ND49rq8CjTC7KF
- cVtYpa/yPpoT/vcaSwwgzCXVsUeKzpaW2ETLarMSnWId/k7oionXUfoFbIJAenGda8LQz3IorRt
- QMoxSVqxxuAn22ed6+e08oRfcrgOmIbqDeIAjhIipMttCBBNnUvTgGaoXUX0ofTr3D+PwnF9U5q
- oIUJLTT2jm0NPqPqAvFA4HDXrUeOPr492ttfaFit6no9p9q+ZeXqnPuGXSpnN0PGg+/r/GvJnRZ
- 3D6GYnc8hEZvUBEQaqrpx1ezZospMA==
-X-Proofpoint-ORIG-GUID: 6RIvTBZbeOy1r22lTlKhrP0wJgWhGlgq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-09_05,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1031 adultscore=0
- bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
+Content-Transfer-Encoding: quoted-printable
 
-On 10/9/25 5:55 PM, Sasha Levin wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> [ Upstream commit cc85cb96e2e4489826e372cde645b7823c435de0 ]
-> 
-> The strict flag in struct pinmux_ops disallows the usage of the same pin
-> as a GPIO and for another function. Without it, a rouge user-space
-> process with enough privileges (or even a buggy driver) can request a
-> used pin as GPIO and drive it, potentially confusing devices or even
-> crashing the system. Set it globally for all pinctrl-msm users.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+On Thu,  9 Oct 2025 11:54:37 -0400
+Sasha Levin <sashal@kernel.org> wrote:
+
+Hi,
+
+> From: Chen-Yu Tsai <wens@csie.org>
+>=20
+> [ Upstream commit 30849ab484f7397c9902082c7567ca4cd4eb03d3 ]
+>=20
+> The A523 has two Ethernet controllers. So in the system controller
+> address space, there are two registers for Ethernet clock delays,
+> one for each controller.
+>=20
+> Add a new entry for the A523 system controller that allows access to
+> the second register.
+>=20
+> Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Link: https://patch.msgid.link/20250908181059.1785605-4-wens@kernel.org
+> Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
+>=20
+> LLM Generated explanations, may be completely bogus:
+>=20
+> YES =E2=80=93 this should go to stable; without it the second GMAC on A523
+> cannot program its clock-delay register.
 
-I didn't receive more related patches, but this had quite some
-dependencies (in pinctrl core and individual per-SoC drivers), which I'm
-not sure are worth all digging up and resolving conflicts
+It's pointless, any kernel before v6.15 will not boot on any A523 device,
+so support for any kind of A523 MAC is irrelevant.
+For newer kernels, this would be tied to the GMAC1 enablement, which is
+also a new feature, so not a candidate for stable.
 
-Konrad
+Cheers,
+Andre
+
+> - The A523 DT already instantiates the system-control syscon with an
+>   A523-specific compatible and wires GMAC0 (with GMAC1 expected next) to
+>   that syscon (`arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi:423` and
+>   `arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi:543`). Because the
+>   current driver falls back to the A64 variant,
+>   `sunxi_sram_regmap_accessible_reg()` only exposes a single EMAC clock
+>   register (`drivers/soc/sunxi/sunxi_sram.c:325`), so any attempt to use
+>   the second EMAC clock register at 0x34 is blocked, which makes the
+>   second Ethernet controller unusable on this SoC.
+> - The patch adds a dedicated A523 variant with `.num_emac_clocks =3D 2`
+>   and wires it into the OF match table
+>   (`drivers/soc/sunxi/sunxi_sram.c:313` and
+>   `drivers/soc/sunxi/sunxi_sram.c:438` after the change). This is the
+>   minimal change required to expose the second register; no other SoCs
+>   are affected and no behaviour changes for existing users.
+> - Risk is very low: the change only enlarges the allowed register window
+>   for the A523 system controller and mirrors the existing H616 handling.
+>   Without it, backporting forthcoming GMAC1 enablement (or any
+>   downstream board DT that already uses it) will continue to fail, so
+>   carrying this fix in stable keeps A523 Ethernet support from
+>   regressing.
+>=20
+> Next step if you pick it up: merge alongside the GMAC1 enablement so the
+> second port works end-to-end.
+>=20
+>  drivers/soc/sunxi/sunxi_sram.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>=20
+> diff --git a/drivers/soc/sunxi/sunxi_sram.c b/drivers/soc/sunxi/sunxi_sra=
+m.c
+> index 2781a091a6a64..16144a0a0d371 100644
+> --- a/drivers/soc/sunxi/sunxi_sram.c
+> +++ b/drivers/soc/sunxi/sunxi_sram.c
+> @@ -310,6 +310,10 @@ static const struct sunxi_sramc_variant sun50i_h616_=
+sramc_variant =3D {
+>  	.has_ths_offset =3D true,
+>  };
+> =20
+> +static const struct sunxi_sramc_variant sun55i_a523_sramc_variant =3D {
+> +	.num_emac_clocks =3D 2,
+> +};
+> +
+>  #define SUNXI_SRAM_THS_OFFSET_REG	0x0
+>  #define SUNXI_SRAM_EMAC_CLOCK_REG	0x30
+>  #define SUNXI_SYS_LDO_CTRL_REG		0x150
+> @@ -430,6 +434,10 @@ static const struct of_device_id sunxi_sram_dt_match=
+[] =3D {
+>  		.compatible =3D "allwinner,sun50i-h616-system-control",
+>  		.data =3D &sun50i_h616_sramc_variant,
+>  	},
+> +	{
+> +		.compatible =3D "allwinner,sun55i-a523-system-control",
+> +		.data =3D &sun55i_a523_sramc_variant,
+> +	},
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, sunxi_sram_dt_match);
+
