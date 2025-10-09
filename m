@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0DB21C9E5;
-	Thu,  9 Oct 2025 16:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB0221C9E5;
+	Thu,  9 Oct 2025 16:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025672; cv=none; b=JzGKuJZif19FcnlE3h/TTOE73BFqdriCvWbV9B3E3C3nLiqLHekFUTIZywTv72aelUKM8pctfRiLFkLd4xDfuTPSgzapNf1//oYgNI+civXtXbwUHZVyEaZUD9KC0G8UhJY5Fz5ZY20SeoEbbFVyZzRWNbORVywv0DPAlw3bxko=
+	t=1760025674; cv=none; b=uXB/6l6FPUV2MY09uncbGvyK9TjzRsVi22WGZrR7bdpiwz5kqhL++wnXRYhkjq2GdaWJkaMv5iDIgXitiM6epPDDKh6VeLP5DhmnJ3yKto5a2LuDWu58z+Bf+oWfVY+9IolipOBap9Jk5XSglcT0KEt+nrMnCz1Oe3mA9Nb1xts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025672; c=relaxed/simple;
-	bh=vgTvzbuaErSOmNKUcF02F+y/az0JKy9Pe3Vija2d2N0=;
+	s=arc-20240116; t=1760025674; c=relaxed/simple;
+	bh=GemkRLfESMh2tFr6/xGywQSr+fRi9j9xxLHWBi3E+q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Crh4A7A+IPOFNGKjg6jNgIw1a4zHebujkllyLqhKYcCP+SIpJM5FtLKxA6YbwIowi/xb15ahYEKpIvyLToldrSCwkuPfbgJV1ysi41TrBwLp6sonCEZOelxgmVswIxJYBKt4IVEkyu8wRbXNnjH5DNqfDxsa89TIsVurmF8WzQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAEDLbeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gElNNL6t/XJA2l2LExD4Q0dbC5hzNdpehGx0eSF5/rURtudgDsFVqxffsGUWpB4JCBxvxYESU6OCrdynBxCwWaZ08XyxKk3msA0WkaUXUqQdGglL0DSW9vHx4bf16+iPAZw+JUZmdKd5zT7xD61PCmSCBDfgpsq2AsrldwwOfng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqYrkiyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAEDLbeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40515C4CEF8;
-	Thu,  9 Oct 2025 16:01:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqYrkiyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0DCC4CEF7;
+	Thu,  9 Oct 2025 16:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025672;
-	bh=vgTvzbuaErSOmNKUcF02F+y/az0JKy9Pe3Vija2d2N0=;
+	s=k20201202; t=1760025673;
+	bh=GemkRLfESMh2tFr6/xGywQSr+fRi9j9xxLHWBi3E+q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HAEDLbebriCaMUmhik/TelHHejTzGDAdNwpxRtx381NgCRGipNVvleEJ35JopDfuf
-	 xoaC6zb5nAPIXZhtjt7B+c4uaNSA5Jdr0444k50prVyr0twZk3FfDzUxTm0umnS/G7
-	 KgXuvLQDWuwkJplyS001x18Fy4zodscy6cUDeYDSh01IsKdNiJTj+fQhPT3QV5LXG7
-	 cIjLPmYBQ+sv8jFF8Q+NaNdUBcmEIu8gVjuUnIf/Tg7OOJzMa6vF3esDiIbWSphK32
-	 y1+WIu7abDxQQV/EJMZ3y4SGNbYcgcwcHx5bP/ToHQ9UGCAnKoCofgAIFHaaUWa7lg
-	 DskP3l//WnKkQ==
+	b=HqYrkiynmoeyDlLwPPt41cVpRutGJNgtefHZ5pz3TdJ91gxr56lTL7OsLg0tGdEpp
+	 ff5DLylrmHz7ZHD/NlCIrkLBK+UeeWAuhwt/Ln36I5bX15TJbOZOlaPoYdDaqYBXDC
+	 86k4qhLFqHLGRT3NAerUdIN5rtqS74pRvhcJBf70nHJ55voWjWaUcQrtuDSVesdvkd
+	 MCo1sfA+2Lw7gq98aclxu6cetlMV0ZzRDpZ/G2RuZIjU50hzDtvw9O5J92lXX+Zx9T
+	 CyRwA7l+7gBxyTITH+MebXMmrYkEMGDUWTWlJhM0NeQzI9mgHpxMOpSjiH3eNIjgnj
+	 5m2jhs5SYKsww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Chen Pei <cp0613@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.4] mfd: stmpe-i2c: Add missing MODULE_LICENSE
-Date: Thu,  9 Oct 2025 11:56:12 -0400
-Message-ID: <20251009155752.773732-106-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] ACPI: SPCR: Support Precise Baud Rate field
+Date: Thu,  9 Oct 2025 11:56:13 -0400
+Message-ID: <20251009155752.773732-107-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -54,15 +52,25 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit 00ea54f058cd4cb082302fe598cfe148e0aadf94 ]
+[ Upstream commit 4d330fe54145ecfbb657ac01a554fdedf3c1927e ]
 
-This driver is licensed GPL-2.0-only, so add the corresponding module flag.
+The Microsoft Serial Port Console Redirection (SPCR) specification
+revision 1.09 comprises additional field: Precise Baud Rate [1].
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250725071153.338912-3-alexander.stein@ew.tq-group.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+It is used to describe non-traditional baud rates (such as those
+used by high-speed UARTs).
+
+It contains a specific non-zero baud rate which overrides the value
+of the Configured Baud Rate field. If this field is zero or not
+present, Configured Baud Rate is used.
+
+Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table [1]
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Link: https://patch.msgid.link/20250913070815.16758-1-cp0613@linux.alibaba.com
+[ rjw: Corrected typo in the subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,60 +78,90 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**What Changed**
-- Adds missing module license declaration: `MODULE_LICENSE("GPL");` in
-  drivers/mfd/stmpe-i2c.c:129.
+- What it changes and why it matters:
+  - Adds support for the SPCR “Precise Baud Rate” field so the kernel
+    honors non‑standard/high‑speed UART baud rates from firmware. The
+    new logic checks `table->precise_baudrate` and, if non‑zero, uses
+    it; otherwise it falls back to the existing enumerated “Configured
+    Baud Rate” mapping.
+  - Code reference: drivers/acpi/spcr.c:153 adds the explanatory comment
+    and the override logic; drivers/acpi/spcr.c:158 uses `if
+    (table->precise_baudrate) baud_rate = table->precise_baudrate; else
+    switch (table->baud_rate) { ... }`.
+  - Without this, systems that publish a precise baud in SPCR (e.g.,
+    1.5M, 3M, etc.) end up with an incorrect console configuration
+    (typically 115200), breaking or garbling the serial console. This is
+    a user-visible bug in environments that follow SPCR 1.09+.
 
-**Why It Matters**
-- Without a `MODULE_LICENSE`, modules are treated as non‑GPL compatible,
-  which taints the kernel and blocks access to GPL‑only exports:
-  - License compatibility check: include/linux/license.h:5 treats
-    `"GPL"` as GPL‑compatible.
-  - Taint on unknown/non‑GPL licenses: kernel/module/main.c:1742
-    triggers `TAINT_PROPRIETARY_MODULE` when license isn’t
-    GPL‑compatible.
-- The driver carries the SPDX header `GPL-2.0-only`, so the module flag
-  aligns metadata with the actual license.
-- Avoids user‑visible nuisance: dmesg warning and kernel taint on load
-  for this module when built as a module.
+- Scope and risk:
+  - Minimal, self‑contained change in one file (drivers/acpi/spcr.c). It
+    does not alter console selection logic, I/O type decisions, or
+    errata handling; it only sets `baud_rate` earlier when the field is
+    present, leaving the long‑standing switch on `table->baud_rate`
+    unchanged.
+  - No architectural or behavioral changes beyond honoring an existing
+    spec field. No new features; this is a spec‑compliance fix.
 
-**Scope and Risk**
-- One-line metadata-only change in a single file; no functional or
-  architectural changes.
-- Very low regression risk; does not modify probe/remove paths or data
-  flows.
+- Dependencies and compatibility:
+  - Requires the ACPICA header update that introduced the field in
+    `struct acpi_table_spcr`:
+    - Code reference: include/acpi/actbl3.h:124 defines `u32
+      precise_baudrate;` (added by “ACPICA: SPCR: Update the SPCR table
+      to version 4”, present from v6.12 and newer).
+  - For stable trees older than v6.12, this commit will not compile
+    unless that ACPICA update (and its related SPCR struct changes) is
+    backported first. Backporting both together is straightforward and
+    low‑risk, as the header change is additive and this code only reads
+    the new field.
 
-**Context and History**
-- The driver is modular-capable: `config STMPE_I2C` is `tristate`
-  (drivers/mfd/Kconfig:1600), so a module license tag is appropriate.
-- Commit 9e646615df195 (2023) removed `MODULE_LICENSE` under the
-  assumption the object was non‑modular, which was incorrect for this
-  driver and led to the current regression (missing license).
-- This commit corrects that regression.
-- Affected stable series: In this tree, v6.6, v6.8, and v6.10 lack the
-  license line (module taints if built as a module), while v6.1 still
-  had `MODULE_LICENSE("GPL v2")`. Backport is beneficial to stable lines
-  where the line is missing.
+- Subtlety to be aware of:
+  - The SPCR spec says the precise field “overrides” when non‑zero; if
+    zero or not present, use the configured enumerated value. The code
+    implements this correctly by falling back to the existing switch
+    when the field is zero (drivers/acpi/spcr.c:158).
+  - As upstream implemented, there is no explicit table-length check
+    before reading `precise_baudrate`. This matches mainline, but when
+    backporting to very old kernels and encountering very old SPCR
+    revisions, maintainers may optionally add a guard using
+    `table->header.length` to be extra defensive. Not required for
+    v6.12+ where the header and field are in place.
 
-**Stable Criteria Fit**
-- Fixes a real, user-visible regression (kernel taint and GPL‑only
-  symbol ineligibility) with a minimal, contained change.
-- No new features or API changes; confined to MFD stmpe I2C driver
-  metadata.
-- Clear alignment with stable rules for small, low-risk fixes.
+- Stable backport criteria:
+  - Fixes a real, user‑visible issue (misconfigured or non‑functional
+    serial console on systems using SPCR precise baud).
+  - Small and localized change with minimal regression risk.
+  - No architectural churn or new feature exposure.
+  - Touches the ACPI SPCR parsing path only; console setup remains
+    unchanged aside from using the correct baud.
 
- drivers/mfd/stmpe-i2c.c | 1 +
- 1 file changed, 1 insertion(+)
+Conclusion: This is a good candidate for stable backport, provided the
+target stable series already contains (or is backported with) the SPCR
+v4 ACPICA header update that defines `precise_baudrate`.
 
-diff --git a/drivers/mfd/stmpe-i2c.c b/drivers/mfd/stmpe-i2c.c
-index fe018bedab983..7e2ca39758825 100644
---- a/drivers/mfd/stmpe-i2c.c
-+++ b/drivers/mfd/stmpe-i2c.c
-@@ -137,3 +137,4 @@ module_exit(stmpe_exit);
+ drivers/acpi/spcr.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
+index cd36a97b0ea2c..fa12e740386de 100644
+--- a/drivers/acpi/spcr.c
++++ b/drivers/acpi/spcr.c
+@@ -146,7 +146,15 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
+ 		goto done;
+ 	}
  
- MODULE_DESCRIPTION("STMPE MFD I2C Interface Driver");
- MODULE_AUTHOR("Rabin Vincent <rabin.vincent@stericsson.com>");
-+MODULE_LICENSE("GPL");
+-	switch (table->baud_rate) {
++	/*
++	 * SPCR 1.09 defines Precise Baud Rate Filed contains a specific
++	 * non-zero baud rate which overrides the value of the Configured
++	 * Baud Rate field. If this field is zero or not present, Configured
++	 * Baud Rate is used.
++	 */
++	if (table->precise_baudrate)
++		baud_rate = table->precise_baudrate;
++	else switch (table->baud_rate) {
+ 	case 0:
+ 		/*
+ 		 * SPCR 1.04 defines 0 as a preconfigured state of UART.
 -- 
 2.51.0
 
