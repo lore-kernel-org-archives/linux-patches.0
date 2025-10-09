@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB0221C9E5;
-	Thu,  9 Oct 2025 16:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62DC2F5A25;
+	Thu,  9 Oct 2025 16:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025674; cv=none; b=uXB/6l6FPUV2MY09uncbGvyK9TjzRsVi22WGZrR7bdpiwz5kqhL++wnXRYhkjq2GdaWJkaMv5iDIgXitiM6epPDDKh6VeLP5DhmnJ3yKto5a2LuDWu58z+Bf+oWfVY+9IolipOBap9Jk5XSglcT0KEt+nrMnCz1Oe3mA9Nb1xts=
+	t=1760025674; cv=none; b=S37gUuDUjAT82k04cj77ByTFcc3ZwhhfxUCVeM7xx9aAFMzfTVR3Kx+x2WDrv3K08Iq06JKAeW4+ejmJ8NNgLk+tUcW9frWr/ksc7dB8E1f8x9LX2STMtf7+olVIyVyixU809t/1WeJXv0B9aqz8P4Ib3XRqFQm+WX9WT+aP0SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760025674; c=relaxed/simple;
-	bh=GemkRLfESMh2tFr6/xGywQSr+fRi9j9xxLHWBi3E+q4=;
+	bh=9cXL50M/jYGovCmqSCzwi1/+3ZyxmLckljO6XvLFzMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gElNNL6t/XJA2l2LExD4Q0dbC5hzNdpehGx0eSF5/rURtudgDsFVqxffsGUWpB4JCBxvxYESU6OCrdynBxCwWaZ08XyxKk3msA0WkaUXUqQdGglL0DSW9vHx4bf16+iPAZw+JUZmdKd5zT7xD61PCmSCBDfgpsq2AsrldwwOfng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqYrkiyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MQW96M5SBipEPhC7ClyGLZpvl16JBu12xGWdONjGcaHbjaB6+95SwfZRacPJ2OmapTJ+dDNCdT22UlnqSUynI91+c0pEKYzgF6S5dZpQREHELui652SpV9ukdf+EyuiEkQXKC7pbPLv7FTFsd+VZgP6Ur7MKjVYXAoyyCy+tlz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQ/2KquR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqYrkiyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0DCC4CEF7;
-	Thu,  9 Oct 2025 16:01:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQ/2KquR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17A7C4CEF8;
+	Thu,  9 Oct 2025 16:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025673;
-	bh=GemkRLfESMh2tFr6/xGywQSr+fRi9j9xxLHWBi3E+q4=;
+	s=k20201202; t=1760025674;
+	bh=9cXL50M/jYGovCmqSCzwi1/+3ZyxmLckljO6XvLFzMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HqYrkiynmoeyDlLwPPt41cVpRutGJNgtefHZ5pz3TdJ91gxr56lTL7OsLg0tGdEpp
-	 ff5DLylrmHz7ZHD/NlCIrkLBK+UeeWAuhwt/Ln36I5bX15TJbOZOlaPoYdDaqYBXDC
-	 86k4qhLFqHLGRT3NAerUdIN5rtqS74pRvhcJBf70nHJ55voWjWaUcQrtuDSVesdvkd
-	 MCo1sfA+2Lw7gq98aclxu6cetlMV0ZzRDpZ/G2RuZIjU50hzDtvw9O5J92lXX+Zx9T
-	 CyRwA7l+7gBxyTITH+MebXMmrYkEMGDUWTWlJhM0NeQzI9mgHpxMOpSjiH3eNIjgnj
-	 5m2jhs5SYKsww==
+	b=cQ/2KquR43ivIk61Q6H0yKjEYksWcua8/g2+P0uN/tzOjggSOvI5QsMXziERjqmF+
+	 SgMcsFiPRhGG9HAcxxZsV5QEjB+OnaFXYf3FyvfOAAl+2wcOZw/VLTT+u2lkSGGRD0
+	 i8BDI/gpUz25UiR2qTK83J128+yLOlxYs/LVofZpGa3YMxTRHOGPzfA1M0M64hludo
+	 XxzLHUQxUC5pRhhu+/lirhP3vZp8iIZkljcDxjWlfgb5inIr+lzUjrfbGYnlGjMwwJ
+	 nZY2i7S14LPa7dG6i3cbR4aTyyJ1j33H+ThfSAv1jq2UyUnvMKJxc2UK9JxOLA4mdJ
+	 G2tUyIrtFY0Dg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Pei <cp0613@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Sarthak Garg <quic_sartgarg@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] ACPI: SPCR: Support Precise Baud Rate field
-Date: Thu,  9 Oct 2025 11:56:13 -0400
-Message-ID: <20251009155752.773732-107-sashal@kernel.org>
+	linux-mmc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] mmc: sdhci-msm: Enable tuning for SDR50 mode for SD card
+Date: Thu,  9 Oct 2025 11:56:14 -0400
+Message-ID: <20251009155752.773732-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,116 +53,94 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-[ Upstream commit 4d330fe54145ecfbb657ac01a554fdedf3c1927e ]
+[ Upstream commit 08b68ca543ee9d5a8d2dc406165e4887dd8f170b ]
 
-The Microsoft Serial Port Console Redirection (SPCR) specification
-revision 1.09 comprises additional field: Precise Baud Rate [1].
+For Qualcomm SoCs which needs level shifter for SD card, extra delay is
+seen on receiver data path.
 
-It is used to describe non-traditional baud rates (such as those
-used by high-speed UARTs).
+To compensate this delay enable tuning for SDR50 mode for targets which
+has level shifter. SDHCI_SDR50_NEEDS_TUNING caps will be set for targets
+with level shifter on Qualcomm SOC's.
 
-It contains a specific non-zero baud rate which overrides the value
-of the Configured Baud Rate field. If this field is zero or not
-present, Configured Baud Rate is used.
-
-Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table [1]
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Link: https://patch.msgid.link/20250913070815.16758-1-cp0613@linux.alibaba.com
-[ rjw: Corrected typo in the subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES. Enabling SDR50 tuning fixes a real bug that hits Qualcomm boards
+using SD card level shifters, where the RX delay makes SDR50 unreliable
+unless the DLL is tuned. Today `sdhci_msm_is_tuning_needed()` returns
+false for SDR50 because of the existing `CORE_FREQ_100MHZ` check, so the
+controller never tunes even when hardware advertises
+`SDHCI_SDR50_NEEDS_TUNING`; this means the extra propagation delay is
+never compensated. The patch adds an early SDR50+flag check
+(`drivers/mmc/host/sdhci-msm.c:1119`) so tuning runs whenever firmware
+sets that capability, and it programs the vendor “HC_SELECT_IN” field to
+the new SDR50 selector before the tuning loop (`drivers/mmc/host/sdhci-
+msm.c:1210` together with the new `CORE_HC_SELECT_IN_SDR50` definition
+at `drivers/mmc/host/sdhci-msm.c:82`). That matches how HS400 is already
+handled and lets the DLL pick the correct sampling point. The change is
+tiny, self-contained to the Qualcomm host driver, and only engages when
+hardware already flagged that SDR50 needs tuning, so it shouldn’t
+regress other users. No new APIs or structural work are introduced,
+making this an appropriate, low-risk stable backport that restores
+reliable SDR50 operation on the affected systems.
 
-- What it changes and why it matters:
-  - Adds support for the SPCR “Precise Baud Rate” field so the kernel
-    honors non‑standard/high‑speed UART baud rates from firmware. The
-    new logic checks `table->precise_baudrate` and, if non‑zero, uses
-    it; otherwise it falls back to the existing enumerated “Configured
-    Baud Rate” mapping.
-  - Code reference: drivers/acpi/spcr.c:153 adds the explanatory comment
-    and the override logic; drivers/acpi/spcr.c:158 uses `if
-    (table->precise_baudrate) baud_rate = table->precise_baudrate; else
-    switch (table->baud_rate) { ... }`.
-  - Without this, systems that publish a precise baud in SPCR (e.g.,
-    1.5M, 3M, etc.) end up with an incorrect console configuration
-    (typically 115200), breaking or garbling the serial console. This is
-    a user-visible bug in environments that follow SPCR 1.09+.
+ drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-- Scope and risk:
-  - Minimal, self‑contained change in one file (drivers/acpi/spcr.c). It
-    does not alter console selection logic, I/O type decisions, or
-    errata handling; it only sets `baud_rate` earlier when the field is
-    present, leaving the long‑standing switch on `table->baud_rate`
-    unchanged.
-  - No architectural or behavioral changes beyond honoring an existing
-    spec field. No new features; this is a spec‑compliance fix.
-
-- Dependencies and compatibility:
-  - Requires the ACPICA header update that introduced the field in
-    `struct acpi_table_spcr`:
-    - Code reference: include/acpi/actbl3.h:124 defines `u32
-      precise_baudrate;` (added by “ACPICA: SPCR: Update the SPCR table
-      to version 4”, present from v6.12 and newer).
-  - For stable trees older than v6.12, this commit will not compile
-    unless that ACPICA update (and its related SPCR struct changes) is
-    backported first. Backporting both together is straightforward and
-    low‑risk, as the header change is additive and this code only reads
-    the new field.
-
-- Subtlety to be aware of:
-  - The SPCR spec says the precise field “overrides” when non‑zero; if
-    zero or not present, use the configured enumerated value. The code
-    implements this correctly by falling back to the existing switch
-    when the field is zero (drivers/acpi/spcr.c:158).
-  - As upstream implemented, there is no explicit table-length check
-    before reading `precise_baudrate`. This matches mainline, but when
-    backporting to very old kernels and encountering very old SPCR
-    revisions, maintainers may optionally add a guard using
-    `table->header.length` to be extra defensive. Not required for
-    v6.12+ where the header and field are in place.
-
-- Stable backport criteria:
-  - Fixes a real, user‑visible issue (misconfigured or non‑functional
-    serial console on systems using SPCR precise baud).
-  - Small and localized change with minimal regression risk.
-  - No architectural churn or new feature exposure.
-  - Touches the ACPI SPCR parsing path only; console setup remains
-    unchanged aside from using the correct baud.
-
-Conclusion: This is a good candidate for stable backport, provided the
-target stable series already contains (or is backported with) the SPCR
-v4 ACPICA header update that defines `precise_baudrate`.
-
- drivers/acpi/spcr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
-index cd36a97b0ea2c..fa12e740386de 100644
---- a/drivers/acpi/spcr.c
-+++ b/drivers/acpi/spcr.c
-@@ -146,7 +146,15 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
- 		goto done;
- 	}
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 9d8e20dc8ca11..e7df864bdcaf6 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -81,6 +81,7 @@
+ #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
+ #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
+ #define CORE_HC_SELECT_IN_EN	BIT(18)
++#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
+ #define CORE_HC_SELECT_IN_HS400	(6 << 19)
+ #define CORE_HC_SELECT_IN_MASK	(7 << 19)
  
--	switch (table->baud_rate) {
-+	/*
-+	 * SPCR 1.09 defines Precise Baud Rate Filed contains a specific
-+	 * non-zero baud rate which overrides the value of the Configured
-+	 * Baud Rate field. If this field is zero or not present, Configured
-+	 * Baud Rate is used.
-+	 */
-+	if (table->precise_baudrate)
-+		baud_rate = table->precise_baudrate;
-+	else switch (table->baud_rate) {
- 	case 0:
- 		/*
- 		 * SPCR 1.04 defines 0 as a preconfigured state of UART.
+@@ -1133,6 +1134,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
+ {
+ 	struct mmc_ios *ios = &host->mmc->ios;
+ 
++	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING)
++		return true;
++
+ 	/*
+ 	 * Tuning is required for SDR104, HS200 and HS400 cards and
+ 	 * if clock frequency is greater than 100MHz in these modes.
+@@ -1201,6 +1206,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	struct mmc_ios ios = host->mmc->ios;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
++	u32 config;
+ 
+ 	if (!sdhci_msm_is_tuning_needed(host)) {
+ 		msm_host->use_cdr = false;
+@@ -1217,6 +1224,14 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	 */
+ 	msm_host->tuning_done = 0;
+ 
++	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING) {
++		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
++		config &= ~CORE_HC_SELECT_IN_MASK;
++		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
++		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
++	}
++
+ 	/*
+ 	 * For HS400 tuning in HS200 timing requires:
+ 	 * - select MCLK/2 in VENDOR_SPEC
 -- 
 2.51.0
 
