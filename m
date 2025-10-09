@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F471A267;
-	Thu,  9 Oct 2025 16:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9A2F3C11;
+	Thu,  9 Oct 2025 16:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025630; cv=none; b=M872+IVOpRRlFbKvA/85Fp1zdxzwWVJ4ueQFvREMFgTy2zf9ISUYoOQF15ETpB33kuHwt7PmkNrtublY8D8Ra0xDHQpbrk6TgrXoN0Ckj8mTLjHoHsmZAmqO5izy0Rkmu1JX8968gpdHlf8wfNZeDUy6KpHstz6iOEVC5vkNWak=
+	t=1760025632; cv=none; b=C8ha9+zfaHBTJ/c5bwKnqtuP0x+8qMy/WBbRoDFCzSZBMypZRZoCl9CWVrPNXLe0s3qeR+zEnXasAIDR/zO4aa8HVbyLrdzSg0548vk6XQeru2nr7is9mMS+RnF8cykqe7DVtEKXC2PfEZXWujz7kcofNLtl3U6DrPHhOuITjnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025630; c=relaxed/simple;
-	bh=11Wfki1lzai+tC0pkS7NvwICxtb0xRF4vios80pZDgY=;
+	s=arc-20240116; t=1760025632; c=relaxed/simple;
+	bh=w0lL11a4isY3KVINmF2py0wl6uiuhSRVRIWX6J7UIGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GV8noO9p2PKynKRzTR+F0vJxUDfV08XA+NdPIGzMIBWMPYXXKKUjYebbMN089SG2zkZB2s6hxk4TcwIfWm9IbEd3scy3dg/t6u2rBu69hn8bOlFB7wOG7q461XN49JxtJfxjfs58v3+l9ewZL0HOQ1t8hrxkprsFReWl5aQcFUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zeb5WqLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rH/bT6Uwx3Ml2+Iwq5f7aiJzShkHjrflKxw/82BqWn2orV5hjROkeD08vxboqdAFN1BeFhPLxPFdZSXT/FQJSE6svZT+h8AIdh57uYgKhk+w8QBpXD6iakDPMvBTBGIHCp0yNQ7/y29OXFbfwUAsGnmOj2S5taXyBj+FK70AA0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kDsXOx8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zeb5WqLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E56C4CEF8;
-	Thu,  9 Oct 2025 16:00:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDsXOx8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3BDC4CEF7;
+	Thu,  9 Oct 2025 16:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025630;
-	bh=11Wfki1lzai+tC0pkS7NvwICxtb0xRF4vios80pZDgY=;
+	s=k20201202; t=1760025631;
+	bh=w0lL11a4isY3KVINmF2py0wl6uiuhSRVRIWX6J7UIGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zeb5WqLycnF1ZpvNQUCHMXAHptJSzMznX/86gnqjCQucNDEAiLlGV+3xodQi1KJXe
-	 rzOI5kViNQhpEZxx+yHeeiyjosbPnqnQ0ArPMX0CKRj/62hHG6YW3W1z6fCLDeqdsf
-	 Jy/Fox8QfApHbiTzoiYFZq7jBorIjoBYrhO56GN2eFc3lWr+whko/8Ho8jdNGsgPDP
-	 ClegWciqPZDQUlUh0+jjlo+FXRZRAb5Dj/nNV/ZtaN1M3OtQ737FVUdALNHqpWAKZu
-	 wm6ME8TUmkf/9P9gfN4oF/DO+1LXzdE8YPOAKzkd09BdaTYWEVNsr5rwGvndJixzPi
-	 RUCe+2PMZuI4Q==
+	b=kDsXOx8EemIDZuiq1NZmH0se0ut/7R9FTdT+Q5lJQrC5oY0cfqj0xJTRYYq6Q/lsc
+	 jXZ2rifu1Xvi0OR17BS2fM4Q9yNuvUfrHmi43vx2VG1FjIAHovltIsJwkZWCfOVUPT
+	 4XoVmeo6fvM3kHqKw3OCZPjalTXkTsJVgv8KEGAix2HSuiLC4GMgYXD6Lddn/zzNwq
+	 IIHcTSyrwGHe1/eNAgJXgKUzADKrJOMVIwoujHzAm0c8zmSrlIAxJzVMnbcqCvZaNe
+	 B770Q4qDULvFhFjE7QKK7QJL9FHNTuXCopJs4/+2DEVTU4/7G0XifMPCAiUPsMlqm6
+	 aFSX+y7p3y8Sw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
+Cc: Paresh Bhagat <p-bhagat@ti.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org,
-	jiaxun.yang@flygoat.com,
-	linux-mips@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] irqchip/loongson-eiointc: Route interrupt parsed from bios table
-Date: Thu,  9 Oct 2025 11:55:50 -0400
-Message-ID: <20251009155752.773732-84-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] cpufreq: ti: Add support for AM62D2
+Date: Thu,  9 Oct 2025 11:55:51 -0400
+Message-ID: <20251009155752.773732-85-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -51,206 +49,114 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Paresh Bhagat <p-bhagat@ti.com>
 
-[ Upstream commit 7fb83eb664e9b3a0438dd28859e9f0fd49d4c165 ]
+[ Upstream commit b5af45302ebc141662b2b60c713c9202e88c943c ]
 
-Interrupt controller eiointc routes interrupts to CPU interface IP0 - IP7.
+Add support for TI K3 AM62D2 SoC to read speed and revision values
+from hardware and pass to OPP layer. AM62D shares the same configuations
+as AM62A so use existing am62a7_soc_data.
 
-It is currently hard-coded that eiointc routes interrupts to the CPU
-starting from IP1, but it should base that decision on the parent
-interrupt, which is provided by ACPI or DTS.
-
-Retrieve the parent's hardware interrupt number and store it in the
-descriptor of the eointc instance, so that the routing function can utilize
-it for the correct route settings.
-
-[ tglx: Massaged change log ]
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250804081946.1456573-2-maobibo@loongson.cn
+Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me compile my comprehensive analysis.
+Based on my comprehensive analysis of this commit and the stable kernel
+backporting policies, here is my assessment:
 
-## COMPREHENSIVE ANALYSIS
+## Backport Status: YES
 
-Based on my extensive investigation of this commit, here is my
-determination:
+### Detailed Analysis
 
-**Backport Status: YES**
+#### 1. **Explicit Policy Support**
+The Linux stable kernel rules (Documentation/process/stable-kernel-
+rules.rst, line 15) **explicitly allow device ID additions**:
+> "It must either fix a real bug that bothers people or **just add a
+device ID**."
 
-## Detailed Analysis
+This commit adds device IDs for the AM62D2 SoC in two locations:
+- **Line 313** in `k3_cpufreq_soc[]`: Adds `{ .family = "AM62DX",
+  .revision = "SR1.0" }`
+- **Line 461** in `ti_cpufreq_of_match[]`: Adds `{ .compatible =
+  "ti,am62d2", .data = &am62a7_soc_data, }`
 
-### What This Commit Fixes
+#### 2. **Strong Historical Precedent**
+Similar commits for the AM62 SoC family were backported to stable trees:
 
-The Loongson eiointc (Extended I/O Interrupt Controller) driver was
-**hardcoding interrupt routing** to CPU interface pins using the formula
-`BIT(1 + index)`, which routes interrupts starting from IP1. However,
-the **correct routing information is provided by ACPI/DTS** in the
-`cascade` field (for ACPI) or parent interrupt hwirq (for device tree).
+- **AM625 support** (aac0293a8f1cd): No Cc: stable tag, but present in
+  stable branches linux-6.10.y through 6.17.y
+- **AM62A7 support** (5008e4c8c31c6): No Cc: stable tag, but present in
+  stable branches linux-6.10.y through 6.17.y
+- **AM625 blacklist** (e66e20d71d79e): Also backported to stable
+- **AM62A7 blacklist** (b2b2029eb1788): Also backported to stable
 
-**Code Evidence:**
-- Line 214 in drivers/irqchip/irq-loongson-eiointc.c (before fix): `bit
-  = BIT(1 + index); /* Route to IP[1 + index] */`
-- After fix: `bit = BIT(eiointc_priv[index]->parent_hwirq - INT_HWI0);`
-- The ACPI structure at include/acpi/actbl2.h:1479-1485 defines
-  `cascade` field (u8) which specifies the correct interrupt pin
-- INT_HWI0 through INT_HWI7 are defined at
-  arch/loongarch/include/asm/loongarch.h:1462-1469
+#### 3. **Minimal Risk Profile**
+- **Only 2 lines changed** (1 file, +2 insertions)
+- **Reuses existing configuration**: Uses `am62a7_soc_data` as stated in
+  commit message - no new code paths
+- **Isolated change**: Only affects AM62D2 hardware, no impact on other
+  SoCs
+- **Well-tested pattern**: Follows the exact same pattern as AM625,
+  AM62A7, and AM62P5 additions
 
-### Real-World Impact
+#### 4. **User Benefit**
+- Enables CPU frequency scaling on AM62D2 hardware
+- Users with AM62D2 boards (device tree support added in v6.17 via
+  commit 1544bca2f188e) need this for proper power management
+- Without this commit, AM62D2 systems cannot adjust CPU frequencies
+  based on load
 
-1. **Incorrect Interrupt Routing:** On systems where ACPI/DTS specifies
-   a different CPU interrupt pin than the hardcoded value, interrupts
-   would be routed to the wrong pin. This could cause:
-   - Interrupts not being received at all
-   - System hangs or device malfunctions
-   - Hardware that doesn't work correctly
+#### 5. **Companion Commit**
+There's a companion commit **fa40cbe1c86b6** "cpufreq: dt-platdev:
+Blacklist ti,am62d2 SoC" by the same author on the same date. Both
+should be backported together to prevent the generic cpufreq-dt driver
+from conflicting with ti-cpufreq.
 
-2. **Prerequisite for Optimization:** The follow-up commit
-   (8ff1c16c753e2) explains that correct routing enables an important VM
-   optimization: routing different interrupt vectors to different CPU
-   pins reduces VM exits by allowing the handler to read only one
-   EIOINTC_REG_ISR register instead of all four.
+#### 6. **No Architectural Changes**
+- No new features beyond hardware enablement
+- No refactoring or code restructuring
+- No changes to existing functionality
+- Meets stable tree criteria: small, contained, low regression risk
 
-3. **Affected Systems:** All Loongson systems using eiointc:
-   - LS2K0500, LS2K2000 (device tree)
-   - Loongson-3A5000, Loongson-3C5000 (ACPI)
+### Conclusion
+This commit should be backported to stable kernel trees because it:
+1. Falls under the explicit "device ID addition" exception in stable
+   rules
+2. Has strong precedent with similar AM62 family commits being
+   backported
+3. Provides essential functionality for AM62D2 hardware owners
+4. Has minimal regression risk (2 lines, reuses existing data
+   structures)
+5. Follows the established stable backporting pattern for this driver
 
-### Why This Bug Existed
+ drivers/cpufreq/ti-cpufreq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-The hardcoded routing was present **from the initial driver commit**
-(dd281e1a1a937 from July 2022). It likely went undetected because:
-- Reference/common platforms happened to use IP1, matching the hardcoded
-  value
-- Limited deployment of Loongson architecture
-- New hardware configurations or firmware changes exposed the issue
-
-### Backporting Assessment
-
-**✓ Fixes a bug affecting users:** Yes - incorrect hardware programming
-that can cause device malfunctions
-
-**✓ Small and contained:** Yes - adds one struct field, modifies routing
-logic in one place, updates two init functions
-
-**✓ No architectural changes:** Correct - just fixes the routing to
-match hardware specification
-
-**✓ Minimal risk:** Low risk because:
-- Makes behavior match what ACPI/DTS specifies (hardware specification)
-- Part of a tested two-commit series (both commits already merged and
-  backported)
-- No subsequent fixes found (checked commits after 2025-08-04)
-- Already successfully backported to 6.17 (ec1317ec5082f)
-
-**✓ No explicit stable tag:** Commit lacks `Cc: stable` tag, but fits
-stable tree criteria
-
-**✗ Critical subsystem:** Yes, but the change is localized to Loongson-
-specific driver
-
-### Verification of Backport Quality
-
-- Commit was authored: Mon Aug 4 16:19:45 2025
-- Merged to mainline: Sun Aug 24 12:51:04 2025
-- Already backported to 6.17 by Sasha Levin
-- No fixes found targeting this commit (searched with git log
-  --grep="Fixes.*7fb83eb664e9b")
-- Follow-up commit (8ff1c16c753e2) builds on this fix and should be
-  backported together
-
-## Conclusion
-
-**YES - This commit should be backported to stable kernel trees.**
-
-This is a clear bugfix that corrects incorrect hardware programming. The
-driver was routing interrupts to hardcoded CPU interrupt pins instead of
-using the routing information from firmware (ACPI/DTS). This could cause
-device malfunctions on systems where firmware specifies different
-interrupt pins. The fix is small, contained, has no known regressions,
-and is a prerequisite for important virtualization optimizations. It
-meets all stable tree criteria for backporting.
-
- drivers/irqchip/irq-loongson-eiointc.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
-index b2860eb2d32c5..baa406904de55 100644
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -68,6 +68,7 @@ struct eiointc_priv {
- 	struct fwnode_handle	*domain_handle;
- 	struct irq_domain	*eiointc_domain;
- 	int			flags;
-+	irq_hw_number_t		parent_hwirq;
+diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+index 5a5147277cd0a..9a912d3093153 100644
+--- a/drivers/cpufreq/ti-cpufreq.c
++++ b/drivers/cpufreq/ti-cpufreq.c
+@@ -310,6 +310,7 @@ static const struct soc_device_attribute k3_cpufreq_soc[] = {
+ 	{ .family = "AM62X", .revision = "SR1.0" },
+ 	{ .family = "AM62AX", .revision = "SR1.0" },
+ 	{ .family = "AM62PX", .revision = "SR1.0" },
++	{ .family = "AM62DX", .revision = "SR1.0" },
+ 	{ /* sentinel */ }
  };
  
- static struct eiointc_priv *eiointc_priv[MAX_IO_PICS];
-@@ -211,7 +212,12 @@ static int eiointc_router_init(unsigned int cpu)
- 		}
- 
- 		for (i = 0; i < eiointc_priv[0]->vec_count / 32 / 4; i++) {
--			bit = BIT(1 + index); /* Route to IP[1 + index] */
-+			/*
-+			 * Route to interrupt pin, relative offset used here
-+			 * Offset 0 means routing to IP0 and so on
-+			 * Every 32 vector routing to one interrupt pin
-+			 */
-+			bit = BIT(eiointc_priv[index]->parent_hwirq - INT_HWI0);
- 			data = bit | (bit << 8) | (bit << 16) | (bit << 24);
- 			iocsr_write32(data, EIOINTC_REG_IPMAP + i * 4);
- 		}
-@@ -495,7 +501,7 @@ int __init eiointc_acpi_init(struct irq_domain *parent,
- 
- 	priv->vec_count = VEC_COUNT;
- 	priv->node = acpi_eiointc->node;
--
-+	priv->parent_hwirq = acpi_eiointc->cascade;
- 	parent_irq = irq_create_mapping(parent, acpi_eiointc->cascade);
- 
- 	ret = eiointc_init(priv, parent_irq, acpi_eiointc->node_map);
-@@ -527,8 +533,9 @@ int __init eiointc_acpi_init(struct irq_domain *parent,
- static int __init eiointc_of_init(struct device_node *of_node,
- 				  struct device_node *parent)
- {
--	int parent_irq, ret;
- 	struct eiointc_priv *priv;
-+	struct irq_data *irq_data;
-+	int parent_irq, ret;
- 
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
-@@ -544,6 +551,12 @@ static int __init eiointc_of_init(struct device_node *of_node,
- 	if (ret < 0)
- 		goto out_free_priv;
- 
-+	irq_data = irq_get_irq_data(parent_irq);
-+	if (!irq_data) {
-+		ret = -ENODEV;
-+		goto out_free_priv;
-+	}
-+
- 	/*
- 	 * In particular, the number of devices supported by the LS2K0500
- 	 * extended I/O interrupt vector is 128.
-@@ -552,7 +565,7 @@ static int __init eiointc_of_init(struct device_node *of_node,
- 		priv->vec_count = 128;
- 	else
- 		priv->vec_count = VEC_COUNT;
--
-+	priv->parent_hwirq = irqd_to_hwirq(irq_data);
- 	priv->node = 0;
- 	priv->domain_handle = of_fwnode_handle(of_node);
- 
+@@ -457,6 +458,7 @@ static const struct of_device_id ti_cpufreq_of_match[]  __maybe_unused = {
+ 	{ .compatible = "ti,omap36xx", .data = &omap36xx_soc_data, },
+ 	{ .compatible = "ti,am625", .data = &am625_soc_data, },
+ 	{ .compatible = "ti,am62a7", .data = &am62a7_soc_data, },
++	{ .compatible = "ti,am62d2", .data = &am62a7_soc_data, },
+ 	{ .compatible = "ti,am62p5", .data = &am62p5_soc_data, },
+ 	/* legacy */
+ 	{ .compatible = "ti,omap3430", .data = &omap34xx_soc_data, },
 -- 
 2.51.0
 
