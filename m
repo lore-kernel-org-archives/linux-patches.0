@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171762FB99B;
-	Thu,  9 Oct 2025 16:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA82FB99E;
+	Thu,  9 Oct 2025 16:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025604; cv=none; b=QqmXdgPOFqXYNKoyI2I8yA27iC4SGBCB5yKTDXEXdPPhXrnzeKcEGp2245pRv8vH2PlSMBPDc+mUw+fH8AXU4Fda3QIKO8p7d4KU3Ov0qz//r9CTq8IKq1tDkzjdi4o4YL6yVHNiJtHBuSnV6g2ofQ5RgGEdIuZyawOuT8dHl98=
+	t=1760025605; cv=none; b=scx+HxWWwzvHW3QqXJUG680igRma0etvQM6WninsbE/dSnzQo5BPGIMg5tQEWpzQg1kqGOE2uT/LRqEtD4MEpVCPjdJGOwyfFULe1xdEOcV/m8KuWk3dJ+CVdp1qBNTjL8xYL1PTdc7EZSp8Sug1+4LXX4XOH4Kg5gdr9DE1ypQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025604; c=relaxed/simple;
-	bh=iGPfhXstUEtIPxlrGq/8WGl8mFp+xaycxoQGPc3q3CQ=;
+	s=arc-20240116; t=1760025605; c=relaxed/simple;
+	bh=Y0lEqFCh/OtrzyCfm6IZuqcyvjrHHiiSM7TqqV7hQow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c82CcgO6E+TjW5lCJD1RUKDn1cSa+hsH+W4xRNjcTlTjzgaSmF/l070Mhp1ZH4moJKROGnzumrQbV+PuUD+f0JVICvGU+/t0L1ys8yddFRjZfNvMnab+SFyXJsy96GTTtIQIjNyUbnksVfHqQe1nZ0h93Vba0oa0wtNUtNrpm40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qzvkb0cb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pmEQTs4KBqYXBh8LKXo0mxFfUGh14UkE7b1Q7m97oh9SZXLB/WxL0GtA9ZTff0gNZMW6acl2iXRCfsSFXIviSfNkXDqAjq7ZZhwndoHYtBhqIZAwGkI3Xz8ua9ms+39kKu/RFmPv5f2LfrDk3kfABcqaTixXs/608ZqsrJh66tM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hicofYhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qzvkb0cb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2122FC4CEE7;
-	Thu,  9 Oct 2025 16:00:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hicofYhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67042C4CEE7;
+	Thu,  9 Oct 2025 16:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025604;
-	bh=iGPfhXstUEtIPxlrGq/8WGl8mFp+xaycxoQGPc3q3CQ=;
+	s=k20201202; t=1760025605;
+	bh=Y0lEqFCh/OtrzyCfm6IZuqcyvjrHHiiSM7TqqV7hQow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzvkb0cbZJ5m5WmeCn5YlzRxuDz4NAE81VPSKugzHBth1kBeqlIOtqf8gMSP8DnBA
-	 Cerd1AvEbNbPEIRk8bE6ewFBUCy48vf00u9BAFPg1VopfMAxvPqF7aac0rB0TymuUY
-	 jV5P6rbmsj/gOwA3GYZAneywRpereu+p+c3QncFE5lUKyl2/wkTposum09fEQZxMqO
-	 MEZTCZHnnj5p60Rebw/9Io4SrImXUixh24N5fh/qZ9bXgA3ueobefjUY5wHQwLh1/T
-	 BVcQ1xe+6GU7RcJieIQBdZ2w1qir/iQXMibvgIpani5H/7M83qsYdh4AHUlOMuaubY
-	 N6ZLALdknmU3Q==
+	b=hicofYhhxXSMM8JgZPdemrc5EKn5P/Ykr5831Mzz/83mAF4t0z4UZnJwAY9F9J7Ng
+	 IiAV26geThxBfEGawJCTMEvhU+q53VGdXDXe4/8C54x54/XcGyxHWBp9s8I6ENW8LX
+	 po7/roB/8eJzlwzStT6ENWTDPqlThuQNjZ2KmWVzzDiwDfJLXT7R/gDi8zId3Y1g68
+	 5M+6IA/2IGodXYJ2cQkGcZN0xegYk+38xF63ymGKxFtEtw4XWpqU4AVbxUX1j1scG/
+	 RWKFKgEY07vNIs6TT7r906jbbneRdcljx98ZIlJi4K9y78lGngdLitLKuV4m+ONmwD
+	 TI5vRWD/U/M9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gabor Juhos <j4g8y7@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Sohil Mehta <sohil.mehta@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.16] spi: spi-qpic-snand: handle 'use_ecc' parameter of qcom_spi_config_cw_read()
-Date: Thu,  9 Oct 2025 11:55:36 -0400
-Message-ID: <20251009155752.773732-70-sashal@kernel.org>
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] cpufreq: ondemand: Update the efficient idle check for Intel extended Families
+Date: Thu,  9 Oct 2025 11:55:37 -0400
+Message-ID: <20251009155752.773732-71-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -52,126 +53,138 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Sohil Mehta <sohil.mehta@intel.com>
 
-[ Upstream commit 9c45f95222beecd6a284fd1284d54dd7a772cf59 ]
+[ Upstream commit 7f3cfb7943d27a7b61bdac8db739cf0bdc28e87d ]
 
-During raw read, neither the status of the ECC correction nor the erased
-state of the codeword gets checked by the qcom_spi_read_cw_raw() function,
-so in case of raw access reading the corresponding registers via DMA is
-superfluous.
+IO time is considered busy by default for modern Intel processors. The
+current check covers recent Family 6 models but excludes the brand new
+Families 18 and 19.
 
-Extend the qcom_spi_config_cw_read() function to evaluate the existing
-(but actually unused) 'use_ecc' parameter, and configure reading only
-the flash status register when ECC is not used.
+According to Arjan van de Ven, the model check was mainly due to a lack
+of testing on systems before INTEL_CORE2_MEROM. He suggests considering
+all Intel processors as having an efficient idle.
 
-With the change, the code gets in line with the corresponding part of
-the config_nand_cw_read() function in the qcom_nandc driver.
+Extend the IO busy classification to all Intel processors starting with
+Family 6, including Family 15 (Pentium 4s) and upcoming Families 18/19.
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250808-qpic-snand-handle-use_ecc-v1-1-67289fbb5e2f@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use an x86 VFM check and move the function to the header file to avoid
+using arch-specific #ifdefs in the C file.
+
+Signed-off-by: Sohil Mehta <sohil.mehta@intel.com>
+Link: https://patch.msgid.link/20250908230655.2562440-1-sohil.mehta@intel.com
+[ rjw: Added empty line after #include ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit, here is my
-assessment:
+YES
+- The old whitelist was removed and `od_init()` now relies on
+  `od_should_io_be_busy()` to set `dbs_data->io_is_busy`
+  (`drivers/cpufreq/cpufreq_ondemand.c:360`), so the ondemand governor
+  no longer ignores I/O wait load on Intel CPUs whose family number is
+  ≥6. Without this, brand‑new Intel families (18/19) and even existing
+  family 15 parts default to “I/O idle”, which keeps frequencies low
+  under storage-heavy workloads—a clear performance regression on
+  shipping hardware that still ships with the ondemand governor.
+- The new helper in the header
+  (`drivers/cpufreq/cpufreq_ondemand.h:29-50`) checks
+  `boot_cpu_data.x86_vfm >= INTEL_PENTIUM_PRO`, effectively covering
+  every Intel CPU from Pentium Pro onward while leaving other vendors
+  untouched. The fallback branch still returns false on non-x86 systems
+  (`drivers/cpufreq/cpufreq_ondemand.h:48-49`), so the change is tightly
+  scoped and backward compatible elsewhere.
+- This is a tiny, self-contained tweak (no ABI or architectural churn)
+  that simply broadens the existing default to match current Intel
+  guidance; users can still override the policy via the existing sysfs
+  knob. The only prerequisite is the `x86_vfm` field (commit
+  a9d0adce6907, in v6.10 and newer); ensure any target stable branch
+  already has it or bring that dependency along.
 
-## Backport Recommendation: **YES**
+Next step: 1) If you target a stable series older than v6.10, backport
+a9d0adce6907 (“x86/cpu/vfm: Add/initialize x86_vfm field…”) first so
+this change builds.
 
-### Analysis Summary:
+ drivers/cpufreq/cpufreq_ondemand.c | 25 +------------------------
+ drivers/cpufreq/cpufreq_ondemand.h | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 24 deletions(-)
 
-**Context & History:**
-This commit fixes a code correctness issue in the spi-qpic-snand driver
-(added in v6.17, Feb 2025). The `qcom_spi_config_cw_read()` function had
-a `use_ecc` parameter since the driver's inception, but it was
-completely ignored - the function always read both ECC-related registers
-regardless of whether ECC was being used.
-
-**Technical Details:**
-The change modifies lines 491-500 in `drivers/spi/spi-qpic-snand.c`:
-
-**Before:** Always reads 3 registers via DMA:
-- `NAND_FLASH_STATUS` + `NAND_BUFFER_STATUS` (2 registers)
-- `NAND_ERASED_CW_DETECT_STATUS` (1 register)
-
-**After:** Conditionally reads based on `use_ecc`:
-- When `use_ecc=true`: Reads all 3 registers (normal ECC-enabled reads)
-- When `use_ecc=false`: Reads only `NAND_FLASH_STATUS` (raw reads)
-
-**Why This Matters:**
-1. **Code Correctness:** During raw reads (`use_ecc=false`), the
-   `qcom_spi_check_raw_flash_errors()` function (line 557-571) only
-   checks the flash status register, never the ECC registers. Reading
-   those ECC registers via DMA is "superfluous" as the commit message
-   states.
-
-2. **Established Pattern:** This aligns with the qcom_nandc driver's
-   `config_nand_cw_read()` function, which has had this exact same
-   conditional logic since 2018 (commit 5bc36b2bf6e2c8). That commit's
-   message explained: "For raw reads, there won't be any ECC failure but
-   the operational failures are possible, so schedule the
-   NAND_FLASH_STATUS read."
-
-3. **Already Backported:** The commit shows `[ Upstream commit
-   9c45f95222bee ]` and `Signed-off-by: Sasha Levin
-   <sashal@kernel.org>`, indicating it was already selected by AUTOSEL.
-
-**Backport Justification:**
-
-✅ **Pros:**
-- Small, contained change (11 lines, 1 file)
-- Fixes code correctness (parameter was being ignored)
-- Removes unnecessary DMA operations (optimization)
-- Aligns with well-established pattern from related driver
-- Very low regression risk
-- Already reviewed and approved by Konrad Dybcio and Mark Brown
-- No follow-up fixes or reverts since Aug 8, 2025
-
-❌ **Cons:**
-- No explicit `Fixes:` tag
-- No `Cc: stable@vger.kernel.org` tag
-- Not fixing a critical user-visible bug
-- More optimization/cleanup than bug fix
-- Limited impact (Qualcomm-specific hardware only)
-
-**Conclusion:**
-While this doesn't fix a critical bug, it fixes a code correctness issue
-where a function parameter was being completely ignored. The unnecessary
-DMA operations during raw reads waste resources and could potentially
-cause subtle timing or performance issues. The change is safe, well-
-reviewed, and follows the established pattern from the mature qcom_nandc
-driver. The fact that AUTOSEL has already selected it confirms its
-suitability for stable backporting.
-
- drivers/spi/spi-qpic-snand.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 780abb967822a..5a247eebde4d9 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -494,9 +494,14 @@ qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int c
- 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
+index 0e65d37c92311..a6ecc203f7b7f 100644
+--- a/drivers/cpufreq/cpufreq_ondemand.c
++++ b/drivers/cpufreq/cpufreq_ondemand.c
+@@ -29,29 +29,6 @@ static struct od_ops od_ops;
  
--	qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
--	qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
--			  NAND_BAM_NEXT_SGL);
-+	if (use_ecc) {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
-+		qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	} else {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	}
- }
+ static unsigned int default_powersave_bias;
  
- static int qcom_spi_block_erase(struct qcom_nand_controller *snandc)
+-/*
+- * Not all CPUs want IO time to be accounted as busy; this depends on how
+- * efficient idling at a higher frequency/voltage is.
+- * Pavel Machek says this is not so for various generations of AMD and old
+- * Intel systems.
+- * Mike Chan (android.com) claims this is also not true for ARM.
+- * Because of this, whitelist specific known (series) of CPUs by default, and
+- * leave all others up to the user.
+- */
+-static int should_io_be_busy(void)
+-{
+-#if defined(CONFIG_X86)
+-	/*
+-	 * For Intel, Core 2 (model 15) and later have an efficient idle.
+-	 */
+-	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL &&
+-			boot_cpu_data.x86 == 6 &&
+-			boot_cpu_data.x86_model >= 15)
+-		return 1;
+-#endif
+-	return 0;
+-}
+-
+ /*
+  * Find right freq to be set now with powersave_bias on.
+  * Returns the freq_hi to be used right now and will set freq_hi_delay_us,
+@@ -377,7 +354,7 @@ static int od_init(struct dbs_data *dbs_data)
+ 	dbs_data->sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR;
+ 	dbs_data->ignore_nice_load = 0;
+ 	tuners->powersave_bias = default_powersave_bias;
+-	dbs_data->io_is_busy = should_io_be_busy();
++	dbs_data->io_is_busy = od_should_io_be_busy();
+ 
+ 	dbs_data->tuners = tuners;
+ 	return 0;
+diff --git a/drivers/cpufreq/cpufreq_ondemand.h b/drivers/cpufreq/cpufreq_ondemand.h
+index 1af8e5c4b86fd..2ca8f1aaf2e34 100644
+--- a/drivers/cpufreq/cpufreq_ondemand.h
++++ b/drivers/cpufreq/cpufreq_ondemand.h
+@@ -24,3 +24,26 @@ static inline struct od_policy_dbs_info *to_dbs_info(struct policy_dbs_info *pol
+ struct od_dbs_tuners {
+ 	unsigned int powersave_bias;
+ };
++
++#ifdef CONFIG_X86
++#include <asm/cpu_device_id.h>
++
++/*
++ * Not all CPUs want IO time to be accounted as busy; this depends on
++ * how efficient idling at a higher frequency/voltage is.
++ *
++ * Pavel Machek says this is not so for various generations of AMD and
++ * old Intel systems. Mike Chan (android.com) claims this is also not
++ * true for ARM.
++ *
++ * Because of this, select a known series of Intel CPUs (Family 6 and
++ * later) by default, and leave all others up to the user.
++ */
++static inline bool od_should_io_be_busy(void)
++{
++	return (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL &&
++		boot_cpu_data.x86_vfm >= INTEL_PENTIUM_PRO);
++}
++#else
++static inline bool od_should_io_be_busy(void) { return false; }
++#endif
 -- 
 2.51.0
 
