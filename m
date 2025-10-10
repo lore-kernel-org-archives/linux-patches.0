@@ -1,168 +1,265 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0322773E6
-	for <patches@lists.linux.dev>; Fri, 10 Oct 2025 07:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50FE2C325B
+	for <patches@lists.linux.dev>; Fri, 10 Oct 2025 09:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760081955; cv=none; b=KyKGSPtbdTqT7+Lq8IalYWLKQZeP1rpbGcK2GCQ122Okp6a+RDAbmt4YOrABC+ESF1ruPVdaCV+FBSmai7Vow+guW65Pitrf46/JgWnoq7quLMWvXeyESSksTek+iV1iMWQMDeuf5fgGvrqm+WB7CZp9IM160JNLcz+GLRkS1VU=
+	t=1760089289; cv=none; b=cpRwiBD+DNGOyoFVklKklndwBbLMH+WsSXFscCHzqQtVO4d56rqcth8IsAvDhhWQwCKNchsoBVamV52rzDt3cofw818LN8xUuM5+UlJhDtbK6CXMH0psIFb4f22taSbCE/HEvvnD3ICZ/PS9n3Xr78OV5vCQEyvlilVycwlqGrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760081955; c=relaxed/simple;
-	bh=kT9YVemjzzhAAN5e2M0Qz7Wi09RuV71T6B1Sb/HtrtQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=emh2E54Y2CEONMhaCfe0nGwdKHCGV8JlJCg2MS15hHBC+BxgLIAIGbGgezqBmlGBO/EAitkWIQUYIWdpQ1Hlj9UOdQY5GGoGHOQykQApPy7T0fmjIocYyuNIH2XhtJ9ZTRpBzPlbdCRXYVApgG2/WrbdE7mq1gJpJoKAe+1ywsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JnEPpBhB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wBiK3mBo; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=w8XVwUaj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wDm94fF2; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1760089289; c=relaxed/simple;
+	bh=MuTIfJDXeKuuHRy0YR/4p4wSgA5RdL8NKtUcZ5ZUNMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XYVLS+zJ3OD0VX1OzWd9vXqAEF3Smch8GMJONg3gMfFY94M45jNiL5yJ0bbM5JCng3wmCBKe98dx1ScCA72Buxfi0Nx5GhwTQ1D9Z1n/e7dwzhFKNKXNQ+iziOtHf0Sg/mq+a8/siWn6HZobYgVsjVV4qzpRO9/9V7MX7BFoFQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJo6P+wx; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JnEPpBhB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wBiK3mBo";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="w8XVwUaj";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wDm94fF2"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B72BE22023;
-	Fri, 10 Oct 2025 07:39:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1760081950; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
-	b=JnEPpBhBRkLDQLxGm38oa40reqYWKwK/Epg4HN8+IQPG60qwmfYrNw23aTdUsmNWhtMUrX
-	E9Z/2i+mBDeevyI8qyvvnsS+fRXQd+VsstC9gIwx9Iwilo3rICX2jZnL3DQMFLuVKg1eC6
-	PZaG3yLkrO58GzhcL9pODsZixjQWav8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1760081950;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
-	b=wBiK3mBoKAjKKGhsFKUuOPOK31RPXNQJlmBtrJNy1H1aF28gt88atoJ7+aP2yo18zNZpNh
-	9lMtbpZy6jqC0aDQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=w8XVwUaj;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wDm94fF2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1760081949; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
-	b=w8XVwUaj/92adQTwbZl9cDyYYNRSyM6XqECEKyfK7mfGXr+VlaZ+9eXlGtlMqkn2XeJcqk
-	zEgD+ZxxQxvJAIYifv+MIikppJZ6IyAsvTQ0x4w7ByEBamvHaFTfG/bcbyN+iNKTL2KeMg
-	l70nYfAnFclvEnWOiCB3Cw5ScLCKeyY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1760081949;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
-	b=wDm94fF2fD8MG0lDX7ES+YOL+du7Ng4hR9btpwIrN17JAjX1K203U+UDNftq5PRAqbhzXY
-	tw4pOzYybD0tKdBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4C2C1375D;
-	Fri, 10 Oct 2025 07:39:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id dr48Jx246GhVBwAAD6G6ig
-	(envelope-from <dwagner@suse.de>); Fri, 10 Oct 2025 07:39:09 +0000
-Date: Fri, 10 Oct 2025 09:39:05 +0200
-From: Daniel Wagner <dwagner@suse.de>
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-	Daniel Wagner <wagi@kernel.org>, Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>, 
-	Hannes Reinecke <hare@suse.de>, Keith Busch <kbusch@kernel.org>, justin.tee@broadcom.com, 
-	nareshgottumukkala83@gmail.com, paul.ely@broadcom.com, sagi@grimberg.me, kch@nvidia.com, 
-	linux-nvme@lists.infradead.org
-Subject: Re: [PATCH AUTOSEL 6.17-5.15] nvmet-fc: avoid scheduling association
- deletion twice
-Message-ID: <8bed9f7a-ad84-40e8-a275-09b19a917155@flourine.local>
-References: <20251009155752.773732-1-sashal@kernel.org>
- <20251009155752.773732-15-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJo6P+wx"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3f0ae439bc3so926152f8f.1
+        for <patches@lists.linux.dev>; Fri, 10 Oct 2025 02:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760089279; x=1760694079; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wq9sBzt27xhVE00MKRZHgRlmEb4HHQG1wzN2xa1Axvc=;
+        b=HJo6P+wxng5lYo9IJuejo/vtHI3M+lrFzuYkzgCflF2UfS623RUxZuDJLrxGqckM3G
+         0DX4pKjh9rJ9Xy5ydYMNNhzTI9sNBpJsSLjuOz4VAYXD9qCd1w3dtB27kZ7SDo39n98a
+         EG2lzGq4olvFML3P0g0AiVQW917RlY+Q8WSMBC8CjuHFRNgknXQouYPEkXNkoNW1Gbcr
+         cZqZZvdXHgq0CXkDSuSIManj8sIRzKr88FHZuJ4Toh6B47m/5khg7MfyOb9GlN7ISy9k
+         xZdLcmYgLkLZzqjhByVNLyzpt2XbbRHZBvht7QYG/HrQ7oapay5HHODbakfIigWzdCVb
+         QUsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760089279; x=1760694079;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wq9sBzt27xhVE00MKRZHgRlmEb4HHQG1wzN2xa1Axvc=;
+        b=Jd9rQU0RD4YoMDQB+pIMbuTIqjZ2Go5YZX+YLcgacYNFkCqtwtHH6A57+04IzgJC97
+         L6OpPn9KaFXG8GGPxFl7U90Gsa+WSKp4Lgj47ncF2YSZWTq/hovMe+zvEdSKNW3HZnp5
+         qaiA5CXTccCg+FQJjMuugUF6Vebf+MP2AlDw1/hiZ/uY6m0mgK3ZR36EtLWkjo1sXnpF
+         5mAeQOrSGu90cams3B+ZtVhSl5baWLuP/AGpeHyZuXOMUQOzZ5DH9GzcUxl6gTWdGxsg
+         m1xTwrMOuqcsqbGbpVq68IhkGNQ86J9QMKBgJo3aYUA477Z8J4bWHu+OKslUpQ+eh9sj
+         Q7fg==
+X-Forwarded-Encrypted: i=1; AJvYcCVgml3O/rrSnwKR7L/obztFiOYIOSDPGoJGJJ8dobjDZt+1mSjsP18lCSFRe/A6kSCZ0AeHkNW2@lists.linux.dev
+X-Gm-Message-State: AOJu0YxNZ+mLv8UcbzjMuC6QRw0GxHHuRiCJs+No24172KO6v1Zf971R
+	K1MAbVScOtM2LKQTSivFg3HL0p3LoO5xqNN4bUfZ8Zd0hTI/ZoQGQFQN
+X-Gm-Gg: ASbGncuNbN3AeFrfZzYLvHqad1KE6eCaqdlKnOQrrllcVxa09M2oh4BF7gv+oo2d+N+
+	eod6gllpP7HuBqOvNNr8svP7A+71tR7VicW/YZQIeQBAnoCeFFvOKEycl5t/WjVV8WMQiFXduQh
+	ob/WMYsuLsJZNKIEZCGHxqpM819cEPMUqnV32HMZmD9oprhPW/YjB4N/GrRSGKZ/+ol6WGV9hLh
+	YT9Y5sb592NA/K7i+ujsYkUm7iVQxn8MH19UsWTLdFHB0QSfK3TqXCvQXc7X0SR6aGFmF894zXN
+	h8ritz1iMvdvGuPS7NPEhwt6fJSazKoHcg02jmYuKSIgdMkVeT4W1LxTo07n5gU/H1X01UwSZdx
+	xfks5Y1KkVgg4Cpcona4XjkmHxbC9IStiSMyIig==
+X-Google-Smtp-Source: AGHT+IF3lD9WVSidKuzagqFJR/FrlQ6zmxKPnguDbIw0mAThtrjLUEb36T/KN6an53yanBEG5SPxvw==
+X-Received: by 2002:a05:6000:186f:b0:425:75b7:4b67 with SMTP id ffacd0b85a97d-4266e8da717mr6986662f8f.58.1760089278315;
+        Fri, 10 Oct 2025 02:41:18 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-426ce582b44sm3304938f8f.16.2025.10.10.02.41.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Oct 2025 02:41:17 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Julian Stecklina <julian.stecklina@cyberus-technology.de>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Art Nikpal <email2tema@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Graf <graf@amazon.com>,
+	Rob Landley <rob@landley.net>,
+	Lennart Poettering <mzxreary@0pointer.de>,
+	linux-arch@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	initramfs@vger.kernel.org,
+	linux-api@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	Michal Simek <monstr@monstr.eu>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Young <dyoung@redhat.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Jessica Clarke <jrtc27@jrtc27.com>,
+	Nicolas Schichan <nschichan@freebox.fr>,
+	David Disseldorp <ddiss@suse.de>,
+	patches@lists.linux.dev
+Subject: [PATCH v2 0/3] initrd: remove half of classic initrd support
+Date: Fri, 10 Oct 2025 09:40:44 +0000
+Message-ID: <20251010094047.3111495-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251009155752.773732-15-sashal@kernel.org>
-X-Rspamd-Queue-Id: B72BE22023
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,kernel.org,wdc.com,suse.de,broadcom.com,gmail.com,grimberg.me,nvidia.com,lists.infradead.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,wdc.com:email,suse.de:email,suse.de:dkim];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
+Content-Transfer-Encoding: 8bit
 
-Hi Sasha,
+Intro
+====
+This patchset removes half of classic initrd (initial RAM disk) support,
+i. e. linuxrc code path, which was deprecated in 2020.
+Initramfs still stays, RAM disk itself (brd) still stays.
+And other half of initrd stays, too.
+init/do_mounts* are listed in VFS entry in
+MAINTAINERS, so I think this patchset should go through VFS tree.
+I tested the patchset on 8 (!!!) archs in Qemu (see details below).
+If you still use initrd, see below for workaround.
 
-On Thu, Oct 09, 2025 at 11:54:41AM -0400, Sasha Levin wrote:
-> From: Daniel Wagner <wagi@kernel.org>
-> 
-> [ Upstream commit f2537be4f8421f6495edfa0bc284d722f253841d ]
-> 
-> When forcefully shutting down a port via the configfs interface,
-> nvmet_port_subsys_drop_link() first calls nvmet_port_del_ctrls() and
-> then nvmet_disable_port(). Both functions will eventually schedule all
-> remaining associations for deletion.
-> 
-> The current implementation checks whether an association is about to be
-> removed, but only after the work item has already been scheduled. As a
-> result, it is possible for the first scheduled work item to free all
-> resources, and then for the same work item to be scheduled again for
-> deletion.
-> 
-> Because the association list is an RCU list, it is not possible to take
-> a lock and remove the list entry directly, so it cannot be looked up
-> again. Instead, a flag (terminating) must be used to determine whether
-> the association is already in the process of being deleted.
-> 
-> Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-> Closes: https://lore.kernel.org/all/rsdinhafrtlguauhesmrrzkybpnvwantwmyfq2ih5aregghax5@mhr7v3eryci3/
-> Reviewed-by: Hannes Reinecke <hare@suse.de>
-> Signed-off-by: Daniel Wagner <wagi@kernel.org>
-> Signed-off-by: Keith Busch <kbusch@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+In 2020 deprecation notice was put to linuxrc initrd code path.
+In previous version of this patchset I tried to remove initrd
+fully, but Nicolas Schichan reported that he still uses
+other code path (root=/dev/ram0 one) on million devices [4].
+root=/dev/ram0 code path did not contain deprecation notice.
 
-This patch is part of a whole series:
+So, in this version of patchset I remove deprecated code path,
+i. e. linuxrc one, while keeping other, i. e. root=/dev/ram0 one.
 
-https://lore.kernel.org/all/20250902-fix-nvmet-fc-v3-0-1ae1ecb798d8@kernel.org/
+Also I put deprecation notice to remaining code path, i. e. to
+root=/dev/ram0 one. I plan to send patches for full removal
+of initrd after one year, i. e. in September 2026 (of course,
+initramfs will still work).
 
-IMO, all should all be backported:
+Also, I tried to make this patchset small to make sure it
+can be reverted easily. I plan to send cleanups later.
 
-db5a5406fb7e nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
-f2537be4f842 nvmet-fc: avoid scheduling association deletion twice
-10c165af35d2 nvmet-fcloop: call done callback even when remote port is gone
-891cdbb162cc nvme-fc: use lock accessing port_state and rport state
+Details
+====
+Other user-visible changes:
 
-Thanks,
-Daniel
+- Removed kernel command line parameters "load_ramdisk" and
+"prompt_ramdisk", which did nothing and were deprecated
+- Removed /proc/sys/kernel/real-root-dev . It was used
+for initrd only
+- Command line parameters "noinitrd" and "ramdisk_start=" are deprecated
+
+This patchset is based on current mainline (7f7072574127).
+
+Testing
+====
+I tested my patchset on many architectures in Qemu using my Rust
+program, heavily based on mkroot [1].
+
+I used the following cross-compilers:
+
+aarch64-linux-musleabi
+armv4l-linux-musleabihf
+armv5l-linux-musleabihf
+armv7l-linux-musleabihf
+i486-linux-musl
+i686-linux-musl
+mips-linux-musl
+mips64-linux-musl
+mipsel-linux-musl
+powerpc-linux-musl
+powerpc64-linux-musl
+powerpc64le-linux-musl
+riscv32-linux-musl
+riscv64-linux-musl
+s390x-linux-musl
+sh4-linux-musl
+sh4eb-linux-musl
+x86_64-linux-musl
+
+taken from this directory [2].
+
+So, as you can see, there are 18 triplets, which correspond to 8 subdirs in arch/.
+
+For every triplet I tested that:
+- Initramfs still works (both builtin and external)
+- Direct boot from disk still works
+- Remaining initrd code path (root=/dev/ram0) still works
+
+Workaround
+====
+If "retain_initrd" is passed to kernel, then initramfs/initrd,
+passed by bootloader, is retained and becomes available after boot
+as read-only magic file /sys/firmware/initrd [3].
+
+No copies are involved. I. e. /sys/firmware/initrd is simply
+a reference to original blob passed by bootloader.
+
+This works even if initrd/initramfs is not recognized by kernel
+in any way, i. e. even if it is not valid cpio archive, nor
+a fs image supported by classic initrd.
+
+This works both with my patchset and without it.
+
+This means that you can emulate classic initrd so:
+link builtin initramfs to kernel; in /init in this initramfs
+copy /sys/firmware/initrd to some file in / and loop-mount it.
+
+This is even better than classic initrd, because:
+- You can use fs not supported by classic initrd, for example erofs
+- One copy is involved (from /sys/firmware/initrd to some file in /)
+as opposed to two when using classic initrd
+
+Still, I don't recommend using this workaround, because
+I want everyone to migrate to proper modern initramfs.
+But still you can use this workaround if you want.
+
+Also: it is not possible to directly loop-mount
+/sys/firmware/initrd . Theoretically kernel can be changed
+to allow this (and/or to make it writable), but I think nobody needs this.
+And I don't want to implement this.
+
+On Qemu's -initrd and GRUB's initrd
+====
+Don't panic, this patchset doesn't remove initramfs
+(which is used by nearly all Linux distros). And I don't
+have plans to remove it.
+
+Qemu's -initrd option and GRUB's initrd command refer
+to initrd bootloader mechanism, which is used to
+load both initrd and (external) initramfs.
+
+So, if you use Qemu's -initrd or GRUB's initrd,
+then you likely use them to pass initramfs, and thus
+you are safe.
+
+v1: https://lore.kernel.org/lkml/20250913003842.41944-1-safinaskar@gmail.com/
+
+v1 -> v2 changes:
+- A lot. I removed most patches, see cover letter for details
+
+[1] https://github.com/landley/toybox/tree/master/mkroot
+[2] https://landley.net/toybox/downloads/binaries/toolchains/latest
+[3] https://lore.kernel.org/all/20231207235654.16622-1-graf@amazon.com/
+[4] https://lore.kernel.org/lkml/20250918152830.438554-1-nschichan@freebox.fr/
+
+Askar Safin (3):
+  init: remove deprecated "load_ramdisk" and "prompt_ramdisk" command
+    line parameters
+  initrd: remove deprecated code path (linuxrc)
+  init: remove /proc/sys/kernel/real-root-dev
+
+ .../admin-guide/kernel-parameters.txt         |   8 +-
+ Documentation/admin-guide/sysctl/kernel.rst   |   6 -
+ arch/arm/configs/neponset_defconfig           |   2 +-
+ fs/init.c                                     |  14 ---
+ include/linux/init_syscalls.h                 |   1 -
+ include/linux/initrd.h                        |   2 -
+ include/uapi/linux/sysctl.h                   |   1 -
+ init/do_mounts.c                              |  11 +-
+ init/do_mounts.h                              |  18 +--
+ init/do_mounts_initrd.c                       | 105 +-----------------
+ init/do_mounts_rd.c                           |  24 +---
+ 11 files changed, 18 insertions(+), 174 deletions(-)
+
+
+base-commit: 7f7072574127c9e971cad83a0274e86f6275c0d5
+-- 
+2.47.3
+
