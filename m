@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F512F363E;
-	Fri, 10 Oct 2025 13:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B54221579F;
+	Fri, 10 Oct 2025 13:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102425; cv=none; b=AOuppEPsAFIVl5HhOvE+hTfVmbJl1xXPaEHF1ringg0/+4QDMKw3DqHFKrshUvXYbsOAUN9jknMEg/5C4SBbE3Nss81sxXfcVYTFGgmEmkIy/LwepgloHflok166L1r3W4kF3O1hkRTJSth76ObH5Se6WHyvarPzSm36NoLlUaY=
+	t=1760102428; cv=none; b=WpMVGHHDa91Jcuny6SgsGHN4RP/f+nlvCIMppUhR8edZ9bg4v3saTfF0yJqjFcPcM8ZyKfafpl0CX2bqIbOh5Id3MBmirswRXNa9LYrw98JR997OvyBgcYHyM5cqnwRG8P4iaCGhC1hyeaT4AxYXARTjBEap5bwkm1SvKHnQADA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102425; c=relaxed/simple;
-	bh=DPrQ0OcMsC3Qo3ZYTwmPYQMiUA7jnzW2ShdGw1jNndg=;
+	s=arc-20240116; t=1760102428; c=relaxed/simple;
+	bh=1BHjjyQNT/lTS7xxvhvBwqfr88hAUOMpVo5YpnQV4gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mAiWwYdfLH1X6ZRk8lTXArq2ckb3iMfqJKXzM2k7jYc/bgyhkf7xiW6zBNW8DNKooQg5JfsUZP/+WBW9wcFYxn8rL2pVTAdcZi4prsNdBa7lzfdHRj2Yne3jT/ta3T+1lfHYzs2EZj4OTJ0BTANI08TxyIa90CUe/0mhpr/jNOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCkY0NoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1UM0k/awEcVuhMDgi6lUPzFgDmVgMVUxqwLDdqGZWPb/rHBUdQtZzYEeu8xSXS8cYxWsTRKXvRjRWolYmBg2kNlsKhYTb//XUPSpHJfUFeCbRFtW1FMbD+T9HdbP5LmzDqHu6qIkf8U1titJ4hobjKR0PvmqxOS1gD4Ma3m7nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzCVC6Yt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCkY0NoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD26FC4CEF1;
-	Fri, 10 Oct 2025 13:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzCVC6Yt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A117FC4CEF1;
+	Fri, 10 Oct 2025 13:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102425;
-	bh=DPrQ0OcMsC3Qo3ZYTwmPYQMiUA7jnzW2ShdGw1jNndg=;
+	s=korg; t=1760102428;
+	bh=1BHjjyQNT/lTS7xxvhvBwqfr88hAUOMpVo5YpnQV4gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCkY0NoIrnIRBHN51+E5KthfDzg3CIMFzN3tSGgmMewwfA6BZpFTLMtlLIxxkyaCP
-	 8pNv7rjTcHHiPY3/FlLVZ7Cu7SvLvK7wNDWD0f/yLuekkBSqAFSL1LWhRWMRE/SFz2
-	 zEZ01UFxGZYlvv3LQN3RAIxLdThzvRfJHL+4MZfQ=
+	b=bzCVC6YtnVFAsRhftR6BJBrg+MYxKTI6T1A4gShJ515EQCyFfxCbjcm8/MmbrSlOe
+	 xX/tDGx1H8m9r3+w4y+LZfCJzVBDyJUr7NgHCbe2bk6qHgsuf/msA1NsRLBYxEoqH6
+	 3i0jnP0JhdzXS0kAmFzsMvFkBNx0JbUZVHrERQBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	April Grimoire <aprilgrimoire@proton.me>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	hupu <hupu.gm@gmail.com>,
+	Guilherme Amadio <amadio@gentoo.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 10/35] platform/x86/amd/pmc: Add MECHREVO Yilong15Pro to spurious_8042 list
-Date: Fri, 10 Oct 2025 15:16:12 +0200
-Message-ID: <20251010131332.165004198@linuxfoundation.org>
+Subject: [PATCH 6.12 11/35] perf subcmd: avoid crash in exclude_cmds when excludes is empty
+Date: Fri, 10 Oct 2025 15:16:13 +0200
+Message-ID: <20251010131332.199727804@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -46,53 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: aprilgrimoire <aprilgrimoire@proton.me>
+From: hupu <hupu.gm@gmail.com>
 
-[ Upstream commit 8822e8be86d40410ddd2ac8ff44f3050c9ecf9c6 ]
+[ Upstream commit a5edf3550f4260504b7e0ab3d40d13ffe924b773 ]
 
-The firmware of Mechrevo Yilong15Pro emits a spurious keyboard interrupt on
-events including closing the lid. When a user closes the lid on an already
-suspended system this causes the system to wake up.
-Add Mechrevo Yilong15Pro Series (GM5HG7A) to the list of quirk
-spurious_8042 to work around this issue.
+When cross-compiling the perf tool for ARM64, `perf help` may crash
+with the following assertion failure:
 
-Link: https://lore.kernel.org/linux-pm/6ww4uu6Gl4F5n6VY5dl1ufASfKzs4DhMxAN8BuqUpCoqU3PQukVSVSBCl_lKIzkQ-S8kt1acPd58eyolhkWN32lMLFj4ViI0Tdu2jwhnYZ8=@proton.me/
-Signed-off-by: April Grimoire <aprilgrimoire@proton.me>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/IvSc_IN5Pa0wRXElTk_fEl-cTpMZxg6TCQk_7aRUkTd9vJUp_ZeC0NdXZ0z6Tn7B-XiqqqQvCH65lq6FqhuECBMEYWcHQmWm1Jo7Br8kpeg=@proton.me
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  help.c:122: exclude_cmds: Assertion `cmds->names[ci] == NULL' failed.
+
+This happens when the perf binary is not named exactly "perf" or when
+multiple "perf-*" binaries exist in the same directory. In such cases,
+the `excludes` command list can be empty, which leads to the final
+assertion in exclude_cmds() being triggered.
+
+Add a simple guard at the beginning of exclude_cmds() to return early
+if excludes->cnt is zero, preventing the crash.
+
+Signed-off-by: hupu <hupu.gm@gmail.com>
+Reported-by: Guilherme Amadio <amadio@gentoo.org>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20250909094953.106706-1-amadio@gentoo.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/lib/subcmd/help.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 6f5437d210a61..b872baf35808f 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -233,6 +233,14 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
- 		}
- 	},
-+	{
-+		.ident = "MECHREVO Yilong15Pro Series GM5HG7A",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "MECHREVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Yilong15Pro Series GM5HG7A"),
-+		}
-+	},
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=220116 */
- 	{
- 		.ident = "PCSpecialist Lafite Pro V 14M",
+diff --git a/tools/lib/subcmd/help.c b/tools/lib/subcmd/help.c
+index 9ef569492560e..ddaeb4eb3e249 100644
+--- a/tools/lib/subcmd/help.c
++++ b/tools/lib/subcmd/help.c
+@@ -75,6 +75,9 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
+ 	size_t ci, cj, ei;
+ 	int cmp;
+ 
++	if (!excludes->cnt)
++		return;
++
+ 	ci = cj = ei = 0;
+ 	while (ci < cmds->cnt && ei < excludes->cnt) {
+ 		cmp = strcmp(cmds->names[ci]->name, excludes->names[ei]->name);
 -- 
 2.51.0
 
