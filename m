@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDB82F3C1C;
-	Fri, 10 Oct 2025 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256792F3C2D;
+	Fri, 10 Oct 2025 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102302; cv=none; b=e146bQL0VWCf7paCUTcrT5AjB/1P6ioK31YaRxyfkoswXVpsSVntcT/IWr2rHXe03OOZQgLUYt3xFNsPNDFfDS1j40qQrlMR6A3g0QhgGE3Qsa4ZdIvOTJUAY2GgJyBof0qXsoJDW4uElKtjamgU3wsuItzbk8m/NQRqlOVgHKg=
+	t=1760102305; cv=none; b=FO7FqAHr7Dqu/4W0hLsUGtXvZqbircChlGMeliJrClMLoDM8mNkbQUP5ZkJBKFQegMBDX1A6jYGHHT+puRpG0WH1ez+0AHiInYeRuOVh/rDwDkx6q0KEcYRIsCc4KGTvYl8EwSerObejfK7iuUJmseTt4iiNrW0MldC+cvSflFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102302; c=relaxed/simple;
-	bh=+TSqb09QHdN8xYvC10NmkN6WPa2puEROc/AL0mEPxnw=;
+	s=arc-20240116; t=1760102305; c=relaxed/simple;
+	bh=v0ym/9DXTK9zq/kctuk9Inz48kdTAO9oz4qm2/TSkXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOGDXLf6FZlVtWZwfmOqQaevp6cJt7nfxGllxDHY9YAEXtSXfkDZ4k57FM+esjAjkhFaIQy9+ZAQz7ZHn2ZEdFoLGTb+2pSIpuZhol/DdjqBJFEMtWXENyemd5aW9d6aSqm0lgk9a7Qrx4J+AYRcuv4wm/DvpWCQSs/3GyjW4+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WTf9i/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5ltcsA56dz8GYZx4sSpTPBWjpz1Wgn86/pkIHBlE2CCX+1eKVq/aBCfqXwVqSRFKgL6pRCsJG/A39Wb+rJrZuHXqJhHKB8/VWhmlS0sUHkpBatsGf40ou5INaoNzNJ4w+i5W+9dMyeqc+pFVwmKhuCBAWYJkdc5YoZlYvnarsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeaAfxft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WTf9i/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF796C4CEF1;
-	Fri, 10 Oct 2025 13:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeaAfxft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2176C4CEF9;
+	Fri, 10 Oct 2025 13:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102302;
-	bh=+TSqb09QHdN8xYvC10NmkN6WPa2puEROc/AL0mEPxnw=;
+	s=korg; t=1760102305;
+	bh=v0ym/9DXTK9zq/kctuk9Inz48kdTAO9oz4qm2/TSkXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0WTf9i/UXdOMRfd0xtEsHfq/XTYP7Oumh4/JtVTyQwloPaqWi69gpV6IQU9SOeGl0
-	 bKU2YyK6+32tojUEGeq6juPFF0oF3EKluZiH5nhXMsuCE4cd5iaHGPGlzVzjDIRjC3
-	 JSkQyUHzsIQObXPToEc63U/vjKJZbSmTXc5KEgjc=
+	b=UeaAfxftuZ5MKkzhtDE6K4AquDSCRJjBqqTDckO2jM756PYbZAIjEitU//7r5W9FN
+	 0Ug2AgOAbmcG9+NjKe7j0W1vJOLLZaYMasJ7HWDWgeR99EvyPANWVyf0uNwkLWpS5p
+	 XdtxUnaBpp7YW9aJuqhFe4YJee+YgvqAUVll1RBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Gergo Koteles <soyer@irl.hu>
-Subject: [PATCH 6.16 01/41] ALSA: hda/tas2781: Fix the order of TAS2781 calibrated-data
-Date: Fri, 10 Oct 2025 15:15:49 +0200
-Message-ID: <20251010131333.476298429@linuxfoundation.org>
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.16 10/41] rust: block: fix `srctree/` links
+Date: Fri, 10 Oct 2025 15:15:58 +0200
+Message-ID: <20251010131333.797450620@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -51,71 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 71d2893a235bf3b95baccead27b3d47f2f2cdc4c upstream.
+commit 208d7f788e84e80992d7b1c82ff17b620eb1371e upstream.
 
-A bug reported by one of my customers that the order of TAS2781
-calibrated-data is incorrect, the correct way is to move R0_Low
-and insert it between R0 and InvR0.
+This `srctree/` link pointed to a file with an underscore, but the header
+used a dash instead.
 
-Fixes: 4fe238513407 ("ALSA: hda/tas2781: Move and unified the calibrated-data getting function for SPI and I2C into the tas2781_hda lib")
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-Link: https://patch.msgid.link/20250907222728.988-1-shenghao-ding@ti.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Cc: Gergo Koteles <soyer@irl.hu>
+Thus fix it.
+
+This cleans a future warning that will check our `srctree/` links.
+
+Cc: stable@vger.kernel.org
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ rust/kernel/block/mq/gen_disk.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/tas2781_hda.c
-+++ b/sound/pci/hda/tas2781_hda.c
-@@ -31,6 +31,23 @@ const efi_guid_t tasdev_fct_efi_guid[] =
- };
- EXPORT_SYMBOL_NS_GPL(tasdev_fct_efi_guid, "SND_HDA_SCODEC_TAS2781");
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -3,7 +3,7 @@
+ //! Generic disk abstraction.
+ //!
+ //! C header: [`include/linux/blkdev.h`](srctree/include/linux/blkdev.h)
+-//! C header: [`include/linux/blk_mq.h`](srctree/include/linux/blk_mq.h)
++//! C header: [`include/linux/blk-mq.h`](srctree/include/linux/blk-mq.h)
  
-+/*
-+ * The order of calibrated-data writing function is a bit different from the
-+ * order in UEFI. Here is the conversion to match the order of calibrated-data
-+ * writing function.
-+ */
-+static void cali_cnv(unsigned char *data, unsigned int base, int offset)
-+{
-+	struct cali_reg reg_data;
-+
-+	memcpy(&reg_data, &data[base], sizeof(reg_data));
-+	/* the data order has to be swapped between r0_low_reg and inv0_reg */
-+	swap(reg_data.r0_low_reg, reg_data.invr0_reg);
-+
-+	cpu_to_be32_array((__force __be32 *)(data + offset + 1),
-+		(u32 *)&reg_data, TASDEV_CALIB_N);
-+}
-+
- static void tas2781_apply_calib(struct tasdevice_priv *p)
- {
- 	struct calidata *cali_data = &p->cali_data;
-@@ -101,8 +118,7 @@ static void tas2781_apply_calib(struct t
- 
- 				data[l] = k;
- 				oft++;
--				for (i = 0; i < TASDEV_CALIB_N * 4; i++)
--					data[l + i + 1] = data[4 * oft + i];
-+				cali_cnv(data, 4 * oft, l);
- 				k++;
- 			}
- 		}
-@@ -128,9 +144,8 @@ static void tas2781_apply_calib(struct t
- 
- 		for (j = p->ndev - 1; j >= 0; j--) {
- 			l = j * (cali_data->cali_dat_sz_per_dev + 1);
--			for (i = TASDEV_CALIB_N * 4; i > 0 ; i--)
--				data[l + i] = data[p->index * 5 + i];
--			data[l+i] = j;
-+			cali_cnv(data, cali_data->cali_dat_sz_per_dev * j, l);
-+			data[l] = j;
- 		}
- 	}
- 
+ use crate::block::mq::{raw_writer::RawWriter, Operations, TagSet};
+ use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc};
 
 
