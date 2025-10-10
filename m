@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5342882AC;
-	Fri, 10 Oct 2025 13:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1322EF664;
+	Fri, 10 Oct 2025 13:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102411; cv=none; b=fRZdMRvLDUJpb0jnOGqRmBdkqXto87Jl4n2vfzZgYcI87xDMP7Oc8U5ePFvNgO8kLsBnXih6MTSsWPx0j2oT38xYpsnsCfQs5hzt2hX9EXKTXkDAVCKCEycc9IpKaRUgy7Qm3zY/P6TE5OptVoP+nkC+xD15yYnl0qk+SWae+vc=
+	t=1760102413; cv=none; b=c+zwGjLfIbbeDsbYtk6ZFjdn4RIJ5D5UwK23sEPdafgQqpK3S+Gr8v78Mgur0Hc44C890lwWtiW4/pFW+RyZD+LcWmSkmGQR16Qz1cKNI1VtcYqskqag4x+66yzW8Qgzgx7MEWA2ki5c/gPbScOylcPIi7SB/NkKXLfkK6axgN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102411; c=relaxed/simple;
-	bh=or9AUi32cbtxTLNE3DjXenBy5ERB4q3pPM5C+rfzWGc=;
+	s=arc-20240116; t=1760102413; c=relaxed/simple;
+	bh=JnAcFamxAWZ6EX22O7GEmTXb15OIzihsuZ7+zNmo3K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i92/Tl7YzOI93jHi2dMkSqBJggIIdKsM6Yoh9VvnfHhGG6sO7tvcGKjWr+tLbZPL5RA3wuONbIcnvchjerdMPcOh56mo1q2BIJgsJxXJbDT1Q1Vl6cqFqOCvkisU2nAcY+tAHiHT7nDVfWV/P/Cvlkk5lnEWz6IYiOfJjPSVgog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e78NwoVM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H6kOLzsYxYsF1ulA93w8xWyMqOiBY9AatKXy72Uj+yIg1ra/z7MwyJ852qS3OThTwNDbv/gGxkxmV2be97eurXFcJlAsUNqVrUQXUfGfUWjo/6u9ORu3g1l0zV7uGnwrdTs4Szlqbf9TDgCGAzywPyvwiRn9Pbd35Y+Wfev2heo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNWTwLXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e78NwoVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D0BC4CEF8;
-	Fri, 10 Oct 2025 13:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNWTwLXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC5AC4CEF1;
+	Fri, 10 Oct 2025 13:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102410;
-	bh=or9AUi32cbtxTLNE3DjXenBy5ERB4q3pPM5C+rfzWGc=;
+	s=korg; t=1760102413;
+	bh=JnAcFamxAWZ6EX22O7GEmTXb15OIzihsuZ7+zNmo3K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e78NwoVM2BO46qQg0Db2dpUisTQxIXzLIN4cu1IiRNDtWmo0QvTYXSNQ5Eg092p0r
-	 xRBHgh7NPGVBQIweLasemu6cSHjaqvf8M9qwcAmwKC5fWKOzhoqb0fCwvrOHeZHD4n
-	 E1FgbWcEk7R156ZCMuZjiJeAQ09Wyyam2BWpGA+g=
+	b=wNWTwLXVkDt2KrJio7h8zJv+jh/BqoOm9Jj+snHWv9TBPwR9L9ibFVLo9zaRSwzlZ
+	 5jPAMgaON8nuE9FwKMS20GvJEYXDz9uh3O2+jyvs6dkhamSEbJAFjivHqzTM9Lf03w
+	 GAuDgb8u2qa4r780uKcAngXDfzp3BHTkTihn94X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Subject: [PATCH 6.16 35/41] staging: axis-fifo: flush RX FIFO on read errors
-Date: Fri, 10 Oct 2025 15:16:23 +0200
-Message-ID: <20251010131334.681099664@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	stable <stable@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 6.16 36/41] driver core: faux: Set power.no_pm for faux devices
+Date: Fri, 10 Oct 2025 15:16:24 +0200
+Message-ID: <20251010131334.715999280@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -49,84 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 82a051e2553b9e297cba82a975d9c538b882c79e upstream.
+commit 1ad926459970444af1140f9b393f416536e1a828 upstream.
 
-Flush stale data from the RX FIFO in case of errors, to avoid reading
-old data when new packets arrive.
+Since faux devices are not supposed to be involved in any kind of
+power management, set the no_pm flag for all of them.
 
-Commit c6e8d85fafa7 ("staging: axis-fifo: Remove hardware resets for
-user errors") removed full FIFO resets from the read error paths, which
-fixed potential TX data losses, but introduced this RX issue.
-
-Fixes: c6e8d85fafa7 ("staging: axis-fifo: Remove hardware resets for user errors")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Link: https://lore.kernel.org/r/20250912101322.1282507-2-ovidiu.panait.oss@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://lore.kernel.org/r/6206518.lOV4Wx5bFT@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |   18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/base/faux.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/axis-fifo/axis-fifo.c
-+++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -391,6 +391,7 @@ static ssize_t axis_fifo_read(struct fil
- 	}
+--- a/drivers/base/faux.c
++++ b/drivers/base/faux.c
+@@ -155,6 +155,7 @@ struct faux_device *faux_device_create_w
+ 		dev->parent = &faux_bus_root;
+ 	dev->bus = &faux_bus_type;
+ 	dev_set_name(dev, "%s", name);
++	device_set_pm_not_required(dev);
  
- 	bytes_available = ioread32(fifo->base_addr + XLLF_RLR_OFFSET);
-+	words_available = bytes_available / sizeof(u32);
- 	if (!bytes_available) {
- 		dev_err(fifo->dt_device, "received a packet of length 0\n");
- 		ret = -EIO;
-@@ -401,7 +402,7 @@ static ssize_t axis_fifo_read(struct fil
- 		dev_err(fifo->dt_device, "user read buffer too small (available bytes=%zu user buffer bytes=%zu)\n",
- 			bytes_available, len);
- 		ret = -EINVAL;
--		goto end_unlock;
-+		goto err_flush_rx;
- 	}
- 
- 	if (bytes_available % sizeof(u32)) {
-@@ -410,11 +411,9 @@ static ssize_t axis_fifo_read(struct fil
- 		 */
- 		dev_err(fifo->dt_device, "received a packet that isn't word-aligned\n");
- 		ret = -EIO;
--		goto end_unlock;
-+		goto err_flush_rx;
- 	}
- 
--	words_available = bytes_available / sizeof(u32);
--
- 	/* read data into an intermediate buffer, copying the contents
- 	 * to userspace when the buffer is full
- 	 */
-@@ -426,18 +425,23 @@ static ssize_t axis_fifo_read(struct fil
- 			tmp_buf[i] = ioread32(fifo->base_addr +
- 					      XLLF_RDFD_OFFSET);
- 		}
-+		words_available -= copy;
- 
- 		if (copy_to_user(buf + copied * sizeof(u32), tmp_buf,
- 				 copy * sizeof(u32))) {
- 			ret = -EFAULT;
--			goto end_unlock;
-+			goto err_flush_rx;
- 		}
- 
- 		copied += copy;
--		words_available -= copy;
- 	}
-+	mutex_unlock(&fifo->read_lock);
-+
-+	return bytes_available;
- 
--	ret = bytes_available;
-+err_flush_rx:
-+	while (words_available--)
-+		ioread32(fifo->base_addr + XLLF_RDFD_OFFSET);
- 
- end_unlock:
- 	mutex_unlock(&fifo->read_lock);
+ 	ret = device_add(dev);
+ 	if (ret) {
 
 
