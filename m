@@ -1,142 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA8A2F28EE;
-	Fri, 10 Oct 2025 13:23:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286762F533E
+	for <patches@lists.linux.dev>; Fri, 10 Oct 2025 15:02:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102605; cv=none; b=u3sYKxfHGbQPDDThMP10tcwkgFNSdpJ6vTUxHUf7cqLQfRpqX4NMEb5lYd78wvVCYbXkXz0hpTYC3X8E/i+ybPOR0v01kPOggVU2l+MxHYrVbRuP353RaPkLdl0gqc19U40WJz9+bmeU0AE9qcZpBiyZ0CngtIRnm6ePxuxWsIA=
+	t=1760108561; cv=none; b=qpKpuRvNZlqkIR9/6lgcEO6ZWfm50oDrBzD3pz3jaTsDR3zkKpb/IjcXd3g9siUzP60yrEENm849i/7a3ZCU0tpiOxZs62/zUBNXivncU0O2rK1i4UnT275guoW3B8Av9Vp03/W6TH52F5HsxJDvAbHBf8r3DMn8XZ561nNfGiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102605; c=relaxed/simple;
-	bh=1sqFajZVB1zTCp8SIP11xeK4+MP62Fd9sVphvTipnGk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgWn2vH5jYA8TnJyttolaHwZDyb0jGUgq5LMKyzuSaW1I+oyL/Ysr8e5RnD2bDvJFUcyZglkZJTZjzuTZCLsGbz9pVg8qQOvtmn39zzQnRM6g4zFM/84q2I6TKjaQUJT0aXiZYyLiBYaba4jwpHQUZGu0LrfQYYrbhL4+4yzlEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiuDyNEJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760108561; c=relaxed/simple;
+	bh=lLjhJqbBDQ/a2E91zif4RZ281K6W6HFigWXT0cxbz3M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OTeXRCXWQ1HJEVW+Ejq/u48Igoxc6TYCIOtV3pHB3El4NEEUwO8cw1cgQa+sqRLFHiCaFbCwGHxEo9PJujo20veZD8gPLf6u5nNYvfSFGw9Jdl/35N0Lp8JRAtz3I83Hf5b6aekbzRNIZdBWdMRljDWUOLd/SJuC/LqSuo8jbE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WGIN4YIK; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiuDyNEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3126C4CEF9;
-	Fri, 10 Oct 2025 13:23:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102605;
-	bh=1sqFajZVB1zTCp8SIP11xeK4+MP62Fd9sVphvTipnGk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiuDyNEJRcaxk3xQUF2b9sJ48XoqIZ74YKq9ndkkMuEw9OMIf+wZ9cC9Smmn95wcg
-	 VX3MKw0LKz/2xtbFAUOwOFP0gXFXJEuhcJSLuJOCZgN7wjGvgf++5JjqcjW+EuMXcN
-	 GM8sAVebCST7WoMYvJ8giUbbbtz7VURjjWbtrTZA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Han Gao <rabenda.cn@gmail.com>
-Subject: [PATCH 6.6 24/28] riscv: mm: Use hint address in mmap if available
-Date: Fri, 10 Oct 2025 15:16:42 +0200
-Message-ID: <20251010131331.245558091@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251010131330.355311487@linuxfoundation.org>
-References: <20251010131330.355311487@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WGIN4YIK"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b3d50882cc2so414409166b.2
+        for <patches@lists.linux.dev>; Fri, 10 Oct 2025 08:02:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760108558; x=1760713358; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lLjhJqbBDQ/a2E91zif4RZ281K6W6HFigWXT0cxbz3M=;
+        b=WGIN4YIK1joyEkYM55U/1AbD2N7rjG1swepzg62ODZh9yZ7xk0jeofLtpaRRgKqNpB
+         1DmpCsoezpZXgpPILZ0j/VS/xViHVLr5bPkuMolouz4NjwEwPtBrbncDPPGA31ODKlLX
+         NU8oLQ8q/QPoGRgc0Z1/1wrB8SFIWJyql+fp39ZWidicb+ypQsUyvOnRAUhYmrHjT7sW
+         VQ1O0gGJXmDPnBun1/NSiab1VrYk+uzCwlhyt2aOGE9d7zD0Ep2j9Ce5o2F/LRT0wf3J
+         92ycqfihestAekfPRUbretopbUlgjQV4nPb784jFz8NB9Jojebdjl0ZMrWrHAXbjncQZ
+         IWNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760108558; x=1760713358;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lLjhJqbBDQ/a2E91zif4RZ281K6W6HFigWXT0cxbz3M=;
+        b=ptQYtzNcyqdyjmGexWOaGZWWF16SMNGwJ31nixit9kmBLMhar7qqNaocmnNYY+MqZU
+         7r9gZysLDWBQSC12zqWO1FS838YcvrZIRnUltUPyvc2rgBpre4K/qXvd5tIWxQQ73Foa
+         aqHSOrT/44Da2jbvoFhRfkyuPSFB4N2ZDkt3ItFoDW5Fzhwy194KEUU78l9fcP91OmkB
+         Om/IsLT+Kujv8TpViT7hPhIlTALrtcktrczDyylpr4TRrn4KVF5z5IlynOKPL5fduAH5
+         5O1O5BQ/+fOvjtnVT4njTn+xgHiwLMrz/SafERRTfuVafqepXrhtHJHE08WqnHxTclXy
+         o2zA==
+X-Forwarded-Encrypted: i=1; AJvYcCVIl+63GqIVvQmztSB0jygyFRvvSpIUuWm7phYA0JNwyH6TQSMtyBSazoBxPMWtUilAbL41pPmj@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzi+UuJ6Q8R61DVK26gVR7HlsicpawoVftpxXP06dSz+05CjhZA
+	HFcGJiDL+VQaH9ehkBNAxNvYyBNd2JfRmTacrK2LAZ7sKraF/PMZVUNQjQB/IZpAw4hmHTetDe6
+	M68vxOb32BO9dce6AY7gkHdo3c4ZeBt0=
+X-Gm-Gg: ASbGncsCyYt0iNtm+Uy72hbHfcK/azNMsZY1IJzQVs/IPsa/N5HLyD2mdG11+V3NAen
+	54lHoB1qQOETIajvuTVaa4nSpgL05mGVMGebtVItVErrVOM8Bnczfq4BzPEc8O8yK1NdD/ExuKm
+	b1CGt0df+Eyh9DB4KGwv1tYOCXXc7mi1ApZyqAKSHjagT0Wv7kQYDRSncrSH1O7io2CFqO50TWj
+	HchlzSKErbes6tDYK30cyzDiQ==
+X-Google-Smtp-Source: AGHT+IGa/polL6/8Ynsft44cUD0O1NPKwafCC8Smc6nmBnm4TDK7NhR64Y4hIQgBMI+z098vLRzD8f+sU8sdugojvoo=
+X-Received: by 2002:a17:906:c104:b0:b04:9ad9:5b29 with SMTP id
+ a640c23a62f3a-b50ac5d1e3bmr1407180966b.54.1760108556823; Fri, 10 Oct 2025
+ 08:02:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251010094047.3111495-1-safinaskar@gmail.com> <20251010094047.3111495-2-safinaskar@gmail.com>
+In-Reply-To: <20251010094047.3111495-2-safinaskar@gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Fri, 10 Oct 2025 18:02:00 +0300
+X-Gm-Features: AS18NWAoVP5WYC_07QqSXrvsFY0nBG5PiGs9ESaeN2ZfR7dfSMsKUbHhpVYPARc
+Message-ID: <CAHp75VeJM_OoCWDX20FhphRi6e7rG9Z4X6zkjx9vFF12n7Ef7A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] init: remove deprecated "load_ramdisk" and
+ "prompt_ramdisk" command line parameters
+To: Askar Safin <safinaskar@gmail.com>
+Cc: linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Linus Torvalds <torvalds@linux-foundation.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Christian Brauner <brauner@kernel.org>, 
+	Al Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, Christoph Hellwig <hch@lst.de>, 
+	Jens Axboe <axboe@kernel.dk>, Aleksa Sarai <cyphar@cyphar.com>, 
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
+	Julian Stecklina <julian.stecklina@cyberus-technology.de>, 
+	Gao Xiang <hsiangkao@linux.alibaba.com>, Art Nikpal <email2tema@gmail.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, Alexander Graf <graf@amazon.com>, 
+	Rob Landley <rob@landley.net>, Lennart Poettering <mzxreary@0pointer.de>, linux-arch@vger.kernel.org, 
+	linux-block@vger.kernel.org, initramfs@vger.kernel.org, 
+	linux-api@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Michal Simek <monstr@monstr.eu>, Luis Chamberlain <mcgrof@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Thorsten Blum <thorsten.blum@linux.dev>, Heiko Carstens <hca@linux.ibm.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Dave Young <dyoung@redhat.com>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Borislav Petkov <bp@alien8.de>, Jessica Clarke <jrtc27@jrtc27.com>, 
+	Nicolas Schichan <nschichan@freebox.fr>, David Disseldorp <ddiss@suse.de>, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Fri, Oct 10, 2025 at 12:42=E2=80=AFPM Askar Safin <safinaskar@gmail.com>=
+ wrote:
+>
+> ...which do nothing. They were deprecated (in documentation) in
+> 6b99e6e6aa62 ("Documentation/admin-guide: blockdev/ramdisk: remove use of
+> "rdev"") and in kernel messages in c8376994c86c ("initrd: remove support
+> for multiple floppies")
 
-------------------
+With all the respect to the work and the series I have noted this:
+1) often the last period is missing in the commit messages;
+2) in this change it's unclear for how long (years) the feature was
+deprecated, i.e. the other patch states that 2020 for something else.
+I wonder if this one has the similar order of oldness.
 
-From: Charlie Jenkins <charlie@rivosinc.com>
-
-commit b5b4287accd702f562a49a60b10dbfaf7d40270f upstream.
-
-On riscv it is guaranteed that the address returned by mmap is less than
-the hint address. Allow mmap to return an address all the way up to
-addr, if provided, rather than just up to the lower address space.
-
-This provides a performance benefit as well, allowing mmap to exit after
-checking that the address is in range rather than searching for a valid
-address.
-
-It is possible to provide an address that uses at most the same number
-of bits, however it is significantly more computationally expensive to
-provide that number rather than setting the max to be the hint address.
-There is the instruction clz/clzw in Zbb that returns the highest set bit
-which could be used to performantly implement this, but it would still
-be slower than the current implementation. At worst case, half of the
-address would not be able to be allocated when a hint address is
-provided.
-
-Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20240130-use_mmap_hint_address-v3-1-8a655cfa8bcb@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-[ Adjust TASK_SIZE64 -> TASK_SIZE in moved lines ]
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Tested-by: Han Gao <rabenda.cn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/riscv/include/asm/processor.h |   27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
-
---- a/arch/riscv/include/asm/processor.h
-+++ b/arch/riscv/include/asm/processor.h
-@@ -13,22 +13,16 @@
- 
- #include <asm/ptrace.h>
- 
--#ifdef CONFIG_64BIT
--#define DEFAULT_MAP_WINDOW	(UL(1) << (MMAP_VA_BITS - 1))
--#define STACK_TOP_MAX		TASK_SIZE
--
- #define arch_get_mmap_end(addr, len, flags)			\
- ({								\
- 	unsigned long mmap_end;					\
- 	typeof(addr) _addr = (addr);				\
--	if ((_addr) == 0 || (IS_ENABLED(CONFIG_COMPAT) && is_compat_task())) \
-+	if ((_addr) == 0 ||					\
-+	    (IS_ENABLED(CONFIG_COMPAT) && is_compat_task()) ||	\
-+	    ((_addr + len) > BIT(VA_BITS - 1)))			\
- 		mmap_end = STACK_TOP_MAX;			\
--	else if ((_addr) >= VA_USER_SV57)			\
--		mmap_end = STACK_TOP_MAX;			\
--	else if ((((_addr) >= VA_USER_SV48)) && (VA_BITS >= VA_BITS_SV48)) \
--		mmap_end = VA_USER_SV48;			\
- 	else							\
--		mmap_end = VA_USER_SV39;			\
-+		mmap_end = (_addr + len);			\
- 	mmap_end;						\
- })
- 
-@@ -38,17 +32,18 @@
- 	typeof(addr) _addr = (addr);				\
- 	typeof(base) _base = (base);				\
- 	unsigned long rnd_gap = DEFAULT_MAP_WINDOW - (_base);	\
--	if ((_addr) == 0 || (IS_ENABLED(CONFIG_COMPAT) && is_compat_task())) \
-+	if ((_addr) == 0 ||					\
-+	    (IS_ENABLED(CONFIG_COMPAT) && is_compat_task()) ||	\
-+	    ((_addr + len) > BIT(VA_BITS - 1)))			\
- 		mmap_base = (_base);				\
--	else if (((_addr) >= VA_USER_SV57) && (VA_BITS >= VA_BITS_SV57)) \
--		mmap_base = VA_USER_SV57 - rnd_gap;		\
--	else if ((((_addr) >= VA_USER_SV48)) && (VA_BITS >= VA_BITS_SV48)) \
--		mmap_base = VA_USER_SV48 - rnd_gap;		\
- 	else							\
--		mmap_base = VA_USER_SV39 - rnd_gap;		\
-+		mmap_base = (_addr + len) - rnd_gap;		\
- 	mmap_base;						\
- })
- 
-+#ifdef CONFIG_64BIT
-+#define DEFAULT_MAP_WINDOW	(UL(1) << (MMAP_VA_BITS - 1))
-+#define STACK_TOP_MAX		TASK_SIZE
- #else
- #define DEFAULT_MAP_WINDOW	TASK_SIZE
- #define STACK_TOP_MAX		TASK_SIZE
-
-
+--=20
+With Best Regards,
+Andy Shevchenko
