@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A562F5472;
-	Fri, 10 Oct 2025 13:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF132F5473;
+	Fri, 10 Oct 2025 13:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102493; cv=none; b=dzwSnQK+tZGETS6ClQK5C7XUKo+r7aq1AfnLUgtEZZsePC13q0Bjjc6dbfjXzJDXHPG0pibdvVVVEn17ftnRgRv/c0PGpqupf8XR2RqBe86SRyL6ee8jC06S0JM03ng35MCALiMhe94odM2DSrnGDbHUy++HTj3fiZLX3Wi4vLg=
+	t=1760102496; cv=none; b=psolYt9Ff59v+RuvAlAOQc+GSBR6lM1I5Wlju56WnanV1luDRZZn4aids3+4ZyDBDuJzFlad+/VAo13xgYaIhHpfEJyLqiMlzeWpD/7QAR8rlJd08lfyF6SDUcipA9sFs/3a6h4fSswD6LJD7D+a2jYyHgevgtdXAcUmO9eJQ8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102493; c=relaxed/simple;
-	bh=1wVQRnx1RGnGuYGBwAjRTxmrmYIHTRjbRXbTBnF0Dsc=;
+	s=arc-20240116; t=1760102496; c=relaxed/simple;
+	bh=iNUCna3f8ZDM0uPrnDRbyRP/mONY6qbBxRKDWtQ5COc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6GCvk3LoJXr22cb3+Lp8LHisosTBZUn6pznpkJ1CmOaF9G6vWxzdQHSKDh8MGvsZmK3H3ZBz7IHE7pNKwUutZWGVAlFOl+l3V8BlBXny037t8K4DO8/F8KSOSMT2P2zKOHGNVFI3Hsxt7WsKiN1iTHX0IgNBuM6t3f+jFRk0Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zexLsh5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHMYpmAme02PHcAqkl77LsTH0EK1N6EK8r1/EVcyoLhiEjqWzAQQqJwGfFlYgiraDZ81PDLWKIL5f4GpXlJCVtF8VRUvmfv72EGOaDK7hLRI2fmwock+l1RKtj7Aa6H+6RTY+/9QD70hRVVCL5kIoQco3uD75bbPMRjFEWEM1YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dx+0/Vy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zexLsh5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1546BC4CEF1;
-	Fri, 10 Oct 2025 13:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dx+0/Vy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6803C4CEF1;
+	Fri, 10 Oct 2025 13:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102493;
-	bh=1wVQRnx1RGnGuYGBwAjRTxmrmYIHTRjbRXbTBnF0Dsc=;
+	s=korg; t=1760102496;
+	bh=iNUCna3f8ZDM0uPrnDRbyRP/mONY6qbBxRKDWtQ5COc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zexLsh5SEj7uOd1aIl0ERGCQqfU5+i9JXr674M7sTZdp4dassFzXaVe8WYw6XwAnV
-	 eBCkwWExBcpNx6SYIfK+VsIebVI86987ZhWIERhNQU/OfIMZKI49PsAdyMzGl+HWPe
-	 dyiI9XhpYStpP6Gvi5d6KGA/FIx69obU1oH0a3ps=
+	b=Dx+0/Vy1gt3v1C0B51wHJOmHeGnDP5P+gK3S0/tdD7xrtyrIkLE6EBRRnMvAUjNVX
+	 8XH6on9MkNe/do11Q7G2dFmnyQZzFB8aPDo/tv09PmnlftJXgJeoWBnxXlWyTOLU2k
+	 5H4V3c1OUGz+xV77dKRzdPBsxYS3XviGEHWD7Se4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.12 34/35] net/9p: fix double req put in p9_fd_cancelled
-Date: Fri, 10 Oct 2025 15:16:36 +0200
-Message-ID: <20251010131333.017863798@linuxfoundation.org>
+	syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 35/35] KVM: x86: Dont (re)check L1 intercepts when completing userspace I/O
+Date: Fri, 10 Oct 2025 15:16:37 +0200
+Message-ID: <20251010131333.053656920@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -50,121 +51,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 674b56aa57f9379854cb6798c3bbcef7e7b51ab7 upstream.
+commit e750f85391286a4c8100275516973324b621a269 upstream.
 
-Syzkaller reports a KASAN issue as below:
+When completing emulation of instruction that generated a userspace exit
+for I/O, don't recheck L1 intercepts as KVM has already finished that
+phase of instruction execution, i.e. has already committed to allowing L2
+to perform I/O.  If L1 (or host userspace) modifies the I/O permission
+bitmaps during the exit to userspace,  KVM will treat the access as being
+intercepted despite already having emulated the I/O access.
 
-general protection fault, probably for non-canonical address 0xfbd59c0000000021: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: maybe wild-memory-access in range [0xdead000000000108-0xdead00000000010f]
-CPU: 0 PID: 5083 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00037-g855bd1d7d838 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:__list_del include/linux/list.h:114 [inline]
-RIP: 0010:__list_del_entry include/linux/list.h:137 [inline]
-RIP: 0010:list_del include/linux/list.h:148 [inline]
-RIP: 0010:p9_fd_cancelled+0xe9/0x200 net/9p/trans_fd.c:734
+Pivot on EMULTYPE_NO_DECODE to detect that KVM is completing emulation.
+Of the three users of EMULTYPE_NO_DECODE, only complete_emulated_io() (the
+intended "recipient") can reach the code in question.  gp_interception()'s
+use is mutually exclusive with is_guest_mode(), and
+complete_emulated_insn_gp() unconditionally pairs EMULTYPE_NO_DECODE with
+EMULTYPE_SKIP.
 
-Call Trace:
- <TASK>
- p9_client_flush+0x351/0x440 net/9p/client.c:614
- p9_client_rpc+0xb6b/0xc70 net/9p/client.c:734
- p9_client_version net/9p/client.c:920 [inline]
- p9_client_create+0xb51/0x1240 net/9p/client.c:1027
- v9fs_session_init+0x1f0/0x18f0 fs/9p/v9fs.c:408
- v9fs_mount+0xba/0xcb0 fs/9p/vfs_super.c:126
- legacy_get_tree+0x108/0x220 fs/fs_context.c:632
- vfs_get_tree+0x8e/0x300 fs/super.c:1573
- do_new_mount fs/namespace.c:3056 [inline]
- path_mount+0x6a6/0x1e90 fs/namespace.c:3386
- do_mount fs/namespace.c:3399 [inline]
- __do_sys_mount fs/namespace.c:3607 [inline]
- __se_sys_mount fs/namespace.c:3584 [inline]
- __x64_sys_mount+0x283/0x300 fs/namespace.c:3584
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+The bad behavior was detected by a syzkaller program that toggles port I/O
+interception during the userspace I/O exit, ultimately resulting in a WARN
+on vcpu->arch.pio.count being non-zero due to KVM no completing emulation
+of the I/O instruction.
 
-This happens because of a race condition between:
+  WARNING: CPU: 23 PID: 1083 at arch/x86/kvm/x86.c:8039 emulator_pio_in_out+0x154/0x170 [kvm]
+  Modules linked in: kvm_intel kvm irqbypass
+  CPU: 23 UID: 1000 PID: 1083 Comm: repro Not tainted 6.16.0-rc5-c1610d2d66b1-next-vm #74 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:emulator_pio_in_out+0x154/0x170 [kvm]
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   kvm_fast_pio+0xd6/0x1d0 [kvm]
+   vmx_handle_exit+0x149/0x610 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0xda8/0x1ac0 [kvm]
+   kvm_vcpu_ioctl+0x244/0x8c0 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0x5d/0xc60
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
 
-- The 9p client sending an invalid flush request and later cleaning it up;
-- The 9p client in p9_read_work() canceled all pending requests.
-
-      Thread 1                              Thread 2
-    ...
-    p9_client_create()
-    ...
-    p9_fd_create()
-    ...
-    p9_conn_create()
-    ...
-    // start Thread 2
-    INIT_WORK(&m->rq, p9_read_work);
-                                        p9_read_work()
-    ...
-    p9_client_rpc()
-    ...
-                                        ...
-                                        p9_conn_cancel()
-                                        ...
-                                        spin_lock(&m->req_lock);
-    ...
-    p9_fd_cancelled()
-    ...
-                                        ...
-                                        spin_unlock(&m->req_lock);
-                                        // status rewrite
-                                        p9_client_cb(m->client, req, REQ_STATUS_ERROR)
-                                        // first remove
-                                        list_del(&req->req_list);
-                                        ...
-
-    spin_lock(&m->req_lock)
-    ...
-    // second remove
-    list_del(&req->req_list);
-    spin_unlock(&m->req_lock)
-  ...
-
-Commit 74d6a5d56629 ("9p/trans_fd: Fix concurrency del of req_list in
-p9_fd_cancelled/p9_read_work") fixes a concurrency issue in the 9p filesystem
-client where the req_list could be deleted simultaneously by both
-p9_read_work and p9_fd_cancelled functions, but for the case where req->status
-equals REQ_STATUS_RCVD.
-
-Update the check for req->status in p9_fd_cancelled to skip processing not
-just received requests, but anything that is not SENT, as whatever
-changed the state from SENT also removed the request from its list.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: afd8d6541155 ("9P: Add cancelled() to the transport functions.")
+Reported-by: syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68790db4.a00a0220.3af5df.0020.GAE@google.com
+Fixes: 8a76d7f25f8f ("KVM: x86: Add x86 callback for intercept check")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
-Message-ID: <20250715154815.3501030-1-Sergey.Nalivayko@kaspersky.com>
-[updated the check from status == RECV || status == ERROR to status != SENT]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250715190638.1899116-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kvm/emulate.c     |    9 ++++-----
+ arch/x86/kvm/kvm_emulate.h |    3 +--
+ arch/x86/kvm/x86.c         |   15 ++++++++-------
+ 3 files changed, 13 insertions(+), 14 deletions(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -725,10 +725,10 @@ static int p9_fd_cancelled(struct p9_cli
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -5104,12 +5104,11 @@ void init_decode_cache(struct x86_emulat
+ 	ctxt->mem_read.end = 0;
+ }
  
- 	spin_lock(&m->req_lock);
--	/* Ignore cancelled request if message has been received
--	 * before lock.
--	 */
--	if (req->status == REQ_STATUS_RCVD) {
-+	/* Ignore cancelled request if status changed since the request was
-+	 * processed in p9_client_flush()
-+	*/
-+	if (req->status != REQ_STATUS_SENT) {
- 		spin_unlock(&m->req_lock);
- 		return 0;
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts)
+ {
+ 	const struct x86_emulate_ops *ops = ctxt->ops;
+ 	int rc = X86EMUL_CONTINUE;
+ 	int saved_dst_type = ctxt->dst.type;
+-	bool is_guest_mode = ctxt->ops->is_guest_mode(ctxt);
+ 
+ 	ctxt->mem_read.pos = 0;
+ 
+@@ -5157,7 +5156,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				fetch_possible_mmx_operand(&ctxt->dst);
+ 		}
+ 
+-		if (unlikely(is_guest_mode) && ctxt->intercept) {
++		if (unlikely(check_intercepts) && ctxt->intercept) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_PRE_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5186,7 +5185,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				goto done;
+ 		}
+ 
+-		if (unlikely(is_guest_mode) && (ctxt->d & Intercept)) {
++		if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_POST_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5240,7 +5239,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 
+ special_insn:
+ 
+-	if (unlikely(is_guest_mode) && (ctxt->d & Intercept)) {
++	if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 		rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 					      X86_ICPT_POST_MEMACCESS);
+ 		if (rc != X86EMUL_CONTINUE)
+--- a/arch/x86/kvm/kvm_emulate.h
++++ b/arch/x86/kvm/kvm_emulate.h
+@@ -230,7 +230,6 @@ struct x86_emulate_ops {
+ 	void (*set_nmi_mask)(struct x86_emulate_ctxt *ctxt, bool masked);
+ 
+ 	bool (*is_smm)(struct x86_emulate_ctxt *ctxt);
+-	bool (*is_guest_mode)(struct x86_emulate_ctxt *ctxt);
+ 	int (*leave_smm)(struct x86_emulate_ctxt *ctxt);
+ 	void (*triple_fault)(struct x86_emulate_ctxt *ctxt);
+ 	int (*set_xcr)(struct x86_emulate_ctxt *ctxt, u32 index, u64 xcr);
+@@ -514,7 +513,7 @@ bool x86_page_table_writing_insn(struct
+ #define EMULATION_RESTART 1
+ #define EMULATION_INTERCEPTED 2
+ void init_decode_cache(struct x86_emulate_ctxt *ctxt);
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt);
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts);
+ int emulator_task_switch(struct x86_emulate_ctxt *ctxt,
+ 			 u16 tss_selector, int idt_index, int reason,
+ 			 bool has_error_code, u32 error_code);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8567,11 +8567,6 @@ static bool emulator_is_smm(struct x86_e
+ 	return is_smm(emul_to_vcpu(ctxt));
+ }
+ 
+-static bool emulator_is_guest_mode(struct x86_emulate_ctxt *ctxt)
+-{
+-	return is_guest_mode(emul_to_vcpu(ctxt));
+-}
+-
+ #ifndef CONFIG_KVM_SMM
+ static int emulator_leave_smm(struct x86_emulate_ctxt *ctxt)
+ {
+@@ -8655,7 +8650,6 @@ static const struct x86_emulate_ops emul
+ 	.guest_cpuid_is_intel_compatible = emulator_guest_cpuid_is_intel_compatible,
+ 	.set_nmi_mask        = emulator_set_nmi_mask,
+ 	.is_smm              = emulator_is_smm,
+-	.is_guest_mode       = emulator_is_guest_mode,
+ 	.leave_smm           = emulator_leave_smm,
+ 	.triple_fault        = emulator_triple_fault,
+ 	.set_xcr             = emulator_set_xcr,
+@@ -9209,7 +9203,14 @@ restart:
+ 		ctxt->exception.address = 0;
  	}
+ 
+-	r = x86_emulate_insn(ctxt);
++	/*
++	 * Check L1's instruction intercepts when emulating instructions for
++	 * L2, unless KVM is re-emulating a previously decoded instruction,
++	 * e.g. to complete userspace I/O, in which case KVM has already
++	 * checked the intercepts.
++	 */
++	r = x86_emulate_insn(ctxt, is_guest_mode(vcpu) &&
++				   !(emulation_type & EMULTYPE_NO_DECODE));
+ 
+ 	if (r == EMULATION_INTERCEPTED)
+ 		return 1;
 
 
