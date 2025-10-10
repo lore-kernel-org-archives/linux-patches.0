@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7B221579F;
-	Fri, 10 Oct 2025 13:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A0D2F25EC;
+	Fri, 10 Oct 2025 13:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102470; cv=none; b=pWh0mzZam+f/YcWAElspsn0+MsQ+FW+ezqCVLG7Yvza5mPPPeUYssOEHP0PntWmnCfz5fO193pI93UFj7w8xOYCdOjmavSRQeymA/QtO6YefgB5+Qhd6sMWdvsy5CsVQd0A94WY4b/CKf9G15ZWjJxRPEhnE8beoBalGU58dFuk=
+	t=1760102473; cv=none; b=j8+xoeZzbjJCiHefU5TT19O2ntd3YgRRtYCJVmSe8yceOV4Ntsb3bKE3JAf9uJ1lsjD07uw3GXZf+AcndCCi51vbJ0EhuNwbz78tCDMbcNGC2qsRObgKZpK8RsGQCf2nz+o5RttyyZoZOKyTJsbAuw7iB09bW4IzMiVITfVYiBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102470; c=relaxed/simple;
-	bh=TxiKniTyShNILoPK20mnLiWZyUgGLAGdOkY0dmVB1Lo=;
+	s=arc-20240116; t=1760102473; c=relaxed/simple;
+	bh=37276s9aDTKboCx1kq2wnDbrgnJOYp2BeIknOjZFlUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaZsgeOk/EurA4PJGjdIhquztIBC74wYUncBD5V7JOsVy9A6YpRoeLE1dbd+pwm9QktD3KG8Xh+IMc7e4sQiu32pBGXYO2gPwO8noNVZ6aI+KQv6QvEwFmM+l2T3v4xUNP0gIiVrNNen+VYvlsZFcUrxAUuOgqvmyT3gxGHEFME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUy2Se/H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mh7KuP9k0to7dqDipvFVB9AgxLf+ZjSbtXEXt6lUt897j6y2xUMa5dvi87RRQe/vfCjZOrmswd/7H7Re81MxRFEswWK0jEJxunW65v9Rru5ElZgUzbC0ywYB4tDSfNEPRwpA3wJxAwn6zxjX8wHzvifY23xp+SjEY3XNz2VY/1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTM9OtPO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUy2Se/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D75C4CEF1;
-	Fri, 10 Oct 2025 13:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTM9OtPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042EBC4CEF9;
+	Fri, 10 Oct 2025 13:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102470;
-	bh=TxiKniTyShNILoPK20mnLiWZyUgGLAGdOkY0dmVB1Lo=;
+	s=korg; t=1760102473;
+	bh=37276s9aDTKboCx1kq2wnDbrgnJOYp2BeIknOjZFlUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUy2Se/HQeHbTRIRPEtk9NaqquSPmCsi0g9lce3ponVWQO7CdjngBzDnveTxPjyXt
-	 YKMYsy+CuLQd2S2RKJprJ7O0mgc5cN9OQ+OmpsVAwx0+S34bllt83VWecwOQR+ANMt
-	 XUPzWkksNT1OT1BVRZf+EPpwAfVHD9Gq/pl88vCw=
+	b=TTM9OtPOdQNo/P+8o5pYCg8xOKnZTyxkisfJfHysjz9RTJCtJI4Lr6mRiIXpBEMc7
+	 Z3A/lsbS5RJTcDmPrA5pGh6GBYMfsWEY+5akLV2XWok9FOtnfv0djy3mjf+WWnc1wR
+	 0iGMzS7aThl4G89sJUOQaza0sUcaHTl0iiz/oEfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 07/35] rust: block: fix `srctree/` links
-Date: Fri, 10 Oct 2025 15:16:09 +0200
-Message-ID: <20251010131332.059379765@linuxfoundation.org>
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 08/35] ASoC: amd: acp: Adjust pdm gain value
+Date: Fri, 10 Oct 2025 15:16:10 +0200
+Message-ID: <20251010131332.094312210@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -50,39 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-commit 208d7f788e84e80992d7b1c82ff17b620eb1371e upstream.
+[ Upstream commit f1d0260362d72f9f454dc1f9db2eeb80cb801f28 ]
 
-This `srctree/` link pointed to a file with an underscore, but the header
-used a dash instead.
+Set pdm gain value by setting PDM_MISC_CTRL_MASK value.
+To avoid low pdm gain value.
 
-Thus fix it.
-
-This cleans a future warning that will check our `srctree/` links.
-
-Cc: stable@vger.kernel.org
-Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20250821054606.1279178-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/block/mq/gen_disk.rs | 2 +-
+ sound/soc/amd/acp/amd.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/kernel/block/mq/gen_disk.rs b/rust/kernel/block/mq/gen_disk.rs
-index cd54cd64ea88..e1af0fa302a3 100644
---- a/rust/kernel/block/mq/gen_disk.rs
-+++ b/rust/kernel/block/mq/gen_disk.rs
-@@ -3,7 +3,7 @@
- //! Generic disk abstraction.
- //!
- //! C header: [`include/linux/blkdev.h`](srctree/include/linux/blkdev.h)
--//! C header: [`include/linux/blk_mq.h`](srctree/include/linux/blk_mq.h)
-+//! C header: [`include/linux/blk-mq.h`](srctree/include/linux/blk-mq.h)
- 
- use crate::block::mq::{raw_writer::RawWriter, Operations, TagSet};
- use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc};
+diff --git a/sound/soc/amd/acp/amd.h b/sound/soc/amd/acp/amd.h
+index 854269fea875f..aa0aa64202fe4 100644
+--- a/sound/soc/amd/acp/amd.h
++++ b/sound/soc/amd/acp/amd.h
+@@ -135,7 +135,7 @@
+ #define PDM_DMA_INTR_MASK       0x10000
+ #define PDM_DEC_64              0x2
+ #define PDM_CLK_FREQ_MASK       0x07
+-#define PDM_MISC_CTRL_MASK      0x10
++#define PDM_MISC_CTRL_MASK      0x18
+ #define PDM_ENABLE              0x01
+ #define PDM_DISABLE             0x00
+ #define DMA_EN_MASK             0x02
 -- 
 2.51.0
 
