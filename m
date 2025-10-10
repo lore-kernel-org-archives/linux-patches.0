@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2852F8BFA;
-	Fri, 10 Oct 2025 13:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F962F83B8;
+	Fri, 10 Oct 2025 13:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102285; cv=none; b=H0dZ/OluLVoNCW/4XrO93U/RxArlxC0ebKkXLA3MdEe5emo7vkYMjETS38Pub5k9SNZamA2TxspqDQbgwE5GSY0NaIGcmrJBWbeunX4INLFyYz1lv0R9jdoObKt/YPAB+wDejapqCOEXytdb8Gez5D5sujapsVojz7l8ZYNAJ9I=
+	t=1760102287; cv=none; b=HLTWkbzWXQMU+d7N/NLuQqVWvrgvIuAuJZrFOzsF3tfBLD6gf/zoumuvR+fJE00koao/FFlLCXclpfhg7Qoz/wXIKIb2idRlcY85Nz9r+Uf3PDBw4PUfvt3DEGhEKM/qqdKYfB8TB1y2NUPcUaqx0n/vK8E+MepvAKZgIcnsAWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102285; c=relaxed/simple;
-	bh=ztRPJo/WTAPb+6zLcob4w7qV8sg+daiygRlFEIL6iLE=;
+	s=arc-20240116; t=1760102287; c=relaxed/simple;
+	bh=ohLUyIbuOzU9Me1i2n3TK1EBXSfBZQi4lIeJ/yUfwME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEGpQUbt2hCf5MWTcElS3Lj9dDoAM6lZGCkmXi+HePhcyActevS+Ef8zPuek9ghZaIRFnxjI+ldOWUGBwq3j7Q79qFxZ2cD5DGVIVLOChwZ8xzdVVq+U/kK6iVNQmTp3UZbfG0I84g0U9fVfevI2odqdgTMUY86UUdj3eFNpNZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziASLCV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjW/uz2vSfBWQ6S3kqvPdJ2ipDT7ZNaXQYLobeOBloWj3ZODL1XAEwyicF+rx9oKc/c29Ptf2g0oCqzwE2tWY1tuywIFqn7aC/M1apRF6M3QPjSliJOPazYFYSXoZqfAGwXlxlWUK4hv426OFXEgiz+Hnvo9lS9OlHqbPWDL47g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BclmSP4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziASLCV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E07C4CEF1;
-	Fri, 10 Oct 2025 13:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BclmSP4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A98C4CEF1;
+	Fri, 10 Oct 2025 13:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102284;
-	bh=ztRPJo/WTAPb+6zLcob4w7qV8sg+daiygRlFEIL6iLE=;
+	s=korg; t=1760102287;
+	bh=ohLUyIbuOzU9Me1i2n3TK1EBXSfBZQi4lIeJ/yUfwME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziASLCV2dzYj1Br5wxlDZY4t4/fXcDMjmbegTeyq48XE4s4+XeASZIpkB05vkKqu+
-	 wUCk9MybsDxUGygYg9+XIvOt13QP/y78skihQO7lwoSS3v49gVU0FQHAp+hrDc0/5R
-	 vCLT7pmAF0SWZNV+W0iY+GP5vZrTDN4+eimh5TLo=
+	b=BclmSP4zs2cnNDGVcnm4b794b+6LwI3sE4VwiMrinSGq4lKvKD1Z2zuy3rfVrTX5c
+	 A27UuCgUqZYSbFwklRvEMwL6NFVI5imHeLFtrqKrq/YsYTOdVC90WESeR8i1VrVclP
+	 O24CwtPn9z8Eak3LFB0yl4ERiQiYfaA8upf2g8FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	stable <stable@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.17 19/26] driver core/PM: Set power.no_callbacks along with power.no_pm
-Date: Fri, 10 Oct 2025 15:16:14 +0200
-Message-ID: <20251010131331.906612184@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Jon Kohler <jon@nutanix.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.17 20/26] Revert "crypto: testmgr - desupport SHA-1 for FIPS 140"
+Date: Fri, 10 Oct 2025 15:16:15 +0200
+Message-ID: <20251010131331.941774189@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -51,41 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit c2ce2453413d429e302659abc5ace634e873f6f5 upstream.
+commit ca1354f7999d30cf565e810b56cba688927107c6 upstream.
 
-Devices with power.no_pm set are not expected to need any power
-management at all, so modify device_set_pm_not_required() to set
-power.no_callbacks for them too in case runtime PM will be enabled
-for any of them (which in principle may be done for convenience if
-such a device participates in a dependency chain).
+This reverts commit 9d50a25eeb05c45fef46120f4527885a14c84fb2.
 
-Since device_set_pm_not_required() must be called before device_add()
-or it would not have any effect, it can update power.no_callbacks
-without locking, unlike pm_runtime_no_callbacks() that can be called
-after registering the target device.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/1950054.tdWV9SEqCh@rafael.j.wysocki
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Reported-by: Jon Kohler <jon@nutanix.com>
+Link: https://lore.kernel.org/all/05b7ef65-37bb-4391-9ec9-c382d51bae4d@kernel.org/
+Link: https://lore.kernel.org/all/26F8FCC9-B448-4A89-81DF-6BAADA03E174@nutanix.com/
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/device.h |    3 +++
- 1 file changed, 3 insertions(+)
+ crypto/testmgr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -851,6 +851,9 @@ static inline bool device_pm_not_require
- static inline void device_set_pm_not_required(struct device *dev)
- {
- 	dev->power.no_pm = true;
-+#ifdef CONFIG_PM
-+	dev->power.no_callbacks = true;
-+#endif
- }
- 
- static inline void dev_pm_syscore_device(struct device *dev, bool val)
+diff --git a/crypto/testmgr.c b/crypto/testmgr.c
+index ee33ba21ae2b..3e284706152a 100644
+--- a/crypto/testmgr.c
++++ b/crypto/testmgr.c
+@@ -4186,6 +4186,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "authenc(hmac(sha1),cbc(aes))",
+ 		.generic_driver = "authenc(hmac-sha1-lib,cbc(aes-generic))",
+ 		.test = alg_test_aead,
++		.fips_allowed = 1,
+ 		.suite = {
+ 			.aead = __VECS(hmac_sha1_aes_cbc_tv_temp)
+ 		}
+@@ -4206,6 +4207,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 	}, {
+ 		.alg = "authenc(hmac(sha1),ctr(aes))",
+ 		.test = alg_test_null,
++		.fips_allowed = 1,
+ 	}, {
+ 		.alg = "authenc(hmac(sha1),ecb(cipher_null))",
+ 		.generic_driver = "authenc(hmac-sha1-lib,ecb-cipher_null)",
+@@ -4216,6 +4218,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 	}, {
+ 		.alg = "authenc(hmac(sha1),rfc3686(ctr(aes)))",
+ 		.test = alg_test_null,
++		.fips_allowed = 1,
+ 	}, {
+ 		.alg = "authenc(hmac(sha224),cbc(des))",
+ 		.generic_driver = "authenc(hmac-sha224-lib,cbc(des-generic))",
+@@ -5078,6 +5081,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "hmac(sha1)",
+ 		.generic_driver = "hmac-sha1-lib",
+ 		.test = alg_test_hash,
++		.fips_allowed = 1,
+ 		.suite = {
+ 			.hash = __VECS(hmac_sha1_tv_template)
+ 		}
+@@ -5448,6 +5452,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "sha1",
+ 		.generic_driver = "sha1-lib",
+ 		.test = alg_test_hash,
++		.fips_allowed = 1,
+ 		.suite = {
+ 			.hash = __VECS(sha1_tv_template)
+ 		}
+-- 
+2.51.0
+
 
 
