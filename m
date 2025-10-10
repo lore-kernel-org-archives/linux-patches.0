@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0131F63FF;
-	Fri, 10 Oct 2025 13:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BA71F63FF;
+	Fri, 10 Oct 2025 13:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102224; cv=none; b=e8PJiMIGmM0B+vFpQ9LuoTx2QUPo22E/Jhz1i0xZvxYvqbEIXLF7JoCAclvsE2v3Su2A2WPqiJEEfqd3ok60vQPbDWMDgSkkMOkNME94X948GdUfHbutUBcg8Tz4/AjV1gBWbyUd2HHGR0r3OxGJ+2FkkDTRSo14zJUAe9O1unI=
+	t=1760102227; cv=none; b=iE5f28WPrbpHV+kNd4O7U9m1UGC+YHYbccqi9u6skHE6W8gSvfo/3D0ZniesDM55XpNb4+zUHfc+xjCyr6jGDJyPsNTTDmBz0m+z2tpnRI2/6+LGd6HJsa6FQAkvCVN58q+3gnZeTYcOQD64a4eGKSgLB91Ej+kgFTlN7G+2YHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102224; c=relaxed/simple;
-	bh=r7aHSMpuokHWSlHEIBag636kYuzUotCP5eavH7Hooe4=;
+	s=arc-20240116; t=1760102227; c=relaxed/simple;
+	bh=nYuEA6CANKt1RCFGg3izSjARmwLtjmIaoIAw31AaMqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEuoFbxbxr/+dsMAQWeMGN1OZ1Vrzh4QydHyu9Nz7OaB9DrOysBo62deOphYNYP2yg0CniZK2B7JMhe8bZEOBwgGcGH03NpRKmOqj0qT+t/G8q9kDum6sj7HGpVBmAV5nCNwf/GvlC+UgmJ4LNwwNl/CcPuC0Tovk1X8HqeS5hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbETi5mo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNAHpNBLV+KPR/XDWORmOeBkbUgqdanUx37ttSrU46iXzDGgqiBCJxxuyJzrETVJ+nuiQdety7gjKghYKXHc24gyVox2SOe2fjg1FT6CiEh8SFLirC8vheuOykyGuCZWBS1V119xBZB7sgbsdmHvWuVX2zeReeWJ5Ri525sSLEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8Eh96Zx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbETi5mo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82900C4CEF1;
-	Fri, 10 Oct 2025 13:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8Eh96Zx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58598C4CEF1;
+	Fri, 10 Oct 2025 13:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102223;
-	bh=r7aHSMpuokHWSlHEIBag636kYuzUotCP5eavH7Hooe4=;
+	s=korg; t=1760102226;
+	bh=nYuEA6CANKt1RCFGg3izSjARmwLtjmIaoIAw31AaMqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbETi5mom4670hOQpfyCNg/mEb9dEOwG9Z4QK1hG96Q5GnttXJzYb83Rx+GcblDJ3
-	 lt+fjohOLsVcjnlLSHnc66PQSzf6VA+VkyR1Z2RKMkyTdiqt2f6iV4LpExNsXjZatF
-	 K2Hpp8S/blk4rqDgaCzvRZHBssPdjS7eLfs+xjnQ=
+	b=k8Eh96Zxpbg+CDxCwqbpDCnOrLyrdv5UU4uX8DoPGv1ouvIBbQayilVMbCZ79Ysm+
+	 IPxyGaGjhVJFRmZlCSyibJpcwd6BVyzves8+Wd1POeRm4u4hV/fHUYfIkT5ECX/Tym
+	 2wf0ztY233qurVFVqqzmHAusDE0CrLSnunOS0vCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.17 01/26] drm/amdgpu: Enable MES lr_compute_wa by default
-Date: Fri, 10 Oct 2025 15:15:56 +0200
-Message-ID: <20251010131331.262014427@linuxfoundation.org>
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 6.17 10/26] serial: qcom-geni: Fix blocked task
+Date: Fri, 10 Oct 2025 15:16:05 +0200
+Message-ID: <20251010131331.583859387@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -51,80 +51,375 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 1fb710793ce2619223adffaf981b1ff13cd48f17 upstream.
+commit a699213d4e6ef4286348c6439837990f121e0c03 upstream.
 
-The MES set resources packet has an optional bit 'lr_compute_wa'
-which can be used for preventing MES hangs on long compute jobs.
+Revert commit 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for
+serial driver") and its dependent commit 86fa39dd6fb7 ("serial:
+qcom-geni: Enable Serial on SA8255p Qualcomm platforms") because the
+first one causes regression - hang task on Qualcomm RB1 board (QRB2210)
+and unable to use serial at all during normal boot:
 
-Set this bit by default.
+  INFO: task kworker/u16:0:12 blocked for more than 42 seconds.
+        Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/u16:0   state:D stack:0     pid:12    tgid:12    ppid:2      task_flags:0x4208060 flags:0x00000010
+  Workqueue: async async_run_entry_fn
+  Call trace:
+   __switch_to+0xe8/0x1a0 (T)
+   __schedule+0x290/0x7c0
+   schedule+0x34/0x118
+   rpm_resume+0x14c/0x66c
+   rpm_resume+0x2a4/0x66c
+   rpm_resume+0x2a4/0x66c
+   rpm_resume+0x2a4/0x66c
+   __pm_runtime_resume+0x50/0x9c
+   __driver_probe_device+0x58/0x120
+   driver_probe_device+0x3c/0x154
+   __driver_attach_async_helper+0x4c/0xc0
+   async_run_entry_fn+0x34/0xe0
+   process_one_work+0x148/0x290
+   worker_thread+0x2c4/0x3e0
+   kthread+0x118/0x1c0
+   ret_from_fork+0x10/0x20
 
-Co-developed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The issue was reported on 12th of August and was ignored by author of
+commits introducing issue for two weeks.  Only after complaining author
+produced a fix which did not work, so if original commits cannot be
+reliably fixed for 5 weeks, they obviously are buggy and need to be
+dropped.
+
+Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial driver")
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Closes: https://lore.kernel.org/all/DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20250917010437.129912-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c        |    6 ++++++
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c        |    5 +++++
- drivers/gpu/drm/amd/include/mes_v11_api_def.h |    3 ++-
- drivers/gpu/drm/amd/include/mes_v12_api_def.h |    3 ++-
- 4 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |  176 +++-------------------------------
+ 1 file changed, 16 insertions(+), 160 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -711,6 +711,12 @@ static int mes_v11_0_set_hw_resources(st
- 	mes_set_hw_res_pkt.enable_reg_active_poll = 1;
- 	mes_set_hw_res_pkt.enable_level_process_quantum_check = 1;
- 	mes_set_hw_res_pkt.oversubscription_timer = 50;
-+	if ((mes->adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x7f)
-+		mes_set_hw_res_pkt.enable_lr_compute_wa = 1;
-+	else
-+		dev_info_once(mes->adev->dev,
-+			      "MES FW version must be >= 0x7f to enable LR compute workaround.\n");
-+
- 	if (amdgpu_mes_log_enable) {
- 		mes_set_hw_res_pkt.enable_mes_event_int_logging = 1;
- 		mes_set_hw_res_pkt.event_intr_history_gpu_mc_ptr =
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -738,6 +738,11 @@ static int mes_v12_0_set_hw_resources(st
- 	mes_set_hw_res_pkt.use_different_vmid_compute = 1;
- 	mes_set_hw_res_pkt.enable_reg_active_poll = 1;
- 	mes_set_hw_res_pkt.enable_level_process_quantum_check = 1;
-+	if ((mes->adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x82)
-+		mes_set_hw_res_pkt.enable_lr_compute_wa = 1;
-+	else
-+		dev_info_once(adev->dev,
-+			      "MES FW version must be >= 0x82 to enable LR compute workaround.\n");
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -11,7 +11,6 @@
+ #include <linux/irq.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/pm_domain.h>
+ #include <linux/pm_opp.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+@@ -100,16 +99,10 @@
+ #define DMA_RX_BUF_SIZE		2048
  
- 	/*
- 	 * Keep oversubscribe timer for sdma . When we have unmapped doorbell
---- a/drivers/gpu/drm/amd/include/mes_v11_api_def.h
-+++ b/drivers/gpu/drm/amd/include/mes_v11_api_def.h
-@@ -238,7 +238,8 @@ union MESAPI_SET_HW_RESOURCES {
- 				uint32_t enable_mes_sch_stb_log : 1;
- 				uint32_t limit_single_process : 1;
- 				uint32_t is_strix_tmz_wa_enabled  :1;
--				uint32_t reserved : 13;
-+				uint32_t enable_lr_compute_wa : 1;
-+				uint32_t reserved : 12;
- 			};
- 			uint32_t	uint32_t_all;
- 		};
---- a/drivers/gpu/drm/amd/include/mes_v12_api_def.h
-+++ b/drivers/gpu/drm/amd/include/mes_v12_api_def.h
-@@ -286,7 +286,8 @@ union MESAPI_SET_HW_RESOURCES {
- 				uint32_t limit_single_process : 1;
- 				uint32_t unmapped_doorbell_handling: 2;
- 				uint32_t enable_mes_fence_int: 1;
--				uint32_t reserved : 10;
-+				uint32_t enable_lr_compute_wa : 1;
-+				uint32_t reserved : 9;
- 			};
- 			uint32_t uint32_all;
- 		};
+ static DEFINE_IDA(port_ida);
+-#define DOMAIN_IDX_POWER	0
+-#define DOMAIN_IDX_PERF		1
+ 
+ struct qcom_geni_device_data {
+ 	bool console;
+ 	enum geni_se_xfer_mode mode;
+-	struct dev_pm_domain_attach_data pd_data;
+-	int (*resources_init)(struct uart_port *uport);
+-	int (*set_rate)(struct uart_port *uport, unsigned int baud);
+-	int (*power_state)(struct uart_port *uport, bool state);
+ };
+ 
+ struct qcom_geni_private_data {
+@@ -147,7 +140,6 @@ struct qcom_geni_serial_port {
+ 
+ 	struct qcom_geni_private_data private_data;
+ 	const struct qcom_geni_device_data *dev_data;
+-	struct dev_pm_domain_list *pd_list;
+ };
+ 
+ static const struct uart_ops qcom_geni_console_pops;
+@@ -1370,42 +1362,6 @@ static int geni_serial_set_rate(struct u
+ 	return 0;
+ }
+ 
+-static int geni_serial_set_level(struct uart_port *uport, unsigned int baud)
+-{
+-	struct qcom_geni_serial_port *port = to_dev_port(uport);
+-	struct device *perf_dev = port->pd_list->pd_devs[DOMAIN_IDX_PERF];
+-
+-	/*
+-	 * The performance protocol sets UART communication
+-	 * speeds by selecting different performance levels
+-	 * through the OPP framework.
+-	 *
+-	 * Supported perf levels for baudrates in firmware are below
+-	 * +---------------------+--------------------+
+-	 * |  Perf level value   |  Baudrate values   |
+-	 * +---------------------+--------------------+
+-	 * |      300            |      300           |
+-	 * |      1200           |      1200          |
+-	 * |      2400           |      2400          |
+-	 * |      4800           |      4800          |
+-	 * |      9600           |      9600          |
+-	 * |      19200          |      19200         |
+-	 * |      38400          |      38400         |
+-	 * |      57600          |      57600         |
+-	 * |      115200         |      115200        |
+-	 * |      230400         |      230400        |
+-	 * |      460800         |      460800        |
+-	 * |      921600         |      921600        |
+-	 * |      2000000        |      2000000       |
+-	 * |      3000000        |      3000000       |
+-	 * |      3200000        |      3200000       |
+-	 * |      4000000        |      4000000       |
+-	 * +---------------------+--------------------+
+-	 */
+-
+-	return dev_pm_opp_set_level(perf_dev, baud);
+-}
+-
+ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 					 struct ktermios *termios,
+ 					 const struct ktermios *old)
+@@ -1424,7 +1380,7 @@ static void qcom_geni_serial_set_termios
+ 	/* baud rate */
+ 	baud = uart_get_baud_rate(uport, termios, old, 300, 8000000);
+ 
+-	ret = port->dev_data->set_rate(uport, baud);
++	ret = geni_serial_set_rate(uport, baud);
+ 	if (ret)
+ 		return;
+ 
+@@ -1711,27 +1667,8 @@ static int geni_serial_resources_off(str
+ 	return 0;
+ }
+ 
+-static int geni_serial_resource_state(struct uart_port *uport, bool power_on)
+-{
+-	return power_on ? geni_serial_resources_on(uport) : geni_serial_resources_off(uport);
+-}
+-
+-static int geni_serial_pwr_init(struct uart_port *uport)
+-{
+-	struct qcom_geni_serial_port *port = to_dev_port(uport);
+-	int ret;
+-
+-	ret = dev_pm_domain_attach_list(port->se.dev,
+-					&port->dev_data->pd_data, &port->pd_list);
+-	if (ret <= 0)
+-		return -EINVAL;
+-
+-	return 0;
+-}
+-
+-static int geni_serial_resource_init(struct uart_port *uport)
++static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
+ {
+-	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	int ret;
+ 
+ 	port->se.clk = devm_clk_get(port->se.dev, "se");
+@@ -1776,10 +1713,10 @@ static void qcom_geni_serial_pm(struct u
+ 		old_state = UART_PM_STATE_OFF;
+ 
+ 	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
+-		pm_runtime_resume_and_get(uport->dev);
++		geni_serial_resources_on(uport);
+ 	else if (new_state == UART_PM_STATE_OFF &&
+ 		 old_state == UART_PM_STATE_ON)
+-		pm_runtime_put_sync(uport->dev);
++		geni_serial_resources_off(uport);
+ 
+ }
+ 
+@@ -1882,16 +1819,13 @@ static int qcom_geni_serial_probe(struct
+ 	port->se.dev = &pdev->dev;
+ 	port->se.wrapper = dev_get_drvdata(pdev->dev.parent);
+ 
+-	ret = port->dev_data->resources_init(uport);
++	ret = geni_serial_resource_init(port);
+ 	if (ret)
+ 		return ret;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	if (!res) {
+-		ret = -EINVAL;
+-		goto error;
+-	}
+-
++	if (!res)
++		return -EINVAL;
+ 	uport->mapbase = res->start;
+ 
+ 	uport->rs485_config = qcom_geni_rs485_config;
+@@ -1903,26 +1837,19 @@ static int qcom_geni_serial_probe(struct
+ 	if (!data->console) {
+ 		port->rx_buf = devm_kzalloc(uport->dev,
+ 					    DMA_RX_BUF_SIZE, GFP_KERNEL);
+-		if (!port->rx_buf) {
+-			ret = -ENOMEM;
+-			goto error;
+-		}
++		if (!port->rx_buf)
++			return -ENOMEM;
+ 	}
+ 
+ 	port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
+ 			"qcom_geni_serial_%s%d",
+ 			uart_console(uport) ? "console" : "uart", uport->line);
+-	if (!port->name) {
+-		ret = -ENOMEM;
+-		goto error;
+-	}
++	if (!port->name)
++		return -ENOMEM;
+ 
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto error;
+-	}
+-
++	if (irq < 0)
++		return irq;
+ 	uport->irq = irq;
+ 	uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_QCOM_GENI_CONSOLE);
+ 
+@@ -1944,18 +1871,16 @@ static int qcom_geni_serial_probe(struct
+ 			IRQF_TRIGGER_HIGH, port->name, uport);
+ 	if (ret) {
+ 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+-		goto error;
++		return ret;
+ 	}
+ 
+ 	ret = uart_get_rs485_mode(uport);
+ 	if (ret)
+ 		return ret;
+ 
+-	devm_pm_runtime_enable(port->se.dev);
+-
+ 	ret = uart_add_one_port(drv, uport);
+ 	if (ret)
+-		goto error;
++		return ret;
+ 
+ 	if (port->wakeup_irq > 0) {
+ 		device_init_wakeup(&pdev->dev, true);
+@@ -1965,15 +1890,11 @@ static int qcom_geni_serial_probe(struct
+ 			device_init_wakeup(&pdev->dev, false);
+ 			ida_free(&port_ida, uport->line);
+ 			uart_remove_one_port(drv, uport);
+-			goto error;
++			return ret;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-error:
+-	dev_pm_domain_detach_list(port->pd_list);
+-	return ret;
+ }
+ 
+ static void qcom_geni_serial_remove(struct platform_device *pdev)
+@@ -1986,31 +1907,6 @@ static void qcom_geni_serial_remove(stru
+ 	device_init_wakeup(&pdev->dev, false);
+ 	ida_free(&port_ida, uport->line);
+ 	uart_remove_one_port(drv, &port->uport);
+-	dev_pm_domain_detach_list(port->pd_list);
+-}
+-
+-static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device *dev)
+-{
+-	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+-	struct uart_port *uport = &port->uport;
+-	int ret = 0;
+-
+-	if (port->dev_data->power_state)
+-		ret = port->dev_data->power_state(uport, false);
+-
+-	return ret;
+-}
+-
+-static int __maybe_unused qcom_geni_serial_runtime_resume(struct device *dev)
+-{
+-	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+-	struct uart_port *uport = &port->uport;
+-	int ret = 0;
+-
+-	if (port->dev_data->power_state)
+-		ret = port->dev_data->power_state(uport, true);
+-
+-	return ret;
+ }
+ 
+ static int qcom_geni_serial_suspend(struct device *dev)
+@@ -2048,46 +1944,14 @@ static int qcom_geni_serial_resume(struc
+ static const struct qcom_geni_device_data qcom_geni_console_data = {
+ 	.console = true,
+ 	.mode = GENI_SE_FIFO,
+-	.resources_init = geni_serial_resource_init,
+-	.set_rate = geni_serial_set_rate,
+-	.power_state = geni_serial_resource_state,
+ };
+ 
+ static const struct qcom_geni_device_data qcom_geni_uart_data = {
+ 	.console = false,
+ 	.mode = GENI_SE_DMA,
+-	.resources_init = geni_serial_resource_init,
+-	.set_rate = geni_serial_set_rate,
+-	.power_state = geni_serial_resource_state,
+-};
+-
+-static const struct qcom_geni_device_data sa8255p_qcom_geni_console_data = {
+-	.console = true,
+-	.mode = GENI_SE_FIFO,
+-	.pd_data = {
+-		.pd_flags = PD_FLAG_DEV_LINK_ON,
+-		.pd_names = (const char*[]) { "power", "perf" },
+-		.num_pd_names = 2,
+-	},
+-	.resources_init = geni_serial_pwr_init,
+-	.set_rate = geni_serial_set_level,
+-};
+-
+-static const struct qcom_geni_device_data sa8255p_qcom_geni_uart_data = {
+-	.console = false,
+-	.mode = GENI_SE_DMA,
+-	.pd_data = {
+-		.pd_flags = PD_FLAG_DEV_LINK_ON,
+-		.pd_names = (const char*[]) { "power", "perf" },
+-		.num_pd_names = 2,
+-	},
+-	.resources_init = geni_serial_pwr_init,
+-	.set_rate = geni_serial_set_level,
+ };
+ 
+ static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
+-	SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
+-			   qcom_geni_serial_runtime_resume, NULL)
+ 	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
+ };
+ 
+@@ -2097,17 +1961,9 @@ static const struct of_device_id qcom_ge
+ 		.data = &qcom_geni_console_data,
+ 	},
+ 	{
+-		.compatible = "qcom,sa8255p-geni-debug-uart",
+-		.data = &sa8255p_qcom_geni_console_data,
+-	},
+-	{
+ 		.compatible = "qcom,geni-uart",
+ 		.data = &qcom_geni_uart_data,
+ 	},
+-	{
+-		.compatible = "qcom,sa8255p-geni-uart",
+-		.data = &sa8255p_qcom_geni_uart_data,
+-	},
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, qcom_geni_serial_match_table);
 
 
