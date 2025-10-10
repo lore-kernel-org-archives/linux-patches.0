@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E241F63FF;
-	Fri, 10 Oct 2025 13:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3C11F63FF;
+	Fri, 10 Oct 2025 13:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102250; cv=none; b=ni61+bkAm08iwt14ccZzvQh+tzdiBRztv/VsLxiSm8zY78gnQ5RKeZVZxMKSd+SaUP2qjYfSQ/v3aRI8o8JFi3BNkMkd033mbf7XT+TXLuk3PtST/MerneiOk+3bqIJqkld77jEr5gAb2vo/SfaiHpOf0B/c98bd0S1W1XZOEyc=
+	t=1760102252; cv=none; b=qFG1gxWIhHnN+wSqeLfX0Hw9VbMAlqwTJmNlmop7eedqfdCVV0diccmnGGA1SdWuWs06ZnxqAQc06EHMTRbnnZxFJfO5HGDUqva3q+01lO6QouITezu5E9uVMmMqwXYPgQGcXibVAAwOQwl86U0nckI8iBH/RBgq80fMPG/jFNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102250; c=relaxed/simple;
-	bh=C+rb5qiheNGvA2YoHs3Z/BtYZyscTFp8pJe1U08A6R4=;
+	s=arc-20240116; t=1760102252; c=relaxed/simple;
+	bh=NN7AHrie72/4YnSrW/gJfkoI52/BNrwbnDjXpBJP6Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2v1szf0BVJUmBGjcB7s7mgFVihhVA9sG9fdA5/ebpBhkjAeUDQl8Myn4TQ74ACjMet9/iR/7JU/Im+qQ0cIJ5Io7FE5L+7+fSGj1DKjS84NAKFZS9jrA62O/7LX2i7Wrm2jb2c4UunogS6m7IGRn/5MFDbFU75++c+Ow8mDux8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSXEn8c2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLFsgt+5JwFL7WWx4cy6oj0VussmdgJOlag8zIt2qruFyPsPGIoWoLO7DvlrP34AQtlwF0I4GamnHeuLXw/nbMtKb5u2aHbR5E9zqxk57D5/mTzOFIMjqpoxh9CAZeTOQzworORsFM4CbStcKSHMhYJBhwdogffrEEs2GEI+rPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCvl5CFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSXEn8c2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BACDC4CEF1;
-	Fri, 10 Oct 2025 13:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCvl5CFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B68C4CEF1;
+	Fri, 10 Oct 2025 13:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102249;
-	bh=C+rb5qiheNGvA2YoHs3Z/BtYZyscTFp8pJe1U08A6R4=;
+	s=korg; t=1760102252;
+	bh=NN7AHrie72/4YnSrW/gJfkoI52/BNrwbnDjXpBJP6Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSXEn8c2T4Spt01CUhGHjUx2S7lxMGN0YPq3GSV/pb0usPIF/txl8r47OtRqror2o
-	 2XXvpmiE0AibrNg+TdU3nd655JEYSZkM0x8ZRwdt8mMM9mB5ObQTaWajT4JZGbXTTm
-	 NtOmPKcqGbc88oiufiT3KGk/BypF0f3JEH2sbMyU=
+	b=bCvl5CFMlQQx+d0PiZrpIkNKXYFdr8cIhPBce4XdX1QR9HK+Z5lK6cy6AEvzrcxXC
+	 0tHcZ98ETJGcrruzyjjuMUEDGTy+8NeIgL0PSLHXm+MxwGVtIThXoXfqdgm2AcR0/O
+	 Ko+DypRdHQdW5f2St1Cx+t6AIJzS9Oizn7B5tPU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
 	Daniel Almeida <daniel.almeida@collabora.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.17 06/26] rust: drm: fix `srctree/` links
-Date: Fri, 10 Oct 2025 15:16:01 +0200
-Message-ID: <20251010131331.440271350@linuxfoundation.org>
+Subject: [PATCH 6.17 07/26] rust: block: fix `srctree/` links
+Date: Fri, 10 Oct 2025 15:16:02 +0200
+Message-ID: <20251010131331.476902319@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -53,87 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit c2783c7cfefd55b1a5be781679cbee5191c0fd87 upstream.
+commit 208d7f788e84e80992d7b1c82ff17b620eb1371e upstream.
 
-These `srctree/` links pointed inside `linux/`, but they are directly
-under `drm/`.
+This `srctree/` link pointed to a file with an underscore, but the header
+used a dash instead.
 
-Thus fix them.
+Thus fix it.
 
 This cleans a future warning that will check our `srctree/` links.
 
 Cc: stable@vger.kernel.org
-Fixes: a98a73be9ee9 ("rust: drm: file: Add File abstraction")
-Fixes: c284d3e42338 ("rust: drm: gem: Add GEM object abstraction")
-Fixes: 07c9016085f9 ("rust: drm: add driver abstractions")
-Fixes: 1e4b8896c0f3 ("rust: drm: add device abstraction")
-Fixes: 9a69570682b1 ("rust: drm: ioctl: Add DRM ioctl abstraction")
-Acked-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
 Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/drm/device.rs  |    2 +-
- rust/kernel/drm/driver.rs  |    2 +-
- rust/kernel/drm/file.rs    |    2 +-
- rust/kernel/drm/gem/mod.rs |    2 +-
- rust/kernel/drm/ioctl.rs   |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ rust/kernel/block/mq/gen_disk.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/drm/device.rs
-+++ b/rust/kernel/drm/device.rs
-@@ -2,7 +2,7 @@
- 
- //! DRM device.
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -3,7 +3,7 @@
+ //! Generic disk abstraction.
  //!
--//! C header: [`include/linux/drm/drm_device.h`](srctree/include/linux/drm/drm_device.h)
-+//! C header: [`include/drm/drm_device.h`](srctree/include/drm/drm_device.h)
+ //! C header: [`include/linux/blkdev.h`](srctree/include/linux/blkdev.h)
+-//! C header: [`include/linux/blk_mq.h`](srctree/include/linux/blk_mq.h)
++//! C header: [`include/linux/blk-mq.h`](srctree/include/linux/blk-mq.h)
  
- use crate::{
-     alloc::allocator::Kmalloc,
---- a/rust/kernel/drm/driver.rs
-+++ b/rust/kernel/drm/driver.rs
-@@ -2,7 +2,7 @@
- 
- //! DRM driver core.
- //!
--//! C header: [`include/linux/drm/drm_drv.h`](srctree/include/linux/drm/drm_drv.h)
-+//! C header: [`include/drm/drm_drv.h`](srctree/include/drm/drm_drv.h)
- 
- use crate::{
-     bindings, device, devres, drm,
---- a/rust/kernel/drm/file.rs
-+++ b/rust/kernel/drm/file.rs
-@@ -2,7 +2,7 @@
- 
- //! DRM File objects.
- //!
--//! C header: [`include/linux/drm/drm_file.h`](srctree/include/linux/drm/drm_file.h)
-+//! C header: [`include/drm/drm_file.h`](srctree/include/drm/drm_file.h)
- 
- use crate::{bindings, drm, error::Result, prelude::*, types::Opaque};
- use core::marker::PhantomData;
---- a/rust/kernel/drm/gem/mod.rs
-+++ b/rust/kernel/drm/gem/mod.rs
-@@ -2,7 +2,7 @@
- 
- //! DRM GEM API
- //!
--//! C header: [`include/linux/drm/drm_gem.h`](srctree/include/linux/drm/drm_gem.h)
-+//! C header: [`include/drm/drm_gem.h`](srctree/include/drm/drm_gem.h)
- 
- use crate::{
-     alloc::flags::*,
---- a/rust/kernel/drm/ioctl.rs
-+++ b/rust/kernel/drm/ioctl.rs
-@@ -2,7 +2,7 @@
- 
- //! DRM IOCTL definitions.
- //!
--//! C header: [`include/linux/drm/drm_ioctl.h`](srctree/include/linux/drm/drm_ioctl.h)
-+//! C header: [`include/drm/drm_ioctl.h`](srctree/include/drm/drm_ioctl.h)
- 
- use crate::ioctl;
- 
+ use crate::block::mq::{raw_writer::RawWriter, Operations, TagSet};
+ use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc};
 
 
