@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4B521579F;
-	Fri, 10 Oct 2025 13:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1507D21579F;
+	Fri, 10 Oct 2025 13:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102448; cv=none; b=G6EjSIAj7SXQsAT5O3eyxMmPo2jaAIr/JZ2azsv6qS8VGt8SoKhyF8cvCVR9ly91Px3T9eE9EDV4AgFA8iIPL7LzIogFW0nz01DH1bF9CMe6Twqjno7MIrk3qb4lFOwHeNlw+8rsd6P5DDI1mrHTooFM6wS7Iol5v8uK9pB5yVw=
+	t=1760102451; cv=none; b=EfpvNZXCRZd/WsUCjDT760ZZrbYOC9ACnKPY3p0vaTWzuSAhz2YnHnuiWKJB9XQPLnPnc1BEOzLSd1k1cOI0vTsoxpYNxjuB6Fk1L/9XeSgZ+QYB57NketUMMnb1GiFW2xrKCMBk0QKpDQI86FF5ObCXZWjwctdJZPxiChdH3dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102448; c=relaxed/simple;
-	bh=Aj7XiayTr8D/QIg/rOL1D3REb47yOyapl40IdFN93qA=;
+	s=arc-20240116; t=1760102451; c=relaxed/simple;
+	bh=nFYu2EG9vaxoMom8i9M28Z9oUjYLZmkVegLxlel1K4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nf7ESZD71VKO+qRy8Y/9mz2Bo8YziXaiKx9siBOGLBKWT67MrmH9eNYOfq0SaX7EWzkzzZzrIoGx9o0j3vUz/95/cMrw20XdaLUyhqomE8LLR0vzmr6aZmoPcp2k2P/i5IRkQRyI8OSWDnxLILe+98IH/tqi/+vEDUKwE6rFEcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAuXbdY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az09EivWhaL0exAA5fkRx+LVjKPLIzbrgoqfxkPAqqnQKbeJDIQT+2BElSrvBdND/nUGVGt7BkyfdiZqIdg/a4kV7POcxHs8UkOLzN/leHao5Fc6YjlwoZayeCTTziBsnquauLozdVRByzE6KsHNTmvCWUjsjQOVFrICyu5lyYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMx0+RC6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAuXbdY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2D2C4CEFE;
-	Fri, 10 Oct 2025 13:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMx0+RC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5884DC4CEFE;
+	Fri, 10 Oct 2025 13:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102447;
-	bh=Aj7XiayTr8D/QIg/rOL1D3REb47yOyapl40IdFN93qA=;
+	s=korg; t=1760102450;
+	bh=nFYu2EG9vaxoMom8i9M28Z9oUjYLZmkVegLxlel1K4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAuXbdY4EF1KNouOTP/oUlDzhqb6k5YpfXYH94GbZMWysuY8WlKYn+rfOU/Q9eEdf
-	 If2noREOB6J0jz7yiuCiFXlaD4/QZ6n+XgdNpSr9aX1IbMnXeIDTOjIj6MrYxN6fjJ
-	 oyA39xqjAO6kdcfOOCPOwN3iZLOPtX7OP3Qw2ESQ=
+	b=QMx0+RC6TWsDCgqMMoUVUvRjikPpdimGinV6J5qh9Nhvq1pG0lX6Ns/o7fZCwS0RH
+	 Atnttpu+mwpZOPfEY6wjJbLzy2aGAcSr5ALl7vITca1evfRh1WzGgGzOSxVqLyFzQO
+	 /VQW5MPuHlwE5m94DlkjiBHGAPsOWz3D5xb0MKeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 18/35] platform/x86/amd/pmc: Add Stellaris Slim Gen6 AMD to spurious 8042 quirks list
-Date: Fri, 10 Oct 2025 15:16:20 +0200
-Message-ID: <20251010131332.452470589@linuxfoundation.org>
+	Shaoyun Liu <shaoyun.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 19/35] drm/amd : Update MES API header file for v11 & v12
+Date: Fri, 10 Oct 2025 15:16:21 +0200
+Message-ID: <20251010131332.488308541@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -46,49 +44,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Shaoyun Liu <shaoyun.liu@amd.com>
 
-[ Upstream commit 12a3dd4d2cd9232d4e4df3b9a5b3d745db559941 ]
+commit ce4971388c79d36b3f50f607c3278dbfae6c789b upstream.
 
-Prevents instant wakeup ~1s after suspend
+New features require the new fields defines
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20250916164700.32896-1-wse@tuxedocomputers.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shaoyun Liu <shaoyun.liu@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/include/mes_v11_api_def.h |   43 +++++++++++++++++++++++++-
+ drivers/gpu/drm/amd/include/mes_v12_api_def.h |   31 ++++++++++++++++++
+ 2 files changed, 72 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index b872baf35808f..9fd2829ee2ab4 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -250,6 +250,13 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
- 		}
- 	},
-+	{
-+		.ident = "TUXEDO Stellaris Slim 15 AMD Gen6",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
-+		}
-+	},
- 	{
- 		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
- 		.driver_data = &quirk_spurious_8042,
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/amd/include/mes_v11_api_def.h
++++ b/drivers/gpu/drm/amd/include/mes_v11_api_def.h
+@@ -230,13 +230,23 @@ union MESAPI_SET_HW_RESOURCES {
+ 				uint32_t disable_add_queue_wptr_mc_addr : 1;
+ 				uint32_t enable_mes_event_int_logging : 1;
+ 				uint32_t enable_reg_active_poll : 1;
+-				uint32_t reserved	: 21;
++				uint32_t use_disable_queue_in_legacy_uq_preemption : 1;
++				uint32_t send_write_data : 1;
++				uint32_t os_tdr_timeout_override : 1;
++				uint32_t use_rs64mem_for_proc_gang_ctx : 1;
++				uint32_t use_add_queue_unmap_flag_addr : 1;
++				uint32_t enable_mes_sch_stb_log : 1;
++				uint32_t limit_single_process : 1;
++				uint32_t is_strix_tmz_wa_enabled  :1;
++				uint32_t reserved : 13;
+ 			};
+ 			uint32_t	uint32_t_all;
+ 		};
+ 		uint32_t	oversubscription_timer;
+ 		uint64_t        doorbell_info;
+ 		uint64_t        event_intr_history_gpu_mc_ptr;
++		uint64_t	timestamp;
++		uint32_t	os_tdr_timeout_in_sec;
+ 	};
+ 
+ 	uint32_t	max_dwords_in_api[API_FRAME_SIZE_IN_DWORDS];
+@@ -563,6 +573,11 @@ enum MESAPI_MISC_OPCODE {
+ 	MESAPI_MISC__READ_REG,
+ 	MESAPI_MISC__WAIT_REG_MEM,
+ 	MESAPI_MISC__SET_SHADER_DEBUGGER,
++	MESAPI_MISC__NOTIFY_WORK_ON_UNMAPPED_QUEUE,
++	MESAPI_MISC__NOTIFY_TO_UNMAP_PROCESSES,
++	MESAPI_MISC__CHANGE_CONFIG,
++	MESAPI_MISC__LAUNCH_CLEANER_SHADER,
++
+ 	MESAPI_MISC__MAX,
+ };
+ 
+@@ -617,6 +632,31 @@ struct SET_SHADER_DEBUGGER {
+ 	uint32_t trap_en;
+ };
+ 
++enum MESAPI_MISC__CHANGE_CONFIG_OPTION {
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_LIMIT_SINGLE_PROCESS = 0,
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_ENABLE_HWS_LOGGING_BUFFER = 1,
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_CHANGE_TDR_CONFIG    = 2,
++
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_MAX = 0x1F
++};
++
++struct CHANGE_CONFIG {
++	enum MESAPI_MISC__CHANGE_CONFIG_OPTION opcode;
++	union {
++		struct {
++			uint32_t limit_single_process : 1;
++			uint32_t enable_hws_logging_buffer : 1;
++			uint32_t reserved : 31;
++		} bits;
++		uint32_t all;
++	} option;
++
++	struct {
++		uint32_t tdr_level;
++		uint32_t tdr_delay;
++	} tdr_config;
++};
++
+ union MESAPI__MISC {
+ 	struct {
+ 		union MES_API_HEADER	header;
+@@ -631,6 +671,7 @@ union MESAPI__MISC {
+ 			struct          WAIT_REG_MEM wait_reg_mem;
+ 			struct		SET_SHADER_DEBUGGER set_shader_debugger;
+ 			enum MES_AMD_PRIORITY_LEVEL queue_sch_level;
++			struct		CHANGE_CONFIG change_config;
+ 
+ 			uint32_t	data[MISC_DATA_MAX_SIZE_IN_DWORDS];
+ 		};
+--- a/drivers/gpu/drm/amd/include/mes_v12_api_def.h
++++ b/drivers/gpu/drm/amd/include/mes_v12_api_def.h
+@@ -643,6 +643,10 @@ enum MESAPI_MISC_OPCODE {
+ 	MESAPI_MISC__SET_SHADER_DEBUGGER,
+ 	MESAPI_MISC__NOTIFY_WORK_ON_UNMAPPED_QUEUE,
+ 	MESAPI_MISC__NOTIFY_TO_UNMAP_PROCESSES,
++	MESAPI_MISC__QUERY_HUNG_ENGINE_ID,
++	MESAPI_MISC__CHANGE_CONFIG,
++	MESAPI_MISC__LAUNCH_CLEANER_SHADER,
++	MESAPI_MISC__SETUP_MES_DBGEXT,
+ 
+ 	MESAPI_MISC__MAX,
+ };
+@@ -713,6 +717,31 @@ struct SET_GANG_SUBMIT {
+ 	uint32_t slave_gang_context_array_index;
+ };
+ 
++enum MESAPI_MISC__CHANGE_CONFIG_OPTION {
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_LIMIT_SINGLE_PROCESS = 0,
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_ENABLE_HWS_LOGGING_BUFFER = 1,
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_CHANGE_TDR_CONFIG    = 2,
++
++	MESAPI_MISC__CHANGE_CONFIG_OPTION_MAX = 0x1F
++};
++
++struct CHANGE_CONFIG {
++	enum MESAPI_MISC__CHANGE_CONFIG_OPTION opcode;
++	union {
++		struct  {
++			uint32_t limit_single_process : 1;
++			uint32_t enable_hws_logging_buffer : 1;
++			uint32_t reserved : 30;
++		} bits;
++		uint32_t all;
++	} option;
++
++	struct {
++		uint32_t tdr_level;
++		uint32_t tdr_delay;
++	} tdr_config;
++};
++
+ union MESAPI__MISC {
+ 	struct {
+ 		union MES_API_HEADER	header;
+@@ -726,7 +755,7 @@ union MESAPI__MISC {
+ 			struct WAIT_REG_MEM wait_reg_mem;
+ 			struct SET_SHADER_DEBUGGER set_shader_debugger;
+ 			enum MES_AMD_PRIORITY_LEVEL queue_sch_level;
+-
++			struct CHANGE_CONFIG change_config;
+ 			uint32_t data[MISC_DATA_MAX_SIZE_IN_DWORDS];
+ 		};
+ 		uint64_t		timestamp;
 
 
