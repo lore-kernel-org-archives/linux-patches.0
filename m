@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E822A21579F;
-	Fri, 10 Oct 2025 13:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17C02F39B3;
+	Fri, 10 Oct 2025 13:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102431; cv=none; b=ui+wFfj/JUyw7zgFyQVyoTbnPa4qk48wHC5OWe83UH8boOLHdN8vBzMylxFZL6BBDI0jzCyYreMLoLRfRcZZLxl84cczE71dK5I7GrdrSPJKGjBH4tCPaiUNljfDvrJZMt/7/+WhuHPmVip6psLxcTOFDYhex6kDvmi0wBqQI8g=
+	t=1760102433; cv=none; b=UMYyM4mgIg/aQPT6lNcffDU82ylNoe4ugJt8nZ1kWnsC+4Apniv1WiavMaNCES2GHM3DgT+J0l/s2l+q1qea8wYoVXdfYZi4Ap4PSghIGsbYN5zIOxrGURsokINc6lVD/Z2PX2AwqgV+4mQDcOi+CL5niSkBgy0ysBtnbGzBkCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102431; c=relaxed/simple;
-	bh=4L8qjw/4jslETTYyb78sq94BeD6cD5GClrNgaqM272I=;
+	s=arc-20240116; t=1760102433; c=relaxed/simple;
+	bh=8BaAOu7aqbczaMdwoHMdp72KC5OlvFFrp8k95C673Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RiLei/J0OHSzv+O899T6NzDFA5gLz2jHdOjlEmzByH4mNathfqM5S9DQzngmYeeXIOHoeoTCNvjFg9rBtHZiqXCOgZ9d7sFWl+5pTWlxmZJ/e5e4Fu8e4azZv76hypdsqQ4y7FpXXUW7VJQJyS220gtYjzjrciAS30YSqptvmEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK4JkGoe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNdYtkslTQ77tXjIrEY2P0J53aQM7U9Pwq/KShV3dOHEg+l55YpL1rDbQAe9jyBY8pKwcMGsLU9r+7047vPXjsz/FVxgFzeyJoQsn8dkaEbadcK/Moo8M0jnBusEIDZuCoUlmcJ7nO7+gbN2iCRwFWF1KrYSVAerziWENOj7XZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mE/tMu6u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK4JkGoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D812C4CEF1;
-	Fri, 10 Oct 2025 13:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mE/tMu6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B59C4CEF1;
+	Fri, 10 Oct 2025 13:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102430;
-	bh=4L8qjw/4jslETTYyb78sq94BeD6cD5GClrNgaqM272I=;
+	s=korg; t=1760102433;
+	bh=8BaAOu7aqbczaMdwoHMdp72KC5OlvFFrp8k95C673Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UK4JkGoe7Z5g4RLtPNdtUDFT52/DdVW1jQtpHP7AlEckyVhZ55p347Z0AezmrD1nV
-	 IPDKV3cI6wnEjPfkCarZgUpYXKBJ3KHbhbFwIdZdUX8ub0ZgnodOHecGccpz3+Fwsn
-	 1NiE03RxTHJEbCMnPkv3F0sEtiHfsFATPAiekc2M=
+	b=mE/tMu6uZuU2Lcx5ers/wYicbpPpZ40TXQkOz/j98iUtBGVkWgFLbHXh72qzcxV7i
+	 wWSnbiEjGmQexEtCwZJYPPTtz25qh8sFSI32vCKb6bLsCQ5J1AjqDhfp9UP1BEnwfh
+	 Azk+mig/ZtU01whjxRTwSXwbAKcEOAtS4ZezEteA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jack Yu <jack.yu@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 12/35] platform/x86/amd/pmf: Support new ACPI ID AMDI0108
-Date: Fri, 10 Oct 2025 15:16:14 +0200
-Message-ID: <20251010131332.235936334@linuxfoundation.org>
+Subject: [PATCH 6.12 13/35] ASoC: rt5682s: Adjust SAR ADC button mode to fix noise issue
+Date: Fri, 10 Oct 2025 15:16:15 +0200
+Message-ID: <20251010131332.273286780@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -46,41 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Jack Yu <jack.yu@realtek.com>
 
-[ Upstream commit 1b09d08866277677d11726116f5e786d5ba00173 ]
+[ Upstream commit 1dd28fd86c3fa4e395031dd6f2ba920242107010 ]
 
-Include the ACPI ID AMDI0108, which is used on upcoming AMD platforms, in
-the PMF driver's list of supported devices.
+Adjust register settings for SAR adc button detection mode
+to fix noise issue in headset.
 
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20250915090546.2759130-1-Shyam-sundar.S-k@amd.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Jack Yu <jack.yu@realtek.com>
+Link: https://patch.msgid.link/766cd1d2dd7a403ba65bb4cc44845f71@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/rt5682s.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index 719caa2a00f05..8a1e2268d301a 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -406,6 +406,7 @@ static const struct acpi_device_id amd_pmf_acpi_ids[] = {
- 	{"AMDI0103", 0},
- 	{"AMDI0105", 0},
- 	{"AMDI0107", 0},
-+	{"AMDI0108", 0},
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, amd_pmf_acpi_ids);
+diff --git a/sound/soc/codecs/rt5682s.c b/sound/soc/codecs/rt5682s.c
+index ce2e88e066f3e..d773c96e2543c 100644
+--- a/sound/soc/codecs/rt5682s.c
++++ b/sound/soc/codecs/rt5682s.c
+@@ -653,14 +653,15 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
+ 	switch (mode) {
+ 	case SAR_PWR_SAVING:
+ 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_3,
+-			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_DIS);
++			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_EN);
+ 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
+-			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK,
+-			RT5682S_CTRL_MB1_REG | RT5682S_CTRL_MB2_REG);
++			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK |
++			RT5682S_VREF_POW_MASK, RT5682S_CTRL_MB1_FSM |
++			RT5682S_CTRL_MB2_FSM | RT5682S_VREF_POW_FSM);
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
+ 		usleep_range(5000, 5500);
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK, RT5682S_SAR_BUTDET_EN);
+@@ -688,7 +689,7 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
+ 		break;
+ 	default:
+ 		dev_err(component->dev, "Invalid SAR Power mode: %d\n", mode);
+@@ -725,7 +726,7 @@ static void rt5682s_disable_push_button_irq(struct snd_soc_component *component)
+ 	snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 		RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 		RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-		RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++		RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
+ }
+ 
+ /**
+@@ -786,7 +787,7 @@ static int rt5682s_headset_detect(struct snd_soc_component *component, int jack_
+ 			jack_type = SND_JACK_HEADSET;
+ 			snd_soc_component_write(component, RT5682S_SAR_IL_CMD_3, 0x024c);
+ 			snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
+-				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_EN);
++				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_DIS);
+ 			snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 				RT5682S_SAR_SEL_MB1_2_MASK, val << RT5682S_SAR_SEL_MB1_2_SFT);
+ 			rt5682s_enable_push_button_irq(component);
+@@ -966,7 +967,7 @@ static int rt5682s_set_jack_detect(struct snd_soc_component *component,
+ 			RT5682S_EMB_JD_MASK | RT5682S_DET_TYPE |
+ 			RT5682S_POL_FAST_OFF_MASK | RT5682S_MIC_CAP_MASK,
+ 			RT5682S_EMB_JD_EN | RT5682S_DET_TYPE |
+-			RT5682S_POL_FAST_OFF_HIGH | RT5682S_MIC_CAP_HS);
++			RT5682S_POL_FAST_OFF_LOW | RT5682S_MIC_CAP_HS);
+ 		regmap_update_bits(rt5682s->regmap, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_POW_MASK, RT5682S_SAR_POW_EN);
+ 		regmap_update_bits(rt5682s->regmap, RT5682S_GPIO_CTRL_1,
 -- 
 2.51.0
 
