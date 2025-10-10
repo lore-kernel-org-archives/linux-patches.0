@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B12F549B;
-	Fri, 10 Oct 2025 13:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC002F60CD;
+	Fri, 10 Oct 2025 13:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102265; cv=none; b=t6Y1x+jcjzbBi/0fMbKHqW5E8gZDrufOI36C/0U3g4hbHgZdehXUFY3JdVwil0NbJ+Cq3lp242Iot0xOKqWcP/wlJemWQkRqmFFkq5utX/3OcChCuqhxLwatubzlL8FGRk7T1FDezL7Nwx5dSl4Crr2qH4hWRHaP6C64is3QQ9A=
+	t=1760102268; cv=none; b=ffvpzEyh3IRFcPHwWUwVXr008g7MUJM9ahPfh2Zcu1Jxy0QtO63PSIjLmV0wAYiAe6KBr+J6BOO74gULeNU4zDNTJ8gbT01F9QQpcjlGiAiwnR0GAWL5b6XltA7lagkh0Pl/o0zy7Ja58LK6hq0qLzcLX4+YEVFQiJUU5Gwvuig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102265; c=relaxed/simple;
-	bh=dEpy/h3ziJC4mHAurEtPg4qfPUlolWZ2i3DWXP78aM0=;
+	s=arc-20240116; t=1760102268; c=relaxed/simple;
+	bh=+lEpebIQQsG1H1UCUOg/C87FCT+edxk9ywzHNJAPb1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kLOm1hsyFa8HWCarGHfNO5mrqt5+Bh2flHbWDvKeyq9KRN4iuXMAqGZd+TQrXwCvnibBdyLLYIAqNk6nfKeNZoo2gwIzlQyqwwvHXgd4GHUd2dalgpIiBQEOO5w783hi2XMDNh/ugAr6gOK4P32RtdSFqIrcm1SioFWRn2OI1Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkSIU9RA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiGCOv+B9OKbvD989ZX7stFugIA84p2v7EcttvJREG/dMvWPBvts/+5BrHODj1qXzJBuYJp21BBPAfk3QiwtiannaLPrNxRRsHXW4rQvPuTZZJh6F4Ss1Xmu7wj0psj6aXg/mAR3mkTPNa2E9KEqdDQslrA9Q1aSeBB2zpfe8BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWr9j7er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkSIU9RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723DBC4CEF1;
-	Fri, 10 Oct 2025 13:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWr9j7er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4947FC4CEF9;
+	Fri, 10 Oct 2025 13:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102264;
-	bh=dEpy/h3ziJC4mHAurEtPg4qfPUlolWZ2i3DWXP78aM0=;
+	s=korg; t=1760102267;
+	bh=+lEpebIQQsG1H1UCUOg/C87FCT+edxk9ywzHNJAPb1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkSIU9RAyVtEU4lMxnJeS/RysYFdnHECzLWEkwLBHQkaiyW7g08SnmzT0bj1aDqRV
-	 1ljrHgH+O0xwVpv9M6GEkNX/kDYOSpLq9wJq0JMAV9w3BF+XNgEY4aohNa7h+HVdKV
-	 vmVERwzusTiT9QHfBzIazjv8i37Mo8rNaj8A+peE=
+	b=jWr9j7er7NJ5aYj/laE2wy5GxqUUSU4bVl0vBSaHsXg+WC1zyS8BrD8W5+Bk6WvMV
+	 UWcq7FCqgRcukgkNtPQv/IS+sZS7B26v2EvvkLfI73qS0DMzvrEaQ3ZmSN3afaIOUG
+	 OOtGRnDldLb17GXqHFTv9aW0fCp2+P6uBYmz6wp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Subject: [PATCH 6.17 15/26] staging: axis-fifo: fix maximum TX packet length check
-Date: Fri, 10 Oct 2025 15:16:10 +0200
-Message-ID: <20251010131331.764273452@linuxfoundation.org>
+	syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.17 24/26] KVM: x86: Dont (re)check L1 intercepts when completing userspace I/O
+Date: Fri, 10 Oct 2025 15:16:19 +0200
+Message-ID: <20251010131332.085052566@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -43,75 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 52ff2b840bc723f3be1f096f8017c78e0515858c upstream.
+commit e750f85391286a4c8100275516973324b621a269 upstream.
 
-Since commit 2ca34b508774 ("staging: axis-fifo: Correct handling of
-tx_fifo_depth for size validation"), write() operations with packets
-larger than 'tx_fifo_depth - 4' words are no longer rejected with -EINVAL.
+When completing emulation of instruction that generated a userspace exit
+for I/O, don't recheck L1 intercepts as KVM has already finished that
+phase of instruction execution, i.e. has already committed to allowing L2
+to perform I/O.  If L1 (or host userspace) modifies the I/O permission
+bitmaps during the exit to userspace,  KVM will treat the access as being
+intercepted despite already having emulated the I/O access.
 
-Fortunately, the packets are not actually getting transmitted to hardware,
-otherwise they would be raising a 'Transmit Packet Overrun Error'
-interrupt, which requires a reset of the TX circuit to recover from.
+Pivot on EMULTYPE_NO_DECODE to detect that KVM is completing emulation.
+Of the three users of EMULTYPE_NO_DECODE, only complete_emulated_io() (the
+intended "recipient") can reach the code in question.  gp_interception()'s
+use is mutually exclusive with is_guest_mode(), and
+complete_emulated_insn_gp() unconditionally pairs EMULTYPE_NO_DECODE with
+EMULTYPE_SKIP.
 
-Instead, the request times out inside wait_event_interruptible_timeout()
-and always returns -EAGAIN, since the wake up condition can never be true
-for these packets. But still, they unnecessarily block other tasks from
-writing to the FIFO and the EAGAIN return code signals userspace to retry
-the write() call, even though it will always fail and time out.
+The bad behavior was detected by a syzkaller program that toggles port I/O
+interception during the userspace I/O exit, ultimately resulting in a WARN
+on vcpu->arch.pio.count being non-zero due to KVM no completing emulation
+of the I/O instruction.
 
-According to the AXI4-Stream FIFO reference manual (PG080), the maximum
-valid packet length is 'tx_fifo_depth - 4' words, so attempting to send
-larger packets is invalid and should not be happening in the first place:
+  WARNING: CPU: 23 PID: 1083 at arch/x86/kvm/x86.c:8039 emulator_pio_in_out+0x154/0x170 [kvm]
+  Modules linked in: kvm_intel kvm irqbypass
+  CPU: 23 UID: 1000 PID: 1083 Comm: repro Not tainted 6.16.0-rc5-c1610d2d66b1-next-vm #74 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:emulator_pio_in_out+0x154/0x170 [kvm]
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   kvm_fast_pio+0xd6/0x1d0 [kvm]
+   vmx_handle_exit+0x149/0x610 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0xda8/0x1ac0 [kvm]
+   kvm_vcpu_ioctl+0x244/0x8c0 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0x5d/0xc60
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
 
-> The maximum packet that can be transmitted is limited by the size of
-> the FIFO, which is (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
-
-Therefore, bring back the old behavior and outright reject packets larger
-than 'tx_fifo_depth - 4' with -EINVAL. Add a comment to explain why the
-check is necessary. The dev_err() message was removed to avoid cluttering
-the dmesg log if an invalid packet is received from userspace.
-
-Fixes: 2ca34b508774 ("staging: axis-fifo: Correct handling of tx_fifo_depth for size validation")
+Reported-by: syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68790db4.a00a0220.3af5df.0020.GAE@google.com
+Fixes: 8a76d7f25f8f ("KVM: x86: Add x86 callback for intercept check")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Link: https://lore.kernel.org/r/20250817171350.872105-1-ovidiu.panait.oss@gmail.com
+Cc: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250715190638.1899116-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/x86/kvm/emulate.c     |    9 ++++-----
+ arch/x86/kvm/kvm_emulate.h |    3 +--
+ arch/x86/kvm/x86.c         |   15 ++++++++-------
+ 3 files changed, 13 insertions(+), 14 deletions(-)
 
---- a/drivers/staging/axis-fifo/axis-fifo.c
-+++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -322,11 +322,17 @@ static ssize_t axis_fifo_write(struct fi
- 		return -EINVAL;
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -5107,12 +5107,11 @@ void init_decode_cache(struct x86_emulat
+ 	ctxt->mem_read.end = 0;
+ }
+ 
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts)
+ {
+ 	const struct x86_emulate_ops *ops = ctxt->ops;
+ 	int rc = X86EMUL_CONTINUE;
+ 	int saved_dst_type = ctxt->dst.type;
+-	bool is_guest_mode = ctxt->ops->is_guest_mode(ctxt);
+ 
+ 	ctxt->mem_read.pos = 0;
+ 
+@@ -5160,7 +5159,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				fetch_possible_mmx_operand(&ctxt->dst);
+ 		}
+ 
+-		if (unlikely(is_guest_mode) && ctxt->intercept) {
++		if (unlikely(check_intercepts) && ctxt->intercept) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_PRE_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5189,7 +5188,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				goto done;
+ 		}
+ 
+-		if (unlikely(is_guest_mode) && (ctxt->d & Intercept)) {
++		if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_POST_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5243,7 +5242,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 
+ special_insn:
+ 
+-	if (unlikely(is_guest_mode) && (ctxt->d & Intercept)) {
++	if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 		rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 					      X86_ICPT_POST_MEMACCESS);
+ 		if (rc != X86EMUL_CONTINUE)
+--- a/arch/x86/kvm/kvm_emulate.h
++++ b/arch/x86/kvm/kvm_emulate.h
+@@ -235,7 +235,6 @@ struct x86_emulate_ops {
+ 	void (*set_nmi_mask)(struct x86_emulate_ctxt *ctxt, bool masked);
+ 
+ 	bool (*is_smm)(struct x86_emulate_ctxt *ctxt);
+-	bool (*is_guest_mode)(struct x86_emulate_ctxt *ctxt);
+ 	int (*leave_smm)(struct x86_emulate_ctxt *ctxt);
+ 	void (*triple_fault)(struct x86_emulate_ctxt *ctxt);
+ 	int (*set_xcr)(struct x86_emulate_ctxt *ctxt, u32 index, u64 xcr);
+@@ -521,7 +520,7 @@ bool x86_page_table_writing_insn(struct
+ #define EMULATION_RESTART 1
+ #define EMULATION_INTERCEPTED 2
+ void init_decode_cache(struct x86_emulate_ctxt *ctxt);
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt);
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts);
+ int emulator_task_switch(struct x86_emulate_ctxt *ctxt,
+ 			 u16 tss_selector, int idt_index, int reason,
+ 			 bool has_error_code, u32 error_code);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8470,11 +8470,6 @@ static bool emulator_is_smm(struct x86_e
+ 	return is_smm(emul_to_vcpu(ctxt));
+ }
+ 
+-static bool emulator_is_guest_mode(struct x86_emulate_ctxt *ctxt)
+-{
+-	return is_guest_mode(emul_to_vcpu(ctxt));
+-}
+-
+ #ifndef CONFIG_KVM_SMM
+ static int emulator_leave_smm(struct x86_emulate_ctxt *ctxt)
+ {
+@@ -8558,7 +8553,6 @@ static const struct x86_emulate_ops emul
+ 	.guest_cpuid_is_intel_compatible = emulator_guest_cpuid_is_intel_compatible,
+ 	.set_nmi_mask        = emulator_set_nmi_mask,
+ 	.is_smm              = emulator_is_smm,
+-	.is_guest_mode       = emulator_is_guest_mode,
+ 	.leave_smm           = emulator_leave_smm,
+ 	.triple_fault        = emulator_triple_fault,
+ 	.set_xcr             = emulator_set_xcr,
+@@ -9143,7 +9137,14 @@ restart:
+ 		ctxt->exception.address = 0;
  	}
  
--	if (words_to_write > fifo->tx_fifo_depth) {
--		dev_err(fifo->dt_device, "tried to write more words [%u] than slots in the fifo buffer [%u]\n",
--			words_to_write, fifo->tx_fifo_depth);
+-	r = x86_emulate_insn(ctxt);
 +	/*
-+	 * In 'Store-and-Forward' mode, the maximum packet that can be
-+	 * transmitted is limited by the size of the FIFO, which is
-+	 * (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
-+	 *
-+	 * Do not attempt to send a packet larger than 'tx_fifo_depth - 4',
-+	 * otherwise a 'Transmit Packet Overrun Error' interrupt will be
-+	 * raised, which requires a reset of the TX circuit to recover.
++	 * Check L1's instruction intercepts when emulating instructions for
++	 * L2, unless KVM is re-emulating a previously decoded instruction,
++	 * e.g. to complete userspace I/O, in which case KVM has already
++	 * checked the intercepts.
 +	 */
-+	if (words_to_write > (fifo->tx_fifo_depth - 4))
- 		return -EINVAL;
--	}
++	r = x86_emulate_insn(ctxt, is_guest_mode(vcpu) &&
++				   !(emulation_type & EMULTYPE_NO_DECODE));
  
- 	if (fifo->write_flags & O_NONBLOCK) {
- 		/*
+ 	if (r == EMULATION_INTERCEPTED)
+ 		return 1;
 
 
