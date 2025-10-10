@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CD621257F;
-	Fri, 10 Oct 2025 13:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D861A1F63FF;
+	Fri, 10 Oct 2025 13:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102235; cv=none; b=hP56jcECaHYsoTDu+1OA2MTvWz0/W35hitm4m19HKKtgDnJnZCU0oCh1EgbmwG5dhNQqG8slo2K9khd4aTVs/21UrVTKzROBIJzUVY8MRc8lHMxRWY6fhVQR1n6pncBRttoVahlTWL4po/Z2DGLRG6rWwkdesAjAZxEt7ELKu28=
+	t=1760102238; cv=none; b=XGz7u6eUifeA2qiCZIwMIh91SQwtJoH/Cn64ktXxVo3X6D4vc67Dnk3ige1yuVyR7wFIvHhP/NHTshECAnvZSxIakhgEZma7oH3AUop2M4h501vc0vrg92cSxqWCLqar7QKkUFVn0RgurmhGV8Omoi6ZUB5YP1m95kyAHaioQPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102235; c=relaxed/simple;
-	bh=rP0HuVb0U6/f1beQaropGOTV1etLDBqxCLhmg0BJ3TA=;
+	s=arc-20240116; t=1760102238; c=relaxed/simple;
+	bh=C/yMcT057ktXOvYMCfjlkiWml9Rzt5pbBFh10lwm59A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNOETU1IcRQOlpIwf6IjG2tdxngneK4hegl0W965Iq9/1AQihIr6hqti5XcjdiqrwL6+I2veUbgPyzIrj5dYDcdyukjPsTRAI6RTbAMScjSqcFgG05eapG5/c9XXh+h9vgJ8lgqfIRIA7TYcORjKRtcQaM0QnMyqFrZQjSZHC0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYWfFYvs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVu3JWOJrd+CgSk+eDdNeGQIe4hxSQ076YyDoOiT+Iv+mzdHD9yTb4Yn83kkcnnWdv3/9/zOuGODh9diTeAboMMccGfQOAoQVqs1ZAzewhAixrnDRaVDPHJk1FOS1g/ch/BCxX5983n8D+6ZJtIdihtVrML0513i7/sj0tsD6bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/SOFm/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYWfFYvs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074A1C4CEF1;
-	Fri, 10 Oct 2025 13:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/SOFm/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B325C4CEF1;
+	Fri, 10 Oct 2025 13:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102235;
-	bh=rP0HuVb0U6/f1beQaropGOTV1etLDBqxCLhmg0BJ3TA=;
+	s=korg; t=1760102238;
+	bh=C/yMcT057ktXOvYMCfjlkiWml9Rzt5pbBFh10lwm59A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYWfFYvsTR/g/hhwTXsFCxXnFsgHN7jkPzFjkuD1XWKkxvYaB5sR4T4Ff9nHdVjMY
-	 ufpVQtTQYISGrem6eSS3VEnCLiMwnwBFWZ2FkX/8c5kmS/JMJd3Vjdb6X/VsDWMy2X
-	 zTpdGD7/hiqUEo2kq6VWmGYFy15F4YrqXugDSiX8=
+	b=E/SOFm/b76a8BQVfKbyrsMrgAsQ7sNeF13Tpc1heBF3P3mKnRTvyvYcuW+OQA/Qhq
+	 iCqBY3uTiruB00WhO0dUafYr+J/xMipStu29g9bh4G2UhRXYrAqyymO539R/U/oJkY
+	 Am1ynzDf44h27CsIR2f56bi8io0WTvhBj6/e2OD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Tiffany Yang <ynaffit@google.com>
-Subject: [PATCH 6.17 13/26] binder: fix double-free in dbitmap
-Date: Fri, 10 Oct 2025 15:16:08 +0200
-Message-ID: <20251010131331.693737314@linuxfoundation.org>
+	Xiaowei Li <xiaowei.li@simcom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.17 02/26] USB: serial: option: add SIMCom 8230C compositions
+Date: Fri, 10 Oct 2025 15:15:57 +0200
+Message-ID: <20251010131331.296903953@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -51,66 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-commit 3ebcd3460cad351f198c39c6edb4af519a0ed934 upstream.
+commit 0e0ba0ecec3d6e819e0c2348331ff99afe2eb5d5 upstream.
 
-A process might fail to allocate a new bitmap when trying to expand its
-proc->dmap. In that case, dbitmap_grow() fails and frees the old bitmap
-via dbitmap_free(). However, the driver calls dbitmap_free() again when
-the same process terminates, leading to a double-free error:
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
 
-  ==================================================================
-  BUG: KASAN: double-free in binder_proc_dec_tmpref+0x2e0/0x55c
-  Free of addr ffff00000b7c1420 by task kworker/9:1/209
+USB Device Listings:
 
-  CPU: 9 UID: 0 PID: 209 Comm: kworker/9:1 Not tainted 6.17.0-rc6-dirty #5 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Workqueue: events binder_deferred_func
-  Call trace:
-   kfree+0x164/0x31c
-   binder_proc_dec_tmpref+0x2e0/0x55c
-   binder_deferred_func+0xc24/0x1120
-   process_one_work+0x520/0xba4
-  [...]
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet (QMI mode) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#= 10 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-  Allocated by task 448:
-   __kmalloc_noprof+0x178/0x3c0
-   bitmap_zalloc+0x24/0x30
-   binder_open+0x14c/0xc10
-  [...]
+0x9078: tty (DM) + tty (NMEA) + tty (AT) + ECM + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9078 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-  Freed by task 449:
-   kfree+0x184/0x31c
-   binder_inc_ref_for_node+0xb44/0xe44
-   binder_transaction+0x29b4/0x7fbc
-   binder_thread_write+0x1708/0x442c
-   binder_ioctl+0x1b50/0x2900
-  [...]
-  ==================================================================
+0x907b: RNDIS + tty (DM) + tty (NMEA) + tty (AT) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=907b Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=ef(misc ) Sub=04 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fix this issue by marking proc->map NULL in dbitmap_free().
-
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
 Cc: stable@vger.kernel.org
-Fixes: 15d9da3f818c ("binder: use bitmap for faster descriptor lookup")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Tiffany Yang <ynaffit@google.com>
-Link: https://lore.kernel.org/r/20250915221248.3470154-1-cmllamas@google.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/dbitmap.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/android/dbitmap.h
-+++ b/drivers/android/dbitmap.h
-@@ -37,6 +37,7 @@ static inline void dbitmap_free(struct d
- {
- 	dmap->nbits = 0;
- 	kfree(dmap->map);
-+	dmap->map = NULL;
- }
- 
- /* Returns the nbits that a dbitmap can shrink to, 0 if not possible. */
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2114,6 +2114,12 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
+ 	  .driver_info = RSVD(7) },
++	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
++	  .driver_info = RSVD(3) | RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
++	  .driver_info = RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x907b, 0xff),	/* Simcom SIM8230 RNDIS mode */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9205, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT+ECM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9206, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT-only mode */
+ 	{ USB_DEVICE(ALCATEL_VENDOR_ID, ALCATEL_PRODUCT_X060S_X200),
 
 
