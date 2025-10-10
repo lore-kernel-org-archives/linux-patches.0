@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475A621579F;
-	Fri, 10 Oct 2025 13:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4B521579F;
+	Fri, 10 Oct 2025 13:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102445; cv=none; b=UDheOTcvdQ8vX2uRbCtUq+EpbPU1nNmBAwIaQXZkGlzoL0XJlNYV3djKQKrnUF4C2rcNv4yoPnOkTYlEuc071xQ9k4nwdpb0CCcYbE+SLS7T8vLizJg1PcBvrLzukiqKKoiJOvxdgafpQXaKA5W8WZdedhHpTT9ApO6L7ih6qCQ=
+	t=1760102448; cv=none; b=G6EjSIAj7SXQsAT5O3eyxMmPo2jaAIr/JZ2azsv6qS8VGt8SoKhyF8cvCVR9ly91Px3T9eE9EDV4AgFA8iIPL7LzIogFW0nz01DH1bF9CMe6Twqjno7MIrk3qb4lFOwHeNlw+8rsd6P5DDI1mrHTooFM6wS7Iol5v8uK9pB5yVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102445; c=relaxed/simple;
-	bh=FZQlJ/2bL0YOM8kKk6HNAVYbZ1/XcNhZ33DoyDlPvRg=;
+	s=arc-20240116; t=1760102448; c=relaxed/simple;
+	bh=Aj7XiayTr8D/QIg/rOL1D3REb47yOyapl40IdFN93qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e362XNhyePGLS5HxxTGLdSk3ycZHBxzpAeq0vXSi2lwmcnxuigXNqY7sDQLknZsmvSL74NB48Rs1eCOk4pg3LxCQJgbnihkLJ49QXD3EbT0y/VoYnPS5DhhRgM1KrnpdEh9tR/OTv8YOANuXiaI24W0RZ1UVUj562oEUXOFHh78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pND8nTXd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nf7ESZD71VKO+qRy8Y/9mz2Bo8YziXaiKx9siBOGLBKWT67MrmH9eNYOfq0SaX7EWzkzzZzrIoGx9o0j3vUz/95/cMrw20XdaLUyhqomE8LLR0vzmr6aZmoPcp2k2P/i5IRkQRyI8OSWDnxLILe+98IH/tqi/+vEDUKwE6rFEcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAuXbdY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pND8nTXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6873C4CEF1;
-	Fri, 10 Oct 2025 13:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAuXbdY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2D2C4CEFE;
+	Fri, 10 Oct 2025 13:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102445;
-	bh=FZQlJ/2bL0YOM8kKk6HNAVYbZ1/XcNhZ33DoyDlPvRg=;
+	s=korg; t=1760102447;
+	bh=Aj7XiayTr8D/QIg/rOL1D3REb47yOyapl40IdFN93qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pND8nTXdtjiYZksjXhSUACEiuVizMXn/bLNTgSz+LM9AQ/gNnv8vX1wjushx3BmU1
-	 4Q3Pmp3W9gS4INsSAGzVfXDBFVN8+7KzVi7ib274Cndu6Iz8il4oiHT4KI8VueV/7o
-	 2FTGPFGAaVx5wxOqDWJy46gQThFZdhJ18dGfNsKo=
+	b=fAuXbdY4EF1KNouOTP/oUlDzhqb6k5YpfXYH94GbZMWysuY8WlKYn+rfOU/Q9eEdf
+	 If2noREOB6J0jz7yiuCiFXlaD4/QZ6n+XgdNpSr9aX1IbMnXeIDTOjIj6MrYxN6fjJ
+	 oyA39xqjAO6kdcfOOCPOwN3iZLOPtX7OP3Qw2ESQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
-	Tranh Ha <tranh.ha.xb@renesas.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 17/35] can: rcar_canfd: Fix controller mode setting
-Date: Fri, 10 Oct 2025 15:16:19 +0200
-Message-ID: <20251010131332.416692187@linuxfoundation.org>
+Subject: [PATCH 6.12 18/35] platform/x86/amd/pmc: Add Stellaris Slim Gen6 AMD to spurious 8042 quirks list
+Date: Fri, 10 Oct 2025 15:16:20 +0200
+Message-ID: <20251010131332.452470589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -46,54 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duy Nguyen <duy.nguyen.rh@renesas.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-[ Upstream commit 5cff263606a10102a0ea19ff579eaa18fd5577ad ]
+[ Upstream commit 12a3dd4d2cd9232d4e4df3b9a5b3d745db559941 ]
 
-Driver configures register to choose controller mode before
-setting all channels to reset mode leading to failure.
-The patch corrects operation of mode setting.
+Prevents instant wakeup ~1s after suspend
 
-Signed-off-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Signed-off-by: Tranh Ha <tranh.ha.xb@renesas.com>
-Link: https://patch.msgid.link/TYWPR01MB87434739F83E27EDCD23DF44B416A@TYWPR01MB8743.jpnprd01.prod.outlook.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20250916164700.32896-1-wse@tuxedocomputers.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
-index aa3df0d05b853..24dd15c917228 100644
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -732,9 +732,6 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
- 	/* Reset Global error flags */
- 	rcar_canfd_write(gpriv->base, RCANFD_GERFL, 0x0);
- 
--	/* Set the controller into appropriate mode */
--	rcar_canfd_set_mode(gpriv);
--
- 	/* Transition all Channels to reset mode */
- 	for_each_set_bit(ch, &gpriv->channels_mask, gpriv->info->max_channels) {
- 		rcar_canfd_clear_bit(gpriv->base,
-@@ -754,6 +751,10 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
- 			return err;
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index b872baf35808f..9fd2829ee2ab4 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -250,6 +250,13 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
  		}
- 	}
-+
-+	/* Set the controller into appropriate mode */
-+	rcar_canfd_set_mode(gpriv);
-+
- 	return 0;
- }
- 
+ 	},
++	{
++		.ident = "TUXEDO Stellaris Slim 15 AMD Gen6",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
++		}
++	},
+ 	{
+ 		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
+ 		.driver_data = &quirk_spurious_8042,
 -- 
 2.51.0
 
