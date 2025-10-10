@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927D2EF652;
-	Fri, 10 Oct 2025 13:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E812F39B4;
+	Fri, 10 Oct 2025 13:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102439; cv=none; b=ksSMdyGKB6ZClWXM9AoIVGJwE/8l1zfZZQ0DmS5QrWcVOHX/KTi0IvGJOnp1Kc53Twq2v90ACpAn7A5HJJdI7bRYNiBDJ8BhxfQf/hwleXNHGqm9zPtVaYdEl4tOoP38MboniMTZwvV16bwzEU/gLrQmkC/L/VQnQ31nbHWJqnc=
+	t=1760102442; cv=none; b=R0yX919DoKaouAluxCJb3Vobyva8MrnEihe7JaXbjn6j5PXnnv7yrQj/Gxw11wg7+LFiF4wK707+C44h88htGi/BK7T49g0g+m8IE2bE7J6JVuYsenlAd2/7Ibw0YGc+oAZbAcgWfQMIgRwM4RmVOZgi87/hMbieywzcEKyMZEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102439; c=relaxed/simple;
-	bh=Q2gldWnIfpT3zwrKIkV7zazRE1ZMAO2C8FDwK1GkcbI=;
+	s=arc-20240116; t=1760102442; c=relaxed/simple;
+	bh=dN5kPRzjXjTq6xAwAAPezDyNQig/asG37xprOW/mBLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dg/imT2+QMhNVljtxSghshhJZU8h3Fd6oCCW8TTtlCEbg+AVypGpu96cxMrjmZzz6F4rMm91/pj0YzUZSWoPdccmNS+ikNGS9AEhNmzpFaORt9blVHXY8i8OcRvEusLaHY/erDgr/c+UNjWDfX49VNPHobIlkDXZAfSoIgKaoBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8v8o55z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6i4BaFDWUMlZFkwaWB0VQAC1HFJ3s18KfaZ6tz4C8Js6XBFV0LWNQxANq8YBjcJS5SRoijSY3AXkIW0TVc9oDCDfF3L8Zn+/LlcgwzR6NBhrWwBa+Pf5LvbKpOCLJMxxv034CqHQQa4zYgytxkfimjZR4aHNtIZHBpbMQxaVcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqGT3tmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8v8o55z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F984C4CEF1;
-	Fri, 10 Oct 2025 13:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqGT3tmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06223C4CEF1;
+	Fri, 10 Oct 2025 13:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102439;
-	bh=Q2gldWnIfpT3zwrKIkV7zazRE1ZMAO2C8FDwK1GkcbI=;
+	s=korg; t=1760102442;
+	bh=dN5kPRzjXjTq6xAwAAPezDyNQig/asG37xprOW/mBLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8v8o55z8JhuC/lznMb5p1hy62+hiA+Vi3lAR1EeZXI3oIM3xWeoxQSUt6RepE0V2
-	 5g1Inuz4R+HHmB8rHVb5imUD6wTbAxK9vLal2auB/aMNt2/CpVDIPXex3GKS28icM1
-	 Uh1P9MEF3G7WBlv8yzMHrj2eESa33M/xsHDR3k1w=
+	b=tqGT3tmPmJ8OvZBcfaO0nOHcldR2uV7JuQmXi6jhcEHIqRDwsRIW/OBbHH8R0gzfa
+	 Ab06dRiWEVwP2ixF2p0a3g2RuacJ2ywO4JmusmmnkAbgYbahCo3611THwcXvK09Y9L
+	 PBtxe433Xe2fW6p8toVtYyvAUaDPG7X1Cx/+VlgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b73c7d94a151e2ee1e9b@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Chen Yufeng <chenyufeng@iie.ac.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 15/35] netfs: Prevent duplicate unlocking
-Date: Fri, 10 Oct 2025 15:16:17 +0200
-Message-ID: <20251010131332.344686815@linuxfoundation.org>
+Subject: [PATCH 6.12 16/35] can: hi311x: fix null pointer dereference when resuming from sleep before interface was enabled
+Date: Fri, 10 Oct 2025 15:16:18 +0200
+Message-ID: <20251010131332.381102894@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -54,37 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Chen Yufeng <chenyufeng@iie.ac.cn>
 
-[ Upstream commit 66d938e89e940e512f4c3deac938ecef399c13f9 ]
+[ Upstream commit 6b696808472197b77b888f50bc789a3bae077743 ]
 
-The filio lock has been released here, so there is no need to jump to
-error_folio_unlock to release it again.
+This issue is similar to the vulnerability in the `mcp251x` driver,
+which was fixed in commit 03c427147b2d ("can: mcp251x: fix resume from
+sleep before interface was brought up").
 
-Reported-by: syzbot+b73c7d94a151e2ee1e9b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b73c7d94a151e2ee1e9b
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Acked-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+In the `hi311x` driver, when the device resumes from sleep, the driver
+schedules `priv->restart_work`. However, if the network interface was
+not previously enabled, the `priv->wq` (workqueue) is not allocated and
+initialized, leading to a null pointer dereference.
+
+To fix this, we move the allocation and initialization of the workqueue
+from the `hi3110_open` function to the `hi3110_can_probe` function.
+This ensures that the workqueue is properly initialized before it is
+used during device resume. And added logic to destroy the workqueue
+in the error handling paths of `hi3110_can_probe` and in the
+`hi3110_can_remove` function to prevent resource leaks.
+
+Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
+Link: https://patch.msgid.link/20250911150820.250-1-chenyufeng@iie.ac.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/spi/hi311x.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index 896d1d4219ed9..be77a137cc871 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -340,7 +340,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 		folio_put(folio);
- 		ret = filemap_write_and_wait_range(mapping, fpos, fpos + flen - 1);
- 		if (ret < 0)
--			goto error_folio_unlock;
-+			goto out;
- 		continue;
+diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
+index ff39afc77d7d2..c9eba1d37b0eb 100644
+--- a/drivers/net/can/spi/hi311x.c
++++ b/drivers/net/can/spi/hi311x.c
+@@ -545,8 +545,6 @@ static int hi3110_stop(struct net_device *net)
  
- 	copied:
+ 	priv->force_quit = 1;
+ 	free_irq(spi->irq, priv);
+-	destroy_workqueue(priv->wq);
+-	priv->wq = NULL;
+ 
+ 	mutex_lock(&priv->hi3110_lock);
+ 
+@@ -771,34 +769,23 @@ static int hi3110_open(struct net_device *net)
+ 		goto out_close;
+ 	}
+ 
+-	priv->wq = alloc_workqueue("hi3110_wq", WQ_FREEZABLE | WQ_MEM_RECLAIM,
+-				   0);
+-	if (!priv->wq) {
+-		ret = -ENOMEM;
+-		goto out_free_irq;
+-	}
+-	INIT_WORK(&priv->tx_work, hi3110_tx_work_handler);
+-	INIT_WORK(&priv->restart_work, hi3110_restart_work_handler);
+-
+ 	ret = hi3110_hw_reset(spi);
+ 	if (ret)
+-		goto out_free_wq;
++		goto out_free_irq;
+ 
+ 	ret = hi3110_setup(net);
+ 	if (ret)
+-		goto out_free_wq;
++		goto out_free_irq;
+ 
+ 	ret = hi3110_set_normal_mode(spi);
+ 	if (ret)
+-		goto out_free_wq;
++		goto out_free_irq;
+ 
+ 	netif_wake_queue(net);
+ 	mutex_unlock(&priv->hi3110_lock);
+ 
+ 	return 0;
+ 
+- out_free_wq:
+-	destroy_workqueue(priv->wq);
+  out_free_irq:
+ 	free_irq(spi->irq, priv);
+ 	hi3110_hw_sleep(spi);
+@@ -910,6 +897,15 @@ static int hi3110_can_probe(struct spi_device *spi)
+ 	if (ret)
+ 		goto out_clk;
+ 
++	priv->wq = alloc_workqueue("hi3110_wq", WQ_FREEZABLE | WQ_MEM_RECLAIM,
++				   0);
++	if (!priv->wq) {
++		ret = -ENOMEM;
++		goto out_clk;
++	}
++	INIT_WORK(&priv->tx_work, hi3110_tx_work_handler);
++	INIT_WORK(&priv->restart_work, hi3110_restart_work_handler);
++
+ 	priv->spi = spi;
+ 	mutex_init(&priv->hi3110_lock);
+ 
+@@ -945,6 +941,8 @@ static int hi3110_can_probe(struct spi_device *spi)
+ 	return 0;
+ 
+  error_probe:
++	destroy_workqueue(priv->wq);
++	priv->wq = NULL;
+ 	hi3110_power_enable(priv->power, 0);
+ 
+  out_clk:
+@@ -965,6 +963,9 @@ static void hi3110_can_remove(struct spi_device *spi)
+ 
+ 	hi3110_power_enable(priv->power, 0);
+ 
++	destroy_workqueue(priv->wq);
++	priv->wq = NULL;
++
+ 	clk_disable_unprepare(priv->clk);
+ 
+ 	free_candev(net);
 -- 
 2.51.0
 
