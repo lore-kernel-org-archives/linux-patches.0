@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6104E2F25F6;
-	Fri, 10 Oct 2025 13:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDB82F3C1C;
+	Fri, 10 Oct 2025 13:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102299; cv=none; b=bBv/9Nlbmydy7FzmD1/jXV7gOpujLzdozjOBne/gR3U1/FONV1hGu0N5PGDuQ/YKlpBthlJKmWefB7ddS5ORRjzrwouX224Y2aEkr1o1pOrE6iIhJXPTTP6iaDdjhF5JP1fg4a247pD6WKENjWFy2L7M03VTwefZPH42WThsFE4=
+	t=1760102302; cv=none; b=e146bQL0VWCf7paCUTcrT5AjB/1P6ioK31YaRxyfkoswXVpsSVntcT/IWr2rHXe03OOZQgLUYt3xFNsPNDFfDS1j40qQrlMR6A3g0QhgGE3Qsa4ZdIvOTJUAY2GgJyBof0qXsoJDW4uElKtjamgU3wsuItzbk8m/NQRqlOVgHKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102299; c=relaxed/simple;
-	bh=gZbNCzFfNH12lpYMHc4seFl7xBQbRZw/A5b5YQeuw64=;
+	s=arc-20240116; t=1760102302; c=relaxed/simple;
+	bh=+TSqb09QHdN8xYvC10NmkN6WPa2puEROc/AL0mEPxnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBbleOhcUH+Lfq6RGTJ8zN1Ipc935W63byKvBho2nO3Tlor9z1P+8T0jHf7RuOckqd5uUvue/jmWGt71lBIlAYyG/LdyAibNTAE3TUZM3PZ/T8I1vSCJ4r7PH0KYxiU3q+nR5ZVwp7DhkcEbS+GEQ2AWDxgcuZ9pLau16bulbtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CngeIvyJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOGDXLf6FZlVtWZwfmOqQaevp6cJt7nfxGllxDHY9YAEXtSXfkDZ4k57FM+esjAjkhFaIQy9+ZAQz7ZHn2ZEdFoLGTb+2pSIpuZhol/DdjqBJFEMtWXENyemd5aW9d6aSqm0lgk9a7Qrx4J+AYRcuv4wm/DvpWCQSs/3GyjW4+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WTf9i/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CngeIvyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01B7C4CEFE;
-	Fri, 10 Oct 2025 13:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WTf9i/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF796C4CEF1;
+	Fri, 10 Oct 2025 13:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102299;
-	bh=gZbNCzFfNH12lpYMHc4seFl7xBQbRZw/A5b5YQeuw64=;
+	s=korg; t=1760102302;
+	bh=+TSqb09QHdN8xYvC10NmkN6WPa2puEROc/AL0mEPxnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CngeIvyJ91CSzM/DKof/VXKQrqP6N8pwL58C/hv0LrbCOj0nIXtxChA86sHuZq1ik
-	 oZb/ardclXZGEmzq6L+RxkCac8OeyYtsui4CP/H0lOl83fchs0zHaGxV25neLp7u4q
-	 CFpsRyhB8f5QCLiCE/CogFwuLS4KgfxATh2BafjA=
+	b=0WTf9i/UXdOMRfd0xtEsHfq/XTYP7Oumh4/JtVTyQwloPaqWi69gpV6IQU9SOeGl0
+	 bKU2YyK6+32tojUEGeq6juPFF0oF3EKluZiH5nhXMsuCE4cd5iaHGPGlzVzjDIRjC3
+	 JSkQyUHzsIQObXPToEc63U/vjKJZbSmTXc5KEgjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 6.17 14/26] serial: stm32: allow selecting console when the driver is module
-Date: Fri, 10 Oct 2025 15:16:09 +0200
-Message-ID: <20251010131331.728779369@linuxfoundation.org>
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Gergo Koteles <soyer@irl.hu>
+Subject: [PATCH 6.16 01/41] ALSA: hda/tas2781: Fix the order of TAS2781 calibrated-data
+Date: Fri, 10 Oct 2025 15:15:49 +0200
+Message-ID: <20251010131333.476298429@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
-References: <20251010131331.204964167@linuxfoundation.org>
+In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
+References: <20251010131333.420766773@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,36 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-commit cc4d900d0d6d8dd5c41832a93ff3cfa629a78f9a upstream.
+commit 71d2893a235bf3b95baccead27b3d47f2f2cdc4c upstream.
 
-Console can be enabled on the UART compile as module.
-Change dependency to allow console mode when the driver is built as module.
+A bug reported by one of my customers that the order of TAS2781
+calibrated-data is incorrect, the correct way is to move R0_Low
+and insert it between R0 and InvR0.
 
-Fixes: 48a6092fb41fa ("serial: stm32-usart: Add STM32 USART Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Link: https://lore.kernel.org/r/20250822141923.61133-1-raphael.gallais-pou@foss.st.com
+Fixes: 4fe238513407 ("ALSA: hda/tas2781: Move and unified the calibrated-data getting function for SPI and I2C into the tas2781_hda lib")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20250907222728.988-1-shenghao-ding@ti.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Gergo Koteles <soyer@irl.hu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/tas2781_hda.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/Kconfig
-+++ b/drivers/tty/serial/Kconfig
-@@ -1412,7 +1412,7 @@ config SERIAL_STM32
+--- a/sound/pci/hda/tas2781_hda.c
++++ b/sound/pci/hda/tas2781_hda.c
+@@ -31,6 +31,23 @@ const efi_guid_t tasdev_fct_efi_guid[] =
+ };
+ EXPORT_SYMBOL_NS_GPL(tasdev_fct_efi_guid, "SND_HDA_SCODEC_TAS2781");
  
- config SERIAL_STM32_CONSOLE
- 	bool "Support for console on STM32"
--	depends on SERIAL_STM32=y
-+	depends on SERIAL_STM32
- 	select SERIAL_CORE_CONSOLE
- 	select SERIAL_EARLYCON
++/*
++ * The order of calibrated-data writing function is a bit different from the
++ * order in UEFI. Here is the conversion to match the order of calibrated-data
++ * writing function.
++ */
++static void cali_cnv(unsigned char *data, unsigned int base, int offset)
++{
++	struct cali_reg reg_data;
++
++	memcpy(&reg_data, &data[base], sizeof(reg_data));
++	/* the data order has to be swapped between r0_low_reg and inv0_reg */
++	swap(reg_data.r0_low_reg, reg_data.invr0_reg);
++
++	cpu_to_be32_array((__force __be32 *)(data + offset + 1),
++		(u32 *)&reg_data, TASDEV_CALIB_N);
++}
++
+ static void tas2781_apply_calib(struct tasdevice_priv *p)
+ {
+ 	struct calidata *cali_data = &p->cali_data;
+@@ -101,8 +118,7 @@ static void tas2781_apply_calib(struct t
+ 
+ 				data[l] = k;
+ 				oft++;
+-				for (i = 0; i < TASDEV_CALIB_N * 4; i++)
+-					data[l + i + 1] = data[4 * oft + i];
++				cali_cnv(data, 4 * oft, l);
+ 				k++;
+ 			}
+ 		}
+@@ -128,9 +144,8 @@ static void tas2781_apply_calib(struct t
+ 
+ 		for (j = p->ndev - 1; j >= 0; j--) {
+ 			l = j * (cali_data->cali_dat_sz_per_dev + 1);
+-			for (i = TASDEV_CALIB_N * 4; i > 0 ; i--)
+-				data[l + i] = data[p->index * 5 + i];
+-			data[l+i] = j;
++			cali_cnv(data, cali_data->cali_dat_sz_per_dev * j, l);
++			data[l] = j;
+ 		}
+ 	}
  
 
 
