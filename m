@@ -1,114 +1,168 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B0523BCED
-	for <patches@lists.linux.dev>; Fri, 10 Oct 2025 04:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0322773E6
+	for <patches@lists.linux.dev>; Fri, 10 Oct 2025 07:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760072282; cv=none; b=rkoYnsQ8RSoW4IXOMeeBP7YUA31gHehtOFoIRxrCH0KT8mN3F7vddwwaFxMf56ZgkB+wZbTnhyxP7WeFsOKVWIF6wv4xhHJTNnmRez9rPGcNFkubTxo3lh+TVDM5pkCp4k+T6Yr2bxkAveB+jVVuKXXZ28QeLE6aH1c7z6Utt10=
+	t=1760081955; cv=none; b=KyKGSPtbdTqT7+Lq8IalYWLKQZeP1rpbGcK2GCQ122Okp6a+RDAbmt4YOrABC+ESF1ruPVdaCV+FBSmai7Vow+guW65Pitrf46/JgWnoq7quLMWvXeyESSksTek+iV1iMWQMDeuf5fgGvrqm+WB7CZp9IM160JNLcz+GLRkS1VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760072282; c=relaxed/simple;
-	bh=20zVq/I1A85ImSdUuzZ7bh9Qs7dqD4eEIEsQzzw5Ci4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hqX4TBrHJxPLRLmQaGHu29WCXsOVJppzidDal/wGIUAs9f+tr5LBK7Bgx3hemMVzNYRvsTyyA8T+fPrgGUhQVcqDP/WJGrJCNs1v15XEPvWVmiYU8kAiulSy9Mh/ivpEV7ErlbHJOfp4FGB7Rpban8OnJ5TXMWSjHtc8SP0KCKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PkuVLr7O; arc=none smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760081955; c=relaxed/simple;
+	bh=kT9YVemjzzhAAN5e2M0Qz7Wi09RuV71T6B1Sb/HtrtQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=emh2E54Y2CEONMhaCfe0nGwdKHCGV8JlJCg2MS15hHBC+BxgLIAIGbGgezqBmlGBO/EAitkWIQUYIWdpQ1Hlj9UOdQY5GGoGHOQykQApPy7T0fmjIocYyuNIH2XhtJ9ZTRpBzPlbdCRXYVApgG2/WrbdE7mq1gJpJoKAe+1ywsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JnEPpBhB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wBiK3mBo; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=w8XVwUaj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wDm94fF2; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PkuVLr7O"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-63bc1aeb427so1693680d50.3
-        for <patches@lists.linux.dev>; Thu, 09 Oct 2025 21:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760072278; x=1760677078; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j7qS0AM3lX7OGhXSFEYS6mkC3EKNzPxshbg7hLZcah0=;
-        b=PkuVLr7OxOOEj0Ap1gkG0zox5iub9qlLZS0phcMIP6hSDj3GPr6QVtf+P+BYSZYC1s
-         Go3oUhLxeK2zJc/hoOS74p6C7qfdTXvGxb2w0rHe+VUn8KNLPAvoMfTuJEfgycC7rYvw
-         mKu1egsiiYFN2hcgEvJBHEx8v91kc/XKAsTzZENYXKwdThWfV1896r5RKkXsp34/hDQO
-         8zebSOwIsAa0AfiQ4+/Z/9rWWiuyR0q1CoOL8Vol6ZgpphNvOx5Ru8XGY5c3E6CwK7Ta
-         K1uDBY77p3SFTdLvoFQoSDPedmr/3knpac6v8Al1xgi1TJ6bqSDzLfwWZtXchCYBm2yV
-         H9fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760072278; x=1760677078;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j7qS0AM3lX7OGhXSFEYS6mkC3EKNzPxshbg7hLZcah0=;
-        b=AI+PP/ELmnk24g7y7Y21ScRPSutelrfWD6T+xg4TDI7wVmzrxBzO/vjwhAAJWZSMDj
-         wfBBQfliM9Osid/vDqvpjrW/OHlY6xi+WOTXusapz56xtpgOZcO1nFNdCzBVWPAdJrDV
-         jF4zDwBkDurCuGcaFgzatG1v8Ga1VObJcCL9bMvejvf1SYpqrtaQzFH1vu9nLxApUs+b
-         fpMWdFU5ItQTfyvZBKtLfhpTH6Rg6fOhOufWlPp90qvx8pkf67NBE6BTw033EynBYEnA
-         fGXdTRXjkFHQNENWSkEc+viy3kySCdaJx8hha0TP2A4yOdiU4ytOrc4oKSZ1d6nOFhPo
-         E51A==
-X-Forwarded-Encrypted: i=1; AJvYcCXb8AIZv8dUdfy61GLBJPXoKIcDfmwZ8rAHM358xpNaf981L5QrRIQUrBNww1wn4y9JQjfmE1bh@lists.linux.dev
-X-Gm-Message-State: AOJu0YwEka+bNvQ+LtEr7vIhMNyJpTZ+AtTVkhemuYlEP8JczudXLUF+
-	pPZLULuuf9FDp+/g9QXTa6Uj+cpPBk3irKbQ9Owk1WUFHMiqrMq3eBzRzQlEHApfKTDBQyfsymm
-	5RVSIxftTyOUPgbDut3ePUAzeyYQlikE=
-X-Gm-Gg: ASbGncuMULn/e5CeJ9/xdVz/lkM461xb3L0VrHmSCbC14ARlX5bv6WAZ44xw942Ck+o
-	ymg4lXRSlr833kXbM29ucs33nGcZa1hOepx1Z1nJOyLW+ICl97uXD9fgHQvVJNm6b5tFcE6sET0
-	uloHCg6t/PSbdwOGFgOjFvI8iHPXYGdNz36qGB3Mmp3oj9Z5/JYfBF3KX2RBadFEJZa3/XSxVCa
-	4v2DrxooDCPTCJqYgs3/WcYWw==
-X-Google-Smtp-Source: AGHT+IHqDciv7GAPYfMGdKr9Fwuo5GT168N8GcrpsJ5KozP5HqYqg/LDALxuogvzJXgNCm6zrA+DoCqu7lr8uhQrVc0=
-X-Received: by 2002:a53:5009:0:b0:636:2420:d3ce with SMTP id
- 956f58d0204a3-63ccb93456dmr7466309d50.51.1760072277565; Thu, 09 Oct 2025
- 21:57:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JnEPpBhB";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wBiK3mBo";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="w8XVwUaj";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wDm94fF2"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id B72BE22023;
+	Fri, 10 Oct 2025 07:39:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1760081950; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
+	b=JnEPpBhBRkLDQLxGm38oa40reqYWKwK/Epg4HN8+IQPG60qwmfYrNw23aTdUsmNWhtMUrX
+	E9Z/2i+mBDeevyI8qyvvnsS+fRXQd+VsstC9gIwx9Iwilo3rICX2jZnL3DQMFLuVKg1eC6
+	PZaG3yLkrO58GzhcL9pODsZixjQWav8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1760081950;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
+	b=wBiK3mBoKAjKKGhsFKUuOPOK31RPXNQJlmBtrJNy1H1aF28gt88atoJ7+aP2yo18zNZpNh
+	9lMtbpZy6jqC0aDQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=w8XVwUaj;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wDm94fF2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1760081949; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
+	b=w8XVwUaj/92adQTwbZl9cDyYYNRSyM6XqECEKyfK7mfGXr+VlaZ+9eXlGtlMqkn2XeJcqk
+	zEgD+ZxxQxvJAIYifv+MIikppJZ6IyAsvTQ0x4w7ByEBamvHaFTfG/bcbyN+iNKTL2KeMg
+	l70nYfAnFclvEnWOiCB3Cw5ScLCKeyY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1760081949;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PXUUf9UPJHpPGdwbQIJ6NG0AXh/4W4yjOiF3IUrv3io=;
+	b=wDm94fF2fD8MG0lDX7ES+YOL+du7Ng4hR9btpwIrN17JAjX1K203U+UDNftq5PRAqbhzXY
+	tw4pOzYybD0tKdBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4C2C1375D;
+	Fri, 10 Oct 2025 07:39:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id dr48Jx246GhVBwAAD6G6ig
+	(envelope-from <dwagner@suse.de>); Fri, 10 Oct 2025 07:39:09 +0000
+Date: Fri, 10 Oct 2025 09:39:05 +0200
+From: Daniel Wagner <dwagner@suse.de>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
+	Daniel Wagner <wagi@kernel.org>, Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>, 
+	Hannes Reinecke <hare@suse.de>, Keith Busch <kbusch@kernel.org>, justin.tee@broadcom.com, 
+	nareshgottumukkala83@gmail.com, paul.ely@broadcom.com, sagi@grimberg.me, kch@nvidia.com, 
+	linux-nvme@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.17-5.15] nvmet-fc: avoid scheduling association
+ deletion twice
+Message-ID: <8bed9f7a-ad84-40e8-a275-09b19a917155@flourine.local>
+References: <20251009155752.773732-1-sashal@kernel.org>
+ <20251009155752.773732-15-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHNNwZC7gC7zaZGiSBhobSAb4m2O1BuoZ4r=SQBF-tCQyuAPvw@mail.gmail.com>
- <20250925131055.3933381-1-nschichan@freebox.fr>
-In-Reply-To: <20250925131055.3933381-1-nschichan@freebox.fr>
-From: Askar Safin <safinaskar@gmail.com>
-Date: Fri, 10 Oct 2025 07:57:21 +0300
-X-Gm-Features: AS18NWAQwCKadWHXCZjVUBNaD3TaKIilJiJAQzSbvGFaYuFuE8UDpW1_H3riB-k
-Message-ID: <CAPnZJGBPyONjJoM6cskxysDnN4pxWuWJCK5A6TgikR2xHsrN5Q@mail.gmail.com>
-Subject: Re: [PATCH-RFC] init: simplify initrd code (was Re: [PATCH RESEND
- 00/62] initrd: remove classic initrd support).
-To: nschichan@freebox.fr
-Cc: akpm@linux-foundation.org, andy.shevchenko@gmail.com, axboe@kernel.dk, 
-	brauner@kernel.org, cyphar@cyphar.com, devicetree@vger.kernel.org, 
-	ecurtin@redhat.com, email2tema@gmail.com, graf@amazon.com, 
-	gregkh@linuxfoundation.org, hca@linux.ibm.com, hch@lst.de, 
-	hsiangkao@linux.alibaba.com, initramfs@vger.kernel.org, jack@suse.cz, 
-	julian.stecklina@cyberus-technology.de, kees@kernel.org, 
-	linux-acpi@vger.kernel.org, linux-alpha@vger.kernel.org, 
-	linux-api@vger.kernel.org, linux-arch@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org, 
-	linux-csky@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-efi@vger.kernel.org, linux-ext4@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linux-hexagon@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-m68k@lists.linux-m68k.org, 
-	linux-mips@vger.kernel.org, linux-openrisc@vger.kernel.org, 
-	linux-parisc@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org, 
-	linux-snps-arc@lists.infradead.org, linux-um@lists.infradead.org, 
-	linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev, mcgrof@kernel.org, 
-	mingo@redhat.com, monstr@monstr.eu, mzxreary@0pointer.de, 
-	patches@lists.linux.dev, rob@landley.net, sparclinux@vger.kernel.org, 
-	thomas.weissschuh@linutronix.de, thorsten.blum@linux.dev, 
-	torvalds@linux-foundation.org, tytso@mit.edu, viro@zeniv.linux.org.uk, 
-	x86@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251009155752.773732-15-sashal@kernel.org>
+X-Rspamd-Queue-Id: B72BE22023
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,kernel.org,wdc.com,suse.de,broadcom.com,gmail.com,grimberg.me,nvidia.com,lists.infradead.org];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,wdc.com:email,suse.de:email,suse.de:dkim];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
 
-On Thu, Sep 25, 2025 at 4:12=E2=80=AFPM <nschichan@freebox.fr> wrote:
-> - drop prompt_ramdisk and ramdisk_start kernel parameters
-> - drop compression support
-> - drop image autodetection, the whole /initrd.image content is now
->   copied into /dev/ram0
-> - remove rd_load_disk() which doesn't seem to be used anywhere.
+Hi Sasha,
 
-I welcome any initrd simplification!
+On Thu, Oct 09, 2025 at 11:54:41AM -0400, Sasha Levin wrote:
+> From: Daniel Wagner <wagi@kernel.org>
+> 
+> [ Upstream commit f2537be4f8421f6495edfa0bc284d722f253841d ]
+> 
+> When forcefully shutting down a port via the configfs interface,
+> nvmet_port_subsys_drop_link() first calls nvmet_port_del_ctrls() and
+> then nvmet_disable_port(). Both functions will eventually schedule all
+> remaining associations for deletion.
+> 
+> The current implementation checks whether an association is about to be
+> removed, but only after the work item has already been scheduled. As a
+> result, it is possible for the first scheduled work item to free all
+> resources, and then for the same work item to be scheduled again for
+> deletion.
+> 
+> Because the association list is an RCU list, it is not possible to take
+> a lock and remove the list entry directly, so it cannot be looked up
+> again. Instead, a flag (terminating) must be used to determine whether
+> the association is already in the process of being deleted.
+> 
+> Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+> Closes: https://lore.kernel.org/all/rsdinhafrtlguauhesmrrzkybpnvwantwmyfq2ih5aregghax5@mhr7v3eryci3/
+> Reviewed-by: Hannes Reinecke <hare@suse.de>
+> Signed-off-by: Daniel Wagner <wagi@kernel.org>
+> Signed-off-by: Keith Busch <kbusch@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-> Hopefully my email config is now better and reaches gmail users
-> correctly.
+This patch is part of a whole series:
 
-Yes, I got this email.
+https://lore.kernel.org/all/20250902-fix-nvmet-fc-v3-0-1ae1ecb798d8@kernel.org/
 
---
-Askar Safin
+IMO, all should all be backported:
+
+db5a5406fb7e nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
+f2537be4f842 nvmet-fc: avoid scheduling association deletion twice
+10c165af35d2 nvmet-fcloop: call done callback even when remote port is gone
+891cdbb162cc nvme-fc: use lock accessing port_state and rport state
+
+Thanks,
+Daniel
