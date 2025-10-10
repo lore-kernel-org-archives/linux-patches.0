@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3032F5A0F;
-	Fri, 10 Oct 2025 13:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0752F290C;
+	Fri, 10 Oct 2025 13:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102510; cv=none; b=QMSIDHNeNmxfY42Kcq+SNX+PcGTtpMytb9De4PLSRXZVlYpJNx+mVvYyGP4x139X4OTDZx3dDdPY+64kZEmHXYuwBCFkTL8lWM5TmH/ZlKSP9emRLELMfS1PU788L9htcLfedIT4mHipxRWhiVedzyJFTnujhiL3OgHnCEnqGts=
+	t=1760102513; cv=none; b=UeEw+t9tcoezRJLaXDXwdc3FsWlSFbLTmih73YjE/Uj23haCMViZuW0y9t+xwcOx76+beL1SDHhT42gTwXaj5MpMHBpttARkqw5R7PaAYOkSVZT9ult0+tUAbvBEz3ESwJK7SXSPHPvpKvNxV81skVP8oXOtG3j9+/ow5wOo7+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102510; c=relaxed/simple;
-	bh=uvesKUbSL58CxhjC8/Ic9//TUfF3eURI/9UMGP8hjgk=;
+	s=arc-20240116; t=1760102513; c=relaxed/simple;
+	bh=jcy4ZMm+lc1P2ONlGgUZ88uv9Z9+bQajzziK6y1704g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKklj2IzE/3kKgEXi1sxoTB3kcogQZri35Rhlaoy1IzNwvvRzTBlkSMyEOyO6n/7UOhKKpPeRE7Z+5vg3tEMLzFdCs7xYA173vccaaYJ+QcHTyHrPoF82afoCwJIrzhdPGD7LYOcE2u7XnG4hiMnK/KkCxHxyMNE2uglCcOCCrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTE60nUL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkppBsinBELxt+PGYnnmhIb+yiM3T1ojWBGQxK4ODFSpLh5zXvAzL+MWWs/9sVbirXnPL2oOeISGDQGGARY9cVLqsVjZSLYypjpclxTYup1xfMZsLyUB2hgDri74i/YMoTIhZzoAH8JXTAmfJLg0lKWmpxoPV+wQplMf0mAAeTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaHEzGmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTE60nUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE03FC4CEF1;
-	Fri, 10 Oct 2025 13:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaHEzGmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC05BC4CEF1;
+	Fri, 10 Oct 2025 13:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102510;
-	bh=uvesKUbSL58CxhjC8/Ic9//TUfF3eURI/9UMGP8hjgk=;
+	s=korg; t=1760102513;
+	bh=jcy4ZMm+lc1P2ONlGgUZ88uv9Z9+bQajzziK6y1704g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTE60nULUL/O0PLFa8TWdTtS8SxKhI7HSx9uHdLPu//b2DyrORLohrYQRNxIm4JGS
-	 pJ8H/7u2d2vGT8LUirUqNbDj1gNuiFRJR5X2jjjRqCxrbThCKkD7pHhMbe+4Yj//OE
-	 RrvK6Aoxh8mWDPFZIFE36nH/WlXaoKX+uYauU/8c=
+	b=IaHEzGmNGNbPlU0jC2uZsPtvUgcU0YL15oC8US7sxE5Ye2YAMxB5QzltHbEYlnagy
+	 c1GYLwJf3wURnITY+FQSshlKUIDkwdcLuSVJzRXzj9WNLPE0PZ22N+l+DQOMGqb5rp
+	 eUMO9SrlBoA4OHMuVVmNEeZJp7uEYoDt8oJWSnwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Tiffany Yang <ynaffit@google.com>
-Subject: [PATCH 6.12 27/35] binder: fix double-free in dbitmap
-Date: Fri, 10 Oct 2025 15:16:29 +0200
-Message-ID: <20251010131332.771838738@linuxfoundation.org>
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Subject: [PATCH 6.12 28/35] serial: stm32: allow selecting console when the driver is module
+Date: Fri, 10 Oct 2025 15:16:30 +0200
+Message-ID: <20251010131332.807968138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -51,71 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 
-commit 3ebcd3460cad351f198c39c6edb4af519a0ed934 upstream.
+commit cc4d900d0d6d8dd5c41832a93ff3cfa629a78f9a upstream.
 
-A process might fail to allocate a new bitmap when trying to expand its
-proc->dmap. In that case, dbitmap_grow() fails and frees the old bitmap
-via dbitmap_free(). However, the driver calls dbitmap_free() again when
-the same process terminates, leading to a double-free error:
+Console can be enabled on the UART compile as module.
+Change dependency to allow console mode when the driver is built as module.
 
-  ==================================================================
-  BUG: KASAN: double-free in binder_proc_dec_tmpref+0x2e0/0x55c
-  Free of addr ffff00000b7c1420 by task kworker/9:1/209
-
-  CPU: 9 UID: 0 PID: 209 Comm: kworker/9:1 Not tainted 6.17.0-rc6-dirty #5 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Workqueue: events binder_deferred_func
-  Call trace:
-   kfree+0x164/0x31c
-   binder_proc_dec_tmpref+0x2e0/0x55c
-   binder_deferred_func+0xc24/0x1120
-   process_one_work+0x520/0xba4
-  [...]
-
-  Allocated by task 448:
-   __kmalloc_noprof+0x178/0x3c0
-   bitmap_zalloc+0x24/0x30
-   binder_open+0x14c/0xc10
-  [...]
-
-  Freed by task 449:
-   kfree+0x184/0x31c
-   binder_inc_ref_for_node+0xb44/0xe44
-   binder_transaction+0x29b4/0x7fbc
-   binder_thread_write+0x1708/0x442c
-   binder_ioctl+0x1b50/0x2900
-  [...]
-  ==================================================================
-
-Fix this issue by marking proc->map NULL in dbitmap_free().
-
+Fixes: 48a6092fb41fa ("serial: stm32-usart: Add STM32 USART Driver")
 Cc: stable@vger.kernel.org
-Fixes: 15d9da3f818c ("binder: use bitmap for faster descriptor lookup")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Tiffany Yang <ynaffit@google.com>
-Link: https://lore.kernel.org/r/20250915221248.3470154-1-cmllamas@google.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Link: https://lore.kernel.org/r/20250822141923.61133-1-raphael.gallais-pou@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/dbitmap.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/android/dbitmap.h b/drivers/android/dbitmap.h
-index 956f1bd087d1..c7299ce8b374 100644
---- a/drivers/android/dbitmap.h
-+++ b/drivers/android/dbitmap.h
-@@ -37,6 +37,7 @@ static inline void dbitmap_free(struct dbitmap *dmap)
- {
- 	dmap->nbits = 0;
- 	kfree(dmap->map);
-+	dmap->map = NULL;
- }
+--- a/drivers/tty/serial/Kconfig
++++ b/drivers/tty/serial/Kconfig
+@@ -1401,7 +1401,7 @@ config SERIAL_STM32
  
- /* Returns the nbits that a dbitmap can shrink to, 0 if not possible. */
--- 
-2.51.0
-
+ config SERIAL_STM32_CONSOLE
+ 	bool "Support for console on STM32"
+-	depends on SERIAL_STM32=y
++	depends on SERIAL_STM32
+ 	select SERIAL_CORE_CONSOLE
+ 	select SERIAL_EARLYCON
+ 
 
 
