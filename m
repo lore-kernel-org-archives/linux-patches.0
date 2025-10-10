@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413032F290C;
-	Fri, 10 Oct 2025 13:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38DA2F291E;
+	Fri, 10 Oct 2025 13:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102362; cv=none; b=cbmql5G87ALY+GnWr3VjH3dszDPP05bjRsbZm299SX2bxWOnJ0/u7rEv3XQ+B7rnkLedl27wm6IpGQQ5rKeZprPhJcbQLHVP2KacT6wLbec4g0bA70XjC8UgZFJaQdXgGiKIpxoMhykW7M6tlNWLprrx0Vzh6qYcw8w2sflxnlc=
+	t=1760102365; cv=none; b=ke/3q3xTr7QpCKgyskBx25c3LzXdeMKSIbN2FBFeyakt0GMz9S+nmyPYb2pcR/7FCkclPgrwNt7mSu8hM7QVu/n3zz3fG9z3ZMyDA507I42/mao44S2b19633EGB73UMC+TGTg9IjWy9LT72hq7/oEWLT5wsTQrvWTaO8nxYwIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102362; c=relaxed/simple;
-	bh=NLVvxf9pnEDpcxA1iP9ydO+MA6oINNspbNAA82O788M=;
+	s=arc-20240116; t=1760102365; c=relaxed/simple;
+	bh=kCCVMojAA8k/RGoMluFvfxUGc3xPNbPSY/P3NuPWL9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGvIh16gmOcmA7i8UPUtAhfaD7W1eaqzfB41xuQ+i8JXTKjIS0Suw14m18esPcKZCzITH27JdoWmluULKf2Es4WBmT73bLpEnGmnVUArptQcgoKaW8w4ZH9uzErokED2q3iP6gyF/tB7ItAcbgjJQgvoZXdyXchUzgmzcW+DhZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdvbI7Ou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmxrwMZRtT5J6SvFVfKV7LC9ar7x3rsPqA/Ld0AqlBwkw7HlPyaEa9BtzATibgUpacVBMVf50ZHxwmQgvZcshIbcKpflMCXXPka5ukz4ekH85i1P1bC7cIFj9dnnZOGFkePH3pYSQLPGaVbOrZvYwEy5LP7X7ALTn2e3qvTlYRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsV3xqtV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdvbI7Ou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B7EC4CEF1;
-	Fri, 10 Oct 2025 13:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsV3xqtV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78730C4CEF1;
+	Fri, 10 Oct 2025 13:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102361;
-	bh=NLVvxf9pnEDpcxA1iP9ydO+MA6oINNspbNAA82O788M=;
+	s=korg; t=1760102364;
+	bh=kCCVMojAA8k/RGoMluFvfxUGc3xPNbPSY/P3NuPWL9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdvbI7OuzAiW6nSUr+/jWJ2ON/T++QtoWKEg6f61DVl/sMUPtz0jof/lxgEi7zDci
-	 tal1LHsucwgYlbWvkDzSvAc2wfNUCn/im6zwxnBXxxIUhmTEbPOU2wRsGdXWCtmWBP
-	 bPBrwDjU2Ii/kmJJDwF7Y7glRxGU7j3KjBhWx6/A=
+	b=wsV3xqtVWDaD3YuzlGimTFkCAT8eI29gHUd4sqmxHmYpeW6Pq++RQldvY5Po3Q3in
+	 nYNOdZ5Vx5pRdPyFWmNqTEKfkslPMeEEZJDqQDCnFC+iHctYil5vlgFTPMdgs8PM6L
+	 NkhAsNS+zW3j5Kc7qBwaIsLV7TV09HtuVvaoQWI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 04/41] wifi: rtw89: fix use-after-free in rtw89_core_tx_kick_off_and_wait()
-Date: Fri, 10 Oct 2025 15:15:52 +0200
-Message-ID: <20251010131333.583429035@linuxfoundation.org>
+	Xiaowei Li <xiaowei.li@simcom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.16 05/41] USB: serial: option: add SIMCom 8230C compositions
+Date: Fri, 10 Oct 2025 15:15:53 +0200
+Message-ID: <20251010131333.619989224@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -52,323 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-[ Upstream commit 3e31a6bc07312b448fad3b45de578471f86f0e77 ]
+commit 0e0ba0ecec3d6e819e0c2348331ff99afe2eb5d5 upstream.
 
-There is a bug observed when rtw89_core_tx_kick_off_and_wait() tries to
-access already freed skb_data:
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
 
- BUG: KFENCE: use-after-free write in rtw89_core_tx_kick_off_and_wait drivers/net/wireless/realtek/rtw89/core.c:1110
+USB Device Listings:
 
- CPU: 6 UID: 0 PID: 41377 Comm: kworker/u64:24 Not tainted  6.17.0-rc1+ #1 PREEMPT(lazy)
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS edk2-20250523-14.fc42 05/23/2025
- Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet (QMI mode) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#= 10 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
- Use-after-free write at 0x0000000020309d9d (in kfence-#251):
- rtw89_core_tx_kick_off_and_wait drivers/net/wireless/realtek/rtw89/core.c:1110
- rtw89_core_scan_complete drivers/net/wireless/realtek/rtw89/core.c:5338
- rtw89_hw_scan_complete_cb drivers/net/wireless/realtek/rtw89/fw.c:7979
- rtw89_chanctx_proceed_cb drivers/net/wireless/realtek/rtw89/chan.c:3165
- rtw89_chanctx_proceed drivers/net/wireless/realtek/rtw89/chan.h:141
- rtw89_hw_scan_complete drivers/net/wireless/realtek/rtw89/fw.c:8012
- rtw89_mac_c2h_scanofld_rsp drivers/net/wireless/realtek/rtw89/mac.c:5059
- rtw89_fw_c2h_work drivers/net/wireless/realtek/rtw89/fw.c:6758
- process_one_work kernel/workqueue.c:3241
- worker_thread kernel/workqueue.c:3400
- kthread kernel/kthread.c:463
- ret_from_fork arch/x86/kernel/process.c:154
- ret_from_fork_asm arch/x86/entry/entry_64.S:258
+0x9078: tty (DM) + tty (NMEA) + tty (AT) + ECM + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9078 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
- kfence-#251: 0x0000000056e2393d-0x000000009943cb62, size=232, cache=skbuff_head_cache
+0x907b: RNDIS + tty (DM) + tty (NMEA) + tty (AT) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=907b Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=ef(misc ) Sub=04 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
- allocated by task 41377 on cpu 6 at 77869.159548s (0.009551s ago):
- __alloc_skb net/core/skbuff.c:659
- __netdev_alloc_skb net/core/skbuff.c:734
- ieee80211_nullfunc_get net/mac80211/tx.c:5844
- rtw89_core_send_nullfunc drivers/net/wireless/realtek/rtw89/core.c:3431
- rtw89_core_scan_complete drivers/net/wireless/realtek/rtw89/core.c:5338
- rtw89_hw_scan_complete_cb drivers/net/wireless/realtek/rtw89/fw.c:7979
- rtw89_chanctx_proceed_cb drivers/net/wireless/realtek/rtw89/chan.c:3165
- rtw89_chanctx_proceed drivers/net/wireless/realtek/rtw89/chan.c:3194
- rtw89_hw_scan_complete drivers/net/wireless/realtek/rtw89/fw.c:8012
- rtw89_mac_c2h_scanofld_rsp drivers/net/wireless/realtek/rtw89/mac.c:5059
- rtw89_fw_c2h_work drivers/net/wireless/realtek/rtw89/fw.c:6758
- process_one_work kernel/workqueue.c:3241
- worker_thread kernel/workqueue.c:3400
- kthread kernel/kthread.c:463
- ret_from_fork arch/x86/kernel/process.c:154
- ret_from_fork_asm arch/x86/entry/entry_64.S:258
-
- freed by task 1045 on cpu 9 at 77869.168393s (0.001557s ago):
- ieee80211_tx_status_skb net/mac80211/status.c:1117
- rtw89_pci_release_txwd_skb drivers/net/wireless/realtek/rtw89/pci.c:564
- rtw89_pci_release_tx_skbs.isra.0 drivers/net/wireless/realtek/rtw89/pci.c:651
- rtw89_pci_release_tx drivers/net/wireless/realtek/rtw89/pci.c:676
- rtw89_pci_napi_poll drivers/net/wireless/realtek/rtw89/pci.c:4238
- __napi_poll net/core/dev.c:7495
- net_rx_action net/core/dev.c:7557 net/core/dev.c:7684
- handle_softirqs kernel/softirq.c:580
- do_softirq.part.0 kernel/softirq.c:480
- __local_bh_enable_ip kernel/softirq.c:407
- rtw89_pci_interrupt_threadfn drivers/net/wireless/realtek/rtw89/pci.c:927
- irq_thread_fn kernel/irq/manage.c:1133
- irq_thread kernel/irq/manage.c:1257
- kthread kernel/kthread.c:463
- ret_from_fork arch/x86/kernel/process.c:154
- ret_from_fork_asm arch/x86/entry/entry_64.S:258
-
-It is a consequence of a race between the waiting and the signaling side
-of the completion:
-
-            Waiting thread                            Completing thread
-
-rtw89_core_tx_kick_off_and_wait()
-  rcu_assign_pointer(skb_data->wait, wait)
-  /* start waiting */
-  wait_for_completion_timeout()
-                                                rtw89_pci_tx_status()
-                                                  rtw89_core_tx_wait_complete()
-                                                    rcu_read_lock()
-                                                    /* signals completion and
-                                                     * proceeds further
-                                                     */
-                                                    complete(&wait->completion)
-                                                    rcu_read_unlock()
-                                                  ...
-                                                  /* frees skb_data */
-                                                  ieee80211_tx_status_ni()
-  /* returns (exit status doesn't matter) */
-  wait_for_completion_timeout()
-  ...
-  /* accesses the already freed skb_data */
-  rcu_assign_pointer(skb_data->wait, NULL)
-
-The completing side might proceed and free the underlying skb even before
-the waiting side is fully awoken and run to execution.  Actually the race
-happens regardless of wait_for_completion_timeout() exit status, e.g.
-the waiting side may hit a timeout and the concurrent completing side is
-still able to free the skb.
-
-Skbs which are sent by rtw89_core_tx_kick_off_and_wait() are owned by the
-driver.  They don't come from core ieee80211 stack so no need to pass them
-to ieee80211_tx_status_ni() on completing side.
-
-Introduce a work function which will act as a garbage collector for
-rtw89_tx_wait_info objects and the associated skbs.  Thus no potentially
-heavy locks are required on the completing side.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 1ae5ca615285 ("wifi: rtw89: add function to wait for completion of TX skbs")
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250919210852.823912-2-pchelkin@ispras.ru
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c |   30 ++++++++++++++++++++-----
- drivers/net/wireless/realtek/rtw89/core.h |   35 ++++++++++++++++++++++++++++--
- drivers/net/wireless/realtek/rtw89/pci.c  |    3 +-
- drivers/net/wireless/realtek/rtw89/ser.c  |    2 +
- 4 files changed, 61 insertions(+), 9 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1050,6 +1050,14 @@ rtw89_core_tx_update_desc_info(struct rt
- 	}
- }
- 
-+static void rtw89_tx_wait_work(struct wiphy *wiphy, struct wiphy_work *work)
-+{
-+	struct rtw89_dev *rtwdev = container_of(work, struct rtw89_dev,
-+						tx_wait_work.work);
-+
-+	rtw89_tx_wait_list_clear(rtwdev);
-+}
-+
- void rtw89_core_tx_kick_off(struct rtw89_dev *rtwdev, u8 qsel)
- {
- 	u8 ch_dma;
-@@ -1067,6 +1075,8 @@ int rtw89_core_tx_kick_off_and_wait(stru
- 	unsigned long time_left;
- 	int ret = 0;
- 
-+	lockdep_assert_wiphy(rtwdev->hw->wiphy);
-+
- 	wait = kzalloc(sizeof(*wait), GFP_KERNEL);
- 	if (!wait) {
- 		rtw89_core_tx_kick_off(rtwdev, qsel);
-@@ -1074,18 +1084,23 @@ int rtw89_core_tx_kick_off_and_wait(stru
- 	}
- 
- 	init_completion(&wait->completion);
-+	wait->skb = skb;
- 	rcu_assign_pointer(skb_data->wait, wait);
- 
- 	rtw89_core_tx_kick_off(rtwdev, qsel);
- 	time_left = wait_for_completion_timeout(&wait->completion,
- 						msecs_to_jiffies(timeout));
--	if (time_left == 0)
--		ret = -ETIMEDOUT;
--	else if (!wait->tx_done)
--		ret = -EAGAIN;
- 
--	rcu_assign_pointer(skb_data->wait, NULL);
--	kfree_rcu(wait, rcu_head);
-+	if (time_left == 0) {
-+		ret = -ETIMEDOUT;
-+		list_add_tail(&wait->list, &rtwdev->tx_waits);
-+		wiphy_delayed_work_queue(rtwdev->hw->wiphy, &rtwdev->tx_wait_work,
-+					 RTW89_TX_WAIT_WORK_TIMEOUT);
-+	} else {
-+		if (!wait->tx_done)
-+			ret = -EAGAIN;
-+		rtw89_tx_wait_release(wait);
-+	}
- 
- 	return ret;
- }
-@@ -4810,6 +4825,7 @@ void rtw89_core_stop(struct rtw89_dev *r
- 	wiphy_work_cancel(wiphy, &btc->dhcp_notify_work);
- 	wiphy_work_cancel(wiphy, &btc->icmp_notify_work);
- 	cancel_delayed_work_sync(&rtwdev->txq_reinvoke_work);
-+	wiphy_delayed_work_cancel(wiphy, &rtwdev->tx_wait_work);
- 	wiphy_delayed_work_cancel(wiphy, &rtwdev->track_work);
- 	wiphy_delayed_work_cancel(wiphy, &rtwdev->chanctx_work);
- 	wiphy_delayed_work_cancel(wiphy, &rtwdev->coex_act1_work);
-@@ -5034,6 +5050,7 @@ int rtw89_core_init(struct rtw89_dev *rt
- 		INIT_LIST_HEAD(&rtwdev->scan_info.pkt_list[band]);
- 	}
- 	INIT_LIST_HEAD(&rtwdev->scan_info.chan_list);
-+	INIT_LIST_HEAD(&rtwdev->tx_waits);
- 	INIT_WORK(&rtwdev->ba_work, rtw89_core_ba_work);
- 	INIT_WORK(&rtwdev->txq_work, rtw89_core_txq_work);
- 	INIT_DELAYED_WORK(&rtwdev->txq_reinvoke_work, rtw89_core_txq_reinvoke_work);
-@@ -5044,6 +5061,7 @@ int rtw89_core_init(struct rtw89_dev *rt
- 	wiphy_delayed_work_init(&rtwdev->coex_rfk_chk_work, rtw89_coex_rfk_chk_work);
- 	wiphy_delayed_work_init(&rtwdev->cfo_track_work, rtw89_phy_cfo_track_work);
- 	wiphy_delayed_work_init(&rtwdev->mcc_prepare_done_work, rtw89_mcc_prepare_done_work);
-+	wiphy_delayed_work_init(&rtwdev->tx_wait_work, rtw89_tx_wait_work);
- 	INIT_DELAYED_WORK(&rtwdev->forbid_ba_work, rtw89_forbid_ba_work);
- 	wiphy_delayed_work_init(&rtwdev->antdiv_work, rtw89_phy_antdiv_work);
- 	rtwdev->txq_wq = alloc_workqueue("rtw89_tx_wq", WQ_UNBOUND | WQ_HIGHPRI, 0);
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -3429,9 +3429,12 @@ struct rtw89_phy_rate_pattern {
- 	bool enable;
- };
- 
-+#define RTW89_TX_WAIT_WORK_TIMEOUT msecs_to_jiffies(500)
- struct rtw89_tx_wait_info {
- 	struct rcu_head rcu_head;
-+	struct list_head list;
- 	struct completion completion;
-+	struct sk_buff *skb;
- 	bool tx_done;
- };
- 
-@@ -5802,6 +5805,9 @@ struct rtw89_dev {
- 	/* used to protect rpwm */
- 	spinlock_t rpwm_lock;
- 
-+	struct list_head tx_waits;
-+	struct wiphy_delayed_work tx_wait_work;
-+
- 	struct rtw89_cam_info cam_info;
- 
- 	struct sk_buff_head c2h_queue;
-@@ -6056,6 +6062,26 @@ rtw89_assoc_link_rcu_dereference(struct
- 	list_first_entry_or_null(&p->dlink_pool, typeof(*p->links_inst), dlink_schd); \
- })
- 
-+static inline void rtw89_tx_wait_release(struct rtw89_tx_wait_info *wait)
-+{
-+	dev_kfree_skb_any(wait->skb);
-+	kfree_rcu(wait, rcu_head);
-+}
-+
-+static inline void rtw89_tx_wait_list_clear(struct rtw89_dev *rtwdev)
-+{
-+	struct rtw89_tx_wait_info *wait, *tmp;
-+
-+	lockdep_assert_wiphy(rtwdev->hw->wiphy);
-+
-+	list_for_each_entry_safe(wait, tmp, &rtwdev->tx_waits, list) {
-+		if (!completion_done(&wait->completion))
-+			continue;
-+		list_del(&wait->list);
-+		rtw89_tx_wait_release(wait);
-+	}
-+}
-+
- static inline int rtw89_hci_tx_write(struct rtw89_dev *rtwdev,
- 				     struct rtw89_core_tx_request *tx_req)
- {
-@@ -6065,6 +6091,7 @@ static inline int rtw89_hci_tx_write(str
- static inline void rtw89_hci_reset(struct rtw89_dev *rtwdev)
- {
- 	rtwdev->hci.ops->reset(rtwdev);
-+	rtw89_tx_wait_list_clear(rtwdev);
- }
- 
- static inline int rtw89_hci_start(struct rtw89_dev *rtwdev)
-@@ -7122,11 +7149,12 @@ static inline struct sk_buff *rtw89_allo
- 	return dev_alloc_skb(length);
- }
- 
--static inline void rtw89_core_tx_wait_complete(struct rtw89_dev *rtwdev,
-+static inline bool rtw89_core_tx_wait_complete(struct rtw89_dev *rtwdev,
- 					       struct rtw89_tx_skb_data *skb_data,
- 					       bool tx_done)
- {
- 	struct rtw89_tx_wait_info *wait;
-+	bool ret = false;
- 
- 	rcu_read_lock();
- 
-@@ -7134,11 +7162,14 @@ static inline void rtw89_core_tx_wait_co
- 	if (!wait)
- 		goto out;
- 
-+	ret = true;
- 	wait->tx_done = tx_done;
--	complete(&wait->completion);
-+	/* Don't access skb anymore after completion */
-+	complete_all(&wait->completion);
- 
- out:
- 	rcu_read_unlock();
-+	return ret;
- }
- 
- static inline bool rtw89_is_mlo_1_1(struct rtw89_dev *rtwdev)
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -464,7 +464,8 @@ static void rtw89_pci_tx_status(struct r
- 	struct rtw89_tx_skb_data *skb_data = RTW89_TX_SKB_CB(skb);
- 	struct ieee80211_tx_info *info;
- 
--	rtw89_core_tx_wait_complete(rtwdev, skb_data, tx_status == RTW89_TX_DONE);
-+	if (rtw89_core_tx_wait_complete(rtwdev, skb_data, tx_status == RTW89_TX_DONE))
-+		return;
- 
- 	info = IEEE80211_SKB_CB(skb);
- 	ieee80211_tx_info_clear_status(info);
---- a/drivers/net/wireless/realtek/rtw89/ser.c
-+++ b/drivers/net/wireless/realtek/rtw89/ser.c
-@@ -501,7 +501,9 @@ static void ser_reset_trx_st_hdl(struct
- 		}
- 
- 		drv_stop_rx(ser);
-+		wiphy_lock(wiphy);
- 		drv_trx_reset(ser);
-+		wiphy_unlock(wiphy);
- 
- 		/* wait m3 */
- 		hal_send_m2_event(ser);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2114,6 +2114,12 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
+ 	  .driver_info = RSVD(7) },
++	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
++	  .driver_info = RSVD(3) | RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
++	  .driver_info = RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x907b, 0xff),	/* Simcom SIM8230 RNDIS mode */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9205, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT+ECM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9206, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT-only mode */
+ 	{ USB_DEVICE(ALCATEL_VENDOR_ID, ALCATEL_PRODUCT_X060S_X200),
 
 
