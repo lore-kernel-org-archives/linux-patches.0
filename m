@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3C11F63FF;
-	Fri, 10 Oct 2025 13:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94E425A2D1;
+	Fri, 10 Oct 2025 13:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102252; cv=none; b=qFG1gxWIhHnN+wSqeLfX0Hw9VbMAlqwTJmNlmop7eedqfdCVV0diccmnGGA1SdWuWs06ZnxqAQc06EHMTRbnnZxFJfO5HGDUqva3q+01lO6QouITezu5E9uVMmMqwXYPgQGcXibVAAwOQwl86U0nckI8iBH/RBgq80fMPG/jFNc=
+	t=1760102255; cv=none; b=p4bx6HEo2gwzQ9nhwT/NOKkEtVog5kHK888SiOB8Ow4csRwTU0UlTP7malx5G8CoP6G8noPHMiH5ogy+qeUN2K/ktcXi0seicAG6j996xEWY07L4ffynDViRoU0W9KBppQSiqI71xXaqWdotuRrbXCmqozB9N7/NYKCSe2Yruro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102252; c=relaxed/simple;
-	bh=NN7AHrie72/4YnSrW/gJfkoI52/BNrwbnDjXpBJP6Tk=;
+	s=arc-20240116; t=1760102255; c=relaxed/simple;
+	bh=nbFXG9nTHMSbcNnTUNl0CmuPy2h8KSfzLJfQkJtbbXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLFsgt+5JwFL7WWx4cy6oj0VussmdgJOlag8zIt2qruFyPsPGIoWoLO7DvlrP34AQtlwF0I4GamnHeuLXw/nbMtKb5u2aHbR5E9zqxk57D5/mTzOFIMjqpoxh9CAZeTOQzworORsFM4CbStcKSHMhYJBhwdogffrEEs2GEI+rPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCvl5CFM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EY93Q2pDOnEe3FZkngR6zKn0gt63HaFuDP9ctyEOTjjKBQMUZH3MTs4PrSNw4CgXMmkflfdPQvu9l0lJ+Na/5PkLD/DJytlGah/jJlxnQMajGLo0Nyze4fhWOj/OGnHOp2Sn2Bbg51D9ux33FTcYgysESbaLbFLdEtqHd6pf4bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiJz1agd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCvl5CFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B68C4CEF1;
-	Fri, 10 Oct 2025 13:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiJz1agd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC92C116B1;
+	Fri, 10 Oct 2025 13:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102252;
-	bh=NN7AHrie72/4YnSrW/gJfkoI52/BNrwbnDjXpBJP6Tk=;
+	s=korg; t=1760102255;
+	bh=nbFXG9nTHMSbcNnTUNl0CmuPy2h8KSfzLJfQkJtbbXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bCvl5CFMlQQx+d0PiZrpIkNKXYFdr8cIhPBce4XdX1QR9HK+Z5lK6cy6AEvzrcxXC
-	 0tHcZ98ETJGcrruzyjjuMUEDGTy+8NeIgL0PSLHXm+MxwGVtIThXoXfqdgm2AcR0/O
-	 Ko+DypRdHQdW5f2St1Cx+t6AIJzS9Oizn7B5tPU8=
+	b=XiJz1agdRFzWvFLY1T9g3bXBgLrFblrUACtBelbYz71vK2kyqIT/AS2D7wGmDcSBE
+	 de/07C0bi2VRz5lAMlO0s9ZI19eJpaB085FXSCi7ekSPfwjq0QUr7JU1CStp8et8hA
+	 w5PgMbT/XysHeIKbXgp6UN26W7/FquNab2U+23gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.17 07/26] rust: block: fix `srctree/` links
-Date: Fri, 10 Oct 2025 15:16:02 +0200
-Message-ID: <20251010131331.476902319@linuxfoundation.org>
+	stable@kernel.org,
+	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.17 08/26] rust: pci: fix incorrect platform reference in PCI driver probe doc comment
+Date: Fri, 10 Oct 2025 15:16:03 +0200
+Message-ID: <20251010131331.512745211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -50,36 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-commit 208d7f788e84e80992d7b1c82ff17b620eb1371e upstream.
+commit 855318e7c0c4a3e3014c0469dd5bc93a1c0df30c upstream.
 
-This `srctree/` link pointed to a file with an underscore, but the header
-used a dash instead.
+Substitute 'platform' with 'pci'.
 
-Thus fix it.
-
-This cleans a future warning that will check our `srctree/` links.
-
-Cc: stable@vger.kernel.org
-Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 1bd8b6b2c5d3 ("rust: pci: add basic PCI device / driver abstractions")
+Cc: stable@kernel.org
+Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/block/mq/gen_disk.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/pci.rs |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/rust/kernel/block/mq/gen_disk.rs
-+++ b/rust/kernel/block/mq/gen_disk.rs
-@@ -3,7 +3,7 @@
- //! Generic disk abstraction.
- //!
- //! C header: [`include/linux/blkdev.h`](srctree/include/linux/blkdev.h)
--//! C header: [`include/linux/blk_mq.h`](srctree/include/linux/blk_mq.h)
-+//! C header: [`include/linux/blk-mq.h`](srctree/include/linux/blk-mq.h)
+--- a/rust/kernel/pci.rs
++++ b/rust/kernel/pci.rs
+@@ -240,8 +240,8 @@ pub trait Driver: Send {
  
- use crate::block::mq::{raw_writer::RawWriter, Operations, TagSet};
- use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc};
+     /// PCI driver probe.
+     ///
+-    /// Called when a new platform device is added or discovered.
+-    /// Implementers should attempt to initialize the device here.
++    /// Called when a new pci device is added or discovered. Implementers should
++    /// attempt to initialize the device here.
+     fn probe(dev: &Device<device::Core>, id_info: &Self::IdInfo) -> Result<Pin<KBox<Self>>>;
+ 
+     /// Platform driver unbind.
 
 
