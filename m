@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24532F3605;
-	Fri, 10 Oct 2025 13:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745CB2F25FD;
+	Fri, 10 Oct 2025 13:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102330; cv=none; b=o4ar4Ouq2QNFMw8hU2VNzvsq9fno7OuG05lFwG0fRVVFYwgPHg4iIrVhfnV4KTE+rX/asZLdmDUFGvZb6Gyb9a46zSSL39/c2kkLKPydVFK/DQs5PvYkpdqpp9s72PHuxH8Dg4rpO3emKNrL1jRjV1ZS9ffahqoZnueLbwiTaSA=
+	t=1760102333; cv=none; b=TGJBCsS9dijRwhYPB3c86tfW2zvf+UTrV+l2y824THbGrVaDF6KnBPCU1gHjP35tW/IktDGQ9+Q1AyLVeLFJtFGJj71i69KAelbhBcCAVv/RVdm6spgHZsROvAXcMwbiScZDnevWtjYywXtgnc8jTT8KDwqPV4o9kptNNR+7m3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102330; c=relaxed/simple;
-	bh=5hCpYKng3divR1V4azgqk6TIDa83yoRj5sjv7o5j7Ls=;
+	s=arc-20240116; t=1760102333; c=relaxed/simple;
+	bh=YrxyEoTgyWjhnD3IfHe9k7vMw/0OeZLfjiEnLzoJ+Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j7ocG/wn0RwLFA/Ldr83Cf2MvcvfKX8xBo+EdHShGY3220LY2Kw+7ndl/nzJ1//IEevysaDfqL9qdiEi77wXHIXp5anPW4m3sIKDW2YFvN7TX1HNrWYEp7QHaAYne4xBqYCg1i4nq3JRjV1ybUuTNbLmDCfzPNKPCBqclSgG6cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8CDHy+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=onHfO6Q1tSqeE9lhcFQHaHLZsBoyOJtxu548wembRwpa27mEK/YndV51EgW57pESNI4X5A5XCikWYIZKeqyn1BYvL34cuubzJuoCq966EhVZ0Ykfxf0M2nEDavmpzy4Ma5UENTqIk0+B4lRk/d0qzeDkxPbVgsw1Aqr9Y5hbOsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHtTvFJd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8CDHy+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06345C4AF0D;
-	Fri, 10 Oct 2025 13:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHtTvFJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0E1C4CEF1;
+	Fri, 10 Oct 2025 13:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102330;
-	bh=5hCpYKng3divR1V4azgqk6TIDa83yoRj5sjv7o5j7Ls=;
+	s=korg; t=1760102333;
+	bh=YrxyEoTgyWjhnD3IfHe9k7vMw/0OeZLfjiEnLzoJ+Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8CDHy+WqZL1oMeo0yVl6wp/ATLxIvytGacn0Z3ARLQez5tDDnCISGC0Wsj5RznGR
-	 jndfWDlUP/egS6ziK2Wo46VgRbytSNO0VOJ8EfCWRJ21e72xFbPQilPlKPmvny9Syu
-	 xz8kBHjnKPYrmp8Nde5HUFVSrzj0HxRMU7F9tcVs=
+	b=PHtTvFJdYHkjdSKkDE+Tk1gZFBWHMZiYjm5aoezWKxRL3dsmEIKLSsDa5v0VHH5fQ
+	 b9GXzUrzZLL0jsT4FgNC91vLno/Ef6cnKvC0hkmH40pWrMmo/6B0O7jb5f9mbn6oyK
+	 xbO16E1wlPVZpfKOAhYeO9Sgm68WQoQhY/JIptbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wasee Alam <wasee.alam@amd.com>,
-	Mario Sopena-Novales <mario.novales@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 19/41] drm/amdgpu/gfx11: Add Cleaner Shader Support for GFX11.0.1/11.0.4 GPUs
-Date: Fri, 10 Oct 2025 15:16:07 +0200
-Message-ID: <20251010131334.117737752@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.16 02/41] drm/amdgpu: Enable MES lr_compute_wa by default
+Date: Fri, 10 Oct 2025 15:15:50 +0200
+Message-ID: <20251010131333.511557363@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -48,69 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit c1b6b8c7706354b73196649c46b5e6d4d61c2f5c ]
+commit 1fb710793ce2619223adffaf981b1ff13cd48f17 upstream.
 
-Enable the cleaner shader for additional GFX11.0.1/11.0.4 series GPUs to
-ensure data isolation among GPU tasks. The cleaner shader is tasked with
-clearing the Local Data Store (LDS), Vector General Purpose Registers
-(VGPRs), and Scalar General Purpose Registers (SGPRs), which helps avoid
-data leakage and guarantees the accuracy of computational results.
+The MES set resources packet has an optional bit 'lr_compute_wa'
+which can be used for preventing MES hangs on long compute jobs.
 
-This update extends cleaner shader support to GFX11.0.1/11.0.4 GPUs,
-previously available for GFX11.0.3. It enhances security by clearing GPU
-memory between processes and maintains a consistent GPU state across KGD
-and KFD workloads.
+Set this bit by default.
 
-Cc: Wasee Alam <wasee.alam@amd.com>
-Cc: Mario Sopena-Novales <mario.novales@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Co-developed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0a71ceb27f88a944c2de2808b67b2f46ac75076b)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c        |    6 ++++++
+ drivers/gpu/drm/amd/amdgpu/mes_v12_0.c        |    5 +++++
+ drivers/gpu/drm/amd/include/mes_v11_api_def.h |    3 ++-
+ drivers/gpu/drm/amd/include/mes_v12_api_def.h |    3 ++-
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 96566870f079b..199bd9340b3bf 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -1654,6 +1654,21 @@ static int gfx_v11_0_sw_init(struct amdgpu_ip_block *ip_block)
- 			}
- 		}
- 		break;
-+	case IP_VERSION(11, 0, 1):
-+	case IP_VERSION(11, 0, 4):
-+		adev->gfx.cleaner_shader_ptr = gfx_11_0_3_cleaner_shader_hex;
-+		adev->gfx.cleaner_shader_size = sizeof(gfx_11_0_3_cleaner_shader_hex);
-+		if (adev->gfx.pfp_fw_version >= 102 &&
-+		    adev->gfx.mec_fw_version >= 66 &&
-+		    adev->mes.fw_version[0] >= 128) {
-+			adev->gfx.enable_cleaner_shader = true;
-+			r = amdgpu_gfx_cleaner_shader_sw_init(adev, adev->gfx.cleaner_shader_size);
-+			if (r) {
-+				adev->gfx.enable_cleaner_shader = false;
-+				dev_err(adev->dev, "Failed to initialize cleaner shader\n");
-+			}
-+		}
-+		break;
- 	case IP_VERSION(11, 5, 0):
- 	case IP_VERSION(11, 5, 1):
- 		adev->gfx.cleaner_shader_ptr = gfx_11_0_3_cleaner_shader_hex;
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -711,6 +711,12 @@ static int mes_v11_0_set_hw_resources(st
+ 	mes_set_hw_res_pkt.enable_reg_active_poll = 1;
+ 	mes_set_hw_res_pkt.enable_level_process_quantum_check = 1;
+ 	mes_set_hw_res_pkt.oversubscription_timer = 50;
++	if ((mes->adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x7f)
++		mes_set_hw_res_pkt.enable_lr_compute_wa = 1;
++	else
++		dev_info_once(mes->adev->dev,
++			      "MES FW version must be >= 0x7f to enable LR compute workaround.\n");
++
+ 	if (amdgpu_mes_log_enable) {
+ 		mes_set_hw_res_pkt.enable_mes_event_int_logging = 1;
+ 		mes_set_hw_res_pkt.event_intr_history_gpu_mc_ptr =
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+@@ -738,6 +738,11 @@ static int mes_v12_0_set_hw_resources(st
+ 	mes_set_hw_res_pkt.use_different_vmid_compute = 1;
+ 	mes_set_hw_res_pkt.enable_reg_active_poll = 1;
+ 	mes_set_hw_res_pkt.enable_level_process_quantum_check = 1;
++	if ((mes->adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x82)
++		mes_set_hw_res_pkt.enable_lr_compute_wa = 1;
++	else
++		dev_info_once(adev->dev,
++			      "MES FW version must be >= 0x82 to enable LR compute workaround.\n");
+ 
+ 	/*
+ 	 * Keep oversubscribe timer for sdma . When we have unmapped doorbell
+--- a/drivers/gpu/drm/amd/include/mes_v11_api_def.h
++++ b/drivers/gpu/drm/amd/include/mes_v11_api_def.h
+@@ -238,7 +238,8 @@ union MESAPI_SET_HW_RESOURCES {
+ 				uint32_t enable_mes_sch_stb_log : 1;
+ 				uint32_t limit_single_process : 1;
+ 				uint32_t is_strix_tmz_wa_enabled  :1;
+-				uint32_t reserved : 13;
++				uint32_t enable_lr_compute_wa : 1;
++				uint32_t reserved : 12;
+ 			};
+ 			uint32_t	uint32_t_all;
+ 		};
+--- a/drivers/gpu/drm/amd/include/mes_v12_api_def.h
++++ b/drivers/gpu/drm/amd/include/mes_v12_api_def.h
+@@ -286,7 +286,8 @@ union MESAPI_SET_HW_RESOURCES {
+ 				uint32_t limit_single_process : 1;
+ 				uint32_t unmapped_doorbell_handling: 2;
+ 				uint32_t enable_mes_fence_int: 1;
+-				uint32_t reserved : 10;
++				uint32_t enable_lr_compute_wa : 1;
++				uint32_t reserved : 9;
+ 			};
+ 			uint32_t uint32_all;
+ 		};
 
 
