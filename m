@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F283F2F3605;
-	Fri, 10 Oct 2025 13:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6104E2F25F6;
+	Fri, 10 Oct 2025 13:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102297; cv=none; b=hxiBnOfQ7MfcrSZB84+NakqXAH4K2x49/3iB8CpRKviuOd+LoZqJ5TVix7EoAcCINZnn7xqUjH+urdZjdK+DVygbivpLdqQzuGytQpguVbvNVijuNB2ZxaEIB/WrFcxs84WRCbUBhl8Ep1VqvN8YECBP+P4AOT+G1vYznKZDpl0=
+	t=1760102299; cv=none; b=bBv/9Nlbmydy7FzmD1/jXV7gOpujLzdozjOBne/gR3U1/FONV1hGu0N5PGDuQ/YKlpBthlJKmWefB7ddS5ORRjzrwouX224Y2aEkr1o1pOrE6iIhJXPTTP6iaDdjhF5JP1fg4a247pD6WKENjWFy2L7M03VTwefZPH42WThsFE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102297; c=relaxed/simple;
-	bh=R18m1mh9APDC4pZwCN2GxG+lQh0BftKUch6P8yd/STA=;
+	s=arc-20240116; t=1760102299; c=relaxed/simple;
+	bh=gZbNCzFfNH12lpYMHc4seFl7xBQbRZw/A5b5YQeuw64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8nDq0FFzwlA8srLMX+XB4k11umYerIMp7o5Az2rdyytJyizJ8Jm5VSSHJ/Fsszg1EdgdHraOn0xhhK274qXgxfyORIOyFaLTLYI1SZFCsOubvUOGh3jeGqo1ki6zJvDLhyEN4T6r2UWYgrbiu/DVYXovMzZrNI3nJq4f0NE/G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWqLV6iS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBbleOhcUH+Lfq6RGTJ8zN1Ipc935W63byKvBho2nO3Tlor9z1P+8T0jHf7RuOckqd5uUvue/jmWGt71lBIlAYyG/LdyAibNTAE3TUZM3PZ/T8I1vSCJ4r7PH0KYxiU3q+nR5ZVwp7DhkcEbS+GEQ2AWDxgcuZ9pLau16bulbtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CngeIvyJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWqLV6iS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18221C4CEF1;
-	Fri, 10 Oct 2025 13:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CngeIvyJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01B7C4CEFE;
+	Fri, 10 Oct 2025 13:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102296;
-	bh=R18m1mh9APDC4pZwCN2GxG+lQh0BftKUch6P8yd/STA=;
+	s=korg; t=1760102299;
+	bh=gZbNCzFfNH12lpYMHc4seFl7xBQbRZw/A5b5YQeuw64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWqLV6iSDK6Ve+6y2My1HGkiSW0RvWD2K0V07BJGvQ+ymzg/bcYxkl9cN706RF5T+
-	 IwbbGRBIBbK5kAVUKtDdaMcdJbq1w0ezmEiI7kvF3g6gmvgexl8/gPv3Tw5kWXXNQ0
-	 nFRyRA8l7iGxw8B/9GMsS9etEEP95nuws8/8uZeA=
+	b=CngeIvyJ91CSzM/DKof/VXKQrqP6N8pwL58C/hv0LrbCOj0nIXtxChA86sHuZq1ik
+	 oZb/ardclXZGEmzq6L+RxkCac8OeyYtsui4CP/H0lOl83fchs0zHaGxV25neLp7u4q
+	 CFpsRyhB8f5QCLiCE/CogFwuLS4KgfxATh2BafjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.17 23/26] net/9p: fix double req put in p9_fd_cancelled
-Date: Fri, 10 Oct 2025 15:16:18 +0200
-Message-ID: <20251010131332.049400104@linuxfoundation.org>
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Subject: [PATCH 6.17 14/26] serial: stm32: allow selecting console when the driver is module
+Date: Fri, 10 Oct 2025 15:16:09 +0200
+Message-ID: <20251010131331.728779369@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -50,121 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
+From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 
-commit 674b56aa57f9379854cb6798c3bbcef7e7b51ab7 upstream.
+commit cc4d900d0d6d8dd5c41832a93ff3cfa629a78f9a upstream.
 
-Syzkaller reports a KASAN issue as below:
+Console can be enabled on the UART compile as module.
+Change dependency to allow console mode when the driver is built as module.
 
-general protection fault, probably for non-canonical address 0xfbd59c0000000021: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: maybe wild-memory-access in range [0xdead000000000108-0xdead00000000010f]
-CPU: 0 PID: 5083 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00037-g855bd1d7d838 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:__list_del include/linux/list.h:114 [inline]
-RIP: 0010:__list_del_entry include/linux/list.h:137 [inline]
-RIP: 0010:list_del include/linux/list.h:148 [inline]
-RIP: 0010:p9_fd_cancelled+0xe9/0x200 net/9p/trans_fd.c:734
-
-Call Trace:
- <TASK>
- p9_client_flush+0x351/0x440 net/9p/client.c:614
- p9_client_rpc+0xb6b/0xc70 net/9p/client.c:734
- p9_client_version net/9p/client.c:920 [inline]
- p9_client_create+0xb51/0x1240 net/9p/client.c:1027
- v9fs_session_init+0x1f0/0x18f0 fs/9p/v9fs.c:408
- v9fs_mount+0xba/0xcb0 fs/9p/vfs_super.c:126
- legacy_get_tree+0x108/0x220 fs/fs_context.c:632
- vfs_get_tree+0x8e/0x300 fs/super.c:1573
- do_new_mount fs/namespace.c:3056 [inline]
- path_mount+0x6a6/0x1e90 fs/namespace.c:3386
- do_mount fs/namespace.c:3399 [inline]
- __do_sys_mount fs/namespace.c:3607 [inline]
- __se_sys_mount fs/namespace.c:3584 [inline]
- __x64_sys_mount+0x283/0x300 fs/namespace.c:3584
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-This happens because of a race condition between:
-
-- The 9p client sending an invalid flush request and later cleaning it up;
-- The 9p client in p9_read_work() canceled all pending requests.
-
-      Thread 1                              Thread 2
-    ...
-    p9_client_create()
-    ...
-    p9_fd_create()
-    ...
-    p9_conn_create()
-    ...
-    // start Thread 2
-    INIT_WORK(&m->rq, p9_read_work);
-                                        p9_read_work()
-    ...
-    p9_client_rpc()
-    ...
-                                        ...
-                                        p9_conn_cancel()
-                                        ...
-                                        spin_lock(&m->req_lock);
-    ...
-    p9_fd_cancelled()
-    ...
-                                        ...
-                                        spin_unlock(&m->req_lock);
-                                        // status rewrite
-                                        p9_client_cb(m->client, req, REQ_STATUS_ERROR)
-                                        // first remove
-                                        list_del(&req->req_list);
-                                        ...
-
-    spin_lock(&m->req_lock)
-    ...
-    // second remove
-    list_del(&req->req_list);
-    spin_unlock(&m->req_lock)
-  ...
-
-Commit 74d6a5d56629 ("9p/trans_fd: Fix concurrency del of req_list in
-p9_fd_cancelled/p9_read_work") fixes a concurrency issue in the 9p filesystem
-client where the req_list could be deleted simultaneously by both
-p9_read_work and p9_fd_cancelled functions, but for the case where req->status
-equals REQ_STATUS_RCVD.
-
-Update the check for req->status in p9_fd_cancelled to skip processing not
-just received requests, but anything that is not SENT, as whatever
-changed the state from SENT also removed the request from its list.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: afd8d6541155 ("9P: Add cancelled() to the transport functions.")
+Fixes: 48a6092fb41fa ("serial: stm32-usart: Add STM32 USART Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
-Message-ID: <20250715154815.3501030-1-Sergey.Nalivayko@kaspersky.com>
-[updated the check from status == RECV || status == ERROR to status != SENT]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Link: https://lore.kernel.org/r/20250822141923.61133-1-raphael.gallais-pou@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -726,10 +726,10 @@ static int p9_fd_cancelled(struct p9_cli
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
+--- a/drivers/tty/serial/Kconfig
++++ b/drivers/tty/serial/Kconfig
+@@ -1412,7 +1412,7 @@ config SERIAL_STM32
  
- 	spin_lock(&m->req_lock);
--	/* Ignore cancelled request if message has been received
--	 * before lock.
--	 */
--	if (req->status == REQ_STATUS_RCVD) {
-+	/* Ignore cancelled request if status changed since the request was
-+	 * processed in p9_client_flush()
-+	*/
-+	if (req->status != REQ_STATUS_SENT) {
- 		spin_unlock(&m->req_lock);
- 		return 0;
- 	}
+ config SERIAL_STM32_CONSOLE
+ 	bool "Support for console on STM32"
+-	depends on SERIAL_STM32=y
++	depends on SERIAL_STM32
+ 	select SERIAL_CORE_CONSOLE
+ 	select SERIAL_EARLYCON
+ 
 
 
