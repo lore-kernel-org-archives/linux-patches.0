@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BA22EF664;
-	Fri, 10 Oct 2025 13:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779952F3633;
+	Fri, 10 Oct 2025 13:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102419; cv=none; b=FsnFNmDw8iO1uEiqBoN+bKCytYNRzFUP78tuAhzMl/dRVT/G3oxzSJP2sr8sgw8zwjSA1nbbSqfmOU1TY0QhwIuqJzuZIB4quLpbTvLqSKIteJPaHd8dc+N0tS5lHQ8cMCuQbA8o6YPYbqDP4oMfbjlQ8yMT50OtjYnMxZKKDOo=
+	t=1760102422; cv=none; b=IuB+NKZPY6XZcXJSDgmcC/rvQ+EYkV9cHE7S0Z0ifVEaoToBGbQR09Iqn+GzbEZdzc7Mm1AYvuTsxZnuBvaJwZwrADLG02unMYHhjXBXLLx6SYuiyg2KgE6/WOJHpJrCLJwk+/9zzewxUEtSmHJvd3GRTEehyAiqYeTqpH245ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102419; c=relaxed/simple;
-	bh=rM7i4Vb1WcQYfDKRFKp5Wzkosl4D5VjxclSzMGKiags=;
+	s=arc-20240116; t=1760102422; c=relaxed/simple;
+	bh=qg9/KGCpYf+AguxkmOmUiOG57uNIGxnMugjKlfPp4TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnUTQU9HgavIgqwzwaKvChsy3EwckrIxKZSMkrUmPuOr3sCKibWZLsSoullWdZH1TiQRL5bLDgTq443L/ZMa1AbjL8OWbbc26leDYJ+lyHZw8ZuwR1CPasyUgCl8E6y0ob/VqwWWdok8j3Hmuf9GU4EO+eENG1rokxj9e41UWA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay3tYod5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdwzsvsOLrcAhXxirvfHeeZJHPM5fKPs5s9H+Sa3A4xoSFjF1XhAoDf5TZEXPuTyHgpGyKT4PNzbcwCvre+twfJo2+f3xHk/pq3WovC2Olh8VueW2kFIrEWR4kAduqqR5jfX78nkEe8l7ouGNZaX+jBtKdDOW16p4cY97TA/jjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mONRjbwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay3tYod5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434DEC4CEF1;
-	Fri, 10 Oct 2025 13:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mONRjbwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0317EC4CEF1;
+	Fri, 10 Oct 2025 13:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102419;
-	bh=rM7i4Vb1WcQYfDKRFKp5Wzkosl4D5VjxclSzMGKiags=;
+	s=korg; t=1760102422;
+	bh=qg9/KGCpYf+AguxkmOmUiOG57uNIGxnMugjKlfPp4TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ay3tYod57lBw4jC0wZBkBqZbEck4VlbpqxxiihXt1kPewV8xpNin8Nn1zyL/WPJL9
-	 dC1NJXMJwnKHWA9lIQGxM+056qEOCcz+bA7/eOi/TzAyt30EW7Cl3vG/kjIsTKMOg2
-	 5sUpqSoN2x3oir355ck+lTJNisbUf/uGjGP9DGdw=
+	b=mONRjbwXVZN1AkyM6PRxiE2s4/9O677wrk8B09VigcMVBt34fY9q7ijqDoAOUrLYW
+	 q6Ec3ZMtrJQpGS/lB8Xew5nkoNWhts5p/78bE7rgWJFYLJavFOQvuzH0QM6JnaOVUY
+	 jOQEVPdXxWyoyS+LHHu39Z8jgDgKi51bMBJ3tdTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Romain Sioen <romain.sioen@microchip.com>
-Subject: [PATCH 6.16 28/41] hid: fix I2C read buffer overflow in raw_event() for mcp2221
-Date: Fri, 10 Oct 2025 15:16:16 +0200
-Message-ID: <20251010131334.436622059@linuxfoundation.org>
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 01/35] wifi: rtw89: fix use-after-free in rtw89_core_tx_kick_off_and_wait()
+Date: Fri, 10 Oct 2025 15:16:03 +0200
+Message-ID: <20251010131331.842424641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
-References: <20251010131333.420766773@linuxfoundation.org>
+In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
+References: <20251010131331.785281312@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,344 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.16-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit b56cc41a3ae7323aa3c6165f93c32e020538b6d2 upstream.
+[ Upstream commit 3e31a6bc07312b448fad3b45de578471f86f0e77 ]
 
-As reported by syzbot, mcp2221_raw_event lacked
-validation of incoming I2C read data sizes, risking buffer
-overflows in mcp->rxbuf during multi-part transfers.
-As highlighted in the DS20005565B spec, p44, we have:
-"The number of read-back data bytes to follow in this packet:
-from 0 to a maximum of 60 bytes of read-back bytes."
-This patch enforces we don't exceed this limit.
+There is a bug observed when rtw89_core_tx_kick_off_and_wait() tries to
+access already freed skb_data:
 
-Reported-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=52c1a7d3e5b361ccd346
-Tested-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Link: https://patch.msgid.link/20250726220931.7126-1-contact@arnaud-lcm.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+ BUG: KFENCE: use-after-free write in rtw89_core_tx_kick_off_and_wait drivers/net/wireless/realtek/rtw89/core.c:1110
+
+ CPU: 6 UID: 0 PID: 41377 Comm: kworker/u64:24 Not tainted  6.17.0-rc1+ #1 PREEMPT(lazy)
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS edk2-20250523-14.fc42 05/23/2025
+ Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
+
+ Use-after-free write at 0x0000000020309d9d (in kfence-#251):
+ rtw89_core_tx_kick_off_and_wait drivers/net/wireless/realtek/rtw89/core.c:1110
+ rtw89_core_scan_complete drivers/net/wireless/realtek/rtw89/core.c:5338
+ rtw89_hw_scan_complete_cb drivers/net/wireless/realtek/rtw89/fw.c:7979
+ rtw89_chanctx_proceed_cb drivers/net/wireless/realtek/rtw89/chan.c:3165
+ rtw89_chanctx_proceed drivers/net/wireless/realtek/rtw89/chan.h:141
+ rtw89_hw_scan_complete drivers/net/wireless/realtek/rtw89/fw.c:8012
+ rtw89_mac_c2h_scanofld_rsp drivers/net/wireless/realtek/rtw89/mac.c:5059
+ rtw89_fw_c2h_work drivers/net/wireless/realtek/rtw89/fw.c:6758
+ process_one_work kernel/workqueue.c:3241
+ worker_thread kernel/workqueue.c:3400
+ kthread kernel/kthread.c:463
+ ret_from_fork arch/x86/kernel/process.c:154
+ ret_from_fork_asm arch/x86/entry/entry_64.S:258
+
+ kfence-#251: 0x0000000056e2393d-0x000000009943cb62, size=232, cache=skbuff_head_cache
+
+ allocated by task 41377 on cpu 6 at 77869.159548s (0.009551s ago):
+ __alloc_skb net/core/skbuff.c:659
+ __netdev_alloc_skb net/core/skbuff.c:734
+ ieee80211_nullfunc_get net/mac80211/tx.c:5844
+ rtw89_core_send_nullfunc drivers/net/wireless/realtek/rtw89/core.c:3431
+ rtw89_core_scan_complete drivers/net/wireless/realtek/rtw89/core.c:5338
+ rtw89_hw_scan_complete_cb drivers/net/wireless/realtek/rtw89/fw.c:7979
+ rtw89_chanctx_proceed_cb drivers/net/wireless/realtek/rtw89/chan.c:3165
+ rtw89_chanctx_proceed drivers/net/wireless/realtek/rtw89/chan.c:3194
+ rtw89_hw_scan_complete drivers/net/wireless/realtek/rtw89/fw.c:8012
+ rtw89_mac_c2h_scanofld_rsp drivers/net/wireless/realtek/rtw89/mac.c:5059
+ rtw89_fw_c2h_work drivers/net/wireless/realtek/rtw89/fw.c:6758
+ process_one_work kernel/workqueue.c:3241
+ worker_thread kernel/workqueue.c:3400
+ kthread kernel/kthread.c:463
+ ret_from_fork arch/x86/kernel/process.c:154
+ ret_from_fork_asm arch/x86/entry/entry_64.S:258
+
+ freed by task 1045 on cpu 9 at 77869.168393s (0.001557s ago):
+ ieee80211_tx_status_skb net/mac80211/status.c:1117
+ rtw89_pci_release_txwd_skb drivers/net/wireless/realtek/rtw89/pci.c:564
+ rtw89_pci_release_tx_skbs.isra.0 drivers/net/wireless/realtek/rtw89/pci.c:651
+ rtw89_pci_release_tx drivers/net/wireless/realtek/rtw89/pci.c:676
+ rtw89_pci_napi_poll drivers/net/wireless/realtek/rtw89/pci.c:4238
+ __napi_poll net/core/dev.c:7495
+ net_rx_action net/core/dev.c:7557 net/core/dev.c:7684
+ handle_softirqs kernel/softirq.c:580
+ do_softirq.part.0 kernel/softirq.c:480
+ __local_bh_enable_ip kernel/softirq.c:407
+ rtw89_pci_interrupt_threadfn drivers/net/wireless/realtek/rtw89/pci.c:927
+ irq_thread_fn kernel/irq/manage.c:1133
+ irq_thread kernel/irq/manage.c:1257
+ kthread kernel/kthread.c:463
+ ret_from_fork arch/x86/kernel/process.c:154
+ ret_from_fork_asm arch/x86/entry/entry_64.S:258
+
+It is a consequence of a race between the waiting and the signaling side
+of the completion:
+
+            Waiting thread                            Completing thread
+
+rtw89_core_tx_kick_off_and_wait()
+  rcu_assign_pointer(skb_data->wait, wait)
+  /* start waiting */
+  wait_for_completion_timeout()
+                                                rtw89_pci_tx_status()
+                                                  rtw89_core_tx_wait_complete()
+                                                    rcu_read_lock()
+                                                    /* signals completion and
+                                                     * proceeds further
+                                                     */
+                                                    complete(&wait->completion)
+                                                    rcu_read_unlock()
+                                                  ...
+                                                  /* frees skb_data */
+                                                  ieee80211_tx_status_ni()
+  /* returns (exit status doesn't matter) */
+  wait_for_completion_timeout()
+  ...
+  /* accesses the already freed skb_data */
+  rcu_assign_pointer(skb_data->wait, NULL)
+
+The completing side might proceed and free the underlying skb even before
+the waiting side is fully awoken and run to execution.  Actually the race
+happens regardless of wait_for_completion_timeout() exit status, e.g.
+the waiting side may hit a timeout and the concurrent completing side is
+still able to free the skb.
+
+Skbs which are sent by rtw89_core_tx_kick_off_and_wait() are owned by the
+driver.  They don't come from core ieee80211 stack so no need to pass them
+to ieee80211_tx_status_ni() on completing side.
+
+Introduce a work function which will act as a garbage collector for
+rtw89_tx_wait_info objects and the associated skbs.  Thus no potentially
+heavy locks are required on the completing side.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 1ae5ca615285 ("wifi: rtw89: add function to wait for completion of TX skbs")
+Cc: stable@vger.kernel.org
+Suggested-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250919210852.823912-2-pchelkin@ispras.ru
+[ added wiphy variable declarations ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.c |   31 +++++++++++++++++++++-----
+ drivers/net/wireless/realtek/rtw89/core.h |   35 ++++++++++++++++++++++++++++--
+ drivers/net/wireless/realtek/rtw89/pci.c  |    3 +-
+ drivers/net/wireless/realtek/rtw89/ser.c  |    3 ++
+ 4 files changed, 63 insertions(+), 9 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -816,6 +816,10 @@ static int mcp2221_raw_event(struct hid_
- 			}
- 			if (data[2] == MCP2221_I2C_READ_COMPL ||
- 			    data[2] == MCP2221_I2C_READ_PARTIAL) {
-+				if (!mcp->rxbuf || mcp->rxbuf_idx < 0 || data[3] > 60) {
-+					mcp->status = -EINVAL;
-+					break;
-+				}
- 				buf = mcp->rxbuf;
- 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
- 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -960,6 +960,14 @@ rtw89_core_tx_update_desc_info(struct rt
+ 	}
+ }
+ 
++static void rtw89_tx_wait_work(struct wiphy *wiphy, struct wiphy_work *work)
++{
++	struct rtw89_dev *rtwdev = container_of(work, struct rtw89_dev,
++						tx_wait_work.work);
++
++	rtw89_tx_wait_list_clear(rtwdev);
++}
++
+ void rtw89_core_tx_kick_off(struct rtw89_dev *rtwdev, u8 qsel)
+ {
+ 	u8 ch_dma;
+@@ -977,6 +985,8 @@ int rtw89_core_tx_kick_off_and_wait(stru
+ 	unsigned long time_left;
+ 	int ret = 0;
+ 
++	lockdep_assert_wiphy(rtwdev->hw->wiphy);
++
+ 	wait = kzalloc(sizeof(*wait), GFP_KERNEL);
+ 	if (!wait) {
+ 		rtw89_core_tx_kick_off(rtwdev, qsel);
+@@ -984,18 +994,23 @@ int rtw89_core_tx_kick_off_and_wait(stru
+ 	}
+ 
+ 	init_completion(&wait->completion);
++	wait->skb = skb;
+ 	rcu_assign_pointer(skb_data->wait, wait);
+ 
+ 	rtw89_core_tx_kick_off(rtwdev, qsel);
+ 	time_left = wait_for_completion_timeout(&wait->completion,
+ 						msecs_to_jiffies(timeout));
+-	if (time_left == 0)
+-		ret = -ETIMEDOUT;
+-	else if (!wait->tx_done)
+-		ret = -EAGAIN;
+ 
+-	rcu_assign_pointer(skb_data->wait, NULL);
+-	kfree_rcu(wait, rcu_head);
++	if (time_left == 0) {
++		ret = -ETIMEDOUT;
++		list_add_tail(&wait->list, &rtwdev->tx_waits);
++		wiphy_delayed_work_queue(rtwdev->hw->wiphy, &rtwdev->tx_wait_work,
++					 RTW89_TX_WAIT_WORK_TIMEOUT);
++	} else {
++		if (!wait->tx_done)
++			ret = -EAGAIN;
++		rtw89_tx_wait_release(wait);
++	}
+ 
+ 	return ret;
+ }
+@@ -4419,6 +4434,7 @@ int rtw89_core_start(struct rtw89_dev *r
+ void rtw89_core_stop(struct rtw89_dev *rtwdev)
+ {
+ 	struct rtw89_btc *btc = &rtwdev->btc;
++	struct wiphy *wiphy = rtwdev->hw->wiphy;
+ 
+ 	/* Prvent to stop twice; enter_ips and ops_stop */
+ 	if (!test_bit(RTW89_FLAG_RUNNING, rtwdev->flags))
+@@ -4437,6 +4453,7 @@ void rtw89_core_stop(struct rtw89_dev *r
+ 	cancel_work_sync(&btc->dhcp_notify_work);
+ 	cancel_work_sync(&btc->icmp_notify_work);
+ 	cancel_delayed_work_sync(&rtwdev->txq_reinvoke_work);
++	wiphy_delayed_work_cancel(wiphy, &rtwdev->tx_wait_work);
+ 	cancel_delayed_work_sync(&rtwdev->track_work);
+ 	cancel_delayed_work_sync(&rtwdev->chanctx_work);
+ 	cancel_delayed_work_sync(&rtwdev->coex_act1_work);
+@@ -4657,6 +4674,7 @@ int rtw89_core_init(struct rtw89_dev *rt
+ 			continue;
+ 		INIT_LIST_HEAD(&rtwdev->scan_info.pkt_list[band]);
+ 	}
++	INIT_LIST_HEAD(&rtwdev->tx_waits);
+ 	INIT_WORK(&rtwdev->ba_work, rtw89_core_ba_work);
+ 	INIT_WORK(&rtwdev->txq_work, rtw89_core_txq_work);
+ 	INIT_DELAYED_WORK(&rtwdev->txq_reinvoke_work, rtw89_core_txq_reinvoke_work);
+@@ -4666,6 +4684,7 @@ int rtw89_core_init(struct rtw89_dev *rt
+ 	INIT_DELAYED_WORK(&rtwdev->coex_bt_devinfo_work, rtw89_coex_bt_devinfo_work);
+ 	INIT_DELAYED_WORK(&rtwdev->coex_rfk_chk_work, rtw89_coex_rfk_chk_work);
+ 	INIT_DELAYED_WORK(&rtwdev->cfo_track_work, rtw89_phy_cfo_track_work);
++	wiphy_delayed_work_init(&rtwdev->tx_wait_work, rtw89_tx_wait_work);
+ 	INIT_DELAYED_WORK(&rtwdev->forbid_ba_work, rtw89_forbid_ba_work);
+ 	INIT_DELAYED_WORK(&rtwdev->antdiv_work, rtw89_phy_antdiv_work);
+ 	rtwdev->txq_wq = alloc_workqueue("rtw89_tx_wq", WQ_UNBOUND | WQ_HIGHPRI, 0);
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -3406,9 +3406,12 @@ struct rtw89_phy_rate_pattern {
+ 	bool enable;
+ };
+ 
++#define RTW89_TX_WAIT_WORK_TIMEOUT msecs_to_jiffies(500)
+ struct rtw89_tx_wait_info {
+ 	struct rcu_head rcu_head;
++	struct list_head list;
+ 	struct completion completion;
++	struct sk_buff *skb;
+ 	bool tx_done;
+ };
+ 
+@@ -5539,6 +5542,9 @@ struct rtw89_dev {
+ 	/* used to protect rpwm */
+ 	spinlock_t rpwm_lock;
+ 
++	struct list_head tx_waits;
++	struct wiphy_delayed_work tx_wait_work;
++
+ 	struct rtw89_cam_info cam_info;
+ 
+ 	struct sk_buff_head c2h_queue;
+@@ -5735,6 +5741,26 @@ u8 rtw89_sta_link_inst_get_index(struct
+ 	return rtwsta_link - rtwsta->links_inst;
+ }
+ 
++static inline void rtw89_tx_wait_release(struct rtw89_tx_wait_info *wait)
++{
++	dev_kfree_skb_any(wait->skb);
++	kfree_rcu(wait, rcu_head);
++}
++
++static inline void rtw89_tx_wait_list_clear(struct rtw89_dev *rtwdev)
++{
++	struct rtw89_tx_wait_info *wait, *tmp;
++
++	lockdep_assert_wiphy(rtwdev->hw->wiphy);
++
++	list_for_each_entry_safe(wait, tmp, &rtwdev->tx_waits, list) {
++		if (!completion_done(&wait->completion))
++			continue;
++		list_del(&wait->list);
++		rtw89_tx_wait_release(wait);
++	}
++}
++
+ static inline int rtw89_hci_tx_write(struct rtw89_dev *rtwdev,
+ 				     struct rtw89_core_tx_request *tx_req)
+ {
+@@ -5744,6 +5770,7 @@ static inline int rtw89_hci_tx_write(str
+ static inline void rtw89_hci_reset(struct rtw89_dev *rtwdev)
+ {
+ 	rtwdev->hci.ops->reset(rtwdev);
++	rtw89_tx_wait_list_clear(rtwdev);
+ }
+ 
+ static inline int rtw89_hci_start(struct rtw89_dev *rtwdev)
+@@ -6745,11 +6772,12 @@ static inline struct sk_buff *rtw89_allo
+ 	return dev_alloc_skb(length);
+ }
+ 
+-static inline void rtw89_core_tx_wait_complete(struct rtw89_dev *rtwdev,
++static inline bool rtw89_core_tx_wait_complete(struct rtw89_dev *rtwdev,
+ 					       struct rtw89_tx_skb_data *skb_data,
+ 					       bool tx_done)
+ {
+ 	struct rtw89_tx_wait_info *wait;
++	bool ret = false;
+ 
+ 	rcu_read_lock();
+ 
+@@ -6757,11 +6785,14 @@ static inline void rtw89_core_tx_wait_co
+ 	if (!wait)
+ 		goto out;
+ 
++	ret = true;
+ 	wait->tx_done = tx_done;
+-	complete(&wait->completion);
++	/* Don't access skb anymore after completion */
++	complete_all(&wait->completion);
+ 
+ out:
+ 	rcu_read_unlock();
++	return ret;
+ }
+ 
+ static inline bool rtw89_is_mlo_1_1(struct rtw89_dev *rtwdev)
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -458,7 +458,8 @@ static void rtw89_pci_tx_status(struct r
+ 	struct rtw89_tx_skb_data *skb_data = RTW89_TX_SKB_CB(skb);
+ 	struct ieee80211_tx_info *info;
+ 
+-	rtw89_core_tx_wait_complete(rtwdev, skb_data, tx_status == RTW89_TX_DONE);
++	if (rtw89_core_tx_wait_complete(rtwdev, skb_data, tx_status == RTW89_TX_DONE))
++		return;
+ 
+ 	info = IEEE80211_SKB_CB(skb);
+ 	ieee80211_tx_info_clear_status(info);
+--- a/drivers/net/wireless/realtek/rtw89/ser.c
++++ b/drivers/net/wireless/realtek/rtw89/ser.c
+@@ -484,6 +484,7 @@ static void ser_l1_reset_pre_st_hdl(stru
+ static void ser_reset_trx_st_hdl(struct rtw89_ser *ser, u8 evt)
+ {
+ 	struct rtw89_dev *rtwdev = container_of(ser, struct rtw89_dev, ser);
++	struct wiphy *wiphy = rtwdev->hw->wiphy;
+ 
+ 	switch (evt) {
+ 	case SER_EV_STATE_IN:
+@@ -496,7 +497,9 @@ static void ser_reset_trx_st_hdl(struct
+ 		}
+ 
+ 		drv_stop_rx(ser);
++		wiphy_lock(wiphy);
+ 		drv_trx_reset(ser);
++		wiphy_unlock(wiphy);
+ 
+ 		/* wait m3 */
+ 		hal_send_m2_event(ser);
 
 
