@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72742F6196;
-	Fri, 10 Oct 2025 13:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDE22F362F;
+	Fri, 10 Oct 2025 13:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102273; cv=none; b=jYNRTrP6z0pUwHp21rK17YEqL9qjPE1fdsTdMXmOIIvTMrsi68aVHJCwup3d5tEc8uqYVkGUA2oYJkvSOm89NHBj4U5Ag0hyU3DADSTxNgm2RPe3BthQELhGvKGgwG6fab0tp4OrGNUdzLm1dex6nswl7hZFpGXP4W+d2I0F2jg=
+	t=1760102276; cv=none; b=RRJCEq2Oa3RARvMzNVrYnPKQfQARAUxpIeovguDf2Ao+CXsg248EDP6uUROuf+1gLD79eySW6tuOrfpdePiiuamxOC5yPjWPMs3bAqsK2TQ6TY5yb76OSOXGDrk0r6Zbf9GGKYyy6ri4LOoZSsGp6QkVrZYTpiNETkF9/OyTM9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102273; c=relaxed/simple;
-	bh=ezmHTRoZz+VW30TmnIyZK81IPq3A8KqWQu8V0W2fYbA=;
+	s=arc-20240116; t=1760102276; c=relaxed/simple;
+	bh=MhHt6VuMliNWLDZyFH/O4l3jjHT/6Mw097Lw/14iFVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIOuRrDQcwdU4FjRdZ4fXl+C7bsF0RtbSZ4Jhk4trJGC/13V2j1jCnBGjDpTb0/8Lm6KkOqu0v9vxRmyzBCHTNdOpaZiffuDFTYCOCxDuN/yjDfq4m8h1VkFI9oUye4WYAYDTMvpmT07Jz4P3j+B9LDMQF9Y60bn3qwI5M9YJ7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwcd3/3k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=up6HC5nsn0o7Re7Zp4rzbJlwaLwUM0kvbuBSwCGm5M2qPqpHEbRTZOyqqhdeaQscSeDVQ0JzhsoS49sTPwL+B9sWeZsUzazQdi10WhDjIe2LdqJXZV3dlI3sZbgkYnUwvtY5uQahC39vk7Ifn3xqxuuGI0talXF8H2fv6Dlqq4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRxyl9oZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwcd3/3k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038C0C4CEFE;
-	Fri, 10 Oct 2025 13:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRxyl9oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC06DC4CEF8;
+	Fri, 10 Oct 2025 13:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102273;
-	bh=ezmHTRoZz+VW30TmnIyZK81IPq3A8KqWQu8V0W2fYbA=;
+	s=korg; t=1760102276;
+	bh=MhHt6VuMliNWLDZyFH/O4l3jjHT/6Mw097Lw/14iFVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pwcd3/3kXRShPDkeWQbreSJmMNCNeif1zGqbCDECOXsydLzwUvw15nmT0bYrUfdfg
-	 M9gnlKX4tPN+WGT9vzYZP1M/YMsrT+DSehEemdTVNE2+F7h0LVnB+UsJKxyoKvFNzJ
-	 Y86vLQnECsm7Vgi3fUfG7ZkcplFccc2hffEhmyEQ=
+	b=hRxyl9oZHvV8Prp0DTFVP/aMqEqwSryAMQ9vVB7MNTjQykT6Xf233os2tg6SwCUa8
+	 ste8WysHP0j3ooC2nJrmfSPsNaaioRTBIESrwXQHXGptTyw1VoRFxq3aWGWPBicJOk
+	 jcXJAaP+xBtcbDrkWy3Zogs/ZdnZzx24732bPXqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	syzbot+ddc001b92c083dbf2b97@syzkaller.appspotmail.com,
-	Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.17 26/26] ring buffer: Propagate __rb_map_vma return value to caller
-Date: Fri, 10 Oct 2025 15:16:21 +0200
-Message-ID: <20251010131332.156305992@linuxfoundation.org>
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Subject: [PATCH 6.17 16/26] staging: axis-fifo: fix TX handling on copy_from_user() failure
+Date: Fri, 10 Oct 2025 15:16:11 +0200
+Message-ID: <20251010131331.800357543@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
 References: <20251010131331.204964167@linuxfoundation.org>
@@ -53,40 +49,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-commit de4cbd704731778a2dc833ce5a24b38e5d672c05 upstream.
+commit 6d07bee10e4bdd043ec7152cbbb9deb27033c9e2 upstream.
 
-The return value from `__rb_map_vma()`, which rejects writable or
-executable mappings (VM_WRITE, VM_EXEC, or !VM_MAYSHARE), was being
-ignored. As a result the caller of `__rb_map_vma` always returned 0
-even when the mapping had actually failed, allowing it to proceed
-with an invalid VMA.
+If copy_from_user() fails, write() currently returns -EFAULT, but any
+partially written data leaves the TX FIFO in an inconsistent state.
+Subsequent write() calls then fail with "transmit length mismatch"
+errors.
 
+Once partial data is written to the hardware FIFO, it cannot be removed
+without a TX reset. Commit c6e8d85fafa7 ("staging: axis-fifo: Remove
+hardware resets for user errors") removed a full FIFO reset for this case,
+which fixed a potential RX data loss, but introduced this TX issue.
+
+Fix this by introducing a bounce buffer: copy the full packet from
+userspace first, and write to the hardware FIFO only if the copy
+was successful.
+
+Fixes: c6e8d85fafa7 ("staging: axis-fifo: Remove hardware resets for user errors")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com
-Fixes: 117c39200d9d7 ("ring-buffer: Introducing ring-buffer mapping functions")
-Reported-by: syzbot+ddc001b92c083dbf2b97@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb
-Signed-off-by: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Link: https://lore.kernel.org/r/20250912101322.1282507-1-ovidiu.panait.oss@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/axis-fifo/axis-fifo.c |   36 +++++++++-------------------------
+ 1 file changed, 10 insertions(+), 26 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7273,7 +7273,7 @@ int ring_buffer_map(struct trace_buffer
- 		atomic_dec(&cpu_buffer->resize_disabled);
+--- a/drivers/staging/axis-fifo/axis-fifo.c
++++ b/drivers/staging/axis-fifo/axis-fifo.c
+@@ -43,7 +43,6 @@
+ #define DRIVER_NAME "axis_fifo"
+ 
+ #define READ_BUF_SIZE 128U /* read buffer length in words */
+-#define WRITE_BUF_SIZE 128U /* write buffer length in words */
+ 
+ #define AXIS_FIFO_DEBUG_REG_NAME_MAX_LEN	4
+ 
+@@ -302,11 +301,8 @@ static ssize_t axis_fifo_write(struct fi
+ {
+ 	struct axis_fifo *fifo = (struct axis_fifo *)f->private_data;
+ 	unsigned int words_to_write;
+-	unsigned int copied;
+-	unsigned int copy;
+-	unsigned int i;
++	u32 *txbuf;
+ 	int ret;
+-	u32 tmp_buf[WRITE_BUF_SIZE];
+ 
+ 	if (len % sizeof(u32)) {
+ 		dev_err(fifo->dt_device,
+@@ -371,32 +367,20 @@ static ssize_t axis_fifo_write(struct fi
+ 		}
  	}
  
--	return 0;
-+	return err;
- }
+-	/* write data from an intermediate buffer into the fifo IP, refilling
+-	 * the buffer with userspace data as needed
+-	 */
+-	copied = 0;
+-	while (words_to_write > 0) {
+-		copy = min(words_to_write, WRITE_BUF_SIZE);
+-
+-		if (copy_from_user(tmp_buf, buf + copied * sizeof(u32),
+-				   copy * sizeof(u32))) {
+-			ret = -EFAULT;
+-			goto end_unlock;
+-		}
+-
+-		for (i = 0; i < copy; i++)
+-			iowrite32(tmp_buf[i], fifo->base_addr +
+-				  XLLF_TDFD_OFFSET);
+-
+-		copied += copy;
+-		words_to_write -= copy;
++	txbuf = vmemdup_user(buf, len);
++	if (IS_ERR(txbuf)) {
++		ret = PTR_ERR(txbuf);
++		goto end_unlock;
+ 	}
  
- int ring_buffer_unmap(struct trace_buffer *buffer, int cpu)
+-	ret = copied * sizeof(u32);
++	for (int i = 0; i < words_to_write; ++i)
++		iowrite32(txbuf[i], fifo->base_addr + XLLF_TDFD_OFFSET);
+ 
+ 	/* write packet size to fifo */
+-	iowrite32(ret, fifo->base_addr + XLLF_TLR_OFFSET);
++	iowrite32(len, fifo->base_addr + XLLF_TLR_OFFSET);
+ 
++	ret = len;
++	kvfree(txbuf);
+ end_unlock:
+ 	mutex_unlock(&fifo->write_lock);
+ 
 
 
