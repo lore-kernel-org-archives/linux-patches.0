@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95122F0C63;
-	Fri, 10 Oct 2025 13:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D0F2F0C63;
+	Fri, 10 Oct 2025 13:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102504; cv=none; b=e5sUH8cbw+Yw6L0DbatqZWI/aRHMibKlPdXJ4UoZLajKXahpiqcKTLdYT31biGBEjvgoCEtxWK7MVQ5a0zDCpmXR1g/4khzG4bX5/0VcOZMP9ml/nnj3TUbvIxoEDCjKbBXSnhaPRz38H9lx0sMfYNjyKUX6lMaltvAaUdi/mx4=
+	t=1760102507; cv=none; b=MlHA87hpwN8cut/LcEOJfWMPipsXQ5L+Aiu1vmJwQhnO3LXlsCgSgbdXMxR5+WVnls2m982upg7ecTx5QfSi63VLiu17TbYqEr8FO9cJy2pWZJvGq4B7FygT9YNNwGC3WDyFY9OnlDnjjrB/5JgRWvvBc1ArqOG8+UQOvXDWkpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102504; c=relaxed/simple;
-	bh=ePnu6SdZbeIDFlOUfTPOZR1BzDnyuWBZWTNIBH1ejeg=;
+	s=arc-20240116; t=1760102507; c=relaxed/simple;
+	bh=ZWEVcF9IRCwCNjVs7oj04zo1JsgOqjqVmg3/oIfv+fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oM++otvreJwzslVeDQPWm9Wiz3V8e4hdDpa0wLHxKT9tkKSiJXebCZCiCfzjmQzntGbajPUwa37oohZuRXX/0TbWbsQYTtuQza3SWnspOhxFjinXGOIHA3ROwAkuqOViA7hbXLEpgpcI6kUjNPgh0mVpACnsk9VyfZI76eS+9SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uN+CB1Iw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gVooMYMZXfDWtiaCsaoiP2WVOejQT76bfn2M+9Vr/gDFdoipVMPN4NZqeZnp0RvY/sIxqQzEHdZycoxrxoKlyIVlkfmce+f3k1TEpNydJVj05ZvXpWmGGlwGEu8pw5eIHhQSj3BKkMFJwCZogaXJxiDrZnikdvtctOyfBhlSX4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2nbDwpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN+CB1Iw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60180C4CEF1;
-	Fri, 10 Oct 2025 13:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2nbDwpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0EDC4CEF1;
+	Fri, 10 Oct 2025 13:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102504;
-	bh=ePnu6SdZbeIDFlOUfTPOZR1BzDnyuWBZWTNIBH1ejeg=;
+	s=korg; t=1760102507;
+	bh=ZWEVcF9IRCwCNjVs7oj04zo1JsgOqjqVmg3/oIfv+fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uN+CB1Iwg7s6xUW3H60WdMtmizlX9xY8rkN6SpRybQP6kqz9GGJhCszQVW7ERwiFh
-	 ACjVH8/w01ojl9l9FuWgrnPNKJ6Vc/j9JfRsHYqAS6OvYOPJvp0VXhEz0N3DaxtzRq
-	 SJca8I3cfP+v73QQeC2DvYK27WdNCKhOIh/waI2s=
+	b=B2nbDwptQdTc29+ayl5eTIjTyT6bQGmuJBPjPiNiP95LygxN/yk7bAw6Mjj9tm8hl
+	 w4Mfwwkbj265aonnW/yvvZVfkJGhZdqfRFdnnwZi/Dubo3ycAiAFa8hnDhItXifw2G
+	 a9RVderwGP/BQmKE/EdpraRchd8CxAKza2FBGJdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Romain Sioen <romain.sioen@microchip.com>
-Subject: [PATCH 6.12 25/35] hid: fix I2C read buffer overflow in raw_event() for mcp2221
-Date: Fri, 10 Oct 2025 15:16:27 +0200
-Message-ID: <20251010131332.701110291@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 26/35] nvmem: layouts: fix automatic module loading
+Date: Fri, 10 Oct 2025 15:16:28 +0200
+Message-ID: <20251010131332.735840526@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131331.785281312@linuxfoundation.org>
 References: <20251010131331.785281312@linuxfoundation.org>
@@ -52,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Michael Walle <mwalle@kernel.org>
 
-commit b56cc41a3ae7323aa3c6165f93c32e020538b6d2 upstream.
+commit 810b790033ccc795d55cbef3927668fd01efdfdf upstream.
 
-As reported by syzbot, mcp2221_raw_event lacked
-validation of incoming I2C read data sizes, risking buffer
-overflows in mcp->rxbuf during multi-part transfers.
-As highlighted in the DS20005565B spec, p44, we have:
-"The number of read-back data bytes to follow in this packet:
-from 0 to a maximum of 60 bytes of read-back bytes."
-This patch enforces we don't exceed this limit.
+To support loading of a layout module automatically the MODALIAS
+variable in the uevent is needed. Add it.
 
-Reported-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=52c1a7d3e5b361ccd346
-Tested-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Link: https://patch.msgid.link/20250726220931.7126-1-contact@arnaud-lcm.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Fixes: fc29fd821d9a ("nvmem: core: Rework layouts to become regular devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://lore.kernel.org/r/20250912131347.303345-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvmem/layouts.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -814,6 +814,10 @@ static int mcp2221_raw_event(struct hid_
- 			}
- 			if (data[2] == MCP2221_I2C_READ_COMPL ||
- 			    data[2] == MCP2221_I2C_READ_PARTIAL) {
-+				if (!mcp->rxbuf || mcp->rxbuf_idx < 0 || data[3] > 60) {
-+					mcp->status = -EINVAL;
-+					break;
-+				}
- 				buf = mcp->rxbuf;
- 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
- 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
+--- a/drivers/nvmem/layouts.c
++++ b/drivers/nvmem/layouts.c
+@@ -45,11 +45,24 @@ static void nvmem_layout_bus_remove(stru
+ 	return drv->remove(layout);
+ }
+ 
++static int nvmem_layout_bus_uevent(const struct device *dev,
++				   struct kobj_uevent_env *env)
++{
++	int ret;
++
++	ret = of_device_uevent_modalias(dev, env);
++	if (ret != ENODEV)
++		return ret;
++
++	return 0;
++}
++
+ static const struct bus_type nvmem_layout_bus_type = {
+ 	.name		= "nvmem-layout",
+ 	.match		= nvmem_layout_bus_match,
+ 	.probe		= nvmem_layout_bus_probe,
+ 	.remove		= nvmem_layout_bus_remove,
++	.uevent		= nvmem_layout_bus_uevent,
+ };
+ 
+ int __nvmem_layout_driver_register(struct nvmem_layout_driver *drv,
 
 
