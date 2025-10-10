@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269A82F3C09;
-	Fri, 10 Oct 2025 13:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40482F3605;
+	Fri, 10 Oct 2025 13:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102322; cv=none; b=DOrkZ48PnU8ryPguZIDRdxd1U0lKVqJ+/szkXwp31M7JfTGxfkqN81HkLDTxqou7oG6NNZRX/8ELkOXxG/gVyFLyzMlvyMc6y/1AYrRJXCWfFSEM6BpKeHMR/Ml0b6p+ykVikW08+6bpZysss89RC7Iw0AwjPi0CKw1zD9fFNdg=
+	t=1760102325; cv=none; b=HfkBIWlZnEIpTSxBe8ihIpCxBs1PvOSOWJQqU/6tkt0Euffd5riMKfLLyZOsOY+iQwxhUbkl/8flF+LQCdOQqBHiA/0UPrvc74igO6WYfvnxe/+WOJp/xyBUKVMr8NwapPFVNSmEiGcFcoLXnG9GMCu5mDgfjT8SbDvfIpflPWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102322; c=relaxed/simple;
-	bh=RZ7OGUEYxImJRHLfwqGhQ+2J7CfqsdYdXkygZ2xw0Ns=;
+	s=arc-20240116; t=1760102325; c=relaxed/simple;
+	bh=CHjjLywlQfdqxYcXQr9XisUZhNPPceFzd0hKGGiWxWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ov81CI0BZkp4KTQwfFbz3hmkb00YgVPsNBDt/jOIPa4BBk+T9oYp0GlgjMqJwaEXtOvATUWUMGluKeHwrKpB/sM4YIzXBKDrTNC2jAqN9v0jCkKqJTma8PFucyUI360NvVhcUNrgVA7a3/ua5NxRE6xzgM2Ssoy7QgTMpy1S3bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FzGKqqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NAZC7woz/kWHGbNpdZP2A3g1Kga6gb2RRLwEQo3y1SUgwveGP/SqEGQXrNKaHy5VWhMz8Jyryxgu4f1MVi4tYDJfrz7OoecybR2VMILA3N3wkWShxfvfAx82UiSa912TUg5cm0bSQVfxhCeX+MdbOn3dp8aLjZIUyR0mluWigX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f08bqwf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FzGKqqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8A1C4CEF1;
-	Fri, 10 Oct 2025 13:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f08bqwf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800B8C4CEF1;
+	Fri, 10 Oct 2025 13:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102322;
-	bh=RZ7OGUEYxImJRHLfwqGhQ+2J7CfqsdYdXkygZ2xw0Ns=;
+	s=korg; t=1760102324;
+	bh=CHjjLywlQfdqxYcXQr9XisUZhNPPceFzd0hKGGiWxWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FzGKqqzjYY6UqvZ+0gkl1YorcRMxdCrzh2W1o+TpNCrwVkl9zfp7oGlrWkxdTsbQ
-	 m1BRNrE7rOJravRrVlQQbOT8xlTNUMFHq9yjJQ2qje4honnukdQNHklXvx9D62m0OU
-	 n6gfm5NuIMd+OKzd9gTl+KdWCHbQW9y0skSikxtU=
+	b=f08bqwf/tsTB8GJK9kUvjzSROF/j+C29kGNumCAI4DTrColeeSb5kiNOas8Kbix2c
+	 tSgqHKjd52lreetwPBiRJo+gsDY9UIAZxsv9Dt6Z8sTN8sL1n7TWdYaMZxPCdE4aPT
+	 pRMzzTnFJZNcaKuIXzDB7ufUWR+huWGHFtZEo3Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	April Grimoire <aprilgrimoire@proton.me>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 16/41] platform/x86/amd/pmc: Add MECHREVO Yilong15Pro to spurious_8042 list
-Date: Fri, 10 Oct 2025 15:16:04 +0200
-Message-ID: <20251010131334.011397323@linuxfoundation.org>
+Subject: [PATCH 6.16 17/41] platform/x86: oxpec: Add support for OneXPlayer X1Pro EVA-02
+Date: Fri, 10 Oct 2025 15:16:05 +0200
+Message-ID: <20251010131334.046872106@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -53,46 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: aprilgrimoire <aprilgrimoire@proton.me>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 8822e8be86d40410ddd2ac8ff44f3050c9ecf9c6 ]
+[ Upstream commit fba9d5448bd45b0ff7199c47023e9308ea4f1730 ]
 
-The firmware of Mechrevo Yilong15Pro emits a spurious keyboard interrupt on
-events including closing the lid. When a user closes the lid on an already
-suspended system this causes the system to wake up.
-Add Mechrevo Yilong15Pro Series (GM5HG7A) to the list of quirk
-spurious_8042 to work around this issue.
+It is a special edition of X1Pro with a different color.
 
-Link: https://lore.kernel.org/linux-pm/6ww4uu6Gl4F5n6VY5dl1ufASfKzs4DhMxAN8BuqUpCoqU3PQukVSVSBCl_lKIzkQ-S8kt1acPd58eyolhkWN32lMLFj4ViI0Tdu2jwhnYZ8=@proton.me/
-Signed-off-by: April Grimoire <aprilgrimoire@proton.me>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/IvSc_IN5Pa0wRXElTk_fEl-cTpMZxg6TCQk_7aRUkTd9vJUp_ZeC0NdXZ0z6Tn7B-XiqqqQvCH65lq6FqhuECBMEYWcHQmWm1Jo7Br8kpeg=@proton.me
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20250904132252.3041613-1-lkml@antheas.dev
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/platform/x86/oxpec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 18fb44139de25..4d0a38e06f083 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -239,6 +239,14 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
- 		}
+diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
+index eb076bb4099be..4f540a9932fe1 100644
+--- a/drivers/platform/x86/oxpec.c
++++ b/drivers/platform/x86/oxpec.c
+@@ -306,6 +306,13 @@ static const struct dmi_system_id dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)oxp_x1,
  	},
 +	{
-+		.ident = "MECHREVO Yilong15Pro Series GM5HG7A",
-+		.driver_data = &quirk_spurious_8042,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "MECHREVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Yilong15Pro Series GM5HG7A"),
-+		}
++			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER X1Pro EVA-02"),
++		},
++		.driver_data = (void *)oxp_x1,
 +	},
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=220116 */
- 	{
- 		.ident = "PCSpecialist Lafite Pro V 14M",
+ 	{},
+ };
+ 
 -- 
 2.51.0
 
