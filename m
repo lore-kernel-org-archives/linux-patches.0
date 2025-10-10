@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D2126A1AB;
-	Fri, 10 Oct 2025 13:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1D32F548E;
+	Fri, 10 Oct 2025 13:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760102345; cv=none; b=oPsORRATEsMg/fjvuXkIRbRLNSdOHAPlSjb78yaYxkHwmnDsTTA7yVEVpWBwy1yV0soR2y6+B5uVbaX2nvV1d/7UoGmhSLE3xYf6otmLYpZl8wXBClqczAnTy3/c+g99oT8rzII6bc8gTwVeMoUFiWVtVAEkLpP4/MLJrtMheno=
+	t=1760102347; cv=none; b=KnC+Kx43iwzN1xQ4PdwlB423Qdr+2pcYTMg/r8U/wJCaxZjezsOf8VNoQLcL9EqKo+9QHGj3ln5ZN0w2Q9SCQjBT4jXslHrlkGxU2EBiks35+dS2i+QsMd6CxsD3wnKerPbHy3Hqc/GvfiIo1sO60ux+PWAYWHtUWodYc+k+YXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760102345; c=relaxed/simple;
-	bh=MMLit2jv84UBJ2z0hW39HADFFv2skvbnwy/uXJlf6nM=;
+	s=arc-20240116; t=1760102347; c=relaxed/simple;
+	bh=XK/bv7yt1MkwhSvQ9zOcxEpaT2D3QW+61K/nNdSwifg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBzYXhwT1r6HD/iyL9Hpvf4sXu4dg0dEeWmgn+V2I6LYWxq4NL/JGfNaEYMjjQAaEtdS+6nA73FpA39EdNfNR9+ZL5B/ul90GRclNW/wkrTsrBeehppoBdXgluYYufCNAohm2A+eFr9pnQIfqsIJk34x2KnpBpoBtcODiJyfbbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRjNDmSL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjIj4cfbel3RzotcZ4ou/FDPGUW9NqW9iiRiv41tZaoSz61jF/F1YP4d7L0eMaSMOTYoOfZQOxVci2NvO9z+zvaNpu+Jywn7Q61/M5xfSFXeanxlUI8E8C4w4YSg2itcVYY1ywlxSexMrBFAdsnGc3R7Ts4BGwSniZpOFn8kqaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNbgu8al; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRjNDmSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5424AC4CEF1;
-	Fri, 10 Oct 2025 13:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNbgu8al"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179ECC4CEF1;
+	Fri, 10 Oct 2025 13:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760102344;
-	bh=MMLit2jv84UBJ2z0hW39HADFFv2skvbnwy/uXJlf6nM=;
+	s=korg; t=1760102347;
+	bh=XK/bv7yt1MkwhSvQ9zOcxEpaT2D3QW+61K/nNdSwifg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRjNDmSLP2jdH6egMsA3KJ9MUwUMFHFXkHZS1qdHpfWhmdBIw0j0B2ZzpiwaP6m9b
-	 CV0xrqvx9mKlO3DZoz8g3oadqFcOO2P7nowEs8DJN2gffBBa1m61h7iaGPrkKug3DZ
-	 bchGaNmLx1nOqMvhN5B0t965xxYIniBXp9dNTZW0=
+	b=DNbgu8al4bMC2fJlfvupLH3SoI2+O9shOaJ8nyZYcrgbycPlcuMgwkj9W8tUkRhql
+	 UtCN3xkrUfWlXsVRfjon0QthwOZl/g1DLm52mlrrdPRWBjbGnwQIyi8GokcALWb+1V
+	 FoxUflZHSh89FZkpXQZWdwMqmP38CcsZILyJValE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b73c7d94a151e2ee1e9b@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 23/41] netfs: Prevent duplicate unlocking
-Date: Fri, 10 Oct 2025 15:16:11 +0200
-Message-ID: <20251010131334.259366344@linuxfoundation.org>
+Subject: [PATCH 6.16 24/41] iommufd: WARN if an object is aborted with an elevated refcount
+Date: Fri, 10 Oct 2025 15:16:12 +0200
+Message-ID: <20251010131334.294671518@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251010131333.420766773@linuxfoundation.org>
 References: <20251010131333.420766773@linuxfoundation.org>
@@ -54,37 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 66d938e89e940e512f4c3deac938ecef399c13f9 ]
+[ Upstream commit 53d0584eeb2c85a46c83656246d61a89558d74b3 ]
 
-The filio lock has been released here, so there is no need to jump to
-error_folio_unlock to release it again.
+If something holds a refcount then it is at risk of UAFing. For abort
+paths we expect the caller to never share the object with a parallel
+thread and to clean up any refcounts it obtained on its own.
 
-Reported-by: syzbot+b73c7d94a151e2ee1e9b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b73c7d94a151e2ee1e9b
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Acked-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Add the missing dec inside iommufd_hwpt_paging_alloc() during error unwind
+by making iommufd_hw_pagetable_attach/detach() proper pairs.
+
+Link: https://patch.msgid.link/r/2-v1-02cd136829df+31-iommufd_syz_fput_jgg@nvidia.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/device.c          | 3 ++-
+ drivers/iommu/iommufd/iommufd_private.h | 3 +--
+ drivers/iommu/iommufd/main.c            | 4 ++++
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index f27ea5099a681..09394ac2c180d 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -347,7 +347,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 		folio_put(folio);
- 		ret = filemap_write_and_wait_range(mapping, fpos, fpos + flen - 1);
- 		if (ret < 0)
--			goto error_folio_unlock;
-+			goto out;
- 		continue;
+diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
+index 86244403b5320..674f9f244f7b4 100644
+--- a/drivers/iommu/iommufd/device.c
++++ b/drivers/iommu/iommufd/device.c
+@@ -661,6 +661,8 @@ iommufd_hw_pagetable_detach(struct iommufd_device *idev, ioasid_t pasid)
+ 		iopt_remove_reserved_iova(&hwpt_paging->ioas->iopt, idev->dev);
+ 	mutex_unlock(&igroup->lock);
  
- 	copied:
++	iommufd_hw_pagetable_put(idev->ictx, hwpt);
++
+ 	/* Caller must destroy hwpt */
+ 	return hwpt;
+ }
+@@ -1007,7 +1009,6 @@ void iommufd_device_detach(struct iommufd_device *idev, ioasid_t pasid)
+ 	hwpt = iommufd_hw_pagetable_detach(idev, pasid);
+ 	if (!hwpt)
+ 		return;
+-	iommufd_hw_pagetable_put(idev->ictx, hwpt);
+ 	refcount_dec(&idev->obj.users);
+ }
+ EXPORT_SYMBOL_NS_GPL(iommufd_device_detach, "IOMMUFD");
+diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+index 9ccc83341f321..e68d8d63076a8 100644
+--- a/drivers/iommu/iommufd/iommufd_private.h
++++ b/drivers/iommu/iommufd/iommufd_private.h
+@@ -390,9 +390,8 @@ static inline void iommufd_hw_pagetable_put(struct iommufd_ctx *ictx,
+ 	if (hwpt->obj.type == IOMMUFD_OBJ_HWPT_PAGING) {
+ 		struct iommufd_hwpt_paging *hwpt_paging = to_hwpt_paging(hwpt);
+ 
+-		lockdep_assert_not_held(&hwpt_paging->ioas->mutex);
+-
+ 		if (hwpt_paging->auto_domain) {
++			lockdep_assert_not_held(&hwpt_paging->ioas->mutex);
+ 			iommufd_object_put_and_try_destroy(ictx, &hwpt->obj);
+ 			return;
+ 		}
+diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
+index 62a3469bbd37e..2b26747ac2021 100644
+--- a/drivers/iommu/iommufd/main.c
++++ b/drivers/iommu/iommufd/main.c
+@@ -62,6 +62,10 @@ void iommufd_object_abort(struct iommufd_ctx *ictx, struct iommufd_object *obj)
+ 	old = xas_store(&xas, NULL);
+ 	xa_unlock(&ictx->objects);
+ 	WARN_ON(old != XA_ZERO_ENTRY);
++
++	if (WARN_ON(!refcount_dec_and_test(&obj->users)))
++		return;
++
+ 	kfree(obj);
+ }
+ 
 -- 
 2.51.0
 
