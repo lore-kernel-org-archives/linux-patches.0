@@ -1,41 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655C6BE49;
-	Sun, 12 Oct 2025 21:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCF1547E7;
+	Sun, 12 Oct 2025 22:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760304762; cv=none; b=Y8HpR12XuOVZ18D5xmtZgmX8IqyyIrJz8ZL6RG44Y6ZkD5S+lGsu0ZX5zNFfBZmvwDew51Uw+dw9Z35TKvkMHAAfV4vXvRDNTXPMMfTOj/jaNZIqnsfUh8vZLC1AJyp6GQ4gKK4Is/QVB5pjvVV9IJ4ri2PhhK2CIW44UVYMSVg=
+	t=1760309219; cv=none; b=diquc/7OkP4yp0fqU7bfzQDaUwAcKodLf21/jfeOxbRafH1XsSfVzf7xMR85OH8gq2HvvYf5N0zuL7RmYYLCdIvezutHIquF9x0Y00dtsIT57tWCpwwStVVfkr7NoABsTkzpSgIv8t6LXFiX/IyJSVz2Ei2QEaMmYme0WSVQTt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760304762; c=relaxed/simple;
-	bh=vZ/jGHMNdvuCwaAUoyyIPpQwHwlXk1nejjZpkhEcaAo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pA+0GwdZd3xDKC04KaXZBJUmqVTxRHC8Rv4fohRxsF8xPUCVH/P5mcowcSxrxDX+/jDyWZStXIVRi7oMAhmWoIPWaxlK0Uyz3RPkwwnOLIZF8ozznfjIVjDwYHP1jEMvjVHd8VhJ0jwbBWS4sMxGmZv4bN7xBUAK5hAMX4VIBlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CAwiNVTo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760309219; c=relaxed/simple;
+	bh=ObOyoiDDbtj2jx060wHnGYAhzHjfZaoTmQXkMKGc3ZQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uXctImQwkUKIp52abPT1X1LfpL0t0WD8Bf2QeOpdoLxBN5KD0WkKgV/w1PpGSKuRQBlnJRV0cn9pp3Y8oGPdyYfXN429T3R/77OTSvRAW9qrc2ojBjnUN9+fSTwQZzPr0pxkONNX9IDrIK7P5WuhKJ35n03Ca4UM/oInLoyXZOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caOQX94I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CAwiNVTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F442C4CEE7;
-	Sun, 12 Oct 2025 21:32:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caOQX94I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56406C4CEE7;
+	Sun, 12 Oct 2025 22:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760304762;
-	bh=vZ/jGHMNdvuCwaAUoyyIPpQwHwlXk1nejjZpkhEcaAo=;
+	s=k20201202; t=1760309219;
+	bh=ObOyoiDDbtj2jx060wHnGYAhzHjfZaoTmQXkMKGc3ZQ=;
 	h=From:To:Cc:Subject:Date:From;
-	b=CAwiNVToAPclQUZgcNzwpVdbE2GIKreM++X3r7VPCZOG5FAF1lBa89svYrdNOm6JS
-	 9qW279yhqY0EAIsovcok6HsnBnzJcFdDzWRdKd2YcenseMNeNSVlsynJ1KXtNSuIIz
-	 68xtkgj9LLN/2g+/cPHQmmLLs0mX3Y+eh6sVqn5V2wmPLmM3unycBE90pJqXCC7GPQ
-	 aiu7xqgAkQqlT2Ur+CYlftkkS5pDRUQ7eihiGJebUsTN2+KeVsMf6lRRdgCPvORWv2
-	 WJOuFBugNzqJR/jJoPUnPjGwGRazyY/jg3Om3FaeRI+I6CxEi7dVIOK638dXJ9xPfk
-	 RykaZD1fe2Y2g==
+	b=caOQX94ItQhFAAMc0+griLkXxNMzoOb4icFMyY1rZekI/7Jq7mJkcnR5PvuPDDMSG
+	 V/74+y2wG8M7TUttrT6lRguTKg2O+IBCDqWvE6GcU7TeoR6Ck/k1lMjK9uzHUUH1BA
+	 TNqzT9vCg+wi/3Ar/jTazIUxpVTApm3LcJsJ5z4FVN3dzQx8JE/Vw76fwOzWvlV8EE
+	 2tOnalESHo+Zk/coN23TgUnqKtSi/mcUcWt933i0G+TU3Kl6/WlrAJcxx6Kg3PyZeO
+	 8v0KDYL66eadRXxiABC/4D1yM/H0E26Le4obia3XYy59+glE0OW5hNKlysNVZvJEAr
+	 gSsBezHNdeW3g==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
-	Todd Kjos <tkjos@android.com>,
-	Martijn Coenen <maco@android.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Christian Brauner <christian@brauner.io>,
-	Carlos Llamas <cmllamas@google.com>,
-	Suren Baghdasaryan <surenb@google.com>
+	Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
@@ -47,9 +39,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] rust_binder: clean Clippy `mem-replace-with-default` warning
-Date: Sun, 12 Oct 2025 23:32:30 +0200
-Message-ID: <20251012213230.1139674-1-ojeda@kernel.org>
+Subject: [PATCH] docs: rust: quick-start: add Debian 13 (Trixie)
+Date: Mon, 13 Oct 2025 00:46:45 +0200
+Message-ID: <20251012224645.1148411-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,42 +50,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Starting with Rust 1.87.0, Clippy reports:
+Debian 13 (released 2025-08-09) packages Rust 1.85.0 [1], which is recent
+enough to build Linux.
 
-      CLIPPY     drivers/android/binder/rust_binder_main.o
-    error: replacing a value of type `T` with `T::default()` is better expressed using `core::mem::take`
-       --> drivers/android/binder/node.rs:690:32
-        |
-    690 |             _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
-        |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `core::mem::take(&mut inner.freeze_list)`
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#mem_replace_with_default
-        = note: `-D clippy::mem-replace-with-default` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::mem_replace_with_default)]`
+Thus document it.
 
-Thus clean it up as suggested.
+In fact, we are planning to propose that the minimum supported Rust
+version in Linux follows Debian Stable releases, with Debian 13 being
+the first one we upgrade to, i.e. Rust 1.85.
 
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Link: https://www.debian.org/News/2025/20250809 [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- drivers/android/binder/node.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/rust/quick-start.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/android/binder/node.rs b/drivers/android/binder/node.rs
-index ade895ef791e..08d362deaf61 100644
---- a/drivers/android/binder/node.rs
-+++ b/drivers/android/binder/node.rs
-@@ -687,7 +687,7 @@ pub(crate) fn remove_freeze_listener(&self, p: &Arc<Process>) {
-             );
-         }
-         if inner.freeze_list.is_empty() {
--            _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
-+            _unused_capacity = mem::take(&mut inner.freeze_list);
-         }
-     }
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index 155f7107329a..152289f0bed2 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -39,8 +39,8 @@ of the box, e.g.::
+ Debian
+ ******
+ 
+-Debian Testing and Debian Unstable (Sid), outside of the freeze period, provide
+-recent Rust releases and thus they should generally work out of the box, e.g.::
++Debian 13 (Trixie), as well as Testing and Debian Unstable (Sid) provide recent
++Rust releases and thus they should generally work out of the box, e.g.::
+ 
+ 	apt install rustc rust-src bindgen rustfmt rust-clippy
  
 
-base-commit: 8765f467912ff0d4832eeaf26ae573792da877e7
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
 -- 
 2.51.0
 
