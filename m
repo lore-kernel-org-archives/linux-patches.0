@@ -1,57 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA73259CBD;
-	Sun, 12 Oct 2025 09:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655C6BE49;
+	Sun, 12 Oct 2025 21:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760262176; cv=none; b=O+kvKNHC9sns8dBZr6ZC23IgPcno45sD7uNumusGMKmpXqEbcbsDmfEdGiemEVQDYYFteHkDqWctw1eUnhWqW3NsMi7Paj7A7docYc+v1o+5B3lQFu+5Hg7JtD1vdnFKxxV3+MNdz9y00FvMQQLn42naj8eNEKJaevzOeV7sNGI=
+	t=1760304762; cv=none; b=Y8HpR12XuOVZ18D5xmtZgmX8IqyyIrJz8ZL6RG44Y6ZkD5S+lGsu0ZX5zNFfBZmvwDew51Uw+dw9Z35TKvkMHAAfV4vXvRDNTXPMMfTOj/jaNZIqnsfUh8vZLC1AJyp6GQ4gKK4Is/QVB5pjvVV9IJ4ri2PhhK2CIW44UVYMSVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760262176; c=relaxed/simple;
-	bh=eXbz3xcm2kvi4Ssphk3RGsiJ37NS013VUnXfooBPvfk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbYEJ28XFhY6er32L3TbBoNPJdUfIkXLV3tYbZH46s3wJ2JbMmgsS4oH2WpuVzV/D0GCe7wOjOT0mINhQ8WbrxNRJK6pn6LMPzzP3I15PZfoVyjuxY2cO9fQbDLi7s5G8aVCfcNafcg3/AKl6KjEiMJpXmrm5d+GkS1HQ56lcAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t6oclDvx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760304762; c=relaxed/simple;
+	bh=vZ/jGHMNdvuCwaAUoyyIPpQwHwlXk1nejjZpkhEcaAo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pA+0GwdZd3xDKC04KaXZBJUmqVTxRHC8Rv4fohRxsF8xPUCVH/P5mcowcSxrxDX+/jDyWZStXIVRi7oMAhmWoIPWaxlK0Uyz3RPkwwnOLIZF8ozznfjIVjDwYHP1jEMvjVHd8VhJ0jwbBWS4sMxGmZv4bN7xBUAK5hAMX4VIBlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CAwiNVTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t6oclDvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B5AC4CEE7;
-	Sun, 12 Oct 2025 09:42:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CAwiNVTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F442C4CEE7;
+	Sun, 12 Oct 2025 21:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760262175;
-	bh=eXbz3xcm2kvi4Ssphk3RGsiJ37NS013VUnXfooBPvfk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6oclDvxMpT43LDW9K9UTD3Ztko2fsPICYJQkTfbVwcK+LqOgtKXY5sEoNwRFOZR0
-	 zjYNtFhRKQMVJNOhXw/j2BXgFfYU3tVSV6EhtOQ1Pyr+Vt8CCdLOdu4EqqEe85cgf4
-	 iJSb2NtXbotxigZKMC3mDWQSGVpC0P2C4JYxmDNDY2ojDaam6+zuzPR2uRDf1TckEJ
-	 LT0bFlfsStxEWPBtQT/ADulG4S1CviNp428pCQSv4+aOlTcaa36bJK8pDln2A7+Fow
-	 sc0TlQwFp2+sQRUp7V6A63ZH3LW8VLdimO+yEqECJ2SO2u2yKW3HVmmM6lkgMJYM08
-	 bpQfeeXQgGGYw==
+	s=k20201202; t=1760304762;
+	bh=vZ/jGHMNdvuCwaAUoyyIPpQwHwlXk1nejjZpkhEcaAo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CAwiNVToAPclQUZgcNzwpVdbE2GIKreM++X3r7VPCZOG5FAF1lBa89svYrdNOm6JS
+	 9qW279yhqY0EAIsovcok6HsnBnzJcFdDzWRdKd2YcenseMNeNSVlsynJ1KXtNSuIIz
+	 68xtkgj9LLN/2g+/cPHQmmLLs0mX3Y+eh6sVqn5V2wmPLmM3unycBE90pJqXCC7GPQ
+	 aiu7xqgAkQqlT2Ur+CYlftkkS5pDRUQ7eihiGJebUsTN2+KeVsMf6lRRdgCPvORWv2
+	 WJOuFBugNzqJR/jJoPUnPjGwGRazyY/jg3Om3FaeRI+I6CxEi7dVIOK638dXJ9xPfk
+	 RykaZD1fe2Y2g==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	Todd Kjos <tkjos@android.com>,
+	Martijn Coenen <maco@android.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Christian Brauner <christian@brauner.io>,
+	Carlos Llamas <cmllamas@google.com>,
+	Suren Baghdasaryan <surenb@google.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.17 00/26] 6.17.2-rc1 review
-Date: Sun, 12 Oct 2025 11:42:44 +0200
-Message-ID: <20251012094244.999162-1-ojeda@kernel.org>
-In-Reply-To: <20251010131331.204964167@linuxfoundation.org>
-References: <20251010131331.204964167@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH] rust_binder: clean Clippy `mem-replace-with-default` warning
+Date: Sun, 12 Oct 2025 23:32:30 +0200
+Message-ID: <20251012213230.1139674-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,22 +58,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 10 Oct 2025 15:15:55 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.17.2 release.
-> There are 26 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 12 Oct 2025 13:13:18 +0000.
-> Anything received after that time might be too late.
+Starting with Rust 1.87.0, Clippy reports:
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for arm and loongarch64:
+      CLIPPY     drivers/android/binder/rust_binder_main.o
+    error: replacing a value of type `T` with `T::default()` is better expressed using `core::mem::take`
+       --> drivers/android/binder/node.rs:690:32
+        |
+    690 |             _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
+        |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `core::mem::take(&mut inner.freeze_list)`
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#mem_replace_with_default
+        = note: `-D clippy::mem-replace-with-default` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::mem_replace_with_default)]`
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Thus clean it up as suggested.
 
-Thanks!
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ drivers/android/binder/node.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Cheers,
-Miguel
+diff --git a/drivers/android/binder/node.rs b/drivers/android/binder/node.rs
+index ade895ef791e..08d362deaf61 100644
+--- a/drivers/android/binder/node.rs
++++ b/drivers/android/binder/node.rs
+@@ -687,7 +687,7 @@ pub(crate) fn remove_freeze_listener(&self, p: &Arc<Process>) {
+             );
+         }
+         if inner.freeze_list.is_empty() {
+-            _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
++            _unused_capacity = mem::take(&mut inner.freeze_list);
+         }
+     }
+ 
+
+base-commit: 8765f467912ff0d4832eeaf26ae573792da877e7
+-- 
+2.51.0
+
