@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C91313E34;
-	Mon, 13 Oct 2025 15:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B574D30DED7;
+	Mon, 13 Oct 2025 15:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370103; cv=none; b=OxjCdhYfoN7zzn+79gJO+nR3+w9jN8o78uMHLKOjJchW9j9Q2kXEnNreo6k5Bkdt/rCyQH45ayZ+Er0XgI+ZwdlKf59JZR/Cjjd7FeubLT32VGefnH5KCAusACkLfi6OT+deIwXi/iLJoQDaL1OgCnW3weZJlOYd3kfSdCWxT6w=
+	t=1760370106; cv=none; b=W7Sh3PUb519mkdFnI8yD8KbOLjcTqUPuRhzKCmGlXZTSoqo00mhsGQ/tlv4+JN4yN5+jnVs2G/zvWcLEJ+brhw07dqg1qecgaylef5wZazWqTsdVQ6M9VoYIXXEgAWNeGt25XDWWjcD+A7Uj2pEN/BbPh3kkFQ2QXsExK2DHWC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370103; c=relaxed/simple;
-	bh=Bn3JmSn08uMSmgA8jcQOSBNX8RY2BQBmMUtRRTL7wLg=;
+	s=arc-20240116; t=1760370106; c=relaxed/simple;
+	bh=wivqBtD/mt++5VGJ1YTTAjnoJgB0euWbZj9wUSTcHaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIK9THZ6cCgRqx/EUsayutIo0aAU1XxRg/JUoc/7PtJ+41s1Xjk7AULajF9YW10rgjG/1cvsf3cXk+PZiSBR/0HpA4KM+EWGOGuPtsKzJSpudQiY9KGQlUb/xcq673ryUZPw62WL2IRIkvQZntd4ursknNjCwC42KpxP5ICwivk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb8ZM66d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r24Qi13Yz5ALp+lKrLrETPN3r6utRGHj4Rd0xiuO/2gBh5pRWwr+J0aErg2HSBDoibuZp5pVCe28k+uV31OIfq7OkdtRVO9qqQcttx5qGLbsSg2nqDk0ssq/VyL4OK4JAQZoteDT3c0wW0zOBfojkOWCNN2zV2oWkh7j38422JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlTVYiOq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb8ZM66d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB6CC116B1;
-	Mon, 13 Oct 2025 15:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlTVYiOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7242C4CEFE;
+	Mon, 13 Oct 2025 15:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370103;
-	bh=Bn3JmSn08uMSmgA8jcQOSBNX8RY2BQBmMUtRRTL7wLg=;
+	s=korg; t=1760370106;
+	bh=wivqBtD/mt++5VGJ1YTTAjnoJgB0euWbZj9wUSTcHaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cb8ZM66dydt7BjtavbW/ZPFb7oWkSVWvPzthkeiZYjiBGeaYcMypA3N1OY2OpfwB/
-	 dJXOobySf+YbWQPX4QKR9/fq1QtHSMjsAf6DlSqnO/vyd2WF784m7kCFyEoFMcOpv3
-	 yZ8rg1otEXiIO50g+mdFzkph5l5SI/HDVyDyql2k=
+	b=BlTVYiOqJT4bUqPmuCn+8Mn3Z2k1a7tbPNjPw5Uc21Ag4g+tnR0jHJwNvtOYf9bWl
+	 1ZoOvY7WixTbe6a1JUNVPaKY+308datmt3xBClsgGY168jG2x4QLIGu8yrcjqYsax1
+	 ChFlUWeMzntrroEmr7elsN3hVPL8zofmJ6+KoLEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 478/563] smb: client: fix crypto buffers in non-linear memory
-Date: Mon, 13 Oct 2025 16:45:39 +0200
-Message-ID: <20251013144428.603649955@linuxfoundation.org>
+Subject: [PATCH 6.17 479/563] bonding: fix xfrm offload feature setup on active-backup mode
+Date: Mon, 13 Oct 2025 16:45:40 +0200
+Message-ID: <20251013144428.638624092@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,167 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 998a67b954680f26f3734040aeeed08642d49721 ]
+[ Upstream commit 5b66169f6be4847008c0aea50885ff0632151479 ]
 
-The crypto API, through the scatterlist API, expects input buffers to be
-in linear memory.  We handle this with the cifs_sg_set_buf() helper
-that converts vmalloc'd memory to their corresponding pages.
+The active-backup bonding mode supports XFRM ESP offload. However, when
+a bond is added using command like `ip link add bond0 type bond mode 1
+miimon 100`, the `ethtool -k` command shows that the XFRM ESP offload is
+disabled. This occurs because, in bond_newlink(), we change bond link
+first and register bond device later. So the XFRM feature update in
+bond_option_mode_set() is not called as the bond device is not yet
+registered, leading to the offload feature not being set successfully.
 
-However, when we allocate our aead_request buffer (@creq in
-smb2ops.c::crypt_message()), we do so with kvzalloc(), which possibly
-puts aead_request->__ctx in vmalloc area.
+To resolve this issue, we can modify the code order in bond_newlink() to
+ensure that the bond device is registered first before changing the bond
+link parameters. This change will allow the XFRM ESP offload feature to be
+correctly enabled.
 
-AEAD algorithm then uses ->__ctx for its private/internal data and
-operations, and uses sg_set_buf() for such data on a few places.
-
-This works fine as long as @creq falls into kmalloc zone (small
-requests) or vmalloc'd memory is still within linear range.
-
-Tasks' stacks are vmalloc'd by default (CONFIG_VMAP_STACK=y), so too
-many tasks will increment the base stacks' addresses to a point where
-virt_addr_valid(buf) will fail (BUG() in sg_set_buf()) when that
-happens.
-
-In practice: too many parallel reads and writes on an encrypted mount
-will trigger this bug.
-
-To fix this, always alloc @creq with kmalloc() instead.
-Also drop the @sensitive_size variable/arguments since
-kfree_sensitive() doesn't need it.
-
-Backtrace:
-
-[  945.272081] ------------[ cut here ]------------
-[  945.272774] kernel BUG at include/linux/scatterlist.h:209!
-[  945.273520] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC NOPTI
-[  945.274412] CPU: 7 UID: 0 PID: 56 Comm: kworker/u33:0 Kdump: loaded Not tainted 6.15.0-lku-11779-g8e9d6efccdd7-dirty #1 PREEMPT(voluntary)
-[  945.275736] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-2-gc13ff2cd-prebuilt.qemu.org 04/01/2014
-[  945.276877] Workqueue: writeback wb_workfn (flush-cifs-2)
-[  945.277457] RIP: 0010:crypto_gcm_init_common+0x1f9/0x220
-[  945.278018] Code: b0 00 00 00 48 83 c4 08 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 48 c7 c0 00 00 00 80 48 2b 05 5c 58 e5 00 e9 58 ff ff ff <0f> 0b 0f 0b 0f 0b 0f 0b 0f 0b 0f 0b 48 c7 04 24 01 00 00 00 48 8b
-[  945.279992] RSP: 0018:ffffc90000a27360 EFLAGS: 00010246
-[  945.280578] RAX: 0000000000000000 RBX: ffffc90001d85060 RCX: 0000000000000030
-[  945.281376] RDX: 0000000000080000 RSI: 0000000000000000 RDI: ffffc90081d85070
-[  945.282145] RBP: ffffc90001d85010 R08: ffffc90001d85000 R09: 0000000000000000
-[  945.282898] R10: ffffc90001d85090 R11: 0000000000001000 R12: ffffc90001d85070
-[  945.283656] R13: ffff888113522948 R14: ffffc90001d85060 R15: ffffc90001d85010
-[  945.284407] FS:  0000000000000000(0000) GS:ffff8882e66cf000(0000) knlGS:0000000000000000
-[  945.285262] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  945.285884] CR2: 00007fa7ffdd31f4 CR3: 000000010540d000 CR4: 0000000000350ef0
-[  945.286683] Call Trace:
-[  945.286952]  <TASK>
-[  945.287184]  ? crypt_message+0x33f/0xad0 [cifs]
-[  945.287719]  crypto_gcm_encrypt+0x36/0xe0
-[  945.288152]  crypt_message+0x54a/0xad0 [cifs]
-[  945.288724]  smb3_init_transform_rq+0x277/0x300 [cifs]
-[  945.289300]  smb_send_rqst+0xa3/0x160 [cifs]
-[  945.289944]  cifs_call_async+0x178/0x340 [cifs]
-[  945.290514]  ? __pfx_smb2_writev_callback+0x10/0x10 [cifs]
-[  945.291177]  smb2_async_writev+0x3e3/0x670 [cifs]
-[  945.291759]  ? find_held_lock+0x32/0x90
-[  945.292212]  ? netfs_advance_write+0xf2/0x310
-[  945.292723]  netfs_advance_write+0xf2/0x310
-[  945.293210]  netfs_write_folio+0x346/0xcc0
-[  945.293689]  ? __pfx__raw_spin_unlock_irq+0x10/0x10
-[  945.294250]  netfs_writepages+0x117/0x460
-[  945.294724]  do_writepages+0xbe/0x170
-[  945.295152]  ? find_held_lock+0x32/0x90
-[  945.295600]  ? kvm_sched_clock_read+0x11/0x20
-[  945.296103]  __writeback_single_inode+0x56/0x4b0
-[  945.296643]  writeback_sb_inodes+0x229/0x550
-[  945.297140]  __writeback_inodes_wb+0x4c/0xe0
-[  945.297642]  wb_writeback+0x2f1/0x3f0
-[  945.298069]  wb_workfn+0x300/0x490
-[  945.298472]  process_one_work+0x1fe/0x590
-[  945.298949]  worker_thread+0x1ce/0x3c0
-[  945.299397]  ? __pfx_worker_thread+0x10/0x10
-[  945.299900]  kthread+0x119/0x210
-[  945.300285]  ? __pfx_kthread+0x10/0x10
-[  945.300729]  ret_from_fork+0x119/0x1b0
-[  945.301163]  ? __pfx_kthread+0x10/0x10
-[  945.301601]  ret_from_fork_asm+0x1a/0x30
-[  945.302055]  </TASK>
-
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 007ab5345545 ("bonding: fix feature flag setting at init time")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20250925023304.472186-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/net/bonding/bond_main.c    |  2 +-
+ drivers/net/bonding/bond_netlink.c | 16 +++++++++-------
+ include/net/bonding.h              |  1 +
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index e586f3f4b5c93..68286673afc99 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4219,7 +4219,7 @@ fill_transform_hdr(struct smb2_transform_hdr *tr_hdr, unsigned int orig_len,
- static void *smb2_aead_req_alloc(struct crypto_aead *tfm, const struct smb_rqst *rqst,
- 				 int num_rqst, const u8 *sig, u8 **iv,
- 				 struct aead_request **req, struct sg_table *sgt,
--				 unsigned int *num_sgs, size_t *sensitive_size)
-+				 unsigned int *num_sgs)
- {
- 	unsigned int req_size = sizeof(**req) + crypto_aead_reqsize(tfm);
- 	unsigned int iv_size = crypto_aead_ivsize(tfm);
-@@ -4236,9 +4236,8 @@ static void *smb2_aead_req_alloc(struct crypto_aead *tfm, const struct smb_rqst
- 	len += req_size;
- 	len = ALIGN(len, __alignof__(struct scatterlist));
- 	len += array_size(*num_sgs, sizeof(struct scatterlist));
--	*sensitive_size = len;
- 
--	p = kvzalloc(len, GFP_NOFS);
-+	p = kzalloc(len, GFP_NOFS);
- 	if (!p)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -4252,16 +4251,14 @@ static void *smb2_aead_req_alloc(struct crypto_aead *tfm, const struct smb_rqst
- 
- static void *smb2_get_aead_req(struct crypto_aead *tfm, struct smb_rqst *rqst,
- 			       int num_rqst, const u8 *sig, u8 **iv,
--			       struct aead_request **req, struct scatterlist **sgl,
--			       size_t *sensitive_size)
-+			       struct aead_request **req, struct scatterlist **sgl)
- {
- 	struct sg_table sgtable = {};
- 	unsigned int skip, num_sgs, i, j;
- 	ssize_t rc;
- 	void *p;
- 
--	p = smb2_aead_req_alloc(tfm, rqst, num_rqst, sig, iv, req, &sgtable,
--				&num_sgs, sensitive_size);
-+	p = smb2_aead_req_alloc(tfm, rqst, num_rqst, sig, iv, req, &sgtable, &num_sgs);
- 	if (IS_ERR(p))
- 		return ERR_CAST(p);
- 
-@@ -4350,7 +4347,6 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 	DECLARE_CRYPTO_WAIT(wait);
- 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	void *creq;
--	size_t sensitive_size;
- 
- 	rc = smb2_get_enc_key(server, le64_to_cpu(tr_hdr->SessionId), enc, key);
- 	if (rc) {
-@@ -4376,8 +4372,7 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 		return rc;
- 	}
- 
--	creq = smb2_get_aead_req(tfm, rqst, num_rqst, sign, &iv, &req, &sg,
--				 &sensitive_size);
-+	creq = smb2_get_aead_req(tfm, rqst, num_rqst, sign, &iv, &req, &sg);
- 	if (IS_ERR(creq))
- 		return PTR_ERR(creq);
- 
-@@ -4407,7 +4402,7 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 	if (!rc && enc)
- 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
- 
--	kvfree_sensitive(creq, sensitive_size);
-+	kfree_sensitive(creq);
- 	return rc;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 57be04f6cb11a..f4f0feddd9fa0 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4411,7 +4411,7 @@ void bond_work_init_all(struct bonding *bond)
+ 	INIT_DELAYED_WORK(&bond->slave_arr_work, bond_slave_arr_handler);
  }
  
+-static void bond_work_cancel_all(struct bonding *bond)
++void bond_work_cancel_all(struct bonding *bond)
+ {
+ 	cancel_delayed_work_sync(&bond->mii_work);
+ 	cancel_delayed_work_sync(&bond->arp_work);
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index 57fff2421f1b5..7a9d73ec8e91c 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -579,20 +579,22 @@ static int bond_newlink(struct net_device *bond_dev,
+ 			struct rtnl_newlink_params *params,
+ 			struct netlink_ext_ack *extack)
+ {
++	struct bonding *bond = netdev_priv(bond_dev);
+ 	struct nlattr **data = params->data;
+ 	struct nlattr **tb = params->tb;
+ 	int err;
+ 
+-	err = bond_changelink(bond_dev, tb, data, extack);
+-	if (err < 0)
++	err = register_netdevice(bond_dev);
++	if (err)
+ 		return err;
+ 
+-	err = register_netdevice(bond_dev);
+-	if (!err) {
+-		struct bonding *bond = netdev_priv(bond_dev);
++	netif_carrier_off(bond_dev);
++	bond_work_init_all(bond);
+ 
+-		netif_carrier_off(bond_dev);
+-		bond_work_init_all(bond);
++	err = bond_changelink(bond_dev, tb, data, extack);
++	if (err) {
++		bond_work_cancel_all(bond);
++		unregister_netdevice(bond_dev);
+ 	}
+ 
+ 	return err;
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index e06f0d63b2c17..bd56ad976cfb0 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -711,6 +711,7 @@ struct bond_vlan_tag *bond_verify_device_path(struct net_device *start_dev,
+ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave);
+ void bond_slave_arr_work_rearm(struct bonding *bond, unsigned long delay);
+ void bond_work_init_all(struct bonding *bond);
++void bond_work_cancel_all(struct bonding *bond);
+ 
+ #ifdef CONFIG_PROC_FS
+ void bond_create_proc_entry(struct bonding *bond);
 -- 
 2.51.0
 
