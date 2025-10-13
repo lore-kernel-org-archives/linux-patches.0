@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CAF25B663;
-	Mon, 13 Oct 2025 15:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A0A3090EF;
+	Mon, 13 Oct 2025 15:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368508; cv=none; b=JZ+Xw7gejq/48t/cbrQc1AgmsVNx7YJfz3wdVnOnmONbcSv+Sn45rtK9PNcb5CLgQ7zTLxNWAeQgsAevuSqvtAG/MS0s7ljo46MOk/BKnZsg/rUD4GyzmP4A97LBLdJ7Nc4chkAyeOmtT7jOn/SmXk82Hy0y1BDQCy6JVmLcmr0=
+	t=1760368511; cv=none; b=iKmowMvMFRRp+xkscDsxF+JbAnFCjjtXQ9JPks5X0Ne+aXEEsWD/Io/4rMkGwbSxSKbkhNGnUfhuKAIGf16qdvKYGyl1ef7nYePUtql5WPN7OURh15zc8GN8Lb658OWxdjCog8ptD+rawh4WFeE6S87gD+cZJFP01jYXtzdoyws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368508; c=relaxed/simple;
-	bh=bc/Z/3k3T9XvLIWZ+yN1sb5EEe/G7NvEdLNjJH7CMXo=;
+	s=arc-20240116; t=1760368511; c=relaxed/simple;
+	bh=ylYUE6hbgWfPyM6KXgsX7N6iPeDQe/ZHEjA8i3I9rrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mycj7ktF18rr0o6Tk3CkBwvGaCItRcB41FkXXtCcHEwqBl70TDxBHYAs6T6ZCoGjNfCVv9aWqDPHzkv+OcKRcskFLJzi+V6LhAsfm8b3jbxfCQRNMXooAnVHrYK25brQ09Tx1SObzb2MQHndghfYjcSFmtEvJl7eOW/DZ+xxhvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZvPvGUZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+ub9MBwhmQE7gGzeUJKEw9zzjjCdd4VPv9bJP0O6BAVr2Fmc/xBvJ/4PfbJad6B+etIjK64MZjEAc5ybQWbnVYCIfxl+mmFDP1k223G70R4cheBT8uXng3mgaLPvUSOhot0sZuf8pKSJbuColWkzYx4QufHjErF5n60pz3RIC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwF9X7CX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZvPvGUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36ACC4CEE7;
-	Mon, 13 Oct 2025 15:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwF9X7CX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8B0C4CEE7;
+	Mon, 13 Oct 2025 15:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368508;
-	bh=bc/Z/3k3T9XvLIWZ+yN1sb5EEe/G7NvEdLNjJH7CMXo=;
+	s=korg; t=1760368511;
+	bh=ylYUE6hbgWfPyM6KXgsX7N6iPeDQe/ZHEjA8i3I9rrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZvPvGUZaCw9PY4Tbgnm8K4sRiDI2fnvJL/nYmMbHTQIjDhCZsSWUwI1mE/lw4gZF
-	 Ka6u+QA+iBCsZPKpTxGDe2WPMQeTymISRsrOq4V0oCOlwpcRrprxl7D2ayhintXOPv
-	 r1d4LblFY+nTUu31e/zsvbOMS4uT1LfU1oWHzNFI=
+	b=lwF9X7CX/eKLrHdeQgE2YTXg0StCm8e6ZzUYnptXJqyHBzQsHuthq1mmO7rznN1Fg
+	 bh5zetTlWK6rjtLFjaQ6CGgajVPRdeCwj+J3e5nlgV9ADRtLeAttyHQKSHPuK4tmCi
+	 a8pSHz5KE+wo2qyYq1PE6lA6x6cM/rKNtN14ZTxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Zsoldos <tamas.zsoldos@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
 	James Clark <james.clark@linaro.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/262] coresight: trbe: Return NULL pointer for allocation failures
-Date: Mon, 13 Oct 2025 16:45:28 +0200
-Message-ID: <20251013144332.827108499@linuxfoundation.org>
+Subject: [PATCH 6.12 187/262] coresight: tpda: fix the logic to setup the element size
+Date: Mon, 13 Oct 2025 16:45:29 +0200
+Message-ID: <20251013144332.862804991@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit 8a55c161f7f9c1aa1c70611b39830d51c83ef36d ]
+[ Upstream commit 43e0a92c04de7c822f6104abc73caa4a857b4a02 ]
 
-When the TRBE driver fails to allocate a buffer, it currently returns
-the error code "-ENOMEM". However, the caller etm_setup_aux() only
-checks for a NULL pointer, so it misses the error. As a result, the
-driver continues and eventually causes a kernel panic.
+Some TPDM devices support both CMB and DSB datasets, requiring
+the system to enable the port with both corresponding element sizes.
 
-Fix this by returning a NULL pointer from arm_trbe_alloc_buffer() on
-allocation failures. This allows that the callers can properly handle
-the failure.
+Currently, the logic treats tpdm_read_element_size as successful if
+the CMB element size is retrieved correctly, regardless of whether
+the DSB element size is obtained. This behavior causes issues
+when parsing data from TPDM devices that depend on both element sizes.
 
-Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
-Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
+To address this, the function should explicitly fail if the DSB
+element size cannot be read correctly.
+
+Fixes: e6d7f5252f73 ("coresight-tpda: Add support to configure CMB element")
 Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250904-cs_etm_auxsetup_fix_error_handling-v2-1-a502d0bafb95@arm.com
+Link: https://lore.kernel.org/r/20250906-fix_element_size_issue-v2-1-dbb0ac2541a9@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwtracing/coresight/coresight-tpda.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 492b2612f64e0..5755674913723 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -745,12 +745,12 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
- 
- 	buf = kzalloc_node(sizeof(*buf), GFP_KERNEL, trbe_alloc_node(event));
- 	if (!buf)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	pglist = kcalloc(nr_pages, sizeof(*pglist), GFP_KERNEL);
- 	if (!pglist) {
- 		kfree(buf);
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
+diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+index bfca103f9f847..865fd6273e5e4 100644
+--- a/drivers/hwtracing/coresight/coresight-tpda.c
++++ b/drivers/hwtracing/coresight/coresight-tpda.c
+@@ -71,12 +71,15 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
+ 	if (tpdm_has_dsb_dataset(tpdm_data)) {
+ 		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+ 				"qcom,dsb-element-bits", &drvdata->dsb_esize);
++		if (rc)
++			goto out;
+ 	}
+ 	if (tpdm_has_cmb_dataset(tpdm_data)) {
+ 		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+ 				"qcom,cmb-element-bits", &drvdata->cmb_esize);
  	}
  
- 	for (i = 0; i < nr_pages; i++)
-@@ -760,7 +760,7 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
- 	if (!buf->trbe_base) {
- 		kfree(pglist);
- 		kfree(buf);
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 	}
- 	buf->trbe_limit = buf->trbe_base + nr_pages * PAGE_SIZE;
- 	buf->trbe_write = buf->trbe_base;
++out:
+ 	if (rc)
+ 		dev_warn_once(&csdev->dev,
+ 			"Failed to read TPDM Element size: %d\n", rc);
 -- 
 2.51.0
 
