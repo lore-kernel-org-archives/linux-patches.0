@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8424A1F1313;
-	Mon, 13 Oct 2025 15:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780210942;
+	Mon, 13 Oct 2025 15:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368612; cv=none; b=IqUNiTCgihEeHTzeKTrpfWioCWmIzORK8kdClN89WJMGOGVE3a6mlwhbK5gjUarkIUoLeD5+23rxcPnPOt0s5IAnollEuCtdy0iZ4lj4oF4KK4gI8VI9w6thYjB/qEqygoe/oFhyzTEfGyD11vugtdRLlZQ161rYffPNNggNH9I=
+	t=1760368615; cv=none; b=IApUvosBd3erhJ/DHp6LdTU4n3HikF9zX892Bvgmzn393+cGfhEit8qsPfABBMP+pToaQ/4pW02wEBhOTsQFZ8UTXDBhWdII4T8asucK0WMjM6G2cMFxmpy+vYDUI7ZNau5RnECZeVrAtL0lcj+WVSrweP+BRZjPLCgRszY91b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368612; c=relaxed/simple;
-	bh=ihIb1d3M8qT/oCM3pQVvM40GTuMRfZj8WYdOzbAayDI=;
+	s=arc-20240116; t=1760368615; c=relaxed/simple;
+	bh=SfbFCdwXFHxdhFEzD+/sg7mjc538JQ8D+gb1ufsBS5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJY1WkXNhVDgZmKYz7/IfBiDS1ASRc08lJYaHsQNZYXk3lQ2z0iG7gFQsQCuw3l1vdliV9XxtKdZmhpPUCj3tP0p6JMHvKuFry+8cjtfyHApfagDiUXFkg5eezbwWaPdPV69esc42v2Ei9wRzUO8uoqoT1rS0DZzkD5Zq4njJ3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUozcsr9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fef7D3GfXUtsklKvW1fmRIoMnzyFLHeztmkWKYit2QyraYvImC31d/brY/nu1V+q3UzJUU7ULDRqleifpwPgo8AZSgmFdTPpfTMXaOzOpLSE6WzQQ054IJ/Is0udFPdDUcv/PSUgHvq//gdrcKEfu2sxPpc2jeU/qFVJVoVD/b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOkjTsnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUozcsr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C929C4CEE7;
-	Mon, 13 Oct 2025 15:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOkjTsnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86A9C4CEE7;
+	Mon, 13 Oct 2025 15:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368612;
-	bh=ihIb1d3M8qT/oCM3pQVvM40GTuMRfZj8WYdOzbAayDI=;
+	s=korg; t=1760368615;
+	bh=SfbFCdwXFHxdhFEzD+/sg7mjc538JQ8D+gb1ufsBS5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUozcsr9gIozv9MAp7d4tBPNyZtH7LpQclqF8OIBaWVblyUrM0oVsdJ4YiCkPfPp5
-	 PqJuFbu7QObnt+oN7U/40Tt2PfCgkon1FB+L9bd/gFqQpazvRHwP0/SD0GYiBvcrRr
-	 N5LdaIY7TYjZJfbqcGs3bx3QVEzh+Hg62DwDQHcs=
+	b=uOkjTsnLE1zVsxPaPqJyrJbL+m9bSDBRnyvgyEif5JTUx1HDQErVF8+1XWr+4mJQZ
+	 1EGqrKnWJ1FSFSEVzXvDMOrhcN/oL0C824gp6regWZWrKIamn+kQhTDNqdvNySMKk9
+	 hxtIe7nifnn9wtIcJevAVfI4Uw1T5ijq8NtmfZQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stefano Garzarella" <sgarzare@redhat.com>,
-	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Shenghao Yuan <shenghaoyuan0928@163.com>,
+	Tianci Cao <ziye@zju.edu.cn>,
+	Yazhou Tang <tangyazhou518@outlook.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/262] vhost: vringh: Modify the return value check
-Date: Mon, 13 Oct 2025 16:46:04 +0200
-Message-ID: <20251013144334.238194052@linuxfoundation.org>
+Subject: [PATCH 6.12 223/262] bpf: Reject negative offsets for ALU ops
+Date: Mon, 13 Oct 2025 16:46:05 +0200
+Message-ID: <20251013144334.273455057@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,48 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+From: Yazhou Tang <tangyazhou518@outlook.com>
 
-[ Upstream commit 82a8d0fda55b35361ee7f35b54fa2b66d7847d2b ]
+[ Upstream commit 55c0ced59fe17dee34e9dfd5f7be63cbab207758 ]
 
-The return value of copy_from_iter and copy_to_iter can't be negative,
-check whether the copied lengths are equal.
+When verifying BPF programs, the check_alu_op() function validates
+instructions with ALU operations. The 'offset' field in these
+instructions is a signed 16-bit integer.
 
-Fixes: 309bba39c945 ("vringh: iterate on iotlb_translate to handle large translations")
-Cc: "Stefano Garzarella" <sgarzare@redhat.com>
-Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
-Message-Id: <20250910091739.2999-1-zhangjiao2@cmss.chinamobile.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+The existing check 'insn->off > 1' was intended to ensure the offset is
+either 0, or 1 for BPF_MOD/BPF_DIV. However, because 'insn->off' is
+signed, this check incorrectly accepts all negative values (e.g., -1).
+
+This commit tightens the validation by changing the condition to
+'(insn->off != 0 && insn->off != 1)'. This ensures that any value
+other than the explicitly permitted 0 and 1 is rejected, hardening the
+verifier against malformed BPF programs.
+
+Co-developed-by: Shenghao Yuan <shenghaoyuan0928@163.com>
+Signed-off-by: Shenghao Yuan <shenghaoyuan0928@163.com>
+Co-developed-by: Tianci Cao <ziye@zju.edu.cn>
+Signed-off-by: Tianci Cao <ziye@zju.edu.cn>
+Signed-off-by: Yazhou Tang <tangyazhou518@outlook.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Fixes: ec0e2da95f72 ("bpf: Support new signed div/mod instructions.")
+Link: https://lore.kernel.org/r/tencent_70D024BAE70A0A309A4781694C7B764B0608@qq.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index 0db4f3babe961..781731eb95cfe 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -1191,6 +1191,7 @@ static inline int copy_from_iotlb(const struct vringh *vrh, void *dst,
- 		struct iov_iter iter;
- 		u64 translated;
- 		int ret;
-+		size_t size;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 1829f62a74a9e..96640a80fd9c4 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14545,7 +14545,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 	} else {	/* all other ALU ops: and, sub, xor, add, ... */
  
- 		ret = iotlb_translate(vrh, (u64)(uintptr_t)src,
- 				      len - total_translated, &translated,
-@@ -1208,9 +1209,9 @@ static inline int copy_from_iotlb(const struct vringh *vrh, void *dst,
- 				      translated);
- 		}
- 
--		ret = copy_from_iter(dst, translated, &iter);
--		if (ret < 0)
--			return ret;
-+		size = copy_from_iter(dst, translated, &iter);
-+		if (size != translated)
-+			return -EFAULT;
- 
- 		src += translated;
- 		dst += translated;
+ 		if (BPF_SRC(insn->code) == BPF_X) {
+-			if (insn->imm != 0 || insn->off > 1 ||
++			if (insn->imm != 0 || (insn->off != 0 && insn->off != 1) ||
+ 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
+ 				verbose(env, "BPF_ALU uses reserved fields\n");
+ 				return -EINVAL;
+@@ -14555,7 +14555,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 			if (err)
+ 				return err;
+ 		} else {
+-			if (insn->src_reg != BPF_REG_0 || insn->off > 1 ||
++			if (insn->src_reg != BPF_REG_0 || (insn->off != 0 && insn->off != 1) ||
+ 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
+ 				verbose(env, "BPF_ALU uses reserved fields\n");
+ 				return -EINVAL;
 -- 
 2.51.0
 
