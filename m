@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECEF3081A8;
-	Mon, 13 Oct 2025 15:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C7D3081D1;
+	Mon, 13 Oct 2025 15:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368417; cv=none; b=ib6nlMQ/pc1LETzu/pqyjBVpNBPGL/hRYL0iVfjVgfs+I84LYgj6WorAXiOjw/qIZAsA8wOGeO2iEsx+6LW+XTfRruDz90eMVNvjAnq1VTaiyhqsOD5KkvF/Gw3h5zgUDuoq5i52fF3nDks0LjhQmS9VhEKHbTdiNs598wqM6qc=
+	t=1760368420; cv=none; b=SbtQlgDlexGYq+bW6gKuN/FNqZBpNxR0ScHSXmYCu8DlzzKm9ucr/0S1cku/9XODpj9HNmLCJ8FTF2VY4ngnpniinIsgwGi2oiE5919VGUe63lMavRINZ3v8+nmRNgbQGUoXgVNTTHCsPwHHuJyga3fRU0i9E0vQJ7wbAUV5LUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368417; c=relaxed/simple;
-	bh=K36APKBQv/nxXd5G2UvUEFKbPL3CKptXHLVEqJci4Jk=;
+	s=arc-20240116; t=1760368420; c=relaxed/simple;
+	bh=XKiya8boNgNUpgl3JiOzuUAoZA79lofCMbWTUQAtOaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svyAU0H0Lay2PrCLwknmIwxU5e+pmTYRcDjnULViqLaNAv/iTBpUStUkgaC9h1fboQxJIetJ66rcdgpBGJ8vH5PcM7TgxWiJ9e+S52HyjI0ClUXULi9t5t4azE3/1n2Wbd2uBTqrwGIIlO5w1gLUZTtMuWg1/g8iFQMfrUUOjNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW9lPMR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kQz9dtzIKI78/fz4ORP3oMO/fyZ2tTc+dBDOa42f1eOv2Cz/suRNFB3pXMr4quCCludygtAKoZi+3jMCV9Y9SK7GAVhRolbRfGVMh20LYpwAZtvzFItRQu9c6VFCJey4NkM7eYU/FuOtbB1A26/fuMlKA1/Of4nNesakbV/Yx3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HD4oXAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW9lPMR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FFAC4CEE7;
-	Mon, 13 Oct 2025 15:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HD4oXAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05940C4CEE7;
+	Mon, 13 Oct 2025 15:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368417;
-	bh=K36APKBQv/nxXd5G2UvUEFKbPL3CKptXHLVEqJci4Jk=;
+	s=korg; t=1760368420;
+	bh=XKiya8boNgNUpgl3JiOzuUAoZA79lofCMbWTUQAtOaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PW9lPMR9Jom9cYDbYupONDTQzLUXYCqslSgdWi7hstA6R5KyPvjBRbDmTJd74dqpF
-	 Y7TiDH+r4cIC/r/OdM8NCqc84+z5oqw9q2KwSCwxPmfrjUReQW3/klsS681J+QdtvI
-	 xF4mF7l8CbdYdQgOi5Gox/r8k1s5nyZZw+8yoCdA=
+	b=0HD4oXALLCC/PgY8O3T7J6W42sDlfwwotedent8J1Byr+xrl+ZN6CD4J7zYUZqlXw
+	 xomgEeXfqtrLeAaHZ2Vq8WzBj9o7eTZfptvO8UPJIxIfkkDDmNE7WcSUMrklkbdgEu
+	 onZaFXFxOYAgpkiZvGZGUJorKkgID6bSnEHVmr4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/262] ACPI: NFIT: Fix incorrect ndr_desc being reportedin dev_err message
-Date: Mon, 13 Oct 2025 16:44:57 +0200
-Message-ID: <20251013144331.703050542@linuxfoundation.org>
+Subject: [PATCH 6.12 156/262] scsi: qla2xxx: edif: Fix incorrect sign of error code
+Date: Mon, 13 Oct 2025 16:44:58 +0200
+Message-ID: <20251013144331.739001491@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,36 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit d1a599a8136b16522b5afebd122395524496d549 ]
+[ Upstream commit 066b8f3fa85c1be7fb7dbae202231e131d38f7bc ]
 
-There appears to be a cut-n-paste error with the incorrect field
-ndr_desc->numa_node being reported for the target node. Fix this by
-using ndr_desc->target_node instead.
+Change the error code EAGAIN to -EAGAIN in qla24xx_sadb_update() and
+qla_edif_process_els() to align with qla2x00_start_sp() returning
+negative error codes or QLA_SUCCESS, preventing logical errors.
 
-Fixes: f060db99374e ("ACPI: NFIT: Use fallback node id when numa info in NFIT table is incorrect")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 0b3f3143d473 ("scsi: qla2xxx: edif: Add retry for ELS passthrough")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Message-ID: <20250905075446.381139-2-rongqianfeng@vivo.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/nfit/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_edif.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index ae035b93da087..3eb56b77cb6d9 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -2637,7 +2637,7 @@ static int acpi_nfit_register_region(struct acpi_nfit_desc *acpi_desc,
- 	if (ndr_desc->target_node == NUMA_NO_NODE) {
- 		ndr_desc->target_node = phys_to_target_node(spa->address);
- 		dev_info(acpi_desc->dev, "changing target node from %d to %d for nfit region [%pa-%pa]",
--			NUMA_NO_NODE, ndr_desc->numa_node, &res.start, &res.end);
-+			NUMA_NO_NODE, ndr_desc->target_node, &res.start, &res.end);
- 	}
- 
- 	/*
+diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
+index dcde55c8ee5de..be20e2c457b8e 100644
+--- a/drivers/scsi/qla2xxx/qla_edif.c
++++ b/drivers/scsi/qla2xxx/qla_edif.c
+@@ -1797,7 +1797,7 @@ qla24xx_sadb_update(struct bsg_job *bsg_job)
+ 	switch (rval) {
+ 	case QLA_SUCCESS:
+ 		break;
+-	case EAGAIN:
++	case -EAGAIN:
+ 		msleep(EDIF_MSLEEP_INTERVAL);
+ 		cnt++;
+ 		if (cnt < EDIF_RETRY_COUNT)
+@@ -3648,7 +3648,7 @@ int qla_edif_process_els(scsi_qla_host_t *vha, struct bsg_job *bsg_job)
+ 		       p->e.extra_rx_xchg_address, p->e.extra_control_flags,
+ 		       sp->handle, sp->remap.req.len, bsg_job);
+ 		break;
+-	case EAGAIN:
++	case -EAGAIN:
+ 		msleep(EDIF_MSLEEP_INTERVAL);
+ 		cnt++;
+ 		if (cnt < EDIF_RETRY_COUNT)
 -- 
 2.51.0
 
