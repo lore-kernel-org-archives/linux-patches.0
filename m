@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B863090E8;
-	Mon, 13 Oct 2025 15:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C8D3090CE;
+	Mon, 13 Oct 2025 15:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370269; cv=none; b=k6KFNQ7Trh+GWT24tuNpiseR9D62XuXUK4Kc2fTnYFPZBYbHGfXcSpdjQSOuw+LdBX/IrtGsEMxBzRXNtiKHygVb8D97adbN2MpHEYYDbB+uy9ipjESg+OhfIJWzB7XC028N/+DBtN1/cUREueZ/xGROEyx7Vk3ziS0UEgvOWDI=
+	t=1760370272; cv=none; b=YQt0+vbgj1MQE1HfP6IiPRvL87uZzNWwI29xDyQRKR95mSDJ0FYfGRcJ/EH7E9ydcbuU3oa9utIA9uNCpjxH4Gk/zSwheUr11CxUZchyiVM+UwaOvFvm8gxinEl8s8gatNeYSbj1fz+AFaI56A59aLy7CA0228VeknRXcEW5+Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370269; c=relaxed/simple;
-	bh=dyLH3N/hkpDZdSHJ7+/Tz39X/8zfjOdINAyD1hP3P8A=;
+	s=arc-20240116; t=1760370272; c=relaxed/simple;
+	bh=+voAjPvjIfFIF4IzkHYvvSCJiTlLgBpj67sA9KvxG0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HK6X63FYluo2mVqMd2cIkLs+11T6vu95XoKaRgYiIFA++e65Y2fBVNB8HvT+kDP4W3obvsT3lFj04TbIeSa0IWeMLR+EIQ4Ew4vTzrpt3DrmLhhfbo472yz/GtaOshwzfTQpiSUKct6AUPZhxWCcN6yJoVNmzqQ9HfhmdsfkwFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7274F5B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAPsWsU9bRXsMlQi3ij+MlyvQPzpxxuzPCNmBZ+0h2UemO6YSY4cAxwI/1/XSPeoXcgP9KuUzP9JuFslV9klxo0PmBImGl5esEJlMQvQiDV6xg+wp1p+dwG6cxCX0qk5KuK+RcUFGWXD00uEOjfAHucvuLOMrE5K3fXEhQx99wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bor1dsdC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7274F5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80310C116C6;
-	Mon, 13 Oct 2025 15:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bor1dsdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD48C4CEE7;
+	Mon, 13 Oct 2025 15:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370268;
-	bh=dyLH3N/hkpDZdSHJ7+/Tz39X/8zfjOdINAyD1hP3P8A=;
+	s=korg; t=1760370271;
+	bh=+voAjPvjIfFIF4IzkHYvvSCJiTlLgBpj67sA9KvxG0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7274F5Bwp5hQ2AyQXYJDq45m/ZmKqzTD4Ykep7EsHpGBDOtaUF1huFjMSR216jX4
-	 L+a6EtIVK6hJU2j9YjrbRITzaK9ILyEs+P5gird0Yrt3vWpTBbcHh9g86ZVkBEXnHa
-	 FCzZ1W+maDvg30NjaCi8VLbUkmuKOvCSq1e3UouM=
+	b=Bor1dsdCPM5Fd2J8Nh56F/enZk77IMz6uSOPFwcJvjp9q8HeINOjbe3yTTkRIce+K
+	 nAdCPpi53YT6T2PpDFfv+I6PVVEWAhrJzMrVI3b/QWk38LLVD2UTHwkmwY6CawqFM6
+	 9D07Kn8Z+VHB9u1maVdeIXs2FdXiOwxsk6ulEXVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.17 520/563] dm: fix NULL pointer dereference in __dm_suspend()
-Date: Mon, 13 Oct 2025 16:46:21 +0200
-Message-ID: <20251013144430.150955267@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.17 538/563] KVM: SVM: Skip fastpath emulation on VM-Exit if next RIP isnt valid
+Date: Mon, 13 Oct 2025 16:46:39 +0200
+Message-ID: <20251013144430.798513945@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -50,93 +49,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 8d33a030c566e1f105cd5bf27f37940b6367f3be upstream.
+commit 0910dd7c9ad45a2605c45fd2bf3d1bcac087687c upstream.
 
-There is a race condition between dm device suspend and table load that
-can lead to null pointer dereference. The issue occurs when suspend is
-invoked before table load completes:
+Skip the WRMSR and HLT fastpaths in SVM's VM-Exit handler if the next RIP
+isn't valid, e.g. because KVM is running with nrips=false.  SVM must
+decode and emulate to skip the instruction if the CPU doesn't provide the
+next RIP, and getting the instruction bytes to decode requires reading
+guest memory.  Reading guest memory through the emulator can fault, i.e.
+can sleep, which is disallowed since the fastpath handlers run with IRQs
+disabled.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000054
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
-RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
-Call Trace:
+ BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:106
+ in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 32611, name: qemu
+ preempt_count: 1, expected: 0
+ INFO: lockdep is turned off.
+ irq event stamp: 30580
+ hardirqs last  enabled at (30579): [<ffffffffc08b2527>] vcpu_run+0x1787/0x1db0 [kvm]
+ hardirqs last disabled at (30580): [<ffffffffb4f62e32>] __schedule+0x1e2/0xed0
+ softirqs last  enabled at (30570): [<ffffffffb4247a64>] fpu_swap_kvm_fpstate+0x44/0x210
+ softirqs last disabled at (30568): [<ffffffffb4247a64>] fpu_swap_kvm_fpstate+0x44/0x210
+ CPU: 298 UID: 0 PID: 32611 Comm: qemu Tainted: G     U              6.16.0-smp--e6c618b51cfe-sleep #782 NONE
+ Tainted: [U]=USER
+ Hardware name: Google Astoria-Turin/astoria, BIOS 0.20241223.2-0 01/17/2025
+ Call Trace:
   <TASK>
-  blk_mq_quiesce_queue+0x2c/0x50
-  dm_stop_queue+0xd/0x20
-  __dm_suspend+0x130/0x330
-  dm_suspend+0x11a/0x180
-  dev_suspend+0x27e/0x560
-  ctl_ioctl+0x4cf/0x850
-  dm_ctl_ioctl+0xd/0x20
-  vfs_ioctl+0x1d/0x50
-  __se_sys_ioctl+0x9b/0xc0
-  __x64_sys_ioctl+0x19/0x30
-  x64_sys_call+0x2c4a/0x4620
-  do_syscall_64+0x9e/0x1b0
+  dump_stack_lvl+0x7d/0xb0
+  __might_resched+0x271/0x290
+  __might_fault+0x28/0x80
+  kvm_vcpu_read_guest_page+0x8d/0xc0 [kvm]
+  kvm_fetch_guest_virt+0x92/0xc0 [kvm]
+  __do_insn_fetch_bytes+0xf3/0x1e0 [kvm]
+  x86_decode_insn+0xd1/0x1010 [kvm]
+  x86_emulate_instruction+0x105/0x810 [kvm]
+  __svm_skip_emulated_instruction+0xc4/0x140 [kvm_amd]
+  handle_fastpath_invd+0xc4/0x1a0 [kvm]
+  vcpu_run+0x11a1/0x1db0 [kvm]
+  kvm_arch_vcpu_ioctl_run+0x5cc/0x730 [kvm]
+  kvm_vcpu_ioctl+0x578/0x6a0 [kvm]
+  __se_sys_ioctl+0x6d/0xb0
+  do_syscall_64+0x8a/0x2c0
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7f479d57a94b
+  </TASK>
 
-The issue can be triggered as below:
+Note, this is essentially a reapply of commit 5c30e8101e8d ("KVM: SVM:
+Skip WRMSR fastpath on VM-Exit if next RIP isn't valid"), but with
+different justification (KVM now grabs SRCU when skipping the instruction
+for other reasons).
 
-T1 						T2
-dm_suspend					table_load
-__dm_suspend					dm_setup_md_queue
-						dm_mq_init_request_queue
-						blk_mq_init_allocated_queue
-						=> q->mq_ops = set->ops; (1)
-dm_stop_queue / dm_wait_for_completion
-=> q->tag_set NULL pointer!	(2)
-						=> q->tag_set = set; (3)
-
-Fix this by checking if a valid table (map) exists before performing
-request-based suspend and waiting for target I/O. When map is NULL,
-skip these table-dependent suspend steps.
-
-Even when map is NULL, no I/O can reach any target because there is
-no table loaded; I/O submitted in this state will fail early in the
-DM layer. Skipping the table-dependent suspend logic in this case
-is safe and avoids NULL pointer dereferences.
-
-Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
+Fixes: b439eb8ab578 ("Revert "KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isn't valid"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Link: https://lore.kernel.org/r/20250805190526.1453366-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/svm.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2908,7 +2908,7 @@ static int __dm_suspend(struct mapped_de
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4180,13 +4180,21 @@ static int svm_vcpu_pre_run(struct kvm_v
+ static fastpath_t svm_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
  {
- 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
- 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
--	int r;
-+	int r = 0;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
++	struct vmcb_control_area *control = &svm->vmcb->control;
++
++	/*
++	 * Next RIP must be provided as IRQs are disabled, and accessing guest
++	 * memory to decode the instruction might fault, i.e. might sleep.
++	 */
++	if (!nrips || !control->next_rip)
++		return EXIT_FASTPATH_NONE;
  
- 	lockdep_assert_held(&md->suspend_lock);
+ 	if (is_guest_mode(vcpu))
+ 		return EXIT_FASTPATH_NONE;
  
-@@ -2960,7 +2960,7 @@ static int __dm_suspend(struct mapped_de
- 	 * Stop md->queue before flushing md->wq in case request-based
- 	 * dm defers requests to md->wq from md->queue.
- 	 */
--	if (dm_request_based(md)) {
-+	if (map && dm_request_based(md)) {
- 		dm_stop_queue(md->queue);
- 		set_bit(DMF_QUEUE_STOPPED, &md->flags);
- 	}
-@@ -2972,7 +2972,8 @@ static int __dm_suspend(struct mapped_de
- 	 * We call dm_wait_for_completion to wait for all existing requests
- 	 * to finish.
- 	 */
--	r = dm_wait_for_completion(md, task_state);
-+	if (map)
-+		r = dm_wait_for_completion(md, task_state);
- 	if (!r)
- 		set_bit(dmf_suspended_flag, &md->flags);
- 
+-	switch (svm->vmcb->control.exit_code) {
++	switch (control->exit_code) {
+ 	case SVM_EXIT_MSR:
+-		if (!svm->vmcb->control.exit_info_1)
++		if (!control->exit_info_1)
+ 			break;
+ 		return handle_fastpath_set_msr_irqoff(vcpu);
+ 	case SVM_EXIT_HLT:
 
 
