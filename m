@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F96E237A4F;
-	Mon, 13 Oct 2025 14:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB122580F2;
+	Mon, 13 Oct 2025 14:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367532; cv=none; b=ULseDYuZH+Ge0PHqVNnKXKl+QpDAmh+WFBdCI3NkhoKN+C1PVZPpSMQti0nO138AqkZdRIBCCypZvzZNZ0riPgEjD1MLKiQKXuvVYJyHtcS42Ic1MOBUjb4BngmiP3ngiCqHGtps30eIwaT089R3DfS7r/miAzn3wegaYDYg2xg=
+	t=1760367535; cv=none; b=KFwHElNPcKUWQBy4MKbZQDXnOdlshjuSwKRLkerVziKtwshC2Sdy0nDbwzEXffP5lUwO/+zzft/oy+WrJsvuIavQsGhzFoRfYGZuNmXtqlvqNXcHmm9vIMG+VMpURc+pihByGUiNNTmwWXuqkVhswas9QIriDdciNlxFxwspJUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367532; c=relaxed/simple;
-	bh=ehu6//+Sr4NPwrEzedN5i0hS5MnYRw1R0B2wH5uhQF8=;
+	s=arc-20240116; t=1760367535; c=relaxed/simple;
+	bh=zgOvPNs38PSfSX9EtnAjbn2NIpR8JAVTKW/dYPcB6NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nIvwOF4ZKK6gu82u7NMZHsbKqDkpkWMDP5iAFxas+jJiFUKkIlQeCtd3Xxnynb3hUjx+rdzDsxnj5xEXw+HDR1vSR0dVXK25yjPWIIRTaZolJG5q9DthZ3JmwCfVG4Ug4Pg7YbOBYyVWw0u7x0V30fE3CCn6d4CH+th3vbYySAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhzqkN4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYTnFXz+m6SbiKKm4Yy1HBYDdqhoPRpzHm+WS/g493LUF1EG7DgpC20D1lt96hvJl6EmLbpSVMNynfpUcRyDOqdrlcFq2xqyEYAB7AkJ36kRFD/9ulnX9WeDFBtQ2Q5+aqyBNyIMV5fnluGDVhXKH1OWsCW6gMRirTK2nIcdVhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcWA2d5o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhzqkN4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E184FC4CEE7;
-	Mon, 13 Oct 2025 14:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcWA2d5o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B7CC4CEE7;
+	Mon, 13 Oct 2025 14:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367532;
-	bh=ehu6//+Sr4NPwrEzedN5i0hS5MnYRw1R0B2wH5uhQF8=;
+	s=korg; t=1760367535;
+	bh=zgOvPNs38PSfSX9EtnAjbn2NIpR8JAVTKW/dYPcB6NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhzqkN4CGfHfvQj7U3fhyiJTKRzNDooVEcq31AshO1VA8WpYezC94q8vBYrepkLAQ
-	 lh4VdTFt8FuOBpPRaAsrnebBHi93ke/kKt7MUIJpOC1+OMtbW3s0YwqhdOrKT89Vh2
-	 +UXZPmusX4wo6s+Dej52N7V9GSYqtb6LmWsPQRJ8=
+	b=DcWA2d5oyb0/4OBN8pmX/lzR9277ZRTJq8kNLft38gUQMDtkVCVrIyXUL8Tplpyf2
+	 ri1RtBoxPqIpGtOJDvfMzOqo0huJTrxBQSYhRfZxdJi9x2LhWI8WEfgY6R+PKlIxY6
+	 OF1cHIg21QanS83Gc0tWODhpg51UeWN+OESuJr94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/196] pwm: tiehrpwm: Fix corner case in clock divisor calculation
-Date: Mon, 13 Oct 2025 16:43:56 +0200
-Message-ID: <20251013144316.832447474@linuxfoundation.org>
+Subject: [PATCH 6.6 046/196] ACPICA: Fix largest possible resource descriptor index
+Date: Mon, 13 Oct 2025 16:43:57 +0200
+Message-ID: <20251013144316.868467134@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -45,55 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
+[ Upstream commit 8ca944fea4d6d9019e01f2d6f6e766f315a9d73f ]
 
-The function set_prescale_div() is responsible for calculating the clock
-divisor settings such that the input clock rate is divided down such that
-the required period length is at most 0x10000 clock ticks. If period_cycles
-is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
-good enough. So round up in the calculation of the required divisor and
-compare it using >= instead of >.
+ACPI_RESOURCE_NAME_LARGE_MAX should be equal to the last actually
+used resource descriptor index (ACPI_RESOURCE_NAME_CLOCK_INPUT).
 
-Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Otherwise 'resource_index' in 'acpi_ut_validate_resource()' may be
+clamped incorrectly and resulting value may issue an out-of-bounds
+access for 'acpi_gbl_resource_types' array. Compile tested only.
+
+Fixes: 520d4a0ee5b6 ("ACPICA: add support for ClockInput resource (v6.5)")
+Link: https://github.com/acpica/acpica/commit/cf00116c
+Link: https://marc.info/?l=linux-acpi&m=175449676131260&w=2
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/aclocal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index ecbfd7e954ecb..d693b2d65cccf 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -167,7 +167,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
+diff --git a/drivers/acpi/acpica/aclocal.h b/drivers/acpi/acpica/aclocal.h
+index 82563b44af351..261dc8f87556d 100644
+--- a/drivers/acpi/acpica/aclocal.h
++++ b/drivers/acpi/acpica/aclocal.h
+@@ -1139,7 +1139,7 @@ struct acpi_port_info {
+ #define ACPI_RESOURCE_NAME_PIN_GROUP_FUNCTION   0x91
+ #define ACPI_RESOURCE_NAME_PIN_GROUP_CONFIG     0x92
+ #define ACPI_RESOURCE_NAME_CLOCK_INPUT          0x93
+-#define ACPI_RESOURCE_NAME_LARGE_MAX            0x94
++#define ACPI_RESOURCE_NAME_LARGE_MAX            0x93
  
- 			*prescale_div = (1 << clkdiv) *
- 					(hspclkdiv ? (hspclkdiv * 2) : 1);
--			if (*prescale_div > rqst_prescaler) {
-+			if (*prescale_div >= rqst_prescaler) {
- 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
- 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
- 				return 0;
-@@ -266,7 +266,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	pc->period_cycles[pwm->hwpwm] = period_cycles;
- 
- 	/* Configure clock prescaler to support Low frequency PWM wave */
--	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
-+	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
- 			     &tb_divval)) {
- 		dev_err(chip->dev, "Unsupported values\n");
- 		return -EINVAL;
+ /*****************************************************************************
+  *
 -- 
 2.51.0
 
