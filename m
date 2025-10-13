@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F235211491;
-	Mon, 13 Oct 2025 14:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B10211491;
+	Mon, 13 Oct 2025 14:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367058; cv=none; b=Exq+1dLl4wS/RuzYSLzaIO0m4M3c9B+TfmPyx8cBVdAlxJ3s5tEc40Tvfbay0BKWTbhjmM6EG7ZLth2f5pG9k6FsKTaX3omJ5fGaOLefmiXLSsaPEU066LQDUn9dExRLSd56VUV1cTE54iNJ6HVCNXBf9TLbPfInMRmAkkbCXic=
+	t=1760367061; cv=none; b=ZTVExS4aa9ebzBlsFdUKUEwSMeRDQCCgdFeI4o4gd3Gx9ajHgdy1GEZFOU0dNjQUwxW5AwJ0aNG9dGfOUPX+9VyhvsOL6YfKx117XrIcfnRDDpm4q3zu7CxmULqtByMsjSwZgAJQR7g6MFrFCyesqgSK6oLKore9KC/b3tVLFSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367058; c=relaxed/simple;
-	bh=5gvbxu/1lxm6QIjVzTDrimqvCEkLuc6mJT6IRPCWfKw=;
+	s=arc-20240116; t=1760367061; c=relaxed/simple;
+	bh=EpBND5AvBcn8GQP09s/SiwPC8NC6LhAfPKkQ7i8oWnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r0ZlSLszR4t3tGVaJZSp+8k00UwgcKibjb4DnZbABA9HxI5F2p0ccsgtA6rePy3THrzu8kzvf9S2WgmY7QeqGHS4kcWq0mBw9yF77nxSxVQn4SyNNhgZpubyi6p2vpo3fF7s8DlqVvsIelAd0+7ZX9CpCEdO1FusADoNFrZxbUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smt2+nEI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j8ue21nUH9eaIZoQx+NMPkphdhcGlL5/FHA43k/gFukcjueQ/939GZqLhB9YOQTEfVbwioUPN3tHAKAkod3LaVJPTnAqNnSPXVo93McFn7WxDnPv+U+p3Lm73ElU/bSv1HZADxBPBzAqqhJXNOqnRcB3f64cxsdAj4Ermzz3g2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bz/dH5mL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smt2+nEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E46C4CEE7;
-	Mon, 13 Oct 2025 14:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bz/dH5mL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7BCC4CEE7;
+	Mon, 13 Oct 2025 14:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367058;
-	bh=5gvbxu/1lxm6QIjVzTDrimqvCEkLuc6mJT6IRPCWfKw=;
+	s=korg; t=1760367061;
+	bh=EpBND5AvBcn8GQP09s/SiwPC8NC6LhAfPKkQ7i8oWnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smt2+nEIsczbydEgNJNjjKaRajSqxAhsYoNVmAFRxD92EyGbeHfnquoo6KdEi1dVg
-	 Asm4QR0KYiRRHR2ey7Kx1aHCSt0gbFZcODzHdurEXESdyR8XyLg8MN1PL61Mfb4yv4
-	 gLVdeNDi65VLDBYEi79eaYMVwb35q7GONQDAJDc8=
+	b=bz/dH5mLq/kT6iWVk1XPL8qcXsloK0gWRmIz4hXGgLL0SLvwD/04PSk1ObYl+5EVW
+	 EH4BkwhN0H+evcBLWp0bNhLMJ5DVnL5NYKSmpEDDFAaLNl1Z+4b61TGfBzMsF+7ADr
+	 46wsxEj3PL89UmxbTVzQf6SNXNtybijMRNK5EWaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
+	Stanley Chu <yschu@nuvoton.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/196] nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
-Date: Mon, 13 Oct 2025 16:44:10 +0200
-Message-ID: <20251013144317.362161834@linuxfoundation.org>
+Subject: [PATCH 6.1 078/196] i3c: master: svc: Use manual response for IBI events
+Date: Mon, 13 Oct 2025 16:44:11 +0200
+Message-ID: <20251013144317.397796296@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -46,109 +46,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit db5a5406fb7e5337a074385c7a3e53c77f2c1bd3 ]
+[ Upstream commit a7869b0a2540fd122eccec00ae7d4243166b0a60 ]
 
-It’s possible for more than one async command to be in flight from
-__nvmet_fc_send_ls_req. For each command, a tgtport reference is taken.
+Driver wants to nack the IBI request when the target is not in the
+known address list. In below code, svc_i3c_master_nack_ibi() will
+cause undefined behavior when using AUTOIBI with auto response rule,
+because hw always auto ack the IBI request.
 
-In the current code, only one put work item is queued at a time, which
-results in a leaked reference.
+    switch (ibitype) {
+    case SVC_I3C_MSTATUS_IBITYPE_IBI:
+            dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
+            if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
+                    svc_i3c_master_nack_ibi(master);
+            ...
+            break;
 
-To fix this, move the work item to the nvmet_fc_ls_req_op struct, which
-already tracks all resources related to the command.
+AutoIBI has another issue that the controller doesn't quit AutoIBI state
+after IBIWON polling timeout when there is a SDA glitch(high->low->high).
+1. SDA high->low: raising an interrupt to execute IBI ISR
+2. SDA low->high
+3. Driver writes an AutoIBI request
+4. AutoIBI process does not start because SDA is not low
+5. IBIWON polling times out
+6. Controller reamins in AutoIBI state and doesn't accept EmitStop request
 
-Fixes: 710c69dbaccd ("nvmet-fc: avoid deadlock on delete association path")
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Emitting broadcast address with IBIRESP_MANUAL avoids both issues.
+
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250829012309.3562585-2-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c | 30 ++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 570c58d2b5a58..a15e764bae35b 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -54,6 +54,8 @@ struct nvmet_fc_ls_req_op {		/* for an LS RQST XMT */
- 	int				ls_error;
- 	struct list_head		lsreq_list; /* tgtport->ls_req_list */
- 	bool				req_queued;
-+
-+	struct work_struct		put_work;
- };
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index 9b287f92d078d..a18d5876678c1 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -422,9 +422,24 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 	 */
+ 	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
  
+-	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
+-	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
+-	       SVC_I3C_MCTRL_IBIRESP_AUTO,
++	/*
++	 * Write REQUEST_START_ADDR request to emit broadcast address for arbitration,
++	 * instend of using AUTO_IBI.
++	 *
++	 * Using AutoIBI request may cause controller to remain in AutoIBI state when
++	 * there is a glitch on SDA line (high->low->high).
++	 * 1. SDA high->low, raising an interrupt to execute IBI isr.
++	 * 2. SDA low->high.
++	 * 3. IBI isr writes an AutoIBI request.
++	 * 4. The controller will not start AutoIBI process because SDA is not low.
++	 * 5. IBIWON polling times out.
++	 * 6. Controller reamins in AutoIBI state and doesn't accept EmitStop request.
++	 */
++	writel(SVC_I3C_MCTRL_REQUEST_START_ADDR |
++	       SVC_I3C_MCTRL_TYPE_I3C |
++	       SVC_I3C_MCTRL_IBIRESP_MANUAL |
++	       SVC_I3C_MCTRL_DIR(SVC_I3C_MCTRL_DIR_WRITE) |
++	       SVC_I3C_MCTRL_ADDR(I3C_BROADCAST_ADDR),
+ 	       master->regs + SVC_I3C_MCTRL);
  
-@@ -111,8 +113,6 @@ struct nvmet_fc_tgtport {
- 	struct nvmet_fc_port_entry	*pe;
- 	struct kref			ref;
- 	u32				max_sg_cnt;
--
--	struct work_struct		put_work;
- };
- 
- struct nvmet_fc_port_entry {
-@@ -236,12 +236,13 @@ static int nvmet_fc_tgt_a_get(struct nvmet_fc_tgt_assoc *assoc);
- static void nvmet_fc_tgt_q_put(struct nvmet_fc_tgt_queue *queue);
- static int nvmet_fc_tgt_q_get(struct nvmet_fc_tgt_queue *queue);
- static void nvmet_fc_tgtport_put(struct nvmet_fc_tgtport *tgtport);
--static void nvmet_fc_put_tgtport_work(struct work_struct *work)
-+static void nvmet_fc_put_lsop_work(struct work_struct *work)
- {
--	struct nvmet_fc_tgtport *tgtport =
--		container_of(work, struct nvmet_fc_tgtport, put_work);
-+	struct nvmet_fc_ls_req_op *lsop =
-+		container_of(work, struct nvmet_fc_ls_req_op, put_work);
- 
--	nvmet_fc_tgtport_put(tgtport);
-+	nvmet_fc_tgtport_put(lsop->tgtport);
-+	kfree(lsop);
- }
- static int nvmet_fc_tgtport_get(struct nvmet_fc_tgtport *tgtport);
- static void nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
-@@ -368,7 +369,7 @@ __nvmet_fc_finish_ls_req(struct nvmet_fc_ls_req_op *lsop)
- 				  DMA_BIDIRECTIONAL);
- 
- out_putwork:
--	queue_work(nvmet_wq, &tgtport->put_work);
-+	queue_work(nvmet_wq, &lsop->put_work);
- }
- 
- static int
-@@ -389,6 +390,7 @@ __nvmet_fc_send_ls_req(struct nvmet_fc_tgtport *tgtport,
- 	lsreq->done = done;
- 	lsop->req_queued = false;
- 	INIT_LIST_HEAD(&lsop->lsreq_list);
-+	INIT_WORK(&lsop->put_work, nvmet_fc_put_lsop_work);
- 
- 	lsreq->rqstdma = fc_dma_map_single(tgtport->dev, lsreq->rqstaddr,
- 				  lsreq->rqstlen + lsreq->rsplen,
-@@ -448,8 +450,6 @@ nvmet_fc_disconnect_assoc_done(struct nvmefc_ls_req *lsreq, int status)
- 	__nvmet_fc_finish_ls_req(lsop);
- 
- 	/* fc-nvme target doesn't care about success or failure of cmd */
--
--	kfree(lsop);
- }
- 
- /*
-@@ -1407,7 +1407,6 @@ nvmet_fc_register_targetport(struct nvmet_fc_port_info *pinfo,
- 	kref_init(&newrec->ref);
- 	ida_init(&newrec->assoc_cnt);
- 	newrec->max_sg_cnt = template->max_sgl_segments;
--	INIT_WORK(&newrec->put_work, nvmet_fc_put_tgtport_work);
- 
- 	ret = nvmet_fc_alloc_ls_iodlist(newrec);
- 	if (ret) {
+ 	/* Wait for IBIWON, should take approximately 100us */
+@@ -444,10 +459,15 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 	switch (ibitype) {
+ 	case SVC_I3C_MSTATUS_IBITYPE_IBI:
+ 		dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
+-		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
++		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI)) {
+ 			svc_i3c_master_nack_ibi(master);
+-		else
++		} else {
++			if (dev->info.bcr & I3C_BCR_IBI_PAYLOAD)
++				svc_i3c_master_ack_ibi(master, true);
++			else
++				svc_i3c_master_ack_ibi(master, false);
+ 			svc_i3c_master_handle_ibi(master, dev);
++		}
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_HOT_JOIN:
+ 		if (is_events_enabled(master, SVC_I3C_EVENT_HOTJOIN))
 -- 
 2.51.0
 
