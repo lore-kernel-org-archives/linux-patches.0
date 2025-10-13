@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433FA30C363;
-	Mon, 13 Oct 2025 15:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247C530BF7F;
+	Mon, 13 Oct 2025 15:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369657; cv=none; b=sWDPvA5orzB2c0cLeGve+bpBf7Fr8rTH4Bf9tEAGHzhUOyC79CoWksGQ9jncYMWfZTdsAqjfgEYMZ0yT1oUeUF3dQ7RmbhFkFcguFhAc2qSOAlYOv1aJVadhJWHBRv//hsKkmoleTGh7wFHaby4A9InWvok/95eQDHnbYQtgX/s=
+	t=1760369660; cv=none; b=s9pgHaHdJBYS+bws0NXcG+cHoB7GlCWLxB137ostQc9tL9tK+IbkQE1e2FbJKnK7zymh/g2eXfbVqcRIO1kHB7ZRo2btLjgRnb2BzrOtja/KOD5mrjGfRdIKGv06vf2pok1NIjdAHIDp3N+HdUfGc03vx1bFfpAdVlOu6SGDTp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369657; c=relaxed/simple;
-	bh=WC4wlNeXWvNUvdi90CZWfaUWyIBFGamIiDKQ06o9vyA=;
+	s=arc-20240116; t=1760369660; c=relaxed/simple;
+	bh=+yAzpC/XcYeT8EbdhF2o5ieUwwfKmk4B7GvcHPuTqmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krChU/lKTv5AY/HxuLfrCNMW47NTx51nbL3J4R2u3wEkRIXKjoRRqwCwlx8LrPwrhxVAoG4xwPKc7TyqYL+SOXKuRYNCaMQRvv8ycyMojf7e+uB6ZqINTbEKMUgTunGyRAQqDTDl/RYE5HgzIU74CcEf4dzZ4xr6g0HKTopdFog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whsJhXcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9I0U5ZaUe5Wnmsja6pD0EcIS0ONgwvdmb2gcAforJJeyAXq6EqLPul8je+3pJAT/gzv+4ZhM1mLz7cuXJ9ggDX4cddd+W8K+JFwWAsnxwr+e3xreoXW292j/XVzlEk9dVvohvGSJCyuRxCI1DW4u6eb8KocpIMNjEx7mCA5gdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDaOqylr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whsJhXcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDF5C4CEE7;
-	Mon, 13 Oct 2025 15:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDaOqylr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11C9C4CEE7;
+	Mon, 13 Oct 2025 15:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369657;
-	bh=WC4wlNeXWvNUvdi90CZWfaUWyIBFGamIiDKQ06o9vyA=;
+	s=korg; t=1760369660;
+	bh=+yAzpC/XcYeT8EbdhF2o5ieUwwfKmk4B7GvcHPuTqmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whsJhXcG04qcBjz4kHZTVQoekamAxTdZSM04CzSK1MWn+PfuUB+BhoWAUWHzSAHJj
-	 dUqhPY0aSbCFgP3jqGlZnXIaabB7/iTA+lorvMRzUc3Ldk53LJFLrLJ+qf+9zIBxmY
-	 joCww4Mg0L0866OSv+8mBKHWVoSROyHtjJ626G/8=
+	b=fDaOqylrfZ4/kQr49erdVmz23P+m8P+nl3aJ5VSD5GDdVIayDBcZO92xsNJsNwH6y
+	 IWQHgZT24/Y1mJ58nuploLL7mvZZzTKN3xYIdlu5JBRPPTMSfXkaiDvBekGoQz+Tmj
+	 VZLWN9GT4rwS3C5/BPIo3WgHyX2DwpbSKhyZmwV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Calvin Owens <calvin@wbinvd.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 323/563] pps: fix warning in pps_register_cdev when register device fail
-Date: Mon, 13 Oct 2025 16:43:04 +0200
-Message-ID: <20251013144422.965147670@linuxfoundation.org>
+Subject: [PATCH 6.17 324/563] drm/msm: Fix obj leak in VM_BIND error path
+Date: Mon, 13 Oct 2025 16:43:05 +0200
+Message-ID: <20251013144423.000618144@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,113 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit b0531cdba5029f897da5156815e3bdafe1e9b88d ]
+[ Upstream commit 278f8904434aa96055e793936b5977c010549e28 ]
 
-Similar to previous commit 2a934fdb01db ("media: v4l2-dev: fix error
-handling in __video_register_device()"), the release hook should be set
-before device_register(). Otherwise, when device_register() return error
-and put_device() try to callback the release function, the below warning
-may happen.
+If we fail a handle-lookup part way thru, we need to drop the already
+obtained obj references.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 1 PID: 4760 at drivers/base/core.c:2567 device_release+0x1bd/0x240 drivers/base/core.c:2567
-  Modules linked in:
-  CPU: 1 UID: 0 PID: 4760 Comm: syz.4.914 Not tainted 6.17.0-rc3+ #1 NONE
-  RIP: 0010:device_release+0x1bd/0x240 drivers/base/core.c:2567
-  Call Trace:
-   <TASK>
-   kobject_cleanup+0x136/0x410 lib/kobject.c:689
-   kobject_release lib/kobject.c:720 [inline]
-   kref_put include/linux/kref.h:65 [inline]
-   kobject_put+0xe9/0x130 lib/kobject.c:737
-   put_device+0x24/0x30 drivers/base/core.c:3797
-   pps_register_cdev+0x2da/0x370 drivers/pps/pps.c:402
-   pps_register_source+0x2f6/0x480 drivers/pps/kapi.c:108
-   pps_tty_open+0x190/0x310 drivers/pps/clients/pps-ldisc.c:57
-   tty_ldisc_open+0xa7/0x120 drivers/tty/tty_ldisc.c:432
-   tty_set_ldisc+0x333/0x780 drivers/tty/tty_ldisc.c:563
-   tiocsetd drivers/tty/tty_io.c:2429 [inline]
-   tty_ioctl+0x5d1/0x1700 drivers/tty/tty_io.c:2728
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:598 [inline]
-   __se_sys_ioctl fs/ioctl.c:584 [inline]
-   __x64_sys_ioctl+0x194/0x210 fs/ioctl.c:584
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x5f/0x2a0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   </TASK>
-
-Before commit c79a39dc8d06 ("pps: Fix a use-after-free"),
-pps_register_cdev() call device_create() to create pps->dev, which will
-init dev->release to device_create_release(). Now the comment is outdated,
-just remove it.
-
-Thanks for the reminder from Calvin Owens, 'kfree_pps' should be removed
-in pps_register_source() to avoid a double free in the failure case.
-
-Link: https://lore.kernel.org/all/20250827065010.3208525-1-wangliang74@huawei.com/
-Fixes: c79a39dc8d06 ("pps: Fix a use-after-free")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-By: Calvin Owens <calvin@wbinvd.org>
-Link: https://lore.kernel.org/r/20250830075023.3498174-1-wangliang74@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Tested-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/669784/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/kapi.c | 5 +----
- drivers/pps/pps.c  | 5 ++---
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_vma.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pps/kapi.c b/drivers/pps/kapi.c
-index 92d1b62ea239d..e9389876229ea 100644
---- a/drivers/pps/kapi.c
-+++ b/drivers/pps/kapi.c
-@@ -109,16 +109,13 @@ struct pps_device *pps_register_source(struct pps_source_info *info,
- 	if (err < 0) {
- 		pr_err("%s: unable to create char device\n",
- 					info->name);
--		goto kfree_pps;
-+		goto pps_register_source_exit;
- 	}
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index 00d0f3b7ba327..209154be5efcc 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -1023,6 +1023,7 @@ vm_bind_job_lookup_ops(struct msm_vm_bind_job *job, struct drm_msm_vm_bind *args
+ 	struct drm_device *dev = job->vm->drm;
+ 	int ret = 0;
+ 	int cnt = 0;
++	int i = -1;
  
- 	dev_dbg(&pps->dev, "new PPS source %s\n", info->name);
+ 	if (args->nr_ops == 1) {
+ 		/* Single op case, the op is inlined: */
+@@ -1056,11 +1057,12 @@ vm_bind_job_lookup_ops(struct msm_vm_bind_job *job, struct drm_msm_vm_bind *args
  
- 	return pps;
+ 	spin_lock(&file->table_lock);
  
--kfree_pps:
--	kfree(pps);
--
- pps_register_source_exit:
- 	pr_err("%s: unable to register source\n", info->name);
+-	for (unsigned i = 0; i < args->nr_ops; i++) {
++	for (i = 0; i < args->nr_ops; i++) {
++		struct msm_vm_bind_op *op = &job->ops[i];
+ 		struct drm_gem_object *obj;
  
-diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
-index 9463232af8d2e..c6b8b64782761 100644
---- a/drivers/pps/pps.c
-+++ b/drivers/pps/pps.c
-@@ -374,6 +374,7 @@ int pps_register_cdev(struct pps_device *pps)
- 			       pps->info.name);
- 			err = -EBUSY;
+-		if (!job->ops[i].handle) {
+-			job->ops[i].obj = NULL;
++		if (!op->handle) {
++			op->obj = NULL;
+ 			continue;
  		}
-+		kfree(pps);
- 		goto out_unlock;
+ 
+@@ -1068,15 +1070,15 @@ vm_bind_job_lookup_ops(struct msm_vm_bind_job *job, struct drm_msm_vm_bind *args
+ 		 * normally use drm_gem_object_lookup(), but for bulk lookup
+ 		 * all under single table_lock just hit object_idr directly:
+ 		 */
+-		obj = idr_find(&file->object_idr, job->ops[i].handle);
++		obj = idr_find(&file->object_idr, op->handle);
+ 		if (!obj) {
+-			ret = UERR(EINVAL, dev, "invalid handle %u at index %u\n", job->ops[i].handle, i);
++			ret = UERR(EINVAL, dev, "invalid handle %u at index %u\n", op->handle, i);
+ 			goto out_unlock;
+ 		}
+ 
+ 		drm_gem_object_get(obj);
+ 
+-		job->ops[i].obj = obj;
++		op->obj = obj;
+ 		cnt++;
  	}
- 	pps->id = err;
-@@ -383,13 +384,11 @@ int pps_register_cdev(struct pps_device *pps)
- 	pps->dev.devt = MKDEV(pps_major, pps->id);
- 	dev_set_drvdata(&pps->dev, pps);
- 	dev_set_name(&pps->dev, "pps%d", pps->id);
-+	pps->dev.release = pps_device_destruct;
- 	err = device_register(&pps->dev);
- 	if (err)
- 		goto free_idr;
  
--	/* Override the release function with our own */
--	pps->dev.release = pps_device_destruct;
--
- 	pr_debug("source %s got cdev (%d:%d)\n", pps->info.name, pps_major,
- 		 pps->id);
+@@ -1085,6 +1087,17 @@ vm_bind_job_lookup_ops(struct msm_vm_bind_job *job, struct drm_msm_vm_bind *args
+ out_unlock:
+ 	spin_unlock(&file->table_lock);
  
++	if (ret) {
++		for (; i >= 0; i--) {
++			struct msm_vm_bind_op *op = &job->ops[i];
++
++			if (!op->obj)
++				continue;
++
++			drm_gem_object_put(op->obj);
++			op->obj = NULL;
++		}
++	}
+ out:
+ 	return ret;
+ }
 -- 
 2.51.0
 
