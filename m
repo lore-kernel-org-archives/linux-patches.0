@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F513064B7;
-	Mon, 13 Oct 2025 14:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EF8306B3C;
+	Mon, 13 Oct 2025 14:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367290; cv=none; b=XuWzQjT6gorkRUv86tJMfy0auLxSfuwnwQgysU0OMrirbzvPlggIngwwIA+GgcApYRQAsZO63aWvxVYCUy4Bu6oxJ/bEcRnZmVizxXFaZl18GJqGlEy98CywY3xYSHHiJVP5IJcmhNpsGkclGrJMGgERNl2Bv0i3AHBbssItvOw=
+	t=1760367292; cv=none; b=T/LHhPnnMRrxRwSvTAOenE8mo8tep0xT4bwIWKEVNU3xcHa9untcRTnEg1U69hijKNndDU9xEAwWcJ4GVjL9E8QxxJRTYHbQg8hJw5AlduzZ9WYKpzh5K/IUWKMi1SLWlJEy92/RiZzXuZS1QmPkzGDoiB/n6acw3hawqv2+gP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367290; c=relaxed/simple;
-	bh=u82e+pLHyakCKJnPPKFjW2M+6d5Cyk7oxIHdVoFLbko=;
+	s=arc-20240116; t=1760367292; c=relaxed/simple;
+	bh=ZDAiOTMtgwG1Gan5z55wb3j+x56HOCPWWSuBc6hqOH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIOXLsbNfTelIVGHBjzGuoReAXcvB/TPYeRAS0MlINbQsOmxNekuNUozgFAvJ1btoIvKQCrKbde6eFwitGJbCv25rPwGBMT9lVbaoh7msuMjKNpDD+ZgW74igxyKiI6+lQeqx5MbbUJZgbPX83LjHYkNtsF4TyI02a863xOU9O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKNC3iWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTmPS9/0d/ltBf8h5KcxcsFoVDMzYGJdf+tF3SHTODWpEG4nzWVGrjBAbPPWetv8hrRlZWV3DqAgLq/ZBPe664kpq6pJf1v05FJkW+tMQ5MWeNFJapzZOHo2Zy876fJnNv7ktrwiqDhXvxtxxZlodHgFqh6LGUMSaUnEcY/kp4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpHkadyi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKNC3iWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35660C4CEFE;
-	Mon, 13 Oct 2025 14:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpHkadyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3375C4CEE7;
+	Mon, 13 Oct 2025 14:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367289;
-	bh=u82e+pLHyakCKJnPPKFjW2M+6d5Cyk7oxIHdVoFLbko=;
+	s=korg; t=1760367292;
+	bh=ZDAiOTMtgwG1Gan5z55wb3j+x56HOCPWWSuBc6hqOH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKNC3iWzh2sAirnpPOoi+N7p0lM2JNEID5le+OIqqmkB7y37ZEcSoEhcqwJ7s1v28
-	 5eKQG0bo8hGrQHkylhOST2gDHJ7qA+982TRhyQdfs7xpLkAfzpsHDKMHwWApEk92Yl
-	 KaQT/nHZIeNL2FlXLOTVApCmBBhJNPIm1qh4Dj+c=
+	b=qpHkadyiBj6SpDnrCZQHrg4fuz1Bd4f5TwMyjBZ7/R4CPSOEkJWfEih/GgHgjNUAR
+	 at1SlxT1wfRd/Nw6/HxmY2bJdyo2YtviexS45C85/1nMEJPCuV1udLhykN0a96UOCr
+	 2XFXRRR26mg84JFGntkpD9IDCgrcwhKy/LCa30nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/196] vhost: vringh: Fix copy_to_iter return value check
-Date: Mon, 13 Oct 2025 16:45:29 +0200
-Message-ID: <20251013144320.343298393@linuxfoundation.org>
+Subject: [PATCH 6.1 125/196] watchdog: mpc8xxx_wdt: Reload the watchdog timer when enabling the watchdog
+Date: Mon, 13 Oct 2025 16:44:58 +0200
+Message-ID: <20251013144319.217493076@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,51 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 439263376c2c4e126cac0d07e4987568de4eaba5 ]
+[ Upstream commit 7dfd80f70ef00d871df5af7c391133f7ba61ad9b ]
 
-The return value of copy_to_iter can't be negative, check whether the
-copied length is equal to the requested length instead of checking for
-negative values.
+When the watchdog gets enabled with this driver, it leaves enough time
+for the core watchdog subsystem to start pinging it. But when the
+watchdog is already started by hardware or by the boot loader, little
+time remains before it fires and it happens that the core watchdog
+subsystem doesn't have time to start pinging it.
 
-Cc: zhang jiao <zhangjiao2@cmss.chinamobile.com>
-Link: https://lore.kernel.org/all/20250910091739.2999-1-zhangjiao2@cmss.chinamobile.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 309bba39c945 ("vringh: iterate on iotlb_translate to handle large translations")
-Link: https://patch.msgid.link/cd637504a6e3967954a9e80fc1b75e8c0978087b.1758723310.git.mst@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Until commit 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker
+function") pinging was managed by the driver itself and the watchdog
+was immediately pinged by setting the timer expiry to 0.
+
+So restore similar behaviour by pinging it when enabling it so that
+if it was already enabled the watchdog timer counter is reloaded.
+
+Fixes: 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker function")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/watchdog/mpc8xxx_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index 10bfc5f1c50d5..c570d214d5b68 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -1195,6 +1195,7 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
- 		struct iov_iter iter;
- 		u64 translated;
- 		int ret;
-+		size_t size;
+diff --git a/drivers/watchdog/mpc8xxx_wdt.c b/drivers/watchdog/mpc8xxx_wdt.c
+index 1c569be72ea29..15644ae2387fd 100644
+--- a/drivers/watchdog/mpc8xxx_wdt.c
++++ b/drivers/watchdog/mpc8xxx_wdt.c
+@@ -100,6 +100,8 @@ static int mpc8xxx_wdt_start(struct watchdog_device *w)
+ 	ddata->swtc = tmp >> 16;
+ 	set_bit(WDOG_HW_RUNNING, &ddata->wdd.status);
  
- 		ret = iotlb_translate(vrh, (u64)(uintptr_t)dst,
- 				      len - total_translated, &translated,
-@@ -1206,9 +1207,9 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
++	mpc8xxx_wdt_keepalive(ddata);
++
+ 	return 0;
+ }
  
- 		iov_iter_bvec(&iter, ITER_DEST, iov, ret, translated);
- 
--		ret = copy_to_iter(src, translated, &iter);
--		if (ret < 0)
--			return ret;
-+		size = copy_to_iter(src, translated, &iter);
-+		if (size != translated)
-+			return -EFAULT;
- 
- 		src += translated;
- 		dst += translated;
 -- 
 2.51.0
 
