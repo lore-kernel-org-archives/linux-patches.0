@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D3830F814;
-	Mon, 13 Oct 2025 15:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE58330F814;
+	Mon, 13 Oct 2025 15:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368879; cv=none; b=a6hPAvf83mfZIXIIN7vVvami0LDx/ZER84KDdLOqPEN3SBctWrVSt5TF4zToF8VHYsAfaHE5E9QsjkOTPQMO3AqnJdS5Xi+P8nMo2RVIKptgtWLOgiZlWPYQE8dRxE9iVJfyadIaX+gtfGOkQ+8hbg7KIi24Av0s2+1S52LJEnc=
+	t=1760368882; cv=none; b=SeL2v8QCD2thSgojgiww8kySETpZg00pp53/Y8MFSzq/ZzKUo5jG6h3xCra3cQx9VTm5qM4DBlQqnnK5hFxa0vA4Y04KGqJk70kFwgOYvClo4xE5rEOGjqBmkulNmgr0zMiR8qYVDW6q32gUGRsLOXwhAkckJEpyK4iZtkl8sAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368879; c=relaxed/simple;
-	bh=BHtwnrP4GXEJbgsRepWwY0n2Z0P0DqGml6RaDxf1HVY=;
+	s=arc-20240116; t=1760368882; c=relaxed/simple;
+	bh=hXG8mwkRrGrov6r3A9WFi015nS/1zd6u3nmc8kJ8I8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vu2Aby2kszD/PFUv5gdo6S/Gd8JISihfZ0ki6++QkMds7Q3MJhPoaiEci8gdp1NeRGxYeu5SRoCAXsGco5+ceSoC0hlrSJTZ/Fuvb25bDbtG2CVJyaktqsFBmundk2TRF1+6ORdFiOl5/+wDxW+313YJ/AKTYV+ZlvgDocY2yKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJOKketb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PZlIFt04E1alIUVGFhp7WFX2tyh3OI+/RHyvYu6Izjbyk0hUniF32C0zBJnWTCsWXipuDneydpFFEOsn6Dklm21IfF3JHkzl673dMdJiqr5wwf7usFguD5BD6yBFUnRzVvrpKsILOWQHeLwLkMBqaOsB+q6XK6rsWzFV5NvJM8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UT5BVjci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJOKketb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F489C116B1;
-	Mon, 13 Oct 2025 15:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UT5BVjci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636DCC4CEFE;
+	Mon, 13 Oct 2025 15:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368878;
-	bh=BHtwnrP4GXEJbgsRepWwY0n2Z0P0DqGml6RaDxf1HVY=;
+	s=korg; t=1760368881;
+	bh=hXG8mwkRrGrov6r3A9WFi015nS/1zd6u3nmc8kJ8I8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJOKketbDlDsV76zzgyxAC8khonFe7opcvg81E04FtsU9bjQfnAGsr5msg/8+iM2H
-	 7AAixwj4EXEVFT2CQOFpwANqiUw8myl4T0TTYmZaTbV+dW9rnI4FmrKC2yyuUPYex0
-	 fOoQ+w+aor1302xXSmpG5Ydl51gM5iKWhqhEFgQs=
+	b=UT5BVjcibwiV5vA4rSVLKC4krUzOJ7NkAgmVuoQj/gHHws+kxJ4RY/Bm05akNcnuk
+	 67l9gbmsQQ8yJXMtl0FZHHLdEqa1kzPQVZyY+pfuiFVEK445OFIarxRIv6Fv4tcC22
+	 T8rMBJ/bQPXQfOEzDpti1gZyd/HOP/66gg+vRTbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yureka Lilian <yuka@yuka.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 049/563] libbpf: Fix reuse of DEVMAP
-Date: Mon, 13 Oct 2025 16:38:30 +0200
-Message-ID: <20251013144413.070335437@linuxfoundation.org>
+Subject: [PATCH 6.17 050/563] tools/nolibc: fix error return value of clock_nanosleep()
+Date: Mon, 13 Oct 2025 16:38:31 +0200
+Message-ID: <20251013144413.105660822@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,57 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yureka Lilian <yuka@yuka.dev>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 6c6b4146deb12d20f42490d5013f2043df942161 ]
+[ Upstream commit 1201f6fb5bfdbd10985ac3c8f49ef8f4f88b5c94 ]
 
-Previously, re-using pinned DEVMAP maps would always fail, because
-get_map_info on a DEVMAP always returns flags with BPF_F_RDONLY_PROG set,
-but BPF_F_RDONLY_PROG being set on a map during creation is invalid.
+clock_nanosleep() returns a positive error value. Unlike other libc
+functions it *does not* return -1 nor set errno.
 
-Thus, ignore the BPF_F_RDONLY_PROG flag in the flags returned from
-get_map_info when checking for compatibility with an existing DEVMAP.
+Fix the return value and also adapt nanosleep().
 
-The same problem is handled in a third-party ebpf library:
-- https://github.com/cilium/ebpf/issues/925
-- https://github.com/cilium/ebpf/pull/930
-
-Fixes: 0cdbb4b09a06 ("devmap: Allow map lookups from eBPF")
-Signed-off-by: Yureka Lilian <yuka@yuka.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250814180113.1245565-3-yuka@yuka.dev
+Fixes: 7c02bc4088af ("tools/nolibc: add support for clock_nanosleep() and nanosleep()")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250731-nolibc-clock_nanosleep-ret-v1-1-9e4af7855e61@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/include/nolibc/time.h                  | 5 +++--
+ tools/testing/selftests/nolibc/nolibc-test.c | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 8f5a81b672e1b..fe4fc5438678c 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -5093,6 +5093,16 @@ static bool map_is_reuse_compat(const struct bpf_map *map, int map_fd)
- 		return false;
- 	}
+diff --git a/tools/include/nolibc/time.h b/tools/include/nolibc/time.h
+index d02bc44d2643a..e9c1b976791a6 100644
+--- a/tools/include/nolibc/time.h
++++ b/tools/include/nolibc/time.h
+@@ -133,7 +133,8 @@ static __attribute__((unused))
+ int clock_nanosleep(clockid_t clockid, int flags, const struct timespec *rqtp,
+ 		    struct timespec *rmtp)
+ {
+-	return __sysret(sys_clock_nanosleep(clockid, flags, rqtp, rmtp));
++	/* Directly return a positive error number */
++	return -sys_clock_nanosleep(clockid, flags, rqtp, rmtp);
+ }
  
-+	/*
-+	 * bpf_get_map_info_by_fd() for DEVMAP will always return flags with
-+	 * BPF_F_RDONLY_PROG set, but it generally is not set at map creation time.
-+	 * Thus, ignore the BPF_F_RDONLY_PROG flag in the flags returned from
-+	 * bpf_get_map_info_by_fd() when checking for compatibility with an
-+	 * existing DEVMAP.
-+	 */
-+	if (map->def.type == BPF_MAP_TYPE_DEVMAP || map->def.type == BPF_MAP_TYPE_DEVMAP_HASH)
-+		map_info.map_flags &= ~BPF_F_RDONLY_PROG;
-+
- 	return (map_info.type == map->def.type &&
- 		map_info.key_size == map->def.key_size &&
- 		map_info.value_size == map->def.value_size &&
+ static __inline__
+@@ -145,7 +146,7 @@ double difftime(time_t time1, time_t time2)
+ static __inline__
+ int nanosleep(const struct timespec *rqtp, struct timespec *rmtp)
+ {
+-	return clock_nanosleep(CLOCK_REALTIME, 0, rqtp, rmtp);
++	return __sysret(sys_clock_nanosleep(CLOCK_REALTIME, 0, rqtp, rmtp));
+ }
+ 
+ 
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index a297ee0d6d075..cc4d730ac4656 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -1334,6 +1334,7 @@ int run_syscall(int min, int max)
+ 		CASE_TEST(chroot_root);       EXPECT_SYSZR(euid0, chroot("/")); break;
+ 		CASE_TEST(chroot_blah);       EXPECT_SYSER(1, chroot("/proc/self/blah"), -1, ENOENT); break;
+ 		CASE_TEST(chroot_exe);        EXPECT_SYSER(1, chroot(argv0), -1, ENOTDIR); break;
++		CASE_TEST(clock_nanosleep);   ts.tv_nsec = -1; EXPECT_EQ(1, EINVAL, clock_nanosleep(CLOCK_REALTIME, 0, &ts, NULL)); break;
+ 		CASE_TEST(close_m1);          EXPECT_SYSER(1, close(-1), -1, EBADF); break;
+ 		CASE_TEST(close_dup);         EXPECT_SYSZR(1, close(dup(0))); break;
+ 		CASE_TEST(dup_0);             tmp = dup(0);  EXPECT_SYSNE(1, tmp, -1); close(tmp); break;
 -- 
 2.51.0
 
