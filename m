@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A196C3081C1;
-	Mon, 13 Oct 2025 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE4E28D83E;
+	Mon, 13 Oct 2025 15:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369232; cv=none; b=oHup0cmX4oKm5jarSrHso9izjty3D02n/F2yxWpeHmItbXDwYsZTvyuyhPuv93wMLetl6NBBSXQ9tynvyDyPKr5X7oLeiYqdEzcrppH152P9LIfORC0pP6fyIY0gwKiMWRpdXlHtse7R+gojWuJRFF1aw04ZRxmrJF6CtWWl7Cs=
+	t=1760369235; cv=none; b=aaFo6htfKU6NgSX49qT+DgHk0GRQaEY+TzG2t9Z+VkqWnrDi+a7zgtHbOdhoJ3cMqvXyOKGKuNTwbZfHautZm64QqYYs4GdUp9NrhYmUXtJqn42JvB0lYCT9tFmjnDwI7PLilHDKrn6GAYnfYhmoVSdRNU9s4Q4lJXEOBgNXY1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369232; c=relaxed/simple;
-	bh=gF0q5RDj26N0DLMo5gH3q2j4qtOdYkBeqmDTzhLb/H8=;
+	s=arc-20240116; t=1760369235; c=relaxed/simple;
+	bh=OiUM+tk5Jfd3BChCxDjczN8PHMIoIIBuwU/SnJJTJhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FN0wCY4/KfdctDupUcRcrTi8lbiw9zm47lfyToh6Ha1xgbD0IINshMZoXHfR5RaJYuaVgJtWnIcBv+wH/uLjdgsp/c3tS+rg3NiVzFI/qJLhuZqVZdwhvB9RklZXdC7mDv8zo3IogXExrXEiAFPY+GoWUc0PWAqVTgoLZ2GxKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgO4xwZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qhN3la3zEhPE3iDHBy1BDokFj7e7uh1qUYPWqkJuAHP6vhaVQbTMGiqToOwXsBcN5Nhvsk927VhQb8bGoNQLYUoVA16a6+8CZDjg3CxZ4F272hyLXpDOcER9UnXGUSELSaMlmo/VMIIF/i8hyXdGybSyj3y5Kv4X7pcSpMWeGXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0V4+9bW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgO4xwZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEBBC4CEE7;
-	Mon, 13 Oct 2025 15:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0V4+9bW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014B6C4CEFE;
+	Mon, 13 Oct 2025 15:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369232;
-	bh=gF0q5RDj26N0DLMo5gH3q2j4qtOdYkBeqmDTzhLb/H8=;
+	s=korg; t=1760369235;
+	bh=OiUM+tk5Jfd3BChCxDjczN8PHMIoIIBuwU/SnJJTJhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgO4xwZFQco+8JmJBtldTT293Q2rwJaBONNigTjmDXGRVWZ4IuBBoFX0PSW2uHnRZ
-	 2QKWiNPmUmrI98VSZqS0zSa2X3d24HwFQXqva+gMN6bjgpfemrneNQ7Lb4X+dsX+dv
-	 2uRDhqDrcv9eWkPzeQwu4VPbG/zWcufMrA11STK4=
+	b=m0V4+9bWdAkF0u/ngo5aRCFvAgKVVBrsxrk5vFa2V6Kcy+Ykw659Ad1wClKM3zckK
+	 dAASZk09eQUHaxJjdJ5QuEPN48mhb5dJRHgcdb42ydyQPe2UQhD4SOgyPT5zr6qNXh
+	 WGm8c0K/1sbNiNwv+zR2qFi4A2mF3kY861xIeCaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Anders Roxell <anders.roxell@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 175/563] selftests/futex: Fix futex_wait() for 32bit ARM
-Date: Mon, 13 Oct 2025 16:40:36 +0200
-Message-ID: <20251013144417.626205240@linuxfoundation.org>
+Subject: [PATCH 6.17 176/563] selftest/futex: Make the error check more precise for futex_numa_mpol
+Date: Mon, 13 Oct 2025 16:40:37 +0200
+Message-ID: <20251013144417.662589499@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -55,73 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: André Almeida <andrealmeid@igalia.com>
 
-[ Upstream commit 237bfb76c90b184f57bb18fe35ff366c19393dc8 ]
+[ Upstream commit c1c863457780adfb2e29fa9a85897179ad3903e6 ]
 
-On 32bit ARM systems gcc-12 will use 32bit timestamps while gcc-13 and later
-will use 64bit timestamps.  The problem is that SYS_futex will continue
-pointing at the 32bit system call.  This makes the futex_wait test fail like
-this:
+Instead of just checking if the syscall failed as expected, check as
+well if the returned error code matches the expected error code.
 
-  waiter failed errno 110
-  not ok 1 futex_wake private returned: 0 Success
-  waiter failed errno 110
-  not ok 2 futex_wake shared (page anon) returned: 0 Success
-  waiter failed errno 110
-  not ok 3 futex_wake shared (file backed) returned: 0 Success
+[ bigeasy: reword the commmit message ]
 
-Instead of compiling differently depending on the gcc version, use the
--D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 options to ensure that 64bit timestamps
-are used.  Then use ifdefs to make SYS_futex point to the 64bit system call.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: André Almeida <andrealmeid@igalia.com>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Link: https://lore.kernel.org/20250827130011.677600-6-bigeasy@linutronix.de
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
 Stable-dep-of: ed323aeda5e0 ("selftest/futex: Compile also with libnuma < 2.0.16")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/Makefile |  2 +-
- tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ .../futex/functional/futex_numa_mpol.c        | 36 +++++++++++--------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index 8cfb87f7f7c50..ddfa61d857b9b 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- INCLUDES := -I../include -I../../ $(KHDR_INCLUDES)
--CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread $(INCLUDES) $(KHDR_INCLUDES)
-+CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 $(INCLUDES) $(KHDR_INCLUDES)
- LDLIBS := -lpthread -lrt -lnuma
+diff --git a/tools/testing/selftests/futex/functional/futex_numa_mpol.c b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
+index 802c15c821906..dd7b05e8cda45 100644
+--- a/tools/testing/selftests/futex/functional/futex_numa_mpol.c
++++ b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
+@@ -77,7 +77,7 @@ static void join_max_threads(void)
+ 	}
+ }
  
- LOCAL_HDRS := \
-diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
-index 7a5fd1d5355e7..3d48e9789d9fe 100644
---- a/tools/testing/selftests/futex/include/futextest.h
-+++ b/tools/testing/selftests/futex/include/futextest.h
-@@ -58,6 +58,17 @@ typedef volatile u_int32_t futex_t;
- #define SYS_futex SYS_futex_time64
- #endif
+-static void __test_futex(void *futex_ptr, int must_fail, unsigned int futex_flags)
++static void __test_futex(void *futex_ptr, int err_value, unsigned int futex_flags)
+ {
+ 	int to_wake, ret, i, need_exit = 0;
  
-+/*
-+ * On 32bit systems if we use "-D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64" or if
-+ * we are using a newer compiler then the size of the timestamps will be 64bit,
-+ * however, the SYS_futex will still point to the 32bit futex system call.
-+ */
-+#if __SIZEOF_POINTER__ == 4 && defined(SYS_futex_time64) && \
-+	defined(_TIME_BITS) && _TIME_BITS == 64
-+# undef SYS_futex
-+# define SYS_futex SYS_futex_time64
-+#endif
+@@ -88,11 +88,17 @@ static void __test_futex(void *futex_ptr, int must_fail, unsigned int futex_flag
+ 
+ 	do {
+ 		ret = futex2_wake(futex_ptr, to_wake, futex_flags);
+-		if (must_fail) {
+-			if (ret < 0)
+-				break;
+-			ksft_exit_fail_msg("futex2_wake(%d, 0x%x) should fail, but didn't\n",
+-					   to_wake, futex_flags);
 +
- /**
-  * futex() - SYS_futex syscall wrapper
-  * @uaddr:	address of first futex
++		if (err_value) {
++			if (ret >= 0)
++				ksft_exit_fail_msg("futex2_wake(%d, 0x%x) should fail, but didn't\n",
++						   to_wake, futex_flags);
++
++			if (errno != err_value)
++				ksft_exit_fail_msg("futex2_wake(%d, 0x%x) expected error was %d, but returned %d (%s)\n",
++						   to_wake, futex_flags, err_value, errno, strerror(errno));
++
++			break;
+ 		}
+ 		if (ret < 0) {
+ 			ksft_exit_fail_msg("Failed futex2_wake(%d, 0x%x): %m\n",
+@@ -106,12 +112,12 @@ static void __test_futex(void *futex_ptr, int must_fail, unsigned int futex_flag
+ 	join_max_threads();
+ 
+ 	for (i = 0; i < MAX_THREADS; i++) {
+-		if (must_fail && thread_args[i].result != -1) {
++		if (err_value && thread_args[i].result != -1) {
+ 			ksft_print_msg("Thread %d should fail but succeeded (%d)\n",
+ 				       i, thread_args[i].result);
+ 			need_exit = 1;
+ 		}
+-		if (!must_fail && thread_args[i].result != 0) {
++		if (!err_value && thread_args[i].result != 0) {
+ 			ksft_print_msg("Thread %d failed (%d)\n", i, thread_args[i].result);
+ 			need_exit = 1;
+ 		}
+@@ -120,14 +126,14 @@ static void __test_futex(void *futex_ptr, int must_fail, unsigned int futex_flag
+ 		ksft_exit_fail_msg("Aborting due to earlier errors.\n");
+ }
+ 
+-static void test_futex(void *futex_ptr, int must_fail)
++static void test_futex(void *futex_ptr, int err_value)
+ {
+-	__test_futex(futex_ptr, must_fail, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA);
++	__test_futex(futex_ptr, err_value, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA);
+ }
+ 
+-static void test_futex_mpol(void *futex_ptr, int must_fail)
++static void test_futex_mpol(void *futex_ptr, int err_value)
+ {
+-	__test_futex(futex_ptr, must_fail, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA | FUTEX2_MPOL);
++	__test_futex(futex_ptr, err_value, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA | FUTEX2_MPOL);
+ }
+ 
+ static void usage(char *prog)
+@@ -184,16 +190,16 @@ int main(int argc, char *argv[])
+ 
+ 	/* FUTEX2_NUMA futex must be 8-byte aligned */
+ 	ksft_print_msg("Mis-aligned futex\n");
+-	test_futex(futex_ptr + mem_size - 4, 1);
++	test_futex(futex_ptr + mem_size - 4, EINVAL);
+ 
+ 	futex_numa->numa = FUTEX_NO_NODE;
+ 	mprotect(futex_ptr, mem_size, PROT_READ);
+ 	ksft_print_msg("Memory, RO\n");
+-	test_futex(futex_ptr, 1);
++	test_futex(futex_ptr, EFAULT);
+ 
+ 	mprotect(futex_ptr, mem_size, PROT_NONE);
+ 	ksft_print_msg("Memory, no access\n");
+-	test_futex(futex_ptr, 1);
++	test_futex(futex_ptr, EFAULT);
+ 
+ 	mprotect(futex_ptr, mem_size, PROT_READ | PROT_WRITE);
+ 	ksft_print_msg("Memory back to RW\n");
 -- 
 2.51.0
 
