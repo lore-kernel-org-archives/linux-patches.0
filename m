@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8F30EF7B;
-	Mon, 13 Oct 2025 15:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114C730F548;
+	Mon, 13 Oct 2025 15:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367818; cv=none; b=ajdQc74sdX6oAvpUCkSI3dhExygNHaJ6vT3iJkNOKs+HNA+Q+f/Y6th8/he31tEkgxlBCuYBz/YB4r3vOm487UaDxd8tXo04JgEFE9rSHUKroV3KL6ahFhF2oDDH4R4z3GEWcKoSk+KCsAjgI5cL19LD1LiZXOJ8apEXpLNy5wE=
+	t=1760367821; cv=none; b=dL1bZ5hJ06nEREkE0QwKRCdbAoH9TjZITpqMuHSCVgzQmtoXdSotLIxAwC+sgtkulS4GeC87LUwAbziMqjQKQTkIxgmA5FNhXz0GJAaGPGsfD1Apm32f1dNbL5FJWGLRN3anPrPBOaU1dWZd31kc/JcLHaINICOWGb4m5Kv/Ljk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367818; c=relaxed/simple;
-	bh=SzBjNUP20MTtHshH5dVadKh+/e8iLEDQIW+SMkEo8Cw=;
+	s=arc-20240116; t=1760367821; c=relaxed/simple;
+	bh=i9Jv2tX0Tk7YIpNhy04V1M4rtJX10is/8tpXmZ4Qa8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpEOKST9VAG5DmjAyTqpuJEf48ywbKk1NHEtOHivt3MmZtWAKq0aTfl4SxJZ1QwhplP7rwESnrB4NJx7kbpj5jmUKILpzxaG51rmHS/+sm5fOaKr8t3WS2Nfs9WZQ+BLZ7T6oJ4lQYL1ioqsNUe3t4qNaqoy/vrBucCPVp4Y8D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDzo4bNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIxPaR8nzxatYIFdDgtJTXmQGHQ2LR1RnEBZtqhHIaqvCuUEU+ZddE2kkvIWiJ7rAlt6gVQ0XwEA0nWhmw103Lasn+c8DWdk9B6aU5xX5TxOzogt5iviZMMgMnwWe2lRhEwUrIUNn1MPsjSXQapzFk/shTfHky3owUGgR/8SLAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/cFbk7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDzo4bNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C30C4CEE7;
-	Mon, 13 Oct 2025 15:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/cFbk7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7148CC4CEE7;
+	Mon, 13 Oct 2025 15:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367818;
-	bh=SzBjNUP20MTtHshH5dVadKh+/e8iLEDQIW+SMkEo8Cw=;
+	s=korg; t=1760367820;
+	bh=i9Jv2tX0Tk7YIpNhy04V1M4rtJX10is/8tpXmZ4Qa8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDzo4bNuVsCpEcvClAawsF2vzj6Kh8Au/82hhExime1IsIQVx0dBTGxQxgSz75S57
-	 rKLjbebKVRU7/6XWEv69eytNLH+MAQcHSMNEkRVvSRKZHlIHhvK5tTqQfNB7ItUTHs
-	 u5O99I80ezfCdLDclm6lT997x0AUq4rYVowvBj1c=
+	b=p/cFbk7t/IZKw5VOE1chmNhEcdZrVipqh7OTnHRrtGpjnoFp6y0P/Jx3MDjNpN7Dw
+	 esnEXyHbVkP/nptzsDu7kO1owcH+3+HgibnoEGGKuDqX9kGC7P3sPB/K4T1YvlvYX4
+	 bxpHVkfzOjJRWB2nz7maGfb/YnwRNbkXIjgf1zjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Nagarjuna Kristam <nkristam@nvidia.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/196] ASoC: Intel: bytcht_es8316: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:44:52 +0200
-Message-ID: <20251013144318.969432343@linuxfoundation.org>
+Subject: [PATCH 6.6 138/196] PCI: tegra194: Fix duplicate PLL disable in pex_ep_event_pex_rst_assert()
+Date: Mon, 13 Oct 2025 16:45:29 +0200
+Message-ID: <20251013144320.307139675@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,66 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nagarjuna Kristam <nkristam@nvidia.com>
 
-[ Upstream commit b20eb0e8de383116f1e1470d74da2a3c83c4e345 ]
+[ Upstream commit 4f152338e384a3a47dd61909e1457539fa93f5a4 ]
 
-When an invalid value is passed via quirk option, currently
-bytcht_es8316 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+During PERST# assertion tegra_pcie_bpmp_set_pll_state() is currently
+called twice.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
+pex_ep_event_pex_rst_assert() should do the opposite of
+pex_ep_event_pex_rst_deassert(), so it is obvious that the duplicate
+tegra_pcie_bpmp_set_pll_state() is a mistake, and that the duplicate
+tegra_pcie_bpmp_set_pll_state() call should instead be a call to
+tegra_pcie_bpmp_set_ctrl_state().
 
-Fixes: 249d2fc9e55c ("ASoC: Intel: bytcht_es8316: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-2-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+With this, the uninitialization sequence also matches that of
+tegra_pcie_unconfig_controller().
+
+Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
+Signed-off-by: Nagarjuna Kristam <nkristam@nvidia.com>
+[cassel: improve commit log]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20250911093021.1454385-2-cassel@kernel.org
+[mani: added Fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 7a30d2d36f199..fbd7e1f0783fd 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -46,7 +46,8 @@ enum {
- 	BYT_CHT_ES8316_INTMIC_IN2_MAP,
- };
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 416d6b45d1fe8..115a21cf869ae 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1734,9 +1734,9 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
+ 				ret);
+ 	}
  
--#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_CHT_ES8316_MAP_MASK			GENMASK(3, 0)
-+#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & BYT_CHT_ES8316_MAP_MASK)
- #define BYT_CHT_ES8316_SSP0			BIT(16)
- #define BYT_CHT_ES8316_MONO_SPEAKER		BIT(17)
- #define BYT_CHT_ES8316_JD_INVERTED		BIT(18)
-@@ -59,10 +60,23 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
+-	ret = tegra_pcie_bpmp_set_pll_state(pcie, false);
++	ret = tegra_pcie_bpmp_set_ctrl_state(pcie, false);
+ 	if (ret)
+-		dev_err(pcie->dev, "Failed to turn off UPHY: %d\n", ret);
++		dev_err(pcie->dev, "Failed to disable controller: %d\n", ret);
  
- static void log_quirks(struct device *dev)
- {
--	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN1_MAP)
-+	int map;
-+
-+	map = BYT_CHT_ES8316_MAP(quirk);
-+	switch (map) {
-+	case BYT_CHT_ES8316_INTMIC_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN2_MAP)
-+		break;
-+	case BYT_CHT_ES8316_INTMIC_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to INTMIC_IN1_MAP\n", map);
-+		quirk &= ~BYT_CHT_ES8316_MAP_MASK;
-+		quirk |= BYT_CHT_ES8316_INTMIC_IN1_MAP;
-+		break;
-+	}
-+
- 	if (quirk & BYT_CHT_ES8316_SSP0)
- 		dev_info(dev, "quirk SSP0 enabled");
- 	if (quirk & BYT_CHT_ES8316_MONO_SPEAKER)
+ 	pcie->ep_state = EP_STATE_DISABLED;
+ 	dev_dbg(pcie->dev, "Uninitialization of endpoint is completed\n");
 -- 
 2.51.0
 
