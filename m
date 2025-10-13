@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9054F2D2384;
-	Mon, 13 Oct 2025 14:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921C724A06A;
+	Mon, 13 Oct 2025 14:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367112; cv=none; b=SsoD6QnHAH+aZ0q+j57sQUDyYnu65dFbvB/U+biSedJ1WTUMiATFNx5P7jhTAPiv5+4v7rsv1GBuz3XA130+1NeAJiCHxmPUS7SecXiC3V5GNGUuau/QMAtWRIC0jnGXswi2yeBRlHr4hn+GAi9mjKe77/UiDD9uWCWyLNS5ajU=
+	t=1760367115; cv=none; b=Kwrwny9YnlsucJA+7CNUfE/DMJRdkuN6pjIz7c/fTNRDTmqPtq6BgnPKkD1LJWlTFNEJC8dp5NjM6wHylcIGyO4qEUHiIIX12OkAu6pdEC2TySAytMSjKKZ06UKOWOSiOU3w0ApTrbzzbxkO6+LhXhpGLBiA1TwoZW0OCMzOelY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367112; c=relaxed/simple;
-	bh=v72xPyonNKyOIYwpDeAIeuq4mdvB72Uni5SlHTgk06U=;
+	s=arc-20240116; t=1760367115; c=relaxed/simple;
+	bh=/lyBYK2cTBV9j7kzzmHHkIG7qJ9+7vBaFkJRjQ0ezOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGAqRZZn7JfXW/FBsoM0H68+ZsPP2Ki5Tc1JplL946MBGhJOjxz+2dTxGkzkrgiOQ4L/jjlizdOqehQh6vsFi3j35Jg04L/gDkHqhgQvauJ/4TrdPjVPvc7RILORSWq9RmLNYfrBHIVVZIyONmFEo1Mk2pZc+yu0kHJau11h+XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12lbB9Ly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLEMkeC53iTOfj1Tx28Vtz6X/9CL7XG759EkoeDF86zs8HDcIe2Mqgt7wckoHKbm0raulxLzynKrGedgRnHU92INDAV+RoK3xtMu534WdI0yAC34Yq9MY8poxScvHwSNc/yBJDQwXV7XfSaKO1QQrU22gMqi4qTgDdtHRhJAYqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XN/l4i/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12lbB9Ly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A8EC2BC87;
-	Mon, 13 Oct 2025 14:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN/l4i/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB76C4CEFE;
+	Mon, 13 Oct 2025 14:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367112;
-	bh=v72xPyonNKyOIYwpDeAIeuq4mdvB72Uni5SlHTgk06U=;
+	s=korg; t=1760367115;
+	bh=/lyBYK2cTBV9j7kzzmHHkIG7qJ9+7vBaFkJRjQ0ezOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12lbB9LyuXXLWAcdyLQjo9Z8y4h4Yy9BkwEiCroZdR8ddYC+i7NylSZjkhs8gjpZh
-	 0ASgqFjVnQH0xphipmm83rPMAzPBT3AxLx+EhkLvpgsQsbFNw+eQyOBN0zOp3BV/P+
-	 5T8EJ+/ty74g62WGBb5sB175sf+u7kZteFm+Zx2Y=
+	b=XN/l4i/VZeG+LIAhdjuyaizHOm1knistfTRF2W8DEMZO6LDb6O5Lp9Rvl6gXdxvkr
+	 K8OTj/K0fZMDbnS7rE58TTIhs//iliQ2UmLnpY4SniaYLA02FFBmfCNY3Uh/PBQUsx
+	 gRZFvSMrZqNg5O4n2UAKUf9J9JS7qp34lidetiKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/196] scsi: myrs: Fix dma_alloc_coherent() error check
-Date: Mon, 13 Oct 2025 16:44:30 +0200
-Message-ID: <20251013144318.208546308@linuxfoundation.org>
+Subject: [PATCH 6.1 098/196] media: rj54n1cb0c: Fix memleak in rj54n1_probe()
+Date: Mon, 13 Oct 2025 16:44:31 +0200
+Message-ID: <20251013144318.244844875@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,61 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit edb35b1ffc686fd9b5a91902f034eb9f4d2c9f6b ]
+[ Upstream commit fda55673ecdabf25f5ecc61b5ab17239257ac252 ]
 
-Check for NULL return value with dma_alloc_coherent(), because DMA
-address is not always set by dma_alloc_coherent() on failure.
+rj54n1_probe() won't clean all the allocated resources in fail
+path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
+prevent memleak.
 
-Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250725083112.43975-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f187352dcd45 ("media: i2c: Copy rj54n1cb0c soc_camera sensor driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/myrs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/rj54n1cb0c.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
-index 95e7c00cb7e54..2626e13e52a2d 100644
---- a/drivers/scsi/myrs.c
-+++ b/drivers/scsi/myrs.c
-@@ -498,14 +498,14 @@ static bool myrs_enable_mmio_mbox(struct myrs_hba *cs,
- 	/* Temporary dma mapping, used only in the scope of this function */
- 	mbox = dma_alloc_coherent(&pdev->dev, sizeof(union myrs_cmd_mbox),
- 				  &mbox_addr, GFP_KERNEL);
--	if (dma_mapping_error(&pdev->dev, mbox_addr))
-+	if (!mbox)
- 		return false;
+diff --git a/drivers/media/i2c/rj54n1cb0c.c b/drivers/media/i2c/rj54n1cb0c.c
+index 1c3502f34cd37..86f4971222ba7 100644
+--- a/drivers/media/i2c/rj54n1cb0c.c
++++ b/drivers/media/i2c/rj54n1cb0c.c
+@@ -1332,10 +1332,13 @@ static int rj54n1_probe(struct i2c_client *client,
+ 			V4L2_CID_GAIN, 0, 127, 1, 66);
+ 	v4l2_ctrl_new_std(&rj54n1->hdl, &rj54n1_ctrl_ops,
+ 			V4L2_CID_AUTO_WHITE_BALANCE, 0, 1, 1, 1);
+-	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
+-	if (rj54n1->hdl.error)
+-		return rj54n1->hdl.error;
  
- 	/* These are the base addresses for the command memory mailbox array */
- 	cs->cmd_mbox_size = MYRS_MAX_CMD_MBOX * sizeof(union myrs_cmd_mbox);
- 	cmd_mbox = dma_alloc_coherent(&pdev->dev, cs->cmd_mbox_size,
- 				      &cs->cmd_mbox_addr, GFP_KERNEL);
--	if (dma_mapping_error(&pdev->dev, cs->cmd_mbox_addr)) {
-+	if (!cmd_mbox) {
- 		dev_err(&pdev->dev, "Failed to map command mailbox\n");
- 		goto out_free;
- 	}
-@@ -520,7 +520,7 @@ static bool myrs_enable_mmio_mbox(struct myrs_hba *cs,
- 	cs->stat_mbox_size = MYRS_MAX_STAT_MBOX * sizeof(struct myrs_stat_mbox);
- 	stat_mbox = dma_alloc_coherent(&pdev->dev, cs->stat_mbox_size,
- 				       &cs->stat_mbox_addr, GFP_KERNEL);
--	if (dma_mapping_error(&pdev->dev, cs->stat_mbox_addr)) {
-+	if (!stat_mbox) {
- 		dev_err(&pdev->dev, "Failed to map status mailbox\n");
- 		goto out_free;
- 	}
-@@ -533,7 +533,7 @@ static bool myrs_enable_mmio_mbox(struct myrs_hba *cs,
- 	cs->fwstat_buf = dma_alloc_coherent(&pdev->dev,
- 					    sizeof(struct myrs_fwstat),
- 					    &cs->fwstat_addr, GFP_KERNEL);
--	if (dma_mapping_error(&pdev->dev, cs->fwstat_addr)) {
-+	if (!cs->fwstat_buf) {
- 		dev_err(&pdev->dev, "Failed to map firmware health buffer\n");
- 		cs->fwstat_buf = NULL;
- 		goto out_free;
++	if (rj54n1->hdl.error) {
++		ret = rj54n1->hdl.error;
++		goto err_free_ctrl;
++	}
++
++	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
+ 	rj54n1->clk_div		= clk_div;
+ 	rj54n1->rect.left	= RJ54N1_COLUMN_SKIP;
+ 	rj54n1->rect.top	= RJ54N1_ROW_SKIP;
 -- 
 2.51.0
 
