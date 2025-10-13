@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB9309DC0;
-	Mon, 13 Oct 2025 14:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9F97083C;
+	Mon, 13 Oct 2025 14:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367586; cv=none; b=Eht7B9/aBced9Jw4UqDk7QuEQmyo4nd0BmquLXGeUbEosy4bI7IS/Tm9xGSYJcNOxJCdu9DXkoCD8Rj4RbC02WxleB5wLIyHSN0gcK/FBVxiYTvfKzcwWydm9NkS3SGtWCgOoGclnpKN0y1GQbfhpQ4WeAkhrScq8EtXKt2NP2o=
+	t=1760367589; cv=none; b=Y2t+10RNMgPQiv3zwomyAqcxRsejNTlRaZ7lvD4Iev1PIUt087M6x1/lkKa7ls70dpjo+y7+Rd+d4lkxR5GTQnArXBWji8EZzgg1bB+YLuBWnlmTzEP4MXY7oBHDJiVzlH0vbx/zROpjjGJ5n6eBAfAzo5nLuKJ+HBLVrt6Opj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367586; c=relaxed/simple;
-	bh=6z/UT84n9sx431eCOFQqUvHkg70wyjy+D7RRZfGRNWM=;
+	s=arc-20240116; t=1760367589; c=relaxed/simple;
+	bh=ZPnOFIi1hTaagiowsQpodocCHmtEgKm+unR3Z5Y7060=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEaif9+FpaUEWP5MPYBe7tjTo/Ao1zp8wDDZLXKedJECoSszRu2aq0PsGqR1USd4aSdBlbQjdVIvhZYhYryscgi3UcgU227h3r5c40g19NiFCNM0HOQ7AAK+9zC3YmvTfZgzEjMK1opalkwgO2XFhVaElPhAWKKL3gTTxeidK6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhOkJEE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Epw8BBReFWvXfViTw0J/oMTbePB2LhnITqwZ4frVFUFoD51IfkKhqd2HQc0nNRhGL6J731o1eoiQNtzG3AoLG6RHgSd0pf4Ry+ST+guVIKMNS0CZC2iJ2a7HGzQA2jJTrJQrEhYQRD8Y3w/QCxPuHPtL88snZZkG9Vr3vgkDbTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eecgEs3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhOkJEE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14677C4CEE7;
-	Mon, 13 Oct 2025 14:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eecgEs3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D69CC4CEE7;
+	Mon, 13 Oct 2025 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367586;
-	bh=6z/UT84n9sx431eCOFQqUvHkg70wyjy+D7RRZfGRNWM=;
+	s=korg; t=1760367589;
+	bh=ZPnOFIi1hTaagiowsQpodocCHmtEgKm+unR3Z5Y7060=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhOkJEE7LxODPbrJcIjrk8cEMYDPZOV42PZD1xi648Y15VwLQ06Iz3wpeR5SKqcQM
-	 l8IktIRb19P0xgUqcsnR7RZ8XuvruqWiitsriSqZtVTqrfpCSrCQ6AAxTF9bQJtLjT
-	 ZCNQy3qb5pvuOhdaXTiI6BfBu28uQFiSamiYGzwY=
+	b=eecgEs3hxEJ+dx9+Ew/BD52UEt+Xnqjzf+bzXpyLRHW7NlB3PwyX3iWfmoZ4hQmtG
+	 IB3/Dm2gw8DVfOrTvlUn6s+aML1QPJY7Z+bjs+6hjbwe35RrLIDHM1HutaKaOIYEcZ
+	 kQdZ+Z6yWxd+PelcrM9CbA/5oxJJqxC/tP1m6bP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Brigham Campbell <me@brighamcampbell.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Brahmajit Das <listout@listout.xyz>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/196] drm/panel: novatek-nt35560: Fix invalid return value
-Date: Mon, 13 Oct 2025 16:44:13 +0200
-Message-ID: <20251013144317.439485778@linuxfoundation.org>
+Subject: [PATCH 6.6 063/196] drm/radeon/r600_cs: clean up of dead code in r600_cs
+Date: Mon, 13 Oct 2025 16:44:14 +0200
+Message-ID: <20251013144317.475243619@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -46,46 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brigham Campbell <me@brighamcampbell.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 125459e19ec654924e472f3ff5aeea40358dbebf ]
+[ Upstream commit 260dcf5b06d519bcf27a5dfdb5c626821a55c170 ]
 
-Fix bug in nt35560_set_brightness() which causes the function to
-erroneously report an error. mipi_dsi_dcs_write() returns either a
-negative value when an error occurred or a positive number of bytes
-written when no error occurred. The buggy code reports an error under
-either condition.
+GCC 16 enables -Werror=unused-but-set-variable= which results in build
+error with the following message.
 
-Fixes: 8152c2bfd780 ("drm/panel: Add driver for Sony ACX424AKP panel")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250731032343.1258366-2-me@brighamcampbell.com
+drivers/gpu/drm/radeon/r600_cs.c: In function ‘r600_texture_size’:
+drivers/gpu/drm/radeon/r600_cs.c:1411:29: error: variable ‘level’ set but not used [-Werror=unused-but-set-variable=]
+ 1411 |         unsigned offset, i, level;
+      |                             ^~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:287: drivers/gpu/drm/radeon/r600_cs.o] Error 1
+
+level although is set, but in never used in the function
+r600_texture_size. Thus resulting in dead code and this error getting
+triggered.
+
+Fixes: 60b212f8ddcd ("drm/radeon: overhaul texture checking. (v3)")
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-novatek-nt35560.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35560.c b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-index 5bbea734123bc..ee04c55175bb8 100644
---- a/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-+++ b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-@@ -161,7 +161,7 @@ static int nt35560_set_brightness(struct backlight_device *bl)
- 		par = 0x00;
- 		ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY,
- 					 &par, 1);
--		if (ret) {
-+		if (ret < 0) {
- 			dev_err(nt->dev, "failed to disable display backlight (%d)\n", ret);
- 			return ret;
- 		}
+diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
+index ac77d1246b945..811265648a582 100644
+--- a/drivers/gpu/drm/radeon/r600_cs.c
++++ b/drivers/gpu/drm/radeon/r600_cs.c
+@@ -1408,7 +1408,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
+ 			      unsigned block_align, unsigned height_align, unsigned base_align,
+ 			      unsigned *l0_size, unsigned *mipmap_size)
+ {
+-	unsigned offset, i, level;
++	unsigned offset, i;
+ 	unsigned width, height, depth, size;
+ 	unsigned blocksize;
+ 	unsigned nbx, nby;
+@@ -1420,7 +1420,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
+ 	w0 = r600_mip_minify(w0, 0);
+ 	h0 = r600_mip_minify(h0, 0);
+ 	d0 = r600_mip_minify(d0, 0);
+-	for(i = 0, offset = 0, level = blevel; i < nlevels; i++, level++) {
++	for (i = 0, offset = 0; i < nlevels; i++) {
+ 		width = r600_mip_minify(w0, i);
+ 		nbx = r600_fmt_get_nblocksx(format, width);
+ 
 -- 
 2.51.0
 
