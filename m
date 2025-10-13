@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503CC1EF36E;
-	Mon, 13 Oct 2025 15:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258ED3081B4;
+	Mon, 13 Oct 2025 15:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369133; cv=none; b=mszELaEDzk019faoWCRAvD8JAjDDfcvdJg7tOxiK/Z+uja4FKscj/xw/vIY008NOXewabb+wcKT/8/XW773m4UUDtXqQVqVbkg5gSCpNVaYbdNmWZanAmuLWVHyx5Z/o35rah9S0QuZHuhwupMw+KNshuhEGbScbKd5HlMzy+rQ=
+	t=1760369136; cv=none; b=nEioalgRT+9stFcwD3BYxS6ziYDf2JQqkvqfBGInged9//EexnFzR9WoVRC6brXQyBdD8u6P8piGhPFZexYxXjnJn+adS/7i9/+agch2w5c/m8zmwW6ydPhaEWC7RYHdNeiEPNBZeifqL8ywPNXsoR0ew3m11jRd1pzaJsrqOU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369133; c=relaxed/simple;
-	bh=kgDUFYMSbrNPmmkknK6LdoCX9rTvLtLNivKATv+hp3Y=;
+	s=arc-20240116; t=1760369136; c=relaxed/simple;
+	bh=I5/u7paM7pjZ+7egrkxK9v/EAQJMbbHSz22lz39vQqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kG2KMuiuG9v4scEJVxQfT4BQl/NbgGpUntwjLDd/HGdwnCHGIuGbM5MwNvRjlVLNi098vgJeaca1smGlRh5WI55kk28Y6fv9VK6Cktwr1uMjEmtC7kl8stpaMXTpNnVR0Aecf2cJK1N/yfIgv7HLvxCOf3Y/q7ntLSeaNjO5EW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWT7cDbW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nh+BxH+ODbYovSJYhXGOifITT+KmJCofR0Sl7OiFsBr+sW93BkzHgtqPdgDsmEcbExf4jkSudPdPkzDolLPEx0mqbM0J0F9SD0/F73tTFdoUfsVgzLR2id97RzQraZSDXKhwXvRQJlrYyNAWiyINghbe8BKzErla768HGQDAkS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFWaSd7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWT7cDbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C0DC4CEE7;
-	Mon, 13 Oct 2025 15:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFWaSd7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A247EC116B1;
+	Mon, 13 Oct 2025 15:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369133;
-	bh=kgDUFYMSbrNPmmkknK6LdoCX9rTvLtLNivKATv+hp3Y=;
+	s=korg; t=1760369136;
+	bh=I5/u7paM7pjZ+7egrkxK9v/EAQJMbbHSz22lz39vQqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWT7cDbWF1kt++cl7ZW+orVPsgUBbMAjMk89vAQcnrrVQH3Imx8sW0yw10A5ts5B9
-	 gl8DPg6rLoWRSp0tgZIZrU2UKpG6PVhXq8v9UvGOf5H/hqaYpuBXukQPInHbuCYsf9
-	 EvUhaPf+/lpt05vtx3aWn2pBeAmV0CMzByk27Jzk=
+	b=ZFWaSd7xnDd26qtpuS8lIHKv3oyoDWy71YSYkNS3RTmMPCponUAWbcygLvbtKpgJR
+	 in9Vb95YdNiiNeFIpfY/cydyfZMfTynW9yA31ORSaT0MLQpEwONPWenzP6Pn6II97V
+	 A7HztYqGkOktex5HfmQv/uofpcbRZQheTvdOEy8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 140/563] Revert "arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations"
-Date: Mon, 13 Oct 2025 16:40:01 +0200
-Message-ID: <20251013144416.364937777@linuxfoundation.org>
+Subject: [PATCH 6.17 141/563] arm64: dts: mediatek: mt8188: Change efuse fallback compatible to mt8186
+Date: Mon, 13 Oct 2025 16:40:02 +0200
+Message-ID: <20251013144416.400776578@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,60 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 932424a925ce79cbed0a93d36c5f1b69a0128de1 ]
+[ Upstream commit c881d1c37b2c159d908203dba5c4920bc776046f ]
 
-This reverts commit 1a314099b7559690fe23cdf3300dfff6e830ecb1.
+The efuse block in the MT8188 contains the GPU speed bin cell, and like
+the MT8186 one, has the same conversion scheme to work with the GPU OPP
+binding. This was reflected in a corresponding change to the efuse DT
+binding.
 
-The C6x carveouts are reversed intentionally. This is due to the
-requirement to keep the DMA memory region as non-cached, however the
-minimum granular cache region for C6x is 16MB. So, C66x_0 marks the
-entire C66x_1 16MB memory carveouts as non-cached, and uses the DMA
-memory region of C66x_1 as its own, and vice-versa.
+Change the fallback compatible of the MT8188's efuse block from the
+generic one to the MT8186 one. This also makes GPU DVFS work properly.
 
-This was also called out in the original commit which introduced these
-reversed carveouts:
-	"The minimum granularity on the Cache settings on C66x DSP
-	cores is 16MB, so the DMA memory regions are chosen such that
-	they are in separate 16MB regions for each DSP, while reserving
-	a total of 16 MB for each DSP and not changing the overall DSP
-        remoteproc carveouts."
-
-Fixes: 1a314099b755 ("arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://patch.msgid.link/20250908142826.1828676-23-b-padhi@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: d39aacd1021a ("arm64: dts: mediatek: mt8188: add lvts definitions")
+Fixes: 50e7592cb696 ("arm64: dts: mediatek: mt8188: Add GPU speed bin NVMEM cells")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250610063431.2955757-3-wenst@chromium.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8188.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-index 6a1b32169678e..bb771ce823ec1 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-@@ -123,7 +123,8 @@ main_r5fss1_core1_memory_region: memory@a5100000 {
- 			no-map;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8188.dtsi b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
+index 202478407727e..90c388f1890f5 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8188.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
+@@ -2183,7 +2183,7 @@ imp_iic_wrap_en: clock-controller@11ec2000 {
  		};
  
--		c66_0_dma_memory_region: memory@a6000000 {
-+		/* Carveout locations are flipped due to caching */
-+		c66_1_dma_memory_region: memory@a6000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa6000000 0x00 0x100000>;
- 			no-map;
-@@ -135,7 +136,8 @@ c66_0_memory_region: memory@a6100000 {
- 			no-map;
- 		};
- 
--		c66_1_dma_memory_region: memory@a7000000 {
-+		/* Carveout locations are flipped due to caching */
-+		c66_0_dma_memory_region: memory@a7000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa7000000 0x00 0x100000>;
- 			no-map;
+ 		efuse: efuse@11f20000 {
+-			compatible = "mediatek,mt8188-efuse", "mediatek,efuse";
++			compatible = "mediatek,mt8188-efuse", "mediatek,mt8186-efuse";
+ 			reg = <0 0x11f20000 0 0x1000>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
 -- 
 2.51.0
 
