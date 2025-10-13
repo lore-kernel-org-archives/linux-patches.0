@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168930EF9B;
-	Mon, 13 Oct 2025 15:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA64730F543;
+	Mon, 13 Oct 2025 15:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369669; cv=none; b=oNu8HfqVGHGEDIExoefRE3OYrF4pd7FHYFXtWDf2oqMCqjgpHqx0nc3+QLMm71S7BWg7z+qK+l6BrHAS0Nqx4pCDTaabLsxWqq+FCCeFZlsmnWh0Yl37QcOKKdxICxuj7zLSUzVZgisc9gcUBaA0yk1llJA57kYCn/bY939vfms=
+	t=1760369671; cv=none; b=bI6oMETOU2NfNZu0rjDpDQK5EvoIbJmnK8TLXu5d5lBw0fLvYACvg9PEFcroEHHk81x5csB2vCDl+dxo5Np//FXrSF+DXXr6LmI8W3Wy3P3o638yV01rhphZEglrAL+gTInoehth9txNn2urffnK1nFO/AAd4RT40auJl+2F+kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369669; c=relaxed/simple;
-	bh=4Mmd0n/8k09Yup6TStkwKgQbKwu9n/7cYGKJNHd/Eow=;
+	s=arc-20240116; t=1760369671; c=relaxed/simple;
+	bh=Lg0ENwjqkNiTcYTPxDc437r4y+WAd9VH1CGkSHqWdqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQ9nLWjEjGd7QdW22N6/Q+EG7XvLFLRVkUTCIB6nN0dRSNAjRyRTG+1uIsXqxqUuLjTSxvzJT5NZiunkKEtnRDMs741qbBe22yJfPeY/UTQxwePeJrqTxv5LcwIkmpa9mHrM5C8KWNDz+w9zSvE4ifCGuZ5k0u5FJyo3PQlOWB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4zjBFdZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdG2jJ5AXRd3mUmkJ2U/KtOMfqOvmVxVRlEeeYHK9tdLBmIuCOXHNrHGnAzA+a2HPrExoRSSiz/+AK0q1bVO3Muf0fxaredwXcLUzpl9Buan5zTspssWsywweWbCyqBMsdBBKpVs2lApucGvv5E4OeWheqwJEuSq3isiKz6a86U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsVs5FVL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4zjBFdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFE9C4CEFE;
-	Mon, 13 Oct 2025 15:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsVs5FVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45076C116B1;
+	Mon, 13 Oct 2025 15:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369668;
-	bh=4Mmd0n/8k09Yup6TStkwKgQbKwu9n/7cYGKJNHd/Eow=;
+	s=korg; t=1760369671;
+	bh=Lg0ENwjqkNiTcYTPxDc437r4y+WAd9VH1CGkSHqWdqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4zjBFdZ1l2iitirDKNSzixwq2/AQpUuyYKqX92WenR+Mv/I4kmX9bFa8mg7wFZmY
-	 WZx0S/V5+Xzg3uVoLhQhRQ//8S06EPvd304f+WgIi+Yk0p/Soz6BcxXRGnoX4vSJdK
-	 vkYWVybbfVpauBd2ec8E7tcpStCenYWT9P1JvC0k=
+	b=EsVs5FVLMoRy9ILxaHHJBTgHogzVOHL1XFAkziyeE6fjE1iM64sUo2VGpWXqePYW1
+	 BZ9g8ileiUwC9cSwpVTFFpJ+kTUCxI8ubHsy/A2xHbQ5ANYA256FrDMc7oKAwRzXjJ
+	 /0xp277WwF/QXL533q3vDp1tzZgbe8xWEkWALjtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 327/563] drm/msm/mdp4: stop supporting no-IOMMU configuration
-Date: Mon, 13 Oct 2025 16:43:08 +0200
-Message-ID: <20251013144423.108559617@linuxfoundation.org>
+Subject: [PATCH 6.17 328/563] drm/msm: stop supporting no-IOMMU configuration
+Date: Mon, 13 Oct 2025 16:43:09 +0200
+Message-ID: <20251013144423.144801786@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit cc64568b522b64fb8f8c607da9eb4e2d9f72d0cf ]
+[ Upstream commit c94fc6d35685587aa0cb9a8d7d7062c73ab04d89 ]
 
 With the switch to GPUVM the msm driver no longer supports the no-IOMMU
 configurations (even without the actual GPU). Return an error in case we
-face the lack of the IOMMU for an MDP4 device.
+face the lack of the IOMMU.
 
 Fixes: 111fdd2198e6 ("drm/msm: drm_gpuvm conversion")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/672557/
+Patchwork: https://patchwork.freedesktop.org/patch/672559/
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_kms.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 0952c7f18abdc..4d1ea9b261917 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -463,9 +463,9 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		ret = PTR_ERR(mmu);
- 		goto fail;
- 	} else if (!mmu) {
--		DRM_DEV_INFO(dev->dev, "no iommu, fallback to phys "
--				"contig buffers for scanout\n");
--		vm = NULL;
-+		DRM_DEV_INFO(dev->dev, "no IOMMU, bailing out\n");
-+		ret = -ENODEV;
-+		goto fail;
- 	} else {
- 		vm  = msm_gem_vm_create(dev, mmu, "mdp4",
- 					0x1000, 0x100000000 - 0x1000,
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index 56828d218e88a..4c4dcb095c4df 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -195,14 +195,13 @@ struct drm_gpuvm *msm_kms_init_vm(struct drm_device *dev)
+ 		iommu_dev = mdp_dev;
+ 	else
+ 		iommu_dev = mdss_dev;
+-
+ 	mmu = msm_iommu_disp_new(iommu_dev, 0);
+ 	if (IS_ERR(mmu))
+ 		return ERR_CAST(mmu);
+ 
+ 	if (!mmu) {
+-		drm_info(dev, "no IOMMU, fallback to phys contig buffers for scanout\n");
+-		return NULL;
++		drm_info(dev, "no IOMMU, bailing out\n");
++		return ERR_PTR(-ENODEV);
+ 	}
+ 
+ 	vm = msm_gem_vm_create(dev, mmu, "mdp_kms",
 -- 
 2.51.0
 
