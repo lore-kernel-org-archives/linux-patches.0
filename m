@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CAC31353D;
-	Mon, 13 Oct 2025 15:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AE631AF16;
+	Mon, 13 Oct 2025 15:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369743; cv=none; b=mGRYELfrdshnd0KMHtv0yDCSPirSmNZG5xh5XBmt/j20LWs5o9nmo5r3/5RYMUGgdBpG35JPdZk0YCoIgAh+pqJ+PpJabEIgDgWJWv5RevMn1TU+1GLrm+okWqdv/dqvoH1Y0a4YGmUsDfMY3/vgfC03VDwYU+jEbvYJAg4HstU=
+	t=1760369747; cv=none; b=Y9neeV6+D56TPlWz8g4SCjvrffcB/sEDqupo108Q3OFvUh830Yt6yHrCpYMKMWP1bopB6vVe7nz5tQlxqk6IOrdTFRrpPJ2IoHsL/y04IBkfenX8g7bJEYu6Me5gs3EzKCDD5m7jANsj+KnhSEI1/wnC2hw93kslICNU3Du37Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369743; c=relaxed/simple;
-	bh=Q1QYFR90UNWwCpLb9Pd9Z6pGWp57+ApjRYsp3x9y20A=;
+	s=arc-20240116; t=1760369747; c=relaxed/simple;
+	bh=TY/zMOBg6NlhFlQ2cTvwkGXqrmaEnqAShvKuRxAZHUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FC9s6Qd5On9FqqarBSqM9KnvMyQyg93aBIG+4zjsDdY25WrvAfIvDUKFgAGNGLGEXDUkxXGNHBJUbmiDJWuvLZwO0hF+UZofUKjP81en3h/LOe1CcHx75JOXnF5lvhsv2j/5Ci6mawdfnGw6rNgZ/cq9/BfR5j1ACwi8JCCuzXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quGd6ux7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKTBjpPWWGyIKkd2B3dNZ2JaeHLRvr+0ZUWCkaTzMv6t291vhjcJBeYyg0Qh0M8KbVrvy9btmCVznpoiswlTYR80UXKwYn5v7idbqj3R9Zf6gwOwpFv9Ywpj9R5Uwih3CH16LK1LUptAUVkOBCiweJrEo3DiI4t/xBzgydqgFX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVvQy98G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quGd6ux7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF14C2BCC7;
-	Mon, 13 Oct 2025 15:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVvQy98G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFA0C2BCFB;
+	Mon, 13 Oct 2025 15:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369743;
-	bh=Q1QYFR90UNWwCpLb9Pd9Z6pGWp57+ApjRYsp3x9y20A=;
+	s=korg; t=1760369746;
+	bh=TY/zMOBg6NlhFlQ2cTvwkGXqrmaEnqAShvKuRxAZHUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=quGd6ux7bBR59wFHdEP4MeCQziFren3mKILUATmY6KOYw2aiKrepc36VkEMz4gQPY
-	 SiqdR6Bi5ZlpGyfyTJuwReSsXnSOMZGzWAlEskFNi0p5heGp5O0KxYHH3usR768TsP
-	 0muw3r7afJ6bA3ljAr8xAXUBpAA6gpWdpWwxS4TU=
+	b=VVvQy98GrUy6TG8M7p3KbgngPkZvzB2wWRfpSgh9wAWcdxR8QBmFbquflbPIRb8rK
+	 yTcblbrcYJd+38JsjA91R21ag2hft+FtYArTuvE7GdHK4q04LZkZ0M9dhSiIWaSsw/
+	 onvtG4fSTe9fFz9xlLkZTn5SeD+zc+yXpXg460Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 354/563] wifi: mt76: mt7996: Fix mt7996_mcu_bss_mld_tlv routine
-Date: Mon, 13 Oct 2025 16:43:35 +0200
-Message-ID: <20251013144424.093423382@linuxfoundation.org>
+Subject: [PATCH 6.17 355/563] wifi: mt76: fix potential memory leak in mt76_wmac_probe()
+Date: Mon, 13 Oct 2025 16:43:36 +0200
+Message-ID: <20251013144424.129712060@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,212 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit ed01c310eca96453c11b59db46c855aa593cffdd ]
+[ Upstream commit 42754b7de2b1a2cf116c5e3f1e8e78392f4ed700 ]
 
-Update mt7996_mcu_bss_mld_tlv routine to properly support MLO
-configuring the BSS.
+In mt76_wmac_probe(), when the mt76_alloc_device() call succeeds, memory
+is allocated for both struct ieee80211_hw and a workqueue. However, on
+the error path, the workqueue is not freed. Fix that by calling
+mt76_free_device() on the error path.
 
-Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250710-mt7996-mlo-fixes-v3-v1-1-e7595b089f2c@kernel.org
+Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20250709145532.41246-1-abdun.nihaal@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 46 ++++++++++++++++++-
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 26 ++++++++---
- .../net/wireless/mediatek/mt76/mt7996/mcu.h   |  3 +-
- .../wireless/mediatek/mt76/mt7996/mt7996.h    |  8 ++++
- 4 files changed, 75 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7603/soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 8a8a478391646..3c34a4980afa0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -138,6 +138,28 @@ static int get_omac_idx(enum nl80211_iftype type, u64 mask)
- 	return -1;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
+index 08590aa68356f..1dd3723720480 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
+@@ -48,7 +48,7 @@ mt76_wmac_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ error:
+-	ieee80211_free_hw(mt76_hw(dev));
++	mt76_free_device(mdev);
+ 	return ret;
  }
- 
-+static int get_own_mld_idx(u64 mask, bool group_mld)
-+{
-+	u8 start = group_mld ? 0 : 16;
-+	u8 end = group_mld ? 15 : 63;
-+	int idx;
-+
-+	idx = get_free_idx(mask, start, end);
-+	if (idx)
-+		return idx - 1;
-+
-+	/* If the 16-63 range is not available, perform another lookup in the
-+	 * range 0-15
-+	 */
-+	if (!group_mld) {
-+		idx = get_free_idx(mask, 0, 15);
-+		if (idx)
-+			return idx - 1;
-+	}
-+
-+	return -EINVAL;
-+}
-+
- static void
- mt7996_init_bitrate_mask(struct ieee80211_vif *vif, struct mt7996_vif_link *mlink)
- {
-@@ -279,7 +301,7 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	struct mt7996_dev *dev = phy->dev;
- 	u8 band_idx = phy->mt76->band_idx;
- 	struct mt76_txq *mtxq;
--	int idx, ret;
-+	int mld_idx, idx, ret;
- 
- 	mlink->idx = __ffs64(~dev->mt76.vif_mask);
- 	if (mlink->idx >= mt7996_max_interface_num(dev))
-@@ -289,6 +311,17 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	if (idx < 0)
- 		return -ENOSPC;
- 
-+	if (!dev->mld_idx_mask) { /* first link in the group */
-+		mvif->mld_group_idx = get_own_mld_idx(dev->mld_idx_mask, true);
-+		mvif->mld_remap_idx = get_free_idx(dev->mld_remap_idx_mask,
-+						   0, 15);
-+	}
-+
-+	mld_idx = get_own_mld_idx(dev->mld_idx_mask, false);
-+	if (mld_idx < 0)
-+		return -ENOSPC;
-+
-+	link->mld_idx = mld_idx;
- 	link->phy = phy;
- 	mlink->omac_idx = idx;
- 	mlink->band_idx = band_idx;
-@@ -301,6 +334,11 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 		return ret;
- 
- 	dev->mt76.vif_mask |= BIT_ULL(mlink->idx);
-+	if (!dev->mld_idx_mask) {
-+		dev->mld_idx_mask |= BIT_ULL(mvif->mld_group_idx);
-+		dev->mld_remap_idx_mask |= BIT_ULL(mvif->mld_remap_idx);
-+	}
-+	dev->mld_idx_mask |= BIT_ULL(link->mld_idx);
- 	phy->omac_mask |= BIT_ULL(mlink->omac_idx);
- 
- 	idx = MT7996_WTBL_RESERVED - mlink->idx;
-@@ -380,7 +418,13 @@ void mt7996_vif_link_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	}
- 
- 	dev->mt76.vif_mask &= ~BIT_ULL(mlink->idx);
-+	dev->mld_idx_mask &= ~BIT_ULL(link->mld_idx);
- 	phy->omac_mask &= ~BIT_ULL(mlink->omac_idx);
-+	if (!(dev->mld_idx_mask & ~BIT_ULL(mvif->mld_group_idx))) {
-+		/* last link */
-+		dev->mld_idx_mask &= ~BIT_ULL(mvif->mld_group_idx);
-+		dev->mld_remap_idx_mask &= ~BIT_ULL(mvif->mld_remap_idx);
-+	}
- 
- 	spin_lock_bh(&dev->mt76.sta_poll_lock);
- 	if (!list_empty(&msta_link->wcid.poll_list))
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index e6db3e0b2ffda..aad58f7831c7b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -899,17 +899,28 @@ mt7996_mcu_bss_txcmd_tlv(struct sk_buff *skb, bool en)
- }
- 
- static void
--mt7996_mcu_bss_mld_tlv(struct sk_buff *skb, struct mt76_vif_link *mlink)
-+mt7996_mcu_bss_mld_tlv(struct sk_buff *skb,
-+		       struct ieee80211_bss_conf *link_conf,
-+		       struct mt7996_vif_link *link)
- {
-+	struct ieee80211_vif *vif = link_conf->vif;
-+	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
- 	struct bss_mld_tlv *mld;
- 	struct tlv *tlv;
- 
- 	tlv = mt7996_mcu_add_uni_tlv(skb, UNI_BSS_INFO_MLD, sizeof(*mld));
--
- 	mld = (struct bss_mld_tlv *)tlv;
--	mld->group_mld_id = 0xff;
--	mld->own_mld_id = mlink->idx;
--	mld->remap_idx = 0xff;
-+	mld->own_mld_id = link->mld_idx;
-+	mld->link_id = link_conf->link_id;
-+
-+	if (ieee80211_vif_is_mld(vif)) {
-+		mld->group_mld_id = mvif->mld_group_idx;
-+		mld->remap_idx = mvif->mld_remap_idx;
-+		memcpy(mld->mac_addr, vif->addr, ETH_ALEN);
-+	} else {
-+		mld->group_mld_id = 0xff;
-+		mld->remap_idx = 0xff;
-+	}
- }
- 
- static void
-@@ -1108,6 +1119,8 @@ int mt7996_mcu_add_bss_info(struct mt7996_phy *phy, struct ieee80211_vif *vif,
- 		goto out;
- 
- 	if (enable) {
-+		struct mt7996_vif_link *link;
-+
- 		mt7996_mcu_bss_rfch_tlv(skb, phy);
- 		mt7996_mcu_bss_bmc_tlv(skb, mlink, phy);
- 		mt7996_mcu_bss_ra_tlv(skb, phy);
-@@ -1118,7 +1131,8 @@ int mt7996_mcu_add_bss_info(struct mt7996_phy *phy, struct ieee80211_vif *vif,
- 			mt7996_mcu_bss_he_tlv(skb, vif, link_conf, phy);
- 
- 		/* this tag is necessary no matter if the vif is MLD */
--		mt7996_mcu_bss_mld_tlv(skb, mlink);
-+		link = container_of(mlink, struct mt7996_vif_link, mt76);
-+		mt7996_mcu_bss_mld_tlv(skb, link_conf, link);
- 	}
- 
- 	mt7996_mcu_bss_mbssid_tlv(skb, link_conf, enable);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-index 130ea95626d5b..7b21d6ae7e435 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-@@ -481,7 +481,8 @@ struct bss_mld_tlv {
- 	u8 own_mld_id;
- 	u8 mac_addr[ETH_ALEN];
- 	u8 remap_idx;
--	u8 __rsv[3];
-+	u8 link_id;
-+	u8 __rsv[2];
- } __packed;
- 
- struct sta_rec_ht_uni {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index bbd4679edc9d3..b98cfe6e5be8c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -248,11 +248,16 @@ struct mt7996_vif_link {
- 
- 	struct ieee80211_tx_queue_params queue_params[IEEE80211_NUM_ACS];
- 	struct cfg80211_bitrate_mask bitrate_mask;
-+
-+	u8 mld_idx;
- };
- 
- struct mt7996_vif {
- 	struct mt7996_vif_link deflink; /* must be first */
- 	struct mt76_vif_data mt76;
-+
-+	u8 mld_group_idx;
-+	u8 mld_remap_idx;
- };
- 
- /* crash-dump */
-@@ -337,6 +342,9 @@ struct mt7996_dev {
- 	u32 q_int_mask[MT7996_MAX_QUEUE];
- 	u32 q_wfdma_mask;
- 
-+	u64 mld_idx_mask;
-+	u64 mld_remap_idx_mask;
-+
- 	const struct mt76_bus_ops *bus_ops;
- 	struct mt7996_phy phy;
  
 -- 
 2.51.0
