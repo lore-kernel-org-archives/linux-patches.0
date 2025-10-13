@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D958630C626;
-	Mon, 13 Oct 2025 15:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A7E3093DB;
+	Mon, 13 Oct 2025 15:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369112; cv=none; b=WSc1Z3d9DRj8wlyNoq/WTDviHi7yunm2uT7Uaddl4nA37TCvz/QIwT2KXzjckc29mmGmDMl5a5s8u37dUggrRWGyyCZ/RDSkiI/6fhPlBMnc/MrnQkkdyaIpHXGOdCmMd+M7oErWzL2bn8ijN6IdgnbRCxYz9U4rMLsy4IrBmog=
+	t=1760369115; cv=none; b=kSTO2ZccruOc0VXLEmLNlY/kArOF0gHtpY0B0iGf0eoQSS02CFU7Ne+G82pyvkb262642XgL1Rz9NLe5juAlFjwmUD8VcINqGnzauqCH556QDmXxKpFLZysxotQdrY2EJ+uPqDlEXPPUE6AU1Mbu8733LZI9GmUCOicP/hTlU1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369112; c=relaxed/simple;
-	bh=1saZZx9D8VCoXBCUAkuIu6tIftiZ0IjciToJ4WfgJlA=;
+	s=arc-20240116; t=1760369115; c=relaxed/simple;
+	bh=CMaa7k7W8HsZgUWWohY7SG5YmIwUAsRC2IHZTxpSfWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRIzRrs5Q9FepDMs/jYi5l/XUcNkPevbZ94xPPF4sH70PAOcR2A/tHekoHMcI8UInryx1akjFr1ELeOHg4nbj/ldKQmrExkLdvCPD4wI0wpM+pkDVSldRvWgbzaTY0gkzVk8eJ5fA0NPGBIXiYhrVkiQkByp7NzB9c+iLRUuYuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGbTlpQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hfk2KHNmoKaqdGdpewVTnlM+FQMp7nleSo68wMVUWNeQO0Zt4UbNYiHVax4ljCVQ/RxD7KsscF+R/keToUp1btsLdXSBqJ9BcfF8BbWaX5l9+4PsgUZ6ouS1riisodFL2sZiQBAR6Hy1cOvPr80suIwtwi4dGEFfRKeMJty71So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPVqlYZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGbTlpQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6DCC4CEE7;
-	Mon, 13 Oct 2025 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPVqlYZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27043C4CEE7;
+	Mon, 13 Oct 2025 15:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369112;
-	bh=1saZZx9D8VCoXBCUAkuIu6tIftiZ0IjciToJ4WfgJlA=;
+	s=korg; t=1760369115;
+	bh=CMaa7k7W8HsZgUWWohY7SG5YmIwUAsRC2IHZTxpSfWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGbTlpQvvzG1GqD9KtsI8OHQ29Z4wSkJnswkFwz3VsPnn8XYiYN8bzw1bja0qxb2/
-	 qeOrnm/R272SRXKHN2WkYoytpww8PMOURM3dYCSJaMuOJP7DN1f18c9KBH66LMHoVh
-	 68TOeeR7tPeI9DurVn2Dud4qIfudqddmvh+y36lI=
+	b=rPVqlYZBZz1q4bPhMWwCQwIxB+AbvFGzm4bzsPsGGLCEqvgsSVIgaA8ArZCdXoQ4r
+	 28TgMzwVQS+QHOmCbvOJ3dZaMZt3AJpGXx4KZxmrn7g3i8gkJ7ogP86mOIvAQomjmm
+	 xefx0dVtjzgbVT/xVVGWTnrE/lQv/+6Ob6W6zyvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pavel Zhovner <pavel@flipperdevices.com>,
+	Alexey Charkov <alchark@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 125/563] blk-mq: remove useless checkings in blk_mq_update_nr_requests()
-Date: Mon, 13 Oct 2025 16:39:46 +0200
-Message-ID: <20251013144415.823048130@linuxfoundation.org>
+Subject: [PATCH 6.17 134/563] arm64: dts: rockchip: Add RTC on rk3576-evb1-v10
+Date: Mon, 13 Oct 2025 16:39:55 +0200
+Message-ID: <20251013144416.146640698@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,53 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Alexey Charkov <alchark@gmail.com>
 
-[ Upstream commit 8bd7195fea6d9662aa3b32498a3828bfd9b63185 ]
+[ Upstream commit 0adaae77862932a19cc14c086d7fd15ec0ef7703 ]
 
-1) queue_requests_store() is the only caller of
-blk_mq_update_nr_requests(), where queue is already freezed, no need to
-check mq_freeze_depth;
-2) q->tag_set must be set for request based device, and queue_is_mq() is
-already checked in blk_mq_queue_attr_visible(), no need to check
-q->tag_set.
+Add the I2C connected RTC chip to the Rockchip RK3576 EVB1 board.
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b86433721f46 ("blk-mq: fix potential deadlock while nr_requests grown")
+Apart from the realtime clock functionality, it also provides a 32 kHz
+clock source for the onboard WiFi chip.
+
+Tested-by: Pavel Zhovner <pavel@flipperdevices.com>
+Signed-off-by: Alexey Charkov <alchark@gmail.com>
+Link: https://lore.kernel.org/r/20250813-evb1-rtcwifibt-v1-1-d13c83422971@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Stable-dep-of: 843367c7ed19 ("arm64: dts: rockchip: Fix network on rk3576 evb1 board")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ .../boot/dts/rockchip/rk3576-evb1-v10.dts     | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 19b50110376c6..f5e713224d819 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4929,21 +4929,14 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
- {
- 	struct blk_mq_tag_set *set = q->tag_set;
- 	struct blk_mq_hw_ctx *hctx;
--	int ret;
-+	int ret = 0;
- 	unsigned long i;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
+index 56527c56830e3..bfefd37a1ab8c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
+@@ -680,6 +680,22 @@ regulator-state-mem {
+ 	};
+ };
  
--	if (WARN_ON_ONCE(!q->mq_freeze_depth))
--		return -EINVAL;
--
--	if (!set)
--		return -EINVAL;
--
- 	if (q->nr_requests == nr)
- 		return 0;
++&i2c2 {
++	status = "okay";
++
++	hym8563: rtc@51 {
++		compatible = "haoyu,hym8563";
++		reg = <0x51>;
++		clock-output-names = "hym8563";
++		interrupt-parent = <&gpio0>;
++		interrupts = <RK_PA0 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&rtc_int>;
++		wakeup-source;
++		#clock-cells = <0>;
++	};
++};
++
+ &mdio0 {
+ 	rgmii_phy0: phy@1 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+@@ -708,6 +724,12 @@ &pcie1 {
+ };
  
- 	blk_mq_quiesce_queue(q);
- 
--	ret = 0;
- 	queue_for_each_hw_ctx(q, hctx, i) {
- 		if (!hctx->tags)
- 			continue;
+ &pinctrl {
++	hym8563 {
++		rtc_int: rtc-int {
++			rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
+ 	usb {
+ 		usb_host_pwren: usb-host-pwren {
+ 			rockchip,pins = <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
 -- 
 2.51.0
 
