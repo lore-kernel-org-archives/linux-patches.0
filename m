@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B03D26F2B6;
-	Mon, 13 Oct 2025 15:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385A830AAD2;
+	Mon, 13 Oct 2025 15:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368661; cv=none; b=lDHB8fYMecO3jpovdpzQF0im2s8YVKC42R9BQstkjbY/IHaUlWyEW8+C5a4ERg4DGlGrxpHV2vIo8Y53XqVknT5T0nC4oDemaim6C64FuSiWQmPS9MtT+xAUpXM9x4puFvrBPi8+MlVce+IOs9PpQoSbwGQfjzdgrfOC+cJ5SNA=
+	t=1760368664; cv=none; b=L5qAtOdPaPz45EZBU9DpQXofLzCYH4BbG11XGxCE7cfBOuf2v1kjrbdifgpMg9QwCjVVrkJfiGPgmpFGYrlUJZXCI6ube7R8gnhzVkGRI2vN1bXlzWjaxPAiLlUNn5kEPDrAi8lgW9eCDQfNiG5TUhsTc/D2TB1Jr5nZ4mq89C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368661; c=relaxed/simple;
-	bh=0Z8UL2GhDJSI19a3Y1AzZSMsUVmigrZxRxSJB6psBNQ=;
+	s=arc-20240116; t=1760368664; c=relaxed/simple;
+	bh=0YZYuMZRTqljUxQV1k7DjQ8FTs/muD1Q2hdZX7GxBIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tit7RBbgsbeMjMtEpIVLmirUowMlTIvEXaEToIKu6xZJr6Bdq3Md9QQhm9lD3U2qK9IpNyMmu07c9xI4nTbxoPQFLyAUCzfANwOMYzj86EL/aS/XxrlGB6nPeA37SD+Vra2ONxV3NfRrp8aai3+IOPEddLgobqO6dyfVMiRmG+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQUVynzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ONKL+dIIqmoInbzXmwXRXNY8S4oRPbZ4Y9FgBHlVH+aWhJkyYp92BbF9Ttg3RCfKunqSfvhHxjqfRg/uQ3RnnScqD8s9wrC0nrlUPGEeEiJDUrQKJCigoKS2EUHhCju9EiI9u6Bxu0qZNyoZYs51ufylFAGONFqxA8f3rn/3V3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2gipGxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQUVynzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920D3C4CEFE;
-	Mon, 13 Oct 2025 15:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2gipGxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F52C4CEE7;
+	Mon, 13 Oct 2025 15:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368661;
-	bh=0Z8UL2GhDJSI19a3Y1AzZSMsUVmigrZxRxSJB6psBNQ=;
+	s=korg; t=1760368663;
+	bh=0YZYuMZRTqljUxQV1k7DjQ8FTs/muD1Q2hdZX7GxBIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQUVynzFUVVHQkWuqECrPyABXSmhk+ABFSSR9YR9upCAHjoGoRQjkAx8SjZgL9zpg
-	 /iq90jVqwdriBbE2p1T3EdWgyWd5ZcVfWaxUFOPEtfcbBK+f5C1GMLyDThxt0rKeqg
-	 KgTnkCdxkekbhs96NqsvIwSoiug32m1Il+W2MlZ4=
+	b=J2gipGxCtY9v6veDFFRJSlgy3HR5ILVrZgQog3F/TMzdhSY5i2DQKHOTpzqxqiADG
+	 Fh+B+R2CTFsnisvZFO/Zjd4gC+fnUnkQUx6pAp8X5hG7wBc8MylO2SXewPOXUHV9Cs
+	 wW6eSahLT/6scj7C+DV9wU3VgSSdjh1zrhZz2Q84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youling Tang <tangyouling@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 238/262] LoongArch: Automatically disable kaslr if boot from kexec_file
-Date: Mon, 13 Oct 2025 16:46:20 +0200
-Message-ID: <20251013144334.811147918@linuxfoundation.org>
+	Yunseong Kim <ysk@kzalloc.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 239/262] ksmbd: Fix race condition in RPC handle list access
+Date: Mon, 13 Oct 2025 16:46:21 +0200
+Message-ID: <20251013144334.846356604@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -50,43 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youling Tang <tangyouling@kylinos.cn>
+From: Yunseong Kim <ysk@kzalloc.com>
 
-commit c8168b4faf1d62cbb320a3e518ad31cdd567cb05 upstream.
+commit 305853cce379407090a73b38c5de5ba748893aee upstream.
 
-Automatically disable kaslr when the kernel loads from kexec_file.
+The 'sess->rpc_handle_list' XArray manages RPC handles within a ksmbd
+session. Access to this list is intended to be protected by
+'sess->rpc_lock' (an rw_semaphore). However, the locking implementation was
+flawed, leading to potential race conditions.
 
-kexec_file loads the secondary kernel image to a non-linked address,
-inherently providing KASLR-like randomization.
+In ksmbd_session_rpc_open(), the code incorrectly acquired only a read lock
+before calling xa_store() and xa_erase(). Since these operations modify
+the XArray structure, a write lock is required to ensure exclusive access
+and prevent data corruption from concurrent modifications.
 
-However, on LoongArch where System RAM may be non-contiguous, enabling
-KASLR for the second kernel may relocate it to an invalid memory region
-and cause a boot failure. Thus, we disable KASLR when "kexec_file" is
-detected in the command line.
+Furthermore, ksmbd_session_rpc_method() accessed the list using xa_load()
+without holding any lock at all. This could lead to reading inconsistent
+data or a potential use-after-free if an entry is concurrently removed and
+the pointer is dereferenced.
 
-To ensure compatibility with older kernels loaded via kexec_file, this
-patch should be backported to stable branches.
+Fix these issues by:
+1. Using down_write() and up_write() in ksmbd_session_rpc_open()
+   to ensure exclusive access during XArray modification, and ensuring
+   the lock is correctly released on error paths.
+2. Adding down_read() and up_read() in ksmbd_session_rpc_method()
+   to safely protect the lookup.
 
+Fixes: a1f46c99d9ea ("ksmbd: fix use-after-free in ksmbd_session_rpc_open")
+Fixes: b685757c7b08 ("ksmbd: Implements sess->rpc_handle_list as xarray")
 Cc: stable@vger.kernel.org
-Signed-off-by: Youling Tang <tangyouling@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/relocate.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/server/mgmt/user_session.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/arch/loongarch/kernel/relocate.c
-+++ b/arch/loongarch/kernel/relocate.c
-@@ -166,6 +166,10 @@ static inline __init bool kaslr_disabled
- 		return true;
- #endif
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -104,29 +104,32 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ 	if (!entry)
+ 		return -ENOMEM;
  
-+	str = strstr(boot_command_line, "kexec_file");
-+	if (str == boot_command_line || (str > boot_command_line && *(str - 1) == ' '))
-+		return true;
+-	down_read(&sess->rpc_lock);
+ 	entry->method = method;
+ 	entry->id = id = ksmbd_ipc_id_alloc();
+ 	if (id < 0)
+ 		goto free_entry;
 +
- 	return false;
++	down_write(&sess->rpc_lock);
+ 	old = xa_store(&sess->rpc_handle_list, id, entry, KSMBD_DEFAULT_GFP);
+-	if (xa_is_err(old))
++	if (xa_is_err(old)) {
++		up_write(&sess->rpc_lock);
+ 		goto free_id;
++	}
+ 
+ 	resp = ksmbd_rpc_open(sess, id);
+-	if (!resp)
+-		goto erase_xa;
++	if (!resp) {
++		xa_erase(&sess->rpc_handle_list, entry->id);
++		up_write(&sess->rpc_lock);
++		goto free_id;
++	}
+ 
+-	up_read(&sess->rpc_lock);
++	up_write(&sess->rpc_lock);
+ 	kvfree(resp);
+ 	return id;
+-erase_xa:
+-	xa_erase(&sess->rpc_handle_list, entry->id);
+ free_id:
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+ 	kfree(entry);
+-	up_read(&sess->rpc_lock);
+ 	return -EINVAL;
  }
  
+@@ -144,9 +147,14 @@ void ksmbd_session_rpc_close(struct ksmb
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+ {
+ 	struct ksmbd_session_rpc *entry;
++	int method;
+ 
++	down_read(&sess->rpc_lock);
+ 	entry = xa_load(&sess->rpc_handle_list, id);
+-	return entry ? entry->method : 0;
++	method = entry ? entry->method : 0;
++	up_read(&sess->rpc_lock);
++
++	return method;
+ }
+ 
+ void ksmbd_session_destroy(struct ksmbd_session *sess)
 
 
