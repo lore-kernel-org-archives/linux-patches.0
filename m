@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5C1221F00;
-	Mon, 13 Oct 2025 15:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DFE2566;
+	Mon, 13 Oct 2025 15:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368595; cv=none; b=J3FIzbcdakTFxGbQ2YiAEIWSBWOl5gxxgyZ30mz6+6HkVw1pJ4XorG+yILbjuB1u73xgT7N5Nsz/dTxuSug+F4OmBJXpp51+EWza5JT370lVEGCZ4XNduz5hz0IUsHr2WVst6A8aNMcCBRPwAmHgLpKOoEz4cyh9EEEwW2/d+NA=
+	t=1760368598; cv=none; b=qrA+cKkIJzzo+5Cpkh0sFq4yJgu/C1oMo4IMRPuqB7nlAdlW1mqBsReykoCrM/sCltDDaB08WGqmP2i70EOPeRqxziZfz/w/M6yonBPdHBxEbYPjpiiyjzdawhBYiYwJ2sKunPqZWxheuzIf4k+xof0Pho4kypMbMFqeXWLtpeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368595; c=relaxed/simple;
-	bh=fgVtJs/sAab0R9tK7JfmOcVErXJqH07VFcQmKEgUXZU=;
+	s=arc-20240116; t=1760368598; c=relaxed/simple;
+	bh=lBeYqI3q0xqorbvc4Y38kLueYjUD6u9igsX/tGddTMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q+ZK6yr+pAA4I4YnwymMhXcE5cWDh28j20zf74rWSgUEu3SiCX64leS5cib4EiNLnG5e3AyomjUi4uEfaTKyZteuUDwvfVpWbRWFWcNFA/06l7oqqHQQ+axtsU1B+IR+/fu2hBcX3S3g+3+ktsHBRz/WUDW2bU+uISN3T6FTlFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxrHqhcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ah/W7vCfsqJSvC+qHyYZIZ+ycr7+jVowrTGwEZjR2bUS3rGwppKp0kAo0K/7wbDTTQz/beGhQAvhJ4Q2Ec5Kcg89bQsa2g+KyPSeq2x1r7/Su39NcKc16oHGprOle89Hia3AQYsB71+wAbSKPCfXjMBOC50lQJ8ngAAYI12NOAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axhWDVqv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxrHqhcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDFDC4CEE7;
-	Mon, 13 Oct 2025 15:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axhWDVqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1C3C4CEE7;
+	Mon, 13 Oct 2025 15:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368595;
-	bh=fgVtJs/sAab0R9tK7JfmOcVErXJqH07VFcQmKEgUXZU=;
+	s=korg; t=1760368598;
+	bh=lBeYqI3q0xqorbvc4Y38kLueYjUD6u9igsX/tGddTMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxrHqhcJJDKRfI9TFL/vEIzA/XesLPZXogE1k2OxeBnGx1eY7bweULW6Fj2zkeJh4
-	 UO7lu30PT072n6ddj7FHIs7/nKDFn0H3csSaM4KoOCir0c0rUYstDsrTS11/D7ZmYe
-	 +SWAJjD5Glx4FvMCjVpNyRIHwOmrWsTEINX4fg1Y=
+	b=axhWDVqvr/F9AM6K0C8poYc30IWyn69oSN5h43DLh7jwCMKmgWauLqUyELEIn1Yu3
+	 PW1YTrNY0SD0vNDvztl1LScgfDw0DHnlfkOHT1zS2iQEINtpX1g7Pkb9ut+pTiNsZC
+	 gaD08QhN+ss3JYTcP4el59Oglf8+wyjiE1qDENoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leo Yan <leo.yan@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/262] coresight: tmc: Support atclk
-Date: Mon, 13 Oct 2025 16:45:25 +0200
-Message-ID: <20251013144332.718989370@linuxfoundation.org>
+Subject: [PATCH 6.12 184/262] coresight: catu: Support atclk
+Date: Mon, 13 Oct 2025 16:45:26 +0200
+Message-ID: <20251013144332.754325015@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -48,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -57,55 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 8a79026926b329d4ab0c6d0921373a80ec8aab6e ]
+[ Upstream commit 5483624effea2e893dc0df6248253a6a2a085451 ]
 
-The atclk is an optional clock for the CoreSight TMC, but the driver
-misses to initialize it.  In most cases, TMC shares the atclk clock with
-other CoreSight components.  Since these components enable the clock
-before the TMC device is initialized, the TMC continues properly,
-which is why we don’t observe any lockup issues.
+The atclk is an optional clock for the CoreSight CATU, but the driver
+misses to initialize it.
 
-This change enables atclk in probe of the TMC driver.  Given the clock
-is optional, it is possible to return NULL if the clock does not exist.
-IS_ERR() is tolerant for this case.
+This change enables atclk in probe of the CATU driver, and dynamically
+control the clock during suspend and resume.
 
-Dynamically disable and enable atclk during suspend and resume.  The
-clock pointers will never be error values if the driver has successfully
-probed, and the case of a NULL pointer case will be handled by the clock
-core layer.  The driver data is always valid after probe. Therefore,
-remove the related checks.  Also in the resume flow adds error handling.
+The checks for driver data and clocks in suspend and resume are not
+needed, remove them.  Add error handling in the resume function.
 
-Fixes: bc4bf7fe98da ("coresight-tmc: add CoreSight TMC driver")
+Fixes: fcacb5c154ba ("coresight: Introduce support for Coresight Address Translation Unit")
 Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
 Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
 Tested-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250731-arm_cs_fix_clock_v4-v6-1-1dfe10bb3f6f@arm.com
+Link: https://lore.kernel.org/r/20250731-arm_cs_fix_clock_v4-v6-2-1dfe10bb3f6f@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-tmc-core.c  | 22 ++++++++++++++-----
- drivers/hwtracing/coresight/coresight-tmc.h   |  2 ++
- 2 files changed, 19 insertions(+), 5 deletions(-)
+ drivers/hwtracing/coresight/coresight-catu.c | 22 +++++++++++++++-----
+ drivers/hwtracing/coresight/coresight-catu.h |  1 +
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-core.c b/drivers/hwtracing/coresight/coresight-tmc-core.c
-index 475fa4bb6813b..96ef2517dd439 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-core.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-core.c
-@@ -480,6 +480,10 @@ static int __tmc_probe(struct device *dev, struct resource *res)
- 	struct coresight_desc desc = { 0 };
- 	struct coresight_dev_list *dev_list = NULL;
+diff --git a/drivers/hwtracing/coresight/coresight-catu.c b/drivers/hwtracing/coresight/coresight-catu.c
+index 25fd02955c38d..abfff42b20c93 100644
+--- a/drivers/hwtracing/coresight/coresight-catu.c
++++ b/drivers/hwtracing/coresight/coresight-catu.c
+@@ -521,6 +521,10 @@ static int __catu_probe(struct device *dev, struct resource *res)
+ 	struct coresight_platform_data *pdata = NULL;
+ 	void __iomem *base;
  
 +	drvdata->atclk = devm_clk_get_optional_enabled(dev, "atclk");
 +	if (IS_ERR(drvdata->atclk))
 +		return PTR_ERR(drvdata->atclk);
 +
- 	ret = -ENOMEM;
- 
- 	/* Validity for the resource is already checked by the AMBA core */
-@@ -700,18 +704,26 @@ static int tmc_runtime_suspend(struct device *dev)
+ 	catu_desc.name = coresight_alloc_device_name(&catu_devs, dev);
+ 	if (!catu_desc.name)
+ 		return -ENOMEM;
+@@ -668,18 +672,26 @@ static int catu_runtime_suspend(struct device *dev)
  {
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(dev);
+ 	struct catu_drvdata *drvdata = dev_get_drvdata(dev);
  
 -	if (drvdata && !IS_ERR_OR_NULL(drvdata->pclk))
 -		clk_disable_unprepare(drvdata->pclk);
@@ -115,9 +107,9 @@ index 475fa4bb6813b..96ef2517dd439 100644
  	return 0;
  }
  
- static int tmc_runtime_resume(struct device *dev)
+ static int catu_runtime_resume(struct device *dev)
  {
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(dev);
+ 	struct catu_drvdata *drvdata = dev_get_drvdata(dev);
 +	int ret;
  
 -	if (drvdata && !IS_ERR_OR_NULL(drvdata->pclk))
@@ -135,26 +127,18 @@ index 475fa4bb6813b..96ef2517dd439 100644
  }
  #endif
  
-diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-index 2671926be62a3..2a53acbb5990b 100644
---- a/drivers/hwtracing/coresight/coresight-tmc.h
-+++ b/drivers/hwtracing/coresight/coresight-tmc.h
-@@ -166,6 +166,7 @@ struct etr_buf {
+diff --git a/drivers/hwtracing/coresight/coresight-catu.h b/drivers/hwtracing/coresight/coresight-catu.h
+index 755776cd19c5b..6e6b7aac206dc 100644
+--- a/drivers/hwtracing/coresight/coresight-catu.h
++++ b/drivers/hwtracing/coresight/coresight-catu.h
+@@ -62,6 +62,7 @@
  
- /**
-  * struct tmc_drvdata - specifics associated to an TMC component
-+ * @atclk:	optional clock for the core parts of the TMC.
-  * @pclk:	APB clock if present, otherwise NULL
-  * @base:	memory mapped base address for this component.
-  * @csdev:	component vitals needed by the framework.
-@@ -191,6 +192,7 @@ struct etr_buf {
-  * @perf_buf:	PERF buffer for ETR.
-  */
- struct tmc_drvdata {
-+	struct clk		*atclk;
- 	struct clk		*pclk;
- 	void __iomem		*base;
- 	struct coresight_device	*csdev;
+ struct catu_drvdata {
+ 	struct clk *pclk;
++	struct clk *atclk;
+ 	void __iomem *base;
+ 	struct coresight_device *csdev;
+ 	int irq;
 -- 
 2.51.0
 
