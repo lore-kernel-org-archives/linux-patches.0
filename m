@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195A530FC0B;
-	Mon, 13 Oct 2025 15:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0634E30FC09;
+	Mon, 13 Oct 2025 15:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369723; cv=none; b=ud04+xwCeZwl4ej8jzgCWZ4w8TtaWcHasOavH7XlKP71R34RrDKcVJa31fXGyf3LnFVjSyJFtKAZtDQtSEaIcgdoC3lt4nv9gurIA5k6ZD2MMpCva4Y/7C9yafeGi6arCP/sIMuqGWgZGrK5ErwolV+9z+HM31JGgoBGcNIKbEs=
+	t=1760369726; cv=none; b=sp6IMiL0V7kotahMmjHphwVxpfx4qu/B8+YEz4D+p/iyEpdMMTw71iO8JVwLZue8XHngvspNfHd9hH+h/5dkgm2QfM7AzlSJeJJyXY0/i/4Hb06BsaMxYc5lL5lfoU6Ic+56WgokyETpef/yN6eTWYu5MOQNvXk9fEaDbKt1f0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369723; c=relaxed/simple;
-	bh=jhxGK+WlmyhnXeQCLKw+1elqplcQ55Iyd0QJNIp4zUo=;
+	s=arc-20240116; t=1760369726; c=relaxed/simple;
+	bh=hUJPqrhWB3M2DTSNvEs+gyAstiGyzTxSie2GeUzqEds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faSSz1CqymNPUIGK2W9sTMZIqP6pTROeeIR3UJryT3b/sRWdrsiPvUfDX9/vVVUj+YIToqJzVnuHA6HEh742Pi4uqMEWkgLZN7/o+ALQX4kiYHePeJSXhRMQY2TjIDfWoJX20bPMVFK1J9IcTr1FIcP/iW6KHB6zmHL7lK4y2HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sq9dyAZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KEAjPM1899b7Oab7TnhK2YLHqiXg2gWAHGtfNUm5TRkDU9EGimWAOJUAJpCk2b5qZe14TYvE1+20GbNcwKiNWwhpDuW/3Uokr8xNLvAoj0UWE8gKCgO52Zy1MpSzE4Y02N7jlxVelPZP0eA2jvdH63toQ8vGXaypErcQX7sRv/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLkAZ6m5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sq9dyAZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973E4C4CEFE;
-	Mon, 13 Oct 2025 15:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLkAZ6m5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3B8C4CEFE;
+	Mon, 13 Oct 2025 15:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369723;
-	bh=jhxGK+WlmyhnXeQCLKw+1elqplcQ55Iyd0QJNIp4zUo=;
+	s=korg; t=1760369725;
+	bh=hUJPqrhWB3M2DTSNvEs+gyAstiGyzTxSie2GeUzqEds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sq9dyAZkJr5myoVkR+jACj1t68J9+iKW3EoiJEeg/IBt1UTV68Ynz94bHQEkPkNM5
-	 kADySgO1qKaF8YXGI9VNcjpsMcErdeTJg0GP6+hFG4UfJKkmF6U7vt1SZjnQvPadC2
-	 ZyWINEhDvAk78bHcL8Rb74sehsTon5+hvvJvQTAE=
+	b=JLkAZ6m5mVcStZ90R40u60ovIEdVpEjwu6Cu5F4SN1UFwYebjBGsv3XYVAj/Vash0
+	 qbTDvdC8/FgW6fRtqw9vuQmAzvO9CMhY5TulPKa0xzWreVXpW83ctnmCBhJ4Luf2Un
+	 VSdZUkhIfW+H5DEm3LIptGuAYLirRnc9Rf9JL0zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Nie <jun.nie@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 312/563] drm/msm: Do not validate SSPP when it is not ready
-Date: Mon, 13 Oct 2025 16:42:53 +0200
-Message-ID: <20251013144422.568047179@linuxfoundation.org>
+Subject: [PATCH 6.17 303/563] drm/amd/pm: Disable ULV even if unsupported (v3)
+Date: Mon, 13 Oct 2025 16:42:44 +0200
+Message-ID: <20251013144422.243809265@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,110 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jun Nie <jun.nie@linaro.org>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 6fc616723bb5fd4289d7422fa013da062b44ae55 ]
+[ Upstream commit 3a0c3a4035f995e1f993dfaf4d63dc19e9b4bc1c ]
 
-Current code will validate current plane and previous plane to
-confirm they can share a SSPP with multi-rect mode. The SSPP
-is already allocated for previous plane, while current plane
-is not associated with any SSPP yet. Null pointer is referenced
-when validating the SSPP of current plane. Skip SSPP validation
-for current plane.
+Always send PPSMC_MSG_DisableULV to the SMC, even if ULV mode
+is unsupported, to make sure it is properly turned off.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-Mem abort info:
-  ESR = 0x0000000096000004
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x04: level 0 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=0000000888ac3000
-[0000000000000020] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1]  SMP
-Modules linked in:
-CPU: 4 UID: 0 PID: 1891 Comm: modetest Tainted: G S                  6.15.0-rc2-g3ee3f6e1202e #335 PREEMPT
-Tainted: [S]=CPU_OUT_OF_SPEC
-Hardware name: SM8650 EV1 rev1 4slam 2et (DT)
-pstate: 63400009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-pc : dpu_plane_is_multirect_capable+0x68/0x90
-lr : dpu_assign_plane_resources+0x288/0x410
-sp : ffff800093dcb770
-x29: ffff800093dcb770 x28: 0000000000002000 x27: ffff000817c6c000
-x26: ffff000806b46368 x25: ffff0008013f6080 x24: ffff00080cbf4800
-x23: ffff000810842680 x22: ffff0008013f1080 x21: ffff00080cc86080
-x20: ffff000806b463b0 x19: ffff00080cbf5a00 x18: 00000000ffffffff
-x17: 707a5f657a696c61 x16: 0000000000000003 x15: 0000000000002200
-x14: 00000000ffffffff x13: 00aaaaaa00aaaaaa x12: 0000000000000000
-x11: ffff000817c6e2b8 x10: 0000000000000000 x9 : ffff80008106a950
-x8 : ffff00080cbf48f4 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : 0000000000000000 x4 : 0000000000000438 x3 : 0000000000000438
-x2 : ffff800082e245e0 x1 : 0000000000000008 x0 : 0000000000000000
-Call trace:
- dpu_plane_is_multirect_capable+0x68/0x90 (P)
- dpu_crtc_atomic_check+0x5bc/0x650
- drm_atomic_helper_check_planes+0x13c/0x220
- drm_atomic_helper_check+0x58/0xb8
- msm_atomic_check+0xd8/0xf0
- drm_atomic_check_only+0x4a8/0x968
- drm_atomic_commit+0x50/0xd8
- drm_atomic_helper_update_plane+0x140/0x188
- __setplane_atomic+0xfc/0x148
- drm_mode_setplane+0x164/0x378
- drm_ioctl_kernel+0xc0/0x140
- drm_ioctl+0x20c/0x500
- __arm64_sys_ioctl+0xbc/0xf8
- invoke_syscall+0x50/0x120
- el0_svc_common.constprop.0+0x48/0xf8
- do_el0_svc+0x28/0x40
- el0_svc+0x30/0xd0
- el0t_64_sync_handler+0x144/0x168
- el0t_64_sync+0x198/0x1a0
-Code: b9402021 370fffc1 f9401441 3707ff81 (f94010a1)
----[ end trace 0000000000000000 ]---
+v3:
+Simplify si_disable_ulv further.
+Always check the return value of amdgpu_si_send_msg_to_smc.
 
-Fixes: 3ed12a3664b36 ("drm/msm/dpu: allow sharing SSPP between planes")
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/669224/
-Link: https://lore.kernel.org/r/20250819-v6-16-rc2-quad-pipe-upstream-v15-1-2c7a85089db8@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 6859e8ef6b055..f54cf0faa1c7c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -922,6 +922,9 @@ static int dpu_plane_is_multirect_capable(struct dpu_hw_sspp *sspp,
- 	if (MSM_FORMAT_IS_YUV(fmt))
- 		return false;
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index 52e732be59e36..e71070a23b915 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -5637,14 +5637,10 @@ static int si_populate_smc_t(struct amdgpu_device *adev,
  
-+	if (!sspp)
-+		return true;
-+
- 	if (!test_bit(DPU_SSPP_SMART_DMA_V1, &sspp->cap->features) &&
- 	    !test_bit(DPU_SSPP_SMART_DMA_V2, &sspp->cap->features))
- 		return false;
-@@ -1028,6 +1031,7 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
- 	    prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
- 		return false;
+ static int si_disable_ulv(struct amdgpu_device *adev)
+ {
+-	struct si_power_info *si_pi = si_get_pi(adev);
+-	struct si_ulv_param *ulv = &si_pi->ulv;
++	PPSMC_Result r;
  
-+	/* Do not validate SSPP of current plane when it is not ready */
- 	if (!dpu_plane_is_multirect_capable(pipe->sspp, pipe_cfg, fmt) ||
- 	    !dpu_plane_is_multirect_capable(prev_pipe->sspp, prev_pipe_cfg, prev_fmt))
- 		return false;
+-	if (ulv->supported)
+-		return (amdgpu_si_send_msg_to_smc(adev, PPSMC_MSG_DisableULV) == PPSMC_Result_OK) ?
+-			0 : -EINVAL;
+-
+-	return 0;
++	r = amdgpu_si_send_msg_to_smc(adev, PPSMC_MSG_DisableULV);
++	return (r == PPSMC_Result_OK) ? 0 : -EINVAL;
+ }
+ 
+ static bool si_is_state_ulv_compatible(struct amdgpu_device *adev,
 -- 
 2.51.0
 
