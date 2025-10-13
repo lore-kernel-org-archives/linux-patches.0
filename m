@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9334B30DEB2;
-	Mon, 13 Oct 2025 14:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4930DEB2;
+	Mon, 13 Oct 2025 14:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367403; cv=none; b=RZ8zVNf+w+k+nueFXCWN07g+fcXGR2XWTOjJidP9UOb1RUi7Hc2nno6uxhbespAFxvcy2grxZFUs5NdExg/IO/m8K8gmfeFPoQA7SgLd5S2Gk2neMfUxI9dd9inVfvlueh8VnsjZl0bcLMO2R9rR+LFZZTlDP+hJEQNzvWmdemE=
+	t=1760367406; cv=none; b=k7D1bEp9VQAb8MGXOYcqifnrsgm2WhPTVgUXfFi2wDjzhMsxgHRbV2qMZeSVuiQ1584FHYp6BXYUWtVxVJs9N+oh1b1Hd9id0dpMq2EG/LMAzV3GIqRPZytPTFmr3ud4M1AzpNVgY9h7fv6AbxfyeqbZsMUmJt0rgqfYY6U7cDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367403; c=relaxed/simple;
-	bh=LEnHzOzRRaeg5kgKX5AdWlc+0aSt2WPbKws0maYZs64=;
+	s=arc-20240116; t=1760367406; c=relaxed/simple;
+	bh=TYEVtNvxvBjWeZhJ7lAIclThH8shAw50q8ZAW1WXN6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cm5035U5xoMZ4d8uaaiedhEps13SLixiqQuVt1i4T8KXvZP2l+/xpSvALPeqtC/MwA6NGQQG/VK78pKHljCQCF1O0kLQtz/jUbsPNNTSj9n3y0b7avTrg0inHbb3uGXQ2NQRkPKiSVUHz52g5BSyFx73AYek62mdfA+i7sRYI/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXtJHwgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2aauP9scuGf0lDpmB0XYVF18vNkufjl5qIjQnURGEV53+kFiqjwpBK07tN+sJVxz7uiwBDy8h+a8rNaoP+A/HsKIrkFpgL7DsQMG0WBJepRC10XvU8RavSCePk7PM1YgJhUSCFHhXeoUBXSwAr4GyTfaMg7hkPyWHx1IlMtI+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eg2ioAzd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXtJHwgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99B9C4CEE7;
-	Mon, 13 Oct 2025 14:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eg2ioAzd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7BEC4CEE7;
+	Mon, 13 Oct 2025 14:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367403;
-	bh=LEnHzOzRRaeg5kgKX5AdWlc+0aSt2WPbKws0maYZs64=;
+	s=korg; t=1760367406;
+	bh=TYEVtNvxvBjWeZhJ7lAIclThH8shAw50q8ZAW1WXN6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXtJHwgJAHh5KaKz8SBilOSxTfYnknlA9S8nxM8cZLikpITYnUqGSB65UEIp+MfMr
-	 TBbaBiLch3OMNoSaOO6ckh45kx4VylIrwSU0e9fTBJzCTA4rKPDM2wyirNyuERFCO+
-	 Ok21CLDupksVWDuz908NC6lYEt25yshB6hgNdAlI=
+	b=Eg2ioAzdIZL7Shu5nzgZ1qis11OtxMDQc7fi85N7wtjvfGMQyBmjU+e7MCPANMpeO
+	 /K68NpIUkVdGm5y/HKB0C/6ieiwuelGr265cB43vE4MWQ9TOKGyIFtEU+DkFqAmCwV
+	 gKMYM58+CyMSnJT6i7FqUZ8Bhkc8S1ormzUCr66g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Chris Mason <clm@meta.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
-	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Erick Karanja <karanja99erick@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/196] drivers/base/node: fix double free in register_one_node()
-Date: Mon, 13 Oct 2025 16:45:36 +0200
-Message-ID: <20251013144320.595506887@linuxfoundation.org>
+Subject: [PATCH 6.1 164/196] mtd: rawnand: atmel: Fix error handling path in atmel_nand_controller_add_nands
+Date: Mon, 13 Oct 2025 16:45:37 +0200
+Message-ID: <20251013144320.631835756@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -62,54 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Erick Karanja <karanja99erick@gmail.com>
 
-[ Upstream commit 0efdedfa537eb534c251a5b4794caaf72cc55869 ]
+[ Upstream commit 8ed4728eb9f10b57c3eb02e0f6933a89ffcb8a91 ]
 
-When device_register() fails in register_node(), it calls
-put_device(&node->dev).  This triggers node_device_release(), which calls
-kfree(to_node(dev)), thereby freeing the entire node structure.
+In case of a jump to the  err label due to atmel_nand_create() or
+atmel_nand_controller_add_nand() failure, the reference to nand_np
+need to be released
 
-As a result, when register_node() returns an error, the node memory has
-already been freed.  Calling kfree(node) again in register_one_node()
-leads to a double free.
+Use for_each_child_of_node_scoped() to fix the issue.
 
-This patch removes the redundant kfree(node) from register_one_node() to
-prevent the double free.
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
 
-Link: https://lkml.kernel.org/r/20250918054144.58980-1-donettom@linux.ibm.com
-Fixes: 786eb990cfb7 ("drivers/base/node: handle error properly in register_one_node()")
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Chris Mason <clm@meta.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
-Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Erick Karanja <karanja99erick@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/node.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/node.c b/drivers/base/node.c
-index cbaa4e2eddcef..6153dbd5be903 100644
---- a/drivers/base/node.c
-+++ b/drivers/base/node.c
-@@ -871,7 +871,6 @@ int __register_one_node(int nid)
- 	error = register_node(node_devices[nid], nid);
- 	if (error) {
- 		node_devices[nid] = NULL;
--		kfree(node);
- 		return error;
- 	}
+diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
+index 78f317ac04afa..56fd897721ad5 100644
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -1859,7 +1859,7 @@ atmel_nand_controller_legacy_add_nands(struct atmel_nand_controller *nc)
  
+ static int atmel_nand_controller_add_nands(struct atmel_nand_controller *nc)
+ {
+-	struct device_node *np, *nand_np;
++	struct device_node *np;
+ 	struct device *dev = nc->dev;
+ 	int ret, reg_cells;
+ 	u32 val;
+@@ -1886,7 +1886,7 @@ static int atmel_nand_controller_add_nands(struct atmel_nand_controller *nc)
+ 
+ 	reg_cells += val;
+ 
+-	for_each_child_of_node(np, nand_np) {
++	for_each_child_of_node_scoped(np, nand_np) {
+ 		struct atmel_nand *nand;
+ 
+ 		nand = atmel_nand_create(nc, nand_np, reg_cells);
 -- 
 2.51.0
 
