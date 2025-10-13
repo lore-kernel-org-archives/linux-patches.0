@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A2B30BBB3;
-	Mon, 13 Oct 2025 15:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6255930BF55;
+	Mon, 13 Oct 2025 15:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367773; cv=none; b=LiZzqBEIgsT+sCNOk+6lOzHumPJ3Y8cLcYeiiiq/P3/9c+0relkhK24pSv2VXJEN/bE4Z3hudyZ+VI6w5mstmQ3RGquPBHuycoZq+RsYCF5Y0VizTacrAr+++QOqJl8/sna+A7I8cWpcC3KqqZRQnlRrXXtFb2f0tmERGDXh+qU=
+	t=1760367776; cv=none; b=LXEgpfoyuzJmQFwm9R8pn1Nv4S9P7eIsLr/V2ftKvNlfH3PWtDLfSgjBBKBgQ4Og/808iohHfAtF609PVR7/0xJqxu4Uv3aBkF6xvAs5VdlQx6HAvhsP71QxlKEWPnFCwULHJowS+Ea+nJRwZACVSFom8zLlWwAg4eUZGHdDU2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367773; c=relaxed/simple;
-	bh=YmHCrT86U6E5+hwd5CFjs4kfS439xL3vnxfgf9tfEhQ=;
+	s=arc-20240116; t=1760367776; c=relaxed/simple;
+	bh=Q10lgVH/CWaIyPgIfHEzfV59dHfrtu4SVnjsIM/nz34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWmsXM11uT4AbbVDkyw8YsMsds0yaAVrOEX+X5Za3x9hML6BSKPONtmhn8Doqbd+Z0NA51J4ZUes0iHbM07ighiU8a2YCNAUHrk5OILOUYDwpfSIZjGTGN+YGsKkr2PkyvPX+Hh2DAdDThDN5j2PMNHc4SS/duI53I6bMhD7e8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diSppZyj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gse3QCrMUBu8U+QErvgM6YaiNo95Bx+4+P4HALIPCaJT/57dhRcC/aaznytq8yAROFYAz0l/KMLm01Ic2MyLXh4R/Sy70pRWxk/I3TXg06rmKbuJO6oMq4UvrYULcIRnQijK4Lvkg+p79myjc4GyAiWZtuwgkYGF6ZpgZaFvTkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D61xtA2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diSppZyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36ABC4CEE7;
-	Mon, 13 Oct 2025 15:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D61xtA2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BC4C4CEFE;
+	Mon, 13 Oct 2025 15:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367773;
-	bh=YmHCrT86U6E5+hwd5CFjs4kfS439xL3vnxfgf9tfEhQ=;
+	s=korg; t=1760367775;
+	bh=Q10lgVH/CWaIyPgIfHEzfV59dHfrtu4SVnjsIM/nz34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diSppZyj0z0PtYnkAm1ccyhd2W6PorWbPoa/bQMwnuqw2cu8Ge9HquId4DVq9Nfxc
-	 ZDmZFxw3sKPT+MW2K9FDcEInmJpoPqda3KKu5aqk1tYPpx3GQi/Rma1MMPvM1e96jf
-	 Cgg/1UKQ40oCsCMqTnmcwcL59C/I+q8L4P5bYIsY=
+	b=D61xtA2UFD03+Rc7FmKd8xvpBgC2+UWl16b6WBrdg5T68//T/inEj5bQPcxl1rHMw
+	 gfJERe+CpVFdVgJTNaN7G3n0clSPuW0u3NL3dLb0uXpnB0aiZURBWgdzzOqb3ITIcE
+	 pE2WH30SvpjNHFe3F4a3tKir1VBO9uC/YQGurwW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/196] wifi: mac80211: fix Rx packet handling when pubsta information is not available
-Date: Mon, 13 Oct 2025 16:45:19 +0200
-Message-ID: <20251013144319.940724412@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.com>,
+	Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk>
+Subject: [PATCH 6.6 129/196] sparc: fix accurate exception reporting in copy_{from_to}_user for UltraSPARC
+Date: Mon, 13 Oct 2025 16:45:20 +0200
+Message-ID: <20251013144319.976097416@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -46,90 +48,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 32d340ae675800672e1219444a17940a8efe5cca ]
+[ Upstream commit 4fba1713001195e59cfc001ff1f2837dab877efb ]
 
-In ieee80211_rx_handle_packet(), if the caller does not provide pubsta
-information, an attempt is made to find the station using the address 2
-(source address) field in the header. Since pubsta is missing, link
-information such as link_valid and link_id is also unavailable. Now if such
-a situation comes, and if a matching ML station entry is found based on
-the source address, currently the packet is dropped due to missing link ID
-in the status field which is not correct.
+The referenced commit introduced exception handlers on user-space memory
+references in copy_from_user and copy_to_user. These handlers return from
+the respective function and calculate the remaining bytes left to copy
+using the current register contents. This commit fixes a couple of bad
+calculations. This will fix the return value of copy_from_user and
+copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
 
-Hence, to fix this issue, if link_valid is not set and the station is an
-ML station, make an attempt to find a link station entry using the source
-address. If a valid link station is found, derive the link ID and proceed
-with packet processing. Otherwise, drop the packet as per the existing
-flow.
-
-Fixes: ea9d807b5642 ("wifi: mac80211: add link information in ieee80211_rx_status")
-Suggested-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250917-fix_data_packet_rx_with_mlo_and_no_pubsta-v1-1-8cf971a958ac@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: cb736fdbb208 ("sparc64: Convert U1copy_{from,to}_user to accurate exception reporting.")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on QEMU 10.0.3
+Tested-by: René Rebe <rene@exactcode.com> # on Ultra 5 UltraSparc IIi
+Tested-by: Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk> # on Sun Netra T1
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-1-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ arch/sparc/lib/U1memcpy.S | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 210337ef23cf5..164c6e8049826 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -5219,12 +5219,20 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
- 			}
+diff --git a/arch/sparc/lib/U1memcpy.S b/arch/sparc/lib/U1memcpy.S
+index 635398ec7540e..154fbd35400ca 100644
+--- a/arch/sparc/lib/U1memcpy.S
++++ b/arch/sparc/lib/U1memcpy.S
+@@ -164,17 +164,18 @@ ENTRY(U1_gs_40_fp)
+ 	retl
+ 	 add		%o0, %o2, %o0
+ ENDPROC(U1_gs_40_fp)
+-ENTRY(U1_g3_0_fp)
+-	VISExitHalf
+-	retl
+-	 add		%g3, %o2, %o0
+-ENDPROC(U1_g3_0_fp)
+ ENTRY(U1_g3_8_fp)
+ 	VISExitHalf
+ 	add		%g3, 8, %g3
+ 	retl
+ 	 add		%g3, %o2, %o0
+ ENDPROC(U1_g3_8_fp)
++ENTRY(U1_g3_16_fp)
++	VISExitHalf
++	add		%g3, 16, %g3
++	retl
++	 add		%g3, %o2, %o0
++ENDPROC(U1_g3_16_fp)
+ ENTRY(U1_o2_0_fp)
+ 	VISExitHalf
+ 	retl
+@@ -547,18 +548,18 @@ FUNC_NAME:		/* %o0=dst, %o1=src, %o2=len */
+ 62:	FINISH_VISCHUNK(o0, f44, f46)
+ 63:	UNEVEN_VISCHUNK_LAST(o0, f46, f0)
  
- 			rx.sdata = prev_sta->sdata;
-+			if (!status->link_valid && prev_sta->sta.mlo) {
-+				struct link_sta_info *link_sta;
-+
-+				link_sta = link_sta_info_get_bss(rx.sdata,
-+								 hdr->addr2);
-+				if (!link_sta)
-+					continue;
-+
-+				link_id = link_sta->link_id;
-+			}
-+
- 			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
- 				goto out;
+-93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_0_fp)
++93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_8_fp)
+ 	add		%o1, 8, %o1
+ 	subcc		%g3, 8, %g3
+ 	faligndata	%f0, %f2, %f8
+-	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
++	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
+ 	bl,pn		%xcc, 95f
+ 	 add		%o0, 8, %o0
+-	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_0_fp)
++	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_8_fp)
+ 	add		%o1, 8, %o1
+ 	subcc		%g3, 8, %g3
+ 	faligndata	%f2, %f0, %f8
+-	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
++	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
+ 	bge,pt		%xcc, 93b
+ 	 add		%o0, 8, %o0
  
--			if (!status->link_valid && prev_sta->sta.mlo)
--				continue;
--
- 			ieee80211_prepare_and_rx_handle(&rx, skb, false);
- 
- 			prev_sta = sta;
-@@ -5232,10 +5240,18 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
- 
- 		if (prev_sta) {
- 			rx.sdata = prev_sta->sdata;
--			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
--				goto out;
-+			if (!status->link_valid && prev_sta->sta.mlo) {
-+				struct link_sta_info *link_sta;
-+
-+				link_sta = link_sta_info_get_bss(rx.sdata,
-+								 hdr->addr2);
-+				if (!link_sta)
-+					goto out;
- 
--			if (!status->link_valid && prev_sta->sta.mlo)
-+				link_id = link_sta->link_id;
-+			}
-+
-+			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
- 				goto out;
- 
- 			if (ieee80211_prepare_and_rx_handle(&rx, skb, true))
 -- 
 2.51.0
 
