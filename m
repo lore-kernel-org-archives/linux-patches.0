@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A1030F945;
-	Mon, 13 Oct 2025 15:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADB030C37D;
+	Mon, 13 Oct 2025 15:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368928; cv=none; b=Iq+BEh8k7YyDY1zxqWs+CEOUNh6d67WPCo8I+IminPpNMjIhyEdYB/JzmoJBbBXGdw3HiAzMxqyd09ff/DHu2qNgPNf3m5o2Cp7nM01A3llljcR1m+PYJrYZ1F+KDorVC7PYzHYkwCSD5wft1fLh/KtD6ypnBajmPANr/e0PtiA=
+	t=1760368930; cv=none; b=OFjKtwwy5E/Fll5L6e+Nq4GlxA4mJqYGjgjY8BUDP7667tPXdWJMksmrR0kySlc7aIbZvdUt+ktrsTF8PLtzlnLf0r5MyGsABpNlbFzoY3X9aWAIllfVZWeuHZMuIZC0fN5yc3aOIhq6gOvvvPqH7ritghVHXYofHEsaE2jj/Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368928; c=relaxed/simple;
-	bh=R3uT9iV7vWNc5NCc6pV2x0pIyaVBYYC3ojHI7+Zn958=;
+	s=arc-20240116; t=1760368930; c=relaxed/simple;
+	bh=xr7vP+jSfK6pT9J/+yVYGZ0nrOrfHFnZ5PB9Egam4aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmKr20tJa6dSP0MI6RBcYfoFPrx+B9ufxmg6GaGrGp2u6yTIIrkoS7Ev2fqXFb3YiIcDVOu58j3iYPEWUoabSCvrtRE8P+BsqFhty6KLnh0AZAPiPDvOjam3C2BurXb9AO7Rdqx/PFKcd0fJvyu2tMsbbZUtiFAFEPUS3kQPhPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmeMoGbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qni3a0ZbNhSDIhBbeC+ucVpEgsTeK7r3S97A3OycXARRO9IeJf6vcrq8Fa6OodcFOiQ3OmjRhws+uBjiz6ZRkS6TDg72+3NgewZR04YoxAQAg7WphjAJCONBZ+6V5XPZDAM479PdD4E2CxPoQuHPjkgy8CADltq9NM0hESdZovo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IViqpjlb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmeMoGbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1921AC4CEFE;
-	Mon, 13 Oct 2025 15:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IViqpjlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D682BC4CEE7;
+	Mon, 13 Oct 2025 15:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368927;
-	bh=R3uT9iV7vWNc5NCc6pV2x0pIyaVBYYC3ojHI7+Zn958=;
+	s=korg; t=1760368930;
+	bh=xr7vP+jSfK6pT9J/+yVYGZ0nrOrfHFnZ5PB9Egam4aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmeMoGbJ1MLkNW58Hdrn3+tAGUdtBQcTBOOOFGJHUzwd5EXUUAv2AZGQSQ65eLU6k
-	 0tyg7/imgmq9vjWubC6WTBdQ7+HU0GFcYyUSMYb2uuFc5kBhwGusc57i2ENwngVJgZ
-	 gtae1EpiHpLzn7H3ZNeuDkut+KhE4J4Ngi9Pf5Wo=
+	b=IViqpjlbRKjtmiELR/ydUW4spQIRrMi5YZotth1nXm+26yHgM+U5yN86KZPJI1mQ+
+	 hi9djNR0DIjcN4YlQpWONpuLZ8LBKogFW4DlT1j3rR8WkggTE4IiVwKssJd5jDcKIS
+	 zQ5mCgSVJA4DvXSg5fQdEkEEklknUKOByJZxN5WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Han Gao <rabenda.cn@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Inochi Amaoto <inochiama@gmail.com>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 068/563] PCI/MSI: Add startup/shutdown for per device domains
-Date: Mon, 13 Oct 2025 16:38:49 +0200
-Message-ID: <20251013144413.753811471@linuxfoundation.org>
+Subject: [PATCH 6.17 069/563] irqchip/sg2042-msi: Fix broken affinity setting
+Date: Mon, 13 Oct 2025 16:38:50 +0200
+Message-ID: <20251013144413.791453540@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -55,139 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit 54f45a30c0d0153d2be091ba2d683ab6db6d1d5b ]
+[ Upstream commit 9d8c41816bac518b4824f83b346ae30a1be83f68 ]
 
-As the RISC-V PLIC cannot apply affinity settings without invoking
-irq_enable(), it will make the interrupt unavailble when used as an
-underlying interrupt chip for the MSI controller.
+When using NVME on SG2044, the NVME drvier always complains about "I/O tag
+XXX (XXX) QID XX timeout, completion polled", which is caused by the broken
+affinity setting mechanism of the sg2042-msi driver.
 
-Implement the irq_startup() and irq_shutdown() callbacks for the PCI MSI
-and MSI-X templates.
+The PLIC driver can only the set the affinity when enabled, but the
+sg2042-msi driver invokes the affinity setter in disabled state, which
+causes the change to be lost.
 
-For chips that specify MSI_FLAG_PCI_MSI_STARTUP_PARENT, the parent startup
-and shutdown functions are invoked. That allows the interrupt on the parent
-chip to be enabled if the interrupt has not been enabled during
-allocation. This is necessary for MSI controllers which use PLIC as
-underlying parent interrupt chip.
+Cure this by implementing the irq_startup()/shutdown() callbacks, which
+allow to startup (enabled) the underlying PLIC first.
 
+Fixes: e96b93a97c90 ("irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller")
+Reported-by: Han Gao <rabenda.cn@gmail.com>
 Suggested-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Tested-by: Chen Wang <unicorn_wang@outlook.com> # Pioneerbox
 Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/all/20250813232835.43458-3-inochiama@gmail.com
-Stable-dep-of: 9d8c41816bac ("irqchip/sg2042-msi: Fix broken affinity setting")
+Link: https://lore.kernel.org/all/20250813232835.43458-4-inochiama@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/msi/irqdomain.c | 52 +++++++++++++++++++++++++++++++++++++
- include/linux/msi.h         |  2 ++
- 2 files changed, 54 insertions(+)
+ drivers/irqchip/irq-sg2042-msi.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/msi/irqdomain.c b/drivers/pci/msi/irqdomain.c
-index 0938ef7ebabf2..e0a800f918e81 100644
---- a/drivers/pci/msi/irqdomain.c
-+++ b/drivers/pci/msi/irqdomain.c
-@@ -148,6 +148,23 @@ static void pci_device_domain_set_desc(msi_alloc_info_t *arg, struct msi_desc *d
- 	arg->hwirq = desc->msi_index;
- }
+diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
+index bcfddc51bc6a1..2fd4d94f9bd76 100644
+--- a/drivers/irqchip/irq-sg2042-msi.c
++++ b/drivers/irqchip/irq-sg2042-msi.c
+@@ -85,6 +85,8 @@ static void sg2042_msi_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *m
  
-+static void cond_shutdown_parent(struct irq_data *data)
-+{
-+	struct msi_domain_info *info = data->domain->host_data;
-+
-+	if (unlikely(info->flags & MSI_FLAG_PCI_MSI_STARTUP_PARENT))
-+		irq_chip_shutdown_parent(data);
-+}
-+
-+static unsigned int cond_startup_parent(struct irq_data *data)
-+{
-+	struct msi_domain_info *info = data->domain->host_data;
-+
-+	if (unlikely(info->flags & MSI_FLAG_PCI_MSI_STARTUP_PARENT))
-+		return irq_chip_startup_parent(data);
-+	return 0;
-+}
-+
- static __always_inline void cond_mask_parent(struct irq_data *data)
- {
- 	struct msi_domain_info *info = data->domain->host_data;
-@@ -164,6 +181,23 @@ static __always_inline void cond_unmask_parent(struct irq_data *data)
- 		irq_chip_unmask_parent(data);
- }
+ static const struct irq_chip sg2042_msi_middle_irq_chip = {
+ 	.name			= "SG2042 MSI",
++	.irq_startup		= irq_chip_startup_parent,
++	.irq_shutdown		= irq_chip_shutdown_parent,
+ 	.irq_ack		= sg2042_msi_irq_ack,
+ 	.irq_mask		= irq_chip_mask_parent,
+ 	.irq_unmask		= irq_chip_unmask_parent,
+@@ -114,6 +116,8 @@ static void sg2044_msi_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *m
  
-+static void pci_irq_shutdown_msi(struct irq_data *data)
-+{
-+	struct msi_desc *desc = irq_data_get_msi_desc(data);
-+
-+	pci_msi_mask(desc, BIT(data->irq - desc->irq));
-+	cond_shutdown_parent(data);
-+}
-+
-+static unsigned int pci_irq_startup_msi(struct irq_data *data)
-+{
-+	struct msi_desc *desc = irq_data_get_msi_desc(data);
-+	unsigned int ret = cond_startup_parent(data);
-+
-+	pci_msi_unmask(desc, BIT(data->irq - desc->irq));
-+	return ret;
-+}
-+
- static void pci_irq_mask_msi(struct irq_data *data)
- {
- 	struct msi_desc *desc = irq_data_get_msi_desc(data);
-@@ -194,6 +228,8 @@ static void pci_irq_unmask_msi(struct irq_data *data)
- static const struct msi_domain_template pci_msi_template = {
- 	.chip = {
- 		.name			= "PCI-MSI",
-+		.irq_startup		= pci_irq_startup_msi,
-+		.irq_shutdown		= pci_irq_shutdown_msi,
- 		.irq_mask		= pci_irq_mask_msi,
- 		.irq_unmask		= pci_irq_unmask_msi,
- 		.irq_write_msi_msg	= pci_msi_domain_write_msg,
-@@ -210,6 +246,20 @@ static const struct msi_domain_template pci_msi_template = {
- 	},
+ static struct irq_chip sg2044_msi_middle_irq_chip = {
+ 	.name			= "SG2044 MSI",
++	.irq_startup		= irq_chip_startup_parent,
++	.irq_shutdown		= irq_chip_shutdown_parent,
+ 	.irq_ack		= sg2044_msi_irq_ack,
+ 	.irq_mask		= irq_chip_mask_parent,
+ 	.irq_unmask		= irq_chip_unmask_parent,
+@@ -185,8 +189,10 @@ static const struct irq_domain_ops sg204x_msi_middle_domain_ops = {
+ 	.select	= msi_lib_irq_domain_select,
  };
  
-+static void pci_irq_shutdown_msix(struct irq_data *data)
-+{
-+	pci_msix_mask(irq_data_get_msi_desc(data));
-+	cond_shutdown_parent(data);
-+}
-+
-+static unsigned int pci_irq_startup_msix(struct irq_data *data)
-+{
-+	unsigned int ret = cond_startup_parent(data);
-+
-+	pci_msix_unmask(irq_data_get_msi_desc(data));
-+	return ret;
-+}
-+
- static void pci_irq_mask_msix(struct irq_data *data)
- {
- 	pci_msix_mask(irq_data_get_msi_desc(data));
-@@ -234,6 +284,8 @@ EXPORT_SYMBOL_GPL(pci_msix_prepare_desc);
- static const struct msi_domain_template pci_msix_template = {
- 	.chip = {
- 		.name			= "PCI-MSIX",
-+		.irq_startup		= pci_irq_startup_msix,
-+		.irq_shutdown		= pci_irq_shutdown_msix,
- 		.irq_mask		= pci_irq_mask_msix,
- 		.irq_unmask		= pci_irq_unmask_msix,
- 		.irq_write_msi_msg	= pci_msi_domain_write_msg,
-diff --git a/include/linux/msi.h b/include/linux/msi.h
-index e5e86a8529fb6..3111ba95fbde4 100644
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -568,6 +568,8 @@ enum {
- 	MSI_FLAG_PARENT_PM_DEV		= (1 << 8),
- 	/* Support for parent mask/unmask */
- 	MSI_FLAG_PCI_MSI_MASK_PARENT	= (1 << 9),
-+	/* Support for parent startup/shutdown */
-+	MSI_FLAG_PCI_MSI_STARTUP_PARENT	= (1 << 10),
+-#define SG2042_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |	\
+-				   MSI_FLAG_USE_DEF_CHIP_OPS)
++#define SG2042_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |		\
++				   MSI_FLAG_USE_DEF_CHIP_OPS |		\
++				   MSI_FLAG_PCI_MSI_MASK_PARENT |	\
++				   MSI_FLAG_PCI_MSI_STARTUP_PARENT)
  
- 	/* Mask for the generic functionality */
- 	MSI_GENERIC_FLAGS_MASK		= GENMASK(15, 0),
+ #define SG2042_MSI_FLAGS_SUPPORTED MSI_GENERIC_FLAGS_MASK
+ 
+@@ -200,10 +206,12 @@ static const struct msi_parent_ops sg2042_msi_parent_ops = {
+ 	.init_dev_msi_info	= msi_lib_init_dev_msi_info,
+ };
+ 
+-#define SG2044_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |	\
+-				   MSI_FLAG_USE_DEF_CHIP_OPS)
++#define SG2044_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |		\
++				   MSI_FLAG_USE_DEF_CHIP_OPS |		\
++				   MSI_FLAG_PCI_MSI_MASK_PARENT |	\
++				   MSI_FLAG_PCI_MSI_STARTUP_PARENT)
+ 
+-#define SG2044_MSI_FLAGS_SUPPORTED (MSI_GENERIC_FLAGS_MASK |	\
++#define SG2044_MSI_FLAGS_SUPPORTED (MSI_GENERIC_FLAGS_MASK |		\
+ 				    MSI_FLAG_PCI_MSIX)
+ 
+ static const struct msi_parent_ops sg2044_msi_parent_ops = {
 -- 
 2.51.0
 
