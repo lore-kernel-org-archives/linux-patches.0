@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351B222587;
-	Mon, 13 Oct 2025 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39BE31A805;
+	Mon, 13 Oct 2025 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369327; cv=none; b=sScXnoIrNTpWytqyufsQm2ou97kM9ABC0JU2KTiI1G9Zu8UFIwMIjrfGKLqhBxVozM3ZsvC5cAsxGwFAHPkSo40PoCL/c4s8TH46Fo9CFw9u+uRK3Tx1Ri4fhFLUemxmwjfmpGpalFHOeGtMqcCEKP5rVRngXW1WbinnWiXSCN8=
+	t=1760369330; cv=none; b=R4k5XzLQbB7kmDvofJynMhTvjYWaSRXpZNDONGZR7EP3lsBObmeHdQXTnb1kXD3haJ1B7yASNdu6nCNMPctk9p1qF6CEUpHJ5XilsihpfgbPJre2uuNQN3rbzkmvSzJ+26jRqY1DjxgHuJtlgv5abMUnpTit685F5aWcauOSt7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369327; c=relaxed/simple;
-	bh=4SFj6E+CUYiuLIVHpjG/2/WLKKcLL4eSwDwvhGIYByY=;
+	s=arc-20240116; t=1760369330; c=relaxed/simple;
+	bh=5zZwYoh/NuQkij9+yefiYZAfwJJW7obrLAZ4chrPKwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dd07ySVOixLEjsBlCc5eqTDkcNjd1b7HIc+OkeRbbLJg8PkpOh2LBjGWwFn5tngOxaLm65Dyqhge5eMmXsOMpWpjToyAMdvZPT6NAsrcMLrSeq85B5Fn4y+zffO/0OX+EdD1eMbGW2CHVeORFbZjN08J2HV8OQbRcoIoDhi1fco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN87pZL+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzOeUo7EfkBb60EOJBCA6yKGjVuA8lISrKLQa/gNuFekpH7eLnqf/4id6pj6g4XtSuFR9o46I/yQj6FDbh8Ec2Tq70+Dlb8ZUAqp2fhqRhB26rii/wmuSXC57MROqRtgk+Jy5gfvCRcSFlmlMSTZOVUwLRYeat56wmBzjSeOR6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbGiNPXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN87pZL+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CD7C4CEFE;
-	Mon, 13 Oct 2025 15:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbGiNPXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF745C4CEFE;
+	Mon, 13 Oct 2025 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369327;
-	bh=4SFj6E+CUYiuLIVHpjG/2/WLKKcLL4eSwDwvhGIYByY=;
+	s=korg; t=1760369330;
+	bh=5zZwYoh/NuQkij9+yefiYZAfwJJW7obrLAZ4chrPKwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wN87pZL+EjubMwnytQCj4EsXsHdDDdy5UUOx6ICHlZaoQ/zGGvxdb/oG+7Q3TV6id
-	 qfcs+A6a9pdPSPoJAebVG6e1Nbu27SwWqHmd9RcxCoUjEe1AlgIrB9jjZ7QEOt1acB
-	 bhzEFBN813ZeTs8dkea4ceColWoVNRxdc2Kx0gXI=
+	b=TbGiNPXufKPjJHqHGhI9QQlb8HCKUI0l9EA7R6iuWExSXdpm4QtjwFCLBaaMFb/7+
+	 k8Im+f6pnrDrx53+c2ZdO35+GCSLUhIR0TM7uic8IHkgKMSwXr0UUki4GIo9Zx9RMw
+	 /yqsl+XTzdRpvuaj5R2fyRuxrjJBpSMfm6KD3c3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jorge Marques <jorge.marques@analog.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 208/563] bpf: Enforce expected_attach_type for tailcall compatibility
-Date: Mon, 13 Oct 2025 16:41:09 +0200
-Message-ID: <20251013144418.821103745@linuxfoundation.org>
+Subject: [PATCH 6.17 209/563] i3c: fix big-endian FIFO transfers
+Date: Mon, 13 Oct 2025 16:41:10 +0200
+Message-ID: <20251013144418.857494703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,91 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4540aed51b12bc13364149bf95f6ecef013197c0 ]
+[ Upstream commit d6ddd9beb1a5c32acb9b80f5c2cd8b17f41371d1 ]
 
-Yinhao et al. recently reported:
+Short MMIO transfers that are not a multiple of four bytes in size need
+a special case for the final bytes, however the existing implementation
+is not endian-safe and introduces an incorrect byteswap on big-endian
+kernels.
 
-  Our fuzzer tool discovered an uninitialized pointer issue in the
-  bpf_prog_test_run_xdp() function within the Linux kernel's BPF subsystem.
-  This leads to a NULL pointer dereference when a BPF program attempts to
-  deference the txq member of struct xdp_buff object.
+This usually does not cause problems because most systems are
+little-endian and most transfers are multiple of four bytes long, but
+still needs to be fixed to avoid the extra byteswap.
 
-The test initializes two programs of BPF_PROG_TYPE_XDP: progA acts as the
-entry point for bpf_prog_test_run_xdp() and its expected_attach_type can
-neither be of be BPF_XDP_DEVMAP nor BPF_XDP_CPUMAP. progA calls into a slot
-of a tailcall map it owns. progB's expected_attach_type must be BPF_XDP_DEVMAP
-to pass xdp_is_valid_access() validation. The program returns struct xdp_md's
-egress_ifindex, and the latter is only allowed to be accessed under mentioned
-expected_attach_type. progB is then inserted into the tailcall which progA
-calls.
+Change the special case for both i3c_writel_fifo() and i3c_readl_fifo()
+to use non-byteswapping writesl() and readsl() with a single element
+instead of the byteswapping writel()/readl() that are meant for individual
+MMIO registers. As data is copied between a FIFO and a memory buffer,
+the writesl()/readsl() loops are typically based on __raw_readl()/
+__raw_writel(), resulting in the order of bytes in the FIFO to match
+the order in the buffer, regardless of the CPU endianess.
 
-The underlying issue goes beyond XDP though. Another example are programs
-of type BPF_PROG_TYPE_CGROUP_SOCK_ADDR. sock_addr_is_valid_access() as well
-as sock_addr_func_proto() have different logic depending on the programs'
-expected_attach_type. Similarly, a program attached to BPF_CGROUP_INET4_GETPEERNAME
-should not be allowed doing a tailcall into a program which calls bpf_bind()
-out of BPF which is only enabled for BPF_CGROUP_INET4_CONNECT.
+The earlier versions in the dw-i3c and i3c-master-cdns had a correct
+implementation, but the generic version that was recently added broke it.
 
-In short, specifying expected_attach_type allows to open up additional
-functionality or restrictions beyond what the basic bpf_prog_type enables.
-The use of tailcalls must not violate these constraints. Fix it by enforcing
-expected_attach_type in __bpf_prog_map_compatible().
-
-Note that we only enforce this for tailcall maps, but not for BPF devmaps or
-cpumaps: There, the programs are invoked through dev_map_bpf_prog_run*() and
-cpu_map_bpf_prog_run*() which set up a new environment / context and therefore
-these situations are not prone to this issue.
-
-Fixes: 5e43f899b03a ("bpf: Check attach type at prog load time")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250926171201.188490-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 733b439375b4 ("i3c: master: Add inline i3c_readl_fifo() and i3c_writel_fifo()")
+Cc: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Jorge Marques <jorge.marques@analog.com>
+Link: https://lore.kernel.org/r/20250924201837.3691486-1-arnd@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h | 1 +
- kernel/bpf/core.c   | 5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/i3c/internals.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index cc700925b802f..84826dc0a3268 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -285,6 +285,7 @@ struct bpf_map_owner {
- 	bool xdp_has_frags;
- 	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	const struct btf_type *attach_func_proto;
-+	enum bpf_attach_type expected_attach_type;
- };
+diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
+index 0d857cc68cc5d..79ceaa5f5afd6 100644
+--- a/drivers/i3c/internals.h
++++ b/drivers/i3c/internals.h
+@@ -38,7 +38,11 @@ static inline void i3c_writel_fifo(void __iomem *addr, const void *buf,
+ 		u32 tmp = 0;
  
- struct bpf_map {
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index e4568d44e8279..f6dd071f5e38c 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2393,6 +2393,7 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		map->owner->type  = prog_type;
- 		map->owner->jited = fp->jited;
- 		map->owner->xdp_has_frags = aux->xdp_has_frags;
-+		map->owner->expected_attach_type = fp->expected_attach_type;
- 		map->owner->attach_func_proto = aux->attach_func_proto;
- 		for_each_cgroup_storage_type(i) {
- 			map->owner->storage_cookie[i] =
-@@ -2404,6 +2405,10 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		ret = map->owner->type  == prog_type &&
- 		      map->owner->jited == fp->jited &&
- 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
-+		if (ret &&
-+		    map->map_type == BPF_MAP_TYPE_PROG_ARRAY &&
-+		    map->owner->expected_attach_type != fp->expected_attach_type)
-+			ret = false;
- 		for_each_cgroup_storage_type(i) {
- 			if (!ret)
- 				break;
+ 		memcpy(&tmp, buf + (nbytes & ~3), nbytes & 3);
+-		writel(tmp, addr);
++		/*
++		 * writesl() instead of writel() to keep FIFO
++		 * byteorder on big-endian targets
++		 */
++		writesl(addr, &tmp, 1);
+ 	}
+ }
+ 
+@@ -55,7 +59,11 @@ static inline void i3c_readl_fifo(const void __iomem *addr, void *buf,
+ 	if (nbytes & 3) {
+ 		u32 tmp;
+ 
+-		tmp = readl(addr);
++		/*
++		 * readsl() instead of readl() to keep FIFO
++		 * byteorder on big-endian targets
++		 */
++		readsl(addr, &tmp, 1);
+ 		memcpy(buf + (nbytes & ~3), &tmp, nbytes & 3);
+ 	}
+ }
 -- 
 2.51.0
 
