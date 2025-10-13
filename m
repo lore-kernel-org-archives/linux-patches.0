@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6288530BBAE;
-	Mon, 13 Oct 2025 15:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F32356D9;
+	Mon, 13 Oct 2025 15:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369597; cv=none; b=qlKtdBrLzwo2l8je4pVNH85GgI/RgV7b7aP9YHIME7Xp4J/XkUeW1sW0v04r1bFry7zM5OKR+XeV4rXK9ozVKGfKVdbcx2LuIUOOGTdX30uhewSC24xtLu1OI5ACGPdtH2CuVhBmGIU5eDYY7vX9hJy/EJpT+yTmq07y5EZJhY0=
+	t=1760369603; cv=none; b=qTzLDp+ep0Fg2jAR/UPX/wMfJgOnTQ2Pp4bJcbkbDZnY1OwzlUeWGyLUqkc91/BlDFyTc/yUcYqSfO9LgcIefhjXONE88MXLEo3cbts46l//2MhYOs7fRmP1t+2RWW/zeuYGozIL96Qq2NzZLaUSvviTcNu9+FqI2sjSvKAjkM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369597; c=relaxed/simple;
-	bh=vmwHNiNZT+vfR7uxm+6EsPLVHBvfQmGu2IhcxYR6DpU=;
+	s=arc-20240116; t=1760369603; c=relaxed/simple;
+	bh=RR3t3Vx/2iRSEQF4pq4sLQWa5nXoZTpDZPCuuEgU2kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zv4MVU2b1s2Rt1j1J5QhjPSDXkqgdG0xM/r1K56TU5jHSf5sUsFqdqiOk2VvZc7pCVokPPHP0uVfhqp2VpLSvn1RyO0Wx5fUTQedytzM27+tMaT6PTTmV7WfPON1jBUOTOQydzrgI2W+H4ineb+lg2dOKszxm9R2pphuRzjdLbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUZ6aSCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sLBBkNEaU20EHaLYecCvU9gJFUdlFy5UwAf6imbe1b7vQSNPWysEWsYkJ+yA6T/xVBrIlEPMwV3Ezwsaemz2aqyfQOh7SOFGUUX8HfFPiQBiLlsElAZXaVZSLUb7wdwb09UGaVSZFtkfcgA5XcuRsl1To/ZrJrGMQNl6XghG2gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nh6jxeLd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUZ6aSCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3770C4CEE7;
-	Mon, 13 Oct 2025 15:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nh6jxeLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D196FC4CEE7;
+	Mon, 13 Oct 2025 15:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369597;
-	bh=vmwHNiNZT+vfR7uxm+6EsPLVHBvfQmGu2IhcxYR6DpU=;
+	s=korg; t=1760369600;
+	bh=RR3t3Vx/2iRSEQF4pq4sLQWa5nXoZTpDZPCuuEgU2kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUZ6aSCnNKoU9FdYv/gIQ3fo8apBFmnRfop5LGp/n21mZenZvAPBk3ScbxbbPzzDL
-	 iS/NQI2j06gUnTJt9rFDBJNqeq0WLs8jUlgRW2pzjjVMmsyIV9nktEw0ixBBUXhJmN
-	 iE04Wk7cWSgLPZOUOwdozb75VkBbDBeaJqlRZhKY=
+	b=Nh6jxeLdl1fTQIZzhAS7uY96Gf3sM8/XZuxVRItfUMx62xeKLyFNRJDQZQmZfTWz0
+	 n52p2ihsd7T08rmKh4unPI4rULpFo3fcs7p//+0xmfmQuToQjup++kfoosGKZ/S75Z
+	 9lC7/5B62PhptFgjLCuZTX6DDpDS9SHHDVZdYVqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 301/563] coresight: Only register perf symlink for sinks with alloc_buffer
-Date: Mon, 13 Oct 2025 16:42:42 +0200
-Message-ID: <20251013144422.172318119@linuxfoundation.org>
+Subject: [PATCH 6.17 302/563] drm/amdgpu: Power up UVD 3 for FW validation (v2)
+Date: Mon, 13 Oct 2025 16:42:43 +0200
+Message-ID: <20251013144422.208669347@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,49 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 12d9a9dd9d8a4f1968073e7f34515896d1e22b78 ]
+[ Upstream commit c661219cd7be75bb5599b525f16a455a058eb516 ]
 
-Ensure that etm_perf_add_symlink_sink() is only called for devices
-that implement the alloc_buffer operation. This prevents invalid
-symlink creation for dummy sinks that do not implement alloc_buffer.
+Unlike later versions, UVD 3 has firmware validation.
+For this to work, the UVD should be powered up correctly.
 
-Without this check, perf may attempt to use a dummy sink that lacks
-alloc_buffer operationsu to initialise perf's ring buffer, leading
-to runtime failures.
+When DPM is enabled and the display clock is off,
+the SMU may choose a power state which doesn't power
+the UVD, which can result in failure to initialize UVD.
 
-Fixes: 9d3ba0b6c0569 ("Coresight: Add coresight dummy driver")
-Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250630-etm_perf_sink-v1-1-e4a7211f9ad7@quicinc.com
+v2:
+Add code comments to explain about the UVD power state
+and how UVD clock is turned on/off.
+
+Fixes: b38f3e80ecec ("drm amdgpu: SI UVD v3_1 (v2)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 29 +++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index c2db94f2ab237..1accd7cbd54bf 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -1375,8 +1375,9 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 		goto out_unlock;
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+index 5dbaebb592b30..2e79a3afc7748 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+@@ -623,7 +623,22 @@ static void uvd_v3_1_enable_mgcg(struct amdgpu_device *adev,
+  *
+  * @ip_block: Pointer to the amdgpu_ip_block for this hw instance.
+  *
+- * Initialize the hardware, boot up the VCPU and do some testing
++ * Initialize the hardware, boot up the VCPU and do some testing.
++ *
++ * On SI, the UVD is meant to be used in a specific power state,
++ * or alternatively the driver can manually enable its clock.
++ * In amdgpu we use the dedicated UVD power state when DPM is enabled.
++ * Calling amdgpu_dpm_enable_uvd makes DPM select the UVD power state
++ * for the SMU and afterwards enables the UVD clock.
++ * This is automatically done by amdgpu_uvd_ring_begin_use when work
++ * is submitted to the UVD ring. Here, we have to call it manually
++ * in order to power up UVD before firmware validation.
++ *
++ * Note that we must not disable the UVD clock here, as that would
++ * cause the ring test to fail. However, UVD is powered off
++ * automatically after the ring test: amdgpu_uvd_ring_end_use calls
++ * the UVD idle work handler which will disable the UVD clock when
++ * all fences are signalled.
+  */
+ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
+ {
+@@ -633,6 +648,15 @@ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
+ 	int r;
+ 
+ 	uvd_v3_1_mc_resume(adev);
++	uvd_v3_1_enable_mgcg(adev, true);
++
++	/* Make sure UVD is powered during FW validation.
++	 * It's going to be automatically powered off after the ring test.
++	 */
++	if (adev->pm.dpm_enabled)
++		amdgpu_dpm_enable_uvd(adev, true);
++	else
++		amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
+ 
+ 	r = uvd_v3_1_fw_validate(adev);
+ 	if (r) {
+@@ -640,9 +664,6 @@ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
+ 		return r;
  	}
  
--	if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
--	    csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) {
-+	if ((csdev->type == CORESIGHT_DEV_TYPE_SINK ||
-+	     csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) &&
-+	    sink_ops(csdev)->alloc_buffer) {
- 		ret = etm_perf_add_symlink_sink(csdev);
+-	uvd_v3_1_enable_mgcg(adev, true);
+-	amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
+-
+ 	uvd_v3_1_start(adev);
  
- 		if (ret) {
+ 	r = amdgpu_ring_test_helper(ring);
 -- 
 2.51.0
 
