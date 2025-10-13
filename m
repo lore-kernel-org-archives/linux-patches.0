@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A4D1F91E3;
-	Mon, 13 Oct 2025 14:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD031F91E3;
+	Mon, 13 Oct 2025 14:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367035; cv=none; b=E8osxetWVZHVpTPl5ShIvvahewfjyjoF/wKNZi85IQ4obyMNIFF+eziVrmu/2bFWhCnIY7KuWRTpUfCwtQ7329OHqbCxUoJgUfWyGi25Yh+EpOdxtHzX0gEp0Fak5dyBcxyTd168BC3b3MvrW9yucNAeDGN36lV6iWZqIDmBNZo=
+	t=1760367038; cv=none; b=PNktrQGOYfMLBDG7czk33zQfZcq1XqU+4sCDgUXtPysN+weXk7PWjW70Ok93p3I+tl8laPZ9qMrykGfmE7Sg2Tr2CmeXZsX/OLLDS0bLQrGZBhVFyuGDIkv4B36TlgGuRhfM+bx9LyDaIRsFGNTMXr8AsqSRCbc1eBHjTiQ767c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367035; c=relaxed/simple;
-	bh=VFV3DYtz5VhCuyuCY9XoeRGycwnAWfqh49Yh30SjW5E=;
+	s=arc-20240116; t=1760367038; c=relaxed/simple;
+	bh=Ehl8dyoJPrGI1Tun25PoE2BAMMHpKvtCzJb/vgmFBuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O4yba9UnTbn1cw5Qnnt4N7zG5PSVib5fDyQHMc7I+4ys8GfwOpFH1MxMZyKyaNc5ZSaON0oa1ggqGHB42RrLSgfBenviO7oTxyQH+FaHuuNwtLJCDSBUUeeSj79sek4PUze2vFC9jt9RDHAwDOW35tHY82BMD1YCiIWnHwBiymA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3mJu3O+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nf2EnlAi8IQ0cNPXe5Iet+fNtWQDdvJ0fIUdPzbaJYx+nnZDBah7ZP139ckUtJ4Di/+25NGjBrybr8s7UH8n5u1BSu1BBg5vW/u0Hx7VbUSdhymvFPBRi0e0JqF3wo55coCJlIzjj5TdmNWbrA1Wbut5AkMEC82HDSDWsrfiSrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiTS28zh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3mJu3O+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26569C4CEE7;
-	Mon, 13 Oct 2025 14:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiTS28zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79C1C4CEE7;
+	Mon, 13 Oct 2025 14:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367035;
-	bh=VFV3DYtz5VhCuyuCY9XoeRGycwnAWfqh49Yh30SjW5E=;
+	s=korg; t=1760367038;
+	bh=Ehl8dyoJPrGI1Tun25PoE2BAMMHpKvtCzJb/vgmFBuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3mJu3O+8KKMVbZcqPHuCJT0cT2wE1qfcXcDRMnOPmomjlJCl0U0WI5dBM2hdNB3t
-	 tV6vu40THLh63YfjcOEv3CEvTIbFypCyNoHvHf1nR/bFDH01DUEwxoynjHgBlJXBe7
-	 7FPGu/ynCMJ622inw7RM/gXfW8/NAxL9VOnRbVDM=
+	b=WiTS28zh/CTH7qbvJdBwne4B6T4KM/bxuDuWIlXkKRTc7EoNzIqaSHKxDBh3Xe8ui
+	 lf4HvymoWAbyhzV8CjNYhOOZHPbqmxuGdaOTJcimRsD/7jUGbfOTnRy/ErFVHYHBqv
+	 lkH3tVQjARIvcysd8g2wNqaEdPwHWfEOBrD+mO6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andyshrk@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/196] power: supply: cw2015: Fix a alignment coding style issue
-Date: Mon, 13 Oct 2025 16:44:02 +0200
-Message-ID: <20251013144317.075683279@linuxfoundation.org>
+Subject: [PATCH 6.1 070/196] pinctrl: renesas: Use int type to store negative error codes
+Date: Mon, 13 Oct 2025 16:44:03 +0200
+Message-ID: <20251013144317.111198911@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,35 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit def5612170a8c6c4c6a3ea5bd6c3cfc8de6ba4b1 ]
+[ Upstream commit 9f062fc5b0ff44550088912ab89f9da40226a826 ]
 
-Fix the checkpatch warning:
-CHECK: Alignment should match open parenthesis
+Change the 'ret' variable in sh_pfc_pinconf_group_set() from unsigned
+int to int, as it needs to store either negative error codes or zero
+returned by sh_pfc_pinconf_set().
 
-Fixes: 0cb172a4918e ("power: supply: cw2015: Use device managed API to simplify the code")
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+No effect on runtime.
+
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Fixes: d0593c363f04ccc4 ("pinctrl: sh-pfc: Propagate errors on group config")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250831084958.431913-4-rongqianfeng@vivo.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cw2015_battery.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/renesas/pinctrl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
-index 9d957cf8edf07..ae6f46b452101 100644
---- a/drivers/power/supply/cw2015_battery.c
-+++ b/drivers/power/supply/cw2015_battery.c
-@@ -702,8 +702,7 @@ static int cw_bat_probe(struct i2c_client *client)
- 	if (!cw_bat->battery_workqueue)
- 		return -ENOMEM;
+diff --git a/drivers/pinctrl/renesas/pinctrl.c b/drivers/pinctrl/renesas/pinctrl.c
+index b438d24c13b5c..ea2fbabe1c64b 100644
+--- a/drivers/pinctrl/renesas/pinctrl.c
++++ b/drivers/pinctrl/renesas/pinctrl.c
+@@ -747,7 +747,8 @@ static int sh_pfc_pinconf_group_set(struct pinctrl_dev *pctldev, unsigned group,
+ 	struct sh_pfc_pinctrl *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	const unsigned int *pins;
+ 	unsigned int num_pins;
+-	unsigned int i, ret;
++	unsigned int i;
++	int ret;
  
--	devm_delayed_work_autocancel(&client->dev,
--							  &cw_bat->battery_delay_work, cw_bat_work);
-+	devm_delayed_work_autocancel(&client->dev, &cw_bat->battery_delay_work, cw_bat_work);
- 	queue_delayed_work(cw_bat->battery_workqueue,
- 			   &cw_bat->battery_delay_work, msecs_to_jiffies(10));
- 	return 0;
+ 	pins = pmx->pfc->info->groups[group].pins;
+ 	num_pins = pmx->pfc->info->groups[group].nr_pins;
 -- 
 2.51.0
 
