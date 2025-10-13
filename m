@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E9F2DF139;
-	Mon, 13 Oct 2025 14:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013BF279DCE;
+	Mon, 13 Oct 2025 14:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367167; cv=none; b=NCoiGM2ACGj98AsDIk5UYEFRi/Bbz6Xn10QEU9MZZlNTDF87QizCGEDnFzcZsh/uMMNgxl3V/eGcsaNSWXI1CVFmifjao4wn45Y2JfaqcovXDTS9uadfdUDfmsii/9IVbI55GphgryO7Ks39Q4eaArgytFeioNCQinhvOarpR3k=
+	t=1760367170; cv=none; b=QZlA69mY4g0IiuYhWNsmOJ+5t/Tb6WviFqqx2MbXv+DnohdtZ6zecMf/yfgKeA5ObOKo6jb3ac5OA+Ufu5lOtHdHruG9l07VDwQG4CFv6cgG2fX2refaj5Mk6IhNw4Rh4iT5e0iMxknuxIVZvr2Cr7Hv+BD5TStbwuB1jcxAPfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367167; c=relaxed/simple;
-	bh=9ZPHbAOd+CawNmXw6hwMk3I0l4hl9dbuGmZ/xGdlOI0=;
+	s=arc-20240116; t=1760367170; c=relaxed/simple;
+	bh=0ErED4saSnGr63Ht+kDDSIFJnVPuGGOgckghfV3X1Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwoomjTk2Ym+J2o66XKImyHqlsZQ+qo9jCnvbrO5OXDfuMDQQNLFjkrjwqDk56CJ0FgRspyFQtk0mU9Mm1waORAcL44eTpgGMiaIgQwcCKZdp/1rA7U4VCCzAFha4kEGQCoaCDr6ApvBCNRj/wjGa3Lqp8OOiHhPyRzL0gUWY+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+Z/rKoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6PupUyyhJLsSv/xPT/DIXpOHfzDqsXYizhtXZPzyceDB3Bbkw7X497kc4iYVX8+VXBiH0ZtbevcnIY7Yc2tybsgf3MYGyziA7Ebz9KugZxalf5mzk7WZR38UOVfZTcG991nf7EdLoLKo4H9dbwb2nj14GA0WLhWhbN6V6oYZD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18qyuRCF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+Z/rKoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC0DC4CEE7;
-	Mon, 13 Oct 2025 14:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18qyuRCF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4A1C4CEE7;
+	Mon, 13 Oct 2025 14:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367167;
-	bh=9ZPHbAOd+CawNmXw6hwMk3I0l4hl9dbuGmZ/xGdlOI0=;
+	s=korg; t=1760367169;
+	bh=0ErED4saSnGr63Ht+kDDSIFJnVPuGGOgckghfV3X1Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+Z/rKoIZB+TgL+wjnzVob7zo+lngtxcXCXg7SIoruqK/5cBgKCFPiXdC/xS+YKSa
-	 RLgTdJAfuG/ylyH4I/y4rtlCCnjbV78aBfhPG35LSvjQ2Bf1BkuBdBpKCtxn+DSzOT
-	 p7l/gEVhLIoG18NiLukvsl8PVVIeVvp+PQf0mXsA=
+	b=18qyuRCF2BRtRsV00EBLW0TYXjeEBmI8Stw/1ISlIr+7TgrvEM8USio6fJAMHOKaQ
+	 lwdPmzgFrVRNb0eBr6Te1O9vUEX1SuU8AN7Gm20ed3vRo+fGPYuapZ26kUPuKEMThR
+	 l9T+oZodVClxCS9AkGwjwZ0ozERfuTZ80eANtV20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Ito <ito.kohei@socionext.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	William Wu <william.wu@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/196] i2c: designware: Add disabling clocks when probe fails
-Date: Mon, 13 Oct 2025 16:44:21 +0200
-Message-ID: <20251013144317.755024818@linuxfoundation.org>
+Subject: [PATCH 6.1 115/196] usb: gadget: configfs: Correctly set use_os_string at bind
+Date: Mon, 13 Oct 2025 16:44:48 +0200
+Message-ID: <20251013144318.858295646@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,37 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit c149841b069ccc6e480b00e11f35a57b5d88c7bb ]
+[ Upstream commit e271cc0d25015f4be6c88bd7731444644eb352c2 ]
 
-After an error occurs during probing state, dw_i2c_plat_pm_cleanup() is
-called. However, this function doesn't disable clocks and the clock-enable
-count keeps increasing. Should disable these clocks explicitly.
+Once the use_os_string flag is set to true for some functions
+(e.g. adb/mtp) which need to response the OS string, and then
+if we re-bind the ConfigFS gadget to use the other functions
+(e.g. hid) which should not to response the OS string, however,
+because the use_os_string flag is still true, so the usb gadget
+response the OS string descriptor incorrectly, this can cause
+the USB device to be unrecognizable on the Windows system.
 
-Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
-Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+An example of this as follows:
+
+echo 1 > os_desc/use
+ln -s functions/ffs.adb configs/b.1/function0
+start adbd
+echo "<udc device>" > UDC   #succeed
+
+stop adbd
+rm configs/b.1/function0
+echo 0 > os_desc/use
+ln -s functions/hid.gs0 configs/b.1/function0
+echo "<udc device>" > UDC  #fail to connect on Windows
+
+This patch sets the use_os_string flag to false at bind if
+the functions not support OS Descriptors.
+
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Fixes: 87213d388e92 ("usb: gadget: configfs: OS String support")
+Link: https://lore.kernel.org/r/1755833769-25434-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-platdrv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/configfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index 74182db03a88b..a29f4ef793cf3 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -380,6 +380,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index cdbf12639dfa7..f55dcc3a40184 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -1356,6 +1356,8 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
+ 		cdev->use_os_string = true;
+ 		cdev->b_vendor_code = gi->b_vendor_code;
+ 		memcpy(cdev->qw_sign, gi->qw_sign, OS_STRING_QW_SIGN_LEN);
++	} else {
++		cdev->use_os_string = false;
+ 	}
  
- exit_probe:
- 	dw_i2c_plat_pm_cleanup(dev);
-+	i2c_dw_prepare_clk(dev, false);
- exit_reset:
- 	reset_control_assert(dev->rst);
- 	return ret;
+ 	if (gadget_is_otg(gadget) && !otg_desc[0]) {
 -- 
 2.51.0
 
