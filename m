@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8330C36B;
-	Mon, 13 Oct 2025 15:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7390231076C;
+	Mon, 13 Oct 2025 15:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368070; cv=none; b=aT+RnSBCIUc7S9OS47npTPMQBA8CVnshwyymJYvVLireXWSPHgY0waZ4weWObrf/k6077wQRIMCzy8lPeG9La86mArE4uBrA3xk+BPRmKi/InnID0Z0w+Zj5DSQNZ0/CQBVoxN5T8wtnCd9Ua/HOOYmdg1+EgsjlySLMDapeM8M=
+	t=1760368073; cv=none; b=nz+r+xdM/aNJ4zE2k2MrKnRWGgKAWMfNvZY0hUuoSySJaeae9eqGL8chtgKJnGwNJaPn1rQzCOhlkfbmemdiCXFL1JmnivYPd/DtPiB9soKGqy3mqn/CkQ81UfKF02PxrUx5H59pcusYgnlUMeNdRkvEYybr1/TbJaLlsXLjfbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368070; c=relaxed/simple;
-	bh=uRbSfgy0C5DKIckVxmBZvaCvvOmYwK54AcdiM/U0UHk=;
+	s=arc-20240116; t=1760368073; c=relaxed/simple;
+	bh=amdayZEiAfoRBvyJ4y1CaLuB3fvePKh4+AXIljkGb5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YqvqVW6shEcJEf2fLNYEZNnu5RCUCQVVEDaNfBDrRf04rvvumwuopvdV8M+cM1Sne4zCv7WSZWEvPdyovTRs4s8rXcv5OBJKqa3gJDJH2gcLqs/oIr0/L5cJhTqsQYP4dAsbgury0W50dsdyWG8W0J1zP51W1V9Z7QzX236gs3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKeu+UZb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kuVAhwrrqqnQRcRtAmpuqbIWYceuFFejZjw3PxCwYLlauin5EUQLYcgQ2laOcMHw2PCBrlUYUXmUQ0iGGy/yK77RcBZyZix238skahlZf0KJj+akQ11/aPU6mB6AuwTUcrq6ZRRydx6c1qBblN+hEGbstEBC+b5U6g+eUE87N7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6LZ1CUc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKeu+UZb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7DEC4CEE7;
-	Mon, 13 Oct 2025 15:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6LZ1CUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01D8C4CEE7;
+	Mon, 13 Oct 2025 15:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368070;
-	bh=uRbSfgy0C5DKIckVxmBZvaCvvOmYwK54AcdiM/U0UHk=;
+	s=korg; t=1760368073;
+	bh=amdayZEiAfoRBvyJ4y1CaLuB3fvePKh4+AXIljkGb5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKeu+UZbjXJqKb2Ox76DBBrZjfAxKX5f1T9CxhUN0fL8IWsfouWhmqhMM1pTs4qqe
-	 PLbocLbGVgbJjYhwxcNLEf05L5it4gBuFiMOTVYRZnaBdhwbh6t1b0bz5Jn264AD1Z
-	 tYTHj5M+PcIVlyPb7eoxeMaA0iPY0x9NqsziA0dQ=
+	b=r6LZ1CUcGx7ElHoagVuzZ1ghYOvhSOVz0PXqJsfB+PjnLf76BBjxRKJS+uDyq2fwp
+	 7v7IPUHbbRwJsASLUCFQzokJocdI1Caeqk7oDy1rN9QARUwwUZdaTDvfKEDjFGV3VO
+	 jr0kE1tBfrpApWZlskeioQH2S+HjinridBBtLQIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Andrew Price <anprice@redhat.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/262] gfs2: Fix GLF_INVALIDATE_IN_PROGRESS flag clearing in do_xmote
-Date: Mon, 13 Oct 2025 16:42:27 +0200
-Message-ID: <20251013144326.318977597@linuxfoundation.org>
+Subject: [PATCH 6.12 006/262] powerpc/8xx: Remove left-over instruction and comments in DataStoreTLBMiss handler
+Date: Mon, 13 Oct 2025 16:42:28 +0200
+Message-ID: <20251013144326.354227512@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,34 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 061df28b82af6b22fb5fa529a8f2ef00474ee004 ]
+[ Upstream commit d9e46de4bf5c5f987075afd5f240bb2a8a5d71ed ]
 
-Commit 865cc3e9cc0b ("gfs2: fix a deadlock on withdraw-during-mount")
-added a statement to do_xmote() to clear the GLF_INVALIDATE_IN_PROGRESS
-flag a second time after it has already been cleared.  Fix that.
+Commit ac9f97ff8b32 ("powerpc/8xx: Inconditionally use task PGDIR in
+DTLB misses") removed the test that needed the valeur in SPRN_EPN but
+failed to remove the read.
 
-Fixes: 865cc3e9cc0b ("gfs2: fix a deadlock on withdraw-during-mount")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Reviewed-by: Andrew Price <anprice@redhat.com>
+Remove it.
+
+And remove related comments, including the very same comment
+in InstructionTLBMiss that should have been removed by
+commit 33c527522f39 ("powerpc/8xx: Inconditionally use task PGDIR in
+ITLB misses").
+
+Also update the comment about absence of a second level table which
+has been handled implicitely since commit 5ddb75cee5af ("powerpc/8xx:
+remove tests on PGDIR entry validity").
+
+Fixes: ac9f97ff8b32 ("powerpc/8xx: Inconditionally use task PGDIR in DTLB misses")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/5811c8d1d6187f280ad140d6c0ad6010e41eeaeb.1755361995.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/powerpc/kernel/head_8xx.S | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 161fc76ed5b0e..e5558e63e2cba 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -801,8 +801,6 @@ __acquires(&gl->gl_lockref.lock)
- 			clear_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
- 			gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
- 			return;
--		} else {
--			clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
- 		}
- 	}
+diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
+index 56c5ebe21b99a..613606400ee99 100644
+--- a/arch/powerpc/kernel/head_8xx.S
++++ b/arch/powerpc/kernel/head_8xx.S
+@@ -162,7 +162,7 @@ instruction_counter:
+  * For the MPC8xx, this is a software tablewalk to load the instruction
+  * TLB.  The task switch loads the M_TWB register with the pointer to the first
+  * level table.
+- * If we discover there is no second level table (value is zero) or if there
++ * If there is no second level table (value is zero) or if there
+  * is an invalid pte, we load that into the TLB, which causes another fault
+  * into the TLB Error interrupt where we can handle such problems.
+  * We have to use the MD_xxx registers for the tablewalk because the
+@@ -183,9 +183,6 @@ instruction_counter:
+ 	mtspr	SPRN_SPRG_SCRATCH2, r10
+ 	mtspr	SPRN_M_TW, r11
+ 
+-	/* If we are faulting a kernel address, we have to use the
+-	 * kernel page tables.
+-	 */
+ 	mfspr	r10, SPRN_SRR0	/* Get effective address of fault */
+ 	INVALIDATE_ADJACENT_PAGES_CPU15(r10, r11)
+ 	mtspr	SPRN_MD_EPN, r10
+@@ -228,10 +225,6 @@ instruction_counter:
+ 	mtspr	SPRN_SPRG_SCRATCH2, r10
+ 	mtspr	SPRN_M_TW, r11
+ 
+-	/* If we are faulting a kernel address, we have to use the
+-	 * kernel page tables.
+-	 */
+-	mfspr	r10, SPRN_MD_EPN
+ 	mfspr	r10, SPRN_M_TWB	/* Get level 1 table */
+ 	lwz	r11, (swapper_pg_dir-PAGE_OFFSET)@l(r10)	/* Get level 1 entry */
  
 -- 
 2.51.0
