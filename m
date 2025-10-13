@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9421E3101BB;
-	Mon, 13 Oct 2025 15:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E70430EF83;
+	Mon, 13 Oct 2025 15:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368984; cv=none; b=PR5Lk5rg3keLEncj7KqShNQw8pCE47H9mB6tn1ATt4dBK7KOG9K79+8syvCiTR+bBUpNzVBP1RSPkNCiYX5/UGQp+7cVblM71oq7MMxWgXiFnBfHJyY1bpADF4/dedzLu299mz8Lq1cUsywKg9XFTK6qo/MNYTBAg80T3IrnOzI=
+	t=1760368987; cv=none; b=N3EFHcWtXUcrd8kGNPaWj2JEhTNYkQfYt5FuX+VNglOvyPevftx2N2ARcyvDiZin4RA2m52iY6CVdupO9d35sxmYKDgWWQ2s0v+avKyWSUlNZGplPAaiWdFPYBs3hYkWzKURF1PHovaT+eOHzShuU0OSnLcSoExIJstvkhicBK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368984; c=relaxed/simple;
-	bh=X2Zvvt+HTTOQNaYSVwqeH7nX3WWCNNKxkM8K9u0TnSE=;
+	s=arc-20240116; t=1760368987; c=relaxed/simple;
+	bh=b9/ohJC6hr2fwmsOoqA3U5n9equOPc36p9/BYcqmEY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HfUGyvT6JTcMashuMaTJg+79bBLCEvCoTJg065d6H4VGiiF71UAsi74JLctkNvzg7NANEjS65ADw+NYyV/AamNBYrc/KhzkvxpEIkmwJ/KeJ9E5TFztXSQRiLBKZ2bGUiMR63a5GkkAyaiURgVn32l6uy29eiJ0AXBHZ6UgOW94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJrPSUpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLaMA3qXj33HVLiGJ3e5kYYCUEsiV70REQBOdJeyVs4cOjRVDdvss1o7sqB0zVoc6F8+ihRw9/DJiNn3oNcom8nClMSFhZQtK4iRDt7qKR5mtaOe35v95BTXbUlb7/SxMUexCV6H4umypSV/7yWagdLp6R6gKKl9I6d9xebHRj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtaBpBht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJrPSUpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21153C4CEE7;
-	Mon, 13 Oct 2025 15:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtaBpBht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC20C116B1;
+	Mon, 13 Oct 2025 15:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368984;
-	bh=X2Zvvt+HTTOQNaYSVwqeH7nX3WWCNNKxkM8K9u0TnSE=;
+	s=korg; t=1760368987;
+	bh=b9/ohJC6hr2fwmsOoqA3U5n9equOPc36p9/BYcqmEY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJrPSUpFl2kds/2F4Gi6BiOXgczcwteg709FU18JLMJ9PyyxYr6NuHD1+/vDJiXFb
-	 ZMa6f5YtJke27tSkNcDP2l7XRKL573ECm3ePHG2qv4yJW8OhkYJozPla6U1UfZqkcT
-	 e2cfVep1dbdaJMS6ZMZ3iKIiLScHg5H00Y+4Xhuc=
+	b=TtaBpBhtx5DB+rO1O5aFFe2OLMQbyJn+dUUv7E6R3a0hzETHD/kW3oeEO3AMvtm4O
+	 hR8V5sEOTbQ0ZjHMiVU4T4JV42N7ALr5O5NxOEdtrl2/8/aB2A6QcZKoHYfCt7uMeE
+	 ls5G59ozM2jclTu5YauQ//C4Y20rL11nVew+Iflc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Brian Norris <briannorris@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	David Gow <davidgow@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 086/563] genirq/test: Fix depth tests on architectures with NOREQUEST by default.
-Date: Mon, 13 Oct 2025 16:39:07 +0200
-Message-ID: <20251013144414.412283832@linuxfoundation.org>
+Subject: [PATCH 6.17 087/563] genirq/test: Select IRQ_DOMAIN
+Date: Mon, 13 Oct 2025 16:39:08 +0200
+Message-ID: <20251013144414.448993097@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,83 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit c9163915a93d40e32c4e4aeb942c0adcb190d72e ]
+[ Upstream commit f8a44f9babd054ff19e20a30cab661d716ad5459 ]
 
-The new irq KUnit tests fail on some architectures (notably PowerPC and
-32-bit ARM), as the request_irq() call fails due to the ARCH_IRQ_INIT_FLAGS
-containing IRQ_NOREQUEST, yielding the following errors:
-
-[10:17:45]     # irq_free_disabled_test: EXPECTATION FAILED at kernel/irq/irq_test.c:88
-[10:17:45]     Expected ret == 0, but
-[10:17:45]         ret == -22 (0xffffffffffffffea)
-[10:17:45]     # irq_free_disabled_test: EXPECTATION FAILED at kernel/irq/irq_test.c:90
-[10:17:45]     Expected desc->depth == 0, but
-[10:17:45]         desc->depth == 1 (0x1)
-[10:17:45]     # irq_free_disabled_test: EXPECTATION FAILED at kernel/irq/irq_test.c:93
-[10:17:45]     Expected desc->depth == 1, but
-[10:17:45]         desc->depth == 2 (0x2)
-
-By clearing IRQ_NOREQUEST from the interrupt descriptor, these tests now
-pass on ARM and PowerPC.
+These tests use irq_domain_alloc_descs() and so require CONFIG_IRQ_DOMAIN.
 
 Fixes: 66067c3c8a1e ("genirq: Add kunit tests for depth counts")
-Signed-off-by: David Gow <davidgow@google.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Tested-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Link: https://lore.kernel.org/all/20250816094528.3560222-2-davidgow@google.com
+Reviewed-by: David Gow <davidgow@google.com>
+Link: https://lore.kernel.org/all/20250822190140.2154646-2-briannorris@chromium.org
+Closes: https://lore.kernel.org/lkml/ded44edf-eeb7-420c-b8a8-d6543b955e6e@roeck-us.net/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irq_test.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ kernel/irq/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/irq/irq_test.c b/kernel/irq/irq_test.c
-index a75abebed7f24..e220e7b2fc187 100644
---- a/kernel/irq/irq_test.c
-+++ b/kernel/irq/irq_test.c
-@@ -54,6 +54,9 @@ static void irq_disable_depth_test(struct kunit *test)
- 	desc = irq_to_desc(virq);
- 	KUNIT_ASSERT_PTR_NE(test, desc, NULL);
- 
-+	/* On some architectures, IRQs are NOREQUEST | NOPROBE by default. */
-+	irq_settings_clr_norequest(desc);
-+
- 	ret = request_irq(virq, noop_handler, 0, "test_irq", NULL);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -81,6 +84,9 @@ static void irq_free_disabled_test(struct kunit *test)
- 	desc = irq_to_desc(virq);
- 	KUNIT_ASSERT_PTR_NE(test, desc, NULL);
- 
-+	/* On some architectures, IRQs are NOREQUEST | NOPROBE by default. */
-+	irq_settings_clr_norequest(desc);
-+
- 	ret = request_irq(virq, noop_handler, 0, "test_irq", NULL);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -120,6 +126,9 @@ static void irq_shutdown_depth_test(struct kunit *test)
- 	desc = irq_to_desc(virq);
- 	KUNIT_ASSERT_PTR_NE(test, desc, NULL);
- 
-+	/* On some architectures, IRQs are NOREQUEST | NOPROBE by default. */
-+	irq_settings_clr_norequest(desc);
-+
- 	data = irq_desc_get_irq_data(desc);
- 	KUNIT_ASSERT_PTR_NE(test, data, NULL);
- 
-@@ -180,6 +189,9 @@ static void irq_cpuhotplug_test(struct kunit *test)
- 	desc = irq_to_desc(virq);
- 	KUNIT_ASSERT_PTR_NE(test, desc, NULL);
- 
-+	/* On some architectures, IRQs are NOREQUEST | NOPROBE by default. */
-+	irq_settings_clr_norequest(desc);
-+
- 	data = irq_desc_get_irq_data(desc);
- 	KUNIT_ASSERT_PTR_NE(test, data, NULL);
- 
+diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
+index 1da5e9d9da719..08088b8e95ae9 100644
+--- a/kernel/irq/Kconfig
++++ b/kernel/irq/Kconfig
+@@ -148,6 +148,7 @@ config IRQ_KUNIT_TEST
+ 	bool "KUnit tests for IRQ management APIs" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT=y
+ 	default KUNIT_ALL_TESTS
++	select IRQ_DOMAIN
+ 	imply SMP
+ 	help
+ 	  This option enables KUnit tests for the IRQ subsystem API. These are
 -- 
 2.51.0
 
