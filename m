@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E94B30FC27;
-	Mon, 13 Oct 2025 15:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AD430FF2A;
+	Mon, 13 Oct 2025 15:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369734; cv=none; b=i5BVENQ9b7vp0TbfFmgON2rxVvDHNyfqX2d2EBfEfhjkablEQZOH5EKmhDsbYC1iUIYj6E/PYc/VIsE0H/VFU34w8cPiOWsEEtarXYv7AbeKobY55zSPOe+PXkha3ZzIl+p3/x3u7xaYT14b4a2XwwTo/kB7sP4AxXWF3iB+/t8=
+	t=1760369737; cv=none; b=m9ghb3z1g1ospc+y2a2uKchsnBnrG+WdcChaeGZBuSt7MAMs8tir/Igy50vcXArXOJF6waveXpS4qTwJ1IqftuwWrReBCxb9wc98OJqBPxPLrVIrvlerHLovgJ3X5WZbTajcc3qF9c8++w1y6gNAzCuz3b89skrZbUAw1K6iqbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369734; c=relaxed/simple;
-	bh=qDJxgBTwJ6n3RQ0mYB/r2DnvGXCqXo35JMCzantBU7A=;
+	s=arc-20240116; t=1760369737; c=relaxed/simple;
+	bh=XS3h7OoWWNRuC/o+2LGS3o7ur6gZIQ/hVrG22fIQYHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZWB7W7QEpUWp9dhO7aE6aeY3/yGK1HMW0ItkwR4QxNZAKZBBunCsCQdNWkpje1XBTHDiWbhXP/vpnGuWuHAyGm+m+0js1OvDWegMLiPhrLQNPc0caZjeExu6VWXU8BkJRp5FFyWux98gDpZGoTQNoypZcIb7QaaQP37moaLp1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJFfK+XW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nSGS0nO3CO5Bv0eVRImWikpyfujK4EckTOpNAz+XRsuQdNoioG6+wn/4QmGPAIxx9VHyAVBtn4Y0vKmNEL/eg7tMetE2/JMUjz9TXSWKmSF5H8JtedvnaO52zeozMOsKNsoEUDufPly3x6b3gbMRukNTJ3AQs5S+jDInsun4J+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWbIlqAf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJFfK+XW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8E5C19424;
-	Mon, 13 Oct 2025 15:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWbIlqAf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019B1C116D0;
+	Mon, 13 Oct 2025 15:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369734;
-	bh=qDJxgBTwJ6n3RQ0mYB/r2DnvGXCqXo35JMCzantBU7A=;
+	s=korg; t=1760369737;
+	bh=XS3h7OoWWNRuC/o+2LGS3o7ur6gZIQ/hVrG22fIQYHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJFfK+XWrsCTbuGHn3QxxALrJtOjLFaOb84bo/yM/qShQYJ+QXgK4gyQfSGIw/dXO
-	 ehZGyytZ0VxcGyKfAaLhVFw5yv5imOx9OA8tnjNcU/L3AfCAtMvvt44BnW5rXlcXmA
-	 yd1ZeAhJ7/NI4i3yGo1dp6c146QyrRBUqQlN3pHg=
+	b=kWbIlqAfUtc/6lHmMW47pUs82C9vcMmvDZ0Dpi2omLPnwzkgERX8r93NQ0MiLXHGj
+	 r2SLxQ6MiVbOtOQFVJ5xdG0jW4eDuMrLG/1u4Se/IK1uTK++j9PY1Ipa82KZKKDYIZ
+	 DR1pFhLSu3yJZZvbzOp/twCtfpxcjf3/Ciqi4cDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
-	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 351/563] drivers/base/node: handle error properly in register_one_node()
-Date: Mon, 13 Oct 2025 16:43:32 +0200
-Message-ID: <20251013144423.984726484@linuxfoundation.org>
+Subject: [PATCH 6.17 352/563] RDMA/cm: Rate limit destroy CM ID timeout error message
+Date: Mon, 13 Oct 2025 16:43:33 +0200
+Message-ID: <20251013144424.020793365@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -55,60 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit 786eb990cfb78aab94eb74fb32a030e14723a620 ]
+[ Upstream commit 2bbe1255fcf19c5eb300efb6cb5ad98d66fdae2e ]
 
-If register_node() returns an error, it is not handled correctly.
-The function will proceed further and try to register CPUs under the
-node, which is not correct.
+When the destroy CM ID timeout kicks in, you typically get a storm of
+them which creates a log flooding. Hence, change pr_err() to
+pr_err_ratelimited() in cm_destroy_id_wait_timeout().
 
-So, in this patch, if register_node() returns an error, we return
-immediately from the function.
-
-Link: https://lkml.kernel.org/r/20250822084845.19219-1-donettom@linux.ibm.com
-Fixes: 76b67ed9dce6 ("[PATCH] node hotplug: register cpu: remove node struct")
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Donet Tom <donettom@linux.ibm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
-Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 96d9cbe2f2ff ("RDMA/cm: add timeout to cm_destroy_id wait")
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Link: https://patch.msgid.link/20250912100525.531102-1-haakon.bugge@oracle.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/node.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/core/cm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/node.c b/drivers/base/node.c
-index 3399594136b2a..45d512939c408 100644
---- a/drivers/base/node.c
-+++ b/drivers/base/node.c
-@@ -885,6 +885,11 @@ int register_one_node(int nid)
- 	node_devices[nid] = node;
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 92678e438ff4d..01bede8ba1055 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -1049,8 +1049,8 @@ static noinline void cm_destroy_id_wait_timeout(struct ib_cm_id *cm_id,
+ 	struct cm_id_private *cm_id_priv;
  
- 	error = register_node(node_devices[nid], nid);
-+	if (error) {
-+		node_devices[nid] = NULL;
-+		kfree(node);
-+		return error;
-+	}
+ 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
+-	pr_err("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
+-	       cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
++	pr_err_ratelimited("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
++			   cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
+ }
  
- 	/* link cpu under this node */
- 	for_each_present_cpu(cpu) {
+ static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
 -- 
 2.51.0
 
