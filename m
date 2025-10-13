@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A6026E702;
-	Mon, 13 Oct 2025 14:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB33309F11;
+	Mon, 13 Oct 2025 14:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367201; cv=none; b=cETeWa8ETb8LyEfDZseeMl0U8wTXcTcM65spgLS8SApJh74wajHNoXWv9/aE2riSpBvDfkWS3dTqZE0z5h1hnv1t5tgFi2R1J3svXA02KbbKv07atmnnqdIuxs58HT8Q30B76PddVi2Fdyg7KvQ6Sm8iHJyoGao6QCVy8OwSvFo=
+	t=1760367204; cv=none; b=uoDEAqEWe1zfGwVhErPhssAUvopTuFAzRcJ/zAQ41n6FAJQyOI5q29wmQjG1vtefHWiSfL3ukdpezhMitQFCn4tBb7XhKcmGws7RObwpqKb3LzuOvW5+HBkIlLcfYUc6tRzvvjhxLLTzM5nL4e6oLqj77piz74BbgLRezeuX/uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367201; c=relaxed/simple;
-	bh=G9jWyIlcBX/vLTsctuwL+Wxqa2HVXOwVruSNZo8Nx4Y=;
+	s=arc-20240116; t=1760367204; c=relaxed/simple;
+	bh=W0m+i6pSw2T0ainefqZPPnopvJl5x14l0zLgY5wwrQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3lsoxEOKCuv9NdG0NEUiQadXbxH93BAr9JQvOCMlyk45LX2RFvaDP99QCmrDOMAdQD4zoul2nmT74o/DTKm+VN1arJvQFpeT7zMw93gsQMUfBf5wGM1ARix5R93DmsjLEteUNaJV1yDy8oCKA78M1Ko2jA+rJnmYlC4kMJxV3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ61+hbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PRyaUL6MM3G8qz9mfRqI8mVbTzVAd/U5DQp8mIuvh8waUhB4sdZHUVK0+qWihhBKDOWJ3lHySS2aHg4DrKdnozMJf/26oVkNxvoQyRIe2h8zUQRnxhY9szHjcirTXDg5ffDEiIpIxufWmrMnjSYPtPjoL2hyatzrErhedkDZQTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue2q/D6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ61+hbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA19C113D0;
-	Mon, 13 Oct 2025 14:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue2q/D6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8096AC4CEFE;
+	Mon, 13 Oct 2025 14:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367200;
-	bh=G9jWyIlcBX/vLTsctuwL+Wxqa2HVXOwVruSNZo8Nx4Y=;
+	s=korg; t=1760367203;
+	bh=W0m+i6pSw2T0ainefqZPPnopvJl5x14l0zLgY5wwrQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQ61+hbmfOIy/A9McebDuUCxm74ys779aDbX6vNZEi5rVSk2WD6+aPB9Czldh+Plz
-	 JDMHlwlPE7jhnvCzkF7m/tju3VAIreK0X/ueboSwaXwaKMFtDxJB0sqeoyulHow9l5
-	 RKloMckQKsyE6kGr74Sb+6L7+6ETE1jYyusAH2h4=
+	b=ue2q/D6Ft/FhmaADa6hoR38d93h+Ws/Kw8jHQubXz/IHbwoN32zaqb6hAFzfumnTJ
+	 vXvxixRfYCuGf8YUMpJxCpRJ8fN2XXT7uZgPj1RfcEkHoyuMEnyYdZ/LbTxtWFZZec
+	 sq4z8G80rs8Ch29IBSuyAzN3zZyaLnXZD9H0ntpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Yuanhong <liaoyuanhong@vivo.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/196] drm/amd/display: Remove redundant semicolons
-Date: Mon, 13 Oct 2025 16:44:27 +0200
-Message-ID: <20251013144318.101035376@linuxfoundation.org>
+Subject: [PATCH 6.1 085/196] thermal/drivers/qcom: Make LMH select QCOM_SCM
+Date: Mon, 13 Oct 2025 16:44:18 +0200
+Message-ID: <20251013144317.648472120@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,32 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Yuanhong <liaoyuanhong@vivo.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 90b810dd859c0df9db2290da1ac5842e5f031267 ]
+[ Upstream commit 57eda47bd14b0c2876f2db42e757c57b7a671965 ]
 
-Remove unnecessary semicolons.
+The QCOM_SCM symbol is not user-visible, so it makes little sense to
+depend on it. Make LMH driver select QCOM_SCM as all other drivers do
+and, as the dependecy is now correctly handled, enable || COMPILE_TEST
+in order to include the driver into broader set of build tests.
 
-Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
-Signed-off-by: Liao Yuanhong <liaoyuanhong@vivo.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 9e5a4fb84230 ("thermal/drivers/qcom/lmh: make QCOM_LMH depends on QCOM_SCM")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-1-33bc58388ca5@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c    | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/thermal/qcom/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-index 9ba6cb67655f4..6c75aa82327ac 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-@@ -139,7 +139,6 @@ void dml32_rq_dlg_get_rq_reg(display_rq_regs_st *rq_regs,
- 	if (dual_plane) {
- 		unsigned int p1_pte_row_height_linear = get_dpte_row_height_linear_c(mode_lib, e2e_pipe_param,
- 				num_pipes, pipe_idx);
--		;
- 		if (src->sw_mode == dm_sw_linear)
- 			ASSERT(p1_pte_row_height_linear >= 8);
+diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
+index 2c7f3f9a26ebb..a6bb01082ec69 100644
+--- a/drivers/thermal/qcom/Kconfig
++++ b/drivers/thermal/qcom/Kconfig
+@@ -34,7 +34,8 @@ config QCOM_SPMI_TEMP_ALARM
  
+ config QCOM_LMH
+ 	tristate "Qualcomm Limits Management Hardware"
+-	depends on ARCH_QCOM && QCOM_SCM
++	depends on ARCH_QCOM || COMPILE_TEST
++	select QCOM_SCM
+ 	help
+ 	  This enables initialization of Qualcomm limits management
+ 	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
 -- 
 2.51.0
 
