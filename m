@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B9126F2B3;
-	Mon, 13 Oct 2025 15:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3F126F2B3;
+	Mon, 13 Oct 2025 15:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369922; cv=none; b=egfsZIg9MDke0ZYCXiThhiwyLGi+ubEtnVxe3yVueh9ZPclGdVyCjq3NnD+L2S7KLf0QSbZ1zYfr0IeBoxFbJhQBputWN4J7KdCk2qQXytpPQa3TcWN2tl+G3J3xo+7uxWtcuMYGBvkx/77LKnVLeGcl5eRQU0xL/gizbVTMUnA=
+	t=1760369924; cv=none; b=fvdj3Net9N+3v+dHClPyUU/ghWKWJaV6TDQ9qCQfSSnpqlq8/QIlBQ3/MFwoZL//1uw8XylMvLaiJ14o2xYR1vaz2ag98kSc0DNWVNr5xRlegM2dVGK+9yup9WJaFeOuLS1hGL39y14GYqLyA+4WvHQAheilvzGc7Kv+hEKV8ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369922; c=relaxed/simple;
-	bh=H+Xo0/RvGEZjqmI2uWrhvWBn9rKUKShYiWmKMtaWcG4=;
+	s=arc-20240116; t=1760369924; c=relaxed/simple;
+	bh=kQoj9RJ9l8PaL+Uf2MYzKyRBtIDZcHlmrZpxwNFILwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmW8JT/hoPcngsJkoFbEHFkCGAfMuOq1yFf4VhMdcVU7RiqksYZ9A3V0OPq5nBhfQfIqrdKUftVG7F1k64lqQx2Qn8mGpLHXmBGZZcMT3rt8jnsBrvx6EvoI9OvOfctQuDyVckSXrsqN2+gGtxHQK1eZeJCSL6JSCsfX3PqPK+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYBKT/9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhYBqGCZf9eQTuwyl/eOqIizXWPbEoQVwxvb3X5ktB1XYG5AZ+Z9WtBZbN+L7HXSA5+xQbHV6dBFlC3yNxIiZIqpKHDo2DH1I+Sr07UWMjyP4ZDfQtuAyNYwcldtk8y5nC2NgzxzJrEtlN3t9YUqMJbtnw8FtYx4+HFhpkSSIIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJtrVmuf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYBKT/9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5C7C4CEE7;
-	Mon, 13 Oct 2025 15:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJtrVmuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E608C4CEE7;
+	Mon, 13 Oct 2025 15:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369921;
-	bh=H+Xo0/RvGEZjqmI2uWrhvWBn9rKUKShYiWmKMtaWcG4=;
+	s=korg; t=1760369924;
+	bh=kQoj9RJ9l8PaL+Uf2MYzKyRBtIDZcHlmrZpxwNFILwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYBKT/9dwm7z/9j+oLHsVcnlMPGrObCjKHD954A0zZgB9g5nWOXDh73TYArIH7SfX
-	 ni3zVVTJWreGvdC8kgTAOw0OtrA0NEneaW4qgOwJ9PGiLvIYvbHFJqVxJ2za7a+HNK
-	 yPsYEl+63Kl0kQoxewjJieLrZkRR3e7JclqhNTTA=
+	b=dJtrVmufFGOIZEKMrgTgIlzzwR2kzNO5IxUObkGCEbSAafFS3W18vqUp6ze2hk+w4
+	 4Nqf5QRVAPnhCYwN0lmmyH790U2sr+Af1xPZDZcTiLPDKc57hizNedxXpr6AOj5uNW
+	 H6j4gbG+LWjYLvujK5MldTgoUzTGDzbUyc5QJjVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 382/563] tls: Use __sk_dst_get() and dst_dev_rcu() in get_netdev_for_sock().
-Date: Mon, 13 Oct 2025 16:44:03 +0200
-Message-ID: <20251013144425.111402747@linuxfoundation.org>
+Subject: [PATCH 6.17 383/563] mptcp: Call dst_release() in mptcp_active_enable().
+Date: Mon, 13 Oct 2025 16:44:04 +0200
+Message-ID: <20251013144425.147558926@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -55,61 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit c65f27b9c3be2269918e1cbad6d8884741f835c5 ]
+[ Upstream commit 108a86c71c93ff28087994e6107bc99ebe336629 ]
 
-get_netdev_for_sock() is called during setsockopt(),
-so not under RCU.
+mptcp_active_enable() calls sk_dst_get(), which returns dst with its
+refcount bumped, but forgot dst_release().
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+Let's add missing dst_release().
 
-Let's use __sk_dst_get() and dst_dev_rcu().
-
-Note that the only ->ndo_sk_get_lower_dev() user is
-bond_sk_get_lower_dev(), which uses RCU.
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Cc: stable@vger.kernel.org
+Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250916214758.650211-6-kuniyu@google.com
+Link: https://patch.msgid.link/20250916214758.650211-7-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 893c49a78d9f ("mptcp: Use __sk_dst_get() and dst_dev_rcu() in mptcp_active_enable().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/mptcp/ctrl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index f672a62a9a52f..a82fdcf199690 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -123,17 +123,19 @@ static void tls_device_queue_ctx_destruction(struct tls_context *ctx)
- /* We assume that the socket is already connected */
- static struct net_device *get_netdev_for_sock(struct sock *sk)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
--	struct net_device *netdev = NULL;
-+	struct net_device *dev, *lowest_dev = NULL;
-+	struct dst_entry *dst;
+diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
+index fed40dae5583a..c0e516872b4b5 100644
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -505,6 +505,8 @@ void mptcp_active_enable(struct sock *sk)
  
--	if (likely(dst)) {
--		netdev = netdev_sk_get_lowest_dev(dst->dev, sk);
--		dev_hold(netdev);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (likely(dev)) {
-+		lowest_dev = netdev_sk_get_lowest_dev(dev, sk);
-+		dev_hold(lowest_dev);
+ 		if (dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK))
+ 			atomic_set(&pernet->active_disable_times, 0);
++
++		dst_release(dst);
  	}
-+	rcu_read_unlock();
- 
--	dst_release(dst);
--
--	return netdev;
-+	return lowest_dev;
  }
  
- static void destroy_record(struct tls_record_info *record)
 -- 
 2.51.0
 
