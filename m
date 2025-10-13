@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314B52FB978;
-	Mon, 13 Oct 2025 15:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA47630FC0C;
+	Mon, 13 Oct 2025 15:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368956; cv=none; b=FPrsFBnyFLwJz6g2d25L8sZuhIcNkUJD65AtLHKqfiUdQlEOJCyzyAftPTerXnuKTpLG/gNWEZr/QztiFNFllhHM8ybsl018/I4VFMJAuJ/RbDZUp74OxuiHLOwD/3+tggxMFvZJxvgXJvo/GYmiroxQi4bcbo5wkS8K7DGdd0U=
+	t=1760368959; cv=none; b=n5eMx8Etol0xyshu2MGRPk3sV/fBcEOtu5qWwX62TctzPBwSjxbTX/lOJLMcxaKlXwuw0w8QdELFca5CJFhXikK+VEZH+hjI2CUY7dXJivRgEJ/ICgCk79/nxOtCiP4oC/IfUwd3QCNfCNq49z8uHNjcwcs9f9d8Mux96o0PLIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368956; c=relaxed/simple;
-	bh=dMs3zjubW0TKTUTbJUsa2otpMvGP79ZJ+1rwlqh/zkA=;
+	s=arc-20240116; t=1760368959; c=relaxed/simple;
+	bh=zMYobK/ABnSR1/oHInTfxeAlOG2JT2sWWD37e+Qj48k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4TztwZWeX8C2dWEbT3vgOyXHEM/ifH4j9YKe/YYFZv7Bps4Bkt4jqjg7esiEmwHRDX98sxCQ/Y2ZC+dnsCvWRv5liqVeVifUbMPsC8VQ/IyiIT5WD88wvm2Ppwf1QKDbi5yQd9wiW/e6UAFmMEDC9dN4kT0pfOoEM/Q3Vw8Zx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm42WFue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOHiQE62mK7o2AwTIFBdkVL8xvUqFjnltIyz8dVsmyOeOdltk/ZYRRLvIAEhpXfeWIdoruNNcVcJQkOQ5t2gcoN4SHlHeR0zeoHM8TvRKbCXlFBuATVjy3DKYIsruRYjMaYhI8b1pYRi0qs4nssQGgT1gP5/C0MtdQLC9sSAIN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfKA5iXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm42WFue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84AAC4CEE7;
-	Mon, 13 Oct 2025 15:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfKA5iXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A12AC4CEE7;
+	Mon, 13 Oct 2025 15:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368956;
-	bh=dMs3zjubW0TKTUTbJUsa2otpMvGP79ZJ+1rwlqh/zkA=;
+	s=korg; t=1760368958;
+	bh=zMYobK/ABnSR1/oHInTfxeAlOG2JT2sWWD37e+Qj48k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hm42WFueVcU7URy9ABPrmtAYUH2KacswB1OSj3bC3WHiQ3exbd8N2KB89nkNYWlM+
-	 vFetITuPW8OJ6cGPoypV1TA00FyKPwmk4aXydeollpwJ1ve4uM7AeZbIayYFXJIzmC
-	 scGeFY91R3nFNhgnUoC75He+bkLajnAiANrJfqnU=
+	b=QfKA5iXPRBl8tHcLNQfRqQyh9TSsvlHOTauUK4D6TtqPiP5VZwxZ8XgKzX31+uK6y
+	 xBH2yr1g8BGcmBNTf5i1fllaBtsi/8jJ0P+YzfeHGDctvbJlg45/Gcba1VnfsgZUrq
+	 tKhazIhkEhTUXK9mxstkd0KFPIQazUyrF1S+DXP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 077/563] regulator: scmi: Use int type to store negative error codes
-Date: Mon, 13 Oct 2025 16:38:58 +0200
-Message-ID: <20251013144414.081215564@linuxfoundation.org>
+Subject: [PATCH 6.17 078/563] selftests/futex: Fix some futex_numa_mpol subtests
+Date: Mon, 13 Oct 2025 16:38:59 +0200
+Message-ID: <20251013144414.116532219@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,44 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 9d35d068fb138160709e04e3ee97fe29a6f8615b ]
+[ Upstream commit d8e2f919997b14665e4509ef9a5278f291598d6e ]
 
-Change the 'ret' variable from u32 to int to store negative error codes or
-zero returned by of_property_read_u32().
+The "Memory out of range" subtest of futex_numa_mpol assumes that memory
+access outside of the mmap'ed area is invalid. That may not be the case
+depending on the actual memory layout of the test application. When that
+subtest was run on an x86-64 system with latest upstream kernel, the test
+passed as an error was returned from futex_wake(). On another PowerPC system,
+the same subtest failed because futex_wake() returned 0.
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants. Additionally, assigning negative error
-codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
-flag is enabled.
+  Bail out! futex2_wake(64, 0x86) should fail, but didn't
 
-No effect on runtime.
+Looking further into the passed subtest on x86-64, it was found that an
+-EINVAL was returned instead of -EFAULT. The -EINVAL error was returned
+because the node value test with FLAGS_NUMA set failed with a node value
+of 0x7f7f. IOW, the futex memory was accessible and futex_wake() failed
+because the supposed node number wasn't valid. If that memory location
+happens to have a very small value (e.g. 0), the test will pass and no
+error will be returned.
 
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
-Link: https://patch.msgid.link/20250829101411.625214-1-rongqianfeng@vivo.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since this subtest is non-deterministic, drop it unless a guard page beyond
+the mmap region is explicitly set.
+
+The other problematic test is the "Memory too small" test. The futex_wake()
+function returns the -EINVAL error code because the given futex address isn't
+8-byte aligned, not because only 4 of the 8 bytes are valid and the other
+4 bytes are not. So change the name of this subtest to "Mis-aligned futex" to
+reflect the reality.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 3163369407ba ("selftests/futex: Add futex_numa_mpol")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/20250827130011.677600-3-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/scmi-regulator.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/futex/functional/futex_numa_mpol.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
-index 9df726f10ad12..6d609c42e4793 100644
---- a/drivers/regulator/scmi-regulator.c
-+++ b/drivers/regulator/scmi-regulator.c
-@@ -257,7 +257,8 @@ static int process_scmi_regulator_of_node(struct scmi_device *sdev,
- 					  struct device_node *np,
- 					  struct scmi_regulator_info *rinfo)
- {
--	u32 dom, ret;
-+	u32 dom;
-+	int ret;
+diff --git a/tools/testing/selftests/futex/functional/futex_numa_mpol.c b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
+index a9ecfb2d3932a..802c15c821906 100644
+--- a/tools/testing/selftests/futex/functional/futex_numa_mpol.c
++++ b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
+@@ -182,12 +182,10 @@ int main(int argc, char *argv[])
+ 	if (futex_numa->numa == FUTEX_NO_NODE)
+ 		ksft_exit_fail_msg("NUMA node is left uninitialized\n");
  
- 	ret = of_property_read_u32(np, "reg", &dom);
- 	if (ret)
+-	ksft_print_msg("Memory too small\n");
++	/* FUTEX2_NUMA futex must be 8-byte aligned */
++	ksft_print_msg("Mis-aligned futex\n");
+ 	test_futex(futex_ptr + mem_size - 4, 1);
+ 
+-	ksft_print_msg("Memory out of range\n");
+-	test_futex(futex_ptr + mem_size, 1);
+-
+ 	futex_numa->numa = FUTEX_NO_NODE;
+ 	mprotect(futex_ptr, mem_size, PROT_READ);
+ 	ksft_print_msg("Memory, RO\n");
 -- 
 2.51.0
 
