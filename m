@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C9D271473;
-	Mon, 13 Oct 2025 15:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8211271473;
+	Mon, 13 Oct 2025 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367902; cv=none; b=eOjYF2WPOUJVU8Vq8xZVMHrNP9JwMK1fcTjvfR3p8FTjTZKfHeYjRhqfvG/w+HBdOAGLDitGsnGpfM7hSjiQkWS3TZJacXX2bdc9rLpKRl/XWOqdf+xDpzrmFwFMnD+xDma2YGJCQeZXXzoIyA+yDEq35nsRwup8tD44gRMhO4M=
+	t=1760367905; cv=none; b=AOkfTMLGYypq59EO5WdR6tU9oZT/pk51sUgHOr1mNAkdcYUFjPRNvCyeHnSjQFtkjm9YBUThLAC+yMxdJaWA32vYGhrEAgpiUaGM+ojTrTFHwTr61Ax9LW6aR3sSgn0SIuTs2fUJp8o+vyPEf/QITZq42IOCTUTGt+g3kTyO3SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367902; c=relaxed/simple;
-	bh=KUB3z0fyrRhXMmQoTqljTaX/kpNgseNMTWODnPqviws=;
+	s=arc-20240116; t=1760367905; c=relaxed/simple;
+	bh=CjFclI1C//unICXY0eAyPGsV5MLMZjbLu/l+Nxm0sUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tldmi+7tr7jVnyTyNqgxvGRr9F4mVJoMSdUdzlZD86TNkoXU+YubriCO9icJgoEFtgfQcCnTNFJvSrnF8Rm6eb2G1MyuvTDgN5XWsw86lUL7IPmoT7IJ50fNRPqiT5mDXRbKVljVezsdOlXs/HXMyfO3h5GYu3DG1AD5WIdaDdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXgUbWkm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=btLibPaT9qZC0pXb71SFxebZmsJ4GK9s7Z1PYWZlkv5LtcUt3A6OwFJxTWVxfEi0aDPlB2nrb8fSsQk3XNvTTYLAh8E11j/k56m3bUqEwy7gIqDVhfN+dwVKl/OwAIyb07iEP/S9SnuHOh7gni7D7n0O3khq58ae2YYvk99a/K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBmkQ8Pa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXgUbWkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87903C4CEE7;
-	Mon, 13 Oct 2025 15:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBmkQ8Pa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E975C4CEE7;
+	Mon, 13 Oct 2025 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367901;
-	bh=KUB3z0fyrRhXMmQoTqljTaX/kpNgseNMTWODnPqviws=;
+	s=korg; t=1760367904;
+	bh=CjFclI1C//unICXY0eAyPGsV5MLMZjbLu/l+Nxm0sUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXgUbWkmQtDMSmmiZXgXVBwvj45c8j7B+n8T1zdDlR2OI09SGkeIn+ZkqprjE+NmU
-	 uJl3yUvcBFAefVf8e1pxWcqa//V5ooCNnoQ/XVMlo4KTCiHapWmCA9ldp9m0qEiCsK
-	 bpK5LG7tuvYPz6rWwkzW8bdsIMYvQNAin/qhWgoo=
+	b=GBmkQ8PaJ/6NC8o1kFNaslVZEYo0LDZdxfLKMC8NYUzzpANZnKAT79MSERp8PLhLD
+	 F2CbsXdjPTYBJv8C1p3Kx/w1iQqPytwMuvi3u5FOGxIPiWl159OH8Ja4uCGH+BSqox
+	 O70AdXgZhiMoNxytad2meAFL2Oe/5gl0pCSYdJkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 171/196] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()
-Date: Mon, 13 Oct 2025 16:46:02 +0200
-Message-ID: <20251013144321.495143797@linuxfoundation.org>
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 141/196] coresight: etm4x: Support atclk
+Date: Mon, 13 Oct 2025 16:45:32 +0200
+Message-ID: <20251013144320.414849364@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,81 +54,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Leo Yan <leo.yan@arm.com>
 
-commit 4e65bda8273c938039403144730923e77916a3d7 upstream.
+[ Upstream commit 40c0cdc9cbbebae9f43bef1cab9ce152318d0cce ]
 
-wcd934x_codec_parse_data() contains a device reference count leak in
-of_slim_get_device() where device_find_child() increases the reference
-count of the device but this reference is not properly decreased in
-the success path. Add put_device() in wcd934x_codec_parse_data() and
-add devm_add_action_or_reset() in the probe function, which ensures
-that the reference count of the device is correctly managed.
+The atclk is an optional clock for the CoreSight ETMv4, but the driver
+misses to initialize it.
 
-Memory leak in regmap_init_slimbus() as the allocated regmap is not
-released when the device is removed. Using devm_regmap_init_slimbus()
-instead of regmap_init_slimbus() to ensure automatic regmap cleanup on
-device removal.
+This change enables atclk in probe of the ETMv4 driver, and dynamically
+control the clock during suspend and resume.
 
-Calling path: of_slim_get_device() -> of_find_slim_device() ->
-device_find_child(). As comment of device_find_child() says, 'NOTE:
-you will need to drop the reference with put_device() after use.'.
+No need to check the driver data and clock pointer in the runtime
+suspend and resume, so remove checks.  And add error handling in the
+resume function.
 
-Found by code review.
+Add a minor fix to the comment format when adding the atclk field.
 
-Cc: stable@vger.kernel.org
-Fixes: a61f3b4f476e ("ASoC: wcd934x: add support to wcd9340/wcd9341 codec")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250923065212.26660-1-make24@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250731-arm_cs_fix_clock_v4-v6-3-1dfe10bb3f6f@arm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd934x.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ .../coresight/coresight-etm4x-core.c          | 20 ++++++++++++++-----
+ drivers/hwtracing/coresight/coresight-etm4x.h |  4 +++-
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
---- a/sound/soc/codecs/wcd934x.c
-+++ b/sound/soc/codecs/wcd934x.c
-@@ -5858,6 +5858,13 @@ static const struct snd_soc_component_dr
- 	.endianness = 1,
- };
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 625582f7dc34c..e4d8d446ea4d3 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -2118,6 +2118,10 @@ static int etm4_probe(struct device *dev)
+ 	if (WARN_ON(!drvdata))
+ 		return -ENOMEM;
  
-+static void wcd934x_put_device_action(void *data)
-+{
-+	struct device *dev = data;
++	drvdata->atclk = devm_clk_get_optional_enabled(dev, "atclk");
++	if (IS_ERR(drvdata->atclk))
++		return PTR_ERR(drvdata->atclk);
 +
-+	put_device(dev);
-+}
-+
- static int wcd934x_codec_parse_data(struct wcd934x_codec *wcd)
+ 	if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
+ 		pm_save_enable = coresight_loses_context_with_cpu(dev) ?
+ 			       PARAM_PM_SAVE_SELF_HOSTED : PARAM_PM_SAVE_NEVER;
+@@ -2369,8 +2373,8 @@ static int etm4_runtime_suspend(struct device *dev)
  {
- 	struct device *dev = &wcd->sdev->dev;
-@@ -5878,11 +5885,13 @@ static int wcd934x_codec_parse_data(stru
- 	}
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(dev);
  
- 	slim_get_logical_addr(wcd->sidev);
--	wcd->if_regmap = regmap_init_slimbus(wcd->sidev,
-+	wcd->if_regmap = devm_regmap_init_slimbus(wcd->sidev,
- 				  &wcd934x_ifc_regmap_config);
--	if (IS_ERR(wcd->if_regmap))
-+	if (IS_ERR(wcd->if_regmap)) {
-+		put_device(&wcd->sidev->dev);
- 		return dev_err_probe(dev, PTR_ERR(wcd->if_regmap),
- 				     "Failed to allocate ifc register map\n");
-+	}
+-	if (drvdata->pclk && !IS_ERR(drvdata->pclk))
+-		clk_disable_unprepare(drvdata->pclk);
++	clk_disable_unprepare(drvdata->atclk);
++	clk_disable_unprepare(drvdata->pclk);
  
- 	of_property_read_u32(dev->parent->of_node, "qcom,dmic-sample-rate",
- 			     &wcd->dmic_sample_rate);
-@@ -5926,6 +5935,10 @@ static int wcd934x_codec_probe(struct pl
- 		return ret;
- 	}
- 
-+	ret = devm_add_action_or_reset(dev, wcd934x_put_device_action, &wcd->sidev->dev);
+ 	return 0;
+ }
+@@ -2378,11 +2382,17 @@ static int etm4_runtime_suspend(struct device *dev)
+ static int etm4_runtime_resume(struct device *dev)
+ {
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(dev);
++	int ret;
++
++	ret = clk_prepare_enable(drvdata->pclk);
 +	if (ret)
 +		return ret;
-+
- 	/* set default rate 9P6MHz */
- 	regmap_update_bits(wcd->regmap, WCD934X_CODEC_RPM_CLK_MCLK_CFG,
- 			   WCD934X_CODEC_RPM_CLK_MCLK_CFG_MCLK_MASK,
+ 
+-	if (drvdata->pclk && !IS_ERR(drvdata->pclk))
+-		clk_prepare_enable(drvdata->pclk);
++	ret = clk_prepare_enable(drvdata->atclk);
++	if (ret)
++		clk_disable_unprepare(drvdata->pclk);
+ 
+-	return 0;
++	return ret;
+ }
+ #endif
+ 
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
+index d72f742b41054..d8b8102d790cc 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.h
++++ b/drivers/hwtracing/coresight/coresight-etm4x.h
+@@ -920,7 +920,8 @@ struct etmv4_save_state {
+ 
+ /**
+  * struct etm4_drvdata - specifics associated to an ETM component
+- * @pclk        APB clock if present, otherwise NULL
++ * @pclk:       APB clock if present, otherwise NULL
++ * @atclk:      Optional clock for the core parts of the ETMv4.
+  * @base:       Memory mapped base address for this component.
+  * @csdev:      Component vitals needed by the framework.
+  * @spinlock:   Only one at a time pls.
+@@ -988,6 +989,7 @@ struct etmv4_save_state {
+  */
+ struct etmv4_drvdata {
+ 	struct clk			*pclk;
++	struct clk			*atclk;
+ 	void __iomem			*base;
+ 	struct coresight_device		*csdev;
+ 	spinlock_t			spinlock;
+-- 
+2.51.0
+
 
 
