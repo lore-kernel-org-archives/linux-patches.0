@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDF130DD1E;
-	Mon, 13 Oct 2025 14:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEA1274B3A;
+	Mon, 13 Oct 2025 14:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367374; cv=none; b=lUXkl0+X+wUTf2vCTTzGJI/rPVkDhWMbHVqTXJe3mEoKKQA/JZtijg1i7MWwYFdLfUJdc3E9FyXysoo2GFbRbLkOYaUk5M4wdQW8yYMS7cD9/NakiDLbWMMyw+ORyUY8EZHfT7MFuaJaaUqTqk36LHKzwzcNBKU7LoxpxPCs03g=
+	t=1760367377; cv=none; b=XDWRrMZMaEpngjPKwm5kRcrcI07zIJWni9cXzNGVgcWO2XN4VtSemXKSyMjUZj/fXGEhc59azOEKwWSUHKNsm4tWBuCLoFsliM7qLEXET65XuIjQpXpUQVlGBf072YKyllyhLDgUaYDIy++9caNhtk1NVMK5XEuHbJGuuxgYd5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367374; c=relaxed/simple;
-	bh=Af8dOZ/wOGYaWvYUBNBGjgnK7UOCrHArNAgGlvCfRnA=;
+	s=arc-20240116; t=1760367377; c=relaxed/simple;
+	bh=zlRivWcastJA2kNX65gFrtLUQHc+0Xj3MBy5TAHQ8Lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YocS2rFhOTLYkLIODk4ZSBQDIzcVLePwqBp3b4epRf+ql7IsaEOpI/N8yyBRY3i3QY66wO0+tGn3MZpRTrz7/ZnwtuDe6WftRzlAyAPpuPF2GoJmHhn3SIZrzUt5wpEIta+EXbD08VkJggQ45wBkgfUgvCHig0/HxBHNZAmsmAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAFW2wKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMi6110v/8+xgbUDCgGGRyNx0Fy2o+tW/DTOZ9BiJwDwnALZVhkmFYzUoy1Q3L1zypq9kUe4Rt0zmJ7EZ3TRjC3+IF4wqaR/A0HyFCm4oP39WNll7fwYzLggyhMMcehaECqm68xQTgvGV0byEZ/jWRT84jmExQ3Q9w5dVBWG1i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWIq8Dj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAFW2wKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1A8C113D0;
-	Mon, 13 Oct 2025 14:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWIq8Dj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE16C4CEE7;
+	Mon, 13 Oct 2025 14:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367374;
-	bh=Af8dOZ/wOGYaWvYUBNBGjgnK7UOCrHArNAgGlvCfRnA=;
+	s=korg; t=1760367377;
+	bh=zlRivWcastJA2kNX65gFrtLUQHc+0Xj3MBy5TAHQ8Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAFW2wKHe2Q4R9DhxiW43+mjgAw2iswqiImZpEHYLu1MxVoKBgdnV+yyKXoj///U8
-	 lAF+8AzJEuJeT2Qx0k2QzpMsr/8iCLTArMtQ6mSZZEEDmwgg2aLU55eDY34r2XAhOm
-	 1Pj18+1uJi/haLvy+OeQff+qx6Cf3LpPfWxJF1CE=
+	b=SWIq8Dj67D3t7u5caCiS3FacfojJrgB1/ol1tYQRhOXwnx7frVudDvxEVszVp5MwL
+	 8xbIJHpubtess28NMjWY8yu8Is3twPHVuiW5A04kwY1vrGl/W/tjKDffpuFFHL6UDT
+	 0EkAcy0c4OZvXXtYGVZYaUsNetFhc92GQFew+mWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Ling Xu <quic_lxu5@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.1 186/196] misc: fastrpc: Skip reference for DMA handles
-Date: Mon, 13 Oct 2025 16:45:59 +0200
-Message-ID: <20251013144321.421474060@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 160/196] Bluetooth: hci_sync: Fix using random address for BIG/PA advertisements
+Date: Mon, 13 Oct 2025 16:45:33 +0200
+Message-ID: <20251013144320.487115632@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,127 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ling Xu <quic_lxu5@quicinc.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 10df039834f84a297c72ec962c0f9b7c8c5ca31a upstream.
+[ Upstream commit 03ddb4ac251463ec5b7b069395d9ab89163dd56c ]
 
-If multiple dma handles are passed with same fd over a remote call
-the kernel driver takes a reference and expects that put for the
-map will be called as many times to free the map. But DSP only
-updates the fd one time in the fd list when the DSP refcount
-goes to zero and hence kernel make put call only once for the
-fd. This can cause SMMU fault issue as the same fd can be used
-in future for some other call.
+When creating an advertisement for BIG the address shall not be
+non-resolvable since in case of acting as BASS/Broadcast Assistant the
+address must be the same as the connection in order to use the PAST
+method and even when PAST/BASS are not in the picture a Periodic
+Advertisement can still be synchronized thus the same argument as to
+connectable advertisements still stand.
 
-Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
-Cc: stable@kernel.org
-Co-developed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://lore.kernel.org/r/20250912131236.303102-5-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c |   45 +++++++++++++++++++++++++++------------------
- 1 file changed, 27 insertions(+), 18 deletions(-)
+ net/bluetooth/hci_sync.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -342,9 +342,8 @@ static int fastrpc_map_get(struct fastrp
- 
- 
- static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
--			    struct fastrpc_map **ppmap, bool take_ref)
-+			    struct fastrpc_map **ppmap)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 4c1b2468989a8..851a43a5aee0c 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1304,7 +1304,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
  {
--	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
- 	struct dma_buf *buf;
- 	int ret = -ENOENT;
-@@ -358,15 +357,6 @@ static int fastrpc_map_lookup(struct fas
- 		if (map->fd != fd || map->buf != buf)
- 			continue;
+ 	struct hci_cp_le_set_ext_adv_params cp;
+ 	struct hci_rp_le_set_ext_adv_params rp;
+-	bool connectable;
++	bool connectable, require_privacy;
+ 	u32 flags;
+ 	bdaddr_t random_addr;
+ 	u8 own_addr_type;
+@@ -1342,10 +1342,12 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 		return -EPERM;
  
--		if (take_ref) {
--			ret = fastrpc_map_get(map);
--			if (ret) {
--				dev_dbg(sess->dev, "%s: Failed to get map fd=%d ret=%d\n",
--					__func__, fd, ret);
--				break;
--			}
--		}
--
- 		*ppmap = map;
- 		ret = 0;
- 		break;
-@@ -711,7 +701,7 @@ static const struct dma_buf_ops fastrpc_
- 	.release = fastrpc_release,
- };
- 
--static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
-+static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
- 			      u64 len, u32 attr, struct fastrpc_map **ppmap)
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
-@@ -719,9 +709,6 @@ static int fastrpc_map_create(struct fas
- 	struct sg_table *table;
- 	int err = 0;
- 
--	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
--		return 0;
--
- 	map = kzalloc(sizeof(*map), GFP_KERNEL);
- 	if (!map)
- 		return -ENOMEM;
-@@ -789,6 +776,24 @@ get_err:
- 	return err;
- }
- 
-+static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
-+			      u64 len, u32 attr, struct fastrpc_map **ppmap)
-+{
-+	struct fastrpc_session_ctx *sess = fl->sctx;
-+	int err = 0;
+ 	/* Set require_privacy to true only when non-connectable
+-	 * advertising is used. In that case it is fine to use a
+-	 * non-resolvable private address.
++	 * advertising is used and it is not periodic.
++	 * In that case it is fine to use a non-resolvable private address.
+ 	 */
+-	err = hci_get_random_address(hdev, !connectable,
++	require_privacy = !connectable && !(adv && adv->periodic);
 +
-+	if (!fastrpc_map_lookup(fl, fd, ppmap)) {
-+		if (!fastrpc_map_get(*ppmap))
-+			return 0;
-+		dev_dbg(sess->dev, "%s: Failed to get map fd=%d\n",
-+			__func__, fd);
-+	}
-+
-+	err = fastrpc_map_attach(fl, fd, len, attr, ppmap);
-+
-+	return err;
-+}
-+
- /*
-  * Fastrpc payload buffer with metadata looks like:
-  *
-@@ -861,8 +866,12 @@ static int fastrpc_create_maps(struct fa
- 		    ctx->args[i].length == 0)
- 			continue;
- 
--		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
--			 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
-+		if (i < ctx->nbufs)
-+			err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
-+				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
-+		else
-+			err = fastrpc_map_attach(ctx->fl, ctx->args[i].fd,
-+				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
- 		if (err) {
- 			dev_err(dev, "Error Creating map %d\n", err);
- 			return -EINVAL;
-@@ -1049,7 +1058,7 @@ cleanup_fdlist:
- 	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
- 		if (!fdlist[i])
- 			break;
--		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap, false))
-+		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap))
- 			fastrpc_map_put(mmap);
- 	}
- 
++	err = hci_get_random_address(hdev, require_privacy,
+ 				     adv_use_rpa(hdev, flags), adv,
+ 				     &own_addr_type, &random_addr);
+ 	if (err < 0)
+-- 
+2.51.0
+
 
 
