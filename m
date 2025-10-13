@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2256D30C608;
-	Mon, 13 Oct 2025 15:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DBD3093C9;
+	Mon, 13 Oct 2025 15:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368122; cv=none; b=OFkzyqhkU7+zEwtgCa1Hb1YFSCEI3D0chmZD1Gxh6l1yvmFYeclaGdPdQ3BaEcifUVkjcy26D0DdLcNQuXFxJyzJWEDwYCpqxCo5FgWP6F+A6aEllr/enlQkohXo3HbPzigL6zqUrKL6h66frL40Aq5ZOyiUYu0TCdl2Z0PiPI4=
+	t=1760368124; cv=none; b=P/37bZ1D7nxrnOLnTtzG5HkQBDk8FtPkdAdCVzWl7suHHWaXqVSeB34BeskfPEb7PVBuU9wDLTfOdqtHcVBswWyVJ+KyXsyls5mbQDPCN0caXp0no9eMKfbiKP6eFpNwPLICRwiH4aAYcnOLzX6rUnBJeOBim22RmKZfNaCXGS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368122; c=relaxed/simple;
-	bh=6jZvPQxLp5OKhTphoNXMqvHT6Tj87R0kVPZJlUa7WVY=;
+	s=arc-20240116; t=1760368124; c=relaxed/simple;
+	bh=paa7JaKwW3ECcFr/xLgof+WcKk50N9oB3+yY57WsB7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=spctYSIpUs4L9K/yTpjHNlsxq0VyGW5X1pamjySHrLwfCX2qsYbSHfm/m3/hmyUVaj2/P/7HWj4aipRA4FRKQ/k/bbJ/QbnZPS5VlEapx4qCcu7UI8X4/CqmY/TR2t49ZQo0w4EZDL2hOPPlhzXoRI5l0lINzD5Gw6YKG8RP0rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDBIEXa9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0NTD/6593mS7xZRB3yDAB5zJjMXj/Q9+XjWr/WmkPo4gLy8Zm/6fOTYFpoYDwwe+XHPXsYz7wFbayb3A7ObjNpPCDH7h+X8Kyotm6Itwlnr8JfBTZOFxNgs+RiE62zxSXFlfkif8vL8rkqWx3bzJXZ3tkC2/EP7kilfDXTx1aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc/Krv2q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDBIEXa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFAAC4CEE7;
-	Mon, 13 Oct 2025 15:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc/Krv2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27945C4CEE7;
+	Mon, 13 Oct 2025 15:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368121;
-	bh=6jZvPQxLp5OKhTphoNXMqvHT6Tj87R0kVPZJlUa7WVY=;
+	s=korg; t=1760368124;
+	bh=paa7JaKwW3ECcFr/xLgof+WcKk50N9oB3+yY57WsB7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDBIEXa9O37zLdOqX4P4Yr1y1kF/X/F+BwQ1oF3gr66yoqgZxdgXZyKFmIJWqEd9O
-	 JnnH7/mGqgtX2sFhbiCjHIr7RqgBT/Eqow41InW6bQ+ABmmOUJo0ZGezD0fSWujBwX
-	 YqMGGUM5Lu3LILfrYsNtDvQyDQhn0JM+SQeRcukU=
+	b=gc/Krv2qWjdbHU3fSQZjvFRGK1hAjglPkObDTVH4UQzDAI2U6daDlR8q200x/1NS5
+	 vQIaoe52HmwzzpoTS8ey0juA9TBVyfibusMOwacABDLfOdUuo/m0om/Z+vF2JJw4Be
+	 K/kUgL/52rdbnLDl6NJ1HilXU3oGEITRbRjhq+7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Guoqing Jiang <guoqing.jiang@canonical.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/262] selftests: vDSO: vdso_test_abi: Correctly skip whole test with missing vDSO
-Date: Mon, 13 Oct 2025 16:43:13 +0200
-Message-ID: <20251013144327.967008913@linuxfoundation.org>
+Subject: [PATCH 6.12 052/262] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie0
+Date: Mon, 13 Oct 2025 16:43:14 +0200
+Message-ID: <20251013144328.002595205@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -45,63 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Guoqing Jiang <guoqing.jiang@canonical.com>
 
-[ Upstream commit 4b59a9f7628fd82b24f2148f62cf327a84d26555 ]
+[ Upstream commit 3374b5fb26b300809ecd6aed9f414987dd17c313 ]
 
-If AT_SYSINFO_EHDR is missing the whole test needs to be skipped.
-Currently this results in the following output:
+When test suspend resume with 6.8 based kernel, system can't resume
+and I got below error which can be also reproduced with 6.16 rc6+
+kernel.
 
-	TAP version 13
-	1..16
-	# AT_SYSINFO_EHDR is not present!
+mtk-pcie-gen3 112f0000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
+mtk-pcie-gen3 112f0000.pcie: PM: dpm_run_callback(): genpd_resume_noirq returns -110
+mtk-pcie-gen3 112f0000.pcie: PM: failed to resume noirq: error -110
 
-This output is incorrect, as "1..16" still requires the subtest lines to
-be printed, which isn't done however.
+After investigation, looks pcie0 has the same problem as pcie1 as
+decribed in commit 3d7fdd8e38aa ("arm64: dts: mediatek: mt8195:
+Remove suspend-breaking reset from pcie1").
 
-Switch to the correct skipping functions, so the output now correctly
-indicates that no subtests are being run:
-
-	TAP version 13
-	1..0 # SKIP AT_SYSINFO_EHDR is not present!
-
-Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250812-vdso-tests-fixes-v2-2-90f499dd35f8@linutronix.de
+Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Link: https://lore.kernel.org/r/20250721095959.57703-1-guoqing.jiang@canonical.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_test_abi.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_test_abi.c b/tools/testing/selftests/vDSO/vdso_test_abi.c
-index a54424e2336f4..67cbfc56e4e1b 100644
---- a/tools/testing/selftests/vDSO/vdso_test_abi.c
-+++ b/tools/testing/selftests/vDSO/vdso_test_abi.c
-@@ -182,12 +182,11 @@ int main(int argc, char **argv)
- 	unsigned long sysinfo_ehdr = getauxval(AT_SYSINFO_EHDR);
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 2e138b54f5563..451aa278bef50 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -1563,9 +1563,6 @@ pcie0: pcie@112f0000 {
  
- 	ksft_print_header();
--	ksft_set_plan(VDSO_TEST_PLAN);
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P0>;
  
--	if (!sysinfo_ehdr) {
--		ksft_print_msg("AT_SYSINFO_EHDR is not present!\n");
--		return KSFT_SKIP;
--	}
-+	if (!sysinfo_ehdr)
-+		ksft_exit_skip("AT_SYSINFO_EHDR is not present!\n");
-+
-+	ksft_set_plan(VDSO_TEST_PLAN);
- 
- 	version = versions[VDSO_VERSION];
- 	name = (const char **)&names[VDSO_NAMES];
+-			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P0_SWRST>;
+-			reset-names = "mac";
+-
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 7>;
+ 			interrupt-map = <0 0 0 1 &pcie_intc0 0>,
 -- 
 2.51.0
 
