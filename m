@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912043081A8;
-	Mon, 13 Oct 2025 14:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D1E30DEB2;
+	Mon, 13 Oct 2025 14:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367397; cv=none; b=gmWqMABlhHl4B1LSUZlLaeg72i98Xkyqs/7wS4Cxdv/YKZ6Zj7DDmHws3PuFTkf0BUMRm7WPXoXsMKdpjkJw/6t+JmooNDA5Gw0P7Ms9auYT2KCKSgA5C+/SxfvPOZ9ppu2h1ntsBUNLp6RR45p/tCQk4S4Dm1omGtWNmfiq9DQ=
+	t=1760367400; cv=none; b=dU0UUi2Hwj8CuXj5UMgCfCzYcIQ2MZzPjt31U3uFw6FITFVLQvJENPPH67b4lHpx7s9jTsVJ9zg2QXXfQ/F0AGklzgGjwKuydneGM9w55qTndTa8srnpAdGchGDZrI/GD4bY0BshFozmeiDbIbuf4vqGZm25NRrP5/GoXFT+4M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367397; c=relaxed/simple;
-	bh=nqyeynbYbjUzr9Yt2+quL04I73r0tVUTSMp9x5MfnlM=;
+	s=arc-20240116; t=1760367400; c=relaxed/simple;
+	bh=uorLUQrmCpj3zaBZnO1GHjmeeJiGQNVScMOTjhRsnHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUnvChFPfw3ppUdjLT0xt1vhapDTQdnYvvuqaxV1T3mvc+/KMhDvOhq6OGnZgbnq5bPVxYMd24OWxHfJHialWnEH0ON+R4D+sKTQ1C0d+zSmHSPOvDNGv3nmGvLbjU446dnJuN8OBvV+Ppsj3d/wCXMXW7Kd0yIsL8AGDGyaoBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULp+uVDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AhnDMmhGFKbAdrqn88+xhdMNlv8cxDV36Dmu1g/L6u0EJAxn63sKSci6nmuqaY8xR63CEcDeSsrvp8MqeVH4EZRnNSFU4kcuu55j7lH4YGZDn1ukPytcMLhyiL/fbu8edTC7MH4W0huziRm5hlEAPSfD79PQ5Qt1Fn5MEqYXVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY3wA6C7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULp+uVDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181FAC4CEE7;
-	Mon, 13 Oct 2025 14:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY3wA6C7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44AAC4CEE7;
+	Mon, 13 Oct 2025 14:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367397;
-	bh=nqyeynbYbjUzr9Yt2+quL04I73r0tVUTSMp9x5MfnlM=;
+	s=korg; t=1760367400;
+	bh=uorLUQrmCpj3zaBZnO1GHjmeeJiGQNVScMOTjhRsnHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULp+uVDZ/yNLlP9QGmbM4NGLoutlSE9XKBHGwxgHVOw802TBQxz9BDpZJ6One2Pdl
-	 7Hi8ZOXLz0OKQXcIfGxOcmfqQ0e+JSzItQOvILVpZAJbqY3Y/q29VkjiBc+rnKfn3p
-	 K0mVYjF0Ez5DTfPlE6MZIkBnJ9jYHNRMVLSJqJAY=
+	b=uY3wA6C75indbq/El5Q5AfzT3O0I4149M8ZtUa0ut4xRJX/IIeG1NRMQmaf678ztJ
+	 kJ6m24E6RBlPeGPwMDUW9bw/PzC+MgKGAtUsCZ/QEMsqyu0M5r0kj2sXbXO9vI50le
+	 s32P2+sdYnkRkjdsFCL7qIdsUrFnkZHfn1o+3qsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Goldwyn Rodrigues <rgoldwyn@suse.de>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/196] hwrng: ks-sa - fix division by zero in ks_sa_rng_init
-Date: Mon, 13 Oct 2025 16:45:34 +0200
-Message-ID: <20251013144320.523234431@linuxfoundation.org>
+Subject: [PATCH 6.1 162/196] ocfs2: fix double free in user_cluster_connect()
+Date: Mon, 13 Oct 2025 16:45:35 +0200
+Message-ID: <20251013144320.559609547@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,45 +58,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nishanth Menon <nm@ti.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 612b1dfeb414dfa780a6316014ceddf9a74ff5c0 ]
+[ Upstream commit 8f45f089337d924db24397f55697cda0e6960516 ]
 
-Fix division by zero in ks_sa_rng_init caused by missing clock
-pointer initialization. The clk_get_rate() call is performed on
-an uninitialized clk pointer, resulting in division by zero when
-calculating delay values.
+user_cluster_disconnect() frees "conn->cc_private" which is "lc" but then
+the error handling frees "lc" a second time.  Set "lc" to NULL on this
+path to avoid a double free.
 
-Add clock initialization code before using the clock.
-
-Fixes: 6d01d8511dce ("hwrng: ks-sa - Add minimum sleep time before ready-polling")
-Signed-off-by: Nishanth Menon <nm@ti.com>
-
- drivers/char/hw_random/ks-sa-rng.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lkml.kernel.org/r/aNKDz_7JF7aycZ0k@stanley.mountain
+Fixes: c994c2ebdbbc ("ocfs2: use the new DLM operation callbacks while requesting new lockspace")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Goldwyn Rodrigues <rgoldwyn@suse.de>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/ks-sa-rng.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ocfs2/stack_user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
-index 2f2f21f1b659e..d7b42888f25c2 100644
---- a/drivers/char/hw_random/ks-sa-rng.c
-+++ b/drivers/char/hw_random/ks-sa-rng.c
-@@ -240,6 +240,10 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
- 
-+	ks_sa_rng->clk = devm_clk_get_enabled(dev, NULL);
-+	if (IS_ERR(ks_sa_rng->clk))
-+		return dev_err_probe(dev, PTR_ERR(ks_sa_rng->clk), "Failed to get clock\n");
-+
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0) {
+diff --git a/fs/ocfs2/stack_user.c b/fs/ocfs2/stack_user.c
+index 64e6ddcfe329a..e28905e58bd6a 100644
+--- a/fs/ocfs2/stack_user.c
++++ b/fs/ocfs2/stack_user.c
+@@ -1024,6 +1024,7 @@ static int user_cluster_connect(struct ocfs2_cluster_connection *conn)
+ 			printk(KERN_ERR "ocfs2: Could not determine"
+ 					" locking version\n");
+ 			user_cluster_disconnect(conn);
++			lc = NULL;
+ 			goto out;
+ 		}
+ 		wait_event(lc->oc_wait, (atomic_read(&lc->oc_this_node) > 0));
 -- 
 2.51.0
 
