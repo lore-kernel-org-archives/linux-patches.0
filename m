@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F32356D9;
-	Mon, 13 Oct 2025 15:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B09630BBB0;
+	Mon, 13 Oct 2025 15:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369603; cv=none; b=qTzLDp+ep0Fg2jAR/UPX/wMfJgOnTQ2Pp4bJcbkbDZnY1OwzlUeWGyLUqkc91/BlDFyTc/yUcYqSfO9LgcIefhjXONE88MXLEo3cbts46l//2MhYOs7fRmP1t+2RWW/zeuYGozIL96Qq2NzZLaUSvviTcNu9+FqI2sjSvKAjkM0=
+	t=1760369603; cv=none; b=WDkPTMV7HtLZYc8To1D3w2iVObKn1YjTKejVsy37+D/P0ExvZSZB8OGf9LuVnRS7tK2GP7bI5NX/cVZz1l7Ldf0bNR9GqfMKqXxQSHZaN8IV85kuxEQPf4ssRJtZcn/94ZChghpo0F0PzGDG0kD1cn9vcV5juSwjAb/UqCIuH2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760369603; c=relaxed/simple;
-	bh=RR3t3Vx/2iRSEQF4pq4sLQWa5nXoZTpDZPCuuEgU2kE=;
+	bh=mB3nXm/BYt7TneSH4hYIUhvmJ8n7yeDK1YkHYXWrZv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sLBBkNEaU20EHaLYecCvU9gJFUdlFy5UwAf6imbe1b7vQSNPWysEWsYkJ+yA6T/xVBrIlEPMwV3Ezwsaemz2aqyfQOh7SOFGUUX8HfFPiQBiLlsElAZXaVZSLUb7wdwb09UGaVSZFtkfcgA5XcuRsl1To/ZrJrGMQNl6XghG2gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nh6jxeLd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpZm7S3DjsPypZpFlMbDIh1CtfnNbs/sJl5jslZDKJ0dswfXOUbLPNsZASOASsl37NVhKP77aym9Ce4IciVZq8Rps1IDFZ1+ix6YPJ8tu+anz1TN7BqYT/wtqpVTRgAI8ipROhicRG2ZUyMlQA4Go75e8V6+4roRfQvmY16e9gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKmuRoCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nh6jxeLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D196FC4CEE7;
-	Mon, 13 Oct 2025 15:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKmuRoCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB941C4CEFE;
+	Mon, 13 Oct 2025 15:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369600;
-	bh=RR3t3Vx/2iRSEQF4pq4sLQWa5nXoZTpDZPCuuEgU2kE=;
+	s=korg; t=1760369603;
+	bh=mB3nXm/BYt7TneSH4hYIUhvmJ8n7yeDK1YkHYXWrZv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nh6jxeLdl1fTQIZzhAS7uY96Gf3sM8/XZuxVRItfUMx62xeKLyFNRJDQZQmZfTWz0
-	 n52p2ihsd7T08rmKh4unPI4rULpFo3fcs7p//+0xmfmQuToQjup++kfoosGKZ/S75Z
-	 9lC7/5B62PhptFgjLCuZTX6DDpDS9SHHDVZdYVqU=
+	b=oKmuRoCN7qyXMgKaWzmHOXRxAXLRvK6a0LD0IxIOM8zqWVbOwH52pVe6yJmCw2Zxo
+	 7rnbcSQAlp2EzXdP/SUz18xDpfI3FNVK7VZavb9MeySSwo9ISR4nh5LWq6eaiuI2Qv
+	 OFq9RPkpe7i9RojE2PCBm99thRSSMjlHYkIff9Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 302/563] drm/amdgpu: Power up UVD 3 for FW validation (v2)
-Date: Mon, 13 Oct 2025 16:42:43 +0200
-Message-ID: <20251013144422.208669347@linuxfoundation.org>
+Subject: [PATCH 6.17 271/563] PCI: rcar-host: Pass proper IRQ domain to generic_handle_domain_irq()
+Date: Mon, 13 Oct 2025 16:42:12 +0200
+Message-ID: <20251013144421.092767765@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,91 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit c661219cd7be75bb5599b525f16a455a058eb516 ]
+[ Upstream commit d3fee10e40a938331e2aae34348691136db31304 ]
 
-Unlike later versions, UVD 3 has firmware validation.
-For this to work, the UVD should be powered up correctly.
+Starting with commit dd26c1a23fd5 ("PCI: rcar-host: Switch to
+msi_create_parent_irq_domain()"), the MSI parent IRQ domain is NULL because
+the object of type struct irq_domain_info passed to:
 
-When DPM is enabled and the display clock is off,
-the SMU may choose a power state which doesn't power
-the UVD, which can result in failure to initialize UVD.
+msi_create_parent_irq_domain() ->
+  irq_domain_instantiate()() ->
+    __irq_domain_instantiate()
 
-v2:
-Add code comments to explain about the UVD power state
-and how UVD clock is turned on/off.
+has no reference to the parent IRQ domain. Using msi->domain->parent as an
+argument for generic_handle_domain_irq() leads to below error:
 
-Fixes: b38f3e80ecec ("drm amdgpu: SI UVD v3_1 (v2)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+	"Unable to handle kernel NULL pointer dereference at virtual address"
+
+This error was identified while switching the upcoming RZ/G3S PCIe host
+controller driver to msi_create_parent_irq_domain() (which was using a
+similar pattern to handle MSIs (see link section)), but it was not tested
+on hardware using the pcie-rcar-host controller driver due to lack of
+hardware.
+
+Fixes: dd26c1a23fd5 ("PCI: rcar-host: Switch to msi_create_parent_irq_domain()")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+[mani: reworded subject and description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://lore.kernel.org/all/20250704161410.3931884-6-claudiu.beznea.uj@bp.renesas.com
+Link: https://patch.msgid.link/20250809144447.3939284-1-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 29 +++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rcar-host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 5dbaebb592b30..2e79a3afc7748 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -623,7 +623,22 @@ static void uvd_v3_1_enable_mgcg(struct amdgpu_device *adev,
-  *
-  * @ip_block: Pointer to the amdgpu_ip_block for this hw instance.
-  *
-- * Initialize the hardware, boot up the VCPU and do some testing
-+ * Initialize the hardware, boot up the VCPU and do some testing.
-+ *
-+ * On SI, the UVD is meant to be used in a specific power state,
-+ * or alternatively the driver can manually enable its clock.
-+ * In amdgpu we use the dedicated UVD power state when DPM is enabled.
-+ * Calling amdgpu_dpm_enable_uvd makes DPM select the UVD power state
-+ * for the SMU and afterwards enables the UVD clock.
-+ * This is automatically done by amdgpu_uvd_ring_begin_use when work
-+ * is submitted to the UVD ring. Here, we have to call it manually
-+ * in order to power up UVD before firmware validation.
-+ *
-+ * Note that we must not disable the UVD clock here, as that would
-+ * cause the ring test to fail. However, UVD is powered off
-+ * automatically after the ring test: amdgpu_uvd_ring_end_use calls
-+ * the UVD idle work handler which will disable the UVD clock when
-+ * all fences are signalled.
-  */
- static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
- {
-@@ -633,6 +648,15 @@ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
- 	int r;
+diff --git a/drivers/pci/controller/pcie-rcar-host.c b/drivers/pci/controller/pcie-rcar-host.c
+index fe288fd770c49..4780e0109e583 100644
+--- a/drivers/pci/controller/pcie-rcar-host.c
++++ b/drivers/pci/controller/pcie-rcar-host.c
+@@ -584,7 +584,7 @@ static irqreturn_t rcar_pcie_msi_irq(int irq, void *data)
+ 		unsigned int index = find_first_bit(&reg, 32);
+ 		int ret;
  
- 	uvd_v3_1_mc_resume(adev);
-+	uvd_v3_1_enable_mgcg(adev, true);
-+
-+	/* Make sure UVD is powered during FW validation.
-+	 * It's going to be automatically powered off after the ring test.
-+	 */
-+	if (adev->pm.dpm_enabled)
-+		amdgpu_dpm_enable_uvd(adev, true);
-+	else
-+		amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
- 
- 	r = uvd_v3_1_fw_validate(adev);
- 	if (r) {
-@@ -640,9 +664,6 @@ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
- 		return r;
- 	}
- 
--	uvd_v3_1_enable_mgcg(adev, true);
--	amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
--
- 	uvd_v3_1_start(adev);
- 
- 	r = amdgpu_ring_test_helper(ring);
+-		ret = generic_handle_domain_irq(msi->domain->parent, index);
++		ret = generic_handle_domain_irq(msi->domain, index);
+ 		if (ret) {
+ 			/* Unknown MSI, just clear it */
+ 			dev_dbg(dev, "unexpected MSI\n");
 -- 
 2.51.0
 
