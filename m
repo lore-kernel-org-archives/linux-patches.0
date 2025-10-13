@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAFF3090DC;
-	Mon, 13 Oct 2025 15:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CAF25B663;
+	Mon, 13 Oct 2025 15:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368505; cv=none; b=QLu+ozb/DQn5Y1l9W9Ttz+W9lnkU/s9C/Po44QYlD+vlpbi41JbAWzt+D3aro7hfgBh06MPz6j2EGUTkQ6QroyY/JPTEaOlMr3e9XThiHPuTLKOVpGy8B8mbUh+bnO85jITkp6vxJ2RQx4evJsDuX8i1qVMQX3S+4yWo418nQAk=
+	t=1760368508; cv=none; b=JZ+Xw7gejq/48t/cbrQc1AgmsVNx7YJfz3wdVnOnmONbcSv+Sn45rtK9PNcb5CLgQ7zTLxNWAeQgsAevuSqvtAG/MS0s7ljo46MOk/BKnZsg/rUD4GyzmP4A97LBLdJ7Nc4chkAyeOmtT7jOn/SmXk82Hy0y1BDQCy6JVmLcmr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368505; c=relaxed/simple;
-	bh=u84p/Wp8PcVxbqa2052II7GG5IN6JTT79FHPc1l2Smw=;
+	s=arc-20240116; t=1760368508; c=relaxed/simple;
+	bh=bc/Z/3k3T9XvLIWZ+yN1sb5EEe/G7NvEdLNjJH7CMXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYM6ug6PtX4IbX97Dy2znrko+uy2T83IVmw/xp3reGDdQWB+AvMyJnNpBKE18rMyA563QfJAVxgzQ0AvDMOALDhrCd07vDTiB2s3iwnyHMLPUgDkluhAcAT1pCnzOeuRzq/fw6pr5WyUoNy4I89ekDk3gYJ43uxIHqiqTDbxG/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbWeYJZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mycj7ktF18rr0o6Tk3CkBwvGaCItRcB41FkXXtCcHEwqBl70TDxBHYAs6T6ZCoGjNfCVv9aWqDPHzkv+OcKRcskFLJzi+V6LhAsfm8b3jbxfCQRNMXooAnVHrYK25brQ09Tx1SObzb2MQHndghfYjcSFmtEvJl7eOW/DZ+xxhvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZvPvGUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbWeYJZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A3DC4CEE7;
-	Mon, 13 Oct 2025 15:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZvPvGUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36ACC4CEE7;
+	Mon, 13 Oct 2025 15:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368505;
-	bh=u84p/Wp8PcVxbqa2052II7GG5IN6JTT79FHPc1l2Smw=;
+	s=korg; t=1760368508;
+	bh=bc/Z/3k3T9XvLIWZ+yN1sb5EEe/G7NvEdLNjJH7CMXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbWeYJZTiJhY2wTVs7F/iYTlo6FdytEk2KW+UXgCKQRC++1pVqB9CAgmIsScTMsI+
-	 lMk2Ob9ReIJ9gzBoIEiKLKiLSFdFVLwZ1698hueA6rPGx8KVQ5by1pP5nqj8diAJ41
-	 lx+O/wVKgo626LzvsTMmljbEIo8JVW5wpol/Gr2Q=
+	b=dZvPvGUZaCw9PY4Tbgnm8K4sRiDI2fnvJL/nYmMbHTQIjDhCZsSWUwI1mE/lw4gZF
+	 Ka6u+QA+iBCsZPKpTxGDe2WPMQeTymISRsrOq4V0oCOlwpcRrprxl7D2ayhintXOPv
+	 r1d4LblFY+nTUu31e/zsvbOMS4uT1LfU1oWHzNFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
+	Tamas Zsoldos <tamas.zsoldos@arm.com>,
 	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/262] coresight: etm4x: Support atclk
-Date: Mon, 13 Oct 2025 16:45:27 +0200
-Message-ID: <20251013144332.790191475@linuxfoundation.org>
+Subject: [PATCH 6.12 186/262] coresight: trbe: Return NULL pointer for allocation failures
+Date: Mon, 13 Oct 2025 16:45:28 +0200
+Message-ID: <20251013144332.827108499@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -56,102 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 40c0cdc9cbbebae9f43bef1cab9ce152318d0cce ]
+[ Upstream commit 8a55c161f7f9c1aa1c70611b39830d51c83ef36d ]
 
-The atclk is an optional clock for the CoreSight ETMv4, but the driver
-misses to initialize it.
+When the TRBE driver fails to allocate a buffer, it currently returns
+the error code "-ENOMEM". However, the caller etm_setup_aux() only
+checks for a NULL pointer, so it misses the error. As a result, the
+driver continues and eventually causes a kernel panic.
 
-This change enables atclk in probe of the ETMv4 driver, and dynamically
-control the clock during suspend and resume.
+Fix this by returning a NULL pointer from arm_trbe_alloc_buffer() on
+allocation failures. This allows that the callers can properly handle
+the failure.
 
-No need to check the driver data and clock pointer in the runtime
-suspend and resume, so remove checks.  And add error handling in the
-resume function.
-
-Add a minor fix to the comment format when adding the atclk field.
-
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Tested-by: James Clark <james.clark@linaro.org>
+Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
+Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
 Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250731-arm_cs_fix_clock_v4-v6-3-1dfe10bb3f6f@arm.com
+Link: https://lore.kernel.org/r/20250904-cs_etm_auxsetup_fix_error_handling-v2-1-a502d0bafb95@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 20 ++++++++++++++-----
- drivers/hwtracing/coresight/coresight-etm4x.h |  4 +++-
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/hwtracing/coresight/coresight-trbe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index cdfd35e03c1dc..7b9eaeb115d21 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -2157,6 +2157,10 @@ static int etm4_probe(struct device *dev)
- 	if (WARN_ON(!drvdata))
- 		return -ENOMEM;
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+index 492b2612f64e0..5755674913723 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.c
++++ b/drivers/hwtracing/coresight/coresight-trbe.c
+@@ -745,12 +745,12 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
  
-+	drvdata->atclk = devm_clk_get_optional_enabled(dev, "atclk");
-+	if (IS_ERR(drvdata->atclk))
-+		return PTR_ERR(drvdata->atclk);
-+
- 	if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
- 		pm_save_enable = coresight_loses_context_with_cpu(dev) ?
- 			       PARAM_PM_SAVE_SELF_HOSTED : PARAM_PM_SAVE_NEVER;
-@@ -2405,8 +2409,8 @@ static int etm4_runtime_suspend(struct device *dev)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(dev);
+ 	buf = kzalloc_node(sizeof(*buf), GFP_KERNEL, trbe_alloc_node(event));
+ 	if (!buf)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
  
--	if (drvdata->pclk && !IS_ERR(drvdata->pclk))
--		clk_disable_unprepare(drvdata->pclk);
-+	clk_disable_unprepare(drvdata->atclk);
-+	clk_disable_unprepare(drvdata->pclk);
+ 	pglist = kcalloc(nr_pages, sizeof(*pglist), GFP_KERNEL);
+ 	if (!pglist) {
+ 		kfree(buf);
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 	}
  
- 	return 0;
- }
-@@ -2414,11 +2418,17 @@ static int etm4_runtime_suspend(struct device *dev)
- static int etm4_runtime_resume(struct device *dev)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_prepare_enable(drvdata->pclk);
-+	if (ret)
-+		return ret;
- 
--	if (drvdata->pclk && !IS_ERR(drvdata->pclk))
--		clk_prepare_enable(drvdata->pclk);
-+	ret = clk_prepare_enable(drvdata->atclk);
-+	if (ret)
-+		clk_disable_unprepare(drvdata->pclk);
- 
--	return 0;
-+	return ret;
- }
- #endif
- 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
-index 899790c8777a9..3683966bd0603 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -920,7 +920,8 @@ struct etmv4_save_state {
- 
- /**
-  * struct etm4_drvdata - specifics associated to an ETM component
-- * @pclk        APB clock if present, otherwise NULL
-+ * @pclk:       APB clock if present, otherwise NULL
-+ * @atclk:      Optional clock for the core parts of the ETMv4.
-  * @base:       Memory mapped base address for this component.
-  * @csdev:      Component vitals needed by the framework.
-  * @spinlock:   Only one at a time pls.
-@@ -988,6 +989,7 @@ struct etmv4_save_state {
-  */
- struct etmv4_drvdata {
- 	struct clk			*pclk;
-+	struct clk			*atclk;
- 	void __iomem			*base;
- 	struct coresight_device		*csdev;
- 	spinlock_t			spinlock;
+ 	for (i = 0; i < nr_pages; i++)
+@@ -760,7 +760,7 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
+ 	if (!buf->trbe_base) {
+ 		kfree(pglist);
+ 		kfree(buf);
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 	}
+ 	buf->trbe_limit = buf->trbe_base + nr_pages * PAGE_SIZE;
+ 	buf->trbe_write = buf->trbe_base;
 -- 
 2.51.0
 
