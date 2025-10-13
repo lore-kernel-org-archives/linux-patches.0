@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7DD3081D6;
-	Mon, 13 Oct 2025 15:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8B63081D3;
+	Mon, 13 Oct 2025 15:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370114; cv=none; b=Ar/wSHlZE1FNrjVhv1tDsVtLsIPzw/DoAqEjeOaXK7BpMPHIg5WQh+dO/B6X67QNKAzbRDJ9X0xXDr3ZGJsluCRFiZFUbBXuGRJKdjAN7u6rnSFcNIgDuDr4rIk2gLBLWJe+A/uUbRTl4Y8fv/0DHoAIlamRse9yw7AZQRUriaw=
+	t=1760370117; cv=none; b=n4tlE2F3YFYwtNkKc+ArsESmJE365JAyjHFY2GEn05FabFNXx65IpHzMFl86ku3hktmaP0RBHQd0hNVXKZvrUCkRMHfpgq+PV5/d2aCvXOjYvjAi92fC0kbJuYQThyMDdRZ3BPirHj8KkC1fZg+cU/IgX787a7Pvr56dS5C/f+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370114; c=relaxed/simple;
-	bh=Hl2TbKh8jKK146+8NmxuK0LSAYfLpNFzGb5G2Rxp4XQ=;
+	s=arc-20240116; t=1760370117; c=relaxed/simple;
+	bh=v6+FHqO8/XpifNAUprtxHFklfqKMPwkxKXzCn0bLs60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sReylmBbph7wrubNXKwMkPJ47iR/BzIiyxbcEgndAJmUnkCjRTBj9GbPMyIHEkBr+EuwzGX4LLGqaU5cMhG0Zh4ko3zcYPPvVsAJDBAgZJVeu2NSJcyaA7FWGuhLDbW1FQrzn0874Q+uf8I3Thh5CEeKeLTtb84I69B60fMcD2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/zhUjID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sv1BfNzJY0OLm1P/zpnF9jI52sK4vMvrdOvyBhpN3RzlGmXlc3sbOSBtEQwdGkemZaGtvWBS2VUkv/5Vz75/BFD+rGOfISdoRY0jp2b7hJ1YuJhwKwakQsCkr/KWrR201NNvXshpZfOw5q4eip2alzfn1aMKhoo0F53VadQU/Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJcU+WgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/zhUjID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D145C4CEFE;
-	Mon, 13 Oct 2025 15:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJcU+WgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE67FC4CEE7;
+	Mon, 13 Oct 2025 15:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370114;
-	bh=Hl2TbKh8jKK146+8NmxuK0LSAYfLpNFzGb5G2Rxp4XQ=;
+	s=korg; t=1760370117;
+	bh=v6+FHqO8/XpifNAUprtxHFklfqKMPwkxKXzCn0bLs60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/zhUjID0Ycc1O6FogGzayd3/IopAl61KeTPyZF8VEiNRrp3XDsYHYT8Ogsh+/2ib
-	 OCQljfPdyfzeJtaHnM6FQj63Yo84Le9MLk8QECUe8deG5Nmq1otZSSsnvWi/9W+7/O
-	 Pp7hjS7yNmVwtKzdUSoRTufKfFdwQ+54+RNVdiL4=
+	b=TJcU+WgNVGFhq3nSpFWxOejV5Pdo7UPf5ON8EX+WYD2V+Kaw8kRtJFk7Q5TCTJKAk
+	 c63bBNfs6RKpE12wCuxEeeL7KKmpWBSnLSC8g/RfMLjGTk8TQZfu1lCAmKqN2Q5Zcp
+	 31Z10XvtOirJkXPCECNK4Zcvjz1ZXKB+z6evZr5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com,
+	I Viswanath <viswanathiyyappan@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 482/563] Revert "net/mlx5e: Update and set Xon/Xoff upon MTU set"
-Date: Mon, 13 Oct 2025 16:45:43 +0200
-Message-ID: <20251013144428.752857844@linuxfoundation.org>
+Subject: [PATCH 6.17 451/563] ptp: Add a upper bound on max_vclocks
+Date: Mon, 13 Oct 2025 16:45:12 +0200
+Message-ID: <20251013144427.619612482@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,112 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: I Viswanath <viswanathiyyappan@gmail.com>
 
-[ Upstream commit 6f5dacf88a32b3fd8b52c8ea781bf188c42aaa95 ]
+[ Upstream commit e9f35294e18da82162004a2f35976e7031aaf7f9 ]
 
-This reverts commit ceddedc969f0532b7c62ca971ee50d519d2bc0cb.
+syzbot reported WARNING in max_vclocks_store.
 
-Commit in question breaks the mapping of PGs to pools for some SKUs.
-Specifically multi-host NICs seem to be shipped with a custom buffer
-configuration which maps the lossy PG to pool 4. But the bad commit
-overrides this with pool 0 which does not have sufficient buffer space
-reserved. Resulting in ~40% packet loss. The commit also breaks BMC /
-OOB connection completely (100% packet loss).
+This occurs when the argument max is too large for kcalloc to handle.
 
-Revert, similarly to commit 3fbfe251cc9f ("Revert "net/mlx5e: Update and
-set Xon/Xoff upon port speed set""). The breakage is exactly the same,
-the only difference is that quoted commit would break the NIC immediately
-on boot, and the currently reverted commit only when MTU is changed.
+Extend the guard to guard against values that are too large for
+kcalloc
 
-Note: "good" kernels do not restore the configuration, so downgrade isn't
-enough to recover machines. A NIC power cycle seems to be necessary to
-return to a healthy state (or overriding the relevant registers using
-a custom patch).
-
-Fixes: ceddedc969f0 ("net/mlx5e: Update and set Xon/Xoff upon MTU set")
+Reported-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=94d20db923b9f51be0df
+Tested-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://patch.msgid.link/20250925155908.5034-1-viswanathiyyappan@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250929181529.1848157-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en/port_buffer.h         | 12 ------------
- .../net/ethernet/mellanox/mlx5/core/en_main.c   | 17 +----------------
- 2 files changed, 1 insertion(+), 28 deletions(-)
+ drivers/ptp/ptp_private.h | 1 +
+ drivers/ptp/ptp_sysfs.c   | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-index 66d276a1be836..f4a19ffbb641c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-@@ -66,23 +66,11 @@ struct mlx5e_port_buffer {
- 	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_NETWORK_BUFFER];
- };
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index b352df4cd3f97..f329263f33aa1 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -22,6 +22,7 @@
+ #define PTP_MAX_TIMESTAMPS 128
+ #define PTP_BUF_TIMESTAMPS 30
+ #define PTP_DEFAULT_MAX_VCLOCKS 20
++#define PTP_MAX_VCLOCKS_LIMIT (KMALLOC_MAX_SIZE/(sizeof(int)))
+ #define PTP_MAX_CHANNELS 2048
  
--#ifdef CONFIG_MLX5_CORE_EN_DCB
- int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
- 				    u32 change, unsigned int mtu,
- 				    struct ieee_pfc *pfc,
- 				    u32 *buffer_size,
- 				    u8 *prio2buffer);
--#else
--static inline int
--mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
--				u32 change, unsigned int mtu,
--				void *pfc,
--				u32 *buffer_size,
--				u8 *prio2buffer)
--{
--	return 0;
--}
--#endif
+ enum {
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 6b1b8f57cd951..200eaf5006968 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -284,7 +284,7 @@ static ssize_t max_vclocks_store(struct device *dev,
+ 	size_t size;
+ 	u32 max;
  
- int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
- 			    struct mlx5e_port_buffer *port_buffer);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 15eded36b872a..21bb88c5d3dce 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -49,7 +49,6 @@
- #include "en.h"
- #include "en/dim.h"
- #include "en/txrx.h"
--#include "en/port_buffer.h"
- #include "en_tc.h"
- #include "en_rep.h"
- #include "en_accel/ipsec.h"
-@@ -3041,11 +3040,9 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
- 	struct mlx5e_params *params = &priv->channels.params;
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
--	u16 mtu, prev_mtu;
-+	u16 mtu;
- 	int err;
+-	if (kstrtou32(buf, 0, &max) || max == 0)
++	if (kstrtou32(buf, 0, &max) || max == 0 || max > PTP_MAX_VCLOCKS_LIMIT)
+ 		return -EINVAL;
  
--	mlx5e_query_mtu(mdev, params, &prev_mtu);
--
- 	err = mlx5e_set_mtu(mdev, params, params->sw_mtu);
- 	if (err)
- 		return err;
-@@ -3055,18 +3052,6 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
- 		netdev_warn(netdev, "%s: VPort MTU %d is different than netdev mtu %d\n",
- 			    __func__, mtu, params->sw_mtu);
- 
--	if (mtu != prev_mtu && MLX5_BUFFER_SUPPORTED(mdev)) {
--		err = mlx5e_port_manual_buffer_config(priv, 0, mtu,
--						      NULL, NULL, NULL);
--		if (err) {
--			netdev_warn(netdev, "%s: Failed to set Xon/Xoff values with MTU %d (err %d), setting back to previous MTU %d\n",
--				    __func__, mtu, err, prev_mtu);
--
--			mlx5e_set_mtu(mdev, params, prev_mtu);
--			return err;
--		}
--	}
--
- 	params->sw_mtu = mtu;
- 	return 0;
- }
+ 	if (max == ptp->max_vclocks)
 -- 
 2.51.0
 
