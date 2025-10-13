@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EEA29A301;
-	Mon, 13 Oct 2025 15:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCB722A4D5;
+	Mon, 13 Oct 2025 15:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369348; cv=none; b=RoTptQWJsVdgbcFeAqRGMZRPQm+aWXHTyf/7pBPsUndF8v1PSswMNNyXjpgMJxgX9Rf/VicONt7nd6yVsrv2mvGnKKSvcRzsSx5vs9QqiQDgV7Oj5uH6vU7v7K+M8FOn0qTnGnHTBD7ZuYmPg2qGZV9eh9M4VViHePdmvEiwMzg=
+	t=1760369350; cv=none; b=EwujiDHAZNhSnMTht/I41MG5WCzbAM4arUejVPs57Jo2fUhagxSZ0gzgfark0701uNGvPKgZpguZsqBGTGsm6iK1Q6s2Zv3rr1MGyCh/znFxwj1bCIWrUOstI6ehpDsTb4ayijLXJx412KS4+n5DrqhzhqHP+pmoZDz9EBYBGf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369348; c=relaxed/simple;
-	bh=zHlbfeGax2Aal3ODVM6GGp2jDrzjduEzuUxXx+jXPCY=;
+	s=arc-20240116; t=1760369350; c=relaxed/simple;
+	bh=RDPCOUxf69+xvClnECG92S0e190BCrCnAP2F2NjbC18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cj9M7xvaR/Ht9bfXABWQaFuEuljBQiQel+vFU9Uuzl7YUhsJGKrMqouGX/EQb0Ph68zgFn6v1ODZ5s5m10nz4O7mJG7WCvCZdajwpC2KIybaE4VXe9baK5b4jDlJrKJrwmdwzds5i1H/c3CbdI+vrLSrzM7q3D8HmypJOW6+kgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8uScBzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIv1dv8IZU41rE0fwJd4l9ximUpRZIwreu2BunLSdbhDOSaY4RWafplADtHzudSxRwjarfcX+sbf7JcCTpUeEIeSRfEze7vN/d3R59w/Am0efGK463nOYkyyLgBx1F/4wAMvkwD7NjbCSXtnnucSBHyBkQAZAk5krarJbk8Xslc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQnSVzSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8uScBzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE6EC4CEE7;
-	Mon, 13 Oct 2025 15:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQnSVzSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EB2C4CEE7;
+	Mon, 13 Oct 2025 15:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369347;
-	bh=zHlbfeGax2Aal3ODVM6GGp2jDrzjduEzuUxXx+jXPCY=;
+	s=korg; t=1760369350;
+	bh=RDPCOUxf69+xvClnECG92S0e190BCrCnAP2F2NjbC18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8uScBzW/26D8XJ6YbZyzI8oHMgnvbL03tSZ6L+D+2YVt+p9puafFLsT/8KGmZUFY
-	 UZ0SI+9LteURkhRospFQG2h/HfyaTf0jOzHDbqgrjhfTKhurH9f0dQ6IZeGNndbKmx
-	 JbobtURqYa1h+KBIkMSlXn+BsK2YKJP28Vmjo/1U=
+	b=nQnSVzSaSux1hr+xTWw5v2xBtQS1aJnJnshu+vBuk32Yg+wIpzCzGYjHj76VhgoEM
+	 5gZ8oR9Mhcny+gGv4oK8ijyjptCH20UisKdMWEALKK6kKl0LfQjYMxK+m4+3wrkgw4
+	 as1sIFJn5HAUFc56cKfdzwrxJWG6jP+KNxLwuNC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	kernel test robot <lkp@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 215/563] drm/vmwgfx: fix missing assignment to ts
-Date: Mon, 13 Oct 2025 16:41:16 +0200
-Message-ID: <20251013144419.072373835@linuxfoundation.org>
+Subject: [PATCH 6.17 198/563] thermal/drivers/qcom/lmh: Add missing IRQ includes
+Date: Mon, 13 Oct 2025 16:40:59 +0200
+Message-ID: <20251013144418.457837281@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 33f8f321e7aa7715ce19560801ee5223ba8b9a7d ]
+[ Upstream commit b50b2c53f98fcdb6957e184eb488c16502db9575 ]
 
-The assignment to ts is missing on the call to ktime_to_timespec64.
-Fix this by adding the missing assignment.
+As reported by LKP, the Qualcomm LMH driver needs to include several
+IRQ-related headers, which decrlare necessary IRQ functionality.
+Currently driver builds on ARM64 platforms, where the headers are pulled
+in implicitly by other headers, but fails to build on other platforms.
 
-Fixes: db6a94b26354 ("drm/vmwgfx: Implement dma_fence_ops properly")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://lore.kernel.org/r/20250623223526.281398-1-colin.i.king@gmail.com
+Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507270042.KdK0KKht-lkp@intel.com/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-2-33bc58388ca5@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/qcom/lmh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-index c2294abbe7534..00be92da55097 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -538,7 +538,7 @@ static void vmw_event_fence_action_seq_passed(struct dma_fence *f,
- 	if (likely(eaction->tv_sec != NULL)) {
- 		struct timespec64 ts;
- 
--		ktime_to_timespec64(f->timestamp);
-+		ts = ktime_to_timespec64(f->timestamp);
- 		/* monotonic time, so no y2038 overflow */
- 		*eaction->tv_sec = ts.tv_sec;
- 		*eaction->tv_usec = ts.tv_nsec / NSEC_PER_USEC;
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index 75eaa9a68ab8a..c681a3c89ffa0 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -5,6 +5,8 @@
+  */
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
++#include <linux/irq.h>
++#include <linux/irqdesc.h>
+ #include <linux/irqdomain.h>
+ #include <linux/err.h>
+ #include <linux/platform_device.h>
 -- 
 2.51.0
 
