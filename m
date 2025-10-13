@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7390231076C;
-	Mon, 13 Oct 2025 15:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EF4310782;
+	Mon, 13 Oct 2025 15:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368073; cv=none; b=nz+r+xdM/aNJ4zE2k2MrKnRWGgKAWMfNvZY0hUuoSySJaeae9eqGL8chtgKJnGwNJaPn1rQzCOhlkfbmemdiCXFL1JmnivYPd/DtPiB9soKGqy3mqn/CkQ81UfKF02PxrUx5H59pcusYgnlUMeNdRkvEYybr1/TbJaLlsXLjfbw=
+	t=1760368077; cv=none; b=eVaV2W4khaLEOrcjYG8thwnhmeBDj3rGWIIOflkxCdoD24ojlYwp2KnWOR9sHetDjJtJVTAe3/hWvUtAh34C7f6M4X5z+Zbuy2iOTaU56sxrW51tRjzbL0C/bPpkcS1WAsVShpcl215Bochj5AG/W0kentgyBsLIzBQ+YAvWycA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368073; c=relaxed/simple;
-	bh=amdayZEiAfoRBvyJ4y1CaLuB3fvePKh4+AXIljkGb5g=;
+	s=arc-20240116; t=1760368077; c=relaxed/simple;
+	bh=m5dHlExasWVNvJj2pvuDZ4rq/j7xD/7W5PUwje/u5ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuVAhwrrqqnQRcRtAmpuqbIWYceuFFejZjw3PxCwYLlauin5EUQLYcgQ2laOcMHw2PCBrlUYUXmUQ0iGGy/yK77RcBZyZix238skahlZf0KJj+akQ11/aPU6mB6AuwTUcrq6ZRRydx6c1qBblN+hEGbstEBC+b5U6g+eUE87N7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6LZ1CUc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHdSJs5mj/mT0aKsDmlkvVCcIdZ2QA56sfcskGZNa8/X/ozV/Zam7PofCt46voVQO6ePWtwoJMUMYNwcB8Mz4zNH7B1jpmu1dUa884MoEER8/dtGyRL4EBFUxKPkgYoTDWo1Uac+pZJAnklpxBzNB0vHlO5hdc4YRFDYi/TwtUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNIxn0CJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6LZ1CUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01D8C4CEE7;
-	Mon, 13 Oct 2025 15:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNIxn0CJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8813DC4CEE7;
+	Mon, 13 Oct 2025 15:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368073;
-	bh=amdayZEiAfoRBvyJ4y1CaLuB3fvePKh4+AXIljkGb5g=;
+	s=korg; t=1760368075;
+	bh=m5dHlExasWVNvJj2pvuDZ4rq/j7xD/7W5PUwje/u5ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6LZ1CUcGx7ElHoagVuzZ1ghYOvhSOVz0PXqJsfB+PjnLf76BBjxRKJS+uDyq2fwp
-	 7v7IPUHbbRwJsASLUCFQzokJocdI1Caeqk7oDy1rN9QARUwwUZdaTDvfKEDjFGV3VO
-	 jr0kE1tBfrpApWZlskeioQH2S+HjinridBBtLQIY=
+	b=nNIxn0CJdfq+dzXAix+NxgsFUHx0UPaHaMZ+XNuJgsZ51iGi70oyrysruz3CW9e9n
+	 RxADH/d8zKv/ztUXT6lCxf62bg1ZIra/IFvxV6C1wHLvRpXuV9XSArW8Ym8Ld3hawH
+	 f5OXb3qAE1bNABQRdE91dF6DaWoODuvN4cN+sns4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/262] powerpc/8xx: Remove left-over instruction and comments in DataStoreTLBMiss handler
-Date: Mon, 13 Oct 2025 16:42:28 +0200
-Message-ID: <20251013144326.354227512@linuxfoundation.org>
+Subject: [PATCH 6.12 007/262] powerpc/603: Really copy kernel PGD entries into all PGDIRs
+Date: Mon, 13 Oct 2025 16:42:29 +0200
+Message-ID: <20251013144326.389781154@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,66 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit d9e46de4bf5c5f987075afd5f240bb2a8a5d71ed ]
+[ Upstream commit f2863371f017eb03c230addc253783fa4c7e90f5 ]
 
-Commit ac9f97ff8b32 ("powerpc/8xx: Inconditionally use task PGDIR in
-DTLB misses") removed the test that needed the valeur in SPRN_EPN but
-failed to remove the read.
+Commit 82ef440f9a38 ("powerpc/603: Copy kernel PGD entries into all
+PGDIRs and preallocate execmem page tables") was supposed to extend
+to powerpc 603 the copy of kernel PGD entries into all PGDIRs
+implemented in a previous patch on the 8xx. But 603 is book3s/32 and
+uses a duplicate of pgd_alloc() defined in another header.
 
-Remove it.
+So really do the copy at the correct place for the 603.
 
-And remove related comments, including the very same comment
-in InstructionTLBMiss that should have been removed by
-commit 33c527522f39 ("powerpc/8xx: Inconditionally use task PGDIR in
-ITLB misses").
-
-Also update the comment about absence of a second level table which
-has been handled implicitely since commit 5ddb75cee5af ("powerpc/8xx:
-remove tests on PGDIR entry validity").
-
-Fixes: ac9f97ff8b32 ("powerpc/8xx: Inconditionally use task PGDIR in DTLB misses")
+Fixes: 82ef440f9a38 ("powerpc/603: Copy kernel PGD entries into all PGDIRs and preallocate execmem page tables")
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/5811c8d1d6187f280ad140d6c0ad6010e41eeaeb.1755361995.git.christophe.leroy@csgroup.eu
+Link: https://patch.msgid.link/752ab7514cae089a2dd7cc0f3d5e35849f76adb9.1755757797.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/head_8xx.S | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ arch/powerpc/include/asm/book3s/32/pgalloc.h | 10 ++++++++--
+ arch/powerpc/include/asm/nohash/pgalloc.h    |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
-index 56c5ebe21b99a..613606400ee99 100644
---- a/arch/powerpc/kernel/head_8xx.S
-+++ b/arch/powerpc/kernel/head_8xx.S
-@@ -162,7 +162,7 @@ instruction_counter:
-  * For the MPC8xx, this is a software tablewalk to load the instruction
-  * TLB.  The task switch loads the M_TWB register with the pointer to the first
-  * level table.
-- * If we discover there is no second level table (value is zero) or if there
-+ * If there is no second level table (value is zero) or if there
-  * is an invalid pte, we load that into the TLB, which causes another fault
-  * into the TLB Error interrupt where we can handle such problems.
-  * We have to use the MD_xxx registers for the tablewalk because the
-@@ -183,9 +183,6 @@ instruction_counter:
- 	mtspr	SPRN_SPRG_SCRATCH2, r10
- 	mtspr	SPRN_M_TW, r11
+diff --git a/arch/powerpc/include/asm/book3s/32/pgalloc.h b/arch/powerpc/include/asm/book3s/32/pgalloc.h
+index dd4eb30631758..f4390704d5ba2 100644
+--- a/arch/powerpc/include/asm/book3s/32/pgalloc.h
++++ b/arch/powerpc/include/asm/book3s/32/pgalloc.h
+@@ -7,8 +7,14 @@
  
--	/* If we are faulting a kernel address, we have to use the
--	 * kernel page tables.
--	 */
- 	mfspr	r10, SPRN_SRR0	/* Get effective address of fault */
- 	INVALIDATE_ADJACENT_PAGES_CPU15(r10, r11)
- 	mtspr	SPRN_MD_EPN, r10
-@@ -228,10 +225,6 @@ instruction_counter:
- 	mtspr	SPRN_SPRG_SCRATCH2, r10
- 	mtspr	SPRN_M_TW, r11
+ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
+ {
+-	return kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
+-			pgtable_gfp_flags(mm, GFP_KERNEL));
++	pgd_t *pgd = kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
++				      pgtable_gfp_flags(mm, GFP_KERNEL));
++
++#ifdef CONFIG_PPC_BOOK3S_603
++	memcpy(pgd + USER_PTRS_PER_PGD, swapper_pg_dir + USER_PTRS_PER_PGD,
++	       (MAX_PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
++#endif
++	return pgd;
+ }
  
--	/* If we are faulting a kernel address, we have to use the
--	 * kernel page tables.
--	 */
--	mfspr	r10, SPRN_MD_EPN
- 	mfspr	r10, SPRN_M_TWB	/* Get level 1 table */
- 	lwz	r11, (swapper_pg_dir-PAGE_OFFSET)@l(r10)	/* Get level 1 entry */
+ static inline void pgd_free(struct mm_struct *mm, pgd_t *pgd)
+diff --git a/arch/powerpc/include/asm/nohash/pgalloc.h b/arch/powerpc/include/asm/nohash/pgalloc.h
+index bb5f3e8ea912d..4ef780b291bc3 100644
+--- a/arch/powerpc/include/asm/nohash/pgalloc.h
++++ b/arch/powerpc/include/asm/nohash/pgalloc.h
+@@ -22,7 +22,7 @@ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
+ 	pgd_t *pgd = kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
+ 			pgtable_gfp_flags(mm, GFP_KERNEL));
  
+-#if defined(CONFIG_PPC_8xx) || defined(CONFIG_PPC_BOOK3S_603)
++#ifdef CONFIG_PPC_8xx
+ 	memcpy(pgd + USER_PTRS_PER_PGD, swapper_pg_dir + USER_PTRS_PER_PGD,
+ 	       (MAX_PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
+ #endif
 -- 
 2.51.0
 
