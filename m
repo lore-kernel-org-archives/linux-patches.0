@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6038531280A;
-	Mon, 13 Oct 2025 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301CA253954;
+	Mon, 13 Oct 2025 15:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368263; cv=none; b=k+CsdOL3AhRZjMBOfbMXXcmRgkGhqFXJwaxSC3hUxgJos9zgpcX2nwUhSf05y3lh2O55VHg7YiQr5I7j2yL5zp9TPqedhnrEFFJkWbNU4g9k1IM7zwZ3NHo/6p306bGVdafVPGxkB2z9GzS/eqm0bHWFz087IP4njjMhRlruy9Q=
+	t=1760368266; cv=none; b=eWzVTs+IRlozVAUTUpVwLI9SX10kTjiJcECqtG/H9FWrtcdPOHYqidaAedrMUSFzb9PKZmOQGVomooFI5n5AisZ8UjEWyfroxX+u1WwZ4Uh7Op1W70zge0bILEsdDMdB0Tt6/xUR7IZ48ZBTtxHXy9NufJthT4s9ypsa6ot9g7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368263; c=relaxed/simple;
-	bh=sCKT9uHxbbqYTVPZr2on4IgKwapgcfQhn003v96NR4Y=;
+	s=arc-20240116; t=1760368266; c=relaxed/simple;
+	bh=uXMTvqsI2n/tBXURiBCa5WEMX/rk0DbmwtBSWCgPc5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTbRHZM8MQoP4vZISpAlLgarLy9fs7ovwLZvVNNiS88xKO3UMcnQns78GJILywxh9YDAUqimNQ+oi+15EBQhHRG0+t4uMFfgbQML4txkzXfDudRVSHapFm6hK7jrdMEZZIE8dEg8rTNXJ2C10paXA8cnbsWzO8qA/VuuSvuo+2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+UZVupF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYecrsPyEHC1Ei0bLfXY82Q1vFjXbx1ULqzGQGtMgfyj/ssq/1z0QvqfDH7pU37+1fEoIR9zuqVUuTAevsYHUEIzqL5TGsbqKE8fegupSwyd+enUHbPGFJVSTqyxpRUun1IYq21d9ny3dvsPLBb8Xg4qBaz+KW3iuCosIVruFpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsUu80ii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+UZVupF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56AEC4CEE7;
-	Mon, 13 Oct 2025 15:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsUu80ii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0827C4CEE7;
+	Mon, 13 Oct 2025 15:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368263;
-	bh=sCKT9uHxbbqYTVPZr2on4IgKwapgcfQhn003v96NR4Y=;
+	s=korg; t=1760368266;
+	bh=uXMTvqsI2n/tBXURiBCa5WEMX/rk0DbmwtBSWCgPc5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+UZVupFAucCq+rl8pcfwFhtmCVht3OX4rIxeCkIrpQyQ/La3GjuB5An/lW3JmKTv
-	 JhO7UuiGarZg2wibJcI++qt0cSxXC0hoxF2PLgkZxK2rIxDQUvt90ogWOvpcJzj5vX
-	 DQO90D4mh0LguuGUY/6jVK1taPrsGlHP1L1qZwbw=
+	b=VsUu80ii8fO1iwqi7Lkk5bPbmutagabHH+z2guBmd/2nriXlufjl2QNL4UJPrcN3L
+	 cjUWtV9vdNVE2P1GF0Fchr014NDKfeZ8NmtE8iQa0ZPhhv55Ab/YKFIEwaNq6QEn2o
+	 oiIBqHZr0GH18s/GbaZR+p2ftVvjmo2fuva3X2O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Yuanhong <liaoyuanhong@vivo.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/262] drm/amd/display: Remove redundant semicolons
-Date: Mon, 13 Oct 2025 16:44:01 +0200
-Message-ID: <20251013144329.696350017@linuxfoundation.org>
+Subject: [PATCH 6.12 100/262] crypto: keembay - Add missing check after sg_nents_for_len()
+Date: Mon, 13 Oct 2025 16:44:02 +0200
+Message-ID: <20251013144329.732448155@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,32 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Yuanhong <liaoyuanhong@vivo.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 90b810dd859c0df9db2290da1ac5842e5f031267 ]
+[ Upstream commit 4e53be21dd0315c00eaf40cc8f8c0facd4d9a6b2 ]
 
-Remove unnecessary semicolons.
+sg_nents_for_len() returns an int which is negative in case of error.
 
-Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
-Signed-off-by: Liao Yuanhong <liaoyuanhong@vivo.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 472b04444cd3 ("crypto: keembay - Add Keem Bay OCS HCU driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c    | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-index 9ba6cb67655f4..6c75aa82327ac 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-@@ -139,7 +139,6 @@ void dml32_rq_dlg_get_rq_reg(display_rq_regs_st *rq_regs,
- 	if (dual_plane) {
- 		unsigned int p1_pte_row_height_linear = get_dpte_row_height_linear_c(mode_lib, e2e_pipe_param,
- 				num_pipes, pipe_idx);
--		;
- 		if (src->sw_mode == dm_sw_linear)
- 			ASSERT(p1_pte_row_height_linear >= 8);
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
+index fdeca861933cb..903f31dc663e9 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
+@@ -232,7 +232,7 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
+ 	struct device *dev = rctx->hcu_dev->dev;
+ 	unsigned int remainder = 0;
+ 	unsigned int total;
+-	size_t nents;
++	int nents;
+ 	size_t count;
+ 	int rc;
+ 	int i;
+@@ -253,6 +253,9 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
+ 	/* Determine the number of scatter gather list entries to process. */
+ 	nents = sg_nents_for_len(req->src, rctx->sg_data_total - remainder);
  
++	if (nents < 0)
++		return nents;
++
+ 	/* If there are entries to process, map them. */
+ 	if (nents) {
+ 		rctx->sg_dma_nents = dma_map_sg(dev, req->src, nents,
 -- 
 2.51.0
 
