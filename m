@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981142F83BA;
-	Mon, 13 Oct 2025 15:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF5D2F83BA;
+	Mon, 13 Oct 2025 15:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368369; cv=none; b=Hh9pqdtikxfCY7I6APXy9L4u5x5qE+AemC7aJ6WagePg3mKo56GJBg8dzPzJybweAIam8Yxv4glIixqpat8szqXjbVo1rJ+V/VYGIZhiQllhYlsC2vq4/z6VTHfuPCIy/tCwpAtCvKNnCna9CjZ6aB+4YO9QV6Bm1OfQ9aNRnCo=
+	t=1760368372; cv=none; b=X2QQSQBErtblX6PkXzf4Fu389gF6Advqvt54esEpUN4iwoc7BA3Jd0hQsxvJiKqPowOl8QsYktFgN8yWwk5CFuxCsR7KakssXcEI/M2Rt/SGqiRelVWNXSJ9eNGUUq1WpppJI7SxQXSI+hNIt2N+frD5NgCyVvIoz4jqebBur50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368369; c=relaxed/simple;
-	bh=p8TeNejUx3QoB7hib6l1JBrU2au96INAEHjFl5VY8RM=;
+	s=arc-20240116; t=1760368372; c=relaxed/simple;
+	bh=ECFo0pJ+d1o3ApQtNsY+XjHYfl6q82N3I7WEVx1BPoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQthljNihg/gfSs3WNy3Ttr7GeMNwLMrWn2Mi711z4tIK0yoVySMbUNRAk5reqwY0rEy85m0WKuDlNnfPMTzvqMZfyoxfmcTe5td8y2RpDhis9yHcTmCBwVvQPDi/9XkWnoht9HrOQ8H7HYcyab+jCC+cKeOKVIjGLsdTMEP7iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB8T0H8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSyxLItHxiIhUYElyJvzBKbtQRpicDIQOmhpuEo6dcxiqZvsxmsC/KKj/G0mchqv2mdXY2bDjbcWk163Hcctv+JU4xT1dPHvy4Tvz/QuGkF69xA70ZMfnwZrR5uU33L4PFfBYS1O8RsC8yMh4nxM2CV96maWd8DWVfzOz/DObnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqsqNpTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB8T0H8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217E6C4CEE7;
-	Mon, 13 Oct 2025 15:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqsqNpTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEC4C4CEE7;
+	Mon, 13 Oct 2025 15:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368369;
-	bh=p8TeNejUx3QoB7hib6l1JBrU2au96INAEHjFl5VY8RM=;
+	s=korg; t=1760368372;
+	bh=ECFo0pJ+d1o3ApQtNsY+XjHYfl6q82N3I7WEVx1BPoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB8T0H8qQnUTHbVClSSo9rKvOVnL0VlbVYpPp0t1ACX7Ro9LDxGiqFoLDpwCnfTFx
-	 I/V6VzdDlKJYBJ9AYfzkHMNjSqaeADIUBi1Z0iSHB5tPjeOtrt5VqsIdX+R6ou70f3
-	 8HWAl5pxIHdYQNAt4pviotqsggfEegCaEsP5J7to=
+	b=NqsqNpTLTSGaqPMk8no3/Xsyih+Qe9danckElXRUVKR/63m1kHbLR/wDTUnAPdvMd
+	 KR//81pmk9vMCC/W26z6NMfr1RC9/HL79kC0MbULv6GSTE469xeSF/s9S8m3AinTI+
+	 kHohFB9YtZGx+KTvj4yZkutaLpsN5qCJ5uEXQd4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/262] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:44:38 +0200
-Message-ID: <20251013144331.022176106@linuxfoundation.org>
+Subject: [PATCH 6.12 137/262] drm/msm/dpu: fix incorrect type for ret
+Date: Mon, 13 Oct 2025 16:44:39 +0200
+Message-ID: <20251013144331.058022916@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,74 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
+[ Upstream commit 88ec0e01a880e3326794e149efae39e3aa4dbbec ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+Change 'ret' from unsigned long to int, as storing negative error codes
+in an unsigned long makes it never equal to -ETIMEDOUT, causing logical
+errors.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
-
-Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-4-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/671100/
+Link: https://lore.kernel.org/r/20250826092047.224341-1-rongqianfeng@vivo.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 8e4b821efe927..6860ac41e6b32 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -58,7 +58,8 @@ enum {
- 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
- };
- 
--#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
- #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
- 
- static void log_quirks(struct device *dev)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index 07035ab77b792..4597fdb653588 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -445,7 +445,7 @@ static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
+ static int dpu_encoder_phys_wb_wait_for_commit_done(
+ 		struct dpu_encoder_phys *phys_enc)
  {
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
-+	int map;
-+
-+	map = BYT_RT5651_MAP(byt_rt5651_quirk);
-+	switch (map) {
-+	case BYT_RT5651_DMIC_MAP:
- 		dev_info(dev, "quirk DMIC_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
-+		break;
-+	case BYT_RT5651_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN1_IN2_MAP:
- 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
-+		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
-+		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
-+		break;
-+	}
-+
- 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
- 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
- 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
+-	unsigned long ret;
++	int ret;
+ 	struct dpu_encoder_wait_info wait_info;
+ 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+ 
 -- 
 2.51.0
 
