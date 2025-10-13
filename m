@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB89C12DDA1;
-	Mon, 13 Oct 2025 15:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B693A12DDA1;
+	Mon, 13 Oct 2025 15:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370347; cv=none; b=UW1HERuIfIQY2kiCI3fEOO80ngyVq1NLmjLzm5aXRvPzhsmYsqa9LukAuFhLt/75zoJqiMuD4Wfox4lBpR9KgUDu/4Uwpxpzr3cNvbn/YFsB8BWmRpFU1ThfLwonsKk0pD4tUPvJfYOWnFjnVxqnIAJ7PRQlz+NGK05HgwbmRck=
+	t=1760370349; cv=none; b=hBIEHiwWvqL9f4mmJewYLid5X5rNSVMJYsSEKSTqvLsctFA9YBkGgK+nmSh+agZxi0JTzGv/uJn9lhlteisipKA/vkfftkP5IzOLfifcUo6GeqMiGc/htxR+xRThsy15YEX8aSueppFW7xQVY35Z/CChummEv3t0Q+8utM9f384=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370347; c=relaxed/simple;
-	bh=dCFV6INbMVKpq/jOc/gimzOj2HOlcFXzyvMi/YsdvPY=;
+	s=arc-20240116; t=1760370349; c=relaxed/simple;
+	bh=GCwGDO1GjTzGDcZkE7WuoHZyHnOcIHbhuZwuTEAaOXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+FurHFPA7K512deCfL1wKCRtfQQQBaFZ+ZMr4fOYL1gnxo4d+8xTmJqMjsuKR9jGWHafQ29CO7N0s2vHeFr/t266DeSo0tH5QK4sGHgeaBshOLHwsW4tjbHeYzMckKu8ZtGRlmwRJGxCftiHbDIdwJJOMiy0f4Eec4g6mc16wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyQtYVdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BiQoeUTQo0krDFj2C3gBMoCa1xxS/6QjKFEiQNHIgyZ34neRqhX5wizjlBdkfMBQOLREe/0jPzFVKxaZQAX2fiZQMUSITLTIVNeovIjEJHqrIQ+7zLHGNYkW0cX6lVDvEfhE6avh4jtCJSjPUuppuCauZEiqJ78pEji9248dmss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ej4qpU4a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyQtYVdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6820BC4CEE7;
-	Mon, 13 Oct 2025 15:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ej4qpU4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4113FC4CEE7;
+	Mon, 13 Oct 2025 15:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370346;
-	bh=dCFV6INbMVKpq/jOc/gimzOj2HOlcFXzyvMi/YsdvPY=;
+	s=korg; t=1760370349;
+	bh=GCwGDO1GjTzGDcZkE7WuoHZyHnOcIHbhuZwuTEAaOXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NyQtYVdL+VhIMN+/qUfkWdhWT2l5YEkW2Ap/tjnefwJhYiX+IDx6AC8HDhlMuTF61
-	 0WIFablQiBsduXkDNrNrGm1xLP98WbTZDw9fXqtAeY5iY9rnFsaDpMxvoSgnw0aIfk
-	 419Ffy5Yt4lJ+i843wm5/tktoEZF6g28ZDfBdx+8=
+	b=Ej4qpU4aoKG6w0feSMDFhiaKQl6H/6yza6u1MA8pYtEG1HLpm14v5ZTEufOmNrK1t
+	 0sDnPYq45w2JE9cIRP0UTLeCfjeVx7MPoCKZpZ4JRJEmt0gJRgkMkBPLzzsRDN85qb
+	 ipXBOEhNs4C6jmetj6jEpaseo8C9QpzpuLqtd1Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.17 557/563] net/9p: Fix buffer overflow in USB transport layer
-Date: Mon, 13 Oct 2025 16:46:58 +0200
-Message-ID: <20251013144431.481396891@linuxfoundation.org>
+	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.17 558/563] net: usb: asix: hold PM usage ref to avoid PM/MDIO + RTNL deadlock
+Date: Mon, 13 Oct 2025 16:46:59 +0200
+Message-ID: <20251013144431.517687559@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -44,76 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit c04db81cd0288dfc68b7a0f7d09bd49b40bba451 upstream.
+commit 3d3c4cd5c62f24bb3cb4511b7a95df707635e00a upstream.
 
-A buffer overflow vulnerability exists in the USB 9pfs transport layer
-where inconsistent size validation between packet header parsing and
-actual data copying allows a malicious USB host to overflow heap buffers.
+Prevent USB runtime PM (autosuspend) for AX88772* in bind.
 
-The issue occurs because:
-- usb9pfs_rx_header() validates only the declared size in packet header
-- usb9pfs_rx_complete() uses req->actual (actual received bytes) for
-memcpy
+usbnet enables runtime PM (autosuspend) by default, so disabling it via
+the usb_driver flag is ineffective. On AX88772B, autosuspend shows no
+measurable power saving with current driver (no link partner, admin
+up/down). The ~0.453 W -> ~0.248 W drop on v6.1 comes from phylib powering
+the PHY off on admin-down, not from USB autosuspend.
 
-This allows an attacker to craft packets with small declared size
-(bypassing validation) but large actual payload (triggering overflow
-in memcpy).
+The real hazard is that with runtime PM enabled, ndo_open() (under RTNL)
+may synchronously trigger autoresume (usb_autopm_get_interface()) into
+asix_resume() while the USB PM lock is held. Resume paths then invoke
+phylink/phylib and MDIO, which also expect RTNL, leading to possible
+deadlocks or PM lock vs MDIO wake issues.
 
-Add validation in usb9pfs_rx_complete() to ensure req->actual does not
-exceed the buffer capacity before copying data.
+To avoid this, keep the device runtime-PM active by taking a usage
+reference in ax88772_bind() and dropping it in unbind(). A non-zero PM
+usage count blocks runtime suspend regardless of userspace policy
+(.../power/control - pm_runtime_allow/forbid), making this approach
+robust against sysfs overrides.
 
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Closes: https://lkml.kernel.org/r/20250616132539.63434-1-danisjiang@gmail.com
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Holding a runtime-PM usage ref does not affect system-wide suspend;
+system sleep/resume callbacks continue to run as before.
+
+Fixes: 4a2c7217cd5a ("net: usb: asix: ax88772: manage PHY PM from MAC")
+Reported-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Closes: https://lore.kernel.org/all/DCGHG5UJT9G3.2K1GHFZ3H87T0@gmail.com
+Tested-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com
 Cc: stable@vger.kernel.org
-Message-ID: <20250622-9p-usb_overflow-v3-1-ab172691b946@codewreck.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20251005081203.3067982-1-o.rempel@pengutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_usbg.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/usb/asix_devices.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -231,6 +231,8 @@ static void usb9pfs_rx_complete(struct u
- 	struct f_usb9pfs *usb9pfs = ep->driver_data;
- 	struct usb_composite_dev *cdev = usb9pfs->function.config->cdev;
- 	struct p9_req_t *p9_rx_req;
-+	unsigned int req_size = req->actual;
-+	int status = REQ_STATUS_RCVD;
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -625,6 +625,21 @@ static void ax88772_suspend(struct usbne
+ 		   asix_read_medium_status(dev, 1));
+ }
  
- 	if (req->status) {
- 		dev_err(&cdev->gadget->dev, "%s usb9pfs complete --> %d, %d/%d\n",
-@@ -242,11 +244,19 @@ static void usb9pfs_rx_complete(struct u
- 	if (!p9_rx_req)
- 		return;
++/* Notes on PM callbacks and locking context:
++ *
++ * - asix_suspend()/asix_resume() are invoked for both runtime PM and
++ *   system-wide suspend/resume. For struct usb_driver the ->resume()
++ *   callback does not receive pm_message_t, so the resume type cannot
++ *   be distinguished here.
++ *
++ * - The MAC driver must hold RTNL when calling phylink interfaces such as
++ *   phylink_suspend()/resume(). Those calls will also perform MDIO I/O.
++ *
++ * - Taking RTNL and doing MDIO from a runtime-PM resume callback (while
++ *   the USB PM lock is held) is fragile. Since autosuspend brings no
++ *   measurable power saving here, we block it by holding a PM usage
++ *   reference in ax88772_bind().
++ */
+ static int asix_suspend(struct usb_interface *intf, pm_message_t message)
+ {
+ 	struct usbnet *dev = usb_get_intfdata(intf);
+@@ -919,6 +934,13 @@ static int ax88772_bind(struct usbnet *d
+ 	if (ret)
+ 		goto initphy_err;
  
--	memcpy(p9_rx_req->rc.sdata, req->buf, req->actual);
-+	if (req_size > p9_rx_req->rc.capacity) {
-+		dev_err(&cdev->gadget->dev,
-+			"%s received data size %u exceeds buffer capacity %zu\n",
-+			ep->name, req_size, p9_rx_req->rc.capacity);
-+		req_size = 0;
-+		status = REQ_STATUS_ERROR;
-+	}
++	/* Keep this interface runtime-PM active by taking a usage ref.
++	 * Prevents runtime suspend while bound and avoids resume paths
++	 * that could deadlock (autoresume under RTNL while USB PM lock
++	 * is held, phylink/MDIO wants RTNL).
++	 */
++	pm_runtime_get_noresume(&intf->dev);
 +
-+	memcpy(p9_rx_req->rc.sdata, req->buf, req_size);
+ 	return 0;
  
--	p9_rx_req->rc.size = req->actual;
-+	p9_rx_req->rc.size = req_size;
+ initphy_err:
+@@ -948,6 +970,8 @@ static void ax88772_unbind(struct usbnet
+ 	phylink_destroy(priv->phylink);
+ 	ax88772_mdio_unregister(priv);
+ 	asix_rx_fixup_common_free(dev->driver_priv);
++	/* Drop the PM usage ref taken in bind() */
++	pm_runtime_put(&intf->dev);
+ }
  
--	p9_client_cb(usb9pfs->client, p9_rx_req, REQ_STATUS_RCVD);
-+	p9_client_cb(usb9pfs->client, p9_rx_req, status);
- 	p9_req_put(usb9pfs->client, p9_rx_req);
- 
- 	complete(&usb9pfs->received);
+ static void ax88178_unbind(struct usbnet *dev, struct usb_interface *intf)
+@@ -1600,6 +1624,11 @@ static struct usb_driver asix_driver = {
+ 	.resume =	asix_resume,
+ 	.reset_resume =	asix_resume,
+ 	.disconnect =	usbnet_disconnect,
++	/* usbnet enables autosuspend by default (supports_autosuspend=1).
++	 * We keep runtime-PM active for AX88772* by taking a PM usage
++	 * reference in ax88772_bind() (pm_runtime_get_noresume()) and
++	 * dropping it in unbind(), which effectively blocks autosuspend.
++	 */
+ 	.supports_autosuspend = 1,
+ 	.disable_hub_initiated_lpm = 1,
+ };
 
 
