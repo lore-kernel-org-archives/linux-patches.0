@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39BE31A805;
-	Mon, 13 Oct 2025 15:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBF727464F;
+	Mon, 13 Oct 2025 15:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369330; cv=none; b=R4k5XzLQbB7kmDvofJynMhTvjYWaSRXpZNDONGZR7EP3lsBObmeHdQXTnb1kXD3haJ1B7yASNdu6nCNMPctk9p1qF6CEUpHJ5XilsihpfgbPJre2uuNQN3rbzkmvSzJ+26jRqY1DjxgHuJtlgv5abMUnpTit685F5aWcauOSt7A=
+	t=1760369333; cv=none; b=gxNLnErVe15Xc2iKTTPqyJuTxjxKi4U/lfp8zE4arzajV5WQvjc4K3J+7Hc0wT0bqhisfyNCCbFmQNUBKKiBn9GsKGDo4kFTfZ1MBcNvB8/ZSt39XQ2jnkavn9q8hHMD2F/emm9xw/hRcuHgt8vTFVv1kWANBiIaVvggzrBw0c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369330; c=relaxed/simple;
-	bh=5zZwYoh/NuQkij9+yefiYZAfwJJW7obrLAZ4chrPKwc=;
+	s=arc-20240116; t=1760369333; c=relaxed/simple;
+	bh=7C52uuAFIXtoyyPj4P4T9Wh3n5YZTnVYHqU6HMylkrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzOeUo7EfkBb60EOJBCA6yKGjVuA8lISrKLQa/gNuFekpH7eLnqf/4id6pj6g4XtSuFR9o46I/yQj6FDbh8Ec2Tq70+Dlb8ZUAqp2fhqRhB26rii/wmuSXC57MROqRtgk+Jy5gfvCRcSFlmlMSTZOVUwLRYeat56wmBzjSeOR6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbGiNPXu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9ECTOLD4mGyEGuDMyFJjgij/4XnZmaYJzejw9jgxYGyOVXl7uuCMJrsI1xmvxWA21DUfMgah08yiL8gSXbUq+gXJ2QOgX6pLU1KwEIWevuQj9OZ2/lO7aslnBlOUE7kFxzzbfN+jgnbGQZoti/wgFd7p7gfYDTvPBoOUEkeKoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WO8fPBBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbGiNPXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF745C4CEFE;
-	Mon, 13 Oct 2025 15:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WO8fPBBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6D9C4CEE7;
+	Mon, 13 Oct 2025 15:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369330;
-	bh=5zZwYoh/NuQkij9+yefiYZAfwJJW7obrLAZ4chrPKwc=;
+	s=korg; t=1760369333;
+	bh=7C52uuAFIXtoyyPj4P4T9Wh3n5YZTnVYHqU6HMylkrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbGiNPXufKPjJHqHGhI9QQlb8HCKUI0l9EA7R6iuWExSXdpm4QtjwFCLBaaMFb/7+
-	 k8Im+f6pnrDrx53+c2ZdO35+GCSLUhIR0TM7uic8IHkgKMSwXr0UUki4GIo9Zx9RMw
-	 /yqsl+XTzdRpvuaj5R2fyRuxrjJBpSMfm6KD3c3g=
+	b=WO8fPBBFWvDRNiegC+Ttpy1H2pzYcfKhnXx1zJOls4TUCRq1kutnyjjDIIy1wOV8D
+	 xMvcyx0SjYdTo94G13S8F/lV7AkK4gDU8w7V4c1wkQ8fGhFgobfRbkBcg/k3g7Z/Fe
+	 yYKN+g297ckNBoAavdLlEa4YZ+es7ymCutzxJ5Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jorge Marques <jorge.marques@analog.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 209/563] i3c: fix big-endian FIFO transfers
-Date: Mon, 13 Oct 2025 16:41:10 +0200
-Message-ID: <20251013144418.857494703@linuxfoundation.org>
+Subject: [PATCH 6.17 210/563] mfd: max77705: Setup the core driver as an interrupt controller
+Date: Mon, 13 Oct 2025 16:41:11 +0200
+Message-ID: <20251013144418.892662080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,71 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-[ Upstream commit d6ddd9beb1a5c32acb9b80f5c2cd8b17f41371d1 ]
+[ Upstream commit 605c9820e44de2da7d67acf66484136561da63a2 ]
 
-Short MMIO transfers that are not a multiple of four bytes in size need
-a special case for the final bytes, however the existing implementation
-is not endian-safe and introduces an incorrect byteswap on big-endian
-kernels.
+Current implementation describes only MFD's own topsys interrupts.
+However, max77705 has a register which indicates interrupt source, i.e.
+it acts as an interrupt controller. There's 4 interrupt sources in
+max77705: topsys, charger, fuelgauge, usb type-c manager.
 
-This usually does not cause problems because most systems are
-little-endian and most transfers are multiple of four bytes long, but
-still needs to be fixed to avoid the extra byteswap.
+Setup max77705 MFD parent as an interrupt controller. Delete topsys
+interrupts because currently unused.
 
-Change the special case for both i3c_writel_fifo() and i3c_readl_fifo()
-to use non-byteswapping writesl() and readsl() with a single element
-instead of the byteswapping writel()/readl() that are meant for individual
-MMIO registers. As data is copied between a FIFO and a memory buffer,
-the writesl()/readsl() loops are typically based on __raw_readl()/
-__raw_writel(), resulting in the order of bytes in the FIFO to match
-the order in the buffer, regardless of the CPU endianess.
+Remove shared interrupt flag, because we're are an interrupt controller
+now, and subdevices should request interrupts from us.
 
-The earlier versions in the dw-i3c and i3c-master-cdns had a correct
-implementation, but the generic version that was recently added broke it.
+Fixes: c8d50f029748 ("mfd: Add new driver for MAX77705 PMIC")
 
-Fixes: 733b439375b4 ("i3c: master: Add inline i3c_readl_fifo() and i3c_writel_fifo()")
-Cc: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Jorge Marques <jorge.marques@analog.com>
-Link: https://lore.kernel.org/r/20250924201837.3691486-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Link: https://lore.kernel.org/r/20250909-max77705-fix_interrupt_handling-v3-1-233c5a1a20b5@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/internals.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/mfd/max77705.c | 35 ++++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
-index 0d857cc68cc5d..79ceaa5f5afd6 100644
---- a/drivers/i3c/internals.h
-+++ b/drivers/i3c/internals.h
-@@ -38,7 +38,11 @@ static inline void i3c_writel_fifo(void __iomem *addr, const void *buf,
- 		u32 tmp = 0;
+diff --git a/drivers/mfd/max77705.c b/drivers/mfd/max77705.c
+index ff07d0e0d5f8e..e1a9bfd658560 100644
+--- a/drivers/mfd/max77705.c
++++ b/drivers/mfd/max77705.c
+@@ -61,21 +61,21 @@ static const struct regmap_config max77705_regmap_config = {
+ 	.max_register = MAX77705_PMIC_REG_USBC_RESET,
+ };
  
- 		memcpy(&tmp, buf + (nbytes & ~3), nbytes & 3);
--		writel(tmp, addr);
-+		/*
-+		 * writesl() instead of writel() to keep FIFO
-+		 * byteorder on big-endian targets
-+		 */
-+		writesl(addr, &tmp, 1);
- 	}
- }
+-static const struct regmap_irq max77705_topsys_irqs[] = {
+-	{ .mask = MAX77705_SYSTEM_IRQ_BSTEN_INT, },
+-	{ .mask = MAX77705_SYSTEM_IRQ_SYSUVLO_INT, },
+-	{ .mask = MAX77705_SYSTEM_IRQ_SYSOVLO_INT, },
+-	{ .mask = MAX77705_SYSTEM_IRQ_TSHDN_INT, },
+-	{ .mask = MAX77705_SYSTEM_IRQ_TM_INT, },
++static const struct regmap_irq max77705_irqs[] = {
++	{ .mask = MAX77705_SRC_IRQ_CHG, },
++	{ .mask = MAX77705_SRC_IRQ_TOP, },
++	{ .mask = MAX77705_SRC_IRQ_FG, },
++	{ .mask = MAX77705_SRC_IRQ_USBC, },
+ };
  
-@@ -55,7 +59,11 @@ static inline void i3c_readl_fifo(const void __iomem *addr, void *buf,
- 	if (nbytes & 3) {
- 		u32 tmp;
+-static const struct regmap_irq_chip max77705_topsys_irq_chip = {
+-	.name		= "max77705-topsys",
+-	.status_base	= MAX77705_PMIC_REG_SYSTEM_INT,
+-	.mask_base	= MAX77705_PMIC_REG_SYSTEM_INT_MASK,
++static const struct regmap_irq_chip max77705_irq_chip = {
++	.name		= "max77705",
++	.status_base	= MAX77705_PMIC_REG_INTSRC,
++	.ack_base	= MAX77705_PMIC_REG_INTSRC,
++	.mask_base	= MAX77705_PMIC_REG_INTSRC_MASK,
+ 	.num_regs	= 1,
+-	.irqs		= max77705_topsys_irqs,
+-	.num_irqs	= ARRAY_SIZE(max77705_topsys_irqs),
++	.irqs		= max77705_irqs,
++	.num_irqs	= ARRAY_SIZE(max77705_irqs),
+ };
  
--		tmp = readl(addr);
-+		/*
-+		 * readsl() instead of readl() to keep FIFO
-+		 * byteorder on big-endian targets
-+		 */
-+		readsl(addr, &tmp, 1);
- 		memcpy(buf + (nbytes & ~3), &tmp, nbytes & 3);
- 	}
- }
+ static int max77705_i2c_probe(struct i2c_client *i2c)
+@@ -113,19 +113,12 @@ static int max77705_i2c_probe(struct i2c_client *i2c)
+ 
+ 	ret = devm_regmap_add_irq_chip(dev, max77705->regmap,
+ 					i2c->irq,
+-					IRQF_ONESHOT | IRQF_SHARED, 0,
+-					&max77705_topsys_irq_chip,
++					IRQF_ONESHOT, 0,
++					&max77705_irq_chip,
+ 					&irq_data);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to add IRQ chip\n");
+ 
+-	/* Unmask interrupts from all blocks in interrupt source register */
+-	ret = regmap_update_bits(max77705->regmap,
+-				 MAX77705_PMIC_REG_INTSRC_MASK,
+-				 MAX77705_SRC_IRQ_ALL, (unsigned int)~MAX77705_SRC_IRQ_ALL);
+-	if (ret < 0)
+-		return dev_err_probe(dev, ret, "Could not unmask interrupts in INTSRC\n");
+-
+ 	domain = regmap_irq_get_domain(irq_data);
+ 
+ 	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
 -- 
 2.51.0
 
