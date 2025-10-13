@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F8930EF87
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 22:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8117130F523
+	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 22:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760394862; cv=none; b=GenpT2pggZhA6wpUg0sn28Ctev2C2X+LYwpYu7m7l/u10z00RGqFNe5hXEcUB0/ZbMoc1cD5bQ9O5hx6hUF4V9yrTVUxawi6ikz0SBqk04quNC6p5GdztdNmDejaL3p6/nCOPDdidIP9yIlKbFjS4TRfZoh702XDKk59tRI/r08=
+	t=1760394863; cv=none; b=f4xSLkvBThbLCWVDwx4gxtM1LboauImjgAJdWWdcKXgYn+U7ILrzFe0b6jWXo1NMxCa+J9id3zsf7A431o3zTVSNoz2ZuoBwaxRaQerxigyUMFmsfXeyo6LpnFAx2mfSK35+wAEwWagrnNp4Tw4NDvV/+EcdFv/6CPMIwc2sE3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760394862; c=relaxed/simple;
-	bh=30XH7Z/Zz5NjCV5G3ZhrejvVkWxbn154b/BrJEoERCk=;
+	s=arc-20240116; t=1760394863; c=relaxed/simple;
+	bh=3RWvTnQSEkux+jTameRPS1qJv6hGBV+LzBX5eUtRyXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DY7l32qAnVzUjcMqSvvwL0Uu1xuJs+4LIvdhRdGNR1iA2QqHMgHGkaGcyvROZ5VnMPeFW0+lj+qSBCWe/lLGvoXJhYVZZc4nlYD0dpVV1/IR8UQcMB+al8ATnXrsFEN1UTBv9kzCS1/TP/sqrq1F0t2oxOVCArV9lEkzz6C+lxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ijkD6xqv; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=PgwcKTp81trka8hidj6V42Ob7idS8p8QaDZkwFcTdjTHnpf9LTA7rGS58nl0xrpJqA/inE4+B9lIakxJBXwD0RtA9Ntqe+18RRsAuUknBds25IMOQLb6Lgx4Etef54Dyc5qC/6qQ3H7ixdhMSH67hp+ACnlgVBHfY2pZBwaXtnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CbZORJTl; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ijkD6xqv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CbZORJTl"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1760394860; x=1791930860;
+  t=1760394861; x=1791930861;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=30XH7Z/Zz5NjCV5G3ZhrejvVkWxbn154b/BrJEoERCk=;
-  b=ijkD6xqvK3s5DfYL2UCxzZpi+NSHCpZuwhFLgn4KerVup6Y/Jq4jK8Tx
-   r9kZmstq26Fhd5ZPU0uu5rWMCoT4Q6YASHlGXUQYeDnnnPYiswMxgq8sA
-   a+UFAzIdwMNIN3JcvnpstR9D0FpXOVdMUHxg+BVNyCYeWuCYM3yHsKfgb
-   qbPtlQFi+6cKFP8eLbAc9pmuFZdcUrY1N1cbq0MBf4LsAHnhApk6EHJ2A
-   2fUyIsuOHeb+iN13OfucV3HtWGCfjQDxJIf5vhzwTw6x4JH2xL1eGNwLy
-   3fb2LMq3xkXI98rNN3gm9sdx5uh4wc5I4Ioa8ts2j9xKQozK4F9+/Anpc
-   Q==;
-X-CSE-ConnectionGUID: eXhTO4UgRSOZeiFrhYb1MQ==
-X-CSE-MsgGUID: EACpfFlqS3S3+1dgI59BSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="85168952"
+  bh=3RWvTnQSEkux+jTameRPS1qJv6hGBV+LzBX5eUtRyXE=;
+  b=CbZORJTlnc0ldfuQ1D6HZ3RgRZ44DHo2qWf6dJU0Y9sopEPaP43tIofa
+   TGCifuTdsSHXhiruDr0PqavSNjZzS6WnEa0SxHJ2PB2XHxeO79Z73OzHq
+   fO4gD0Vden7OMiJcP/JtHGriAK93Noph3xVwFh3eqpuwUxjiuRFtxULsU
+   y0tRx25XiTNd6CAfbOtpAM7dBGnmPwkkPrKk5fhBo+YFX1xrL1VmfPeXg
+   bVneuNNvm4dJGhd5nedliSJPATCJHCcBCFr/7WKCBq2UDame/veNjH9ee
+   nA1v6e+kBHsaTWy/sA0HcYJdGJyDvLiLDyWoSvUJ+hIm20aH9I4aNbOLX
+   w==;
+X-CSE-ConnectionGUID: W7UYyvs7TtGTDsC98KF+pg==
+X-CSE-MsgGUID: syqMxgd2QJmE7+WEp58GAg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="85168973"
 X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="85168952"
+   d="scan'208";a="85168973"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:04 -0700
-X-CSE-ConnectionGUID: WP2MIzcmQfCtz2t+YAFWdg==
-X-CSE-MsgGUID: qIhNLSXEQvO4djOJNlYLZw==
+X-CSE-ConnectionGUID: anHY2+bURe6Xzfg7m7P5VQ==
+X-CSE-MsgGUID: 1G8zSumoR7qD3Y1SJvLmbw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="182145335"
+   d="scan'208";a="182145348"
 Received: from sramkris-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.79])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:03 -0700
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:04 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 27/31] fs/resctrl: Move RMID initialization to first mount
-Date: Mon, 13 Oct 2025 15:33:41 -0700
-Message-ID: <20251013223348.103390-28-tony.luck@intel.com>
+Subject: [PATCH v12 31/31] x86,fs/resctrl: Update documentation for telemetry events
+Date: Mon, 13 Oct 2025 15:33:45 -0700
+Message-ID: <20251013223348.103390-32-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013223348.103390-1-tony.luck@intel.com>
 References: <20251013223348.103390-1-tony.luck@intel.com>
@@ -71,175 +71,152 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-L3 monitor features are enumerated during resctrl initialization
-and rmid_ptrs[] that tracks all RMIDs and depends on the
-number of supported RMIDs is allocated during this time.
-
-Telemetry monitor features are enumerated during first resctrl mount and
-may support a different number of RMIDs compared to L3 monitor features.
-
-Delay allocation and initialization of rmid_ptrs[] until first mount.
-Since the number of RMIDs cannot change on later mounts, keep the same
-set of rmid_ptrs[] until resctrl_exit(). This is required because the
-limbo handler keeps running after resctrl is unmounted and may likely
-need to access rmid_ptrs[] as it keeps tracking busy RMIDs after unmount.
-
-Rename routines to match what they now do:
-dom_data_init() -> setup_rmid_lru_list()
-dom_data_exit() -> free_rmid_lru_list()
+Update resctrl filesystem documentation with the details about the
+resctrl files that support telemetry events.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- fs/resctrl/internal.h |  4 ++++
- fs/resctrl/monitor.c  | 54 ++++++++++++++++++++-----------------------
- fs/resctrl/rdtgroup.c |  5 ++++
- 3 files changed, 34 insertions(+), 29 deletions(-)
+ Documentation/filesystems/resctrl.rst | 102 +++++++++++++++++++++++---
+ 1 file changed, 90 insertions(+), 12 deletions(-)
 
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 46fd648a2961..0dd89d3fa31a 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -369,6 +369,10 @@ int closids_supported(void);
+diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
+index b7f35b07876a..5e4a5d4bbe9b 100644
+--- a/Documentation/filesystems/resctrl.rst
++++ b/Documentation/filesystems/resctrl.rst
+@@ -168,13 +168,12 @@ with respect to allocation:
+ 			bandwidth percentages are directly applied to
+ 			the threads running on the core
  
- void closid_free(int closid);
+-If RDT monitoring is available there will be an "L3_MON" directory
++If L3 monitoring is available there will be an "L3_MON" directory
+ with the following files:
  
-+int setup_rmid_lru_list(void);
+ "num_rmids":
+-		The number of RMIDs available. This is the
+-		upper bound for how many "CTRL_MON" + "MON"
+-		groups can be created.
++		The number of RMIDs supported by hardware for
++		L3 monitoring events.
+ 
+ "mon_features":
+ 		Lists the monitoring events if
+@@ -400,6 +399,24 @@ with the following files:
+ 		bytes) at which a previously used LLC_occupancy
+ 		counter can be considered for re-use.
+ 
++If telemetry monitoring is available there will be an "PERF_PKG_MON" directory
++with the following files:
 +
-+void free_rmid_lru_list(void);
++"num_rmids":
++		The number of RMIDs for telemetry monitoring events. By default,
++		resctrl will not enable telemetry events of a particular type
++		("perf" or "energy") if the number of RMIDs supported is lower
++		than the number of RMIDs supported by the system. The user can
++		force-enable each type of telemetry events with the "rdt=" boot
++		command line option, but this will reduce the number of "MON"
++		groups that can be created.
 +
- int alloc_rmid(u32 closid);
- 
- void free_rmid(u32 closid, u32 rmid);
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 2782e2e212f6..66157f650d10 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -907,20 +907,29 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
- 		schedule_delayed_work_on(cpu, &dom->mbm_over, delay);
- }
- 
--static int dom_data_init(struct rdt_resource *r)
-+int setup_rmid_lru_list(void)
- {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	struct rmid_entry *entry = NULL;
--	int err = 0, i;
-+	u32 idx_limit;
- 	u32 idx;
-+	int i;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!resctrl_arch_mon_capable())
-+		return 0;
- 
-+	/*
-+	 * Called on every mount, but the number of RMIDs cannot change
-+	 * after the first mount, so keep using the same set of rmid_ptrs[]
-+	 * until resctrl_exit(). Note that the limbo handler continues to
-+	 * access rmid_ptrs[] after resctrl is unmounted.
-+	 */
-+	if (rmid_ptrs)
-+		return 0;
++"mon_features":
++		Lists the telemetry monitoring events that are enabled on this system.
 +
-+	idx_limit = resctrl_arch_system_num_rmid_idx();
- 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
--	if (!rmid_ptrs) {
--		err = -ENOMEM;
--		goto out_unlock;
--	}
-+	if (!rmid_ptrs)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < idx_limit; i++) {
- 		entry = &rmid_ptrs[i];
-@@ -933,30 +942,24 @@ static int dom_data_init(struct rdt_resource *r)
- 	/*
- 	 * RESCTRL_RESERVED_CLOSID and RESCTRL_RESERVED_RMID are special and
- 	 * are always allocated. These are used for the rdtgroup_default
--	 * control group, which will be setup later in resctrl_init().
-+	 * control group, which was setup earlier in rdtgroup_setup_default().
- 	 */
- 	idx = resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
- 					   RESCTRL_RESERVED_RMID);
- 	entry = __rmid_entry(idx);
- 	list_del(&entry->list);
- 
--out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--
--	return err;
-+	return 0;
- }
- 
--static void dom_data_exit(struct rdt_resource *r)
-+void free_rmid_lru_list(void)
- {
--	mutex_lock(&rdtgroup_mutex);
--
--	if (!r->mon_capable)
--		goto out_unlock;
-+	if (!resctrl_arch_mon_capable())
-+		return;
- 
-+	mutex_lock(&rdtgroup_mutex);
- 	kfree(rmid_ptrs);
- 	rmid_ptrs = NULL;
--
--out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
-@@ -1830,7 +1833,8 @@ static void closid_num_dirty_rmid_free(void)
-  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
-  *
-  * Allocate and initialise global monitor resources that do not belong to a
-- * specific domain. i.e. the rmid_ptrs[] used for the limbo and free lists.
-+ * specific domain. i.e. the closid_num_dirty_rmid[] used to find the CLOSID
-+ * with the cleanest set of RMIDs.
-  * Called once during boot after the struct rdt_resource's have been configured
-  * but before the filesystem is mounted.
-  * Resctrl's cpuhp callbacks may be called before this point to bring a domain
-@@ -1850,12 +1854,6 @@ int resctrl_l3_mon_resource_init(void)
- 	if (ret)
- 		return ret;
- 
--	ret = dom_data_init(r);
--	if (ret) {
--		closid_num_dirty_rmid_free();
--		return ret;
--	}
--
- 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
- 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
- 		resctrl_file_fflags_init("mbm_total_bytes_config",
-@@ -1904,6 +1902,4 @@ void resctrl_l3_mon_resource_exit(void)
- 		return;
- 
- 	closid_num_dirty_rmid_free();
--
--	dom_data_exit(r);
- }
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index c94536382316..c1c02b5bf5d7 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2734,6 +2734,10 @@ static int rdt_get_tree(struct fs_context *fc)
- 		goto out;
- 	}
- 
-+	ret = setup_rmid_lru_list();
-+	if (ret)
-+		goto out;
++The upper bound for how many "CTRL_MON" + "MON" can be created
++is the smaller of the L3_MON and PERF_PKG_MON "num_rmids" values.
 +
- 	ret = rdtgroup_setup_root(ctx);
- 	if (ret)
- 		goto out;
-@@ -4596,4 +4600,5 @@ void resctrl_exit(void)
- 	 */
+ Finally, in the top level of the "info" directory there is a file
+ named "last_cmd_status". This is reset with every "command" issued
+ via the file system (making new directories or writing to any of the
+@@ -505,15 +522,40 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
- 	resctrl_l3_mon_resource_exit();
-+	free_rmid_lru_list();
- }
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
+-	directories have one file per event (e.g. "llc_occupancy",
+-	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+-	files provide a read out of the current value of the event for
+-	all tasks in the group. In CTRL_MON groups these files provide
+-	the sum for all tasks in the CTRL_MON group and all tasks in
++	This contains directories for each monitor domain.
++
++	If L3 monitoring is enabled, there will be a "mon_L3_XX" directory for
++	each instance of an L3 cache. Each directory contains files for the enabled
++	L3 events (e.g. "llc_occupancy", "mbm_total_bytes", and "mbm_local_bytes").
++
++	If telemetry monitoring is enabled, there will be a "mon_PERF_PKG_YY"
++	directory for each physical processor package. Each directory contains
++	files for the enabled telemetry events (e.g. "core_energy". "activity",
++	"uops_retired", etc.)
++
++	The info/`*`/mon_features files provide the full list of enabled
++	event/file names.
++
++	"core energy" reports a floating point number for the energy (in Joules)
++	consumed by cores (registers, arithmetic units, TLB and L1/L2 caches)
++	during execution of instructions summed across all logical CPUs on a
++	package for the current RMID.
++
++	"activity" also reports a floating point value (in Farads).  This provides
++	an estimate of work done independent of the frequency that the CPUs used
++	for execution.
++
++	Note that "core energy" and "activity" only measure energy/activity in the
++	"core" of the CPU (arithmetic units, TLB, L1 and L2 caches, etc.). They
++	do not include L3 cache, memory, I/O devices etc.
++
++	All other events report decimal integer values.
++
++	In a MON group these files provide a read out of the current value of
++	the event for all tasks in the group. In CTRL_MON groups these files
++	provide the sum for all tasks in the CTRL_MON group and all tasks in
+ 	MON groups. Please see example section for more details on usage.
++
+ 	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
+ 	directories for each node (located within the "mon_L3_XX" directory
+ 	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
+@@ -1506,6 +1548,42 @@ Example with C::
+     resctrl_release_lock(fd);
+   }
+ 
++Debugfs
++=======
++In addition to the use of debugfs for tracing of pseudo-locking performance,
++architecture code may create debugfs directories associated with monitoring
++features for a specific resource.
++
++The full pathname for these is in the form:
++
++    /sys/kernel/debug/resctrl/info/{resource_name}_MON/{arch}/
++
++The presence, names, and format of these files may vary between architectures
++even if the same resource is present.
++
++PERF_PKG_MON/x86_64
++-------------------
++Three files are present per telemetry aggregator instance that show status.
++The prefix of each file name describes the type ("energy" or "perf") which
++processor package it belongs to, and the instance number of the aggregator.
++For example: "energy_pkg1_agg2".
++
++The suffix describes which data is reported in the file and
++is one of:
++
++data_loss_count:
++	This counts the number of times that this aggregator
++	failed to accumulate a counter value supplied by a CPU.
++
++data_loss_timestamp:
++	This is a "timestamp" from a free running 25MHz uncore
++	timer indicating when the most recent data loss occurred.
++
++last_update_timestamp:
++	Another 25MHz timestamp indicating when the
++	most recent counter update was successfully applied.
++
++
+ Examples for RDT Monitoring along with allocation usage
+ =======================================================
+ Reading monitored data
 -- 
 2.51.0
 
