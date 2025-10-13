@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4164D257828;
-	Mon, 13 Oct 2025 15:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C11130CDB4;
+	Mon, 13 Oct 2025 15:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368406; cv=none; b=jDhdJ+C4z62/CtS2b47GliupmECNRmICrf1TRkVz0E8qtr6jPAPWlb1sae2Wke31a+aRKJT2IIddqXvzPnqVE3U1xg57E6VKWuAchffUmOkHytvhpypZylJ/Qd4O6GMAe4cEa1MiUyua9JT2hg+ycuO3eDqGF3VNQhwymviK/Y8=
+	t=1760368409; cv=none; b=qOzlh9VMIo5OVENVK8bdZ+qEmm8exu/4UfYWRmg+V7AbFSjr3NcYq00GGKu+INOwivu3A9b166nulyC5Mwr1lXuzJ0ZBbsMluYiNU7AUaan1D/6eVXwa4hEOxHZifF9QborT25a7e3qTNiNW9ZiXfZk+REcpelVnqK+CC9vr91c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368406; c=relaxed/simple;
-	bh=cGada7c+6Rwi3TE2O4COZVEZdQlIO96zUCfZlbd6XBw=;
+	s=arc-20240116; t=1760368409; c=relaxed/simple;
+	bh=tz2l/Nz+5iCG4A2lNcJWezQ2BNNIfTJ3k83c/X8XT4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHoyE8wuDHN+hyxWTWdxp05ZMIazBw6ab3wmI0H5P2KDENNg4p8ZhXzSpDsSRv5NjT9xpYB6ly8VjEaLIgz4J+jJ9K1v4ewm4zpfuzWoj5JVe00dpgVexr4loa9JqQ5hpeIScIrVoGYzgXQaSYJa0Zm0R185Kt/in+c0kaAA71o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAez9C1l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Thj1CywLKlXYSdBl4R4gyT6XmzUSn84W4N/RkKwUCZpMLlGqc50MLUXOhR8juxVSwwuP7+JSermCb2Mnrc9tOKUaiBvsLSPCNIrro0TtBR8PLYo9E3+TBrv8IHIGSqc+FwKu50V3ASVPpjiHFjZxTm4sHCJ6toVZjQitPt4X+2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaAuGSJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAez9C1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E9C4CEE7;
-	Mon, 13 Oct 2025 15:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaAuGSJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8398AC4CEE7;
+	Mon, 13 Oct 2025 15:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368406;
-	bh=cGada7c+6Rwi3TE2O4COZVEZdQlIO96zUCfZlbd6XBw=;
+	s=korg; t=1760368408;
+	bh=tz2l/Nz+5iCG4A2lNcJWezQ2BNNIfTJ3k83c/X8XT4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAez9C1lqNMNfMDevqY5x6vM1T/OE8KfG1mUN/p8afizfXDjhmkv6Eu3SDd5y0I7D
-	 Fqoz3bNSvXUCeTAVkP8pl3IsD4Sv7T4KmIBUViy8pHIWJ1ATQYm0gai8XsDODiHpp5
-	 fivx0V2s5uonGh8WmaANW71EXsEMczfrkZJpoZ0o=
+	b=jaAuGSJ//fNQPpPLS50B8xsZ7nWzp8M66zlDptHyXOZwVM/8KAnaUZC07qaPeZfU/
+	 H2vPMa5iF0aHBJLQbUwxdA7ojaoIEz7hUwwj98dUfNYGUsRvhq4QHT7nf33S5xFils
+	 EMOeyXnBv3lGPiYuGpy6uEPNcbUkYhLiKvKxHor0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/262] f2fs: fix to update map->m_next_extent correctly in f2fs_map_blocks()
-Date: Mon, 13 Oct 2025 16:44:53 +0200
-Message-ID: <20251013144331.559093002@linuxfoundation.org>
+Subject: [PATCH 6.12 152/262] f2fs: fix to truncate first page in error path of f2fs_truncate()
+Date: Mon, 13 Oct 2025 16:44:54 +0200
+Message-ID: <20251013144331.594831134@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,52 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 869833f54e8306326b85ca3ed08979b7ad412a4a ]
+[ Upstream commit 9251a9e6e871cb03c4714a18efa8f5d4a8818450 ]
 
-Script to reproduce:
-mkfs.f2fs -O extra_attr,compression /dev/vdb -f
-mount /dev/vdb /mnt/f2fs -o mode=lfs,noextent_cache
-cd /mnt/f2fs
-f2fs_io write 1 0 1024 rand dsync testfile
-xfs_io testfile -c "fsync"
-f2fs_io write 1 0 512 rand dsync testfile
-xfs_io testfile -c "fsync"
-cd /
-umount /mnt/f2fs
-mount /dev/vdb /mnt/f2fs
-f2fs_io precache_extents /mnt/f2fs/testfile
-umount /mnt/f2fs
+syzbot reports a bug as below:
 
-Tracepoint output:
-f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 0, len = 512, blkaddr = 1055744, c_len = 0
-f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 513, len = 351, blkaddr = 17921, c_len = 0
-f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 864, len = 160, blkaddr = 18272, c_len = 0
+loop0: detected capacity change from 0 to 40427
+F2FS-fs (loop0): Wrong SSA boundary, start(3584) end(4096) blocks(3072)
+F2FS-fs (loop0): Can't find valid F2FS filesystem in 1th superblock
+F2FS-fs (loop0): invalid crc value
+F2FS-fs (loop0): f2fs_convert_inline_folio: corrupted inline inode ino=3, i_addr[0]:0x1601, run fsck to fix.
+------------[ cut here ]------------
+kernel BUG at fs/inode.c:753!
+RIP: 0010:clear_inode+0x169/0x190 fs/inode.c:753
+Call Trace:
+ <TASK>
+ evict+0x504/0x9c0 fs/inode.c:810
+ f2fs_fill_super+0x5612/0x6fa0 fs/f2fs/super.c:5047
+ get_tree_bdev_flags+0x40e/0x4d0 fs/super.c:1692
+ vfs_get_tree+0x8f/0x2b0 fs/super.c:1815
+ do_new_mount+0x2a2/0x9e0 fs/namespace.c:3808
+ do_mount fs/namespace.c:4136 [inline]
+ __do_sys_mount fs/namespace.c:4347 [inline]
+ __se_sys_mount+0x317/0x410 fs/namespace.c:4324
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-During precache_extents, there is off-by-one issue, we should update
-map->m_next_extent to pgofs rather than pgofs + 1, if last blkaddr is
-valid and not contiguous to previous extent.
+During f2fs_evict_inode(), clear_inode() detects that we missed to truncate
+all page cache before destorying inode, that is because in below path, we
+will create page #0 in cache, but missed to drop it in error path, let's fix
+it.
 
-Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+- evict
+ - f2fs_evict_inode
+  - f2fs_truncate
+   - f2fs_convert_inline_inode
+    - f2fs_grab_cache_folio
+    : create page #0 in cache
+    - f2fs_convert_inline_folio
+    : sanity check failed, return -EFSCORRUPTED
+  - clear_inode detects that inode->i_data.nrpages is not zero
+
+Fixes: 92dffd01790a ("f2fs: convert inline_data when i_size becomes large")
+Reported-by: syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/68c09802.050a0220.3c6139.000e.GAE@google.com
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/file.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index efc30626760a6..a008d70b9f5ec 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1786,7 +1786,7 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
- 				map->m_len - ofs);
- 		}
- 		if (map->m_next_extent)
--			*map->m_next_extent = pgofs + 1;
-+			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index fa77841f3e2cc..eb58d05284173 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -856,8 +856,16 @@ int f2fs_truncate(struct inode *inode)
+ 	/* we should check inline_data size */
+ 	if (!f2fs_may_inline_data(inode)) {
+ 		err = f2fs_convert_inline_inode(inode);
+-		if (err)
++		if (err) {
++			/*
++			 * Always truncate page #0 to avoid page cache
++			 * leak in evict() path.
++			 */
++			truncate_inode_pages_range(inode->i_mapping,
++					F2FS_BLK_TO_BYTES(0),
++					F2FS_BLK_END_BYTES(0));
+ 			return err;
++		}
  	}
- 	f2fs_put_dnode(&dn);
- unlock_out:
+ 
+ 	err = f2fs_truncate_blocks(inode, i_size_read(inode), true);
 -- 
 2.51.0
 
