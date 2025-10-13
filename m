@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DD82FE564;
-	Mon, 13 Oct 2025 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6E230B505;
+	Mon, 13 Oct 2025 15:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369555; cv=none; b=LbvLIKnmqtymGWOz93wrRenAUADPmE8ot91/fqu3fMm1TeRoVDhzpsTOMLJQ3Vp+NtO6J2atQTS4ZQ3EiGVMNTynxUASNFD11TKP1paFMhKoIAppbaYbQiNPRrMOLKvx98j8egygwHHwQD+O3CLH5TF8RO/9zkHN04I7T79o3sg=
+	t=1760369557; cv=none; b=aO7FNuVoqOPBdsMGrdohst8Bm/eYDiQ8JUISx+6bWrCGGW42GFvT1yDVJhkYKcZo1nohANZ5v/YT72ZdAcZLjg4xH6YYxaaY8zdRgvRi7dNaVZfBrYbonBKcLFcbfKJDsDRjTpHuymA98JUhkcx8Hd70DuO00EFcvmk8QDxN0Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369555; c=relaxed/simple;
-	bh=QWnclDFuNMYmP9RYZNUEzDJ+SFURDxQvdsHDI2hCqqA=;
+	s=arc-20240116; t=1760369557; c=relaxed/simple;
+	bh=/l7Fli2oW1wZuYentZU1HRlFULM1utPjkFd/6zZgfjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCDlGfCBvY5e0q29/Rcex6z5QEjSOicgG4gU8hrFD4z/wbmdzBJWtU4rIwml/c4i7F6FZZQ2iyM9idhtjUAEoa8IqtFiGAkq0GZy7NB0IzarpaKogNRunitUsSyCGN27nND+aVSIZbojA7ZG1+3tNFeoh9xa0XwT3MtA2jitMAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T56C1/W7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OpATth1YiRQVyfm31b1k7prKpVfIfmDssIuCB4ccwXe1jw/qwHxhzdFo3I6PwRT6j4D9nuBcbF1atqbkHfROQRMRX7b50jjQSp9D+vbipYvfVPriULIS1qa8QcECOscusI6+UgNNRNNMBI17KAqdqLQjBjNo2jaILEb1FdROZG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VsfEbim; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T56C1/W7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F41BC4CEE7;
-	Mon, 13 Oct 2025 15:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VsfEbim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A607C4CEE7;
+	Mon, 13 Oct 2025 15:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369554;
-	bh=QWnclDFuNMYmP9RYZNUEzDJ+SFURDxQvdsHDI2hCqqA=;
+	s=korg; t=1760369557;
+	bh=/l7Fli2oW1wZuYentZU1HRlFULM1utPjkFd/6zZgfjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T56C1/W7Tsv43JOiMRg4cOL2Ib2uZmTxhSP/qt07EPOZsB1qYUFTR//EKtheQsJgK
-	 erD6wfuL7lssXQ9CeGTKlgRi+Hq4uunb+yrDNEkmD9kFkGtC2PlmaO93h5rUdbzle6
-	 Pgjadxe5kD5uDJkOcP8zYvCIyKEi0UpSRLJge05E=
+	b=1VsfEbimVyzwBvsvkgonOMQfif6e8zOtWfTf+swiKnfGAjrBr9RtUad4HgX/hncA6
+	 KhskMl7HKH/1sIcB94dXaDt/vJpGjceli+S4OnY+TTbJS7B4tZ9VXW8zIqhJhQJQPT
+	 ApktsYju/QCq4qNFNcVKHDuuYc4p7jj4uj8LZiRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 287/563] ipv6: use RCU in ip6_xmit()
-Date: Mon, 13 Oct 2025 16:42:28 +0200
-Message-ID: <20251013144421.667101407@linuxfoundation.org>
+Subject: [PATCH 6.17 288/563] ipv6: use RCU in ip6_output()
+Date: Mon, 13 Oct 2025 16:42:29 +0200
+Message-ID: <20251013144421.702654451@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,107 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c ]
+[ Upstream commit 11709573cc4e48dc34c80fc7ab9ce5b159e29695 ]
 
-Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
+Use RCU in ip6_output() in order to use dst_dev_rcu() to prevent
 possible UAF.
+
+We can remove rcu_read_lock()/rcu_read_unlock() pairs
+from ip6_finish_output2().
 
 Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
+Link: https://patch.msgid.link/20250828195823.3958522-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ net/ipv6/ip6_output.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
 diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 1e1410237b6ef..e234640433d6b 100644
+index e234640433d6b..9d64c13bab5ea 100644
 --- a/net/ipv6/ip6_output.c
 +++ b/net/ipv6/ip6_output.c
-@@ -268,35 +268,36 @@ bool ip6_autoflowlabel(struct net *net, const struct sock *sk)
- int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
+@@ -60,7 +60,7 @@
+ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
  {
--	struct net *net = sock_net(sk);
- 	const struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct in6_addr *first_hop = &fl6->daddr;
  	struct dst_entry *dst = skb_dst(skb);
 -	struct net_device *dev = dst_dev(dst);
++	struct net_device *dev = dst_dev_rcu(dst);
  	struct inet6_dev *idev = ip6_dst_idev(dst);
- 	struct hop_jumbo_hdr *hop_jumbo;
- 	int hoplen = sizeof(*hop_jumbo);
-+	struct net *net = sock_net(sk);
- 	unsigned int head_room;
-+	struct net_device *dev;
- 	struct ipv6hdr *hdr;
- 	u8  proto = fl6->flowi6_proto;
- 	int seg_len = skb->len;
--	int hlimit = -1;
-+	int ret, hlimit = -1;
- 	u32 mtu;
+ 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
+ 	const struct in6_addr *daddr, *nexthop;
+@@ -70,15 +70,12 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
  
-+	rcu_read_lock();
-+
-+	dev = dst_dev_rcu(dst);
- 	head_room = sizeof(struct ipv6hdr) + hoplen + LL_RESERVED_SPACE(dev);
- 	if (opt)
- 		head_room += opt->opt_nflen + opt->opt_flen;
- 
- 	if (unlikely(head_room > skb_headroom(skb))) {
+ 	/* Be paranoid, rather than too clever. */
+ 	if (unlikely(hh_len > skb_headroom(skb)) && dev->header_ops) {
 -		/* Make sure idev stays alive */
 -		rcu_read_lock();
-+		/* idev stays alive while we hold rcu_read_lock(). */
- 		skb = skb_expand_head(skb, head_room);
++		/* idev stays alive because we hold rcu_read_lock(). */
+ 		skb = skb_expand_head(skb, hh_len);
  		if (!skb) {
  			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
 -			rcu_read_unlock();
--			return -ENOBUFS;
-+			ret = -ENOBUFS;
-+			goto unlock;
+ 			return -ENOMEM;
  		}
 -		rcu_read_unlock();
  	}
  
- 	if (opt) {
-@@ -358,17 +359,21 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 		 * skb to its handler for processing
- 		 */
- 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
--		if (unlikely(!skb))
--			return 0;
-+		if (unlikely(!skb)) {
-+			ret = 0;
-+			goto unlock;
-+		}
+ 	hdr = ipv6_hdr(skb);
+@@ -123,7 +120,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
  
- 		/* hooks should never assume socket lock is held.
- 		 * we promote our socket to non const
- 		 */
--		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
--			       net, (struct sock *)sk, skb, NULL, dev,
--			       dst_output);
-+		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
-+			      net, (struct sock *)sk, skb, NULL, dev,
-+			      dst_output);
-+		goto unlock;
+ 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
+ 
+-	rcu_read_lock();
+ 	nexthop = rt6_nexthop(dst_rt6_info(dst), daddr);
+ 	neigh = __ipv6_neigh_lookup_noref(dev, nexthop);
+ 
+@@ -131,7 +127,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 		if (unlikely(!neigh))
+ 			neigh = __neigh_create(&nd_tbl, nexthop, dev, false);
+ 		if (IS_ERR(neigh)) {
+-			rcu_read_unlock();
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTNOROUTES);
+ 			kfree_skb_reason(skb, SKB_DROP_REASON_NEIGH_CREATEFAIL);
+ 			return -EINVAL;
+@@ -139,7 +134,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 	}
+ 	sock_confirm_neigh(skb, neigh);
+ 	ret = neigh_output(neigh, skb, false);
+-	rcu_read_unlock();
+ 	return ret;
+ }
+ 
+@@ -233,22 +227,29 @@ static int ip6_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
+ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst_dev(dst), *indev = skb->dev;
+-	struct inet6_dev *idev = ip6_dst_idev(dst);
++	struct net_device *dev, *indev = skb->dev;
++	struct inet6_dev *idev;
++	int ret;
+ 
+ 	skb->protocol = htons(ETH_P_IPV6);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
++	idev = ip6_dst_idev(dst);
+ 	skb->dev = dev;
+ 
+ 	if (unlikely(!idev || READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
++		rcu_read_unlock();
+ 		kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
+ 		return 0;
  	}
  
-+	ret = -EMSGSIZE;
- 	skb->dev = dev;
- 	/* ipv6_local_error() does not require socket lock,
- 	 * we promote our socket to non const
-@@ -377,7 +382,9 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 
- 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
- 	kfree_skb(skb);
--	return -EMSGSIZE;
-+unlock:
+-	return NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
+-			    net, sk, skb, indev, dev,
+-			    ip6_finish_output,
+-			    !(IP6CB(skb)->flags & IP6SKB_REROUTED));
++	ret = NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
++			   net, sk, skb, indev, dev,
++			   ip6_finish_output,
++			   !(IP6CB(skb)->flags & IP6SKB_REROUTED));
 +	rcu_read_unlock();
 +	return ret;
  }
- EXPORT_SYMBOL(ip6_xmit);
+ EXPORT_SYMBOL(ip6_output);
  
 -- 
 2.51.0
