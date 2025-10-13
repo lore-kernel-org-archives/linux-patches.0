@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EF4310782;
-	Mon, 13 Oct 2025 15:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A88310782;
+	Mon, 13 Oct 2025 15:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368077; cv=none; b=eVaV2W4khaLEOrcjYG8thwnhmeBDj3rGWIIOflkxCdoD24ojlYwp2KnWOR9sHetDjJtJVTAe3/hWvUtAh34C7f6M4X5z+Zbuy2iOTaU56sxrW51tRjzbL0C/bPpkcS1WAsVShpcl215Bochj5AG/W0kentgyBsLIzBQ+YAvWycA=
+	t=1760368079; cv=none; b=OXRwd3UDlNU7oaxsBri5A2rAfLiwofJuFF4VF+kBumGK25UExUvzP4+z2CCIQzemP8lZ5aWX5t0VmfnhsR+MSCByhk3Jouune05pdFQEqoG4tHgkR0da0/yVHb7UKwbPWEVsTzLA57dPpDv9LM/aarDNyHNN/iloxTDF8W7kFJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368077; c=relaxed/simple;
-	bh=m5dHlExasWVNvJj2pvuDZ4rq/j7xD/7W5PUwje/u5ko=;
+	s=arc-20240116; t=1760368079; c=relaxed/simple;
+	bh=XPaWwdrgwUOqSQT5Pmvykketc30hBLVw92WjclSh8ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHdSJs5mj/mT0aKsDmlkvVCcIdZ2QA56sfcskGZNa8/X/ozV/Zam7PofCt46voVQO6ePWtwoJMUMYNwcB8Mz4zNH7B1jpmu1dUa884MoEER8/dtGyRL4EBFUxKPkgYoTDWo1Uac+pZJAnklpxBzNB0vHlO5hdc4YRFDYi/TwtUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNIxn0CJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lhk13+oUB5lWEXkcsSwG8NBSpShOUA0RA5bAGN8Q6DmLvGbmGjzOTSSEOmM+3IM/RXz7t+K3C6VTflaWQI16YBFslR35VAivS5OiisCXfj6OccnUxVtv+WFgWXVN3su4DQAHvr8sV0GmqkOwMCefgAMhoGBsHne+7ovJc+1wtME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/pl+wcA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNIxn0CJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8813DC4CEE7;
-	Mon, 13 Oct 2025 15:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/pl+wcA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E07C4CEE7;
+	Mon, 13 Oct 2025 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368075;
-	bh=m5dHlExasWVNvJj2pvuDZ4rq/j7xD/7W5PUwje/u5ko=;
+	s=korg; t=1760368078;
+	bh=XPaWwdrgwUOqSQT5Pmvykketc30hBLVw92WjclSh8ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNIxn0CJdfq+dzXAix+NxgsFUHx0UPaHaMZ+XNuJgsZ51iGi70oyrysruz3CW9e9n
-	 RxADH/d8zKv/ztUXT6lCxf62bg1ZIra/IFvxV6C1wHLvRpXuV9XSArW8Ym8Ld3hawH
-	 f5OXb3qAE1bNABQRdE91dF6DaWoODuvN4cN+sns4=
+	b=g/pl+wcAZltImZjSy1rIU1S378QBGwiZd7w7dM5ietymgLGOZgDYXP3ebBgSUuVK2
+	 kJa9x6Na4c5BlGSbbK+wbu4qhE4+BjcA3jIwj58dyQiQlkb94xijIEb1P6TN+CF154
+	 aoCl718GwSlEfVF4NG/zbyey3BxsmNNqqPyWzf2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/262] powerpc/603: Really copy kernel PGD entries into all PGDIRs
-Date: Mon, 13 Oct 2025 16:42:29 +0200
-Message-ID: <20251013144326.389781154@linuxfoundation.org>
+Subject: [PATCH 6.12 008/262] uprobes: uprobe_warn should use passed task
+Date: Mon, 13 Oct 2025 16:42:30 +0200
+Message-ID: <20251013144326.425185738@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,62 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-[ Upstream commit f2863371f017eb03c230addc253783fa4c7e90f5 ]
+[ Upstream commit ba1afc94deb849eab843a372b969444581add2c9 ]
 
-Commit 82ef440f9a38 ("powerpc/603: Copy kernel PGD entries into all
-PGDIRs and preallocate execmem page tables") was supposed to extend
-to powerpc 603 the copy of kernel PGD entries into all PGDIRs
-implemented in a previous patch on the 8xx. But 603 is book3s/32 and
-uses a duplicate of pgd_alloc() defined in another header.
+uprobe_warn() is passed a task structure, yet its using current. For
+the most part this shouldn't matter, but since a task structure is
+provided, lets use it.
 
-So really do the copy at the correct place for the 603.
-
-Fixes: 82ef440f9a38 ("powerpc/603: Copy kernel PGD entries into all PGDIRs and preallocate execmem page tables")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/752ab7514cae089a2dd7cc0f3d5e35849f76adb9.1755757797.git.christophe.leroy@csgroup.eu
+Fixes: 248d3a7b2f10 ("uprobes: Change uprobe_copy_process() to dup return_instances")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/32/pgalloc.h | 10 ++++++++--
- arch/powerpc/include/asm/nohash/pgalloc.h    |  2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ kernel/events/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/book3s/32/pgalloc.h b/arch/powerpc/include/asm/book3s/32/pgalloc.h
-index dd4eb30631758..f4390704d5ba2 100644
---- a/arch/powerpc/include/asm/book3s/32/pgalloc.h
-+++ b/arch/powerpc/include/asm/book3s/32/pgalloc.h
-@@ -7,8 +7,14 @@
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index e60f5e71e35df..c00981cc6fe5b 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -114,7 +114,7 @@ struct xol_area {
  
- static inline pgd_t *pgd_alloc(struct mm_struct *mm)
+ static void uprobe_warn(struct task_struct *t, const char *msg)
  {
--	return kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
--			pgtable_gfp_flags(mm, GFP_KERNEL));
-+	pgd_t *pgd = kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
-+				      pgtable_gfp_flags(mm, GFP_KERNEL));
-+
-+#ifdef CONFIG_PPC_BOOK3S_603
-+	memcpy(pgd + USER_PTRS_PER_PGD, swapper_pg_dir + USER_PTRS_PER_PGD,
-+	       (MAX_PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
-+#endif
-+	return pgd;
+-	pr_warn("uprobe: %s:%d failed to %s\n", current->comm, current->pid, msg);
++	pr_warn("uprobe: %s:%d failed to %s\n", t->comm, t->pid, msg);
  }
  
- static inline void pgd_free(struct mm_struct *mm, pgd_t *pgd)
-diff --git a/arch/powerpc/include/asm/nohash/pgalloc.h b/arch/powerpc/include/asm/nohash/pgalloc.h
-index bb5f3e8ea912d..4ef780b291bc3 100644
---- a/arch/powerpc/include/asm/nohash/pgalloc.h
-+++ b/arch/powerpc/include/asm/nohash/pgalloc.h
-@@ -22,7 +22,7 @@ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
- 	pgd_t *pgd = kmem_cache_alloc(PGT_CACHE(PGD_INDEX_SIZE),
- 			pgtable_gfp_flags(mm, GFP_KERNEL));
- 
--#if defined(CONFIG_PPC_8xx) || defined(CONFIG_PPC_BOOK3S_603)
-+#ifdef CONFIG_PPC_8xx
- 	memcpy(pgd + USER_PTRS_PER_PGD, swapper_pg_dir + USER_PTRS_PER_PGD,
- 	       (MAX_PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
- #endif
+ /*
 -- 
 2.51.0
 
