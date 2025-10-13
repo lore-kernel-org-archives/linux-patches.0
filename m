@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54423241C8C;
-	Mon, 13 Oct 2025 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491E231062C;
+	Mon, 13 Oct 2025 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368047; cv=none; b=J0qSzPNris6WQq8qIHFGPKbk/9Te4dTns+HmKfJSNYy2uVxNopqEkCryWBy1F22p7Vgrg/R51Y+eerdxzoimHJBj/yKqGqr4PMOEe7hPxJJkUh6B01+UrrsZPjXekwnxAJ3a9M70MRmzVubXPHh1VIzuIDxUtu8uovM3a9x9d2I=
+	t=1760368050; cv=none; b=JdcgBsbYJr27DDA8MNgPIjPYntsdYbatfBL0A9VzFu6+rs7j1t9KpkbTFlpIMo+OiySrVf4TqKdi+1yS1dQjAnAN1IxrIR24XRLj9HN2qI3wGTSe6D+BY0Am8bEcz+Jeu1Y3EPa6D2AQ8SSUHT+zEsANtmIdRuuh33QshELkZGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368047; c=relaxed/simple;
-	bh=mJ1FoUP+EEvcnOD5af9KBrYLof0R6Zk1/7XG+VsJiA0=;
+	s=arc-20240116; t=1760368050; c=relaxed/simple;
+	bh=oZINTMPe1DQ37R6RcPs2Q2tPTFBhJyIAUtQ3TjML0LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDEWRovhvjAReNI0+l/gTi7IWjeKoXwRAI0roNWx5CSXxz00ooYJ66LN0VAUJRzXTVfKcpO2/KDCg2sKjcum0Qugg/dMTm+YT8+FpYYv3ml2pu/DNTz5tpu9teNlMGrwQdl7giQdTAovYIUKsE36agXTsHZzQ/rFGbwHaRjs1Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2t5Hd1lz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOw9jf4ICi0mXELkkgvLjMg8l6zRisL0XHiMoP1WCOVxvutCfQqoIV2rG+EKzWduDcR2g6a8x5UdSe+jODr4S6BYVatPg7yFZDNymwu/2HKvdzhYJNU6AX3CaSwunWoCkjevlOD+1EmaeZ7zp3dhkt5mk03v7qIgcY+K3wL6enI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lQJP+iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2t5Hd1lz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22D0C4CEE7;
-	Mon, 13 Oct 2025 15:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lQJP+iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D77C4CEE7;
+	Mon, 13 Oct 2025 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368047;
-	bh=mJ1FoUP+EEvcnOD5af9KBrYLof0R6Zk1/7XG+VsJiA0=;
+	s=korg; t=1760368050;
+	bh=oZINTMPe1DQ37R6RcPs2Q2tPTFBhJyIAUtQ3TjML0LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2t5Hd1lz+ILkiL+unLsQJsxg3cFQYvbqsuIsSeimuxO7kgPMFhiNzA723+MkDpI8Q
-	 Z/kVcebknwRpEUKz907v74N4b8vDnBdeo0H6hXUer/HeXSCngts+CDZUWSQkiRr3NQ
-	 xb7wksJ5KLATrWshS3ffoTWG9k7tbauQJTg9ff5w=
+	b=0lQJP+iy3jGRl3OdzZGyKYeeUC6+3sLHnrnTWu0S3PJEHf2lmcmPaxnDAOYM3Mhu0
+	 n/KFbtSNQgqnAWR4fzdV/R0ve1sR/tMYnZhAJ5QHi+cKBAliCj4gPzFhUK9tPe0Eu7
+	 IL39XntdmxWaD+iaHBQRZK0aaEYB70sc3H80ZqMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/262] s390/bpf: Write back tail call counter for BPF_TRAMP_F_CALL_ORIG
-Date: Mon, 13 Oct 2025 16:42:47 +0200
-Message-ID: <20251013144327.038795680@linuxfoundation.org>
+Subject: [PATCH 6.12 026/262] cpufreq: scmi: Account for malformed DT in scmi_dev_used_by_cpus()
+Date: Mon, 13 Oct 2025 16:42:48 +0200
+Message-ID: <20251013144327.074163795@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit bc3905a71f02511607d3ccf732360580209cac4c ]
+[ Upstream commit cd5d4621ba846dad9b2e6b0c2d1518d083fcfa13 ]
 
-The tailcall_bpf2bpf_hierarchy_fentry test hangs on s390. Its call
-graph is as follows:
+Broadcom STB platforms were early adopters (2017) of the SCMI framework and as
+a result, not all deployed systems have a Device Tree entry where SCMI
+protocol 0x13 (PERFORMANCE) is declared as a clock provider, nor are the
+CPU Device Tree node(s) referencing protocol 0x13 as their clock
+provider. This was clarified in commit e11c480b6df1 ("dt-bindings:
+firmware: arm,scmi: Extend bindings for protocol@13") in 2023.
 
-  entry()
-    subprog_tail()
-      trampoline()
-        fentry()
-        the rest of subprog_tail()  # via BPF_TRAMP_F_CALL_ORIG
-        return to entry()
+For those platforms, we allow the checks done by scmi_dev_used_by_cpus()
+to continue, and in the event of not having done an early return, we key
+off the documented compatible string and give them a pass to continue to
+use scmi-cpufreq.
 
-The problem is that the rest of subprog_tail() increments the tail call
-counter, but the trampoline discards the incremented value. This
-results in an astronomically large number of tail calls.
-
-Fix by making the trampoline write the incremented tail call counter
-back.
-
-Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20250813121016.163375-4-iii@linux.ibm.com
+Fixes: 6c9bb8692272 ("cpufreq: scmi: Skip SCMI devices that aren't used by the CPUs")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/scmi-cpufreq.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index a88d53fe87743..c15be6955cc7f 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -2808,6 +2808,9 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 		/* stg %r2,retval_off(%r15) */
- 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_2, REG_0, REG_15,
- 			      tjit->retval_off);
-+		/* mvc tccnt_off(%r15),tail_call_cnt(4,%r15) */
-+		_EMIT6(0xd203f000 | tjit->tccnt_off,
-+		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index beb660ca240cc..a2ec1addafc93 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -15,6 +15,7 @@
+ #include <linux/energy_model.h>
+ #include <linux/export.h>
+ #include <linux/module.h>
++#include <linux/of.h>
+ #include <linux/pm_opp.h>
+ #include <linux/slab.h>
+ #include <linux/scmi_protocol.h>
+@@ -398,6 +399,15 @@ static bool scmi_dev_used_by_cpus(struct device *scmi_dev)
+ 			return true;
+ 	}
  
- 		im->ip_after_call = jit->prg_buf + jit->prg;
++	/*
++	 * Older Broadcom STB chips had a "clocks" property for CPU node(s)
++	 * that did not match the SCMI performance protocol node, if we got
++	 * there, it means we had such an older Device Tree, therefore return
++	 * true to preserve backwards compatibility.
++	 */
++	if (of_machine_is_compatible("brcm,brcmstb"))
++		return true;
++
+ 	return false;
+ }
  
 -- 
 2.51.0
