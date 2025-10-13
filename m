@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268EE2153E7;
-	Mon, 13 Oct 2025 14:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A4D1F91E3;
+	Mon, 13 Oct 2025 14:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367033; cv=none; b=pYfSoXtSCGgIPK53CsV/uWU3I+DYr10nIHlqQmmqo8pm4gy+4GpJ9sIW+C9JWAZhozLr0U8Ib6Z02C4hm3U0nRA/YKRvdQ1mXN/n84fGrRDKv+9BGMHIIfE8o1dnOtgFQMsYX/B4VESdSLDRBfIoczvp3LaKKEy8mglI6NA96iU=
+	t=1760367035; cv=none; b=E8osxetWVZHVpTPl5ShIvvahewfjyjoF/wKNZi85IQ4obyMNIFF+eziVrmu/2bFWhCnIY7KuWRTpUfCwtQ7329OHqbCxUoJgUfWyGi25Yh+EpOdxtHzX0gEp0Fak5dyBcxyTd168BC3b3MvrW9yucNAeDGN36lV6iWZqIDmBNZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367033; c=relaxed/simple;
-	bh=DcLSX1fzGE0WgES0ZqMV6meYOZ3ylkY5AEHrfx7l+og=;
+	s=arc-20240116; t=1760367035; c=relaxed/simple;
+	bh=VFV3DYtz5VhCuyuCY9XoeRGycwnAWfqh49Yh30SjW5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9Z7BJROLN3awH1jXsitdH7KCiyK/Pln7XhUY/vx3nRa36IdnmqpvSDyOPnyE6LuNt47TK1pXk3CGyTzoNFYHTXXe7aLpn36r+aXaeG6D2CSjHOhvJN2SDenjCHiEqxdyRac/JIWon//2feRoTiIns8/M56ZhTNyjJbF235+8zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5HLgDNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4yba9UnTbn1cw5Qnnt4N7zG5PSVib5fDyQHMc7I+4ys8GfwOpFH1MxMZyKyaNc5ZSaON0oa1ggqGHB42RrLSgfBenviO7oTxyQH+FaHuuNwtLJCDSBUUeeSj79sek4PUze2vFC9jt9RDHAwDOW35tHY82BMD1YCiIWnHwBiymA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3mJu3O+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5HLgDNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8E9C4CEE7;
-	Mon, 13 Oct 2025 14:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3mJu3O+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26569C4CEE7;
+	Mon, 13 Oct 2025 14:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367032;
-	bh=DcLSX1fzGE0WgES0ZqMV6meYOZ3ylkY5AEHrfx7l+og=;
+	s=korg; t=1760367035;
+	bh=VFV3DYtz5VhCuyuCY9XoeRGycwnAWfqh49Yh30SjW5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5HLgDNdAT4DYXFMzAvDzQAJjml/YvCLdnRr10Frm/z0IRNgekLqIuETHi/qXoLjK
-	 WPqJ3lifdRZ36bkuL3/7i6xfUzDZaJsyZkAf5ZWAPewGj3nzz1zWwDuiYJYuzUCYBf
-	 BsNUyRJdh5RGScm1VKTTO4y+F8PAFF585Y5NM2OQ=
+	b=R3mJu3O+8KKMVbZcqPHuCJT0cT2wE1qfcXcDRMnOPmomjlJCl0U0WI5dBM2hdNB3t
+	 tV6vu40THLh63YfjcOEv3CEvTIbFypCyNoHvHf1nR/bFDH01DUEwxoynjHgBlJXBe7
+	 7FPGu/ynCMJ622inw7RM/gXfW8/NAxL9VOnRbVDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Andy Yan <andyshrk@163.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/196] perf: arm_spe: Prevent overflow in PERF_IDX2OFF()
-Date: Mon, 13 Oct 2025 16:43:44 +0200
-Message-ID: <20251013144316.431692234@linuxfoundation.org>
+Subject: [PATCH 6.1 069/196] power: supply: cw2015: Fix a alignment coding style issue
+Date: Mon, 13 Oct 2025 16:44:02 +0200
+Message-ID: <20251013144317.075683279@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,35 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Andy Yan <andyshrk@163.com>
 
-[ Upstream commit a29fea30dd93da16652930162b177941abd8c75e ]
+[ Upstream commit def5612170a8c6c4c6a3ea5bd6c3cfc8de6ba4b1 ]
 
-Cast nr_pages to unsigned long to avoid overflow when handling large
-AUX buffer sizes (>= 2 GiB).
+Fix the checkpatch warning:
+CHECK: Alignment should match open parenthesis
 
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 0cb172a4918e ("power: supply: cw2015: Use device managed API to simplify the code")
+Signed-off-by: Andy Yan <andyshrk@163.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/supply/cw2015_battery.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index 00e3a637f7b63..815bf2e2dffa4 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -95,7 +95,8 @@ struct arm_spe_pmu {
- #define to_spe_pmu(p) (container_of(p, struct arm_spe_pmu, pmu))
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index 9d957cf8edf07..ae6f46b452101 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -702,8 +702,7 @@ static int cw_bat_probe(struct i2c_client *client)
+ 	if (!cw_bat->battery_workqueue)
+ 		return -ENOMEM;
  
- /* Convert a free-running index from perf into an SPE buffer offset */
--#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
-+#define PERF_IDX2OFF(idx, buf) \
-+	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
- 
- /* Keep track of our dynamic hotplug state */
- static enum cpuhp_state arm_spe_pmu_online;
+-	devm_delayed_work_autocancel(&client->dev,
+-							  &cw_bat->battery_delay_work, cw_bat_work);
++	devm_delayed_work_autocancel(&client->dev, &cw_bat->battery_delay_work, cw_bat_work);
+ 	queue_delayed_work(cw_bat->battery_workqueue,
+ 			   &cw_bat->battery_delay_work, msecs_to_jiffies(10));
+ 	return 0;
 -- 
 2.51.0
 
