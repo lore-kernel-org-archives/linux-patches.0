@@ -1,235 +1,107 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818E230F524
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 22:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91B4199BC
+	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 23:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760394864; cv=none; b=IJh01Atxs8wH2Ntfw1K+FmJnEuGQ4p4s5Wa8uSuQQb4uE5+MumbH6sjrwGShlgjsoGD5JFZW9NGw2znRGUjpqFU/OBk9kMfhc4QUwR1ecelk8N/uvgOf3+bX+/+Qc9r84Ab9yF1zX4sxc6SNFVcsy7qgiSzboS6NgeEPyzfctDo=
+	t=1760396569; cv=none; b=ZpvlbeD/Q0yRTGFduCOyubuRVaIVFBYaR0mG3up7t4sWs3LTlTA7dMVj/NQnwTdNQtd6nwZ8V+xAK5aA3ufiACSqy6AmPmltoBlYH8ljJvmoLF2B+cNzqEZNnbNIGNk7P57vr/OfMRscqCGo+uSp+XBOz0spwKAvqOdzWYYb7h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760394864; c=relaxed/simple;
-	bh=qiylo3Pj0+5Qg2JphvKyg3NBjflTZC1R7ys+XbHnNQg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiNlTCbP2IC1J7MB7O1Pr0cC4oT+sfUagJPUNvX+popUQD17HyOY0DmmUpmq8pf4i2jg3NVcSWlAV9hP1m49UbWvPcisMIWOR4z+FYXGwjERFGnlpIe5QVyH5F7jFLBw557+hJTHsMY2yPI287Tbf48692atUYi1+LZKeLYlzLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SqFKcleN; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1760396569; c=relaxed/simple;
+	bh=NN5Uhc/H7ql22G1CZ8MYhKGMzprQGvu13nPfy/soR6U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tkSY+RSV5/1ICGXS2ZpXJ0+zWmjHIVAr3QzwRCmF94B1B98YW4eMyqE20ZinHW9Wi8c0hq4cA03xmRI0YZAUwbd2I3y1bI8DFDKiTZetubTzsmM4LZjsmhDMCFml3RiouuxKjvdVav/0yVEAQlFO5330KMqsSnURjx079Ts/HqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=knAaYQtw; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SqFKcleN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1760394861; x=1791930861;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=qiylo3Pj0+5Qg2JphvKyg3NBjflTZC1R7ys+XbHnNQg=;
-  b=SqFKcleNB7ziu8AB8ZZ2Z6UvdX5IR+/fURWZkiFGoYTaA1fWij2XxiV7
-   WykctElUriyiE7p+ayK6V67HFsLVxdQV+XP9tTvTlA/dDTtUEyeVBR1Xj
-   blkI1hCRAlngK2UCUx0NnGMGNFhDdh85fIXkyL0DNcgfPw/er8ZsosEd9
-   8afbC1JStElbkhN6mtap4qhi19+POFdvnm8HyesWwId9VVFL703OKUsDW
-   AD/CtzeKQYYslB66yn2ZKl06HYu6eawcH7z4Rnx8wMs2w+OwcrPGB8gi3
-   J+joanUBP2HJmA2+UovLOTDz+qT8Q7I5FfoIu74FUYVZDSNdK5AnYJBPO
-   A==;
-X-CSE-ConnectionGUID: q9kclKv1SUCJbmHVc3Bv1w==
-X-CSE-MsgGUID: MYSO/oShTMi7AkexOKYPAQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="85168967"
-X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="85168967"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:04 -0700
-X-CSE-ConnectionGUID: J3QhgdnYQ1moq/pduQcXTg==
-X-CSE-MsgGUID: 2gkHVdaiRPClq1X63UqCIA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="182145345"
-Received: from sramkris-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.79])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:04 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 30/31] x86/resctrl: Add debugfs files to show telemetry aggregator status
-Date: Mon, 13 Oct 2025 15:33:44 -0700
-Message-ID: <20251013223348.103390-31-tony.luck@intel.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251013223348.103390-1-tony.luck@intel.com>
-References: <20251013223348.103390-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="knAaYQtw"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46e42deffa8so44338485e9.0
+        for <patches@lists.linux.dev>; Mon, 13 Oct 2025 16:02:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1760396566; x=1761001366; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I/couXEdkLhLPr9L+MDSsns4M5kv4pWx10gdCua1dck=;
+        b=knAaYQtw3s7aqrAusX3EJS2VWiKgAOonuCBkegb3Mutk1zKssLqv+m1T6tPZhtrCt7
+         X6dQu0GBjQ77FpbwqfzHZI5fg2WtEYYXVnaRfs4TCJ37qUIXPjSSydMYs1mg0eCnmEm7
+         7VU79LPUJ/9kDWS2lMrKhUoaR366F3QKYLVYaYSu5oBaBeEzzJ6b5RMce6o+lKtrdhQz
+         YXJnZIm9MU/R4nDWPjm6yp4gca5suBvUeLi8p6ASToNTak/yn5xoFvyDL4jTGHQH546Y
+         tiHi9jfC0y/8KjlNs5RAbpiMvb6jb2/Gjdqh8+2FyoRud+2b40y1KnwWOA812AhGG5ML
+         dnXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760396566; x=1761001366;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=I/couXEdkLhLPr9L+MDSsns4M5kv4pWx10gdCua1dck=;
+        b=lT+WxqWCdfyC9Fw4KS8IAqjluTzDfiQGSev48acRRosXYLsjPFY6ZO2K9QwIljzoX9
+         0h7D2eMLOkx6pMDI0G+nHCDwyi3Mgpt7jY0DU+JHPSu0dj8BdmYoAZgn/8/J7s9W4V9l
+         WrgPrTygD4F8AJpzQxx2wKNJeeeh3HZwQ+CYkd/GQ753uvX1gLilUcM9t+pUK7Hj9OJu
+         +3ih7tBkppbXsgmQdxR5gHlG5VWzqzk+6mYfaqgtf2ghEUv+Go8YuFEAHucTHFiOdP3s
+         Gcbv4qdULpxMkCxX7CP2aLJvH4kyin02dXW5b8W/P21QHJNtf3yO430oJJMXKpoDl4fC
+         vO6w==
+X-Gm-Message-State: AOJu0YzdeSU/adksFMnvKlT5Bb3Jk+nWtOTaa5LcIgqeaNb4GsPtBZnT
+	WKQBEBr6eZUPFsXzoXNYSvu7u8koHbCM2k28j0/KMOXtflE/95C7jHA=
+X-Gm-Gg: ASbGnctg1LU7VH93HKgOUQaDNpZPhsJrFXXTeOED7w+TN9aTI8Ffcd4iWUtsftlD86Q
+	LwmnM7bA5+0qcFMuhJjzu3QHfsqTpY1ip7ErUrC3QBEpx2PuylZW5YBa2NM+WmVoMEMhh4ubIaP
+	cTzvefbyG2H+LQYmvWahztPGwz9+XAwDsxzmU0a6LaC1R6mvVahuJzSHfjOPGeI+V3QnCdR6dC8
+	uLLsEpQoRkqHs4v/YHF0cdcAtXfl+TmbfpZGnFCjZhrRZJj53ByR5HUG1VC8fyveecZNCanRFWZ
+	4HdcpYip1AfURnCHpbWpyFs14rzmOT/yHdE2rn7+hGSn/ZqR5pQS4ccKDOg92L4DCUrKWWYzVzI
+	caePnwL1Au6zPDQyN1bkDoLcTQjeGhArFt8ZW2QKKBNJ4XJMFx9t42JotUASuvm4mdRztAQTfYr
+	tdX2NsZxC9/CrBBxHEEdQ=
+X-Google-Smtp-Source: AGHT+IEvSuL2pcLs02ff6tDICDiVy1cIZRV5hog1G8bH+8Au/ePi0Nv8ATYYDvBtFD/LFI+EZGN9Og==
+X-Received: by 2002:a05:600c:3f08:b0:46e:4b42:1dbe with SMTP id 5b1f17b1804b1-46fa9b075f3mr172090445e9.32.1760396565972;
+        Mon, 13 Oct 2025 16:02:45 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2aca8d.dip0.t-ipconnect.de. [91.42.202.141])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb49d0307sm205739165e9.18.2025.10.13.16.02.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Oct 2025 16:02:45 -0700 (PDT)
+Message-ID: <13ca47ef-e5f9-4339-a94d-0eef595d3fb0@googlemail.com>
+Date: Tue, 14 Oct 2025 01:02:44 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/196] 6.1.156-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+References: <20251013144314.549284796@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Each telemetry aggregator provides three status registers at the top
-end of MMIO space after all the per-RMID per-event counters:
+Am 13.10.2025 um 16:42 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.156 release.
+> There are 196 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  data_loss_count: This counts the number of times that this aggregator
-  failed to accumulate a counter value supplied by a CPU core.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-  data_loss_timestamp: This is a "timestamp" from a free running
-  25MHz uncore timer indicating when the most recent data loss occurred.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-  last_update_timestamp: Another 25MHz timestamp indicating when the
-  most recent counter update was successfully applied.
 
-Create files in /sys/kernel/debug/resctrl/info/PERF_PKG_MON/x86_64/
-to display the value of each of these status registers for each aggregator
-in each enabled event group. The prefix for each file name describes
-the type of aggregator, which package it is located on, and an opaque
-instance number to provide a unique file name when there are multiple
-aggregators on a package.
+Beste Grüße,
+Peter Schneider
 
-The suffix is one of the three strings listed above. An example name is:
-
-	energy_pkg0_agg2_data_loss_count
-
-These files are removed along with all other debugfs entries by the
-call to debugfs_remove_recursive() in resctrl_exit().
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/kernel/cpu/resctrl/internal.h  |  2 +
- arch/x86/kernel/cpu/resctrl/core.c      |  2 +
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 62 +++++++++++++++++++++++++
- 3 files changed, 66 insertions(+)
-
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index cea76f88422c..8d4bdae735e4 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -236,6 +236,7 @@ int intel_aet_read_event(int domid, u32 rmid, enum resctrl_event_id evtid,
- 			 void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
-+void intel_aet_add_debugfs(void);
- #else
- static inline bool intel_aet_get_events(void) { return false; }
- static inline void __exit intel_aet_exit(void) { }
-@@ -247,6 +248,7 @@ static inline int intel_aet_read_event(int domid, u32 rmid, enum resctrl_event_i
- 
- static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 					      struct list_head *add_pos) { }
-+static inline void intel_aet_add_debugfs(void) { }
- #endif
- 
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 2d8c20819ec3..94ca7902420b 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -783,6 +783,8 @@ void resctrl_arch_pre_mount(void)
- 		domain_add_cpu_mon(cpu, r);
- 	mutex_unlock(&domain_list_lock);
- 	cpus_read_unlock();
-+
-+	intel_aet_add_debugfs();
- }
- 
- enum {
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index bc0a4d84a4e0..0834538f7ddf 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -18,8 +18,11 @@
- #include <linux/container_of.h>
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
-+#include <linux/debugfs.h>
-+#include <linux/dcache.h>
- #include <linux/err.h>
- #include <linux/errno.h>
-+#include <linux/fs.h>
- #include <linux/gfp_types.h>
- #include <linux/init.h>
- #include <linux/intel_pmt_features.h>
-@@ -33,6 +36,7 @@
- #include <linux/resctrl.h>
- #include <linux/resctrl_types.h>
- #include <linux/slab.h>
-+#include <linux/sprintf.h>
- #include <linux/stddef.h>
- #include <linux/topology.h>
- #include <linux/types.h>
-@@ -188,6 +192,46 @@ static bool all_regions_have_sufficient_rmid(struct event_group *e, struct pmt_f
- 	return ret;
- }
- 
-+static int status_read(void *priv, u64 *val)
-+{
-+	void __iomem *info = (void __iomem *)priv;
-+
-+	*val = readq(info);
-+
-+	return 0;
-+}
-+
-+DEFINE_SIMPLE_ATTRIBUTE(status_fops, status_read, NULL, "%llu\n");
-+
-+static void make_status_files(struct dentry *dir, struct event_group *e, u8 pkg,
-+			      int instance, void *info_end)
-+{
-+	char name[64];
-+
-+	sprintf(name, "%s_pkg%u_agg%d_data_loss_count", e->name, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 24, &status_fops);
-+
-+	sprintf(name, "%s_pkg%u_agg%d_data_loss_timestamp", e->name, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 16, &status_fops);
-+
-+	sprintf(name, "%s_pkg%u_agg%d_last_update_timestamp", e->name, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 8, &status_fops);
-+}
-+
-+static void create_debug_event_status_files(struct dentry *dir, struct event_group *e)
-+{
-+	struct pmt_feature_group *p = e->pfg;
-+	void *info_end;
-+
-+	for (int i = 0; i < p->count; i++) {
-+		if (!p->regions[i].addr)
-+			continue;
-+		info_end = (void __force *)p->regions[i].addr + e->mmio_size;
-+		make_status_files(dir, e, p->regions[i].plat_info.package_id,
-+				  i, info_end);
-+	}
-+}
-+
- static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
-@@ -359,3 +403,21 @@ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 		kfree(d);
- 	}
- }
-+
-+void intel_aet_add_debugfs(void)
-+{
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
-+	struct event_group **peg;
-+	struct dentry *infodir;
-+
-+	infodir = resctrl_debugfs_mon_info_arch_mkdir(r);
-+
-+	if (IS_ERR_OR_NULL(infodir))
-+		return;
-+
-+	for_each_enabled_event_group(peg, known_energy_event_groups)
-+		create_debug_event_status_files(infodir, *peg);
-+	for_each_enabled_event_group(peg, known_perf_event_groups)
-+		create_debug_event_status_files(infodir, *peg);
-+
-+}
 -- 
-2.51.0
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
