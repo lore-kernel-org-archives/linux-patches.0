@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB6230F92A;
-	Mon, 13 Oct 2025 15:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381DE30F92F;
+	Mon, 13 Oct 2025 15:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369680; cv=none; b=GYQ48QddjkGA1LvbC5orMXTSRU8RtHUrC0QpbrTEcK0jjWiayfA6+P+6IJwek32XTiGpK+eRNIrxvhupNu1JvtdCPktjddivFIFhrcQ3vno+vImaMp7ICJq+NeYkqoj9GDLlwMELtDMfXJ6xRt0LCuQr9lMwRL40wlUY1K1lCpo=
+	t=1760369683; cv=none; b=ZXHBEwIih/7gL+7E13kMbgDNZv8Iwll8WjoYexq0XX+AdwAxDNmoSxcUJgWjSG3Eaeowil0uM2RMtbmnDXIL+KdhvsfhJNKnBH4oxow7uFC9na5MGtgGXdclQEUU/L2bGu2LOYhD0a7nVPBCbG5AgrYI/qPjFmyzlCarTS2B7Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369680; c=relaxed/simple;
-	bh=uDJqEjK5q7EGq0guwt36E67b05ByvMFB/aw68dfdlgQ=;
+	s=arc-20240116; t=1760369683; c=relaxed/simple;
+	bh=TnGqWF56T3NwP1/P5M8O37Hi+CvSUv7uk6KYLkEWiwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsqYr1lGDjr4jraixgeqNU98XZLSH7CmsC5384jFxmB9OApgtOIBA61QqA0FePwQa5hmYHeCK2pOTiN4uA4BbblU0Uf8mMdv4xW/C4qCV5OsUegmYF7MV54Hs58lI/BzoDAZ9geogZP2A5Ayma+CUuQGB0SBot8dlzURUWrbTc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXTQVxeB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrPKHadXaej6EjIz7EMtB9hHJw7rZvNIhMD534h8dVpGiuQgPf+Cag+pIbZ/GCpHD/ikeKWvyg6ACisMJ1mIzH9LVdKNnp2g0Gb2aGZRSJBRN90zkxaBHl5ESlY8wucXNEqr8Mn6TshDOcRajg/t/btCIaMeDdn9NYEtMLqUHxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/yZItQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXTQVxeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC98C4CEE7;
-	Mon, 13 Oct 2025 15:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/yZItQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2373C4CEE7;
+	Mon, 13 Oct 2025 15:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369680;
-	bh=uDJqEjK5q7EGq0guwt36E67b05ByvMFB/aw68dfdlgQ=;
+	s=korg; t=1760369683;
+	bh=TnGqWF56T3NwP1/P5M8O37Hi+CvSUv7uk6KYLkEWiwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXTQVxeBsjqff6T9OmEeUt741jMVe+p8wDcVYFE2rfOC+64wrq+fEfeOYiMQOZam+
-	 W/Pw77Yt0DW4hI0NoAbiG2zEFkyoaQdx4kK4Fh2O7B7HzfEzBlAcovZnxzYpPPBGU2
-	 FGsLeNUh95Gi1wS1qDnZjcGVs3/m24lTrSgkzsnY=
+	b=q/yZItQCE6VETqdPkqSaURKIXimR90VF7TgfAL7TwUK2DsLjzyWnjnIsAvK43aV9U
+	 BWZjsbxxARpGErEGNbNm5BhmPXu9VLCNqiZvUzIFMMKy2oQZgoitHXVjqunQVMDPnB
+	 rABSWY+Ct9zIbLuwnEA5YDL18dN2tIWHrHQn6HOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 331/563] ASoC: Intel: bytcr_rt5640: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:43:12 +0200
-Message-ID: <20251013144423.253534693@linuxfoundation.org>
+Subject: [PATCH 6.17 332/563] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
+Date: Mon, 13 Oct 2025 16:43:13 +0200
+Message-ID: <20251013144423.290409459@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,49 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fba404e4b4af4f4f747bb0e41e9fff7d03c7bcc0 ]
+[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
 
 When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver only shows an error message but leaves as is.
-This may lead to unepxected results like OOB access.
+bytcr_rt5640 driver just ignores and leaves as is, which may lead to
+unepxected results like OOB access.
 
-This patch corrects the input mapping to the certain default value if
-an invalid value is passed.
+This patch adds the sanity check and corrects the input mapping to the
+certain default value if an invalid value is passed.
 
-Fixes: 063422ca2a9d ("ASoC: Intel: bytcr_rt5640: Set card long_name based on quirks")
+Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-3-tiwai@suse.de>
+Message-ID: <20250902171826.27329-4-tiwai@suse.de>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 0f3b8f44e7011..bc846558480e4 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -68,7 +68,8 @@ enum {
- 	BYT_RT5640_OVCD_SF_1P5		= (RT5640_OVCD_SF_1P5 << 13),
+diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
+index 67c62844ca2a9..604a35d380e9a 100644
+--- a/sound/soc/intel/boards/bytcr_rt5651.c
++++ b/sound/soc/intel/boards/bytcr_rt5651.c
+@@ -58,7 +58,8 @@ enum {
+ 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
  };
  
--#define BYT_RT5640_MAP(quirk)		((quirk) &  GENMASK(3, 0))
-+#define BYT_RT5640_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5640_MAP(quirk)		((quirk) & BYT_RT5640_MAP_MASK)
- #define BYT_RT5640_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5640_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5640_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -140,7 +141,9 @@ static void log_quirks(struct device *dev)
- 		dev_info(dev, "quirk NO_INTERNAL_MIC_MAP enabled\n");
- 		break;
- 	default:
--		dev_err(dev, "quirk map 0x%x is not supported, microphone input will not work\n", map);
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC1_MAP\n", map);
-+		byt_rt5640_quirk &= ~BYT_RT5640_MAP_MASK;
-+		byt_rt5640_quirk |= BYT_RT5640_DMIC1_MAP;
- 		break;
- 	}
- 	if (byt_rt5640_quirk & BYT_RT5640_HSMIC2_ON_IN1)
+-#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
++#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
++#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
+ #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
+ #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
+ #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
+@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
+ 
+ static void log_quirks(struct device *dev)
+ {
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
++	int map;
++
++	map = BYT_RT5651_MAP(byt_rt5651_quirk);
++	switch (map) {
++	case BYT_RT5651_DMIC_MAP:
+ 		dev_info(dev, "quirk DMIC_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
++		break;
++	case BYT_RT5651_IN1_MAP:
+ 		dev_info(dev, "quirk IN1_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
++		break;
++	case BYT_RT5651_IN2_MAP:
+ 		dev_info(dev, "quirk IN2_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
++		break;
++	case BYT_RT5651_IN1_IN2_MAP:
+ 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
++		break;
++	default:
++		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
++		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
++		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
++		break;
++	}
++
+ 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
+ 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
+ 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
 -- 
 2.51.0
 
