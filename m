@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8412FE564;
-	Mon, 13 Oct 2025 15:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B26330C60A;
+	Mon, 13 Oct 2025 15:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368162; cv=none; b=Gt+M29XZQD5pAhqPGRuxj9YuZ1j+pkY6LNexsKOQNhESX82mMnjdVKAxAI0TGUHl4t+q8Wlr5Dyi6zKjtMuMiMPgcMuK4xcrRbz9Cjvwbo50voORJ1v1LedHftkKMxGcM350X398PTTJrh4gJCBrKELotsLgU9qaSNliaFvNB2s=
+	t=1760368165; cv=none; b=ZAzHCEV7TxYT05oZOhyPqhkPqujXzIAjvtjmyVbMh2pf1jyBav7M01U742MPFgTS8pt7m8dMVhLQVLtOpa8rGXVhGWzKmauUivw1DR8TUAd3Gx75zTPBabqW8SaaJqg2gQ7PLt33+ShvZuEweQvOeWGjGUnCaXwm5lWrqFQTqdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368162; c=relaxed/simple;
-	bh=1su5Nfhgaxt+EEE0HHj2sn2J8H2bTvnXGA2Ht/tK9j4=;
+	s=arc-20240116; t=1760368165; c=relaxed/simple;
+	bh=gUhGGwCoCjOeDyU9iFJGGIt+1sBSrtkrNKAN0xuu4DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCQltS2Cny6lF06ZinDx18fCjKc6qBNiCWEzO9dKdjUrTaNwy/GjBM5gJGe33J1PHYPAeRMwB5JV3SpTM8AeFyrd77wefIW5Wyj430YbGWrcHNKYhlJs3BpJFeg8CFoq35oRcFHFMDjjHzCZS49h23EZk0KDn/WdCdiENYjjZhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKYylAZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pZcROCJYxq6Cnp5attRicaZI3Norfig60SONMKYBhTIYBmIjwA7QGuqYigo/qRUxTVD7xBJS978qMmtbfjRicU4aBAWAv9Pj3eZ12GWrmtoPIpbJjFiZ2uAn2RIP+DuvmAV/gs+Mh/CLbhbroJDrOIF0nNZJ/ivPTGI+PfhmN3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuyfiXqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKYylAZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60D7C4CEE7;
-	Mon, 13 Oct 2025 15:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuyfiXqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3585C4CEE7;
+	Mon, 13 Oct 2025 15:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368162;
-	bh=1su5Nfhgaxt+EEE0HHj2sn2J8H2bTvnXGA2Ht/tK9j4=;
+	s=korg; t=1760368165;
+	bh=gUhGGwCoCjOeDyU9iFJGGIt+1sBSrtkrNKAN0xuu4DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKYylAZry7EMs0eHT9Gf8PcdS9tq+RLUUW1m7lTPYleezoMYTjr+JaZO1wgJztOZP
-	 xC8Q94SwJAskJDE6gygrYQNWpDeAIA/PSNZoIxj7gZ/G40PBahEh88JVBTLVtMlTOu
-	 4GaZ9XlERYlaiyQlh+8NhtzMJLOUjqbtPMB20Edc=
+	b=UuyfiXqnirah4ajw7u1iADAjz7BBDQvk6DSmGDU4mS8qXUhSljGOHdwkSes3/AvWP
+	 fa+feJD7X9x6wbzuUrNqAga7gYVsfALwI7VwBPvi0D0rtTcrXxlMzN+vFLkR1GrUSM
+	 7p5dXdZoH9gIeGRdoc4x1Tz+9akajLKRKkuEDLIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/262] arm64: dts: mediatek: mt8516-pumpkin: Fix machine compatible
-Date: Mon, 13 Oct 2025 16:43:26 +0200
-Message-ID: <20251013144328.433392319@linuxfoundation.org>
+Subject: [PATCH 6.12 065/262] pwm: tiehrpwm: Dont drop runtime PM reference in .free()
+Date: Mon, 13 Oct 2025 16:43:27 +0200
+Message-ID: <20251013144328.468714983@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -46,43 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit ffe6a5d1dd4d4d8af0779526cf4e40522647b25f ]
+[ Upstream commit 21a5e91fda50fc662ce1a12bd0aae9d103455b43 ]
 
-This devicetree contained only the SoC compatible but lacked the
-machine specific one: add a "mediatek,mt8516-pumpkin" compatible
-to the list to fix dtbs_check warnings.
+The pwm driver calls pm_runtime_get_sync() when the hardware becomes
+enabled and pm_runtime_put_sync() when it becomes disabled. The PWM's
+state is kept when a consumer goes away, so the call to
+pm_runtime_put_sync() in the .free() callback is unbalanced resulting in
+a non-functional device and a reference underlow for the second consumer.
 
-Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20250724083914.61351-39-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+The easiest fix for that issue is to just not drop the runtime PM
+reference in .free(), so do that.
+
+Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/bbb089c4b5650cc1f7b25cf582d817543fd25384.1754927682.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-tiehrpwm.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-index cce642c538128..3d3db33a64dc6 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-@@ -11,7 +11,7 @@
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index 0125e73b98dfb..5e674a7bbf3be 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -391,11 +391,6 @@ static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ {
+ 	struct ehrpwm_pwm_chip *pc = to_ehrpwm_pwm_chip(chip);
  
- / {
- 	model = "Pumpkin MT8516";
--	compatible = "mediatek,mt8516";
-+	compatible = "mediatek,mt8516-pumpkin", "mediatek,mt8516";
- 
- 	memory@40000000 {
- 		device_type = "memory";
+-	if (pwm_is_enabled(pwm)) {
+-		dev_warn(pwmchip_parent(chip), "Removing PWM device without disabling\n");
+-		pm_runtime_put_sync(pwmchip_parent(chip));
+-	}
+-
+ 	/* set period value to zero on free */
+ 	pc->period_cycles[pwm->hwpwm] = 0;
+ }
 -- 
 2.51.0
 
