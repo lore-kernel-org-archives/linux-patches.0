@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15E92F998D;
-	Mon, 13 Oct 2025 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70E305043;
+	Mon, 13 Oct 2025 15:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369763; cv=none; b=N8LzWgU4EGLaqg2uAcrAIwY5y7PPYprnhQ3FSRLF2e8ee9r07qst1lisFy8M3X//rEnxkijQRq5YtVBarD0TuHletnDEBH1xfr3hJPlQ3nSpqq46MP2fTW5QxvcJMi+je4SE0dzFSFP77xbsghWKHy/1ptjW1yjI+zyxArvG+hs=
+	t=1760369765; cv=none; b=W80/gISqbM24D+jXsJ7zv2n2Y2xIpmIhIUWSlA2MXejvLY6wN1ysC8LVrYLWA/vReXpzl768ujccYwKwkwxVwdnnTSncAbcaVaTH8chyreuh078+BvxcvEc2842WeusSxWRc2cPmu4pzsWWysevDq0au1M4XfmkwG21TXtXAn7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369763; c=relaxed/simple;
-	bh=1R1Hr6lVUkX3pWbNqdkzlVO2zLXCfsVs2c6tW9GTAUk=;
+	s=arc-20240116; t=1760369765; c=relaxed/simple;
+	bh=xgOAbMF/yQgKeqxHjss2EKmHCQQbVvqh4oYiuZt3o+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bq2Gm71u3ZMhgHJQJFdBHbvVglGlpT6QN3w6JPYDKQZseDqd9S8VQ1YWABlP1UlVr00qqyyMQjGfJzruROUlJNRfzCjrKrrrAY8u6+1wB02zzZ1dOwc2onfqZq1rd/p+9r5wOtLRZO2+Ohzej269SROXh0vb/PTeSJh2he8Q65c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=km+yHZZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5VtTR99qqxQtm/zlenBsZQkiIIkUHLNku979Y5Pyy7wxMil6gT5Gd5wS3VvbZ2bxUxvBBuOwit18PGf7h1Y5Xl9cpXfqf0Q5TEvQcI0YRA5GyeHv6p/smo+PBfV/RNTz+oxywbNfbIGg8UW/rEuTBDN5OwiOTEd6hHCKSDbNu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUH6aXW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="km+yHZZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F05C19425;
-	Mon, 13 Oct 2025 15:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUH6aXW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B45DC116B1;
+	Mon, 13 Oct 2025 15:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369762;
-	bh=1R1Hr6lVUkX3pWbNqdkzlVO2zLXCfsVs2c6tW9GTAUk=;
+	s=korg; t=1760369765;
+	bh=xgOAbMF/yQgKeqxHjss2EKmHCQQbVvqh4oYiuZt3o+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=km+yHZZEmyDxF2v8Q8GkqeufLy73GyBy1cLfmz4LWqf+aMWHAUjiMnOuDC7EX0drZ
-	 3fTIdSp0lOQmBGSeo1daNSO1bNKbWXR7bjA5UT+KJ/y4Vu7NwqFrSDFTG0+PtpB265
-	 kUqYfbLJ2Wxu/B16mHU6/qlXhzddCFm2DwxJHjIE=
+	b=cUH6aXW0z4/ILS1LKVSkucM1T46zSWK0cO68IlC0I0FhIlZKgqjmM0RiQ6PV7V9uj
+	 pvi1Y+IZr+kqIEadBdAfz7ZJ8sfym5/ryy2kmac0B6MCtQoGq7oIPekjiGbRSVIFRR
+	 theIz6ZIAHfVpz0FS1t7zMyGVl4LmJmXXFO79yLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 342/563] mm/slub: Fix cmp_loc_by_count() to return 0 when counts are equal
-Date: Mon, 13 Oct 2025 16:43:23 +0200
-Message-ID: <20251013144423.658214774@linuxfoundation.org>
+Subject: [PATCH 6.17 360/563] wifi: mt76: mt7996: Convert mt7996_wed_rro_addr to LE
+Date: Mon, 13 Oct 2025 16:43:41 +0200
+Message-ID: <20251013144424.320323224@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,47 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit e1c4350327b39c9cad27b6c5779b3754384f26c8 ]
+[ Upstream commit 809054a60d613ccca6e7f243bc68966b58044163 ]
 
-The comparison function cmp_loc_by_count() used for sorting stack trace
-locations in debugfs currently returns -1 if a->count > b->count and 1
-otherwise. This breaks the antisymmetry property required by sort(),
-because when two counts are equal, both cmp(a, b) and cmp(b, a) return
-1.
+Do not use bitmask in mt7996_wed_rro_addr DMA descriptor in order to not
+break endianness
 
-This can lead to undefined or incorrect ordering results. Fix it by
-updating the comparison logic to explicitly handle the case when counts
-are equal, and use cmp_int() to ensure the comparison function adheres
-to the required mathematical properties of antisymmetry.
-
-Fixes: 553c0369b3e1 ("mm/slub: sort debugfs output by frequency of stack traces")
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 950d0abb5cd94 ("wifi: mt76: mt7996: add wed rx support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250909-mt7996-rro-rework-v5-11-7d66f6eb7795@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c   |  8 +++++---
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 11 +++++------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index d257141896c95..264fc76455d73 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -7731,10 +7731,7 @@ static int cmp_loc_by_count(const void *a, const void *b, const void *data)
- 	struct location *loc1 = (struct location *)a;
- 	struct location *loc2 = (struct location *)b;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index be729db5b75c1..84015ab24af62 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -734,6 +734,7 @@ void mt7996_wfsys_reset(struct mt7996_dev *dev)
+ static int mt7996_wed_rro_init(struct mt7996_dev *dev)
+ {
+ #ifdef CONFIG_NET_MEDIATEK_SOC_WED
++	u32 val = FIELD_PREP(WED_RRO_ADDR_SIGNATURE_MASK, 0xff);
+ 	struct mtk_wed_device *wed = &dev->mt76.mmio.wed;
+ 	u32 reg = MT_RRO_ADDR_ELEM_SEG_ADDR0;
+ 	struct mt7996_wed_rro_addr *addr;
+@@ -773,7 +774,7 @@ static int mt7996_wed_rro_init(struct mt7996_dev *dev)
  
--	if (loc1->count > loc2->count)
--		return -1;
--	else
--		return 1;
-+	return cmp_int(loc2->count, loc1->count);
- }
+ 		addr = dev->wed_rro.addr_elem[i].ptr;
+ 		for (j = 0; j < MT7996_RRO_WINDOW_MAX_SIZE; j++) {
+-			addr->signature = 0xff;
++			addr->data = cpu_to_le32(val);
+ 			addr++;
+ 		}
  
- static void *slab_debugfs_start(struct seq_file *seq, loff_t *ppos)
+@@ -791,7 +792,7 @@ static int mt7996_wed_rro_init(struct mt7996_dev *dev)
+ 	dev->wed_rro.session.ptr = ptr;
+ 	addr = dev->wed_rro.session.ptr;
+ 	for (i = 0; i < MT7996_RRO_WINDOW_MAX_LEN; i++) {
+-		addr->signature = 0xff;
++		addr->data = cpu_to_le32(val);
+ 		addr++;
+ 	}
+ 
+@@ -891,6 +892,7 @@ static void mt7996_wed_rro_free(struct mt7996_dev *dev)
+ static void mt7996_wed_rro_work(struct work_struct *work)
+ {
+ #ifdef CONFIG_NET_MEDIATEK_SOC_WED
++	u32 val = FIELD_PREP(WED_RRO_ADDR_SIGNATURE_MASK, 0xff);
+ 	struct mt7996_dev *dev;
+ 	LIST_HEAD(list);
+ 
+@@ -927,7 +929,7 @@ static void mt7996_wed_rro_work(struct work_struct *work)
+ 				MT7996_RRO_WINDOW_MAX_LEN;
+ reset:
+ 			elem = ptr + elem_id * sizeof(*elem);
+-			elem->signature = 0xff;
++			elem->data |= cpu_to_le32(val);
+ 		}
+ 		mt7996_mcu_wed_rro_reset_sessions(dev, e->id);
+ out:
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index b98cfe6e5be8c..048d9a9898c6e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -277,13 +277,12 @@ struct mt7996_hif {
+ 	int irq;
+ };
+ 
++#define WED_RRO_ADDR_SIGNATURE_MASK	GENMASK(31, 24)
++#define WED_RRO_ADDR_COUNT_MASK		GENMASK(14, 4)
++#define WED_RRO_ADDR_HEAD_HIGH_MASK	GENMASK(3, 0)
+ struct mt7996_wed_rro_addr {
+-	u32 head_low;
+-	u32 head_high : 4;
+-	u32 count: 11;
+-	u32 oor: 1;
+-	u32 rsv : 8;
+-	u32 signature : 8;
++	__le32 head_low;
++	__le32 data;
+ };
+ 
+ struct mt7996_wed_rro_session_id {
 -- 
 2.51.0
 
