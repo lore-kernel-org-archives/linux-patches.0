@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6458B2FE564;
-	Mon, 13 Oct 2025 15:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DD82FE564;
+	Mon, 13 Oct 2025 15:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369552; cv=none; b=FaMa4l1faAc2aN6P+NROg6buhC1c3AzznH0AYl7lAB8i0WLWiRKPWZDKjdvtPnZEtU1OMaqIMxgzbfO+1SypN/0G2JbBD858oaW7G0Uec9bs6LU+mYKRs4zS1IhlHUXxIf2/vWHtlqx7vfIyKpzX4z9Xd+HJf1JExdA7ZhRpw2o=
+	t=1760369555; cv=none; b=LbvLIKnmqtymGWOz93wrRenAUADPmE8ot91/fqu3fMm1TeRoVDhzpsTOMLJQ3Vp+NtO6J2atQTS4ZQ3EiGVMNTynxUASNFD11TKP1paFMhKoIAppbaYbQiNPRrMOLKvx98j8egygwHHwQD+O3CLH5TF8RO/9zkHN04I7T79o3sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369552; c=relaxed/simple;
-	bh=5UVdqTPr+TNpu++CYmLE8vu320R1qoTuzw349w/mj1U=;
+	s=arc-20240116; t=1760369555; c=relaxed/simple;
+	bh=QWnclDFuNMYmP9RYZNUEzDJ+SFURDxQvdsHDI2hCqqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=me1hbIH61X9StPk6AqgGLVgt2oLtE4BoPdEC0jo+9T9eMbhDJaBEIgjri3CskPJcSjC+nKulQmu0aB6KRqnWRbGavjQGC60IAwtPNRsVehJe7DlQjZ7skq5CqcxCp8QXkeyory12tPhJ224NceOy8RN5KZid0uzElu2Ahlyvus0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0+3Cs3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCDlGfCBvY5e0q29/Rcex6z5QEjSOicgG4gU8hrFD4z/wbmdzBJWtU4rIwml/c4i7F6FZZQ2iyM9idhtjUAEoa8IqtFiGAkq0GZy7NB0IzarpaKogNRunitUsSyCGN27nND+aVSIZbojA7ZG1+3tNFeoh9xa0XwT3MtA2jitMAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T56C1/W7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0+3Cs3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86110C4CEFE;
-	Mon, 13 Oct 2025 15:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T56C1/W7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F41BC4CEE7;
+	Mon, 13 Oct 2025 15:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369551;
-	bh=5UVdqTPr+TNpu++CYmLE8vu320R1qoTuzw349w/mj1U=;
+	s=korg; t=1760369554;
+	bh=QWnclDFuNMYmP9RYZNUEzDJ+SFURDxQvdsHDI2hCqqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0+3Cs3WvRRY8gc2mCX3g6fMFEAHF1sXSS6mnKecgi1FbsAH2mjlQyt4j8hBOikuv
-	 8VyQEcuxKg5QvCgaix7tKlaKXatl87+kPeScZN+ZRGKtAQ2RtlWfptKfSctAgVHIkG
-	 JCHspAGTRy/zTsUqJK14/klJX5zjBnwCDe+YeDfU=
+	b=T56C1/W7Tsv43JOiMRg4cOL2Ib2uZmTxhSP/qt07EPOZsB1qYUFTR//EKtheQsJgK
+	 erD6wfuL7lssXQ9CeGTKlgRi+Hq4uunb+yrDNEkmD9kFkGtC2PlmaO93h5rUdbzle6
+	 Pgjadxe5kD5uDJkOcP8zYvCIyKEi0UpSRLJge05E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 269/563] net: phy: introduce phy_id_compare_vendor() PHY ID helper
-Date: Mon, 13 Oct 2025 16:42:10 +0200
-Message-ID: <20251013144421.020763433@linuxfoundation.org>
+Subject: [PATCH 6.17 287/563] ipv6: use RCU in ip6_xmit()
+Date: Mon, 13 Oct 2025 16:42:28 +0200
+Message-ID: <20251013144421.667101407@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,67 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1abe21ef1adf0c5b6dbb5878c2fa4573df8d29fc ]
+[ Upstream commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c ]
 
-Introduce phy_id_compare_vendor() PHY ID helper to compare a PHY ID with
-the PHY ID Vendor using the generic PHY ID Vendor mask.
+Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
+possible UAF.
 
-While at it also rework the PHY_ID_MATCH macro and move the mask to
-dedicated define so that PHY driver can make use of the mask if needed.
-
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250823134431.4854-1-ansuelsmth@gmail.com
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b4d5cd20507b ("net: phy: as21xxx: better handle PHY HW reset on soft-reboot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/phy.h | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_output.c | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index bb45787d86848..04553419adc3f 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -1273,9 +1273,13 @@ struct phy_driver {
- #define to_phy_driver(d) container_of_const(to_mdio_common_driver(d),		\
- 				      struct phy_driver, mdiodrv)
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 1e1410237b6ef..e234640433d6b 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -268,35 +268,36 @@ bool ip6_autoflowlabel(struct net *net, const struct sock *sk)
+ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
+ {
+-	struct net *net = sock_net(sk);
+ 	const struct ipv6_pinfo *np = inet6_sk(sk);
+ 	struct in6_addr *first_hop = &fl6->daddr;
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst_dev(dst);
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 	struct hop_jumbo_hdr *hop_jumbo;
+ 	int hoplen = sizeof(*hop_jumbo);
++	struct net *net = sock_net(sk);
+ 	unsigned int head_room;
++	struct net_device *dev;
+ 	struct ipv6hdr *hdr;
+ 	u8  proto = fl6->flowi6_proto;
+ 	int seg_len = skb->len;
+-	int hlimit = -1;
++	int ret, hlimit = -1;
+ 	u32 mtu;
  
--#define PHY_ID_MATCH_EXACT(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 0)
--#define PHY_ID_MATCH_MODEL(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 4)
--#define PHY_ID_MATCH_VENDOR(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 10)
-+#define PHY_ID_MATCH_EXTACT_MASK GENMASK(31, 0)
-+#define PHY_ID_MATCH_MODEL_MASK GENMASK(31, 4)
-+#define PHY_ID_MATCH_VENDOR_MASK GENMASK(31, 10)
++	rcu_read_lock();
 +
-+#define PHY_ID_MATCH_EXACT(id) .phy_id = (id), .phy_id_mask = PHY_ID_MATCH_EXTACT_MASK
-+#define PHY_ID_MATCH_MODEL(id) .phy_id = (id), .phy_id_mask = PHY_ID_MATCH_MODEL_MASK
-+#define PHY_ID_MATCH_VENDOR(id) .phy_id = (id), .phy_id_mask = PHY_ID_MATCH_VENDOR_MASK
++	dev = dst_dev_rcu(dst);
+ 	head_room = sizeof(struct ipv6hdr) + hoplen + LL_RESERVED_SPACE(dev);
+ 	if (opt)
+ 		head_room += opt->opt_nflen + opt->opt_flen;
  
- /**
-  * phy_id_compare - compare @id1 with @id2 taking account of @mask
-@@ -1291,6 +1295,19 @@ static inline bool phy_id_compare(u32 id1, u32 id2, u32 mask)
- 	return !((id1 ^ id2) & mask);
+ 	if (unlikely(head_room > skb_headroom(skb))) {
+-		/* Make sure idev stays alive */
+-		rcu_read_lock();
++		/* idev stays alive while we hold rcu_read_lock(). */
+ 		skb = skb_expand_head(skb, head_room);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+-			rcu_read_unlock();
+-			return -ENOBUFS;
++			ret = -ENOBUFS;
++			goto unlock;
+ 		}
+-		rcu_read_unlock();
+ 	}
+ 
+ 	if (opt) {
+@@ -358,17 +359,21 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 		 * skb to its handler for processing
+ 		 */
+ 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
+-		if (unlikely(!skb))
+-			return 0;
++		if (unlikely(!skb)) {
++			ret = 0;
++			goto unlock;
++		}
+ 
+ 		/* hooks should never assume socket lock is held.
+ 		 * we promote our socket to non const
+ 		 */
+-		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+-			       net, (struct sock *)sk, skb, NULL, dev,
+-			       dst_output);
++		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
++			      net, (struct sock *)sk, skb, NULL, dev,
++			      dst_output);
++		goto unlock;
+ 	}
+ 
++	ret = -EMSGSIZE;
+ 	skb->dev = dev;
+ 	/* ipv6_local_error() does not require socket lock,
+ 	 * we promote our socket to non const
+@@ -377,7 +382,9 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
+ 	kfree_skb(skb);
+-	return -EMSGSIZE;
++unlock:
++	rcu_read_unlock();
++	return ret;
  }
+ EXPORT_SYMBOL(ip6_xmit);
  
-+/**
-+ * phy_id_compare_vendor - compare @id with @vendor mask
-+ * @id: PHY ID
-+ * @vendor_mask: PHY Vendor mask
-+ *
-+ * Return: true if the bits from @id match @vendor using the
-+ *	   generic PHY Vendor mask.
-+ */
-+static inline bool phy_id_compare_vendor(u32 id, u32 vendor_mask)
-+{
-+	return phy_id_compare(id, vendor_mask, PHY_ID_MATCH_VENDOR_MASK);
-+}
-+
- /**
-  * phydev_id_compare - compare @id with the PHY's Clause 22 ID
-  * @phydev: the PHY device
 -- 
 2.51.0
 
