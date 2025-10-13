@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7D03093C9;
-	Mon, 13 Oct 2025 15:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22273115A9;
+	Mon, 13 Oct 2025 15:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368127; cv=none; b=m3/xZ0hULEBw5FQneaM3480NOXfVuvaIIcjEd0a2de4RPIipvlOTsx8h4pYo8Qni8Sh85TZ+KDDHhV4OhMe0ZU3/ZaKf2k18jLQaXmf1VRYodctsAOAHX+74KCwqDcf7fl1Z7D9L4sdLMWwfTY/5UxdaQC/cYDsmHVNBEb6rWjE=
+	t=1760368130; cv=none; b=JB+/ug0q6PwZjQ6tpBKUCfZ5p1xOfccrQbhcLcDKSHSicfmYfKBC2q0YhSiRqQRjrjCUrJSSDR+3K9PVQBhRjjUkkDyRBgzq+tq1nqAVEX9KLZmUgJCqA2U25vXS7+u1wsrJvpbRu0pDOn67OJaounj3WrCtkGVsI6YrHTDGVF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368127; c=relaxed/simple;
-	bh=c52cp2Mq362xHgpMzwKWS5joqtAlHPq8sZ/xvOXwK24=;
+	s=arc-20240116; t=1760368130; c=relaxed/simple;
+	bh=mKk5N6+3NKiQiDQjyY/REGL+N/hch1f4VktunBszK0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgCEBUfcok3cpQCSYxCitzteNqQzitle8NzzdXCcYGShhpS2kA+B/JSLxT702diY4M6iV5zy/U/SJ8j7wirI+PL1+wInwX5PSkhiKh4Ie1Rd3xVYIPlmEgZ+ThTmQ52Kmgx/YwLxTMrVI0oplaFoYK0Y2k9xRWd2wXd879T4p0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJxKLbA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0ze27yF7sfl37rJplInZy/CjWktY01ewaGwrU18wR3VXokv530cf8hW3hTTjw4FlRVKUYpoZn5nluQlR7Rf7sdR1xc6NWRUuc5bh3sfu3wcTsbPgb3wHWms172OpbFabSPnlih9HIeCbnwF+Rqbh8j0NOnfCel3tD7Yk1/3Cqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ux0BWdGa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJxKLbA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E984AC4CEE7;
-	Mon, 13 Oct 2025 15:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ux0BWdGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB243C4CEE7;
+	Mon, 13 Oct 2025 15:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368127;
-	bh=c52cp2Mq362xHgpMzwKWS5joqtAlHPq8sZ/xvOXwK24=;
+	s=korg; t=1760368130;
+	bh=mKk5N6+3NKiQiDQjyY/REGL+N/hch1f4VktunBszK0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJxKLbA0nWhBNpVz99PKT3emcCD1IRwFkbkumzSCbivaqleU6SVLi1yxySlleW2ck
-	 k80O2909vWIlR3zTwU8VBB6iVWNv3fvnldKsLyuFtKt/pNrOhtEzPrMwcHRniXvlyJ
-	 a/o40+blZ1pSwEREqTzpuJB7f5A6SnmFvo8zXmLk=
+	b=Ux0BWdGarnzqssRiRPV1HT8l/JHuxe+sRYobY602j82NTV9rlIpClxVhjPalAhdRa
+	 V5jUbc/3tD/GBAOuxkuQ6PjzoSNdLIE+f6YBh442XrUJa0wHDhDEIna4AhhwPdFrZS
+	 IrzxsfhEBrVvGnWszMPCXdsY22I8jXzRm3jfLQK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Mike Christie <mchristi@redhat.com>,
-	"Richard W.M. Jones" <rjones@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Yu Kuai <yukuai1@huaweicloud.com>,
-	linux-block@vger.kernel.org,
-	nbd@other.debian.org,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/262] nbd: restrict sockets to TCP and UDP
-Date: Mon, 13 Oct 2025 16:43:15 +0200
-Message-ID: <20251013144328.039218970@linuxfoundation.org>
+Subject: [PATCH 6.12 054/262] PM / devfreq: rockchip-dfi: double count on RK3588
+Date: Mon, 13 Oct 2025 16:43:16 +0200
+Message-ID: <20251013144328.075353339@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -57,52 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 9f7c02e031570e8291a63162c6c046dc15ff85b0 ]
+[ Upstream commit f89c7fb83ae95578e355bed1a7aeea5f3ca5a067 ]
 
-Recently, syzbot started to abuse NBD with all kinds of sockets.
+On RK3588 with LPDDR4X memory, the cycle count as returned by
 
-Commit cf1b2326b734 ("nbd: verify socket is supported during setup")
-made sure the socket supported a shutdown() method.
+  perf stat -a -e rockchip_ddr/cycles/ sleep 1
 
-Explicitely accept TCP and UNIX stream sockets.
+consistently reads half as much as what the actual DDR frequency is at.
+For a LPDDR4X module running at 2112MHz, I get more like 1056059916
+cycles per second, which is almost bang-on half what it should be. No,
+I'm not mixing up megatransfers and megahertz.
 
-Fixes: cf1b2326b734 ("nbd: verify socket is supported during setup")
-Reported-by: syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/CANn89iJ+76eE3A_8S_zTpSyW5hvPRn6V57458hCZGY5hbH_bFA@mail.gmail.com/T/#m081036e8747cd7e2626c1da5d78c8b9d1e55b154
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mike Christie <mchristi@redhat.com>
-Cc: Richard W.M. Jones <rjones@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Yu Kuai <yukuai1@huaweicloud.com>
-Cc: linux-block@vger.kernel.org
-Cc: nbd@other.debian.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Consulting the downstream driver, this appears to be because the RK3588
+hardware specifically (and RK3528 as well, for future reference) needs a
+multiplier of 2 to get to the correct frequency with everything but
+LPDDR5.
+
+The RK3588's actual memory bandwidth measurements in MB/s are correct
+however, as confirmed with stress-ng --stream. This makes me think the
+access counters are not affected in the same way. This tracks with the
+vendor kernel not multiplying the access counts either.
+
+Solve this by adding a new member to the dfi struct, which each SoC can
+set to whatever they want, but defaults to 1 if left unset by the SoC
+init functions. The event_get_count op can then use this multiplier if
+the cycle count is requested.
+
+The cycle multiplier is not used in rockchip_dfi_get_event because the
+vendor driver doesn't use it there either, and we don't do other actual
+bandwidth unit conversion stuff in there anyway.
+
+Fixes: 481d97ba61e1 ("PM / devfreq: rockchip-dfi: add support for RK3588")
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Link: https://lore.kernel.org/lkml/20250530-rk3588-dfi-improvements-v1-1-6e077c243a95@collabora.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/devfreq/event/rockchip-dfi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index c705acc4d6f4b..de692eed98740 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1156,6 +1156,14 @@ static struct socket *nbd_get_socket(struct nbd_device *nbd, unsigned long fd,
- 	if (!sock)
- 		return NULL;
+diff --git a/drivers/devfreq/event/rockchip-dfi.c b/drivers/devfreq/event/rockchip-dfi.c
+index e2a1e4463b6f5..712df781436ce 100644
+--- a/drivers/devfreq/event/rockchip-dfi.c
++++ b/drivers/devfreq/event/rockchip-dfi.c
+@@ -116,6 +116,7 @@ struct rockchip_dfi {
+ 	int buswidth[DMC_MAX_CHANNELS];
+ 	int ddrmon_stride;
+ 	bool ddrmon_ctrl_single;
++	unsigned int count_multiplier;	/* number of data clocks per count */
+ };
  
-+	if (!sk_is_tcp(sock->sk) &&
-+	    !sk_is_stream_unix(sock->sk)) {
-+		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: should be TCP or UNIX.\n");
-+		*err = -EINVAL;
-+		sockfd_put(sock);
-+		return NULL;
-+	}
+ static int rockchip_dfi_enable(struct rockchip_dfi *dfi)
+@@ -435,7 +436,7 @@ static u64 rockchip_ddr_perf_event_get_count(struct perf_event *event)
+ 
+ 	switch (event->attr.config) {
+ 	case PERF_EVENT_CYCLES:
+-		count = total.c[0].clock_cycles;
++		count = total.c[0].clock_cycles * dfi->count_multiplier;
+ 		break;
+ 	case PERF_EVENT_READ_BYTES:
+ 		for (i = 0; i < dfi->max_channels; i++)
+@@ -656,6 +657,9 @@ static int rockchip_ddr_perf_init(struct rockchip_dfi *dfi)
+ 		break;
+ 	}
+ 
++	if (!dfi->count_multiplier)
++		dfi->count_multiplier = 1;
 +
- 	if (sock->ops->shutdown == sock_no_shutdown) {
- 		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: shutdown callout must be supported.\n");
- 		*err = -EINVAL;
+ 	ret = perf_pmu_register(pmu, "rockchip_ddr", -1);
+ 	if (ret)
+ 		return ret;
+@@ -752,6 +756,7 @@ static int rk3588_dfi_init(struct rockchip_dfi *dfi)
+ 	dfi->max_channels = 4;
+ 
+ 	dfi->ddrmon_stride = 0x4000;
++	dfi->count_multiplier = 2;
+ 
+ 	return 0;
+ };
 -- 
 2.51.0
 
