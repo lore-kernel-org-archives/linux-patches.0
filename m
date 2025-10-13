@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523B7311C20;
-	Mon, 13 Oct 2025 15:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513AE30C61C;
+	Mon, 13 Oct 2025 15:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368191; cv=none; b=Dp+GLtPI/MSrgMULVOFkLVFadvwOpZao32/pLKPQ/1Ulz6bueTwifsErLQ7Ia1FOytYvk2uzBVR7ydtsgxYH+ZsIcbDcpSUj249k3DsBhDPq4vlExp/ussbRh6bUWKd99RLYAwZR3pbay9do0Os1vQV5/xZdqRWm/NsTyP8aoW0=
+	t=1760368194; cv=none; b=ZrrQDw6aIQSrzgLcQRHoL+RZa/FqyNpB5gcvafw0w3szS0z/UPWHxMFzsW6Px8NUQsmg9oc4TNR0DHqcG0hJCph16zk0DwjMazOi/p1Nw+IWvK0X6e/HFoQXnAAiIr5pFUKQMNfooFTHhxPtgHnk63QIrfl9npU9T6Y5K1R62pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368191; c=relaxed/simple;
-	bh=ouN30tGe5Chl15z6LNQleJKIYr8SDDHv7ynvbfIyb1g=;
+	s=arc-20240116; t=1760368194; c=relaxed/simple;
+	bh=3U8/CXw9z4gNo82gXYBUiQAnevdp5vlc0ZC4U1SJCXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nKtj+jahx2RQaGWUa34QhIZ5qiTX18OVLtV0R8N1k4Eb2lrZ1wiP/KafISWDoK87T+JucLA1t6EkTvIkEVwvC8AdxoRTWFneTFf9rIsHI0IWdkwBvUX4TSXmGaP4ntW6tobTOW1ZcKGGKuKq1L3+SFTrnoaFsFfH2AJ5xa6Dv10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGGeICq9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bl7gOdXnBJWA7fx9C09W7C/a8DZ4YunVXejnf2VVKXf4dkb9u8FIcQpSL6IJtLqxZCOVZbuDObLTX1hxd2uySUMu5YC1S+gHcr6yIKNAtJ/hLiEh/grz2pz+z3L49ngWL6nhYiyelVZX3CEONraSlBsuTtdEyoGj0S1A5hBbb8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDiHGlc9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGGeICq9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF871C4CEE7;
-	Mon, 13 Oct 2025 15:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDiHGlc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EFBC4CEFE;
+	Mon, 13 Oct 2025 15:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368191;
-	bh=ouN30tGe5Chl15z6LNQleJKIYr8SDDHv7ynvbfIyb1g=;
+	s=korg; t=1760368194;
+	bh=3U8/CXw9z4gNo82gXYBUiQAnevdp5vlc0ZC4U1SJCXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGGeICq9OEQD17pGxpXYY/WudtgV5vpjd6cmOplacjmA0GoReEbQ5pUpUhUhKOXv9
-	 e2upXI0ssSP2AsFLVnoFcJIwbuinJBEFdha/oNSxsVzHtNonBp6P7O5h85BVMB9qOp
-	 aTgBX2Ub5MoXNw+pfGDNTRImoWXteMlHM+iw5MOk=
+	b=bDiHGlc9+V80I09GkMhSlk6B9HXJ7JarF61UWHK4rdGGeJPwYrbjH4S79Jg6X4fR9
+	 W3juuyiIgyiwhojsetHj7dfP3hqqE8BC1PZZg5XJcxUHaZ01C47wksjPh0aJ5y6OLj
+	 +6ca2ITkBsR2EB+8M6R5CYfto4KV/LwCidgdbqus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/262] pwm: tiehrpwm: Fix corner case in clock divisor calculation
-Date: Mon, 13 Oct 2025 16:43:30 +0200
-Message-ID: <20251013144328.577141589@linuxfoundation.org>
+Subject: [PATCH 6.12 077/262] smp: Fix up and expand the smp_call_function_many() kerneldoc
+Date: Mon, 13 Oct 2025 16:43:39 +0200
+Message-ID: <20251013144328.900469901@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -45,55 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
+[ Upstream commit ccf09357ffef2ab472369ab9cdf470c9bc9b821a ]
 
-The function set_prescale_div() is responsible for calculating the clock
-divisor settings such that the input clock rate is divided down such that
-the required period length is at most 0x10000 clock ticks. If period_cycles
-is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
-good enough. So round up in the calculation of the required divisor and
-compare it using >= instead of >.
+The smp_call_function_many() kerneldoc comment got out of sync with the
+function definition (bool parameter "wait" is incorrectly described as a
+bitmask in it), so fix it up by copying the "wait" description from the
+smp_call_function() kerneldoc and add information regarding the handling
+of the local CPU to it.
 
-Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 49b3bd213a9f ("smp: Fix all kernel-doc warnings")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/smp.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index a23e48b8523db..7a86cb090f76f 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -161,7 +161,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
- 
- 			*prescale_div = (1 << clkdiv) *
- 					(hspclkdiv ? (hspclkdiv * 2) : 1);
--			if (*prescale_div > rqst_prescaler) {
-+			if (*prescale_div >= rqst_prescaler) {
- 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
- 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
- 				return 0;
-@@ -224,7 +224,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	pc->period_cycles[pwm->hwpwm] = period_cycles;
- 
- 	/* Configure clock prescaler to support Low frequency PWM wave */
--	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
-+	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
- 			     &tb_divval)) {
- 		dev_err(pwmchip_parent(chip), "Unsupported values\n");
- 		return -EINVAL;
+diff --git a/kernel/smp.c b/kernel/smp.c
+index f25e20617b7eb..fa6faf50fb43b 100644
+--- a/kernel/smp.c
++++ b/kernel/smp.c
+@@ -891,16 +891,15 @@ static void smp_call_function_many_cond(const struct cpumask *mask,
+  * @mask: The set of cpus to run on (only runs on online subset).
+  * @func: The function to run. This must be fast and non-blocking.
+  * @info: An arbitrary pointer to pass to the function.
+- * @wait: Bitmask that controls the operation. If %SCF_WAIT is set, wait
+- *        (atomically) until function has completed on other CPUs. If
+- *        %SCF_RUN_LOCAL is set, the function will also be run locally
+- *        if the local CPU is set in the @cpumask.
+- *
+- * If @wait is true, then returns once @func has returned.
++ * @wait: If true, wait (atomically) until function has completed
++ *        on other CPUs.
+  *
+  * You must not call this function with disabled interrupts or from a
+  * hardware interrupt handler or from a bottom half handler. Preemption
+  * must be disabled when calling this function.
++ *
++ * @func is not called on the local CPU even if @mask contains it.  Consider
++ * using on_each_cpu_cond_mask() instead if this is not desirable.
+  */
+ void smp_call_function_many(const struct cpumask *mask,
+ 			    smp_call_func_t func, void *info, bool wait)
 -- 
 2.51.0
 
