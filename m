@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2482FF642;
-	Mon, 13 Oct 2025 15:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834C030CD80;
+	Mon, 13 Oct 2025 15:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368312; cv=none; b=GIk0P+8LYqlfwIYgeDwXvY7v2X5Cz9Gx/xwJ6gJsKQiL0p/4ZYv86o3nTJNYAHERNTc0dE8scHQ60Rf//yNenagCOTaLjoncIZzYUelKcwtJQbIcyw5DOhIzI06LiiXhzk9sJwtwYdEG4jM5MKCZEJtqj51iItyxcpw3T720oIw=
+	t=1760368315; cv=none; b=Xb2M39t5LKVMKiTqZJDFOl8zaZBkozB+upQ83kJTpLITY+anhjoGNXMbmGALOCxQO0ig9CbkO/9LXI7/pnRMmcH0hKf7i/DckWQ2ArGRTldQMZrCLhp+4g01KJjqT9wgOsHcxp6bKlODn7FK/vunVWjeKTGGGRzAyPUynHPtvxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368312; c=relaxed/simple;
-	bh=x7IYyjszqtxUwFdD8OtIoTtCgYy4I2IZcNrTeaOWNS4=;
+	s=arc-20240116; t=1760368315; c=relaxed/simple;
+	bh=UCm4saks1B3I7gt0SDBtZVYv2GpICc24XbkXddXzdDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=guMC6suXtlpBPDmJnu/Ai2WsYXJSYvCpSXmHhQXIQzhBnZHy76gdQ49PCuZ3++P/CN8JsSO7VYp3nBJPDmALcA374m1cEcf2Yk1IIu9DrxOJady1fN/iRAArMrDqB2oL/isGHGJ+67HOElDMPD93ezDrlPqGMnMrL3Z0JGWHqr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MX9WPWOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pOUzE9fDwNbpGv/HTfOCOXz8Cub2remnm1+Lf0PiXSm1LrDF+jCMWJukV7QZhGv/gZ3HlmG0v8bhCLDCLSJS/7PAivlWX966uDNmSLJ938OndCpa3HZGW79JM/+iNJJBdG8Eq7P6sUU7N9s6mMNgyO9+dRU+DU35cRT2JY9xY3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6yiUldn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MX9WPWOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DFBC4CEE7;
-	Mon, 13 Oct 2025 15:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6yiUldn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA233C4CEE7;
+	Mon, 13 Oct 2025 15:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368312;
-	bh=x7IYyjszqtxUwFdD8OtIoTtCgYy4I2IZcNrTeaOWNS4=;
+	s=korg; t=1760368315;
+	bh=UCm4saks1B3I7gt0SDBtZVYv2GpICc24XbkXddXzdDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MX9WPWOtrGk7kZr0W8ivzkxE1GUN7nUJqrK/SViMPJKdbi9PWQnqCs2HVf6JGYfLz
-	 va4swb1twnXR/dSs+Vg5oPvtAqu0HqGwAbD65b89193YJCGOUCwsgOkE3+W0htsTaG
-	 rJ4B01R3IYyl+tGG7DnYzOdNaSs8bLoeul5xzM/Y=
+	b=e6yiUldn2fy6h5/FcAgBxo4Sekt/53pz5pw/HZF60wYo/0E/6r+Dk4B4E/CY2K1pL
+	 UpWifZU1AEd+nUtnQzKXIv2ittfG2f0qZyBfM8taZm4uPTFIG16siepIBjUw9Hh/2h
+	 m1G418J0/Pe+n2Y1Bk6/w8TFIYA95Y2CPPHt8wxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/262] drm/amd/pm: Fix si_upload_smc_data (v3)
-Date: Mon, 13 Oct 2025 16:44:20 +0200
-Message-ID: <20251013144330.374603909@linuxfoundation.org>
+Subject: [PATCH 6.12 119/262] drm/amd/pm: Adjust si_upload_smc_data register programming (v3)
+Date: Mon, 13 Oct 2025 16:44:21 +0200
+Message-ID: <20251013144330.411709731@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,24 +54,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit a43b2cec04b02743338aa78f837ee0bdf066a6d5 ]
+[ Upstream commit ce025130127437dc884c84c254170e27b2ce9309 ]
 
-The si_upload_smc_data function uses si_write_smc_soft_register
-to set some register values in the SMC, and expects the result
-to be PPSMC_Result_OK which is 1.
+Based on some comments in dm_pp_display_configuration
+above the crtc_index and line_time fields, these values
+are programmed to the SMC to work around an SMC hang
+when it switches MCLK.
 
-The PPSMC_Result_OK / PPSMC_Result_Failed values are used for
-checking the result of a command sent to the SMC.
-However, the si_write_smc_soft_register actually doesn't send
-any commands to the SMC and returns zero on success,
-so this check was incorrect.
+According to Alex, the Windows driver programs them to:
+mclk_change_block_cp_min = 200 / line_time
+mclk_change_block_cp_max = 100 / line_time
+Let's use the same for the sake of consistency.
 
-Fix that by not checking the return value, just like other
-calls to si_write_smc_soft_register.
+Previously we used the watermark values, but it seemed buggy
+as the code was mixing up low/high and A/B watermarks, and
+was not saving a low watermark value on DCE 6, so
+mclk_change_block_cp_max would be always zero previously.
 
-v3:
-Additionally, when no display is plugged in, there is no need
-to restrict MCLK switching, so program the registers to zero.
+Split this change off from the previous si_upload_smc_data
+to make it easier to bisect, in case it causes any issues.
 
 Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
@@ -79,74 +80,24 @@ Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 43 ++++++++++++----------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-index 6a97ddcd695b5..341f2d796aeeb 100644
+index 341f2d796aeeb..a8fe6aa6845eb 100644
 --- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
 +++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -5789,9 +5789,9 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
- {
- 	struct amdgpu_crtc *amdgpu_crtc = NULL;
- 	int i;
--
--	if (adev->pm.dpm.new_active_crtc_count == 0)
--		return 0;
-+	u32 crtc_index = 0;
-+	u32 mclk_change_block_cp_min = 0;
-+	u32 mclk_change_block_cp_max = 0;
+@@ -5809,8 +5809,8 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
+ 		crtc_index = amdgpu_crtc->crtc_id;
  
- 	for (i = 0; i < adev->mode_info.num_crtc; i++) {
- 		if (adev->pm.dpm.new_active_crtcs & (1 << i)) {
-@@ -5800,26 +5800,31 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
+ 		if (amdgpu_crtc->line_time) {
+-			mclk_change_block_cp_min = amdgpu_crtc->wm_high / amdgpu_crtc->line_time;
+-			mclk_change_block_cp_max = amdgpu_crtc->wm_low / amdgpu_crtc->line_time;
++			mclk_change_block_cp_min = 200 / amdgpu_crtc->line_time;
++			mclk_change_block_cp_max = 100 / amdgpu_crtc->line_time;
  		}
  	}
  
--	if (amdgpu_crtc == NULL)
--		return 0;
-+	/* When a display is plugged in, program these so that the SMC
-+	 * performs MCLK switching when it doesn't cause flickering.
-+	 * When no display is plugged in, there is no need to restrict
-+	 * MCLK switching, so program them to zero.
-+	 */
-+	if (adev->pm.dpm.new_active_crtc_count && amdgpu_crtc) {
-+		crtc_index = amdgpu_crtc->crtc_id;
- 
--	if (amdgpu_crtc->line_time <= 0)
--		return 0;
-+		if (amdgpu_crtc->line_time) {
-+			mclk_change_block_cp_min = amdgpu_crtc->wm_high / amdgpu_crtc->line_time;
-+			mclk_change_block_cp_max = amdgpu_crtc->wm_low / amdgpu_crtc->line_time;
-+		}
-+	}
- 
--	if (si_write_smc_soft_register(adev,
--				       SI_SMC_SOFT_REGISTER_crtc_index,
--				       amdgpu_crtc->crtc_id) != PPSMC_Result_OK)
--		return 0;
-+	si_write_smc_soft_register(adev,
-+		SI_SMC_SOFT_REGISTER_crtc_index,
-+		crtc_index);
- 
--	if (si_write_smc_soft_register(adev,
--				       SI_SMC_SOFT_REGISTER_mclk_change_block_cp_min,
--				       amdgpu_crtc->wm_high / amdgpu_crtc->line_time) != PPSMC_Result_OK)
--		return 0;
-+	si_write_smc_soft_register(adev,
-+		SI_SMC_SOFT_REGISTER_mclk_change_block_cp_min,
-+		mclk_change_block_cp_min);
- 
--	if (si_write_smc_soft_register(adev,
--				       SI_SMC_SOFT_REGISTER_mclk_change_block_cp_max,
--				       amdgpu_crtc->wm_low / amdgpu_crtc->line_time) != PPSMC_Result_OK)
--		return 0;
-+	si_write_smc_soft_register(adev,
-+		SI_SMC_SOFT_REGISTER_mclk_change_block_cp_max,
-+		mclk_change_block_cp_max);
- 
- 	return 0;
- }
 -- 
 2.51.0
 
