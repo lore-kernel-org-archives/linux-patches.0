@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF8D1F1313;
-	Mon, 13 Oct 2025 15:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C8B2D5924;
+	Mon, 13 Oct 2025 15:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368587; cv=none; b=CH4CxAQ8u3Sxresu3nkhS6hn71Z700nJUwf0AdmOtBgNuDPWfwdjtCeG1eyAzWg326VvbNnr9IFqZiBqYi8aeQsamfK+D1RNOEm8xJr1e+MrUQGvgr5I5aWsq9P2GaetEQBScjyFZqkOzfP15jKfufU7jLq4BLTeWueFaIc0BV4=
+	t=1760368589; cv=none; b=FdOBoiLqvgSx9xFI+iUC7J92/+N4IZrww5cz0dyVHcxrmtpHihMr4e8uVECROq9LnsYiRnssAox52dqd/GdBEQB3gQZJX+VVYCiZsi167+pZD0uaLv7U7Siu1kS2wJBIuMc1qb/Ay3rn1fKqfesuBGTFCLEMFnIq7vd//0cdckE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368587; c=relaxed/simple;
-	bh=/8eZ5vNuKvykCOAN6353C2aAfPc5hZrCTYWyMTdc81E=;
+	s=arc-20240116; t=1760368589; c=relaxed/simple;
+	bh=5JTLJzMQblWjxor6KX3+JnK/59mcEaseGiyU8u6E8SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJpKac6l/4detB8WhtU+OsgJ3klRoaxG62hiFWDiG9FfpqwNfvx3sQAZWIR3okFZ1v2d3iBevogODpPezjwDpuRppVHIAuwR2Q1omNy9pmBgM4idZ+LpI1FmQqgUz7THTiWApCugSsBc7XQxO/ulfGKfQfUR4v/PIItPSGsiCPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muRwF2EV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjAVYFKFVjEUvcLdmp5u9Ig3dSejehXpiVLAnPqS0EjjKzt6enFUPx+4dQbZAlB3VfF5XMGGIuA+AUhRrUJKBgcqV2BvQT3EB//MsgYj0zfMTE1Sjox7L9fXMo4Ip3VzM1/P1Gd2x5TOoxMa3u3P5OP5TOM+kx/1FXr69QOjBZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj3G+Vu1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muRwF2EV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D295C4CEE7;
-	Mon, 13 Oct 2025 15:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj3G+Vu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558F9C4CEE7;
+	Mon, 13 Oct 2025 15:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368586;
-	bh=/8eZ5vNuKvykCOAN6353C2aAfPc5hZrCTYWyMTdc81E=;
+	s=korg; t=1760368589;
+	bh=5JTLJzMQblWjxor6KX3+JnK/59mcEaseGiyU8u6E8SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muRwF2EVWuxYkiCl3y5FVcE0eDEhkoe84PlIjI23O2GJ2MnzAjUX0hc9HUwX4QAu0
-	 rCrn5MjI10NQgIQlWzKtNOvYIXHNbB6EX1hv2tYl8KaODzkzjoOyz9JX18C8wl+pKl
-	 x+ePO0GmDhU4PWQljuAwQN7+sZM82nQcEdxa3x40=
+	b=sj3G+Vu12f06tuB6Z3AJ2g1Dp2LuIVDm1T8JiDadZM87ulovh9Mo3SO+Cj7U+rYWJ
+	 UUQBbPrrgRZK0g3Gv7TOJahMi3mnKjN5E8qUMs8C1B6oyH8Sb6vM71dGO5fdJoQ3kK
+	 c17WTNPpJ8nSQulNjpyupfcIk4OXcgtmM33st7AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Matthew Sakai <msakai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 180/262] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
-Date: Mon, 13 Oct 2025 16:45:22 +0200
-Message-ID: <20251013144332.610617003@linuxfoundation.org>
+Subject: [PATCH 6.12 181/262] dm vdo: return error on corrupted metadata in start_restoring_volume functions
+Date: Mon, 13 Oct 2025 16:45:23 +0200
+Message-ID: <20251013144332.646025398@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,47 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
+[ Upstream commit 9ddf6d3fcbe0b96e318da364cf7e6b59cd4cb5a2 ]
 
-enable_irq() and disable_irq() are reference counted, so we must make sure
-that each enable_irq() is always paired with a single disable_irq(). If we
-call disable_irq() twice followed by just a single enable_irq(), the IRQ
-will remain disabled forever.
+The return values of VDO_ASSERT calls that validate metadata are not acted
+upon.
 
-For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
-will end up being called twice, because disable_irq() also happens in
-qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
+Return UDS_CORRUPT_DATA in case of an error.
 
-Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
-qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
-sense to have the rollback handled always by qcom_q6v5_unprepare().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: a4eb7e255517 ("dm vdo: implement the volume index")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Reviewed-by: Matthew Sakai <msakai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/dm-vdo/indexer/volume-index.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 4ee5e67a9f03f..769c6d6d6a731 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -156,9 +156,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
- 	int ret;
+diff --git a/drivers/md/dm-vdo/indexer/volume-index.c b/drivers/md/dm-vdo/indexer/volume-index.c
+index 12f954a0c5325..afb062e1f1fb4 100644
+--- a/drivers/md/dm-vdo/indexer/volume-index.c
++++ b/drivers/md/dm-vdo/indexer/volume-index.c
+@@ -836,7 +836,7 @@ static int start_restoring_volume_sub_index(struct volume_sub_index *sub_index,
+ 				    "%zu bytes decoded of %zu expected", offset,
+ 				    sizeof(buffer));
+ 		if (result != VDO_SUCCESS)
+-			result = UDS_CORRUPT_DATA;
++			return UDS_CORRUPT_DATA;
  
- 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
--	if (!ret)
--		disable_irq(q6v5->handover_irq);
--
- 	return !ret ? -ETIMEDOUT : 0;
- }
- EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
+ 		if (memcmp(header.magic, MAGIC_START_5, MAGIC_SIZE) != 0) {
+ 			return vdo_log_warning_strerror(UDS_CORRUPT_DATA,
+@@ -928,7 +928,7 @@ static int start_restoring_volume_index(struct volume_index *volume_index,
+ 				    "%zu bytes decoded of %zu expected", offset,
+ 				    sizeof(buffer));
+ 		if (result != VDO_SUCCESS)
+-			result = UDS_CORRUPT_DATA;
++			return UDS_CORRUPT_DATA;
+ 
+ 		if (memcmp(header.magic, MAGIC_START_6, MAGIC_SIZE) != 0)
+ 			return vdo_log_warning_strerror(UDS_CORRUPT_DATA,
 -- 
 2.51.0
 
