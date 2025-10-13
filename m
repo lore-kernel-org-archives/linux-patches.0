@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0AC3081CA;
-	Mon, 13 Oct 2025 15:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3AA3081CF;
+	Mon, 13 Oct 2025 15:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369893; cv=none; b=tpJo8dbqR7HQ4ifQLfdhASQ3nC7pGjcr4mTsBjddnA8cWV7CrfSsXlo7LFeJjd2yTkIbvbBSTDG9bEbVnbAate4G0MhR95iYbaOxpVXyawjViEpORI/o9QxoVkPUagCWDUgaVBz0WHzvD/cyBYlMZD6YhdYkbW9mjqrvFg+l6jk=
+	t=1760369896; cv=none; b=GvMWKHU/pVUDucmO52k8IlfNVXOtQT3zoCnYfGbpRcQKvwilb9vzyyVxmx265SS2Zbyjo9iZIV+NnnMymffVd0uufk78aoBIdYRSnWN0DGwyjudKvW2EFEzkUWdn81a0BkWjgdEfHzLrkTr04cgrD6rVVZ2p/XiEl7mYV0sRavo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369893; c=relaxed/simple;
-	bh=CRLalObrrwh3kpnKA0FTeeaE+czaW/03MVO0p8tKIrw=;
+	s=arc-20240116; t=1760369896; c=relaxed/simple;
+	bh=I9p1mSI+7pjpMdVvUctSsNSyTYBC1E2bVzWcmV8gQcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8t+y4qDwF2HIM9MZUlwzwh3ZnXfikqqPfgD6cg+fZOvji7SRjBRHt/JUjPqRDufwIsxT64gGR7MmG6931n/eY/1A6DuE/eDm14p4mHrh24T4Kar6hm5p4fsURZpYJ1KrtEVZ45Q4lebX1uiYm4meTlYITlaseV14zZJkkUMLTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSXUdD6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MdAm+V4DITVoYu2CWSAQm0aMINxD3SIQmx5RyfTKgpG3vfkYmaLQUhtLvia8QcoKoCeNcQZwd5BBfwzW84GPjioF9BG9AaQJyFAb8jyQ6rZ5OTf6jwxv/y7oDkz/QnUkS9k4fQv0CeK3BTjd+w7QgarSml77Ts9+F2MSJJU8KwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tjp+vEXf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSXUdD6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B31C4CEE7;
-	Mon, 13 Oct 2025 15:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tjp+vEXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B583C2BCB5;
+	Mon, 13 Oct 2025 15:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369893;
-	bh=CRLalObrrwh3kpnKA0FTeeaE+czaW/03MVO0p8tKIrw=;
+	s=korg; t=1760369896;
+	bh=I9p1mSI+7pjpMdVvUctSsNSyTYBC1E2bVzWcmV8gQcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OSXUdD6XY6C/4pRqCYiDYQMcI1B9s9gi3Dx8FiU+nPG//1HsAsg5rmn1B4y6emWOo
-	 rBqDKc57eGT83UqpZtKivPyJDPQgGI6wncNFFOaQ0BvkKjPF17ymZqcu+lLJVBz8OJ
-	 ntMXXqTKuDjoXj3tGZYp040sxTdOheYK5yg5iT+Y=
+	b=Tjp+vEXfLgp5/RcEKcyoLwt12W0KOMOZscGilY7jfvwrxIXsGVOtkwU20xF+mX7fw
+	 Boc7/Lud7BWeyc8Jeu2phXzi58Cs02vMtYUWfkaFipUrZ2TUVrcqu9bwJJOsF1cwnj
+	 8+ja0FBO2V1t7Goec3r7EcYP98XZgyn4zHk56GbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 378/563] smc: Fix use-after-free in __pnet_find_base_ndev().
-Date: Mon, 13 Oct 2025 16:43:59 +0200
-Message-ID: <20251013144424.969170502@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Tony Rodriguez <unixpro1970@gmail.com>
+Subject: [PATCH 6.17 405/563] sparc: fix accurate exception reporting in copy_{from,to}_user for M7
+Date: Mon, 13 Oct 2025 16:44:26 +0200
+Message-ID: <20251013144425.959553951@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,210 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 3d3466878afd8d43ec0ca2facfbc7f03e40d0f79 ]
+[ Upstream commit 936fb512752af349fc30ccbe0afe14a2ae6d7159 ]
 
-syzbot reported use-after-free of net_device in __pnet_find_base_ndev(),
-which was called during connect(). [0]
+The referenced commit introduced exception handlers on user-space memory
+references in copy_from_user and copy_to_user. These handlers return from
+the respective function and calculate the remaining bytes left to copy
+using the current register contents. This commit fixes a couple of bad
+calculations. This will fix the return value of copy_from_user and
+copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
 
-smc_pnet_find_ism_resource() fetches sk_dst_get(sk)->dev and passes
-down to pnet_find_base_ndev(), where RTNL is held.  Then, UAF happened
-at __pnet_find_base_ndev() when the dev is first used.
-
-This means dev had already been freed before acquiring RTNL in
-pnet_find_base_ndev().
-
-While dev is going away, dst->dev could be swapped with blackhole_netdev,
-and the dev's refcnt by dst will be released.
-
-We must hold dev's refcnt before calling smc_pnet_find_ism_resource().
-
-Also, smc_pnet_find_roce_resource() has the same problem.
-
-Let's use __sk_dst_get() and dst_dev_rcu() in the two functions.
-
-[0]:
-BUG: KASAN: use-after-free in __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
-Read of size 1 at addr ffff888036bac33a by task syz.0.3632/18609
-
-CPU: 1 UID: 0 PID: 18609 Comm: syz.0.3632 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
- pnet_find_base_ndev net/smc/smc_pnet.c:946 [inline]
- smc_pnet_find_ism_by_pnetid net/smc/smc_pnet.c:1103 [inline]
- smc_pnet_find_ism_resource+0xef/0x390 net/smc/smc_pnet.c:1154
- smc_find_ism_device net/smc/af_smc.c:1030 [inline]
- smc_find_proposal_devices net/smc/af_smc.c:1115 [inline]
- __smc_connect+0x372/0x1890 net/smc/af_smc.c:1545
- smc_connect+0x877/0xd90 net/smc/af_smc.c:1715
- __sys_connect_file net/socket.c:2086 [inline]
- __sys_connect+0x313/0x440 net/socket.c:2105
- __do_sys_connect net/socket.c:2111 [inline]
- __se_sys_connect net/socket.c:2108 [inline]
- __x64_sys_connect+0x7a/0x90 net/socket.c:2108
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f47cbf8eba9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f47ccdb1038 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f47cc1d5fa0 RCX: 00007f47cbf8eba9
-RDX: 0000000000000010 RSI: 0000200000000280 RDI: 000000000000000b
-RBP: 00007f47cc011e19 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f47cc1d6038 R14: 00007f47cc1d5fa0 R15: 00007ffc512f8aa8
- </TASK>
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888036bacd00 pfn:0x36bac
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000000000 ffffea0001243d08 ffff8880b863fdc0 0000000000000000
-raw: ffff888036bacd00 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as freed
-page last allocated via order 2, migratetype Unmovable, gfp_mask 0x446dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO|__GFP_NOWARN|__GFP_RETRY_MAYFAIL|__GFP_COMP), pid 16741, tgid 16741 (syz-executor), ts 343313197788, free_ts 380670750466
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0x240/0x2a0 mm/page_alloc.c:1851
- prep_new_page mm/page_alloc.c:1859 [inline]
- get_page_from_freelist+0x21e4/0x22c0 mm/page_alloc.c:3858
- __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5148
- alloc_pages_mpol+0x232/0x4a0 mm/mempolicy.c:2416
- ___kmalloc_large_node+0x5f/0x1b0 mm/slub.c:4317
- __kmalloc_large_node_noprof+0x18/0x90 mm/slub.c:4348
- __do_kmalloc_node mm/slub.c:4364 [inline]
- __kvmalloc_node_noprof+0x6d/0x5f0 mm/slub.c:5067
- alloc_netdev_mqs+0xa3/0x11b0 net/core/dev.c:11812
- tun_set_iff+0x532/0xef0 drivers/net/tun.c:2775
- __tun_chr_ioctl+0x788/0x1df0 drivers/net/tun.c:3085
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:598 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-page last free pid 18610 tgid 18608 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- free_pages_prepare mm/page_alloc.c:1395 [inline]
- __free_frozen_pages+0xbc4/0xd30 mm/page_alloc.c:2895
- free_large_kmalloc+0x13a/0x1f0 mm/slub.c:4820
- device_release+0x99/0x1c0 drivers/base/core.c:-1
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x22b/0x480 lib/kobject.c:737
- netdev_run_todo+0xd2e/0xea0 net/core/dev.c:11513
- rtnl_unlock net/core/rtnetlink.c:157 [inline]
- rtnl_net_unlock include/linux/rtnetlink.h:135 [inline]
- rtnl_dellink+0x537/0x710 net/core/rtnetlink.c:3563
- rtnetlink_rcv_msg+0x7cc/0xb70 net/core/rtnetlink.c:6946
- netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
- netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
- netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1346
- netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- ____sys_sendmsg+0x505/0x830 net/socket.c:2614
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
- __sys_sendmsg net/socket.c:2700 [inline]
- __do_sys_sendmsg net/socket.c:2705 [inline]
- __se_sys_sendmsg net/socket.c:2703 [inline]
- __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Memory state around the buggy address:
- ffff888036bac200: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac280: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
->ffff888036bac300: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                                        ^
- ffff888036bac380: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac400: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
-Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
-Reported-by: syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68c237c7.050a0220.3c6139.0036.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 34060b8fffa7 ("arch/sparc: Add accurate exception reporting in M7memcpy")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on Oracle SPARC S7
+Tested-by: Tony Rodriguez <unixpro1970@gmail.com> # S7, see https://lore.kernel.org/r/98564e2e68df2dda0e00c67a75c7f7dfedb33c7e.camel@physik.fu-berlin.de
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-5-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ arch/sparc/lib/M7memcpy.S     | 20 ++++++++++----------
+ arch/sparc/lib/Memcpy_utils.S |  9 +++++++++
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index 76ad29e31d605..db3043b1e3fdb 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -1126,37 +1126,38 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
-  */
- void smc_pnet_find_roce_resource(struct sock *sk, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
--
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
-+	struct net_device *dev;
-+	struct dst_entry *dst;
+diff --git a/arch/sparc/lib/M7memcpy.S b/arch/sparc/lib/M7memcpy.S
+index cbd42ea7c3f7c..99357bfa8e82a 100644
+--- a/arch/sparc/lib/M7memcpy.S
++++ b/arch/sparc/lib/M7memcpy.S
+@@ -696,16 +696,16 @@ FUNC_NAME:
+ 	EX_LD_FP(LOAD(ldd, %o4+40, %f26), memcpy_retl_o2_plus_o5_plus_40)
+ 	faligndata %f24, %f26, %f10
+ 	EX_ST_FP(STORE(std, %f6, %o0+24), memcpy_retl_o2_plus_o5_plus_40)
+-	EX_LD_FP(LOAD(ldd, %o4+48, %f28), memcpy_retl_o2_plus_o5_plus_40)
++	EX_LD_FP(LOAD(ldd, %o4+48, %f28), memcpy_retl_o2_plus_o5_plus_32)
+ 	faligndata %f26, %f28, %f12
+-	EX_ST_FP(STORE(std, %f8, %o0+32), memcpy_retl_o2_plus_o5_plus_40)
++	EX_ST_FP(STORE(std, %f8, %o0+32), memcpy_retl_o2_plus_o5_plus_32)
+ 	add	%o4, 64, %o4
+-	EX_LD_FP(LOAD(ldd, %o4-8, %f30), memcpy_retl_o2_plus_o5_plus_40)
++	EX_LD_FP(LOAD(ldd, %o4-8, %f30), memcpy_retl_o2_plus_o5_plus_24)
+ 	faligndata %f28, %f30, %f14
+-	EX_ST_FP(STORE(std, %f10, %o0+40), memcpy_retl_o2_plus_o5_plus_40)
+-	EX_ST_FP(STORE(std, %f12, %o0+48), memcpy_retl_o2_plus_o5_plus_40)
++	EX_ST_FP(STORE(std, %f10, %o0+40), memcpy_retl_o2_plus_o5_plus_24)
++	EX_ST_FP(STORE(std, %f12, %o0+48), memcpy_retl_o2_plus_o5_plus_16)
+ 	add	%o0, 64, %o0
+-	EX_ST_FP(STORE(std, %f14, %o0-8), memcpy_retl_o2_plus_o5_plus_40)
++	EX_ST_FP(STORE(std, %f14, %o0-8), memcpy_retl_o2_plus_o5_plus_8)
+ 	fsrc2	%f30, %f14
+ 	bgu,pt	%xcc, .Lunalign_sloop
+ 	 prefetch [%o4 + (8 * BLOCK_SIZE)], 20
+@@ -728,7 +728,7 @@ FUNC_NAME:
+ 	add	%o4, 8, %o4
+ 	faligndata %f0, %f2, %f16
+ 	subcc	%o5, 8, %o5
+-	EX_ST_FP(STORE(std, %f16, %o0), memcpy_retl_o2_plus_o5)
++	EX_ST_FP(STORE(std, %f16, %o0), memcpy_retl_o2_plus_o5_plus_8)
+ 	fsrc2	%f2, %f0
+ 	bgu,pt	%xcc, .Lunalign_by8
+ 	 add	%o0, 8, %o0
+@@ -772,7 +772,7 @@ FUNC_NAME:
+ 	subcc	%o5, 0x20, %o5
+ 	EX_ST(STORE(stx, %o3, %o0 + 0x00), memcpy_retl_o2_plus_o5_plus_32)
+ 	EX_ST(STORE(stx, %g2, %o0 + 0x08), memcpy_retl_o2_plus_o5_plus_24)
+-	EX_ST(STORE(stx, %g7, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_24)
++	EX_ST(STORE(stx, %g7, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_16)
+ 	EX_ST(STORE(stx, %o4, %o0 + 0x18), memcpy_retl_o2_plus_o5_plus_8)
+ 	bne,pt	%xcc, 1b
+ 	 add	%o0, 0x20, %o0
+@@ -804,12 +804,12 @@ FUNC_NAME:
+ 	brz,pt	%o3, 2f
+ 	 sub	%o2, %o3, %o2
  
--	smc_pnet_find_roce_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_roce_by_pnetid(dev, ini);
-+		dev_put(dev);
-+	}
- }
- 
- void smc_pnet_find_ism_resource(struct sock *sk, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
-+	struct net_device *dev;
-+	struct dst_entry *dst;
- 
- 	ini->ism_dev[0] = NULL;
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
- 
--	smc_pnet_find_ism_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_ism_by_pnetid(dev, ini);
-+		dev_put(dev);
-+	}
- }
- 
- /* Lookup and apply a pnet table entry to the given ib device.
+-1:	EX_LD(LOAD(ldub, %o1 + 0x00, %g2), memcpy_retl_o2_plus_g1)
++1:	EX_LD(LOAD(ldub, %o1 + 0x00, %g2), memcpy_retl_o2_plus_o3)
+ 	add	%o1, 1, %o1
+ 	subcc	%o3, 1, %o3
+ 	add	%o0, 1, %o0
+ 	bne,pt	%xcc, 1b
+-	 EX_ST(STORE(stb, %g2, %o0 - 0x01), memcpy_retl_o2_plus_g1_plus_1)
++	 EX_ST(STORE(stb, %g2, %o0 - 0x01), memcpy_retl_o2_plus_o3_plus_1)
+ 2:
+ 	and	%o1, 0x7, %o3
+ 	brz,pn	%o3, .Lmedium_noprefetch_cp
+diff --git a/arch/sparc/lib/Memcpy_utils.S b/arch/sparc/lib/Memcpy_utils.S
+index 64fbac28b3db1..207343367bb2d 100644
+--- a/arch/sparc/lib/Memcpy_utils.S
++++ b/arch/sparc/lib/Memcpy_utils.S
+@@ -137,6 +137,15 @@ ENTRY(memcpy_retl_o2_plus_63_8)
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%o2, 8, %o0
+ ENDPROC(memcpy_retl_o2_plus_63_8)
++ENTRY(memcpy_retl_o2_plus_o3)
++	ba,pt	%xcc, __restore_asi
++	 add	%o2, %o3, %o0
++ENDPROC(memcpy_retl_o2_plus_o3)
++ENTRY(memcpy_retl_o2_plus_o3_plus_1)
++	add	%o3, 1, %o3
++	ba,pt	%xcc, __restore_asi
++	 add	%o2, %o3, %o0
++ENDPROC(memcpy_retl_o2_plus_o3_plus_1)
+ ENTRY(memcpy_retl_o2_plus_o5)
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%o2, %o5, %o0
 -- 
 2.51.0
 
