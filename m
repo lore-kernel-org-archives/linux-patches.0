@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E163161A6;
-	Mon, 13 Oct 2025 15:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9D23161BF;
+	Mon, 13 Oct 2025 15:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369261; cv=none; b=AWXqqUvZzKoW6DFNRM7COMDbz8zrG8BpceN1XB/+fZklkGSjWPJTX0naoiQvE4g/OhZWflJC5RpaN+TanMGE7rDbSIqhIj15vqgIuIxkkh3wX4FYR4Y9xpCaywWibkKwvLSkrpzQ2NAQiYvEf6MZzKLqiNNZJUOSUayjFV7OcKE=
+	t=1760369264; cv=none; b=cg+nsn6+I86jaOfeX4d0OUONKFCGtQSsfF0XyQNxg5XJVyu+eDgvYhE/6xCMDGKDyhlsISM671kmT85vb+ElZXRFAAAXfcXqLqOjxUKbmeM+f0ivdH3hNQEqF+3wHtz4iPQ7EnfCzQj39dfRDNshQdd5G0KY5DFWA4qXk2PpfQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369261; c=relaxed/simple;
-	bh=cnmoIyxay2scur52ZzGd+pgWgjhrbNc3OniGg0D5WPQ=;
+	s=arc-20240116; t=1760369264; c=relaxed/simple;
+	bh=GzIrFzEhUvZhTY+bAeXBqvbsbtEN6pyPkW6nKukX5IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWBuzXEs5xwhoe4h6Gg9U0j3YKfreCfPw2qNlmCeIhe5JwWCdnRqtrBFbsVFlOeFhqxyt2CWWaxYAC3ukcud3LPy3mFvO7NXccEI98pO74u/qJiqDzQRjV3JquAR/C9efL+eLbK5qeoVTmlF7COMuFxT1sXq3Rk4t51IhfcAV8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suab8+nG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTRmOzqMkjw4DpaNc9WbXtYfJLzHfGjcBRqa8VTGqaJJiBRd9FxohybK5PohmZA0L5ZxnrCXcWq+wKm19t3boGwY4iL582loz7yD3/gX6nuhdbMWw5oRzibN56GvDutoGlRRpD/uAdZc8Os2lySN+s6iq3JNTGcQxRHhSdiPR+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TPmFVz2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suab8+nG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9346CC16AAE;
-	Mon, 13 Oct 2025 15:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TPmFVz2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8498BC116B1;
+	Mon, 13 Oct 2025 15:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369260;
-	bh=cnmoIyxay2scur52ZzGd+pgWgjhrbNc3OniGg0D5WPQ=;
+	s=korg; t=1760369263;
+	bh=GzIrFzEhUvZhTY+bAeXBqvbsbtEN6pyPkW6nKukX5IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suab8+nGbQRe5p4yGCoes7uVVt5QfCmtl3XewFP4dbZaw/JRnp1rHjjNtnirROWwS
-	 P4alNGBPbd4zggeSGfklSqsARnpxO1TUXd+wT07bQJWAspFKuh0WZ+1y4jZBuIgMEw
-	 UyAiVm/QgxNAQx3/pyLUalXDTxI9yV09qKeo2Xks=
+	b=2TPmFVz2AQKorsyvi6pMyug4m/UAsoXAvOGo8RaaA+E678CqBBT/wHK2YM3629Oe1
+	 Ix9EDzd/XRTCyOiaroUDjb5vbTYlHYxOV7pCWUkMXBhnmSE9MjoFdHv3kuS1elfkQr
+	 z68wpM8/7UUM9M/9jO8S81+cmoNHeYr8fgCcKm5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 184/563] smp: Fix up and expand the smp_call_function_many() kerneldoc
-Date: Mon, 13 Oct 2025 16:40:45 +0200
-Message-ID: <20251013144417.948424917@linuxfoundation.org>
+Subject: [PATCH 6.17 185/563] mfd: max77705: max77705_charger: move active discharge setting to mfd parent
+Date: Mon, 13 Oct 2025 16:40:46 +0200
+Message-ID: <20251013144417.984222869@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,50 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-[ Upstream commit ccf09357ffef2ab472369ab9cdf470c9bc9b821a ]
+[ Upstream commit c24928ac69be2390cdf456d126b464af079c57ef ]
 
-The smp_call_function_many() kerneldoc comment got out of sync with the
-function definition (bool parameter "wait" is incorrectly described as a
-bitmask in it), so fix it up by copying the "wait" description from the
-smp_call_function() kerneldoc and add information regarding the handling
-of the local CPU to it.
+Active discharge setting is a part of MFD top level i2c device, hence
+cannot be controlled by charger. Writing to MAX77705_PMIC_REG_MAINCTRL1
+register from charger driver is a mistake.
 
-Fixes: 49b3bd213a9f ("smp: Fix all kernel-doc warnings")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Move active discharge setting to MFD parent driver.
+
+Fixes: a6a494c8e3ce ("power: supply: max77705: Add charger driver for Maxim 77705")
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Acked-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/smp.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/mfd/max77705.c                  | 3 +++
+ drivers/power/supply/max77705_charger.c | 3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/smp.c b/kernel/smp.c
-index 56f83aa58ec82..02f52291fae42 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -884,16 +884,15 @@ static void smp_call_function_many_cond(const struct cpumask *mask,
-  * @mask: The set of cpus to run on (only runs on online subset).
-  * @func: The function to run. This must be fast and non-blocking.
-  * @info: An arbitrary pointer to pass to the function.
-- * @wait: Bitmask that controls the operation. If %SCF_WAIT is set, wait
-- *        (atomically) until function has completed on other CPUs. If
-- *        %SCF_RUN_LOCAL is set, the function will also be run locally
-- *        if the local CPU is set in the @cpumask.
-- *
-- * If @wait is true, then returns once @func has returned.
-+ * @wait: If true, wait (atomically) until function has completed
-+ *        on other CPUs.
-  *
-  * You must not call this function with disabled interrupts or from a
-  * hardware interrupt handler or from a bottom half handler. Preemption
-  * must be disabled when calling this function.
-+ *
-+ * @func is not called on the local CPU even if @mask contains it.  Consider
-+ * using on_each_cpu_cond_mask() instead if this is not desirable.
-  */
- void smp_call_function_many(const struct cpumask *mask,
- 			    smp_call_func_t func, void *info, bool wait)
+diff --git a/drivers/mfd/max77705.c b/drivers/mfd/max77705.c
+index 6b263bacb8c28..ff07d0e0d5f8e 100644
+--- a/drivers/mfd/max77705.c
++++ b/drivers/mfd/max77705.c
+@@ -108,6 +108,9 @@ static int max77705_i2c_probe(struct i2c_client *i2c)
+ 	if (pmic_rev != MAX77705_PASS3)
+ 		return dev_err_probe(dev, -ENODEV, "Rev.0x%x is not tested\n", pmic_rev);
+ 
++	/* Active Discharge Enable */
++	regmap_update_bits(max77705->regmap, MAX77705_PMIC_REG_MAINCTRL1, 1, 1);
++
+ 	ret = devm_regmap_add_irq_chip(dev, max77705->regmap,
+ 					i2c->irq,
+ 					IRQF_ONESHOT | IRQF_SHARED, 0,
+diff --git a/drivers/power/supply/max77705_charger.c b/drivers/power/supply/max77705_charger.c
+index 329b430d0e506..3b75c82b9b9ea 100644
+--- a/drivers/power/supply/max77705_charger.c
++++ b/drivers/power/supply/max77705_charger.c
+@@ -487,9 +487,6 @@ static void max77705_charger_initialize(struct max77705_charger_data *chg)
+ 	regmap_update_bits(regmap, MAX77705_CHG_REG_CNFG_00,
+ 				MAX77705_WDTEN_MASK, 0);
+ 
+-	/* Active Discharge Enable */
+-	regmap_update_bits(regmap, MAX77705_PMIC_REG_MAINCTRL1, 1, 1);
+-
+ 	/* VBYPSET=5.0V */
+ 	regmap_update_bits(regmap, MAX77705_CHG_REG_CNFG_11, MAX77705_VBYPSET_MASK, 0);
+ 
 -- 
 2.51.0
 
