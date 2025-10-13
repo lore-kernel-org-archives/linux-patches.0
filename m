@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4541A30EF82;
-	Mon, 13 Oct 2025 15:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F345830EF82;
+	Mon, 13 Oct 2025 15:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368820; cv=none; b=gvgDfFjelJ1vw87KXchxPE2gw1bF8J/zMMIaWyHHyfu3nie0hW/iedzAjFsmK9Z2IYGfmbj24l/VXbflXHMBGUUHz7ADFdFcQC2aTbtVfkD2JZnngNLAYfLf2ZK03ryT7pQWYge3COr+ekFADbv/JwZPtN/GugzpgcR1GEmB9Lc=
+	t=1760368823; cv=none; b=rx6oeSK58ETPcU01oLlLbJZ58QRwZhWFrX7lifZYkjaHwgOQshCl/d46f4HMvABLxperRZ3R1LmuGdU3RgXq3YiMsP4tbZy3Zd0skqkXsnzyPEQJeqJjOoXj6UjP/D+pZunS/pxeIZ6uLewWiuS4yvDW2Ch033p6LEfjzzoKGkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368820; c=relaxed/simple;
-	bh=cCKL/GpQBM/yzaZZiRKviiESUFDZ8AGR6HX6jAJx7HE=;
+	s=arc-20240116; t=1760368823; c=relaxed/simple;
+	bh=dr/lMuXVn4mBwHaOQnRSege9anHnTsicA2QP0gZAfY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMZv0Oyu5pVm3oKNR9lAsVljef9kbNipAVD3eWvszK41g4OCgHDhHg9oqigsVQyWLW7J2b4B0SeWtwCUnSZiBwjwfCbCtl+9i6SmaWxlmw+/FyEJlb6g5zWwMJiTXfYwgDWdchhXKjVFdzyPBJzXYG2000dwfj891w0+E0WP2H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+Gdag3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJGI41GXqPe82VnQNFSS/HR6hbKg6+MB8jHaRImXlw85ve0yIqTMNsoh6hxEWQtzn5bBDu/uchu+M6yb+pKpUO4av1Y3dnbnXn/COh2tIkr18ZvEowF0BmeFbSqj3WgvDKg280FhiM86U1vv6JwdKutW5kyXxNtWVXIxesC0tYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtdKlqos; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+Gdag3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14FEC4CEE7;
-	Mon, 13 Oct 2025 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtdKlqos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3C9C4CEE7;
+	Mon, 13 Oct 2025 15:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368820;
-	bh=cCKL/GpQBM/yzaZZiRKviiESUFDZ8AGR6HX6jAJx7HE=;
+	s=korg; t=1760368822;
+	bh=dr/lMuXVn4mBwHaOQnRSege9anHnTsicA2QP0gZAfY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+Gdag3xRzw0loy8XKsNw6BHlwyxBbgZBu5Zi6VoEwcixH6tMgpjz4jq5EGROANWS
-	 RiNfXKGdXcZGxg5lzoWpyaRyPuK+T4djZvn07Y6VXSCecHTEPv+C+mWXnwPdThJ7SO
-	 CQooZdVXsCU7imB66vIgnqHPv7SvsYl48Ei8gSKA=
+	b=CtdKlqosEGVnzPJIIeg2Pf6IGCdeKqXh3/14I1cEofNv8ro+BRDiNgCgej7Skfblw
+	 wnrwrPbKI3RJ3UF4ho3J9UpymNLsuYvDiD1KFzASla7JFbdAkC5zUV6ZaRpV7I5TRe
+	 SBBf16LWc0pNaGMparmJ9v21dZTP3aebZ94DdDSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Jesus Ambriz Meza <jose.jesus.ambriz.meza@intel.com>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 031/563] EDAC/i10nm: Skip DIMM enumeration on a disabled memory controller
-Date: Mon, 13 Oct 2025 16:38:12 +0200
-Message-ID: <20251013144412.416135488@linuxfoundation.org>
+Subject: [PATCH 6.17 032/563] perf/x86/intel: Use early_initcall() to hook bts_init()
+Date: Mon, 13 Oct 2025 16:38:13 +0200
+Message-ID: <20251013144412.452937263@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,76 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 2e6fe1bbefd9c059c3787d1c620fe67343a94dff ]
+[ Upstream commit d9cf9c6884d21e01483c4e17479d27636ea4bb50 ]
 
-When loading the i10nm_edac driver on some Intel Granite Rapids servers,
-a call trace may appear as follows:
+After the commit 'd971342d38bf ("perf/x86/intel: Decouple BTS
+ initialization from PEBS initialization")' is introduced, x86_pmu.bts
+would initialized in bts_init() which is hooked by arch_initcall().
 
-  UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c:453:16
-  shift exponent -66 is negative
-  ...
-  __ubsan_handle_shift_out_of_bounds+0x1e3/0x390
-  skx_get_dimm_info.cold+0x47/0xd40 [skx_edac_common]
-  i10nm_get_dimm_config+0x23e/0x390 [i10nm_edac]
-  skx_register_mci+0x159/0x220 [skx_edac_common]
-  i10nm_init+0xcb0/0x1ff0 [i10nm_edac]
-  ...
+Whereas init_hw_perf_events() is hooked by early_initcall(). Once the
+core PMU is initialized, nmi watchdog initialization is called
+immediately before bts_init() is called. It leads to the BTS buffer is
+not really initialized since bts_init() is not called and x86_pmu.bts is
+still false at that time. Worse, BTS buffer would never be initialized
+then unless all core PMU events are freed and reserve_ds_buffers()
+is called again.
 
-This occurs because some BIOS may disable a memory controller if there
-aren't any memory DIMMs populated on this memory controller. The DIMMMTR
-register of this disabled memory controller contains the invalid value
-~0, resulting in the call trace above.
+Thus aligning with init_hw_perf_events(), use early_initcall() to hook
+bts_init() to ensure x86_pmu.bts is initialized before nmi watchdog
+initialization.
 
-Fix this call trace by skipping DIMM enumeration on a disabled memory
-controller.
-
-Fixes: ba987eaaabf9 ("EDAC/i10nm: Add Intel Granite Rapids server support")
-Reported-by: Jose Jesus Ambriz Meza <jose.jesus.ambriz.meza@intel.com>
-Reported-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Closes: https://lore.kernel.org/all/20250730063155.2612379-1-acelan.kao@canonical.com/
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Link: https://lore.kernel.org/r/20250806065707.3533345-1-qiuxu.zhuo@intel.com
+Fixes: d971342d38bf ("perf/x86/intel: Decouple BTS initialization from PEBS initialization")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20250820023032.17128-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/x86/events/intel/bts.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index bf4171ac191d3..9d00f247f4e0e 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -1057,6 +1057,15 @@ static bool i10nm_check_ecc(struct skx_imc *imc, int chan)
- 	return !!GET_BITFIELD(mcmtr, 2, 2);
+diff --git a/arch/x86/events/intel/bts.c b/arch/x86/events/intel/bts.c
+index 61da6b8a3d519..cbac54cb3a9ec 100644
+--- a/arch/x86/events/intel/bts.c
++++ b/arch/x86/events/intel/bts.c
+@@ -643,4 +643,4 @@ static __init int bts_init(void)
+ 
+ 	return perf_pmu_register(&bts_pmu, "intel_bts", -1);
  }
- 
-+static bool i10nm_channel_disabled(struct skx_imc *imc, int chan)
-+{
-+	u32 mcmtr = I10NM_GET_MCMTR(imc, chan);
-+
-+	edac_dbg(1, "mc%d ch%d mcmtr reg %x\n", imc->mc, chan, mcmtr);
-+
-+	return (mcmtr == ~0 || GET_BITFIELD(mcmtr, 18, 18));
-+}
-+
- static int i10nm_get_dimm_config(struct mem_ctl_info *mci,
- 				 struct res_config *cfg)
- {
-@@ -1070,6 +1079,11 @@ static int i10nm_get_dimm_config(struct mem_ctl_info *mci,
- 		if (!imc->mbase)
- 			continue;
- 
-+		if (i10nm_channel_disabled(imc, i)) {
-+			edac_dbg(1, "mc%d ch%d is disabled.\n", imc->mc, i);
-+			continue;
-+		}
-+
- 		ndimms = 0;
- 
- 		if (res_cfg->type != GNR)
+-arch_initcall(bts_init);
++early_initcall(bts_init);
 -- 
 2.51.0
 
