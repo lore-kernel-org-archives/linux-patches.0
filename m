@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AC9309EFA;
-	Mon, 13 Oct 2025 14:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFCF309F0A;
+	Mon, 13 Oct 2025 14:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367149; cv=none; b=ddKXMkzGMvXoZdl+QZSo4C3257tNWtHsw4WRqDbiMaQ6i0yxU3Q2nwHzOojm9oeqg5qDLQZNyCfJX1o485Jby6vfvMFxLNYkif3Xf0pBQRDFzlRzTQYqsfhYqFHM+EEhaGF9QPzhMoTW7WWRC4cVFHTM+onirWYZAhwNMxtjG7w=
+	t=1760367153; cv=none; b=AvBBOFD7IYS8D1ipWkmhIBOjSV2U5HNKne4Y4s87Iq72cqFTKMz0R/kCBGnyPzSPdrpTYkNvGhxdxl0p4Phu+OTVwGI3i5PvBRmZF3uHwvLL3YSgyd1HUahAPJd4sjQkv5wCmHNGJn/6vx9du8dMSaHGOBoU2E8GQ6R5j0VAjk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367149; c=relaxed/simple;
-	bh=Cq8LXpXX532+otaSRd8DrzKhZ+SC2UnrBqjWcjUx2nU=;
+	s=arc-20240116; t=1760367153; c=relaxed/simple;
+	bh=l5Q1HNxPkcqgZ1lkEGrjSv1asNVw+i33zN9lSSTmQ3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DYUG7bzxd64QapU7gKJvuyZUfY6d9knEv/GcSqJT09pDjXRCdJ5s1SEL/bLTs1/BA5GMUY5Tx6ZuzNowN7G+X3YniQeek7uPKSM3aXOg3uLlPfSaXs3YHPbQQKteWDpdO9YFIrzS7t9db9geV9NU+vqu1UtqWZQ9i/67a5L1HLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AQZf48s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9azy5S6A0cSGEXsn2Pla7nfZDKftdyNazKSK6aay5OwWmBJirIhY/VdNtVIAmvo+EVrv4G7ajarh51CZKJrogizx5AwJzaTs4RpldWXh848/Y19gp9Xe4qV46VZUPVwX7vLOWLoCGswTDVj2JvMie9xCUp0SrBvDYZQ/7Zv5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hey5XJRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AQZf48s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F7EC4CEE7;
-	Mon, 13 Oct 2025 14:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hey5XJRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEF8C4CEE7;
+	Mon, 13 Oct 2025 14:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367149;
-	bh=Cq8LXpXX532+otaSRd8DrzKhZ+SC2UnrBqjWcjUx2nU=;
+	s=korg; t=1760367152;
+	bh=l5Q1HNxPkcqgZ1lkEGrjSv1asNVw+i33zN9lSSTmQ3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AQZf48sMCu/y43ZoysbWA/JJK5Pm6NgXHDxxuyONTSzbKdPo+fmTimsOKToUYqMd
-	 fT4DSm6xTvGQQRomgyMSociWVi6O4uTlAXL6KNilEVDARK8WVtRfaLXtxdKdnjiMZQ
-	 wZvDGi/z1SKi73MLnQSkmA+yj4SCDBSHXn/rsVkM=
+	b=Hey5XJRjj1SyKmXoVywxsY3rCM9dDFAgqSUHBYwII114/z2Y7VexS6Nzb6azqfgq3
+	 omgVM8umJfMlSLKfMSIjU/Y0++P5JctubZ6BEsNPKxreUWZ5lMOdxJhsyBANkVt1rP
+	 GrJV7TQs6oTjoC63cxhxylKCeZuYMvriWbTRW8Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
+	Jeff Chen <jeff.chen_1@nxp.con>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/196] drm/amd/pm: Disable SCLK switching on Oland with high pixel clocks (v3)
-Date: Mon, 13 Oct 2025 16:44:42 +0200
-Message-ID: <20251013144318.642378679@linuxfoundation.org>
+Subject: [PATCH 6.1 110/196] wifi: mwifiex: send world regulatory domain to driver
+Date: Mon, 13 Oct 2025 16:44:43 +0200
+Message-ID: <20251013144318.678300558@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -45,100 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Stefan Kerkmann <s.kerkmann@pengutronix.de>
 
-[ Upstream commit 7009e3af0474aca5f64262b3c72fb6e23b232f9b ]
+[ Upstream commit 56819d00bc2ebaa6308913c28680da5d896852b8 ]
 
-Port of commit 227545b9a08c ("drm/radeon/dpm: Disable sclk
-switching on Oland when two 4K 60Hz monitors are connected")
+The world regulatory domain is a restrictive subset of channel
+configurations which allows legal operation of the adapter all over the
+world. Changing to this domain should not be prevented.
 
-This is an ad-hoc DPM fix, necessary because we don't have
-proper bandwidth calculation for DCE 6.
-
-We define "high pixelclock" for SI as higher than necessary
-for 4K 30Hz. For example, 4K 60Hz and 1080p 144Hz fall into
-this category.
-
-When two high pixel clock displays are connected to Oland,
-additionally disable shader clock switching, which results in
-a higher voltage, thereby addressing some visible flickering.
-
-v2:
-Add more comments.
-v3:
-Split into two commits for easier review.
-
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: dd4a9ac05c8e1 ("mwifiex: send regulatory domain info to firmware only if alpha2 changed") changed
+Signed-off-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.con>
+Link: https://patch.msgid.link/20250804-fix-mwifiex-regulatory-domain-v1-1-e4715c770c4d@pengutronix.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 31 ++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-index b3c011542daf7..7a85c042a6db9 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3430,12 +3430,14 @@ static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
- {
- 	struct  si_ps *ps = si_get_ps(rps);
- 	struct amdgpu_clock_and_voltage_limits *max_limits;
-+	struct amdgpu_connector *conn;
- 	bool disable_mclk_switching = false;
- 	bool disable_sclk_switching = false;
- 	u32 mclk, sclk;
- 	u16 vddc, vddci, min_vce_voltage = 0;
- 	u32 max_sclk_vddc, max_mclk_vddci, max_mclk_vddc;
- 	u32 max_sclk = 0, max_mclk = 0;
-+	u32 high_pixelclock_count = 0;
- 	int i;
- 
- 	if (adev->asic_type == CHIP_HAINAN) {
-@@ -3463,6 +3465,35 @@ static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
- 		}
+diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+index 5e25060647b2d..3b9b75eb4cdb8 100644
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -659,10 +659,9 @@ static void mwifiex_reg_notifier(struct wiphy *wiphy,
+ 		return;
  	}
  
-+	/* We define "high pixelclock" for SI as higher than necessary for 4K 30Hz.
-+	 * For example, 4K 60Hz and 1080p 144Hz fall into this category.
-+	 * Find number of such displays connected.
-+	 */
-+	for (i = 0; i < adev->mode_info.num_crtc; i++) {
-+		if (!(adev->pm.dpm.new_active_crtcs & (1 << i)) ||
-+			!adev->mode_info.crtcs[i]->enabled)
-+			continue;
-+
-+		conn = to_amdgpu_connector(adev->mode_info.crtcs[i]->connector);
-+
-+		if (conn->pixelclock_for_modeset > 297000)
-+			high_pixelclock_count++;
-+	}
-+
-+	/* These are some ad-hoc fixes to some issues observed with SI GPUs.
-+	 * They are necessary because we don't have something like dce_calcs
-+	 * for these GPUs to calculate bandwidth requirements.
-+	 */
-+	if (high_pixelclock_count) {
-+		/* On Oland, we observe some flickering when two 4K 60Hz
-+		 * displays are connected, possibly because voltage is too low.
-+		 * Raise the voltage by requiring a higher SCLK.
-+		 * (Voltage cannot be adjusted independently without also SCLK.)
-+		 */
-+		if (high_pixelclock_count > 1 && adev->asic_type == CHIP_OLAND)
-+			disable_sclk_switching = true;
-+	}
-+
- 	if (rps->vce_active) {
- 		rps->evclk = adev->pm.dpm.vce_states[adev->pm.dpm.vce_level].evclk;
- 		rps->ecclk = adev->pm.dpm.vce_states[adev->pm.dpm.vce_level].ecclk;
+-	/* Don't send world or same regdom info to firmware */
+-	if (strncmp(request->alpha2, "00", 2) &&
+-	    strncmp(request->alpha2, adapter->country_code,
+-		    sizeof(request->alpha2))) {
++	/* Don't send same regdom info to firmware */
++	if (strncmp(request->alpha2, adapter->country_code,
++		    sizeof(request->alpha2)) != 0) {
+ 		memcpy(adapter->country_code, request->alpha2,
+ 		       sizeof(request->alpha2));
+ 		mwifiex_send_domain_info_cmd_fw(wiphy);
 -- 
 2.51.0
 
