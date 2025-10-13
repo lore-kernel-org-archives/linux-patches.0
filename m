@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FD530EF82;
-	Mon, 13 Oct 2025 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B61730F529;
+	Mon, 13 Oct 2025 15:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368826; cv=none; b=h8kLECMt77yvVy2h43TVqZbbvSp5kvlnUdm+zs9MVLxAlizcjNYeNI34Y3lIwYY9r02lVHTFWivNTrK8XwmROYuExVX1bQCFmTK50dD6Uw1MJhlLYKmF/Im382INZF+osn3xwOc61cpJnSYs+CAdDKCIGJBBVAvQPJeuKcxqgbU=
+	t=1760368829; cv=none; b=SDTEDZced8d5+ahYIPZoZpet1OM1d0GFGUDKWCL+0h6qh5oICg1PoiUKOLXYGdoE3xF9QFKYhrorL4TKAbT+72WOSurJSmBNgeXtkGZvJkaci1230UaPTvL6EEpuEG+Lln5yPrNgqwfCCJQCk3mVpLHubXERLutpaqaTn+fl67I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368826; c=relaxed/simple;
-	bh=NbmYe5dihMq1aZnnpexAVIbIXPxe4erTlThoiGKhfv8=;
+	s=arc-20240116; t=1760368829; c=relaxed/simple;
+	bh=U5Sa7W3wntIUXwBEIvxwAI9pVrePJioZoT4ci+wcrFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8Uzr5x0l4JQCurOJjEC8G5SBSovxZDvZrOSytbDCZq2Gag3N1QkKhtXFyWu5OempgmPdOam6Wwp9H/pguDMkeWwMvYGaWRa+EqD2swuLzjxGtzvaFqiBEufktIEANDfAabgTTbyyy9bcIX1LhFNPel8upneSWF6z/c6BSjwbDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDJK5PJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dHwZlVLs6LdVb4POSadtKiJOEgjv+F00VYK8WRnyv7Rpun7wkqsfAurRhgnUS45f55WtujVpw2vEUUb+Fuw3lzViQ5991txR+EAqeRAhf7Xo0zzydpqexJgMNbrB0K5TdPv2iq/8SuCpilvk8gvMQ2dBy2giqgqjlJOydAXXOe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3lC8d1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDJK5PJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C502C116C6;
-	Mon, 13 Oct 2025 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3lC8d1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76929C116C6;
+	Mon, 13 Oct 2025 15:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368825;
-	bh=NbmYe5dihMq1aZnnpexAVIbIXPxe4erTlThoiGKhfv8=;
+	s=korg; t=1760368828;
+	bh=U5Sa7W3wntIUXwBEIvxwAI9pVrePJioZoT4ci+wcrFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDJK5PJNfiSNBSXTKQfjm7iZNffrj5Bpo16/VA7ekvPGJHMmzdJf5/89i74hqgx86
-	 zdUbHsnLeKFJRv6e10mHei4Yhecq/Opnqj6HfvIpgmydd2FbQlUQ0pUZChWAFj14hJ
-	 5qEuz8dY8C6E7qQbjejoMepTwn+ro4cjISI4Y71s=
+	b=y3lC8d1n+t3b6C8qVSJxTpqnUDwekrJf1ybXcJfCkTuaN0hYmJ1DfZfQhslfry/Xh
+	 PCHxC9fNVfFY0YZtyM2XAtgCPX0y8wIqCs35T4b6C2BEdkJmtnei2YFm9i5QU/dhd4
+	 qGlGtn6109URbdE7zjmjCQKzYfTnwVub3qJTb3MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 033/563] perf/x86/intel: Fix IA32_PMC_x_CFG_B MSRs access error
-Date: Mon, 13 Oct 2025 16:38:14 +0200
-Message-ID: <20251013144412.488907664@linuxfoundation.org>
+Subject: [PATCH 6.17 034/563] x86/vdso: Fix output operand size of RDPID
+Date: Mon, 13 Oct 2025 16:38:15 +0200
+Message-ID: <20251013144412.525502981@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,90 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 43796f30507802d93ead2dc44fc9637f34671a89 ]
+[ Upstream commit ac9c408ed19d535289ca59200dd6a44a6a2d6036 ]
 
-When running perf_fuzzer on PTL, sometimes the below "unchecked MSR
- access error" is seen when accessing IA32_PMC_x_CFG_B MSRs.
+RDPID instruction outputs to a word-sized register (64-bit on x86_64 and
+32-bit on x86_32). Use an unsigned long variable to store the correct size.
 
-[   55.611268] unchecked MSR access error: WRMSR to 0x1986 (tried to write 0x0000000200000001) at rIP: 0xffffffffac564b28 (native_write_msr+0x8/0x30)
-[   55.611280] Call Trace:
-[   55.611282]  <TASK>
-[   55.611284]  ? intel_pmu_config_acr+0x87/0x160
-[   55.611289]  intel_pmu_enable_acr+0x6d/0x80
-[   55.611291]  intel_pmu_enable_event+0xce/0x460
-[   55.611293]  x86_pmu_start+0x78/0xb0
-[   55.611297]  x86_pmu_enable+0x218/0x3a0
-[   55.611300]  ? x86_pmu_enable+0x121/0x3a0
-[   55.611302]  perf_pmu_enable+0x40/0x50
-[   55.611307]  ctx_resched+0x19d/0x220
-[   55.611309]  __perf_install_in_context+0x284/0x2f0
-[   55.611311]  ? __pfx_remote_function+0x10/0x10
-[   55.611314]  remote_function+0x52/0x70
-[   55.611317]  ? __pfx_remote_function+0x10/0x10
-[   55.611319]  generic_exec_single+0x84/0x150
-[   55.611323]  smp_call_function_single+0xc5/0x1a0
-[   55.611326]  ? __pfx_remote_function+0x10/0x10
-[   55.611329]  perf_install_in_context+0xd1/0x1e0
-[   55.611331]  ? __pfx___perf_install_in_context+0x10/0x10
-[   55.611333]  __do_sys_perf_event_open+0xa76/0x1040
-[   55.611336]  __x64_sys_perf_event_open+0x26/0x30
-[   55.611337]  x64_sys_call+0x1d8e/0x20c0
-[   55.611339]  do_syscall_64+0x4f/0x120
-[   55.611343]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+LSL outputs to 32-bit register, use %k operand prefix to always print the
+32-bit name of the register.
 
-On PTL, GP counter 0 and 1 doesn't support auto counter reload feature,
-thus it would trigger a #GP when trying to write 1 on bit 0 of CFG_B MSR
-which requires to enable auto counter reload on GP counter 0.
+Use RDPID insn mnemonic while at it as the minimum binutils version of
+2.30 supports it.
 
-The root cause of causing this issue is the check for auto counter
-reload (ACR) counter mask from user space is incorrect in
-intel_pmu_acr_late_setup() helper. It leads to an invalid ACR counter
-mask from user space could be set into hw.config1 and then written into
-CFG_B MSRs and trigger the MSR access warning.
+  [ bp: Merge two patches touching the same function into a single one. ]
 
-e.g., User may create a perf event with ACR counter mask (config2=0xcb),
-and there is only 1 event created, so "cpuc->n_events" is 1.
-
-The correct check condition should be "i + idx >= cpuc->n_events"
-instead of "i + idx > cpuc->n_events" (it looks a typo). Otherwise,
-the counter mask would traverse twice and an invalid "cpuc->assign[1]"
-bit (bit 0) is set into hw.config1 and cause MSR accessing error.
-
-Besides, also check if the ACR counter mask corresponding events are
-ACR events. If not, filter out these counter mask. If a event is not a
-ACR event, it could be scheduled to an HW counter which doesn't support
-ACR. It's invalid to add their counter index in ACR counter mask.
-
-Furthermore, remove the WARN_ON_ONCE() since it's easily triggered as
-user could set any invalid ACR counter mask and the warning message
-could mislead users.
-
-Fixes: ec980e4facef ("perf/x86/intel: Support auto counter reload")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20250820023032.17128-3-dapeng1.mi@linux.intel.com
+Fixes: ffebbaedc861 ("x86/vdso: Introduce helper functions for CPU and node number")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250616095315.230620-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/segment.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index c2fb729c270ec..15da60cf69f20 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2997,7 +2997,8 @@ static void intel_pmu_acr_late_setup(struct cpu_hw_events *cpuc)
- 			if (event->group_leader != leader->group_leader)
- 				break;
- 			for_each_set_bit(idx, (unsigned long *)&event->attr.config2, X86_PMC_IDX_MAX) {
--				if (WARN_ON_ONCE(i + idx > cpuc->n_events))
-+				if (i + idx >= cpuc->n_events ||
-+				    !is_acr_event_group(cpuc->event_list[i + idx]))
- 					return;
- 				__set_bit(cpuc->assign[i + idx], (unsigned long *)&event->hw.config1);
- 			}
+diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
+index 77d8f49b92bdd..f59ae7186940a 100644
+--- a/arch/x86/include/asm/segment.h
++++ b/arch/x86/include/asm/segment.h
+@@ -244,7 +244,7 @@ static inline unsigned long vdso_encode_cpunode(int cpu, unsigned long node)
+ 
+ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
+ {
+-	unsigned int p;
++	unsigned long p;
+ 
+ 	/*
+ 	 * Load CPU and node number from the GDT.  LSL is faster than RDTSCP
+@@ -254,10 +254,10 @@ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
+ 	 *
+ 	 * If RDPID is available, use it.
+ 	 */
+-	alternative_io ("lsl %[seg],%[p]",
+-			".byte 0xf3,0x0f,0xc7,0xf8", /* RDPID %eax/rax */
++	alternative_io ("lsl %[seg],%k[p]",
++			"rdpid %[p]",
+ 			X86_FEATURE_RDPID,
+-			[p] "=a" (p), [seg] "r" (__CPUNODE_SEG));
++			[p] "=r" (p), [seg] "r" (__CPUNODE_SEG));
+ 
+ 	if (cpu)
+ 		*cpu = (p & VDSO_CPUNODE_MASK);
 -- 
 2.51.0
 
