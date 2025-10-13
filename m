@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD9225B663;
-	Mon, 13 Oct 2025 15:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD30318144;
+	Mon, 13 Oct 2025 15:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369278; cv=none; b=mVODFcpxgL88IwE2lPsb7IIRi866vwAezJfL2kHx5V4H3joxZkyay6Vhmmb8CXxEz04Mfbo8ewK5Q2v2TteaLwFX556eZTI+yxVRTV2Vyhr89oAQVDI835ZZ2SbqW0g35ML9oxt/IYrpxXROX0UMQ2iEA63+BZ6LjpkMj3tfavQ=
+	t=1760369282; cv=none; b=Lg/9e/KZ+XqQD9z/x3SP0XEIDw66/2i4Vv8P04G0aB/PE8CHxzaxqhkHyr77MJLX7qfn0HhR65g8/JdnOV5Qptchge0DIIs0dM22PRFuzjTJF8V9MPSQv0MhLydQ5rGr4E+vMYtpIBufow+qcjGKhAU7+He4N8G3akSA+VvunqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369278; c=relaxed/simple;
-	bh=+g8a78zURAS++fvM5nmoU1wZ2Lq0bDNcgYmoXu/rDfg=;
+	s=arc-20240116; t=1760369282; c=relaxed/simple;
+	bh=GFwMyrWxiZbW4Lq/lhCMvSXjcay59XAdPilzVDwnrbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ORLEb9LMyEO5pkTcQI5yeXjEHc1aaVMAg76+8O2oR4IxAbI7KLOShGlzIM6qAm1EVns49sKPkmAV5plReqJXAlIGDl7TwkBL8Vo/+BLUHXTvL1TCm6ZSQmqRgN4IbGfv5Sje6xmMrcw8Fgs6yHyvZ4OS0kF+o637bl/iM2bkOCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUCCx8Rw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WAjP2CX8z9+LAjFLZ532P8KEKwxMe+hxDgoSOWmShjpGgEHxn7xV6jyMor0ou9n0Zau33lLY0TvOqOI1vH/C6LejW7PkqhAtUrNGD43AVSPdiQBsrT3LpGVd0BhvlB9VTXbkxbzEOQNWGlsrzgO6/xAd0GjZWuS2BkuQgCheFG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRIQfOca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUCCx8Rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53331C116B1;
-	Mon, 13 Oct 2025 15:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRIQfOca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D53C116B1;
+	Mon, 13 Oct 2025 15:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369278;
-	bh=+g8a78zURAS++fvM5nmoU1wZ2Lq0bDNcgYmoXu/rDfg=;
+	s=korg; t=1760369281;
+	bh=GFwMyrWxiZbW4Lq/lhCMvSXjcay59XAdPilzVDwnrbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUCCx8RwLsXbszoXj2jXgbIXHZIqMDCkTI+Hvz0cX9edgERclkmh48I6tAjqzITJW
-	 9S58KHjZMn7+kkskJqclhHY52gkvKt53rRSzRqnI+XV9KcdXzglIqf0/KrMxv/FkPx
-	 5DrLZ/FwO9iq3QZ4w7ggUUUN36ws2iHa95Tb3BnI=
+	b=oRIQfOcaCBAMuMtAVxJhSmMZxRuyKBkHHbjb89UlrUJ94sIediODDAFR5JUA+DSYO
+	 qrqg/XIO83VJz5e+P5llBK9FnIskWB96H/t1wTT95w6qUmwjo/F4vMQ1j19EhPCrdU
+	 EPgISUEqZ6WAhqTR7i1+kEEFzRzuslQn7/0MYqXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 163/563] nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
-Date: Mon, 13 Oct 2025 16:40:24 +0200
-Message-ID: <20251013144417.195025527@linuxfoundation.org>
+Subject: [PATCH 6.17 190/563] spi: fix return code when spi device has too many chipselects
+Date: Mon, 13 Oct 2025 16:40:51 +0200
+Message-ID: <20251013144418.166515898@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,109 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit db5a5406fb7e5337a074385c7a3e53c77f2c1bd3 ]
+[ Upstream commit 188f63235bcdd207646773a8739387d85347ed76 ]
 
-It’s possible for more than one async command to be in flight from
-__nvmet_fc_send_ls_req. For each command, a tgtport reference is taken.
+Don't return a positive value when there are too many chipselects.
 
-In the current code, only one put work item is queued at a time, which
-results in a leaked reference.
-
-To fix this, move the work item to the nvmet_fc_ls_req_op struct, which
-already tracks all resources related to the command.
-
-Fixes: 710c69dbaccd ("nvmet-fc: avoid deadlock on delete association path")
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 4d8ff6b0991d ("spi: Add multi-cs memories support in SPI core")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20250915183725.219473-2-jonas.gorski@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/spi/spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index a9b18c051f5bd..6725c34dd7c90 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -54,6 +54,8 @@ struct nvmet_fc_ls_req_op {		/* for an LS RQST XMT */
- 	int				ls_error;
- 	struct list_head		lsreq_list; /* tgtport->ls_req_list */
- 	bool				req_queued;
-+
-+	struct work_struct		put_work;
- };
- 
- 
-@@ -111,8 +113,6 @@ struct nvmet_fc_tgtport {
- 	struct nvmet_fc_port_entry	*pe;
- 	struct kref			ref;
- 	u32				max_sg_cnt;
--
--	struct work_struct		put_work;
- };
- 
- struct nvmet_fc_port_entry {
-@@ -235,12 +235,13 @@ static int nvmet_fc_tgt_a_get(struct nvmet_fc_tgt_assoc *assoc);
- static void nvmet_fc_tgt_q_put(struct nvmet_fc_tgt_queue *queue);
- static int nvmet_fc_tgt_q_get(struct nvmet_fc_tgt_queue *queue);
- static void nvmet_fc_tgtport_put(struct nvmet_fc_tgtport *tgtport);
--static void nvmet_fc_put_tgtport_work(struct work_struct *work)
-+static void nvmet_fc_put_lsop_work(struct work_struct *work)
- {
--	struct nvmet_fc_tgtport *tgtport =
--		container_of(work, struct nvmet_fc_tgtport, put_work);
-+	struct nvmet_fc_ls_req_op *lsop =
-+		container_of(work, struct nvmet_fc_ls_req_op, put_work);
- 
--	nvmet_fc_tgtport_put(tgtport);
-+	nvmet_fc_tgtport_put(lsop->tgtport);
-+	kfree(lsop);
- }
- static int nvmet_fc_tgtport_get(struct nvmet_fc_tgtport *tgtport);
- static void nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
-@@ -367,7 +368,7 @@ __nvmet_fc_finish_ls_req(struct nvmet_fc_ls_req_op *lsop)
- 				  DMA_BIDIRECTIONAL);
- 
- out_putwork:
--	queue_work(nvmet_wq, &tgtport->put_work);
-+	queue_work(nvmet_wq, &lsop->put_work);
- }
- 
- static int
-@@ -388,6 +389,7 @@ __nvmet_fc_send_ls_req(struct nvmet_fc_tgtport *tgtport,
- 	lsreq->done = done;
- 	lsop->req_queued = false;
- 	INIT_LIST_HEAD(&lsop->lsreq_list);
-+	INIT_WORK(&lsop->put_work, nvmet_fc_put_lsop_work);
- 
- 	lsreq->rqstdma = fc_dma_map_single(tgtport->dev, lsreq->rqstaddr,
- 				  lsreq->rqstlen + lsreq->rsplen,
-@@ -447,8 +449,6 @@ nvmet_fc_disconnect_assoc_done(struct nvmefc_ls_req *lsreq, int status)
- 	__nvmet_fc_finish_ls_req(lsop);
- 
- 	/* fc-nvme target doesn't care about success or failure of cmd */
--
--	kfree(lsop);
- }
- 
- /*
-@@ -1410,7 +1410,6 @@ nvmet_fc_register_targetport(struct nvmet_fc_port_info *pinfo,
- 	kref_init(&newrec->ref);
- 	ida_init(&newrec->assoc_cnt);
- 	newrec->max_sg_cnt = template->max_sgl_segments;
--	INIT_WORK(&newrec->put_work, nvmet_fc_put_tgtport_work);
- 
- 	ret = nvmet_fc_alloc_ls_iodlist(newrec);
- 	if (ret) {
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index a388f372b27a7..19c2a6eb9922a 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2449,7 +2449,7 @@ static int of_spi_parse_dt(struct spi_controller *ctlr, struct spi_device *spi,
+ 	if (rc > ctlr->num_chipselect) {
+ 		dev_err(&ctlr->dev, "%pOF has number of CS > ctlr->num_chipselect (%d)\n",
+ 			nc, rc);
+-		return rc;
++		return -EINVAL;
+ 	}
+ 	if ((of_property_present(nc, "parallel-memories")) &&
+ 	    (!(ctlr->flags & SPI_CONTROLLER_MULTI_CS))) {
 -- 
 2.51.0
 
