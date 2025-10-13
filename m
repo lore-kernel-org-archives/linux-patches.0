@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1C41494C2;
-	Mon, 13 Oct 2025 14:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F3A308F03;
+	Mon, 13 Oct 2025 14:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367483; cv=none; b=hOonGbiyItkbrVFHOEzUxePUDyExrRG1qz0Q5QGPvUTdBAyqhFn8/dQv2bmyjPvZqwjiTFHl5qPNouzbNduQilp6VuKr4Y+NULvy4z6Dka0XvNlZuShVUbulZ3QB5mG1qDKYWmCnRu8c1EI5cJikBPQTCimcndOKc/j6EvAd6Oo=
+	t=1760367485; cv=none; b=T89oHbn+0JDgXk1sOqbwVknTkHm6dXnHueCRWzqVlkV3AXDvyubeU+J9gN4+A1lWOqxC4YEe57IL0b1Y0pqjWv1xMWunVZDQhGbSvNzOM/7YtDQ7BjbLI5JH8a6ZvhMb29IC153uNNjaWq2J+ZJKAr3JwLTNOE+m0OWXvRYYeZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367483; c=relaxed/simple;
-	bh=g/OBgPtL4cfJmd78Y5/IFGnkf94C+MOLzLszuuacJG8=;
+	s=arc-20240116; t=1760367485; c=relaxed/simple;
+	bh=vos9G9lutMyPuszJ1TMwvI9B+z819HFXlN6v62VJ5GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRgV1P1OESk6AfQ8yg3yxHregfyoWrwqNfpug7NDoN8gluwJQk63t8loeyOYQuR3+gbbtk1Xw1iwxKBHDoXg2ul8Olt838cTCeQWNRiV+IRTUJMAoMNFWj70BJHbapYILuAOeeoupVDOfWPwNLAEcttsvC6peELIEp0GrD9WaRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugT4Ok7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnD2VibttVyWUa5rQBRM/NR3U4uTv+YtuZw5CqvIfFx3mGeHXpoH0izLv+PRAzUXYLVuVAflIw+N76KB7feewFcnfPL/SNMJFzRTMABBGuckvStW0+wAUVLBlhD+wvCjzWNtB0J5pbn4xqKTuBGq7iY+EsLP2FxWUxfhu3qNTTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB6vjrJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugT4Ok7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4171AC4CEE7;
-	Mon, 13 Oct 2025 14:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB6vjrJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474ACC4CEE7;
+	Mon, 13 Oct 2025 14:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367482;
-	bh=g/OBgPtL4cfJmd78Y5/IFGnkf94C+MOLzLszuuacJG8=;
+	s=korg; t=1760367485;
+	bh=vos9G9lutMyPuszJ1TMwvI9B+z819HFXlN6v62VJ5GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugT4Ok7tDB6ihSl8qAwk1RM9FEVA6mNSL2fM4O6GbiC0m9szmLvhxY1/4G3Q6+b64
-	 AEzem28O//4OWNMUy40VMoUrUC6AHm8pEeBj6sR4cD1V2mSciT2ltQlEwjjxMt6eRa
-	 pQrh8kGbal2O/jAVa1G4zrAOUfINCsNhlgXwAkiA=
+	b=JB6vjrJHlBo0K0l9Acnvu4RqLen/zpMhLmhDeN5XtCIFpLND6Q06O89huEOukILoK
+	 l25GXh1LGlzz+fka24OUvj2SW7+Bn4dYhY0f4SQnnAJCOc0ixzgynSYZkORbn78rwX
+	 4fkNbA9bq44/c+B+UVNEZYmF+xpIkhluS1aIbXYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ali Polatel <alip@chesswob.org>,
+	Johannes Nixdorf <johannes@nixdorf.dev>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/196] regulator: scmi: Use int type to store negative error codes
-Date: Mon, 13 Oct 2025 16:43:38 +0200
-Message-ID: <20251013144316.177898890@linuxfoundation.org>
+Subject: [PATCH 6.6 003/196] seccomp: Fix a race with WAIT_KILLABLE_RECV if the tracer replies too fast
+Date: Mon, 13 Oct 2025 16:43:14 +0200
+Message-ID: <20251013144315.312537114@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,44 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Johannes Nixdorf <johannes@nixdorf.dev>
 
-[ Upstream commit 9d35d068fb138160709e04e3ee97fe29a6f8615b ]
+[ Upstream commit cce436aafc2abad691fdd37de63ec8a4490b42ce ]
 
-Change the 'ret' variable from u32 to int to store negative error codes or
-zero returned by of_property_read_u32().
+Normally the tracee starts in SECCOMP_NOTIFY_INIT, sends an
+event to the tracer, and starts to wait interruptibly. With
+SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV, if the tracer receives the
+message (SECCOMP_NOTIFY_SENT is reached) while the tracee was waiting
+and is subsequently interrupted, the tracee begins to wait again
+uninterruptibly (but killable).
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants. Additionally, assigning negative error
-codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
-flag is enabled.
+This fails if SECCOMP_NOTIFY_REPLIED is reached before the tracee
+is interrupted, as the check only considered SECCOMP_NOTIFY_SENT as a
+condition to begin waiting again. In this case the tracee is interrupted
+even though the tracer already acted on its behalf. This breaks the
+assumption SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV wanted to ensure,
+namely that the tracer can be sure the syscall is not interrupted or
+restarted on the tracee after it is received on the tracer. Fix this
+by also considering SECCOMP_NOTIFY_REPLIED when evaluating whether to
+switch to uninterruptible waiting.
 
-No effect on runtime.
+With the condition changed the loop in seccomp_do_user_notification()
+would exit immediately after deciding that noninterruptible waiting
+is required if the operation already reached SECCOMP_NOTIFY_REPLIED,
+skipping the code that processes pending addfd commands first. Prevent
+this by executing the remaining loop body one last time in this case.
 
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
-Link: https://patch.msgid.link/20250829101411.625214-1-rongqianfeng@vivo.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c2aa2dfef243 ("seccomp: Add wait_killable semantic to seccomp user notifier")
+Reported-by: Ali Polatel <alip@chesswob.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220291
+Signed-off-by: Johannes Nixdorf <johannes@nixdorf.dev>
+Link: https://lore.kernel.org/r/20250725-seccomp-races-v2-1-cf8b9d139596@nixdorf.dev
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/scmi-regulator.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/seccomp.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
-index 29ab217297d6d..432654fbd7a12 100644
---- a/drivers/regulator/scmi-regulator.c
-+++ b/drivers/regulator/scmi-regulator.c
-@@ -257,7 +257,8 @@ static int process_scmi_regulator_of_node(struct scmi_device *sdev,
- 					  struct device_node *np,
- 					  struct scmi_regulator_info *rinfo)
+diff --git a/kernel/seccomp.c b/kernel/seccomp.c
+index 255999ba9190a..1d26a0e978f26 100644
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -1099,7 +1099,7 @@ static void seccomp_handle_addfd(struct seccomp_kaddfd *addfd, struct seccomp_kn
+ static bool should_sleep_killable(struct seccomp_filter *match,
+ 				  struct seccomp_knotif *n)
  {
--	u32 dom, ret;
-+	u32 dom;
-+	int ret;
+-	return match->wait_killable_recv && n->state == SECCOMP_NOTIFY_SENT;
++	return match->wait_killable_recv && n->state >= SECCOMP_NOTIFY_SENT;
+ }
  
- 	ret = of_property_read_u32(np, "reg", &dom);
- 	if (ret)
+ static int seccomp_do_user_notification(int this_syscall,
+@@ -1146,13 +1146,11 @@ static int seccomp_do_user_notification(int this_syscall,
+ 
+ 		if (err != 0) {
+ 			/*
+-			 * Check to see if the notifcation got picked up and
+-			 * whether we should switch to wait killable.
++			 * Check to see whether we should switch to wait
++			 * killable. Only return the interrupted error if not.
+ 			 */
+-			if (!wait_killable && should_sleep_killable(match, &n))
+-				continue;
+-
+-			goto interrupted;
++			if (!(!wait_killable && should_sleep_killable(match, &n)))
++				goto interrupted;
+ 		}
+ 
+ 		addfd = list_first_entry_or_null(&n.addfd,
 -- 
 2.51.0
 
