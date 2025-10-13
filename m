@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8F1311977;
-	Mon, 13 Oct 2025 14:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFA93126C7;
+	Mon, 13 Oct 2025 14:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367227; cv=none; b=cavNaJ/mWPxf+WqI5ebg9wvlNX3kCk1PFDKlv3vf7aB7JhmoUDvYp3V3kbIqQMId2TqHT3Vx0aOy/OMlJ+6pXUPMc+2zdD01GQICWO2fWHGYwa44FuHmFMgon1RFguu1N4bj62qBKvLUjdRzjWoZqBIhAGAAqjyGh5ahtEXPR2s=
+	t=1760367231; cv=none; b=CGlV9WBQHdo5IHdn+rhhtKdSSnoGSJgvhIL6zK+FvSMYLFH3aZ0ij3Gn6bwJrnmjnukf5NU4GyVvwFqqYphu1HzwaUSQQWuBAjLdQuigQ6QzBM9tAhywF+f0+hJeGAzGjRHbp6rjGTMSzlNI5T8pcqdfnPOhb9HUgsv+5W7zGdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367227; c=relaxed/simple;
-	bh=hBABAieH0plv6Pp3rwdA4Qx4ku9mnjzRDVwK+0SsPoc=;
+	s=arc-20240116; t=1760367231; c=relaxed/simple;
+	bh=KdYrs9I4QF1W/PE8R8fEhyWPlR//YoO9FkHUgjDtUu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxxu3LjOrd/7qgusE/Lkd01zdcFukIGDkXtSC59Rd6IwWEI9nAH+Nzgm2TnlaJi8f5lE1pNv6lWbBzHAF2KyXeHGBdoPMmcBc5twRkZlhYaaNHGD5/qvg1lLLDQ0ex767cgr1Dc7BMzm5tdyu/x0SRo17clULRBrhUbp8nqS3Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhUO9xFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bokM+bVzo/xVuxkG3Huee0YCsu59VG+84U7TUvKTCYgFQS58k+XdvH1tAPjgnwNfSYVNjzFmbHM9RXkJo4OmfL7/ySpYK+aNCWXQTz+eNpOR7LRzLG7Kh3LJbFE0e++GWXM+8QT6EcQQQu1i69lwH0vVWi0HA1ordRDVa1GYUTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et58Biae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhUO9xFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1825DC19421;
-	Mon, 13 Oct 2025 14:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et58Biae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AC6C19421;
+	Mon, 13 Oct 2025 14:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367227;
-	bh=hBABAieH0plv6Pp3rwdA4Qx4ku9mnjzRDVwK+0SsPoc=;
+	s=korg; t=1760367230;
+	bh=KdYrs9I4QF1W/PE8R8fEhyWPlR//YoO9FkHUgjDtUu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhUO9xFHTBy0RnDzO8u2m68y9+2fdSNkxxM84btqtfMrux9hGOUOoE/Np3dviKSeo
-	 YlsSNnSCrTSlLJntoEs/C3+Xi2Fx8EdgUyyNkNE8bRGVumMB2yJNHA2fzsObVgtILo
-	 dWzDLV1e0NpY3B5KT2KwHNDhn0xdsISnNu9h8Nbk=
+	b=Et58BiaeYXqnDaiY6wYo4mv5XutEXfVNz9ZjVPriqmrUDEVE7u2pTsoD1aOzaITq/
+	 WSy2BCkjlDnRlTC+pq5YOP+80aJ2TutJ8FBPF/Mt8vbu+QsF6mj8PYyCMW4OHrNfnB
+	 Ctu59NW4N09TT7HqbiG4r6XJNEnC1QiDs8MtWBdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/196] wifi: ath10k: avoid unnecessary wait for service ready message
-Date: Mon, 13 Oct 2025 16:45:10 +0200
-Message-ID: <20251013144319.649581109@linuxfoundation.org>
+Subject: [PATCH 6.1 138/196] wifi: mac80211: fix Rx packet handling when pubsta information is not available
+Date: Mon, 13 Oct 2025 16:45:11 +0200
+Message-ID: <20251013144319.685506378@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,91 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
 
-[ Upstream commit 51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a ]
+[ Upstream commit 32d340ae675800672e1219444a17940a8efe5cca ]
 
-Commit e57b7d62a1b2 ("wifi: ath10k: poll service ready message before
-failing") works around the failure in waiting for the service ready
-message by active polling. Note the polling is triggered after initial
-wait timeout, which means that the wait-till-timeout can not be avoided
-even the message is ready.
+In ieee80211_rx_handle_packet(), if the caller does not provide pubsta
+information, an attempt is made to find the station using the address 2
+(source address) field in the header. Since pubsta is missing, link
+information such as link_valid and link_id is also unavailable. Now if such
+a situation comes, and if a matching ML station entry is found based on
+the source address, currently the packet is dropped due to missing link ID
+in the status field which is not correct.
 
-A possible fix is to do polling once before wait as well, however this
-can not handle the race that the message arrives right after polling.
-So the solution is to do periodic polling until timeout.
+Hence, to fix this issue, if link_valid is not set and the station is an
+ML station, make an attempt to find a link station entry using the source
+address. If a valid link station is found, derive the link ID and proceed
+with packet processing. Otherwise, drop the packet as per the existing
+flow.
 
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
-
-Fixes: e57b7d62a1b2 ("wifi: ath10k: poll service ready message before failing")
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Closes: https://lore.kernel.org/all/97a15967-5518-4731-a8ff-d43ff7f437b0@molgen.mpg.de
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250811-ath10k-avoid-unnecessary-wait-v1-1-db2deb87c39b@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: ea9d807b5642 ("wifi: mac80211: add link information in ieee80211_rx_status")
+Suggested-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250917-fix_data_packet_rx_with_mlo_and_no_pubsta-v1-1-8cf971a958ac@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c | 39 +++++++++++++--------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ net/mac80211/rx.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index b126ffba480f1..2fda5ca3e6ee9 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1762,33 +1762,32 @@ void ath10k_wmi_put_wmi_channel(struct ath10k *ar, struct wmi_channel *ch,
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 8c9267acb227b..776f9fcf05abe 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -5106,12 +5106,20 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
+ 			}
  
- int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
- {
-+	unsigned long timeout = jiffies + WMI_SERVICE_READY_TIMEOUT_HZ;
- 	unsigned long time_left, i;
+ 			rx.sdata = prev_sta->sdata;
++			if (!status->link_valid && prev_sta->sta.mlo) {
++				struct link_sta_info *link_sta;
++
++				link_sta = link_sta_info_get_bss(rx.sdata,
++								 hdr->addr2);
++				if (!link_sta)
++					continue;
++
++				link_id = link_sta->link_id;
++			}
++
+ 			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
+ 				goto out;
  
--	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--						WMI_SERVICE_READY_TIMEOUT_HZ);
--	if (!time_left) {
--		/* Sometimes the PCI HIF doesn't receive interrupt
--		 * for the service ready message even if the buffer
--		 * was completed. PCIe sniffer shows that it's
--		 * because the corresponding CE ring doesn't fires
--		 * it. Workaround here by polling CE rings once.
--		 */
--		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
+-			if (!status->link_valid && prev_sta->sta.mlo)
+-				continue;
 -
-+	/* Sometimes the PCI HIF doesn't receive interrupt
-+	 * for the service ready message even if the buffer
-+	 * was completed. PCIe sniffer shows that it's
-+	 * because the corresponding CE ring doesn't fires
-+	 * it. Workaround here by polling CE rings. Since
-+	 * the message could arrive at any time, continue
-+	 * polling until timeout.
-+	 */
-+	do {
- 		for (i = 0; i < CE_COUNT; i++)
- 			ath10k_hif_send_complete_check(ar, i, 1);
+ 			ieee80211_prepare_and_rx_handle(&rx, skb, false);
  
-+		/* The 100 ms granularity is a tradeoff considering scheduler
-+		 * overhead and response latency
-+		 */
- 		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--							WMI_SERVICE_READY_TIMEOUT_HZ);
--		if (!time_left) {
--			ath10k_warn(ar, "polling timed out\n");
--			return -ETIMEDOUT;
--		}
--
--		ath10k_warn(ar, "service ready completion received, continuing normally\n");
--	}
-+							msecs_to_jiffies(100));
-+		if (time_left)
-+			return 0;
-+	} while (time_before(jiffies, timeout));
+ 			prev_sta = sta;
+@@ -5119,10 +5127,18 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
  
--	return 0;
-+	ath10k_warn(ar, "failed to receive service ready completion\n");
-+	return -ETIMEDOUT;
- }
+ 		if (prev_sta) {
+ 			rx.sdata = prev_sta->sdata;
+-			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
+-				goto out;
++			if (!status->link_valid && prev_sta->sta.mlo) {
++				struct link_sta_info *link_sta;
++
++				link_sta = link_sta_info_get_bss(rx.sdata,
++								 hdr->addr2);
++				if (!link_sta)
++					goto out;
  
- int ath10k_wmi_wait_for_unified_ready(struct ath10k *ar)
+-			if (!status->link_valid && prev_sta->sta.mlo)
++				link_id = link_sta->link_id;
++			}
++
++			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
+ 				goto out;
+ 
+ 			if (ieee80211_prepare_and_rx_handle(&rx, skb, true))
 -- 
 2.51.0
 
