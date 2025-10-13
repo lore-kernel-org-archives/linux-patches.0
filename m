@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C077306480;
-	Mon, 13 Oct 2025 15:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F52B23F294;
+	Mon, 13 Oct 2025 15:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369121; cv=none; b=JAeVuf6ve0j3ngs8TcirEJkVEsbyS0TlQN5OzHYlpyuBOpvKdx6MyMHwMeyXSz+OFSElO9Vqh0vVZo9pOC5mBcuVUVHaA+3hnqXlI87R+G7V5OKxMlmVKPJuZQNTe63RSB0pCAEVt9u/aAu2+bNhzHIsKCLElz5rK166Ku+OMSg=
+	t=1760369124; cv=none; b=qmJ2eckCdz9s+nQn6NkF+uMea/bYFiB3HVN8iydZmBIwCCUhFVHIg3xf7yYNG+scukj1fF6J4J+sel6qSqEV68/UivJypSfbMbXIAkAJ7OFNpV3t9tv71+PA/RvyXKFyGb588+vLaVt22H90QkjM0q81Lda+2xVT1Pc4ncTch2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369121; c=relaxed/simple;
-	bh=ZuE9c0wSVU1MfODwS+Eogv7hfaBBuhlPDX/sc3dUZe8=;
+	s=arc-20240116; t=1760369124; c=relaxed/simple;
+	bh=12kFANR8Te0d73exV7uCijNBQq7NvScHScrYhf537hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWxuXjbSCVOhzVf8YfKZHBuHFeRK2iKYXAYg3worJR8onMWR6jyzGeds8JhhuZP/3CF6ubWsITrimPsW+mnFpxZ/ci1mybebjW6EZBW/xCEqBtqvXWlXnbBfyrHLWJhVTwTk1k2O+fKU0az5SF6JLcc4a8E8ZmFR3N/2L0q40Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fha45uJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3lJNlEvi3BsYJ0jQ7A2RiETmbzyTovyKUcQVPLrYluyRJ9UUORDsMNRj9Nc+05sapYLmsvKYcWb9/g7/cz/TED0HDae2vHLVzUTR2j2VABwVXnmipnEomXpPG3VFfVe26jw7zUBquPqQL+ZXnyZuCGS6n4qiGX/9wh2lpmcIi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbAJDdL2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fha45uJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024A9C4CEE7;
-	Mon, 13 Oct 2025 15:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbAJDdL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7FCC4CEE7;
+	Mon, 13 Oct 2025 15:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369121;
-	bh=ZuE9c0wSVU1MfODwS+Eogv7hfaBBuhlPDX/sc3dUZe8=;
+	s=korg; t=1760369124;
+	bh=12kFANR8Te0d73exV7uCijNBQq7NvScHScrYhf537hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fha45uJ8HJtbAFtPc1tghq9NgdpytnJme02zEiz6HZQLP93fUGNN8BtAUC4SnR6n8
-	 QKq0hwyBx+18K8SLKH1C0BsqXzL5SvmrPlrKuaKclfsJQPht0cacImPObbuKwqlSvs
-	 t9JYeA+EkklC2bqpHjG0Ov+DU1e+HHaKasFojI18=
+	b=VbAJDdL2P5fdfqYjEGz7xxwl67wuhKQMFNlcgKgX3YYIAw22jnGG7BtcUWDuHS0pu
+	 A2sIQ/jcHpntm4/h9ceVnJiPk7BpHL+6K4routIZZHNKBnyq0etjBaMsts2qEqEw/E
+	 yOZRVe45Fn3c8BJzP71Xicj0UH35RWefI4YrH4Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Beleswar Padhi <b-padhi@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 136/563] arm64: dts: rockchip: Fix network on rk3576 evb1 board
-Date: Mon, 13 Oct 2025 16:39:57 +0200
-Message-ID: <20251013144416.218088103@linuxfoundation.org>
+Subject: [PATCH 6.17 137/563] arm64: dts: ti: k3-j742s2-mcu-wakeup: Override firmware-name for MCU R5F cores
+Date: Mon, 13 Oct 2025 16:39:58 +0200
+Message-ID: <20251013144416.254465741@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,108 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-[ Upstream commit 843367c7ed196bd0806c8776cba108aaf6923b82 ]
+[ Upstream commit 00c8fdc2809f05422d919809106f54c23de3cba3 ]
 
-The RK3576 EVB1 has a RTL8211F PHY for each GMAC interface with
-a dedicated reset line and the 25MHz clock provided by the SoC.
-The current description results in non-working Ethernet as the
-clocks are only enabled by the PHY driver, but probing the right
-PHY driver currently requires that the PHY ID register can be read
-for automatic identification.
+The J742S2 SoC reuses the common k3-j784s4-j742s2-mcu-wakeup-common.dtsi
+for its MCU domain, but it does not override the firmware-name property
+for its R5F cores. This causes the wrong firmware binaries to be
+referenced.
 
-This fixes up the network description to get the network functionality
-working reliably and cleans up usage of deprecated DT properties while
-at it.
+Introduce a new k3-j742s2-mcu-wakeup.dtsi file to override the
+firmware-name property with correct names for J742s2.
 
-Fixes: f135a1a07352 ("arm64: dts: rockchip: Add rk3576 evb1 board")
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20250910-rk3576-evb-network-v1-1-68ed4df272a2@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 38fd90a3e1ac ("arm64: dts: ti: Introduce J742S2 SoC family")
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://patch.msgid.link/20250823163111.2237199-1-b-padhi@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3576-evb1-v10.dts     | 38 ++++++++++++++-----
- 1 file changed, 28 insertions(+), 10 deletions(-)
+ .../arm64/boot/dts/ti/k3-j742s2-mcu-wakeup.dtsi | 17 +++++++++++++++++
+ arch/arm64/boot/dts/ti/k3-j742s2.dtsi           |  1 +
+ 2 files changed, 18 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/ti/k3-j742s2-mcu-wakeup.dtsi
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
-index 3007e0179611b..012c21b58a5a1 100644
---- a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
-@@ -275,9 +275,6 @@ &eth0m0_rx_bus2
- 		     &eth0m0_rgmii_clk
- 		     &eth0m0_rgmii_bus
- 		     &ethm0_clk0_25m_out>;
--	snps,reset-gpio = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
--	snps,reset-active-low;
--	snps,reset-delays-us = <0 20000 100000>;
- 	tx_delay = <0x21>;
- 	status = "okay";
- };
-@@ -293,9 +290,6 @@ &eth1m0_rx_bus2
- 		     &eth1m0_rgmii_clk
- 		     &eth1m0_rgmii_bus
- 		     &ethm0_clk1_25m_out>;
--	snps,reset-gpio = <&gpio3 RK_PA3 GPIO_ACTIVE_LOW>;
--	snps,reset-active-low;
--	snps,reset-delays-us = <0 20000 100000>;
- 	tx_delay = <0x20>;
- 	status = "okay";
- };
-@@ -715,18 +709,32 @@ hym8563: rtc@51 {
- };
- 
- &mdio0 {
--	rgmii_phy0: phy@1 {
--		compatible = "ethernet-phy-ieee802.3-c22";
-+	rgmii_phy0: ethernet-phy@1 {
-+		compatible = "ethernet-phy-id001c.c916";
- 		reg = <0x1>;
- 		clocks = <&cru REFCLKO25M_GMAC0_OUT>;
-+		assigned-clocks = <&cru REFCLKO25M_GMAC0_OUT>;
-+		assigned-clock-rates = <25000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&rgmii_phy0_rst>;
-+		reset-assert-us = <20000>;
-+		reset-deassert-us = <100000>;
-+		reset-gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
- 	};
- };
- 
- &mdio1 {
--	rgmii_phy1: phy@1 {
--		compatible = "ethernet-phy-ieee802.3-c22";
-+	rgmii_phy1: ethernet-phy@1 {
-+		compatible = "ethernet-phy-id001c.c916";
- 		reg = <0x1>;
- 		clocks = <&cru REFCLKO25M_GMAC1_OUT>;
-+		assigned-clocks = <&cru REFCLKO25M_GMAC1_OUT>;
-+		assigned-clock-rates = <25000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&rgmii_phy1_rst>;
-+		reset-assert-us = <20000>;
-+		reset-deassert-us = <100000>;
-+		reset-gpios = <&gpio3 RK_PA3 GPIO_ACTIVE_LOW>;
- 	};
- };
- 
-@@ -772,6 +780,16 @@ rtc_int: rtc-int {
- 		};
- 	};
- 
-+	network {
-+		rgmii_phy0_rst: rgmii-phy0-rst {
-+			rockchip,pins = <2 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
+diff --git a/arch/arm64/boot/dts/ti/k3-j742s2-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j742s2-mcu-wakeup.dtsi
+new file mode 100644
+index 0000000000000..61db2348d6a47
+--- /dev/null
++++ b/arch/arm64/boot/dts/ti/k3-j742s2-mcu-wakeup.dtsi
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: GPL-2.0-only OR MIT
++/*
++ * Device Tree Source for J742S2 SoC Family
++ *
++ * TRM: https://www.ti.com/lit/pdf/spruje3
++ *
++ * Copyright (C) 2025 Texas Instruments Incorporated - https://www.ti.com/
++ *
++ */
 +
-+		rgmii_phy1_rst: rgmii-phy1-rst {
-+			rockchip,pins = <3 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
++&mcu_r5fss0_core0 {
++	firmware-name = "j742s2-mcu-r5f0_0-fw";
++};
 +
- 	pcie0 {
- 		pcie0_rst: pcie0-rst {
- 			rockchip,pins = <2 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
++&mcu_r5fss0_core1 {
++	firmware-name = "j742s2-mcu-r5f0_1-fw";
++};
+diff --git a/arch/arm64/boot/dts/ti/k3-j742s2.dtsi b/arch/arm64/boot/dts/ti/k3-j742s2.dtsi
+index 7a72f82f56d68..d265df1abade1 100644
+--- a/arch/arm64/boot/dts/ti/k3-j742s2.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j742s2.dtsi
+@@ -96,3 +96,4 @@ cpu3: cpu@3 {
+ };
+ 
+ #include "k3-j742s2-main.dtsi"
++#include "k3-j742s2-mcu-wakeup.dtsi"
 -- 
 2.51.0
 
