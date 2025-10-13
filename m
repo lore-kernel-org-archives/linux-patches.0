@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B4812DDA1;
-	Mon, 13 Oct 2025 14:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A510E12DDA1;
+	Mon, 13 Oct 2025 14:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367540; cv=none; b=jSCMvoPxiDz/zqqGOiNiyUTZ0XcUCuuLQMmqsaNplRfWaLO2ql/UjV84HYOykDa0E7B++Em/9yHTKpykRoOUIgb/zWJvvhrH6vaA7snyLSaTnfOS9NlBkdpMaLuRC7RdSz/yLmlcwrAAA0OsfCPoas/bB7ZGSgknP0jyT3YZGUY=
+	t=1760367543; cv=none; b=L5cYo9/ejKUVbcMGwZ0MwfW4MYncUaTBA9v1ZeL9ritf++JqptA2LirVduTDbWXTtTTVBjQePV0B9eT6YF/r3cOAz6jt8YS94FhcsxMeRr9+G78/aQkxxqf2un6tiPK9CWsKka3P6mQayYm06xXh9jtFGzk5OWnvMKWpFn036Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367540; c=relaxed/simple;
-	bh=MJpMdQ+pUptFmgSUUp8XBLXCMbBR+pfBEGhN9jVfSjs=;
+	s=arc-20240116; t=1760367543; c=relaxed/simple;
+	bh=AWYyWQGHJFQiRBnPvYrzJHTtPdsEi5SMrNah28WRMfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQ1W0o3E9jSPp55vYJxLYwjk33+A47pgbP3ciZS+0Z2Oa/lxiiV5X2zFyOVvqyvyEhWijYZrBP3Q00RZUWcZ3jEMOEEtZT3WKZ/NS8k0ul1sNS9bmfums9l8McXLdjalGKB7LMkWzWtZXEbD/QWIGCaguer4eP0gTZh6AsHH5iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsMx/euA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfjN0JAoo9prYGVG2l99/mUBIRxbybdcdc6CWcIsL4qwNk8WoEnT7rBYhLGalh4BIGjxUO/JbuykOExM+VcfHlnKyr/DhAG1whLWum2k1UOOfx0fAdEWS4nEqVE0q9WyqTB7gzXrYTtXqHWBy+xkq8wg60HjpWYNyRyLGLax7/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUFPkh6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsMx/euA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3343CC4CEE7;
-	Mon, 13 Oct 2025 14:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUFPkh6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F3FC4CEE7;
+	Mon, 13 Oct 2025 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367540;
-	bh=MJpMdQ+pUptFmgSUUp8XBLXCMbBR+pfBEGhN9jVfSjs=;
+	s=korg; t=1760367543;
+	bh=AWYyWQGHJFQiRBnPvYrzJHTtPdsEi5SMrNah28WRMfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsMx/euAc7p/f0fOPxQ0fZ1cVTaJ7oUfMlyh04jwCdPuvpor9zAfSdikZURoY7TVe
-	 rzeDNwyoRIUBKdMS3FxHTwKCVeiRxYSWO4WhOLEy5bAHEmfj7ZlOTevkl5A6Uc1xmV
-	 y50ElcseZ6m5cn9s/IIxUaGS3umroUa0Yjk6COPA=
+	b=aUFPkh6qCWupzjC3o0thcy9hGP9hyd7Gd8kvE7p4svzzHgf9BHrHn5Ecp+eezIw71
+	 RG1443jyXbcqsmjXK7KKH7r5ffm7FElX1MTx1ONL00PvnPXnlNO0OO1Jq9TSXIP1Uj
+	 wnx8ryR+riuentmvGWOhaDzr+7BiPPTsrn4CKKVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Stanley Chu <yschu@nuvoton.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/196] PM: sleep: core: Clear power.must_resume in noirq suspend error path
-Date: Mon, 13 Oct 2025 16:43:41 +0200
-Message-ID: <20251013144316.287265718@linuxfoundation.org>
+Subject: [PATCH 6.6 048/196] i3c: master: svc: Use manual response for IBI events
+Date: Mon, 13 Oct 2025 16:43:59 +0200
+Message-ID: <20251013144316.939118522@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,65 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit be82483d1b60baf6747884bd74cb7de484deaf76 ]
+[ Upstream commit a7869b0a2540fd122eccec00ae7d4243166b0a60 ]
 
-If system suspend is aborted in the "noirq" phase (for instance, due to
-an error returned by one of the device callbacks), power.is_noirq_suspended
-will not be set for some devices and device_resume_noirq() will return
-early for them.  Consequently, noirq resume callbacks will not run for
-them at all because the noirq suspend callbacks have not run for them
-yet.
+Driver wants to nack the IBI request when the target is not in the
+known address list. In below code, svc_i3c_master_nack_ibi() will
+cause undefined behavior when using AUTOIBI with auto response rule,
+because hw always auto ack the IBI request.
 
-If any of them has power.must_resume set and late suspend has been
-skipped for it (due to power.smart_suspend), early resume should be
-skipped for it either, or its state may become inconsistent (for
-instance, if the early resume assumes that it will always follow
-noirq resume).
+    switch (ibitype) {
+    case SVC_I3C_MSTATUS_IBITYPE_IBI:
+            dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
+            if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
+                    svc_i3c_master_nack_ibi(master);
+            ...
+            break;
 
-Make that happen by clearing power.must_resume in device_resume_noirq()
-for devices with power.is_noirq_suspended clear that have been left in
-suspend by device_suspend_late(), which will subsequently cause
-device_resume_early() to leave the device in suspend and avoid
-changing its state.
+AutoIBI has another issue that the controller doesn't quit AutoIBI state
+after IBIWON polling timeout when there is a SDA glitch(high->low->high).
+1. SDA high->low: raising an interrupt to execute IBI ISR
+2. SDA low->high
+3. Driver writes an AutoIBI request
+4. AutoIBI process does not start because SDA is not low
+5. IBIWON polling times out
+6. Controller reamins in AutoIBI state and doesn't accept EmitStop request
 
-Fixes: 0d4b54c6fee8 ("PM / core: Add LEAVE_SUSPENDED driver flag")
-Link: https://lore.kernel.org/linux-pm/5d692b81-6f58-4e86-9cb0-ede69a09d799@rowland.harvard.edu/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://patch.msgid.link/3381776.aeNJFYEL58@rafael.j.wysocki
+Emitting broadcast address with IBIRESP_MANUAL avoids both issues.
+
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250829012309.3562585-2-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c | 30 ++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index baa31194cf20d..ef5157fc8dcc5 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -600,8 +600,20 @@ static void __device_resume_noirq(struct device *dev, pm_message_t state, bool a
- 	if (dev->power.syscore || dev->power.direct_complete)
- 		goto Out;
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index d1630d47ef6fc..1cfc8f480d15c 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -430,9 +430,24 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 	 */
+ 	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
  
--	if (!dev->power.is_noirq_suspended)
-+	if (!dev->power.is_noirq_suspended) {
-+		/*
-+		 * This means that system suspend has been aborted in the noirq
-+		 * phase before invoking the noirq suspend callback for the
-+		 * device, so if device_suspend_late() has left it in suspend,
-+		 * device_resume_early() should leave it in suspend either in
-+		 * case the early resume of it depends on the noirq resume that
-+		 * has not run.
-+		 */
-+		if (dev_pm_skip_suspend(dev))
-+			dev->power.must_resume = false;
-+
- 		goto Out;
-+	}
+-	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
+-	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
+-	       SVC_I3C_MCTRL_IBIRESP_AUTO,
++	/*
++	 * Write REQUEST_START_ADDR request to emit broadcast address for arbitration,
++	 * instend of using AUTO_IBI.
++	 *
++	 * Using AutoIBI request may cause controller to remain in AutoIBI state when
++	 * there is a glitch on SDA line (high->low->high).
++	 * 1. SDA high->low, raising an interrupt to execute IBI isr.
++	 * 2. SDA low->high.
++	 * 3. IBI isr writes an AutoIBI request.
++	 * 4. The controller will not start AutoIBI process because SDA is not low.
++	 * 5. IBIWON polling times out.
++	 * 6. Controller reamins in AutoIBI state and doesn't accept EmitStop request.
++	 */
++	writel(SVC_I3C_MCTRL_REQUEST_START_ADDR |
++	       SVC_I3C_MCTRL_TYPE_I3C |
++	       SVC_I3C_MCTRL_IBIRESP_MANUAL |
++	       SVC_I3C_MCTRL_DIR(SVC_I3C_MCTRL_DIR_WRITE) |
++	       SVC_I3C_MCTRL_ADDR(I3C_BROADCAST_ADDR),
+ 	       master->regs + SVC_I3C_MCTRL);
  
- 	if (!dpm_wait_for_superior(dev, async))
- 		goto Out;
+ 	/* Wait for IBIWON, should take approximately 100us */
+@@ -452,10 +467,15 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 	switch (ibitype) {
+ 	case SVC_I3C_MSTATUS_IBITYPE_IBI:
+ 		dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
+-		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
++		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI)) {
+ 			svc_i3c_master_nack_ibi(master);
+-		else
++		} else {
++			if (dev->info.bcr & I3C_BCR_IBI_PAYLOAD)
++				svc_i3c_master_ack_ibi(master, true);
++			else
++				svc_i3c_master_ack_ibi(master, false);
+ 			svc_i3c_master_handle_ibi(master, dev);
++		}
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_HOT_JOIN:
+ 		if (is_events_enabled(master, SVC_I3C_EVENT_HOTJOIN))
 -- 
 2.51.0
 
