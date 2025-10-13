@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A88310782;
-	Mon, 13 Oct 2025 15:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4F9310768;
+	Mon, 13 Oct 2025 15:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368079; cv=none; b=OXRwd3UDlNU7oaxsBri5A2rAfLiwofJuFF4VF+kBumGK25UExUvzP4+z2CCIQzemP8lZ5aWX5t0VmfnhsR+MSCByhk3Jouune05pdFQEqoG4tHgkR0da0/yVHb7UKwbPWEVsTzLA57dPpDv9LM/aarDNyHNN/iloxTDF8W7kFJo=
+	t=1760368081; cv=none; b=n+dHq3XTJaVhgc2ml/xE84teZ9n5YT2TlANEPDq5gVdTjmHXH+TaJBKJwE3GEg6JEtpZeqMdOXzj4d0ZSzgg0vCpkSDtRCLafodElWPq6E3eGFYHNQzGPl7rEHTEiImdP9CWWUWhtaAwdha35qRx+UjI/I7/3B5z0qOnKDJiq6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368079; c=relaxed/simple;
-	bh=XPaWwdrgwUOqSQT5Pmvykketc30hBLVw92WjclSh8ms=;
+	s=arc-20240116; t=1760368081; c=relaxed/simple;
+	bh=B4kqeZBAOGz8rLMynEnwNsnmrBfqJYrIpkOLI/C3i9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lhk13+oUB5lWEXkcsSwG8NBSpShOUA0RA5bAGN8Q6DmLvGbmGjzOTSSEOmM+3IM/RXz7t+K3C6VTflaWQI16YBFslR35VAivS5OiisCXfj6OccnUxVtv+WFgWXVN3su4DQAHvr8sV0GmqkOwMCefgAMhoGBsHne+7ovJc+1wtME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/pl+wcA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8+rkxYJy5PhY/bSKUDPDT/16c/gux8L6Nk5yVyfw9/66hXQs8KYC1bfAcrMpZB0uew3OnOUWMp6aWzhtEDdbZtoTR2chBJMFBWPQ8nWCpcXh9pmFaUHpDP/2gxDx+uI7YgM3WgXWi+fadeU8yots0W9CZlz02B1jGFa6MVeLn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THmswBU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/pl+wcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E07C4CEE7;
-	Mon, 13 Oct 2025 15:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THmswBU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435BCC4CEE7;
+	Mon, 13 Oct 2025 15:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368078;
-	bh=XPaWwdrgwUOqSQT5Pmvykketc30hBLVw92WjclSh8ms=;
+	s=korg; t=1760368081;
+	bh=B4kqeZBAOGz8rLMynEnwNsnmrBfqJYrIpkOLI/C3i9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/pl+wcAZltImZjSy1rIU1S378QBGwiZd7w7dM5ietymgLGOZgDYXP3ebBgSUuVK2
-	 kJa9x6Na4c5BlGSbbK+wbu4qhE4+BjcA3jIwj58dyQiQlkb94xijIEb1P6TN+CF154
-	 aoCl718GwSlEfVF4NG/zbyey3BxsmNNqqPyWzf2Q=
+	b=THmswBU2YJOpQIn7ncHNqB6vQe0O7l1SApu8UbtnPw76Lbc7ZBZGQMQ0Nn7RYbybT
+	 8F4W+1Ml24O4DEeMu600lteToVXiCQAyGhpYoW8ysJ8QH0Q9nQ54kM2x5V9So7OeTe
+	 Fcb+l12XOKGJritMhuyvRZ87g2bHDR9sOozNAczA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/262] uprobes: uprobe_warn should use passed task
-Date: Mon, 13 Oct 2025 16:42:30 +0200
-Message-ID: <20251013144326.425185738@linuxfoundation.org>
+Subject: [PATCH 6.12 009/262] coresight: trbe: Prevent overflow in PERF_IDX2OFF()
+Date: Mon, 13 Oct 2025 16:42:31 +0200
+Message-ID: <20251013144326.461390327@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ba1afc94deb849eab843a372b969444581add2c9 ]
+[ Upstream commit 105f56877f2d5f82d71e20b45eb7be7c24c3d908 ]
 
-uprobe_warn() is passed a task structure, yet its using current. For
-the most part this shouldn't matter, but since a task structure is
-provided, lets use it.
+Cast nr_pages to unsigned long to avoid overflow when handling large
+AUX buffer sizes (>= 2 GiB).
 
-Fixes: 248d3a7b2f10 ("uprobes: Change uprobe_copy_process() to dup return_instances")
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-trbe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index e60f5e71e35df..c00981cc6fe5b 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -114,7 +114,7 @@ struct xol_area {
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+index 96a32b2136699..492b2612f64e0 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.c
++++ b/drivers/hwtracing/coresight/coresight-trbe.c
+@@ -22,7 +22,8 @@
+ #include "coresight-self-hosted-trace.h"
+ #include "coresight-trbe.h"
  
- static void uprobe_warn(struct task_struct *t, const char *msg)
- {
--	pr_warn("uprobe: %s:%d failed to %s\n", current->comm, current->pid, msg);
-+	pr_warn("uprobe: %s:%d failed to %s\n", t->comm, t->pid, msg);
- }
+-#define PERF_IDX2OFF(idx, buf) ((idx) % ((buf)->nr_pages << PAGE_SHIFT))
++#define PERF_IDX2OFF(idx, buf) \
++	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
  
  /*
+  * A padding packet that will help the user space tools
 -- 
 2.51.0
 
