@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAD930C374;
-	Mon, 13 Oct 2025 15:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C33F30C374;
+	Mon, 13 Oct 2025 15:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368916; cv=none; b=RKUemlF5+SePdDgN4cwH2EKoSaxmja4lLCOselbmdZHl33Y9yAXMAab8gDzrov8RnC4rvvJef1aoVsac7KZbj6ZhqIj9QT/zUK2eT8tXJ9M1tOtqMr+hq2gl3wKgtDfZgBHkDBptQ9ppgMtbQ7sZN8bPBQJFr2sbvdoB3NjSzEE=
+	t=1760368919; cv=none; b=MANxph/lsILAEY+FbwjpMvF12RDIKwQvBnLhaZE1ZsFVZLoe2RSwkg1kBUNSX50OseTzSS6kfHR2pMp9h2iN4hC/6RrbOiEk3xSd5r2sS5VS1Yg/akjh5YhyfYfkkr7jF4A1fB4GIpD7KM5bnoVGYykWt5pb1N778nbNtkNlbU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368916; c=relaxed/simple;
-	bh=MvsJh+uhTHGC3WrOsMHx8/cXqitLtHfwlEMvd2hLC+Y=;
+	s=arc-20240116; t=1760368919; c=relaxed/simple;
+	bh=9qAQ8pHxaQefcElbyFqbotNBK0TBSrP/fzM3SWkwoiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBA77V8YEUPvweTeRwJqcN7tiTgBYSLWnichHEXIrCdeIcj00sDusKaaQ/G2xc18cr9RXXb+mibbcvYlU40/EwLxtqwqyb9nxjDqX2VOcKvlKSK7q0H2yxFuz/kIbmuiCHjkurnjakU0wdAxQCC6K+Wv9HLd5rk5A44+CyroNgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLkPUsZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXbNG/2Ov6JMBNRWpoxrMy1y45Bbbn6+fYRydON7ItPVYQKbpWAaU00L23yes4waKSOIsxTs3BgZUA40DO4vIPgPfboAfLOZ/XegL7w5V06vxOWo+FvvMG+BZxe/E22Qm2mcJPCU6aWsl0lfPBfZ2aS1ceCWDqtAqNxZnPY5KcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSwXOf1d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLkPUsZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E16C4CEE7;
-	Mon, 13 Oct 2025 15:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSwXOf1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9587CC4CEE7;
+	Mon, 13 Oct 2025 15:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368916;
-	bh=MvsJh+uhTHGC3WrOsMHx8/cXqitLtHfwlEMvd2hLC+Y=;
+	s=korg; t=1760368919;
+	bh=9qAQ8pHxaQefcElbyFqbotNBK0TBSrP/fzM3SWkwoiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLkPUsZIa53zcuBFWp1IMaMDiRdaZYzWDBvv5NcYUh9fOdLcY81G+C3DiQovAG0es
-	 2VR8LBBUvGdFKHY+0GXYfNyWZTse6t560kTr9Ck6glJ/OmRNt8RYwtKenwW386ZknI
-	 W0uLJoBLxEU3LyajCKATkDRk/IhCwLHVd8pMi/7U=
+	b=kSwXOf1dxYbSt407BoWdv3yL8VO9kk/cw2R4uOcdejMaIx/dVgctaXr1ki8bGcn9L
+	 xx8cfBvJP7nTIB+VUwo6MFx+bEFU1FSBegHq35tTrE21/irFdnL2x5OMJuYezm9Bsa
+	 b+wswK+VyoarZSr+pwq4s/BvwxitfgZUaCtxlfho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Tao Chen <chen.dylane@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 064/563] arm64: dts: imx95: Correct the lpuart7 and lpuart8 srcid
-Date: Mon, 13 Oct 2025 16:38:45 +0200
-Message-ID: <20251013144413.608656816@linuxfoundation.org>
+Subject: [PATCH 6.17 065/563] bpf: Remove preempt_disable in bpf_try_get_buffers
+Date: Mon, 13 Oct 2025 16:38:46 +0200
+Message-ID: <20251013144413.644580637@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@nxp.com>
+From: Tao Chen <chen.dylane@linux.dev>
 
-[ Upstream commit 6fdaf3b1839c861931db0dd11747c056a76b68f9 ]
+[ Upstream commit 4223bf833c8495e40ae2886acbc0ecbe88fa6306 ]
 
-According to the imx95 RM, the lpuart7 rx and tx DMA's srcid are 88 and 87,
-and the lpuart8 rx and tx DMA's srcid are 90 and 89. So correct them.
+Now BPF program will run with migration disabled, so it is safe
+to access this_cpu_inc_return(bpf_bprintf_nest_level).
 
-Fixes: 915fd2e127e8 ("arm64: dts: imx95: add edma[1..3] nodes")
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: d9c9e4db186a ("bpf: Factorize bpf_trace_printk and bpf_seq_printf")
+Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250819125638.2544715-1-chen.dylane@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index 8296888bce594..4521da02d1695 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -913,7 +913,7 @@ lpuart7: serial@42690000 {
- 				interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_LPUART7>;
- 				clock-names = "ipg";
--				dmas = <&edma2 26 0 FSL_EDMA_RX>, <&edma2 25 0 0>;
-+				dmas = <&edma2 88 0 FSL_EDMA_RX>, <&edma2 87 0 0>;
- 				dma-names = "rx", "tx";
- 				status = "disabled";
- 			};
-@@ -925,7 +925,7 @@ lpuart8: serial@426a0000 {
- 				interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_LPUART8>;
- 				clock-names = "ipg";
--				dmas = <&edma2 28 0 FSL_EDMA_RX>, <&edma2 27 0 0>;
-+				dmas = <&edma2 90 0 FSL_EDMA_RX>, <&edma2 89 0 0>;
- 				dma-names = "rx", "tx";
- 				status = "disabled";
- 			};
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 8af62cb243d9e..9c750a6a895bf 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -774,11 +774,9 @@ int bpf_try_get_buffers(struct bpf_bprintf_buffers **bufs)
+ {
+ 	int nest_level;
+ 
+-	preempt_disable();
+ 	nest_level = this_cpu_inc_return(bpf_bprintf_nest_level);
+ 	if (WARN_ON_ONCE(nest_level > MAX_BPRINTF_NEST_LEVEL)) {
+ 		this_cpu_dec(bpf_bprintf_nest_level);
+-		preempt_enable();
+ 		return -EBUSY;
+ 	}
+ 	*bufs = this_cpu_ptr(&bpf_bprintf_bufs[nest_level - 1]);
+@@ -791,7 +789,6 @@ void bpf_put_buffers(void)
+ 	if (WARN_ON_ONCE(this_cpu_read(bpf_bprintf_nest_level) == 0))
+ 		return;
+ 	this_cpu_dec(bpf_bprintf_nest_level);
+-	preempt_enable();
+ }
+ 
+ void bpf_bprintf_cleanup(struct bpf_bprintf_data *data)
 -- 
 2.51.0
 
