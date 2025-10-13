@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DA630B515;
-	Mon, 13 Oct 2025 15:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09BC30B515;
+	Mon, 13 Oct 2025 15:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369620; cv=none; b=RDc15t/K0JhI5bky4Gy7rDFn6+JfNtr4nL0KyKTKB0a9woTKJDtvxJyKBcbDT1WvcSh6ZDdCHxKMggU9asPSlcyRb80DU+BE/lJa+V6gosZUg19K9zhwYl1IWrVel5IP9Vl4XKOtDaAOCzrpXJ63xv1vhCnOOkeWWx9GuUb/p90=
+	t=1760369622; cv=none; b=UN0oFrR46FsPLQkITbbmuX1sz/Ro/lv//yNAdxXxsz3IcQyymc/HdtxuQ+JnFUEd9lf322wYMYGUV5AJOouJsd0MEaG7sQ3WqhlMcbLadeSJ51y4JYKtbYXVr+I5savRclL5d7LM5+Hj7YfCTgDrgIfmgkpP9L/OHEXxu3bMQjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369620; c=relaxed/simple;
-	bh=PwCgI6XJKixlskNEe/FnpKt0nnyoaH51I7C24W8XejY=;
+	s=arc-20240116; t=1760369622; c=relaxed/simple;
+	bh=weBb+JQxBODjhQHLKGRrEEx01X0YNqyovP4/6a9ILOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j97+/f6FZ1swGxf3T5vUPjGbVGVmZehV0IB1KkLsl6BtPihuAC0yxks2UXmulk81AJhyUx8A9oaUNNgeve623T78tISGQ7pMxkrBrpzYXXZehNoNXt43cv2OdxBZqRR+z0QOOAJ0oWD6NYAwiopgy1rExDFTHb2yN0O9fskPU8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTe+Di6W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mX9e6FI19bmU9IANAtSaI5VmhbS7DwfdPQvFVtnQlfFaJID6tjzvfrwGwqYaSY2PPU5HMMrwANkamARTogHfwe42UGW/Rk+bimffm9+0nDjkmhFWzTefcNt8IOyfewMZOf8hN85UYG02Zo9952ns9I+ddBxKCiRubi6yd5Bvh0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crF7HBN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTe+Di6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA11C4CEE7;
-	Mon, 13 Oct 2025 15:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crF7HBN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC41C4CEE7;
+	Mon, 13 Oct 2025 15:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369619;
-	bh=PwCgI6XJKixlskNEe/FnpKt0nnyoaH51I7C24W8XejY=;
+	s=korg; t=1760369622;
+	bh=weBb+JQxBODjhQHLKGRrEEx01X0YNqyovP4/6a9ILOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTe+Di6WVJQfacyUFrLfE9bRy7X6gO4uWev3B6O2WTEm3BYSMquazDFFchMDyk/KX
-	 vi0z1D2EsBYXji1V6zJIMxZrqEElbxEL58sEAV//oZd0fr+n0TaQbMuRWFjhXRfSZe
-	 7Uoej/gmjvjN3fUk8UflUWZBJkwQgpb02wFQ5B0Y=
+	b=crF7HBN7SFoaKr/kLGhkTMynzqHZOah/pi3ih7BT/JEjq3PaLvwfuLRpm6JHPyoJZ
+	 9Lb5A845hsodluIVAz9vCda9ZrX5MSYNL414o7MHpmWiDwxmcVLX80qF5OdDHhSTrI
+	 ia98abJ9v+tVVhpr0K/z1phalpR/p9bPGt3uglVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 267/563] RDMA/mlx5: Fix vport loopback forcing for MPV device
-Date: Mon, 13 Oct 2025 16:42:08 +0200
-Message-ID: <20251013144420.949799935@linuxfoundation.org>
+Subject: [PATCH 6.17 304/563] drm/amd/pm: Fix si_upload_smc_data (v3)
+Date: Mon, 13 Oct 2025 16:42:45 +0200
+Message-ID: <20251013144422.279386648@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -47,121 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 08aae7860450c89eebbc6fd4d38416e53c7a33d2 ]
+[ Upstream commit a43b2cec04b02743338aa78f837ee0bdf066a6d5 ]
 
-Previously loopback for MPV was supposed to be permanently enabled,
-however other driver flows were able to over-ride that configuration and
-disable it.
+The si_upload_smc_data function uses si_write_smc_soft_register
+to set some register values in the SMC, and expects the result
+to be PPSMC_Result_OK which is 1.
 
-Add force_lb parameter that indicates that loopback should always be
-enabled which prevents all other driver flows from disabling it.
+The PPSMC_Result_OK / PPSMC_Result_Failed values are used for
+checking the result of a command sent to the SMC.
+However, the si_write_smc_soft_register actually doesn't send
+any commands to the SMC and returns zero on success,
+so this check was incorrect.
 
-Fixes: a9a9e68954f2 ("RDMA/mlx5: Fix vport loopback for MPV device")
-Link: https://patch.msgid.link/r/cfc6b1f0f99f8100b087483cc14da6025317f901.1755088808.git.leon@kernel.org
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix that by not checking the return value, just like other
+calls to si_write_smc_soft_register.
+
+v3:
+Additionally, when no display is plugged in, there is no need
+to restrict MCLK switching, so program the registers to zero.
+
+Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c    | 19 +++++++++++++++----
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 +
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 43 ++++++++++++----------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 20d15207a5f1f..5fabd39b7492a 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1839,7 +1839,8 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
- }
- 
- static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
--				struct mlx5_core_dev *slave)
-+				struct mlx5_core_dev *slave,
-+				struct mlx5_ib_lb_state *lb_state)
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index e71070a23b915..6736c592dfdc6 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -5813,9 +5813,9 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
  {
- 	int err;
+ 	struct amdgpu_crtc *amdgpu_crtc = NULL;
+ 	int i;
+-
+-	if (adev->pm.dpm.new_active_crtc_count == 0)
+-		return 0;
++	u32 crtc_index = 0;
++	u32 mclk_change_block_cp_min = 0;
++	u32 mclk_change_block_cp_max = 0;
  
-@@ -1851,6 +1852,7 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
- 	if (err)
- 		goto out;
+ 	for (i = 0; i < adev->mode_info.num_crtc; i++) {
+ 		if (adev->pm.dpm.new_active_crtcs & (1 << i)) {
+@@ -5824,26 +5824,31 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
+ 		}
+ 	}
  
-+	lb_state->force_enable = true;
+-	if (amdgpu_crtc == NULL)
+-		return 0;
++	/* When a display is plugged in, program these so that the SMC
++	 * performs MCLK switching when it doesn't cause flickering.
++	 * When no display is plugged in, there is no need to restrict
++	 * MCLK switching, so program them to zero.
++	 */
++	if (adev->pm.dpm.new_active_crtc_count && amdgpu_crtc) {
++		crtc_index = amdgpu_crtc->crtc_id;
+ 
+-	if (amdgpu_crtc->line_time <= 0)
+-		return 0;
++		if (amdgpu_crtc->line_time) {
++			mclk_change_block_cp_min = amdgpu_crtc->wm_high / amdgpu_crtc->line_time;
++			mclk_change_block_cp_max = amdgpu_crtc->wm_low / amdgpu_crtc->line_time;
++		}
++	}
+ 
+-	if (si_write_smc_soft_register(adev,
+-				       SI_SMC_SOFT_REGISTER_crtc_index,
+-				       amdgpu_crtc->crtc_id) != PPSMC_Result_OK)
+-		return 0;
++	si_write_smc_soft_register(adev,
++		SI_SMC_SOFT_REGISTER_crtc_index,
++		crtc_index);
+ 
+-	if (si_write_smc_soft_register(adev,
+-				       SI_SMC_SOFT_REGISTER_mclk_change_block_cp_min,
+-				       amdgpu_crtc->wm_high / amdgpu_crtc->line_time) != PPSMC_Result_OK)
+-		return 0;
++	si_write_smc_soft_register(adev,
++		SI_SMC_SOFT_REGISTER_mclk_change_block_cp_min,
++		mclk_change_block_cp_min);
+ 
+-	if (si_write_smc_soft_register(adev,
+-				       SI_SMC_SOFT_REGISTER_mclk_change_block_cp_max,
+-				       amdgpu_crtc->wm_low / amdgpu_crtc->line_time) != PPSMC_Result_OK)
+-		return 0;
++	si_write_smc_soft_register(adev,
++		SI_SMC_SOFT_REGISTER_mclk_change_block_cp_max,
++		mclk_change_block_cp_max);
+ 
  	return 0;
- 
- out:
-@@ -1859,16 +1861,22 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
  }
- 
- static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
--				  struct mlx5_core_dev *slave)
-+				  struct mlx5_core_dev *slave,
-+				  struct mlx5_ib_lb_state *lb_state)
- {
- 	mlx5_nic_vport_update_local_lb(slave, false);
- 	mlx5_nic_vport_update_local_lb(master, false);
-+
-+	lb_state->force_enable = false;
- }
- 
- int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
- 	int err = 0;
- 
-+	if (dev->lb.force_enable)
-+		return 0;
-+
- 	mutex_lock(&dev->lb.mutex);
- 	if (td)
- 		dev->lb.user_td++;
-@@ -1890,6 +1898,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 
- void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
-+	if (dev->lb.force_enable)
-+		return;
-+
- 	mutex_lock(&dev->lb.mutex);
- 	if (td)
- 		dev->lb.user_td--;
-@@ -3569,7 +3580,7 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
- 
--	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
-+	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
- 
- 	mlx5_core_mp_event_replay(ibdev->mdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
-@@ -3666,7 +3677,7 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
- 				  &key);
- 
--	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
-+	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
- 	if (err)
- 		goto unbind;
- 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 7ffc7ee92cf03..8d21ecf8a996f 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -1109,6 +1109,7 @@ struct mlx5_ib_lb_state {
- 	u32			user_td;
- 	int			qps;
- 	bool			enabled;
-+	bool			force_enable;
- };
- 
- struct mlx5_ib_pf_eq {
 -- 
 2.51.0
 
