@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B3D30AAC5;
-	Mon, 13 Oct 2025 15:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02053309EFB;
+	Mon, 13 Oct 2025 15:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368667; cv=none; b=gASPkJuz5MWIitQR6Nr+QLeXzWCqpF5bt410qd30hIucihU9vdZ5dOmJO4u5jFk6pTsD2A7Ce0LIjvc/NHqXYcQKhoKuD33tBCSpuFXMCy9LGIkCgIJG7YPScmH4cOebRW4OMNShQyGjOWGBTUR+eUME9y4Zlhdj79NLGiH7Mw0=
+	t=1760368670; cv=none; b=ht3xwxEfhySIPTyU0gj/lcTYWoGf/JCZ6AT3sLFBIKq9JrnBLfRr9wPELNefMdE1SJw+9gJ6Iv5rTFeVN5QCcdZq/slpKs2+G164M0P8f187fQ3wlCkYTb0IooRLY6/AoHhaH144SClTPte5AuJbk1WQbWD3zF65rCDULl1ct1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368667; c=relaxed/simple;
-	bh=ADvhm+VkO019plS7ru1m4pHLxOxECyX/NZld75surPo=;
+	s=arc-20240116; t=1760368670; c=relaxed/simple;
+	bh=xLi/MnsewopkYbgdb04AaLD89EieCnHYB2xrjY3w8Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6T6KGDZsE+C4Vrevl8ooRW6YPDGVviF3oW2P1vQuO36ihSxpX9p1w8v+JkG9KwvVcBbhXUaD/WuDIuV7gx4gvy99WncDelf84hxLcTirSD1Yfd9kvH//6xkfIoSoFr6z7F7Zza/xG5ZldxZO0+poDxlUdW5U4eYPrVIVLNKdwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu38Ai9j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S4DoM5BMOvJjwHfhst8fUEYPFra0IY6OH+CKYt1Jn2NsB6qszFTvQpqDqst2YlPoytdSMEUn51QVY0wUTJIA+/YxzghKaLCFkqU0vcZ/pjG6pr5nHGMa/0UiR/lGN4aq7pMSJPBjO0oaAwtiUf7qmohegVi1j/HwqYuYZUxV2e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKjT4ntW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu38Ai9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F71BC4CEE7;
-	Mon, 13 Oct 2025 15:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKjT4ntW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22633C4CEE7;
+	Mon, 13 Oct 2025 15:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368666;
-	bh=ADvhm+VkO019plS7ru1m4pHLxOxECyX/NZld75surPo=;
+	s=korg; t=1760368669;
+	bh=xLi/MnsewopkYbgdb04AaLD89EieCnHYB2xrjY3w8Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tu38Ai9jDtt/KaOue5vw/RFFVCKzgm0xf/5IZI4XG3yd3CVxk0Oqhb7zc5kRuxyGT
-	 nT2UPjl1WIFjeEkGq7AZI1f8ulQJJtvWJQeceCCgXffHje33z+hy7seUoW+Yc+v22l
-	 vfTBq58DwQYdp7A/qYjokVkhQ6UK90usfkOFTVcc=
+	b=HKjT4ntWAUeHRbc8koYYD8tViy+0Hl6mYGpKoJ4LtHiNaozYTowiCCVNn5KpTHlK9
+	 Z4qB4KTQxEskGIWFdEEWtY0ueh5MrfsmiCrkyQi5k+FYApVtGsKxcrw9ag6d/QijPc
+	 D9DYBmS/Aa/maO8smaKRGEjOk/QgeOx0hneW+ZVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/262] idpf: fix mismatched free function for dma_alloc_coherent
-Date: Mon, 13 Oct 2025 16:45:55 +0200
-Message-ID: <20251013144333.916024732@linuxfoundation.org>
+	Matvey Kovalev <matvey.kovalev@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 240/262] ksmbd: fix error code overwriting in smb2_get_info_filesystem()
+Date: Mon, 13 Oct 2025 16:46:22 +0200
+Message-ID: <20251013144334.881693368@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -55,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Matvey Kovalev <matvey.kovalev@ispras.ru>
 
-[ Upstream commit b9bd25f47eb79c9eb275e3d9ac3983dc88577dd4 ]
+commit 88daf2f448aad05a2e6df738d66fe8b0cf85cee0 upstream.
 
-The mailbox receive path allocates coherent DMA memory with
-dma_alloc_coherent(), but frees it with dmam_free_coherent().
-This is incorrect since dmam_free_coherent() is only valid for
-buffers allocated with dmam_alloc_coherent().
+If client doesn't negotiate with SMB3.1.1 POSIX Extensions,
+then proper error code won't be returned due to overwriting.
 
-Fix the mismatch by using dma_free_coherent() instead of
-dmam_free_coherent
+Return error immediately.
 
-Fixes: e54232da1238 ("idpf: refactor idpf_recv_mb_msg")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Link: https://patch.msgid.link/20250925180212.415093-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e2f34481b24db ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-index f27a8cf3816db..d1f374da00981 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -727,9 +727,9 @@ int idpf_recv_mb_msg(struct idpf_adapter *adapter)
- 		/* If post failed clear the only buffer we supplied */
- 		if (post_err) {
- 			if (dma_mem)
--				dmam_free_coherent(&adapter->pdev->dev,
--						   dma_mem->size, dma_mem->va,
--						   dma_mem->pa);
-+				dma_free_coherent(&adapter->pdev->dev,
-+						  dma_mem->size, dma_mem->va,
-+						  dma_mem->pa);
- 			break;
- 		}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5600,7 +5600,8 @@ static int smb2_get_info_filesystem(stru
  
--- 
-2.51.0
-
+ 		if (!work->tcon->posix_extensions) {
+ 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
+-			rc = -EOPNOTSUPP;
++			path_put(&path);
++			return -EOPNOTSUPP;
+ 		} else {
+ 			info = (struct filesystem_posix_info *)(rsp->Buffer);
+ 			info->OptimalTransferSize = cpu_to_le32(stfs.f_bsize);
 
 
