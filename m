@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E77E30AD1C;
-	Mon, 13 Oct 2025 14:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D1530DD13;
+	Mon, 13 Oct 2025 14:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367358; cv=none; b=cJpXS4chXvzvKPd+eluKj0W7d1t++ho7Bw+xRgVSxx+cPJ3WkEw5RaVN6kSxGBgm3etq91VgFf5qFauQLu1QDcc0ARfZK72JdL0NooYKbo7qo05qqxi+owlaPhjRvZp37Mh4X0kqh/vXpOE66TYrIomXG/JgkaGUvX0lBjSp99M=
+	t=1760367361; cv=none; b=efrOqZtD5zpDhYknKx07ihk8p8+G6VXi3IB9B/RCZkAV2yZ27yiGN/Ebc5HgMVJUuvxZan1udSLdwy/J+Yq3HUlLn+J8pnDqGUbrxIYqMn4HwqP3n3csqFggRYYmNOhRSqFZWDxB2vOxK7SKYhKfOADXekqrvChi/eLHQEjHMA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367358; c=relaxed/simple;
-	bh=zH6EcuSC/04eYEUtKR9zTvE6sUADSgPN/XYDn54u3rc=;
+	s=arc-20240116; t=1760367361; c=relaxed/simple;
+	bh=xxW+ByaBBlox/3sVZlvKIaY7jHZkO4G9/jETwXPSZCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIR0vbOtHT5xSVEQncw6qVxQOUbjdwO0LCG0hiG1+zYFVnoRJIS0M+4DWb4yWhWg8URkraFJivGRffwy11D6cw9kflyENaFa2d7yPtQuABm4gbEEik+R/KNzMPhgpQ0uA3n8yg/YwFrJ+/1Om5wF1cjAmvecV6aSQYXs0863rFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evFZVKaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cKxeBSejw1aR0miXew0X+N07IgzaHFq9cdaQRo70uaeGcN1V5jYeAvO4P+fqN3Uqtjyz2850Ea9J+Qz1d5Bu/tLqY5BCXAbJR9Npiuuhl6A2J0EuRha6JDwAa0WjLCEGfigHijcPwSGuOSghngO7tnI6GQwYxaDCvlWXSDPiQ2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsaPyBez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evFZVKaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187B5C4CEE7;
-	Mon, 13 Oct 2025 14:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsaPyBez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD70BC4CEE7;
+	Mon, 13 Oct 2025 14:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367358;
-	bh=zH6EcuSC/04eYEUtKR9zTvE6sUADSgPN/XYDn54u3rc=;
+	s=korg; t=1760367361;
+	bh=xxW+ByaBBlox/3sVZlvKIaY7jHZkO4G9/jETwXPSZCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evFZVKaOjqImAb0J39MwPX1Cj2RNokx9dndKQHUxWfMyEy5ngX5PX5iRIAKknk4Jx
-	 OQ5FfUTSYjVB2fhwgPPyWZiIvTzbNzWG6X33ZxvFYu87/jE9F649dBbmLUxE+7ABRK
-	 EaI3Om/xd11ctLI9O40zpGiuDajv1q9fadUaoN8I=
+	b=FsaPyBezbFk4GW01Fq+KPRTuFX8B0z4ZYOQpQ+uIH94FX/o7x9PFQYinXEQ66dsX2
+	 4MiNJMZe4PAs1b1m/dVVnVT1DJ/jYwmxYgV39FzA4fqklPK2aRM67bz42tbEd096Xw
+	 m1lRX+EGIA8qpVra2PLEXluShg2pUE8Le8g74kj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 181/196] ext4: fix checks for orphan inodes
-Date: Mon, 13 Oct 2025 16:45:54 +0200
-Message-ID: <20251013144321.242435976@linuxfoundation.org>
+	Yang Shi <yang@os.amperecomputing.com>,
+	Carl Worth <carl@os.amperecomputing.com>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 182/196] mm: hugetlb: avoid soft lockup when mprotect to large memory area
+Date: Mon, 13 Oct 2025 16:45:55 +0200
+Message-ID: <20251013144321.277957388@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -46,112 +53,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yang Shi <yang@os.amperecomputing.com>
 
-commit acf943e9768ec9d9be80982ca0ebc4bfd6b7631e upstream.
+commit f52ce0ea90c83a28904c7cc203a70e6434adfecb upstream.
 
-When orphan file feature is enabled, inode can be tracked as orphan
-either in the standard orphan list or in the orphan file. The first can
-be tested by checking ei->i_orphan list head, the second is recorded by
-EXT4_STATE_ORPHAN_FILE inode state flag. There are several places where
-we want to check whether inode is tracked as orphan and only some of
-them properly check for both possibilities. Luckily the consequences are
-mostly minor, the worst that can happen is that we track an inode as
-orphan although we don't need to and e2fsck then complains (resulting in
-occasional ext4/307 xfstest failures). Fix the problem by introducing a
-helper for checking whether an inode is tracked as orphan and use it in
-appropriate places.
+When calling mprotect() to a large hugetlb memory area in our customer's
+workload (~300GB hugetlb memory), soft lockup was observed:
 
-Fixes: 4a79a98c7b19 ("ext4: Improve scalability of ext4 orphan file handling")
-Cc: stable@kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Message-ID: <20250925123038.20264-2-jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+watchdog: BUG: soft lockup - CPU#98 stuck for 23s! [t2_new_sysv:126916]
+
+CPU: 98 PID: 126916 Comm: t2_new_sysv Kdump: loaded Not tainted 6.17-rc7
+Hardware name: GIGACOMPUTING R2A3-T40-AAV1/Jefferson CIO, BIOS 5.4.4.1 07/15/2025
+pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : mte_clear_page_tags+0x14/0x24
+lr : mte_sync_tags+0x1c0/0x240
+sp : ffff80003150bb80
+x29: ffff80003150bb80 x28: ffff00739e9705a8 x27: 0000ffd2d6a00000
+x26: 0000ff8e4bc00000 x25: 00e80046cde00f45 x24: 0000000000022458
+x23: 0000000000000000 x22: 0000000000000004 x21: 000000011b380000
+x20: ffff000000000000 x19: 000000011b379f40 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc875e0aa5e2c
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : fffffc01ce7a5c00 x4 : 00000000046cde00 x3 : fffffc0000000000
+x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff0046cde7c000
+
+Call trace:
+  mte_clear_page_tags+0x14/0x24
+  set_huge_pte_at+0x25c/0x280
+  hugetlb_change_protection+0x220/0x430
+  change_protection+0x5c/0x8c
+  mprotect_fixup+0x10c/0x294
+  do_mprotect_pkey.constprop.0+0x2e0/0x3d4
+  __arm64_sys_mprotect+0x24/0x44
+  invoke_syscall+0x50/0x160
+  el0_svc_common+0x48/0x144
+  do_el0_svc+0x30/0xe0
+  el0_svc+0x30/0xf0
+  el0t_64_sync_handler+0xc4/0x148
+  el0t_64_sync+0x1a4/0x1a8
+
+Soft lockup is not triggered with THP or base page because there is
+cond_resched() called for each PMD size.
+
+Although the soft lockup was triggered by MTE, it should be not MTE
+specific.  The other processing which takes long time in the loop may
+trigger soft lockup too.
+
+So add cond_resched() for hugetlb to avoid soft lockup.
+
+Link: https://lkml.kernel.org/r/20250929202402.1663290-1-yang@os.amperecomputing.com
+Fixes: 8f860591ffb2 ("[PATCH] Enable mprotect on huge pages")
+Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
+Tested-by: Carl Worth <carl@os.amperecomputing.com>
+Reviewed-by: Christoph Lameter (Ampere) <cl@gentwo.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h   |   10 ++++++++++
- fs/ext4/file.c   |    2 +-
- fs/ext4/inode.c  |    2 +-
- fs/ext4/orphan.c |    6 +-----
- fs/ext4/super.c  |    4 ++--
- 5 files changed, 15 insertions(+), 9 deletions(-)
+ mm/hugetlb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1962,6 +1962,16 @@ static inline bool ext4_verity_in_progre
- #define NEXT_ORPHAN(inode) EXT4_I(inode)->i_dtime
- 
- /*
-+ * Check whether the inode is tracked as orphan (either in orphan file or
-+ * orphan list).
-+ */
-+static inline bool ext4_inode_orphan_tracked(struct inode *inode)
-+{
-+	return ext4_test_inode_state(inode, EXT4_STATE_ORPHAN_FILE) ||
-+		!list_empty(&EXT4_I(inode)->i_orphan);
-+}
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6779,6 +6779,8 @@ unsigned long hugetlb_change_protection(
+ 						make_pte_marker(PTE_MARKER_UFFD_WP));
+ 		}
+ 		spin_unlock(ptl);
 +
-+/*
-  * Codes for operating systems
-  */
- #define EXT4_OS_LINUX		0
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -344,7 +344,7 @@ static void ext4_inode_extension_cleanup
- 	 * to cleanup the orphan list in ext4_handle_inode_extension(). Do it
- 	 * now.
- 	 */
--	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
-+	if (ext4_inode_orphan_tracked(inode) && inode->i_nlink) {
- 		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
- 
- 		if (IS_ERR(handle)) {
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4394,7 +4394,7 @@ static int ext4_fill_raw_inode(struct in
- 		 * old inodes get re-used with the upper 16 bits of the
- 		 * uid/gid intact.
- 		 */
--		if (ei->i_dtime && list_empty(&ei->i_orphan)) {
-+		if (ei->i_dtime && !ext4_inode_orphan_tracked(inode)) {
- 			raw_inode->i_uid_high = 0;
- 			raw_inode->i_gid_high = 0;
- 		} else {
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -109,11 +109,7 @@ int ext4_orphan_add(handle_t *handle, st
- 
- 	WARN_ON_ONCE(!(inode->i_state & (I_NEW | I_FREEING)) &&
- 		     !inode_is_locked(inode));
--	/*
--	 * Inode orphaned in orphan file or in orphan list?
--	 */
--	if (ext4_test_inode_state(inode, EXT4_STATE_ORPHAN_FILE) ||
--	    !list_empty(&EXT4_I(inode)->i_orphan))
-+	if (ext4_inode_orphan_tracked(inode))
- 		return 0;
- 
++		cond_resched();
+ 	}
  	/*
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1379,9 +1379,9 @@ static void ext4_free_in_core_inode(stru
- 
- static void ext4_destroy_inode(struct inode *inode)
- {
--	if (!list_empty(&(EXT4_I(inode)->i_orphan))) {
-+	if (ext4_inode_orphan_tracked(inode)) {
- 		ext4_msg(inode->i_sb, KERN_ERR,
--			 "Inode %lu (%p): orphan list check failed!",
-+			 "Inode %lu (%p): inode tracked as orphan!",
- 			 inode->i_ino, EXT4_I(inode));
- 		print_hex_dump(KERN_INFO, "", DUMP_PREFIX_ADDRESS, 16, 4,
- 				EXT4_I(inode), sizeof(struct ext4_inode_info),
+ 	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
 
 
