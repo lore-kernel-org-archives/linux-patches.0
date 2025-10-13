@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C11130CDB4;
-	Mon, 13 Oct 2025 15:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8710307AF5;
+	Mon, 13 Oct 2025 15:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368409; cv=none; b=qOzlh9VMIo5OVENVK8bdZ+qEmm8exu/4UfYWRmg+V7AbFSjr3NcYq00GGKu+INOwivu3A9b166nulyC5Mwr1lXuzJ0ZBbsMluYiNU7AUaan1D/6eVXwa4hEOxHZifF9QborT25a7e3qTNiNW9ZiXfZk+REcpelVnqK+CC9vr91c=
+	t=1760368412; cv=none; b=FmZPkmPbadjssvnmgQJwmLH64huDFrjeiqsuAuWawuUFfBdOWWK454JCt37swTktxa+IQVU5uK0DTkdxKQfJBWVy5vBlvAJHy3OQhaMG03Ky6nc6coRW0TIGH7tEOq0AWnyDDspRXA9+aiXtBZ83TKjBrIEFJoBkVm7e9/0Zhfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368409; c=relaxed/simple;
-	bh=tz2l/Nz+5iCG4A2lNcJWezQ2BNNIfTJ3k83c/X8XT4k=;
+	s=arc-20240116; t=1760368412; c=relaxed/simple;
+	bh=v2F4xZkY3lqBbA80izFl/4GxvQ11w6/qYZcfLPMUnWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Thj1CywLKlXYSdBl4R4gyT6XmzUSn84W4N/RkKwUCZpMLlGqc50MLUXOhR8juxVSwwuP7+JSermCb2Mnrc9tOKUaiBvsLSPCNIrro0TtBR8PLYo9E3+TBrv8IHIGSqc+FwKu50V3ASVPpjiHFjZxTm4sHCJ6toVZjQitPt4X+2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaAuGSJ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gP7NhyW1z9yvPQuk+ePZySm3V1BusH7dENQwxAana2jZ6Shuu+M51rLc2cTjXHdIVAUJAXOdGyuYeLf4CWKAgTD+Z9Blj0kwrxiMt8mCDaKoNmVnduvO1ftj5YFravrUBbroLPZ+VwGxjuusSiN+VeRVDu30HdBTdr+C29VHa3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3FsMxxu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaAuGSJ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8398AC4CEE7;
-	Mon, 13 Oct 2025 15:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3FsMxxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD55C4CEE7;
+	Mon, 13 Oct 2025 15:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368408;
-	bh=tz2l/Nz+5iCG4A2lNcJWezQ2BNNIfTJ3k83c/X8XT4k=;
+	s=korg; t=1760368411;
+	bh=v2F4xZkY3lqBbA80izFl/4GxvQ11w6/qYZcfLPMUnWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaAuGSJ//fNQPpPLS50B8xsZ7nWzp8M66zlDptHyXOZwVM/8KAnaUZC07qaPeZfU/
-	 H2vPMa5iF0aHBJLQbUwxdA7ojaoIEz7hUwwj98dUfNYGUsRvhq4QHT7nf33S5xFils
-	 EMOeyXnBv3lGPiYuGpy6uEPNcbUkYhLiKvKxHor0=
+	b=U3FsMxxux4/9YHmSBu2CYmErxE6ayeecIsuynA0TCBHjHYbH0gqBgprtMknuVYRiI
+	 UpkNptX/0oyM4o5k4q4a4ZbGciSKAuXvgT5CprVUUbh2hf906zrWlPJLOtsI1IXoMY
+	 J7Bg9PYFF6uO1KLtaRxt7imGd0QOsfrAZLDIpk2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/262] f2fs: fix to truncate first page in error path of f2fs_truncate()
-Date: Mon, 13 Oct 2025 16:44:54 +0200
-Message-ID: <20251013144331.594831134@linuxfoundation.org>
+Subject: [PATCH 6.12 153/262] f2fs: fix to mitigate overhead of f2fs_zero_post_eof_page()
+Date: Mon, 13 Oct 2025 16:44:55 +0200
+Message-ID: <20251013144331.630209138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,79 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 9251a9e6e871cb03c4714a18efa8f5d4a8818450 ]
+[ Upstream commit c2f7c32b254006ad48f8e4efb2e7e7bf71739f17 ]
 
-syzbot reports a bug as below:
+f2fs_zero_post_eof_page() may cuase more overhead due to invalidate_lock
+and page lookup, change as below to mitigate its overhead:
+- check new_size before grabbing invalidate_lock
+- lookup and invalidate pages only in range of [old_size, new_size]
 
-loop0: detected capacity change from 0 to 40427
-F2FS-fs (loop0): Wrong SSA boundary, start(3584) end(4096) blocks(3072)
-F2FS-fs (loop0): Can't find valid F2FS filesystem in 1th superblock
-F2FS-fs (loop0): invalid crc value
-F2FS-fs (loop0): f2fs_convert_inline_folio: corrupted inline inode ino=3, i_addr[0]:0x1601, run fsck to fix.
-------------[ cut here ]------------
-kernel BUG at fs/inode.c:753!
-RIP: 0010:clear_inode+0x169/0x190 fs/inode.c:753
-Call Trace:
- <TASK>
- evict+0x504/0x9c0 fs/inode.c:810
- f2fs_fill_super+0x5612/0x6fa0 fs/f2fs/super.c:5047
- get_tree_bdev_flags+0x40e/0x4d0 fs/super.c:1692
- vfs_get_tree+0x8f/0x2b0 fs/super.c:1815
- do_new_mount+0x2a2/0x9e0 fs/namespace.c:3808
- do_mount fs/namespace.c:4136 [inline]
- __do_sys_mount fs/namespace.c:4347 [inline]
- __se_sys_mount+0x317/0x410 fs/namespace.c:4324
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-During f2fs_evict_inode(), clear_inode() detects that we missed to truncate
-all page cache before destorying inode, that is because in below path, we
-will create page #0 in cache, but missed to drop it in error path, let's fix
-it.
-
-- evict
- - f2fs_evict_inode
-  - f2fs_truncate
-   - f2fs_convert_inline_inode
-    - f2fs_grab_cache_folio
-    : create page #0 in cache
-    - f2fs_convert_inline_folio
-    : sanity check failed, return -EFSCORRUPTED
-  - clear_inode detects that inode->i_data.nrpages is not zero
-
-Fixes: 92dffd01790a ("f2fs: convert inline_data when i_size becomes large")
-Reported-by: syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68c09802.050a0220.3c6139.000e.GAE@google.com
+Fixes: ba8dac350faf ("f2fs: fix to zero post-eof page")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index fa77841f3e2cc..eb58d05284173 100644
+index eb58d05284173..2a108c561e8bc 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -856,8 +856,16 @@ int f2fs_truncate(struct inode *inode)
- 	/* we should check inline_data size */
- 	if (!f2fs_may_inline_data(inode)) {
- 		err = f2fs_convert_inline_inode(inode);
--		if (err)
-+		if (err) {
-+			/*
-+			 * Always truncate page #0 to avoid page cache
-+			 * leak in evict() path.
-+			 */
-+			truncate_inode_pages_range(inode->i_mapping,
-+					F2FS_BLK_TO_BYTES(0),
-+					F2FS_BLK_END_BYTES(0));
- 			return err;
-+		}
- 	}
+@@ -35,15 +35,23 @@
+ #include <trace/events/f2fs.h>
+ #include <uapi/linux/f2fs.h>
  
- 	err = f2fs_truncate_blocks(inode, i_size_read(inode), true);
+-static void f2fs_zero_post_eof_page(struct inode *inode, loff_t new_size)
++static void f2fs_zero_post_eof_page(struct inode *inode,
++					loff_t new_size, bool lock)
+ {
+ 	loff_t old_size = i_size_read(inode);
+ 
+ 	if (old_size >= new_size)
+ 		return;
+ 
++	if (mapping_empty(inode->i_mapping))
++		return;
++
++	if (lock)
++		filemap_invalidate_lock(inode->i_mapping);
+ 	/* zero or drop pages only in range of [old_size, new_size] */
+-	truncate_pagecache(inode, old_size);
++	truncate_inode_pages_range(inode->i_mapping, old_size, new_size);
++	if (lock)
++		filemap_invalidate_unlock(inode->i_mapping);
+ }
+ 
+ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
+@@ -114,9 +122,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 
+ 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
+ 
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+@@ -1089,7 +1095,7 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		filemap_invalidate_lock(inode->i_mapping);
+ 
+ 		if (attr->ia_size > old_size)
+-			f2fs_zero_post_eof_page(inode, attr->ia_size);
++			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
+ 		truncate_setsize(inode, attr->ia_size);
+ 
+ 		if (attr->ia_size <= old_size)
+@@ -1208,9 +1214,7 @@ static int f2fs_punch_hole(struct inode *inode, loff_t offset, loff_t len)
+ 	if (ret)
+ 		return ret;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1495,7 +1499,7 @@ static int f2fs_do_collapse(struct inode *inode, loff_t offset, loff_t len)
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len);
++	f2fs_zero_post_eof_page(inode, offset + len, false);
+ 
+ 	f2fs_lock_op(sbi);
+ 	f2fs_drop_extent_tree(inode);
+@@ -1618,9 +1622,7 @@ static int f2fs_zero_range(struct inode *inode, loff_t offset, loff_t len,
+ 	if (ret)
+ 		return ret;
+ 
+-	filemap_invalidate_lock(mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1754,7 +1756,7 @@ static int f2fs_insert_range(struct inode *inode, loff_t offset, loff_t len)
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len);
++	f2fs_zero_post_eof_page(inode, offset + len, false);
+ 	truncate_pagecache(inode, offset);
+ 
+ 	while (!ret && idx > pg_start) {
+@@ -1812,9 +1814,7 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
+ 	if (err)
+ 		return err;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	f2fs_balance_fs(sbi, true);
+ 
+@@ -4759,9 +4759,8 @@ static ssize_t f2fs_write_checks(struct kiocb *iocb, struct iov_iter *from)
+ 	if (err)
+ 		return err;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, iocb->ki_pos + iov_iter_count(from));
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode,
++		iocb->ki_pos + iov_iter_count(from), true);
+ 	return count;
+ }
+ 
 -- 
 2.51.0
 
