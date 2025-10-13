@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F732701BB;
-	Mon, 13 Oct 2025 14:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A0A26560B;
+	Mon, 13 Oct 2025 14:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367052; cv=none; b=V3T7JKp4JejHcjrl+VQh1+w+dMVEjpVgsU58IQLXJMuAh2DLGOcs8j8HG9q32Fn9sGTcW9KH2KNKK54Zrxv8JljgevDB2xxafrbgINyT2/f0R0EJVt8c3PNg55tWnB0olq9SP3CLisktMqbEDZ/gojTYNPvTfWsF39lVLCezpKk=
+	t=1760367055; cv=none; b=nkqs9UPIQ4XudNImvmyKvyyMDSa+w16AYZPe+Kc5+0BAApD0h+owJ5sEjuf7klqI6Go3i4vci5in8NxjJNb6s28nCMwbrUwUBnatRIW1Y+ZsijrQE5QiWaW7u03sVfnveV1NCazo4IJRBlLanrGTBZG0I4+PAdyeKMcJiueG9E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367052; c=relaxed/simple;
-	bh=VN2JkLohh+8h937wy8zKJ+1DjVMsRkQCVVeJDHwfrKM=;
+	s=arc-20240116; t=1760367055; c=relaxed/simple;
+	bh=BYc745sVAG9KQd81OmPOtIXDnA0TDdmhHnfzEnb44Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBpNd/H2SB2jzmap5oJhcNlN0hz+9QBq3AVVus22eBiPJkai7f3SMS5lW3MxCcx/DdCg9hetDINEpalR68OIh1LGoZ0afFjFEDi02wnLU2lh/YbEJD00UdlG8NuCQeYr02xxLWhf1//lXwTkIn9YGHoj1ZMoC1szwnTZBKEpgVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWQAmg9s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bupwWPG/7dr/lMtU2Rj8uU69/Bc4fa/KDHBDkCokCc8MZwsID2gVgR9a9lL01uFMdkZ0jY1i4DBwXCGWe9AlY0XGqW3Va+kyIcoGUnvxf0n66+ygF2bQFeX6mxA9yjeWR9k/OM8zjt09Tpxm/UPY11UuOzsbZXEZc7pLzOHLKdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8NU50+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWQAmg9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F251CC4CEE7;
-	Mon, 13 Oct 2025 14:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8NU50+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF40C4CEE7;
+	Mon, 13 Oct 2025 14:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367052;
-	bh=VN2JkLohh+8h937wy8zKJ+1DjVMsRkQCVVeJDHwfrKM=;
+	s=korg; t=1760367055;
+	bh=BYc745sVAG9KQd81OmPOtIXDnA0TDdmhHnfzEnb44Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWQAmg9sNYHQOVNSVgd/Tc+ymvv+Rbu5D4u50XHB/LRMVyT0aV2f1xRh3E1DSDEkr
-	 XNdhT2Qc8vf2l8xWrHkyYmlcEgc5uTdORkbIgyvzG56Ku6nVzDg+z3RmQRgbZMelMW
-	 +ogXNlt9X0GPVvOrWvjj+ufZmNImpTkbykEraJuQ=
+	b=k8NU50+Zx+8vAloZNxrt9TBoCmIqQDZ263xlPG4shoIfvSTYTlV1j6FKMbS5plNZ4
+	 UJb5ccK1sPtjXkkRMGWo0FHVdaQr7T5JIkqwcPCBojO09pM31tQ0myz1fxg6xc3vD0
+	 Atx9Ue++l9CWhdGfP+9JGdeucl+ki+bDuYJlcimg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/196] arm64: dts: mediatek: mt8516-pumpkin: Fix machine compatible
-Date: Mon, 13 Oct 2025 16:44:08 +0200
-Message-ID: <20251013144317.290693392@linuxfoundation.org>
+Subject: [PATCH 6.1 076/196] pwm: tiehrpwm: Fix corner case in clock divisor calculation
+Date: Mon, 13 Oct 2025 16:44:09 +0200
+Message-ID: <20251013144317.326008566@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -46,43 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit ffe6a5d1dd4d4d8af0779526cf4e40522647b25f ]
+[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
 
-This devicetree contained only the SoC compatible but lacked the
-machine specific one: add a "mediatek,mt8516-pumpkin" compatible
-to the list to fix dtbs_check warnings.
+The function set_prescale_div() is responsible for calculating the clock
+divisor settings such that the input clock rate is divided down such that
+the required period length is at most 0x10000 clock ticks. If period_cycles
+is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
+good enough. So round up in the calculation of the required divisor and
+compare it using >= instead of >.
 
-Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20250724083914.61351-39-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-tiehrpwm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-index cce642c538128..3d3db33a64dc6 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-@@ -11,7 +11,7 @@
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index 48ca0ff690ae2..6b3248be2bf10 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -167,7 +167,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
  
- / {
- 	model = "Pumpkin MT8516";
--	compatible = "mediatek,mt8516";
-+	compatible = "mediatek,mt8516-pumpkin", "mediatek,mt8516";
+ 			*prescale_div = (1 << clkdiv) *
+ 					(hspclkdiv ? (hspclkdiv * 2) : 1);
+-			if (*prescale_div > rqst_prescaler) {
++			if (*prescale_div >= rqst_prescaler) {
+ 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
+ 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
+ 				return 0;
+@@ -266,7 +266,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	pc->period_cycles[pwm->hwpwm] = period_cycles;
  
- 	memory@40000000 {
- 		device_type = "memory";
+ 	/* Configure clock prescaler to support Low frequency PWM wave */
+-	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
++	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
+ 			     &tb_divval)) {
+ 		dev_err(chip->dev, "Unsupported values\n");
+ 		return -EINVAL;
 -- 
 2.51.0
 
