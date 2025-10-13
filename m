@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041123081A8;
-	Mon, 13 Oct 2025 14:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24CF30DD1D;
+	Mon, 13 Oct 2025 14:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367392; cv=none; b=u+zMPWLjwtRZonOIDNtGMcVRg1iG+U1aMwHe0UtW55W0/e4rRK2cRjlwtlM3nthBQapzbJyzc58rur7tk0Lo06i2KIePbxjL4q8Fi0krW/DGM3eH0WAihnnJK9tPpr/QyMG8CyAMUzKMebRU6KGfk2j7ACmjgQ9bHttkjOL+FF4=
+	t=1760367394; cv=none; b=Y9BeqdCAari6/Dg4/Ky+1SKAO92SLxtDyHcos5pU58bqTUqSG45QoAyfzeUPiHWoiXkg89zjTZ/kGOoXZXxpdqJC9QLwKB2FpdSXazcGLzZgxRKdSddV4Bgbkl1wKVLmEtTPZupyq4oID/WHc75xkoFlJV3xRdt8emgiZ87XlTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367392; c=relaxed/simple;
-	bh=dlAHIWq7AeTcknK8hxTo6DjKYQH8jXOuMJS06zZ0LCE=;
+	s=arc-20240116; t=1760367394; c=relaxed/simple;
+	bh=2PrLHXKLAAK9GvgEdBu7jYd/NHUNZqlOKM+ftSObTzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MURyljUDqXz2jfWhQdu4VuFBaX8MJdOyjhvmOD2i6+BKo9H+vUOW4sbeXGcBL0mQzrTMFtMBAKK7jWgeVWOa6VjpmD9kJU7wCLzCrxjx6s6Hc62l10XVXoKFi0fH4hTMl7h9fZEsS8ZxGCbRIZL112e5OYQt6TyMjbI3mlNpY+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKxH0vOg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u/k98yJvxeGi7O5Qu0K/UNYGARHRz+O4luCaNdwt3Ge0Vb5IH5GsTy0I7S6OG+Zo+hDWaw51GeKT4hQr8MMqwo8GCSBkxAhvXHUmQh9DjuBscVFM5X+p0YrC6uaLKWRwfMjUtnG0aZESGav/0K9dgEllMu40zLVcU0cuCPlFTBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/HuwrKr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKxH0vOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B48EC4CEE7;
-	Mon, 13 Oct 2025 14:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/HuwrKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D36AC4CEE7;
+	Mon, 13 Oct 2025 14:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367391;
-	bh=dlAHIWq7AeTcknK8hxTo6DjKYQH8jXOuMJS06zZ0LCE=;
+	s=korg; t=1760367394;
+	bh=2PrLHXKLAAK9GvgEdBu7jYd/NHUNZqlOKM+ftSObTzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKxH0vOghs2Ag+X+WMu8joT76ExJdjbbduN1/P2INIXMk3ow0xOBVoBJIoFPAnoPh
-	 wGZlTxnd8XmwbBbugjOP+Yn+AzS1Azv7F4aRy8d2NVibLQx9u2YvVke8JGu6fE1fuJ
-	 B+CCTuyjmpHCpRIPOhY34v0epXFpdIo6tGtmyJ3w=
+	b=P/HuwrKrNJjk0oKvLR3yl4I2+lOL/OLxcRo3CMCXO9RFDqGaEE2eUrte4Mi+AQwaX
+	 V3SavieyXr6vPydw2CGzVN7ulBcjn6UkzqpIb1ahcqz9/gcX0pVX2ZC5BWfuuacbje
+	 rfph3MXQXImXsknbc/C8FaxzS+D/esUEBwPRVtlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 191/196] net: usb: asix: hold PM usage ref to avoid PM/MDIO + RTNL deadlock
-Date: Mon, 13 Oct 2025 16:46:04 +0200
-Message-ID: <20251013144321.600758432@linuxfoundation.org>
+	stable@kernel.org,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Sven Peter <sven@kernel.org>
+Subject: [PATCH 6.1 192/196] usb: typec: tipd: Clear interrupts first
+Date: Mon, 13 Oct 2025 16:46:05 +0200
+Message-ID: <20251013144321.636338904@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -46,113 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Sven Peter <sven@kernel.org>
 
-commit 3d3c4cd5c62f24bb3cb4511b7a95df707635e00a upstream.
+commit be5ae730ffa6fd774a00a4705c1e11e078b08ca1 upstream.
 
-Prevent USB runtime PM (autosuspend) for AX88772* in bind.
+Right now the interrupt handler first reads all updated status registers
+and only then clears the interrupts. It's possible that a duplicate
+interrupt for a changed register or plug state comes in after the
+interrupts have been processed but before they have been cleared:
 
-usbnet enables runtime PM (autosuspend) by default, so disabling it via
-the usb_driver flag is ineffective. On AX88772B, autosuspend shows no
-measurable power saving with current driver (no link partner, admin
-up/down). The ~0.453 W -> ~0.248 W drop on v6.1 comes from phylib powering
-the PHY off on admin-down, not from USB autosuspend.
+* plug is inserted, TPS_REG_INT_PLUG_EVENT is set
+* TPS_REG_INT_EVENT1 is read
+* tps6598x_handle_plug_event() has run and registered the plug
+* plug is removed again, TPS_REG_INT_PLUG_EVENT is set (again)
+* TPS_REG_INT_CLEAR1 is written, TPS_REG_INT_PLUG_EVENT is cleared
 
-The real hazard is that with runtime PM enabled, ndo_open() (under RTNL)
-may synchronously trigger autoresume (usb_autopm_get_interface()) into
-asix_resume() while the USB PM lock is held. Resume paths then invoke
-phylink/phylib and MDIO, which also expect RTNL, leading to possible
-deadlocks or PM lock vs MDIO wake issues.
+We then have no plug connected and no pending interrupt but the tipd
+core still thinks there is a plug. It's possible to trigger this with
+e.g. a slightly broken Type-C to USB A converter.
 
-To avoid this, keep the device runtime-PM active by taking a usage
-reference in ax88772_bind() and dropping it in unbind(). A non-zero PM
-usage count blocks runtime suspend regardless of userspace policy
-(.../power/control - pm_runtime_allow/forbid), making this approach
-robust against sysfs overrides.
+Fix this by first clearing the interrupts and only then reading the
+updated registers.
 
-Holding a runtime-PM usage ref does not affect system-wide suspend;
-system sleep/resume callbacks continue to run as before.
-
-Fixes: 4a2c7217cd5a ("net: usb: asix: ax88772: manage PHY PM from MAC")
-Reported-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Closes: https://lore.kernel.org/all/DCGHG5UJT9G3.2K1GHFZ3H87T0@gmail.com
-Tested-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20251005081203.3067982-1-o.rempel@pengutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 45188f27b3d0 ("usb: typec: tipd: Add support for Apple CD321X")
+Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
+Cc: stable@kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Sven Peter <sven@kernel.org>
+Link: https://lore.kernel.org/r/20250914-apple-usb3-tipd-v1-1-4e99c8649024@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/usb/typec/tipd/core.c |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -625,6 +625,21 @@ static void ax88772_suspend(struct usbne
- 		   asix_read_medium_status(dev, 1));
- }
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -491,24 +491,23 @@ static irqreturn_t cd321x_interrupt(int
+ 	if (!event)
+ 		goto err_unlock;
  
-+/* Notes on PM callbacks and locking context:
-+ *
-+ * - asix_suspend()/asix_resume() are invoked for both runtime PM and
-+ *   system-wide suspend/resume. For struct usb_driver the ->resume()
-+ *   callback does not receive pm_message_t, so the resume type cannot
-+ *   be distinguished here.
-+ *
-+ * - The MAC driver must hold RTNL when calling phylink interfaces such as
-+ *   phylink_suspend()/resume(). Those calls will also perform MDIO I/O.
-+ *
-+ * - Taking RTNL and doing MDIO from a runtime-PM resume callback (while
-+ *   the USB PM lock is held) is fragile. Since autosuspend brings no
-+ *   measurable power saving here, we block it by holding a PM usage
-+ *   reference in ax88772_bind().
-+ */
- static int asix_suspend(struct usb_interface *intf, pm_message_t message)
- {
- 	struct usbnet *dev = usb_get_intfdata(intf);
-@@ -922,6 +937,13 @@ static int ax88772_bind(struct usbnet *d
- 	if (ret)
- 		goto initphy_err;
- 
-+	/* Keep this interface runtime-PM active by taking a usage ref.
-+	 * Prevents runtime suspend while bound and avoids resume paths
-+	 * that could deadlock (autoresume under RTNL while USB PM lock
-+	 * is held, phylink/MDIO wants RTNL).
-+	 */
-+	pm_runtime_get_noresume(&intf->dev);
++	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event);
 +
- 	return 0;
+ 	if (!tps6598x_read_status(tps, &status))
+-		goto err_clear_ints;
++		goto err_unlock;
  
- initphy_err:
-@@ -951,6 +973,8 @@ static void ax88772_unbind(struct usbnet
- 	phylink_destroy(priv->phylink);
- 	ax88772_mdio_unregister(priv);
- 	asix_rx_fixup_common_free(dev->driver_priv);
-+	/* Drop the PM usage ref taken in bind() */
-+	pm_runtime_put(&intf->dev);
- }
+ 	if (event & APPLE_CD_REG_INT_POWER_STATUS_UPDATE)
+ 		if (!tps6598x_read_power_status(tps))
+-			goto err_clear_ints;
++			goto err_unlock;
  
- static void ax88178_unbind(struct usbnet *dev, struct usb_interface *intf)
-@@ -1575,6 +1599,11 @@ static struct usb_driver asix_driver = {
- 	.resume =	asix_resume,
- 	.reset_resume =	asix_resume,
- 	.disconnect =	usbnet_disconnect,
-+	/* usbnet enables autosuspend by default (supports_autosuspend=1).
-+	 * We keep runtime-PM active for AX88772* by taking a PM usage
-+	 * reference in ax88772_bind() (pm_runtime_get_noresume()) and
-+	 * dropping it in unbind(), which effectively blocks autosuspend.
-+	 */
- 	.supports_autosuspend = 1,
- 	.disable_hub_initiated_lpm = 1,
- };
+ 	if (event & APPLE_CD_REG_INT_DATA_STATUS_UPDATE)
+ 		if (!tps6598x_read_data_status(tps))
+-			goto err_clear_ints;
++			goto err_unlock;
+ 
+ 	/* Handle plug insert or removal */
+ 	if (event & APPLE_CD_REG_INT_PLUG_EVENT)
+ 		tps6598x_handle_plug_event(tps, status);
+ 
+-err_clear_ints:
+-	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event);
+-
+ err_unlock:
+ 	mutex_unlock(&tps->lock);
+ 
+@@ -555,25 +554,24 @@ static irqreturn_t tps6598x_interrupt(in
+ 	if (!(event1[0] | event1[1] | event2[0] | event2[1]))
+ 		goto err_unlock;
+ 
++	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
++	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
++
+ 	if (!tps6598x_read_status(tps, &status))
+-		goto err_clear_ints;
++		goto err_unlock;
+ 
+ 	if ((event1[0] | event2[0]) & TPS_REG_INT_POWER_STATUS_UPDATE)
+ 		if (!tps6598x_read_power_status(tps))
+-			goto err_clear_ints;
++			goto err_unlock;
+ 
+ 	if ((event1[0] | event2[0]) & TPS_REG_INT_DATA_STATUS_UPDATE)
+ 		if (!tps6598x_read_data_status(tps))
+-			goto err_clear_ints;
++			goto err_unlock;
+ 
+ 	/* Handle plug insert or removal */
+ 	if ((event1[0] | event2[0]) & TPS_REG_INT_PLUG_EVENT)
+ 		tps6598x_handle_plug_event(tps, status);
+ 
+-err_clear_ints:
+-	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
+-	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
+-
+ err_unlock:
+ 	mutex_unlock(&tps->lock);
+ 
 
 
