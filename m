@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98529311945;
-	Mon, 13 Oct 2025 15:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98902311945;
+	Mon, 13 Oct 2025 15:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368153; cv=none; b=AYEeslYhiAvfG3iLSTIYTeMbgNHFFGLycbqWEM8Q2DXmCLofL1pPngC8jdPurO9CgfuEBelldIZQQK1YFX14zQWVl9fBPf5nx+kwk/2QH/Vh1zpR3/Y8xPwF3fyxum5HkMcsRNoVebxuRiDbs4/v1wh5Fz8v3np6dCVRXPbyQwE=
+	t=1760368156; cv=none; b=QZq7zXh7Y4N0dgtoO9V93zh6xZ2XW99lWsgbzs488G/lTP8h0cAxZKj4QiZL7YFs/QAQ9GALOCXwrQe80stV3wcp+yuvtzcZodu5GeQBD/wszSWmyMGRp4V8SP3bsAGrQDphtcErcBMHXSyeb8jIG3L4u5GZyz39qMW3yuXpAps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368153; c=relaxed/simple;
-	bh=yLHX+tCEAkzMlUx6ZnXWpRIuxACtz0XSb1zqMiYflTo=;
+	s=arc-20240116; t=1760368156; c=relaxed/simple;
+	bh=smb+RFPi/FeScm3PVew3d/HLSUxLkE/lEJ1PyfnakK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6iiwNq2kLhT3bFuTkUXhmkMOzCKXEJP2j3QueFH/4QfuG0A15CnbnZmV99hDwbq+Gy5pF/UapxqRLx35jKJZcA8EErCeFfCQs7y7ABvVpDRIF320etV5mg1b99CNC0uUVOQc7/uDS8IKBpC8GtifaynthtboZRSVMVCDdFMi9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv5R8t+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcDkXblZED9pW5MWglMtuHw15KpF/G48gBIKN+F9tSMlF1BbN/BiB9Nba8LPZTeldYhqiuOIEZ1uD0RGwm2CA8fT1tT61kS1X2EihO5dmY7kYQlZzYlDXUQ0iaseYQFyXZa0fystzjzW9KyuBfqcPU9rXYQ526taLNVEVPmBU94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aURPHdti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv5R8t+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B76C4CEE7;
-	Mon, 13 Oct 2025 15:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aURPHdti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC45C4CEE7;
+	Mon, 13 Oct 2025 15:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368153;
-	bh=yLHX+tCEAkzMlUx6ZnXWpRIuxACtz0XSb1zqMiYflTo=;
+	s=korg; t=1760368156;
+	bh=smb+RFPi/FeScm3PVew3d/HLSUxLkE/lEJ1PyfnakK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fv5R8t+eze5DP32hwU1Hf68qaPYvdYcBIGd4/yzeUKrDh9RRtlIna7/OyEPaCi1NT
-	 WDID9E0G1U42EGsLZA730xHCe6U8HBCDFmaKI0fTy3kMfHSikzvib1n7yw/KAdwBz4
-	 fRFToQSPC7U7QtZWidaqZAoAQJL1+JVlrkWJVM7w=
+	b=aURPHdtio2vQskIKxL4viH+Z5a2LygXwcJ7Jc04eCjngShUUhFyGKwuJBW8RN7Nno
+	 uBM/IqGA0P25myQXpOhjkRYpkZkhf4H/HdpsRToULM69OH0Po5bAhdzsuz0Grrpj3f
+	 DJLwdPsdLnvpkjQmH/UArYusDKIEeP399YEOZreo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Bean Huo <beanhuo@micron.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/262] mmc: core: Fix variable shadowing in mmc_route_rpmb_frames()
-Date: Mon, 13 Oct 2025 16:43:23 +0200
-Message-ID: <20251013144328.326001766@linuxfoundation.org>
+Subject: [PATCH 6.12 062/262] arm64: dts: mediatek: mt6795-xperia-m5: Fix mmc0 latch-ck value
+Date: Mon, 13 Oct 2025 16:43:24 +0200
+Message-ID: <20251013144328.361568268@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 072755cca7e743c28a273fcb69b0e826109473d7 ]
+[ Upstream commit 236681fb64102f25ed11df55999e6985c1bc2f7d ]
 
-Rename the inner 'frm' variable to 'resp_frm' in the write path of
-mmc_route_rpmb_frames() to avoid shadowing the outer 'frm' variable.
+Change the latch-ck value from 0x14 to 4: as only bits [0-3] are
+actually used, the final value that gets written to the register
+field for DAT_LATCH_CK_SEL is just 0x4.
 
-The function declares 'frm' at function scope pointing to the request
-frame, but then redeclares another 'frm' variable inside the write
-block pointing to the response frame. This shadowing makes the code
-confusing and error-prone.
+This also fixes dtbs_check warnings.
 
-Using 'resp_frm' for the response frame makes the distinction clear
-and improves code readability.
-
-Fixes: 7852028a35f0 ("mmc: block: register RPMB partition with the RPMB subsystem")
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 5a65dcccf483 ("arm64: dts: mediatek: mt6795-xperia-m5: Add eMMC, MicroSD slot, SDIO")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250724083914.61351-21-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index 1d08009f2bd83..08b8276e1da93 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -2876,15 +2876,15 @@ static int mmc_route_rpmb_frames(struct device *dev, u8 *req,
- 		return -ENOMEM;
+diff --git a/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts b/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
+index 91de920c22457..03cc48321a3f4 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
++++ b/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
+@@ -212,7 +212,7 @@ proximity@48 {
  
- 	if (write) {
--		struct rpmb_frame *frm = (struct rpmb_frame *)resp;
-+		struct rpmb_frame *resp_frm = (struct rpmb_frame *)resp;
- 
- 		/* Send write request frame(s) */
- 		set_idata(idata[0], MMC_WRITE_MULTIPLE_BLOCK,
- 			  1 | MMC_CMD23_ARG_REL_WR, req, req_len);
- 
- 		/* Send result request frame */
--		memset(frm, 0, sizeof(*frm));
--		frm->req_resp = cpu_to_be16(RPMB_RESULT_READ);
-+		memset(resp_frm, 0, sizeof(*resp_frm));
-+		resp_frm->req_resp = cpu_to_be16(RPMB_RESULT_READ);
- 		set_idata(idata[1], MMC_WRITE_MULTIPLE_BLOCK, 1, resp,
- 			  resp_len);
- 
+ &mmc0 {
+ 	/* eMMC controller */
+-	mediatek,latch-ck = <0x14>; /* hs400 */
++	mediatek,latch-ck = <4>; /* hs400 */
+ 	mediatek,hs200-cmd-int-delay = <1>;
+ 	mediatek,hs400-cmd-int-delay = <1>;
+ 	mediatek,hs400-ds-dly3 = <0x1a>;
 -- 
 2.51.0
 
