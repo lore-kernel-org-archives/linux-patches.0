@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05E3271468;
-	Mon, 13 Oct 2025 15:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF5D30B51F;
+	Mon, 13 Oct 2025 15:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367745; cv=none; b=H+U9vV3pDn2UdSrdzOG4JNd0/82CQJaCqUtMP/VrEH17kR8MhW+R6tQxzWl7RbITi6lCTC4KIjjT0QcqzlU4DNgLgR8IDUfYsk8usJ992RtVaWzfadEOZSNnievN3KFc+uCKYcceKCiukz0pV7OemZU8v6WLMDtrA1uDXg2ViAQ=
+	t=1760367748; cv=none; b=ix62mTF419fz1KpQIRk+ReAEs/4eUk2e1fjUMohI0wMcU75hDp74PGQ+yecqYR3Pdkp+7grSmy3zauhQ6vUH5U2kYM042TucrQX2MtwUbnzvcf+OWJGOKgoylKSA9LJLS0oMgnbUAG8VvWXq2Ea9B7VuQl1IPp6Chw5NaxIhLkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367745; c=relaxed/simple;
-	bh=w57l2UuXbaGrESFjwd6xaRXjQ2L8O7hI0nvMNBRKroc=;
+	s=arc-20240116; t=1760367748; c=relaxed/simple;
+	bh=GFxvUIq4zSXJIHgnJEh1fU6qz2MLI5UgK00NtgZnZB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeBf2w78T8MPiQVu10U+FbyqYBDnArRy1bSFhZwoYEJmxLcFIaU+kosGEuWhEszZYu/80rauOTAbIBw8b/CuwRNslvusVijxcN1RQcuSvlMX0+O3jAeoWd0/ZbWrRtkoK2cv7kpb/BbRsBWLwiIvHV7JcxIb13ZwBpp4ORAEKRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EP7Rdcjz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJ/kp+mRxX5QAsbHozffyha7F9D5J4eWUyrY+5VPZSnpbx5tIPnQR36i4OIu/3EaaUphTHffj6UL/lZ9NjSe1CHcCtTS9nt49dFy8m6HP3AXYPpwwSdshbujG3ABsiLZd1OUzzQ4ahvjQhkxNwBfMJ6CEgve8hENQzJCkiabklw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAdoSKf6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EP7Rdcjz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651A8C4CEE7;
-	Mon, 13 Oct 2025 15:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAdoSKf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F937C4CEE7;
+	Mon, 13 Oct 2025 15:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367744;
-	bh=w57l2UuXbaGrESFjwd6xaRXjQ2L8O7hI0nvMNBRKroc=;
+	s=korg; t=1760367747;
+	bh=GFxvUIq4zSXJIHgnJEh1fU6qz2MLI5UgK00NtgZnZB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EP7RdcjzTb9RKbRkt+b7QHYzsvytA8oZdnmwf52rKmcDhhSQZ2a5ZbUjeE1fCOpsB
-	 xTuIk8PwCjKxeJFP7wfGi4BkFj+Va4TMjLPz/rzYQ1dnRVgPPd2uTSKGkeUzFNYP7c
-	 2n6rhA9iDygC0JEDIFDFUKh4Nl8kAm7F7/djGYl4=
+	b=AAdoSKf6auLZQeBcDmI9MKkz/1Pz+q5Ps32TXeSuTXTWQf+h88WL0TepPp0tfUtqP
+	 ie+oDjUCngWhiyLV3pTZLh/ZM6SJeI2SU7fbQIGyzdd/XaEiKv/UvCCFpxlYmLBxrV
+	 nnnBnpH8/es/I2n5VE1Tu8o0j9rHoqwLanFX/0dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qianfeng Rong <rongqianfeng@vivo.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/196] scsi: qla2xxx: edif: Fix incorrect sign of error code
-Date: Mon, 13 Oct 2025 16:45:10 +0200
-Message-ID: <20251013144319.614750221@linuxfoundation.org>
+Subject: [PATCH 6.6 120/196] scsi: qla2xxx: Fix incorrect sign of error code in START_SP_W_RETRIES()
+Date: Mon, 13 Oct 2025 16:45:11 +0200
+Message-ID: <20251013144319.650504212@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -53,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 066b8f3fa85c1be7fb7dbae202231e131d38f7bc ]
+[ Upstream commit 1f037e3acda79639a78f096355f2c308a3d45492 ]
 
-Change the error code EAGAIN to -EAGAIN in qla24xx_sadb_update() and
-qla_edif_process_els() to align with qla2x00_start_sp() returning
-negative error codes or QLA_SUCCESS, preventing logical errors.
+Change the error code EAGAIN to -EAGAIN in START_SP_W_RETRIES() to align
+with qla2x00_start_sp() returning negative error codes or QLA_SUCCESS,
+preventing logical errors.  Additionally, the '_rval' variable should
+store negative error codes to conform to Linux kernel error code
+conventions.
 
-Fixes: 0b3f3143d473 ("scsi: qla2xxx: edif: Add retry for ELS passthrough")
+Fixes: 9803fb5d2759 ("scsi: qla2xxx: Fix task management cmd failure")
 Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Message-ID: <20250905075446.381139-2-rongqianfeng@vivo.com>
+Message-ID: <20250905075446.381139-3-rongqianfeng@vivo.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_edif.c | 4 ++--
+ drivers/scsi/qla2xxx/qla_init.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
-index dcde55c8ee5de..be20e2c457b8e 100644
---- a/drivers/scsi/qla2xxx/qla_edif.c
-+++ b/drivers/scsi/qla2xxx/qla_edif.c
-@@ -1797,7 +1797,7 @@ qla24xx_sadb_update(struct bsg_job *bsg_job)
- 	switch (rval) {
- 	case QLA_SUCCESS:
- 		break;
--	case EAGAIN:
-+	case -EAGAIN:
- 		msleep(EDIF_MSLEEP_INTERVAL);
- 		cnt++;
- 		if (cnt < EDIF_RETRY_COUNT)
-@@ -3648,7 +3648,7 @@ int qla_edif_process_els(scsi_qla_host_t *vha, struct bsg_job *bsg_job)
- 		       p->e.extra_rx_xchg_address, p->e.extra_control_flags,
- 		       sp->handle, sp->remap.req.len, bsg_job);
- 		break;
--	case EAGAIN:
-+	case -EAGAIN:
- 		msleep(EDIF_MSLEEP_INTERVAL);
- 		cnt++;
- 		if (cnt < EDIF_RETRY_COUNT)
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 5fa2727c1bea7..e881d704b45d1 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -2059,11 +2059,11 @@ static void qla_marker_sp_done(srb_t *sp, int res)
+ 	int cnt = 5; \
+ 	do { \
+ 		if (_chip_gen != sp->vha->hw->chip_reset || _login_gen != sp->fcport->login_gen) {\
+-			_rval = EINVAL; \
++			_rval = -EINVAL; \
+ 			break; \
+ 		} \
+ 		_rval = qla2x00_start_sp(_sp); \
+-		if (_rval == EAGAIN) \
++		if (_rval == -EAGAIN) \
+ 			msleep(1); \
+ 		else \
+ 			break; \
 -- 
 2.51.0
 
