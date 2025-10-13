@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDE230E82B;
-	Mon, 13 Oct 2025 15:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D703128A5;
+	Mon, 13 Oct 2025 15:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369319; cv=none; b=G+ymybXJOKOT17kkMgJc+tw0UCznyJLKFK1KUECHdy+rQDczbwRsrOFiI9mTrw/MM7BiM+fpPgnnrIerv/IEom05Aso1Np82Jik9FKa+cSlTRs1p9vIR/DWGQpZnNdWUDgKQicQkkj4N+KSe+mfXwn79nzxt0W2uO9W+Y4MucRM=
+	t=1760369321; cv=none; b=jkMVQ6pBGkKj/rlLgCf8ji/GdDr4Nz7+vFzS+YU3yD+DYERUdZdBjhc2MjD8XY7t/8pu+OCWqKEW/me3QKh9osiyyeWpXQuV8qHpTtf4LPWSoVm3pNqgwecn94JaPFL1i9voiDM7L77xxSfwLWVDcqVoxoK7ex8+El2CUUdAe18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369319; c=relaxed/simple;
-	bh=ieopgtLCYEyA71AR1Y28f66Opm60fSqf2LBmqKbaRME=;
+	s=arc-20240116; t=1760369321; c=relaxed/simple;
+	bh=uWybZ9iENMZk3MS8lLv9dPTwIXTvOwONXaavM3JJDaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6I6/+tsS9ynAQ15huZq1pvkUdp6pTUZ1w1pXw7nuhXgHogFO2RS4YpSC41oYyqBBLNySLhap6UWMkW44/LHGxEJ34Bsa9vc+8+lDvLgQRejkJCregQraOcjtJMLaMVR1TnmTsSdFqx4k9x5Wagfr4DvMTfnqJthvCg37P1wKuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHhUimk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1LCi2ech1lPyJUoMq8FDThikFbS33cMAgbzx2+1l56vjT8LjPMeQGHyCpcIyf6DiwZkpLL5uH5tzB4jcNkfAb+SRCtfZzNGnx3V6iWtdLXgT61TQUTPV8lT38WCrAkLHy66jiq6aqvWAltlJ9QAlyzrIVDqRAucP7q41uX16wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXg1mvfb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHhUimk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DDAC4CEE7;
-	Mon, 13 Oct 2025 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXg1mvfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314AAC4CEE7;
+	Mon, 13 Oct 2025 15:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369318;
-	bh=ieopgtLCYEyA71AR1Y28f66Opm60fSqf2LBmqKbaRME=;
+	s=korg; t=1760369321;
+	bh=uWybZ9iENMZk3MS8lLv9dPTwIXTvOwONXaavM3JJDaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHhUimk/M5JrQ4qirWKWyTCv75/PHAGpklC6pmw+iXqhuC7w/BtwJrbK1fwYQ+mrM
-	 D6EURHZly+LJjx4ElxwPL1BNxEp2yNMbW30UXJShrp3Meo17Bjl+C1+XnMjDMXb37P
-	 OajFc8Yo2s2ki8ShjaQkA3nmr1nKANiMrGp5gkR0=
+	b=EXg1mvfbD2Exm5qJsJQtWmuwQtvYm/5fM1V2IvVtxXgGem52Fr8SaPUpCF9RIemFS
+	 NUy8q9M18B7afgYO5Rxtvl5BEgBVmG7IV2RsuIeTWxepBuAMBly28kVOZXKKcVKVHZ
+	 B7nZvsOZjneLThemu8kuWXQSmlLYegq4Gk9jjWjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Kohei Ito <ito.kohei@socionext.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 197/563] thermal/drivers/qcom: Make LMH select QCOM_SCM
-Date: Mon, 13 Oct 2025 16:40:58 +0200
-Message-ID: <20251013144418.420384290@linuxfoundation.org>
+Subject: [PATCH 6.17 206/563] i2c: designware: Add disabling clocks when probe fails
+Date: Mon, 13 Oct 2025 16:41:07 +0200
+Message-ID: <20251013144418.748116921@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,38 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit 57eda47bd14b0c2876f2db42e757c57b7a671965 ]
+[ Upstream commit c149841b069ccc6e480b00e11f35a57b5d88c7bb ]
 
-The QCOM_SCM symbol is not user-visible, so it makes little sense to
-depend on it. Make LMH driver select QCOM_SCM as all other drivers do
-and, as the dependecy is now correctly handled, enable || COMPILE_TEST
-in order to include the driver into broader set of build tests.
+After an error occurs during probing state, dw_i2c_plat_pm_cleanup() is
+called. However, this function doesn't disable clocks and the clock-enable
+count keeps increasing. Should disable these clocks explicitly.
 
-Fixes: 9e5a4fb84230 ("thermal/drivers/qcom/lmh: make QCOM_LMH depends on QCOM_SCM")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-1-33bc58388ca5@oss.qualcomm.com
+Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
+Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index 2c7f3f9a26ebb..a6bb01082ec69 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -34,7 +34,8 @@ config QCOM_SPMI_TEMP_ALARM
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index b4bfdd2dd35e4..e37210d6c5f26 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -314,6 +314,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
  
- config QCOM_LMH
- 	tristate "Qualcomm Limits Management Hardware"
--	depends on ARCH_QCOM && QCOM_SCM
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	select QCOM_SCM
- 	help
- 	  This enables initialization of Qualcomm limits management
- 	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
+ exit_probe:
+ 	dw_i2c_plat_pm_cleanup(dev);
++	i2c_dw_prepare_clk(dev, false);
+ exit_reset:
+ 	reset_control_assert(dev->rst);
+ 	return ret;
 -- 
 2.51.0
 
