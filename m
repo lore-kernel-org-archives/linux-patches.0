@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BDD30DED9;
-	Mon, 13 Oct 2025 15:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8513148C2;
+	Mon, 13 Oct 2025 15:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370137; cv=none; b=bW4IummR+vBsrShr0pWSVoSh0tNEWzv7pDsvLR3K+en7aGS4gA1c271dvOQgB4wC7n8Wp5JvDZ3IFnMWo0Rwc9a8LLnuDXGsYHw0yRHcvivnZsCwBX43iT6yzZev/WayOznZeYPkpVwNqb+h0mS1ND4pA1p1HuCpbEl1ll1PVU8=
+	t=1760370140; cv=none; b=Ak8xQU+dZYH+0tONtscGFR3gA7l4uXAPUkDVc2wXMp9fj/J0jgFFq0APvseXoo0hmPfEF1oOG2Iu2YMJLjI9f/3A7TGCzfkhBTDBX2tV1MMfQVTFMBwHr9CMk1CzdyE5JXpo2OTetosTZuIqZJzFSsM1BkOvxEMNMReccjOhEAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370137; c=relaxed/simple;
-	bh=dEjkGF2bAxgjQpXq99p6xvjzJaSRC30heyYsSDEdwCI=;
+	s=arc-20240116; t=1760370140; c=relaxed/simple;
+	bh=Hom9tn8NgRZspiTioJrxeCD0f/oU2g6MhZSLzOJrjwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGORhGQ5U8SNTMdfj5N/NqPm8F9r1OuuPEWKKjPmkXOVlrnc6qclGfp6s37FmGsAu/XeVryJrbY8ont5nxkFWiM0Fdi9e2BeVTxZDMKw213rv4dsJwvEbgMfCqsa0KVnejm+d0UEzBcMt0oOhXLZ/gPq1IswcxDwNiHdzmjgP6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmwJUnfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHljghcPwsbniW+vNpJhSwdUrWm6OlDx/mTbMdbrHaY+PlVDjeDn29hciCx0NhigFfCKDKkBcYWpP2ku00NFrhzk+4zq2DWptgRUfansi9pgOQxYhf9XrSSBO6VuS8hnZ1emF+MeVD1r+NoseyToO6EbiP7LjCDB5kqOSfavUUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsP523OI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmwJUnfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A20C4CEE7;
-	Mon, 13 Oct 2025 15:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsP523OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75743C4CEE7;
+	Mon, 13 Oct 2025 15:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370136;
-	bh=dEjkGF2bAxgjQpXq99p6xvjzJaSRC30heyYsSDEdwCI=;
+	s=korg; t=1760370139;
+	bh=Hom9tn8NgRZspiTioJrxeCD0f/oU2g6MhZSLzOJrjwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NmwJUnfM5sdH47Lkk2ZJCyv5ghKY06b8JkHIAFUbuJIamO4o8ZlyU6AKC7nUbB6Vg
-	 vEOUXVY+GHmnUPIlJViN7V2R8VLvBv/rANLPqH4EnT7QBvU86R0BX54ZqFstHsrltz
-	 DQlK9RJcnhVgDw3w0c7RwZWyROZ1vQiBP4gnjbnc=
+	b=lsP523OIWMJUgY6MmOdjQTFZRlxegmLKxomLAWtvCVNvc0nECMRzQpQaySnfjjwb3
+	 US+hMMdEwhj7o2OzCWHP0ECxxbrno2IzROB3WhVpeEZJu1CSYUKaT2gDPflXdYGzdQ
+	 mvHZABpIok+BxCVOVm8GahFPNThC8efa9RfSSeqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 484/563] nfs/localio: avoid issuing misaligned IO using O_DIRECT
-Date: Mon, 13 Oct 2025 16:45:45 +0200
-Message-ID: <20251013144428.825911269@linuxfoundation.org>
+	Chris Fenner <cfenn@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	stable@vger.kernel.or
+Subject: [PATCH 6.17 493/563] tpm: Disable TPM2_TCG_HMAC by default
+Date: Mon, 13 Oct 2025 16:45:54 +0200
+Message-ID: <20251013144429.152278910@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,194 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 25ba2b84c38f624151a3ba36e56d41c39b9223ad ]
+commit 4bddf4587c131d7b8ce8952cd32b284dcda0dd1f upstream.
 
-Add nfsd_file_dio_alignment and use it to avoid issuing misaligned IO
-using O_DIRECT. Any misaligned DIO falls back to using buffered IO.
+After reading all the feedback, right now disabling the TPM2_TCG_HMAC
+is the right call.
 
-Because misaligned DIO is now handled safely, remove the nfs modparam
-'localio_O_DIRECT_semantics' that was added to require users opt-in to
-the requirement that all O_DIRECT be properly DIO-aligned.
+Other views discussed:
 
-Also, introduce nfs_iov_iter_aligned_bvec() which is a variant of
-iov_iter_aligned_bvec() that also verifies the offset associated with
-an iov_iter is DIO-aligned.  NOTE: in a parallel effort,
-iov_iter_aligned_bvec() is being removed along with
-iov_iter_is_aligned().
+A. Having a kernel command-line parameter or refining the feature
+   otherwise. This goes to the area of improvements.  E.g., one
+   example is my own idea where the null key specific code would be
+   replaced with a persistent handle parameter (which can be
+   *unambigously* defined as part of attestation process when
+   done correctly).
 
-Lastly, add pr_info_ratelimited if underlying filesystem returns
--EINVAL because it was made to try O_DIRECT for IO that is not
-DIO-aligned (shouldn't happen, so its best to be louder if it does).
+B. Removing the code. I don't buy this because that is same as saying
+   that HMAC encryption cannot work at all (if really nitpicking) in
+   any form. Also I disagree on the view that the feature could not
+   be refined to something more reasoable.
 
-Fixes: 3feec68563d ("nfs/localio: add direct IO enablement with sync and async IO support")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also, both A and B are worst options in terms of backporting.
+
+Thuss, this is the best possible choice.
+
+Cc: stable@vger.kernel.or # v6.10+
+Fixes: d2add27cf2b8 ("tpm: Add NULL primary creation")
+Suggested-by: Chris Fenner <cfenn@google.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/localio.c           | 65 ++++++++++++++++++++++++++++++++------
- fs/nfsd/localio.c          | 11 +++++++
- include/linux/nfslocalio.h |  2 ++
- 3 files changed, 68 insertions(+), 10 deletions(-)
+ drivers/char/tpm/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 97abf62f109d2..31ce210f032ac 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -49,11 +49,6 @@ struct nfs_local_fsync_ctx {
- static bool localio_enabled __read_mostly = true;
- module_param(localio_enabled, bool, 0644);
+--- a/drivers/char/tpm/Kconfig
++++ b/drivers/char/tpm/Kconfig
+@@ -29,7 +29,7 @@ if TCG_TPM
  
--static bool localio_O_DIRECT_semantics __read_mostly = false;
--module_param(localio_O_DIRECT_semantics, bool, 0644);
--MODULE_PARM_DESC(localio_O_DIRECT_semantics,
--		 "LOCALIO will use O_DIRECT semantics to filesystem.");
--
- static inline bool nfs_client_is_local(const struct nfs_client *clp)
- {
- 	return !!rcu_access_pointer(clp->cl_uuid.net);
-@@ -321,12 +316,9 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
- 		return NULL;
- 	}
- 
--	if (localio_O_DIRECT_semantics &&
--	    test_bit(NFS_IOHDR_ODIRECT, &hdr->flags)) {
--		iocb->kiocb.ki_filp = file;
-+	init_sync_kiocb(&iocb->kiocb, file);
-+	if (test_bit(NFS_IOHDR_ODIRECT, &hdr->flags))
- 		iocb->kiocb.ki_flags = IOCB_DIRECT;
--	} else
--		init_sync_kiocb(&iocb->kiocb, file);
- 
- 	iocb->kiocb.ki_pos = hdr->args.offset;
- 	iocb->hdr = hdr;
-@@ -336,6 +328,30 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
- 	return iocb;
- }
- 
-+static bool nfs_iov_iter_aligned_bvec(const struct iov_iter *i,
-+		loff_t offset, unsigned int addr_mask, unsigned int len_mask)
-+{
-+	const struct bio_vec *bvec = i->bvec;
-+	size_t skip = i->iov_offset;
-+	size_t size = i->count;
-+
-+	if ((offset | size) & len_mask)
-+		return false;
-+	do {
-+		size_t len = bvec->bv_len;
-+
-+		if (len > size)
-+			len = size;
-+		if ((unsigned long)(bvec->bv_offset + skip) & addr_mask)
-+			return false;
-+		bvec++;
-+		size -= len;
-+		skip = 0;
-+	} while (size);
-+
-+	return true;
-+}
-+
- static void
- nfs_local_iter_init(struct iov_iter *i, struct nfs_local_kiocb *iocb, int dir)
- {
-@@ -345,6 +361,25 @@ nfs_local_iter_init(struct iov_iter *i, struct nfs_local_kiocb *iocb, int dir)
- 		      hdr->args.count + hdr->args.pgbase);
- 	if (hdr->args.pgbase != 0)
- 		iov_iter_advance(i, hdr->args.pgbase);
-+
-+	if (iocb->kiocb.ki_flags & IOCB_DIRECT) {
-+		u32 nf_dio_mem_align, nf_dio_offset_align, nf_dio_read_offset_align;
-+		/* Verify the IO is DIO-aligned as required */
-+		nfs_to->nfsd_file_dio_alignment(iocb->localio, &nf_dio_mem_align,
-+						&nf_dio_offset_align,
-+						&nf_dio_read_offset_align);
-+		if (dir == READ)
-+			nf_dio_offset_align = nf_dio_read_offset_align;
-+
-+		if (nf_dio_mem_align && nf_dio_offset_align &&
-+		    nfs_iov_iter_aligned_bvec(i, hdr->args.offset,
-+					      nf_dio_mem_align - 1,
-+					      nf_dio_offset_align - 1))
-+			return; /* is DIO-aligned */
-+
-+		/* Fallback to using buffered for this misaligned IO */
-+		iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
-+	}
- }
- 
- static void
-@@ -405,6 +440,11 @@ nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
- 	struct nfs_pgio_header *hdr = iocb->hdr;
- 	struct file *filp = iocb->kiocb.ki_filp;
- 
-+	if ((iocb->kiocb.ki_flags & IOCB_DIRECT) && status == -EINVAL) {
-+		/* Underlying FS will return -EINVAL if misaligned DIO is attempted. */
-+		pr_info_ratelimited("nfs: Unexpected direct I/O read alignment failure\n");
-+	}
-+
- 	nfs_local_pgio_done(hdr, status);
- 
- 	/*
-@@ -597,6 +637,11 @@ nfs_local_write_done(struct nfs_local_kiocb *iocb, long status)
- 
- 	dprintk("%s: wrote %ld bytes.\n", __func__, status > 0 ? status : 0);
- 
-+	if ((iocb->kiocb.ki_flags & IOCB_DIRECT) && status == -EINVAL) {
-+		/* Underlying FS will return -EINVAL if misaligned DIO is attempted. */
-+		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
-+	}
-+
- 	/* Handle short writes as if they are ENOSPC */
- 	if (status > 0 && status < hdr->args.count) {
- 		hdr->mds_offset += status;
-diff --git a/fs/nfsd/localio.c b/fs/nfsd/localio.c
-index cb237f1b902a7..9e0a37cd29d8a 100644
---- a/fs/nfsd/localio.c
-+++ b/fs/nfsd/localio.c
-@@ -117,6 +117,16 @@ nfsd_open_local_fh(struct net *net, struct auth_domain *dom,
- 	return localio;
- }
- 
-+static void nfsd_file_dio_alignment(struct nfsd_file *nf,
-+				    u32 *nf_dio_mem_align,
-+				    u32 *nf_dio_offset_align,
-+				    u32 *nf_dio_read_offset_align)
-+{
-+	*nf_dio_mem_align = nf->nf_dio_mem_align;
-+	*nf_dio_offset_align = nf->nf_dio_offset_align;
-+	*nf_dio_read_offset_align = nf->nf_dio_read_offset_align;
-+}
-+
- static const struct nfsd_localio_operations nfsd_localio_ops = {
- 	.nfsd_net_try_get  = nfsd_net_try_get,
- 	.nfsd_net_put  = nfsd_net_put,
-@@ -124,6 +134,7 @@ static const struct nfsd_localio_operations nfsd_localio_ops = {
- 	.nfsd_file_put_local = nfsd_file_put_local,
- 	.nfsd_file_get_local = nfsd_file_get_local,
- 	.nfsd_file_file = nfsd_file_file,
-+	.nfsd_file_dio_alignment = nfsd_file_dio_alignment,
- };
- 
- void nfsd_localio_ops_init(void)
-diff --git a/include/linux/nfslocalio.h b/include/linux/nfslocalio.h
-index 5c7c92659e736..7ca2715edccca 100644
---- a/include/linux/nfslocalio.h
-+++ b/include/linux/nfslocalio.h
-@@ -65,6 +65,8 @@ struct nfsd_localio_operations {
- 	struct net *(*nfsd_file_put_local)(struct nfsd_file __rcu **);
- 	struct nfsd_file *(*nfsd_file_get_local)(struct nfsd_file *);
- 	struct file *(*nfsd_file_file)(struct nfsd_file *);
-+	void (*nfsd_file_dio_alignment)(struct nfsd_file *,
-+					u32 *, u32 *, u32 *);
- } ____cacheline_aligned;
- 
- extern void nfsd_localio_ops_init(void);
--- 
-2.51.0
-
+ config TCG_TPM2_HMAC
+ 	bool "Use HMAC and encrypted transactions on the TPM bus"
+-	default X86_64
++	default n
+ 	select CRYPTO_ECDH
+ 	select CRYPTO_LIB_AESCFB
+ 	select CRYPTO_LIB_SHA256
 
 
