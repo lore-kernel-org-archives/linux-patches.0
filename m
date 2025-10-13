@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304E7314D32;
-	Mon, 13 Oct 2025 15:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0975E3093D3;
+	Mon, 13 Oct 2025 15:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370231; cv=none; b=XsN4+bJxFpGQvYjjXtoBlvoFmSxX9JbkZU24m+2BI5vAPOet6VUsfrPO8rHCUdKtZoXTh2SdCxWknEbLDeXSGoHDtMIvh53Z51UUR5CMvMa45PnlEUGvCm2caOjVOnON/JDB4V6sAlZsHJUUiHiCiHfM90qSiiNr++0qWzyLJZE=
+	t=1760370234; cv=none; b=JL3EF/r3iXHJbjs33L5GqQofAhXuJX3sPQAlPON3L03LGhqLzqYsiln5DyBd9lsXN//MMGn8M1nA7sVGN2rUeRsxsYijFl9A1nbTDQoc4JcRcXoRIvebOOGuRngeJqHHxh6LjEwJFkXHOkrhZkUpzx6Aco+0wpDCQ2D7LSixoAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370231; c=relaxed/simple;
-	bh=/aEnx+EI3IT5My5DLJd7RcMC3SPsh4N69TXyluRPyjc=;
+	s=arc-20240116; t=1760370234; c=relaxed/simple;
+	bh=CIjVEFpzfLa5TECtBq1d4ZitCExNuos+rOOXM2553Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pdvy52gIYQPWRpxUO3FIr0H4pYvndZsH6vUId7Wm1pk+EGhfTZYwJlWj9cAxIQnMkekLmTCuSGcyp3/oCZgyVDxdKFiPQYh0+cbi1hXRqGvC3UNmYWu/PrPOjUjkgOdhvwGnTT4yNOUI3bMIybYfGQWyG420QhQwVjuu9jLiZh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwr6u/Nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A1sHDRMQYQqqb5sANdIVpiYW9uPnpaYFPTrp6/56q6GWbd87OhB9KRgDnQN+IOqQANSvR0wc2npEJOUatI/OsD+B4AM9Mk1RLSsfiYrFkQvYxfods/6i/S0MRXdFL7ZqunI8u3D+mcDDxDMc7mVhZrfloflzOPmWIhkpGyJt1IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUeZP8E7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwr6u/Nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE72AC4CEE7;
-	Mon, 13 Oct 2025 15:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUeZP8E7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B6CC116C6;
+	Mon, 13 Oct 2025 15:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370231;
-	bh=/aEnx+EI3IT5My5DLJd7RcMC3SPsh4N69TXyluRPyjc=;
+	s=korg; t=1760370233;
+	bh=CIjVEFpzfLa5TECtBq1d4ZitCExNuos+rOOXM2553Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwr6u/NxRLtWt5sxQZorXwopwA0JxtpD4uVqER/4YI6Q3tiJ/XAu7A/1NsGVIgj8r
-	 X0gstUkkO4MVxiSxOnJfM52LajdCWfxH4/iaizzmHD34QYRvjxsIdPo21aWSzAC58q
-	 zALP1Kj9AFr31ibb82K/Iq9bdGc6nYNGpvIfMhQw=
+	b=OUeZP8E7Y0bvhYShseNRuV88gQN9+n1wpDWfy95/Dkl0i5E0KWlM79kU4J2ZvaVbE
+	 1w0MGD0+uBPGat/uFbzkImD52USdUEna2iwTwCWOV+lIVTyxUqeLPYwHC0SL+dMvbr
+	 G41FZllyR+ioi/qKXQ7QSc0SngPYuhbrgyFddESA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Yuan <shenghaoyuan0928@163.com>,
-	Tianci Cao <ziye@zju.edu.cn>,
-	Yazhou Tang <tangyazhou518@outlook.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 492/563] bpf: Reject negative offsets for ALU ops
-Date: Mon, 13 Oct 2025 16:45:53 +0200
-Message-ID: <20251013144429.115518264@linuxfoundation.org>
+Subject: [PATCH 6.17 483/563] NFSD: filecache: add STATX_DIOALIGN and STATX_DIO_READ_ALIGN support
+Date: Mon, 13 Oct 2025 16:45:44 +0200
+Message-ID: <20251013144428.789490550@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,59 +54,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazhou Tang <tangyazhou518@outlook.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 55c0ced59fe17dee34e9dfd5f7be63cbab207758 ]
+[ Upstream commit d11f6cd1bb4a416b4515702d020a7480ac667f0f ]
 
-When verifying BPF programs, the check_alu_op() function validates
-instructions with ALU operations. The 'offset' field in these
-instructions is a signed 16-bit integer.
+Use STATX_DIOALIGN and STATX_DIO_READ_ALIGN to get DIO alignment
+attributes from the underlying filesystem and store them in the
+associated nfsd_file. This is done when the nfsd_file is first
+opened for each regular file.
 
-The existing check 'insn->off > 1' was intended to ensure the offset is
-either 0, or 1 for BPF_MOD/BPF_DIV. However, because 'insn->off' is
-signed, this check incorrectly accepts all negative values (e.g., -1).
-
-This commit tightens the validation by changing the condition to
-'(insn->off != 0 && insn->off != 1)'. This ensures that any value
-other than the explicitly permitted 0 and 1 is rejected, hardening the
-verifier against malformed BPF programs.
-
-Co-developed-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Signed-off-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Co-developed-by: Tianci Cao <ziye@zju.edu.cn>
-Signed-off-by: Tianci Cao <ziye@zju.edu.cn>
-Signed-off-by: Yazhou Tang <tangyazhou518@outlook.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Fixes: ec0e2da95f72 ("bpf: Support new signed div/mod instructions.")
-Link: https://lore.kernel.org/r/tencent_70D024BAE70A0A309A4781694C7B764B0608@qq.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Stable-dep-of: 25ba2b84c38f ("nfs/localio: avoid issuing misaligned IO using O_DIRECT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/filecache.c     | 34 ++++++++++++++++++++++++++++++++++
+ fs/nfsd/filecache.h     |  4 ++++
+ fs/nfsd/trace.h         | 27 +++++++++++++++++++++++++++
+ fs/nfsd/vfs.h           |  4 ++++
+ include/trace/misc/fs.h | 22 ++++++++++++++++++++++
+ 5 files changed, 91 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 299e43dac873e..ed1457c273409 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15755,7 +15755,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 	} else {	/* all other ALU ops: and, sub, xor, add, ... */
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 732abf6b92a56..7ca1dedf4e04a 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -231,6 +231,9 @@ nfsd_file_alloc(struct net *net, struct inode *inode, unsigned char need,
+ 	refcount_set(&nf->nf_ref, 1);
+ 	nf->nf_may = need;
+ 	nf->nf_mark = NULL;
++	nf->nf_dio_mem_align = 0;
++	nf->nf_dio_offset_align = 0;
++	nf->nf_dio_read_offset_align = 0;
+ 	return nf;
+ }
  
- 		if (BPF_SRC(insn->code) == BPF_X) {
--			if (insn->imm != 0 || insn->off > 1 ||
-+			if (insn->imm != 0 || (insn->off != 0 && insn->off != 1) ||
- 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
- 				verbose(env, "BPF_ALU uses reserved fields\n");
- 				return -EINVAL;
-@@ -15765,7 +15765,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 			if (err)
- 				return err;
- 		} else {
--			if (insn->src_reg != BPF_REG_0 || insn->off > 1 ||
-+			if (insn->src_reg != BPF_REG_0 || (insn->off != 0 && insn->off != 1) ||
- 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
- 				verbose(env, "BPF_ALU uses reserved fields\n");
- 				return -EINVAL;
+@@ -1069,6 +1072,35 @@ nfsd_file_is_cached(struct inode *inode)
+ 	return ret;
+ }
+ 
++static __be32
++nfsd_file_get_dio_attrs(const struct svc_fh *fhp, struct nfsd_file *nf)
++{
++	struct inode *inode = file_inode(nf->nf_file);
++	struct kstat stat;
++	__be32 status;
++
++	/* Currently only need to get DIO alignment info for regular files */
++	if (!S_ISREG(inode->i_mode))
++		return nfs_ok;
++
++	status = fh_getattr(fhp, &stat);
++	if (status != nfs_ok)
++		return status;
++
++	trace_nfsd_file_get_dio_attrs(inode, &stat);
++
++	if (stat.result_mask & STATX_DIOALIGN) {
++		nf->nf_dio_mem_align = stat.dio_mem_align;
++		nf->nf_dio_offset_align = stat.dio_offset_align;
++	}
++	if (stat.result_mask & STATX_DIO_READ_ALIGN)
++		nf->nf_dio_read_offset_align = stat.dio_read_offset_align;
++	else
++		nf->nf_dio_read_offset_align = nf->nf_dio_offset_align;
++
++	return nfs_ok;
++}
++
+ static __be32
+ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct net *net,
+ 		     struct svc_cred *cred,
+@@ -1187,6 +1219,8 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct net *net,
+ 			}
+ 			status = nfserrno(ret);
+ 			trace_nfsd_file_open(nf, status);
++			if (status == nfs_ok)
++				status = nfsd_file_get_dio_attrs(fhp, nf);
+ 		}
+ 	} else
+ 		status = nfserr_jukebox;
+diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
+index 722b26c71e454..237a05c74211b 100644
+--- a/fs/nfsd/filecache.h
++++ b/fs/nfsd/filecache.h
+@@ -54,6 +54,10 @@ struct nfsd_file {
+ 	struct list_head	nf_gc;
+ 	struct rcu_head		nf_rcu;
+ 	ktime_t			nf_birthtime;
++
++	u32			nf_dio_mem_align;
++	u32			nf_dio_offset_align;
++	u32			nf_dio_read_offset_align;
+ };
+ 
+ int nfsd_file_cache_init(void);
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index a664fdf1161e9..6e2c8e2aab10a 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -1133,6 +1133,33 @@ TRACE_EVENT(nfsd_file_alloc,
+ 	)
+ );
+ 
++TRACE_EVENT(nfsd_file_get_dio_attrs,
++	TP_PROTO(
++		const struct inode *inode,
++		const struct kstat *stat
++	),
++	TP_ARGS(inode, stat),
++	TP_STRUCT__entry(
++		__field(const void *, inode)
++		__field(unsigned long, mask)
++		__field(u32, mem_align)
++		__field(u32, offset_align)
++		__field(u32, read_offset_align)
++	),
++	TP_fast_assign(
++		__entry->inode = inode;
++		__entry->mask = stat->result_mask;
++		__entry->mem_align = stat->dio_mem_align;
++		__entry->offset_align = stat->dio_offset_align;
++		__entry->read_offset_align = stat->dio_read_offset_align;
++	),
++	TP_printk("inode=%p flags=%s mem_align=%u offset_align=%u read_offset_align=%u",
++		__entry->inode, show_statx_mask(__entry->mask),
++		__entry->mem_align, __entry->offset_align,
++		__entry->read_offset_align
++	)
++);
++
+ TRACE_EVENT(nfsd_file_acquire,
+ 	TP_PROTO(
+ 		const struct svc_rqst *rqstp,
+diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
+index eff04959606fe..fde3e0c11dbaf 100644
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -185,6 +185,10 @@ static inline __be32 fh_getattr(const struct svc_fh *fh, struct kstat *stat)
+ 	u32 request_mask = STATX_BASIC_STATS;
+ 	struct path p = {.mnt = fh->fh_export->ex_path.mnt,
+ 			 .dentry = fh->fh_dentry};
++	struct inode *inode = d_inode(p.dentry);
++
++	if (S_ISREG(inode->i_mode))
++		request_mask |= (STATX_DIOALIGN | STATX_DIO_READ_ALIGN);
+ 
+ 	if (fh->fh_maxsize == NFS4_FHSIZE)
+ 		request_mask |= (STATX_BTIME | STATX_CHANGE_COOKIE);
+diff --git a/include/trace/misc/fs.h b/include/trace/misc/fs.h
+index 0406ebe2a80a4..7ead1c61f0cb1 100644
+--- a/include/trace/misc/fs.h
++++ b/include/trace/misc/fs.h
+@@ -141,3 +141,25 @@
+ 		{ ATTR_TIMES_SET,	"TIMES_SET" },	\
+ 		{ ATTR_TOUCH,		"TOUCH"},	\
+ 		{ ATTR_DELEG,		"DELEG"})
++
++#define show_statx_mask(flags)					\
++	__print_flags(flags, "|",				\
++		{ STATX_TYPE,		"TYPE" },		\
++		{ STATX_MODE,		"MODE" },		\
++		{ STATX_NLINK,		"NLINK" },		\
++		{ STATX_UID,		"UID" },		\
++		{ STATX_GID,		"GID" },		\
++		{ STATX_ATIME,		"ATIME" },		\
++		{ STATX_MTIME,		"MTIME" },		\
++		{ STATX_CTIME,		"CTIME" },		\
++		{ STATX_INO,		"INO" },		\
++		{ STATX_SIZE,		"SIZE" },		\
++		{ STATX_BLOCKS,		"BLOCKS" },		\
++		{ STATX_BASIC_STATS,	"BASIC_STATS" },	\
++		{ STATX_BTIME,		"BTIME" },		\
++		{ STATX_MNT_ID,		"MNT_ID" },		\
++		{ STATX_DIOALIGN,	"DIOALIGN" },		\
++		{ STATX_MNT_ID_UNIQUE,	"MNT_ID_UNIQUE" },	\
++		{ STATX_SUBVOL,		"SUBVOL" },		\
++		{ STATX_WRITE_ATOMIC,	"WRITE_ATOMIC" },	\
++		{ STATX_DIO_READ_ALIGN,	"DIO_READ_ALIGN" })
 -- 
 2.51.0
 
