@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4183026E702;
-	Mon, 13 Oct 2025 14:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A6026E702;
+	Mon, 13 Oct 2025 14:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367198; cv=none; b=eF25IIZIpsSiS+WbvsqG2anTs2/vdqUf7ixXQ/nHkb+BiWuS6XzyffbHgmvrYxugglT+dSo/P6tBw7gm7zB6/IFX5dnYcrpcX78TSsAUxne/XwbJWrnbLDTaWozqSYCOrvSg0qzXOssYdXKK3jVEC+fFMfY0Yu7miJE9aLIuVt0=
+	t=1760367201; cv=none; b=cETeWa8ETb8LyEfDZseeMl0U8wTXcTcM65spgLS8SApJh74wajHNoXWv9/aE2riSpBvDfkWS3dTqZE0z5h1hnv1t5tgFi2R1J3svXA02KbbKv07atmnnqdIuxs58HT8Q30B76PddVi2Fdyg7KvQ6Sm8iHJyoGao6QCVy8OwSvFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367198; c=relaxed/simple;
-	bh=+PAqnhX5QkMOknBv+wno2n6Pyg4g4VE8p73B5D6jcso=;
+	s=arc-20240116; t=1760367201; c=relaxed/simple;
+	bh=G9jWyIlcBX/vLTsctuwL+Wxqa2HVXOwVruSNZo8Nx4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmOwcuM6fNccaHq+nrqi3bBgKIaQF4s82Ghp4tqCspAXzk2NnScldv4TRpl2CHadU4vGYh3rPot5/ia8i81SVL54z5h8qu0n6zgyGlDdau4YaiLLi3vqFznXqAGQSXbHwEqk+LUhTn9xWb5WfhvCz9OUP/PbxxtxIbPZ7LQRO70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSyjpcrL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u3lsoxEOKCuv9NdG0NEUiQadXbxH93BAr9JQvOCMlyk45LX2RFvaDP99QCmrDOMAdQD4zoul2nmT74o/DTKm+VN1arJvQFpeT7zMw93gsQMUfBf5wGM1ARix5R93DmsjLEteUNaJV1yDy8oCKA78M1Ko2jA+rJnmYlC4kMJxV3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ61+hbm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSyjpcrL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CEFC4CEE7;
-	Mon, 13 Oct 2025 14:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ61+hbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA19C113D0;
+	Mon, 13 Oct 2025 14:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367198;
-	bh=+PAqnhX5QkMOknBv+wno2n6Pyg4g4VE8p73B5D6jcso=;
+	s=korg; t=1760367200;
+	bh=G9jWyIlcBX/vLTsctuwL+Wxqa2HVXOwVruSNZo8Nx4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSyjpcrLnWgD56JZHJNCO25TyCTkX6h+sBzmwQ32oS3jkop96ujyA2aySvhzyXuQf
-	 6X4j3FT3fuW8jHCDpVCR7xN8aVRwhZ0DOpPajs9e6w1xCx+95ZxZnUPAHFnPZjctJO
-	 CIp+aGEauOEIRfZBBZ1kPjhoACnuxUCQ+1n6XyR4=
+	b=SQ61+hbmfOIy/A9McebDuUCxm74ys779aDbX6vNZEi5rVSk2WD6+aPB9Czldh+Plz
+	 JDMHlwlPE7jhnvCzkF7m/tju3VAIreK0X/ueboSwaXwaKMFtDxJB0sqeoyulHow9l5
+	 RKloMckQKsyE6kGr74Sb+6L7+6ETE1jYyusAH2h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Liao Yuanhong <liaoyuanhong@vivo.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/196] serial: max310x: Add error checking in probe()
-Date: Mon, 13 Oct 2025 16:44:26 +0200
-Message-ID: <20251013144318.065591143@linuxfoundation.org>
+Subject: [PATCH 6.1 094/196] drm/amd/display: Remove redundant semicolons
+Date: Mon, 13 Oct 2025 16:44:27 +0200
+Message-ID: <20251013144318.101035376@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -50,34 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Liao Yuanhong <liaoyuanhong@vivo.com>
 
-[ Upstream commit 672a37ba8af1f2ebcedeb94aea2cdd047f805f30 ]
+[ Upstream commit 90b810dd859c0df9db2290da1ac5842e5f031267 ]
 
-Check if devm_i2c_new_dummy_device() fails.
+Remove unnecessary semicolons.
 
-Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aJTMPZiKqeXSE-KM@stanley.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
+Signed-off-by: Liao Yuanhong <liaoyuanhong@vivo.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c    | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 4eb8d372f619f..44b78e979cdc4 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1656,6 +1656,8 @@ static int max310x_i2c_probe(struct i2c_client *client)
- 		port_client = devm_i2c_new_dummy_device(&client->dev,
- 							client->adapter,
- 							port_addr);
-+		if (IS_ERR(port_client))
-+			return PTR_ERR(port_client);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
+index 9ba6cb67655f4..6c75aa82327ac 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
+@@ -139,7 +139,6 @@ void dml32_rq_dlg_get_rq_reg(display_rq_regs_st *rq_regs,
+ 	if (dual_plane) {
+ 		unsigned int p1_pte_row_height_linear = get_dpte_row_height_linear_c(mode_lib, e2e_pipe_param,
+ 				num_pipes, pipe_idx);
+-		;
+ 		if (src->sw_mode == dm_sw_linear)
+ 			ASSERT(p1_pte_row_height_linear >= 8);
  
- 		regmaps[i] = devm_regmap_init_i2c(port_client, &regcfg_i2c);
- 	}
 -- 
 2.51.0
 
