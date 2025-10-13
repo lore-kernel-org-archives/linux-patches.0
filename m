@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D1530DD13;
-	Mon, 13 Oct 2025 14:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AD83081B1;
+	Mon, 13 Oct 2025 14:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367361; cv=none; b=efrOqZtD5zpDhYknKx07ihk8p8+G6VXi3IB9B/RCZkAV2yZ27yiGN/Ebc5HgMVJUuvxZan1udSLdwy/J+Yq3HUlLn+J8pnDqGUbrxIYqMn4HwqP3n3csqFggRYYmNOhRSqFZWDxB2vOxK7SKYhKfOADXekqrvChi/eLHQEjHMA8=
+	t=1760367365; cv=none; b=sJomm3B0qTFPqiP+0BrwBW/MOUuVAj9Ad72GruwZhz1m66QnRarOxWpBFiE5BWrA4OdQVKloaSQCP0siWgKMV//vMibdpb8X1uEAQylLjzZUetPSnuz8kOGLZkocmOe1AMKC/a5zAzPsktbcytVTKeX7vsQ2Pw88SgIGJ1ZZa+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367361; c=relaxed/simple;
-	bh=xxW+ByaBBlox/3sVZlvKIaY7jHZkO4G9/jETwXPSZCM=;
+	s=arc-20240116; t=1760367365; c=relaxed/simple;
+	bh=nPh1PYa+a+C2R6s92eRd1T4Go0CbQ92mHM4eKcGpp9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cKxeBSejw1aR0miXew0X+N07IgzaHFq9cdaQRo70uaeGcN1V5jYeAvO4P+fqN3Uqtjyz2850Ea9J+Qz1d5Bu/tLqY5BCXAbJR9Npiuuhl6A2J0EuRha6JDwAa0WjLCEGfigHijcPwSGuOSghngO7tnI6GQwYxaDCvlWXSDPiQ2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsaPyBez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayH05i7Z7ufjLo2ppdtPyEsjKmlnhxRfkisja1knn40IldJGXdfOx7LBZq3J+LQxuaQdByHm9ejhxmdwi3GtsoT6Xo3OpF3GJT/w/phUDd9KhbuSwhnywKuauAVUI7DERM7ZtFDgU0ij644zmq058jnTajwu3TmeQDigTXnQ/0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzVpd3ye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsaPyBez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD70BC4CEE7;
-	Mon, 13 Oct 2025 14:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzVpd3ye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66437C4CEE7;
+	Mon, 13 Oct 2025 14:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367361;
-	bh=xxW+ByaBBlox/3sVZlvKIaY7jHZkO4G9/jETwXPSZCM=;
+	s=korg; t=1760367365;
+	bh=nPh1PYa+a+C2R6s92eRd1T4Go0CbQ92mHM4eKcGpp9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsaPyBezbFk4GW01Fq+KPRTuFX8B0z4ZYOQpQ+uIH94FX/o7x9PFQYinXEQ66dsX2
-	 4MiNJMZe4PAs1b1m/dVVnVT1DJ/jYwmxYgV39FzA4fqklPK2aRM67bz42tbEd096Xw
-	 m1lRX+EGIA8qpVra2PLEXluShg2pUE8Le8g74kj4=
+	b=zzVpd3yeEKYWYM23oul75Wh+NuKqXeARWu7vtt6Es6u1v8T8KKaHl/oRdLsRPPbBE
+	 KUIW0tD2gd/oxdZlvlb9jqeoiWD3aBBQdXag1I+fkLA88OQuU1MqTDk4Hl1SC14OGR
+	 idWsaJb6SZdc91v2RV7d78OgC9aoexnxXJhAO1iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Carl Worth <carl@os.amperecomputing.com>,
-	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 182/196] mm: hugetlb: avoid soft lockup when mprotect to large memory area
-Date: Mon, 13 Oct 2025 16:45:55 +0200
-Message-ID: <20251013144321.277957388@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.1 183/196] nvdimm: ndtest: Return -ENOMEM if devm_kcalloc() fails in ndtest_probe()
+Date: Mon, 13 Oct 2025 16:45:56 +0200
+Message-ID: <20251013144321.313714019@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,92 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit f52ce0ea90c83a28904c7cc203a70e6434adfecb upstream.
+commit a9e6aa994917ee602798bbb03180a194b37865bb upstream.
 
-When calling mprotect() to a large hugetlb memory area in our customer's
-workload (~300GB hugetlb memory), soft lockup was observed:
+devm_kcalloc() may fail. ndtest_probe() allocates three DMA address
+arrays (dcr_dma, label_dma, dimm_dma) and later unconditionally uses
+them in ndtest_nvdimm_init(), which can lead to a NULL pointer
+dereference under low-memory conditions.
 
-watchdog: BUG: soft lockup - CPU#98 stuck for 23s! [t2_new_sysv:126916]
+Check all three allocations and return -ENOMEM if any allocation fails,
+jumping to the common error path. Do not emit an extra error message
+since the allocator already warns on allocation failure.
 
-CPU: 98 PID: 126916 Comm: t2_new_sysv Kdump: loaded Not tainted 6.17-rc7
-Hardware name: GIGACOMPUTING R2A3-T40-AAV1/Jefferson CIO, BIOS 5.4.4.1 07/15/2025
-pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mte_clear_page_tags+0x14/0x24
-lr : mte_sync_tags+0x1c0/0x240
-sp : ffff80003150bb80
-x29: ffff80003150bb80 x28: ffff00739e9705a8 x27: 0000ffd2d6a00000
-x26: 0000ff8e4bc00000 x25: 00e80046cde00f45 x24: 0000000000022458
-x23: 0000000000000000 x22: 0000000000000004 x21: 000000011b380000
-x20: ffff000000000000 x19: 000000011b379f40 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc875e0aa5e2c
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : fffffc01ce7a5c00 x4 : 00000000046cde00 x3 : fffffc0000000000
-x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff0046cde7c000
-
-Call trace:
-  mte_clear_page_tags+0x14/0x24
-  set_huge_pte_at+0x25c/0x280
-  hugetlb_change_protection+0x220/0x430
-  change_protection+0x5c/0x8c
-  mprotect_fixup+0x10c/0x294
-  do_mprotect_pkey.constprop.0+0x2e0/0x3d4
-  __arm64_sys_mprotect+0x24/0x44
-  invoke_syscall+0x50/0x160
-  el0_svc_common+0x48/0x144
-  do_el0_svc+0x30/0xe0
-  el0_svc+0x30/0xf0
-  el0t_64_sync_handler+0xc4/0x148
-  el0t_64_sync+0x1a4/0x1a8
-
-Soft lockup is not triggered with THP or base page because there is
-cond_resched() called for each PMD size.
-
-Although the soft lockup was triggered by MTE, it should be not MTE
-specific.  The other processing which takes long time in the loop may
-trigger soft lockup too.
-
-So add cond_resched() for hugetlb to avoid soft lockup.
-
-Link: https://lkml.kernel.org/r/20250929202402.1663290-1-yang@os.amperecomputing.com
-Fixes: 8f860591ffb2 ("[PATCH] Enable mprotect on huge pages")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Tested-by: Carl Worth <carl@os.amperecomputing.com>
-Reviewed-by: Christoph Lameter (Ampere) <cl@gentwo.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9399ab61ad82 ("ndtest: Add dimms to the two buses")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/nvdimm/test/ndtest.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6779,6 +6779,8 @@ unsigned long hugetlb_change_protection(
- 						make_pte_marker(PTE_MARKER_UFFD_WP));
- 		}
- 		spin_unlock(ptl);
-+
-+		cond_resched();
- 	}
- 	/*
- 	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
+--- a/tools/testing/nvdimm/test/ndtest.c
++++ b/tools/testing/nvdimm/test/ndtest.c
+@@ -845,11 +845,22 @@ static int ndtest_probe(struct platform_
+ 
+ 	p->dcr_dma = devm_kcalloc(&p->pdev.dev, NUM_DCR,
+ 				 sizeof(dma_addr_t), GFP_KERNEL);
++	if (!p->dcr_dma) {
++		rc = -ENOMEM;
++		goto err;
++	}
+ 	p->label_dma = devm_kcalloc(&p->pdev.dev, NUM_DCR,
+ 				   sizeof(dma_addr_t), GFP_KERNEL);
++	if (!p->label_dma) {
++		rc = -ENOMEM;
++		goto err;
++	}
+ 	p->dimm_dma = devm_kcalloc(&p->pdev.dev, NUM_DCR,
+ 				  sizeof(dma_addr_t), GFP_KERNEL);
+-
++	if (!p->dimm_dma) {
++		rc = -ENOMEM;
++		goto err;
++	}
+ 	rc = ndtest_nvdimm_init(p);
+ 	if (rc)
+ 		goto err;
 
 
