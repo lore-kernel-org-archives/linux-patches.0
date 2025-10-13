@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6413093C9;
-	Mon, 13 Oct 2025 15:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7ED3115BC;
+	Mon, 13 Oct 2025 15:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368144; cv=none; b=qMBn7G+qjryKejhgR2QE/rDbwPzF0FuPZ0/MtPuSlCD7c3JeIa0uesz7MFqrZ7KJflcqolPSG/1Z/5ZpevvdAWJhPsxW2d8gwY2D8CxB0o7xaxPSFSJzDwa7UEQ5F2tf7OdzHPIHav+CCyaEFysjDEZGzZb8kr9Pm5wBbDgd5P4=
+	t=1760368147; cv=none; b=N9KoPJqOtyHuqVzDGNUWwd5T426zbGMj4u4yk9tk0d3yjgz2PZ8Cc+VGSR4ZtG0bbi3MEti8MlEVIZheaY5Z9pGb94G8PzaoqAXrOEs47WL4iuLfsQz1wMc5b7nkPQIZMgTl23Z5/azMA+ZJ6ZDoE+pJDPV0U53MLSIzz9bEhSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368144; c=relaxed/simple;
-	bh=GIJ3Y/Jr/C7Jh1+dwbxIbgLg9M0rEiIXqfkOOrFeJ/Q=;
+	s=arc-20240116; t=1760368147; c=relaxed/simple;
+	bh=NVYmvdxbTY/acpC62Z9lQDPv0WRXWupIM6/nwmJUew4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abjer6FIm2qM94zBDGG/eA/rhuZqXW6xyexzsUW1chRjdXmxUkoAv78/dYtQcNnRS0OW4ZpMlghjFJ7OB9cGh/41gtUrIt36la63pqsRXdlSpgDQasCqnXAVpOFiuM3Ym1H2S7cz3gEDsHkGlUW2J69+zkEX8KSoXEmgdhFGbAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+DuOLGv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=INlOMQKso7yqyM0BsDx8oxpMpp/mlW3jRm7awkSUcuRaeX6sg2zhiym+M0l9SmCsjGscUBJSp06ttJMoKh7NaXwkamQdj5XiloYiUZ+x0S4oRq6KxVLBemDNlV6JqGKddNJSPVg8TreRYpNV/xO8dfKING3A9liyyaQEHjb/LJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9iknPrw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+DuOLGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F08BC4CEE7;
-	Mon, 13 Oct 2025 15:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9iknPrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE60C4CEE7;
+	Mon, 13 Oct 2025 15:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368144;
-	bh=GIJ3Y/Jr/C7Jh1+dwbxIbgLg9M0rEiIXqfkOOrFeJ/Q=;
+	s=korg; t=1760368147;
+	bh=NVYmvdxbTY/acpC62Z9lQDPv0WRXWupIM6/nwmJUew4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+DuOLGvlRLus//ukfJ+k64BDPSwf53Ge6XR8sPD4/0t6T8VVf8cbDI2BlbFEPJmD
-	 KXR0Pyx8NguwTnBxbIvMA7eSfgGmiI4PsFjaK467DccPurDP9Kqpcs6hcYJDQ43YTA
-	 2NoXAlnnDmkMuH4IdfVzz77p2+2fIiR5KUH3ID8U=
+	b=I9iknPrwX6N3BxXuNPwdNL1sQESwrk8TN/MeWYnvh8/JsVHmfGke3f08OXh5ouvlR
+	 KRRGpPbr+7WFaDSc3k/l/mdQPu+xrXtQEv81zBq/7Yf5HkiV+SOmjUEZIpQeC/UFjp
+	 2XriIIuV6gz3NWqDboIhewtzifu7imFetl5+2QWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fei Shao <fshao@chromium.org>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/262] arm64: dts: mediatek: mt8186-tentacruel: Fix touchscreen model
-Date: Mon, 13 Oct 2025 16:43:21 +0200
-Message-ID: <20251013144328.255030889@linuxfoundation.org>
+Subject: [PATCH 6.12 060/262] arm64: dts: mediatek: mt6331: Fix pmic, regulators, rtc, keys node names
+Date: Mon, 13 Oct 2025 16:43:22 +0200
+Message-ID: <20251013144328.290480622@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,68 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 0370911565869384f19b35ea9e71ee7a57b48a33 ]
+[ Upstream commit 98967109c9c0e2de4140827628c63f96314099ab ]
 
-The touchscreen controller used with the original Krabby design is the
-Elan eKTH6918, which is in the same family as eKTH6915, but supporting
-a larger screen size with more sense lines.
+The node names for "pmic", "regulators", "rtc", and "keys" are
+dictated by the PMIC MFD binding: change those to adhere to it.
 
-OTOH, the touchscreen controller that actually shipped on the Tentacruel
-devices is the Elan eKTH6A12NAY. A compatible string was added for it
-specifically because it has different power sequencing timings.
-
-Fix up the touchscreen nodes for both these. This also includes adding
-a previously missing reset line. Also add "no-reset-on-power-off" since
-the power is always on, and putting it in reset would consume more
-power.
-
-Fixes: 8855d01fb81f ("arm64: dts: mediatek: Add MT8186 Krabby platform based Tentacruel / Tentacool")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20250812090135.3310374-1-wenst@chromium.org
+Fixes: aef783f3e0ca ("arm64: dts: mediatek: Add MT6331 PMIC devicetree")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20250724083914.61351-17-angelogioacchino.delregno@collabora.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi   | 8 ++++----
- .../dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts  | 4 ++++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6331.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-index 7c971198fa956..72a2a2bff0a93 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-@@ -71,14 +71,14 @@ &i2c1 {
- 	i2c-scl-internal-delay-ns = <10000>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt6331.dtsi b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
+index d89858c73ab1b..243afbffa21fd 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6331.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
+@@ -6,12 +6,12 @@
+ #include <dt-bindings/input/input.h>
  
- 	touchscreen: touchscreen@10 {
--		compatible = "hid-over-i2c";
-+		compatible = "elan,ekth6915";
- 		reg = <0x10>;
- 		interrupts-extended = <&pio 12 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&touchscreen_pins>;
--		post-power-on-delay-ms = <10>;
--		hid-descr-addr = <0x0001>;
--		vdd-supply = <&pp3300_s3>;
-+		reset-gpios = <&pio 60 GPIO_ACTIVE_LOW>;
-+		vcc33-supply = <&pp3300_s3>;
-+		no-reset-on-power-off;
- 	};
- };
+ &pwrap {
+-	pmic: mt6331 {
++	pmic: pmic {
+ 		compatible = "mediatek,mt6331";
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
  
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-index 26d3451a5e47c..24d9ede63eaa2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-@@ -42,3 +42,7 @@ MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
- 		CROS_STD_MAIN_KEYMAP
- 	>;
- };
-+
-+&touchscreen {
-+	compatible = "elan,ekth6a12nay";
-+};
+-		mt6331regulator: mt6331regulator {
++		mt6331regulator: regulators {
+ 			compatible = "mediatek,mt6331-regulator";
+ 
+ 			mt6331_vdvfs11_reg: buck-vdvfs11 {
+@@ -258,7 +258,7 @@ mt6331_vrtc_reg: ldo-vrtc {
+ 			};
+ 
+ 			mt6331_vdig18_reg: ldo-vdig18 {
+-				regulator-name = "dvdd18_dig";
++				regulator-name = "vdig18";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+ 				regulator-ramp-delay = <0>;
+@@ -266,11 +266,11 @@ mt6331_vdig18_reg: ldo-vdig18 {
+ 			};
+ 		};
+ 
+-		mt6331rtc: mt6331rtc {
++		mt6331rtc: rtc {
+ 			compatible = "mediatek,mt6331-rtc";
+ 		};
+ 
+-		mt6331keys: mt6331keys {
++		mt6331keys: keys {
+ 			compatible = "mediatek,mt6331-keys";
+ 			power {
+ 				linux,keycodes = <KEY_POWER>;
 -- 
 2.51.0
 
