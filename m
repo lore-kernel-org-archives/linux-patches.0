@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847AB30B505;
-	Mon, 13 Oct 2025 15:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EF1219E8;
+	Mon, 13 Oct 2025 15:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369546; cv=none; b=GoKyC5VVe5uehdL0FeYH1s9OWqmvaECVh8ZbQHLhjh305/LZUiPgdDfKcu6j/0Y4T1o17WhkXL47tA3D29OjJiETmtTKb3kBV2eNnTVSWCU3cw+Z/cokef5tF12MYyuHC+NjcJHxxTudL3iZxu1cVFBLYaOuZisCWb6ZXUl5jY0=
+	t=1760369549; cv=none; b=r4pMCvOz3FbF0bO6BBhb/OQt4CiVb8FxjfGsoCRH/RBSN4Y6/4YKS88XZJx3tKWabWqCyfBkngy4SA9SvmDymkO20ZfR2vpx62obHMr7qkRmy56PgwEYrZhfTdR/mzbHL0CuY34itEFi0w0TWvyMSbuW2VFmTo5Pzy/pi22e7BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369546; c=relaxed/simple;
-	bh=RgIiEDqglrDetT/y3m/y8k/OF7jwc+0PcjG9LSQAvOU=;
+	s=arc-20240116; t=1760369549; c=relaxed/simple;
+	bh=J2e8GPTota0J29rmm8NDsAaTUO7DduoQtBTx4RbgCNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hdkl/AEg/o/HjaLKFGzRifzjPWxPYoG4jZcxrZ6jtctUPp4Te55g7W3562H1PLVb2o38jlQr6cBbqTqQhVXXm1t4HU6LU4WoYm2/x1IhJhzyEuxiqGWcaoDYpZ2B8Qi8rzYH0MpFFEBmDgh04/prkMUf+C8CV6OVR/jSW9n+wjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMeKU5/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSHtxZ0d0BFY7jLmuO1FAFe/+xTs9pxaR2U2xAU2cMDNV/Tu8kTByNdL58Hmi5s0uoMzyZ+AHw9H3lR91uaa3qnOJi7mzF9v9AB+AjCi5bXJMVo4FIT4TSBaSD4yEzg9KjMXjFVobBlvIVC1uqgg4MRrANyOOzQiwSh63au1RUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvF6Dwr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMeKU5/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC93C4CEE7;
-	Mon, 13 Oct 2025 15:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvF6Dwr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC629C4CEE7;
+	Mon, 13 Oct 2025 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369546;
-	bh=RgIiEDqglrDetT/y3m/y8k/OF7jwc+0PcjG9LSQAvOU=;
+	s=korg; t=1760369549;
+	bh=J2e8GPTota0J29rmm8NDsAaTUO7DduoQtBTx4RbgCNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMeKU5/P5zL4Qxfrl5qWhWoN2LqHJFDDeQAJ7G5kee99lLuD7ljMSKsu6WXt4VF2O
-	 rng5+nitUVdEorl9OnMKOccxqpxp/VNtUE2lj3Q7/9anvyZJiNtvL6b3fEAOP2nThT
-	 1l1el6Pt77mV47VWc8b9sTo0/6envf5YPL9lBWb4=
+	b=TvF6Dwr33YsH4bviA6pcoyGIQ9SPXvRf5unpBypkhzL2jNWO88GA0YmLQUxTT7z68
+	 jMGPVUiPVQAYV/yOyM45TU3v6ukIbLaEzoX48XF4nqnlLabIfHA9EfVdJ2izxglgXT
+	 bMmK4i6uTLQqW6Sn0Ji4lebP8e04HXHMCDLua2rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 285/563] ipv6: mcast: Add ip6_mc_find_idev() helper
-Date: Mon, 13 Oct 2025 16:42:26 +0200
-Message-ID: <20251013144421.595566903@linuxfoundation.org>
+Subject: [PATCH 6.17 286/563] ipv6: start using dst_dev_rcu()
+Date: Mon, 13 Oct 2025 16:42:27 +0200
+Message-ID: <20251013144421.631230456@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,140 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 60c481d4caa569001c708d4e9622d19650b6bedc ]
+[ Upstream commit b775ecf1655cedbc465fd6699ab18a2bc4e7a352 ]
 
-Extract the same code logic from __ipv6_sock_mc_join() and
-ip6_mc_find_dev(), also add new helper ip6_mc_find_idev() to
-reduce redundancy and enhance readability.
+Refactor icmpv6_xrlim_allow() and ip6_dst_hoplimit()
+so that we acquire rcu_read_lock() a bit longer
+to be able to use dst_dev_rcu() instead of dst_dev().
 
-No functional changes intended.
+__ip6_rt_update_pmtu() and rt6_do_redirect can directly
+use dst_dev_rcu() in sections already holding rcu_read_lock().
 
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Link: https://patch.msgid.link/20250822064051.2991480-1-yuehaibing@huawei.com
+Small changes to use dst_dev_net_rcu() in
+ip6_default_advmss(), ipv6_sock_ac_join(),
+ip6_mc_find_dev() and ndisc_send_skb().
+
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b775ecf1655c ("ipv6: start using dst_dev_rcu()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 67 ++++++++++++++++++++++--------------------------
- 1 file changed, 31 insertions(+), 36 deletions(-)
+ net/ipv6/anycast.c     | 2 +-
+ net/ipv6/icmp.c        | 6 +++---
+ net/ipv6/mcast.c       | 2 +-
+ net/ipv6/ndisc.c       | 2 +-
+ net/ipv6/output_core.c | 8 +++++---
+ net/ipv6/route.c       | 7 +++----
+ 6 files changed, 14 insertions(+), 13 deletions(-)
 
+diff --git a/net/ipv6/anycast.c b/net/ipv6/anycast.c
+index f8a8e46286b8e..52599584422bf 100644
+--- a/net/ipv6/anycast.c
++++ b/net/ipv6/anycast.c
+@@ -104,7 +104,7 @@ int ipv6_sock_ac_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
+ 		rcu_read_lock();
+ 		rt = rt6_lookup(net, addr, NULL, 0, NULL, 0);
+ 		if (rt) {
+-			dev = dst_dev(&rt->dst);
++			dev = dst_dev_rcu(&rt->dst);
+ 			netdev_hold(dev, &dev_tracker, GFP_ATOMIC);
+ 			ip6_rt_put(rt);
+ 		} else if (ishost) {
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 44550957fd4e3..95cdd4cacb004 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -209,7 +209,8 @@ static bool icmpv6_xrlim_allow(struct sock *sk, u8 type,
+ 	 * this lookup should be more aggressive (not longer than timeout).
+ 	 */
+ 	dst = ip6_route_output(net, sk, fl6);
+-	dev = dst_dev(dst);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
+ 	if (dst->error) {
+ 		IP6_INC_STATS(net, ip6_dst_idev(dst),
+ 			      IPSTATS_MIB_OUTNOROUTES);
+@@ -224,11 +225,10 @@ static bool icmpv6_xrlim_allow(struct sock *sk, u8 type,
+ 		if (rt->rt6i_dst.plen < 128)
+ 			tmo >>= ((128 - rt->rt6i_dst.plen)>>5);
+ 
+-		rcu_read_lock();
+ 		peer = inet_getpeer_v6(net->ipv6.peers, &fl6->daddr);
+ 		res = inet_peer_xrlim_allow(peer, tmo);
+-		rcu_read_unlock();
+ 	}
++	rcu_read_unlock();
+ 	if (!res)
+ 		__ICMP6_INC_STATS(net, ip6_dst_idev(dst),
+ 				  ICMP6_MIB_RATELIMITHOST);
 diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 36ca27496b3c0..55c49dc14b1bd 100644
+index 55c49dc14b1bd..016b572e7d6f0 100644
 --- a/net/ipv6/mcast.c
 +++ b/net/ipv6/mcast.c
-@@ -169,6 +169,29 @@ static int unsolicited_report_interval(struct inet6_dev *idev)
- 	return iv > 0 ? iv : 1;
- }
- 
-+static struct net_device *ip6_mc_find_dev(struct net *net,
-+					  const struct in6_addr *group,
-+					  int ifindex)
-+{
-+	struct net_device *dev = NULL;
-+	struct rt6_info *rt;
-+
-+	if (ifindex == 0) {
-+		rcu_read_lock();
-+		rt = rt6_lookup(net, group, NULL, 0, NULL, 0);
-+		if (rt) {
-+			dev = dst_dev(&rt->dst);
-+			dev_hold(dev);
-+			ip6_rt_put(rt);
-+		}
-+		rcu_read_unlock();
-+	} else {
-+		dev = dev_get_by_index(net, ifindex);
-+	}
-+
-+	return dev;
-+}
-+
- /*
-  *	socket join on multicast group
-  */
-@@ -191,28 +214,13 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 	}
- 
- 	mc_lst = sock_kmalloc(sk, sizeof(struct ipv6_mc_socklist), GFP_KERNEL);
--
- 	if (!mc_lst)
- 		return -ENOMEM;
- 
- 	mc_lst->next = NULL;
- 	mc_lst->addr = *addr;
- 
--	if (ifindex == 0) {
--		struct rt6_info *rt;
--
--		rcu_read_lock();
--		rt = rt6_lookup(net, addr, NULL, 0, NULL, 0);
--		if (rt) {
+@@ -180,7 +180,7 @@ static struct net_device *ip6_mc_find_dev(struct net *net,
+ 		rcu_read_lock();
+ 		rt = rt6_lookup(net, group, NULL, 0, NULL, 0);
+ 		if (rt) {
 -			dev = dst_dev(&rt->dst);
--			dev_hold(dev);
--			ip6_rt_put(rt);
--		}
--		rcu_read_unlock();
--	} else {
--		dev = dev_get_by_index(net, ifindex);
--	}
--
-+	dev = ip6_mc_find_dev(net, addr, ifindex);
- 	if (!dev) {
- 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
- 		return -ENODEV;
-@@ -302,27 +310,14 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
- }
- EXPORT_SYMBOL(ipv6_sock_mc_drop);
++			dev = dst_dev_rcu(&rt->dst);
+ 			dev_hold(dev);
+ 			ip6_rt_put(rt);
+ 		}
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 7d5abb3158ec9..d6bb1e2f6192e 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -505,7 +505,7 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
  
--static struct inet6_dev *ip6_mc_find_dev(struct net *net,
--					 const struct in6_addr *group,
--					 int ifindex)
-+static struct inet6_dev *ip6_mc_find_idev(struct net *net,
-+					  const struct in6_addr *group,
-+					  int ifindex)
+ 	ip6_nd_hdr(skb, saddr, daddr, READ_ONCE(inet6_sk(sk)->hop_limit), skb->len);
+ 
+-	dev = dst_dev(dst);
++	dev = dst_dev_rcu(dst);
+ 	idev = __in6_dev_get(dev);
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
+ 
+diff --git a/net/ipv6/output_core.c b/net/ipv6/output_core.c
+index d21fe27fe21e3..1c9b283a4132d 100644
+--- a/net/ipv6/output_core.c
++++ b/net/ipv6/output_core.c
+@@ -104,18 +104,20 @@ EXPORT_SYMBOL(ip6_find_1stfragopt);
+ int ip6_dst_hoplimit(struct dst_entry *dst)
  {
--	struct net_device *dev = NULL;
-+	struct net_device *dev;
- 	struct inet6_dev *idev;
+ 	int hoplimit = dst_metric_raw(dst, RTAX_HOPLIMIT);
++
++	rcu_read_lock();
+ 	if (hoplimit == 0) {
+-		struct net_device *dev = dst_dev(dst);
++		struct net_device *dev = dst_dev_rcu(dst);
+ 		struct inet6_dev *idev;
  
--	if (ifindex == 0) {
--		struct rt6_info *rt;
--
 -		rcu_read_lock();
--		rt = rt6_lookup(net, group, NULL, 0, NULL, 0);
--		if (rt) {
--			dev = dst_dev(&rt->dst);
--			dev_hold(dev);
--			ip6_rt_put(rt);
--		}
+ 		idev = __in6_dev_get(dev);
+ 		if (idev)
+ 			hoplimit = READ_ONCE(idev->cnf.hop_limit);
+ 		else
+ 			hoplimit = READ_ONCE(dev_net(dev)->ipv6.devconf_all->hop_limit);
 -		rcu_read_unlock();
--	} else {
--		dev = dev_get_by_index(net, ifindex);
--	}
-+	dev = ip6_mc_find_dev(net, group, ifindex);
- 	if (!dev)
- 		return NULL;
+ 	}
++	rcu_read_unlock();
++
+ 	return hoplimit;
+ }
+ EXPORT_SYMBOL(ip6_dst_hoplimit);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 3299cfa12e21c..3371f16b7a3e6 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -2943,7 +2943,7 @@ static void __ip6_rt_update_pmtu(struct dst_entry *dst, const struct sock *sk,
  
-@@ -374,7 +369,7 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	if (!ipv6_addr_is_multicast(group))
- 		return -EINVAL;
+ 		if (res.f6i->nh) {
+ 			struct fib6_nh_match_arg arg = {
+-				.dev = dst_dev(dst),
++				.dev = dst_dev_rcu(dst),
+ 				.gw = &rt6->rt6i_gateway,
+ 			};
  
--	idev = ip6_mc_find_dev(net, group, pgsr->gsr_interface);
-+	idev = ip6_mc_find_idev(net, group, pgsr->gsr_interface);
- 	if (!idev)
- 		return -ENODEV;
+@@ -3238,7 +3238,6 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
  
-@@ -509,7 +504,7 @@ int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 	    gsf->gf_fmode != MCAST_EXCLUDE)
- 		return -EINVAL;
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+-	struct net_device *dev = dst_dev(dst);
+ 	unsigned int mtu = dst_mtu(dst);
+ 	struct net *net;
  
--	idev = ip6_mc_find_dev(net, group, gsf->gf_interface);
-+	idev = ip6_mc_find_idev(net, group, gsf->gf_interface);
- 	if (!idev)
- 		return -ENODEV;
+@@ -3246,7 +3245,7 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ 
+ 	rcu_read_lock();
+ 
+-	net = dev_net_rcu(dev);
++	net = dst_dev_net_rcu(dst);
+ 	if (mtu < net->ipv6.sysctl.ip6_rt_min_advmss)
+ 		mtu = net->ipv6.sysctl.ip6_rt_min_advmss;
+ 
+@@ -4301,7 +4300,7 @@ static void rt6_do_redirect(struct dst_entry *dst, struct sock *sk, struct sk_bu
+ 
+ 	if (res.f6i->nh) {
+ 		struct fib6_nh_match_arg arg = {
+-			.dev = dst_dev(dst),
++			.dev = dst_dev_rcu(dst),
+ 			.gw = &rt->rt6i_gateway,
+ 		};
  
 -- 
 2.51.0
