@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACA81A9B46;
-	Mon, 13 Oct 2025 15:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A69230BBA3;
+	Mon, 13 Oct 2025 15:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368712; cv=none; b=pz21hlQuvmEGqRQxlyDJf4gR4urHnABfMlIK+S3MZFlAzSRf78lueHBjQVUVDfNpheD5td/DDlIE4zFSW/LPa1+Sf+yzaMv7V/MUNek6KTf1bkMDslOcBjELmT+T8dX9oaRR5kjTD/uFhL+IFkqZQZ38ATDJAySyKkJygLqgwTI=
+	t=1760368715; cv=none; b=BnOS2Hns9gVZWh/QFAIO70Pv9wmgR2HxVXEaeScffI9D8fbJ4B4TxuEonUBzagaOowSdRhiOEntDWSsDXBIuTqepwdUVP0Eez6Cja8/ceDqrqM1Tzd8nUNOG6O/9oMPy3lc+UpzecSBLgQAChWWL+AO7YK5tNbktNrMSoPJWhws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368712; c=relaxed/simple;
-	bh=44kPqm/oX1aN8GGsDwWCJI4AMt70EV332CLE6x3zyf8=;
+	s=arc-20240116; t=1760368715; c=relaxed/simple;
+	bh=x5rdQJqWvaw5kSkWsaJ8nuSHegAfZF8hmE1MgNpj21Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lS7UO5Cxsuxyb/JnJovwrGOd0W9cxYcUhD1/XhrbVvK8Id7TvVRVtqjTZyXNPK9rUfu48eDK5oZu2xu4v2hoCPe9ScCWYC7Tbn6r8W+SZO/1oYFkNfsDdRXZ5Asi/DYjmdP8t9JQ0QbMIR/qaAoPuPsHtGX6NVK7/9+qW4RnUZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIEwwUn/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOwztItUQir5GVWctDGkQULPiO1NpC4E+eTCYs3KnYXWHwJHSljyNBx4W/NJYGdFR3ldjOmiWQVj1j7UdA21B6SGopUjLmK+8LHPqIN4X0ymoRsW4nTMppMJoPGJrLeNib2KMh06JKh6xxMiZZo5esJG/1HlwPAfChm1vdi+H68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/uvH8VT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIEwwUn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93DCC4CEE7;
-	Mon, 13 Oct 2025 15:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/uvH8VT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85054C4CEE7;
+	Mon, 13 Oct 2025 15:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368712;
-	bh=44kPqm/oX1aN8GGsDwWCJI4AMt70EV332CLE6x3zyf8=;
+	s=korg; t=1760368714;
+	bh=x5rdQJqWvaw5kSkWsaJ8nuSHegAfZF8hmE1MgNpj21Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIEwwUn/+bDAfkEH0tBL1mV3fAcL92t301aZXdo/hLKamudo9iDXKuPNIKbhMgl8J
-	 TQX+85ifzQG39GksowscBHS++Zs/yJMu84JLFmTWaSp+bl2AZuEhY79dguI9WDooWx
-	 le72QGZ8K6c6V30cKsBLf7Umsivr+PfLJ0kvOQuI=
+	b=W/uvH8VT+1lLqg1WGJ06xuHtDoPKJKn5a0LOVJObevdTJJi7IkyYYQBoZ79vfLo/V
+	 MUUNGRpr3KUsrKiaxPrDnm17b0G9vyi66MqFLU3sTeOogh0t73InCW368/Uxf+c9z2
+	 q4vCn5N/t40MAfaRkZ+ZXBfCKIX7nHJ+Sr3bJunE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.12 257/262] bus: fsl-mc: Check return value of platform_get_resource()
-Date: Mon, 13 Oct 2025 16:46:39 +0200
-Message-ID: <20251013144335.489446893@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.12 258/262] net/9p: Fix buffer overflow in USB transport layer
+Date: Mon, 13 Oct 2025 16:46:40 +0200
+Message-ID: <20251013144335.525446542@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,36 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-commit 25f526507b8ccc6ac3a43bc094d09b1f9b0b90ae upstream.
+commit c04db81cd0288dfc68b7a0f7d09bd49b40bba451 upstream.
 
-platform_get_resource() returns NULL in case of failure, so check its
-return value and propagate the error in order to prevent NULL pointer
-dereference.
+A buffer overflow vulnerability exists in the USB 9pfs transport layer
+where inconsistent size validation between packet header parsing and
+actual data copying allows a malicious USB host to overflow heap buffers.
 
-Fixes: 6305166c8771 ("bus: fsl-mc: Add ACPI support for fsl-mc")
+The issue occurs because:
+- usb9pfs_rx_header() validates only the declared size in packet header
+- usb9pfs_rx_complete() uses req->actual (actual received bytes) for
+memcpy
+
+This allows an attacker to craft packets with small declared size
+(bypassing validation) but large actual payload (triggering overflow
+in memcpy).
+
+Add validation in usb9pfs_rx_complete() to ensure req->actual does not
+exceed the buffer capacity before copying data.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Closes: https://lkml.kernel.org/r/20250616132539.63434-1-danisjiang@gmail.com
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/aKwuK6TRr5XNYQ8u@pc
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Message-ID: <20250622-9p-usb_overflow-v3-1-ab172691b946@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/9p/trans_usbg.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -1103,6 +1103,9 @@ static int fsl_mc_bus_probe(struct platf
- 	 * Get physical address of MC portal for the root DPRC:
- 	 */
- 	plat_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!plat_res)
-+		return -EINVAL;
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -231,6 +231,8 @@ static void usb9pfs_rx_complete(struct u
+ 	struct f_usb9pfs *usb9pfs = ep->driver_data;
+ 	struct usb_composite_dev *cdev = usb9pfs->function.config->cdev;
+ 	struct p9_req_t *p9_rx_req;
++	unsigned int req_size = req->actual;
++	int status = REQ_STATUS_RCVD;
+ 
+ 	if (req->status) {
+ 		dev_err(&cdev->gadget->dev, "%s usb9pfs complete --> %d, %d/%d\n",
+@@ -242,11 +244,19 @@ static void usb9pfs_rx_complete(struct u
+ 	if (!p9_rx_req)
+ 		return;
+ 
+-	memcpy(p9_rx_req->rc.sdata, req->buf, req->actual);
++	if (req_size > p9_rx_req->rc.capacity) {
++		dev_err(&cdev->gadget->dev,
++			"%s received data size %u exceeds buffer capacity %zu\n",
++			ep->name, req_size, p9_rx_req->rc.capacity);
++		req_size = 0;
++		status = REQ_STATUS_ERROR;
++	}
 +
- 	mc_portal_phys_addr = plat_res->start;
- 	mc_portal_size = resource_size(plat_res);
- 	mc_portal_base_phys_addr = mc_portal_phys_addr & ~0x3ffffff;
++	memcpy(p9_rx_req->rc.sdata, req->buf, req_size);
+ 
+-	p9_rx_req->rc.size = req->actual;
++	p9_rx_req->rc.size = req_size;
+ 
+-	p9_client_cb(usb9pfs->client, p9_rx_req, REQ_STATUS_RCVD);
++	p9_client_cb(usb9pfs->client, p9_rx_req, status);
+ 	p9_req_put(usb9pfs->client, p9_rx_req);
+ 
+ 	complete(&usb9pfs->received);
 
 
