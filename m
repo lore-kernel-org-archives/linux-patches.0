@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D18430C35C;
-	Mon, 13 Oct 2025 15:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4054306497;
+	Mon, 13 Oct 2025 15:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369090; cv=none; b=CcVoct+T7H6eZ7mFDADB6OVJQPBM6GoHcyoJel6dYZ+fEjvZ9wZWNONGOWAXqM8LxxyUIGGt8SQDM8U1l/E0WEYD8V7BGByoXVx6MldTr3IVBA5afb4Bs+4FYr9eNf7jZiutKmt2vKsqy43lemu26E5FAj58ukwxfJoxelkkX+Y=
+	t=1760369092; cv=none; b=Z1Ivg+o+dCRGv5H5M3fEB/ESHSILoqt7hex2nmPWcxFPvPZQ6aGYqfIggMG8aw1LcYsSGtOHIzfEErKYL872RfZkJHTG9IOYxdyqx+ew3MaJWNg2Y3z+yAV/zJBoEEgJ7TRmTBEkI/9fZePg4H6PK+XKVWAJ5Lj9vjt8B/HbL3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369090; c=relaxed/simple;
-	bh=Jj7Ebs5D1rUUdBoFnjQpprEhC+Hx+eRY0/Tc3R/Z+eU=;
+	s=arc-20240116; t=1760369092; c=relaxed/simple;
+	bh=cnYIYigWysodhlhgbSAryj2xo2RUnwUaTWDA5S05YYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBIMVgFPMcOhZjkUWaZkk9FZmdiKck8M7NOyngeOXXAMfXiUZDeEpB7AawckQCBCrGA8oNmx1iiBSYuj/3QObGMDtGu6qklJSlgbnEPfVqQPy/Ydwd54c3Hvv1BC5zEnBAOUdqRAETliE4aGigfDvwEjTGN9MPfAiOnMM6b2O98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yup7bkW8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GSqIHxHRsFh+gXmneRihjUfRlh6MD0duzCNiV2yiHXVcBF07j9kAw9DYBRUxw7AvD1C8+s0xUBmu97GHMGzjZ6c0c+SbAZAVzspwz2j8RJUoDakMPnWCRi+/wmZtdGxKBWzAUleJmOfn2GE/QQgbaFk2cKWE2s+Kv5SsDL+PT/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkZWAUf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yup7bkW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78601C4CEFE;
-	Mon, 13 Oct 2025 15:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkZWAUf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDC8C4CEE7;
+	Mon, 13 Oct 2025 15:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369089;
-	bh=Jj7Ebs5D1rUUdBoFnjQpprEhC+Hx+eRY0/Tc3R/Z+eU=;
+	s=korg; t=1760369092;
+	bh=cnYIYigWysodhlhgbSAryj2xo2RUnwUaTWDA5S05YYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yup7bkW8cN8tNyiBxN5I5MctTQPEW6FhjBKwInKEe5G264My3N+0S76V1cwKmRcQk
-	 Ilb+elqthEeonfIiYPfPCETyHFopSCT3dGM4VC9vX9ueIKicPIHFHNLiqXCgN0rMpM
-	 PEfvZq9TQ3aB3i4Z9wX2q6kXwRBlk3UVHx7lQUtY=
+	b=bkZWAUf+SfBtPJrkDXfv9Z7LsSwykRARWXwNytB38DlwjkUVSCVcSn0ngGxr40TAB
+	 vnbyj9qGaNckIY+BxwPLuhJ/VYydH3pyg327ZpBiyD/4K99jTZoQD5QvnHiJuYKTqe
+	 hglt4Vo4Lsvoiv30FSMn9fuF+C7N2IlH7sxGG3a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 123/563] block: skip unnecessary checks for split bio
-Date: Mon, 13 Oct 2025 16:39:44 +0200
-Message-ID: <20251013144415.749291210@linuxfoundation.org>
+Subject: [PATCH 6.17 092/563] vdso/datastore: Gate time data behind CONFIG_GENERIC_GETTIMEOFDAY
+Date: Mon, 13 Oct 2025 16:39:13 +0200
+Message-ID: <20251013144414.630471211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,76 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 0b64682e78f7a53ea863e368b1aa66f05767858d ]
+[ Upstream commit 7c0c01a216e6d9e1d169c0f6f3b5522e6da708ed ]
 
-Lots of checks are already done while submitting this bio the first
-time, and there is no need to check them again when this bio is
-resubmitted after split.
+When the generic vDSO does not provide time functions, as for example on
+riscv32, then the time data store is not necessary.
 
-Hence open code should_fail_bio() and blk_throtl_bio() that are still
-necessary from submit_bio_split_bioset().
+Avoid allocating these time data pages when not used.
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b2f5974079d8 ("block: fix ordering of recursive split IO")
+Fixes: df7fcbefa710 ("vdso: Add generic time data storage")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250826-vdso-cleanups-v1-1-d9b65750e49f@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c  | 2 +-
- block/blk-merge.c | 6 +++++-
- block/blk.h       | 1 +
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ lib/vdso/datastore.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index e5af6eda5a459..03a5d4c9cbf72 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -539,7 +539,7 @@ static inline void bio_check_ro(struct bio *bio)
- 	}
- }
+diff --git a/lib/vdso/datastore.c b/lib/vdso/datastore.c
+index 3693c6caf2c4d..a565c30c71a04 100644
+--- a/lib/vdso/datastore.c
++++ b/lib/vdso/datastore.c
+@@ -11,14 +11,14 @@
+ /*
+  * The vDSO data page.
+  */
+-#ifdef CONFIG_HAVE_GENERIC_VDSO
++#ifdef CONFIG_GENERIC_GETTIMEOFDAY
+ static union {
+ 	struct vdso_time_data	data;
+ 	u8			page[PAGE_SIZE];
+ } vdso_time_data_store __page_aligned_data;
+ struct vdso_time_data *vdso_k_time_data = &vdso_time_data_store.data;
+ static_assert(sizeof(vdso_time_data_store) == PAGE_SIZE);
+-#endif /* CONFIG_HAVE_GENERIC_VDSO */
++#endif /* CONFIG_GENERIC_GETTIMEOFDAY */
  
--static noinline int should_fail_bio(struct bio *bio)
-+int should_fail_bio(struct bio *bio)
- {
- 	if (should_fail_request(bdev_whole(bio->bi_bdev), bio->bi_iter.bi_size))
- 		return -EIO;
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 51fe4ed5b7c0b..c411045fcf03a 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -130,7 +130,11 @@ struct bio *bio_submit_split_bioset(struct bio *bio, unsigned int split_sectors,
- 	bio_chain(split, bio);
- 	trace_block_split(split, bio->bi_iter.bi_sector);
- 	WARN_ON_ONCE(bio_zone_write_plugging(bio));
--	submit_bio_noacct(bio);
-+
-+	if (should_fail_bio(bio))
-+		bio_io_error(bio);
-+	else if (!blk_throtl_bio(bio))
-+		submit_bio_noacct_nocheck(bio);
+ #ifdef CONFIG_VDSO_GETRANDOM
+ static union {
+@@ -46,7 +46,7 @@ static vm_fault_t vvar_fault(const struct vm_special_mapping *sm,
  
- 	return split;
- }
-diff --git a/block/blk.h b/block/blk.h
-index 0268deb222688..18cc3c2afdd4d 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -615,6 +615,7 @@ extern const struct address_space_operations def_blk_aops;
- int disk_register_independent_access_ranges(struct gendisk *disk);
- void disk_unregister_independent_access_ranges(struct gendisk *disk);
- 
-+int should_fail_bio(struct bio *bio);
- #ifdef CONFIG_FAIL_MAKE_REQUEST
- bool should_fail_request(struct block_device *part, unsigned int bytes);
- #else /* CONFIG_FAIL_MAKE_REQUEST */
+ 	switch (vmf->pgoff) {
+ 	case VDSO_TIME_PAGE_OFFSET:
+-		if (!IS_ENABLED(CONFIG_HAVE_GENERIC_VDSO))
++		if (!IS_ENABLED(CONFIG_GENERIC_GETTIMEOFDAY))
+ 			return VM_FAULT_SIGBUS;
+ 		pfn = __phys_to_pfn(__pa_symbol(vdso_k_time_data));
+ 		if (timens_page) {
 -- 
 2.51.0
 
