@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4930DEB2;
-	Mon, 13 Oct 2025 14:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86AF30ACF6;
+	Mon, 13 Oct 2025 14:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367406; cv=none; b=k7D1bEp9VQAb8MGXOYcqifnrsgm2WhPTVgUXfFi2wDjzhMsxgHRbV2qMZeSVuiQ1584FHYp6BXYUWtVxVJs9N+oh1b1Hd9id0dpMq2EG/LMAzV3GIqRPZytPTFmr3ud4M1AzpNVgY9h7fv6AbxfyeqbZsMUmJt0rgqfYY6U7cDY=
+	t=1760367409; cv=none; b=XRz5cD+5Y6Nzyo3KIUjXZUrQreZ2AwtxFMYCgxDCq02OTUPK22ro96+YkiFhOF3WvO6oREFspRUAqq5WDEiXtJJTvIeczxKk5U4aMtd6VDMyZudPof5vd3jzcaV8QggmJyE4ZbdHys5SH8g5By5uNCB97plggwVYQFjocz3FG80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367406; c=relaxed/simple;
-	bh=TYEVtNvxvBjWeZhJ7lAIclThH8shAw50q8ZAW1WXN6A=;
+	s=arc-20240116; t=1760367409; c=relaxed/simple;
+	bh=ynQfTQpppMfOdjERChb5buOrcBF+KI6y5Gu7lNKjVFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2aauP9scuGf0lDpmB0XYVF18vNkufjl5qIjQnURGEV53+kFiqjwpBK07tN+sJVxz7uiwBDy8h+a8rNaoP+A/HsKIrkFpgL7DsQMG0WBJepRC10XvU8RavSCePk7PM1YgJhUSCFHhXeoUBXSwAr4GyTfaMg7hkPyWHx1IlMtI+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eg2ioAzd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3PdT92xOwFRJMo3j3HwQbFuBqC/dlM7/60yonnBe3MGaAZ1SLnS+wKn4y7/O8K4jW2NS5n5pm5Y6gAYMQRuYOZwCmZYOkokpU9pttY5ca5njG31O1MrUDUsIlPTIJeAxYWErUrTs9kMfjGXpb4xYFo8VdljJd8F9rKbSLATIl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ME6OnKQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eg2ioAzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7BEC4CEE7;
-	Mon, 13 Oct 2025 14:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ME6OnKQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76ECFC4CEE7;
+	Mon, 13 Oct 2025 14:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367406;
-	bh=TYEVtNvxvBjWeZhJ7lAIclThH8shAw50q8ZAW1WXN6A=;
+	s=korg; t=1760367408;
+	bh=ynQfTQpppMfOdjERChb5buOrcBF+KI6y5Gu7lNKjVFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eg2ioAzdIZL7Shu5nzgZ1qis11OtxMDQc7fi85N7wtjvfGMQyBmjU+e7MCPANMpeO
-	 /K68NpIUkVdGm5y/HKB0C/6ieiwuelGr265cB43vE4MWQ9TOKGyIFtEU+DkFqAmCwV
-	 gKMYM58+CyMSnJT6i7FqUZ8Bhkc8S1ormzUCr66g=
+	b=ME6OnKQABQImct3QoFuX3Yur/ov/qPvrdd03RgasNaaawBeIV66rcncDkk2w8OI6V
+	 1QYn1Cp8P2fLRMXChvWvfHdzy2NNtyMMjzygJYzBYrmylKaTqNKEa4fhGh/J4bW7Gj
+	 Dp/a932i5hDCnjfmnGnGKepObbHG2BTEvaZNGWjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erick Karanja <karanja99erick@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Kohei Enju <enjuk@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 164/196] mtd: rawnand: atmel: Fix error handling path in atmel_nand_controller_add_nands
-Date: Mon, 13 Oct 2025 16:45:37 +0200
-Message-ID: <20251013144320.631835756@linuxfoundation.org>
+Subject: [PATCH 6.1 165/196] nfp: fix RSS hash key size when RSS is not supported
+Date: Mon, 13 Oct 2025 16:45:38 +0200
+Message-ID: <20251013144320.667963234@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erick Karanja <karanja99erick@gmail.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit 8ed4728eb9f10b57c3eb02e0f6933a89ffcb8a91 ]
+[ Upstream commit 8425161ac1204d2185e0a10f5ae652bae75d2451 ]
 
-In case of a jump to the  err label due to atmel_nand_create() or
-atmel_nand_controller_add_nand() failure, the reference to nand_np
-need to be released
+The nfp_net_get_rxfh_key_size() function returns -EOPNOTSUPP when
+devices don't support RSS, and callers treat the negative value as a
+large positive value since the return type is u32.
 
-Use for_each_child_of_node_scoped() to fix the issue.
+Return 0 when devices don't support RSS, aligning with the ethtool
+interface .get_rxfh_key_size() that requires returning 0 in such cases.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-
-Signed-off-by: Erick Karanja <karanja99erick@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 9ff304bfaf58 ("nfp: add support for reporting CRC32 hash function")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Link: https://patch.msgid.link/20250929054230.68120-1-enjuk@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/nand-controller.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
-index 78f317ac04afa..56fd897721ad5 100644
---- a/drivers/mtd/nand/raw/atmel/nand-controller.c
-+++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
-@@ -1859,7 +1859,7 @@ atmel_nand_controller_legacy_add_nands(struct atmel_nand_controller *nc)
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+index af376b9000677..7ee919201985f 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+@@ -1409,7 +1409,7 @@ static u32 nfp_net_get_rxfh_key_size(struct net_device *netdev)
+ 	struct nfp_net *nn = netdev_priv(netdev);
  
- static int atmel_nand_controller_add_nands(struct atmel_nand_controller *nc)
- {
--	struct device_node *np, *nand_np;
-+	struct device_node *np;
- 	struct device *dev = nc->dev;
- 	int ret, reg_cells;
- 	u32 val;
-@@ -1886,7 +1886,7 @@ static int atmel_nand_controller_add_nands(struct atmel_nand_controller *nc)
+ 	if (!(nn->cap & NFP_NET_CFG_CTRL_RSS_ANY))
+-		return -EOPNOTSUPP;
++		return 0;
  
- 	reg_cells += val;
- 
--	for_each_child_of_node(np, nand_np) {
-+	for_each_child_of_node_scoped(np, nand_np) {
- 		struct atmel_nand *nand;
- 
- 		nand = atmel_nand_create(nc, nand_np, reg_cells);
+ 	return nfp_net_rss_key_sz(nn);
+ }
 -- 
 2.51.0
 
