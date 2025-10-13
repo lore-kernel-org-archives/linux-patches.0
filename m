@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385A830AAD2;
-	Mon, 13 Oct 2025 15:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B3D30AAC5;
+	Mon, 13 Oct 2025 15:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368664; cv=none; b=L5qAtOdPaPz45EZBU9DpQXofLzCYH4BbG11XGxCE7cfBOuf2v1kjrbdifgpMg9QwCjVVrkJfiGPgmpFGYrlUJZXCI6ube7R8gnhzVkGRI2vN1bXlzWjaxPAiLlUNn5kEPDrAi8lgW9eCDQfNiG5TUhsTc/D2TB1Jr5nZ4mq89C0=
+	t=1760368667; cv=none; b=gASPkJuz5MWIitQR6Nr+QLeXzWCqpF5bt410qd30hIucihU9vdZ5dOmJO4u5jFk6pTsD2A7Ce0LIjvc/NHqXYcQKhoKuD33tBCSpuFXMCy9LGIkCgIJG7YPScmH4cOebRW4OMNShQyGjOWGBTUR+eUME9y4Zlhdj79NLGiH7Mw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368664; c=relaxed/simple;
-	bh=0YZYuMZRTqljUxQV1k7DjQ8FTs/muD1Q2hdZX7GxBIc=;
+	s=arc-20240116; t=1760368667; c=relaxed/simple;
+	bh=ADvhm+VkO019plS7ru1m4pHLxOxECyX/NZld75surPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONKL+dIIqmoInbzXmwXRXNY8S4oRPbZ4Y9FgBHlVH+aWhJkyYp92BbF9Ttg3RCfKunqSfvhHxjqfRg/uQ3RnnScqD8s9wrC0nrlUPGEeEiJDUrQKJCigoKS2EUHhCju9EiI9u6Bxu0qZNyoZYs51ufylFAGONFqxA8f3rn/3V3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2gipGxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6T6KGDZsE+C4Vrevl8ooRW6YPDGVviF3oW2P1vQuO36ihSxpX9p1w8v+JkG9KwvVcBbhXUaD/WuDIuV7gx4gvy99WncDelf84hxLcTirSD1Yfd9kvH//6xkfIoSoFr6z7F7Zza/xG5ZldxZO0+poDxlUdW5U4eYPrVIVLNKdwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu38Ai9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2gipGxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F52C4CEE7;
-	Mon, 13 Oct 2025 15:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu38Ai9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F71BC4CEE7;
+	Mon, 13 Oct 2025 15:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368663;
-	bh=0YZYuMZRTqljUxQV1k7DjQ8FTs/muD1Q2hdZX7GxBIc=;
+	s=korg; t=1760368666;
+	bh=ADvhm+VkO019plS7ru1m4pHLxOxECyX/NZld75surPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2gipGxCtY9v6veDFFRJSlgy3HR5ILVrZgQog3F/TMzdhSY5i2DQKHOTpzqxqiADG
-	 Fh+B+R2CTFsnisvZFO/Zjd4gC+fnUnkQUx6pAp8X5hG7wBc8MylO2SXewPOXUHV9Cs
-	 wW6eSahLT/6scj7C+DV9wU3VgSSdjh1zrhZz2Q84=
+	b=Tu38Ai9jDtt/KaOue5vw/RFFVCKzgm0xf/5IZI4XG3yd3CVxk0Oqhb7zc5kRuxyGT
+	 nT2UPjl1WIFjeEkGq7AZI1f8ulQJJtvWJQeceCCgXffHje33z+hy7seUoW+Yc+v22l
+	 vfTBq58DwQYdp7A/qYjokVkhQ6UK90usfkOFTVcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <ysk@kzalloc.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 239/262] ksmbd: Fix race condition in RPC handle list access
-Date: Mon, 13 Oct 2025 16:46:21 +0200
-Message-ID: <20251013144334.846356604@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 213/262] idpf: fix mismatched free function for dma_alloc_coherent
+Date: Mon, 13 Oct 2025 16:45:55 +0200
+Message-ID: <20251013144333.916024732@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,101 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunseong Kim <ysk@kzalloc.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit 305853cce379407090a73b38c5de5ba748893aee upstream.
+[ Upstream commit b9bd25f47eb79c9eb275e3d9ac3983dc88577dd4 ]
 
-The 'sess->rpc_handle_list' XArray manages RPC handles within a ksmbd
-session. Access to this list is intended to be protected by
-'sess->rpc_lock' (an rw_semaphore). However, the locking implementation was
-flawed, leading to potential race conditions.
+The mailbox receive path allocates coherent DMA memory with
+dma_alloc_coherent(), but frees it with dmam_free_coherent().
+This is incorrect since dmam_free_coherent() is only valid for
+buffers allocated with dmam_alloc_coherent().
 
-In ksmbd_session_rpc_open(), the code incorrectly acquired only a read lock
-before calling xa_store() and xa_erase(). Since these operations modify
-the XArray structure, a write lock is required to ensure exclusive access
-and prevent data corruption from concurrent modifications.
+Fix the mismatch by using dma_free_coherent() instead of
+dmam_free_coherent
 
-Furthermore, ksmbd_session_rpc_method() accessed the list using xa_load()
-without holding any lock at all. This could lead to reading inconsistent
-data or a potential use-after-free if an entry is concurrently removed and
-the pointer is dereferenced.
-
-Fix these issues by:
-1. Using down_write() and up_write() in ksmbd_session_rpc_open()
-   to ensure exclusive access during XArray modification, and ensuring
-   the lock is correctly released on error paths.
-2. Adding down_read() and up_read() in ksmbd_session_rpc_method()
-   to safely protect the lookup.
-
-Fixes: a1f46c99d9ea ("ksmbd: fix use-after-free in ksmbd_session_rpc_open")
-Fixes: b685757c7b08 ("ksmbd: Implements sess->rpc_handle_list as xarray")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e54232da1238 ("idpf: refactor idpf_recv_mb_msg")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Link: https://patch.msgid.link/20250925180212.415093-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -104,29 +104,32 @@ int ksmbd_session_rpc_open(struct ksmbd_
- 	if (!entry)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index f27a8cf3816db..d1f374da00981 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -727,9 +727,9 @@ int idpf_recv_mb_msg(struct idpf_adapter *adapter)
+ 		/* If post failed clear the only buffer we supplied */
+ 		if (post_err) {
+ 			if (dma_mem)
+-				dmam_free_coherent(&adapter->pdev->dev,
+-						   dma_mem->size, dma_mem->va,
+-						   dma_mem->pa);
++				dma_free_coherent(&adapter->pdev->dev,
++						  dma_mem->size, dma_mem->va,
++						  dma_mem->pa);
+ 			break;
+ 		}
  
--	down_read(&sess->rpc_lock);
- 	entry->method = method;
- 	entry->id = id = ksmbd_ipc_id_alloc();
- 	if (id < 0)
- 		goto free_entry;
-+
-+	down_write(&sess->rpc_lock);
- 	old = xa_store(&sess->rpc_handle_list, id, entry, KSMBD_DEFAULT_GFP);
--	if (xa_is_err(old))
-+	if (xa_is_err(old)) {
-+		up_write(&sess->rpc_lock);
- 		goto free_id;
-+	}
- 
- 	resp = ksmbd_rpc_open(sess, id);
--	if (!resp)
--		goto erase_xa;
-+	if (!resp) {
-+		xa_erase(&sess->rpc_handle_list, entry->id);
-+		up_write(&sess->rpc_lock);
-+		goto free_id;
-+	}
- 
--	up_read(&sess->rpc_lock);
-+	up_write(&sess->rpc_lock);
- 	kvfree(resp);
- 	return id;
--erase_xa:
--	xa_erase(&sess->rpc_handle_list, entry->id);
- free_id:
- 	ksmbd_rpc_id_free(entry->id);
- free_entry:
- 	kfree(entry);
--	up_read(&sess->rpc_lock);
- 	return -EINVAL;
- }
- 
-@@ -144,9 +147,14 @@ void ksmbd_session_rpc_close(struct ksmb
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
- {
- 	struct ksmbd_session_rpc *entry;
-+	int method;
- 
-+	down_read(&sess->rpc_lock);
- 	entry = xa_load(&sess->rpc_handle_list, id);
--	return entry ? entry->method : 0;
-+	method = entry ? entry->method : 0;
-+	up_read(&sess->rpc_lock);
-+
-+	return method;
- }
- 
- void ksmbd_session_destroy(struct ksmbd_session *sess)
+-- 
+2.51.0
+
 
 
