@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3725230FC05;
-	Mon, 13 Oct 2025 15:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314B52FB978;
+	Mon, 13 Oct 2025 15:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368953; cv=none; b=RjsbOS+NlNs9C9qnzBaHw7OADv748Jprp8P/Wpeujfvr0rAuWsURT6JfRP/2D+jFRElyWNfV2qZ6shaYsOIBBdtRqWdgTIddSzzO3ifsP9ggiUhEhJZ9YGnKmP8GS2Xe9sM4ELEZm+2raZUYCkmfa86vUv11BkO43YAEGkG1WYQ=
+	t=1760368956; cv=none; b=FPrsFBnyFLwJz6g2d25L8sZuhIcNkUJD65AtLHKqfiUdQlEOJCyzyAftPTerXnuKTpLG/gNWEZr/QztiFNFllhHM8ybsl018/I4VFMJAuJ/RbDZUp74OxuiHLOwD/3+tggxMFvZJxvgXJvo/GYmiroxQi4bcbo5wkS8K7DGdd0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368953; c=relaxed/simple;
-	bh=w0iMV6mPl27s2KKJD7rRLhtfVhunM+2PnAaFYXLOZRE=;
+	s=arc-20240116; t=1760368956; c=relaxed/simple;
+	bh=dMs3zjubW0TKTUTbJUsa2otpMvGP79ZJ+1rwlqh/zkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJTx4aEOznlrO5KiteemPMUoAu9IH0yA8cOxQCq35tdfrLVteTKFgxk++rxrUxOQmzoq4MOqyD1bZL0DqhWTdwp8qQzsm0tFN+tlrlUmzng+G37GZcrQPV1eY6sxrMiOnuL+R0RxwDBdH1nPI6szZMGhPb0tZ1Ms9+Hk0s0z1fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfsicj6N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S4TztwZWeX8C2dWEbT3vgOyXHEM/ifH4j9YKe/YYFZv7Bps4Bkt4jqjg7esiEmwHRDX98sxCQ/Y2ZC+dnsCvWRv5liqVeVifUbMPsC8VQ/IyiIT5WD88wvm2Ppwf1QKDbi5yQd9wiW/e6UAFmMEDC9dN4kT0pfOoEM/Q3Vw8Zx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm42WFue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfsicj6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3852C4CEE7;
-	Mon, 13 Oct 2025 15:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm42WFue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84AAC4CEE7;
+	Mon, 13 Oct 2025 15:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368953;
-	bh=w0iMV6mPl27s2KKJD7rRLhtfVhunM+2PnAaFYXLOZRE=;
+	s=korg; t=1760368956;
+	bh=dMs3zjubW0TKTUTbJUsa2otpMvGP79ZJ+1rwlqh/zkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yfsicj6N4sQ5CLSuebQFPDUNuv0KOYfL8ewMsBz92DZb7TieHmw+huLS/V9yTZMxy
-	 NiV/IXlFYf5+sRLyJJPjfO3xOiUt0qGmJeWHk8blFJQoTjqwA6MNwcAcqhkKRmr+WI
-	 to68qFW8m9z3BVklqTE9IYocjnfAM5FN7GFrQVnY=
+	b=Hm42WFueVcU7URy9ABPrmtAYUH2KacswB1OSj3bC3WHiQ3exbd8N2KB89nkNYWlM+
+	 vFetITuPW8OJ6cGPoypV1TA00FyKPwmk4aXydeollpwJ1ve4uM7AeZbIayYFXJIzmC
+	 scGeFY91R3nFNhgnUoC75He+bkLajnAiANrJfqnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Sven Peter <sven@kernel.org>,
-	Janne Grunau <j@jannau.net>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 076/563] arm64: dts: apple: t8103-j457: Fix PCIe ethernet iommu-map
-Date: Mon, 13 Oct 2025 16:38:57 +0200
-Message-ID: <20251013144414.046045227@linuxfoundation.org>
+Subject: [PATCH 6.17 077/563] regulator: scmi: Use int type to store negative error codes
+Date: Mon, 13 Oct 2025 16:38:58 +0200
+Message-ID: <20251013144414.081215564@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,63 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 6e08cdd604edcec2c277af17c7d36caf827057ff ]
+[ Upstream commit 9d35d068fb138160709e04e3ee97fe29a6f8615b ]
 
-PCIe `port01` of t8103-j457 (iMac, M1, 2 USB-C ports, 2021) is unused
-and disabled. Linux' PCI subsystem assigns the ethernet nic from
-`port02` to bus 02. This results into assigning `pcie0_dart_1` from the
-disabled port as iommu. The `pcie0_dart_1` instance is disabled and
-probably fused off (it is on the M2 Pro Mac mini which has a disabled
-PCIe port as well).
-Without iommu the ethernet nic is not expected work.
-Adjusts the "bus-range" and the PCIe devices "reg" property to PCI
-subsystem's bus number.
+Change the 'ret' variable from u32 to int to store negative error codes or
+zero returned by of_property_read_u32().
 
-Fixes: 7c77ab91b33d ("arm64: dts: apple: Add missing M1 (t8103) devices")
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Reviewed-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://lore.kernel.org/r/20250823-apple-dt-sync-6-17-v2-1-6dc0daeb4786@jannau.net
-Signed-off-by: Sven Peter <sven@kernel.org>
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants. Additionally, assigning negative error
+codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
+flag is enabled.
+
+No effect on runtime.
+
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
+Link: https://patch.msgid.link/20250829101411.625214-1-rongqianfeng@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t8103-j457.dts | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/regulator/scmi-regulator.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8103-j457.dts b/arch/arm64/boot/dts/apple/t8103-j457.dts
-index 152f95fd49a21..7089ccf3ce556 100644
---- a/arch/arm64/boot/dts/apple/t8103-j457.dts
-+++ b/arch/arm64/boot/dts/apple/t8103-j457.dts
-@@ -21,6 +21,14 @@ aliases {
- 	};
- };
+diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
+index 9df726f10ad12..6d609c42e4793 100644
+--- a/drivers/regulator/scmi-regulator.c
++++ b/drivers/regulator/scmi-regulator.c
+@@ -257,7 +257,8 @@ static int process_scmi_regulator_of_node(struct scmi_device *sdev,
+ 					  struct device_node *np,
+ 					  struct scmi_regulator_info *rinfo)
+ {
+-	u32 dom, ret;
++	u32 dom;
++	int ret;
  
-+/*
-+ * Adjust pcie0's iommu-map to account for the disabled port01.
-+ */
-+&pcie0 {
-+	iommu-map = <0x100 &pcie0_dart_0 1 1>,
-+			<0x200 &pcie0_dart_2 1 1>;
-+};
-+
- &bluetooth0 {
- 	brcm,board-type = "apple,santorini";
- };
-@@ -36,10 +44,10 @@ &wifi0 {
-  */
- 
- &port02 {
--	bus-range = <3 3>;
-+	bus-range = <2 2>;
- 	status = "okay";
- 	ethernet0: ethernet@0,0 {
--		reg = <0x30000 0x0 0x0 0x0 0x0>;
-+		reg = <0x20000 0x0 0x0 0x0 0x0>;
- 		/* To be filled by the loader */
- 		local-mac-address = [00 10 18 00 00 00];
- 	};
+ 	ret = of_property_read_u32(np, "reg", &dom);
+ 	if (ret)
 -- 
 2.51.0
 
