@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC231A9B46;
-	Mon, 13 Oct 2025 15:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A82930BBA6;
+	Mon, 13 Oct 2025 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368726; cv=none; b=ZqA9UqtNHtUJV+OYWHqDPIP96lBhOx0JZA4RydAZyA0Goi5gDHkp9W5E2dt8pi2bADBaOyBs0fR63OEHIRiUk7FgSt0bzg21u1kEhRfpphQYKV26387eyi6iPJQ6JjkZMfghmteh9U12LFR4onOZqwNo//Qvnr0RC5hmg0o7aoc=
+	t=1760368729; cv=none; b=oej4UAEABwIzHcDON3CznHgltTBel/KWYv4U2UWQ4lJ5IdO5tJGjbMrq+pynHIA2TZfapOL9AS8i8BuStQ7XG/+EJY/dFvMe5uuxdUPv4gDv3pw2TAd276fZWGqAZ0e6VFr0TMRODXiuwVHmo5h3TEGO2rnviMChZlwdwSO5lsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368726; c=relaxed/simple;
-	bh=9+48S6rTdat7QWbgRZHQ5U9WKwtaCHVlr9cXSk26b30=;
+	s=arc-20240116; t=1760368729; c=relaxed/simple;
+	bh=hYSpS6HD/YbHmiGzshUpepi9P0PQIfUPpUWariizyhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlnpZwsB/IahoLXj9sBxyJFkAQaVEN6DJIlr13YiFMcCCCcc27tc20oRFm03bFtoNgll4dgNqfGlk/AnzV1Tn7sdvSQx+i+ioEECRaD4X4V3jlJKmhICX3RSYWq7tITmIIl4K1Me95TiMvXCdNJUYCRdA8unGVHXjmeCCt9mxZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVaxGejz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDxMUnVLUgA/VedR0QA1plp54uhzunMi6asP1A3+UPjGfDi0vqGIPLpfvDjwOmQrb/CLJp7hEBaQ2pCqsUatsGxVifEsKAhtWABWNScG3LoSlK7ypDKKjeARM04OWSeDfqKF28wl7HKRlw44I8jnryl7k6RR53xr+Fzk7+q/oTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HT9R53mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVaxGejz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0267DC4CEE7;
-	Mon, 13 Oct 2025 15:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HT9R53mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5876C4CEE7;
+	Mon, 13 Oct 2025 15:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368726;
-	bh=9+48S6rTdat7QWbgRZHQ5U9WKwtaCHVlr9cXSk26b30=;
+	s=korg; t=1760368729;
+	bh=hYSpS6HD/YbHmiGzshUpepi9P0PQIfUPpUWariizyhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVaxGejzcFM9GPahpP+AmollIzuaLE7Fb6AJrMTCYNqGK7d5t+1jlt+U1sCFirESk
-	 KuY4mU7DUbT+qDKmC1ZCsfqjIonVaejBVrpJ+im1n9xEE4czC9Kab94H7w3dG/Ge+7
-	 HSs81SI8BQCqhHet9ce3xkrF6qjyVcFplqRoya+c=
+	b=HT9R53moLfmD4Olpo5iQhOWzXpKLAo5PDuvl7ujVYweYqZq6uEv+JxMzdBebLyj+1
+	 7I2q0dOQXusJF4XBsLSQxF0fTdfxDlTFkyROgf+toC7IUxYGjXUrQ32xP8d38wsheg
+	 X1LGH2TPTSASwteYsVUG/ewyjuqKB6oxJx9yTgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>
-Subject: [PATCH 6.12 262/262] usb: cdns3: cdnsp-pci: remove redundant pci_disable_device() call
-Date: Mon, 13 Oct 2025 16:46:44 +0200
-Message-ID: <20251013144335.668164670@linuxfoundation.org>
+	stable@kernel.org,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Ling Xu <quic_lxu5@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 248/262] misc: fastrpc: Fix fastrpc_map_lookup operation
+Date: Mon, 13 Oct 2025 16:46:30 +0200
+Message-ID: <20251013144335.169008481@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -49,47 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Ling Xu <quic_lxu5@quicinc.com>
 
-commit e9c206324eeb213957a567a9d066bdeb355c7491 upstream.
+commit 9031626ade38b092b72638dfe0c6ffce8d8acd43 upstream.
 
-The cdnsp-pci driver uses pcim_enable_device() to enable a PCI device,
-which means the device will be automatically disabled on driver detach
-through the managed device framework. The manual pci_disable_device()
-call in the error path is therefore redundant.
+Fastrpc driver creates maps for user allocated fd buffers. Before
+creating a new map, the map list is checked for any already existing
+maps using map fd. Checking with just map fd is not sufficient as the
+user can pass offsetted buffer with less size when the map is created
+and then a larger size the next time which could result in memory
+issues. Check for dma_buf object also when looking up for the map.
 
-Found via static anlaysis and this is similar to commit 99ca0b57e49f
-("thermal: intel: int340x: processor: Fix warning during module unload").
-
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250903141613.2535472-1-linmq006@gmail.com
+Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
+Cc: stable@kernel.org
+Co-developed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://lore.kernel.org/r/20250912131236.303102-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-pci.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/misc/fastrpc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-pci.c
-+++ b/drivers/usb/cdns3/cdnsp-pci.c
-@@ -91,7 +91,7 @@ static int cdnsp_pci_probe(struct pci_de
- 		cdnsp = kzalloc(sizeof(*cdnsp), GFP_KERNEL);
- 		if (!cdnsp) {
- 			ret = -ENOMEM;
--			goto disable_pci;
-+			goto put_pci;
- 		}
- 	}
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -367,11 +367,16 @@ static int fastrpc_map_lookup(struct fas
+ {
+ 	struct fastrpc_session_ctx *sess = fl->sctx;
+ 	struct fastrpc_map *map = NULL;
++	struct dma_buf *buf;
+ 	int ret = -ENOENT;
  
-@@ -174,9 +174,6 @@ free_cdnsp:
- 	if (!pci_is_enabled(func))
- 		kfree(cdnsp);
++	buf = dma_buf_get(fd);
++	if (IS_ERR(buf))
++		return PTR_ERR(buf);
++
+ 	spin_lock(&fl->lock);
+ 	list_for_each_entry(map, &fl->maps, node) {
+-		if (map->fd != fd)
++		if (map->fd != fd || map->buf != buf)
+ 			continue;
  
--disable_pci:
--	pci_disable_device(pdev);
--
- put_pci:
- 	pci_dev_put(func);
- 
+ 		if (take_ref) {
 
 
