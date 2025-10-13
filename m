@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E223081A3;
-	Mon, 13 Oct 2025 14:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB012367B5;
+	Mon, 13 Oct 2025 14:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367477; cv=none; b=Fn0Hv/eIn2JG/pqXHXeQXVwxUrNxCxV9JUVFJH5ZmQEBWoqKFwYxeU3A3P/e+I9tWhvoMHQUkyuuhX+yrn8rYfPi3ohkg8A1pmVOKzPypJnanQH3DncOthvPVn9F65OVjnKzroQJ3R22gBxYDhXX9M0Llrt6XWbIwu/lOWIcyd0=
+	t=1760367479; cv=none; b=iODaDaCH4XKa4mGkOB92UX4yYb+SwoY0LDMUmTb2tK8tfbuQV+jdUCzzu3VrnM7CR+nf9OI1CSjDZh6d+RLnS6o9ym83Tep7AbxQDvWWupJwPpJ6Ot78VrtJdizpP89XnkqRjoMyQtIzod/Jcc+2zSPW3PnSXA+bFAnRtfATTXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367477; c=relaxed/simple;
-	bh=kJT0S2Nz2CBmVdYYMPt9gMw4tbFY1/b4B+CIWuiivwg=;
+	s=arc-20240116; t=1760367479; c=relaxed/simple;
+	bh=MDKcgoSxMKJMXpLag1LrLI5K6+EDyjSNEQ1ir+EW2bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa235e2YtSuKyWZ427CPbp5AF9+FZkYS1+YRiHUYsUgRJalkz2o+obqP6i2snRHZGOSyMvsRa8tgspfXOTAVjvAV11kK00+vm+QKnl47f6sqt2yqYImO3ITVHJP+YT34DjWB0e2QhmRkkPXtNgKAdtG488aLOC8DCWd7cI/hqFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/+bOrq1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbf06I3pSQSYK8tQncrIp5MgFnw7ngIqVXt+C3N7+t5Q6oBj4xAK1optpuoPfIJ0IxdzY9c4kEjAuFfTRVsPuj5mHPsf1W/aoBpyQx8NmNQSO4AwG1YYpp/YoEPgl1+Qcx7KWCO7JuixfAjttId3MQ/OwYIYOqUlPLcdc5i5cuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iNKA5So; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/+bOrq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A7BC4CEE7;
-	Mon, 13 Oct 2025 14:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iNKA5So"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E804C19424;
+	Mon, 13 Oct 2025 14:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367476;
-	bh=kJT0S2Nz2CBmVdYYMPt9gMw4tbFY1/b4B+CIWuiivwg=;
+	s=korg; t=1760367479;
+	bh=MDKcgoSxMKJMXpLag1LrLI5K6+EDyjSNEQ1ir+EW2bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/+bOrq1NvTjLJRjG7f0GIUpMbwjEZHfaMTWDEJof/LmjiVTlGiXWkDfyTZt5kfdG
-	 eOJqs3ZpX8dK9/Pa9XAyv7IhbDNqj0+4+dJfCpPHNJvCBgqseRVMyMnftrGEPcAMqH
-	 DXu+ryZTg/e8PY96DCYrXIULIW/vq0DJSV5nlNXw=
+	b=2iNKA5SoePSs/t59oa+nZXDtxDh+WQiMKYpRZn88pCNZp6sN41srkpP4raR8Kerg7
+	 xDxpbiAdWJ24f9K09B6AGOsjCCYYXeHrVysF7B1aNpoIMK9YkHB2J7+UPKIHhNvAiz
+	 boKM5Czmdzni14uSSeF4xLOoeV0RM0RqWD9smHcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Neal Gompa <neal@gompa.dev>,
+	Sven Peter <sven@kernel.org>,
+	Janne Grunau <j@jannau.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/196] ARM: at91: pm: fix MCKx restore routine
-Date: Mon, 13 Oct 2025 16:43:36 +0200
-Message-ID: <20251013144316.106038029@linuxfoundation.org>
+Subject: [PATCH 6.6 026/196] arm64: dts: apple: t8103-j457: Fix PCIe ethernet iommu-map
+Date: Mon, 13 Oct 2025 16:43:37 +0200
+Message-ID: <20251013144316.142028659@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,54 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 296302d3d81360e09fa956e9be9edc8223b69a12 ]
+[ Upstream commit 6e08cdd604edcec2c277af17c7d36caf827057ff ]
 
-The at91_mckx_ps_restore() assembly function is responsible for setting
-back MCKx system bus clocks after exiting low power modes.
+PCIe `port01` of t8103-j457 (iMac, M1, 2 USB-C ports, 2021) is unused
+and disabled. Linux' PCI subsystem assigns the ethernet nic from
+`port02` to bus 02. This results into assigning `pcie0_dart_1` from the
+disabled port as iommu. The `pcie0_dart_1` instance is disabled and
+probably fused off (it is on the M2 Pro Mac mini which has a disabled
+PCIe port as well).
+Without iommu the ethernet nic is not expected work.
+Adjusts the "bus-range" and the PCIe devices "reg" property to PCI
+subsystem's bus number.
 
-Fix a typo and use tmp3 variable instead of tmp2 to correctly set MCKx
-to previously saved state.
-Tmp2 was used without the needed changes in CSS and DIV. Moreover the
-required bit 7, telling that MCR register's content is to be changed
-(CMD/write), was not set.
-
-Fix function comment to match tmp variables actually used.
-
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Fixes: 28eb1d40fe57 ("ARM: at91: pm: add support for MCK1..4 save/restore for ulp modes")
-Link: https://lore.kernel.org/r/20250827145427.46819-3-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[claudiu.beznea: s/sate/state in commit description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 7c77ab91b33d ("arm64: dts: apple: Add missing M1 (t8103) devices")
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Link: https://lore.kernel.org/r/20250823-apple-dt-sync-6-17-v2-1-6dc0daeb4786@jannau.net
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm_suspend.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/apple/t8103-j457.dts | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index e5869cca5e791..94dece1839af3 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -872,7 +872,7 @@ e_done:
- /**
-  * at91_mckx_ps_restore: restore MCK1..4 settings
-  *
-- * Side effects: overwrites tmp1, tmp2
-+ * Side effects: overwrites tmp1, tmp2 and tmp3
+diff --git a/arch/arm64/boot/dts/apple/t8103-j457.dts b/arch/arm64/boot/dts/apple/t8103-j457.dts
+index 152f95fd49a21..7089ccf3ce556 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j457.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j457.dts
+@@ -21,6 +21,14 @@ aliases {
+ 	};
+ };
+ 
++/*
++ * Adjust pcie0's iommu-map to account for the disabled port01.
++ */
++&pcie0 {
++	iommu-map = <0x100 &pcie0_dart_0 1 1>,
++			<0x200 &pcie0_dart_2 1 1>;
++};
++
+ &bluetooth0 {
+ 	brcm,board-type = "apple,santorini";
+ };
+@@ -36,10 +44,10 @@ &wifi0 {
   */
- .macro at91_mckx_ps_restore
- #ifdef CONFIG_SOC_SAMA7
-@@ -916,7 +916,7 @@ r_ps:
- 	bic	tmp3, tmp3, #AT91_PMC_MCR_V2_ID_MSK
- 	orr	tmp3, tmp3, tmp1
- 	orr	tmp3, tmp3, #AT91_PMC_MCR_V2_CMD
--	str	tmp2, [pmc, #AT91_PMC_MCR_V2]
-+	str	tmp3, [pmc, #AT91_PMC_MCR_V2]
  
- 	wait_mckrdy tmp1
- 
+ &port02 {
+-	bus-range = <3 3>;
++	bus-range = <2 2>;
+ 	status = "okay";
+ 	ethernet0: ethernet@0,0 {
+-		reg = <0x30000 0x0 0x0 0x0 0x0>;
++		reg = <0x20000 0x0 0x0 0x0 0x0>;
+ 		/* To be filled by the loader */
+ 		local-mac-address = [00 10 18 00 00 00];
+ 	};
 -- 
 2.51.0
 
