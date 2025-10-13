@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0915F30E85B;
-	Mon, 13 Oct 2025 15:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1154C30EF76;
+	Mon, 13 Oct 2025 15:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369663; cv=none; b=oHC4cZCHiyrB5raf+yiX/7e2srlAfN/JW77fU6kjHhAexZYcrlWpkdbTIHgHZ3pBPChU/64MMzxMD/iv11SkuDWB/akjsVRZhJN5/20Z44q03Ltqy8kb7cpzG+190mbaSchVSsWXpNxwdYDyju62qb6vJCALREYZ1ituNEnYzrY=
+	t=1760369666; cv=none; b=jif1FtXWVGJUK4mReV6vBUI62K3cGtFLDQZ14UROF0uy5XLfHKOyu/2K7TWMsblQLee9M3s3F/5pKkqePeAzxmhSMuscPgjll9z4eBhft8MO63GmdIBLre2eykbEzKgFNx/3oiBgZZG1acWkpMJu8kIVAd4h4FUiqJB+jZ86ml0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369663; c=relaxed/simple;
-	bh=o9eDurtjHrCzx0YkQ9cndzQqYhYf0yLouX9BUMzpSaQ=;
+	s=arc-20240116; t=1760369666; c=relaxed/simple;
+	bh=J1xrWt4ycXF/iUAjSHDYYNAJiYlmP6b3IjqRNQ5dNVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRaK9BAiDNTBtTfqn+YKDIYj9WG3MK955Cqw1E9w/lnS1Vn6rwuf56pm/+TvIjfc8xE0fxWuMc9f7HMWbyQVGc/JQe3WyCN1ju6ezTMalYWB9BSDrT+HJygF2Z9TCg7y521eYwQewGHYNH/wrJJaTVzD+BsRnZ7FOkDjKzp10vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BB1aRHzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jy/0nqSNy8GIkksTNgBnSKB3Sixfyq3v17ZLBEE4KuelOERtReAkbTW+d+EARjesZWqi6bRDRp7jUVv3nUONYkhLQMBB89rqQMfqoLzJwFAMjnuVSdP3ScfZL+azHGCL3guQXVypBkKjy4Fz94ckA2k6JhLRW7DxOOPjUWetdP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTYENZns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BB1aRHzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD62C19424;
-	Mon, 13 Oct 2025 15:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTYENZns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC25C4CEE7;
+	Mon, 13 Oct 2025 15:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369662;
-	bh=o9eDurtjHrCzx0YkQ9cndzQqYhYf0yLouX9BUMzpSaQ=;
+	s=korg; t=1760369665;
+	bh=J1xrWt4ycXF/iUAjSHDYYNAJiYlmP6b3IjqRNQ5dNVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB1aRHzuemii2nGKZUf5zkb6/ktMS5ISrllMDup08p8Uxf6Zfh3ZM9sC+TrMQd0Vx
-	 /4yeBW99WrCEJgkCLb9AIY9KfLjbYObSN+vteX0WKyGbVyzBVBWOajKEzXWBm5vvgO
-	 0IQRfROv6/IRKVmQMvHfHtKiLEbSsUh3eGv0gMjw=
+	b=FTYENZns5PcthXP7wxd9tHLFPMuxewAGx3NVNrEYTNPU9EPjCPsSMIx8TryqF0LBJ
+	 c3Ap9WUuagGSjQP4LcbPhV9zeN07s2o+oxi9HW7bGGHGtsMMM75qRd95oqFc8aPdak
+	 SiOIJg363qFptRU6EAQ7wJsBwcZ/caPUuR/rfdkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Liao Yuanhong <liaoyuanhong@vivo.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 325/563] drm/msm: Fix missing VM_BIND offset/range validation
-Date: Mon, 13 Oct 2025 16:43:06 +0200
-Message-ID: <20251013144423.035908700@linuxfoundation.org>
+Subject: [PATCH 6.17 326/563] wifi: iwlwifi: Remove redundant header files
+Date: Mon, 13 Oct 2025 16:43:07 +0200
+Message-ID: <20251013144423.072160879@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Liao Yuanhong <liaoyuanhong@vivo.com>
 
-[ Upstream commit 3a3bef68a6c15d079646a964ebc4dc8bb0aedb06 ]
+[ Upstream commit b4b34ba66443696cc5f3e95493f9d7597259b728 ]
 
-We need to reject the MAP op if offset+range is larger than the BO size.
+The header file "fw/img.h" is already included on line 9. Remove the
+redundant include.
 
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Tested-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/669781/
+Fixes: 2594e4d9e1a2d ("wifi: iwlwifi: prepare for reading SAR tables from UEFI")
+Signed-off-by: Liao Yuanhong <liaoyuanhong@vivo.com>
+Link: https://patch.msgid.link/20250819121201.608770-2-liaoyuanhong@vivo.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_vma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/regulatory.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 209154be5efcc..381a0853c05ba 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -1080,6 +1080,12 @@ vm_bind_job_lookup_ops(struct msm_vm_bind_job *job, struct drm_msm_vm_bind *args
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
+index a07c512b6ed43..735482e7adf56 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
+@@ -12,7 +12,6 @@
+ #include "fw/api/phy.h"
+ #include "fw/api/config.h"
+ #include "fw/api/nvm-reg.h"
+-#include "fw/img.h"
+ #include "iwl-trans.h"
  
- 		op->obj = obj;
- 		cnt++;
-+
-+		if ((op->range + op->obj_offset) > obj->size) {
-+			ret = UERR(EINVAL, dev, "invalid range: %016llx + %016llx > %016zx\n",
-+				   op->range, op->obj_offset, obj->size);
-+			goto out_unlock;
-+		}
- 	}
- 
- 	*nr_bos = cnt;
+ #define BIOS_SAR_MAX_PROFILE_NUM	4
 -- 
 2.51.0
 
