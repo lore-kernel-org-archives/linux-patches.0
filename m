@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7ED3115BC;
-	Mon, 13 Oct 2025 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4882D3093C9;
+	Mon, 13 Oct 2025 15:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368147; cv=none; b=N9KoPJqOtyHuqVzDGNUWwd5T426zbGMj4u4yk9tk0d3yjgz2PZ8Cc+VGSR4ZtG0bbi3MEti8MlEVIZheaY5Z9pGb94G8PzaoqAXrOEs47WL4iuLfsQz1wMc5b7nkPQIZMgTl23Z5/azMA+ZJ6ZDoE+pJDPV0U53MLSIzz9bEhSk=
+	t=1760368150; cv=none; b=V4NiMyg63y59mbf1wTTTNjSoAILyr/e89z+noGZGGvQK1HNwcory8aN3tTmqIQ+v23dzaSjbhUPRRTxlBn0QFD51axF8cWQA8z+Af970Y7WbUyvFkv0Ktr5uELGKKMdpGAItVCXYy7MafBIcRukSv6E3fXggCvk4NDOBJzm4sBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368147; c=relaxed/simple;
-	bh=NVYmvdxbTY/acpC62Z9lQDPv0WRXWupIM6/nwmJUew4=;
+	s=arc-20240116; t=1760368150; c=relaxed/simple;
+	bh=NtA3/qUiiiW3/uyIBGENbGS/UGfwire103ZVDwNF4xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INlOMQKso7yqyM0BsDx8oxpMpp/mlW3jRm7awkSUcuRaeX6sg2zhiym+M0l9SmCsjGscUBJSp06ttJMoKh7NaXwkamQdj5XiloYiUZ+x0S4oRq6KxVLBemDNlV6JqGKddNJSPVg8TreRYpNV/xO8dfKING3A9liyyaQEHjb/LJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9iknPrw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gW+kPy1Sw2HMXhWPhvsFMuiT3hexg7XID3OHZ/NGRQ2iwc9PN+eJ7fmz9NCxi2WUkJt3ciOQnLQPrH96B4Gzm8460GxJejq28e8cJ+Xw2GyVyG71SQyqpDjpO3N58paTwGnRBfOaZWgRbj1DLLxngmB7OwDHV0qE66G7CPIwDtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zafesFda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9iknPrw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE60C4CEE7;
-	Mon, 13 Oct 2025 15:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zafesFda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB96C4CEE7;
+	Mon, 13 Oct 2025 15:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368147;
-	bh=NVYmvdxbTY/acpC62Z9lQDPv0WRXWupIM6/nwmJUew4=;
+	s=korg; t=1760368150;
+	bh=NtA3/qUiiiW3/uyIBGENbGS/UGfwire103ZVDwNF4xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9iknPrwX6N3BxXuNPwdNL1sQESwrk8TN/MeWYnvh8/JsVHmfGke3f08OXh5ouvlR
-	 KRRGpPbr+7WFaDSc3k/l/mdQPu+xrXtQEv81zBq/7Yf5HkiV+SOmjUEZIpQeC/UFjp
-	 2XriIIuV6gz3NWqDboIhewtzifu7imFetl5+2QWM=
+	b=zafesFdaY5UDtFaS6Iogc3WE8ykTixHg9ho/V9xcO+NDAQt+DqFVCJ9wYGa3YzMO/
+	 d0yjO+MTmYWkWzM1cue4tmHlEYNmsWQzGHsLfM57Xm0M4+Cp9p6q6bGgxu3WzxpmY3
+	 vdAH588sVJkYqSuQ6ybWhAQJ8mbs3s+C/WSLrAXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/262] arm64: dts: mediatek: mt6331: Fix pmic, regulators, rtc, keys node names
-Date: Mon, 13 Oct 2025 16:43:22 +0200
-Message-ID: <20251013144328.290480622@linuxfoundation.org>
+Subject: [PATCH 6.12 034/262] blk-mq: check kobject state_in_sysfs before deleting in blk_mq_unregister_hctx
+Date: Mon, 13 Oct 2025 16:42:56 +0200
+Message-ID: <20251013144327.361243078@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,65 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 98967109c9c0e2de4140827628c63f96314099ab ]
+[ Upstream commit 4c7ef92f6d4d08a27d676e4c348f4e2922cab3ed ]
 
-The node names for "pmic", "regulators", "rtc", and "keys" are
-dictated by the PMIC MFD binding: change those to adhere to it.
+In __blk_mq_update_nr_hw_queues() the return value of
+blk_mq_sysfs_register_hctxs() is not checked. If sysfs creation for hctx
+fails, later changing the number of hw_queues or removing disk will
+trigger the following warning:
 
-Fixes: aef783f3e0ca ("arm64: dts: mediatek: Add MT6331 PMIC devicetree")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20250724083914.61351-17-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+  kernfs: can not remove 'nr_tags', no directory
+  WARNING: CPU: 2 PID: 637 at fs/kernfs/dir.c:1707 kernfs_remove_by_name_ns+0x13f/0x160
+  Call Trace:
+   remove_files.isra.1+0x38/0xb0
+   sysfs_remove_group+0x4d/0x100
+   sysfs_remove_groups+0x31/0x60
+   __kobject_del+0x23/0xf0
+   kobject_del+0x17/0x40
+   blk_mq_unregister_hctx+0x5d/0x80
+   blk_mq_sysfs_unregister_hctxs+0x94/0xd0
+   blk_mq_update_nr_hw_queues+0x124/0x760
+   nullb_update_nr_hw_queues+0x71/0xf0 [null_blk]
+   nullb_device_submit_queues_store+0x92/0x120 [null_blk]
+
+kobjct_del() was called unconditionally even if sysfs creation failed.
+Fix it by checkig the kobject creation statusbefore deleting it.
+
+Fixes: 477e19dedc9d ("blk-mq: adjust debugfs and sysfs register when updating nr_hw_queues")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250826084854.1030545-1-linan666@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6331.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ block/blk-mq-sysfs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6331.dtsi b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-index d89858c73ab1b..243afbffa21fd 100644
---- a/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-@@ -6,12 +6,12 @@
- #include <dt-bindings/input/input.h>
+diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
+index 156e9bb07abf1..2fb234ab467b1 100644
+--- a/block/blk-mq-sysfs.c
++++ b/block/blk-mq-sysfs.c
+@@ -150,9 +150,11 @@ static void blk_mq_unregister_hctx(struct blk_mq_hw_ctx *hctx)
+ 		return;
  
- &pwrap {
--	pmic: mt6331 {
-+	pmic: pmic {
- 		compatible = "mediatek,mt6331";
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
+ 	hctx_for_each_ctx(hctx, ctx, i)
+-		kobject_del(&ctx->kobj);
++		if (ctx->kobj.state_in_sysfs)
++			kobject_del(&ctx->kobj);
  
--		mt6331regulator: mt6331regulator {
-+		mt6331regulator: regulators {
- 			compatible = "mediatek,mt6331-regulator";
+-	kobject_del(&hctx->kobj);
++	if (hctx->kobj.state_in_sysfs)
++		kobject_del(&hctx->kobj);
+ }
  
- 			mt6331_vdvfs11_reg: buck-vdvfs11 {
-@@ -258,7 +258,7 @@ mt6331_vrtc_reg: ldo-vrtc {
- 			};
- 
- 			mt6331_vdig18_reg: ldo-vdig18 {
--				regulator-name = "dvdd18_dig";
-+				regulator-name = "vdig18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <0>;
-@@ -266,11 +266,11 @@ mt6331_vdig18_reg: ldo-vdig18 {
- 			};
- 		};
- 
--		mt6331rtc: mt6331rtc {
-+		mt6331rtc: rtc {
- 			compatible = "mediatek,mt6331-rtc";
- 		};
- 
--		mt6331keys: mt6331keys {
-+		mt6331keys: keys {
- 			compatible = "mediatek,mt6331-keys";
- 			power {
- 				linux,keycodes = <KEY_POWER>;
+ static int blk_mq_register_hctx(struct blk_mq_hw_ctx *hctx)
 -- 
 2.51.0
 
