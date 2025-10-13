@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DFF315D5C;
-	Mon, 13 Oct 2025 15:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EB331618F;
+	Mon, 13 Oct 2025 15:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370304; cv=none; b=opnOWnJ1uk2cVe2TcO2eesCN1cg3GE7LYWuyptgCKDJ0DE6fd+tGIYa3PjX53np4VWQukbsrxSigY/4Eo4lRhYF6wGbznqloNT6zoa6QUDTxkPj2vEuMEOe3eAHTY1awHP8c2JkLqY4M7lbmgMUfT9XAFbrhatX+34sRBaH8sLs=
+	t=1760370308; cv=none; b=IGLsipUuaY6O9GAnvxVanYmqU/rxhjiO9x2ulJ9fiVmHCK4x0vKRVGXBYgeUzkMHg8PTvnGJxdvX5DojezJ/lvfD5Kcuh0IMPc4THTxyIgv/G8NSR8k0uoCj4s/ImC1uh5j0gcrTBSo58W5ALI2Dd3i8sAj62IKFA0pC6Vb20Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370304; c=relaxed/simple;
-	bh=F+TwbUBPoRfJ2z8LJAxoGVqWQinc8RkptiQJbAXzBDE=;
+	s=arc-20240116; t=1760370308; c=relaxed/simple;
+	bh=7+UhgvmbqLA8jp457CDOMqudYbgpyWpBpHIMauCw3yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qN44K0AxvtY9o2yFYniFvjFYc3/uI11pFkVT3UNSostsLBDQX9wph2MuLEgIUEfcVfJifuC2G5ZelXyT1Vlj/2Mc0bVlTIfqFQwvVZeOql4qzmQC9MVxwDqQdIVW/5iVFlUIK5QQmIgk9xCWQuqJOLfmuNgqXYZIzDie3la530k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBbaoTQl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIvXxUvyG6e6fQZ9IPiJGoHWtjLM2XFZnIRglzyfzy9yS7WhNdv2JRbCQf6X/PjZJE2wJZepqNeg8cXcjOhISJAJi/epzuIoexglDlAz6I3g2tRRiV7oK26PkbiQxuTxYsURHbxEEjg1SGZQErp0vc5h23x9NSTqbVpht2e4sKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJykJIIn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBbaoTQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26850C4CEE7;
-	Mon, 13 Oct 2025 15:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJykJIIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F410CC4CEE7;
+	Mon, 13 Oct 2025 15:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370303;
-	bh=F+TwbUBPoRfJ2z8LJAxoGVqWQinc8RkptiQJbAXzBDE=;
+	s=korg; t=1760370306;
+	bh=7+UhgvmbqLA8jp457CDOMqudYbgpyWpBpHIMauCw3yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBbaoTQlaBIdIM+Vff97OsyJdR5aeT0HPXNRnOHbbzNqK6Z15Kjyzj2fh9cnWTKOs
-	 B00440Fp739DlD+FJMlO+qi9Cvq4sh8NdyKf2rHBsDQax4jOCWt8sMyaUBe0Q9Olp9
-	 6m6fuso9qwBwfNZRTB56Xfa9GzweTmvzBLBZKlpY=
+	b=MJykJIIn6F3MSWb2tFwYRqlV+yb2L7tOJuqmzvRTt/rIw7X2c6HSN5siCmv4cqFOt
+	 syqXDPT2ce1LYKVxE1UbIYc+IPBcp+Gztn8jhNv3QyjJQV5twnsHsG2X+7lnzjwkEu
+	 9eS1yCsDKDhubQJ/2c7Vxh/YhMEpeccj/MxPsp94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.17 548/563] Input: uinput - zero-initialize uinput_ff_upload_compat to avoid info leak
-Date: Mon, 13 Oct 2025 16:46:49 +0200
-Message-ID: <20251013144431.158033467@linuxfoundation.org>
+	stable@kernel.org,
+	Lei Lu <llfamsec@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.17 549/563] sunrpc: fix null pointer dereference on zero-length checksum
+Date: Mon, 13 Oct 2025 16:46:50 +0200
+Message-ID: <20251013144431.193467302@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -50,37 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Lei Lu <llfamsec@gmail.com>
 
-commit d3366a04770eea807f2826cbdb96934dd8c9bf79 upstream.
+commit 6df164e29bd4e6505c5a2e0e5f1e1f6957a16a42 upstream.
 
-Struct ff_effect_compat is embedded twice inside
-uinput_ff_upload_compat, contains internal padding. In particular, there
-is a hole after struct ff_replay to satisfy alignment requirements for
-the following union member. Without clearing the structure,
-copy_to_user() may leak stack data to userspace.
+In xdr_stream_decode_opaque_auth(), zero-length checksum.len causes
+checksum.data to be set to NULL. This triggers a NPD when accessing
+checksum.data in gss_krb5_verify_mic_v2(). This patch ensures that
+the value of checksum.len is not less than XDR_UNIT.
 
-Initialize ff_up_compat to zero before filling valid fields.
-
-Fixes: 2d56f3a32c0e ("Input: refactor evdev 32bit compat to be shareable with uinput")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Link: https://lore.kernel.org/r/20250928063737.74590-1-zhen.ni@easystack.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 0653028e8f1c ("SUNRPC: Convert gss_verify_header() to use xdr_stream")
+Cc: stable@kernel.org
+Signed-off-by: Lei Lu <llfamsec@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/uinput.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/auth_gss/svcauth_gss.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -775,6 +775,7 @@ static int uinput_ff_upload_to_user(char
- 	if (in_compat_syscall()) {
- 		struct uinput_ff_upload_compat ff_up_compat;
- 
-+		memset(&ff_up_compat, 0, sizeof(ff_up_compat));
- 		ff_up_compat.request_id = ff_up->request_id;
- 		ff_up_compat.retval = ff_up->retval;
- 		/*
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -724,7 +724,7 @@ svcauth_gss_verify_header(struct svc_rqs
+ 		rqstp->rq_auth_stat = rpc_autherr_badverf;
+ 		return SVC_DENIED;
+ 	}
+-	if (flavor != RPC_AUTH_GSS) {
++	if (flavor != RPC_AUTH_GSS || checksum.len < XDR_UNIT) {
+ 		rqstp->rq_auth_stat = rpc_autherr_badverf;
+ 		return SVC_DENIED;
+ 	}
 
 
