@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEE3093C9;
-	Mon, 13 Oct 2025 15:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6413093C9;
+	Mon, 13 Oct 2025 15:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368141; cv=none; b=fesY7kqjI+hWD61ZMtMlXJfqR3h8Dvqblop29J7QcFmmQSwVnZZy1xafbb9fjfaiZ/WY4Cs8J+Hh1DRteLJ0agxrN5vTb3/+CBM3igX9h8vmtfoNi89IB+DQSatfhr9p1qE9PzlwOb6oJW81Y1bR+f0vwSTEkje7D7uBFIVe9Jk=
+	t=1760368144; cv=none; b=qMBn7G+qjryKejhgR2QE/rDbwPzF0FuPZ0/MtPuSlCD7c3JeIa0uesz7MFqrZ7KJflcqolPSG/1Z/5ZpevvdAWJhPsxW2d8gwY2D8CxB0o7xaxPSFSJzDwa7UEQ5F2tf7OdzHPIHav+CCyaEFysjDEZGzZb8kr9Pm5wBbDgd5P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368141; c=relaxed/simple;
-	bh=YeD5iW/bySKObCl73uQbWdtVZa/+9nyxrWBHsS8OdlQ=;
+	s=arc-20240116; t=1760368144; c=relaxed/simple;
+	bh=GIJ3Y/Jr/C7Jh1+dwbxIbgLg9M0rEiIXqfkOOrFeJ/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxE+Iq33D8t8RXEkfHz5uFS2vW3Gza1krvKjmowRr3KsV/wcdsLw/WMfQYWBVw6bDTYVeWiARzYLuMIpGl1NCGgmIVP5R2tjqAQqFJrYJ0X/pzSYsgIdOXKysnyO5lqWpl8t6tHFaLA1jqjZUYeCGHBQw8HKcDV7zE32x7iOpG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VL2vNqFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abjer6FIm2qM94zBDGG/eA/rhuZqXW6xyexzsUW1chRjdXmxUkoAv78/dYtQcNnRS0OW4ZpMlghjFJ7OB9cGh/41gtUrIt36la63pqsRXdlSpgDQasCqnXAVpOFiuM3Ym1H2S7cz3gEDsHkGlUW2J69+zkEX8KSoXEmgdhFGbAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+DuOLGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VL2vNqFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D3FC4CEE7;
-	Mon, 13 Oct 2025 15:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+DuOLGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F08BC4CEE7;
+	Mon, 13 Oct 2025 15:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368141;
-	bh=YeD5iW/bySKObCl73uQbWdtVZa/+9nyxrWBHsS8OdlQ=;
+	s=korg; t=1760368144;
+	bh=GIJ3Y/Jr/C7Jh1+dwbxIbgLg9M0rEiIXqfkOOrFeJ/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VL2vNqFloZI/DHY2Y+yQ+h0m70NIAZfcLDkdzDrMoRmE5YOdUkaQtV1d408HRoTMm
-	 O0S0IVyaxLMeldqHC9fwmoj6bFlMyM8FrcgtmQo8z/vGiwvuQFzYdcfTYpjqY8N31t
-	 g4R9xA7Qc9A4v69KVq2GKbuiX++ebm+FSWjXWm4A=
+	b=N+DuOLGvlRLus//ukfJ+k64BDPSwf53Ge6XR8sPD4/0t6T8VVf8cbDI2BlbFEPJmD
+	 KXR0Pyx8NguwTnBxbIvMA7eSfgGmiI4PsFjaK467DccPurDP9Kqpcs6hcYJDQ43YTA
+	 2NoXAlnnDmkMuH4IdfVzz77p2+2fIiR5KUH3ID8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/262] cpuidle: qcom-spm: fix device and OF node leaks at probe
-Date: Mon, 13 Oct 2025 16:43:20 +0200
-Message-ID: <20251013144328.219083010@linuxfoundation.org>
+Subject: [PATCH 6.12 059/262] arm64: dts: mediatek: mt8186-tentacruel: Fix touchscreen model
+Date: Mon, 13 Oct 2025 16:43:21 +0200
+Message-ID: <20251013144328.255030889@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,56 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit cdc06f912670c8c199d5fa9e78b64b7ed8e871d0 ]
+[ Upstream commit 0370911565869384f19b35ea9e71ee7a57b48a33 ]
 
-Make sure to drop the reference to the saw device taken by
-of_find_device_by_node() after retrieving its driver data during
-probe().
+The touchscreen controller used with the original Krabby design is the
+Elan eKTH6918, which is in the same family as eKTH6915, but supporting
+a larger screen size with more sense lines.
 
-Also drop the reference to the CPU node sooner to avoid leaking it in
-case there is no saw node or device.
+OTOH, the touchscreen controller that actually shipped on the Tentacruel
+devices is the Elan eKTH6A12NAY. A compatible string was added for it
+specifically because it has different power sequencing timings.
 
-Fixes: 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main SPM handling")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix up the touchscreen nodes for both these. This also includes adding
+a previously missing reset line. Also add "no-reset-on-power-off" since
+the power is always on, and putting it in reset would consume more
+power.
+
+Fixes: 8855d01fb81f ("arm64: dts: mediatek: Add MT8186 Krabby platform based Tentacruel / Tentacool")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20250812090135.3310374-1-wenst@chromium.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle-qcom-spm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi   | 8 ++++----
+ .../dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts  | 4 ++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-index 1fc9968eae199..b6b06a510fd86 100644
---- a/drivers/cpuidle/cpuidle-qcom-spm.c
-+++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-@@ -96,20 +96,23 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
- 		return -ENODEV;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
+index 7c971198fa956..72a2a2bff0a93 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
+@@ -71,14 +71,14 @@ &i2c1 {
+ 	i2c-scl-internal-delay-ns = <10000>;
  
- 	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
-+	of_node_put(cpu_node);
- 	if (!saw_node)
- 		return -ENODEV;
+ 	touchscreen: touchscreen@10 {
+-		compatible = "hid-over-i2c";
++		compatible = "elan,ekth6915";
+ 		reg = <0x10>;
+ 		interrupts-extended = <&pio 12 IRQ_TYPE_LEVEL_LOW>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&touchscreen_pins>;
+-		post-power-on-delay-ms = <10>;
+-		hid-descr-addr = <0x0001>;
+-		vdd-supply = <&pp3300_s3>;
++		reset-gpios = <&pio 60 GPIO_ACTIVE_LOW>;
++		vcc33-supply = <&pp3300_s3>;
++		no-reset-on-power-off;
+ 	};
+ };
  
- 	pdev = of_find_device_by_node(saw_node);
- 	of_node_put(saw_node);
--	of_node_put(cpu_node);
- 	if (!pdev)
- 		return -ENODEV;
- 
- 	data = devm_kzalloc(cpuidle_dev, sizeof(*data), GFP_KERNEL);
--	if (!data)
-+	if (!data) {
-+		put_device(&pdev->dev);
- 		return -ENOMEM;
-+	}
- 
- 	data->spm = dev_get_drvdata(&pdev->dev);
-+	put_device(&pdev->dev);
- 	if (!data->spm)
- 		return -EINVAL;
- 
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
+index 26d3451a5e47c..24d9ede63eaa2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
+@@ -42,3 +42,7 @@ MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
+ 		CROS_STD_MAIN_KEYMAP
+ 	>;
+ };
++
++&touchscreen {
++	compatible = "elan,ekth6a12nay";
++};
 -- 
 2.51.0
 
