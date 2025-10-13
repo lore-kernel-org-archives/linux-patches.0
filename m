@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53065309F13;
-	Mon, 13 Oct 2025 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123A2241695;
+	Mon, 13 Oct 2025 15:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369447; cv=none; b=LpM6bPS8OCZr9KYQD+V/XAkZVaJP4EI+S8F4CsJPY0iRy+Mue3y1YnpEvksj0nsBOwos6QNfST3JNUtRpiPomUSnm4dCodN8CsAqdnY7FNrxSkb8bToVdJC7wtqFpVb7QvkMncSlh2iTZy0fG+GuLB8EZnnanLlZLN62/uuhohM=
+	t=1760369450; cv=none; b=Ap0s2JqdytKwPRR7Y7EvviSOwFwpUpkN7Rb+Cqs+NfISmFazWWIWs4LhCBWcy8/S3LsU/B//sGMbGWX5DRr19JY7fPjAbq3Q4sdoQZuAmdOn3ZLMgMrSKUmVNAlLxlzClPqM7LhvVH8Hn4qx0AvvzDB325kjswz1kNRkHvvMceQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369447; c=relaxed/simple;
-	bh=RKa8CLSZKk2pZT86N7pW3UgFbwZn7FzuIm5Wi2ml9dU=;
+	s=arc-20240116; t=1760369450; c=relaxed/simple;
+	bh=zRn4qX8IdfONMNz0hzCnDhdWAkGw/dj3ewPQqKt6iW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgSl9vA5VW5Pl5r+iYVL5viBVgNB3P3w6wc19CQjeDeqJb4XQtmtNsj+SgfUc2MxoGpmo4wDJio5xStDXjCRSSRu0uCcVERajZVTsBExTPaqaL3iMvH9KChGVOT01oSQtGepeNaZub4MyGDcRYk9uiSGztJG+/vabfudPajodNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONfzddgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2tLNg7mkC3t1JoQzON+KR2TZUrPb5ZKJcj+VdPK+MNcAoyFDaYDigjDmxJI1FwaRK9YSCJ9RuMC5d6BteZYfHB4vx6wB/pFiX1R2UH7+Uw2unhEa+NhQzZdfqANPmv70ge1TIOr1bZSVGZonjYhhdRnKVElpvc3cEAdD7nQL5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvuk0pyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONfzddgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B62C4CEE7;
-	Mon, 13 Oct 2025 15:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvuk0pyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D11C4CEE7;
+	Mon, 13 Oct 2025 15:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369447;
-	bh=RKa8CLSZKk2pZT86N7pW3UgFbwZn7FzuIm5Wi2ml9dU=;
+	s=korg; t=1760369449;
+	bh=zRn4qX8IdfONMNz0hzCnDhdWAkGw/dj3ewPQqKt6iW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONfzddgtOnLShhIiEk2DNgvpJkXqoc5c4lr5SoPBGc+xBgl/Ci611t4UHoiIP5TmT
-	 Xj4Ea4hlFrwcfWWkElcEuNn3UrdBqZ7GzLmfTgOGGV8jqtOPFC8lmdPgTR/1EAHFLY
-	 7/fLHWPjKj6dlBn/bU0Vz+aTTbTLXU9cEo6564BM=
+	b=dvuk0pywV+WffOnQ4GYhvUxZnth9+z1JftUev/1xT2uGDg2aFfD2spTaOIlm0i0R7
+	 mE5Sg2Sesfjx03k9+jCYNO07vNBCvw2NKwsup14VF2KoKu8WrfNNPqlGNQDCv4EAVL
+	 jCoGyCnBTOP2G22NdLP3rPHSnQW35UiWBJxoo34o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 250/563] scsi: pm80xx: Fix pm8001_abort_task() for chip_8006 when using an expander
-Date: Mon, 13 Oct 2025 16:41:51 +0200
-Message-ID: <20251013144420.338316519@linuxfoundation.org>
+Subject: [PATCH 6.17 251/563] mptcp: Fix up subflows memcg when CONFIG_SOCK_CGROUP_DATA=n.
+Date: Mon, 13 Oct 2025 16:41:52 +0200
+Message-ID: <20251013144420.375576423@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,66 +54,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ad70c6bc776b53e61c8db6533c833aff0ff5da8b ]
+[ Upstream commit 68889dfd547bd8eabc5a98b58475d7b901cf5129 ]
 
-For a direct attached device, attached_phy contains the local phy id.
-For a device behind an expander, attached_phy contains the remote phy
-id, not the local phy id.
+When sk_alloc() allocates a socket, mem_cgroup_sk_alloc() sets
+sk->sk_memcg based on the current task.
 
-The pm8001_ha->phy array only contains the phys of the HBA.  It does not
-contain the phys of the expander.
+MPTCP subflow socket creation is triggered from userspace or
+an in-kernel worker.
 
-Thus, you cannot use attached_phy to index the pm8001_ha->phy array,
-without first verifying that the device is directly attached.
+In the latter case, sk->sk_memcg is not what we want.  So, we fix
+it up from the parent socket's sk->sk_memcg in mptcp_attach_cgroup().
 
-Use the pm80xx_get_local_phy_id() helper to make sure that we use the
-local phy id to index the array, regardless if the device is directly
-attached or not.
+Although the code is placed under #ifdef CONFIG_MEMCG, it is buried
+under #ifdef CONFIG_SOCK_CGROUP_DATA.
 
-Fixes: 869ddbdcae3b ("scsi: pm80xx: corrected SATA abort handling sequence.")
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20250814173215.1765055-21-cassel@kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The two configs are orthogonal.  If CONFIG_MEMCG is enabled without
+CONFIG_SOCK_CGROUP_DATA, the subflow's memory usage is not charged
+correctly.
+
+Let's move the code out of the wrong ifdef guard.
+
+Note that sk->sk_memcg is freed in sk_prot_free() and the parent
+sk holds the refcnt of memcg->css here, so we don't need to use
+css_tryget().
+
+Fixes: 3764b0c5651e3 ("mptcp: attach subflow socket to parent cgroup")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/memcontrol.h |  6 ++++++
+ mm/memcontrol.c            | 13 +++++++++++++
+ net/mptcp/subflow.c        | 11 +++--------
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index 5595913eb7fc1..c5354263b45e8 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -1063,7 +1063,7 @@ int pm8001_abort_task(struct sas_task *task)
- 	struct pm8001_hba_info *pm8001_ha;
- 	struct pm8001_device *pm8001_dev;
- 	int rc = TMF_RESP_FUNC_FAILED, ret;
--	u32 phy_id, port_id;
-+	u32 port_id;
- 	struct sas_task_slow slow_task;
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 785173aa0739c..25921fbec6856 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -1604,6 +1604,7 @@ extern struct static_key_false memcg_sockets_enabled_key;
+ #define mem_cgroup_sockets_enabled static_branch_unlikely(&memcg_sockets_enabled_key)
+ void mem_cgroup_sk_alloc(struct sock *sk);
+ void mem_cgroup_sk_free(struct sock *sk);
++void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk);
  
- 	if (!task->lldd_task || !task->dev)
-@@ -1072,7 +1072,6 @@ int pm8001_abort_task(struct sas_task *task)
- 	dev = task->dev;
- 	pm8001_dev = dev->lldd_dev;
- 	pm8001_ha = pm8001_find_ha_by_dev(dev);
--	phy_id = pm8001_dev->attached_phy;
+ #if BITS_PER_LONG < 64
+ static inline void mem_cgroup_set_socket_pressure(struct mem_cgroup *memcg)
+@@ -1661,6 +1662,11 @@ void reparent_shrinker_deferred(struct mem_cgroup *memcg);
+ #define mem_cgroup_sockets_enabled 0
+ static inline void mem_cgroup_sk_alloc(struct sock *sk) { };
+ static inline void mem_cgroup_sk_free(struct sock *sk) { };
++
++static inline void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk)
++{
++}
++
+ static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
+ {
+ 	return false;
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 8dd7fbed5a942..46713b9ece063 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5024,6 +5024,19 @@ void mem_cgroup_sk_free(struct sock *sk)
+ 		css_put(&sk->sk_memcg->css);
+ }
  
- 	if (PM8001_CHIP_DISP->fatal_errors(pm8001_ha)) {
- 		// If the controller is seeing fatal errors
-@@ -1104,7 +1103,8 @@ int pm8001_abort_task(struct sas_task *task)
- 		if (pm8001_ha->chip_id == chip_8006) {
- 			DECLARE_COMPLETION_ONSTACK(completion_reset);
- 			DECLARE_COMPLETION_ONSTACK(completion);
--			struct pm8001_phy *phy = pm8001_ha->phy + phy_id;
-+			u32 phy_id = pm80xx_get_local_phy_id(dev);
-+			struct pm8001_phy *phy = &pm8001_ha->phy[phy_id];
- 			port_id = phy->port->port_id;
++void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk)
++{
++	if (sk->sk_memcg == newsk->sk_memcg)
++		return;
++
++	mem_cgroup_sk_free(newsk);
++
++	if (sk->sk_memcg)
++		css_get(&sk->sk_memcg->css);
++
++	newsk->sk_memcg = sk->sk_memcg;
++}
++
+ /**
+  * mem_cgroup_charge_skmem - charge socket memory
+  * @memcg: memcg to charge
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index f31a3a79531a2..e8325890a3223 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1721,19 +1721,14 @@ static void mptcp_attach_cgroup(struct sock *parent, struct sock *child)
+ 	/* only the additional subflows created by kworkers have to be modified */
+ 	if (cgroup_id(sock_cgroup_ptr(parent_skcd)) !=
+ 	    cgroup_id(sock_cgroup_ptr(child_skcd))) {
+-#ifdef CONFIG_MEMCG
+-		struct mem_cgroup *memcg = parent->sk_memcg;
+-
+-		mem_cgroup_sk_free(child);
+-		if (memcg && css_tryget(&memcg->css))
+-			child->sk_memcg = memcg;
+-#endif /* CONFIG_MEMCG */
+-
+ 		cgroup_sk_free(child_skcd);
+ 		*child_skcd = *parent_skcd;
+ 		cgroup_sk_clone(child_skcd);
+ 	}
+ #endif /* CONFIG_SOCK_CGROUP_DATA */
++
++	if (mem_cgroup_sockets_enabled)
++		mem_cgroup_sk_inherit(parent, child);
+ }
  
- 			/* 1. Set Device state as Recovery */
+ static void mptcp_subflow_ops_override(struct sock *ssk)
 -- 
 2.51.0
 
