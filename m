@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499482FE564;
-	Mon, 13 Oct 2025 15:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C648230BBBF;
+	Mon, 13 Oct 2025 15:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368732; cv=none; b=An0tDasPFDPfsO9CgL6RgrCAwfLuaA/I9ODjsw3csNog9oYaukX6ve7FxQ19hyOtKz8Q9KzYNumTi8q4fGy8F7zNrfHvxLjD3DsZAr8XEIIzUsvnil2MAxwyKYS0mVhfCE7eOxTQIP9KKk2jp4zX7POFk1PZdmeSsiZ8KN3MEfE=
+	t=1760368735; cv=none; b=Rt5ZIcdck9j/nWavO1kFPueJOgjx+XMvuGC70ZRI6X75mUz/GC6Z8Uu5MXVu1ZUwfStpeJd3Z7sWwltgKp0L439ziNqrOAbv9nG908YxbhCPUkKdZMDBRCA6yLJvjEKYZhf0of/RDJfO/B8KzlJgxflXQGzeIC/mW7ese7S6XZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368732; c=relaxed/simple;
-	bh=r4slTj/as8ygRiHfUJvK0Krxz5msInM/pghMKKSf8jA=;
+	s=arc-20240116; t=1760368735; c=relaxed/simple;
+	bh=tAnqS3HtAVLBlCT9epBbMksJ2ysgUARIaSY2Ueh9Mxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvxYN+Cw41yl+9fTK0N4pcXiWviRPDPpUrItWAsDmumhrNn1SL061WGktewucqpiUPb0wtHRqSXw8o+LITQmu/hHSBWDewqaW4J/fke7uIMMw2B5HCNBAsfJZhzqT+cKfKmfZ9hfDnwzRrT/xk/0PJQDxOVuR+uQ2VSFffoj0+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gc1l1u4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZrGoZN269LjdCpnuKgPFelASis/dyCuZLDroyJkvWg/VPqCtx2CEBsSz/dbDZnecjo18LWi4aV+SCJxXfVoieGQNmuGPdFA3DJ9mDf1ZAvsBuhEhRPp5hL4cwJhIxTilm2Zlhm4aEfFQPUu/gQz6sgtQ/UvsR/WAg3TCDqCF8IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMDyLf3o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gc1l1u4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD30EC4CEE7;
-	Mon, 13 Oct 2025 15:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMDyLf3o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED55C4CEE7;
+	Mon, 13 Oct 2025 15:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368732;
-	bh=r4slTj/as8ygRiHfUJvK0Krxz5msInM/pghMKKSf8jA=;
+	s=korg; t=1760368735;
+	bh=tAnqS3HtAVLBlCT9epBbMksJ2ysgUARIaSY2Ueh9Mxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gc1l1u4GdsAeX+Y0oX77FClu1nUi+8kTcqOzUi5c3NQAmL8KftkqN4rrDHND5IT2M
-	 iS4CB7mQJQBsDkIXVsSlftu2gye99MpdYJI3PYTr/QWtsaFgVXSed8YYU7Q+wCIoGr
-	 APARVqwkj2EJ19glsHKI4JdrJSPZjBzdvPZlxNJ0=
+	b=PMDyLf3o+P266U7jH0v6fffK4i0kwWWWD3HqihpCOA+ClsIiB/EY7+ZTPjxU93BdM
+	 hM/ACAmRXKhbp7KbQWRpWzUY2qs3ST/ib0hjvwvVP3ptQqpfTtwd+mglam+aobdiHF
+	 YcjuK8/ExEKRQTLLkLw/9lghHszAVCZr+LpjGQEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ling Xu <quic_lxu5@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 249/262] misc: fastrpc: fix possible map leak in fastrpc_put_args
-Date: Mon, 13 Oct 2025 16:46:31 +0200
-Message-ID: <20251013144335.205016861@linuxfoundation.org>
+Subject: [PATCH 6.12 250/262] misc: fastrpc: Skip reference for DMA handles
+Date: Mon, 13 Oct 2025 16:46:32 +0200
+Message-ID: <20251013144335.240676592@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -55,64 +55,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Ling Xu <quic_lxu5@quicinc.com>
 
-commit da1ba64176e0138f2bfa96f9e43e8c3640d01e1e upstream.
+commit 10df039834f84a297c72ec962c0f9b7c8c5ca31a upstream.
 
-copy_to_user() failure would cause an early return without cleaning up
-the fdlist, which has been updated by the DSP. This could lead to map
-leak. Fix this by redirecting to a cleanup path on failure, ensuring
-that all mapped buffers are properly released before returning.
+If multiple dma handles are passed with same fd over a remote call
+the kernel driver takes a reference and expects that put for the
+map will be called as many times to free the map. But DSP only
+updates the fd one time in the fd list when the DSP refcount
+goes to zero and hence kernel make put call only once for the
+fd. This can cause SMMU fault issue as the same fd can be used
+in future for some other call.
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
+Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
 Cc: stable@kernel.org
 Co-developed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://lore.kernel.org/r/20250912131236.303102-4-srini@kernel.org
+Link: https://lore.kernel.org/r/20250912131236.303102-5-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/misc/fastrpc.c |   45 +++++++++++++++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1085,6 +1085,7 @@ static int fastrpc_put_args(struct fastr
- 	struct fastrpc_phy_page *pages;
- 	u64 *fdlist;
- 	int i, inbufs, outbufs, handles;
-+	int ret = 0;
+@@ -363,9 +363,8 @@ static int fastrpc_map_get(struct fastrp
  
- 	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
- 	outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
-@@ -1100,14 +1101,17 @@ static int fastrpc_put_args(struct fastr
- 			u64 len = rpra[i].buf.len;
  
- 			if (!kernel) {
--				if (copy_to_user((void __user *)dst, src, len))
--					return -EFAULT;
-+				if (copy_to_user((void __user *)dst, src, len)) {
-+					ret = -EFAULT;
-+					goto cleanup_fdlist;
-+				}
- 			} else {
- 				memcpy(dst, src, len);
- 			}
- 		}
- 	}
+ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+-			    struct fastrpc_map **ppmap, bool take_ref)
++			    struct fastrpc_map **ppmap)
+ {
+-	struct fastrpc_session_ctx *sess = fl->sctx;
+ 	struct fastrpc_map *map = NULL;
+ 	struct dma_buf *buf;
+ 	int ret = -ENOENT;
+@@ -379,15 +378,6 @@ static int fastrpc_map_lookup(struct fas
+ 		if (map->fd != fd || map->buf != buf)
+ 			continue;
  
-+cleanup_fdlist:
- 	/* Clean up fdlist which is updated by DSP */
+-		if (take_ref) {
+-			ret = fastrpc_map_get(map);
+-			if (ret) {
+-				dev_dbg(sess->dev, "%s: Failed to get map fd=%d ret=%d\n",
+-					__func__, fd, ret);
+-				break;
+-			}
+-		}
+-
+ 		*ppmap = map;
+ 		ret = 0;
+ 		break;
+@@ -757,7 +747,7 @@ static const struct dma_buf_ops fastrpc_
+ 	.release = fastrpc_release,
+ };
+ 
+-static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
++static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+ 			      u64 len, u32 attr, struct fastrpc_map **ppmap)
+ {
+ 	struct fastrpc_session_ctx *sess = fl->sctx;
+@@ -766,9 +756,6 @@ static int fastrpc_map_create(struct fas
+ 	struct scatterlist *sgl = NULL;
+ 	int err = 0, sgl_index = 0;
+ 
+-	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
+-		return 0;
+-
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+ 	if (!map)
+ 		return -ENOMEM;
+@@ -853,6 +840,24 @@ get_err:
+ 	return err;
+ }
+ 
++static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
++			      u64 len, u32 attr, struct fastrpc_map **ppmap)
++{
++	struct fastrpc_session_ctx *sess = fl->sctx;
++	int err = 0;
++
++	if (!fastrpc_map_lookup(fl, fd, ppmap)) {
++		if (!fastrpc_map_get(*ppmap))
++			return 0;
++		dev_dbg(sess->dev, "%s: Failed to get map fd=%d\n",
++			__func__, fd);
++	}
++
++	err = fastrpc_map_attach(fl, fd, len, attr, ppmap);
++
++	return err;
++}
++
+ /*
+  * Fastrpc payload buffer with metadata looks like:
+  *
+@@ -925,8 +930,12 @@ static int fastrpc_create_maps(struct fa
+ 		    ctx->args[i].length == 0)
+ 			continue;
+ 
+-		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
+-			 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
++		if (i < ctx->nbufs)
++			err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
++				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
++		else
++			err = fastrpc_map_attach(ctx->fl, ctx->args[i].fd,
++				 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
+ 		if (err) {
+ 			dev_err(dev, "Error Creating map %d\n", err);
+ 			return -EINVAL;
+@@ -1116,7 +1125,7 @@ cleanup_fdlist:
  	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
  		if (!fdlist[i])
-@@ -1116,7 +1120,7 @@ static int fastrpc_put_args(struct fastr
+ 			break;
+-		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap, false))
++		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap))
  			fastrpc_map_put(mmap);
  	}
  
--	return 0;
-+	return ret;
- }
- 
- static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
 
 
