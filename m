@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D305273D6B;
-	Mon, 13 Oct 2025 14:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084C3273D6B;
+	Mon, 13 Oct 2025 14:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366859; cv=none; b=KdsHhnyYVgfxu994CO95famiiJvo7aERHvo0OogaV2dK5IMIXGZr3R9QRrJx3LqkLfh+0xLGQHLGlZbmpf7BSAvaHLOCxEwy8MYnBdC7PzL1R+zDJkCMBrfFM0ZTBYZCg06aNUHTyvrCUhaqH8a3HbMUcd1nlT8J2uH2fnf57dg=
+	t=1760366862; cv=none; b=QC0ykVKjD7CMJUB4+6DaYneZOlydvMFF9WcrIBN5T7Q9Z24wT11j+qDv8xsQ1JgI7yjMNmKjNGa5WBxw8TxordSyZHyTEM6TqP9xqQYvo4l2cyaw9ykXPbwnJ+WdbSLfpw7NXUmDSULMGUPl01FmHdkBuoav/EGQ7xlp1X7n02I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366859; c=relaxed/simple;
-	bh=NOnedFGvdCd0oXHmveVDpO1fYdnBK/rQ8Vqv8O2bnTU=;
+	s=arc-20240116; t=1760366862; c=relaxed/simple;
+	bh=RjOEXcl0Wux6GVKIPupxMPAFyb3AOOSo8hxnZzEWerU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9/2Xab31fFGsqEZdCdOYgg/ZaU5P8JlROTkqRXoAzJbz4wfnU8Uxzai/S/nrdzTZtNcDSRSONtI6qwokm/0KxlCod0lXcAto+egDw3DrI6eFK2K10Zrb2vAlKtkLklM6+6wIXemdIvqdx7Alqbywpk6AIZi1BoxKY3rxPjWqjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAdok2U9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUydS9k+nHh19v0WZTosZYyt2eDXdde6rw78h966STVLGpMbNLNOtsWk7J8jMkx1PtQnIoo1tipXMXPO9RJEbsXoqWNJAULh9466v+Tvf7zXCi+t2mw1MNo8wTuBF44w93xbQeXS9UYB1porso++JWeFhdgxaLWZTXqSFYDCMYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsSkjW1f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAdok2U9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55392C4CEE7;
-	Mon, 13 Oct 2025 14:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsSkjW1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428C2C4CEE7;
+	Mon, 13 Oct 2025 14:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366858;
-	bh=NOnedFGvdCd0oXHmveVDpO1fYdnBK/rQ8Vqv8O2bnTU=;
+	s=korg; t=1760366861;
+	bh=RjOEXcl0Wux6GVKIPupxMPAFyb3AOOSo8hxnZzEWerU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAdok2U9zFq+XwoVHJfoCQI+hPppCzMauEbasq154RPWxrGdSR+ECjpQ5nzNmAAbu
-	 e25D7LIT3/4YDPVywaGbfCWanI94WncomLmEX5cjqYE8AM5lgo2joVaIblbzqfIrOI
-	 zVXAe0eSKKnRVsmWCAeE+XedJ4NQbSYMKwREEIXQ=
+	b=XsSkjW1fTblnK8abcub4HKULYdwX3uz641j7TyTPtKtWQoVg/OaLHAQu2ZrBjoIi3
+	 IfDRcFlaq1yB8Xp/isQsYsPPGrdeBmcX00l4c7dAM2T8qsax7t34O6WEi4uBOU62Yg
+	 7i/+3RWGAqrczjAXxZYz08KeXK2lHkGsCemlvfA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Tobias Fleig <tfleig@meta.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.1 001/196] crypto: sha256 - fix crash at kexec
-Date: Mon, 13 Oct 2025 16:42:54 +0200
-Message-ID: <20251013144314.606419114@linuxfoundation.org>
+	Wang Haoran <haoranwangsec@gmail.com>,
+	ziiiro <yuanmingbuaa@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 010/196] scsi: target: target_core_configfs: Add length check to avoid buffer overflow
+Date: Mon, 13 Oct 2025 16:43:03 +0200
+Message-ID: <20251013144314.935141716@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,62 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-Loading a large (~2.1G) files with kexec crashes the host with when
-running:
+commit 27e06650a5eafe832a90fd2604f0c5e920857fae upstream.
 
-  # kexec --load kernel --initrd initrd_with_2G_or_more
+A buffer overflow arises from the usage of snprintf to write into the
+buffer "buf" in target_lu_gp_members_show function located in
+/drivers/target/target_core_configfs.c. This buffer is allocated with
+size LU_GROUP_NAME_BUF (256 bytes).
 
-  UBSAN: signed-integer-overflow in ./include/crypto/sha256_base.h:64:19
-  34152083 * 64 cannot be represented in type 'int'
-  ...
-  BUG: unable to handle page fault for address: ff9fffff83b624c0
-  sha256_update (lib/crypto/sha256.c:137)
-  crypto_sha256_update (crypto/sha256_generic.c:40)
-  kexec_calculate_store_digests (kernel/kexec_file.c:769)
-  __se_sys_kexec_file_load (kernel/kexec_file.c:397 kernel/kexec_file.c:332)
-  ...
+snprintf(...) formats multiple strings into buf with the HBA name
+(hba->hba_group.cg_item), a slash character, a devicename (dev->
+dev_group.cg_item) and a newline character, the total formatted string
+length may exceed the buffer size of 256 bytes.
 
-(Line numbers based on commit da274362a7bd9 ("Linux 6.12.49")
+Since snprintf() returns the total number of bytes that would have been
+written (the length of %s/%sn ), this value may exceed the buffer length
+(256 bytes) passed to memcpy(), this will ultimately cause function
+memcpy reporting a buffer overflow error.
 
-This started happening after commit f4da7afe07523f
-("kexec_file: increase maximum file size to 4G") that landed in v6.0,
-which increased the file size for kexec.
+An additional check of the return value of snprintf() can avoid this
+buffer overflow.
 
-This is not happening upstream (v6.16+), given that `block` type was
-upgraded from "int" to "size_t" in commit 74a43a2cf5e8 ("crypto:
-lib/sha256 - Move partial block handling out")
-
-Upgrade the block type similar to the commit above, avoiding hitting the
-overflow.
-
-This patch is only suitable for the stable tree, and before 6.16, which
-got commit 74a43a2cf5e8 ("crypto: lib/sha256 - Move partial block
-handling out"). This is not required before f4da7afe07523f ("kexec_file:
-increase maximum file size to 4G"). In other words, this fix is required
-between versions v6.0 and v6.16.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: f4da7afe07523f ("kexec_file: increase maximum file size to 4G") # Before v6.16
-Reported-by: Michael van der Westhuizen <rmikey@meta.com>
-Reported-by: Tobias Fleig <tfleig@meta.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: ziiiro <yuanmingbuaa@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/crypto/sha256_base.h |    2 +-
+ drivers/target/target_core_configfs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/crypto/sha256_base.h
-+++ b/include/crypto/sha256_base.h
-@@ -46,7 +46,7 @@ static inline int sha256_base_do_update(
- 	sctx->count += len;
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -2691,7 +2691,7 @@ static ssize_t target_lu_gp_members_show
+ 			config_item_name(&dev->dev_group.cg_item));
+ 		cur_len++; /* Extra byte for NULL terminator */
  
- 	if (unlikely((partial + len) >= SHA256_BLOCK_SIZE)) {
--		int blocks;
-+		unsigned int blocks;
- 
- 		if (partial) {
- 			int p = SHA256_BLOCK_SIZE - partial;
+-		if ((cur_len + len) > PAGE_SIZE) {
++		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
+ 				"_members buffer\n");
+ 			break;
 
 
