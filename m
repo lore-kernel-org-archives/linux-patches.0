@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B72313E1C;
-	Mon, 13 Oct 2025 15:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399AF30DED7;
+	Mon, 13 Oct 2025 15:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370089; cv=none; b=F91MWnQ3QUXIPH/WwegBw8nKYCKAH4MyILc+M3pDUiXOe4eb+aO8zX6WoznHsCNZh6G1HkgFq+NqLRLg1MLL+7zrsmS2ylvrS8z+JMB9X2te/4QnF57tsRf4D7Uht457gw3PiPdu32sNL9vaw44Apbo5QozOQvBZtH1S+WvNqLQ=
+	t=1760370092; cv=none; b=pzBllwNB3ad4V6K5kdVdu/Daq2OOfyEsv52lgHd3cm/nwuh1ioAVHK4QZiPZfC6nxWyCzS1m6IJip4e5ut5/SBGrn2+OZFCzW4xEu5pUwLYudZceMk8TOg7ElvyO/K+z0+QfvoOvRDscpgSeK2VA1YZzdLNK/1w7FK/X5w/TGkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370089; c=relaxed/simple;
-	bh=4004CS0Db0KFory9r+ab5/RCsETVJv02mpjzZM/CPSI=;
+	s=arc-20240116; t=1760370092; c=relaxed/simple;
+	bh=HDKQBV715n0tGbUbB1czpTsLxoUL1a+SoYir1me4zpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqYM+3SV+MQYMNYkLrc3r3xLzc7NESvgScptQ07afZ07GE8YqxN0R5z4dp4ApPE+GqifTM3wBgrShAR2in4F3pbYrXKmneKUWEzXVIzmH23BNqZzA8B0C1sIVeTEjSDrQzgX+9pewJWJ/Oon/+ausYaMxZQZoJcT69+iN3gkvJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7QN7elj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QPz398md9vKlTUAatU3Hr3ZjOTApbXP/xQjYqIsIalbQX8BM/rA4Q5kzrVHTXnMRujKMHaDVmtjzhzRG+4eqRejoKpfC0oL3KIaFJ3em5Ia3BityPZcgo+Xkef8x9euwOP5X/3rWNpocxW3WtJOD1JhD2cnQsRQFzeSys3URXZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeJOcjZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7QN7elj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B25CC4CEE7;
-	Mon, 13 Oct 2025 15:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeJOcjZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE031C116B1;
+	Mon, 13 Oct 2025 15:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370089;
-	bh=4004CS0Db0KFory9r+ab5/RCsETVJv02mpjzZM/CPSI=;
+	s=korg; t=1760370092;
+	bh=HDKQBV715n0tGbUbB1czpTsLxoUL1a+SoYir1me4zpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7QN7eljl9iLsSlNKoSxkoXWsI3LdWRWm2GHOoZmJ9qHReWx2d8YMTSLBFX3QV9iV
-	 J/Rr//pRztL8WUvhCV3uoaTpCJwkKfTg5NbB2ttf5CWFSL+z270wwIsMuJ0buo6GB4
-	 pNwj8bvY2AOpMAvmUX3u3yI6HwxA5Vc2mmmbK/wQ=
+	b=GeJOcjZPqXwtMX0ba5XHLjgxBmlmu7pT4Fz0/9p5dW9nVOa989tuXd0vsKECesw+9
+	 Pzw2/oGgD4kImHXvyLGU4Xz43bzIhAJyU7ZBpBkXFxrVW5r6sFel2uv2BEk16ZOFQS
+	 JsMXwGO+En6tVNfMjeYHWtrR5hd4DKqRn3cV3S9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Yeounsu Moon <yyyynoom@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 474/563] net: dlink: handle copy_thresh allocation failure
-Date: Mon, 13 Oct 2025 16:45:35 +0200
-Message-ID: <20251013144428.460505436@linuxfoundation.org>
+Subject: [PATCH 6.17 475/563] net/mlx5: Stop polling for command response if interface goes down
+Date: Mon, 13 Oct 2025 16:45:36 +0200
+Message-ID: <20251013144428.495859951@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeounsu Moon <yyyynoom@gmail.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 8169a6011c5fecc6cb1c3654c541c567d3318de8 ]
+[ Upstream commit b1f0349bd6d320c382df2e7f6fc2ac95c85f2b18 ]
 
-The driver did not handle failure of `netdev_alloc_skb_ip_align()`.
-If the allocation failed, dereferencing `skb->protocol` could lead to
-a NULL pointer dereference.
+Stop polling on firmware response to command in polling mode if the
+command interface got down. This situation can occur, for example, if a
+firmware fatal error is detected during polling.
 
-This patch tries to allocate `skb`. If the allocation fails, it falls
-back to the normal path.
+This change halts the polling process when the command interface goes
+down, preventing unnecessary waits.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Tested-on: D-Link DGE-550T Rev-A3
-Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250928190124.1156-1-yyyynoom@gmail.com
+Fixes: b898ce7bccf1 ("net/mlx5: cmdif, Avoid skipping reclaim pages if FW is not accessible")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 6bbf6e5584e54..1996d2e4e3e2c 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -964,15 +964,18 @@ receive_packet (struct net_device *dev)
- 		} else {
- 			struct sk_buff *skb;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index e395ef5f356eb..722282cebce9a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -294,6 +294,10 @@ static void poll_timeout(struct mlx5_cmd_work_ent *ent)
+ 			return;
+ 		}
+ 		cond_resched();
++		if (mlx5_cmd_is_down(dev)) {
++			ent->ret = -ENXIO;
++			return;
++		}
+ 	} while (time_before(jiffies, poll_end));
  
-+			skb = NULL;
- 			/* Small skbuffs for short packets */
--			if (pkt_len > copy_thresh) {
-+			if (pkt_len <= copy_thresh)
-+				skb = netdev_alloc_skb_ip_align(dev, pkt_len);
-+			if (!skb) {
- 				dma_unmap_single(&np->pdev->dev,
- 						 desc_to_dma(desc),
- 						 np->rx_buf_sz,
- 						 DMA_FROM_DEVICE);
- 				skb_put (skb = np->rx_skbuff[entry], pkt_len);
- 				np->rx_skbuff[entry] = NULL;
--			} else if ((skb = netdev_alloc_skb_ip_align(dev, pkt_len))) {
-+			} else {
- 				dma_sync_single_for_cpu(&np->pdev->dev,
- 							desc_to_dma(desc),
- 							np->rx_buf_sz,
+ 	ent->ret = -ETIMEDOUT;
+@@ -1070,7 +1074,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 		poll_timeout(ent);
+ 		/* make sure we read the descriptor after ownership is SW */
+ 		rmb();
+-		mlx5_cmd_comp_handler(dev, 1ULL << ent->idx, (ent->ret == -ETIMEDOUT));
++		mlx5_cmd_comp_handler(dev, 1ULL << ent->idx, !!ent->ret);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
