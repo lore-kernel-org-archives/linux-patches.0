@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FD730FF36;
-	Mon, 13 Oct 2025 15:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CAC31353D;
+	Mon, 13 Oct 2025 15:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369740; cv=none; b=Ed1RuBkjujXpSqCnxsEJp1hQoLMFIbvIQCNfF6Uztlk6mqxFw/I0IEfGj6DWzz4+rrZOmiqFcnw5L+AqdcW95y2ivxB2uCHoNxVRYr3XFcYhD06B4YjKyEHofaLiNsapbazlLILRUrBh4jzBERPXIT1Gx4XSSIC7ZWCbXLoH+kE=
+	t=1760369743; cv=none; b=mGRYELfrdshnd0KMHtv0yDCSPirSmNZG5xh5XBmt/j20LWs5o9nmo5r3/5RYMUGgdBpG35JPdZk0YCoIgAh+pqJ+PpJabEIgDgWJWv5RevMn1TU+1GLrm+okWqdv/dqvoH1Y0a4YGmUsDfMY3/vgfC03VDwYU+jEbvYJAg4HstU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369740; c=relaxed/simple;
-	bh=AJSIbboQUCB5UG3bSXpohaCrmQl6IvYpvm6BZjArdtY=;
+	s=arc-20240116; t=1760369743; c=relaxed/simple;
+	bh=Q1QYFR90UNWwCpLb9Pd9Z6pGWp57+ApjRYsp3x9y20A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daCKQhB56tob4oyd8K3vo2wnzlBKsCymXSDYaCoRygxwA9qlaG5TNdDMf4XKy4mbkDsKEd0bhDUmeQWXNMoKUHuI3eyc8qTBmZ1L1//EgrcHCTaGB+ra5Z5D7WkJp+HJvFvx9vLDEwbRpxXIqqOW+oopxcyB9RSM02qeKV0iHjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvpbWOWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FC9s6Qd5On9FqqarBSqM9KnvMyQyg93aBIG+4zjsDdY25WrvAfIvDUKFgAGNGLGEXDUkxXGNHBJUbmiDJWuvLZwO0hF+UZofUKjP81en3h/LOe1CcHx75JOXnF5lvhsv2j/5Ci6mawdfnGw6rNgZ/cq9/BfR5j1ACwi8JCCuzXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quGd6ux7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvpbWOWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E52C2BC86;
-	Mon, 13 Oct 2025 15:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quGd6ux7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF14C2BCC7;
+	Mon, 13 Oct 2025 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369740;
-	bh=AJSIbboQUCB5UG3bSXpohaCrmQl6IvYpvm6BZjArdtY=;
+	s=korg; t=1760369743;
+	bh=Q1QYFR90UNWwCpLb9Pd9Z6pGWp57+ApjRYsp3x9y20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvpbWOWC+56DJmAWvvA94x4hCIHUNM8exkZT4NdMCeNUD2QZMDX72byISpKCfehgM
-	 62HPCbo0N4ikiuV8popsPCt77ZRuDLoOQfwYvI9B3laZbOJohmTPUsW5o5TG1Qur0C
-	 l6oW7DIYS5VKpOIqe8h5ggUBGN0MgmLCKXl/7A78=
+	b=quGd6ux7bBR59wFHdEP4MeCQziFren3mKILUATmY6KOYw2aiKrepc36VkEMz4gQPY
+	 SiqdR6Bi5ZlpGyfyTJuwReSsXnSOMZGzWAlEskFNi0p5heGp5O0KxYHH3usR768TsP
+	 0muw3r7afJ6bA3ljAr8xAXUBpAA6gpWdpWwxS4TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 353/563] wifi: mt76: mt7996: Fix mt7996_mcu_sta_ba wcid configuration
-Date: Mon, 13 Oct 2025 16:43:34 +0200
-Message-ID: <20251013144424.057829948@linuxfoundation.org>
+Subject: [PATCH 6.17 354/563] wifi: mt76: mt7996: Fix mt7996_mcu_bss_mld_tlv routine
+Date: Mon, 13 Oct 2025 16:43:35 +0200
+Message-ID: <20251013144424.093423382@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,92 +53,211 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit fe219a41adaf5354c59e75ebb642b8cb8a851d38 ]
+[ Upstream commit ed01c310eca96453c11b59db46c855aa593cffdd ]
 
-Fix the wcid pointer used in mt7996_mcu_sta_ba routine to properly
-support MLO scenario.
+Update mt7996_mcu_bss_mld_tlv routine to properly support MLO
+configuring the BSS.
 
 Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250708-mt7996-mlo-fixes-v2-v1-2-f2682818a8a3@kernel.org
+Link: https://patch.msgid.link/20250710-mt7996-mlo-fixes-v3-v1-1-e7595b089f2c@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c   |  6 ++++--
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    | 12 +++++++-----
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h |  3 ++-
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c  | 46 ++++++++++++++++++-
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 26 ++++++++---
+ .../net/wireless/mediatek/mt76/mt7996/mcu.h   |  3 +-
+ .../wireless/mediatek/mt76/mt7996/mt7996.h    |  8 ++++
+ 4 files changed, 75 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 84f731b387d20..8a8a478391646 100644
+index 8a8a478391646..3c34a4980afa0 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1327,11 +1327,13 @@ mt7996_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		case IEEE80211_AMPDU_RX_START:
- 			mt76_rx_aggr_start(&dev->mt76, &msta_link->wcid, tid,
- 					   ssn, params->buf_size);
--			ret = mt7996_mcu_add_rx_ba(dev, params, link, true);
-+			ret = mt7996_mcu_add_rx_ba(dev, params, link,
-+						   msta_link, true);
- 			break;
- 		case IEEE80211_AMPDU_RX_STOP:
- 			mt76_rx_aggr_stop(&dev->mt76, &msta_link->wcid, tid);
--			ret = mt7996_mcu_add_rx_ba(dev, params, link, false);
-+			ret = mt7996_mcu_add_rx_ba(dev, params, link,
-+						   msta_link, false);
- 			break;
- 		case IEEE80211_AMPDU_TX_OPERATIONAL:
- 			mtxq->aggr = true;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 0be03eb3cf461..e6db3e0b2ffda 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1149,9 +1149,8 @@ int mt7996_mcu_set_timing(struct mt7996_phy *phy, struct ieee80211_vif *vif,
- static int
- mt7996_mcu_sta_ba(struct mt7996_dev *dev, struct mt76_vif_link *mvif,
- 		  struct ieee80211_ampdu_params *params,
--		  bool enable, bool tx)
-+		  struct mt76_wcid *wcid, bool enable, bool tx)
- {
--	struct mt76_wcid *wcid = (struct mt76_wcid *)params->sta->drv_priv;
- 	struct sta_rec_ba_uni *ba;
- 	struct sk_buff *skb;
- 	struct tlv *tlv;
-@@ -1185,14 +1184,17 @@ int mt7996_mcu_add_tx_ba(struct mt7996_dev *dev,
- 	if (enable && !params->amsdu)
- 		msta_link->wcid.amsdu = false;
- 
--	return mt7996_mcu_sta_ba(dev, &link->mt76, params, enable, true);
-+	return mt7996_mcu_sta_ba(dev, &link->mt76, params, &msta_link->wcid,
-+				 enable, true);
+@@ -138,6 +138,28 @@ static int get_omac_idx(enum nl80211_iftype type, u64 mask)
+ 	return -1;
  }
  
- int mt7996_mcu_add_rx_ba(struct mt7996_dev *dev,
- 			 struct ieee80211_ampdu_params *params,
--			 struct mt7996_vif_link *link, bool enable)
-+			 struct mt7996_vif_link *link,
-+			 struct mt7996_sta_link *msta_link, bool enable)
++static int get_own_mld_idx(u64 mask, bool group_mld)
++{
++	u8 start = group_mld ? 0 : 16;
++	u8 end = group_mld ? 15 : 63;
++	int idx;
++
++	idx = get_free_idx(mask, start, end);
++	if (idx)
++		return idx - 1;
++
++	/* If the 16-63 range is not available, perform another lookup in the
++	 * range 0-15
++	 */
++	if (!group_mld) {
++		idx = get_free_idx(mask, 0, 15);
++		if (idx)
++			return idx - 1;
++	}
++
++	return -EINVAL;
++}
++
+ static void
+ mt7996_init_bitrate_mask(struct ieee80211_vif *vif, struct mt7996_vif_link *mlink)
  {
--	return mt7996_mcu_sta_ba(dev, &link->mt76, params, enable, false);
-+	return mt7996_mcu_sta_ba(dev, &link->mt76, params, &msta_link->wcid,
-+				 enable, false);
+@@ -279,7 +301,7 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 	struct mt7996_dev *dev = phy->dev;
+ 	u8 band_idx = phy->mt76->band_idx;
+ 	struct mt76_txq *mtxq;
+-	int idx, ret;
++	int mld_idx, idx, ret;
+ 
+ 	mlink->idx = __ffs64(~dev->mt76.vif_mask);
+ 	if (mlink->idx >= mt7996_max_interface_num(dev))
+@@ -289,6 +311,17 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 	if (idx < 0)
+ 		return -ENOSPC;
+ 
++	if (!dev->mld_idx_mask) { /* first link in the group */
++		mvif->mld_group_idx = get_own_mld_idx(dev->mld_idx_mask, true);
++		mvif->mld_remap_idx = get_free_idx(dev->mld_remap_idx_mask,
++						   0, 15);
++	}
++
++	mld_idx = get_own_mld_idx(dev->mld_idx_mask, false);
++	if (mld_idx < 0)
++		return -ENOSPC;
++
++	link->mld_idx = mld_idx;
+ 	link->phy = phy;
+ 	mlink->omac_idx = idx;
+ 	mlink->band_idx = band_idx;
+@@ -301,6 +334,11 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 		return ret;
+ 
+ 	dev->mt76.vif_mask |= BIT_ULL(mlink->idx);
++	if (!dev->mld_idx_mask) {
++		dev->mld_idx_mask |= BIT_ULL(mvif->mld_group_idx);
++		dev->mld_remap_idx_mask |= BIT_ULL(mvif->mld_remap_idx);
++	}
++	dev->mld_idx_mask |= BIT_ULL(link->mld_idx);
+ 	phy->omac_mask |= BIT_ULL(mlink->omac_idx);
+ 
+ 	idx = MT7996_WTBL_RESERVED - mlink->idx;
+@@ -380,7 +418,13 @@ void mt7996_vif_link_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 	}
+ 
+ 	dev->mt76.vif_mask &= ~BIT_ULL(mlink->idx);
++	dev->mld_idx_mask &= ~BIT_ULL(link->mld_idx);
+ 	phy->omac_mask &= ~BIT_ULL(mlink->omac_idx);
++	if (!(dev->mld_idx_mask & ~BIT_ULL(mvif->mld_group_idx))) {
++		/* last link */
++		dev->mld_idx_mask &= ~BIT_ULL(mvif->mld_group_idx);
++		dev->mld_remap_idx_mask &= ~BIT_ULL(mvif->mld_remap_idx);
++	}
+ 
+ 	spin_lock_bh(&dev->mt76.sta_poll_lock);
+ 	if (!list_empty(&msta_link->wcid.poll_list))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index e6db3e0b2ffda..aad58f7831c7b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -899,17 +899,28 @@ mt7996_mcu_bss_txcmd_tlv(struct sk_buff *skb, bool en)
  }
  
  static void
+-mt7996_mcu_bss_mld_tlv(struct sk_buff *skb, struct mt76_vif_link *mlink)
++mt7996_mcu_bss_mld_tlv(struct sk_buff *skb,
++		       struct ieee80211_bss_conf *link_conf,
++		       struct mt7996_vif_link *link)
+ {
++	struct ieee80211_vif *vif = link_conf->vif;
++	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
+ 	struct bss_mld_tlv *mld;
+ 	struct tlv *tlv;
+ 
+ 	tlv = mt7996_mcu_add_uni_tlv(skb, UNI_BSS_INFO_MLD, sizeof(*mld));
+-
+ 	mld = (struct bss_mld_tlv *)tlv;
+-	mld->group_mld_id = 0xff;
+-	mld->own_mld_id = mlink->idx;
+-	mld->remap_idx = 0xff;
++	mld->own_mld_id = link->mld_idx;
++	mld->link_id = link_conf->link_id;
++
++	if (ieee80211_vif_is_mld(vif)) {
++		mld->group_mld_id = mvif->mld_group_idx;
++		mld->remap_idx = mvif->mld_remap_idx;
++		memcpy(mld->mac_addr, vif->addr, ETH_ALEN);
++	} else {
++		mld->group_mld_id = 0xff;
++		mld->remap_idx = 0xff;
++	}
+ }
+ 
+ static void
+@@ -1108,6 +1119,8 @@ int mt7996_mcu_add_bss_info(struct mt7996_phy *phy, struct ieee80211_vif *vif,
+ 		goto out;
+ 
+ 	if (enable) {
++		struct mt7996_vif_link *link;
++
+ 		mt7996_mcu_bss_rfch_tlv(skb, phy);
+ 		mt7996_mcu_bss_bmc_tlv(skb, mlink, phy);
+ 		mt7996_mcu_bss_ra_tlv(skb, phy);
+@@ -1118,7 +1131,8 @@ int mt7996_mcu_add_bss_info(struct mt7996_phy *phy, struct ieee80211_vif *vif,
+ 			mt7996_mcu_bss_he_tlv(skb, vif, link_conf, phy);
+ 
+ 		/* this tag is necessary no matter if the vif is MLD */
+-		mt7996_mcu_bss_mld_tlv(skb, mlink);
++		link = container_of(mlink, struct mt7996_vif_link, mt76);
++		mt7996_mcu_bss_mld_tlv(skb, link_conf, link);
+ 	}
+ 
+ 	mt7996_mcu_bss_mbssid_tlv(skb, link_conf, enable);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index 130ea95626d5b..7b21d6ae7e435 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -481,7 +481,8 @@ struct bss_mld_tlv {
+ 	u8 own_mld_id;
+ 	u8 mac_addr[ETH_ALEN];
+ 	u8 remap_idx;
+-	u8 __rsv[3];
++	u8 link_id;
++	u8 __rsv[2];
+ } __packed;
+ 
+ struct sta_rec_ht_uni {
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 8509d508e1e19..bbd4679edc9d3 100644
+index bbd4679edc9d3..b98cfe6e5be8c 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -608,7 +608,8 @@ int mt7996_mcu_add_tx_ba(struct mt7996_dev *dev,
- 			 struct mt7996_sta_link *msta_link, bool enable);
- int mt7996_mcu_add_rx_ba(struct mt7996_dev *dev,
- 			 struct ieee80211_ampdu_params *params,
--			 struct mt7996_vif_link *link, bool enable);
-+			 struct mt7996_vif_link *link,
-+			 struct mt7996_sta_link *msta_link, bool enable);
- int mt7996_mcu_update_bss_color(struct mt7996_dev *dev,
- 				struct mt76_vif_link *mlink,
- 				struct cfg80211_he_bss_color *he_bss_color);
+@@ -248,11 +248,16 @@ struct mt7996_vif_link {
+ 
+ 	struct ieee80211_tx_queue_params queue_params[IEEE80211_NUM_ACS];
+ 	struct cfg80211_bitrate_mask bitrate_mask;
++
++	u8 mld_idx;
+ };
+ 
+ struct mt7996_vif {
+ 	struct mt7996_vif_link deflink; /* must be first */
+ 	struct mt76_vif_data mt76;
++
++	u8 mld_group_idx;
++	u8 mld_remap_idx;
+ };
+ 
+ /* crash-dump */
+@@ -337,6 +342,9 @@ struct mt7996_dev {
+ 	u32 q_int_mask[MT7996_MAX_QUEUE];
+ 	u32 q_wfdma_mask;
+ 
++	u64 mld_idx_mask;
++	u64 mld_remap_idx_mask;
++
+ 	const struct mt76_bus_ops *bus_ops;
+ 	struct mt7996_phy phy;
+ 
 -- 
 2.51.0
 
