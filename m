@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44B130F540;
-	Mon, 13 Oct 2025 15:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EC330F80B;
+	Mon, 13 Oct 2025 15:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369674; cv=none; b=iaj7bVF4391PLSInvyKBPl1Vk3UVlyloY7i9rpliCIrv+YROOpu3BQTq6x+TMKf5OAY3l25kIl6mwJYzYQ/LNAx77L3pX8XhGOrbC9R/ASgT5MdhNWBQrS2wwTJAr+RF879WtOeOHQCPrx+MnRlPQO7bNa1XF89BxW+QG/tTzf0=
+	t=1760369677; cv=none; b=ESfeWj0S81nWMSbIHdU0fgBGgnXtxAB8fcs5WNDEXPSVqik27ZGCioO7TpFF0NRtjLjBcDuZqw70A0NUW5yXGHb2Vk4p9CJ0fqs0QKIeTW+hhFVQXLoFXgCD90TzSyPphk6xezChIyUOSeY4YZ7vfH6lWFW00vA+Q0Z5y0yxPl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369674; c=relaxed/simple;
-	bh=YTg2LZFHG/8/Kj2LbIZZDOIbC7ODWi1UW6vtP3KD2Gk=;
+	s=arc-20240116; t=1760369677; c=relaxed/simple;
+	bh=gXZkSW4DJnYHMJwj6zM87ZXi+Z7f6XT1ZLqA3D1pNK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YM9AECZLEPyn5LmeIAWrTyJFdTT8/Vw9ajwO+zG621/uQhEMI1WLIYuSEoSQX2v+x+FAJk+9MhCGuG4U7PZ4ntp+XjXyRyfMl7gZzIJPjPXvlT3SRtNbyTvGtSoJQZkuiOkNyEDy6R84cs6VVp+bKaWO/lKusMspC76R0tn9vEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2E22Eq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YH19Jdawvfu/LNBqY/RW2RyJlxFEwbQNP9VmzQyyRtw65UWfi94lkzzhI+76knbHgea1hIXDTOuD+ed7o+TL4HVZGMes7x2kpLOdDA/v1Fu4DHqkQ8PVONf78L4C4lCcIyUakicbwcfWAAiggm2uBIQ1W3ai5JYsVxHE9Fz9fXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIKo1jWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2E22Eq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A143C4CEFE;
-	Mon, 13 Oct 2025 15:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIKo1jWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AB1C116B1;
+	Mon, 13 Oct 2025 15:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369674;
-	bh=YTg2LZFHG/8/Kj2LbIZZDOIbC7ODWi1UW6vtP3KD2Gk=;
+	s=korg; t=1760369677;
+	bh=gXZkSW4DJnYHMJwj6zM87ZXi+Z7f6XT1ZLqA3D1pNK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2E22Eq+qErONmNyHtrSmVl6OIjut0h+rpDZtSUqS5B5vvWJXw/Y88B1g9kDscAWW
-	 kujT+Yp27KPJcn0kaecsqkDY03YuGhxNtjBbgeTvr/Yaa5Vi+X37UAx8HYyjdI1WE4
-	 1ktl7juB+erR0w4KbRjoTUUQ/sh5UUKKqx64/Bew=
+	b=MIKo1jWbHYYvOoH1qm/m5tCEN5YfCTOOQneQRPX+PBh0NQWPYwTpWoqEUVTiuuHTE
+	 /5Y9p+PeXXz9dcRdo6SopxbcCJtEeaaZfZyu/v0LzmKuVPV6YiSwKg6xNsfzPgYrkU
+	 V7Xg1aVfu8NtTpQTNCEfwEs0PMs68a9rC+EiTmaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Ramu R <ramu.r@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 329/563] idpf: fix Rx descriptor ready check barrier in splitq
-Date: Mon, 13 Oct 2025 16:43:10 +0200
-Message-ID: <20251013144423.180269320@linuxfoundation.org>
+Subject: [PATCH 6.17 330/563] ASoC: Intel: bytcht_es8316: Fix invalid quirk input mapping
+Date: Mon, 13 Oct 2025 16:43:11 +0200
+Message-ID: <20251013144423.215829564@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,54 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c20edbacc0295fd36f5f634b3421647ce3e08fd7 ]
+[ Upstream commit b20eb0e8de383116f1e1470d74da2a3c83c4e345 ]
 
-No idea what the current barrier position was meant for. At that point,
-nothing is read from the descriptor, only the pointer to the actual one
-is fetched.
-The correct barrier usage here is after the generation check, so that
-only the first qword is read if the descriptor is not yet ready and we
-need to stop polling. Debatable on coherent DMA as the Rx descriptor
-size is <= cacheline size, but anyway, the current barrier position
-only makes the codegen worse.
+When an invalid value is passed via quirk option, currently
+bytcht_es8316 driver just ignores and leaves as is, which may lead to
+unepxected results like OOB access.
 
-Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Ramu R <ramu.r@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This patch adds the sanity check and corrects the input mapping to the
+certain default value if an invalid value is passed.
+
+Fixes: 249d2fc9e55c ("ASoC: Intel: bytcht_es8316: Set card long_name based on quirks")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Message-ID: <20250902171826.27329-2-tiwai@suse.de>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ sound/soc/intel/boards/bytcht_es8316.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index eaad52a83b04c..50f90ed3107ec 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3187,18 +3187,14 @@ static int idpf_rx_splitq_clean(struct idpf_rx_queue *rxq, int budget)
- 		/* get the Rx desc from Rx queue based on 'next_to_clean' */
- 		rx_desc = &rxq->rx[ntc].flex_adv_nic_3_wb;
+diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
+index 62594e7966ab0..b384d38654e65 100644
+--- a/sound/soc/intel/boards/bytcht_es8316.c
++++ b/sound/soc/intel/boards/bytcht_es8316.c
+@@ -47,7 +47,8 @@ enum {
+ 	BYT_CHT_ES8316_INTMIC_IN2_MAP,
+ };
  
--		/* This memory barrier is needed to keep us from reading
--		 * any other fields out of the rx_desc
--		 */
--		dma_rmb();
--
- 		/* if the descriptor isn't done, no work yet to do */
- 		gen_id = le16_get_bits(rx_desc->pktlen_gen_bufq_id,
- 				       VIRTCHNL2_RX_FLEX_DESC_ADV_GEN_M);
--
- 		if (idpf_queue_has(GEN_CHK, rxq) != gen_id)
- 			break;
+-#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & GENMASK(3, 0))
++#define BYT_CHT_ES8316_MAP_MASK			GENMASK(3, 0)
++#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & BYT_CHT_ES8316_MAP_MASK)
+ #define BYT_CHT_ES8316_SSP0			BIT(16)
+ #define BYT_CHT_ES8316_MONO_SPEAKER		BIT(17)
+ #define BYT_CHT_ES8316_JD_INVERTED		BIT(18)
+@@ -60,10 +61,23 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
  
-+		dma_rmb();
+ static void log_quirks(struct device *dev)
+ {
+-	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN1_MAP)
++	int map;
 +
- 		rxdid = FIELD_GET(VIRTCHNL2_RX_FLEX_DESC_ADV_RXDID_M,
- 				  rx_desc->rxdid_ucast);
- 		if (rxdid != VIRTCHNL2_RXDID_2_FLEX_SPLITQ) {
++	map = BYT_CHT_ES8316_MAP(quirk);
++	switch (map) {
++	case BYT_CHT_ES8316_INTMIC_IN1_MAP:
+ 		dev_info(dev, "quirk IN1_MAP enabled");
+-	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN2_MAP)
++		break;
++	case BYT_CHT_ES8316_INTMIC_IN2_MAP:
+ 		dev_info(dev, "quirk IN2_MAP enabled");
++		break;
++	default:
++		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to INTMIC_IN1_MAP\n", map);
++		quirk &= ~BYT_CHT_ES8316_MAP_MASK;
++		quirk |= BYT_CHT_ES8316_INTMIC_IN1_MAP;
++		break;
++	}
++
+ 	if (quirk & BYT_CHT_ES8316_SSP0)
+ 		dev_info(dev, "quirk SSP0 enabled");
+ 	if (quirk & BYT_CHT_ES8316_MONO_SPEAKER)
 -- 
 2.51.0
 
