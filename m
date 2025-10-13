@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0BF30E0DD;
-	Mon, 13 Oct 2025 14:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1B13081C0;
+	Mon, 13 Oct 2025 14:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366930; cv=none; b=NSZntpRyDMRM1cgtj2TAPX69HBKESnUsmXuQGts3Fqb4ls5oYUB1Ht2e33qgvrSoBsJWnXU7jby73kvI1lWXRRWAJN9QvA7ioej7Il5jJInmkp1xx3tgcordJco+7FiDswvzvRCEyqNAl9R47gIQ/3zWq7QOdUu05yLj6KXFQXA=
+	t=1760366934; cv=none; b=PHuUay1Zu5tvADP2Im1sR952lCFDo4wucWgRKrZjYfwcoM2oPJpOTbLh5yuuEDvF4fy07a2BdUNRpCTWOTVGLNVLXIc4eTQdZLvyq35xZlNawZlsJOcqZ+g1T/tVMXoXsdlv863XszuRO4qBUtPmltn8gfmZG8+5aUCELBlEhW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366930; c=relaxed/simple;
-	bh=GJ+8evf/FEqm8jFiVm7m7kwMuPQ3116SQpPyMhY94us=;
+	s=arc-20240116; t=1760366934; c=relaxed/simple;
+	bh=UAVx8b7WAN5w48YBAb8lJ2IoppNH72VjkUeHAanGm5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVI1jUCtieF7TqzTYXquTCsVVTiALKXUMmc0b0AdX41vbQ+1SHP1WpRQAxLM0vBgV1PqoAfLJeh29gbcpD5oROD9qw1iTjWWtXwKJCWkkEh4dM00j5en2v/AGGvTc61708WvX+fwT/2JbbqqhkrqHSfgusGqB6RIbOzV36hOq2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fea1djAx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJigr0HKNfZqTT/IxhST6SLKK+VS2A4ktlRoejf40KpxzhPuEURwxUrcShHwDo2V+UyF/7BJ+W0z9FedX4tqUqJRSRQmEcMzd8rl/MUH8MKrVOh3MvJDJpDSfGLYje/iQvx36POYWECB+VImRPrSmxlYMF0xX8x9Cxb7jqOWTXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym4uDeV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fea1djAx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2769FC116C6;
-	Mon, 13 Oct 2025 14:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym4uDeV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBEAC4CEE7;
+	Mon, 13 Oct 2025 14:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366930;
-	bh=GJ+8evf/FEqm8jFiVm7m7kwMuPQ3116SQpPyMhY94us=;
+	s=korg; t=1760366933;
+	bh=UAVx8b7WAN5w48YBAb8lJ2IoppNH72VjkUeHAanGm5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fea1djAxC23CSFuYsnZFT3qsTUisJaNzo6+TmWdKEvQ23LPaWrfiCDULqrVjkBwQ/
-	 k7L2VdSOj6GORf3p3c2Va5wV5e03MKa0NYUaWDaZVutUv+wYAJNonwajqGXF6jnJiE
-	 o0ISqJiolRnIVg+dEq61jsr83azPRs7EN5PxE6NU=
+	b=ym4uDeV71Vke/N0p3EP7ZT2pwde6uiXBApbLUq2glH/MCVwYgjMC2WudfBXZPudBp
+	 UVKn3t5XnLLCWoT88ONCjZm1KZnK//ZeOpKDdbIusOY4Yl48HnJn/4RyU5aCtgA5Jr
+	 f1DGEkwsh1zBdgz4G+ndF0NY1navGm2SbRzh/kuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <shuah.kh@samsung.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jack Yu <jack.yu@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/196] media: tunner: xc5000: Refactor firmware load
-Date: Mon, 13 Oct 2025 16:43:09 +0200
-Message-ID: <20251013144315.154316391@linuxfoundation.org>
+Subject: [PATCH 6.1 034/196] ASoC: rt5682s: Adjust SAR ADC button mode to fix noise issue
+Date: Mon, 13 Oct 2025 16:43:27 +0200
+Message-ID: <20251013144315.821837339@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,110 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Jack Yu <jack.yu@realtek.com>
 
-[ Upstream commit 8e1f5da59dd4a1966f859639860b803a7e8b8bfb ]
+[ Upstream commit 1dd28fd86c3fa4e395031dd6f2ba920242107010 ]
 
-Make sure the firmware is released when we leave
-xc_load_fw_and_init_tuner()
+Adjust register settings for SAR adc button detection mode
+to fix noise issue in headset.
 
-This change makes smatch happy:
-drivers/media/tuners/xc5000.c:1213 xc_load_fw_and_init_tuner() warn: 'fw' from request_firmware() not released on lines: 1213.
-
-Cc: Shuah Khan <shuah.kh@samsung.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 40b7a19f321e ("media: tuner: xc5000: Fix use-after-free in xc5000_release")
+Signed-off-by: Jack Yu <jack.yu@realtek.com>
+Link: https://patch.msgid.link/766cd1d2dd7a403ba65bb4cc44845f71@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/tuners/xc5000.c |   41 ++++++++++++++++++-----------------------
- 1 file changed, 18 insertions(+), 23 deletions(-)
+ sound/soc/codecs/rt5682s.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/media/tuners/xc5000.c
-+++ b/drivers/media/tuners/xc5000.c
-@@ -58,7 +58,7 @@ struct xc5000_priv {
- 	struct dvb_frontend *fe;
- 	struct delayed_work timer_sleep;
- 
--	const struct firmware   *firmware;
-+	bool inited;
- };
- 
- /* Misc Defines */
-@@ -1110,23 +1110,19 @@ static int xc_load_fw_and_init_tuner(str
- 	if (!force && xc5000_is_firmware_loaded(fe) == 0)
- 		return 0;
- 
--	if (!priv->firmware) {
--		ret = request_firmware(&fw, desired_fw->name,
--					priv->i2c_props.adap->dev.parent);
--		if (ret) {
--			pr_err("xc5000: Upload failed. rc %d\n", ret);
--			return ret;
--		}
--		dprintk(1, "firmware read %zu bytes.\n", fw->size);
--
--		if (fw->size != desired_fw->size) {
--			pr_err("xc5000: Firmware file with incorrect size\n");
--			release_firmware(fw);
--			return -EINVAL;
--		}
--		priv->firmware = fw;
--	} else
--		fw = priv->firmware;
-+	ret = request_firmware(&fw, desired_fw->name,
-+			       priv->i2c_props.adap->dev.parent);
-+	if (ret) {
-+		pr_err("xc5000: Upload failed. rc %d\n", ret);
-+		return ret;
-+	}
-+	dprintk(1, "firmware read %zu bytes.\n", fw->size);
-+
-+	if (fw->size != desired_fw->size) {
-+		pr_err("xc5000: Firmware file with incorrect size\n");
-+		release_firmware(fw);
-+		return -EINVAL;
-+	}
- 
- 	/* Try up to 5 times to load firmware */
- 	for (i = 0; i < 5; i++) {
-@@ -1204,6 +1200,7 @@ static int xc_load_fw_and_init_tuner(str
- 	}
- 
- err:
-+	release_firmware(fw);
- 	if (!ret)
- 		printk(KERN_INFO "xc5000: Firmware %s loaded and running.\n",
- 		       desired_fw->name);
-@@ -1274,7 +1271,7 @@ static int xc5000_resume(struct dvb_fron
- 
- 	/* suspended before firmware is loaded.
- 	   Avoid firmware load in resume path. */
--	if (!priv->firmware)
-+	if (!priv->inited)
- 		return 0;
- 
- 	return xc5000_set_params(fe);
-@@ -1293,6 +1290,8 @@ static int xc5000_init(struct dvb_fronte
- 	if (debug)
- 		xc_debug_dump(priv);
- 
-+	priv->inited = true;
-+
- 	return 0;
+diff --git a/sound/soc/codecs/rt5682s.c b/sound/soc/codecs/rt5682s.c
+index 07d514b4ce707..76f07ef142246 100644
+--- a/sound/soc/codecs/rt5682s.c
++++ b/sound/soc/codecs/rt5682s.c
+@@ -653,14 +653,15 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
+ 	switch (mode) {
+ 	case SAR_PWR_SAVING:
+ 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_3,
+-			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_DIS);
++			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_EN);
+ 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
+-			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK,
+-			RT5682S_CTRL_MB1_REG | RT5682S_CTRL_MB2_REG);
++			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK |
++			RT5682S_VREF_POW_MASK, RT5682S_CTRL_MB1_FSM |
++			RT5682S_CTRL_MB2_FSM | RT5682S_VREF_POW_FSM);
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
+ 		usleep_range(5000, 5500);
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK, RT5682S_SAR_BUTDET_EN);
+@@ -688,7 +689,7 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
+ 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
+ 		break;
+ 	default:
+ 		dev_err(component->dev, "Invalid SAR Power mode: %d\n", mode);
+@@ -725,7 +726,7 @@ static void rt5682s_disable_push_button_irq(struct snd_soc_component *component)
+ 	snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 		RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
+ 		RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
+-		RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
++		RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
  }
  
-@@ -1306,10 +1305,6 @@ static void xc5000_release(struct dvb_fr
- 
- 	if (priv) {
- 		cancel_delayed_work(&priv->timer_sleep);
--		if (priv->firmware) {
--			release_firmware(priv->firmware);
--			priv->firmware = NULL;
--		}
- 		hybrid_tuner_release_state(priv);
- 	}
- 
+ /**
+@@ -786,7 +787,7 @@ static int rt5682s_headset_detect(struct snd_soc_component *component, int jack_
+ 			jack_type = SND_JACK_HEADSET;
+ 			snd_soc_component_write(component, RT5682S_SAR_IL_CMD_3, 0x024c);
+ 			snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
+-				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_EN);
++				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_DIS);
+ 			snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
+ 				RT5682S_SAR_SEL_MB1_2_MASK, val << RT5682S_SAR_SEL_MB1_2_SFT);
+ 			rt5682s_enable_push_button_irq(component);
+@@ -966,7 +967,7 @@ static int rt5682s_set_jack_detect(struct snd_soc_component *component,
+ 			RT5682S_EMB_JD_MASK | RT5682S_DET_TYPE |
+ 			RT5682S_POL_FAST_OFF_MASK | RT5682S_MIC_CAP_MASK,
+ 			RT5682S_EMB_JD_EN | RT5682S_DET_TYPE |
+-			RT5682S_POL_FAST_OFF_HIGH | RT5682S_MIC_CAP_HS);
++			RT5682S_POL_FAST_OFF_LOW | RT5682S_MIC_CAP_HS);
+ 		regmap_update_bits(rt5682s->regmap, RT5682S_SAR_IL_CMD_1,
+ 			RT5682S_SAR_POW_MASK, RT5682S_SAR_POW_EN);
+ 		regmap_update_bits(rt5682s->regmap, RT5682S_GPIO_CTRL_1,
+-- 
+2.51.0
+
 
 
