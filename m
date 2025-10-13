@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E204B308F24;
-	Mon, 13 Oct 2025 15:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA94A307AF5;
+	Mon, 13 Oct 2025 15:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368624; cv=none; b=ubUy9Y5rqgz5yRHGJx0lq6R0+x+jF/VsbicCNa4cT/q2nRZQazmqQMB5JmFmZpop6/MMkHngtdwr1+k97hZ2/vqXeex/zkJl2OlXZDPDfGwTTZXon4bWd83m6rDal7o5/ZOCitObVyCWbD1FMtEelVJN97q9HF+3qlOUQ5M/Gew=
+	t=1760368627; cv=none; b=hgeXjbZP5JbDcjkrhUDohNiXlw6OOlAMCQ9pWcBG3k8ciBFkxLdqJdMr9sR8tOvuXw96zAs3l5owvrw46sXcSGYB/C6DAn38nw3c1WZ0Qfm0hP2Trn3HsDJ/Y7qN3LDsBdnazApZ/bgSCODbcdraA5vqEjL3yI5Few/77D8hRpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368624; c=relaxed/simple;
-	bh=Ss+M/2ILMZXyG0xx/sDJzX7DgSHQy6O5klgSDmZAFtc=;
+	s=arc-20240116; t=1760368627; c=relaxed/simple;
+	bh=6znLhvq8TCo6NQ7VrSGWVTKkX4dMPFFlDvz9AlAzqNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SLvcfgEtNJ267v0ZGTrlJpje3WnzjPS78kxFmFTKmG/8BGqNE1jK2SHxPQlDpe7dezQoLubZyMFOEBBwJfXCOEDRa3UL7gls1tjb9ZTDMp8w6TzuIqrYH4BFTTrkrHRtYFAlQcfBEcIxe8lDUwCFh/tZzUbtxgSVrwUg8hnxbiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/XtU20Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTEriLMabGxPX0NHCTh6ZBF8YN0rhIcBcTPBw/w3Cyp2jwEQHd+B0++cCuiqZgHYqV552f5haVlN8T+lGLB90yanTOwPcLFKrdVux9uXZVexC6fBE2q30utTMUgxlmx+aD3FD7MIEL9y1H0wzB+z83zgFVSysysQaw4QnmVW7R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uivy4isq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/XtU20Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DEFC4CEE7;
-	Mon, 13 Oct 2025 15:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uivy4isq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C56C4CEE7;
+	Mon, 13 Oct 2025 15:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368623;
-	bh=Ss+M/2ILMZXyG0xx/sDJzX7DgSHQy6O5klgSDmZAFtc=;
+	s=korg; t=1760368626;
+	bh=6znLhvq8TCo6NQ7VrSGWVTKkX4dMPFFlDvz9AlAzqNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/XtU20Z2l+d7kjVqC4ZUMpHIwd4sfrDiItgrKdtbQ8MmNFN9Iy+xh6Ghi0fHqYKh
-	 OYf7mYtaWaAmTTdLLJK4iFCg6vB3d+67/ZRMpBSLW7FxiM/9Tq9gHiFOJ/FW+8jiAY
-	 aX+FquJFkovelHKMDrsEGhg1HNjPxbT3AGUq/Tak=
+	b=uivy4isqt2rsZ0GeMQF9YALEkNb6njxOPuU+oD7z19ZGStym+nsoVPadTtgbifqqR
+	 R6cTRHHsY8VlgQeL7N3MiG/1j0S3SwbOW/4PGlTfB9MXfY+dqmbVurNYicmbrEi0iw
+	 GI0Pm6dqnHFO3YA0/EDIhNEhH60YoBrFFc3hvmAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Long Li <longli@microsoft.com>,
-	Tianyu Lan <tiala@microsoft.com>
-Subject: [PATCH 6.12 226/262] uio_hv_generic: Let userspace take care of interrupt mask
-Date: Mon, 13 Oct 2025 16:46:08 +0200
-Message-ID: <20251013144334.381673625@linuxfoundation.org>
+	syzbot+b9e83021d9c642a33d8c@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 227/262] io_uring/waitid: always prune wait queue entry in io_waitid_wait()
+Date: Mon, 13 Oct 2025 16:46:09 +0200
+Message-ID: <20251013144334.418120151@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -47,101 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit b15b7d2a1b09ef5428a8db260251897405a19496 upstream.
+commit 2f8229d53d984c6a05b71ac9e9583d4354e3b91f upstream.
 
-Remove the logic to set interrupt mask by default in uio_hv_generic
-driver as the interrupt mask value is supposed to be controlled
-completely by the user space. If the mask bit gets changed
-by the driver, concurrently with user mode operating on the ring,
-the mask bit may be set when it is supposed to be clear, and the
-user-mode driver will miss an interrupt which will cause a hang.
+For a successful return, always remove our entry from the wait queue
+entry list. Previously this was skipped if a cancelation was in
+progress, but this can race with another invocation of the wait queue
+entry callback.
 
-For eg- when the driver sets inbound ring buffer interrupt mask to 1,
-the host does not interrupt the guest on the UIO VMBus channel.
-However, setting the mask does not prevent the host from putting a
-message in the inbound ring buffer. So let’s assume that happens,
-the host puts a message into the ring buffer but does not interrupt.
-
-Subsequently, the user space code in the guest sets the inbound ring
-buffer interrupt mask to 0, saying “Hey, I’m ready for interrupts”.
-User space code then calls pread() to wait for an interrupt.
-Then one of two things happens:
-
-* The host never sends another message. So the pread() waits forever.
-* The host does send another message. But because there’s already a
-  message in the ring buffer, it doesn’t generate an interrupt.
-  This is the correct behavior, because the host should only send an
-  interrupt when the inbound ring buffer transitions from empty to
-  not-empty. Adding an additional message to a ring buffer that is not
-  empty is not supposed to generate an interrupt on the guest.
-  Since the guest is waiting in pread() and not removing messages from
-  the ring buffer, the pread() waits forever.
-
-This could be easily reproduced in hv_fcopy_uio_daemon if we delay
-setting interrupt mask to 0.
-
-Similarly if hv_uio_channel_cb() sets the interrupt_mask to 1,
-there’s a race condition. Once user space empties the inbound ring
-buffer, but before user space sets interrupt_mask to 0, the host could
-put another message in the ring buffer but it wouldn’t interrupt.
-Then the next pread() would hang.
-
-Fix these by removing all instances where interrupt_mask is changed,
-while keeping the one in set_event() unchanged to enable userspace
-control the interrupt mask by writing 0/1 to /dev/uioX.
-
-Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
-Suggested-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Reviewed-by: Tianyu Lan <tiala@microsoft.com>
-Tested-by: Tianyu Lan <tiala@microsoft.com>
-Link: https://lore.kernel.org/r/20250828044200.492030-1-namjain@linux.microsoft.com
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+Reported-by: syzbot+b9e83021d9c642a33d8c@syzkaller.appspotmail.com
+Tested-by: syzbot+b9e83021d9c642a33d8c@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/io-uring/68e5195e.050a0220.256323.001f.GAE@google.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ io_uring/waitid.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -98,7 +98,6 @@ static void hv_uio_channel_cb(void *cont
- 	struct hv_device *hv_dev = chan->device_obj;
- 	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -272,13 +272,14 @@ static int io_waitid_wait(struct wait_qu
+ 	if (!pid_child_should_wake(wo, p))
+ 		return 0;
  
--	chan->inbound.ring_buffer->interrupt_mask = 1;
- 	virt_mb();
++	list_del_init(&wait->entry);
++
+ 	/* cancel is in progress */
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return 1;
  
- 	uio_event_notify(&pdata->info);
-@@ -163,8 +162,6 @@ hv_uio_new_channel(struct vmbus_channel
- 		return;
- 	}
+ 	req->io_task_work.func = io_waitid_cb;
+ 	io_req_task_work_add(req);
+-	list_del_init(&wait->entry);
+ 	return 1;
+ }
  
--	/* Disable interrupts on sub channel */
--	new_sc->inbound.ring_buffer->interrupt_mask = 1;
- 	set_channel_read_mode(new_sc, HV_CALL_ISR);
- 	ret = hv_create_ring_sysfs(new_sc, hv_uio_ring_mmap);
- 	if (ret) {
-@@ -207,9 +204,7 @@ hv_uio_open(struct uio_info *info, struc
- 
- 	ret = vmbus_connect_ring(dev->channel,
- 				 hv_uio_channel_cb, dev->channel);
--	if (ret == 0)
--		dev->channel->inbound.ring_buffer->interrupt_mask = 1;
--	else
-+	if (ret)
- 		atomic_dec(&pdata->refcnt);
- 
- 	return ret;
 
 
