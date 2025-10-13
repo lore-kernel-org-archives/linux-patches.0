@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0723112BF;
-	Mon, 13 Oct 2025 15:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDE23112B4;
+	Mon, 13 Oct 2025 15:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369047; cv=none; b=ESZaUi47ZwjkNV8HOboNC26ZqSQAu+pQavdw2rQf/JwvOkljoAmXC+eccFLd7Rq/je3MR6ka2JqoyM5ljRueynIjPkJbB8fIAlcLaESoXgtZJCyidDjXuQnWtObVK4imXx2S4U0kBUtfcwPSW67SAVjEn6iDmr9RqboWiZet3FY=
+	t=1760369050; cv=none; b=rYOQITDkIjzPqbBk7C5OABm8T2zPw5UIkNXCujc2Ev+z/1o0B0TdnhreMNpJTVYCORT70DWW13R6Q2tlc8sF9wvznjwT05y4WG0dpKJYOnIjXHo/x8oOfZc49VZNCxR6H/j3Q/PE5+TIB79NeC/ypjueFpOtJBa5Ca/8PcILHx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369047; c=relaxed/simple;
-	bh=hUrk/ZsVHwGAs+V+3IzB4n4QBscUT/eIViNjbpr0mvQ=;
+	s=arc-20240116; t=1760369050; c=relaxed/simple;
+	bh=xJogdsl6cmUWTs9ixDF5/KhfzW4bYvCjHpVOqvRpbdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWGKEy4KlMWOGAp+nokHl6QmzR/WNCZFaqq1WG2AJDrNZ+x8wdiGm4pKCzdsUk491QSmxjv+B21kPxy4EXCMkHcay/PrJnFmcZKmcL4rG31AUjjTqYAOEauqvfoMb6FtoU4NBQMthknxzayiJr5GYZx2OxKP0GkkC8BYrHCNCF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xE/VfEJd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1PRMqwB/QsTvvsr/QVEtBMhhddXdpdkVddgGd8wP8sCCHwc+Ja6TlFrectsJzcKlcf+ZXLsSrRyqXVLWtJUdeHj01Pv9pkg4NUpi3IgM5sSqoC98U7D8vS+c7wpAiHdXDVZwzYi9xMsLxC9atYvT5qfT8+Yhwly46g+qjKH+14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgCQGA1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xE/VfEJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBA6C4CEE7;
-	Mon, 13 Oct 2025 15:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgCQGA1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EEEC4CEFE;
+	Mon, 13 Oct 2025 15:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369046;
-	bh=hUrk/ZsVHwGAs+V+3IzB4n4QBscUT/eIViNjbpr0mvQ=;
+	s=korg; t=1760369049;
+	bh=xJogdsl6cmUWTs9ixDF5/KhfzW4bYvCjHpVOqvRpbdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xE/VfEJdgfVMHoP5i6izxdZZU8X6tZ8mL4bvV03Lb9c2nQ9qPNrs5or/CI3rKcbXH
-	 vCQr4Jh2REK8gub4T23ThgurHhsU/TT3CSEtXpCf6bLGIqkjx8TQoW8jOW+TKoOwAa
-	 /KjPjZUQO487N5hB6c6pr+SBn/pe6EFpNcPPQbUU=
+	b=xgCQGA1MxgZ7qJ26eDPxQRG5JEMdBrwZA3LNNutQJhXvpeGH7VLlkerkKBl5KxJGB
+	 37FH5uRfGrBeCTR/R+4VkTUTq+u76ERFO4vKaX3hZ4+qCeBahnOMLIM7lJP+Ghjk8h
+	 X2QRUZzHVMKgbKIvU4H+t0s/Ulgrdasc2TuCNos8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Zenghui Yu <yuzenghui@huawei.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 109/563] irqchip/gic-v5: Fix error handling in gicv5_its_irq_domain_alloc()
-Date: Mon, 13 Oct 2025 16:39:30 +0200
-Message-ID: <20251013144415.242804139@linuxfoundation.org>
+Subject: [PATCH 6.17 110/563] tick: Do not set device to detached state in tick_shutdown()
+Date: Mon, 13 Oct 2025 16:39:31 +0200
+Message-ID: <20251013144415.279043368@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,76 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit a186120c780e21e4cfd186a925e34f718e30de88 ]
+[ Upstream commit fe2a449a45b13df1562419e0104b4777b6ea5248 ]
 
-Code in gicv5_its_irq_domain_alloc() has two issues:
+tick_shutdown() sets the state of the clockevent device to detached
+first and the invokes clockevents_exchange_device(), which in turn
+invokes clockevents_switch_state().
 
- - it checks the wrong return value/variable when calling gicv5_alloc_lpi()
+But clockevents_switch_state() returns without invoking the device shutdown
+callback as the device is already in detached state. As a consequence the
+timer device is not shutdown when a CPU goes offline.
 
- - The cleanup code does not take previous loop iterations into account
+tick_shutdown() does this because it was originally invoked on a online CPU
+and not on the outgoing CPU. It therefore could not access the clockevent
+device of the already offlined CPU and just set the state.
 
-Fix both issues at once by adding the right gicv5_alloc_lpi() variable
-check and by reworking the function cleanup code to take into account
-current and previous iterations.
+Since commit 3b1596a21fbf tick_shutdown() is called on the outgoing CPU, so
+the hardware device can be accessed.
 
-[ lpieralisi: Reworded commit message ]
+Remove the state set before calling clockevents_exchange_device(), so that
+the subsequent clockevents_switch_state() handles the state transition and
+invokes the shutdown callback of the clockevent device.
 
-Fixes: 57d72196dfc8 ("irqchip/gic-v5: Add GICv5 ITS support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+[ tglx: Massaged change log ]
+
+Fixes: 3b1596a21fbf ("clockevents: Shutdown and unregister current clockevents at CPUHP_AP_TICK_DYING")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Link: https://lore.kernel.org/all/20250908082745.113718-4-lpieralisi@kernel.org
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/all/20250906064952.3749122-2-maobibo@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v5-its.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ kernel/time/clockevents.c   |  2 +-
+ kernel/time/tick-common.c   | 16 +++++-----------
+ kernel/time/tick-internal.h |  2 +-
+ 3 files changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v5-its.c b/drivers/irqchip/irq-gic-v5-its.c
-index 4701ef62b8b27..2fb58d76f5214 100644
---- a/drivers/irqchip/irq-gic-v5-its.c
-+++ b/drivers/irqchip/irq-gic-v5-its.c
-@@ -949,15 +949,18 @@ static int gicv5_its_irq_domain_alloc(struct irq_domain *domain, unsigned int vi
- 	device_id = its_dev->device_id;
+diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
+index f3e831f62906f..a59bc75ab7c5b 100644
+--- a/kernel/time/clockevents.c
++++ b/kernel/time/clockevents.c
+@@ -633,7 +633,7 @@ void tick_offline_cpu(unsigned int cpu)
+ 	raw_spin_lock(&clockevents_lock);
  
- 	for (i = 0; i < nr_irqs; i++) {
--		lpi = gicv5_alloc_lpi();
-+		ret = gicv5_alloc_lpi();
- 		if (ret < 0) {
- 			pr_debug("Failed to find free LPI!\n");
--			goto out_eventid;
-+			goto out_free_irqs;
- 		}
-+		lpi = ret;
+ 	tick_broadcast_offline(cpu);
+-	tick_shutdown(cpu);
++	tick_shutdown();
  
- 		ret = irq_domain_alloc_irqs_parent(domain, virq + i, 1, &lpi);
--		if (ret)
--			goto out_free_lpi;
-+		if (ret) {
-+			gicv5_free_lpi(lpi);
-+			goto out_free_irqs;
-+		}
+ 	/*
+ 	 * Unregister the clock event devices which were
+diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
+index 9a3859443c042..7e33d3f2e889b 100644
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -411,24 +411,18 @@ int tick_cpu_dying(unsigned int dying_cpu)
+ }
  
- 		/*
- 		 * Store eventid and deviceid into the hwirq for later use.
-@@ -977,8 +980,13 @@ static int gicv5_its_irq_domain_alloc(struct irq_domain *domain, unsigned int vi
+ /*
+- * Shutdown an event device on a given cpu:
++ * Shutdown an event device on the outgoing CPU:
+  *
+- * This is called on a life CPU, when a CPU is dead. So we cannot
+- * access the hardware device itself.
+- * We just set the mode and remove it from the lists.
++ * Called by the dying CPU during teardown, with clockevents_lock held
++ * and interrupts disabled.
+  */
+-void tick_shutdown(unsigned int cpu)
++void tick_shutdown(void)
+ {
+-	struct tick_device *td = &per_cpu(tick_cpu_device, cpu);
++	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
+ 	struct clock_event_device *dev = td->evtdev;
  
- 	return 0;
- 
--out_free_lpi:
--	gicv5_free_lpi(lpi);
-+out_free_irqs:
-+	while (--i >= 0) {
-+		irqd = irq_domain_get_irq_data(domain, virq + i);
-+		gicv5_free_lpi(irqd->parent_data->hwirq);
-+		irq_domain_reset_irq_data(irqd);
-+		irq_domain_free_irqs_parent(domain, virq + i, 1);
-+	}
- out_eventid:
- 	gicv5_its_free_eventid(its_dev, event_id_base, nr_irqs);
- 	return ret;
+ 	td->mode = TICKDEV_MODE_PERIODIC;
+ 	if (dev) {
+-		/*
+-		 * Prevent that the clock events layer tries to call
+-		 * the set mode function!
+-		 */
+-		clockevent_set_state(dev, CLOCK_EVT_STATE_DETACHED);
+ 		clockevents_exchange_device(dev, NULL);
+ 		dev->event_handler = clockevents_handle_noop;
+ 		td->evtdev = NULL;
+diff --git a/kernel/time/tick-internal.h b/kernel/time/tick-internal.h
+index faac36de35b9e..4e4f7bbe2a64b 100644
+--- a/kernel/time/tick-internal.h
++++ b/kernel/time/tick-internal.h
+@@ -26,7 +26,7 @@ extern void tick_setup_periodic(struct clock_event_device *dev, int broadcast);
+ extern void tick_handle_periodic(struct clock_event_device *dev);
+ extern void tick_check_new_device(struct clock_event_device *dev);
+ extern void tick_offline_cpu(unsigned int cpu);
+-extern void tick_shutdown(unsigned int cpu);
++extern void tick_shutdown(void);
+ extern void tick_suspend(void);
+ extern void tick_resume(void);
+ extern bool tick_check_replacement(struct clock_event_device *curdev,
 -- 
 2.51.0
 
