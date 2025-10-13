@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF66274669;
-	Mon, 13 Oct 2025 15:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D073112B4;
+	Mon, 13 Oct 2025 15:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369055; cv=none; b=UUR8ObDSiU9FmhL90j9GfeyFhnQw7cRoS9kPuJZTOlH0FTUGMH8EtU7UpM/b9LrT02zzTf3HcAZNVPJHNS78GxJLdW0y4D+OxJHCEMIF2otE/nnNTcYA/ugRfqlW2LepBBYiJiSGHjcuPWh0KHRe25G/KAvKc8pkQWmFeR/SOP4=
+	t=1760369058; cv=none; b=dryrSIgOWtQV2H9eEZm8awwgWsdLFplNjERM/YtYtzbvp02BK7KGvkflU2V+IuwCJl00o3Uue4pe0K0UDd7kdl+wCgzTePE7aYTyNCSSomFjt5rfJG8+NVvFUO0ISW5JaiLZkDoiXiK0kVb5ZK4J6mCW4bxjmU6EzKnE1f7pzoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369055; c=relaxed/simple;
-	bh=kmqBNyz4A93wTLrcbXC5DaCpgWxXRlDa2sthNMsBGyQ=;
+	s=arc-20240116; t=1760369058; c=relaxed/simple;
+	bh=s/03muLX84TLkR0AqENV0+EaulM58z/rfNsu6M2LL1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKF67xYv5Re7DKwQmTrUHkcpSQ9qkRPDTy6gY0+hovtQC4Fy+cqe1+fak/RYMli/h58lUW3ulDbSLKAF++OTtrycS0eVNbRWnGS0hcT7E9ZEBWd1uytiXDjZg6F6JYTfhA9kUDSCUZuWQUCCOLsHUF3jMdECYc8CzDJVPO6b3aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fObBx4lt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0sRk+w6eJQeODZogy4vYxeh9omnoOKCVMzS9iqyklrLQ5iAoCapFCsqaf3WgSonL715XjhbC9DNjdPsg4Un3XszMgBHuvwY71fNDi4Oi5lUl9TJtpG3eVnnRij8tRMMyF6cL99iwZbiaFIOvjIhsdhwURW23+LyO+lYRrC8EGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Os6/gFKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fObBx4lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF6BC4CEE7;
-	Mon, 13 Oct 2025 15:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Os6/gFKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1821FC4CEFE;
+	Mon, 13 Oct 2025 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369055;
-	bh=kmqBNyz4A93wTLrcbXC5DaCpgWxXRlDa2sthNMsBGyQ=;
+	s=korg; t=1760369058;
+	bh=s/03muLX84TLkR0AqENV0+EaulM58z/rfNsu6M2LL1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fObBx4ltGNG7duiwhNZV2v3lFnnfiCtiuZTL6vy9kKHP5rF0BflzBsqc0lo8qJ+FL
-	 IAG4fuC3ePXjhB4hVhZu8A2Wng7b+dZRJANZ1TMjf5JYZFDpysY7qzb0XIsnzCIQqh
-	 avBAU+ESE82kyMN7LEKJB3Bw0DzF7Dw7IXAKKGrE=
+	b=Os6/gFKUs93jZPTKOHpunX+6RoINl3P4beaa1O98PObuyaQ+BWotR7ZqINdGcxiB2
+	 e5QaGaT0hiTKFoQ6AZbJfzYqbnk4+gJIvr4vLfLXQKxo2oUZ6n32MFH39vghmYOj/W
+	 zCyvwuR6i2dgPDy3d//esWNCQHYXjTQzyyOzqZ20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Mike Christie <mchristi@redhat.com>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Yu Kuai <yukuai1@huaweicloud.com>,
+	linux-block@vger.kernel.org,
+	nbd@other.debian.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 112/563] arm64: dts: mediatek: mt8183: Fix out of range pull values
-Date: Mon, 13 Oct 2025 16:39:33 +0200
-Message-ID: <20251013144415.354411237@linuxfoundation.org>
+Subject: [PATCH 6.17 113/563] nbd: restrict sockets to TCP and UDP
+Date: Mon, 13 Oct 2025 16:39:34 +0200
+Message-ID: <20251013144415.389676652@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,150 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0aeb7ed4bcb244862a35f880053cd64d28c6fb04 ]
+[ Upstream commit 9f7c02e031570e8291a63162c6c046dc15ff85b0 ]
 
-A value of 10 is not valid for "mediatek,pull-down-adv" and
-"mediatek,pull-up-adv" properties which have defined values of 0-3. It
-appears the "10" was written as a binary value. The driver only looks at
-the lowest 2 bits, so the value "10" decimal works out the same as if
-"2" was used.
+Recently, syzbot started to abuse NBD with all kinds of sockets.
 
-Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
-Fixes: 19b6403f1e2a ("arm64: dts: mt8183: add mt8183 pumpkin board")
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250722171152.58923-2-robh@kernel.org
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Commit cf1b2326b734 ("nbd: verify socket is supported during setup")
+made sure the socket supported a shutdown() method.
+
+Explicitely accept TCP and UNIX stream sockets.
+
+Fixes: cf1b2326b734 ("nbd: verify socket is supported during setup")
+Reported-by: syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/CANn89iJ+76eE3A_8S_zTpSyW5hvPRn6V57458hCZGY5hbH_bFA@mail.gmail.com/T/#m081036e8747cd7e2626c1da5d78c8b9d1e55b154
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Mike Christie <mchristi@redhat.com>
+Cc: Richard W.M. Jones <rjones@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Yu Kuai <yukuai1@huaweicloud.com>
+Cc: linux-block@vger.kernel.org
+Cc: nbd@other.debian.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi  | 14 +++++++-------
- arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts | 14 +++++++-------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/block/nbd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index 400c61d110356..fff93e26eb760 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -580,7 +580,7 @@ pins-cmd-dat {
- 		pins-clk {
- 			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CLK>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 6463d0e8d0cef..87b0b78249da3 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1217,6 +1217,14 @@ static struct socket *nbd_get_socket(struct nbd_device *nbd, unsigned long fd,
+ 	if (!sock)
+ 		return NULL;
  
- 		pins-rst {
-@@ -609,13 +609,13 @@ pins-cmd-dat {
- 		pins-clk {
- 			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CLK>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins-ds {
- 			pinmux = <PINMUX_GPIO131__FUNC_MSDC0_DSL>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins-rst {
-@@ -633,13 +633,13 @@ pins-cmd-dat {
- 				 <PINMUX_GPIO33__FUNC_MSDC1_DAT2>,
- 				 <PINMUX_GPIO30__FUNC_MSDC1_DAT3>;
- 			input-enable;
--			mediatek,pull-up-adv = <10>;
-+			mediatek,pull-up-adv = <2>;
- 		};
- 
- 		pins-clk {
- 			pinmux = <PINMUX_GPIO29__FUNC_MSDC1_CLK>;
- 			input-enable;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 	};
- 
-@@ -652,13 +652,13 @@ pins-cmd-dat {
- 				 <PINMUX_GPIO30__FUNC_MSDC1_DAT3>;
- 			drive-strength = <6>;
- 			input-enable;
--			mediatek,pull-up-adv = <10>;
-+			mediatek,pull-up-adv = <2>;
- 		};
- 
- 		pins-clk {
- 			pinmux = <PINMUX_GPIO29__FUNC_MSDC1_CLK>;
- 			drive-strength = <8>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 			input-enable;
- 		};
- 	};
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-index dbdee604edab4..7c3010889ae73 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-@@ -324,7 +324,7 @@ pins_cmd_dat {
- 		pins_clk {
- 			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CLK>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins_rst {
-@@ -353,13 +353,13 @@ pins_cmd_dat {
- 		pins_clk {
- 			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CLK>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins_ds {
- 			pinmux = <PINMUX_GPIO131__FUNC_MSDC0_DSL>;
- 			drive-strength = <MTK_DRIVE_14mA>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins_rst {
-@@ -377,13 +377,13 @@ pins_cmd_dat {
- 				 <PINMUX_GPIO33__FUNC_MSDC1_DAT2>,
- 				 <PINMUX_GPIO30__FUNC_MSDC1_DAT3>;
- 			input-enable;
--			mediatek,pull-up-adv = <10>;
-+			mediatek,pull-up-adv = <2>;
- 		};
- 
- 		pins_clk {
- 			pinmux = <PINMUX_GPIO29__FUNC_MSDC1_CLK>;
- 			input-enable;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 		};
- 
- 		pins_pmu {
-@@ -401,13 +401,13 @@ pins_cmd_dat {
- 				 <PINMUX_GPIO30__FUNC_MSDC1_DAT3>;
- 			drive-strength = <6>;
- 			input-enable;
--			mediatek,pull-up-adv = <10>;
-+			mediatek,pull-up-adv = <2>;
- 		};
- 
- 		pins_clk {
- 			pinmux = <PINMUX_GPIO29__FUNC_MSDC1_CLK>;
- 			drive-strength = <8>;
--			mediatek,pull-down-adv = <10>;
-+			mediatek,pull-down-adv = <2>;
- 			input-enable;
- 		};
- 	};
++	if (!sk_is_tcp(sock->sk) &&
++	    !sk_is_stream_unix(sock->sk)) {
++		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: should be TCP or UNIX.\n");
++		*err = -EINVAL;
++		sockfd_put(sock);
++		return NULL;
++	}
++
+ 	if (sock->ops->shutdown == sock_no_shutdown) {
+ 		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: shutdown callout must be supported.\n");
+ 		*err = -EINVAL;
 -- 
 2.51.0
 
