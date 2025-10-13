@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DE3313E09;
-	Mon, 13 Oct 2025 15:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BA73148A7;
+	Mon, 13 Oct 2025 15:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369207; cv=none; b=tmxYxvrUEnFJ0u3y2/9khl1JIgdgJrCxBVj+JiN42moxKm5N6/HmDAPcwAtn8+6LRHsPHBui+VvfWN+AFayaxEzHtFYNE5AoGuXCinxoHg9erYiIkKZJPjg8YnTT8adTPyMs4GCtio6X0ywtIR+D21RB8H+pzhvCHyiuvieJ3a4=
+	t=1760369210; cv=none; b=KTdE5u7pJNYItABAdOWuTvigNS37zylpX5f8UAPZpFkBB4CaP3wuK6rMqR0tZNUzvCELYfRn8VAJK7/QCYUrPlIfO/aFLgL3gLTh+rYzJyt7lnK93Np00HcPkvOli1yZEwUOzvtlqy/oyE3AuQhoUsMUK17iMy2aYFbSdOTpA+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369207; c=relaxed/simple;
-	bh=Fp+y8LWQpWRStvyCnTuxWEXRULIUV9OjeGPAmjV7oNA=;
+	s=arc-20240116; t=1760369210; c=relaxed/simple;
+	bh=pj+Ho1HSziqp1nrc8lPRnNjMNLH+Sk945piiY2wG+xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdwvR/c4HCuX+cc8XmWQI5wTFVJ8AjBLu/bMYwFO8PLy2xkB3ZKs1CU9oDOQVKF9iWOPY+A3souq7VgxYtMM3WDzeQ8tnmYHLM31pPW+XSskyZ1yT3XT5nfBFFUBWMOw8Vx0S8bklHBAEylVLmJQ8E+p1jqnObsm3CkK+Eyl/ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvKgrRL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNjAhnsDj5c2cVZwsSzCtAjFulbz3WbEG8GP/IlB50pTyqrWdqP7HkZTgx/xBIJjSVuNrBMyRMxUI/lsVny2f7bIq+OoowafdBSSJ9FHop97kqD/RTgv1yPUo/0vOm33SIwDwnvfByTkv4dwREwDadpqRRQMA9pZ6R62OsuUOpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSdAUaLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvKgrRL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0E9C4CEFE;
-	Mon, 13 Oct 2025 15:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSdAUaLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F4DC116D0;
+	Mon, 13 Oct 2025 15:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369207;
-	bh=Fp+y8LWQpWRStvyCnTuxWEXRULIUV9OjeGPAmjV7oNA=;
+	s=korg; t=1760369209;
+	bh=pj+Ho1HSziqp1nrc8lPRnNjMNLH+Sk945piiY2wG+xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvKgrRL7DnUzfFUBHrc1vjn7mGLdi2ojwiwZ7nPxXCzi/PTB59B8n23XDzdDoRKrG
-	 mbb5E/Ogu1GnxKk/xfugDbBZ9UMs3LlViaWWJtLvZN7r5SomryzyFqlKrWHPpO9fqM
-	 aoCSSuW4fbaaX1nMDX+sO8Kp6UCSsREmg5li7+pI=
+	b=DSdAUaLO1BinPrFemvSW/La0+Ge61Eq6zOZdrnCDsX7jZMdxa42wHDpppsAF/7K6L
+	 BoGpPHOSlZ4zU0FRVcyB+0nQXJaadNmCmKg/usy2eeKcDT4AbmOEGl/hTFwz6Hi+cd
+	 lcu4wZW8IqPytDMl2cfW/k5fqg3q3VKWt4Mw7yZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 132/563] arm64: dts: allwinner: a527: cubie-a5e: Add ethernet PHY reset setting
-Date: Mon, 13 Oct 2025 16:39:53 +0200
-Message-ID: <20251013144416.075202173@linuxfoundation.org>
+Subject: [PATCH 6.17 133/563] arm64: dts: allwinner: t527: avaota-a1: Add ethernet PHY reset setting
+Date: Mon, 13 Oct 2025 16:39:54 +0200
+Message-ID: <20251013144416.110718397@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,27 +53,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit a15f095b590bcc1968fbf2ced8fe87fbd8d012e0 ]
+[ Upstream commit 8dc3f973b2ff7ea19f7637983c11b005daa8fe45 ]
 
 The external Ethernet PHY has a reset pin that is connected to the SoC.
 It is missing from the original submission.
 
 Add it to complete the description.
 
-Fixes: acca163f3f51 ("arm64: dts: allwinner: a527: add EMAC0 to Radxa A5E board")
+Fixes: c6800f15998b ("arm64: dts: allwinner: t527: add EMAC0 to Avaota-A1 board")
 Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250908181059.1785605-7-wens@kernel.org
+Link: https://patch.msgid.link/20250908181059.1785605-9-wens@kernel.org
 Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts | 3 +++
+ arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-index 553ad774ed13d..43251042d1bd5 100644
---- a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-@@ -75,6 +75,9 @@ &mdio0 {
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
+index b9eeb6753e9e3..e7713678208d4 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
++++ b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
+@@ -85,6 +85,9 @@ &mdio0 {
  	ext_rgmii_phy: ethernet-phy@1 {
  		compatible = "ethernet-phy-ieee802.3-c22";
  		reg = <1>;
