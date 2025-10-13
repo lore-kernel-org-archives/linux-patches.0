@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F99261B9C;
-	Mon, 13 Oct 2025 15:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB95271459;
+	Mon, 13 Oct 2025 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368546; cv=none; b=aPnoZXoF+YarmUh464yj/SF1Oy6VfvHzP/jMUmsQ/2IfRi/XjMPKXp6sqJPvuTasyemgmjfmFQN0PnxUkETbSeYbz0Tj7NRd82HJ1370D6MyBSAlTjpN0zDtL/U+LYoHrq2DSWX8FgL49uL7YOKzyPTaI2J1MWk1qEO2W7AzWDs=
+	t=1760368550; cv=none; b=i/UF5LJPlvo8dmea+OqlBfKGHAGqXM0VuXPv4+cDMJa1+vPkZLcjJD1NMZV94AdSmg7MDx0i2flLD+a0o61fW5ISw5ZF6At0f1ZEWGzCj9lSiB6mfo4b8YOjxlIEXnNmchXkb4r+nup6auacRAonjYqUYREVkuR5gObseRuNRjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368546; c=relaxed/simple;
-	bh=WkOET0Fr4I9tLMOyiOUkb2cNbzMi7gX3uc8/TcMdHLQ=;
+	s=arc-20240116; t=1760368550; c=relaxed/simple;
+	bh=2ciQsK59mO7tKJqWx7NEV3dkadT2FeL3fUt3tiPkGR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQ4IpnNm+HGDlaI84QzmRcKXQah6ygakVHzYfmIIyFU2R4wl4s5JKg/t9lP9dYhMHnGVEs42hF5n0lt+CVVovA3R8sMT34q7dkEcyu3BoNLg9/yXbhSf9/0Feu+lsWV4qw3Lxl+10I2K0YCRo+rAtqfzueTdU0RCYj/w5nB0dq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jKB56IW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLphi2a6lVa9ubypcLKE8AT2M6YB6+IBP97pkhdb2rXe2jbxdhzN71lvaFS/+MU0cWG8TXNhmsDvY/HlHcRzNEp9LQtgU9nSW1TbfHUFWCY35OxJWBMP2efDOZCqUTR4Gv2VbNpuFNv/CqQozpptadLZv4CFn9OGhFXom/ta62g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNWJT3DQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jKB56IW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD91C116C6;
-	Mon, 13 Oct 2025 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNWJT3DQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46324C4CEE7;
+	Mon, 13 Oct 2025 15:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368546;
-	bh=WkOET0Fr4I9tLMOyiOUkb2cNbzMi7gX3uc8/TcMdHLQ=;
+	s=korg; t=1760368549;
+	bh=2ciQsK59mO7tKJqWx7NEV3dkadT2FeL3fUt3tiPkGR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jKB56IWiB5siHe/nTmfLukfqvkgfwUQl7Jn0qD8DZJru9zc1g666pToYDdDGxHUG
-	 qM/f+V+IjnnD/mTPYeNgkHSQmGphgPKVOpFY2VGceyJZXb/aPANL6Y/Ii4zPsyAPpo
-	 DslqSxdXjksIF3SHUFVJ88zXgwSgU7U+k+kr/038=
+	b=QNWJT3DQdch061J5PDFyQIhOVCQpLmBej2iywX3vNXOG8mupq1pBacjdvA5BoR50O
+	 m2lEeHgLzvkOELKZGva8yUpJF6bpjsNk66HefRYR2jMD9DcdyiztQBe8NXJ+D7Tu4u
+	 xdm77r1SQr4nfKp2pGKc2v3DU1/d06WOwbva2g6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/262] RDMA/siw: Always report immediate post SQ errors
-Date: Mon, 13 Oct 2025 16:45:40 +0200
-Message-ID: <20251013144333.377920363@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	I Viswanath <viswanathiyyappan@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+78cae3f37c62ad092caa@syzkaller.appspotmail.com
+Subject: [PATCH 6.12 199/262] net: usb: Remove disruptive netif_wake_queue in rtl8150_set_multicast
+Date: Mon, 13 Oct 2025 16:45:41 +0200
+Message-ID: <20251013144333.413266667@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,83 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Metzler <bernard.metzler@linux.dev>
+From: I Viswanath <viswanathiyyappan@gmail.com>
 
-[ Upstream commit fdd0fe94d68649322e391c5c27dd9f436b4e955e ]
+[ Upstream commit 958baf5eaee394e5fd976979b0791a875f14a179 ]
 
-In siw_post_send(), any immediate error encountered during processing of
-the work request list must be reported to the caller, even if previous
-work requests in that list were just accepted and added to the send queue.
+syzbot reported WARNING in rtl8150_start_xmit/usb_submit_urb.
+This is the sequence of events that leads to the warning:
 
-Not reporting those errors confuses the caller, which would wait
-indefinitely for the failing and potentially subsequently aborted work
-requests completion.
+rtl8150_start_xmit() {
+	netif_stop_queue();
+	usb_submit_urb(dev->tx_urb);
+}
 
-This fixes a case where immediate errors were overwritten by subsequent
-code in siw_post_send().
+rtl8150_set_multicast() {
+	netif_stop_queue();
+	netif_wake_queue();		<-- wakes up TX queue before URB is done
+}
 
-Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
-Link: https://patch.msgid.link/r/20250923144536.103825-1-bernard.metzler@linux.dev
-Suggested-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+rtl8150_start_xmit() {
+	netif_stop_queue();
+	usb_submit_urb(dev->tx_urb);	<-- double submission
+}
+
+rtl8150_set_multicast being the ndo_set_rx_mode callback should not be
+calling netif_stop_queue and notif_start_queue as these handle
+TX queue synchronization.
+
+The net core function dev_set_rx_mode handles the synchronization
+for rtl8150_set_multicast making it safe to remove these locks.
+
+Reported-and-tested-by: syzbot+78cae3f37c62ad092caa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=78cae3f37c62ad092caa
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Tested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
+Link: https://patch.msgid.link/20250924134350.264597-1-viswanathiyyappan@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_verbs.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/net/usb/rtl8150.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 7ca0297d68a4a..d0c0cde09f118 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -773,7 +773,7 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
- 	struct siw_wqe *wqe = tx_wqe(qp);
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index ddff6f19ff98e..92add3daadbb1 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -664,7 +664,6 @@ static void rtl8150_set_multicast(struct net_device *netdev)
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	u16 rx_creg = 0x9e;
  
- 	unsigned long flags;
--	int rv = 0;
-+	int rv = 0, imm_err = 0;
- 
- 	if (wr && !rdma_is_kernel_res(&qp->base_qp.res)) {
- 		siw_dbg_qp(qp, "wr must be empty for user mapped sq\n");
-@@ -959,9 +959,17 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
- 	 * Send directly if SQ processing is not in progress.
- 	 * Eventual immediate errors (rv < 0) do not affect the involved
- 	 * RI resources (Verbs, 8.3.1) and thus do not prevent from SQ
--	 * processing, if new work is already pending. But rv must be passed
--	 * to caller.
-+	 * processing, if new work is already pending. But rv and pointer
-+	 * to failed work request must be passed to caller.
- 	 */
-+	if (unlikely(rv < 0)) {
-+		/*
-+		 * Immediate error
-+		 */
-+		siw_dbg_qp(qp, "Immediate error %d\n", rv);
-+		imm_err = rv;
-+		*bad_wr = wr;
-+	}
- 	if (wqe->wr_status != SIW_WR_IDLE) {
- 		spin_unlock_irqrestore(&qp->sq_lock, flags);
- 		goto skip_direct_sending;
-@@ -986,15 +994,10 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
- 
- 	up_read(&qp->state_lock);
- 
--	if (rv >= 0)
--		return 0;
--	/*
--	 * Immediate error
--	 */
--	siw_dbg_qp(qp, "error %d\n", rv);
-+	if (unlikely(imm_err))
-+		return imm_err;
- 
--	*bad_wr = wr;
--	return rv;
-+	return (rv >= 0) ? 0 : rv;
+-	netif_stop_queue(netdev);
+ 	if (netdev->flags & IFF_PROMISC) {
+ 		rx_creg |= 0x0001;
+ 		dev_info(&netdev->dev, "%s: promiscuous mode\n", netdev->name);
+@@ -678,7 +677,6 @@ static void rtl8150_set_multicast(struct net_device *netdev)
+ 		rx_creg &= 0x00fc;
+ 	}
+ 	async_set_registers(dev, RCR, sizeof(rx_creg), rx_creg);
+-	netif_wake_queue(netdev);
  }
  
- /*
+ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
 -- 
 2.51.0
 
