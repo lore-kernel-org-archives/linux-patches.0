@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A928328D83E;
-	Mon, 13 Oct 2025 15:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADD4314D2D;
+	Mon, 13 Oct 2025 15:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369238; cv=none; b=Hy+8B1wurqAyE6Rmjc8o9vE+RJkF9YQTrqHUu6qYDv+/2/cY/EYUze5COJRDrbdmocUMJJs1UQnVfS/dcTUT18wI90Gk0lcYSOm7Jrpm/faYxXxdVmzOkaUtDjfSGYYyOGDgF0ihLfzvxFrIw+CWCPUtP1xKZUwiRR6nYv2PJmE=
+	t=1760369241; cv=none; b=Vy3mGEF1YIRIN/bZPxgz5eS8p4Kz+Yj+05ug9vCTc/w6nGLatSTivLVMA3Sp3rg5QWkxAUBvtDd1GX9oM8pROZFJSUwKLFld8czasJH52NZCONlmVp+2KlzWOTWSTtSW27r0YtcPr6OZ2iR6ohWuY2HNLyYSBe4JG/ATnMo4vUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369238; c=relaxed/simple;
-	bh=+cxVP38u/GJ0aCpsacxkW4uydzWMgB5zG6eEO8kjrHQ=;
+	s=arc-20240116; t=1760369241; c=relaxed/simple;
+	bh=KlGr9K6x4g0qP9rh2TjpADi/MRZuMxA/YjOwMkABqx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyeJpCMjKKkzvG+23bKcTB2wWfqhBOunX/7VHhwd/yLfGY3XNAme4sfMic10ERueIaqMV1GbfTqwkM2+1L5sgJG1y+BILyHIvTmJBX5CNGTyhLUSMM8Fc9Ys3n7NbmpoAmyztI1KPxOITVCgPiPDEwowWnlB5vbNWzPygz2gqJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6yo4axs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hCZ2A/BvQ6SwLvkyO4rOtNHneNuT3RJk3jHspSgzS38HDzATc2Gcg/lTg6o9+AHtIyVHtyq6zfutg5uEo/NtEZk8sn18aTZ6kUzaaTyNO8L0uBjVFWdnDOPkst97Z0/nkXL2pcLw0rJXDyhBTJYOhQcJdG8MQUHfraWLvY0s3Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNq5cuIJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6yo4axs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8CDC4CEE7;
-	Mon, 13 Oct 2025 15:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNq5cuIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97C6C116B1;
+	Mon, 13 Oct 2025 15:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369238;
-	bh=+cxVP38u/GJ0aCpsacxkW4uydzWMgB5zG6eEO8kjrHQ=;
+	s=korg; t=1760369241;
+	bh=KlGr9K6x4g0qP9rh2TjpADi/MRZuMxA/YjOwMkABqx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6yo4axs9SGSuoVQ4xXaYaJ2U6NoJE8IZgMABw9C6t1KBwxIa/tia1GB2fIVh1hhw
-	 YfXLfYe/gO6Sk2NEnZy1IukUeXdJZpb6QmW/p0jIRtmMt6NVt6A/cYXO4NTdEI7t+U
-	 xIu6xQeNriBJi8WRFksrVa9GhF9iepVFnR5+Mt68=
+	b=JNq5cuIJXw8u5GWXDg6+fiARSGGkQ4dTE4yokaVvCKRQC/PbkBt2T1532KhrzIpF/
+	 JtFV+dv4CDBmLXGZrG+huvJI56wyWIkTtk+uUIXG7dXgkSqohlCAgOWxqJrX3ecI68
+	 N4fH957zJActbBfTUR8XYbp/4NmvQNSBn7OMJiD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	syzbot+3afc814e8df1af64b653@syzkaller.appspotmail.com,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 177/563] selftest/futex: Compile also with libnuma < 2.0.16
-Date: Mon, 13 Oct 2025 16:40:38 +0200
-Message-ID: <20251013144417.698419341@linuxfoundation.org>
+Subject: [PATCH 6.17 178/563] bpf: dont report verifier bug for missing bpf_scc_visit on speculative path
+Date: Mon, 13 Oct 2025 16:40:39 +0200
+Message-ID: <20251013144417.734702019@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,117 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit ed323aeda5e09fa1ab95946673939c8c425c329c ]
+[ Upstream commit a3c73d629ea1373af3c0c954d41fd1af555492e3 ]
 
-After using numa_set_mempolicy_home_node() the test fails to compile on
-systems with libnuma library versioned lower than 2.0.16.
+Syzbot generated a program that triggers a verifier_bug() call in
+maybe_exit_scc(). maybe_exit_scc() assumes that, when called for a
+state with insn_idx in some SCC, there should be an instance of struct
+bpf_scc_visit allocated for that SCC. Turns out the assumption does
+not hold for speculative execution paths. See example in the next
+patch.
 
-In order to allow lower library version add a pkg-config related check
-and exclude that part of the code. Without the proper MPOL setup it
-can't be tested.
+maybe_scc_exit() is called from update_branch_counts() for states that
+reach branch count of zero, meaning that path exploration for a
+particular path is finished. Path exploration can finish in one of
+three ways:
+a. Verification error is found. In this case, update_branch_counts()
+   is called only for non-speculative paths.
+b. Top level BPF_EXIT is reached. Such instructions are never a part of
+   an SCC, so compute_scc_callchain() in maybe_scc_exit() will return
+   false, and maybe_scc_exit() will return early.
+c. A checkpoint is reached and matched. Checkpoints are created by
+   is_state_visited(), which calls maybe_enter_scc(), which allocates
+   bpf_scc_visit instances for checkpoints within SCCs.
 
-Make a total number of tests two. The first one is the first batch and
-the second is the MPOL related one. The goal is to let the user know if
-it has been skipped due to library limitation.
+Hence, for non-speculative symbolic execution paths, the assumption
+still holds: if maybe_scc_exit() is called for a state within an SCC,
+bpf_scc_visit instance must exist.
 
-Remove test_futex_mpol(), it was unused and it is now complained by the
-compiler if the part is not compiled.
+This patch removes the verifier_bug() call for speculative paths.
 
-Fixes: 0ecb4232fc65e ("selftests/futex: Set the home_node in futex_numa_mpol")
-Closes: https://lore.kernel.org/oe-lkp/202507150858.bedaf012-lkp@intel.com
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: c9e31900b54c ("bpf: propagate read/precision marks over state graph backedges")
+Reported-by: syzbot+3afc814e8df1af64b653@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/68c85acd.050a0220.2ff435.03a4.GAE@google.com/
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20250916212251.3490455-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/futex/functional/Makefile       |  5 ++++-
- .../futex/functional/futex_numa_mpol.c        | 21 +++++++++----------
- 2 files changed, 14 insertions(+), 12 deletions(-)
+ kernel/bpf/verifier.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index ddfa61d857b9b..bd50aecfca8a3 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -1,6 +1,9 @@
- # SPDX-License-Identifier: GPL-2.0
-+PKG_CONFIG ?= pkg-config
-+LIBNUMA_TEST = $(shell sh -c "$(PKG_CONFIG) numa --atleast-version 2.0.16 > /dev/null 2>&1 && echo SUFFICIENT || echo NO")
-+
- INCLUDES := -I../include -I../../ $(KHDR_INCLUDES)
--CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 $(INCLUDES) $(KHDR_INCLUDES)
-+CFLAGS := $(CFLAGS) -g -O2 -Wall -pthread -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 $(INCLUDES) $(KHDR_INCLUDES) -DLIBNUMA_VER_$(LIBNUMA_TEST)=1
- LDLIBS := -lpthread -lrt -lnuma
- 
- LOCAL_HDRS := \
-diff --git a/tools/testing/selftests/futex/functional/futex_numa_mpol.c b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-index dd7b05e8cda45..7f2b2e1ff9f8a 100644
---- a/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-+++ b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-@@ -131,11 +131,6 @@ static void test_futex(void *futex_ptr, int err_value)
- 	__test_futex(futex_ptr, err_value, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA);
- }
- 
--static void test_futex_mpol(void *futex_ptr, int err_value)
--{
--	__test_futex(futex_ptr, err_value, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA | FUTEX2_MPOL);
--}
--
- static void usage(char *prog)
- {
- 	printf("Usage: %s\n", prog);
-@@ -148,7 +143,7 @@ static void usage(char *prog)
- int main(int argc, char *argv[])
- {
- 	struct futex32_numa *futex_numa;
--	int mem_size, i;
-+	int mem_size;
- 	void *futex_ptr;
- 	int c;
- 
-@@ -171,7 +166,7 @@ int main(int argc, char *argv[])
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9fb1f957a0937..6ad0dc226183a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -1946,9 +1946,24 @@ static int maybe_exit_scc(struct bpf_verifier_env *env, struct bpf_verifier_stat
+ 		return 0;
+ 	visit = scc_visit_lookup(env, callchain);
+ 	if (!visit) {
+-		verifier_bug(env, "scc exit: no visit info for call chain %s",
+-			     format_callchain(env, callchain));
+-		return -EFAULT;
++		/*
++		 * If path traversal stops inside an SCC, corresponding bpf_scc_visit
++		 * must exist for non-speculative paths. For non-speculative paths
++		 * traversal stops when:
++		 * a. Verification error is found, maybe_exit_scc() is not called.
++		 * b. Top level BPF_EXIT is reached. Top level BPF_EXIT is not a member
++		 *    of any SCC.
++		 * c. A checkpoint is reached and matched. Checkpoints are created by
++		 *    is_state_visited(), which calls maybe_enter_scc(), which allocates
++		 *    bpf_scc_visit instances for checkpoints within SCCs.
++		 * (c) is the only case that can reach this point.
++		 */
++		if (!st->speculative) {
++			verifier_bug(env, "scc exit: no visit info for call chain %s",
++				     format_callchain(env, callchain));
++			return -EFAULT;
++		}
++		return 0;
  	}
- 
- 	ksft_print_header();
--	ksft_set_plan(1);
-+	ksft_set_plan(2);
- 
- 	mem_size = sysconf(_SC_PAGE_SIZE);
- 	futex_ptr = mmap(NULL, mem_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
-@@ -205,8 +200,11 @@ int main(int argc, char *argv[])
- 	ksft_print_msg("Memory back to RW\n");
- 	test_futex(futex_ptr, 0);
- 
-+	ksft_test_result_pass("futex2 memory boundarie tests passed\n");
-+
- 	/* MPOL test. Does not work as expected */
--	for (i = 0; i < 4; i++) {
-+#ifdef LIBNUMA_VER_SUFFICIENT
-+	for (int i = 0; i < 4; i++) {
- 		unsigned long nodemask;
- 		int ret;
- 
-@@ -225,15 +223,16 @@ int main(int argc, char *argv[])
- 			ret = futex2_wake(futex_ptr, 0, FUTEX2_SIZE_U32 | FUTEX_PRIVATE_FLAG | FUTEX2_NUMA | FUTEX2_MPOL);
- 			if (ret < 0)
- 				ksft_test_result_fail("Failed to wake 0 with MPOL: %m\n");
--			if (0)
--				test_futex_mpol(futex_numa, 0);
- 			if (futex_numa->numa != i) {
- 				ksft_exit_fail_msg("Returned NUMA node is %d expected %d\n",
- 						   futex_numa->numa, i);
- 			}
- 		}
- 	}
--	ksft_test_result_pass("NUMA MPOL tests passed\n");
-+	ksft_test_result_pass("futex2 MPOL hints test passed\n");
-+#else
-+	ksft_test_result_skip("futex2 MPOL hints test requires libnuma 2.0.16+\n");
-+#endif
- 	ksft_finished();
- 	return 0;
- }
+ 	if (visit->entry_state != st)
+ 		return 0;
 -- 
 2.51.0
 
