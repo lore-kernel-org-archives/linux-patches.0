@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024762BF009;
-	Mon, 13 Oct 2025 14:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AD02741DF;
+	Mon, 13 Oct 2025 14:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367044; cv=none; b=nkukHzdepdQyUVb56YaMy8TU3ZqR+MpuGC9umPxPiDUdw8m9X+8Mn/D0RsrE0uL/EoYGkhtE8eypjYrLQYrvyydT8VUg6bbGfBUWOMhx7wF5UZXsZaSRw/J0blsgtBfnojijbeKad/CBHT857JO2wFENf+raeyJcPT0goOgh5K4=
+	t=1760367046; cv=none; b=LjD8B/f/YoWbcYfoBtdyZTO1j+hmWR5ettlZQx51c6tFGzzPumVAIZcSWj6+oYFawOpeCmLLf3JsYQ/pkuvgHx6alErOutRdFA2KFHtQgwMmxFbQBFXJjt8mAaRyliviCcBfLnxNiU9AxOVaztNAi3neU2u23EILVjk5hxTNoHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367044; c=relaxed/simple;
-	bh=R89kp0iLYdk1U26/++/e06fNrPuyMTwTnm1iRfn6sSg=;
+	s=arc-20240116; t=1760367046; c=relaxed/simple;
+	bh=Nx01DCgUKZCK4JIuudxbrRHQotOegdsllWKtX3xHTgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o95OBXT9g1DO8FzoNEXc8I/jyMn327K2LyCkUZL84IhNcvpPQOAxmoBr1epViSCtoRhSOPDiw8Una4Q7ZBepY850xPpCee7zLPvCKpZSuHygBEaVkCgqXMlpM97CuSWsHxUDV3xjpqS4B0OlE78kmdJJhdVEyH5uClzcLIh1k6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3FjiUPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pbf7LbdjLt45u8Bk4jY45iGfHTAFvVC4NI+qoLGIr5JXW1sx53jbZFXBqx70fpnEYv2oHetbMNlAj6bqq2sw5TYSmapB2IU9rAgi3KXVKO2ooywG7k7WjBm7Hwpi25j4VZ1IcC899A9CiyeYedVQGutLnwjZhYQJBZDOoX/pVVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3clDanA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3FjiUPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80328C4CEE7;
-	Mon, 13 Oct 2025 14:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3clDanA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E61C4CEE7;
+	Mon, 13 Oct 2025 14:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367043;
-	bh=R89kp0iLYdk1U26/++/e06fNrPuyMTwTnm1iRfn6sSg=;
+	s=korg; t=1760367046;
+	bh=Nx01DCgUKZCK4JIuudxbrRHQotOegdsllWKtX3xHTgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3FjiUPiiXXMVThDwxC9HwMY7q+1UACKF9/ezuyfgqW2vmDsx69VhNNFduFVkFf9t
-	 iL/iRTJLWXjyNMoulOEVh/AB8ULteeih+vlqVVpJm+fX/tTlrQfhiNPymsg7AoWNfm
-	 YmAV2wjD/FXz4d4J+wm3+5lMjsqletEisZcrWESo=
+	b=B3clDanA3nNPGcG9DDCQ8nZbpsta6J1v7JA+zdhOF2r2A9JRJN4SAVwTKwrxUAux+
+	 5HBENkYEil89PiKjJ6jFAOtS7y7WZvu0e2uYpertYp2zmVGR20lKG8MZ2gnD6UGKfG
+	 USmVGpN1KEWwrQYuRr/3mAq9+5sYt6XV12yWF3/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Mike Christie <mchristi@redhat.com>,
-	"Richard W.M. Jones" <rjones@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Yu Kuai <yukuai1@huaweicloud.com>,
-	linux-block@vger.kernel.org,
-	nbd@other.debian.org,
+	Johan Hovold <johan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/196] nbd: restrict sockets to TCP and UDP
-Date: Mon, 13 Oct 2025 16:44:05 +0200
-Message-ID: <20251013144317.182186217@linuxfoundation.org>
+Subject: [PATCH 6.1 073/196] firmware: firmware: meson-sm: fix compile-test default
+Date: Mon, 13 Oct 2025 16:44:06 +0200
+Message-ID: <20251013144317.218042137@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -57,52 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 9f7c02e031570e8291a63162c6c046dc15ff85b0 ]
+[ Upstream commit 0454346d1c5f7fccb3ef6e3103985de8ab3469f3 ]
 
-Recently, syzbot started to abuse NBD with all kinds of sockets.
+Enabling compile testing should not enable every individual driver (we
+have "allyesconfig" for that).
 
-Commit cf1b2326b734 ("nbd: verify socket is supported during setup")
-made sure the socket supported a shutdown() method.
-
-Explicitely accept TCP and UNIX stream sockets.
-
-Fixes: cf1b2326b734 ("nbd: verify socket is supported during setup")
-Reported-by: syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/CANn89iJ+76eE3A_8S_zTpSyW5hvPRn6V57458hCZGY5hbH_bFA@mail.gmail.com/T/#m081036e8747cd7e2626c1da5d78c8b9d1e55b154
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mike Christie <mchristi@redhat.com>
-Cc: Richard W.M. Jones <rjones@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Yu Kuai <yukuai1@huaweicloud.com>
-Cc: linux-block@vger.kernel.org
-Cc: nbd@other.debian.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4a434abc40d2 ("firmware: meson-sm: enable build as module")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250725075429.10056-1-johan@kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/firmware/meson/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 120b75ee703d1..2a959c08bd3cb 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1107,6 +1107,14 @@ static struct socket *nbd_get_socket(struct nbd_device *nbd, unsigned long fd,
- 	if (!sock)
- 		return NULL;
- 
-+	if (!sk_is_tcp(sock->sk) &&
-+	    !sk_is_stream_unix(sock->sk)) {
-+		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: should be TCP or UNIX.\n");
-+		*err = -EINVAL;
-+		sockfd_put(sock);
-+		return NULL;
-+	}
-+
- 	if (sock->ops->shutdown == sock_no_shutdown) {
- 		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: shutdown callout must be supported.\n");
- 		*err = -EINVAL;
+diff --git a/drivers/firmware/meson/Kconfig b/drivers/firmware/meson/Kconfig
+index f2fdd37566482..179f5d46d8ddf 100644
+--- a/drivers/firmware/meson/Kconfig
++++ b/drivers/firmware/meson/Kconfig
+@@ -5,7 +5,7 @@
+ config MESON_SM
+ 	tristate "Amlogic Secure Monitor driver"
+ 	depends on ARCH_MESON || COMPILE_TEST
+-	default y
++	default ARCH_MESON
+ 	depends on ARM64_4K_PAGES
+ 	help
+ 	  Say y here to enable the Amlogic secure monitor driver
 -- 
 2.51.0
 
