@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603B030CD9E;
-	Mon, 13 Oct 2025 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB452580F2;
+	Mon, 13 Oct 2025 15:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368535; cv=none; b=MVwO3scWYTZs+iGOGL1SbMnW+DPfc6rDUJNPRFlJJlXCOV2hhUlX6VbsxRbPYtD/Ae2j+40QSHqC2fQgoiZx7KtGfG9mSSk5LuEQ43QOnV/FRzFydL8f4ZWKsU9fY7utQ200fW5/bpF5SW5UpT8fslG6+cAKuTtOwlWekFwxIbs=
+	t=1760368537; cv=none; b=PiNpgRju+dT0GAMndcOQm4WiK1o4sXXtY4FSoWs4zVyfG/OOjFDjmRO1xlmOxvR303IY7XOL4Z85sJlXhbOXRjV8rZwd6F1sMP5nrGsRwZKZqxrYGmb94eOSTljEUBWOjUXjcClGjzvDxuvzYt48KrW5GLFs/rXhZFA8Ec6XQ9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368535; c=relaxed/simple;
-	bh=dpzqSZFdY6XIsVzkEmzhi2EFkn5boy3RYp5nikdoTao=;
+	s=arc-20240116; t=1760368537; c=relaxed/simple;
+	bh=QrmdgupOwnAcELOuuXGTiV0vi308PSAkxHGd/pyR15k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaCHBh3rQISvhGZLhCn2p4lV66KjBIh4WJiD/r2qubcSHNa1v5TKOWnmHEVjpkOQdEhDzBLYmcvzyytqdic0LUd1rqvlhj484gmkPdfABd3hZm0ndPlUW80EyRAR+OXotIFcGkZGIyhjbuAq47q6H9rnsptFZImOfibcj89OpxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GP3o3n1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAfmv+uv35GNE/91o31Ik534bBLkghg3X0mOKJYrSSxLESo7t+R8t5iaouKolmepSaYs9I3R27VP0ub+xOb7fj6M8BhbEi08p84vnmBUhARAzsJY8muM58NttrFUtDWZlh/nr0ebyE080BfE5tpLD7S1AqUajlnqc+aNv++M+RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtMdN3fC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GP3o3n1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76850C4CEE7;
-	Mon, 13 Oct 2025 15:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtMdN3fC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67882C4CEE7;
+	Mon, 13 Oct 2025 15:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368534;
-	bh=dpzqSZFdY6XIsVzkEmzhi2EFkn5boy3RYp5nikdoTao=;
+	s=korg; t=1760368537;
+	bh=QrmdgupOwnAcELOuuXGTiV0vi308PSAkxHGd/pyR15k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GP3o3n1dFTkpb9HZe8hfVfycBU5qeJYUOB81EhjPey7chYalRxxMvK3aSRGD//Hzt
-	 M8Kfd4CnthFZyISsfmNtzFVM+O6A3k27kmqyUjzJyFJMs8jJI1AWS/hact8rORPmf7
-	 FBO5JID3KCpxeYzCa/bojcbM8LQtkLjuE3hPvVq4=
+	b=VtMdN3fC0AwkUv9U/QoaCIy4sz25RRbCMFNxgD1yAHILWpwMGyydv8pdUiZjSd3Cd
+	 8mm+GuQXyKLxC+XABzzfXLhnKdVxF0IUKX0sFUFognr6ykmvILdeyV8XMH6Q/GWmxM
+	 Nv0Jg+JvQ7EnYwZK1gLfXZpe2AyWeECJuixByV5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 177/262] RDMA/rxe: Fix race in do_task() when draining
-Date: Mon, 13 Oct 2025 16:45:19 +0200
-Message-ID: <20251013144332.503166731@linuxfoundation.org>
+Subject: [PATCH 6.12 195/262] PCI: rcar-gen4: Assure reset occurs before DBI access
+Date: Mon, 13 Oct 2025 16:45:37 +0200
+Message-ID: <20251013144333.270349671@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,59 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 8ca7eada62fcfabf6ec1dc7468941e791c1d8729 ]
+[ Upstream commit 0056d29f8c1b13d7e60d60cdb159767ac8f6a883 ]
 
-When do_task() exhausts its iteration budget (!ret), it sets the state
-to TASK_STATE_IDLE to reschedule, without a secondary check on the
-current task->state. This can overwrite the TASK_STATE_DRAINING state
-set by a concurrent call to rxe_cleanup_task() or rxe_disable_task().
+Assure the reset is latched and the core is ready for DBI access. On R-Car
+V4H, the PCIe reset is asynchronous and does not take effect immediately,
+but needs a short time to complete. In case DBI access happens in that
+short time, that access generates an SError. Make sure that condition can
+never happen, read back the state of the reset, which should turn the
+asynchronous reset into a synchronous one, and wait a little over 1ms to
+add additional safety margin.
 
-While state changes are protected by a spinlock, both rxe_cleanup_task()
-and rxe_disable_task() release the lock while waiting for the task to
-finish draining in the while(!is_done(task)) loop. The race occurs if
-do_task() hits its iteration limit and acquires the lock in this window.
-The cleanup logic may then proceed while the task incorrectly
-reschedules itself, leading to a potential use-after-free.
-
-This bug was introduced during the migration from tasklets to workqueues,
-where the special handling for the draining case was lost.
-
-Fix this by restoring the original pre-migration behavior. If the state is
-TASK_STATE_DRAINING when iterations are exhausted, set cont to 1 to
-force a new loop iteration. This allows the task to finish its work, so
-that a subsequent iteration can reach the switch statement and correctly
-transition the state to TASK_STATE_DRAINED, stopping the task as intended.
-
-Fixes: 9b4b7c1f9f54 ("RDMA/rxe: Add workqueue support for rxe tasks")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20250919025212.1682087-1-hanguidong02@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0d0c551011df ("PCI: rcar-gen4: Add R-Car Gen4 PCIe controller support for host mode")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250924005610.96484-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_task.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
-index 80332638d9e3a..be6cd8ce4d97e 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.c
-+++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -132,8 +132,12 @@ static void do_task(struct rxe_task *task)
- 		 * yield the cpu and reschedule the task
- 		 */
- 		if (!ret) {
--			task->state = TASK_STATE_IDLE;
--			resched = 1;
-+			if (task->state != TASK_STATE_DRAINING) {
-+				task->state = TASK_STATE_IDLE;
-+				resched = 1;
-+			} else {
-+				cont = 1;
-+			}
- 			goto exit;
- 		}
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 5382008e366ec..30d16f85f6465 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -213,6 +213,19 @@ static int rcar_gen4_pcie_common_init(struct rcar_gen4_pcie *rcar)
+ 	if (ret)
+ 		goto err_unprepare;
+ 
++	/*
++	 * Assure the reset is latched and the core is ready for DBI access.
++	 * On R-Car V4H, the PCIe reset is asynchronous and does not take
++	 * effect immediately, but needs a short time to complete. In case
++	 * DBI access happens in that short time, that access generates an
++	 * SError. To make sure that condition can never happen, read back the
++	 * state of the reset, which should turn the asynchronous reset into
++	 * synchronous one, and wait a little over 1ms to add additional
++	 * safety margin.
++	 */
++	reset_control_status(dw->core_rsts[DW_PCIE_PWR_RST].rstc);
++	fsleep(1000);
++
+ 	if (rcar->drvdata->additional_common_init)
+ 		rcar->drvdata->additional_common_init(rcar);
  
 -- 
 2.51.0
