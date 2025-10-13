@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47F230B53A;
-	Mon, 13 Oct 2025 15:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9485C30B51A;
+	Mon, 13 Oct 2025 15:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367751; cv=none; b=kLzkli05MmFqg/8ZtJB0SkMATB+VZpcvsBSyFso1czV65mKRgwJn6RqA0hvaaf9sMt8fJua4O9mwzd6td15ae9FlOzOa83lrOpzpZCHaao55jIbYXe+VpB3RP9W6uRRnwKaz7PKzdiuC85lO6i20fBLAlhvvmKywkkDJ+xnCSpQ=
+	t=1760367753; cv=none; b=XpZOTA9qxjP1NMNRIgzfRasKmTRlY3+/cvF8tHyhMllZe0jZcRg90sEXFZA6XmpCAfv+/KUukU9ojG1hvfXJvh+LeAHmOLzJDzPcVG0irvxJo3pzDIUL0/DjpEM0e5UY6eE4M6LqCoMMl950LekeYcGlz0EISWpwoWj3IjvquBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367751; c=relaxed/simple;
-	bh=++ROtoxPusOHugSu8dnM5Yh7akBDj6qD6wlmSHWJoWU=;
+	s=arc-20240116; t=1760367753; c=relaxed/simple;
+	bh=9uPVAuZWL4VMzJ35uUNTiSSuQED25LeY2C9HoQGJQhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xn6k73HtiFGRW9UfMNrrqp0myp1BqRu7w6l5KqwBQ9ly9kISpboRB3a+cFsvgT7ElAdkxYX748/LwFc05vXrAu9h8LVKLYeE1r2VrAhe5F8jpodPamMYNDzHrrNMDgd+A935jPozZftIjU5vPgKqO4lcfWkxOdNDWoe5IgGu3AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqwxWIPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+rWcJfRHnJsjwcbhGWKqDNImMXTjOqwCdjDf39ZPuIXpcCMTiAMLNUsk8BsUxL7zjfYs4uhMTpu/SjOphia47rrjjlusezSm8yWPbAG73rMt1FXCqZ1ELPRGbzHOhvyZw0cN40qGnGjm3xHwo3y8g9u8Lio6HSRTd+luEoyY5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFfoUTlD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqwxWIPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21324C4CEE7;
-	Mon, 13 Oct 2025 15:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFfoUTlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198CAC4CEFE;
+	Mon, 13 Oct 2025 15:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367750;
-	bh=++ROtoxPusOHugSu8dnM5Yh7akBDj6qD6wlmSHWJoWU=;
+	s=korg; t=1760367753;
+	bh=9uPVAuZWL4VMzJ35uUNTiSSuQED25LeY2C9HoQGJQhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqwxWIPj36GiylY2wLQuS7OKM8dkXMWiyd/EJ7tvCA+0QJziB2gI3GSreedtmrZ6y
-	 nnXQBuDpvQPVJnSCYwLmozjQ1/HA2m81ZCCoeBAQaZJTQTt/qxKg9pFpVPKsUmCTm8
-	 6O32rx20WGuDYpgAk3xdY2jSkl27hR6T5WE6ol7A=
+	b=EFfoUTlD+E3H6KtCxBQ+yH7S9+Y/AhCkqgHvQ3sNxGKnc/ggkA3DLI7reYMZnp05P
+	 aPJLOqYqSc6Qzt/A7OZnBhZGsxF1Mnxl7AeipLUYIaN0TmF9MogzIG/LM3d2kjwoio
+	 +v1yk8Vl/qgdklg9N+xrS5wt+IAKsN1IXnd2HRDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/196] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:44:54 +0200
-Message-ID: <20251013144319.041226883@linuxfoundation.org>
+Subject: [PATCH 6.6 121/196] scsi: qla2xxx: Fix incorrect sign of error code in qla_nvme_xmt_ls_rsp()
+Date: Mon, 13 Oct 2025 16:45:12 +0200
+Message-ID: <20251013144319.686563241@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,74 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
+[ Upstream commit 9877c004e9f4d10e7786ac80a50321705d76e036 ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+Change the error code EAGAIN to -EAGAIN in qla_nvme_xmt_ls_rsp() to
+align with qla2x00_start_sp() returning negative error codes or
+QLA_SUCCESS, preventing logical errors.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
-
-Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-4-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Message-ID: <20250905075446.381139-4-rongqianfeng@vivo.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_nvme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 805afaf47b290..2abe47303ecdb 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -58,7 +58,8 @@ enum {
- 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
- };
- 
--#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
- #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
- 
- static void log_quirks(struct device *dev)
- {
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
-+	int map;
-+
-+	map = BYT_RT5651_MAP(byt_rt5651_quirk);
-+	switch (map) {
-+	case BYT_RT5651_DMIC_MAP:
- 		dev_info(dev, "quirk DMIC_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
-+		break;
-+	case BYT_RT5651_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN1_IN2_MAP:
- 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
-+		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
-+		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
-+		break;
-+	}
-+
- 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
- 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
- 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
+diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
+index 8f4cc136a9c9c..080670cb2aa51 100644
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -420,7 +420,7 @@ static int qla_nvme_xmt_ls_rsp(struct nvme_fc_local_port *lport,
+ 	switch (rval) {
+ 	case QLA_SUCCESS:
+ 		break;
+-	case EAGAIN:
++	case -EAGAIN:
+ 		msleep(PURLS_MSLEEP_INTERVAL);
+ 		cnt++;
+ 		if (cnt < PURLS_RETRY_COUNT)
 -- 
 2.51.0
 
