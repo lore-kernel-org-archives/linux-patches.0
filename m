@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7BA3112B7;
-	Mon, 13 Oct 2025 15:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4086F3112B7;
+	Mon, 13 Oct 2025 15:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368087; cv=none; b=lCsKy33Mx3dAIm+dpIcxKLqOBW4XGoIao113LkVqi6n1tLBpOuX8MB8FgtRuX+e0B9BTBzMhHH2si8868KKtsNU3vs/LlzIfzFdXvbfKrpfcRuKY3r1Lfk5YH8U/vqbUV4KwaPDYoHE6CsCKtVlk6cT9udn2Y6vFEUQd41BMgMY=
+	t=1760368090; cv=none; b=OIIVqhp5pzULMPQmKqECVHwlNep0KZJ1xLWE6moeqlFw2FM5o1v/FBhxpD7QIX18okE5AujZZ6GpweJGZovC0UQ8sYCSN6JkGjHKnn5D4a7yFGZKg7w3rFTQdUh+sW2Zr/BhMgYsEAZNs6xJy21E9gsGp8uZ4CkSSkA3ZfPWsCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368087; c=relaxed/simple;
-	bh=IXSUWtI9j6i5CK2364GiXtBquU57sl35cqaID5ADqZ0=;
+	s=arc-20240116; t=1760368090; c=relaxed/simple;
+	bh=PL/3IJ5BNNyk4Rv4W+oJKtqIC3dW0ve6eoRGuZvKl48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bH6R9PqO5paZP8JIaswDXC84Dekq2DOdm9czjqBopnwZicu6njP9NbNUMoQcymyctVGNr+2eikZIffPBBURQplUuY98Ncof25z08I6ox0CW3qQ/0joRzA49pxQ+BnVkVnUuCMWxoKGTaT/TA65HtJ3/qzCnR7gJW/QLDSv7xwhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIoDYzrB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoCe8aja3oKyjk2gm6L/uODDoFp6esf3ScqEj3P0fhbuaHf3jw4IQ/pR7eI0GBy9LjB5EXlYLdf3zVf/KN7zafGo3co4GKvHXUgdBu2m/ROXESG3QpgALk/4+VtIxJq5DHjtGG1OLqDjeAbxNXO3Zkc9xb0aUXubzN2H6Ypeu7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cx9PR6zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIoDYzrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DB0C4CEE7;
-	Mon, 13 Oct 2025 15:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cx9PR6zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA2DC4CEE7;
+	Mon, 13 Oct 2025 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368087;
-	bh=IXSUWtI9j6i5CK2364GiXtBquU57sl35cqaID5ADqZ0=;
+	s=korg; t=1760368090;
+	bh=PL/3IJ5BNNyk4Rv4W+oJKtqIC3dW0ve6eoRGuZvKl48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIoDYzrB0x/HXlyIMsswTP4Q03RqJAs2u1gfgQoQKx7D+3SDz4Y/VoXzzXNLYGHkR
-	 D2nRWxrOHQPnLiiA/JVCJbAk4P0ZBdeWWDzR1oRvq/+dvwau2PSmPFaab8TJTXnhe8
-	 qrfokdrkaGXmEyqOU+DpuZnJLrZ6V5YNuS1142Hc=
+	b=Cx9PR6zRnpDm91p9siJfyDp7T+rGFYUrxB/M87msZBUqXD/rUxDlSEZILj5WxCfQc
+	 wqEIOcI5NcvZYty5s+4vB9lh2i4+dWfkS2z/Qi09Ssf+0xtwoLIf+M85NQ6xYP0sfO
+	 GYMIuQEHd/S0EprDTTR4B+UYdvWHOzPXFTDqQ/v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/262] soc: qcom: rpmh-rsc: Unconditionally clear _TRIGGER bit for TCS
-Date: Mon, 13 Oct 2025 16:42:54 +0200
-Message-ID: <20251013144327.290240471@linuxfoundation.org>
+Subject: [PATCH 6.12 041/262] PM: sleep: core: Clear power.must_resume in noirq suspend error path
+Date: Mon, 13 Oct 2025 16:43:03 +0200
+Message-ID: <20251013144327.611375307@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f87412d18edb5b8393eb8cb1c2d4a54f90185a21 ]
+[ Upstream commit be82483d1b60baf6747884bd74cb7de484deaf76 ]
 
-Unconditionally clear the TCS_AMC_MODE_TRIGGER bit when a
-transaction completes. Previously this bit was only cleared when
-a wake TCS was borrowed as an AMC TCS but not for dedicated
-AMC TCS. Leaving this bit set for AMC TCS and entering deeper low
-power modes can generate a false completion IRQ.
+If system suspend is aborted in the "noirq" phase (for instance, due to
+an error returned by one of the device callbacks), power.is_noirq_suspended
+will not be set for some devices and device_resume_noirq() will return
+early for them.  Consequently, noirq resume callbacks will not run for
+them at all because the noirq suspend callbacks have not run for them
+yet.
 
-Prevent this scenario by always clearing the TCS_AMC_MODE_TRIGGER
-bit upon receiving a completion IRQ.
+If any of them has power.must_resume set and late suspend has been
+skipped for it (due to power.smart_suspend), early resume should be
+skipped for it either, or its state may become inconsistent (for
+instance, if the early resume assumes that it will always follow
+noirq resume).
 
-Fixes: 15b3bf61b8d4 ("soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS")
-Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250825-rpmh_rsc_change-v1-1-138202c31bf6@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Make that happen by clearing power.must_resume in device_resume_noirq()
+for devices with power.is_noirq_suspended clear that have been left in
+suspend by device_suspend_late(), which will subsequently cause
+device_resume_early() to leave the device in suspend and avoid
+changing its state.
+
+Fixes: 0d4b54c6fee8 ("PM / core: Add LEAVE_SUSPENDED driver flag")
+Link: https://lore.kernel.org/linux-pm/5d692b81-6f58-4e86-9cb0-ede69a09d799@rowland.harvard.edu/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/3381776.aeNJFYEL58@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/base/power/main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 641f29a98cbd2..cc72a31a450e4 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -453,13 +453,10 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index faf4cdec23f04..abb16a5bb7967 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -628,8 +628,20 @@ static void device_resume_noirq(struct device *dev, pm_message_t state, bool asy
+ 	if (dev->power.syscore || dev->power.direct_complete)
+ 		goto Out;
  
- 		trace_rpmh_tx_done(drv, i, req);
+-	if (!dev->power.is_noirq_suspended)
++	if (!dev->power.is_noirq_suspended) {
++		/*
++		 * This means that system suspend has been aborted in the noirq
++		 * phase before invoking the noirq suspend callback for the
++		 * device, so if device_suspend_late() has left it in suspend,
++		 * device_resume_early() should leave it in suspend either in
++		 * case the early resume of it depends on the noirq resume that
++		 * has not run.
++		 */
++		if (dev_pm_skip_suspend(dev))
++			dev->power.must_resume = false;
++
+ 		goto Out;
++	}
  
--		/*
--		 * If wake tcs was re-purposed for sending active
--		 * votes, clear AMC trigger & enable modes and
-+		/* Clear AMC trigger & enable modes and
- 		 * disable interrupt for this TCS
- 		 */
--		if (!drv->tcs[ACTIVE_TCS].num_tcs)
--			__tcs_set_trigger(drv, i, false);
-+		__tcs_set_trigger(drv, i, false);
- skip:
- 		/* Reclaim the TCS */
- 		write_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], i, 0);
+ 	if (!dpm_wait_for_superior(dev, async))
+ 		goto Out;
 -- 
 2.51.0
 
