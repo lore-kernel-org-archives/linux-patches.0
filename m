@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8414B30C374;
-	Mon, 13 Oct 2025 15:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D05277CB8;
+	Mon, 13 Oct 2025 15:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368899; cv=none; b=Z3YooTzgiZCHtUsB2w3G4uCBLUMY4oKn/CB5+EfJod/5KFzQq1KAwdO8OlUaPuyhV8arPbYngKboQoSSOX0R39yJ6QiQ5tsjQRfd3M8N2iuKimPW3rpSUcsxwB0kNgCRV2aBrj2wOpI21A3dDbdEogMZNL/TW9Y0rIZCu+xVRg0=
+	t=1760368902; cv=none; b=eRgUVLKS7WWfnPnhXABpJXTuRcUFVOat3eQb4OziwZHeh0/e+DzsYPW9uMwwPvx+0KlWA6DXMmrEjeWvDxbMZmFnS/CFpmUfQijcIw16xHjNCOjFpoobJoYhf2se8olL4/w95Pwrp7c4dXQIxcQX/XCWQqJda9+qfTgSvgzULHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368899; c=relaxed/simple;
-	bh=3bYHLU8C1gpEPad03qhnazQBUm+qpWTwtiajahEPB10=;
+	s=arc-20240116; t=1760368902; c=relaxed/simple;
+	bh=w98oeeMkDEuXw17CJVzT+4PDqY6Ww3MssXmdZtHsGS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s496fXmHrnL6MtQxl+ALOlwApC8NBHI0KwAzwqR4o83ioJOHxrn/UrCKGqIwAXOczkLwXPK5OxNCmasr0EiIF1yVKjcJuu5JHoHat/dHjA39WzvccAzvDkXvXHeL8KI9H8lFZXRSyEPwILMr7RqkDIekpa0UXxGP1m+s5cGRLas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQg47f9+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmBfrNxR4CWGzTJ21Zdr/Uy8Krgq5OCKkLUooMn6AY9EYFX3khTbarhD485BH8a+twryJopdH17h3T2FFRo3OKvmp7KFnCYrndclvzgCgcZDtof6QX218qAzAH27yKEb/kW5FTxM4YQpNqbXB6ClBq9xKdkPUJh0iPv1OEI/tpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hm5/HKPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQg47f9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B5DC4CEFE;
-	Mon, 13 Oct 2025 15:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm5/HKPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BB4C4CEE7;
+	Mon, 13 Oct 2025 15:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368899;
-	bh=3bYHLU8C1gpEPad03qhnazQBUm+qpWTwtiajahEPB10=;
+	s=korg; t=1760368901;
+	bh=w98oeeMkDEuXw17CJVzT+4PDqY6Ww3MssXmdZtHsGS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQg47f9+69DkE4Mct+3s9nERRbO/bWBPNwyT9IzNh5nNGb0NDpUKi/cTCBcnD/QNn
-	 vxjxsEYgZsJAZFPH4ah7xa4J1LgfMIxRuv3VYiNkWyyNQHag7ND0sEPORE/P6v8HIp
-	 /SDoEHiGEHJbpAQrpEAhH9V9YhVVfTCe0WI4izms=
+	b=hm5/HKPTvkflXHMwtj+ltf2sa+mUXBbjiWqmMGsV7SndZyHvvVXdV/SwFXpOeRHzs
+	 QKgrbvah+HB2tfqA+Eue8zB5qLy34387Vr/MmNNruA9ZvAX0EDwNfStxilD8f1uPh6
+	 pF9chiXg0T+BzSDeG7qC/f4cKenOlqDRE3ErHsLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 024/563] uprobes: uprobe_warn should use passed task
-Date: Mon, 13 Oct 2025 16:38:05 +0200
-Message-ID: <20251013144412.164353943@linuxfoundation.org>
+Subject: [PATCH 6.17 025/563] raid6: riscv: Clean up unused header file inclusion
+Date: Mon, 13 Oct 2025 16:38:06 +0200
+Message-ID: <20251013144412.200035346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,38 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit ba1afc94deb849eab843a372b969444581add2c9 ]
+[ Upstream commit f8a03516a530cc36bc9015c84ba7540ee3e8d7bd ]
 
-uprobe_warn() is passed a task structure, yet its using current. For
-the most part this shouldn't matter, but since a task structure is
-provided, lets use it.
+These two C files don't reference things defined in simd.h or types.h
+so remove these redundant #inclusions.
 
-Fixes: 248d3a7b2f10 ("uprobes: Change uprobe_copy_process() to dup return_instances")
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 6093faaf9593 ("raid6: Add RISC-V SIMD syndrome and recovery calculations")
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Link: https://lore.kernel.org/r/20250718072711.3865118-2-zhangchunyan@iscas.ac.cn
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/raid6/recov_rvv.c | 2 --
+ lib/raid6/rvv.c       | 3 ---
+ 2 files changed, 5 deletions(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 7ca1940607bd8..4b97d16f731c1 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -121,7 +121,7 @@ struct xol_area {
+diff --git a/lib/raid6/recov_rvv.c b/lib/raid6/recov_rvv.c
+index 5d54c4b437df7..5f779719c3d34 100644
+--- a/lib/raid6/recov_rvv.c
++++ b/lib/raid6/recov_rvv.c
+@@ -4,9 +4,7 @@
+  * Author: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+  */
  
- static void uprobe_warn(struct task_struct *t, const char *msg)
- {
--	pr_warn("uprobe: %s:%d failed to %s\n", current->comm, current->pid, msg);
-+	pr_warn("uprobe: %s:%d failed to %s\n", t->comm, t->pid, msg);
- }
+-#include <asm/simd.h>
+ #include <asm/vector.h>
+-#include <crypto/internal/simd.h>
+ #include <linux/raid/pq.h>
  
- /*
+ static int rvv_has_vector(void)
+diff --git a/lib/raid6/rvv.c b/lib/raid6/rvv.c
+index 7d82efa5b14f9..b193ea176d5d3 100644
+--- a/lib/raid6/rvv.c
++++ b/lib/raid6/rvv.c
+@@ -9,11 +9,8 @@
+  *	Copyright 2002-2004 H. Peter Anvin
+  */
+ 
+-#include <asm/simd.h>
+ #include <asm/vector.h>
+-#include <crypto/internal/simd.h>
+ #include <linux/raid/pq.h>
+-#include <linux/types.h>
+ #include "rvv.h"
+ 
+ #define NSIZE	(riscv_v_vsize / 32) /* NSIZE = vlenb */
 -- 
 2.51.0
 
