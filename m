@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC530F956;
-	Mon, 13 Oct 2025 15:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5475A241C8C;
+	Mon, 13 Oct 2025 15:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369697; cv=none; b=XZRYXs6efVUhmD25q7LO8rIXPDcPMr4PyU2cYo2IUklOkZoiAnG1ob3+P4tfhFFzwKGcBf4150adMCRK/nMLYb5l7IlxMlJf9XoHtqIMq6Q6wcg8Tq7k2cxhxdTUeL4V7uGg6bx7hFZyR/50rfzVKE902KrbNEesuDQ4gYP9Lik=
+	t=1760369700; cv=none; b=cFAayEHb8XWYeWRUB2K61taDm7+oA0KgM2MEvb7KWhY3xPRiwNn1ws7OQ3aD5LtCUUAQyWjI6SSnrzhrFktalkDSJDbAgSK7COXZRCSXp75dBRBaEOC7ZxDJ5bVPoZObNtuOhh2Z5MYMKvfvRfAJH7QjxWXANdB5akUKSCll3ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369697; c=relaxed/simple;
-	bh=Pq20Y1oxr1hARxPEYUTUxsPbhns0xqnnCZnN4/AIt6g=;
+	s=arc-20240116; t=1760369700; c=relaxed/simple;
+	bh=lpHieRhJ9wX2x4VPqwIO0pJhCtUi9UAz/l1Db8OEjvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szqQEWySryFpeqenBqywwT9d3TPy6x3WIR8qLOS9W9JxxeMPk0jcQXFGi0oGWqsze7o8X54UY4pntiiT65e2KdzRd6xJQKOOpJ6AyrD0lrBVVnFWTYtqmwZ3jTq2KPIZHMdoTaxS22zDlUTm7s3oKf3FFKIsQvKq9UBRyAq1Vu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYiD7XNG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU/6+rSBP6TTdRjsW2Ki6E1SQ/+gAo/YcBa0HJab91jGOOyhD4nv2H9qwqLDpNjFEY27Kua3+XMpVS71QU2b6BBJXewaPRtkakP1je+PCqnIhHTTzyxV3Bmz1uGZhq6fj+LfIUUZ2iX6NC5+mhBP1Sp5AwF960cZhgCNZ/B/6kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um+OsVff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYiD7XNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FC2C4CEE7;
-	Mon, 13 Oct 2025 15:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um+OsVff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1A7C4CEE7;
+	Mon, 13 Oct 2025 15:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369697;
-	bh=Pq20Y1oxr1hARxPEYUTUxsPbhns0xqnnCZnN4/AIt6g=;
+	s=korg; t=1760369700;
+	bh=lpHieRhJ9wX2x4VPqwIO0pJhCtUi9UAz/l1Db8OEjvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYiD7XNG44NJ+QotRo/wZqURnTP4P3EPr7dsdTqtTdkb6D7xgUjo1Fo7X9aEdONxW
-	 Fu6KjG9rcN9bbHcKqlOGkvODoykVtlFmOM58pIypwrm/IBmFbqcY8NUjBJ38fWTF8q
-	 jzo6YrNDwEs7exa6kYrg6SxfkWSV0/5bZfacpLUQ=
+	b=um+OsVffxn8nbj3gSa8uDEE2Y/HfkPA59LqFauNCixvGa4yMuZlfITwyieXXSPxHz
+	 +H7KchNqSkywUIKD4v/Mw3hIxsN5xsl7jfQm59X0HzGIfOqAzSmKamc7ii/HRt1qCo
+	 Zc8wLFwoIkAxbdrtjG/bZgVdY79r0Q/rbJCa5LMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 336/563] drm/msm/dpu: fix incorrect type for ret
-Date: Mon, 13 Oct 2025 16:43:17 +0200
-Message-ID: <20251013144423.442505597@linuxfoundation.org>
+Subject: [PATCH 6.17 337/563] wifi: mac80211: fix reporting of all valid links in sta_set_sinfo()
+Date: Mon, 13 Oct 2025 16:43:18 +0200
+Message-ID: <20251013144423.478496309@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,38 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit 88ec0e01a880e3326794e149efae39e3aa4dbbec ]
+[ Upstream commit eebccbfea4184feb758c104783b870ec4ddb6aec ]
 
-Change 'ret' from unsigned long to int, as storing negative error codes
-in an unsigned long makes it never equal to -ETIMEDOUT, causing logical
-errors.
+Currently, sta_set_sinfo() fails to populate link-level station info
+when sinfo->valid_links is initially 0 and sta->sta.valid_links has
+bits set for links other than link 0. This typically occurs when
+association happens on a non-zero link or link 0 deleted dynamically.
+In such cases, the for_each_valid_link(sinfo, link_id) loop only
+executes for link 0 and terminates early, since sinfo->valid_links
+remains 0. As a result, only MLD-level information is reported to
+userspace.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/671100/
-Link: https://lore.kernel.org/r/20250826092047.224341-1-rongqianfeng@vivo.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Hence to fix, initialize sinfo->valid_links with sta->sta.valid_links
+before entering the loop to ensure loop executes for each valid link.
+During iteration, mask out invalid links from sinfo->valid_links if
+any of sta->link[link_id], sdata->link[link_id], or sinfo->links[link_id]
+are not present, to report only valid link information.
+
+Fixes: 505991fba9ec ("wifi: mac80211: extend support to fill link level sinfo structure")
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Link: https://patch.msgid.link/20250904104054.790321-1-quic_sarishar@quicinc.com
+[clarify comment]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/sta_info.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 56a5b596554db..46f348972a975 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -446,7 +446,7 @@ static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
- static int dpu_encoder_phys_wb_wait_for_commit_done(
- 		struct dpu_encoder_phys *phys_enc)
- {
--	unsigned long ret;
-+	int ret;
- 	struct dpu_encoder_wait_info wait_info;
- 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 8c550aab9bdce..ebcec5241a944 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -3206,16 +3206,20 @@ void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
+ 		struct link_sta_info *link_sta;
  
+ 		ether_addr_copy(sinfo->mld_addr, sta->addr);
++
++		/* assign valid links first for iteration */
++		sinfo->valid_links = sta->sta.valid_links;
++
+ 		for_each_valid_link(sinfo, link_id) {
+ 			link_sta = wiphy_dereference(sta->local->hw.wiphy,
+ 						     sta->link[link_id]);
+ 			link = wiphy_dereference(sdata->local->hw.wiphy,
+ 						 sdata->link[link_id]);
+ 
+-			if (!link_sta || !sinfo->links[link_id] || !link)
++			if (!link_sta || !sinfo->links[link_id] || !link) {
++				sinfo->valid_links &= ~BIT(link_id);
+ 				continue;
+-
+-			sinfo->valid_links = sta->sta.valid_links;
++			}
+ 			sta_set_link_sinfo(sta, sinfo->links[link_id],
+ 					   link, tidstats);
+ 		}
 -- 
 2.51.0
 
