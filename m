@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351D26E708;
-	Mon, 13 Oct 2025 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FBF1F03C9;
+	Mon, 13 Oct 2025 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366980; cv=none; b=fJzEzwaQ02RSfZ1zB8R2LgiuZo/F4nQV38iRK+hXcBKgZ0eiyOcLPczm5p6SUWA4dWM8hRSJKD6rd1tUXTSfGOZvYU4CNgvfhtvLdLsVK93MZc02vcAU6DR1PD9Pi6sy2d4w9nCE1+k9T+/2KYMGytyD0fGSAzNEhwznxxSaFHs=
+	t=1760366983; cv=none; b=FX/gm5zh8Mh5a/5Y1JzswrlzXbu/O//w2KQ6b6rqxQZbYuWX4ZgO3BMVekyqVz5LPZzhk/h+n9CcEwg/pm6d41jSu7Z3Yy2ni3Jm7SS4Z9XUamTKUOGGKGmY7JnZtxH5ZmoiZ+DspfWBn3Sn6ZICGzJDPjF40PJ7a+aUs2kOoO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366980; c=relaxed/simple;
-	bh=bXJACKZLnuZnzjRG72HOlc6mBRmKv0Nbwdb0167p/aI=;
+	s=arc-20240116; t=1760366983; c=relaxed/simple;
+	bh=SW0RIf3QfCnvJf+IXoEe2TMBeWENK+/0Jo5/usmKEl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mi6Tgw3zQyEdMzbsSr1D97JlXTNjTo/jcQ7VcAfOKRrguOBDxzRYyWekJdKK8yCoh2QYff8lHkggheox6pYgPINnoOzX8exYgAsFaBwPLIkrNS4Vym0a/r9yxJCwwX627dJQib9K1BzLUFzTDwL/CuEK4U5ViguY9mVayxWPq58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxS6LDTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eO/l/7UE0N7mBlKOGFcCrsA3Uud2WWXgEnVMmFyoyEUMJX36pJZL4ZVoI+uhK/74pODj57nhnfvnSTYG8vsYKhdViRpbSETL5TtX7wfe7cufUhgJTmkxJ0FqDQ2jhGvdady3aYy/P6jayrfaecx4zwfHlJXslOe47bz/g5UzIc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL9vgC86; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxS6LDTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC34C4CEE7;
-	Mon, 13 Oct 2025 14:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL9vgC86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229DEC4CEE7;
+	Mon, 13 Oct 2025 14:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366980;
-	bh=bXJACKZLnuZnzjRG72HOlc6mBRmKv0Nbwdb0167p/aI=;
+	s=korg; t=1760366983;
+	bh=SW0RIf3QfCnvJf+IXoEe2TMBeWENK+/0Jo5/usmKEl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxS6LDTiys7b6S39Ruvn8T5vR/1E9q36LtS9ApuX3UmDK4z9PvmDLPtot7v1u9Vt4
-	 sNkQar7Dey13Zn3GARO1VwRjKWNUWZqwrY9WQ97SusJaVKkWgYgNrMi++BFmN5R4+N
-	 dd+Vs6tQxbprNUsIkpLUFYXLhfhEaxcDNr27zvDg=
+	b=tL9vgC86N2I6WhfAdoqU5ZKtH2tka9JVzfRTHllkw7iEgcX7vBBwGq2hLyqpv2HrS
+	 ZhqIl75fERRw4RFaxC3wtLQlNoaeOmWdQxUpF5VEsrhMAhA7/7pFdlvqZJgH+7cb0m
+	 lMJaIiYsujMWeX3hKnvE7/JBR2SC0LZoyQnO6Q1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/196] media: i2c: tc358743: Fix use-after-free bugs caused by orphan timer in probe
-Date: Mon, 13 Oct 2025 16:43:11 +0200
-Message-ID: <20251013144315.228881223@linuxfoundation.org>
+	David Laight <David.Laight@aculab.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 6.1 019/196] minmax: dont use max() in situations that want a C constant expression
+Date: Mon, 13 Oct 2025 16:43:12 +0200
+Message-ID: <20251013144315.265799567@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,146 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 79d10f4f21a92e459b2276a77be62c59c1502c9d ]
+[ Upstream commit cb04e8b1d2f24c4c2c92f7b7529031fc35a16fed ]
 
-The state->timer is a cyclic timer that schedules work_i2c_poll and
-delayed_work_enable_hotplug, while rearming itself. Using timer_delete()
-fails to guarantee the timer isn't still running when destroyed, similarly
-cancel_delayed_work() cannot ensure delayed_work_enable_hotplug has
-terminated if already executing. During probe failure after timer
-initialization, these may continue running as orphans and reference the
-already-freed tc358743_state object through tc358743_irq_poll_timer.
+We only had a couple of array[] declarations, and changing them to just
+use 'MAX()' instead of 'max()' fixes the issue.
 
-The following is the trace captured by KASAN.
+This will allow us to simplify our min/max macros enormously, since they
+can now unconditionally use temporary variables to avoid using the
+argument values multiple times.
 
-BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
-Write of size 8 at addr ffff88800ded83c8 by task swapper/1/0
-...
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_report+0xcf/0x610
- ? __pfx_sched_balance_find_src_group+0x10/0x10
- ? __run_timer_base.part.0+0x7d7/0x8c0
- kasan_report+0xb8/0xf0
- ? __run_timer_base.part.0+0x7d7/0x8c0
- __run_timer_base.part.0+0x7d7/0x8c0
- ? rcu_sched_clock_irq+0xb06/0x27d0
- ? __pfx___run_timer_base.part.0+0x10/0x10
- ? try_to_wake_up+0xb15/0x1960
- ? tmigr_update_events+0x280/0x740
- ? _raw_spin_lock_irq+0x80/0xe0
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- tmigr_handle_remote_up+0x603/0x7e0
- ? __pfx_tmigr_handle_remote_up+0x10/0x10
- ? sched_balance_trigger+0x98/0x9f0
- ? sched_tick+0x221/0x5a0
- ? _raw_spin_lock_irq+0x80/0xe0
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- ? tick_nohz_handler+0x339/0x440
- ? __pfx_tmigr_handle_remote_up+0x10/0x10
- __walk_groups.isra.0+0x42/0x150
- tmigr_handle_remote+0x1f4/0x2e0
- ? __pfx_tmigr_handle_remote+0x10/0x10
- ? ktime_get+0x60/0x140
- ? lapic_next_event+0x11/0x20
- ? clockevents_program_event+0x1d4/0x2a0
- ? hrtimer_interrupt+0x322/0x780
- handle_softirqs+0x16a/0x550
- irq_exit_rcu+0xaf/0xe0
- sysvec_apic_timer_interrupt+0x70/0x80
- </IRQ>
-...
-
-Allocated by task 141:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- __kmalloc_node_track_caller_noprof+0x198/0x430
- devm_kmalloc+0x7b/0x1e0
- tc358743_probe+0xb7/0x610  i2c_device_probe+0x51d/0x880
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __device_attach_driver+0x174/0x220
- bus_for_each_drv+0x100/0x190
- __device_attach+0x206/0x370
- bus_probe_device+0x123/0x170
- device_add+0xd25/0x1470
- i2c_new_client_device+0x7a0/0xcd0
- do_one_initcall+0x89/0x300
- do_init_module+0x29d/0x7f0
- load_module+0x4f48/0x69e0
- init_module_from_file+0xe4/0x150
- idempotent_init_module+0x320/0x670
- __x64_sys_finit_module+0xbd/0x120
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 141:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x3f/0x50
- kfree+0x137/0x370
- release_nodes+0xa4/0x100
- devres_release_group+0x1b2/0x380
- i2c_device_probe+0x694/0x880
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __device_attach_driver+0x174/0x220
- bus_for_each_drv+0x100/0x190
- __device_attach+0x206/0x370
- bus_probe_device+0x123/0x170
- device_add+0xd25/0x1470
- i2c_new_client_device+0x7a0/0xcd0
- do_one_initcall+0x89/0x300
- do_init_module+0x29d/0x7f0
- load_module+0x4f48/0x69e0
- init_module_from_file+0xe4/0x150
- idempotent_init_module+0x320/0x670
- __x64_sys_finit_module+0xbd/0x120
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
-
-Replace timer_delete() with timer_delete_sync() and cancel_delayed_work()
-with cancel_delayed_work_sync() to ensure proper termination of timer and
-work items before resource cleanup.
-
-This bug was initially identified through static analysis. For reproduction
-and testing, I created a functional emulation of the tc358743 device via a
-kernel module and introduced faults through the debugfs interface.
-
-Fixes: 869f38ae07f7 ("media: i2c: tc358743: Fix crash in the probe error path when using polling")
-Fixes: d32d98642de6 ("[media] Driver for Toshiba TC358743 HDMI to CSI-2 bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ replaced del_timer() instead of timer_delete() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: David Laight <David.Laight@aculab.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tc358743.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c   |    2 +-
+ drivers/input/touchscreen/cyttsp4_core.c |    2 +-
+ drivers/irqchip/irq-sun6i-r.c            |    2 +-
+ drivers/md/dm-integrity.c                |    2 +-
+ fs/btrfs/tree-checker.c                  |    2 +-
+ lib/vsprintf.c                           |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -2180,10 +2180,10 @@ static int tc358743_probe(struct i2c_cli
- err_work_queues:
- 	cec_unregister_adapter(state->cec_adap);
- 	if (!state->i2c_client->irq) {
--		del_timer(&state->timer);
-+		timer_delete_sync(&state->timer);
- 		flush_work(&state->work_i2c_poll);
- 	}
--	cancel_delayed_work(&state->delayed_work_enable_hotplug);
-+	cancel_delayed_work_sync(&state->delayed_work_enable_hotplug);
- 	mutex_destroy(&state->confctl_mutex);
- err_hdl:
- 	media_entity_cleanup(&sd->entity);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -700,7 +700,7 @@ static const char *smu_get_feature_name(
+ size_t smu_cmn_get_pp_feature_mask(struct smu_context *smu,
+ 				   char *buf)
+ {
+-	int8_t sort_feature[max(SMU_FEATURE_COUNT, SMU_FEATURE_MAX)];
++	int8_t sort_feature[MAX(SMU_FEATURE_COUNT, SMU_FEATURE_MAX)];
+ 	uint64_t feature_mask;
+ 	int i, feature_index;
+ 	uint32_t count = 0;
+--- a/drivers/input/touchscreen/cyttsp4_core.c
++++ b/drivers/input/touchscreen/cyttsp4_core.c
+@@ -871,7 +871,7 @@ static void cyttsp4_get_mt_touches(struc
+ 	struct cyttsp4_touch tch;
+ 	int sig;
+ 	int i, j, t = 0;
+-	int ids[max(CY_TMA1036_MAX_TCH, CY_TMA4XX_MAX_TCH)];
++	int ids[MAX(CY_TMA1036_MAX_TCH, CY_TMA4XX_MAX_TCH)];
+ 
+ 	memset(ids, 0, si->si_ofs.tch_abs[CY_TCH_T].max * sizeof(int));
+ 	for (i = 0; i < num_cur_tch; i++) {
+--- a/drivers/irqchip/irq-sun6i-r.c
++++ b/drivers/irqchip/irq-sun6i-r.c
+@@ -270,7 +270,7 @@ static const struct irq_domain_ops sun6i
+ 
+ static int sun6i_r_intc_suspend(void)
+ {
+-	u32 buf[BITS_TO_U32(max(SUN6I_NR_TOP_LEVEL_IRQS, SUN6I_NR_MUX_BITS))];
++	u32 buf[BITS_TO_U32(MAX(SUN6I_NR_TOP_LEVEL_IRQS, SUN6I_NR_MUX_BITS))];
+ 	int i;
+ 
+ 	/* Wake IRQs are enabled during system sleep and shutdown. */
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1794,7 +1794,7 @@ static void integrity_metadata(struct wo
+ 		struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
+ 		char *checksums;
+ 		unsigned int extra_space = unlikely(digest_size > ic->tag_size) ? digest_size - ic->tag_size : 0;
+-		char checksums_onstack[max((size_t)HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
++		char checksums_onstack[MAX(HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
+ 		sector_t sector;
+ 		unsigned int sectors_to_process;
+ 
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -608,7 +608,7 @@ static int check_dir_item(struct extent_
+ 		 */
+ 		if (key->type == BTRFS_DIR_ITEM_KEY ||
+ 		    key->type == BTRFS_XATTR_ITEM_KEY) {
+-			char namebuf[max(BTRFS_NAME_LEN, XATTR_NAME_MAX)];
++			char namebuf[MAX(BTRFS_NAME_LEN, XATTR_NAME_MAX)];
+ 
+ 			read_extent_buffer(leaf, namebuf,
+ 					(unsigned long)(di + 1), name_len);
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -1082,7 +1082,7 @@ char *resource_string(char *buf, char *e
+ #define FLAG_BUF_SIZE		(2 * sizeof(res->flags))
+ #define DECODED_BUF_SIZE	sizeof("[mem - 64bit pref window disabled]")
+ #define RAW_BUF_SIZE		sizeof("[mem - flags 0x]")
+-	char sym[max(2*RSRC_BUF_SIZE + DECODED_BUF_SIZE,
++	char sym[MAX(2*RSRC_BUF_SIZE + DECODED_BUF_SIZE,
+ 		     2*RSRC_BUF_SIZE + FLAG_BUF_SIZE + RAW_BUF_SIZE)];
+ 
+ 	char *p = sym, *pend = sym + sizeof(sym);
 
 
