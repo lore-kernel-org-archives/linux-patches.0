@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09DE3090C7;
-	Mon, 13 Oct 2025 15:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE8A309F14;
+	Mon, 13 Oct 2025 15:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369441; cv=none; b=SbQ2bsZblCUxg0xHoopYr/+gJzQwLxH96IjWq/DiuQDvqcAAzNV/xpTFNZCAFt3wQ3SSdctiAE5rEXu1nyPPCdJDBR6nY3s5xXI1Wkoj0wBc0sfyveOTFy35ywjBI7IdT1G85YFVxvhkt/km16bJ7v86MpoyB65NObxnvTkL3tY=
+	t=1760369444; cv=none; b=PSxoS5UawAxKZkTwVjMho8goax4CbjgquJ/cUCI1Gu3B7PtU5s1Aj1yDhw2u/6Hi8NJt3DWYyScDBld35y+mi7uTvAHrZGQ55NiaGtEnLVmylUeD3F/R2Syhi8X1pVlntR2yFQEbprH2LvdGqqCmreKSwjevL6IZi6skytmPM9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369441; c=relaxed/simple;
-	bh=a9V3mCyTnwjfRZDVuLF2N/3vcCo7eBySlfBPjMBBJLY=;
+	s=arc-20240116; t=1760369444; c=relaxed/simple;
+	bh=rKPOsOoso5kdXLWCoG5jgdxitTU+IZjgsdWp6xqCzTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6BDcbrCupRLcBNW4vKd5AXRTPMG1wrNMUAUrbW+M4X9xgqrnjr17tS3Kt1ohc2b3MM/ol8p5z51trMMyglIGji231gn0TF1IURRviQSqMhQhzvh+OtD39ZgSyJ1mnpG8q0tgSEfVYf/n5Fw4ycWAn4oc6Ts/4EtGt7p47fSDWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vldIE8o/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFP6+StTdmCn9soXco/Ue1d+tAU01YU0BJOxRDwjYzecgtWcisgFfembRSlg53Q+4Ui/ldIqcklFgxsVWvUhQoM3mVOyYUv2w2/ImVmqHGUrSj5Rr9jp4mKVTAw+UCXLeSeoZDT30w7mbAnpHcl5GXkxMKpjUq3O09RbEyXworI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CStMfVLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vldIE8o/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE26C4CEE7;
-	Mon, 13 Oct 2025 15:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CStMfVLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB21C4CEFE;
+	Mon, 13 Oct 2025 15:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369441;
-	bh=a9V3mCyTnwjfRZDVuLF2N/3vcCo7eBySlfBPjMBBJLY=;
+	s=korg; t=1760369444;
+	bh=rKPOsOoso5kdXLWCoG5jgdxitTU+IZjgsdWp6xqCzTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vldIE8o/d+ZlT45WADAmyCzUlQA6qm6yrxrZvvOEXLLsBJEDb+PAjK+1X0ki8Qaox
-	 uLMf6P7VX+wjiqxeVD6jwYl6HWJAoo1i5O1oNBCLQUuT8CjNlyaZvFP7BT+WINqnbE
-	 UaCqajziRXRqbLXzOuO4yqcadyTvXnnP9rf5OhmY=
+	b=CStMfVLrwOk0iosolkuNQ6Q8JRt8f+Z5UAiNu/CYgj9G9ZHNdOpVYM0kZrsfL9rAN
+	 9LViuHf4ZEI3PWkSkoUsfSFftY9rCSkxEdLc7oLGFVPL1gcu7mqknwCVWowj0srDol
+	 jFe+B0k3AMsEyGLKDG8+2j6/5Fox/yRAP46Vmn6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 248/563] scsi: pm80xx: Use dev_parent_is_expander() helper
-Date: Mon, 13 Oct 2025 16:41:49 +0200
-Message-ID: <20251013144420.267720020@linuxfoundation.org>
+Subject: [PATCH 6.17 249/563] scsi: pm80xx: Add helper function to get the local phy id
+Date: Mon, 13 Oct 2025 16:41:50 +0200
+Message-ID: <20251013144420.302909985@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -57,120 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 35e388696c3f3b6bf70e2010873c5e0c1d37d579 ]
+[ Upstream commit b4ec98303f9fc9b1da0053106716db6a7e002d8b ]
 
-Make use of the dev_parent_is_expander() helper.
+Avoid duplicated code by adding a helper to get the local phy id.
+
+No functional changes intended.
 
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20250814173215.1765055-19-cassel@kernel.org
+Link: https://lore.kernel.org/r/20250814173215.1765055-20-cassel@kernel.org
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: ad70c6bc776b ("scsi: pm80xx: Fix pm8001_abort_task() for chip_8006 when using an expander")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_hwi.c | 8 +++-----
- drivers/scsi/pm8001/pm8001_sas.c | 5 ++---
- drivers/scsi/pm8001/pm80xx_hwi.c | 8 +++-----
- 3 files changed, 8 insertions(+), 13 deletions(-)
+ drivers/scsi/pm8001/pm8001_hwi.c |  7 +++----
+ drivers/scsi/pm8001/pm8001_sas.c | 10 ++++++++++
+ drivers/scsi/pm8001/pm8001_sas.h |  1 +
+ drivers/scsi/pm8001/pm80xx_hwi.c |  6 ++----
+ 4 files changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/scsi/pm8001/pm8001_hwi.c b/drivers/scsi/pm8001/pm8001_hwi.c
-index 42a4eeac24c94..fb4913547b00f 100644
+index fb4913547b00f..8005995a317c1 100644
 --- a/drivers/scsi/pm8001/pm8001_hwi.c
 +++ b/drivers/scsi/pm8001/pm8001_hwi.c
-@@ -2163,8 +2163,7 @@ mpi_sata_completion(struct pm8001_hba_info *pm8001_ha, void *piomb)
- 	/* Print sas address of IO failed device */
- 	if ((status != IO_SUCCESS) && (status != IO_OVERFLOW) &&
- 		(status != IO_UNDERFLOW)) {
--		if (!((t->dev->parent) &&
--			(dev_is_expander(t->dev->parent->dev_type)))) {
-+		if (!dev_parent_is_expander(t->dev)) {
- 			for (i = 0, j = 4; j <= 7 && i <= 3; i++, j++)
- 				sata_addr_low[i] = pm8001_ha->sas_addr[j];
- 			for (i = 0, j = 0; j <= 3 && i <= 3; i++, j++)
-@@ -4168,7 +4167,6 @@ static int pm8001_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
- 	u16 firstBurstSize = 0;
- 	u16 ITNT = 2000;
- 	struct domain_device *dev = pm8001_dev->sas_device;
--	struct domain_device *parent_dev = dev->parent;
- 	struct pm8001_port *port = dev->port->lldd_port;
- 
- 	memset(&payload, 0, sizeof(payload));
-@@ -4186,8 +4184,8 @@ static int pm8001_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
+@@ -4184,10 +4184,9 @@ static int pm8001_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
  			dev_is_expander(pm8001_dev->dev_type))
  			stp_sspsmp_sata = 0x01; /*ssp or smp*/
  	}
--	if (parent_dev && dev_is_expander(parent_dev->dev_type))
--		phy_id = parent_dev->ex_dev.ex_phy->phy_id;
-+	if (dev_parent_is_expander(dev))
-+		phy_id = dev->parent->ex_dev.ex_phy->phy_id;
- 	else
- 		phy_id = pm8001_dev->attached_phy;
+-	if (dev_parent_is_expander(dev))
+-		phy_id = dev->parent->ex_dev.ex_phy->phy_id;
+-	else
+-		phy_id = pm8001_dev->attached_phy;
++
++	phy_id = pm80xx_get_local_phy_id(dev);
++
  	opc = OPC_INB_REG_DEV;
+ 	linkrate = (pm8001_dev->sas_device->linkrate < dev->port->linkrate) ?
+ 			pm8001_dev->sas_device->linkrate : dev->port->linkrate;
 diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index 3e1dac4b820fe..2bdeace6c6bfe 100644
+index 2bdeace6c6bfe..5595913eb7fc1 100644
 --- a/drivers/scsi/pm8001/pm8001_sas.c
 +++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -700,7 +700,7 @@ static int pm8001_dev_found_notify(struct domain_device *dev)
- 	dev->lldd_dev = pm8001_device;
- 	pm8001_device->dev_type = dev->dev_type;
- 	pm8001_device->dcompletion = &completion;
--	if (parent_dev && dev_is_expander(parent_dev->dev_type)) {
-+	if (dev_parent_is_expander(dev)) {
- 		int phy_id;
+@@ -130,6 +130,16 @@ static void pm80xx_get_tag_opcodes(struct sas_task *task, int *ata_op,
+ 	}
+ }
  
- 		phy_id = sas_find_attached_phy_id(&parent_dev->ex_dev, dev);
-@@ -749,7 +749,6 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 	unsigned long flags = 0;
- 	struct pm8001_hba_info *pm8001_ha;
- 	struct pm8001_device *pm8001_dev = dev->lldd_dev;
--	struct domain_device *parent_dev = dev->parent;
++u32 pm80xx_get_local_phy_id(struct domain_device *dev)
++{
++	struct pm8001_device *pm8001_dev = dev->lldd_dev;
++
++	if (dev_parent_is_expander(dev))
++		return dev->parent->ex_dev.ex_phy->phy_id;
++
++	return pm8001_dev->attached_phy;
++}
++
+ void pm80xx_show_pending_commands(struct pm8001_hba_info *pm8001_ha,
+ 				  struct pm8001_device *target_pm8001_dev)
+ {
+diff --git a/drivers/scsi/pm8001/pm8001_sas.h b/drivers/scsi/pm8001/pm8001_sas.h
+index 334485bb2c12d..91b2cdf3535cd 100644
+--- a/drivers/scsi/pm8001/pm8001_sas.h
++++ b/drivers/scsi/pm8001/pm8001_sas.h
+@@ -798,6 +798,7 @@ void pm8001_setds_completion(struct domain_device *dev);
+ void pm8001_tmf_aborted(struct sas_task *task);
+ void pm80xx_show_pending_commands(struct pm8001_hba_info *pm8001_ha,
+ 				  struct pm8001_device *dev);
++u32 pm80xx_get_local_phy_id(struct domain_device *dev);
  
- 	pm8001_ha = pm8001_find_ha_by_dev(dev);
- 	spin_lock_irqsave(&pm8001_ha->lock, flags);
-@@ -771,7 +770,7 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 		 * The phy array only contains local phys. Thus, we cannot clear
- 		 * phy_attached for a device behind an expander.
- 		 */
--		if (!(parent_dev && dev_is_expander(parent_dev->dev_type)))
-+		if (!dev_parent_is_expander(dev))
- 			pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
- 		pm8001_free_dev(pm8001_dev);
- 	} else {
+ #endif
+ 
 diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
-index c1bae995a4128..546d0d26f7a17 100644
+index 546d0d26f7a17..31960b72c1e92 100644
 --- a/drivers/scsi/pm8001/pm80xx_hwi.c
 +++ b/drivers/scsi/pm8001/pm80xx_hwi.c
-@@ -2340,8 +2340,7 @@ mpi_sata_completion(struct pm8001_hba_info *pm8001_ha,
- 	/* Print sas address of IO failed device */
- 	if ((status != IO_SUCCESS) && (status != IO_OVERFLOW) &&
- 		(status != IO_UNDERFLOW)) {
--		if (!((t->dev->parent) &&
--			(dev_is_expander(t->dev->parent->dev_type)))) {
-+		if (!dev_parent_is_expander(t->dev)) {
- 			for (i = 0, j = 4; i <= 3 && j <= 7; i++, j++)
- 				sata_addr_low[i] = pm8001_ha->sas_addr[j];
- 			for (i = 0, j = 0; i <= 3 && j <= 3; i++, j++)
-@@ -4780,7 +4779,6 @@ static int pm80xx_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
- 	u16 firstBurstSize = 0;
- 	u16 ITNT = 2000;
- 	struct domain_device *dev = pm8001_dev->sas_device;
--	struct domain_device *parent_dev = dev->parent;
- 	struct pm8001_port *port = dev->port->lldd_port;
- 
- 	memset(&payload, 0, sizeof(payload));
-@@ -4799,8 +4797,8 @@ static int pm80xx_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
+@@ -4797,10 +4797,8 @@ static int pm80xx_chip_reg_dev_req(struct pm8001_hba_info *pm8001_ha,
  			dev_is_expander(pm8001_dev->dev_type))
  			stp_sspsmp_sata = 0x01; /*ssp or smp*/
  	}
--	if (parent_dev && dev_is_expander(parent_dev->dev_type))
--		phy_id = parent_dev->ex_dev.ex_phy->phy_id;
-+	if (dev_parent_is_expander(dev))
-+		phy_id = dev->parent->ex_dev.ex_phy->phy_id;
- 	else
- 		phy_id = pm8001_dev->attached_phy;
+-	if (dev_parent_is_expander(dev))
+-		phy_id = dev->parent->ex_dev.ex_phy->phy_id;
+-	else
+-		phy_id = pm8001_dev->attached_phy;
++
++	phy_id = pm80xx_get_local_phy_id(dev);
+ 
+ 	opc = OPC_INB_REG_DEV;
  
 -- 
 2.51.0
