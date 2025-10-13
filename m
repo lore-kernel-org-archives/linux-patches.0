@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834C030CD80;
-	Mon, 13 Oct 2025 15:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A7030CD80;
+	Mon, 13 Oct 2025 15:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368315; cv=none; b=Xb2M39t5LKVMKiTqZJDFOl8zaZBkozB+upQ83kJTpLITY+anhjoGNXMbmGALOCxQO0ig9CbkO/9LXI7/pnRMmcH0hKf7i/DckWQ2ArGRTldQMZrCLhp+4g01KJjqT9wgOsHcxp6bKlODn7FK/vunVWjeKTGGGRzAyPUynHPtvxw=
+	t=1760368318; cv=none; b=n8Op+It/E0d7Glftk5Tuy2lwDrZyM4RyngYitHcQRf0FDGJB4lnZk8WCLETOyDsj13ql8sEp5P97K8TBgH5zIcrWGVq47OjTPO0OTHvRONyIOfQqiSuD8NgcM5aDG3BH8cfmOS60y7dLQTuNBbPysBZe6CK1bwgmaGGAI3gCNr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368315; c=relaxed/simple;
-	bh=UCm4saks1B3I7gt0SDBtZVYv2GpICc24XbkXddXzdDA=;
+	s=arc-20240116; t=1760368318; c=relaxed/simple;
+	bh=6oSO/sy2EdHRTMuSqU69ai3TvlQTs9Ce+Z7UFzMXIDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pOUzE9fDwNbpGv/HTfOCOXz8Cub2remnm1+Lf0PiXSm1LrDF+jCMWJukV7QZhGv/gZ3HlmG0v8bhCLDCLSJS/7PAivlWX966uDNmSLJ938OndCpa3HZGW79JM/+iNJJBdG8Eq7P6sUU7N9s6mMNgyO9+dRU+DU35cRT2JY9xY3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6yiUldn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GS0ldWpsi+6+RsuHMA6b+r/+WsSiJ0ycPq2sDyAhE3RdJSFGo9O2kW/uNb3bdi18JH7X/bvJvU7mRRBaPqvVJEnnagxRWSs7gnMXKUg56DsVHvXcOGMG97z6AsI9vGiigm6A8Ho5u0Qyqul8sYvzHO8paf1/g7UptDyAbfELwG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCwVUV7O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6yiUldn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA233C4CEE7;
-	Mon, 13 Oct 2025 15:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCwVUV7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EACC4CEE7;
+	Mon, 13 Oct 2025 15:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368315;
-	bh=UCm4saks1B3I7gt0SDBtZVYv2GpICc24XbkXddXzdDA=;
+	s=korg; t=1760368317;
+	bh=6oSO/sy2EdHRTMuSqU69ai3TvlQTs9Ce+Z7UFzMXIDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6yiUldn2fy6h5/FcAgBxo4Sekt/53pz5pw/HZF60wYo/0E/6r+Dk4B4E/CY2K1pL
-	 UpWifZU1AEd+nUtnQzKXIv2ittfG2f0qZyBfM8taZm4uPTFIG16siepIBjUw9Hh/2h
-	 m1G418J0/Pe+n2Y1Bk6/w8TFIYA95Y2CPPHt8wxY=
+	b=XCwVUV7OnlUOgpRnKgVEl2Uj+iOPVj2gIYEoxxIek9N+Q+ecLLGBytXpJyzYZpZoj
+	 EFu/7M1iRFBpL7xMXS63GydVfUaz1hioJwcyJHF+Ns1leM4P5qcUGca665wtCDH0wx
+	 Vqzskkz+hanbWYfm4OZdegEyl9dHmNa7Yrj8oqgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/262] drm/amd/pm: Adjust si_upload_smc_data register programming (v3)
-Date: Mon, 13 Oct 2025 16:44:21 +0200
-Message-ID: <20251013144330.411709731@linuxfoundation.org>
+Subject: [PATCH 6.12 120/262] drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)
+Date: Mon, 13 Oct 2025 16:44:22 +0200
+Message-ID: <20251013144330.446999296@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,25 +54,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit ce025130127437dc884c84c254170e27b2ce9309 ]
+[ Upstream commit 9003a0746864f39a0ef72bd45f8e1ad85d930d67 ]
 
-Based on some comments in dm_pp_display_configuration
-above the crtc_index and line_time fields, these values
-are programmed to the SMC to work around an SMC hang
-when it switches MCLK.
+Some parts of the code base expect that MCLK switching is turned
+off when the vblank time is set to zero.
 
-According to Alex, the Windows driver programs them to:
-mclk_change_block_cp_min = 200 / line_time
-mclk_change_block_cp_max = 100 / line_time
-Let's use the same for the sake of consistency.
+According to pp_pm_compute_clocks the non-DC code has issues
+with MCLK switching with refresh rates over 120 Hz.
 
-Previously we used the watermark values, but it seemed buggy
-as the code was mixing up low/high and A/B watermarks, and
-was not saving a low watermark value on DCE 6, so
-mclk_change_block_cp_max would be always zero previously.
-
-Split this change off from the previous si_upload_smc_data
-to make it easier to bisect, in case it causes any issues.
+v3:
+Add code comment to explain this better.
+Add an if statement instead of changing the switch_limit.
 
 Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
@@ -80,24 +72,28 @@ Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-index 341f2d796aeeb..a8fe6aa6845eb 100644
+index a8fe6aa6845eb..76fc08cda7480 100644
 --- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
 +++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -5809,8 +5809,8 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
- 		crtc_index = amdgpu_crtc->crtc_id;
+@@ -3066,7 +3066,13 @@ static bool si_dpm_vblank_too_short(void *handle)
+ 	/* we never hit the non-gddr5 limit so disable it */
+ 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
  
- 		if (amdgpu_crtc->line_time) {
--			mclk_change_block_cp_min = amdgpu_crtc->wm_high / amdgpu_crtc->line_time;
--			mclk_change_block_cp_max = amdgpu_crtc->wm_low / amdgpu_crtc->line_time;
-+			mclk_change_block_cp_min = 200 / amdgpu_crtc->line_time;
-+			mclk_change_block_cp_max = 100 / amdgpu_crtc->line_time;
- 		}
- 	}
- 
+-	if (vblank_time < switch_limit)
++	/* Consider zero vblank time too short and disable MCLK switching.
++	 * Note that the vblank time is set to maximum when no displays are attached,
++	 * so we'll still enable MCLK switching in that case.
++	 */
++	if (vblank_time == 0)
++		return true;
++	else if (vblank_time < switch_limit)
+ 		return true;
+ 	else
+ 		return false;
 -- 
 2.51.0
 
