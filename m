@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8642A311958;
-	Mon, 13 Oct 2025 15:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523B7311C20;
+	Mon, 13 Oct 2025 15:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368188; cv=none; b=QFssIbv16r+9iKnQtqhMYwqvK9g7jyNhH/fufRZuGrw/QAYLvkGvyyn7bltC8ozrMKKsWj0tkKhGvj22oFKbf17q6qu9LqrJerGDhcfu/855e+y1GiuQqTv5Lvs4y0Qqz9C+QwZbAOgY3sN1lmf8XfGYH1FBDoyYVB7RrEsKDwg=
+	t=1760368191; cv=none; b=Dp+GLtPI/MSrgMULVOFkLVFadvwOpZao32/pLKPQ/1Ulz6bueTwifsErLQ7Ia1FOytYvk2uzBVR7ydtsgxYH+ZsIcbDcpSUj249k3DsBhDPq4vlExp/ussbRh6bUWKd99RLYAwZR3pbay9do0Os1vQV5/xZdqRWm/NsTyP8aoW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368188; c=relaxed/simple;
-	bh=7VdeC7ODruayH2jsWSJ+H0HDohUQ4ODNOu4BE4sssPs=;
+	s=arc-20240116; t=1760368191; c=relaxed/simple;
+	bh=ouN30tGe5Chl15z6LNQleJKIYr8SDDHv7ynvbfIyb1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iPV2TODgGo69tL5dk43e4Uc3iOp/zvWOCSforrHWHj5ZvjUBR9M1gQJaYQZ22dLf3wSR/kDglbzfVF45kjfSg2yQPdQ5BcxIQ83PVNqAHcQUCi3vpOrD0oa30mT3iVh7TlytmdHrtPb7ruJmIW8Sn9mx7RhMMbQn7fouQAUde/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJVhvATk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nKtj+jahx2RQaGWUa34QhIZ5qiTX18OVLtV0R8N1k4Eb2lrZ1wiP/KafISWDoK87T+JucLA1t6EkTvIkEVwvC8AdxoRTWFneTFf9rIsHI0IWdkwBvUX4TSXmGaP4ntW6tobTOW1ZcKGGKuKq1L3+SFTrnoaFsFfH2AJ5xa6Dv10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGGeICq9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJVhvATk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021E9C4CEFE;
-	Mon, 13 Oct 2025 15:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGGeICq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF871C4CEE7;
+	Mon, 13 Oct 2025 15:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368188;
-	bh=7VdeC7ODruayH2jsWSJ+H0HDohUQ4ODNOu4BE4sssPs=;
+	s=korg; t=1760368191;
+	bh=ouN30tGe5Chl15z6LNQleJKIYr8SDDHv7ynvbfIyb1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJVhvATkj4naSbU5KuEiB5WPj6kCFqmwBix32vruoJybPQC9gG4/VSe+wX1/gybjU
-	 jk/u2vlQLVAIo18cWP9iZ10T9IlieAeMbStQ7V8CgfSkxeaS3+ck72br5xxiX04cl4
-	 jtrqVvBNeVSJg51PTpmeFZUFA03sdTO75jmbHdIM=
+	b=EGGeICq9OEQD17pGxpXYY/WudtgV5vpjd6cmOplacjmA0GoReEbQ5pUpUhUhKOXv9
+	 e2upXI0ssSP2AsFLVnoFcJIwbuinJBEFdha/oNSxsVzHtNonBp6P7O5h85BVMB9qOp
+	 aTgBX2Ub5MoXNw+pfGDNTRImoWXteMlHM+iw5MOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/262] ACPI: processor: idle: Fix memory leak when register cpuidle device failed
-Date: Mon, 13 Oct 2025 16:42:53 +0200
-Message-ID: <20251013144327.254081743@linuxfoundation.org>
+Subject: [PATCH 6.12 068/262] pwm: tiehrpwm: Fix corner case in clock divisor calculation
+Date: Mon, 13 Oct 2025 16:43:30 +0200
+Message-ID: <20251013144328.577141589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -45,44 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 11b3de1c03fa9f3b5d17e6d48050bc98b3704420 ]
+[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
 
-The cpuidle device's memory is leaked when cpuidle device registration
-fails in acpi_processor_power_init().  Free it as appropriate.
+The function set_prescale_div() is responsible for calculating the clock
+divisor settings such that the input clock rate is divided down such that
+the required period length is at most 0x10000 clock ticks. If period_cycles
+is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
+good enough. So round up in the calculation of the required divisor and
+compare it using >= instead of >.
 
-Fixes: 3d339dcbb56d ("cpuidle / ACPI : move cpuidle_device field out of the acpi_processor_power structure")
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Link: https://patch.msgid.link/20250728070612.1260859-2-lihuisong@huawei.com
-[ rjw: Changed the order of the new statements, added empty line after if () ]
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pwm/pwm-tiehrpwm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 0888e4d618d53..b524cf27213d4 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1410,6 +1410,9 @@ int acpi_processor_power_init(struct acpi_processor *pr)
- 		if (retval) {
- 			if (acpi_processor_registered == 0)
- 				cpuidle_unregister_driver(&acpi_idle_driver);
-+
-+			per_cpu(acpi_cpuidle_device, pr->id) = NULL;
-+			kfree(dev);
- 			return retval;
- 		}
- 		acpi_processor_registered++;
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index a23e48b8523db..7a86cb090f76f 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -161,7 +161,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
+ 
+ 			*prescale_div = (1 << clkdiv) *
+ 					(hspclkdiv ? (hspclkdiv * 2) : 1);
+-			if (*prescale_div > rqst_prescaler) {
++			if (*prescale_div >= rqst_prescaler) {
+ 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
+ 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
+ 				return 0;
+@@ -224,7 +224,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	pc->period_cycles[pwm->hwpwm] = period_cycles;
+ 
+ 	/* Configure clock prescaler to support Low frequency PWM wave */
+-	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
++	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
+ 			     &tb_divval)) {
+ 		dev_err(pwmchip_parent(chip), "Unsupported values\n");
+ 		return -EINVAL;
 -- 
 2.51.0
 
