@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283BF30C627;
-	Mon, 13 Oct 2025 15:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3135930C624;
+	Mon, 13 Oct 2025 15:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368280; cv=none; b=bt+wCNsolqhWJiVwK1tyLCG5e3D+3BpVeLAjDqu2gLimYitgIKatZhN837jbLVcXfBv935N2Ylab17tTzt42Tr8AobDt50PzSVewUzknXkwo5X3Asu+ktqC2/RbbhHxC70q5V9pEpZkVWOh0Gq5l/IaD+8ndlJXua1jbPcY9oFE=
+	t=1760368283; cv=none; b=thYsGdtNG301/UPuXAz7DPgkQUo0Jhk3p6NNlat6aQhPvz5/+Qv9MqR49CjY/qmqy6Oq76IXkudsbDjERmOPTlYDgMd+86IRPbsuSCIXxfUIvJSBtZ0BXw75Tkw3N00ldJ9l4gPJ2hD0TSeMFRFPy/5ZmVqI4R+zNIQQzziLBys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368280; c=relaxed/simple;
-	bh=CJhwsUWph+1ziWMQqu8oLdgciVEWwiEmOrNHnmI++VI=;
+	s=arc-20240116; t=1760368283; c=relaxed/simple;
+	bh=ihTj8WGjg8MDAXw1fCR5ThdAFlmxE59iBS3s4t0P7qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVhvJ7XV6NleNr1gwIRvNvt2J7FETVPliBvVzo4TEXcHkdhBCOfSempVo9wa2DURBKLJ8GU5/p6ikoKI85PORRoMlsLKP4c1iU343me+uNKFYJBSTAjLL6sUJojk8glEbTxMHXHPsk5sfe/kNZiOOGCE9IteTEM8hORUWhKwBvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jcoj/x8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8h53s1Zx7LiLs8kjjR8HxoeH5O2WobaFoVfkuj+YS1eVFZDASRYIo2N9oBmlk7dZBjYuJyF8FJJGuWlXvGyPS80oHe06Di3JFq7qVX6S3F7tk5DPAu+sBj5fmxQNsenq0UeqDIPsu1OPwHX+9bUF99cQdGOFHpFPjcU9Xf5OJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TkAtPs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jcoj/x8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A856DC4CEE7;
-	Mon, 13 Oct 2025 15:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TkAtPs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7DEC4CEE7;
+	Mon, 13 Oct 2025 15:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368280;
-	bh=CJhwsUWph+1ziWMQqu8oLdgciVEWwiEmOrNHnmI++VI=;
+	s=korg; t=1760368283;
+	bh=ihTj8WGjg8MDAXw1fCR5ThdAFlmxE59iBS3s4t0P7qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jcoj/x8YEFsJ0xYti5UuacL15JPYqtleb0I8VZC/77uxlBm8PuHz0OQEcrJmQL7Jx
-	 flQaPB6bSvNYA8eiRP6kc+dqA0tUWp0rMZ0LZVvAaHlbhQaNIsTBVth/eQh+8U0Jg6
-	 DXkppRODIjkkWAlmB4APVxxZ85tJ9tM6Z59HByqY=
+	b=0TkAtPs33eX3iLEbkXQcWKsyBvCrRBL9XhHf2Tx36C1PfapISd4DtaDjAZjbple3S
+	 XSWCme/7QB/nrj3Fwk3/2ZBZKnfV17ciWm02hvXsBM7awMW7Ugc4kqHDc1KGj3yeYY
+	 aY5W06nRtxXQrUVsRTrYWuP2Qbbh1A9BMTJQxyfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Akhilesh Patil <akhilesh@ee.iitb.ac.in>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/262] i3c: master: svc: Recycle unused IBI slot
-Date: Mon, 13 Oct 2025 16:43:35 +0200
-Message-ID: <20251013144328.755366769@linuxfoundation.org>
+Subject: [PATCH 6.12 074/262] selftests: watchdog: skip ping loop if WDIOF_KEEPALIVEPING not supported
+Date: Mon, 13 Oct 2025 16:43:36 +0200
+Message-ID: <20251013144328.790702764@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,37 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <stanley.chuys@gmail.com>
+From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
 
-[ Upstream commit 3448a934ba6f803911ac084d05a2ffce507ea6c6 ]
+[ Upstream commit e8cfc524eaf3c0ed88106177edb6961e202e6716 ]
 
-In svc_i3c_master_handle_ibi(), an IBI slot is fetched from the pool
-to store the IBI payload. However, when an error condition is encountered,
-the function returns without recycling the IBI slot, resulting in an IBI
-slot leak.
+Check if watchdog device supports WDIOF_KEEPALIVEPING option before
+entering keep_alive() ping test loop. Fix watchdog-test silently looping
+if ioctl based ping is not supported by the device. Exit from test in
+such case instead of getting stuck in loop executing failing keep_alive()
 
-Fixes: c85e209b799f ("i3c: master: svc: fix ibi may not return mandatory data byte")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250829012309.3562585-3-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+watchdog_info:
+ identity:              m41t93 rtc Watchdog
+ firmware_version:      0
+Support/Status: Set timeout (in seconds)
+Support/Status: Watchdog triggers a management or other external alarm not a reboot
+
+Watchdog card disabled.
+Watchdog timeout set to 5 seconds.
+Watchdog ping rate set to 2 seconds.
+Watchdog card enabled.
+WDIOC_KEEPALIVE not supported by this device
+
+without this change
+Watchdog card disabled.
+Watchdog timeout set to 5 seconds.
+Watchdog ping rate set to 2 seconds.
+Watchdog card enabled.
+Watchdog Ticking Away!
+(Where test stuck here forver silently)
+
+Updated change log at commit time:
+Shuah Khan <skhan@linuxfoundation.org>
+
+Link: https://lore.kernel.org/r/20250914152840.GA3047348@bhairav-test.ee.iitb.ac.in
+Fixes: d89d08ffd2c5 ("selftests: watchdog: Fix ioctl SET* error paths to take oneshot exit path")
+Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 7d8e1540f02ae..a1945bf9ef19e 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -377,6 +377,7 @@ static int svc_i3c_master_handle_ibi(struct svc_i3c_master *master,
- 						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
- 	if (ret) {
- 		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
-+		i3c_generic_ibi_recycle_slot(data->ibi_pool, slot);
- 		return ret;
- 	}
+diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
+index a1f506ba55786..4f09c5db0c7f3 100644
+--- a/tools/testing/selftests/watchdog/watchdog-test.c
++++ b/tools/testing/selftests/watchdog/watchdog-test.c
+@@ -332,6 +332,12 @@ int main(int argc, char *argv[])
+ 	if (oneshot)
+ 		goto end;
  
++	/* Check if WDIOF_KEEPALIVEPING is supported */
++	if (!(info.options & WDIOF_KEEPALIVEPING)) {
++		printf("WDIOC_KEEPALIVE not supported by this device\n");
++		goto end;
++	}
++
+ 	printf("Watchdog Ticking Away!\n");
+ 
+ 	/*
 -- 
 2.51.0
 
