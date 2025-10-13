@@ -1,376 +1,250 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CEF22A7F1
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 15:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0735C27A477;
+	Mon, 13 Oct 2025 15:00:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367633; cv=none; b=GLWDWf6h5F1qEhIbY4D9BpYGik838F1Op1DDnJp3MQKo+kRn8D0YRfoksBPa7aiYZIeLnbEwY3OKUJTPvYs+qRsjZapAOJXol3tw930+gX+iOY6HpoG3IY0kDStV2DFoIHfkHc0o4B4TBZLvvGOo1aOltqp33paXCzWMnOzJymg=
+	t=1760367636; cv=none; b=dK81++/Oji8Pdwf2W1/8iU1iImLUTTlX7X2+PQ+sSwLAcnGrIzNadFeYGJXSN/uypefIm0Ml9R0HDf+A9OGhmcFy/OVHSR5xEZuimzvIacekQJL3e03/fWO0RdPVUMRviErOPwI6AWC1T/vRu7LNgdplPd5xLs7m8DGK65FYyTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367633; c=relaxed/simple;
-	bh=bhM//TLWjuoky3gUJuDpKMEg1m9sIINyg57Lg6NvuAM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ynjc6ty0SPGpAExvTaUZf+VdV6zIKdr8Vcp6O/6V0WsEJPjjr63/+0hum7ZrFLLvn4BFGnrhCG+RIkf7eHo5G9YLUYFcgPamXdqmmZNeH80QZsxZqnllBk4DVaJ3Yi3CFv7vsEwpzrwkAyOGPbq03BKtp/k8RCdWTF4jiCsWTsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=EzFHmfnk; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1760367636; c=relaxed/simple;
+	bh=we3SVKs0k+edK3JWQ4+4fknKuiZNleTxoALk8wQXEfw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JHj+IMWTlFJU0uCaGN10HBtQ95ZJJnbNCSeybFGepGGZGQAlECGTTm4+oBNDQKdXSv9MiCSg7KO4YT8iHGlYA73MDtcYdZs+K4vpV6aXXDzua5AEEChbVzVuMKFEp/lh34gvwaCAA2zhxsp80BuK6Mvhr6tXLJMVbZf6S+QjYcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NToomgBB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="EzFHmfnk"
-Received: from pendragon.ideasonboard.com (82-203-166-19.bb.dnainternet.fi [82.203.166.19])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 4AF94557;
-	Mon, 13 Oct 2025 16:58:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1760367531;
-	bh=bhM//TLWjuoky3gUJuDpKMEg1m9sIINyg57Lg6NvuAM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EzFHmfnkMwun2ICT9FMtGBt0avOJRivmr+GSG2VUl8unqZt+30AEBVwratK3vWTRd
-	 wVt7MRZl19oy34jx6xMVR9NknhyB+GS1nYKuZ3XHFgll2Z3O434km0GMe/wuduh2mb
-	 fB4FMScs3NWmwzYff/2/7582btzZ33TMxJEi6070=
-Date: Mon, 13 Oct 2025 18:00:22 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com,
-	syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH 6.1 013/196] media: uvcvideo: Mark invalid entities with
- id UVC_INVALID_ENTITY_ID
-Message-ID: <20251013150022.GB1168@pendragon.ideasonboard.com>
-References: <20251013144314.549284796@linuxfoundation.org>
- <20251013144315.044387377@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NToomgBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32776C4CEE7;
+	Mon, 13 Oct 2025 15:00:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1760367635;
+	bh=we3SVKs0k+edK3JWQ4+4fknKuiZNleTxoALk8wQXEfw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NToomgBB7ck6PNvK9hRstdClmUCVz71GoV7SVtYz70jd3Wh8LCQDRkpjWBKdlPT4G
+	 xRRbUivnjPkXYs0vPoHDZSDxv6eHFHC3Yq9l7G+P7WqphSPZMUN4NIRyWZhWHy1ZFx
+	 RH7OGQb2KHWgK/SlVru/J+yqgcNBWEPdF9kM+dGM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 081/196] crypto: hisilicon - re-enable address prefetch after device resuming
+Date: Mon, 13 Oct 2025 16:44:32 +0200
+Message-ID: <20251013144318.246134297@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
+References: <20251013144315.184275491@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251013144315.044387377@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-On Mon, Oct 13, 2025 at 04:43:06PM +0200, Greg KH wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
+------------------
 
-This is causing a regression as reported in [1]. Ricardo is trying to
-get his hands on a device to try and develop a proper fix. In the
-meantime, can we avoid backporting this patch to any stable tree ?
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[1] https://lore.kernel.org/r/CAOzBiVuS7ygUjjhCbyWg-KiNx+HFTYnqH5+GJhd6cYsNLT=DaA@mail.gmail.com
+[ Upstream commit 0dcd21443d9308ed88909d35aa0490c3fc680a47 ]
 
-> ------------------
-> 
-> From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-> 
-> commit 0e2ee70291e64a30fe36960c85294726d34a103e upstream.
-> 
-> Per UVC 1.1+ specification 3.7.2, units and terminals must have a non-zero
-> unique ID.
-> 
-> ```
-> Each Unit and Terminal within the video function is assigned a unique
-> identification number, the Unit ID (UID) or Terminal ID (TID), contained in
-> the bUnitID or bTerminalID field of the descriptor. The value 0x00 is
-> reserved for undefined ID,
-> ```
-> 
-> If we add a new entity with id 0 or a duplicated ID, it will be marked
-> as UVC_INVALID_ENTITY_ID.
-> 
-> In a previous attempt commit 3dd075fe8ebb ("media: uvcvideo: Require
-> entities to have a non-zero unique ID"), we ignored all the invalid units,
-> this broke a lot of non-compatible cameras. Hopefully we are more lucky
-> this time.
-> 
-> This also prevents some syzkaller reproducers from triggering warnings due
-> to a chain of entities referring to themselves. In one particular case, an
-> Output Unit is connected to an Input Unit, both with the same ID of 1. But
-> when looking up for the source ID of the Output Unit, that same entity is
-> found instead of the input entity, which leads to such warnings.
-> 
-> In another case, a backward chain was considered finished as the source ID
-> was 0. Later on, that entity was found, but its pads were not valid.
-> 
-> Here is a sample stack trace for one of those cases.
-> 
-> [   20.650953] usb 1-1: new high-speed USB device number 2 using dummy_hcd
-> [   20.830206] usb 1-1: Using ep0 maxpacket: 8
-> [   20.833501] usb 1-1: config 0 descriptor??
-> [   21.038518] usb 1-1: string descriptor 0 read error: -71
-> [   21.038893] usb 1-1: Found UVC 0.00 device <unnamed> (2833:0201)
-> [   21.039299] uvcvideo 1-1:0.0: Entity type for entity Output 1 was not initialized!
-> [   21.041583] uvcvideo 1-1:0.0: Entity type for entity Input 1 was not initialized!
-> [   21.042218] ------------[ cut here ]------------
-> [   21.042536] WARNING: CPU: 0 PID: 9 at drivers/media/mc/mc-entity.c:1147 media_create_pad_link+0x2c4/0x2e0
-> [   21.043195] Modules linked in:
-> [   21.043535] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:1 Not tainted 6.11.0-rc7-00030-g3480e43aeccf #444
-> [   21.044101] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-> [   21.044639] Workqueue: usb_hub_wq hub_event
-> [   21.045100] RIP: 0010:media_create_pad_link+0x2c4/0x2e0
-> [   21.045508] Code: fe e8 20 01 00 00 b8 f4 ff ff ff 48 83 c4 30 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 0f 0b eb e9 0f 0b eb 0a 0f 0b eb 06 <0f> 0b eb 02 0f 0b b8 ea ff ff ff eb d4 66 2e 0f 1f 84 00 00 00 00
-> [   21.046801] RSP: 0018:ffffc9000004b318 EFLAGS: 00010246
-> [   21.047227] RAX: ffff888004e5d458 RBX: 0000000000000000 RCX: ffffffff818fccf1
-> [   21.047719] RDX: 000000000000007b RSI: 0000000000000000 RDI: ffff888004313290
-> [   21.048241] RBP: ffff888004313290 R08: 0001ffffffffffff R09: 0000000000000000
-> [   21.048701] R10: 0000000000000013 R11: 0001888004313290 R12: 0000000000000003
-> [   21.049138] R13: ffff888004313080 R14: ffff888004313080 R15: 0000000000000000
-> [   21.049648] FS:  0000000000000000(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
-> [   21.050271] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   21.050688] CR2: 0000592cc27635b0 CR3: 000000000431c000 CR4: 0000000000750ef0
-> [   21.051136] PKRU: 55555554
-> [   21.051331] Call Trace:
-> [   21.051480]  <TASK>
-> [   21.051611]  ? __warn+0xc4/0x210
-> [   21.051861]  ? media_create_pad_link+0x2c4/0x2e0
-> [   21.052252]  ? report_bug+0x11b/0x1a0
-> [   21.052540]  ? trace_hardirqs_on+0x31/0x40
-> [   21.052901]  ? handle_bug+0x3d/0x70
-> [   21.053197]  ? exc_invalid_op+0x1a/0x50
-> [   21.053511]  ? asm_exc_invalid_op+0x1a/0x20
-> [   21.053924]  ? media_create_pad_link+0x91/0x2e0
-> [   21.054364]  ? media_create_pad_link+0x2c4/0x2e0
-> [   21.054834]  ? media_create_pad_link+0x91/0x2e0
-> [   21.055131]  ? _raw_spin_unlock+0x1e/0x40
-> [   21.055441]  ? __v4l2_device_register_subdev+0x202/0x210
-> [   21.055837]  uvc_mc_register_entities+0x358/0x400
-> [   21.056144]  uvc_register_chains+0x1fd/0x290
-> [   21.056413]  uvc_probe+0x380e/0x3dc0
-> [   21.056676]  ? __lock_acquire+0x5aa/0x26e0
-> [   21.056946]  ? find_held_lock+0x33/0xa0
-> [   21.057196]  ? kernfs_activate+0x70/0x80
-> [   21.057533]  ? usb_match_dynamic_id+0x1b/0x70
-> [   21.057811]  ? find_held_lock+0x33/0xa0
-> [   21.058047]  ? usb_match_dynamic_id+0x55/0x70
-> [   21.058330]  ? lock_release+0x124/0x260
-> [   21.058657]  ? usb_match_one_id_intf+0xa2/0x100
-> [   21.058997]  usb_probe_interface+0x1ba/0x330
-> [   21.059399]  really_probe+0x1ba/0x4c0
-> [   21.059662]  __driver_probe_device+0xb2/0x180
-> [   21.059944]  driver_probe_device+0x5a/0x100
-> [   21.060170]  __device_attach_driver+0xe9/0x160
-> [   21.060427]  ? __pfx___device_attach_driver+0x10/0x10
-> [   21.060872]  bus_for_each_drv+0xa9/0x100
-> [   21.061312]  __device_attach+0xed/0x190
-> [   21.061812]  device_initial_probe+0xe/0x20
-> [   21.062229]  bus_probe_device+0x4d/0xd0
-> [   21.062590]  device_add+0x308/0x590
-> [   21.062912]  usb_set_configuration+0x7b6/0xaf0
-> [   21.063403]  usb_generic_driver_probe+0x36/0x80
-> [   21.063714]  usb_probe_device+0x7b/0x130
-> [   21.063936]  really_probe+0x1ba/0x4c0
-> [   21.064111]  __driver_probe_device+0xb2/0x180
-> [   21.064577]  driver_probe_device+0x5a/0x100
-> [   21.065019]  __device_attach_driver+0xe9/0x160
-> [   21.065403]  ? __pfx___device_attach_driver+0x10/0x10
-> [   21.065820]  bus_for_each_drv+0xa9/0x100
-> [   21.066094]  __device_attach+0xed/0x190
-> [   21.066535]  device_initial_probe+0xe/0x20
-> [   21.066992]  bus_probe_device+0x4d/0xd0
-> [   21.067250]  device_add+0x308/0x590
-> [   21.067501]  usb_new_device+0x347/0x610
-> [   21.067817]  hub_event+0x156b/0x1e30
-> [   21.068060]  ? process_scheduled_works+0x48b/0xaf0
-> [   21.068337]  process_scheduled_works+0x5a3/0xaf0
-> [   21.068668]  worker_thread+0x3cf/0x560
-> [   21.068932]  ? kthread+0x109/0x1b0
-> [   21.069133]  kthread+0x197/0x1b0
-> [   21.069343]  ? __pfx_worker_thread+0x10/0x10
-> [   21.069598]  ? __pfx_kthread+0x10/0x10
-> [   21.069908]  ret_from_fork+0x32/0x40
-> [   21.070169]  ? __pfx_kthread+0x10/0x10
-> [   21.070424]  ret_from_fork_asm+0x1a/0x30
-> [   21.070737]  </TASK>
-> 
-> Reported-by: syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=0584f746fde3d52b4675
-> Reported-by: syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=dd320d114deb3f5bb79b
-> Reported-by: Youngjun Lee <yjjuny.lee@samsung.com>
-> Fixes: a3fbc2e6bb05 ("media: mc-entity.c: use WARN_ON, validate link pads")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-> Co-developed-by: Ricardo Ribalda <ribalda@chromium.org>
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Reviewed-by: Hans de Goede <hansg@kernel.org>
-> Signed-off-by: Hans de Goede <hansg@kernel.org>
-> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/media/usb/uvc/uvc_driver.c |   73 +++++++++++++++++++++++--------------
->  drivers/media/usb/uvc/uvcvideo.h   |    2 +
->  2 files changed, 48 insertions(+), 27 deletions(-)
-> 
-> --- a/drivers/media/usb/uvc/uvc_driver.c
-> +++ b/drivers/media/usb/uvc/uvc_driver.c
-> @@ -134,6 +134,9 @@ struct uvc_entity *uvc_entity_by_id(stru
->  {
->  	struct uvc_entity *entity;
->  
-> +	if (id == UVC_INVALID_ENTITY_ID)
-> +		return NULL;
-> +
->  	list_for_each_entry(entity, &dev->entities, list) {
->  		if (entity->id == id)
->  			return entity;
-> @@ -757,14 +760,27 @@ static const u8 uvc_media_transport_inpu
->  	UVC_GUID_UVC_MEDIA_TRANSPORT_INPUT;
->  static const u8 uvc_processing_guid[16] = UVC_GUID_UVC_PROCESSING;
->  
-> -static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
-> -		unsigned int num_pads, unsigned int extra_size)
-> +static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
-> +					       u16 id, unsigned int num_pads,
-> +					       unsigned int extra_size)
->  {
->  	struct uvc_entity *entity;
->  	unsigned int num_inputs;
->  	unsigned int size;
->  	unsigned int i;
->  
-> +	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
-> +	if (id == 0) {
-> +		dev_err(&dev->intf->dev, "Found Unit with invalid ID 0\n");
-> +		id = UVC_INVALID_ENTITY_ID;
-> +	}
-> +
-> +	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
-> +	if (uvc_entity_by_id(dev, id)) {
-> +		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n", id);
-> +		id = UVC_INVALID_ENTITY_ID;
-> +	}
-> +
->  	extra_size = roundup(extra_size, sizeof(*entity->pads));
->  	if (num_pads)
->  		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
-> @@ -774,7 +790,7 @@ static struct uvc_entity *uvc_alloc_enti
->  	     + num_inputs;
->  	entity = kzalloc(size, GFP_KERNEL);
->  	if (entity == NULL)
-> -		return NULL;
-> +		return ERR_PTR(-ENOMEM);
->  
->  	entity->id = id;
->  	entity->type = type;
-> @@ -865,10 +881,10 @@ static int uvc_parse_vendor_control(stru
->  			break;
->  		}
->  
-> -		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
-> -					p + 1, 2*n);
-> -		if (unit == NULL)
-> -			return -ENOMEM;
-> +		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
-> +					    buffer[3], p + 1, 2 * n);
-> +		if (IS_ERR(unit))
-> +			return PTR_ERR(unit);
->  
->  		memcpy(unit->guid, &buffer[4], 16);
->  		unit->extension.bNumControls = buffer[20];
-> @@ -978,10 +994,10 @@ static int uvc_parse_standard_control(st
->  			return -EINVAL;
->  		}
->  
-> -		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
-> -					1, n + p);
-> -		if (term == NULL)
-> -			return -ENOMEM;
-> +		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
-> +					    buffer[3], 1, n + p);
-> +		if (IS_ERR(term))
-> +			return PTR_ERR(term);
->  
->  		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
->  			term->camera.bControlSize = n;
-> @@ -1038,10 +1054,10 @@ static int uvc_parse_standard_control(st
->  			return 0;
->  		}
->  
-> -		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
-> -					1, 0);
-> -		if (term == NULL)
-> -			return -ENOMEM;
-> +		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
-> +					    buffer[3], 1, 0);
-> +		if (IS_ERR(term))
-> +			return PTR_ERR(term);
->  
->  		memcpy(term->baSourceID, &buffer[7], 1);
->  
-> @@ -1062,9 +1078,10 @@ static int uvc_parse_standard_control(st
->  			return -EINVAL;
->  		}
->  
-> -		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
-> -		if (unit == NULL)
-> -			return -ENOMEM;
-> +		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-> +					    p + 1, 0);
-> +		if (IS_ERR(unit))
-> +			return PTR_ERR(unit);
->  
->  		memcpy(unit->baSourceID, &buffer[5], p);
->  
-> @@ -1086,9 +1103,9 @@ static int uvc_parse_standard_control(st
->  			return -EINVAL;
->  		}
->  
-> -		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
-> -		if (unit == NULL)
-> -			return -ENOMEM;
-> +		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
-> +		if (IS_ERR(unit))
-> +			return PTR_ERR(unit);
->  
->  		memcpy(unit->baSourceID, &buffer[4], 1);
->  		unit->processing.wMaxMultiplier =
-> @@ -1117,9 +1134,10 @@ static int uvc_parse_standard_control(st
->  			return -EINVAL;
->  		}
->  
-> -		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
-> -		if (unit == NULL)
-> -			return -ENOMEM;
-> +		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-> +					    p + 1, n);
-> +		if (IS_ERR(unit))
-> +			return PTR_ERR(unit);
->  
->  		memcpy(unit->guid, &buffer[4], 16);
->  		unit->extension.bNumControls = buffer[20];
-> @@ -1260,9 +1278,10 @@ static int uvc_gpio_parse(struct uvc_dev
->  		return dev_err_probe(&dev->intf->dev, irq,
->  				     "No IRQ for privacy GPIO\n");
->  
-> -	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
-> -	if (!unit)
-> -		return -ENOMEM;
-> +	unit = uvc_alloc_new_entity(dev, UVC_EXT_GPIO_UNIT,
-> +				    UVC_EXT_GPIO_UNIT_ID, 0, 1);
-> +	if (IS_ERR(unit))
-> +		return PTR_ERR(unit);
->  
->  	unit->gpio.gpio_privacy = gpio_privacy;
->  	unit->gpio.irq = irq;
-> --- a/drivers/media/usb/uvc/uvcvideo.h
-> +++ b/drivers/media/usb/uvc/uvcvideo.h
-> @@ -41,6 +41,8 @@
->  #define UVC_EXT_GPIO_UNIT		0x7ffe
->  #define UVC_EXT_GPIO_UNIT_ID		0x100
->  
-> +#define UVC_INVALID_ENTITY_ID          0xffff
-> +
->  /* ------------------------------------------------------------------------
->   * Driver specific constants.
->   */
+When the device resumes from a suspended state, it will revert to its
+initial state and requires re-enabling. Currently, the address prefetch
+function is not re-enabled after device resuming. Move the address prefetch
+enable to the initialization process. In this way, the address prefetch
+can be enabled when the device resumes by calling the initialization
+process.
 
+Fixes: 607c191b371d ("crypto: hisilicon - support runtime PM for accelerator device")
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/crypto/hisilicon/hpre/hpre_main.c |  3 +-
+ drivers/crypto/hisilicon/qm.c             |  3 -
+ drivers/crypto/hisilicon/sec2/sec_main.c  | 80 +++++++++++------------
+ drivers/crypto/hisilicon/zip/zip_main.c   |  5 +-
+ 4 files changed, 43 insertions(+), 48 deletions(-)
+
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
+index 762a2a54ca821..e3d113334d4e4 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_main.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
+@@ -689,6 +689,7 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
+ 
+ 	/* Config data buffer pasid needed by Kunpeng 920 */
+ 	hpre_config_pasid(qm);
++	hpre_open_sva_prefetch(qm);
+ 
+ 	hpre_enable_clock_gate(qm);
+ 
+@@ -1366,8 +1367,6 @@ static int hpre_pf_probe_init(struct hpre *hpre)
+ 	if (ret)
+ 		return ret;
+ 
+-	hpre_open_sva_prefetch(qm);
+-
+ 	hisi_qm_dev_err_init(qm);
+ 	ret = hpre_show_last_regs_init(qm);
+ 	if (ret)
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 7921409791fb0..183885619eb8b 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -4363,9 +4363,6 @@ static void qm_restart_prepare(struct hisi_qm *qm)
+ {
+ 	u32 value;
+ 
+-	if (qm->err_ini->open_sva_prefetch)
+-		qm->err_ini->open_sva_prefetch(qm);
+-
+ 	if (qm->ver >= QM_HW_V3)
+ 		return;
+ 
+diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
+index 6aaaaf784ddc0..064fbc8db16fc 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_main.c
++++ b/drivers/crypto/hisilicon/sec2/sec_main.c
+@@ -436,6 +436,45 @@ static void sec_set_endian(struct hisi_qm *qm)
+ 	writel_relaxed(reg, qm->io_base + SEC_CONTROL_REG);
+ }
+ 
++static void sec_close_sva_prefetch(struct hisi_qm *qm)
++{
++	u32 val;
++	int ret;
++
++	if (!test_bit(QM_SUPPORT_SVA_PREFETCH, &qm->caps))
++		return;
++
++	val = readl_relaxed(qm->io_base + SEC_PREFETCH_CFG);
++	val |= SEC_PREFETCH_DISABLE;
++	writel(val, qm->io_base + SEC_PREFETCH_CFG);
++
++	ret = readl_relaxed_poll_timeout(qm->io_base + SEC_SVA_TRANS,
++					 val, !(val & SEC_SVA_DISABLE_READY),
++					 SEC_DELAY_10_US, SEC_POLL_TIMEOUT_US);
++	if (ret)
++		pci_err(qm->pdev, "failed to close sva prefetch\n");
++}
++
++static void sec_open_sva_prefetch(struct hisi_qm *qm)
++{
++	u32 val;
++	int ret;
++
++	if (!test_bit(QM_SUPPORT_SVA_PREFETCH, &qm->caps))
++		return;
++
++	/* Enable prefetch */
++	val = readl_relaxed(qm->io_base + SEC_PREFETCH_CFG);
++	val &= SEC_PREFETCH_ENABLE;
++	writel(val, qm->io_base + SEC_PREFETCH_CFG);
++
++	ret = readl_relaxed_poll_timeout(qm->io_base + SEC_PREFETCH_CFG,
++					 val, !(val & SEC_PREFETCH_DISABLE),
++					 SEC_DELAY_10_US, SEC_POLL_TIMEOUT_US);
++	if (ret)
++		pci_err(qm->pdev, "failed to open sva prefetch\n");
++}
++
+ static void sec_engine_sva_config(struct hisi_qm *qm)
+ {
+ 	u32 reg;
+@@ -469,45 +508,7 @@ static void sec_engine_sva_config(struct hisi_qm *qm)
+ 		writel_relaxed(reg, qm->io_base +
+ 				SEC_INTERFACE_USER_CTRL1_REG);
+ 	}
+-}
+-
+-static void sec_open_sva_prefetch(struct hisi_qm *qm)
+-{
+-	u32 val;
+-	int ret;
+-
+-	if (!test_bit(QM_SUPPORT_SVA_PREFETCH, &qm->caps))
+-		return;
+-
+-	/* Enable prefetch */
+-	val = readl_relaxed(qm->io_base + SEC_PREFETCH_CFG);
+-	val &= SEC_PREFETCH_ENABLE;
+-	writel(val, qm->io_base + SEC_PREFETCH_CFG);
+-
+-	ret = readl_relaxed_poll_timeout(qm->io_base + SEC_PREFETCH_CFG,
+-					 val, !(val & SEC_PREFETCH_DISABLE),
+-					 SEC_DELAY_10_US, SEC_POLL_TIMEOUT_US);
+-	if (ret)
+-		pci_err(qm->pdev, "failed to open sva prefetch\n");
+-}
+-
+-static void sec_close_sva_prefetch(struct hisi_qm *qm)
+-{
+-	u32 val;
+-	int ret;
+-
+-	if (!test_bit(QM_SUPPORT_SVA_PREFETCH, &qm->caps))
+-		return;
+-
+-	val = readl_relaxed(qm->io_base + SEC_PREFETCH_CFG);
+-	val |= SEC_PREFETCH_DISABLE;
+-	writel(val, qm->io_base + SEC_PREFETCH_CFG);
+-
+-	ret = readl_relaxed_poll_timeout(qm->io_base + SEC_SVA_TRANS,
+-					 val, !(val & SEC_SVA_DISABLE_READY),
+-					 SEC_DELAY_10_US, SEC_POLL_TIMEOUT_US);
+-	if (ret)
+-		pci_err(qm->pdev, "failed to close sva prefetch\n");
++	sec_open_sva_prefetch(qm);
+ }
+ 
+ static void sec_enable_clock_gate(struct hisi_qm *qm)
+@@ -1090,7 +1091,6 @@ static int sec_pf_probe_init(struct sec_dev *sec)
+ 	if (ret)
+ 		return ret;
+ 
+-	sec_open_sva_prefetch(qm);
+ 	hisi_qm_dev_err_init(qm);
+ 	sec_debug_regs_clear(qm);
+ 	ret = sec_show_last_regs_init(qm);
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index 6e419c5165cb4..b70aa6032874e 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -577,6 +577,7 @@ static int hisi_zip_set_user_domain_and_cache(struct hisi_qm *qm)
+ 		writel(AXUSER_BASE, base + HZIP_DATA_WUSER_32_63);
+ 		writel(AXUSER_BASE, base + HZIP_SGL_RUSER_32_63);
+ 	}
++	hisi_zip_open_sva_prefetch(qm);
+ 
+ 	/* let's open all compression/decompression cores */
+ 	dcomp_bm = qm->cap_tables.dev_cap_table[ZIP_DECOMP_ENABLE_BITMAP_IDX].cap_val;
+@@ -588,6 +589,7 @@ static int hisi_zip_set_user_domain_and_cache(struct hisi_qm *qm)
+ 	       CQC_CACHE_WB_ENABLE | FIELD_PREP(SQC_CACHE_WB_THRD, 1) |
+ 	       FIELD_PREP(CQC_CACHE_WB_THRD, 1), base + QM_CACHE_CTL);
+ 
++	hisi_zip_set_high_perf(qm);
+ 	hisi_zip_enable_clock_gate(qm);
+ 
+ 	return 0;
+@@ -1172,9 +1174,6 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 	if (ret)
+ 		return ret;
+ 
+-	hisi_zip_set_high_perf(qm);
+-
+-	hisi_zip_open_sva_prefetch(qm);
+ 	hisi_qm_dev_err_init(qm);
+ 	hisi_zip_debug_regs_clear(qm);
+ 
 -- 
-Regards,
+2.51.0
 
-Laurent Pinchart
+
+
