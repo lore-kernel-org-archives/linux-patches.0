@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB83A8F54;
-	Mon, 13 Oct 2025 15:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816A13064B7;
+	Mon, 13 Oct 2025 15:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368380; cv=none; b=hKBUUbb2Qxza8KHYNSEDA7REZ0is2L2ZOFk7QXL8uoXyiEp0eCQh5KDitz+2HznDLnTDAYy7wx4BgIKVn2l7gWVjGydoMwOSNCOQ5MByQXtzyrVbY0jvXc+A8fy3ORhfthXY/jn3ERfKDuLzeK0L5WW5X58Q/sJL7vOwmslilag=
+	t=1760368383; cv=none; b=Nzl+K/A/UUoPSl2augM/u9kG0duQwm1dfnADiod3YeSkr5PQn4RV0zwuGnJJyxG6+QscCW81x7j1WzpcSA1YUaa6P4zwb7U2xO3tzCWmVuYiRYvWQwOkCrZJVP9UZXvnb8pPwg/w5NIoH07iBW9J9JW3bBNmYlZA+eti7T4L5do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368380; c=relaxed/simple;
-	bh=Y9b2BjPwrDel7+3z1hDmTtKuVMElHeNC3SLI0/t6bQk=;
+	s=arc-20240116; t=1760368383; c=relaxed/simple;
+	bh=a2MpA/MNafW3j1LBqrd0ygkoBHZ/L1qjMiBU30B/jFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIuewGO4E1+yR3d9X03PhIw9QGAgbNmfUv4hjXcbgTGww9oLSSYLPZQxs77e1Wl54DjoIWIHM+4Wc5GJuGa6CkjmqgZtd7GK4dzsae/g9cDujJEUf7eDn5YRe3SuesNs2tU2tS3/KSg/kk/iD3n6duvFxijdiCSNkCGHLxbXpDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHTPT/Yv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CENlQqnF6Xmfz/3lr7Buqh7yGj+M9qwdM/EWTqmQvHgO1i4UvAkABX17UfjOdx2vO8wHla4UihIZyBOW2gcS0CTqKRNVe0s+t0GGtifgeOr38KYzExe8Q4eujZIS6hjlkZY4sIBlC19qQsbNQ4WkBop9BqYpgizaUcxf++f/qvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk4a36u9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHTPT/Yv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471F7C4CEE7;
-	Mon, 13 Oct 2025 15:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk4a36u9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8EDC4CEFE;
+	Mon, 13 Oct 2025 15:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368380;
-	bh=Y9b2BjPwrDel7+3z1hDmTtKuVMElHeNC3SLI0/t6bQk=;
+	s=korg; t=1760368383;
+	bh=a2MpA/MNafW3j1LBqrd0ygkoBHZ/L1qjMiBU30B/jFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHTPT/YvritLxJGDXvQiYTRRtPbHE59EhpBOJrEp+wEGqI0fczG0qvh+jUsqa6knT
-	 EheOttmVIiO0lBWKmnNpwGMyhWKFojOsXHjyySTLy5B+XLXA81HTlJauw8e/pDmkUd
-	 RY4beQxtaZH+/QtzrXGDrhJyhhjW5dZYOvEvig7M=
+	b=tk4a36u9Wpq4+LSryIefrVLbFzPuNWJ45WyESzQih0TZ9fucAkrtGQwBczAMZlAHQ
+	 3obQxn62VhPONj3YjqxBX9yNRA7YHER57rEcpM1IJR0/ZrM/cxkmSnoDDjNnzLvYd7
+	 gA6fZsQ3MDCgL8v6a2pFDfpc3HYJdD1LnPIFoVGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/262] RDMA/mlx5: Fix vport loopback forcing for MPV device
-Date: Mon, 13 Oct 2025 16:44:09 +0200
-Message-ID: <20251013144329.980486659@linuxfoundation.org>
+Subject: [PATCH 6.12 108/262] PCI/ACPI: Fix pci_acpi_preserve_config() memory leak
+Date: Mon, 13 Oct 2025 16:44:10 +0200
+Message-ID: <20251013144330.017141996@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,115 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-[ Upstream commit 08aae7860450c89eebbc6fd4d38416e53c7a33d2 ]
+[ Upstream commit fac679df7580979174c90303f004b09cdc6f086f ]
 
-Previously loopback for MPV was supposed to be permanently enabled,
-however other driver flows were able to over-ride that configuration and
-disable it.
+pci_acpi_preserve_config() leaks memory by returning early without freeing
+the ACPI object on success. Fix that by always freeing the obj, which is
+not needed by the caller.
 
-Add force_lb parameter that indicates that loopback should always be
-enabled which prevents all other driver flows from disabling it.
-
-Fixes: a9a9e68954f2 ("RDMA/mlx5: Fix vport loopback for MPV device")
-Link: https://patch.msgid.link/r/cfc6b1f0f99f8100b087483cc14da6025317f901.1755088808.git.leon@kernel.org
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9d7d5db8e78e ("PCI: Move PRESERVE_BOOT_CONFIG _DSM evaluation to pci_register_host_bridge()")
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250825214642.142135-1-nirmoyd@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c    | 19 +++++++++++++++----
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 +
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/pci/pci-acpi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 29d0bc583169b..f3e58797705d7 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1813,7 +1813,8 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
+diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
+index 99c58ee09fbb0..0cd8a75e22580 100644
+--- a/drivers/pci/pci-acpi.c
++++ b/drivers/pci/pci-acpi.c
+@@ -122,6 +122,8 @@ phys_addr_t acpi_pci_root_get_mcfg_addr(acpi_handle handle)
+ 
+ bool pci_acpi_preserve_config(struct pci_host_bridge *host_bridge)
+ {
++	bool ret = false;
++
+ 	if (ACPI_HANDLE(&host_bridge->dev)) {
+ 		union acpi_object *obj;
+ 
+@@ -135,11 +137,11 @@ bool pci_acpi_preserve_config(struct pci_host_bridge *host_bridge)
+ 					      1, DSM_PCI_PRESERVE_BOOT_CONFIG,
+ 					      NULL, ACPI_TYPE_INTEGER);
+ 		if (obj && obj->integer.value == 0)
+-			return true;
++			ret = true;
+ 		ACPI_FREE(obj);
+ 	}
+ 
+-	return false;
++	return ret;
  }
  
- static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
--				struct mlx5_core_dev *slave)
-+				struct mlx5_core_dev *slave,
-+				struct mlx5_ib_lb_state *lb_state)
- {
- 	int err;
- 
-@@ -1825,6 +1826,7 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
- 	if (err)
- 		goto out;
- 
-+	lb_state->force_enable = true;
- 	return 0;
- 
- out:
-@@ -1833,16 +1835,22 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
- }
- 
- static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
--				  struct mlx5_core_dev *slave)
-+				  struct mlx5_core_dev *slave,
-+				  struct mlx5_ib_lb_state *lb_state)
- {
- 	mlx5_nic_vport_update_local_lb(slave, false);
- 	mlx5_nic_vport_update_local_lb(master, false);
-+
-+	lb_state->force_enable = false;
- }
- 
- int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
- 	int err = 0;
- 
-+	if (dev->lb.force_enable)
-+		return 0;
-+
- 	mutex_lock(&dev->lb.mutex);
- 	if (td)
- 		dev->lb.user_td++;
-@@ -1864,6 +1872,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 
- void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
-+	if (dev->lb.force_enable)
-+		return;
-+
- 	mutex_lock(&dev->lb.mutex);
- 	if (td)
- 		dev->lb.user_td--;
-@@ -3521,7 +3532,7 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
- 
--	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
-+	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
- 
- 	mlx5_core_mp_event_replay(ibdev->mdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
-@@ -3618,7 +3629,7 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
- 				  &key);
- 
--	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
-+	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
- 	if (err)
- 		goto unbind;
- 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 29bde64ea1eac..f49cb588a856d 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -1083,6 +1083,7 @@ struct mlx5_ib_lb_state {
- 	u32			user_td;
- 	int			qps;
- 	bool			enabled;
-+	bool			force_enable;
- };
- 
- struct mlx5_ib_pf_eq {
+ /* _HPX PCI Setting Record (Type 0); same as _HPP */
 -- 
 2.51.0
 
