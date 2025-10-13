@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D50B27055F;
-	Mon, 13 Oct 2025 15:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4313F2EB5D2;
+	Mon, 13 Oct 2025 15:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370286; cv=none; b=jk4gGRiVdrU0u7iyRl7jJZdwygCZe76mDTLjstvkmCVxuurHsgwkhIHIJdJ/qdAMyQgmTLGIlQoFhoiA5ItyUjYVXPkAe1NiqHf9ujdPT1byuYu8kWAX+8I7jzBTN5fhHWr9GduWuF0nG7jcToSfVk0sXd/Ve+DJNd8DOKu2iCo=
+	t=1760370289; cv=none; b=dH2mKLUTPTfVi2gLzVBA8lfeo1bFeMyjsxPSRNEI8bQXikb9RzGbSH63mRa1S7M3yovkMwurA0hfk/qoGIMd+A3cfkflsJ75rO+0YWhRV34B6+SX3InrVL3ioqqvwjIIbAFMVjoSkeY3XOnpjaXn5eC8GJ/7UwLYsgkk7YBaiE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370286; c=relaxed/simple;
-	bh=IzSLF7yNsi1ApJqcysZgZvXKAZV8EosL03eOeitA1aI=;
+	s=arc-20240116; t=1760370289; c=relaxed/simple;
+	bh=QoBWIqo+ddnGGLge3M8t/JiZ+oTb870Wb2w7fxycdCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXyR0rJiaV9scwJDvl3USPUbuF2q+il0Y/sMfbFUUNo9utJX8y2BdAUfIoNKZ8r+JTuc+JcfP4OhWG245t/kdAAckrae9QfWoEI1IOTpDQAYBmfVhKaNqQsTdUFQy0R3xMDMgEp404NikeSjRvD8cU3JD5RQCF3IMoFXGFAIGNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+esT7Mr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fg3zc+OtahYU3XHZjkTeB5I9bi2hHJ/6XHaRGDfnhMG7gkAFtVfbeAeXL3FQJ/h+gNX+17WezDkifysDcNa/Ek8xfdb0ZpjhcNMFGoj3TJg2WguetUWo2JZjayiHmrOJhw+fBXgMSEDVrAB+ykz5HXxrhklacjYZ1DF8cjKgvhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnh1Ofoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+esT7Mr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D411C4CEE7;
-	Mon, 13 Oct 2025 15:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnh1Ofoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC3EC2BCB5;
+	Mon, 13 Oct 2025 15:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370285;
-	bh=IzSLF7yNsi1ApJqcysZgZvXKAZV8EosL03eOeitA1aI=;
+	s=korg; t=1760370288;
+	bh=QoBWIqo+ddnGGLge3M8t/JiZ+oTb870Wb2w7fxycdCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+esT7MrK4aSXdaVMu5hxMKZXA++whL7/LvsYyuw3wgS20oTzgs02DNkVDdA2tAXH
-	 xij3mwiqZDz3AcE2l/1T+h4A0OF8GgaAJ912UBcdayORPHqOVfrHDyWruittln50jQ
-	 JjapdZw5dNSyt9l8OyQPaRSxGqDk3A5n5YCyCoZE=
+	b=dnh1OfoyY2Y6oKVjyLSdpSrM4byOR2SfvyF5PRgJsnF4Vc7sCX73zkaLTXzRY5vKP
+	 J989aF3cL5HHDvDLpwAVuqg9bu5DFIM40vRChuJkeU7LUIVmieHMu0nYAD/3WRu7Di
+	 1aYMNlsunFBvCM4JcXoG7jb19mQNuFYemtohe4Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
 	Ling Xu <quic_lxu5@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.17 543/563] misc: fastrpc: Save actual DMA size in fastrpc_map structure
-Date: Mon, 13 Oct 2025 16:46:44 +0200
-Message-ID: <20251013144430.979602493@linuxfoundation.org>
+Subject: [PATCH 6.17 544/563] misc: fastrpc: Fix fastrpc_map_lookup operation
+Date: Mon, 13 Oct 2025 16:46:45 +0200
+Message-ID: <20251013144431.015409406@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -56,109 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ling Xu <quic_lxu5@quicinc.com>
 
-commit 8b5b456222fd604079b5cf2af1f25ad690f54a25 upstream.
+commit 9031626ade38b092b72638dfe0c6ffce8d8acd43 upstream.
 
-For user passed fd buffer, map is created using DMA calls. The
-map related information is stored in fastrpc_map structure. The
-actual DMA size is not stored in the structure. Store the actual
-size of buffer and check it against the user passed size.
+Fastrpc driver creates maps for user allocated fd buffers. Before
+creating a new map, the map list is checked for any already existing
+maps using map fd. Checking with just map fd is not sufficient as the
+user can pass offsetted buffer with less size when the map is created
+and then a larger size the next time which could result in memory
+issues. Check for dma_buf object also when looking up for the map.
 
 Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 Cc: stable@kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Co-developed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://lore.kernel.org/r/20250912131236.303102-2-srini@kernel.org
+Link: https://lore.kernel.org/r/20250912131236.303102-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/misc/fastrpc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -323,11 +323,11 @@ static void fastrpc_free_map(struct kref
- 
- 			perm.vmid = QCOM_SCM_VMID_HLOS;
- 			perm.perm = QCOM_SCM_PERM_RWX;
--			err = qcom_scm_assign_mem(map->phys, map->size,
-+			err = qcom_scm_assign_mem(map->phys, map->len,
- 				&src_perms, &perm, 1);
- 			if (err) {
- 				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
--						map->phys, map->size, err);
-+						map->phys, map->len, err);
- 				return;
- 			}
- 		}
-@@ -758,7 +758,8 @@ static int fastrpc_map_create(struct fas
+@@ -367,11 +367,16 @@ static int fastrpc_map_lookup(struct fas
+ {
  	struct fastrpc_session_ctx *sess = fl->sctx;
  	struct fastrpc_map *map = NULL;
- 	struct sg_table *table;
--	int err = 0;
-+	struct scatterlist *sgl = NULL;
-+	int err = 0, sgl_index = 0;
++	struct dma_buf *buf;
+ 	int ret = -ENOENT;
  
- 	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
- 		return 0;
-@@ -798,7 +799,15 @@ static int fastrpc_map_create(struct fas
- 		map->phys = sg_dma_address(map->table->sgl);
- 		map->phys += ((u64)fl->sctx->sid << 32);
- 	}
--	map->size = len;
-+	for_each_sg(map->table->sgl, sgl, map->table->nents,
-+		sgl_index)
-+		map->size += sg_dma_len(sgl);
-+	if (len > map->size) {
-+		dev_dbg(sess->dev, "Bad size passed len 0x%llx map size 0x%llx\n",
-+				len, map->size);
-+		err = -EINVAL;
-+		goto map_err;
-+	}
- 	map->va = sg_virt(map->table->sgl);
- 	map->len = len;
++	buf = dma_buf_get(fd);
++	if (IS_ERR(buf))
++		return PTR_ERR(buf);
++
+ 	spin_lock(&fl->lock);
+ 	list_for_each_entry(map, &fl->maps, node) {
+-		if (map->fd != fd)
++		if (map->fd != fd || map->buf != buf)
+ 			continue;
  
-@@ -815,10 +824,10 @@ static int fastrpc_map_create(struct fas
- 		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
- 		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
- 		map->attr = attr;
--		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
-+		err = qcom_scm_assign_mem(map->phys, (u64)map->len, &src_perms, dst_perms, 2);
- 		if (err) {
- 			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
--					map->phys, map->size, err);
-+					map->phys, map->len, err);
- 			goto map_err;
- 		}
- 	}
-@@ -2046,7 +2055,7 @@ static int fastrpc_req_mem_map(struct fa
- 	args[0].length = sizeof(req_msg);
- 
- 	pages.addr = map->phys;
--	pages.size = map->size;
-+	pages.size = map->len;
- 
- 	args[1].ptr = (u64) (uintptr_t) &pages;
- 	args[1].length = sizeof(pages);
-@@ -2061,7 +2070,7 @@ static int fastrpc_req_mem_map(struct fa
- 	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc, &args[0]);
- 	if (err) {
- 		dev_err(dev, "mem mmap error, fd %d, vaddr %llx, size %lld\n",
--			req.fd, req.vaddrin, map->size);
-+			req.fd, req.vaddrin, map->len);
- 		goto err_invoke;
- 	}
- 
-@@ -2074,7 +2083,7 @@ static int fastrpc_req_mem_map(struct fa
- 	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
- 		/* unmap the memory and release the buffer */
- 		req_unmap.vaddr = (uintptr_t) rsp_msg.vaddr;
--		req_unmap.length = map->size;
-+		req_unmap.length = map->len;
- 		fastrpc_req_mem_unmap_impl(fl, &req_unmap);
- 		return -EFAULT;
- 	}
+ 		if (take_ref) {
 
 
