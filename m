@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE02E308F01;
-	Mon, 13 Oct 2025 15:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978502949E0;
+	Mon, 13 Oct 2025 15:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370275; cv=none; b=NoCrxhtvh8QGxiEBZo/RdAwxpcS8z5IYqW03BDAOjyRlNu3RRqIk3xthrh58V6sXnOabq/FN1D2GWVv/IUCX8ITMCC5WIkmYFr0Q1aICHHYDUh3P1+wbC7JAeKlQW4f+i8Uk8dy+XvU3j3eqUImLMdqnPRx4T2YYmLZrRBDWasw=
+	t=1760370277; cv=none; b=bAiIazllhGOGY014AZtzTO/9WfAeDVrbS4leK7AFPVLBO6eskETQmjPslHP7ckOoNK4Ow3dlHVi+sBAtdGKAKfl1UMNvb78ScF0Xe5mghQtyIg08rSpDPoKKx6/crK8tgvIVbBr/uOQccygGX33KBWVTnp2k74U0a1zl0cqK6lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370275; c=relaxed/simple;
-	bh=PIuGIzhnIHbntyeEHT8BlkjIpcSm/aeQ8EYh61h9Kyc=;
+	s=arc-20240116; t=1760370277; c=relaxed/simple;
+	bh=N0H5+HZjh3K4wjMY0RaCXssZuP8CGjD1VaDf86paLtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQLTd+NiQjobXrkb+m4AlykUzmik8tp5sPdOYxzyfLVBzircqrakG70pe5hIDi6lAnKrLe3kEbhZdylEQubqZfOXDAVlzVkQBG27TLTcfmaz/JBKBdTksQ9EWEo2uqaRJsbM1n04C8UGjcEDug+4gx1P3kIJzC48RH4r+f5MiMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X36cfrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t0iflZxgAOqTfNvXqDv8PO3sm9L2WQCiiLGpDW6JcQirVlpIypVUU3RWg1F3ywGYT4Lq1/eNbp/k7pkidnLcC6diIRZO23ZIYKfSWjr4nDggmT5k0xHKPvK59UJH4787ZyGrHB3xVQRFnqCwphDsVz1w/XpYbEdlx1qufhNFFxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ck6hHm8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X36cfrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D010C4CEE7;
-	Mon, 13 Oct 2025 15:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ck6hHm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F15C4CEE7;
+	Mon, 13 Oct 2025 15:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370274;
-	bh=PIuGIzhnIHbntyeEHT8BlkjIpcSm/aeQ8EYh61h9Kyc=;
+	s=korg; t=1760370277;
+	bh=N0H5+HZjh3K4wjMY0RaCXssZuP8CGjD1VaDf86paLtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1X36cfrdlGZuCqZO0PTdWsyr54BXYIWFcw+w+6hwrpz8V5CR6kWcdZNQO/jUMwIqh
-	 QOiy8Sd+rLJZPObyETpyl/O1LQRlFPmb9/aToGwoeJ3IMKgUdHTKhduq62Gf6RvYuW
-	 sFOuBbETnGwIhJZEUR6M0HSIpqGxoxKhZCL7ktSc=
+	b=0Ck6hHm8XHv84/T5R/ZGuo+DxEp1So68i4FzTj6V5sAv5l5tVp7w3vlqnoi2jJFBv
+	 sLDy5JTc6WBgYIyERMCxMa6SqIo1qLBZID2OyzEPtv90rAKpl3Id9TQXH+FWEMPqLi
+	 q2Ac434CFfJN10WwbhPCINQK8myhfvCtui5yvNKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Huhardeaux <tech@tootai.net>,
-	Janne Grunau <j@jannau.net>,
-	Hans de Goede <hansg@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.17 539/563] fbdev: simplefb: Fix use after free in simplefb_detach_genpds()
-Date: Mon, 13 Oct 2025 16:46:40 +0200
-Message-ID: <20251013144430.834539197@linuxfoundation.org>
+	Yang Shi <yang@os.amperecomputing.com>,
+	Carl Worth <carl@os.amperecomputing.com>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 540/563] mm: hugetlb: avoid soft lockup when mprotect to large memory area
+Date: Mon, 13 Oct 2025 16:46:41 +0200
+Message-ID: <20251013144430.870145180@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,211 +53,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Yang Shi <yang@os.amperecomputing.com>
 
-commit da1bb9135213744e7ec398826c8f2e843de4fb94 upstream.
+commit f52ce0ea90c83a28904c7cc203a70e6434adfecb upstream.
 
-The pm_domain cleanup can not be devres managed as it uses struct
-simplefb_par which is allocated within struct fb_info by
-framebuffer_alloc(). This allocation is explicitly freed by
-unregister_framebuffer() in simplefb_remove().
-Devres managed cleanup runs after the device remove call and thus can no
-longer access struct simplefb_par.
-Call simplefb_detach_genpds() explicitly from simplefb_destroy() like
-the cleanup functions for clocks and regulators.
+When calling mprotect() to a large hugetlb memory area in our customer's
+workload (~300GB hugetlb memory), soft lockup was observed:
 
-Fixes an use after free on M2 Mac mini during
-aperture_remove_conflicting_devices() using the downstream asahi kernel
-with Debian's kernel config. For unknown reasons this started to
-consistently dereference an invalid pointer in v6.16.3 based kernels.
+watchdog: BUG: soft lockup - CPU#98 stuck for 23s! [t2_new_sysv:126916]
 
-[    6.736134] BUG: KASAN: slab-use-after-free in simplefb_detach_genpds+0x58/0x220
-[    6.743545] Read of size 4 at addr ffff8000304743f0 by task (udev-worker)/227
-[    6.750697]
-[    6.752182] CPU: 6 UID: 0 PID: 227 Comm: (udev-worker) Tainted: G S                  6.16.3-asahi+ #16 PREEMPTLAZY
-[    6.752186] Tainted: [S]=CPU_OUT_OF_SPEC
-[    6.752187] Hardware name: Apple Mac mini (M2, 2023) (DT)
-[    6.752189] Call trace:
-[    6.752190]  show_stack+0x34/0x98 (C)
-[    6.752194]  dump_stack_lvl+0x60/0x80
-[    6.752197]  print_report+0x17c/0x4d8
-[    6.752201]  kasan_report+0xb4/0x100
-[    6.752206]  __asan_report_load4_noabort+0x20/0x30
-[    6.752209]  simplefb_detach_genpds+0x58/0x220
-[    6.752213]  devm_action_release+0x50/0x98
-[    6.752216]  release_nodes+0xd0/0x2c8
-[    6.752219]  devres_release_all+0xfc/0x178
-[    6.752221]  device_unbind_cleanup+0x28/0x168
-[    6.752224]  device_release_driver_internal+0x34c/0x470
-[    6.752228]  device_release_driver+0x20/0x38
-[    6.752231]  bus_remove_device+0x1b0/0x380
-[    6.752234]  device_del+0x314/0x820
-[    6.752238]  platform_device_del+0x3c/0x1e8
-[    6.752242]  platform_device_unregister+0x20/0x50
-[    6.752246]  aperture_detach_platform_device+0x1c/0x30
-[    6.752250]  aperture_detach_devices+0x16c/0x290
-[    6.752253]  aperture_remove_conflicting_devices+0x34/0x50
-...
-[    6.752343]
-[    6.967409] Allocated by task 62:
-[    6.970724]  kasan_save_stack+0x3c/0x70
-[    6.974560]  kasan_save_track+0x20/0x40
-[    6.978397]  kasan_save_alloc_info+0x40/0x58
-[    6.982670]  __kasan_kmalloc+0xd4/0xd8
-[    6.986420]  __kmalloc_noprof+0x194/0x540
-[    6.990432]  framebuffer_alloc+0xc8/0x130
-[    6.994444]  simplefb_probe+0x258/0x2378
-...
-[    7.054356]
-[    7.055838] Freed by task 227:
-[    7.058891]  kasan_save_stack+0x3c/0x70
-[    7.062727]  kasan_save_track+0x20/0x40
-[    7.066565]  kasan_save_free_info+0x4c/0x80
-[    7.070751]  __kasan_slab_free+0x6c/0xa0
-[    7.074675]  kfree+0x10c/0x380
-[    7.077727]  framebuffer_release+0x5c/0x90
-[    7.081826]  simplefb_destroy+0x1b4/0x2c0
-[    7.085837]  put_fb_info+0x98/0x100
-[    7.089326]  unregister_framebuffer+0x178/0x320
-[    7.093861]  simplefb_remove+0x3c/0x60
-[    7.097611]  platform_remove+0x60/0x98
-[    7.101361]  device_remove+0xb8/0x160
-[    7.105024]  device_release_driver_internal+0x2fc/0x470
-[    7.110256]  device_release_driver+0x20/0x38
-[    7.114529]  bus_remove_device+0x1b0/0x380
-[    7.118628]  device_del+0x314/0x820
-[    7.122116]  platform_device_del+0x3c/0x1e8
-[    7.126302]  platform_device_unregister+0x20/0x50
-[    7.131012]  aperture_detach_platform_device+0x1c/0x30
-[    7.136157]  aperture_detach_devices+0x16c/0x290
-[    7.140779]  aperture_remove_conflicting_devices+0x34/0x50
-...
+CPU: 98 PID: 126916 Comm: t2_new_sysv Kdump: loaded Not tainted 6.17-rc7
+Hardware name: GIGACOMPUTING R2A3-T40-AAV1/Jefferson CIO, BIOS 5.4.4.1 07/15/2025
+pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : mte_clear_page_tags+0x14/0x24
+lr : mte_sync_tags+0x1c0/0x240
+sp : ffff80003150bb80
+x29: ffff80003150bb80 x28: ffff00739e9705a8 x27: 0000ffd2d6a00000
+x26: 0000ff8e4bc00000 x25: 00e80046cde00f45 x24: 0000000000022458
+x23: 0000000000000000 x22: 0000000000000004 x21: 000000011b380000
+x20: ffff000000000000 x19: 000000011b379f40 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc875e0aa5e2c
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : fffffc01ce7a5c00 x4 : 00000000046cde00 x3 : fffffc0000000000
+x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff0046cde7c000
 
-Reported-by: Daniel Huhardeaux <tech@tootai.net>
-Cc: stable@vger.kernel.org
-Fixes: 92a511a568e44 ("fbdev/simplefb: Add support for generic power-domains")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Call trace:
+  mte_clear_page_tags+0x14/0x24
+  set_huge_pte_at+0x25c/0x280
+  hugetlb_change_protection+0x220/0x430
+  change_protection+0x5c/0x8c
+  mprotect_fixup+0x10c/0x294
+  do_mprotect_pkey.constprop.0+0x2e0/0x3d4
+  __arm64_sys_mprotect+0x24/0x44
+  invoke_syscall+0x50/0x160
+  el0_svc_common+0x48/0x144
+  do_el0_svc+0x30/0xe0
+  el0_svc+0x30/0xf0
+  el0t_64_sync_handler+0xc4/0x148
+  el0t_64_sync+0x1a4/0x1a8
+
+Soft lockup is not triggered with THP or base page because there is
+cond_resched() called for each PMD size.
+
+Although the soft lockup was triggered by MTE, it should be not MTE
+specific.  The other processing which takes long time in the loop may
+trigger soft lockup too.
+
+So add cond_resched() for hugetlb to avoid soft lockup.
+
+Link: https://lkml.kernel.org/r/20250929202402.1663290-1-yang@os.amperecomputing.com
+Fixes: 8f860591ffb2 ("[PATCH] Enable mprotect on huge pages")
+Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
+Tested-by: Carl Worth <carl@os.amperecomputing.com>
+Reviewed-by: Christoph Lameter (Ampere) <cl@gentwo.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/simplefb.c |   31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ mm/hugetlb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/video/fbdev/simplefb.c
-+++ b/drivers/video/fbdev/simplefb.c
-@@ -93,6 +93,7 @@ struct simplefb_par {
- 
- static void simplefb_clocks_destroy(struct simplefb_par *par);
- static void simplefb_regulators_destroy(struct simplefb_par *par);
-+static void simplefb_detach_genpds(void *res);
- 
- /*
-  * fb_ops.fb_destroy is called by the last put_fb_info() call at the end
-@@ -105,6 +106,7 @@ static void simplefb_destroy(struct fb_i
- 
- 	simplefb_regulators_destroy(info->par);
- 	simplefb_clocks_destroy(info->par);
-+	simplefb_detach_genpds(info->par);
- 	if (info->screen_base)
- 		iounmap(info->screen_base);
- 
-@@ -445,13 +447,14 @@ static void simplefb_detach_genpds(void
- 		if (!IS_ERR_OR_NULL(par->genpds[i]))
- 			dev_pm_domain_detach(par->genpds[i], true);
- 	}
-+	par->num_genpds = 0;
- }
- 
- static int simplefb_attach_genpds(struct simplefb_par *par,
- 				  struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	unsigned int i;
-+	unsigned int i, num_genpds;
- 	int err;
- 
- 	err = of_count_phandle_with_args(dev->of_node, "power-domains",
-@@ -465,26 +468,35 @@ static int simplefb_attach_genpds(struct
- 		return err;
- 	}
- 
--	par->num_genpds = err;
-+	num_genpds = err;
- 
- 	/*
- 	 * Single power-domain devices are handled by the driver core, so
- 	 * nothing to do here.
- 	 */
--	if (par->num_genpds <= 1)
-+	if (num_genpds <= 1) {
-+		par->num_genpds = num_genpds;
- 		return 0;
-+	}
- 
--	par->genpds = devm_kcalloc(dev, par->num_genpds, sizeof(*par->genpds),
-+	par->genpds = devm_kcalloc(dev, num_genpds, sizeof(*par->genpds),
- 				   GFP_KERNEL);
- 	if (!par->genpds)
- 		return -ENOMEM;
- 
--	par->genpd_links = devm_kcalloc(dev, par->num_genpds,
-+	par->genpd_links = devm_kcalloc(dev, num_genpds,
- 					sizeof(*par->genpd_links),
- 					GFP_KERNEL);
- 	if (!par->genpd_links)
- 		return -ENOMEM;
- 
-+	/*
-+	 * Set par->num_genpds only after genpds and genpd_links are allocated
-+	 * to exit early from simplefb_detach_genpds() without full
-+	 * initialisation.
-+	 */
-+	par->num_genpds = num_genpds;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7203,6 +7203,8 @@ long hugetlb_change_protection(struct vm
+ 						psize);
+ 		}
+ 		spin_unlock(ptl);
 +
- 	for (i = 0; i < par->num_genpds; i++) {
- 		par->genpds[i] = dev_pm_domain_attach_by_id(dev, i);
- 		if (IS_ERR(par->genpds[i])) {
-@@ -506,9 +518,10 @@ static int simplefb_attach_genpds(struct
- 			dev_warn(dev, "failed to link power-domain %u\n", i);
++		cond_resched();
  	}
- 
--	return devm_add_action_or_reset(dev, simplefb_detach_genpds, par);
-+	return 0;
- }
- #else
-+static void simplefb_detach_genpds(void *res) { }
- static int simplefb_attach_genpds(struct simplefb_par *par,
- 				  struct platform_device *pdev)
- {
-@@ -622,18 +635,20 @@ static int simplefb_probe(struct platfor
- 	ret = devm_aperture_acquire_for_platform_device(pdev, par->base, par->size);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Unable to acquire aperture: %d\n", ret);
--		goto error_regulators;
-+		goto error_genpds;
- 	}
- 	ret = register_framebuffer(info);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Unable to register simplefb: %d\n", ret);
--		goto error_regulators;
-+		goto error_genpds;
- 	}
- 
- 	dev_info(&pdev->dev, "fb%d: simplefb registered!\n", info->node);
- 
- 	return 0;
- 
-+error_genpds:
-+	simplefb_detach_genpds(par);
- error_regulators:
- 	simplefb_regulators_destroy(par);
- error_clocks:
+ 	/*
+ 	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
 
 
