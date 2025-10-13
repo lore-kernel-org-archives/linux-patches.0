@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9111130C62B;
-	Mon, 13 Oct 2025 15:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B77309EE9;
+	Mon, 13 Oct 2025 15:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369827; cv=none; b=Shaa2CTYM0887omIuOo0NWEoCNBqkgvZ7X7HBkaMsq8+eMNCi0vWjhxhzKAu/MP8z+/Kr8AUNinXRaolHfMx3N32GldvVfQxazCYjwqT2Tstw8eaNp0NxUB4SnyCF3ore9ygkMAdAsvPaYPZxbhOutYzCrr4T42nFNugV3ir/w4=
+	t=1760369830; cv=none; b=JXcKRSLoEDi1tDqlAKF+uk00AKRZ2/xhnv+isirwO0F0nN904du8ZJi1y7jPSZTCCIVz/BHdHmm+1pIgxYhVgAD0FsemL27puuXPx3WkmvjDdGdEGQFp+1Ok+mOZrVWIAHK156F8ciMcfZbOrsG8M7JM/04u/bvT5gElP1ONHyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369827; c=relaxed/simple;
-	bh=2C8x6WAEQHwOL4lP1+nooMQp7dr1UsgHSTtD23MyfhE=;
+	s=arc-20240116; t=1760369830; c=relaxed/simple;
+	bh=ilOetQwMP1bXYYzmHAn1C8HcALL9pJE1yWGePkFuj4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ky2k6lrsCaji2XJbo18lsyLwYU4E/9TL6Q08yiQKNmgecOs5+E324avzQ4r5VK6Xhh4+Dp6R/5IJ0OJ7uRqovxp+Hg/nlu9t/QaYeOdcYyc2Y1TPFYCOLNRQD1vdvQxhWMpEgl++MH2F2gcft/MA9HQcb7ZjW5i4zTvsVxXz5ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDC2vYzK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pu03pvqAGD7MMxJTKA3jrFFfgMJ60WGnuoTjGp9X6zg7XdJKtmnMRobHpOivaCz26Nn+zv8gT1a+KO5hgMwLLtE5V9HsBXGWpLa3LI17IMOVKatQVo4qnhhFyJVsK5oPqPFoVJA6X22Phzdkb8MkszZ4npLytH8KkzwtbQlyCTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMyEQsex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDC2vYzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC4EC4CEE7;
-	Mon, 13 Oct 2025 15:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMyEQsex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07664C4CEE7;
+	Mon, 13 Oct 2025 15:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369827;
-	bh=2C8x6WAEQHwOL4lP1+nooMQp7dr1UsgHSTtD23MyfhE=;
+	s=korg; t=1760369830;
+	bh=ilOetQwMP1bXYYzmHAn1C8HcALL9pJE1yWGePkFuj4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDC2vYzKe4/3chtyILYQM6oib2rbRiNYPp+pVUuUmXAFIvJOynQN8hQ2E8vRxg4a8
-	 xq8Vc2LmDI1qtW/Aw+UmkDKxhHEnvcEixdR2x1opsL6Vv2/fGMqOqaYsiBTj7w+m38
-	 Vj6NO4++Li8E+3vx8iT86E7K4QXVzoeuXlXUbHOQ=
+	b=uMyEQsexLmg+TsjZPn//dqnseuLgyK2GkMR2+WkdxPrzV9xoKo/DAY3br4nnR5OXr
+	 qr3JHBBrS37/iyg/9VdPgJlFv4XYKm18Bip8vXkajDsUZSks8UkbmWlk3w25efreL2
+	 6/HBH0lRj44s1tI0xNjxp9rVF4QORiZS9Nc08L9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 340/563] iio: consumers: Fix handling of negative channel scale in iio_convert_raw_to_processed()
-Date: Mon, 13 Oct 2025 16:43:21 +0200
-Message-ID: <20251013144423.586677210@linuxfoundation.org>
+Subject: [PATCH 6.17 376/563] HID: hidraw: tighten ioctl command parsing
+Date: Mon, 13 Oct 2025 16:43:57 +0200
+Message-ID: <20251013144424.897853136@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,118 +52,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 0f85406bf830eb8747dd555ab53c9d97ee4af293 ]
+[ Upstream commit 75d5546f60b36900051d75ee623fceccbeb6750c ]
 
-There is an issue with the handling of negative channel scales
-in iio_convert_raw_to_processed_unlocked() when the channel-scale
-is of the IIO_VAL_INT_PLUS_[MICRO|NANO] type:
+The handling for variable-length ioctl commands in hidraw_ioctl() is
+rather complex and the check for the data direction is incomplete.
 
-Things work for channel-scale values > -1.0 and < 0.0 because of
-the use of signed values in:
+Simplify this code by factoring out the various ioctls grouped by dir
+and size, and using a switch() statement with the size masked out, to
+ensure the rest of the command is correctly matched.
 
-	*processed += div_s64(raw64 * (s64)scale_val2 * scale, 1000000LL);
-
-Things will break however for scale values < -1.0. Lets for example say
-that raw = 2, (caller-provided)scale = 10 and (channel)scale_val = -1.5.
-
-The result should then be 2 * 10 * -1.5 = -30.
-
-channel-scale = -1.5 means scale_val = -1 and scale_val2 = 500000,
-now lets see what gets stored in processed:
-
-1. *processed = raw64 * scale_val * scale;
-2. *processed += raw64 * scale_val2 * scale / 1000000LL;
-
-1. Sets processed to 2 * -1 * 10 = -20
-2. Adds 2 * 500000 * 10 / 1000000 = 10 to processed
-
-And the end result is processed = -20 + 10 = -10, which is not correct.
-
-Fix this by always using the abs value of both scale_val and scale_val2
-and if either is negative multiply the end-result by -1.
-
-Note there seems to be an unwritten rule about negative
-IIO_VAL_INT_PLUS_[MICRO|NANO] values that:
-
-i.   values > -1.0 and < 0.0 are written as val=0 val2=-xxx
-ii.  values <= -1.0 are written as val=-xxx val2=xxx
-
-But iio_format_value() will also correctly display a third option:
-
-iii. values <= -1.0 written as val=-xxx val2=-xxx
-
-Since iio_format_value() uses abs(val) when val2 < 0.
-
-This fix also makes iio_convert_raw_to_processed() properly handle
-channel-scales using this third option.
-
-Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
-Cc: Matteo Martelli <matteomartelli3@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250831104825.15097-2-hansg@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 9188e79ec3fd ("HID: add phys and name ioctls to hidraw")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/inkern.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/hid/hidraw.c        | 224 ++++++++++++++++++++----------------
+ include/uapi/linux/hidraw.h |   2 +
+ 2 files changed, 124 insertions(+), 102 deletions(-)
 
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index c174ebb7d5e6d..d36a80a7b8a93 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -11,6 +11,7 @@
- #include <linux/mutex.h>
- #include <linux/property.h>
- #include <linux/slab.h>
-+#include <linux/units.h>
+diff --git a/drivers/hid/hidraw.c b/drivers/hid/hidraw.c
+index c887f48756f4b..bbd6f23bce789 100644
+--- a/drivers/hid/hidraw.c
++++ b/drivers/hid/hidraw.c
+@@ -394,27 +394,15 @@ static int hidraw_revoke(struct hidraw_list *list)
+ 	return 0;
+ }
  
- #include <linux/iio/iio.h>
- #include <linux/iio/iio-opaque.h>
-@@ -604,7 +605,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
+-static long hidraw_ioctl(struct file *file, unsigned int cmd,
+-							unsigned long arg)
++static long hidraw_fixed_size_ioctl(struct file *file, struct hidraw *dev, unsigned int cmd,
++				    void __user *arg)
  {
- 	int scale_type, scale_val, scale_val2;
- 	int offset_type, offset_val, offset_val2;
--	s64 raw64 = raw;
-+	s64 denominator, raw64 = raw;
+-	struct inode *inode = file_inode(file);
+-	unsigned int minor = iminor(inode);
+-	long ret = 0;
+-	struct hidraw *dev;
+-	struct hidraw_list *list = file->private_data;
+-	void __user *user_arg = (void __user*) arg;
+-
+-	down_read(&minors_rwsem);
+-	dev = hidraw_table[minor];
+-	if (!dev || !dev->exist || hidraw_is_revoked(list)) {
+-		ret = -ENODEV;
+-		goto out;
+-	}
++	struct hid_device *hid = dev->hid;
  
- 	offset_type = iio_channel_read(chan, &offset_val, &offset_val2,
- 				       IIO_CHAN_INFO_OFFSET);
-@@ -648,20 +649,19 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- 		*processed = raw64 * scale_val * scale;
- 		break;
- 	case IIO_VAL_INT_PLUS_MICRO:
--		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val * scale;
--		else
--			*processed = raw64 * scale_val * scale;
--		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
--				      1000000LL);
--		break;
- 	case IIO_VAL_INT_PLUS_NANO:
--		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val * scale;
--		else
--			*processed = raw64 * scale_val * scale;
--		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
--				      1000000000LL);
-+		switch (scale_type) {
-+		case IIO_VAL_INT_PLUS_MICRO:
-+			denominator = MICRO;
-+			break;
-+		case IIO_VAL_INT_PLUS_NANO:
-+			denominator = NANO;
-+			break;
-+		}
-+		*processed = raw64 * scale * abs(scale_val);
-+		*processed += div_s64(raw64 * scale * abs(scale_val2), denominator);
-+		if (scale_val < 0 || scale_val2 < 0)
-+			*processed *= -1;
- 		break;
- 	case IIO_VAL_FRACTIONAL:
- 		*processed = div_s64(raw64 * (s64)scale_val * scale,
+ 	switch (cmd) {
+ 		case HIDIOCGRDESCSIZE:
+-			if (put_user(dev->hid->rsize, (int __user *)arg))
+-				ret = -EFAULT;
++			if (put_user(hid->rsize, (int __user *)arg))
++				return -EFAULT;
+ 			break;
+ 
+ 		case HIDIOCGRDESC:
+@@ -422,113 +410,145 @@ static long hidraw_ioctl(struct file *file, unsigned int cmd,
+ 				__u32 len;
+ 
+ 				if (get_user(len, (int __user *)arg))
+-					ret = -EFAULT;
+-				else if (len > HID_MAX_DESCRIPTOR_SIZE - 1)
+-					ret = -EINVAL;
+-				else if (copy_to_user(user_arg + offsetof(
+-					struct hidraw_report_descriptor,
+-					value[0]),
+-					dev->hid->rdesc,
+-					min(dev->hid->rsize, len)))
+-					ret = -EFAULT;
++					return -EFAULT;
++
++				if (len > HID_MAX_DESCRIPTOR_SIZE - 1)
++					return -EINVAL;
++
++				if (copy_to_user(arg + offsetof(
++				    struct hidraw_report_descriptor,
++				    value[0]),
++				    hid->rdesc,
++				    min(hid->rsize, len)))
++					return -EFAULT;
++
+ 				break;
+ 			}
+ 		case HIDIOCGRAWINFO:
+ 			{
+ 				struct hidraw_devinfo dinfo;
+ 
+-				dinfo.bustype = dev->hid->bus;
+-				dinfo.vendor = dev->hid->vendor;
+-				dinfo.product = dev->hid->product;
+-				if (copy_to_user(user_arg, &dinfo, sizeof(dinfo)))
+-					ret = -EFAULT;
++				dinfo.bustype = hid->bus;
++				dinfo.vendor = hid->vendor;
++				dinfo.product = hid->product;
++				if (copy_to_user(arg, &dinfo, sizeof(dinfo)))
++					return -EFAULT;
+ 				break;
+ 			}
+ 		case HIDIOCREVOKE:
+ 			{
+-				if (user_arg)
+-					ret = -EINVAL;
+-				else
+-					ret = hidraw_revoke(list);
+-				break;
++				struct hidraw_list *list = file->private_data;
++
++				if (arg)
++					return -EINVAL;
++
++				return hidraw_revoke(list);
+ 			}
+ 		default:
+-			{
+-				struct hid_device *hid = dev->hid;
+-				if (_IOC_TYPE(cmd) != 'H') {
+-					ret = -EINVAL;
+-					break;
+-				}
++			/*
++			 * None of the above ioctls can return -EAGAIN, so
++			 * use it as a marker that we need to check variable
++			 * length ioctls.
++			 */
++			return -EAGAIN;
++	}
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCSFEATURE(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_send_report(file, user_arg, len, HID_FEATURE_REPORT);
+-					break;
+-				}
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGFEATURE(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_get_report(file, user_arg, len, HID_FEATURE_REPORT);
+-					break;
+-				}
++	return 0;
++}
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCSINPUT(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_send_report(file, user_arg, len, HID_INPUT_REPORT);
+-					break;
+-				}
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGINPUT(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_get_report(file, user_arg, len, HID_INPUT_REPORT);
+-					break;
+-				}
++static long hidraw_rw_variable_size_ioctl(struct file *file, struct hidraw *dev, unsigned int cmd,
++					  void __user *user_arg)
++{
++	int len = _IOC_SIZE(cmd);
++
++	switch (cmd & ~IOCSIZE_MASK) {
++	case HIDIOCSFEATURE(0):
++		return hidraw_send_report(file, user_arg, len, HID_FEATURE_REPORT);
++	case HIDIOCGFEATURE(0):
++		return hidraw_get_report(file, user_arg, len, HID_FEATURE_REPORT);
++	case HIDIOCSINPUT(0):
++		return hidraw_send_report(file, user_arg, len, HID_INPUT_REPORT);
++	case HIDIOCGINPUT(0):
++		return hidraw_get_report(file, user_arg, len, HID_INPUT_REPORT);
++	case HIDIOCSOUTPUT(0):
++		return hidraw_send_report(file, user_arg, len, HID_OUTPUT_REPORT);
++	case HIDIOCGOUTPUT(0):
++		return hidraw_get_report(file, user_arg, len, HID_OUTPUT_REPORT);
++	}
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCSOUTPUT(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_send_report(file, user_arg, len, HID_OUTPUT_REPORT);
+-					break;
+-				}
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGOUTPUT(0))) {
+-					int len = _IOC_SIZE(cmd);
+-					ret = hidraw_get_report(file, user_arg, len, HID_OUTPUT_REPORT);
+-					break;
+-				}
++	return -EINVAL;
++}
+ 
+-				/* Begin Read-only ioctls. */
+-				if (_IOC_DIR(cmd) != _IOC_READ) {
+-					ret = -EINVAL;
+-					break;
+-				}
++static long hidraw_ro_variable_size_ioctl(struct file *file, struct hidraw *dev, unsigned int cmd,
++					  void __user *user_arg)
++{
++	struct hid_device *hid = dev->hid;
++	int len = _IOC_SIZE(cmd);
++	int field_len;
++
++	switch (cmd & ~IOCSIZE_MASK) {
++	case HIDIOCGRAWNAME(0):
++		field_len = strlen(hid->name) + 1;
++		if (len > field_len)
++			len = field_len;
++		return copy_to_user(user_arg, hid->name, len) ?  -EFAULT : len;
++	case HIDIOCGRAWPHYS(0):
++		field_len = strlen(hid->phys) + 1;
++		if (len > field_len)
++			len = field_len;
++		return copy_to_user(user_arg, hid->phys, len) ?  -EFAULT : len;
++	case HIDIOCGRAWUNIQ(0):
++		field_len = strlen(hid->uniq) + 1;
++		if (len > field_len)
++			len = field_len;
++		return copy_to_user(user_arg, hid->uniq, len) ?  -EFAULT : len;
++	}
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGRAWNAME(0))) {
+-					int len = strlen(hid->name) + 1;
+-					if (len > _IOC_SIZE(cmd))
+-						len = _IOC_SIZE(cmd);
+-					ret = copy_to_user(user_arg, hid->name, len) ?
+-						-EFAULT : len;
+-					break;
+-				}
++	return -EINVAL;
++}
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGRAWPHYS(0))) {
+-					int len = strlen(hid->phys) + 1;
+-					if (len > _IOC_SIZE(cmd))
+-						len = _IOC_SIZE(cmd);
+-					ret = copy_to_user(user_arg, hid->phys, len) ?
+-						-EFAULT : len;
+-					break;
+-				}
++static long hidraw_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
++{
++	struct inode *inode = file_inode(file);
++	unsigned int minor = iminor(inode);
++	struct hidraw *dev;
++	struct hidraw_list *list = file->private_data;
++	void __user *user_arg = (void __user *)arg;
++	int ret;
+ 
+-				if (_IOC_NR(cmd) == _IOC_NR(HIDIOCGRAWUNIQ(0))) {
+-					int len = strlen(hid->uniq) + 1;
+-					if (len > _IOC_SIZE(cmd))
+-						len = _IOC_SIZE(cmd);
+-					ret = copy_to_user(user_arg, hid->uniq, len) ?
+-						-EFAULT : len;
+-					break;
+-				}
+-			}
++	down_read(&minors_rwsem);
++	dev = hidraw_table[minor];
++	if (!dev || !dev->exist || hidraw_is_revoked(list)) {
++		ret = -ENODEV;
++		goto out;
++	}
++
++	if (_IOC_TYPE(cmd) != 'H') {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
++	if (_IOC_NR(cmd) > HIDIOCTL_LAST || _IOC_NR(cmd) == 0) {
+ 		ret = -ENOTTY;
++		goto out;
+ 	}
++
++	ret = hidraw_fixed_size_ioctl(file, dev, cmd, user_arg);
++	if (ret != -EAGAIN)
++		goto out;
++
++	switch (_IOC_DIR(cmd)) {
++	case (_IOC_READ | _IOC_WRITE):
++		ret = hidraw_rw_variable_size_ioctl(file, dev, cmd, user_arg);
++		break;
++	case _IOC_READ:
++		ret = hidraw_ro_variable_size_ioctl(file, dev, cmd, user_arg);
++		break;
++	default:
++		/* Any other IOC_DIR is wrong */
++		ret = -EINVAL;
++	}
++
+ out:
+ 	up_read(&minors_rwsem);
+ 	return ret;
+diff --git a/include/uapi/linux/hidraw.h b/include/uapi/linux/hidraw.h
+index d5ee269864e07..ebd701b3c18d9 100644
+--- a/include/uapi/linux/hidraw.h
++++ b/include/uapi/linux/hidraw.h
+@@ -48,6 +48,8 @@ struct hidraw_devinfo {
+ #define HIDIOCGOUTPUT(len)    _IOC(_IOC_WRITE|_IOC_READ, 'H', 0x0C, len)
+ #define HIDIOCREVOKE	      _IOW('H', 0x0D, int) /* Revoke device access */
+ 
++#define HIDIOCTL_LAST		_IOC_NR(HIDIOCREVOKE)
++
+ #define HIDRAW_FIRST_MINOR 0
+ #define HIDRAW_MAX_DEVICES 64
+ /* number of reports to buffer */
 -- 
 2.51.0
 
