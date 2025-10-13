@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A1E3195E5;
-	Mon, 13 Oct 2025 15:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3248B319611;
+	Mon, 13 Oct 2025 15:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369290; cv=none; b=V61ZAdDpqzeK5URBDAlDdGIYyGqd7QtJI4B7p05PTmozFSEys7w7WX/iBLgahTQ57dUpteFso6KWxaUK6GXEHnWDLCTFpG7Ehh0NlS88I6JHUa+sUxGmKXFk8CQP1W1QRP6Yum6JZFNHtgQ5gI3TpAnXr081uju9e9jtGo9xfUc=
+	t=1760369293; cv=none; b=ZQhwScit/O/ntCmegG54hORibtoke2kbkH0xv0UhkmZ/8YCiBOZH2WMXL52H8aR25reLu9Z//vROGVHP/uYNRO/g3Q84wSLOqa6Un3UR1WZ47bl/fPxljikyOyE+GirYn9er5x3XZKp13fpCQCyK099OcYoiNeapDuSC8GjxWhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369290; c=relaxed/simple;
-	bh=BmQkQi5TBCYJy2x2Y9ouQ0qZa2zzpXV9C4xMHL9B99U=;
+	s=arc-20240116; t=1760369293; c=relaxed/simple;
+	bh=sWcVLhs3OYus4UZrC3M3Qddip2QGBtIy3h58Z8LHEqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rL3c0pfX6U+WrRJUUqZWlud9uVt1DGqXzHLM7USpLnXNYOpLIt2ELcZWsw1Ujo4LkQo+2z79p+LIcW/7zTmVpIthPmwWpdNR3hc943yCxhHd5Mfi5T72UCnoduYM24OpxcZyoqAxI+fqMPqjDinf5YvG2kxELcTy2mILpA2N+/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRiPNjb3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoQLmrCi1x4dyMiDAZxThnf6lBqd24PO8haXXfrwBAa7goyK49iQ4ldIEgpQgt2R9I+8Xxqob3P6Sa0LbicaoZGf0I5dInvJtmM0x5upPviU5fMGhrTayKjj2j8KO5iE3Nnjb6i7LEWSUhknP3/aEiw6PQtjlRju7urGqRBrXns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4f9MKmy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRiPNjb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10EDC4CEE7;
-	Mon, 13 Oct 2025 15:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4f9MKmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC996C116B1;
+	Mon, 13 Oct 2025 15:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369290;
-	bh=BmQkQi5TBCYJy2x2Y9ouQ0qZa2zzpXV9C4xMHL9B99U=;
+	s=korg; t=1760369293;
+	bh=sWcVLhs3OYus4UZrC3M3Qddip2QGBtIy3h58Z8LHEqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRiPNjb3O8P5OILPT3QP8q0lOflemvRkovFrWs1lwLmV/ZHeDCcbO3pLmkBCnnJda
-	 vjDJq1hNwwW/2HRT4qi9Nm6CibyM3OQLGiHkZZlnvzDDE9Fr66JBvNeLJfXwdHQhJt
-	 djojo40FLeFiJgC8lzLXvwoQiIVRgXfHR3Z3xr4M=
+	b=z4f9MKmyy8SmD6bIvrxHn2L3AzWuhFt1OJWasxX4NPGAq0yEn5iix1OiwHjUcbpG+
+	 LrlE3nQiLHB862xcx7YNPBYsyvLUIoCRlI8sz9+myDIF4jS2z5IZwYPXfh3pS4/aWW
+	 Fv+oF9gB9ngt4COISMb2bk1cSjA4/VRKsZUulCOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrea Righi <arighi@nvidia.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hulk Robot <hulkci@huawei.com>,
+	Qi Xi <xiqi2@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 193/563] bpf: Mark kfuncs as __noclone
-Date: Mon, 13 Oct 2025 16:40:54 +0200
-Message-ID: <20251013144418.273898304@linuxfoundation.org>
+Subject: [PATCH 6.17 194/563] once: fix race by moving DO_ONCE to separate section
+Date: Mon, 13 Oct 2025 16:40:55 +0200
+Message-ID: <20251013144418.310115483@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,54 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-[ Upstream commit d4680a11e14c7baf683cb8453d91d71d2e0b9d3e ]
+[ Upstream commit edcc8a38b5ac1a3dbd05e113a38a25b937ebefe5 ]
 
-Some distributions (e.g., CachyOS) support building the kernel with -O3,
-but doing so may break kfuncs, resulting in their symbols not being
-properly exported.
+The commit c2c60ea37e5b ("once: use __section(".data.once")") moved
+DO_ONCE's ___done variable to .data.once section, which conflicts with
+DO_ONCE_LITE() that also uses the same section.
 
-In fact, with gcc -O3, some kfuncs may be optimized away despite being
-annotated as noinline. This happens because gcc can still clone the
-function during IPA optimizations, e.g., by duplicating or inlining it
-into callers, and then dropping the standalone symbol. This breaks BTF
-ID resolution since resolve_btfids relies on the presence of a global
-symbol for each kfunc.
+This creates a race condition when clear_warn_once is used:
 
-Currently, this is not an issue for upstream, because we don't allow
-building the kernel with -O3, but it may be safer to address it anyway,
-to prevent potential issues in the future if compilers become more
-aggressive with optimizations.
+Thread 1 (DO_ONCE)             Thread 2 (DO_ONCE)
+__do_once_start
+    read ___done (false)
+    acquire once_lock
+execute func
+__do_once_done
+    write ___done (true)      __do_once_start
+    release once_lock             // Thread 3 clear_warn_once reset ___done
+                                  read ___done (false)
+                                  acquire once_lock
+                              execute func
+schedule once_work            __do_once_done
+once_deferred: OK             write ___done (true)
+static_branch_disable         release once_lock
+                              schedule once_work
+                              once_deferred:
+                                  BUG_ON(!static_key_enabled)
 
-Therefore, add __noclone to __bpf_kfunc to ensure kfuncs are never
-cloned and remain distinct, globally visible symbols, regardless of
-the optimization level.
+DO_ONCE_LITE() in once_lite.h is used by WARN_ON_ONCE() and other warning
+macros. Keep its ___done flag in the .data..once section and allow resetting
+by clear_warn_once, as originally intended.
 
-Fixes: 57e7c169cd6af ("bpf: Add __bpf_kfunc tag for marking kernel functions as kfuncs")
-Acked-by: David Vernet <void@manifault.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Link: https://lore.kernel.org/r/20250924081426.156934-1-arighi@nvidia.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+In contrast, DO_ONCE() is used for functions like get_random_once() and
+relies on its ___done flag for internal synchronization. We should not reset
+DO_ONCE() by clear_warn_once.
+
+Fix it by isolating DO_ONCE's ___done into a separate .data..do_once section,
+shielding it from clear_warn_once.
+
+Fixes: c2c60ea37e5b ("once: use __section(".data.once")")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/btf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/asm-generic/vmlinux.lds.h | 1 +
+ include/linux/once.h              | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/btf.h b/include/linux/btf.h
-index 9eda6b113f9b4..f06976ffb63f9 100644
---- a/include/linux/btf.h
-+++ b/include/linux/btf.h
-@@ -86,7 +86,7 @@
-  * as to avoid issues such as the compiler inlining or eliding either a static
-  * kfunc, or a global kfunc in an LTO build.
-  */
--#define __bpf_kfunc __used __retain noinline
-+#define __bpf_kfunc __used __retain __noclone noinline
- 
- #define __bpf_kfunc_start_defs()					       \
- 	__diag_push();							       \
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index ae2d2359b79e9..8efbe8c4874ee 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -361,6 +361,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+ 	__start_once = .;						\
+ 	*(.data..once)							\
+ 	__end_once = .;							\
++	*(.data..do_once)						\
+ 	STRUCT_ALIGN();							\
+ 	*(__tracepoints)						\
+ 	/* implement dynamic printk debug */				\
+diff --git a/include/linux/once.h b/include/linux/once.h
+index 30346fcdc7995..449a0e34ad5ad 100644
+--- a/include/linux/once.h
++++ b/include/linux/once.h
+@@ -46,7 +46,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
+ #define DO_ONCE(func, ...)						     \
+ 	({								     \
+ 		bool ___ret = false;					     \
+-		static bool __section(".data..once") ___done = false;	     \
++		static bool __section(".data..do_once") ___done = false;     \
+ 		static DEFINE_STATIC_KEY_TRUE(___once_key);		     \
+ 		if (static_branch_unlikely(&___once_key)) {		     \
+ 			unsigned long ___flags;				     \
+@@ -64,7 +64,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
+ #define DO_ONCE_SLEEPABLE(func, ...)						\
+ 	({									\
+ 		bool ___ret = false;						\
+-		static bool __section(".data..once") ___done = false;		\
++		static bool __section(".data..do_once") ___done = false;	\
+ 		static DEFINE_STATIC_KEY_TRUE(___once_key);			\
+ 		if (static_branch_unlikely(&___once_key)) {			\
+ 			___ret = __do_once_sleepable_start(&___done);		\
 -- 
 2.51.0
 
