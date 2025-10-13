@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1420125F;
-	Mon, 13 Oct 2025 14:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A912A20125F;
+	Mon, 13 Oct 2025 14:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367522; cv=none; b=vF49Q7H5kiFIMOsIQ1aT65ehIRc5kBy3YmcJFyc/07DE1X6I2d2oDeMJ05iGApTHtuHQmW9P7/KV6r0UpGNA1yytEpbDMY6welfmKtkIo+7I1FHbaPDnNy2wvLvced+J8U08pukxqhUYgRhVL3/pCbAEP6Mpq4BNKLV+cUzA8DQ=
+	t=1760367525; cv=none; b=iKM0HiMVMYY7YHILNVarVrzOePKWEjpZv7ip1zvH10cvpBQzTqAucPFnAPFv3ihYxHgnArvr3/v7j1hRk2GxT5E9xKkz9fgvzpqSj+mxaqAsaEHCwOLPqRGaSbl8PF9fq3EgLmi/40JwdfouCLfsvBbONDtY+dI7Ysbg2FJHTAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367522; c=relaxed/simple;
-	bh=Nq/JbD0vUWFSStDuIONBq8zWdtZZT6uykw4K836VInk=;
+	s=arc-20240116; t=1760367525; c=relaxed/simple;
+	bh=VJsAv2zgDDaRV4mfkwKEzkZlAxZ6V3oFjH4anLdMGvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHGvdfF6wT20Stz1Qn/8edmagXfDfpw5MkmWIMwuYts+6hrZ9Iw0T/7JtxNNo9C4CAhxRnKTS+Cz6C7XdhQBe5Le8Izor1Lw9CmzuLlu0vueOgC57K3wHEI83B66Dha2vdJ/qDXW/3Ho4yi1AlRglIFKZvYuyvVEvTk98DRvA1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vo16G7Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WvpVPMpF6H0tDRmQFEAxHbhboJBN7PjZ9Hd5H90DA2MXABYxy9D9+7oY8R5hllD0eLgrqyzF0Ge5a1jLSaSMQQp/g/URpHHkUHAw4bcSla2EgfOhnrVcLMAmytwQnzFqeo+Z+MZZ+Mp7iU5zkMqzaSvIgwd7ei7fcLpJInaqYnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikrhjKAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vo16G7Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66831C4CEE7;
-	Mon, 13 Oct 2025 14:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikrhjKAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2696AC4CEE7;
+	Mon, 13 Oct 2025 14:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367522;
-	bh=Nq/JbD0vUWFSStDuIONBq8zWdtZZT6uykw4K836VInk=;
+	s=korg; t=1760367525;
+	bh=VJsAv2zgDDaRV4mfkwKEzkZlAxZ6V3oFjH4anLdMGvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vo16G7DcDeQ6L1iDTKWjC8w/dulZy/RkHeZ7bQXgd0pqcZbqj6selJwdNM2FY7htP
-	 4664xc5eFjxIwtqfVzb1OTyvkX34sF1mwdps6R6Mnvr3JGaByflACr5l9KTqMCdqPy
-	 55xAF/Gi0TOz4uy46zWRW8uAFXZF2/M5wS78dv/Y=
+	b=ikrhjKAhKfI4DsKJjBOOX+29/+P/MMq+XwIC4OfzaVqepw630MRWKhbr6BUvx4RTN
+	 qi5P688CzZujFStePOjNBCqYw4hTO7PSJX1sNu1TfvXP4gqeQ/m6SlzkVgozlUPCTB
+	 O6TDRzSZiemCwnbZpEt+LekfJNQBsaENeWW5swbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/196] arm64: dts: mediatek: mt6331: Fix pmic, regulators, rtc, keys node names
-Date: Mon, 13 Oct 2025 16:43:53 +0200
-Message-ID: <20251013144316.724244728@linuxfoundation.org>
+Subject: [PATCH 6.6 043/196] arm64: dts: mediatek: mt6795-xperia-m5: Fix mmc0 latch-ck value
+Date: Mon, 13 Oct 2025 16:43:54 +0200
+Message-ID: <20251013144316.762214193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -54,63 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 98967109c9c0e2de4140827628c63f96314099ab ]
+[ Upstream commit 236681fb64102f25ed11df55999e6985c1bc2f7d ]
 
-The node names for "pmic", "regulators", "rtc", and "keys" are
-dictated by the PMIC MFD binding: change those to adhere to it.
+Change the latch-ck value from 0x14 to 4: as only bits [0-3] are
+actually used, the final value that gets written to the register
+field for DAT_LATCH_CK_SEL is just 0x4.
 
-Fixes: aef783f3e0ca ("arm64: dts: mediatek: Add MT6331 PMIC devicetree")
+This also fixes dtbs_check warnings.
+
+Fixes: 5a65dcccf483 ("arm64: dts: mediatek: mt6795-xperia-m5: Add eMMC, MicroSD slot, SDIO")
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20250724083914.61351-17-angelogioacchino.delregno@collabora.com
+Link: https://lore.kernel.org/r/20250724083914.61351-21-angelogioacchino.delregno@collabora.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6331.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6331.dtsi b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-index d89858c73ab1b..243afbffa21fd 100644
---- a/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6331.dtsi
-@@ -6,12 +6,12 @@
- #include <dt-bindings/input/input.h>
+diff --git a/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts b/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
+index b5746e6d0b15a..110fae4ec11c9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
++++ b/arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts
+@@ -136,7 +136,7 @@ proximity@48 {
  
- &pwrap {
--	pmic: mt6331 {
-+	pmic: pmic {
- 		compatible = "mediatek,mt6331";
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
- 
--		mt6331regulator: mt6331regulator {
-+		mt6331regulator: regulators {
- 			compatible = "mediatek,mt6331-regulator";
- 
- 			mt6331_vdvfs11_reg: buck-vdvfs11 {
-@@ -258,7 +258,7 @@ mt6331_vrtc_reg: ldo-vrtc {
- 			};
- 
- 			mt6331_vdig18_reg: ldo-vdig18 {
--				regulator-name = "dvdd18_dig";
-+				regulator-name = "vdig18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <0>;
-@@ -266,11 +266,11 @@ mt6331_vdig18_reg: ldo-vdig18 {
- 			};
- 		};
- 
--		mt6331rtc: mt6331rtc {
-+		mt6331rtc: rtc {
- 			compatible = "mediatek,mt6331-rtc";
- 		};
- 
--		mt6331keys: mt6331keys {
-+		mt6331keys: keys {
- 			compatible = "mediatek,mt6331-keys";
- 			power {
- 				linux,keycodes = <KEY_POWER>;
+ &mmc0 {
+ 	/* eMMC controller */
+-	mediatek,latch-ck = <0x14>; /* hs400 */
++	mediatek,latch-ck = <4>; /* hs400 */
+ 	mediatek,hs200-cmd-int-delay = <1>;
+ 	mediatek,hs400-cmd-int-delay = <1>;
+ 	mediatek,hs400-ds-dly3 = <0x1a>;
 -- 
 2.51.0
 
