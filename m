@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1135A3081B3;
-	Mon, 13 Oct 2025 14:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA25D30E0C2;
+	Mon, 13 Oct 2025 14:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367420; cv=none; b=DCtTHC7Bdqwz1N+1SDmkqqm3aCZbbNGAVJV0Wcn6J9E8RtUhslX3Xpz8RLuf4HxtteXj9BQ5dWovFuF1Rv525qFoM9dDuJsU81e9J1jYNN3iVv/GPanNS6shJ/V/HQm8yCpmweAlfaXINDt/MVVuKg3y+R1BnHJ2tJzkAi+70jM=
+	t=1760367423; cv=none; b=KH12S+gRl1zhBMqMFv6VU16gs//NDo1DtExoeTuZyalr3RzjWMmTIquoR+M7ss5pIHxpUPpaowgktJjdmzWxfWMnIZL1PFtkafKxe4MSLUxLUVGTUp6Jg6CRftPyNzemwRITERIJ5WjD15cQnod3c9Zw9xNhqgkStcLlviOi4OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367420; c=relaxed/simple;
-	bh=q5CQu7NsdPDYOvHTTswwRtl6ABcGEqY/XR6/218t5O4=;
+	s=arc-20240116; t=1760367423; c=relaxed/simple;
+	bh=WsncMvwM61F8z+h+RP2U9gO9Q76IhEwlBLqvsBYGFpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GU2JeE96cFYkDTMtb/IaxXMhmkUuT3Af7axY0x2Tsw8xqBHj/w+rJB/wsl3au1zZ3MMCuN1eo1htjxwv7oDxToTmEXLCaxtNrSrojLwTY42e5D5VUoSLXgqAReDFem/jicXrUNzzKo5+Vts2AEQ8PmEVZfTsPicpIK9U3u7nHh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqrpL0jL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DRoCW7I+f3xoxupocAKjteZVDsHplBndkL2Gf7T2Vfpdrv3wh/OzZSvvbNQhNPM/WlEX6wkt0dnFe+v/a1bpc8lS3GybFuEvVH8jbC+yTlRW2dCULA0+WprSBLskHdy8iLftX5os4Da1nE7DMfXdNv9t2ihUu3krPUMvrmuLWtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znNiN5Lw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqrpL0jL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C67BC4CEE7;
-	Mon, 13 Oct 2025 14:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znNiN5Lw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A8AC4CEE7;
+	Mon, 13 Oct 2025 14:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367419;
-	bh=q5CQu7NsdPDYOvHTTswwRtl6ABcGEqY/XR6/218t5O4=;
+	s=korg; t=1760367422;
+	bh=WsncMvwM61F8z+h+RP2U9gO9Q76IhEwlBLqvsBYGFpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqrpL0jL8yxPyr6WMjQgv+zH3aErOfkpTlKX+XFCGOZS4Wd9Ppz6+ClPs4vzR7RvH
-	 dzX8+oOUyqyTipIos14Hdy0o5FxdGoRkhnpznp4pD822V/CyZYX02lLY5Q7AoNg+za
-	 C59h/R66qdKXq7T0G5ggqFDVqhb03oWDOj5tAyNw=
+	b=znNiN5LwmFwQQdfckN3jYexcFn+98SU855rwThj3z1ba4eIwcFA3t5T4XfezbMcZS
+	 K+solpY+OpzM6mUFJC0IAOSlyeq2XxbzXTv2flPoTCnb1oeC4thpUTlEjBBFY7afqT
+	 Ws4ER3U0IJsuaJ/Jv3zUyZUOyGtxL6+DTgKeOVXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Yicong Yang <yangyicong@hisilicon.com>,
-	Pierre Gondois <pierre.gondois@arm.com>,
 	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.1 195/196] cacheinfo: Fix LLC is not exported through sysfs
-Date: Mon, 13 Oct 2025 16:46:08 +0200
-Message-ID: <20251013144321.744322113@linuxfoundation.org>
+Subject: [PATCH 6.1 196/196] drivers: base: cacheinfo: Update cpu_map_populated during CPU Hotplug
+Date: Mon, 13 Oct 2025 16:46:09 +0200
+Message-ID: <20251013144321.780632270@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,75 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-commit 5c2712387d4850e0b64121d5fd3e6c4e84ea3266 upstream.
+commit c26fabe73330d983c7ce822c6b6ec0879b4da61f upstream.
 
-After entering 6.3-rc1 the LLC cacheinfo is not exported on our ACPI
-based arm64 server. This is because the LLC cacheinfo is partly reset
-when secondary CPUs boot up. On arm64 the primary cpu will allocate
-and setup cacheinfo:
-init_cpu_topology()
-  for_each_possible_cpu()
-    fetch_cache_info() // Allocate cacheinfo and init levels
-detect_cache_attributes()
-  cache_shared_cpu_map_setup()
-    if (!last_level_cache_is_valid()) // not valid, setup LLC
-      cache_setup_properties() // setup LLC
+Until commit 5c2712387d48 ("cacheinfo: Fix LLC is not exported through
+sysfs"), cacheinfo called populate_cache_leaves() for CPU coming online
+which let the arch specific functions handle (at least on x86)
+populating the shared_cpu_map. However, with the changes in the
+aforementioned commit, populate_cache_leaves() is not called when a CPU
+comes online as a result of hotplug since last_level_cache_is_valid()
+returns true as the cacheinfo data is not discarded. The CPU coming
+online is not present in shared_cpu_map, however, it will not be added
+since the cpu_cacheinfo->cpu_map_populated flag is set (it is set in
+populate_cache_leaves() when cacheinfo is first populated for x86)
 
-On secondary CPU boot up:
-detect_cache_attributes()
-  populate_cache_leaves()
-    get_cache_type() // Get cache type from clidr_el1,
-                     // for LLC type=CACHE_TYPE_NOCACHE
-  cache_shared_cpu_map_setup()
-    if (!last_level_cache_is_valid()) // Valid and won't go to this branch,
-                                      // leave LLC's type=CACHE_TYPE_NOCACHE
+This can lead to inconsistencies in the shared_cpu_map when an offlined
+CPU comes online again. Example below depicts the inconsistency in the
+shared_cpu_list in cacheinfo when CPU8 is offlined and onlined again on
+a 3rd Generation EPYC processor:
 
-The last_level_cache_is_valid() use cacheinfo->{attributes, fw_token} to
-test it's valid or not, but populate_cache_leaves() will only reset
-LLC's type, so we won't try to re-setup LLC's type and leave it
-CACHE_TYPE_NOCACHE and won't export it through sysfs.
+  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
+    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
 
-This patch tries to fix this by not re-populating the cache leaves if
-the LLC is valid.
+  # echo 0 > /sys/devices/system/cpu/cpu8/online
+  # echo 1 > /sys/devices/system/cpu/cpu8/online
 
-Fixes: 5944ce092b97 ("arch_topology: Build cacheinfo from primary CPU")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
+    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8
+    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8
+    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8
+    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8
+
+  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
+    136
+
+  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
+    9-15,136-143
+
+Clear the flag when the CPU is removed from shared_cpu_map when
+cache_shared_cpu_map_remove() is called during CPU hotplug. This will
+allow cache_shared_cpu_map_setup() to add the CPU coming back online in
+the shared_cpu_map. Set the flag again when the shared_cpu_map is setup.
+Following are results of performing the same test as described above with
+the changes:
+
+  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
+    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
+
+  # echo 0 > /sys/devices/system/cpu/cpu8/online
+  # echo 1 > /sys/devices/system/cpu/cpu8/online
+
+  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
+    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
+    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
+
+  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
+    8,136
+
+  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
+    8-15,136-143
+
+Fixes: 5c2712387d48 ("cacheinfo: Fix LLC is not exported through sysfs")
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
 Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20230328114915.33340-1-yangyicong@huawei.com
+Link: https://lore.kernel.org/r/20230508084115.1157-3-kprateek.nayak@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cacheinfo.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/base/cacheinfo.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/base/cacheinfo.c
 +++ b/drivers/base/cacheinfo.c
-@@ -490,12 +490,18 @@ int detect_cache_attributes(unsigned int
+@@ -365,11 +365,14 @@ static int cache_shared_cpu_map_setup(un
+ 			coherency_max_size = this_leaf->coherency_line_size;
+ 	}
  
- populate_leaves:
- 	/*
--	 * populate_cache_leaves() may completely setup the cache leaves and
--	 * shared_cpu_map or it may leave it partially setup.
-+	 * If LLC is valid the cache leaves were already populated so just go to
-+	 * update the cpu map.
- 	 */
--	ret = populate_cache_leaves(cpu);
--	if (ret)
--		goto free_ci;
-+	if (!last_level_cache_is_valid(cpu)) {
-+		/*
-+		 * populate_cache_leaves() may completely setup the cache leaves and
-+		 * shared_cpu_map or it may leave it partially setup.
-+		 */
-+		ret = populate_cache_leaves(cpu);
-+		if (ret)
-+			goto free_ci;
-+	}
++	/* shared_cpu_map is now populated for the cpu */
++	this_cpu_ci->cpu_map_populated = true;
+ 	return 0;
+ }
  
- 	/*
- 	 * For systems using DT for cache hierarchy, fw_token
+ static void cache_shared_cpu_map_remove(unsigned int cpu)
+ {
++	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+ 	struct cacheinfo *this_leaf, *sib_leaf;
+ 	unsigned int sibling, index, sib_index;
+ 
+@@ -404,6 +407,9 @@ static void cache_shared_cpu_map_remove(
+ 		if (of_have_populated_dt())
+ 			of_node_put(this_leaf->fw_token);
+ 	}
++
++	/* cpu is no longer populated in the shared map */
++	this_cpu_ci->cpu_map_populated = false;
+ }
+ 
+ static void free_cache_attributes(unsigned int cpu)
 
 
