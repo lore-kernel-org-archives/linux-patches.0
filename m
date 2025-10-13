@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A1030FF01;
-	Mon, 13 Oct 2025 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC9C243969;
+	Mon, 13 Oct 2025 15:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368970; cv=none; b=uxDp8mzQKuI8JCVKtEWPd1FaXAPCAOn914YciOAz5eHot3OZZt5nd7hruLtFOEwYvrFsp7hwQHoqLX23lz+tXBfMbPvhVebPuV6e/86IkDGEUb6V7+g1kNubQSoGX6hy7oO6qxgpqlE2kOmv8XB+qMrv+uVwkPnexUCdhyOHGc8=
+	t=1760368973; cv=none; b=NOJ4r/qa3kZAjtukQT3CqPPvbglzy9rhH4emGQ36EVcyymFIIvM76r0UP9sOphjP6nvKkHsBc2sIp91Q8mXxZ3XfYy55AbKDi/+1QbT5ZhHNFM2D5E1SZe9+Pq1ngs/ek9ZcWHydnp4rK7dsJQSGq5POYKT0uDmV/qMijO4SPFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368970; c=relaxed/simple;
-	bh=7vG8GzFqcGsxt/z17VI6Vqpr4g8CSJ8yAL/6byEA+QA=;
+	s=arc-20240116; t=1760368973; c=relaxed/simple;
+	bh=EeQSzAsx2khvZnIDmJ92PqldPKw47wL8c1Jxns+z5UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1yHFVjzvFTNLRXhwIRIYuvgS750SClibYY05iU2ZeaHwTq1nc6jqAvU4kOmCiJG0R5G7HdcT9ZVWNu2RC5lv6mXlyrdZP7UXNO5Udo6D5ZB9xCkk7wuL4noLSiMTqZWqhpqJFKIAn6/JSG7+OU0gwUjtaEUNH3yZie72yoexFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbPaja2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHqHKCTKNj7MOxwhhGXdfiwlwICCSAIfqrQRp0rtGi9mtfhBXPtJesylIlqpQ0g6IqatvZlBUiTqA3p04JSKAcj8uhvnpuwWe0S0Sov0ZtvoPoLg7drdIUSf6DVY6phhKaY806EsgtR8bcKjwldw6sCEpXRAQQSBjktmmbFvj/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8ZJbjjQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbPaja2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94398C4CEE7;
-	Mon, 13 Oct 2025 15:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8ZJbjjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A35C4CEE7;
+	Mon, 13 Oct 2025 15:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368969;
-	bh=7vG8GzFqcGsxt/z17VI6Vqpr4g8CSJ8yAL/6byEA+QA=;
+	s=korg; t=1760368972;
+	bh=EeQSzAsx2khvZnIDmJ92PqldPKw47wL8c1Jxns+z5UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbPaja2gIqvnfDjtPNYC7bcF8m+AQAVmDtKVY7458TIxt9VyFUFt1oJ/iM/72eynW
-	 7vADrBGulCyBHKbhGWQUwC+N8NDm6OpW4TFXZpUmefCVg5A6mEtEAUxq3jzhuR1+kM
-	 gf17gCIa62UOaF1R7xPVluu2mjotVRFQykVVyYmw=
+	b=I8ZJbjjQ42m3kd1HrMX8D3TNhn9SWT3chL4XCf4yu450fUHSWnqyTFq2eitrvY1im
+	 csR02/6ilYnapjZBv6wzaH75NK40ntFKUP9gNmtf8NRG+mkO4svyW5zg/BpGn4zSf3
+	 2EGUYysaszKpah3zxi+Gel0Vqg95FoM873daHC6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 055/563] s390/bpf: Write back tail call counter for BPF_PSEUDO_CALL
-Date: Mon, 13 Oct 2025 16:38:36 +0200
-Message-ID: <20251013144413.284670741@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>
+Subject: [PATCH 6.17 082/563] PCI/MSI: Check MSI_FLAG_PCI_MSI_MASK_PARENT in cond_[startup|shutdown]_parent()
+Date: Mon, 13 Oct 2025 16:39:03 +0200
+Message-ID: <20251013144414.267007528@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,75 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit c861a6b147137d10b5ff88a2c492ba376cd1b8b0 ]
+[ Upstream commit 727e914bbfbbda9e6efa5cb1abe4e96a949d576f ]
 
-The tailcall_bpf2bpf_hierarchy_1 test hangs on s390. Its call graph is
-as follows:
+For MSI controllers which only support MSI_FLAG_PCI_MSI_MASK_PARENT, the
+newly added callback irq_startup() and irq_shutdown() for
+pci_msi[x]_template will not unmask or mask the interrupt when startup()
+resp.  shutdown() is invoked. This prevents the interrupt from being
+enabled resp. disabled.
 
-  entry()
-    subprog_tail()
-      bpf_tail_call_static(0) -> entry + tail_call_start
-    subprog_tail()
-      bpf_tail_call_static(0) -> entry + tail_call_start
+Invoke irq_[un]mask_parent() in cond_[startup|shutdown]_parent(), when the
+interrupt has the MSI_FLAG_PCI_MSI_MASK_PARENT flag set.
 
-entry() copies its tail call counter to the subprog_tail()'s frame,
-which then increments it. However, the incremented result is discarded,
-leading to an astronomically large number of tail calls.
-
-Fix by writing the incremented counter back to the entry()'s frame.
-
-Fixes: dd691e847d28 ("s390/bpf: Implement bpf_jit_supports_subprog_tailcalls()")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20250813121016.163375-3-iii@linux.ibm.com
+Fixes: 54f45a30c0d0 ("PCI/MSI: Add startup/shutdown for per device domains")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Wei Fang <wei.fang@nxp.com>
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Wei Fang <wei.fang@nxp.com>
+Tested-by: Chen Wang <unicorn_wang@outlook.com> # Pioneerbox/SG2042
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/all/20250827230943.17829-1-inochiama@gmail.com
+Closes: https://lore.kernel.org/regressions/aK4O7Hl8NCVEMznB@monster/
+Closes: https://lore.kernel.org/regressions/20250826220959.GA4119563@ax162/
+Closes: https://lore.kernel.org/all/20250827093911.1218640-1-wei.fang@nxp.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/pci/msi/irqdomain.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index bfac1ddf3447b..ccb83ac3e6f32 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -1793,13 +1793,6 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+diff --git a/drivers/pci/msi/irqdomain.c b/drivers/pci/msi/irqdomain.c
+index e0a800f918e81..b11b7f63f0d6f 100644
+--- a/drivers/pci/msi/irqdomain.c
++++ b/drivers/pci/msi/irqdomain.c
+@@ -154,6 +154,8 @@ static void cond_shutdown_parent(struct irq_data *data)
  
- 		/*
- 		 * Copy the tail call counter to where the callee expects it.
--		 *
--		 * Note 1: The callee can increment the tail call counter, but
--		 * we do not load it back, since the x86 JIT does not do this
--		 * either.
--		 *
--		 * Note 2: We assume that the verifier does not let us call the
--		 * main program, which clears the tail call counter on entry.
- 		 */
+ 	if (unlikely(info->flags & MSI_FLAG_PCI_MSI_STARTUP_PARENT))
+ 		irq_chip_shutdown_parent(data);
++	else if (unlikely(info->flags & MSI_FLAG_PCI_MSI_MASK_PARENT))
++		irq_chip_mask_parent(data);
+ }
  
- 		if (insn->src_reg == BPF_PSEUDO_CALL)
-@@ -1833,6 +1826,22 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 		call_r1(jit);
- 		/* lgr %b0,%r2: load return value into %b0 */
- 		EMIT4(0xb9040000, BPF_REG_0, REG_2);
+ static unsigned int cond_startup_parent(struct irq_data *data)
+@@ -162,6 +164,9 @@ static unsigned int cond_startup_parent(struct irq_data *data)
+ 
+ 	if (unlikely(info->flags & MSI_FLAG_PCI_MSI_STARTUP_PARENT))
+ 		return irq_chip_startup_parent(data);
++	else if (unlikely(info->flags & MSI_FLAG_PCI_MSI_MASK_PARENT))
++		irq_chip_unmask_parent(data);
 +
-+		/*
-+		 * Copy the potentially updated tail call counter back.
-+		 */
-+
-+		if (insn->src_reg == BPF_PSEUDO_CALL)
-+			/*
-+			 * mvc frame_off+tail_call_cnt(%r15),
-+			 *     tail_call_cnt(4,%r15)
-+			 */
-+			_EMIT6(0xd203f000 | (jit->frame_off +
-+					     offsetof(struct prog_frame,
-+						      tail_call_cnt)),
-+			       0xf000 | offsetof(struct prog_frame,
-+						 tail_call_cnt));
-+
- 		break;
- 	}
- 	case BPF_JMP | BPF_TAIL_CALL: {
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
