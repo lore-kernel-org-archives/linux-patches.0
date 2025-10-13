@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48A930E0C7;
-	Mon, 13 Oct 2025 15:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0960314B93;
+	Mon, 13 Oct 2025 15:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369218; cv=none; b=WP3YEHWke92I5OTwBYuzAsK+9zpKsoojnLNmOcxfZiIQkesOEJVDzJPWYxggom3NIOMFlfoKi5ZCDElaxuIxshCm4oJGa1nngYFa5Ob7LXf6bDQ/Z/wy+KZUXTcXU41VvfGmKEEa66E3lP6qiZzgLdYMkJI8SP3JfZjK8D4MrH4=
+	t=1760369221; cv=none; b=quhYtaPphjZmVfyIqjt1qWDHVS60U3AtR02JmRrETr7hTTLE7Npbsl5TVL/Rl87BrCdXF7Bd8il23dG0p2ObEIYQKPFR641G06JBfYamI3y2E1fmI7+/Cw8FSd3Al98+FPb7Pdimfn6MZbTuv9nzIiUnkzVmnkYLECEuhqXGQPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369218; c=relaxed/simple;
-	bh=ZptFrQa9F44TCl5kpDAgn+KNWNTPw/xnOYy0P7yvscs=;
+	s=arc-20240116; t=1760369221; c=relaxed/simple;
+	bh=Mepr3RKQcyRr1G8P5khqO3JnH2zC6mXf0IeG+GBhc64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuWgTufEaicq5sBg9nx8MHikdR54JCQMp4INkD/ggKQzt2DmziJzzR+PSU6QiaDcfE5ldltZfb3g9225zvE9siafJAjRvrLjXbCPKRmOVC0mmh+b2LOifLEhAeFgM61xRONmaDpzPOd70MPw8k4Be/zml/JmHoKGVTjSAAfTH30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRRJ+4Zf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KuXTu+lno1ikwU20r8k2jpBcmjOnv7RGD6d+DvguiFVp0agr4gDCT3KG8hp6R8qu3mL2QFItE71OHwuvNIrzbvhndH1QZSlrGytMCxr4wJ+EkE1eu+wXsaHuK58IHm8xK8Ok5Un5slUtLhLiPf02/4U1BYM58vfzjbw5yLR4fjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGH8qwey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRRJ+4Zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E279DC4CEE7;
-	Mon, 13 Oct 2025 15:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGH8qwey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0161C4CEE7;
+	Mon, 13 Oct 2025 15:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369218;
-	bh=ZptFrQa9F44TCl5kpDAgn+KNWNTPw/xnOYy0P7yvscs=;
+	s=korg; t=1760369221;
+	bh=Mepr3RKQcyRr1G8P5khqO3JnH2zC6mXf0IeG+GBhc64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRRJ+4Zf/0zIJrFoVp+O+5RG8rlvq2TNrv1kDfobqmQFPtoklLXM8byuXyO16a0lj
-	 R0LmjwcZvhHi2I+D3559KsRkV46T/3GQ8viNKMKia7O7VwaEnMxJT3pcFubqyHnKN0
-	 aDUAdDb/VsKjN58UXQyriZSlROja2CDeJgJQrJKI=
+	b=lGH8qweywayrXofofLQaawXrHFYRQ5gMLfzuHypG3zwEJDlVb+0U1a6nvi12Z9r3x
+	 nee1ERTWwllMgj8TI1+DFfG1tVxUn7AWueMkx0RJzhvwGv4nixSFpXOnkIxCkeluOd
+	 38qy+rvy3MNaRSyi9/oz4oY5SCTEriFwClz63xjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhilesh Patil <akhilesh@ee.iitb.ac.in>,
+	Yi Lai <yi1.lai@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 170/563] selftests: watchdog: skip ping loop if WDIOF_KEEPALIVEPING not supported
-Date: Mon, 13 Oct 2025 16:40:31 +0200
-Message-ID: <20251013144417.447755697@linuxfoundation.org>
+Subject: [PATCH 6.17 171/563] selftests/kselftest_harness: Add harness-selftest.expected to TEST_FILES
+Date: Mon, 13 Oct 2025 16:40:32 +0200
+Message-ID: <20251013144417.483011113@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,70 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+From: Yi Lai <yi1.lai@intel.com>
 
-[ Upstream commit e8cfc524eaf3c0ed88106177edb6961e202e6716 ]
+[ Upstream commit 3e23a3f688b457288c37899f8898180cc231ff97 ]
 
-Check if watchdog device supports WDIOF_KEEPALIVEPING option before
-entering keep_alive() ping test loop. Fix watchdog-test silently looping
-if ioctl based ping is not supported by the device. Exit from test in
-such case instead of getting stuck in loop executing failing keep_alive()
+The harness-selftest.expected is not installed in INSTALL_PATH.
+Attempting to execute harness-selftest.sh shows warning:
 
-watchdog_info:
- identity:              m41t93 rtc Watchdog
- firmware_version:      0
-Support/Status: Set timeout (in seconds)
-Support/Status: Watchdog triggers a management or other external alarm not a reboot
+diff: ./kselftest_harness/harness-selftest.expected: No such file or
+directory
 
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-WDIOC_KEEPALIVE not supported by this device
+Add harness-selftest.expected to TEST_FILES.
 
-without this change
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-Watchdog Ticking Away!
-(Where test stuck here forver silently)
-
-Updated change log at commit time:
-Shuah Khan <skhan@linuxfoundation.org>
-
-Link: https://lore.kernel.org/r/20250914152840.GA3047348@bhairav-test.ee.iitb.ac.in
-Fixes: d89d08ffd2c5 ("selftests: watchdog: Fix ioctl SET* error paths to take oneshot exit path")
-Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+Link: https://lore.kernel.org/r/20250909082619.584470-1-yi1.lai@intel.com
+Fixes: df82ffc5a3c1 ("selftests: harness: Add kselftest harness selftest")
+Signed-off-by: Yi Lai <yi1.lai@intel.com>
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/kselftest_harness/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
-index a1f506ba55786..4f09c5db0c7f3 100644
---- a/tools/testing/selftests/watchdog/watchdog-test.c
-+++ b/tools/testing/selftests/watchdog/watchdog-test.c
-@@ -332,6 +332,12 @@ int main(int argc, char *argv[])
- 	if (oneshot)
- 		goto end;
+diff --git a/tools/testing/selftests/kselftest_harness/Makefile b/tools/testing/selftests/kselftest_harness/Makefile
+index 0617535a6ce42..d2369c01701a0 100644
+--- a/tools/testing/selftests/kselftest_harness/Makefile
++++ b/tools/testing/selftests/kselftest_harness/Makefile
+@@ -2,6 +2,7 @@
  
-+	/* Check if WDIOF_KEEPALIVEPING is supported */
-+	if (!(info.options & WDIOF_KEEPALIVEPING)) {
-+		printf("WDIOC_KEEPALIVE not supported by this device\n");
-+		goto end;
-+	}
-+
- 	printf("Watchdog Ticking Away!\n");
+ TEST_GEN_PROGS_EXTENDED := harness-selftest
+ TEST_PROGS := harness-selftest.sh
++TEST_FILES := harness-selftest.expected
+ EXTRA_CLEAN := harness-selftest.seen
  
- 	/*
+ include ../lib.mk
 -- 
 2.51.0
 
