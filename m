@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D2B30FF34;
-	Mon, 13 Oct 2025 15:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6BD30FF2E;
+	Mon, 13 Oct 2025 15:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367978; cv=none; b=taEVHSPxM9lUEsLQMyDz9DiE1vFz9O8bTaTsNtgpAY3B5wWwVWS/Yw8oKaX2zwsoCiIZIUCf/465ENBYGG3BM7g2e30BklyqQB0TeqWYkBmDAPpVvwEkzurXwzF0qc9pd+v9HEiuI9BwGhfFWAeKpOqdnC1zPsvXFq/w+77GtB8=
+	t=1760367981; cv=none; b=A5nn12I3aSpchjljLVBJHAseJ2bi4dLfon7XM/DQKhkPf48N2MJMnOCNsQcWJ0sME4QvPpgGdVnxr1qC1yHS2wJ1DPacHohiV1h6FPbcWD6MwRcMDagXrceolXZR9qy3tDyyuM5h5aAp7D20ceJd17q1pwngE+jfY2xSYBRiw7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367978; c=relaxed/simple;
-	bh=Xg/V4XGWSZPZQPB4HNqA28Fzg4Fb1+lAesxqCfnAQRU=;
+	s=arc-20240116; t=1760367981; c=relaxed/simple;
+	bh=+GkBuIUVw9XziaXgu7LwyQ03f2sIS5nuzQRnJr/8vPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AwKTC1j3vRQu/BdUFGTamBr46yQEiVFNkDepAHAEWOE2X4K3gBohFzzyL3rFPaW8FmJYTJ89WDYvnmi61PB3Iu1c7j43bKzriA81YAEjeb8V6bmdzPEZGGYyOFRxX+bcfVl+WY6u8srl4MKTmOqUrFEJ74eqyPdzNprvGRNDZgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fKDq6tQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8qPhfQzrvb2tMYUEhNXxIJ6Vm3uG/YppbfcViR6GiTXBsVoyojJ6ll/JicFGr1b1rk9J1fnj9GHeuTfJBfS6V81GbG4+INt8HCvXPBQ4ZzPOF/vTFRRD6DoClr25AxY91ypDJ9gikSBVm9HYM+/y1ZtN1rplNX1Njru5VXtnjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1z87T0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fKDq6tQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB068C4CEFE;
-	Mon, 13 Oct 2025 15:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1z87T0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F61C4CEFE;
+	Mon, 13 Oct 2025 15:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367978;
-	bh=Xg/V4XGWSZPZQPB4HNqA28Fzg4Fb1+lAesxqCfnAQRU=;
+	s=korg; t=1760367981;
+	bh=+GkBuIUVw9XziaXgu7LwyQ03f2sIS5nuzQRnJr/8vPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fKDq6tQQ1gbN990dhC89aEGk/8/bcwoTaEpb2ASE57ewuyp2Ec5P2N7V++BQGnAv
-	 sDHSEtMvS+CxMyZUzefFMt493+Y3tKFEMXOP6DlJntmit4LXQH2Ta0FFcxlKg2WX9L
-	 yVf0jrFDF7hlGFfZXVEb/a/vpofGPQ8ys+IYuUss=
+	b=M1z87T0dR9BkKI4ea9t+XFccGJzGU5l66XtVqVM5KkmgBmEMZEpCTR4MWqdsB6t7E
+	 ZKlh10Xekppfyv1R/ahv4Cg71rBDc0KFM8wbtXlrId9tuwcIWlSeeI6soMMX0kCE74
+	 XcRlA/LBVKrVzpLJGOriKupyjwvryg6ZDlUBHv1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 176/196] mfd: vexpress-sysreg: Check the return value of devm_gpiochip_add_data()
-Date: Mon, 13 Oct 2025 16:46:07 +0200
-Message-ID: <20251013144321.675750641@linuxfoundation.org>
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.6 177/196] dm: fix queue start/stop imbalance under suspend/load/resume races
+Date: Mon, 13 Oct 2025 16:46:08 +0200
+Message-ID: <20251013144321.712179138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,48 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit 1efbee6852f1ff698a9981bd731308dd027189fb upstream.
+commit 7f597c2cdb9d3263a6fce07c4fc0a9eaa8e8fc43 upstream.
 
-Commit 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
-removed the return value check from the call to gpiochip_add_data() (or
-rather gpiochip_add() back then and later converted to devres) with no
-explanation. This function however can still fail, so check the return
-value and bail-out if it does.
+When suspend and load run concurrently, before q->mq_ops is set in
+blk_mq_init_allocated_queue(), __dm_suspend() skip dm_stop_queue(). As a
+result, the queue's quiesce depth is not incremented.
 
+Later, once table load has finished and __dm_resume() runs, which triggers
+q->quiesce_depth ==0 warning in blk_mq_unquiesce_queue():
+Call Trace:
+ <TASK>
+ dm_start_queue+0x16/0x20 [dm_mod]
+ __dm_resume+0xac/0xb0 [dm_mod]
+ dm_resume+0x12d/0x150 [dm_mod]
+ do_resume+0x2c2/0x420 [dm_mod]
+ dev_suspend+0x30/0x130 [dm_mod]
+ ctl_ioctl+0x402/0x570 [dm_mod]
+ dm_ctl_ioctl+0x23/0x30 [dm_mod]
+
+Fix this by explicitly tracking whether the request queue was
+stopped in __dm_suspend() via a new DMF_QUEUE_STOPPED flag.
+Only call dm_start_queue() in __dm_resume() if the queue was
+actually stopped.
+
+Fixes: e70feb8b3e68 ("blk-mq: support concurrent queue quiesce/unquiesce")
 Cc: stable@vger.kernel.org
-Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250811-gpio-mmio-mfd-conv-v1-1-68c5c958cf80@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/vexpress-sysreg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/md/dm-core.h |    1 +
+ drivers/md/dm.c      |    8 +++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/mfd/vexpress-sysreg.c
-+++ b/drivers/mfd/vexpress-sysreg.c
-@@ -90,6 +90,7 @@ static int vexpress_sysreg_probe(struct
- 	struct resource *mem;
- 	void __iomem *base;
- 	struct gpio_chip *mmc_gpio_chip;
-+	int ret;
+--- a/drivers/md/dm-core.h
++++ b/drivers/md/dm-core.h
+@@ -161,6 +161,7 @@ struct mapped_device {
+ #define DMF_SUSPENDED_INTERNALLY 7
+ #define DMF_POST_SUSPENDING 8
+ #define DMF_EMULATE_ZONE_APPEND 9
++#define DMF_QUEUE_STOPPED 10
  
- 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!mem)
-@@ -110,7 +111,10 @@ static int vexpress_sysreg_probe(struct
- 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
- 			NULL, NULL, NULL, NULL, 0);
- 	mmc_gpio_chip->ngpio = 2;
--	devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
-+
-+	ret = devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
-+	if (ret)
-+		return ret;
+ void disable_discard(struct mapped_device *md);
+ void disable_write_zeroes(struct mapped_device *md);
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2740,8 +2740,10 @@ static int __dm_suspend(struct mapped_de
+ 	 * Stop md->queue before flushing md->wq in case request-based
+ 	 * dm defers requests to md->wq from md->queue.
+ 	 */
+-	if (dm_request_based(md))
++	if (dm_request_based(md)) {
+ 		dm_stop_queue(md->queue);
++		set_bit(DMF_QUEUE_STOPPED, &md->flags);
++	}
  
- 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
- 			vexpress_sysreg_cells,
+ 	flush_workqueue(md->wq);
+ 
+@@ -2763,7 +2765,7 @@ static int __dm_suspend(struct mapped_de
+ 	if (r < 0) {
+ 		dm_queue_flush(md);
+ 
+-		if (dm_request_based(md))
++		if (test_and_clear_bit(DMF_QUEUE_STOPPED, &md->flags))
+ 			dm_start_queue(md->queue);
+ 
+ 		unlock_fs(md);
+@@ -2847,7 +2849,7 @@ static int __dm_resume(struct mapped_dev
+ 	 * so that mapping of targets can work correctly.
+ 	 * Request-based dm is queueing the deferred I/Os in its request_queue.
+ 	 */
+-	if (dm_request_based(md))
++	if (test_and_clear_bit(DMF_QUEUE_STOPPED, &md->flags))
+ 		dm_start_queue(md->queue);
+ 
+ 	unlock_fs(md);
 
 
