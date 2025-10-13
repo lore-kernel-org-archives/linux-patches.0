@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE131E9B0D;
-	Mon, 13 Oct 2025 15:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0817C257828;
+	Mon, 13 Oct 2025 15:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368375; cv=none; b=GhbBN5e3oOwKwm0Aj80/HHh30OMei2CS8td6e8USUfWdGGTOC5cxlV0vEXOBAFw6CMRcx1HF7lnXK3rYVSXe5f3bJa0/vx0qiC3CoCEq3ndYVaMBxpZsrIb+xvInCsBhZbDin0BTX6W1U6FyHClN13XA8h/FXjOhdZBat7PUljM=
+	t=1760368378; cv=none; b=fwkJPd/QFgOpGWnpcpXhuapqGOZHt8Ioi+evVhqbV5YmGOo+FCkBIf617evem987sYgot89IbmmbLnDU9yJdM4Xp3q5SUOCjm1rt+jlYHNXCoNzcPAgqKK88cNAtmSPhtlX86hiz0Fn4TVMvDu8ZTZXjQUWrTW4cxrIk3+B1EXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368375; c=relaxed/simple;
-	bh=hCWkR1NbqzeO10SZ5pgHXH2JRcv0VgyZFE5n55llmm4=;
+	s=arc-20240116; t=1760368378; c=relaxed/simple;
+	bh=Ovji5IJAi9hxWyONm8VcjrhyWsaaFKkKr1jtSCtWCD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ss6OIhs/xCKJtYG+KAAjDGLqyfurqD1328SsgLAs+b3PUrLepWbV/fDhNPd0mRp68esbrU8B8iuQ6igg/rPeaUTHtSQGePj4212YD0CVBuZASj+30aL4r4Gk5jUxv7t0w+iQMGYxmvH5di9HLwqZj6FSefjua4DkedmSnGDlkyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bP6KY6BE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbiIOBWr9saQrsVAVjDRWXcT3POv+yTquQHJ5rGxGxCPCoKGjlwMn2DJpPwVobL3jSzilaIppz0cd7BjXUm7GVqmth6nwYUdYYUtXVnim3pERsJ/9ULzB2T6rgZuPDYvXAJ66oO1vRLpchAyXSFjAp+mJQd4Q+XvUWpJ8wkln4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6XNGnY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bP6KY6BE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910B7C4CEE7;
-	Mon, 13 Oct 2025 15:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6XNGnY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1B0C4CEE7;
+	Mon, 13 Oct 2025 15:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368374;
-	bh=hCWkR1NbqzeO10SZ5pgHXH2JRcv0VgyZFE5n55llmm4=;
+	s=korg; t=1760368377;
+	bh=Ovji5IJAi9hxWyONm8VcjrhyWsaaFKkKr1jtSCtWCD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bP6KY6BE7yEfQCSCHlTPFwKlmDfUx2unkbmDoME7QJeKSZ7pVBJTWwAzFpjsNp4gj
-	 zdCKWrb/lUFm+JPYdEY4F1B77n+ceOi3dn/+WD4Fsnw+UR9I+D4XsWczPORlnBiQNp
-	 hgiNNvqCAOTmrvwB541ZmkzP/sqXO20aA6O1DtFA=
+	b=T6XNGnY4MBIiMbntNtI0oOs+Q4L0FxSqRZisS3CRMgcFS5/XqheBqErEAq5i2U3Sw
+	 ZInWOd1OLY7DEwP6GMrn1CKKselWII5pTuX75UZbvUEF+cV0+4VBrBnKQIclpYrJim
+	 oltD0Qcj1bCg5NSwSTxHruGc233sCtqpIXTMPv0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>,
+	syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com,
+	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/262] fs: ntfs3: Fix integer overflow in run_unpack()
-Date: Mon, 13 Oct 2025 16:44:40 +0200
-Message-ID: <20251013144331.093781958@linuxfoundation.org>
+Subject: [PATCH 6.12 139/262] fs/ntfs3: reject index allocation if $BITMAP is empty but blocks exist
+Date: Mon, 13 Oct 2025 16:44:41 +0200
+Message-ID: <20251013144331.129410960@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,85 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 
-[ Upstream commit 736fc7bf5f68f6b74a0925b7e072c571838657d2 ]
+[ Upstream commit 0dc7117da8f92dd5fe077d712a756eccbe377d40 ]
 
-The MFT record relative to the file being opened contains its runlist,
-an array containing information about the file's location on the physical
-disk. Analysis of all Call Stack paths showed that the values of the
-runlist array, from which LCNs are calculated, are not validated before
-run_unpack function.
+Index allocation requires at least one bit in the $BITMAP attribute to
+track usage of index entries. If the bitmap is empty while index blocks
+are already present, this reflects on-disk corruption.
 
-The run_unpack function decodes the compressed runlist data format
-from MFT attributes (for example, $DATA), converting them into a runs_tree
-structure, which describes the mapping of virtual clusters (VCN) to
-logical clusters (LCN). The NTFS3 subsystem also has a shortcut for
-deleting files from MFT records - in this case, the RUN_DEALLOCATE
-command is sent to the run_unpack input, and the function logic
-provides that all data transferred to the runlist about file or
-directory is deleted without creating a runs_tree structure.
+syzbot triggered this condition using a malformed NTFS image. During a
+rename() operation involving a long filename (which spans multiple
+index entries), the empty bitmap allowed the name to be added without
+valid tracking. Subsequent deletion of the original entry failed with
+-ENOENT, due to unexpected index state.
 
-Substituting the runlist in the $DATA attribute of the MFT record for an
-arbitrary file can lead either to access to arbitrary data on the disk
-bypassing access checks to them (since the inode access check
-occurs above) or to destruction of arbitrary data on the disk.
+Reject such cases by verifying that the bitmap is not empty when index
+blocks exist.
 
-Add overflow check for addition operation.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Signed-off-by: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+Reported-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b0373017f711c06ada64
+Fixes: d99208b91933 ("fs/ntfs3: cancle set bad inode after removing name fails")
+Tested-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
+Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/run.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/ntfs3/index.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
-index 48566dff0dc92..662add939da78 100644
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -9,6 +9,7 @@
- #include <linux/blkdev.h>
- #include <linux/fs.h>
- #include <linux/log2.h>
-+#include <linux/overflow.h>
- 
- #include "debug.h"
- #include "ntfs.h"
-@@ -982,14 +983,18 @@ int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 
- 			if (!dlcn)
- 				return -EINVAL;
--			lcn = prev_lcn + dlcn;
-+
-+			if (check_add_overflow(prev_lcn, dlcn, &lcn))
-+				return -EINVAL;
- 			prev_lcn = lcn;
- 		} else {
- 			/* The size of 'dlcn' can't be > 8. */
- 			return -EINVAL;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 1bf2a6593dec6..6d1bf890929d9 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1508,6 +1508,16 @@ static int indx_add_allocate(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 			bmp_size = bmp_size_v = le32_to_cpu(bmp->res.data_size);
  		}
  
--		next_vcn = vcn64 + len;
-+		if (check_add_overflow(vcn64, len, &next_vcn))
-+			return -EINVAL;
++		/*
++		 * Index blocks exist, but $BITMAP has zero valid bits.
++		 * This implies an on-disk corruption and must be rejected.
++		 */
++		if (in->name == I30_NAME &&
++		    unlikely(bmp_size_v == 0 && indx->alloc_run.count)) {
++			err = -EINVAL;
++			goto out1;
++		}
 +
- 		/* Check boundary. */
- 		if (next_vcn > evcn + 1)
- 			return -EINVAL;
-@@ -1153,7 +1158,8 @@ int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
- 			return -EINVAL;
+ 		bit = bmp_size << 3;
+ 	}
  
- 		run_buf += size_size + offset_size;
--		vcn64 += len;
-+		if (check_add_overflow(vcn64, len, &vcn64))
-+			return -EINVAL;
- 
- #ifndef CONFIG_NTFS3_64BIT_CLUSTER
- 		if (vcn64 > 0x100000000ull)
 -- 
 2.51.0
 
