@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A605530BF6B;
-	Mon, 13 Oct 2025 15:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BDF253954;
+	Mon, 13 Oct 2025 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369081; cv=none; b=JaApyyXLk2NJZ5X7quxXA2r7+8MIMyhvs7xlU+hCBrLsmfSrzlTUoultO4WiXkgF5OW41QpG1kZfRVvdDVOCHmKz1MJzEOgjC9zu3uo5lxzEVzw6TJi/LhveQ6mzkcdKN13iqAOiKn54MeV0XwL/hpcLhQrHTlFJblX1fEv/XtQ=
+	t=1760369084; cv=none; b=ogfLZNdd0CDx264UEkwCXxIrswDg2m2eV/WjfebvCAewbj9Siy/Ia54zmYDeuTXuybqdlUQThblkHOFAQtTD0LfLabyc1taR4sfwrW9jIokkN1GSIa/nlRwWcPMgfjLxzUI3kCfr23V8UJiHLUvaITCCVX9xb23hMCrbGRaqz9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369081; c=relaxed/simple;
-	bh=Borexb4ossLqvtP7GQ6JqbAWuxd/qa7iZZPI9klEEAQ=;
+	s=arc-20240116; t=1760369084; c=relaxed/simple;
+	bh=INgivSK8bHOmnCzuqhDq9dchKR5xZYqn/9698tc8ClE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTtOFEy0uY4ee57qil7wZEK6LqmO/RMRY6jnIYVIqXS0ZYGId3UCvJGzhWhbUKfK0mPnOMeDybv2QrQzlv+hlUURSk4R1fHtzVHn1cdyQEmkLo25Z3L15L1G0inupTCEWysDS80cImdwHors2Ja65gQXTNAqHA27qdAr6QbCfJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5wt3xCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRPZ69sVFBewcO1Z3RSK7NO3/FE9iqOuwKYouMimquEOtDflCxXnISktBBE/IdoAqbJoyG+DOCqjo23g/+5e9M6LZEYMoFWL3WwsmXJdJpamhgZevb5eg8L0n5d3+1hYkcBRVQTjjY4FIB34EDYqEE8J7EN4Akh6hpwizxzxADs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bnU+ga8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5wt3xCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351F2C4CEE7;
-	Mon, 13 Oct 2025 15:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bnU+ga8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0741C4CEE7;
+	Mon, 13 Oct 2025 15:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369081;
-	bh=Borexb4ossLqvtP7GQ6JqbAWuxd/qa7iZZPI9klEEAQ=;
+	s=korg; t=1760369084;
+	bh=INgivSK8bHOmnCzuqhDq9dchKR5xZYqn/9698tc8ClE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5wt3xCQlrOGpylclc34FBvpoQhSIGuWvBPJ2E+CgnkF+cLVjHwfcqm7P1jmsW11u
-	 zGthwvWuM+q79OwOxcEu40AlSaMtWUf188pZIDkHayfHBh+MMM6WBtd8kRUbrGrJ/E
-	 iiUbkuGHqZK8sOjbArv/cKYZNLKeE4IZJz3bLxj4=
+	b=0bnU+ga8O6++cS2QaHp/mVVXMeQ7Nvs5eEEEXhyMLpdYZqTu6NVD4P31Dp/DZR2Vz
+	 fCa8+6vleS7AoCdoy1jlix2uXltfw4YcK/W/LaT6N5W9vuzB0rccbXWOPtrWOx5Pbe
+	 nIFVaHpXTp1/usiLPHgbxedJ1a55+4UZ4lXdKwME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 120/563] block: cleanup bio_issue
-Date: Mon, 13 Oct 2025 16:39:41 +0200
-Message-ID: <20251013144415.641133209@linuxfoundation.org>
+Subject: [PATCH 6.17 121/563] block: initialize bio issue time in blk_mq_submit_bio()
+Date: Mon, 13 Oct 2025 16:39:42 +0200
+Message-ID: <20251013144415.677130850@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,164 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 1733e88874838ddebf7774440c285700865e6b08 ]
+[ Upstream commit 1f963bdd6420b6080bcfd0ee84a75c96f35545a6 ]
 
-Now that bio->bi_issue is only used by blk-iolatency to get bio issue
-time, replace bio_issue with u64 time directly and remove bio_issue to
-make code cleaner.
+bio->issue_time_ns is only used by blk-iolatency, which can only be
+enabled for rq-based disk, hence it's not necessary to initialize
+the time for bio-based disk.
 
+Meanwhile, if bio is split by blk_crypto_fallback_split_bio_if_needed(),
+the issue time is not initialized for new split bio, this can be fixed
+as well.
+
+Noted the next patch will optimize better that bio issue time will
+only be used when blk-iolatency is really enabled by the disk.
+
+Fixes: 488f6682c832 ("block: blk-crypto-fallback for Inline Encryption")
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1f963bdd6420 ("block: initialize bio issue time in blk_mq_submit_bio()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c               |  2 +-
- block/blk-cgroup.h        |  2 +-
- block/blk-iolatency.c     | 14 +++----------
- block/blk.h               | 42 ---------------------------------------
- include/linux/blk_types.h |  7 ++-----
- 5 files changed, 7 insertions(+), 60 deletions(-)
+ block/blk-cgroup.h | 6 ------
+ block/blk-core.c   | 1 -
+ block/blk-merge.c  | 1 -
+ block/blk-mq.c     | 8 ++++++++
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index 3b371a5da159e..1904683f7ab05 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -261,7 +261,7 @@ void bio_init(struct bio *bio, struct block_device *bdev, struct bio_vec *table,
- 	bio->bi_private = NULL;
- #ifdef CONFIG_BLK_CGROUP
- 	bio->bi_blkg = NULL;
--	bio->bi_issue.value = 0;
-+	bio->issue_time_ns = 0;
- 	if (bdev)
- 		bio_associate_blkg(bio);
- #ifdef CONFIG_BLK_CGROUP_IOCOST
 diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index 83367086cb6ae..8328427e31657 100644
+index 8328427e31657..1cce3294634d1 100644
 --- a/block/blk-cgroup.h
 +++ b/block/blk-cgroup.h
-@@ -372,7 +372,7 @@ static inline void blkg_put(struct blkcg_gq *blkg)
+@@ -370,11 +370,6 @@ static inline void blkg_put(struct blkcg_gq *blkg)
+ 		if (((d_blkg) = blkg_lookup(css_to_blkcg(pos_css),	\
+ 					    (p_blkg)->q)))
  
- static inline void blkcg_bio_issue_init(struct bio *bio)
- {
--	bio_issue_init(&bio->bi_issue, bio_sectors(bio));
-+	bio->issue_time_ns = blk_time_get_ns();
- }
- 
+-static inline void blkcg_bio_issue_init(struct bio *bio)
+-{
+-	bio->issue_time_ns = blk_time_get_ns();
+-}
+-
  static inline void blkcg_use_delay(struct blkcg_gq *blkg)
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 2f8fdecdd7a9b..554b191a68921 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -485,19 +485,11 @@ static void blkcg_iolatency_throttle(struct rq_qos *rqos, struct bio *bio)
- 		mod_timer(&blkiolat->timer, jiffies + HZ);
- }
- 
--static void iolatency_record_time(struct iolatency_grp *iolat,
--				  struct bio_issue *issue, u64 now,
--				  bool issue_as_root)
-+static void iolatency_record_time(struct iolatency_grp *iolat, u64 start,
-+				  u64 now, bool issue_as_root)
  {
--	u64 start = bio_issue_time(issue);
- 	u64 req_time;
+ 	if (WARN_ON_ONCE(atomic_read(&blkg->use_delay) < 0))
+@@ -497,7 +492,6 @@ static inline struct blkg_policy_data *blkg_to_pd(struct blkcg_gq *blkg,
+ static inline struct blkcg_gq *pd_to_blkg(struct blkg_policy_data *pd) { return NULL; }
+ static inline void blkg_get(struct blkcg_gq *blkg) { }
+ static inline void blkg_put(struct blkcg_gq *blkg) { }
+-static inline void blkcg_bio_issue_init(struct bio *bio) { }
+ static inline void blk_cgroup_bio_start(struct bio *bio) { }
+ static inline bool blk_cgroup_mergeable(struct request *rq, struct bio *bio) { return true; }
  
--	/*
--	 * Have to do this so we are truncated to the correct time that our
--	 * issue is truncated to.
--	 */
--	now = __bio_issue_time(now);
--
- 	if (now <= start)
- 		return;
+diff --git a/block/blk-core.c b/block/blk-core.c
+index a27185cd8edea..e5af6eda5a459 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -730,7 +730,6 @@ static void __submit_bio_noacct_mq(struct bio *bio)
+ void submit_bio_noacct_nocheck(struct bio *bio)
+ {
+ 	blk_cgroup_bio_start(bio);
+-	blkcg_bio_issue_init(bio);
  
-@@ -625,7 +617,7 @@ static void blkcg_iolatency_done_bio(struct rq_qos *rqos, struct bio *bio)
- 		 * submitted, so do not account for it.
- 		 */
- 		if (iolat->min_lat_nsec && bio->bi_status != BLK_STS_AGAIN) {
--			iolatency_record_time(iolat, &bio->bi_issue, now,
-+			iolatency_record_time(iolat, bio->issue_time_ns, now,
- 					      issue_as_root);
- 			window_start = atomic64_read(&iolat->window_start);
- 			if (now > window_start &&
-diff --git a/block/blk.h b/block/blk.h
-index 46f566f9b1266..0268deb222688 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -680,48 +680,6 @@ static inline ktime_t blk_time_get(void)
- 	return ns_to_ktime(blk_time_get_ns());
- }
- 
--/*
-- * From most significant bit:
-- * 1 bit: reserved for other usage, see below
-- * 12 bits: original size of bio
-- * 51 bits: issue time of bio
-- */
--#define BIO_ISSUE_RES_BITS      1
--#define BIO_ISSUE_SIZE_BITS     12
--#define BIO_ISSUE_RES_SHIFT     (64 - BIO_ISSUE_RES_BITS)
--#define BIO_ISSUE_SIZE_SHIFT    (BIO_ISSUE_RES_SHIFT - BIO_ISSUE_SIZE_BITS)
--#define BIO_ISSUE_TIME_MASK     ((1ULL << BIO_ISSUE_SIZE_SHIFT) - 1)
--#define BIO_ISSUE_SIZE_MASK     \
--	(((1ULL << BIO_ISSUE_SIZE_BITS) - 1) << BIO_ISSUE_SIZE_SHIFT)
--#define BIO_ISSUE_RES_MASK      (~((1ULL << BIO_ISSUE_RES_SHIFT) - 1))
--
--/* Reserved bit for blk-throtl */
--#define BIO_ISSUE_THROTL_SKIP_LATENCY (1ULL << 63)
--
--static inline u64 __bio_issue_time(u64 time)
--{
--	return time & BIO_ISSUE_TIME_MASK;
--}
--
--static inline u64 bio_issue_time(struct bio_issue *issue)
--{
--	return __bio_issue_time(issue->value);
--}
--
--static inline sector_t bio_issue_size(struct bio_issue *issue)
--{
--	return ((issue->value & BIO_ISSUE_SIZE_MASK) >> BIO_ISSUE_SIZE_SHIFT);
--}
--
--static inline void bio_issue_init(struct bio_issue *issue,
--				       sector_t size)
--{
--	size &= (1ULL << BIO_ISSUE_SIZE_BITS) - 1;
--	issue->value = ((issue->value & BIO_ISSUE_RES_MASK) |
--			(blk_time_get_ns() & BIO_ISSUE_TIME_MASK) |
--			((u64)size << BIO_ISSUE_SIZE_SHIFT));
--}
--
- void bdev_release(struct file *bdev_file);
- int bdev_open(struct block_device *bdev, blk_mode_t mode, void *holder,
- 	      const struct blk_holder_ops *hops, struct file *bdev_file);
-diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
-index 09b99d52fd365..f78145be77df5 100644
---- a/include/linux/blk_types.h
-+++ b/include/linux/blk_types.h
-@@ -198,10 +198,6 @@ static inline bool blk_path_error(blk_status_t error)
- 	return true;
- }
- 
--struct bio_issue {
--	u64 value;
--};
--
- typedef __u32 __bitwise blk_opf_t;
- 
- typedef unsigned int blk_qc_t;
-@@ -242,7 +238,8 @@ struct bio {
- 	 * on release of the bio.
- 	 */
- 	struct blkcg_gq		*bi_blkg;
--	struct bio_issue	bi_issue;
-+	/* Time that this bio was issued. */
-+	u64			issue_time_ns;
- #ifdef CONFIG_BLK_CGROUP_IOCOST
- 	u64			bi_iocost_cost;
+ 	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
+ 		trace_block_bio_queue(bio);
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index 70d704615be52..5538356770a47 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -119,7 +119,6 @@ static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
+ 			goto error;
+ 		}
+ 		split->bi_opf |= REQ_NOMERGE;
+-		blkcg_bio_issue_init(split);
+ 		bio_chain(split, bio);
+ 		trace_block_split(split, bio->bi_iter.bi_sector);
+ 		WARN_ON_ONCE(bio_zone_write_plugging(bio));
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 9055cd6247004..19b50110376c6 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -396,6 +396,13 @@ static inline void blk_mq_rq_time_init(struct request *rq, u64 alloc_time_ns)
  #endif
+ }
+ 
++static inline void blk_mq_bio_issue_init(struct bio *bio)
++{
++#ifdef CONFIG_BLK_CGROUP
++	bio->issue_time_ns = blk_time_get_ns();
++#endif
++}
++
+ static struct request *blk_mq_rq_ctx_init(struct blk_mq_alloc_data *data,
+ 		struct blk_mq_tags *tags, unsigned int tag)
+ {
+@@ -3168,6 +3175,7 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	if (!bio_integrity_prep(bio))
+ 		goto queue_exit;
+ 
++	blk_mq_bio_issue_init(bio);
+ 	if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
+ 		goto queue_exit;
+ 
 -- 
 2.51.0
 
