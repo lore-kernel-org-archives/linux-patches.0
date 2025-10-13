@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5A530AADA;
-	Mon, 13 Oct 2025 14:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584A82DF139;
+	Mon, 13 Oct 2025 14:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367162; cv=none; b=idX3PqFuBjIZDlbWqkKObf96iQvpcWA7+PyOBaL8MEbhRlFNN6CN86TOQ3imxfa43908SrBp9V/f0eYo7oVb5FjiKP1YRj843wWBLscgV8qG4uE6Sp9DJzIZ4TOXiaXaLQStHCoP9yH7dVRIdYTVJXiGq5vGCVihQIF2fJt9Svc=
+	t=1760367164; cv=none; b=tOki1+lRarmLX4dSpydl7Sfrtwp7Jx8vSyVr8qU0MnQGMRF3twJPxT7CzHJ1EBTXR7CzT7kBuMlXrMfKBAwemNo3Rj5qOeT9o+QGF4nRIeWKOsxOODJ9I177Sh+tQzXhLMojrNm6mfPdWUAJKOVf4d9HYjj1je38BZOy87YVRfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367162; c=relaxed/simple;
-	bh=PU2Vb1G9Hotdmad/Dvcij3x1Lhg/q5q3zmpbJ0fxTtQ=;
+	s=arc-20240116; t=1760367164; c=relaxed/simple;
+	bh=zmMbOMDi8IAkd5NFbdAysXAxLUeFxXczHAMzhcsm69Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUzv7ujVwoH4VG3ilonJWphhx8PD0fiWHE9c1G1LCGpkgu0t2MsnqFS3HNcNm8TUr8bJSBYa913mVfr/SxZjposhnjOzy3ZWFLSAHpZOwCdqfgn9uSJtPdg86y6/0NpPX3boZf+qz2vjWKeFhGATA/ll+BWL8Pgt62Aj/jmecPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlQPws0t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU7Rp1ukYWGqnTbMJrJhKIO8Ecv8Ts1cngBT+FjTvpcjFBoEyiMiEPfZZ9G9bbkU1bTLMIgvnydQe71Mmt2de3qIt1VNl1GD57uYaO+ABgh6EsKF+ftdJrAhZ1127mKV4OIxjNTW8qUCfe7y3w+iBLhWVumIDeH5EZ6jYYCnsBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXZ5B/dk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlQPws0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05990C4CEE7;
-	Mon, 13 Oct 2025 14:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXZ5B/dk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBF0C4CEE7;
+	Mon, 13 Oct 2025 14:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367161;
-	bh=PU2Vb1G9Hotdmad/Dvcij3x1Lhg/q5q3zmpbJ0fxTtQ=;
+	s=korg; t=1760367164;
+	bh=zmMbOMDi8IAkd5NFbdAysXAxLUeFxXczHAMzhcsm69Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlQPws0tVe424KrBWBQyoTwg6ooYP/apNYAdci0X/jx8flw0fS9SRU3pBlqUqonny
-	 kLT0znERZLdySK8FKzL1YgcJdxdPkQaPUM/boqtt+X0EGd8ZGH0FlUnP0iKN5nUvUS
-	 RV32HUTW5Z9XYF48vFAmIctTD7lxGtwvyrTlFRVY=
+	b=eXZ5B/dkBJftCyhZOhPn/arA2FBvmsPQlFVlLR1Zc1u6yh+dvkVPjdhvu4dKM/cU0
+	 EMrgIzSIeBOqYEN/3hhieagJvX7tQ9jUOQ9R8KMUQituikOzWsDGu3bFKlnrNdnlV8
+	 LS6CGuixNot4/IRMyXxuZCU4DdyV+IT4IBCiZq/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xichao Zhao <zhao.xichao@vivo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/196] drm/amdkfd: Fix error code sign for EINVAL in svm_ioctl()
-Date: Mon, 13 Oct 2025 16:44:46 +0200
-Message-ID: <20251013144318.786301177@linuxfoundation.org>
+Subject: [PATCH 6.1 114/196] usb: phy: twl6030: Fix incorrect type for ret
+Date: Mon, 13 Oct 2025 16:44:47 +0200
+Message-ID: <20251013144318.821895299@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,33 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Xichao Zhao <zhao.xichao@vivo.com>
 
-[ Upstream commit cbda64f3f58027f68211dda8ea94d52d7e493995 ]
+[ Upstream commit b570b346ddd727c4b41743a6a2f49e7217c5317f ]
 
-Use negative error code -EINVAL instead of positive EINVAL in the default
-case of svm_ioctl() to conform to Linux kernel error code conventions.
+In the twl6030_usb_probe(), the variable ret is declared as
+a u32 type. However, since ret may receive -ENODEV when accepting
+the return value of omap_usb2_set_comparator().Therefore, its type
+should be changed to int.
 
-Fixes: 42de677f7999 ("drm/amdkfd: register svm range")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 0e98de67bacba ("usb: otg: make twl6030_usb as a comparator driver to omap_usb2")
+Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
+Link: https://lore.kernel.org/r/20250822092224.30645-1-zhao.xichao@vivo.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/phy/phy-twl6030-usb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 09ce90cf6b532..2ee3a74ae0d8f 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -4002,7 +4002,7 @@ svm_ioctl(struct kfd_process *p, enum kfd_ioctl_svm_op op, uint64_t start,
- 		r = svm_range_get_attr(p, mm, start, size, nattrs, attrs);
- 		break;
- 	default:
--		r = EINVAL;
-+		r = -EINVAL;
- 		break;
- 	}
+diff --git a/drivers/usb/phy/phy-twl6030-usb.c b/drivers/usb/phy/phy-twl6030-usb.c
+index ab3c38a7d8ac0..a73604af8960e 100644
+--- a/drivers/usb/phy/phy-twl6030-usb.c
++++ b/drivers/usb/phy/phy-twl6030-usb.c
+@@ -328,9 +328,8 @@ static int twl6030_set_vbus(struct phy_companion *comparator, bool enabled)
+ 
+ static int twl6030_usb_probe(struct platform_device *pdev)
+ {
+-	u32 ret;
+ 	struct twl6030_usb	*twl;
+-	int			status, err;
++	int			status, err, ret;
+ 	struct device_node	*np = pdev->dev.of_node;
+ 	struct device		*dev = &pdev->dev;
  
 -- 
 2.51.0
