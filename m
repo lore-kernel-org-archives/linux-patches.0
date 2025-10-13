@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAE63081AE;
-	Mon, 13 Oct 2025 15:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AEF30CDB4;
+	Mon, 13 Oct 2025 15:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369176; cv=none; b=oXGfm12/ra+voSb/H6U1qSnqiqm8+jthHnxEOJC4PRlCEcmApzCfAZe1YZW4FjhgJ/fPwYj+0iBgQyS0a/Waq+oKUFnT5fQWE+A5C16BJ7t97BMC85E5QMxT4IYnigTDcUrF5OLrrpayawqvCjnAG1PPcJVA+45/C9f7StoOhGc=
+	t=1760369179; cv=none; b=e62l8H9HiEYh6lxQZ4nBnYlKSSLt/ghADemvyQbxjgS+ql1oGpw3K+gag/wqYXd/q2ymuCes995IrxLLz5/pYTaKkPpAvEpYGq621+MXzPp1mN/PIt0GxHidA9TyWv9TadEnMh5DCtb3QJg8pfJys3Kie5vy5IgwbUPUkvdwFXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369176; c=relaxed/simple;
-	bh=QNGBqiiBpBF48jgpmpOSvGS17AlNE+B5S9PYX4JxRho=;
+	s=arc-20240116; t=1760369179; c=relaxed/simple;
+	bh=hPWnCJBobnXomezOyb07Od+ZyBOyRW2w+Fit/v2OQhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYCmzsj5mP1uuX8DRtETQThqGEu60Y7dogKSrftrM4Fm4ofY5UNaqvojSa1UAoOtDimnrDQc5OFVVjNI2df/b0NAXIEEGjzf6GFZ9ahLxo/MnhIDW/41FPybSsUoyMVOSnMhx8dYLXUS0zksJSz3rHIBSZLFH2VytvkbFtgByVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyKUw0t+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDBUuiTol6eSqbMk5LO4HM0GPN9mWMGlFym2UGB7DJb58kL+IvEQttGbkdRfFHuzbNtvHDfemCi4rAS4/NUCwz47vSRUSwtTiP9+4PSluvy24xAuPDHAk27dXlbMKUv7zypxgxmMHKrj5t6JpUxSFMBfH1xt1JyIRfmdqbHqkdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpEDWDxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyKUw0t+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9469AC4CEE7;
-	Mon, 13 Oct 2025 15:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpEDWDxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E3DC4CEE7;
+	Mon, 13 Oct 2025 15:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369176;
-	bh=QNGBqiiBpBF48jgpmpOSvGS17AlNE+B5S9PYX4JxRho=;
+	s=korg; t=1760369178;
+	bh=hPWnCJBobnXomezOyb07Od+ZyBOyRW2w+Fit/v2OQhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZyKUw0t+8UM9U00y6awoANBefer0a7tiDrQm5H2Qc/7A4uBm2U8gBg0/XuKtv7sBt
-	 KdMHk241WaFN8VeIIiPvvJROEnhTVAOa6Gi3+srWvpzGTLyp9sVL6C/7Ri5mtTCk8d
-	 V0+JXYVJITQwZ8rFie7y9RLvKN/T2CuvkwsSXCY8=
+	b=ZpEDWDxVK/Jr0NXXWYMO1ZK6MWnh5NxqKeyNUpVRkitYSzcOwWk+t0zikdPSwwq5m
+	 1yTRZMV4+Jo2WhiUWwe4LV+c1Zhdd5F6MtPiHRWpk+kLJbmGuVxzVimsw7tu2TaXaQ
+	 2fvOEC3Ak8VDCQVpW5AMRpSu9j/axQzp2nAHcPKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 127/563] blk-mq: convert to serialize updating nr_requests with update_nr_hwq_lock
-Date: Mon, 13 Oct 2025 16:39:48 +0200
-Message-ID: <20251013144415.895473568@linuxfoundation.org>
+Subject: [PATCH 6.17 154/563] arm64: dts: allwinner: t527: orangepi-4a: hook up external 32k crystal
+Date: Mon, 13 Oct 2025 16:40:15 +0200
+Message-ID: <20251013144416.868172091@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,101 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 626ff4f8ebcb7207f01e7810acb85812ccf06bd8 ]
+[ Upstream commit bd1ce7ef6aef4ee7349eb3124166e712693650ce ]
 
-request_queue->nr_requests can be changed by:
+When the board was added, its external 32.768 KHz crystal was described
+but not hooked up correctly. This meant the device had to fall back to
+the SoC's internal oscillator or divide a 32 KHz clock from the main
+oscillator, neither of which are accurate for the RTC. As a result the
+RTC clock will drift badly.
 
-a) switch elevator by updating nr_hw_queues
-b) switch elevator by elevator sysfs attribute
-c) configue queue sysfs attribute nr_requests
+Hook the crystal up to the RTC block and request the correct clock rate.
 
-Current lock order is:
-
-1) update_nr_hwq_lock, case a,b
-2) freeze_queue
-3) elevator_lock, case a,b,c
-
-And update nr_requests is seriablized by elevator_lock() already,
-however, in the case c, we'll have to allocate new sched_tags if
-nr_requests grow, and do this with elevator_lock held and queue
-freezed has the risk of deadlock.
-
-Hence use update_nr_hwq_lock instead, make it possible to allocate
-memory if tags grow, meanwhile also prevent nr_requests to be changed
-concurrently.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b86433721f46 ("blk-mq: fix potential deadlock while nr_requests grown")
+Fixes: de713ccb9934 ("arm64: dts: allwinner: t527: Add OrangePi 4A board")
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20250913102450.3935943-3-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index b61e956a868e7..163264e4ec629 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -68,6 +68,7 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
- 	int ret, err;
- 	unsigned int memflags;
- 	struct request_queue *q = disk->queue;
-+	struct blk_mq_tag_set *set = q->tag_set;
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts b/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+index d07bb9193b438..b5483bd7b8d5d 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
++++ b/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+@@ -346,6 +346,14 @@ &r_pio {
+ 	vcc-pm-supply = <&reg_bldo2>;
+ };
  
- 	if (!queue_is_mq(q))
- 		return -EINVAL;
-@@ -76,8 +77,11 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
- 	if (ret < 0)
- 		return ret;
- 
--	memflags = blk_mq_freeze_queue(q);
--	mutex_lock(&q->elevator_lock);
-+	/*
-+	 * Serialize updating nr_requests with concurrent queue_requests_store()
-+	 * and switching elevator.
-+	 */
-+	down_write(&set->update_nr_hwq_lock);
- 
- 	if (nr == q->nr_requests)
- 		goto unlock;
-@@ -85,20 +89,31 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
- 	if (nr < BLKDEV_MIN_RQ)
- 		nr = BLKDEV_MIN_RQ;
- 
--	if (nr <= q->tag_set->reserved_tags ||
-+	/*
-+	 * Switching elevator is protected by update_nr_hwq_lock:
-+	 *  - read lock is held from elevator sysfs attribute;
-+	 *  - write lock is held from updating nr_hw_queues;
-+	 * Hence it's safe to access q->elevator here with write lock held.
-+	 */
-+	if (nr <= set->reserved_tags ||
- 	    (q->elevator && nr > MAX_SCHED_RQ) ||
--	    (!q->elevator && nr > q->tag_set->queue_depth)) {
-+	    (!q->elevator && nr > set->queue_depth)) {
- 		ret = -EINVAL;
- 		goto unlock;
- 	}
- 
-+	memflags = blk_mq_freeze_queue(q);
-+	mutex_lock(&q->elevator_lock);
++&rtc {
++	clocks = <&r_ccu CLK_BUS_R_RTC>, <&osc24M>,
++		 <&r_ccu CLK_R_AHB>, <&ext_osc32k>;
++	clock-names = "bus", "hosc", "ahb", "ext-osc32k";
++	assigned-clocks = <&rtc CLK_OSC32K>;
++	assigned-clock-rates = <32768>;
++};
 +
- 	err = blk_mq_update_nr_requests(disk->queue, nr);
- 	if (err)
- 		ret = err;
- 
--unlock:
- 	mutex_unlock(&q->elevator_lock);
- 	blk_mq_unfreeze_queue(q, memflags);
-+
-+unlock:
-+	up_write(&set->update_nr_hwq_lock);
- 	return ret;
- }
- 
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_pb_pins>;
 -- 
 2.51.0
 
