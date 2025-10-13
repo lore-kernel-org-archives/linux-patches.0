@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6C30EF71;
-	Mon, 13 Oct 2025 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DD530F531;
+	Mon, 13 Oct 2025 15:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367812; cv=none; b=QIyVWO4njWx8M4dGE0lzefkFzD0UXtuxJSlcPPrWy7uvJehmjmmpGdE767k1mWniWDuXjYfGNu9D2SkZ8qSS7ZsN4nXXepWwIsICypBuUfWAHYXiwH+1Q5x2uXgAG7+ImzocouDhKtDalJg47SiCVIgbZmEY8TveIcscL9VxI8s=
+	t=1760367815; cv=none; b=pbLxPBj4yTz+Wsh/GCT7UCKJOfBNx41dujF/yU3ozzjI92W4ae5pn5nkWoNCXNqIt0hA9S6fO+qKQ+yaOLW5UtyzvtVjTH8sjGk1BdMXtAhnZP7gXxiFcSMdwjOEq+LdyJU6VB1Kwe+qxK58Ap8rSwnRXNnQz5aiQ0F7J+e2QuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367812; c=relaxed/simple;
-	bh=kIrLs1rb8KT4NZIEUsy8efqo/hedApX1DqMkQHXtX+M=;
+	s=arc-20240116; t=1760367815; c=relaxed/simple;
+	bh=I8COHu1S6ms/Jxr5xJ1Mu3E7zhCIplFjSRZyedjSrxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3zFR2y9MQHds+Rsm03044qjrbw54nS2npVFcDAT41AaE6aGXJIAO774gfZRqfw1eo370wJSQdW8fa2fspfEIj2uwD1zta8Y9YcPwPEhDUObvO1rm/aAFuk8j3AxrvFmrHvhyssE9zZZdiuet7oDtUFUQIotAMXxZ+C/OpvoY8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fczdiZ3p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8pfISqrM/ZrBhX2b35QN3NUTEVC50UuW1Frg4FKSGu9xsxp9QafvA7K9SM589lZIvI9PMGKixW9cS3ccXypsL3Uq1OtVhSgZIx6rAYcLz/uV5PFbF38gOQ/fbLmgcnbdJzj4gsFjWZrIkYETRudKxZMedsxum2ZySYvFmTikY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKMot0HS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fczdiZ3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C97C4CEFE;
-	Mon, 13 Oct 2025 15:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKMot0HS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AD3C4CEE7;
+	Mon, 13 Oct 2025 15:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367812;
-	bh=kIrLs1rb8KT4NZIEUsy8efqo/hedApX1DqMkQHXtX+M=;
+	s=korg; t=1760367815;
+	bh=I8COHu1S6ms/Jxr5xJ1Mu3E7zhCIplFjSRZyedjSrxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fczdiZ3p4qp3ZKJL95el4LRTy+Qh0tVTgGJ4VbSijB7dKWoowuz/EFDxbHmpprgyj
-	 BwFz1fvjcaNLUYZtW+lxW2j2qMxI/DSKGFxqxkITTEFCr5D2qBEf2RdL3gU0wppeZ8
-	 9ACdZQOqQryNB3Ekege7sPL694Qvv9S9glCFYyiI=
+	b=vKMot0HS2HAo5Q4sZNdNX/0+NOPwa9NluXyVAbMyqXQ2XYariCmBPY1iGZLh4/d+X
+	 LSioXvoH0+sXusTmryHluIdtisbX5BpJFyUfq+Px26GZioDePP/dN7qE7ynSPB77VI
+	 uCFCktrTWY13U0pA+ClHPF42ewE4bnCVZcmSqVCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Phil Sutter <phil@nwl.cc>,
+	syzbot+1651b5234028c294c339@syzkaller.appspotmail.com,
+	Julian Anastasov <ja@ssi.bg>,
+	Zhang Tengfei <zhtfdev@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/196] netfilter: ipset: Remove unused htable_bits in macro ahash_region
-Date: Mon, 13 Oct 2025 16:45:00 +0200
-Message-ID: <20251013144319.256192017@linuxfoundation.org>
+Subject: [PATCH 6.6 110/196] ipvs: Use READ_ONCE/WRITE_ONCE for ipvs->enable
+Date: Mon, 13 Oct 2025 16:45:01 +0200
+Message-ID: <20251013144319.292038307@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,66 +53,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Zhang Tengfei <zhtfdev@gmail.com>
 
-[ Upstream commit ba941796d7cd1e81f51eed145dad1b47240ff420 ]
+[ Upstream commit 944b6b216c0387ac3050cd8b773819ae360bfb1c ]
 
-Since the ahash_region() macro was redefined to calculate the region
-index solely from HTABLE_REGION_BITS, the htable_bits parameter became
-unused.
+KCSAN reported a data-race on the `ipvs->enable` flag, which is
+written in the control path and read concurrently from many other
+contexts.
 
-Remove the unused htable_bits argument and its call sites, simplifying
-the code without changing semantics.
+Following a suggestion by Julian, this patch fixes the race by
+converting all accesses to use `WRITE_ONCE()/READ_ONCE()`.
+This lightweight approach ensures atomic access and acts as a
+compiler barrier, preventing unsafe optimizations where the flag
+is checked in loops (e.g., in ip_vs_est.c).
 
-Fixes: 8478a729c046 ("netfilter: ipset: fix region locking in hash types")
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
+Additionally, the `enable` checks in the fast-path hooks
+(`ip_vs_in_hook`, `ip_vs_out_hook`, `ip_vs_forward_icmp`) are
+removed. These are unnecessary since commit 857ca89711de
+("ipvs: register hooks only with services"). The `enable=0`
+condition they check for can only occur in two rare and non-fatal
+scenarios: 1) after hooks are registered but before the flag is set,
+and 2) after hooks are unregistered on cleanup_net. In the worst
+case, a single packet might be mishandled (e.g., dropped), which
+does not lead to a system crash or data corruption. Adding a check
+in the performance-critical fast-path to handle this harmless
+condition is not a worthwhile trade-off.
+
+Fixes: 857ca89711de ("ipvs: register hooks only with services")
+Reported-by: syzbot+1651b5234028c294c339@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1651b5234028c294c339
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Link: https://lore.kernel.org/lvs-devel/2189fc62-e51e-78c9-d1de-d35b8e3657e3@ssi.bg/
+Signed-off-by: Zhang Tengfei <zhtfdev@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c |  4 ++--
+ net/netfilter/ipvs/ip_vs_core.c | 11 ++++-------
+ net/netfilter/ipvs/ip_vs_ctl.c  |  6 +++---
+ net/netfilter/ipvs/ip_vs_est.c  | 16 ++++++++--------
+ 4 files changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index c2d88b1b06b87..20b223e6e93b9 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -62,7 +62,7 @@ struct hbucket {
- 		: jhash_size((htable_bits) - HTABLE_REGION_BITS))
- #define ahash_sizeof_regions(htable_bits)		\
- 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
--#define ahash_region(n, htable_bits)		\
-+#define ahash_region(n)		\
- 	((n) / jhash_size(HTABLE_REGION_BITS))
- #define ahash_bucket_start(h,  htable_bits)	\
- 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
-@@ -701,7 +701,7 @@ mtype_resize(struct ip_set *set, bool retried)
- #endif
- 				key = HKEY(data, h->initval, htable_bits);
- 				m = __ipset_dereference(hbucket(t, key));
--				nr = ahash_region(key, htable_bits);
-+				nr = ahash_region(key);
- 				if (!m) {
- 					m = kzalloc(sizeof(*m) +
- 					    AHASH_INIT_SIZE * dsize,
-@@ -851,7 +851,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	rcu_read_lock_bh();
- 	t = rcu_dereference_bh(h->table);
- 	key = HKEY(value, h->initval, t->htable_bits);
--	r = ahash_region(key, t->htable_bits);
-+	r = ahash_region(key);
- 	atomic_inc(&t->uref);
- 	elements = t->hregion[r].elements;
- 	maxelem = t->maxelem;
-@@ -1049,7 +1049,7 @@ mtype_del(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	rcu_read_lock_bh();
- 	t = rcu_dereference_bh(h->table);
- 	key = HKEY(value, h->initval, t->htable_bits);
--	r = ahash_region(key, t->htable_bits);
-+	r = ahash_region(key);
- 	atomic_inc(&t->uref);
- 	rcu_read_unlock_bh();
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index 8182833a35828..d9c3eefe8cbb0 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -884,7 +884,7 @@ static void ip_vs_conn_expire(struct timer_list *t)
+ 			 * conntrack cleanup for the net.
+ 			 */
+ 			smp_rmb();
+-			if (ipvs->enable)
++			if (READ_ONCE(ipvs->enable))
+ 				ip_vs_conn_drop_conntrack(cp);
+ 		}
  
+@@ -1432,7 +1432,7 @@ void ip_vs_expire_nodest_conn_flush(struct netns_ipvs *ipvs)
+ 		cond_resched_rcu();
+ 
+ 		/* netns clean up started, abort delayed work */
+-		if (!ipvs->enable)
++		if (!READ_ONCE(ipvs->enable))
+ 			break;
+ 	}
+ 	rcu_read_unlock();
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 3230506ae3ffd..34c4648ba36ec 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1353,9 +1353,6 @@ ip_vs_out_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *stat
+ 	if (unlikely(!skb_dst(skb)))
+ 		return NF_ACCEPT;
+ 
+-	if (!ipvs->enable)
+-		return NF_ACCEPT;
+-
+ 	ip_vs_fill_iph_skb(af, skb, false, &iph);
+ #ifdef CONFIG_IP_VS_IPV6
+ 	if (af == AF_INET6) {
+@@ -1936,7 +1933,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
+ 		return NF_ACCEPT;
+ 	}
+ 	/* ipvs enabled in this netns ? */
+-	if (unlikely(sysctl_backup_only(ipvs) || !ipvs->enable))
++	if (unlikely(sysctl_backup_only(ipvs)))
+ 		return NF_ACCEPT;
+ 
+ 	ip_vs_fill_iph_skb(af, skb, false, &iph);
+@@ -2104,7 +2101,7 @@ ip_vs_forward_icmp(void *priv, struct sk_buff *skb,
+ 	int r;
+ 
+ 	/* ipvs enabled in this netns ? */
+-	if (unlikely(sysctl_backup_only(ipvs) || !ipvs->enable))
++	if (unlikely(sysctl_backup_only(ipvs)))
+ 		return NF_ACCEPT;
+ 
+ 	if (state->pf == NFPROTO_IPV4) {
+@@ -2291,7 +2288,7 @@ static int __net_init __ip_vs_init(struct net *net)
+ 		return -ENOMEM;
+ 
+ 	/* Hold the beast until a service is registered */
+-	ipvs->enable = 0;
++	WRITE_ONCE(ipvs->enable, 0);
+ 	ipvs->net = net;
+ 	/* Counters used for creating unique names */
+ 	ipvs->gen = atomic_read(&ipvs_netns_cnt);
+@@ -2363,7 +2360,7 @@ static void __net_exit __ip_vs_dev_cleanup_batch(struct list_head *net_list)
+ 		ipvs = net_ipvs(net);
+ 		ip_vs_unregister_hooks(ipvs, AF_INET);
+ 		ip_vs_unregister_hooks(ipvs, AF_INET6);
+-		ipvs->enable = 0;	/* Disable packet reception */
++		WRITE_ONCE(ipvs->enable, 0);	/* Disable packet reception */
+ 		smp_wmb();
+ 		ip_vs_sync_net_cleanup(ipvs);
+ 	}
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index ae76542de3e98..c82dcbb4dabce 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -256,7 +256,7 @@ static void est_reload_work_handler(struct work_struct *work)
+ 		struct ip_vs_est_kt_data *kd = ipvs->est_kt_arr[id];
+ 
+ 		/* netns clean up started, abort delayed work */
+-		if (!ipvs->enable)
++		if (!READ_ONCE(ipvs->enable))
+ 			goto unlock;
+ 		if (!kd)
+ 			continue;
+@@ -1482,9 +1482,9 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
+ 
+ 	*svc_p = svc;
+ 
+-	if (!ipvs->enable) {
++	if (!READ_ONCE(ipvs->enable)) {
+ 		/* Now there is a service - full throttle */
+-		ipvs->enable = 1;
++		WRITE_ONCE(ipvs->enable, 1);
+ 
+ 		/* Start estimation for first time */
+ 		ip_vs_est_reload_start(ipvs);
+diff --git a/net/netfilter/ipvs/ip_vs_est.c b/net/netfilter/ipvs/ip_vs_est.c
+index c5970ba416aea..b48d3a09e2174 100644
+--- a/net/netfilter/ipvs/ip_vs_est.c
++++ b/net/netfilter/ipvs/ip_vs_est.c
+@@ -230,7 +230,7 @@ static int ip_vs_estimation_kthread(void *data)
+ void ip_vs_est_reload_start(struct netns_ipvs *ipvs)
+ {
+ 	/* Ignore reloads before first service is added */
+-	if (!ipvs->enable)
++	if (!READ_ONCE(ipvs->enable))
+ 		return;
+ 	ip_vs_est_stopped_recalc(ipvs);
+ 	/* Bump the kthread configuration genid */
+@@ -304,7 +304,7 @@ static int ip_vs_est_add_kthread(struct netns_ipvs *ipvs)
+ 	int i;
+ 
+ 	if ((unsigned long)ipvs->est_kt_count >= ipvs->est_max_threads &&
+-	    ipvs->enable && ipvs->est_max_threads)
++	    READ_ONCE(ipvs->enable) && ipvs->est_max_threads)
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&ipvs->est_mutex);
+@@ -341,7 +341,7 @@ static int ip_vs_est_add_kthread(struct netns_ipvs *ipvs)
+ 	}
+ 
+ 	/* Start kthread tasks only when services are present */
+-	if (ipvs->enable && !ip_vs_est_stopped(ipvs)) {
++	if (READ_ONCE(ipvs->enable) && !ip_vs_est_stopped(ipvs)) {
+ 		ret = ip_vs_est_kthread_start(ipvs, kd);
+ 		if (ret < 0)
+ 			goto out;
+@@ -484,7 +484,7 @@ int ip_vs_start_estimator(struct netns_ipvs *ipvs, struct ip_vs_stats *stats)
+ 	struct ip_vs_estimator *est = &stats->est;
+ 	int ret;
+ 
+-	if (!ipvs->est_max_threads && ipvs->enable)
++	if (!ipvs->est_max_threads && READ_ONCE(ipvs->enable))
+ 		ipvs->est_max_threads = ip_vs_est_max_threads(ipvs);
+ 
+ 	est->ktid = -1;
+@@ -661,7 +661,7 @@ static int ip_vs_est_calc_limits(struct netns_ipvs *ipvs, int *chain_max)
+ 			/* Wait for cpufreq frequency transition */
+ 			wait_event_idle_timeout(wq, kthread_should_stop(),
+ 						HZ / 50);
+-			if (!ipvs->enable || kthread_should_stop())
++			if (!READ_ONCE(ipvs->enable) || kthread_should_stop())
+ 				goto stop;
+ 		}
+ 
+@@ -679,7 +679,7 @@ static int ip_vs_est_calc_limits(struct netns_ipvs *ipvs, int *chain_max)
+ 		rcu_read_unlock();
+ 		local_bh_enable();
+ 
+-		if (!ipvs->enable || kthread_should_stop())
++		if (!READ_ONCE(ipvs->enable) || kthread_should_stop())
+ 			goto stop;
+ 		cond_resched();
+ 
+@@ -755,7 +755,7 @@ static void ip_vs_est_calc_phase(struct netns_ipvs *ipvs)
+ 	mutex_lock(&ipvs->est_mutex);
+ 	for (id = 1; id < ipvs->est_kt_count; id++) {
+ 		/* netns clean up started, abort */
+-		if (!ipvs->enable)
++		if (!READ_ONCE(ipvs->enable))
+ 			goto unlock2;
+ 		kd = ipvs->est_kt_arr[id];
+ 		if (!kd)
+@@ -785,7 +785,7 @@ static void ip_vs_est_calc_phase(struct netns_ipvs *ipvs)
+ 	id = ipvs->est_kt_count;
+ 
+ next_kt:
+-	if (!ipvs->enable || kthread_should_stop())
++	if (!READ_ONCE(ipvs->enable) || kthread_should_stop())
+ 		goto unlock;
+ 	id--;
+ 	if (id < 0)
 -- 
 2.51.0
 
