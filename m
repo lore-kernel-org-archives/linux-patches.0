@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BADA26F2B6;
-	Mon, 13 Oct 2025 15:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0D430ACEA;
+	Mon, 13 Oct 2025 15:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367713; cv=none; b=MIV6zrgRHzxfEE4P4P/Ys8cWpXDvKU4BechOcFlJmhlATgZuZN1Pe/9+K6DvS3822za6RE19V6uetKxiWtzlasTLcBkmM2/kOuID9W3/PDphlncIRqHyItHYSrKw3yQjiFAohUZjRrPMlTOFaDAcJ0YWDnKLxprXIEiojf2nsMI=
+	t=1760367716; cv=none; b=gflc96AwkNdWm1/fWpe5GDKducyEtud73sHv9YDkIIXBxYkPniQW4CwVXjzxY3V9OEUsi3Oc/inklcwx4nc+TwzUHIOJggaTnJPb/lxpsz2DwFozUeF3ldUr8dXmrEkve4AKGFlQJ/WIRitk41PfLjF2QQvoZyXFIa2qObF3wQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367713; c=relaxed/simple;
-	bh=H8rXO36gjAXKImzST7gMS5/1QR9m8aeaDY/79KdQNVo=;
+	s=arc-20240116; t=1760367716; c=relaxed/simple;
+	bh=fOnjbeODVetse5ljQwi61eDC2coiM6k4NbWHor4W6uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtWHLj+IS2cieptRNa6HCxinJTbM1iH8dsiKly+k99Rj55yDySSX6URLRG7HgPYi0jRiTkbTAGb3wS3WEoGrrqDmin+hfB6qYKnPUpz5ULqPn+3w5UP5brAKk+LnabCXtwSVWX/1Ya6IE5VKc9wLwDh8f2HCCUwLpBiFZ5FEz8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0he5A2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tG1UgpaE13unEU+Os43fjbw8wyDDKcbTmtxojgUctvdtxAkxl17v/XKAxlxppUEVLX1vZhyQfjj6Q5X4WDkfPQThCgbyLNhElU4fZjtFGtuWAMVNEIq7k4vSmvufOvLf7+aL/cIEM8t9SuVNQgrF9i8hby4wFGqglS9BMjqh4VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiYMY8O3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0he5A2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26FBC4CEE7;
-	Mon, 13 Oct 2025 15:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiYMY8O3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FA4C4CEE7;
+	Mon, 13 Oct 2025 15:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367713;
-	bh=H8rXO36gjAXKImzST7gMS5/1QR9m8aeaDY/79KdQNVo=;
+	s=korg; t=1760367716;
+	bh=fOnjbeODVetse5ljQwi61eDC2coiM6k4NbWHor4W6uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0he5A2KhohrQkzsPSgobTwTQDz9jYskJYVY00Wogmb7iCJ2KTOFYzwYdgOMG5Nqw
-	 PV2Av9k/AgsgyNM/NW1bhBbkgV/h8fakuX0E/RIHBn8cDV/H+zk/oVITks42AabiTe
-	 IZ2AbiouY+YFDHGiqzk501r+NjcR/mQeaJ7sEmr0=
+	b=BiYMY8O3ThkvKnmdMUQpt6NtJqIVPe/vZTU2ZFU1tvrclDSkQfT4BMYYhp7/GYHXv
+	 cI2L6cCBIGnDTMZUvPXYYzeXVOX0KT87LVPNtecvXfhwTtmy6PcUOCqU/oXZt30YAW
+	 X4wpI8WMStwRxKvTIQb8ibIXuFZDsWD7Wt0kDTsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/196] hwrng: nomadik - add ARM_AMBA dependency
-Date: Mon, 13 Oct 2025 16:44:24 +0200
-Message-ID: <20251013144317.831518127@linuxfoundation.org>
+Subject: [PATCH 6.6 064/196] f2fs: fix condition in __allow_reserved_blocks()
+Date: Mon, 13 Oct 2025 16:44:15 +0200
+Message-ID: <20251013144317.511773764@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit efaa2d815a0e4d1c06750e587100f6f7f4ee5497 ]
+[ Upstream commit e75ce117905d2830976a289e718470f3230fa30a ]
 
-Compile-testing this driver is only possible when the AMBA bus driver is
-available in the kernel:
+If reserve_root mount option is not assigned, __allow_reserved_blocks()
+will return false, it's not correct, fix it.
 
-x86_64-linux-ld: drivers/char/hw_random/nomadik-rng.o: in function `nmk_rng_remove':
-nomadik-rng.c:(.text+0x67): undefined reference to `amba_release_regions'
-x86_64-linux-ld: drivers/char/hw_random/nomadik-rng.o: in function `nmk_rng_probe':
-nomadik-rng.c:(.text+0xee): undefined reference to `amba_request_regions'
-x86_64-linux-ld: nomadik-rng.c:(.text+0x18d): undefined reference to `amba_release_regions'
-
-The was previously implied by the 'depends on ARCH_NOMADIK', but needs to be
-specified for the COMPILE_TEST case.
-
-Fixes: d5e93b3374e4 ("hwrng: Kconfig - Add helper dependency on COMPILE_TEST")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7e65be49ed94 ("f2fs: add reserved blocks for root user")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/f2fs.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
-index 8de74dcfa18cf..ece2d794174d4 100644
---- a/drivers/char/hw_random/Kconfig
-+++ b/drivers/char/hw_random/Kconfig
-@@ -286,6 +286,7 @@ config HW_RANDOM_INGENIC_TRNG
- config HW_RANDOM_NOMADIK
- 	tristate "ST-Ericsson Nomadik Random Number Generator support"
- 	depends on ARCH_NOMADIK || COMPILE_TEST
-+	depends on ARM_AMBA
- 	default HW_RANDOM
- 	help
- 	  This driver provides kernel-side support for the Random Number
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 7329f706da83c..ab2ddd09d8131 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -2296,8 +2296,6 @@ static inline bool __allow_reserved_blocks(struct f2fs_sb_info *sbi,
+ {
+ 	if (!inode)
+ 		return true;
+-	if (!test_opt(sbi, RESERVE_ROOT))
+-		return false;
+ 	if (IS_NOQUOTA(inode))
+ 		return true;
+ 	if (uid_eq(F2FS_OPTION(sbi).s_resuid, current_fsuid()))
+@@ -2318,7 +2316,7 @@ static inline unsigned int get_available_block_count(struct f2fs_sb_info *sbi,
+ 	avail_user_block_count = sbi->user_block_count -
+ 					sbi->current_reserved_blocks;
+ 
+-	if (!__allow_reserved_blocks(sbi, inode, cap))
++	if (test_opt(sbi, RESERVE_ROOT) && !__allow_reserved_blocks(sbi, inode, cap))
+ 		avail_user_block_count -= F2FS_OPTION(sbi).root_reserved_blocks;
+ 
+ 	if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED))) {
 -- 
 2.51.0
 
