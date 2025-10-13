@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFB8286890;
-	Mon, 13 Oct 2025 15:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457CA308F2D;
+	Mon, 13 Oct 2025 15:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369399; cv=none; b=Q2jzBQtk5hzXhQcKcXwc0kC3vS+GkgqfjWMQy28DrPPLsxTIOVG5cgfd+le2Onji7cC1X0Z3tOBMpnONoQhVH1srUOQRIY2z0asGx70P9G6/GBkYeGKhrw+Xk9Ia+IP9GcEOmTqVJdvYE/9FlIEIvtOlOR8xcdDjo5h1SMG74PM=
+	t=1760369402; cv=none; b=bF3LhY5guuoF9acx8XUUjQyeQdkm3KPYR2wG2rrJ4lkH3kffE8qODhW8ruDNOvBIyoMZZi9MKgvH8hLZV83Ux3Pvfuoq27CvHRkERC/Ei+iBUhSS+sID5jW0+3mNgDdj15EQq34KvOE6pibA9m/du5+yD8t7gnakkVqSXpqMa1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369399; c=relaxed/simple;
-	bh=YZkBU7qvkhA9pnBbQC5zBdLiFiWYAtmYFjFjcM7m1po=;
+	s=arc-20240116; t=1760369402; c=relaxed/simple;
+	bh=sGiMmpNB7Pt6qGbrCNkhxazGk+LvdI/zShEk8jk57Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3o15iYl1Y8C7JTyjn4e25WCG98sv+LBIPQw23Be/38mpXuDO9JDGv7CWhDV7Gty/TO4KxAEyKbqlN5/Mhv9hh34YWx6igwWntKVWeDIuC/BJhOgkDwVpbyV/2G+BMLjzKy9m1KHEU3Z71T4odqiMPsWkUo/Hcn4Zs5XGYuBQoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xtk5Uz71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZxFhkNaugvvvOYG3mefWAWFSXLs4mCgVoOfpaIhvqRzwTMfDTkr90Jd02QKLyEGJPkvQ1IbtSrGyCfoAzLXc+SmGpS1pXiV5AKDp7fTVjnej8nyTkcGJcJy7nNamzFzutEN4RXyH5OExKEQSW36T2cxNGWo9gp2lYT1cMmyXaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJIvoGrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xtk5Uz71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E423AC4CEE7;
-	Mon, 13 Oct 2025 15:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJIvoGrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C533EC4CEE7;
+	Mon, 13 Oct 2025 15:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369399;
-	bh=YZkBU7qvkhA9pnBbQC5zBdLiFiWYAtmYFjFjcM7m1po=;
+	s=korg; t=1760369402;
+	bh=sGiMmpNB7Pt6qGbrCNkhxazGk+LvdI/zShEk8jk57Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xtk5Uz71u1nDtoCN+6yAQGW1qu3zNnDERYd9Trzsd86ljRMyxedUf7M1AMZt53u+D
-	 pM2RMdK9SReG4hzOJjM0og3jtRmMTa2yIWr3rGetXqwPYnjMw5gUxBEN4D7flLyqpf
-	 MWjzsatlCa0uK5Qht2rpnx5oZBJtyG+IXSqsXBNU=
+	b=aJIvoGrd4DPdEHxpZ+qp7mKdg7k0BWS9/WBxiGnBONTt8Fy1QrFEOypMdPWPMMXKb
+	 Q4pNuVEW/4mN6qVKmK7Y2CxHW0SEAMYT7epU/z7YSBKfLy7XaHYkRYqNSAkIUlGmh9
+	 yo1H//e9+uW3t1L4y24K8VJxTXKZaDRiCCEqqunk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 231/563] media: zoran: Remove zoran_fh structure
-Date: Mon, 13 Oct 2025 16:41:32 +0200
-Message-ID: <20251013144419.649255980@linuxfoundation.org>
+Subject: [PATCH 6.17 200/563] i2c: spacemit: ensure bus release check runs when wait_bus_idle() fails
+Date: Mon, 13 Oct 2025 16:41:01 +0200
+Message-ID: <20251013144418.532853592@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,61 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-[ Upstream commit dc322d13cf417552b59e313e809a6da40b8b36ef ]
+[ Upstream commit 41d6f90ef5dc2841bdd09817c63a3d6188473b9b ]
 
-The zoran_fh structure is a wrapper around v4l2_fh. Its usage has been
-mostly removed by commit 83f89a8bcbc3 ("media: zoran: convert to vb2"),
-but the structure stayed by mistake. It is now used in a single
-location, assigned from a void pointer and then recast to a void
-pointer, without being every accessed. Drop it.
+spacemit_i2c_wait_bus_idle() only returns 0 on success or a negative
+error code on failure.
 
-Fixes: 83f89a8bcbc3 ("media: zoran: convert to vb2")
-Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Since 'ret' can never be positive, the final 'else' branch was
+unreachable, and spacemit_i2c_check_bus_release() was never called.
+
+This commit guarantees we attempt to release the bus whenever waiting for
+an idle bus fails.
+
+Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/zoran/zoran.h        | 6 ------
- drivers/media/pci/zoran/zoran_driver.c | 3 +--
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ drivers/i2c/busses/i2c-k1.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/pci/zoran/zoran.h b/drivers/media/pci/zoran/zoran.h
-index 1cd990468d3de..d05e222b39215 100644
---- a/drivers/media/pci/zoran/zoran.h
-+++ b/drivers/media/pci/zoran/zoran.h
-@@ -154,12 +154,6 @@ struct zoran_jpg_settings {
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index b68a21fff0b56..ee08811f4087c 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -476,12 +476,13 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+ 	spacemit_i2c_enable(i2c);
  
- struct zoran;
+ 	ret = spacemit_i2c_wait_bus_idle(i2c);
+-	if (!ret)
++	if (!ret) {
+ 		ret = spacemit_i2c_xfer_msg(i2c);
+-	else if (ret < 0)
+-		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
+-	else
++		if (ret < 0)
++			dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
++	} else {
+ 		spacemit_i2c_check_bus_release(i2c);
++	}
  
--/* zoran_fh contains per-open() settings */
--struct zoran_fh {
--	struct v4l2_fh fh;
--	struct zoran *zr;
--};
--
- struct card_info {
- 	enum card_type type;
- 	char name[32];
-diff --git a/drivers/media/pci/zoran/zoran_driver.c b/drivers/media/pci/zoran/zoran_driver.c
-index f42f596d3e629..ec7fc1da4cc02 100644
---- a/drivers/media/pci/zoran/zoran_driver.c
-+++ b/drivers/media/pci/zoran/zoran_driver.c
-@@ -511,12 +511,11 @@ static int zoran_s_fmt_vid_cap(struct file *file, void *__fh,
- 			       struct v4l2_format *fmt)
- {
- 	struct zoran *zr = video_drvdata(file);
--	struct zoran_fh *fh = __fh;
- 	int i;
- 	int res = 0;
+ 	spacemit_i2c_disable(i2c);
  
- 	if (fmt->fmt.pix.pixelformat == V4L2_PIX_FMT_MJPEG)
--		return zoran_s_fmt_vid_out(file, fh, fmt);
-+		return zoran_s_fmt_vid_out(file, __fh, fmt);
- 
- 	for (i = 0; i < NUM_FORMATS; i++)
- 		if (fmt->fmt.pix.pixelformat == zoran_formats[i].fourcc)
 -- 
 2.51.0
 
