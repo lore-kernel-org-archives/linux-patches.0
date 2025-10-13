@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF4F3148D2;
-	Mon, 13 Oct 2025 15:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8923C30E0C7;
+	Mon, 13 Oct 2025 15:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370145; cv=none; b=T43K3E98b2X5DefFNIi34U5y+U6UfjYmtPu1ngU53vvBUwfp9lL9F1UbBuN7n3/2t1GISAI+vTlWJiTMBes3e/kDoZhkc1RlpMO69O1+Q/MOR1gnv4tVh7YucmO046GHlfQVBFFee1aZnzNXpdFv+RsXzUvqAgymit/G47s57sA=
+	t=1760370148; cv=none; b=XfoB+BH5mMB9dzdk3hbUrZUTPJAS1AYOnbJfZ4NWJaEBC77vM50gJEuRDfhx+6VNRbfRDJbfIjYfYSZmswT68f34l4IAMZclWzlYz3TwO6eIZYPBzCkvBGkiJ2jyUEQRx1R5bMCR/eyEz9t9jz10syDRTXjhxYO+raQdi1fpjj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370145; c=relaxed/simple;
-	bh=ObO8EMCKe+U2uLKqeSHXp/hCHM31dNhcXY5NtRu7cgA=;
+	s=arc-20240116; t=1760370148; c=relaxed/simple;
+	bh=EZiMUon7CFNuF74/yAizuJsjkTFoieYmwVLjIgXcBNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXRBFAq+aMZqB6m91DKsZ/l99NuC9lRjygLddhLqbevMSLZvISuZXCs7Ii2b8aYZQse9Vi04Z/RMEGoR6DnfviUdYPpJA+rCXIWIeaY/03kyGOcXYJKWGJ6xyWCw38oAVuxFHDWDAF9vSfSK3fXMzIZWK7lDAc/b2iHO7UpRxUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+SQgxi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pi1cS51bv5eF1Qum/lcJKuGrKxoTxGEuBRR3txcx1Q5YaefHTVY2QEHajX9n8oQi42htlQZL71Hkbe4cF09xZOBOFmvMpMjBInxHM1TOPSFMagcRf+Fla6E8wmQzhUq0+4wLHlBhi+Ine/wvUnWc0byOkEf8YTlh7Nvppi+ZenQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUIgQtoW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+SQgxi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EC9C4CEE7;
-	Mon, 13 Oct 2025 15:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUIgQtoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D25EC4CEE7;
+	Mon, 13 Oct 2025 15:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370145;
-	bh=ObO8EMCKe+U2uLKqeSHXp/hCHM31dNhcXY5NtRu7cgA=;
+	s=korg; t=1760370148;
+	bh=EZiMUon7CFNuF74/yAizuJsjkTFoieYmwVLjIgXcBNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+SQgxi4buumryDNbIBAUYOcbPqNOU+sZl8k1oUVOGLVitlaWBl0IEBjm+aMUKUK6
-	 gVSMxZf82B2R74iUDPhPRFgIfmG/dbDMQubjK44S9J3mCJGq6NWE0Ja8LrnK7IBDP1
-	 N43M0/c1d6sNGOVTO9ua2WxA1LZV9v2bv/2a2I5k=
+	b=EUIgQtoWFOq6j7FTyAajs27B3V34/2Y5VgX9BY9b9uG9nhUP4narHlllNThGkHy4U
+	 lmYffXbKcScv9Th3BrWucSwdnYihjlz+xLrlmsOEUZKHeOdWzCxDD3x9OZxcW9FZGl
+	 msd/lL37OMEAa/o0OELAXF7/DSXw4+t2p9d8+RBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaden Berger <kadenb816@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.17 495/563] ALSA: hda/realtek: Add quirk for HP Spectre 14t-ea100
-Date: Mon, 13 Oct 2025 16:45:56 +0200
-Message-ID: <20251013144429.226795576@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 496/563] Squashfs: fix uninit-value in squashfs_get_parent
+Date: Mon, 13 Oct 2025 16:45:57 +0200
+Message-ID: <20251013144429.276207897@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -50,33 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 50a098e3e9b1bb30cefc43cdfba3c7b9b32e14a7 upstream.
+commit 74058c0a9fc8b2b4d5f4a0ef7ee2cfa66a9e49cf upstream.
 
-HP-Spectre 14t-ea100 model has no speaker output unless booting
-previously from Windows on dual boot, a reboot while on Linux will
-stop the speakers working.  Applying the existing quirk for HP Spectre
-X360 EU0xxx seems fixing this speaker problem.
+Syzkaller reports a "KMSAN: uninit-value in squashfs_get_parent" bug.
 
-Reported-by: Kaden Berger <kadenb816@gmail.com>
+This is caused by open_by_handle_at() being called with a file handle
+containing an invalid parent inode number.  In particular the inode number
+is that of a symbolic link, rather than a directory.
+
+Squashfs_get_parent() gets called with that symbolic link inode, and
+accesses the parent member field.
+
+	unsigned int parent_ino = squashfs_i(inode)->parent;
+
+Because non-directory inodes in Squashfs do not have a parent value, this
+is uninitialised, and this causes an uninitialised value access.
+
+The fix is to initialise parent with the invalid inode 0, which will cause
+an EINVAL error to be returned.
+
+Regular inodes used to share the parent field with the block_list_start
+field.  This is removed in this commit to enable the parent field to
+contain the invalid inode number 0.
+
+Link: https://lkml.kernel.org/r/20250918233308.293861-1-phillip@squashfs.org.uk
+Fixes: 122601408d20 ("Squashfs: export operations")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68cc2431.050a0220.139b6.0001.GAE@google.com/
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/aMxdGAmfOQ6VPNU8@archlinux
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/squashfs/inode.c         |    7 +++++++
+ fs/squashfs/squashfs_fs_i.h |    2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6487,6 +6487,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x89da, "HP Spectre x360 14t-ea100", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x89e7, "HP Elite x2 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+--- a/fs/squashfs/inode.c
++++ b/fs/squashfs/inode.c
+@@ -165,6 +165,7 @@ int squashfs_read_inode(struct inode *in
+ 		squashfs_i(inode)->start = le32_to_cpu(sqsh_ino->start_block);
+ 		squashfs_i(inode)->block_list_start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 		inode->i_data.a_ops = &squashfs_aops;
+ 
+ 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
+@@ -212,6 +213,7 @@ int squashfs_read_inode(struct inode *in
+ 		squashfs_i(inode)->start = le64_to_cpu(sqsh_ino->start_block);
+ 		squashfs_i(inode)->block_list_start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 		inode->i_data.a_ops = &squashfs_aops;
+ 
+ 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
+@@ -292,6 +294,7 @@ int squashfs_read_inode(struct inode *in
+ 		inode->i_mode |= S_IFLNK;
+ 		squashfs_i(inode)->start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 
+ 		if (type == SQUASHFS_LSYMLINK_TYPE) {
+ 			__le32 xattr;
+@@ -329,6 +332,7 @@ int squashfs_read_inode(struct inode *in
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		rdev = le32_to_cpu(sqsh_ino->rdev);
+ 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
++		squashfs_i(inode)->parent = 0;
+ 
+ 		TRACE("Device inode %x:%x, rdev %x\n",
+ 				SQUASHFS_INODE_BLK(ino), offset, rdev);
+@@ -353,6 +357,7 @@ int squashfs_read_inode(struct inode *in
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		rdev = le32_to_cpu(sqsh_ino->rdev);
+ 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
++		squashfs_i(inode)->parent = 0;
+ 
+ 		TRACE("Device inode %x:%x, rdev %x\n",
+ 				SQUASHFS_INODE_BLK(ino), offset, rdev);
+@@ -373,6 +378,7 @@ int squashfs_read_inode(struct inode *in
+ 			inode->i_mode |= S_IFSOCK;
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		init_special_inode(inode, inode->i_mode, 0);
++		squashfs_i(inode)->parent = 0;
+ 		break;
+ 	}
+ 	case SQUASHFS_LFIFO_TYPE:
+@@ -392,6 +398,7 @@ int squashfs_read_inode(struct inode *in
+ 		inode->i_op = &squashfs_inode_ops;
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		init_special_inode(inode, inode->i_mode, 0);
++		squashfs_i(inode)->parent = 0;
+ 		break;
+ 	}
+ 	default:
+--- a/fs/squashfs/squashfs_fs_i.h
++++ b/fs/squashfs/squashfs_fs_i.h
+@@ -16,6 +16,7 @@ struct squashfs_inode_info {
+ 	u64		xattr;
+ 	unsigned int	xattr_size;
+ 	int		xattr_count;
++	int		parent;
+ 	union {
+ 		struct {
+ 			u64		fragment_block;
+@@ -27,7 +28,6 @@ struct squashfs_inode_info {
+ 			u64		dir_idx_start;
+ 			int		dir_idx_offset;
+ 			int		dir_idx_cnt;
+-			int		parent;
+ 		};
+ 	};
+ 	struct inode	vfs_inode;
 
 
