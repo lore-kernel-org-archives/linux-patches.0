@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D23830E82A;
-	Mon, 13 Oct 2025 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7169E31984E;
+	Mon, 13 Oct 2025 15:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369296; cv=none; b=q8Trzn+L2SssXvp/sGtwLS3j99pmbxgE1NLkl9VKWbVBN0z78hgNLM13LGTGLv8ov/WDweUfESrQlxehe3z6lg2NW41mhzqEMzVEwYU8QG9q3biw7mJ6sPbwNty5iESLXoYXVSeoYScFFGitTAhWGofTP7hgH1bZird04Eu4XBE=
+	t=1760369299; cv=none; b=BAMRzh42ffD1BXMiGAZisuJqs2vGp9yjXhPAle1hnb+tvqfpZa7fDeNhtVgIiNhgeIQE1JJffr63MeYIYQn0ndkZIClTH09cC3jOMeXRDcyEyEUE+BiWQ7KjcJNess5PlwOmXipz8zmy4b+xXTtKOtwkQA3NT5z4zYUvzrlcIBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369296; c=relaxed/simple;
-	bh=sheLHEuDuu4EdynuqsF/SKg5fFFqVIPC6zyCJjE39cE=;
+	s=arc-20240116; t=1760369299; c=relaxed/simple;
+	bh=+PCIuAvnutkTUpjffJC9KqJMNJpmjWis+V7BcUO3sBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqPECoGz/twUAk8XUcHd286ySCjKQVj3N3d+BHnVj719MNIi8c1okRhkHpJVRDPkWvBaT8ONRqmjnq41YX/sR8jxZFzDGsmnSr62+teNdsMlb52z5ac9WrL0lnLrg/KYQu9M/+MsgrX5/y49smVKjsd6KnRcvCpwUQxWnE0eDxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nhcx2ZlN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mhk9NSjm1BuY8+Wi0dM8Wr/NEIZYJqgBOWj2rei+cpm8FpnOjuIJO3T5iq0aIRyMd3g5ZJ0TzSC+q0QTVLkpzwZs1qHXspamH3P9ZBVtpMcFXfBZ7VGW4jdeO0tzyhoAdj3u76a0Vt/n1/HRyBL+v1gukjybQ6EIJMtjU6+8qGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJWRjUd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nhcx2ZlN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DF4C4CEFE;
-	Mon, 13 Oct 2025 15:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJWRjUd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A3CC116C6;
+	Mon, 13 Oct 2025 15:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369295;
-	bh=sheLHEuDuu4EdynuqsF/SKg5fFFqVIPC6zyCJjE39cE=;
+	s=korg; t=1760369298;
+	bh=+PCIuAvnutkTUpjffJC9KqJMNJpmjWis+V7BcUO3sBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nhcx2ZlNvPJRc50SrKqXQUiWMpgxSpRVzqYreDR8bdObDuSsrxY0fx+fyUexQufTV
-	 LIgOZqZIwbyx5sVYniTY3aXRZbcY9Qpq092ngtcgZP+1dve6ZnTRIsNHrG15BPbWDq
-	 mO0gO04Obnf/K0A85xwh1jfjEMNocy3NmCE5szXE=
+	b=SJWRjUd2NeTPrzMCBRuBOJvpEGFxhxRBe+7N1BcxD7z3/UvLzg51a7/2Y1hh8yW2J
+	 /gbebE2BepGRaycEQdpbqzw/qI/hz/wfeZIlrU+TqjfVzD5jKodFgaKaZ01Q8YMaTp
+	 d5gDzNhDMyDvGHb1k4INJgvyDsZWzybsqUe74LRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 195/563] hwmon: (mlxreg-fan) Separate methods of fan setting coming from different subsystems
-Date: Mon, 13 Oct 2025 16:40:56 +0200
-Message-ID: <20251013144418.346825189@linuxfoundation.org>
+Subject: [PATCH 6.17 164/563] nvmet-fcloop: call done callback even when remote port is gone
+Date: Mon, 13 Oct 2025 16:40:25 +0200
+Message-ID: <20251013144417.231302636@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,99 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit c02e4644f8ac9c501077ef5ac53ae7fc51472d49 ]
+[ Upstream commit 10c165af35d225eb033f4edc7fcc699a8d2d533d ]
 
-Distinct between fan speed setting request coming for hwmon and
-thermal subsystems.
+When the target port is gone, it's not possible to access any of the
+request resources. The function should just silently drop the response.
+The comment is misleading in this regard.
 
-There are fields 'last_hwmon_state' and 'last_thermal_state' in the
-structure 'mlxreg_fan_pwm', which respectively store the cooling state
-set by the 'hwmon' and 'thermal' subsystem.
-The purpose is to make arbitration of fan speed setting. For example, if
-fan speed required to be not lower than some limit, such setting is to
-be performed through 'hwmon' subsystem, thus 'thermal' subsystem will
-not set fan below this limit.
+Though it's still necessary to call the driver via the ->done callback
+so the driver is able to release all resources.
 
-Currently, the 'last_thermal_state' is also be updated by 'hwmon' causing
-cooling state to never be set to a lower value.
-
-Eliminate update of 'last_thermal_state', when request is coming from
-'hwmon' subsystem.
-
-Fixes: da74944d3a46 ("hwmon: (mlxreg-fan) Use pwm attribute for setting fan speed low limit")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Link: https://lore.kernel.org/r/20250113084859.27064-2-vadimp@nvidia.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/all/CAHj4cs-OBA0WMt5f7R0dz+rR4HcEz19YLhnyGsj-MRV3jWDsPg@mail.gmail.com/
+Fixes: 84eedced1c5b ("nvmet-fcloop: drop response if targetport is gone")
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/mlxreg-fan.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/nvme/target/fcloop.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
-index c25a54d5b39ad..0ba9195c9d713 100644
---- a/drivers/hwmon/mlxreg-fan.c
-+++ b/drivers/hwmon/mlxreg-fan.c
-@@ -113,8 +113,8 @@ struct mlxreg_fan {
- 	int divider;
- };
- 
--static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
--				    unsigned long state);
-+static int _mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
-+				     unsigned long state, bool thermal);
- 
- static int
- mlxreg_fan_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
-@@ -224,8 +224,9 @@ mlxreg_fan_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 				 * last thermal state.
- 				 */
- 				if (pwm->last_hwmon_state >= pwm->last_thermal_state)
--					return mlxreg_fan_set_cur_state(pwm->cdev,
--									pwm->last_hwmon_state);
-+					return _mlxreg_fan_set_cur_state(pwm->cdev,
-+									 pwm->last_hwmon_state,
-+									 false);
- 				return 0;
- 			}
- 			return regmap_write(fan->regmap, pwm->reg, val);
-@@ -357,9 +358,8 @@ static int mlxreg_fan_get_cur_state(struct thermal_cooling_device *cdev,
- 	return 0;
- }
- 
--static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
--				    unsigned long state)
--
-+static int _mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
-+				     unsigned long state, bool thermal)
- {
- 	struct mlxreg_fan_pwm *pwm = cdev->devdata;
- 	struct mlxreg_fan *fan = pwm->fan;
-@@ -369,7 +369,8 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
- 		return -EINVAL;
- 
- 	/* Save thermal state. */
--	pwm->last_thermal_state = state;
-+	if (thermal)
-+		pwm->last_thermal_state = state;
- 
- 	state = max_t(unsigned long, state, pwm->last_hwmon_state);
- 	err = regmap_write(fan->regmap, pwm->reg,
-@@ -381,6 +382,13 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
- 	return 0;
- }
- 
-+static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
-+				    unsigned long state)
-+
-+{
-+	return _mlxreg_fan_set_cur_state(cdev, state, true);
-+}
-+
- static const struct thermal_cooling_device_ops mlxreg_fan_cooling_ops = {
- 	.get_max_state	= mlxreg_fan_get_max_state,
- 	.get_cur_state	= mlxreg_fan_get_cur_state,
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index 257b497d515a8..5dffcc5becae8 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -496,13 +496,15 @@ fcloop_t2h_xmt_ls_rsp(struct nvme_fc_local_port *localport,
+ 	if (!targetport) {
+ 		/*
+ 		 * The target port is gone. The target doesn't expect any
+-		 * response anymore and the ->done call is not valid
+-		 * because the resources have been freed by
+-		 * nvmet_fc_free_pending_reqs.
++		 * response anymore and thus lsreq can't be accessed anymore.
+ 		 *
+ 		 * We end up here from delete association exchange:
+ 		 * nvmet_fc_xmt_disconnect_assoc sends an async request.
++		 *
++		 * Return success because this is what LLDDs do; silently
++		 * drop the response.
+ 		 */
++		lsrsp->done(lsrsp);
+ 		kmem_cache_free(lsreq_cache, tls_req);
+ 		return 0;
+ 	}
 -- 
 2.51.0
 
