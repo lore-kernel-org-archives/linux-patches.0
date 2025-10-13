@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C866145B3F;
-	Mon, 13 Oct 2025 15:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF8D1F1313;
+	Mon, 13 Oct 2025 15:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368584; cv=none; b=frIeQuKByUbvKxkct/+IXtfwv+cnJYTqqGNoZ2oGB60Bg53lXKMihtI17YvZDGyrz/S21rSzyAoTffRAhzsNBWg9GsSyQpjkxyIaet8eTjmyXIRawwPwTy5bcWun+03XUZFhX0L+lecW8L4znZdGBO3itC+deSOlqp0p982Uek0=
+	t=1760368587; cv=none; b=CH4CxAQ8u3Sxresu3nkhS6hn71Z700nJUwf0AdmOtBgNuDPWfwdjtCeG1eyAzWg326VvbNnr9IFqZiBqYi8aeQsamfK+D1RNOEm8xJr1e+MrUQGvgr5I5aWsq9P2GaetEQBScjyFZqkOzfP15jKfufU7jLq4BLTeWueFaIc0BV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368584; c=relaxed/simple;
-	bh=7fm/AAKGnJdB7BvC1CqwHlD7Z370fd0INzwxJa7Fpe4=;
+	s=arc-20240116; t=1760368587; c=relaxed/simple;
+	bh=/8eZ5vNuKvykCOAN6353C2aAfPc5hZrCTYWyMTdc81E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkH+Mbyj1JbLSzLOGhH5mVMn1uJ/UPhtGwMjPmoD/EgXUuZdv21Bkev+NRDVE5GrdC+VCx30pTubQmltbvTloqvsh9c6OLNbyAlE00zMBPCf8cmOr9WmQJtadzcNIWHSsLreZuERDLWGtnWGICj3ty73xUr++wabYUjZxPikycs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ix1dUIpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJpKac6l/4detB8WhtU+OsgJ3klRoaxG62hiFWDiG9FfpqwNfvx3sQAZWIR3okFZ1v2d3iBevogODpPezjwDpuRppVHIAuwR2Q1omNy9pmBgM4idZ+LpI1FmQqgUz7THTiWApCugSsBc7XQxO/ulfGKfQfUR4v/PIItPSGsiCPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muRwF2EV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix1dUIpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CADF4C4CEE7;
-	Mon, 13 Oct 2025 15:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muRwF2EV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D295C4CEE7;
+	Mon, 13 Oct 2025 15:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368584;
-	bh=7fm/AAKGnJdB7BvC1CqwHlD7Z370fd0INzwxJa7Fpe4=;
+	s=korg; t=1760368586;
+	bh=/8eZ5vNuKvykCOAN6353C2aAfPc5hZrCTYWyMTdc81E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ix1dUIpxks/C/FjsX80tnKMtvrT3o0w9hE7rCKNTmGl4hMHGizzjBmrT3sMym5i9l
-	 XEcJ4bOdQqnOtehWhnmg9KtE9i/9styJwAcciUi7dvaJM3qbOdpBNCqncrAdpKnkNu
-	 5as5hBMHB0ItB53x8WDf1WQ6LuaJG9rBF4n9stzA=
+	b=muRwF2EVWuxYkiCl3y5FVcE0eDEhkoe84PlIjI23O2GJ2MnzAjUX0hc9HUwX4QAu0
+	 rCrn5MjI10NQgIQlWzKtNOvYIXHNbB6EX1hv2tYl8KaODzkzjoOyz9JX18C8wl+pKl
+	 x+ePO0GmDhU4PWQljuAwQN7+sZM82nQcEdxa3x40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nagarjuna Kristam <nkristam@nvidia.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/262] PCI: tegra194: Fix duplicate PLL disable in pex_ep_event_pex_rst_assert()
-Date: Mon, 13 Oct 2025 16:45:21 +0200
-Message-ID: <20251013144332.575249580@linuxfoundation.org>
+Subject: [PATCH 6.12 180/262] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
+Date: Mon, 13 Oct 2025 16:45:22 +0200
+Message-ID: <20251013144332.610617003@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,50 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nagarjuna Kristam <nkristam@nvidia.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 4f152338e384a3a47dd61909e1457539fa93f5a4 ]
+[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
 
-During PERST# assertion tegra_pcie_bpmp_set_pll_state() is currently
-called twice.
+enable_irq() and disable_irq() are reference counted, so we must make sure
+that each enable_irq() is always paired with a single disable_irq(). If we
+call disable_irq() twice followed by just a single enable_irq(), the IRQ
+will remain disabled forever.
 
-pex_ep_event_pex_rst_assert() should do the opposite of
-pex_ep_event_pex_rst_deassert(), so it is obvious that the duplicate
-tegra_pcie_bpmp_set_pll_state() is a mistake, and that the duplicate
-tegra_pcie_bpmp_set_pll_state() call should instead be a call to
-tegra_pcie_bpmp_set_ctrl_state().
+For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
+will end up being called twice, because disable_irq() also happens in
+qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
 
-With this, the uninitialization sequence also matches that of
-tegra_pcie_unconfig_controller().
+Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
+qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
+sense to have the rollback handled always by qcom_q6v5_unprepare().
 
-Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
-Signed-off-by: Nagarjuna Kristam <nkristam@nvidia.com>
-[cassel: improve commit log]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20250911093021.1454385-2-cassel@kernel.org
-[mani: added Fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/qcom_q6v5.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index ced3b7e7bdade..815599ef72db8 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1721,9 +1721,9 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 				ret);
- 	}
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 4ee5e67a9f03f..769c6d6d6a731 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -156,9 +156,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
+ 	int ret;
  
--	ret = tegra_pcie_bpmp_set_pll_state(pcie, false);
-+	ret = tegra_pcie_bpmp_set_ctrl_state(pcie, false);
- 	if (ret)
--		dev_err(pcie->dev, "Failed to turn off UPHY: %d\n", ret);
-+		dev_err(pcie->dev, "Failed to disable controller: %d\n", ret);
- 
- 	pcie->ep_state = EP_STATE_DISABLED;
- 	dev_dbg(pcie->dev, "Uninitialization of endpoint is completed\n");
+ 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
+-	if (!ret)
+-		disable_irq(q6v5->handover_irq);
+-
+ 	return !ret ? -ETIMEDOUT : 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
 -- 
 2.51.0
 
