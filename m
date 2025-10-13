@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E94423B616;
-	Mon, 13 Oct 2025 15:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3BC308F11;
+	Mon, 13 Oct 2025 15:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367610; cv=none; b=FtebP/8qoIcclf+a4dfpTPZPoTeuMEeN2sj37z8zw7r7NhqdBzu3ZyA3BhF5DCd5zIXNYYiSEkb1baWbIBjK4FOzMZj7BoR/NvyZhu/r/Rp+bRROkob8vB/lgcKNHzkEr9DFuTiK5QsrJAMKkJCspQa205e6wojNrBO5mPs3ySs=
+	t=1760367613; cv=none; b=a7SYHq+MOlSXmusR047RMskOGmHNVUf9aXNqNyxYCV3g22AhrUN7jAtukaPOM/t++2uv6tFTyaxhcV8c9jvH+IYcarsdnMa57Bn1GBrDPP2BF4W6gB0uku6rymD69uHFsDuBG0aHB1TY7AUlHluhbRBjcPOM9OvFaHlkvaYP1Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367610; c=relaxed/simple;
-	bh=tALJ+MzZHsZL8Uf274h6k3gjlRiY+MCDcc5UAwqpezM=;
+	s=arc-20240116; t=1760367613; c=relaxed/simple;
+	bh=TGEykBH46IFAONrfnOVixLB+AEn0AnIZecAgOPWtOoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KjDVWsMeNeAVkdO/hKbm8oCepzuMfxAeq2suTsCRtdPdQiOU4bgwlY7YOtltxarF9WIvLxmbVT3kF58v/jtDlvGqlFWb6vEjaoJBCAEoQOxWSEXhF2Yx5EOZVi1D9L9wSvGvW5ZI/LEXs/fwv7LR2L4n2BidgSurzQ+LGDbNqac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTElc4RL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RhYYVARdNHFsqLSyJyhH74mV1AqFP0M+wincgVhvJssQTX3ubcnQPKbWGQnpktfn2CAUtCzFDM0Uvg7plAaa3A4f8qCkBdI4+Jk3IMBRpsLu/jdh+4iAjITD59UvV5PChDooxbHyec8irxxuMTjNFTJSly37AKIQXgQgIg0zPsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpLuR/5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTElc4RL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFF5C4CEE7;
-	Mon, 13 Oct 2025 15:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpLuR/5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1C6C4CEE7;
+	Mon, 13 Oct 2025 15:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367610;
-	bh=tALJ+MzZHsZL8Uf274h6k3gjlRiY+MCDcc5UAwqpezM=;
+	s=korg; t=1760367613;
+	bh=TGEykBH46IFAONrfnOVixLB+AEn0AnIZecAgOPWtOoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTElc4RL0diefP2x/QkERGMADqsRuGKhCW+wI7ma45CSpaTg6jutIQ9jfx3QnzJcw
-	 XHmGviDA1sqj8BiEIC9rXWth/f91mVWyIJqZ+3tpkp3SOfEKD7gMIkUrrGbjCn7ByP
-	 YwHnMagPO3O05Dapbc9nYzWR2Ze9f45KCib0yMjM=
+	b=MpLuR/5yjRLTCocNsKUmhnaAeBn9+x5nzj2S9o4/T0I/GnF0RexShDHr5qtlbTsKE
+	 lDkludgSA+sRl/s00BR4q0LzGUwTd8qhyXtNgOr5iXvZSRzxihBju6lppYUEUR3Cmx
+	 8+3tmaDnfivQTnXljWNoo2uhJy+e/WWhQugT+Sm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/196] selftests/nolibc: fix EXPECT_NZ macro
-Date: Mon, 13 Oct 2025 16:43:39 +0200
-Message-ID: <20251013144316.214083578@linuxfoundation.org>
+Subject: [PATCH 6.6 065/196] drm/bridge: it6505: select REGMAP_I2C
+Date: Mon, 13 Oct 2025 16:44:16 +0200
+Message-ID: <20251013144317.547485805@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -45,44 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit 6d33ce3634f99e0c6c9ce9fc111261f2c411cb48 ]
+[ Upstream commit 21b137f651cf9d981e22d2c60a2a8105f50a6361 ]
 
-The expect non-zero macro was incorrect and never used. Fix its
-definition.
+Fix
 
-Fixes: 362aecb2d8cfa ("selftests/nolibc: add basic infrastructure to ease creation of nolibc tests")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://lore.kernel.org/r/20250731201225.323254-2-benjamin@sipsolutions.net
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+  aarch64-linux-gnu-ld: drivers/gpu/drm/bridge/ite-it6505.o: in function `it6505_i2c_probe':
+  ite-it6505.c:(.text+0x754): undefined reference to `__devm_regmap_init_i2c'
+
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20250610235825.3113075-1-olvaffe@gmail.com
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
-index 4aaafbfc2f973..a019de995e5df 100644
---- a/tools/testing/selftests/nolibc/nolibc-test.c
-+++ b/tools/testing/selftests/nolibc/nolibc-test.c
-@@ -176,8 +176,8 @@ int expect_zr(int expr, int llen)
- }
+diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
+index 3e6a4e2044c0e..5a4d574b37b89 100644
+--- a/drivers/gpu/drm/bridge/Kconfig
++++ b/drivers/gpu/drm/bridge/Kconfig
+@@ -85,6 +85,7 @@ config DRM_ITE_IT6505
+ 	select EXTCON
+ 	select CRYPTO
+ 	select CRYPTO_HASH
++	select REGMAP_I2C
+ 	help
+ 	  ITE IT6505 DisplayPort bridge chip driver.
  
- 
--#define EXPECT_NZ(cond, expr, val)			\
--	do { if (!(cond)) result(llen, SKIPPED); else ret += expect_nz(expr, llen; } while (0)
-+#define EXPECT_NZ(cond, expr)				\
-+	do { if (!(cond)) result(llen, SKIPPED); else ret += expect_nz(expr, llen); } while (0)
- 
- static __attribute__((unused))
- int expect_nz(int expr, int llen)
 -- 
 2.51.0
 
