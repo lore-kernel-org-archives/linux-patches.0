@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B90D1F1313;
-	Mon, 13 Oct 2025 14:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266F72248A5;
+	Mon, 13 Oct 2025 14:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367575; cv=none; b=WvK7Z/jaI6kqvvvbqlcLVkNa9PXbDjtJl7oVZup1V7no6mW7RNJUFk3l6eOxid23uVgXTnKEzmgVTHkhPmuC5ZV0o8hqv/ZBQi3bz4q7wg2Q8YpG6wSk28omvaZaez0rwTcTtlvDaYmqgNyEMHhs79oMbvmRa7amZs+AjAVb1p8=
+	t=1760367578; cv=none; b=JtyKjR8wLRLJbw4By/tz7X1HOdnMvM0MFQTILn0jnyl8YBO90q5s3SG4gBmA7wM4RsZr5XEosfThpyTv72fWi6KpJNazBRTpU97O87WV9eU2lFhyN/Iys/vg4qvHJk1K5HJgmzEzkf0i3ICSks7DBaku9Gaj3TbPaC3W095Ivek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367575; c=relaxed/simple;
-	bh=jvjwU3UFKyakl6j35gy5D111aTt5mZEcu5Be5l1xUss=;
+	s=arc-20240116; t=1760367578; c=relaxed/simple;
+	bh=XnuOr/RmAVBt5WijjpKFXlDIGoFNH89zU85Qo13jdRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kRRLIJr4abvWxP+wmPHrVtWXO3FL7kwJj9DcjwHhItsuTHYDWJlLxSPkL9rhgaDGH9wUsOQL4mOhWSAEinGLmCTadydDkd8UejFSPWD+FbeNeHmYtET6rL3eieyHV8Ot03ji6ipzqqpgKvKiDBt9ZYxcnmG+nIX/vsmmSLmYRlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+rZ3Fxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O23hJUKRBn1JIkd7jw7i1U6Xo7zm7vu3I2P2G0wsMVSKQ/MLROBDWvBsJgw++D5Bl5rIG7fIw9XZ7M59snCcouVqJNEfr3ZLi1Xnk0U6hJdFwTnnaQ5xe+RAFMDl1DsRfKRGj/JEIsXJZDCteCDiIZAZbP6J6SCKW7zcU9kJ7gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxPPz8Vm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+rZ3Fxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE9BC4CEFE;
-	Mon, 13 Oct 2025 14:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxPPz8Vm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D82EC4CEFE;
+	Mon, 13 Oct 2025 14:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367575;
-	bh=jvjwU3UFKyakl6j35gy5D111aTt5mZEcu5Be5l1xUss=;
+	s=korg; t=1760367578;
+	bh=XnuOr/RmAVBt5WijjpKFXlDIGoFNH89zU85Qo13jdRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+rZ3FxuE3nBUGRbbpGSXBj1s5umM2zKU8jjtc28Ifqy4Ixg0hmAtVIgzfMEeKQtE
-	 OBL24tWX4S7u+VqJNRsNrQ/M+uOPO1YFxB2QQtEBxopQ9iPgcLBmUYEfm8GTU9wTsh
-	 d4y/snXAz0Gjcf4VMn1OIXlj4wRx9H7bZztcs2m8=
+	b=KxPPz8Vm6UDPhCtTB1UTooHBQX2YwkGgX+P3njzTT3w0+YjG4HQEfrVYAUYh5+nJ7
+	 1rsTjfGqKiyUujhmTaDIzWRg+zTfwSIdFVKr2JmVyJclzQaoafhrlSNpBWL7KY+fkv
+	 lvCHYz6ObkyasXjUIFM6zvU1VsBIpTUg0hy7a0rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Leilk.Liu" <leilk.liu@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Kohei Ito <ito.kohei@socionext.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/196] i2c: mediatek: fix potential incorrect use of I2C_MASTER_WRRD
-Date: Mon, 13 Oct 2025 16:44:09 +0200
-Message-ID: <20251013144317.295419980@linuxfoundation.org>
+Subject: [PATCH 6.6 059/196] i2c: designware: Fix clock issue when PM is disabled
+Date: Mon, 13 Oct 2025 16:44:10 +0200
+Message-ID: <20251013144317.331323260@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -46,88 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leilk.Liu <leilk.liu@mediatek.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit b492183652808e0f389272bf63dc836241b287ff ]
+[ Upstream commit 70e633bedeeb4a7290d3b1dd9d49cc2bae25a46f ]
 
-The old IC does not support the I2C_MASTER_WRRD (write-then-read)
-function, but the current code’s handling of i2c->auto_restart may
-potentially lead to entering the I2C_MASTER_WRRD software flow,
-resulting in unexpected bugs.
+When the driver is removed, the clocks are first enabled by
+calling pm_runtime_get_sync(), and then disabled with
+pm_runtime_put_sync().
 
-Instead of repurposing the auto_restart flag, add a separate flag
-to signal I2C_MASTER_WRRD operations.
+If CONFIG_PM=y, clocks for this controller are disabled when it's in
+the idle state. So the clocks are properly disabled when the driver
+exits.
 
-Also fix handling of msgs. If the operation (i2c->op) is
-I2C_MASTER_WRRD, then the msgs pointer is incremented by 2.
-For all other operations, msgs is simply incremented by 1.
+Othewise, the clocks are always enabled and the PM functions have
+no effect. Therefore, the driver exits without disabling the clocks.
 
-Fixes: b2ed11e224a2 ("I2C: mediatek: Add driver for MediaTek MT8173 I2C controller")
-Signed-off-by: Leilk.Liu <leilk.liu@mediatek.com>
-Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    18
+    # echo 1214a000.i2c > /sys/bus/platform/drivers/i2c_designware/bind
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    20
+    # echo 1214a000.i2c > /sys/bus/platform/drivers/i2c_designware/unbind
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    20
+
+To ensure that the clocks can be disabled correctly even without
+CONFIG_PM=y, should add the following fixes:
+
+- Replace with pm_runtime_put_noidle(), which only decrements the runtime
+  PM usage count.
+- Call i2c_dw_prepare_clk(false) to explicitly disable the clocks.
+
+Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
+Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Tested-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mt65xx.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-mt65xx.c b/drivers/i2c/busses/i2c-mt65xx.c
-index 1a9b5a068ef1b..6b788bca64d54 100644
---- a/drivers/i2c/busses/i2c-mt65xx.c
-+++ b/drivers/i2c/busses/i2c-mt65xx.c
-@@ -1243,6 +1243,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
- {
- 	int ret;
- 	int left_num = num;
-+	bool write_then_read_en = false;
- 	struct mtk_i2c *i2c = i2c_get_adapdata(adap);
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index 1ebcf5673a06b..ca6e1991ad13f 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -411,9 +411,11 @@ static void dw_i2c_plat_remove(struct platform_device *pdev)
+ 	i2c_dw_disable(dev);
  
- 	ret = clk_bulk_enable(I2C_MT65XX_CLK_MAX, i2c->clocks);
-@@ -1256,6 +1257,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
- 		if (!(msgs[0].flags & I2C_M_RD) && (msgs[1].flags & I2C_M_RD) &&
- 		    msgs[0].addr == msgs[1].addr) {
- 			i2c->auto_restart = 0;
-+			write_then_read_en = true;
- 		}
- 	}
+ 	pm_runtime_dont_use_autosuspend(device);
+-	pm_runtime_put_sync(device);
++	pm_runtime_put_noidle(device);
+ 	dw_i2c_plat_pm_cleanup(dev);
  
-@@ -1280,12 +1282,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
- 		else
- 			i2c->op = I2C_MASTER_WR;
++	i2c_dw_prepare_clk(dev, false);
++
+ 	i2c_dw_remove_lock_support(dev);
  
--		if (!i2c->auto_restart) {
--			if (num > 1) {
--				/* combined two messages into one transaction */
--				i2c->op = I2C_MASTER_WRRD;
--				left_num--;
--			}
-+		if (write_then_read_en) {
-+			/* combined two messages into one transaction */
-+			i2c->op = I2C_MASTER_WRRD;
-+			left_num--;
- 		}
- 
- 		/* always use DMA mode. */
-@@ -1293,7 +1293,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
- 		if (ret < 0)
- 			goto err_exit;
- 
--		msgs++;
-+		if (i2c->op == I2C_MASTER_WRRD)
-+			msgs += 2;
-+		else
-+			msgs++;
- 	}
- 	/* the return value is number of executed messages */
- 	ret = num;
+ 	reset_control_assert(dev->rst);
 -- 
 2.51.0
 
