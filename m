@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6B72248A5;
-	Mon, 13 Oct 2025 14:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DB02701B8;
+	Mon, 13 Oct 2025 14:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367566; cv=none; b=cWbmip9tcUPgiCZ43sfmYvfXJ61QAqZ6BLTEjhg3VKwiavX2lP96cHdxq3s1xqQ/YDloaSb5iyP6bjWt3HcYtCqgTFGROEXkPH8VgYVldA76RVWR2wi0DuuPfBhG/5VIKyQkgBrwVGWYCTD7jREwtuWkHBJTGZiCTcZpLDDDIFY=
+	t=1760367569; cv=none; b=P+N+KJTW0abIgYEI9yqpWsZSdF2eauuiRfAJFz/oQZaWw8+zuAfAWrd0umWLeq8fohEEDM7XJWFRpsawyBHlm3jL56HMsUiuWiBxyXkZKHBMHy1EJBziJi30lYCC2AsKl738BssV12lFUO487glzo8z3/cPjt1dwUKGVaIXS9xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367566; c=relaxed/simple;
-	bh=1UTQFgpw2MrrYKzUHdIZid8TNIAQZIhakzYqtn53Wvk=;
+	s=arc-20240116; t=1760367569; c=relaxed/simple;
+	bh=T+Y+b0noHjUun1nrwhM7bNXOu88b/NrOK4CBDhMhOVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFRq/uqjjT6Z8JhoBPCRYgOpyt4cw8WSGezj9TV1Fsv7i6Qb5YZjxIwZqYz44OBw1luI2PXBg/GNBpNhIAz5CMJ5XIgyoFjOxAiwKGLOQC3u/4JQiBtkMZDyKCiOssltojXVJMAHYxkX3NIPVN2eQpHfNsKdpruh4XbqHdvuzK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJT5B1BN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlFD8yR5g2piITEOcupfIFR0bG4NcU8mC9qMP/ZzUHG/GyVuQtrqo43bysJXVg6XpIUUwdQx+SnkNbIcSKsKUxHqqDjuYdApWoqzFbjtDceYQDLsXeTwNqXHaO2xqUQoYnw3nqEiT/sVTLwuWoHZxFYj/w1gQgvygHVG4gIFvZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udgr+1VL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJT5B1BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED107C4CEFE;
-	Mon, 13 Oct 2025 14:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udgr+1VL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E609DC4CEE7;
+	Mon, 13 Oct 2025 14:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367566;
-	bh=1UTQFgpw2MrrYKzUHdIZid8TNIAQZIhakzYqtn53Wvk=;
+	s=korg; t=1760367569;
+	bh=T+Y+b0noHjUun1nrwhM7bNXOu88b/NrOK4CBDhMhOVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJT5B1BNbTfeLZR7uMgA+3DClR1fjtPE9F3gUHUUjmofQAk8iwZXFsec2D+s/GWE5
-	 4XmUhYJxRJbYb/3pEAUCew5Pt40C4oMQ3N7cPb0PxTzKjm/oRoGLPIYpkhvPRqNgKW
-	 PCtdFJQcoQtX+N2KXluykaOw6Yq2Fv+T3uR/H3Fc=
+	b=udgr+1VLlQmwda3rBNOricPsADCcF9DoCM7VYHAB12QKkiEMasOapC9x6r4PVgCwm
+	 coNfEo/CVbaT9R4chJkt3yXbN3wm/dfP5WeYTJS4ckQpbjAoJbFtBNy2sGp4d2ZaqK
+	 aMF/3vQcms//zCi2mjStaVLAEP5tJbkA7+zU3Iv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/196] thermal/drivers/qcom: Make LMH select QCOM_SCM
-Date: Mon, 13 Oct 2025 16:44:07 +0200
-Message-ID: <20251013144317.225078801@linuxfoundation.org>
+Subject: [PATCH 6.6 057/196] thermal/drivers/qcom/lmh: Add missing IRQ includes
+Date: Mon, 13 Oct 2025 16:44:08 +0200
+Message-ID: <20251013144317.260291415@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -53,36 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 57eda47bd14b0c2876f2db42e757c57b7a671965 ]
+[ Upstream commit b50b2c53f98fcdb6957e184eb488c16502db9575 ]
 
-The QCOM_SCM symbol is not user-visible, so it makes little sense to
-depend on it. Make LMH driver select QCOM_SCM as all other drivers do
-and, as the dependecy is now correctly handled, enable || COMPILE_TEST
-in order to include the driver into broader set of build tests.
+As reported by LKP, the Qualcomm LMH driver needs to include several
+IRQ-related headers, which decrlare necessary IRQ functionality.
+Currently driver builds on ARM64 platforms, where the headers are pulled
+in implicitly by other headers, but fails to build on other platforms.
 
-Fixes: 9e5a4fb84230 ("thermal/drivers/qcom/lmh: make QCOM_LMH depends on QCOM_SCM")
+Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507270042.KdK0KKht-lkp@intel.com/
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-1-33bc58388ca5@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-2-33bc58388ca5@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/qcom/lmh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index 2c7f3f9a26ebb..a6bb01082ec69 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -34,7 +34,8 @@ config QCOM_SPMI_TEMP_ALARM
- 
- config QCOM_LMH
- 	tristate "Qualcomm Limits Management Hardware"
--	depends on ARCH_QCOM && QCOM_SCM
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	select QCOM_SCM
- 	help
- 	  This enables initialization of Qualcomm limits management
- 	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index d2d49264cf83a..7c299184c59b1 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -5,6 +5,8 @@
+  */
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
++#include <linux/irq.h>
++#include <linux/irqdesc.h>
+ #include <linux/irqdomain.h>
+ #include <linux/err.h>
+ #include <linux/platform_device.h>
 -- 
 2.51.0
 
