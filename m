@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCBE3064A2;
-	Mon, 13 Oct 2025 15:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFA93064A2;
+	Mon, 13 Oct 2025 15:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369847; cv=none; b=dfPAmBVrWUNJU4O4ULZ9gFSfurgEPsHI2Ht+3J8kmN5fzthx212DPOJFe9m4B11vmAU5HwcwzC/x0+6yq6OawlBWQXktZ2PSwDe5QniJI9LFnXajbq3oj34Litcx7K5iBodnKKNKDyS57m03SsU6qkUohjp6id2RW6ixbop6ap8=
+	t=1760369850; cv=none; b=g6mPgQS+MA12wraG8nueu98jehpjkEZSrU8z8A4ehIT786YKulF9uK75Egx/LqiyAi6SXQLy35FBpHeeyw/tgfBXWGrpLaqWfHMoAQGADWsL2AbIeIUsC6qymHFL0pF0oDYofioYZ+A+bizVLXhUYYelWbiqcnnS9K3H6oY6QmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369847; c=relaxed/simple;
-	bh=6EEvW7xuQob7R7oV8nNI2oShfwdjM0nAyrta/6Zwwyg=;
+	s=arc-20240116; t=1760369850; c=relaxed/simple;
+	bh=4HEVEEp/iHYmyeaaaMuOHM87QWJKa62HffKJEcUCF1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlS+eMP9CTwuHOrJZyuzyfMvHYC1kgJONPEYFoNV3BkQ3V1um+v4oEkfp2T1spM3bc3af8WSDLCCyBVG1FP0Q7fLWGXOd0N0FRaSKOt0zp4lC+S974lm/aPrIZRtIkCoNDJXxPOF6yzyHhXH6/T0WdjXJiS6wdJPRoAOkq4DXVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M85VtCCW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwn9pBGBvhQkHeuynZdiJ1eKeN6l7JgDuMlewyEq7gC341vFISfH2H+xojjpsJ7UwuTWZElxuqHJwjtIaol2vzRnenK+ILGw7GMx2r41U6Eq8/A1CtsztmKgOeAjauFj8BCqsqM8jjJ4McI5GFBMQWkLbEkEz4WRV3sh5XJTX/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtkxc8EH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M85VtCCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A3AC4CEE7;
-	Mon, 13 Oct 2025 15:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtkxc8EH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D93C4CEE7;
+	Mon, 13 Oct 2025 15:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369847;
-	bh=6EEvW7xuQob7R7oV8nNI2oShfwdjM0nAyrta/6Zwwyg=;
+	s=korg; t=1760369850;
+	bh=4HEVEEp/iHYmyeaaaMuOHM87QWJKa62HffKJEcUCF1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M85VtCCWTwOC4fQ3i2uIzWqUmGZIaDMEXuBtoTxAClf4OBuoLMpWjhM5BLchrbF4y
-	 rnvgV+d2csnv3wcvTf534lQ7CBclLRxSWSC2O/5RTZa+e9fwz3zW8hAxO5yFidUpNt
-	 FsEOM0dz5gbFrZ8JFIMr5TaINcS1zGjfxez/NRmc=
+	b=wtkxc8EH655W+JK/9brmZNfDFIXVf5SBGYVLjptXvy4HQAZ2ijqwUqFdVk5op0nbq
+	 9CyuenXk7bQ6m4+LHhqRHBPHD+5z+J5f5HdfLWOfBYJCk/mMpwIfQkahnh9rWdVHeC
+	 ZZ7A0Cy0kHRBeZIZEu0uqGGtyP6ET5Xoemx8XlXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 390/563] wifi: ath12k: initialize eirp_power before use
-Date: Mon, 13 Oct 2025 16:44:11 +0200
-Message-ID: <20251013144425.412773484@linuxfoundation.org>
+Subject: [PATCH 6.17 391/563] wifi: ath12k: fix overflow warning on num_pwr_levels
+Date: Mon, 13 Oct 2025 16:44:12 +0200
+Message-ID: <20251013144425.449205273@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,56 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit bba2f9faf41ee9607c78fcd669527b7654543cfe ]
+[ Upstream commit ea2b0af4c9e3f7187b5be4b7fc1511ea239046c0 ]
 
-Currently, at the end of ath12k_mac_fill_reg_tpc_info(), the
-reg_tpc_info struct is populated, including the following:
-reg_tpc_info->is_psd_power = is_psd_power;
-reg_tpc_info->eirp_power = eirp_power;
+In ath12k_mac_parse_tx_pwr_env(), for the non-PSD case num_pwr_levels is
+limited by ATH12K_NUM_PWR_LEVELS which is 16:
 
-Kernel test robot complains on uninitialized symbol:
-drivers/net/wireless/ath/ath12k/mac.c:10069
-ath12k_mac_fill_reg_tpc_info() error: uninitialized symbol 'eirp_power'
+	if (tpc_info->num_pwr_levels > ATH12K_NUM_PWR_LEVELS)
+		tpc_info->num_pwr_levels = ATH12K_NUM_PWR_LEVELS;
 
-This is because there are some code paths that never set eirp_power, so
-the assignment of reg_tpc_info->eirp_power can come from an
-uninitialized variable. Functionally this is OK since the eirp_power
-only has meaning when is_psd_power is true, and all code paths which set
-is_psd_power to true also set eirp_power. However, to keep the robot
-happy, always initialize eirp_power before use.
+Then it is used to iterate entries in local_non_psd->power[] and
+reg_non_psd->power[]:
+
+	for (i = 0; i < tpc_info->num_pwr_levels; i++) {
+		tpc_info->tpe[i] = min(local_non_psd->power[i],
+				       reg_non_psd->power[i]) / 2;
+
+Since the two array are of size 5, Smatch warns:
+
+drivers/net/wireless/ath/ath12k/mac.c:9812
+ath12k_mac_parse_tx_pwr_env() error: buffer overflow 'local_non_psd->power' 5 <= 15
+drivers/net/wireless/ath/ath12k/mac.c:9812
+ath12k_mac_parse_tx_pwr_env() error: buffer overflow 'reg_non_psd->power' 5 <= 15
+
+This is a false positive as there is already implicit limitation:
+
+	tpc_info->num_pwr_levels = max(local_non_psd->count,
+				       reg_non_psd->count);
+
+meaning it won't exceed 5.
+
+However, to make robot happy, add explicit limit there.
+
+Also add the same to the PSD case, although no warning due to
+ATH12K_NUM_PWR_LEVELS equals IEEE80211_TPE_PSD_ENTRIES_320MHZ.
 
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
 
-Fixes: aeda163bb0c7 ("wifi: ath12k: fill parameters for vdev set TPC power WMI command")
+Fixes: cccbb9d0dd6a ("wifi: ath12k: add parse of transmit power envelope element")
 Reported-by: kernel test robot <lkp@intel.com>
 Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202505180927.tbNWr3vE-lkp@intel.com/
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Closes: https://lore.kernel.org/r/202505180703.Kr9OfQRP-lkp@intel.com/
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250804-ath12k-fix-smatch-warning-on-6g-vlp-v1-1-56f1e54152ab@oss.qualcomm.com
+Link: https://patch.msgid.link/20250804-ath12k-fix-smatch-warning-on-6g-vlp-v1-2-56f1e54152ab@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 3a3965b79942d..93a9c2bc3c596 100644
+index 93a9c2bc3c596..2644b5d4b0bc8 100644
 --- a/drivers/net/wireless/ath/ath12k/mac.c
 +++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -11240,8 +11240,8 @@ void ath12k_mac_fill_reg_tpc_info(struct ath12k *ar,
- 	struct ieee80211_channel *chan, *temp_chan;
- 	u8 pwr_lvl_idx, num_pwr_levels, pwr_reduction;
- 	bool is_psd_power = false, is_tpe_present = false;
--	s8 max_tx_power[ATH12K_NUM_PWR_LEVELS],
--		psd_power, tx_power, eirp_power;
-+	s8 max_tx_power[ATH12K_NUM_PWR_LEVELS], psd_power, tx_power;
-+	s8 eirp_power = 0;
- 	struct ath12k_vif *ahvif = arvif->ahvif;
- 	u16 start_freq, center_freq;
- 	u8 reg_6ghz_power_mode;
+@@ -11447,8 +11447,10 @@ static void ath12k_mac_parse_tx_pwr_env(struct ath12k *ar,
+ 
+ 		tpc_info->num_pwr_levels = max(local_psd->count,
+ 					       reg_psd->count);
+-		if (tpc_info->num_pwr_levels > ATH12K_NUM_PWR_LEVELS)
+-			tpc_info->num_pwr_levels = ATH12K_NUM_PWR_LEVELS;
++		tpc_info->num_pwr_levels =
++				min3(tpc_info->num_pwr_levels,
++				     IEEE80211_TPE_PSD_ENTRIES_320MHZ,
++				     ATH12K_NUM_PWR_LEVELS);
+ 
+ 		for (i = 0; i < tpc_info->num_pwr_levels; i++) {
+ 			tpc_info->tpe[i] = min(local_psd->power[i],
+@@ -11463,8 +11465,10 @@ static void ath12k_mac_parse_tx_pwr_env(struct ath12k *ar,
+ 
+ 		tpc_info->num_pwr_levels = max(local_non_psd->count,
+ 					       reg_non_psd->count);
+-		if (tpc_info->num_pwr_levels > ATH12K_NUM_PWR_LEVELS)
+-			tpc_info->num_pwr_levels = ATH12K_NUM_PWR_LEVELS;
++		tpc_info->num_pwr_levels =
++				min3(tpc_info->num_pwr_levels,
++				     IEEE80211_TPE_EIRP_ENTRIES_320MHZ,
++				     ATH12K_NUM_PWR_LEVELS);
+ 
+ 		for (i = 0; i < tpc_info->num_pwr_levels; i++) {
+ 			tpc_info->tpe[i] = min(local_non_psd->power[i],
 -- 
 2.51.0
 
