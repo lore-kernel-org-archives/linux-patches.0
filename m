@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A2B310650;
-	Mon, 13 Oct 2025 15:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB69A31076D;
+	Mon, 13 Oct 2025 15:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369788; cv=none; b=ezcgxmBcKargpuSrDjN+D90X8XCxO9sk7wJ8NwpgXrBGYz+RBeTWK2TGpRYG+5rUscH+1Jbbh2r2xfV5Q8d4r3vUKJSI/Zq+Q27GWMpSlDDbYSCGhvBru+ORQZwnRWg1l9wbSA6CMahDtiJGNO/V+3Nl83fmQIv7+DJEG01einc=
+	t=1760369791; cv=none; b=CVRdWREEi8HPHWZbiDlSPo1+7GUgp2IK+AXSt9V4U23NQPr2XLfAJ/jwOQw7JF+DcMWOSn6a7Mc+0gs99ZBKzEAIYIZCkiip6JJpJxifHs+82hLoHddDWWO9rhUUmTIWxzA8vCENM23D3JVZ4orpWGAa6kfib7Ul5kfIsO5RPkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369788; c=relaxed/simple;
-	bh=2JP9fn9ENeDPveAsIb3k1WhEXd9/6xMUnNNW7utVzTY=;
+	s=arc-20240116; t=1760369791; c=relaxed/simple;
+	bh=Q6+zzaO4fb24ZVnxNVoEoT/66SknsRw+xAP/uFBixTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsB/pAIQMEN1c0AS84sxHLzm7w9DuW+Yhr1erSIvGYXQbA+pJ5/G3A21lxXo3uVv4wVYg7/lzpSpEaBaN53QGR68cD5RugJXQgmEwyoPOZnluE7Cwqp4IggeEWThqTVrrp99sJJvXlQuafQ4BVF5upaHytg66iGrdgN/JRcQT6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1w/i2LQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dTUCJmdxJEKBiB3Km5tfMOhdtm2xlPUTNUNhHTFqLLLCpW7KWeNWvk5u6eGmWAqfzeXoq6+yBo9RHuY5qe6mvo/bMwvMtCbGv72R09eq5Mc8NK6qCYC3UqFXXAU49NYTAV80QswZbQyNhKoSHbzo9uzofb4hudHB8bnBqOrsohQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO5Z8Xvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1w/i2LQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED4CC4CEE7;
-	Mon, 13 Oct 2025 15:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO5Z8Xvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F036C4CEE7;
+	Mon, 13 Oct 2025 15:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369787;
-	bh=2JP9fn9ENeDPveAsIb3k1WhEXd9/6xMUnNNW7utVzTY=;
+	s=korg; t=1760369790;
+	bh=Q6+zzaO4fb24ZVnxNVoEoT/66SknsRw+xAP/uFBixTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1w/i2LQ5ntah21V35oHGoRLEGHv1YAzj0V1zYtv0TK+Oz3DqAHAXFs7DcMKsbmgu
-	 a/1WbXjbHiqYgatUGlWD93Pp6aALdYEDAA9zMkBMlTTGGpXTVh3x/r3GRK2W1ixSX6
-	 yWjTbMUHBomFh9dNR1PNPq/7SMndVSrtV5/64244=
+	b=eO5Z8XvtkKWK91UedVMfC1pERgwZEwRbV3xJtbCCgZ5W33B4Jh+EjP9QgnC41eWqy
+	 hdPZmRtlw+SKZInew42w3xn5Hn+roQwZmMtpDNOp0kXhaO9n+mRsT/ylLE5JE8cC6M
+	 MPEuZUwv46v2lqlBg2XHlJlLwG0yAeRHPhoDVC34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 368/563] f2fs: fix to avoid migrating empty section
-Date: Mon, 13 Oct 2025 16:43:49 +0200
-Message-ID: <20251013144424.609605351@linuxfoundation.org>
+Subject: [PATCH 6.17 369/563] f2fs: fix to mitigate overhead of f2fs_zero_post_eof_page()
+Date: Mon, 13 Oct 2025 16:43:50 +0200
+Message-ID: <20251013144424.645034706@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,89 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d625a2b08c089397d3a03bff13fa8645e4ec7a01 ]
+[ Upstream commit c2f7c32b254006ad48f8e4efb2e7e7bf71739f17 ]
 
-It reports a bug from device w/ zufs:
+f2fs_zero_post_eof_page() may cuase more overhead due to invalidate_lock
+and page lookup, change as below to mitigate its overhead:
+- check new_size before grabbing invalidate_lock
+- lookup and invalidate pages only in range of [old_size, new_size]
 
-F2FS-fs (dm-64): Inconsistent segment (173822) type [1, 0] in SSA and SIT
-F2FS-fs (dm-64): Stopped filesystem due to reason: 4
-
-Thread A				Thread B
-- f2fs_expand_inode_data
- - f2fs_allocate_pinning_section
-  - f2fs_gc_range
-   - do_garbage_collect w/ segno #x
-					- writepage
-					 - f2fs_allocate_data_block
-					  - new_curseg
-					   - allocate segno #x
-
-The root cause is: fallocate on pinning file may race w/ block allocation
-as above, result in do_garbage_collect() from fallocate() may migrate
-segment which is just allocated by a log, the log will update segment type
-in its in-memory structure, however GC will get segment type from on-disk
-SSA block, once segment type changes by log, we can detect such
-inconsistency, then shutdown filesystem.
-
-In this case, on-disk SSA shows type of segno #173822 is 1 (SUM_TYPE_NODE),
-however segno #173822 was just allocated as data type segment, so in-memory
-SIT shows type of segno #173822 is 0 (SUM_TYPE_DATA).
-
-Change as below to fix this issue:
-- check whether current section is empty before gc
-- add sanity checks on do_garbage_collect() to avoid any race case, result
-in migrating segment used by log.
-- btw, it fixes misc issue in printed logs: "SSA and SIT" -> "SIT and SSA".
-
-Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
-Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: ba8dac350faf ("f2fs: fix to zero post-eof page")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index c0f209f746882..5734e03864685 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1794,6 +1794,13 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 		struct folio *sum_folio = filemap_get_folio(META_MAPPING(sbi),
- 					GET_SUM_BLOCK(sbi, segno));
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 1aae4361d0a89..ffa045b39c01d 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -35,15 +35,23 @@
+ #include <trace/events/f2fs.h>
+ #include <uapi/linux/f2fs.h>
  
-+		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
-+			f2fs_err(sbi, "%s: segment %u is used by log",
-+							__func__, segno);
-+			f2fs_bug_on(sbi, 1);
-+			goto skip;
-+		}
+-static void f2fs_zero_post_eof_page(struct inode *inode, loff_t new_size)
++static void f2fs_zero_post_eof_page(struct inode *inode,
++					loff_t new_size, bool lock)
+ {
+ 	loff_t old_size = i_size_read(inode);
+ 
+ 	if (old_size >= new_size)
+ 		return;
+ 
++	if (mapping_empty(inode->i_mapping))
++		return;
 +
- 		if (get_valid_blocks(sbi, segno, false) == 0)
- 			goto freed;
- 		if (gc_type == BG_GC && __is_large_section(sbi) &&
-@@ -1805,7 +1812,7 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
++	if (lock)
++		filemap_invalidate_lock(inode->i_mapping);
+ 	/* zero or drop pages only in range of [old_size, new_size] */
+-	truncate_pagecache(inode, old_size);
++	truncate_inode_pages_range(inode->i_mapping, old_size, new_size);
++	if (lock)
++		filemap_invalidate_unlock(inode->i_mapping);
+ }
  
- 		sum = folio_address(sum_folio);
- 		if (type != GET_SUM_TYPE((&sum->footer))) {
--			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SSA and SIT",
-+			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SIT and SSA",
- 				 segno, type, GET_SUM_TYPE((&sum->footer)));
- 			f2fs_stop_checkpoint(sbi, false,
- 				STOP_CP_REASON_CORRUPTED_SUMMARY);
-@@ -2068,6 +2075,13 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
- 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
- 		};
+ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
+@@ -114,9 +122,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
  
-+		/*
-+		 * avoid migrating empty section, as it can be allocated by
-+		 * log in parallel.
-+		 */
-+		if (!get_valid_blocks(sbi, segno, true))
-+			continue;
-+
- 		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno)))
- 			continue;
+ 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
+ 
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+@@ -1149,7 +1155,7 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		filemap_invalidate_lock(inode->i_mapping);
+ 
+ 		if (attr->ia_size > old_size)
+-			f2fs_zero_post_eof_page(inode, attr->ia_size);
++			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
+ 		truncate_setsize(inode, attr->ia_size);
+ 
+ 		if (attr->ia_size <= old_size)
+@@ -1268,9 +1274,7 @@ static int f2fs_punch_hole(struct inode *inode, loff_t offset, loff_t len)
+ 	if (ret)
+ 		return ret;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1555,7 +1559,7 @@ static int f2fs_do_collapse(struct inode *inode, loff_t offset, loff_t len)
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len);
++	f2fs_zero_post_eof_page(inode, offset + len, false);
+ 
+ 	f2fs_lock_op(sbi);
+ 	f2fs_drop_extent_tree(inode);
+@@ -1678,9 +1682,7 @@ static int f2fs_zero_range(struct inode *inode, loff_t offset, loff_t len,
+ 	if (ret)
+ 		return ret;
+ 
+-	filemap_invalidate_lock(mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1814,7 +1816,7 @@ static int f2fs_insert_range(struct inode *inode, loff_t offset, loff_t len)
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len);
++	f2fs_zero_post_eof_page(inode, offset + len, false);
+ 	truncate_pagecache(inode, offset);
+ 
+ 	while (!ret && idx > pg_start) {
+@@ -1872,9 +1874,7 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
+ 	if (err)
+ 		return err;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, offset + len);
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len, true);
+ 
+ 	f2fs_balance_fs(sbi, true);
+ 
+@@ -4922,9 +4922,8 @@ static ssize_t f2fs_write_checks(struct kiocb *iocb, struct iov_iter *from)
+ 	if (err)
+ 		return err;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-	f2fs_zero_post_eof_page(inode, iocb->ki_pos + iov_iter_count(from));
+-	filemap_invalidate_unlock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode,
++		iocb->ki_pos + iov_iter_count(from), true);
+ 	return count;
+ }
  
 -- 
 2.51.0
