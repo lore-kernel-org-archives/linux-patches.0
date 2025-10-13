@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFAB309DA8;
-	Mon, 13 Oct 2025 14:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF615309DB0;
+	Mon, 13 Oct 2025 14:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367017; cv=none; b=C4OjvZ6qbP1AMtIkz1+dtf8lPe9UGa3WEDiCCrSjI9HrTmrvfaansVMA/rz/9+PLaavVwcBSQGKHUVKEa595pvsrKg51H99daV5FHFTo/oSfC51lnvMCs9nE7i6rwdaPHpvQU/ZkgfU/0UD9clkaJByZBVckfFnvTH0ruSzrMUs=
+	t=1760367020; cv=none; b=oQ6W5tUWZb1i6uwhvu5Dcoibv5T46pZHDy7om3yxVwy7c5pLAEf0frDF0Z5fq4nYZjTl4R7wis+PI+JPzeV0u6+vwkoNJKsuCN+RJzMNpRS8Fr2jjJ7loUVNP6bTBdnLTAwSDpjr+iefinjSt2xo5UuqW7h6f4el5FxZMF35o/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367017; c=relaxed/simple;
-	bh=YNMBOUQhVgwhmOd+Ob/ZqVK1bB/mFVsDPNdASWH7fGM=;
+	s=arc-20240116; t=1760367020; c=relaxed/simple;
+	bh=LZ/jNo4V87JC9cJgtCTfcOdBLrwF/Ec81vp5x+ArzsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpoZsnc/6fpa7S2g/Qdc1t1hTU0LoQ8sGZKmRu9osKoVFc6HZhs5WNoOK4spAgAhqbpD7wn3084Po0c5k2f3zwGhMz+lgd1DnNhqvcHOejrR5KQxF1cAWDaqWi0tjMIkKUpB1c04qD0q8aAaWH6TP6VewoFjDjmKRirVou+G6kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u31t9Gu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aaBN+BKfhbivnM4YudvN9QBBtVxV6IJxWfGNG4gKl9OoJRGt5moIKmcyfOF0PfWTm9Q6JzLP2TIvoaMUagFBUgBaVwKjCPAS7/dOHh5A4XfzC7/OZU9tjEzkAadDXpxwbvAVF8KFxD/5G3dEfYfkw2kkdpc1CgVSDCrO5DGUE9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BX7wRGzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u31t9Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E63C4CEE7;
-	Mon, 13 Oct 2025 14:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BX7wRGzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB18C4CEE7;
+	Mon, 13 Oct 2025 14:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367017;
-	bh=YNMBOUQhVgwhmOd+Ob/ZqVK1bB/mFVsDPNdASWH7fGM=;
+	s=korg; t=1760367020;
+	bh=LZ/jNo4V87JC9cJgtCTfcOdBLrwF/Ec81vp5x+ArzsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0u31t9Gu/SqhCX4f2J6/PvlgSw5U8u5nnuAw0ZhA1pE1teRuAZsxy2h5NIpKh0spS
-	 +6k7Ut88vC4STkdSSNsmBvlgLA49p7Mfl9MRDrJ6J0fgNTuaeqDqq1K97GBT9AYaA5
-	 Lmc5ahpsEUZXKy+QClfAkKtj3Amr5uvRNA8gYMks=
+	b=BX7wRGzQUr1tHOTZ3gDj9kJYqonPjTbYJAHKAHbGVAJVczmcPoCFsRGOq4eRfR6QB
+	 ZJl+7DGztP7gFHMe+BqG0uW2RfdFQY11uFdrQ66GqwUAxAEkvL1Ke2qS9l4LTExDuR
+	 Hwnxv3BSPm0XgWP1G8F5BeJzRbewnxcitYtSmVSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/196] ARM: at91: pm: fix MCKx restore routine
-Date: Mon, 13 Oct 2025 16:43:57 +0200
-Message-ID: <20251013144316.897059812@linuxfoundation.org>
+Subject: [PATCH 6.1 065/196] regulator: scmi: Use int type to store negative error codes
+Date: Mon, 13 Oct 2025 16:43:58 +0200
+Message-ID: <20251013144316.932919162@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 296302d3d81360e09fa956e9be9edc8223b69a12 ]
+[ Upstream commit 9d35d068fb138160709e04e3ee97fe29a6f8615b ]
 
-The at91_mckx_ps_restore() assembly function is responsible for setting
-back MCKx system bus clocks after exiting low power modes.
+Change the 'ret' variable from u32 to int to store negative error codes or
+zero returned by of_property_read_u32().
 
-Fix a typo and use tmp3 variable instead of tmp2 to correctly set MCKx
-to previously saved state.
-Tmp2 was used without the needed changes in CSS and DIV. Moreover the
-required bit 7, telling that MCR register's content is to be changed
-(CMD/write), was not set.
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants. Additionally, assigning negative error
+codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
+flag is enabled.
 
-Fix function comment to match tmp variables actually used.
+No effect on runtime.
 
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Fixes: 28eb1d40fe57 ("ARM: at91: pm: add support for MCK1..4 save/restore for ulp modes")
-Link: https://lore.kernel.org/r/20250827145427.46819-3-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[claudiu.beznea: s/sate/state in commit description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
+Link: https://patch.msgid.link/20250829101411.625214-1-rongqianfeng@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm_suspend.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/scmi-regulator.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index e4904faf17532..0af2598899fc5 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -868,7 +868,7 @@ e_done:
- /**
-  * at91_mckx_ps_restore: restore MCK1..4 settings
-  *
-- * Side effects: overwrites tmp1, tmp2
-+ * Side effects: overwrites tmp1, tmp2 and tmp3
-  */
- .macro at91_mckx_ps_restore
- #ifdef CONFIG_SOC_SAMA7
-@@ -912,7 +912,7 @@ r_ps:
- 	bic	tmp3, tmp3, #AT91_PMC_MCR_V2_ID_MSK
- 	orr	tmp3, tmp3, tmp1
- 	orr	tmp3, tmp3, #AT91_PMC_MCR_V2_CMD
--	str	tmp2, [pmc, #AT91_PMC_MCR_V2]
-+	str	tmp3, [pmc, #AT91_PMC_MCR_V2]
+diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
+index b9918f4fd2418..7252fa32cf054 100644
+--- a/drivers/regulator/scmi-regulator.c
++++ b/drivers/regulator/scmi-regulator.c
+@@ -257,7 +257,8 @@ static int process_scmi_regulator_of_node(struct scmi_device *sdev,
+ 					  struct device_node *np,
+ 					  struct scmi_regulator_info *rinfo)
+ {
+-	u32 dom, ret;
++	u32 dom;
++	int ret;
  
- 	wait_mckrdy tmp1
- 
+ 	ret = of_property_read_u32(np, "reg", &dom);
+ 	if (ret)
 -- 
 2.51.0
 
