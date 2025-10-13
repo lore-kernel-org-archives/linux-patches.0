@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9712630E0D3;
-	Mon, 13 Oct 2025 15:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AED7314A67;
+	Mon, 13 Oct 2025 15:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370165; cv=none; b=m5irVkDQQX3epSg/Hq5AU4i04lqXPzPrelMNUHNwqrYcVUlB88CwotG9+LRmR2PYid8btdf9Mb0+W1JoXnOZbsD2VdDG0n2EnIRoCxUuQ0sLgenJi21m7N8jUsCoqEgdisFkBkuZnxfYYSAn+BMmX40/I4Kv1A0H8m08OiuuuJc=
+	t=1760370168; cv=none; b=EoGp4d9SwjRyYWmy4bp2c3KgsrXdkzq1Z5aGzn9qKS7/jKqZ5cbQEaoLatN7vd2kZCDSyW2by2xHpE3oJNlEIXz3ikhIbpX75CTiEz1zD3QqOE2ldd+vubS2Wq1sjo970hEGwBllS7qn/ESKg4jcl/daCmPVNxxlUB8WG96AlWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370165; c=relaxed/simple;
-	bh=olZ753+H1l/asDudg/gsbaXoVqc4RXMyOZMMxVBxWpg=;
+	s=arc-20240116; t=1760370168; c=relaxed/simple;
+	bh=NtiS0oRwZk5Q5NxJqAYC6p1Xtae/TP7CsTJxzKlrIgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=otoYUIXP37XjFpnVypN5hfTaXK7viesmJg9GmwQYXXkWyj2SaD9ZTp0c8f7zJxIJ4wjFvYpr8dRhD8SXLeqeTOiuIAwwLY41hQx2hW8XQYY+Y1AWZ4wCHscN2tlfHgPSc5CJun1OptJHwxrodJHbwIXcfuFdJyA1WspMSE7+wXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZFFIze7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rmsKboZCBXvCw647UTb92ujmkDFuhSk3keXqL+21GMR/eGjLlss+TPP+EAZIOCHFSDiq7jlDSL6qUgw2mf1mK0jprfQFlb5OPobJAzyS7KnBuVOFHUZ90l6IK7kn73oGaglQnUEBRbkp7NX1gZHQ1LVzwSfMQ49YnRSza8La2mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xd/cDWHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZFFIze7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3F2C4CEE7;
-	Mon, 13 Oct 2025 15:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd/cDWHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE17C4CEE7;
+	Mon, 13 Oct 2025 15:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370165;
-	bh=olZ753+H1l/asDudg/gsbaXoVqc4RXMyOZMMxVBxWpg=;
+	s=korg; t=1760370168;
+	bh=NtiS0oRwZk5Q5NxJqAYC6p1Xtae/TP7CsTJxzKlrIgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZFFIze7UIRIH5cx3LBtpjVLkNN8MjrxsquQvqbgZ76Jrh0mCvG8ihPjvnydt1F4s
-	 GhUOBYR7iJOlivyNFHgRB7eaEheFa1or65nyttYVclU/QspvKziwnfJTjgXJU0vm0M
-	 RklxFvAxE0AAs5wYtAEPHJmktFj2UrWi9NJQZ09I=
+	b=Xd/cDWHFAprXlsnOYtnpJ7r2CBVTfooZ4j9rGQwJTB+Nrz/VouevOfm5tgm6xbjT1
+	 JFJpVE3HC+XyOvFzd3nvsS2+9kx8uYbCGmYxtwT4Bm/UiuXr4OngjfcbM5WHx3a+eS
+	 JVrByEnbEt+KEcMEnzE+cN9TEqIiyOlojuMRK4EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.17 502/563] ASoC: SOF: ipc3-topology: Fix multi-core and static pipelines tear down
-Date: Mon, 13 Oct 2025 16:46:03 +0200
-Message-ID: <20251013144429.495774549@linuxfoundation.org>
+	Bo Sun <bo@mboxify.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 485/563] octeontx2-vf: fix bitmap leak
+Date: Mon, 13 Oct 2025 16:45:46 +0200
+Message-ID: <20251013144428.862929262@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,61 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Bo Sun <bo@mboxify.com>
 
-commit 59abe7bc7e7c70e9066b3e46874d1b7e6a13de14 upstream.
+[ Upstream commit cd9ea7da41a449ff1950230a35990155457b9879 ]
 
-In the case of static pipelines, freeing the widgets in the pipelines
-that were not suspended after freeing the scheduler widgets results in
-errors because the secondary cores are powered off when the scheduler
-widgets are freed. Fix this by tearing down the leftover pipelines before
-powering off the secondary cores.
+The bitmap allocated with bitmap_zalloc() in otx2vf_probe() was not
+released in otx2vf_remove(). Unbinding and rebinding the driver therefore
+triggers a kmemleak warning:
 
-Cc: stable@vger.kernel.org
-Fixes: d7332c4a4f1a ("ASoC: SOF: ipc3-topology: Fix pipeline tear down logic")
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20251002073125.32471-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    unreferenced object (size 8):
+      backtrace:
+        bitmap_zalloc
+        otx2vf_probe
+
+Call bitmap_free() in the remove path to fix the leak.
+
+Fixes: efabce290151 ("octeontx2-pf: AF_XDP zero copy receive support")
+Signed-off-by: Bo Sun <bo@mboxify.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-topology.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -2473,11 +2473,6 @@ static int sof_ipc3_tear_down_all_pipeli
- 	if (ret < 0)
- 		return ret;
- 
--	/* free all the scheduler widgets now */
--	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
--	if (ret < 0)
--		return ret;
--
- 	/*
- 	 * Tear down all pipelines associated with PCMs that did not get suspended
- 	 * and unset the prepare flag so that they can be set up again during resume.
-@@ -2493,6 +2488,11 @@ static int sof_ipc3_tear_down_all_pipeli
- 		}
- 	}
- 
-+	/* free all the scheduler widgets now. This will also power down the secondary cores */
-+	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
-+	if (ret < 0)
-+		return ret;
-+
- 	list_for_each_entry(sroute, &sdev->route_list, list)
- 		sroute->setup = false;
- 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+index 7ebb6e656884a..25381f079b97d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+@@ -854,6 +854,7 @@ static void otx2vf_remove(struct pci_dev *pdev)
+ 		qmem_free(vf->dev, vf->dync_lmt);
+ 	otx2vf_vfaf_mbox_destroy(vf);
+ 	pci_free_irq_vectors(vf->pdev);
++	bitmap_free(vf->af_xdp_zc_qidx);
+ 	pci_set_drvdata(pdev, NULL);
+ 	free_netdev(netdev);
+ }
+-- 
+2.51.0
+
 
 
