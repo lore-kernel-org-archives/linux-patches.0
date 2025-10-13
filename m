@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEF52FE577;
-	Mon, 13 Oct 2025 15:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D614530AD1D;
+	Mon, 13 Oct 2025 15:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367719; cv=none; b=P9TIFl454CQjgUH0RDIqTVxwNSLJbipmgks15Dax+qaq/AhG6IQMQMDyhsWm/5BAqNXuhMZZcWT6YkNVPzmcHoeyOeMaKRDYP1/uJ56tpEqqwfeCdFNzqClsj50AjxJWFHluWBJwcVL8FUX3N8R+GBHY4cI1jGXrMlGYrO3y1Og=
+	t=1760367721; cv=none; b=tm23JwmK9roTuNrjG4rlr6ABI++eC2e4vpzRn8Hg9yVC9+JX7MSn8pdflLG5A4GAegnUOyEw/l5q76V3/Ly/9sPqI40EMHkBdjO19p/4BRFAZsjj/RmEcsziSc4oI2kJ88Jf82iD/s4j3mzREqPCzE6exntOpXJQFQxt8tH3qVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367719; c=relaxed/simple;
-	bh=D3+Y4KbodPS5t4vbiA7cyBxTizcrw7s0OmS20rWh0nE=;
+	s=arc-20240116; t=1760367721; c=relaxed/simple;
+	bh=t3lMl97MuATCtwsIqCID3VG24Gp2X9G67JsQBL9LGs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcjFoV6WubnYeDuuWsZKubcMvkACErms2KjOXDZNC2HroKyP2cGV5nvhkC9rCWqcOMPwWhxUcIwhOrt3FZdyvyjw1JtNleAPjJowRi8QW9Hz1gatea/C++xBHalXTl3JuRda1lWzmHU5hEoDBHCbjD0E6QukY8OsbIZVywNBQg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVPpjJT7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g41tEkBUHYWRp4Lo1J+vVmInCvdH0C3ao6sT9ksRUizQb4g7Yo7xmlW8N1nEIMSnx6lpZUZvGieP5L57RWeyTzmIygRkpa0w20Mc/RAKiFBLOWASrL6qnNVSh/Mm/mDvSOQB8QwnMpwlgaMdyeaiuVL90k32UrShg9NcCjOcSO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUy2VWUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVPpjJT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9E1C4CEFE;
-	Mon, 13 Oct 2025 15:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUy2VWUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631E9C4CEE7;
+	Mon, 13 Oct 2025 15:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367719;
-	bh=D3+Y4KbodPS5t4vbiA7cyBxTizcrw7s0OmS20rWh0nE=;
+	s=korg; t=1760367721;
+	bh=t3lMl97MuATCtwsIqCID3VG24Gp2X9G67JsQBL9LGs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVPpjJT7rk9MOWqrbgEOwx7qdTlz3Zwiqldp6t9RKPJF+d14qb9BOWbRcCpJMkJLO
-	 yp49po/Lcfd0Nqlbp/pvaRTP+NgzMHFqfzzXdMhM6NkgfWkfKKQj8uDPU5hKFxBZXp
-	 XQWQbyKU8tMEJKujtyARUretxxBt7Zw9Nv0FV2u0=
+	b=yUy2VWUeAykSHcyxDCJivWFE4b4f1ZgltgomXj1gt43tr/+IsoL4PULCa68kFwMMt
+	 NvUP9t8FkiEnoP5FbOaVkrZJEhqgQw9F56vHoHzGh6tW88rCpyF04l2I8KMbl6XE9M
+	 GGXGnyr0ReikUgqCnq38BlnqMQvy9tLginPJIZas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/196] ASoC: Intel: bytcr_rt5640: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:44:53 +0200
-Message-ID: <20251013144319.005066485@linuxfoundation.org>
+Subject: [PATCH 6.6 111/196] watchdog: mpc8xxx_wdt: Reload the watchdog timer when enabling the watchdog
+Date: Mon, 13 Oct 2025 16:45:02 +0200
+Message-ID: <20251013144319.327597389@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,51 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit fba404e4b4af4f4f747bb0e41e9fff7d03c7bcc0 ]
+[ Upstream commit 7dfd80f70ef00d871df5af7c391133f7ba61ad9b ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver only shows an error message but leaves as is.
-This may lead to unepxected results like OOB access.
+When the watchdog gets enabled with this driver, it leaves enough time
+for the core watchdog subsystem to start pinging it. But when the
+watchdog is already started by hardware or by the boot loader, little
+time remains before it fires and it happens that the core watchdog
+subsystem doesn't have time to start pinging it.
 
-This patch corrects the input mapping to the certain default value if
-an invalid value is passed.
+Until commit 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker
+function") pinging was managed by the driver itself and the watchdog
+was immediately pinged by setting the timer expiry to 0.
 
-Fixes: 063422ca2a9d ("ASoC: Intel: bytcr_rt5640: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-3-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+So restore similar behaviour by pinging it when enabling it so that
+if it was already enabled the watchdog timer counter is reloaded.
+
+Fixes: 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker function")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/watchdog/mpc8xxx_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 6a85e8fdcae64..beca466dd468e 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -68,7 +68,8 @@ enum {
- 	BYT_RT5640_OVCD_SF_1P5		= (RT5640_OVCD_SF_1P5 << 13),
- };
+diff --git a/drivers/watchdog/mpc8xxx_wdt.c b/drivers/watchdog/mpc8xxx_wdt.c
+index 867f9f3113797..a4b497ecfa205 100644
+--- a/drivers/watchdog/mpc8xxx_wdt.c
++++ b/drivers/watchdog/mpc8xxx_wdt.c
+@@ -100,6 +100,8 @@ static int mpc8xxx_wdt_start(struct watchdog_device *w)
+ 	ddata->swtc = tmp >> 16;
+ 	set_bit(WDOG_HW_RUNNING, &ddata->wdd.status);
  
--#define BYT_RT5640_MAP(quirk)		((quirk) &  GENMASK(3, 0))
-+#define BYT_RT5640_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5640_MAP(quirk)		((quirk) & BYT_RT5640_MAP_MASK)
- #define BYT_RT5640_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5640_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5640_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -140,7 +141,9 @@ static void log_quirks(struct device *dev)
- 		dev_info(dev, "quirk NO_INTERNAL_MIC_MAP enabled\n");
- 		break;
- 	default:
--		dev_err(dev, "quirk map 0x%x is not supported, microphone input will not work\n", map);
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC1_MAP\n", map);
-+		byt_rt5640_quirk &= ~BYT_RT5640_MAP_MASK;
-+		byt_rt5640_quirk |= BYT_RT5640_DMIC1_MAP;
- 		break;
- 	}
- 	if (byt_rt5640_quirk & BYT_RT5640_HSMIC2_ON_IN1)
++	mpc8xxx_wdt_keepalive(ddata);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
