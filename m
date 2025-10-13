@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381DE30F92F;
-	Mon, 13 Oct 2025 15:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0856A30C375;
+	Mon, 13 Oct 2025 15:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369683; cv=none; b=ZXHBEwIih/7gL+7E13kMbgDNZv8Iwll8WjoYexq0XX+AdwAxDNmoSxcUJgWjSG3Eaeowil0uM2RMtbmnDXIL+KdhvsfhJNKnBH4oxow7uFC9na5MGtgGXdclQEUU/L2bGu2LOYhD0a7nVPBCbG5AgrYI/qPjFmyzlCarTS2B7Eo=
+	t=1760369686; cv=none; b=lLvDYD57e03fJqPF/KQzxp3PNCTf70LNUlyvYTKVfGqDxYvV4qWRvC5VMduNz8oLUH/VpPneELxIrlqsJWDLMkr2vO5QqNidPZ748+eBnQ+OAaXyAsF0nidGl864wIBQA5WiVUemmSKFtSWKdB9BqW7LGqu1hs+w7WfT+/ELOlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369683; c=relaxed/simple;
-	bh=TnGqWF56T3NwP1/P5M8O37Hi+CvSUv7uk6KYLkEWiwc=;
+	s=arc-20240116; t=1760369686; c=relaxed/simple;
+	bh=b6vUOrzE+Zd/p9mi7jeMweqqv3bOdhbiWdrPt2yKS8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrPKHadXaej6EjIz7EMtB9hHJw7rZvNIhMD534h8dVpGiuQgPf+Cag+pIbZ/GCpHD/ikeKWvyg6ACisMJ1mIzH9LVdKNnp2g0Gb2aGZRSJBRN90zkxaBHl5ESlY8wucXNEqr8Mn6TshDOcRajg/t/btCIaMeDdn9NYEtMLqUHxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/yZItQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kb8MeZkq0aKL4F6ptOa8Lb2L/IRMsw+H98xn6bYEYJxaAErt7iH/Ydh54mkvxNRHk1EyMVFWuU7lfVPLiN/vFd0EyERubLAskI+PzyrqYBha12i75wa9vNOsjGfWKiR/xZLWjnznigdtVqQAF+LkM+qJV0NObHYLNuk7fLlTO5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Im1AdVtQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/yZItQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2373C4CEE7;
-	Mon, 13 Oct 2025 15:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Im1AdVtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88629C116D0;
+	Mon, 13 Oct 2025 15:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369683;
-	bh=TnGqWF56T3NwP1/P5M8O37Hi+CvSUv7uk6KYLkEWiwc=;
+	s=korg; t=1760369685;
+	bh=b6vUOrzE+Zd/p9mi7jeMweqqv3bOdhbiWdrPt2yKS8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/yZItQCE6VETqdPkqSaURKIXimR90VF7TgfAL7TwUK2DsLjzyWnjnIsAvK43aV9U
-	 BWZjsbxxARpGErEGNbNm5BhmPXu9VLCNqiZvUzIFMMKy2oQZgoitHXVjqunQVMDPnB
-	 rABSWY+Ct9zIbLuwnEA5YDL18dN2tIWHrHQn6HOI=
+	b=Im1AdVtQpB4YvnEY9Jq1/Ru6VqOMSxTFKt5aeRM6JxKnuvWl7duMprTIO3yR/Lflb
+	 FBjwXWkHAebtbIfn7ZssgpFb4KdazPW06OTwv8xh818gYICLfHIDC4GUReduzYaYLf
+	 pT0aHi8KvDNsHYy4OyaoQuiJTjD/da74WTdK3KLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 332/563] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:43:13 +0200
-Message-ID: <20251013144423.290409459@linuxfoundation.org>
+Subject: [PATCH 6.17 306/563] drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)
+Date: Mon, 13 Oct 2025 16:42:47 +0200
+Message-ID: <20251013144422.350152698@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,80 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
+[ Upstream commit 9003a0746864f39a0ef72bd45f8e1ad85d930d67 ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+Some parts of the code base expect that MCLK switching is turned
+off when the vblank time is set to zero.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
+According to pp_pm_compute_clocks the non-DC code has issues
+with MCLK switching with refresh rates over 120 Hz.
 
-Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-4-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+v3:
+Add code comment to explain this better.
+Add an if statement instead of changing the switch_limit.
+
+Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 67c62844ca2a9..604a35d380e9a 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -58,7 +58,8 @@ enum {
- 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
- };
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index fb008c5980d67..c11c4cc111df5 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -3085,7 +3085,13 @@ static bool si_dpm_vblank_too_short(void *handle)
+ 	/* we never hit the non-gddr5 limit so disable it */
+ 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
  
--#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
- #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
- 
- static void log_quirks(struct device *dev)
- {
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
-+	int map;
-+
-+	map = BYT_RT5651_MAP(byt_rt5651_quirk);
-+	switch (map) {
-+	case BYT_RT5651_DMIC_MAP:
- 		dev_info(dev, "quirk DMIC_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
-+		break;
-+	case BYT_RT5651_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN1_IN2_MAP:
- 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
-+		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
-+		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
-+		break;
-+	}
-+
- 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
- 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
- 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
+-	if (vblank_time < switch_limit)
++	/* Consider zero vblank time too short and disable MCLK switching.
++	 * Note that the vblank time is set to maximum when no displays are attached,
++	 * so we'll still enable MCLK switching in that case.
++	 */
++	if (vblank_time == 0)
++		return true;
++	else if (vblank_time < switch_limit)
+ 		return true;
+ 	else
+ 		return false;
 -- 
 2.51.0
 
