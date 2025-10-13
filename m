@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD85630CDB9;
-	Mon, 13 Oct 2025 14:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B662798FA;
+	Mon, 13 Oct 2025 14:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367353; cv=none; b=ZCeSYxTtThRdPV4IbcAtt+TRz6CEq/3sWYxUjP19uwAcfY4HuM5xXn1Yb6ZEFEmaO+ZtCJW9sYaSrP6eFQTFU16Y5m1HsbhIKYxJxIWpyy8Mh1tKyxd5XinoipFedAY3STJwaCcPpEG6ZdkrK+p+CfirmCbo8pXJ/pD3AS6yBO0=
+	t=1760367355; cv=none; b=f2ylpBRR+aTeMntqpRy13Hsmd7Znw3PJOOhDVG2mXIzni0uyX8v8swdDv1LWkcz5DXbCsLJpVo1/sDp0sPMnkgMDGq8EvldyP6HW+aW6yRcbkaC8TOWkTL2c/26ThAUPuaoFrfP3Xtn6VGIM5+cLd4EDqftrO4vf5GCyeuBsURw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367353; c=relaxed/simple;
-	bh=FdxdZRSRB9ZUFHAKLYaZveNpbkDDaVP90nSzhrlqEpY=;
+	s=arc-20240116; t=1760367355; c=relaxed/simple;
+	bh=jCu5KqEwKF3xDmmXm1tuvl1mNDZK33ESROoacAATyOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgT0q1JpE+gJLK7TZXE1sRHhaLRRocF6wFHDxSRXBajwWd0l2OLr6w4zHabYKXehQAFod2Y7Dxz8cibhhQ0qpHwnZg0W7IZCVS8HJTigaqHQ10RVpTGfah/v8ROG96SLpWtweU2pVNTH8xlgKF46kzFUjbaIZgVrht7kQTDvvaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PIYwvng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AuOAXi3VwBjSp5AU7Z/FZFtzUU6v+gnAZqy/Ta1H40TfdYORXexIOdMTNV1z3ter1Wx6wOhWRp8I9/reoww6jcjLSJG8xWaEcMbf7A/1Xx678CFA6ndkwLSgfg657UF1EQRvm8Y7C+qN87iBpNC6O8E7x7WMweKpgx3/XfAjOzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIJ8J3md; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PIYwvng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B22FC4CEE7;
-	Mon, 13 Oct 2025 14:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIJ8J3md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47809C4CEE7;
+	Mon, 13 Oct 2025 14:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367352;
-	bh=FdxdZRSRB9ZUFHAKLYaZveNpbkDDaVP90nSzhrlqEpY=;
+	s=korg; t=1760367355;
+	bh=jCu5KqEwKF3xDmmXm1tuvl1mNDZK33ESROoacAATyOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0PIYwvngRl9HRxvEIg9QKmnWg9Ltp+RQ5+O/yMmg91DKavrCe/ny5ym/E92+MQdvb
-	 J6++pQcH3gKEcftzBZqfLMmrViTGBlSuaNVtpDcRjZ2MQys4fI84vY79ea3kjwP/8E
-	 bBoC8NDbMbTNn6kC+a/W/9NMMKsRmypUj2B+gChc=
+	b=hIJ8J3mdyV1e8rXDwEvDArYQwB5dAMtrdwFI42p+D1YeqVvc2uZJRIxHScU+F0ajg
+	 0lsuoTqL7GQim4jly/i9EOnDUVP7b+72MwB9VHGY4s4U+FnOe6RrU1EfvvzWBAp6/N
+	 G8aKX2pSLSCE/wwwlBgiL/znq6v9Pa8PWGBQSeZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 179/196] dm: fix NULL pointer dereference in __dm_suspend()
-Date: Mon, 13 Oct 2025 16:45:52 +0200
-Message-ID: <20251013144321.171125783@linuxfoundation.org>
+	Matvey Kovalev <matvey.kovalev@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 180/196] ksmbd: fix error code overwriting in smb2_get_info_filesystem()
+Date: Mon, 13 Oct 2025 16:45:53 +0200
+Message-ID: <20251013144321.206521786@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -50,93 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Matvey Kovalev <matvey.kovalev@ispras.ru>
 
-commit 8d33a030c566e1f105cd5bf27f37940b6367f3be upstream.
+commit 88daf2f448aad05a2e6df738d66fe8b0cf85cee0 upstream.
 
-There is a race condition between dm device suspend and table load that
-can lead to null pointer dereference. The issue occurs when suspend is
-invoked before table load completes:
+If client doesn't negotiate with SMB3.1.1 POSIX Extensions,
+then proper error code won't be returned due to overwriting.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000054
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
-RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
-Call Trace:
-  <TASK>
-  blk_mq_quiesce_queue+0x2c/0x50
-  dm_stop_queue+0xd/0x20
-  __dm_suspend+0x130/0x330
-  dm_suspend+0x11a/0x180
-  dev_suspend+0x27e/0x560
-  ctl_ioctl+0x4cf/0x850
-  dm_ctl_ioctl+0xd/0x20
-  vfs_ioctl+0x1d/0x50
-  __se_sys_ioctl+0x9b/0xc0
-  __x64_sys_ioctl+0x19/0x30
-  x64_sys_call+0x2c4a/0x4620
-  do_syscall_64+0x9e/0x1b0
+Return error immediately.
 
-The issue can be triggered as below:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-T1 						T2
-dm_suspend					table_load
-__dm_suspend					dm_setup_md_queue
-						dm_mq_init_request_queue
-						blk_mq_init_allocated_queue
-						=> q->mq_ops = set->ops; (1)
-dm_stop_queue / dm_wait_for_completion
-=> q->tag_set NULL pointer!	(2)
-						=> q->tag_set = set; (3)
-
-Fix this by checking if a valid table (map) exists before performing
-request-based suspend and waiting for target I/O. When map is NULL,
-skip these table-dependent suspend steps.
-
-Even when map is NULL, no I/O can reach any target because there is
-no table loaded; I/O submitted in this state will fail early in the
-DM layer. Skipping the table-dependent suspend logic in this case
-is safe and avoids NULL pointer dereferences.
-
-Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
+Fixes: e2f34481b24db ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2668,7 +2668,7 @@ static int __dm_suspend(struct mapped_de
- {
- 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
- 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
--	int r;
-+	int r = 0;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5233,7 +5233,8 @@ static int smb2_get_info_filesystem(stru
  
- 	lockdep_assert_held(&md->suspend_lock);
- 
-@@ -2720,7 +2720,7 @@ static int __dm_suspend(struct mapped_de
- 	 * Stop md->queue before flushing md->wq in case request-based
- 	 * dm defers requests to md->wq from md->queue.
- 	 */
--	if (dm_request_based(md)) {
-+	if (map && dm_request_based(md)) {
- 		dm_stop_queue(md->queue);
- 		set_bit(DMF_QUEUE_STOPPED, &md->flags);
- 	}
-@@ -2732,7 +2732,8 @@ static int __dm_suspend(struct mapped_de
- 	 * We call dm_wait_for_completion to wait for all existing requests
- 	 * to finish.
- 	 */
--	r = dm_wait_for_completion(md, task_state);
-+	if (map)
-+		r = dm_wait_for_completion(md, task_state);
- 	if (!r)
- 		set_bit(dmf_suspended_flag, &md->flags);
- 
+ 		if (!work->tcon->posix_extensions) {
+ 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
+-			rc = -EOPNOTSUPP;
++			path_put(&path);
++			return -EOPNOTSUPP;
+ 		} else {
+ 			info = (struct filesystem_posix_info *)(rsp->Buffer);
+ 			info->OptimalTransferSize = cpu_to_le32(stfs.f_bsize);
 
 
