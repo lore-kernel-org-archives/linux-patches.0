@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006F4308F1B;
-	Mon, 13 Oct 2025 14:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7221D3081D4;
+	Mon, 13 Oct 2025 14:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367489; cv=none; b=ePRGE+8W7rcrxuc8kzGZ6N4mGo8w1IvCz9Mzm2QK+67vcNx9WxaTbt8qCnvwLv8+3DVRKRQBY9WWkvzmDxJ0+3HLDDWiLadEnM83+h4J2andFXyk4+Bv47yhdjpMWxZHts4gMBhx8Su68krFQ+ZE+1kTyPOyqHKDoKwJQykn+r4=
+	t=1760367491; cv=none; b=H6OqtzYtjA2DHves6edYMk8iuYGTzSmpC0A7U4ptwP+uYIchtmUuMc1a20BzVEwg7myPwejCDIp6zc8Bqd9QJHyqCQPDuiEGQJ60eWPGppgLXcesNx7Zma/ujkpCQXNbnI3u3my0NGTROZocuN39dU0RrbO4duDuFRsxQKRTkcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367489; c=relaxed/simple;
-	bh=pFti+lEhgzue0vGnNzPgenNVZ1p0HSonIF9e17OCpAo=;
+	s=arc-20240116; t=1760367491; c=relaxed/simple;
+	bh=4j9BRhMW9uF4Xk5qLOopVfG7Sad98plYXTCUXLGmkxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxOJf1BGylRzQNZTasD3FJP2Fc6+IJvLCWi/3hjDgLV0roiJ4ZNkZi8+8nLOpgveBFueBjPW9LU981f9jJgFQY6QbK3b1/UgOw4rgxrPN8zFmRBMdj31J6tberAlTX+JKeF186q26HI5U1wf8OFBTconXzUgseWgbr/lti1KMXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to3adsO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rw2FhK7P1x1reFSWkjLiX4zo3r0W5KEraaUq1tbvbzkfuE6LQQHKNP9O1ZMIOMn6m+XGuivyAa3FzOeNVu6rFWW0gMLY8GJ32MAIwzoL80qk6365iCwI6EgoMmp3SnApAYAQlHkS7fJHL9JG/YCDcnPqVAXKXvP07VOsXHGC0nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qW/iLWhu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to3adsO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189CDC4CEE7;
-	Mon, 13 Oct 2025 14:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qW/iLWhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9AEC4CEE7;
+	Mon, 13 Oct 2025 14:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367488;
-	bh=pFti+lEhgzue0vGnNzPgenNVZ1p0HSonIF9e17OCpAo=;
+	s=korg; t=1760367491;
+	bh=4j9BRhMW9uF4Xk5qLOopVfG7Sad98plYXTCUXLGmkxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=to3adsO8LiIR1nqmtFPah0ryYd+KGZOK30jUiUMrh5ceVkSvXGSVVPoDXErio3Hrn
-	 Wx6zfcEo+9HRuedv+q247spEqYNE9un1c0DFbtwFhtrlDfgSRNWPd8l5h2YLNsQb5o
-	 1T7qoG5ObGCNgHyxXXXIZJEO0YsturcmAB9nZGqk=
+	b=qW/iLWhu0KcMkj3Diasrrif0dnqdXi85yHsc+q+M5o7utHLbnhpnUYdudFVvkH9e8
+	 WtMc8lH59Ks8l12vKahZ22g7jnksEzkvMCLYT3zWF83EtFkQvOIS5BqbN8R4vXHQJj
+	 Z1Em81J4IyNwhOIJR1AWmLhi0T7ZRbW7zRrxPVn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Andrew Price <anprice@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/196] selftests: arm64: Check fread return value in exec_target
-Date: Mon, 13 Oct 2025 16:43:15 +0200
-Message-ID: <20251013144315.348789242@linuxfoundation.org>
+Subject: [PATCH 6.6 005/196] gfs2: Fix GLF_INVALIDATE_IN_PROGRESS flag clearing in do_xmote
+Date: Mon, 13 Oct 2025 16:43:16 +0200
+Message-ID: <20251013144315.384303484@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit a679e5683d3eef22ca12514ff8784b2b914ebedc ]
+[ Upstream commit 061df28b82af6b22fb5fa529a8f2ef00474ee004 ]
 
-Fix -Wunused-result warning generated when compiled with gcc 13.3.0,
-by checking fread's return value and handling errors, preventing
-potential failures when reading from stdin.
+Commit 865cc3e9cc0b ("gfs2: fix a deadlock on withdraw-during-mount")
+added a statement to do_xmote() to clear the GLF_INVALIDATE_IN_PROGRESS
+flag a second time after it has already been cleared.  Fix that.
 
-Fixes compiler warning:
-warning: ignoring return value of 'fread' declared with attribute
-'warn_unused_result' [-Wunused-result]
-
-Fixes: 806a15b2545e ("kselftests/arm64: add PAuth test for whether exec() changes keys")
-
-Signed-off-by: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 865cc3e9cc0b ("gfs2: fix a deadlock on withdraw-during-mount")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Reviewed-by: Andrew Price <anprice@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/pauth/exec_target.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/gfs2/glock.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/pauth/exec_target.c b/tools/testing/selftests/arm64/pauth/exec_target.c
-index 4435600ca400d..e597861b26d6b 100644
---- a/tools/testing/selftests/arm64/pauth/exec_target.c
-+++ b/tools/testing/selftests/arm64/pauth/exec_target.c
-@@ -13,7 +13,12 @@ int main(void)
- 	unsigned long hwcaps;
- 	size_t val;
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 687670075d225..c4bc86c3535ba 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -811,8 +811,6 @@ __acquires(&gl->gl_lockref.lock)
+ 			clear_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
+ 			gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
+ 			return;
+-		} else {
+-			clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
+ 		}
+ 	}
  
--	fread(&val, sizeof(size_t), 1, stdin);
-+	size_t size = fread(&val, sizeof(size_t), 1, stdin);
-+
-+	if (size != 1) {
-+		fprintf(stderr, "Could not read input from stdin\n");
-+		return EXIT_FAILURE;
-+	}
- 
- 	/* don't try to execute illegal (unimplemented) instructions) caller
- 	 * should have checked this and keep worker simple
 -- 
 2.51.0
 
