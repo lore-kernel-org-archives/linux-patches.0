@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B10211491;
-	Mon, 13 Oct 2025 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4281EB9FA;
+	Mon, 13 Oct 2025 14:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367061; cv=none; b=ZTVExS4aa9ebzBlsFdUKUEwSMeRDQCCgdFeI4o4gd3Gx9ajHgdy1GEZFOU0dNjQUwxW5AwJ0aNG9dGfOUPX+9VyhvsOL6YfKx117XrIcfnRDDpm4q3zu7CxmULqtByMsjSwZgAJQR7g6MFrFCyesqgSK6oLKore9KC/b3tVLFSc=
+	t=1760367064; cv=none; b=pE6x29KL+92nlXJ0Uy6V0o0T+KdJrjU2JNQPRiJ0Vm159/dND8dLo5Tv2XS7s9r98rHfoAbg0wSTx7LafuFEBTla24qcRWoaEo6uZtP/4sr2esvhKPVvk4OXDsMnrT/qwJ1pw2wfwQQg+qhQ+heq5jW6+q03U+K8VtN03bU+o0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367061; c=relaxed/simple;
-	bh=EpBND5AvBcn8GQP09s/SiwPC8NC6LhAfPKkQ7i8oWnU=;
+	s=arc-20240116; t=1760367064; c=relaxed/simple;
+	bh=V+EA/HAYN4xAQmv1tLAZQoGTMRNG5Dw7RZ7cdv7LCAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8ue21nUH9eaIZoQx+NMPkphdhcGlL5/FHA43k/gFukcjueQ/939GZqLhB9YOQTEfVbwioUPN3tHAKAkod3LaVJPTnAqNnSPXVo93McFn7WxDnPv+U+p3Lm73ElU/bSv1HZADxBPBzAqqhJXNOqnRcB3f64cxsdAj4Ermzz3g2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bz/dH5mL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+op4GlTrgJzHpbOp6EISfNXqqMZm+GBWoj8omjWpWG4dXHroeLTHTddw71RKMiqnb664kEcWYnnt8yNMgOIBLd4OekLmIyv16ddlpzl9DusuqCZwbFWogYsfrYHLwxdm3S8rHFhkxbt8QRNlaJOtmjK0vtsN14U3tcbseXcSLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zezx/nrb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bz/dH5mL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7BCC4CEE7;
-	Mon, 13 Oct 2025 14:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zezx/nrb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D696AC4CEE7;
+	Mon, 13 Oct 2025 14:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367061;
-	bh=EpBND5AvBcn8GQP09s/SiwPC8NC6LhAfPKkQ7i8oWnU=;
+	s=korg; t=1760367064;
+	bh=V+EA/HAYN4xAQmv1tLAZQoGTMRNG5Dw7RZ7cdv7LCAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bz/dH5mLq/kT6iWVk1XPL8qcXsloK0gWRmIz4hXGgLL0SLvwD/04PSk1ObYl+5EVW
-	 EH4BkwhN0H+evcBLWp0bNhLMJ5DVnL5NYKSmpEDDFAaLNl1Z+4b61TGfBzMsF+7ADr
-	 46wsxEj3PL89UmxbTVzQf6SNXNtybijMRNK5EWaM=
+	b=Zezx/nrbo6xTPhoAliQwjBgbLOyLsLRPTkR1YzSML3d3g/O8ke7rv1gScPCwgbYv4
+	 MsvAvv0YyGb55tzaV3nemzUD2XSt9EELiIHONr1UUXgdQQJ7iGRFk4Xib8uW6U/3Ya
+	 2EAIsuDqoJwIk2C4ZO7Q1MY7Sw3RSrrfPOGIiaNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	linux-rdma@vger.kernel.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/196] i3c: master: svc: Use manual response for IBI events
-Date: Mon, 13 Oct 2025 16:44:11 +0200
-Message-ID: <20251013144317.397796296@linuxfoundation.org>
+Subject: [PATCH 6.1 052/196] smb: server: fix IRD/ORD negotiation with the client
+Date: Mon, 13 Oct 2025 16:43:45 +0200
+Message-ID: <20251013144316.467260856@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,94 +57,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit a7869b0a2540fd122eccec00ae7d4243166b0a60 ]
+[ Upstream commit fad988a2158d743da7971884b93482a73735b25e ]
 
-Driver wants to nack the IBI request when the target is not in the
-known address list. In below code, svc_i3c_master_nack_ibi() will
-cause undefined behavior when using AUTOIBI with auto response rule,
-because hw always auto ack the IBI request.
+Already do real negotiation in smb_direct_handle_connect_request()
+where we see the requested initiator_depth and responder_resources
+from the client.
 
-    switch (ibitype) {
-    case SVC_I3C_MSTATUS_IBITYPE_IBI:
-            dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
-            if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
-                    svc_i3c_master_nack_ibi(master);
-            ...
-            break;
+We should detect legacy iwarp clients using MPA v1
+with the custom IRD/ORD negotiation.
 
-AutoIBI has another issue that the controller doesn't quit AutoIBI state
-after IBIWON polling timeout when there is a SDA glitch(high->low->high).
-1. SDA high->low: raising an interrupt to execute IBI ISR
-2. SDA low->high
-3. Driver writes an AutoIBI request
-4. AutoIBI process does not start because SDA is not low
-5. IBIWON polling times out
-6. Controller reamins in AutoIBI state and doesn't accept EmitStop request
+We need to send the custom IRD/ORD in big endian,
+but we need to try to let clients with broken requests
+using little endian (older cifs.ko) to work.
 
-Emitting broadcast address with IBIRESP_MANUAL avoids both issues.
+Note the reason why this uses u8 for
+initiator_depth and responder_resources is
+that the rdma layer also uses it.
 
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250829012309.3562585-2-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Cc: linux-rdma@vger.kernel.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 30 ++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ fs/smb/server/transport_rdma.c | 99 +++++++++++++++++++++++++++++-----
+ 1 file changed, 85 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 9b287f92d078d..a18d5876678c1 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -422,9 +422,24 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 	 */
- 	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 84b5b2f5df998..af1c41f922bb3 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -152,6 +152,10 @@ struct smb_direct_transport {
+ 	struct work_struct	disconnect_work;
  
--	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
--	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
--	       SVC_I3C_MCTRL_IBIRESP_AUTO,
+ 	bool			negotiation_requested;
++
++	bool			legacy_iwarp;
++	u8			initiator_depth;
++	u8			responder_resources;
+ };
+ 
+ #define KSMBD_TRANS(t) ((struct ksmbd_transport *)&((t)->transport))
+@@ -345,6 +349,9 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
+ 	t->cm_id = cm_id;
+ 	cm_id->context = t;
+ 
++	t->initiator_depth = SMB_DIRECT_CM_INITIATOR_DEPTH;
++	t->responder_resources = 1;
++
+ 	t->status = SMB_DIRECT_CS_NEW;
+ 	init_waitqueue_head(&t->wait_status);
+ 
+@@ -1618,21 +1625,21 @@ static int smb_direct_send_negotiate_response(struct smb_direct_transport *t,
+ static int smb_direct_accept_client(struct smb_direct_transport *t)
+ {
+ 	struct rdma_conn_param conn_param;
+-	struct ib_port_immutable port_immutable;
+-	u32 ird_ord_hdr[2];
++	__be32 ird_ord_hdr[2];
+ 	int ret;
+ 
 +	/*
-+	 * Write REQUEST_START_ADDR request to emit broadcast address for arbitration,
-+	 * instend of using AUTO_IBI.
-+	 *
-+	 * Using AutoIBI request may cause controller to remain in AutoIBI state when
-+	 * there is a glitch on SDA line (high->low->high).
-+	 * 1. SDA high->low, raising an interrupt to execute IBI isr.
-+	 * 2. SDA low->high.
-+	 * 3. IBI isr writes an AutoIBI request.
-+	 * 4. The controller will not start AutoIBI process because SDA is not low.
-+	 * 5. IBIWON polling times out.
-+	 * 6. Controller reamins in AutoIBI state and doesn't accept EmitStop request.
++	 * smb_direct_handle_connect_request()
++	 * already negotiated t->initiator_depth
++	 * and t->responder_resources
 +	 */
-+	writel(SVC_I3C_MCTRL_REQUEST_START_ADDR |
-+	       SVC_I3C_MCTRL_TYPE_I3C |
-+	       SVC_I3C_MCTRL_IBIRESP_MANUAL |
-+	       SVC_I3C_MCTRL_DIR(SVC_I3C_MCTRL_DIR_WRITE) |
-+	       SVC_I3C_MCTRL_ADDR(I3C_BROADCAST_ADDR),
- 	       master->regs + SVC_I3C_MCTRL);
+ 	memset(&conn_param, 0, sizeof(conn_param));
+-	conn_param.initiator_depth = min_t(u8, t->cm_id->device->attrs.max_qp_rd_atom,
+-					   SMB_DIRECT_CM_INITIATOR_DEPTH);
+-	conn_param.responder_resources = 0;
+-
+-	t->cm_id->device->ops.get_port_immutable(t->cm_id->device,
+-						 t->cm_id->port_num,
+-						 &port_immutable);
+-	if (port_immutable.core_cap_flags & RDMA_CORE_PORT_IWARP) {
+-		ird_ord_hdr[0] = conn_param.responder_resources;
+-		ird_ord_hdr[1] = 1;
++	conn_param.initiator_depth = t->initiator_depth;
++	conn_param.responder_resources = t->responder_resources;
++
++	if (t->legacy_iwarp) {
++		ird_ord_hdr[0] = cpu_to_be32(conn_param.responder_resources);
++		ird_ord_hdr[1] = cpu_to_be32(conn_param.initiator_depth);
+ 		conn_param.private_data = ird_ord_hdr;
+ 		conn_param.private_data_len = sizeof(ird_ord_hdr);
+ 	} else {
+@@ -2018,10 +2025,13 @@ static bool rdma_frwr_is_supported(struct ib_device_attr *attrs)
+ 	return true;
+ }
  
- 	/* Wait for IBIWON, should take approximately 100us */
-@@ -444,10 +459,15 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 	switch (ibitype) {
- 	case SVC_I3C_MSTATUS_IBITYPE_IBI:
- 		dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
--		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
-+		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI)) {
- 			svc_i3c_master_nack_ibi(master);
--		else
-+		} else {
-+			if (dev->info.bcr & I3C_BCR_IBI_PAYLOAD)
-+				svc_i3c_master_ack_ibi(master, true);
-+			else
-+				svc_i3c_master_ack_ibi(master, false);
- 			svc_i3c_master_handle_ibi(master, dev);
+-static int smb_direct_handle_connect_request(struct rdma_cm_id *new_cm_id)
++static int smb_direct_handle_connect_request(struct rdma_cm_id *new_cm_id,
++					     struct rdma_cm_event *event)
+ {
+ 	struct smb_direct_transport *t;
+ 	struct task_struct *handler;
++	u8 peer_initiator_depth;
++	u8 peer_responder_resources;
+ 	int ret;
+ 
+ 	if (!rdma_frwr_is_supported(&new_cm_id->device->attrs)) {
+@@ -2035,6 +2045,67 @@ static int smb_direct_handle_connect_request(struct rdma_cm_id *new_cm_id)
+ 	if (!t)
+ 		return -ENOMEM;
+ 
++	peer_initiator_depth = event->param.conn.initiator_depth;
++	peer_responder_resources = event->param.conn.responder_resources;
++	if (rdma_protocol_iwarp(new_cm_id->device, new_cm_id->port_num) &&
++	    event->param.conn.private_data_len == 8) {
++		/*
++		 * Legacy clients with only iWarp MPA v1 support
++		 * need a private blob in order to negotiate
++		 * the IRD/ORD values.
++		 */
++		const __be32 *ird_ord_hdr = event->param.conn.private_data;
++		u32 ird32 = be32_to_cpu(ird_ord_hdr[0]);
++		u32 ord32 = be32_to_cpu(ird_ord_hdr[1]);
++
++		/*
++		 * cifs.ko sends the legacy IRD/ORD negotiation
++		 * event if iWarp MPA v2 was used.
++		 *
++		 * Here we check that the values match and only
++		 * mark the client as legacy if they don't match.
++		 */
++		if ((u32)event->param.conn.initiator_depth != ird32 ||
++		    (u32)event->param.conn.responder_resources != ord32) {
++			/*
++			 * There are broken clients (old cifs.ko)
++			 * using little endian and also
++			 * struct rdma_conn_param only uses u8
++			 * for initiator_depth and responder_resources,
++			 * so we truncate the value to U8_MAX.
++			 *
++			 * smb_direct_accept_client() will then
++			 * do the real negotiation in order to
++			 * select the minimum between client and
++			 * server.
++			 */
++			ird32 = min_t(u32, ird32, U8_MAX);
++			ord32 = min_t(u32, ord32, U8_MAX);
++
++			t->legacy_iwarp = true;
++			peer_initiator_depth = (u8)ird32;
++			peer_responder_resources = (u8)ord32;
 +		}
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_HOT_JOIN:
- 		if (is_events_enabled(master, SVC_I3C_EVENT_HOTJOIN))
++	}
++
++	/*
++	 * First set what the we as server are able to support
++	 */
++	t->initiator_depth = min_t(u8, t->initiator_depth,
++				   new_cm_id->device->attrs.max_qp_rd_atom);
++
++	/*
++	 * negotiate the value by using the minimum
++	 * between client and server if the client provided
++	 * non 0 values.
++	 */
++	if (peer_initiator_depth != 0)
++		t->initiator_depth = min_t(u8, t->initiator_depth,
++					   peer_initiator_depth);
++	if (peer_responder_resources != 0)
++		t->responder_resources = min_t(u8, t->responder_resources,
++					       peer_responder_resources);
++
+ 	ret = smb_direct_connect(t);
+ 	if (ret)
+ 		goto out_err;
+@@ -2059,7 +2130,7 @@ static int smb_direct_listen_handler(struct rdma_cm_id *cm_id,
+ {
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_CONNECT_REQUEST: {
+-		int ret = smb_direct_handle_connect_request(cm_id);
++		int ret = smb_direct_handle_connect_request(cm_id, event);
+ 
+ 		if (ret) {
+ 			pr_err("Can't create transport: %d\n", ret);
 -- 
 2.51.0
 
