@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB8930ACF8;
-	Mon, 13 Oct 2025 15:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BADA26F2B6;
+	Mon, 13 Oct 2025 15:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367710; cv=none; b=ddJsZcWfQMM2gtppa+04nT8CQS+kUgJhRkVH5mHJ6AtP/jpNJPqmA+GVxE2Pt64V2VDH/9RNm02yY+6O6S7urjG+gVpCjGsKtk8sZviNnn1TcifgxBBQ0qFum3Qd7j+fqN9ROSYJMreWqq1pH67x10aLMl9dYGhJrSTM4WtSAyg=
+	t=1760367713; cv=none; b=MIV6zrgRHzxfEE4P4P/Ys8cWpXDvKU4BechOcFlJmhlATgZuZN1Pe/9+K6DvS3822za6RE19V6uetKxiWtzlasTLcBkmM2/kOuID9W3/PDphlncIRqHyItHYSrKw3yQjiFAohUZjRrPMlTOFaDAcJ0YWDnKLxprXIEiojf2nsMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367710; c=relaxed/simple;
-	bh=SkEMIjjaBoH2/etsIEx0CHFH3rTCDRcOxvVmtpQNwDo=;
+	s=arc-20240116; t=1760367713; c=relaxed/simple;
+	bh=H8rXO36gjAXKImzST7gMS5/1QR9m8aeaDY/79KdQNVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adjF0MfFrfEiEPR3MXPlc+aDWx6Z6ur1CAvX0yn7OV7l3QCVdQO07/rStw5ae4rW649PGyHAsEauY3kmmH9jnApY8BcbsI99zh0fUvO5Zb8IgXuxo7cnDQu92hLKyo0gflLvbieTneUYCazyFel9ZIOGHzJ1wuIm9rm2lZmvO5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErlTGxRo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KtWHLj+IS2cieptRNa6HCxinJTbM1iH8dsiKly+k99Rj55yDySSX6URLRG7HgPYi0jRiTkbTAGb3wS3WEoGrrqDmin+hfB6qYKnPUpz5ULqPn+3w5UP5brAKk+LnabCXtwSVWX/1Ya6IE5VKc9wLwDh8f2HCCUwLpBiFZ5FEz8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0he5A2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErlTGxRo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6BEC4CEE7;
-	Mon, 13 Oct 2025 15:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0he5A2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26FBC4CEE7;
+	Mon, 13 Oct 2025 15:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367710;
-	bh=SkEMIjjaBoH2/etsIEx0CHFH3rTCDRcOxvVmtpQNwDo=;
+	s=korg; t=1760367713;
+	bh=H8rXO36gjAXKImzST7gMS5/1QR9m8aeaDY/79KdQNVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErlTGxRoNyrp6DuxKEQu5xG5HXXD09UClEUFFq9hpPPjZXIgEf/QiHx9YcYy7ubeN
-	 kardLurm0Xl/RKH0aaNN0PYDkDFIL4w/Nn8QK3k26Y5aOn8qRy0gRMCHlo9cjumbgu
-	 vKUMquj8jYCCoMNOmt9l2CsnRN+RCI080Medwm5g=
+	b=m0he5A2KhohrQkzsPSgobTwTQDz9jYskJYVY00Wogmb7iCJ2KTOFYzwYdgOMG5Nqw
+	 PV2Av9k/AgsgyNM/NW1bhBbkgV/h8fakuX0E/RIHBn8cDV/H+zk/oVITks42AabiTe
+	 IZ2AbiouY+YFDHGiqzk501r+NjcR/mQeaJ7sEmr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/196] crypto: keembay - Add missing check after sg_nents_for_len()
-Date: Mon, 13 Oct 2025 16:44:23 +0200
-Message-ID: <20251013144317.796284023@linuxfoundation.org>
+Subject: [PATCH 6.6 073/196] hwrng: nomadik - add ARM_AMBA dependency
+Date: Mon, 13 Oct 2025 16:44:24 +0200
+Message-ID: <20251013144317.831518127@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4e53be21dd0315c00eaf40cc8f8c0facd4d9a6b2 ]
+[ Upstream commit efaa2d815a0e4d1c06750e587100f6f7f4ee5497 ]
 
-sg_nents_for_len() returns an int which is negative in case of error.
+Compile-testing this driver is only possible when the AMBA bus driver is
+available in the kernel:
 
-Fixes: 472b04444cd3 ("crypto: keembay - Add Keem Bay OCS HCU driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+x86_64-linux-ld: drivers/char/hw_random/nomadik-rng.o: in function `nmk_rng_remove':
+nomadik-rng.c:(.text+0x67): undefined reference to `amba_release_regions'
+x86_64-linux-ld: drivers/char/hw_random/nomadik-rng.o: in function `nmk_rng_probe':
+nomadik-rng.c:(.text+0xee): undefined reference to `amba_request_regions'
+x86_64-linux-ld: nomadik-rng.c:(.text+0x18d): undefined reference to `amba_release_regions'
+
+The was previously implied by the 'depends on ARCH_NOMADIK', but needs to be
+specified for the COMPILE_TEST case.
+
+Fixes: d5e93b3374e4 ("hwrng: Kconfig - Add helper dependency on COMPILE_TEST")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-index b732223035399..3b5d5b64e1414 100644
---- a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-+++ b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-@@ -232,7 +232,7 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
- 	struct device *dev = rctx->hcu_dev->dev;
- 	unsigned int remainder = 0;
- 	unsigned int total;
--	size_t nents;
-+	int nents;
- 	size_t count;
- 	int rc;
- 	int i;
-@@ -253,6 +253,9 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
- 	/* Determine the number of scatter gather list entries to process. */
- 	nents = sg_nents_for_len(req->src, rctx->sg_data_total - remainder);
- 
-+	if (nents < 0)
-+		return nents;
-+
- 	/* If there are entries to process, map them. */
- 	if (nents) {
- 		rctx->sg_dma_nents = dma_map_sg(dev, req->src, nents,
+diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
+index 8de74dcfa18cf..ece2d794174d4 100644
+--- a/drivers/char/hw_random/Kconfig
++++ b/drivers/char/hw_random/Kconfig
+@@ -286,6 +286,7 @@ config HW_RANDOM_INGENIC_TRNG
+ config HW_RANDOM_NOMADIK
+ 	tristate "ST-Ericsson Nomadik Random Number Generator support"
+ 	depends on ARCH_NOMADIK || COMPILE_TEST
++	depends on ARM_AMBA
+ 	default HW_RANDOM
+ 	help
+ 	  This driver provides kernel-side support for the Random Number
 -- 
 2.51.0
 
