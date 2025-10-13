@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A930BF7D;
-	Mon, 13 Oct 2025 15:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB0030FF30;
+	Mon, 13 Oct 2025 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367995; cv=none; b=HG0wH+L1sZG0kN6hO6c8Der+8jgsfNdeBblae69Fy+Kizt7gxzLqYHfuWqddPck7nf0W3cZy4l4PXz/ARfIfGJ/W2/WX7EoUSCAV6lm46RPFCR5bO2dn8JFGsIFpsZsCFxyc8id0uJk232fsilyDPW+B1kw2n09P2v3Nk6chtos=
+	t=1760367998; cv=none; b=akauGAUUmBUlcjX7NIqXtc5PeMOjHMazdvbEC81NDBusk1Ah1+cyq0/tNeWcuFDJFBvj17HlxzbzuWVkCxVwTkbvOGL0Onqdn4lbxxYwdq369kqgeScntqXIEoYH+LN5+p+WWNotnnuHCpcXMjBn08wZbDT/B6N6kfXWvAhkcv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367995; c=relaxed/simple;
-	bh=RuP//OzXCBgB/hVa5fVydrygztCQA9vQQjTG5D0FI2Q=;
+	s=arc-20240116; t=1760367998; c=relaxed/simple;
+	bh=HXMzytvILtbJWDkfmBPcC5ppuj+VZ0xUWZHgQjse+FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nMIj0RS50znHxJuqmcz08F/D92pYW5du3h3zU+ovRBxirwXZeUBTX6dAhfBxX8Nf1HeokXRBtWEtKFqcsGhkzivrdTPgvDiPL40em1ecuL8+CG3PRYvWeeYQi6Pusl1huuybXSndloPutMVRC/qrtEPOeW5ftrWz07PDCGzM824=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG8wkjzt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PAf0sD3Job+gME2XsgLDxE5T01Bz4GDO8491a0yeeOVmtseaQ+V1H0nkKLF0x+n5aYM/T1sI0FX9gTq5s5dsxY34Jp6Uy7LmoIre5lV3RMHWtlPm7so10+sxxNAWBUT3WpblE+zbNEOH+I5oIkEuWJlLmZFQmRPCh7K3nDrzchc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfXCWB5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG8wkjzt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB8EC4CEE7;
-	Mon, 13 Oct 2025 15:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfXCWB5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270C1C4CEE7;
+	Mon, 13 Oct 2025 15:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367995;
-	bh=RuP//OzXCBgB/hVa5fVydrygztCQA9vQQjTG5D0FI2Q=;
+	s=korg; t=1760367998;
+	bh=HXMzytvILtbJWDkfmBPcC5ppuj+VZ0xUWZHgQjse+FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vG8wkjztY8W9YbOAmq6LymHwz2Q1m3rAG2UVK1l549c7uxFBG47wY8fzU3ys6TdQd
-	 evUBRRnylxovQqn5UYUdrk4N5EUGGQbu1aF6ptidOJjLvyunL6S5rzvpoqnJQLeZef
-	 xda3vWr0P1MStNnWmiI6eru3NiTADGdOXiOxwjMg=
+	b=QfXCWB5q46VTIK6FkDlHLGwoPqt/Eec0wdjX0y0G1+L9/bd3pa573RtxRMcSJGTV9
+	 OTSVFs/kgl1kUBIwuMvXnQqMPN5ocTliJ40GdXRz+FpIOPkcJL1y2P17FkkMTytYEl
+	 UshZvEGfWlS8a+d4JVe8sbecHP2xWLOGKEjT5LVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 172/196] ASoC: SOF: ipc3-topology: Fix multi-core and static pipelines tear down
-Date: Mon, 13 Oct 2025 16:46:03 +0200
-Message-ID: <20251013144321.531522015@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/262] filelock: add FL_RECLAIM to show_fl_flags() macro
+Date: Mon, 13 Oct 2025 16:42:23 +0200
+Message-ID: <20251013144326.175103458@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
-References: <20251013144315.184275491@linuxfoundation.org>
+In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
+References: <20251013144326.116493600@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 59abe7bc7e7c70e9066b3e46874d1b7e6a13de14 upstream.
+[ Upstream commit c593b9d6c446510684da400833f9d632651942f0 ]
 
-In the case of static pipelines, freeing the widgets in the pipelines
-that were not suspended after freeing the scheduler widgets results in
-errors because the secondary cores are powered off when the scheduler
-widgets are freed. Fix this by tearing down the leftover pipelines before
-powering off the secondary cores.
+Show the FL_RECLAIM flag symbolically in tracepoints.
 
-Cc: stable@vger.kernel.org
-Fixes: d7332c4a4f1a ("ASoC: SOF: ipc3-topology: Fix pipeline tear down logic")
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20251002073125.32471-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bb0a55bb7148 ("nfs: don't allow reexport reclaims")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/20250903-filelock-v1-1-f2926902962d@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-topology.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/trace/events/filelock.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -2394,11 +2394,6 @@ static int sof_ipc3_tear_down_all_pipeli
- 	if (ret < 0)
- 		return ret;
+diff --git a/include/trace/events/filelock.h b/include/trace/events/filelock.h
+index b8d1e00a7982c..2dfeb158e848a 100644
+--- a/include/trace/events/filelock.h
++++ b/include/trace/events/filelock.h
+@@ -27,7 +27,8 @@
+ 		{ FL_SLEEP,		"FL_SLEEP" },			\
+ 		{ FL_DOWNGRADE_PENDING,	"FL_DOWNGRADE_PENDING" },	\
+ 		{ FL_UNLOCK_PENDING,	"FL_UNLOCK_PENDING" },		\
+-		{ FL_OFDLCK,		"FL_OFDLCK" })
++		{ FL_OFDLCK,		"FL_OFDLCK" },			\
++		{ FL_RECLAIM,		"FL_RECLAIM"})
  
--	/* free all the scheduler widgets now */
--	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
--	if (ret < 0)
--		return ret;
--
- 	/*
- 	 * Tear down all pipelines associated with PCMs that did not get suspended
- 	 * and unset the prepare flag so that they can be set up again during resume.
-@@ -2414,6 +2409,11 @@ static int sof_ipc3_tear_down_all_pipeli
- 		}
- 	}
- 
-+	/* free all the scheduler widgets now. This will also power down the secondary cores */
-+	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
-+	if (ret < 0)
-+		return ret;
-+
- 	list_for_each_entry(sroute, &sdev->route_list, list)
- 		sroute->setup = false;
- 
+ #define show_fl_type(val)				\
+ 	__print_symbolic(val,				\
+-- 
+2.51.0
+
 
 
