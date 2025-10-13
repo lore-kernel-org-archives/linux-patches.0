@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEB630F949;
-	Mon, 13 Oct 2025 15:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC530F956;
+	Mon, 13 Oct 2025 15:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369694; cv=none; b=diyaIgxpsMxHRSdMSVZo448vUh7n1S7eN27A002s/8ZcxXQ0QJgqQT2knhC9TaJ4UNJNcP7qKRr732c6ExLv0IEldBNLA5tnBrQbeIWCebqCeqf4tU1U3E6OdukEbG8fqmLCXFWJX8+gb8ah+hQYsJ+P2PyTthACG2GhWVU1FEc=
+	t=1760369697; cv=none; b=XZRYXs6efVUhmD25q7LO8rIXPDcPMr4PyU2cYo2IUklOkZoiAnG1ob3+P4tfhFFzwKGcBf4150adMCRK/nMLYb5l7IlxMlJf9XoHtqIMq6Q6wcg8Tq7k2cxhxdTUeL4V7uGg6bx7hFZyR/50rfzVKE902KrbNEesuDQ4gYP9Lik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369694; c=relaxed/simple;
-	bh=t4Z7Hqk1nBwSldeAhFKNbfNyNffeFMfB+DSwEd25KXM=;
+	s=arc-20240116; t=1760369697; c=relaxed/simple;
+	bh=Pq20Y1oxr1hARxPEYUTUxsPbhns0xqnnCZnN4/AIt6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiiqSkpC4d3+GNS17nL8kIwBuHbZk2J6OAFGDuKOIgs0jOJ/x3Dt+pqZi6kU3I6JQS2mDMyGIZYreJb7YjN19/ZuY2stP6dIX0Zm/Z1/HHnMNvYdI6D3r50cnexyDXvcv7Na/HPQTHM6ACe0FesFi7KfxTTEyZo+csWKPdfRYjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmcp9EHH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szqQEWySryFpeqenBqywwT9d3TPy6x3WIR8qLOS9W9JxxeMPk0jcQXFGi0oGWqsze7o8X54UY4pntiiT65e2KdzRd6xJQKOOpJ6AyrD0lrBVVnFWTYtqmwZ3jTq2KPIZHMdoTaxS22zDlUTm7s3oKf3FFKIsQvKq9UBRyAq1Vu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYiD7XNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmcp9EHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F2AC4CEE7;
-	Mon, 13 Oct 2025 15:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYiD7XNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FC2C4CEE7;
+	Mon, 13 Oct 2025 15:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369694;
-	bh=t4Z7Hqk1nBwSldeAhFKNbfNyNffeFMfB+DSwEd25KXM=;
+	s=korg; t=1760369697;
+	bh=Pq20Y1oxr1hARxPEYUTUxsPbhns0xqnnCZnN4/AIt6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmcp9EHHss3XXb3TikC6QuVW4qcbo1yAjAUqo0eGFjsjz8WafTlEIbP4kkhPe4Vnl
-	 ifdkJ/ulHNDC0ZbCWcAglm081aXhbJV/XkaoMw0ja2WFME0e6bwy9p0vrRP5PnSSq9
-	 J3t/02U+xi4yEUz9opGLW4ng/npHQRMPg8UqfZi0=
+	b=gYiD7XNG44NJ+QotRo/wZqURnTP4P3EPr7dsdTqtTdkb6D7xgUjo1Fo7X9aEdONxW
+	 Fu6KjG9rcN9bbHcKqlOGkvODoykVtlFmOM58pIypwrm/IBmFbqcY8NUjBJ38fWTF8q
+	 jzo6YrNDwEs7exa6kYrg6SxfkWSV0/5bZfacpLUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 335/563] drm/msm: Fix bootup splat with separate_gpu_drm modparam
-Date: Mon, 13 Oct 2025 16:43:16 +0200
-Message-ID: <20251013144423.398176652@linuxfoundation.org>
+Subject: [PATCH 6.17 336/563] drm/msm/dpu: fix incorrect type for ret
+Date: Mon, 13 Oct 2025 16:43:17 +0200
+Message-ID: <20251013144423.442505597@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,104 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit f028bcafb6dfb4c2bb656cbff9e6a66222d3d3d7 ]
+[ Upstream commit 88ec0e01a880e3326794e149efae39e3aa4dbbec ]
 
-The drm_gem_for_each_gpuvm_bo() call from lookup_vma() accesses
-drm_gem_obj.gpuva.list, which is not initialized when the drm driver
-does not support DRIVER_GEM_GPUVA feature. Enable it for msm_kms
-drm driver to fix the splat seen when msm.separate_gpu_drm=1 modparam
-is set:
+Change 'ret' from unsigned long to int, as storing negative error codes
+in an unsigned long makes it never equal to -ETIMEDOUT, causing logical
+errors.
 
-[    9.506020] Unable to handle kernel paging request at virtual address fffffffffffffff0
-[    9.523160] Mem abort info:
-[    9.523161]   ESR = 0x0000000096000006
-[    9.523163]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    9.523165]   SET = 0, FnV = 0
-[    9.523166]   EA = 0, S1PTW = 0
-[    9.523167]   FSC = 0x06: level 2 translation fault
-[    9.523169] Data abort info:
-[    9.523170]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-[    9.523171]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    9.523172]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    9.523174] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000ad370f000
-[    9.523176] [fffffffffffffff0] pgd=0000000000000000, p4d=0000000ad4787403, pud=0000000ad4788403, pmd=0000000000000000
-[    9.523184] Internal error: Oops: 0000000096000006 [#1]  SMP
-[    9.592968] CPU: 9 UID: 0 PID: 448 Comm: (udev-worker) Not tainted 6.17.0-rc4-assorted-fix-00005-g0e9bb53a2282-dirty #3 PREEMPT
-[    9.592970] Hardware name: Qualcomm CRD, BIOS 6.0.240718.BOOT.MXF.2.4-00515-HAMOA-1 07/18/2024
-[    9.592971] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[    9.592973] pc : lookup_vma+0x28/0xe0 [msm]
-[    9.592996] lr : get_vma_locked+0x2c/0x128 [msm]
-[    9.763632] sp : ffff800082dab460
-[    9.763666] Call trace:
-[    9.763668]  lookup_vma+0x28/0xe0 [msm] (P)
-[    9.763688]  get_vma_locked+0x2c/0x128 [msm]
-[    9.763706]  msm_gem_get_and_pin_iova_range+0x68/0x11c [msm]
-[    9.763723]  msm_gem_get_and_pin_iova+0x18/0x24 [msm]
-[    9.763740]  msm_fbdev_driver_fbdev_probe+0xd0/0x258 [msm]
-[    9.763760]  __drm_fb_helper_initial_config_and_unlock+0x288/0x528 [drm_kms_helper]
-[    9.763771]  drm_fb_helper_initial_config+0x44/0x54 [drm_kms_helper]
-[    9.763779]  drm_fbdev_client_hotplug+0x84/0xd4 [drm_client_lib]
-[    9.763782]  drm_client_register+0x58/0x9c [drm]
-[    9.763806]  drm_fbdev_client_setup+0xe8/0xcf0 [drm_client_lib]
-[    9.763809]  drm_client_setup+0xb4/0xd8 [drm_client_lib]
-[    9.763811]  msm_drm_kms_post_init+0x2c/0x3c [msm]
-[    9.763830]  msm_drm_init+0x1a8/0x22c [msm]
-[    9.763848]  msm_drm_bind+0x30/0x3c [msm]
-[    9.919273]  try_to_bring_up_aggregate_device+0x168/0x1d4
-[    9.919283]  __component_add+0xa4/0x170
-[    9.919286]  component_add+0x14/0x20
-[    9.919288]  msm_dp_display_probe_tail+0x4c/0xac [msm]
-[    9.919315]  msm_dp_auxbus_done_probe+0x14/0x20 [msm]
-[    9.919335]  dp_aux_ep_probe+0x4c/0xf0 [drm_dp_aux_bus]
-[    9.919341]  really_probe+0xbc/0x298
-[    9.919345]  __driver_probe_device+0x78/0x12c
-[    9.919348]  driver_probe_device+0x40/0x160
-[    9.919350]  __driver_attach+0x94/0x19c
-[    9.919353]  bus_for_each_dev+0x74/0xd4
-[    9.919355]  driver_attach+0x24/0x30
-[    9.919358]  bus_add_driver+0xe4/0x208
-[    9.919360]  driver_register+0x60/0x128
-[    9.919363]  __dp_aux_dp_driver_register+0x24/0x30 [drm_dp_aux_bus]
-[    9.919365]  atana33xc20_init+0x20/0x1000 [panel_samsung_atna33xc20]
-[    9.919370]  do_one_initcall+0x6c/0x1b0
-[    9.919374]  do_init_module+0x58/0x234
-[    9.919377]  load_module+0x19cc/0x1bd4
-[    9.919380]  init_module_from_file+0x84/0xc4
-[    9.919382]  __arm64_sys_finit_module+0x1b8/0x2cc
-[    9.919384]  invoke_syscall+0x48/0x110
-[    9.919389]  el0_svc_common.constprop.0+0xc8/0xe8
-[    9.919393]  do_el0_svc+0x20/0x2c
-[    9.919396]  el0_svc+0x34/0xf0
-[    9.919401]  el0t_64_sync_handler+0xa0/0xe4
-[    9.919403]  el0t_64_sync+0x198/0x19c
-[    9.919407] Code: eb0000bf 54000480 d100a003 aa0303e2 (f8418c44)
-[    9.919410] ---[ end trace 0000000000000000 ]---
-
-Fixes: 217ed15bd399 ("drm/msm: enable separate binding of GPU and display devices")
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/672257/
-Link: https://lore.kernel.org/r/20250902-assorted-sept-1-v1-1-f3ec9baed513@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/671100/
+Link: https://lore.kernel.org/r/20250826092047.224341-1-rongqianfeng@vivo.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 9dcc7a596a11d..7e977fec41007 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -826,6 +826,7 @@ static const struct file_operations fops = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index 56a5b596554db..46f348972a975 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -446,7 +446,7 @@ static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
+ static int dpu_encoder_phys_wb_wait_for_commit_done(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	unsigned long ret;
++	int ret;
+ 	struct dpu_encoder_wait_info wait_info;
+ 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
  
- #define DRIVER_FEATURES_KMS ( \
- 		DRIVER_GEM | \
-+		DRIVER_GEM_GPUVA | \
- 		DRIVER_ATOMIC | \
- 		DRIVER_MODESET | \
- 		0 )
 -- 
 2.51.0
 
