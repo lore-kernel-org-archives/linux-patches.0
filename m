@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF5D30B51F;
-	Mon, 13 Oct 2025 15:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47F230B53A;
+	Mon, 13 Oct 2025 15:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367748; cv=none; b=ix62mTF419fz1KpQIRk+ReAEs/4eUk2e1fjUMohI0wMcU75hDp74PGQ+yecqYR3Pdkp+7grSmy3zauhQ6vUH5U2kYM042TucrQX2MtwUbnzvcf+OWJGOKgoylKSA9LJLS0oMgnbUAG8VvWXq2Ea9B7VuQl1IPp6Chw5NaxIhLkM=
+	t=1760367751; cv=none; b=kLzkli05MmFqg/8ZtJB0SkMATB+VZpcvsBSyFso1czV65mKRgwJn6RqA0hvaaf9sMt8fJua4O9mwzd6td15ae9FlOzOa83lrOpzpZCHaao55jIbYXe+VpB3RP9W6uRRnwKaz7PKzdiuC85lO6i20fBLAlhvvmKywkkDJ+xnCSpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367748; c=relaxed/simple;
-	bh=GFxvUIq4zSXJIHgnJEh1fU6qz2MLI5UgK00NtgZnZB4=;
+	s=arc-20240116; t=1760367751; c=relaxed/simple;
+	bh=++ROtoxPusOHugSu8dnM5Yh7akBDj6qD6wlmSHWJoWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJ/kp+mRxX5QAsbHozffyha7F9D5J4eWUyrY+5VPZSnpbx5tIPnQR36i4OIu/3EaaUphTHffj6UL/lZ9NjSe1CHcCtTS9nt49dFy8m6HP3AXYPpwwSdshbujG3ABsiLZd1OUzzQ4ahvjQhkxNwBfMJ6CEgve8hENQzJCkiabklw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAdoSKf6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn6k73HtiFGRW9UfMNrrqp0myp1BqRu7w6l5KqwBQ9ly9kISpboRB3a+cFsvgT7ElAdkxYX748/LwFc05vXrAu9h8LVKLYeE1r2VrAhe5F8jpodPamMYNDzHrrNMDgd+A935jPozZftIjU5vPgKqO4lcfWkxOdNDWoe5IgGu3AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqwxWIPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAdoSKf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F937C4CEE7;
-	Mon, 13 Oct 2025 15:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqwxWIPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21324C4CEE7;
+	Mon, 13 Oct 2025 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367747;
-	bh=GFxvUIq4zSXJIHgnJEh1fU6qz2MLI5UgK00NtgZnZB4=;
+	s=korg; t=1760367750;
+	bh=++ROtoxPusOHugSu8dnM5Yh7akBDj6qD6wlmSHWJoWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAdoSKf6auLZQeBcDmI9MKkz/1Pz+q5Ps32TXeSuTXTWQf+h88WL0TepPp0tfUtqP
-	 ie+oDjUCngWhiyLV3pTZLh/ZM6SJeI2SU7fbQIGyzdd/XaEiKv/UvCCFpxlYmLBxrV
-	 nnnBnpH8/es/I2n5VE1Tu8o0j9rHoqwLanFX/0dU=
+	b=QqwxWIPj36GiylY2wLQuS7OKM8dkXMWiyd/EJ7tvCA+0QJziB2gI3GSreedtmrZ6y
+	 nnXQBuDpvQPVJnSCYwLmozjQ1/HA2m81ZCCoeBAQaZJTQTt/qxKg9pFpVPKsUmCTm8
+	 6O32rx20WGuDYpgAk3xdY2jSkl27hR6T5WE6ol7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/196] scsi: qla2xxx: Fix incorrect sign of error code in START_SP_W_RETRIES()
-Date: Mon, 13 Oct 2025 16:45:11 +0200
-Message-ID: <20251013144319.650504212@linuxfoundation.org>
+Subject: [PATCH 6.6 103/196] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
+Date: Mon, 13 Oct 2025 16:44:54 +0200
+Message-ID: <20251013144319.041226883@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,43 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1f037e3acda79639a78f096355f2c308a3d45492 ]
+[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
 
-Change the error code EAGAIN to -EAGAIN in START_SP_W_RETRIES() to align
-with qla2x00_start_sp() returning negative error codes or QLA_SUCCESS,
-preventing logical errors.  Additionally, the '_rval' variable should
-store negative error codes to conform to Linux kernel error code
-conventions.
+When an invalid value is passed via quirk option, currently
+bytcr_rt5640 driver just ignores and leaves as is, which may lead to
+unepxected results like OOB access.
 
-Fixes: 9803fb5d2759 ("scsi: qla2xxx: Fix task management cmd failure")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Message-ID: <20250905075446.381139-3-rongqianfeng@vivo.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This patch adds the sanity check and corrects the input mapping to the
+certain default value if an invalid value is passed.
+
+Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Message-ID: <20250902171826.27329-4-tiwai@suse.de>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 5fa2727c1bea7..e881d704b45d1 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2059,11 +2059,11 @@ static void qla_marker_sp_done(srb_t *sp, int res)
- 	int cnt = 5; \
- 	do { \
- 		if (_chip_gen != sp->vha->hw->chip_reset || _login_gen != sp->fcport->login_gen) {\
--			_rval = EINVAL; \
-+			_rval = -EINVAL; \
- 			break; \
- 		} \
- 		_rval = qla2x00_start_sp(_sp); \
--		if (_rval == EAGAIN) \
-+		if (_rval == -EAGAIN) \
- 			msleep(1); \
- 		else \
- 			break; \
+diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
+index 805afaf47b290..2abe47303ecdb 100644
+--- a/sound/soc/intel/boards/bytcr_rt5651.c
++++ b/sound/soc/intel/boards/bytcr_rt5651.c
+@@ -58,7 +58,8 @@ enum {
+ 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
+ };
+ 
+-#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
++#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
++#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
+ #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
+ #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
+ #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
+@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
+ 
+ static void log_quirks(struct device *dev)
+ {
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
++	int map;
++
++	map = BYT_RT5651_MAP(byt_rt5651_quirk);
++	switch (map) {
++	case BYT_RT5651_DMIC_MAP:
+ 		dev_info(dev, "quirk DMIC_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
++		break;
++	case BYT_RT5651_IN1_MAP:
+ 		dev_info(dev, "quirk IN1_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
++		break;
++	case BYT_RT5651_IN2_MAP:
+ 		dev_info(dev, "quirk IN2_MAP enabled");
+-	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
++		break;
++	case BYT_RT5651_IN1_IN2_MAP:
+ 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
++		break;
++	default:
++		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
++		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
++		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
++		break;
++	}
++
+ 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
+ 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
+ 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
 -- 
 2.51.0
 
