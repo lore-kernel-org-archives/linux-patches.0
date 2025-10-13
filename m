@@ -1,99 +1,101 @@
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5332FD1C6
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 09:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535BC2FD1BC
+	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 09:20:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760347176; cv=none; b=Y50bGKFDdBoQd08vNaUlOYrEEiBfaK/OEiNk60CvUYIitjacio200MYQlF7OKyONHuw8JxOPHGI1XbMyBuNHICZHusLHP1dKk0DAXhDl3qwtnWS9+arpS8h7iNU5/FxEffoeP7ugU/3IWkP2RrA3lQMAxOCviYspB0ab07ESfUU=
+	t=1760347220; cv=none; b=NnZAJLuKgPEyqVuIWH34cRqrdt+3ezKdLK+uVoTcdV2N9E46bcuZw5WxSHTazFRjDvD8eXTjmHKrIra/KA04E0vAH1Thv82iXhvsOUpkWJ0SOS/BQbrh0K35EAzYsJho95URmPq6ueAOwkAWfQ5s+8kb6tb0RWGdUays32gALr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760347176; c=relaxed/simple;
-	bh=7e11H1Sl1fNF6/Pen2WxGe/Xr1qM6aJthuzJAA0/Mog=;
+	s=arc-20240116; t=1760347220; c=relaxed/simple;
+	bh=QauuifBIivV0CnP0lZumGXahaU8WwHf1ZmuHKkcj6i0=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=JRfhQPdqXGpwrWJkYAUaVn91Hg5BPwLX0sDso85EgL99zB3oHZvED2T//G3Nchty4W//O8Yt92CMXwhpbTJopcdqS2VwJ2+V+tlkEgZaytnzSJbRss3xsbKdv7Sg3WqUTQDoiG4ft9fg6zWeokwP99Pi4JTeob8dciqt5UTGUWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Jc8xiefv; arc=none smtp.client-ip=209.85.128.74
+	 To:Cc:Content-Type; b=Djr9ompPcVlXKPm1qk3Y8m4PZy43I/SdfUcVkcyuhzBLfWTeviCGBIuFX7UY4SPQLIBkn+g2JUc4eiPBNn+AkBilYiiLp/3OGH8/X10k2U0h823b8T1+bN3ffJB9UK76l3e94RQWSDCzsF9bQskP5FgGoZAb7VxdH9+0v+CYqgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HxtfaWpw; arc=none smtp.client-ip=209.85.128.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Jc8xiefv"
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-46e473e577eso26945595e9.0
-        for <patches@lists.linux.dev>; Mon, 13 Oct 2025 02:19:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HxtfaWpw"
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-46e2c11b94cso27902205e9.3
+        for <patches@lists.linux.dev>; Mon, 13 Oct 2025 02:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1760347173; x=1760951973; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1760347217; x=1760952017; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8mp6Sl5lpIMsBMcZe0Dwu/oRU1yIEVK7dE0nvjB0QA=;
-        b=Jc8xiefvaNUiOfrrx5AzyWnS7iTn6Zqwx4WGypK/4V6q2yQTuFq86u74V/CriCGWXl
-         MusYhDq0L1RWe6ZdAP4XZw6LqCF0zIqU1HZN6/fTDYvL1ymgn3C903J6S5xUxix8WdcO
-         JC1JYkBRID86WAQdN1GFFRbGmM+hh4ah7bVMGw2x9+BjK3UAIstEnp2O1v58xwKey8W2
-         1w31GiarP0Svq4FzeWNQSIrWJXUOOJOPYUm7cokcdLodN+rTA1FXz7yTYqJXbEtknU6G
-         MJHavfqpcntNk0cvHtIyDnveJgoQFhhef4hWooVZq1wIWf6UJzvvZr6hF/ZmtBztiFIU
-         NJ+g==
+        bh=/YLIXxu3r1bT61bpUEMmybN5f7kCfaViovXYFbL3SjM=;
+        b=HxtfaWpw+BqwCw1Gi5J0Zv5u+7/VIdxJAam15Wak+erAIWysxcKV+/7XhXHrZN408D
+         9lKGfVBkuk5Svm9lqvL0d/bEBbxIOFALQW/d1sxtIdi1f+L52WTrDx2mrB+OaseJrCrY
+         aQxjLBjVy+H0Ugn9lVKYbZEwzbKlTvv1Az02TuBzeUt0MPIfuZU7PID1c5FyfV95Bfh/
+         KKMncPo8Dtef5lhVR+LF3RiFc8zxjoHl/uKtGR3hWfnPTKiIoFT+BwTt240VyBkjwHpv
+         ITLvAOKAmJu1UrOiD7eAXSYQUKaPV8oHNIP4i+CxIgtVHRBVsiuA8qNtppISvs3kd/Ip
+         TKYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760347173; x=1760951973;
+        d=1e100.net; s=20230601; t=1760347217; x=1760952017;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8mp6Sl5lpIMsBMcZe0Dwu/oRU1yIEVK7dE0nvjB0QA=;
-        b=QYi8Xeig9s7YBmFv7aMgfOjaYPQkFq7JI0ONgcy05Knarsv2S7jpZHs+8U5MnIPJ9K
-         zRzJFkcggWZY4o1fKIm7vMiQGy3oMVLTbHCWsKy9BYonKalBl327tLf4Y21fAFIX3rke
-         Fo+uxB+IA7vtV4diKSKLoDGmS0ghYRPvcGdgWKl3kd39Vu2VgTwkbb7/abP9ilrIXZ2l
-         SFFkxxnDuHRT98QTQMtHYmcrfWZ97e59FPSkXR1XdX9k4ROBdooTlV5eBq/5AB5qN85R
-         fW9C6yjmiAdLYbUDqCAn1a/Y2Ww600ajVTl0hIGldnx0/DiE0OyLsa19uA6wO+axnAqA
-         9Inw==
-X-Forwarded-Encrypted: i=1; AJvYcCVFGJu03Inzcl+wQxDVayCeBn1lnP8TLqu85eLeQEgudRgx0DUo9OVtyrhc+4Qd6wdSoiCJVN5G@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2KmaYtKTye/bs7fgqGl7ivCeGBEXdTD5j3wkPJ+FXdVKOZAy0
-	61SKjn9t5eu6i7PDkApntrXTMPTLnFR2s4Wfc0lolZE6A9EpacixzGIpL2bKHqmnqG7FjL6F+QJ
-	tFn+anZVdHIkAmJWuhA==
-X-Google-Smtp-Source: AGHT+IGyE1/ItkqoGr313xqMor1adj+/d0l73A5B2xL0EAcjYPfGXqLNzPt25q8he9xrFaEgiN5RRjL9JA9wkiQ=
-X-Received: from wmcn14.prod.google.com ([2002:a05:600c:c0ce:b0:46e:2897:9c17])
+        bh=/YLIXxu3r1bT61bpUEMmybN5f7kCfaViovXYFbL3SjM=;
+        b=B7tQYvTMjfG4Q8ylyNFUhRhKr6qOeWyP0MsZNm+azn7bEgOuuTc/uKmL1I0My75bvF
+         6PTb4cQwu9OdW/FK/AsjisOqK9Dt/qzKpSbKu+fj9fKNYpFvfqAdJzc0KhQKK6BgyLuX
+         ny/x1IuRJDr+Go/hFjH22PMe5mJF70rqJwg59rM6sY2YIiiB59GoiBDE0M12h2foDUBr
+         7Ry8NBNZLz5xMt0nBuGg4kLPezIMcWyXdnRdvqxhZsyi+g+Z3LUZRnR1NdmY/kzpuIUo
+         /gZpkx7XVkRiPP/nacYp8KqyRqyLt0yr5n5t7KMqJMzo41nqvFJTeEJWXBYOlZIYLWJ9
+         zDJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUO/dkjzvS8uLfa8DlnUSUkx/c7wFRKh7NVUcuOSbqgwhjg1D+ykDTiaORSyZwVG0D6tbQRHUFj@lists.linux.dev
+X-Gm-Message-State: AOJu0YzqLeXJCeo765xN/QNa7f+F7XDO94TfPDmZqR7CYXL6Gt0GgLuX
+	b9P3PQ83y8J8WOIeiGgjt3zIS4E9c7OJTiYMzFI/Rh/HxlTkGKlHt9N7aiBuH2sVz4rJIqwPsPN
+	Fi2h+RgUNqV4kkmqPCA==
+X-Google-Smtp-Source: AGHT+IHb6VBFw+s5vLpdfRpV683e8ptVQHwXIXwalC0rZp9VrZA2JvEvy5kZ5UvL/xduE9r47vW5HXPH+BxtecY=
+X-Received: from wmlu17.prod.google.com ([2002:a05:600c:2111:b0:46e:2eb4:38d])
  (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:83ce:b0:46e:394b:49b7 with SMTP id 5b1f17b1804b1-46fa9b16597mr144514005e9.37.1760347173573;
- Mon, 13 Oct 2025 02:19:33 -0700 (PDT)
-Date: Mon, 13 Oct 2025 09:19:32 +0000
-In-Reply-To: <20251012213230.1139674-1-ojeda@kernel.org>
+ 2002:a05:600c:4510:b0:46d:d949:daba with SMTP id 5b1f17b1804b1-46fa9a8f275mr139441695e9.4.1760347216682;
+ Mon, 13 Oct 2025 02:20:16 -0700 (PDT)
+Date: Mon, 13 Oct 2025 09:20:15 +0000
+In-Reply-To: <20251013001422.1168581-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20251012213230.1139674-1-ojeda@kernel.org>
-Message-ID: <aOzEJAdNHatrW_Gz@google.com>
-Subject: Re: [PATCH] rust_binder: clean Clippy `mem-replace-with-default` warning
+References: <20251013001422.1168581-1-ojeda@kernel.org>
+Message-ID: <aOzET46lagm-p8go@google.com>
+Subject: Re: [PATCH] rust: bitmap: clean Rust 1.92.0 `unused_unsafe` warning
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Arve =?utf-8?B?SGrDuG5uZXbDpWc=?=" <arve@android.com>, Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>, 
-	Joel Fernandes <joelagnelf@nvidia.com>, Christian Brauner <christian@brauner.io>, 
-	Carlos Llamas <cmllamas@google.com>, Suren Baghdasaryan <surenb@google.com>, 
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Burak Emir <bqe@google.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
 	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	Yury Norov <yury.norov@gmail.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="utf-8"
 
-On Sun, Oct 12, 2025 at 11:32:30PM +0200, Miguel Ojeda wrote:
-> Starting with Rust 1.87.0, Clippy reports:
+On Mon, Oct 13, 2025 at 02:14:22AM +0200, Miguel Ojeda wrote:
+> Starting with Rust 1.92.0 (expected 2025-12-11), Rust allows to safely
+> take the address of a union field [1][2]:
 > 
->       CLIPPY     drivers/android/binder/rust_binder_main.o
->     error: replacing a value of type `T` with `T::default()` is better expressed using `core::mem::take`
->        --> drivers/android/binder/node.rs:690:32
+>       CLIPPY L rust/kernel.o
+>     error: unnecessary `unsafe` block
+>        --> rust/kernel/bitmap.rs:169:13
 >         |
->     690 |             _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
->         |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `core::mem::take(&mut inner.freeze_list)`
+>     169 |             unsafe { core::ptr::addr_of!(self.repr.bitmap) }
+>         |             ^^^^^^ unnecessary `unsafe` block
 >         |
->         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#mem_replace_with_default
->         = note: `-D clippy::mem-replace-with-default` implied by `-D warnings`
->         = help: to override `-D warnings` add `#[allow(clippy::mem_replace_with_default)]`
+>         = note: `-D unused-unsafe` implied by `-D warnings`
+>         = help: to override `-D warnings` add `#[allow(unused_unsafe)]`
 > 
-> Thus clean it up as suggested.
+>     error: unnecessary `unsafe` block
+>        --> rust/kernel/bitmap.rs:185:13
+>         |
+>     185 |             unsafe { core::ptr::addr_of_mut!(self.repr.bitmap) }
+>         |             ^^^^^^ unnecessary `unsafe` block
 > 
-> Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+> Thus allow both instances to clean the warning in newer compilers.
+> 
+> Link: https://github.com/rust-lang/rust/issues/141264 [1]
+> Link: https://github.com/rust-lang/rust/pull/141469 [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-
-Thanks. I guess I never got around to making use of commit 47d8101924b5
-("rust: vec: impl Default for Vec with any allocator").
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
