@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACCB30C63B;
-	Mon, 13 Oct 2025 14:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7C830CD97;
+	Mon, 13 Oct 2025 14:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367278; cv=none; b=R3ztKnVKylT/BHhw0j3hmjetZxc4w8rn/8oMLTPZ66MOzXLKxGxmg/meuoRbfHV1J1DQwsqDp2lSOB/weRPcFplCGMAqwcQD+kXLwTUXr9t3YLS+hJRhTGPRd0/FUfKzOTtM7r9kI8C3j18XFPKZxFkT2J8RPyROwJa8B75t4no=
+	t=1760367281; cv=none; b=oe7LvKR3YNWYG3T3K+3gvayQf6ikd6QNF6TOo0SCitMvmb3dEJNgQEI/1dbmDsl5lUA4aHjfjL6dV9yOJHyzVJobUxQhNC1tkLDpxkcf22oN4SadmOTH8Z3ewLRrbWXMLrHL5XiKT4J9RBd28c7NNq+EHZqNoDq4NDtrlBqIjsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367278; c=relaxed/simple;
-	bh=f0SJlzFAtyhDgnrdilbkmNR801QPtuzeyaLVJKRmS/A=;
+	s=arc-20240116; t=1760367281; c=relaxed/simple;
+	bh=0o+Rg0zo4EmVySgy+4qtUyvO5zglJ9KgwQXzoYjjoxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1icyazxU4SVsk5WF5mIUFVxX6Y+mb7FtgV7A85bX3p5mk3zGg1NOCqr+TzY4zNEs5w7XLOvgMMja+Q4y8/w/qiZRLBF0RNwFZ6nxCqY4Abz22CaFWC439ebQUlWrkwfn1sGzkerGoKQSMZV+ODYQ4X2qiAdJOsfqFoXsWP+QR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTZfm9K1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRy6EPOU/ahWetQyRb9ksRIIyM386XM3N1dV3HOvY4cvj9NDOT+GPIbzhbeMhC8FuoFWtX0PNEfWQnEQoU1R0LFJyoxhUiFLEiIqE9Ge+coM405dmPIuKs3vyznTddlvgnOtujNEvFMB+CoknQ4iWsMySeqLTmkQL5e7NYrmFKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rrk+jbe3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTZfm9K1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CE0C4CEFE;
-	Mon, 13 Oct 2025 14:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rrk+jbe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2E7C4CEE7;
+	Mon, 13 Oct 2025 14:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367278;
-	bh=f0SJlzFAtyhDgnrdilbkmNR801QPtuzeyaLVJKRmS/A=;
+	s=korg; t=1760367280;
+	bh=0o+Rg0zo4EmVySgy+4qtUyvO5zglJ9KgwQXzoYjjoxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTZfm9K1PchADLmDlpi7lDfXpbJ2YgvPyraQNTseilhPa6rMUy8KdPfjc4wgda/8C
-	 Hr/yYktZai5xHAJK29J02yLip5UuyMQpXyGnIFT2cHCMVnvd89GFVYz+1akwAUfqSj
-	 CX5pamgC68EuL3vjl9fN1rZqKkyKEhDd0d5nUPr8=
+	b=Rrk+jbe35gE8I3Tgq5qP7CQV6TOaMcq5x26KMKgCxE4P4aJ3uzykSd9Hz1bS0S8zr
+	 tC3D+hXpsE+b9Jo8IPQpirMaKSwXynhKnUpVCL/MLa9rixZDSFT0fCrdzrHXTJfwKZ
+	 mYFdhOUJGK1bETMw7dbS1Rp8fv94IheFTILQp4vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/196] scsi: mpt3sas: Fix crash in transport port remove by using ioc_info()
-Date: Mon, 13 Oct 2025 16:45:25 +0200
-Message-ID: <20251013144320.197485067@linuxfoundation.org>
+Subject: [PATCH 6.1 153/196] usb: vhci-hcd: Prevent suspending virtually attached devices
+Date: Mon, 13 Oct 2025 16:45:26 +0200
+Message-ID: <20251013144320.233740495@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,88 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 1703fe4f8ae50d1fb6449854e1fcaed1053e3a14 ]
+[ Upstream commit e40b984b6c4ce3f80814f39f86f87b2a48f2e662 ]
 
-During mpt3sas_transport_port_remove(), messages were logged with
-dev_printk() against &mpt3sas_port->port->dev. At this point the SAS
-transport device may already be partially unregistered or freed, leading
-to a crash when accessing its struct device.
+The VHCI platform driver aims to forbid entering system suspend when at
+least one of the virtual USB ports are bound to an active USB/IP
+connection.
 
-Using ioc_info(), which logs via the PCI device (ioc->pdev->dev),
-guaranteed to remain valid until driver removal.
+However, in some cases, the detection logic doesn't work reliably, i.e.
+when all devices attached to the virtual root hub have been already
+suspended, leading to a broken suspend state, with unrecoverable resume.
 
-[83428.295776] Oops: general protection fault, probably for non-canonical address 0x6f702f323a33312d: 0000 [#1] SMP NOPTI
-[83428.295785] CPU: 145 UID: 0 PID: 113296 Comm: rmmod Kdump: loaded Tainted: G           OE       6.16.0-rc1+ #1 PREEMPT(voluntary)
-[83428.295792] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[83428.295795] Hardware name: Dell Inc. Precision 7875 Tower/, BIOS 89.1.67 02/23/2024
-[83428.295799] RIP: 0010:__dev_printk+0x1f/0x70
-[83428.295805] Code: 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 49 89 d1 48 85 f6 74 52 4c 8b 46 50 4d 85 c0 74 1f 48 8b 46 68 48 85 c0 74 22 <48> 8b 08 0f b6 7f 01 48 c7 c2 db e8 42 ad 83 ef 30 e9 7b f8 ff ff
-[83428.295813] RSP: 0018:ff85aeafc3137bb0 EFLAGS: 00010206
-[83428.295817] RAX: 6f702f323a33312d RBX: ff4290ee81292860 RCX: 5000cca25103be32
-[83428.295820] RDX: ff85aeafc3137bb8 RSI: ff4290eeb1966c00 RDI: ffffffffc1560845
-[83428.295823] RBP: ff85aeafc3137c18 R08: 74726f702f303a33 R09: ff85aeafc3137bb8
-[83428.295826] R10: ff85aeafc3137b18 R11: ff4290f5bd60fe68 R12: ff4290ee81290000
-[83428.295830] R13: ff4290ee6e345de0 R14: ff4290ee81290000 R15: ff4290ee6e345e30
-[83428.295833] FS:  00007fd9472a6740(0000) GS:ff4290f5ce96b000(0000) knlGS:0000000000000000
-[83428.295837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[83428.295840] CR2: 00007f242b4db238 CR3: 00000002372b8006 CR4: 0000000000771ef0
-[83428.295844] PKRU: 55555554
-[83428.295846] Call Trace:
-[83428.295848]  <TASK>
-[83428.295850]  _dev_printk+0x5c/0x80
-[83428.295857]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.295863]  mpt3sas_transport_port_remove+0x1c7/0x420 [mpt3sas]
-[83428.295882]  _scsih_remove_device+0x21b/0x280 [mpt3sas]
-[83428.295894]  ? _scsih_expander_node_remove+0x108/0x140 [mpt3sas]
-[83428.295906]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.295910]  mpt3sas_device_remove_by_sas_address.part.0+0x8f/0x110 [mpt3sas]
-[83428.295921]  _scsih_expander_node_remove+0x129/0x140 [mpt3sas]
-[83428.295933]  _scsih_expander_node_remove+0x6a/0x140 [mpt3sas]
-[83428.295944]  scsih_remove+0x3f0/0x4a0 [mpt3sas]
-[83428.295957]  pci_device_remove+0x3b/0xb0
-[83428.295962]  device_release_driver_internal+0x193/0x200
-[83428.295968]  driver_detach+0x44/0x90
-[83428.295971]  bus_remove_driver+0x69/0xf0
-[83428.295975]  pci_unregister_driver+0x2a/0xb0
-[83428.295979]  _mpt3sas_exit+0x1f/0x300 [mpt3sas]
-[83428.295991]  __do_sys_delete_module.constprop.0+0x174/0x310
-[83428.295997]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296000]  ? __x64_sys_getdents64+0x9a/0x110
-[83428.296005]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296009]  ? syscall_trace_enter+0xf6/0x1b0
-[83428.296014]  do_syscall_64+0x7b/0x2c0
-[83428.296019]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296023]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Ensure the virtually attached devices do not enter suspend by setting
+the syscore PM flag.  Note this is currently limited to the client side
+only, since the server side doesn't implement system suspend prevention.
 
-Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 04679b3489e0 ("Staging: USB/IP: add client driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250902-vhci-hcd-suspend-fix-v3-1-864e4e833559@collabora.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/usb/usbip/vhci_hcd.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index e8a4750f6ec47..7d6e4fe31ceed 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -991,11 +991,9 @@ mpt3sas_transport_port_remove(struct MPT3SAS_ADAPTER *ioc, u64 sas_address,
- 	list_for_each_entry_safe(mpt3sas_phy, next_phy,
- 	    &mpt3sas_port->phy_list, port_siblings) {
- 		if ((ioc->logging_level & MPT_DEBUG_TRANSPORT))
--			dev_printk(KERN_INFO, &mpt3sas_port->port->dev,
--			    "remove: sas_addr(0x%016llx), phy(%d)\n",
--			    (unsigned long long)
--			    mpt3sas_port->remote_identify.sas_address,
--			    mpt3sas_phy->phy_id);
-+			ioc_info(ioc, "remove: sas_addr(0x%016llx), phy(%d)\n",
-+				(unsigned long long) mpt3sas_port->remote_identify.sas_address,
-+					mpt3sas_phy->phy_id);
- 		mpt3sas_phy->phy_belongs_to_port = 0;
- 		if (!ioc->remove_host)
- 			sas_port_delete_phy(mpt3sas_port->port,
+diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
+index 6b98f5ab6dfed..e3c8483d7ba40 100644
+--- a/drivers/usb/usbip/vhci_hcd.c
++++ b/drivers/usb/usbip/vhci_hcd.c
+@@ -764,6 +764,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
+ 				 ctrlreq->wValue, vdev->rhport);
+ 
+ 			vdev->udev = usb_get_dev(urb->dev);
++			/*
++			 * NOTE: A similar operation has been done via
++			 * USB_REQ_GET_DESCRIPTOR handler below, which is
++			 * supposed to always precede USB_REQ_SET_ADDRESS.
++			 *
++			 * It's not entirely clear if operating on a different
++			 * usb_device instance here is a real possibility,
++			 * otherwise this call and vdev->udev assignment above
++			 * should be dropped.
++			 */
++			dev_pm_syscore_device(&vdev->udev->dev, true);
+ 			usb_put_dev(old);
+ 
+ 			spin_lock(&vdev->ud.lock);
+@@ -784,6 +795,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
+ 					"Not yet?:Get_Descriptor to device 0 (get max pipe size)\n");
+ 
+ 			vdev->udev = usb_get_dev(urb->dev);
++			/*
++			 * Set syscore PM flag for the virtually attached
++			 * devices to ensure they will not enter suspend on
++			 * the client side.
++			 *
++			 * Note this doesn't have any impact on the physical
++			 * devices attached to the host system on the server
++			 * side, hence there is no need to undo the operation
++			 * on disconnect.
++			 */
++			dev_pm_syscore_device(&vdev->udev->dev, true);
+ 			usb_put_dev(old);
+ 			goto out;
+ 
 -- 
 2.51.0
 
