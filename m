@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5C73081CE;
-	Mon, 13 Oct 2025 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982DE30CDB7;
+	Mon, 13 Oct 2025 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369181; cv=none; b=fZlkpcpM8GhgWknwW3tpmq3+Qp/ErM1tJNUkCxO1Fll9GQ4MXCebIEaQ15KofE2CFe8kSUpVRzUMV3blSSJRF4ise1LldQWtnvtPHDmWIHziS+iTvegRFUtwYl1xg2tcNP6PgQ+MEajU5Twq+ceHeksnJer2mYPrCtUEi3hA1E4=
+	t=1760369184; cv=none; b=YXHcIdARe2mTEYQ/m+O1P+Tv16VY7BEjbSv2gH8GWnZk23uRxNKGmwNwrM+yiQTfTSV7CoiuqAY3uTYrMxnutN1ogSevWuKr9qlFvVex/F+8S1Wup8SP2M/ful3PmdI91QwTtqQbFamcvf2dzPOejojKYdpkMxSyYUHT4byAAhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369181; c=relaxed/simple;
-	bh=/LxIyWOKsT+r2i8Qu5HWN/XLDGdb0Fcs7ZJrl6Mg2zY=;
+	s=arc-20240116; t=1760369184; c=relaxed/simple;
+	bh=NzaMegead0bwEbYROQFYLJ6tYo867EvRNwuDSmsLF2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pu6rKo7SCZtbBAwRpShKdwqZqZGJdqldqQtXpZ5TDYRkF49EjfX7QV6nUx2u496htKGtxYdPe0gvw1Z/bz2ZgkEmTqJ0oYmcMJa3iANg4pfhdg+Pl6GrXUEeVO9o4/pi/feRlvGQgOqiO1B10d1o3r08dcRkai+qygJIh6g1l0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl47HQiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Sj4mvas0SkCGf8wgRirmiKYVftKHDnt1PWHqlATInkq8TcppefzLXPP7f5qznmRPHXMzduez/nr9+cqbRnak73et7aaa2fJTsxpW42fly+iaZ91vFMkKGToxsXa0m3W17pA90oSeJZca1q1PmU81pABWYP1AM4yoizG3TT0GLro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyOolsPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl47HQiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576A8C4CEE7;
-	Mon, 13 Oct 2025 15:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyOolsPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E22C4CEE7;
+	Mon, 13 Oct 2025 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369181;
-	bh=/LxIyWOKsT+r2i8Qu5HWN/XLDGdb0Fcs7ZJrl6Mg2zY=;
+	s=korg; t=1760369184;
+	bh=NzaMegead0bwEbYROQFYLJ6tYo867EvRNwuDSmsLF2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tl47HQiy0ToDyb7FevODtkb6dWFUEc5r9ORyitm51IA4sU+TiKPuS+EPZ0RMTO4hX
-	 7CVR+edkILnNTsl8k9+KlobJBfJW16Nl6Khi2EbE+qpIhxEnXk8Sumxl9GYT6GXuPj
-	 gwNpzFUOpwbbcfqxPpH5r+hc62CKGMTuEFr5xBME=
+	b=ZyOolsPC27bHmmZ7PE1kih2QMpCIZN0Ive9c2QcXccMVhW3OHu0X9FiqP92Ct3o4i
+	 yKLile5pnKULl06cJlKIOpyP4jy31Hv76SOIlg8Z7NHUeh0GZ8E8zL03n/fCQLg/rm
+	 8lvcMdc4SuznP9tv/+jlMAXvKeoSA9MKA66uaqm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 155/563] pwm: tiehrpwm: Dont drop runtime PM reference in .free()
-Date: Mon, 13 Oct 2025 16:40:16 +0200
-Message-ID: <20251013144416.904327880@linuxfoundation.org>
+Subject: [PATCH 6.17 156/563] pwm: tiehrpwm: Make code comment in .free() more useful
+Date: Mon, 13 Oct 2025 16:40:17 +0200
+Message-ID: <20251013144416.941600662@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,42 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 21a5e91fda50fc662ce1a12bd0aae9d103455b43 ]
+[ Upstream commit 878dbfc12cc52b17d79d205560c0fafcf5332b13 ]
 
-The pwm driver calls pm_runtime_get_sync() when the hardware becomes
-enabled and pm_runtime_put_sync() when it becomes disabled. The PWM's
-state is kept when a consumer goes away, so the call to
-pm_runtime_put_sync() in the .free() callback is unbalanced resulting in
-a non-functional device and a reference underlow for the second consumer.
+Instead of explaining trivia to everyone who can read C describe the
+higher-level effect of setting pc->period_cycles[pwm->hwpwm] to zero.
 
-The easiest fix for that issue is to just not drop the runtime PM
-reference in .free(), so do that.
-
-Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
+Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/bbb089c4b5650cc1f7b25cf582d817543fd25384.1754927682.git.u.kleine-koenig@baylibre.com
+Link: https://lore.kernel.org/r/4c38dd119a77d7017115318a3f2c50bde62a6f21.1754927682.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/pwm/pwm-tiehrpwm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index 0125e73b98dfb..5e674a7bbf3be 100644
+index 5e674a7bbf3be..a94b1e387b924 100644
 --- a/drivers/pwm/pwm-tiehrpwm.c
 +++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -391,11 +391,6 @@ static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+@@ -391,7 +391,7 @@ static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
  {
  	struct ehrpwm_pwm_chip *pc = to_ehrpwm_pwm_chip(chip);
  
--	if (pwm_is_enabled(pwm)) {
--		dev_warn(pwmchip_parent(chip), "Removing PWM device without disabling\n");
--		pm_runtime_put_sync(pwmchip_parent(chip));
--	}
--
- 	/* set period value to zero on free */
+-	/* set period value to zero on free */
++	/* Don't let a pwm without consumer block requests to the other channel */
  	pc->period_cycles[pwm->hwpwm] = 0;
  }
+ 
 -- 
 2.51.0
 
