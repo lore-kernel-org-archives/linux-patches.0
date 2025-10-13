@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE7A30F55D;
-	Mon, 13 Oct 2025 14:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4264830F52D;
+	Mon, 13 Oct 2025 14:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366943; cv=none; b=PMw6A6hDL0wzDw1kCPQ0DVjH6ABd3xMFmhi7CBqpXFPG38kGOJvredurxEDVgPhL7Ea97cdvQaxxNaIQ58Zb6q4wX8XDzysilctuYhObnDzgx0axA2Wd2r48rtDv0m+EngawBbW7X4XDUhnzm+J7xr4WN40lllR2iRfxpxVxagg=
+	t=1760366946; cv=none; b=GgnG14pGBxq8L8esMSp7wE+2Ovc7s/MPWE7urHNMfth+Dz1BLAsS/DdpVPwD/dSQZxjY2ke2b8VHS6fRtR4m8eTdtaD3kaVj6IpBdM5eVdSsFVnLjL6UBRPS8JIN7UAzvg4prayC80ehPGP9GGibj3n5H/qAxq7R0RChan/BuKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366943; c=relaxed/simple;
-	bh=ZPXH9nQInaUlLDUrnJ94HGlDZXWZ0vEjQD3m/BmlLA4=;
+	s=arc-20240116; t=1760366946; c=relaxed/simple;
+	bh=zM22GH8U7MSWnzq1SCVQxW9B0nAeBbIV1lwMVb9t3I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsYtDMmk3CH7xkoUN8hGS3Nb/B505BJREGVisw+jHI0UB8yvv1AX/x2Ggb7BHMEEE4DnJ+7YaULLo+TYlcRqYdK/yQDHFKAn2Lq96bRiiLGH05AOwDHPwL9dCqZlmeQ401Al9s4tqAPqJTXxfx4jMu+Jc7uQfjUwXDjGdlXI42Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+LitHN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BE7lUWNbqhISaoDje7claCv9vvPrPPlr1ECkWhAQ/Pn/SwJAoSRLIHoctFePKxDagT3EYmo8gLzZl7beRdhkbCBo2aghn7S4JFBLXjlUW1zbBFcwwLh2CGNj/cp9Kpp+WfW/xkNjKpgmzss6UuHeOI1XXOAqA35QVmv1J9r9Qjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUYB9lBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+LitHN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9702EC4CEE7;
-	Mon, 13 Oct 2025 14:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUYB9lBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D42C4CEE7;
+	Mon, 13 Oct 2025 14:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366943;
-	bh=ZPXH9nQInaUlLDUrnJ94HGlDZXWZ0vEjQD3m/BmlLA4=;
+	s=korg; t=1760366946;
+	bh=zM22GH8U7MSWnzq1SCVQxW9B0nAeBbIV1lwMVb9t3I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+LitHN6R+gEHWn1URJZnBcP5W2Eb9yiwzRzWPtXFfqyBDBwP7+iips46ZlEpQ5Kx
-	 C4yrYzu2pLCSazUQG7I+BSTDUVJvJFIRFZinWq+Uwnjygwp1mIj9h6mnkK73+iPXzD
-	 VCgIQWgdXHZ76jOIIOS29TFtf72/dWY0o34gnSYU=
+	b=KUYB9lBevMc+RXg7YLo9+W3kcbACVYRAFAGCwj9s5d7hrjo5ZuGzAhwhR4aee5sr/
+	 g8+R9nZZxRmZMo+BM0jSgV4A/MD5wjZZ6NgmF2tz3P4RujDSXDfbEc4MDp5cl4dFAs
+	 5bHhbciPrWqgnqOiskDESjmHCe8Q2/PHTNXrQOTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
-	Tranh Ha <tranh.ha.xb@renesas.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/196] can: rcar_canfd: Fix controller mode setting
-Date: Mon, 13 Oct 2025 16:43:30 +0200
-Message-ID: <20251013144315.929277331@linuxfoundation.org>
+	syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com,
+	Arnaud Lecomte <contact@arnaud-lcm.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Romain Sioen <romain.sioen@microchip.com>
+Subject: [PATCH 6.1 038/196] hid: fix I2C read buffer overflow in raw_event() for mcp2221
+Date: Mon, 13 Oct 2025 16:43:31 +0200
+Message-ID: <20251013144315.965421740@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,50 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duy Nguyen <duy.nguyen.rh@renesas.com>
+From: Arnaud Lecomte <contact@arnaud-lcm.com>
 
-[ Upstream commit 5cff263606a10102a0ea19ff579eaa18fd5577ad ]
+commit b56cc41a3ae7323aa3c6165f93c32e020538b6d2 upstream.
 
-Driver configures register to choose controller mode before
-setting all channels to reset mode leading to failure.
-The patch corrects operation of mode setting.
+As reported by syzbot, mcp2221_raw_event lacked
+validation of incoming I2C read data sizes, risking buffer
+overflows in mcp->rxbuf during multi-part transfers.
+As highlighted in the DS20005565B spec, p44, we have:
+"The number of read-back data bytes to follow in this packet:
+from 0 to a maximum of 60 bytes of read-back bytes."
+This patch enforces we don't exceed this limit.
 
-Signed-off-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Signed-off-by: Tranh Ha <tranh.ha.xb@renesas.com>
-Link: https://patch.msgid.link/TYWPR01MB87434739F83E27EDCD23DF44B416A@TYWPR01MB8743.jpnprd01.prod.outlook.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=52c1a7d3e5b361ccd346
+Tested-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
+Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
+Link: https://patch.msgid.link/20250726220931.7126-1-contact@arnaud-lcm.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hid/hid-mcp2221.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
-index a1f68b74229e6..3d6daeea83553 100644
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -717,9 +717,6 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
- 	/* Reset Global error flags */
- 	rcar_canfd_write(gpriv->base, RCANFD_GERFL, 0x0);
- 
--	/* Set the controller into appropriate mode */
--	rcar_canfd_set_mode(gpriv);
--
- 	/* Transition all Channels to reset mode */
- 	for_each_set_bit(ch, &gpriv->channels_mask, gpriv->max_channels) {
- 		rcar_canfd_clear_bit(gpriv->base,
-@@ -739,6 +736,10 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
- 			return err;
- 		}
- 	}
-+
-+	/* Set the controller into appropriate mode */
-+	rcar_canfd_set_mode(gpriv);
-+
- 	return 0;
- }
- 
--- 
-2.51.0
-
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -791,6 +791,10 @@ static int mcp2221_raw_event(struct hid_
+ 			}
+ 			if (data[2] == MCP2221_I2C_READ_COMPL ||
+ 			    data[2] == MCP2221_I2C_READ_PARTIAL) {
++				if (!mcp->rxbuf || mcp->rxbuf_idx < 0 || data[3] > 60) {
++					mcp->status = -EINVAL;
++					break;
++				}
+ 				buf = mcp->rxbuf;
+ 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
+ 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
 
 
