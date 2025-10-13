@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EC1308F32;
-	Mon, 13 Oct 2025 15:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138603090CB;
+	Mon, 13 Oct 2025 15:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370214; cv=none; b=sm5dZPGumh41THLsvlhn2nrS4vgvkjXTcRuBy7ijtUr5wgkQB8w6IXf3zjKVLY4MrDSj6KYKrrXvB3IfwRMvYC56bOgs61GYPGuUHKjr7kURKRnSuWCtexvPiARncHoOPx1QyDZ7ypBQ6YGtwZ+/3LS5ZK5SHhmNy01c46koHJI=
+	t=1760370217; cv=none; b=Z0xbSDkCoIcotmQjinK8oMSlPPgAgBAAWg3UDw+XVvFKmoj9+cK0CGJzhy/oMM2qzVC6Gry0OdckubhNZ36BlSed3nSEafr2UKaI7V/17M5D6b13cSxERU5IGeLMgCIeHc651L34yo0FKkTB0NZYytxHqKrImurI84vn5gBJZq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370214; c=relaxed/simple;
-	bh=h9uX1va/AOcnF206t5bQkY48Hf7wHJNEeUq5QuUrAb0=;
+	s=arc-20240116; t=1760370217; c=relaxed/simple;
+	bh=/HhLSqk1j56uD5CrwIdxs7SwvXxulaZmDSlnmrQAaaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJHR7hpsic6M8c3aVAOFWGfxKwFv/JSnWfw5LZeTvH/HD0zPgX7FTZQlx03fSvVmpFyfxo+79bTSnAUqinCSjPo1L/fJcCPZyiJr7Y8C9SW9q+dJViBTQavCWSN7voRWpnLhE5f7pe2keZCsDGP4+lL4IBTm9qWbfCmFLTvbu6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZh120kd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxDg+15GoJnLZTIu7nYYUnAsNIjZU5EL2s+18annAQ2ibirC/y00m1F1FEWa/Wl2TazQ/lZpiRDm9Ov4bwpUPF9yEmQk4jxAEsQXXygpuvYWRZMfOU2cuiZF/N2kztUxtwqwEoBJ8DdTdCfjpHVyRA02gYNz+ZLoUbtS35n6tFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X58O/QBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZh120kd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95070C4CEFE;
-	Mon, 13 Oct 2025 15:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X58O/QBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0B9C4CEE7;
+	Mon, 13 Oct 2025 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370214;
-	bh=h9uX1va/AOcnF206t5bQkY48Hf7wHJNEeUq5QuUrAb0=;
+	s=korg; t=1760370216;
+	bh=/HhLSqk1j56uD5CrwIdxs7SwvXxulaZmDSlnmrQAaaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZh120kdD5fCHe4dOfd+RKfKt4ACoeqo58xzkEKG1a3glXNfVBvK+sZYBQd7g7PHr
-	 5ZHO9nlvNr1Vd3eaK3qV2OHRhubIUBpalLpbXN1jR+6OS6r81u1bWiuW1lzXYBrdab
-	 RjJMjScXqY51C+c9tmiLCHYtJREEDLRpH8vJ6oR4=
+	b=X58O/QBi9TRY1U0K23VpbGUOy8j5nsLPxI1/5Fo58qhCy87qqyPxiKM6CZPHKCaEE
+	 Ggmsb7orF4+rm1eHS3hznDhxDvAoTQjHkPUBHFjWsK96yNFqB9yEa7JoP+mfzTlvVg
+	 EmxCIA3hvy8/S+oNm6ku/q503vU/YGiixjRjEPw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+9a2ede1643175f350105@syzkaller.appspotmail.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.17 517/563] tracing: Fix tracing_mark_raw_write() to use buf and not ubuf
-Date: Mon, 13 Oct 2025 16:46:18 +0200
-Message-ID: <20251013144430.043938127@linuxfoundation.org>
+	"Stefano Garzarella" <sgarzare@redhat.com>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 487/563] vhost: vringh: Modify the return value check
+Date: Mon, 13 Oct 2025 16:45:48 +0200
+Message-ID: <20251013144428.935149533@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,56 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
 
-commit bda745ee8fbb63330d8f2f2ea4157229a5df959e upstream.
+[ Upstream commit 82a8d0fda55b35361ee7f35b54fa2b66d7847d2b ]
 
-The fix to use a per CPU buffer to read user space tested only the writes
-to trace_marker. But it appears that the selftests are missing tests to
-the trace_maker_raw file. The trace_maker_raw file is used by applications
-that writes data structures and not strings into the file, and the tools
-read the raw ring buffer to process the structures it writes.
+The return value of copy_from_iter and copy_to_iter can't be negative,
+check whether the copied lengths are equal.
 
-The fix that reads the per CPU buffers passes the new per CPU buffer to
-the trace_marker file writes, but the update to the trace_marker_raw write
-read the data from user space into the per CPU buffer, but then still used
-then passed the user space address to the function that records the data.
-
-Pass in the per CPU buffer and not the user space address.
-
-TODO: Add a test to better test trace_marker_raw.
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/20251011035243.386098147@kernel.org
-Fixes: 64cf7d058a00 ("tracing: Have trace_marker use per-cpu data to read user space")
-Reported-by: syzbot+9a2ede1643175f350105@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68e973f5.050a0220.1186a4.0010.GAE@google.com/
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 309bba39c945 ("vringh: iterate on iotlb_translate to handle large translations")
+Cc: "Stefano Garzarella" <sgarzare@redhat.com>
+Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Message-Id: <20250910091739.2999-1-zhangjiao2@cmss.chinamobile.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vringh.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7497,12 +7497,12 @@ tracing_mark_raw_write(struct file *filp
- 	if (tr == &global_trace) {
- 		guard(rcu)();
- 		list_for_each_entry_rcu(tr, &marker_copies, marker_list) {
--			written = write_raw_marker_to_buffer(tr, ubuf, cnt);
-+			written = write_raw_marker_to_buffer(tr, buf, cnt);
- 			if (written < 0)
- 				break;
- 		}
- 	} else {
--		written = write_raw_marker_to_buffer(tr, ubuf, cnt);
-+		written = write_raw_marker_to_buffer(tr, buf, cnt);
- 	}
+diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
+index 1778eff7ab006..925858cc60964 100644
+--- a/drivers/vhost/vringh.c
++++ b/drivers/vhost/vringh.c
+@@ -1115,6 +1115,7 @@ static inline int copy_from_iotlb(const struct vringh *vrh, void *dst,
+ 		struct iov_iter iter;
+ 		u64 translated;
+ 		int ret;
++		size_t size;
  
- 	return written;
+ 		ret = iotlb_translate(vrh, (u64)(uintptr_t)src,
+ 				      len - total_translated, &translated,
+@@ -1132,9 +1133,9 @@ static inline int copy_from_iotlb(const struct vringh *vrh, void *dst,
+ 				      translated);
+ 		}
+ 
+-		ret = copy_from_iter(dst, translated, &iter);
+-		if (ret < 0)
+-			return ret;
++		size = copy_from_iter(dst, translated, &iter);
++		if (size != translated)
++			return -EFAULT;
+ 
+ 		src += translated;
+ 		dst += translated;
+-- 
+2.51.0
+
 
 
