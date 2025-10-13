@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670AA30DD37;
-	Mon, 13 Oct 2025 15:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10553126D8;
+	Mon, 13 Oct 2025 15:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370024; cv=none; b=kwAG6AY88VQVdPJ5eG4xO9Pp3WqV390lfCjrM+K7tI1WAWYCbd+MHp1GmJBy1DnmPn9xSsD/r5NAT0G1x91i4+igbzTSADV+nrqkDqMmoQm2qqB54o+Q80KjJ/Lr4iPOdiqRVtFcCmJTM2rGyoDyMINqympphaGC21BZR0mdbhU=
+	t=1760370027; cv=none; b=WpoU7NKtFB8BZ8kDP/9uZbbHEbeI6YveR2PW+L/TMFKvH/t6Xb7um7dVrmvyVrvGY890QaeRTG0iuPQvObh5IOttHmPsWDl5GA49/ljRtOGYt6Qiv51pKqrIHpERixbzn06YGLlS9a1hQD3HuHzdv6CQ4XhVi/0/IJH+TMIyfMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370024; c=relaxed/simple;
-	bh=Ia43CtLu6+Se/o7JWCFDPa4qVNolTvnHVFU7WHYZZOQ=;
+	s=arc-20240116; t=1760370027; c=relaxed/simple;
+	bh=FsLplzXsr9d9cuok2qR8cTaprG+wiCz6KEnJwvHdAZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRvhsjQp5wqHOE0dQREE479xVU4qJ9F+NxSZCRrvKZ0eM/e6HvDmvyc0aCg4aVxRfeEieSH6OvcBnUSnDphqePI5AZwxgpAkjjdSEAGJzIbHQRWpp8zEzIjUC+4wAu8+Ok/8Ym5hjW6NAGltymhkJYUBQwNbWphMjcH0NYT96No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOwmq7DM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ztsa+5dZblYsp1rVwkYMkU+7IJSqDXNPqxa+vhA/fJ+ZSJo3+37MsM4soUKgTVSeLRWMoGdZAiKbzJNjlpqVTzkRrKFCtbSREGfDvoFqU0hdUrziu+ofKQuEMrlxS/x7TlJObQFE9TwO2o2dzX1AczvsZ0LdkCZPJjAEtqZk4lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaC6kLUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOwmq7DM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904D3C4CEE7;
-	Mon, 13 Oct 2025 15:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaC6kLUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BFAC4CEE7;
+	Mon, 13 Oct 2025 15:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370023;
-	bh=Ia43CtLu6+Se/o7JWCFDPa4qVNolTvnHVFU7WHYZZOQ=;
+	s=korg; t=1760370026;
+	bh=FsLplzXsr9d9cuok2qR8cTaprG+wiCz6KEnJwvHdAZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOwmq7DMIgwWIuD525ZFjtWOHhwAU57czaFYE7fveM5eXA0FTt0JVq4p6fN//zRbI
-	 bx6RFq99U/+9cPMKi9Wv/WEH47Dj/pClpFs3nCWnjewlXExj1dS9g34bnNl82p5c76
-	 mKybH2DO13GhC1h7ItoE0pOVLlrOWHsbAg3Rs1WI=
+	b=oaC6kLUWwZaavCtTjS5BO2pZMhDvODzOp03NoXpoHwXxikw61MR2DOr54uC/u7ZPo
+	 Dq2JYcmBtDSphq9dzOQrtkoQdb6iz8oHHdQeh37CRq5dYEr70kmXnZM/++ACbY55J/
+	 qxH1vb+tzpMr3F2aXaRofH6Np9k59eEHKok31NoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 418/563] remoteproc: qcom: pas: Shutdown lite ADSP DTB on X1E
-Date: Mon, 13 Oct 2025 16:44:39 +0200
-Message-ID: <20251013144426.432573118@linuxfoundation.org>
+Subject: [PATCH 6.17 419/563] wifi: ath12k: Refactor RX TID deletion handling into helper function
+Date: Mon, 13 Oct 2025 16:44:40 +0200
+Message-ID: <20251013144426.468095412@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,84 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
 
-[ Upstream commit 142964960c7c35de5c5f7bdd61c32699de693630 ]
+[ Upstream commit 7c32476253f11210ac24c7818ca07e19bc032521 ]
 
-The ADSP firmware on X1E has separate firmware binaries for the main
-firmware and the DTB. The same applies for the "lite" firmware loaded by
-the boot firmware.
+Refactor RX TID deletion handling by moving the REO command
+setup and send sequence into a new helper function:
+ath12k_dp_rx_tid_delete_handler().
 
-When preparing to load the new ADSP firmware we shutdown the lite_pas_id
-for the main firmware, but we don't shutdown the corresponding lite pas_id
-for the DTB. The fact that we're leaving it "running" forever becomes
-obvious if you try to reuse (or just access) the memory region used by the
-"lite" firmware: The &adsp_boot_mem is accessible, but accessing the
-&adsp_boot_dtb_mem results in a crash.
+This improves code readability and modularity, and prepares
+the codebase for potential reuse of the REO command logic in
+other contexts where RX TID deletion is required.
 
-We don't support reusing the memory regions currently, but nevertheless we
-should not keep part of the lite firmware running. Fix this by adding the
-lite_dtb_pas_id and shutting it down as well.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-We don't have a way to detect if the lite firmware is actually running yet,
-so ignore the return status of qcom_scm_pas_shutdown() for now. This was
-already the case before, the assignment to "ret" is not used anywhere.
-
-Fixes: 62210f7509e1 ("remoteproc: qcom_q6v5_pas: Unload lite firmware on ADSP")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-3-910b1a3aff71@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250806111750.3214584-3-nithyanantham.paramasivam@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Stable-dep-of: 5e32edc69425 ("wifi: ath12k: Fix flush cache failure during RX queue update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 27 +++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 02e29171cbbee..f3ec5b06261e8 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -42,6 +42,7 @@ struct qcom_pas_data {
- 	int pas_id;
- 	int dtb_pas_id;
- 	int lite_pas_id;
-+	int lite_dtb_pas_id;
- 	unsigned int minidump_id;
- 	bool auto_boot;
- 	bool decrypt_shutdown;
-@@ -80,6 +81,7 @@ struct qcom_pas {
- 	int pas_id;
- 	int dtb_pas_id;
- 	int lite_pas_id;
-+	int lite_dtb_pas_id;
- 	unsigned int minidump_id;
- 	int crash_reason_smem;
- 	unsigned int smem_host_id;
-@@ -226,6 +228,8 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index adb0cfe109e67..8c61c7f3bbdc9 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -21,6 +21,9 @@
  
- 	if (pas->lite_pas_id)
- 		ret = qcom_scm_pas_shutdown(pas->lite_pas_id);
-+	if (pas->lite_dtb_pas_id)
-+		qcom_scm_pas_shutdown(pas->lite_dtb_pas_id);
+ #define ATH12K_DP_RX_FRAGMENT_TIMEOUT_MS (2 * HZ)
  
- 	if (pas->dtb_pas_id) {
- 		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
-@@ -722,6 +726,7 @@ static int qcom_pas_probe(struct platform_device *pdev)
- 	pas->minidump_id = desc->minidump_id;
- 	pas->pas_id = desc->pas_id;
- 	pas->lite_pas_id = desc->lite_pas_id;
-+	pas->lite_dtb_pas_id = desc->lite_dtb_pas_id;
- 	pas->info_name = desc->sysmon_name;
- 	pas->smem_host_id = desc->smem_host_id;
- 	pas->decrypt_shutdown = desc->decrypt_shutdown;
-@@ -1085,6 +1090,7 @@ static const struct qcom_pas_data x1e80100_adsp_resource = {
- 	.pas_id = 1,
- 	.dtb_pas_id = 0x24,
- 	.lite_pas_id = 0x1f,
-+	.lite_dtb_pas_id = 0x29,
- 	.minidump_id = 5,
- 	.auto_boot = true,
- 	.proxy_pd_names = (char*[]){
++static int ath12k_dp_rx_tid_delete_handler(struct ath12k_base *ab,
++					     struct ath12k_dp_rx_tid *rx_tid);
++
+ static enum hal_encrypt_type ath12k_dp_rx_h_enctype(struct ath12k_base *ab,
+ 						    struct hal_rx_desc *desc)
+ {
+@@ -769,6 +772,21 @@ static void ath12k_dp_rx_tid_del_func(struct ath12k_dp *dp, void *ctx,
+ 	rx_tid->qbuf.vaddr = NULL;
+ }
+ 
++static int ath12k_dp_rx_tid_delete_handler(struct ath12k_base *ab,
++					     struct ath12k_dp_rx_tid *rx_tid)
++{
++	struct ath12k_hal_reo_cmd cmd = {};
++
++	cmd.flag = HAL_REO_CMD_FLG_NEED_STATUS;
++	cmd.addr_lo = lower_32_bits(rx_tid->qbuf.paddr_aligned);
++	cmd.addr_hi = upper_32_bits(rx_tid->qbuf.paddr_aligned);
++	cmd.upd0 |= HAL_REO_CMD_UPD0_VLD;
++
++	return ath12k_dp_reo_cmd_send(ab, rx_tid,
++				      HAL_REO_CMD_UPDATE_RX_QUEUE, &cmd,
++				      ath12k_dp_rx_tid_del_func);
++}
++
+ static void ath12k_peer_rx_tid_qref_setup(struct ath12k_base *ab, u16 peer_id, u16 tid,
+ 					  dma_addr_t paddr)
+ {
+@@ -828,20 +846,13 @@ static void ath12k_peer_rx_tid_qref_reset(struct ath12k_base *ab, u16 peer_id, u
+ void ath12k_dp_rx_peer_tid_delete(struct ath12k *ar,
+ 				  struct ath12k_peer *peer, u8 tid)
+ {
+-	struct ath12k_hal_reo_cmd cmd = {};
+ 	struct ath12k_dp_rx_tid *rx_tid = &peer->rx_tid[tid];
+ 	int ret;
+ 
+ 	if (!rx_tid->active)
+ 		return;
+ 
+-	cmd.flag = HAL_REO_CMD_FLG_NEED_STATUS;
+-	cmd.addr_lo = lower_32_bits(rx_tid->qbuf.paddr_aligned);
+-	cmd.addr_hi = upper_32_bits(rx_tid->qbuf.paddr_aligned);
+-	cmd.upd0 = HAL_REO_CMD_UPD0_VLD;
+-	ret = ath12k_dp_reo_cmd_send(ar->ab, rx_tid,
+-				     HAL_REO_CMD_UPDATE_RX_QUEUE, &cmd,
+-				     ath12k_dp_rx_tid_del_func);
++	ret = ath12k_dp_rx_tid_delete_handler(ar->ab, rx_tid);
+ 	if (ret) {
+ 		ath12k_err(ar->ab, "failed to send HAL_REO_CMD_UPDATE_RX_QUEUE cmd, tid %d (%d)\n",
+ 			   tid, ret);
 -- 
 2.51.0
 
