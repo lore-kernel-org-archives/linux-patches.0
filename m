@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460F530C37A;
-	Mon, 13 Oct 2025 15:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7139310620;
+	Mon, 13 Oct 2025 15:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368033; cv=none; b=aCzBocwUvu94KUyiLNZt48s3eiRBDnJ8z6+EBKSdLck+5i6a4SFobONOUZig0Zy6J+RcjXsN//Uoobu68Uo64EEiN04ZpdBnWQ+IyBIRr1q+ouW1t1dCSgbECyWd3Ie2iGSrhZqzLkci4GMAg6XF/vKyaOuMaz27qrJ9t+5WeOg=
+	t=1760368035; cv=none; b=FncQwXuGYxBgydwCONRIg9Cco1J1xECYaky4QYVK392VtwDbiaF0+vJ8E8hoEl9i258Cqy9CUWYZnY69t4ui8sLAxBw6zcug84llajY4Cf8bj77HjV+TerNBCYw1BPrQiS700HSqQ6rRSIb9MgC43NhsMgo8UbwB0p8LfJWocJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368033; c=relaxed/simple;
-	bh=aVNusDdpjQFpZIFBqBWO/hIf4hb/JmCuGTnR/UHXTPM=;
+	s=arc-20240116; t=1760368035; c=relaxed/simple;
+	bh=vbS7YjwnQ9a0rxE93ZvY5cNfOUDOHVH0VYN47uaxREY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YawTWdBQMIT0C5unO3cpCgYLAZs7lc8YWDVfYigICNp9peMYg9ZfTb6bncggCDiAkYgSIwKLjA2k/JE63nJHjhd1cCW274aapW9Srk7o1owCss3o/94+Xham4vLxI/dL9lmhF+RwQGUfzLprOwu6YqCVxRU/9jdd2N6l8GWv71E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYnKu/qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5DInfqWEmTB0dZw9U9pQTua+gQAWC4Qo0F23/fykXw0UxZAD5cv1ZyCE8GAC/nRYuiefiM/XLde14yqsmFmv8wDRrMqsvaf8pClKtzD1qpqtiQQ/8NIIobWnnBa7/Ut9UOSx5HqYwm0tgeAozCltYMlITZwZdZiQP83BU/IAVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plhCMr3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYnKu/qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C22C4CEE7;
-	Mon, 13 Oct 2025 15:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plhCMr3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF34C4CEE7;
+	Mon, 13 Oct 2025 15:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368032;
-	bh=aVNusDdpjQFpZIFBqBWO/hIf4hb/JmCuGTnR/UHXTPM=;
+	s=korg; t=1760368035;
+	bh=vbS7YjwnQ9a0rxE93ZvY5cNfOUDOHVH0VYN47uaxREY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYnKu/quaFypZKX1Z47Hn7tTxsIUz3rmfPHdW4haNRHBlG7AAgtcx+5FgRu7kxIOF
-	 IB8DOsBFIzRLY3/qsGg2uS+4xBnJELtM34SOM4nQUzzQeHYYhjWe4O3KmGkn+KqyjA
-	 8gyPYXKEkidaJiMqsX/smK6Az9aAXYYvy2eWR9iQ=
+	b=plhCMr3XZl5RoGwdBVYAEwuPgUR6OFLt4St1+e3tRFvB+EY+3pRCP86QJ998MKGq9
+	 5f30oNRRQ6NjLPgOqPwJESSY4k5sidYymDVIKUqYBf5KbQcfKx4INi/QKF6C1rVO1C
+	 szasPxtxQiZqmp13G9vCG+EctklYld6w4IKvswXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
+	Yureka Lilian <yuka@yuka.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/262] bpf: Remove migrate_disable in kprobe_multi_link_prog_run
-Date: Mon, 13 Oct 2025 16:42:42 +0200
-Message-ID: <20251013144326.858339146@linuxfoundation.org>
+Subject: [PATCH 6.12 021/262] libbpf: Fix reuse of DEVMAP
+Date: Mon, 13 Oct 2025 16:42:43 +0200
+Message-ID: <20251013144326.894348605@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,56 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Yureka Lilian <yuka@yuka.dev>
 
-[ Upstream commit abdaf49be5424db74e19d167c10d7dad79a0efc2 ]
+[ Upstream commit 6c6b4146deb12d20f42490d5013f2043df942161 ]
 
-Graph tracer framework ensures we won't migrate, kprobe_multi_link_prog_run
-called all the way from graph tracer, which disables preemption in
-function_graph_enter_regs, as Jiri and Yonghong suggested, there is no
-need to use migrate_disable. As a result, some overhead may will be reduced.
-And add cant_sleep check for __this_cpu_inc_return.
+Previously, re-using pinned DEVMAP maps would always fail, because
+get_map_info on a DEVMAP always returns flags with BPF_F_RDONLY_PROG set,
+but BPF_F_RDONLY_PROG being set on a map during creation is invalid.
 
-Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Thus, ignore the BPF_F_RDONLY_PROG flag in the flags returned from
+get_map_info when checking for compatibility with an existing DEVMAP.
+
+The same problem is handled in a third-party ebpf library:
+- https://github.com/cilium/ebpf/issues/925
+- https://github.com/cilium/ebpf/pull/930
+
+Fixes: 0cdbb4b09a06 ("devmap: Allow map lookups from eBPF")
+Signed-off-by: Yureka Lilian <yuka@yuka.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250814121430.2347454-1-chen.dylane@linux.dev
+Link: https://lore.kernel.org/bpf/20250814180113.1245565-3-yuka@yuka.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/lib/bpf/libbpf.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 3ec7df7dbeec4..4a44451efbcc6 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2759,19 +2759,24 @@ kprobe_multi_link_prog_run(struct bpf_kprobe_multi_link *link,
- 	struct bpf_run_ctx *old_run_ctx;
- 	int err;
- 
-+	/*
-+	 * graph tracer framework ensures we won't migrate, so there is no need
-+	 * to use migrate_disable for bpf_prog_run again. The check here just for
-+	 * __this_cpu_inc_return.
-+	 */
-+	cant_sleep();
-+
- 	if (unlikely(__this_cpu_inc_return(bpf_prog_active) != 1)) {
- 		bpf_prog_inc_misses_counter(link->link.prog);
- 		err = 0;
- 		goto out;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index e33cf3caf8b64..ac5ad30266a5e 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -5056,6 +5056,16 @@ static bool map_is_reuse_compat(const struct bpf_map *map, int map_fd)
+ 		return false;
  	}
  
--	migrate_disable();
- 	rcu_read_lock();
- 	old_run_ctx = bpf_set_run_ctx(&run_ctx.session_ctx.run_ctx);
- 	err = bpf_prog_run(link->link.prog, regs);
- 	bpf_reset_run_ctx(old_run_ctx);
- 	rcu_read_unlock();
--	migrate_enable();
- 
-  out:
- 	__this_cpu_dec(bpf_prog_active);
++	/*
++	 * bpf_get_map_info_by_fd() for DEVMAP will always return flags with
++	 * BPF_F_RDONLY_PROG set, but it generally is not set at map creation time.
++	 * Thus, ignore the BPF_F_RDONLY_PROG flag in the flags returned from
++	 * bpf_get_map_info_by_fd() when checking for compatibility with an
++	 * existing DEVMAP.
++	 */
++	if (map->def.type == BPF_MAP_TYPE_DEVMAP || map->def.type == BPF_MAP_TYPE_DEVMAP_HASH)
++		map_info.map_flags &= ~BPF_F_RDONLY_PROG;
++
+ 	return (map_info.type == map->def.type &&
+ 		map_info.key_size == map->def.key_size &&
+ 		map_info.value_size == map->def.value_size &&
 -- 
 2.51.0
 
