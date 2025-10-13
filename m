@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA83630DEA0;
-	Mon, 13 Oct 2025 15:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859DB312812;
+	Mon, 13 Oct 2025 15:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370061; cv=none; b=uE8hr9xXD92FN72r2hrdB1Hgdc4fE02A4K87RIrd8VwfyvvbFalQHNHJZoUnNTNs8grTirqXdNM0iUSkSW346Rb8MiVcat8X3VWtCXjl5X/zWj7ysGUrIARQirURg2TfMYNZgNjTn4O8ur77LAAt/Xm+IbVfvsDmDPAMYz0qF7g=
+	t=1760370063; cv=none; b=B2RqTv2GhssDahvyhd/rEFwatrg8T9qycR8YVgEIUtKjjCsD9mNDlCc4R5fhBwhvyyzoc26fkxwKRCIk7jOFAPjEZW1XGV24fhTrdcXrgUfmeA4kXrdxnyF623ua7hUFeaZNkwDQa1a3sdyhfxWzqr1Zdsd4Xtnq2/yWYAgRRhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370061; c=relaxed/simple;
-	bh=Tk98j2ADW+HXb0Uz4nnfLZ0CBQi/A7Z4gMMgT/NRIx8=;
+	s=arc-20240116; t=1760370063; c=relaxed/simple;
+	bh=/pJEl/i4RiNgxfpdFXiAf8AkpeiCaUxyLjLRhhnSOSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxfX1c4bUtRPLVEDYDUN0KzBWOBhDTf1CiJ2HhMXCXxYsvzTkl5KEDjlH0gwSucBKqaPbxbMXrYt4NtTqgO/U8HXGXu/+I+AH1b1APsjZ1soLAWS4DzYmSzrtiRSI49LoEBfYUh8BAKi+GLkWWsHKUNBRvjO7wumGS8YUeQLJgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbtBLBKd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1fklthse/3rlVH19qdri3oVVDl6ZDkg46xbp+FkjwzttffL9uoqSof6+EitfQtEHSupHu93CQkUbaEA44MMauM83U1IuYvQzPNQQ1vdpum+3FIeYzdFZrue4IH8Fs4bF/nZPiZJbwyEANQOGhwNJZUkZJ3g1nOS+H7KOaAUq64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0er+Kt3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbtBLBKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF145C4CEE7;
-	Mon, 13 Oct 2025 15:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0er+Kt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFE3C4CEE7;
+	Mon, 13 Oct 2025 15:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370060;
-	bh=Tk98j2ADW+HXb0Uz4nnfLZ0CBQi/A7Z4gMMgT/NRIx8=;
+	s=korg; t=1760370063;
+	bh=/pJEl/i4RiNgxfpdFXiAf8AkpeiCaUxyLjLRhhnSOSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbtBLBKdhbDWi3u/HqIAF+XrhWSWVBuHy0XoT2V9C+S9TcmcckORoLXh7MGJ/Oy5+
-	 dZqml6Z/rowvg0zudwOheKJF9/0g0EREqrD0T/1rZ0ZHKRej/XvJ1erZoGVS0L+prv
-	 zXm9eh3Z28tHCVwSsQrpAWz9D1cb9vmqKcLMPa2o=
+	b=k0er+Kt3s0PtViiE7DdbgfMm2YmuTNi102gL7OsGYjn6AXpvaOzWTZCDDVuY/ny8+
+	 0ben1StWgce2v21jcZ1mdmOxRGcOOH89/VCjXTSxM8+5bFADW9e3ITrYNNZM3tsKK8
+	 09DWEL8dUVn7r8fUrKSp3IGR8Vtc2IQfsUlONLx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Goldwyn Rodrigues <rgoldwyn@suse.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Chris Mason <clm@meta.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 465/563] ocfs2: fix double free in user_cluster_connect()
-Date: Mon, 13 Oct 2025 16:45:26 +0200
-Message-ID: <20251013144428.133479599@linuxfoundation.org>
+Subject: [PATCH 6.17 466/563] drivers/base/node: fix double free in register_one_node()
+Date: Mon, 13 Oct 2025 16:45:27 +0200
+Message-ID: <20251013144428.170614452@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -58,42 +62,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit 8f45f089337d924db24397f55697cda0e6960516 ]
+[ Upstream commit 0efdedfa537eb534c251a5b4794caaf72cc55869 ]
 
-user_cluster_disconnect() frees "conn->cc_private" which is "lc" but then
-the error handling frees "lc" a second time.  Set "lc" to NULL on this
-path to avoid a double free.
+When device_register() fails in register_node(), it calls
+put_device(&node->dev).  This triggers node_device_release(), which calls
+kfree(to_node(dev)), thereby freeing the entire node structure.
 
-Link: https://lkml.kernel.org/r/aNKDz_7JF7aycZ0k@stanley.mountain
-Fixes: c994c2ebdbbc ("ocfs2: use the new DLM operation callbacks while requesting new lockspace")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Goldwyn Rodrigues <rgoldwyn@suse.de>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+As a result, when register_node() returns an error, the node memory has
+already been freed.  Calling kfree(node) again in register_one_node()
+leads to a double free.
+
+This patch removes the redundant kfree(node) from register_one_node() to
+prevent the double free.
+
+Link: https://lkml.kernel.org/r/20250918054144.58980-1-donettom@linux.ibm.com
+Fixes: 786eb990cfb7 ("drivers/base/node: handle error properly in register_one_node()")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Chris Mason <clm@meta.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stack_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/node.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/ocfs2/stack_user.c b/fs/ocfs2/stack_user.c
-index 0f045e45fa0c3..439742cec3c26 100644
---- a/fs/ocfs2/stack_user.c
-+++ b/fs/ocfs2/stack_user.c
-@@ -1011,6 +1011,7 @@ static int user_cluster_connect(struct ocfs2_cluster_connection *conn)
- 			printk(KERN_ERR "ocfs2: Could not determine"
- 					" locking version\n");
- 			user_cluster_disconnect(conn);
-+			lc = NULL;
- 			goto out;
- 		}
- 		wait_event(lc->oc_wait, (atomic_read(&lc->oc_this_node) > 0));
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index 45d512939c408..67b01d5797377 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -887,7 +887,6 @@ int register_one_node(int nid)
+ 	error = register_node(node_devices[nid], nid);
+ 	if (error) {
+ 		node_devices[nid] = NULL;
+-		kfree(node);
+ 		return error;
+ 	}
+ 
 -- 
 2.51.0
 
