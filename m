@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1B13081C0;
-	Mon, 13 Oct 2025 14:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC5930EF64;
+	Mon, 13 Oct 2025 14:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366934; cv=none; b=PHuUay1Zu5tvADP2Im1sR952lCFDo4wucWgRKrZjYfwcoM2oPJpOTbLh5yuuEDvF4fy07a2BdUNRpCTWOTVGLNVLXIc4eTQdZLvyq35xZlNawZlsJOcqZ+g1T/tVMXoXsdlv863XszuRO4qBUtPmltn8gfmZG8+5aUCELBlEhW8=
+	t=1760366936; cv=none; b=UdyQMtqHK4YVLmMP3NIc+z1HN0Su6rDG3EHN6bqajuQWFQZdwX+emTlgSPopi4LMqEwN2cy13W4SF/QO13KpyENhQJyCXD21P6HE3GQyVCHNyyldPuOIZ16e+NsCiK13LYeyodvkS2POSf6c2pXd/R2LzlcQ0x4ZPpdViL2qUQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366934; c=relaxed/simple;
-	bh=UAVx8b7WAN5w48YBAb8lJ2IoppNH72VjkUeHAanGm5w=;
+	s=arc-20240116; t=1760366936; c=relaxed/simple;
+	bh=hf0MeK9gtfLPbD0IftvB1VOcBKcDO47JzrbiJxpJ8kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJigr0HKNfZqTT/IxhST6SLKK+VS2A4ktlRoejf40KpxzhPuEURwxUrcShHwDo2V+UyF/7BJ+W0z9FedX4tqUqJRSRQmEcMzd8rl/MUH8MKrVOh3MvJDJpDSfGLYje/iQvx36POYWECB+VImRPrSmxlYMF0xX8x9Cxb7jqOWTXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym4uDeV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baMwR6w6v5OMnJZavg5XIBiXCitNkBycAAJ73beHUE+qYgw7uY/v4HTtFz2SZ5+fU7nlxwqt1I91jvbI9BME4oWOR3EGZ/syp95mGs0sOr0GayHDdhXbZwn3d646L8TXW4lKFTJ89OhMTNf+XBxKU9loQME3oc3XybZhiSMXEy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGHm4+ga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym4uDeV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBEAC4CEE7;
-	Mon, 13 Oct 2025 14:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGHm4+ga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E3DC4CEE7;
+	Mon, 13 Oct 2025 14:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366933;
-	bh=UAVx8b7WAN5w48YBAb8lJ2IoppNH72VjkUeHAanGm5w=;
+	s=korg; t=1760366936;
+	bh=hf0MeK9gtfLPbD0IftvB1VOcBKcDO47JzrbiJxpJ8kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ym4uDeV71Vke/N0p3EP7ZT2pwde6uiXBApbLUq2glH/MCVwYgjMC2WudfBXZPudBp
-	 UVKn3t5XnLLCWoT88ONCjZm1KZnK//ZeOpKDdbIusOY4Yl48HnJn/4RyU5aCtgA5Jr
-	 f1DGEkwsh1zBdgz4G+ndF0NY1navGm2SbRzh/kuY=
+	b=aGHm4+gaJ/cNiddFX5CzznWewot1ijWHcUcBCH+xaDlg3B2wX1bLNDwSRY3d7ZGR+
+	 YrqK47ipzYNuM8LSs3YuaeA1IEQao41duNtZIME60L4ppfjfmt26uV85xemNYVv8ZS
+	 xsU238q1tlfof4ut/46SkWo+aEFeIF/uaf+nL4Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Yu <jack.yu@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+9c3e0cdfbfe351b0bc0e@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/196] ASoC: rt5682s: Adjust SAR ADC button mode to fix noise issue
-Date: Mon, 13 Oct 2025 16:43:27 +0200
-Message-ID: <20251013144315.821837339@linuxfoundation.org>
+Subject: [PATCH 6.1 035/196] btrfs: ref-verify: handle damaged extent root tree
+Date: Mon, 13 Oct 2025 16:43:28 +0200
+Message-ID: <20251013144315.857671990@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,81 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Yu <jack.yu@realtek.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 1dd28fd86c3fa4e395031dd6f2ba920242107010 ]
+[ Upstream commit ed4e6b5d644c4dd2bc2872ffec036b7da0ec2e27 ]
 
-Adjust register settings for SAR adc button detection mode
-to fix noise issue in headset.
+Syzbot hits a problem with enabled ref-verify, ignorebadroots and a
+fuzzed/damaged extent tree. There's no fallback option like in other
+places that can deal with it so disable the whole ref-verify as it is
+just a debugging feature.
 
-Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Link: https://patch.msgid.link/766cd1d2dd7a403ba65bb4cc44845f71@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: syzbot+9c3e0cdfbfe351b0bc0e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/0000000000001b6052062139be1c@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5682s.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/btrfs/ref-verify.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5682s.c b/sound/soc/codecs/rt5682s.c
-index 07d514b4ce707..76f07ef142246 100644
---- a/sound/soc/codecs/rt5682s.c
-+++ b/sound/soc/codecs/rt5682s.c
-@@ -653,14 +653,15 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
- 	switch (mode) {
- 	case SAR_PWR_SAVING:
- 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_3,
--			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_DIS);
-+			RT5682S_CBJ_IN_BUF_MASK, RT5682S_CBJ_IN_BUF_EN);
- 		snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
--			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK,
--			RT5682S_CTRL_MB1_REG | RT5682S_CTRL_MB2_REG);
-+			RT5682S_MB1_PATH_MASK | RT5682S_MB2_PATH_MASK |
-+			RT5682S_VREF_POW_MASK, RT5682S_CTRL_MB1_FSM |
-+			RT5682S_CTRL_MB2_FSM | RT5682S_VREF_POW_FSM);
- 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
- 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
- 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
--			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
-+			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
- 		usleep_range(5000, 5500);
- 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
- 			RT5682S_SAR_BUTDET_MASK, RT5682S_SAR_BUTDET_EN);
-@@ -688,7 +689,7 @@ static void rt5682s_sar_power_mode(struct snd_soc_component *component, int mode
- 		snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
- 			RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
- 			RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
--			RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
-+			RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
- 		break;
- 	default:
- 		dev_err(component->dev, "Invalid SAR Power mode: %d\n", mode);
-@@ -725,7 +726,7 @@ static void rt5682s_disable_push_button_irq(struct snd_soc_component *component)
- 	snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
- 		RT5682S_SAR_BUTDET_MASK | RT5682S_SAR_BUTDET_POW_MASK |
- 		RT5682S_SAR_SEL_MB1_2_CTL_MASK, RT5682S_SAR_BUTDET_DIS |
--		RT5682S_SAR_BUTDET_POW_SAV | RT5682S_SAR_SEL_MB1_2_MANU);
-+		RT5682S_SAR_BUTDET_POW_NORM | RT5682S_SAR_SEL_MB1_2_MANU);
- }
+diff --git a/fs/btrfs/ref-verify.c b/fs/btrfs/ref-verify.c
+index 56ceb23bd7409..195fce42b982d 100644
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -987,11 +987,18 @@ int btrfs_build_ref_tree(struct btrfs_fs_info *fs_info)
+ 	if (!btrfs_test_opt(fs_info, REF_VERIFY))
+ 		return 0;
  
- /**
-@@ -786,7 +787,7 @@ static int rt5682s_headset_detect(struct snd_soc_component *component, int jack_
- 			jack_type = SND_JACK_HEADSET;
- 			snd_soc_component_write(component, RT5682S_SAR_IL_CMD_3, 0x024c);
- 			snd_soc_component_update_bits(component, RT5682S_CBJ_CTRL_1,
--				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_EN);
-+				RT5682S_FAST_OFF_MASK, RT5682S_FAST_OFF_DIS);
- 			snd_soc_component_update_bits(component, RT5682S_SAR_IL_CMD_1,
- 				RT5682S_SAR_SEL_MB1_2_MASK, val << RT5682S_SAR_SEL_MB1_2_SFT);
- 			rt5682s_enable_push_button_irq(component);
-@@ -966,7 +967,7 @@ static int rt5682s_set_jack_detect(struct snd_soc_component *component,
- 			RT5682S_EMB_JD_MASK | RT5682S_DET_TYPE |
- 			RT5682S_POL_FAST_OFF_MASK | RT5682S_MIC_CAP_MASK,
- 			RT5682S_EMB_JD_EN | RT5682S_DET_TYPE |
--			RT5682S_POL_FAST_OFF_HIGH | RT5682S_MIC_CAP_HS);
-+			RT5682S_POL_FAST_OFF_LOW | RT5682S_MIC_CAP_HS);
- 		regmap_update_bits(rt5682s->regmap, RT5682S_SAR_IL_CMD_1,
- 			RT5682S_SAR_POW_MASK, RT5682S_SAR_POW_EN);
- 		regmap_update_bits(rt5682s->regmap, RT5682S_GPIO_CTRL_1,
++	extent_root = btrfs_extent_root(fs_info, 0);
++	/* If the extent tree is damaged we cannot ignore it (IGNOREBADROOTS). */
++	if (IS_ERR(extent_root)) {
++		btrfs_warn(fs_info, "ref-verify: extent tree not available, disabling");
++		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
++		return 0;
++	}
++
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
+ 
+-	extent_root = btrfs_extent_root(fs_info, 0);
+ 	eb = btrfs_read_lock_root_node(extent_root);
+ 	level = btrfs_header_level(eb);
+ 	path->nodes[level] = eb;
 -- 
 2.51.0
 
