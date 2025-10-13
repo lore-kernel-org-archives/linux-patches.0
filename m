@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D7830649D;
-	Mon, 13 Oct 2025 14:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1135A3081B3;
+	Mon, 13 Oct 2025 14:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367417; cv=none; b=o2oK7697CmeLX+Z7OBjKY8XBQxGqlRwZmGHPWzXqrc+OJd9MOEEaUhI4VhLclS50reCE7gXohe5MGpNH6bl+8bJ53SY+hsCglJvImLCeMsvvfx6DBS4sDrk4uLc/v2uF5ivU613LdSDaTSLTtSPh/2Zdj5j21lG+yi4PTxnzcx4=
+	t=1760367420; cv=none; b=DCtTHC7Bdqwz1N+1SDmkqqm3aCZbbNGAVJV0Wcn6J9E8RtUhslX3Xpz8RLuf4HxtteXj9BQ5dWovFuF1Rv525qFoM9dDuJsU81e9J1jYNN3iVv/GPanNS6shJ/V/HQm8yCpmweAlfaXINDt/MVVuKg3y+R1BnHJ2tJzkAi+70jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367417; c=relaxed/simple;
-	bh=SY5ANba5mQAEQ5B4+DJUpHnANAcVBNpxAE1wsIJsLl0=;
+	s=arc-20240116; t=1760367420; c=relaxed/simple;
+	bh=q5CQu7NsdPDYOvHTTswwRtl6ABcGEqY/XR6/218t5O4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgWzcWdrjCana/PjR0n/0BVG2OQ13AMaCSNWahOeWMiT56BBCBQ0qulY1X4WGlw3ohK8uKu51c8kSTy2AwDx7saCnFP0tJRsL42eBw0y6uNLjXaa+SDdvGOCqELOvLlnBRrz04LGzKiEzowpn1Bk+xXdJPg4wKiNBX3q5MIMKrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygpVjzxM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GU2JeE96cFYkDTMtb/IaxXMhmkUuT3Af7axY0x2Tsw8xqBHj/w+rJB/wsl3au1zZ3MMCuN1eo1htjxwv7oDxToTmEXLCaxtNrSrojLwTY42e5D5VUoSLXgqAReDFem/jicXrUNzzKo5+Vts2AEQ8PmEVZfTsPicpIK9U3u7nHh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqrpL0jL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygpVjzxM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5422C4CEE7;
-	Mon, 13 Oct 2025 14:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqrpL0jL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C67BC4CEE7;
+	Mon, 13 Oct 2025 14:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367417;
-	bh=SY5ANba5mQAEQ5B4+DJUpHnANAcVBNpxAE1wsIJsLl0=;
+	s=korg; t=1760367419;
+	bh=q5CQu7NsdPDYOvHTTswwRtl6ABcGEqY/XR6/218t5O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygpVjzxMeUtnn4KWoWOqgpyWt4fIbWi9CAgh83RBbdwU2FP4E8QehQP84V3sH6WgR
-	 k9NW8XjFSPhK//7yvt4b1rk2j8jo09Zok3p5z67iwQNU+siESYUgNd+mdTpBcj13UP
-	 YYoHGdoCKFFc6w4bSU8bD8fgrujTNyMulNYa6p+I=
+	b=YqrpL0jL8yxPyr6WMjQgv+zH3aErOfkpTlKX+XFCGOZS4Wd9Ppz6+ClPs4vzR7RvH
+	 dzX8+oOUyqyTipIos14Hdy0o5FxdGoRkhnpznp4pD822V/CyZYX02lLY5Q7AoNg+za
+	 C59h/R66qdKXq7T0G5ggqFDVqhb03oWDOj5tAyNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Pierre Gondois <pierre.gondois@arm.com>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.1 194/196] cacheinfo: Initialize variables in fetch_cache_info()
-Date: Mon, 13 Oct 2025 16:46:07 +0200
-Message-ID: <20251013144321.708322224@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 6.1 195/196] cacheinfo: Fix LLC is not exported through sysfs
+Date: Mon, 13 Oct 2025 16:46:08 +0200
+Message-ID: <20251013144321.744322113@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,37 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-commit ecaef469920fd6d2c7687f19081946f47684a423 upstream.
+commit 5c2712387d4850e0b64121d5fd3e6c4e84ea3266 upstream.
 
-Set potentially uninitialized variables to 0. This is particularly
-relevant when CONFIG_ACPI_PPTT is not set.
+After entering 6.3-rc1 the LLC cacheinfo is not exported on our ACPI
+based arm64 server. This is because the LLC cacheinfo is partly reset
+when secondary CPUs boot up. On arm64 the primary cpu will allocate
+and setup cacheinfo:
+init_cpu_topology()
+  for_each_possible_cpu()
+    fetch_cache_info() // Allocate cacheinfo and init levels
+detect_cache_attributes()
+  cache_shared_cpu_map_setup()
+    if (!last_level_cache_is_valid()) // not valid, setup LLC
+      cache_setup_properties() // setup LLC
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202301052307.JYt1GWaJ-lkp@intel.com/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/all/Y86iruJPuwNN7rZw@kili/
+On secondary CPU boot up:
+detect_cache_attributes()
+  populate_cache_leaves()
+    get_cache_type() // Get cache type from clidr_el1,
+                     // for LLC type=CACHE_TYPE_NOCACHE
+  cache_shared_cpu_map_setup()
+    if (!last_level_cache_is_valid()) // Valid and won't go to this branch,
+                                      // leave LLC's type=CACHE_TYPE_NOCACHE
+
+The last_level_cache_is_valid() use cacheinfo->{attributes, fw_token} to
+test it's valid or not, but populate_cache_leaves() will only reset
+LLC's type, so we won't try to re-setup LLC's type and leave it
+CACHE_TYPE_NOCACHE and won't export it through sysfs.
+
+This patch tries to fix this by not re-populating the cache leaves if
+the LLC is valid.
+
 Fixes: 5944ce092b97 ("arch_topology: Build cacheinfo from primary CPU")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230124154053.355376-2-pierre.gondois@arm.com
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://lore.kernel.org/r/20230328114915.33340-1-yangyicong@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cacheinfo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/cacheinfo.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 --- a/drivers/base/cacheinfo.c
 +++ b/drivers/base/cacheinfo.c
-@@ -440,7 +440,7 @@ int allocate_cache_info(int cpu)
- int fetch_cache_info(unsigned int cpu)
- {
- 	struct cpu_cacheinfo *this_cpu_ci;
--	unsigned int levels, split_levels;
-+	unsigned int levels = 0, split_levels = 0;
- 	int ret;
+@@ -490,12 +490,18 @@ int detect_cache_attributes(unsigned int
  
- 	if (acpi_disabled) {
+ populate_leaves:
+ 	/*
+-	 * populate_cache_leaves() may completely setup the cache leaves and
+-	 * shared_cpu_map or it may leave it partially setup.
++	 * If LLC is valid the cache leaves were already populated so just go to
++	 * update the cpu map.
+ 	 */
+-	ret = populate_cache_leaves(cpu);
+-	if (ret)
+-		goto free_ci;
++	if (!last_level_cache_is_valid(cpu)) {
++		/*
++		 * populate_cache_leaves() may completely setup the cache leaves and
++		 * shared_cpu_map or it may leave it partially setup.
++		 */
++		ret = populate_cache_leaves(cpu);
++		if (ret)
++			goto free_ci;
++	}
+ 
+ 	/*
+ 	 * For systems using DT for cache hierarchy, fw_token
 
 
