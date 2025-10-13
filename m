@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F781E9B0D;
-	Mon, 13 Oct 2025 15:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503CC1EF36E;
+	Mon, 13 Oct 2025 15:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369130; cv=none; b=lpxyEUVMHV2+UfIBn69RSqrjpKql9OUASHaJIHMpBHYN9shB2PkF/ff8IPP3NMmkeP3MSLqOoFGXtyHD5ApwuIxTXH0duyD/HFXLiLEMznZ0Y2UFkrRuSV/1J/1PR4ihHbhApcA26OiVQ74nDz8YQEap4HYnvLuoJwQpHwYemYg=
+	t=1760369133; cv=none; b=mszELaEDzk019faoWCRAvD8JAjDDfcvdJg7tOxiK/Z+uja4FKscj/xw/vIY008NOXewabb+wcKT/8/XW773m4UUDtXqQVqVbkg5gSCpNVaYbdNmWZanAmuLWVHyx5Z/o35rah9S0QuZHuhwupMw+KNshuhEGbScbKd5HlMzy+rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369130; c=relaxed/simple;
-	bh=6gd14LNcYfFUp19crJ8MxBX2HYQVRp+rZDwpZHPlrlc=;
+	s=arc-20240116; t=1760369133; c=relaxed/simple;
+	bh=kgDUFYMSbrNPmmkknK6LdoCX9rTvLtLNivKATv+hp3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MunvNwaM1iuXCATQvqoOPiWYL1zzZzPs/CIE3P2cqIm4IN+Qt2tMPR+ggfWBeR576Ak5GzMW3xyoC1mC8tIE4A2DmgTUj0k8H95C3GZLCVI+ZUWNk9V9pp6AjGaEm3tlBjuaaqnUxF82XrjXqKoQht2L6mn/KdZa1lgFRqUhQfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LR1+K3Y4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kG2KMuiuG9v4scEJVxQfT4BQl/NbgGpUntwjLDd/HGdwnCHGIuGbM5MwNvRjlVLNi098vgJeaca1smGlRh5WI55kk28Y6fv9VK6Cktwr1uMjEmtC7kl8stpaMXTpNnVR0Aecf2cJK1N/yfIgv7HLvxCOf3Y/q7ntLSeaNjO5EW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWT7cDbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LR1+K3Y4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A84C4CEE7;
-	Mon, 13 Oct 2025 15:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWT7cDbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C0DC4CEE7;
+	Mon, 13 Oct 2025 15:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369130;
-	bh=6gd14LNcYfFUp19crJ8MxBX2HYQVRp+rZDwpZHPlrlc=;
+	s=korg; t=1760369133;
+	bh=kgDUFYMSbrNPmmkknK6LdoCX9rTvLtLNivKATv+hp3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LR1+K3Y4etT3gSt5gPvZtlYQT4TyRVD/wHNYJS4hfkEUROVf9n4rOHdoIYKJwLCK/
-	 bic1iB4QPGmZll14clVxNJt/eDTBAX5dXOq0vnPL6U8Smozr9UWPnoTuA9l3Gy5ISe
-	 ak+NZhFpifHtNTqPwveDq6F/eN9yoBntJ1ed3C5Q=
+	b=EWT7cDbWF1kt++cl7ZW+orVPsgUBbMAjMk89vAQcnrrVQH3Imx8sW0yw10A5ts5B9
+	 gl8DPg6rLoWRSp0tgZIZrU2UKpG6PVhXq8v9UvGOf5H/hqaYpuBXukQPInHbuCYsf9
+	 EvUhaPf+/lpt05vtx3aWn2pBeAmV0CMzByk27Jzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Davis <afd@ti.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 139/563] Revert "arm64: dts: ti: k3-j721e-sk: Fix reversed C6x carveout locations"
-Date: Mon, 13 Oct 2025 16:40:00 +0200
-Message-ID: <20251013144416.328108332@linuxfoundation.org>
+Subject: [PATCH 6.17 140/563] Revert "arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations"
+Date: Mon, 13 Oct 2025 16:40:01 +0200
+Message-ID: <20251013144416.364937777@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,9 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Beleswar Padhi <b-padhi@ti.com>
 
-[ Upstream commit 79a1778c7819c8491cdbdc1f7e46d478cb84d5cf ]
+[ Upstream commit 932424a925ce79cbed0a93d36c5f1b69a0128de1 ]
 
-This reverts commit 9f3814a7c06b7c7296cf8c1622078ad71820454b.
+This reverts commit 1a314099b7559690fe23cdf3300dfff6e830ecb1.
 
 The C6x carveouts are reversed intentionally. This is due to the
 requirement to keep the DMA memory region as non-cached, however the
@@ -66,27 +66,27 @@ memory region of C66x_1 as its own, and vice-versa.
 
 This was also called out in the original commit which introduced these
 reversed carveouts:
-	"The minimum granularity on the Cache settings on C66x DSP cores
-	is 16MB, so the DMA memory regions are chosen such that they are
-	in separate 16MB regions for each DSP, while reserving a total
-	of 16 MB for each DSP and not changing the overall DSP
-	remoteproc carveouts."
+	"The minimum granularity on the Cache settings on C66x DSP
+	cores is 16MB, so the DMA memory regions are chosen such that
+	they are in separate 16MB regions for each DSP, while reserving
+	a total of 16 MB for each DSP and not changing the overall DSP
+        remoteproc carveouts."
 
-Fixes: 9f3814a7c06b ("arm64: dts: ti: k3-j721e-sk: Fix reversed C6x carveout locations")
+Fixes: 1a314099b755 ("arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations")
 Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
 Acked-by: Andrew Davis <afd@ti.com>
-Link: https://patch.msgid.link/20250908142826.1828676-22-b-padhi@ti.com
+Link: https://patch.msgid.link/20250908142826.1828676-23-b-padhi@ti.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk.dts | 6 ++++--
+ arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-index d1b0257048de2..488c5ebe9e272 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-@@ -120,7 +120,8 @@ main_r5fss1_core1_memory_region: memory@a5100000 {
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+index 6a1b32169678e..bb771ce823ec1 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+@@ -123,7 +123,8 @@ main_r5fss1_core1_memory_region: memory@a5100000 {
  			no-map;
  		};
  
@@ -96,7 +96,7 @@ index d1b0257048de2..488c5ebe9e272 100644
  			compatible = "shared-dma-pool";
  			reg = <0x00 0xa6000000 0x00 0x100000>;
  			no-map;
-@@ -132,7 +133,8 @@ c66_0_memory_region: memory@a6100000 {
+@@ -135,7 +136,8 @@ c66_0_memory_region: memory@a6100000 {
  			no-map;
  		};
  
