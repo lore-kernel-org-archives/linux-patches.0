@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49365228CB0;
-	Mon, 13 Oct 2025 15:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AADC309DB1;
+	Mon, 13 Oct 2025 15:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370049; cv=none; b=fyjxq6CJfj+jCLyiIMUZh5+p9MW1+hky2FMIMTdjCYy+DRWuj9ifNNlwUHyzn1QFy2Lw72UTVHPf7bn/2J2JQHfz5pvMtJ31ugKrxj74ZhI51YhmLQRqeE40eFh+V526gditcKJcw1zXIY8BGCBhsIyXbzfEgHI2tyvbwggULZw=
+	t=1760370052; cv=none; b=ZxnDB56w5LQNssLA0n+rsDIVO12T1nYtE2CRWo4SwdGdq7ZVz5QxDQbc04PV77KbunaCB6rc+tWfDic/HNSFNroVTRgNNn0OfqaPk8Z2e/1qFOhmqkbxCIEFqJ4Uj/y6Q5xFmqlaAAYc57UPM91CWc5ReaAptMzhw8tKL4eoKQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370049; c=relaxed/simple;
-	bh=1cH4kgdlW8y5Eie+oIkHKMD0tjS2g+TPBOMqwQ3AMIc=;
+	s=arc-20240116; t=1760370052; c=relaxed/simple;
+	bh=hEklShDnOjoWjxyHvrcFgudvuUTRX6QaojxMhw7+N84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+ToM0VM6dQ4MB1fe/Bjx18cm8Q7wGz9vUj0k0NLf8XiVlOVo/XbDNXwewsEiupFDPN6mMy7v5wF1eqQhFQ1TSzmI6CRlJqd89ECddOtHvh3upSJMEGeEosYnv6uTpi93Pkl+N/aSZy+0XfFF9y+u4EbRE6V02YRUCZRG4P359c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jH4XZ0RU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwzhjULz2OeqBnu2yR1MNhE62TNMA6u+UG+TK9is71WSU5DcnbQbN8Sa9NvWl7DvzREPWGaocGXKR44+/oLC7eIt5psU85/9ECMqwgzU4Hoz86bIDCepGkN7yiYGxEI9EZ5riun80WTTrN3ErhI+mmmmZ3C8lx5pn7gP8QHRYMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0cjJyyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jH4XZ0RU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA467C4CEFE;
-	Mon, 13 Oct 2025 15:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0cjJyyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45E6C4CEE7;
+	Mon, 13 Oct 2025 15:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370049;
-	bh=1cH4kgdlW8y5Eie+oIkHKMD0tjS2g+TPBOMqwQ3AMIc=;
+	s=korg; t=1760370052;
+	bh=hEklShDnOjoWjxyHvrcFgudvuUTRX6QaojxMhw7+N84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jH4XZ0RU50xQNYR3YhOazSPLCN4RdWwKKoL/h6nHcYkBfOBKzp7c3wOB2vphKb7Kx
-	 uUoC2W0oquYbrIsM+dXzbiQZy8p02WvfpyLDfu7uXK1IRIfrjkZzE2DvAK5ehgWLD7
-	 bHABPp63VR5kOkCDryBMTQBKKuoEJ9qwDFmxyzrE=
+	b=E0cjJyyCiYDqt1qYg2UEHbWBKaJrw2R8Oy90NvTXzmlk7U9n+ABPrOEoqK/Fld8UX
+	 +Gptl7H+7/ENW3fHrIIS/LY3jCvffe9jGAXKYMR+2rL844BfmWAN5BPWU7mBBQfuGe
+	 4nxwyM7n7/H3sUmBDpJN/dXSgeoU0ujQ0hIHsOac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Fan Wu <wufan@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 461/563] Bluetooth: hci_sync: Fix using random address for BIG/PA advertisements
-Date: Mon, 13 Oct 2025 16:45:22 +0200
-Message-ID: <20251013144427.985732320@linuxfoundation.org>
+Subject: [PATCH 6.17 462/563] KEYS: X.509: Fix Basic Constraints CA flag parsing
+Date: Mon, 13 Oct 2025 16:45:23 +0200
+Message-ID: <20251013144428.021389473@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,54 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Fan Wu <wufan@kernel.org>
 
-[ Upstream commit 03ddb4ac251463ec5b7b069395d9ab89163dd56c ]
+[ Upstream commit 5851afffe2ab323a53e184ba5a35fddf268f096b ]
 
-When creating an advertisement for BIG the address shall not be
-non-resolvable since in case of acting as BASS/Broadcast Assistant the
-address must be the same as the connection in order to use the PAST
-method and even when PAST/BASS are not in the picture a Periodic
-Advertisement can still be synchronized thus the same argument as to
-connectable advertisements still stand.
+Fix the X.509 Basic Constraints CA flag parsing to correctly handle
+the ASN.1 DER encoded structure. The parser was incorrectly treating
+the length field as the boolean value.
 
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Per RFC 5280 section 4.1, X.509 certificates must use ASN.1 DER encoding.
+According to ITU-T X.690, a DER-encoded BOOLEAN is represented as:
+
+Tag (0x01), Length (0x01), Value (0x00 for FALSE, 0xFF for TRUE)
+
+The basicConstraints extension with CA:TRUE is encoded as:
+
+  SEQUENCE (0x30) | Length | BOOLEAN (0x01) | Length (0x01) | Value (0xFF)
+                             ^-- v[2]         ^-- v[3]        ^-- v[4]
+
+The parser was checking v[3] (the length field, always 0x01) instead
+of v[4] (the actual boolean value, 0xFF for TRUE in DER encoding).
+
+Also handle the case where the extension is an empty SEQUENCE (30 00),
+which is valid for CA:FALSE when the default value is omitted as
+required by DER encoding rules (X.690 section 11.5).
+
+Per ITU-T X.690-0207:
+- Section 11.5: Default values must be omitted in DER
+- Section 11.1: DER requires TRUE to be encoded as 0xFF
+
+Link: https://datatracker.ietf.org/doc/html/rfc5280
+Link: https://www.itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf
+Fixes: 30eae2b037af ("KEYS: X.509: Parse Basic Constraints for CA")
+Signed-off-by: Fan Wu <wufan@kernel.org>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ crypto/asymmetric_keys/x509_cert_parser.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 7a7d498908584..eefdb6134ca53 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1325,7 +1325,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- {
- 	struct hci_cp_le_set_ext_adv_params cp;
- 	struct hci_rp_le_set_ext_adv_params rp;
--	bool connectable;
-+	bool connectable, require_privacy;
- 	u32 flags;
- 	bdaddr_t random_addr;
- 	u8 own_addr_type;
-@@ -1363,10 +1363,12 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 		return -EPERM;
+diff --git a/crypto/asymmetric_keys/x509_cert_parser.c b/crypto/asymmetric_keys/x509_cert_parser.c
+index 2ffe4ae90bea0..8df3fa60a44f8 100644
+--- a/crypto/asymmetric_keys/x509_cert_parser.c
++++ b/crypto/asymmetric_keys/x509_cert_parser.c
+@@ -610,11 +610,14 @@ int x509_process_extension(void *context, size_t hdrlen,
+ 		/*
+ 		 * Get hold of the basicConstraints
+ 		 * v[1] is the encoding size
+-		 *	(Expect 0x2 or greater, making it 1 or more bytes)
++		 *	(Expect 0x00 for empty SEQUENCE with CA:FALSE, or
++		 *	0x03 or greater for non-empty SEQUENCE)
+ 		 * v[2] is the encoding type
+ 		 *	(Expect an ASN1_BOOL for the CA)
+-		 * v[3] is the contents of the ASN1_BOOL
+-		 *      (Expect 1 if the CA is TRUE)
++		 * v[3] is the length of the ASN1_BOOL
++		 *	(Expect 1 for a single byte boolean)
++		 * v[4] is the contents of the ASN1_BOOL
++		 *	(Expect 0xFF if the CA is TRUE)
+ 		 * vlen should match the entire extension size
+ 		 */
+ 		if (v[0] != (ASN1_CONS_BIT | ASN1_SEQ))
+@@ -623,8 +626,13 @@ int x509_process_extension(void *context, size_t hdrlen,
+ 			return -EBADMSG;
+ 		if (v[1] != vlen - 2)
+ 			return -EBADMSG;
+-		if (vlen >= 4 && v[1] != 0 && v[2] == ASN1_BOOL && v[3] == 1)
++		/* Empty SEQUENCE means CA:FALSE (default value omitted per DER) */
++		if (v[1] == 0)
++			return 0;
++		if (vlen >= 5 && v[2] == ASN1_BOOL && v[3] == 1 && v[4] == 0xFF)
+ 			ctx->cert->pub->key_eflags |= 1 << KEY_EFLAG_CA;
++		else
++			return -EBADMSG;
+ 		return 0;
+ 	}
  
- 	/* Set require_privacy to true only when non-connectable
--	 * advertising is used. In that case it is fine to use a
--	 * non-resolvable private address.
-+	 * advertising is used and it is not periodic.
-+	 * In that case it is fine to use a non-resolvable private address.
- 	 */
--	err = hci_get_random_address(hdev, !connectable,
-+	require_privacy = !connectable && !(adv && adv->periodic);
-+
-+	err = hci_get_random_address(hdev, require_privacy,
- 				     adv_use_rpa(hdev, flags), adv,
- 				     &own_addr_type, &random_addr);
- 	if (err < 0)
 -- 
 2.51.0
 
