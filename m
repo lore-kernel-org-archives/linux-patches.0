@@ -1,68 +1,68 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013028.outbound.protection.outlook.com [40.107.201.28])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010051.outbound.protection.outlook.com [40.93.198.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD36C2A1BF;
-	Mon, 13 Oct 2025 00:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5256C1DDC1D;
+	Mon, 13 Oct 2025 00:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760313966; cv=fail; b=eutI+w1jv+EYhDVLd/sRekZaRXq8Xl+/u/g9rK7h42ReH5nKFqe5i8BrQq9P46/RloFt9Xg7ME649OJd9LgfccKpLQiK4mGa7JEuEZUsGc+yWMzkTk2sE2B/aowcIXxXxK6ZNCRc1riXpUBV9RT79i+9eSOH1Rrqcj2zoEnT2W8=
+	t=1760313968; cv=fail; b=VLZJrCa4jSgI7gGqowu7VKe4+KVVZuRwDTUUaX90JHLhURn3ktTvvZnOwXJR0P8DbzN6grB3htt+c9/fgQ2SRvbBy4d8SCZ+M2nT/zTrM4ho4DI3Mu44iTsipD8p92NiFDLzC11ikXuGjBRzWz3Qusqp7stmkslaR+8I0Ee9aA4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760313966; c=relaxed/simple;
-	bh=dYyEsKcYZsVzEh96PQKoM2ELs1t1VAIEM1I4wIJjbWM=;
+	s=arc-20240116; t=1760313968; c=relaxed/simple;
+	bh=K2aHwX/7aW4OHfTw7Jx8YRDWe9XyHyl1NfOhSCx5hS0=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kj7aDLaL9kWbghWyBatDSxMIvufDgDy6QQYpAlmVfVGM6CmP4XdZ9p/HcURWekc4FwuUzjbKjv1+FCYHUYWBvhBxI1FR44X12iehdPomyMQqaFM9GrkpbEsDB0r9JnlHGmt+43a8LzgfykwGORaeEySOINb6Tx2H0W0yWXNsDeA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FeFSZS0M; arc=fail smtp.client-ip=40.107.201.28
+	 MIME-Version:Content-Type; b=ShhqMvEujaseSEDapP/nfYepIlTFkZpgGEptlOgL6eaDxl3EdPpqqLXY5Ddrj/K8jxwuQyA7IYacbBr/vIwwRl9p9DvJ1TaKBSwA29cgY7CxCGe4NEXes6Z2irwrttFv0jZ6OUcfIaxgK/EZnOKRZzV2DmekxgVl8EA09F+8DrU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XUZQ0UOo; arc=fail smtp.client-ip=40.93.198.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FeFSZS0M"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XUZQ0UOo"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jfBjCyR2ybnlb82oEoz0LjLyNz7XFFwLgpXLHpYJGgmJWnyRRiwcDi9yIXbhy17VvIog//OBzE8fPtfQ5uzOzyLXHF3z25qNaxkMpb6/HIXoe7CtF5E52xd5deP/lsALZAZOxUNhDOglkMu+Zzsaue7uFYm2d/HoE7T3L7HWaqrydaH2wkhOvuvWA1Uxrp4IQ3wt+zV2ZvE0wAKruAom3Y+jbHPUqkoZaYYTDMbZJ0AnzZaECGdvOTrIPFy5VgNr4RAdeDEuyo3zlSaMnmBhxH00einU1V0DiKHkUCVtiycZuXxCg0tQRftJC4Zpyb2LSxJEE04R6GKopzUk4qdlww==
+ b=hydjQ4w0MClPWowz/qLWw2Z+tngnVJEYDaXBkZxDfy3rR4ABcbkSpEVQI0dCCM6we9hTT9Egzes+i2elc4H9Jily1LKfq/fSN2arfKjbYdVQtKSLpBYrjweThRKhl9tMRrcWjwyegKRYBXQbpomL72Wd3HeUATDIKIoQxn/tHDvJndTQXHGeIB2JWPMm5FLsgxAzvPzOM8vvZZqabPtpFiubKX93DmvJLwaXMm/irhNu3kMyiMrXZsReny1t0Xn7qAXDmU7+KmvPhMLOm9R98IeYY8BVbjmFjkro7FZcGkPMNVqPe8mEGSuyYBBl6z0hqy+s753DUai9dhQc6vtiFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v09sZbypHJWchEVdkmR3UO/t72qlThIWk+CNgXkQ6Mo=;
- b=l5sDHN5/kU7GAa27GmTwRFDHCgjDjsrfbjnVnDlU4DubaU9u1Mpx8s7MIOw8+1LGSwqJMjR+YwxFHQ7moBY4CZAZO3SI6igUdvhOYijjVvpfjbY5HtAQcrXjBhXMYjAVwv6f+5rK3IoYKxk2b+jeqmXJTTNhho/hLwM7atscpclJgNS5T9S5sMNAZspuGQvFQ4Tlq0OjWaPtA+IATkJon3Psx+8qcMB39XnFk2tuZQ8snIe+lcBBDLFafFdFb3OrUfyI1vVmoWxF0JLQLtcjZtT4TTeXzzjMoG6tOCkPNpJLdJljyLmjXSXYE1I5qCc95TWSONWwpd0GPbujDgar5A==
+ bh=I/tl8btLMqZTZoa4YJsybI0ayC0J3qAhB5UQU93JFYA=;
+ b=e7FMik2DYZCo6NhDmqvgCCL9aRhf1nLRME9H181NVGr6dxUkfIuGlkSEy1P5WMmwDYL0m4x5Xgf0K0CJvey3+bInVGmy67ysCEI2UBQmooCO2IoJvPqW4EaM56Bu3UWzZRqOVazdly1SAzVKmp368lvU1BVkKNFBvSg5H3hrMDgQwy2W6855gMuuHZb2zdqU8KnTsCD3x6yJNqnfvm+f+3tD05vpjkuWJkcmZLrJOVQYRGqczNunudVmUSvA/FAZ4fkTkadErreWZQb5vCNDxhcoE71kjc0cpmPHJ110fm6eB6QB1aGfhJnD689BwKhtj9EBc/rUPx3JTxeiUVYghw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v09sZbypHJWchEVdkmR3UO/t72qlThIWk+CNgXkQ6Mo=;
- b=FeFSZS0MfmjH0CImXA5tU//LiwOKQx9cblofpvqfvF97b6HX6kNzbIflLhCTr68uWpOnZX8Rl34GisZOOKXWTSoBcucFIYU0Ch2ti9jQ6aiHszQFc+p2Pu5daYqC9vudZeuN+tkzKtYKg/6amiuVzwRc2/FlK475T122MzJAVUFMrfw+wpaVUTT92OIWg+Q43bmmAuNjniwzeggXRDoEgUIDTI5p76S0SGmXYv87qkCGUla4X612O39hoZnuYpIOK7Y7KtTPCRPL+uli0R8ctKeETiJgl0qugNU//AaEkjWqfMN5g/1WZBWHruyxq0O4X5B5gxW4lYbOqFHM5q2+jQ==
-Received: from CY5PR17CA0011.namprd17.prod.outlook.com (2603:10b6:930:17::8)
- by MW4PR12MB6949.namprd12.prod.outlook.com (2603:10b6:303:208::19) with
+ bh=I/tl8btLMqZTZoa4YJsybI0ayC0J3qAhB5UQU93JFYA=;
+ b=XUZQ0UOoAocPJRllc++17Ot1owhEdfnSxR99jrMNwiovxHKqTaRWAn4XGAzrhvfsKobl6t6LZUqhdfYj9BiR/aUbVdsdS45X2ZgbGc0HBO6cH1H73rVTAif07xDX1qNqN8Rqio8TZJB6NzVZXhXlj5I0UERipL/++ZQAPOCo27dVnPdlf2RRk9lWMEr3jdJTAaizWXkB5VY8R7dzSV4bbfsU/mJtoJALzwVFCdCIYLUpvExkv88WqWTFo5/MOZ/IWIo/iwam0tA94b0CQMfMeQc5R8QiAIbpt2WL49IqaBmj+q8K/RWACi1kwl1qL5T06WFZVM7ge41ME/+omQCmng==
+Received: from BN0PR04CA0026.namprd04.prod.outlook.com (2603:10b6:408:ee::31)
+ by LV9PR12MB9760.namprd12.prod.outlook.com (2603:10b6:408:2f0::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Mon, 13 Oct
- 2025 00:05:56 +0000
-Received: from CY4PEPF0000EE3C.namprd03.prod.outlook.com
- (2603:10b6:930:17:cafe::91) by CY5PR17CA0011.outlook.office365.com
- (2603:10b6:930:17::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.11; Mon, 13 Oct
+ 2025 00:06:00 +0000
+Received: from BL02EPF00021F69.namprd02.prod.outlook.com
+ (2603:10b6:408:ee:cafe::a7) by BN0PR04CA0026.outlook.office365.com
+ (2603:10b6:408:ee::31) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.12 via Frontend Transport; Mon,
- 13 Oct 2025 00:05:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ 13 Oct 2025 00:05:48 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CY4PEPF0000EE3C.mail.protection.outlook.com (10.167.242.13) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL02EPF00021F69.mail.protection.outlook.com (10.167.249.5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9228.7 via Frontend Transport; Mon, 13 Oct 2025 00:05:56 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Sun, 12 Oct
- 2025 17:05:34 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9228.7 via Frontend Transport; Mon, 13 Oct 2025 00:06:00 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Sun, 12 Oct
+ 2025 17:05:44 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Sun, 12 Oct
- 2025 17:05:33 -0700
+ 2025 17:05:44 -0700
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.12) by mail.nvidia.com
  (10.129.68.7) with Microsoft SMTP Server id 15.2.2562.20 via Frontend
- Transport; Sun, 12 Oct 2025 17:05:31 -0700
+ Transport; Sun, 12 Oct 2025 17:05:42 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <joro@8bytes.org>, <jgg@nvidia.com>, <kevin.tian@intel.com>
 CC: <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
@@ -81,9 +81,9 @@ CC: <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
 	<linux-s390@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
 	<linux-tegra@vger.kernel.org>, <virtualization@lists.linux.dev>,
 	<patches@lists.linux.dev>
-Subject: [PATCH v1 02/20] iommu: Introduce a test_dev domain op and an internal helper
-Date: Sun, 12 Oct 2025 17:04:59 -0700
-Message-ID: <32ce256a2ece5d63e99d5858f953586859818ffc.1760312725.git.nicolinc@nvidia.com>
+Subject: [PATCH v1 06/20] iommu/arm-smmu: Implement arm_smmu_test_dev
+Date: Sun, 12 Oct 2025 17:05:03 -0700
+Message-ID: <ff644b97bccd6454bd770a481a89d0612a836741.1760312725.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1760312725.git.nicolinc@nvidia.com>
 References: <cover.1760312725.git.nicolinc@nvidia.com>
@@ -98,317 +98,250 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3C:EE_|MW4PR12MB6949:EE_
-X-MS-Office365-Filtering-Correlation-Id: 78946808-a7f5-4dd5-b571-08de09ec4859
+X-MS-TrafficTypeDiagnostic: BL02EPF00021F69:EE_|LV9PR12MB9760:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9f53487a-5098-4eee-5aa2-08de09ec4a9f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|82310400026|376014|1800799024|36860700013;
+	BCL:0;ARA:13230040|1800799024|36860700013|376014|7416014|82310400026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?RlvLI2qzTcAPDYUeZcpZFxeNrD/yU7vm99xSYJIFVbGPGSFK3ICNQQZhjp26?=
- =?us-ascii?Q?pIqOt5fXwppsqnNpGbfKXO/zAT3l5FM0SCofaK/SoKKZmrAMKPg/lMOQ8zuX?=
- =?us-ascii?Q?PqUXUACPoBZdWHQOYEeTeX65n8mS3xvJthGqg5F80pbjjZJ50MI9hTi1/166?=
- =?us-ascii?Q?5YKH+3Z/jubsHdF4envf1265UH3uCgychy5ZOVU5cHU7gHzhTqBUSRUzN+Dg?=
- =?us-ascii?Q?I4AA5CuSCEBZaPEXBCGVtPoLohYWsxTwJeVohtq3fiT+pkrQCuI3M7P68QOt?=
- =?us-ascii?Q?a9iqfisyVnfGz442wbacnvXeo/A9alNEFrm/WoWAUCjULGHNcd0jjHBr3jlA?=
- =?us-ascii?Q?9AL+0gT0DKBcIx38pPtXqHTVAvv1D9My72vmw7cZSqX0PMYm0wLPXvOnexHF?=
- =?us-ascii?Q?3fBKTuLYcxnnWoWta2paNf7vXxOX5E/Q86ksDl2OYTkq5LGBZCXEZzkPpYmM?=
- =?us-ascii?Q?sN/yZXu2GA1vk6w8kRC1cama4qg23pjzSPhO6LQHPlJqTGn31YVMgPCxONbB?=
- =?us-ascii?Q?2x0x+EauZUaDOphb0KiuotUEwCzJ4jBzBYe3Uv5OlrcgQerwJHWOzMVbgO/2?=
- =?us-ascii?Q?6Jp+Bws5fT4QkIkmKgujQQZ9oC8nywUl6GJZ1VPPUskXIZwbnXiy/gpqCHZa?=
- =?us-ascii?Q?6MM05mLsEg/OYczRJf3vFv7Zj0U51OaDfMOmb82bKwTPbTA0gnDC9978DpMv?=
- =?us-ascii?Q?dGUAS6T4skGLMVm//rMjYwROfxA579VMd4c/iuxaS8oRvLfOQE79jnle2BnO?=
- =?us-ascii?Q?sbDwRhqLHoDH905Rs/mKTB7PyHOoqCCqZ3oMsuiBkAy3qbvfzzKioTMkcCIc?=
- =?us-ascii?Q?OFoAkt09G3e/IpzQuz7bUp6mTiEh8Q40UdHWpQo4xfcFFs2eEppd0hNpqMC9?=
- =?us-ascii?Q?WWpTYmiGIheSqXWwKumCJCrijt9vBbQgiP9Sy02Ch0M15v5IxaIoLIrMG+ug?=
- =?us-ascii?Q?PLkJDOwjyn6Pg6Eu9GywdBEuutA0Dfm2oPsyO4bv2ZedRl147QlCqvmH4mJj?=
- =?us-ascii?Q?tKn+Lo5qudrvaBwXxk5emsOkkseltRjhsjNZJRriYdcE38uamAUFLyYqu+/1?=
- =?us-ascii?Q?kT2MKGYNwUx9QzeRMcMZx/VXbaGTPw7O3BC9Vbj/8zG1GpfQDYdFldY9Tb/P?=
- =?us-ascii?Q?Tmyw87b3Ip1eeZwOIeK4Yklf6HXC2eWUlKAMSq9yCC2M0Akx+sOYbk5o7a7u?=
- =?us-ascii?Q?FJJmUBu3SfwulSuqQ5yFJ+YtGSd+DJVu9V/R2Zu7W5FN5908d/Tz97JLyjMH?=
- =?us-ascii?Q?wRTHftZGzjjRV5XSt4cNSurURmp0rw6QC38hMdXzOKseJa9p5ID3R8/vIWVD?=
- =?us-ascii?Q?eoV5AFvqYpMC0BpyteU+iZmizk4jGUETKIq3+snNM6Fl8e2gukOAb1oimoYD?=
- =?us-ascii?Q?CHpcwgJnHjUBAtjatmd1Y0jIE6N1JQsAGp5+hQDgkKd9xT684xDXjk1hO/b3?=
- =?us-ascii?Q?5Veh9BtafNYdEDZT3mHflJkA5o/LvcZm+fb3e/v9f/++G1goJnKuGrDF7iiU?=
- =?us-ascii?Q?ZfvoQbDj/qcBKNmzb3d9giSxw+u9P4KNdvc85p6OyBGjZCNIjnPrFaeCVLrN?=
- =?us-ascii?Q?Zy/7QsrhGptL+q8dLA4=3D?=
+	=?us-ascii?Q?vAFkRjJB5JStJFSzBCtyCX6nhRxwEgh4dQjIE2P22saOjD5LEnXMvkLo19Sm?=
+ =?us-ascii?Q?zXC9N6/dUoKLvuaWuZJAK4NUg+vurrIqVhkBkQpTbI4woKCWuaB6xaaXoOYX?=
+ =?us-ascii?Q?8NVAmKSZNqEVNr8RSkX6DjUaYaD7ZezsHG0y7icAWjtyZj0OdR/s0n5ePU0N?=
+ =?us-ascii?Q?IOJC3ii+vEjdwF/jz7tfPO4pVEm8IRAfhViJSgqwflS2YXlEa6PbtVDtJSmc?=
+ =?us-ascii?Q?k6k1CvU7FQ7VeronpexbMa74Vec1/DUOqmuiiZzflA++ltpvJQR+fE/uzkR6?=
+ =?us-ascii?Q?km/L6u7OMe9BGi44efwQDKqKkfb3joz1jcSd6BnHGQ9M0EXttLWtBv8Ohszm?=
+ =?us-ascii?Q?2gilYrbfByjYUn+86jvaQSg6nQqE67a2U1GANUrJhwESarx7PFuFdC7nuEzN?=
+ =?us-ascii?Q?qO1aUK7aK1JqnpH7eE+XP7LOQBJIoSgPwttiE6ceF/zuojMV2DeqdPRiarwR?=
+ =?us-ascii?Q?ijLjBXP5hueldap6siSj4WZ+QRzLUQK5bRVsp47RXpk3203i57MySuag3R/g?=
+ =?us-ascii?Q?V3WuEBYQ+GsYfQN2VA/MR/AbPg2OXxvY9hKq0CYdZq8KROeKjoFDZJyNoOot?=
+ =?us-ascii?Q?lDBr2dy/fiBAyUmZ+D6ScLgW8/00G47dxGCyhaypuZ3avQTJEPBHYJUzaZxl?=
+ =?us-ascii?Q?jKu0FuRexoAHuH/U2tGZu6EWrjoSJOJ6FVBU0Hkz6iMXlRz5fQkbifeMLG31?=
+ =?us-ascii?Q?PzEOVmA8EYvwztKRmxZHkXc+n59ABerc6UCNktHQxdGs7rNReKhDL5Q9NiNa?=
+ =?us-ascii?Q?/ng2s452C+6KqLxG7YkFk/ZrCYPhN0HXdlL4fLSdQi1JLYVPa1IPt+P6+mvG?=
+ =?us-ascii?Q?tTlbhj1TkF085M9IqnVknOlk15YGP6kDTCHnmg9L40T4a1oVtaV7Tx13pVFr?=
+ =?us-ascii?Q?7T+SghpIR30GLTY2jG/q35LgfMz9yAMXOBhF+hVnrNGGxmhFcUx/d5dZgorS?=
+ =?us-ascii?Q?QsfWH7G4hyj3iVhS9ZqCSn4RkrvHOcM8kirbNS/h9AtmT2Y/7NmhRLhj1Yzd?=
+ =?us-ascii?Q?BllNu4+GtbJKhbUtIEaw7f4yPX3cxwwV9yRXouS1bA0dafpmmQAs68xpYBFT?=
+ =?us-ascii?Q?1YC/9d8NAk0RsrbtEXs8vMY2GWeMStX3yW9hVbdVEJxt7ie/19nv2BeTGB0U?=
+ =?us-ascii?Q?35dXvelRyr/Yc6CeFJNdIRwGJ0Q6RF8vqQ9Ax7q/RW/9M7UUcUkf/Jr6KcCh?=
+ =?us-ascii?Q?g7Omop3i/1ER6DgE9XIJRwsWFq5cBFUrA34w52cXSPBUi3v4hLFzI93ahN2L?=
+ =?us-ascii?Q?R0MHRyglpmq75a/lccTxWDxE0ysZoVMaPRQbFP5yB31Usb37d8u3WvL7VLKq?=
+ =?us-ascii?Q?jKNlfiAemy6ZH8jo292k4/EdNExDnxEXIsB3OAYOIAA1Wb9PE90TTYukm2a1?=
+ =?us-ascii?Q?TtvAhTiHOV87J0b+2x5wnwJSoel6S/FYAdyiLf+9DCBOh15qg9AFZ52QVnSb?=
+ =?us-ascii?Q?hTVXYwF5Nr2oUqIBGUZVxMO+XGBi5F64JNWDn0mAYnsJgR4EUC5lm9XpoQ1F?=
+ =?us-ascii?Q?vaBErmAjdIEVF/cpnG8K/1GzAZnElsGmOxycLkigPFTOmq0G7gcRrxX35dW4?=
+ =?us-ascii?Q?/Nc0w0TAUQzWEktlnKM=3D?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(82310400026)(376014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(36860700013)(376014)(7416014)(82310400026);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2025 00:05:56.3213
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2025 00:06:00.0566
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78946808-a7f5-4dd5-b571-08de09ec4859
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f53487a-5098-4eee-5aa2-08de09ec4a9f
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EE3C.namprd03.prod.outlook.com
+	BL02EPF00021F69.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6949
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9760
 
-Add a new test_dev domain op for driver to test the compatibility between
-a domain and a device at the driver level, before calling into the actual
-attachment/replacement of a domain. Support pasid for set_dev_pasid call.
+Move sanity and compatibility tests from the attach_dev callback to the
+new test_dev callback function. The IOMMU core makes sure an attach_dev
+call must be invoked after a successful test_dev call.
 
-Move existing core-level compatibility tests to a helper function. Invoke
-it prior to:
- * __iommu_attach_device() or its wrapper __iommu_device_set_domain()
- * __iommu_set_group_pasid()
-
-And keep them within the group->mutex, so drivers can simply move all the
-sanity and compatibility tests from their attach_dev callbacks to the new
-test_dev callbacks without concerning about a race condition.
-
-This may be a public API someday for VFIO/IOMMUFD to run a list of attach
-tests without doing any actual attachment, which may result in a list of
-failed tests. So encourage drivers to avoid printks to prevent kernel log
-spam.
-
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- include/linux/iommu.h |  17 +++++--
- drivers/iommu/iommu.c | 111 ++++++++++++++++++++++++++++++------------
- 2 files changed, 93 insertions(+), 35 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu.c | 116 ++++++++++++++++----------
+ 1 file changed, 71 insertions(+), 45 deletions(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 801b2bd9e8d49..2ec99502dc29c 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -714,7 +714,12 @@ struct iommu_ops {
- 
- /**
-  * struct iommu_domain_ops - domain specific operations
-- * @attach_dev: attach an iommu domain to a device
-+ * @test_dev: Test compatibility prior to an @attach_dev or @set_dev_pasid call.
-+ *            A driver-level callback of this op should do a thorough sanity, to
-+ *            make sure a device is compatible with the domain. So the following
-+ *            @attach_dev and @set_dev_pasid functions would likely succeed with
-+ *            only one exception due to a temporary failure like out of memory.
-+ *            It's suggested to avoid the kernel prints in this op.
-  *  Return:
-  * * 0		- success
-  * * EINVAL	- can indicate that device and domain are incompatible due to
-@@ -722,11 +727,15 @@ struct iommu_ops {
-  *		  driver shouldn't log an error, since it is legitimate for a
-  *		  caller to test reuse of existing domains. Otherwise, it may
-  *		  still represent some other fundamental problem
-- * * ENOMEM	- out of memory
-- * * ENOSPC	- non-ENOMEM type of resource allocation failures
-  * * EBUSY	- device is attached to a domain and cannot be changed
-  * * ENODEV	- device specific errors, not able to be attached
-  * * <others>	- treated as ENODEV by the caller. Use is discouraged
-+ * @attach_dev: attach an iommu domain to a device
-+ *  Return:
-+ * * 0		- success
-+ * * ENOMEM	- out of memory
-+ * * ENOSPC	- non-ENOMEM type of resource allocation failures
-+ * * <others>	- Use is discouraged
-  * @set_dev_pasid: set or replace an iommu domain to a pasid of device. The pasid of
-  *                 the device should be left in the old config in error case.
-  * @map_pages: map a physically contiguous set of pages of the same size to
-@@ -751,6 +760,8 @@ struct iommu_ops {
-  * @free: Release the domain after use.
-  */
- struct iommu_domain_ops {
-+	int (*test_dev)(struct iommu_domain *domain, struct device *dev,
-+			ioasid_t pasid, struct iommu_domain *old);
- 	int (*attach_dev)(struct iommu_domain *domain, struct device *dev,
- 			  struct iommu_domain *old);
- 	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 170e522b5bda4..95f0e2898b6b5 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -99,6 +99,9 @@ static int bus_iommu_probe(const struct bus_type *bus);
- static int iommu_bus_notifier(struct notifier_block *nb,
- 			      unsigned long action, void *data);
- static void iommu_release_device(struct device *dev);
-+static int __iommu_domain_test_device(struct iommu_domain *domain,
-+				      struct device *dev, ioasid_t pasid,
-+				      struct iommu_domain *old);
- static int __iommu_attach_device(struct iommu_domain *domain,
- 				 struct device *dev, struct iommu_domain *old);
- static int __iommu_attach_group(struct iommu_domain *domain,
-@@ -642,6 +645,10 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
- 	if (group->default_domain)
- 		iommu_create_device_direct_mappings(group->default_domain, dev);
- 	if (group->domain) {
-+		ret = __iommu_domain_test_device(group->domain, dev,
-+						 IOMMU_NO_PASID, NULL);
-+		if (ret)
-+			goto err_remove_gdev;
- 		ret = __iommu_device_set_domain(group, dev, group->domain, NULL,
- 						0);
- 		if (ret)
-@@ -2185,6 +2192,8 @@ EXPORT_SYMBOL_GPL(iommu_attach_device);
- 
- int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
- {
-+	int ret;
-+
- 	/*
- 	 * This is called on the dma mapping fast path so avoid locking. This is
- 	 * racy, but we have an expectation that the driver will setup its DMAs
-@@ -2195,6 +2204,10 @@ int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
- 
- 	guard(mutex)(&dev->iommu_group->mutex);
- 
-+	ret = __iommu_domain_test_device(domain, dev, IOMMU_NO_PASID, NULL);
-+	if (ret)
-+		return ret;
-+
- 	return __iommu_attach_device(domain, dev, NULL);
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 5e690cf85ec96..5752eecc1d434 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -672,6 +672,37 @@ static int arm_smmu_alloc_context_bank(struct arm_smmu_domain *smmu_domain,
+ 	return __arm_smmu_alloc_bitmap(smmu->context_map, start, smmu->num_context_banks);
  }
  
-@@ -2262,6 +2275,53 @@ static bool domain_iommu_ops_compatible(const struct iommu_ops *ops,
- 	return false;
- }
- 
-+/*
-+ * Test if a future attach for a domain to the device will always fail. This may
-+ * indicate that the device and the domain are incompatible in some way. Actual
-+ * attach may still fail for some temporary failure like out of memory.
-+ *
-+ * If pasid != IOMMU_NO_PASID, it is meant to test a future set_dev_pasid call.
-+ */
-+static int __iommu_domain_test_device(struct iommu_domain *domain,
-+				      struct device *dev, ioasid_t pasid,
-+				      struct iommu_domain *old)
++static enum arm_smmu_context_fmt
++arm_smmu_get_context_fmt(struct arm_smmu_domain *smmu_domain)
 +{
-+	const struct iommu_ops *ops = dev_iommu_ops(dev);
-+	struct iommu_group *group = dev->iommu_group;
-+
-+	lockdep_assert_held(&group->mutex);
-+
-+	if (!domain_iommu_ops_compatible(ops, domain))
-+		return -EINVAL;
-+
-+	if (pasid != IOMMU_NO_PASID) {
-+		struct group_device *gdev;
-+
-+		if (!domain->ops->set_dev_pasid || !ops->blocked_domain ||
-+		    !ops->blocked_domain->ops->set_dev_pasid)
-+			return -EOPNOTSUPP;
-+		/*
-+		 * Skip PASID validation for devices without PASID support
-+		 * (max_pasids = 0). These devices cannot issue transactions
-+		 * with PASID, so they don't affect group's PASID usage.
-+		 */
-+		for_each_group_device(group, gdev) {
-+			if (gdev->dev->iommu->max_pasids > 0 &&
-+			    pasid >= gdev->dev->iommu->max_pasids)
-+				return -EINVAL;
-+		}
-+	}
++	struct arm_smmu_device *smmu = smmu_domain->smmu;
++	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
++	enum arm_smmu_context_fmt fmt = cfg->fmt;
 +
 +	/*
-+	 * Domains that don't implement a test_dev callback function must have a
-+	 * simple domain attach behavior. The sanity above should be enough.
++	 * Choosing a suitable context format is even more fiddly. Until we
++	 * grow some way for the caller to express a preference, and/or move
++	 * the decision into the io-pgtable code where it arguably belongs,
++	 * just aim for the closest thing to the rest of the system, and hope
++	 * that the hardware isn't esoteric enough that we can't assume AArch64
++	 * support to be a superset of AArch32 support...
 +	 */
-+	if (!domain->ops->test_dev)
-+		return 0;
++	if (smmu->features & ARM_SMMU_FEAT_FMT_AARCH32_L)
++		fmt = ARM_SMMU_CTX_FMT_AARCH32_L;
++	if (IS_ENABLED(CONFIG_IOMMU_IO_PGTABLE_ARMV7S) &&
++	    !IS_ENABLED(CONFIG_64BIT) && !IS_ENABLED(CONFIG_ARM_LPAE) &&
++	    (smmu->features & ARM_SMMU_FEAT_FMT_AARCH32_S) &&
++	    (smmu_domain->stage == ARM_SMMU_DOMAIN_S1))
++		fmt = ARM_SMMU_CTX_FMT_AARCH32_S;
++	if ((IS_ENABLED(CONFIG_64BIT) || cfg->fmt == ARM_SMMU_CTX_FMT_NONE) &&
++	    (smmu->features & (ARM_SMMU_FEAT_FMT_AARCH64_64K |
++			       ARM_SMMU_FEAT_FMT_AARCH64_16K |
++			       ARM_SMMU_FEAT_FMT_AARCH64_4K)))
++		fmt = ARM_SMMU_CTX_FMT_AARCH64;
 +
-+	return domain->ops->test_dev(domain, dev, pasid, old);
++	return fmt;
 +}
 +
- static int __iommu_attach_group(struct iommu_domain *domain,
- 				struct iommu_group *group)
+ static int arm_smmu_init_domain_context(struct arm_smmu_domain *smmu_domain,
+ 					struct arm_smmu_device *smmu,
+ 					struct device *dev)
+@@ -712,31 +743,8 @@ static int arm_smmu_init_domain_context(struct arm_smmu_domain *smmu_domain,
+ 	if (!(smmu->features & ARM_SMMU_FEAT_TRANS_S2))
+ 		smmu_domain->stage = ARM_SMMU_DOMAIN_S1;
+ 
+-	/*
+-	 * Choosing a suitable context format is even more fiddly. Until we
+-	 * grow some way for the caller to express a preference, and/or move
+-	 * the decision into the io-pgtable code where it arguably belongs,
+-	 * just aim for the closest thing to the rest of the system, and hope
+-	 * that the hardware isn't esoteric enough that we can't assume AArch64
+-	 * support to be a superset of AArch32 support...
+-	 */
+-	if (smmu->features & ARM_SMMU_FEAT_FMT_AARCH32_L)
+-		cfg->fmt = ARM_SMMU_CTX_FMT_AARCH32_L;
+-	if (IS_ENABLED(CONFIG_IOMMU_IO_PGTABLE_ARMV7S) &&
+-	    !IS_ENABLED(CONFIG_64BIT) && !IS_ENABLED(CONFIG_ARM_LPAE) &&
+-	    (smmu->features & ARM_SMMU_FEAT_FMT_AARCH32_S) &&
+-	    (smmu_domain->stage == ARM_SMMU_DOMAIN_S1))
+-		cfg->fmt = ARM_SMMU_CTX_FMT_AARCH32_S;
+-	if ((IS_ENABLED(CONFIG_64BIT) || cfg->fmt == ARM_SMMU_CTX_FMT_NONE) &&
+-	    (smmu->features & (ARM_SMMU_FEAT_FMT_AARCH64_64K |
+-			       ARM_SMMU_FEAT_FMT_AARCH64_16K |
+-			       ARM_SMMU_FEAT_FMT_AARCH64_4K)))
+-		cfg->fmt = ARM_SMMU_CTX_FMT_AARCH64;
+-
+-	if (cfg->fmt == ARM_SMMU_CTX_FMT_NONE) {
+-		ret = -EINVAL;
+-		goto out_unlock;
+-	}
++	cfg->fmt = arm_smmu_get_context_fmt(smmu_domain);
++	WARN_ON(cfg->fmt == ARM_SMMU_CTX_FMT_NONE);
+ 
+ 	switch (smmu_domain->stage) {
+ 	case ARM_SMMU_DOMAIN_S1:
+@@ -1165,14 +1173,11 @@ static void arm_smmu_master_install_s2crs(struct arm_smmu_master_cfg *cfg,
+ 	}
+ }
+ 
+-static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
+-			       struct iommu_domain *old)
++static int arm_smmu_test_dev(struct iommu_domain *domain, struct device *dev,
++			     ioasid_t pasid, struct iommu_domain *old)
  {
-@@ -2272,8 +2332,7 @@ static int __iommu_attach_group(struct iommu_domain *domain,
- 		return -EBUSY;
+-	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct arm_smmu_master_cfg *cfg;
+-	struct arm_smmu_device *smmu;
+-	int ret;
++	struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
++	struct arm_smmu_domain *smmu_domain;
  
- 	dev = iommu_group_first_dev(group);
--	if (!dev_has_iommu(dev) ||
--	    !domain_iommu_ops_compatible(dev_iommu_ops(dev), domain))
-+	if (!dev_has_iommu(dev))
- 		return -EINVAL;
+ 	/*
+ 	 * FIXME: The arch/arm DMA API code tries to attach devices to its own
+@@ -1181,11 +1186,40 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
+ 	 * domains, just say no (but more politely than by dereferencing NULL).
+ 	 * This should be at least a WARN_ON once that's sorted.
+ 	 */
+-	cfg = dev_iommu_priv_get(dev);
+ 	if (!cfg)
+ 		return -ENODEV;
  
- 	return __iommu_group_set_domain(group, domain);
-@@ -2381,6 +2440,13 @@ static int __iommu_group_set_domain_internal(struct iommu_group *group,
- 	if (WARN_ON(!new_domain))
- 		return -EINVAL;
- 
-+	for_each_group_device(group, gdev) {
-+		ret = __iommu_domain_test_device(new_domain, gdev->dev,
-+						 IOMMU_NO_PASID, group->domain);
-+		if (ret)
-+			return ret;
+-	smmu = cfg->smmu;
++	if (domain == arm_smmu_ops.identity_domain ||
++	    domain == arm_smmu_ops.blocked_domain)
++		return 0;
++
++	smmu_domain = to_smmu_domain(domain);
++	scoped_guard(mutex, &smmu_domain->init_mutex) {
++		/* arm_smmu_init_domain_context() will initialize it */
++		if (!smmu_domain->smmu)
++			return 0;
++		/*
++		 * Sanity check the domain. We don't support domains across
++		 * different SMMUs.
++		 */
++		if (smmu_domain->smmu != cfg->smmu)
++			return -EINVAL;
++		if (arm_smmu_get_context_fmt(smmu_domain) ==
++		    ARM_SMMU_CTX_FMT_NONE)
++			return -EINVAL;
 +	}
 +
- 	/*
- 	 * Changing the domain is done by calling attach_dev() on the new
- 	 * domain. This switch does not have to be atomic and DMA can be
-@@ -3479,38 +3545,19 @@ int iommu_attach_device_pasid(struct iommu_domain *domain,
- {
- 	/* Caller must be a probed driver on dev */
- 	struct iommu_group *group = dev->iommu_group;
--	struct group_device *device;
--	const struct iommu_ops *ops;
- 	void *entry;
++	return 0;
++}
++
++static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
++			       struct iommu_domain *old)
++{
++	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
++	struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
++	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
++	struct arm_smmu_device *smmu = cfg->smmu;
++	int ret;
+ 
+ 	ret = arm_smmu_rpm_get(smmu);
+ 	if (ret < 0)
+@@ -1196,15 +1230,6 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
+ 	if (ret < 0)
+ 		goto rpm_put;
+ 
+-	/*
+-	 * Sanity check the domain. We don't support domains across
+-	 * different SMMUs.
+-	 */
+-	if (smmu_domain->smmu != smmu) {
+-		ret = -EINVAL;
+-		goto rpm_put;
+-	}
+-
+ 	/* Looks ok, so add the device to the domain */
+ 	arm_smmu_master_install_s2crs(cfg, S2CR_TYPE_TRANS,
+ 				      smmu_domain->cfg.cbndx, fwspec);
+@@ -1221,8 +1246,6 @@ static int arm_smmu_attach_dev_type(struct device *dev,
+ 	struct arm_smmu_device *smmu;
  	int ret;
  
- 	if (!group)
- 		return -ENODEV;
--
--	ops = dev_iommu_ops(dev);
--
--	if (!domain->ops->set_dev_pasid ||
--	    !ops->blocked_domain ||
--	    !ops->blocked_domain->ops->set_dev_pasid)
--		return -EOPNOTSUPP;
--
--	if (!domain_iommu_ops_compatible(ops, domain) ||
--	    pasid == IOMMU_NO_PASID)
-+	if (pasid == IOMMU_NO_PASID)
- 		return -EINVAL;
+-	if (!cfg)
+-		return -ENODEV;
+ 	smmu = cfg->smmu;
  
- 	mutex_lock(&group->mutex);
--	for_each_group_device(group, device) {
--		/*
--		 * Skip PASID validation for devices without PASID support
--		 * (max_pasids = 0). These devices cannot issue transactions
--		 * with PASID, so they don't affect group's PASID usage.
--		 */
--		if ((device->dev->iommu->max_pasids > 0) &&
--		    (pasid >= device->dev->iommu->max_pasids)) {
--			ret = -EINVAL;
--			goto out_unlock;
--		}
--	}
-+
-+	ret = __iommu_domain_test_device(domain, dev, pasid, NULL);
-+	if (ret)
-+		goto out_unlock;
+ 	ret = arm_smmu_rpm_get(smmu);
+@@ -1242,6 +1265,7 @@ static int arm_smmu_attach_dev_identity(struct iommu_domain *domain,
+ }
  
- 	entry = iommu_make_pasid_array_entry(domain, handle);
+ static const struct iommu_domain_ops arm_smmu_identity_ops = {
++	.test_dev = arm_smmu_test_dev,
+ 	.attach_dev = arm_smmu_attach_dev_identity,
+ };
  
-@@ -3573,12 +3620,7 @@ int iommu_replace_device_pasid(struct iommu_domain *domain,
+@@ -1258,6 +1282,7 @@ static int arm_smmu_attach_dev_blocked(struct iommu_domain *domain,
+ }
  
- 	if (!group)
- 		return -ENODEV;
--
--	if (!domain->ops->set_dev_pasid)
--		return -EOPNOTSUPP;
--
--	if (!domain_iommu_ops_compatible(dev_iommu_ops(dev), domain) ||
--	    pasid == IOMMU_NO_PASID || !handle)
-+	if (pasid == IOMMU_NO_PASID || !handle)
- 		return -EINVAL;
+ static const struct iommu_domain_ops arm_smmu_blocked_ops = {
++	.test_dev = arm_smmu_test_dev,
+ 	.attach_dev = arm_smmu_attach_dev_blocked,
+ };
  
- 	mutex_lock(&group->mutex);
-@@ -3615,6 +3657,11 @@ int iommu_replace_device_pasid(struct iommu_domain *domain,
- 	ret = 0;
- 
- 	if (curr_domain != domain) {
-+		ret = __iommu_domain_test_device(domain, dev, pasid,
-+						 curr_domain);
-+		if (ret)
-+			goto out_unlock;
-+
- 		ret = __iommu_set_group_pasid(domain, group,
- 					      pasid, curr_domain);
- 		if (ret)
+@@ -1647,6 +1672,7 @@ static const struct iommu_ops arm_smmu_ops = {
+ 	.def_domain_type	= arm_smmu_def_domain_type,
+ 	.owner			= THIS_MODULE,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
++		.test_dev		= arm_smmu_test_dev,
+ 		.attach_dev		= arm_smmu_attach_dev,
+ 		.map_pages		= arm_smmu_map_pages,
+ 		.unmap_pages		= arm_smmu_unmap_pages,
 -- 
 2.43.0
 
