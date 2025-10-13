@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADB030C37D;
-	Mon, 13 Oct 2025 15:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D34230C372;
+	Mon, 13 Oct 2025 15:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368930; cv=none; b=OFjKtwwy5E/Fll5L6e+Nq4GlxA4mJqYGjgjY8BUDP7667tPXdWJMksmrR0kySlc7aIbZvdUt+ktrsTF8PLtzlnLf0r5MyGsABpNlbFzoY3X9aWAIllfVZWeuHZMuIZC0fN5yc3aOIhq6gOvvvPqH7ritghVHXYofHEsaE2jj/Es=
+	t=1760368933; cv=none; b=MYgxMPCNia1u9lCypprnxvLjDOEpabYYW+z3tWJp99kgt+gjiLPg+TXdX/AAnWqToeH4J7JGcMcTqldHElxRVriPEzKhnjy5NiG/MGn4vAThnF1Zq8xo8SZK2ohuZWEok1c5/1tFfoXVSBGrqng3oA7JFkNL3lnjS2XXVZVi5vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368930; c=relaxed/simple;
-	bh=xr7vP+jSfK6pT9J/+yVYGZ0nrOrfHFnZ5PB9Egam4aA=;
+	s=arc-20240116; t=1760368933; c=relaxed/simple;
+	bh=oYxUhQUUcjNiwjXApbcV3NRTY+h28YZfPAV7xwlEg8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qni3a0ZbNhSDIhBbeC+ucVpEgsTeK7r3S97A3OycXARRO9IeJf6vcrq8Fa6OodcFOiQ3OmjRhws+uBjiz6ZRkS6TDg72+3NgewZR04YoxAQAg7WphjAJCONBZ+6V5XPZDAM479PdD4E2CxPoQuHPjkgy8CADltq9NM0hESdZovo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IViqpjlb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3/iV6DylHhXxuVy9GDOdVV7+9BQ77LoKCiOryhIh9fkv1zjaQ8QRaRgJfKbPvpM2vljkQ1j2N3HGbxjztVWto32GO7EMPjXojWUdV8Htln8LsDPeafA5MVNCagXuz5wxf3UD+hQoS17nOvZMuW7TBQxOI61qqQWs90Ot9xvzXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9lq5CzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IViqpjlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D682BC4CEE7;
-	Mon, 13 Oct 2025 15:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9lq5CzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7748C4CEE7;
+	Mon, 13 Oct 2025 15:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368930;
-	bh=xr7vP+jSfK6pT9J/+yVYGZ0nrOrfHFnZ5PB9Egam4aA=;
+	s=korg; t=1760368933;
+	bh=oYxUhQUUcjNiwjXApbcV3NRTY+h28YZfPAV7xwlEg8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IViqpjlbRKjtmiELR/ydUW4spQIRrMi5YZotth1nXm+26yHgM+U5yN86KZPJI1mQ+
-	 hi9djNR0DIjcN4YlQpWONpuLZ8LBKogFW4DlT1j3rR8WkggTE4IiVwKssJd5jDcKIS
-	 zQ5mCgSVJA4DvXSg5fQdEkEEklknUKOByJZxN5WU=
+	b=b9lq5CzCwoREft6g9XBA8uhXMlQAjdU64bYwfBYTUOZjrbHsEszNl0Z7yxdt/wWLg
+	 5cC0Xfof0pyNp7l5l+maDk7sCur30NO9GcPcBCpBE9TPy43z4nkzcNki7uHlDQGYlh
+	 RUsvglEuvycRjPCO2z/GI62bGT9hMzzyyg7tROWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <rabenda.cn@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 069/563] irqchip/sg2042-msi: Fix broken affinity setting
-Date: Mon, 13 Oct 2025 16:38:50 +0200
-Message-ID: <20251013144413.791453540@linuxfoundation.org>
+Subject: [PATCH 6.17 070/563] scripts/misc-check: update export checks for EXPORT_SYMBOL_FOR_MODULES()
+Date: Mon, 13 Oct 2025 16:38:51 +0200
+Message-ID: <20251013144413.828516814@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,85 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 9d8c41816bac518b4824f83b346ae30a1be83f68 ]
+[ Upstream commit 0354e81b7bd629f9c3379c9524e988ebc504fa25 ]
 
-When using NVME on SG2044, the NVME drvier always complains about "I/O tag
-XXX (XXX) QID XX timeout, completion polled", which is caused by the broken
-affinity setting mechanism of the sg2042-msi driver.
+The module export checks are looking for EXPORT_SYMBOL_GPL_FOR_MODULES()
+which was renamed to EXPORT_SYMBOL_FOR_MODULES(). Update the checks.
 
-The PLIC driver can only the set the affinity when enabled, but the
-sg2042-msi driver invokes the affinity setter in disabled state, which
-causes the change to be lost.
-
-Cure this by implementing the irq_startup()/shutdown() callbacks, which
-allow to startup (enabled) the underlying PLIC first.
-
-Fixes: e96b93a97c90 ("irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller")
-Reported-by: Han Gao <rabenda.cn@gmail.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Chen Wang <unicorn_wang@outlook.com> # Pioneerbox
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-Link: https://lore.kernel.org/all/20250813232835.43458-4-inochiama@gmail.com
+Fixes: 6d3c3ca4c77e ("module: Rename EXPORT_SYMBOL_GPL_FOR_MODULES to EXPORT_SYMBOL_FOR_MODULES")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://lore.kernel.org/r/20250825-export_modules_fix-v1-1-5c331e949538@suse.cz
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sg2042-msi.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ scripts/misc-check | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
-index bcfddc51bc6a1..2fd4d94f9bd76 100644
---- a/drivers/irqchip/irq-sg2042-msi.c
-+++ b/drivers/irqchip/irq-sg2042-msi.c
-@@ -85,6 +85,8 @@ static void sg2042_msi_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *m
+diff --git a/scripts/misc-check b/scripts/misc-check
+index 84f08da17b2c0..40e5a4b01ff47 100755
+--- a/scripts/misc-check
++++ b/scripts/misc-check
+@@ -45,7 +45,7 @@ check_tracked_ignored_files () {
+ # does not automatically fix it.
+ check_missing_include_linux_export_h () {
  
- static const struct irq_chip sg2042_msi_middle_irq_chip = {
- 	.name			= "SG2042 MSI",
-+	.irq_startup		= irq_chip_startup_parent,
-+	.irq_shutdown		= irq_chip_shutdown_parent,
- 	.irq_ack		= sg2042_msi_irq_ack,
- 	.irq_mask		= irq_chip_mask_parent,
- 	.irq_unmask		= irq_chip_unmask_parent,
-@@ -114,6 +116,8 @@ static void sg2044_msi_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *m
+-	git -C "${srctree:-.}" grep --files-with-matches -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_GPL_FOR_MODULES)\(.*\)' \
++	git -C "${srctree:-.}" grep --files-with-matches -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_FOR_MODULES)\(.*\)' \
+ 	    -- '*.[ch]' :^tools/ :^include/linux/export.h |
+ 	xargs -r git -C "${srctree:-.}" grep --files-without-match '#include[[:space:]]*<linux/export\.h>' |
+ 	xargs -r printf "%s: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing\n" >&2
+@@ -58,7 +58,7 @@ check_unnecessary_include_linux_export_h () {
  
- static struct irq_chip sg2044_msi_middle_irq_chip = {
- 	.name			= "SG2044 MSI",
-+	.irq_startup		= irq_chip_startup_parent,
-+	.irq_shutdown		= irq_chip_shutdown_parent,
- 	.irq_ack		= sg2044_msi_irq_ack,
- 	.irq_mask		= irq_chip_mask_parent,
- 	.irq_unmask		= irq_chip_unmask_parent,
-@@ -185,8 +189,10 @@ static const struct irq_domain_ops sg204x_msi_middle_domain_ops = {
- 	.select	= msi_lib_irq_domain_select,
- };
+ 	git -C "${srctree:-.}" grep --files-with-matches '#include[[:space:]]*<linux/export\.h>' \
+ 	    -- '*.[c]' :^tools/ |
+-	xargs -r git -C "${srctree:-.}" grep --files-without-match -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_GPL_FOR_MODULES)\(.*\)' |
++	xargs -r git -C "${srctree:-.}" grep --files-without-match -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_FOR_MODULES)\(.*\)' |
+ 	xargs -r printf "%s: warning: EXPORT_SYMBOL() is not used, but #include <linux/export.h> is present\n" >&2
+ }
  
--#define SG2042_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |	\
--				   MSI_FLAG_USE_DEF_CHIP_OPS)
-+#define SG2042_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |		\
-+				   MSI_FLAG_USE_DEF_CHIP_OPS |		\
-+				   MSI_FLAG_PCI_MSI_MASK_PARENT |	\
-+				   MSI_FLAG_PCI_MSI_STARTUP_PARENT)
- 
- #define SG2042_MSI_FLAGS_SUPPORTED MSI_GENERIC_FLAGS_MASK
- 
-@@ -200,10 +206,12 @@ static const struct msi_parent_ops sg2042_msi_parent_ops = {
- 	.init_dev_msi_info	= msi_lib_init_dev_msi_info,
- };
- 
--#define SG2044_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |	\
--				   MSI_FLAG_USE_DEF_CHIP_OPS)
-+#define SG2044_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |		\
-+				   MSI_FLAG_USE_DEF_CHIP_OPS |		\
-+				   MSI_FLAG_PCI_MSI_MASK_PARENT |	\
-+				   MSI_FLAG_PCI_MSI_STARTUP_PARENT)
- 
--#define SG2044_MSI_FLAGS_SUPPORTED (MSI_GENERIC_FLAGS_MASK |	\
-+#define SG2044_MSI_FLAGS_SUPPORTED (MSI_GENERIC_FLAGS_MASK |		\
- 				    MSI_FLAG_PCI_MSIX)
- 
- static const struct msi_parent_ops sg2044_msi_parent_ops = {
 -- 
 2.51.0
 
