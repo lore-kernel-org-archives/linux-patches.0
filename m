@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFD0223DC1;
-	Mon, 13 Oct 2025 15:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D01C2F3C31;
+	Mon, 13 Oct 2025 15:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370219; cv=none; b=Qj1kKd5gOWBeNw3+uvl6Er0JhOhITVOXYo/+of9LsDowM3d0iYsr71HeXhFHA+5Qt9zHRdsaYWG3+EWvuKnnDtebYl1e66jHvqesgPZFqShjKcisDiG+2HrV8irmGfD5yYToOvGqcHFoXWyHsNYgFEuhR8NTWoLJPbqw+JEMTbc=
+	t=1760370223; cv=none; b=CcppD4RVvahTTlXj6ZEffD1tbQAuH7kldREtq7HVqAVoK1Fck5CSDXsNYuTWENvlvzb6NuVPqsgYlaosiPLaiVfYCI4f4udvoCIGAvo1GXOQ2Ff6Ni7mcEoFuQGmuE8DwZnWbGa0txrhq/w+0QIkUrbSh9EUAXXgFIezwDF7heg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370219; c=relaxed/simple;
-	bh=VPe+9TZ9Ven+ds7zoqcjVdYAJMHTXa84JmdO45HE3WY=;
+	s=arc-20240116; t=1760370223; c=relaxed/simple;
+	bh=V+DJefSGd5G9y9KN/aZ6OPI/v/O44WuA/nv/DXtWpjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMgJ3ifAbILgk2enCA9bvFnRjwP6z+82JH377UGigxwBh0EB4hQi8GHgBn5k8ycjZ1W0MWMrPmTqiRJb402hdNru41+GQ4O/VTXTmA4ZGsZynSABnDu9OmW/NGM11WBRj3CeArbMpkNz4QHXwcMu8vmY+eiKijpe9dD2CxXpmZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mn/LxTu7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8hYN+U05dK4An3iHWuRLpMA2TboEZG60LBOIUjLZN/w/wbjuvam6ZJ6ijTZPphRo25F3GWiycuRG79+Zg5YgxiqaOyiIhuu7Vi39X9B89cavjXg/acQ7SwxGWm8+PIcC5dVCGJ3nUvGz1yygT5OFz186ml4M9x7PuLjCd9Lino=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkGl2ym/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mn/LxTu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657D8C4CEE7;
-	Mon, 13 Oct 2025 15:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkGl2ym/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAB6C4CEE7;
+	Mon, 13 Oct 2025 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370219;
-	bh=VPe+9TZ9Ven+ds7zoqcjVdYAJMHTXa84JmdO45HE3WY=;
+	s=korg; t=1760370222;
+	bh=V+DJefSGd5G9y9KN/aZ6OPI/v/O44WuA/nv/DXtWpjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mn/LxTu778IrUfXVUTN+U7XoVX/dnIrJO1Gysav5736UZNBNhE+wCf9hQ/hbO55JZ
-	 6tHNPhtIhTYsxHbufd+Nm7qRviakOnPRCiCFeMEYrqtqvwh1ZWlROxNz8Ld8rsX+aU
-	 D7G2tHpPYiDOGVBPNiFYahUS0GQrUiFI8bkBPTY8=
+	b=LkGl2ym/W3TZu0Uf1NNVcbhPOVlbteR5ASGXh/4KSuKI2HWxfPg1uaPvIqadgsTkR
+	 IwcKx54mqYq/P7Z6I4sgMSHP1QAuBqFRXp2UR4qjJHxeag+DA1ARQiEbcrl39Kqae2
+	 0jMNdiCNtFGF2h7Yxp/P4abFwULzZTRRdu9m1jlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Sharma <slopixelz@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 488/563] selftests/bpf: Fix typos and grammar in test sources
-Date: Mon, 13 Oct 2025 16:45:49 +0200
-Message-ID: <20251013144428.970829825@linuxfoundation.org>
+Subject: [PATCH 6.17 489/563] selftests/bpf: move get_ksyms and get_addrs to trace_helpers.c
+Date: Mon, 13 Oct 2025 16:45:50 +0200
+Message-ID: <20251013144429.006978696@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,463 +51,516 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Sharma <slopixelz@gmail.com>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-[ Upstream commit d3abefe897408718799ae3bd06295b89b870a38e ]
+[ Upstream commit 8bad31edf5490a38dc26163502cd7005a033ee05 ]
 
-Fix spelling typos and grammar errors in BPF selftests source code.
+We need to get all the kernel function that can be traced sometimes, so we
+move the get_syms() and get_addrs() in kprobe_multi_test.c to
+trace_helpers.c and rename it to bpf_get_ksyms() and bpf_get_addrs().
 
-Signed-off-by: Shubham Sharma <slopixelz@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250826125746.17983-1-slopixelz@gmail.com
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Link: https://lore.kernel.org/r/20250904021011.14069-2-dongml2@chinatelecom.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: 0c342bfc9949 ("selftests/bpf: Fix realloc size in bpf_get_addrs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile                      | 2 +-
- tools/testing/selftests/bpf/bench.c                       | 2 +-
- tools/testing/selftests/bpf/prog_tests/btf_dump.c         | 2 +-
- tools/testing/selftests/bpf/prog_tests/fd_array.c         | 2 +-
- .../testing/selftests/bpf/prog_tests/kprobe_multi_test.c  | 2 +-
- tools/testing/selftests/bpf/prog_tests/module_attach.c    | 2 +-
- tools/testing/selftests/bpf/prog_tests/reg_bounds.c       | 4 ++--
- .../selftests/bpf/prog_tests/stacktrace_build_id.c        | 2 +-
- .../selftests/bpf/prog_tests/stacktrace_build_id_nmi.c    | 2 +-
- tools/testing/selftests/bpf/prog_tests/stacktrace_map.c   | 2 +-
- .../selftests/bpf/prog_tests/stacktrace_map_raw_tp.c      | 2 +-
- .../selftests/bpf/prog_tests/stacktrace_map_skip.c        | 2 +-
- tools/testing/selftests/bpf/progs/bpf_cc_cubic.c          | 2 +-
- tools/testing/selftests/bpf/progs/bpf_dctcp.c             | 2 +-
- .../selftests/bpf/progs/freplace_connect_v4_prog.c        | 2 +-
- tools/testing/selftests/bpf/progs/iters_state_safety.c    | 2 +-
- tools/testing/selftests/bpf/progs/rbtree_search.c         | 2 +-
- .../testing/selftests/bpf/progs/struct_ops_kptr_return.c  | 2 +-
- tools/testing/selftests/bpf/progs/struct_ops_refcounted.c | 2 +-
- tools/testing/selftests/bpf/progs/test_cls_redirect.c     | 2 +-
- .../selftests/bpf/progs/test_cls_redirect_dynptr.c        | 2 +-
- tools/testing/selftests/bpf/progs/uretprobe_stack.c       | 4 ++--
- tools/testing/selftests/bpf/progs/verifier_scalar_ids.c   | 2 +-
- tools/testing/selftests/bpf/progs/verifier_var_off.c      | 6 +++---
- tools/testing/selftests/bpf/test_sockmap.c                | 2 +-
- tools/testing/selftests/bpf/verifier/calls.c              | 8 ++++----
- tools/testing/selftests/bpf/xdping.c                      | 2 +-
- tools/testing/selftests/bpf/xsk.h                         | 4 ++--
- 28 files changed, 36 insertions(+), 36 deletions(-)
+ .../bpf/prog_tests/kprobe_multi_test.c        | 220 +-----------------
+ tools/testing/selftests/bpf/trace_helpers.c   | 214 +++++++++++++++++
+ tools/testing/selftests/bpf/trace_helpers.h   |   3 +
+ 3 files changed, 220 insertions(+), 217 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index 77794efc020ea..fd6b370c81698 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -398,7 +398,7 @@ $(HOST_BPFOBJ): $(wildcard $(BPFDIR)/*.[ch] $(BPFDIR)/Makefile)		       \
- 		    DESTDIR=$(HOST_SCRATCH_DIR)/ prefix= all install_headers
- endif
- 
--# vmlinux.h is first dumped to a temprorary file and then compared to
-+# vmlinux.h is first dumped to a temporary file and then compared to
- # the previous version. This helps to avoid unnecessary re-builds of
- # $(TRUNNER_BPF_OBJS)
- $(INCLUDE_DIR)/vmlinux.h: $(VMLINUX_BTF) $(BPFTOOL) | $(INCLUDE_DIR)
-diff --git a/tools/testing/selftests/bpf/bench.c b/tools/testing/selftests/bpf/bench.c
-index ddd73d06a1eb2..3ecc226ea7b25 100644
---- a/tools/testing/selftests/bpf/bench.c
-+++ b/tools/testing/selftests/bpf/bench.c
-@@ -499,7 +499,7 @@ extern const struct bench bench_rename_rawtp;
- extern const struct bench bench_rename_fentry;
- extern const struct bench bench_rename_fexit;
- 
--/* pure counting benchmarks to establish theoretical lmits */
-+/* pure counting benchmarks to establish theoretical limits */
- extern const struct bench bench_trig_usermode_count;
- extern const struct bench bench_trig_syscall_count;
- extern const struct bench bench_trig_kernel_count;
-diff --git a/tools/testing/selftests/bpf/prog_tests/btf_dump.c b/tools/testing/selftests/bpf/prog_tests/btf_dump.c
-index 82903585c8700..10cba526d3e63 100644
---- a/tools/testing/selftests/bpf/prog_tests/btf_dump.c
-+++ b/tools/testing/selftests/bpf/prog_tests/btf_dump.c
-@@ -63,7 +63,7 @@ static int test_btf_dump_case(int n, struct btf_dump_test_case *t)
- 
- 	/* tests with t->known_ptr_sz have no "long" or "unsigned long" type,
- 	 * so it's impossible to determine correct pointer size; but if they
--	 * do, it should be 8 regardless of host architecture, becaues BPF
-+	 * do, it should be 8 regardless of host architecture, because BPF
- 	 * target is always 64-bit
- 	 */
- 	if (!t->known_ptr_sz) {
-diff --git a/tools/testing/selftests/bpf/prog_tests/fd_array.c b/tools/testing/selftests/bpf/prog_tests/fd_array.c
-index 241b2c8c6e0f1..c534b4d5f9da8 100644
---- a/tools/testing/selftests/bpf/prog_tests/fd_array.c
-+++ b/tools/testing/selftests/bpf/prog_tests/fd_array.c
-@@ -293,7 +293,7 @@ static int get_btf_id_by_fd(int btf_fd, __u32 *id)
-  *  1) Create a new btf, it's referenced only by a file descriptor, so refcnt=1
-  *  2) Load a BPF prog with fd_array[0] = btf_fd; now btf's refcnt=2
-  *  3) Close the btf_fd, now refcnt=1
-- * Wait and check that BTF stil exists.
-+ * Wait and check that BTF still exists.
-  */
- static void check_fd_array_cnt__referenced_btfs(void)
- {
 diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-index e19ef509ebf85..f377bea0b82d4 100644
+index f377bea0b82d4..171706e78da88 100644
 --- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
 +++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-@@ -463,7 +463,7 @@ static bool skip_entry(char *name)
- 	return false;
+@@ -422,220 +422,6 @@ static void test_unique_match(void)
+ 	kprobe_multi__destroy(skel);
  }
  
--/* Do comparision by ignoring '.llvm.<hash>' suffixes. */
-+/* Do comparison by ignoring '.llvm.<hash>' suffixes. */
- static int compare_name(const char *name1, const char *name2)
+-static size_t symbol_hash(long key, void *ctx __maybe_unused)
+-{
+-	return str_hash((const char *) key);
+-}
+-
+-static bool symbol_equal(long key1, long key2, void *ctx __maybe_unused)
+-{
+-	return strcmp((const char *) key1, (const char *) key2) == 0;
+-}
+-
+-static bool is_invalid_entry(char *buf, bool kernel)
+-{
+-	if (kernel && strchr(buf, '['))
+-		return true;
+-	if (!kernel && !strchr(buf, '['))
+-		return true;
+-	return false;
+-}
+-
+-static bool skip_entry(char *name)
+-{
+-	/*
+-	 * We attach to almost all kernel functions and some of them
+-	 * will cause 'suspicious RCU usage' when fprobe is attached
+-	 * to them. Filter out the current culprits - arch_cpu_idle
+-	 * default_idle and rcu_* functions.
+-	 */
+-	if (!strcmp(name, "arch_cpu_idle"))
+-		return true;
+-	if (!strcmp(name, "default_idle"))
+-		return true;
+-	if (!strncmp(name, "rcu_", 4))
+-		return true;
+-	if (!strcmp(name, "bpf_dispatcher_xdp_func"))
+-		return true;
+-	if (!strncmp(name, "__ftrace_invalid_address__",
+-		     sizeof("__ftrace_invalid_address__") - 1))
+-		return true;
+-	return false;
+-}
+-
+-/* Do comparison by ignoring '.llvm.<hash>' suffixes. */
+-static int compare_name(const char *name1, const char *name2)
+-{
+-	const char *res1, *res2;
+-	int len1, len2;
+-
+-	res1 = strstr(name1, ".llvm.");
+-	res2 = strstr(name2, ".llvm.");
+-	len1 = res1 ? res1 - name1 : strlen(name1);
+-	len2 = res2 ? res2 - name2 : strlen(name2);
+-
+-	if (len1 == len2)
+-		return strncmp(name1, name2, len1);
+-	if (len1 < len2)
+-		return strncmp(name1, name2, len1) <= 0 ? -1 : 1;
+-	return strncmp(name1, name2, len2) >= 0 ? 1 : -1;
+-}
+-
+-static int load_kallsyms_compare(const void *p1, const void *p2)
+-{
+-	return compare_name(((const struct ksym *)p1)->name, ((const struct ksym *)p2)->name);
+-}
+-
+-static int search_kallsyms_compare(const void *p1, const struct ksym *p2)
+-{
+-	return compare_name(p1, p2->name);
+-}
+-
+-static int get_syms(char ***symsp, size_t *cntp, bool kernel)
+-{
+-	size_t cap = 0, cnt = 0;
+-	char *name = NULL, *ksym_name, **syms = NULL;
+-	struct hashmap *map;
+-	struct ksyms *ksyms;
+-	struct ksym *ks;
+-	char buf[256];
+-	FILE *f;
+-	int err = 0;
+-
+-	ksyms = load_kallsyms_custom_local(load_kallsyms_compare);
+-	if (!ASSERT_OK_PTR(ksyms, "load_kallsyms_custom_local"))
+-		return -EINVAL;
+-
+-	/*
+-	 * The available_filter_functions contains many duplicates,
+-	 * but other than that all symbols are usable in kprobe multi
+-	 * interface.
+-	 * Filtering out duplicates by using hashmap__add, which won't
+-	 * add existing entry.
+-	 */
+-
+-	if (access("/sys/kernel/tracing/trace", F_OK) == 0)
+-		f = fopen("/sys/kernel/tracing/available_filter_functions", "r");
+-	else
+-		f = fopen("/sys/kernel/debug/tracing/available_filter_functions", "r");
+-
+-	if (!f)
+-		return -EINVAL;
+-
+-	map = hashmap__new(symbol_hash, symbol_equal, NULL);
+-	if (IS_ERR(map)) {
+-		err = libbpf_get_error(map);
+-		goto error;
+-	}
+-
+-	while (fgets(buf, sizeof(buf), f)) {
+-		if (is_invalid_entry(buf, kernel))
+-			continue;
+-
+-		free(name);
+-		if (sscanf(buf, "%ms$*[^\n]\n", &name) != 1)
+-			continue;
+-		if (skip_entry(name))
+-			continue;
+-
+-		ks = search_kallsyms_custom_local(ksyms, name, search_kallsyms_compare);
+-		if (!ks) {
+-			err = -EINVAL;
+-			goto error;
+-		}
+-
+-		ksym_name = ks->name;
+-		err = hashmap__add(map, ksym_name, 0);
+-		if (err == -EEXIST) {
+-			err = 0;
+-			continue;
+-		}
+-		if (err)
+-			goto error;
+-
+-		err = libbpf_ensure_mem((void **) &syms, &cap,
+-					sizeof(*syms), cnt + 1);
+-		if (err)
+-			goto error;
+-
+-		syms[cnt++] = ksym_name;
+-	}
+-
+-	*symsp = syms;
+-	*cntp = cnt;
+-
+-error:
+-	free(name);
+-	fclose(f);
+-	hashmap__free(map);
+-	if (err)
+-		free(syms);
+-	return err;
+-}
+-
+-static int get_addrs(unsigned long **addrsp, size_t *cntp, bool kernel)
+-{
+-	unsigned long *addr, *addrs, *tmp_addrs;
+-	int err = 0, max_cnt, inc_cnt;
+-	char *name = NULL;
+-	size_t cnt = 0;
+-	char buf[256];
+-	FILE *f;
+-
+-	if (access("/sys/kernel/tracing/trace", F_OK) == 0)
+-		f = fopen("/sys/kernel/tracing/available_filter_functions_addrs", "r");
+-	else
+-		f = fopen("/sys/kernel/debug/tracing/available_filter_functions_addrs", "r");
+-
+-	if (!f)
+-		return -ENOENT;
+-
+-	/* In my local setup, the number of entries is 50k+ so Let us initially
+-	 * allocate space to hold 64k entries. If 64k is not enough, incrementally
+-	 * increase 1k each time.
+-	 */
+-	max_cnt = 65536;
+-	inc_cnt = 1024;
+-	addrs = malloc(max_cnt * sizeof(long));
+-	if (addrs == NULL) {
+-		err = -ENOMEM;
+-		goto error;
+-	}
+-
+-	while (fgets(buf, sizeof(buf), f)) {
+-		if (is_invalid_entry(buf, kernel))
+-			continue;
+-
+-		free(name);
+-		if (sscanf(buf, "%p %ms$*[^\n]\n", &addr, &name) != 2)
+-			continue;
+-		if (skip_entry(name))
+-			continue;
+-
+-		if (cnt == max_cnt) {
+-			max_cnt += inc_cnt;
+-			tmp_addrs = realloc(addrs, max_cnt);
+-			if (!tmp_addrs) {
+-				err = -ENOMEM;
+-				goto error;
+-			}
+-			addrs = tmp_addrs;
+-		}
+-
+-		addrs[cnt++] = (unsigned long)addr;
+-	}
+-
+-	*addrsp = addrs;
+-	*cntp = cnt;
+-
+-error:
+-	free(name);
+-	fclose(f);
+-	if (err)
+-		free(addrs);
+-	return err;
+-}
+-
+ static void do_bench_test(struct kprobe_multi_empty *skel, struct bpf_kprobe_multi_opts *opts)
  {
- 	const char *res1, *res2;
-diff --git a/tools/testing/selftests/bpf/prog_tests/module_attach.c b/tools/testing/selftests/bpf/prog_tests/module_attach.c
-index 6d391d95f96e0..70fa7ae93173b 100644
---- a/tools/testing/selftests/bpf/prog_tests/module_attach.c
-+++ b/tools/testing/selftests/bpf/prog_tests/module_attach.c
-@@ -90,7 +90,7 @@ void test_module_attach(void)
+ 	long attach_start_ns, attach_end_ns;
+@@ -670,7 +456,7 @@ static void test_kprobe_multi_bench_attach(bool kernel)
+ 	char **syms = NULL;
+ 	size_t cnt = 0;
  
- 	test_module_attach__detach(skel);
+-	if (!ASSERT_OK(get_syms(&syms, &cnt, kernel), "get_syms"))
++	if (!ASSERT_OK(bpf_get_ksyms(&syms, &cnt, kernel), "bpf_get_ksyms"))
+ 		return;
  
--	/* attach fentry/fexit and make sure it get's module reference */
-+	/* attach fentry/fexit and make sure it gets module reference */
- 	link = bpf_program__attach(skel->progs.handle_fentry);
- 	if (!ASSERT_OK_PTR(link, "attach_fentry"))
- 		goto cleanup;
-diff --git a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-index e261b0e872dbb..d93a0c7b1786f 100644
---- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-+++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-@@ -623,7 +623,7 @@ static void range_cond(enum num_t t, struct range x, struct range y,
- 			*newx = range(t, x.a, x.b);
- 			*newy = range(t, y.a + 1, y.b);
- 		} else if (x.a == x.b && x.b == y.b) {
--			/* X is a constant matching rigth side of Y */
-+			/* X is a constant matching right side of Y */
- 			*newx = range(t, x.a, x.b);
- 			*newy = range(t, y.a, y.b - 1);
- 		} else if (y.a == y.b && x.a == y.a) {
-@@ -631,7 +631,7 @@ static void range_cond(enum num_t t, struct range x, struct range y,
- 			*newx = range(t, x.a + 1, x.b);
- 			*newy = range(t, y.a, y.b);
- 		} else if (y.a == y.b && x.b == y.b) {
--			/* Y is a constant matching rigth side of X */
-+			/* Y is a constant matching right side of X */
- 			*newx = range(t, x.a, x.b - 1);
- 			*newy = range(t, y.a, y.b);
- 		} else {
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id.c
-index b7ba5cd47d96f..271b5cc9fc015 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id.c
-@@ -39,7 +39,7 @@ void test_stacktrace_build_id(void)
- 	bpf_map_update_elem(control_map_fd, &key, &val, 0);
+ 	skel = kprobe_multi_empty__open_and_load();
+@@ -696,13 +482,13 @@ static void test_kprobe_multi_bench_attach_addr(bool kernel)
+ 	size_t cnt = 0;
+ 	int err;
  
- 	/* for every element in stackid_hmap, we can find a corresponding one
--	 * in stackmap, and vise versa.
-+	 * in stackmap, and vice versa.
- 	 */
- 	err = compare_map_keys(stackid_hmap_fd, stackmap_fd);
- 	if (CHECK(err, "compare_map_keys stackid_hmap vs. stackmap",
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-index 0832fd7874575..b277dddd5af7f 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-@@ -66,7 +66,7 @@ void test_stacktrace_build_id_nmi(void)
- 	bpf_map_update_elem(control_map_fd, &key, &val, 0);
- 
- 	/* for every element in stackid_hmap, we can find a corresponding one
--	 * in stackmap, and vise versa.
-+	 * in stackmap, and vice versa.
- 	 */
- 	err = compare_map_keys(stackid_hmap_fd, stackmap_fd);
- 	if (CHECK(err, "compare_map_keys stackid_hmap vs. stackmap",
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_map.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_map.c
-index df59e4ae29510..84a7e405e9129 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_map.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_map.c
-@@ -50,7 +50,7 @@ void test_stacktrace_map(void)
- 	bpf_map_update_elem(control_map_fd, &key, &val, 0);
- 
- 	/* for every element in stackid_hmap, we can find a corresponding one
--	 * in stackmap, and vise versa.
-+	 * in stackmap, and vice versa.
- 	 */
- 	err = compare_map_keys(stackid_hmap_fd, stackmap_fd);
- 	if (CHECK(err, "compare_map_keys stackid_hmap vs. stackmap",
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_map_raw_tp.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_map_raw_tp.c
-index c6ef06f55cdb4..e0cb4697b4b3c 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_map_raw_tp.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_map_raw_tp.c
-@@ -46,7 +46,7 @@ void test_stacktrace_map_raw_tp(void)
- 	bpf_map_update_elem(control_map_fd, &key, &val, 0);
- 
- 	/* for every element in stackid_hmap, we can find a corresponding one
--	 * in stackmap, and vise versa.
-+	 * in stackmap, and vice versa.
- 	 */
- 	err = compare_map_keys(stackid_hmap_fd, stackmap_fd);
- 	if (CHECK(err, "compare_map_keys stackid_hmap vs. stackmap",
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_map_skip.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_map_skip.c
-index 1932b1e0685cf..dc2ccf6a14d13 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_map_skip.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_map_skip.c
-@@ -40,7 +40,7 @@ void test_stacktrace_map_skip(void)
- 	skel->bss->control = 1;
- 
- 	/* for every element in stackid_hmap, we can find a corresponding one
--	 * in stackmap, and vise versa.
-+	 * in stackmap, and vice versa.
- 	 */
- 	err = compare_map_keys(stackid_hmap_fd, stackmap_fd);
- 	if (!ASSERT_OK(err, "compare_map_keys stackid_hmap vs. stackmap"))
-diff --git a/tools/testing/selftests/bpf/progs/bpf_cc_cubic.c b/tools/testing/selftests/bpf/progs/bpf_cc_cubic.c
-index 1654a530aa3dc..4e51785e7606e 100644
---- a/tools/testing/selftests/bpf/progs/bpf_cc_cubic.c
-+++ b/tools/testing/selftests/bpf/progs/bpf_cc_cubic.c
-@@ -101,7 +101,7 @@ static void tcp_cwnd_reduction(struct sock *sk, int newly_acked_sacked,
- 	tp->snd_cwnd = pkts_in_flight + sndcnt;
- }
- 
--/* Decide wheather to run the increase function of congestion control. */
-+/* Decide whether to run the increase function of congestion control. */
- static bool tcp_may_raise_cwnd(const struct sock *sk, const int flag)
- {
- 	if (tcp_sk(sk)->reordering > TCP_REORDERING)
-diff --git a/tools/testing/selftests/bpf/progs/bpf_dctcp.c b/tools/testing/selftests/bpf/progs/bpf_dctcp.c
-index 7cd73e75f52a2..32c511bcd60b3 100644
---- a/tools/testing/selftests/bpf/progs/bpf_dctcp.c
-+++ b/tools/testing/selftests/bpf/progs/bpf_dctcp.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2019 Facebook */
- 
--/* WARNING: This implemenation is not necessarily the same
-+/* WARNING: This implementation is not necessarily the same
-  * as the tcp_dctcp.c.  The purpose is mainly for testing
-  * the kernel BPF logic.
-  */
-diff --git a/tools/testing/selftests/bpf/progs/freplace_connect_v4_prog.c b/tools/testing/selftests/bpf/progs/freplace_connect_v4_prog.c
-index 544e5ac904610..d09bbd8ae8a85 100644
---- a/tools/testing/selftests/bpf/progs/freplace_connect_v4_prog.c
-+++ b/tools/testing/selftests/bpf/progs/freplace_connect_v4_prog.c
-@@ -12,7 +12,7 @@
- SEC("freplace/connect_v4_prog")
- int new_connect_v4_prog(struct bpf_sock_addr *ctx)
- {
--	// return value thats in invalid range
-+	// return value that's in invalid range
- 	return 255;
- }
- 
-diff --git a/tools/testing/selftests/bpf/progs/iters_state_safety.c b/tools/testing/selftests/bpf/progs/iters_state_safety.c
-index f41257eadbb25..b381ac0c736cf 100644
---- a/tools/testing/selftests/bpf/progs/iters_state_safety.c
-+++ b/tools/testing/selftests/bpf/progs/iters_state_safety.c
-@@ -345,7 +345,7 @@ int __naked read_from_iter_slot_fail(void)
- 		"r3 = 1000;"
- 		"call %[bpf_iter_num_new];"
- 
--		/* attemp to leak bpf_iter_num state */
-+		/* attempt to leak bpf_iter_num state */
- 		"r7 = *(u64 *)(r6 + 0);"
- 		"r8 = *(u64 *)(r6 + 8);"
- 
-diff --git a/tools/testing/selftests/bpf/progs/rbtree_search.c b/tools/testing/selftests/bpf/progs/rbtree_search.c
-index 098ef970fac16..b05565d1db0d4 100644
---- a/tools/testing/selftests/bpf/progs/rbtree_search.c
-+++ b/tools/testing/selftests/bpf/progs/rbtree_search.c
-@@ -183,7 +183,7 @@ long test_##op##_spinlock_##dolock(void *ctx)		\
- }
- 
- /*
-- * Use a spearate MSG macro instead of passing to TEST_XXX(..., MSG)
-+ * Use a separate MSG macro instead of passing to TEST_XXX(..., MSG)
-  * to ensure the message itself is not in the bpf prog lineinfo
-  * which the verifier includes in its log.
-  * Otherwise, the test_loader will incorrectly match the prog lineinfo
-diff --git a/tools/testing/selftests/bpf/progs/struct_ops_kptr_return.c b/tools/testing/selftests/bpf/progs/struct_ops_kptr_return.c
-index 36386b3c23a1f..2b98b7710816d 100644
---- a/tools/testing/selftests/bpf/progs/struct_ops_kptr_return.c
-+++ b/tools/testing/selftests/bpf/progs/struct_ops_kptr_return.c
-@@ -9,7 +9,7 @@ void bpf_task_release(struct task_struct *p) __ksym;
- 
- /* This test struct_ops BPF programs returning referenced kptr. The verifier should
-  * allow a referenced kptr or a NULL pointer to be returned. A referenced kptr to task
-- * here is acquried automatically as the task argument is tagged with "__ref".
-+ * here is acquired automatically as the task argument is tagged with "__ref".
-  */
- SEC("struct_ops/test_return_ref_kptr")
- struct task_struct *BPF_PROG(kptr_return, int dummy,
-diff --git a/tools/testing/selftests/bpf/progs/struct_ops_refcounted.c b/tools/testing/selftests/bpf/progs/struct_ops_refcounted.c
-index 76dcb6089d7f8..9c0a65466356c 100644
---- a/tools/testing/selftests/bpf/progs/struct_ops_refcounted.c
-+++ b/tools/testing/selftests/bpf/progs/struct_ops_refcounted.c
-@@ -9,7 +9,7 @@ __attribute__((nomerge)) extern void bpf_task_release(struct task_struct *p) __k
- 
- /* This is a test BPF program that uses struct_ops to access a referenced
-  * kptr argument. This is a test for the verifier to ensure that it
-- * 1) recongnizes the task as a referenced object (i.e., ref_obj_id > 0), and
-+ * 1) recognizes the task as a referenced object (i.e., ref_obj_id > 0), and
-  * 2) the same reference can be acquired from multiple paths as long as it
-  *    has not been released.
-  */
-diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.c b/tools/testing/selftests/bpf/progs/test_cls_redirect.c
-index f344c6835e84e..823169fb6e4c7 100644
---- a/tools/testing/selftests/bpf/progs/test_cls_redirect.c
-+++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.c
-@@ -129,7 +129,7 @@ typedef uint8_t *net_ptr __attribute__((align_value(8)));
- typedef struct buf {
- 	struct __sk_buff *skb;
- 	net_ptr head;
--	/* NB: tail musn't have alignment other than 1, otherwise
-+	/* NB: tail mustn't have alignment other than 1, otherwise
- 	* LLVM will go and eliminate code, e.g. when checking packet lengths.
- 	*/
- 	uint8_t *const tail;
-diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect_dynptr.c b/tools/testing/selftests/bpf/progs/test_cls_redirect_dynptr.c
-index d0f7670351e58..dfd4a2710391d 100644
---- a/tools/testing/selftests/bpf/progs/test_cls_redirect_dynptr.c
-+++ b/tools/testing/selftests/bpf/progs/test_cls_redirect_dynptr.c
-@@ -494,7 +494,7 @@ static ret_t get_next_hop(struct bpf_dynptr *dynptr, __u64 *offset, encap_header
- 
- 	*offset += sizeof(*next_hop);
- 
--	/* Skip the remainig next hops (may be zero). */
-+	/* Skip the remaining next hops (may be zero). */
- 	return skip_next_hops(offset, encap->unigue.hop_count - encap->unigue.next_hop - 1);
- }
- 
-diff --git a/tools/testing/selftests/bpf/progs/uretprobe_stack.c b/tools/testing/selftests/bpf/progs/uretprobe_stack.c
-index 9fdcf396b8f46..a2951e2f1711b 100644
---- a/tools/testing/selftests/bpf/progs/uretprobe_stack.c
-+++ b/tools/testing/selftests/bpf/progs/uretprobe_stack.c
-@@ -26,8 +26,8 @@ int usdt_len;
- SEC("uprobe//proc/self/exe:target_1")
- int BPF_UPROBE(uprobe_1)
- {
--	/* target_1 is recursive wit depth of 2, so we capture two separate
--	 * stack traces, depending on which occurence it is
-+	/* target_1 is recursive with depth of 2, so we capture two separate
-+	 * stack traces, depending on which occurrence it is
- 	 */
- 	static bool recur = false;
- 
-diff --git a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-index 7c5e5e6d10ebc..dba3ca728f6e6 100644
---- a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-@@ -349,7 +349,7 @@ __naked void precision_two_ids(void)
- SEC("socket")
- __success __log_level(2)
- __flag(BPF_F_TEST_STATE_FREQ)
--/* check thar r0 and r6 have different IDs after 'if',
-+/* check that r0 and r6 have different IDs after 'if',
-  * collect_linked_regs() can't tie more than 6 registers for a single insn.
-  */
- __msg("8: (25) if r0 > 0x7 goto pc+0         ; R0=scalar(id=1")
-diff --git a/tools/testing/selftests/bpf/progs/verifier_var_off.c b/tools/testing/selftests/bpf/progs/verifier_var_off.c
-index 1d36d01b746e7..f345466bca686 100644
---- a/tools/testing/selftests/bpf/progs/verifier_var_off.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_var_off.c
-@@ -114,8 +114,8 @@ __naked void stack_write_priv_vs_unpriv(void)
- }
- 
- /* Similar to the previous test, but this time also perform a read from the
-- * address written to with a variable offset. The read is allowed, showing that,
-- * after a variable-offset write, a priviledged program can read the slots that
-+ * address written to with a variable offet. The read is allowed, showing that,
-+ * after a variable-offset write, a privileged program can read the slots that
-  * were in the range of that write (even if the verifier doesn't actually know if
-  * the slot being read was really written to or not.
-  *
-@@ -157,7 +157,7 @@ __naked void stack_write_followed_by_read(void)
- SEC("socket")
- __description("variable-offset stack write clobbers spilled regs")
- __failure
--/* In the priviledged case, dereferencing a spilled-and-then-filled
-+/* In the privileged case, dereferencing a spilled-and-then-filled
-  * register is rejected because the previous variable offset stack
-  * write might have overwritten the spilled pointer (i.e. we lose track
-  * of the spilled register when we analyze the write).
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index fd2da2234cc9b..76568db7a6642 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -1372,7 +1372,7 @@ static int run_options(struct sockmap_options *options, int cg_fd,  int test)
- 	} else
- 		fprintf(stderr, "unknown test\n");
- out:
--	/* Detatch and zero all the maps */
-+	/* Detach and zero all the maps */
- 	bpf_prog_detach2(bpf_program__fd(progs[3]), cg_fd, BPF_CGROUP_SOCK_OPS);
- 
- 	for (i = 0; i < ARRAY_SIZE(links); i++) {
-diff --git a/tools/testing/selftests/bpf/verifier/calls.c b/tools/testing/selftests/bpf/verifier/calls.c
-index f3492efc88346..c8d640802cce4 100644
---- a/tools/testing/selftests/bpf/verifier/calls.c
-+++ b/tools/testing/selftests/bpf/verifier/calls.c
-@@ -1375,7 +1375,7 @@
- 	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 1),
- 	/* write into map value */
- 	BPF_ST_MEM(BPF_DW, BPF_REG_0, 0, 0),
--	/* fetch secound map_value_ptr from the stack */
-+	/* fetch second map_value_ptr from the stack */
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_10, -16),
- 	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 1),
- 	/* write into map value */
-@@ -1439,7 +1439,7 @@
- 	/* second time with fp-16 */
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 1, 0, 4),
- 	BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 1, 2),
--	/* fetch secound map_value_ptr from the stack */
-+	/* fetch second map_value_ptr from the stack */
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_7, 0),
- 	/* write into map value */
- 	BPF_ST_MEM(BPF_DW, BPF_REG_0, 0, 0),
-@@ -1493,7 +1493,7 @@
- 	/* second time with fp-16 */
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 1, 0, 4),
- 	BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 0, 2),
--	/* fetch secound map_value_ptr from the stack */
-+	/* fetch second map_value_ptr from the stack */
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_7, 0),
- 	/* write into map value */
- 	BPF_ST_MEM(BPF_DW, BPF_REG_0, 0, 0),
-@@ -2380,7 +2380,7 @@
- 	 */
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_6, BPF_REG_7, 1),
- 	BPF_MOV64_REG(BPF_REG_9, BPF_REG_8),
--	/* r9 = *r9                ; verifier get's to this point via two paths:
-+	/* r9 = *r9                ; verifier gets to this point via two paths:
- 	 *                         ; (I) one including r9 = r8, verified first;
- 	 *                         ; (II) one excluding r9 = r8, verified next.
- 	 *                         ; After load of *r9 to r9 the frame[0].fp[-24].id == r9.id.
-diff --git a/tools/testing/selftests/bpf/xdping.c b/tools/testing/selftests/bpf/xdping.c
-index 1503a1d2faa09..9ed8c796645d0 100644
---- a/tools/testing/selftests/bpf/xdping.c
-+++ b/tools/testing/selftests/bpf/xdping.c
-@@ -155,7 +155,7 @@ int main(int argc, char **argv)
+-	err = get_addrs(&addrs, &cnt, kernel);
++	err = bpf_get_addrs(&addrs, &cnt, kernel);
+ 	if (err == -ENOENT) {
+ 		test__skip();
+ 		return;
  	}
  
- 	if (!server) {
--		/* Only supports IPv4; see hints initiailization above. */
-+		/* Only supports IPv4; see hints initialization above. */
- 		if (getaddrinfo(argv[optind], NULL, &hints, &a) || !a) {
- 			fprintf(stderr, "Could not resolve %s\n", argv[optind]);
- 			return 1;
-diff --git a/tools/testing/selftests/bpf/xsk.h b/tools/testing/selftests/bpf/xsk.h
-index 93c2cc413cfcd..48729da142c24 100644
---- a/tools/testing/selftests/bpf/xsk.h
-+++ b/tools/testing/selftests/bpf/xsk.h
-@@ -93,8 +93,8 @@ static inline __u32 xsk_prod_nb_free(struct xsk_ring_prod *r, __u32 nb)
- 	/* Refresh the local tail pointer.
- 	 * cached_cons is r->size bigger than the real consumer pointer so
- 	 * that this addition can be avoided in the more frequently
--	 * executed code that computs free_entries in the beginning of
--	 * this function. Without this optimization it whould have been
-+	 * executed code that computes free_entries in the beginning of
-+	 * this function. Without this optimization it would have been
- 	 * free_entries = r->cached_prod - r->cached_cons + r->size.
- 	 */
- 	r->cached_cons = __atomic_load_n(r->consumer, __ATOMIC_ACQUIRE);
+-	if (!ASSERT_OK(err, "get_addrs"))
++	if (!ASSERT_OK(err, "bpf_get_addrs"))
+ 		return;
+ 
+ 	skel = kprobe_multi_empty__open_and_load();
+diff --git a/tools/testing/selftests/bpf/trace_helpers.c b/tools/testing/selftests/bpf/trace_helpers.c
+index 81943c6254e6b..d24baf244d1f3 100644
+--- a/tools/testing/selftests/bpf/trace_helpers.c
++++ b/tools/testing/selftests/bpf/trace_helpers.c
+@@ -17,6 +17,7 @@
+ #include <linux/limits.h>
+ #include <libelf.h>
+ #include <gelf.h>
++#include "bpf/hashmap.h"
+ #include "bpf/libbpf_internal.h"
+ 
+ #define TRACEFS_PIPE	"/sys/kernel/tracing/trace_pipe"
+@@ -519,3 +520,216 @@ void read_trace_pipe(void)
+ {
+ 	read_trace_pipe_iter(trace_pipe_cb, NULL, 0);
+ }
++
++static size_t symbol_hash(long key, void *ctx __maybe_unused)
++{
++	return str_hash((const char *) key);
++}
++
++static bool symbol_equal(long key1, long key2, void *ctx __maybe_unused)
++{
++	return strcmp((const char *) key1, (const char *) key2) == 0;
++}
++
++static bool is_invalid_entry(char *buf, bool kernel)
++{
++	if (kernel && strchr(buf, '['))
++		return true;
++	if (!kernel && !strchr(buf, '['))
++		return true;
++	return false;
++}
++
++static bool skip_entry(char *name)
++{
++	/*
++	 * We attach to almost all kernel functions and some of them
++	 * will cause 'suspicious RCU usage' when fprobe is attached
++	 * to them. Filter out the current culprits - arch_cpu_idle
++	 * default_idle and rcu_* functions.
++	 */
++	if (!strcmp(name, "arch_cpu_idle"))
++		return true;
++	if (!strcmp(name, "default_idle"))
++		return true;
++	if (!strncmp(name, "rcu_", 4))
++		return true;
++	if (!strcmp(name, "bpf_dispatcher_xdp_func"))
++		return true;
++	if (!strncmp(name, "__ftrace_invalid_address__",
++		     sizeof("__ftrace_invalid_address__") - 1))
++		return true;
++	return false;
++}
++
++/* Do comparison by ignoring '.llvm.<hash>' suffixes. */
++static int compare_name(const char *name1, const char *name2)
++{
++	const char *res1, *res2;
++	int len1, len2;
++
++	res1 = strstr(name1, ".llvm.");
++	res2 = strstr(name2, ".llvm.");
++	len1 = res1 ? res1 - name1 : strlen(name1);
++	len2 = res2 ? res2 - name2 : strlen(name2);
++
++	if (len1 == len2)
++		return strncmp(name1, name2, len1);
++	if (len1 < len2)
++		return strncmp(name1, name2, len1) <= 0 ? -1 : 1;
++	return strncmp(name1, name2, len2) >= 0 ? 1 : -1;
++}
++
++static int load_kallsyms_compare(const void *p1, const void *p2)
++{
++	return compare_name(((const struct ksym *)p1)->name, ((const struct ksym *)p2)->name);
++}
++
++static int search_kallsyms_compare(const void *p1, const struct ksym *p2)
++{
++	return compare_name(p1, p2->name);
++}
++
++int bpf_get_ksyms(char ***symsp, size_t *cntp, bool kernel)
++{
++	size_t cap = 0, cnt = 0;
++	char *name = NULL, *ksym_name, **syms = NULL;
++	struct hashmap *map;
++	struct ksyms *ksyms;
++	struct ksym *ks;
++	char buf[256];
++	FILE *f;
++	int err = 0;
++
++	ksyms = load_kallsyms_custom_local(load_kallsyms_compare);
++	if (!ksyms)
++		return -EINVAL;
++
++	/*
++	 * The available_filter_functions contains many duplicates,
++	 * but other than that all symbols are usable to trace.
++	 * Filtering out duplicates by using hashmap__add, which won't
++	 * add existing entry.
++	 */
++
++	if (access("/sys/kernel/tracing/trace", F_OK) == 0)
++		f = fopen("/sys/kernel/tracing/available_filter_functions", "r");
++	else
++		f = fopen("/sys/kernel/debug/tracing/available_filter_functions", "r");
++
++	if (!f)
++		return -EINVAL;
++
++	map = hashmap__new(symbol_hash, symbol_equal, NULL);
++	if (IS_ERR(map)) {
++		err = libbpf_get_error(map);
++		goto error;
++	}
++
++	while (fgets(buf, sizeof(buf), f)) {
++		if (is_invalid_entry(buf, kernel))
++			continue;
++
++		free(name);
++		if (sscanf(buf, "%ms$*[^\n]\n", &name) != 1)
++			continue;
++		if (skip_entry(name))
++			continue;
++
++		ks = search_kallsyms_custom_local(ksyms, name, search_kallsyms_compare);
++		if (!ks) {
++			err = -EINVAL;
++			goto error;
++		}
++
++		ksym_name = ks->name;
++		err = hashmap__add(map, ksym_name, 0);
++		if (err == -EEXIST) {
++			err = 0;
++			continue;
++		}
++		if (err)
++			goto error;
++
++		err = libbpf_ensure_mem((void **) &syms, &cap,
++					sizeof(*syms), cnt + 1);
++		if (err)
++			goto error;
++
++		syms[cnt++] = ksym_name;
++	}
++
++	*symsp = syms;
++	*cntp = cnt;
++
++error:
++	free(name);
++	fclose(f);
++	hashmap__free(map);
++	if (err)
++		free(syms);
++	return err;
++}
++
++int bpf_get_addrs(unsigned long **addrsp, size_t *cntp, bool kernel)
++{
++	unsigned long *addr, *addrs, *tmp_addrs;
++	int err = 0, max_cnt, inc_cnt;
++	char *name = NULL;
++	size_t cnt = 0;
++	char buf[256];
++	FILE *f;
++
++	if (access("/sys/kernel/tracing/trace", F_OK) == 0)
++		f = fopen("/sys/kernel/tracing/available_filter_functions_addrs", "r");
++	else
++		f = fopen("/sys/kernel/debug/tracing/available_filter_functions_addrs", "r");
++
++	if (!f)
++		return -ENOENT;
++
++	/* In my local setup, the number of entries is 50k+ so Let us initially
++	 * allocate space to hold 64k entries. If 64k is not enough, incrementally
++	 * increase 1k each time.
++	 */
++	max_cnt = 65536;
++	inc_cnt = 1024;
++	addrs = malloc(max_cnt * sizeof(long));
++	if (addrs == NULL) {
++		err = -ENOMEM;
++		goto error;
++	}
++
++	while (fgets(buf, sizeof(buf), f)) {
++		if (is_invalid_entry(buf, kernel))
++			continue;
++
++		free(name);
++		if (sscanf(buf, "%p %ms$*[^\n]\n", &addr, &name) != 2)
++			continue;
++		if (skip_entry(name))
++			continue;
++
++		if (cnt == max_cnt) {
++			max_cnt += inc_cnt;
++			tmp_addrs = realloc(addrs, max_cnt);
++			if (!tmp_addrs) {
++				err = -ENOMEM;
++				goto error;
++			}
++			addrs = tmp_addrs;
++		}
++
++		addrs[cnt++] = (unsigned long)addr;
++	}
++
++	*addrsp = addrs;
++	*cntp = cnt;
++
++error:
++	free(name);
++	fclose(f);
++	if (err)
++		free(addrs);
++	return err;
++}
+diff --git a/tools/testing/selftests/bpf/trace_helpers.h b/tools/testing/selftests/bpf/trace_helpers.h
+index 2ce873c9f9aad..9437bdd4afa50 100644
+--- a/tools/testing/selftests/bpf/trace_helpers.h
++++ b/tools/testing/selftests/bpf/trace_helpers.h
+@@ -41,4 +41,7 @@ ssize_t get_rel_offset(uintptr_t addr);
+ 
+ int read_build_id(const char *path, char *build_id, size_t size);
+ 
++int bpf_get_ksyms(char ***symsp, size_t *cntp, bool kernel);
++int bpf_get_addrs(unsigned long **addrsp, size_t *cntp, bool kernel);
++
+ #endif
 -- 
 2.51.0
 
