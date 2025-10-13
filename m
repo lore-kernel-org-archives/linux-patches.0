@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1695130AAC6;
-	Mon, 13 Oct 2025 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7165130AACA;
+	Mon, 13 Oct 2025 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369473; cv=none; b=CfyQOi89a4/ojd2B2P8/015+fk6ct2zIBo6+r90qB+hdvSFpYJi6sJpFIt8KqHx1MZvOrqel9mKyQ67NnaKfIfhnBRB6j7fV5oEkzvukcldyB3WH3BcEArEBRR4NYOpLRkphLp1pwd5FU3IuvMAlWXJiGJ+0FRTnx7GcQg2ZNn8=
+	t=1760369475; cv=none; b=ckzy0/7yQ1dGgwzEC+HmKVR7tSkLSfpCTSfSPmaZzi/THcPNFsHCtAmaHAcdNuR2kutccpyIojO5hrOK3dTwnwd9RuI7YKQqDSf+zOXkJqdHwGGO6ulTTRr0Ym/V+4QwmP7Y4nJ2WsIcHurwch6NHUPPvMn+RDrnHpqxsbE15eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369473; c=relaxed/simple;
-	bh=tFISL2veRwHPa+nJ2rEtL7DnRTEGmWUIfMvOkzXDXiI=;
+	s=arc-20240116; t=1760369475; c=relaxed/simple;
+	bh=bymQpmfu8kELnJ7eTDO8MA5h5ccQFStrnG3HYWN6+L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g/psVVGEMKxyWcUXcARObdJA1XWIbIkBVI8bw+64pkhRZkQIubrqHrrYB6jUnZlC4DYDRu44OzVlrNiKGUUMvN3kveNmSj8Zz1DKcwNX2i2YjiAP43zut63x3g4yCPCqZaWiTJtPWOTj1NbZdpo+BDPipmN+v+8orwUL0tC2MCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOjBpfGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y6qWnCFypEl4HhYr01TJwqOlyIikTU5afF5rjXtB6pXAOZT7E5YuZ1gLTiGni0k0bNjtd1+IyFhqzfAyp5/LfICqVu+xdxvNzi/g3zZUv7WwOvHBu4s7/YzedXEOZfv+TKZewhfuqIUY7f5eySvV9OOaX8YuSaUjguS1IPvq0S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tw7qKPLx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOjBpfGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39ECDC4CEE7;
-	Mon, 13 Oct 2025 15:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tw7qKPLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0143CC4CEE7;
+	Mon, 13 Oct 2025 15:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369472;
-	bh=tFISL2veRwHPa+nJ2rEtL7DnRTEGmWUIfMvOkzXDXiI=;
+	s=korg; t=1760369475;
+	bh=bymQpmfu8kELnJ7eTDO8MA5h5ccQFStrnG3HYWN6+L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOjBpfGoqkyok5TUqQ+Tbr2PXkP/UhYHBlp0qeCGYAPExstEik2WqXrLPhvmiqjTk
-	 qc1xcIFc17e4MbknqKSUFREczSWK2kt3ZpNiVfUbGvKmDK1KMA9J7MdSTeSQLt11Go
-	 3KnkiLqjNaZCzV0Gg5QBvafHQxXWt+7RSH99p2aY=
+	b=tw7qKPLxwa+9xuSh+ltm9r7FCXhGy5aK1Ph92hWBFl6XWx6m8ILbZpAl5yjiHMjEA
+	 8u3vNKmwAC5zIbBIiB7am6EjYyCtoh2a/Lci1D3qbmKsBmxqKf63RDkRXYddHl+p39
+	 75IFZeuVZqnUJj26MCAixad13CHk1mhWgjr5LEYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 258/563] drm: re-allow no-op changes on non-primary planes in async flips
-Date: Mon, 13 Oct 2025 16:41:59 +0200
-Message-ID: <20251013144420.625268933@linuxfoundation.org>
+Subject: [PATCH 6.17 259/563] media: rj54n1cb0c: Fix memleak in rj54n1_probe()
+Date: Mon, 13 Oct 2025 16:42:00 +0200
+Message-ID: <20251013144420.660553978@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,73 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xaver Hugl <xaver.hugl@kde.org>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit b065bd213caf6d35b57c5089d6507d7e8598a586 ]
+[ Upstream commit fda55673ecdabf25f5ecc61b5ab17239257ac252 ]
 
-Commit fd40a63c63a1 ("drm/atomic: Let drivers decide which planes to
-async flip") unintentionally disallowed no-op changes on non-primary
-planes that the driver doesn't allow async flips on. This broke async
-flips for compositors that disable the cursor plane in every async
-atomic commit. To fix that, change drm_atomic_set_property to again
-only run atomic_async_check if the plane would actually be changed by
-the atomic commit.
+rj54n1_probe() won't clean all the allocated resources in fail
+path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
+prevent memleak.
 
-Fixes: fd40a63c63a1 ("drm/atomic: Let drivers decide which planes to async flip")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4263
-Signed-off-by: Xaver Hugl <xaver.hugl@kde.org>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
-Link: https://lore.kernel.org/r/20250822152849.87843-1-xaver.hugl@kde.org
-[andrealmeid: fix checkpatch warning]
-Signed-off-by: André Almeida <andrealmeid@igalia.com>
+Fixes: f187352dcd45 ("media: i2c: Copy rj54n1cb0c soc_camera sensor driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/media/i2c/rj54n1cb0c.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index ecc73d52bfae4..85dbdaa4a2e25 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -1078,19 +1078,20 @@ int drm_atomic_set_property(struct drm_atomic_state *state,
- 		}
+diff --git a/drivers/media/i2c/rj54n1cb0c.c b/drivers/media/i2c/rj54n1cb0c.c
+index b7ca39f63dba8..6dfc912168510 100644
+--- a/drivers/media/i2c/rj54n1cb0c.c
++++ b/drivers/media/i2c/rj54n1cb0c.c
+@@ -1329,10 +1329,13 @@ static int rj54n1_probe(struct i2c_client *client)
+ 			V4L2_CID_GAIN, 0, 127, 1, 66);
+ 	v4l2_ctrl_new_std(&rj54n1->hdl, &rj54n1_ctrl_ops,
+ 			V4L2_CID_AUTO_WHITE_BALANCE, 0, 1, 1, 1);
+-	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
+-	if (rj54n1->hdl.error)
+-		return rj54n1->hdl.error;
  
- 		if (async_flip) {
--			/* check if the prop does a nop change */
--			if ((prop != config->prop_fb_id &&
--			     prop != config->prop_in_fence_fd &&
--			     prop != config->prop_fb_damage_clips)) {
--				ret = drm_atomic_plane_get_property(plane, plane_state,
--								    prop, &old_val);
--				ret = drm_atomic_check_prop_changes(ret, old_val, prop_value, prop);
--			}
-+			/* no-op changes are always allowed */
-+			ret = drm_atomic_plane_get_property(plane, plane_state,
-+							    prop, &old_val);
-+			ret = drm_atomic_check_prop_changes(ret, old_val, prop_value, prop);
- 
--			/* ask the driver if this non-primary plane is supported */
--			if (plane->type != DRM_PLANE_TYPE_PRIMARY) {
--				ret = -EINVAL;
-+			/* fail everything that isn't no-op or a pure flip */
-+			if (ret && prop != config->prop_fb_id &&
-+			    prop != config->prop_in_fence_fd &&
-+			    prop != config->prop_fb_damage_clips) {
-+				break;
-+			}
- 
-+			if (ret && plane->type != DRM_PLANE_TYPE_PRIMARY) {
-+				/* ask the driver if this non-primary plane is supported */
- 				if (plane_funcs && plane_funcs->atomic_async_check)
- 					ret = plane_funcs->atomic_async_check(plane, state, true);
- 
++	if (rj54n1->hdl.error) {
++		ret = rj54n1->hdl.error;
++		goto err_free_ctrl;
++	}
++
++	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
+ 	rj54n1->clk_div		= clk_div;
+ 	rj54n1->rect.left	= RJ54N1_COLUMN_SKIP;
+ 	rj54n1->rect.top	= RJ54N1_ROW_SKIP;
 -- 
 2.51.0
 
