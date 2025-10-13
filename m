@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D9C27AC21;
-	Mon, 13 Oct 2025 15:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E61A30E84B;
+	Mon, 13 Oct 2025 15:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368785; cv=none; b=GiDgBKe5nswSE/aB+jbaJoVqKvQjTlzuasWke2a0On9hhhgCcWO+EwLNitm7I83h45z4hqTGUehvgukN0GAAlB7na7puNz2Qcd/G2gWTpF7+DGvFy+maa4s8juCLF/NbLTHIM/nELzrqB/ZRCRYh921r53MOHKRPG4iraWJTrgI=
+	t=1760368788; cv=none; b=VrbrXaNBRriZhmUmlXxVNt7emItMD7q9IC7ZEDCsUodNX6x8JIsFMqRYpQC+wMq3cchxH43N61e/pRm1QkD8dgwrvOOXxjkU7eZo+bmSbCOPwP0MCb6I1p+t49/UoClgG3cQW0ucb/NrnSMHQ+8RTmpsWh/39C4+23gXGCm0VHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368785; c=relaxed/simple;
-	bh=Xpq9UeU9QgM1qK3TsT/SPSDudQAJBEb76BIj3SxavoU=;
+	s=arc-20240116; t=1760368788; c=relaxed/simple;
+	bh=rg0meAkcirKzq2+IcIMaPVJYcjEF+lhHdgAZU2gkT60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qt1MA5Q27DBwLLi4URi3wb94NzuPhKq9C/0kVXdMVwLm2SGFjz07BuH9vXWXBgr8pK0raC2CXnqwm9Phh/9WNaatciG1LCwBTFczFh4I4oV5vxTN585whkpHkmvWvwFPIx4ySnbxLKsEMlEhdglX66m/G/DX+mQnrwfN/dzx7Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtvnPF+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OsmijBEs+whEW6qrNWqsyrJj3ZO5kTVpmfD5r4Z8yjQCSwpZFwImcGF1dQYA86Gcrjq2AZLVOLsCAFeu2vILDkS3/+Lb12FfUYaLEjGVm8G4A5MJg5fUGPYAjdLuiI95no8HNw0Q4OQ3pEXmCBnvlDQd7kkucQ5UgBWy6AsDAlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykyItOpb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtvnPF+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B052DC4CEE7;
-	Mon, 13 Oct 2025 15:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykyItOpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831F3C4CEE7;
+	Mon, 13 Oct 2025 15:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368785;
-	bh=Xpq9UeU9QgM1qK3TsT/SPSDudQAJBEb76BIj3SxavoU=;
+	s=korg; t=1760368787;
+	bh=rg0meAkcirKzq2+IcIMaPVJYcjEF+lhHdgAZU2gkT60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtvnPF+DKQ39kYf1eaQz3dyLf/DA/au+oZ4RhqQQIMpPRxwjfT2wmT2BMVfTvzqwr
-	 mFcKLny+3N2uAKqjcoE1r42nPvZvMQwrTweT5dO6Vl8+rDn3EImX+SFs5u5QWyxuoK
-	 tPdGCBsc2Gv23JzKoQhFSjtNbNImiSDcgWB35pEI=
+	b=ykyItOpbw+KeS79lcDmeMIJbLeTWelrEjGKyxG8QXujgRoaaJE/nNhIfGAM10akOu
+	 6731lyjyzL9PeSko59d+rMw868oxMLSlA8vzO/q1QgfNNh5lD0v0wfl9uGgyjHuXpc
+	 EL/dB9lrkhgphZTVplB/q6vOd8EGuweHYtSdF3e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 6.17 005/563] Fix CC_HAS_ASM_GOTO_OUTPUT on non-x86 architectures
-Date: Mon, 13 Oct 2025 16:37:46 +0200
-Message-ID: <20251013144411.483446573@linuxfoundation.org>
+	Ali Polatel <alip@chesswob.org>,
+	Johannes Nixdorf <johannes@nixdorf.dev>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 006/563] seccomp: Fix a race with WAIT_KILLABLE_RECV if the tracer replies too fast
+Date: Mon, 13 Oct 2025 16:37:47 +0200
+Message-ID: <20251013144411.520249768@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,48 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Nixdorf <johannes@nixdorf.dev>
 
-[ Upstream commit fde0ab43b9a30d08817adc5402b69fec83a61cb8 ]
+[ Upstream commit cce436aafc2abad691fdd37de63ec8a4490b42ce ]
 
-There's a silly problem with the CC_HAS_ASM_GOTO_OUTPUT test: even with
-a working compiler it will fail on some architectures simply because it
-uses the mnemonic "jmp" for testing the inline asm.
+Normally the tracee starts in SECCOMP_NOTIFY_INIT, sends an
+event to the tracer, and starts to wait interruptibly. With
+SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV, if the tracer receives the
+message (SECCOMP_NOTIFY_SENT is reached) while the tracee was waiting
+and is subsequently interrupted, the tracee begins to wait again
+uninterruptibly (but killable).
 
-And as reported by Geert, not all architectures use that mnemonic, so
-the test fails spuriously on such platforms (including arm and riscv,
-but also several other architectures).
+This fails if SECCOMP_NOTIFY_REPLIED is reached before the tracee
+is interrupted, as the check only considered SECCOMP_NOTIFY_SENT as a
+condition to begin waiting again. In this case the tracee is interrupted
+even though the tracer already acted on its behalf. This breaks the
+assumption SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV wanted to ensure,
+namely that the tracer can be sure the syscall is not interrupted or
+restarted on the tracee after it is received on the tracer. Fix this
+by also considering SECCOMP_NOTIFY_REPLIED when evaluating whether to
+switch to uninterruptible waiting.
 
-This issue avoided any obvious test failures because the build still
-works thanks to falling back on the old non-asm-goto code, which just
-generates worse code.
+With the condition changed the loop in seccomp_do_user_notification()
+would exit immediately after deciding that noninterruptible waiting
+is required if the operation already reached SECCOMP_NOTIFY_REPLIED,
+skipping the code that processes pending addfd commands first. Prevent
+this by executing the remaining loop body one last time in this case.
 
-Just use an empty asm statement instead.
-
-Reported-and-tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Fixes: e2ffa15b9baa ("kbuild: Disable CC_HAS_ASM_GOTO_OUTPUT on clang < 17")
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: c2aa2dfef243 ("seccomp: Add wait_killable semantic to seccomp user notifier")
+Reported-by: Ali Polatel <alip@chesswob.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220291
+Signed-off-by: Johannes Nixdorf <johannes@nixdorf.dev>
+Link: https://lore.kernel.org/r/20250725-seccomp-races-v2-1-cf8b9d139596@nixdorf.dev
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/seccomp.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index e5d6d798994ae..87c868f86a060 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -102,7 +102,7 @@ config CC_HAS_ASM_GOTO_OUTPUT
- 	# Detect basic support
- 	depends on $(success,echo 'int foo(int x) { asm goto ("": "=r"(x) ::: bar); return x; bar: return 0; }' | $(CC) -x c - -c -o /dev/null)
- 	# Detect clang (< v17) scoped label issues
--	depends on $(success,echo 'void b(void **);void* c(void);int f(void){{asm goto("jmp %l0"::::l0);return 0;l0:return 1;}void *x __attribute__((cleanup(b)))=c();{asm goto("jmp %l0"::::l1);return 2;l1:return 3;}}' | $(CC) -x c - -c -o /dev/null)
-+	depends on $(success,echo 'void b(void **);void* c(void);int f(void){{asm goto(""::::l0);return 0;l0:return 1;}void *x __attribute__((cleanup(b)))=c();{asm goto(""::::l1);return 2;l1:return 3;}}' | $(CC) -x c - -c -o /dev/null)
+diff --git a/kernel/seccomp.c b/kernel/seccomp.c
+index 41aa761c7738c..3bbfba30a777a 100644
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -1139,7 +1139,7 @@ static void seccomp_handle_addfd(struct seccomp_kaddfd *addfd, struct seccomp_kn
+ static bool should_sleep_killable(struct seccomp_filter *match,
+ 				  struct seccomp_knotif *n)
+ {
+-	return match->wait_killable_recv && n->state == SECCOMP_NOTIFY_SENT;
++	return match->wait_killable_recv && n->state >= SECCOMP_NOTIFY_SENT;
+ }
  
- config CC_HAS_ASM_GOTO_TIED_OUTPUT
- 	depends on CC_HAS_ASM_GOTO_OUTPUT
+ static int seccomp_do_user_notification(int this_syscall,
+@@ -1186,13 +1186,11 @@ static int seccomp_do_user_notification(int this_syscall,
+ 
+ 		if (err != 0) {
+ 			/*
+-			 * Check to see if the notifcation got picked up and
+-			 * whether we should switch to wait killable.
++			 * Check to see whether we should switch to wait
++			 * killable. Only return the interrupted error if not.
+ 			 */
+-			if (!wait_killable && should_sleep_killable(match, &n))
+-				continue;
+-
+-			goto interrupted;
++			if (!(!wait_killable && should_sleep_killable(match, &n)))
++				goto interrupted;
+ 		}
+ 
+ 		addfd = list_first_entry_or_null(&n.addfd,
 -- 
 2.51.0
 
