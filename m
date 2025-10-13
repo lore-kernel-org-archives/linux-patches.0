@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44AD20125F;
-	Mon, 13 Oct 2025 15:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0259620125F;
+	Mon, 13 Oct 2025 15:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368528; cv=none; b=AFSasGQAKZ2iyjP0vgvRy88isdk8on4n9r5JB0HsMhyzYH7/FAxCqG2i98IQOOftQENn8TNRo114uN9RGq7FCceO+lGqKF4Qiw84jAH27t9KvAzFW/4p19C1UmcGv0utWqEoIN/qlxIE29QdpvwhnbHNJQhLfsoyP8wQ8HfETfA=
+	t=1760368532; cv=none; b=EtkgD/K6p254KJmgKhmn4jskB1CfJQ/HwW4sBErZVjL/6Xl/W94TuunW6y5JcPswmMOyha8VyW2MMfSzjzL+poKgIyuOQX9mC8X/GZOqXkoJTqgSYP+6Scg3I0CzwfTZNOKK4S+t4RA8SEXuVReEreAhEBcCenBaVIcZ8b8tbSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368528; c=relaxed/simple;
-	bh=wAN4dR44f05Ty1Ubmnuw2fuAlCttf8VxI7t8lWnrF6c=;
+	s=arc-20240116; t=1760368532; c=relaxed/simple;
+	bh=3+NTBIOuvwdH/mvT3CJ4EzgaLM0SnYvw/bdMmhdqNos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Exff43NOW7NUGJVf288MSbT5i7EorapGkFnforiW+S2aM+RauL1qLNKFG9+FuOVQW/PEsq8+F7JfzCG1gmzORvjFsa+6zhKt3RGGIWFNlzEKjSnj1mqhQk2g+1YcQ9IcHgeU9aASZeIJDM16oTApprnoIXjaHsv7bewQ/cz5nk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWWrwoAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hH2uW+XkBLROGCMmRgGAtz5BafqB9WWINgEVDOGx0bNrf+z9W7yjzwomOYIJ14cCnIJqx+j32tAinD1id525kINuJzxAmPtIHhzwk6rMjbNxCY/MJFS5JJLjEVYxWHqTAD/cAgr8kjKI65A7hE3g/ei4cz1PY/nBvIzbwrZ1YZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r77Mb5Xz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWWrwoAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53157C4CEE7;
-	Mon, 13 Oct 2025 15:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r77Mb5Xz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E733C116D0;
+	Mon, 13 Oct 2025 15:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368528;
-	bh=wAN4dR44f05Ty1Ubmnuw2fuAlCttf8VxI7t8lWnrF6c=;
+	s=korg; t=1760368531;
+	bh=3+NTBIOuvwdH/mvT3CJ4EzgaLM0SnYvw/bdMmhdqNos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWWrwoAa3xC84OOeyaXmNMpL8gGOSxJc6pxTDjxaAVnzQDiHmufigbeFK0Nwo2CY8
-	 molbPQ4BFtwarG5cKWvbV7sg1h3gIrGU9cF+KQwJ76Hzq/Rp6VQA1B4V9KtAI87dKB
-	 uKFFtvb4i5QkN/W/Ki0R+plOhnd3Fvviot0VBAe4=
+	b=r77Mb5Xzn/Npg2zuilAqPBaHNyHASeJuGvTjVZjGCqkMl7EmsKd4pOcKBDW/Z2zyg
+	 Ep3CHxN0Nsdewhh0Y+TQuX9auunYYtnTGyThDOwe4pnRfiu3eGH8bA2shmQtC2uwh4
+	 lA7IyUG8eQ9KGwOMTS9rPIQbRnXivUwdj55dQrvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/262] usb: vhci-hcd: Prevent suspending virtually attached devices
-Date: Mon, 13 Oct 2025 16:45:35 +0200
-Message-ID: <20251013144333.199359674@linuxfoundation.org>
+Subject: [PATCH 6.12 194/262] PCI: rcar-gen4: Add missing 1ms delay after PWR reset assertion
+Date: Mon, 13 Oct 2025 16:45:36 +0200
+Message-ID: <20251013144333.235359755@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -45,78 +49,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit e40b984b6c4ce3f80814f39f86f87b2a48f2e662 ]
+[ Upstream commit 8795b70581770657cd5ead3c965348f05242580f ]
 
-The VHCI platform driver aims to forbid entering system suspend when at
-least one of the virtual USB ports are bound to an active USB/IP
-connection.
+R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page 585
+Figure 9.3.2 Software Reset flow (B) indicates that for peripherals in HSC
+domain, after reset has been asserted by writing a matching reset bit into
+register SRCR, it is mandatory to wait 1ms.
 
-However, in some cases, the detection logic doesn't work reliably, i.e.
-when all devices attached to the virtual root hub have been already
-suspended, leading to a broken suspend state, with unrecoverable resume.
+Because it is the controller driver which can determine whether or not the
+controller is in HSC domain based on its compatible string, add the missing
+delay in the controller driver.
 
-Ensure the virtually attached devices do not enter suspend by setting
-the syscore PM flag.  Note this is currently limited to the client side
-only, since the server side doesn't implement system suspend prevention.
+This 1ms delay is documented on R-Car V4H and V4M; it is currently unclear
+whether S4 is affected as well. This patch does apply the extra delay on
+R-Car S4 as well.
 
-Fixes: 04679b3489e0 ("Staging: USB/IP: add client driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250902-vhci-hcd-suspend-fix-v3-1-864e4e833559@collabora.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0d0c551011df ("PCI: rcar-gen4: Add R-Car Gen4 PCIe controller support for host mode")
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+[mani: added the missing r-b tag from Krzysztof]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Link: https://patch.msgid.link/20250919134644.208098-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_hcd.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
-index 8dac1edc74d4e..a793e30d46b78 100644
---- a/drivers/usb/usbip/vhci_hcd.c
-+++ b/drivers/usb/usbip/vhci_hcd.c
-@@ -764,6 +764,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- 				 ctrlreq->wValue, vdev->rhport);
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 5d77a01648606..5382008e366ec 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -182,8 +182,17 @@ static int rcar_gen4_pcie_common_init(struct rcar_gen4_pcie *rcar)
+ 		return ret;
+ 	}
  
- 			vdev->udev = usb_get_dev(urb->dev);
-+			/*
-+			 * NOTE: A similar operation has been done via
-+			 * USB_REQ_GET_DESCRIPTOR handler below, which is
-+			 * supposed to always precede USB_REQ_SET_ADDRESS.
-+			 *
-+			 * It's not entirely clear if operating on a different
-+			 * usb_device instance here is a real possibility,
-+			 * otherwise this call and vdev->udev assignment above
-+			 * should be dropped.
-+			 */
-+			dev_pm_syscore_device(&vdev->udev->dev, true);
- 			usb_put_dev(old);
+-	if (!reset_control_status(dw->core_rsts[DW_PCIE_PWR_RST].rstc))
++	if (!reset_control_status(dw->core_rsts[DW_PCIE_PWR_RST].rstc)) {
+ 		reset_control_assert(dw->core_rsts[DW_PCIE_PWR_RST].rstc);
++		/*
++		 * R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr.
++		 * 21, 2025 page 585 Figure 9.3.2 Software Reset flow (B)
++		 * indicates that for peripherals in HSC domain, after
++		 * reset has been asserted by writing a matching reset bit
++		 * into register SRCR, it is mandatory to wait 1ms.
++		 */
++		fsleep(1000);
++	}
  
- 			spin_lock(&vdev->ud.lock);
-@@ -784,6 +795,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- 					"Not yet?:Get_Descriptor to device 0 (get max pipe size)\n");
- 
- 			vdev->udev = usb_get_dev(urb->dev);
-+			/*
-+			 * Set syscore PM flag for the virtually attached
-+			 * devices to ensure they will not enter suspend on
-+			 * the client side.
-+			 *
-+			 * Note this doesn't have any impact on the physical
-+			 * devices attached to the host system on the server
-+			 * side, hence there is no need to undo the operation
-+			 * on disconnect.
-+			 */
-+			dev_pm_syscore_device(&vdev->udev->dev, true);
- 			usb_put_dev(old);
- 			goto out;
- 
+ 	val = readl(rcar->base + PCIEMSR0);
+ 	if (rcar->drvdata->mode == DW_PCIE_RC_TYPE) {
 -- 
 2.51.0
 
