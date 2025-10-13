@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F530C61E;
-	Mon, 13 Oct 2025 15:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D402730CD8E;
+	Mon, 13 Oct 2025 15:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369139; cv=none; b=IhH/8Rqa3XDmY5FdAAYhOeT9SzF1qnwwaOtmRWfFVkA+qLvnRlj/pzkaX7leyu21njKzjuo64kaSaUP8v+barBYCR2gQNkIVeJ1xuFS74ZajgGvGOL9c/+fu44JlqDQ3Fhw99zipqqmgVQoUIhsuMTHE7pnMXlNOG2Rl50YevLs=
+	t=1760369141; cv=none; b=AgcYb1onbhFwwM54OiQMuJwAR6zsR0WxuFIpyC5neS4HJYC1tY7+m2132htop02/mbsYVAYuBmDdCY40RhdfCFBRorj1bWHmzC+QKNCjew6ifDXXbW5NMkKJ28dp1idVKdZlEWLkC32OEimH02yfWUeBKRsL2XsxVnxKFQPh9PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369139; c=relaxed/simple;
-	bh=nxj8jhKE0I8TMrXLE/WdboSD/5z+N/w11Ef/RiWWl/A=;
+	s=arc-20240116; t=1760369141; c=relaxed/simple;
+	bh=vQzOsZqZ3nQGlBo7sa8cNxSUk/yIv2n3HsoXI8DvU/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1KOKXVF/q7otTmxdTHH8y3X40P066WvPP4SSB6cnOBeTdfqxiTD92kr2iSk+XsoSOAYRm7BZnSlaHTTF3pIqAySNVu1e2hnpB17fkatZvuQ+YW//ou8aVHISi84GSe9C2rfVT3USn57m66Uy87GqUcqVjW4F+p9WIkeR4fIS9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vAee5Lz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDdDRUZgTQ1/2+uTmt79I3lTTF8bM8uhTQ+VwRLrE/KwSeaPC7Dbt+kuhwaBSosVRpnUPNJ0aOj8gG36+hFPQmwJHKiHwFY+DTFUa6UsMntSpBlFiVKtxvRRneWHbYr2GlBmetQqU1OiNLOxZSAuwawmXzAWcJmLKmeO+WUjfFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVlnW+7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vAee5Lz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDBEC4CEFE;
-	Mon, 13 Oct 2025 15:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVlnW+7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602E9C4CEFE;
+	Mon, 13 Oct 2025 15:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369138;
-	bh=nxj8jhKE0I8TMrXLE/WdboSD/5z+N/w11Ef/RiWWl/A=;
+	s=korg; t=1760369141;
+	bh=vQzOsZqZ3nQGlBo7sa8cNxSUk/yIv2n3HsoXI8DvU/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vAee5Lz3SAp+sysZYH2zJV+0Nu6YgFRAs5Y/38U3ZHnk0AecNPAjeDZkOSILtmDT
-	 cqmT9kNGeLmSL+MRusyDnfpYxAMamy0zHZpWs6/URz+X33yaJe/vPZRo8Ex9v1ZTor
-	 KWP0Du2Fmpude9R/kgOZCrYCH1OZLA6CaUPKZnzg=
+	b=OVlnW+7XxPYLg5ptUMUR2sLbPEP09jBYGE50JPltIX0gg5z0TGRC45/0h+XqjF+jo
+	 CSN9N6pvq1yA5Jl69YLhUZMfzZM0qINVr38eAOCxiQLXXTRWMqnJFE+YbNXZRBXzt0
+	 YGPr5x5GNIXO9RQvW67gvnCxJQVzSX8JfXATIhnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Kendall Willis <k-willis@ti.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Akashdeep Kaur <a-kaur@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 142/563] arm64: dts: mediatek: mt8186-tentacruel: Fix touchscreen model
-Date: Mon, 13 Oct 2025 16:40:03 +0200
-Message-ID: <20251013144416.435875365@linuxfoundation.org>
+Subject: [PATCH 6.17 143/563] arm64: dts: ti: k3-pinctrl: Fix the bug in existing macros
+Date: Mon, 13 Oct 2025 16:40:04 +0200
+Message-ID: <20251013144416.471793516@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,68 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Akashdeep Kaur <a-kaur@ti.com>
 
-[ Upstream commit 0370911565869384f19b35ea9e71ee7a57b48a33 ]
+[ Upstream commit 2e79ee4d64e9ba4a3fc90e91dfd715407efab16d ]
 
-The touchscreen controller used with the original Krabby design is the
-Elan eKTH6918, which is in the same family as eKTH6915, but supporting
-a larger screen size with more sense lines.
+Currently, DS_IO_OVERRIDE_EN_SHIFT macro is not defined anywhere but
+used for defining other macro.
+Replace this undefined macro with valid macro. Rename the existing macro
+to reflect the actual behavior.
 
-OTOH, the touchscreen controller that actually shipped on the Tentacruel
-devices is the Elan eKTH6A12NAY. A compatible string was added for it
-specifically because it has different power sequencing timings.
+Fixes: 325aa0f6b36e ("arm64: dts: ti: k3-pinctrl: Introduce deep sleep macros")
 
-Fix up the touchscreen nodes for both these. This also includes adding
-a previously missing reset line. Also add "no-reset-on-power-off" since
-the power is always on, and putting it in reset would consume more
-power.
-
-Fixes: 8855d01fb81f ("arm64: dts: mediatek: Add MT8186 Krabby platform based Tentacruel / Tentacool")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20250812090135.3310374-1-wenst@chromium.org
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: Kendall Willis <k-willis@ti.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
+Fixes: 325aa0f6b36e ("arm64: dts: ti: k3-pinctrl: Introduce deep sleep macros")
+Link: https://patch.msgid.link/20250909044108.2541534-5-a-kaur@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi   | 8 ++++----
- .../dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts  | 4 ++++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/ti/k3-pinctrl.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-index 7c971198fa956..72a2a2bff0a93 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-krabby.dtsi
-@@ -71,14 +71,14 @@ &i2c1 {
- 	i2c-scl-internal-delay-ns = <10000>;
+diff --git a/arch/arm64/boot/dts/ti/k3-pinctrl.h b/arch/arm64/boot/dts/ti/k3-pinctrl.h
+index c0f09be8d3f94..146b780f3bd4a 100644
+--- a/arch/arm64/boot/dts/ti/k3-pinctrl.h
++++ b/arch/arm64/boot/dts/ti/k3-pinctrl.h
+@@ -55,8 +55,8 @@
  
- 	touchscreen: touchscreen@10 {
--		compatible = "hid-over-i2c";
-+		compatible = "elan,ekth6915";
- 		reg = <0x10>;
- 		interrupts-extended = <&pio 12 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&touchscreen_pins>;
--		post-power-on-delay-ms = <10>;
--		hid-descr-addr = <0x0001>;
--		vdd-supply = <&pp3300_s3>;
-+		reset-gpios = <&pio 60 GPIO_ACTIVE_LOW>;
-+		vcc33-supply = <&pp3300_s3>;
-+		no-reset-on-power-off;
- 	};
- };
- 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-index 26d3451a5e47c..24d9ede63eaa2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola-tentacruel-sku262144.dts
-@@ -42,3 +42,7 @@ MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
- 		CROS_STD_MAIN_KEYMAP
- 	>;
- };
-+
-+&touchscreen {
-+	compatible = "elan,ekth6a12nay";
-+};
+ #define PIN_DS_FORCE_DISABLE		(0 << FORCE_DS_EN_SHIFT)
+ #define PIN_DS_FORCE_ENABLE		(1 << FORCE_DS_EN_SHIFT)
+-#define PIN_DS_IO_OVERRIDE_DISABLE	(0 << DS_IO_OVERRIDE_EN_SHIFT)
+-#define PIN_DS_IO_OVERRIDE_ENABLE	(1 << DS_IO_OVERRIDE_EN_SHIFT)
++#define PIN_DS_ISO_OVERRIDE_DISABLE     (0 << ISO_OVERRIDE_EN_SHIFT)
++#define PIN_DS_ISO_OVERRIDE_ENABLE      (1 << ISO_OVERRIDE_EN_SHIFT)
+ #define PIN_DS_OUT_ENABLE		(0 << DS_OUT_DIS_SHIFT)
+ #define PIN_DS_OUT_DISABLE		(1 << DS_OUT_DIS_SHIFT)
+ #define PIN_DS_OUT_VALUE_ZERO		(0 << DS_OUT_VAL_SHIFT)
 -- 
 2.51.0
 
