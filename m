@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A752FE577;
-	Mon, 13 Oct 2025 15:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BA72FE577;
+	Mon, 13 Oct 2025 15:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367730; cv=none; b=fZcDwTGTSoFrHTTaeAOKm1QZcF4NhLju3wK28imwk8SdMjS43rxqm1Ja4VA+7iC+k9kK7wT3UM9rEz6fBAN8Rz5UNIE8G9NNuFr4BuUzfnZf7NdX6hy6rVFuvk9HH11YVJ9rrBag3XaieGrVvC89IBns6L7iqOeYLy5YeWL5xSI=
+	t=1760367733; cv=none; b=a5ZMOvTO3C5p+bXbHOz89CIbt9+jHqXap5ab5ygEqCDjpCWnmipB+m2Dtrf5zCSWOQ2Fmwyxl0TRK+6XVM1vNgm2OMvowNXmvHfLj9Y2SlHUQMEQ7hm1XaFIxtA8Ek9xmgoe7ZmXk46VpA2FA0N2KYFjc5JPPIwF8AUpS/yPjZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367730; c=relaxed/simple;
-	bh=9JEWfKFIeT+o1ovoU5HfchG4YfKZv4J/rPgYEacNpvQ=;
+	s=arc-20240116; t=1760367733; c=relaxed/simple;
+	bh=wDw1bX5QUi/7O/acn/0pNtWdZQRc58UiObEDy2Doz8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4qT17YcSf/tQgoqlFLMQLTJDrWiQCl4+N67yLyRhzEvkTnVSPL7IFuWXJkc/ZVKOW30lyodKm8FvFFTFCQJPxGODVKu20m7qGfVexwHoLUutKSiGA6RytGuPpFDX7f8WqLJYyNyx5T/zMdl4BZsou4FPoZD/+sLVaQ21p8cack=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sD/vB8Tf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdF1WSfe3j58kx5fmYetn62+/1xZeDEJVPodfJeoi/+ot87EHYhioXLS9AK3NcUjrU8Kijv/ofI8xrzY1iNcwg9DBTo21Wktv7KSoX7A3GEvJeRZMgVOJvh3eHqMHXZFytnnZzJVhUW6igYlbqbIqLm1NAGycms85vLwL4uU9b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbpJmH/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sD/vB8Tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00118C4CEE7;
-	Mon, 13 Oct 2025 15:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbpJmH/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9166C4CEE7;
+	Mon, 13 Oct 2025 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367730;
-	bh=9JEWfKFIeT+o1ovoU5HfchG4YfKZv4J/rPgYEacNpvQ=;
+	s=korg; t=1760367733;
+	bh=wDw1bX5QUi/7O/acn/0pNtWdZQRc58UiObEDy2Doz8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sD/vB8TffVKSonQMc2DVLImvGQ2K8kTYzvy6A5QuaCN6ZeWOALo5BuH9INCNLdMNw
-	 cjdh3ClYvDxpPZ95lreAr9H2N4s5FylUyjzoJi7OhZXJps3ODwkkj7Hq5eVyMxIoGT
-	 4d82B+MFK+6RQz5zax1qCEKecjniAYahNdlx9ewI=
+	b=QbpJmH/IWxNuAPttkWjgjcAfoj0PtTwC6Q+NSZZmDuo100AqEcHzs4t4kgAelqkdt
+	 BjMA8iCxuRoILQTZBboVYCKmM1ClxZDSH3t2/HEFzfPt9HIGLs00GRtL+00RM9k7Kk
+	 pObNYkequEIB5ctletA06dJp1TqlN8YONdMXOSic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/196] wifi: mt76: fix potential memory leak in mt76_wmac_probe()
-Date: Mon, 13 Oct 2025 16:45:05 +0200
-Message-ID: <20251013144319.435253611@linuxfoundation.org>
+Subject: [PATCH 6.6 115/196] f2fs: fix to update map->m_next_extent correctly in f2fs_map_blocks()
+Date: Mon, 13 Oct 2025 16:45:06 +0200
+Message-ID: <20251013144319.471427679@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,38 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 42754b7de2b1a2cf116c5e3f1e8e78392f4ed700 ]
+[ Upstream commit 869833f54e8306326b85ca3ed08979b7ad412a4a ]
 
-In mt76_wmac_probe(), when the mt76_alloc_device() call succeeds, memory
-is allocated for both struct ieee80211_hw and a workqueue. However, on
-the error path, the workqueue is not freed. Fix that by calling
-mt76_free_device() on the error path.
+Script to reproduce:
+mkfs.f2fs -O extra_attr,compression /dev/vdb -f
+mount /dev/vdb /mnt/f2fs -o mode=lfs,noextent_cache
+cd /mnt/f2fs
+f2fs_io write 1 0 1024 rand dsync testfile
+xfs_io testfile -c "fsync"
+f2fs_io write 1 0 512 rand dsync testfile
+xfs_io testfile -c "fsync"
+cd /
+umount /mnt/f2fs
+mount /dev/vdb /mnt/f2fs
+f2fs_io precache_extents /mnt/f2fs/testfile
+umount /mnt/f2fs
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20250709145532.41246-1-abdun.nihaal@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Tracepoint output:
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 0, len = 512, blkaddr = 1055744, c_len = 0
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 513, len = 351, blkaddr = 17921, c_len = 0
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 864, len = 160, blkaddr = 18272, c_len = 0
+
+During precache_extents, there is off-by-one issue, we should update
+map->m_next_extent to pgofs rather than pgofs + 1, if last blkaddr is
+valid and not contiguous to previous extent.
+
+Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7603/soc.c | 2 +-
+ fs/f2fs/data.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
-index ba927033bbe8c..1206769cdc7fd 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
-@@ -48,7 +48,7 @@ mt76_wmac_probe(struct platform_device *pdev)
- 
- 	return 0;
- error:
--	ieee80211_free_hw(mt76_hw(dev));
-+	mt76_free_device(mdev);
- 	return ret;
- }
- 
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index d37104aa847a7..0e119218ebf74 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1756,7 +1756,7 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
+ 				map->m_len - ofs);
+ 		}
+ 		if (map->m_next_extent)
+-			*map->m_next_extent = pgofs + 1;
++			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
+ 	}
+ 	f2fs_put_dnode(&dn);
+ unlock_out:
 -- 
 2.51.0
 
