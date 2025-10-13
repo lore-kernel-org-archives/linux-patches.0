@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9575430F7FA;
-	Mon, 13 Oct 2025 15:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862C6311582;
+	Mon, 13 Oct 2025 15:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368110; cv=none; b=WdhkQscxwb5221A3e7pWn1ZzUVIAD1MpQoUyXwFYgYvVmWxkELz/Iw40xSP1GRhs8PLhWuvFNzNp3g9aipkC4Iz2ypeDWNBYzemWEggSAIRVX9lBSR+hZuhKQDmP9TUDG9fitzg9O4aIbRU7Mj1mue+kzPmG7xiIfbFHWhhNHz0=
+	t=1760368113; cv=none; b=sUhD6FrOiziicfDTuvr9pGSPXwUOgAkJz8SlsGiP/xIDivrKWhd1VxSH8XbBZ8mny+H4pVRAyxJQGCsrt4Z3amMF0Q0edFORDlOdzC8PKY6ijOX5TwIqUmO0k5aMyTn4X/IbStskgN37pxRs6bYvU44FhbJ4nP9hVrrG+F0+Uv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368110; c=relaxed/simple;
-	bh=J9RzZ3SiqnCd9dk7bAxESHvgj//pMLT9a/P9ThOlwlE=;
+	s=arc-20240116; t=1760368113; c=relaxed/simple;
+	bh=fUTURClY7P35QmmCnnZlk4dKTV984s1uZOcbLfVLYwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fU0X0pzp8C1mYmBNgIByztnwdd99iqNxarCmnCKNDtghcuRDJVjRbZPH4fC/SIfAjWEaiF6ggh/v0BEd2KfNblE7xbvWyG/qDH4aJzpSeejXss1rKUErLMjh9tvRAYfHjJwu6K/L6EwTEA66RFwm4R3VFjrwAd6pox3zmB7ioLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hITL/EU+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWhlJCbuOhJIUB4YRvWwS1V6edcBsPS2EPJZsoTJJr3OTApQN7PyEXsKQGaTedJQCFw18Ny5j5jBP4Qa3mH7YYDAHtFK874Vku4+xjFJenPo0FurUHxN6Z2nu5IMn7Tt5Bphzqu3py25J0bfg2Er/I+cWyqYL364Wx74FLli4Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f32VMJKh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hITL/EU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1766FC4CEE7;
-	Mon, 13 Oct 2025 15:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f32VMJKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F229DC4CEE7;
+	Mon, 13 Oct 2025 15:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368110;
-	bh=J9RzZ3SiqnCd9dk7bAxESHvgj//pMLT9a/P9ThOlwlE=;
+	s=korg; t=1760368113;
+	bh=fUTURClY7P35QmmCnnZlk4dKTV984s1uZOcbLfVLYwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hITL/EU+pjLDrwccx7JoILXNfW4ndg/ko4b6Uw0o5Kr31UWOfIjklh4H7L97bxH1a
-	 os8JDth52xvNhIn9nAM6P03J19f9sULo63dXJXAwxfDNJNRZjXIgt5nJzOWelHBXv7
-	 HEX0XqGdayoejlhy4ZlQj0AL677T8btVCRzaYMxc=
+	b=f32VMJKhhGdM8t9HZKQdEmhisVA6uTzLImy6YxELdrt/n0W3b86Z59r3OkWI0wjXN
+	 9kQPjyooW+qG1semX4caK/L3Qa+++kMtUfj/DJmAdYq/oyvRhUJZxbZxJCPX+B8OWD
+	 3Rdp6XjM0FvgXdrYY8bwHgWirfU9d9hqDfME93jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/262] pinctrl: renesas: Use int type to store negative error codes
-Date: Mon, 13 Oct 2025 16:43:10 +0200
-Message-ID: <20251013144327.860756782@linuxfoundation.org>
+Subject: [PATCH 6.12 049/262] null_blk: Fix the description of the cache_size module argument
+Date: Mon, 13 Oct 2025 16:43:11 +0200
+Message-ID: <20251013144327.896256565@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,40 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-[ Upstream commit 9f062fc5b0ff44550088912ab89f9da40226a826 ]
+[ Upstream commit 7942b226e6b84df13b46b76c01d3b6e07a1b349e ]
 
-Change the 'ret' variable in sh_pfc_pinconf_group_set() from unsigned
-int to int, as it needs to store either negative error codes or zero
-returned by sh_pfc_pinconf_set().
+When executing modinfo null_blk, there is an error in the description
+of module parameter mbps, and the output information of cache_size is
+incomplete.The output of modinfo before and after applying this patch
+is as follows:
 
-No effect on runtime.
+Before:
+[...]
+parm:           cache_size:ulong
+[...]
+parm:           mbps:Cache size in MiB for memory-backed device.
+		Default: 0 (none) (uint)
+[...]
 
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Fixes: d0593c363f04ccc4 ("pinctrl: sh-pfc: Propagate errors on group config")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250831084958.431913-4-rongqianfeng@vivo.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+After:
+[...]
+parm:           cache_size:Cache size in MiB for memory-backed device.
+		Default: 0 (none) (ulong)
+[...]
+parm:           mbps:Limit maximum bandwidth (in MiB/s).
+		Default: 0 (no limit) (uint)
+[...]
+
+Fixes: 058efe000b31 ("null_blk: add module parameters for 4 options")
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/null_blk/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl.c b/drivers/pinctrl/renesas/pinctrl.c
-index 29d16c9c1bd19..3a742f74ecd1d 100644
---- a/drivers/pinctrl/renesas/pinctrl.c
-+++ b/drivers/pinctrl/renesas/pinctrl.c
-@@ -726,7 +726,8 @@ static int sh_pfc_pinconf_group_set(struct pinctrl_dev *pctldev, unsigned group,
- 	struct sh_pfc_pinctrl *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	const unsigned int *pins;
- 	unsigned int num_pins;
--	unsigned int i, ret;
-+	unsigned int i;
-+	int ret;
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index f10369ad90f76..ceb7aeca5d9bd 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -223,7 +223,7 @@ MODULE_PARM_DESC(discard, "Support discard operations (requires memory-backed nu
  
- 	pins = pmx->pfc->info->groups[group].pins;
- 	num_pins = pmx->pfc->info->groups[group].nr_pins;
+ static unsigned long g_cache_size;
+ module_param_named(cache_size, g_cache_size, ulong, 0444);
+-MODULE_PARM_DESC(mbps, "Cache size in MiB for memory-backed device. Default: 0 (none)");
++MODULE_PARM_DESC(cache_size, "Cache size in MiB for memory-backed device. Default: 0 (none)");
+ 
+ static bool g_fua = true;
+ module_param_named(fua, g_fua, bool, 0444);
 -- 
 2.51.0
 
