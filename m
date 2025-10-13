@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9F97083C;
-	Mon, 13 Oct 2025 14:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB977083C;
+	Mon, 13 Oct 2025 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367589; cv=none; b=Y2t+10RNMgPQiv3zwomyAqcxRsejNTlRaZ7lvD4Iev1PIUt087M6x1/lkKa7ls70dpjo+y7+Rd+d4lkxR5GTQnArXBWji8EZzgg1bB+YLuBWnlmTzEP4MXY7oBHDJiVzlH0vbx/zROpjjGJ5n6eBAfAzo5nLuKJ+HBLVrt6Opj8=
+	t=1760367592; cv=none; b=QPTMGj3jSmTNJcIWLyf1FqgUjBh0sqyJMKInapRdQcZrZkZ4dCgpmBSHeF9o2wQW8dmE87EnaYZSw3EFP5Asj2/WnZoeaRlhoQO+vb1f6VhZ9QnPDZR6u6Q4eVyFfxOqKZXpFF6VR0VUxCr9gJsaSazSh7aut71OVqvg7x1QZN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367589; c=relaxed/simple;
-	bh=ZPnOFIi1hTaagiowsQpodocCHmtEgKm+unR3Z5Y7060=;
+	s=arc-20240116; t=1760367592; c=relaxed/simple;
+	bh=MXjHWmCaBM5WFaWXVtMuwXmsvIKN06X6Kxf67/A2b2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Epw8BBReFWvXfViTw0J/oMTbePB2LhnITqwZ4frVFUFoD51IfkKhqd2HQc0nNRhGL6J731o1eoiQNtzG3AoLG6RHgSd0pf4Ry+ST+guVIKMNS0CZC2iJ2a7HGzQA2jJTrJQrEhYQRD8Y3w/QCxPuHPtL88snZZkG9Vr3vgkDbTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eecgEs3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1m4P9WuovFW2XYmHctLJWkwTLokuiE/DWQ7E6YRTwG67PZ3Hnd85XVtuxsvTiTYmTke2zR7Tn+flObCN5LnDOmXypJaRFZEpT2nIqPKJJP9L2YXFo4ONCs/AGrBhuih+K/zmdwc4xW2v0t26z6f2u8AGXPsyhwwYDc195m5Y9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaAD4WGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eecgEs3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D69CC4CEE7;
-	Mon, 13 Oct 2025 14:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaAD4WGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE727C4CEE7;
+	Mon, 13 Oct 2025 14:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367589;
-	bh=ZPnOFIi1hTaagiowsQpodocCHmtEgKm+unR3Z5Y7060=;
+	s=korg; t=1760367592;
+	bh=MXjHWmCaBM5WFaWXVtMuwXmsvIKN06X6Kxf67/A2b2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eecgEs3hxEJ+dx9+Ew/BD52UEt+Xnqjzf+bzXpyLRHW7NlB3PwyX3iWfmoZ4hQmtG
-	 IB3/Dm2gw8DVfOrTvlUn6s+aML1QPJY7Z+bjs+6hjbwe35RrLIDHM1HutaKaOIYEcZ
-	 kQdZ+Z6yWxd+PelcrM9CbA/5oxJJqxC/tP1m6bP0=
+	b=eaAD4WGeEdawS9V7heAAcFX+zRikaBWiNMTinT4bNKxotFODLoLkhPYB6hi2MMr+W
+	 oSJS+fEhlLkpNOyD4XQNEQRoKmj/AbK74Vz+o/vxqW/Mu0/iFcNq6D2GjqYZTQ9yX5
+	 7QxzMEtV8QheTMSHg1vgnM/V/qBRgffofclRUvJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Brahmajit Das <listout@listout.xyz>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/196] drm/radeon/r600_cs: clean up of dead code in r600_cs
-Date: Mon, 13 Oct 2025 16:44:14 +0200
-Message-ID: <20251013144317.475243619@linuxfoundation.org>
+Subject: [PATCH 6.6 032/196] ARM: dts: ti: omap: omap3-devkit8000-lcd: Fix ti,keep-vref-on property to use correct boolean syntax in DTS
+Date: Mon, 13 Oct 2025 16:43:43 +0200
+Message-ID: <20251013144316.360017612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -46,62 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 260dcf5b06d519bcf27a5dfdb5c626821a55c170 ]
+[ Upstream commit 5af5b85505bc859adb338fe5d6e4842e72cdf932 ]
 
-GCC 16 enables -Werror=unused-but-set-variable= which results in build
-error with the following message.
+The ti,keep-vref-on property, defined as a boolean flag in the Device
+Tree schema, was incorrectly assigned a value (<1>) in the DTS file,
+causing a validation error: "size (4) error for type flag". Remove
+the value to match the schema and ensure compatibility with the driver
+using device_property_read_bool(). This fixes the dtbs_check error.
 
-drivers/gpu/drm/radeon/r600_cs.c: In function ‘r600_texture_size’:
-drivers/gpu/drm/radeon/r600_cs.c:1411:29: error: variable ‘level’ set but not used [-Werror=unused-but-set-variable=]
- 1411 |         unsigned offset, i, level;
-      |                             ^~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:287: drivers/gpu/drm/radeon/r600_cs.o] Error 1
-
-level although is set, but in never used in the function
-r600_texture_size. Thus resulting in dead code and this error getting
-triggered.
-
-Fixes: 60b212f8ddcd ("drm/radeon: overhaul texture checking. (v3)")
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: ed05637c30e6 ("ARM: dts: omap3-devkit8000: Add ADS7846 Touchscreen support")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Link: https://lore.kernel.org/r/20250822225052.136919-1-jihed.chaibi.dev@gmail.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
-index ac77d1246b945..811265648a582 100644
---- a/drivers/gpu/drm/radeon/r600_cs.c
-+++ b/drivers/gpu/drm/radeon/r600_cs.c
-@@ -1408,7 +1408,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
- 			      unsigned block_align, unsigned height_align, unsigned base_align,
- 			      unsigned *l0_size, unsigned *mipmap_size)
- {
--	unsigned offset, i, level;
-+	unsigned offset, i;
- 	unsigned width, height, depth, size;
- 	unsigned blocksize;
- 	unsigned nbx, nby;
-@@ -1420,7 +1420,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
- 	w0 = r600_mip_minify(w0, 0);
- 	h0 = r600_mip_minify(h0, 0);
- 	d0 = r600_mip_minify(d0, 0);
--	for(i = 0, offset = 0, level = blevel; i < nlevels; i++, level++) {
-+	for (i = 0, offset = 0; i < nlevels; i++) {
- 		width = r600_mip_minify(w0, i);
- 		nbx = r600_fmt_get_nblocksx(format, width);
+diff --git a/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi b/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
+index a7f99ae0c1fe9..78c657429f641 100644
+--- a/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
++++ b/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
+@@ -65,7 +65,7 @@ ads7846@0 {
+ 		ti,debounce-max = /bits/ 16 <10>;
+ 		ti,debounce-tol = /bits/ 16 <5>;
+ 		ti,debounce-rep = /bits/ 16 <1>;
+-		ti,keep-vref-on = <1>;
++		ti,keep-vref-on;
+ 		ti,settle-delay-usec = /bits/ 16 <150>;
  
+ 		wakeup-source;
 -- 
 2.51.0
 
