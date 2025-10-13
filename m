@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A9B30DEC7;
-	Mon, 13 Oct 2025 15:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0691430DECA;
+	Mon, 13 Oct 2025 15:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370013; cv=none; b=mzeYjtW56mWRdrPAp0hFZKbro7QJNrmgWQy8+plpOI6fWO8SuyXHQLiUkmc/SMxbO52fxTLFAN8/94q2bnuIKonoXRLrN0tG68VX+I0jO8h3Qn20tgEUuKYDAjiRH9jfUYX8FUichDRMWkvFFP0M2ukJlvkfP63q9p5Q+mTpZuM=
+	t=1760370016; cv=none; b=b5iBn7Rv4A4wGb9uDmMgQv9C3fMSdfDwSYLoqTUneC1tk/ZbIGHULSQC0hHloc9Q+DcomNpcHhIaTyI2VVnEVeroxdu6sje5TGR4qd+PXoH3OI2sch6AxFiwS5GJnmItNlWxvIJFTlVIPh222nGMPfRZFFUyPBx7ZJkz7PgNeWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370013; c=relaxed/simple;
-	bh=MywPTQUOK2raOz2JHKM89J9o7nCDJ5UyICc1Tb3N2nI=;
+	s=arc-20240116; t=1760370016; c=relaxed/simple;
+	bh=dkG6YDUzQC8DOvSnc/U0FJr7MQ64Wve0SD0E6Zq8S2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mN8Lv6NIuWPDzU2cMfRsq1KegWaTLdKGgXzH03yIWAdz+d0bMELzrLm5DpfxDt6Q8IBCf5K6gqlmgq7Zt/baUrEEty2xle5UmZHKQLrEF8RoNP6ePVs/RZpYvWeKU3NOGUPvE9Lk3GiHqLo54YefVKcM8wa37u/DVXaLlYVgAtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+jxHgOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qudIRZu/oSIzsP3a/721/UrpnxM1SemxO/JuXjrNR/mXV4kpqiO2/SA5NC2IN7UtVIdJ1AVNsOYXa1Y44NevRuFpKdqmzloDUs3zk67CR/wN+DObIXRcxAXkLLde+nDiQEGWibtCCsXClG6x7lcRbYv+3ODuzGyhCZ6yOneRuq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQU2jtbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+jxHgOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8267CC4CEE7;
-	Mon, 13 Oct 2025 15:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQU2jtbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEC0C4CEE7;
+	Mon, 13 Oct 2025 15:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370012;
-	bh=MywPTQUOK2raOz2JHKM89J9o7nCDJ5UyICc1Tb3N2nI=;
+	s=korg; t=1760370015;
+	bh=dkG6YDUzQC8DOvSnc/U0FJr7MQ64Wve0SD0E6Zq8S2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+jxHgOFkG/jXgjao4zDUJyz/+CV4sVhayxZy2I41r1fv5yEOgMAuOWC6/XUPeBNG
-	 i8nfJL6hzr0at6NDjhclah4Wl0fVPR25kX2sOX1W66JUE7tD3Wor3GcWa8gSwbClqI
-	 qLe6klgHuswMUJJYE/bBimiFaHKuFLzaFJxRndao=
+	b=TQU2jtbpi9MAYgGluijprQxRstwCCPZpOMiOXTERQli0yN0cy3Af/WyPrJsPqRSPW
+	 u0WP7KUT/ORq/TWQuC/vv4haXW+IVvAqcsYBC/FVVYdR48UHqT3HX+dj3vne/wVj1R
+	 KZifhbjTUSQcY5zqcoc/yGCeZISGOvvJM1yB3Fx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 446/563] iommu/vt-d: Disallow dirty tracking if incoherent page walk
-Date: Mon, 13 Oct 2025 16:45:07 +0200
-Message-ID: <20251013144427.439082061@linuxfoundation.org>
+Subject: [PATCH 6.17 415/563] wifi: rtw89: avoid circular locking dependency in ser_state_run()
+Date: Mon, 13 Oct 2025 16:44:36 +0200
+Message-ID: <20251013144426.322434970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,49 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 57f55048e564dedd8a4546d018e29d6bbfff0a7e ]
+[ Upstream commit 570f94511766f9236d3462dfb8a3c719c2b54c23 ]
 
-Dirty page tracking relies on the IOMMU atomically updating the dirty bit
-in the paging-structure entry. For this operation to succeed, the paging-
-structure memory must be coherent between the IOMMU and the CPU. In
-another word, if the iommu page walk is incoherent, dirty page tracking
-doesn't work.
+Lockdep gives a splat [1] when ser_hdl_work item is executed.  It is
+scheduled at mac80211 workqueue via ieee80211_queue_work() and takes a
+wiphy lock inside.  However, this workqueue can be flushed when e.g.
+closing the interface and wiphy lock is already taken in that case.
 
-The Intel VT-d specification, Section 3.10 "Snoop Behavior" states:
+Choosing wiphy_work_queue() for SER is likely not suitable.  Back on to
+the global workqueue.
 
-"Remapping hardware encountering the need to atomically update A/EA/D bits
- in a paging-structure entry that is not snooped will result in a non-
- recoverable fault."
+[1]:
 
-To prevent an IOMMU from being incorrectly configured for dirty page
-tracking when it is operating in an incoherent mode, mark SSADS as
-supported only when both ecap_slads and ecap_smpwc are supported.
+ WARNING: possible circular locking dependency detected
+ 6.17.0-rc2 #17 Not tainted
+ ------------------------------------------------------
+ kworker/u32:1/61 is trying to acquire lock:
+ ffff88811bc00768 (&rdev->wiphy.mtx){+.+.}-{4:4}, at: ser_state_run+0x5e/0x180 [rtw89_core]
 
-Fixes: f35f22cc760e ("iommu/vt-d: Access/Dirty bit support for SS domains")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20250924083447.123224-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+ but task is already holding lock:
+ ffffc9000048fd30 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}, at: process_one_work+0x7b5/0x1450
+
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #2 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}:
+        process_one_work+0x7c6/0x1450
+        worker_thread+0x49e/0xd00
+        kthread+0x313/0x640
+        ret_from_fork+0x221/0x300
+        ret_from_fork_asm+0x1a/0x30
+
+ -> #1 ((wq_completion)phy0){+.+.}-{0:0}:
+        touch_wq_lockdep_map+0x8e/0x180
+        __flush_workqueue+0x129/0x10d0
+        ieee80211_stop_device+0xa8/0x110
+        ieee80211_do_stop+0x14ce/0x2880
+        ieee80211_stop+0x13a/0x2c0
+        __dev_close_many+0x18f/0x510
+        __dev_change_flags+0x25f/0x670
+        netif_change_flags+0x7b/0x160
+        do_setlink.isra.0+0x1640/0x35d0
+        rtnl_newlink+0xd8c/0x1d30
+        rtnetlink_rcv_msg+0x700/0xb80
+        netlink_rcv_skb+0x11d/0x350
+        netlink_unicast+0x49a/0x7a0
+        netlink_sendmsg+0x759/0xc20
+        ____sys_sendmsg+0x812/0xa00
+        ___sys_sendmsg+0xf7/0x180
+        __sys_sendmsg+0x11f/0x1b0
+        do_syscall_64+0xbb/0x360
+        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+ -> #0 (&rdev->wiphy.mtx){+.+.}-{4:4}:
+        __lock_acquire+0x124c/0x1d20
+        lock_acquire+0x154/0x2e0
+        __mutex_lock+0x17b/0x12f0
+        ser_state_run+0x5e/0x180 [rtw89_core]
+        rtw89_ser_hdl_work+0x119/0x220 [rtw89_core]
+        process_one_work+0x82d/0x1450
+        worker_thread+0x49e/0xd00
+        kthread+0x313/0x640
+        ret_from_fork+0x221/0x300
+        ret_from_fork_asm+0x1a/0x30
+
+ other info that might help us debug this:
+
+ Chain exists of:
+   &rdev->wiphy.mtx --> (wq_completion)phy0 --> (work_completion)(&ser->ser_hdl_work)
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock((work_completion)(&ser->ser_hdl_work));
+                                lock((wq_completion)phy0);
+                                lock((work_completion)(&ser->ser_hdl_work));
+   lock(&rdev->wiphy.mtx);
+
+  *** DEADLOCK ***
+
+ 2 locks held by kworker/u32:1/61:
+  #0: ffff888103835148 ((wq_completion)phy0){+.+.}-{0:0}, at: process_one_work+0xefa/0x1450
+  #1: ffffc9000048fd30 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}, at: process_one_work+0x7b5/0x1450
+
+ stack backtrace:
+ CPU: 0 UID: 0 PID: 61 Comm: kworker/u32:1 Not tainted 6.17.0-rc2 #17 PREEMPT(voluntary)
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS edk2-20250523-14.fc42 05/23/2025
+ Workqueue: phy0 rtw89_ser_hdl_work [rtw89_core]
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5d/0x80
+  print_circular_bug.cold+0x178/0x1be
+  check_noncircular+0x14c/0x170
+  __lock_acquire+0x124c/0x1d20
+  lock_acquire+0x154/0x2e0
+  __mutex_lock+0x17b/0x12f0
+  ser_state_run+0x5e/0x180 [rtw89_core]
+  rtw89_ser_hdl_work+0x119/0x220 [rtw89_core]
+  process_one_work+0x82d/0x1450
+  worker_thread+0x49e/0xd00
+  kthread+0x313/0x640
+  ret_from_fork+0x221/0x300
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: ebfc9199df05 ("wifi: rtw89: add wiphy_lock() to work that isn't held wiphy_lock() yet")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250919210852.823912-5-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/ser.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index d09b928716592..2c261c069001c 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -541,7 +541,8 @@ enum {
- #define pasid_supported(iommu)	(sm_supported(iommu) &&			\
- 				 ecap_pasid((iommu)->ecap))
- #define ssads_supported(iommu) (sm_supported(iommu) &&                 \
--				ecap_slads((iommu)->ecap))
-+				ecap_slads((iommu)->ecap) &&           \
-+				ecap_smpwc(iommu->ecap))
- #define nested_supported(iommu)	(sm_supported(iommu) &&			\
- 				 ecap_nest((iommu)->ecap))
+diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
+index fe7beff8c4246..f99e179f7ff9f 100644
+--- a/drivers/net/wireless/realtek/rtw89/ser.c
++++ b/drivers/net/wireless/realtek/rtw89/ser.c
+@@ -205,7 +205,6 @@ static void rtw89_ser_hdl_work(struct work_struct *work)
+ 
+ static int ser_send_msg(struct rtw89_ser *ser, u8 event)
+ {
+-	struct rtw89_dev *rtwdev = container_of(ser, struct rtw89_dev, ser);
+ 	struct ser_msg *msg = NULL;
+ 
+ 	if (test_bit(RTW89_SER_DRV_STOP_RUN, ser->flags))
+@@ -221,7 +220,7 @@ static int ser_send_msg(struct rtw89_ser *ser, u8 event)
+ 	list_add(&msg->list, &ser->msg_q);
+ 	spin_unlock_irq(&ser->msg_q_lock);
+ 
+-	ieee80211_queue_work(rtwdev->hw, &ser->ser_hdl_work);
++	schedule_work(&ser->ser_hdl_work);
+ 	return 0;
+ }
  
 -- 
 2.51.0
