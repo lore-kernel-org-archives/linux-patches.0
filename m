@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8A930DD2A;
-	Mon, 13 Oct 2025 15:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8321D30DD2A;
+	Mon, 13 Oct 2025 15:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369981; cv=none; b=ST3jUwGZ4H37/q2syb21KL7FuNpkKe5eM6wJoCriR04ewmHHGdhgxIJidQeJ8NXkJyIeCx8zImXhtzBczHR2t6xaOpPmKMSUDU89S3H0ugZ+TETXh2Ujvs1CcPWGkyFuOyE1/INpveMWpgPVpjjw5FLe7gFSfp9/Iyrtxxv/qXU=
+	t=1760369984; cv=none; b=Pwczv5oFEywu2aZy0dvYGFg/7a6DnXAa2Ws5vjH5FHmxt37gnPMjqYWdT+xzQ/+VV4Y7WhryRAskGjYiOOqV8LeNtPewyqcQ/LuQMYIQl91/b37pUHGKKYg/zOS8VBpKQmY3cIm02Mr3aRhSQ6BtU8c8SpB/dMjw6molBRI1QwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369981; c=relaxed/simple;
-	bh=hYIVyuM1TJoUe8kAUS33/9M0JTpF8Naw/U1RIRVGeJs=;
+	s=arc-20240116; t=1760369984; c=relaxed/simple;
+	bh=FkuS9Rl2UYIPhMPYrqzsy8D9EWAuyC9mLZBikuSOUDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6jRhULojDqdz1Js1Q/iRwkpBpJBcZwkoJpiEs+4KO86v/msYtwUXguDyQXGYNFq9KcDDBBN5KYu+5W3SJ9TzKxePytD/fVzfZDbRfZvs38I6O+3r7VdTVBXl02s45FQKg0UtuMnbyp5crC2NBT+mN5Mtuqmbb8Pu3miiGapSig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxJwK7RV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TtqevNkOeXtV2SLMakUT9RP0Wim8qsJvx8vMYotkDyIhBpeaSzKYlKy6RENWn76pCxptvhTdND4TdUVmBrQ3v4OBspO9jXFX+5+0Xh2PL+U0uMKt8yHk+k+QFhEyHpBmvF8Lm57xURgybM5ZwIX/+8WtSs2rlZxzv+C3/J2745w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkacYMCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxJwK7RV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC09C4CEE7;
-	Mon, 13 Oct 2025 15:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkacYMCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BD2C4CEE7;
+	Mon, 13 Oct 2025 15:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369981;
-	bh=hYIVyuM1TJoUe8kAUS33/9M0JTpF8Naw/U1RIRVGeJs=;
+	s=korg; t=1760369984;
+	bh=FkuS9Rl2UYIPhMPYrqzsy8D9EWAuyC9mLZBikuSOUDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxJwK7RV7Ot41a441oJ8ttgLpJk8lFwHXq+F1qn3V3uItW6bSo6FfRAi4T29oBnu3
-	 GpXFUbNFPv3thBmueu6v5uw/Knv2BIb79DA5tA8NwzGA9iPxpQPaPgr0HxBmK1bReh
-	 HfxfRtcmI3wrsLwIdNp6bTpIUTV9CT1ZBZAC7c2w=
+	b=JkacYMCYtKq4YBMiU0NlCpZlCl97FiIt9HGwnHBTX0P8mV65oijjwgaXCIUWjSa2D
+	 QC+lm3FdhxnMs+7Yb3JzIxYz4BM9nBYZqkPqlVNFtSiifQwGeBA0tCuFjg5soixXBH
+	 fUlfayGsdM8f4gc8HxV0KD2X0xI1XrBC5ygIZC1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Slavin Liu <slavin452@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 436/563] ipvs: Defer ip_vs_ftp unregister during netns cleanup
-Date: Mon, 13 Oct 2025 16:44:57 +0200
-Message-ID: <20251013144427.078297438@linuxfoundation.org>
+Subject: [PATCH 6.17 437/563] netfilter: nfnetlink: reset nlh pointer during batch replay
+Date: Mon, 13 Oct 2025 16:44:58 +0200
+Message-ID: <20251013144427.114959175@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,61 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <slavin452@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 134121bfd99a06d44ef5ba15a9beb075297c0821 ]
+[ Upstream commit 09efbac953f6f076a07735f9ba885148d4796235 ]
 
-On the netns cleanup path, __ip_vs_ftp_exit() may unregister ip_vs_ftp
-before connections with valid cp->app pointers are flushed, leading to a
-use-after-free.
+During a batch replay, the nlh pointer is not reset until the parsing of
+the commands. Since commit bf2ac490d28c ("netfilter: nfnetlink: Handle
+ACK flags for batch messages") that is problematic as the condition to
+add an ACK for batch begin will evaluate to true even if NLM_F_ACK
+wasn't used for batch begin message.
 
-Fix this by introducing a global `exiting_module` flag, set to true in
-ip_vs_ftp_exit() before unregistering the pernet subsystem. In
-__ip_vs_ftp_exit(), skip ip_vs_ftp unregister if called during netns
-cleanup (when exiting_module is false) and defer it to
-__ip_vs_cleanup_batch(), which unregisters all apps after all connections
-are flushed. If called during module exit, unregister ip_vs_ftp
-immediately.
+If there is an error during the command processing, netlink is sending
+an ACK despite that. This misleads userspace tools which think that the
+return code was 0. Reset the nlh pointer to the original one when a
+replay is triggered.
 
-Fixes: 61b1ab4583e2 ("IPVS: netns, add basic init per netns.")
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Slavin Liu <slavin452@gmail.com>
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: bf2ac490d28c ("netfilter: nfnetlink: Handle ACK flags for batch messages")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ftp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
-index d8a284999544b..206c6700e2006 100644
---- a/net/netfilter/ipvs/ip_vs_ftp.c
-+++ b/net/netfilter/ipvs/ip_vs_ftp.c
-@@ -53,6 +53,7 @@ enum {
- 	IP_VS_FTP_EPSV,
- };
+diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
+index e598a2a252b0a..811d02b4c4f7c 100644
+--- a/net/netfilter/nfnetlink.c
++++ b/net/netfilter/nfnetlink.c
+@@ -376,6 +376,7 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	const struct nfnetlink_subsystem *ss;
+ 	const struct nfnl_callback *nc;
+ 	struct netlink_ext_ack extack;
++	struct nlmsghdr *onlh = nlh;
+ 	LIST_HEAD(err_list);
+ 	u32 status;
+ 	int err;
+@@ -386,6 +387,7 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	status = 0;
+ replay_abort:
+ 	skb = netlink_skb_clone(oskb, GFP_KERNEL);
++	nlh = onlh;
+ 	if (!skb)
+ 		return netlink_ack(oskb, nlh, -ENOMEM, NULL);
  
-+static bool exiting_module;
- /*
-  * List of ports (up to IP_VS_APP_MAX_PORTS) to be handled by helper
-  * First port is set to the default port.
-@@ -605,7 +606,7 @@ static void __ip_vs_ftp_exit(struct net *net)
- {
- 	struct netns_ipvs *ipvs = net_ipvs(net);
- 
--	if (!ipvs)
-+	if (!ipvs || !exiting_module)
- 		return;
- 
- 	unregister_ip_vs_app(ipvs, &ip_vs_ftp);
-@@ -627,6 +628,7 @@ static int __init ip_vs_ftp_init(void)
-  */
- static void __exit ip_vs_ftp_exit(void)
- {
-+	exiting_module = true;
- 	unregister_pernet_subsys(&ip_vs_ftp_ops);
- 	/* rcu_barrier() is called by netns */
- }
 -- 
 2.51.0
 
