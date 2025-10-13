@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A7530F7FD;
-	Mon, 13 Oct 2025 15:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1109C30F818;
+	Mon, 13 Oct 2025 15:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367851; cv=none; b=SeKHbL7qNZd5Fbdwj5snWzJM3Yy0VhXiDiIr0wWHqAQty4SHhxwzgw3I3l2i3m12f0SFgNPKgc+vxGsf4102tkP51FW7u7dElsajsy7YHAqZar/F9iHZOwHfYsA67gi3LUjoSsqakdh/KDkUqhVdUvL3sFG1kpPgPiS2lVz88fM=
+	t=1760367856; cv=none; b=aBC/H4VzLTWXV2M980bpgG0gMXXkk5CHrGKscAV6Cmg8Q8SEU9nmgB5mOwdaU/vQWFRkVWl3gyx8F/K1tGgeRoUMV+v7qdc521i2vL88OdtcgKfiuikoNJEycn48VqyPQXf5aIyaJKoxEfKGropItojyYhNimJH/Vzq7ENdrBNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367851; c=relaxed/simple;
-	bh=7Uv7iradkIIsHg2VMmePIjxIgOFmEPEzUJOM8rjIdFA=;
+	s=arc-20240116; t=1760367856; c=relaxed/simple;
+	bh=Oe88VzO31f9E4tv1JWJ+V1S64+5tYjQXEcaiPbxzGvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgbckzO9gecsFucGZBqu/K5r2xgVJfOXZVG9ErRlJcJ+DpnN8FWHTUTz8z0wsBAgmLhhi2Ebn4yz+B8QHLZrnyroGZ3fOE+aGaL/2Va1Tle9wSWL1FjgxZi67dCYyna549gAfsPmcZaxuUNvMxSW5MpSYRLChNbNpM3M3ypQtWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQfrxRHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDVfHIfGpo3nkRyJ3ESshU9DfKAL1lh6IW0q7R/N3V3whSgGqpfCGraMQsTL1tinB8hqYMu7/FmTUzO+y+KmIbNmDzHm5QP7w4BYEtnRt7/gBvBE8KK700VCAOilnvQhDgL0kEN9qbFyT2yzL3Bk8IHc6N8Cjpy6ZhqKw2IqaOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHOs+/Aj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQfrxRHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4B9C19423;
-	Mon, 13 Oct 2025 15:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHOs+/Aj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4059AC4CEE7;
+	Mon, 13 Oct 2025 15:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367851;
-	bh=7Uv7iradkIIsHg2VMmePIjxIgOFmEPEzUJOM8rjIdFA=;
+	s=korg; t=1760367855;
+	bh=Oe88VzO31f9E4tv1JWJ+V1S64+5tYjQXEcaiPbxzGvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQfrxRHM6bkqRDCiFGJuB3PETb77mYpCQPkk0jf53D0vhZv+Tb2dZZHYshdmvShVx
-	 lkAuEJ/8YcBJreKpiG1uiydt2EIyvNXgsDaOrQDfZzqFeL9OPEv+O25Qj/8Eht7wJo
-	 Es4vlYlQHHbp4j2gG7hRSczgBVDocMqUZOoySgTw=
+	b=tHOs+/Aj8WwZIY6MUabr+/irmYm3lThisKgsagpQ98RjcLL1fWVnHhrZ8vzPA2oyX
+	 andk+RP8yl0x9ll7zivx9yUqRwE9c896VKyTafjA5S2vrM/YDOpXuDOx0xLsqLZQV7
+	 zNfPElJdUCoOzAf9tCH6IMMQHlrMimi38llPG/44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Goldwyn Rodrigues <rgoldwyn@suse.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/196] ocfs2: fix double free in user_cluster_connect()
-Date: Mon, 13 Oct 2025 16:45:47 +0200
-Message-ID: <20251013144320.954792547@linuxfoundation.org>
+Subject: [PATCH 6.6 139/196] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
+Date: Mon, 13 Oct 2025 16:45:30 +0200
+Message-ID: <20251013144320.342921206@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -58,42 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 8f45f089337d924db24397f55697cda0e6960516 ]
+[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
 
-user_cluster_disconnect() frees "conn->cc_private" which is "lc" but then
-the error handling frees "lc" a second time.  Set "lc" to NULL on this
-path to avoid a double free.
+enable_irq() and disable_irq() are reference counted, so we must make sure
+that each enable_irq() is always paired with a single disable_irq(). If we
+call disable_irq() twice followed by just a single enable_irq(), the IRQ
+will remain disabled forever.
 
-Link: https://lkml.kernel.org/r/aNKDz_7JF7aycZ0k@stanley.mountain
-Fixes: c994c2ebdbbc ("ocfs2: use the new DLM operation callbacks while requesting new lockspace")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Goldwyn Rodrigues <rgoldwyn@suse.de>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
+will end up being called twice, because disable_irq() also happens in
+qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
+
+Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
+qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
+sense to have the rollback handled always by qcom_q6v5_unprepare().
+
+Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stack_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/remoteproc/qcom_q6v5.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/ocfs2/stack_user.c b/fs/ocfs2/stack_user.c
-index 9b76ee66aeb2f..38c0d6f64fce3 100644
---- a/fs/ocfs2/stack_user.c
-+++ b/fs/ocfs2/stack_user.c
-@@ -1018,6 +1018,7 @@ static int user_cluster_connect(struct ocfs2_cluster_connection *conn)
- 			printk(KERN_ERR "ocfs2: Could not determine"
- 					" locking version\n");
- 			user_cluster_disconnect(conn);
-+			lc = NULL;
- 			goto out;
- 		}
- 		wait_event(lc->oc_wait, (atomic_read(&lc->oc_this_node) > 0));
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 4ee5e67a9f03f..769c6d6d6a731 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -156,9 +156,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
+ 	int ret;
+ 
+ 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
+-	if (!ret)
+-		disable_irq(q6v5->handover_irq);
+-
+ 	return !ret ? -ETIMEDOUT : 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
 -- 
 2.51.0
 
