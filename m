@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6BD30FF2E;
-	Mon, 13 Oct 2025 15:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2509930FF30;
+	Mon, 13 Oct 2025 15:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367981; cv=none; b=A5nn12I3aSpchjljLVBJHAseJ2bi4dLfon7XM/DQKhkPf48N2MJMnOCNsQcWJ0sME4QvPpgGdVnxr1qC1yHS2wJ1DPacHohiV1h6FPbcWD6MwRcMDagXrceolXZR9qy3tDyyuM5h5aAp7D20ceJd17q1pwngE+jfY2xSYBRiw7Y=
+	t=1760367984; cv=none; b=GMDt8TnLcd9ra8E8MXz+d4ne9tfVi5NM7iDNZ1xm2K+L9YNf+0NxSAtfpG9Vx4u9cTTUx2B50Y9ZUvFERVUW8nCbO3pnpQ5tZZ/dj3HVDriIII2ohdr6QPwtD/yibbgoF2l6zQDOHXjHnMZqmHOdfnoAeFuAW60BhnbnhhjHjzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367981; c=relaxed/simple;
-	bh=+GkBuIUVw9XziaXgu7LwyQ03f2sIS5nuzQRnJr/8vPc=;
+	s=arc-20240116; t=1760367984; c=relaxed/simple;
+	bh=pWOsfcWoSbqH0xUXdZtA5u9LR0QjGTcp1Tjsq0TzBoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8qPhfQzrvb2tMYUEhNXxIJ6Vm3uG/YppbfcViR6GiTXBsVoyojJ6ll/JicFGr1b1rk9J1fnj9GHeuTfJBfS6V81GbG4+INt8HCvXPBQ4ZzPOF/vTFRRD6DoClr25AxY91ypDJ9gikSBVm9HYM+/y1ZtN1rplNX1Njru5VXtnjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1z87T0d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjHUWTsBq18C4anFdRnT78sgY2963nh107IZo2Ck4IfKwESlc0oKLC6sZ+VAWzQPy3UZS35lXwCjsaRl0Kp+gt+voT18CLAmokW8910o8DzdALNuBOaWM+vBXuO1hCt1onse+LqSOhOMBVXttrnVuyPKYlnFF7H9oVG2NpksPL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7keJjuP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1z87T0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F61C4CEFE;
-	Mon, 13 Oct 2025 15:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7keJjuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDDEC4CEFE;
+	Mon, 13 Oct 2025 15:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367981;
-	bh=+GkBuIUVw9XziaXgu7LwyQ03f2sIS5nuzQRnJr/8vPc=;
+	s=korg; t=1760367984;
+	bh=pWOsfcWoSbqH0xUXdZtA5u9LR0QjGTcp1Tjsq0TzBoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1z87T0dR9BkKI4ea9t+XFccGJzGU5l66XtVqVM5KkmgBmEMZEpCTR4MWqdsB6t7E
-	 ZKlh10Xekppfyv1R/ahv4Cg71rBDc0KFM8wbtXlrId9tuwcIWlSeeI6soMMX0kCE74
-	 XcRlA/LBVKrVzpLJGOriKupyjwvryg6ZDlUBHv1M=
+	b=v7keJjuPUsamNrZ7oSf6qFnfpa5jTNYRaY9i37ZogE82/AImY2In0zZjIjRxhejOt
+	 rW5e8ivdo+9MfyDZ+zvR6RAzr3WjJyhE0DxLhiUoqowCsjDMTHE1/2H9OEOCoEJ12M
+	 xirOfM1SoNKBDpUINXg7+fm6IOx72QShqj5vb/8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zheng Qixing <zhengqixing@huawei.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 177/196] dm: fix queue start/stop imbalance under suspend/load/resume races
-Date: Mon, 13 Oct 2025 16:46:08 +0200
-Message-ID: <20251013144321.712179138@linuxfoundation.org>
+Subject: [PATCH 6.6 178/196] dm: fix NULL pointer dereference in __dm_suspend()
+Date: Mon, 13 Oct 2025 16:46:09 +0200
+Message-ID: <20251013144321.748490995@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,80 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit 7f597c2cdb9d3263a6fce07c4fc0a9eaa8e8fc43 upstream.
+commit 8d33a030c566e1f105cd5bf27f37940b6367f3be upstream.
 
-When suspend and load run concurrently, before q->mq_ops is set in
-blk_mq_init_allocated_queue(), __dm_suspend() skip dm_stop_queue(). As a
-result, the queue's quiesce depth is not incremented.
+There is a race condition between dm device suspend and table load that
+can lead to null pointer dereference. The issue occurs when suspend is
+invoked before table load completes:
 
-Later, once table load has finished and __dm_resume() runs, which triggers
-q->quiesce_depth ==0 warning in blk_mq_unquiesce_queue():
+BUG: kernel NULL pointer dereference, address: 0000000000000054
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
+RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
 Call Trace:
- <TASK>
- dm_start_queue+0x16/0x20 [dm_mod]
- __dm_resume+0xac/0xb0 [dm_mod]
- dm_resume+0x12d/0x150 [dm_mod]
- do_resume+0x2c2/0x420 [dm_mod]
- dev_suspend+0x30/0x130 [dm_mod]
- ctl_ioctl+0x402/0x570 [dm_mod]
- dm_ctl_ioctl+0x23/0x30 [dm_mod]
+  <TASK>
+  blk_mq_quiesce_queue+0x2c/0x50
+  dm_stop_queue+0xd/0x20
+  __dm_suspend+0x130/0x330
+  dm_suspend+0x11a/0x180
+  dev_suspend+0x27e/0x560
+  ctl_ioctl+0x4cf/0x850
+  dm_ctl_ioctl+0xd/0x20
+  vfs_ioctl+0x1d/0x50
+  __se_sys_ioctl+0x9b/0xc0
+  __x64_sys_ioctl+0x19/0x30
+  x64_sys_call+0x2c4a/0x4620
+  do_syscall_64+0x9e/0x1b0
 
-Fix this by explicitly tracking whether the request queue was
-stopped in __dm_suspend() via a new DMF_QUEUE_STOPPED flag.
-Only call dm_start_queue() in __dm_resume() if the queue was
-actually stopped.
+The issue can be triggered as below:
 
-Fixes: e70feb8b3e68 ("blk-mq: support concurrent queue quiesce/unquiesce")
+T1 						T2
+dm_suspend					table_load
+__dm_suspend					dm_setup_md_queue
+						dm_mq_init_request_queue
+						blk_mq_init_allocated_queue
+						=> q->mq_ops = set->ops; (1)
+dm_stop_queue / dm_wait_for_completion
+=> q->tag_set NULL pointer!	(2)
+						=> q->tag_set = set; (3)
+
+Fix this by checking if a valid table (map) exists before performing
+request-based suspend and waiting for target I/O. When map is NULL,
+skip these table-dependent suspend steps.
+
+Even when map is NULL, no I/O can reach any target because there is
+no table loaded; I/O submitted in this state will fail early in the
+DM layer. Skipping the table-dependent suspend logic in this case
+is safe and avoids NULL pointer dereferences.
+
+Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-core.h |    1 +
- drivers/md/dm.c      |    8 +++++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/dm.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-core.h
-+++ b/drivers/md/dm-core.h
-@@ -161,6 +161,7 @@ struct mapped_device {
- #define DMF_SUSPENDED_INTERNALLY 7
- #define DMF_POST_SUSPENDING 8
- #define DMF_EMULATE_ZONE_APPEND 9
-+#define DMF_QUEUE_STOPPED 10
- 
- void disable_discard(struct mapped_device *md);
- void disable_write_zeroes(struct mapped_device *md);
 --- a/drivers/md/dm.c
 +++ b/drivers/md/dm.c
-@@ -2740,8 +2740,10 @@ static int __dm_suspend(struct mapped_de
+@@ -2688,7 +2688,7 @@ static int __dm_suspend(struct mapped_de
+ {
+ 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
+ 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
+-	int r;
++	int r = 0;
+ 
+ 	lockdep_assert_held(&md->suspend_lock);
+ 
+@@ -2740,7 +2740,7 @@ static int __dm_suspend(struct mapped_de
  	 * Stop md->queue before flushing md->wq in case request-based
  	 * dm defers requests to md->wq from md->queue.
  	 */
--	if (dm_request_based(md))
-+	if (dm_request_based(md)) {
+-	if (dm_request_based(md)) {
++	if (map && dm_request_based(md)) {
  		dm_stop_queue(md->queue);
-+		set_bit(DMF_QUEUE_STOPPED, &md->flags);
-+	}
- 
- 	flush_workqueue(md->wq);
- 
-@@ -2763,7 +2765,7 @@ static int __dm_suspend(struct mapped_de
- 	if (r < 0) {
- 		dm_queue_flush(md);
- 
--		if (dm_request_based(md))
-+		if (test_and_clear_bit(DMF_QUEUE_STOPPED, &md->flags))
- 			dm_start_queue(md->queue);
- 
- 		unlock_fs(md);
-@@ -2847,7 +2849,7 @@ static int __dm_resume(struct mapped_dev
- 	 * so that mapping of targets can work correctly.
- 	 * Request-based dm is queueing the deferred I/Os in its request_queue.
+ 		set_bit(DMF_QUEUE_STOPPED, &md->flags);
+ 	}
+@@ -2752,7 +2752,8 @@ static int __dm_suspend(struct mapped_de
+ 	 * We call dm_wait_for_completion to wait for all existing requests
+ 	 * to finish.
  	 */
--	if (dm_request_based(md))
-+	if (test_and_clear_bit(DMF_QUEUE_STOPPED, &md->flags))
- 		dm_start_queue(md->queue);
+-	r = dm_wait_for_completion(md, task_state);
++	if (map)
++		r = dm_wait_for_completion(md, task_state);
+ 	if (!r)
+ 		set_bit(dmf_suspended_flag, &md->flags);
  
- 	unlock_fs(md);
 
 
