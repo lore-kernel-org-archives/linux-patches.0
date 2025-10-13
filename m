@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E53930C614;
-	Mon, 13 Oct 2025 15:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464863126D8;
+	Mon, 13 Oct 2025 15:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368240; cv=none; b=rdYtBoFce2YQkyaojtohJ8FfB++wCw0lQdoH81VRZwn4+qUP00h+q6EcdoSPkChqk1bDVta+9fu1aAJpI1c/tcSJbyPr+IhdT2kQLLLH6ammWg1NJVJDqaVSX/GKOBpEI9O7VdMdZJg01G4/ShmFPR/ZA8ls8cCrN2K+DHWzvf0=
+	t=1760368243; cv=none; b=ate4R04N77JgHgd7KMwkJ4mbZ8LVwG+fqjeDzEZ60TextdlSNmoAmVzw7giy6dsBpFKKlXhfiDlUY2zXrgQRfBaT5FE3Uoko6KjDNJvDpA9VdtSWTuVlu9u3ZNC3yybdLbkti+RVueSrc9m9ZirlbGpZhH3u2fuRAgpKdZIkPw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368240; c=relaxed/simple;
-	bh=1epM/zyXAKlkXBB2VaSlwjmm2W99oypffgxQglBji2s=;
+	s=arc-20240116; t=1760368243; c=relaxed/simple;
+	bh=X0Fh2sh9svPZIHXq1Pwc66uiF7XOBKajSg39d7xLA2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnA88JdWvfnEDSOVDhUWSvfcBGnJoUVikawZxtuxhN6ufh8s4iGHSbX+4Bgn4c+WvaAnpPFHVSv92m/Bv7CG0DrpQXMEv+34fyM6EnCAITO/CHUvaP+yMO9Qq2uXDHwPnubdW4VLm/uvPB48h2fl//f5FG/ESDlGjZLlcWO6vxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euTE0LCT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSnZSyzchApt7qwTe1sceKcH/bODf3cP2mb+h1KuQ6ISmrqh2Ype4Hr3srH9k1gu1gtxoV8STRtpoKBsefHh3AI/VT+PJU4yxlz6xiQ17BjSlHDGlAil6NBT35vvYP857iuJx619ExxB2IA9Yzs3TEM+Yoqdg8sIbWgVXTOsUUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp/Otj68; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euTE0LCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E522CC4CEFE;
-	Mon, 13 Oct 2025 15:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp/Otj68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3521C4CEFE;
+	Mon, 13 Oct 2025 15:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368240;
-	bh=1epM/zyXAKlkXBB2VaSlwjmm2W99oypffgxQglBji2s=;
+	s=korg; t=1760368243;
+	bh=X0Fh2sh9svPZIHXq1Pwc66uiF7XOBKajSg39d7xLA2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=euTE0LCTxS9latSXNk76mUjLohhHKwWzSGacJ6HrI1n4jFj0DV4o3eOlLuAQou2Er
-	 gplZz57L3gyjBN69pvb51wPdi7/TdfrJDBXYV+fnXlV2WV3sFSBpIoqxDiS+mPM/SE
-	 h12HOEu52qL+QgVz2N8GGpNIwMEaU3mg73E3SHvE=
+	b=mp/Otj68XEyUiDfaKmkRVohUerYCPsM2FgG9yLbudiYfz2RgkKeiu3EHkuvZPs6OB
+	 iio9Jm0VFMWduUYkvqlWhEdmBJ+58IG7c/AMPOVtMLj601QFmEQBqLQUp0d4RBlGdO
+	 7m8YbNkcp0lJUR3cB5dVw4uNp3JmRDsLOWzrQe8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/262] f2fs: fix condition in __allow_reserved_blocks()
-Date: Mon, 13 Oct 2025 16:43:54 +0200
-Message-ID: <20251013144329.441871825@linuxfoundation.org>
+Subject: [PATCH 6.12 093/262] drm/bridge: it6505: select REGMAP_I2C
+Date: Mon, 13 Oct 2025 16:43:55 +0200
+Message-ID: <20251013144329.478028725@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit e75ce117905d2830976a289e718470f3230fa30a ]
+[ Upstream commit 21b137f651cf9d981e22d2c60a2a8105f50a6361 ]
 
-If reserve_root mount option is not assigned, __allow_reserved_blocks()
-will return false, it's not correct, fix it.
+Fix
 
-Fixes: 7e65be49ed94 ("f2fs: add reserved blocks for root user")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+  aarch64-linux-gnu-ld: drivers/gpu/drm/bridge/ite-it6505.o: in function `it6505_i2c_probe':
+  ite-it6505.c:(.text+0x754): undefined reference to `__devm_regmap_init_i2c'
+
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20250610235825.3113075-1-olvaffe@gmail.com
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 2dec22f2ea639..0d3ef487f72ac 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2331,8 +2331,6 @@ static inline bool __allow_reserved_blocks(struct f2fs_sb_info *sbi,
- {
- 	if (!inode)
- 		return true;
--	if (!test_opt(sbi, RESERVE_ROOT))
--		return false;
- 	if (IS_NOQUOTA(inode))
- 		return true;
- 	if (uid_eq(F2FS_OPTION(sbi).s_resuid, current_fsuid()))
-@@ -2353,7 +2351,7 @@ static inline unsigned int get_available_block_count(struct f2fs_sb_info *sbi,
- 	avail_user_block_count = sbi->user_block_count -
- 					sbi->current_reserved_blocks;
+diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
+index 3eb955333c809..66369b6a023f0 100644
+--- a/drivers/gpu/drm/bridge/Kconfig
++++ b/drivers/gpu/drm/bridge/Kconfig
+@@ -101,6 +101,7 @@ config DRM_ITE_IT6505
+ 	select EXTCON
+ 	select CRYPTO
+ 	select CRYPTO_HASH
++	select REGMAP_I2C
+ 	help
+ 	  ITE IT6505 DisplayPort bridge chip driver.
  
--	if (!__allow_reserved_blocks(sbi, inode, cap))
-+	if (test_opt(sbi, RESERVE_ROOT) && !__allow_reserved_blocks(sbi, inode, cap))
- 		avail_user_block_count -= F2FS_OPTION(sbi).root_reserved_blocks;
- 
- 	if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED))) {
 -- 
 2.51.0
 
