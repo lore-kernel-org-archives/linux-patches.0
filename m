@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2477030DECD;
-	Mon, 13 Oct 2025 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0BF30E0DD;
+	Mon, 13 Oct 2025 14:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366928; cv=none; b=dMD8KYTWuKy5KObcG0/TLksnPMOAWhQU8++kVQR8SQp07ADrwVdZNH1zpebWC/kH86y0PV674M+Xq/gOdzOvcME9jc75p7NGc+fiFBM8UQmBkHxBvUDc+eSpYbxbGRG1XEuloUCNDVq+m/NoQpV1dyD+55pKbc5oIyem0iOC2cI=
+	t=1760366930; cv=none; b=NSZntpRyDMRM1cgtj2TAPX69HBKESnUsmXuQGts3Fqb4ls5oYUB1Ht2e33qgvrSoBsJWnXU7jby73kvI1lWXRRWAJN9QvA7ioej7Il5jJInmkp1xx3tgcordJco+7FiDswvzvRCEyqNAl9R47gIQ/3zWq7QOdUu05yLj6KXFQXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366928; c=relaxed/simple;
-	bh=5f0wgzGvDpZrOqtq062bTojOuGOf57zUcWFS7M5DCu0=;
+	s=arc-20240116; t=1760366930; c=relaxed/simple;
+	bh=GJ+8evf/FEqm8jFiVm7m7kwMuPQ3116SQpPyMhY94us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOUA3drec0N/4w967+Fda2KZRV5FMV3qN3B+0a45qR8Q0d9b+Z0RoTZWCzyxUeAWtERMzawqD496xkVfXQqdWgCmH9T2atL0t7p+S4vRVBoqUrcAUnkNR/hhk7zM4MmF+mGfS83ZS79JXWRWxN5tQJ/UGUprZh7Qp4bSEAs+LME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1pCDm9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVI1jUCtieF7TqzTYXquTCsVVTiALKXUMmc0b0AdX41vbQ+1SHP1WpRQAxLM0vBgV1PqoAfLJeh29gbcpD5oROD9qw1iTjWWtXwKJCWkkEh4dM00j5en2v/AGGvTc61708WvX+fwT/2JbbqqhkrqHSfgusGqB6RIbOzV36hOq2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fea1djAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1pCDm9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396DAC116D0;
-	Mon, 13 Oct 2025 14:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fea1djAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2769FC116C6;
+	Mon, 13 Oct 2025 14:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366927;
-	bh=5f0wgzGvDpZrOqtq062bTojOuGOf57zUcWFS7M5DCu0=;
+	s=korg; t=1760366930;
+	bh=GJ+8evf/FEqm8jFiVm7m7kwMuPQ3116SQpPyMhY94us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1pCDm9DvhIow+nKtx50lboElB9KgLM3zIXreuqFJmFkvS4BZu9+PNBnHQkpYKJ0e
-	 nxmCHT/7thHi49mvw88j99jCN8rPwEaUw8HyBkygOEVqf8pSfzqu3ORO63UGP8+4lg
-	 VruBXo5aU83XLnFkE+cVhryuAlJxRvgFLduhrd5o=
+	b=fea1djAxC23CSFuYsnZFT3qsTUisJaNzo6+TmWdKEvQ23LPaWrfiCDULqrVjkBwQ/
+	 k7L2VdSOj6GORf3p3c2Va5wV5e03MKa0NYUaWDaZVutUv+wYAJNonwajqGXF6jnJiE
+	 o0ISqJiolRnIVg+dEq61jsr83azPRs7EN5PxE6NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hupu <hupu.gm@gmail.com>,
-	Guilherme Amadio <amadio@gentoo.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Shuah Khan <shuah.kh@samsung.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/196] perf subcmd: avoid crash in exclude_cmds when excludes is empty
-Date: Mon, 13 Oct 2025 16:43:26 +0200
-Message-ID: <20251013144315.786706724@linuxfoundation.org>
+Subject: [PATCH 6.1 016/196] media: tunner: xc5000: Refactor firmware load
+Date: Mon, 13 Oct 2025 16:43:09 +0200
+Message-ID: <20251013144315.154316391@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,49 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hupu <hupu.gm@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit a5edf3550f4260504b7e0ab3d40d13ffe924b773 ]
+[ Upstream commit 8e1f5da59dd4a1966f859639860b803a7e8b8bfb ]
 
-When cross-compiling the perf tool for ARM64, `perf help` may crash
-with the following assertion failure:
+Make sure the firmware is released when we leave
+xc_load_fw_and_init_tuner()
 
-  help.c:122: exclude_cmds: Assertion `cmds->names[ci] == NULL' failed.
+This change makes smatch happy:
+drivers/media/tuners/xc5000.c:1213 xc_load_fw_and_init_tuner() warn: 'fw' from request_firmware() not released on lines: 1213.
 
-This happens when the perf binary is not named exactly "perf" or when
-multiple "perf-*" binaries exist in the same directory. In such cases,
-the `excludes` command list can be empty, which leads to the final
-assertion in exclude_cmds() being triggered.
-
-Add a simple guard at the beginning of exclude_cmds() to return early
-if excludes->cnt is zero, preventing the crash.
-
-Signed-off-by: hupu <hupu.gm@gmail.com>
-Reported-by: Guilherme Amadio <amadio@gentoo.org>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250909094953.106706-1-amadio@gentoo.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Shuah Khan <shuah.kh@samsung.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 40b7a19f321e ("media: tuner: xc5000: Fix use-after-free in xc5000_release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/subcmd/help.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/tuners/xc5000.c |   41 ++++++++++++++++++-----------------------
+ 1 file changed, 18 insertions(+), 23 deletions(-)
 
-diff --git a/tools/lib/subcmd/help.c b/tools/lib/subcmd/help.c
-index 42f57b640f119..687307f2fe0f7 100644
---- a/tools/lib/subcmd/help.c
-+++ b/tools/lib/subcmd/help.c
-@@ -72,6 +72,9 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
- 	size_t ci, cj, ei;
- 	int cmp;
+--- a/drivers/media/tuners/xc5000.c
++++ b/drivers/media/tuners/xc5000.c
+@@ -58,7 +58,7 @@ struct xc5000_priv {
+ 	struct dvb_frontend *fe;
+ 	struct delayed_work timer_sleep;
  
-+	if (!excludes->cnt)
-+		return;
+-	const struct firmware   *firmware;
++	bool inited;
+ };
+ 
+ /* Misc Defines */
+@@ -1110,23 +1110,19 @@ static int xc_load_fw_and_init_tuner(str
+ 	if (!force && xc5000_is_firmware_loaded(fe) == 0)
+ 		return 0;
+ 
+-	if (!priv->firmware) {
+-		ret = request_firmware(&fw, desired_fw->name,
+-					priv->i2c_props.adap->dev.parent);
+-		if (ret) {
+-			pr_err("xc5000: Upload failed. rc %d\n", ret);
+-			return ret;
+-		}
+-		dprintk(1, "firmware read %zu bytes.\n", fw->size);
+-
+-		if (fw->size != desired_fw->size) {
+-			pr_err("xc5000: Firmware file with incorrect size\n");
+-			release_firmware(fw);
+-			return -EINVAL;
+-		}
+-		priv->firmware = fw;
+-	} else
+-		fw = priv->firmware;
++	ret = request_firmware(&fw, desired_fw->name,
++			       priv->i2c_props.adap->dev.parent);
++	if (ret) {
++		pr_err("xc5000: Upload failed. rc %d\n", ret);
++		return ret;
++	}
++	dprintk(1, "firmware read %zu bytes.\n", fw->size);
 +
- 	ci = cj = ei = 0;
- 	while (ci < cmds->cnt && ei < excludes->cnt) {
- 		cmp = strcmp(cmds->names[ci]->name, excludes->names[ei]->name);
--- 
-2.51.0
-
++	if (fw->size != desired_fw->size) {
++		pr_err("xc5000: Firmware file with incorrect size\n");
++		release_firmware(fw);
++		return -EINVAL;
++	}
+ 
+ 	/* Try up to 5 times to load firmware */
+ 	for (i = 0; i < 5; i++) {
+@@ -1204,6 +1200,7 @@ static int xc_load_fw_and_init_tuner(str
+ 	}
+ 
+ err:
++	release_firmware(fw);
+ 	if (!ret)
+ 		printk(KERN_INFO "xc5000: Firmware %s loaded and running.\n",
+ 		       desired_fw->name);
+@@ -1274,7 +1271,7 @@ static int xc5000_resume(struct dvb_fron
+ 
+ 	/* suspended before firmware is loaded.
+ 	   Avoid firmware load in resume path. */
+-	if (!priv->firmware)
++	if (!priv->inited)
+ 		return 0;
+ 
+ 	return xc5000_set_params(fe);
+@@ -1293,6 +1290,8 @@ static int xc5000_init(struct dvb_fronte
+ 	if (debug)
+ 		xc_debug_dump(priv);
+ 
++	priv->inited = true;
++
+ 	return 0;
+ }
+ 
+@@ -1306,10 +1305,6 @@ static void xc5000_release(struct dvb_fr
+ 
+ 	if (priv) {
+ 		cancel_delayed_work(&priv->timer_sleep);
+-		if (priv->firmware) {
+-			release_firmware(priv->firmware);
+-			priv->firmware = NULL;
+-		}
+ 		hybrid_tuner_release_state(priv);
+ 	}
+ 
 
 
