@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C704A30B52A;
-	Mon, 13 Oct 2025 15:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1555D30B51F;
+	Mon, 13 Oct 2025 15:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368698; cv=none; b=EXJ5UKSVqGclLZeXmUG79clirB6bGAI726kVFsOnVyVN/4ouGjOUO5kN5MXlZUFnBA+FYzRqnvwavoeEwhQPCpbMrov+e854ZGrS9hYb1c6IiNjbAZmVwWPsQyXnR5vWjfkHT2CGXTW5rsiIcqAndttKXJgzZ1wKHMSeBVIdjRQ=
+	t=1760368701; cv=none; b=SuYHIoVmzxIfCUYfcTFlCcr9ohq2fQz8Otb4Qcm58K+Pxz23uGyxu3WK9tbwjLelQ2hsQwvIAnygvBv0wX/gwUESGNW4TiIyA+HYPTKAmLWtIQjnKvw910UOnJL7oeaj65CdNhwCDTnQ5EgZsifm8lsnbKZk0DbdCjJVxOtaP88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368698; c=relaxed/simple;
-	bh=D4HfO59nSRc2DDqFPC+cg07zikyuy+PfV3V7qpwa2VA=;
+	s=arc-20240116; t=1760368701; c=relaxed/simple;
+	bh=pjOtFuSUMXyDrtRKCrHTiC1vLCYVPOacUCMMkfGE+hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIPwel0SZRCjvL96OBT6DgnoOJsn378QOQGbJcY3fGVij23PNVUTXw8XZNlzClFukGwiR0D1sfWVHaVN0/xGhNsB7oLDcR3J+Fr5nRQLTducMTEi6Yml/sDaLNaJyPYJ7srBigc2bwd56vT/vsochEDaiipQmhV1ujr7RhP8nYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ql4IITw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHoYT7UanNePvYbEy3hclVpe02lwwrrfXw+ijU6rhv2PT4PpeBC0o51DkcpzsYHVgF+HI34RaRLc0xrB0UER4mJU1sxjSfTRhJ5B0k2nORrkqAVQ2gI3MS2gTYjayXoCQuqTFLDrwgh/H72NhU3cXNeawKGvyvrduMJXOMv4Jak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKUeIjQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ql4IITw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD39EC4CEE7;
-	Mon, 13 Oct 2025 15:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKUeIjQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940D9C4CEE7;
+	Mon, 13 Oct 2025 15:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368698;
-	bh=D4HfO59nSRc2DDqFPC+cg07zikyuy+PfV3V7qpwa2VA=;
+	s=korg; t=1760368701;
+	bh=pjOtFuSUMXyDrtRKCrHTiC1vLCYVPOacUCMMkfGE+hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ql4IITwTBb5qxF68Ks+aFTQHCGnhXlmLV/mXNhytuMLhR5g52arx3dhHMBq0cLep
-	 83Pn5xI2SMyc/O8DfIOi1pvQp6v216DQ5BYVIdKRAu6d/iCzsdlSnC/JVkqraF9ZqY
-	 1qugejtfiFdByVDdwu58YiGb8S1sWAk0weB7WV4Y=
+	b=nKUeIjQcIf8+6IHo9CbRqbdBmxLj/PhmlXa5YlLIhOm9cRc33IMwBxifr4DWLp8o5
+	 xVsbt8Fk8tPHl/TjmhzD3cV6ARF+8C5wpDiRpBddw0YbnDZARIFtLNhShf2+O3ygk6
+	 wTTSGytliLe47/hzaBjLF4DmJ+EOXuExHeSF6XkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 218/262] net/mlx5: pagealloc: Fix reclaim race during command interface teardown
-Date: Mon, 13 Oct 2025 16:46:00 +0200
-Message-ID: <20251013144334.094964468@linuxfoundation.org>
+Subject: [PATCH 6.12 219/262] net/mlx5: fw reset, add reset timeout work
+Date: Mon, 13 Oct 2025 16:46:01 +0200
+Message-ID: <20251013144334.130841728@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,54 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 79a0e32b32ac4e4f9e4bb22be97f371c8c116c88 ]
+[ Upstream commit 5cfbe7ebfa42fd3c517a701dab5bd73524da9088 ]
 
-The reclaim_pages_cmd() function sends a command to the firmware to
-reclaim pages if the command interface is active.
+Add sync reset timeout to stop poll_sync_reset in case there was no
+reset done or abort event within timeout. Otherwise poll sync reset will
+just continue and in case of fw fatal error no health reporting will be
+done.
 
-A race condition can occur if the command interface goes down (e.g., due
-to a PCI error) while the mlx5_cmd_do() call is in flight. In this
-case, mlx5_cmd_do() will return an error. The original code would
-propagate this error immediately, bypassing the software-based page
-reclamation logic that is supposed to run when the command interface is
-down.
-
-Fix this by checking whether mlx5_cmd_do() returns -ENXIO, which mark
-that command interface is down. If this is the case, fall through to
-the software reclamation path. If the command failed for any another
-reason, or finished successfully, return as before.
-
-Fixes: b898ce7bccf1 ("net/mlx5: cmdif, Avoid skipping reclaim pages if FW is not accessible")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: 38b9f903f22b ("net/mlx5: Handle sync reset request event")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../ethernet/mellanox/mlx5/core/fw_reset.c    | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-index 9bc9bd83c2324..cd68c4b2c0bf9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-@@ -489,9 +489,12 @@ static int reclaim_pages_cmd(struct mlx5_core_dev *dev,
- 	u32 func_id;
- 	u32 npages;
- 	u32 i = 0;
-+	int err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 516df7f1997eb..35d2fe08c0fb5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -27,6 +27,7 @@ struct mlx5_fw_reset {
+ 	struct work_struct reset_reload_work;
+ 	struct work_struct reset_now_work;
+ 	struct work_struct reset_abort_work;
++	struct delayed_work reset_timeout_work;
+ 	unsigned long reset_flags;
+ 	u8 reset_method;
+ 	struct timer_list timer;
+@@ -258,6 +259,8 @@ static int mlx5_sync_reset_clear_reset_requested(struct mlx5_core_dev *dev, bool
+ 		return -EALREADY;
+ 	}
  
--	if (!mlx5_cmd_is_down(dev))
--		return mlx5_cmd_do(dev, in, in_size, out, out_size);
-+	err = mlx5_cmd_do(dev, in, in_size, out, out_size);
-+	/* If FW is gone (-ENXIO), proceed to forceful reclaim */
-+	if (err != -ENXIO)
-+		return err;
++	if (current_work() != &fw_reset->reset_timeout_work.work)
++		cancel_delayed_work(&fw_reset->reset_timeout_work);
+ 	mlx5_stop_sync_reset_poll(dev);
+ 	if (poll_health)
+ 		mlx5_start_health_poll(dev);
+@@ -328,6 +331,11 @@ static int mlx5_sync_reset_set_reset_requested(struct mlx5_core_dev *dev)
+ 	}
+ 	mlx5_stop_health_poll(dev, true);
+ 	mlx5_start_sync_reset_poll(dev);
++
++	if (!test_bit(MLX5_FW_RESET_FLAGS_DROP_NEW_REQUESTS,
++		      &fw_reset->reset_flags))
++		schedule_delayed_work(&fw_reset->reset_timeout_work,
++			msecs_to_jiffies(mlx5_tout_ms(dev, PCI_SYNC_UPDATE)));
+ 	return 0;
+ }
  
- 	/* No hard feelings, we want our pages back! */
- 	npages = MLX5_GET(manage_pages_in, in, input_num_entries);
+@@ -728,6 +736,19 @@ static void mlx5_sync_reset_events_handle(struct mlx5_fw_reset *fw_reset, struct
+ 	}
+ }
+ 
++static void mlx5_sync_reset_timeout_work(struct work_struct *work)
++{
++	struct delayed_work *dwork = container_of(work, struct delayed_work,
++						  work);
++	struct mlx5_fw_reset *fw_reset =
++		container_of(dwork, struct mlx5_fw_reset, reset_timeout_work);
++	struct mlx5_core_dev *dev = fw_reset->dev;
++
++	if (mlx5_sync_reset_clear_reset_requested(dev, true))
++		return;
++	mlx5_core_warn(dev, "PCI Sync FW Update Reset Timeout.\n");
++}
++
+ static int fw_reset_event_notifier(struct notifier_block *nb, unsigned long action, void *data)
+ {
+ 	struct mlx5_fw_reset *fw_reset = mlx5_nb_cof(nb, struct mlx5_fw_reset, nb);
+@@ -811,6 +832,7 @@ void mlx5_drain_fw_reset(struct mlx5_core_dev *dev)
+ 	cancel_work_sync(&fw_reset->reset_reload_work);
+ 	cancel_work_sync(&fw_reset->reset_now_work);
+ 	cancel_work_sync(&fw_reset->reset_abort_work);
++	cancel_delayed_work(&fw_reset->reset_timeout_work);
+ }
+ 
+ static const struct devlink_param mlx5_fw_reset_devlink_params[] = {
+@@ -854,6 +876,8 @@ int mlx5_fw_reset_init(struct mlx5_core_dev *dev)
+ 	INIT_WORK(&fw_reset->reset_reload_work, mlx5_sync_reset_reload_work);
+ 	INIT_WORK(&fw_reset->reset_now_work, mlx5_sync_reset_now_event);
+ 	INIT_WORK(&fw_reset->reset_abort_work, mlx5_sync_reset_abort_event);
++	INIT_DELAYED_WORK(&fw_reset->reset_timeout_work,
++			  mlx5_sync_reset_timeout_work);
+ 
+ 	init_completion(&fw_reset->done);
+ 	return 0;
 -- 
 2.51.0
 
