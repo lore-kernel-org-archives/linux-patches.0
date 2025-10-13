@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C256230C36B;
-	Mon, 13 Oct 2025 15:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E3B3112B8;
+	Mon, 13 Oct 2025 15:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369067; cv=none; b=J9GkGxGy3PROEYqfUYoprUxNN6Gf2Ftspcm/pkM2lb1wKNreWXeUq12Vc0OBgV1qIBHS0tvXAglxrsPQzccW/znGJ/NyW+mncuZz6qSn/H9AtsXYvOhHfisJ+heKUkrZHmGo//nzulg4r+mItCE1BXy66N09It981X7C+f70HO8=
+	t=1760369070; cv=none; b=eLrZayUU7wMGBsMYhx2F7OxvBtYwjlTS0WrmDuodDmWgUhnLQJQOgXqL69XQQCAK8aLyKCBwxGxPOW0s3Oup8KqW+/n4oKSXKiXi68eLH+puL1SH9oF0qcBep6Dxeyu/DL5/SjXeVfeODc66zEAnYnzdvtfUYTVdTiCzELgt7Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369067; c=relaxed/simple;
-	bh=UhWpqT2i2nclpC5jaF8eYBDEWOcS1HgoQQDLWF/3Hyo=;
+	s=arc-20240116; t=1760369070; c=relaxed/simple;
+	bh=k8j9BfqzH5uyccw8XtD0woJ5C1p5zp3B8pnFo0rlTH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aj0kSz1w6PiDlc5osRys+0w+RUAo8aJy4iwErUzVqVhragI0JO2EJw76tRMvs/KKZVafuQR5WWRidh/fmS8GnYjCZ9bCc30XiELON11YfdQuRSyJXONBytxQlVOYqRGlY7VqKFNtk2yxes//TEvjNf1dSb/8ZD5eTfddmaj4yfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ECQ20P9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQ9kEsMoXbfhAdu+3t1iATNdA/03VJ6B5A6xUEFnmVKfsr69dXRBI7ddV06Nhz8UR50AHMrTdvDqaGDZ0pIK0GWhXC+W71yqE3GW5shX63YngCRd3YCVAoC/Hs+FgZ7LzR5q41hl3iGZwJJiWmiXZ15y8sL7UHXsSD4AwUgdpG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2F79Esx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ECQ20P9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42C6C4CEE7;
-	Mon, 13 Oct 2025 15:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2F79Esx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7790C4CEE7;
+	Mon, 13 Oct 2025 15:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369067;
-	bh=UhWpqT2i2nclpC5jaF8eYBDEWOcS1HgoQQDLWF/3Hyo=;
+	s=korg; t=1760369070;
+	bh=k8j9BfqzH5uyccw8XtD0woJ5C1p5zp3B8pnFo0rlTH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ECQ20P9F7b0R3E9qcedZVFHfD3orTlvPwdZ7sxt4Z5YZE1wCeQ8iVv3L2VrbISz6
-	 2IltQ7zKutlOXwwqP/Cmhtr+maD7HH6x0A4g2lVC+5vaJtYEVg0ht+v7M+H2dOEjhF
-	 8w2vHFD09Uo13iwlas5uFJpgNWKZ5pj6KOzJPmcw=
+	b=P2F79EsxHhBzDhv5ywRt02W44HLr8oZ0IJkgHJRxbulpAUcp7+eRu3DoMJZbv+5u/
+	 x0Hw60QrWraYTqnjiCShiO4wELXV20IqZ7+45q1gG97333jcBCAsdTnXU9DCDWk3lV
+	 KHmlvmXqFWsRh44My/rWJYUxgtdfBDjPQaf3M9/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Roger Lu <roger.lu@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 116/563] dts: arm: amlogic: fix pwm node for c3
-Date: Mon, 13 Oct 2025 16:39:37 +0200
-Message-ID: <20251013144415.497378635@linuxfoundation.org>
+Subject: [PATCH 6.17 117/563] soc: mediatek: mtk-svs: fix device leaks on mt8183 probe failure
+Date: Mon, 13 Oct 2025 16:39:38 +0200
+Message-ID: <20251013144415.533361066@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,35 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit f8c9fabf2f3d87773613734a8479d0ef9b662b11 ]
+[ Upstream commit 6ab4f79ea92324f7f2eb22692054a34bbba7cf35 ]
 
-Fix reg address for c3 pwm node.
+Make sure to drop the references taken by of_find_device_by_node() when
+looking up the thermal sensor and opp devices during probe on probe
+failure (e.g. probe deferral) and on driver unbind.
 
-Fixes: be90cd4bd422 ("arm64: dts: amlogic: Add Amlogic C3 PWM")
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250717-fix-pwm-node-v2-1-7365ac7d5320@amlogic.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
+Cc: Roger Lu <roger.lu@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250909095651.5530-2-johan@kernel.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-svs.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
-index cb9ea3ca6ee0f..71b2b3b547f7c 100644
---- a/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
-@@ -792,7 +792,7 @@ spicc1: spi@52000 {
- 			pwm_mn: pwm@54000 {
- 				compatible = "amlogic,c3-pwm",
- 					     "amlogic,meson-s4-pwm";
--				reg = <0x0 54000 0x0 0x24>;
-+				reg = <0x0 0x54000 0x0 0x24>;
- 				clocks = <&clkc_periphs CLKID_PWM_M>,
- 					 <&clkc_periphs CLKID_PWM_N>;
- 				#pwm-cells = <3>;
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index 7c349a94b45c0..48804e1e5a6c8 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -2165,6 +2165,13 @@ static struct device *svs_add_device_link(struct svs_platform *svsp,
+ 	return dev;
+ }
+ 
++static void svs_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
+ {
+ 	struct device *dev;
+@@ -2216,11 +2223,13 @@ static int svs_mt8183_platform_probe(struct svs_platform *svsp)
+ {
+ 	struct device *dev;
+ 	u32 idx;
++	int ret;
+ 
+ 	dev = svs_add_device_link(svsp, "thermal-sensor");
+ 	if (IS_ERR(dev))
+ 		return dev_err_probe(svsp->dev, PTR_ERR(dev),
+ 				     "failed to get thermal device\n");
++	put_device(dev);
+ 
+ 	for (idx = 0; idx < svsp->bank_max; idx++) {
+ 		struct svs_bank *svsb = &svsp->banks[idx];
+@@ -2230,6 +2239,7 @@ static int svs_mt8183_platform_probe(struct svs_platform *svsp)
+ 		case SVSB_SWID_CPU_LITTLE:
+ 		case SVSB_SWID_CPU_BIG:
+ 			svsb->opp_dev = get_cpu_device(bdata->cpu_id);
++			get_device(svsb->opp_dev);
+ 			break;
+ 		case SVSB_SWID_CCI:
+ 			svsb->opp_dev = svs_add_device_link(svsp, "cci");
+@@ -2246,6 +2256,11 @@ static int svs_mt8183_platform_probe(struct svs_platform *svsp)
+ 			return dev_err_probe(svsp->dev, PTR_ERR(svsb->opp_dev),
+ 					     "failed to get OPP device for bank %d\n",
+ 					     idx);
++
++		ret = devm_add_action_or_reset(svsp->dev, svs_put_device,
++					       svsb->opp_dev);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
