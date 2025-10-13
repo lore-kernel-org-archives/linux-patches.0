@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC3930EF64;
-	Mon, 13 Oct 2025 15:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22DF30EF67;
+	Mon, 13 Oct 2025 15:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368808; cv=none; b=c/tC6qxlDG9IU/IeJ2mJevw6n7VaQ3WPWvavLuRS1bN1LT9xOz82rClyTrWszAsYWTM5innt54YCH6Yb6M9cr5hKv7LOUa9faAD8SwzO6XIbnrg4vNxt+h66xH7SArupc/vk1A3AoQTN6zfaiw2pmzotQoNIlIymeB7zYXOSTNw=
+	t=1760368811; cv=none; b=Uj2gsspii1saRJc2LM41DAyCL8jzpK4Z/pJDE+Wlt9lrDsds1s7au0BzOkjEdtqSUxo0Qyo1ORqCzXNyuJnZwNQnvv6QFdDa9wdcsnk3sh1uCctNzy61Te4cdnypaczg8rCPrzyf9qTbbrgEDmgH98YckFlhvwigqe/W0FX66+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368808; c=relaxed/simple;
-	bh=5DVo6RTVb7rUWbFHOCGCG94JSSkun/FGjY4iQVnzEI4=;
+	s=arc-20240116; t=1760368811; c=relaxed/simple;
+	bh=QJWwb4Ea9qc8xgBrNMqeH4qS3gk14DKiJfL+HnRsVJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ea7vlFCxBPG34qzPEsEzulRKrIfeAczOwW2/Ke8FhGDT508TbhsbtMq635vLESem9ghjj/VQXJcpmYxs7k3IgVQ7KWBPRyKyRbpj5k5/3cQLq3uLnliOF3t4tNI3V2DNDaKHsGWyVkzRE7gnDZ9jTqs+i7O4OoOji44Wa2jYK4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCDceMMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTrt1nNSBbV7IGB8tV8fVzcvH16yFRprXpioTirK3cr7Hij8ZnfZUfNmus7pWJnJSCl+3tz/Xy7nem9oLV4fmsZ2ciRagbeUq4qGfafFaIjX6ddMz3BdiJdgTm3HRz6SD3WKgkWcY0I0PHBLhgXa1dHjpd991qrGH80y/FvW3Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rnamcnx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCDceMMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C88FC4CEFE;
-	Mon, 13 Oct 2025 15:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rnamcnx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D74C4CEE7;
+	Mon, 13 Oct 2025 15:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368808;
-	bh=5DVo6RTVb7rUWbFHOCGCG94JSSkun/FGjY4iQVnzEI4=;
+	s=korg; t=1760368811;
+	bh=QJWwb4Ea9qc8xgBrNMqeH4qS3gk14DKiJfL+HnRsVJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCDceMMwu3wy9Fu8Sbkgr/27C4TkztbokcOnDQoV06lizxXeTMBdMd4pApiLko981
-	 S2ayhiCFD8SwJ2ayr9qt9+i+/ZUM8KjbtiXIWeST0FjsqqAkHPoxviUmYkaGWTmxnW
-	 5Dy8zJ2NKYnNSx/MhF4unkC8Qc8G+YTK6XMdKVmQ=
+	b=Rnamcnx/Xbm8piw+VMdvYRZFeDQaBxSdcsqgKuVjkUH55DNvyLKRi8Mzfxx1dKIx2
+	 rkuyK7f/WHoQ6e9BywQvc+huFq7gTLZ1xSkqABJ3hIybCeYeX/yBNe9+kGoZLK11vG
+	 uixRbLAVH+0YE6Tk5FuSBY1MBPsKX0/Q+DkPe4Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 027/563] perf: arm_spe: Prevent overflow in PERF_IDX2OFF()
-Date: Mon, 13 Oct 2025 16:38:08 +0200
-Message-ID: <20251013144412.272605304@linuxfoundation.org>
+	Hongbo Li <lihongbo22@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+1a9af3ef3c84c5e14dcc@syzkaller.appspotmail.com
+Subject: [PATCH 6.17 028/563] erofs: avoid reading more for fragment maps
+Date: Mon, 13 Oct 2025 16:38:09 +0200
+Message-ID: <20251013144412.307932709@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,35 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit a29fea30dd93da16652930162b177941abd8c75e ]
+[ Upstream commit 334c0e493c2aa3e843a80bb9f3862bb50360cb36 ]
 
-Cast nr_pages to unsigned long to avoid overflow when handling large
-AUX buffer sizes (>= 2 GiB).
+Since all real encoded extents (directly handled by the decompression
+subsystem) have a sane, limited maximum decoded length
+(Z_EROFS_PCLUSTER_MAX_DSIZE), and the read-more policy is only applied
+if needed.
 
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+However, it makes no sense to read more for non-encoded maps, such as
+fragment extents, since such extents can be huge (up to i_size) and
+there is no benefit to reading more at this layer.
+
+For normal images, it does not really matter, but for crafted images
+generated by syzbot, excessively large fragment extents can cause
+read-more to run for an overly long time.
+
+Reported-and-tested-by: syzbot+1a9af3ef3c84c5e14dcc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/68c8583d.050a0220.2ff435.03a3.GAE@google.com
+Fixes: b44686c8391b ("erofs: fix large fragment handling")
+Fixes: b15b2e307c3a ("erofs: support on-disk compressed fragments data")
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/erofs/zdata.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index 369e77ad5f13f..8f14cb324e018 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -97,7 +97,8 @@ struct arm_spe_pmu {
- #define to_spe_pmu(p) (container_of(p, struct arm_spe_pmu, pmu))
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 2d73297003d25..625b8ae8f67f0 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1835,7 +1835,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
+ 		map->m_la = end;
+ 		err = z_erofs_map_blocks_iter(inode, map,
+ 					      EROFS_GET_BLOCKS_READMORE);
+-		if (err)
++		if (err || !(map->m_flags & EROFS_MAP_ENCODED))
+ 			return;
  
- /* Convert a free-running index from perf into an SPE buffer offset */
--#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
-+#define PERF_IDX2OFF(idx, buf) \
-+	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
+ 		/* expand ra for the trailing edge if readahead */
+@@ -1847,7 +1847,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
+ 		end = round_up(end, PAGE_SIZE);
+ 	} else {
+ 		end = round_up(map->m_la, PAGE_SIZE);
+-		if (!map->m_llen)
++		if (!(map->m_flags & EROFS_MAP_ENCODED) || !map->m_llen)
+ 			return;
+ 	}
  
- /* Keep track of our dynamic hotplug state */
- static enum cpuhp_state arm_spe_pmu_online;
 -- 
 2.51.0
 
