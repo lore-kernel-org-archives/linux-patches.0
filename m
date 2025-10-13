@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA47630FC0C;
-	Mon, 13 Oct 2025 15:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BE92FB978;
+	Mon, 13 Oct 2025 15:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368959; cv=none; b=n5eMx8Etol0xyshu2MGRPk3sV/fBcEOtu5qWwX62TctzPBwSjxbTX/lOJLMcxaKlXwuw0w8QdELFca5CJFhXikK+VEZH+hjI2CUY7dXJivRgEJ/ICgCk79/nxOtCiP4oC/IfUwd3QCNfCNq49z8uHNjcwcs9f9d8Mux96o0PLIQ=
+	t=1760368961; cv=none; b=raIkpjDjkBIFuDls22S3AHUzA9cn8FUkVHgkMnTesGWPk7Z9tGwWJiJ2Y3u4ANq1hAvHpeV8irIwdE859zFg2YLLEmx0MY2lTQQcVsi+s4JmdkdkCvh+dCF1RkpSRDK7SEtzzxN2u4lKe26AAqkYPMfqpFUMCzOdmN5b/e1FIOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368959; c=relaxed/simple;
-	bh=zMYobK/ABnSR1/oHInTfxeAlOG2JT2sWWD37e+Qj48k=;
+	s=arc-20240116; t=1760368961; c=relaxed/simple;
+	bh=wBeZAVmiSaRD6DYB0mC5zn3w95yzJPpJtSLIqJeQou0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOHiQE62mK7o2AwTIFBdkVL8xvUqFjnltIyz8dVsmyOeOdltk/ZYRRLvIAEhpXfeWIdoruNNcVcJQkOQ5t2gcoN4SHlHeR0zeoHM8TvRKbCXlFBuATVjy3DKYIsruRYjMaYhI8b1pYRi0qs4nssQGgT1gP5/C0MtdQLC9sSAIN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfKA5iXP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JK+zYJtxSTc3DmeV0LndQ1m9kLFLUGl7dE2m7tlQdAiTeWvxiCBTUmBtCZ4bMRhijs9tDgCUQUnY71vVb4DXnRkz67Rt0XXjHyBdrFELrwxPFf9Zax0FIj0P6fT4igY0pJ+bhaBI5EGQaSnH7bj4b0W9ssW2rXvcHJOqlZmXvt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjAQtTnV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfKA5iXP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A12AC4CEE7;
-	Mon, 13 Oct 2025 15:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjAQtTnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA63C116B1;
+	Mon, 13 Oct 2025 15:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368958;
-	bh=zMYobK/ABnSR1/oHInTfxeAlOG2JT2sWWD37e+Qj48k=;
+	s=korg; t=1760368961;
+	bh=wBeZAVmiSaRD6DYB0mC5zn3w95yzJPpJtSLIqJeQou0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfKA5iXPRBl8tHcLNQfRqQyh9TSsvlHOTauUK4D6TtqPiP5VZwxZ8XgKzX31+uK6y
-	 xBH2yr1g8BGcmBNTf5i1fllaBtsi/8jJ0P+YzfeHGDctvbJlg45/Gcba1VnfsgZUrq
-	 tKhazIhkEhTUXK9mxstkd0KFPIQazUyrF1S+DXP0=
+	b=IjAQtTnV33JElFr11FDNjniZTEUcR8j7RgqE8nFWFzHT8lbtkx2BRURdpnudAxNjA
+	 Zb3W89cq67BGTw/Bs0742WQYZi0tWXgaZdPNrlb7uF3qT9ukzLMP3zKebAV1hzqCMj
+	 8tFTmCbCPDnWWqywv2Mbnum//HJWw9ulVgNGWgm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 078/563] selftests/futex: Fix some futex_numa_mpol subtests
-Date: Mon, 13 Oct 2025 16:38:59 +0200
-Message-ID: <20251013144414.116532219@linuxfoundation.org>
+Subject: [PATCH 6.17 079/563] tools/nolibc: avoid error in dup2() if old fd equals new fd
+Date: Mon, 13 Oct 2025 16:39:00 +0200
+Message-ID: <20251013144414.152157352@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,74 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit d8e2f919997b14665e4509ef9a5278f291598d6e ]
+[ Upstream commit d1ff0e2d13d6ac3a15be7870e15216726b0a809a ]
 
-The "Memory out of range" subtest of futex_numa_mpol assumes that memory
-access outside of the mmap'ed area is invalid. That may not be the case
-depending on the actual memory layout of the test application. When that
-subtest was run on an x86-64 system with latest upstream kernel, the test
-passed as an error was returned from futex_wake(). On another PowerPC system,
-the same subtest failed because futex_wake() returned 0.
+dup2() allows both 'old' and 'new' to have the same value, which dup3()
+does not. If libc dup2() is implemented through the dup3() system call,
+then it would incorrectly fail in this case.
 
-  Bail out! futex2_wake(64, 0x86) should fail, but didn't
+Avoid the error by handling old == new explicitly.
 
-Looking further into the passed subtest on x86-64, it was found that an
--EINVAL was returned instead of -EFAULT. The -EINVAL error was returned
-because the node value test with FLAGS_NUMA set failed with a node value
-of 0x7f7f. IOW, the futex memory was accessible and futex_wake() failed
-because the supposed node number wasn't valid. If that memory location
-happens to have a very small value (e.g. 0), the test will pass and no
-error will be returned.
-
-Since this subtest is non-deterministic, drop it unless a guard page beyond
-the mmap region is explicitly set.
-
-The other problematic test is the "Memory too small" test. The futex_wake()
-function returns the -EINVAL error code because the given futex address isn't
-8-byte aligned, not because only 4 of the 8 bytes are valid and the other
-4 bytes are not. So change the name of this subtest to "Mis-aligned futex" to
-reflect the reality.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 3163369407ba ("selftests/futex: Add futex_numa_mpol")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/20250827130011.677600-3-bigeasy@linutronix.de
+Fixes: 30ca20517ac1 ("tools headers: Move the nolibc header from rcutorture to tools/include/nolibc/")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250820-nolibc-dup2-einval-v2-1-807185a45c56@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/futex_numa_mpol.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tools/include/nolibc/sys.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_numa_mpol.c b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-index a9ecfb2d3932a..802c15c821906 100644
---- a/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-+++ b/tools/testing/selftests/futex/functional/futex_numa_mpol.c
-@@ -182,12 +182,10 @@ int main(int argc, char *argv[])
- 	if (futex_numa->numa == FUTEX_NO_NODE)
- 		ksft_exit_fail_msg("NUMA node is left uninitialized\n");
- 
--	ksft_print_msg("Memory too small\n");
-+	/* FUTEX2_NUMA futex must be 8-byte aligned */
-+	ksft_print_msg("Mis-aligned futex\n");
- 	test_futex(futex_ptr + mem_size - 4, 1);
- 
--	ksft_print_msg("Memory out of range\n");
--	test_futex(futex_ptr + mem_size, 1);
--
- 	futex_numa->numa = FUTEX_NO_NODE;
- 	mprotect(futex_ptr, mem_size, PROT_READ);
- 	ksft_print_msg("Memory, RO\n");
+diff --git a/tools/include/nolibc/sys.h b/tools/include/nolibc/sys.h
+index 295e71d34abad..90aadad31f6cb 100644
+--- a/tools/include/nolibc/sys.h
++++ b/tools/include/nolibc/sys.h
+@@ -238,6 +238,19 @@ static __attribute__((unused))
+ int sys_dup2(int old, int new)
+ {
+ #if defined(__NR_dup3)
++	int ret, nr_fcntl;
++
++#ifdef __NR_fcntl64
++	nr_fcntl = __NR_fcntl64;
++#else
++	nr_fcntl = __NR_fcntl;
++#endif
++
++	if (old == new) {
++		ret = my_syscall2(nr_fcntl, old, F_GETFD);
++		return ret < 0 ? ret : old;
++	}
++
+ 	return my_syscall3(__NR_dup3, old, new, 0);
+ #elif defined(__NR_dup2)
+ 	return my_syscall2(__NR_dup2, old, new);
 -- 
 2.51.0
 
