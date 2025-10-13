@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF57730CDBE;
-	Mon, 13 Oct 2025 15:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34D73081AE;
+	Mon, 13 Oct 2025 15:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368431; cv=none; b=pnLpSlO0QYPpy+qQyfjKQtd98O6ep/8rwazkN6nr8vgtr6dQYYM1c18HiYfOyypt2xM9Xb8Bvy6IsfLsY2xJiZPcBbttJcJoEta5fJIkWDfTCKHVvriMxDFpFui6T59hpdzUELOy5OFLnsA7X1mqt+hVM1ot7sIkCqg2Pe38abs=
+	t=1760368434; cv=none; b=JOBQiWg34eFfj+xG2VyQMQwBXq40byFJAHqkNJbriBKH/6ZcjWlubaAWmsAOuK8Gkcav1iuOQXvBedSY5IDffDfqZQsCLLUqAegKThqqAI4KxN5TnCXzsQfemQYZfG3vKVmGpMoCyzl0qb5YKLY5kyyT6ecivuc7WEkfgZIF76Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368431; c=relaxed/simple;
-	bh=MU8/ERNspMI7iq3YBRqWOk6u0PmNlK4tUgwKHIjzOv0=;
+	s=arc-20240116; t=1760368434; c=relaxed/simple;
+	bh=0oxSeif3SZGcH7MQi9Sr9y8BX7DuNVpvnRaasDSdLSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyuCuk5hRmNekc0itKQhJ0PV5aeGq2jwfffdm8RxGPOulGutXv9Ythp3ZJ/DmTEp/a73dFZzreWJ0dB9obw1IOekAhGST2qlztx4Hyqo21PbYkpJ60Cg2+R95V2b6rfn0J2EF3Bc6WJ0iPJro1k/1tbUJnWqcqtFKe0fuiMCjFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5eajRT7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSG+PLZ8WJKYtZ/7WgqGEcmmB8Wln2vboijqANVldCGjMzapb0TKl1BbqUN7InulTgJ/pMw1PuVKU2dZLR+F/JZ0ukXLEtnsCXylfhzqSrmiMdYMsUEXstZPuQhbqGfwcPVEsnDAC08fDikhgszq3P5ZoqYtJa+zTaPfzafjnlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hedq7JMQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5eajRT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577B8C4CEE7;
-	Mon, 13 Oct 2025 15:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hedq7JMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2988AC4CEE7;
+	Mon, 13 Oct 2025 15:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368431;
-	bh=MU8/ERNspMI7iq3YBRqWOk6u0PmNlK4tUgwKHIjzOv0=;
+	s=korg; t=1760368434;
+	bh=0oxSeif3SZGcH7MQi9Sr9y8BX7DuNVpvnRaasDSdLSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5eajRT7NwQA+SHnY4lbAFCDuNYHCkhX9XdlZecTkr1lNKELsS9RviNqXfw70zwsg
-	 6cCEmz4S2yjEoYYMhMTSPmIqqu4IDIbhXDOn87EgBgcFyb4TaGo8Jkt/rAAhEzS77g
-	 JAemr0Y/V+KIj43Jr8nppSgaaGzzZCCHRSr3enM0=
+	b=Hedq7JMQG0FsYHLcrVUkLCJu8JhdJGdLevYmkr2xOKROEitsECep/dmeUcSzfAjoR
+	 a4bj/TtAX9Axr1wwMF8H0U2v0uvwgDHI3PfgH8ubqgghO5gxF96EeQQNOtHmwx1ZTm
+	 xzAzR3ZaXZCiIyngfFBiugnObmI6tZuXXSJsA288=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
+	wangzijie <wangzijie1@honor.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/262] netfilter: ipset: Remove unused htable_bits in macro ahash_region
-Date: Mon, 13 Oct 2025 16:44:44 +0200
-Message-ID: <20251013144331.237167121@linuxfoundation.org>
+Subject: [PATCH 6.12 160/262] f2fs: fix zero-sized extent for precache extents
+Date: Mon, 13 Oct 2025 16:45:02 +0200
+Message-ID: <20251013144331.884771089@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,66 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: wangzijie <wangzijie1@honor.com>
 
-[ Upstream commit ba941796d7cd1e81f51eed145dad1b47240ff420 ]
+[ Upstream commit 8175c864391753b210f3dcfae1aeed686a226ebb ]
 
-Since the ahash_region() macro was redefined to calculate the region
-index solely from HTABLE_REGION_BITS, the htable_bits parameter became
-unused.
+Script to reproduce:
+f2fs_io write 1 0 1881 rand dsync testfile
+f2fs_io fallocate 0 7708672 4096 testfile
+f2fs_io write 1 1881 1 rand buffered testfile
+fsync testfile
+umount
+mount
+f2fs_io precache_extents testfile
 
-Remove the unused htable_bits argument and its call sites, simplifying
-the code without changing semantics.
+When the data layout is something like this:
+dnode1:                     dnode2:
+[0]      A                  [0]    NEW_ADDR
+[1]      A+1                [1]    0x0
+...
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
 
-Fixes: 8478a729c046 ("netfilter: ipset: fix region locking in hash types")
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+During precache_extents, we map the last block(valid blkaddr) in dnode1:
+map->m_flags |= F2FS_MAP_MAPPED;
+map->m_pblk = blkaddr(valid blkaddr);
+map->m_len = 1;
+then we goto next_dnode, meet the first block in dnode2(hole), goto sync_out:
+map->m_flags & F2FS_MAP_MAPPED == true, and we make zero-sized extent:
+
+map->m_len = 1
+ofs = start_pgofs - map->m_lblk = 1882 - 1881 = 1
+ei.fofs = start_pgofs = 1882
+ei.len = map->m_len - ofs = 1 - 1 = 0
+
+Rebased on patch[1], this patch can cover these cases to avoid zero-sized extent:
+A,B,C is valid blkaddr
+case1:
+dnode1:                     dnode2:
+[0]      A                  [0]    NEW_ADDR
+[1]      A+1                [1]    0x0
+...                         ....
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
+
+case2:
+dnode1:                     dnode2:
+[0]      A                  [0]    C (C!=B+1)
+[1]      A+1                [1]    C+1
+...                         ....
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
+
+case3:
+dnode1:                     dnode2:
+[0]      A                  [0]    C (C!=B+2)
+[1]      A+1                [1]    C+1
+...                         ....
+[1015]   A+1015
+[1016]   B (B!=A+1016)
+[1017]   B+1                [1017] 0x0
+
+[1] https://lore.kernel.org/linux-f2fs-devel/20250912081250.44383-1-chao@kernel.org/
+
+Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/f2fs/data.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 5251524b96afa..5e4453e9ef8e7 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -63,7 +63,7 @@ struct hbucket {
- 		: jhash_size((htable_bits) - HTABLE_REGION_BITS))
- #define ahash_sizeof_regions(htable_bits)		\
- 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
--#define ahash_region(n, htable_bits)		\
-+#define ahash_region(n)		\
- 	((n) / jhash_size(HTABLE_REGION_BITS))
- #define ahash_bucket_start(h,  htable_bits)	\
- 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
-@@ -702,7 +702,7 @@ mtype_resize(struct ip_set *set, bool retried)
- #endif
- 				key = HKEY(data, h->initval, htable_bits);
- 				m = __ipset_dereference(hbucket(t, key));
--				nr = ahash_region(key, htable_bits);
-+				nr = ahash_region(key);
- 				if (!m) {
- 					m = kzalloc(sizeof(*m) +
- 					    AHASH_INIT_SIZE * dsize,
-@@ -852,7 +852,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	rcu_read_lock_bh();
- 	t = rcu_dereference_bh(h->table);
- 	key = HKEY(value, h->initval, t->htable_bits);
--	r = ahash_region(key, t->htable_bits);
-+	r = ahash_region(key);
- 	atomic_inc(&t->uref);
- 	elements = t->hregion[r].elements;
- 	maxelem = t->maxelem;
-@@ -1050,7 +1050,7 @@ mtype_del(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	rcu_read_lock_bh();
- 	t = rcu_dereference_bh(h->table);
- 	key = HKEY(value, h->initval, t->htable_bits);
--	r = ahash_region(key, t->htable_bits);
-+	r = ahash_region(key);
- 	atomic_inc(&t->uref);
- 	rcu_read_unlock_bh();
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index a008d70b9f5ec..040c06dfb8c03 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1781,9 +1781,10 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
+ 		if (map->m_flags & F2FS_MAP_MAPPED) {
+ 			unsigned int ofs = start_pgofs - map->m_lblk;
  
+-			f2fs_update_read_extent_cache_range(&dn,
+-				start_pgofs, map->m_pblk + ofs,
+-				map->m_len - ofs);
++			if (map->m_len > ofs)
++				f2fs_update_read_extent_cache_range(&dn,
++					start_pgofs, map->m_pblk + ofs,
++					map->m_len - ofs);
+ 		}
+ 		if (map->m_next_extent)
+ 			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
 -- 
 2.51.0
 
