@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153C830DD3B;
-	Mon, 13 Oct 2025 15:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E865530DD10;
+	Mon, 13 Oct 2025 15:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368452; cv=none; b=m5hrI2+9HS5Fc48lZlOXrl5nEnUDyaFQckmlgBf22jVka0JCakj+44XYXUBccClAugl84pgBRg4bGCO9G6aoaH2bKJ/sMFFToChl4ZUnHXp74A6KGpt2YYcw2XV0HS4f7v7oO3r/4w7ddSAjHOUr5N1WukFpqFEabKURFvd6Xyk=
+	t=1760368455; cv=none; b=Zy/Z89/q47m8K4DFS7GqElBazqrv3A93Lkz0S8qHbwdhac0vmVnSIGNZy8sHB/CjQvdxDPns7uumq+7WEMSEyPuON8XuyDC2C40LtYrL/Z7Tn4uE8xvoOtDTLlOi4edrwDR+i2afumzMOWrmGjH+lEEl1Oi+CPJ0nNK8PKyCpmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368452; c=relaxed/simple;
-	bh=4qmZPRBYmK5+GONLJtVkyQDDeW1gUqohvHsNigLUfuM=;
+	s=arc-20240116; t=1760368455; c=relaxed/simple;
+	bh=kAXx+9Uk4darDFzc3ARiLCyK/oJc7lEwTtNATlypf2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMtmTlorhsTbeEBc5D9z+E2ARMKxW0YBWtLdr5YCXptj1/mbncCNeAHzc06xjnEKt9gE4EisaHp0usRRaeuDkgJxZ55o9GUY5b/cGtJHYQ2Y9aLzci+YuDr4m8FqOlA8Oz+f51ZknWRFjwct+1oirSRrJ0Nx3ZJNPV1x/cEALVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIXsHsiS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WT1ryP0lI/eQQQ/qK7vbwTccII1HLveiO9vf8ZWLg5zoCgWN31RNM+vJtuNDS6l5BaH5c/P7O1+nn8PIfCQhwaODcLiOqyzEFViGAsXGdQnT8iLVP/Y80glj37s8FMGeUlP3tyVk/sxHs5r+LoBZQbrWsxhl05ah390tGoRF7AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScGfQkGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIXsHsiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848ADC113D0;
-	Mon, 13 Oct 2025 15:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScGfQkGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70170C4CEE7;
+	Mon, 13 Oct 2025 15:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368451;
-	bh=4qmZPRBYmK5+GONLJtVkyQDDeW1gUqohvHsNigLUfuM=;
+	s=korg; t=1760368454;
+	bh=kAXx+9Uk4darDFzc3ARiLCyK/oJc7lEwTtNATlypf2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIXsHsiSkKLK82kW/bd74Fp4+X18FQsEMxe5CjE8TtsRDygMkZnuYx2Obi9r3liwK
-	 +DWEN+kTUXX0oHqxACYCPF9bk4HsS8APv2xiqeBSdTGqu158Dv1cHSm0hSx1FeQOai
-	 9VAaT2BZ3HwFMCxckBdNeDcz2qNZ2f3k0y+b6Yac=
+	b=ScGfQkGQSa29164eztdIQ2rLnDnSfDvKoKy31tFbbsqA717HcybyTgkq6TN2a5vZY
+	 E+mgaug+xFs+66AtcKYl8kiQB99kP43H6MvtpmbBRVOu6psabq8QttVSO92TtDkqVd
+	 jOn/IzKwikW/Zn7QFjq+xpJMAuumNIWqOHFsYK0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/262] wifi: ath10k: avoid unnecessary wait for service ready message
-Date: Mon, 13 Oct 2025 16:45:08 +0200
-Message-ID: <20251013144332.103021042@linuxfoundation.org>
+Subject: [PATCH 6.12 167/262] iommu/vt-d: debugfs: Fix legacy mode page table dump logic
+Date: Mon, 13 Oct 2025 16:45:09 +0200
+Message-ID: <20251013144332.138235016@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,91 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
 
-[ Upstream commit 51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a ]
+[ Upstream commit fbe6070c73badca726e4ff7877320e6c62339917 ]
 
-Commit e57b7d62a1b2 ("wifi: ath10k: poll service ready message before
-failing") works around the failure in waiting for the service ready
-message by active polling. Note the polling is triggered after initial
-wait timeout, which means that the wait-till-timeout can not be avoided
-even the message is ready.
+In legacy mode, SSPTPTR is ignored if TT is not 00b or 01b. SSPTPTR
+maybe uninitialized or zero in that case and may cause oops like:
 
-A possible fix is to do polling once before wait as well, however this
-can not handle the race that the message arrives right after polling.
-So the solution is to do periodic polling until timeout.
+ Oops: general protection fault, probably for non-canonical address
+       0xf00087d3f000f000: 0000 [#1] SMP NOPTI
+ CPU: 2 UID: 0 PID: 786 Comm: cat Not tainted 6.16.0 #191 PREEMPT(voluntary)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-5.fc42 04/01/2014
+ RIP: 0010:pgtable_walk_level+0x98/0x150
+ RSP: 0018:ffffc90000f279c0 EFLAGS: 00010206
+ RAX: 0000000040000000 RBX: ffffc90000f27ab0 RCX: 000000000000001e
+ RDX: 0000000000000003 RSI: f00087d3f000f000 RDI: f00087d3f0010000
+ RBP: ffffc90000f27a00 R08: ffffc90000f27a98 R09: 0000000000000002
+ R10: 0000000000000000 R11: 0000000000000000 R12: f00087d3f000f000
+ R13: 0000000000000000 R14: 0000000040000000 R15: ffffc90000f27a98
+ FS:  0000764566dcb740(0000) GS:ffff8881f812c000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000764566d44000 CR3: 0000000109d81003 CR4: 0000000000772ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  pgtable_walk_level+0x88/0x150
+  domain_translation_struct_show.isra.0+0x2d9/0x300
+  dev_domain_translation_struct_show+0x20/0x40
+  seq_read_iter+0x12d/0x490
+...
 
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
+Avoid walking the page table if TT is not 00b or 01b.
 
-Fixes: e57b7d62a1b2 ("wifi: ath10k: poll service ready message before failing")
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Closes: https://lore.kernel.org/all/97a15967-5518-4731-a8ff-d43ff7f437b0@molgen.mpg.de
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250811-ath10k-avoid-unnecessary-wait-v1-1-db2deb87c39b@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 2b437e804566 ("iommu/vt-d: debugfs: Support dumping a specified page table")
+Signed-off-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20250814163153.634680-1-vineeth@bitbyteword.org
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c | 39 +++++++++++++--------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ drivers/iommu/intel/debugfs.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index 09066e6aca402..fdab67a56e438 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1764,33 +1764,32 @@ void ath10k_wmi_put_wmi_channel(struct ath10k *ar, struct wmi_channel *ch,
+diff --git a/drivers/iommu/intel/debugfs.c b/drivers/iommu/intel/debugfs.c
+index affbf4a1558de..5aa7f46a420b5 100644
+--- a/drivers/iommu/intel/debugfs.c
++++ b/drivers/iommu/intel/debugfs.c
+@@ -435,8 +435,21 @@ static int domain_translation_struct_show(struct seq_file *m,
+ 			}
+ 			pgd &= VTD_PAGE_MASK;
+ 		} else { /* legacy mode */
+-			pgd = context->lo & VTD_PAGE_MASK;
+-			agaw = context->hi & 7;
++			u8 tt = (u8)(context->lo & GENMASK_ULL(3, 2)) >> 2;
++
++			/*
++			 * According to Translation Type(TT),
++			 * get the page table pointer(SSPTPTR).
++			 */
++			switch (tt) {
++			case CONTEXT_TT_MULTI_LEVEL:
++			case CONTEXT_TT_DEV_IOTLB:
++				pgd = context->lo & VTD_PAGE_MASK;
++				agaw = context->hi & 7;
++				break;
++			default:
++				goto iommu_unlock;
++			}
+ 		}
  
- int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
- {
-+	unsigned long timeout = jiffies + WMI_SERVICE_READY_TIMEOUT_HZ;
- 	unsigned long time_left, i;
- 
--	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--						WMI_SERVICE_READY_TIMEOUT_HZ);
--	if (!time_left) {
--		/* Sometimes the PCI HIF doesn't receive interrupt
--		 * for the service ready message even if the buffer
--		 * was completed. PCIe sniffer shows that it's
--		 * because the corresponding CE ring doesn't fires
--		 * it. Workaround here by polling CE rings once.
--		 */
--		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
--
-+	/* Sometimes the PCI HIF doesn't receive interrupt
-+	 * for the service ready message even if the buffer
-+	 * was completed. PCIe sniffer shows that it's
-+	 * because the corresponding CE ring doesn't fires
-+	 * it. Workaround here by polling CE rings. Since
-+	 * the message could arrive at any time, continue
-+	 * polling until timeout.
-+	 */
-+	do {
- 		for (i = 0; i < CE_COUNT; i++)
- 			ath10k_hif_send_complete_check(ar, i, 1);
- 
-+		/* The 100 ms granularity is a tradeoff considering scheduler
-+		 * overhead and response latency
-+		 */
- 		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--							WMI_SERVICE_READY_TIMEOUT_HZ);
--		if (!time_left) {
--			ath10k_warn(ar, "polling timed out\n");
--			return -ETIMEDOUT;
--		}
--
--		ath10k_warn(ar, "service ready completion received, continuing normally\n");
--	}
-+							msecs_to_jiffies(100));
-+		if (time_left)
-+			return 0;
-+	} while (time_before(jiffies, timeout));
- 
--	return 0;
-+	ath10k_warn(ar, "failed to receive service ready completion\n");
-+	return -ETIMEDOUT;
- }
- 
- int ath10k_wmi_wait_for_unified_ready(struct ath10k *ar)
+ 		seq_printf(m, "Device %04x:%02x:%02x.%x ",
 -- 
 2.51.0
 
