@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0EF271473;
-	Mon, 13 Oct 2025 15:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C9D271473;
+	Mon, 13 Oct 2025 15:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367899; cv=none; b=Rk3zKpVvS9CNEYF5p8zSmMul4Y7W6Es2cMkBLmlYFYjJ0mL6AiebCtRUS5K/VQPp+jzW2/AH0Q9+uVlrqMVVbt3PW0WPeuoJFNE+Egg3ZraNGMchqYXvLR/n+vK+neFPLF2nEGPc/p5CwlVE7XS1AFZVS1mxQF9JVCPiF9vAY74=
+	t=1760367902; cv=none; b=eOjYF2WPOUJVU8Vq8xZVMHrNP9JwMK1fcTjvfR3p8FTjTZKfHeYjRhqfvG/w+HBdOAGLDitGsnGpfM7hSjiQkWS3TZJacXX2bdc9rLpKRl/XWOqdf+xDpzrmFwFMnD+xDma2YGJCQeZXXzoIyA+yDEq35nsRwup8tD44gRMhO4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367899; c=relaxed/simple;
-	bh=d+zKkI9W57DB3Q5cmhki6kkebouUMP4b28DQCs3ylqg=;
+	s=arc-20240116; t=1760367902; c=relaxed/simple;
+	bh=KUB3z0fyrRhXMmQoTqljTaX/kpNgseNMTWODnPqviws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YbQdtxNQRioMCy2SJ7otX8xQxpsQ+0tZ+VWfdIz0F4eO6l3zG90Q/OXczdpWjHf2jznGJBlPIXDsNYOgUsoq0+K6oEbMcnD8E7HqKmHhboWdTnB4OJ+A5n5IsedODZUdMrtFUstH4qtUtZ/lPBdauF1b+lb34TH9hwIcDjSbvM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiUybSRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tldmi+7tr7jVnyTyNqgxvGRr9F4mVJoMSdUdzlZD86TNkoXU+YubriCO9icJgoEFtgfQcCnTNFJvSrnF8Rm6eb2G1MyuvTDgN5XWsw86lUL7IPmoT7IJ50fNRPqiT5mDXRbKVljVezsdOlXs/HXMyfO3h5GYu3DG1AD5WIdaDdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXgUbWkm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiUybSRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB09C4CEE7;
-	Mon, 13 Oct 2025 15:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXgUbWkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87903C4CEE7;
+	Mon, 13 Oct 2025 15:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367899;
-	bh=d+zKkI9W57DB3Q5cmhki6kkebouUMP4b28DQCs3ylqg=;
+	s=korg; t=1760367901;
+	bh=KUB3z0fyrRhXMmQoTqljTaX/kpNgseNMTWODnPqviws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiUybSROGzR3i18Mm75PqhVDGtuc/CFBAkYqEO9jF8JH1x/OctXboSNZX0epMHMvs
-	 r/a4u0yd3w+ZGOucoqnN0ep+9YuTFkDeDP2JyW4+tKSMaV3C4CX9uLoNIJf03C3s+q
-	 r0ZnZjPktRV+k2iJstVZxQMXeFzAYTfudL/tO/q0=
+	b=RXgUbWkmQtDMSmmiZXgXVBwvj45c8j7B+n8T1zdDlR2OI09SGkeIn+ZkqprjE+NmU
+	 uJl3yUvcBFAefVf8e1pxWcqa//V5ooCNnoQ/XVMlo4KTCiHapWmCA9ldp9m0qEiCsK
+	 bpK5LG7tuvYPz6rWwkzW8bdsIMYvQNAin/qhWgoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Long Li <longli@microsoft.com>,
-	Tianyu Lan <tiala@microsoft.com>
-Subject: [PATCH 6.6 170/196] uio_hv_generic: Let userspace take care of interrupt mask
-Date: Mon, 13 Oct 2025 16:46:01 +0200
-Message-ID: <20251013144321.459164637@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 171/196] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()
+Date: Mon, 13 Oct 2025 16:46:02 +0200
+Message-ID: <20251013144321.495143797@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -47,101 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit b15b7d2a1b09ef5428a8db260251897405a19496 upstream.
+commit 4e65bda8273c938039403144730923e77916a3d7 upstream.
 
-Remove the logic to set interrupt mask by default in uio_hv_generic
-driver as the interrupt mask value is supposed to be controlled
-completely by the user space. If the mask bit gets changed
-by the driver, concurrently with user mode operating on the ring,
-the mask bit may be set when it is supposed to be clear, and the
-user-mode driver will miss an interrupt which will cause a hang.
+wcd934x_codec_parse_data() contains a device reference count leak in
+of_slim_get_device() where device_find_child() increases the reference
+count of the device but this reference is not properly decreased in
+the success path. Add put_device() in wcd934x_codec_parse_data() and
+add devm_add_action_or_reset() in the probe function, which ensures
+that the reference count of the device is correctly managed.
 
-For eg- when the driver sets inbound ring buffer interrupt mask to 1,
-the host does not interrupt the guest on the UIO VMBus channel.
-However, setting the mask does not prevent the host from putting a
-message in the inbound ring buffer. So let’s assume that happens,
-the host puts a message into the ring buffer but does not interrupt.
+Memory leak in regmap_init_slimbus() as the allocated regmap is not
+released when the device is removed. Using devm_regmap_init_slimbus()
+instead of regmap_init_slimbus() to ensure automatic regmap cleanup on
+device removal.
 
-Subsequently, the user space code in the guest sets the inbound ring
-buffer interrupt mask to 0, saying “Hey, I’m ready for interrupts”.
-User space code then calls pread() to wait for an interrupt.
-Then one of two things happens:
+Calling path: of_slim_get_device() -> of_find_slim_device() ->
+device_find_child(). As comment of device_find_child() says, 'NOTE:
+you will need to drop the reference with put_device() after use.'.
 
-* The host never sends another message. So the pread() waits forever.
-* The host does send another message. But because there’s already a
-  message in the ring buffer, it doesn’t generate an interrupt.
-  This is the correct behavior, because the host should only send an
-  interrupt when the inbound ring buffer transitions from empty to
-  not-empty. Adding an additional message to a ring buffer that is not
-  empty is not supposed to generate an interrupt on the guest.
-  Since the guest is waiting in pread() and not removing messages from
-  the ring buffer, the pread() waits forever.
+Found by code review.
 
-This could be easily reproduced in hv_fcopy_uio_daemon if we delay
-setting interrupt mask to 0.
-
-Similarly if hv_uio_channel_cb() sets the interrupt_mask to 1,
-there’s a race condition. Once user space empties the inbound ring
-buffer, but before user space sets interrupt_mask to 0, the host could
-put another message in the ring buffer but it wouldn’t interrupt.
-Then the next pread() would hang.
-
-Fix these by removing all instances where interrupt_mask is changed,
-while keeping the one in set_event() unchanged to enable userspace
-control the interrupt mask by writing 0/1 to /dev/uioX.
-
-Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
-Suggested-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Reviewed-by: Tianyu Lan <tiala@microsoft.com>
-Tested-by: Tianyu Lan <tiala@microsoft.com>
-Link: https://lore.kernel.org/r/20250828044200.492030-1-namjain@linux.microsoft.com
+Fixes: a61f3b4f476e ("ASoC: wcd934x: add support to wcd9340/wcd9341 codec")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250923065212.26660-1-make24@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ sound/soc/codecs/wcd934x.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -96,7 +96,6 @@ static void hv_uio_channel_cb(void *cont
- 	struct hv_device *hv_dev = chan->device_obj;
- 	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -5858,6 +5858,13 @@ static const struct snd_soc_component_dr
+ 	.endianness = 1,
+ };
  
--	chan->inbound.ring_buffer->interrupt_mask = 1;
- 	virt_mb();
- 
- 	uio_event_notify(&pdata->info);
-@@ -173,8 +172,6 @@ hv_uio_new_channel(struct vmbus_channel
- 		return;
++static void wcd934x_put_device_action(void *data)
++{
++	struct device *dev = data;
++
++	put_device(dev);
++}
++
+ static int wcd934x_codec_parse_data(struct wcd934x_codec *wcd)
+ {
+ 	struct device *dev = &wcd->sdev->dev;
+@@ -5878,11 +5885,13 @@ static int wcd934x_codec_parse_data(stru
  	}
  
--	/* Disable interrupts on sub channel */
--	new_sc->inbound.ring_buffer->interrupt_mask = 1;
- 	set_channel_read_mode(new_sc, HV_CALL_ISR);
+ 	slim_get_logical_addr(wcd->sidev);
+-	wcd->if_regmap = regmap_init_slimbus(wcd->sidev,
++	wcd->if_regmap = devm_regmap_init_slimbus(wcd->sidev,
+ 				  &wcd934x_ifc_regmap_config);
+-	if (IS_ERR(wcd->if_regmap))
++	if (IS_ERR(wcd->if_regmap)) {
++		put_device(&wcd->sidev->dev);
+ 		return dev_err_probe(dev, PTR_ERR(wcd->if_regmap),
+ 				     "Failed to allocate ifc register map\n");
++	}
  
- 	ret = sysfs_create_bin_file(&new_sc->kobj, &ring_buffer_bin_attr);
-@@ -218,9 +215,7 @@ hv_uio_open(struct uio_info *info, struc
+ 	of_property_read_u32(dev->parent->of_node, "qcom,dmic-sample-rate",
+ 			     &wcd->dmic_sample_rate);
+@@ -5926,6 +5935,10 @@ static int wcd934x_codec_probe(struct pl
+ 		return ret;
+ 	}
  
- 	ret = vmbus_connect_ring(dev->channel,
- 				 hv_uio_channel_cb, dev->channel);
--	if (ret == 0)
--		dev->channel->inbound.ring_buffer->interrupt_mask = 1;
--	else
++	ret = devm_add_action_or_reset(dev, wcd934x_put_device_action, &wcd->sidev->dev);
 +	if (ret)
- 		atomic_dec(&pdata->refcnt);
- 
- 	return ret;
++		return ret;
++
+ 	/* set default rate 9P6MHz */
+ 	regmap_update_bits(wcd->regmap, WCD934X_CODEC_RPM_CLK_MCLK_CFG,
+ 			   WCD934X_CODEC_RPM_CLK_MCLK_CFG_MCLK_MASK,
 
 
