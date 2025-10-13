@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6738E2FB978;
-	Mon, 13 Oct 2025 15:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D962B30BB99;
+	Mon, 13 Oct 2025 15:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368936; cv=none; b=SxBs1FlokS78rL+ohiroFjjXO60vlFnigkDeLbfLDlDqXCgYJveCwRtdkiEaS6AmgpBqx+mZyUqXPHRppw3ZTy4MKx72rFPgy66/nMivmlbKTOhFazn8ncvoqZWe8MCTX5LnduxmnTZOoDIxTIMYzegoyU31cF9XVxan90KlXKo=
+	t=1760368938; cv=none; b=ZyPN3Mhf+o7Ie7pZX3+84a8lAAPaJZ8RZr6f/Bl45bbbdn+jk2FzDEP9MNo2cmP6TJVUOti3iB6p05IdZKFlq3cTYNPZNkdLq2MG/ysGyI2UqAmoBBtCpo8Db3XBr4a0Mn64aMOYucFWkSDLHxpd1TzJHIRnG7YyRqAEDYo8UDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368936; c=relaxed/simple;
-	bh=lSo3+/Tl4u93n7hhFsdozMZfk6fFTE/wb9eUxZUC4cY=;
+	s=arc-20240116; t=1760368938; c=relaxed/simple;
+	bh=T5tbQ0rzt8VnnhR2WRZ2YyMCjxICOo4BFicHctVE8zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5MBYYLuJJWQzV4m/rwYNADwtvlf6DqEFRiTlGQ+JHEwbR3ZXP8IqE8FeqiQ57dxKALXqUJ5GbyxWBq4OEGe6AlP2AcEs7BcV0tmXqCs/siifHLJVWQwDLu8WkKkGEADvdQ21TchBgy/ZlWCd5Yr+VT8GpltRaeKGdcTJSNuXQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEMbuZwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sEUr1JmJKMRcrji0vAA1NepGGTaB67nSjrWL05Nnj1nqnkhbkgE+NZpZbvkjF8+iWQsZFvow4s3vpV4iqjc9mgs8XYGl9iMP19fYW8tzkylT5dNHaPR4/P9l+1DV9x6ND1TOjXtM6SXjeEjCxa9Op4MSGjY3kJOYce4JI3wfKIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAvHRqEm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEMbuZwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DFEC116B1;
-	Mon, 13 Oct 2025 15:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAvHRqEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64790C4CEE7;
+	Mon, 13 Oct 2025 15:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368935;
-	bh=lSo3+/Tl4u93n7hhFsdozMZfk6fFTE/wb9eUxZUC4cY=;
+	s=korg; t=1760368938;
+	bh=T5tbQ0rzt8VnnhR2WRZ2YyMCjxICOo4BFicHctVE8zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEMbuZwggB97Y1nEEuBrfH5Qii58F0gZrtzYSL+AdiMdXmFTxfM08wKzGuT9dvkVM
-	 zDuLlD4aEDA4R78ru2moVqbS0dF+AeGvZcZ7LUne2MjrfTQaOTiqgu4l7h4R5ZwKOq
-	 1FXMpprmBxQ+veWMXCe8KO2n/Ssb6wV38U3iyuDM=
+	b=JAvHRqEmYr1j45RaMr03IaxijDWUygJEZ6TVnHbIl190lS+6zQNe9rhkTTYm+CQAL
+	 c8w3Zx9BlmixIzlz4GoIUaYYx6tiUoEA4dIlFdlYN6HkgXf+Nve8z0XLN6IynydyPq
+	 xJSAGhuI7ffbFD7QxZ/0HWydpadZg8L+xFKkeQvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 071/563] soc: qcom: rpmh-rsc: Unconditionally clear _TRIGGER bit for TCS
-Date: Mon, 13 Oct 2025 16:38:52 +0200
-Message-ID: <20251013144413.864602044@linuxfoundation.org>
+Subject: [PATCH 6.17 054/563] s390/bpf: Do not write tail call counter into helper and kfunc frames
+Date: Mon, 13 Oct 2025 16:38:35 +0200
+Message-ID: <20251013144413.248848510@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,48 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit f87412d18edb5b8393eb8cb1c2d4a54f90185a21 ]
+[ Upstream commit eada40e057fc1842358d9daca3abe5cacb21e8a1 ]
 
-Unconditionally clear the TCS_AMC_MODE_TRIGGER bit when a
-transaction completes. Previously this bit was only cleared when
-a wake TCS was borrowed as an AMC TCS but not for dedicated
-AMC TCS. Leaving this bit set for AMC TCS and entering deeper low
-power modes can generate a false completion IRQ.
+Only BPF functions make use of the tail call counter; helpers and
+kfuncs ignore and most likely also clobber it. Writing it into these
+functions' frames is pointless and misleading, so do not do it.
 
-Prevent this scenario by always clearing the TCS_AMC_MODE_TRIGGER
-bit upon receiving a completion IRQ.
-
-Fixes: 15b3bf61b8d4 ("soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS")
-Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250825-rpmh_rsc_change-v1-1-138202c31bf6@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: dd691e847d28 ("s390/bpf: Implement bpf_jit_supports_subprog_tailcalls()")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20250813121016.163375-2-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index fdab2b1067dbb..c6f7d5c9c493d 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -453,13 +453,10 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index bb17efe29d657..bfac1ddf3447b 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -1790,6 +1790,7 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
  
- 		trace_rpmh_tx_done(drv, i, req);
- 
--		/*
--		 * If wake tcs was re-purposed for sending active
--		 * votes, clear AMC trigger & enable modes and
-+		/* Clear AMC trigger & enable modes and
- 		 * disable interrupt for this TCS
+ 		REG_SET_SEEN(BPF_REG_5);
+ 		jit->seen |= SEEN_FUNC;
++
+ 		/*
+ 		 * Copy the tail call counter to where the callee expects it.
+ 		 *
+@@ -1800,10 +1801,17 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+ 		 * Note 2: We assume that the verifier does not let us call the
+ 		 * main program, which clears the tail call counter on entry.
  		 */
--		if (!drv->tcs[ACTIVE_TCS].num_tcs)
--			__tcs_set_trigger(drv, i, false);
-+		__tcs_set_trigger(drv, i, false);
- skip:
- 		/* Reclaim the TCS */
- 		write_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], i, 0);
+-		/* mvc tail_call_cnt(4,%r15),frame_off+tail_call_cnt(%r15) */
+-		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
+-		       0xf000 | (jit->frame_off +
+-				 offsetof(struct prog_frame, tail_call_cnt)));
++
++		if (insn->src_reg == BPF_PSEUDO_CALL)
++			/*
++			 * mvc tail_call_cnt(4,%r15),
++			 *     frame_off+tail_call_cnt(%r15)
++			 */
++			_EMIT6(0xd203f000 | offsetof(struct prog_frame,
++						     tail_call_cnt),
++			       0xf000 | (jit->frame_off +
++					 offsetof(struct prog_frame,
++						  tail_call_cnt)));
+ 
+ 		/* Sign-extend the kfunc arguments. */
+ 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
 -- 
 2.51.0
 
