@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB0030FF30;
-	Mon, 13 Oct 2025 15:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8F03101AD;
+	Mon, 13 Oct 2025 15:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367998; cv=none; b=akauGAUUmBUlcjX7NIqXtc5PeMOjHMazdvbEC81NDBusk1Ah1+cyq0/tNeWcuFDJFBvj17HlxzbzuWVkCxVwTkbvOGL0Onqdn4lbxxYwdq369kqgeScntqXIEoYH+LN5+p+WWNotnnuHCpcXMjBn08wZbDT/B6N6kfXWvAhkcv4=
+	t=1760368001; cv=none; b=qVXmEbmuSgzGBalR2cKM/JCXJ9TTAVnKEmvBJ8kGUIRBPjFEWZbl5ju9zCxMoeqL1KhrSHxiLol2aFLIntzvj7DcDIYsF1h7TAuyAeIstLWB0u/37rHIMnVL9FJvXBSL3nFi6lgJrjNe1oTgFpBkHiUzoAmEHv1v7NLmlyYmGEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367998; c=relaxed/simple;
-	bh=HXMzytvILtbJWDkfmBPcC5ppuj+VZ0xUWZHgQjse+FA=;
+	s=arc-20240116; t=1760368001; c=relaxed/simple;
+	bh=56EIppqCiW4JSTYvZcgtig6eu5uBfP/mij7hy5TLKr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAf0sD3Job+gME2XsgLDxE5T01Bz4GDO8491a0yeeOVmtseaQ+V1H0nkKLF0x+n5aYM/T1sI0FX9gTq5s5dsxY34Jp6Uy7LmoIre5lV3RMHWtlPm7so10+sxxNAWBUT3WpblE+zbNEOH+I5oIkEuWJlLmZFQmRPCh7K3nDrzchc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfXCWB5q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RAjHqv3N6upaXqNaeZ93aERYr+aYJY7c/vLaFSueHZzAIpWUBfvWOHV94g71aVcsSYaPp6y16lGG1GX/rLqQRpMa7VoZhVsfQbl0hIX6SEELISTugkhJqv/9H03SBXXHUhUtz8yla6LU/D0HmA3U2xI9qQes9VLYASmZrVkgHm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3jHUELY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfXCWB5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270C1C4CEE7;
-	Mon, 13 Oct 2025 15:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3jHUELY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17121C4CEE7;
+	Mon, 13 Oct 2025 15:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367998;
-	bh=HXMzytvILtbJWDkfmBPcC5ppuj+VZ0xUWZHgQjse+FA=;
+	s=korg; t=1760368001;
+	bh=56EIppqCiW4JSTYvZcgtig6eu5uBfP/mij7hy5TLKr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfXCWB5q46VTIK6FkDlHLGwoPqt/Eec0wdjX0y0G1+L9/bd3pa573RtxRMcSJGTV9
-	 OTSVFs/kgl1kUBIwuMvXnQqMPN5ocTliJ40GdXRz+FpIOPkcJL1y2P17FkkMTytYEl
-	 UshZvEGfWlS8a+d4JVe8sbecHP2xWLOGKEjT5LVA=
+	b=O3jHUELYdx5LNGrzFgkBTG/1rpoRNUckzMlTFzex1nvoi+a3zbZC1YdidYUErFVXT
+	 kAVggDj/uxejheb/kqInmF72jJIUv4tEImyGNYhzfnJunnLVIUgqVSa0XWCX/l/L6L
+	 XrpcwKv6nM5i0gV7ep4LzDtDWOhZXa6jQJ11ECjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/262] filelock: add FL_RECLAIM to show_fl_flags() macro
-Date: Mon, 13 Oct 2025 16:42:23 +0200
-Message-ID: <20251013144326.175103458@linuxfoundation.org>
+Subject: [PATCH 6.12 010/262] perf: arm_spe: Prevent overflow in PERF_IDX2OFF()
+Date: Mon, 13 Oct 2025 16:42:32 +0200
+Message-ID: <20251013144326.497607845@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,35 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit c593b9d6c446510684da400833f9d632651942f0 ]
+[ Upstream commit a29fea30dd93da16652930162b177941abd8c75e ]
 
-Show the FL_RECLAIM flag symbolically in tracepoints.
+Cast nr_pages to unsigned long to avoid overflow when handling large
+AUX buffer sizes (>= 2 GiB).
 
-Fixes: bb0a55bb7148 ("nfs: don't allow reexport reclaims")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/20250903-filelock-v1-1-f2926902962d@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/filelock.h | 3 ++-
+ drivers/perf/arm_spe_pmu.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/filelock.h b/include/trace/events/filelock.h
-index b8d1e00a7982c..2dfeb158e848a 100644
---- a/include/trace/events/filelock.h
-+++ b/include/trace/events/filelock.h
-@@ -27,7 +27,8 @@
- 		{ FL_SLEEP,		"FL_SLEEP" },			\
- 		{ FL_DOWNGRADE_PENDING,	"FL_DOWNGRADE_PENDING" },	\
- 		{ FL_UNLOCK_PENDING,	"FL_UNLOCK_PENDING" },		\
--		{ FL_OFDLCK,		"FL_OFDLCK" })
-+		{ FL_OFDLCK,		"FL_OFDLCK" },			\
-+		{ FL_RECLAIM,		"FL_RECLAIM"})
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index 3569050f9cf37..abd23430dc033 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -96,7 +96,8 @@ struct arm_spe_pmu {
+ #define to_spe_pmu(p) (container_of(p, struct arm_spe_pmu, pmu))
  
- #define show_fl_type(val)				\
- 	__print_symbolic(val,				\
+ /* Convert a free-running index from perf into an SPE buffer offset */
+-#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
++#define PERF_IDX2OFF(idx, buf) \
++	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
+ 
+ /* Keep track of our dynamic hotplug state */
+ static enum cpuhp_state arm_spe_pmu_online;
 -- 
 2.51.0
 
