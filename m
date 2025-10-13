@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A7030CD87;
-	Mon, 13 Oct 2025 15:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F4B3081CE;
+	Mon, 13 Oct 2025 15:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369916; cv=none; b=CBPr3hI33D9sR/2PP4tDsaI9JWBS9SAvrbpk6dU4+6aMF2dEBBMPlkph067rxs8HYmkuowDJZlo9haW10jIwU6nYKbJtI1cE45BEtGxid/HLm+UyCAcOBfVTarKsJEx1Z9Z/cUFApFnlL7LGoJ4s9sfMSNvc8q5+Djhxn4Bi/+M=
+	t=1760369919; cv=none; b=kTqGRoAdZgICc0U47KC/5imHsHS7aTQ4KCrR0MvO1oU5w16134aU/fyb36Q9W31GR324mlpSRhmV2wRrSRLp4Topnb8lvScks9ZGrNE8rDGpsqzeXYc7S7Y5b8nwNdMSZLfuU3AbtsB6At31LAjnVZJFH0bgDyn9Yhys7JKgc2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369916; c=relaxed/simple;
-	bh=fq8pLD8sdByCRDAmQVntXN3xxSFeBv102CBzqfqTiaM=;
+	s=arc-20240116; t=1760369919; c=relaxed/simple;
+	bh=xNKK/Apk4ujHUGrZuIlz5zypqCOqOGmHxqY9OmjQeTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQg0GJZ9WfnyRAVPZwv9nD/p5S5+KXJ935mDjeLiRvO8JNCrGVYKayH4wpGe/zmiP9EYyhhEYJXNkLixnaJuKXaZgF9EOnSc2cZTlhwcHKynA4TCqmJHKoBYOauUdy5Rv5kRvnzRy9IKz8Q5izFp0ExEn8mX/EsI5oul8SPpzyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNHMOybd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhnJYtxn3xwMIUETSXQa+7nb7fMMKn4fbbgoXDk2QXAn9+qbs6q/4o/frM6mSukxXvSkbNdpkg3If3Y9rgxjuYcrPSyWkym9MjrmnTFCyPKFV3Imnu8SSo5nLZ+BzP/D68+mZbHV2m0zKj10Xo0sFsJt7UNt5MrjvTXi+/3RZ8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjsvCzIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNHMOybd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4FFC4CEE7;
-	Mon, 13 Oct 2025 15:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjsvCzIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C18C4CEE7;
+	Mon, 13 Oct 2025 15:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369916;
-	bh=fq8pLD8sdByCRDAmQVntXN3xxSFeBv102CBzqfqTiaM=;
+	s=korg; t=1760369919;
+	bh=xNKK/Apk4ujHUGrZuIlz5zypqCOqOGmHxqY9OmjQeTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNHMOybdrYGJ5Xm+jwlQDLjcHLY6mwhiA7sVAIfc1aBrbhXKTAyUMM4PSRRMFAx7P
-	 P/ZGpeJWknMriFNioZ2aZDDfoxxrtSlUeZ2gvhWE8CvxFPvgxf19epH1lcnQF4JftY
-	 O9M/ZWqzKTLeaJtLDpdZWnAFzgTy6eQZPT2VLnes=
+	b=pjsvCzIAPLMvDdhm/osvZ5xM87XNV8BFqP9z57qFmQ5hFKVZAdb399/NTxCkYgnB2
+	 z+PU5/eCZcev35SFRIIKHa4MPMsQy5xifS5AAbiCvlnYEqaK+IiVopbuGz3MkyaYvi
+	 rrfGjVKWUA4PVfZrgrqPPfXNKQ5+6YXHo7cLSzlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 380/563] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_clc_prfx_match().
-Date: Mon, 13 Oct 2025 16:44:01 +0200
-Message-ID: <20251013144425.039968882@linuxfoundation.org>
+Subject: [PATCH 6.17 381/563] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_vlan_by_tcpsk().
+Date: Mon, 13 Oct 2025 16:44:02 +0200
+Message-ID: <20251013144425.075823983@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,66 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 235f81045c008169cc4e1955b4a64e118eebe61b ]
+[ Upstream commit 0b0e4d51c6554e5ecc3f8cc73c2eaf12da21249a ]
 
-smc_clc_prfx_match() is called from smc_listen_work() and
-not under RCU nor RTNL.
+smc_vlan_by_tcpsk() fetches sk_dst_get(sk)->dev before RTNL and
+passes it to netdev_walk_all_lower_dev(), which is illegal.
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+Also, smc_vlan_by_tcpsk_walk() does not require RTNL at all.
 
-Let's use __sk_dst_get() and dst_dev_rcu().
+Let's use __sk_dst_get(), dst_dev_rcu(), and
+netdev_walk_all_lower_dev_rcu().
 
-Note that the returned value of smc_clc_prfx_match() is not
-used in the caller.
+Note that the returned value of smc_vlan_by_tcpsk() is not used
+in the caller.
 
-Fixes: a046d57da19f ("smc: CLC handshake (incl. preparation steps)")
+Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-4-kuniyu@google.com
+Link: https://patch.msgid.link/20250916214758.650211-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_clc.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ net/smc/smc_core.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index 976b2102bdfcd..09745baa10170 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -657,26 +657,26 @@ static int smc_clc_prfx_match6_rcu(struct net_device *dev,
- int smc_clc_prfx_match(struct socket *clcsock,
- 		       struct smc_clc_msg_proposal_prefix *prop)
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 262746e304dda..2a559a98541c7 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1883,35 +1883,32 @@ static int smc_vlan_by_tcpsk_walk(struct net_device *lower_dev,
+ /* Determine vlan of internal TCP socket. */
+ int smc_vlan_by_tcpsk(struct socket *clcsock, struct smc_init_info *ini)
  {
 -	struct dst_entry *dst = sk_dst_get(clcsock->sk);
-+	struct net_device *dev;
+ 	struct netdev_nested_priv priv;
+ 	struct net_device *ndev;
 +	struct dst_entry *dst;
- 	int rc;
+ 	int rc = 0;
  
+ 	ini->vlan_id = 0;
 -	if (!dst) {
 -		rc = -ENOTCONN;
 -		goto out;
 -	}
 -	if (!dst->dev) {
++
 +	rcu_read_lock();
 +
 +	dst = __sk_dst_get(clcsock->sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (!dev) {
++	ndev = dst ? dst_dev_rcu(dst) : NULL;
++	if (!ndev) {
  		rc = -ENODEV;
 -		goto out_rel;
 +		goto out;
  	}
--	rcu_read_lock();
-+
- 	if (!prop->ipv6_prefixes_cnt)
--		rc = smc_clc_prfx_match4_rcu(dst->dev, prop);
-+		rc = smc_clc_prfx_match4_rcu(dev, prop);
- 	else
--		rc = smc_clc_prfx_match6_rcu(dst->dev, prop);
--	rcu_read_unlock();
+ 
+-	ndev = dst->dev;
+ 	if (is_vlan_dev(ndev)) {
+ 		ini->vlan_id = vlan_dev_vlan_id(ndev);
+-		goto out_rel;
++		goto out;
+ 	}
+ 
+ 	priv.data = (void *)&ini->vlan_id;
+-	rtnl_lock();
+-	netdev_walk_all_lower_dev(ndev, smc_vlan_by_tcpsk_walk, &priv);
+-	rtnl_unlock();
+-
 -out_rel:
 -	dst_release(dst);
-+		rc = smc_clc_prfx_match6_rcu(dev, prop);
++	netdev_walk_all_lower_dev_rcu(ndev, smc_vlan_by_tcpsk_walk, &priv);
  out:
 +	rcu_read_unlock();
 +
