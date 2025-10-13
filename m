@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B030C625;
-	Mon, 13 Oct 2025 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D958630C626;
+	Mon, 13 Oct 2025 15:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369110; cv=none; b=BmMUHVjLqHYm4Jo6rC9PAv+fEQGfRLyfm3bprSgn6HbgYUH3ip33niYqVsTP4CTWKpkh3jgFce+TFZDT3LQaA0m++tr9rq/WnOc5jO4mqPovABt0unbnZZimWf756FBrMU64Jo/gBncTNXDjWyCobPUAT4ovNZoMA43in1HzvD8=
+	t=1760369112; cv=none; b=WSc1Z3d9DRj8wlyNoq/WTDviHi7yunm2uT7Uaddl4nA37TCvz/QIwT2KXzjckc29mmGmDMl5a5s8u37dUggrRWGyyCZ/RDSkiI/6fhPlBMnc/MrnQkkdyaIpHXGOdCmMd+M7oErWzL2bn8ijN6IdgnbRCxYz9U4rMLsy4IrBmog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369110; c=relaxed/simple;
-	bh=zvmNBfvx22HP3dI0EPfpIgpbm8Eb2kITcpgPqfiQlgc=;
+	s=arc-20240116; t=1760369112; c=relaxed/simple;
+	bh=1saZZx9D8VCoXBCUAkuIu6tIftiZ0IjciToJ4WfgJlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQVIADblKqBfu/pSKaafYSEiy0le7Qt3ph9dPGxoFDdQ/W5PiWStEl1R6bvyXPZpumH3RH9FsYNRlrNfFJQgk5XKLjaQbJgmuS5IXcKhUqHRFjCxQo9fUrQGpobwHaBuz8M6DvKbidmDe6FkPj5Y7az075d0Eruumn3OyDD8ans=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNJaY0mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRIzRrs5Q9FepDMs/jYi5l/XUcNkPevbZ94xPPF4sH70PAOcR2A/tHekoHMcI8UInryx1akjFr1ELeOHg4nbj/ldKQmrExkLdvCPD4wI0wpM+pkDVSldRvWgbzaTY0gkzVk8eJ5fA0NPGBIXiYhrVkiQkByp7NzB9c+iLRUuYuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGbTlpQv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNJaY0mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A8C4CEE7;
-	Mon, 13 Oct 2025 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGbTlpQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6DCC4CEE7;
+	Mon, 13 Oct 2025 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369109;
-	bh=zvmNBfvx22HP3dI0EPfpIgpbm8Eb2kITcpgPqfiQlgc=;
+	s=korg; t=1760369112;
+	bh=1saZZx9D8VCoXBCUAkuIu6tIftiZ0IjciToJ4WfgJlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNJaY0mzqtDV8gThR0pVskCqfmUpx2E9Zi36sNRwU/FRAF5gIHteE7/+tw59XiEcP
-	 1JyuUMCIIbn0KBsBkxrsLJriCulR/fq1dIMCdMhM4mqt3WsJCbDzmbkjMQqzP1YOfC
-	 RXmQWlSZGnmMosfjZKLS+msDtTZ4cd5e2ay3Qvmo=
+	b=gGbTlpQvvzG1GqD9KtsI8OHQ29Z4wSkJnswkFwz3VsPnn8XYiYN8bzw1bja0qxb2/
+	 qeOrnm/R272SRXKHN2WkYoytpww8PMOURM3dYCSJaMuOJP7DN1f18c9KBH66LMHoVh
+	 68TOeeR7tPeI9DurVn2Dud4qIfudqddmvh+y36lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Brian Norris <briannorris@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	David Gow <davidgow@google.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 088/563] genirq/test: Depend on SPARSE_IRQ
-Date: Mon, 13 Oct 2025 16:39:09 +0200
-Message-ID: <20251013144414.486368779@linuxfoundation.org>
+Subject: [PATCH 6.17 125/563] blk-mq: remove useless checkings in blk_mq_update_nr_requests()
+Date: Mon, 13 Oct 2025 16:39:46 +0200
+Message-ID: <20251013144415.823048130@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,50 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 0c888bc86d672e551ce5c58b891c8b44f8967643 ]
+[ Upstream commit 8bd7195fea6d9662aa3b32498a3828bfd9b63185 ]
 
-Some architectures have a static interrupt layout, with a limited number of
-interrupts. Without SPARSE_IRQ, the test may not be able to allocate any
-fake interrupts, and the test will fail. (This occurs on ARCH=m68k, for
-example.)
+1) queue_requests_store() is the only caller of
+blk_mq_update_nr_requests(), where queue is already freezed, no need to
+check mq_freeze_depth;
+2) q->tag_set must be set for request based device, and queue_is_mq() is
+already checked in blk_mq_queue_attr_visible(), no need to check
+q->tag_set.
 
-Additionally, managed-affinity is only supported with CONFIG_SPARSE_IRQ=y,
-so irq_shutdown_depth_test() and irq_cpuhotplug_test() would fail without
-it.
-
-Add a 'SPARSE_IRQ' dependency to avoid these problems.
-
-Many architectures 'select SPARSE_IRQ', so this is easy to miss.
-
-Notably, this also excludes ARCH=um from running any of these tests, even
-though some of them might work.
-
-Fixes: 66067c3c8a1e ("genirq: Add kunit tests for depth counts")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: David Gow <davidgow@google.com>
-Link: https://lore.kernel.org/all/20250822190140.2154646-5-briannorris@chromium.org
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b86433721f46 ("blk-mq: fix potential deadlock while nr_requests grown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-mq.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
-index 08088b8e95ae9..a75df2bb9db66 100644
---- a/kernel/irq/Kconfig
-+++ b/kernel/irq/Kconfig
-@@ -147,6 +147,7 @@ config GENERIC_IRQ_KEXEC_CLEAR_VM_FORWARD
- config IRQ_KUNIT_TEST
- 	bool "KUnit tests for IRQ management APIs" if !KUNIT_ALL_TESTS
- 	depends on KUNIT=y
-+	depends on SPARSE_IRQ
- 	default KUNIT_ALL_TESTS
- 	select IRQ_DOMAIN
- 	imply SMP
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 19b50110376c6..f5e713224d819 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4929,21 +4929,14 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
+ {
+ 	struct blk_mq_tag_set *set = q->tag_set;
+ 	struct blk_mq_hw_ctx *hctx;
+-	int ret;
++	int ret = 0;
+ 	unsigned long i;
+ 
+-	if (WARN_ON_ONCE(!q->mq_freeze_depth))
+-		return -EINVAL;
+-
+-	if (!set)
+-		return -EINVAL;
+-
+ 	if (q->nr_requests == nr)
+ 		return 0;
+ 
+ 	blk_mq_quiesce_queue(q);
+ 
+-	ret = 0;
+ 	queue_for_each_hw_ctx(q, hctx, i) {
+ 		if (!hctx->tags)
+ 			continue;
 -- 
 2.51.0
 
