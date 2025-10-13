@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FAB3093CE;
-	Mon, 13 Oct 2025 15:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E49926F2B6;
+	Mon, 13 Oct 2025 15:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369717; cv=none; b=NKT+uyMwHxv6kPXFhmhDs8z6MjJF4kIIOuJAL8Kw5Gywa3Q4CCl2Q1n5ns0TLYnsW2Eyu3OuoIq2jO9NvHsrn8+U6DbouU49VtHXSOgUx3uhv4z91W2UA6duT7rk+h2GoWh2zpqiGREEPuIg8UyeDbZ/2zuOEtmleLyRlprJSlw=
+	t=1760369720; cv=none; b=WNGGyFjkGzqYyx1mneczxk5pzQjv6FhekmTKDU5ubW0XAmn3D96+PDCXtSfNCeMRRw/s4F1nJRZDvqBoHXa5OQ0MGuauczdyQjYrX3AgmOFhSZTT+nOvTxpc7atd5KPZdiO1ddwiknBLbaNsspIxRKR7tSNZPsQkEb5evYUF+yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369717; c=relaxed/simple;
-	bh=wTNoRkrPZTVPHmKcVvYacHJdTg/dLeKrEuG3jDwglQA=;
+	s=arc-20240116; t=1760369720; c=relaxed/simple;
+	bh=3B/dfrP8Uz6DsiiGavA+p8GKFDSs4ja5t8FK2+3qh2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRlDd3x0SutD2EdtdEv6Mvi8XgfBGduoSPtoe5RTab7cVozBhTF3mzDt8ybPK47Lu2hi6IkZxVhLVJFTZT4sm3R9m98x6JSeDzEQDdSc/NjZzi4w5sSrgHghSCtGtnZXXkV4pYnjRB7zBA8uLiA2vAH8bZPTELJRU0JZilaGn60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chWo5Dnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfGsjxEHmT04wvrRV5UO6K7ZWIknAdx3B2OuOzCUnMFsxVn3Wlnn16wKsaQYVySbj9mShmXPgLj5FB01KyS0/ZK9FLvgZvCIul2931lcWIrrdLW5T5zUhkl1LGjdBWbczRqQoSeBT+sHqCDUvMAr54KvWAGcDIW1nYCDlAsexwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSCyEPHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chWo5Dnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0207C4CEE7;
-	Mon, 13 Oct 2025 15:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSCyEPHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EB9C4CEE7;
+	Mon, 13 Oct 2025 15:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369717;
-	bh=wTNoRkrPZTVPHmKcVvYacHJdTg/dLeKrEuG3jDwglQA=;
+	s=korg; t=1760369720;
+	bh=3B/dfrP8Uz6DsiiGavA+p8GKFDSs4ja5t8FK2+3qh2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chWo5DnzJnrxC8AutlrA6ELXV4aevyqF5GU57j7SG1a16afkJR58AkNzM4auY0/EQ
-	 BUQ3LX1COWVFVTZ8Omd9zxkAU/Os4pi1JO2xVkqm/Bi9xCNdiDv3fw1UanRBTBBI75
-	 MDKtG1BtOHTt8XN9gHVt34WY0Y+ottWsoWW1fPF8=
+	b=jSCyEPHPlQ5uZSkBRTLuam/0Ro+zdL7NLHnQvF5XjmzNtPdY9Yr5SqPT2YpiaJSYm
+	 EdLHoupDduiPHlExj6/D4muOTCP+Jxu7dQ9LG5aeq7P4L2DfF+pr5YoneSDkjTPWC8
+	 2L7EXho5zeYre9MY70XG+YWeQ057M6zNxd90Nzsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
-	Jeff Chen <jeff.chen_1@nxp.con>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 310/563] wifi: mwifiex: send world regulatory domain to driver
-Date: Mon, 13 Oct 2025 16:42:51 +0200
-Message-ID: <20251013144422.495377882@linuxfoundation.org>
+Subject: [PATCH 6.17 311/563] wifi: brcmfmac: fix 43752 SDIO FWVID incorrectly labelled as Cypress (CYW)
+Date: Mon, 13 Oct 2025 16:42:52 +0200
+Message-ID: <20251013144422.532118728@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,42 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Kerkmann <s.kerkmann@pengutronix.de>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-[ Upstream commit 56819d00bc2ebaa6308913c28680da5d896852b8 ]
+[ Upstream commit 74e2ef72bd4b25ce21c8f309d4f5b91b5df9ff5b ]
 
-The world regulatory domain is a restrictive subset of channel
-configurations which allows legal operation of the adapter all over the
-world. Changing to this domain should not be prevented.
+Cypress(Infineon) is not the vendor for this 43752 SDIO WLAN chip, and so
+has not officially released any firmware binary for it. It is incorrect to
+maintain this WLAN chip with firmware vendor ID as "CYW". So relabel the
+chip's firmware Vendor ID as "WCC" as suggested by the maintainer.
 
-Fixes: dd4a9ac05c8e1 ("mwifiex: send regulatory domain info to firmware only if alpha2 changed") changed
-Signed-off-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.con>
-Link: https://patch.msgid.link/20250804-fix-mwifiex-regulatory-domain-v1-1-e4715c770c4d@pengutronix.de
+Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
+Fixes: f74f1ec22dc2 ("wifi: brcmfmac: add support for Cypress firmware api")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250724101136.6691-1-gokulkumar.sivakumar@infineon.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c   | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   | 8 ++++----
+ .../net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h | 1 -
+ include/linux/mmc/sdio_ids.h                              | 2 +-
+ 5 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-index 4c8c7a5fdf23e..be23a29e7de09 100644
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -686,10 +686,9 @@ static void mwifiex_reg_notifier(struct wiphy *wiphy,
- 		return;
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index 8ab7d1e34a6e1..6a3f187320fc4 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -997,9 +997,9 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4356, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43751, WCC),
++	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43752, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012, CYW),
+-	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359, CYW),
+ 	CYW_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
+ 	{ /* end: all zeroes */ }
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+index 9074ab49e8068..4239f2b21e542 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+@@ -738,8 +738,8 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
+ 	case BRCM_CC_4364_CHIP_ID:
+ 	case CY_CC_4373_CHIP_ID:
+ 		return 0x160000;
+-	case CY_CC_43752_CHIP_ID:
+ 	case BRCM_CC_43751_CHIP_ID:
++	case BRCM_CC_43752_CHIP_ID:
+ 	case BRCM_CC_4377_CHIP_ID:
+ 		return 0x170000;
+ 	case BRCM_CC_4378_CHIP_ID:
+@@ -1452,7 +1452,7 @@ bool brcmf_chip_sr_capable(struct brcmf_chip *pub)
+ 		return (reg & CC_SR_CTL0_ENABLE_MASK) != 0;
+ 	case BRCM_CC_4359_CHIP_ID:
+ 	case BRCM_CC_43751_CHIP_ID:
+-	case CY_CC_43752_CHIP_ID:
++	case BRCM_CC_43752_CHIP_ID:
+ 	case CY_CC_43012_CHIP_ID:
+ 		addr = CORE_CC_REG(pmu->base, retention_ctl);
+ 		reg = chip->ops->read32(chip->ctx, addr);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 8a0bad5119a0d..8cf9d7e7c3f70 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -655,10 +655,10 @@ static const struct brcmf_firmware_mapping brcmf_sdio_fwnames[] = {
+ 	BRCMF_FW_ENTRY(BRCM_CC_4356_CHIP_ID, 0xFFFFFFFF, 4356),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
+ 	BRCMF_FW_ENTRY(BRCM_CC_43751_CHIP_ID, 0xFFFFFFFF, 43752),
++	BRCMF_FW_ENTRY(BRCM_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752),
+ 	BRCMF_FW_ENTRY(CY_CC_4373_CHIP_ID, 0xFFFFFFFF, 4373),
+ 	BRCMF_FW_ENTRY(CY_CC_43012_CHIP_ID, 0xFFFFFFFF, 43012),
+ 	BRCMF_FW_ENTRY(CY_CC_43439_CHIP_ID, 0xFFFFFFFF, 43439),
+-	BRCMF_FW_ENTRY(CY_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752)
+ };
  
--	/* Don't send world or same regdom info to firmware */
--	if (strncmp(request->alpha2, "00", 2) &&
--	    strncmp(request->alpha2, adapter->country_code,
--		    sizeof(request->alpha2))) {
-+	/* Don't send same regdom info to firmware */
-+	if (strncmp(request->alpha2, adapter->country_code,
-+		    sizeof(request->alpha2)) != 0) {
- 		memcpy(adapter->country_code, request->alpha2,
- 		       sizeof(request->alpha2));
- 		mwifiex_send_domain_info_cmd_fw(wiphy);
+ #define TXCTL_CREDITS	2
+@@ -3426,8 +3426,8 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
+ static bool brcmf_sdio_aos_no_decode(struct brcmf_sdio *bus)
+ {
+ 	if (bus->ci->chip == BRCM_CC_43751_CHIP_ID ||
+-	    bus->ci->chip == CY_CC_43012_CHIP_ID ||
+-	    bus->ci->chip == CY_CC_43752_CHIP_ID)
++	    bus->ci->chip == BRCM_CC_43752_CHIP_ID ||
++	    bus->ci->chip == CY_CC_43012_CHIP_ID)
+ 		return true;
+ 	else
+ 		return false;
+@@ -4278,8 +4278,8 @@ static void brcmf_sdio_firmware_callback(struct device *dev, int err,
+ 
+ 		switch (sdiod->func1->device) {
+ 		case SDIO_DEVICE_ID_BROADCOM_43751:
++		case SDIO_DEVICE_ID_BROADCOM_43752:
+ 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+-		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752:
+ 			brcmf_dbg(INFO, "set F2 watermark to 0x%x*4 bytes\n",
+ 				  CY_4373_F2_WATERMARK);
+ 			brcmf_sdiod_writeb(sdiod, SBSDIO_WATERMARK,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+index b39c5c1ee18b6..df3b67ba4db29 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
++++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+@@ -60,7 +60,6 @@
+ #define CY_CC_4373_CHIP_ID		0x4373
+ #define CY_CC_43012_CHIP_ID		43012
+ #define CY_CC_43439_CHIP_ID		43439
+-#define CY_CC_43752_CHIP_ID		43752
+ 
+ /* USB Device IDs */
+ #define BRCM_USB_43143_DEVICE_ID	0xbd1e
+diff --git a/include/linux/mmc/sdio_ids.h b/include/linux/mmc/sdio_ids.h
+index fe3d6d98f8da4..673cbdf434533 100644
+--- a/include/linux/mmc/sdio_ids.h
++++ b/include/linux/mmc/sdio_ids.h
+@@ -77,7 +77,7 @@
+ #define SDIO_DEVICE_ID_BROADCOM_43439		0xa9af
+ #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
+ #define SDIO_DEVICE_ID_BROADCOM_43751		0xaae7
+-#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
++#define SDIO_DEVICE_ID_BROADCOM_43752		0xaae8
+ 
+ #define SDIO_VENDOR_ID_CYPRESS			0x04b4
+ #define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xbd3d
 -- 
 2.51.0
 
