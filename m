@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD8C30C373;
-	Mon, 13 Oct 2025 15:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEB630F949;
+	Mon, 13 Oct 2025 15:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369691; cv=none; b=sCXQ8gRBj9VHFKnwh+ylDlJcyJhlD+TgUc9v548BVboCRmohGn1A6vADO4+TKUTG/INpIwx5YAUgv3b1+z8JmHXhDtM63yJo5PbjgMLpGFvgBIExNi6UdSo/bqFobWT+E6bdTeUguLu/tZUu6hgKM33Uq94//V+ZBA3V0KvQTtM=
+	t=1760369694; cv=none; b=diyaIgxpsMxHRSdMSVZo448vUh7n1S7eN27A002s/8ZcxXQ0QJgqQT2knhC9TaJ4UNJNcP7qKRr732c6ExLv0IEldBNLA5tnBrQbeIWCebqCeqf4tU1U3E6OdukEbG8fqmLCXFWJX8+gb8ah+hQYsJ+P2PyTthACG2GhWVU1FEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369691; c=relaxed/simple;
-	bh=NZ/SIcTzbJcXiZj7RztLIH6wsQEFR2euZywUdk+cgdY=;
+	s=arc-20240116; t=1760369694; c=relaxed/simple;
+	bh=t4Z7Hqk1nBwSldeAhFKNbfNyNffeFMfB+DSwEd25KXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adTFoM13wJ02/3HUtdT9Xo2WLhCS+D6APLcqqKmmF3BXXFBG/WDFpNu7odUtg+z1CS8o5E3/ggh8Gzdwrx06/8fTM1lCEZRn4lHHRvmJK5Cw0LyrEtdMyJNKJkC9qBuLkhR9MhTmmE2F7dUvIRPs6SeoSAgQMWTGEUW5WASyKvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjWPosi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiiqSkpC4d3+GNS17nL8kIwBuHbZk2J6OAFGDuKOIgs0jOJ/x3Dt+pqZi6kU3I6JQS2mDMyGIZYreJb7YjN19/ZuY2stP6dIX0Zm/Z1/HHnMNvYdI6D3r50cnexyDXvcv7Na/HPQTHM6ACe0FesFi7KfxTTEyZo+csWKPdfRYjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmcp9EHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjWPosi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441E3C4CEE7;
-	Mon, 13 Oct 2025 15:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmcp9EHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F2AC4CEE7;
+	Mon, 13 Oct 2025 15:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369691;
-	bh=NZ/SIcTzbJcXiZj7RztLIH6wsQEFR2euZywUdk+cgdY=;
+	s=korg; t=1760369694;
+	bh=t4Z7Hqk1nBwSldeAhFKNbfNyNffeFMfB+DSwEd25KXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjWPosi+lsfqYQo1F0mEJY8hFEd362tZFv/iEhOqISZR6vtryb1ZX2Br58XSj/pYM
-	 MZIS8cOyClEDBVXp6tDARTAA6LmzrOaKgQ54NcRQakR2vA8v8Xsj8bKnAGI2AnkfRn
-	 JwIdZLHcyYalIhHCPdOIvP6QvmOBTwvzTmTNsjX0=
+	b=lmcp9EHHss3XXb3TikC6QuVW4qcbo1yAjAUqo0eGFjsjz8WafTlEIbP4kkhPe4Vnl
+	 ifdkJ/ulHNDC0ZbCWcAglm081aXhbJV/XkaoMw0ja2WFME0e6bwy9p0vrRP5PnSSq9
+	 J3t/02U+xi4yEUz9opGLW4ng/npHQRMPg8UqfZi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
-	Abhishek Rawal <rawal.abhishek92@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 334/563] ipv6: snmp: do not track per idev ICMP6_MIB_RATELIMITHOST
-Date: Mon, 13 Oct 2025 16:43:15 +0200
-Message-ID: <20251013144423.362088992@linuxfoundation.org>
+Subject: [PATCH 6.17 335/563] drm/msm: Fix bootup splat with separate_gpu_drm modparam
+Date: Mon, 13 Oct 2025 16:43:16 +0200
+Message-ID: <20251013144423.398176652@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,68 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 2fab94bcf313480336b0a41eb45a24ffd5087490 ]
+[ Upstream commit f028bcafb6dfb4c2bb656cbff9e6a66222d3d3d7 ]
 
-Blamed commit added a critical false sharing on a single
-atomic_long_t under DOS, like receiving UDP packets
-to closed ports.
+The drm_gem_for_each_gpuvm_bo() call from lookup_vma() accesses
+drm_gem_obj.gpuva.list, which is not initialized when the drm driver
+does not support DRIVER_GEM_GPUVA feature. Enable it for msm_kms
+drm driver to fix the splat seen when msm.separate_gpu_drm=1 modparam
+is set:
 
-Per netns ICMP6_MIB_RATELIMITHOST tracking uses per-cpu
-storage and is enough, we do not need per-device and slow tracking.
+[    9.506020] Unable to handle kernel paging request at virtual address fffffffffffffff0
+[    9.523160] Mem abort info:
+[    9.523161]   ESR = 0x0000000096000006
+[    9.523163]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    9.523165]   SET = 0, FnV = 0
+[    9.523166]   EA = 0, S1PTW = 0
+[    9.523167]   FSC = 0x06: level 2 translation fault
+[    9.523169] Data abort info:
+[    9.523170]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+[    9.523171]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    9.523172]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    9.523174] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000ad370f000
+[    9.523176] [fffffffffffffff0] pgd=0000000000000000, p4d=0000000ad4787403, pud=0000000ad4788403, pmd=0000000000000000
+[    9.523184] Internal error: Oops: 0000000096000006 [#1]  SMP
+[    9.592968] CPU: 9 UID: 0 PID: 448 Comm: (udev-worker) Not tainted 6.17.0-rc4-assorted-fix-00005-g0e9bb53a2282-dirty #3 PREEMPT
+[    9.592970] Hardware name: Qualcomm CRD, BIOS 6.0.240718.BOOT.MXF.2.4-00515-HAMOA-1 07/18/2024
+[    9.592971] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    9.592973] pc : lookup_vma+0x28/0xe0 [msm]
+[    9.592996] lr : get_vma_locked+0x2c/0x128 [msm]
+[    9.763632] sp : ffff800082dab460
+[    9.763666] Call trace:
+[    9.763668]  lookup_vma+0x28/0xe0 [msm] (P)
+[    9.763688]  get_vma_locked+0x2c/0x128 [msm]
+[    9.763706]  msm_gem_get_and_pin_iova_range+0x68/0x11c [msm]
+[    9.763723]  msm_gem_get_and_pin_iova+0x18/0x24 [msm]
+[    9.763740]  msm_fbdev_driver_fbdev_probe+0xd0/0x258 [msm]
+[    9.763760]  __drm_fb_helper_initial_config_and_unlock+0x288/0x528 [drm_kms_helper]
+[    9.763771]  drm_fb_helper_initial_config+0x44/0x54 [drm_kms_helper]
+[    9.763779]  drm_fbdev_client_hotplug+0x84/0xd4 [drm_client_lib]
+[    9.763782]  drm_client_register+0x58/0x9c [drm]
+[    9.763806]  drm_fbdev_client_setup+0xe8/0xcf0 [drm_client_lib]
+[    9.763809]  drm_client_setup+0xb4/0xd8 [drm_client_lib]
+[    9.763811]  msm_drm_kms_post_init+0x2c/0x3c [msm]
+[    9.763830]  msm_drm_init+0x1a8/0x22c [msm]
+[    9.763848]  msm_drm_bind+0x30/0x3c [msm]
+[    9.919273]  try_to_bring_up_aggregate_device+0x168/0x1d4
+[    9.919283]  __component_add+0xa4/0x170
+[    9.919286]  component_add+0x14/0x20
+[    9.919288]  msm_dp_display_probe_tail+0x4c/0xac [msm]
+[    9.919315]  msm_dp_auxbus_done_probe+0x14/0x20 [msm]
+[    9.919335]  dp_aux_ep_probe+0x4c/0xf0 [drm_dp_aux_bus]
+[    9.919341]  really_probe+0xbc/0x298
+[    9.919345]  __driver_probe_device+0x78/0x12c
+[    9.919348]  driver_probe_device+0x40/0x160
+[    9.919350]  __driver_attach+0x94/0x19c
+[    9.919353]  bus_for_each_dev+0x74/0xd4
+[    9.919355]  driver_attach+0x24/0x30
+[    9.919358]  bus_add_driver+0xe4/0x208
+[    9.919360]  driver_register+0x60/0x128
+[    9.919363]  __dp_aux_dp_driver_register+0x24/0x30 [drm_dp_aux_bus]
+[    9.919365]  atana33xc20_init+0x20/0x1000 [panel_samsung_atna33xc20]
+[    9.919370]  do_one_initcall+0x6c/0x1b0
+[    9.919374]  do_init_module+0x58/0x234
+[    9.919377]  load_module+0x19cc/0x1bd4
+[    9.919380]  init_module_from_file+0x84/0xc4
+[    9.919382]  __arm64_sys_finit_module+0x1b8/0x2cc
+[    9.919384]  invoke_syscall+0x48/0x110
+[    9.919389]  el0_svc_common.constprop.0+0xc8/0xe8
+[    9.919393]  do_el0_svc+0x20/0x2c
+[    9.919396]  el0_svc+0x34/0xf0
+[    9.919401]  el0t_64_sync_handler+0xa0/0xe4
+[    9.919403]  el0t_64_sync+0x198/0x19c
+[    9.919407] Code: eb0000bf 54000480 d100a003 aa0303e2 (f8418c44)
+[    9.919410] ---[ end trace 0000000000000000 ]---
 
-Fixes: d0941130c9351 ("icmp: Add counters for rate limits")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Cc: Abhishek Rawal <rawal.abhishek92@gmail.com>
-Link: https://patch.msgid.link/20250905165813.1470708-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 217ed15bd399 ("drm/msm: enable separate binding of GPU and display devices")
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/672257/
+Link: https://lore.kernel.org/r/20250902-assorted-sept-1-v1-1-f3ec9baed513@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 3 +--
- net/ipv6/proc.c | 6 +++++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 95cdd4cacb004..56c974cf75d15 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -230,8 +230,7 @@ static bool icmpv6_xrlim_allow(struct sock *sk, u8 type,
- 	}
- 	rcu_read_unlock();
- 	if (!res)
--		__ICMP6_INC_STATS(net, ip6_dst_idev(dst),
--				  ICMP6_MIB_RATELIMITHOST);
-+		__ICMP6_INC_STATS(net, NULL, ICMP6_MIB_RATELIMITHOST);
- 	else
- 		icmp_global_consume(net);
- 	dst_release(dst);
-diff --git a/net/ipv6/proc.c b/net/ipv6/proc.c
-index 1a20d088bb13c..eb268b0700258 100644
---- a/net/ipv6/proc.c
-+++ b/net/ipv6/proc.c
-@@ -94,6 +94,7 @@ static const struct snmp_mib snmp6_icmp6_list[] = {
- 	SNMP_MIB_ITEM("Icmp6OutMsgs", ICMP6_MIB_OUTMSGS),
- 	SNMP_MIB_ITEM("Icmp6OutErrors", ICMP6_MIB_OUTERRORS),
- 	SNMP_MIB_ITEM("Icmp6InCsumErrors", ICMP6_MIB_CSUMERRORS),
-+/* ICMP6_MIB_RATELIMITHOST needs to be last, see snmp6_dev_seq_show(). */
- 	SNMP_MIB_ITEM("Icmp6OutRateLimitHost", ICMP6_MIB_RATELIMITHOST),
- };
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 9dcc7a596a11d..7e977fec41007 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -826,6 +826,7 @@ static const struct file_operations fops = {
  
-@@ -242,8 +243,11 @@ static int snmp6_dev_seq_show(struct seq_file *seq, void *v)
- 			      snmp6_ipstats_list,
- 			      ARRAY_SIZE(snmp6_ipstats_list),
- 			      offsetof(struct ipstats_mib, syncp));
-+
-+	/* Per idev icmp stats do not have ICMP6_MIB_RATELIMITHOST */
- 	snmp6_seq_show_item(seq, NULL, idev->stats.icmpv6dev->mibs,
--			    snmp6_icmp6_list, ARRAY_SIZE(snmp6_icmp6_list));
-+			    snmp6_icmp6_list, ARRAY_SIZE(snmp6_icmp6_list) - 1);
-+
- 	snmp6_seq_show_icmpv6msg(seq, idev->stats.icmpv6msgdev->mibs);
- 	return 0;
- }
+ #define DRIVER_FEATURES_KMS ( \
+ 		DRIVER_GEM | \
++		DRIVER_GEM_GPUVA | \
+ 		DRIVER_ATOMIC | \
+ 		DRIVER_MODESET | \
+ 		0 )
 -- 
 2.51.0
 
