@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B989830AABF;
-	Mon, 13 Oct 2025 15:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19CD30ACE9;
+	Mon, 13 Oct 2025 15:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369486; cv=none; b=Cgl5+SKKhi1g/Re1LlFqH+PwIV6PJrkER0Gmvj0ysHBQqhg5dTAKVtj2hwm59oh3HEbLcQHD6rsvDLVFzDjK/OhPiX4xX0ezzJUL8y9CQA10k09MHJ+uzLDKi/Apgao5PO5VgEiBsBksf0fDZfAH3nD3wMSqY9h5HHYGRPjeMxU=
+	t=1760369489; cv=none; b=acxMidlvhQTn4e/IdKVJf9WpJG6e5NlesaiHz/QaamhF++pjJNeoy347KRHLwokjBYDKJLl7onWdK8p2oXPcpulA2fo1hjXCdp3eFnKrMQeuLOKIFTGIkmdo/iuU9osgI54WSkgCaKf1c5QLGR9XojH/gCAg9NOBkm6Saej/Dhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369486; c=relaxed/simple;
-	bh=HZOlO3XRrXAPkbtCfXbonOBkRqAtcTG+PsDY21kHZec=;
+	s=arc-20240116; t=1760369489; c=relaxed/simple;
+	bh=aEfyGl9vQVVaooeqxyD5GvUymJvVKJdHeyxqWGcLeno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NA2RszIh3UzaGVTfSxrKrCz6M6ZsfYMTSt1k6j8d39eT7jRyng6WB6gQJ/JM0mrhUv85bp23C8LMAirKeLIhYBvyToFCz68tWDW5lWNwBe2F4p4jFjANBmVWazOxaWGOjVyALOdIjXTZ8GoQLnP6aMx8lfEgB7mbySN8U85NRkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5c4G5Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YytTPoISXpKIcGveFt8NQqiOepBJqHA6QtlBrJoiK8ZmWeoW3q3hkugiV0/OpH+FzS49ghmykJ1jux/Fp43pwNeZkECyo1ALbs7jxv5DPkWrjYTf7RIaCzmzPy2wdTi/27S3acLZkWwTphRbYPNPw6iyM2qNFW3tq7JvwSsJ/Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9338D24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5c4G5Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43869C4CEE7;
-	Mon, 13 Oct 2025 15:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9338D24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05836C4CEE7;
+	Mon, 13 Oct 2025 15:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369486;
-	bh=HZOlO3XRrXAPkbtCfXbonOBkRqAtcTG+PsDY21kHZec=;
+	s=korg; t=1760369489;
+	bh=aEfyGl9vQVVaooeqxyD5GvUymJvVKJdHeyxqWGcLeno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5c4G5XhwvMlF5FhWmXCgdoG5cvO8xCw4JA0eIUGlNIpPEg8VniR9hbvyEeSzUiqo
-	 FExqSAkLq423uO80ikILayMnG2ofpgCbkykA0dbEUY7GsqMw3NJ+CXVqpMFoDT/99U
-	 9xllq6sF430yvyH4GutERfJgXNuLmE1htFA9Z1V8=
+	b=V9338D24Qo95w5FLGVj2s0g0oDfFSYam315MXtWVXTDppeZL4JxX35sdzqDr+0Bew
+	 GmHqYp0JSSgV4UcYzj6wuLTVRA8pnbosGO5lhBykien52vRUiGjL8IAUC+CKWZlJvL
+	 bO0A8tKJIP00UPFe1/e/nKDs7CR5R7y8DenCoWRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingbu Cao <bingbu.cao@intel.com>,
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 262/563] media: staging/ipu7: cleanup the MMU correctly in IPU7 driver release
-Date: Mon, 13 Oct 2025 16:42:03 +0200
-Message-ID: <20251013144420.768944477@linuxfoundation.org>
+Subject: [PATCH 6.17 263/563] media: i2c: vd55g1: Fix duster register address
+Date: Mon, 13 Oct 2025 16:42:04 +0200
+Message-ID: <20251013144420.805835512@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,49 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
 
-[ Upstream commit 01a80b6649e69e4889b8521de022d3ee4bc5cb6f ]
+[ Upstream commit ba4b8886c22a3e8c3f41c6dd373b177d7d41bcf8 ]
 
-IPU7 ISYS and PSYS auxiliary devices are released after
-ipu7_bus_del_devices(), so driver can not reference the MMU devices
-from ISYS and PSYS auxiliary devices, so move the MMUs cleanup before
-releasing the auxiliary devices.
+The duster register needs to be disabled on test patterns. While the
+code is correctly doing so, the register address contained a typo, thus
+not disabling the duster correctly. Fix the typo.
 
-Fixes: b7fe4c0019b1 ("media: staging/ipu7: add Intel IPU7 PCI device driver")
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-[Sakari Ailus: Drop extra newline.]
+Fixes: e56616d7b23c ("media: i2c: Add driver for ST VD55G1 camera sensor")
+
+Signed-off-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu7/ipu7.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/vd55g1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/ipu7/ipu7.c b/drivers/staging/media/ipu7/ipu7.c
-index aef931d235108..ee6b63717ed36 100644
---- a/drivers/staging/media/ipu7/ipu7.c
-+++ b/drivers/staging/media/ipu7/ipu7.c
-@@ -2644,6 +2644,9 @@ static void ipu7_pci_remove(struct pci_dev *pdev)
- 	if (!IS_ERR_OR_NULL(isp->fw_code_region))
- 		vfree(isp->fw_code_region);
- 
-+	ipu7_mmu_cleanup(isp->isys->mmu);
-+	ipu7_mmu_cleanup(isp->psys->mmu);
-+
- 	ipu7_bus_del_devices(pdev);
- 
- 	pm_runtime_forbid(&pdev->dev);
-@@ -2652,9 +2655,6 @@ static void ipu7_pci_remove(struct pci_dev *pdev)
- 	ipu_buttress_exit(isp);
- 
- 	release_firmware(isp->cpd_fw);
--
--	ipu7_mmu_cleanup(isp->psys->mmu);
--	ipu7_mmu_cleanup(isp->isys->mmu);
- }
- 
- static void ipu7_pci_reset_prepare(struct pci_dev *pdev)
+diff --git a/drivers/media/i2c/vd55g1.c b/drivers/media/i2c/vd55g1.c
+index 7c39183dd44bf..4a62d35006829 100644
+--- a/drivers/media/i2c/vd55g1.c
++++ b/drivers/media/i2c/vd55g1.c
+@@ -66,7 +66,7 @@
+ #define VD55G1_REG_READOUT_CTRL				CCI_REG8(0x052e)
+ #define VD55G1_READOUT_CTRL_BIN_MODE_NORMAL		0
+ #define VD55G1_READOUT_CTRL_BIN_MODE_DIGITAL_X2		1
+-#define VD55G1_REG_DUSTER_CTRL				CCI_REG8(0x03ea)
++#define VD55G1_REG_DUSTER_CTRL				CCI_REG8(0x03ae)
+ #define VD55G1_DUSTER_ENABLE				BIT(0)
+ #define VD55G1_DUSTER_DISABLE				0
+ #define VD55G1_DUSTER_DYN_ENABLE			BIT(1)
 -- 
 2.51.0
 
