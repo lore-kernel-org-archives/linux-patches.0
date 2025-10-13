@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E1B312819;
-	Mon, 13 Oct 2025 15:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4047431A562;
+	Mon, 13 Oct 2025 15:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369313; cv=none; b=F3334OGcMMWOivT+jcNbnf8t1NRDEkp/HlIRrvh349qzr8ReXYLniwn9iOxuKs3mSs67Mf9DKZ154g26BdpMuMumcOYo5bzInA4dJKkOJsK8lru5ndZ+VnthAiiZXqfOECzZG7Trwg8qIBwfDSu++nfVyLQhL/iGMsQ0CBLU/PA=
+	t=1760369316; cv=none; b=FO2IpsW1EYzJhGVIMBIih9hqfrePRNoAD+VWawqRisAZr3aCN6jQI5sDQaMJRY9qmWnxO0D3CMAgneGFdbOhUS6N2yjsJKXmFslMAYPGcOUXclp1SHfLrNr4ASEtFvlJjBtw7Y2GOCtlDEInmntxYE8nGN/UOb/gBNXN27ziQlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369313; c=relaxed/simple;
-	bh=ZCgU8y5I1uEFg7r3dLWr5yhA11DGxcZw0i5WpFa7Qx0=;
+	s=arc-20240116; t=1760369316; c=relaxed/simple;
+	bh=jMSOF1Pa9lpCeGg5mzbIG9HO2ij97cf7KIeMabvq+2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjW9vqTkCZr2ur/x0Vto1VaCfGAcpEgxVcE6Bib1pqNMqVbPadUsTuOVv+7eyLQB+/H4d/6PQOWblLhJQ0yGs2vYQU7jTuPnLn0DKZbbzbMpc61PiNt7hZW43ETsLx4QgOaOuBoZ/JHQ9PswehhpFwjADTmBsR1ITbaVyp113Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhVmI0YW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjZtiPjXMEe+BgzkK1z4Ls+A1fkVz+5R3Wqk+wb6dK+KgABJDkX0UZFjP0M2/m2NzdIL49ns+NJLZfvxOP+t7MQfkEp8/awq+yLRQPx/shcX2YdoYedmNxPdOQgQUhFBEOQA3mChEkwk9CeSFL9QXPx9OGXAspTltLX/5WiwuBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhhOU+OL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhVmI0YW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FA0C4CEFE;
-	Mon, 13 Oct 2025 15:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhhOU+OL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D25C116B1;
+	Mon, 13 Oct 2025 15:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369312;
-	bh=ZCgU8y5I1uEFg7r3dLWr5yhA11DGxcZw0i5WpFa7Qx0=;
+	s=korg; t=1760369315;
+	bh=jMSOF1Pa9lpCeGg5mzbIG9HO2ij97cf7KIeMabvq+2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhVmI0YWIMC0Jm7f1C9SsQhCRl6bdtnPZ6OEZOdP0CRFuzLhK6wyfvcoMxt3gCmht
-	 DJwvIIMFRz1biuKucTy6nlAO5N3ERyH1WQFgqMYxMtajYj9A5Bfkac6YsxLhCT4IQW
-	 7uTXUoTGZM0TV3tObtLm4TrTKFkg7IbSDAMHrCXE=
+	b=EhhOU+OLXmz7OkuWWvx+ovAjIfC96WT8WBX/dvMt+s3cJR5NccClpEq0VJHUjO6wl
+	 KpLOnBI0SH24jo7rvYGsj470MmmpeQCVnxShxfp6H8/nue4y8rEdYprQN6uEYPP9fe
+	 bUqpkZ1/c0QWLpAnokx4twp+yMJrY8dCr+vqMkbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 169/563] block: fix stacking of atomic writes when atomics are not supported
-Date: Mon, 13 Oct 2025 16:40:30 +0200
-Message-ID: <20251013144417.412148404@linuxfoundation.org>
+Subject: [PATCH 6.17 160/563] ACPICA: Fix largest possible resource descriptor index
+Date: Mon, 13 Oct 2025 16:40:21 +0200
+Message-ID: <20251013144417.087363193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,82 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit f2d8c5a2f79c28569edf4948b611052253b5e99a ]
+[ Upstream commit 8ca944fea4d6d9019e01f2d6f6e766f315a9d73f ]
 
-Atomic writes support may not always be possible when stacking devices
-which support atomic writes. Such as case is a different atomic write
-boundary between stacked devices (which is not supported).
+ACPI_RESOURCE_NAME_LARGE_MAX should be equal to the last actually
+used resource descriptor index (ACPI_RESOURCE_NAME_CLOCK_INPUT).
 
-In the case that atomic writes cannot supported, the top device queue HW
-limits are set to 0.
+Otherwise 'resource_index' in 'acpi_ut_validate_resource()' may be
+clamped incorrectly and resulting value may issue an out-of-bounds
+access for 'acpi_gbl_resource_types' array. Compile tested only.
 
-However, in blk_stack_atomic_writes_limits(), we detect that we are
-stacking the first bottom device by checking the top device
-atomic_write_hw_max value == 0. This get confused with the case of atomic
-writes not supported, above.
-
-Make the distinction between stacking the first bottom device and no
-atomics supported by initializing stacked device atomic_write_hw_max =
-UINT_MAX and checking that for stacking the first bottom device.
-
-Fixes: d7f36dc446e8 ("block: Support atomic writes limits for stacked devices")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 520d4a0ee5b6 ("ACPICA: add support for ClockInput resource (v6.5)")
+Link: https://github.com/acpica/acpica/commit/cf00116c
+Link: https://marc.info/?l=linux-acpi&m=175449676131260&w=2
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/acpi/acpica/aclocal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 6760dbf130b24..8fa52914e16b0 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -56,6 +56,7 @@ void blk_set_stacking_limits(struct queue_limits *lim)
- 	lim->max_user_wzeroes_unmap_sectors = UINT_MAX;
- 	lim->max_hw_zone_append_sectors = UINT_MAX;
- 	lim->max_user_discard_sectors = UINT_MAX;
-+	lim->atomic_write_hw_max = UINT_MAX;
- }
- EXPORT_SYMBOL(blk_set_stacking_limits);
+diff --git a/drivers/acpi/acpica/aclocal.h b/drivers/acpi/acpica/aclocal.h
+index 0c41f0097e8d7..f98640086f4ef 100644
+--- a/drivers/acpi/acpica/aclocal.h
++++ b/drivers/acpi/acpica/aclocal.h
+@@ -1141,7 +1141,7 @@ struct acpi_port_info {
+ #define ACPI_RESOURCE_NAME_PIN_GROUP_FUNCTION   0x91
+ #define ACPI_RESOURCE_NAME_PIN_GROUP_CONFIG     0x92
+ #define ACPI_RESOURCE_NAME_CLOCK_INPUT          0x93
+-#define ACPI_RESOURCE_NAME_LARGE_MAX            0x94
++#define ACPI_RESOURCE_NAME_LARGE_MAX            0x93
  
-@@ -232,6 +233,10 @@ static void blk_validate_atomic_write_limits(struct queue_limits *lim)
- 	if (!(lim->features & BLK_FEAT_ATOMIC_WRITES))
- 		goto unsupported;
- 
-+	/* UINT_MAX indicates stacked limits in initial state */
-+	if (lim->atomic_write_hw_max == UINT_MAX)
-+		goto unsupported;
-+
- 	if (!lim->atomic_write_hw_max)
- 		goto unsupported;
- 
-@@ -723,18 +728,14 @@ static void blk_stack_atomic_writes_limits(struct queue_limits *t,
- 	if (!blk_atomic_write_start_sect_aligned(start, b))
- 		goto unsupported;
- 
--	/*
--	 * If atomic_write_hw_max is set, we have already stacked 1x bottom
--	 * device, so check for compliance.
--	 */
--	if (t->atomic_write_hw_max) {
-+	/* UINT_MAX indicates no stacking of bottom devices yet */
-+	if (t->atomic_write_hw_max == UINT_MAX) {
-+		if (!blk_stack_atomic_writes_head(t, b))
-+			goto unsupported;
-+	} else {
- 		if (!blk_stack_atomic_writes_tail(t, b))
- 			goto unsupported;
--		return;
- 	}
--
--	if (!blk_stack_atomic_writes_head(t, b))
--		goto unsupported;
- 	blk_stack_atomic_writes_chunk_sectors(t);
- 	return;
- 
+ /*****************************************************************************
+  *
 -- 
 2.51.0
 
