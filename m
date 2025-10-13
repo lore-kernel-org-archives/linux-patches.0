@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BDF253954;
-	Mon, 13 Oct 2025 15:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C53130C622;
+	Mon, 13 Oct 2025 15:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369084; cv=none; b=ogfLZNdd0CDx264UEkwCXxIrswDg2m2eV/WjfebvCAewbj9Siy/Ia54zmYDeuTXuybqdlUQThblkHOFAQtTD0LfLabyc1taR4sfwrW9jIokkN1GSIa/nlRwWcPMgfjLxzUI3kCfr23V8UJiHLUvaITCCVX9xb23hMCrbGRaqz9g=
+	t=1760369087; cv=none; b=CSzqIR+CgnFakwBPoq1nHRSc0nj6gU5eSL5vEbIvEpgfTJQFHH0kU1TCmkshhihQjOd7wF10SLP6tmv8Hv9Nm1y20sFG08GewvloAxz8dpGzSFHIF3XWmPBjJkXesfttHoXhPPBx+jwtSN1ZjXCwCp6L8upGpXsY/b3lE0Qk5ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369084; c=relaxed/simple;
-	bh=INgivSK8bHOmnCzuqhDq9dchKR5xZYqn/9698tc8ClE=;
+	s=arc-20240116; t=1760369087; c=relaxed/simple;
+	bh=2f1a2X+XCNaQowmWC82F1b72BnixKT8bb0dmE4YP8Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRPZ69sVFBewcO1Z3RSK7NO3/FE9iqOuwKYouMimquEOtDflCxXnISktBBE/IdoAqbJoyG+DOCqjo23g/+5e9M6LZEYMoFWL3WwsmXJdJpamhgZevb5eg8L0n5d3+1hYkcBRVQTjjY4FIB34EDYqEE8J7EN4Akh6hpwizxzxADs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bnU+ga8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgPRaVDWR2h2PV4Pe0/7z5FffswtTDNYkWikaOR/hQiICToKeTWTLqlmqy0S2ylvFx1ypco8RI07SZK55ldBkoqUUMw1u5V92D/hIKYzGksJPk9Sqp508ACFPvcaotg5BcNd+T7K1oADXcvPGRicJ4FzgsWuETHmGBx75ByEVqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psHkRfuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bnU+ga8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0741C4CEE7;
-	Mon, 13 Oct 2025 15:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psHkRfuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A3AC4CEE7;
+	Mon, 13 Oct 2025 15:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369084;
-	bh=INgivSK8bHOmnCzuqhDq9dchKR5xZYqn/9698tc8ClE=;
+	s=korg; t=1760369087;
+	bh=2f1a2X+XCNaQowmWC82F1b72BnixKT8bb0dmE4YP8Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bnU+ga8O6++cS2QaHp/mVVXMeQ7Nvs5eEEEXhyMLpdYZqTu6NVD4P31Dp/DZR2Vz
-	 fCa8+6vleS7AoCdoy1jlix2uXltfw4YcK/W/LaT6N5W9vuzB0rccbXWOPtrWOx5Pbe
-	 nIFVaHpXTp1/usiLPHgbxedJ1a55+4UZ4lXdKwME=
+	b=psHkRfuDL+bglmmqWeOKKX3+xQpbmmS1YtdkB7thZB8EQY59KX3VBNEFK/WIdY2eN
+	 i5AAdl3C5h2j9YGfhAl5AztDc2PO7qCRbaKTIukMVHGBlMyJMv+OOUClZJ+c86XfvN
+	 mYbG56cK/0QpyRqNr7Fq7gOdMoDio62Khmx1mX60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 121/563] block: initialize bio issue time in blk_mq_submit_bio()
-Date: Mon, 13 Oct 2025 16:39:42 +0200
-Message-ID: <20251013144415.677130850@linuxfoundation.org>
+Subject: [PATCH 6.17 122/563] block: factor out a helper bio_submit_split_bioset()
+Date: Mon, 13 Oct 2025 16:39:43 +0200
+Message-ID: <20251013144415.713568438@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,104 +55,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 1f963bdd6420b6080bcfd0ee84a75c96f35545a6 ]
+[ Upstream commit e37b5596a19be9a150cb194ec32e78f295a3574b ]
 
-bio->issue_time_ns is only used by blk-iolatency, which can only be
-enabled for rq-based disk, hence it's not necessary to initialize
-the time for bio-based disk.
+No functional changes are intended, some drivers like mdraid will split
+bio by internal processing, prepare to unify bio split codes.
 
-Meanwhile, if bio is split by blk_crypto_fallback_split_bio_if_needed(),
-the issue time is not initialized for new split bio, this can be fixed
-as well.
-
-Noted the next patch will optimize better that bio issue time will
-only be used when blk-iolatency is really enabled by the disk.
-
-Fixes: 488f6682c832 ("block: blk-crypto-fallback for Inline Encryption")
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b2f5974079d8 ("block: fix ordering of recursive split IO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.h | 6 ------
- block/blk-core.c   | 1 -
- block/blk-merge.c  | 1 -
- block/blk-mq.c     | 8 ++++++++
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ block/blk-merge.c      | 59 ++++++++++++++++++++++++++++--------------
+ include/linux/blkdev.h |  2 ++
+ 2 files changed, 42 insertions(+), 19 deletions(-)
 
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index 8328427e31657..1cce3294634d1 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -370,11 +370,6 @@ static inline void blkg_put(struct blkcg_gq *blkg)
- 		if (((d_blkg) = blkg_lookup(css_to_blkcg(pos_css),	\
- 					    (p_blkg)->q)))
- 
--static inline void blkcg_bio_issue_init(struct bio *bio)
--{
--	bio->issue_time_ns = blk_time_get_ns();
--}
--
- static inline void blkcg_use_delay(struct blkcg_gq *blkg)
- {
- 	if (WARN_ON_ONCE(atomic_read(&blkg->use_delay) < 0))
-@@ -497,7 +492,6 @@ static inline struct blkg_policy_data *blkg_to_pd(struct blkcg_gq *blkg,
- static inline struct blkcg_gq *pd_to_blkg(struct blkg_policy_data *pd) { return NULL; }
- static inline void blkg_get(struct blkcg_gq *blkg) { }
- static inline void blkg_put(struct blkcg_gq *blkg) { }
--static inline void blkcg_bio_issue_init(struct bio *bio) { }
- static inline void blk_cgroup_bio_start(struct bio *bio) { }
- static inline bool blk_cgroup_mergeable(struct request *rq, struct bio *bio) { return true; }
- 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index a27185cd8edea..e5af6eda5a459 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -730,7 +730,6 @@ static void __submit_bio_noacct_mq(struct bio *bio)
- void submit_bio_noacct_nocheck(struct bio *bio)
- {
- 	blk_cgroup_bio_start(bio);
--	blkcg_bio_issue_init(bio);
- 
- 	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
- 		trace_block_bio_queue(bio);
 diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 70d704615be52..5538356770a47 100644
+index 5538356770a47..51fe4ed5b7c0b 100644
 --- a/block/blk-merge.c
 +++ b/block/blk-merge.c
-@@ -119,7 +119,6 @@ static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
- 			goto error;
- 		}
- 		split->bi_opf |= REQ_NOMERGE;
--		blkcg_bio_issue_init(split);
- 		bio_chain(split, bio);
- 		trace_block_split(split, bio->bi_iter.bi_sector);
- 		WARN_ON_ONCE(bio_zone_write_plugging(bio));
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 9055cd6247004..19b50110376c6 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -396,6 +396,13 @@ static inline void blk_mq_rq_time_init(struct request *rq, u64 alloc_time_ns)
- #endif
+@@ -104,33 +104,54 @@ static unsigned int bio_allowed_max_sectors(const struct queue_limits *lim)
+ 	return round_down(UINT_MAX, lim->logical_block_size) >> SECTOR_SHIFT;
  }
  
-+static inline void blk_mq_bio_issue_init(struct bio *bio)
++/*
++ * bio_submit_split_bioset - Submit a bio, splitting it at a designated sector
++ * @bio:		the original bio to be submitted and split
++ * @split_sectors:	the sector count at which to split
++ * @bs:			the bio set used for allocating the new split bio
++ *
++ * The original bio is modified to contain the remaining sectors and submitted.
++ * The caller is responsible for submitting the returned bio.
++ *
++ * If succeed, the newly allocated bio representing the initial part will be
++ * returned, on failure NULL will be returned and original bio will fail.
++ */
++struct bio *bio_submit_split_bioset(struct bio *bio, unsigned int split_sectors,
++				    struct bio_set *bs)
 +{
-+#ifdef CONFIG_BLK_CGROUP
-+	bio->issue_time_ns = blk_time_get_ns();
-+#endif
-+}
++	struct bio *split = bio_split(bio, split_sectors, GFP_NOIO, bs);
 +
- static struct request *blk_mq_rq_ctx_init(struct blk_mq_alloc_data *data,
- 		struct blk_mq_tags *tags, unsigned int tag)
++	if (IS_ERR(split)) {
++		bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++		bio_endio(bio);
++		return NULL;
++	}
++
++	bio_chain(split, bio);
++	trace_block_split(split, bio->bi_iter.bi_sector);
++	WARN_ON_ONCE(bio_zone_write_plugging(bio));
++	submit_bio_noacct(bio);
++
++	return split;
++}
++EXPORT_SYMBOL_GPL(bio_submit_split_bioset);
++
+ static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
  {
-@@ -3168,6 +3175,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	if (!bio_integrity_prep(bio))
- 		goto queue_exit;
+-	if (unlikely(split_sectors < 0))
+-		goto error;
++	if (unlikely(split_sectors < 0)) {
++		bio->bi_status = errno_to_blk_status(split_sectors);
++		bio_endio(bio);
++		return NULL;
++	}
  
-+	blk_mq_bio_issue_init(bio);
- 	if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
- 		goto queue_exit;
+ 	if (split_sectors) {
+-		struct bio *split;
+-
+-		split = bio_split(bio, split_sectors, GFP_NOIO,
++		bio = bio_submit_split_bioset(bio, split_sectors,
+ 				&bio->bi_bdev->bd_disk->bio_split);
+-		if (IS_ERR(split)) {
+-			split_sectors = PTR_ERR(split);
+-			goto error;
+-		}
+-		split->bi_opf |= REQ_NOMERGE;
+-		bio_chain(split, bio);
+-		trace_block_split(split, bio->bi_iter.bi_sector);
+-		WARN_ON_ONCE(bio_zone_write_plugging(bio));
+-		submit_bio_noacct(bio);
+-		return split;
++		if (bio)
++			bio->bi_opf |= REQ_NOMERGE;
+ 	}
  
+ 	return bio;
+-error:
+-	bio->bi_status = errno_to_blk_status(split_sectors);
+-	bio_endio(bio);
+-	return NULL;
+ }
+ 
+ struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index fe1797bbec420..cc221318712e7 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -999,6 +999,8 @@ extern int blk_register_queue(struct gendisk *disk);
+ extern void blk_unregister_queue(struct gendisk *disk);
+ void submit_bio_noacct(struct bio *bio);
+ struct bio *bio_split_to_limits(struct bio *bio);
++struct bio *bio_submit_split_bioset(struct bio *bio, unsigned int split_sectors,
++				    struct bio_set *bs);
+ 
+ extern int blk_lld_busy(struct request_queue *q);
+ extern int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags);
 -- 
 2.51.0
 
