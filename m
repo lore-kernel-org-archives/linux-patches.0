@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C06271479;
-	Mon, 13 Oct 2025 15:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A64424A063;
+	Mon, 13 Oct 2025 15:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367644; cv=none; b=Is13Q25X9kwYK2loLhcPuiG9q3cSTBP01rW4msF5Xb55i1R5WZaJXZSLgDquFVdXFisgEbBhV9qEPYXiLGLZhazltNGvvScaNjpAl+XBrUAFpLHY0Ij4KnnaawYw7Dm69pOZKRs4jAvmIx+mbrGYvvVXqmUo77hTo0v6YtA6jLU=
+	t=1760367647; cv=none; b=V2rSC4Wmw2lJ9xbfL3NSC6/RTtNr4mylEm9g2w5eLq8FBmNoaotV/20kO+g2dbFaoSc+/5NLh0Ue8yYxvP6d3S2odkV9ZBqO5ykwcFmVVAo1vDGdGyBJOSke8S7Q/kSrkqdu3S6W2iHPbRE9q8Fm6zEmvC7ifG7OOj6Bsrt60ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367644; c=relaxed/simple;
-	bh=TThNX95KLHUfL6dHyd0h/BVBIwFf7CdGWaQlap5Dx3g=;
+	s=arc-20240116; t=1760367647; c=relaxed/simple;
+	bh=Ejs6OJfUJ5Lmv/NgJxD2LZ0IxwJPlY2ZV7weqN1p9qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHmn9UM9Q7zVe4cq8loVzdai7HB2HX5fByMXceeHn0JeqbqScvOhhib+phW1SJxGQmK075PzzOpXU0iSTKs0c7LxOysMHvRwBpojjRLgGyiQCUA5KH2LABeUnS5rRfXHFXEvqnL7ZprrYRkfFbvqK8SzpabXD2VN5EcSpwu+uCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pw/oIhzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYhxT1c9wCrjf018NrB2/KPnQbktF5ZuJIFBKX7uAXIL6gKIW/gvd05yLrpkJN18Qv+FSZgxesXvzBvy+K/o1GiYe8tHh2bBRcm3RkLxIU5EBF48WRBk2nivtGmhOM/U9TBrFTEdBYzC2MoMXjFnPqjvNMxLUZSCteoh35RTXpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=li1bIZCe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pw/oIhzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D042CC4CEE7;
-	Mon, 13 Oct 2025 15:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="li1bIZCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3612C4CEE7;
+	Mon, 13 Oct 2025 15:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367644;
-	bh=TThNX95KLHUfL6dHyd0h/BVBIwFf7CdGWaQlap5Dx3g=;
+	s=korg; t=1760367647;
+	bh=Ejs6OJfUJ5Lmv/NgJxD2LZ0IxwJPlY2ZV7weqN1p9qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pw/oIhzleGuqGEi0gSzNRW/i2m5+PQ3WqO8o5XbwcudDRW6nY8SfCPzjBqxFUL39X
-	 +oeU+MTlsAExNIqvEdBlaSA7hFV2Z8zD0pche/uP4qrqGSOgRJ3h+PjLjc7Yl3eLn/
-	 YYrhLFftKoFiWZjPKPxTPgUfxol83EP2mhSn5RHY=
+	b=li1bIZCee7YCjfD9tSwl/isvWg7XaGYUxPwg7IEe3JAcvHXEuzFHeGjBxDmdN/kXP
+	 PQ82V5zEVIDJWP/44yIbTeMlsq1QUXV/8uGZIPDnMw4uaTNCkT8+Dxx8og02ioGL4D
+	 wkib89GghtC/vB/PwKggu5Oe0opzKi8lRd0VYeM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/196] media: zoran: Remove zoran_fh structure
-Date: Mon, 13 Oct 2025 16:44:17 +0200
-Message-ID: <20251013144317.582843189@linuxfoundation.org>
+Subject: [PATCH 6.6 084/196] coresight: Only register perf symlink for sinks with alloc_buffer
+Date: Mon, 13 Oct 2025 16:44:35 +0200
+Message-ID: <20251013144318.357472043@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,61 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
 
-[ Upstream commit dc322d13cf417552b59e313e809a6da40b8b36ef ]
+[ Upstream commit 12d9a9dd9d8a4f1968073e7f34515896d1e22b78 ]
 
-The zoran_fh structure is a wrapper around v4l2_fh. Its usage has been
-mostly removed by commit 83f89a8bcbc3 ("media: zoran: convert to vb2"),
-but the structure stayed by mistake. It is now used in a single
-location, assigned from a void pointer and then recast to a void
-pointer, without being every accessed. Drop it.
+Ensure that etm_perf_add_symlink_sink() is only called for devices
+that implement the alloc_buffer operation. This prevents invalid
+symlink creation for dummy sinks that do not implement alloc_buffer.
 
-Fixes: 83f89a8bcbc3 ("media: zoran: convert to vb2")
-Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Without this check, perf may attempt to use a dummy sink that lacks
+alloc_buffer operationsu to initialise perf's ring buffer, leading
+to runtime failures.
+
+Fixes: 9d3ba0b6c0569 ("Coresight: Add coresight dummy driver")
+Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250630-etm_perf_sink-v1-1-e4a7211f9ad7@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/zoran/zoran.h        | 6 ------
- drivers/media/pci/zoran/zoran_driver.c | 3 +--
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ drivers/hwtracing/coresight/coresight-core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/zoran/zoran.h b/drivers/media/pci/zoran/zoran.h
-index 56340553b2823..63592c4f9ed8c 100644
---- a/drivers/media/pci/zoran/zoran.h
-+++ b/drivers/media/pci/zoran/zoran.h
-@@ -154,12 +154,6 @@ struct zoran_jpg_settings {
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index 3b57851869eaa..a836952737209 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -1638,8 +1638,9 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+ 		goto out_unlock;
+ 	}
  
- struct zoran;
+-	if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+-	    csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) {
++	if ((csdev->type == CORESIGHT_DEV_TYPE_SINK ||
++	     csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) &&
++	    sink_ops(csdev)->alloc_buffer) {
+ 		ret = etm_perf_add_symlink_sink(csdev);
  
--/* zoran_fh contains per-open() settings */
--struct zoran_fh {
--	struct v4l2_fh fh;
--	struct zoran *zr;
--};
--
- struct card_info {
- 	enum card_type type;
- 	char name[32];
-diff --git a/drivers/media/pci/zoran/zoran_driver.c b/drivers/media/pci/zoran/zoran_driver.c
-index fa672cc8bc678..feb39854a989e 100644
---- a/drivers/media/pci/zoran/zoran_driver.c
-+++ b/drivers/media/pci/zoran/zoran_driver.c
-@@ -511,12 +511,11 @@ static int zoran_s_fmt_vid_cap(struct file *file, void *__fh,
- 			       struct v4l2_format *fmt)
- {
- 	struct zoran *zr = video_drvdata(file);
--	struct zoran_fh *fh = __fh;
- 	int i;
- 	int res = 0;
- 
- 	if (fmt->fmt.pix.pixelformat == V4L2_PIX_FMT_MJPEG)
--		return zoran_s_fmt_vid_out(file, fh, fmt);
-+		return zoran_s_fmt_vid_out(file, __fh, fmt);
- 
- 	for (i = 0; i < NUM_FORMATS; i++)
- 		if (fmt->fmt.pix.pixelformat == zoran_formats[i].fourcc)
+ 		if (ret) {
 -- 
 2.51.0
 
