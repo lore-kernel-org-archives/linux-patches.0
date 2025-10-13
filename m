@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356A631064B;
-	Mon, 13 Oct 2025 15:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A2B310650;
+	Mon, 13 Oct 2025 15:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369785; cv=none; b=Z1ZC0H1gkGNCyU0WIx5adxHEvL6SAvPw1XVX3vtiljPpDN2pWlI5jawM0fSlV8Y223Wr+7Yn1bopTawVdfZ45QQGbWI79L8U58ViJRZfWEnShy4fBGSIB9kvXEeK49B8jnbnhubDupcu10vlsuPexE597WMV6b6vhGDmnx8YAxo=
+	t=1760369788; cv=none; b=ezcgxmBcKargpuSrDjN+D90X8XCxO9sk7wJ8NwpgXrBGYz+RBeTWK2TGpRYG+5rUscH+1Jbbh2r2xfV5Q8d4r3vUKJSI/Zq+Q27GWMpSlDDbYSCGhvBru+ORQZwnRWg1l9wbSA6CMahDtiJGNO/V+3Nl83fmQIv7+DJEG01einc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369785; c=relaxed/simple;
-	bh=+tGqCMVajAEgYct/isAInh02XwGck3KNhM/CihlEjnU=;
+	s=arc-20240116; t=1760369788; c=relaxed/simple;
+	bh=2JP9fn9ENeDPveAsIb3k1WhEXd9/6xMUnNNW7utVzTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLQjfQ7A+JGX2AZcWNeIztZZ4KzF7t3P2fc59uQ+MkbfUxI7ScLsuXTTPgfab9gMvBlMIsRWrn0WDr1nr2EfVrKOwQs57kRRom47vhU5ScWQrzQr24TFR84S82dCa0Fu4TSpUn6jBa0nQnyGAc5WYWq7RyDYN+e0gQx6hBR6TDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3RbjIj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsB/pAIQMEN1c0AS84sxHLzm7w9DuW+Yhr1erSIvGYXQbA+pJ5/G3A21lxXo3uVv4wVYg7/lzpSpEaBaN53QGR68cD5RugJXQgmEwyoPOZnluE7Cwqp4IggeEWThqTVrrp99sJJvXlQuafQ4BVF5upaHytg66iGrdgN/JRcQT6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1w/i2LQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3RbjIj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B5CC4CEE7;
-	Mon, 13 Oct 2025 15:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1w/i2LQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED4CC4CEE7;
+	Mon, 13 Oct 2025 15:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369785;
-	bh=+tGqCMVajAEgYct/isAInh02XwGck3KNhM/CihlEjnU=;
+	s=korg; t=1760369787;
+	bh=2JP9fn9ENeDPveAsIb3k1WhEXd9/6xMUnNNW7utVzTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3RbjIj+2ryrTwNqWqGIXhCJ86jxthz/1eK0UrYXuo3Liyc2h8HuSPyeRci25u7/m
-	 yB+zNtaq/09vabMkc4rMMfF2fpVcbrZVh+pMQp4Rjf68cWmWM8eNNob+U46wBIjp+R
-	 24ELBjA3Dpp96GUiq5i5xtsIhwcwknkFoL2G3HIo=
+	b=o1w/i2LQ5ntah21V35oHGoRLEGHv1YAzj0V1zYtv0TK+Oz3DqAHAXFs7DcMKsbmgu
+	 a/1WbXjbHiqYgatUGlWD93Pp6aALdYEDAA9zMkBMlTTGGpXTVh3x/r3GRK2W1ixSX6
+	 yWjTbMUHBomFh9dNR1PNPq/7SMndVSrtV5/64244=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com,
+	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 367/563] f2fs: fix to truncate first page in error path of f2fs_truncate()
-Date: Mon, 13 Oct 2025 16:43:48 +0200
-Message-ID: <20251013144424.573355252@linuxfoundation.org>
+Subject: [PATCH 6.17 368/563] f2fs: fix to avoid migrating empty section
+Date: Mon, 13 Oct 2025 16:43:49 +0200
+Message-ID: <20251013144424.609605351@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,79 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 9251a9e6e871cb03c4714a18efa8f5d4a8818450 ]
+[ Upstream commit d625a2b08c089397d3a03bff13fa8645e4ec7a01 ]
 
-syzbot reports a bug as below:
+It reports a bug from device w/ zufs:
 
-loop0: detected capacity change from 0 to 40427
-F2FS-fs (loop0): Wrong SSA boundary, start(3584) end(4096) blocks(3072)
-F2FS-fs (loop0): Can't find valid F2FS filesystem in 1th superblock
-F2FS-fs (loop0): invalid crc value
-F2FS-fs (loop0): f2fs_convert_inline_folio: corrupted inline inode ino=3, i_addr[0]:0x1601, run fsck to fix.
-------------[ cut here ]------------
-kernel BUG at fs/inode.c:753!
-RIP: 0010:clear_inode+0x169/0x190 fs/inode.c:753
-Call Trace:
- <TASK>
- evict+0x504/0x9c0 fs/inode.c:810
- f2fs_fill_super+0x5612/0x6fa0 fs/f2fs/super.c:5047
- get_tree_bdev_flags+0x40e/0x4d0 fs/super.c:1692
- vfs_get_tree+0x8f/0x2b0 fs/super.c:1815
- do_new_mount+0x2a2/0x9e0 fs/namespace.c:3808
- do_mount fs/namespace.c:4136 [inline]
- __do_sys_mount fs/namespace.c:4347 [inline]
- __se_sys_mount+0x317/0x410 fs/namespace.c:4324
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+F2FS-fs (dm-64): Inconsistent segment (173822) type [1, 0] in SSA and SIT
+F2FS-fs (dm-64): Stopped filesystem due to reason: 4
 
-During f2fs_evict_inode(), clear_inode() detects that we missed to truncate
-all page cache before destorying inode, that is because in below path, we
-will create page #0 in cache, but missed to drop it in error path, let's fix
-it.
+Thread A				Thread B
+- f2fs_expand_inode_data
+ - f2fs_allocate_pinning_section
+  - f2fs_gc_range
+   - do_garbage_collect w/ segno #x
+					- writepage
+					 - f2fs_allocate_data_block
+					  - new_curseg
+					   - allocate segno #x
 
-- evict
- - f2fs_evict_inode
-  - f2fs_truncate
-   - f2fs_convert_inline_inode
-    - f2fs_grab_cache_folio
-    : create page #0 in cache
-    - f2fs_convert_inline_folio
-    : sanity check failed, return -EFSCORRUPTED
-  - clear_inode detects that inode->i_data.nrpages is not zero
+The root cause is: fallocate on pinning file may race w/ block allocation
+as above, result in do_garbage_collect() from fallocate() may migrate
+segment which is just allocated by a log, the log will update segment type
+in its in-memory structure, however GC will get segment type from on-disk
+SSA block, once segment type changes by log, we can detect such
+inconsistency, then shutdown filesystem.
 
-Fixes: 92dffd01790a ("f2fs: convert inline_data when i_size becomes large")
-Reported-by: syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68c09802.050a0220.3c6139.000e.GAE@google.com
+In this case, on-disk SSA shows type of segno #173822 is 1 (SUM_TYPE_NODE),
+however segno #173822 was just allocated as data type segment, so in-memory
+SIT shows type of segno #173822 is 0 (SUM_TYPE_DATA).
+
+Change as below to fix this issue:
+- check whether current section is empty before gc
+- add sanity checks on do_garbage_collect() to avoid any race case, result
+in migrating segment used by log.
+- btw, it fixes misc issue in printed logs: "SSA and SIT" -> "SIT and SSA".
+
+Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
+Cc: Daeho Jeong <daehojeong@google.com>
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 42faaed6a02da..1aae4361d0a89 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -904,8 +904,16 @@ int f2fs_truncate(struct inode *inode)
- 	/* we should check inline_data size */
- 	if (!f2fs_may_inline_data(inode)) {
- 		err = f2fs_convert_inline_inode(inode);
--		if (err)
-+		if (err) {
-+			/*
-+			 * Always truncate page #0 to avoid page cache
-+			 * leak in evict() path.
-+			 */
-+			truncate_inode_pages_range(inode->i_mapping,
-+					F2FS_BLK_TO_BYTES(0),
-+					F2FS_BLK_END_BYTES(0));
- 			return err;
-+		}
- 	}
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index c0f209f746882..5734e03864685 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1794,6 +1794,13 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 		struct folio *sum_folio = filemap_get_folio(META_MAPPING(sbi),
+ 					GET_SUM_BLOCK(sbi, segno));
  
- 	err = f2fs_truncate_blocks(inode, i_size_read(inode), true);
++		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
++			f2fs_err(sbi, "%s: segment %u is used by log",
++							__func__, segno);
++			f2fs_bug_on(sbi, 1);
++			goto skip;
++		}
++
+ 		if (get_valid_blocks(sbi, segno, false) == 0)
+ 			goto freed;
+ 		if (gc_type == BG_GC && __is_large_section(sbi) &&
+@@ -1805,7 +1812,7 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 
+ 		sum = folio_address(sum_folio);
+ 		if (type != GET_SUM_TYPE((&sum->footer))) {
+-			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SSA and SIT",
++			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SIT and SSA",
+ 				 segno, type, GET_SUM_TYPE((&sum->footer)));
+ 			f2fs_stop_checkpoint(sbi, false,
+ 				STOP_CP_REASON_CORRUPTED_SUMMARY);
+@@ -2068,6 +2075,13 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
+ 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
+ 		};
+ 
++		/*
++		 * avoid migrating empty section, as it can be allocated by
++		 * log in parallel.
++		 */
++		if (!get_valid_blocks(sbi, segno, true))
++			continue;
++
+ 		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno)))
+ 			continue;
+ 
 -- 
 2.51.0
 
