@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F3310942;
-	Mon, 13 Oct 2025 15:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E204B308F24;
+	Mon, 13 Oct 2025 15:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368621; cv=none; b=llhKKafMF9Gh0yU0u6DoGn4ZcVPuiN2dh2MeeLYitjrUGZvSJAwjq6u/aiVJJ9t917Wv+AfZ3uB3hnV7kuQRljOj6/jnTcnZ0U7Do7tq92wgWlmeXzTuGzZIfvVjGK39d6srcLSMotjzeUS/sFCtA0qltUjJSLY9GaR23n7SVfM=
+	t=1760368624; cv=none; b=ubUy9Y5rqgz5yRHGJx0lq6R0+x+jF/VsbicCNa4cT/q2nRZQazmqQMB5JmFmZpop6/MMkHngtdwr1+k97hZ2/vqXeex/zkJl2OlXZDPDfGwTTZXon4bWd83m6rDal7o5/ZOCitObVyCWbD1FMtEelVJN97q9HF+3qlOUQ5M/Gew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368621; c=relaxed/simple;
-	bh=C6Jlmiv3pBPfFWw/xJDk3060RX4Rp2YuMT29jYhC40o=;
+	s=arc-20240116; t=1760368624; c=relaxed/simple;
+	bh=Ss+M/2ILMZXyG0xx/sDJzX7DgSHQy6O5klgSDmZAFtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daIjdW4tN0vChzsXlLHFXE3+RJpVpW2DFFPR1W+tk7jkXf9F4BoI2OOxRgyghDbsAr2l6ga0V3rFMAcetIeQBzQd5WEAaxjn0KJOcqtEkLR81Kr+LYFb8+Aui9QQ2+Js0xoy+whQoiAkdb84aL2MG35/+bzTDpMiuhv2Xgx6yGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w54ugplE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SLvcfgEtNJ267v0ZGTrlJpje3WnzjPS78kxFmFTKmG/8BGqNE1jK2SHxPQlDpe7dezQoLubZyMFOEBBwJfXCOEDRa3UL7gls1tjb9ZTDMp8w6TzuIqrYH4BFTTrkrHRtYFAlQcfBEcIxe8lDUwCFh/tZzUbtxgSVrwUg8hnxbiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/XtU20Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w54ugplE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D5CC4CEE7;
-	Mon, 13 Oct 2025 15:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/XtU20Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DEFC4CEE7;
+	Mon, 13 Oct 2025 15:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368621;
-	bh=C6Jlmiv3pBPfFWw/xJDk3060RX4Rp2YuMT29jYhC40o=;
+	s=korg; t=1760368623;
+	bh=Ss+M/2ILMZXyG0xx/sDJzX7DgSHQy6O5klgSDmZAFtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w54ugplEbQfpoU34gzdGBqdwSEFDgjvA+P/Z7QdEXcBBEou0ukWHliplPWVztj3GM
-	 Rd+L3fgh/dQgrBBodk6FT3gpLGxlDMV0jxcQmiVCXDSH5FMh7fQdMENesfhhcfwLVs
-	 DcX9F0EMwhkyBpD7GdfdfA1tcOFpj18M+XxMH/98=
+	b=w/XtU20Z2l+d7kjVqC4ZUMpHIwd4sfrDiItgrKdtbQ8MmNFN9Iy+xh6Ghi0fHqYKh
+	 OYf7mYtaWaAmTTdLLJK4iFCg6vB3d+67/ZRMpBSLW7FxiM/9Tq9gHiFOJ/FW+8jiAY
+	 aX+FquJFkovelHKMDrsEGhg1HNjPxbT3AGUq/Tak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 225/262] Squashfs: fix uninit-value in squashfs_get_parent
-Date: Mon, 13 Oct 2025 16:46:07 +0200
-Message-ID: <20251013144334.346129332@linuxfoundation.org>
+	John Starks <jostarks@microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Long Li <longli@microsoft.com>,
+	Tianyu Lan <tiala@microsoft.com>
+Subject: [PATCH 6.12 226/262] uio_hv_generic: Let userspace take care of interrupt mask
+Date: Mon, 13 Oct 2025 16:46:08 +0200
+Message-ID: <20251013144334.381673625@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -45,125 +47,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit 74058c0a9fc8b2b4d5f4a0ef7ee2cfa66a9e49cf upstream.
+commit b15b7d2a1b09ef5428a8db260251897405a19496 upstream.
 
-Syzkaller reports a "KMSAN: uninit-value in squashfs_get_parent" bug.
+Remove the logic to set interrupt mask by default in uio_hv_generic
+driver as the interrupt mask value is supposed to be controlled
+completely by the user space. If the mask bit gets changed
+by the driver, concurrently with user mode operating on the ring,
+the mask bit may be set when it is supposed to be clear, and the
+user-mode driver will miss an interrupt which will cause a hang.
 
-This is caused by open_by_handle_at() being called with a file handle
-containing an invalid parent inode number.  In particular the inode number
-is that of a symbolic link, rather than a directory.
+For eg- when the driver sets inbound ring buffer interrupt mask to 1,
+the host does not interrupt the guest on the UIO VMBus channel.
+However, setting the mask does not prevent the host from putting a
+message in the inbound ring buffer. So let’s assume that happens,
+the host puts a message into the ring buffer but does not interrupt.
 
-Squashfs_get_parent() gets called with that symbolic link inode, and
-accesses the parent member field.
+Subsequently, the user space code in the guest sets the inbound ring
+buffer interrupt mask to 0, saying “Hey, I’m ready for interrupts”.
+User space code then calls pread() to wait for an interrupt.
+Then one of two things happens:
 
-	unsigned int parent_ino = squashfs_i(inode)->parent;
+* The host never sends another message. So the pread() waits forever.
+* The host does send another message. But because there’s already a
+  message in the ring buffer, it doesn’t generate an interrupt.
+  This is the correct behavior, because the host should only send an
+  interrupt when the inbound ring buffer transitions from empty to
+  not-empty. Adding an additional message to a ring buffer that is not
+  empty is not supposed to generate an interrupt on the guest.
+  Since the guest is waiting in pread() and not removing messages from
+  the ring buffer, the pread() waits forever.
 
-Because non-directory inodes in Squashfs do not have a parent value, this
-is uninitialised, and this causes an uninitialised value access.
+This could be easily reproduced in hv_fcopy_uio_daemon if we delay
+setting interrupt mask to 0.
 
-The fix is to initialise parent with the invalid inode 0, which will cause
-an EINVAL error to be returned.
+Similarly if hv_uio_channel_cb() sets the interrupt_mask to 1,
+there’s a race condition. Once user space empties the inbound ring
+buffer, but before user space sets interrupt_mask to 0, the host could
+put another message in the ring buffer but it wouldn’t interrupt.
+Then the next pread() would hang.
 
-Regular inodes used to share the parent field with the block_list_start
-field.  This is removed in this commit to enable the parent field to
-contain the invalid inode number 0.
+Fix these by removing all instances where interrupt_mask is changed,
+while keeping the one in set_event() unchanged to enable userspace
+control the interrupt mask by writing 0/1 to /dev/uioX.
 
-Link: https://lkml.kernel.org/r/20250918233308.293861-1-phillip@squashfs.org.uk
-Fixes: 122601408d20 ("Squashfs: export operations")
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68cc2431.050a0220.139b6.0001.GAE@google.com/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
+Suggested-by: John Starks <jostarks@microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Reviewed-by: Tianyu Lan <tiala@microsoft.com>
+Tested-by: Tianyu Lan <tiala@microsoft.com>
+Link: https://lore.kernel.org/r/20250828044200.492030-1-namjain@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/inode.c         |    7 +++++++
- fs/squashfs/squashfs_fs_i.h |    2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/uio/uio_hv_generic.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/fs/squashfs/inode.c
-+++ b/fs/squashfs/inode.c
-@@ -165,6 +165,7 @@ int squashfs_read_inode(struct inode *in
- 		squashfs_i(inode)->start = le32_to_cpu(sqsh_ino->start_block);
- 		squashfs_i(inode)->block_list_start = block;
- 		squashfs_i(inode)->offset = offset;
-+		squashfs_i(inode)->parent = 0;
- 		inode->i_data.a_ops = &squashfs_aops;
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -98,7 +98,6 @@ static void hv_uio_channel_cb(void *cont
+ 	struct hv_device *hv_dev = chan->device_obj;
+ 	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
  
- 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
-@@ -212,6 +213,7 @@ int squashfs_read_inode(struct inode *in
- 		squashfs_i(inode)->start = le64_to_cpu(sqsh_ino->start_block);
- 		squashfs_i(inode)->block_list_start = block;
- 		squashfs_i(inode)->offset = offset;
-+		squashfs_i(inode)->parent = 0;
- 		inode->i_data.a_ops = &squashfs_aops;
+-	chan->inbound.ring_buffer->interrupt_mask = 1;
+ 	virt_mb();
  
- 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
-@@ -292,6 +294,7 @@ int squashfs_read_inode(struct inode *in
- 		inode->i_mode |= S_IFLNK;
- 		squashfs_i(inode)->start = block;
- 		squashfs_i(inode)->offset = offset;
-+		squashfs_i(inode)->parent = 0;
- 
- 		if (type == SQUASHFS_LSYMLINK_TYPE) {
- 			__le32 xattr;
-@@ -329,6 +332,7 @@ int squashfs_read_inode(struct inode *in
- 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		rdev = le32_to_cpu(sqsh_ino->rdev);
- 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
-+		squashfs_i(inode)->parent = 0;
- 
- 		TRACE("Device inode %x:%x, rdev %x\n",
- 				SQUASHFS_INODE_BLK(ino), offset, rdev);
-@@ -353,6 +357,7 @@ int squashfs_read_inode(struct inode *in
- 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		rdev = le32_to_cpu(sqsh_ino->rdev);
- 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
-+		squashfs_i(inode)->parent = 0;
- 
- 		TRACE("Device inode %x:%x, rdev %x\n",
- 				SQUASHFS_INODE_BLK(ino), offset, rdev);
-@@ -373,6 +378,7 @@ int squashfs_read_inode(struct inode *in
- 			inode->i_mode |= S_IFSOCK;
- 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		init_special_inode(inode, inode->i_mode, 0);
-+		squashfs_i(inode)->parent = 0;
- 		break;
+ 	uio_event_notify(&pdata->info);
+@@ -163,8 +162,6 @@ hv_uio_new_channel(struct vmbus_channel
+ 		return;
  	}
- 	case SQUASHFS_LFIFO_TYPE:
-@@ -392,6 +398,7 @@ int squashfs_read_inode(struct inode *in
- 		inode->i_op = &squashfs_inode_ops;
- 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		init_special_inode(inode, inode->i_mode, 0);
-+		squashfs_i(inode)->parent = 0;
- 		break;
- 	}
- 	default:
---- a/fs/squashfs/squashfs_fs_i.h
-+++ b/fs/squashfs/squashfs_fs_i.h
-@@ -16,6 +16,7 @@ struct squashfs_inode_info {
- 	u64		xattr;
- 	unsigned int	xattr_size;
- 	int		xattr_count;
-+	int		parent;
- 	union {
- 		struct {
- 			u64		fragment_block;
-@@ -27,7 +28,6 @@ struct squashfs_inode_info {
- 			u64		dir_idx_start;
- 			int		dir_idx_offset;
- 			int		dir_idx_cnt;
--			int		parent;
- 		};
- 	};
- 	struct inode	vfs_inode;
+ 
+-	/* Disable interrupts on sub channel */
+-	new_sc->inbound.ring_buffer->interrupt_mask = 1;
+ 	set_channel_read_mode(new_sc, HV_CALL_ISR);
+ 	ret = hv_create_ring_sysfs(new_sc, hv_uio_ring_mmap);
+ 	if (ret) {
+@@ -207,9 +204,7 @@ hv_uio_open(struct uio_info *info, struc
+ 
+ 	ret = vmbus_connect_ring(dev->channel,
+ 				 hv_uio_channel_cb, dev->channel);
+-	if (ret == 0)
+-		dev->channel->inbound.ring_buffer->interrupt_mask = 1;
+-	else
++	if (ret)
+ 		atomic_dec(&pdata->refcnt);
+ 
+ 	return ret;
 
 
