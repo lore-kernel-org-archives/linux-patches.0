@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649B630FF00;
-	Mon, 13 Oct 2025 15:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D2B30FF34;
+	Mon, 13 Oct 2025 15:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367975; cv=none; b=shm5FH4y52AvDahZV3af//WdJLxM8NvqUTP9iEVjYAKYb/xMz+pFU0vvN6O7u3dv3Cy1WUO687DmXEBMoqxchAd0RQY8pUp7dPW9IZz+L4WZLOzBi8RrOicrFXUalViZ/RxLRmi+eJ0Z4Uyyij21cf7Rjrbvgg31YWXMzEJWsVM=
+	t=1760367978; cv=none; b=taEVHSPxM9lUEsLQMyDz9DiE1vFz9O8bTaTsNtgpAY3B5wWwVWS/Yw8oKaX2zwsoCiIZIUCf/465ENBYGG3BM7g2e30BklyqQB0TeqWYkBmDAPpVvwEkzurXwzF0qc9pd+v9HEiuI9BwGhfFWAeKpOqdnC1zPsvXFq/w+77GtB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367975; c=relaxed/simple;
-	bh=IMBsuHDDo5ZsSKPzUIWX6jU4YEQp7VCs8bqDPZbEN6A=;
+	s=arc-20240116; t=1760367978; c=relaxed/simple;
+	bh=Xg/V4XGWSZPZQPB4HNqA28Fzg4Fb1+lAesxqCfnAQRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhmXhpNXp1m0x0pXk22HV0Cl14k7O0+8kKLcTKi8lBDxAPIBHcdIwv8CLa6Pc0gUL4twsZFSAB635gpkFYWXLwT4Q4Dw02bS96eN3VZ8fGHvPGOTz3kkaaOKa/DWUztLa2fUuOZtOsF6uHarLfJAsC9Gv03+/G7bnVS4NPIjzZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdaGTIhY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwKTC1j3vRQu/BdUFGTamBr46yQEiVFNkDepAHAEWOE2X4K3gBohFzzyL3rFPaW8FmJYTJ89WDYvnmi61PB3Iu1c7j43bKzriA81YAEjeb8V6bmdzPEZGGYyOFRxX+bcfVl+WY6u8srl4MKTmOqUrFEJ74eqyPdzNprvGRNDZgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fKDq6tQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdaGTIhY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DF1C4CEFE;
-	Mon, 13 Oct 2025 15:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fKDq6tQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB068C4CEFE;
+	Mon, 13 Oct 2025 15:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367975;
-	bh=IMBsuHDDo5ZsSKPzUIWX6jU4YEQp7VCs8bqDPZbEN6A=;
+	s=korg; t=1760367978;
+	bh=Xg/V4XGWSZPZQPB4HNqA28Fzg4Fb1+lAesxqCfnAQRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdaGTIhYrQn2ZySVcYVMpHf4OsqxsluQTP/X9RsdtE1TxgbYFt80ifEnKrZ5a2O69
-	 s59aj6Ef3Dt7PeQ0N239G/owvEepKRNlbTMjJ2i9cWlNXE76erB6PwM6XYUtoMLMlC
-	 cmzh7+Nh09Rzni2r9c7iCI9r2ejLeuWtAPU8DWYc=
+	b=0fKDq6tQQ1gbN990dhC89aEGk/8/bcwoTaEpb2ASE57ewuyp2Ec5P2N7V++BQGnAv
+	 sDHSEtMvS+CxMyZUzefFMt493+Y3tKFEMXOP6DlJntmit4LXQH2Ta0FFcxlKg2WX9L
+	 yVf0jrFDF7hlGFfZXVEb/a/vpofGPQ8ys+IYuUss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 175/196] mfd: rz-mtu3: Fix MTU5 NFCR register offset
-Date: Mon, 13 Oct 2025 16:46:06 +0200
-Message-ID: <20251013144321.640204078@linuxfoundation.org>
+Subject: [PATCH 6.6 176/196] mfd: vexpress-sysreg: Check the return value of devm_gpiochip_add_data()
+Date: Mon, 13 Oct 2025 16:46:07 +0200
+Message-ID: <20251013144321.675750641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,40 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit da32b0e82c523b76265ba1ad25d7ea74f0ece402 upstream.
+commit 1efbee6852f1ff698a9981bd731308dd027189fb upstream.
 
-The NFCR register for MTU5 is at 0x1a95 offset according to Datasheet
-Page 725, Table 16.4. The address of all registers is offset by 0x1200,
-making the proper address of MTU5 NFCR register be 0x895.
+Commit 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+removed the return value check from the call to gpiochip_add_data() (or
+rather gpiochip_add() back then and later converted to devres) with no
+explanation. This function however can still fail, so check the return
+value and bail-out if it does.
 
 Cc: stable@vger.kernel.org
-Fixes: 654c293e1687 ("mfd: Add Renesas RZ/G2L MTU3a core driver")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250910175914.12956-1-cosmin-gabriel.tanislav.xa@renesas.com
+Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250811-gpio-mmio-mfd-conv-v1-1-68c5c958cf80@linaro.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/rz-mtu3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/vexpress-sysreg.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/rz-mtu3.c b/drivers/mfd/rz-mtu3.c
-index f3dac4a29a83..9cdfef610398 100644
---- a/drivers/mfd/rz-mtu3.c
-+++ b/drivers/mfd/rz-mtu3.c
-@@ -32,7 +32,7 @@ static const unsigned long rz_mtu3_8bit_ch_reg_offs[][13] = {
- 	[RZ_MTU3_CHAN_2] = MTU_8BIT_CH_1_2(0x204, 0x092, 0x205, 0x200, 0x20c, 0x201, 0x202),
- 	[RZ_MTU3_CHAN_3] = MTU_8BIT_CH_3_4_6_7(0x008, 0x093, 0x02c, 0x000, 0x04c, 0x002, 0x004, 0x005, 0x038),
- 	[RZ_MTU3_CHAN_4] = MTU_8BIT_CH_3_4_6_7(0x009, 0x094, 0x02d, 0x001, 0x04d, 0x003, 0x006, 0x007, 0x039),
--	[RZ_MTU3_CHAN_5] = MTU_8BIT_CH_5(0xab2, 0x1eb, 0xab4, 0xab6, 0xa84, 0xa85, 0xa86, 0xa94, 0xa95, 0xa96, 0xaa4, 0xaa5, 0xaa6),
-+	[RZ_MTU3_CHAN_5] = MTU_8BIT_CH_5(0xab2, 0x895, 0xab4, 0xab6, 0xa84, 0xa85, 0xa86, 0xa94, 0xa95, 0xa96, 0xaa4, 0xaa5, 0xaa6),
- 	[RZ_MTU3_CHAN_6] = MTU_8BIT_CH_3_4_6_7(0x808, 0x893, 0x82c, 0x800, 0x84c, 0x802, 0x804, 0x805, 0x838),
- 	[RZ_MTU3_CHAN_7] = MTU_8BIT_CH_3_4_6_7(0x809, 0x894, 0x82d, 0x801, 0x84d, 0x803, 0x806, 0x807, 0x839),
- 	[RZ_MTU3_CHAN_8] = MTU_8BIT_CH_8(0x404, 0x098, 0x400, 0x406, 0x401, 0x402, 0x403)
--- 
-2.51.0
-
+--- a/drivers/mfd/vexpress-sysreg.c
++++ b/drivers/mfd/vexpress-sysreg.c
+@@ -90,6 +90,7 @@ static int vexpress_sysreg_probe(struct
+ 	struct resource *mem;
+ 	void __iomem *base;
+ 	struct gpio_chip *mmc_gpio_chip;
++	int ret;
+ 
+ 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!mem)
+@@ -110,7 +111,10 @@ static int vexpress_sysreg_probe(struct
+ 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
+ 			NULL, NULL, NULL, NULL, 0);
+ 	mmc_gpio_chip->ngpio = 2;
+-	devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
++
++	ret = devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
++	if (ret)
++		return ret;
+ 
+ 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
+ 			vexpress_sysreg_cells,
 
 
