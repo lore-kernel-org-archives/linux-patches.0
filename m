@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00E526F2B6;
-	Mon, 13 Oct 2025 15:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F06530B50F;
+	Mon, 13 Oct 2025 15:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369541; cv=none; b=uSNZ8SCuklQKqES7/VTrIQDmU88yaC4GD6QxcdovWU2FiAVsY70KOHBxqbc5gN/SmFxQwOXUJi3LKx/56hwLCmhRNal+wYR9CYQQlf1mU2bawoBzVAAUNkG93j6XUreH6McKtoWNm1WWV06FE3NUmghB+2GfGOYeDPPkkxBj4QY=
+	t=1760369543; cv=none; b=u7SHJud3Q5r8IoOTtY1YT/ZSygtYSVUvnblNEE0AmXKZylhbcoPzWgbNQ+WWPE+vp33ki3b82XBzFJpDbFl8Uq9VvCs04Tsb28D0RUUKRcaU0DCCDdkxZAU7msevveR283plJcuD6bExfApAavg8j8121ylMY6S506uwLYZFmYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369541; c=relaxed/simple;
-	bh=jzXuiocfFCcgtsKrddEckm6DYEqPHlmi15s7gwLQDiA=;
+	s=arc-20240116; t=1760369543; c=relaxed/simple;
+	bh=LS7Sv0eWZDH+bUW56JhJaPYUv5PeU1gtn/8g7v64Yh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBzqVtCEqHQBQUfpnzeJlatBR0xfSx1LLhxn4mi5v6tSKR1AScSpgKoJoM6x9o0NmXhfbMa8pWpwDrVzzJa9YRyZ4udPZSeSyy8uplLLP5RdpPMbHrvpVYCMpgCe1uftMePmS16clp+WTVzMthaWqGDPsAFyxEJ158nrZwHR0sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYvqrrla; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+0cnxYhUKbJcNLfr/ptsRxftqWjqr+N0RKMorD7kgKEXvlfu0YTDuExrK1A4VMo5+57d4kMLtJrqzc0ox4Q86F2wm/Ca9wvYeVPEllT/+qgjJuyUurxaoVvuJRq0VF5WSou7oxjdCOR/EPyVMtwM0efhfviz9KqVUfc3YVV2is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqUeefee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYvqrrla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469B9C4CEE7;
-	Mon, 13 Oct 2025 15:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqUeefee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B385C116B1;
+	Mon, 13 Oct 2025 15:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369540;
-	bh=jzXuiocfFCcgtsKrddEckm6DYEqPHlmi15s7gwLQDiA=;
+	s=korg; t=1760369543;
+	bh=LS7Sv0eWZDH+bUW56JhJaPYUv5PeU1gtn/8g7v64Yh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYvqrrlacdFlNCxUBL1ZHkfpbtZHEOu8VLbty7Vg5d6zuf9ySCh463nDt98o9rsw0
-	 jqMZBKBS+Qwf0EjVfuHUm6dgB76FvmhvczMlHEOWgAOy537HNmbBRChk3/Qo7+z42n
-	 4IP0oJwQpMF+YsXU4MTOdRsG0wSvwtY5Cbmiky7w=
+	b=cqUeefeeCU+cuyJkfv1jkrbL6Jrdh8b1vzNE6fyqEOLixYYm1lkvcWQJudL1h9PAS
+	 Sm55ViffflQ9Fm86LNFauu2HV6zTWdYIgMclAI82l9/PatUhG2AjgZl2LugJM1ehJs
+	 32qTbOQv5NRg5o0XjEQhYdI+Mm9EkDTliZapwisU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Richard Lyu <richard.lyu@suse.com>,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 283/563] efi: Explain OVMF acronym in OVMF_DEBUG_LOG help text
-Date: Mon, 13 Oct 2025 16:42:24 +0200
-Message-ID: <20251013144421.523205724@linuxfoundation.org>
+Subject: [PATCH 6.17 284/563] net: dst: introduce dst->dev_rcu
+Date: Mon, 13 Oct 2025 16:42:25 +0200
+Message-ID: <20251013144421.558676618@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,42 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 05e75ac35ee9e38f96bbfebf1830ec2cace2e7f8 ]
+[ Upstream commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50 ]
 
-People not very intimate with EFI may not know the meaning of the OVMF
-acronym.  Write it in full, to help users with making good decisions
-when configuring their kernels.
+Followup of commit 88fe14253e18 ("net: dst: add four helpers
+to annotate data-races around dst->dev").
 
-Fixes: f393a761763c5427 ("efi: add ovmf debug log driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Richard Lyu <richard.lyu@suse.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+We want to gradually add explicit RCU protection to dst->dev,
+including lockdep support.
+
+Add an union to alias dst->dev_rcu and dst->dev.
+
+Add dst_dev_net_rcu() helper.
+
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/Kconfig | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/dst.h | 16 +++++++++++-----
+ net/core/dst.c    |  2 +-
+ net/ipv4/route.c  |  4 ++--
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/firmware/efi/Kconfig b/drivers/firmware/efi/Kconfig
-index d528c94c5859b..29e0729299f5b 100644
---- a/drivers/firmware/efi/Kconfig
-+++ b/drivers/firmware/efi/Kconfig
-@@ -267,9 +267,10 @@ config OVMF_DEBUG_LOG
- 	bool "Expose OVMF firmware debug log via sysfs"
- 	depends on EFI
- 	help
--	  Recent OVMF versions (edk2-stable202508 + newer) can write
--	  their debug log to a memory buffer.  This driver exposes the
--	  log content via sysfs (/sys/firmware/efi/ovmf_debug_log).
-+	  Recent versions of the Open Virtual Machine Firmware
-+	  (edk2-stable202508 + newer) can write their debug log to a memory
-+	  buffer.  This driver exposes the log content via sysfs
-+	  (/sys/firmware/efi/ovmf_debug_log).
+diff --git a/include/net/dst.h b/include/net/dst.h
+index bab01363bb975..f8aa1239b4db6 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -24,7 +24,10 @@
+ struct sk_buff;
  
- config UNACCEPTED_MEMORY
- 	bool
+ struct dst_entry {
+-	struct net_device       *dev;
++	union {
++		struct net_device       *dev;
++		struct net_device __rcu *dev_rcu;
++	};
+ 	struct  dst_ops	        *ops;
+ 	unsigned long		_metrics;
+ 	unsigned long           expires;
+@@ -570,9 +573,12 @@ static inline struct net_device *dst_dev(const struct dst_entry *dst)
+ 
+ static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+ {
+-	/* In the future, use rcu_dereference(dst->dev) */
+-	WARN_ON_ONCE(!rcu_read_lock_held());
+-	return READ_ONCE(dst->dev);
++	return rcu_dereference(dst->dev_rcu);
++}
++
++static inline struct net *dst_dev_net_rcu(const struct dst_entry *dst)
++{
++	return dev_net_rcu(dst_dev_rcu(dst));
+ }
+ 
+ static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
+@@ -592,7 +598,7 @@ static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+ 
+ static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+ {
+-	return dev_net_rcu(skb_dst_dev(skb));
++	return dev_net_rcu(skb_dst_dev_rcu(skb));
+ }
+ 
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+diff --git a/net/core/dst.c b/net/core/dst.c
+index e2de8b68c41d3..e9d35f49c9e78 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -150,7 +150,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 		dst->ops->ifdown(dst, dev);
+ 	WRITE_ONCE(dst->input, dst_discard);
+ 	WRITE_ONCE(dst->output, dst_discard_out);
+-	WRITE_ONCE(dst->dev, blackhole_netdev);
++	rcu_assign_pointer(dst->dev_rcu, blackhole_netdev);
+ 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
+ 			   GFP_ATOMIC);
+ }
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index baa43e5966b19..97b96275a775d 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1026,7 +1026,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 		return;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
+ 		lock = true;
+ 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
+@@ -1326,7 +1326,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ 	struct net *net;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+ 				   net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
 -- 
 2.51.0
 
