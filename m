@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2F71E9B0D;
-	Mon, 13 Oct 2025 15:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FDB1E9B0D;
+	Mon, 13 Oct 2025 15:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369862; cv=none; b=hH7+vlPCcYO2ceBjT7nfmXdSZ5AaUIZc3N3zOePrBgdPRAD65aJVQsYng7Ia21sLtg1UvhvnDN8TJhrXb0nJTloPrYKCu0Z8VaNjuXAmnC9hhA+eL2vViaFxyrya0h04Hed8eV4+BqauC49o1zyH1tvvl/gqeKguHHju6bJMnYc=
+	t=1760369865; cv=none; b=O6Skwd6l7/q6Wp/cPkUZuJOWX5unmCvA/0xpcRGMSGtPWAuq7GZC2oVYavfoP5URDPxJ1SMlPCjOil9LAh6nTGczxENdba8h4YWydpU+Uqd9ppDIJmlBjVTcSHi+qqRFolmdfJvZwsY6R2YFKb+Jnrp1Cw6Rkz9cX5jyFgDWYjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369862; c=relaxed/simple;
-	bh=J0ni+ePdhT6jvaXC0DAXL5xGGjvQdp5LZ2ru2m3EH/E=;
+	s=arc-20240116; t=1760369865; c=relaxed/simple;
+	bh=nzW55T/pVpg+30YMS+y+GAAiLqAdXJ2R6xLt7sfBQAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyQiyBP5D8dXNrc1VHnNEzs7/9RhS1PeqyqRV2GZ6oybHHpj46L7Ib9MZdRRwRdZB6D7DqXoDw3/nGMx75XWAnJsGEDpwiiNNvsIySXO5XlDSltDrZsmjhuyMM4LAMzvBUXJ9QNevaCaZTPEQOwivmnYB2Nfq3J90BQ+iuj44sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RI4pWy/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HmM8DUHjydIN2LBc4H8WiKZs3kr0OzKJuU72qG7zSn8KHITL+g0z9yfk90gkBy1Vfr6S7LfxhCQ/67M5tEg33FbtwNnUtp4C4YUd5XJ6JLfhEeOJaPqarB185tcnNCXi7p/zNSTe5F6MkFZdJuzH/Jz9q1qMsI7dGOq76o/TBwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuximC+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RI4pWy/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789B8C4CEE7;
-	Mon, 13 Oct 2025 15:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuximC+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7702AC4CEE7;
+	Mon, 13 Oct 2025 15:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369861;
-	bh=J0ni+ePdhT6jvaXC0DAXL5xGGjvQdp5LZ2ru2m3EH/E=;
+	s=korg; t=1760369864;
+	bh=nzW55T/pVpg+30YMS+y+GAAiLqAdXJ2R6xLt7sfBQAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RI4pWy/UevrKI6AeLZwmdsWfue+fkNZ02vkHzzTqSYYLze488hlUsyCR6emI+41tm
-	 TyDPVgh/n9M62xjlhenPsH+IaNh3iK/6s84A7qSAdeWeuKYTk5LZ0YBjLU13XvqZIo
-	 fIZy0iNQbOhk49qzsQpejKigIUdqfjSfWpdZ9XWs=
+	b=TuximC+RFeLvwHgmi0YQYgd70ik5F1tNgmmswhTQwEMscdfdOFoJng79ipkp7iQzV
+	 nQPAYX+SVYSQZgRhVlgUNAsXl/wZ3j4JHzJP/j1CIrZfvl2owoUFklTWN/nO0Z2aHS
+	 KpcN9RLe1zk9byknwNMwFDW67UsE7BakjXpB5ar0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sriram R <quic_srirrama@quicinc.com>,
+	Vinith Kumar R <quic_vinithku@quicinc.com>,
+	Aishwarya R <aishwarya.r@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 377/563] f2fs: fix zero-sized extent for precache extents
-Date: Mon, 13 Oct 2025 16:43:58 +0200
-Message-ID: <20251013144424.933567439@linuxfoundation.org>
+Subject: [PATCH 6.17 395/563] wifi: ath12k: Add fallback for invalid channel number in PHY metadata
+Date: Mon, 13 Oct 2025 16:44:16 +0200
+Message-ID: <20251013144425.593893341@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,95 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Sriram R <quic_srirrama@quicinc.com>
 
-[ Upstream commit 8175c864391753b210f3dcfae1aeed686a226ebb ]
+[ Upstream commit 26f8fc0b24fd1a9dba1000bc9b5f2b199b7775a0 ]
 
-Script to reproduce:
-f2fs_io write 1 0 1881 rand dsync testfile
-f2fs_io fallocate 0 7708672 4096 testfile
-f2fs_io write 1 1881 1 rand buffered testfile
-fsync testfile
-umount
-mount
-f2fs_io precache_extents testfile
+Currently, ath12k_dp_rx_h_ppdu() determines the band and frequency
+based on the channel number and center frequency from the RX descriptor's
+PHY metadata. However, in rare cases, it is observed that frequency
+retrieved from the metadata may be invalid or unexpected especially for
+6 GHz frames.
+This can result in a NULL sband, which prevents proper frequency assignment
+in rx_status and potentially leading to incorrect RX packet classification.
 
-When the data layout is something like this:
-dnode1:                     dnode2:
-[0]      A                  [0]    NEW_ADDR
-[1]      A+1                [1]    0x0
-...
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
+To fix this potential issue, add a fallback mechanism that uses
+ar->rx_channel to populate the band and frequency when the derived
+sband is invalid or missing.
 
-During precache_extents, we map the last block(valid blkaddr) in dnode1:
-map->m_flags |= F2FS_MAP_MAPPED;
-map->m_pblk = blkaddr(valid blkaddr);
-map->m_len = 1;
-then we goto next_dnode, meet the first block in dnode2(hole), goto sync_out:
-map->m_flags & F2FS_MAP_MAPPED == true, and we make zero-sized extent:
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
 
-map->m_len = 1
-ofs = start_pgofs - map->m_lblk = 1882 - 1881 = 1
-ei.fofs = start_pgofs = 1882
-ei.len = map->m_len - ofs = 1 - 1 = 0
-
-Rebased on patch[1], this patch can cover these cases to avoid zero-sized extent:
-A,B,C is valid blkaddr
-case1:
-dnode1:                     dnode2:
-[0]      A                  [0]    NEW_ADDR
-[1]      A+1                [1]    0x0
-...                         ....
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
-
-case2:
-dnode1:                     dnode2:
-[0]      A                  [0]    C (C!=B+1)
-[1]      A+1                [1]    C+1
-...                         ....
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
-
-case3:
-dnode1:                     dnode2:
-[0]      A                  [0]    C (C!=B+2)
-[1]      A+1                [1]    C+1
-...                         ....
-[1015]   A+1015
-[1016]   B (B!=A+1016)
-[1017]   B+1                [1017] 0x0
-
-[1] https://lore.kernel.org/linux-f2fs-devel/20250912081250.44383-1-chao@kernel.org/
-
-Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
+Co-developed-by: Vinith Kumar R <quic_vinithku@quicinc.com>
+Signed-off-by: Vinith Kumar R <quic_vinithku@quicinc.com>
+Signed-off-by: Aishwarya R <aishwarya.r@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250723190651.699828-1-aishwarya.r@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 838eae39d3b19..6e39a15a942a9 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1778,9 +1778,10 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
- 		if (map->m_flags & F2FS_MAP_MAPPED) {
- 			unsigned int ofs = start_pgofs - map->m_lblk;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 8ab91273592c8..adb0cfe109e67 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2533,6 +2533,8 @@ void ath12k_dp_rx_h_ppdu(struct ath12k *ar, struct ath12k_dp_rx_info *rx_info)
+ 	channel_num = meta_data;
+ 	center_freq = meta_data >> 16;
  
--			f2fs_update_read_extent_cache_range(&dn,
--				start_pgofs, map->m_pblk + ofs,
--				map->m_len - ofs);
-+			if (map->m_len > ofs)
-+				f2fs_update_read_extent_cache_range(&dn,
-+					start_pgofs, map->m_pblk + ofs,
-+					map->m_len - ofs);
++	rx_status->band = NUM_NL80211_BANDS;
++
+ 	if (center_freq >= ATH12K_MIN_6GHZ_FREQ &&
+ 	    center_freq <= ATH12K_MAX_6GHZ_FREQ) {
+ 		rx_status->band = NL80211_BAND_6GHZ;
+@@ -2541,21 +2543,33 @@ void ath12k_dp_rx_h_ppdu(struct ath12k *ar, struct ath12k_dp_rx_info *rx_info)
+ 		rx_status->band = NL80211_BAND_2GHZ;
+ 	} else if (channel_num >= 36 && channel_num <= 173) {
+ 		rx_status->band = NL80211_BAND_5GHZ;
+-	} else {
++	}
++
++	if (unlikely(rx_status->band == NUM_NL80211_BANDS ||
++		     !ath12k_ar_to_hw(ar)->wiphy->bands[rx_status->band])) {
++		ath12k_warn(ar->ab, "sband is NULL for status band %d channel_num %d center_freq %d pdev_id %d\n",
++			    rx_status->band, channel_num, center_freq, ar->pdev_idx);
++
+ 		spin_lock_bh(&ar->data_lock);
+ 		channel = ar->rx_channel;
+ 		if (channel) {
+ 			rx_status->band = channel->band;
+ 			channel_num =
+ 				ieee80211_frequency_to_channel(channel->center_freq);
++			rx_status->freq = ieee80211_channel_to_frequency(channel_num,
++									 rx_status->band);
++		} else {
++			ath12k_err(ar->ab, "unable to determine channel, band for rx packet");
  		}
- 		if (map->m_next_extent)
- 			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
+ 		spin_unlock_bh(&ar->data_lock);
++		goto h_rate;
+ 	}
+ 
+ 	if (rx_status->band != NL80211_BAND_6GHZ)
+ 		rx_status->freq = ieee80211_channel_to_frequency(channel_num,
+ 								 rx_status->band);
+ 
++h_rate:
+ 	ath12k_dp_rx_h_rate(ar, rx_info);
+ }
+ 
 -- 
 2.51.0
 
