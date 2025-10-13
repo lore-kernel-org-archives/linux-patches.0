@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4054306497;
-	Mon, 13 Oct 2025 15:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC1630C619;
+	Mon, 13 Oct 2025 15:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369092; cv=none; b=Z1Ivg+o+dCRGv5H5M3fEB/ESHSILoqt7hex2nmPWcxFPvPZQ6aGYqfIggMG8aw1LcYsSGtOHIzfEErKYL872RfZkJHTG9IOYxdyqx+ew3MaJWNg2Y3z+yAV/zJBoEEgJ7TRmTBEkI/9fZePg4H6PK+XKVWAJ5Lj9vjt8B/HbL3w=
+	t=1760369095; cv=none; b=THfqVvPq63X82dPLxoBvZ9nmRU+Fsa7PPD5zPwpV7ihPeH+3LW5U1c2hwFw4yfVoUxb5GN/XqhK8K2VS86xOYUi0yA6U6RuH4zIt/1U1O+p666oUmhXUTKgV/07TQSOGPWXMBnEtmn8UNxWdNjMwjkkoPqYA4w+0N/N2aAYnOTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369092; c=relaxed/simple;
-	bh=cnYIYigWysodhlhgbSAryj2xo2RUnwUaTWDA5S05YYc=;
+	s=arc-20240116; t=1760369095; c=relaxed/simple;
+	bh=oQNdw+GNas9qvlqup/FP01HN8hc3dArs18erXJru2rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GSqIHxHRsFh+gXmneRihjUfRlh6MD0duzCNiV2yiHXVcBF07j9kAw9DYBRUxw7AvD1C8+s0xUBmu97GHMGzjZ6c0c+SbAZAVzspwz2j8RJUoDakMPnWCRi+/wmZtdGxKBWzAUleJmOfn2GE/QQgbaFk2cKWE2s+Kv5SsDL+PT/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkZWAUf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WVhn37yBNIFwYmtD+YlrsTdlU45u6lPEVzYAjQi/imaQEbSTfeiUAeXZ5/e9mtNfOOin4u5WJLGB1qXawaxdhPTYDkUMxX0d6Unv1N3GxfMjC7HVxcR+ogKZ0Dy+oU/UzGn/DwfAdjI76lurfFPa3Gm+THltnm8n/RH4j7PgnSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAPYZuy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkZWAUf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDC8C4CEE7;
-	Mon, 13 Oct 2025 15:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAPYZuy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC37EC4CEE7;
+	Mon, 13 Oct 2025 15:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369092;
-	bh=cnYIYigWysodhlhgbSAryj2xo2RUnwUaTWDA5S05YYc=;
+	s=korg; t=1760369095;
+	bh=oQNdw+GNas9qvlqup/FP01HN8hc3dArs18erXJru2rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkZWAUf+SfBtPJrkDXfv9Z7LsSwykRARWXwNytB38DlwjkUVSCVcSn0ngGxr40TAB
-	 vnbyj9qGaNckIY+BxwPLuhJ/VYydH3pyg327ZpBiyD/4K99jTZoQD5QvnHiJuYKTqe
-	 hglt4Vo4Lsvoiv30FSMn9fuF+C7N2IlH7sxGG3a0=
+	b=GAPYZuy+RP6H99g5oZbAtAM0rzBpXNuqR0gxbY/CuLWho06YxVMa2KCnus8N8JFBI
+	 q0sB+2970j0fSV+bwrChxL83o7xWQbEa6w4rUA2GsiJYcDUski5+94pyG+MFRFeKEV
+	 Ct505VXrh5dPxWBmFwmV/MpgRitOF6DlSZDOJ25A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 092/563] vdso/datastore: Gate time data behind CONFIG_GENERIC_GETTIMEOFDAY
-Date: Mon, 13 Oct 2025 16:39:13 +0200
-Message-ID: <20251013144414.630471211@linuxfoundation.org>
+Subject: [PATCH 6.17 093/563] PM: sleep: core: Clear power.must_resume in noirq suspend error path
+Date: Mon, 13 Oct 2025 16:39:14 +0200
+Message-ID: <20251013144414.666262563@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,61 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 7c0c01a216e6d9e1d169c0f6f3b5522e6da708ed ]
+[ Upstream commit be82483d1b60baf6747884bd74cb7de484deaf76 ]
 
-When the generic vDSO does not provide time functions, as for example on
-riscv32, then the time data store is not necessary.
+If system suspend is aborted in the "noirq" phase (for instance, due to
+an error returned by one of the device callbacks), power.is_noirq_suspended
+will not be set for some devices and device_resume_noirq() will return
+early for them.  Consequently, noirq resume callbacks will not run for
+them at all because the noirq suspend callbacks have not run for them
+yet.
 
-Avoid allocating these time data pages when not used.
+If any of them has power.must_resume set and late suspend has been
+skipped for it (due to power.smart_suspend), early resume should be
+skipped for it either, or its state may become inconsistent (for
+instance, if the early resume assumes that it will always follow
+noirq resume).
 
-Fixes: df7fcbefa710 ("vdso: Add generic time data storage")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250826-vdso-cleanups-v1-1-d9b65750e49f@linutronix.de
+Make that happen by clearing power.must_resume in device_resume_noirq()
+for devices with power.is_noirq_suspended clear that have been left in
+suspend by device_suspend_late(), which will subsequently cause
+device_resume_early() to leave the device in suspend and avoid
+changing its state.
+
+Fixes: 0d4b54c6fee8 ("PM / core: Add LEAVE_SUSPENDED driver flag")
+Link: https://lore.kernel.org/linux-pm/5d692b81-6f58-4e86-9cb0-ede69a09d799@rowland.harvard.edu/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/3381776.aeNJFYEL58@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vdso/datastore.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/base/power/main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/lib/vdso/datastore.c b/lib/vdso/datastore.c
-index 3693c6caf2c4d..a565c30c71a04 100644
---- a/lib/vdso/datastore.c
-+++ b/lib/vdso/datastore.c
-@@ -11,14 +11,14 @@
- /*
-  * The vDSO data page.
-  */
--#ifdef CONFIG_HAVE_GENERIC_VDSO
-+#ifdef CONFIG_GENERIC_GETTIMEOFDAY
- static union {
- 	struct vdso_time_data	data;
- 	u8			page[PAGE_SIZE];
- } vdso_time_data_store __page_aligned_data;
- struct vdso_time_data *vdso_k_time_data = &vdso_time_data_store.data;
- static_assert(sizeof(vdso_time_data_store) == PAGE_SIZE);
--#endif /* CONFIG_HAVE_GENERIC_VDSO */
-+#endif /* CONFIG_GENERIC_GETTIMEOFDAY */
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index 2ea6e05e6ec90..c883b01ffbddc 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -724,8 +724,20 @@ static void device_resume_noirq(struct device *dev, pm_message_t state, bool asy
+ 	if (dev->power.syscore || dev->power.direct_complete)
+ 		goto Out;
  
- #ifdef CONFIG_VDSO_GETRANDOM
- static union {
-@@ -46,7 +46,7 @@ static vm_fault_t vvar_fault(const struct vm_special_mapping *sm,
+-	if (!dev->power.is_noirq_suspended)
++	if (!dev->power.is_noirq_suspended) {
++		/*
++		 * This means that system suspend has been aborted in the noirq
++		 * phase before invoking the noirq suspend callback for the
++		 * device, so if device_suspend_late() has left it in suspend,
++		 * device_resume_early() should leave it in suspend either in
++		 * case the early resume of it depends on the noirq resume that
++		 * has not run.
++		 */
++		if (dev_pm_skip_suspend(dev))
++			dev->power.must_resume = false;
++
+ 		goto Out;
++	}
  
- 	switch (vmf->pgoff) {
- 	case VDSO_TIME_PAGE_OFFSET:
--		if (!IS_ENABLED(CONFIG_HAVE_GENERIC_VDSO))
-+		if (!IS_ENABLED(CONFIG_GENERIC_GETTIMEOFDAY))
- 			return VM_FAULT_SIGBUS;
- 		pfn = __phys_to_pfn(__pa_symbol(vdso_k_time_data));
- 		if (timens_page) {
+ 	if (!dpm_wait_for_superior(dev, async))
+ 		goto Out;
 -- 
 2.51.0
 
