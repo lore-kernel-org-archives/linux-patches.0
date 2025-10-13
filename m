@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862C6311582;
-	Mon, 13 Oct 2025 15:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4077931158D;
+	Mon, 13 Oct 2025 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368113; cv=none; b=sUhD6FrOiziicfDTuvr9pGSPXwUOgAkJz8SlsGiP/xIDivrKWhd1VxSH8XbBZ8mny+H4pVRAyxJQGCsrt4Z3amMF0Q0edFORDlOdzC8PKY6ijOX5TwIqUmO0k5aMyTn4X/IbStskgN37pxRs6bYvU44FhbJ4nP9hVrrG+F0+Uv4=
+	t=1760368116; cv=none; b=iqiNbGmz8uv+viOT2HkCfsWm7FuCPZXVjxtMBIocokdhQ6HrvI016maQDzsA5Omq8uCYEjdbyoSPLRRdTlbwQn4dYo0xchDdaELDOZK2Ys5Wy9Niu93RM3oUTqLseEFv8WZPoLOsjDLTrYFI7VPORQfweR3v/MmRd8fwz9RwCxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368113; c=relaxed/simple;
-	bh=fUTURClY7P35QmmCnnZlk4dKTV984s1uZOcbLfVLYwM=;
+	s=arc-20240116; t=1760368116; c=relaxed/simple;
+	bh=kthSEHILunhuwkzBvZYigXUFaJ/DZxJTGGW3P0Z1gUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWhlJCbuOhJIUB4YRvWwS1V6edcBsPS2EPJZsoTJJr3OTApQN7PyEXsKQGaTedJQCFw18Ny5j5jBP4Qa3mH7YYDAHtFK874Vku4+xjFJenPo0FurUHxN6Z2nu5IMn7Tt5Bphzqu3py25J0bfg2Er/I+cWyqYL364Wx74FLli4Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f32VMJKh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HPMpr5OmQuCYLAjD8kGW2O2aovXM3EUurxvRa/ze29JZMkP/r2tDjqJXt7Bq+brrK9UKZTtrERBRxZmR2sDHePc0vlNw5okcQa8NRuEJTefoAXqbn+WhLb9PJjzHurh8OxzJm2CzkMJQTB3XylovNbi2f0ITAGzMUP6ucYA7qCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PP4j3SLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f32VMJKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F229DC4CEE7;
-	Mon, 13 Oct 2025 15:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PP4j3SLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AFDC113D0;
+	Mon, 13 Oct 2025 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368113;
-	bh=fUTURClY7P35QmmCnnZlk4dKTV984s1uZOcbLfVLYwM=;
+	s=korg; t=1760368116;
+	bh=kthSEHILunhuwkzBvZYigXUFaJ/DZxJTGGW3P0Z1gUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f32VMJKhhGdM8t9HZKQdEmhisVA6uTzLImy6YxELdrt/n0W3b86Z59r3OkWI0wjXN
-	 9kQPjyooW+qG1semX4caK/L3Qa+++kMtUfj/DJmAdYq/oyvRhUJZxbZxJCPX+B8OWD
-	 3Rdp6XjM0FvgXdrYY8bwHgWirfU9d9hqDfME93jE=
+	b=PP4j3SLsDHspJ3Bmn5y7VJuN8zNAEGgJNOYR3cKs7/pgn+9mwlCN3fpKW15H9X6Oa
+	 1zSbDoUQKaKhA3/+6U3K2jrJDKjm9Rg7lb25LBU1anLiAAdGs5L53g70VRnp47N1P9
+	 FEkNxAjnFLqmH91ZpRQdZ6fryH/87NNpVa2/h7q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/262] null_blk: Fix the description of the cache_size module argument
-Date: Mon, 13 Oct 2025 16:43:11 +0200
-Message-ID: <20251013144327.896256565@linuxfoundation.org>
+Subject: [PATCH 6.12 050/262] selftests: vDSO: Fix -Wunitialized in powerpc VDSO_CALL() wrapper
+Date: Mon, 13 Oct 2025 16:43:12 +0200
+Message-ID: <20251013144327.931962096@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -46,60 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 7942b226e6b84df13b46b76c01d3b6e07a1b349e ]
+[ Upstream commit 9f15e0f9ef514b8e1a80707931f6d07362e8ebc4 ]
 
-When executing modinfo null_blk, there is an error in the description
-of module parameter mbps, and the output information of cache_size is
-incomplete.The output of modinfo before and after applying this patch
-is as follows:
+The _rval register variable is meant to be an output operand of the asm
+statement but is instead used as input operand.
+clang 20.1 notices this and triggers -Wuninitialized warnings:
 
-Before:
-[...]
-parm:           cache_size:ulong
-[...]
-parm:           mbps:Cache size in MiB for memory-backed device.
-		Default: 0 (none) (uint)
-[...]
+tools/testing/selftests/timers/auxclock.c:154:10: error: variable '_rval' is uninitialized when used here [-Werror,-Wuninitialized]
+  154 |                 return VDSO_CALL(self->vdso_clock_gettime64, 2, clockid, ts);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tools/testing/selftests/timers/../vDSO/vdso_call.h:59:10: note: expanded from macro 'VDSO_CALL'
+   59 |                 : "r" (_rval)                                           \
+      |                        ^~~~~
+tools/testing/selftests/timers/auxclock.c:154:10: note: variable '_rval' is declared here
+tools/testing/selftests/timers/../vDSO/vdso_call.h:47:2: note: expanded from macro 'VDSO_CALL'
+   47 |         register long _rval asm ("r3");                                 \
+      |         ^
 
-After:
-[...]
-parm:           cache_size:Cache size in MiB for memory-backed device.
-		Default: 0 (none) (ulong)
-[...]
-parm:           mbps:Limit maximum bandwidth (in MiB/s).
-		Default: 0 (no limit) (uint)
-[...]
+It seems the list of input and output operands have been switched around.
+However as the argument registers are not always initialized they can not
+be marked as pure inputs as that would trigger -Wuninitialized warnings.
+Adding _rval as another input and output operand does also not work as it
+would collide with the existing _r3 variable.
 
-Fixes: 058efe000b31 ("null_blk: add module parameters for 4 options")
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Instead reuse _r3 for both the argument and the return value.
+
+Fixes: 6eda706a535c ("selftests: vDSO: fix the way vDSO functions are called for powerpc")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/all/20250812-vdso-tests-fixes-v2-1-90f499dd35f8@linutronix.de
+Closes: https://lore.kernel.org/oe-kbuild-all/202506180223.BOOk5jDK-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/vDSO/vdso_call.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index f10369ad90f76..ceb7aeca5d9bd 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -223,7 +223,7 @@ MODULE_PARM_DESC(discard, "Support discard operations (requires memory-backed nu
+diff --git a/tools/testing/selftests/vDSO/vdso_call.h b/tools/testing/selftests/vDSO/vdso_call.h
+index bb237d771051b..e7205584cbdca 100644
+--- a/tools/testing/selftests/vDSO/vdso_call.h
++++ b/tools/testing/selftests/vDSO/vdso_call.h
+@@ -44,7 +44,6 @@
+ 	register long _r6 asm ("r6");					\
+ 	register long _r7 asm ("r7");					\
+ 	register long _r8 asm ("r8");					\
+-	register long _rval asm ("r3");					\
+ 									\
+ 	LOADARGS_##nr(fn, args);					\
+ 									\
+@@ -54,13 +53,13 @@
+ 		"	bns+	1f\n"					\
+ 		"	neg	3, 3\n"					\
+ 		"1:"							\
+-		: "+r" (_r0), "=r" (_r3), "+r" (_r4), "+r" (_r5),	\
++		: "+r" (_r0), "+r" (_r3), "+r" (_r4), "+r" (_r5),	\
+ 		  "+r" (_r6), "+r" (_r7), "+r" (_r8)			\
+-		: "r" (_rval)						\
++		:							\
+ 		: "r9", "r10", "r11", "r12", "cr0", "cr1", "cr5",	\
+ 		  "cr6", "cr7", "xer", "lr", "ctr", "memory"		\
+ 	);								\
+-	_rval;								\
++	_r3;								\
+ })
  
- static unsigned long g_cache_size;
- module_param_named(cache_size, g_cache_size, ulong, 0444);
--MODULE_PARM_DESC(mbps, "Cache size in MiB for memory-backed device. Default: 0 (none)");
-+MODULE_PARM_DESC(cache_size, "Cache size in MiB for memory-backed device. Default: 0 (none)");
- 
- static bool g_fua = true;
- module_param_named(fua, g_fua, bool, 0444);
+ #else
 -- 
 2.51.0
 
