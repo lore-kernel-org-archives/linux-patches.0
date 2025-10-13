@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F650313532;
-	Mon, 13 Oct 2025 14:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80A1313E1A;
+	Mon, 13 Oct 2025 14:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367240; cv=none; b=mqqd6DnYlx+MTKaW6MNUo9TCBq3Ui/zNwbZ3EURGJj6ZEd7EIVlo2Y3okeyRc1XyAETOd6l3GkKvrBr9HXCUj6LbZOa/w1EWvl2Nnq/H08N/k+a76ll+f9lIMsFYeCuETCfBm5EAjnYuIgZJHzssAuoq+Uy0Yl/GN74t2TT1ITw=
+	t=1760367243; cv=none; b=DwlX2q7bPmgmeghmDmGRJ5KXaze6kbzmhiaSZvoX3Zqi7pX6D0rkQaSNRN8S896GciGs1CvAQMxufJvCoVHYrLFIsfhG0e7LP9N8Lrm0iZug8JFwsxrfUSNg/0vjjuIZMaVUoeod47Y7CVlF6UYJjJRk48SL38kuT6fKqUHq2lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367240; c=relaxed/simple;
-	bh=Fjf2Bmt9dM6gp/oMA/8XsukfYhDa0RMGrN30jjV2Cnk=;
+	s=arc-20240116; t=1760367243; c=relaxed/simple;
+	bh=u0LYykkE2auTIeMHz16O2a4NAIEkzM5afEg4s+0cgyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDjgEIj7Y4KUNPFfFNd6mmvg9NrewTAjdh1qTbvFnxjRGuNUnDMVEXbZie1Zm19UHjQj5nRjvQMvQyTFQfLshdYC+bIcx1RmsUlIGGj2EwdNrFA+zrBpeDI1AepESwHuoI0QBpc0eq1k0+8pFcWto9035+6452RpOorL3yF0NrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNeDqnN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXtM6xPKkx5qXdtJ2AvIy7C7HsFmO+heYzTWt1oeKXE662vXyCo5SjDVCaT558hFy+rmSO19/Zty60PGWVM/WEGvgtYhrVA0pR683QYlLLHxmU/MHfgIN+Q8LqerDRIpdMBhBj1JvQXneqEIhGT0IwufR0VCAQ5IvJAdL3xkaLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgXiO5e4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNeDqnN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D619C116D0;
-	Mon, 13 Oct 2025 14:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgXiO5e4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C312FC113D0;
+	Mon, 13 Oct 2025 14:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367239;
-	bh=Fjf2Bmt9dM6gp/oMA/8XsukfYhDa0RMGrN30jjV2Cnk=;
+	s=korg; t=1760367243;
+	bh=u0LYykkE2auTIeMHz16O2a4NAIEkzM5afEg4s+0cgyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNeDqnN2/Yl6G7WbxyLGixoHyMhFhFPOdaKGtmPwYHvHL7cbqYqWhTaS4ub879V3a
-	 dGE1IKOzrFgPpGuNCsnHh6FSBAd1ryYnKCa24OZarTsN6pZi5ekmgEMja2ZNgl02JC
-	 TikDjVgjNAzMxjUa22voHQYpIpS4dPYmlYy7FyHQ=
+	b=xgXiO5e4BXyMsLnQpYHvaSY3TIUiNg3CkRc55QZI5rtcOnZyotyyV7LEFqYEkeafu
+	 dMp+c9oLUFtW1zZB3lwYw4eyzr++3y/jINTHbvDjV0gT1vHnqEYCsajFzgkDOtf5+k
+	 zPdaxdwnHFiW3bkId78QkP0G4SkoUZYQpghb79JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Beguin <liambeguin@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/196] iio: consumers: Fix offset handling in iio_convert_raw_to_processed()
-Date: Mon, 13 Oct 2025 16:44:56 +0200
-Message-ID: <20251013144319.144915880@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Ethan Hawke <ehawk@ember.systems>,
+	Ken Link <iissmart@numberzero.org>
+Subject: [PATCH 6.1 141/196] sparc: fix accurate exception reporting in copy_{from_to}_user for Niagara
+Date: Mon, 13 Oct 2025 16:45:14 +0200
+Message-ID: <20251013144319.796712106@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,40 +55,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 33f5c69c4daff39c010b3ea6da8ebab285f4277b ]
+[ Upstream commit 0b67c8fc10b13a9090340c5f8a37d308f4e1571c ]
 
-Fix iio_convert_raw_to_processed() offset handling for channels without
-a scale attribute.
+The referenced commit introduced exception handlers on user-space memory
+references in copy_from_user and copy_to_user. These handlers return from
+the respective function and calculate the remaining bytes left to copy
+using the current register contents. This commit fixes a couple of bad
+calculations and a broken epilogue in the exception handlers. This will
+prevent crashes and ensure correct return values of copy_from_user and
+copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
 
-The offset has been applied to the raw64 value not to the original raw
-value. Use the raw64 value so that the offset is taken into account.
-
-Fixes: 14b457fdde38 ("iio: inkern: apply consumer scale when no channel scale is available")
-Cc: Liam Beguin <liambeguin@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250831104825.15097-3-hansg@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 7ae3aaf53f16 ("sparc64: Convert NGcopy_{from,to}_user to accurate exception reporting.")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on SPARC T4 with modified kernel to use Niagara 1 code
+Tested-by: Magnus Lindholm <linmag7@gmail.com> # on Sun Fire T2000
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Tested-by: Ethan Hawke <ehawk@ember.systems> # on Sun Fire T2000
+Tested-by: Ken Link <iissmart@numberzero.org> # on Sun Fire T1000
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-3-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/inkern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/sparc/lib/NGmemcpy.S | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index 5c210f48bd9ce..c7795feb904ed 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -669,7 +669,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- 		 * If no channel scaling is available apply consumer scale to
- 		 * raw value and return.
- 		 */
--		*processed = raw * scale;
-+		*processed = raw64 * scale;
- 		return 0;
- 	}
+diff --git a/arch/sparc/lib/NGmemcpy.S b/arch/sparc/lib/NGmemcpy.S
+index ee51c12306894..bbd3ea0a64822 100644
+--- a/arch/sparc/lib/NGmemcpy.S
++++ b/arch/sparc/lib/NGmemcpy.S
+@@ -79,8 +79,8 @@
+ #ifndef EX_RETVAL
+ #define EX_RETVAL(x)	x
+ __restore_asi:
+-	ret
+ 	wr	%g0, ASI_AIUS, %asi
++	ret
+ 	 restore
+ ENTRY(NG_ret_i2_plus_i4_plus_1)
+ 	ba,pt	%xcc, __restore_asi
+@@ -125,15 +125,16 @@ ENTRY(NG_ret_i2_plus_g1_minus_56)
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%i2, %g1, %i0
+ ENDPROC(NG_ret_i2_plus_g1_minus_56)
+-ENTRY(NG_ret_i2_plus_i4)
++ENTRY(NG_ret_i2_plus_i4_plus_16)
++        add     %i4, 16, %i4
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%i2, %i4, %i0
+-ENDPROC(NG_ret_i2_plus_i4)
+-ENTRY(NG_ret_i2_plus_i4_minus_8)
+-	sub	%i4, 8, %i4
++ENDPROC(NG_ret_i2_plus_i4_plus_16)
++ENTRY(NG_ret_i2_plus_i4_plus_8)
++	add	%i4, 8, %i4
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%i2, %i4, %i0
+-ENDPROC(NG_ret_i2_plus_i4_minus_8)
++ENDPROC(NG_ret_i2_plus_i4_plus_8)
+ ENTRY(NG_ret_i2_plus_8)
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%i2, 8, %i0
+@@ -160,6 +161,12 @@ ENTRY(NG_ret_i2_and_7_plus_i4)
+ 	ba,pt	%xcc, __restore_asi
+ 	 add	%i2, %i4, %i0
+ ENDPROC(NG_ret_i2_and_7_plus_i4)
++ENTRY(NG_ret_i2_and_7_plus_i4_plus_8)
++	and	%i2, 7, %i2
++	add	%i4, 8, %i4
++	ba,pt	%xcc, __restore_asi
++	 add	%i2, %i4, %i0
++ENDPROC(NG_ret_i2_and_7_plus_i4)
+ #endif
  
+ 	.align		64
+@@ -405,13 +412,13 @@ FUNC_NAME:	/* %i0=dst, %i1=src, %i2=len */
+ 	andn		%i2, 0xf, %i4
+ 	and		%i2, 0xf, %i2
+ 1:	subcc		%i4, 0x10, %i4
+-	EX_LD(LOAD(ldx, %i1, %o4), NG_ret_i2_plus_i4)
++	EX_LD(LOAD(ldx, %i1, %o4), NG_ret_i2_plus_i4_plus_16)
+ 	add		%i1, 0x08, %i1
+-	EX_LD(LOAD(ldx, %i1, %g1), NG_ret_i2_plus_i4)
++	EX_LD(LOAD(ldx, %i1, %g1), NG_ret_i2_plus_i4_plus_16)
+ 	sub		%i1, 0x08, %i1
+-	EX_ST(STORE(stx, %o4, %i1 + %i3), NG_ret_i2_plus_i4)
++	EX_ST(STORE(stx, %o4, %i1 + %i3), NG_ret_i2_plus_i4_plus_16)
+ 	add		%i1, 0x8, %i1
+-	EX_ST(STORE(stx, %g1, %i1 + %i3), NG_ret_i2_plus_i4_minus_8)
++	EX_ST(STORE(stx, %g1, %i1 + %i3), NG_ret_i2_plus_i4_plus_8)
+ 	bgu,pt		%XCC, 1b
+ 	 add		%i1, 0x8, %i1
+ 73:	andcc		%i2, 0x8, %g0
+@@ -468,7 +475,7 @@ FUNC_NAME:	/* %i0=dst, %i1=src, %i2=len */
+ 	subcc		%i4, 0x8, %i4
+ 	srlx		%g3, %i3, %i5
+ 	or		%i5, %g2, %i5
+-	EX_ST(STORE(stx, %i5, %o0), NG_ret_i2_and_7_plus_i4)
++	EX_ST(STORE(stx, %i5, %o0), NG_ret_i2_and_7_plus_i4_plus_8)
+ 	add		%o0, 0x8, %o0
+ 	bgu,pt		%icc, 1b
+ 	 sllx		%g3, %g1, %g2
 -- 
 2.51.0
 
