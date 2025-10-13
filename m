@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978502949E0;
-	Mon, 13 Oct 2025 15:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D112949E0;
+	Mon, 13 Oct 2025 15:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370277; cv=none; b=bAiIazllhGOGY014AZtzTO/9WfAeDVrbS4leK7AFPVLBO6eskETQmjPslHP7ckOoNK4Ow3dlHVi+sBAtdGKAKfl1UMNvb78ScF0Xe5mghQtyIg08rSpDPoKKx6/crK8tgvIVbBr/uOQccygGX33KBWVTnp2k74U0a1zl0cqK6lM=
+	t=1760370280; cv=none; b=lNGSoMxu5lY1EeddM7gJRJ+PD0h7mC3brSgQ6VHUY/tG/eL9URuLWYqpucQoUDm5+LzmKE0zxzG3PVRCgLeaR/aWyYqXMRBQeyek9tfy1HA+qCu/prz5zI3Wo8UDsGC1xC2sOR12Bvv6UNEpj96Fs8QkQr8E6lxEk4Ao2DYe3Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370277; c=relaxed/simple;
-	bh=N0H5+HZjh3K4wjMY0RaCXssZuP8CGjD1VaDf86paLtc=;
+	s=arc-20240116; t=1760370280; c=relaxed/simple;
+	bh=vZiWltL4NN1aq0mYsfGW/uCIzTTz0+1vh9eSvqz4Tx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t0iflZxgAOqTfNvXqDv8PO3sm9L2WQCiiLGpDW6JcQirVlpIypVUU3RWg1F3ywGYT4Lq1/eNbp/k7pkidnLcC6diIRZO23ZIYKfSWjr4nDggmT5k0xHKPvK59UJH4787ZyGrHB3xVQRFnqCwphDsVz1w/XpYbEdlx1qufhNFFxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ck6hHm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0LpONHQ304JyGRaGW7UkPTcYpNVT8jiyy8YF1KPT9uUvzZnPn/766wfk9qYlwinejVVFr/3fPrOHRpcIWZMK/o4sueufdGJi200UclU7PRsrkSQRo6PZSG9G4QPDz94plBHcX4tnJldAIwgYCttksFI+Rb6iORgFzu7T1xulG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MszchaSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ck6hHm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F15C4CEE7;
-	Mon, 13 Oct 2025 15:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MszchaSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32BEC4CEE7;
+	Mon, 13 Oct 2025 15:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370277;
-	bh=N0H5+HZjh3K4wjMY0RaCXssZuP8CGjD1VaDf86paLtc=;
+	s=korg; t=1760370280;
+	bh=vZiWltL4NN1aq0mYsfGW/uCIzTTz0+1vh9eSvqz4Tx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ck6hHm8XHv84/T5R/ZGuo+DxEp1So68i4FzTj6V5sAv5l5tVp7w3vlqnoi2jJFBv
-	 sLDy5JTc6WBgYIyERMCxMa6SqIo1qLBZID2OyzEPtv90rAKpl3Id9TQXH+FWEMPqLi
-	 q2Ac434CFfJN10WwbhPCINQK8myhfvCtui5yvNKU=
+	b=MszchaSq2jVG5z56NSka00+8pfykKmUl//e70mQsTEy2ufIFzcKOnyYvES0Rfxhjm
+	 TXX/xj5sUfnal5hfLnpK5PlQ2Z7HiRs2pvEKQsnU/aPy5v69WgxQQZEx1WT/CpxKLf
+	 LJZsZNKGIVhwdP5c+17zQrDvuXawY9MYubMRUH3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Carl Worth <carl@os.amperecomputing.com>,
-	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Will Deacon <will@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 540/563] mm: hugetlb: avoid soft lockup when mprotect to large memory area
-Date: Mon, 13 Oct 2025 16:46:41 +0200
-Message-ID: <20251013144430.870145180@linuxfoundation.org>
+Subject: [PATCH 6.17 541/563] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
+Date: Mon, 13 Oct 2025 16:46:42 +0200
+Message-ID: <20251013144430.907574291@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,92 +48,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-commit f52ce0ea90c83a28904c7cc203a70e6434adfecb upstream.
+commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
 
-When calling mprotect() to a large hugetlb memory area in our customer's
-workload (~300GB hugetlb memory), soft lockup was observed:
+The madv_populate and soft-dirty kselftests currently fail on systems
+where CONFIG_MEM_SOFT_DIRTY is disabled.
 
-watchdog: BUG: soft lockup - CPU#98 stuck for 23s! [t2_new_sysv:126916]
+Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
+tests are properly skipped when the feature is not enabled.
 
-CPU: 98 PID: 126916 Comm: t2_new_sysv Kdump: loaded Not tainted 6.17-rc7
-Hardware name: GIGACOMPUTING R2A3-T40-AAV1/Jefferson CIO, BIOS 5.4.4.1 07/15/2025
-pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mte_clear_page_tags+0x14/0x24
-lr : mte_sync_tags+0x1c0/0x240
-sp : ffff80003150bb80
-x29: ffff80003150bb80 x28: ffff00739e9705a8 x27: 0000ffd2d6a00000
-x26: 0000ff8e4bc00000 x25: 00e80046cde00f45 x24: 0000000000022458
-x23: 0000000000000000 x22: 0000000000000004 x21: 000000011b380000
-x20: ffff000000000000 x19: 000000011b379f40 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc875e0aa5e2c
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : fffffc01ce7a5c00 x4 : 00000000046cde00 x3 : fffffc0000000000
-x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff0046cde7c000
-
-Call trace:
-  mte_clear_page_tags+0x14/0x24
-  set_huge_pte_at+0x25c/0x280
-  hugetlb_change_protection+0x220/0x430
-  change_protection+0x5c/0x8c
-  mprotect_fixup+0x10c/0x294
-  do_mprotect_pkey.constprop.0+0x2e0/0x3d4
-  __arm64_sys_mprotect+0x24/0x44
-  invoke_syscall+0x50/0x160
-  el0_svc_common+0x48/0x144
-  do_el0_svc+0x30/0xe0
-  el0_svc+0x30/0xf0
-  el0t_64_sync_handler+0xc4/0x148
-  el0t_64_sync+0x1a4/0x1a8
-
-Soft lockup is not triggered with THP or base page because there is
-cond_resched() called for each PMD size.
-
-Although the soft lockup was triggered by MTE, it should be not MTE
-specific.  The other processing which takes long time in the loop may
-trigger soft lockup too.
-
-So add cond_resched() for hugetlb to avoid soft lockup.
-
-Link: https://lkml.kernel.org/r/20250929202402.1663290-1-yang@os.amperecomputing.com
-Fixes: 8f860591ffb2 ("[PATCH] Enable mprotect on huge pages")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Tested-by: Carl Worth <carl@os.amperecomputing.com>
-Reviewed-by: Christoph Lameter (Ampere) <cl@gentwo.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
+Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
 Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Will Deacon <will@kernel.org>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/mm/madv_populate.c |   21 ++-------------------
+ tools/testing/selftests/mm/soft-dirty.c    |    5 ++++-
+ tools/testing/selftests/mm/vm_util.c       |   17 +++++++++++++++++
+ tools/testing/selftests/mm/vm_util.h       |    1 +
+ 4 files changed, 24 insertions(+), 20 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -7203,6 +7203,8 @@ long hugetlb_change_protection(struct vm
- 						psize);
- 		}
- 		spin_unlock(ptl);
+--- a/tools/testing/selftests/mm/madv_populate.c
++++ b/tools/testing/selftests/mm/madv_populate.c
+@@ -264,23 +264,6 @@ static void test_softdirty(void)
+ 	munmap(addr, SIZE);
+ }
+ 
+-static int system_has_softdirty(void)
+-{
+-	/*
+-	 * There is no way to check if the kernel supports soft-dirty, other
+-	 * than by writing to a page and seeing if the bit was set. But the
+-	 * tests are intended to check that the bit gets set when it should, so
+-	 * doing that check would turn a potentially legitimate fail into a
+-	 * skip. Fortunately, we know for sure that arm64 does not support
+-	 * soft-dirty. So for now, let's just use the arch as a corse guide.
+-	 */
+-#if defined(__aarch64__)
+-	return 0;
+-#else
+-	return 1;
+-#endif
+-}
+-
+ int main(int argc, char **argv)
+ {
+ 	int nr_tests = 16;
+@@ -288,7 +271,7 @@ int main(int argc, char **argv)
+ 
+ 	pagesize = getpagesize();
+ 
+-	if (system_has_softdirty())
++	if (softdirty_supported())
+ 		nr_tests += 5;
+ 
+ 	ksft_print_header();
+@@ -300,7 +283,7 @@ int main(int argc, char **argv)
+ 	test_holes();
+ 	test_populate_read();
+ 	test_populate_write();
+-	if (system_has_softdirty())
++	if (softdirty_supported())
+ 		test_softdirty();
+ 
+ 	err = ksft_get_fail_cnt();
+--- a/tools/testing/selftests/mm/soft-dirty.c
++++ b/tools/testing/selftests/mm/soft-dirty.c
+@@ -200,8 +200,11 @@ int main(int argc, char **argv)
+ 	int pagesize;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(15);
+ 
++	if (!softdirty_supported())
++		ksft_exit_skip("soft-dirty is not support\n");
 +
-+		cond_resched();
++	ksft_set_plan(15);
+ 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
+ 	if (pagemap_fd < 0)
+ 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
+--- a/tools/testing/selftests/mm/vm_util.c
++++ b/tools/testing/selftests/mm/vm_util.c
+@@ -426,6 +426,23 @@ bool check_vmflag_io(void *addr)
  	}
- 	/*
- 	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
+ }
+ 
++bool softdirty_supported(void)
++{
++	char *addr;
++	bool supported = false;
++	const size_t pagesize = getpagesize();
++
++	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
++	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
++		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
++	if (!addr)
++		ksft_exit_fail_msg("mmap failed\n");
++
++	supported = check_vmflag(addr, "sd");
++	munmap(addr, pagesize);
++	return supported;
++}
++
+ /*
+  * Open an fd at /proc/$pid/maps and configure procmap_out ready for
+  * PROCMAP_QUERY query. Returns 0 on success, or an error code otherwise.
+--- a/tools/testing/selftests/mm/vm_util.h
++++ b/tools/testing/selftests/mm/vm_util.h
+@@ -99,6 +99,7 @@ bool find_vma_procmap(struct procmap_fd
+ int close_procmap(struct procmap_fd *procmap);
+ int write_sysfs(const char *file_path, unsigned long val);
+ int read_sysfs(const char *file_path, unsigned long *val);
++bool softdirty_supported(void);
+ 
+ static inline int open_self_procmap(struct procmap_fd *procmap_out)
+ {
 
 
