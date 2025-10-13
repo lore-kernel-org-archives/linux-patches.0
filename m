@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0817C257828;
-	Mon, 13 Oct 2025 15:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB83A8F54;
+	Mon, 13 Oct 2025 15:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368378; cv=none; b=fwkJPd/QFgOpGWnpcpXhuapqGOZHt8Ioi+evVhqbV5YmGOo+FCkBIf617evem987sYgot89IbmmbLnDU9yJdM4Xp3q5SUOCjm1rt+jlYHNXCoNzcPAgqKK88cNAtmSPhtlX86hiz0Fn4TVMvDu8ZTZXjQUWrTW4cxrIk3+B1EXw=
+	t=1760368380; cv=none; b=hKBUUbb2Qxza8KHYNSEDA7REZ0is2L2ZOFk7QXL8uoXyiEp0eCQh5KDitz+2HznDLnTDAYy7wx4BgIKVn2l7gWVjGydoMwOSNCOQ5MByQXtzyrVbY0jvXc+A8fy3ORhfthXY/jn3ERfKDuLzeK0L5WW5X58Q/sJL7vOwmslilag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368378; c=relaxed/simple;
-	bh=Ovji5IJAi9hxWyONm8VcjrhyWsaaFKkKr1jtSCtWCD0=;
+	s=arc-20240116; t=1760368380; c=relaxed/simple;
+	bh=Y9b2BjPwrDel7+3z1hDmTtKuVMElHeNC3SLI0/t6bQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbiIOBWr9saQrsVAVjDRWXcT3POv+yTquQHJ5rGxGxCPCoKGjlwMn2DJpPwVobL3jSzilaIppz0cd7BjXUm7GVqmth6nwYUdYYUtXVnim3pERsJ/9ULzB2T6rgZuPDYvXAJ66oO1vRLpchAyXSFjAp+mJQd4Q+XvUWpJ8wkln4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6XNGnY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DIuewGO4E1+yR3d9X03PhIw9QGAgbNmfUv4hjXcbgTGww9oLSSYLPZQxs77e1Wl54DjoIWIHM+4Wc5GJuGa6CkjmqgZtd7GK4dzsae/g9cDujJEUf7eDn5YRe3SuesNs2tU2tS3/KSg/kk/iD3n6duvFxijdiCSNkCGHLxbXpDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHTPT/Yv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6XNGnY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1B0C4CEE7;
-	Mon, 13 Oct 2025 15:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHTPT/Yv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471F7C4CEE7;
+	Mon, 13 Oct 2025 15:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368377;
-	bh=Ovji5IJAi9hxWyONm8VcjrhyWsaaFKkKr1jtSCtWCD0=;
+	s=korg; t=1760368380;
+	bh=Y9b2BjPwrDel7+3z1hDmTtKuVMElHeNC3SLI0/t6bQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6XNGnY4MBIiMbntNtI0oOs+Q4L0FxSqRZisS3CRMgcFS5/XqheBqErEAq5i2U3Sw
-	 ZInWOd1OLY7DEwP6GMrn1CKKselWII5pTuX75UZbvUEF+cV0+4VBrBnKQIclpYrJim
-	 oltD0Qcj1bCg5NSwSTxHruGc233sCtqpIXTMPv0w=
+	b=uHTPT/YvritLxJGDXvQiYTRRtPbHE59EhpBOJrEp+wEGqI0fczG0qvh+jUsqa6knT
+	 EheOttmVIiO0lBWKmnNpwGMyhWKFojOsXHjyySTLy5B+XLXA81HTlJauw8e/pDmkUd
+	 RY4beQxtaZH+/QtzrXGDrhJyhhjW5dZYOvEvig7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/262] fs/ntfs3: reject index allocation if $BITMAP is empty but blocks exist
-Date: Mon, 13 Oct 2025 16:44:41 +0200
-Message-ID: <20251013144331.129410960@linuxfoundation.org>
+Subject: [PATCH 6.12 107/262] RDMA/mlx5: Fix vport loopback forcing for MPV device
+Date: Mon, 13 Oct 2025 16:44:09 +0200
+Message-ID: <20251013144329.980486659@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,55 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 0dc7117da8f92dd5fe077d712a756eccbe377d40 ]
+[ Upstream commit 08aae7860450c89eebbc6fd4d38416e53c7a33d2 ]
 
-Index allocation requires at least one bit in the $BITMAP attribute to
-track usage of index entries. If the bitmap is empty while index blocks
-are already present, this reflects on-disk corruption.
+Previously loopback for MPV was supposed to be permanently enabled,
+however other driver flows were able to over-ride that configuration and
+disable it.
 
-syzbot triggered this condition using a malformed NTFS image. During a
-rename() operation involving a long filename (which spans multiple
-index entries), the empty bitmap allowed the name to be added without
-valid tracking. Subsequent deletion of the original entry failed with
--ENOENT, due to unexpected index state.
+Add force_lb parameter that indicates that loopback should always be
+enabled which prevents all other driver flows from disabling it.
 
-Reject such cases by verifying that the bitmap is not empty when index
-blocks exist.
-
-Reported-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b0373017f711c06ada64
-Fixes: d99208b91933 ("fs/ntfs3: cancle set bad inode after removing name fails")
-Tested-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: a9a9e68954f2 ("RDMA/mlx5: Fix vport loopback for MPV device")
+Link: https://patch.msgid.link/r/cfc6b1f0f99f8100b087483cc14da6025317f901.1755088808.git.leon@kernel.org
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c    | 19 +++++++++++++++----
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 +
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 1bf2a6593dec6..6d1bf890929d9 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1508,6 +1508,16 @@ static int indx_add_allocate(struct ntfs_index *indx, struct ntfs_inode *ni,
- 			bmp_size = bmp_size_v = le32_to_cpu(bmp->res.data_size);
- 		}
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 29d0bc583169b..f3e58797705d7 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1813,7 +1813,8 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
+ }
  
-+		/*
-+		 * Index blocks exist, but $BITMAP has zero valid bits.
-+		 * This implies an on-disk corruption and must be rejected.
-+		 */
-+		if (in->name == I30_NAME &&
-+		    unlikely(bmp_size_v == 0 && indx->alloc_run.count)) {
-+			err = -EINVAL;
-+			goto out1;
-+		}
+ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
+-				struct mlx5_core_dev *slave)
++				struct mlx5_core_dev *slave,
++				struct mlx5_ib_lb_state *lb_state)
+ {
+ 	int err;
+ 
+@@ -1825,6 +1826,7 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
+ 	if (err)
+ 		goto out;
+ 
++	lb_state->force_enable = true;
+ 	return 0;
+ 
+ out:
+@@ -1833,16 +1835,22 @@ static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
+ }
+ 
+ static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
+-				  struct mlx5_core_dev *slave)
++				  struct mlx5_core_dev *slave,
++				  struct mlx5_ib_lb_state *lb_state)
+ {
+ 	mlx5_nic_vport_update_local_lb(slave, false);
+ 	mlx5_nic_vport_update_local_lb(master, false);
 +
- 		bit = bmp_size << 3;
- 	}
++	lb_state->force_enable = false;
+ }
  
+ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ {
+ 	int err = 0;
+ 
++	if (dev->lb.force_enable)
++		return 0;
++
+ 	mutex_lock(&dev->lb.mutex);
+ 	if (td)
+ 		dev->lb.user_td++;
+@@ -1864,6 +1872,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ 
+ void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ {
++	if (dev->lb.force_enable)
++		return;
++
+ 	mutex_lock(&dev->lb.mutex);
+ 	if (td)
+ 		dev->lb.user_td--;
+@@ -3521,7 +3532,7 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
+ 
+ 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
+ 
+-	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
++	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
+ 
+ 	mlx5_core_mp_event_replay(ibdev->mdev,
+ 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
+@@ -3618,7 +3629,7 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
+ 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
+ 				  &key);
+ 
+-	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
++	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev, &ibdev->lb);
+ 	if (err)
+ 		goto unbind;
+ 
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 29bde64ea1eac..f49cb588a856d 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -1083,6 +1083,7 @@ struct mlx5_ib_lb_state {
+ 	u32			user_td;
+ 	int			qps;
+ 	bool			enabled;
++	bool			force_enable;
+ };
+ 
+ struct mlx5_ib_pf_eq {
 -- 
 2.51.0
 
