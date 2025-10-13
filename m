@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DF2308F32;
-	Mon, 13 Oct 2025 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86333090CC;
+	Mon, 13 Oct 2025 14:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367509; cv=none; b=tORzrUyDgDRnCHdud8zwKaUzHZDgglbOT1QZIX4HYHWy2IZFaph5+BUEb9RtqaK5etwOHy2RStmZKxVa+8qwcVQ82MQcTPrHku8OK5dhhfEScAcDQIHBgLiN6djGwItwqrsA7CHLERMGOwbRelS/kHKcgJl9unxweOmPd89fzG4=
+	t=1760367511; cv=none; b=D+knd1w5Bb7Pd/KHAZmUW/Yuab25rgxG9PyPj7kvsNAhUUai2NIqpxAM6cZqTP+xec3gVeefKRYo7c7yg/UdbEAQ/O243X/Casn1Pxjdo8idTdyBhGSoCMt6tb11InksQti1I9O9zUTQVntE2Ewr6ppQloJabUzwYzV4Y/Nyc/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367509; c=relaxed/simple;
-	bh=axFZr0YFp7MZIBUSgrMFDvkoLrfCw6+V2WSqYtRNL+c=;
+	s=arc-20240116; t=1760367511; c=relaxed/simple;
+	bh=VC4cNFj/BvMiMQy3lxUh4kQnN5K9KB0Tq7Ag584OQ1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2OnKu5qNcXgJCZ+jg8ya/uFTYtE8ILVP2Us8e/bof02wrgHvB3CVkoQgBdCz9K+ulHdp98mM0aYgJwtYOA0ThbtPrf17VoCGyk84K436jEjWgM/McLHhEqYtUGhg3EwhLyufpR0fZtBKOvcWP87dlPgVF30M6IxgEZrBAFxlXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWEyiBEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aquzSFt2Zaa3HkEO4pYPNze7QCwENCGJ2tgzp1vpanHkq8zfrpnuv5jzc3tfx0HxqPheG2yN4q7N0VPXQkIBUx/y2FSPLTCPooTapNYcKo3yQfrxpcw++O8g94l8BVVSmMhhB2Li+e+440mbfLoigo4dGB4nugABC41fB4V6ehI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyUKzTY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWEyiBEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C75FC4CEE7;
-	Mon, 13 Oct 2025 14:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyUKzTY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3299CC4CEFE;
+	Mon, 13 Oct 2025 14:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367508;
-	bh=axFZr0YFp7MZIBUSgrMFDvkoLrfCw6+V2WSqYtRNL+c=;
+	s=korg; t=1760367511;
+	bh=VC4cNFj/BvMiMQy3lxUh4kQnN5K9KB0Tq7Ag584OQ1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWEyiBEZoroOBuHXVWocwbWWgAWFC47o9tGxSya7f4Y331yBfUic+VcW8e9+CMKLR
-	 PpTgzBMV/oaQ4u4/pWscdCZB7LWEw7ZX7ThGdC0PMiWXfPHDjdsqma0KrujjdPSOay
-	 LFemSFPt183VMb1ixCzRDUKwwF3U1G3WWDYm6gdQ=
+	b=CyUKzTY6jxcJq3uYisKCxDEphPvDfwCytOrgKL38BwFfbgGvrcnLKMCD+nTKa/jBT
+	 nBObl1W9M3Nokj6HdtKwdhK62VjdeRMiHPhYdFLZCV4y0NEnYBge9vw1TlzoK+7Tky
+	 cWX1quO0O1SBn2Xmx3ApJYEmj6VifAllUrH8bt/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Guoqing Jiang <guoqing.jiang@canonical.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/196] block: use int to store blk_stack_limits() return value
-Date: Mon, 13 Oct 2025 16:43:40 +0200
-Message-ID: <20251013144316.250316076@linuxfoundation.org>
+Subject: [PATCH 6.6 038/196] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie0
+Date: Mon, 13 Oct 2025 16:43:49 +0200
+Message-ID: <20251013144316.580391438@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -53,46 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Guoqing Jiang <guoqing.jiang@canonical.com>
 
-[ Upstream commit b0b4518c992eb5f316c6e40ff186cbb7a5009518 ]
+[ Upstream commit 3374b5fb26b300809ecd6aed9f414987dd17c313 ]
 
-Change the 'ret' variable in blk_stack_limits() from unsigned int to int,
-as it needs to store negative value -1.
+When test suspend resume with 6.8 based kernel, system can't resume
+and I got below error which can be also reproduced with 6.16 rc6+
+kernel.
 
-Storing the negative error codes in unsigned type, or performing equality
-comparisons (e.g., ret == -1), doesn't cause an issue at runtime [1] but
-can be confusing.  Additionally, assigning negative error codes to unsigned
-type may trigger a GCC warning when the -Wsign-conversion flag is enabled.
+mtk-pcie-gen3 112f0000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
+mtk-pcie-gen3 112f0000.pcie: PM: dpm_run_callback(): genpd_resume_noirq returns -110
+mtk-pcie-gen3 112f0000.pcie: PM: failed to resume noirq: error -110
 
-No effect on runtime.
+After investigation, looks pcie0 has the same problem as pcie1 as
+decribed in commit 3d7fdd8e38aa ("arm64: dts: mediatek: mt8195:
+Remove suspend-breaking reset from pcie1").
 
-Link: https://lore.kernel.org/all/x3wogjf6vgpkisdhg3abzrx7v7zktmdnfmqeih5kosszmagqfs@oh3qxrgzkikf/ #1
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Fixes: fe0b393f2c0a ("block: Correct handling of bottom device misaligment")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250902130930.68317-1-rongqianfeng@vivo.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Link: https://lore.kernel.org/r/20250721095959.57703-1-guoqing.jiang@canonical.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 021994f6d2d82..a891f27ff834d 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -553,7 +553,8 @@ static unsigned int blk_round_down_sectors(unsigned int sectors, unsigned int lb
- int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
- 		     sector_t start)
- {
--	unsigned int top, bottom, alignment, ret = 0;
-+	unsigned int top, bottom, alignment;
-+	int ret = 0;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 22604d3abde3b..4b701afe995e2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -1524,9 +1524,6 @@ pcie0: pcie@112f0000 {
  
- 	t->max_sectors = min_not_zero(t->max_sectors, b->max_sectors);
- 	t->max_hw_sectors = min_not_zero(t->max_hw_sectors, b->max_hw_sectors);
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P0>;
+ 
+-			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P0_SWRST>;
+-			reset-names = "mac";
+-
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 7>;
+ 			interrupt-map = <0 0 0 1 &pcie_intc0 0>,
 -- 
 2.51.0
 
