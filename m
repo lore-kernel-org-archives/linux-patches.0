@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0704630C37A;
-	Mon, 13 Oct 2025 15:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F59B30C37B;
+	Mon, 13 Oct 2025 15:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368022; cv=none; b=f7lz7s+LbxhSo0JkoLYsXxGuYL5qLeqwqtgImGAtZhyGeFpNpeNJ7DQs1QjeZmXcN93MPZ6N8cc0XANY2bPUDkcuL+rfO9zZ+E2st1go7hHF581EMQVAzcNWl4NbR2wF7cVYVIPTxZ5TY/zcJpDpNDSDbRM6m10Dpsf1pu2w8iE=
+	t=1760368024; cv=none; b=eXgWuJuaQLUEMDQy8DrUAHVtQ6N8i7AArs+uGpqRMdjTKOSkDfjEPnXdLsbgmgzUAZPZUbEPqCoTwbVFxXwnhwGwrHXStewDTsUJ0Guzb07/KkV6RfG/0MN3vqMXHWyatno7X/soY1jrYegggLkkc76w4Ht9oSZ+pSBE4Rl5oQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368022; c=relaxed/simple;
-	bh=dxqr5YYeBOvPCB5fOOPp2RnlHnrlwlnTSJQiV+sYC9Q=;
+	s=arc-20240116; t=1760368024; c=relaxed/simple;
+	bh=7a1gDoXXv1UfwRFLqtsxvV/Vj2XDwOhXdsJT3XePFtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mz+4CgWRZrd2uX+4caevUwF8tT/CL23+9hcslcqsSVy1VJxkCBsLUmKV1Xr5Odcrd/bqeTX9Y9iUCm18hs1nXSxSo0+IFAomNh+Hwj+GH+Y5VZ1ydNKsUNFRmw8OjrmwNDiyB5QpyZ8CFVq+kBLxgsvda6+HZa8xWSw8oEqfUcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqa9k5l+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2UNXbalnRoMi5Ji0w48i6Vri0p3JlP7sNkGKeD8LHmUbJqQdM2LjwmnAk+Bq3uiDr4KMO6PRKXK1OnC8n7MMSxoeOGg4lvMVMVp5rbML3L0Os2w1LeKNzR81kQj7rg1P7wjYFYgQHgigJIDpeDIlQWDv40fIu2NqwnLv6esLdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJAtGXjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqa9k5l+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F351C4CEE7;
-	Mon, 13 Oct 2025 15:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJAtGXjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EFFC4CEE7;
+	Mon, 13 Oct 2025 15:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368021;
-	bh=dxqr5YYeBOvPCB5fOOPp2RnlHnrlwlnTSJQiV+sYC9Q=;
+	s=korg; t=1760368024;
+	bh=7a1gDoXXv1UfwRFLqtsxvV/Vj2XDwOhXdsJT3XePFtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqa9k5l+YrcQWMWb4yW9Szt1jD7aAGMYiHJ7ypLfKRpZgCEFlHGcW9DiZsMvAhR4/
-	 1hcWjK4B0XmSWUrdPn0NT9yMDPf0VBKFcchbdsy0xyoaUsD0c1sXntpoyMVc+YWZfO
-	 aT/T3TchMcfkfKj+6TkJVDKP95OZTLzAAEaUtRBw=
+	b=jJAtGXjk3YGH4u3O3ABWJdrGIL8nW7IgvlyRFwbOzFLf3QXWxdzy99bkc+Df8OWf6
+	 SCeYW73WkQsRMjCWQx19KrXKyYAzcUse9z8ch6RmLwPO44fJ4APFPBCO8Jnx88yehh
+	 bWZR/FgxL2dZ/l8t3wHTaXi0zf04d3u60pFzAjD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/262] arm64: dts: renesas: rzg2lc-smarc: Disable CAN-FD channel0
-Date: Mon, 13 Oct 2025 16:42:39 +0200
-Message-ID: <20251013144326.748682078@linuxfoundation.org>
+Subject: [PATCH 6.12 018/262] regmap: Remove superfluous check for !config in __regmap_init()
+Date: Mon, 13 Oct 2025 16:42:40 +0200
+Message-ID: <20251013144326.786700223@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit ae014fbc99c7f986ee785233e7a5336834e39af4 ]
+[ Upstream commit 5c36b86d2bf68fbcad16169983ef7ee8c537db59 ]
 
-On RZ/G2LC SMARC EVK, CAN-FD channel0 is not populated, and currently we
-are deleting a wrong and nonexistent node.  Fixing the wrong node would
-invoke a dtb warning message, as channel0 is a required property.
-Disable CAN-FD channel0 instead of deleting the node.
+The first thing __regmap_init() do is check if config is non-NULL,
+so there is no need to check for this again later.
 
-Fixes: 46da632734a5 ("arm64: dts: renesas: rzg2lc-smarc: Enable CANFD channel 1")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250801121959.267424-1-biju.das.jz@bp.renesas.com
+Fixes: d77e745613680c54 ("regmap: Add bulk read/write callbacks into regmap_config")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/a154d9db0f290dda96b48bd817eb743773e846e1.1755090330.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/rzg2lc-smarc.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/base/regmap/regmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/rzg2lc-smarc.dtsi b/arch/arm64/boot/dts/renesas/rzg2lc-smarc.dtsi
-index 377849cbb462e..5785a934c28bf 100644
---- a/arch/arm64/boot/dts/renesas/rzg2lc-smarc.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg2lc-smarc.dtsi
-@@ -48,7 +48,10 @@ sound_card {
- #if (SW_SCIF_CAN || SW_RSPI_CAN)
- &canfd {
- 	pinctrl-0 = <&can1_pins>;
--	/delete-node/ channel@0;
-+
-+	channel0 {
-+		status = "disabled";
-+	};
- };
- #else
- &canfd {
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index de4e2f3db942a..66b3840bd96e3 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -828,7 +828,7 @@ struct regmap *__regmap_init(struct device *dev,
+ 		map->read_flag_mask = bus->read_flag_mask;
+ 	}
+ 
+-	if (config && config->read && config->write) {
++	if (config->read && config->write) {
+ 		map->reg_read  = _regmap_bus_read;
+ 		if (config->reg_update_bits)
+ 			map->reg_update_bits = config->reg_update_bits;
 -- 
 2.51.0
 
