@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8630E0DD;
-	Mon, 13 Oct 2025 15:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F99261B9C;
+	Mon, 13 Oct 2025 15:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368543; cv=none; b=mIo/giTFtbk+/AnV+S+tI3OR1hH5eXulMI5pDWovECVDrrxcbJFukulgCxxOXKFbURom3Mnaqp/N4NUc7NjQ89KKaokclosQuzCJ5BSubjnADPnO3KdNv+TGXHMbpXEmAVin56HUoe/cV4P6cHARdGpKqsBx26lJ+ppwDEez6TE=
+	t=1760368546; cv=none; b=aPnoZXoF+YarmUh464yj/SF1Oy6VfvHzP/jMUmsQ/2IfRi/XjMPKXp6sqJPvuTasyemgmjfmFQN0PnxUkETbSeYbz0Tj7NRd82HJ1370D6MyBSAlTjpN0zDtL/U+LYoHrq2DSWX8FgL49uL7YOKzyPTaI2J1MWk1qEO2W7AzWDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368543; c=relaxed/simple;
-	bh=gf8GYvBS6J11Y+5ePzigVfCF1QTnLRzipV1J3Ed1Aig=;
+	s=arc-20240116; t=1760368546; c=relaxed/simple;
+	bh=WkOET0Fr4I9tLMOyiOUkb2cNbzMi7gX3uc8/TcMdHLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBWrAEKYbJ5RX775vu+Ta+rumZizW7NzWOTcyOLBDfQq+2uau8MqAahaZMzz9wzDdMyGbhtWRx2Y77bGyfdivePhMNUkqZrsZZ2w4UPGjUHrAxZJeBkOOi/RCinL0GQUAn0VoweIm5MXbQOnnXUOcF/nS44io2ZU2KdOpcrVQgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRn2W9nB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQ4IpnNm+HGDlaI84QzmRcKXQah6ygakVHzYfmIIyFU2R4wl4s5JKg/t9lP9dYhMHnGVEs42hF5n0lt+CVVovA3R8sMT34q7dkEcyu3BoNLg9/yXbhSf9/0Feu+lsWV4qw3Lxl+10I2K0YCRo+rAtqfzueTdU0RCYj/w5nB0dq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jKB56IW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRn2W9nB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F59AC4CEE7;
-	Mon, 13 Oct 2025 15:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jKB56IW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD91C116C6;
+	Mon, 13 Oct 2025 15:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368543;
-	bh=gf8GYvBS6J11Y+5ePzigVfCF1QTnLRzipV1J3Ed1Aig=;
+	s=korg; t=1760368546;
+	bh=WkOET0Fr4I9tLMOyiOUkb2cNbzMi7gX3uc8/TcMdHLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRn2W9nBZhxY0Z1IEzZ2VVuGZfPhYmFjUMASJCBZSZaXRuYCz0R0x2x/hC6tuz6Hd
-	 YW8FQfBYLi0uUNR44aBmc3j+ohrfeEGfnzuUA8R82KKD7Rykrk3cHWfkzEKYDA3Gxl
-	 mHkBwGyclk5BP9S95Il5AlWcdNJRGR/dsskGgipk=
+	b=1jKB56IWiB5siHe/nTmfLukfqvkgfwUQl7Jn0qD8DZJru9zc1g666pToYDdDGxHUG
+	 qM/f+V+IjnnD/mTPYeNgkHSQmGphgPKVOpFY2VGceyJZXb/aPANL6Y/Ii4zPsyAPpo
+	 DslqSxdXjksIF3SHUFVJ88zXgwSgU7U+k+kr/038=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/262] iommu/vt-d: Disallow dirty tracking if incoherent page walk
-Date: Mon, 13 Oct 2025 16:45:39 +0200
-Message-ID: <20251013144333.342210122@linuxfoundation.org>
+Subject: [PATCH 6.12 198/262] RDMA/siw: Always report immediate post SQ errors
+Date: Mon, 13 Oct 2025 16:45:40 +0200
+Message-ID: <20251013144333.377920363@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,50 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Bernard Metzler <bernard.metzler@linux.dev>
 
-[ Upstream commit 57f55048e564dedd8a4546d018e29d6bbfff0a7e ]
+[ Upstream commit fdd0fe94d68649322e391c5c27dd9f436b4e955e ]
 
-Dirty page tracking relies on the IOMMU atomically updating the dirty bit
-in the paging-structure entry. For this operation to succeed, the paging-
-structure memory must be coherent between the IOMMU and the CPU. In
-another word, if the iommu page walk is incoherent, dirty page tracking
-doesn't work.
+In siw_post_send(), any immediate error encountered during processing of
+the work request list must be reported to the caller, even if previous
+work requests in that list were just accepted and added to the send queue.
 
-The Intel VT-d specification, Section 3.10 "Snoop Behavior" states:
+Not reporting those errors confuses the caller, which would wait
+indefinitely for the failing and potentially subsequently aborted work
+requests completion.
 
-"Remapping hardware encountering the need to atomically update A/EA/D bits
- in a paging-structure entry that is not snooped will result in a non-
- recoverable fault."
+This fixes a case where immediate errors were overwritten by subsequent
+code in siw_post_send().
 
-To prevent an IOMMU from being incorrectly configured for dirty page
-tracking when it is operating in an incoherent mode, mark SSADS as
-supported only when both ecap_slads and ecap_smpwc are supported.
-
-Fixes: f35f22cc760e ("iommu/vt-d: Access/Dirty bit support for SS domains")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20250924083447.123224-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
+Link: https://patch.msgid.link/r/20250923144536.103825-1-bernard.metzler@linux.dev
+Suggested-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index f521155fb793b..df24a62e8ca40 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -541,7 +541,8 @@ enum {
- #define pasid_supported(iommu)	(sm_supported(iommu) &&			\
- 				 ecap_pasid((iommu)->ecap))
- #define ssads_supported(iommu) (sm_supported(iommu) &&                 \
--				ecap_slads((iommu)->ecap))
-+				ecap_slads((iommu)->ecap) &&           \
-+				ecap_smpwc(iommu->ecap))
- #define nested_supported(iommu)	(sm_supported(iommu) &&			\
- 				 ecap_nest((iommu)->ecap))
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 7ca0297d68a4a..d0c0cde09f118 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -773,7 +773,7 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
+ 	struct siw_wqe *wqe = tx_wqe(qp);
  
+ 	unsigned long flags;
+-	int rv = 0;
++	int rv = 0, imm_err = 0;
+ 
+ 	if (wr && !rdma_is_kernel_res(&qp->base_qp.res)) {
+ 		siw_dbg_qp(qp, "wr must be empty for user mapped sq\n");
+@@ -959,9 +959,17 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
+ 	 * Send directly if SQ processing is not in progress.
+ 	 * Eventual immediate errors (rv < 0) do not affect the involved
+ 	 * RI resources (Verbs, 8.3.1) and thus do not prevent from SQ
+-	 * processing, if new work is already pending. But rv must be passed
+-	 * to caller.
++	 * processing, if new work is already pending. But rv and pointer
++	 * to failed work request must be passed to caller.
+ 	 */
++	if (unlikely(rv < 0)) {
++		/*
++		 * Immediate error
++		 */
++		siw_dbg_qp(qp, "Immediate error %d\n", rv);
++		imm_err = rv;
++		*bad_wr = wr;
++	}
+ 	if (wqe->wr_status != SIW_WR_IDLE) {
+ 		spin_unlock_irqrestore(&qp->sq_lock, flags);
+ 		goto skip_direct_sending;
+@@ -986,15 +994,10 @@ int siw_post_send(struct ib_qp *base_qp, const struct ib_send_wr *wr,
+ 
+ 	up_read(&qp->state_lock);
+ 
+-	if (rv >= 0)
+-		return 0;
+-	/*
+-	 * Immediate error
+-	 */
+-	siw_dbg_qp(qp, "error %d\n", rv);
++	if (unlikely(imm_err))
++		return imm_err;
+ 
+-	*bad_wr = wr;
+-	return rv;
++	return (rv >= 0) ? 0 : rv;
+ }
+ 
+ /*
 -- 
 2.51.0
 
