@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFD33090DD;
-	Mon, 13 Oct 2025 14:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED493090E1;
+	Mon, 13 Oct 2025 14:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367003; cv=none; b=JD1aI4VdPWA9ycQXGpd+Q8a8zTB90RIrK2EcR5lZG6faP0qyJwbEfBe6CUo5k9vltnqH6VkJEzm/d3Vdg/Q1OLJ6Ai7KXIQ/Z+4WcDZUCHDpj4AthKI6v4VXXKyyVhpNFvzkSmxZWs9CadZtDy6x9csscqXG4DIVAGvWNfZEdHE=
+	t=1760367006; cv=none; b=SBtfY+9OBFcsEyBn1T6rx0n/FyUJiov+NdxbOZ43Mh/4/E3t0gNji25+xImDjhgd2+eDvxTw+MpcAP+JGMbAm2zWz6b5/waz9s9HFnvyZydX8KD4dlagagDgsrbBEjmQ6lHpDx/P2zusAXCIznxoY3VOfjN6toKm8+1sz2cwixU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367003; c=relaxed/simple;
-	bh=d1fWQJQaOv9Y86HFQBrxxExID5RhVEDoJJoX1pJdJLc=;
+	s=arc-20240116; t=1760367006; c=relaxed/simple;
+	bh=HuEudgYtkX6qYDy1c41amkHXMCr2g9QC71xVhsYbKpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LoDHHK5AWkxPFEFKdebB2You9YsJOxT2D6Myo0JDNwG+n8qT3xwyvnP8En6dXulunDbz2GRoQUCwXPwY542X7U66EAiHTwwkTCotzHSSc+XaNOhG5fZ07y6FHQxBNQc2nDep5NxGsAn2P6exkKoIBvI83LLDnF7h3B4bX0Si8m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQS8kOHQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cuG+jc51hCQ6qmehPbuBU5Bu6PtcUUpJt4ugVFC4ilfGjvphU2Q/ERU8v2J9ptL6ZtSwUqK7JS+0gxJsjKRensy7TfwKcBtk/BJ8PLJM53eLY7E8j4qG4bx+UXE0s4iVw7nX3V8qDqbp73XR+DaV+Rsa9Yfn7u4e5U4kUwVGlk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ag4AUwno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQS8kOHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377D2C4CEE7;
-	Mon, 13 Oct 2025 14:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ag4AUwno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA36C4CEE7;
+	Mon, 13 Oct 2025 14:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367003;
-	bh=d1fWQJQaOv9Y86HFQBrxxExID5RhVEDoJJoX1pJdJLc=;
+	s=korg; t=1760367006;
+	bh=HuEudgYtkX6qYDy1c41amkHXMCr2g9QC71xVhsYbKpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQS8kOHQ2jskfHW4xoUa4JiIlJ6ZruTMFST783urjLUGf8IrJI4CKLI3XspZycNVt
-	 RIKqJ3mDjq9TMuSomtq28meNlbO+cpJ7BQiUbo5UQCe3Ac5/oW3lFIMVd0cNMWEDjk
-	 qqMFjJLX2ei/p426CZH/2hIxdFsveVcbZyaXlF7A=
+	b=Ag4AUwnokNSPCN9dd/oQeWgriW7vG341lBwZUQ3xvYtLOYW9eYSYgC6YBA40LrZfZ
+	 7rSrp4/0JutiVB3f7KfZHOl42mCbOQJU5Hx39BLnFfsBJ9tRncW1SwbRQ45E1MV5I6
+	 6Je+jSQCeXid/GlBRm8pWIlaOjHP1WNdNeqoRsEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Huisong Li <lihuisong@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/196] cpufreq: scmi: Account for malformed DT in scmi_dev_used_by_cpus()
-Date: Mon, 13 Oct 2025 16:43:52 +0200
-Message-ID: <20251013144316.717197165@linuxfoundation.org>
+Subject: [PATCH 6.1 060/196] ACPI: processor: idle: Fix memory leak when register cpuidle device failed
+Date: Mon, 13 Oct 2025 16:43:53 +0200
+Message-ID: <20251013144316.752677598@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,59 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit cd5d4621ba846dad9b2e6b0c2d1518d083fcfa13 ]
+[ Upstream commit 11b3de1c03fa9f3b5d17e6d48050bc98b3704420 ]
 
-Broadcom STB platforms were early adopters (2017) of the SCMI framework and as
-a result, not all deployed systems have a Device Tree entry where SCMI
-protocol 0x13 (PERFORMANCE) is declared as a clock provider, nor are the
-CPU Device Tree node(s) referencing protocol 0x13 as their clock
-provider. This was clarified in commit e11c480b6df1 ("dt-bindings:
-firmware: arm,scmi: Extend bindings for protocol@13") in 2023.
+The cpuidle device's memory is leaked when cpuidle device registration
+fails in acpi_processor_power_init().  Free it as appropriate.
 
-For those platforms, we allow the checks done by scmi_dev_used_by_cpus()
-to continue, and in the event of not having done an early return, we key
-off the documented compatible string and give them a pass to continue to
-use scmi-cpufreq.
-
-Fixes: 6c9bb8692272 ("cpufreq: scmi: Skip SCMI devices that aren't used by the CPUs")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 3d339dcbb56d ("cpuidle / ACPI : move cpuidle_device field out of the acpi_processor_power structure")
+Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Link: https://patch.msgid.link/20250728070612.1260859-2-lihuisong@huawei.com
+[ rjw: Changed the order of the new statements, added empty line after if () ]
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scmi-cpufreq.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/acpi/processor_idle.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 6ff77003a96ea..68325ebd56fe3 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -15,6 +15,7 @@
- #include <linux/energy_model.h>
- #include <linux/export.h>
- #include <linux/module.h>
-+#include <linux/of.h>
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/scmi_protocol.h>
-@@ -330,6 +331,15 @@ static bool scmi_dev_used_by_cpus(struct device *scmi_dev)
- 			return true;
- 	}
- 
-+	/*
-+	 * Older Broadcom STB chips had a "clocks" property for CPU node(s)
-+	 * that did not match the SCMI performance protocol node, if we got
-+	 * there, it means we had such an older Device Tree, therefore return
-+	 * true to preserve backwards compatibility.
-+	 */
-+	if (of_machine_is_compatible("brcm,brcmstb"))
-+		return true;
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index 3386d01c1f157..afa3b4ac367a3 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1411,6 +1411,9 @@ int acpi_processor_power_init(struct acpi_processor *pr)
+ 		if (retval) {
+ 			if (acpi_processor_registered == 0)
+ 				cpuidle_unregister_driver(&acpi_idle_driver);
 +
- 	return false;
- }
- 
++			per_cpu(acpi_cpuidle_device, pr->id) = NULL;
++			kfree(dev);
+ 			return retval;
+ 		}
+ 		acpi_processor_registered++;
 -- 
 2.51.0
 
