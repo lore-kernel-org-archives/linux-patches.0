@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352483064B7;
-	Mon, 13 Oct 2025 14:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B40277CB8;
+	Mon, 13 Oct 2025 14:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367310; cv=none; b=CQ/tPfFI+F2E1Ufe3vaistO8nsyDZpMuQPXPC8sc25USS+uUdaUagvsdJdVTR5OQeZMyVzpIGvDUdGMQ3rJBHhBA5KFj1KFg713D9f8sK2Bkb3K/Gwag5Gx8zDd8P1R34JIH7J5U2mE/UN7Z25doUEwDJjHmKCt0ODYAHfcAXm4=
+	t=1760367313; cv=none; b=akvgP09GtVlHxLBgvX2pj4aK6zeX2+a2w7lY06WQtiwIBDbxv4nmP3rRNU3yeGerFNP8T+j+66d2yddNP0cniamiRfSlsjjMtIh7Gv5OUnWowrzjoOrO56TIxCWSePjc9aAiWDrA8zRvtJwdl0IxCsUNnAvZzOAGH3oUh39jR6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367310; c=relaxed/simple;
-	bh=pGEIrBnRN0oS0R+IaxT95hVDiDLvc4eISxI6UrdTCE4=;
+	s=arc-20240116; t=1760367313; c=relaxed/simple;
+	bh=IYPRq0vzMyHLOpZTRAYNEkqnR3Cr7OM9TiEimWDZHC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0xDW2NqclDp8u6hp5AkqZxQnUceRp2QykU2LTA+zAMlI+qYZgSSD7YQ/50Sqyt1ZCxDDCIHOkcJI4VTVOltowxaQ23c2QNDUmgpDzMTe4EpQUhPOB9p4HlkOn2ZojiyDZ2+NP0AcOOefUDrLSt/Cx3vxlTok0I+8fQ0qNBWCLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h79B19sE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqqQEmvPZOnvZ1bYgUpmXcCitcmZFGrqp0w+9z4KHM/uOyV5m1KMmo7y+snbcob+YWFzrz3vbmOG30m5Ge1vYPgcu2JXuXoKrxvxLGlZrYEdBr+hser1iNHmCFroy+7VxJt2qAVK3FkhwjWMeAltA8w3jXB7ornv8OUtBmGVBdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfYRbIEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h79B19sE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB1BC4CEE7;
-	Mon, 13 Oct 2025 14:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfYRbIEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371A6C4CEE7;
+	Mon, 13 Oct 2025 14:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367309;
-	bh=pGEIrBnRN0oS0R+IaxT95hVDiDLvc4eISxI6UrdTCE4=;
+	s=korg; t=1760367312;
+	bh=IYPRq0vzMyHLOpZTRAYNEkqnR3Cr7OM9TiEimWDZHC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h79B19sEaDzrHzNqQZr5yOFViplKRZKQ7xFh92P014wZoN5yIOjeGzyH1aN7uxszl
-	 fEc5OwnfheLkXekeFzmnX4QGuEjVtvojzRpkfvCKpphMEVA2WPR+BciMs7+BGg6yZx
-	 xFblElE48sBpNyQ3qa7ca0LjpBuQ4S96TTx5OzUc=
+	b=YfYRbIEyfLZJ7YHDobG1YkYXsPJ/zu4V2ILt/vPVzxtmsPtZQ7BBBDwG9M6bema/r
+	 2Z0CDGMuiIO5I1KclvSWEcF2He2y/TtqwiFvWdLX7pAZXK4EAIdPuFQ71Vj592rG+I
+	 Jt/BFq8xowbnfnNIPKOHVRE1O5bdStdzbSb1jqA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/196] drm/msm/dpu: fix incorrect type for ret
-Date: Mon, 13 Oct 2025 16:44:54 +0200
-Message-ID: <20251013144319.073400098@linuxfoundation.org>
+Subject: [PATCH 6.1 158/196] Bluetooth: ISO: Fix possible UAF on iso_conn_free
+Date: Mon, 13 Oct 2025 16:45:31 +0200
+Message-ID: <20251013144320.414963514@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 88ec0e01a880e3326794e149efae39e3aa4dbbec ]
+[ Upstream commit 9950f095d6c875dbe0c9ebfcf972ec88fdf26fc8 ]
 
-Change 'ret' from unsigned long to int, as storing negative error codes
-in an unsigned long makes it never equal to -ETIMEDOUT, causing logical
-errors.
+This attempt to fix similar issue to sco_conn_free where if the
+conn->sk is not set to NULL may lead to UAF on iso_conn_free.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/671100/
-Link: https://lore.kernel.org/r/20250826092047.224341-1-rongqianfeng@vivo.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/iso.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 05a09d86e1838..fd5f9d04f81e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -452,7 +452,7 @@ static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
- static int dpu_encoder_phys_wb_wait_for_commit_done(
- 		struct dpu_encoder_phys *phys_enc)
- {
--	unsigned long ret;
-+	int ret;
- 	struct dpu_encoder_wait_info wait_info;
- 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 437cbeaa96193..5f6e4c79e190b 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -581,6 +581,13 @@ static void iso_sock_kill(struct sock *sk)
  
+ 	BT_DBG("sk %p state %d", sk, sk->sk_state);
+ 
++	/* Sock is dead, so set conn->sk to NULL to avoid possible UAF */
++	if (iso_pi(sk)->conn) {
++		iso_conn_lock(iso_pi(sk)->conn);
++		iso_pi(sk)->conn->sk = NULL;
++		iso_conn_unlock(iso_pi(sk)->conn);
++	}
++
+ 	/* Kill poor orphan */
+ 	bt_sock_unlink(&iso_sk_list, sk);
+ 	sock_set_flag(sk, SOCK_DEAD);
 -- 
 2.51.0
 
