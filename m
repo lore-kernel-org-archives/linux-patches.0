@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1CB30F7EE;
-	Mon, 13 Oct 2025 14:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC79B30FC24;
+	Mon, 13 Oct 2025 14:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367216; cv=none; b=dJpcZOVZ3TixwsR9HbyVh8jtdsxuj715UcP2mFDJW0O/WQKHUUg8t3DK8ri7XvPGdzh01ChLrTmfNlXwnE38khM7JcZ4negpcIr6QdQh1d7jdBZsMWn5ov2I4zzwy6Itiu1Ybk76EWabd/pkb2jj5CNo4YHAOiy3PRz9FKPfVi4=
+	t=1760367219; cv=none; b=sJ5YDHaHLFxZ4bFW84+7lL4oci6STvPopVn/xg5X0lawCP20MPLff+MGKhz43iRPyG577gikWe0bmKZTDy2NfxT94FRR9FvFCmmqIRN/OPusMdYBPMoYD2ZijLqFL0EcpYivd/3Tfl5EuVe+nq6UCuX/p34RshZnvUxnJglJLgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367216; c=relaxed/simple;
-	bh=8Z+TTPaDnfSvaQKbGERH9iRpRw+SJP0QHBPlgsgwC44=;
+	s=arc-20240116; t=1760367219; c=relaxed/simple;
+	bh=2n7k2Twaw1LjTN3UDyvhHBa/Yt2Cpsh7sjklLR8FvQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfmbBIENdnupiUDrqL/mgkAQEWQkmoKEzkfS1F7ewv+ZXclDgVhQVshY7IbCHMzocSvL/ZGAT2+0ak+sFsUgP7e/mD7ysPxJcZAexnDuN87iQjjuBTJHRQTcvdryBRmeiXyp2zSSeIM0al0Sq22F7JaErDvjO1WmBMV7UGf+Phw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myJTPhbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKZANFDXe9gK4Xy5FZD78P4tQ70ByyE0mY9maBhUj2ozs2vvQa00I2COOOSNKqM4SMeQhQmC+GVM//cmU2AlYOQYur8e8m2Jm/6NWkYOAB9yzpUwrWVQMxKYLwSQvq12eMNm+hIy60dnGnPlamI9DWnHEUnS9ySxeeMsieRLNxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMHKlKSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myJTPhbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4023DC113D0;
-	Mon, 13 Oct 2025 14:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMHKlKSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499E2C19421;
+	Mon, 13 Oct 2025 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367215;
-	bh=8Z+TTPaDnfSvaQKbGERH9iRpRw+SJP0QHBPlgsgwC44=;
+	s=korg; t=1760367218;
+	bh=2n7k2Twaw1LjTN3UDyvhHBa/Yt2Cpsh7sjklLR8FvQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=myJTPhbQdZ8LLjHeZUGQJjhFATHrkwStloII+bBdVuwz1CwoBcrjLSVmShrsrm/GK
-	 rSNCHYrWbIPZaM7xwHUjwWOGqrKZqgduOFIRCYlIMo+CJehKRMOtYIT8l8LNM7mP6i
-	 ZhagBI8S0JNod47p1HXIXnfadGM9oHxnEBWoXL/s=
+	b=aMHKlKShByveW36SAdbWXXkJofanlt1Ppu7AwfMJctcVJOghqbcwkaMwdyBAbV2j+
+	 HLcbKTtKZE0D0qbWIvGIEFzs/AbQ0NGHRVp1o2C+2AOZrcLQ0Hfq/0YWHi+2BoJZAg
+	 26WhcGGgfXOgC1IdclBOUrQ3q4II+g9seMeISHTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/196] Revert "usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running"
-Date: Mon, 13 Oct 2025 16:45:06 +0200
-Message-ID: <20251013144319.505121113@linuxfoundation.org>
+Subject: [PATCH 6.1 134/196] RDMA/core: Resolve MAC of next-hop device without ARP support
+Date: Mon, 13 Oct 2025 16:45:07 +0200
+Message-ID: <20251013144319.541754818@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,68 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 08fa726e66039dfa80226dfa112931f60ad4c898 ]
+[ Upstream commit 200651b9b8aadfbbec852f0e5d042d9abe75e2ab ]
 
-This reverts commit 28a76fcc4c85dd39633fb96edb643c91820133e3.
+Currently, if the next-hop netdevice does not support ARP resolution,
+the destination MAC address is silently set to zero without reporting
+an error. This leads to incorrect behavior and may result in packet
+transmission failures.
 
-No actual HW bugs are known where Endpoint Context shows Running state
-but Stop Endpoint fails repeatedly with Context State Error and leaves
-the endpoint state unchanged. Stop Endpoint retries on Running EPs have
-been performed since early 2021 with no such issues reported so far.
+Fix this by deferring MAC resolution to the IP stack via neighbour
+lookup, allowing proper resolution or error reporting as appropriate.
 
-Trying to handle this hypothetical case brings a more realistic danger:
-if Stop Endpoint fails on an endpoint which hasn't yet started after a
-doorbell ring and enough latency occurs before this completion event is
-handled, the driver may time out and begin removing cancelled TDs from
-a running endpoint, even though one more retry would stop it reliably.
-
-Such high latency is rare but not impossible, and removing TDs from a
-running endpoint can cause more damage than not giving back a cancelled
-URB (which wasn't happening anyway). So err on the side of caution and
-revert to the old policy of always retrying if the EP appears running.
-
-[Remove stable tag as we are dealing with theoretical cases -Mathias]
-
-Fixes: 28a76fcc4c85d ("usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running")
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250917210726.97100-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7025fcd36bd6 ("IB: address translation to map IP toIB addresses (GIDs)")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20250916111103.84069-3-edwards@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/infiniband/core/addr.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index c8e1ead0c09e6..cb0bf8b6e0172 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1175,19 +1175,16 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 			 * Stopped state, but it will soon change to Running.
- 			 *
- 			 * Assume this bug on unexpected Stop Endpoint failures.
--			 * Keep retrying until the EP starts and stops again.
-+			 * Keep retrying until the EP starts and stops again, on
-+			 * chips where this is known to help. Wait for 100ms.
- 			 */
-+			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
-+				break;
- 			fallthrough;
- 		case EP_STATE_RUNNING:
- 			/* Race, HW handled stop ep cmd before ep was running */
- 			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
- 					GET_EP_CTX_STATE(ep_ctx));
--			/*
--			 * Don't retry forever if we guessed wrong or a defective HC never starts
--			 * the EP or says 'Running' but fails the command. We must give back TDs.
--			 */
--			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
--				break;
+diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
+index f253295795f0a..cdb3b99e057cf 100644
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -460,14 +460,10 @@ static int addr_resolve_neigh(const struct dst_entry *dst,
+ {
+ 	int ret = 0;
  
- 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 			if (!command) {
+-	if (ndev_flags & IFF_LOOPBACK) {
++	if (ndev_flags & IFF_LOOPBACK)
+ 		memcpy(addr->dst_dev_addr, addr->src_dev_addr, MAX_ADDR_LEN);
+-	} else {
+-		if (!(ndev_flags & IFF_NOARP)) {
+-			/* If the device doesn't do ARP internally */
+-			ret = fetch_ha(dst, addr, dst_in, seq);
+-		}
+-	}
++	else
++		ret = fetch_ha(dst, addr, dst_in, seq);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
