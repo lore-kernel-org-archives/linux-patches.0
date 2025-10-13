@@ -1,109 +1,113 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44882FF168
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 10:29:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D305273D6B;
+	Mon, 13 Oct 2025 14:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760351386; cv=none; b=B0r5AaXsIXEjUJHk3x4HNWljA+8C/cQIgJ+BtmvQL3XZaCGB0HDx/j+L7EjfVbATg484ortg54wqdLXgWtYT0BCy/FHHLe3lhwUdvPYczHWQK7A1CJRgc2sh4qvT2WJ3PWsjbWJajRbjYwXPJ22vuwSo2635WBddHs9jHQQfcCc=
+	t=1760366859; cv=none; b=KdsHhnyYVgfxu994CO95famiiJvo7aERHvo0OogaV2dK5IMIXGZr3R9QRrJx3LqkLfh+0xLGQHLGlZbmpf7BSAvaHLOCxEwy8MYnBdC7PzL1R+zDJkCMBrfFM0ZTBYZCg06aNUHTyvrCUhaqH8a3HbMUcd1nlT8J2uH2fnf57dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760351386; c=relaxed/simple;
-	bh=SVPUlK6sYHZahK5O3+GOTdw6Bx0G0qiDlm5PKLNZXQA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oMPEr+Ybd5Sb6a3aZjQyD04bXhejibpwnY1WtChMDasoNtKaLJUSvo255r0ehdACMz16x5r04hoZYnYwLH5nh0IEbv/7/T2y8M5IME1FPxrrSOLpen0a2GRa7YGv7SHB/ySKympkBz6zcrN1rnYguF/+A/KraN+ArHn0zHBUNKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zrpsd5DU; arc=none smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760366859; c=relaxed/simple;
+	bh=NOnedFGvdCd0oXHmveVDpO1fYdnBK/rQ8Vqv8O2bnTU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K9/2Xab31fFGsqEZdCdOYgg/ZaU5P8JlROTkqRXoAzJbz4wfnU8Uxzai/S/nrdzTZtNcDSRSONtI6qwokm/0KxlCod0lXcAto+egDw3DrI6eFK2K10Zrb2vAlKtkLklM6+6wIXemdIvqdx7Alqbywpk6AIZi1BoxKY3rxPjWqjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAdok2U9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zrpsd5DU"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-635355713d9so3872473d50.3
-        for <patches@lists.linux.dev>; Mon, 13 Oct 2025 03:29:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760351384; x=1760956184; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SVPUlK6sYHZahK5O3+GOTdw6Bx0G0qiDlm5PKLNZXQA=;
-        b=Zrpsd5DUUmyaQ+hVxflihEbyNENLqhTQsSrIKUGG+0UByiXl5J82ZqqKTLkmfHrHyX
-         aNyDEqWVH74LXMr8URme7UXwhYoehcp/TvXK1BYDmLvNOleauijFn7d10UfHaH2xyHzb
-         lfy5YxpFiN4k2cHGoj/Y+Mtl0fU6tJrvkJ8WjoXwsWkS+uPS+LhuTjgId/aiOJLFxhz4
-         xRBDfoswxtD1fWqDnKBdkxWHORKr5y3AQ7Ljo0dvYthWllrfnM9dQpNmKRx4Lc1LXNuF
-         nU2ciHoEV7AFcgg6WHeyo1yM7mJiNuO/fC/QOrOOsQK8lveiGeWdQVj1hjS8LHDG0zwO
-         i8KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760351384; x=1760956184;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SVPUlK6sYHZahK5O3+GOTdw6Bx0G0qiDlm5PKLNZXQA=;
-        b=aUfFdjRMqR2wH9Br7PvnfuaSNf8BD4BgaxgHUHIqsaTKj6AKXgSvaUsVv5X7V3OM7g
-         PgDXZnWgNCDnxccbaliE0EBKLsuy2X9dN+rDMABMmHbJ87bYbBHiHjYPW+H62Z205qCL
-         Xic0sVsuZs9XIhSRXNvdQ5jd8vAE1uvNuNfX8Jhz9vWGBoV4dZjQDB2t3pLi18YWS7V7
-         K0Obtq11iCpTzHWDlgCHbxL+N8nWZuqyAkHagC14l8sJmzuf7eS0X9eMK17ztZMwMMTi
-         DCKkrWh+adWyFj92bkBRKtaEairLmpwn+yU7gVJWHyan2sWxzQkV2Xt/ha1vpxZOtdJV
-         OrGA==
-X-Forwarded-Encrypted: i=1; AJvYcCUfYI12YjWyIVSsyg1A7g3PFQXcn7G3CLVWjOTWnkBNbGDn+/kqOqw5z24jjkko8Sz9YuWtDqK2@lists.linux.dev
-X-Gm-Message-State: AOJu0YzaGdLnQZ4V6CLkqlwbVG0g92gt+9RbBopUDj32XCAP8VbI0ltH
-	jbmAv6OVMorh/0A3vVm0vIZho7GACUubPjVXU+lZxj8moBTiWD3Vb/18q0lvgiEghiPD41dInoE
-	Q8A+oXRtDMAK9P9PpxqZK7jLcM7qC56FLFHyo
-X-Gm-Gg: ASbGncvFOHOg0sysA3QmDmpjbGq6avAr2oWaGLKPjhyjXxIJpJf1ubbENU7/IOLfJCv
-	XiiDEbf3rvYETm/69teZbMmNYQM0NW5ojVxlgfoD1IZH9z1JWL3CmX3WxCDzA6aS037qHrYxyJV
-	a/jFI6o6re93boV12q13J96VGcMHHauK0Tp23JEGVBGpdCnchusGYL60vcniM0memkX6Zymb0pd
-	uKe145l61L472WrJ/7MsYRlGCudSsrZ0fO0
-X-Google-Smtp-Source: AGHT+IF7gB/uIYJ4y7t+OLiZ00mCO9lllMt+QoIyqpZ385m2NgZqSy+lqlMIQpqL29tGtjodZ9h+RUr8WRjGSui6l/0=
-X-Received: by 2002:a05:690e:4186:b0:63c:f5a6:f2f0 with SMTP id
- 956f58d0204a3-63cf5a7080fmr6997775d50.66.1760351383745; Mon, 13 Oct 2025
- 03:29:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAdok2U9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55392C4CEE7;
+	Mon, 13 Oct 2025 14:47:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1760366858;
+	bh=NOnedFGvdCd0oXHmveVDpO1fYdnBK/rQ8Vqv8O2bnTU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lAdok2U9zFq+XwoVHJfoCQI+hPppCzMauEbasq154RPWxrGdSR+ECjpQ5nzNmAAbu
+	 e25D7LIT3/4YDPVywaGbfCWanI94WncomLmEX5cjqYE8AM5lgo2joVaIblbzqfIrOI
+	 zVXAe0eSKKnRVsmWCAeE+XedJ4NQbSYMKwREEIXQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Breno Leitao <leitao@debian.org>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Tobias Fleig <tfleig@meta.com>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.1 001/196] crypto: sha256 - fix crash at kexec
+Date: Mon, 13 Oct 2025 16:42:54 +0200
+Message-ID: <20251013144314.606419114@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
+References: <20251013144314.549284796@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251010094047.3111495-1-safinaskar@gmail.com>
- <20251010094047.3111495-3-safinaskar@gmail.com> <07ae142e-4266-44a3-9aa1-4b2acbd72c1b@infradead.org>
-In-Reply-To: <07ae142e-4266-44a3-9aa1-4b2acbd72c1b@infradead.org>
-From: Askar Safin <safinaskar@gmail.com>
-Date: Mon, 13 Oct 2025 13:29:07 +0300
-X-Gm-Features: AS18NWAYGkNu7BjeCT0jHGno_eA5ARoSWF2j7yYdLIuVOnrJP74yF3CsWnjM_B4
-Message-ID: <CAPnZJGDe+sDCsCngHyF6+=3=A9pYwQ1+N87jpq-ZdsSvVbQuNw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] initrd: remove deprecated code path (linuxrc)
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Christian Brauner <brauner@kernel.org>, 
-	Al Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, Christoph Hellwig <hch@lst.de>, 
-	Jens Axboe <axboe@kernel.dk>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
-	Aleksa Sarai <cyphar@cyphar.com>, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
-	Julian Stecklina <julian.stecklina@cyberus-technology.de>, 
-	Gao Xiang <hsiangkao@linux.alibaba.com>, Art Nikpal <email2tema@gmail.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Alexander Graf <graf@amazon.com>, 
-	Rob Landley <rob@landley.net>, Lennart Poettering <mzxreary@0pointer.de>, linux-arch@vger.kernel.org, 
-	linux-block@vger.kernel.org, initramfs@vger.kernel.org, 
-	linux-api@vger.kernel.org, linux-doc@vger.kernel.org, 
-	Michal Simek <monstr@monstr.eu>, Luis Chamberlain <mcgrof@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Thorsten Blum <thorsten.blum@linux.dev>, Heiko Carstens <hca@linux.ibm.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Dave Young <dyoung@redhat.com>, 
-	Christophe Leroy <christophe.leroy@csgroup.eu>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Borislav Petkov <bp@alien8.de>, Jessica Clarke <jrtc27@jrtc27.com>, 
-	Nicolas Schichan <nschichan@freebox.fr>, David Disseldorp <ddiss@suse.de>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 10, 2025 at 10:31=E2=80=AFPM Randy Dunlap <rdunlap@infradead.or=
-g> wrote:
-> There are more places in Documentation/ that refer to "linuxrc".
-> Should those also be removed or fixed?
->
-> accounting/delay-accounting.rst
-> admin-guide/initrd.rst
-> driver-api/early-userspace/early_userspace_support.rst
-> power/swsusp-dmcrypt.rst
-> translations/zh_CN/accounting/delay-accounting.rst
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Yes, they should be removed.
-I made this patchset minimal to be sure it is easy to revert.
-I will remove these linuxrc mentions in cleanup patchset.
+------------------
 
---=20
-Askar Safin
+From: Breno Leitao <leitao@debian.org>
+
+Loading a large (~2.1G) files with kexec crashes the host with when
+running:
+
+  # kexec --load kernel --initrd initrd_with_2G_or_more
+
+  UBSAN: signed-integer-overflow in ./include/crypto/sha256_base.h:64:19
+  34152083 * 64 cannot be represented in type 'int'
+  ...
+  BUG: unable to handle page fault for address: ff9fffff83b624c0
+  sha256_update (lib/crypto/sha256.c:137)
+  crypto_sha256_update (crypto/sha256_generic.c:40)
+  kexec_calculate_store_digests (kernel/kexec_file.c:769)
+  __se_sys_kexec_file_load (kernel/kexec_file.c:397 kernel/kexec_file.c:332)
+  ...
+
+(Line numbers based on commit da274362a7bd9 ("Linux 6.12.49")
+
+This started happening after commit f4da7afe07523f
+("kexec_file: increase maximum file size to 4G") that landed in v6.0,
+which increased the file size for kexec.
+
+This is not happening upstream (v6.16+), given that `block` type was
+upgraded from "int" to "size_t" in commit 74a43a2cf5e8 ("crypto:
+lib/sha256 - Move partial block handling out")
+
+Upgrade the block type similar to the commit above, avoiding hitting the
+overflow.
+
+This patch is only suitable for the stable tree, and before 6.16, which
+got commit 74a43a2cf5e8 ("crypto: lib/sha256 - Move partial block
+handling out"). This is not required before f4da7afe07523f ("kexec_file:
+increase maximum file size to 4G"). In other words, this fix is required
+between versions v6.0 and v6.16.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: f4da7afe07523f ("kexec_file: increase maximum file size to 4G") # Before v6.16
+Reported-by: Michael van der Westhuizen <rmikey@meta.com>
+Reported-by: Tobias Fleig <tfleig@meta.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/crypto/sha256_base.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/include/crypto/sha256_base.h
++++ b/include/crypto/sha256_base.h
+@@ -46,7 +46,7 @@ static inline int sha256_base_do_update(
+ 	sctx->count += len;
+ 
+ 	if (unlikely((partial + len) >= SHA256_BLOCK_SIZE)) {
+-		int blocks;
++		unsigned int blocks;
+ 
+ 		if (partial) {
+ 			int p = SHA256_BLOCK_SIZE - partial;
+
+
