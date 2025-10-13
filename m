@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4077931158D;
-	Mon, 13 Oct 2025 15:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597F2311582;
+	Mon, 13 Oct 2025 15:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368116; cv=none; b=iqiNbGmz8uv+viOT2HkCfsWm7FuCPZXVjxtMBIocokdhQ6HrvI016maQDzsA5Omq8uCYEjdbyoSPLRRdTlbwQn4dYo0xchDdaELDOZK2Ys5Wy9Niu93RM3oUTqLseEFv8WZPoLOsjDLTrYFI7VPORQfweR3v/MmRd8fwz9RwCxg=
+	t=1760368119; cv=none; b=Tc+6SfGfm/I91sw0zH4hkBskA1l0yZR2TcoflCsR00WXOCGD9/tHIZbd5PO6D9wwDpbL5K9/jPcsi/cG3WWraSTKsKt4I+RVZaghrhkPyakhnerTlQN5BrOihDYB1VrmKlWJnSL1EqTpA8qEqw+WU5/bkLiuviwoqsFtlSjyhdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368116; c=relaxed/simple;
-	bh=kthSEHILunhuwkzBvZYigXUFaJ/DZxJTGGW3P0Z1gUY=;
+	s=arc-20240116; t=1760368119; c=relaxed/simple;
+	bh=6hLqYnfQMm4KX9Tr776SvGzdoO9Sh7NwkXx6OpyyTvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HPMpr5OmQuCYLAjD8kGW2O2aovXM3EUurxvRa/ze29JZMkP/r2tDjqJXt7Bq+brrK9UKZTtrERBRxZmR2sDHePc0vlNw5okcQa8NRuEJTefoAXqbn+WhLb9PJjzHurh8OxzJm2CzkMJQTB3XylovNbi2f0ITAGzMUP6ucYA7qCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PP4j3SLs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ko/OIpazGRmrkjY3Ne9ocaBca8UA8dcgXNwHsTs+7orX0Eu5dN87FWgG+jtFKw51WUv4+k3OlDzjDXkYtGyycveb6N7Ip+QWpy4PTCrb2EqhQjFYHRv6ZdXbqO/03SccICNqznwPKzG/d1jp/sfDqNzZW/czk8iyLCDkXb9yTGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sjt3QJSm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PP4j3SLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AFDC113D0;
-	Mon, 13 Oct 2025 15:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjt3QJSm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFAAC4CEE7;
+	Mon, 13 Oct 2025 15:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368116;
-	bh=kthSEHILunhuwkzBvZYigXUFaJ/DZxJTGGW3P0Z1gUY=;
+	s=korg; t=1760368118;
+	bh=6hLqYnfQMm4KX9Tr776SvGzdoO9Sh7NwkXx6OpyyTvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PP4j3SLsDHspJ3Bmn5y7VJuN8zNAEGgJNOYR3cKs7/pgn+9mwlCN3fpKW15H9X6Oa
-	 1zSbDoUQKaKhA3/+6U3K2jrJDKjm9Rg7lb25LBU1anLiAAdGs5L53g70VRnp47N1P9
-	 FEkNxAjnFLqmH91ZpRQdZ6fryH/87NNpVa2/h7q8=
+	b=Sjt3QJSmVDinmIzN2K37x3n5qAIEBsatBzaJcFhcIlVOsqZrNhrYknjJtRUnKuQts
+	 fqcPdy/arxCOhRH3BKjQ2XaL6UTH/gYGqykAi3XPY5aGYqDOq+sdztopDPe0NVRSNX
+	 24UMJVLO4AfYP1J5wra4yLCqW2FqH1y0Ia76/vXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Da Xue <da@libre.computer>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/262] selftests: vDSO: Fix -Wunitialized in powerpc VDSO_CALL() wrapper
-Date: Mon, 13 Oct 2025 16:43:12 +0200
-Message-ID: <20251013144327.931962096@linuxfoundation.org>
+Subject: [PATCH 6.12 033/262] pinctrl: meson-gxl: add missing i2c_d pinmux
+Date: Mon, 13 Oct 2025 16:42:55 +0200
+Message-ID: <20251013144327.325723235@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -47,81 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit 9f15e0f9ef514b8e1a80707931f6d07362e8ebc4 ]
+[ Upstream commit d8c2a9edd181f0cc4a66eec954b3d8f6a1d954a7 ]
 
-The _rval register variable is meant to be an output operand of the asm
-statement but is instead used as input operand.
-clang 20.1 notices this and triggers -Wuninitialized warnings:
+Amlogic GXL has 4 I2C attached to gpio-periphs. I2C_D is on GPIOX_10/11.
 
-tools/testing/selftests/timers/auxclock.c:154:10: error: variable '_rval' is uninitialized when used here [-Werror,-Wuninitialized]
-  154 |                 return VDSO_CALL(self->vdso_clock_gettime64, 2, clockid, ts);
-      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/testing/selftests/timers/../vDSO/vdso_call.h:59:10: note: expanded from macro 'VDSO_CALL'
-   59 |                 : "r" (_rval)                                           \
-      |                        ^~~~~
-tools/testing/selftests/timers/auxclock.c:154:10: note: variable '_rval' is declared here
-tools/testing/selftests/timers/../vDSO/vdso_call.h:47:2: note: expanded from macro 'VDSO_CALL'
-   47 |         register long _rval asm ("r3");                                 \
-      |         ^
+Add the relevant func 3 pinmux per the datasheet for S805X/S905X/S905D.
 
-It seems the list of input and output operands have been switched around.
-However as the argument registers are not always initialized they can not
-be marked as pure inputs as that would trigger -Wuninitialized warnings.
-Adding _rval as another input and output operand does also not work as it
-would collide with the existing _r3 variable.
-
-Instead reuse _r3 for both the argument and the return value.
-
-Fixes: 6eda706a535c ("selftests: vDSO: fix the way vDSO functions are called for powerpc")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/all/20250812-vdso-tests-fixes-v2-1-90f499dd35f8@linutronix.de
-Closes: https://lore.kernel.org/oe-kbuild-all/202506180223.BOOk5jDK-lkp@intel.com/
+Fixes: 0f15f500ff2c ("pinctrl: meson: Add GXL pinctrl definitions")
+Signed-off-by: Da Xue <da@libre.computer>
+Link: https://lore.kernel.org/20250821233335.1707559-1-da@libre.computer
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_call.h | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-gxl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_call.h b/tools/testing/selftests/vDSO/vdso_call.h
-index bb237d771051b..e7205584cbdca 100644
---- a/tools/testing/selftests/vDSO/vdso_call.h
-+++ b/tools/testing/selftests/vDSO/vdso_call.h
-@@ -44,7 +44,6 @@
- 	register long _r6 asm ("r6");					\
- 	register long _r7 asm ("r7");					\
- 	register long _r8 asm ("r8");					\
--	register long _rval asm ("r3");					\
- 									\
- 	LOADARGS_##nr(fn, args);					\
- 									\
-@@ -54,13 +53,13 @@
- 		"	bns+	1f\n"					\
- 		"	neg	3, 3\n"					\
- 		"1:"							\
--		: "+r" (_r0), "=r" (_r3), "+r" (_r4), "+r" (_r5),	\
-+		: "+r" (_r0), "+r" (_r3), "+r" (_r4), "+r" (_r5),	\
- 		  "+r" (_r6), "+r" (_r7), "+r" (_r8)			\
--		: "r" (_rval)						\
-+		:							\
- 		: "r9", "r10", "r11", "r12", "cr0", "cr1", "cr5",	\
- 		  "cr6", "cr7", "xer", "lr", "ctr", "memory"		\
- 	);								\
--	_rval;								\
-+	_r3;								\
- })
+diff --git a/drivers/pinctrl/meson/pinctrl-meson-gxl.c b/drivers/pinctrl/meson/pinctrl-meson-gxl.c
+index 9171de657f978..a75762e4d2641 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson-gxl.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-gxl.c
+@@ -187,6 +187,9 @@ static const unsigned int i2c_sda_c_pins[]	= { GPIODV_28 };
+ static const unsigned int i2c_sck_c_dv19_pins[] = { GPIODV_19 };
+ static const unsigned int i2c_sda_c_dv18_pins[] = { GPIODV_18 };
  
- #else
++static const unsigned int i2c_sck_d_pins[]	= { GPIOX_11 };
++static const unsigned int i2c_sda_d_pins[]	= { GPIOX_10 };
++
+ static const unsigned int eth_mdio_pins[]	= { GPIOZ_0 };
+ static const unsigned int eth_mdc_pins[]	= { GPIOZ_1 };
+ static const unsigned int eth_clk_rx_clk_pins[] = { GPIOZ_2 };
+@@ -411,6 +414,8 @@ static const struct meson_pmx_group meson_gxl_periphs_groups[] = {
+ 	GPIO_GROUP(GPIO_TEST_N),
+ 
+ 	/* Bank X */
++	GROUP(i2c_sda_d,	5,	5),
++	GROUP(i2c_sck_d,	5,	4),
+ 	GROUP(sdio_d0,		5,	31),
+ 	GROUP(sdio_d1,		5,	30),
+ 	GROUP(sdio_d2,		5,	29),
+@@ -651,6 +656,10 @@ static const char * const i2c_c_groups[] = {
+ 	"i2c_sck_c", "i2c_sda_c", "i2c_sda_c_dv18", "i2c_sck_c_dv19",
+ };
+ 
++static const char * const i2c_d_groups[] = {
++	"i2c_sck_d", "i2c_sda_d",
++};
++
+ static const char * const eth_groups[] = {
+ 	"eth_mdio", "eth_mdc", "eth_clk_rx_clk", "eth_rx_dv",
+ 	"eth_rxd0", "eth_rxd1", "eth_rxd2", "eth_rxd3",
+@@ -777,6 +786,7 @@ static const struct meson_pmx_func meson_gxl_periphs_functions[] = {
+ 	FUNCTION(i2c_a),
+ 	FUNCTION(i2c_b),
+ 	FUNCTION(i2c_c),
++	FUNCTION(i2c_d),
+ 	FUNCTION(eth),
+ 	FUNCTION(pwm_a),
+ 	FUNCTION(pwm_b),
 -- 
 2.51.0
 
