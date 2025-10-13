@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2E1308F01;
-	Mon, 13 Oct 2025 14:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFAB309DA8;
+	Mon, 13 Oct 2025 14:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367015; cv=none; b=j9WseFlbN6SLqwmpamCRwGJu0aSxh8T0Bjm3oAWjH570q+ruacQKCg2YhSgmgnRlXwfy9ylZBWvo0/4OylkgxXSUh1ci1LGF4R4qWynnTjzTCK9TwQR4n+16UrwVaiojxHcAwqYE4be1xqnGr3QB/CZxkryfI4gt1aKZv3V9dBw=
+	t=1760367017; cv=none; b=C4OjvZ6qbP1AMtIkz1+dtf8lPe9UGa3WEDiCCrSjI9HrTmrvfaansVMA/rz/9+PLaavVwcBSQGKHUVKEa595pvsrKg51H99daV5FHFTo/oSfC51lnvMCs9nE7i6rwdaPHpvQU/ZkgfU/0UD9clkaJByZBVckfFnvTH0ruSzrMUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367015; c=relaxed/simple;
-	bh=5GhKVKCLfkK2hlAqxTKivjV6NkNkD6xKjvS50suBoUA=;
+	s=arc-20240116; t=1760367017; c=relaxed/simple;
+	bh=YNMBOUQhVgwhmOd+Ob/ZqVK1bB/mFVsDPNdASWH7fGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxXDTsemQS2f12B+2MAaXkkYyKjU6FzhtAb2BnvSbAyYQmG6qxgqqvx/VVEJ2DHbQy17uFEQaEdFc2+CNDYrFUvXxqMQTJeSz3ypUkFno5d5lDJmp+4jhuBNCVnpi+WERGY8Prmt6I8eJXhchdDd7GsBsse+mgvrjetDIf/mWOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHPZwnPD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpoZsnc/6fpa7S2g/Qdc1t1hTU0LoQ8sGZKmRu9osKoVFc6HZhs5WNoOK4spAgAhqbpD7wn3084Po0c5k2f3zwGhMz+lgd1DnNhqvcHOejrR5KQxF1cAWDaqWi0tjMIkKUpB1c04qD0q8aAaWH6TP6VewoFjDjmKRirVou+G6kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u31t9Gu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHPZwnPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9631DC4CEE7;
-	Mon, 13 Oct 2025 14:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u31t9Gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E63C4CEE7;
+	Mon, 13 Oct 2025 14:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367015;
-	bh=5GhKVKCLfkK2hlAqxTKivjV6NkNkD6xKjvS50suBoUA=;
+	s=korg; t=1760367017;
+	bh=YNMBOUQhVgwhmOd+Ob/ZqVK1bB/mFVsDPNdASWH7fGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHPZwnPDlHkF5RHuE581LuCuvg/xweVuUcUZBQuYhCM8LIPxlPNuzuFgKuG2wlE1K
-	 Z354+oqU1S6sh+aA52sxjrVqv9qjjS/Z7v79JQ9UavbiYZEcN4sGjhMfKBFR6aOlLZ
-	 /rfM6UN/1R03VWrnCmc5k9wPLJwvrYCDleYYSPrk=
+	b=0u31t9Gu/SqhCX4f2J6/PvlgSw5U8u5nnuAw0ZhA1pE1teRuAZsxy2h5NIpKh0spS
+	 +6k7Ut88vC4STkdSSNsmBvlgLA49p7Mfl9MRDrJ6J0fgNTuaeqDqq1K97GBT9AYaA5
+	 Lmc5ahpsEUZXKy+QClfAkKtj3Amr5uvRNA8gYMks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/196] blk-mq: check kobject state_in_sysfs before deleting in blk_mq_unregister_hctx
-Date: Mon, 13 Oct 2025 16:43:56 +0200
-Message-ID: <20251013144316.860677686@linuxfoundation.org>
+Subject: [PATCH 6.1 064/196] ARM: at91: pm: fix MCKx restore routine
+Date: Mon, 13 Oct 2025 16:43:57 +0200
+Message-ID: <20251013144316.897059812@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,60 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit 4c7ef92f6d4d08a27d676e4c348f4e2922cab3ed ]
+[ Upstream commit 296302d3d81360e09fa956e9be9edc8223b69a12 ]
 
-In __blk_mq_update_nr_hw_queues() the return value of
-blk_mq_sysfs_register_hctxs() is not checked. If sysfs creation for hctx
-fails, later changing the number of hw_queues or removing disk will
-trigger the following warning:
+The at91_mckx_ps_restore() assembly function is responsible for setting
+back MCKx system bus clocks after exiting low power modes.
 
-  kernfs: can not remove 'nr_tags', no directory
-  WARNING: CPU: 2 PID: 637 at fs/kernfs/dir.c:1707 kernfs_remove_by_name_ns+0x13f/0x160
-  Call Trace:
-   remove_files.isra.1+0x38/0xb0
-   sysfs_remove_group+0x4d/0x100
-   sysfs_remove_groups+0x31/0x60
-   __kobject_del+0x23/0xf0
-   kobject_del+0x17/0x40
-   blk_mq_unregister_hctx+0x5d/0x80
-   blk_mq_sysfs_unregister_hctxs+0x94/0xd0
-   blk_mq_update_nr_hw_queues+0x124/0x760
-   nullb_update_nr_hw_queues+0x71/0xf0 [null_blk]
-   nullb_device_submit_queues_store+0x92/0x120 [null_blk]
+Fix a typo and use tmp3 variable instead of tmp2 to correctly set MCKx
+to previously saved state.
+Tmp2 was used without the needed changes in CSS and DIV. Moreover the
+required bit 7, telling that MCR register's content is to be changed
+(CMD/write), was not set.
 
-kobjct_del() was called unconditionally even if sysfs creation failed.
-Fix it by checkig the kobject creation statusbefore deleting it.
+Fix function comment to match tmp variables actually used.
 
-Fixes: 477e19dedc9d ("blk-mq: adjust debugfs and sysfs register when updating nr_hw_queues")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250826084854.1030545-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Fixes: 28eb1d40fe57 ("ARM: at91: pm: add support for MCK1..4 save/restore for ulp modes")
+Link: https://lore.kernel.org/r/20250827145427.46819-3-nicolas.ferre@microchip.com
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[claudiu.beznea: s/sate/state in commit description]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sysfs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm/mach-at91/pm_suspend.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
-index 4515288fbe351..f5870efec33e9 100644
---- a/block/blk-mq-sysfs.c
-+++ b/block/blk-mq-sysfs.c
-@@ -176,9 +176,11 @@ static void blk_mq_unregister_hctx(struct blk_mq_hw_ctx *hctx)
- 		return;
+diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
+index e4904faf17532..0af2598899fc5 100644
+--- a/arch/arm/mach-at91/pm_suspend.S
++++ b/arch/arm/mach-at91/pm_suspend.S
+@@ -868,7 +868,7 @@ e_done:
+ /**
+  * at91_mckx_ps_restore: restore MCK1..4 settings
+  *
+- * Side effects: overwrites tmp1, tmp2
++ * Side effects: overwrites tmp1, tmp2 and tmp3
+  */
+ .macro at91_mckx_ps_restore
+ #ifdef CONFIG_SOC_SAMA7
+@@ -912,7 +912,7 @@ r_ps:
+ 	bic	tmp3, tmp3, #AT91_PMC_MCR_V2_ID_MSK
+ 	orr	tmp3, tmp3, tmp1
+ 	orr	tmp3, tmp3, #AT91_PMC_MCR_V2_CMD
+-	str	tmp2, [pmc, #AT91_PMC_MCR_V2]
++	str	tmp3, [pmc, #AT91_PMC_MCR_V2]
  
- 	hctx_for_each_ctx(hctx, ctx, i)
--		kobject_del(&ctx->kobj);
-+		if (ctx->kobj.state_in_sysfs)
-+			kobject_del(&ctx->kobj);
+ 	wait_mckrdy tmp1
  
--	kobject_del(&hctx->kobj);
-+	if (hctx->kobj.state_in_sysfs)
-+		kobject_del(&hctx->kobj);
- }
- 
- static int blk_mq_register_hctx(struct blk_mq_hw_ctx *hctx)
 -- 
 2.51.0
 
