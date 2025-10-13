@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C855922257E;
-	Mon, 13 Oct 2025 15:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EE530C614;
+	Mon, 13 Oct 2025 15:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368222; cv=none; b=E7zCu42eJqjLyg1E4uaYepm1MZ+UycUR2AR9XXymbylMoqC2awhqwWfJwArlYK+j0HNPb2Y715Eo+Wn9k37ds58rFDOVftann392FLegrh1yB1ZUSmvv6Mxg9vPBqJxUwVB8EUv1xUjLd6ZvBc2v9oFB9vsjjbL53Yp6zz7J05U=
+	t=1760368225; cv=none; b=mZhECHwMdqXRxmgRRBsmMyP1cXWRJI+vcVsc/HgDIYHj6TIXAK3N4oeTEwLcKM5k5hJa+vReClHNBzjFA4GebqGP3zpMPz572VGe8DMMFoEqDafItG25jyaH/87g98AI/T+3TD/MbLhUDCM/HbxkeVc5IAK0A8P+mq/8PVGaxSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368222; c=relaxed/simple;
-	bh=BKtDRRAmM4y8nbjtwbyi3qYS5X7iQk93+Oc+zyZ2CgA=;
+	s=arc-20240116; t=1760368225; c=relaxed/simple;
+	bh=YXIjgWMRI0e3d0Vg1xuISR2AbXTdb5vYWpwDB8ftbW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WA3VUiGxpL1EiCthq1c9TzsvK8FLK12lnGgIRsh81xyTqhs6SkXOdfgDAmTRlJKBgSGPhpt7VEl/saGtoFneNYciqmEikd9VyyCbtVh/lcRJ6O6iKy6kS1vlsgd1FP2qWrIzYJeCMyxWAn6ahcEoyyc07GJxYVi7kC8kJXqypRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfX/VJJd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZeXERWvDiawmAMdVN6PEtMGxVBCP48+sU1MggM8jiJXj0qWveCok+RhRfysmfimHurf1aKM8bClYZdJ6BPQZ8Gsfj44cEwIMUrqI96UCa2jpkE2Nor9qQnK+A92ylV091zK2oRbxLMhpHmSTGTbC23gTngLKFadpfbjTjD++QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM7f4VJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfX/VJJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F4EC4CEE7;
-	Mon, 13 Oct 2025 15:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM7f4VJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215E6C4CEE7;
+	Mon, 13 Oct 2025 15:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368222;
-	bh=BKtDRRAmM4y8nbjtwbyi3qYS5X7iQk93+Oc+zyZ2CgA=;
+	s=korg; t=1760368225;
+	bh=YXIjgWMRI0e3d0Vg1xuISR2AbXTdb5vYWpwDB8ftbW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfX/VJJdePk85lWzA84eaOeXySV4k8yD48IhAL84DQ1QoGLrtukbLXB6t9RFTyJ2U
-	 Ww7S4Uxkx1ZEl62pWBGlZhI565wO5ydITbWTzxkDYDL24kdGywSCB2SS5rNiIMf+g1
-	 UK08O97Nx+KyMZYNwL8A/wNjPoivOfR0sr1Dy2ag=
+	b=FM7f4VJHmqReGn8B68TwfpMHZmYVwHWOvKu7DzQMw5yqVeLOmTTnjILhpwq1Xvn5/
+	 Yg/23i4+HQCEvnCEHPqNelhKJTGJhvNvti6knW7YUJD+Q4COujJT3m8SXPZcXvAWFO
+	 X1m8KbNPgWf5Vw5g10xYENux0fUOAhKZfJjP/zoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kohei Ito <ito.kohei@socionext.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/262] ACPICA: Fix largest possible resource descriptor index
-Date: Mon, 13 Oct 2025 16:43:31 +0200
-Message-ID: <20251013144328.613169138@linuxfoundation.org>
+Subject: [PATCH 6.12 087/262] i2c: designware: Add disabling clocks when probe fails
+Date: Mon, 13 Oct 2025 16:43:49 +0200
+Message-ID: <20251013144329.263948534@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,40 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit 8ca944fea4d6d9019e01f2d6f6e766f315a9d73f ]
+[ Upstream commit c149841b069ccc6e480b00e11f35a57b5d88c7bb ]
 
-ACPI_RESOURCE_NAME_LARGE_MAX should be equal to the last actually
-used resource descriptor index (ACPI_RESOURCE_NAME_CLOCK_INPUT).
+After an error occurs during probing state, dw_i2c_plat_pm_cleanup() is
+called. However, this function doesn't disable clocks and the clock-enable
+count keeps increasing. Should disable these clocks explicitly.
 
-Otherwise 'resource_index' in 'acpi_ut_validate_resource()' may be
-clamped incorrectly and resulting value may issue an out-of-bounds
-access for 'acpi_gbl_resource_types' array. Compile tested only.
-
-Fixes: 520d4a0ee5b6 ("ACPICA: add support for ClockInput resource (v6.5)")
-Link: https://github.com/acpica/acpica/commit/cf00116c
-Link: https://marc.info/?l=linux-acpi&m=175449676131260&w=2
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
+Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/aclocal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/acpica/aclocal.h b/drivers/acpi/acpica/aclocal.h
-index 6f4fe47c955bd..35460c2072a4a 100644
---- a/drivers/acpi/acpica/aclocal.h
-+++ b/drivers/acpi/acpica/aclocal.h
-@@ -1141,7 +1141,7 @@ struct acpi_port_info {
- #define ACPI_RESOURCE_NAME_PIN_GROUP_FUNCTION   0x91
- #define ACPI_RESOURCE_NAME_PIN_GROUP_CONFIG     0x92
- #define ACPI_RESOURCE_NAME_CLOCK_INPUT          0x93
--#define ACPI_RESOURCE_NAME_LARGE_MAX            0x94
-+#define ACPI_RESOURCE_NAME_LARGE_MAX            0x93
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index 1615facff29c6..24c0ada72f6a5 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -311,6 +311,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
  
- /*****************************************************************************
-  *
+ exit_probe:
+ 	dw_i2c_plat_pm_cleanup(dev);
++	i2c_dw_prepare_clk(dev, false);
+ exit_reset:
+ 	reset_control_assert(dev->rst);
+ 	return ret;
 -- 
 2.51.0
 
