@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248533081CE;
-	Mon, 13 Oct 2025 14:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE61277C8D;
+	Mon, 13 Oct 2025 14:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367457; cv=none; b=BZ6QYnvV3r44oenZsNSHNKdEda2krNff+FAD+KFzsYpIeSh2U8r7b80PopaAwkJNbjV/6GsLnRRUhf8Doswphsz19XzqL/LdTI7y4NVQjL2IRV8Ep7eqiuYjnhQZPs4QWnVWNxaJCkK3Dh2mqlbpl4+CYwHugow+B8Yfwq/S1NM=
+	t=1760367460; cv=none; b=iT0EL2WPvMAkqObxtilIeIpXRLNK6MxEDdiknkzSxPm8gp7DMh0iEZiWcnZmD9wHhwLtBGy+2ArBAO592y5sMv/uaa6W/GPJeQNzLJTz9kAZTnxJIHuh2H4Cg8eZNKdzxpF/0ieFUlXnAny7dbgCIMh1kbSgzLiE8vI39mtcrss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367457; c=relaxed/simple;
-	bh=ARqsYD1o3WrFji041nkJIdJoEtdUmMjE7miSnROBb+g=;
+	s=arc-20240116; t=1760367460; c=relaxed/simple;
+	bh=gsvY83+6RnqglEN/DjpCp5AZNvFRsrU4robCg0i4k74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxUgN74KnJ8IYVTp8tI1PLF1dm6LRtXLWDEiYBjA7tawup6Yosxy9PcRzDmBmzEx6zxNZOup8lewsEozWWqsmqC/+UVXBrjeyAmnHUs45lTTFpBleJJCCjEEcmExwlaDK/0aP6p5bkeeSs0QH4//yazXUiMou1BYdh4rq52TAYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4dAetI9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOEBMfyl7bINtZUoBRsbKxHk6ImcklZwZrjD6Quo6JGvUjKahAQvbeg3kWRaY67FYg5r/SQKIBZZgK5jAToBzAeHL6doY9fV1bn+XqmODfMIe16hF2xClibkNr8LtewTM/DsuSzUvEGmgzWlnxPlihglT1WD7JrPFmbhShYTY7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c86MBTi/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4dAetI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF46C4CEE7;
-	Mon, 13 Oct 2025 14:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c86MBTi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8792EC113D0;
+	Mon, 13 Oct 2025 14:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367457;
-	bh=ARqsYD1o3WrFji041nkJIdJoEtdUmMjE7miSnROBb+g=;
+	s=korg; t=1760367459;
+	bh=gsvY83+6RnqglEN/DjpCp5AZNvFRsrU4robCg0i4k74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4dAetI9F3DDPnhGMYBtspp93WVOAhBbzbAqjzDGEvxTalz84ys/g7icnUpHp0ibP
-	 rtVT6TmMCHl2z5GB4zQDhCnBudHTknRgmwFdPIE2y5NjprEb9HhzgG8G6Tt4JjuC7R
-	 aSOveyGHc1cbH/oNhMBKs1mJ1Bd5q640C5Wipb2Y=
+	b=c86MBTi/g9tZqtKQe+jAXvNiMgxLTl2sXpWzhJa1IGb6rr0cwArbjS1n5sMaHwERl
+	 dSFvK1xBQfgJTMUii7R/RCeFnDbxmLK/c0MuQj8p7TwlO9+risc0z7f/uzs7xYJ0pS
+	 Gk4TzGb6KE+FNH/cvk6mxkqPEEJNz6LaI3+bSQig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Martin Wilck <mwilck@suse.com>,
+	David Disseldorp <ddiss@suse.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/196] s390/bpf: Write back tail call counter for BPF_TRAMP_F_CALL_ORIG
-Date: Mon, 13 Oct 2025 16:43:30 +0200
-Message-ID: <20251013144315.891872462@linuxfoundation.org>
+Subject: [PATCH 6.6 002/196] init: INITRAMFS_PRESERVE_MTIME should depend on BLK_DEV_INITRD
+Date: Mon, 13 Oct 2025 16:43:13 +0200
+Message-ID: <20251013144315.276235986@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,50 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit bc3905a71f02511607d3ccf732360580209cac4c ]
+[ Upstream commit 74792608606a525a0e0df7e8d48acd8000561389 ]
 
-The tailcall_bpf2bpf_hierarchy_fentry test hangs on s390. Its call
-graph is as follows:
+INITRAMFS_PRESERVE_MTIME is only used in init/initramfs.c and
+init/initramfs_test.c.  Hence add a dependency on BLK_DEV_INITRD, to
+prevent asking the user about this feature when configuring a kernel
+without initramfs support.
 
-  entry()
-    subprog_tail()
-      trampoline()
-        fentry()
-        the rest of subprog_tail()  # via BPF_TRAMP_F_CALL_ORIG
-        return to entry()
-
-The problem is that the rest of subprog_tail() increments the tail call
-counter, but the trampoline discards the incremented value. This
-results in an astronomically large number of tail calls.
-
-Fix by making the trampoline write the incremented tail call counter
-back.
-
-Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20250813121016.163375-4-iii@linux.ibm.com
+Fixes: 1274aea127b2e8c9 ("initramfs: add INITRAMFS_PRESERVE_MTIME Kconfig option")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin Wilck <mwilck@suse.com>
+Reviewed-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ init/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 31a4bbd2e7dc4..fe0354ad3bb96 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -2442,6 +2442,9 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 		/* stg %r2,retval_off(%r15) */
- 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_2, REG_0, REG_15,
- 			      tjit->retval_off);
-+		/* mvc tccnt_off(%r15),tail_call_cnt(4,%r15) */
-+		_EMIT6(0xd203f000 | tjit->tccnt_off,
-+		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
+diff --git a/init/Kconfig b/init/Kconfig
+index 8b630143c720f..461591503bf43 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1367,6 +1367,7 @@ config BOOT_CONFIG_EMBED_FILE
  
- 		im->ip_after_call = jit->prg_buf + jit->prg;
- 
+ config INITRAMFS_PRESERVE_MTIME
+ 	bool "Preserve cpio archive mtimes in initramfs"
++	depends on BLK_DEV_INITRD
+ 	default y
+ 	help
+ 	  Each entry in an initramfs cpio archive carries an mtime value. When
 -- 
 2.51.0
 
