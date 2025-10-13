@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4A33081CA;
-	Mon, 13 Oct 2025 14:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248533081CE;
+	Mon, 13 Oct 2025 14:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367454; cv=none; b=g3xcWr84g2VabbjpHzAofCSPW7OGgQLy/6ExShoSh41Pc97VMfxMcMDAjIU/f4URSVBlRYwsWMSmEejimeNaqBHYp8c4+FQ+PodO46pjlW+HtjuIpinUtDQjxe7YMIqLhfXQsFyYeMflVwVc6vefWzFLO7MxbYZQqmJz+Lxy9CA=
+	t=1760367457; cv=none; b=BZ6QYnvV3r44oenZsNSHNKdEda2krNff+FAD+KFzsYpIeSh2U8r7b80PopaAwkJNbjV/6GsLnRRUhf8Doswphsz19XzqL/LdTI7y4NVQjL2IRV8Ep7eqiuYjnhQZPs4QWnVWNxaJCkK3Dh2mqlbpl4+CYwHugow+B8Yfwq/S1NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367454; c=relaxed/simple;
-	bh=o6YJmH/S3MqOzaATzJyzJGJFEYtjrHSzPhdqFVdl/WU=;
+	s=arc-20240116; t=1760367457; c=relaxed/simple;
+	bh=ARqsYD1o3WrFji041nkJIdJoEtdUmMjE7miSnROBb+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4tbndzKnM7/UWj2A9N95bShziGNRqNfvF6BO+zlF/0UyQu7OlNoRyBleJ39H36goeboRG8+9doUoaCb8zrvvTfCnLOYyJgX5HwBpx5W5Ju7L5BWhRFlOAvYSy2NMlmBjRlmqXOcgt/TmTPoXoyE0t74C8mBOGPFJMTs4vMUJF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ashYBfat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxUgN74KnJ8IYVTp8tI1PLF1dm6LRtXLWDEiYBjA7tawup6Yosxy9PcRzDmBmzEx6zxNZOup8lewsEozWWqsmqC/+UVXBrjeyAmnHUs45lTTFpBleJJCCjEEcmExwlaDK/0aP6p5bkeeSs0QH4//yazXUiMou1BYdh4rq52TAYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4dAetI9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ashYBfat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB38EC4CEE7;
-	Mon, 13 Oct 2025 14:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4dAetI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF46C4CEE7;
+	Mon, 13 Oct 2025 14:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367454;
-	bh=o6YJmH/S3MqOzaATzJyzJGJFEYtjrHSzPhdqFVdl/WU=;
+	s=korg; t=1760367457;
+	bh=ARqsYD1o3WrFji041nkJIdJoEtdUmMjE7miSnROBb+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ashYBfat2WYcsR7BDg4aFdtH3SeA88KB0YAVs0bQgrjy2Ur3iQGrmBzbl8KSSJ8Vd
-	 3WgRmmU1GY8Wu/7T986Ufj+yc9lEzOlkpCFx1atjqU9bOQchHeARaujNJR7jLJzw0i
-	 9cqr2x5S5vdPuKwRUudQ17JzyISsFaDG05Cf9KDo=
+	b=R4dAetI9F3DDPnhGMYBtspp93WVOAhBbzbAqjzDGEvxTalz84ys/g7icnUpHp0ibP
+	 rtVT6TmMCHl2z5GB4zQDhCnBudHTknRgmwFdPIE2y5NjprEb9HhzgG8G6Tt4JjuC7R
+	 aSOveyGHc1cbH/oNhMBKs1mJ1Bd5q640C5Wipb2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/196] s390/bpf: Write back tail call counter for BPF_PSEUDO_CALL
-Date: Mon, 13 Oct 2025 16:43:29 +0200
-Message-ID: <20251013144315.855528374@linuxfoundation.org>
+Subject: [PATCH 6.6 019/196] s390/bpf: Write back tail call counter for BPF_TRAMP_F_CALL_ORIG
+Date: Mon, 13 Oct 2025 16:43:30 +0200
+Message-ID: <20251013144315.891872462@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -53,73 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit c861a6b147137d10b5ff88a2c492ba376cd1b8b0 ]
+[ Upstream commit bc3905a71f02511607d3ccf732360580209cac4c ]
 
-The tailcall_bpf2bpf_hierarchy_1 test hangs on s390. Its call graph is
-as follows:
+The tailcall_bpf2bpf_hierarchy_fentry test hangs on s390. Its call
+graph is as follows:
 
   entry()
     subprog_tail()
-      bpf_tail_call_static(0) -> entry + tail_call_start
-    subprog_tail()
-      bpf_tail_call_static(0) -> entry + tail_call_start
+      trampoline()
+        fentry()
+        the rest of subprog_tail()  # via BPF_TRAMP_F_CALL_ORIG
+        return to entry()
 
-entry() copies its tail call counter to the subprog_tail()'s frame,
-which then increments it. However, the incremented result is discarded,
-leading to an astronomically large number of tail calls.
+The problem is that the rest of subprog_tail() increments the tail call
+counter, but the trampoline discards the incremented value. This
+results in an astronomically large number of tail calls.
 
-Fix by writing the incremented counter back to the entry()'s frame.
+Fix by making the trampoline write the incremented tail call counter
+back.
 
-Fixes: dd691e847d28 ("s390/bpf: Implement bpf_jit_supports_subprog_tailcalls()")
+Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20250813121016.163375-3-iii@linux.ibm.com
+Link: https://lore.kernel.org/bpf/20250813121016.163375-4-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 2d8facfd4e425..31a4bbd2e7dc4 100644
+index 31a4bbd2e7dc4..fe0354ad3bb96 100644
 --- a/arch/s390/net/bpf_jit_comp.c
 +++ b/arch/s390/net/bpf_jit_comp.c
-@@ -1425,13 +1425,6 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 		jit->seen |= SEEN_FUNC;
- 		/*
- 		 * Copy the tail call counter to where the callee expects it.
--		 *
--		 * Note 1: The callee can increment the tail call counter, but
--		 * we do not load it back, since the x86 JIT does not do this
--		 * either.
--		 *
--		 * Note 2: We assume that the verifier does not let us call the
--		 * main program, which clears the tail call counter on entry.
- 		 */
- 		/* mvc STK_OFF_TCCNT(4,%r15),N(%r15) */
- 		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
-@@ -1457,6 +1450,22 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 		call_r1(jit);
- 		/* lgr %b0,%r2: load return value into %b0 */
- 		EMIT4(0xb9040000, BPF_REG_0, REG_2);
-+
-+		/*
-+		 * Copy the potentially updated tail call counter back.
-+		 */
-+
-+		if (insn->src_reg == BPF_PSEUDO_CALL)
-+			/*
-+			 * mvc frame_off+tail_call_cnt(%r15),
-+			 *     tail_call_cnt(4,%r15)
-+			 */
-+			_EMIT6(0xd203f000 | (jit->frame_off +
-+					     offsetof(struct prog_frame,
-+						      tail_call_cnt)),
-+			       0xf000 | offsetof(struct prog_frame,
-+						 tail_call_cnt));
-+
- 		break;
- 	}
- 	case BPF_JMP | BPF_TAIL_CALL: {
+@@ -2442,6 +2442,9 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 		/* stg %r2,retval_off(%r15) */
+ 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_2, REG_0, REG_15,
+ 			      tjit->retval_off);
++		/* mvc tccnt_off(%r15),tail_call_cnt(4,%r15) */
++		_EMIT6(0xd203f000 | tjit->tccnt_off,
++		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
+ 
+ 		im->ip_after_call = jit->prg_buf + jit->prg;
+ 
 -- 
 2.51.0
 
