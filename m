@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24CF30DD1D;
-	Mon, 13 Oct 2025 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912043081A8;
+	Mon, 13 Oct 2025 14:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367394; cv=none; b=Y9BeqdCAari6/Dg4/Ky+1SKAO92SLxtDyHcos5pU58bqTUqSG45QoAyfzeUPiHWoiXkg89zjTZ/kGOoXZXxpdqJC9QLwKB2FpdSXazcGLzZgxRKdSddV4Bgbkl1wKVLmEtTPZupyq4oID/WHc75xkoFlJV3xRdt8emgiZ87XlTs=
+	t=1760367397; cv=none; b=gmWqMABlhHl4B1LSUZlLaeg72i98Xkyqs/7wS4Cxdv/YKZ6Zj7DDmHws3PuFTkf0BUMRm7WPXoXsMKdpjkJw/6t+JmooNDA5Gw0P7Ms9auYT2KCKSgA5C+/SxfvPOZ9ppu2h1ntsBUNLp6RR45p/tCQk4S4Dm1omGtWNmfiq9DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367394; c=relaxed/simple;
-	bh=2PrLHXKLAAK9GvgEdBu7jYd/NHUNZqlOKM+ftSObTzQ=;
+	s=arc-20240116; t=1760367397; c=relaxed/simple;
+	bh=nqyeynbYbjUzr9Yt2+quL04I73r0tVUTSMp9x5MfnlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/k98yJvxeGi7O5Qu0K/UNYGARHRz+O4luCaNdwt3Ge0Vb5IH5GsTy0I7S6OG+Zo+hDWaw51GeKT4hQr8MMqwo8GCSBkxAhvXHUmQh9DjuBscVFM5X+p0YrC6uaLKWRwfMjUtnG0aZESGav/0K9dgEllMu40zLVcU0cuCPlFTBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/HuwrKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUnvChFPfw3ppUdjLT0xt1vhapDTQdnYvvuqaxV1T3mvc+/KMhDvOhq6OGnZgbnq5bPVxYMd24OWxHfJHialWnEH0ON+R4D+sKTQ1C0d+zSmHSPOvDNGv3nmGvLbjU446dnJuN8OBvV+Ppsj3d/wCXMXW7Kd0yIsL8AGDGyaoBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULp+uVDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/HuwrKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D36AC4CEE7;
-	Mon, 13 Oct 2025 14:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULp+uVDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181FAC4CEE7;
+	Mon, 13 Oct 2025 14:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367394;
-	bh=2PrLHXKLAAK9GvgEdBu7jYd/NHUNZqlOKM+ftSObTzQ=;
+	s=korg; t=1760367397;
+	bh=nqyeynbYbjUzr9Yt2+quL04I73r0tVUTSMp9x5MfnlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/HuwrKrNJjk0oKvLR3yl4I2+lOL/OLxcRo3CMCXO9RFDqGaEE2eUrte4Mi+AQwaX
-	 V3SavieyXr6vPydw2CGzVN7ulBcjn6UkzqpIb1ahcqz9/gcX0pVX2ZC5BWfuuacbje
-	 rfph3MXQXImXsknbc/C8FaxzS+D/esUEBwPRVtlY=
+	b=ULp+uVDZ/yNLlP9QGmbM4NGLoutlSE9XKBHGwxgHVOw802TBQxz9BDpZJ6One2Pdl
+	 7Hi8ZOXLz0OKQXcIfGxOcmfqQ0e+JSzItQOvILVpZAJbqY3Y/q29VkjiBc+rnKfn3p
+	 K0mVYjF0Ez5DTfPlE6MZIkBnJ9jYHNRMVLSJqJAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Sven Peter <sven@kernel.org>
-Subject: [PATCH 6.1 192/196] usb: typec: tipd: Clear interrupts first
-Date: Mon, 13 Oct 2025 16:46:05 +0200
-Message-ID: <20251013144321.636338904@linuxfoundation.org>
+	Nishanth Menon <nm@ti.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 161/196] hwrng: ks-sa - fix division by zero in ks_sa_rng_init
+Date: Mon, 13 Oct 2025 16:45:34 +0200
+Message-ID: <20251013144320.523234431@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,104 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Nishanth Menon <nm@ti.com>
 
-commit be5ae730ffa6fd774a00a4705c1e11e078b08ca1 upstream.
+[ Upstream commit 612b1dfeb414dfa780a6316014ceddf9a74ff5c0 ]
 
-Right now the interrupt handler first reads all updated status registers
-and only then clears the interrupts. It's possible that a duplicate
-interrupt for a changed register or plug state comes in after the
-interrupts have been processed but before they have been cleared:
+Fix division by zero in ks_sa_rng_init caused by missing clock
+pointer initialization. The clk_get_rate() call is performed on
+an uninitialized clk pointer, resulting in division by zero when
+calculating delay values.
 
-* plug is inserted, TPS_REG_INT_PLUG_EVENT is set
-* TPS_REG_INT_EVENT1 is read
-* tps6598x_handle_plug_event() has run and registered the plug
-* plug is removed again, TPS_REG_INT_PLUG_EVENT is set (again)
-* TPS_REG_INT_CLEAR1 is written, TPS_REG_INT_PLUG_EVENT is cleared
+Add clock initialization code before using the clock.
 
-We then have no plug connected and no pending interrupt but the tipd
-core still thinks there is a plug. It's possible to trigger this with
-e.g. a slightly broken Type-C to USB A converter.
+Fixes: 6d01d8511dce ("hwrng: ks-sa - Add minimum sleep time before ready-polling")
+Signed-off-by: Nishanth Menon <nm@ti.com>
 
-Fix this by first clearing the interrupts and only then reading the
-updated registers.
+ drivers/char/hw_random/ks-sa-rng.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 
-Fixes: 45188f27b3d0 ("usb: typec: tipd: Add support for Apple CD321X")
-Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
-Cc: stable@kernel.org
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Sven Peter <sven@kernel.org>
-Link: https://lore.kernel.org/r/20250914-apple-usb3-tipd-v1-1-4e99c8649024@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tipd/core.c |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -491,24 +491,23 @@ static irqreturn_t cd321x_interrupt(int
- 	if (!event)
- 		goto err_unlock;
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 2f2f21f1b659e..d7b42888f25c2 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -240,6 +240,10 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
-+	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event);
++	ks_sa_rng->clk = devm_clk_get_enabled(dev, NULL);
++	if (IS_ERR(ks_sa_rng->clk))
++		return dev_err_probe(dev, PTR_ERR(ks_sa_rng->clk), "Failed to get clock\n");
 +
- 	if (!tps6598x_read_status(tps, &status))
--		goto err_clear_ints;
-+		goto err_unlock;
- 
- 	if (event & APPLE_CD_REG_INT_POWER_STATUS_UPDATE)
- 		if (!tps6598x_read_power_status(tps))
--			goto err_clear_ints;
-+			goto err_unlock;
- 
- 	if (event & APPLE_CD_REG_INT_DATA_STATUS_UPDATE)
- 		if (!tps6598x_read_data_status(tps))
--			goto err_clear_ints;
-+			goto err_unlock;
- 
- 	/* Handle plug insert or removal */
- 	if (event & APPLE_CD_REG_INT_PLUG_EVENT)
- 		tps6598x_handle_plug_event(tps, status);
- 
--err_clear_ints:
--	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event);
--
- err_unlock:
- 	mutex_unlock(&tps->lock);
- 
-@@ -555,25 +554,24 @@ static irqreturn_t tps6598x_interrupt(in
- 	if (!(event1[0] | event1[1] | event2[0] | event2[1]))
- 		goto err_unlock;
- 
-+	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
-+	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
-+
- 	if (!tps6598x_read_status(tps, &status))
--		goto err_clear_ints;
-+		goto err_unlock;
- 
- 	if ((event1[0] | event2[0]) & TPS_REG_INT_POWER_STATUS_UPDATE)
- 		if (!tps6598x_read_power_status(tps))
--			goto err_clear_ints;
-+			goto err_unlock;
- 
- 	if ((event1[0] | event2[0]) & TPS_REG_INT_DATA_STATUS_UPDATE)
- 		if (!tps6598x_read_data_status(tps))
--			goto err_clear_ints;
-+			goto err_unlock;
- 
- 	/* Handle plug insert or removal */
- 	if ((event1[0] | event2[0]) & TPS_REG_INT_PLUG_EVENT)
- 		tps6598x_handle_plug_event(tps, status);
- 
--err_clear_ints:
--	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
--	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
--
- err_unlock:
- 	mutex_unlock(&tps->lock);
- 
+ 	pm_runtime_enable(dev);
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0) {
+-- 
+2.51.0
+
 
 
