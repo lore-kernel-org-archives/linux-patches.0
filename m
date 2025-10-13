@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753A430CD9D;
-	Mon, 13 Oct 2025 15:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F30A3081AE;
+	Mon, 13 Oct 2025 15:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369170; cv=none; b=UlKu2NRal+JcVeStTeYh5/Co0PvyUSUev59yhbkbE63u4qIJReew7ZJlNHFHtm4y9O+1tD5nZqxFAh9Cz7CyPqxdgg1y0TMwLgWkvzIbTk9qgdT4fT7nyl9qEIrdXKki2x220rmllLYd4L2t1yQCDizUFKPuHRi3gohlP2mFRKQ=
+	t=1760369173; cv=none; b=ttcytQ6xZt9o2Vo4cRRi5lgBS04RMdrhcXk1bx45tf0Sw2LjSzl4BUnfJf0yPfUfwz5OZktSN6vm0MPNTJnYvuy3407+lUi1tjl3cl1/noUh+LNWesF9cTqOyFunnG5iDM2CHF7BML0OI2Kc7SDS9o0NsLTpQv7K6EW8UGBgG7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369170; c=relaxed/simple;
-	bh=NVzt5EGJP2dOodJj5rM4k4aN77BFwD//NDuT0JR8FPw=;
+	s=arc-20240116; t=1760369173; c=relaxed/simple;
+	bh=NY8ImeykUexv8hE+10CJW6RTlCJoMSau7LpXm/FOBbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9H5Dd0CLSPKgh+PWrKexZLKLHzOi8HhrUelDvs9qG03jes3z5UeF0bt5kHUAVWj+41ymVmJga/kz6CaxEbHdXEQI/egRAr4zLK3Tx5dheGNfB2cjs0y2HKd0EU3fkw1ogbCKHMKWMp+y54IvqewbrrT1WBr3LHfU4bvw9RMFDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yR6BOsak; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RBaOYhgb8eb2dszueQSg7jNoMF1vddsFE7ROmlem1XSEjSw5iNGcv7EpmH8kWgBRlEZVYxxlF0B+ZzsLoishBTfg9Ao6qOPLKtyTzgOuxgllp3S6efkhiEBH6zGITpPIohWCxKoKVMv/wrvjNmu/vxePUD2w3u+KUECnM7ky7W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV0EZxGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yR6BOsak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C63C4CEE7;
-	Mon, 13 Oct 2025 15:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV0EZxGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC80C4CEE7;
+	Mon, 13 Oct 2025 15:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369170;
-	bh=NVzt5EGJP2dOodJj5rM4k4aN77BFwD//NDuT0JR8FPw=;
+	s=korg; t=1760369173;
+	bh=NY8ImeykUexv8hE+10CJW6RTlCJoMSau7LpXm/FOBbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yR6BOsakQDL1721+gOyazE7tXY+V9trwCJQxCWOO5Q91qH73rHPlbzJmlGklGQIVN
-	 e7P5R2kC1YE82lrUvqkfhuRyxPYY7T2l6KbdJcJNxO8hB578N6FJVmO8sr2iT/rwdG
-	 mC4EJnpU9ZWkxElg+YhpcoVoCjqBQ5/WuobAgb+U=
+	b=MV0EZxGZRK98ykTgAB0hWs2zkvrR2AfM2xjxlYniRH4UUB6Y1fFNNw+HfQvO54Xh4
+	 Xax3ljc440Y26/TTIQQ5/UpBK959soL5Iq2sCTUE54ncDbamZFwJM+kVw2Ev/YXxW4
+	 DRMs6nbDQdE+KIuDYBR6lAZ6nStuhGkwWzRwOEpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 152/563] arm64: dts: allwinner: a527: cubie-a5e: Drop external 32.768 KHz crystal
-Date: Mon, 13 Oct 2025 16:40:13 +0200
-Message-ID: <20251013144416.796369168@linuxfoundation.org>
+Subject: [PATCH 6.17 153/563] arm64: dts: allwinner: t527: avaota-a1: hook up external 32k crystal
+Date: Mon, 13 Oct 2025 16:40:14 +0200
+Message-ID: <20251013144416.832161060@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,43 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 9f01e1e14e71defefcb4d6823b8476a15f3cf04a ]
+[ Upstream commit 3d5e1ba00af8dd34ae1e573c2c07e00b5ec65267 ]
 
-The Radxa Cubie A5E has empty pads for a 32.768 KHz crystal, but it is
-left unpopulated, as per the schematics and seen on board images. A dead
-give away is the RTC's LOSC auto switch register showing the external
-OSC to be abnormal.
+When the board was added, its external 32.768 KHz crystal was described
+but not hooked up correctly. This meant the device had to fall back to
+the SoC's internal oscillator or divide a 32 KHz clock from the main
+oscillator, neither of which are accurate for the RTC. As a result the
+RTC clock will drift badly.
 
-Drop the external crystal from the device tree. It was not referenced
-anyway.
+Hook the crystal up to the RTC block and request the correct clock rate.
 
-Fixes: c2520cd032ae ("arm64: dts: allwinner: a523: add Radxa A5E support")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250913102450.3935943-1-wens@kernel.org
+Fixes: dbe54efa32af ("arm64: dts: allwinner: a523: add Avaota-A1 router support")
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20250913102450.3935943-2-wens@kernel.org
 Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts | 7 -------
- 1 file changed, 7 deletions(-)
+ arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-index d4cee22221045..514c221a7a866 100644
---- a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-@@ -21,13 +21,6 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
+index e7713678208d4..4e71055fbd159 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
++++ b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
+@@ -309,6 +309,14 @@ &r_pio {
+ 	vcc-pm-supply = <&reg_aldo3>;
+ };
  
--	ext_osc32k: ext-osc32k-clk {
--		#clock-cells = <0>;
--		compatible = "fixed-clock";
--		clock-frequency = <32768>;
--		clock-output-names = "ext_osc32k";
--	};
--
- 	leds {
- 		compatible = "gpio-leds";
- 
++&rtc {
++	clocks = <&r_ccu CLK_BUS_R_RTC>, <&osc24M>,
++		 <&r_ccu CLK_R_AHB>, <&ext_osc32k>;
++	clock-names = "bus", "hosc", "ahb", "ext-osc32k";
++	assigned-clocks = <&rtc CLK_OSC32K>;
++	assigned-clock-rates = <32768>;
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_pb_pins>;
 -- 
 2.51.0
 
