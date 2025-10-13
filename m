@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74230C365;
-	Mon, 13 Oct 2025 15:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B874B3081B0;
+	Mon, 13 Oct 2025 15:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368840; cv=none; b=bX9G4Jj9ROyhaCaxX6z6Qr8rHu8gwf9qeHAtZQjLW5R6+uKY7kwDVXIaHTL1UOgFr7ps1gKjaO2hyY2Uz0oeIJWtNZswtIsR2jWJZXhaqfiNsIpwSc+rhplF2QYapP7ZkxP6hojNKhEtcIw58WkDtOtV5zlZ7aJFEBgXBx3JvR8=
+	t=1760368843; cv=none; b=YStO0Psb1rqpUDwoiRtjNDQ3EKdTeAaFoC582G4Zwgfp4DCsYDY1mIqx22AaM4Ukf4vHQ4hRtvWPL9ubIhDZmD0Lfm4ZE0eAyTis1hNpU1JkDPS4jLiuHPqdua7pcIEo62AWXOBfUfq4d0PXRwhUxEr2CQXHOUuUthrnO0qUbSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368840; c=relaxed/simple;
-	bh=m+wnRGZsN87rK7yo9c0I1zc16PLcDtwIehZoHXbACC8=;
+	s=arc-20240116; t=1760368843; c=relaxed/simple;
+	bh=3ve1aNDhU3E7gM3f275jDnn4pKvq4xZ2xj68eTfIXzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMkSKkYGddW8Rj9yErIXFycsz94QKJ/OM3xB57YtFfT1kemUjAQ/7HWV741tODZTo8RqiY/yEF3k81H9Q1zl6pMtLKE0c+HxcMuwYBCtUmZrz+9DZqpzvapNkdL00dbJSvcSSunbM5fN1bknoZTGnmBa3V9x1pN6etNqHs/9jfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5HhqORE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3cD6knPCw81ujQ/cNPdWpxbPzqzpx7cNZ1HUr11/Nxfr7kaYrWVxW7jMOF/IPXzC54mQCjMAGPrEnBbHx1+/O2DAv0E/4BMer47ILa90RsXrwcV0HKCMVJ8Uc8KoLY4HMpCwCO5yF9tTo/iZUo0YOb/fl1HsgHMBmMCoWZgfDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxBbn7da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5HhqORE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AB5C4CEE7;
-	Mon, 13 Oct 2025 15:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxBbn7da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3F5C4CEE7;
+	Mon, 13 Oct 2025 15:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368840;
-	bh=m+wnRGZsN87rK7yo9c0I1zc16PLcDtwIehZoHXbACC8=;
+	s=korg; t=1760368843;
+	bh=3ve1aNDhU3E7gM3f275jDnn4pKvq4xZ2xj68eTfIXzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5HhqORE9HHwyIRB89EfJXqtJoJvmbVh/wt2eck6MDo8UjOiN+XGfzLvNdagqlJKh
-	 F2sC7hDRrgdt711c965OWQivy7RB8gPyYD/Y+VyedgxHylVJj4m0NeDoo++5HNuQH5
-	 fImFEe2yMRpvVzxdOcW1YzJAAOyTrwImp+2e9J5k=
+	b=XxBbn7davsx9C2q3r2urg4HbcX+8H4JJsHqn0eFut8t+6iE/vhGrqzfdob3jy6/l5
+	 7AdB3aezW76sGBe54GNZpSLvfs81ob9e5d40NZXvt6IlLnsvrmeP0rVBPZmeoHUq9L
+	 oMQk17mwTBgh5kFow4QkbD69aoMW+4cJRRlyiiKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Paul Moore <paul@paul-moore.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 037/563] lsm: CONFIG_LSM can depend on CONFIG_SECURITY
-Date: Mon, 13 Oct 2025 16:38:18 +0200
-Message-ID: <20251013144412.634329787@linuxfoundation.org>
+Subject: [PATCH 6.17 038/563] cpuset: fix failure to enable isolated partition when containing isolcpus
+Date: Mon, 13 Oct 2025 16:38:19 +0200
+Message-ID: <20251013144412.671134512@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,37 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 54d94c422fed9575b74167333c1757847a4e6899 ]
+[ Upstream commit 216217ebee16afc4d79c3e86a736d87175c18e68 ]
 
-When CONFIG_SECURITY is not set, CONFIG_LSM (builtin_lsm_order) does
-not need to be visible and settable since builtin_lsm_order is defined in
-security.o, which is only built when CONFIG_SECURITY=y.
+The 'isolcpus' parameter specified at boot time can be assigned to an
+isolated partition. While it is valid put the 'isolcpus' in an isolated
+partition, attempting to change a member cpuset to an isolated partition
+will fail if the cpuset contains any 'isolcpus'.
 
-So make CONFIG_LSM depend on CONFIG_SECURITY.
+For example, the system boots with 'isolcpus=9', and the following
+configuration works correctly:
 
-Fixes: 13e735c0e953 ("LSM: Introduce CONFIG_LSM")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-[PM: subj tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+  # cd /sys/fs/cgroup/
+  # mkdir test
+  # echo 1 > test/cpuset.cpus
+  # echo isolated > test/cpuset.cpus.partition
+  # cat test/cpuset.cpus.partition
+  isolated
+  # echo 9 > test/cpuset.cpus
+  # cat test/cpuset.cpus.partition
+  isolated
+  # cat test/cpuset.cpus
+  9
+
+However, the following steps to convert a member cpuset to an isolated
+partition will fail:
+
+  # cd /sys/fs/cgroup/
+  # mkdir test
+  # echo 9 > test/cpuset.cpus
+  # echo isolated > test/cpuset.cpus.partition
+  # cat test/cpuset.cpus.partition
+  isolated invalid (partition config conflicts with housekeeping setup)
+
+The issue occurs because the new partition state (new_prs) is used for
+validation against housekeeping constraints before it has been properly
+updated. To resolve this, move the assignment of new_prs before the
+housekeeping validation check when enabling a root partition.
+
+Fixes: 4a74e418881f ("cgroup/cpuset: Check partition conflict with housekeeping setup")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/cgroup/cpuset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/Kconfig b/security/Kconfig
-index 4816fc74f81eb..285f284dfcac4 100644
---- a/security/Kconfig
-+++ b/security/Kconfig
-@@ -269,6 +269,7 @@ endchoice
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 27adb04df675d..fef93032fe7e4 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1716,6 +1716,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 		xcpus = tmp->delmask;
+ 		if (compute_effective_exclusive_cpumask(cs, xcpus, NULL))
+ 			WARN_ON_ONCE(!cpumask_empty(cs->exclusive_cpus));
++		new_prs = (cmd == partcmd_enable) ? PRS_ROOT : PRS_ISOLATED;
  
- config LSM
- 	string "Ordered list of enabled LSMs"
-+	depends on SECURITY
- 	default "landlock,lockdown,yama,loadpin,safesetid,smack,selinux,tomoyo,apparmor,ipe,bpf" if DEFAULT_SECURITY_SMACK
- 	default "landlock,lockdown,yama,loadpin,safesetid,apparmor,selinux,smack,tomoyo,ipe,bpf" if DEFAULT_SECURITY_APPARMOR
- 	default "landlock,lockdown,yama,loadpin,safesetid,tomoyo,ipe,bpf" if DEFAULT_SECURITY_TOMOYO
+ 		/*
+ 		 * Enabling partition root is not allowed if its
+@@ -1748,7 +1749,6 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 
+ 		deleting = true;
+ 		subparts_delta++;
+-		new_prs = (cmd == partcmd_enable) ? PRS_ROOT : PRS_ISOLATED;
+ 	} else if (cmd == partcmd_disable) {
+ 		/*
+ 		 * May need to add cpus back to parent's effective_cpus
 -- 
 2.51.0
 
