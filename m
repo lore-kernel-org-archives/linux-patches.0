@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93237145B3F;
-	Mon, 13 Oct 2025 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5C1221F00;
+	Mon, 13 Oct 2025 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368592; cv=none; b=Vol0APTvsb07T/M/Q07X5bQJKegMvFp50Y2QzEgKcjYjuS12PQ0W3nJderkPMBlyAcnrsCrKHCFR27+l3xRFt4GIOTCo+S4ffvqvaPvF7bV/wSdKr/wVghbfHcWh/8KousqYu9mhHgCmlvc96n/Pp6FFlLAzzBX2UXiRYk3SFJQ=
+	t=1760368595; cv=none; b=J3FIzbcdakTFxGbQ2YiAEIWSBWOl5gxxgyZ30mz6+6HkVw1pJ4XorG+yILbjuB1u73xgT7N5Nsz/dTxuSug+F4OmBJXpp51+EWza5JT370lVEGCZ4XNduz5hz0IUsHr2WVst6A8aNMcCBRPwAmHgLpKOoEz4cyh9EEEwW2/d+NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368592; c=relaxed/simple;
-	bh=8mY0m1COMRcM5rlttZcRogbjor360Cd7VEdngYFk0AM=;
+	s=arc-20240116; t=1760368595; c=relaxed/simple;
+	bh=fgVtJs/sAab0R9tK7JfmOcVErXJqH07VFcQmKEgUXZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwc8hvXa3Y7zDRX0J4qL9aMZ9K+yRYyAnSBIiVzT4H5vBkFRDzpDLKO67tuzCObMn9bwYs1HfUb5f4P9Eh90eq34s2EPTmn+no+f4Cte2pzE/RIc+yInH5x+EGZFNUKR7wZUoDxYtSpzAM0RV5CUt9PmCTgksysHbvEKQsHaOs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUkLi5Q9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q+ZK6yr+pAA4I4YnwymMhXcE5cWDh28j20zf74rWSgUEu3SiCX64leS5cib4EiNLnG5e3AyomjUi4uEfaTKyZteuUDwvfVpWbRWFWcNFA/06l7oqqHQQ+axtsU1B+IR+/fu2hBcX3S3g+3+ktsHBRz/WUDW2bU+uISN3T6FTlFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxrHqhcJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUkLi5Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F505C113D0;
-	Mon, 13 Oct 2025 15:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxrHqhcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDFDC4CEE7;
+	Mon, 13 Oct 2025 15:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368592;
-	bh=8mY0m1COMRcM5rlttZcRogbjor360Cd7VEdngYFk0AM=;
+	s=korg; t=1760368595;
+	bh=fgVtJs/sAab0R9tK7JfmOcVErXJqH07VFcQmKEgUXZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUkLi5Q9JobtkdYJChElbrTI+rFQRW159rDKyBtKtvRmBCENUn1xHAWFZLtvxe5dq
-	 xsretano37H5zeFP6fdCURczE4KXXXUi2UwNbsTBHFicpVXqTK6tIigGyhmlTeX9du
-	 6e1KpJzNM9yFxwPEmI7BAkhvjXGbugMdXf5BwZzM=
+	b=JxrHqhcJJDKRfI9TFL/vEIzA/XesLPZXogE1k2OxeBnGx1eY7bweULW6Fj2zkeJh4
+	 UO7lu30PT072n6ddj7FHIs7/nKDFn0H3csSaM4KoOCir0c0rUYstDsrTS11/D7ZmYe
+	 +SWAJjD5Glx4FvMCjVpNyRIHwOmrWsTEINX4fg1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
 	James Clark <james.clark@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/262] coresight-etm4x: Conditionally access register TRCEXTINSELR
-Date: Mon, 13 Oct 2025 16:45:24 +0200
-Message-ID: <20251013144332.683560067@linuxfoundation.org>
+Subject: [PATCH 6.12 183/262] coresight: tmc: Support atclk
+Date: Mon, 13 Oct 2025 16:45:25 +0200
+Message-ID: <20251013144332.718989370@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -47,95 +48,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit dcdc42f5dcf9b9197c51246c62966e2d54a033d8 ]
+[ Upstream commit 8a79026926b329d4ab0c6d0921373a80ec8aab6e ]
 
-The TRCEXTINSELR is only implemented if TRCIDR5.NUMEXTINSEL > 0.
-To avoid invalid accesses, introduce a check on numextinsel
-(derived from TRCIDR5[11:9]) before reading or writing to this register.
+The atclk is an optional clock for the CoreSight TMC, but the driver
+misses to initialize it.  In most cases, TMC shares the atclk clock with
+other CoreSight components.  Since these components enable the clock
+before the TMC device is initialized, the TMC continues properly,
+which is why we don’t observe any lockup issues.
 
-Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
-Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
+This change enables atclk in probe of the TMC driver.  Given the clock
+is optional, it is possible to return NULL if the clock does not exist.
+IS_ERR() is tolerant for this case.
+
+Dynamically disable and enable atclk during suspend and resume.  The
+clock pointers will never be error values if the driver has successfully
+probed, and the case of a NULL pointer case will be handled by the clock
+core layer.  The driver data is always valid after probe. Therefore,
+remove the related checks.  Also in the resume flow adds error handling.
+
+Fixes: bc4bf7fe98da ("coresight-tmc: add CoreSight TMC driver")
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250812-trcextinselr_issue-v2-1-e6eb121dfcf4@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20250731-arm_cs_fix_clock_v4-v6-1-1dfe10bb3f6f@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 11 ++++++++---
- drivers/hwtracing/coresight/coresight-etm4x.h      |  2 ++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ .../hwtracing/coresight/coresight-tmc-core.c  | 22 ++++++++++++++-----
+ drivers/hwtracing/coresight/coresight-tmc.h   |  2 ++
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index be8b46f26ddc8..cdfd35e03c1dc 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -481,7 +481,8 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, config->seq_rst, TRCSEQRSTEVR);
- 		etm4x_relaxed_write32(csa, config->seq_state, TRCSEQSTR);
- 	}
--	etm4x_relaxed_write32(csa, config->ext_inp, TRCEXTINSELR);
-+	if (drvdata->numextinsel)
-+		etm4x_relaxed_write32(csa, config->ext_inp, TRCEXTINSELR);
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
- 		etm4x_relaxed_write32(csa, config->cntrldvr[i], TRCCNTRLDVRn(i));
- 		etm4x_relaxed_write32(csa, config->cntr_ctrl[i], TRCCNTCTLRn(i));
-@@ -1362,6 +1363,7 @@ static void etm4_init_arch_data(void *info)
- 	etmidr5 = etm4x_relaxed_read32(csa, TRCIDR5);
- 	/* NUMEXTIN, bits[8:0] number of external inputs implemented */
- 	drvdata->nr_ext_inp = FIELD_GET(TRCIDR5_NUMEXTIN_MASK, etmidr5);
-+	drvdata->numextinsel = FIELD_GET(TRCIDR5_NUMEXTINSEL_MASK, etmidr5);
- 	/* TRACEIDSIZE, bits[21:16] indicates the trace ID width */
- 	drvdata->trcid_size = FIELD_GET(TRCIDR5_TRACEIDSIZE_MASK, etmidr5);
- 	/* ATBTRIG, bit[22] implementation can support ATB triggers? */
-@@ -1789,7 +1791,9 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
- 		state->trcseqrstevr = etm4x_read32(csa, TRCSEQRSTEVR);
- 		state->trcseqstr = etm4x_read32(csa, TRCSEQSTR);
- 	}
--	state->trcextinselr = etm4x_read32(csa, TRCEXTINSELR);
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-core.c b/drivers/hwtracing/coresight/coresight-tmc-core.c
+index 475fa4bb6813b..96ef2517dd439 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-core.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-core.c
+@@ -480,6 +480,10 @@ static int __tmc_probe(struct device *dev, struct resource *res)
+ 	struct coresight_desc desc = { 0 };
+ 	struct coresight_dev_list *dev_list = NULL;
+ 
++	drvdata->atclk = devm_clk_get_optional_enabled(dev, "atclk");
++	if (IS_ERR(drvdata->atclk))
++		return PTR_ERR(drvdata->atclk);
 +
-+	if (drvdata->numextinsel)
-+		state->trcextinselr = etm4x_read32(csa, TRCEXTINSELR);
+ 	ret = -ENOMEM;
  
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
- 		state->trccntrldvr[i] = etm4x_read32(csa, TRCCNTRLDVRn(i));
-@@ -1921,7 +1925,8 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, state->trcseqrstevr, TRCSEQRSTEVR);
- 		etm4x_relaxed_write32(csa, state->trcseqstr, TRCSEQSTR);
- 	}
--	etm4x_relaxed_write32(csa, state->trcextinselr, TRCEXTINSELR);
-+	if (drvdata->numextinsel)
-+		etm4x_relaxed_write32(csa, state->trcextinselr, TRCEXTINSELR);
+ 	/* Validity for the resource is already checked by the AMBA core */
+@@ -700,18 +704,26 @@ static int tmc_runtime_suspend(struct device *dev)
+ {
+ 	struct tmc_drvdata *drvdata = dev_get_drvdata(dev);
  
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
- 		etm4x_relaxed_write32(csa, state->trccntrldvr[i], TRCCNTRLDVRn(i));
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
-index 9e9165f62e81f..899790c8777a9 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -162,6 +162,7 @@
- #define TRCIDR4_NUMVMIDC_MASK			GENMASK(31, 28)
+-	if (drvdata && !IS_ERR_OR_NULL(drvdata->pclk))
+-		clk_disable_unprepare(drvdata->pclk);
++	clk_disable_unprepare(drvdata->atclk);
++	clk_disable_unprepare(drvdata->pclk);
++
+ 	return 0;
+ }
  
- #define TRCIDR5_NUMEXTIN_MASK			GENMASK(8, 0)
-+#define TRCIDR5_NUMEXTINSEL_MASK               GENMASK(11, 9)
- #define TRCIDR5_TRACEIDSIZE_MASK		GENMASK(21, 16)
- #define TRCIDR5_ATBTRIG				BIT(22)
- #define TRCIDR5_LPOVERRIDE			BIT(23)
-@@ -998,6 +999,7 @@ struct etmv4_drvdata {
- 	u8				nr_cntr;
- 	u8				nr_ext_inp;
- 	u8				numcidc;
-+	u8				numextinsel;
- 	u8				numvmidc;
- 	u8				nrseqstate;
- 	u8				nr_event;
+ static int tmc_runtime_resume(struct device *dev)
+ {
+ 	struct tmc_drvdata *drvdata = dev_get_drvdata(dev);
++	int ret;
+ 
+-	if (drvdata && !IS_ERR_OR_NULL(drvdata->pclk))
+-		clk_prepare_enable(drvdata->pclk);
+-	return 0;
++	ret = clk_prepare_enable(drvdata->pclk);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(drvdata->atclk);
++	if (ret)
++		clk_disable_unprepare(drvdata->pclk);
++
++	return ret;
+ }
+ #endif
+ 
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+index 2671926be62a3..2a53acbb5990b 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.h
++++ b/drivers/hwtracing/coresight/coresight-tmc.h
+@@ -166,6 +166,7 @@ struct etr_buf {
+ 
+ /**
+  * struct tmc_drvdata - specifics associated to an TMC component
++ * @atclk:	optional clock for the core parts of the TMC.
+  * @pclk:	APB clock if present, otherwise NULL
+  * @base:	memory mapped base address for this component.
+  * @csdev:	component vitals needed by the framework.
+@@ -191,6 +192,7 @@ struct etr_buf {
+  * @perf_buf:	PERF buffer for ETR.
+  */
+ struct tmc_drvdata {
++	struct clk		*atclk;
+ 	struct clk		*pclk;
+ 	void __iomem		*base;
+ 	struct coresight_device	*csdev;
 -- 
 2.51.0
 
