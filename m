@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D34230C372;
-	Mon, 13 Oct 2025 15:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6738E2FB978;
+	Mon, 13 Oct 2025 15:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368933; cv=none; b=MYgxMPCNia1u9lCypprnxvLjDOEpabYYW+z3tWJp99kgt+gjiLPg+TXdX/AAnWqToeH4J7JGcMcTqldHElxRVriPEzKhnjy5NiG/MGn4vAThnF1Zq8xo8SZK2ohuZWEok1c5/1tFfoXVSBGrqng3oA7JFkNL3lnjS2XXVZVi5vs=
+	t=1760368936; cv=none; b=SxBs1FlokS78rL+ohiroFjjXO60vlFnigkDeLbfLDlDqXCgYJveCwRtdkiEaS6AmgpBqx+mZyUqXPHRppw3ZTy4MKx72rFPgy66/nMivmlbKTOhFazn8ncvoqZWe8MCTX5LnduxmnTZOoDIxTIMYzegoyU31cF9XVxan90KlXKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368933; c=relaxed/simple;
-	bh=oYxUhQUUcjNiwjXApbcV3NRTY+h28YZfPAV7xwlEg8Y=;
+	s=arc-20240116; t=1760368936; c=relaxed/simple;
+	bh=lSo3+/Tl4u93n7hhFsdozMZfk6fFTE/wb9eUxZUC4cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3/iV6DylHhXxuVy9GDOdVV7+9BQ77LoKCiOryhIh9fkv1zjaQ8QRaRgJfKbPvpM2vljkQ1j2N3HGbxjztVWto32GO7EMPjXojWUdV8Htln8LsDPeafA5MVNCagXuz5wxf3UD+hQoS17nOvZMuW7TBQxOI61qqQWs90Ot9xvzXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9lq5CzC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5MBYYLuJJWQzV4m/rwYNADwtvlf6DqEFRiTlGQ+JHEwbR3ZXP8IqE8FeqiQ57dxKALXqUJ5GbyxWBq4OEGe6AlP2AcEs7BcV0tmXqCs/siifHLJVWQwDLu8WkKkGEADvdQ21TchBgy/ZlWCd5Yr+VT8GpltRaeKGdcTJSNuXQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEMbuZwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9lq5CzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7748C4CEE7;
-	Mon, 13 Oct 2025 15:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEMbuZwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DFEC116B1;
+	Mon, 13 Oct 2025 15:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368933;
-	bh=oYxUhQUUcjNiwjXApbcV3NRTY+h28YZfPAV7xwlEg8Y=;
+	s=korg; t=1760368935;
+	bh=lSo3+/Tl4u93n7hhFsdozMZfk6fFTE/wb9eUxZUC4cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9lq5CzCwoREft6g9XBA8uhXMlQAjdU64bYwfBYTUOZjrbHsEszNl0Z7yxdt/wWLg
-	 5cC0Xfof0pyNp7l5l+maDk7sCur30NO9GcPcBCpBE9TPy43z4nkzcNki7uHlDQGYlh
-	 RUsvglEuvycRjPCO2z/GI62bGT9hMzzyyg7tROWA=
+	b=zEMbuZwggB97Y1nEEuBrfH5Qii58F0gZrtzYSL+AdiMdXmFTxfM08wKzGuT9dvkVM
+	 zDuLlD4aEDA4R78ru2moVqbS0dF+AeGvZcZ7LUne2MjrfTQaOTiqgu4l7h4R5ZwKOq
+	 1FXMpprmBxQ+veWMXCe8KO2n/Ssb6wV38U3iyuDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 070/563] scripts/misc-check: update export checks for EXPORT_SYMBOL_FOR_MODULES()
-Date: Mon, 13 Oct 2025 16:38:51 +0200
-Message-ID: <20251013144413.828516814@linuxfoundation.org>
+Subject: [PATCH 6.17 071/563] soc: qcom: rpmh-rsc: Unconditionally clear _TRIGGER bit for TCS
+Date: Mon, 13 Oct 2025 16:38:52 +0200
+Message-ID: <20251013144413.864602044@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
 
-[ Upstream commit 0354e81b7bd629f9c3379c9524e988ebc504fa25 ]
+[ Upstream commit f87412d18edb5b8393eb8cb1c2d4a54f90185a21 ]
 
-The module export checks are looking for EXPORT_SYMBOL_GPL_FOR_MODULES()
-which was renamed to EXPORT_SYMBOL_FOR_MODULES(). Update the checks.
+Unconditionally clear the TCS_AMC_MODE_TRIGGER bit when a
+transaction completes. Previously this bit was only cleared when
+a wake TCS was borrowed as an AMC TCS but not for dedicated
+AMC TCS. Leaving this bit set for AMC TCS and entering deeper low
+power modes can generate a false completion IRQ.
 
-Fixes: 6d3c3ca4c77e ("module: Rename EXPORT_SYMBOL_GPL_FOR_MODULES to EXPORT_SYMBOL_FOR_MODULES")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://lore.kernel.org/r/20250825-export_modules_fix-v1-1-5c331e949538@suse.cz
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Prevent this scenario by always clearing the TCS_AMC_MODE_TRIGGER
+bit upon receiving a completion IRQ.
+
+Fixes: 15b3bf61b8d4 ("soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS")
+Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250825-rpmh_rsc_change-v1-1-138202c31bf6@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/misc-check | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/scripts/misc-check b/scripts/misc-check
-index 84f08da17b2c0..40e5a4b01ff47 100755
---- a/scripts/misc-check
-+++ b/scripts/misc-check
-@@ -45,7 +45,7 @@ check_tracked_ignored_files () {
- # does not automatically fix it.
- check_missing_include_linux_export_h () {
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index fdab2b1067dbb..c6f7d5c9c493d 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -453,13 +453,10 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
  
--	git -C "${srctree:-.}" grep --files-with-matches -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_GPL_FOR_MODULES)\(.*\)' \
-+	git -C "${srctree:-.}" grep --files-with-matches -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_FOR_MODULES)\(.*\)' \
- 	    -- '*.[ch]' :^tools/ :^include/linux/export.h |
- 	xargs -r git -C "${srctree:-.}" grep --files-without-match '#include[[:space:]]*<linux/export\.h>' |
- 	xargs -r printf "%s: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing\n" >&2
-@@ -58,7 +58,7 @@ check_unnecessary_include_linux_export_h () {
+ 		trace_rpmh_tx_done(drv, i, req);
  
- 	git -C "${srctree:-.}" grep --files-with-matches '#include[[:space:]]*<linux/export\.h>' \
- 	    -- '*.[c]' :^tools/ |
--	xargs -r git -C "${srctree:-.}" grep --files-without-match -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_GPL_FOR_MODULES)\(.*\)' |
-+	xargs -r git -C "${srctree:-.}" grep --files-without-match -E 'EXPORT_SYMBOL((_NS)?(_GPL)?|_FOR_MODULES)\(.*\)' |
- 	xargs -r printf "%s: warning: EXPORT_SYMBOL() is not used, but #include <linux/export.h> is present\n" >&2
- }
- 
+-		/*
+-		 * If wake tcs was re-purposed for sending active
+-		 * votes, clear AMC trigger & enable modes and
++		/* Clear AMC trigger & enable modes and
+ 		 * disable interrupt for this TCS
+ 		 */
+-		if (!drv->tcs[ACTIVE_TCS].num_tcs)
+-			__tcs_set_trigger(drv, i, false);
++		__tcs_set_trigger(drv, i, false);
+ skip:
+ 		/* Reclaim the TCS */
+ 		write_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], i, 0);
 -- 
 2.51.0
 
