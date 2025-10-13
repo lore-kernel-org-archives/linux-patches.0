@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A274F2FE577;
-	Mon, 13 Oct 2025 15:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69BD309EFF;
+	Mon, 13 Oct 2025 15:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369413; cv=none; b=prCRSnO5Xb9rvy/MYoN6UQLbxsHGHVp1GYQ9xxA6fxEumvbK5yPlHUTss4mwSzqwwra1hsAWf0ej6lW7baTC6J/ckWxQ2WKS2SasmhMgiql0IJEYXqJWgWV+EahSF+bIxauj0WePJqUXO1LYHo7cVOimylw1BlR+jlTwhgzp+eQ=
+	t=1760369416; cv=none; b=r2H1Fj3ABrfCbuDC7bGKILJRh1iS0r2Qm8XriZneWHQ/VrBppSWEtn4xm4pqdpr6NQN363VC+rKbIreV5+EEhUHGFIwT/h3LG9lg5oGfonlZhdg+I2V24xwRMvUNQby8n6mcUoLX2yVyERmHuxZuww3rAs5wGkw78KEY0r6uDpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369413; c=relaxed/simple;
-	bh=FafY/LUn+/ZLVKarka+5dYYzbLSUnJBhxccDNfZMhYs=;
+	s=arc-20240116; t=1760369416; c=relaxed/simple;
+	bh=wHsrupQcDdly/Yp1MBS5P6CN+Q5od2A7pJSmA13i0jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFd/DCQmMgI+ew8nCzyV7AQ0R4NjXWhvJDp3Y/TTM9iNVcvAHhZNl3hxo7LqSZjItCoVnaqnHZcDWkCOvzkxc1hDqB3eKJubx5PZ9kYp+J2a3gVrjM9ZuVXlZMdjd1U8oo1vAhBfdU6XXuY4S85Hl6BUlhHa8SNIvIINK50iyB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7T0Ykly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNPCl+62oE8cEkR7l6bbn3A4cnmjvwG6/7s6WMz2qY/KXbfL/k5t19L7vgKTfiYcEUgGVgW4se8fE25zPtKveccrdTA9ytvZ29GzuGhp37wdM2pJCnRKYLjv9v5Uqogu6o04IWRGKUCIatE19PjQ73WLWW/zo+JM9wdOubWshiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxnKI3pz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7T0Ykly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2067EC4CEE7;
-	Mon, 13 Oct 2025 15:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxnKI3pz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E329AC4CEE7;
+	Mon, 13 Oct 2025 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369413;
-	bh=FafY/LUn+/ZLVKarka+5dYYzbLSUnJBhxccDNfZMhYs=;
+	s=korg; t=1760369416;
+	bh=wHsrupQcDdly/Yp1MBS5P6CN+Q5od2A7pJSmA13i0jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7T0YklyfBRSwXLhrbnRTUjWRq/DIOv4+EPFOE2AJFSPIaOSSugu26kkPv7kIg4sB
-	 3jT67xPGJCkScRzw94mJI23nJzyzBOjPrGtWIhnnzV1o2MX8p5Y9Z4/AWg9ENyFX1O
-	 r+bAH+9ZKGIstVTbEShB0IFK7EOmmU91MnFCotxc=
+	b=rxnKI3pzao3bTWsvCX1lo7Rp9iyLsQnKvz+URopUI8gzvU9lvYwV6sp4mfw3nGQmb
+	 dEhXCHJtiMIFIR7mKr9rAPf0P2FT+aIbvWEB18gRRUYPRVaQeXlK4ltw0Evw2E4nFY
+	 MO0wIK/BXFFVo1LCGWxKqibiAXd50Ranc/qrDUt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
+	Kohei Ito <ito.kohei@socionext.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 204/563] i2c: spacemit: ensure SDA is released after bus reset
-Date: Mon, 13 Oct 2025 16:41:05 +0200
-Message-ID: <20251013144418.676325058@linuxfoundation.org>
+Subject: [PATCH 6.17 205/563] i2c: designware: Fix clock issue when PM is disabled
+Date: Mon, 13 Oct 2025 16:41:06 +0200
+Message-ID: <20251013144418.712090680@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,99 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit 0de61943244dec418d396633a587adca1c350b55 ]
+[ Upstream commit 70e633bedeeb4a7290d3b1dd9d49cc2bae25a46f ]
 
-After performing a conditional bus reset, the controller must ensure
-that the SDA line is actually released.
+When the driver is removed, the clocks are first enabled by
+calling pm_runtime_get_sync(), and then disabled with
+pm_runtime_put_sync().
 
-Previously, the reset routine only performed a single check,
-which could leave the bus in a locked state in some situations.
+If CONFIG_PM=y, clocks for this controller are disabled when it's in
+the idle state. So the clocks are properly disabled when the driver
+exits.
 
-This patch introduces a loop that toggles the reset cycle and issues
-a reset request up to SPACEMIT_BUS_RESET_CLK_CNT_MAX times, checking
-SDA after each attempt. If SDA is released before the maximum count,
-the function returns early. Otherwise, a warning is emitted.
+Othewise, the clocks are always enabled and the PM functions have
+no effect. Therefore, the driver exits without disabling the clocks.
 
-This change improves bus recovery reliability.
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    18
+    # echo 1214a000.i2c > /sys/bus/platform/drivers/i2c_designware/bind
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    20
+    # echo 1214a000.i2c > /sys/bus/platform/drivers/i2c_designware/unbind
+    # cat /sys/kernel/debug/clk/clk-pclk/clk_enable_count
+    20
 
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+To ensure that the clocks can be disabled correctly even without
+CONFIG_PM=y, should add the following fixes:
+
+- Replace with pm_runtime_put_noidle(), which only decrements the runtime
+  PM usage count.
+- Call i2c_dw_prepare_clk(false) to explicitly disable the clocks.
+
+Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
+Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Tested-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-k1.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index 848dfaf634f63..6b918770e612e 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -3,6 +3,7 @@
-  * Copyright (C) 2024-2025 Troy Mitchell <troymitchell988@gmail.com>
-  */
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index a35e4c64a1d46..b4bfdd2dd35e4 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -331,9 +331,11 @@ static void dw_i2c_plat_remove(struct platform_device *pdev)
+ 	i2c_dw_disable(dev);
  
-+#include <linux/bitfield.h>
-  #include <linux/clk.h>
-  #include <linux/i2c.h>
-  #include <linux/iopoll.h>
-@@ -26,7 +27,8 @@
- #define SPACEMIT_CR_MODE_FAST    BIT(8)		/* bus mode (master operation) */
- /* Bit 9 is reserved */
- #define SPACEMIT_CR_UR           BIT(10)	/* unit reset */
--/* Bits 11-12 are reserved */
-+#define SPACEMIT_CR_RSTREQ	 BIT(11)	/* i2c bus reset request */
-+/* Bit 12 is reserved */
- #define SPACEMIT_CR_SCLE         BIT(13)	/* master clock enable */
- #define SPACEMIT_CR_IUE          BIT(14)	/* unit enable */
- /* Bits 15-17 are reserved */
-@@ -78,6 +80,8 @@
- 					SPACEMIT_SR_ALD)
+ 	pm_runtime_dont_use_autosuspend(device);
+-	pm_runtime_put_sync(device);
++	pm_runtime_put_noidle(device);
+ 	dw_i2c_plat_pm_cleanup(dev);
  
- #define SPACEMIT_RCR_SDA_GLITCH_NOFIX		BIT(7)		/* bypass the SDA glitch fix */
-+/* the cycles of SCL during bus reset */
-+#define SPACEMIT_RCR_FIELD_RST_CYC		GENMASK(3, 0)
- 
- /* SPACEMIT_IBMR register fields */
- #define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
-@@ -91,6 +95,8 @@
- 
- #define SPACEMIT_SR_ERR	(SPACEMIT_SR_BED | SPACEMIT_SR_RXOV | SPACEMIT_SR_ALD)
- 
-+#define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
++	i2c_dw_prepare_clk(dev, false);
 +
- enum spacemit_i2c_state {
- 	SPACEMIT_STATE_IDLE,
- 	SPACEMIT_STATE_START,
-@@ -163,6 +169,7 @@ static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
- static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
- {
- 	u32 status;
-+	u8 clk_cnt;
+ 	i2c_dw_remove_lock_support(dev);
  
- 	/* if bus is locked, reset unit. 0: locked */
- 	status = readl(i2c->base + SPACEMIT_IBMR);
-@@ -172,6 +179,18 @@ static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
- 	spacemit_i2c_reset(i2c);
- 	usleep_range(10, 20);
- 
-+	for (clk_cnt = 0; clk_cnt < SPACEMIT_BUS_RESET_CLK_CNT_MAX; clk_cnt++) {
-+		status = readl(i2c->base + SPACEMIT_IBMR);
-+		if (status & SPACEMIT_BMR_SDA)
-+			return;
-+
-+		/* There's nothing left to save here, we are about to exit */
-+		writel(FIELD_PREP(SPACEMIT_RCR_FIELD_RST_CYC, 1),
-+		       i2c->base + SPACEMIT_IRCR);
-+		writel(SPACEMIT_CR_RSTREQ, i2c->base + SPACEMIT_ICR);
-+		usleep_range(20, 30);
-+	}
-+
- 	/* check sda again here */
- 	status = readl(i2c->base + SPACEMIT_IBMR);
- 	if (!(status & SPACEMIT_BMR_SDA))
+ 	reset_control_assert(dev->rst);
 -- 
 2.51.0
 
