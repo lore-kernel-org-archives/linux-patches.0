@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB33309F11;
-	Mon, 13 Oct 2025 14:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5A530B512;
+	Mon, 13 Oct 2025 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367204; cv=none; b=uoDEAqEWe1zfGwVhErPhssAUvopTuFAzRcJ/zAQ41n6FAJQyOI5q29wmQjG1vtefHWiSfL3ukdpezhMitQFCn4tBb7XhKcmGws7RObwpqKb3LzuOvW5+HBkIlLcfYUc6tRzvvjhxLLTzM5nL4e6oLqj77piz74BbgLRezeuX/uk=
+	t=1760367207; cv=none; b=UJoY+FkRLW/qdCUpi2AEuDBsVmXFfhVRHz8CWQgzEpfIsSBxss3gK6+gaDD33OZlls9jwqcW9aLejLJTD99U64kNyArCyJEJg3HGUfCnqmAeX5GE1cqIRoUbtoOb6r0QKseGhuFDerpg9AYCy4I5Atpv2l1KZa7Zs5NPXXbokl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367204; c=relaxed/simple;
-	bh=W0m+i6pSw2T0ainefqZPPnopvJl5x14l0zLgY5wwrQQ=;
+	s=arc-20240116; t=1760367207; c=relaxed/simple;
+	bh=74tKqXOWownIlsEOOBwhdSdrfnd4Qe61YRpk9b1KDGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PRyaUL6MM3G8qz9mfRqI8mVbTzVAd/U5DQp8mIuvh8waUhB4sdZHUVK0+qWihhBKDOWJ3lHySS2aHg4DrKdnozMJf/26oVkNxvoQyRIe2h8zUQRnxhY9szHjcirTXDg5ffDEiIpIxufWmrMnjSYPtPjoL2hyatzrErhedkDZQTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue2q/D6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OI5RVKDiCbeoUEXjsUFLSjdOl++htL19+HpIBX9/oMDAO31Ls5ORiRsu3JAtwZGorynhe/lqWsaYXkc1Ty/YMZGTsw9Q73PEARohI3H4ICRjDOupJ2u+6FIeJpz761PwE+U0qDHqQiFOysJtDz67VO4KG8B2BqWAtc+qLCd+pHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgsRZlVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue2q/D6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8096AC4CEFE;
-	Mon, 13 Oct 2025 14:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgsRZlVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61217C16AAE;
+	Mon, 13 Oct 2025 14:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367203;
-	bh=W0m+i6pSw2T0ainefqZPPnopvJl5x14l0zLgY5wwrQQ=;
+	s=korg; t=1760367206;
+	bh=74tKqXOWownIlsEOOBwhdSdrfnd4Qe61YRpk9b1KDGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ue2q/D6Ft/FhmaADa6hoR38d93h+Ws/Kw8jHQubXz/IHbwoN32zaqb6hAFzfumnTJ
-	 vXvxixRfYCuGf8YUMpJxCpRJ8fN2XXT7uZgPj1RfcEkHoyuMEnyYdZ/LbTxtWFZZec
-	 sq4z8G80rs8Ch29IBSuyAzN3zZyaLnXZD9H0ntpk=
+	b=GgsRZlVPNyWIiLYPwWE5x0CWmG9+vEOqw6Rm/df1gIShwjuypRkcDUItAT3qOvLPc
+	 FL2osNwD5D8RlYqRPjZW4AibsX8FWsLiMAALln5Kog0uyk6JN/3D4cuUKGsj0AOXs8
+	 te9E23sR8/F8AEu7kC+CHbYYfOgADZWPWuuPHIps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/196] thermal/drivers/qcom: Make LMH select QCOM_SCM
-Date: Mon, 13 Oct 2025 16:44:18 +0200
-Message-ID: <20251013144317.648472120@linuxfoundation.org>
+Subject: [PATCH 6.1 122/196] fs: ntfs3: Fix integer overflow in run_unpack()
+Date: Mon, 13 Oct 2025 16:44:55 +0200
+Message-ID: <20251013144319.109444587@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,38 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
 
-[ Upstream commit 57eda47bd14b0c2876f2db42e757c57b7a671965 ]
+[ Upstream commit 736fc7bf5f68f6b74a0925b7e072c571838657d2 ]
 
-The QCOM_SCM symbol is not user-visible, so it makes little sense to
-depend on it. Make LMH driver select QCOM_SCM as all other drivers do
-and, as the dependecy is now correctly handled, enable || COMPILE_TEST
-in order to include the driver into broader set of build tests.
+The MFT record relative to the file being opened contains its runlist,
+an array containing information about the file's location on the physical
+disk. Analysis of all Call Stack paths showed that the values of the
+runlist array, from which LCNs are calculated, are not validated before
+run_unpack function.
 
-Fixes: 9e5a4fb84230 ("thermal/drivers/qcom/lmh: make QCOM_LMH depends on QCOM_SCM")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-1-33bc58388ca5@oss.qualcomm.com
+The run_unpack function decodes the compressed runlist data format
+from MFT attributes (for example, $DATA), converting them into a runs_tree
+structure, which describes the mapping of virtual clusters (VCN) to
+logical clusters (LCN). The NTFS3 subsystem also has a shortcut for
+deleting files from MFT records - in this case, the RUN_DEALLOCATE
+command is sent to the run_unpack input, and the function logic
+provides that all data transferred to the runlist about file or
+directory is deleted without creating a runs_tree structure.
+
+Substituting the runlist in the $DATA attribute of the MFT record for an
+arbitrary file can lead either to access to arbitrary data on the disk
+bypassing access checks to them (since the inode access check
+occurs above) or to destruction of arbitrary data on the disk.
+
+Add overflow check for addition operation.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/run.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index 2c7f3f9a26ebb..a6bb01082ec69 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -34,7 +34,8 @@ config QCOM_SPMI_TEMP_ALARM
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 12d8682f33b53..340a4cbe8b5ca 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -9,6 +9,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/fs.h>
+ #include <linux/log2.h>
++#include <linux/overflow.h>
  
- config QCOM_LMH
- 	tristate "Qualcomm Limits Management Hardware"
--	depends on ARCH_QCOM && QCOM_SCM
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	select QCOM_SCM
- 	help
- 	  This enables initialization of Qualcomm limits management
- 	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
+ #include "debug.h"
+ #include "ntfs.h"
+@@ -982,12 +983,16 @@ int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+ 
+ 			if (!dlcn)
+ 				return -EINVAL;
+-			lcn = prev_lcn + dlcn;
++
++			if (check_add_overflow(prev_lcn, dlcn, &lcn))
++				return -EINVAL;
+ 			prev_lcn = lcn;
+ 		} else
+ 			return -EINVAL;
+ 
+-		next_vcn = vcn64 + len;
++		if (check_add_overflow(vcn64, len, &next_vcn))
++			return -EINVAL;
++
+ 		/* Check boundary. */
+ 		if (next_vcn > evcn + 1)
+ 			return -EINVAL;
+@@ -1148,7 +1153,8 @@ int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
+ 			return -EINVAL;
+ 
+ 		run_buf += size_size + offset_size;
+-		vcn64 += len;
++		if (check_add_overflow(vcn64, len, &vcn64))
++			return -EINVAL;
+ 
+ #ifndef CONFIG_NTFS3_64BIT_CLUSTER
+ 		if (vcn64 > 0x100000000ull)
 -- 
 2.51.0
 
