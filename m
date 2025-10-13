@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D740830AD14;
-	Mon, 13 Oct 2025 15:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A626530AD0A;
+	Mon, 13 Oct 2025 15:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369523; cv=none; b=QT6hEmdBft4R98/q0PU+i04BRVncIsgBvAWZ3Ri/P8Md4k4PgH+GeACxHKYeRbnmOYjMcKRlHU6kQYxT+SqKCAPXOdyZ9kOJAozT9TJ7PsTZpiDjkPz1iVpSlOe0zJlYnB+RTJYVpXs24IY3RTxzZoSSBsowmSJJzddvLvAU72w=
+	t=1760369526; cv=none; b=bhE3BUcFQwdfrFUL+S8Q65MyZRXmid/OFUjlmvqvgO0WGaiccTdoWfr6bsV+u+JnAoD+aaYxe69TD54ZBufgAlqtxNVCeMGgKi7v3ehgx2+e/KRBvzb7Bmyx1kYc9cg0wd49FlzZbWTPK1r1Qy83OdT1rOB39ozYrHHf8rH2TNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369523; c=relaxed/simple;
-	bh=BXpmzA7mIKgn659a/h1mDWIYjJ6Co+h5sULQlLZmsDw=;
+	s=arc-20240116; t=1760369526; c=relaxed/simple;
+	bh=H+jHcfjguSScUxMImuQcwgth0HfB5HRgR3Oe/pVJJm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/K6xHSJoHlCWk0VP1rZyyXbG5fxidD+KHDGiKngHNA0uqSxgxJMYq5mXnathoVRWSKY3wboibqwoH5PpQgUeGNqh9kNUf3+hogJybAdr6Pttvo9Obiq4ZWkeQzBmlFx09PR2DNH0QKtXGmEfCaH4JfU1mYbjyVqSOFNRThsNnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rQfC+qA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/un3T3Tjwnjdna7ovN4CUOZRhV5S+07mlDxHQBy16unR5IBDZ00yPEIenQded+PCUbbgaz5lWtK7PmUvhM1u3XKOdmAMPkk3+UNkQZzelhZYXKzOToKAxvK/mw6tC4QamE5Uv7akUjJY+KShUmT5FNJoQLO8eWSh1/WAvhN1Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDJc0Ezo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rQfC+qA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B19C4CEFE;
-	Mon, 13 Oct 2025 15:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDJc0Ezo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DC2C4CEE7;
+	Mon, 13 Oct 2025 15:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369523;
-	bh=BXpmzA7mIKgn659a/h1mDWIYjJ6Co+h5sULQlLZmsDw=;
+	s=korg; t=1760369526;
+	bh=H+jHcfjguSScUxMImuQcwgth0HfB5HRgR3Oe/pVJJm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rQfC+qAuRIPZu0X2z5962p0xz9T4GzIqNW8is6xJhqv0qD3gDfyylvNxlOAldm2b
-	 Wxd+wULxKV6G7KQQUi94oE2TVpI1jtFih7EFI5JprauMwkrjqqpPOH7wBvopHDEdJ/
-	 wwcsU6gmTQDGvaL0NYBapQe9ICTxebXGuZwg/mw0=
+	b=qDJc0EzoSniCPwIOCfkH3fONH3MSit0QQiUY3ZfCD9YZlRnpp/RfCJKMjTXvHi1og
+	 Buj60AN2PYKE/jXubuqEjF7fmsJZEQ7Ve7q7nW4L0fRM9W09wYt6tXEg7R7fcQD9mI
+	 vRs6KKA9bhsx16EmFHyn2scPSFHbOPPMUf7ao2Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 277/563] ALSA: lx_core: use int type to store negative error codes
-Date: Mon, 13 Oct 2025 16:42:18 +0200
-Message-ID: <20251013144421.307470597@linuxfoundation.org>
+Subject: [PATCH 6.17 278/563] media: st-delta: avoid excessive stack usage
+Date: Mon, 13 Oct 2025 16:42:19 +0200
+Message-ID: <20251013144421.343069931@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,53 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4ef353d546cda466fc39b7daca558d7bcec21c09 ]
+[ Upstream commit 5954ad7d1af92cb6244c5f31216e43af55febbb7 ]
 
-Change the 'ret' variable from u16 to int to store negative error codes or
-zero returned by lx_message_send_atomic().
+Building with a reduced stack warning limit shows that delta_mjpeg_decode()
+copies a giant structure to the stack each time but only uses three of
+its members:
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants. Additionally, assigning negative error
-codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
-flag is enabled.
+drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c: In function 'delta_mjpeg_decode':
+drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c:427:1: error: the frame size of 1296 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-No effect on runtime.
+Open-code the passing of the structure members that are actually used here.
 
-Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Link: https://patch.msgid.link/20250828081312.393148-1-rongqianfeng@vivo.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/lx6464es/lx_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../platform/st/sti/delta/delta-mjpeg-dec.c   | 20 ++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/sound/pci/lx6464es/lx_core.c b/sound/pci/lx6464es/lx_core.c
-index 9d95ecb299aed..a99acd1125e74 100644
---- a/sound/pci/lx6464es/lx_core.c
-+++ b/sound/pci/lx6464es/lx_core.c
-@@ -316,7 +316,7 @@ static int lx_message_send_atomic(struct lx6464es *chip, struct lx_rmh *rmh)
- /* low-level dsp access */
- int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+diff --git a/drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c b/drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c
+index 0533d4a083d24..a078f1107300e 100644
+--- a/drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c
++++ b/drivers/media/platform/st/sti/delta/delta-mjpeg-dec.c
+@@ -239,7 +239,7 @@ static int delta_mjpeg_ipc_open(struct delta_ctx *pctx)
+ 	return 0;
+ }
+ 
+-static int delta_mjpeg_ipc_decode(struct delta_ctx *pctx, struct delta_au *au)
++static int delta_mjpeg_ipc_decode(struct delta_ctx *pctx, dma_addr_t pstart, dma_addr_t pend)
  {
--	u16 ret;
-+	int ret;
+ 	struct delta_dev *delta = pctx->dev;
+ 	struct delta_mjpeg_ctx *ctx = to_ctx(pctx);
+@@ -256,8 +256,8 @@ static int delta_mjpeg_ipc_decode(struct delta_ctx *pctx, struct delta_au *au)
  
- 	mutex_lock(&chip->msg_lock);
+ 	memset(params, 0, sizeof(*params));
  
-@@ -330,10 +330,10 @@ int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+-	params->picture_start_addr_p = (u32)(au->paddr);
+-	params->picture_end_addr_p = (u32)(au->paddr + au->size - 1);
++	params->picture_start_addr_p = pstart;
++	params->picture_end_addr_p = pend;
  
- int lx_dsp_get_clock_frequency(struct lx6464es *chip, u32 *rfreq)
- {
--	u16 ret = 0;
- 	u32 freq_raw = 0;
- 	u32 freq = 0;
- 	u32 frequency = 0;
-+	int ret;
+ 	/*
+ 	 * !WARNING!
+@@ -374,12 +374,14 @@ static int delta_mjpeg_decode(struct delta_ctx *pctx, struct delta_au *pau)
+ 	struct delta_dev *delta = pctx->dev;
+ 	struct delta_mjpeg_ctx *ctx = to_ctx(pctx);
+ 	int ret;
+-	struct delta_au au = *pau;
++	void *au_vaddr = pau->vaddr;
++	dma_addr_t au_dma = pau->paddr;
++	size_t au_size = pau->size;
+ 	unsigned int data_offset = 0;
+ 	struct mjpeg_header *header = &ctx->header_struct;
  
- 	mutex_lock(&chip->msg_lock);
+ 	if (!ctx->header) {
+-		ret = delta_mjpeg_read_header(pctx, au.vaddr, au.size,
++		ret = delta_mjpeg_read_header(pctx, au_vaddr, au_size,
+ 					      header, &data_offset);
+ 		if (ret) {
+ 			pctx->stream_errors++;
+@@ -405,17 +407,17 @@ static int delta_mjpeg_decode(struct delta_ctx *pctx, struct delta_au *pau)
+ 			goto err;
+ 	}
+ 
+-	ret = delta_mjpeg_read_header(pctx, au.vaddr, au.size,
++	ret = delta_mjpeg_read_header(pctx, au_vaddr, au_size,
+ 				      ctx->header, &data_offset);
+ 	if (ret) {
+ 		pctx->stream_errors++;
+ 		goto err;
+ 	}
+ 
+-	au.paddr += data_offset;
+-	au.vaddr += data_offset;
++	au_dma += data_offset;
++	au_vaddr += data_offset;
+ 
+-	ret = delta_mjpeg_ipc_decode(pctx, &au);
++	ret = delta_mjpeg_ipc_decode(pctx, au_dma, au_dma + au_size - 1);
+ 	if (ret)
+ 		goto err;
  
 -- 
 2.51.0
