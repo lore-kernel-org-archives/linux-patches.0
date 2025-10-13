@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108C630CD94;
-	Mon, 13 Oct 2025 15:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC9030CDA8;
+	Mon, 13 Oct 2025 15:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369936; cv=none; b=j4XTxTgwzN4Emb6xSnUBw1JJavmZcvVwnCjsDqQlllzGXbBQHZqxdlCgmVXh7BkJc6eo0et5S5Utk0Ga/nJE5GG1+y7elcPywWYWjhYAEvsv9wGN0olpAmCoKM/hnzPDfAZ9a5tXwWH19d3PuIs1tZgZ60t1M2DnXeO2jBQdQYk=
+	t=1760369939; cv=none; b=Tt2DZzPvpC66XU2JcRovxODbssAn5gyDfapK2sTS0u2TsmzVKouWH9j8lS8zA62Yr316W9w7i/NZBuYcfd7sYae39zZqdyKgJ6WcQ0bDB70Oa3bnCGEu6HOu70KXnSBMkrhRfzh6HOMUsPJUdW8c1z7wkdFUrdg1lK2y1R4PMHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369936; c=relaxed/simple;
-	bh=85uLi1UiTRJxKkeiHXwZmNQOxs4VJZ98v10Jqwe7Q7M=;
+	s=arc-20240116; t=1760369939; c=relaxed/simple;
+	bh=zSOtMheqU5Yrv8HlrbzX9rTLkf08ERMNOGWfqAvsPJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rl1UbTcFIpz4Sz1kZ7uQmYVaH/D3pRxQsobe2ps1D7rzPG76LuaOeuHfNqgdyRklb0xi4TNm+wklal3xNp4gL8r+FNwX+NACMhqqJWwMSL745rKNHvvQDUv7Mi4CbHhNvGCE7dYb3Byaey5f1Z+cgIUCDWm+zBBS+St3vHS2rqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lchHA1J+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcHplKt1vCBX8f+LxQU1GqUYXM4L36HS07GPpC3/IVzGHG44y/LH+DtmjxoF49ZValADagtjmy3zyj87zKWbg1EPzhHupDdIT23lXcIjD/srLvABgUb+y6mQ9MYXyjotaWCS/sK1py3lyTqdgooCBVmEdX0ybEsIC+UNa+XFsqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxO+ACb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lchHA1J+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFC2C4CEE7;
-	Mon, 13 Oct 2025 15:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxO+ACb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48205C4CEE7;
+	Mon, 13 Oct 2025 15:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369935;
-	bh=85uLi1UiTRJxKkeiHXwZmNQOxs4VJZ98v10Jqwe7Q7M=;
+	s=korg; t=1760369938;
+	bh=zSOtMheqU5Yrv8HlrbzX9rTLkf08ERMNOGWfqAvsPJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lchHA1J+EuaRzhL1K5Y5cqNnotwrRJpBHZcKdZZB6Hzlw/E7Zyt5wIWYJVe45E16w
-	 /mvnnbY6HPZ0AxbnGbuXUrfio2wujEeFfmjMOPcU2NsWOnA2zIVQlaxWj07uCGjcB1
-	 JVidEBpTCS5Wraf3F3C9eveEgP0ZIkUhI1dP9ccM=
+	b=vxO+ACb+GivuGrjSGKWcqkz0nONBLH616rNnJfBGHaEvbpbFHuaQ7jVwk30zsPMd8
+	 /6cuzi0dyI61PywaTGE5YbQnLRI1wVz68XWECFjyt2Do2eo/2O6WL2dFJLBb1LtWK8
+	 VMwEj/Tx1DYeqy9JXY6Buf2C1fPtb9IQXH/Xh2fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Matthew Sakai <msakai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 421/563] wifi: cfg80211: fix width unit in cfg80211_radio_chandef_valid()
-Date: Mon, 13 Oct 2025 16:44:42 +0200
-Message-ID: <20251013144426.540661740@linuxfoundation.org>
+Subject: [PATCH 6.17 422/563] dm vdo: return error on corrupted metadata in start_restoring_volume functions
+Date: Mon, 13 Oct 2025 16:44:43 +0200
+Message-ID: <20251013144426.576578652@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,35 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 17f34ab55a8518ecbd5dcacec48e6ee903f7c1d0 ]
+[ Upstream commit 9ddf6d3fcbe0b96e318da364cf7e6b59cd4cb5a2 ]
 
-The original code used nl80211_chan_width_to_mhz(), which returns the width in MHz.
-However, the expected unit is KHz.
+The return values of VDO_ASSERT calls that validate metadata are not acted
+upon.
 
-Fixes: 510dba80ed66 ("wifi: cfg80211: add helper for checking if a chandef is valid on a radio")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Link: https://patch.msgid.link/df54294e6c4ed0f3ceff6e818b710478ddfc62c0.1758579480.git.Ryder%20Lee%20ryder.lee@mediatek.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Return UDS_CORRUPT_DATA in case of an error.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a4eb7e255517 ("dm vdo: implement the volume index")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Reviewed-by: Matthew Sakai <msakai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-vdo/indexer/volume-index.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 240c68baa3d1f..341dbf642181b 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -2992,7 +2992,7 @@ bool cfg80211_radio_chandef_valid(const struct wiphy_radio *radio,
- 	u32 freq, width;
+diff --git a/drivers/md/dm-vdo/indexer/volume-index.c b/drivers/md/dm-vdo/indexer/volume-index.c
+index 12f954a0c5325..afb062e1f1fb4 100644
+--- a/drivers/md/dm-vdo/indexer/volume-index.c
++++ b/drivers/md/dm-vdo/indexer/volume-index.c
+@@ -836,7 +836,7 @@ static int start_restoring_volume_sub_index(struct volume_sub_index *sub_index,
+ 				    "%zu bytes decoded of %zu expected", offset,
+ 				    sizeof(buffer));
+ 		if (result != VDO_SUCCESS)
+-			result = UDS_CORRUPT_DATA;
++			return UDS_CORRUPT_DATA;
  
- 	freq = ieee80211_chandef_to_khz(chandef);
--	width = cfg80211_chandef_get_width(chandef);
-+	width = MHZ_TO_KHZ(cfg80211_chandef_get_width(chandef));
- 	if (!ieee80211_radio_freq_range_valid(radio, freq, width))
- 		return false;
+ 		if (memcmp(header.magic, MAGIC_START_5, MAGIC_SIZE) != 0) {
+ 			return vdo_log_warning_strerror(UDS_CORRUPT_DATA,
+@@ -928,7 +928,7 @@ static int start_restoring_volume_index(struct volume_index *volume_index,
+ 				    "%zu bytes decoded of %zu expected", offset,
+ 				    sizeof(buffer));
+ 		if (result != VDO_SUCCESS)
+-			result = UDS_CORRUPT_DATA;
++			return UDS_CORRUPT_DATA;
  
+ 		if (memcmp(header.magic, MAGIC_START_6, MAGIC_SIZE) != 0)
+ 			return vdo_log_warning_strerror(UDS_CORRUPT_DATA,
 -- 
 2.51.0
 
