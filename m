@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37003081CC;
-	Mon, 13 Oct 2025 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD08309DA4;
+	Mon, 13 Oct 2025 15:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368635; cv=none; b=BpV396ywERG7g0EdAXiqd8lL7esm3KHbPuugedsOsn2abPWlydioaNBizmmkgtBSSc3J0JCLQgbpShUmVe+aGTHNVM+SmXd0r37Ki12tKYXexIOEisDFFwBpFnOGj3JKbZ/TyBHu6CDub2aZSHYZLfbffIHXbcjpA0D4kUKrJWM=
+	t=1760368638; cv=none; b=NVXUMJVcudqvq/lYdFh9PDvTTMNgiFp7WsbfMiEg2twjrhPegC4DouZ4igAoa4K2L19iueAzq/IG0fLuKIk0RAgheRKJBVKijc+/z8dbyLzI3PnuPk3cr1i366Y+PHJ4Ncd0lHTuiztk3NSXS0+uB7H2tlIBudwhQFXD0YHKBO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368635; c=relaxed/simple;
-	bh=rnWGzEBAAYxCTwWfZQnoWLyr+je+iYsOago3w7uvGAs=;
+	s=arc-20240116; t=1760368638; c=relaxed/simple;
+	bh=cJ2uQvmTgbrVNw0Ov1wP5XUqfz4CuScEhFRuU+py4/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ7eqDOFbsLFqdZEgQriQ5faNOiCdQDAk+1nK1pHuM+5T5SQ/euej6OwkDtsRKoWgUD8VbovTHDfKpzbzxhhO4dIwNsry8wooCm/Pg1aFLsRSjKgA0C3JY5/OjIgCOSS4KUeprmSaDqgbSsZBfuvWrx1Tlz73MoJJ9ZPwW1gIUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/Rbq4Ww; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t32Tu6D+196BjRyNxJCwsZsycYnY7W6bRotsql0/TsBpOntifWsidnKLVvG4noE3VrSppPtsloiX8FkIG9pXRR1oRFZNm/bedG1NIOXpkeBLUkmymO4UuR08/o170cMTTXvY2UM9c1lSHQpJyAT+72cf4qBHWjfjwrOCzIOXLjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LomPWMe2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/Rbq4Ww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEABC4CEE7;
-	Mon, 13 Oct 2025 15:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LomPWMe2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723F0C4CEE7;
+	Mon, 13 Oct 2025 15:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368634;
-	bh=rnWGzEBAAYxCTwWfZQnoWLyr+je+iYsOago3w7uvGAs=;
+	s=korg; t=1760368637;
+	bh=cJ2uQvmTgbrVNw0Ov1wP5XUqfz4CuScEhFRuU+py4/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/Rbq4WwNhLLUDewOunQY52YsmSojb0wPfNGlrkY5/V6pavZfWJOTwv8Mv0GIWX+s
-	 +wYVkMF2+9v0ufAtAr5Y3hpaJi1zwf/nAXp0J71+TYvqX6uHyCHzuk3bihuXS2D5Z8
-	 dJBwesGhiGwPXKQPXHQkHXjni6o/qOz0UQy5ktKI=
+	b=LomPWMe2G+yRIn+joet+F5Az7v47vyg86VnIzvPG6Eq4oDrQ77hJt4+3l8nRlag14
+	 F03tD8ECioNS4SXuIjaa7yjI6VLorQmRQj0C0tTeeBMurR+1vwVi1qZGpONtGKxLuP
+	 vW61TG87lZPK2Qu+IBNPUnMEdgIaX13+RHYemmHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 212/262] PCI: j721e: Fix incorrect error message in probe()
-Date: Mon, 13 Oct 2025 16:45:54 +0200
-Message-ID: <20251013144333.878405162@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 230/262] ASoC: codecs: wcd937x: set the comp soundwire port correctly
+Date: Mon, 13 Oct 2025 16:46:12 +0200
+Message-ID: <20251013144334.524472561@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit cfcd6cab2f33c24a68517f9e3131480b4000c2be ]
+commit 66a940b1bf48a7095162688332d725ba160154eb upstream.
 
-The probe() function prints "pm_runtime_get_sync failed" when
-j721e_pcie_ctrl_init() returns an error. This is misleading since
-the failure is not from pm_runtime, but from the controller init
-routine. Update the error message to correctly reflect the source.
+For some reason we endup with setting soundwire port for
+HPHL_COMP and HPHR_COMP as zero, this can potentially result
+in a memory corruption due to accessing and setting -1 th element of
+port_map array.
 
-No functional changes.
-
-Fixes: f3e25911a430 ("PCI: j721e: Add TI J721E PCIe driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20250905211436.3048282-1-alok.a.tiwari@oracle.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 82be8c62a38c ("ASoC: codecs: wcd937x: add basic controls")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20250909121954.225833-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wcd937x.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
-index bae829ac759e1..eb772c18d44ed 100644
---- a/drivers/pci/controller/cadence/pci-j721e.c
-+++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -531,7 +531,7 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -2039,9 +2039,9 @@ static const struct snd_kcontrol_new wcd
+ 	SOC_ENUM_EXT("RX HPH Mode", rx_hph_mode_mux_enum,
+ 		     wcd937x_rx_hph_mode_get, wcd937x_rx_hph_mode_put),
  
- 	ret = j721e_pcie_ctrl_init(pcie);
- 	if (ret < 0) {
--		dev_err_probe(dev, ret, "pm_runtime_get_sync failed\n");
-+		dev_err_probe(dev, ret, "j721e_pcie_ctrl_init failed\n");
- 		goto err_get_sync;
- 	}
+-	SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
++	SOC_SINGLE_EXT("HPHL_COMP Switch", WCD937X_COMP_L, 0, 1, 0,
+ 		       wcd937x_get_compander, wcd937x_set_compander),
+-	SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
++	SOC_SINGLE_EXT("HPHR_COMP Switch", WCD937X_COMP_R, 1, 1, 0,
+ 		       wcd937x_get_compander, wcd937x_set_compander),
  
--- 
-2.51.0
-
+ 	SOC_SINGLE_TLV("HPHL Volume", WCD937X_HPH_L_EN, 0, 20, 1, line_gain),
 
 
