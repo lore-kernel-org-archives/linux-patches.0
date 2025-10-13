@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4406330DD37;
-	Mon, 13 Oct 2025 15:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670AA30DD37;
+	Mon, 13 Oct 2025 15:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370021; cv=none; b=TWiLai8V7OtrSpiCkJOqeVtzngcOpo3Tu+LvsvzHAc0S3jg5LXEnaXawtU/HmD6+ZV4Z2lb52hDk6U9Hjt+pDxInKlwzzYOnnLmGGYoGW6Ag/9MqZaeqFTkW+2YsEGqN0iF3YW1MMliqk3LtQIuOMjeUQuf1yD5p2CGFD8ILZcQ=
+	t=1760370024; cv=none; b=kwAG6AY88VQVdPJ5eG4xO9Pp3WqV390lfCjrM+K7tI1WAWYCbd+MHp1GmJBy1DnmPn9xSsD/r5NAT0G1x91i4+igbzTSADV+nrqkDqMmoQm2qqB54o+Q80KjJ/Lr4iPOdiqRVtFcCmJTM2rGyoDyMINqympphaGC21BZR0mdbhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370021; c=relaxed/simple;
-	bh=xG7r8UGj/QmrBSm/K6jfmmHevVxAcnk2erK4uvIFnuc=;
+	s=arc-20240116; t=1760370024; c=relaxed/simple;
+	bh=Ia43CtLu6+Se/o7JWCFDPa4qVNolTvnHVFU7WHYZZOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6YuLKVhgkvb7mLMm5uE3tZ1bkIqx07CLx/cF9+u3UvCWLN9ILH3RIN4jntqpdQn0Jpq9gpKR+qi3KfvUbAkpQxSH8iwoJSSPPuaPHeLW1W8tRE15KfFGtfvMTPv1J/rEvcjmMaTzGiwtHCzAJRYJHrBRJQAtyu8aUtJ9jhKPKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCoVtB25; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NRvhsjQp5wqHOE0dQREE479xVU4qJ9F+NxSZCRrvKZ0eM/e6HvDmvyc0aCg4aVxRfeEieSH6OvcBnUSnDphqePI5AZwxgpAkjjdSEAGJzIbHQRWpp8zEzIjUC+4wAu8+Ok/8Ym5hjW6NAGltymhkJYUBQwNbWphMjcH0NYT96No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOwmq7DM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCoVtB25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0979C4CEE7;
-	Mon, 13 Oct 2025 15:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOwmq7DM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904D3C4CEE7;
+	Mon, 13 Oct 2025 15:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370021;
-	bh=xG7r8UGj/QmrBSm/K6jfmmHevVxAcnk2erK4uvIFnuc=;
+	s=korg; t=1760370023;
+	bh=Ia43CtLu6+Se/o7JWCFDPa4qVNolTvnHVFU7WHYZZOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCoVtB25y+UhvAKBF+Su5rCEPColbjRtdYWJ/XSIEpB9mbqm6/UGWcYffUYhtGplQ
-	 K5AtZP0Rm1GqU85gkWTy0jL4MA3rfC80nlz6J/4oU25j3p14DQNmhlVSoTNyWuqAz0
-	 xmXCvogaUru9pIOj2pvTBHs/jKMXbT2HoK8d6sBM=
+	b=KOwmq7DMIgwWIuD525ZFjtWOHhwAU57czaFYE7fveM5eXA0FTt0JVq4p6fN//zRbI
+	 bx6RFq99U/+9cPMKi9Wv/WEH47Dj/pClpFs3nCWnjewlXExj1dS9g34bnNl82p5c76
+	 mKybH2DO13GhC1h7ItoE0pOVLlrOWHsbAg3Rs1WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 417/563] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
-Date: Mon, 13 Oct 2025 16:44:38 +0200
-Message-ID: <20251013144426.396420459@linuxfoundation.org>
+Subject: [PATCH 6.17 418/563] remoteproc: qcom: pas: Shutdown lite ADSP DTB on X1E
+Date: Mon, 13 Oct 2025 16:44:39 +0200
+Message-ID: <20251013144426.432573118@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -54,45 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
+[ Upstream commit 142964960c7c35de5c5f7bdd61c32699de693630 ]
 
-enable_irq() and disable_irq() are reference counted, so we must make sure
-that each enable_irq() is always paired with a single disable_irq(). If we
-call disable_irq() twice followed by just a single enable_irq(), the IRQ
-will remain disabled forever.
+The ADSP firmware on X1E has separate firmware binaries for the main
+firmware and the DTB. The same applies for the "lite" firmware loaded by
+the boot firmware.
 
-For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
-will end up being called twice, because disable_irq() also happens in
-qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
+When preparing to load the new ADSP firmware we shutdown the lite_pas_id
+for the main firmware, but we don't shutdown the corresponding lite pas_id
+for the DTB. The fact that we're leaving it "running" forever becomes
+obvious if you try to reuse (or just access) the memory region used by the
+"lite" firmware: The &adsp_boot_mem is accessible, but accessing the
+&adsp_boot_dtb_mem results in a crash.
 
-Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
-qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
-sense to have the rollback handled always by qcom_q6v5_unprepare().
+We don't support reusing the memory regions currently, but nevertheless we
+should not keep part of the lite firmware running. Fix this by adding the
+lite_dtb_pas_id and shutting it down as well.
 
-Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
+We don't have a way to detect if the lite firmware is actually running yet,
+so ignore the return status of qcom_scm_pas_shutdown() for now. This was
+already the case before, the assignment to "ret" is not used anywhere.
+
+Fixes: 62210f7509e1 ("remoteproc: qcom_q6v5_pas: Unload lite firmware on ADSP")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-3-910b1a3aff71@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 4ee5e67a9f03f..769c6d6d6a731 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -156,9 +156,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
- 	int ret;
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 02e29171cbbee..f3ec5b06261e8 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -42,6 +42,7 @@ struct qcom_pas_data {
+ 	int pas_id;
+ 	int dtb_pas_id;
+ 	int lite_pas_id;
++	int lite_dtb_pas_id;
+ 	unsigned int minidump_id;
+ 	bool auto_boot;
+ 	bool decrypt_shutdown;
+@@ -80,6 +81,7 @@ struct qcom_pas {
+ 	int pas_id;
+ 	int dtb_pas_id;
+ 	int lite_pas_id;
++	int lite_dtb_pas_id;
+ 	unsigned int minidump_id;
+ 	int crash_reason_smem;
+ 	unsigned int smem_host_id;
+@@ -226,6 +228,8 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
  
- 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
--	if (!ret)
--		disable_irq(q6v5->handover_irq);
--
- 	return !ret ? -ETIMEDOUT : 0;
- }
- EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
+ 	if (pas->lite_pas_id)
+ 		ret = qcom_scm_pas_shutdown(pas->lite_pas_id);
++	if (pas->lite_dtb_pas_id)
++		qcom_scm_pas_shutdown(pas->lite_dtb_pas_id);
+ 
+ 	if (pas->dtb_pas_id) {
+ 		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
+@@ -722,6 +726,7 @@ static int qcom_pas_probe(struct platform_device *pdev)
+ 	pas->minidump_id = desc->minidump_id;
+ 	pas->pas_id = desc->pas_id;
+ 	pas->lite_pas_id = desc->lite_pas_id;
++	pas->lite_dtb_pas_id = desc->lite_dtb_pas_id;
+ 	pas->info_name = desc->sysmon_name;
+ 	pas->smem_host_id = desc->smem_host_id;
+ 	pas->decrypt_shutdown = desc->decrypt_shutdown;
+@@ -1085,6 +1090,7 @@ static const struct qcom_pas_data x1e80100_adsp_resource = {
+ 	.pas_id = 1,
+ 	.dtb_pas_id = 0x24,
+ 	.lite_pas_id = 0x1f,
++	.lite_dtb_pas_id = 0x29,
+ 	.minidump_id = 5,
+ 	.auto_boot = true,
+ 	.proxy_pd_names = (char*[]){
 -- 
 2.51.0
 
