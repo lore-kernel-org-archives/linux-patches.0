@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6906E30F95C;
-	Mon, 13 Oct 2025 15:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2357C30F95C;
+	Mon, 13 Oct 2025 15:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369021; cv=none; b=jKxN6OpKuJifpGpaFK7QTKfJk66d/OiAkI9Aa03dADzdptsE9kZBNnZsLfQBN9Jp3rcvExlckA4cL62bwU/YfLmXOsXABMG3qd6SDIDiAUCA20nEdptycCq+TdtufVTtoW1+2aRefilB/ZlbIo2bx8H3gZS/xZP4rRjw/M8bm/Q=
+	t=1760369024; cv=none; b=YVerRqBCQoGP5GCjOjmlMDCVPSbMfy4nE1j3i3WtZgOaolRpr+tBIvhZZRKldYqBDfQBN2IE5Yl/UehDbcr2T4IDyPa/rw9HOIVWx+jM17++1qmm8f9nrVgrlD/WJIA1p1CRsEoks/SEGuUF/4iS1wIHhQq6iMK6EhReudV0VdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369021; c=relaxed/simple;
-	bh=mKzWcum/Xhls3J3kszV2//wlW9ZuTlkDZbHO3a4MeTg=;
+	s=arc-20240116; t=1760369024; c=relaxed/simple;
+	bh=6tyXyLU+yNTLz77DU1dBCOq/eYLdljfbrlvwgkmR5zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1f6uAEJhvLUMFRSgqR2d14GzwaysbP8VjQ6OU6OUmGpPkGTLCD8Qz+THoef+zQITbVBNI+ZDhVKL8Kq9IkYbyK5xL94slgypyUEh4xDDtGLrvQTZCP0bWb5YWrYi2SSfahRmqIqERD30tMMhanqZwgWQCvOCN0yvbt8sVCLtPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSvtIsSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TPYLCc/RFvep4j7gtPHzzpVTavNvk4puPQHn4wVqD+cyUXJ03wQ/GDX9CIyHtVSYs3ZecsdQZ5EIslS3XV62x9fePvAOqnHx/ed0+m3lXT88y4FnDneRQIe4wNSqDFt2GBr01HLsSOkeabeoEYi+KrkUgkwbtaStFrIQJ30o1+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuKc8Xq5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSvtIsSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E543CC4CEFE;
-	Mon, 13 Oct 2025 15:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuKc8Xq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EF1C4CEE7;
+	Mon, 13 Oct 2025 15:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369021;
-	bh=mKzWcum/Xhls3J3kszV2//wlW9ZuTlkDZbHO3a4MeTg=;
+	s=korg; t=1760369024;
+	bh=6tyXyLU+yNTLz77DU1dBCOq/eYLdljfbrlvwgkmR5zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSvtIsSb/N4S2qxh9W2NiHJM9B4LpseH0nJznB+iuafK/Kr+iZ4hhT2wnElKwc1F7
-	 r6fW9wfX9CZOGVaQoA5mY7ItSBmaFash07STg2GWePlHBwGHrYA9y6f6AbIXjy7UPf
-	 67iOjVtL0uLQbtQJfRNrHFnVwTb8rjEJBU5xB8J8=
+	b=BuKc8Xq5sF4XbtFpAWFk8NJVl1mBDErb8KWh0aqkM/KlezkqawNtKdwSYmU6EI6FJ
+	 vknRg6RbJSHBAImVq9ZqShUkaySlIZibtRrJhVIHNCoiiyFn0OJgG2u8NM+V2KvYkv
+	 SkCVtxzHQJmrOIMtbmRHs+juoX7oxW9bVS00ZVCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Shalygin <eugene.shalygin@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 101/563] hwmon: (asus-ec-sensors) Narrow lock for X870E-CREATOR WIFI
-Date: Mon, 13 Oct 2025 16:39:22 +0200
-Message-ID: <20251013144414.953273494@linuxfoundation.org>
+Subject: [PATCH 6.17 102/563] pinctrl: renesas: Use int type to store negative error codes
+Date: Mon, 13 Oct 2025 16:39:23 +0200
+Message-ID: <20251013144414.989561253@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,35 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Shalygin <eugene.shalygin@gmail.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 3aa72cf03924d04c8d20f8b319df8f73550dd26c ]
+[ Upstream commit 9f062fc5b0ff44550088912ab89f9da40226a826 ]
 
-Use mutex from the SIO device rather than the global lock.
+Change the 'ret' variable in sh_pfc_pinconf_group_set() from unsigned
+int to int, as it needs to store either negative error codes or zero
+returned by sh_pfc_pinconf_set().
 
-Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+No effect on runtime.
 
-Fixes: 3e538b52157b ("hwmon: (asus-ec-sensors) add ProArt X870E-CREATOR WIFI")
-Link: https://lore.kernel.org/r/20250805203157.18446-1-eugene.shalygin@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Fixes: d0593c363f04ccc4 ("pinctrl: sh-pfc: Propagate errors on group config")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250831084958.431913-4-rongqianfeng@vivo.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index 4ac554731e98a..f43efb80aabf3 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -396,7 +396,7 @@ static const struct ec_board_info board_info_pro_art_x870E_creator_wifi = {
- 	.sensors = SENSOR_TEMP_CPU | SENSOR_TEMP_CPU_PACKAGE |
- 		SENSOR_TEMP_MB | SENSOR_TEMP_VRM |
- 		SENSOR_TEMP_T_SENSOR | SENSOR_FAN_CPU_OPT,
--	.mutex_path = ACPI_GLOBAL_LOCK_PSEUDO_PATH,
-+	.mutex_path = ASUS_HW_ACCESS_MUTEX_SB_PCI0_SBRG_SIO1_MUT0,
- 	.family = family_amd_800_series,
- };
+diff --git a/drivers/pinctrl/renesas/pinctrl.c b/drivers/pinctrl/renesas/pinctrl.c
+index 29d16c9c1bd19..3a742f74ecd1d 100644
+--- a/drivers/pinctrl/renesas/pinctrl.c
++++ b/drivers/pinctrl/renesas/pinctrl.c
+@@ -726,7 +726,8 @@ static int sh_pfc_pinconf_group_set(struct pinctrl_dev *pctldev, unsigned group,
+ 	struct sh_pfc_pinctrl *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	const unsigned int *pins;
+ 	unsigned int num_pins;
+-	unsigned int i, ret;
++	unsigned int i;
++	int ret;
  
+ 	pins = pmx->pfc->info->groups[group].pins;
+ 	num_pins = pmx->pfc->info->groups[group].nr_pins;
 -- 
 2.51.0
 
