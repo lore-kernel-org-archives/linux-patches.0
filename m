@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC663128A6;
-	Mon, 13 Oct 2025 15:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BC5145B3F;
+	Mon, 13 Oct 2025 15:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368552; cv=none; b=PU4Seyura4z7Eec5LeEmtsL0x+OCYClrdpzX1nQaYN7SuS0IrC11n3lI/5IvDTTYRIKD1nZR9aZAOG0nRFkFK/GEFdUKTZRX8EsYYtf0AfgtcEzdMYoQWeEn8rklZ8W1p4MmMPg2IicP9itwmLlgjnD7BF7gQeNc0rcgspWDhHY=
+	t=1760368555; cv=none; b=q4opnpOrKJ0ulLW9obuPo0WO0ta7GazRolvPyORmEA1Z5fRwJ5+ixZ4/P4p5UOT8ROk3CaAtsSqwjjXIKmd3YwZ8TBYDGESyHf+avF7mXYrsf9MIGXK55wtgMwDNg5AYNg57KXJ0OMH2ZDBHgw2efWJpLj/xUe7CF+ogYBl45qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368552; c=relaxed/simple;
-	bh=K9alUFH6YHvYyacjxI9qQi8N4mG0uvagCmsEhF1jEgU=;
+	s=arc-20240116; t=1760368555; c=relaxed/simple;
+	bh=t24NbpDYNtiKj3itJGMFYXgGHnw7KtrjGVxDkWmYtGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UACUWS2XFxuoSF6QVa09UUqSwDcPZv/2auE4kAN6PgW88nw7/P1K/nAJj/dVkepLQ0qNbvVqTHEyKD+fyjpvN5//B6Yvf4wr29RZqH6RiPwI0f34FsnXkFVZhq6bO02mZdtZjRyQfSQsELMq/meCygr+uJMKfHCfNiOQqoV3hws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5RmEtg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JFC94N8K7mZbgiFioKpUsjeysIDf5HGfHL8n+bQjYdzG8J8eqTkldT8EUDvJBRK/qapOpscCRIDhCZogKvgTUra6xRUvMk1phm3fdNhxyF/HRfOJXozzk3qOEiYAmdMuzYgW1y+0I0IPQybM8Z3UHLcMILatu38x4wd3XQqQVVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaBXhJ5k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5RmEtg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AEBC116C6;
-	Mon, 13 Oct 2025 15:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaBXhJ5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDF4C4CEE7;
+	Mon, 13 Oct 2025 15:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368552;
-	bh=K9alUFH6YHvYyacjxI9qQi8N4mG0uvagCmsEhF1jEgU=;
+	s=korg; t=1760368555;
+	bh=t24NbpDYNtiKj3itJGMFYXgGHnw7KtrjGVxDkWmYtGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W5RmEtg5jdhWrNZXj36E4YOTdZyqxxRAOrnOhaifZEYzA2ruXRO4mmIltLMXklHi0
-	 Obew/aDypjGjs9MqnnnPEiVC84woLAks6ehbJlCFp/xYlt+s7Axu7IcCj4BvCDrq2w
-	 7NS0upL6HrVXRMpqdGeduq1fINyHs6BshCwL8lkQ=
+	b=LaBXhJ5k6Aa7RqLdcm5I+RWwFqTeOvMfkBN9u6Qm8qa/Nf7QC9vXcsDzdC7qsaunY
+	 jkuqWUrhaRwuizo8kop8zMjaMrjzOz7SPpBeOsmb+PkApmpfidxoZn5sZN0o0Ffn37
+	 wCn2mxnkcUbFGeg4QOYT/6ElCaPoBHGAh2FlBFdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com,
-	I Viswanath <viswanathiyyappan@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/262] ptp: Add a upper bound on max_vclocks
-Date: Mon, 13 Oct 2025 16:45:42 +0200
-Message-ID: <20251013144333.449619105@linuxfoundation.org>
+Subject: [PATCH 6.12 201/262] vhost: vringh: Fix copy_to_iter return value check
+Date: Mon, 13 Oct 2025 16:45:43 +0200
+Message-ID: <20251013144333.485273546@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,56 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: I Viswanath <viswanathiyyappan@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit e9f35294e18da82162004a2f35976e7031aaf7f9 ]
+[ Upstream commit 439263376c2c4e126cac0d07e4987568de4eaba5 ]
 
-syzbot reported WARNING in max_vclocks_store.
+The return value of copy_to_iter can't be negative, check whether the
+copied length is equal to the requested length instead of checking for
+negative values.
 
-This occurs when the argument max is too large for kcalloc to handle.
-
-Extend the guard to guard against values that are too large for
-kcalloc
-
-Reported-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=94d20db923b9f51be0df
-Tested-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250925155908.5034-1-viswanathiyyappan@gmail.com
+Cc: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Link: https://lore.kernel.org/all/20250910091739.2999-1-zhangjiao2@cmss.chinamobile.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 309bba39c945 ("vringh: iterate on iotlb_translate to handle large translations")
+Link: https://patch.msgid.link/cd637504a6e3967954a9e80fc1b75e8c0978087b.1758723310.git.mst@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_private.h | 1 +
- drivers/ptp/ptp_sysfs.c   | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/vringh.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index b352df4cd3f97..f329263f33aa1 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -22,6 +22,7 @@
- #define PTP_MAX_TIMESTAMPS 128
- #define PTP_BUF_TIMESTAMPS 30
- #define PTP_DEFAULT_MAX_VCLOCKS 20
-+#define PTP_MAX_VCLOCKS_LIMIT (KMALLOC_MAX_SIZE/(sizeof(int)))
- #define PTP_MAX_CHANNELS 2048
+diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
+index 73e153f9b4495..0db4f3babe961 100644
+--- a/drivers/vhost/vringh.c
++++ b/drivers/vhost/vringh.c
+@@ -1237,6 +1237,7 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
+ 		struct iov_iter iter;
+ 		u64 translated;
+ 		int ret;
++		size_t size;
  
- enum {
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 6b1b8f57cd951..200eaf5006968 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -284,7 +284,7 @@ static ssize_t max_vclocks_store(struct device *dev,
- 	size_t size;
- 	u32 max;
+ 		ret = iotlb_translate(vrh, (u64)(uintptr_t)dst,
+ 				      len - total_translated, &translated,
+@@ -1254,9 +1255,9 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
+ 				      translated);
+ 		}
  
--	if (kstrtou32(buf, 0, &max) || max == 0)
-+	if (kstrtou32(buf, 0, &max) || max == 0 || max > PTP_MAX_VCLOCKS_LIMIT)
- 		return -EINVAL;
+-		ret = copy_to_iter(src, translated, &iter);
+-		if (ret < 0)
+-			return ret;
++		size = copy_to_iter(src, translated, &iter);
++		if (size != translated)
++			return -EFAULT;
  
- 	if (max == ptp->max_vclocks)
+ 		src += translated;
+ 		dst += translated;
 -- 
 2.51.0
 
