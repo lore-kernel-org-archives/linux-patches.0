@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090733101D1;
-	Mon, 13 Oct 2025 15:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7540231064A;
+	Mon, 13 Oct 2025 15:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369780; cv=none; b=CHSeiHOUEByRux1T7IfoMZ8ogTKNqn9aer2DDh0tjqUnT+9RYjsLv8QR1qpCqwr0vHbn0WQtdojHLBgRwP08Uvjc3REl7Uxjd73CYTCOrfQTbY5ZGgBQ/kFjKdNiJ6d6/+CEwzsxNJrg4DNCZxJwUNuorSd58TyKzWZ1a0nD7tU=
+	t=1760369782; cv=none; b=er+qyUg9F0iiuyEcTx4/m7V2fzVn0ipb66Z1q6osguzlqr1UVJuOEkTeD5xLfTH84kmdacTdKws3acO82OdFbnmrM0gz5/GfpV1ZR6Im/Rl2cTu8rXrIAQxVxrWkA71KUb+9nVhLysd8rpGD4ssg8fTXzV5nZHJ2AHwsTuxZ72k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369780; c=relaxed/simple;
-	bh=PGInoFUG+GqGxFKCFofDAfrccHtmxjA4baR0y6UUvJM=;
+	s=arc-20240116; t=1760369782; c=relaxed/simple;
+	bh=HHdfDKRJuZ6+h8i++Xxaa20leAT/7IzZH+P+BBMDQ14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FtwYRpYmbZ+AlHCCkyRotBQ9JUAiniWGeWINjls8eq1CCLFSmXRh5l34LnDaGEYkLByuvEAVlCv1F4DVwJRmWHxHk6+w3LNRN4Pf4yLzuVoOG7+WkpEgF9xNHstS6gYH4iJqvRR/emq9cRUbPjtwPxwQ/BExYSDHncpJS6mDIlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9dnk0HQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0W5gHF+Zp47STHS8fuiAvQcTcBe0NfRkAk4Fg0WiX9tVZzC7wXkhUQ+OPQrmoyzvz44EqTAVnn3+mrSamIeKkAUeeb/8BUbSmJi445bxWHFUOghfs5lUDB749UlpjAQmIETm2fdd3DOYqr+7QYEH5T0U0l6hD3mfAAKQMiPqWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ORd05+2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9dnk0HQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C65C116B1;
-	Mon, 13 Oct 2025 15:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ORd05+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01506C4CEE7;
+	Mon, 13 Oct 2025 15:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369779;
-	bh=PGInoFUG+GqGxFKCFofDAfrccHtmxjA4baR0y6UUvJM=;
+	s=korg; t=1760369782;
+	bh=HHdfDKRJuZ6+h8i++Xxaa20leAT/7IzZH+P+BBMDQ14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9dnk0HQiYh/+z6PSXUNot7yqC6BQhPJkQaJWC2ZDtL2TNRkEMh2CmU5yD22rCFGT
-	 qaZHPSgWEupN2fgiOMpVKjhHYv9F6ZQ5vxIPOsXoMZrSuo0Bqc+WPCJc+evvNC1GFc
-	 dy2CjC++Y7gqiigWZyV1y5bXa1GZiy1jUPaxBdbA=
+	b=0ORd05+2m4HyloAgP1pQzjEoitS0LkqPQSqRL6bps34PbnHISudG7kYxTVkhmysP7
+	 5LwKjUMweJgFGwZsVnhY7gVv6Z6cmIvT6HZCfYzi82dAmakG66K7uMaZj2xhaSvMCL
+	 sW8XB2MJ6/s9/MyvuQlZyCS1KgYp1EsA8FNC5NfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 365/563] drm/amdgpu: Fix allocating extra dwords for rings (v2)
-Date: Mon, 13 Oct 2025 16:43:46 +0200
-Message-ID: <20251013144424.500592536@linuxfoundation.org>
+Subject: [PATCH 6.17 366/563] f2fs: fix to update map->m_next_extent correctly in f2fs_map_blocks()
+Date: Mon, 13 Oct 2025 16:43:47 +0200
+Message-ID: <20251013144424.536160670@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,102 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit ae5c2bee1680436d9bf8bfaca7416496adff0ee0 ]
+[ Upstream commit 869833f54e8306326b85ca3ed08979b7ad412a4a ]
 
-Rename extra_dw to extra_bytes and document what it's for.
+Script to reproduce:
+mkfs.f2fs -O extra_attr,compression /dev/vdb -f
+mount /dev/vdb /mnt/f2fs -o mode=lfs,noextent_cache
+cd /mnt/f2fs
+f2fs_io write 1 0 1024 rand dsync testfile
+xfs_io testfile -c "fsync"
+f2fs_io write 1 0 512 rand dsync testfile
+xfs_io testfile -c "fsync"
+cd /
+umount /mnt/f2fs
+mount /dev/vdb /mnt/f2fs
+f2fs_io precache_extents /mnt/f2fs/testfile
+umount /mnt/f2fs
 
-The value is already used as if it were bytes in vcn_v4_0.c
-and in amdgpu_ring_init. Just adjust the dword count in
-jpeg_v1_0.c so that it becomes a byte count.
+Tracepoint output:
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 0, len = 512, blkaddr = 1055744, c_len = 0
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 513, len = 351, blkaddr = 17921, c_len = 0
+f2fs_update_read_extent_tree_range: dev = (253,16), ino = 4, pgofs = 864, len = 160, blkaddr = 18272, c_len = 0
 
-v2:
-Rename extra_dw to extra_bytes as discussed during review.
+During precache_extents, there is off-by-one issue, we should update
+map->m_next_extent to pgofs rather than pgofs + 1, if last blkaddr is
+valid and not contiguous to previous extent.
 
-Fixes: c8c1a1d2ef04 ("drm/amdgpu: define and add extra dword for jpeg ring")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |  3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h | 13 ++++++++++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c   |  2 +-
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c    |  2 +-
- 4 files changed, 16 insertions(+), 4 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-index 486c3646710cc..8f6ce948c6841 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -364,7 +364,8 @@ int amdgpu_ring_init(struct amdgpu_device *adev, struct amdgpu_ring *ring,
- 
- 	/* Allocate ring buffer */
- 	if (ring->ring_obj == NULL) {
--		r = amdgpu_bo_create_kernel(adev, ring->ring_size + ring->funcs->extra_dw, PAGE_SIZE,
-+		r = amdgpu_bo_create_kernel(adev, ring->ring_size + ring->funcs->extra_bytes,
-+					    PAGE_SIZE,
- 					    AMDGPU_GEM_DOMAIN_GTT,
- 					    &ring->ring_obj,
- 					    &ring->gpu_addr,
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-index 7670f5d82b9e4..12783ea3ba0f1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-@@ -211,7 +211,18 @@ struct amdgpu_ring_funcs {
- 	bool			support_64bit_ptrs;
- 	bool			no_user_fence;
- 	bool			secure_submission_supported;
--	unsigned		extra_dw;
-+
-+	/**
-+	 * @extra_bytes:
-+	 *
-+	 * Optional extra space in bytes that is added to the ring size
-+	 * when allocating the BO that holds the contents of the ring.
-+	 * This space isn't used for command submission to the ring,
-+	 * but is just there to satisfy some hardware requirements or
-+	 * implement workarounds. It's up to the implementation of each
-+	 * specific ring to initialize this space.
-+	 */
-+	unsigned		extra_bytes;
- 
- 	/* ring read/write ptr handling */
- 	u64 (*get_rptr)(struct amdgpu_ring *ring);
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
-index 9e428e669ada6..b5bb7f4d607c1 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
-@@ -557,7 +557,7 @@ static const struct amdgpu_ring_funcs jpeg_v1_0_decode_ring_vm_funcs = {
- 	.nop = PACKET0(0x81ff, 0),
- 	.support_64bit_ptrs = false,
- 	.no_user_fence = true,
--	.extra_dw = 64,
-+	.extra_bytes = 256,
- 	.get_rptr = jpeg_v1_0_decode_ring_get_rptr,
- 	.get_wptr = jpeg_v1_0_decode_ring_get_wptr,
- 	.set_wptr = jpeg_v1_0_decode_ring_set_wptr,
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-index 706f3b2f484f7..ac55549e20be6 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1984,7 +1984,7 @@ static struct amdgpu_ring_funcs vcn_v4_0_unified_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_ENC,
- 	.align_mask = 0x3f,
- 	.nop = VCN_ENC_CMD_NO_OP,
--	.extra_dw = sizeof(struct amdgpu_vcn_rb_metadata),
-+	.extra_bytes = sizeof(struct amdgpu_vcn_rb_metadata),
- 	.get_rptr = vcn_v4_0_unified_ring_get_rptr,
- 	.get_wptr = vcn_v4_0_unified_ring_get_wptr,
- 	.set_wptr = vcn_v4_0_unified_ring_set_wptr,
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 7961e0ddfca3a..838eae39d3b19 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1783,7 +1783,7 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
+ 				map->m_len - ofs);
+ 		}
+ 		if (map->m_next_extent)
+-			*map->m_next_extent = pgofs + 1;
++			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
+ 	}
+ 	f2fs_put_dnode(&dn);
+ unlock_out:
 -- 
 2.51.0
 
