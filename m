@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB2E30C366;
-	Mon, 13 Oct 2025 15:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A45830C36F;
+	Mon, 13 Oct 2025 15:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367947; cv=none; b=nscDywjeIAZRLX0aliP4CSZ26iHNs7XBMZC1o6mXMNUd3ZnoCyDEWTdpxeKMNibPusQ1W+eVztK+Gkl9qciY7TD9t3Vb0mIi9jaCdch76BeYbcPwfrWmuxxV4ECruZQLs7J1pYOWLI7u1Rn/CP4uGmrRFaBW4l4ZTf1/yLQTlJA=
+	t=1760367950; cv=none; b=NUuGTa3zizTnXs4GNYMems4zLblARsLmT3Bi12ewopjF95ymNubB5A/QR63abZ17z0zCvIlu6jY3s8S0RFeeqmerC2nQLs7fz9ciaeM1ltcR0JDsuH8x7ROEto3NAfZ9A/nM789yT6RvnwMYGvH8Wyo185PsyOj7CwExbVTCk1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367947; c=relaxed/simple;
-	bh=BXdePOZK4l0gKWc57ac8RDlYEyyouEJAVXqPwi2Jjk4=;
+	s=arc-20240116; t=1760367950; c=relaxed/simple;
+	bh=8s0fcy/6+U5VhB/vZ0N7gAbJsYg4cJKfcfBglFt4dSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zqe0Lo8m2TqeOnLLUcCC2laVh85PUmluunYMxdLke/BNwfF1OfzzcempbHPYRTNo8srGfcENLiLtVY2rIPEzarq2PhcFr9AjjNAVElK0Nr03qNKEzwvvoF3f2R7Z8yvnJBMd/sZHhn1PJzzkNTAhP79ovwMmHzvdHSAaVgoocjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABdnJmGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtZsQ5G0PEbTigBLqTAA37lZoAOoqS2xCkUaXm02sD6DvJRSLLiMwkGHQ4DjKhf6CywJEBDwB3kytqmsTTR2/6lOKmWES/CfQ+wDA+EDv0vJfniJ5ySdmbglzPySRNIU3jvdYrp9J6ig6yfX/f9kPQL71FncxKMqfKnb84sHp7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmArcWpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABdnJmGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7391C4CEE7;
-	Mon, 13 Oct 2025 15:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmArcWpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8686C4CEE7;
+	Mon, 13 Oct 2025 15:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367947;
-	bh=BXdePOZK4l0gKWc57ac8RDlYEyyouEJAVXqPwi2Jjk4=;
+	s=korg; t=1760367950;
+	bh=8s0fcy/6+U5VhB/vZ0N7gAbJsYg4cJKfcfBglFt4dSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABdnJmGdtvYsh6fajrWRZuTt9M9zvxsIYubT1UMDK4jpfW9h4ThLVQbhv8TnTN0rS
-	 LIVkQyY3dTRj3kJxMEJNoS8TRbcENO01i4pj7CUcGXfAdrIWA+Dp7jWD6noiI3cbyc
-	 La9k6gY6Cz2Co99lZe86m12I1LMfSD7ynOtFXDJ8=
+	b=VmArcWpvl4ONDswze7GgM1EGqHLnmqJsDIy8JI4wFR//5U1cb3Qx5XhT3elq3LJCg
+	 5/U1/gj+gjaOgOtihzyTWUAozzZJti5O+wL5xQruIjo25fBvlQ1l9I4B1+Fudehuc3
+	 bMxzbPs31GqwnMIVrqi46yfNknf5UJuJlA3DbWto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Lei Lu <llfamsec@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 189/196] sunrpc: fix null pointer dereference on zero-length checksum
-Date: Mon, 13 Oct 2025 16:46:20 +0200
-Message-ID: <20251013144322.143542465@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.6 190/196] remoteproc: pru: Fix potential NULL pointer dereference in pru_rproc_set_ctable()
+Date: Mon, 13 Oct 2025 16:46:21 +0200
+Message-ID: <20251013144322.179557255@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,34 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Lu <llfamsec@gmail.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit 6df164e29bd4e6505c5a2e0e5f1e1f6957a16a42 upstream.
+commit d41e075b077142bb9ae5df40b9ddf9fd7821a811 upstream.
 
-In xdr_stream_decode_opaque_auth(), zero-length checksum.len causes
-checksum.data to be set to NULL. This triggers a NPD when accessing
-checksum.data in gss_krb5_verify_mic_v2(). This patch ensures that
-the value of checksum.len is not less than XDR_UNIT.
+pru_rproc_set_ctable() accessed rproc->priv before the IS_ERR_OR_NULL
+check, which could lead to a null pointer dereference. Move the pru
+assignment, ensuring we never dereference a NULL rproc pointer.
 
-Fixes: 0653028e8f1c ("SUNRPC: Convert gss_verify_header() to use xdr_stream")
-Cc: stable@kernel.org
-Signed-off-by: Lei Lu <llfamsec@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 102853400321 ("remoteproc: pru: Add pru_rproc_set_ctable() function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250923112109.1165126-1-zhen.ni@easystack.cn
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/pru_rproc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -724,7 +724,7 @@ svcauth_gss_verify_header(struct svc_rqs
- 		rqstp->rq_auth_stat = rpc_autherr_badverf;
- 		return SVC_DENIED;
- 	}
--	if (flavor != RPC_AUTH_GSS) {
-+	if (flavor != RPC_AUTH_GSS || checksum.len < XDR_UNIT) {
- 		rqstp->rq_auth_stat = rpc_autherr_badverf;
- 		return SVC_DENIED;
- 	}
+--- a/drivers/remoteproc/pru_rproc.c
++++ b/drivers/remoteproc/pru_rproc.c
+@@ -340,7 +340,7 @@ EXPORT_SYMBOL_GPL(pru_rproc_put);
+  */
+ int pru_rproc_set_ctable(struct rproc *rproc, enum pru_ctable_idx c, u32 addr)
+ {
+-	struct pru_rproc *pru = rproc->priv;
++	struct pru_rproc *pru;
+ 	unsigned int reg;
+ 	u32 mask, set;
+ 	u16 idx;
+@@ -352,6 +352,7 @@ int pru_rproc_set_ctable(struct rproc *r
+ 	if (!rproc->dev.parent || !is_pru_rproc(rproc->dev.parent))
+ 		return -ENODEV;
+ 
++	pru = rproc->priv;
+ 	/* pointer is 16 bit and index is 8-bit so mask out the rest */
+ 	idx_mask = (c >= PRU_C28) ? 0xFFFF : 0xFF;
+ 
 
 
