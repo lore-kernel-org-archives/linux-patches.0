@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AB730CDA0;
-	Mon, 13 Oct 2025 14:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F513064B7;
+	Mon, 13 Oct 2025 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367286; cv=none; b=fwgnRJnwBAc9WVzlKQu9hhdPokmc94KTuuScjPgToYXCcKJNCk9Z537t0uui0/I8aCCV3rTy8LVDJH/8g/uyXr9zC1OLQzSNkXeyo8xzvXkFe+IvHGt0+F2jxJxFsf2Tg++/AUlQ6bWUJCmtADg4tO+mcL4ckzuwibusCOJ2Zio=
+	t=1760367290; cv=none; b=XuWzQjT6gorkRUv86tJMfy0auLxSfuwnwQgysU0OMrirbzvPlggIngwwIA+GgcApYRQAsZO63aWvxVYCUy4Bu6oxJ/bEcRnZmVizxXFaZl18GJqGlEy98CywY3xYSHHiJVP5IJcmhNpsGkclGrJMGgERNl2Bv0i3AHBbssItvOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367286; c=relaxed/simple;
-	bh=DQHbmzGSmzTeZDfqRlihEFNYsd8p5Ou7imqRaMcjIgk=;
+	s=arc-20240116; t=1760367290; c=relaxed/simple;
+	bh=u82e+pLHyakCKJnPPKFjW2M+6d5Cyk7oxIHdVoFLbko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkaFQtqe/NHn34XGb9bQEU3eRXayzwK2gCKEmFgR0C4s9b6974tOu1RkrderIPWJl7gvYmSo6U+IA7Mbtf26ob2W/ka3FmM45sJQDPyEStSm3zQskjLvWrtfjxl2BFtFAT/JQr+cu8ccaP9eccvupF2Kogbocm2gEwboCFpeqmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMcohmsH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIOXLsbNfTelIVGHBjzGuoReAXcvB/TPYeRAS0MlINbQsOmxNekuNUozgFAvJ1btoIvKQCrKbde6eFwitGJbCv25rPwGBMT9lVbaoh7msuMjKNpDD+ZgW74igxyKiI6+lQeqx5MbbUJZgbPX83LjHYkNtsF4TyI02a863xOU9O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKNC3iWz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMcohmsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550D7C4CEE7;
-	Mon, 13 Oct 2025 14:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKNC3iWz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35660C4CEFE;
+	Mon, 13 Oct 2025 14:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367286;
-	bh=DQHbmzGSmzTeZDfqRlihEFNYsd8p5Ou7imqRaMcjIgk=;
+	s=korg; t=1760367289;
+	bh=u82e+pLHyakCKJnPPKFjW2M+6d5Cyk7oxIHdVoFLbko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMcohmsH9pfuBGrPVysz8c0K0VTWsR9YhXY4HTU8KGOZ17BrRblAhUFvFJc0+KBur
-	 YtPiQt7WvsqaJm9DepcguLszEepV8MDnQHMFRAKUhkDhMdA46vuG/3MpzKNEShZ0dd
-	 X5TOrTMzh0SFvTcf8wXJcBS6XCTL1u9aboPlFmIU=
+	b=TKNC3iWzh2sAirnpPOoi+N7p0lM2JNEID5le+OIqqmkB7y37ZEcSoEhcqwJ7s1v28
+	 5eKQG0bo8hGrQHkylhOST2gDHJ7qA+982TRhyQdfs7xpLkAfzpsHDKMHwWApEk92Yl
+	 KaQT/nHZIeNL2FlXLOTVApCmBBhJNPIm1qh4Dj+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	I Viswanath <viswanathiyyappan@gmail.com>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+78cae3f37c62ad092caa@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 155/196] net: usb: Remove disruptive netif_wake_queue in rtl8150_set_multicast
-Date: Mon, 13 Oct 2025 16:45:28 +0200
-Message-ID: <20251013144320.306786587@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 156/196] vhost: vringh: Fix copy_to_iter return value check
+Date: Mon, 13 Oct 2025 16:45:29 +0200
+Message-ID: <20251013144320.343298393@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -53,67 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: I Viswanath <viswanathiyyappan@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 958baf5eaee394e5fd976979b0791a875f14a179 ]
+[ Upstream commit 439263376c2c4e126cac0d07e4987568de4eaba5 ]
 
-syzbot reported WARNING in rtl8150_start_xmit/usb_submit_urb.
-This is the sequence of events that leads to the warning:
+The return value of copy_to_iter can't be negative, check whether the
+copied length is equal to the requested length instead of checking for
+negative values.
 
-rtl8150_start_xmit() {
-	netif_stop_queue();
-	usb_submit_urb(dev->tx_urb);
-}
-
-rtl8150_set_multicast() {
-	netif_stop_queue();
-	netif_wake_queue();		<-- wakes up TX queue before URB is done
-}
-
-rtl8150_start_xmit() {
-	netif_stop_queue();
-	usb_submit_urb(dev->tx_urb);	<-- double submission
-}
-
-rtl8150_set_multicast being the ndo_set_rx_mode callback should not be
-calling netif_stop_queue and notif_start_queue as these handle
-TX queue synchronization.
-
-The net core function dev_set_rx_mode handles the synchronization
-for rtl8150_set_multicast making it safe to remove these locks.
-
-Reported-and-tested-by: syzbot+78cae3f37c62ad092caa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=78cae3f37c62ad092caa
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Tested-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
-Link: https://patch.msgid.link/20250924134350.264597-1-viswanathiyyappan@gmail.com
+Cc: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Link: https://lore.kernel.org/all/20250910091739.2999-1-zhangjiao2@cmss.chinamobile.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 309bba39c945 ("vringh: iterate on iotlb_translate to handle large translations")
+Link: https://patch.msgid.link/cd637504a6e3967954a9e80fc1b75e8c0978087b.1758723310.git.mst@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/vhost/vringh.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index ddff6f19ff98e..92add3daadbb1 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -664,7 +664,6 @@ static void rtl8150_set_multicast(struct net_device *netdev)
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	u16 rx_creg = 0x9e;
+diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
+index 10bfc5f1c50d5..c570d214d5b68 100644
+--- a/drivers/vhost/vringh.c
++++ b/drivers/vhost/vringh.c
+@@ -1195,6 +1195,7 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
+ 		struct iov_iter iter;
+ 		u64 translated;
+ 		int ret;
++		size_t size;
  
--	netif_stop_queue(netdev);
- 	if (netdev->flags & IFF_PROMISC) {
- 		rx_creg |= 0x0001;
- 		dev_info(&netdev->dev, "%s: promiscuous mode\n", netdev->name);
-@@ -678,7 +677,6 @@ static void rtl8150_set_multicast(struct net_device *netdev)
- 		rx_creg &= 0x00fc;
- 	}
- 	async_set_registers(dev, RCR, sizeof(rx_creg), rx_creg);
--	netif_wake_queue(netdev);
- }
+ 		ret = iotlb_translate(vrh, (u64)(uintptr_t)dst,
+ 				      len - total_translated, &translated,
+@@ -1206,9 +1207,9 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
  
- static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 		iov_iter_bvec(&iter, ITER_DEST, iov, ret, translated);
+ 
+-		ret = copy_to_iter(src, translated, &iter);
+-		if (ret < 0)
+-			return ret;
++		size = copy_to_iter(src, translated, &iter);
++		if (size != translated)
++			return -EFAULT;
+ 
+ 		src += translated;
+ 		dst += translated;
 -- 
 2.51.0
 
