@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9A230E835;
-	Mon, 13 Oct 2025 14:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE7A30F55D;
+	Mon, 13 Oct 2025 14:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366940; cv=none; b=PBR1hD9Hntvr854HwFQopyFCGfgC39A/z7Rw6JhQEt8LfvjjocW3expcdfM1OG9xFWcMk1ppe6zVz7sEM5EXfeYQc02CCGhN2mS/E0I1De0DrLcbFY2l5ROuapf9eIMDo2X3V4VrvY6XIJVZ+9M1BHL2EYFUo+o7oJCQoXLxVew=
+	t=1760366943; cv=none; b=PMw6A6hDL0wzDw1kCPQ0DVjH6ABd3xMFmhi7CBqpXFPG38kGOJvredurxEDVgPhL7Ea97cdvQaxxNaIQ58Zb6q4wX8XDzysilctuYhObnDzgx0axA2Wd2r48rtDv0m+EngawBbW7X4XDUhnzm+J7xr4WN40lllR2iRfxpxVxagg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366940; c=relaxed/simple;
-	bh=YFJwdQjmhANHXliMvKOrjX00lVPUHJcFBkFm+0O8c74=;
+	s=arc-20240116; t=1760366943; c=relaxed/simple;
+	bh=ZPXH9nQInaUlLDUrnJ94HGlDZXWZ0vEjQD3m/BmlLA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkzxMRkUmfZnp+rxUgk2widwbbC4JqURBZvHvWWjvSt+tcDV2yHUb7qLYEBhcFUgwQJn7E+WDsvup8txM3X1K+aU/DDo3afFm+hrxYx98MVOwvbbBcNcXrfoQWQDAnWPB8jbpavx8wDTB9vYFuy/5jn8ZV8pGX1svhtEDQqc2Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUlRE0ME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MsYtDMmk3CH7xkoUN8hGS3Nb/B505BJREGVisw+jHI0UB8yvv1AX/x2Ggb7BHMEEE4DnJ+7YaULLo+TYlcRqYdK/yQDHFKAn2Lq96bRiiLGH05AOwDHPwL9dCqZlmeQ401Al9s4tqAPqJTXxfx4jMu+Jc7uQfjUwXDjGdlXI42Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+LitHN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUlRE0ME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FA1C4CEE7;
-	Mon, 13 Oct 2025 14:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+LitHN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9702EC4CEE7;
+	Mon, 13 Oct 2025 14:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366939;
-	bh=YFJwdQjmhANHXliMvKOrjX00lVPUHJcFBkFm+0O8c74=;
+	s=korg; t=1760366943;
+	bh=ZPXH9nQInaUlLDUrnJ94HGlDZXWZ0vEjQD3m/BmlLA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUlRE0MEpmSMqZDrGy8bKShcdYW+PP7DC4teqkjab354dtAzwcDbmtj8g2drYg3pk
-	 +MKuYY5XYEAaOPggXeE9PFMbYfo569mVPhBOzJ7g9goUHZIK+iwOcBGZpZketj9XrZ
-	 Mu+nKeVSpwIb9+Xp85U1BMY3sPSiUbYF/HOaUEl8=
+	b=m+LitHN6R+gEHWn1URJZnBcP5W2Eb9yiwzRzWPtXFfqyBDBwP7+iips46ZlEpQ5Kx
+	 C4yrYzu2pLCSazUQG7I+BSTDUVJvJFIRFZinWq+Uwnjygwp1mIj9h6mnkK73+iPXzD
+	 VCgIQWgdXHZ76jOIIOS29TFtf72/dWY0o34gnSYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yufeng <chenyufeng@iie.ac.cn>,
+	Duy Nguyen <duy.nguyen.rh@renesas.com>,
+	Tranh Ha <tranh.ha.xb@renesas.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/196] can: hi311x: fix null pointer dereference when resuming from sleep before interface was enabled
-Date: Mon, 13 Oct 2025 16:43:29 +0200
-Message-ID: <20251013144315.894145166@linuxfoundation.org>
+Subject: [PATCH 6.1 037/196] can: rcar_canfd: Fix controller mode setting
+Date: Mon, 13 Oct 2025 16:43:30 +0200
+Message-ID: <20251013144315.929277331@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,120 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yufeng <chenyufeng@iie.ac.cn>
+From: Duy Nguyen <duy.nguyen.rh@renesas.com>
 
-[ Upstream commit 6b696808472197b77b888f50bc789a3bae077743 ]
+[ Upstream commit 5cff263606a10102a0ea19ff579eaa18fd5577ad ]
 
-This issue is similar to the vulnerability in the `mcp251x` driver,
-which was fixed in commit 03c427147b2d ("can: mcp251x: fix resume from
-sleep before interface was brought up").
+Driver configures register to choose controller mode before
+setting all channels to reset mode leading to failure.
+The patch corrects operation of mode setting.
 
-In the `hi311x` driver, when the device resumes from sleep, the driver
-schedules `priv->restart_work`. However, if the network interface was
-not previously enabled, the `priv->wq` (workqueue) is not allocated and
-initialized, leading to a null pointer dereference.
-
-To fix this, we move the allocation and initialization of the workqueue
-from the `hi3110_open` function to the `hi3110_can_probe` function.
-This ensures that the workqueue is properly initialized before it is
-used during device resume. And added logic to destroy the workqueue
-in the error handling paths of `hi3110_can_probe` and in the
-`hi3110_can_remove` function to prevent resource leaks.
-
-Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
-Link: https://patch.msgid.link/20250911150820.250-1-chenyufeng@iie.ac.cn
+Signed-off-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
+Signed-off-by: Tranh Ha <tranh.ha.xb@renesas.com>
+Link: https://patch.msgid.link/TYWPR01MB87434739F83E27EDCD23DF44B416A@TYWPR01MB8743.jpnprd01.prod.outlook.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/hi311x.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/net/can/rcar/rcar_canfd.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
-index 57ea7dfe8a596..1acd4fc7adc8b 100644
---- a/drivers/net/can/spi/hi311x.c
-+++ b/drivers/net/can/spi/hi311x.c
-@@ -545,8 +545,6 @@ static int hi3110_stop(struct net_device *net)
+diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
+index a1f68b74229e6..3d6daeea83553 100644
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -717,9 +717,6 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
+ 	/* Reset Global error flags */
+ 	rcar_canfd_write(gpriv->base, RCANFD_GERFL, 0x0);
  
- 	priv->force_quit = 1;
- 	free_irq(spi->irq, priv);
--	destroy_workqueue(priv->wq);
--	priv->wq = NULL;
- 
- 	mutex_lock(&priv->hi3110_lock);
- 
-@@ -771,34 +769,23 @@ static int hi3110_open(struct net_device *net)
- 		goto out_close;
- 	}
- 
--	priv->wq = alloc_workqueue("hi3110_wq", WQ_FREEZABLE | WQ_MEM_RECLAIM,
--				   0);
--	if (!priv->wq) {
--		ret = -ENOMEM;
--		goto out_free_irq;
--	}
--	INIT_WORK(&priv->tx_work, hi3110_tx_work_handler);
--	INIT_WORK(&priv->restart_work, hi3110_restart_work_handler);
+-	/* Set the controller into appropriate mode */
+-	rcar_canfd_set_mode(gpriv);
 -
- 	ret = hi3110_hw_reset(spi);
- 	if (ret)
--		goto out_free_wq;
-+		goto out_free_irq;
- 
- 	ret = hi3110_setup(net);
- 	if (ret)
--		goto out_free_wq;
-+		goto out_free_irq;
- 
- 	ret = hi3110_set_normal_mode(spi);
- 	if (ret)
--		goto out_free_wq;
-+		goto out_free_irq;
- 
- 	netif_wake_queue(net);
- 	mutex_unlock(&priv->hi3110_lock);
- 
- 	return 0;
- 
-- out_free_wq:
--	destroy_workqueue(priv->wq);
-  out_free_irq:
- 	free_irq(spi->irq, priv);
- 	hi3110_hw_sleep(spi);
-@@ -915,6 +902,15 @@ static int hi3110_can_probe(struct spi_device *spi)
- 	if (ret)
- 		goto out_clk;
- 
-+	priv->wq = alloc_workqueue("hi3110_wq", WQ_FREEZABLE | WQ_MEM_RECLAIM,
-+				   0);
-+	if (!priv->wq) {
-+		ret = -ENOMEM;
-+		goto out_clk;
-+	}
-+	INIT_WORK(&priv->tx_work, hi3110_tx_work_handler);
-+	INIT_WORK(&priv->restart_work, hi3110_restart_work_handler);
+ 	/* Transition all Channels to reset mode */
+ 	for_each_set_bit(ch, &gpriv->channels_mask, gpriv->max_channels) {
+ 		rcar_canfd_clear_bit(gpriv->base,
+@@ -739,6 +736,10 @@ static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
+ 			return err;
+ 		}
+ 	}
 +
- 	priv->spi = spi;
- 	mutex_init(&priv->hi3110_lock);
- 
-@@ -950,6 +946,8 @@ static int hi3110_can_probe(struct spi_device *spi)
- 	return 0;
- 
-  error_probe:
-+	destroy_workqueue(priv->wq);
-+	priv->wq = NULL;
- 	hi3110_power_enable(priv->power, 0);
- 
-  out_clk:
-@@ -970,6 +968,9 @@ static void hi3110_can_remove(struct spi_device *spi)
- 
- 	hi3110_power_enable(priv->power, 0);
- 
-+	destroy_workqueue(priv->wq);
-+	priv->wq = NULL;
++	/* Set the controller into appropriate mode */
++	rcar_canfd_set_mode(gpriv);
 +
- 	clk_disable_unprepare(priv->clk);
+ 	return 0;
+ }
  
- 	free_candev(net);
 -- 
 2.51.0
 
