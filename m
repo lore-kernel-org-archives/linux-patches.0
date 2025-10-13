@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAE930C614;
-	Mon, 13 Oct 2025 15:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE83530C614;
+	Mon, 13 Oct 2025 15:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369807; cv=none; b=IRONxCpQAi8slnCK0QtqlF28jU+X70nRDa9CU4+v0BJPSdKe+qMVFm93oVblA02LQowE7KXVLMkMzCLyy1bntq+cChy4MorxpDuKIVTPaV8dP/S26BhaNa78F1PJdMuqyQFjaEQGbBA6sDpRWF8nP32NkaL6lvEx//o1lrQYOzA=
+	t=1760369810; cv=none; b=uQL4cq70rGYTWDLl6hUI5BtR+06WXdqOmO0/XxPPWfebK0/Opm3YF/vOb7fLvv4yx/wuLwS9dWG1vdxCrTLr0eTDB4vuTuZQck0kUiAdr31d+m9vxBsg+Mtyp2KHu9MPqOOqxUn5kO7GW1UyTztEO2UzE+OYLtam1D9W2RLyevQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369807; c=relaxed/simple;
-	bh=67F7clzCZL84ZwplXOoI6Bze+e6g8y7rRoxO0yq1xXg=;
+	s=arc-20240116; t=1760369810; c=relaxed/simple;
+	bh=241kqRbkJsTjz0tqmrgNVgTHOd1xXZn953hMDZp/dwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCuso5ked+SazlbSY6RJsX3qoLW4+SSCuIYhB4b4nrRJxdEBpQigLocS/T9nGrOPl9xCumLclZnVG72lQXkm/MuHJ7YbmwRiUbY1JnafB9V+6EDJPBZIShhpcpCpQrWRJ1sLDhhtAdn6b5/o7uptlMl/so8OVRCYW82ikKwq0rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qa9jayW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=meYzomCCg0G9RSS8barkU4NAXn4mrK57H4sJWx1hO9xOX28676DDmRtBemA8JM2FMTzh/1VbjYahDT00KADBsMrgoq4/MC+2eVe79gHOC1NkZlzJXUqWqFxd0er0fhzLNt14487WDE9xgMmEwSKMNJ4IEsRPkNH/yisYuoYxDV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lL+UasWr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qa9jayW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C981C4CEE7;
-	Mon, 13 Oct 2025 15:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lL+UasWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1883EC4CEE7;
+	Mon, 13 Oct 2025 15:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369807;
-	bh=67F7clzCZL84ZwplXOoI6Bze+e6g8y7rRoxO0yq1xXg=;
+	s=korg; t=1760369810;
+	bh=241kqRbkJsTjz0tqmrgNVgTHOd1xXZn953hMDZp/dwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qa9jayWesiy7St4a8bzHzq7jWmGuAMLMjo6GlZ3TORIzu1P1+vlUbK+ms5vuQply
-	 g9AFr5/FOrG/FUi3tUFBxSokYp9uN8NShug2F9hD1sb/p/ILc7CvbU5UXc1e53qdyb
-	 04oi8EaXfTnG85SIJhKtY/pcJium750sBN4Y/2Dg=
+	b=lL+UasWrB9sVL1aUoFyUM6b59IXWNu3qaWbGaJJhd47YttHtX1R2Qjwho2X5Wo5Mi
+	 6kx9H2eUsmhqAsnkN2OFcGKODrujTh1RjCK82Bbu1PVXEz81PHhOo5Krb87+5Hj2BW
+	 PHm4eKwLfKcUF3ec+ZiecK9j5+uQ2dXHkd98lHys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 374/563] scsi: qla2xxx: Fix incorrect sign of error code in START_SP_W_RETRIES()
-Date: Mon, 13 Oct 2025 16:43:55 +0200
-Message-ID: <20251013144424.824428724@linuxfoundation.org>
+Subject: [PATCH 6.17 344/563] RDMA/mlx5: Fix page size bitmap calculation for KSM mode
+Date: Mon, 13 Oct 2025 16:43:25 +0200
+Message-ID: <20251013144423.732584269@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Edward Srouji <edwards@nvidia.com>
 
-[ Upstream commit 1f037e3acda79639a78f096355f2c308a3d45492 ]
+[ Upstream commit 372fdb5c75b61f038f4abf596abdcf01acbdb7af ]
 
-Change the error code EAGAIN to -EAGAIN in START_SP_W_RETRIES() to align
-with qla2x00_start_sp() returning negative error codes or QLA_SUCCESS,
-preventing logical errors.  Additionally, the '_rval' variable should
-store negative error codes to conform to Linux kernel error code
-conventions.
+When using KSM (Key Scatter-gather Memory) access mode, the HW requires
+the IOVA to be aligned to the selected page size.
+Without this alignment, the HW may not function correctly.
 
-Fixes: 9803fb5d2759 ("scsi: qla2xxx: Fix task management cmd failure")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Message-ID: <20250905075446.381139-3-rongqianfeng@vivo.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Currently, mlx5_umem_mkc_find_best_pgsz() does not filter out page sizes
+that would result in misaligned IOVAs for KSM mode. This can lead to
+selecting page sizes that are incompatible with the given IOVA.
+
+Fix this by filtering the page size bitmap when in KSM mode, keeping
+only page sizes to which the IOVA is aligned to.
+
+Fixes: fcfb03597b7d ("RDMA/mlx5: Align mkc page size capability check to PRM")
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20250824144839.154717-1-edwards@nvidia.com
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index be211ff22acbd..6a2e1c7fd1251 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2059,11 +2059,11 @@ static void qla_marker_sp_done(srb_t *sp, int res)
- 	int cnt = 5; \
- 	do { \
- 		if (_chip_gen != sp->vha->hw->chip_reset || _login_gen != sp->fcport->login_gen) {\
--			_rval = EINVAL; \
-+			_rval = -EINVAL; \
- 			break; \
- 		} \
- 		_rval = qla2x00_start_sp(_sp); \
--		if (_rval == EAGAIN) \
-+		if (_rval == -EAGAIN) \
- 			msleep(1); \
- 		else \
- 			break; \
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 8d21ecf8a996f..15e3962633dc3 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -1803,6 +1803,10 @@ mlx5_umem_mkc_find_best_pgsz(struct mlx5_ib_dev *dev, struct ib_umem *umem,
+ 
+ 	bitmap = GENMASK_ULL(max_log_entity_size_cap, min_log_entity_size_cap);
+ 
++	/* In KSM mode HW requires IOVA and mkey's page size to be aligned */
++	if (access_mode == MLX5_MKC_ACCESS_MODE_KSM && iova)
++		bitmap &= GENMASK_ULL(__ffs64(iova), 0);
++
+ 	return ib_umem_find_best_pgsz(umem, bitmap, iova);
+ }
+ 
 -- 
 2.51.0
 
