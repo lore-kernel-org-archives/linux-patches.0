@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5995A228CB0;
-	Mon, 13 Oct 2025 15:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F852309DB1;
+	Mon, 13 Oct 2025 15:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370041; cv=none; b=gM9jxxA+k3reW5Gnuh1xOpc7Zxi7dVYFIUJ31RTOm35nchPwfF/XQn4Vv9iwXFKiUvoETVcsznetIH4SkxaSIlDL0Y87MYLuhADkCT+mmEN31bqctJekuYN/xPFt/uvqnWJBbk/xRQi2s87fL1RPzK4SafXYdK6/bYzTS+0Ge/M=
+	t=1760370044; cv=none; b=DOPmBPcR2lfH6+coMsiyMkTBfcxeYpgvQwYWqiQ+KmXdQsQfLoKW4jFzw7yxnViE+XnTLtQv/x4RZyFDVfwmVBHqepyUmAv3iT+dndP819JBGrJKKUWebcp6w9EbiceBu7Ppz09ZS3tW0OYunL8kQnM/4Lua0XEys+wmeKsPPng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370041; c=relaxed/simple;
-	bh=KnGLTcD8h/hlexYLi3B513/phJ9/fqTd9o6E6DACPMk=;
+	s=arc-20240116; t=1760370044; c=relaxed/simple;
+	bh=th26xk+qs2gz5c06yLQwGHFHj2pioVBxMHBbjVi18DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9chWSeQcnPj15IIdKCxAssjRAbdmOcsHh0R6UijDV+CErt8ETYoqf3DNw065nu50YFs5II6P2mIRJHf2pPgSkldKBGPwnOy2NLtEVvAc97xQfeksk1M2+4ZJqWFN891edsOrs2MSz7V08h1k0OnDXb2PU1TrnLwcT24DyZ+X10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6TuGhYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sb5lDPCWz09tt5wObudwpwGqakPMj18LgDJ61NruU6XStB0KsA2N10J+9GAsd+NEfr7IITH3arLOVeS6uYE9kGFcduUBEt1lrxLEWyX2BoIh0269V4IQvEAfaZlJMQ5hgST++C9BONxh5rv5Md68tuLgkk9Y7DUIBh+GvCSg2v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fgya7U2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6TuGhYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902C7C4CEE7;
-	Mon, 13 Oct 2025 15:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fgya7U2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55224C4CEE7;
+	Mon, 13 Oct 2025 15:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370040;
-	bh=KnGLTcD8h/hlexYLi3B513/phJ9/fqTd9o6E6DACPMk=;
+	s=korg; t=1760370043;
+	bh=th26xk+qs2gz5c06yLQwGHFHj2pioVBxMHBbjVi18DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6TuGhYXSOz+midqxqnYJljLVfYsE7Z913YvPxWSFJCYlFR/MIgPhW3hmfnr4idu8
-	 mEYLYPhW+Wv5e1wH+IMLA25lJVOQxXMm5e6X4RDV5z5TlCx7uvK/H0XAPIrVooM/sg
-	 EEu6l+As4GjcfhXi1amsQ8hBkEWPNcYLw5fMJ+yM=
+	b=Fgya7U2TDFA2TxJM7lVNRRK2M0XPZ2lkxaO6nc98PZ0QHq/x2mNRCYkodc8AVOEWe
+	 7FizY4dc/CBKjMuo6e9mVI5HIIFY9p5/TRdU7kGimVBriz7Xuynqmv2tZsHBYqN0S2
+	 iXCfaI+0DAUPDIyaJRGpdzFrQPcugnJSdTr3Xjcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 458/563] Bluetooth: ISO: Fix possible UAF on iso_conn_free
-Date: Mon, 13 Oct 2025 16:45:19 +0200
-Message-ID: <20251013144427.877235780@linuxfoundation.org>
+Subject: [PATCH 6.17 459/563] Bluetooth: ISO: free rx_skb if not consumed
+Date: Mon, 13 Oct 2025 16:45:20 +0200
+Message-ID: <20251013144427.913518869@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -50,38 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 9950f095d6c875dbe0c9ebfcf972ec88fdf26fc8 ]
+[ Upstream commit 6ba85da5804efffe15c89b03742ea868f20b4172 ]
 
-This attempt to fix similar issue to sco_conn_free where if the
-conn->sk is not set to NULL may lead to UAF on iso_conn_free.
+If iso_conn is freed when RX is incomplete, free any leftover skb piece.
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Fixes: dc26097bdb86 ("Bluetooth: ISO: Use kref to track lifetime of iso_conn")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/iso.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 5ce823ca3aaf4..c047a15e3fa39 100644
+index c047a15e3fa39..9170c46eb47c6 100644
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -750,6 +750,13 @@ static void iso_sock_kill(struct sock *sk)
+@@ -111,6 +111,8 @@ static void iso_conn_free(struct kref *ref)
+ 	/* Ensure no more work items will run since hci_conn has been dropped */
+ 	disable_delayed_work_sync(&conn->timeout_work);
  
- 	BT_DBG("sk %p state %d", sk, sk->sk_state);
- 
-+	/* Sock is dead, so set conn->sk to NULL to avoid possible UAF */
-+	if (iso_pi(sk)->conn) {
-+		iso_conn_lock(iso_pi(sk)->conn);
-+		iso_pi(sk)->conn->sk = NULL;
-+		iso_conn_unlock(iso_pi(sk)->conn);
-+	}
++	kfree_skb(conn->rx_skb);
 +
- 	/* Kill poor orphan */
- 	bt_sock_unlink(&iso_sk_list, sk);
- 	sock_set_flag(sk, SOCK_DEAD);
+ 	kfree(conn);
+ }
+ 
 -- 
 2.51.0
 
