@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BE92FB978;
-	Mon, 13 Oct 2025 15:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8459D30FC27;
+	Mon, 13 Oct 2025 15:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368961; cv=none; b=raIkpjDjkBIFuDls22S3AHUzA9cn8FUkVHgkMnTesGWPk7Z9tGwWJiJ2Y3u4ANq1hAvHpeV8irIwdE859zFg2YLLEmx0MY2lTQQcVsi+s4JmdkdkCvh+dCF1RkpSRDK7SEtzzxN2u4lKe26AAqkYPMfqpFUMCzOdmN5b/e1FIOY=
+	t=1760368964; cv=none; b=YsA6v3IRgY/OSBJhxkvxKezsGAWxlOgIrDq/JaXtywX68cGEa8STAGUroXG1jG7Tw2ej7MCuN+K6E04p1HZbTzmpLEaQ2nAcpVEJHaO3XjPs90SiZkp+9om7Kl2qQxvKkj3GmttN9AnK6ztuXeA+ChFzM3dGJHu7VUN40fHPPkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368961; c=relaxed/simple;
-	bh=wBeZAVmiSaRD6DYB0mC5zn3w95yzJPpJtSLIqJeQou0=;
+	s=arc-20240116; t=1760368964; c=relaxed/simple;
+	bh=hRZgqEv8OJYKRvlCgje4fPESnNCqflQbe0EVTnB3QKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JK+zYJtxSTc3DmeV0LndQ1m9kLFLUGl7dE2m7tlQdAiTeWvxiCBTUmBtCZ4bMRhijs9tDgCUQUnY71vVb4DXnRkz67Rt0XXjHyBdrFELrwxPFf9Zax0FIj0P6fT4igY0pJ+bhaBI5EGQaSnH7bj4b0W9ssW2rXvcHJOqlZmXvt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjAQtTnV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=swzqwi8ACVZAtd/Hz2cpxQchhRBxd6IBUjsweO6/ZX7x+YYfs8Vb2eaRS8FSuYnKy0ktsPqYZKFTmjrqBz4LG3BaQDDImaUBLDBeIDArBWR5nA0MDLhC9LsRNXXDly6lwgqNQw6fBh1pZkSJU6XzGr/qvd3SryVwWmBpfxUQ0qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHLzq0Sk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjAQtTnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA63C116B1;
-	Mon, 13 Oct 2025 15:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHLzq0Sk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF6AC4CEFE;
+	Mon, 13 Oct 2025 15:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368961;
-	bh=wBeZAVmiSaRD6DYB0mC5zn3w95yzJPpJtSLIqJeQou0=;
+	s=korg; t=1760368964;
+	bh=hRZgqEv8OJYKRvlCgje4fPESnNCqflQbe0EVTnB3QKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjAQtTnV33JElFr11FDNjniZTEUcR8j7RgqE8nFWFzHT8lbtkx2BRURdpnudAxNjA
-	 Zb3W89cq67BGTw/Bs0742WQYZi0tWXgaZdPNrlb7uF3qT9ukzLMP3zKebAV1hzqCMj
-	 8tFTmCbCPDnWWqywv2Mbnum//HJWw9ulVgNGWgm0=
+	b=oHLzq0SkA9QPey4lDhC30fSChA9gcsPnj6gkem1rTWoB+NvN/ARKVS445omcwIUY7
+	 HF4HlBoEZeKO8hYMjXobJp89OyPnFUW9Wi/o0Py7NgLYPy/hGhzhYPFzNW6qEDPL5Z
+	 gF8c7mQbe/b0RuHrrCB3ODv2mS11zcw8AJomJjMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Willy Tarreau <w@1wt.eu>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/563] tools/nolibc: avoid error in dup2() if old fd equals new fd
-Date: Mon, 13 Oct 2025 16:39:00 +0200
-Message-ID: <20251013144414.152157352@linuxfoundation.org>
+Subject: [PATCH 6.17 080/563] selftests/nolibc: fix EXPECT_NZ macro
+Date: Mon, 13 Oct 2025 16:39:01 +0200
+Message-ID: <20251013144414.196203409@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,50 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit d1ff0e2d13d6ac3a15be7870e15216726b0a809a ]
+[ Upstream commit 6d33ce3634f99e0c6c9ce9fc111261f2c411cb48 ]
 
-dup2() allows both 'old' and 'new' to have the same value, which dup3()
-does not. If libc dup2() is implemented through the dup3() system call,
-then it would incorrectly fail in this case.
+The expect non-zero macro was incorrect and never used. Fix its
+definition.
 
-Avoid the error by handling old == new explicitly.
-
-Fixes: 30ca20517ac1 ("tools headers: Move the nolibc header from rcutorture to tools/include/nolibc/")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://lore.kernel.org/r/20250820-nolibc-dup2-einval-v2-1-807185a45c56@linutronix.de
+Fixes: 362aecb2d8cfa ("selftests/nolibc: add basic infrastructure to ease creation of nolibc tests")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://lore.kernel.org/r/20250731201225.323254-2-benjamin@sipsolutions.net
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/sys.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/include/nolibc/sys.h b/tools/include/nolibc/sys.h
-index 295e71d34abad..90aadad31f6cb 100644
---- a/tools/include/nolibc/sys.h
-+++ b/tools/include/nolibc/sys.h
-@@ -238,6 +238,19 @@ static __attribute__((unused))
- int sys_dup2(int old, int new)
- {
- #if defined(__NR_dup3)
-+	int ret, nr_fcntl;
-+
-+#ifdef __NR_fcntl64
-+	nr_fcntl = __NR_fcntl64;
-+#else
-+	nr_fcntl = __NR_fcntl;
-+#endif
-+
-+	if (old == new) {
-+		ret = my_syscall2(nr_fcntl, old, F_GETFD);
-+		return ret < 0 ? ret : old;
-+	}
-+
- 	return my_syscall3(__NR_dup3, old, new, 0);
- #elif defined(__NR_dup2)
- 	return my_syscall2(__NR_dup2, old, new);
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index cc4d730ac4656..d074878eb2341 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -196,8 +196,8 @@ int expect_zr(int expr, int llen)
+ }
+ 
+ 
+-#define EXPECT_NZ(cond, expr, val)			\
+-	do { if (!(cond)) result(llen, SKIPPED); else ret += expect_nz(expr, llen; } while (0)
++#define EXPECT_NZ(cond, expr)				\
++	do { if (!(cond)) result(llen, SKIPPED); else ret += expect_nz(expr, llen); } while (0)
+ 
+ static __attribute__((unused))
+ int expect_nz(int expr, int llen)
 -- 
 2.51.0
 
