@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9E025784F;
-	Mon, 13 Oct 2025 15:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F725784F;
+	Mon, 13 Oct 2025 15:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368496; cv=none; b=eLyEhjf1n9OmIpVW6WrFafpx81fPUF25zOHpOtRxdBeM3jyHG07fe2FNupSOWH511Dm0O2+TV20RRdRFLfDnQuwtsSs2R9XdBxQJ/9XOreO1A0gHx+VXUfV2vJ+8SLwbcxmJugDswfEWyiIfrVCOy8i+R0ZaG/5+stVccuyRGRY=
+	t=1760368500; cv=none; b=bZjendqZaMV0PELXgVJIPAsG+rnD6LDSKRuBogITStFmpxeOyA1mi5WW/+I389YsCiEFARD3nJpmUbWmv3w/t78j/R8Z7s7aB42qwcfhWmeTgsA2RKa8W8dZg10BU0YIiOOzmS9BR+Z1s4WUhcmYnvL5Co1BDq0jbPkrRssRaVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368496; c=relaxed/simple;
-	bh=sZUCb8oTRc87XteldyDzXsITG3PmFNcp04t4xV6IGU4=;
+	s=arc-20240116; t=1760368500; c=relaxed/simple;
+	bh=QiBUuJiwG3ey1MyPML+c3TcTZDZOfdHIM0/QsRjcjEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QR7e3L7iFoVbe8sDNVUsqudxEVzbR/g82wRF+v/W6TMXnXgypMcqS1pWWwCaLdiv1rb0k+kD/1u66KUFQwymwab/qgYA5rHVxtnISouHm0AyeIer8q0jEO5NCm4zza6pGmTCH7jBuK9HJY1Q+9XHgxPqeiN7ea3/YsURUSE106g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PraTtu5a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z762hXBjKy6X67OgfW3RfXguHVO/VnLLpHd70ecVPmJhnBZ/Ow9emOin0MsXspvCgfC3U57Grfv7mL4pN9c9M2/D3w928Rl7S0rEXTPMCwbxTOPvxssQf2hBMynWA4sXX9i2QAWjLkBJyq63neEyHUV5N9bSGDaNKnkO6xFhaZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUhHvbBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PraTtu5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2336AC4CEE7;
-	Mon, 13 Oct 2025 15:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUhHvbBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D671C4CEE7;
+	Mon, 13 Oct 2025 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368496;
-	bh=sZUCb8oTRc87XteldyDzXsITG3PmFNcp04t4xV6IGU4=;
+	s=korg; t=1760368499;
+	bh=QiBUuJiwG3ey1MyPML+c3TcTZDZOfdHIM0/QsRjcjEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PraTtu5a+AWTjM7ZvfaLwdkJEOPheeUY5EUeq2jLEx29Fl25UrGrOJ9a0mZPwuxZR
-	 frBzF7z1Ra+NO1etGXe+vScR8Cxp7QmTaZdeBmud1eR2vyZA0J4iYeMqBimTeBdrGb
-	 xeOvNkUl9lrysQxbP5qMUIyl45wwYE49XmaoYkzA=
+	b=gUhHvbBemdAdfJECBs2PseFZ0dA3HWvW8IN6vrBw2v+FAr+GjtoKhvUblRUH5zHsb
+	 sylYnZQb1qotgqrJJz9nWoLtWIVhY2ecDIfbNZUjPs0PvFF74A9J7Gbme549gpmC4P
+	 P4llR+c8FpWW3rpcwTGxj02fTw9kRygzqmfMhh/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Matteo Martelli <matteomartelli3@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hansg@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/262] wifi: mt76: mt7996: Convert mt7996_wed_rro_addr to LE
-Date: Mon, 13 Oct 2025 16:44:51 +0200
-Message-ID: <20251013144331.487511731@linuxfoundation.org>
+Subject: [PATCH 6.12 140/262] iio: consumers: Fix handling of negative channel scale in iio_convert_raw_to_processed()
+Date: Mon, 13 Oct 2025 16:44:42 +0200
+Message-ID: <20251013144331.165263641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,93 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 809054a60d613ccca6e7f243bc68966b58044163 ]
+[ Upstream commit 0f85406bf830eb8747dd555ab53c9d97ee4af293 ]
 
-Do not use bitmask in mt7996_wed_rro_addr DMA descriptor in order to not
-break endianness
+There is an issue with the handling of negative channel scales
+in iio_convert_raw_to_processed_unlocked() when the channel-scale
+is of the IIO_VAL_INT_PLUS_[MICRO|NANO] type:
 
-Fixes: 950d0abb5cd94 ("wifi: mt76: mt7996: add wed rx support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250909-mt7996-rro-rework-v5-11-7d66f6eb7795@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Things work for channel-scale values > -1.0 and < 0.0 because of
+the use of signed values in:
+
+	*processed += div_s64(raw64 * (s64)scale_val2 * scale, 1000000LL);
+
+Things will break however for scale values < -1.0. Lets for example say
+that raw = 2, (caller-provided)scale = 10 and (channel)scale_val = -1.5.
+
+The result should then be 2 * 10 * -1.5 = -30.
+
+channel-scale = -1.5 means scale_val = -1 and scale_val2 = 500000,
+now lets see what gets stored in processed:
+
+1. *processed = raw64 * scale_val * scale;
+2. *processed += raw64 * scale_val2 * scale / 1000000LL;
+
+1. Sets processed to 2 * -1 * 10 = -20
+2. Adds 2 * 500000 * 10 / 1000000 = 10 to processed
+
+And the end result is processed = -20 + 10 = -10, which is not correct.
+
+Fix this by always using the abs value of both scale_val and scale_val2
+and if either is negative multiply the end-result by -1.
+
+Note there seems to be an unwritten rule about negative
+IIO_VAL_INT_PLUS_[MICRO|NANO] values that:
+
+i.   values > -1.0 and < 0.0 are written as val=0 val2=-xxx
+ii.  values <= -1.0 are written as val=-xxx val2=xxx
+
+But iio_format_value() will also correctly display a third option:
+
+iii. values <= -1.0 written as val=-xxx val2=-xxx
+
+Since iio_format_value() uses abs(val) when val2 < 0.
+
+This fix also makes iio_convert_raw_to_processed() properly handle
+channel-scales using this third option.
+
+Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
+Cc: Matteo Martelli <matteomartelli3@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20250831104825.15097-2-hansg@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c   |  8 +++++---
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 11 +++++------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/iio/inkern.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index c550385541143..91b7d35bdb431 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -679,6 +679,7 @@ void mt7996_wfsys_reset(struct mt7996_dev *dev)
- static int mt7996_wed_rro_init(struct mt7996_dev *dev)
+diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
+index 1155487f7aeac..0f394266ff8c0 100644
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -10,6 +10,7 @@
+ #include <linux/mutex.h>
+ #include <linux/property.h>
+ #include <linux/slab.h>
++#include <linux/units.h>
+ 
+ #include <linux/iio/iio.h>
+ #include <linux/iio/iio-opaque.h>
+@@ -602,7 +603,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
  {
- #ifdef CONFIG_NET_MEDIATEK_SOC_WED
-+	u32 val = FIELD_PREP(WED_RRO_ADDR_SIGNATURE_MASK, 0xff);
- 	struct mtk_wed_device *wed = &dev->mt76.mmio.wed;
- 	u32 reg = MT_RRO_ADDR_ELEM_SEG_ADDR0;
- 	struct mt7996_wed_rro_addr *addr;
-@@ -718,7 +719,7 @@ static int mt7996_wed_rro_init(struct mt7996_dev *dev)
+ 	int scale_type, scale_val, scale_val2;
+ 	int offset_type, offset_val, offset_val2;
+-	s64 raw64 = raw;
++	s64 denominator, raw64 = raw;
  
- 		addr = dev->wed_rro.addr_elem[i].ptr;
- 		for (j = 0; j < MT7996_RRO_WINDOW_MAX_SIZE; j++) {
--			addr->signature = 0xff;
-+			addr->data = cpu_to_le32(val);
- 			addr++;
- 		}
- 
-@@ -736,7 +737,7 @@ static int mt7996_wed_rro_init(struct mt7996_dev *dev)
- 	dev->wed_rro.session.ptr = ptr;
- 	addr = dev->wed_rro.session.ptr;
- 	for (i = 0; i < MT7996_RRO_WINDOW_MAX_LEN; i++) {
--		addr->signature = 0xff;
-+		addr->data = cpu_to_le32(val);
- 		addr++;
- 	}
- 
-@@ -836,6 +837,7 @@ static void mt7996_wed_rro_free(struct mt7996_dev *dev)
- static void mt7996_wed_rro_work(struct work_struct *work)
- {
- #ifdef CONFIG_NET_MEDIATEK_SOC_WED
-+	u32 val = FIELD_PREP(WED_RRO_ADDR_SIGNATURE_MASK, 0xff);
- 	struct mt7996_dev *dev;
- 	LIST_HEAD(list);
- 
-@@ -872,7 +874,7 @@ static void mt7996_wed_rro_work(struct work_struct *work)
- 				MT7996_RRO_WINDOW_MAX_LEN;
- reset:
- 			elem = ptr + elem_id * sizeof(*elem);
--			elem->signature = 0xff;
-+			elem->data |= cpu_to_le32(val);
- 		}
- 		mt7996_mcu_wed_rro_reset_sessions(dev, e->id);
- out:
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 425fd030bee00..29e7289c3a169 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -194,13 +194,12 @@ struct mt7996_hif {
- 	int irq;
- };
- 
-+#define WED_RRO_ADDR_SIGNATURE_MASK	GENMASK(31, 24)
-+#define WED_RRO_ADDR_COUNT_MASK		GENMASK(14, 4)
-+#define WED_RRO_ADDR_HEAD_HIGH_MASK	GENMASK(3, 0)
- struct mt7996_wed_rro_addr {
--	u32 head_low;
--	u32 head_high : 4;
--	u32 count: 11;
--	u32 oor: 1;
--	u32 rsv : 8;
--	u32 signature : 8;
-+	__le32 head_low;
-+	__le32 data;
- };
- 
- struct mt7996_wed_rro_session_id {
+ 	offset_type = iio_channel_read(chan, &offset_val, &offset_val2,
+ 				       IIO_CHAN_INFO_OFFSET);
+@@ -646,20 +647,19 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
+ 		*processed = raw64 * scale_val * scale;
+ 		break;
+ 	case IIO_VAL_INT_PLUS_MICRO:
+-		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val * scale;
+-		else
+-			*processed = raw64 * scale_val * scale;
+-		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+-				      1000000LL);
+-		break;
+ 	case IIO_VAL_INT_PLUS_NANO:
+-		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val * scale;
+-		else
+-			*processed = raw64 * scale_val * scale;
+-		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+-				      1000000000LL);
++		switch (scale_type) {
++		case IIO_VAL_INT_PLUS_MICRO:
++			denominator = MICRO;
++			break;
++		case IIO_VAL_INT_PLUS_NANO:
++			denominator = NANO;
++			break;
++		}
++		*processed = raw64 * scale * abs(scale_val);
++		*processed += div_s64(raw64 * scale * abs(scale_val2), denominator);
++		if (scale_val < 0 || scale_val2 < 0)
++			*processed *= -1;
+ 		break;
+ 	case IIO_VAL_FRACTIONAL:
+ 		*processed = div_s64(raw64 * (s64)scale_val * scale,
 -- 
 2.51.0
 
