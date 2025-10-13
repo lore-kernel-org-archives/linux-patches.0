@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40EB2248A5;
-	Mon, 13 Oct 2025 14:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0682248A5;
+	Mon, 13 Oct 2025 14:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367561; cv=none; b=TlGeVgTTMBWm63lvY02wcJpZ/td4vXVAMwrOfIFmubMzOVYfEKZHyHe/r0vPLn2PyNlyJs6Ed4SP9OxxIwcmzsxjsjsBOo1yw+Wu9Xuwmm1ZZF35O09mOP3wRngzNmib6IHm89drus1qwGIPMLZnKSMiXDRT0oYDaj3R+AHwX/s=
+	t=1760367563; cv=none; b=edBjn83TY2zCbP0THjiunsfa5lDap74oL4MNDhEoJgiA/NeRV/KhyOGUB1UFaSWzVGiPqPUGdo3T1bPBgcblrHMBF1ZHc9ORG9vR0uDYGQexr7YwFDdKiRF+wXiZ5ITZfNT9MC2hjnJb/imGE1cKL8uULlVFIZv/AUG4SNtBUzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367561; c=relaxed/simple;
-	bh=n3SyVGj4VRI4m/jvFuSfXFIvL6F11XQ4rRWj6YFbbSU=;
+	s=arc-20240116; t=1760367563; c=relaxed/simple;
+	bh=UvSLSIzLMmHkK4Z3x9au4R6fUeR7lF3Sjt8cSIv8mEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwcCG9KeLNIB7tBiRziKyTAhrXsMSzV+1lBYnt+SbNhgERWiuAE4BygDqdHbgbpzXWRBptQewgE3YOdC4BJJK9d0QA1aSIZTly7PpDo8VXUQz5Ss6UXP5wAgC4d3qeBEpFn1RE2AlXhRxoSaFr78wlmv4hp4PA0A0CzqjUx0Re8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8Fz9aud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxxRCQoAAXCBhZXiN5qVF4wczvuxGkaa5N+haNJmJMmhGyBU7QJR3PSw5wzyryewiOzPyvAgYwDvScisydnn9AcnzvMUVoE5OzKhN2fWff4wL+AWxetU1I5pLughOvKil4OCjoRSA8nLGqhQNxqJzgBRUCs70TCFD0Xu/8VC1/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cm02bJLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8Fz9aud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705F1C4CEE7;
-	Mon, 13 Oct 2025 14:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cm02bJLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A87C4CEE7;
+	Mon, 13 Oct 2025 14:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367560;
-	bh=n3SyVGj4VRI4m/jvFuSfXFIvL6F11XQ4rRWj6YFbbSU=;
+	s=korg; t=1760367563;
+	bh=UvSLSIzLMmHkK4Z3x9au4R6fUeR7lF3Sjt8cSIv8mEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8Fz9audiT9tS23Sxfbhsqs0TSv0pOl/fd1eVVppA4ActJC/+7oN9+F+XA+pYPVDw
-	 Lko+yZkvjo1aRs2FYTFQsUW0cEB/rDs5ilqgBC49GeZRAmGfWM32sKdDX1a4hHQyUP
-	 FJW3sSRr3vrJafNo3omJwz7997Svf3+tpFeJx0YQ=
+	b=Cm02bJLwI8C/FgN7eFHYCZcn1MbGLL74FMsmkZofw0PyaHyLY2YcqVVWlzO8clwcG
+	 smBjRE7cynAoqpwEUU6qSEfp2uJQ3hyl7RNtu22wvYvsiJu7ApXmQ7P2tHsrmWUTQF
+	 belxIJKXpZzZwKIsKrKInu6S3KBH0v26mZWlRUB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Qi Xi <xiqi2@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/196] once: fix race by moving DO_ONCE to separate section
-Date: Mon, 13 Oct 2025 16:44:05 +0200
-Message-ID: <20251013144317.153162921@linuxfoundation.org>
+Subject: [PATCH 6.6 055/196] hwmon: (mlxreg-fan) Separate methods of fan setting coming from different subsystems
+Date: Mon, 13 Oct 2025 16:44:06 +0200
+Message-ID: <20251013144317.189761947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,89 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit edcc8a38b5ac1a3dbd05e113a38a25b937ebefe5 ]
+[ Upstream commit c02e4644f8ac9c501077ef5ac53ae7fc51472d49 ]
 
-The commit c2c60ea37e5b ("once: use __section(".data.once")") moved
-DO_ONCE's ___done variable to .data.once section, which conflicts with
-DO_ONCE_LITE() that also uses the same section.
+Distinct between fan speed setting request coming for hwmon and
+thermal subsystems.
 
-This creates a race condition when clear_warn_once is used:
+There are fields 'last_hwmon_state' and 'last_thermal_state' in the
+structure 'mlxreg_fan_pwm', which respectively store the cooling state
+set by the 'hwmon' and 'thermal' subsystem.
+The purpose is to make arbitration of fan speed setting. For example, if
+fan speed required to be not lower than some limit, such setting is to
+be performed through 'hwmon' subsystem, thus 'thermal' subsystem will
+not set fan below this limit.
 
-Thread 1 (DO_ONCE)             Thread 2 (DO_ONCE)
-__do_once_start
-    read ___done (false)
-    acquire once_lock
-execute func
-__do_once_done
-    write ___done (true)      __do_once_start
-    release once_lock             // Thread 3 clear_warn_once reset ___done
-                                  read ___done (false)
-                                  acquire once_lock
-                              execute func
-schedule once_work            __do_once_done
-once_deferred: OK             write ___done (true)
-static_branch_disable         release once_lock
-                              schedule once_work
-                              once_deferred:
-                                  BUG_ON(!static_key_enabled)
+Currently, the 'last_thermal_state' is also be updated by 'hwmon' causing
+cooling state to never be set to a lower value.
 
-DO_ONCE_LITE() in once_lite.h is used by WARN_ON_ONCE() and other warning
-macros. Keep its ___done flag in the .data..once section and allow resetting
-by clear_warn_once, as originally intended.
+Eliminate update of 'last_thermal_state', when request is coming from
+'hwmon' subsystem.
 
-In contrast, DO_ONCE() is used for functions like get_random_once() and
-relies on its ___done flag for internal synchronization. We should not reset
-DO_ONCE() by clear_warn_once.
-
-Fix it by isolating DO_ONCE's ___done into a separate .data..do_once section,
-shielding it from clear_warn_once.
-
-Fixes: c2c60ea37e5b ("once: use __section(".data.once")")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: da74944d3a46 ("hwmon: (mlxreg-fan) Use pwm attribute for setting fan speed low limit")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250113084859.27064-2-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 1 +
- include/linux/once.h              | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/mlxreg-fan.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index cf3f8b9bf43f0..010ac18c05916 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -351,6 +351,7 @@
- 	__start_once = .;						\
- 	*(.data..once)							\
- 	__end_once = .;							\
-+	*(.data..do_once)						\
- 	STRUCT_ALIGN();							\
- 	*(__tracepoints)						\
- 	/* implement dynamic printk debug */				\
-diff --git a/include/linux/once.h b/include/linux/once.h
-index 30346fcdc7995..449a0e34ad5ad 100644
---- a/include/linux/once.h
-+++ b/include/linux/once.h
-@@ -46,7 +46,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
- #define DO_ONCE(func, ...)						     \
- 	({								     \
- 		bool ___ret = false;					     \
--		static bool __section(".data..once") ___done = false;	     \
-+		static bool __section(".data..do_once") ___done = false;     \
- 		static DEFINE_STATIC_KEY_TRUE(___once_key);		     \
- 		if (static_branch_unlikely(&___once_key)) {		     \
- 			unsigned long ___flags;				     \
-@@ -64,7 +64,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
- #define DO_ONCE_SLEEPABLE(func, ...)						\
- 	({									\
- 		bool ___ret = false;						\
--		static bool __section(".data..once") ___done = false;		\
-+		static bool __section(".data..do_once") ___done = false;	\
- 		static DEFINE_STATIC_KEY_TRUE(___once_key);			\
- 		if (static_branch_unlikely(&___once_key)) {			\
- 			___ret = __do_once_sleepable_start(&___done);		\
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index c25a54d5b39ad..0ba9195c9d713 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -113,8 +113,8 @@ struct mlxreg_fan {
+ 	int divider;
+ };
+ 
+-static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
+-				    unsigned long state);
++static int _mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
++				     unsigned long state, bool thermal);
+ 
+ static int
+ mlxreg_fan_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+@@ -224,8 +224,9 @@ mlxreg_fan_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 				 * last thermal state.
+ 				 */
+ 				if (pwm->last_hwmon_state >= pwm->last_thermal_state)
+-					return mlxreg_fan_set_cur_state(pwm->cdev,
+-									pwm->last_hwmon_state);
++					return _mlxreg_fan_set_cur_state(pwm->cdev,
++									 pwm->last_hwmon_state,
++									 false);
+ 				return 0;
+ 			}
+ 			return regmap_write(fan->regmap, pwm->reg, val);
+@@ -357,9 +358,8 @@ static int mlxreg_fan_get_cur_state(struct thermal_cooling_device *cdev,
+ 	return 0;
+ }
+ 
+-static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
+-				    unsigned long state)
+-
++static int _mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
++				     unsigned long state, bool thermal)
+ {
+ 	struct mlxreg_fan_pwm *pwm = cdev->devdata;
+ 	struct mlxreg_fan *fan = pwm->fan;
+@@ -369,7 +369,8 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
+ 		return -EINVAL;
+ 
+ 	/* Save thermal state. */
+-	pwm->last_thermal_state = state;
++	if (thermal)
++		pwm->last_thermal_state = state;
+ 
+ 	state = max_t(unsigned long, state, pwm->last_hwmon_state);
+ 	err = regmap_write(fan->regmap, pwm->reg,
+@@ -381,6 +382,13 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
+ 	return 0;
+ }
+ 
++static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
++				    unsigned long state)
++
++{
++	return _mlxreg_fan_set_cur_state(cdev, state, true);
++}
++
+ static const struct thermal_cooling_device_ops mlxreg_fan_cooling_ops = {
+ 	.get_max_state	= mlxreg_fan_get_max_state,
+ 	.get_cur_state	= mlxreg_fan_get_cur_state,
 -- 
 2.51.0
 
