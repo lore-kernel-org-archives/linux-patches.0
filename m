@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C40D2BEC34;
-	Mon, 13 Oct 2025 15:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A1B1F1313;
+	Mon, 13 Oct 2025 15:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368570; cv=none; b=Jdz7e7/YWqxcskTmx8OUJibalJoNa2bQ05xytHQZKMyYzrM5TfKbSzDKVrw14AhokwHDl20k+7JT7qQV0uFjY6fzDyK1nOftWZtNzWzyJRupnQi6gmXD1rkJpSvp1UJNYzpvqH0iuhRsO0ND/uceotfVu34RQf0OyUcOKTthMeg=
+	t=1760368573; cv=none; b=bpbIJHVrgIWIEZDqwZu8btg3mzX6iikiRi13A5f8+dM2wiwxBAHrx2623UOJEhLH2WjJ0DTTD3SZDDay9UXmu+xuwtAlUTnKTXwIfXOcU1cEgKyqlIk1Ki3s7QdUNJpBCqLRx5+DhJboPg1m3bNw3ATlrvkANDabHU+MnWJrBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368570; c=relaxed/simple;
-	bh=sbKwKH41tuopmMchn5Jq4WPnqMNu16Lx4wop7FNRQS0=;
+	s=arc-20240116; t=1760368573; c=relaxed/simple;
+	bh=QL2G0q7JYoaf5JAwYZtPkQvBaczV7X45pdMs0UYJT9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfjLdcFeb3Ta1vq9roBITk0SYQ8EWqJ8bGwkJ2c81sZXsnYrnSTlqukw16e/jebHhMV7hqj3WZjK4kHovCr8hTBB6TmKjwtuC+ALYU+X5I7D4Y4Zw4m5pLYjnh5KKinOQGg4YE/V5FjUN2YnK17P4m8MyNKMiSA8jfm0UuEoEks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFCeAjEu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSYIjuXOxocMF6WDXCdaNy/KcM6Osn6JA71b/TYQA2HceavZyN+CsRsL/vCpjkAjlBRBaTuYG0mWqThnOVqJd7xrd41K4pGnpqfOjvkOwwiRC4oDdBBS1W22fBgzcHDGj6VKquk9y4lP4hf/3IBvZoGFcpkSZx70u3oqncy/Wi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7aaKGTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFCeAjEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E2FC4CEE7;
-	Mon, 13 Oct 2025 15:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7aaKGTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE5CC4CEE7;
+	Mon, 13 Oct 2025 15:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368570;
-	bh=sbKwKH41tuopmMchn5Jq4WPnqMNu16Lx4wop7FNRQS0=;
+	s=korg; t=1760368572;
+	bh=QL2G0q7JYoaf5JAwYZtPkQvBaczV7X45pdMs0UYJT9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFCeAjEuSKYumgJ5Il/QKpjzDiJUm8eWz1QsCJuK90dDYnbwNhsV1AozsqPMnMd1b
-	 tUJzJ6z349Ru7bF1l6pDO/Vc/fuH6wzXRmbvc5MSNmX9ugRLYHCYoEl6vuc0cMu61I
-	 9Bsmsg8/yk6C/VMMedZ3ge6fNcSpY+MZxTk6ps2g=
+	b=e7aaKGTQx6DOShPSmoH1YxQ7G4RI0DNwiMFUUVGOb6ZRh7eEXkCcAd6P7/ZMiWtB0
+	 nIebcyJy2nP625n8Qv/Ynj3uYgwo0Tv9wi9SfVu3o/u08TdUu0+7Ait9sQ2mXRUMbH
+	 dManKjdQjKkrecbHX7Y7r0VHVdExHIsllLYrzC3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 205/262] Bluetooth: ISO: dont leak skb in ISO_CONT RX
-Date: Mon, 13 Oct 2025 16:45:47 +0200
-Message-ID: <20251013144333.626877802@linuxfoundation.org>
+Subject: [PATCH 6.12 206/262] Bluetooth: hci_sync: Fix using random address for BIG/PA advertisements
+Date: Mon, 13 Oct 2025 16:45:48 +0200
+Message-ID: <20251013144333.661766219@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 5bf863f4c5da055c1eb08887ae4f26d99dbc4aac ]
+[ Upstream commit 03ddb4ac251463ec5b7b069395d9ab89163dd56c ]
 
-For ISO_CONT RX, the data from skb is copied to conn->rx_skb, but the
-skb is leaked.
+When creating an advertisement for BIG the address shall not be
+non-resolvable since in case of acting as BASS/Broadcast Assistant the
+address must be the same as the connection in order to use the PAST
+method and even when PAST/BASS are not in the picture a Periodic
+Advertisement can still be synchronized thus the same argument as to
+connectable advertisements still stand.
 
-Free skb after copying its data.
-
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index e38f52638627d..2cd0b963c96bd 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2304,7 +2304,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
- 					  skb->len);
- 		conn->rx_len -= skb->len;
--		return;
-+		break;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 333f32a9fd219..853acfa8e9433 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1325,7 +1325,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ {
+ 	struct hci_cp_le_set_ext_adv_params cp;
+ 	struct hci_rp_le_set_ext_adv_params rp;
+-	bool connectable;
++	bool connectable, require_privacy;
+ 	u32 flags;
+ 	bdaddr_t random_addr;
+ 	u8 own_addr_type;
+@@ -1363,10 +1363,12 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 		return -EPERM;
  
- 	case ISO_END:
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+ 	/* Set require_privacy to true only when non-connectable
+-	 * advertising is used. In that case it is fine to use a
+-	 * non-resolvable private address.
++	 * advertising is used and it is not periodic.
++	 * In that case it is fine to use a non-resolvable private address.
+ 	 */
+-	err = hci_get_random_address(hdev, !connectable,
++	require_privacy = !connectable && !(adv && adv->periodic);
++
++	err = hci_get_random_address(hdev, require_privacy,
+ 				     adv_use_rpa(hdev, flags), adv,
+ 				     &own_addr_type, &random_addr);
+ 	if (err < 0)
 -- 
 2.51.0
 
