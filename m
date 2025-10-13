@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C1730DEDC;
-	Mon, 13 Oct 2025 15:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BDD30DED9;
+	Mon, 13 Oct 2025 15:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370134; cv=none; b=l6K3PIE5uNs8QnmsTp4zujavKdHBsuA4V3vn96nLHFZCedTvX2uJnMPQOEUP+ePiZelGPYOOwnknJZb6iFABG5KxlszWk662+vIhL63CZRsMqTo6uubraWrduepYsApMLwGaIUy/PhLB4MwVADVc7qZSr8bB+v4sJ0dJGyxdpMg=
+	t=1760370137; cv=none; b=bW4IummR+vBsrShr0pWSVoSh0tNEWzv7pDsvLR3K+en7aGS4gA1c271dvOQgB4wC7n8Wp5JvDZ3IFnMWo0Rwc9a8LLnuDXGsYHw0yRHcvivnZsCwBX43iT6yzZev/WayOznZeYPkpVwNqb+h0mS1ND4pA1p1HuCpbEl1ll1PVU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370134; c=relaxed/simple;
-	bh=36FZGd4nd2adIXtYQnH4J8z9p2N5OWTOJ9ylGdfO5WQ=;
+	s=arc-20240116; t=1760370137; c=relaxed/simple;
+	bh=dEjkGF2bAxgjQpXq99p6xvjzJaSRC30heyYsSDEdwCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G8Te4+reGtZHXyKWb2wLeIXlbaUG/VyVJpyyIZ8Con3hba8bHS08zYHoJv7B0CaO09CEdOIJoqNgFAimtpQbixTlI8RGkasyDbp+U8jj3ET5zYU+WlaAi7PVcLYX1DGj2ojIJSb6/QQZuGTB0WWNAwZH0PGalOuYrrAX4yBq4VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uK7QNUFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eGORhGQ5U8SNTMdfj5N/NqPm8F9r1OuuPEWKKjPmkXOVlrnc6qclGfp6s37FmGsAu/XeVryJrbY8ont5nxkFWiM0Fdi9e2BeVTxZDMKw213rv4dsJwvEbgMfCqsa0KVnejm+d0UEzBcMt0oOhXLZ/gPq1IswcxDwNiHdzmjgP6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmwJUnfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uK7QNUFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69AFC4CEE7;
-	Mon, 13 Oct 2025 15:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmwJUnfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A20C4CEE7;
+	Mon, 13 Oct 2025 15:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370134;
-	bh=36FZGd4nd2adIXtYQnH4J8z9p2N5OWTOJ9ylGdfO5WQ=;
+	s=korg; t=1760370136;
+	bh=dEjkGF2bAxgjQpXq99p6xvjzJaSRC30heyYsSDEdwCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uK7QNUFeu0YQ9JHAnElxdHQ4CDwREiT0DaokrPHo+AuRNxTOBD4bVAAowotzWlGtx
-	 PafJIOdQIjLayExYP/ng1pQeAqfFyYROIJiaXzcD+hNURmkKurPy/QE6oXRFxCYkso
-	 T8WFr8K/7yW+tTFFd5owxLBba0VoC6e1cF6KCiww=
+	b=NmwJUnfM5sdH47Lkk2ZJCyv5ghKY06b8JkHIAFUbuJIamO4o8ZlyU6AKC7nUbB6Vg
+	 vEOUXVY+GHmnUPIlJViN7V2R8VLvBv/rANLPqH4EnT7QBvU86R0BX54ZqFstHsrltz
+	 DQlK9RJcnhVgDw3w0c7RwZWyROZ1vQiBP4gnjbnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Zanni <alessandro.zanni87@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 447/563] iommu/selftest: prevent use of uninitialized variable
-Date: Mon, 13 Oct 2025 16:45:08 +0200
-Message-ID: <20251013144427.475036772@linuxfoundation.org>
+Subject: [PATCH 6.17 484/563] nfs/localio: avoid issuing misaligned IO using O_DIRECT
+Date: Mon, 13 Oct 2025 16:45:45 +0200
+Message-ID: <20251013144428.825911269@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,71 +46,198 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alessandro Zanni <alessandro.zanni87@gmail.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 1d235d8494259b588bc3b7d29bc73ce34bf885bc ]
+[ Upstream commit 25ba2b84c38f624151a3ba36e56d41c39b9223ad ]
 
-Fix to avoid the usage of the `res` variable uninitialized in the
-following macro expansions.
+Add nfsd_file_dio_alignment and use it to avoid issuing misaligned IO
+using O_DIRECT. Any misaligned DIO falls back to using buffered IO.
 
-It solves the following warning:
-In function ‘iommufd_viommu_vdevice_alloc’,
-  inlined from ‘wrapper_iommufd_viommu_vdevice_alloc’ at iommufd.c:2889:1:
-../kselftest_harness.h:760:12: warning: ‘ret’ may be used uninitialized [-Wmaybe-uninitialized]
-  760 |   if (!(__exp _t __seen)) { \
-      |      ^
-../kselftest_harness.h:513:9: note: in expansion of macro ‘__EXPECT’
-  513 |   __EXPECT(expected, #expected, seen, #seen, ==, 1)
-      |   ^~~~~~~~
-iommufd_utils.h:1057:9: note: in expansion of macro ‘ASSERT_EQ’
- 1057 |   ASSERT_EQ(0, _test_cmd_trigger_vevents(self->fd, dev_id, nvevents))
-      |   ^~~~~~~~~
-iommufd.c:2924:17: note: in expansion of macro ‘test_cmd_trigger_vevents’
- 2924 |   test_cmd_trigger_vevents(dev_id, 3);
-      |   ^~~~~~~~~~~~~~~~~~~~~~~~
+Because misaligned DIO is now handled safely, remove the nfs modparam
+'localio_O_DIRECT_semantics' that was added to require users opt-in to
+the requirement that all O_DIRECT be properly DIO-aligned.
 
-The issue can be reproduced, building the tests, with the command: make -C
-tools/testing/selftests TARGETS=iommu
+Also, introduce nfs_iov_iter_aligned_bvec() which is a variant of
+iov_iter_aligned_bvec() that also verifies the offset associated with
+an iov_iter is DIO-aligned.  NOTE: in a parallel effort,
+iov_iter_aligned_bvec() is being removed along with
+iov_iter_is_aligned().
 
-Link: https://patch.msgid.link/r/20250924171629.50266-1-alessandro.zanni87@gmail.com
-Fixes: 97717a1f283f ("iommufd/selftest: Add IOMMU_VEVENTQ_ALLOC test coverage")
-Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Lastly, add pr_info_ratelimited if underlying filesystem returns
+-EINVAL because it was made to try O_DIRECT for IO that is not
+DIO-aligned (shouldn't happen, so its best to be louder if it does).
+
+Fixes: 3feec68563d ("nfs/localio: add direct IO enablement with sync and async IO support")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/iommu/iommufd_utils.h | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/nfs/localio.c           | 65 ++++++++++++++++++++++++++++++++------
+ fs/nfsd/localio.c          | 11 +++++++
+ include/linux/nfslocalio.h |  2 ++
+ 3 files changed, 68 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/iommu/iommufd_utils.h b/tools/testing/selftests/iommu/iommufd_utils.h
-index 3c3e08b8c90eb..772ca1db6e597 100644
---- a/tools/testing/selftests/iommu/iommufd_utils.h
-+++ b/tools/testing/selftests/iommu/iommufd_utils.h
-@@ -1042,15 +1042,13 @@ static int _test_cmd_trigger_vevents(int fd, __u32 dev_id, __u32 nvevents)
- 			.dev_id = dev_id,
- 		},
- 	};
--	int ret;
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 97abf62f109d2..31ce210f032ac 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -49,11 +49,6 @@ struct nfs_local_fsync_ctx {
+ static bool localio_enabled __read_mostly = true;
+ module_param(localio_enabled, bool, 0644);
  
- 	while (nvevents--) {
--		ret = ioctl(fd, _IOMMU_TEST_CMD(IOMMU_TEST_OP_TRIGGER_VEVENT),
--			    &trigger_vevent_cmd);
--		if (ret < 0)
-+		if (!ioctl(fd, _IOMMU_TEST_CMD(IOMMU_TEST_OP_TRIGGER_VEVENT),
-+			    &trigger_vevent_cmd))
- 			return -1;
+-static bool localio_O_DIRECT_semantics __read_mostly = false;
+-module_param(localio_O_DIRECT_semantics, bool, 0644);
+-MODULE_PARM_DESC(localio_O_DIRECT_semantics,
+-		 "LOCALIO will use O_DIRECT semantics to filesystem.");
+-
+ static inline bool nfs_client_is_local(const struct nfs_client *clp)
+ {
+ 	return !!rcu_access_pointer(clp->cl_uuid.net);
+@@ -321,12 +316,9 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+ 		return NULL;
  	}
--	return ret;
-+	return 0;
+ 
+-	if (localio_O_DIRECT_semantics &&
+-	    test_bit(NFS_IOHDR_ODIRECT, &hdr->flags)) {
+-		iocb->kiocb.ki_filp = file;
++	init_sync_kiocb(&iocb->kiocb, file);
++	if (test_bit(NFS_IOHDR_ODIRECT, &hdr->flags))
+ 		iocb->kiocb.ki_flags = IOCB_DIRECT;
+-	} else
+-		init_sync_kiocb(&iocb->kiocb, file);
+ 
+ 	iocb->kiocb.ki_pos = hdr->args.offset;
+ 	iocb->hdr = hdr;
+@@ -336,6 +328,30 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+ 	return iocb;
  }
  
- #define test_cmd_trigger_vevents(dev_id, nvevents) \
++static bool nfs_iov_iter_aligned_bvec(const struct iov_iter *i,
++		loff_t offset, unsigned int addr_mask, unsigned int len_mask)
++{
++	const struct bio_vec *bvec = i->bvec;
++	size_t skip = i->iov_offset;
++	size_t size = i->count;
++
++	if ((offset | size) & len_mask)
++		return false;
++	do {
++		size_t len = bvec->bv_len;
++
++		if (len > size)
++			len = size;
++		if ((unsigned long)(bvec->bv_offset + skip) & addr_mask)
++			return false;
++		bvec++;
++		size -= len;
++		skip = 0;
++	} while (size);
++
++	return true;
++}
++
+ static void
+ nfs_local_iter_init(struct iov_iter *i, struct nfs_local_kiocb *iocb, int dir)
+ {
+@@ -345,6 +361,25 @@ nfs_local_iter_init(struct iov_iter *i, struct nfs_local_kiocb *iocb, int dir)
+ 		      hdr->args.count + hdr->args.pgbase);
+ 	if (hdr->args.pgbase != 0)
+ 		iov_iter_advance(i, hdr->args.pgbase);
++
++	if (iocb->kiocb.ki_flags & IOCB_DIRECT) {
++		u32 nf_dio_mem_align, nf_dio_offset_align, nf_dio_read_offset_align;
++		/* Verify the IO is DIO-aligned as required */
++		nfs_to->nfsd_file_dio_alignment(iocb->localio, &nf_dio_mem_align,
++						&nf_dio_offset_align,
++						&nf_dio_read_offset_align);
++		if (dir == READ)
++			nf_dio_offset_align = nf_dio_read_offset_align;
++
++		if (nf_dio_mem_align && nf_dio_offset_align &&
++		    nfs_iov_iter_aligned_bvec(i, hdr->args.offset,
++					      nf_dio_mem_align - 1,
++					      nf_dio_offset_align - 1))
++			return; /* is DIO-aligned */
++
++		/* Fallback to using buffered for this misaligned IO */
++		iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
++	}
+ }
+ 
+ static void
+@@ -405,6 +440,11 @@ nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
+ 	struct nfs_pgio_header *hdr = iocb->hdr;
+ 	struct file *filp = iocb->kiocb.ki_filp;
+ 
++	if ((iocb->kiocb.ki_flags & IOCB_DIRECT) && status == -EINVAL) {
++		/* Underlying FS will return -EINVAL if misaligned DIO is attempted. */
++		pr_info_ratelimited("nfs: Unexpected direct I/O read alignment failure\n");
++	}
++
+ 	nfs_local_pgio_done(hdr, status);
+ 
+ 	/*
+@@ -597,6 +637,11 @@ nfs_local_write_done(struct nfs_local_kiocb *iocb, long status)
+ 
+ 	dprintk("%s: wrote %ld bytes.\n", __func__, status > 0 ? status : 0);
+ 
++	if ((iocb->kiocb.ki_flags & IOCB_DIRECT) && status == -EINVAL) {
++		/* Underlying FS will return -EINVAL if misaligned DIO is attempted. */
++		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
++	}
++
+ 	/* Handle short writes as if they are ENOSPC */
+ 	if (status > 0 && status < hdr->args.count) {
+ 		hdr->mds_offset += status;
+diff --git a/fs/nfsd/localio.c b/fs/nfsd/localio.c
+index cb237f1b902a7..9e0a37cd29d8a 100644
+--- a/fs/nfsd/localio.c
++++ b/fs/nfsd/localio.c
+@@ -117,6 +117,16 @@ nfsd_open_local_fh(struct net *net, struct auth_domain *dom,
+ 	return localio;
+ }
+ 
++static void nfsd_file_dio_alignment(struct nfsd_file *nf,
++				    u32 *nf_dio_mem_align,
++				    u32 *nf_dio_offset_align,
++				    u32 *nf_dio_read_offset_align)
++{
++	*nf_dio_mem_align = nf->nf_dio_mem_align;
++	*nf_dio_offset_align = nf->nf_dio_offset_align;
++	*nf_dio_read_offset_align = nf->nf_dio_read_offset_align;
++}
++
+ static const struct nfsd_localio_operations nfsd_localio_ops = {
+ 	.nfsd_net_try_get  = nfsd_net_try_get,
+ 	.nfsd_net_put  = nfsd_net_put,
+@@ -124,6 +134,7 @@ static const struct nfsd_localio_operations nfsd_localio_ops = {
+ 	.nfsd_file_put_local = nfsd_file_put_local,
+ 	.nfsd_file_get_local = nfsd_file_get_local,
+ 	.nfsd_file_file = nfsd_file_file,
++	.nfsd_file_dio_alignment = nfsd_file_dio_alignment,
+ };
+ 
+ void nfsd_localio_ops_init(void)
+diff --git a/include/linux/nfslocalio.h b/include/linux/nfslocalio.h
+index 5c7c92659e736..7ca2715edccca 100644
+--- a/include/linux/nfslocalio.h
++++ b/include/linux/nfslocalio.h
+@@ -65,6 +65,8 @@ struct nfsd_localio_operations {
+ 	struct net *(*nfsd_file_put_local)(struct nfsd_file __rcu **);
+ 	struct nfsd_file *(*nfsd_file_get_local)(struct nfsd_file *);
+ 	struct file *(*nfsd_file_file)(struct nfsd_file *);
++	void (*nfsd_file_dio_alignment)(struct nfsd_file *,
++					u32 *, u32 *, u32 *);
+ } ____cacheline_aligned;
+ 
+ extern void nfsd_localio_ops_init(void);
 -- 
 2.51.0
 
