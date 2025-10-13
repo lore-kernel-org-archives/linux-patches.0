@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182193168F7;
-	Mon, 13 Oct 2025 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F8D31691A;
+	Mon, 13 Oct 2025 15:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369273; cv=none; b=t7Kr8rWJhJMBDFvYmU0iOYVv27OWINs9RW4xnCjWPt72RKKmwZkoJZmWZWsj35YpcLr67NsNSj0TP79q9Gk+J23xekDTd5q86chuC6x7Hz2+yecSPOSA7A1uFSvTL9klrKOp80znxl2vgHzEPzMYVD1B75Q0YZ0lOLV3uk/dj2s=
+	t=1760369276; cv=none; b=L18NwV2fjiITrIn93Y/Sj7JTr8jJQD4WmrHWycwZigTWkrGtrUpsIofAG3bbxVWSsqpzkOvs5107f8RbzKd4/3mhryH/ruo0M3pW0ld6mW4eFbpPySK0FQLGcivPr8YEB8iiEiSSoX+wczLY4DZKqeXNYFWpkeut+GxawceO0rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369273; c=relaxed/simple;
-	bh=/75/ZkxJTakp9og4O4DvZGJRBWtzSOU7j8LbFZ/rOeg=;
+	s=arc-20240116; t=1760369276; c=relaxed/simple;
+	bh=6dkao3N9iNXm/80wYU5+BFWIwNJR6ZO9Rznp/+rkt9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKQJcRk/STZGw/8dUZF0jIKc/Kzmnb8QARHX1PnFc8FP+BGMxQYoEOADlfedTybViTKam0RWjsxGRGlKzgQFf+ZTPj7Wd6Lb0tNfs7HTrNE1c+MupixpIhLgBFTZRHW3au0XIPOkpHV0Psi/lFx2XMLnv6Eer7J5jWmVLPrUmYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bb9C8HUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qe97J+25KFsR4B9/mibVT4oTsft6bftv5xCs2WarvfdKOrqOSdd/mXQiLIpFWAlRbDHOHgHHJ5/biFgJYogxIPIdNwmVHT/ak3kk4cX8USGKRuNs1dMsbdNuxY5yHi1AV+MsTXU0kaOG/J3DgOYEqhRSndW+Nr4dcKwk3waidXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vwywniv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bb9C8HUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7E6C4CEE7;
-	Mon, 13 Oct 2025 15:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vwywniv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5B7C4AF09;
+	Mon, 13 Oct 2025 15:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369272;
-	bh=/75/ZkxJTakp9og4O4DvZGJRBWtzSOU7j8LbFZ/rOeg=;
+	s=korg; t=1760369275;
+	bh=6dkao3N9iNXm/80wYU5+BFWIwNJR6ZO9Rznp/+rkt9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bb9C8HUJUQyMFqCsG7dm3s9Ew+mER2b6Zc4BMr6lAk2T+oOO+VNg63Q6fPN1UkGko
-	 b6PVIRGm6HCtZ9vVOXLRLVkJSYMDLwguMgwkDdF1X6/CVIkUztGqQoqVbrMO42LMbK
-	 wmt2ds9JCiwNtUgw7IyrQ0SgiLTAkmnTIuNSxxag=
+	b=Vwywniv/snCOFeVaYVzbz44UwNCm3L2jPA5Dz6241cxlAyRT+KCZuqztg+v/PXPyb
+	 5yskbzHCiwvo7lh6Y4+gbPkG7kWm1k4JIUwu3Qe83MsQl4gmNZO1TPCBYdrpkkWgSQ
+	 VqweUPyIxL57ykAOqAR9rr5wmUOBLdrtAq/5O2CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 188/563] power: supply: max77705_charger: rework interrupts
-Date: Mon, 13 Oct 2025 16:40:49 +0200
-Message-ID: <20251013144418.093786582@linuxfoundation.org>
+Subject: [PATCH 6.17 189/563] tools/nolibc: make time_t robust if __kernel_old_time_t is missing in host headers
+Date: Mon, 13 Oct 2025 16:40:50 +0200
+Message-ID: <20251013144418.130172240@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,95 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Zhouyi Zhou <zhouzhouyi@gmail.com>
 
-[ Upstream commit 12a1185a06e3377af777e792ba7436862f8e528a ]
+[ Upstream commit 0ff52df6b32a6b04a7c9dfe3d7a387aff215b482 ]
 
-Current implementation uses handle_post_irq to actually handle chgin
-irq. This is not how things are meant to work in regmap-irq.
+Commit d5094bcb5bfd ("tools/nolibc: define time_t in terms of
+__kernel_old_time_t") made nolibc use the kernel's time type so that
+`time_t` matches `timespec::tv_sec` on all ABIs (notably x32).
 
-Remove handle_post_irq, and request a threaded interrupt for chgin.
+But since __kernel_old_time_t is fairly new, notably from 2020 in commit
+94c467ddb273 ("y2038: add __kernel_old_timespec and __kernel_old_time_t"),
+nolibc builds that rely on host headers may fail.
 
-Fixes: a6a494c8e3ce ("power: supply: max77705: Add charger driver for Maxim 77705")
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Switch to __kernel_time_t, which is the same as __kernel_old_time_t and
+has existed for longer.
+
+Tested in PPC VM of Open Source Lab of Oregon State University
+(./tools/testing/selftests/rcutorture/bin/mkinitrd.sh)
+
+Fixes: d5094bcb5bfd ("tools/nolibc: define time_t in terms of __kernel_old_time_t")
+Signed-off-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+[Thomas: Reformat commit and its message a bit]
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max77705_charger.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ tools/include/nolibc/std.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max77705_charger.c b/drivers/power/supply/max77705_charger.c
-index 2d2201a6ba687..a8762bdd2c7c6 100644
---- a/drivers/power/supply/max77705_charger.c
-+++ b/drivers/power/supply/max77705_charger.c
-@@ -40,13 +40,13 @@ static enum power_supply_property max77705_charger_props[] = {
- 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
- };
+diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
+index ba950f0e73384..2c1ad23b9b5c1 100644
+--- a/tools/include/nolibc/std.h
++++ b/tools/include/nolibc/std.h
+@@ -29,6 +29,6 @@ typedef unsigned long       nlink_t;
+ typedef   signed long         off_t;
+ typedef   signed long     blksize_t;
+ typedef   signed long      blkcnt_t;
+-typedef __kernel_old_time_t  time_t;
++typedef __kernel_time_t      time_t;
  
--static int max77705_chgin_irq(void *irq_drv_data)
-+static irqreturn_t max77705_chgin_irq(int irq, void *irq_drv_data)
- {
- 	struct max77705_charger_data *chg = irq_drv_data;
- 
- 	queue_work(chg->wqueue, &chg->chgin_work);
- 
--	return 0;
-+	return IRQ_HANDLED;
- }
- 
- static const struct regmap_irq max77705_charger_irqs[] = {
-@@ -64,7 +64,6 @@ static struct regmap_irq_chip max77705_charger_irq_chip = {
- 	.name			= "max77705-charger",
- 	.status_base		= MAX77705_CHG_REG_INT,
- 	.mask_base		= MAX77705_CHG_REG_INT_MASK,
--	.handle_post_irq	= max77705_chgin_irq,
- 	.num_regs		= 1,
- 	.irqs			= max77705_charger_irqs,
- 	.num_irqs		= ARRAY_SIZE(max77705_charger_irqs),
-@@ -493,12 +492,6 @@ static int max77705_charger_probe(struct i2c_client *i2c)
- 					     "cannot allocate regmap field\n");
- 	}
- 
--	ret = regmap_update_bits(chg->regmap,
--				MAX77705_CHG_REG_INT_MASK,
--				MAX77705_CHGIN_IM, 0);
--	if (ret)
--		return ret;
--
- 	pscfg.fwnode = dev_fwnode(dev);
- 	pscfg.drv_data = chg;
- 
-@@ -508,7 +501,7 @@ static int max77705_charger_probe(struct i2c_client *i2c)
- 
- 	max77705_charger_irq_chip.irq_drv_data = chg;
- 	ret = devm_regmap_add_irq_chip(chg->dev, chg->regmap, i2c->irq,
--					IRQF_ONESHOT | IRQF_SHARED, 0,
-+					IRQF_ONESHOT, 0,
- 					&max77705_charger_irq_chip,
- 					&irq_data);
- 	if (ret)
-@@ -526,6 +519,15 @@ static int max77705_charger_probe(struct i2c_client *i2c)
- 
- 	max77705_charger_initialize(chg);
- 
-+	ret = devm_request_threaded_irq(dev, regmap_irq_get_virq(irq_data, MAX77705_CHGIN_I),
-+					NULL, max77705_chgin_irq,
-+					IRQF_TRIGGER_NONE,
-+					"chgin-irq", chg);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "Failed to Request chgin IRQ\n");
-+		goto destroy_wq;
-+	}
-+
- 	ret = max77705_charger_enable(chg);
- 	if (ret) {
- 		dev_err_probe(dev, ret, "failed to enable charge\n");
+ #endif /* _NOLIBC_STD_H */
 -- 
 2.51.0
 
