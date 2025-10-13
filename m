@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4702F5A37;
-	Mon, 13 Oct 2025 15:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3606A309DC5;
+	Mon, 13 Oct 2025 15:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367670; cv=none; b=tUsfbxD3d7DvS8FUxiYmgn8/Bw38SiT2zJ5Tr+yJFdQTmlDv/Qhpbq0O5mppeKHHMJwIjCgNaZAOMzHXYsRBGyokTNHGxiFzrrW9NiOICwNnXYil2i07DBCV9z1pXb/eHrTD2C+0d8Jd9m2fipU9IQ2x0s41dcmbQxGho7aCtac=
+	t=1760367673; cv=none; b=BiJY93puwmewnHQ24lFNErKZrNRnMcJshvBwkUk4T99y+La9lIMIK0qcKKhCA/G1d1ikylXBhoF6x7CmDRi+4h836YcF8v8raO/+yfajH4/6qtXB1LY4f9KY+1E1cKlKr+rnlpXLvFvwGr6Yn95z80OqxHlGkw5dws9RotT52XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367670; c=relaxed/simple;
-	bh=Fn2dWrSR+WpwQ8lL7XtJCapCss+ym1mFWXIdpOjG/iA=;
+	s=arc-20240116; t=1760367673; c=relaxed/simple;
+	bh=cvpK/uj17mORDCONLNTQ/hXzOjbVQIpePGs/CMI5ThQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukdzC6f4j8Kvz+bm89DG15IcNmwign3X0BWu9d+Cx0VR+TJkMv/+meXME2yneLsSIoB1G9wYo/ThWo+Y9K1vgGuLBXIg1F710W4FbCaKCDW/aovIfEsZ5rFFup5wexZjjuZgEohy2h87tFguJP0IGBQTn0U+V4Gq0HdF6CVNPUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6lww2gi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=caMWY34pTY34c/LlPMuijNRYJ35cX+OxzuxsNSeXEGZCk1KHffH1SY/IDGFngql/NqpUYdNBzwMyHxgbxXv2I23hPwRWLIo/AKdzOxtZ4mZbeIUwg1JDjAf/72rurAmxPRMwHdwtUhIAG5WFxFdp/nolTj9dMfKiLaL958U9rkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/a0CaAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6lww2gi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB560C4CEE7;
-	Mon, 13 Oct 2025 15:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/a0CaAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAB1C4CEE7;
+	Mon, 13 Oct 2025 15:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367670;
-	bh=Fn2dWrSR+WpwQ8lL7XtJCapCss+ym1mFWXIdpOjG/iA=;
+	s=korg; t=1760367673;
+	bh=cvpK/uj17mORDCONLNTQ/hXzOjbVQIpePGs/CMI5ThQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6lww2gi4CbVfnAh00cpwFAqdZcmpZ5bvMqQa96PwOB672r+7kBZm8Cd+q7OGM77Y
-	 ZD4rI/T1znNmekGPiw+zhk/ZyodI3RNiRRns4VyWGVpAAnkoNdxT3SBx1MJZZROKIP
-	 jf4blUh1wqfYg8jPSpdH8Hym8+Gu9d4tYil8H4IU=
+	b=w/a0CaACsqvcO+8y6t4fxfE8fpcV1RqTmgsM8Ie04pfHcWf0TSq9Ny4mL1w+P0q/U
+	 tcaypIBN1pUC48Jw7I8h1rXcP3ZmSrKjLKFMiUWB4U2hkvMdBnf/g6VbkCdtSpG5WV
+	 LvkJ5rFBFJVhqrxbypPMhOYUrk8vbtc30z4fwDHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
-	Jeff Chen <jeff.chen_1@nxp.con>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/196] wifi: mwifiex: send world regulatory domain to driver
-Date: Mon, 13 Oct 2025 16:44:43 +0200
-Message-ID: <20251013144318.644363055@linuxfoundation.org>
+Subject: [PATCH 6.6 093/196] PCI: tegra: Fix devm_kcalloc() argument order for port->phys allocation
+Date: Mon, 13 Oct 2025 16:44:44 +0200
+Message-ID: <20251013144318.682030193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -52,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Kerkmann <s.kerkmann@pengutronix.de>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 56819d00bc2ebaa6308913c28680da5d896852b8 ]
+[ Upstream commit e1a8805e5d263453ad76a4f50ab3b1c18ea07560 ]
 
-The world regulatory domain is a restrictive subset of channel
-configurations which allows legal operation of the adapter all over the
-world. Changing to this domain should not be prevented.
+Fix incorrect argument order in devm_kcalloc() when allocating port->phys.
+The original call used sizeof(phy) as the number of elements and
+port->lanes as the element size, which is reversed.  While this happens to
+produce the correct total allocation size with current pointer size and
+lane counts, the argument order is wrong.
 
-Fixes: dd4a9ac05c8e1 ("mwifiex: send regulatory domain info to firmware only if alpha2 changed") changed
-Signed-off-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.con>
-Link: https://patch.msgid.link/20250804-fix-mwifiex-regulatory-domain-v1-1-e4715c770c4d@pengutronix.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 6fe7c187e026 ("PCI: tegra: Support per-lane PHYs")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+[mani: added Fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250819150436.3105973-1-alok.a.tiwari@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pci-tegra.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-index 69eea0628e670..df6e4a112ec48 100644
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -659,10 +659,9 @@ static void mwifiex_reg_notifier(struct wiphy *wiphy,
- 		return;
- 	}
+diff --git a/drivers/pci/controller/pci-tegra.c b/drivers/pci/controller/pci-tegra.c
+index 038d974a318ea..80d975dcb2ee2 100644
+--- a/drivers/pci/controller/pci-tegra.c
++++ b/drivers/pci/controller/pci-tegra.c
+@@ -1343,7 +1343,7 @@ static int tegra_pcie_port_get_phys(struct tegra_pcie_port *port)
+ 	unsigned int i;
+ 	int err;
  
--	/* Don't send world or same regdom info to firmware */
--	if (strncmp(request->alpha2, "00", 2) &&
--	    strncmp(request->alpha2, adapter->country_code,
--		    sizeof(request->alpha2))) {
-+	/* Don't send same regdom info to firmware */
-+	if (strncmp(request->alpha2, adapter->country_code,
-+		    sizeof(request->alpha2)) != 0) {
- 		memcpy(adapter->country_code, request->alpha2,
- 		       sizeof(request->alpha2));
- 		mwifiex_send_domain_info_cmd_fw(wiphy);
+-	port->phys = devm_kcalloc(dev, sizeof(phy), port->lanes, GFP_KERNEL);
++	port->phys = devm_kcalloc(dev, port->lanes, sizeof(phy), GFP_KERNEL);
+ 	if (!port->phys)
+ 		return -ENOMEM;
+ 
 -- 
 2.51.0
 
