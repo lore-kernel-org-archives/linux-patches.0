@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA7C314A75;
-	Mon, 13 Oct 2025 15:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5431A308F00;
+	Mon, 13 Oct 2025 15:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370180; cv=none; b=JvvUdVhWnZrlOddwk1i3gNKWMJGz1tlIDjLYFlPitBg+bgDazqLZuROvNbAConHbft+vZe6RqvBW04vFSh6KZ3ikM1RBZD16dVp3y1lVDHifZDyMjZ+amilaHq4nQyLhWovRqfo1r5lUTAvTv3Tk9LBwO5rRkFNLTj6p8qU/mOM=
+	t=1760370183; cv=none; b=Ox2oH+jXITto7eqWjxN84uezgUYLF9ChEzusYRtj7ANxqH9V2PMaB/WIb82K8UN3AXgOepqiop3DwaTSuwg/8502J4GTi6x91YGzUaCq/1NcqHjcTQKPskyLUKrTfqRn4x+wR4QLtULh9eR9IjLm3xaU+7mlmFSI+/3WcWaDQdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370180; c=relaxed/simple;
-	bh=HqUmTJJFrnCYIUsbsmCiUySl9lYbgNxwesiIlnc0NPI=;
+	s=arc-20240116; t=1760370183; c=relaxed/simple;
+	bh=1NL4nu9yknQ/FO4Y8OgWhmnF4cS7eYcahhsDNe6gAtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lxiQOr85qCNKUCgiBGAJUV1Vwn1sAwmq4VQNWxt5JoAVHMXKh0wciCAnfoO6LIqDFRUErZm1fkL+7hWwzQNeRUu7eTVYn/cx19uyKB/Ok3j9oep7o+TWnMYg3Fh232n1aefxbob+2F6lVy2BtWz5KuGe5FuHYEXUNdv2hQiK+ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYWfTJBP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMepgD0K3kH/6b2mPImvfnK/50xE0y3SgObH+6xgqhopzKNWQOpfnc7PaqSoZm2sjqUEAMd3d3z4nV3prDBMMiMr0xV+oiIJqGi5iBDzK/ALuK6+nYUtBbU7Gv3jcEwoTXwB4rGP0f1pd0dJbiAzr9qAc3kV5MERyuj8CA7gzrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCPkc+sb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYWfTJBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997C3C4CEE7;
-	Mon, 13 Oct 2025 15:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCPkc+sb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E17BC4CEE7;
+	Mon, 13 Oct 2025 15:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370180;
-	bh=HqUmTJJFrnCYIUsbsmCiUySl9lYbgNxwesiIlnc0NPI=;
+	s=korg; t=1760370183;
+	bh=1NL4nu9yknQ/FO4Y8OgWhmnF4cS7eYcahhsDNe6gAtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYWfTJBPIdFkLY6kRn8yapWYyRPiecldkcAPFb/Uja2yPMeB406ER3SQmdrfhAWOh
-	 UauBPYqy2SSnG0lCJXnFg5Tt6OWZsWTT8sW+3FfGFyF84Li1HuF2PgasFchotOI0qU
-	 YKua4jEBxKWMqun7OIfIHoO/4j9c6Htr0GeRxoXE=
+	b=nCPkc+sbOoQ93obx1R5v52EZ9RpoPa43sa7y86gZ2gKlOzBu29L+cd0SnbnRUZqdI
+	 GhsWsIcmPZKQrgYWJw7oxbXLSMKw0yrVMGBwMmyphjM62CCpDrfnWQY+sg3Z0ahOv+
+	 65hxOoe0oVFrG+jBhwuWEhTRWgytw3B+vwdmgtmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.17 506/563] ASoC: SOF: ipc4-pcm: fix start offset calculation for chain DMA
-Date: Mon, 13 Oct 2025 16:46:07 +0200
-Message-ID: <20251013144429.639546574@linuxfoundation.org>
+	syzbot+8743fca924afed42f93e@syzkaller.appspotmail.com,
+	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.17 507/563] fs: udf: fix OOB read in lengthAllocDescs handling
+Date: Mon, 13 Oct 2025 16:46:08 +0200
+Message-ID: <20251013144429.674903639@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,97 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
 
-commit bace10b59624e6bd8d68bc9304357f292f1b3dcf upstream.
+commit 3bd5e45c2ce30e239d596becd5db720f7eb83c99 upstream.
 
-Assumption that chain DMA module starts the link DMA when 1ms of
-data is available from host is not correct. Instead the firmware
-chain DMA module fills the link DMA with initial buffer of zeroes
-and the host and link DMAs are started at the same time.
+When parsing Allocation Extent Descriptor, lengthAllocDescs comes from
+on-disk data and must be validated against the block size. Crafted or
+corrupted images may set lengthAllocDescs so that the total descriptor
+length (sizeof(allocExtDesc) + lengthAllocDescs) exceeds the buffer,
+leading udf_update_tag() to call crc_itu_t() on out-of-bounds memory and
+trigger a KASAN use-after-free read.
 
-This results in a small error in delay calculation. This can become a
-more severe problem if host DMA has delays that exceed 1ms. This results
-in negative delay to be calculated and bogus values reported to
-applications. This can confuse some applications like
-alsa_conformance_test.
+BUG: KASAN: use-after-free in crc_itu_t+0x1d5/0x2b0 lib/crc-itu-t.c:60
+Read of size 1 at addr ffff888041e7d000 by task syz-executor317/5309
 
-Fix the issue by correctly calculating the firmware chain DMA
-preamble size and initializing the start offset to this value.
+CPU: 0 UID: 0 PID: 5309 Comm: syz-executor317 Not tainted 6.12.0-rc4-syzkaller-00261-g850925a8133c #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ crc_itu_t+0x1d5/0x2b0 lib/crc-itu-t.c:60
+ udf_update_tag+0x70/0x6a0 fs/udf/misc.c:261
+ udf_write_aext+0x4d8/0x7b0 fs/udf/inode.c:2179
+ extent_trunc+0x2f7/0x4a0 fs/udf/truncate.c:46
+ udf_truncate_tail_extent+0x527/0x7e0 fs/udf/truncate.c:106
+ udf_release_file+0xc1/0x120 fs/udf/file.c:185
+ __fput+0x23f/0x880 fs/file_table.c:431
+ task_work_run+0x24f/0x310 kernel/task_work.c:239
+ exit_task_work include/linux/task_work.h:43 [inline]
+ do_exit+0xa2f/0x28e0 kernel/exit.c:939
+ do_group_exit+0x207/0x2c0 kernel/exit.c:1088
+ __do_sys_exit_group kernel/exit.c:1099 [inline]
+ __se_sys_exit_group kernel/exit.c:1097 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
+ x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
+Validate the computed total length against epos->bh->b_size.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Reported-by: syzbot+8743fca924afed42f93e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8743fca924afed42f93e
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: a1d203d390e0 ("ASoC: SOF: ipc4-pcm: Enable delay reporting for ChainDMA streams")
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20251002074719.2084-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+Link: https://patch.msgid.link/20250922131358.745579-1-Sergey.Larshin@kaspersky.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-pcm.c      |   14 ++++++++++----
- sound/soc/sof/ipc4-topology.c |    1 -
- sound/soc/sof/ipc4-topology.h |    2 ++
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ fs/udf/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/soc/sof/ipc4-pcm.c
-+++ b/sound/soc/sof/ipc4-pcm.c
-@@ -1052,7 +1052,7 @@ static int sof_ipc4_get_stream_start_off
- 		return -EINVAL;
- 	} else if (host_copier->data.gtw_cfg.node_id == SOF_IPC4_CHAIN_DMA_NODE_ID) {
- 		/*
--		 * While the firmware does not supports time_info reporting for
-+		 * While the firmware does not support time_info reporting for
- 		 * streams using ChainDMA, it is granted that ChainDMA can only
- 		 * be used on Host+Link pairs where the link position is
- 		 * accessible from the host side.
-@@ -1060,10 +1060,16 @@ static int sof_ipc4_get_stream_start_off
- 		 * Enable delay calculation in case of ChainDMA via host
- 		 * accessible registers.
- 		 *
--		 * The ChainDMA uses 2x 1ms ping-pong buffer, dai side starts
--		 * when 1ms data is available
-+		 * The ChainDMA prefills the link DMA with a preamble
-+		 * of zero samples. Set the stream start offset based
-+		 * on size of the preamble (driver provided fifo size
-+		 * multiplied by 2.5). We add 1ms of margin as the FW
-+		 * will align the buffer size to DMA hardware
-+		 * alignment that is not known to host.
- 		 */
--		time_info->stream_start_offset = substream->runtime->rate / MSEC_PER_SEC;
-+		int pre_ms = SOF_IPC4_CHAIN_DMA_BUF_SIZE_MS * 5 / 2 + 1;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -2272,6 +2272,9 @@ int udf_current_aext(struct inode *inode
+ 		if (check_add_overflow(sizeof(struct allocExtDesc),
+ 				le32_to_cpu(header->lengthAllocDescs), &alen))
+ 			return -1;
 +
-+		time_info->stream_start_offset = pre_ms * substream->runtime->rate / MSEC_PER_SEC;
- 		goto out;
++		if (alen > epos->bh->b_size)
++			return -1;
  	}
  
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -33,7 +33,6 @@ MODULE_PARM_DESC(ipc4_ignore_cpc,
- 
- #define SOF_IPC4_GAIN_PARAM_ID  0
- #define SOF_IPC4_TPLG_ABI_SIZE 6
--#define SOF_IPC4_CHAIN_DMA_BUF_SIZE_MS 2
- 
- static DEFINE_IDA(alh_group_ida);
- static DEFINE_IDA(pipeline_ida);
---- a/sound/soc/sof/ipc4-topology.h
-+++ b/sound/soc/sof/ipc4-topology.h
-@@ -247,6 +247,8 @@ struct sof_ipc4_dma_stream_ch_map {
- #define SOF_IPC4_DMA_METHOD_HDA   1
- #define SOF_IPC4_DMA_METHOD_GPDMA 2 /* defined for consistency but not used */
- 
-+#define SOF_IPC4_CHAIN_DMA_BUF_SIZE_MS 2
-+
- /**
-  * struct sof_ipc4_dma_config: DMA configuration
-  * @dma_method: HDAudio or GPDMA
+ 	switch (iinfo->i_alloc_type) {
 
 
