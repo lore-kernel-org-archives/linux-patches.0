@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5475A241C8C;
-	Mon, 13 Oct 2025 15:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C11C30EF93;
+	Mon, 13 Oct 2025 15:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369700; cv=none; b=cFAayEHb8XWYeWRUB2K61taDm7+oA0KgM2MEvb7KWhY3xPRiwNn1ws7OQ3aD5LtCUUAQyWjI6SSnrzhrFktalkDSJDbAgSK7COXZRCSXp75dBRBaEOC7ZxDJ5bVPoZObNtuOhh2Z5MYMKvfvRfAJH7QjxWXANdB5akUKSCll3ac=
+	t=1760369703; cv=none; b=EMRqgBUgPvQsBmpea2gcwfvQeh98aJJ05g+HdD5Rvc6Yi2GD9HB+hAhJMynp8+SeHm48NJ9ePXrjYYDs+x3SQ5MFMuiNNpSVYOHejKaQQz/c5uYPNHEIP1CY5QvcwrOtwu7rLxMk/3Gffe5CJHGrRfarIUeXGnM3m58b5JgmlzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369700; c=relaxed/simple;
-	bh=lpHieRhJ9wX2x4VPqwIO0pJhCtUi9UAz/l1Db8OEjvc=;
+	s=arc-20240116; t=1760369703; c=relaxed/simple;
+	bh=DN/TJmPC1hKu9EBA7/wllwWnX+RYTaNbCkRu0zH//Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OU/6+rSBP6TTdRjsW2Ki6E1SQ/+gAo/YcBa0HJab91jGOOyhD4nv2H9qwqLDpNjFEY27Kua3+XMpVS71QU2b6BBJXewaPRtkakP1je+PCqnIhHTTzyxV3Bmz1uGZhq6fj+LfIUUZ2iX6NC5+mhBP1Sp5AwF960cZhgCNZ/B/6kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um+OsVff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EvjV6NqxQON4OGZ68Mxe6CpkVbp/MW9/cZvS8mA44+T8bAhDiOLncj0NEj1tDSKS/SBkccatLgGrxZwLq6WmjWZaWHaOJUlAA4A1hsPd43w23Ji4wmqiNrXXYFlhY4ECwGgjWSZii3p5t2sXBZIVu+bOjOeLiFf4/DRLomAbAAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2AoohcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um+OsVff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1A7C4CEE7;
-	Mon, 13 Oct 2025 15:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2AoohcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FE9C4CEE7;
+	Mon, 13 Oct 2025 15:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369700;
-	bh=lpHieRhJ9wX2x4VPqwIO0pJhCtUi9UAz/l1Db8OEjvc=;
+	s=korg; t=1760369703;
+	bh=DN/TJmPC1hKu9EBA7/wllwWnX+RYTaNbCkRu0zH//Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=um+OsVffxn8nbj3gSa8uDEE2Y/HfkPA59LqFauNCixvGa4yMuZlfITwyieXXSPxHz
-	 +H7KchNqSkywUIKD4v/Mw3hIxsN5xsl7jfQm59X0HzGIfOqAzSmKamc7ii/HRt1qCo
-	 Zc8wLFwoIkAxbdrtjG/bZgVdY79r0Q/rbJCa5LMs=
+	b=S2AoohcG0m+qzzDCyVs7vQiNiyERkwlzsVE3ixO9s3Zg3T5FWT7PmSsW6sHYwpOtt
+	 27KYr5fqwbqmecwfMiRrsH7yXvpWM+4vjvHuVzcmwVmrMxJ4XPXvgtaZID2fYpADzB
+	 dzz/EzHF7W1vbZMlwwZzacP/2HiSEv0dH/4utja4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 337/563] wifi: mac80211: fix reporting of all valid links in sta_set_sinfo()
-Date: Mon, 13 Oct 2025 16:43:18 +0200
-Message-ID: <20251013144423.478496309@linuxfoundation.org>
+Subject: [PATCH 6.17 338/563] fs: ntfs3: Fix integer overflow in run_unpack()
+Date: Mon, 13 Oct 2025 16:43:19 +0200
+Message-ID: <20251013144423.514529539@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,63 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
 
-[ Upstream commit eebccbfea4184feb758c104783b870ec4ddb6aec ]
+[ Upstream commit 736fc7bf5f68f6b74a0925b7e072c571838657d2 ]
 
-Currently, sta_set_sinfo() fails to populate link-level station info
-when sinfo->valid_links is initially 0 and sta->sta.valid_links has
-bits set for links other than link 0. This typically occurs when
-association happens on a non-zero link or link 0 deleted dynamically.
-In such cases, the for_each_valid_link(sinfo, link_id) loop only
-executes for link 0 and terminates early, since sinfo->valid_links
-remains 0. As a result, only MLD-level information is reported to
-userspace.
+The MFT record relative to the file being opened contains its runlist,
+an array containing information about the file's location on the physical
+disk. Analysis of all Call Stack paths showed that the values of the
+runlist array, from which LCNs are calculated, are not validated before
+run_unpack function.
 
-Hence to fix, initialize sinfo->valid_links with sta->sta.valid_links
-before entering the loop to ensure loop executes for each valid link.
-During iteration, mask out invalid links from sinfo->valid_links if
-any of sta->link[link_id], sdata->link[link_id], or sinfo->links[link_id]
-are not present, to report only valid link information.
+The run_unpack function decodes the compressed runlist data format
+from MFT attributes (for example, $DATA), converting them into a runs_tree
+structure, which describes the mapping of virtual clusters (VCN) to
+logical clusters (LCN). The NTFS3 subsystem also has a shortcut for
+deleting files from MFT records - in this case, the RUN_DEALLOCATE
+command is sent to the run_unpack input, and the function logic
+provides that all data transferred to the runlist about file or
+directory is deleted without creating a runs_tree structure.
 
-Fixes: 505991fba9ec ("wifi: mac80211: extend support to fill link level sinfo structure")
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Link: https://patch.msgid.link/20250904104054.790321-1-quic_sarishar@quicinc.com
-[clarify comment]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Substituting the runlist in the $DATA attribute of the MFT record for an
+arbitrary file can lead either to access to arbitrary data on the disk
+bypassing access checks to them (since the inode access check
+occurs above) or to destruction of arbitrary data on the disk.
+
+Add overflow check for addition operation.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/ntfs3/run.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 8c550aab9bdce..ebcec5241a944 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -3206,16 +3206,20 @@ void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
- 		struct link_sta_info *link_sta;
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 6e86d66197ef2..88550085f7457 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -9,6 +9,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/fs.h>
+ #include <linux/log2.h>
++#include <linux/overflow.h>
  
- 		ether_addr_copy(sinfo->mld_addr, sta->addr);
-+
-+		/* assign valid links first for iteration */
-+		sinfo->valid_links = sta->sta.valid_links;
-+
- 		for_each_valid_link(sinfo, link_id) {
- 			link_sta = wiphy_dereference(sta->local->hw.wiphy,
- 						     sta->link[link_id]);
- 			link = wiphy_dereference(sdata->local->hw.wiphy,
- 						 sdata->link[link_id]);
+ #include "debug.h"
+ #include "ntfs.h"
+@@ -982,14 +983,18 @@ int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
  
--			if (!link_sta || !sinfo->links[link_id] || !link)
-+			if (!link_sta || !sinfo->links[link_id] || !link) {
-+				sinfo->valid_links &= ~BIT(link_id);
- 				continue;
--
--			sinfo->valid_links = sta->sta.valid_links;
-+			}
- 			sta_set_link_sinfo(sta, sinfo->links[link_id],
- 					   link, tidstats);
+ 			if (!dlcn)
+ 				return -EINVAL;
+-			lcn = prev_lcn + dlcn;
++
++			if (check_add_overflow(prev_lcn, dlcn, &lcn))
++				return -EINVAL;
+ 			prev_lcn = lcn;
+ 		} else {
+ 			/* The size of 'dlcn' can't be > 8. */
+ 			return -EINVAL;
  		}
+ 
+-		next_vcn = vcn64 + len;
++		if (check_add_overflow(vcn64, len, &next_vcn))
++			return -EINVAL;
++
+ 		/* Check boundary. */
+ 		if (next_vcn > evcn + 1)
+ 			return -EINVAL;
+@@ -1153,7 +1158,8 @@ int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
+ 			return -EINVAL;
+ 
+ 		run_buf += size_size + offset_size;
+-		vcn64 += len;
++		if (check_add_overflow(vcn64, len, &vcn64))
++			return -EINVAL;
+ 
+ #ifndef CONFIG_NTFS3_64BIT_CLUSTER
+ 		if (vcn64 > 0x100000000ull)
 -- 
 2.51.0
 
