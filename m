@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8710307AF5;
-	Mon, 13 Oct 2025 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84E830C353;
+	Mon, 13 Oct 2025 15:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368412; cv=none; b=FmZPkmPbadjssvnmgQJwmLH64huDFrjeiqsuAuWawuUFfBdOWWK454JCt37swTktxa+IQVU5uK0DTkdxKQfJBWVy5vBlvAJHy3OQhaMG03Ky6nc6coRW0TIGH7tEOq0AWnyDDspRXA9+aiXtBZ83TKjBrIEFJoBkVm7e9/0Zhfk=
+	t=1760368414; cv=none; b=ih3irrCjCLmlyZHE1MhTaoqFB0YIzlqSe1PYkj7SMLTWmcDiw/b+6ZjC3VwavGvShB7+lh0no63alE8aaST18Ywb86t1ADwIVKuaVJJo/otIQW9Pe8srGqtedr9az1/HnbCj/Sdo6K2735no1vSjZuXy+mej5tU8W2emkoCx1GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368412; c=relaxed/simple;
-	bh=v2F4xZkY3lqBbA80izFl/4GxvQ11w6/qYZcfLPMUnWg=;
+	s=arc-20240116; t=1760368414; c=relaxed/simple;
+	bh=IMFFuu+ZGUjm9c+Pjsy5mUsLr05PUnYeQwxb1duNttE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gP7NhyW1z9yvPQuk+ePZySm3V1BusH7dENQwxAana2jZ6Shuu+M51rLc2cTjXHdIVAUJAXOdGyuYeLf4CWKAgTD+Z9Blj0kwrxiMt8mCDaKoNmVnduvO1ftj5YFravrUBbroLPZ+VwGxjuusSiN+VeRVDu30HdBTdr+C29VHa3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3FsMxxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVe3rItmyzgZufWxAQn46wKLX9YQin/8xzNClepy5a2SK8jyOzCu/OLp0xEziKwAzxjatoyTR5sAODfXsRhu1I/qiswHPkjN86RFROwIXUg7f+PqwRvNaP66kbYLEKRdCvQuxyR9GwPsmV8NZbnMVi0cKEVEtl3PyUqUBz7rq7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcfbJp8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3FsMxxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD55C4CEE7;
-	Mon, 13 Oct 2025 15:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcfbJp8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411D6C4CEE7;
+	Mon, 13 Oct 2025 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368411;
-	bh=v2F4xZkY3lqBbA80izFl/4GxvQ11w6/qYZcfLPMUnWg=;
+	s=korg; t=1760368414;
+	bh=IMFFuu+ZGUjm9c+Pjsy5mUsLr05PUnYeQwxb1duNttE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3FsMxxux4/9YHmSBu2CYmErxE6ayeecIsuynA0TCBHjHYbH0gqBgprtMknuVYRiI
-	 UpkNptX/0oyM4o5k4q4a4ZbGciSKAuXvgT5CprVUUbh2hf906zrWlPJLOtsI1IXoMY
-	 J7Bg9PYFF6uO1KLtaRxt7imGd0QOsfrAZLDIpk2E=
+	b=JcfbJp8X8Yiwhtwn1/6US12L8eB97jScdQwgDeKjcpil3HEhayNa1hXxRZd1Ex78d
+	 Cq5Me2ZlOUXTIcyIzTpX//S9fDKCSodxGj2QnhAcudHFuYERipx/fkkNW9XLSEDzqS
+	 HVoTXxoAsYHZy4L9T6laDR2CYNQNFzLhKrQbr6bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+10b4363fb0f46527f3f3@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/262] f2fs: fix to mitigate overhead of f2fs_zero_post_eof_page()
-Date: Mon, 13 Oct 2025 16:44:55 +0200
-Message-ID: <20251013144331.630209138@linuxfoundation.org>
+Subject: [PATCH 6.12 154/262] ALSA: pcm: Disable bottom softirqs as part of spin_lock_irq() on PREEMPT_RT
+Date: Mon, 13 Oct 2025 16:44:56 +0200
+Message-ID: <20251013144331.665675700@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -51,136 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit c2f7c32b254006ad48f8e4efb2e7e7bf71739f17 ]
+[ Upstream commit 9fc4a3da9a0259a0500848b5d8657918efde176b ]
 
-f2fs_zero_post_eof_page() may cuase more overhead due to invalidate_lock
-and page lookup, change as below to mitigate its overhead:
-- check new_size before grabbing invalidate_lock
-- lookup and invalidate pages only in range of [old_size, new_size]
+snd_pcm_group_lock_irq() acquires a spinlock_t and disables interrupts
+via spin_lock_irq(). This also implicitly disables the handling of
+softirqs such as TIMER_SOFTIRQ.
+On PREEMPT_RT softirqs are preemptible and spin_lock_irq() does not
+disable them. That means a timer can be invoked during spin_lock_irq()
+on the same CPU. Due to synchronisations reasons local_bh_disable() has
+a per-CPU lock named softirq_ctrl.lock which synchronizes individual
+softirq against each other.
+syz-bot managed to trigger a lockdep report where softirq_ctrl.lock is
+acquired in hrtimer_cancel() in addition to hrtimer_run_softirq(). This
+is a possible deadlock.
 
-Fixes: ba8dac350faf ("f2fs: fix to zero post-eof page")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+The softirq_ctrl.lock can not be made part of spin_lock_irq() as this
+would lead to too much synchronisation against individual threads on the
+system. To avoid the possible deadlock, softirqs must be manually
+disabled before the lock is acquired.
+
+Disable softirqs before the lock is acquired on PREEMPT_RT.
+
+Reported-by: syzbot+10b4363fb0f46527f3f3@syzkaller.appspotmail.com
+Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ sound/core/pcm_native.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index eb58d05284173..2a108c561e8bc 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -35,15 +35,23 @@
- #include <trace/events/f2fs.h>
- #include <uapi/linux/f2fs.h>
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 9b91f68b3fff0..d15de21f6ebf0 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -84,19 +84,24 @@ void snd_pcm_group_init(struct snd_pcm_group *group)
+ }
  
--static void f2fs_zero_post_eof_page(struct inode *inode, loff_t new_size)
-+static void f2fs_zero_post_eof_page(struct inode *inode,
-+					loff_t new_size, bool lock)
- {
- 	loff_t old_size = i_size_read(inode);
- 
- 	if (old_size >= new_size)
- 		return;
- 
-+	if (mapping_empty(inode->i_mapping))
-+		return;
+ /* define group lock helpers */
+-#define DEFINE_PCM_GROUP_LOCK(action, mutex_action) \
++#define DEFINE_PCM_GROUP_LOCK(action, bh_lock, bh_unlock, mutex_action) \
+ static void snd_pcm_group_ ## action(struct snd_pcm_group *group, bool nonatomic) \
+ { \
+-	if (nonatomic) \
++	if (nonatomic) { \
+ 		mutex_ ## mutex_action(&group->mutex); \
+-	else \
+-		spin_ ## action(&group->lock); \
+-}
+-
+-DEFINE_PCM_GROUP_LOCK(lock, lock);
+-DEFINE_PCM_GROUP_LOCK(unlock, unlock);
+-DEFINE_PCM_GROUP_LOCK(lock_irq, lock);
+-DEFINE_PCM_GROUP_LOCK(unlock_irq, unlock);
++	} else { \
++		if (IS_ENABLED(CONFIG_PREEMPT_RT) && bh_lock)   \
++			local_bh_disable();			\
++		spin_ ## action(&group->lock);			\
++		if (IS_ENABLED(CONFIG_PREEMPT_RT) && bh_unlock) \
++			local_bh_enable();                      \
++	}							\
++}
 +
-+	if (lock)
-+		filemap_invalidate_lock(inode->i_mapping);
- 	/* zero or drop pages only in range of [old_size, new_size] */
--	truncate_pagecache(inode, old_size);
-+	truncate_inode_pages_range(inode->i_mapping, old_size, new_size);
-+	if (lock)
-+		filemap_invalidate_unlock(inode->i_mapping);
- }
++DEFINE_PCM_GROUP_LOCK(lock, false, false, lock);
++DEFINE_PCM_GROUP_LOCK(unlock, false, false, unlock);
++DEFINE_PCM_GROUP_LOCK(lock_irq, true, false, lock);
++DEFINE_PCM_GROUP_LOCK(unlock_irq, false, true, unlock);
  
- static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
-@@ -114,9 +122,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 
- 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
- 
--	filemap_invalidate_lock(inode->i_mapping);
--	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT);
--	filemap_invalidate_unlock(inode->i_mapping);
-+	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
- 
- 	file_update_time(vmf->vma->vm_file);
- 	filemap_invalidate_lock_shared(inode->i_mapping);
-@@ -1089,7 +1095,7 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		filemap_invalidate_lock(inode->i_mapping);
- 
- 		if (attr->ia_size > old_size)
--			f2fs_zero_post_eof_page(inode, attr->ia_size);
-+			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
- 		truncate_setsize(inode, attr->ia_size);
- 
- 		if (attr->ia_size <= old_size)
-@@ -1208,9 +1214,7 @@ static int f2fs_punch_hole(struct inode *inode, loff_t offset, loff_t len)
- 	if (ret)
- 		return ret;
- 
--	filemap_invalidate_lock(inode->i_mapping);
--	f2fs_zero_post_eof_page(inode, offset + len);
--	filemap_invalidate_unlock(inode->i_mapping);
-+	f2fs_zero_post_eof_page(inode, offset + len, true);
- 
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1495,7 +1499,7 @@ static int f2fs_do_collapse(struct inode *inode, loff_t offset, loff_t len)
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(inode->i_mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len);
-+	f2fs_zero_post_eof_page(inode, offset + len, false);
- 
- 	f2fs_lock_op(sbi);
- 	f2fs_drop_extent_tree(inode);
-@@ -1618,9 +1622,7 @@ static int f2fs_zero_range(struct inode *inode, loff_t offset, loff_t len,
- 	if (ret)
- 		return ret;
- 
--	filemap_invalidate_lock(mapping);
--	f2fs_zero_post_eof_page(inode, offset + len);
--	filemap_invalidate_unlock(mapping);
-+	f2fs_zero_post_eof_page(inode, offset + len, true);
- 
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1754,7 +1756,7 @@ static int f2fs_insert_range(struct inode *inode, loff_t offset, loff_t len)
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len);
-+	f2fs_zero_post_eof_page(inode, offset + len, false);
- 	truncate_pagecache(inode, offset);
- 
- 	while (!ret && idx > pg_start) {
-@@ -1812,9 +1814,7 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
- 	if (err)
- 		return err;
- 
--	filemap_invalidate_lock(inode->i_mapping);
--	f2fs_zero_post_eof_page(inode, offset + len);
--	filemap_invalidate_unlock(inode->i_mapping);
-+	f2fs_zero_post_eof_page(inode, offset + len, true);
- 
- 	f2fs_balance_fs(sbi, true);
- 
-@@ -4759,9 +4759,8 @@ static ssize_t f2fs_write_checks(struct kiocb *iocb, struct iov_iter *from)
- 	if (err)
- 		return err;
- 
--	filemap_invalidate_lock(inode->i_mapping);
--	f2fs_zero_post_eof_page(inode, iocb->ki_pos + iov_iter_count(from));
--	filemap_invalidate_unlock(inode->i_mapping);
-+	f2fs_zero_post_eof_page(inode,
-+		iocb->ki_pos + iov_iter_count(from), true);
- 	return count;
- }
- 
+ /**
+  * snd_pcm_stream_lock - Lock the PCM stream
 -- 
 2.51.0
 
