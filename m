@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD7D30F948;
-	Mon, 13 Oct 2025 15:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ACB3101C7;
+	Mon, 13 Oct 2025 15:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368007; cv=none; b=c85C72QETu5FTr6ouKKJ8vZtJetnlsZ6h0ggP5J6RCFVGs9azyuQqZsKA9PSb6lU4V/yJ8UJPctnt2bZBzRO98ciM/JE8AcR27bm5vcopreTZGnPZkeDykKCUMsd23QHD/hZaDmaFpQZvW80GF3zRzmoFBNfaJOtGkVhXPZOsDg=
+	t=1760368010; cv=none; b=uC29h0RieTABmehGiPSzl6yaQf3by7xf+rdqDU6uM1cglKo85Pp9e7pbThjgo8Tmxtt3tmv4+WCxkf1Oxzl4FSMm3/YvC4QAlUUbf3QspKgzq+NOwmcIc+Eio3k4CQQT65JlZYFnPuaUZqxp5C+UoWMb32AuHGHDWfIusihzAo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368007; c=relaxed/simple;
-	bh=MWFYCSS0jMU7648f8yYNk+lqoHgALSx8WW5IOGWOZ88=;
+	s=arc-20240116; t=1760368010; c=relaxed/simple;
+	bh=RyH7hujMbH/aRd+ssv+Psrsu0+FDg/g6HXmRLn7V7rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMvesRy5Rf5XVH2Wttaxl7cAhy2XiA1WBNQFlJUJy6DYJmmFzvkgdZvdfJztPE5ml4JaIxaCwqOdzhn4DuiiAj0Z1icmDqF7RFBwDnMipCtGDNdVS2GLFCU8DjhCTHmEIyThIaBJ/0oAa1AJ6UJJ7mCfIkphChFcV14LZqZMK+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU+/nEaE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbK0KXTPawo6HPXiTUXyixaht0h/DW1Q6s4+U1Z8hb6Ouhh/5DZSZcLXumDNJ9f3rb1FlDchxf5RqjY+B3NGZz+gZY7HBKZILIqCB0uYMHAX7IOdUf9OAHUxoixxPMwI14xMTnD9NgK3zcSF28u9eesInQJhbwCiNF5MPLZ/kCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O0rg21B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU+/nEaE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E63C4CEE7;
-	Mon, 13 Oct 2025 15:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O0rg21B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94245C4CEE7;
+	Mon, 13 Oct 2025 15:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368007;
-	bh=MWFYCSS0jMU7648f8yYNk+lqoHgALSx8WW5IOGWOZ88=;
+	s=korg; t=1760368010;
+	bh=RyH7hujMbH/aRd+ssv+Psrsu0+FDg/g6HXmRLn7V7rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KU+/nEaEVpAXFX+7xIuXS2SyUrFXbuSk93R8PAxWJvAGx7x2IEck8oRe+10RWvrRX
-	 HUoEGlkz5+eD26Yt6VHqPokM8aDZ949zR1vtGhZuKMpCZJJOUyXzicU0MfRH1d9zUz
-	 IifeOB0pMYX+5F7HhAdNAmh7FMEA3E0JsXwDitBI=
+	b=1O0rg21BVjhpcoSnWEfkUrOepou3D2l/U+4PyhmrTZPIDOCnTmxJX+navTHI6uIFO
+	 Y2tulecqO89QqpVGp9i/KWr/Ia8MrEUUQ53JOlXvpH61dBVAXbkxzuuJwmIQwI8cFI
+	 0JsHJUZfAcRD10nCGm6NY7PvuorJ3ke0ulw2pgK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Jesus Ambriz Meza <jose.jesus.ambriz.meza@intel.com>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/262] EDAC/i10nm: Skip DIMM enumeration on a disabled memory controller
-Date: Mon, 13 Oct 2025 16:42:34 +0200
-Message-ID: <20251013144326.569273076@linuxfoundation.org>
+Subject: [PATCH 6.12 013/262] x86/vdso: Fix output operand size of RDPID
+Date: Mon, 13 Oct 2025 16:42:35 +0200
+Message-ID: <20251013144326.605712193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,76 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 2e6fe1bbefd9c059c3787d1c620fe67343a94dff ]
+[ Upstream commit ac9c408ed19d535289ca59200dd6a44a6a2d6036 ]
 
-When loading the i10nm_edac driver on some Intel Granite Rapids servers,
-a call trace may appear as follows:
+RDPID instruction outputs to a word-sized register (64-bit on x86_64 and
+32-bit on x86_32). Use an unsigned long variable to store the correct size.
 
-  UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c:453:16
-  shift exponent -66 is negative
-  ...
-  __ubsan_handle_shift_out_of_bounds+0x1e3/0x390
-  skx_get_dimm_info.cold+0x47/0xd40 [skx_edac_common]
-  i10nm_get_dimm_config+0x23e/0x390 [i10nm_edac]
-  skx_register_mci+0x159/0x220 [skx_edac_common]
-  i10nm_init+0xcb0/0x1ff0 [i10nm_edac]
-  ...
+LSL outputs to 32-bit register, use %k operand prefix to always print the
+32-bit name of the register.
 
-This occurs because some BIOS may disable a memory controller if there
-aren't any memory DIMMs populated on this memory controller. The DIMMMTR
-register of this disabled memory controller contains the invalid value
-~0, resulting in the call trace above.
+Use RDPID insn mnemonic while at it as the minimum binutils version of
+2.30 supports it.
 
-Fix this call trace by skipping DIMM enumeration on a disabled memory
-controller.
+  [ bp: Merge two patches touching the same function into a single one. ]
 
-Fixes: ba987eaaabf9 ("EDAC/i10nm: Add Intel Granite Rapids server support")
-Reported-by: Jose Jesus Ambriz Meza <jose.jesus.ambriz.meza@intel.com>
-Reported-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Closes: https://lore.kernel.org/all/20250730063155.2612379-1-acelan.kao@canonical.com/
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Link: https://lore.kernel.org/r/20250806065707.3533345-1-qiuxu.zhuo@intel.com
+Fixes: ffebbaedc861 ("x86/vdso: Introduce helper functions for CPU and node number")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250616095315.230620-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/x86/include/asm/segment.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index ac4b3d95531c5..d8cd12d906a72 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -967,6 +967,15 @@ static bool i10nm_check_ecc(struct skx_imc *imc, int chan)
- 	return !!GET_BITFIELD(mcmtr, 2, 2);
- }
+diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
+index 9d6411c659205..00cefbb59fa98 100644
+--- a/arch/x86/include/asm/segment.h
++++ b/arch/x86/include/asm/segment.h
+@@ -244,7 +244,7 @@ static inline unsigned long vdso_encode_cpunode(int cpu, unsigned long node)
  
-+static bool i10nm_channel_disabled(struct skx_imc *imc, int chan)
-+{
-+	u32 mcmtr = I10NM_GET_MCMTR(imc, chan);
-+
-+	edac_dbg(1, "mc%d ch%d mcmtr reg %x\n", imc->mc, chan, mcmtr);
-+
-+	return (mcmtr == ~0 || GET_BITFIELD(mcmtr, 18, 18));
-+}
-+
- static int i10nm_get_dimm_config(struct mem_ctl_info *mci,
- 				 struct res_config *cfg)
+ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
  {
-@@ -980,6 +989,11 @@ static int i10nm_get_dimm_config(struct mem_ctl_info *mci,
- 		if (!imc->mbase)
- 			continue;
+-	unsigned int p;
++	unsigned long p;
  
-+		if (i10nm_channel_disabled(imc, i)) {
-+			edac_dbg(1, "mc%d ch%d is disabled.\n", imc->mc, i);
-+			continue;
-+		}
-+
- 		ndimms = 0;
+ 	/*
+ 	 * Load CPU and node number from the GDT.  LSL is faster than RDTSCP
+@@ -254,10 +254,10 @@ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
+ 	 *
+ 	 * If RDPID is available, use it.
+ 	 */
+-	alternative_io ("lsl %[seg],%[p]",
+-			".byte 0xf3,0x0f,0xc7,0xf8", /* RDPID %eax/rax */
++	alternative_io ("lsl %[seg],%k[p]",
++			"rdpid %[p]",
+ 			X86_FEATURE_RDPID,
+-			[p] "=a" (p), [seg] "r" (__CPUNODE_SEG));
++			[p] "=r" (p), [seg] "r" (__CPUNODE_SEG));
  
- 		if (res_cfg->type != GNR)
+ 	if (cpu)
+ 		*cpu = (p & VDSO_CPUNODE_MASK);
 -- 
 2.51.0
 
