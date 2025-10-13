@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DBD3093C9;
-	Mon, 13 Oct 2025 15:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7D03093C9;
+	Mon, 13 Oct 2025 15:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368124; cv=none; b=P/37bZ1D7nxrnOLnTtzG5HkQBDk8FtPkdAdCVzWl7suHHWaXqVSeB34BeskfPEb7PVBuU9wDLTfOdqtHcVBswWyVJ+KyXsyls5mbQDPCN0caXp0no9eMKfbiKP6eFpNwPLICRwiH4aAYcnOLzX6rUnBJeOBim22RmKZfNaCXGS4=
+	t=1760368127; cv=none; b=m3/xZ0hULEBw5FQneaM3480NOXfVuvaIIcjEd0a2de4RPIipvlOTsx8h4pYo8Qni8Sh85TZ+KDDHhV4OhMe0ZU3/ZaKf2k18jLQaXmf1VRYodctsAOAHX+74KCwqDcf7fl1Z7D9L4sdLMWwfTY/5UxdaQC/cYDsmHVNBEb6rWjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368124; c=relaxed/simple;
-	bh=paa7JaKwW3ECcFr/xLgof+WcKk50N9oB3+yY57WsB7w=;
+	s=arc-20240116; t=1760368127; c=relaxed/simple;
+	bh=c52cp2Mq362xHgpMzwKWS5joqtAlHPq8sZ/xvOXwK24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0NTD/6593mS7xZRB3yDAB5zJjMXj/Q9+XjWr/WmkPo4gLy8Zm/6fOTYFpoYDwwe+XHPXsYz7wFbayb3A7ObjNpPCDH7h+X8Kyotm6Itwlnr8JfBTZOFxNgs+RiE62zxSXFlfkif8vL8rkqWx3bzJXZ3tkC2/EP7kilfDXTx1aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc/Krv2q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RgCEBUfcok3cpQCSYxCitzteNqQzitle8NzzdXCcYGShhpS2kA+B/JSLxT702diY4M6iV5zy/U/SJ8j7wirI+PL1+wInwX5PSkhiKh4Ie1Rd3xVYIPlmEgZ+ThTmQ52Kmgx/YwLxTMrVI0oplaFoYK0Y2k9xRWd2wXd879T4p0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJxKLbA0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc/Krv2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27945C4CEE7;
-	Mon, 13 Oct 2025 15:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJxKLbA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E984AC4CEE7;
+	Mon, 13 Oct 2025 15:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368124;
-	bh=paa7JaKwW3ECcFr/xLgof+WcKk50N9oB3+yY57WsB7w=;
+	s=korg; t=1760368127;
+	bh=c52cp2Mq362xHgpMzwKWS5joqtAlHPq8sZ/xvOXwK24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gc/Krv2qWjdbHU3fSQZjvFRGK1hAjglPkObDTVH4UQzDAI2U6daDlR8q200x/1NS5
-	 vQIaoe52HmwzzpoTS8ey0juA9TBVyfibusMOwacABDLfOdUuo/m0om/Z+vF2JJw4Be
-	 K/kUgL/52rdbnLDl6NJ1HilXU3oGEITRbRjhq+7M=
+	b=aJxKLbA0nWhBNpVz99PKT3emcCD1IRwFkbkumzSCbivaqleU6SVLi1yxySlleW2ck
+	 k80O2909vWIlR3zTwU8VBB6iVWNv3fvnldKsLyuFtKt/pNrOhtEzPrMwcHRniXvlyJ
+	 a/o40+blZ1pSwEREqTzpuJB7f5A6SnmFvo8zXmLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@canonical.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Mike Christie <mchristi@redhat.com>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Yu Kuai <yukuai1@huaweicloud.com>,
+	linux-block@vger.kernel.org,
+	nbd@other.debian.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/262] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie0
-Date: Mon, 13 Oct 2025 16:43:14 +0200
-Message-ID: <20251013144328.002595205@linuxfoundation.org>
+Subject: [PATCH 6.12 053/262] nbd: restrict sockets to TCP and UDP
+Date: Mon, 13 Oct 2025 16:43:15 +0200
+Message-ID: <20251013144328.039218970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,47 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@canonical.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3374b5fb26b300809ecd6aed9f414987dd17c313 ]
+[ Upstream commit 9f7c02e031570e8291a63162c6c046dc15ff85b0 ]
 
-When test suspend resume with 6.8 based kernel, system can't resume
-and I got below error which can be also reproduced with 6.16 rc6+
-kernel.
+Recently, syzbot started to abuse NBD with all kinds of sockets.
 
-mtk-pcie-gen3 112f0000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
-mtk-pcie-gen3 112f0000.pcie: PM: dpm_run_callback(): genpd_resume_noirq returns -110
-mtk-pcie-gen3 112f0000.pcie: PM: failed to resume noirq: error -110
+Commit cf1b2326b734 ("nbd: verify socket is supported during setup")
+made sure the socket supported a shutdown() method.
 
-After investigation, looks pcie0 has the same problem as pcie1 as
-decribed in commit 3d7fdd8e38aa ("arm64: dts: mediatek: mt8195:
-Remove suspend-breaking reset from pcie1").
+Explicitely accept TCP and UNIX stream sockets.
 
-Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
-Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Link: https://lore.kernel.org/r/20250721095959.57703-1-guoqing.jiang@canonical.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: cf1b2326b734 ("nbd: verify socket is supported during setup")
+Reported-by: syzbot+e1cd6bd8493060bd701d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/CANn89iJ+76eE3A_8S_zTpSyW5hvPRn6V57458hCZGY5hbH_bFA@mail.gmail.com/T/#m081036e8747cd7e2626c1da5d78c8b9d1e55b154
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Mike Christie <mchristi@redhat.com>
+Cc: Richard W.M. Jones <rjones@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Yu Kuai <yukuai1@huaweicloud.com>
+Cc: linux-block@vger.kernel.org
+Cc: nbd@other.debian.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/block/nbd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 2e138b54f5563..451aa278bef50 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -1563,9 +1563,6 @@ pcie0: pcie@112f0000 {
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index c705acc4d6f4b..de692eed98740 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1156,6 +1156,14 @@ static struct socket *nbd_get_socket(struct nbd_device *nbd, unsigned long fd,
+ 	if (!sock)
+ 		return NULL;
  
- 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P0>;
- 
--			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P0_SWRST>;
--			reset-names = "mac";
--
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 7>;
- 			interrupt-map = <0 0 0 1 &pcie_intc0 0>,
++	if (!sk_is_tcp(sock->sk) &&
++	    !sk_is_stream_unix(sock->sk)) {
++		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: should be TCP or UNIX.\n");
++		*err = -EINVAL;
++		sockfd_put(sock);
++		return NULL;
++	}
++
+ 	if (sock->ops->shutdown == sock_no_shutdown) {
+ 		dev_err(disk_to_dev(nbd->disk), "Unsupported socket: shutdown callout must be supported.\n");
+ 		*err = -EINVAL;
 -- 
 2.51.0
 
