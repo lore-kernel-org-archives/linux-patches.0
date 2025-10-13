@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5761430BF7F;
-	Mon, 13 Oct 2025 15:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433FA30C363;
+	Mon, 13 Oct 2025 15:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369654; cv=none; b=PDcPKVUsorlerbdRvbJR3T+6rKCgQadG9hwVkgqBqBuZu0E18w9pDcxZAFwDEFBAAwt5udWb9ft/Lpi6oDbSO2Xbf7N2mEkboIZox0ur2RojaEcfPbob/B3qTWn3elljr09vz7m86VCaDfpNk6IfQgtFTT9mD1LzkA7kMSC1u5o=
+	t=1760369657; cv=none; b=sWDPvA5orzB2c0cLeGve+bpBf7Fr8rTH4Bf9tEAGHzhUOyC79CoWksGQ9jncYMWfZTdsAqjfgEYMZ0yT1oUeUF3dQ7RmbhFkFcguFhAc2qSOAlYOv1aJVadhJWHBRv//hsKkmoleTGh7wFHaby4A9InWvok/95eQDHnbYQtgX/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369654; c=relaxed/simple;
-	bh=iNXS4o4IkYNWC1VzeGoac9tVj1laaa198UomfsXv6lo=;
+	s=arc-20240116; t=1760369657; c=relaxed/simple;
+	bh=WC4wlNeXWvNUvdi90CZWfaUWyIBFGamIiDKQ06o9vyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dRL6Y5s/dvapDN0pSfu4oY8dvoJ6rUeeXmEEU6SbIPHPnxxxQlO8IdVJPDwMCxLqvCx5qKwNJMKY49ew+A+fyMVHhIgrloO4Zr714mChCat5Edsl2kF6sNgqnfUi0COY2fBF/vUF2Pus0mKroQGdCJwgTDzhjRUWO4UQ4gg9QkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvN5UmE2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krChU/lKTv5AY/HxuLfrCNMW47NTx51nbL3J4R2u3wEkRIXKjoRRqwCwlx8LrPwrhxVAoG4xwPKc7TyqYL+SOXKuRYNCaMQRvv8ycyMojf7e+uB6ZqINTbEKMUgTunGyRAQqDTDl/RYE5HgzIU74CcEf4dzZ4xr6g0HKTopdFog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whsJhXcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvN5UmE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B9AC4CEE7;
-	Mon, 13 Oct 2025 15:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whsJhXcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDF5C4CEE7;
+	Mon, 13 Oct 2025 15:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369654;
-	bh=iNXS4o4IkYNWC1VzeGoac9tVj1laaa198UomfsXv6lo=;
+	s=korg; t=1760369657;
+	bh=WC4wlNeXWvNUvdi90CZWfaUWyIBFGamIiDKQ06o9vyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvN5UmE2t/Cuog0a5xWemTeDEVge4qreHq5/N5wJ96AX2pfful+3CHCSsgeLY3e35
-	 0F64GZJBfwmdYSlhmOh/ocQhxwci5SNRF8SWzrTQzq2rpYO3yuu9xIi8UW9WHxmIK4
-	 bRgX2zH0eNbqYCrLyNc+1jWcqHKfUwPhQM4zSnfw=
+	b=whsJhXcG04qcBjz4kHZTVQoekamAxTdZSM04CzSK1MWn+PfuUB+BhoWAUWHzSAHJj
+	 dUqhPY0aSbCFgP3jqGlZnXIaabB7/iTA+lorvMRzUc3Ldk53LJFLrLJ+qf+9zIBxmY
+	 joCww4Mg0L0866OSv+8mBKHWVoSROyHtjJ626G/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Wang Liang <wangliang74@huawei.com>,
+	Calvin Owens <calvin@wbinvd.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 305/563] drm/amd/pm: Adjust si_upload_smc_data register programming (v3)
-Date: Mon, 13 Oct 2025 16:42:46 +0200
-Message-ID: <20251013144422.315006281@linuxfoundation.org>
+Subject: [PATCH 6.17 323/563] pps: fix warning in pps_register_cdev when register device fail
+Date: Mon, 13 Oct 2025 16:43:04 +0200
+Message-ID: <20251013144422.965147670@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,58 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit ce025130127437dc884c84c254170e27b2ce9309 ]
+[ Upstream commit b0531cdba5029f897da5156815e3bdafe1e9b88d ]
 
-Based on some comments in dm_pp_display_configuration
-above the crtc_index and line_time fields, these values
-are programmed to the SMC to work around an SMC hang
-when it switches MCLK.
+Similar to previous commit 2a934fdb01db ("media: v4l2-dev: fix error
+handling in __video_register_device()"), the release hook should be set
+before device_register(). Otherwise, when device_register() return error
+and put_device() try to callback the release function, the below warning
+may happen.
 
-According to Alex, the Windows driver programs them to:
-mclk_change_block_cp_min = 200 / line_time
-mclk_change_block_cp_max = 100 / line_time
-Let's use the same for the sake of consistency.
+  ------------[ cut here ]------------
+  WARNING: CPU: 1 PID: 4760 at drivers/base/core.c:2567 device_release+0x1bd/0x240 drivers/base/core.c:2567
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 4760 Comm: syz.4.914 Not tainted 6.17.0-rc3+ #1 NONE
+  RIP: 0010:device_release+0x1bd/0x240 drivers/base/core.c:2567
+  Call Trace:
+   <TASK>
+   kobject_cleanup+0x136/0x410 lib/kobject.c:689
+   kobject_release lib/kobject.c:720 [inline]
+   kref_put include/linux/kref.h:65 [inline]
+   kobject_put+0xe9/0x130 lib/kobject.c:737
+   put_device+0x24/0x30 drivers/base/core.c:3797
+   pps_register_cdev+0x2da/0x370 drivers/pps/pps.c:402
+   pps_register_source+0x2f6/0x480 drivers/pps/kapi.c:108
+   pps_tty_open+0x190/0x310 drivers/pps/clients/pps-ldisc.c:57
+   tty_ldisc_open+0xa7/0x120 drivers/tty/tty_ldisc.c:432
+   tty_set_ldisc+0x333/0x780 drivers/tty/tty_ldisc.c:563
+   tiocsetd drivers/tty/tty_io.c:2429 [inline]
+   tty_ioctl+0x5d1/0x1700 drivers/tty/tty_io.c:2728
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:598 [inline]
+   __se_sys_ioctl fs/ioctl.c:584 [inline]
+   __x64_sys_ioctl+0x194/0x210 fs/ioctl.c:584
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x5f/0x2a0 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Previously we used the watermark values, but it seemed buggy
-as the code was mixing up low/high and A/B watermarks, and
-was not saving a low watermark value on DCE 6, so
-mclk_change_block_cp_max would be always zero previously.
+Before commit c79a39dc8d06 ("pps: Fix a use-after-free"),
+pps_register_cdev() call device_create() to create pps->dev, which will
+init dev->release to device_create_release(). Now the comment is outdated,
+just remove it.
 
-Split this change off from the previous si_upload_smc_data
-to make it easier to bisect, in case it causes any issues.
+Thanks for the reminder from Calvin Owens, 'kfree_pps' should be removed
+in pps_register_source() to avoid a double free in the failure case.
 
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/all/20250827065010.3208525-1-wangliang74@huawei.com/
+Fixes: c79a39dc8d06 ("pps: Fix a use-after-free")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Reviewed-By: Calvin Owens <calvin@wbinvd.org>
+Link: https://lore.kernel.org/r/20250830075023.3498174-1-wangliang74@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pps/kapi.c | 5 +----
+ drivers/pps/pps.c  | 5 ++---
+ 2 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-index 6736c592dfdc6..fb008c5980d67 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -5833,8 +5833,8 @@ static int si_upload_smc_data(struct amdgpu_device *adev)
- 		crtc_index = amdgpu_crtc->crtc_id;
- 
- 		if (amdgpu_crtc->line_time) {
--			mclk_change_block_cp_min = amdgpu_crtc->wm_high / amdgpu_crtc->line_time;
--			mclk_change_block_cp_max = amdgpu_crtc->wm_low / amdgpu_crtc->line_time;
-+			mclk_change_block_cp_min = 200 / amdgpu_crtc->line_time;
-+			mclk_change_block_cp_max = 100 / amdgpu_crtc->line_time;
- 		}
+diff --git a/drivers/pps/kapi.c b/drivers/pps/kapi.c
+index 92d1b62ea239d..e9389876229ea 100644
+--- a/drivers/pps/kapi.c
++++ b/drivers/pps/kapi.c
+@@ -109,16 +109,13 @@ struct pps_device *pps_register_source(struct pps_source_info *info,
+ 	if (err < 0) {
+ 		pr_err("%s: unable to create char device\n",
+ 					info->name);
+-		goto kfree_pps;
++		goto pps_register_source_exit;
  	}
+ 
+ 	dev_dbg(&pps->dev, "new PPS source %s\n", info->name);
+ 
+ 	return pps;
+ 
+-kfree_pps:
+-	kfree(pps);
+-
+ pps_register_source_exit:
+ 	pr_err("%s: unable to register source\n", info->name);
+ 
+diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
+index 9463232af8d2e..c6b8b64782761 100644
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -374,6 +374,7 @@ int pps_register_cdev(struct pps_device *pps)
+ 			       pps->info.name);
+ 			err = -EBUSY;
+ 		}
++		kfree(pps);
+ 		goto out_unlock;
+ 	}
+ 	pps->id = err;
+@@ -383,13 +384,11 @@ int pps_register_cdev(struct pps_device *pps)
+ 	pps->dev.devt = MKDEV(pps_major, pps->id);
+ 	dev_set_drvdata(&pps->dev, pps);
+ 	dev_set_name(&pps->dev, "pps%d", pps->id);
++	pps->dev.release = pps_device_destruct;
+ 	err = device_register(&pps->dev);
+ 	if (err)
+ 		goto free_idr;
+ 
+-	/* Override the release function with our own */
+-	pps->dev.release = pps_device_destruct;
+-
+ 	pr_debug("source %s got cdev (%d:%d)\n", pps->info.name, pps_major,
+ 		 pps->id);
  
 -- 
 2.51.0
