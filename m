@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEC930C603;
-	Mon, 13 Oct 2025 15:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B030C625;
+	Mon, 13 Oct 2025 15:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369107; cv=none; b=ZNz0+mTXfyHpjpBJI2HCPqI9dNzaIGjsoQI3Yoyw8TsFVXRE7EVDLqymJR4nH/REtfAwsmEtB6L5xP3C2XI3KRNlqCGZU1PNNCOd36eotAWd342cA2HiPNdinCZ6HH5u6xUaUxgiNaZ391lci4EXYTqq0Ir0Z/YNX5l7q9rCt5M=
+	t=1760369110; cv=none; b=BmMUHVjLqHYm4Jo6rC9PAv+fEQGfRLyfm3bprSgn6HbgYUH3ip33niYqVsTP4CTWKpkh3jgFce+TFZDT3LQaA0m++tr9rq/WnOc5jO4mqPovABt0unbnZZimWf756FBrMU64Jo/gBncTNXDjWyCobPUAT4ovNZoMA43in1HzvD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369107; c=relaxed/simple;
-	bh=RCMH+A8uBeM7fl1o0AN1d9+71RwrlZb0JJUqbKIyEto=;
+	s=arc-20240116; t=1760369110; c=relaxed/simple;
+	bh=zvmNBfvx22HP3dI0EPfpIgpbm8Eb2kITcpgPqfiQlgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8YFYYa4JjZ4YV/oA/WpwMiBJ7NVcrg+1g6Kj3XqWNIiodY54KUkm7oNVWvuzjB3Ng0Z13pUW8kw+UYCBrAJUc4jly8E2/yBs9hGv2qH8vbvho/JiVBpc5hjnuR57825AborevDADneH5085qCEB39ye8D62pfkxd7L24iAEXLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPHBUGXn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gQVIADblKqBfu/pSKaafYSEiy0le7Qt3ph9dPGxoFDdQ/W5PiWStEl1R6bvyXPZpumH3RH9FsYNRlrNfFJQgk5XKLjaQbJgmuS5IXcKhUqHRFjCxQo9fUrQGpobwHaBuz8M6DvKbidmDe6FkPj5Y7az075d0Eruumn3OyDD8ans=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNJaY0mz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPHBUGXn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766CAC4CEE7;
-	Mon, 13 Oct 2025 15:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNJaY0mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A8C4CEE7;
+	Mon, 13 Oct 2025 15:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369106;
-	bh=RCMH+A8uBeM7fl1o0AN1d9+71RwrlZb0JJUqbKIyEto=;
+	s=korg; t=1760369109;
+	bh=zvmNBfvx22HP3dI0EPfpIgpbm8Eb2kITcpgPqfiQlgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPHBUGXng9fymXzKQEyeEMHxq3jTOrg+L+VDQ9/nTMjEVNBzGSRv9MLKiXjabFKaL
-	 McUTx1pLpKrl8uyNmk/2u48M/xe5mAzQbFv6+w9QEu0gqvZWCQEvs428G7u02Ls5Pn
-	 BIeIq/RWlvNCHeYQIhxV8k5RPaDWTFJjM3zHCMUU=
+	b=BNJaY0mzqtDV8gThR0pVskCqfmUpx2E9Zi36sNRwU/FRAF5gIHteE7/+tw59XiEcP
+	 1JyuUMCIIbn0KBsBkxrsLJriCulR/fq1dIMCdMhM4mqt3WsJCbDzmbkjMQqzP1YOfC
+	 RXmQWlSZGnmMosfjZKLS+msDtTZ4cd5e2ay3Qvmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	David Gow <davidgow@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 097/563] ARM: dts: ti: omap: omap3-devkit8000-lcd: Fix ti,keep-vref-on property to use correct boolean syntax in DTS
-Date: Mon, 13 Oct 2025 16:39:18 +0200
-Message-ID: <20251013144414.809325652@linuxfoundation.org>
+Subject: [PATCH 6.17 088/563] genirq/test: Depend on SPARSE_IRQ
+Date: Mon, 13 Oct 2025 16:39:09 +0200
+Message-ID: <20251013144414.486368779@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,38 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit 5af5b85505bc859adb338fe5d6e4842e72cdf932 ]
+[ Upstream commit 0c888bc86d672e551ce5c58b891c8b44f8967643 ]
 
-The ti,keep-vref-on property, defined as a boolean flag in the Device
-Tree schema, was incorrectly assigned a value (<1>) in the DTS file,
-causing a validation error: "size (4) error for type flag". Remove
-the value to match the schema and ensure compatibility with the driver
-using device_property_read_bool(). This fixes the dtbs_check error.
+Some architectures have a static interrupt layout, with a limited number of
+interrupts. Without SPARSE_IRQ, the test may not be able to allocate any
+fake interrupts, and the test will fail. (This occurs on ARCH=m68k, for
+example.)
 
-Fixes: ed05637c30e6 ("ARM: dts: omap3-devkit8000: Add ADS7846 Touchscreen support")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Link: https://lore.kernel.org/r/20250822225052.136919-1-jihed.chaibi.dev@gmail.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Additionally, managed-affinity is only supported with CONFIG_SPARSE_IRQ=y,
+so irq_shutdown_depth_test() and irq_cpuhotplug_test() would fail without
+it.
+
+Add a 'SPARSE_IRQ' dependency to avoid these problems.
+
+Many architectures 'select SPARSE_IRQ', so this is easy to miss.
+
+Notably, this also excludes ARCH=um from running any of these tests, even
+though some of them might work.
+
+Fixes: 66067c3c8a1e ("genirq: Add kunit tests for depth counts")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: David Gow <davidgow@google.com>
+Link: https://lore.kernel.org/all/20250822190140.2154646-5-briannorris@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi b/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
-index a7f99ae0c1fe9..78c657429f641 100644
---- a/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap3-devkit8000-lcd-common.dtsi
-@@ -65,7 +65,7 @@ ads7846@0 {
- 		ti,debounce-max = /bits/ 16 <10>;
- 		ti,debounce-tol = /bits/ 16 <5>;
- 		ti,debounce-rep = /bits/ 16 <1>;
--		ti,keep-vref-on = <1>;
-+		ti,keep-vref-on;
- 		ti,settle-delay-usec = /bits/ 16 <150>;
- 
- 		wakeup-source;
+diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
+index 08088b8e95ae9..a75df2bb9db66 100644
+--- a/kernel/irq/Kconfig
++++ b/kernel/irq/Kconfig
+@@ -147,6 +147,7 @@ config GENERIC_IRQ_KEXEC_CLEAR_VM_FORWARD
+ config IRQ_KUNIT_TEST
+ 	bool "KUnit tests for IRQ management APIs" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT=y
++	depends on SPARSE_IRQ
+ 	default KUNIT_ALL_TESTS
+ 	select IRQ_DOMAIN
+ 	imply SMP
 -- 
 2.51.0
 
