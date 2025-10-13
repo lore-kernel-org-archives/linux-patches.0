@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F26310647;
-	Mon, 13 Oct 2025 15:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24B3310647;
+	Mon, 13 Oct 2025 15:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368064; cv=none; b=G1G+1NS/mMgDK1eFJ8Sl1cnkiUVT3GciLf9q1rrIFYTocWYIgqHUu5DsLj9/ESEYJadYCBMCV+fW8fXHMqklJosHg3LV48fGKItrhNO5HdAR0uy6gvlEFOKJP+jXd3uvcu52Z7mtDY6RRBwIXC7kBT8AHDv0ohgBceNcjEkNFw4=
+	t=1760368067; cv=none; b=oKiH3iYHeAml7tQ7LOo9RtpgYQBWTjqlLuoxZg+PUo+ibhqNQGDqwfNSZWsZzq3YUjc2RiqZXuvLXPllw5nUcg1cRQ4E5Md2wDZu+CKpB/Fouw3CsMhpZhz/fkrORlDlWx0jAF82b9rE5m3EEENsWP/CFuiABxUFF6TbjrWP2cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368064; c=relaxed/simple;
-	bh=QKMRw0exnscM1HOXI4E66Jr0Fg94jPioH3jr9XL7T84=;
+	s=arc-20240116; t=1760368067; c=relaxed/simple;
+	bh=SvWC28SMlSKljUxe1ITsFmCT0/fErZvFrhaNeRhmhrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc/yWlRR2H5x+YPI1MPV6Fa0W583A8gh/z4jg+3rDDQJGR8F5ItU1VoGuOhdeXYqshlOiQ84+gHF4x0Nr5/Xp/WzB1upXlv8b8hxa1JVauD0EciUDsM0HJcHcpBNkN3uhKBvaecWFG1WpfrTbQceQiBlihTXzzQeLh+NB5f/R0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUhYjyQ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZfrreF6O29esb/J7hzU7EHYrVWuNKHm7mCn9Kp5jWz+IIVmPUq/t0roceX6IM4LVmZjis2Rg5ZEIHdqRdVz1Xrgx3YaTl63wmYn6+78nHxu6PO0o84kbdsLri6h504n0T933M6+LyLOHF1sNQtBKTv8l2LSZ5XArWXKwbCdKP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSAyPOnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUhYjyQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46755C4CEE7;
-	Mon, 13 Oct 2025 15:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSAyPOnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27922C4CEE7;
+	Mon, 13 Oct 2025 15:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368064;
-	bh=QKMRw0exnscM1HOXI4E66Jr0Fg94jPioH3jr9XL7T84=;
+	s=korg; t=1760368067;
+	bh=SvWC28SMlSKljUxe1ITsFmCT0/fErZvFrhaNeRhmhrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUhYjyQ/wJm8iD4LSdgAh8YWo8sfIPwH61StLR4CVT+xmHCiXp+Q2328DnIuBsV2L
-	 dyvtPq87jGYH3UkdZBdJ5qdc+VxjA5J8LCl4PPexpKpEVT9g4bRV8BsqoRgPDAh7mG
-	 6h6C4BpOBEHRmvGBuMw5biBkJZgjyIdBhTW7Hx1U=
+	b=nSAyPOnK/T2YTmCtShqTS8wuAS1k+mD0x+uSl3UZaUu5nHZ5HihwWWAgZEewcDLRP
+	 Xm9c3qx39BJ3KfusQOEkprTRTmE4KSJygitAS7QxA4Jedab3aXpqfIR885A24ahA8K
+	 P9DEF0SS5n0qOjTI/gLUDq3yxkx/BbgGL2WnQxZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/262] arm64: dts: imx95: Correct the lpuart7 and lpuart8 srcid
-Date: Mon, 13 Oct 2025 16:42:52 +0200
-Message-ID: <20251013144327.218597090@linuxfoundation.org>
+Subject: [PATCH 6.12 004/262] selftests: arm64: Check fread return value in exec_target
+Date: Mon, 13 Oct 2025 16:42:26 +0200
+Message-ID: <20251013144326.282435671@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,45 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@nxp.com>
+From: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
 
-[ Upstream commit 6fdaf3b1839c861931db0dd11747c056a76b68f9 ]
+[ Upstream commit a679e5683d3eef22ca12514ff8784b2b914ebedc ]
 
-According to the imx95 RM, the lpuart7 rx and tx DMA's srcid are 88 and 87,
-and the lpuart8 rx and tx DMA's srcid are 90 and 89. So correct them.
+Fix -Wunused-result warning generated when compiled with gcc 13.3.0,
+by checking fread's return value and handling errors, preventing
+potential failures when reading from stdin.
 
-Fixes: 915fd2e127e8 ("arm64: dts: imx95: add edma[1..3] nodes")
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes compiler warning:
+warning: ignoring return value of 'fread' declared with attribute
+'warn_unused_result' [-Wunused-result]
+
+Fixes: 806a15b2545e ("kselftests/arm64: add PAuth test for whether exec() changes keys")
+
+Signed-off-by: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/arm64/pauth/exec_target.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index 7365d6538a733..ddbc94c375e0c 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -822,7 +822,7 @@ lpuart7: serial@42690000 {
- 				interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_LPUART7>;
- 				clock-names = "ipg";
--				dmas = <&edma2 26 0 FSL_EDMA_RX>, <&edma2 25 0 0>;
-+				dmas = <&edma2 88 0 FSL_EDMA_RX>, <&edma2 87 0 0>;
- 				dma-names = "rx", "tx";
- 				status = "disabled";
- 			};
-@@ -834,7 +834,7 @@ lpuart8: serial@426a0000 {
- 				interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_LPUART8>;
- 				clock-names = "ipg";
--				dmas = <&edma2 28 0 FSL_EDMA_RX>, <&edma2 27 0 0>;
-+				dmas = <&edma2 90 0 FSL_EDMA_RX>, <&edma2 89 0 0>;
- 				dma-names = "rx", "tx";
- 				status = "disabled";
- 			};
+diff --git a/tools/testing/selftests/arm64/pauth/exec_target.c b/tools/testing/selftests/arm64/pauth/exec_target.c
+index 4435600ca400d..e597861b26d6b 100644
+--- a/tools/testing/selftests/arm64/pauth/exec_target.c
++++ b/tools/testing/selftests/arm64/pauth/exec_target.c
+@@ -13,7 +13,12 @@ int main(void)
+ 	unsigned long hwcaps;
+ 	size_t val;
+ 
+-	fread(&val, sizeof(size_t), 1, stdin);
++	size_t size = fread(&val, sizeof(size_t), 1, stdin);
++
++	if (size != 1) {
++		fprintf(stderr, "Could not read input from stdin\n");
++		return EXIT_FAILURE;
++	}
+ 
+ 	/* don't try to execute illegal (unimplemented) instructions) caller
+ 	 * should have checked this and keep worker simple
 -- 
 2.51.0
 
