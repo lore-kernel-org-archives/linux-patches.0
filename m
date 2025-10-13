@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5721430F936;
-	Mon, 13 Oct 2025 15:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EE830F818;
+	Mon, 13 Oct 2025 15:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367873; cv=none; b=G+6odtms5MGnFhSgv66LY9cZJCbZ/Bk4nqD+30xHQtCw6FcnYuxbBcAa2BP20obut+fA4CqOMcipXpv5faeX+jB9RznTurh7t3ouhsnnVdAobDyPIeBruahYtNa5QAlRFdZiTwPkzqp/TaARn8OCDG8KEVGG3uFJhw+tNfl5Ia0=
+	t=1760367876; cv=none; b=RwFdN8x+CbNgd28bk5q7R3FEfYAW7CD+Re781+LpjC5FVygfOVT7Yuk/GAa8O+jGN2D8xLITbJI+95DAcBkfbH5BHtC/AqgMv/DaWc4AdyQlUIEJ9qWM8668Q7rbOTL99JMsUZe/RZM/EY2cG4YdqzSrbYic95xK4hyTpfG7vAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367873; c=relaxed/simple;
-	bh=Vy3I7362oG7gB6rH9H7Zwjgz1tvlGxTWXgJHw7YOGG8=;
+	s=arc-20240116; t=1760367876; c=relaxed/simple;
+	bh=42akdj8HUScdXPNot71D7Kz75kSZlBNYGbxQGJcvHRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3HQLV9G+R6lhlN5S3OY0aLICE54+XmaxoPk9EYV2x5/6c7DnvhStspHj7ihbQruaBJQz7U2cfE4IJOCdpGTmHoyGXLfyEIC2Lox/N1B0r9sPHwzKCOcpWjM5f/8Hdp0RIt40wdnsA+Es8Pfv2Cgc9CoFROz2qW2Y/mKrAdVBSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmsgXA+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RhiLYYY3qYFGdTULTxLR7zQRa5hOmK0aE8Xo6wCCgJCcXvQylFv+kaqylunW1DrHS6UtcTXfj5nKdbAfZEQA1VXo1ZKLdS/U/mY+xX7aQC8RqdfWo6op7zIGF0aTufm+Lfv4ZUJkdKJEVN1eL1Xdf1liozoxAXRu+R5Ymc9A3Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APzOY3qV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmsgXA+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4C2C4CEE7;
-	Mon, 13 Oct 2025 15:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APzOY3qV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9727AC4CEE7;
+	Mon, 13 Oct 2025 15:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367873;
-	bh=Vy3I7362oG7gB6rH9H7Zwjgz1tvlGxTWXgJHw7YOGG8=;
+	s=korg; t=1760367876;
+	bh=42akdj8HUScdXPNot71D7Kz75kSZlBNYGbxQGJcvHRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmsgXA+ocSKnYyobWNnOaWjBN35/1T4FOVEpxk0xjUPbfYZPdF42M0qkABs6i6Kx7
-	 QLsN61D3zqLx0l8qCIqxdGa9PL6+DTVwrJzjjAzLhlYL4j2O4BJvc6Zt9Y4rd5Dxm3
-	 EfGbBVVObVprWln8mZZx62Q3HaqCCNPnQ4ry43RU=
+	b=APzOY3qVd2M8QypCIR3LUUyXq4MzEzw5aprKkeuUviwhdDJGR6HNm3zcINUGiyp5j
+	 i74S3o0+R5hzlB3ne99hYUCdol0i3LMyM3T0zk1nyMW6FMSQKtjVIdFShFr+0YxYIn
+	 WJ+yFk5LHZWk7MbLicujpc/gCRubbXcz6Fbgr/BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shay Drory <shayd@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/196] net/mlx5: Stop polling for command response if interface goes down
-Date: Mon, 13 Oct 2025 16:45:53 +0200
-Message-ID: <20251013144321.171850738@linuxfoundation.org>
+Subject: [PATCH 6.6 163/196] net/mlx5: pagealloc: Fix reclaim race during command interface teardown
+Date: Mon, 13 Oct 2025 16:45:54 +0200
+Message-ID: <20251013144321.207799607@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -53,51 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit b1f0349bd6d320c382df2e7f6fc2ac95c85f2b18 ]
+[ Upstream commit 79a0e32b32ac4e4f9e4bb22be97f371c8c116c88 ]
 
-Stop polling on firmware response to command in polling mode if the
-command interface got down. This situation can occur, for example, if a
-firmware fatal error is detected during polling.
+The reclaim_pages_cmd() function sends a command to the firmware to
+reclaim pages if the command interface is active.
 
-This change halts the polling process when the command interface goes
-down, preventing unnecessary waits.
+A race condition can occur if the command interface goes down (e.g., due
+to a PCI error) while the mlx5_cmd_do() call is in flight. In this
+case, mlx5_cmd_do() will return an error. The original code would
+propagate this error immediately, bypassing the software-based page
+reclamation logic that is supposed to run when the command interface is
+down.
+
+Fix this by checking whether mlx5_cmd_do() returns -ENXIO, which mark
+that command interface is down. If this is the case, fall through to
+the software reclamation path. If the command failed for any another
+reason, or finished successfully, return as before.
 
 Fixes: b898ce7bccf1 ("net/mlx5: cmdif, Avoid skipping reclaim pages if FW is not accessible")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 5a2126679415c..336e0a54b3dc2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -289,6 +289,10 @@ static void poll_timeout(struct mlx5_cmd_work_ent *ent)
- 			return;
- 		}
- 		cond_resched();
-+		if (mlx5_cmd_is_down(dev)) {
-+			ent->ret = -ENXIO;
-+			return;
-+		}
- 	} while (time_before(jiffies, poll_end));
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index e0581c6f9cecd..5df1472fe2be2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -489,9 +489,12 @@ static int reclaim_pages_cmd(struct mlx5_core_dev *dev,
+ 	u32 func_id;
+ 	u32 npages;
+ 	u32 i = 0;
++	int err;
  
- 	ent->ret = -ETIMEDOUT;
-@@ -1059,7 +1063,7 @@ static void cmd_work_handler(struct work_struct *work)
- 		poll_timeout(ent);
- 		/* make sure we read the descriptor after ownership is SW */
- 		rmb();
--		mlx5_cmd_comp_handler(dev, 1ULL << ent->idx, (ent->ret == -ETIMEDOUT));
-+		mlx5_cmd_comp_handler(dev, 1ULL << ent->idx, !!ent->ret);
- 	}
- }
+-	if (!mlx5_cmd_is_down(dev))
+-		return mlx5_cmd_do(dev, in, in_size, out, out_size);
++	err = mlx5_cmd_do(dev, in, in_size, out, out_size);
++	/* If FW is gone (-ENXIO), proceed to forceful reclaim */
++	if (err != -ENXIO)
++		return err;
  
+ 	/* No hard feelings, we want our pages back! */
+ 	npages = MLX5_GET(manage_pages_in, in, input_num_entries);
 -- 
 2.51.0
 
