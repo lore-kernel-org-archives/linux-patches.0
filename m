@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EC13128A2;
-	Mon, 13 Oct 2025 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351B222587;
+	Mon, 13 Oct 2025 15:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369325; cv=none; b=R1Ahx0vrZmOaUYyUn8r56QGIKS744B4d96zWip+rmLctD0va4oqR34pJttbNDdqZTogyp0WLhgZVPhwlchexkTaDrZVupftrydmeLavjxPGETwT3ZfDxvZ6+d1SsECppOiJy9Kh1V536c2LQ0W47C8m4YXCljtwyCzxgfuz0QEM=
+	t=1760369327; cv=none; b=sScXnoIrNTpWytqyufsQm2ou97kM9ABC0JU2KTiI1G9Zu8UFIwMIjrfGKLqhBxVozM3ZsvC5cAsxGwFAHPkSo40PoCL/c4s8TH46Fo9CFw9u+uRK3Tx1Ri4fhFLUemxmwjfmpGpalFHOeGtMqcCEKP5rVRngXW1WbinnWiXSCN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369325; c=relaxed/simple;
-	bh=pMXvOqmIrbxDfSoBivmydNbZQmlBNjAaxq6eXCclmV4=;
+	s=arc-20240116; t=1760369327; c=relaxed/simple;
+	bh=4SFj6E+CUYiuLIVHpjG/2/WLKKcLL4eSwDwvhGIYByY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7hQ5N+9XhhdLO3IbSgTdsr6R6hb2GlMwGQQkLj9AWYbALiOafFoYpaBljqAjiBx6xkOk+7BOYDxPJ1RxH75HEKpEsv90SnbZrNWUlIgDxT5B38L3jvMqm2wbg8JDi14yC2ARfu+DrQmuMPHBqqB5uw544eZ/gswi0U3AqxDU2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgZQLpqn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dd07ySVOixLEjsBlCc5eqTDkcNjd1b7HIc+OkeRbbLJg8PkpOh2LBjGWwFn5tngOxaLm65Dyqhge5eMmXsOMpWpjToyAMdvZPT6NAsrcMLrSeq85B5Fn4y+zffO/0OX+EdD1eMbGW2CHVeORFbZjN08J2HV8OQbRcoIoDhi1fco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN87pZL+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgZQLpqn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E343C116C6;
-	Mon, 13 Oct 2025 15:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN87pZL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CD7C4CEFE;
+	Mon, 13 Oct 2025 15:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369324;
-	bh=pMXvOqmIrbxDfSoBivmydNbZQmlBNjAaxq6eXCclmV4=;
+	s=korg; t=1760369327;
+	bh=4SFj6E+CUYiuLIVHpjG/2/WLKKcLL4eSwDwvhGIYByY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgZQLpqnwLQ9OTrJwnBJaXPeSbyHsAU2vobG95EAgeqCY0gBEI2gmBYSVAESxXytL
-	 6NB9iipkYw5f1l2IGauyOl+Xv98ZYkvx3PAjmERqaoxlFyj3Jvp7ceVZu5LJm/drmA
-	 6V5BJ4Y7Zkzs+++R/25A54f0dpdWQVNmc9mb+W+I=
+	b=wN87pZL+EjubMwnytQCj4EsXsHdDDdy5UUOx6ICHlZaoQ/zGGvxdb/oG+7Q3TV6id
+	 qfcs+A6a9pdPSPoJAebVG6e1Nbu27SwWqHmd9RcxCoUjEe1AlgIrB9jjZ7QEOt1acB
+	 bhzEFBN813ZeTs8dkea4ceColWoVNRxdc2Kx0gXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 207/563] libbpf: Fix error when st-prefix_ops and ops from differ btf
-Date: Mon, 13 Oct 2025 16:41:08 +0200
-Message-ID: <20251013144418.784708357@linuxfoundation.org>
+Subject: [PATCH 6.17 208/563] bpf: Enforce expected_attach_type for tailcall compatibility
+Date: Mon, 13 Oct 2025 16:41:09 +0200
+Message-ID: <20251013144418.821103745@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,119 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 0cc114dc358cf8da2ca23a366e761e89a46ca277 ]
+[ Upstream commit 4540aed51b12bc13364149bf95f6ecef013197c0 ]
 
-When a module registers a struct_ops, the struct_ops type and its
-corresponding map_value type ("bpf_struct_ops_") may reside in different
-btf objects, here are four possible case:
+Yinhao et al. recently reported:
 
-+--------+---------------+-------------+---------------------------------+
-|        |bpf_struct_ops_| xxx_ops     |                                 |
-+--------+---------------+-------------+---------------------------------+
-| case 0 | btf_vmlinux   | btf_vmlinux | be used and reg only in vmlinux |
-+--------+---------------+-------------+---------------------------------+
-| case 1 | btf_vmlinux   | mod_btf     | INVALID                         |
-+--------+---------------+-------------+---------------------------------+
-| case 2 | mod_btf       | btf_vmlinux | reg in mod but be used both in  |
-|        |               |             | vmlinux and mod.                |
-+--------+---------------+-------------+---------------------------------+
-| case 3 | mod_btf       | mod_btf     | be used and reg only in mod     |
-+--------+---------------+-------------+---------------------------------+
+  Our fuzzer tool discovered an uninitialized pointer issue in the
+  bpf_prog_test_run_xdp() function within the Linux kernel's BPF subsystem.
+  This leads to a NULL pointer dereference when a BPF program attempts to
+  deference the txq member of struct xdp_buff object.
 
-Currently we figure out the mod_btf by searching with the struct_ops type,
-which makes it impossible to figure out the mod_btf when the struct_ops
-type is in btf_vmlinux while it's corresponding map_value type is in
-mod_btf (case 2).
+The test initializes two programs of BPF_PROG_TYPE_XDP: progA acts as the
+entry point for bpf_prog_test_run_xdp() and its expected_attach_type can
+neither be of be BPF_XDP_DEVMAP nor BPF_XDP_CPUMAP. progA calls into a slot
+of a tailcall map it owns. progB's expected_attach_type must be BPF_XDP_DEVMAP
+to pass xdp_is_valid_access() validation. The program returns struct xdp_md's
+egress_ifindex, and the latter is only allowed to be accessed under mentioned
+expected_attach_type. progB is then inserted into the tailcall which progA
+calls.
 
-The fix is to use the corresponding map_value type ("bpf_struct_ops_")
-as the lookup anchor instead of the struct_ops type to figure out the
-`btf` and `mod_btf` via find_ksym_btf_id(), and then we can locate
-the kern_type_id via btf__find_by_name_kind() with the `btf` we just
-obtained from find_ksym_btf_id().
+The underlying issue goes beyond XDP though. Another example are programs
+of type BPF_PROG_TYPE_CGROUP_SOCK_ADDR. sock_addr_is_valid_access() as well
+as sock_addr_func_proto() have different logic depending on the programs'
+expected_attach_type. Similarly, a program attached to BPF_CGROUP_INET4_GETPEERNAME
+should not be allowed doing a tailcall into a program which calls bpf_bind()
+out of BPF which is only enabled for BPF_CGROUP_INET4_CONNECT.
 
-With this change the lookup obtains the correct btf and mod_btf for case 2,
-preserves correct behavior for other valid cases, and still fails as
-expected for the invalid scenario (case 1).
+In short, specifying expected_attach_type allows to open up additional
+functionality or restrictions beyond what the basic bpf_prog_type enables.
+The use of tailcalls must not violate these constraints. Fix it by enforcing
+expected_attach_type in __bpf_prog_map_compatible().
 
-Fixes: 590a00888250 ("bpf: libbpf: Add STRUCT_OPS support")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20250926071751.108293-1-alibuda@linux.alibaba.com
+Note that we only enforce this for tailcall maps, but not for BPF devmaps or
+cpumaps: There, the programs are invoked through dev_map_bpf_prog_run*() and
+cpu_map_bpf_prog_run*() which set up a new environment / context and therefore
+these situations are not prone to this issue.
+
+Fixes: 5e43f899b03a ("bpf: Check attach type at prog load time")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20250926171201.188490-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 36 +++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ include/linux/bpf.h | 1 +
+ kernel/bpf/core.c   | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index fe4fc5438678c..8f9261279b921 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -1013,35 +1013,33 @@ find_struct_ops_kern_types(struct bpf_object *obj, const char *tname_raw,
- 	const struct btf_member *kern_data_member;
- 	struct btf *btf = NULL;
- 	__s32 kern_vtype_id, kern_type_id;
--	char tname[256];
-+	char tname[192], stname[256];
- 	__u32 i;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index cc700925b802f..84826dc0a3268 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -285,6 +285,7 @@ struct bpf_map_owner {
+ 	bool xdp_has_frags;
+ 	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
+ 	const struct btf_type *attach_func_proto;
++	enum bpf_attach_type expected_attach_type;
+ };
  
- 	snprintf(tname, sizeof(tname), "%.*s",
- 		 (int)bpf_core_essential_name_len(tname_raw), tname_raw);
- 
--	kern_type_id = find_ksym_btf_id(obj, tname, BTF_KIND_STRUCT,
--					&btf, mod_btf);
--	if (kern_type_id < 0) {
--		pr_warn("struct_ops init_kern: struct %s is not found in kernel BTF\n",
--			tname);
--		return kern_type_id;
--	}
--	kern_type = btf__type_by_id(btf, kern_type_id);
-+	snprintf(stname, sizeof(stname), "%s%s", STRUCT_OPS_VALUE_PREFIX, tname);
- 
--	/* Find the corresponding "map_value" type that will be used
--	 * in map_update(BPF_MAP_TYPE_STRUCT_OPS).  For example,
--	 * find "struct bpf_struct_ops_tcp_congestion_ops" from the
--	 * btf_vmlinux.
-+	/* Look for the corresponding "map_value" type that will be used
-+	 * in map_update(BPF_MAP_TYPE_STRUCT_OPS) first, figure out the btf
-+	 * and the mod_btf.
-+	 * For example, find "struct bpf_struct_ops_tcp_congestion_ops".
- 	 */
--	kern_vtype_id = find_btf_by_prefix_kind(btf, STRUCT_OPS_VALUE_PREFIX,
--						tname, BTF_KIND_STRUCT);
-+	kern_vtype_id = find_ksym_btf_id(obj, stname, BTF_KIND_STRUCT, &btf, mod_btf);
- 	if (kern_vtype_id < 0) {
--		pr_warn("struct_ops init_kern: struct %s%s is not found in kernel BTF\n",
--			STRUCT_OPS_VALUE_PREFIX, tname);
-+		pr_warn("struct_ops init_kern: struct %s is not found in kernel BTF\n", stname);
- 		return kern_vtype_id;
- 	}
- 	kern_vtype = btf__type_by_id(btf, kern_vtype_id);
- 
-+	kern_type_id = btf__find_by_name_kind(btf, tname, BTF_KIND_STRUCT);
-+	if (kern_type_id < 0) {
-+		pr_warn("struct_ops init_kern: struct %s is not found in kernel BTF\n", tname);
-+		return kern_type_id;
-+	}
-+	kern_type = btf__type_by_id(btf, kern_type_id);
-+
- 	/* Find "struct tcp_congestion_ops" from
- 	 * struct bpf_struct_ops_tcp_congestion_ops {
- 	 *	[ ... ]
-@@ -1054,8 +1052,8 @@ find_struct_ops_kern_types(struct bpf_object *obj, const char *tname_raw,
- 			break;
- 	}
- 	if (i == btf_vlen(kern_vtype)) {
--		pr_warn("struct_ops init_kern: struct %s data is not found in struct %s%s\n",
--			tname, STRUCT_OPS_VALUE_PREFIX, tname);
-+		pr_warn("struct_ops init_kern: struct %s data is not found in struct %s\n",
-+			tname, stname);
- 		return -EINVAL;
- 	}
- 
+ struct bpf_map {
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index e4568d44e8279..f6dd071f5e38c 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2393,6 +2393,7 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
+ 		map->owner->type  = prog_type;
+ 		map->owner->jited = fp->jited;
+ 		map->owner->xdp_has_frags = aux->xdp_has_frags;
++		map->owner->expected_attach_type = fp->expected_attach_type;
+ 		map->owner->attach_func_proto = aux->attach_func_proto;
+ 		for_each_cgroup_storage_type(i) {
+ 			map->owner->storage_cookie[i] =
+@@ -2404,6 +2405,10 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
+ 		ret = map->owner->type  == prog_type &&
+ 		      map->owner->jited == fp->jited &&
+ 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
++		if (ret &&
++		    map->map_type == BPF_MAP_TYPE_PROG_ARRAY &&
++		    map->owner->expected_attach_type != fp->expected_attach_type)
++			ret = false;
+ 		for_each_cgroup_storage_type(i) {
+ 			if (!ret)
+ 				break;
 -- 
 2.51.0
 
