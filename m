@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F725784F;
-	Mon, 13 Oct 2025 15:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B903090C7;
+	Mon, 13 Oct 2025 15:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368500; cv=none; b=bZjendqZaMV0PELXgVJIPAsG+rnD6LDSKRuBogITStFmpxeOyA1mi5WW/+I389YsCiEFARD3nJpmUbWmv3w/t78j/R8Z7s7aB42qwcfhWmeTgsA2RKa8W8dZg10BU0YIiOOzmS9BR+Z1s4WUhcmYnvL5Co1BDq0jbPkrRssRaVM=
+	t=1760368502; cv=none; b=EPwXzYsY6C8aKv3t6PQNiPuPvAQlVdv+XiMLB8Watv6NDtUUM4poMiMjaj57HhiC/lIV57ask1g2WzImtT+oIeHDsmBdddIVin9LJFkHRIbq0gdGMGKs+Tl7lhmZYU8jqQjQCYO6KlVkh3hhDrRhjTG78l25a4jQEDSx9vkPgFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368500; c=relaxed/simple;
-	bh=QiBUuJiwG3ey1MyPML+c3TcTZDZOfdHIM0/QsRjcjEw=;
+	s=arc-20240116; t=1760368502; c=relaxed/simple;
+	bh=fkNjWNc7KuQnSD8BmK71MA3KSfMmz/Jx8meR13Ac9bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z762hXBjKy6X67OgfW3RfXguHVO/VnLLpHd70ecVPmJhnBZ/Ow9emOin0MsXspvCgfC3U57Grfv7mL4pN9c9M2/D3w928Rl7S0rEXTPMCwbxTOPvxssQf2hBMynWA4sXX9i2QAWjLkBJyq63neEyHUV5N9bSGDaNKnkO6xFhaZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUhHvbBe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTcDcTjXSp88Kn8qhPNuGMyZw7hCSRO1oDi6RfiHP+v/izXfbcYwhzH7jgUe+X3llNAlv/PFZK8egtuImgapHDoyWbIsmYBaffHdWjdCrzyn2GDvAECL0RcnTimvs6iJYlI4YO6jCx347h5TCi7Qaykkg/1fHBW0jFIzOnclKgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3LHt/pz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUhHvbBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D671C4CEE7;
-	Mon, 13 Oct 2025 15:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3LHt/pz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAA0C4CEFE;
+	Mon, 13 Oct 2025 15:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368499;
-	bh=QiBUuJiwG3ey1MyPML+c3TcTZDZOfdHIM0/QsRjcjEw=;
+	s=korg; t=1760368502;
+	bh=fkNjWNc7KuQnSD8BmK71MA3KSfMmz/Jx8meR13Ac9bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUhHvbBemdAdfJECBs2PseFZ0dA3HWvW8IN6vrBw2v+FAr+GjtoKhvUblRUH5zHsb
-	 sylYnZQb1qotgqrJJz9nWoLtWIVhY2ecDIfbNZUjPs0PvFF74A9J7Gbme549gpmC4P
-	 P4llR+c8FpWW3rpcwTGxj02fTw9kRygzqmfMhh/k=
+	b=O3LHt/pzNglo4Pd6ULM+gupWlCJJ4Zp2fLZL8rcVxh2Kq6wFz3ul5fFu3OA1wHeE6
+	 XXB/SzsDLH/i1ix2KgpReNrNAEBoSzosu6WBoo7C73zetPfWqYIcSt5QSz4gbBnUW8
+	 HdVVjaa4BHafmNekuRdrb/h5a+354HqrYiBzAeuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/262] iio: consumers: Fix handling of negative channel scale in iio_convert_raw_to_processed()
-Date: Mon, 13 Oct 2025 16:44:42 +0200
-Message-ID: <20251013144331.165263641@linuxfoundation.org>
+Subject: [PATCH 6.12 176/262] crypto: hisilicon/qm - set NULL to qm->debug.qm_diff_regs
+Date: Mon, 13 Oct 2025 16:45:18 +0200
+Message-ID: <20251013144332.467033142@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -53,118 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit 0f85406bf830eb8747dd555ab53c9d97ee4af293 ]
+[ Upstream commit f0cafb02de883b3b413d34eb079c9680782a9cc1 ]
 
-There is an issue with the handling of negative channel scales
-in iio_convert_raw_to_processed_unlocked() when the channel-scale
-is of the IIO_VAL_INT_PLUS_[MICRO|NANO] type:
+When the initialization of qm->debug.acc_diff_reg fails,
+the probe process does not exit. However, after qm->debug.qm_diff_regs is
+freed, it is not set to NULL. This can lead to a double free when the
+remove process attempts to free it again. Therefore, qm->debug.qm_diff_regs
+should be set to NULL after it is freed.
 
-Things work for channel-scale values > -1.0 and < 0.0 because of
-the use of signed values in:
-
-	*processed += div_s64(raw64 * (s64)scale_val2 * scale, 1000000LL);
-
-Things will break however for scale values < -1.0. Lets for example say
-that raw = 2, (caller-provided)scale = 10 and (channel)scale_val = -1.5.
-
-The result should then be 2 * 10 * -1.5 = -30.
-
-channel-scale = -1.5 means scale_val = -1 and scale_val2 = 500000,
-now lets see what gets stored in processed:
-
-1. *processed = raw64 * scale_val * scale;
-2. *processed += raw64 * scale_val2 * scale / 1000000LL;
-
-1. Sets processed to 2 * -1 * 10 = -20
-2. Adds 2 * 500000 * 10 / 1000000 = 10 to processed
-
-And the end result is processed = -20 + 10 = -10, which is not correct.
-
-Fix this by always using the abs value of both scale_val and scale_val2
-and if either is negative multiply the end-result by -1.
-
-Note there seems to be an unwritten rule about negative
-IIO_VAL_INT_PLUS_[MICRO|NANO] values that:
-
-i.   values > -1.0 and < 0.0 are written as val=0 val2=-xxx
-ii.  values <= -1.0 are written as val=-xxx val2=xxx
-
-But iio_format_value() will also correctly display a third option:
-
-iii. values <= -1.0 written as val=-xxx val2=-xxx
-
-Since iio_format_value() uses abs(val) when val2 < 0.
-
-This fix also makes iio_convert_raw_to_processed() properly handle
-channel-scales using this third option.
-
-Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
-Cc: Matteo Martelli <matteomartelli3@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250831104825.15097-2-hansg@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 8be091338971 ("crypto: hisilicon/debugfs - Fix debugfs uninit process issue")
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/inkern.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/crypto/hisilicon/debugfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index 1155487f7aeac..0f394266ff8c0 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -10,6 +10,7 @@
- #include <linux/mutex.h>
- #include <linux/property.h>
- #include <linux/slab.h>
-+#include <linux/units.h>
+diff --git a/drivers/crypto/hisilicon/debugfs.c b/drivers/crypto/hisilicon/debugfs.c
+index 45e130b901eb5..17eb236e9ee4d 100644
+--- a/drivers/crypto/hisilicon/debugfs.c
++++ b/drivers/crypto/hisilicon/debugfs.c
+@@ -888,6 +888,7 @@ static int qm_diff_regs_init(struct hisi_qm *qm,
+ 		dfx_regs_uninit(qm, qm->debug.qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
+ 		ret = PTR_ERR(qm->debug.acc_diff_regs);
+ 		qm->debug.acc_diff_regs = NULL;
++		qm->debug.qm_diff_regs = NULL;
+ 		return ret;
+ 	}
  
- #include <linux/iio/iio.h>
- #include <linux/iio/iio-opaque.h>
-@@ -602,7 +603,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- {
- 	int scale_type, scale_val, scale_val2;
- 	int offset_type, offset_val, offset_val2;
--	s64 raw64 = raw;
-+	s64 denominator, raw64 = raw;
- 
- 	offset_type = iio_channel_read(chan, &offset_val, &offset_val2,
- 				       IIO_CHAN_INFO_OFFSET);
-@@ -646,20 +647,19 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- 		*processed = raw64 * scale_val * scale;
- 		break;
- 	case IIO_VAL_INT_PLUS_MICRO:
--		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val * scale;
--		else
--			*processed = raw64 * scale_val * scale;
--		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
--				      1000000LL);
--		break;
- 	case IIO_VAL_INT_PLUS_NANO:
--		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val * scale;
--		else
--			*processed = raw64 * scale_val * scale;
--		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
--				      1000000000LL);
-+		switch (scale_type) {
-+		case IIO_VAL_INT_PLUS_MICRO:
-+			denominator = MICRO;
-+			break;
-+		case IIO_VAL_INT_PLUS_NANO:
-+			denominator = NANO;
-+			break;
-+		}
-+		*processed = raw64 * scale * abs(scale_val);
-+		*processed += div_s64(raw64 * scale * abs(scale_val2), denominator);
-+		if (scale_val < 0 || scale_val2 < 0)
-+			*processed *= -1;
- 		break;
- 	case IIO_VAL_FRACTIONAL:
- 		*processed = div_s64(raw64 * (s64)scale_val * scale,
 -- 
 2.51.0
 
