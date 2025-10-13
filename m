@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E323090DE;
-	Mon, 13 Oct 2025 15:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37003081CC;
+	Mon, 13 Oct 2025 15:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368632; cv=none; b=HPQ22lNT8yh/ixpcddBixnW3/M42+RN14TCi4hm6LT2q3lri6zYU1gwJv7TmgIiLrT5H1RM1UDUaNeWbp/SDYO0jpEnDUHh5mWL1FT7hiPNbB8DrgPxRg/QF+EcyqYgXDhCufx6hVy+CFYAgVA7HCfkbJqk0JsNt4htXobLWJxY=
+	t=1760368635; cv=none; b=BpV396ywERG7g0EdAXiqd8lL7esm3KHbPuugedsOsn2abPWlydioaNBizmmkgtBSSc3J0JCLQgbpShUmVe+aGTHNVM+SmXd0r37Ki12tKYXexIOEisDFFwBpFnOGj3JKbZ/TyBHu6CDub2aZSHYZLfbffIHXbcjpA0D4kUKrJWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368632; c=relaxed/simple;
-	bh=i+fqnV+t/vhL0JjPY2CB1jRLrXGOUkpOq91vqy2/xHI=;
+	s=arc-20240116; t=1760368635; c=relaxed/simple;
+	bh=rnWGzEBAAYxCTwWfZQnoWLyr+je+iYsOago3w7uvGAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=epLvAnSSoP/koxJLjatYMqCw35MbeGxA3bav35kmzXnVRPQlmQx+32EA/6VOWdDeF5dToYtiTGbLEWioDAxrGl6OLpRLiI2rHBKUAkwO/D27hcjfVMmE1hkAL4eBA14d4Es4aPUbB31SZtrgGASKpUW8L3Avxlz2mOpBXe7ie5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JG3r97A7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQ7eqDOFbsLFqdZEgQriQ5faNOiCdQDAk+1nK1pHuM+5T5SQ/euej6OwkDtsRKoWgUD8VbovTHDfKpzbzxhhO4dIwNsry8wooCm/Pg1aFLsRSjKgA0C3JY5/OjIgCOSS4KUeprmSaDqgbSsZBfuvWrx1Tlz73MoJJ9ZPwW1gIUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/Rbq4Ww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JG3r97A7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A46C4CEE7;
-	Mon, 13 Oct 2025 15:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/Rbq4Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEABC4CEE7;
+	Mon, 13 Oct 2025 15:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368632;
-	bh=i+fqnV+t/vhL0JjPY2CB1jRLrXGOUkpOq91vqy2/xHI=;
+	s=korg; t=1760368634;
+	bh=rnWGzEBAAYxCTwWfZQnoWLyr+je+iYsOago3w7uvGAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JG3r97A7KhIWjkUWM92xJkrqeTLictcUQZ+rfguUbRzdzdBqz2LNMxnyM/MqNkvXq
-	 vmNrr7C/TBWItvbYeUeEvloCDvb1J3kDM367u8laDQM11LniZ7fhRGOhjbWzc5t1BM
-	 9G8c9DX4Ckov9t6EvrDVXmjHaMWbM0TjoLhYIUZQ=
+	b=k/Rbq4WwNhLLUDewOunQY52YsmSojb0wPfNGlrkY5/V6pavZfWJOTwv8Mv0GIWX+s
+	 +wYVkMF2+9v0ufAtAr5Y3hpaJi1zwf/nAXp0J71+TYvqX6uHyCHzuk3bihuXS2D5Z8
+	 dJBwesGhiGwPXKQPXHQkHXjni6o/qOz0UQy5ktKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 229/262] ASoC: SOF: ipc3-topology: Fix multi-core and static pipelines tear down
-Date: Mon, 13 Oct 2025 16:46:11 +0200
-Message-ID: <20251013144334.489146737@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 212/262] PCI: j721e: Fix incorrect error message in probe()
+Date: Mon, 13 Oct 2025 16:45:54 +0200
+Message-ID: <20251013144333.878405162@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -46,61 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit 59abe7bc7e7c70e9066b3e46874d1b7e6a13de14 upstream.
+[ Upstream commit cfcd6cab2f33c24a68517f9e3131480b4000c2be ]
 
-In the case of static pipelines, freeing the widgets in the pipelines
-that were not suspended after freeing the scheduler widgets results in
-errors because the secondary cores are powered off when the scheduler
-widgets are freed. Fix this by tearing down the leftover pipelines before
-powering off the secondary cores.
+The probe() function prints "pm_runtime_get_sync failed" when
+j721e_pcie_ctrl_init() returns an error. This is misleading since
+the failure is not from pm_runtime, but from the controller init
+routine. Update the error message to correctly reflect the source.
 
-Cc: stable@vger.kernel.org
-Fixes: d7332c4a4f1a ("ASoC: SOF: ipc3-topology: Fix pipeline tear down logic")
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20251002073125.32471-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+No functional changes.
+
+Fixes: f3e25911a430 ("PCI: j721e: Add TI J721E PCIe driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://patch.msgid.link/20250905211436.3048282-1-alok.a.tiwari@oracle.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-topology.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -2485,11 +2485,6 @@ static int sof_ipc3_tear_down_all_pipeli
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
+index bae829ac759e1..eb772c18d44ed 100644
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -531,7 +531,7 @@ static int j721e_pcie_probe(struct platform_device *pdev)
  
--	/* free all the scheduler widgets now */
--	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
--	if (ret < 0)
--		return ret;
--
- 	/*
- 	 * Tear down all pipelines associated with PCMs that did not get suspended
- 	 * and unset the prepare flag so that they can be set up again during resume.
-@@ -2505,6 +2500,11 @@ static int sof_ipc3_tear_down_all_pipeli
- 		}
+ 	ret = j721e_pcie_ctrl_init(pcie);
+ 	if (ret < 0) {
+-		dev_err_probe(dev, ret, "pm_runtime_get_sync failed\n");
++		dev_err_probe(dev, ret, "j721e_pcie_ctrl_init failed\n");
+ 		goto err_get_sync;
  	}
  
-+	/* free all the scheduler widgets now. This will also power down the secondary cores */
-+	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
-+	if (ret < 0)
-+		return ret;
-+
- 	list_for_each_entry(sroute, &sdev->route_list, list)
- 		sroute->setup = false;
- 
+-- 
+2.51.0
+
 
 
