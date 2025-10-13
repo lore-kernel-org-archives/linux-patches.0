@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E80B30C621;
-	Mon, 13 Oct 2025 15:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB9A30C621;
+	Mon, 13 Oct 2025 15:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369073; cv=none; b=fKVqppCvoFiJWVs2Hnnw9yP95GXPGkySRkEWXHW44W9cjyLOTkDbC3SIEY5m9oWk3bQPtlG7tVj01WD45HliRvI+LpzPZP4yEglVeRT9XvwoFCqcJXe9xMJ82LDdVgSZZjHprzBcZCjJAS2SEeSYU5tASR3IAeogHZXVKEURJa4=
+	t=1760369076; cv=none; b=PxbnVT9MpZWA7gMP0+gFwZgYYLamvjbz30ixhweA7y8gg26GNtlAcA5BwajrATo4ghEM07KHXHHyB9Y5HN3y/wdRS/76n927lYMhPVUl0fzub/aVK0yFM4xt7bcx6kxWIydTdDEGugNDWv4lxQCgl1l33zNoVeGhBwr/xfUHft8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369073; c=relaxed/simple;
-	bh=7FvIlWRDZF3mY2F6ht8cvKl9Wrm7m3/a+9d++9YilrQ=;
+	s=arc-20240116; t=1760369076; c=relaxed/simple;
+	bh=utYeBJCj45mMRJrcQ7WxHH3O9uIe5rFgJgMXkz7De7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ENhJUVdWZ4XsdroeIeLtP4G+oGztVzIoHENcHqj/6WoLHMhxhAbtq8vIxrTqaqsEdn4h4mKe9eAFQRdfl6HNceVzOnBHnbL4n7z3TJ08U15+TyXyiyMjgpHMiKuJ2XeoxFfGU3CJ1dFJFHi0xOcdqrgLpTF+i2J9Ogg+8VjsnGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACX75b44; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ob5w6Tt2T/Y9k3gG+eevhggGEvZM9CsP8+Hu8cBnMzQn0DAzzMwx3kmBaX7r0E8LC6stDHgWFMKBzqm4g0jebCPtI0G/J8XrEgY7X5ttFXqkSxVZ3grm3rVzQ08rSf/K5wPy2aSpY65Fm3wq3J8TK7bfGefvW5A69/4hB1ADiJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIlA0Dsn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACX75b44"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB37C4CEE7;
-	Mon, 13 Oct 2025 15:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIlA0Dsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E90C4CEE7;
+	Mon, 13 Oct 2025 15:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369073;
-	bh=7FvIlWRDZF3mY2F6ht8cvKl9Wrm7m3/a+9d++9YilrQ=;
+	s=korg; t=1760369075;
+	bh=utYeBJCj45mMRJrcQ7WxHH3O9uIe5rFgJgMXkz7De7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACX75b44G8wa54F2u3bhKAQoa/1yUPQTEOgCJITmLnq3ZOD2MM1Uz91TCWp9afZAH
-	 fLrNt9V0CYjU+afJfmrofd//tL/VjRmtBWxGAA7AXvl0kmO9BDEBqB53M3t5V5tuL7
-	 9iu8YGUyh1zG5GeZS/e2iIkVFhd6jG0PW5SAt83Y=
+	b=rIlA0Dsn73TqxurGfkKmd++3KrVHhYBIe+BZlDRYwz9FHoiN2XpMZLfYgg5q0/rNg
+	 qqgsQjmYOCW0EpHhPIBl3fPG9GzERPrqp2NtdwTpjOQDTm4IESkT7drgJpOhywYRkv
+	 rqcLCAisQ3NBx/Xo2t6zgHbcOah2H2OV2zpnviJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Roger Lu <roger.lu@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 091/563] selftests/bpf: Fix count write in testapp_xdp_metadata_copy()
-Date: Mon, 13 Oct 2025 16:39:12 +0200
-Message-ID: <20251013144414.594362901@linuxfoundation.org>
+Subject: [PATCH 6.17 118/563] soc: mediatek: mtk-svs: fix device leaks on mt8192 probe failure
+Date: Mon, 13 Oct 2025 16:39:39 +0200
+Message-ID: <20251013144415.569575396@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -45,63 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit c9110e6f7237f4a314e2b87b75a8a158b9877a7b ]
+[ Upstream commit f1a68ba5739e42353609438e27a83b08d7f5cfd6 ]
 
-Commit 4b302092553c ("selftests/xsk: Add tail adjustment tests and support
-check") added a new global to xsk_xdp_progs.c, but left out the access in
-the testapp_xdp_metadata_copy() function. Since bpf_map_update_elem() will
-write to the whole bss section, it gets truncated. Fix by writing to
-skel_rx->bss->count directly.
+Make sure to drop the references taken by of_find_device_by_node() when
+looking up the thermal sensor and opp devices during probe on probe
+failure (e.g. probe deferral) and on driver unbind.
 
-Fixes: 4b302092553c ("selftests/xsk: Add tail adjustment tests and support check")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250829-selftests-bpf-xsk_regression_fix-v1-1-5f5acdb9fe6b@suse.com
+Fixes: 0bbb09b2af9d ("soc: mediatek: SVS: add mt8192 SVS GPU driver")
+Cc: Roger Lu <roger.lu@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250909095651.5530-3-johan@kernel.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/soc/mediatek/mtk-svs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index a29de0713f19f..352adc8df2d1c 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -2276,25 +2276,13 @@ static int testapp_xdp_metadata_copy(struct test_spec *test)
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index 48804e1e5a6c8..f45537546553e 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -2176,6 +2176,7 @@ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
  {
- 	struct xsk_xdp_progs *skel_rx = test->ifobj_rx->xdp_progs;
- 	struct xsk_xdp_progs *skel_tx = test->ifobj_tx->xdp_progs;
--	struct bpf_map *data_map;
--	int count = 0;
--	int key = 0;
+ 	struct device *dev;
+ 	u32 idx;
++	int ret;
  
- 	test_spec_set_xdp_prog(test, skel_rx->progs.xsk_xdp_populate_metadata,
- 			       skel_tx->progs.xsk_xdp_populate_metadata,
- 			       skel_rx->maps.xsk, skel_tx->maps.xsk);
- 	test->ifobj_rx->use_metadata = true;
+ 	svsp->rst = devm_reset_control_get_optional(svsp->dev, "svs_rst");
+ 	if (IS_ERR(svsp->rst))
+@@ -2186,6 +2187,7 @@ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
+ 	if (IS_ERR(dev))
+ 		return dev_err_probe(svsp->dev, PTR_ERR(dev),
+ 				     "failed to get lvts device\n");
++	put_device(dev);
  
--	data_map = bpf_object__find_map_by_name(skel_rx->obj, "xsk_xdp_.bss");
--	if (!data_map || !bpf_map__is_internal(data_map)) {
--		ksft_print_msg("Error: could not find bss section of XDP program\n");
--		return TEST_FAILURE;
--	}
--
--	if (bpf_map_update_elem(bpf_map__fd(data_map), &key, &count, BPF_ANY)) {
--		ksft_print_msg("Error: could not update count element\n");
--		return TEST_FAILURE;
--	}
-+	skel_rx->bss->count = 0;
+ 	for (idx = 0; idx < svsp->bank_max; idx++) {
+ 		struct svs_bank *svsb = &svsp->banks[idx];
+@@ -2195,6 +2197,7 @@ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
+ 		case SVSB_SWID_CPU_LITTLE:
+ 		case SVSB_SWID_CPU_BIG:
+ 			svsb->opp_dev = get_cpu_device(bdata->cpu_id);
++			get_device(svsb->opp_dev);
+ 			break;
+ 		case SVSB_SWID_CCI:
+ 			svsb->opp_dev = svs_add_device_link(svsp, "cci");
+@@ -2214,6 +2217,11 @@ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
+ 			return dev_err_probe(svsp->dev, PTR_ERR(svsb->opp_dev),
+ 					     "failed to get OPP device for bank %d\n",
+ 					     idx);
++
++		ret = devm_add_action_or_reset(svsp->dev, svs_put_device,
++					       svsb->opp_dev);
++		if (ret)
++			return ret;
+ 	}
  
- 	return testapp_validate_traffic(test);
- }
+ 	return 0;
 -- 
 2.51.0
 
