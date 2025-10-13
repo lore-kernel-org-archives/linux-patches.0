@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B23309EEC;
-	Mon, 13 Oct 2025 15:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A25223DC1;
+	Mon, 13 Oct 2025 15:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368514; cv=none; b=EfMQmIhemDsbk9GqDQEdfuGjvZ2W0Gq6UKxARWM3jdMKkKk56iXt1mp66UKFCKUdy4kIk/lqX10WpyN54u3Kv29d028hwHghQoidnicr4HCWUH2iNmiplR75wkjs+cCyz/A69uu7odiwsN5+3Af5uDSpWF2kAVOY9fbkTJXO1ds=
+	t=1760368517; cv=none; b=tNu2pLsoA5VM5FZszENYNRMM15zPPOdgPTbk5JwW8aYi42FZw6TF+Ri6JHrFPquP+MZIn6jC2O19d9+GJIEslZ83XblqwaPvitFYve9B75tQQ1ATIAnIarENXGoEQcf+zmLS/m8FpiG91Z4HlsD6Gcfp9y8I6St61KOW6opXzgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368514; c=relaxed/simple;
-	bh=SkP1MvfpMlPq/9fxIjtw6iCJ8n3JR9gslw0NchviMV8=;
+	s=arc-20240116; t=1760368517; c=relaxed/simple;
+	bh=o+z99hE7i8E7NGVRlZNCtv9XxxvAjDW6sT5p0aztYpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3RR5lgVDu/Y73vCATYT/A2e+xbYIxWn+iHMwOMTOyCFE3Q0xy7/Q5twcUcLRohUgyRVPWxldv5crQWmZuMJuWTG2ynK8Cngg2elEUrp8kRK+FczdTWP7r8g0PAYNrU3AsRE8p1hYHfQxFs98aOcDDzv/pNPnd52lpBoIBmOpas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTiM6gTq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ac6BW/tPnpH21XhTT+QvdC3Mr9bVQCf2n4fDxfYsxOoGXU+UsF7Qfd/vYEj0oGMHgELGoJ5x/aaXqssyWmiSkQxGke7pRj2eQYbcCFkm/r2BJHnAByOzRsqyZEpqX1ckcQ4/gFwd+iRmoM/df1t18tQJUHXDpXVGbvvHQ95MoN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2EfsL5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTiM6gTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC72C4CEE7;
-	Mon, 13 Oct 2025 15:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2EfsL5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9898C113D0;
+	Mon, 13 Oct 2025 15:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368514;
-	bh=SkP1MvfpMlPq/9fxIjtw6iCJ8n3JR9gslw0NchviMV8=;
+	s=korg; t=1760368517;
+	bh=o+z99hE7i8E7NGVRlZNCtv9XxxvAjDW6sT5p0aztYpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JTiM6gTqM47uAQyAJlF1Hpvgbi2fp9OLxuFF2UYQe0eCSV34m6nsC/T03w/4oAKYa
-	 8lzmUC9Ke/r9sxdSdah7v13E8lcfY+IQlLgbOXXZ5OPLoNsAV8pDFXHX53DkopAeJZ
-	 PcqxKfaUEnMGeWzWiucKN9rG8UFx3wtqD4Wq+Glc=
+	b=G2EfsL5pE/tX3LzUbzxFXwLNgeaafAezR+1jjYGshMQOcoMjilFhcN3X/EcVo4h9g
+	 eo7q5e4DUfJcl/zVq5Z6S3rYSAWJCx7B8TJtsSKeAXaWWS4ZI5sd8au82OqKiMvkUG
+	 CcVEWPf1Gun+sdpwuoT5Ox3nWLsLDAjxKA94IcGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Yujun <linyujun809@h-partners.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Anthony Iliopoulos <ailiop@suse.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/262] coresight: Fix incorrect handling for return value of devm_kzalloc
-Date: Mon, 13 Oct 2025 16:45:30 +0200
-Message-ID: <20251013144333.020198520@linuxfoundation.org>
+Subject: [PATCH 6.12 189/262] NFSv4.1: fix backchannel max_resp_sz verification check
+Date: Mon, 13 Oct 2025 16:45:31 +0200
+Message-ID: <20251013144333.056302100@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,37 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Yujun <linyujun809@h-partners.com>
+From: Anthony Iliopoulos <ailiop@suse.com>
 
-[ Upstream commit 70714eb7243eaf333d23501d4c7bdd9daf011c01 ]
+[ Upstream commit 191512355e520dfc45c8bc3b56d4de59c3ade33e ]
 
-The return value of devm_kzalloc could be an null pointer,
-use "!desc.pdata" to fix incorrect handling return value
-of devm_kzalloc.
+When the client max_resp_sz is larger than what the server encodes in
+its reply, the nfs4_verify_back_channel_attrs() check fails and this
+causes nfs4_proc_create_session() to fail, in cases where the client
+page size is larger than that of the server and the server does not want
+to negotiate upwards.
 
-Fixes: 4277f035d227 ("coresight: trbe: Add a representative coresight_platform_data for TRBE")
-Signed-off-by: Lin Yujun <linyujun809@h-partners.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250908122022.1315399-1-linyujun809@h-partners.com
+While this is not a problem with the linux nfs server that will reflect
+the proposed value in its reply irrespective of the local page size,
+other nfs server implementations may insist on their own max_resp_sz
+value, which could be smaller.
+
+Fix this by accepting smaller max_resp_sz values from the server, as
+this does not violate the protocol. The server is allowed to decrease
+but not increase proposed the size, and as such values smaller than the
+client-proposed ones are valid.
+
+Fixes: 43c2e885be25 ("nfs4: fix channel attribute sanity-checks")
+Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 2 +-
+ fs/nfs/nfs4proc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 5755674913723..d771980a278dc 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -1267,7 +1267,7 @@ static void arm_trbe_register_coresight_cpu(struct trbe_drvdata *drvdata, int cp
- 	 * into the device for that purpose.
- 	 */
- 	desc.pdata = devm_kzalloc(dev, sizeof(*desc.pdata), GFP_KERNEL);
--	if (IS_ERR(desc.pdata))
-+	if (!desc.pdata)
- 		goto cpu_clear;
- 
- 	desc.type = CORESIGHT_DEV_TYPE_SINK;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index ea92483d5e71e..c21e63027fc0e 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -9393,7 +9393,7 @@ static int nfs4_verify_back_channel_attrs(struct nfs41_create_session_args *args
+ 		goto out;
+ 	if (rcvd->max_rqst_sz > sent->max_rqst_sz)
+ 		return -EINVAL;
+-	if (rcvd->max_resp_sz < sent->max_resp_sz)
++	if (rcvd->max_resp_sz > sent->max_resp_sz)
+ 		return -EINVAL;
+ 	if (rcvd->max_resp_sz_cached > sent->max_resp_sz_cached)
+ 		return -EINVAL;
 -- 
 2.51.0
 
