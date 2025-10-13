@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E30145B3F;
-	Mon, 13 Oct 2025 14:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F732701BB;
+	Mon, 13 Oct 2025 14:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367049; cv=none; b=LkEtFSZTNB+Fize6lrl7qcFvGWIs3Cs+hAEtn++fbGQHj5Je7suarjBWJsccOn4xTN44XnbVXdxLPPaTUNxR1kkEOFvzSsZ8x9JixCKBAxNGmzmKNJRo+FUw5+vIkqUKtHTcd8SksZ4IG0GhVf4Y9170UJz35UrOT3vDnX3iFaw=
+	t=1760367052; cv=none; b=V3T7JKp4JejHcjrl+VQh1+w+dMVEjpVgsU58IQLXJMuAh2DLGOcs8j8HG9q32Fn9sGTcW9KH2KNKK54Zrxv8JljgevDB2xxafrbgINyT2/f0R0EJVt8c3PNg55tWnB0olq9SP3CLisktMqbEDZ/gojTYNPvTfWsF39lVLCezpKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367049; c=relaxed/simple;
-	bh=+6nqStFnkz8mtUPOFH01cCwBf6dP9ibXUVn7ITpfbLg=;
+	s=arc-20240116; t=1760367052; c=relaxed/simple;
+	bh=VN2JkLohh+8h937wy8zKJ+1DjVMsRkQCVVeJDHwfrKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XraSMfg/bJ84KxpaTXu04lRlUoZaOBrp85440BBzN68QFLgwQ5ak/pHJnJGhVHvaqvvB5U6d9GdsiBF8hvSaBkxzAXMAOd/UQX40gNnsD4LNiOtQILDbKa+3QTOhbHnnmgC+kpINXVbNeWr8YZssuypx0+CMwb7y5nCeY6wneuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmq8WkOn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBpNd/H2SB2jzmap5oJhcNlN0hz+9QBq3AVVus22eBiPJkai7f3SMS5lW3MxCcx/DdCg9hetDINEpalR68OIh1LGoZ0afFjFEDi02wnLU2lh/YbEJD00UdlG8NuCQeYr02xxLWhf1//lXwTkIn9YGHoj1ZMoC1szwnTZBKEpgVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWQAmg9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmq8WkOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B57C4AF09;
-	Mon, 13 Oct 2025 14:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWQAmg9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F251CC4CEE7;
+	Mon, 13 Oct 2025 14:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367049;
-	bh=+6nqStFnkz8mtUPOFH01cCwBf6dP9ibXUVn7ITpfbLg=;
+	s=korg; t=1760367052;
+	bh=VN2JkLohh+8h937wy8zKJ+1DjVMsRkQCVVeJDHwfrKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmq8WkOnBCwEH3JF/YJPrHGVGWQvwXV7m79Xs6F3v8X3Z7ziAdH51pQaF+A23XLY/
-	 REUvgdluAdoi5qjEmO6qguYbwwkwfMIo+k9EYK1VSFcyfrSpz1JbztJaoHIdU+uwlU
-	 7Rljy63q76LgAFg9tBHrF8Xi/MvbobNFZx57GuSg=
+	b=GWQAmg9sNYHQOVNSVgd/Tc+ymvv+Rbu5D4u50XHB/LRMVyT0aV2f1xRh3E1DSDEkr
+	 XNdhT2Qc8vf2l8xWrHkyYmlcEgc5uTdORkbIgyvzG56Ku6nVzDg+z3RmQRgbZMelMW
+	 +ogXNlt9X0GPVvOrWvjj+ufZmNImpTkbykEraJuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fei Shao <fshao@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/196] cpuidle: qcom-spm: fix device and OF node leaks at probe
-Date: Mon, 13 Oct 2025 16:44:07 +0200
-Message-ID: <20251013144317.254052757@linuxfoundation.org>
+Subject: [PATCH 6.1 075/196] arm64: dts: mediatek: mt8516-pumpkin: Fix machine compatible
+Date: Mon, 13 Oct 2025 16:44:08 +0200
+Message-ID: <20251013144317.290693392@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -52,56 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit cdc06f912670c8c199d5fa9e78b64b7ed8e871d0 ]
+[ Upstream commit ffe6a5d1dd4d4d8af0779526cf4e40522647b25f ]
 
-Make sure to drop the reference to the saw device taken by
-of_find_device_by_node() after retrieving its driver data during
-probe().
+This devicetree contained only the SoC compatible but lacked the
+machine specific one: add a "mediatek,mt8516-pumpkin" compatible
+to the list to fix dtbs_check warnings.
 
-Also drop the reference to the CPU node sooner to avoid leaking it in
-case there is no saw node or device.
-
-Fixes: 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main SPM handling")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20250724083914.61351-39-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle-qcom-spm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-index beedf22cbe78b..716474a793817 100644
---- a/drivers/cpuidle/cpuidle-qcom-spm.c
-+++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-@@ -97,20 +97,23 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
- 		return -ENODEV;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
+index cce642c538128..3d3db33a64dc6 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
+@@ -11,7 +11,7 @@
  
- 	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
-+	of_node_put(cpu_node);
- 	if (!saw_node)
- 		return -ENODEV;
+ / {
+ 	model = "Pumpkin MT8516";
+-	compatible = "mediatek,mt8516";
++	compatible = "mediatek,mt8516-pumpkin", "mediatek,mt8516";
  
- 	pdev = of_find_device_by_node(saw_node);
- 	of_node_put(saw_node);
--	of_node_put(cpu_node);
- 	if (!pdev)
- 		return -ENODEV;
- 
- 	data = devm_kzalloc(cpuidle_dev, sizeof(*data), GFP_KERNEL);
--	if (!data)
-+	if (!data) {
-+		put_device(&pdev->dev);
- 		return -ENOMEM;
-+	}
- 
- 	data->spm = dev_get_drvdata(&pdev->dev);
-+	put_device(&pdev->dev);
- 	if (!data->spm)
- 		return -EINVAL;
- 
+ 	memory@40000000 {
+ 		device_type = "memory";
 -- 
 2.51.0
 
