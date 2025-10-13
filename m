@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780210942;
-	Mon, 13 Oct 2025 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF951A9B46;
+	Mon, 13 Oct 2025 15:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368615; cv=none; b=IApUvosBd3erhJ/DHp6LdTU4n3HikF9zX892Bvgmzn393+cGfhEit8qsPfABBMP+pToaQ/4pW02wEBhOTsQFZ8UTXDBhWdII4T8asucK0WMjM6G2cMFxmpy+vYDUI7ZNau5RnECZeVrAtL0lcj+WVSrweP+BRZjPLCgRszY91b4=
+	t=1760368618; cv=none; b=sQEaTsazBN+00yi6KaJ6yrd1soOAwbv6q+yie9Z/qMiCWB/pW1qpbM64s7tweOnEE021gohOPXUlhNqYH5owpCEaSjkndb+96fvEe1LdmZ29RADZSt7k6051wybDrdAR6kdT4o+WLe+4rLNowb/2Q33V9AK8hJe+u/FELKDGxRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368615; c=relaxed/simple;
-	bh=SfbFCdwXFHxdhFEzD+/sg7mjc538JQ8D+gb1ufsBS5E=;
+	s=arc-20240116; t=1760368618; c=relaxed/simple;
+	bh=Pi38RafzL2WE6Q5yWJEy4mqxcvbiMXRRTe7UtVsNVrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fef7D3GfXUtsklKvW1fmRIoMnzyFLHeztmkWKYit2QyraYvImC31d/brY/nu1V+q3UzJUU7ULDRqleifpwPgo8AZSgmFdTPpfTMXaOzOpLSE6WzQQ054IJ/Is0udFPdDUcv/PSUgHvq//gdrcKEfu2sxPpc2jeU/qFVJVoVD/b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOkjTsnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+DCcfk7So5mf6IsVb1xa2Ao4KgiDOzc/AvV7Am60k2QKWsN/jHHlDCD8LLHdlDHRNsuDy1LOjyM1EiI1Dk06k9HbeyGulCB57nKy0sJiEbWaF+5UlfQc5TYwSVlWL+mpufXlJQjJuqUUpHy8doX+/UsCI5xoTtAm/M2TExlAFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4d6kFUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOkjTsnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86A9C4CEE7;
-	Mon, 13 Oct 2025 15:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4d6kFUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73DDC4CEE7;
+	Mon, 13 Oct 2025 15:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368615;
-	bh=SfbFCdwXFHxdhFEzD+/sg7mjc538JQ8D+gb1ufsBS5E=;
+	s=korg; t=1760368618;
+	bh=Pi38RafzL2WE6Q5yWJEy4mqxcvbiMXRRTe7UtVsNVrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOkjTsnLE1zVsxPaPqJyrJbL+m9bSDBRnyvgyEif5JTUx1HDQErVF8+1XWr+4mJQZ
-	 1EGqrKnWJ1FSFSEVzXvDMOrhcN/oL0C824gp6regWZWrKIamn+kQhTDNqdvNySMKk9
-	 hxtIe7nifnn9wtIcJevAVfI4Uw1T5ijq8NtmfZQc=
+	b=d4d6kFUG4EN826iLPHmXsgLBQWAHdbVD678xdzVk3hxmA2YJIwgSK2KkGDKJf1sxz
+	 zLiJJaLYbJJVOedxeDWLuQreyxWZSUFld+uGpwqzHKLo9x/IjRTn6+rkdE4na1bfyf
+	 RITN50yrGRI/0P6kKDzZ9tievtd/2Cit/jL8CsgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Yuan <shenghaoyuan0928@163.com>,
-	Tianci Cao <ziye@zju.edu.cn>,
-	Yazhou Tang <tangyazhou518@outlook.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/262] bpf: Reject negative offsets for ALU ops
-Date: Mon, 13 Oct 2025 16:46:05 +0200
-Message-ID: <20251013144334.273455057@linuxfoundation.org>
+	Chris Fenner <cfenn@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	stable@vger.kernel.or
+Subject: [PATCH 6.12 224/262] tpm: Disable TPM2_TCG_HMAC by default
+Date: Mon, 13 Oct 2025 16:46:06 +0200
+Message-ID: <20251013144334.309607115@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,61 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazhou Tang <tangyazhou518@outlook.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 55c0ced59fe17dee34e9dfd5f7be63cbab207758 ]
+commit 4bddf4587c131d7b8ce8952cd32b284dcda0dd1f upstream.
 
-When verifying BPF programs, the check_alu_op() function validates
-instructions with ALU operations. The 'offset' field in these
-instructions is a signed 16-bit integer.
+After reading all the feedback, right now disabling the TPM2_TCG_HMAC
+is the right call.
 
-The existing check 'insn->off > 1' was intended to ensure the offset is
-either 0, or 1 for BPF_MOD/BPF_DIV. However, because 'insn->off' is
-signed, this check incorrectly accepts all negative values (e.g., -1).
+Other views discussed:
 
-This commit tightens the validation by changing the condition to
-'(insn->off != 0 && insn->off != 1)'. This ensures that any value
-other than the explicitly permitted 0 and 1 is rejected, hardening the
-verifier against malformed BPF programs.
+A. Having a kernel command-line parameter or refining the feature
+   otherwise. This goes to the area of improvements.  E.g., one
+   example is my own idea where the null key specific code would be
+   replaced with a persistent handle parameter (which can be
+   *unambigously* defined as part of attestation process when
+   done correctly).
 
-Co-developed-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Signed-off-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Co-developed-by: Tianci Cao <ziye@zju.edu.cn>
-Signed-off-by: Tianci Cao <ziye@zju.edu.cn>
-Signed-off-by: Yazhou Tang <tangyazhou518@outlook.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Fixes: ec0e2da95f72 ("bpf: Support new signed div/mod instructions.")
-Link: https://lore.kernel.org/r/tencent_70D024BAE70A0A309A4781694C7B764B0608@qq.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+B. Removing the code. I don't buy this because that is same as saying
+   that HMAC encryption cannot work at all (if really nitpicking) in
+   any form. Also I disagree on the view that the feature could not
+   be refined to something more reasoable.
+
+Also, both A and B are worst options in terms of backporting.
+
+Thuss, this is the best possible choice.
+
+Cc: stable@vger.kernel.or # v6.10+
+Fixes: d2add27cf2b8 ("tpm: Add NULL primary creation")
+Suggested-by: Chris Fenner <cfenn@google.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1829f62a74a9e..96640a80fd9c4 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14545,7 +14545,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 	} else {	/* all other ALU ops: and, sub, xor, add, ... */
+--- a/drivers/char/tpm/Kconfig
++++ b/drivers/char/tpm/Kconfig
+@@ -29,7 +29,7 @@ if TCG_TPM
  
- 		if (BPF_SRC(insn->code) == BPF_X) {
--			if (insn->imm != 0 || insn->off > 1 ||
-+			if (insn->imm != 0 || (insn->off != 0 && insn->off != 1) ||
- 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
- 				verbose(env, "BPF_ALU uses reserved fields\n");
- 				return -EINVAL;
-@@ -14555,7 +14555,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 			if (err)
- 				return err;
- 		} else {
--			if (insn->src_reg != BPF_REG_0 || insn->off > 1 ||
-+			if (insn->src_reg != BPF_REG_0 || (insn->off != 0 && insn->off != 1) ||
- 			    (insn->off == 1 && opcode != BPF_MOD && opcode != BPF_DIV)) {
- 				verbose(env, "BPF_ALU uses reserved fields\n");
- 				return -EINVAL;
--- 
-2.51.0
-
+ config TCG_TPM2_HMAC
+ 	bool "Use HMAC and encrypted transactions on the TPM bus"
+-	default X86_64
++	default n
+ 	select CRYPTO_ECDH
+ 	select CRYPTO_LIB_AESCFB
+ 	select CRYPTO_LIB_SHA256
 
 
