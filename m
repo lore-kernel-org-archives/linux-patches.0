@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17A730FF13;
-	Mon, 13 Oct 2025 15:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A1030FF01;
+	Mon, 13 Oct 2025 15:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368967; cv=none; b=RwAsu8vQoD1g9eLyHEh7SbE3fMRKXDqrbduPYs0/UzggzB4ckc1o9U4uS7MnEnJfrBUkApATGupH0fw4YT5o4wlY8+c49ERolKFBGXhUz+DyfrHTXpsEGpozR//YfzrzlRPbkCuKP9LvEotLs2IL6I9vk5oYXV7EQKjiR1KhK5s=
+	t=1760368970; cv=none; b=uxDp8mzQKuI8JCVKtEWPd1FaXAPCAOn914YciOAz5eHot3OZZt5nd7hruLtFOEwYvrFsp7hwQHoqLX23lz+tXBfMbPvhVebPuV6e/86IkDGEUb6V7+g1kNubQSoGX6hy7oO6qxgpqlE2kOmv8XB+qMrv+uVwkPnexUCdhyOHGc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368967; c=relaxed/simple;
-	bh=hary/BSstPWp+DnTpc7Don5W0EK4LdlhGRSZvg7B+Ec=;
+	s=arc-20240116; t=1760368970; c=relaxed/simple;
+	bh=7vG8GzFqcGsxt/z17VI6Vqpr4g8CSJ8yAL/6byEA+QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJM6353CLet1aCtjVPfTiGtgobahMKYyzZVRR6cRCLYU0lHjMvz7iUcDjN5tUdYoHF8YckqRecyimDxJl/Lotbvh9TOcjracIuTLvk/9Fgo12jjvj5qy6iE5VECpZ3NG8BjmiBC7jIJxjkOOL6SCaILg5To2vIMWnhb2onnWyt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g879muXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y1yHFVjzvFTNLRXhwIRIYuvgS750SClibYY05iU2ZeaHwTq1nc6jqAvU4kOmCiJG0R5G7HdcT9ZVWNu2RC5lv6mXlyrdZP7UXNO5Udo6D5ZB9xCkk7wuL4noLSiMTqZWqhpqJFKIAn6/JSG7+OU0gwUjtaEUNH3yZie72yoexFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbPaja2g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g879muXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40F2C116B1;
-	Mon, 13 Oct 2025 15:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbPaja2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94398C4CEE7;
+	Mon, 13 Oct 2025 15:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368967;
-	bh=hary/BSstPWp+DnTpc7Don5W0EK4LdlhGRSZvg7B+Ec=;
+	s=korg; t=1760368969;
+	bh=7vG8GzFqcGsxt/z17VI6Vqpr4g8CSJ8yAL/6byEA+QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g879muXvAFwc6LYcrdavSsNhlOUKXs9bqySwRMftozj7u5SDImyhS6t3jaOJTOsXe
-	 5znwVpMErk99dR3g7WtdO7VzXO/CtKLMkWvPk51O1AH/AADBedCKXp7wCnVYEf/m80
-	 /EotIqRHxTuakg95dwbKQNuqMXBRiVRJjFRAjanI=
+	b=LbPaja2gIqvnfDjtPNYC7bcF8m+AQAVmDtKVY7458TIxt9VyFUFt1oJ/iM/72eynW
+	 7vADrBGulCyBHKbhGWQUwC+N8NDm6OpW4TFXZpUmefCVg5A6mEtEAUxq3jzhuR1+kM
+	 gf17gCIa62UOaF1R7xPVluu2mjotVRFQykVVyYmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Lalaev <andrei.lalaev@anton-paar.com>,
-	Lee Jones <lee@kernel.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 081/563] leds: leds-lp55xx: Use correct address for memory programming
-Date: Mon, 13 Oct 2025 16:39:02 +0200
-Message-ID: <20251013144414.231473384@linuxfoundation.org>
+Subject: [PATCH 6.17 055/563] s390/bpf: Write back tail call counter for BPF_PSEUDO_CALL
+Date: Mon, 13 Oct 2025 16:38:36 +0200
+Message-ID: <20251013144413.284670741@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,62 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Lalaev <andrei.lalaev@anton-paar.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit d6058316d16ee0d1861c0550051b2492efb54b79 ]
+[ Upstream commit c861a6b147137d10b5ff88a2c492ba376cd1b8b0 ]
 
-Memory programming doesn't work for devices without page support.
-For example, LP5562 has 3 engines but doesn't support pages,
-the start address is changed depending on engine number.
-According to datasheet [1], the PROG MEM register addresses for each
-engine are as follows:
+The tailcall_bpf2bpf_hierarchy_1 test hangs on s390. Its call graph is
+as follows:
 
-  Engine 1: 0x10
-  Engine 2: 0x30
-  Engine 3: 0x50
+  entry()
+    subprog_tail()
+      bpf_tail_call_static(0) -> entry + tail_call_start
+    subprog_tail()
+      bpf_tail_call_static(0) -> entry + tail_call_start
 
-However, the current implementation incorrectly calculates the address
-of PROG MEM register using the engine index starting from 1:
+entry() copies its tail call counter to the subprog_tail()'s frame,
+which then increments it. However, the incremented result is discarded,
+leading to an astronomically large number of tail calls.
 
-  prog_mem_base = 0x10
-  LP55xx_BYTES_PER_PAGE = 0x20
+Fix by writing the incremented counter back to the entry()'s frame.
 
-  Engine 1: 0x10 + 0x20 * 1 = 0x30
-  Engine 2: 0x10 + 0x20 * 2 = 0x50
-  Engine 3: 0x10 + 0x20 * 3 = 0x70
-
-This results in writing to the wrong engine memory, causing pattern
-programming to fail.
-
-To correct it, the engine index should be decreased:
-  Engine 1: 0x10 + 0x20 * 0 = 0x10
-  Engine 2: 0x10 + 0x20 * 1 = 0x30
-  Engine 3: 0x10 + 0x20 * 2 = 0x50
-
-1 - https://www.ti.com/lit/ds/symlink/lp5562.pdf
-
-Fixes: 31379a57cf2f ("leds: leds-lp55xx: Generalize update_program_memory function")
-Signed-off-by: Andrei Lalaev <andrei.lalaev@anton-paar.com>
-Link: https://lore.kernel.org/r/20250820-lp5562-prog-mem-address-v1-1-8569647fa71d@anton-paar.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: dd691e847d28 ("s390/bpf: Implement bpf_jit_supports_subprog_tailcalls()")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20250813121016.163375-3-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lp55xx-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/net/bpf_jit_comp.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/leds/leds-lp55xx-common.c b/drivers/leds/leds-lp55xx-common.c
-index e71456a56ab8d..fd447eb7eb15e 100644
---- a/drivers/leds/leds-lp55xx-common.c
-+++ b/drivers/leds/leds-lp55xx-common.c
-@@ -212,7 +212,7 @@ int lp55xx_update_program_memory(struct lp55xx_chip *chip,
- 	 * For LED chip that support page, PAGE is already set in load_engine.
- 	 */
- 	if (!cfg->pages_per_engine)
--		start_addr += LP55xx_BYTES_PER_PAGE * idx;
-+		start_addr += LP55xx_BYTES_PER_PAGE * (idx - 1);
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index bfac1ddf3447b..ccb83ac3e6f32 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -1793,13 +1793,6 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
  
- 	for (page = 0; page < program_length / LP55xx_BYTES_PER_PAGE; page++) {
- 		/* Write to the next page each 32 bytes (if supported) */
+ 		/*
+ 		 * Copy the tail call counter to where the callee expects it.
+-		 *
+-		 * Note 1: The callee can increment the tail call counter, but
+-		 * we do not load it back, since the x86 JIT does not do this
+-		 * either.
+-		 *
+-		 * Note 2: We assume that the verifier does not let us call the
+-		 * main program, which clears the tail call counter on entry.
+ 		 */
+ 
+ 		if (insn->src_reg == BPF_PSEUDO_CALL)
+@@ -1833,6 +1826,22 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+ 		call_r1(jit);
+ 		/* lgr %b0,%r2: load return value into %b0 */
+ 		EMIT4(0xb9040000, BPF_REG_0, REG_2);
++
++		/*
++		 * Copy the potentially updated tail call counter back.
++		 */
++
++		if (insn->src_reg == BPF_PSEUDO_CALL)
++			/*
++			 * mvc frame_off+tail_call_cnt(%r15),
++			 *     tail_call_cnt(4,%r15)
++			 */
++			_EMIT6(0xd203f000 | (jit->frame_off +
++					     offsetof(struct prog_frame,
++						      tail_call_cnt)),
++			       0xf000 | offsetof(struct prog_frame,
++						 tail_call_cnt));
++
+ 		break;
+ 	}
+ 	case BPF_JMP | BPF_TAIL_CALL: {
 -- 
 2.51.0
 
