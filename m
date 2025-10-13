@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F30A3081AE;
-	Mon, 13 Oct 2025 15:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAE63081AE;
+	Mon, 13 Oct 2025 15:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369173; cv=none; b=ttcytQ6xZt9o2Vo4cRRi5lgBS04RMdrhcXk1bx45tf0Sw2LjSzl4BUnfJf0yPfUfwz5OZktSN6vm0MPNTJnYvuy3407+lUi1tjl3cl1/noUh+LNWesF9cTqOyFunnG5iDM2CHF7BML0OI2Kc7SDS9o0NsLTpQv7K6EW8UGBgG7I=
+	t=1760369176; cv=none; b=oXGfm12/ra+voSb/H6U1qSnqiqm8+jthHnxEOJC4PRlCEcmApzCfAZe1YZW4FjhgJ/fPwYj+0iBgQyS0a/Waq+oKUFnT5fQWE+A5C16BJ7t97BMC85E5QMxT4IYnigTDcUrF5OLrrpayawqvCjnAG1PPcJVA+45/C9f7StoOhGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369173; c=relaxed/simple;
-	bh=NY8ImeykUexv8hE+10CJW6RTlCJoMSau7LpXm/FOBbM=;
+	s=arc-20240116; t=1760369176; c=relaxed/simple;
+	bh=QNGBqiiBpBF48jgpmpOSvGS17AlNE+B5S9PYX4JxRho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBaOYhgb8eb2dszueQSg7jNoMF1vddsFE7ROmlem1XSEjSw5iNGcv7EpmH8kWgBRlEZVYxxlF0B+ZzsLoishBTfg9Ao6qOPLKtyTzgOuxgllp3S6efkhiEBH6zGITpPIohWCxKoKVMv/wrvjNmu/vxePUD2w3u+KUECnM7ky7W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV0EZxGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYCmzsj5mP1uuX8DRtETQThqGEu60Y7dogKSrftrM4Fm4ofY5UNaqvojSa1UAoOtDimnrDQc5OFVVjNI2df/b0NAXIEEGjzf6GFZ9ahLxo/MnhIDW/41FPybSsUoyMVOSnMhx8dYLXUS0zksJSz3rHIBSZLFH2VytvkbFtgByVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyKUw0t+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV0EZxGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC80C4CEE7;
-	Mon, 13 Oct 2025 15:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyKUw0t+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9469AC4CEE7;
+	Mon, 13 Oct 2025 15:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369173;
-	bh=NY8ImeykUexv8hE+10CJW6RTlCJoMSau7LpXm/FOBbM=;
+	s=korg; t=1760369176;
+	bh=QNGBqiiBpBF48jgpmpOSvGS17AlNE+B5S9PYX4JxRho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MV0EZxGZRK98ykTgAB0hWs2zkvrR2AfM2xjxlYniRH4UUB6Y1fFNNw+HfQvO54Xh4
-	 Xax3ljc440Y26/TTIQQ5/UpBK959soL5Iq2sCTUE54ncDbamZFwJM+kVw2Ev/YXxW4
-	 DRMs6nbDQdE+KIuDYBR6lAZ6nStuhGkwWzRwOEpA=
+	b=ZyKUw0t+8UM9U00y6awoANBefer0a7tiDrQm5H2Qc/7A4uBm2U8gBg0/XuKtv7sBt
+	 KdMHk241WaFN8VeIIiPvvJROEnhTVAOa6Gi3+srWvpzGTLyp9sVL6C/7Ri5mtTCk8d
+	 V0+JXYVJITQwZ8rFie7y9RLvKN/T2CuvkwsSXCY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 153/563] arm64: dts: allwinner: t527: avaota-a1: hook up external 32k crystal
-Date: Mon, 13 Oct 2025 16:40:14 +0200
-Message-ID: <20251013144416.832161060@linuxfoundation.org>
+Subject: [PATCH 6.17 127/563] blk-mq: convert to serialize updating nr_requests with update_nr_hwq_lock
+Date: Mon, 13 Oct 2025 16:39:48 +0200
+Message-ID: <20251013144415.895473568@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -51,46 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 3d5e1ba00af8dd34ae1e573c2c07e00b5ec65267 ]
+[ Upstream commit 626ff4f8ebcb7207f01e7810acb85812ccf06bd8 ]
 
-When the board was added, its external 32.768 KHz crystal was described
-but not hooked up correctly. This meant the device had to fall back to
-the SoC's internal oscillator or divide a 32 KHz clock from the main
-oscillator, neither of which are accurate for the RTC. As a result the
-RTC clock will drift badly.
+request_queue->nr_requests can be changed by:
 
-Hook the crystal up to the RTC block and request the correct clock rate.
+a) switch elevator by updating nr_hw_queues
+b) switch elevator by elevator sysfs attribute
+c) configue queue sysfs attribute nr_requests
 
-Fixes: dbe54efa32af ("arm64: dts: allwinner: a523: add Avaota-A1 router support")
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250913102450.3935943-2-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Current lock order is:
+
+1) update_nr_hwq_lock, case a,b
+2) freeze_queue
+3) elevator_lock, case a,b,c
+
+And update nr_requests is seriablized by elevator_lock() already,
+however, in the case c, we'll have to allocate new sched_tags if
+nr_requests grow, and do this with elevator_lock held and queue
+freezed has the risk of deadlock.
+
+Hence use update_nr_hwq_lock instead, make it possible to allocate
+memory if tags grow, meanwhile also prevent nr_requests to be changed
+concurrently.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b86433721f46 ("blk-mq: fix potential deadlock while nr_requests grown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ block/blk-sysfs.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
-index e7713678208d4..4e71055fbd159 100644
---- a/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun55i-t527-avaota-a1.dts
-@@ -309,6 +309,14 @@ &r_pio {
- 	vcc-pm-supply = <&reg_aldo3>;
- };
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index b61e956a868e7..163264e4ec629 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -68,6 +68,7 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
+ 	int ret, err;
+ 	unsigned int memflags;
+ 	struct request_queue *q = disk->queue;
++	struct blk_mq_tag_set *set = q->tag_set;
  
-+&rtc {
-+	clocks = <&r_ccu CLK_BUS_R_RTC>, <&osc24M>,
-+		 <&r_ccu CLK_R_AHB>, <&ext_osc32k>;
-+	clock-names = "bus", "hosc", "ahb", "ext-osc32k";
-+	assigned-clocks = <&rtc CLK_OSC32K>;
-+	assigned-clock-rates = <32768>;
-+};
+ 	if (!queue_is_mq(q))
+ 		return -EINVAL;
+@@ -76,8 +77,11 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	memflags = blk_mq_freeze_queue(q);
+-	mutex_lock(&q->elevator_lock);
++	/*
++	 * Serialize updating nr_requests with concurrent queue_requests_store()
++	 * and switching elevator.
++	 */
++	down_write(&set->update_nr_hwq_lock);
+ 
+ 	if (nr == q->nr_requests)
+ 		goto unlock;
+@@ -85,20 +89,31 @@ queue_requests_store(struct gendisk *disk, const char *page, size_t count)
+ 	if (nr < BLKDEV_MIN_RQ)
+ 		nr = BLKDEV_MIN_RQ;
+ 
+-	if (nr <= q->tag_set->reserved_tags ||
++	/*
++	 * Switching elevator is protected by update_nr_hwq_lock:
++	 *  - read lock is held from elevator sysfs attribute;
++	 *  - write lock is held from updating nr_hw_queues;
++	 * Hence it's safe to access q->elevator here with write lock held.
++	 */
++	if (nr <= set->reserved_tags ||
+ 	    (q->elevator && nr > MAX_SCHED_RQ) ||
+-	    (!q->elevator && nr > q->tag_set->queue_depth)) {
++	    (!q->elevator && nr > set->queue_depth)) {
+ 		ret = -EINVAL;
+ 		goto unlock;
+ 	}
+ 
++	memflags = blk_mq_freeze_queue(q);
++	mutex_lock(&q->elevator_lock);
 +
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_pb_pins>;
+ 	err = blk_mq_update_nr_requests(disk->queue, nr);
+ 	if (err)
+ 		ret = err;
+ 
+-unlock:
+ 	mutex_unlock(&q->elevator_lock);
+ 	blk_mq_unfreeze_queue(q, memflags);
++
++unlock:
++	up_write(&set->update_nr_hwq_lock);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
