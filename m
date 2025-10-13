@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D643090E8;
-	Mon, 13 Oct 2025 15:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B863090E8;
+	Mon, 13 Oct 2025 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370265; cv=none; b=QuewpVcqGsqYAfFp5rCZa0svXdkTBtjsg0UsIrfhheS9z887DT0NbhHnNzJR+GjMynuqxY+DeDuOfjdzpNreZ+hYaTZz45mqcWgseD9CiZ6RjyV+q0LwnJrPJYcjbgqkqzUHEf+DlAKmBuQf20Bgz2jaNnr/sg8trriXoowsFQY=
+	t=1760370269; cv=none; b=k6KFNQ7Trh+GWT24tuNpiseR9D62XuXUK4Kc2fTnYFPZBYbHGfXcSpdjQSOuw+LdBX/IrtGsEMxBzRXNtiKHygVb8D97adbN2MpHEYYDbB+uy9ipjESg+OhfIJWzB7XC028N/+DBtN1/cUREueZ/xGROEyx7Vk3ziS0UEgvOWDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370265; c=relaxed/simple;
-	bh=ISandJV3s3VVvUf6Rb8SU1TgsOQreXfcXsuTZBbdCFM=;
+	s=arc-20240116; t=1760370269; c=relaxed/simple;
+	bh=dyLH3N/hkpDZdSHJ7+/Tz39X/8zfjOdINAyD1hP3P8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Trq6//3P4BKsctl12gpSvZaLIi0/4v6wApISCavdziuSLmFbvEg498r5+GYQBRe7/Ixgs3MG41E+RXV3wVIILGIqEjZ0mz28HXB7DPujtZV1mJ1wKgRvIsp+SVeglcM24kKvxc9oiqNVAUd9HIsdHTH1YrW5VFKb6/3vBmqbcpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSBlGI89; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HK6X63FYluo2mVqMd2cIkLs+11T6vu95XoKaRgYiIFA++e65Y2fBVNB8HvT+kDP4W3obvsT3lFj04TbIeSa0IWeMLR+EIQ4Ew4vTzrpt3DrmLhhfbo472yz/GtaOshwzfTQpiSUKct6AUPZhxWCcN6yJoVNmzqQ9HfhmdsfkwFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7274F5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSBlGI89"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A04EC4CEE7;
-	Mon, 13 Oct 2025 15:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7274F5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80310C116C6;
+	Mon, 13 Oct 2025 15:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370265;
-	bh=ISandJV3s3VVvUf6Rb8SU1TgsOQreXfcXsuTZBbdCFM=;
+	s=korg; t=1760370268;
+	bh=dyLH3N/hkpDZdSHJ7+/Tz39X/8zfjOdINAyD1hP3P8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSBlGI89tCZXJXTY0XL5n3Fhfng3KxeGMwWfQtX9mhz4IKs7jRtkjWQtzuhTYvZeM
-	 ivzrIWjCqB7OnrC6iI9DYbvA44sXMK2PzxxdREhipVX+s8tWwgNC42aID+GK24qDyC
-	 A8/ZbO2kpXZ/+gkuTW7Hp1t+hnbfRrGJIgsCuaaQ=
+	b=v7274F5Bwp5hQ2AyQXYJDq45m/ZmKqzTD4Ykep7EsHpGBDOtaUF1huFjMSR216jX4
+	 L+a6EtIVK6hJU2j9YjrbRITzaK9ILyEs+P5gird0Yrt3vWpTBbcHh9g86ZVkBEXnHa
+	 FCzZ1W+maDvg30NjaCi8VLbUkmuKOvCSq1e3UouM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.17 537/563] ext4: fix checks for orphan inodes
-Date: Mon, 13 Oct 2025 16:46:38 +0200
-Message-ID: <20251013144430.763410659@linuxfoundation.org>
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.17 520/563] dm: fix NULL pointer dereference in __dm_suspend()
+Date: Mon, 13 Oct 2025 16:46:21 +0200
+Message-ID: <20251013144430.150955267@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,106 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit acf943e9768ec9d9be80982ca0ebc4bfd6b7631e upstream.
+commit 8d33a030c566e1f105cd5bf27f37940b6367f3be upstream.
 
-When orphan file feature is enabled, inode can be tracked as orphan
-either in the standard orphan list or in the orphan file. The first can
-be tested by checking ei->i_orphan list head, the second is recorded by
-EXT4_STATE_ORPHAN_FILE inode state flag. There are several places where
-we want to check whether inode is tracked as orphan and only some of
-them properly check for both possibilities. Luckily the consequences are
-mostly minor, the worst that can happen is that we track an inode as
-orphan although we don't need to and e2fsck then complains (resulting in
-occasional ext4/307 xfstest failures). Fix the problem by introducing a
-helper for checking whether an inode is tracked as orphan and use it in
-appropriate places.
+There is a race condition between dm device suspend and table load that
+can lead to null pointer dereference. The issue occurs when suspend is
+invoked before table load completes:
 
-Fixes: 4a79a98c7b19 ("ext4: Improve scalability of ext4 orphan file handling")
-Cc: stable@kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Message-ID: <20250925123038.20264-2-jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+BUG: kernel NULL pointer dereference, address: 0000000000000054
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
+RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
+Call Trace:
+  <TASK>
+  blk_mq_quiesce_queue+0x2c/0x50
+  dm_stop_queue+0xd/0x20
+  __dm_suspend+0x130/0x330
+  dm_suspend+0x11a/0x180
+  dev_suspend+0x27e/0x560
+  ctl_ioctl+0x4cf/0x850
+  dm_ctl_ioctl+0xd/0x20
+  vfs_ioctl+0x1d/0x50
+  __se_sys_ioctl+0x9b/0xc0
+  __x64_sys_ioctl+0x19/0x30
+  x64_sys_call+0x2c4a/0x4620
+  do_syscall_64+0x9e/0x1b0
+
+The issue can be triggered as below:
+
+T1 						T2
+dm_suspend					table_load
+__dm_suspend					dm_setup_md_queue
+						dm_mq_init_request_queue
+						blk_mq_init_allocated_queue
+						=> q->mq_ops = set->ops; (1)
+dm_stop_queue / dm_wait_for_completion
+=> q->tag_set NULL pointer!	(2)
+						=> q->tag_set = set; (3)
+
+Fix this by checking if a valid table (map) exists before performing
+request-based suspend and waiting for target I/O. When map is NULL,
+skip these table-dependent suspend steps.
+
+Even when map is NULL, no I/O can reach any target because there is
+no table loaded; I/O submitted in this state will fail early in the
+DM layer. Skipping the table-dependent suspend logic in this case
+is safe and avoids NULL pointer dereferences.
+
+Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h   |   10 ++++++++++
- fs/ext4/file.c   |    2 +-
- fs/ext4/inode.c  |    2 +-
- fs/ext4/orphan.c |    6 +-----
- fs/ext4/super.c  |    4 ++--
- 5 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/md/dm.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1982,6 +1982,16 @@ static inline bool ext4_verity_in_progre
- #define NEXT_ORPHAN(inode) EXT4_I(inode)->i_dtime
- 
- /*
-+ * Check whether the inode is tracked as orphan (either in orphan file or
-+ * orphan list).
-+ */
-+static inline bool ext4_inode_orphan_tracked(struct inode *inode)
-+{
-+	return ext4_test_inode_state(inode, EXT4_STATE_ORPHAN_FILE) ||
-+		!list_empty(&EXT4_I(inode)->i_orphan);
-+}
-+
-+/*
-  * Codes for operating systems
-  */
- #define EXT4_OS_LINUX		0
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -354,7 +354,7 @@ static void ext4_inode_extension_cleanup
- 	 * to cleanup the orphan list in ext4_handle_inode_extension(). Do it
- 	 * now.
- 	 */
--	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
-+	if (ext4_inode_orphan_tracked(inode) && inode->i_nlink) {
- 		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
- 
- 		if (IS_ERR(handle)) {
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4748,7 +4748,7 @@ static int ext4_fill_raw_inode(struct in
- 		 * old inodes get re-used with the upper 16 bits of the
- 		 * uid/gid intact.
- 		 */
--		if (ei->i_dtime && list_empty(&ei->i_orphan)) {
-+		if (ei->i_dtime && !ext4_inode_orphan_tracked(inode)) {
- 			raw_inode->i_uid_high = 0;
- 			raw_inode->i_gid_high = 0;
- 		} else {
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -109,11 +109,7 @@ int ext4_orphan_add(handle_t *handle, st
- 
- 	WARN_ON_ONCE(!(inode->i_state & (I_NEW | I_FREEING)) &&
- 		     !inode_is_locked(inode));
--	/*
--	 * Inode orphaned in orphan file or in orphan list?
--	 */
--	if (ext4_test_inode_state(inode, EXT4_STATE_ORPHAN_FILE) ||
--	    !list_empty(&EXT4_I(inode)->i_orphan))
-+	if (ext4_inode_orphan_tracked(inode))
- 		return 0;
- 
- 	/*
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1438,9 +1438,9 @@ static void ext4_free_in_core_inode(stru
- 
- static void ext4_destroy_inode(struct inode *inode)
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2908,7 +2908,7 @@ static int __dm_suspend(struct mapped_de
  {
--	if (!list_empty(&(EXT4_I(inode)->i_orphan))) {
-+	if (ext4_inode_orphan_tracked(inode)) {
- 		ext4_msg(inode->i_sb, KERN_ERR,
--			 "Inode %lu (%p): orphan list check failed!",
-+			 "Inode %lu (%p): inode tracked as orphan!",
- 			 inode->i_ino, EXT4_I(inode));
- 		print_hex_dump(KERN_INFO, "", DUMP_PREFIX_ADDRESS, 16, 4,
- 				EXT4_I(inode), sizeof(struct ext4_inode_info),
+ 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
+ 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
+-	int r;
++	int r = 0;
+ 
+ 	lockdep_assert_held(&md->suspend_lock);
+ 
+@@ -2960,7 +2960,7 @@ static int __dm_suspend(struct mapped_de
+ 	 * Stop md->queue before flushing md->wq in case request-based
+ 	 * dm defers requests to md->wq from md->queue.
+ 	 */
+-	if (dm_request_based(md)) {
++	if (map && dm_request_based(md)) {
+ 		dm_stop_queue(md->queue);
+ 		set_bit(DMF_QUEUE_STOPPED, &md->flags);
+ 	}
+@@ -2972,7 +2972,8 @@ static int __dm_suspend(struct mapped_de
+ 	 * We call dm_wait_for_completion to wait for all existing requests
+ 	 * to finish.
+ 	 */
+-	r = dm_wait_for_completion(md, task_state);
++	if (map)
++		r = dm_wait_for_completion(md, task_state);
+ 	if (!r)
+ 		set_bit(dmf_suspended_flag, &md->flags);
+ 
 
 
