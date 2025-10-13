@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870E31A065;
-	Mon, 13 Oct 2025 15:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6388530E848;
+	Mon, 13 Oct 2025 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369307; cv=none; b=T6X69GJh/lUgk7v/FMt225GdQdPFdNo0dg4TzOglOCbK332GbjwWQnHsGqIoFZwFkqEps8Q+L/tyjhqRh4CR398F9fQL87FKUVzhiZWfDiwMMKJ7ZfHOZHBMzsdPpk3960UmwdY+4kNIrrOFr0YpGetYDFn065k6yq8HzrKNJPk=
+	t=1760369310; cv=none; b=pVQvvGIM2//dlhG+5xP2HI3KvgznSQcggVATBi4E1o9P/2qiDOwFcc1rIpWpJmFlJx/c9eIeu9gkxe16v8Su24YsCldO0rYSkGxi6fCRtDsz6FK7hiA4ynpSaQMSMohJbZ1y+RW3Nscevdge50P5gXlhPRabsHA7Kvk2dRAiNqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369307; c=relaxed/simple;
-	bh=v6muUyFG6d0Yeo78bfkygZaMmSyVTjJUFG3/XAt9LTA=;
+	s=arc-20240116; t=1760369310; c=relaxed/simple;
+	bh=Ks5VbF96nc/X94wqruLln8mbGCN12whp6CJRNgxAQFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSJlvHGhmAn8m88bOfUmgqklXU+LkgNUsl6TEeHWrC56l3fwRMQjiEIILKv1K/+lQvG7G3XWIJgzTJoktZlVxJihsjOxcUJAmocPezlWvI1IACSvFTUVtOnxqCmyqMVo7wr1ytm/wf9fjGfDY9g4Ir8ZAxjL/LPWkYCgWo/P3aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ibMkKRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvHpnfLN7+jToO3GUo6NbA5fLaTHwtEooSzjB8sGMfVgJ7tfcC+BWC+qlrH+UhcGiZ21liTQlKS44TnhABSBQaab+OgyaJghVs1s5HFEZZTJ+WYYBdHvXAysFo8LsO/Ba9Yt4EURo7uxcvBUDxZkGu0EQzNG/x/xuEmsd/VPUVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuvXSDAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ibMkKRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43E3C116C6;
-	Mon, 13 Oct 2025 15:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuvXSDAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2203C4CEFE;
+	Mon, 13 Oct 2025 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369307;
-	bh=v6muUyFG6d0Yeo78bfkygZaMmSyVTjJUFG3/XAt9LTA=;
+	s=korg; t=1760369310;
+	bh=Ks5VbF96nc/X94wqruLln8mbGCN12whp6CJRNgxAQFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ibMkKRJhkDAtmcu2C9t1hIReUAK+Nin7DVLCbbSx01kmJqTbRoM+eNyzzRGrMJsW
-	 RfDwRnWiSrvNgyFSuqoD2qMe4A+QwRHSXRp4FYaUrNjzGEJOIrj4Ir+REIvfV0j6sC
-	 lDpaedx7TEEnjtdZg8kyMxUUQiP9GLuj/H+LTQes=
+	b=MuvXSDABQQtIrqZTRp19kmqR5GbmiO++cUB692HWNRmW7NBFYJxxks1AEFr6Xw17J
+	 k9gWoDyc56mbLF2VEd81c6cM2gsD7bIYuPzaveqcUb0O1NP3DRor9GfEYJwOSbsvn8
+	 KLzZx9VcOPLHb4zcQgZ4ArgN0Z8pwPfX0c4GBeAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 167/563] i3c: master: svc: Recycle unused IBI slot
-Date: Mon, 13 Oct 2025 16:40:28 +0200
-Message-ID: <20251013144417.339626726@linuxfoundation.org>
+Subject: [PATCH 6.17 168/563] block: update validation of atomic writes boundary for stacked devices
+Date: Mon, 13 Oct 2025 16:40:29 +0200
+Message-ID: <20251013144417.375831315@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,36 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <stanley.chuys@gmail.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 3448a934ba6f803911ac084d05a2ffce507ea6c6 ]
+[ Upstream commit bfd4037296bd7e1f95394a2e3daf8e3c1796c3b3 ]
 
-In svc_i3c_master_handle_ibi(), an IBI slot is fetched from the pool
-to store the IBI payload. However, when an error condition is encountered,
-the function returns without recycling the IBI slot, resulting in an IBI
-slot leak.
+In commit 63d092d1c1b1 ("block: use chunk_sectors when evaluating stacked
+atomic write limits"), it was missed to use a chunk sectors limit check
+in blk_stack_atomic_writes_boundary_head(), so update that function to
+do the proper check.
 
-Fixes: c85e209b799f ("i3c: master: svc: fix ibi may not return mandatory data byte")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250829012309.3562585-3-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 63d092d1c1b1 ("block: use chunk_sectors when evaluating stacked atomic write limits")
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-settings.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 8e7b4ab919e3d..9641e66a4e5f2 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -417,6 +417,7 @@ static int svc_i3c_master_handle_ibi(struct svc_i3c_master *master,
- 						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
- 	if (ret) {
- 		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
-+		i3c_generic_ibi_recycle_slot(data->ibi_pool, slot);
- 		return ret;
- 	}
+diff --git a/block/blk-settings.c b/block/blk-settings.c
+index 693bc8d20acf3..6760dbf130b24 100644
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -643,18 +643,24 @@ static bool blk_stack_atomic_writes_tail(struct queue_limits *t,
+ static bool blk_stack_atomic_writes_boundary_head(struct queue_limits *t,
+ 				struct queue_limits *b)
+ {
++	unsigned int boundary_sectors;
++
++	if (!b->atomic_write_hw_boundary || !t->chunk_sectors)
++		return true;
++
++	boundary_sectors = b->atomic_write_hw_boundary >> SECTOR_SHIFT;
++
+ 	/*
+ 	 * Ensure atomic write boundary is aligned with chunk sectors. Stacked
+-	 * devices store chunk sectors in t->io_min.
++	 * devices store any stripe size in t->chunk_sectors.
+ 	 */
+-	if (b->atomic_write_hw_boundary > t->io_min &&
+-	    b->atomic_write_hw_boundary % t->io_min)
++	if (boundary_sectors > t->chunk_sectors &&
++	    boundary_sectors % t->chunk_sectors)
+ 		return false;
+-	if (t->io_min > b->atomic_write_hw_boundary &&
+-	    t->io_min % b->atomic_write_hw_boundary)
++	if (t->chunk_sectors > boundary_sectors &&
++	    t->chunk_sectors % boundary_sectors)
+ 		return false;
+ 
+-	t->atomic_write_hw_boundary = b->atomic_write_hw_boundary;
+ 	return true;
+ }
+ 
+@@ -695,13 +701,13 @@ static void blk_stack_atomic_writes_chunk_sectors(struct queue_limits *t)
+ static bool blk_stack_atomic_writes_head(struct queue_limits *t,
+ 				struct queue_limits *b)
+ {
+-	if (b->atomic_write_hw_boundary &&
+-	    !blk_stack_atomic_writes_boundary_head(t, b))
++	if (!blk_stack_atomic_writes_boundary_head(t, b))
+ 		return false;
+ 
+ 	t->atomic_write_hw_unit_max = b->atomic_write_hw_unit_max;
+ 	t->atomic_write_hw_unit_min = b->atomic_write_hw_unit_min;
+ 	t->atomic_write_hw_max = b->atomic_write_hw_max;
++	t->atomic_write_hw_boundary = b->atomic_write_hw_boundary;
+ 	return true;
+ }
  
 -- 
 2.51.0
