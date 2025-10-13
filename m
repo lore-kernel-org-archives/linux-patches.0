@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7B34BA40;
-	Mon, 13 Oct 2025 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250511A2630;
+	Mon, 13 Oct 2025 14:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367184; cv=none; b=C2FJKIahNXAZ9V0MxW1TTAfLT/juGXA5jNYmP1oLFAXVk71AF3nhSul0YJoFS7JdRLF11NAV2UUTCABE4pNVh+TImJnZau8ixhMrePXYnUzq5rmV8Eyo+1Rym3oIk7ED5JbCp72tyjNhnZMyb9rqh+6ZbqDj1Ay3rVDjIN56tSY=
+	t=1760367187; cv=none; b=XGbz5yMnjlcLYqdb9A2Al5uKqcobDNXKdSf+cl5BFHENVvhcmp0pTjjFa+beAHYTlQgKot2F0SP7hnsF2ebbMksbi3a0mqQxWVIXZzAfD0dRn1OS0gFtAeqUQ/Ti/HHKN8Fs1ftiK7fhheQDcaDx+rDVffVwQCBa1dchRFwoX+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367184; c=relaxed/simple;
-	bh=lRPCop/zmG3oVkLgEFQhtWm5R/Qz8ufJNLDf0fN1yd0=;
+	s=arc-20240116; t=1760367187; c=relaxed/simple;
+	bh=RQYZdPXP/ghDoMgMkRA0OaJdR09OnY3q1T0Ow9KxeiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQf1SEUQOCb7xVdXukElNmP4PQRyPZl58+/6PqGixC4dB2Omaz6X+UOSbVgf2vs/4vDEG38TprQUfvz7MjZAFZJiI5BKS0NbbAagkTI9UtlE0yEuci1xScpAo00J2hWqzNUKYW03nJtW592pR6aUSnORXZXwChByYsU6/XEn8ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER5pyeN5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEMbir8Fmgcz2UjGStpo/ToIfCs2qCk/Ia7o7OASKr7+4iux7wPcQDYD9+uRMu+iqfRjgaxE7fKcSMIsGIEmZYmn7GKUrkftEJzTXIf+pWqDyRYf/AYGTagizffo7fFNHYvgfpni67I1L6g0AEoiRxOtvkz8KZe9FGaAf2rl/6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuB1wnT5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER5pyeN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A8DC4CEE7;
-	Mon, 13 Oct 2025 14:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuB1wnT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518D7C4CEE7;
+	Mon, 13 Oct 2025 14:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367183;
-	bh=lRPCop/zmG3oVkLgEFQhtWm5R/Qz8ufJNLDf0fN1yd0=;
+	s=korg; t=1760367186;
+	bh=RQYZdPXP/ghDoMgMkRA0OaJdR09OnY3q1T0Ow9KxeiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ER5pyeN5zBGIEB4oik40q/qc2HSseJ7UtiqElbu70W66yhyEBsUIi3PMOTZI2KsD3
-	 wddVZA8enhIbheb0TJafXKR4bC1o3Vj2psm40q6mdHtSXEwfgr+A1PeqBOFU83zOu+
-	 69ycJdLvjNphwlOGUQpX+Makd3xGoMeA/kywdNHs=
+	b=vuB1wnT5HqAcPnJkiej/Kc9n/wZFRQzXRj9HFGQLuEJUeGnC0g2lmOIwpEUZFsZEx
+	 zHD45om8o506hLRmufcpoj+xrX7jkHU6bDl/0Ka9029bXB4Dk1mXDqNt7NojclbTkz
+	 SmUiMvIRkKUU9RgKGVPEPmFf6xPcP8i/4VMaGNF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/196] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
-Date: Mon, 13 Oct 2025 16:44:53 +0200
-Message-ID: <20251013144319.037976515@linuxfoundation.org>
+Subject: [PATCH 6.1 089/196] bpf: Enforce expected_attach_type for tailcall compatibility
+Date: Mon, 13 Oct 2025 16:44:22 +0200
+Message-ID: <20251013144317.791347596@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -51,74 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
+[ Upstream commit 4540aed51b12bc13364149bf95f6ecef013197c0 ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+Yinhao et al. recently reported:
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
+  Our fuzzer tool discovered an uninitialized pointer issue in the
+  bpf_prog_test_run_xdp() function within the Linux kernel's BPF subsystem.
+  This leads to a NULL pointer dereference when a BPF program attempts to
+  deference the txq member of struct xdp_buff object.
 
-Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-4-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The test initializes two programs of BPF_PROG_TYPE_XDP: progA acts as the
+entry point for bpf_prog_test_run_xdp() and its expected_attach_type can
+neither be of be BPF_XDP_DEVMAP nor BPF_XDP_CPUMAP. progA calls into a slot
+of a tailcall map it owns. progB's expected_attach_type must be BPF_XDP_DEVMAP
+to pass xdp_is_valid_access() validation. The program returns struct xdp_md's
+egress_ifindex, and the latter is only allowed to be accessed under mentioned
+expected_attach_type. progB is then inserted into the tailcall which progA
+calls.
+
+The underlying issue goes beyond XDP though. Another example are programs
+of type BPF_PROG_TYPE_CGROUP_SOCK_ADDR. sock_addr_is_valid_access() as well
+as sock_addr_func_proto() have different logic depending on the programs'
+expected_attach_type. Similarly, a program attached to BPF_CGROUP_INET4_GETPEERNAME
+should not be allowed doing a tailcall into a program which calls bpf_bind()
+out of BPF which is only enabled for BPF_CGROUP_INET4_CONNECT.
+
+In short, specifying expected_attach_type allows to open up additional
+functionality or restrictions beyond what the basic bpf_prog_type enables.
+The use of tailcalls must not violate these constraints. Fix it by enforcing
+expected_attach_type in __bpf_prog_map_compatible().
+
+Note that we only enforce this for tailcall maps, but not for BPF devmaps or
+cpumaps: There, the programs are invoked through dev_map_bpf_prog_run*() and
+cpu_map_bpf_prog_run*() which set up a new environment / context and therefore
+these situations are not prone to this issue.
+
+Fixes: 5e43f899b03a ("bpf: Check attach type at prog load time")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20250926171201.188490-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ include/linux/bpf.h | 1 +
+ kernel/bpf/core.c   | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index d74d184e1c7f3..b9990cb1181ff 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -58,7 +58,8 @@ enum {
- 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 5f01845627d49..142a21f019ff8 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -228,6 +228,7 @@ struct bpf_map_owner {
+ 	bool xdp_has_frags;
+ 	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
+ 	const struct btf_type *attach_func_proto;
++	enum bpf_attach_type expected_attach_type;
  };
  
--#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
- #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
- 
- static void log_quirks(struct device *dev)
- {
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
-+	int map;
-+
-+	map = BYT_RT5651_MAP(byt_rt5651_quirk);
-+	switch (map) {
-+	case BYT_RT5651_DMIC_MAP:
- 		dev_info(dev, "quirk DMIC_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
-+		break;
-+	case BYT_RT5651_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN1_IN2_MAP:
- 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
-+		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
-+		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
-+		break;
-+	}
-+
- 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
- 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
- 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
+ struct bpf_map {
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 3136af6559a82..6924f86a8a3ff 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2137,6 +2137,7 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 		map->owner->type  = prog_type;
+ 		map->owner->jited = fp->jited;
+ 		map->owner->xdp_has_frags = aux->xdp_has_frags;
++		map->owner->expected_attach_type = fp->expected_attach_type;
+ 		map->owner->attach_func_proto = aux->attach_func_proto;
+ 		for_each_cgroup_storage_type(i) {
+ 			map->owner->storage_cookie[i] =
+@@ -2148,6 +2149,10 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 		ret = map->owner->type  == prog_type &&
+ 		      map->owner->jited == fp->jited &&
+ 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
++		if (ret &&
++		    map->map_type == BPF_MAP_TYPE_PROG_ARRAY &&
++		    map->owner->expected_attach_type != fp->expected_attach_type)
++			ret = false;
+ 		for_each_cgroup_storage_type(i) {
+ 			if (!ret)
+ 				break;
 -- 
 2.51.0
 
