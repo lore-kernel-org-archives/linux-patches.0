@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B8E3081DC;
-	Mon, 13 Oct 2025 14:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74729308F09;
+	Mon, 13 Oct 2025 14:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760366952; cv=none; b=HBcesY0iIG7CBlWxjfjO7B+wAlFbKQ+ncl6iBBMDEjc/EHC+5GLe4wXUfM0NfUp76XjOQLFHXCCzlieX1zE2MZNeCLC5niiazS5QU/qnamcHcoBd1dreK1WBqzZYt0Np3S5ptxtRcQsoylqaVHb3Qac5hiyN6mHNLMhb2bFh2qQ=
+	t=1760366955; cv=none; b=nd/0xbkhmWUuSgJUJ+LJ3CfP1QnbCV/+4AoXLogLbbFHL+obg6MPuOGPmLakNxQBFLytx5q4ccSKpafmU+O80yz1sZSz/ag3HbxPpsQ8CqTD/VLTuyMUME0cr63uFc4YJUmb86u8aWX2ibQ2s75T2OnJOsSHMcUVs4f3Et/S7cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760366952; c=relaxed/simple;
-	bh=zHp5lVvsu1ckZ2dDqtCy7V3lmPCovNyX9ES3HyRzpew=;
+	s=arc-20240116; t=1760366955; c=relaxed/simple;
+	bh=vUicEagmKcYIdkX3jiffEN/Cy/IngjMX4REhp1Sj3J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N4zUnk8H9AsgePnf9R1uQ+SVYVHROHQNrEW32S/dOJiy/v985D/x5PGdKWYBfbouHFQSN/kWyVeoERXuo8to4vulZPQz7vlQWSR4RGW3taispcnCZCjaXIqmXURSCZJAiE3tbO2mIwp3HcAPvLQSWr0+AFMs73iBMmXLh7b7eEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPDUh4Y/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYukkCnUFDr2Gypqc1bFXqXDwBoAZkkMdJD4B6cTZ52ZYJhB400PoP2rbVh3G5AAmzS6bjOLC4KQOX7esHJC3Nn/1zJ1xHgLszypJEi3iy1BIHRzImv5WDvXy8xnHKghhd53ZhhVxx3FAqiojYVDAXas0D3mU7or2DVn0xxdmcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOUa90nl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPDUh4Y/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C64C4CEE7;
-	Mon, 13 Oct 2025 14:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOUa90nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56F9C4CEE7;
+	Mon, 13 Oct 2025 14:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760366952;
-	bh=zHp5lVvsu1ckZ2dDqtCy7V3lmPCovNyX9ES3HyRzpew=;
+	s=korg; t=1760366955;
+	bh=vUicEagmKcYIdkX3jiffEN/Cy/IngjMX4REhp1Sj3J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPDUh4Y/OyJZN70fiu//eVMXjEcit/Ba2HHdiUhh8B+h/rW222ulToOqNkhRtMz7T
-	 neBXWdu2ir+Nfqn1xBS+7mxLA5C1fAYX+yAryOz79q3xPhLZbcCvg3r/SetxLApaXB
-	 3W6S93nxmCueqG4dLgD1pR7GseGhgtPlE/SlOqdo=
+	b=tOUa90nlba6p0XNK9hrhCF13yHxN0xrTzwPFeueFX+Fbaq4MyiwnlsufK7c2op/Ck
+	 h12/OWNyjrvXkXpb5M1zTzK2RQiR8qNLThFj3vfO8R4SzFQbuw2+9V87qq9wgArKg4
+	 N6zB7oSAD9gyiK/Lu814ber4yf8WiJyxr5vdCYlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Subject: [PATCH 6.1 040/196] staging: axis-fifo: fix maximum TX packet length check
-Date: Mon, 13 Oct 2025 16:43:33 +0200
-Message-ID: <20251013144316.036319895@linuxfoundation.org>
+Subject: [PATCH 6.1 041/196] staging: axis-fifo: fix TX handling on copy_from_user() failure
+Date: Mon, 13 Oct 2025 16:43:34 +0200
+Message-ID: <20251013144316.071582630@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -43,7 +43,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -52,66 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-commit 52ff2b840bc723f3be1f096f8017c78e0515858c upstream.
+commit 6d07bee10e4bdd043ec7152cbbb9deb27033c9e2 upstream.
 
-Since commit 2ca34b508774 ("staging: axis-fifo: Correct handling of
-tx_fifo_depth for size validation"), write() operations with packets
-larger than 'tx_fifo_depth - 4' words are no longer rejected with -EINVAL.
+If copy_from_user() fails, write() currently returns -EFAULT, but any
+partially written data leaves the TX FIFO in an inconsistent state.
+Subsequent write() calls then fail with "transmit length mismatch"
+errors.
 
-Fortunately, the packets are not actually getting transmitted to hardware,
-otherwise they would be raising a 'Transmit Packet Overrun Error'
-interrupt, which requires a reset of the TX circuit to recover from.
+Once partial data is written to the hardware FIFO, it cannot be removed
+without a TX reset. Commit c6e8d85fafa7 ("staging: axis-fifo: Remove
+hardware resets for user errors") removed a full FIFO reset for this case,
+which fixed a potential RX data loss, but introduced this TX issue.
 
-Instead, the request times out inside wait_event_interruptible_timeout()
-and always returns -EAGAIN, since the wake up condition can never be true
-for these packets. But still, they unnecessarily block other tasks from
-writing to the FIFO and the EAGAIN return code signals userspace to retry
-the write() call, even though it will always fail and time out.
+Fix this by introducing a bounce buffer: copy the full packet from
+userspace first, and write to the hardware FIFO only if the copy
+was successful.
 
-According to the AXI4-Stream FIFO reference manual (PG080), the maximum
-valid packet length is 'tx_fifo_depth - 4' words, so attempting to send
-larger packets is invalid and should not be happening in the first place:
-
-> The maximum packet that can be transmitted is limited by the size of
-> the FIFO, which is (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
-
-Therefore, bring back the old behavior and outright reject packets larger
-than 'tx_fifo_depth - 4' with -EINVAL. Add a comment to explain why the
-check is necessary. The dev_err() message was removed to avoid cluttering
-the dmesg log if an invalid packet is received from userspace.
-
-Fixes: 2ca34b508774 ("staging: axis-fifo: Correct handling of tx_fifo_depth for size validation")
+Fixes: c6e8d85fafa7 ("staging: axis-fifo: Remove hardware resets for user errors")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Link: https://lore.kernel.org/r/20250817171350.872105-1-ovidiu.panait.oss@gmail.com
+Link: https://lore.kernel.org/r/20250912101322.1282507-1-ovidiu.panait.oss@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/staging/axis-fifo/axis-fifo.c |   36 +++++++++-------------------------
+ 1 file changed, 10 insertions(+), 26 deletions(-)
 
 --- a/drivers/staging/axis-fifo/axis-fifo.c
 +++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -493,11 +493,17 @@ static ssize_t axis_fifo_write(struct fi
- 		return -EINVAL;
+@@ -44,7 +44,6 @@
+ #define DRIVER_NAME "axis_fifo"
+ 
+ #define READ_BUF_SIZE 128U /* read buffer length in words */
+-#define WRITE_BUF_SIZE 128U /* write buffer length in words */
+ 
+ /* ----------------------------
+  *     IP register offsets
+@@ -473,11 +472,8 @@ static ssize_t axis_fifo_write(struct fi
+ {
+ 	struct axis_fifo *fifo = (struct axis_fifo *)f->private_data;
+ 	unsigned int words_to_write;
+-	unsigned int copied;
+-	unsigned int copy;
+-	unsigned int i;
++	u32 *txbuf;
+ 	int ret;
+-	u32 tmp_buf[WRITE_BUF_SIZE];
+ 
+ 	if (len % sizeof(u32)) {
+ 		dev_err(fifo->dt_device,
+@@ -542,32 +538,20 @@ static ssize_t axis_fifo_write(struct fi
+ 		}
  	}
  
--	if (words_to_write > fifo->tx_fifo_depth) {
--		dev_err(fifo->dt_device, "tried to write more words [%u] than slots in the fifo buffer [%u]\n",
--			words_to_write, fifo->tx_fifo_depth);
-+	/*
-+	 * In 'Store-and-Forward' mode, the maximum packet that can be
-+	 * transmitted is limited by the size of the FIFO, which is
-+	 * (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
-+	 *
-+	 * Do not attempt to send a packet larger than 'tx_fifo_depth - 4',
-+	 * otherwise a 'Transmit Packet Overrun Error' interrupt will be
-+	 * raised, which requires a reset of the TX circuit to recover.
-+	 */
-+	if (words_to_write > (fifo->tx_fifo_depth - 4))
- 		return -EINVAL;
--	}
+-	/* write data from an intermediate buffer into the fifo IP, refilling
+-	 * the buffer with userspace data as needed
+-	 */
+-	copied = 0;
+-	while (words_to_write > 0) {
+-		copy = min(words_to_write, WRITE_BUF_SIZE);
+-
+-		if (copy_from_user(tmp_buf, buf + copied * sizeof(u32),
+-				   copy * sizeof(u32))) {
+-			ret = -EFAULT;
+-			goto end_unlock;
+-		}
+-
+-		for (i = 0; i < copy; i++)
+-			iowrite32(tmp_buf[i], fifo->base_addr +
+-				  XLLF_TDFD_OFFSET);
+-
+-		copied += copy;
+-		words_to_write -= copy;
++	txbuf = vmemdup_user(buf, len);
++	if (IS_ERR(txbuf)) {
++		ret = PTR_ERR(txbuf);
++		goto end_unlock;
+ 	}
  
- 	if (fifo->write_flags & O_NONBLOCK) {
- 		/*
+-	ret = copied * sizeof(u32);
++	for (int i = 0; i < words_to_write; ++i)
++		iowrite32(txbuf[i], fifo->base_addr + XLLF_TDFD_OFFSET);
+ 
+ 	/* write packet size to fifo */
+-	iowrite32(ret, fifo->base_addr + XLLF_TLR_OFFSET);
++	iowrite32(len, fifo->base_addr + XLLF_TLR_OFFSET);
+ 
++	ret = len;
++	kvfree(txbuf);
+ end_unlock:
+ 	mutex_unlock(&fifo->write_lock);
+ 
 
 
