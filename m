@@ -1,122 +1,99 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C16225A65A;
-	Mon, 13 Oct 2025 08:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5332FD1C6
+	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 09:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345525; cv=none; b=C4XYXhCWRoOMpNcfWHYFol6PnFRFuho+2sEsUDQCsOM7OBwfbGuUcy6NN+Q0BhCb00VLS7ixht/g3tmOqx6pZJgX/iGCm+Jog44GsYzC0hJlFH5nqgys3yVPPa8CyL4zvLzBOscseYY09miELxoHK4/3bpJEWnz3kT97CpJZYzw=
+	t=1760347176; cv=none; b=Y50bGKFDdBoQd08vNaUlOYrEEiBfaK/OEiNk60CvUYIitjacio200MYQlF7OKyONHuw8JxOPHGI1XbMyBuNHICZHusLHP1dKk0DAXhDl3qwtnWS9+arpS8h7iNU5/FxEffoeP7ugU/3IWkP2RrA3lQMAxOCviYspB0ab07ESfUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760345525; c=relaxed/simple;
-	bh=D0Pm5gDAEf/J/fLMJeYhII2rupxN55IU1PVARShdLz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=rfM1wRomOUfd+XYcPqYCWIB0APG5z7CRIlW/9u7tcd7H8jNFwzjOVf7fe/0Zdj+ns6UPjn7Btwpr7naShEeTX34O6XSxdvMhNLevwN1GIOT198EOBVDObxX4cWtBuaSeLbEsRoqKNrZgbXrdYDEmnSEiz2aJmTdeBenK9R8hT4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=BQoGMpil; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1760347176; c=relaxed/simple;
+	bh=7e11H1Sl1fNF6/Pen2WxGe/Xr1qM6aJthuzJAA0/Mog=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=JRfhQPdqXGpwrWJkYAUaVn91Hg5BPwLX0sDso85EgL99zB3oHZvED2T//G3Nchty4W//O8Yt92CMXwhpbTJopcdqS2VwJ2+V+tlkEgZaytnzSJbRss3xsbKdv7Sg3WqUTQDoiG4ft9fg6zWeokwP99Pi4JTeob8dciqt5UTGUWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Jc8xiefv; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="BQoGMpil"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20251013085200euoutp0266e34edf90c863a4c01eb72fc5c48eb3~uAOyYTX0q1874618746euoutp02G;
-	Mon, 13 Oct 2025 08:52:00 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20251013085200euoutp0266e34edf90c863a4c01eb72fc5c48eb3~uAOyYTX0q1874618746euoutp02G
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1760345520;
-	bh=JyDd/uFH2Am1LZ5SPDN+k8UExukF9D/xq2Z7HY8ZnFU=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=BQoGMpilRJCUe8Y44BcqjJWkeRiS+JPfur3kcgk/2YoTAS+ViVlUzaRYX89zuEjDq
-	 wkZ//2bWyV40qfk9fRhKG5W52cbl/HFo0RcqE6+fae76UZ4N7VyDdV6dd9ILg/D8OP
-	 faJI0JVLj/Gc3HQk8b0emDKXb80ilcDcD66u6PCM=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20251013085200eucas1p2f4ded79121c5a222f59ecf4ddda0816c~uAOx-fHcX0880708807eucas1p26;
-	Mon, 13 Oct 2025 08:52:00 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20251013085157eusmtip27fccd916a2ad4442a7f4d1fa1f91c70b~uAOvsyZiW2933229332eusmtip2d;
-	Mon, 13 Oct 2025 08:51:57 +0000 (GMT)
-Message-ID: <e1d3661d-26ba-49ae-a124-dc5233c9107d@samsung.com>
-Date: Mon, 13 Oct 2025 10:51:57 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Jc8xiefv"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-46e473e577eso26945595e9.0
+        for <patches@lists.linux.dev>; Mon, 13 Oct 2025 02:19:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1760347173; x=1760951973; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=q8mp6Sl5lpIMsBMcZe0Dwu/oRU1yIEVK7dE0nvjB0QA=;
+        b=Jc8xiefvaNUiOfrrx5AzyWnS7iTn6Zqwx4WGypK/4V6q2yQTuFq86u74V/CriCGWXl
+         MusYhDq0L1RWe6ZdAP4XZw6LqCF0zIqU1HZN6/fTDYvL1ymgn3C903J6S5xUxix8WdcO
+         JC1JYkBRID86WAQdN1GFFRbGmM+hh4ah7bVMGw2x9+BjK3UAIstEnp2O1v58xwKey8W2
+         1w31GiarP0Svq4FzeWNQSIrWJXUOOJOPYUm7cokcdLodN+rTA1FXz7yTYqJXbEtknU6G
+         MJHavfqpcntNk0cvHtIyDnveJgoQFhhef4hWooVZq1wIWf6UJzvvZr6hF/ZmtBztiFIU
+         NJ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760347173; x=1760951973;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q8mp6Sl5lpIMsBMcZe0Dwu/oRU1yIEVK7dE0nvjB0QA=;
+        b=QYi8Xeig9s7YBmFv7aMgfOjaYPQkFq7JI0ONgcy05Knarsv2S7jpZHs+8U5MnIPJ9K
+         zRzJFkcggWZY4o1fKIm7vMiQGy3oMVLTbHCWsKy9BYonKalBl327tLf4Y21fAFIX3rke
+         Fo+uxB+IA7vtV4diKSKLoDGmS0ghYRPvcGdgWKl3kd39Vu2VgTwkbb7/abP9ilrIXZ2l
+         SFFkxxnDuHRT98QTQMtHYmcrfWZ97e59FPSkXR1XdX9k4ROBdooTlV5eBq/5AB5qN85R
+         fW9C6yjmiAdLYbUDqCAn1a/Y2Ww600ajVTl0hIGldnx0/DiE0OyLsa19uA6wO+axnAqA
+         9Inw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFGJu03Inzcl+wQxDVayCeBn1lnP8TLqu85eLeQEgudRgx0DUo9OVtyrhc+4Qd6wdSoiCJVN5G@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx2KmaYtKTye/bs7fgqGl7ivCeGBEXdTD5j3wkPJ+FXdVKOZAy0
+	61SKjn9t5eu6i7PDkApntrXTMPTLnFR2s4Wfc0lolZE6A9EpacixzGIpL2bKHqmnqG7FjL6F+QJ
+	tFn+anZVdHIkAmJWuhA==
+X-Google-Smtp-Source: AGHT+IGyE1/ItkqoGr313xqMor1adj+/d0l73A5B2xL0EAcjYPfGXqLNzPt25q8he9xrFaEgiN5RRjL9JA9wkiQ=
+X-Received: from wmcn14.prod.google.com ([2002:a05:600c:c0ce:b0:46e:2897:9c17])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:83ce:b0:46e:394b:49b7 with SMTP id 5b1f17b1804b1-46fa9b16597mr144514005e9.37.1760347173573;
+ Mon, 13 Oct 2025 02:19:33 -0700 (PDT)
+Date: Mon, 13 Oct 2025 09:19:32 +0000
+In-Reply-To: <20251012213230.1139674-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH v1 3/6] iommu/exynos-iommu: Set release_domain to
- exynos_identity_domain
-To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, jgg@nvidia.com,
-	kevin.tian@intel.com
-Cc: suravee.suthikulpanit@amd.com, will@kernel.org, robin.murphy@arm.com,
-	sven@kernel.org, j@jannau.net, robin.clark@oss.qualcomm.com,
-	krzk@kernel.org, dwmw2@infradead.org, baolu.lu@linux.intel.com,
-	yong.wu@mediatek.com, matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com, tjeznach@rivosinc.com,
-	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, heiko@sntech.de,
-	schnelle@linux.ibm.com, mjrosato@linux.ibm.com, orsonzhai@gmail.com,
-	baolin.wang@linux.alibaba.com, wens@csie.org, jernej.skrabec@gmail.com,
-	samuel@sholland.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
-	jean-philippe@linaro.org, iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
-	linux-s390@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev,
-	patches@lists.linux.dev
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <56175bec385d24af9eb2a38632e1d6ce889025e3.1760312540.git.nicolinc@nvidia.com>
-Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20251013085200eucas1p2f4ded79121c5a222f59ecf4ddda0816c
-X-Msg-Generator: CA
+Mime-Version: 1.0
+References: <20251012213230.1139674-1-ojeda@kernel.org>
+Message-ID: <aOzEJAdNHatrW_Gz@google.com>
+Subject: Re: [PATCH] rust_binder: clean Clippy `mem-replace-with-default` warning
+From: Alice Ryhl <aliceryhl@google.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	"Arve =?utf-8?B?SGrDuG5uZXbDpWc=?=" <arve@android.com>, Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>, 
+	Joel Fernandes <joelagnelf@nvidia.com>, Christian Brauner <christian@brauner.io>, 
+	Carlos Llamas <cmllamas@google.com>, Suren Baghdasaryan <surenb@google.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20251012235812eucas1p1209a75bffb5a4784955781d437746731
-X-EPHeader: CA
-X-CMS-RootMailID: 20251012235812eucas1p1209a75bffb5a4784955781d437746731
-References: <cover.1760312540.git.nicolinc@nvidia.com>
-	<CGME20251012235812eucas1p1209a75bffb5a4784955781d437746731@eucas1p1.samsung.com>
-	<56175bec385d24af9eb2a38632e1d6ce889025e3.1760312540.git.nicolinc@nvidia.com>
 
-On 13.10.2025 01:57, Nicolin Chen wrote:
-> Following a coming core change to pass in the old domain pointer into the
-> attach_dev op and its callbacks, exynos_iommu_identity_attach() will need
-> this new argument too, which the release_device op doesn't provide.
->
-> Instead, the core provides a release_domain to attach to the device prior
-> to invoking the release_device callback. Thus, simply use that.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->   drivers/iommu/exynos-iommu.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-> index b6edd178fe25e..0857519ca7188 100644
-> --- a/drivers/iommu/exynos-iommu.c
-> +++ b/drivers/iommu/exynos-iommu.c
-> @@ -1429,8 +1429,6 @@ static void exynos_iommu_release_device(struct device *dev)
->   	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
->   	struct sysmmu_drvdata *data;
->   
-> -	WARN_ON(exynos_iommu_identity_attach(&exynos_identity_domain, dev));
-> -
->   	list_for_each_entry(data, &owner->controllers, owner_node)
->   		device_link_del(data->link);
->   }
-> @@ -1476,6 +1474,7 @@ static int exynos_iommu_of_xlate(struct device *dev,
->   
->   static const struct iommu_ops exynos_iommu_ops = {
->   	.identity_domain = &exynos_identity_domain,
-> +	.release_domain = &exynos_identity_domain,
->   	.domain_alloc_paging = exynos_iommu_domain_alloc_paging,
->   	.device_group = generic_device_group,
->   	.probe_device = exynos_iommu_probe_device,
+On Sun, Oct 12, 2025 at 11:32:30PM +0200, Miguel Ojeda wrote:
+> Starting with Rust 1.87.0, Clippy reports:
+> 
+>       CLIPPY     drivers/android/binder/rust_binder_main.o
+>     error: replacing a value of type `T` with `T::default()` is better expressed using `core::mem::take`
+>        --> drivers/android/binder/node.rs:690:32
+>         |
+>     690 |             _unused_capacity = mem::replace(&mut inner.freeze_list, KVVec::new());
+>         |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `core::mem::take(&mut inner.freeze_list)`
+>         |
+>         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#mem_replace_with_default
+>         = note: `-D clippy::mem-replace-with-default` implied by `-D warnings`
+>         = help: to override `-D warnings` add `#[allow(clippy::mem_replace_with_default)]`
+> 
+> Thus clean it up as suggested.
+> 
+> Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Thanks. I guess I never got around to making use of commit 47d8101924b5
+("rust: vec: impl Default for Vec with any allocator").
+
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
