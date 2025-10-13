@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E5E22257E;
-	Mon, 13 Oct 2025 15:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7321F22257E;
+	Mon, 13 Oct 2025 15:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368231; cv=none; b=YcXa/yj5kKcGd5ZAGXM+h1JhGN900on7fj/RKDt6sYx7UhPOiSRKs+f/prAYk3jDB5uuoUjh3gcF214aJHRuhfSc89br1OnQVgCWBT0W/RF0VEdUtuFcaj+RyMRam19QzI+fpnjrQQGG9DALODFmdXu6JG9OCkqaohtTMd8M1jc=
+	t=1760368234; cv=none; b=RIFtxz6iROUItDRApNdzRyULDabYhJFnm1PA3D9UroSZq1VGoxlki8C67A2S5URwjSILIotkQSbjuEzHPjdjfW8id6KHhaJVCXcei71DsPz5kjpS0+yF1qcR43YPePbLQv/6OPCjZYuvD0akDwRs3lVjIGYYAbcsx+BCtfDkr1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368231; c=relaxed/simple;
-	bh=byISUw4NLz7nqbPaDvfU2AnKml+cbSqTVCPNUd18KNY=;
+	s=arc-20240116; t=1760368234; c=relaxed/simple;
+	bh=in/3Luai7Cw9+zlj25Es7gqJBcuEmx+0NLl1oEBNOTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiXkPiED9H+K/qiK+aY8ZmPJY6MGZgA3l3uB6hMMXIVxst1yJ+9vxSIvkKIQEGTuflBS6TU/PGoTS1xR68WrQautJ7GSWdROQprEIkI+x7ZPlsiSjy0INGpiaVygppvbVEFWBNLkreZouBTLwGWOskM7e6XFi5bhyRSLkIvzRb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFb2xTeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/VmipOUIYKAsLfWdVwAUIZufclTP8HhX18kS1krH0BepZXWINTEhFPKYzr9giZC7/r7qUXx3mCHkNau09z81aaOMLHVq8AxY26Zfmqiivb1zQmgEHqfIvrGiTl8PEnpeoxSs9ZTEfa0asvek1ol9EFvz9z1q+mbXt6u+AFTB28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=za2byTeo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFb2xTeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1CAC4CEE7;
-	Mon, 13 Oct 2025 15:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="za2byTeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019EBC113D0;
+	Mon, 13 Oct 2025 15:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368231;
-	bh=byISUw4NLz7nqbPaDvfU2AnKml+cbSqTVCPNUd18KNY=;
+	s=korg; t=1760368234;
+	bh=in/3Luai7Cw9+zlj25Es7gqJBcuEmx+0NLl1oEBNOTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFb2xTeDaFPPsqwHJ7vitfJvm8+7icxahA59SWtJm95BCLXgtrzfWjvRcFzDG+hji
-	 YgyNLYSB1Hv1I3RVMuFqetZ7cLnBxgah0JZsI96hNx3l/lB3OOPZUToovGY26QQ1jN
-	 t3Gzf5ecnFChtmtTdAsCUFbGV13aZs3zZU0X3pV4=
+	b=za2byTeoi/eW8jJDuJR7HP1y0YQRqTlqKK18DqxJKOGZ5NKt2Exr3TIlEEVI7tS08
+	 7TyUW7lsPxSK+UjhO1gCJPeEJkhkUvogqPFbCxKyMugrvlSTh3loMd6y+zRS4J21mO
+	 T3QDO7AZ5BCIZBTENrh+mu5g9aLxCcn/BG+uJkFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Brigham Campbell <me@brighamcampbell.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/262] bpf: Enforce expected_attach_type for tailcall compatibility
-Date: Mon, 13 Oct 2025 16:43:51 +0200
-Message-ID: <20251013144329.334725932@linuxfoundation.org>
+Subject: [PATCH 6.12 090/262] drm/panel: novatek-nt35560: Fix invalid return value
+Date: Mon, 13 Oct 2025 16:43:52 +0200
+Message-ID: <20251013144329.370966199@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -54,91 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Brigham Campbell <me@brighamcampbell.com>
 
-[ Upstream commit 4540aed51b12bc13364149bf95f6ecef013197c0 ]
+[ Upstream commit 125459e19ec654924e472f3ff5aeea40358dbebf ]
 
-Yinhao et al. recently reported:
+Fix bug in nt35560_set_brightness() which causes the function to
+erroneously report an error. mipi_dsi_dcs_write() returns either a
+negative value when an error occurred or a positive number of bytes
+written when no error occurred. The buggy code reports an error under
+either condition.
 
-  Our fuzzer tool discovered an uninitialized pointer issue in the
-  bpf_prog_test_run_xdp() function within the Linux kernel's BPF subsystem.
-  This leads to a NULL pointer dereference when a BPF program attempts to
-  deference the txq member of struct xdp_buff object.
-
-The test initializes two programs of BPF_PROG_TYPE_XDP: progA acts as the
-entry point for bpf_prog_test_run_xdp() and its expected_attach_type can
-neither be of be BPF_XDP_DEVMAP nor BPF_XDP_CPUMAP. progA calls into a slot
-of a tailcall map it owns. progB's expected_attach_type must be BPF_XDP_DEVMAP
-to pass xdp_is_valid_access() validation. The program returns struct xdp_md's
-egress_ifindex, and the latter is only allowed to be accessed under mentioned
-expected_attach_type. progB is then inserted into the tailcall which progA
-calls.
-
-The underlying issue goes beyond XDP though. Another example are programs
-of type BPF_PROG_TYPE_CGROUP_SOCK_ADDR. sock_addr_is_valid_access() as well
-as sock_addr_func_proto() have different logic depending on the programs'
-expected_attach_type. Similarly, a program attached to BPF_CGROUP_INET4_GETPEERNAME
-should not be allowed doing a tailcall into a program which calls bpf_bind()
-out of BPF which is only enabled for BPF_CGROUP_INET4_CONNECT.
-
-In short, specifying expected_attach_type allows to open up additional
-functionality or restrictions beyond what the basic bpf_prog_type enables.
-The use of tailcalls must not violate these constraints. Fix it by enforcing
-expected_attach_type in __bpf_prog_map_compatible().
-
-Note that we only enforce this for tailcall maps, but not for BPF devmaps or
-cpumaps: There, the programs are invoked through dev_map_bpf_prog_run*() and
-cpu_map_bpf_prog_run*() which set up a new environment / context and therefore
-these situations are not prone to this issue.
-
-Fixes: 5e43f899b03a ("bpf: Check attach type at prog load time")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250926171201.188490-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8152c2bfd780 ("drm/panel: Add driver for Sony ACX424AKP panel")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250731032343.1258366-2-me@brighamcampbell.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h | 1 +
- kernel/bpf/core.c   | 5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/gpu/drm/panel/panel-novatek-nt35560.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 6db72c66de91d..e8d9803cc6756 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -281,6 +281,7 @@ struct bpf_map_owner {
- 	bool xdp_has_frags;
- 	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	const struct btf_type *attach_func_proto;
-+	enum bpf_attach_type expected_attach_type;
- };
- 
- struct bpf_map {
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 1f51c8f20722e..08bdb623f4f91 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2326,6 +2326,7 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		map->owner->type  = prog_type;
- 		map->owner->jited = fp->jited;
- 		map->owner->xdp_has_frags = aux->xdp_has_frags;
-+		map->owner->expected_attach_type = fp->expected_attach_type;
- 		map->owner->attach_func_proto = aux->attach_func_proto;
- 		for_each_cgroup_storage_type(i) {
- 			map->owner->storage_cookie[i] =
-@@ -2337,6 +2338,10 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		ret = map->owner->type  == prog_type &&
- 		      map->owner->jited == fp->jited &&
- 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
-+		if (ret &&
-+		    map->map_type == BPF_MAP_TYPE_PROG_ARRAY &&
-+		    map->owner->expected_attach_type != fp->expected_attach_type)
-+			ret = false;
- 		for_each_cgroup_storage_type(i) {
- 			if (!ret)
- 				break;
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35560.c b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
+index 5bbea734123bc..ee04c55175bb8 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35560.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
+@@ -161,7 +161,7 @@ static int nt35560_set_brightness(struct backlight_device *bl)
+ 		par = 0x00;
+ 		ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY,
+ 					 &par, 1);
+-		if (ret) {
++		if (ret < 0) {
+ 			dev_err(nt->dev, "failed to disable display backlight (%d)\n", ret);
+ 			return ret;
+ 		}
 -- 
 2.51.0
 
