@@ -1,107 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fllvem-ot03.ext.ti.com (fllvem-ot03.ext.ti.com [198.47.19.245])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F112566;
-	Mon, 13 Oct 2025 00:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E539034BA42;
+	Mon, 13 Oct 2025 03:50:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.245
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760314478; cv=none; b=o+/3xKJgDUPPA/Cy3fHQq7+YXIXbMgPUFpvkYbbf3xeVJqY3t98c47bL5eIok5C2VKK7zaBEGTMwaqHCPspqW/yBtcD8xNGbTRFt5oIxuY66vxJ3YMb2qs1FKJIQf2VUlVzT49dZKKUESyHr7p+Fn0CcatNFBcUGqpRbiY/JHIA=
+	t=1760327408; cv=none; b=oyu1TUSXsm5fTipzVTs4fDslo6JJjj+x3HJSLhT59X8MFoDKBYMWEifiBrxLq5Tq18lkA07Z67z36WOsftiAGMA4dTTxMwXvC0LIcGkklG3kTg41Yso7Co9KUwGiY9o3PeyzZPEk7ivIrhzp/CnuzQujtA/uPbsbuE6tp+S31Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760314478; c=relaxed/simple;
-	bh=FjAXHZ+MbGBGWo6/zQ47+tjI8pX/9RPwwwUIErKcHq4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XngjDR2gfYavXBUhrSUmh6UubtXR/be79eWqoWbYpcEEW9hh964iGpSpc74L2YUWfwOsfRQXKeIs3gDBQlueE/4xYhwUhjF/8lQXbjBzchUV245gRpSs6DPlKKYj4zhJ7vgjv2Bf6Pq+1exdwhLFPmZ+vRGG1kAwNS7bRI7QsHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gl19GJWA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760327408; c=relaxed/simple;
+	bh=II9PstpmWDTczQX7bhyjq4AqTAUxf3ZpRGR9ppyMc2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NzSZO65WIs0GM1QwAkIRJI47uZrBFV7vEZRnhuBxNRIX0WiDZdAyqrt/o+kn+HVt07UdO16nf5xTQTCvcmQtINmnSY6sM9VbrPZiPtCYDNT10NVGsq0rm/WA2rN3al8bJiGSspoun9KXC5gJ3S50h4EvrEB2utEf1DVIQaWMfLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=LVnGE+F0; arc=none smtp.client-ip=198.47.19.245
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gl19GJWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744DBC4CEE7;
-	Mon, 13 Oct 2025 00:14:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760314477;
-	bh=FjAXHZ+MbGBGWo6/zQ47+tjI8pX/9RPwwwUIErKcHq4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Gl19GJWAH37jbiTuqrJKKDMfarGJoT7wQcadgU1Ompu3yfwh7Pw9nkgYBVqn4X2AV
-	 FMbd7f5LEdtMlkzJycF3xgCqxQO2vZMGdteiiqcfnz49FiQUut9YntJmZVOCLIAWCn
-	 +aY8O+Gro4QZsLNAXeu/i1uWZPXTA9tXncJ7iYATA9MQpY2JCS4+Pos558VBfxqU02
-	 m+w/KO/NsI6YNSPS6yVRELGQxQfZON7gWiYcVFoe4Efw3kig00HE7ekH9U9/N3bDu6
-	 Fcfps1LTTkTpAU5F1P5C2E8Up9ipeGkicWO4Bg4/wlP4cg63snP3292pSGLmdaPz8n
-	 IvHa91PV1X8yg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Burak Emir <bqe@google.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	Yury Norov <yury.norov@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: bitmap: clean Rust 1.92.0 `unused_unsafe` warning
-Date: Mon, 13 Oct 2025 02:14:22 +0200
-Message-ID: <20251013001422.1168581-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="LVnGE+F0"
+Received: from lelvem-sh02.itg.ti.com ([10.180.78.226])
+	by fllvem-ot03.ext.ti.com (8.15.2/8.15.2) with ESMTP id 59D3nnCO730626;
+	Sun, 12 Oct 2025 22:49:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1760327389;
+	bh=dCw0dkLniTXuadQJ1IK2N4d0zgAIPu2vQk8B/Rto7pY=;
+	h=Date:Subject:To:CC:References:From:In-Reply-To;
+	b=LVnGE+F0ZtSxnzj1vRiYQ7BfQIzQavIgGhsBECpMtj9+CLC4rFIbkNrHqo7qnDo07
+	 j20WoazHfLlTBFmqQUc7bkS7KsXuitGP/IzpCwU9rDA+wggUrKps9hSvJvYAgpkJuI
+	 TFZL5GYVrwYMJM/O6AawXOr38m/+hyAxwquMVo9Y=
+Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
+	by lelvem-sh02.itg.ti.com (8.18.1/8.18.1) with ESMTPS id 59D3nnx63521823
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA256 bits=128 verify=FAIL);
+	Sun, 12 Oct 2025 22:49:49 -0500
+Received: from DLEE202.ent.ti.com (157.170.170.77) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.55; Sun, 12
+ Oct 2025 22:49:48 -0500
+Received: from lelvem-mr05.itg.ti.com (10.180.75.9) by DLEE202.ent.ti.com
+ (157.170.170.77) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Sun, 12 Oct 2025 22:49:48 -0500
+Received: from [172.24.233.249] (ula0502350.dhcp.ti.com [172.24.233.249])
+	by lelvem-mr05.itg.ti.com (8.18.1/8.18.1) with ESMTP id 59D3njWf1399385;
+	Sun, 12 Oct 2025 22:49:46 -0500
+Message-ID: <029725c3-f747-4f90-9f6a-ef7eb133d7eb@ti.com>
+Date: Mon, 13 Oct 2025 09:19:45 +0530
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH AUTOSEL 6.17-6.12] cpufreq: ti: Add support for AM62D2
+To: Sasha Levin <sashal@kernel.org>, <patches@lists.linux.dev>,
+        <stable@vger.kernel.org>
+CC: Viresh Kumar <viresh.kumar@linaro.org>, <rafael@kernel.org>,
+        <linux-pm@vger.kernel.org>
+References: <20251009155752.773732-1-sashal@kernel.org>
+ <20251009155752.773732-85-sashal@kernel.org>
+Content-Language: en-US
+From: Paresh Bhagat <p-bhagat@ti.com>
+In-Reply-To: <20251009155752.773732-85-sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 
-Starting with Rust 1.92.0 (expected 2025-12-11), Rust allows to safely
-take the address of a union field [1][2]:
+Hi all,
 
-      CLIPPY L rust/kernel.o
-    error: unnecessary `unsafe` block
-       --> rust/kernel/bitmap.rs:169:13
-        |
-    169 |             unsafe { core::ptr::addr_of!(self.repr.bitmap) }
-        |             ^^^^^^ unnecessary `unsafe` block
-        |
-        = note: `-D unused-unsafe` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(unused_unsafe)]`
+This patch doesn't need to be backported. AM62D support itself was added 
+recently in 6.17.
 
-    error: unnecessary `unsafe` block
-       --> rust/kernel/bitmap.rs:185:13
-        |
-    185 |             unsafe { core::ptr::addr_of_mut!(self.repr.bitmap) }
-        |             ^^^^^^ unnecessary `unsafe` block
+Thanks
 
-Thus allow both instances to clean the warning in newer compilers.
-
-Link: https://github.com/rust-lang/rust/issues/141264 [1]
-Link: https://github.com/rust-lang/rust/pull/141469 [2]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/bitmap.rs | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/rust/kernel/bitmap.rs b/rust/kernel/bitmap.rs
-index f45915694454..711b8368b38f 100644
---- a/rust/kernel/bitmap.rs
-+++ b/rust/kernel/bitmap.rs
-@@ -166,6 +166,7 @@ impl core::ops::Deref for BitmapVec {
-     fn deref(&self) -> &Bitmap {
-         let ptr = if self.nbits <= BITS_PER_LONG {
-             // SAFETY: Bitmap is represented inline.
-+            #[allow(unused_unsafe, reason = "Safe since Rust 1.92.0")]
-             unsafe { core::ptr::addr_of!(self.repr.bitmap) }
-         } else {
-             // SAFETY: Bitmap is represented as array of `unsigned long`.
-@@ -182,6 +183,7 @@ impl core::ops::DerefMut for BitmapVec {
-     fn deref_mut(&mut self) -> &mut Bitmap {
-         let ptr = if self.nbits <= BITS_PER_LONG {
-             // SAFETY: Bitmap is represented inline.
-+            #[allow(unused_unsafe, reason = "Safe since Rust 1.92.0")]
-             unsafe { core::ptr::addr_of_mut!(self.repr.bitmap) }
-         } else {
-             // SAFETY: Bitmap is represented as array of `unsigned long`.
-
-base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
--- 
-2.51.0
-
+On 09/10/25 21:25, Sasha Levin wrote:
+> From: Paresh Bhagat <p-bhagat@ti.com>
+>
+> [ Upstream commit b5af45302ebc141662b2b60c713c9202e88c943c ]
+>
+> Add support for TI K3 AM62D2 SoC to read speed and revision values
+> from hardware and pass to OPP layer. AM62D shares the same configuations
+> as AM62A so use existing am62a7_soc_data.
+>
+> Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>
+> LLM Generated explanations, may be completely bogus:
+>
+> Based on my comprehensive analysis of this commit and the stable kernel
+> backporting policies, here is my assessment:
+>
+> ## Backport Status: YES
+>
+> ### Detailed Analysis
+>
+> #### 1. **Explicit Policy Support**
+> The Linux stable kernel rules (Documentation/process/stable-kernel-
+> rules.rst, line 15) **explicitly allow device ID additions**:
+>> "It must either fix a real bug that bothers people or **just add a
+> device ID**."
+>
+> This commit adds device IDs for the AM62D2 SoC in two locations:
+> - **Line 313** in `k3_cpufreq_soc[]`: Adds `{ .family = "AM62DX",
+>    .revision = "SR1.0" }`
+> - **Line 461** in `ti_cpufreq_of_match[]`: Adds `{ .compatible =
+>    "ti,am62d2", .data = &am62a7_soc_data, }`
+>
+> #### 2. **Strong Historical Precedent**
+> Similar commits for the AM62 SoC family were backported to stable trees:
+>
+> - **AM625 support** (aac0293a8f1cd): No Cc: stable tag, but present in
+>    stable branches linux-6.10.y through 6.17.y
+> - **AM62A7 support** (5008e4c8c31c6): No Cc: stable tag, but present in
+>    stable branches linux-6.10.y through 6.17.y
+> - **AM625 blacklist** (e66e20d71d79e): Also backported to stable
+> - **AM62A7 blacklist** (b2b2029eb1788): Also backported to stable
+>
+> #### 3. **Minimal Risk Profile**
+> - **Only 2 lines changed** (1 file, +2 insertions)
+> - **Reuses existing configuration**: Uses `am62a7_soc_data` as stated in
+>    commit message - no new code paths
+> - **Isolated change**: Only affects AM62D2 hardware, no impact on other
+>    SoCs
+> - **Well-tested pattern**: Follows the exact same pattern as AM625,
+>    AM62A7, and AM62P5 additions
+>
+> #### 4. **User Benefit**
+> - Enables CPU frequency scaling on AM62D2 hardware
+> - Users with AM62D2 boards (device tree support added in v6.17 via
+>    commit 1544bca2f188e) need this for proper power management
+> - Without this commit, AM62D2 systems cannot adjust CPU frequencies
+>    based on load
+>
+> #### 5. **Companion Commit**
+> There's a companion commit **fa40cbe1c86b6** "cpufreq: dt-platdev:
+> Blacklist ti,am62d2 SoC" by the same author on the same date. Both
+> should be backported together to prevent the generic cpufreq-dt driver
+> from conflicting with ti-cpufreq.
+>
+> #### 6. **No Architectural Changes**
+> - No new features beyond hardware enablement
+> - No refactoring or code restructuring
+> - No changes to existing functionality
+> - Meets stable tree criteria: small, contained, low regression risk
+>
+> ### Conclusion
+> This commit should be backported to stable kernel trees because it:
+> 1. Falls under the explicit "device ID addition" exception in stable
+>     rules
+> 2. Has strong precedent with similar AM62 family commits being
+>     backported
+> 3. Provides essential functionality for AM62D2 hardware owners
+> 4. Has minimal regression risk (2 lines, reuses existing data
+>     structures)
+> 5. Follows the established stable backporting pattern for this driver
+>
+>   drivers/cpufreq/ti-cpufreq.c | 2 ++
+>   1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+> index 5a5147277cd0a..9a912d3093153 100644
+> --- a/drivers/cpufreq/ti-cpufreq.c
+> +++ b/drivers/cpufreq/ti-cpufreq.c
+> @@ -310,6 +310,7 @@ static const struct soc_device_attribute k3_cpufreq_soc[] = {
+>   	{ .family = "AM62X", .revision = "SR1.0" },
+>   	{ .family = "AM62AX", .revision = "SR1.0" },
+>   	{ .family = "AM62PX", .revision = "SR1.0" },
+> +	{ .family = "AM62DX", .revision = "SR1.0" },
+>   	{ /* sentinel */ }
+>   };
+>   
+> @@ -457,6 +458,7 @@ static const struct of_device_id ti_cpufreq_of_match[]  __maybe_unused = {
+>   	{ .compatible = "ti,omap36xx", .data = &omap36xx_soc_data, },
+>   	{ .compatible = "ti,am625", .data = &am625_soc_data, },
+>   	{ .compatible = "ti,am62a7", .data = &am62a7_soc_data, },
+> +	{ .compatible = "ti,am62d2", .data = &am62a7_soc_data, },
+>   	{ .compatible = "ti,am62p5", .data = &am62p5_soc_data, },
+>   	/* legacy */
+>   	{ .compatible = "ti,omap3430", .data = &omap34xx_soc_data, },
