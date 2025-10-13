@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32353271473;
-	Mon, 13 Oct 2025 15:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D32630F7E4;
+	Mon, 13 Oct 2025 15:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368858; cv=none; b=ioJMNuuiBoRV8BK5YbaUEr8e7JkhCKYBrYuBXgYIdXbs786jIoM6U+tpy9jT7PrUxa1/btF/6j57GfvPXfc4BlDjKEqbW3A54re9JQGugYCgx7MfbnkRfdGQXHwNjdyNOjBkGGtFgh+zDEKodDROumtdDictHtTne7s5Q3PdbaI=
+	t=1760368861; cv=none; b=bOWiiIntu6ErXJvnSMK6BuFLbz5KCCRr9iiM7pcz4jIlnAK5e9nQvpWj7832vObtl4jkeQHmKFCEFj+Cs5PY14B9Hpj4j8kqvKJ5Jv0bzhNWgTQBnpQIOsWvntHZTyuUwRUNBWqYXJcfo6OnR2fUDOW2hKHCDkBqM0yR4BkRQ3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368858; c=relaxed/simple;
-	bh=hwY54i3RCqc+ATS+4xc65xsXbEGLSC7z2ZUWLLdVxB4=;
+	s=arc-20240116; t=1760368861; c=relaxed/simple;
+	bh=e+eceK+a/Sgx52nypJviumHp4m+YouhSmRVLWU94Txw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe60op4UebWe4qkSFcffRqyNv71Pf6Mrk00YLekqQXCJgEvEF0vWq0mrIGzfLf+x7wRgkzh1RizD17QgemHQRRpd0sCVxTMo2TbeYh6JYQ/5IOB0CYguQErXAltQWcToyAGDYfZOHDa553KpSIkclk0FYD+Fi1FpKF9TnacpDP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uG0V4zMO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCo4dYm6HrBP37/3FcJfOBtB6BaYRJL6ZzzGEDngt05LzeWlnj0MFNWSCn99vpeNo80k+UcyxV/9p2Qp3dtCQaDRYp/3m0yuLowIkM+W3VQZnPfeYN3bez1Lo14LPA072hpY2ck+pw+q9rPePlOsG303gPP6Xo76dQPWRNX9x24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMCrveQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uG0V4zMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC09C4CEE7;
-	Mon, 13 Oct 2025 15:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMCrveQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5019C4CEE7;
+	Mon, 13 Oct 2025 15:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368858;
-	bh=hwY54i3RCqc+ATS+4xc65xsXbEGLSC7z2ZUWLLdVxB4=;
+	s=korg; t=1760368861;
+	bh=e+eceK+a/Sgx52nypJviumHp4m+YouhSmRVLWU94Txw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uG0V4zMOVWDBYUemtzRozMeR8AJFoymdwlD6FxpRcd+fKaq+7TEk20tpTRw/gFL9N
-	 qaxdmd+NRKVaMEg6tAwG5F0m4bV9WudmDtdYBJUP/NVDW0QdtR3SN9f+gOulAYqQ2x
-	 B+qxq+2qrwkvWI/6ykpN/TX88dEc/KHSDNdmuvy4=
+	b=vMCrveQOxu0qasF8vCfLjIzwIMVLRM0N3YXmleJLx3LwNAG3+duKnpUXoThtkygQF
+	 TiXijAWqWmOWVbn7IawEusswI8BdQLKQVY1NZC9JFn4A0Io6NXWUsMsFFkC2uwr2T1
+	 O86FYEcHEpW24u7tKSMYoda+MFft4FEFz3OlD6fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 043/563] bpf: Tidy verifier bug message
-Date: Mon, 13 Oct 2025 16:38:24 +0200
-Message-ID: <20251013144412.851822991@linuxfoundation.org>
+Subject: [PATCH 6.17 044/563] regmap: Remove superfluous check for !config in __regmap_init()
+Date: Mon, 13 Oct 2025 16:38:25 +0200
+Message-ID: <20251013144412.889373021@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,58 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit c93c59baa5ab57e94b874000cec56e26611b7a23 ]
+[ Upstream commit 5c36b86d2bf68fbcad16169983ef7ee8c537db59 ]
 
-Yonghong noticed that error messages for potential verifier bugs often
-have a '(1)' at the end. This is happening because verifier_bug_if(cond,
-env, fmt, args...) prints "(" #cond ")\n" as part of the message and
-verifier_bug() is defined as:
+The first thing __regmap_init() do is check if config is non-NULL,
+so there is no need to check for this again later.
 
-  #define verifier_bug(env, fmt, args...) verifier_bug_if(1, env, fmt, ##args)
-
-Hence, verifier_bug() always ends up displaying '(1)'. This small patch
-fixes it by having verifier_bug_if conditionally call verifier_bug
-instead of the other way around.
-
-Fixes: 1cb0f56d9618 ("bpf: WARN_ONCE on verifier bugs")
-Reported-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/aJo9THBrzo8jFXsh@mail.gmail.com
+Fixes: d77e745613680c54 ("regmap: Add bulk read/write callbacks into regmap_config")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/a154d9db0f290dda96b48bd817eb743773e846e1.1755090330.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/base/regmap/regmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 94defa405c85e..fe9a841fdf0cf 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -875,13 +875,15 @@ __printf(3, 4) void verbose_linfo(struct bpf_verifier_env *env,
- #define verifier_bug_if(cond, env, fmt, args...)						\
- 	({											\
- 		bool __cond = (cond);								\
--		if (unlikely(__cond)) {								\
--			BPF_WARN_ONCE(1, "verifier bug: " fmt "(" #cond ")\n", ##args);		\
--			bpf_log(&env->log, "verifier bug: " fmt "(" #cond ")\n", ##args);	\
--		}										\
-+		if (unlikely(__cond))								\
-+			verifier_bug(env, fmt " (" #cond ")", ##args);				\
- 		(__cond);									\
- 	})
--#define verifier_bug(env, fmt, args...) verifier_bug_if(1, env, fmt, ##args)
-+#define verifier_bug(env, fmt, args...)								\
-+	({											\
-+		BPF_WARN_ONCE(1, "verifier bug: " fmt "\n", ##args);				\
-+		bpf_log(&env->log, "verifier bug: " fmt "\n", ##args);				\
-+	})
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 1f3f782a04ba2..6883e1a43fe5d 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -827,7 +827,7 @@ struct regmap *__regmap_init(struct device *dev,
+ 		map->read_flag_mask = bus->read_flag_mask;
+ 	}
  
- static inline struct bpf_func_state *cur_func(struct bpf_verifier_env *env)
- {
+-	if (config && config->read && config->write) {
++	if (config->read && config->write) {
+ 		map->reg_read  = _regmap_bus_read;
+ 		if (config->reg_update_bits)
+ 			map->reg_update_bits = config->reg_update_bits;
 -- 
 2.51.0
 
