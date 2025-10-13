@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B40277CB8;
-	Mon, 13 Oct 2025 14:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA4F307AE1;
+	Mon, 13 Oct 2025 14:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367313; cv=none; b=akvgP09GtVlHxLBgvX2pj4aK6zeX2+a2w7lY06WQtiwIBDbxv4nmP3rRNU3yeGerFNP8T+j+66d2yddNP0cniamiRfSlsjjMtIh7Gv5OUnWowrzjoOrO56TIxCWSePjc9aAiWDrA8zRvtJwdl0IxCsUNnAvZzOAGH3oUh39jR6U=
+	t=1760367315; cv=none; b=JazyjUGlUWYXiwJOQeSPs9yeCAVboJ9TaVojWI6OCTcWcnEWR16G7+pnr9/8IQjyn6UmeX9x2QCIX9J0STyEruL+nlSV0Mam+hW24qhuiIJJxcC4/ss/SfjN6TyMP5qUwSXpOLB8SXOHjVVDFP0lJSzX6eUqvqpGwJhJ/g/YUiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367313; c=relaxed/simple;
-	bh=IYPRq0vzMyHLOpZTRAYNEkqnR3Cr7OM9TiEimWDZHC8=;
+	s=arc-20240116; t=1760367315; c=relaxed/simple;
+	bh=LVUuu9mY8N3vRN0eXhqweO0C/WhPxOqMr22JzvR4BOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqqQEmvPZOnvZ1bYgUpmXcCitcmZFGrqp0w+9z4KHM/uOyV5m1KMmo7y+snbcob+YWFzrz3vbmOG30m5Ge1vYPgcu2JXuXoKrxvxLGlZrYEdBr+hser1iNHmCFroy+7VxJt2qAVK3FkhwjWMeAltA8w3jXB7ornv8OUtBmGVBdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfYRbIEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYo80VA6dBA/BvRs3lVSnr8/jqIHxy3hSfZ+Ucxr0biZmp3xkXqZ4bHRS0Vkjmr4llGJ39kCw9lDVpzaf+BN/vLeNGufDCIMsjYqwadzQ6deGZyBiv4qTcn7mjtWY0TlLO707C64zjuEuSauig23125U5jbSayQBTGF0rYypVuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJe63nc4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfYRbIEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371A6C4CEE7;
-	Mon, 13 Oct 2025 14:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJe63nc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF54C4CEE7;
+	Mon, 13 Oct 2025 14:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367312;
-	bh=IYPRq0vzMyHLOpZTRAYNEkqnR3Cr7OM9TiEimWDZHC8=;
+	s=korg; t=1760367315;
+	bh=LVUuu9mY8N3vRN0eXhqweO0C/WhPxOqMr22JzvR4BOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfYRbIEyfLZJ7YHDobG1YkYXsPJ/zu4V2ILt/vPVzxtmsPtZQ7BBBDwG9M6bema/r
-	 2Z0CDGMuiIO5I1KclvSWEcF2He2y/TtqwiFvWdLX7pAZXK4EAIdPuFQ71Vj592rG+I
-	 Jt/BFq8xowbnfnNIPKOHVRE1O5bdStdzbSb1jqA8=
+	b=cJe63nc4ObyGpgUhouCh72ubjyjalAocqKY8g0rtuvzGRsWvTUqqUN/uSjaSxGTY8
+	 fk0LtFC6hRIi/ja01ENWB9XW6xnDfCX7RcwW9euEOXXe2hGe25AOD6TRoSpikwX+AJ
+	 6fLXO/oZEnsapePOWHluodKil9vL0dJfGmNzRlPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 158/196] Bluetooth: ISO: Fix possible UAF on iso_conn_free
-Date: Mon, 13 Oct 2025 16:45:31 +0200
-Message-ID: <20251013144320.414963514@linuxfoundation.org>
+Subject: [PATCH 6.1 167/196] net: dlink: handle copy_thresh allocation failure
+Date: Mon, 13 Oct 2025 16:45:40 +0200
+Message-ID: <20251013144320.739072918@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
 References: <20251013144314.549284796@linuxfoundation.org>
@@ -50,38 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit 9950f095d6c875dbe0c9ebfcf972ec88fdf26fc8 ]
+[ Upstream commit 8169a6011c5fecc6cb1c3654c541c567d3318de8 ]
 
-This attempt to fix similar issue to sco_conn_free where if the
-conn->sk is not set to NULL may lead to UAF on iso_conn_free.
+The driver did not handle failure of `netdev_alloc_skb_ip_align()`.
+If the allocation failed, dereferencing `skb->protocol` could lead to
+a NULL pointer dereference.
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This patch tries to allocate `skb`. If the allocation fails, it falls
+back to the normal path.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Tested-on: D-Link DGE-550T Rev-A3
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250928190124.1156-1-yyyynoom@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/dlink/dl2k.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 437cbeaa96193..5f6e4c79e190b 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -581,6 +581,13 @@ static void iso_sock_kill(struct sock *sk)
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 2acb63b547c35..bf58181589bf2 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -956,15 +956,18 @@ receive_packet (struct net_device *dev)
+ 		} else {
+ 			struct sk_buff *skb;
  
- 	BT_DBG("sk %p state %d", sk, sk->sk_state);
- 
-+	/* Sock is dead, so set conn->sk to NULL to avoid possible UAF */
-+	if (iso_pi(sk)->conn) {
-+		iso_conn_lock(iso_pi(sk)->conn);
-+		iso_pi(sk)->conn->sk = NULL;
-+		iso_conn_unlock(iso_pi(sk)->conn);
-+	}
-+
- 	/* Kill poor orphan */
- 	bt_sock_unlink(&iso_sk_list, sk);
- 	sock_set_flag(sk, SOCK_DEAD);
++			skb = NULL;
+ 			/* Small skbuffs for short packets */
+-			if (pkt_len > copy_thresh) {
++			if (pkt_len <= copy_thresh)
++				skb = netdev_alloc_skb_ip_align(dev, pkt_len);
++			if (!skb) {
+ 				dma_unmap_single(&np->pdev->dev,
+ 						 desc_to_dma(desc),
+ 						 np->rx_buf_sz,
+ 						 DMA_FROM_DEVICE);
+ 				skb_put (skb = np->rx_skbuff[entry], pkt_len);
+ 				np->rx_skbuff[entry] = NULL;
+-			} else if ((skb = netdev_alloc_skb_ip_align(dev, pkt_len))) {
++			} else {
+ 				dma_sync_single_for_cpu(&np->pdev->dev,
+ 							desc_to_dma(desc),
+ 							np->rx_buf_sz,
 -- 
 2.51.0
 
