@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34D73081AE;
-	Mon, 13 Oct 2025 15:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B2A3064B7;
+	Mon, 13 Oct 2025 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368434; cv=none; b=JOBQiWg34eFfj+xG2VyQMQwBXq40byFJAHqkNJbriBKH/6ZcjWlubaAWmsAOuK8Gkcav1iuOQXvBedSY5IDffDfqZQsCLLUqAegKThqqAI4KxN5TnCXzsQfemQYZfG3vKVmGpMoCyzl0qb5YKLY5kyyT6ecivuc7WEkfgZIF76Q=
+	t=1760368437; cv=none; b=n4sCTE0oW80l2Igv1+MTHlB+u7SkDliH5cWCFgm5PZ6y3tGe1lrIHzsPSe+zspTallzV+pnCmnp2DIXC8Rzahyu1j9L8ASj3dAmDwYMECSd1wAusW9T7TBlSvPI958pWQVuU9zTiUkwuHcAyZLX+eroxa2/GgCBQ0fj/X6OiN2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368434; c=relaxed/simple;
-	bh=0oxSeif3SZGcH7MQi9Sr9y8BX7DuNVpvnRaasDSdLSs=;
+	s=arc-20240116; t=1760368437; c=relaxed/simple;
+	bh=JmVtGQIv17bBPIax8MbqrtBGxCQfHvdmNy6jKuyTExI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSG+PLZ8WJKYtZ/7WgqGEcmmB8Wln2vboijqANVldCGjMzapb0TKl1BbqUN7InulTgJ/pMw1PuVKU2dZLR+F/JZ0ukXLEtnsCXylfhzqSrmiMdYMsUEXstZPuQhbqGfwcPVEsnDAC08fDikhgszq3P5ZoqYtJa+zTaPfzafjnlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hedq7JMQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0Kk998aGp/Ay997ftQYiyDTHm7YfXKOYKG5TbQwSFiJzn37gputTnn7MRFyYeVMMdvhYn3ZvlUHssQ1Es2KMR8OdOr6erfQCK63ISSJwTRv4GIIVufTYNN4+/aysfdXT1L99iMK7XMpU9JNL2xsXnj4zFjjXVcI0+PAXTPqSFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXECS2pj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hedq7JMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2988AC4CEE7;
-	Mon, 13 Oct 2025 15:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXECS2pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F3C4CEE7;
+	Mon, 13 Oct 2025 15:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368434;
-	bh=0oxSeif3SZGcH7MQi9Sr9y8BX7DuNVpvnRaasDSdLSs=;
+	s=korg; t=1760368437;
+	bh=JmVtGQIv17bBPIax8MbqrtBGxCQfHvdmNy6jKuyTExI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hedq7JMQG0FsYHLcrVUkLCJu8JhdJGdLevYmkr2xOKROEitsECep/dmeUcSzfAjoR
-	 a4bj/TtAX9Axr1wwMF8H0U2v0uvwgDHI3PfgH8ubqgghO5gxF96EeQQNOtHmwx1ZTm
-	 xzAzR3ZaXZCiIyngfFBiugnObmI6tZuXXSJsA288=
+	b=bXECS2pjUwvKaXoBw75WvuUEihJnaYOq/QjPpfuxTGTXJ70asuRj4/s8i1Lca+IUM
+	 BorC96gH/QXdXwgVMDWD5aN+nPlQ0dIdO3KZ0v56EHdjUxoWTDCYffAus7ORD7+w7p
+	 8g8JpMjuRvT/WUzJ0Qm/sd3iYmnRcvi2ncfvPa2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/262] f2fs: fix zero-sized extent for precache extents
-Date: Mon, 13 Oct 2025 16:45:02 +0200
-Message-ID: <20251013144331.884771089@linuxfoundation.org>
+Subject: [PATCH 6.12 161/262] Revert "usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running"
+Date: Mon, 13 Oct 2025 16:45:03 +0200
+Message-ID: <20251013144331.921138896@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,95 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 8175c864391753b210f3dcfae1aeed686a226ebb ]
+[ Upstream commit 08fa726e66039dfa80226dfa112931f60ad4c898 ]
 
-Script to reproduce:
-f2fs_io write 1 0 1881 rand dsync testfile
-f2fs_io fallocate 0 7708672 4096 testfile
-f2fs_io write 1 1881 1 rand buffered testfile
-fsync testfile
-umount
-mount
-f2fs_io precache_extents testfile
+This reverts commit 28a76fcc4c85dd39633fb96edb643c91820133e3.
 
-When the data layout is something like this:
-dnode1:                     dnode2:
-[0]      A                  [0]    NEW_ADDR
-[1]      A+1                [1]    0x0
-...
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
+No actual HW bugs are known where Endpoint Context shows Running state
+but Stop Endpoint fails repeatedly with Context State Error and leaves
+the endpoint state unchanged. Stop Endpoint retries on Running EPs have
+been performed since early 2021 with no such issues reported so far.
 
-During precache_extents, we map the last block(valid blkaddr) in dnode1:
-map->m_flags |= F2FS_MAP_MAPPED;
-map->m_pblk = blkaddr(valid blkaddr);
-map->m_len = 1;
-then we goto next_dnode, meet the first block in dnode2(hole), goto sync_out:
-map->m_flags & F2FS_MAP_MAPPED == true, and we make zero-sized extent:
+Trying to handle this hypothetical case brings a more realistic danger:
+if Stop Endpoint fails on an endpoint which hasn't yet started after a
+doorbell ring and enough latency occurs before this completion event is
+handled, the driver may time out and begin removing cancelled TDs from
+a running endpoint, even though one more retry would stop it reliably.
 
-map->m_len = 1
-ofs = start_pgofs - map->m_lblk = 1882 - 1881 = 1
-ei.fofs = start_pgofs = 1882
-ei.len = map->m_len - ofs = 1 - 1 = 0
+Such high latency is rare but not impossible, and removing TDs from a
+running endpoint can cause more damage than not giving back a cancelled
+URB (which wasn't happening anyway). So err on the side of caution and
+revert to the old policy of always retrying if the EP appears running.
 
-Rebased on patch[1], this patch can cover these cases to avoid zero-sized extent:
-A,B,C is valid blkaddr
-case1:
-dnode1:                     dnode2:
-[0]      A                  [0]    NEW_ADDR
-[1]      A+1                [1]    0x0
-...                         ....
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
+[Remove stable tag as we are dealing with theoretical cases -Mathias]
 
-case2:
-dnode1:                     dnode2:
-[0]      A                  [0]    C (C!=B+1)
-[1]      A+1                [1]    C+1
-...                         ....
-[1016]   A+1016
-[1017]   B (B!=A+1017)      [1017] 0x0
-
-case3:
-dnode1:                     dnode2:
-[0]      A                  [0]    C (C!=B+2)
-[1]      A+1                [1]    C+1
-...                         ....
-[1015]   A+1015
-[1016]   B (B!=A+1016)
-[1017]   B+1                [1017] 0x0
-
-[1] https://lore.kernel.org/linux-f2fs-devel/20250912081250.44383-1-chao@kernel.org/
-
-Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 28a76fcc4c85d ("usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running")
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250917210726.97100-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index a008d70b9f5ec..040c06dfb8c03 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1781,9 +1781,10 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
- 		if (map->m_flags & F2FS_MAP_MAPPED) {
- 			unsigned int ofs = start_pgofs - map->m_lblk;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 1002fa51a25aa..f377725a12128 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1199,19 +1199,16 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
+ 			 * Stopped state, but it will soon change to Running.
+ 			 *
+ 			 * Assume this bug on unexpected Stop Endpoint failures.
+-			 * Keep retrying until the EP starts and stops again.
++			 * Keep retrying until the EP starts and stops again, on
++			 * chips where this is known to help. Wait for 100ms.
+ 			 */
++			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
++				break;
+ 			fallthrough;
+ 		case EP_STATE_RUNNING:
+ 			/* Race, HW handled stop ep cmd before ep was running */
+ 			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
+ 					GET_EP_CTX_STATE(ep_ctx));
+-			/*
+-			 * Don't retry forever if we guessed wrong or a defective HC never starts
+-			 * the EP or says 'Running' but fails the command. We must give back TDs.
+-			 */
+-			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
+-				break;
  
--			f2fs_update_read_extent_cache_range(&dn,
--				start_pgofs, map->m_pblk + ofs,
--				map->m_len - ofs);
-+			if (map->m_len > ofs)
-+				f2fs_update_read_extent_cache_range(&dn,
-+					start_pgofs, map->m_pblk + ofs,
-+					map->m_len - ofs);
- 		}
- 		if (map->m_next_extent)
- 			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
+ 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
+ 			if (!command) {
 -- 
 2.51.0
 
