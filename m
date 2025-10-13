@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD364309DC0;
-	Mon, 13 Oct 2025 15:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692CB286890;
+	Mon, 13 Oct 2025 15:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368646; cv=none; b=AlkXj79GZKWAz4o7MMexhoDV2TfcXfP/WTSE++5FtfOv7RhbufPQsUX2FZLTsKdnJxxyyGpOVgDD02sAjXp2YQCvTnNhfBubzxXuZyWMSl0x2DZ0SCT7aF03GOYF4QCzlY7VPddmUO1wxRmKFizBGUHvxqRp7LwjjMB9pAu2SFY=
+	t=1760368649; cv=none; b=OkjgQW3WD/HmIh2j6i1k8zpeyEu0MUiWY2fdkGeQ4cpJKJQidnJylLAK9bAsO7Z1nvVQygH2UICwSTkSkT/oKrXRnI/KDSH1TrPa2/daVsKiXLQqkahBRjyWcz9+nBS1HlwfaMJ6sCMVDRasrs5NuXzuEXz8EZWCyltgeNGjaqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368646; c=relaxed/simple;
-	bh=OTL+zFuDISnUKsx/KPWcMFHsmGTyDgA2AaPbHLfEAtQ=;
+	s=arc-20240116; t=1760368649; c=relaxed/simple;
+	bh=uayys/hC22+hC/BpNmpX4tBcoXIexyHhyarWVeoZx8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgAD+eNZxiBn6IQRz4uoUg07DI3gFgQ6Aup33Ay9aNYxOBq3I1TaeuXswcuKMposXS6CvPGMLT5utmG7CD29SPvppLjcIWrev6JyOP5stANQsw7Cg0JfSR0ikHRFGc73o1wLOCLg8ywqcFii3HHfZRMMk/72InrqS07xK/E28qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YssuCpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmB6ut2vkCJMOHSdHID9DVmbZnOlxzWOVdHg6dXvMx0Fi9pn4FqsgvYd1IaDjxB6YaJNYKPtlAnsL13TbnDhHjb/6U6GBM+XjpQuraeHHgCjDBO5/YtZ0dV3uYhUDJ2ZOn+Ru4XgEbelB61U495toz/9+n3W5TqVs+TL/VxDTNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU4dy9g2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YssuCpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30645C4CEFE;
-	Mon, 13 Oct 2025 15:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU4dy9g2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2C2C4CEE7;
+	Mon, 13 Oct 2025 15:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368646;
-	bh=OTL+zFuDISnUKsx/KPWcMFHsmGTyDgA2AaPbHLfEAtQ=;
+	s=korg; t=1760368649;
+	bh=uayys/hC22+hC/BpNmpX4tBcoXIexyHhyarWVeoZx8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2YssuCpacpMWZ9GF1tRcI6X7SQdUdq4Hm3DTC1W5cAfRjpBYDs1N24HSrOimE7Rw8
-	 iDl+j7BRdOlyzXoVxWhYBp9mctnSMYukc0wMZZQA3GEUXzjhgvx/N16rFN07/D/WGc
-	 uNFTrYwxggRHDAe0SrP+8YXK9XMCemZYilbqByGI=
+	b=IU4dy9g2xYf/PXP/J7WKYfSXmp0yQGht1EBD/C2Jc/CG+SQDnVGKKOhQQxPHjCnM2
+	 dd2/j+UdXL/b4EH4oZif5e9p3jH/oaoMIm1STnMDayH7LAoBLRiBo/0QMHgmnW/hf+
+	 QiohXGq7c0NPmyODCQ92mOfOnElqoz9DJgzQm9t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com,
-	Deepak Sharma <deepak.sharma.472935@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 233/262] net: nfc: nci: Add parameter validation for packet data
-Date: Mon, 13 Oct 2025 16:46:15 +0200
-Message-ID: <20251013144334.631973994@linuxfoundation.org>
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 234/262] mfd: rz-mtu3: Fix MTU5 NFCR register offset
+Date: Mon, 13 Oct 2025 16:46:16 +0200
+Message-ID: <20251013144334.667573877@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,342 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepak Sharma <deepak.sharma.472935@gmail.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 9c328f54741bd5465ca1dc717c84c04242fac2e1 upstream.
+commit da32b0e82c523b76265ba1ad25d7ea74f0ece402 upstream.
 
-Syzbot reported an uninitialized value bug in nci_init_req, which was
-introduced by commit 5aca7966d2a7 ("Merge tag
-'perf-tools-fixes-for-v6.17-2025-09-16' of
-git://git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools").
+The NFCR register for MTU5 is at 0x1a95 offset according to Datasheet
+Page 725, Table 16.4. The address of all registers is offset by 0x1200,
+making the proper address of MTU5 NFCR register be 0x895.
 
-This bug arises due to very limited and poor input validation
-that was done at nic_valid_size(). This validation only
-validates the skb->len (directly reflects size provided at the
-userspace interface) with the length provided in the buffer
-itself (interpreted as NCI_HEADER). This leads to the processing
-of memory content at the address assuming the correct layout
-per what opcode requires there. This leads to the accesses to
-buffer of `skb_buff->data` which is not assigned anything yet.
-
-Following the same silent drop of packets of invalid sizes at
-`nic_valid_size()`, add validation of the data in the respective
-handlers and return error values in case of failure. Release
-the skb if error values are returned from handlers in
-`nci_nft_packet` and effectively do a silent drop
-
-Possible TODO: because we silently drop the packets, the
-call to `nci_request` will be waiting for completion of request
-and will face timeouts. These timeouts can get excessively logged
-in the dmesg. A proper handling of them may require to export
-`nci_request_cancel` (or propagate error handling from the
-nft packets handlers).
-
-Reported-by: syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=740e04c2a93467a0f8c8
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
-Tested-by: syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepak Sharma <deepak.sharma.472935@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250925132846.213425-1-deepak.sharma.472935@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 654c293e1687 ("mfd: Add Renesas RZ/G2L MTU3a core driver")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250910175914.12956-1-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/ntf.c |  135 +++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 99 insertions(+), 36 deletions(-)
+ drivers/mfd/rz-mtu3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -27,11 +27,16 @@
- 
- /* Handle NCI Notification packets */
- 
--static void nci_core_reset_ntf_packet(struct nci_dev *ndev,
--				      const struct sk_buff *skb)
-+static int nci_core_reset_ntf_packet(struct nci_dev *ndev,
-+				     const struct sk_buff *skb)
- {
- 	/* Handle NCI 2.x core reset notification */
--	const struct nci_core_reset_ntf *ntf = (void *)skb->data;
-+	const struct nci_core_reset_ntf *ntf;
-+
-+	if (skb->len < sizeof(struct nci_core_reset_ntf))
-+		return -EINVAL;
-+
-+	ntf = (struct nci_core_reset_ntf *)skb->data;
- 
- 	ndev->nci_ver = ntf->nci_ver;
- 	pr_debug("nci_ver 0x%x, config_status 0x%x\n",
-@@ -42,15 +47,22 @@ static void nci_core_reset_ntf_packet(st
- 		__le32_to_cpu(ntf->manufact_specific_info);
- 
- 	nci_req_complete(ndev, NCI_STATUS_OK);
-+
-+	return 0;
- }
- 
--static void nci_core_conn_credits_ntf_packet(struct nci_dev *ndev,
--					     struct sk_buff *skb)
-+static int nci_core_conn_credits_ntf_packet(struct nci_dev *ndev,
-+					    struct sk_buff *skb)
- {
--	struct nci_core_conn_credit_ntf *ntf = (void *) skb->data;
-+	struct nci_core_conn_credit_ntf *ntf;
- 	struct nci_conn_info *conn_info;
- 	int i;
- 
-+	if (skb->len < sizeof(struct nci_core_conn_credit_ntf))
-+		return -EINVAL;
-+
-+	ntf = (struct nci_core_conn_credit_ntf *)skb->data;
-+
- 	pr_debug("num_entries %d\n", ntf->num_entries);
- 
- 	if (ntf->num_entries > NCI_MAX_NUM_CONN)
-@@ -68,7 +80,7 @@ static void nci_core_conn_credits_ntf_pa
- 		conn_info = nci_get_conn_info_by_conn_id(ndev,
- 							 ntf->conn_entries[i].conn_id);
- 		if (!conn_info)
--			return;
-+			return 0;
- 
- 		atomic_add(ntf->conn_entries[i].credits,
- 			   &conn_info->credits_cnt);
-@@ -77,12 +89,19 @@ static void nci_core_conn_credits_ntf_pa
- 	/* trigger the next tx */
- 	if (!skb_queue_empty(&ndev->tx_q))
- 		queue_work(ndev->tx_wq, &ndev->tx_work);
-+
-+	return 0;
- }
- 
--static void nci_core_generic_error_ntf_packet(struct nci_dev *ndev,
--					      const struct sk_buff *skb)
-+static int nci_core_generic_error_ntf_packet(struct nci_dev *ndev,
-+					     const struct sk_buff *skb)
- {
--	__u8 status = skb->data[0];
-+	__u8 status;
-+
-+	if (skb->len < 1)
-+		return -EINVAL;
-+
-+	status = skb->data[0];
- 
- 	pr_debug("status 0x%x\n", status);
- 
-@@ -91,12 +110,19 @@ static void nci_core_generic_error_ntf_p
- 		   (the state remains the same) */
- 		nci_req_complete(ndev, status);
- 	}
-+
-+	return 0;
- }
- 
--static void nci_core_conn_intf_error_ntf_packet(struct nci_dev *ndev,
--						struct sk_buff *skb)
-+static int nci_core_conn_intf_error_ntf_packet(struct nci_dev *ndev,
-+					       struct sk_buff *skb)
- {
--	struct nci_core_intf_error_ntf *ntf = (void *) skb->data;
-+	struct nci_core_intf_error_ntf *ntf;
-+
-+	if (skb->len < sizeof(struct nci_core_intf_error_ntf))
-+		return -EINVAL;
-+
-+	ntf = (struct nci_core_intf_error_ntf *)skb->data;
- 
- 	ntf->conn_id = nci_conn_id(&ntf->conn_id);
- 
-@@ -105,6 +131,8 @@ static void nci_core_conn_intf_error_ntf
- 	/* complete the data exchange transaction, if exists */
- 	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
- 		nci_data_exchange_complete(ndev, NULL, ntf->conn_id, -EIO);
-+
-+	return 0;
- }
- 
- static const __u8 *
-@@ -329,13 +357,18 @@ void nci_clear_target_list(struct nci_de
- 	ndev->n_targets = 0;
- }
- 
--static void nci_rf_discover_ntf_packet(struct nci_dev *ndev,
--				       const struct sk_buff *skb)
-+static int nci_rf_discover_ntf_packet(struct nci_dev *ndev,
-+				      const struct sk_buff *skb)
- {
- 	struct nci_rf_discover_ntf ntf;
--	const __u8 *data = skb->data;
-+	const __u8 *data;
- 	bool add_target = true;
- 
-+	if (skb->len < sizeof(struct nci_rf_discover_ntf))
-+		return -EINVAL;
-+
-+	data = skb->data;
-+
- 	ntf.rf_discovery_id = *data++;
- 	ntf.rf_protocol = *data++;
- 	ntf.rf_tech_and_mode = *data++;
-@@ -390,6 +423,8 @@ static void nci_rf_discover_ntf_packet(s
- 		nfc_targets_found(ndev->nfc_dev, ndev->targets,
- 				  ndev->n_targets);
- 	}
-+
-+	return 0;
- }
- 
- static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
-@@ -531,14 +566,19 @@ static int nci_store_general_bytes_nfc_d
- 	return NCI_STATUS_OK;
- }
- 
--static void nci_rf_intf_activated_ntf_packet(struct nci_dev *ndev,
--					     const struct sk_buff *skb)
-+static int nci_rf_intf_activated_ntf_packet(struct nci_dev *ndev,
-+					    const struct sk_buff *skb)
- {
- 	struct nci_conn_info *conn_info;
- 	struct nci_rf_intf_activated_ntf ntf;
--	const __u8 *data = skb->data;
-+	const __u8 *data;
- 	int err = NCI_STATUS_OK;
- 
-+	if (skb->len < sizeof(struct nci_rf_intf_activated_ntf))
-+		return -EINVAL;
-+
-+	data = skb->data;
-+
- 	ntf.rf_discovery_id = *data++;
- 	ntf.rf_interface = *data++;
- 	ntf.rf_protocol = *data++;
-@@ -645,7 +685,7 @@ exit:
- 	if (err == NCI_STATUS_OK) {
- 		conn_info = ndev->rf_conn_info;
- 		if (!conn_info)
--			return;
-+			return 0;
- 
- 		conn_info->max_pkt_payload_len = ntf.max_data_pkt_payload_size;
- 		conn_info->initial_num_credits = ntf.initial_num_credits;
-@@ -691,19 +731,26 @@ listen:
- 				pr_err("error when signaling tm activation\n");
- 		}
- 	}
-+
-+	return 0;
- }
- 
--static void nci_rf_deactivate_ntf_packet(struct nci_dev *ndev,
--					 const struct sk_buff *skb)
-+static int nci_rf_deactivate_ntf_packet(struct nci_dev *ndev,
-+					const struct sk_buff *skb)
- {
- 	const struct nci_conn_info *conn_info;
--	const struct nci_rf_deactivate_ntf *ntf = (void *)skb->data;
-+	const struct nci_rf_deactivate_ntf *ntf;
-+
-+	if (skb->len < sizeof(struct nci_rf_deactivate_ntf))
-+		return -EINVAL;
-+
-+	ntf = (struct nci_rf_deactivate_ntf *)skb->data;
- 
- 	pr_debug("entry, type 0x%x, reason 0x%x\n", ntf->type, ntf->reason);
- 
- 	conn_info = ndev->rf_conn_info;
- 	if (!conn_info)
--		return;
-+		return 0;
- 
- 	/* drop tx data queue */
- 	skb_queue_purge(&ndev->tx_q);
-@@ -735,14 +782,20 @@ static void nci_rf_deactivate_ntf_packet
- 	}
- 
- 	nci_req_complete(ndev, NCI_STATUS_OK);
-+
-+	return 0;
- }
- 
--static void nci_nfcee_discover_ntf_packet(struct nci_dev *ndev,
--					  const struct sk_buff *skb)
-+static int nci_nfcee_discover_ntf_packet(struct nci_dev *ndev,
-+					 const struct sk_buff *skb)
- {
- 	u8 status = NCI_STATUS_OK;
--	const struct nci_nfcee_discover_ntf *nfcee_ntf =
--				(struct nci_nfcee_discover_ntf *)skb->data;
-+	const struct nci_nfcee_discover_ntf *nfcee_ntf;
-+
-+	if (skb->len < sizeof(struct nci_nfcee_discover_ntf))
-+		return -EINVAL;
-+
-+	nfcee_ntf = (struct nci_nfcee_discover_ntf *)skb->data;
- 
- 	/* NFCForum NCI 9.2.1 HCI Network Specific Handling
- 	 * If the NFCC supports the HCI Network, it SHALL return one,
-@@ -753,6 +806,8 @@ static void nci_nfcee_discover_ntf_packe
- 	ndev->cur_params.id = nfcee_ntf->nfcee_id;
- 
- 	nci_req_complete(ndev, status);
-+
-+	return 0;
- }
- 
- void nci_ntf_packet(struct nci_dev *ndev, struct sk_buff *skb)
-@@ -779,35 +834,43 @@ void nci_ntf_packet(struct nci_dev *ndev
- 
- 	switch (ntf_opcode) {
- 	case NCI_OP_CORE_RESET_NTF:
--		nci_core_reset_ntf_packet(ndev, skb);
-+		if (nci_core_reset_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_CORE_CONN_CREDITS_NTF:
--		nci_core_conn_credits_ntf_packet(ndev, skb);
-+		if (nci_core_conn_credits_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_CORE_GENERIC_ERROR_NTF:
--		nci_core_generic_error_ntf_packet(ndev, skb);
-+		if (nci_core_generic_error_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_CORE_INTF_ERROR_NTF:
--		nci_core_conn_intf_error_ntf_packet(ndev, skb);
-+		if (nci_core_conn_intf_error_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_RF_DISCOVER_NTF:
--		nci_rf_discover_ntf_packet(ndev, skb);
-+		if (nci_rf_discover_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_RF_INTF_ACTIVATED_NTF:
--		nci_rf_intf_activated_ntf_packet(ndev, skb);
-+		if (nci_rf_intf_activated_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_RF_DEACTIVATE_NTF:
--		nci_rf_deactivate_ntf_packet(ndev, skb);
-+		if (nci_rf_deactivate_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_NFCEE_DISCOVER_NTF:
--		nci_nfcee_discover_ntf_packet(ndev, skb);
-+		if (nci_nfcee_discover_ntf_packet(ndev, skb))
-+			goto end;
- 		break;
- 
- 	case NCI_OP_RF_NFCEE_ACTION_NTF:
+--- a/drivers/mfd/rz-mtu3.c
++++ b/drivers/mfd/rz-mtu3.c
+@@ -32,7 +32,7 @@ static const unsigned long rz_mtu3_8bit_
+ 	[RZ_MTU3_CHAN_2] = MTU_8BIT_CH_1_2(0x204, 0x092, 0x205, 0x200, 0x20c, 0x201, 0x202),
+ 	[RZ_MTU3_CHAN_3] = MTU_8BIT_CH_3_4_6_7(0x008, 0x093, 0x02c, 0x000, 0x04c, 0x002, 0x004, 0x005, 0x038),
+ 	[RZ_MTU3_CHAN_4] = MTU_8BIT_CH_3_4_6_7(0x009, 0x094, 0x02d, 0x001, 0x04d, 0x003, 0x006, 0x007, 0x039),
+-	[RZ_MTU3_CHAN_5] = MTU_8BIT_CH_5(0xab2, 0x1eb, 0xab4, 0xab6, 0xa84, 0xa85, 0xa86, 0xa94, 0xa95, 0xa96, 0xaa4, 0xaa5, 0xaa6),
++	[RZ_MTU3_CHAN_5] = MTU_8BIT_CH_5(0xab2, 0x895, 0xab4, 0xab6, 0xa84, 0xa85, 0xa86, 0xa94, 0xa95, 0xa96, 0xaa4, 0xaa5, 0xaa6),
+ 	[RZ_MTU3_CHAN_6] = MTU_8BIT_CH_3_4_6_7(0x808, 0x893, 0x82c, 0x800, 0x84c, 0x802, 0x804, 0x805, 0x838),
+ 	[RZ_MTU3_CHAN_7] = MTU_8BIT_CH_3_4_6_7(0x809, 0x894, 0x82d, 0x801, 0x84d, 0x803, 0x806, 0x807, 0x839),
+ 	[RZ_MTU3_CHAN_8] = MTU_8BIT_CH_8(0x404, 0x098, 0x400, 0x406, 0x401, 0x402, 0x403)
 
 
