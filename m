@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99F030BF7A;
-	Mon, 13 Oct 2025 15:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B319930C349;
+	Mon, 13 Oct 2025 15:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368770; cv=none; b=Gj4t7aJy5iKCHuhwrBq/C7P3no80eAu0ZLab42RZUR5kq7skTVoRvsouZP8x0XXoTeR/4LhBDgi9Ft+hCSLp3qEPIRczP64/W/yvvdFkSi6wYQ5ige480S4rKucqS2NQkWmV5pKfX/D+AwMpvPByFspWg1Kl6p4JxBJ0DHmpWgI=
+	t=1760368773; cv=none; b=rN3hxTuxyytqn+NrCh3tyi6ANOJLAG4c45/mJVbIGxQCGqTjqx9rnd/r03Gy5x1Qph3U4FEmbnwXqqCDtkAjQ6P6bOKWQLcOhsAF6Fb7wqiQYD6P6gh93bfjfgCmRC1pfy4oEP3hXuN96VTfvoGcbaX72CeYLt2qt2HO9J/pLEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368770; c=relaxed/simple;
-	bh=vtwrphwyBd50HsY121Vq6gzr9zXUh3hUD+043e2YwqA=;
+	s=arc-20240116; t=1760368773; c=relaxed/simple;
+	bh=4Tg3aHe1Se+rBKzhbyDSt0pmq/Ji2DNLQsf26OQubYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVpyo11v1dfap+zkmzR6S9nHsaWxzZwIhP6PH5pXt3E/ERTCmgepacn0wQXJUPbXU4ni21J0eencutVi+sAf01a5etOQTQQjvy0ck9Z87aPG9OgKfFS+DJCB+NT3Zospy3BhQCNnUFsu+h8dLqkNoLFiK9azJZh7JG+FBMs3YzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgtdVo4a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxged//LeoUcG6OwDqKhygRsphoNGGpfLrzduSV5xLRYHPsBqcA0R7X991pTvBZ6cmMMu80bYOsnr/aWpv14uwGQkU9ZnKzY3sZWRNmyPKQRmB3fUoKskewuHqJ4pJR+JrKMJ+c2vcLi2LtJG7QkWGqqORu2mBIa/jPuAW25gU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYFGKlCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgtdVo4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C38DC4CEE7;
-	Mon, 13 Oct 2025 15:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYFGKlCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F36C4CEE7;
+	Mon, 13 Oct 2025 15:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368770;
-	bh=vtwrphwyBd50HsY121Vq6gzr9zXUh3hUD+043e2YwqA=;
+	s=korg; t=1760368773;
+	bh=4Tg3aHe1Se+rBKzhbyDSt0pmq/Ji2DNLQsf26OQubYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgtdVo4a3zqbjNL1iGA3OYlY7GcFsRJCQP8DzMbXAc06Byk2Fra3s0KeOaaWqZCmd
-	 F3+mjVoSCqJUO4wJlbUErIX1LfVrJJtzCnE0ZjLOJnXRHgsoJiOOsW96zgP3kasOve
-	 Ic7STBIymmOYj6TTF/oSn7XZNTQBzML/SZDwDbAg=
+	b=FYFGKlCAZSVE3szWCs2XWM4063aNyaB5mI5Nd0OELWEsWx0TvO4KGUClStTRkQHZf
+	 GOOhjLYfg4JkgtmoHniOs2DYaf20A32LCdNuctJoQayB++ZmGW+r56dlJEL4f02rfb
+	 YkQ9LOv7b4mCwJpjR+MxvrvCuGrlG+PWqs13PFO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Andrew Price <anprice@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 014/563] gfs2: Further sanitize lock_dlm.c
-Date: Mon, 13 Oct 2025 16:37:55 +0200
-Message-ID: <20251013144411.807890665@linuxfoundation.org>
+Subject: [PATCH 6.17 015/563] gfs2: Fix LM_FLAG_TRY* logic in add_to_queue
+Date: Mon, 13 Oct 2025 16:37:56 +0200
+Message-ID: <20251013144411.843541568@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,157 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit fd70ab7155c4b92a9747d42c02791a0793ab9c66 ]
+[ Upstream commit 0c23e24164d83086e75581b0cf930f4e161636d6 ]
 
-The gl_req field and GLF_BLOCKING flag are only relevant to gdlm_lock(),
-its callback gdlm_ast(), and their helpers, so set and clear them inside
-lock_dlm.c.
+The logic in add_to_queue() for determining whether a LM_FLAG_TRY or
+LM_FLAG_TRY_1CB holder should be queued does not make any sense: we are
+interested in wether or not the new operation will block behind an
+existing or future holder in the queue, but the current code checks for
+ongoing locking or ->go_inval() operations, which has little to do with
+that.
 
-Also, the LM_FLAG_ANY flag is relevant to gdlm_lock(), but do_xmote()
-doesn't pass that flag down to gdlm_lock() as it should.  Fix that by
-passing down all the flags.
-
-In addition, document the effect of the LM_FLAG_ANY flag on locks held
-in EX mode locally.
+Replace that code with something more sensible, remove the incorrect
+add_to_queue() function annotations, remove the similarly misguided
+do_error(gl, 0) call in do_xmote(), and add a missing comment to the
+same call in do_promote().
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Reviewed-by: Andrew Price <anprice@redhat.com>
 Stable-dep-of: bddb53b776fb ("gfs2: Get rid of GLF_INVALIDATE_IN_PROGRESS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c    |  6 ------
- fs/gfs2/glock.h    |  4 ++++
- fs/gfs2/lock_dlm.c | 26 ++++++++++++++++++--------
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ fs/gfs2/glock.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
 diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 3d5cf9c24d78b..45dd73bb884fd 100644
+index 45dd73bb884fd..5edf125b39fe3 100644
 --- a/fs/gfs2/glock.c
 +++ b/fs/gfs2/glock.c
-@@ -715,12 +715,6 @@ __acquires(&gl->gl_lockref.lock)
+@@ -502,7 +502,7 @@ static bool do_promote(struct gfs2_glock *gl)
+ 			 */
+ 			if (list_is_first(&gh->gh_list, &gl->gl_holders))
+ 				return false;
+-			do_error(gl, 0);
++			do_error(gl, 0); /* Fail queued try locks */
+ 			break;
+ 		}
+ 		set_bit(HIF_HOLDER, &gh->gh_iflags);
+@@ -713,7 +713,6 @@ __acquires(&gl->gl_lockref.lock)
+ 		if (test_and_set_bit(GLF_INVALIDATE_IN_PROGRESS,
+ 				     &gl->gl_flags))
  			return;
- 		do_error(gl, 0); /* Fail queued try locks */
+-		do_error(gl, 0); /* Fail queued try locks */
  	}
--	gl->gl_req = target;
--	set_bit(GLF_BLOCKING, &gl->gl_flags);
--	if ((gl->gl_req == LM_ST_UNLOCKED) ||
--	    (gl->gl_state == LM_ST_EXCLUSIVE) ||
--	    (lck_flags & (LM_FLAG_TRY|LM_FLAG_TRY_1CB)))
--		clear_bit(GLF_BLOCKING, &gl->gl_flags);
  	if (!glops->go_inval && !glops->go_sync)
  		goto skip_inval;
- 
-diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
-index 9339a3bff6eeb..d041b922b45e3 100644
---- a/fs/gfs2/glock.h
-+++ b/fs/gfs2/glock.h
-@@ -68,6 +68,10 @@ enum {
-  * also be granted in SHARED.  The preferred state is whichever is compatible
-  * with other granted locks, or the specified state if no other locks exist.
-  *
-+ * In addition, when a lock is already held in EX mode locally, a SHARED or
-+ * DEFERRED mode request with the LM_FLAG_ANY flag set will be granted.
-+ * (The LM_FLAG_ANY flag is only use for SHARED mode requests currently.)
-+ *
-  * LM_FLAG_NODE_SCOPE
-  * This holder agrees to share the lock within this node. In other words,
-  * the glock is held in EX mode according to DLM, but local holders on the
-diff --git a/fs/gfs2/lock_dlm.c b/fs/gfs2/lock_dlm.c
-index cee5d199d2d87..5daaeaaaf18dd 100644
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -58,6 +58,7 @@ static inline void gfs2_update_stats(struct gfs2_lkstats *s, unsigned index,
- /**
-  * gfs2_update_reply_times - Update locking statistics
-  * @gl: The glock to update
-+ * @blocking: The operation may have been blocking
-  *
-  * This assumes that gl->gl_dstamp has been set earlier.
-  *
-@@ -72,12 +73,12 @@ static inline void gfs2_update_stats(struct gfs2_lkstats *s, unsigned index,
-  * TRY_1CB flags are set are classified as non-blocking. All
-  * other DLM requests are counted as (potentially) blocking.
-  */
--static inline void gfs2_update_reply_times(struct gfs2_glock *gl)
-+static inline void gfs2_update_reply_times(struct gfs2_glock *gl,
-+					   bool blocking)
- {
- 	struct gfs2_pcpu_lkstats *lks;
- 	const unsigned gltype = gl->gl_name.ln_type;
--	unsigned index = test_bit(GLF_BLOCKING, &gl->gl_flags) ?
--			 GFS2_LKS_SRTTB : GFS2_LKS_SRTT;
-+	unsigned index = blocking ? GFS2_LKS_SRTTB : GFS2_LKS_SRTT;
- 	s64 rtt;
- 
- 	preempt_disable();
-@@ -119,14 +120,18 @@ static inline void gfs2_update_request_times(struct gfs2_glock *gl)
- static void gdlm_ast(void *arg)
- {
- 	struct gfs2_glock *gl = arg;
-+	bool blocking;
- 	unsigned ret;
- 
-+	blocking = test_bit(GLF_BLOCKING, &gl->gl_flags);
-+	gfs2_update_reply_times(gl, blocking);
-+	clear_bit(GLF_BLOCKING, &gl->gl_flags);
-+
- 	/* If the glock is dead, we only react to a dlm_unlock() reply. */
- 	if (__lockref_is_dead(&gl->gl_lockref) &&
- 	    gl->gl_lksb.sb_status != -DLM_EUNLOCK)
- 		return;
- 
--	gfs2_update_reply_times(gl);
- 	BUG_ON(gl->gl_lksb.sb_flags & DLM_SBF_DEMOTED);
- 
- 	if ((gl->gl_lksb.sb_flags & DLM_SBF_VALNOTVALID) && gl->gl_lksb.sb_lvbptr)
-@@ -241,7 +246,7 @@ static bool down_conversion(int cur, int req)
+@@ -1454,6 +1453,24 @@ void gfs2_print_dbg(struct seq_file *seq, const char *fmt, ...)
+ 	va_end(args);
  }
  
- static u32 make_flags(struct gfs2_glock *gl, const unsigned int gfs_flags,
--		      const int cur, const int req)
-+		      const int req, bool blocking)
++static bool gfs2_should_queue_trylock(struct gfs2_glock *gl,
++				      struct gfs2_holder *gh)
++{
++	struct gfs2_holder *current_gh, *gh2;
++
++	current_gh = find_first_holder(gl);
++	if (current_gh && !may_grant(gl, current_gh, gh))
++		return false;
++
++	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
++		if (test_bit(HIF_HOLDER, &gh2->gh_iflags))
++			continue;
++		if (!(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
++			return false;
++	}
++	return true;
++}
++
+ static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
  {
- 	u32 lkf = 0;
+         if (!(gh->gh_flags & GL_NOPID))
+@@ -1472,27 +1489,20 @@ static inline bool pid_is_meaningful(const struct gfs2_holder *gh)
+  */
  
-@@ -274,7 +279,7 @@ static u32 make_flags(struct gfs2_glock *gl, const unsigned int gfs_flags,
- 		 * "upward" lock conversions or else DLM will reject the
- 		 * request as invalid.
- 		 */
--		if (!down_conversion(cur, req))
-+		if (blocking)
- 			lkf |= DLM_LKF_QUECVT;
+ static inline void add_to_queue(struct gfs2_holder *gh)
+-__releases(&gl->gl_lockref.lock)
+-__acquires(&gl->gl_lockref.lock)
+ {
+ 	struct gfs2_glock *gl = gh->gh_gl;
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+ 	struct gfs2_holder *gh2;
+-	int try_futile = 0;
+ 
+ 	GLOCK_BUG_ON(gl, gh->gh_owner_pid == NULL);
+ 	if (test_and_set_bit(HIF_WAIT, &gh->gh_iflags))
+ 		GLOCK_BUG_ON(gl, true);
+ 
+-	if (gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) {
+-		if (test_bit(GLF_LOCK, &gl->gl_flags)) {
+-			struct gfs2_holder *current_gh;
+-
+-			current_gh = find_first_holder(gl);
+-			try_futile = !may_grant(gl, current_gh, gh);
+-		}
+-		if (test_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags))
+-			goto fail;
++	if ((gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)) &&
++	    !gfs2_should_queue_trylock(gl, gh)) {
++		gh->gh_error = GLR_TRYFAILED;
++		gfs2_holder_wake(gh);
++		return;
  	}
  
-@@ -294,14 +299,20 @@ static int gdlm_lock(struct gfs2_glock *gl, unsigned int req_state,
- 		     unsigned int flags)
- {
- 	struct lm_lockstruct *ls = &gl->gl_name.ln_sbd->sd_lockstruct;
-+	bool blocking;
- 	int cur, req;
- 	u32 lkf;
- 	char strname[GDLM_STRNAME_BYTES] = "";
- 	int error;
- 
-+	gl->gl_req = req_state;
- 	cur = make_mode(gl->gl_name.ln_sbd, gl->gl_state);
- 	req = make_mode(gl->gl_name.ln_sbd, req_state);
--	lkf = make_flags(gl, flags, cur, req);
-+	blocking = !down_conversion(cur, req) &&
-+		   !(flags & (LM_FLAG_TRY|LM_FLAG_TRY_1CB));
-+	lkf = make_flags(gl, flags, req, blocking);
-+	if (blocking)
-+		set_bit(GLF_BLOCKING, &gl->gl_flags);
- 	gfs2_glstats_inc(gl, GFS2_LKS_DCOUNT);
- 	gfs2_sbstats_inc(gl, GFS2_LKS_DCOUNT);
- 	if (test_bit(GLF_INITIAL, &gl->gl_flags)) {
-@@ -341,7 +352,6 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 		return;
+ 	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
+@@ -1504,15 +1514,6 @@ __acquires(&gl->gl_lockref.lock)
+ 			continue;
+ 		goto trap_recursive;
  	}
- 
--	clear_bit(GLF_BLOCKING, &gl->gl_flags);
- 	gfs2_glstats_inc(gl, GFS2_LKS_DCOUNT);
- 	gfs2_sbstats_inc(gl, GFS2_LKS_DCOUNT);
- 	gfs2_update_request_times(gl);
+-	list_for_each_entry(gh2, &gl->gl_holders, gh_list) {
+-		if (try_futile &&
+-		    !(gh2->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB))) {
+-fail:
+-			gh->gh_error = GLR_TRYFAILED;
+-			gfs2_holder_wake(gh);
+-			return;
+-		}
+-	}
+ 	trace_gfs2_glock_queue(gh, 1);
+ 	gfs2_glstats_inc(gl, GFS2_LKS_QCOUNT);
+ 	gfs2_sbstats_inc(gl, GFS2_LKS_QCOUNT);
 -- 
 2.51.0
 
