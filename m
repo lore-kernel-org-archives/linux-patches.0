@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF9A221555;
-	Mon, 13 Oct 2025 15:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EEA315D3F;
+	Mon, 13 Oct 2025 15:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760370321; cv=none; b=Wl/jxW4ANtEFelHWzbgYu1XGM5AOsPKpfrDJsfRdxscS6zxuFoqNOkoN8l+zu9H9pA7YXRnmukrkfyf/usRGrGtVCGpfgk4zcN+yAssGtypdFpWlUVKh1P6VQTdmxX57BFcwr2V/Vh80fi7Fp7eC3OF8e1LZ3tF1mMqZjx+GsMQ=
+	t=1760370324; cv=none; b=Py9fZ6RFjKkwbab+lSHIx+OPzy/asMpFdeg6pOl75Hw8nfRaPFbFp6pE1dJ/XQKMZOf9MDdoKrPDzc44CBb01XMWKzJ1pME0pS6zAdnVGNWeQ5Apwcf4kKH1SISzLyHBuTCtXREM2ctL7pINNFSeID0E5Wm9JQEpHSbpw2aO6yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760370321; c=relaxed/simple;
-	bh=MHHkgcdQOQlZW/GI9KczamMHJ1R0Zc3WMmbod4nYrYo=;
+	s=arc-20240116; t=1760370324; c=relaxed/simple;
+	bh=WBz7My8cFz0deVhOLHKjRF6qjiDZZ8C8qj0dZuyYw4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CL6orq2AQiAFDKsP01InNtuu3j5TYNzORLYlMYIOSRmt6pcjUa6UJSuiqxpCOBqMQJuuPXYnBXsd+o5bb4gIYit7aM+lAC5/8oBkJhXjM7/8yBEVD6PZ3S8vZJFj+635kc2l8wgKnYdB5sTLYXw0hBkL3VvOP7ab394+/kLIqQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWkhOZku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxp4vSOgshsL80JSdJozvdyI0WWwYyripL4lKd6xPvCODG2Ol2Z+g8MjghgcZELR63MEfHfbkqc3wwmA2GFqGxNKMcRvTRb0d71Je0y0Vb+YhDoei0ml3H9nSgqr4IFW504ezWt4EYfx5dYFakJ5LgsbpNgjS3dvxUMNl39aL9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwKZbPFP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWkhOZku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89352C4AF1B;
-	Mon, 13 Oct 2025 15:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwKZbPFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C69C4CEE7;
+	Mon, 13 Oct 2025 15:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760370320;
-	bh=MHHkgcdQOQlZW/GI9KczamMHJ1R0Zc3WMmbod4nYrYo=;
+	s=korg; t=1760370323;
+	bh=WBz7My8cFz0deVhOLHKjRF6qjiDZZ8C8qj0dZuyYw4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWkhOZkuHB5jFlglFIn0wLnFT377E7Wm500j/mqKm1DauoALRBe7aJy0feXlHf/sF
-	 iCrEpvcwo7wDu+mUdD8MuiCcKVfLOtwBsq77lhtyrxsp6PLn9T+fzLv+82vpEjhQYc
-	 niaLmAR4lXIRevjqK34ps2brIglxrmQ2he+1KV4w=
+	b=cwKZbPFPsoaptVTHtmWnO/5uKOQCtyoY63E14aIZen4t3P4xuiNEOIFsH8deKq6C0
+	 rV0LY06S5OpwgEA/3y+ENOlVNMS8NhilMZpOp9LkE5eTICImNCyd+IGM2HanuHdIAA
+	 bRMtloC0oZp4OjRmiKSwHlfs8da3s1vlQmekL7f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.17 522/563] pwm: loongson: Fix LOONGSON_PWM_FREQ_DEFAULT
-Date: Mon, 13 Oct 2025 16:46:23 +0200
-Message-ID: <20251013144430.222740750@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.17 523/563] LoongArch: BPF: Sign-extend struct ops return values properly
+Date: Mon, 13 Oct 2025 16:46:24 +0200
+Message-ID: <20251013144430.258445193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,45 +44,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit 75604e9a5b60707722028947d6dc6bdacb42282e upstream.
+commit 8b51b11b3d81c1ed48a52f87da9256d737b723a0 upstream.
 
-Per the 7A1000 and 7A2000 user manual, the clock frequency of their
-PWM controllers is 50 MHz, not 50 kHz.
+The ns_bpf_qdisc selftest triggers a kernel panic:
 
-Fixes: 2b62c89448dd ("pwm: Add Loongson PWM controller support")
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Reviewed-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250816104904.4779-2-xry111@xry111.site
+  Oops[#1]:
+  CPU 0 Unable to handle kernel paging request at virtual address 0000000000741d58, era == 90000000851b5ac0, ra == 90000000851b5aa4
+  CPU: 0 UID: 0 PID: 449 Comm: test_progs Tainted: G           OE       6.16.0+ #3 PREEMPT(full)
+  Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+  Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 2/2/2022
+  pc 90000000851b5ac0 ra 90000000851b5aa4 tp 90000001076b8000 sp 90000001076bb600
+  a0 0000000000741ce8 a1 0000000000000001 a2 90000001076bb5c0 a3 0000000000000008
+  a4 90000001004c4620 a5 9000000100741ce8 a6 0000000000000000 a7 0100000000000000
+  t0 0000000000000010 t1 0000000000000000 t2 9000000104d24d30 t3 0000000000000001
+  t4 4f2317da8a7e08c4 t5 fffffefffc002f00 t6 90000001004c4620 t7 ffffffffc61c5b3d
+  t8 0000000000000000 u0 0000000000000001 s9 0000000000000050 s0 90000001075bc800
+  s1 0000000000000040 s2 900000010597c400 s3 0000000000000008 s4 90000001075bc880
+  s5 90000001075bc8f0 s6 0000000000000000 s7 0000000000741ce8 s8 0000000000000000
+     ra: 90000000851b5aa4 __qdisc_run+0xac/0x8d8
+    ERA: 90000000851b5ac0 __qdisc_run+0xc8/0x8d8
+   CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+   PRMD: 00000004 (PPLV0 +PIE -PWE)
+   EUEN: 00000007 (+FPE +SXE +ASXE -BTE)
+   ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+  ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+   BADV: 0000000000741d58
+   PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
+  Modules linked in: bpf_testmod(OE) [last unloaded: bpf_testmod(OE)]
+  Process test_progs (pid: 449, threadinfo=000000009af02b3a, task=00000000e9ba4956)
+  Stack : 0000000000000000 90000001075bc8ac 90000000869524a8 9000000100741ce8
+          90000001075bc800 9000000100415300 90000001075bc8ac 0000000000000000
+          900000010597c400 900000008694a000 0000000000000000 9000000105b59000
+          90000001075bc800 9000000100741ce8 0000000000000050 900000008513000c
+          9000000086936000 0000000100094d4c fffffff400676208 0000000000000000
+          9000000105b59000 900000008694a000 9000000086bf0dc0 9000000105b59000
+          9000000086bf0d68 9000000085147010 90000001075be788 0000000000000000
+          9000000086bf0f98 0000000000000001 0000000000000010 9000000006015840
+          0000000000000000 9000000086be6c40 0000000000000000 0000000000000000
+          0000000000000000 4f2317da8a7e08c4 0000000000000101 4f2317da8a7e08c4
+          ...
+  Call Trace:
+  [<90000000851b5ac0>] __qdisc_run+0xc8/0x8d8
+  [<9000000085130008>] __dev_queue_xmit+0x578/0x10f0
+  [<90000000853701c0>] ip6_finish_output2+0x2f0/0x950
+  [<9000000085374bc8>] ip6_finish_output+0x2b8/0x448
+  [<9000000085370b24>] ip6_xmit+0x304/0x858
+  [<90000000853c4438>] inet6_csk_xmit+0x100/0x170
+  [<90000000852b32f0>] __tcp_transmit_skb+0x490/0xdd0
+  [<90000000852b47fc>] tcp_connect+0xbcc/0x1168
+  [<90000000853b9088>] tcp_v6_connect+0x580/0x8a0
+  [<90000000852e7738>] __inet_stream_connect+0x170/0x480
+  [<90000000852e7a98>] inet_stream_connect+0x50/0x88
+  [<90000000850f2814>] __sys_connect+0xe4/0x110
+  [<90000000850f2858>] sys_connect+0x18/0x28
+  [<9000000085520c94>] do_syscall+0x94/0x1a0
+  [<9000000083df1fb8>] handle_syscall+0xb8/0x158
+
+  Code: 4001ad80  2400873f  2400832d <240073cc> 001137ff  001133ff  6407b41f  001503cc  0280041d
+
+  ---[ end trace 0000000000000000 ]---
+
+The bpf_fifo_dequeue prog returns a skb which is a pointer. The pointer
+is treated as a 32bit value and sign extend to 64bit in epilogue. This
+behavior is right for most bpf prog types but wrong for struct ops which
+requires LoongArch ABI.
+
+So let's sign extend struct ops return values according to the LoongArch
+ABI ([1]) and return value spec in function model.
+
+[1]: https://loongson.github.io/LoongArch-Documentation/LoongArch-ELF-ABI-EN.html
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 6abf17d690d8 ("LoongArch: BPF: Add struct ops support for trampoline")
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-loongson.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/net/bpf_jit.c | 37 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-loongson.c b/drivers/pwm/pwm-loongson.c
-index 1ba16168cbb4..31a57edecfd0 100644
---- a/drivers/pwm/pwm-loongson.c
-+++ b/drivers/pwm/pwm-loongson.c
-@@ -49,7 +49,7 @@
- #define LOONGSON_PWM_CTRL_REG_DZONE	BIT(10) /* Anti-dead Zone Enable Bit */
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index fa1a3234e9a6..cbe53d0b7fb0 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -1448,6 +1448,37 @@ void arch_free_bpf_trampoline(void *image, unsigned int size)
+ 	bpf_prog_pack_free(image, size);
+ }
  
- /* default input clk frequency for the ACPI case */
--#define LOONGSON_PWM_FREQ_DEFAULT	50000 /* Hz */
-+#define LOONGSON_PWM_FREQ_DEFAULT	50000000 /* Hz */
++/*
++ * Sign-extend the register if necessary
++ */
++static void sign_extend(struct jit_ctx *ctx, int rd, int rj, u8 size, bool sign)
++{
++	/* ABI requires unsigned char/short to be zero-extended */
++	if (!sign && (size == 1 || size == 2)) {
++		if (rd != rj)
++			move_reg(ctx, rd, rj);
++		return;
++	}
++
++	switch (size) {
++	case 1:
++		emit_insn(ctx, extwb, rd, rj);
++		break;
++	case 2:
++		emit_insn(ctx, extwh, rd, rj);
++		break;
++	case 4:
++		emit_insn(ctx, addiw, rd, rj, 0);
++		break;
++	case 8:
++		if (rd != rj)
++			move_reg(ctx, rd, rj);
++		break;
++	default:
++		pr_warn("bpf_jit: invalid size %d for sign_extend\n", size);
++	}
++}
++
+ static int __arch_prepare_bpf_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 					 const struct btf_func_model *m, struct bpf_tramp_links *tlinks,
+ 					 void *func_addr, u32 flags)
+@@ -1655,8 +1686,12 @@ static int __arch_prepare_bpf_trampoline(struct jit_ctx *ctx, struct bpf_tramp_i
+ 		restore_args(ctx, m->nr_args, args_off);
  
- struct pwm_loongson_ddata {
- 	struct clk *clk;
+ 	if (save_ret) {
+-		emit_insn(ctx, ldd, LOONGARCH_GPR_A0, LOONGARCH_GPR_FP, -retval_off);
+ 		emit_insn(ctx, ldd, regmap[BPF_REG_0], LOONGARCH_GPR_FP, -(retval_off - 8));
++		if (is_struct_ops)
++			sign_extend(ctx, LOONGARCH_GPR_A0, regmap[BPF_REG_0],
++				    m->ret_size, m->ret_flags & BTF_FMODEL_SIGNED_ARG);
++		else
++			emit_insn(ctx, ldd, LOONGARCH_GPR_A0, LOONGARCH_GPR_FP, -retval_off);
+ 	}
+ 
+ 	emit_insn(ctx, ldd, LOONGARCH_GPR_S1, LOONGARCH_GPR_FP, -sreg_off);
 -- 
 2.51.0
 
