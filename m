@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795DF3081D3;
-	Mon, 13 Oct 2025 15:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B4330DEDF;
+	Mon, 13 Oct 2025 15:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368458; cv=none; b=uMM2S7D3V9uCg5m5FVj3PEVr+E+7GYZZO9oSD1nmkiIocQGccNEvrF+tqXnq/DaLpVxDq2AwEE9Nntm3EVmIfbU1p1Z46oBIRVuCCzCjCO0toRULpA5HUN24gp/oYo84jzM3+RxgXAiWsV1ZpZCZZMn3LPdXZb4uPbEgj/EDpVI=
+	t=1760368461; cv=none; b=eXvIfGJbn5hBw6uhh5+aUIT5aJeiPAA/8stv8vrCQn6tyE25KaA7DfseguXXfRd3QgNI73FvN9AhKQABjUu5e50+ieUP0GwaysatqHzXxmtX9zJMdcIiXONiTX8YwbWBqZtn/YxIgq7sF640aq5PNNErmsWEu/zaWdrj+IItT9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368458; c=relaxed/simple;
-	bh=UkiiO1vBNBT2ZNxLvaM92dJ7k7Ikcfs7xnGuPbrj+HI=;
+	s=arc-20240116; t=1760368461; c=relaxed/simple;
+	bh=bUNzVXWC4XuwTFFJO7uihZbbjPBzkI0cz15/zwlCP1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r91gwD1NAsSVKezjUZ8gGuF/AzPI10MpWqt3pPI2O704UPgIx4ogwMOV/ApahNxH0U/v6gjEdm26iubVfRxxZvKRiwXCEQWdG/WRry4BoiptAtJwN3dMWg4BC0pEvW9AXor1GDAYFBlNkklf+1evpNiCp3ZEUMq4WZS4yiF3tlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0q6jeB0K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLA3P5aRauS5OZlQ+hHTJTdpcEge75tqEEcpEw3wO7/ar+75WoOCEgKYjHHJAa93OZFscSh9OMkaP0BqcXEj7GTuKRj1xfpPFSxZSkxsI55FtLcTGI8JJHWS+WB2m7pEQvkEUtIl3vf8npsNM41kh8ExJiCagqqNoTgxTRCuv3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfFpqlYs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q6jeB0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D47C4CEE7;
-	Mon, 13 Oct 2025 15:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfFpqlYs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6863C4CEE7;
+	Mon, 13 Oct 2025 15:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368458;
-	bh=UkiiO1vBNBT2ZNxLvaM92dJ7k7Ikcfs7xnGuPbrj+HI=;
+	s=korg; t=1760368461;
+	bh=bUNzVXWC4XuwTFFJO7uihZbbjPBzkI0cz15/zwlCP1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0q6jeB0KM63Txv5bj+O+Yje/DhtIHKsQy7SmHTpk/POBC0A2mpwChpth8LJO5QDul
-	 JRdvPgl0NoqtdIsBIezIw/WMo2FYVtjQuHmn8gUAiBCEkkKDxcTPDG/6E3B3+czBho
-	 LxpdeJnXh89aHxKxajmREvLZo90UsVvEopYZ9Mg0=
+	b=zfFpqlYstP96yOtGX9Gw0i9ZP1uIMA9/1hnqOmDFNdkgTWm3y3daP/RkA9/lMkRqk
+	 NFHbmQqwNheD8cGc2sOOGvZmUy6c2PkZ5+ydaDuJwscLOE1cxoMqxflR+g+VymZAao
+	 kFSBISCNUx92KFLTX0Hw0doKEI4EJkeHw6j9HIMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/262] wifi: mac80211: fix Rx packet handling when pubsta information is not available
-Date: Mon, 13 Oct 2025 16:45:10 +0200
-Message-ID: <20251013144332.174950932@linuxfoundation.org>
+Subject: [PATCH 6.12 169/262] ASoC: Intel: sof_sdw: Prevent jump to NULL add_sidecar callback
+Date: Mon, 13 Oct 2025 16:45:11 +0200
+Message-ID: <20251013144332.210323415@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144326.116493600@linuxfoundation.org>
 References: <20251013144326.116493600@linuxfoundation.org>
@@ -52,84 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 32d340ae675800672e1219444a17940a8efe5cca ]
+[ Upstream commit 87cab86925b7fa4c1c977bc191ac549a3b23f0ea ]
 
-In ieee80211_rx_handle_packet(), if the caller does not provide pubsta
-information, an attempt is made to find the station using the address 2
-(source address) field in the header. Since pubsta is missing, link
-information such as link_valid and link_id is also unavailable. Now if such
-a situation comes, and if a matching ML station entry is found based on
-the source address, currently the packet is dropped due to missing link ID
-in the status field which is not correct.
+In create_sdw_dailink() check that sof_end->codec_info->add_sidecar
+is not NULL before calling it.
 
-Hence, to fix this issue, if link_valid is not set and the station is an
-ML station, make an attempt to find a link station entry using the source
-address. If a valid link station is found, derive the link ID and proceed
-with packet processing. Otherwise, drop the packet as per the existing
-flow.
+The original code assumed that if include_sidecar is true, the codec
+on that link has an add_sidecar callback. But there could be other
+codecs on the same link that do not have an add_sidecar callback.
 
-Fixes: ea9d807b5642 ("wifi: mac80211: add link information in ieee80211_rx_status")
-Suggested-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250917-fix_data_packet_rx_with_mlo_and_no_pubsta-v1-1-8cf971a958ac@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: da5244180281 ("ASoC: Intel: sof_sdw: Add callbacks to register sidecar devices")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250919140235.1071941-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 8c0d91dfd7e2b..538c6eea645f2 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -5280,12 +5280,20 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
- 			}
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 5911a05586516..00d840d5e585c 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -741,7 +741,7 @@ static int create_sdw_dailink(struct snd_soc_card *card,
+ 			(*codec_conf)++;
+ 		}
  
- 			rx.sdata = prev_sta->sdata;
-+			if (!status->link_valid && prev_sta->sta.mlo) {
-+				struct link_sta_info *link_sta;
-+
-+				link_sta = link_sta_info_get_bss(rx.sdata,
-+								 hdr->addr2);
-+				if (!link_sta)
-+					continue;
-+
-+				link_id = link_sta->link_id;
-+			}
-+
- 			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
- 				goto out;
- 
--			if (!status->link_valid && prev_sta->sta.mlo)
--				continue;
--
- 			ieee80211_prepare_and_rx_handle(&rx, skb, false);
- 
- 			prev_sta = sta;
-@@ -5293,10 +5301,18 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
- 
- 		if (prev_sta) {
- 			rx.sdata = prev_sta->sdata;
--			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
--				goto out;
-+			if (!status->link_valid && prev_sta->sta.mlo) {
-+				struct link_sta_info *link_sta;
-+
-+				link_sta = link_sta_info_get_bss(rx.sdata,
-+								 hdr->addr2);
-+				if (!link_sta)
-+					goto out;
- 
--			if (!status->link_valid && prev_sta->sta.mlo)
-+				link_id = link_sta->link_id;
-+			}
-+
-+			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
- 				goto out;
- 
- 			if (ieee80211_prepare_and_rx_handle(&rx, skb, true))
+-		if (sof_end->include_sidecar) {
++		if (sof_end->include_sidecar && sof_end->codec_info->add_sidecar) {
+ 			ret = sof_end->codec_info->add_sidecar(card, dai_links, codec_conf);
+ 			if (ret)
+ 				return ret;
 -- 
 2.51.0
 
