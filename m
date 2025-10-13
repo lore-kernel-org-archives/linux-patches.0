@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254B330C36A;
-	Mon, 13 Oct 2025 15:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131230F95A;
+	Mon, 13 Oct 2025 15:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760367919; cv=none; b=IFbzZTWvuoowkgCDOsGz1GjokEh5zYTNPI0O2K6YLungaxOsZjaiK3wdwmy5WyPCVxviaSh6PGJjsq+Qcf9FCnLx/+xjJGfDqoHtFuT7jF5N90lbm+F/2z1bTlEc7eS/HZc1YJeUb+E6yQfMvr8EfKbdVkeGlwbaYu2rsEgcpLo=
+	t=1760367922; cv=none; b=dGO8V1lo9J2FNzHI/ijRW7f92yd6uMbx4sSGsPPjYiwiL9xr964bb3YCUMcwog8REaAlxpHAp9A9/ozA7/DX9daWks3jH3Fo9cSom/dKH2n8o9HqE1+kgw4G6u/cDblM7qNwrpcop5K4puk6B5qAv861bFpttr/90wcCT/Yy6fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760367919; c=relaxed/simple;
-	bh=QXX6gnmouB7ge5PrXPu2VOhpdq8R1AewafLw6xi1P1A=;
+	s=arc-20240116; t=1760367922; c=relaxed/simple;
+	bh=n2vrkOXKcAgiwp2ueTSr/ZVTKjcmQYJwhooL7dKKQ+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jy4dz43RNTFS77FoQFKRco0/UKpyz96IVG7qeUi6yecG4GwvyKJ4GW0dUo3CFpWWqR1JGrgA5dboKKUxt1pnkl+lRtwioT+/77l8NUQQyqPekVfP8DoiWE5ua7xU2GWMzzWNmQNwzlyiQb6b8sKf16xC05QfA6DxwxFxGhuwmGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1i+KaqaS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPlajI06+vEw+F+o/bWww1m2YmpOBU6PJIr1KwGitkSqXhQajgu6zoy9OmQMgyLzYp1DIuy+XeCVAcnXpbrAdvMMdHyY7tHz7OVG7vZHYyUQQZQz/+UuhXKlbREngDq6VKxBfw366uVhBmScRQrvVD4ctxv7u043B5MG00z9Bx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8F4yoaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1i+KaqaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A513FC4CEE7;
-	Mon, 13 Oct 2025 15:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8F4yoaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994FAC4CEE7;
+	Mon, 13 Oct 2025 15:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760367919;
-	bh=QXX6gnmouB7ge5PrXPu2VOhpdq8R1AewafLw6xi1P1A=;
+	s=korg; t=1760367922;
+	bh=n2vrkOXKcAgiwp2ueTSr/ZVTKjcmQYJwhooL7dKKQ+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1i+KaqaS5+FAq9mZm1S/Bq40//KAd0kkqDHuxYHaAwOeggNPgfgFGpqOttSbz+V2d
-	 bd4ZmxTWAmq2IEBrNIRcyRmdeCHNXDfCUSpPmU2gDeohyQJe0RAOACOvupg/3FAaw2
-	 mw9E78byIPC0A6gaW7OBALq5UjaIViNCjxDa9QdU=
+	b=T8F4yoaF/TdUAM6oVuQGlnMxQvlnGV76jPIPkuUqLgC6ky8wsxvkLq7rqhTw9KacT
+	 jjxvO2GOC3IB2WWKq+8FiLkgWtUJn8raFc9IAynH8tE8/dojnT9wa4kUfZlbPUsFWZ
+	 zQHPLRa7pZdX1MpreJeua3DeP6pi0kD48r/aQiNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/196] usb: vhci-hcd: Prevent suspending virtually attached devices
-Date: Mon, 13 Oct 2025 16:45:37 +0200
-Message-ID: <20251013144320.593347202@linuxfoundation.org>
+Subject: [PATCH 6.6 137/196] wifi: rtw89: avoid circular locking dependency in ser_state_run()
+Date: Mon, 13 Oct 2025 16:45:28 +0200
+Message-ID: <20251013144320.270707559@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
 References: <20251013144315.184275491@linuxfoundation.org>
@@ -51,71 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit e40b984b6c4ce3f80814f39f86f87b2a48f2e662 ]
+[ Upstream commit 570f94511766f9236d3462dfb8a3c719c2b54c23 ]
 
-The VHCI platform driver aims to forbid entering system suspend when at
-least one of the virtual USB ports are bound to an active USB/IP
-connection.
+Lockdep gives a splat [1] when ser_hdl_work item is executed.  It is
+scheduled at mac80211 workqueue via ieee80211_queue_work() and takes a
+wiphy lock inside.  However, this workqueue can be flushed when e.g.
+closing the interface and wiphy lock is already taken in that case.
 
-However, in some cases, the detection logic doesn't work reliably, i.e.
-when all devices attached to the virtual root hub have been already
-suspended, leading to a broken suspend state, with unrecoverable resume.
+Choosing wiphy_work_queue() for SER is likely not suitable.  Back on to
+the global workqueue.
 
-Ensure the virtually attached devices do not enter suspend by setting
-the syscore PM flag.  Note this is currently limited to the client side
-only, since the server side doesn't implement system suspend prevention.
+[1]:
 
-Fixes: 04679b3489e0 ("Staging: USB/IP: add client driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250902-vhci-hcd-suspend-fix-v3-1-864e4e833559@collabora.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ WARNING: possible circular locking dependency detected
+ 6.17.0-rc2 #17 Not tainted
+ ------------------------------------------------------
+ kworker/u32:1/61 is trying to acquire lock:
+ ffff88811bc00768 (&rdev->wiphy.mtx){+.+.}-{4:4}, at: ser_state_run+0x5e/0x180 [rtw89_core]
+
+ but task is already holding lock:
+ ffffc9000048fd30 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}, at: process_one_work+0x7b5/0x1450
+
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #2 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}:
+        process_one_work+0x7c6/0x1450
+        worker_thread+0x49e/0xd00
+        kthread+0x313/0x640
+        ret_from_fork+0x221/0x300
+        ret_from_fork_asm+0x1a/0x30
+
+ -> #1 ((wq_completion)phy0){+.+.}-{0:0}:
+        touch_wq_lockdep_map+0x8e/0x180
+        __flush_workqueue+0x129/0x10d0
+        ieee80211_stop_device+0xa8/0x110
+        ieee80211_do_stop+0x14ce/0x2880
+        ieee80211_stop+0x13a/0x2c0
+        __dev_close_many+0x18f/0x510
+        __dev_change_flags+0x25f/0x670
+        netif_change_flags+0x7b/0x160
+        do_setlink.isra.0+0x1640/0x35d0
+        rtnl_newlink+0xd8c/0x1d30
+        rtnetlink_rcv_msg+0x700/0xb80
+        netlink_rcv_skb+0x11d/0x350
+        netlink_unicast+0x49a/0x7a0
+        netlink_sendmsg+0x759/0xc20
+        ____sys_sendmsg+0x812/0xa00
+        ___sys_sendmsg+0xf7/0x180
+        __sys_sendmsg+0x11f/0x1b0
+        do_syscall_64+0xbb/0x360
+        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+ -> #0 (&rdev->wiphy.mtx){+.+.}-{4:4}:
+        __lock_acquire+0x124c/0x1d20
+        lock_acquire+0x154/0x2e0
+        __mutex_lock+0x17b/0x12f0
+        ser_state_run+0x5e/0x180 [rtw89_core]
+        rtw89_ser_hdl_work+0x119/0x220 [rtw89_core]
+        process_one_work+0x82d/0x1450
+        worker_thread+0x49e/0xd00
+        kthread+0x313/0x640
+        ret_from_fork+0x221/0x300
+        ret_from_fork_asm+0x1a/0x30
+
+ other info that might help us debug this:
+
+ Chain exists of:
+   &rdev->wiphy.mtx --> (wq_completion)phy0 --> (work_completion)(&ser->ser_hdl_work)
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock((work_completion)(&ser->ser_hdl_work));
+                                lock((wq_completion)phy0);
+                                lock((work_completion)(&ser->ser_hdl_work));
+   lock(&rdev->wiphy.mtx);
+
+  *** DEADLOCK ***
+
+ 2 locks held by kworker/u32:1/61:
+  #0: ffff888103835148 ((wq_completion)phy0){+.+.}-{0:0}, at: process_one_work+0xefa/0x1450
+  #1: ffffc9000048fd30 ((work_completion)(&ser->ser_hdl_work)){+.+.}-{0:0}, at: process_one_work+0x7b5/0x1450
+
+ stack backtrace:
+ CPU: 0 UID: 0 PID: 61 Comm: kworker/u32:1 Not tainted 6.17.0-rc2 #17 PREEMPT(voluntary)
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS edk2-20250523-14.fc42 05/23/2025
+ Workqueue: phy0 rtw89_ser_hdl_work [rtw89_core]
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5d/0x80
+  print_circular_bug.cold+0x178/0x1be
+  check_noncircular+0x14c/0x170
+  __lock_acquire+0x124c/0x1d20
+  lock_acquire+0x154/0x2e0
+  __mutex_lock+0x17b/0x12f0
+  ser_state_run+0x5e/0x180 [rtw89_core]
+  rtw89_ser_hdl_work+0x119/0x220 [rtw89_core]
+  process_one_work+0x82d/0x1450
+  worker_thread+0x49e/0xd00
+  kthread+0x313/0x640
+  ret_from_fork+0x221/0x300
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: ebfc9199df05 ("wifi: rtw89: add wiphy_lock() to work that isn't held wiphy_lock() yet")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250919210852.823912-5-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_hcd.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/wireless/realtek/rtw89/ser.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
-index 14a5f55f24fc8..b22e0881bfaf3 100644
---- a/drivers/usb/usbip/vhci_hcd.c
-+++ b/drivers/usb/usbip/vhci_hcd.c
-@@ -764,6 +764,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- 				 ctrlreq->wValue, vdev->rhport);
+diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
+index 45165cf3e824e..ae3e02efcc5d7 100644
+--- a/drivers/net/wireless/realtek/rtw89/ser.c
++++ b/drivers/net/wireless/realtek/rtw89/ser.c
+@@ -207,7 +207,6 @@ static void rtw89_ser_hdl_work(struct work_struct *work)
  
- 			vdev->udev = usb_get_dev(urb->dev);
-+			/*
-+			 * NOTE: A similar operation has been done via
-+			 * USB_REQ_GET_DESCRIPTOR handler below, which is
-+			 * supposed to always precede USB_REQ_SET_ADDRESS.
-+			 *
-+			 * It's not entirely clear if operating on a different
-+			 * usb_device instance here is a real possibility,
-+			 * otherwise this call and vdev->udev assignment above
-+			 * should be dropped.
-+			 */
-+			dev_pm_syscore_device(&vdev->udev->dev, true);
- 			usb_put_dev(old);
+ static int ser_send_msg(struct rtw89_ser *ser, u8 event)
+ {
+-	struct rtw89_dev *rtwdev = container_of(ser, struct rtw89_dev, ser);
+ 	struct ser_msg *msg = NULL;
  
- 			spin_lock(&vdev->ud.lock);
-@@ -784,6 +795,17 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- 					"Not yet?:Get_Descriptor to device 0 (get max pipe size)\n");
+ 	if (test_bit(RTW89_SER_DRV_STOP_RUN, ser->flags))
+@@ -223,7 +222,7 @@ static int ser_send_msg(struct rtw89_ser *ser, u8 event)
+ 	list_add(&msg->list, &ser->msg_q);
+ 	spin_unlock_irq(&ser->msg_q_lock);
  
- 			vdev->udev = usb_get_dev(urb->dev);
-+			/*
-+			 * Set syscore PM flag for the virtually attached
-+			 * devices to ensure they will not enter suspend on
-+			 * the client side.
-+			 *
-+			 * Note this doesn't have any impact on the physical
-+			 * devices attached to the host system on the server
-+			 * side, hence there is no need to undo the operation
-+			 * on disconnect.
-+			 */
-+			dev_pm_syscore_device(&vdev->udev->dev, true);
- 			usb_put_dev(old);
- 			goto out;
+-	ieee80211_queue_work(rtwdev->hw, &ser->ser_hdl_work);
++	schedule_work(&ser->ser_hdl_work);
+ 	return 0;
+ }
  
 -- 
 2.51.0
