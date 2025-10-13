@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE502FB978;
-	Mon, 13 Oct 2025 15:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2882FB978;
+	Mon, 13 Oct 2025 15:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760368947; cv=none; b=a0T6pTsaEScpzerDG0Lr6hhzCgcLDv00Hq27qktpPZKOvDHhkZwBnJydSjJ50hpuoP5Q98ndno5+xQVOkHDfWW4rlurbzfU0J6YQ4qICwWDAN5XOrMHpu0lSFd9ddzYCspqP/nLL/8qE9e1JhWH/kOGI5Lomzjn3ANw5DIC4+MU=
+	t=1760368950; cv=none; b=PzW0kuHWs639djkhuOQcC5ZGSF/ArN9CWgFpT+BtVKaDzbKp7GbiKKerAyPH8Se2DFzC7/GcykKdTraoSaEmul31MhPrcXe0xVAONDNBFLIM94zKdSvnTOa1FYy0T8luxoffS5tW4NUfFRTVn4LHY4w2Q9fvIxqQj0prIq9wOIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760368947; c=relaxed/simple;
-	bh=bnzdAIHK6rM0+b2gIRNM+VCee+BjFwSOeonz2Fb1qYg=;
+	s=arc-20240116; t=1760368950; c=relaxed/simple;
+	bh=gQXrBGSfxiGx4zZlOcmvDV4LN+J9K8kNmvmen4pdA6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sNZ9+kqGK6RwCb8SD+da7nLyXqs3rkeUS+EfOq6n/9B9OFK1iZPITHJpA9N5d5h/rc+Gtxo4tS6jYn2W/wZzPW35DvglLGFk3CKezfEXUdz/kNLmPjP72hqftVAkfgpOA6DIIG9s703Qp/fT1BBt9bKgdbqvq9Vg+ilX3fr70DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQMxcSih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsK6AIhk4GgqeIxDxLKc5aX5siuFHI7xjcSPhlXhTKfihhOLYDhChCrXyWX9eSG+DKc3yAHBNInW23c3cjSxvn/u1KoOVYmF5kQGh3+LojT5WC97C71zh3mPNvx2hZretH0X5LquY+Y2+HKt/sp6N+/JrxqgkzvkASfelTuCUtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itG6dPrs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQMxcSih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A23C4CEE7;
-	Mon, 13 Oct 2025 15:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itG6dPrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D741CC4CEFE;
+	Mon, 13 Oct 2025 15:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760368947;
-	bh=bnzdAIHK6rM0+b2gIRNM+VCee+BjFwSOeonz2Fb1qYg=;
+	s=korg; t=1760368950;
+	bh=gQXrBGSfxiGx4zZlOcmvDV4LN+J9K8kNmvmen4pdA6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQMxcSihA0XevdKjYTTic0iUXUt6eNsDsjHwUwX1OGavn2xM8u2NBiu6q3Ao7TBu0
-	 4zbjuSuPOJefs0vsH4CR+RClmplhomwlL/Tqg0dBroE+Mrc/k1zrMmdECjIYhIKfv7
-	 3HevWpGrfU2s0P0koJti05hLO+PL37ndrAtMqvo8=
+	b=itG6dPrsXtraIZjp0uY8rLaCRsxtk4ABHaUizAgF04u6mwM0KWSPfa7mqmN7E3XCi
+	 W3jtwpYEIXpUOMbFGv5UdBAY7YleuAaBY8SEZjbSIPEPrLKyXZSVyPM/6tBgP6YkXX
+	 1YvDRag6LfGbGV7l1EafysOpuR9aOSLspSofho9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 074/563] selftests/futex: Remove the -g parameter from futex_priv_hash
-Date: Mon, 13 Oct 2025 16:38:55 +0200
-Message-ID: <20251013144413.973968246@linuxfoundation.org>
+Subject: [PATCH 6.17 075/563] ARM: at91: pm: fix MCKx restore routine
+Date: Mon, 13 Oct 2025 16:38:56 +0200
+Message-ID: <20251013144414.010002627@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,58 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit 2e62688d583809e832433f461194334408b10817 ]
+[ Upstream commit 296302d3d81360e09fa956e9be9edc8223b69a12 ]
 
-The -g parameter was meant to the test the immutable global hash instead of the
-private hash which has been made immutable. The global hash is tested as part
-at the end of the regular test. The immutable private hash been removed.
+The at91_mckx_ps_restore() assembly function is responsible for setting
+back MCKx system bus clocks after exiting low power modes.
 
-Remove last traces of the immutable private hash.
+Fix a typo and use tmp3 variable instead of tmp2 to correctly set MCKx
+to previously saved state.
+Tmp2 was used without the needed changes in CSS and DIV. Moreover the
+required bit 7, telling that MCR register's content is to be changed
+(CMD/write), was not set.
 
-Fixes: 16adc7f136dc1 ("selftests/futex: Remove support for IMMUTABLE")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
-Link: https://lore.kernel.org/20250827130011.677600-2-bigeasy@linutronix.de
+Fix function comment to match tmp variables actually used.
+
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Fixes: 28eb1d40fe57 ("ARM: at91: pm: add support for MCK1..4 save/restore for ulp modes")
+Link: https://lore.kernel.org/r/20250827145427.46819-3-nicolas.ferre@microchip.com
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[claudiu.beznea: s/sate/state in commit description]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/futex_priv_hash.c | 1 -
- tools/testing/selftests/futex/functional/run.sh            | 1 -
- 2 files changed, 2 deletions(-)
+ arch/arm/mach-at91/pm_suspend.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_priv_hash.c b/tools/testing/selftests/futex/functional/futex_priv_hash.c
-index aea001ac49460..ec032faca6a91 100644
---- a/tools/testing/selftests/futex/functional/futex_priv_hash.c
-+++ b/tools/testing/selftests/futex/functional/futex_priv_hash.c
-@@ -132,7 +132,6 @@ static void usage(char *prog)
- {
- 	printf("Usage: %s\n", prog);
- 	printf("  -c    Use color\n");
--	printf("  -g    Test global hash instead intead local immutable \n");
- 	printf("  -h    Display this help message\n");
- 	printf("  -v L  Verbosity level: %d=QUIET %d=CRITICAL %d=INFO\n",
- 	       VQUIET, VCRITICAL, VINFO);
-diff --git a/tools/testing/selftests/futex/functional/run.sh b/tools/testing/selftests/futex/functional/run.sh
-index 81739849f2994..5470088dc4dfb 100755
---- a/tools/testing/selftests/futex/functional/run.sh
-+++ b/tools/testing/selftests/futex/functional/run.sh
-@@ -85,7 +85,6 @@ echo
+diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
+index e23b868340965..7e6c94f8edeef 100644
+--- a/arch/arm/mach-at91/pm_suspend.S
++++ b/arch/arm/mach-at91/pm_suspend.S
+@@ -904,7 +904,7 @@ e_done:
+ /**
+  * at91_mckx_ps_restore: restore MCKx settings
+  *
+- * Side effects: overwrites tmp1, tmp2
++ * Side effects: overwrites tmp1, tmp2 and tmp3
+  */
+ .macro at91_mckx_ps_restore
+ #ifdef CONFIG_SOC_SAMA7
+@@ -980,7 +980,7 @@ r_ps:
+ 	bic	tmp3, tmp3, #AT91_PMC_MCR_V2_ID_MSK
+ 	orr	tmp3, tmp3, tmp1
+ 	orr	tmp3, tmp3, #AT91_PMC_MCR_V2_CMD
+-	str	tmp2, [pmc, #AT91_PMC_MCR_V2]
++	str	tmp3, [pmc, #AT91_PMC_MCR_V2]
  
- echo
- ./futex_priv_hash $COLOR
--./futex_priv_hash -g $COLOR
+ 	wait_mckrdy tmp1
  
- echo
- ./futex_numa_mpol $COLOR
 -- 
 2.51.0
 
