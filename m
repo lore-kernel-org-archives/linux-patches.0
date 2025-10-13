@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E1030C61D;
-	Mon, 13 Oct 2025 15:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0B83101B4;
+	Mon, 13 Oct 2025 15:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369799; cv=none; b=M5VaUX/dr3OqOBBmvDhh/IflQ7ro9OmAApTzGf/hnILcrI+ISJ3DjYNGYn9fDw9V4HzqzqVUJqL76QJGwdboOvjIN8C0r/6uot8ESac0TS8xNxu7gOGaOitJ0pdAsaObyWGzKlBVZEZ/BRmTxNj0WCfSMWO+GL3dZCdheTLmhaI=
+	t=1760369802; cv=none; b=i2M5myHc8xDp/X06IOgvQgn6LUdlC0i08uYovMoE0lkrWp80JVYwhrUFpYVx0xzXPqQIwO9cYV0R1c8zEIE+JtwZPlZ1XizU0KGh4dyJf9l/ZbIpvKfFSBD7zb6teHRvAO7FpNnYCnTDwhq+a63bHeFtT9/lrc+Pn5uSUfjA9b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369799; c=relaxed/simple;
-	bh=eedAXoRqqXz/z0suBO7t4xhvz85YjpXtbrSd86Qu3Qk=;
+	s=arc-20240116; t=1760369802; c=relaxed/simple;
+	bh=5e3Luc4hXl6Vsw7c/HWl1UKPSQ36HtLOM0+qPciWaUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISQtpg7+ci3wT+k/8pu387urfByiwr5g0k4kCN0v122PWLy2IcK7IAFLfz3DmkIOQuK9Id1qWxFaqYTT6NY2qJkfrnLNr3NBMbZsjzLWLAJZfkJWeVlTlNCpPnyR1IuDDaRJfUpS28g4iFJYKN9jUYeBL93sI8nRhtUcriBkaiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byxr73UG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3JiwKr/GujHngtl+FG3+JmpyxsqEj3xuBDHLW2sBuu3i2xoaAFxQ8fHbHD5CGV6DttFuxZbFbLSWRTJeLp50rEq/2vZrQtT0y95rqxGKNtKKyP/uUABM/Au7w6fo06DDwezeb5L2MbBm0KSCTdfYsdXJVeTpFrvkCpzK414t4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3hQlf7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byxr73UG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ACDC4CEE7;
-	Mon, 13 Oct 2025 15:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3hQlf7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA2EC116C6;
+	Mon, 13 Oct 2025 15:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369799;
-	bh=eedAXoRqqXz/z0suBO7t4xhvz85YjpXtbrSd86Qu3Qk=;
+	s=korg; t=1760369802;
+	bh=5e3Luc4hXl6Vsw7c/HWl1UKPSQ36HtLOM0+qPciWaUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byxr73UG+PTD/GV85Lgo3HeVQ9OeHU1o0n80szwwZSDADwhEz46VUZkY49sDw1F8c
-	 5bFqyFlGbWyMY/1EtI7N7jSxGIlRImfQJgUo0v0V2KSmZbT0hrhko3kG1T+lRl8hzd
-	 VlcK7M7ZncebUqkGU8vz1UgV8nfANv00RWdwR+84=
+	b=a3hQlf7YAshOwsxGFa9l4PEjQ2o/33b7ovSOAPAhCA/jS0oyY+lBW2OKq4WzzMTXo
+	 dKM7mUc5aoSqLsTnrrTWH9CGEY4tHSYKexUTMMAh1vTK1pL6vXs7BfxpJy1FcCO4SY
+	 7O1AaCSY6uYSDrat3GV/Wx7iIZQnUUjtjpZHe1w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10b4363fb0f46527f3f3@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 371/563] ALSA: pcm: Disable bottom softirqs as part of spin_lock_irq() on PREEMPT_RT
-Date: Mon, 13 Oct 2025 16:43:52 +0200
-Message-ID: <20251013144424.715569077@linuxfoundation.org>
+Subject: [PATCH 6.17 372/563] ACPI: NFIT: Fix incorrect ndr_desc being reportedin dev_err message
+Date: Mon, 13 Oct 2025 16:43:53 +0200
+Message-ID: <20251013144424.751907126@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,77 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 9fc4a3da9a0259a0500848b5d8657918efde176b ]
+[ Upstream commit d1a599a8136b16522b5afebd122395524496d549 ]
 
-snd_pcm_group_lock_irq() acquires a spinlock_t and disables interrupts
-via spin_lock_irq(). This also implicitly disables the handling of
-softirqs such as TIMER_SOFTIRQ.
-On PREEMPT_RT softirqs are preemptible and spin_lock_irq() does not
-disable them. That means a timer can be invoked during spin_lock_irq()
-on the same CPU. Due to synchronisations reasons local_bh_disable() has
-a per-CPU lock named softirq_ctrl.lock which synchronizes individual
-softirq against each other.
-syz-bot managed to trigger a lockdep report where softirq_ctrl.lock is
-acquired in hrtimer_cancel() in addition to hrtimer_run_softirq(). This
-is a possible deadlock.
+There appears to be a cut-n-paste error with the incorrect field
+ndr_desc->numa_node being reported for the target node. Fix this by
+using ndr_desc->target_node instead.
 
-The softirq_ctrl.lock can not be made part of spin_lock_irq() as this
-would lead to too much synchronisation against individual threads on the
-system. To avoid the possible deadlock, softirqs must be manually
-disabled before the lock is acquired.
-
-Disable softirqs before the lock is acquired on PREEMPT_RT.
-
-Reported-by: syzbot+10b4363fb0f46527f3f3@syzkaller.appspotmail.com
-Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f060db99374e ("ACPI: NFIT: Use fallback node id when numa info in NFIT table is incorrect")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/acpi/nfit/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 1eab940fa2e5a..68bee40c9adaf 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -84,19 +84,24 @@ void snd_pcm_group_init(struct snd_pcm_group *group)
- }
+diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
+index ae035b93da087..3eb56b77cb6d9 100644
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -2637,7 +2637,7 @@ static int acpi_nfit_register_region(struct acpi_nfit_desc *acpi_desc,
+ 	if (ndr_desc->target_node == NUMA_NO_NODE) {
+ 		ndr_desc->target_node = phys_to_target_node(spa->address);
+ 		dev_info(acpi_desc->dev, "changing target node from %d to %d for nfit region [%pa-%pa]",
+-			NUMA_NO_NODE, ndr_desc->numa_node, &res.start, &res.end);
++			NUMA_NO_NODE, ndr_desc->target_node, &res.start, &res.end);
+ 	}
  
- /* define group lock helpers */
--#define DEFINE_PCM_GROUP_LOCK(action, mutex_action) \
-+#define DEFINE_PCM_GROUP_LOCK(action, bh_lock, bh_unlock, mutex_action) \
- static void snd_pcm_group_ ## action(struct snd_pcm_group *group, bool nonatomic) \
- { \
--	if (nonatomic) \
-+	if (nonatomic) { \
- 		mutex_ ## mutex_action(&group->mutex); \
--	else \
--		spin_ ## action(&group->lock); \
--}
--
--DEFINE_PCM_GROUP_LOCK(lock, lock);
--DEFINE_PCM_GROUP_LOCK(unlock, unlock);
--DEFINE_PCM_GROUP_LOCK(lock_irq, lock);
--DEFINE_PCM_GROUP_LOCK(unlock_irq, unlock);
-+	} else { \
-+		if (IS_ENABLED(CONFIG_PREEMPT_RT) && bh_lock)   \
-+			local_bh_disable();			\
-+		spin_ ## action(&group->lock);			\
-+		if (IS_ENABLED(CONFIG_PREEMPT_RT) && bh_unlock) \
-+			local_bh_enable();                      \
-+	}							\
-+}
-+
-+DEFINE_PCM_GROUP_LOCK(lock, false, false, lock);
-+DEFINE_PCM_GROUP_LOCK(unlock, false, false, unlock);
-+DEFINE_PCM_GROUP_LOCK(lock_irq, true, false, lock);
-+DEFINE_PCM_GROUP_LOCK(unlock_irq, false, true, unlock);
- 
- /**
-  * snd_pcm_stream_lock - Lock the PCM stream
+ 	/*
 -- 
 2.51.0
 
