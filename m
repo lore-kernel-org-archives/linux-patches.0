@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AD430FF2A;
-	Mon, 13 Oct 2025 15:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FD730FF36;
+	Mon, 13 Oct 2025 15:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369737; cv=none; b=m9ghb3z1g1ospc+y2a2uKchsnBnrG+WdcChaeGZBuSt7MAMs8tir/Igy50vcXArXOJF6waveXpS4qTwJ1IqftuwWrReBCxb9wc98OJqBPxPLrVIrvlerHLovgJ3X5WZbTajcc3qF9c8++w1y6gNAzCuz3b89skrZbUAw1K6iqbw=
+	t=1760369740; cv=none; b=Ed1RuBkjujXpSqCnxsEJp1hQoLMFIbvIQCNfF6Uztlk6mqxFw/I0IEfGj6DWzz4+rrZOmiqFcnw5L+AqdcW95y2ivxB2uCHoNxVRYr3XFcYhD06B4YjKyEHofaLiNsapbazlLILRUrBh4jzBERPXIT1Gx4XSSIC7ZWCbXLoH+kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369737; c=relaxed/simple;
-	bh=XS3h7OoWWNRuC/o+2LGS3o7ur6gZIQ/hVrG22fIQYHw=;
+	s=arc-20240116; t=1760369740; c=relaxed/simple;
+	bh=AJSIbboQUCB5UG3bSXpohaCrmQl6IvYpvm6BZjArdtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nSGS0nO3CO5Bv0eVRImWikpyfujK4EckTOpNAz+XRsuQdNoioG6+wn/4QmGPAIxx9VHyAVBtn4Y0vKmNEL/eg7tMetE2/JMUjz9TXSWKmSF5H8JtedvnaO52zeozMOsKNsoEUDufPly3x6b3gbMRukNTJ3AQs5S+jDInsun4J+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWbIlqAf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daCKQhB56tob4oyd8K3vo2wnzlBKsCymXSDYaCoRygxwA9qlaG5TNdDMf4XKy4mbkDsKEd0bhDUmeQWXNMoKUHuI3eyc8qTBmZ1L1//EgrcHCTaGB+ra5Z5D7WkJp+HJvFvx9vLDEwbRpxXIqqOW+oopxcyB9RSM02qeKV0iHjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvpbWOWC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWbIlqAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019B1C116D0;
-	Mon, 13 Oct 2025 15:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvpbWOWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E52C2BC86;
+	Mon, 13 Oct 2025 15:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369737;
-	bh=XS3h7OoWWNRuC/o+2LGS3o7ur6gZIQ/hVrG22fIQYHw=;
+	s=korg; t=1760369740;
+	bh=AJSIbboQUCB5UG3bSXpohaCrmQl6IvYpvm6BZjArdtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWbIlqAfUtc/6lHmMW47pUs82C9vcMmvDZ0Dpi2omLPnwzkgERX8r93NQ0MiLXHGj
-	 r2SLxQ6MiVbOtOQFVJ5xdG0jW4eDuMrLG/1u4Se/IK1uTK++j9PY1Ipa82KZKKDYIZ
-	 DR1pFhLSu3yJZZvbzOp/twCtfpxcjf3/Ciqi4cDE=
+	b=vvpbWOWC+56DJmAWvvA94x4hCIHUNM8exkZT4NdMCeNUD2QZMDX72byISpKCfehgM
+	 62HPCbo0N4ikiuV8popsPCt77ZRuDLoOQfwYvI9B3laZbOJohmTPUsW5o5TG1Qur0C
+	 l6oW7DIYS5VKpOIqe8h5ggUBGN0MgmLCKXl/7A78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 352/563] RDMA/cm: Rate limit destroy CM ID timeout error message
-Date: Mon, 13 Oct 2025 16:43:33 +0200
-Message-ID: <20251013144424.020793365@linuxfoundation.org>
+Subject: [PATCH 6.17 353/563] wifi: mt76: mt7996: Fix mt7996_mcu_sta_ba wcid configuration
+Date: Mon, 13 Oct 2025 16:43:34 +0200
+Message-ID: <20251013144424.057829948@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -46,46 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 2bbe1255fcf19c5eb300efb6cb5ad98d66fdae2e ]
+[ Upstream commit fe219a41adaf5354c59e75ebb642b8cb8a851d38 ]
 
-When the destroy CM ID timeout kicks in, you typically get a storm of
-them which creates a log flooding. Hence, change pr_err() to
-pr_err_ratelimited() in cm_destroy_id_wait_timeout().
+Fix the wcid pointer used in mt7996_mcu_sta_ba routine to properly
+support MLO scenario.
 
-Fixes: 96d9cbe2f2ff ("RDMA/cm: add timeout to cm_destroy_id wait")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Link: https://patch.msgid.link/20250912100525.531102-1-haakon.bugge@oracle.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250708-mt7996-mlo-fixes-v2-v1-2-f2682818a8a3@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c   |  6 ++++--
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    | 12 +++++++-----
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h |  3 ++-
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 92678e438ff4d..01bede8ba1055 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -1049,8 +1049,8 @@ static noinline void cm_destroy_id_wait_timeout(struct ib_cm_id *cm_id,
- 	struct cm_id_private *cm_id_priv;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 84f731b387d20..8a8a478391646 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1327,11 +1327,13 @@ mt7996_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 		case IEEE80211_AMPDU_RX_START:
+ 			mt76_rx_aggr_start(&dev->mt76, &msta_link->wcid, tid,
+ 					   ssn, params->buf_size);
+-			ret = mt7996_mcu_add_rx_ba(dev, params, link, true);
++			ret = mt7996_mcu_add_rx_ba(dev, params, link,
++						   msta_link, true);
+ 			break;
+ 		case IEEE80211_AMPDU_RX_STOP:
+ 			mt76_rx_aggr_stop(&dev->mt76, &msta_link->wcid, tid);
+-			ret = mt7996_mcu_add_rx_ba(dev, params, link, false);
++			ret = mt7996_mcu_add_rx_ba(dev, params, link,
++						   msta_link, false);
+ 			break;
+ 		case IEEE80211_AMPDU_TX_OPERATIONAL:
+ 			mtxq->aggr = true;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 0be03eb3cf461..e6db3e0b2ffda 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1149,9 +1149,8 @@ int mt7996_mcu_set_timing(struct mt7996_phy *phy, struct ieee80211_vif *vif,
+ static int
+ mt7996_mcu_sta_ba(struct mt7996_dev *dev, struct mt76_vif_link *mvif,
+ 		  struct ieee80211_ampdu_params *params,
+-		  bool enable, bool tx)
++		  struct mt76_wcid *wcid, bool enable, bool tx)
+ {
+-	struct mt76_wcid *wcid = (struct mt76_wcid *)params->sta->drv_priv;
+ 	struct sta_rec_ba_uni *ba;
+ 	struct sk_buff *skb;
+ 	struct tlv *tlv;
+@@ -1185,14 +1184,17 @@ int mt7996_mcu_add_tx_ba(struct mt7996_dev *dev,
+ 	if (enable && !params->amsdu)
+ 		msta_link->wcid.amsdu = false;
  
- 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
--	pr_err("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
--	       cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
-+	pr_err_ratelimited("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
-+			   cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
+-	return mt7996_mcu_sta_ba(dev, &link->mt76, params, enable, true);
++	return mt7996_mcu_sta_ba(dev, &link->mt76, params, &msta_link->wcid,
++				 enable, true);
  }
  
- static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
+ int mt7996_mcu_add_rx_ba(struct mt7996_dev *dev,
+ 			 struct ieee80211_ampdu_params *params,
+-			 struct mt7996_vif_link *link, bool enable)
++			 struct mt7996_vif_link *link,
++			 struct mt7996_sta_link *msta_link, bool enable)
+ {
+-	return mt7996_mcu_sta_ba(dev, &link->mt76, params, enable, false);
++	return mt7996_mcu_sta_ba(dev, &link->mt76, params, &msta_link->wcid,
++				 enable, false);
+ }
+ 
+ static void
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 8509d508e1e19..bbd4679edc9d3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -608,7 +608,8 @@ int mt7996_mcu_add_tx_ba(struct mt7996_dev *dev,
+ 			 struct mt7996_sta_link *msta_link, bool enable);
+ int mt7996_mcu_add_rx_ba(struct mt7996_dev *dev,
+ 			 struct ieee80211_ampdu_params *params,
+-			 struct mt7996_vif_link *link, bool enable);
++			 struct mt7996_vif_link *link,
++			 struct mt7996_sta_link *msta_link, bool enable);
+ int mt7996_mcu_update_bss_color(struct mt7996_dev *dev,
+ 				struct mt76_vif_link *mlink,
+ 				struct cfg80211_he_bss_color *he_bss_color);
 -- 
 2.51.0
 
