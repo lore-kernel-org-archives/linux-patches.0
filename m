@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF522F3C31;
-	Mon, 13 Oct 2025 15:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9517931579B;
+	Mon, 13 Oct 2025 15:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369249; cv=none; b=XaDpJBmk7sv24WDJSCOsgYOkk/TybFf+hB6+bRP4oNIKrbe+u3m2FV8nGQ1Yy8KAWDoxNDLGeHTpLIFErSoGHs8gu594G2cEsuR18P6KbnBMg+idV9Na2YwggIq9+eD6jxG0c5Vd9X4aY8cNppK8UEfAw4RPPAhJ98dYs6+jKAM=
+	t=1760369252; cv=none; b=hl1Nic6TU0/lJ8M723FqJ64jWbGYRlhJwNBM3IOpdj43ulqI6tFABpSGA6sdAbcieQh2z1vD6jSh3gJVTCiP5vo5fwShyFLTCAqdROJKLoebDwqfzw2zwUvnQZEwDmekyin6z6LlwRwEJu1CWqKl4m1yZyUbM3LB63/qsff5wZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369249; c=relaxed/simple;
-	bh=/7LyWUBIeBGvVgy8h+QDDxGgGqCBi9sRM2rLDB2txJM=;
+	s=arc-20240116; t=1760369252; c=relaxed/simple;
+	bh=EjdAHeqadfOuYpKUVm9vsMAjjp50uewsoGMQMpcK4oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cl1SzR9DC7v/DTFZiZaMW0/UDKMXxvw2up2fk/wzvRr4Bn/i/AXXmw0ecPtJkLePahypvuJ2GzY5XzHdIeBuhl0LZOkWQ9lG4ppviWf8NqnZuGYAKG43pJFG5R6ToYqRFHi13aAO6HMQcGP/2xA9wQpzj0S5Y3O54jPHw9NSY8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwCYPC1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XH2K2fWvaf/X9MwNfsMAuFV1ixLTvQqO4EGcifj7AzhvfSjFnU9uVbQKYK7x085A7wusyi8ghYBm+ylrtLZ/2xaUP7IYMe9mRHlr1Vn6Fn2Mll0h6N6HvtILsCeu60i/hZKMxY5am9pGb+rBfcaVFP8HoxqXa7fLr06h/AdCT8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmMtIclI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwCYPC1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE30C4CEFE;
-	Mon, 13 Oct 2025 15:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmMtIclI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180DCC4CEE7;
+	Mon, 13 Oct 2025 15:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369249;
-	bh=/7LyWUBIeBGvVgy8h+QDDxGgGqCBi9sRM2rLDB2txJM=;
+	s=korg; t=1760369252;
+	bh=EjdAHeqadfOuYpKUVm9vsMAjjp50uewsoGMQMpcK4oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwCYPC1DSul307AKhKkLYvb0Pvekk5a5HzX2dzAtVZZkrNCJl+j/zKrqGJU9JphYT
-	 fG8se82Fk5ps8v9+mqYWieJZVaaSKZEi9G/WE7zgpb0CI1KN7vvrig6Y5LBrhXie/P
-	 ZhqsvxgryW3Sfue4uRzJWoyprErRy7zFLyJ4zexY=
+	b=VmMtIclI6iQXZdiZsjXwMl3D0EX+td4U/5WC4nksfMcJDAnDLu/r2mIiOX4kSXUMv
+	 2BHeu7NyB2DLDuc8/xX4mPOV2l8VCyunBnAdbjycPg1BgGv2lxiiGeET9oiU+HTCUe
+	 zlbQ43odFZfcU6ckLrxE+E9n+WvjLo1YsWdiQT8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sven Peter <sven@kernel.org>,
 	Janne Grunau <j@jannau.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 180/563] arm64: dts: apple: t600x: Add missing WiFi properties
-Date: Mon, 13 Oct 2025 16:40:41 +0200
-Message-ID: <20251013144417.805829656@linuxfoundation.org>
+Subject: [PATCH 6.17 181/563] arm64: dts: apple: t600x: Add bluetooth device nodes
+Date: Mon, 13 Oct 2025 16:40:42 +0200
+Message-ID: <20251013144417.841980285@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -55,16 +55,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 3050713d84f58d2e4ba463c5474092fa6738c527 ]
+[ Upstream commit c34e2ec6a84ea3f7a01d8fcd3073f858c4f47605 ]
 
-Add compatible and antenna-sku properties to the shared node and
-brcm,board-type property to individuall board device trees.
+Add bluetooth PCIe device nodes to specify per device brcm,board-type
+and provide the bootloader filled "local-bd-address" and calibration
+data.
 
 Signed-off-by: Hector Martin <marcan@marcan.st>
 Reviewed-by: Neal Gompa <neal@gompa.dev>
 Reviewed-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://lore.kernel.org/r/20250823-apple-dt-sync-6-17-v2-2-6dc0daeb4786@jannau.net
+Link: https://lore.kernel.org/r/20250823-apple-dt-sync-6-17-v2-3-6dc0daeb4786@jannau.net
 Signed-off-by: Sven Peter <sven@kernel.org>
 Stable-dep-of: 6313115c55f4 ("arm64: dts: apple: Add ethernet0 alias for J375 template")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -75,79 +76,79 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  arch/arm64/boot/dts/apple/t6001-j316c.dts      | 4 ++++
  arch/arm64/boot/dts/apple/t6001-j375c.dts      | 4 ++++
  arch/arm64/boot/dts/apple/t6002-j375d.dts      | 4 ++++
- arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi | 2 ++
- arch/arm64/boot/dts/apple/t600x-j375.dtsi      | 2 ++
- 8 files changed, 28 insertions(+)
+ arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi | 8 ++++++++
+ arch/arm64/boot/dts/apple/t600x-j375.dtsi      | 8 ++++++++
+ 8 files changed, 40 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/apple/t6000-j314s.dts b/arch/arm64/boot/dts/apple/t6000-j314s.dts
-index c9e192848fe3f..ac35870ca129c 100644
+index ac35870ca129c..1430b91ff1b15 100644
 --- a/arch/arm64/boot/dts/apple/t6000-j314s.dts
 +++ b/arch/arm64/boot/dts/apple/t6000-j314s.dts
-@@ -16,3 +16,7 @@ / {
- 	compatible = "apple,j314s", "apple,t6000", "apple,arm-platform";
- 	model = "Apple MacBook Pro (14-inch, M1 Pro, 2021)";
+@@ -20,3 +20,7 @@ / {
+ &wifi0 {
+ 	brcm,board-type = "apple,maldives";
  };
 +
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,maldives";
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6000-j316s.dts b/arch/arm64/boot/dts/apple/t6000-j316s.dts
-index ff1803ce23001..77d6d8c14d741 100644
+index 77d6d8c14d741..da0cbe7d96736 100644
 --- a/arch/arm64/boot/dts/apple/t6000-j316s.dts
 +++ b/arch/arm64/boot/dts/apple/t6000-j316s.dts
-@@ -16,3 +16,7 @@ / {
- 	compatible = "apple,j316s", "apple,t6000", "apple,arm-platform";
- 	model = "Apple MacBook Pro (16-inch, M1 Pro, 2021)";
+@@ -20,3 +20,7 @@ / {
+ &wifi0 {
+ 	brcm,board-type = "apple,madagascar";
  };
 +
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,madagascar";
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6001-j314c.dts b/arch/arm64/boot/dts/apple/t6001-j314c.dts
-index 1761d15b98c12..0a5655792a8f1 100644
+index 0a5655792a8f1..c37097dcfdb30 100644
 --- a/arch/arm64/boot/dts/apple/t6001-j314c.dts
 +++ b/arch/arm64/boot/dts/apple/t6001-j314c.dts
-@@ -16,3 +16,7 @@ / {
- 	compatible = "apple,j314c", "apple,t6001", "apple,arm-platform";
- 	model = "Apple MacBook Pro (14-inch, M1 Max, 2021)";
+@@ -20,3 +20,7 @@ / {
+ &wifi0 {
+ 	brcm,board-type = "apple,maldives";
  };
 +
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,maldives";
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6001-j316c.dts b/arch/arm64/boot/dts/apple/t6001-j316c.dts
-index 750e9beeffc0a..9c215531ea543 100644
+index 9c215531ea543..3bc6e0c3294cf 100644
 --- a/arch/arm64/boot/dts/apple/t6001-j316c.dts
 +++ b/arch/arm64/boot/dts/apple/t6001-j316c.dts
-@@ -16,3 +16,7 @@ / {
- 	compatible = "apple,j316c", "apple,t6001", "apple,arm-platform";
- 	model = "Apple MacBook Pro (16-inch, M1 Max, 2021)";
+@@ -20,3 +20,7 @@ / {
+ &wifi0 {
+ 	brcm,board-type = "apple,madagascar";
  };
 +
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,madagascar";
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6001-j375c.dts b/arch/arm64/boot/dts/apple/t6001-j375c.dts
-index 62ea437b58b25..88ca2037556ce 100644
+index 88ca2037556ce..2e7c23714d4d0 100644
 --- a/arch/arm64/boot/dts/apple/t6001-j375c.dts
 +++ b/arch/arm64/boot/dts/apple/t6001-j375c.dts
-@@ -16,3 +16,7 @@ / {
- 	compatible = "apple,j375c", "apple,t6001", "apple,arm-platform";
- 	model = "Apple Mac Studio (M1 Max, 2022)";
+@@ -20,3 +20,7 @@ / {
+ &wifi0 {
+ 	brcm,board-type = "apple,okinawa";
  };
 +
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,okinawa";
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6002-j375d.dts b/arch/arm64/boot/dts/apple/t6002-j375d.dts
-index 3365429bdc8be..f56d13b37eaff 100644
+index f56d13b37eaff..2b7f80119618a 100644
 --- a/arch/arm64/boot/dts/apple/t6002-j375d.dts
 +++ b/arch/arm64/boot/dts/apple/t6002-j375d.dts
-@@ -38,6 +38,10 @@ hpm5: usb-pd@3a {
- 	};
+@@ -42,6 +42,10 @@ &wifi0 {
+ 	brcm,board-type = "apple,okinawa";
  };
  
-+&wifi0 {
++&bluetooth0 {
 +	brcm,board-type = "apple,okinawa";
 +};
 +
@@ -155,37 +156,57 @@ index 3365429bdc8be..f56d13b37eaff 100644
  
  /delete-node/ &ps_atc2_usb_aon_die1;
 diff --git a/arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi b/arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi
-index 22ebc78e120bf..b699672a5543c 100644
+index b699672a5543c..c0aac59a6fae4 100644
 --- a/arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi
 +++ b/arch/arm64/boot/dts/apple/t600x-j314-j316.dtsi
-@@ -99,9 +99,11 @@ &port00 {
- 	/* WLAN */
- 	bus-range = <1 1>;
- 	wifi0: wifi@0,0 {
-+		compatible = "pci14e4,4433";
- 		reg = <0x10000 0x0 0x0 0x0 0x0>;
- 		/* To be filled by the loader */
- 		local-mac-address = [00 10 18 00 00 10];
-+		apple,antenna-sku = "XX";
+@@ -13,6 +13,7 @@
+ 
+ / {
+ 	aliases {
++		bluetooth0 = &bluetooth0;
+ 		serial0 = &serial0;
+ 		wifi0 = &wifi0;
  	};
+@@ -105,6 +106,13 @@ wifi0: wifi@0,0 {
+ 		local-mac-address = [00 10 18 00 00 10];
+ 		apple,antenna-sku = "XX";
+ 	};
++
++	bluetooth0: bluetooth@0,1 {
++		compatible = "pci14e4,5f71";
++		reg = <0x10100 0x0 0x0 0x0 0x0>;
++		/* To be filled by the loader */
++		local-bd-address = [00 00 00 00 00 00];
++	};
  };
  
+ &port01 {
 diff --git a/arch/arm64/boot/dts/apple/t600x-j375.dtsi b/arch/arm64/boot/dts/apple/t600x-j375.dtsi
-index d5b985ad56793..95560bf3798bf 100644
+index 95560bf3798bf..ed38acc0dfc36 100644
 --- a/arch/arm64/boot/dts/apple/t600x-j375.dtsi
 +++ b/arch/arm64/boot/dts/apple/t600x-j375.dtsi
-@@ -84,9 +84,11 @@ &port00 {
- 	/* WLAN */
- 	bus-range = <1 1>;
- 	wifi0: wifi@0,0 {
-+		compatible = "pci14e4,4433";
- 		reg = <0x10000 0x0 0x0 0x0 0x0>;
- 		/* To be filled by the loader */
- 		local-mac-address = [00 10 18 00 00 10];
-+		apple,antenna-sku = "XX";
+@@ -11,6 +11,7 @@
+ 
+ / {
+ 	aliases {
++		bluetooth0 = &bluetooth0;
+ 		serial0 = &serial0;
+ 		wifi0 = &wifi0;
  	};
+@@ -90,6 +91,13 @@ wifi0: wifi@0,0 {
+ 		local-mac-address = [00 10 18 00 00 10];
+ 		apple,antenna-sku = "XX";
+ 	};
++
++	bluetooth0: bluetooth@0,1 {
++		compatible = "pci14e4,5f71";
++		reg = <0x10100 0x0 0x0 0x0 0x0>;
++		/* To be filled by the loader */
++		local-bd-address = [00 00 00 00 00 00];
++	};
  };
  
+ &port01 {
 -- 
 2.51.0
 
