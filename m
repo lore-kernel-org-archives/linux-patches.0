@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCD630BBBE
-	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 22:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACE530C34D
+	for <patches@lists.linux.dev>; Mon, 13 Oct 2025 22:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760394852; cv=none; b=LvPmD88YWw2JYfBofvKHLKGAHzb9EqP1m61PGMkm7BIoMKDyaNmLhMilBvTAa0ZwtxOdkgh0I1lG4Z2qmIasp0oCYpNJa6Fbf/BvM9FxjRHKsku7yEDRICoAzuGiipHh5MmLjhplmgRF/icNcVN+8QoCHxWCz8S9y7d68a3G+pI=
+	t=1760394853; cv=none; b=bq7nay0zOlMRgWGMVcuYpblqPYDEB5flCLAV9L2nE2kXFp91/s6qwaXhh+dZTM2+xqfe7fMsAB3VT5wr+yhNMF2p2EvMreO44irsu4cIuKPLCinft0Iiv1IzTZNYZxoWXjCGpuykkez4MUJqDySj1ODeqJJD7u2vPEHC2YBBkg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760394852; c=relaxed/simple;
-	bh=9RP78ZCyeuZdcOoGDz2lzNGdSFoAdp2DPblbuZ2TFK4=;
+	s=arc-20240116; t=1760394853; c=relaxed/simple;
+	bh=sxUh6M7tJ8CznuLQWRkaK96SERLOcZ1j/6iCSCkBhqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elE7fPfoeazjk98d+UwCmHyLNJfuBwGIzdHEXuZ24fk/2soM+PlMN3FKMIKW7D5HZwvAFNwhPjEra7EHxkdHZWREUhMaUf7BsD4VG9mgEg+TBqVR6j70FBHXWLUzhj2FxgF5B0ElpKxi/15TEJrKcPqOKhB1QPVtw2OIA6Dt5Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=n02TDglb; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=QqLhH5YDXBSbGQ3DtrfWn+bd+np8WKHIECIUNwDh88KiytUAmbxRW6j8WhWgD/5gHr2tlo9z3b293ic7WcMFoaPsv2jgj1rkzT7wCAkXjk+Iuy4W8QdBPv0Jglbp3F0BieMZyvfSiLzVbhB1LPU4YV48WZeXasthPLq+IahhkBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UkXW9Hfu; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n02TDglb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UkXW9Hfu"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1760394851; x=1791930851;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=9RP78ZCyeuZdcOoGDz2lzNGdSFoAdp2DPblbuZ2TFK4=;
-  b=n02TDglbVGpaSr4pdINT0k+r/gxMXjrp7QMuX9gE4G64IEIzEtV7wYpX
-   3IQZKpBbSm3tmY3W9unlrweurlbecL7GNBgJLLRWrwZJ3IXvB4IU+ls9D
-   ffoEXe/RUc350NXY69B6qHUS81wl7cgXKw6nq5Q9IBFS0DDyy7O0HptmI
-   csA/D7e7MzD7l4NRwByUVlZPgy/uHijosb3ywQ2aI/HALtkN7jtHgqa1i
-   4jtAAnx12Du7nYuX8Mv3X7foWmeSgccmsSOV5EjSXRGnhrxQ2I3e5fWky
-   WOrhbKxwzpFUaI9bZayEy5bCTS3fzSzc8icHfh20clXK1pTNamgi25Mn9
-   A==;
-X-CSE-ConnectionGUID: 37NeMJp3SqWIfVKIM44lmw==
-X-CSE-MsgGUID: 7iiRrd2iQE6MiwZHAjEZKA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="85168840"
+  bh=sxUh6M7tJ8CznuLQWRkaK96SERLOcZ1j/6iCSCkBhqg=;
+  b=UkXW9Hfuo5OEYf5E2YdrQh9Ln+JhxKVrC5j5zow+zngfglV2qu9gf9/C
+   cZjSgMtEBhyIrTststgexHpHmEqmIIa6IfLNdZeciJuYPR/mlHXR24FCY
+   fSR2L0XPpH3ZhxPHaUmakVi7pcI4P//z9gdYwLQ+VU9Xqc1VijLtke1Fk
+   k6K+HMBgmIxNcu4gtbqefs7P9x4Bf+Y4WKpHHH63yUcQRtx2bD6belyDX
+   Watui/3iWxrwiI7T3Pr2Xl0Ct1tIXRhnJ3sI8jmfBm8OmazfwIoBRg7BE
+   niTV62DQ76hnYeP5amHwbkhW6ej1ZbPYJo8Sh095o39bqkUpcvmmwynqX
+   w==;
+X-CSE-ConnectionGUID: AnhCxe3nReKkzHxwwUDXZw==
+X-CSE-MsgGUID: NczlvearS/euS389GBNUtA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="85168866"
 X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="85168840"
+   d="scan'208";a="85168866"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:01 -0700
-X-CSE-ConnectionGUID: a79fFP8oSYGcXLSQXyLOWQ==
-X-CSE-MsgGUID: yTkeixyqQV+jSTxG1kupKA==
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:02 -0700
+X-CSE-ConnectionGUID: PWNYpwcUSzaHP4xWSXjXsg==
+X-CSE-MsgGUID: dqbsL7mVRbad+it1PbIC+A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,226,1754982000"; 
-   d="scan'208";a="182145289"
+   d="scan'208";a="182145304"
 Received: from sramkris-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.79])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:01 -0700
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 15:34:02 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 12/31] x86,fs/resctrl: Add an architectural hook called for each mount
-Date: Mon, 13 Oct 2025 15:33:26 -0700
-Message-ID: <20251013223348.103390-13-tony.luck@intel.com>
+Subject: [PATCH v12 17/31] x86/resctrl: Find and enable usable telemetry events
+Date: Mon, 13 Oct 2025 15:33:31 -0700
+Message-ID: <20251013223348.103390-18-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013223348.103390-1-tony.luck@intel.com>
 References: <20251013223348.103390-1-tony.luck@intel.com>
@@ -71,84 +71,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enumeration of Intel telemetry events is an asynchronous process involving
-several mutually dependent drivers added as auxiliary devices during
-the device_initcall() phase of Linux boot. The process finishes after
-the probe functions of these drivers completes. But this happens after
-resctrl_arch_late_init() is executed.
+The INTEL_PMT_TELEMETRY driver provides telemetry region structures of the
+types requested by resctrl.
 
-Tracing the enumeration process shows that it does complete a full seven
-seconds before the earliest possible mount of the resctrl file system
-(when included in /etc/fstab for automatic mount by systemd).
+Scan these structures to discover which pass sanity checks to derive
+a list of valid regions:
 
-Add a hook at the beginning of the mount code that will be used
-to check for telemetry events and initialize if any are found.
+1) They have guid known to resctrl.
+2) They have a valid package ID.
+3) The enumerated size of the MMIO region matches the expected
+   value from the XML description file.
 
-Call the hook on every attempted mount. Expectations are that
-most actions (like enumeration) will only need to be performed
-on the first call.
+Mark regions that fail any of these checks as unusable.
 
-resctrl filesystem calls the hook with no locks held. Architecture code
-is responsible for any required locking.
+Enable events that usable telemetry regions are responsible for.
+
+Note that it is architecturally possible that some telemetry events
+are only supported by a subset of the packages in the system. It
+is not expected that systems will ever do this. If they do the user
+will see event files in resctrl that always return "Unavailable".
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- include/linux/resctrl.h            | 6 ++++++
- arch/x86/kernel/cpu/resctrl/core.c | 9 +++++++++
- fs/resctrl/rdtgroup.c              | 2 ++
- 3 files changed, 17 insertions(+)
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 53 ++++++++++++++++++++++++-
+ 1 file changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index de66928e9430..6350064ac8be 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -511,6 +511,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- void resctrl_online_cpu(unsigned int cpu);
- void resctrl_offline_cpu(unsigned int cpu);
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 036086404e28..a500b5d384fb 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -20,9 +20,11 @@
+ #include <linux/intel_pmt_features.h>
+ #include <linux/intel_vsec.h>
+ #include <linux/overflow.h>
++#include <linux/printk.h>
+ #include <linux/resctrl.h>
+ #include <linux/resctrl_types.h>
+ #include <linux/stddef.h>
++#include <linux/topology.h>
+ #include <linux/types.h>
  
+ #include "internal.h"
+@@ -114,12 +116,59 @@ static struct event_group *known_perf_event_groups[] = {
+ 	for (_peg = (_grp); _peg < &_grp[ARRAY_SIZE(_grp)]; _peg++)	\
+ 		if ((*_peg)->pfg)
+ 
+-/* Stub for now */
+-static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
 +/*
-+ * Architecture hook called at beginning of each file system mount attempt.
-+ * No locks are held.
++ * Clear the address field of regions that did not pass the checks in
++ * skip_telem_region() so they will not be used by intel_aet_read_event().
++ * This is safe to do because intel_pmt_get_regions_by_feature() allocates
++ * a new pmt_feature_group structure to return to each caller and only makes
++ * use of the pmt_feature_group::kref field when intel_pmt_put_feature_group()
++ * returns the structure.
 + */
-+void resctrl_arch_pre_mount(void);
-+
- /**
-  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
-  *			      for this resource and domain.
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 7670ce7cdcf1..5b6af3b48de3 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -721,6 +721,15 @@ static int resctrl_arch_offline_cpu(unsigned int cpu)
- 	return 0;
- }
- 
-+void resctrl_arch_pre_mount(void)
++static void mark_telem_region_unusable(struct telemetry_region *tr)
 +{
-+	static atomic_t only_once = ATOMIC_INIT(0);
-+	int old = 0;
-+
-+	if (!atomic_try_cmpxchg(&only_once, &old, 1))
-+		return;
++	tr->addr = NULL;
 +}
 +
- enum {
- 	RDT_FLAG_CMT,
- 	RDT_FLAG_MBM_TOTAL,
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 6112e1b83b87..f9bfbdeecf94 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2720,6 +2720,8 @@ static int rdt_get_tree(struct fs_context *fc)
- 	struct rdt_resource *r;
- 	int ret;
- 
-+	resctrl_arch_pre_mount();
++static bool skip_telem_region(struct telemetry_region *tr, struct event_group *e)
+ {
++	if (tr->guid != e->guid)
++		return true;
++	if (tr->plat_info.package_id >= topology_max_packages()) {
++		pr_warn("Bad package %u in guid 0x%x\n", tr->plat_info.package_id,
++			tr->guid);
++		return true;
++	}
++	if (tr->size != e->mmio_size) {
++		pr_warn("MMIO space wrong size (%zu bytes) for guid 0x%x. Expected %zu bytes.\n",
++			tr->size, e->guid, e->mmio_size);
++		return true;
++	}
 +
- 	cpus_read_lock();
- 	mutex_lock(&rdtgroup_mutex);
- 	/*
+ 	return false;
+ }
+ 
++static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
++{
++	bool usable_events = false;
++
++	for (int i = 0; i < p->count; i++) {
++		if (skip_telem_region(&p->regions[i], e)) {
++			mark_telem_region_unusable(&p->regions[i]);
++			continue;
++		}
++		usable_events = true;
++	}
++
++	if (!usable_events)
++		return false;
++
++	for (int j = 0; j < e->num_events; j++)
++		resctrl_enable_mon_event(e->evts[j].id, true,
++					 e->evts[j].bin_bits, &e->evts[j]);
++
++	return true;
++}
++
+ /*
+  * Make a request to the INTEL_PMT_TELEMETRY driver for a copy of the
+  * pmt_feature_group for a specific feature. If there is one, the returned
 -- 
 2.51.0
 
