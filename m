@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC27307AD6;
-	Mon, 13 Oct 2025 15:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2F71E9B0D;
+	Mon, 13 Oct 2025 15:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369859; cv=none; b=S8zdi5abOyj8EuVmXbzoQEVHckMwLEgxzMSijJra78AecJSy0QHW7tBQ2R/yuGCovhhkdJ+eOyR9QQfaN+ibHhNC3SAQ1Hxrxz32YtR0z/oHKare9v4eRxFhDi0jBtT3t74Mg9qI+9T/57fvJVqgLUKwT3urfnB4pOT1VIRo14g=
+	t=1760369862; cv=none; b=hH7+vlPCcYO2ceBjT7nfmXdSZ5AaUIZc3N3zOePrBgdPRAD65aJVQsYng7Ia21sLtg1UvhvnDN8TJhrXb0nJTloPrYKCu0Z8VaNjuXAmnC9hhA+eL2vViaFxyrya0h04Hed8eV4+BqauC49o1zyH1tvvl/gqeKguHHju6bJMnYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369859; c=relaxed/simple;
-	bh=z1o9Jr6xR/a/tgjrvQqSHFOfmyGi5o+onPaPpJnppCo=;
+	s=arc-20240116; t=1760369862; c=relaxed/simple;
+	bh=J0ni+ePdhT6jvaXC0DAXL5xGGjvQdp5LZ2ru2m3EH/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXCfkQRhfy1z4ZiPa/vhOZOtoliTm4uXQd0SFlndwvgRgTYLJa82TZmMkKlALhKrCQlatlxaTJHq5okiMtMdsC+EpsjFKPyfhhgY4OnV3UUaHwkMzgamN6D8E328OPeD2eVYHGfCAtWGCbhNqj2WX4h23tHzsAGt81Lrqd0+jCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bomraiyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyQiyBP5D8dXNrc1VHnNEzs7/9RhS1PeqyqRV2GZ6oybHHpj46L7Ib9MZdRRwRdZB6D7DqXoDw3/nGMx75XWAnJsGEDpwiiNNvsIySXO5XlDSltDrZsmjhuyMM4LAMzvBUXJ9QNevaCaZTPEQOwivmnYB2Nfq3J90BQ+iuj44sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RI4pWy/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bomraiyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC20AC4CEE7;
-	Mon, 13 Oct 2025 15:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RI4pWy/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789B8C4CEE7;
+	Mon, 13 Oct 2025 15:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369859;
-	bh=z1o9Jr6xR/a/tgjrvQqSHFOfmyGi5o+onPaPpJnppCo=;
+	s=korg; t=1760369861;
+	bh=J0ni+ePdhT6jvaXC0DAXL5xGGjvQdp5LZ2ru2m3EH/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bomraiyy1gtq2774CthHkqAy0cQXcH8vF4VfIC7b4Df9ULnc325SRuH/mXiGDCWQv
-	 jPP2UA3bNY5PRTZPgiPx/zQdsoNGltona4nWvPop6zpxQOahC06X52MAlEGV57DHFc
-	 rQjmvH4WhQAulvEzRfKMIYpxdwxFOTCCQ2UawtMg=
+	b=RI4pWy/UevrKI6AeLZwmdsWfue+fkNZ02vkHzzTqSYYLze488hlUsyCR6emI+41tm
+	 TyDPVgh/n9M62xjlhenPsH+IaNh3iK/6s84A7qSAdeWeuKYTk5LZ0YBjLU13XvqZIo
+	 fIZy0iNQbOhk49qzsQpejKigIUdqfjSfWpdZ9XWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	wangzijie <wangzijie1@honor.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 394/563] wifi: ath12k: fix the fetching of combined rssi
-Date: Mon, 13 Oct 2025 16:44:15 +0200
-Message-ID: <20251013144425.557789671@linuxfoundation.org>
+Subject: [PATCH 6.17 377/563] f2fs: fix zero-sized extent for precache extents
+Date: Mon, 13 Oct 2025 16:43:58 +0200
+Message-ID: <20251013144424.933567439@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -53,90 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: wangzijie <wangzijie1@honor.com>
 
-[ Upstream commit 7695fa71c1d50a375e54426421acbc8d457bc5a3 ]
+[ Upstream commit 8175c864391753b210f3dcfae1aeed686a226ebb ]
 
-Currently, host fetches combined rssi from rssi_comb in struct
-hal_rx_phyrx_rssi_legacy_info.
+Script to reproduce:
+f2fs_io write 1 0 1881 rand dsync testfile
+f2fs_io fallocate 0 7708672 4096 testfile
+f2fs_io write 1 1881 1 rand buffered testfile
+fsync testfile
+umount
+mount
+f2fs_io precache_extents testfile
 
-rssi_comb is 8th to 15th bits of the second to last variable.
-rssi_comb_ppdu is the 0th to 7th of the last variable.
+When the data layout is something like this:
+dnode1:                     dnode2:
+[0]      A                  [0]    NEW_ADDR
+[1]      A+1                [1]    0x0
+...
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
 
-When bandwidth = 20MHz, rssi_comb = rssi_comb_ppdu. But when bandwidth >
-20MHz, rssi_comb < rssi_comb_ppdu because rssi_comb only includes power
-of primary 20 MHz while rssi_comb_ppdu includes power of active
-RUs/subchannels. So should fetch combined rssi from rssi_comb_ppdu.
+During precache_extents, we map the last block(valid blkaddr) in dnode1:
+map->m_flags |= F2FS_MAP_MAPPED;
+map->m_pblk = blkaddr(valid blkaddr);
+map->m_len = 1;
+then we goto next_dnode, meet the first block in dnode2(hole), goto sync_out:
+map->m_flags & F2FS_MAP_MAPPED == true, and we make zero-sized extent:
 
-Also related macro definitions are too long, rename them.
+map->m_len = 1
+ofs = start_pgofs - map->m_lblk = 1882 - 1881 = 1
+ei.fofs = start_pgofs = 1882
+ei.len = map->m_len - ofs = 1 - 1 = 0
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Rebased on patch[1], this patch can cover these cases to avoid zero-sized extent:
+A,B,C is valid blkaddr
+case1:
+dnode1:                     dnode2:
+[0]      A                  [0]    NEW_ADDR
+[1]      A+1                [1]    0x0
+...                         ....
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250722095934.67-4-kang.yang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+case2:
+dnode1:                     dnode2:
+[0]      A                  [0]    C (C!=B+1)
+[1]      A+1                [1]    C+1
+...                         ....
+[1016]   A+1016
+[1017]   B (B!=A+1017)      [1017] 0x0
+
+case3:
+dnode1:                     dnode2:
+[0]      A                  [0]    C (C!=B+2)
+[1]      A+1                [1]    C+1
+...                         ....
+[1015]   A+1015
+[1016]   B (B!=A+1016)
+[1017]   B+1                [1017] 0x0
+
+[1] https://lore.kernel.org/linux-f2fs-devel/20250912081250.44383-1-chao@kernel.org/
+
+Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 8 ++++----
- drivers/net/wireless/ath/ath12k/hal_rx.h | 9 +++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ fs/f2fs/data.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index e93ede5e6197c..abd611ac37f06 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -1655,18 +1655,18 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k *ar,
- 		const struct hal_rx_phyrx_rssi_legacy_info *rssi = tlv_data;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 838eae39d3b19..6e39a15a942a9 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1778,9 +1778,10 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
+ 		if (map->m_flags & F2FS_MAP_MAPPED) {
+ 			unsigned int ofs = start_pgofs - map->m_lblk;
  
- 		info[0] = __le32_to_cpu(rssi->info0);
--		info[1] = __le32_to_cpu(rssi->info1);
-+		info[2] = __le32_to_cpu(rssi->info2);
- 
- 		/* TODO: Please note that the combined rssi will not be accurate
- 		 * in MU case. Rssi in MU needs to be retrieved from
- 		 * PHYRX_OTHER_RECEIVE_INFO TLV.
- 		 */
- 		ppdu_info->rssi_comb =
--			u32_get_bits(info[1],
--				     HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO1_RSSI_COMB);
-+			u32_get_bits(info[2],
-+				     HAL_RX_RSSI_LEGACY_INFO_INFO2_RSSI_COMB_PPDU);
- 
- 		ppdu_info->bw = u32_get_bits(info[0],
--					     HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RX_BW);
-+					     HAL_RX_RSSI_LEGACY_INFO_INFO0_RX_BW);
- 		break;
- 	}
- 	case HAL_PHYRX_COMMON_USER_INFO: {
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
-index 801a5f6d3458b..d1ad7747b82c4 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
-@@ -483,15 +483,16 @@ enum hal_rx_ul_reception_type {
- 	HAL_RECEPTION_TYPE_FRAMELESS
- };
- 
--#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RECEPTION	GENMASK(3, 0)
--#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RX_BW	GENMASK(7, 5)
--#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO1_RSSI_COMB	GENMASK(15, 8)
-+#define HAL_RX_RSSI_LEGACY_INFO_INFO0_RECEPTION		GENMASK(3, 0)
-+#define HAL_RX_RSSI_LEGACY_INFO_INFO0_RX_BW		GENMASK(7, 5)
-+#define HAL_RX_RSSI_LEGACY_INFO_INFO1_RSSI_COMB		GENMASK(15, 8)
-+#define HAL_RX_RSSI_LEGACY_INFO_INFO2_RSSI_COMB_PPDU	GENMASK(7, 0)
- 
- struct hal_rx_phyrx_rssi_legacy_info {
- 	__le32 info0;
- 	__le32 rsvd0[39];
- 	__le32 info1;
--	__le32 rsvd1;
-+	__le32 info2;
- } __packed;
- 
- #define HAL_RX_MPDU_START_INFO0_PPDU_ID			GENMASK(31, 16)
+-			f2fs_update_read_extent_cache_range(&dn,
+-				start_pgofs, map->m_pblk + ofs,
+-				map->m_len - ofs);
++			if (map->m_len > ofs)
++				f2fs_update_read_extent_cache_range(&dn,
++					start_pgofs, map->m_pblk + ofs,
++					map->m_len - ofs);
+ 		}
+ 		if (map->m_next_extent)
+ 			*map->m_next_extent = is_hole ? pgofs + 1 : pgofs;
 -- 
 2.51.0
 
