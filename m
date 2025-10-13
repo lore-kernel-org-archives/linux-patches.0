@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EC721E0AD;
-	Mon, 13 Oct 2025 15:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D67F21E0AD;
+	Mon, 13 Oct 2025 15:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760369356; cv=none; b=tQxO4xtVZleQrT/K/vpyUn1l5IvM7LqMhczmSs1fFiUVX75qAylhky5Q0oeOU1LWmyYdI6Mbvbc26HM9lRkyUXkkulaPRg+A95qBU0Wrj8F1vR6gRVxfv7KDNUCeRw0ZNasHsyWmS8mD2HrjSmZ0eVFqrSuQ8JLLdTIqveK69rQ=
+	t=1760369359; cv=none; b=DUFifWa28FrlJMniryZZZv1W/CWi9gXK/+zmTFWiUpXknNPOFmL9Fr8t3BgsPWEumXqKVPfExsiKTG5p00b9fLk+erBiUsiZw6GiCxXv9IcK+u+ajp4ZLBm2OBx11etJHLLO5yETEuBU03UUMAx8TQZQPQg8F8NgzMktm+RDcxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760369356; c=relaxed/simple;
-	bh=DI2NAFoNFWAUkzhHhBLJDDJhCYqJx0F/UXrqBhR+NJQ=;
+	s=arc-20240116; t=1760369359; c=relaxed/simple;
+	bh=ZcqYtLUmYVA5dRgxbyCg2txqtUzeJwcKgMkllfUVmsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nEmhtx34Noq3uFonydx+W+++YUiQEPRZKswwMG47k6oKEcm8WZPaN70UPgz66HuW6kXIwzx+VVxzc+Sg5KzGTvy+HBFcd08OpWI4yEoT52LrbDmMMt5/+3Ob1G6PyIa8+HXYXcDVwFZ/Q4vpkzWL4TEnpHnfAKsxmvJD3TQjBVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYBY0M2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b9SN/0ybk9sAFscQWqu8I1XI2VsxMWj1+INi6PikobvLZmaQRsF0h6YWeR8cKLLOfCuPHThksFyYXKvP92pgcsrLDOprU1BHyK2orjKEsHotuLdJ1UgnSG69eoBtuPge9HDBVHQ9YZ9IW5OKxYde7wxeBu2e2NNErXrCEzMX5J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUWdomWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYBY0M2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C92C4CEFE;
-	Mon, 13 Oct 2025 15:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUWdomWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40AFC4CEE7;
+	Mon, 13 Oct 2025 15:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760369356;
-	bh=DI2NAFoNFWAUkzhHhBLJDDJhCYqJx0F/UXrqBhR+NJQ=;
+	s=korg; t=1760369359;
+	bh=ZcqYtLUmYVA5dRgxbyCg2txqtUzeJwcKgMkllfUVmsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYBY0M2j3fTAetHYcyP6gka6WJK0zjpzIV20ns8IS6JCjBl0fQeLrnnBmywd3MSyR
-	 BgUsDbMZ+2aOxJLgbHZpbx9hJscrRDJcSq+j+uEcwzv5vF+9i9lSoAml3sRXMgpj27
-	 YflWWO7nUgYApwriHPvkrRNTTYdmQVpgZV4RbgEE=
+	b=ZUWdomWIvWd/xeS3JEMIkp2+9ErP2vAwN8MMDgtvgwG8f6ks+Sg3QQJeQVvNt0xmZ
+	 GLp0DI4uETXT8rJ69VZ+zZKOa35rjUclpwcRjSKhivVGwP/oSkMxN6WJhikRGR6V0s
+	 Y+lhOGCNlLF8/HBxQaPBR2MXVVatEYpIyMFGza8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Brigham Campbell <me@brighamcampbell.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 217/563] drm/panel: novatek-nt35560: Fix invalid return value
-Date: Mon, 13 Oct 2025 16:41:18 +0200
-Message-ID: <20251013144419.145421540@linuxfoundation.org>
+Subject: [PATCH 6.17 218/563] drm/amdgpu: fix link error for !PM_SLEEP
+Date: Mon, 13 Oct 2025 16:41:19 +0200
+Message-ID: <20251013144419.180855194@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 References: <20251013144411.274874080@linuxfoundation.org>
@@ -52,40 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brigham Campbell <me@brighamcampbell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 125459e19ec654924e472f3ff5aeea40358dbebf ]
+[ Upstream commit 4d22db6d070ed3934f02ed15391283f6feb258ad ]
 
-Fix bug in nt35560_set_brightness() which causes the function to
-erroneously report an error. mipi_dsi_dcs_write() returns either a
-negative value when an error occurred or a positive number of bytes
-written when no error occurred. The buggy code reports an error under
-either condition.
+When power management is not enabled in the kernel build, the newly
+added hibernation changes cause a link failure:
 
-Fixes: 8152c2bfd780 ("drm/panel: Add driver for Sony ACX424AKP panel")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250731032343.1258366-2-me@brighamcampbell.com
+arm-linux-gnueabi-ld: drivers/gpu/drm/amd/amdgpu/amdgpu_drv.o: in function `amdgpu_pmops_thaw':
+amdgpu_drv.c:(.text+0x1514): undefined reference to `pm_hibernate_is_recovering'
+
+Make the power management code in this driver conditional on
+CONFIG_PM and CONFIG_PM_SLEEP
+
+Fixes: 530694f54dd5 ("drm/amdgpu: do not resume device in thaw for normal hibernation")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250714081635.4071570-1-arnd@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-novatek-nt35560.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35560.c b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-index 98f0782c84111..17898a29efe87 100644
---- a/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-+++ b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-@@ -161,7 +161,7 @@ static int nt35560_set_brightness(struct backlight_device *bl)
- 		par = 0x00;
- 		ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY,
- 					 &par, 1);
--		if (ret) {
-+		if (ret < 0) {
- 			dev_err(nt->dev, "failed to disable display backlight (%d)\n", ret);
- 			return ret;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 395c6be901ce7..dbbb3407fa13b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2964,15 +2964,15 @@ long amdgpu_drm_ioctl(struct file *filp,
+ }
+ 
+ static const struct dev_pm_ops amdgpu_pm_ops = {
+-	.prepare = amdgpu_pmops_prepare,
+-	.complete = amdgpu_pmops_complete,
+-	.suspend = amdgpu_pmops_suspend,
+-	.suspend_noirq = amdgpu_pmops_suspend_noirq,
+-	.resume = amdgpu_pmops_resume,
+-	.freeze = amdgpu_pmops_freeze,
+-	.thaw = amdgpu_pmops_thaw,
+-	.poweroff = amdgpu_pmops_poweroff,
+-	.restore = amdgpu_pmops_restore,
++	.prepare = pm_sleep_ptr(amdgpu_pmops_prepare),
++	.complete = pm_sleep_ptr(amdgpu_pmops_complete),
++	.suspend = pm_sleep_ptr(amdgpu_pmops_suspend),
++	.suspend_noirq = pm_sleep_ptr(amdgpu_pmops_suspend_noirq),
++	.resume = pm_sleep_ptr(amdgpu_pmops_resume),
++	.freeze = pm_sleep_ptr(amdgpu_pmops_freeze),
++	.thaw = pm_sleep_ptr(amdgpu_pmops_thaw),
++	.poweroff = pm_sleep_ptr(amdgpu_pmops_poweroff),
++	.restore = pm_sleep_ptr(amdgpu_pmops_restore),
+ 	.runtime_suspend = amdgpu_pmops_runtime_suspend,
+ 	.runtime_resume = amdgpu_pmops_runtime_resume,
+ 	.runtime_idle = amdgpu_pmops_runtime_idle,
+@@ -3117,7 +3117,7 @@ static struct pci_driver amdgpu_kms_pci_driver = {
+ 	.probe = amdgpu_pci_probe,
+ 	.remove = amdgpu_pci_remove,
+ 	.shutdown = amdgpu_pci_shutdown,
+-	.driver.pm = &amdgpu_pm_ops,
++	.driver.pm = pm_ptr(&amdgpu_pm_ops),
+ 	.err_handler = &amdgpu_pci_err_handler,
+ 	.dev_groups = amdgpu_sysfs_groups,
+ };
 -- 
 2.51.0
 
