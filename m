@@ -1,125 +1,97 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D2C255F22
-	for <patches@lists.linux.dev>; Tue, 14 Oct 2025 16:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D224A288C2C
+	for <patches@lists.linux.dev>; Tue, 14 Oct 2025 16:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760459021; cv=none; b=YnIg+lLdB9hT5mJNBTJPZW773GOOSCZ86WdQXWjnCsowgkpbrHZu1QuagmOToLl2KrGgZ5uqspIKBoZF42JeUrpwx8V1wEHOrGjnFkyfu+QTy95GaqRPm5k7A1cIXXW8zfcYxHxH7fVesreDvGzRFey1q880YN0Tei41YIp3Hjo=
+	t=1760460140; cv=none; b=OqB2iou0DM+UxxI08+Jgp6WflGx5kCpf10CNK+VFrbP60dPmR2dvhyTq+KyPPEnXFITAkhdODPKVfZ0+HHQ3+0LCfO/L5vAVkc3PMcX3gTKgZuEvCrMOsYi1oKIaFGVpC9zTQFLwrjpL1SNBgiliVHIHBVvhFCr2HO8yCQOGSUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760459021; c=relaxed/simple;
-	bh=nLrVSbJF/dsM8EOkqzzEHEEEJ04HBU0HW1wHxoyhlPU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kUejUaTLUdXvxV/3Opg2ltfijW9lQV6ea2Xygnw/o8x+OZ2Y8K3R5T2IifxCGonVMRXk7Z6nNu/DLOgUebK42YRSk9t2+PnFwQQSEfVZuHDlgmxCbgtDZ4YXteFJ8lW7kP4cWoWwZhydWu73izbwgaSL25zvhIh08h/8rfvZ798=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GAR/0Syh; arc=none smtp.client-ip=209.85.222.178
+	s=arc-20240116; t=1760460140; c=relaxed/simple;
+	bh=Qx/eEo2ROVIPmgrj6FFyvxVlP5xP/FaQp3gFsAscr8Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fkyQo95gZGcRPEn/8GKTnHYFYx5YGM4rM/941Ya4Cs/JQPps/Z+hJ2VpsFkwxcMUjW0aCCvNH4Sk5+NyW4xl4CG2uASF0KNtmXd3McFB+u+E9kwurZ137aCon4W+lDUhf7Ze0cYjpM++WkmirfQ1CXAD6bIBIZLbPoECTzLU3Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kwY7M9z6; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GAR/0Syh"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-85d02580a07so7535585a.0
-        for <patches@lists.linux.dev>; Tue, 14 Oct 2025 09:23:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kwY7M9z6"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-26808b24a00so8483475ad.1
+        for <patches@lists.linux.dev>; Tue, 14 Oct 2025 09:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760459017; x=1761063817; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7CUMJDuqtfI1vdOSW6FkgvPnhx2KWnxWXMO5VApQeZE=;
-        b=GAR/0SyhVZmrg963v5htg9xMRnbCTFIoWd4wGILYC9gwPQ/1dW2W/Rs7aGm7nR/MVt
-         ZRCDNO2uwFi580KVVVfyoorbqyyLPm+8lt/QpoE+RrsAFn9hI3CPzhyKKIGP+UctEQUH
-         Hmms1egQ0/FDBuHSmXKOlqq96yDR3PokJTt606FgqS08rKh2QhUX1/RmZB6+92+Tlo8h
-         4YUaqM/rje5eIqnr6q2Mi2uCqSusMklvvCoAGy8XgQNIYjiKPHSVMKAemxtT5bsrhYD8
-         fpYWoTJWvjoNP9XlGe+8tkYSCm3N6JUi/2r1JNWaaoIlbv/I6s8bgvN8JIC0F9Yw29kx
-         K8FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760459017; x=1761063817;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1760460138; x=1761064938; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7CUMJDuqtfI1vdOSW6FkgvPnhx2KWnxWXMO5VApQeZE=;
-        b=LrPYBS7NqQ2HWtzaxCUbWm5YgW2x3AJ/8oN4UFrGv96tkk3OrdCUYJF9lmownhoQgm
-         bTrSyFJMPC6ymJKkvIM9H9R/+WroQQNQqeQr1ijt2O/B8GJu0cxKbU11L1RhymW/zRvs
-         R2rGUKLndsWeI6koItJl4E2mMbDzuhTjhDwWbM/+AvUXc3xph82PzFAurZouSFOv8hvt
-         HN+UfJHN/VYCwDfHFHfcT++JEB9eKemCsODFAwIdHaktkT6trnNRCDyw4dhbcdVdMrNT
-         SpPOe6lQVho+TitKymC6U7kqEYEk6dXmExtpz0pn13PYUY5GitjLxJq3lclUskYc7LqU
-         ufRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUfPqdAoRpmIJTfRt2m4VqB0mF+kc+ABZth8zu37I64OmlTaYyfOiTkR+jjWptES4D9yr8BKskz@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGnLSjk+aSDfvawbUri33gVklCoz61Yn1aReASLJt2KLxcO5xh
-	/lpAoBslhbDWCF14069s5PuPSN9CBImTWn3lTEd5I3BKKcvhrPMb8dXb
-X-Gm-Gg: ASbGncuBVD2fUQykXnwUszBVg1OfPqegXdT1xIZyr/kfiEEYeHIfw1DYO0dNOyo176B
-	joCsSG9FrPBMzou3VT4oL5DEUipyPZ4pGyv1O+4zn6a2agZipcACuycso3moT9buzXpUP02eDkL
-	7FqbVkS++2WGRHNtwmfOQCEtte4Z9cDsFKxIDvem1w1YmfmSBFrOhgDfW2arixG0SladQNExcc+
-	iFCtwSFNM71pcGSHS7getEp/t46b9fc/Dz9Z++DRFw1Ywn4CGFAMXvvk1M09357ZE3cJPLv3+j+
-	COXQ/1mYf+prxrWa6O7kSq77xSOrglLhAJdpCf1xUT4dzpnKgOEsqR0jE43mDN9UwMjBbMMAM0h
-	rgXfXb/hN0f8KZFTvlJT06V2RDt/48abozEf5Wg==
-X-Google-Smtp-Source: AGHT+IGb3LYxLUu0gNLKSrBv3dHhkBztOS9rJ5f0Uu7ubH+luxyqfSH/R31aRzsAnX4WaPCwDZbGSQ==
-X-Received: by 2002:a05:622a:109:b0:4c7:a8ed:af3e with SMTP id d75a77b69052e-4e6eb068d26mr360037541cf.40.1760459017010;
-        Tue, 14 Oct 2025 09:23:37 -0700 (PDT)
-Received: from localhost ([12.22.141.131])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e881b10bbesm1938161cf.0.2025.10.14.09.23.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 09:23:36 -0700 (PDT)
-Date: Tue, 14 Oct 2025 12:23:35 -0400
-From: Yury Norov <yury.norov@gmail.com>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Burak Emir <bqe@google.com>, Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: bitmap: clean Rust 1.92.0 `unused_unsafe` warning
-Message-ID: <aO55B_ishdHO2uiW@yury>
-References: <20251013001422.1168581-1-ojeda@kernel.org>
- <aOzET46lagm-p8go@google.com>
- <aO51pV5WSmqnT4rL@yury>
- <aO54nxGil6a5hLQN@google.com>
+        bh=Qx/eEo2ROVIPmgrj6FFyvxVlP5xP/FaQp3gFsAscr8Q=;
+        b=kwY7M9z6H2luFRzKPgWFha/G7SScy4DhvgUGf1Loxu/IbKGhl3ETVcQW4amZ6ZXsJ2
+         DXOHMe7JLOsOfqHWarTNO1hT4x4UMICbXbcVvxDSAAv3yU1lCFuxsvU0F0f5gEGJuo6O
+         ta3crFfVQAb0ikzJig5eqoFLebgfKVbm9ibbX8LRSlN0oFiZnDvPaT/9iQ0OCmDTfVa0
+         T/FjperErRGzqJ8qmAZIuL6R7BRRbba1DZJ1hm/Ll8lSYYeRlBNAJCIesoDheD4xB+lh
+         dUIAYfHnaPTjttcD5oSjxNV9blpCAmhnNdZwFqAest/HT1TUY2rpUs2YfIYNPKsv3Q2G
+         kORQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760460138; x=1761064938;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Qx/eEo2ROVIPmgrj6FFyvxVlP5xP/FaQp3gFsAscr8Q=;
+        b=Rhx30Ya0WPV7VWNEf4PHjoC1aGzwQmrJwWLxIubonCcCjsLh/tAon/iSBzC0cMWg8x
+         m8AUqo2sLug/nHvoFyxlxssPzOF2UeuClObT0GBtkB/CVuBynrb3d3t9jM+YCJvNS0OM
+         WrecAcI7e9NlvZITzrTpSjkwWyAZ4qgose5MJ5yCD4f9U3Anc6sSbQeE9iKyYAKc7ILo
+         HFmEo2uA6pfCvULAjM88QXwlu5UUDjj+rc9RFE2utrvhMOShvRNYGZpJ8Lf875Loz3te
+         HIHBDsOw9wOBe+0zW963XuYZNT+cOdN5npeTQB40ZACRMuPT2YbLQ6UjxB9tRdhj+v0w
+         l2jg==
+X-Forwarded-Encrypted: i=1; AJvYcCV4GE5+Na4vDtYcAzMlyiJiCHmRM5SyBrZnTEcWaxO5PXM9+TrHxE1XoTTCtAijLSvSuC6Kwtwh@lists.linux.dev
+X-Gm-Message-State: AOJu0YzknEJvdUQ5LJQuqzblMwJ7aPtbKy56wdQw8+AHYn9+kbNSmVVw
+	SQBx5nQK8glkI9Zq9B0bGHeILrFTem2vgK29attSAwMHQk/JyyK0vy+WQCDvSp8rVLrEXLrrBKW
+	yeG59h9RVoiQSdeEnR56BAAmNi4ijucw=
+X-Gm-Gg: ASbGncu4eJI4W4hjklcS2UGelkbD/TfvJqgXl6RsqNQ22XudCsXnS1ySwYbpNu643IB
+	4RZbsr6fYEZLnteb2RYA8Mk9g5eLmiYvLP6Xv98359fFGe9luBgou0RTQjOFiDN/dkbhmikJ9C0
+	mHgOJn3i99l9HJ2TrJrsJy6jUGZStznfiAgCV6p/BnRGaP9EwS6yaSO+uehrYA70f+3wt5xSYOy
+	vcCo/9Dy9uhVQPzrS4goOJiLhhj4daqvhpXWFklBUEeIhzYr6MA5XckDZcdWxYVzLaewi6ambl8
+	IQLu1HNrhQH4VitlFpwu1ZLhmzEoG49L8FpL4Lqfbd64
+X-Google-Smtp-Source: AGHT+IFm0NocZUOA7deQKev6cTvUimVZbWYXQYPu94G9wpQohGmRSl6mxcEZ0e/f5qO6pZB6kdK7mFOzs9rqiJR2e0I=
+X-Received: by 2002:a17:902:ea07:b0:269:85aa:3776 with SMTP id
+ d9443c01a7336-2902745664amr187372845ad.11.1760460138023; Tue, 14 Oct 2025
+ 09:42:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aO54nxGil6a5hLQN@google.com>
+References: <20251013001422.1168581-1-ojeda@kernel.org> <aOzET46lagm-p8go@google.com>
+ <aO51pV5WSmqnT4rL@yury> <aO54nxGil6a5hLQN@google.com> <aO55B_ishdHO2uiW@yury>
+In-Reply-To: <aO55B_ishdHO2uiW@yury>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 14 Oct 2025 18:42:04 +0200
+X-Gm-Features: AS18NWBtweXgcaBwWxSZPbyhJpQmvLi4CG8z_VcU2bxMhsLFlMa-fdtcHq67J60
+Message-ID: <CANiq72=oiJdA_0SyBCzNmf-XL9DbCN+sOrXmVR2TUhYeuZV29A@mail.gmail.com>
+Subject: Re: [PATCH] rust: bitmap: clean Rust 1.92.0 `unused_unsafe` warning
+To: Yury Norov <yury.norov@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Burak Emir <bqe@google.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 14, 2025 at 04:21:51PM +0000, Alice Ryhl wrote:
-> On Tue, Oct 14, 2025 at 12:09:09PM -0400, Yury Norov wrote:
-> > On Mon, Oct 13, 2025 at 09:20:15AM +0000, Alice Ryhl wrote:
-> > > On Mon, Oct 13, 2025 at 02:14:22AM +0200, Miguel Ojeda wrote:
-> > > > Starting with Rust 1.92.0 (expected 2025-12-11), Rust allows to safely
-> > > > take the address of a union field [1][2]:
-> > > > 
-> > > >       CLIPPY L rust/kernel.o
-> > > >     error: unnecessary `unsafe` block
-> > > >        --> rust/kernel/bitmap.rs:169:13
-> > > >         |
-> > > >     169 |             unsafe { core::ptr::addr_of!(self.repr.bitmap) }
-> > > >         |             ^^^^^^ unnecessary `unsafe` block
-> > > >         |
-> > > >         = note: `-D unused-unsafe` implied by `-D warnings`
-> > > >         = help: to override `-D warnings` add `#[allow(unused_unsafe)]`
-> > > > 
-> > > >     error: unnecessary `unsafe` block
-> > > >        --> rust/kernel/bitmap.rs:185:13
-> > > >         |
-> > > >     185 |             unsafe { core::ptr::addr_of_mut!(self.repr.bitmap) }
-> > > >         |             ^^^^^^ unnecessary `unsafe` block
-> > > > 
-> > > > Thus allow both instances to clean the warning in newer compilers.
-> > > > 
-> > > > Link: https://github.com/rust-lang/rust/issues/141264 [1]
-> > > > Link: https://github.com/rust-lang/rust/pull/141469 [2]
-> > > > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > > 
-> > > Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-> > 
-> > Added in bitmap-for-next.
-> 
-> Is there any possibility of landing this for an -rc of 6.18 instead of
-> for 6.19-rc1? That way, the warning won't be present when compiling 6.18
-> with rustc 1.92.0 and newer.
+On Tue, Oct 14, 2025 at 6:23=E2=80=AFPM Yury Norov <yury.norov@gmail.com> w=
+rote:
+>
+> OK, will do -rc1
 
-OK, will do -rc1
+Thanks Yury!
+
+Yeah, these should generally be sent as "fixes" to Linus; otherwise we
+will have red CIs.
+
+(I don't add the Fixes tag for this sort of change because the
+original code is fine).
+
+Cheers,
+Miguel
