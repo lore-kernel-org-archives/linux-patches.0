@@ -1,120 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756442BD5BC;
-	Tue, 14 Oct 2025 20:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCAF30CD86
+	for <patches@lists.linux.dev>; Tue, 14 Oct 2025 22:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760474824; cv=none; b=EFgO6rcjC85Cl6cmaw2w5JiSSW8oKV7a2DUyGX5NR1gAY+98Tb8HPo/BYXqPc6RueLfmHT+EBJw6oVZgMV+pWDn97rXBa/tNgCpxAK1jTbOU0Zyx3A3Hq0mGEh28sqY69iwzUuBBmWbPYqV1tz/MyvFqr9a43WkBxe3NxBFHm2g=
+	t=1760480352; cv=none; b=oKX6/yLI6aGPSKn/k1cGgUmkUOV1cQgEhXYzeId2ke+Orb4XuTNtYAZO93ukRQ8k9ZW9s1wSNY/FD74DdSO7gWQe7Bucx+rErkHPMyrgbei/UTdYGk8Bfu6KA4vVmawwCn7rJf1LYxa48aCTuU1WA71NLxd3nzqUjsGAiX099gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760474824; c=relaxed/simple;
-	bh=BeXYJ7TDDA12WXKKfS+OYrqQ57gzlsQbH9llrXbQhUQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qFSiM+cLyn5cTflp8gP3bRymc238FI4zEJ2DP1ckKnlJzkhKmAbWBetjr0s3LPg4I3waIHlKcPfOK8VuNEHzWDSctIsS/9Th8KDakYcRsvJKGWvobe4IAgT/0mBecNAN1+nQpjZPoSr24YDR38SnjSjCGD8UiznLpt5a+vmktLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s2tnmVxt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760480352; c=relaxed/simple;
+	bh=d52ol5jDnCqNM35j5xvJNRzYXDEU3WfnARQ/CVHCRFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fx+3RCj3TxvDlclufje/n5bPHJRaYd0gIOhf6ugNxRGXziwkiP9s873HhCnTOM/G2OHltX2YUomv78vgf4/MGOA30+3I87hHRBQk1PehtiyTnNKgQjfiAufqiguQ/SRLOx4hBxi9qfgTNf9VbTeanVcu2NjZV4FBIG9XmWezf+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=EmYt/bfM; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s2tnmVxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB18C4CEE7;
-	Tue, 14 Oct 2025 20:47:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760474824;
-	bh=BeXYJ7TDDA12WXKKfS+OYrqQ57gzlsQbH9llrXbQhUQ=;
-	h=From:Date:Subject:To:Cc:From;
-	b=s2tnmVxt8iPDADIbTLFWzPs01vJJBfChUPoVQYRyU+SLtHET8iGF+ti7bcY+wmW6j
-	 foXPNZOspgMzU1r1XC3auiH8DSPYhy2gmxmQJZs69DpBLH8JL6i3wwBjJ75jq4V8US
-	 xQfcx5v+trLzkka7CifMbEDuBZuX+rZBQ0SqngOREkgaZVxyz8U/I6RdzgJimSGHFa
-	 qQtMuUpbaT3cmMdo4GiJKw1pZxPkOAgWNajAewOyzfKuuHNsORZdy7fpEwmKk1ZvyN
-	 RR1+OP8QSs+BdrIWfdpr6a9xsdf4wcZbGKi69HX/j3+T4oJ6F+8H8+XcJQzc3ELv+f
-	 O9nbMuB+88KLQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 14 Oct 2025 13:46:49 -0700
-Subject: [PATCH net] net/mlx5e: Return 1 instead of 0 in invalid case in
- mlx5e_mpwrq_umr_entry_size()
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="EmYt/bfM"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-27ee41e0798so93404325ad.1
+        for <patches@lists.linux.dev>; Tue, 14 Oct 2025 15:19:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1760480348; x=1761085148; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=alzbq4xn+X7BhpgLRSUY/BiUcuSjAW2A5dveqJOGO40=;
+        b=EmYt/bfM/R6V+Cfoa+MrLqe8gw9pKs9pUadKNOlMpKIs2VX9bwiJvP+PeP7eyBK/D6
+         D9eQYX+uNVSf2nTctcCQUy7oL3aS6h0sVWPhaoZrmt2geF6AheRAYBKioxbmfDlQfKQO
+         ODA1DTzVY/GyCYFGKMhRdi4FG8YhkcAiz+ork=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760480348; x=1761085148;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=alzbq4xn+X7BhpgLRSUY/BiUcuSjAW2A5dveqJOGO40=;
+        b=BYoktyYcZlIUDK/A5sQOpidd0WvzcQjHQFN/pfoLcE0O4jOHqCSbWsQnE7Y3Lr3ezP
+         SeXH23XdzNLsCfJHd6HR8DFxGqULWJLVzuAqxCbqV1KnVVdRwPWx6dMQWZp8Ppv0YlvA
+         1VDH2bf+8Vwwz/6xP5SUn4Yls7Rzomhw2zOehSgo6zuM7odUYkrV+3yyw2EJHEBhwYzK
+         jQpHJxxqgR4rUc/pzJ4dm0kdBgGrpTlAyW1IeBTAkx4RAB085S2LP8mbdgg6zyTwsxnX
+         UNkcBQT5//nEEcKUz9KFXiOSpAxy4D8XvZ4KMgEGWcJdR4F2XE51O+HoUyk8N5iKfWhC
+         XZig==
+X-Forwarded-Encrypted: i=1; AJvYcCXN/y+lTRQDwDREOehSW9kOz3by9Y2a2l7wvUD3YOdI8L0HJs0SNDCPSlr6P/QO1P9rXugURMxn@lists.linux.dev
+X-Gm-Message-State: AOJu0YzNEpO5Nf7AitdsFRNDH+1UMp04GIOGMSIMuoaGz4d/7bTAQM+3
+	ZtDl37/Sg2OmyeI1f2etOLjqOEEN0EjEkd6S0GdVgXOmJnfyEQuLwGUO4S2xGLCdYg==
+X-Gm-Gg: ASbGncv09mAyptaS2CXh7pzP42uVqN3jBAlcQ0knW4/NCCBQzEOBidxIo35237Pl+GF
+	iMo763XyGSzBZaaVS7HeskNcjAob2B8nTHQGrja6ULFMtNHB1I74RuS0WXxPEO4nd+xMPDZJwdV
+	K/d8DsQ7w/ov7rp5iFWlF7ajBHZt+dkrE15Lzr8P/8V0G9TPJUxXUA26nuKk17qIDuQuT+0eCta
+	balliE1sgfb6SbSYOucNLyqWidNuyVNkMk2jpI3Lr+TRFGAJgKX0gjY35Z5zf4yvSLni7xKzPuk
+	sclCZuakLMxq2eHVw8M4Uc1Unesd6q3uCtKfaWmmk0e6Pe9vgtPhgt1NysRQADIegOzxOICgafo
+	bOKZ2Rb6sNKAHjgEf73PBMyoYyQ5iFF8MeuGC5K0xAsyToHHPwE61+WgOhWxItiRTu0muUvTs
+X-Google-Smtp-Source: AGHT+IHdeP0YjbJf85NTvomIyM0+GVcr7Wo5mJ7Nfb5UdYxRTyJTMFJyGm2BssQ8MnxvTKoUs9ugRg==
+X-Received: by 2002:a17:903:2ac3:b0:281:613:844b with SMTP id d9443c01a7336-29027418ecdmr328650695ad.52.1760480348537;
+        Tue, 14 Oct 2025 15:19:08 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([216.147.127.80])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f93b71sm175405965ad.114.2025.10.14.15.19.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Oct 2025 15:19:08 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 14 Oct 2025 16:19:05 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+Subject: Re: [PATCH 6.17 000/563] 6.17.3-rc1 review
+Message-ID: <aO7MWRnf7Pk023jU@fedora64.linuxtx.org>
+References: <20251013144411.274874080@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-v1-1-dc186b8819ef@kernel.org>
-X-B4-Tracking: v=1; b=H4sIALi27mgC/yWNQQrCMBAAv1L27EJTU1G/IhJCs9EFk9RNjbWlf
- zfocRiYWSGTMGU4NysIFc6cYgW1a2C423gjZFcZurbrVas0hsfcE9qS2OFCktBxQS8p/I0J41u
- e5hXEUJzkYzIvhHRw+jSoo9V7DzU9Cnmef9sLRJrgum1f7BnEIosAAAA=
-X-Change-ID: 20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-e6d49c18a43f
-To: Saeed Mahameed <saeedm@nvidia.com>, Leon Romanovsky <leon@kernel.org>, 
- Tariq Toukan <tariqt@nvidia.com>, Mark Bloch <mbloch@nvidia.com>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- netdev@vger.kernel.org, linux-rdma@vger.kernel.org, patches@lists.linux.dev, 
- llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2781; i=nathan@kernel.org;
- h=from:subject:message-id; bh=BeXYJ7TDDA12WXKKfS+OYrqQ57gzlsQbH9llrXbQhUQ=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnvth1JEHQ6uG/+jVmr7pfkMvF7x4ea3zytzHqfkT+Za
- +GUKVrVHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAie48zMsxXuiAQ1HdP1aVo
- av8pGckjFzXN9hy0mha7OXj7x/UMSuaMDL887qgc+/U28E/J6jTOnhMXvx9+Wbx9Su8R42ndcV1
- f9vMCAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251013144411.274874080@linuxfoundation.org>
 
-When building with Clang 20 or newer, there are some objtool warnings
-from unexpected fallthroughs to other functions:
+On Mon, Oct 13, 2025 at 04:37:41PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.17.3 release.
+> There are 563 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 15 Oct 2025 14:42:41 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.3-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-  vmlinux.o: warning: objtool: mlx5e_mpwrq_mtts_per_wqe() falls through to next function mlx5e_mpwrq_max_num_entries()
-  vmlinux.o: warning: objtool: mlx5e_mpwrq_max_log_rq_size() falls through to next function mlx5e_get_linear_rq_headroom()
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-LLVM 20 contains an (admittedly problematic [1]) optimization [2] to
-convert divide by zero into the equivalent of __builtin_unreachable(),
-which invokes undefined behavior and destroys code generation when it is
-encountered in a control flow graph.
-
-mlx5e_mpwrq_umr_entry_size() returns 0 in the default case of an
-unrecognized mlx5e_mpwrq_umr_mode value. mlx5e_mpwrq_mtts_per_wqe(),
-which is inlined into mlx5e_mpwrq_max_log_rq_size(), uses the result of
-mlx5e_mpwrq_umr_entry_size() in a divide operation without checking for
-zero, so LLVM is able to infer there will be a divide by zero in this
-case and invokes undefined behavior. While there is some proposed work
-to isolate this undefined behavior and avoid the destructive code
-generation that results in these objtool warnings, code should still be
-defensive against divide by zero.
-
-As the WARN_ONCE() implies that an invalid value should be handled
-gracefully, return 1 instead of 0 in the default case so that the
-results of this division operation is always valid.
-
-Fixes: 168723c1f8d6 ("net/mlx5e: xsk: Use umr_mode to calculate striding RQ parameters")
-Link: https://lore.kernel.org/CAGG=3QUk8-Ak7YKnRziO4=0z=1C_7+4jF+6ZeDQ9yF+kuTOHOQ@mail.gmail.com/ [1]
-Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [2]
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2131
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2132
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index 3692298e10f2..c9bdee9a8b30 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -100,7 +100,7 @@ u8 mlx5e_mpwrq_umr_entry_size(enum mlx5e_mpwrq_umr_mode mode)
- 		return sizeof(struct mlx5_ksm) * 4;
- 	}
- 	WARN_ONCE(1, "MPWRQ UMR mode %d is not known\n", mode);
--	return 0;
-+	return 1;
- }
- 
- u8 mlx5e_mpwrq_log_wqe_sz(struct mlx5_core_dev *mdev, u8 page_shift,
-
----
-base-commit: 4f86eb0a38bc719ba966f155071a6f0594327f34
-change-id: 20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-e6d49c18a43f
-
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
