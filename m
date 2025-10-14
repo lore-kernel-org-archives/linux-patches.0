@@ -1,293 +1,187 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012004.outbound.protection.outlook.com [40.93.195.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D52630C638
-	for <patches@lists.linux.dev>; Tue, 14 Oct 2025 11:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760442286; cv=none; b=CRM089retC/z/Ejs8BeR/SONQy5Wnwmj3nsRejddZEfElyRQ5LPC9q22iEkTAa4kRDC0bcnJVeK16Z+mSiAs6UrlG+4JGxtpRdzw0yg1R501gmYLhVqmCtY7QqY2o9tcdHuGp9TxzDFauLJotCSc+zKC+SO1zHHRDhxdaGANJfk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760442286; c=relaxed/simple;
-	bh=hfahCY27limKIRliXlbrcCNzQkVZ+dtcWauUhXG8Mcg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qO8+udoA/l3SPKhoFiw/PbfBRsHJAJAKqin86Bt6zO5BuBE2JIMJS8qWm4elf6OUySDAZf32RHJ/ADS2xkybIc8lQIz4vpZqx5ec8oEY7t0aEWXVVrCMvNCYuNoGtfaJwxzLEydDhKQJ7nz7wA2GcZ0E2JmIe4qS1nZ5NyWGwJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RoW6cNdQ; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16ED314B7D
+	for <patches@lists.linux.dev>; Tue, 14 Oct 2025 13:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.4
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760447390; cv=fail; b=V5hw45zKeY0+BuMbEAv4BGsVRTQFFNFhEQaYWTC2lCSAfdBHH9SK8hpAkpQxVtrlo0swudhogAlAn4qznMy3bSNDOWoZk5IA7k+VVzXIdqynVgYLd3UXesrhqGJX8ha+ii3denylEk+3dM0JNy8NY9L1MaxxIfF+jL+ZMjoQlXA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760447390; c=relaxed/simple;
+	bh=ktxYK9YZ8ZXm6HuihNlkGPtDxcP7rNbxjDwaDWzWgjg=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=ekFDyfe+PbZ4ttzqP5OQpdo5UTHK6dSxcIWnZBMLXiY86WgDyTrI8s5qer5R5skp2q2VqvGv+9tAwAQqMGFCmpAWrPhSFZFHpVisT0sqy/VeoaQCWjU6Jdy3CNWTF2ld1C755uuymL9/GRjXx2DRQNViZ2itor23QZlmTOl3ml0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FHoYdPTX; arc=fail smtp.client-ip=40.93.195.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RoW6cNdQ"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-27c369f898fso74104195ad.3
-        for <patches@lists.linux.dev>; Tue, 14 Oct 2025 04:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760442284; x=1761047084; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oQ9uK3Kf8jfSaZ6zDVviWmBEyuzg21Wd4ByP3R0vGQ0=;
-        b=RoW6cNdQoRQRLX+qi/d3o3bukRgPHCjcJcsBFmoBqoCPKwJwGUj6qAp/ZukEDpusGh
-         ymgcioG4N6h63DGZb/9ZoOjHiG69jSzp7JaU/VO9oWgxQ1yTiPanhOw2ye3TPYNzA3wz
-         m8z3aaveF4pIPi63z6bQ8GrUUZoEaguGrxvQYW/nXZSrZ96FScj3o41i+jn++gln4bcI
-         Xg/ZlJlHPBgOqJpAGwi877sTbxb0Jfl93aRqKX/dOcG6U9qvvFELFlnIxHjKBu/bCNli
-         wAAUfK2PRGXlid2DfS2wk8i3+3ZC0mjjW74erxsH15ST6bEgLkzhWWHh4SeroT2nONdr
-         D3xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760442284; x=1761047084;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oQ9uK3Kf8jfSaZ6zDVviWmBEyuzg21Wd4ByP3R0vGQ0=;
-        b=vprh3EVizc+ALacgdNMB/fv8+xQ+m2sl9N77w+4vR7kSAzT9JljDPCMPaMKQ2gr3lE
-         PYqI3+TmyrbfMr0Wb8kBf7Ek8OXNgWXiIrqzrU0J798BK9dzi9+iuwmKOuxbStW71Gay
-         8x+mU19zZ7mgJeYATZuxUkpBE9f2QBpFkeJKmcH51bOKJS9dhfDYoQfv5Rtw+wwvasJt
-         8M7BESvNCyqjtiaZZE6tCh69mjf70gi+0gQNHZuYlYDZoGPiD0fnh70M+nQLdJIjD4xV
-         Hy3e5KQRdexPwYOtjuWNijBeM7B/xU2spXC0nhYC97LYwCj0qL4qmZGsszaCqssVacqL
-         0nmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXyl6VVtMPzhElYadjXlahYVYUs9LoQofrXHyGHD1DK0c8ihUlkomv0H5ju9RlmQu6G9/+0AXox@lists.linux.dev
-X-Gm-Message-State: AOJu0YziRoAfI+7geRKx83JrB0/GaVHWMe3T28MT4YZlelTSG+1VFBkt
-	11Gf2w8sWDwXsh1Vxl5oIXtRBdF78jQhjMKHhO1f2nawIvlAOGMkHZfYoqW89gNiP4hZ8R7YAvg
-	3ecmr2JfjYDzz9Cwyzw37opGe51ugs6oixzEHH2o1sA==
-X-Gm-Gg: ASbGncuPfViHdi5XHefM4Ja2VlFiLB2MPKVqG9fuDjJi2h06AXzppBV3iThS+xIZnbG
-	5uETSL7A6bRqepbkS3KihuESXnoXfNsmlVvdUna2GRxTxIgyAxUg0Eqg7Z5a+raT7xxMhUV4SZe
-	xYMrqI3GBHyLapz7cvwYQT7KhXFI+hGAN+VojSDqAjjP2fr8WFthUIX1sxAm/m4Ab8MgcBRtuIf
-	kCZgz2iySZrluVJ3xGyLuNXmmN47QuFjwF9tSjPTKifyyZOTntpybH3oNZ1d1d344S2CCVP1Iu3
-	GIwliEsPVzAJz3FwPMk=
-X-Google-Smtp-Source: AGHT+IFbZ/y6NT5ea9IDQYQSQTzRLXABcHqTVM3gxucF4K4llB2C5gXZ26odu6Mkc0GD85/tFvvstkrHCeTXD2iVOSs=
-X-Received: by 2002:a17:903:298e:b0:27e:eea6:dffc with SMTP id
- d9443c01a7336-290272e3120mr301473205ad.41.1760442283616; Tue, 14 Oct 2025
- 04:44:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FHoYdPTX"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tC4NQuVqqjqvmV5k429GYz/1qhgOw5xP6iKm5J3LxvR8Am08BriXlNrTc9Y/ervqaSewnQqXt0TiGqO6A7GusLkMgelIkYMvb2GmLkHvu4CqKG6GLPR5Flenk97gP3+mqfJLOwpUCiB5Wsb0IX9rLDoQ6GbtPu9cCv0KNr5EVt0UM70RlJwp/+GJPUgDtN483pUkSObKgsCMTN6egzXFbw0g3Q/jNCvm4cuACxv2UGGSnLVAmvhZy4juFIa8uy1BFacoAP0fkJw+DoYadhDASjSkGikYqa99zEENUad+6AQ5a13TZ9+j0KP4q1W1OtQY3D0oXf3w6RR6cvau1uH0GA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iz9Ebc9hY0RxNSw4CjQ17WWljALZMgg2iYOZvTba+aM=;
+ b=il5XMwcKUn99VvqgMZEi60/Zt10G5J3+mnaqnXvZnRhADob1bpD6oMKgvMBem0sxl8vnyTXFHPsHExqsLsotCVAcpXBk6wIUeBza8zwKEJ0rkHOlPTo0C1VBXyfe48XputQN+yItFRqcPIcNOaXbr7ko8EbywMXxHydHGwQOk+KQldD9PUZF+d4YtFdXx0wXkCPssQGTKn/9A6SowiP9tCoW4yZCDlxhwJlHmgepV8GXWqt9mbdGOBZZ8Y7t1jmo11NM7VBXOryUUR3XQqKJd8VIj0eLX6rFV7GQbVIr8i4GXnM1xvY9ihSOpQxNKCKPzRBwm3zFyDHvRhjOLJeSBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iz9Ebc9hY0RxNSw4CjQ17WWljALZMgg2iYOZvTba+aM=;
+ b=FHoYdPTXb9HASkPk+DqxCbMrCYrUKgMSVUtBXzYvPt272DAdT4AeEGIGNbr/DwSqkQbuywu+yg6lYJh7GUop4XtNedLWDgX7IjmUzUmKCyYQmJ0ir78ATOgr7e1Tq62YT9nNRDO9GnoIfvq4Y3UJTJ+HaA8/UQt4l+QONbdBsOrkRbO6W9VFoirgptEwEWR3KpJyWyjCQbexIbeit422BMA6p7Gc4Mc4p5N5rxlnmGizf+rGU3mHB6bzlZ1r6Puo3hs/oooVcJ6YG++sYIiUkceqGBIcFjpcDYeEtDEj+kKoirjGwxsxj3SZSu1Np7NIu5NjDOfKGzriezAgIIzV+A==
+Received: from SJ0PR03CA0208.namprd03.prod.outlook.com (2603:10b6:a03:2ef::33)
+ by DS0PR12MB9422.namprd12.prod.outlook.com (2603:10b6:8:1bb::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.20; Tue, 14 Oct
+ 2025 13:09:43 +0000
+Received: from SJ1PEPF00001CDC.namprd05.prod.outlook.com
+ (2603:10b6:a03:2ef:cafe::b) by SJ0PR03CA0208.outlook.office365.com
+ (2603:10b6:a03:2ef::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.10 via Frontend Transport; Tue,
+ 14 Oct 2025 13:09:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ1PEPF00001CDC.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9228.7 via Frontend Transport; Tue, 14 Oct 2025 13:09:42 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 14 Oct
+ 2025 06:09:26 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 14 Oct
+ 2025 06:09:25 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Tue, 14 Oct 2025 06:09:25 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>,
+	<conor@kernel.org>, <hargar@microsoft.com>, <broonie@kernel.org>,
+	<achill@achill.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/196] 6.1.156-rc1 review
+In-Reply-To: <20251013144314.549284796@linuxfoundation.org>
+References: <20251013144314.549284796@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251013144315.184275491@linuxfoundation.org>
-In-Reply-To: <20251013144315.184275491@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 14 Oct 2025 17:14:30 +0530
-X-Gm-Features: AS18NWBlDyPq4hVEQ-J5018eNoHovic3dklSVWqWWI4TEgdRGPz-I4T3A5-jiaM
-Message-ID: <CA+G9fYvRj41__1beAtYvsGcoeqZfu=chpk4sjHC96+wCrbdWiQ@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/196] 6.6.112-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, linux-s390@vger.kernel.org, bpf <bpf@vger.kernel.org>, 
-	Netdev <netdev@vger.kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>, 
-	Daniel Borkmann <daniel@iogearbox.net>, Arnd Bergmann <arnd@arndb.de>, 
-	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
-	Dan Carpenter <dan.carpenter@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <4ad822af-297a-4de0-b676-6963760a8384@rnnvmail201.nvidia.com>
+Date: Tue, 14 Oct 2025 06:09:25 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CDC:EE_|DS0PR12MB9422:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7ff67f58-0288-4f92-d729-08de0b22f0df
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|36860700013|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?LzFPTlowWC9ldlloSEQxSS8vRVVTWkUxeFVhMVR1ZURhalRuaVpXR0svSkFJ?=
+ =?utf-8?B?c2RXM2xqVGVUNitTZkl4eWlSS21oUTZjMlJ4RmtHMko3b04xbGNDcUtyOTJt?=
+ =?utf-8?B?ekthRWJzdnpyVnIwc1hCVzErODRNeEJ4dENlZFA4cG5sRDFPSk93UGtqNlVP?=
+ =?utf-8?B?QTJva3ZzN09QaVRlTXVERFhleE4vVm1DOVd5OFk0c1FXQXR2b2dTT2MwalN6?=
+ =?utf-8?B?SW9aZVp0aGc1RFp3RUpVQ05zbkJHSUZYeU9EalNFeWNCOG01ZWlhZXU5Nmcv?=
+ =?utf-8?B?RUltQ3pqTGpBRU1UTlZkSXM5RmphU1g0NHd2ZDFxek5wMjFTVk8vczY3azYv?=
+ =?utf-8?B?bmlOdEdjNzlzVWNLS21uNEM5Z0lvRkxZaEh3RVI2TzVIK3I2bm4vR0Q2WVh5?=
+ =?utf-8?B?bTlSUjMyUnVwT09IY2RKM2lqS3IxMkFIR3liajVXbkN5bmgwMnFSZTVkWlNk?=
+ =?utf-8?B?TDA5cTZKVzBNTU1RVXoxc25kQmlFL1p4RzVDWENYdFFBRVlQUnRyZFM5Mkxr?=
+ =?utf-8?B?M0MxVTZPQkNWSElLUEY1S2dLUmpZTENwRlpodUlSUmhxdzQ3K1dqTGxXNUxE?=
+ =?utf-8?B?T2dFQ1c3Z2xLQTN4MnZKRlBuVjFKUzJVTDlhbjlpKzNRSWNpTkJRRTBZVWlR?=
+ =?utf-8?B?dyt3YjVQU3FFZkFKU0pFTVRKV1JFNGNEMkg5VWs2VXRSVktJUDBJL3pnYzlj?=
+ =?utf-8?B?NG1PdFBzVkhWMUkvbS9LRXpJckQ0RmlJclVNdm94QzNrWkZ4ckYyYTU2SkdO?=
+ =?utf-8?B?NEFNeGxqamc5eEJPZ3ZOazdVMVhmZ3YxQTkydWVYZE5EdzllMUtueTRkNnNC?=
+ =?utf-8?B?R2dycTNpblZ6S3RGZU1QcUlzSytvTm9Kb1dZVE5TVFpJTFgxK0o1Umdqc2gv?=
+ =?utf-8?B?UFY4bVg1cjdpOWRScmc4RTVWMUVJYTQwNzhZeS9MZVFjazN5RlhURlFWa1Mv?=
+ =?utf-8?B?citwTFFVR1ZxOVp3bnNEMGpkUHFEODdFQ0tva2ljVjRQaGI5SWVUeVo0cEoz?=
+ =?utf-8?B?YmdTK3hrOGNQQVFvSU5lSEM3K01WOE81dkFnUVRKWlMrejlxaHJaNDRRRTdT?=
+ =?utf-8?B?K1Q3bGRUUmFyb1VzTUpHcTZ0cU1WTmdYbzR5dnpkVUNjVmFNdS9RTjA5Y0NY?=
+ =?utf-8?B?SFRzVVRlbGhXaUk3YXZaRm4vd21lZGdySGJGVXhSelZKVmNFbURmY2pXRWhp?=
+ =?utf-8?B?OTZlU0lqODV1eURGMVFNdnM2UldHL2pPenhSeW5OSEc5NHMzblYvSnlQdW14?=
+ =?utf-8?B?RW5RVFlYYzZFRDNJYVcyb2hseGtVUDZBRFcrZFZKL1J4WWhyajExNWdpd2dl?=
+ =?utf-8?B?N0lJNm1CNnFCK21qSnZXZHgzd24xVTdpZ21SREdzRVZRdFJzUGExaGRRMjFx?=
+ =?utf-8?B?S0RoZmI5Ly9wSTFRNVlHKzBLOEt0MWc1dkdtZlQ1YkdCbjNaZFRkS29kU2lE?=
+ =?utf-8?B?MjUyQjM0VE5JYWo3dmtBSU5ic0J3VFR2aEtydU4rU2JTUWNGZWM1bi8xYmlM?=
+ =?utf-8?B?TFlRMzlxVDYwcnNMVkI0ZUVnZWlnZXp0eVlMbjVnUFE4MGZqVEk2bkhsakdT?=
+ =?utf-8?B?SEZGUWhuaXdKSjM1cFJ3L0NLOU9yajZkN1NxM0JQQlJRQllMcnBsQjhJNXN2?=
+ =?utf-8?B?SldHSDBIeFhIcU5HdXoxbFh1K3BzSnlBc0VMOEoxTk81SlVCVUdudldXeFJh?=
+ =?utf-8?B?ak9NRDRRMlZJSFB6OWpVbnczN3RDRFV4bHBwMUZSMlBBazNJZURVbHlyU3lU?=
+ =?utf-8?B?bkI1UW5pK2xhY1dWdHlOVFplNW85VFFxcDJkVlZ3YWN4dC9QNW5ZVUhjNis3?=
+ =?utf-8?B?TmcvQ3QvdlZybWRiRkg1TUZyb1lacFRFNFUvMEVaQU5Vd0RxUktHM2ZKa0Y5?=
+ =?utf-8?B?S3NML0RjLzd4MTBNYUtkRnZVSGRDY2hQcDRJeW1Fcm5BSzJBdERpU09qVk4x?=
+ =?utf-8?B?QW9tM1hLWEd1NldSa2pIRHJDNm5tQmFFemVNVG9UeTZQbG1yOUY2S3hUTDBD?=
+ =?utf-8?B?bWp3c2NkY3lrKy9PSk96V3hOU2M1am11V0VKSHpzVk81T25sbVQyNnlpMTdl?=
+ =?utf-8?B?R0FnNGlYUXBmVmZnSVJUd2drdzhSbG1PWDJ3NmY1ZnllRkVydVp3VWdPdndO?=
+ =?utf-8?Q?D8ZQ=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2025 13:09:42.9279
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7ff67f58-0288-4f92-d729-08de0b22f0df
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF00001CDC.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9422
 
-On Mon, 13 Oct 2025 at 20:28, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.112 release.
+On Mon, 13 Oct 2025 16:42:53 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.156 release.
 > There are 196 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 15 Oct 2025 14:42:41 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.112-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.156-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
 
-The S390 defconfig builds failed on the Linux stable-rc 6.6.112-rc1
-and 6.12.53-rc1 tag build due to following build warnings / errors
-with gcc and clang toolchains.
+Failures detected for Tegra ...
 
-Also seen on 6.12.53-rc1
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    119 tests:	118 pass, 1 fail
 
-First seen on 6.6.112-rc1
-Good: v6.6.111
-Bad: 6.6.112-rc1 also seen on 6.12.53-rc1
+Linux version:	6.1.156-rc1-gb9f52894e35f
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
+                tegra194-p3509-0000+p3668-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
-Regression Analysis:
-- New regression? Yes
-- Reproducibility? Yes
+Test failures:	tegra194-p2972-0000: boot.py
 
-Build regressions: arch/s390/net/bpf_jit_comp.c:1463:49: error:
-'struct bpf_jit' has no member named 'frame_off'
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-# Build error
-arch/s390/net/bpf_jit_comp.c: In function 'bpf_jit_insn':
-arch/s390/net/bpf_jit_comp.c:1463:49: error: 'struct bpf_jit' has no
-member named 'frame_off'
- 1463 |                         _EMIT6(0xd203f000 | (jit->frame_off +
-      |                                                 ^~
-arch/s390/net/bpf_jit_comp.c:208:55: note: in definition of macro '_EMIT6'
-  208 |                 *(u32 *) (jit->prg_buf + jit->prg) = (op1);     \
-      |                                                       ^~~
-include/linux/stddef.h:16:33: error: invalid use of undefined type
-'struct prog_frame'
-   16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE, MEMBER)
-      |                                 ^~~~~~~~~~~~~~~~~~
-arch/s390/net/bpf_jit_comp.c:208:55: note: in definition of macro '_EMIT6'
-  208 |                 *(u32 *) (jit->prg_buf + jit->prg) = (op1);     \
-      |                                                       ^~~
-arch/s390/net/bpf_jit_comp.c:1464:46: note: in expansion of macro 'offsetof'
- 1464 |                                              offsetof(struct prog_frame,
-      |                                              ^~~~~~~~
-include/linux/stddef.h:16:33: error: invalid use of undefined type
-'struct prog_frame'
-   16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE, MEMBER)
-      |                                 ^~~~~~~~~~~~~~~~~~
-arch/s390/net/bpf_jit_comp.c:209:59: note: in definition of macro '_EMIT6'
-  209 |                 *(u16 *) (jit->prg_buf + jit->prg + 4) = (op2); \
-      |                                                           ^~~
-arch/s390/net/bpf_jit_comp.c:1466:41: note: in expansion of macro 'offsetof'
- 1466 |                                0xf000 | offsetof(struct prog_frame,
-      |                                         ^~~~~~~~
-arch/s390/net/bpf_jit_comp.c: In function '__arch_prepare_bpf_trampoline':
-include/linux/stddef.h:16:33: error: invalid use of undefined type
-'struct prog_frame'
-   16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE, MEMBER)
-      |                                 ^~~~~~~~~~~~~~~~~~
-arch/s390/net/bpf_jit_comp.c:209:59: note: in definition of macro '_EMIT6'
-  209 |                 *(u16 *) (jit->prg_buf + jit->prg + 4) = (op2); \
-      |                                                           ^~~
-arch/s390/net/bpf_jit_comp.c:2447:33: note: in expansion of macro 'offsetof'
- 2447 |                        0xf000 | offsetof(struct prog_frame,
-tail_call_cnt));
-      |                                 ^~~~~~~~
-make[5]: *** [scripts/Makefile.build:243: arch/s390/net/bpf_jit_comp.o] Error 1
-
-The git blame is pointing to,
- $ git blame -L 1463 arch/s390/net/bpf_jit_comp.c
-   987b48ef91346f Ilya Leoshkevich _EMIT6(0xd203f000 | (jit->frame_off +
-
-Commit pointing to,
-   s390/bpf: Write back tail call counter for BPF_PSEUDO_CALL
-   [ Upstream commit c861a6b147137d10b5ff88a2c492ba376cd1b8b0 ]
-
-## Build
-* kernel: 6.6.112-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 07c1c4215e9202defca86827ce9e9c920c3596b9
-* git describe: v6.6.111-197-g07c1c4215e92
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.111-197-g07c1c4215e92
-
-## Test Regressions (compared to v6.6.109-37-g65af00078567)
-
-* s390, build
-  - clang-21-defconfig
-  - clang-nightly-defconfig
-  - gcc-14-allmodconfig
-  - gcc-14-defconfig
-  - gcc-8-defconfig-fe40093d
-
-## Metric Regressions (compared to v6.6.109-37-g65af00078567)
-
-## Test Fixes (compared to v6.6.109-37-g65af00078567)
-
-## Metric Fixes (compared to v6.6.109-37-g65af00078567)
-
-## Test result summary
-total: 131194, pass: 109732, fail: 4948, skip: 16043, xfail: 471
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 129 total, 128 passed, 1 failed
-* arm64: 44 total, 40 passed, 4 failed
-* i386: 23 total, 23 passed, 0 failed
-* mips: 26 total, 25 passed, 1 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 32 total, 31 passed, 1 failed
-* riscv: 15 total, 14 passed, 1 failed
-* s390: 14 total, 8 passed, 6 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 7 total, 7 passed, 0 failed
-* x86_64: 37 total, 34 passed, 3 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Jon
