@@ -1,103 +1,226 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8277311966;
-	Wed, 15 Oct 2025 08:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C015316904;
+	Wed, 15 Oct 2025 08:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760517729; cv=none; b=B/mWtmOkiTLIB7kL478p+CDI5hliXTw4I1QMn0T1dx9t68hijZvau3SD5FszslgNk3IMerW4jAojKXav+Htu4v3S4hjGz7CxwY9ErEQagVtIP1HsaQnCrU3ebab1SEKRT32BT0et+uR+B7Gcitg3j/JdAM5KBax/IN51WRFZbFQ=
+	t=1760518021; cv=none; b=ioYl7bgnqT+IQc1eamLIKONxjJ26fEvFDVc1Tk+4BbkvZ+K4la6fF2YuojM0mXEeuik27ck4EPicBMLlXcyzlCMZq80/lMw6Vl0WLc67h0maIclKxS3K+tE5mOy6vXPElbyPqJOR4hoXf+Rz3SFYaMtodtQoYcL2SV4ADgSGu+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760517729; c=relaxed/simple;
-	bh=fV/RBD9YP50aumeHVRIkO30zj7FKxJUNbhb9CN7QNxs=;
+	s=arc-20240116; t=1760518021; c=relaxed/simple;
+	bh=FrHWepJ+8TvdR3frU07jDniqnzcYnUTc9jm9aMDPuzQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WRSNy47KLUynzolPsK8+VBLNbbYTnLgdw1kh4JAfzrzBwKZYukQ5ruNbtvT0Jq/4B9/wIsNKibxCHt1OFq55fba1ZVwmN3hauZBRH7DQVmMe4EDOfJTlVYwPYBBK+VgnAIcEm04P/LHmC7Gf+MNgQyvCnjInW5QeVXy0XDZ+AqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd4j6WAd; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=LlrenK62kf0m5jQwJpETxfBXil7IKL9ahZVW9lW5W6tADTjb9wOX6XURmm7KMHgymS1jrMJ61lf69BwJKgHgifs1vOJ69X0VrWOOPZ6adPZMHw6zhsezaRG6iwQ7QkJ5StsqUcqPy5izgMOntKjoOlGNAYX9VkqKV+T90j6Kn5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GajTWI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd4j6WAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8286C4CEF8;
-	Wed, 15 Oct 2025 08:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GajTWI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84504C4CEF8;
+	Wed, 15 Oct 2025 08:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760517725;
-	bh=fV/RBD9YP50aumeHVRIkO30zj7FKxJUNbhb9CN7QNxs=;
+	s=korg; t=1760518021;
+	bh=FrHWepJ+8TvdR3frU07jDniqnzcYnUTc9jm9aMDPuzQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qd4j6WAdTQ6yNehh2rdErjKmkXKpaRAcpQD6NSZ1mhdFH4h90UkwQpl7RdznKemWq
-	 znuTSasG67c4MTdTNUpN8Z9qavIOpR12av5QUAPz7QR1fGmCl9mVrP6ctURbpAZ54I
-	 0ekR3tXbcxc3d3sbkF2G/y24RMi44LOOq7cT+z34=
-Date: Wed, 15 Oct 2025 10:42:02 +0200
+	b=2GajTWI6IShclxIK3xp+QleHTNrLdlEHd6vrHatCgHl0HTYmNECTWKuF7S288sa/a
+	 bWWN8awwPQ+19AGfaigECrxqmT6SyLHf8RoxLJzhi/lmUhIHogltc2IBHr+GtMqx2u
+	 zx+bw0eGEF3F1UgnTV1KKzNl1afJWCPlC37qgrts=
+Date: Wed, 15 Oct 2025 10:46:58 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org, akpm@linux-foundation.org,
 	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	linux-tegra@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 6.1 000/196] 6.1.156-rc1 review
-Message-ID: <2025101540-suffix-paralyses-41b7@gregkh>
-References: <20251013144314.549284796@linuxfoundation.org>
- <4ad822af-297a-4de0-b676-6963760a8384@rnnvmail201.nvidia.com>
- <046f08cb-0610-48c9-af24-4804367df177@nvidia.com>
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	achill@achill.org, Daniel Borkmann <daniel@iogearbox.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Ben Copeland <benjamin.copeland@linaro.org>,
+	linux-s390@vger.kernel.org, Netdev <netdev@vger.kernel.org>,
+	bpf <bpf@vger.kernel.org>
+Subject: Re: [PATCH 6.12 000/262] 6.12.53-rc1 review
+Message-ID: <2025101523-foster-impotent-6649@gregkh>
+References: <20251013144326.116493600@linuxfoundation.org>
+ <CA+G9fYsdErtgqKuyPfFhMS9haGKavBVCHQnipv2EeXM3OK0-UQ@mail.gmail.com>
+ <CA+G9fYuV-J7N0cAy30X+rLCRrER071nMkk9JC6kjDw1U0gEzJg@mail.gmail.com>
+ <69b2bf4c5d3aa7fd9c5b6822a03666f616eafe13.camel@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <046f08cb-0610-48c9-af24-4804367df177@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <69b2bf4c5d3aa7fd9c5b6822a03666f616eafe13.camel@linux.ibm.com>
 
-On Tue, Oct 14, 2025 at 02:11:33PM +0100, Jon Hunter wrote:
-> Hi Greg,
-> 
-> On 14/10/2025 14:09, Jon Hunter wrote:
-> > On Mon, 13 Oct 2025 16:42:53 +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.1.156 release.
-> > > There are 196 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
+On Tue, Oct 14, 2025 at 04:45:11PM +0200, Ilya Leoshkevich wrote:
+> On Tue, 2025-10-14 at 19:38 +0530, Naresh Kamboju wrote:
+> > On Tue, 14 Oct 2025 at 16:56, Naresh Kamboju
+> > <naresh.kamboju@linaro.org> wrote:
 > > > 
-> > > Responses should be made by Wed, 15 Oct 2025 14:42:41 +0000.
-> > > Anything received after that time might be too late.
+> > > On Mon, 13 Oct 2025 at 20:38, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > > 
+> > > > This is the start of the stable review cycle for the 6.12.53
+> > > > release.
+> > > > There are 262 patches in this series, all will be posted as a
+> > > > response
+> > > > to this one.  If anyone has any issues with these being applied,
+> > > > please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Wed, 15 Oct 2025 14:42:41 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > > The whole patch series can be found in one patch at:
+> > > >        
+> > > > https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.53-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >        
+> > > > git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-
+> > > > stable-rc.git linux-6.12.y
+> > > > and the diffstat can be found below.
+> > > > 
+> > > > thanks,
+> > > > 
+> > > > greg k-h
 > > > 
-> > > The whole patch series can be found in one patch at:
-> > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.156-rc1.gz
-> > > or in the git tree and branch at:
-> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > and the diffstat can be found below.
+> > > The S390 defconfig builds failed on the Linux stable-rc 6.12.53-rc1
+> > > and 6.6.112-rc1 tag build due to following build warnings / errors
+> > > with gcc and clang toolchains.
 > > > 
-> > > thanks,
+> > > Also seen on 6.6.112-rc1.
 > > > 
-> > > greg k-h
+> > > * s390, build
+> > >   - clang-21-defconfig
+> > >   - clang-nightly-defconfig
+> > >   - clang-nightly-lkftconfig-hardening
+> > >   - clang-nightly-lkftconfig-lto-full
+> > >   - clang-nightly-lkftconfig-lto-thing
+> > >   - gcc-14-allmodconfig
+> > >   - gcc-14-defconfig
+> > >   - gcc-14-lkftconfig-hardening
+> > >   - gcc-8-defconfig-fe40093d
+> > >   - gcc-8-lkftconfig-hardening
+> > >   - korg-clang-21-lkftconfig-hardening
+> > >   - korg-clang-21-lkftconfig-lto-full
+> > >   - korg-clang-21-lkftconfig-lto-thing
+> > > 
+> > > First seen on 6.12.53-rc1
+> > > Good: v6.12.52
+> > > Bad: 6.12.53-rc1 also seen on 6.6.112-rc1
+> > > 
+> > > Regression Analysis:
+> > > - New regression? yes
+> > > - Reproducibility? yes
+> > > 
+> > > Build regressions: arch/s390/net/bpf_jit_comp.c:1813:49: error:
+> > > 'struct bpf_jit' has no member named 'frame_off'
+> > > 
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > > 
+> > > # Build error
+> > > arch/s390/net/bpf_jit_comp.c: In function 'bpf_jit_insn':
+> > > arch/s390/net/bpf_jit_comp.c:1813:49: error: 'struct bpf_jit' has
+> > > no
+> > > member named 'frame_off'
+> > >  1813 |                         _EMIT6(0xd203f000 | (jit->frame_off
+> > > +
+> > >       |                                                 ^~
+> > > arch/s390/net/bpf_jit_comp.c:211:55: note: in definition of macro
+> > > '_EMIT6'
+> > >   211 |                 *(u32 *) (jit->prg_buf + jit->prg) =
+> > > (op1);     \
+> > >       |                                                       ^~~
+> > > include/linux/stddef.h:16:33: error: invalid use of undefined type
+> > > 'struct prog_frame'
+> > >    16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE,
+> > > MEMBER)
+> > >       |                                 ^~~~~~~~~~~~~~~~~~
+> > > arch/s390/net/bpf_jit_comp.c:211:55: note: in definition of macro
+> > > '_EMIT6'
+> > >   211 |                 *(u32 *) (jit->prg_buf + jit->prg) =
+> > > (op1);     \
+> > >       |                                                       ^~~
+> > > arch/s390/net/bpf_jit_comp.c:1814:46: note: in expansion of macro
+> > > 'offsetof'
+> > >  1814 |                                             
+> > > offsetof(struct prog_frame,
+> > >       |                                              ^~~~~~~~
+> > > include/linux/stddef.h:16:33: error: invalid use of undefined type
+> > > 'struct prog_frame'
+> > >    16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE,
+> > > MEMBER)
+> > >       |                                 ^~~~~~~~~~~~~~~~~~
+> > > arch/s390/net/bpf_jit_comp.c:212:59: note: in definition of macro
+> > > '_EMIT6'
+> > >   212 |                 *(u16 *) (jit->prg_buf + jit->prg + 4) =
+> > > (op2); \
+> > >       |                                                          
+> > > ^~~
+> > > arch/s390/net/bpf_jit_comp.c:1816:41: note: in expansion of macro
+> > > 'offsetof'
+> > >  1816 |                                0xf000 | offsetof(struct
+> > > prog_frame,
+> > >       |                                         ^~~~~~~~
+> > > arch/s390/net/bpf_jit_comp.c: In function
+> > > '__arch_prepare_bpf_trampoline':
+> > > include/linux/stddef.h:16:33: error: invalid use of undefined type
+> > > 'struct prog_frame'
+> > >    16 | #define offsetof(TYPE, MEMBER)  __builtin_offsetof(TYPE,
+> > > MEMBER)
+> > >       |                                 ^~~~~~~~~~~~~~~~~~
+> > > arch/s390/net/bpf_jit_comp.c:212:59: note: in definition of macro
+> > > '_EMIT6'
+> > >   212 |                 *(u16 *) (jit->prg_buf + jit->prg + 4) =
+> > > (op2); \
+> > >       |                                                          
+> > > ^~~
+> > > arch/s390/net/bpf_jit_comp.c:2813:33: note: in expansion of macro
+> > > 'offsetof'
+> > >  2813 |                        0xf000 | offsetof(struct prog_frame,
+> > > tail_call_cnt));
+> > >       |                                 ^~~~~~~~
+> > > make[5]: *** [scripts/Makefile.build:229:
+> > > arch/s390/net/bpf_jit_comp.o] Error 1
+> > > 
+> > > The git blame is pointing to,
+> > >  $ git blame -L 1813  arch/s390/net/bpf_jit_comp.c
+> > >    162513d7d81487 (Ilya Leoshkevich)    _EMIT6(0xd203f000 | (jit-
+> > > >frame_off +
+> > > 
+> > > Commit pointing to,
+> > >    s390/bpf: Write back tail call counter for BPF_PSEUDO_CALL
+> > >    [ Upstream commit c861a6b147137d10b5ff88a2c492ba376cd1b8b0 ]
 > > 
-> > Failures detected for Tegra ...
+> > Anders bisected reported regressions and also suggested the missing
+> > patches.
 > > 
-> > Test results for stable-v6.1:
-> >      10 builds:	10 pass, 0 fail
-> >      28 boots:	28 pass, 0 fail
-> >      119 tests:	118 pass, 1 fail
+> > Ilya Leoshkevich,
+> > Is it a good idea to backport / cherry pick these two patches on the
+> > 6.12 branch ?
 > > 
-> > Linux version:	6.1.156-rc1-gb9f52894e35f
-> > Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-> >                  tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
-> >                  tegra194-p3509-0000+p3668-0000, tegra20-ventana,
-> >                  tegra210-p2371-2180, tegra210-p3450-0000,
-> >                  tegra30-cardhu-a04
-> > 
-> > Test failures:	tegra194-p2972-0000: boot.py
+> > b2268d550d20 ("s390/bpf: Centralize frame offset calculations")
+> > e26d523edf2a ("s390/bpf: Describe the frame using a struct instead of
+> > constants")
 > 
+> Thank you for the report and the investigation!
 > 
-> A new kernel warning is observed for this update which is ...
+> I think it would be a good idea to backport these.
+> Both are NFC changes that went into v6.17 and there were no complaints.
 > 
->  ERR KERN Early cacheinfo failed, ret = -22
+> For v6.6 we also need this one (also NFC):
 > 
-> Bisect is pointing to this commit ...
-> 
-> # first bad commit: [988121168f4a3211c7f5e561c24bb0bbe8504565]
-> arch_topology: Build cacheinfo from primary CPU
+> 67aed27bcd46 ("s390/bpf: Change seen_reg to a mask")
 
-Thanks for the info, I'll go drop this whole series from the tree now,
-and report this to the submitter and cc: you on it.
+Thanks for the info, I'll go drop the original offending commit from
+both queues.  Can someone please resubmit all of the needed changes for
+us to apply so that I am sure to get them all correctly?
+
+thanks,
 
 greg k-h
