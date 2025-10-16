@@ -1,35 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8F68834;
-	Thu, 16 Oct 2025 22:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FF826FDA9;
+	Thu, 16 Oct 2025 23:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760655025; cv=none; b=hzwdZmipE2+FKL2fh9R7b4mfWbAzgWOe4opUdFaP/485hYZdtlsl6/UMZWtlR4jyiF/Q3X/DYhGSzWDW3IU7233j+X1rwKZyXBDNO5v1y3aXRTyHG4lmQgNqGNVY9hcRt15UEQk254iALhyJap2XtN6M5uKfxRxpS51gb00N8Lw=
+	t=1760656446; cv=none; b=JlohZCIxan4n2v5kSXe7cDPAONmR7TdwqpvgBvsce4ULYAO6a2j+fsDBsxYedkQ3uCGnZd2E4EzYrsXG3tKlAdkGvdyZMd1UXazLQvakgzsS+RrWxBsHvxsbNT+6dpqUzez6jlcbb9jSx86BJ3TjgHutE+1WBR87HSasiuhSDVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760655025; c=relaxed/simple;
-	bh=Y30PzYE3tUSFUAGRL8A2xsJQQQGFkteVQIJrABahShY=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=IHZA25Hu8yjJGlqCZH/YrgyL8PUYiKlaXg1o/HqKrgD29qqhRxjsxe2vqqMxb9z2kC2Lg86XWQ3tqmiO3c25xLC8952osDMJIQq+Ev9DhhFLGSpLwe7Vap4WaE7JIY1jIqslpetJ+emYjcro3Ez4vL8qMeoNjqUnzGZM/COoe8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBUuZHG8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760656446; c=relaxed/simple;
+	bh=ITMqOLCtxTXwtLJfhCV2mihXr4gf+cYn7l6eHf2Y+Sk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=giLg2J2D2VdzprU7E/iYw0/UCPMPGvYCFRqQ4244fS6h6nB6dJOjOkEd5FRp7oAoH8QtZReNvoK9JnG3YsgQaMR9tMR5yMP+s3hfdRMMRlrX0KX6rlXRTr02XnoWA9hSDtLvDHC3MPjQ7BzkSBr2k+poihzsOYTpGUTe62TDkYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NK44aBRz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBUuZHG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAF7C4CEF1;
-	Thu, 16 Oct 2025 22:50:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NK44aBRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190C4C4CEF1;
+	Thu, 16 Oct 2025 23:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760655024;
-	bh=Y30PzYE3tUSFUAGRL8A2xsJQQQGFkteVQIJrABahShY=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=fBUuZHG8oEtGqKj/57cBfTX2IgUdSoEVFMQaqG1E3bPDFxrwLuGF9Uigv9Bg4ol2P
-	 fROxHibKmrPvt6y+0V/CCs5jdN3fc9jVvX7lNfvMOTzFi2RQmo3l5obKTU3kCActbi
-	 WnfkZlagN0vBkD6wPyg/K05CaHM7Fl1i0BbQF7L7Pe46wkXWQbh0E1Aq+RcLagQrqP
-	 D/pPkdGW7KfMDy+aGml9sSttrZ0Df9fgXVOhnAJ8ggv2ZlMY5p4Hy2OoasLZ7wqLfl
-	 qL9OxxPw9zlujHv6+qIQv3M4GhqbnGI11bzFuRh8iuDcCFz1Qq2hAv9hLfgB++IfUn
-	 /rb0STeAW+xfA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EB06839D0C23;
-	Thu, 16 Oct 2025 22:50:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1760656444;
+	bh=ITMqOLCtxTXwtLJfhCV2mihXr4gf+cYn7l6eHf2Y+Sk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=NK44aBRzxaUx3lsfUitwGmoNGboFZ6cTTXMKWQI+kBOyi4NRBR8jOs4I8RsBC9DP4
+	 sJC6kkjxsTkETQa0xviq0+REnY+Pw5K7gw9mpfhurtabTvk8uNMmBZ5RbIoF6fbf3H
+	 FXXlS3CyShJFUtjXwSFM0163wiFIFwXRT+XXBe907ORwVBa71bBRCkxXWdgM2wxMzV
+	 Nz9WiDRn8GciOkdEOI/MuQvhAi0IzGdPnzVImqp0gFrOF6ylZaUevUBLB152sUK+1X
+	 fedIbFNKZlbEzxVbPCiIvqyVlOM5mta8ZD/7nhhaM6kVg/bPsEs/LI1sUzJQior1Cq
+	 Zux5cFF2RJxMA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: linux-usb@vger.kernel.org,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: usb: fix formatting
+Date: Fri, 17 Oct 2025 01:13:50 +0200
+Message-ID: <20251016231350.1418501-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,49 +51,47 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net/mlx5e: Return 1 instead of 0 in invalid case in
- mlx5e_mpwrq_umr_entry_size()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <176065500875.1934842.18128333206683438556.git-patchwork-notify@kernel.org>
-Date: Thu, 16 Oct 2025 22:50:08 +0000
-References: 
- <20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-v1-1-dc186b8819ef@kernel.org>
-In-Reply-To: 
- <20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-v1-1-dc186b8819ef@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: saeedm@nvidia.com, leon@kernel.org, tariqt@nvidia.com, mbloch@nvidia.com,
- andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, nick.desaulniers+lkml@gmail.com,
- morbo@google.com, justinstitt@google.com, netdev@vger.kernel.org,
- linux-rdma@vger.kernel.org, patches@lists.linux.dev, llvm@lists.linux.dev
 
-Hello:
+We do our best to keep the repository `rustfmt`-clean, thus run the tool
+to fix the formatting issue.
 
-This patch was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+Link: https://docs.kernel.org/rust/coding-guidelines.html#style-formatting
+Link: https://rust-for-linux.com/contributing#submit-checklist-addendum
+Fixes: 9a55e0079258 ("Revert "USB: disable rust bindings from the build for now"")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+Greg: I am sending the `rustfmt` series to Linus to see if he is OK with
+getting the tree back into a clean state:
 
-On Tue, 14 Oct 2025 13:46:49 -0700 you wrote:
-> When building with Clang 20 or newer, there are some objtool warnings
-> from unexpected fallthroughs to other functions:
-> 
->   vmlinux.o: warning: objtool: mlx5e_mpwrq_mtts_per_wqe() falls through to next function mlx5e_mpwrq_max_num_entries()
->   vmlinux.o: warning: objtool: mlx5e_mpwrq_max_log_rq_size() falls through to next function mlx5e_get_linear_rq_headroom()
-> 
-> LLVM 20 contains an (admittedly problematic [1]) optimization [2] to
-> convert divide by zero into the equivalent of __builtin_unreachable(),
-> which invokes undefined behavior and destroys code generation when it is
-> encountered in a control flow graph.
-> 
-> [...]
+    https://lore.kernel.org/rust-for-linux/20251010174351.948650-1-ojeda@kernel.org/
 
-Here is the summary with links:
-  - [net] net/mlx5e: Return 1 instead of 0 in invalid case in mlx5e_mpwrq_umr_entry_size()
-    https://git.kernel.org/netdev/net/c/aaf043a56881
+And I noticed that in linux-next this is wrongly formatted (i.e. bad
+sorting).
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Please feel free to just fix the original commit if you rebase, of
+course. I am sending this as a patch in case it helps.
+
+Thanks!
+
+ rust/kernel/lib.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+index 9cf4ca0ae7a1..cd191686fef6 100644
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -138,9 +138,9 @@
+ pub mod tracepoint;
+ pub mod transmute;
+ pub mod types;
++pub mod uaccess;
+ #[cfg(CONFIG_USB = "y")]
+ pub mod usb;
+-pub mod uaccess;
+ pub mod workqueue;
+ pub mod xarray;
 
 
+base-commit: 2433b84761658ef123ae683508bc461b07c5b0f0
+--
+2.51.0
