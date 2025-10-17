@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B630330B0F;
-	Fri, 17 Oct 2025 15:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2108C330B06;
+	Fri, 17 Oct 2025 15:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715675; cv=none; b=q+1qilMb2njv65SoJ/g66VYIj4DEWxRofUhgjJyCS8k1R4eYB9frWrAO+5KPwfe7llKh+/DhYm+mqFYhYAFrbwJcUvLD4jMK6hEhf2c7XGh/5qR1ufyKmgQ5KkUGWPNIbvuv+KpvUVhc+UJdSa10Mybj708wlR3pSv+kSoVmb0A=
+	t=1760715678; cv=none; b=IxC22YUA67QwLWeFktcK/TdIMm7syGIEmoG2nImVlWawDFJOYlTPTr3iDAEOo4mEcjdv56ffkEkOjqfyQ58qF1zhkvZm7qlQpPqr9iswoi0DsV7R377t2QKNTa5hvuAAzXNsEq9MO3xIKF5h1MBLB0gOpjxjvq9aEXNS+fJ/72M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715675; c=relaxed/simple;
-	bh=sOEWN7onPNQwrblPCuq0FCZ0eL4EeNlt5y3nu8Q+6cI=;
+	s=arc-20240116; t=1760715678; c=relaxed/simple;
+	bh=gm3asZE8nE2joJ8b+a8+KJJcPQLb+Qo9RDE2yoFm6qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F14Hm1WgcEj9fzoKIe3R2OK7hZenx8S4jmZu4k4KFDkrAWWPYjaSVpdUtM8SeKUyt7KgE0B43WfNCIiKm5gOivj1odg7By8fkXfdLB2di5i/cnXHWCoLdcZMomq7cwYbFEtu+BF33bsXMPkKE9QN2MG4M5MiOSuA2L1G+zkqMwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAMBlteo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EWzDF2S8qkus+8lelFyIVZaMHdyS23LzKwaw3uhV/GFQ7iqxwr8m1IxgxgeTyXgFDXTj+CaJ0sHPusU9c99Kcd3d66iW6j/AoVXsaFf/L3N0AyiR2ZLs3v99Cu8Jjd/8cxNmgp8ipcg+Wop7GpqSvVTkRDviP/3Q5eLooZgw/vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ucTXtQ83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAMBlteo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AB7C4CEE7;
-	Fri, 17 Oct 2025 15:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucTXtQ83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD57C4CEE7;
+	Fri, 17 Oct 2025 15:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715675;
-	bh=sOEWN7onPNQwrblPCuq0FCZ0eL4EeNlt5y3nu8Q+6cI=;
+	s=korg; t=1760715678;
+	bh=gm3asZE8nE2joJ8b+a8+KJJcPQLb+Qo9RDE2yoFm6qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAMBlteophL1PPlIpE4qJOUTe4zDNVQxVmraaKGNC80rIpnk5izn5e9VEbhkzMMQg
-	 56BbrPjPgIYghhC90e1Bk7eA/TyoU99hc+K4z8uHOQd/XAAo5Afq5rWdaI+79a3vZe
-	 JEubvox3pmPWlJq8cRD6tW5+KU948QTM/tD/n2vo=
+	b=ucTXtQ83iJTw8PRjR3O9HhLAskfzg9kkO0gdUtz3FTJNvpKh4+vC1nVp/lN2fHykV
+	 GJvpPKlulrUwjv9U/VefREx2894bro8gjjvZ3Nj/eE1BWpQRp7ku/ZkUAmI+pWlwgR
+	 +5th4OczlpizlECuEaXZASHudFXB0bx3o/nJ2QtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esben Haabendal <esben@geanix.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.17 271/371] rtc: interface: Fix long-standing race when setting alarm
-Date: Fri, 17 Oct 2025 16:54:06 +0200
-Message-ID: <20251017145211.880030361@linuxfoundation.org>
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: [PATCH 6.17 298/371] x86/fred: Remove ENDBR64 from FRED entry points
+Date: Fri, 17 Oct 2025 16:54:33 +0200
+Message-ID: <20251017145212.856174683@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,71 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-commit 795cda8338eab036013314dbc0b04aae728880ab upstream.
+commit 3da01ffe1aeaa0d427ab5235ba735226670a80d9 upstream.
 
-As described in the old comment dating back to
-commit 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
-from 2010, we have been living with a race window when setting alarm
-with an expiry in the near future (i.e. next second).
-With 1 second resolution, it can happen that the second ticks after the
-check for the timer having expired, but before the alarm is actually set.
-When this happen, no alarm IRQ is generated, at least not with some RTC
-chips (isl12022 is an example of this).
+The FRED specification has been changed in v9.0 to state that there
+is no need for FRED event handlers to begin with ENDBR64, because
+in the presence of supervisor indirect branch tracking, FRED event
+delivery does not enter the WAIT_FOR_ENDBRANCH state.
 
-With UIE RTC timer being implemented on top of alarm irq, being re-armed
-every second, UIE will occasionally fail to work, as an alarm irq lost
-due to this race will stop the re-arming loop.
+As a result, remove ENDBR64 from FRED entry points.
 
-For now, I have limited the additional expiry check to only be done for
-alarms set to next seconds. I expect it should be good enough, although I
-don't know if we can now for sure that systems with loads could end up
-causing the same problems for alarms set 2 seconds or even longer in the
-future.
+Then add ANNOTATE_NOENDBR to indicate that FRED entry points will
+never be used for indirect calls to suppress an objtool warning.
 
-I haven't been able to reproduce the problem with this check in place.
+This change implies that any indirect CALL/JMP to FRED entry points
+causes #CP in the presence of supervisor indirect branch tracking.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-1-3de8e530a39e@geanix.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Credit goes to Jennifer Miller <jmill@asu.edu> and other contributors
+from Arizona State University whose research shows that placing ENDBR
+at entry points has negative value thus led to this change.
+
+Note: This is obviously an incompatible change to the FRED
+architecture.  But, it's OK because there no FRED systems out in the
+wild today. All production hardware and late pre-production hardware
+will follow the FRED v9 spec and be compatible with this approach.
+
+[ dhansen: add note to changelog about incompatibility ]
+
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/linux-hardening/Z60NwR4w%2F28Z7XUa@ubun/
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250716063320.1337818-1-xin%40zytor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ arch/x86/entry/entry_64_fred.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -443,6 +443,29 @@ static int __rtc_set_alarm(struct rtc_de
- 	else
- 		err = rtc->ops->set_alarm(rtc->dev.parent, alarm);
+--- a/arch/x86/entry/entry_64_fred.S
++++ b/arch/x86/entry/entry_64_fred.S
+@@ -16,7 +16,7 @@
  
-+	/*
-+	 * Check for potential race described above. If the waiting for next
-+	 * second, and the second just ticked since the check above, either
-+	 *
-+	 * 1) It ticked after the alarm was set, and an alarm irq should be
-+	 *    generated.
-+	 *
-+	 * 2) It ticked before the alarm was set, and alarm irq most likely will
-+	 * not be generated.
-+	 *
-+	 * While we cannot easily check for which of these two scenarios we
-+	 * are in, we can return -ETIME to signal that the timer has already
-+	 * expired, which is true in both cases.
-+	 */
-+	if ((scheduled - now) <= 1) {
-+		err = __rtc_read_time(rtc, &tm);
-+		if (err)
-+			return err;
-+		now = rtc_tm_to_time64(&tm);
-+		if (scheduled <= now)
-+			return -ETIME;
-+	}
-+
- 	trace_rtc_set_alarm(rtc_tm_to_time64(&alarm->time), err);
- 	return err;
- }
+ .macro FRED_ENTER
+ 	UNWIND_HINT_END_OF_STACK
+-	ENDBR
++	ANNOTATE_NOENDBR
+ 	PUSH_AND_CLEAR_REGS
+ 	movq	%rsp, %rdi	/* %rdi -> pt_regs */
+ .endm
 
 
