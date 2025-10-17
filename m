@@ -1,56 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC0933506D;
-	Fri, 17 Oct 2025 15:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D905335092;
+	Fri, 17 Oct 2025 15:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713565; cv=none; b=khLUDSxVEKKPzV+0eekrFvCue7KjrdPvqBenqTXvWY4HBw7USn4s7fsVYPQcD3jdrlP6zlo2U02EKdAMq0dZ0EFeT+4EXiup2kkNFWcsuZObL9dTeCrdHSqy/cDsj7Xndw5owpoh5A8FN6Zj/6jck0fIyB3asiuVmR6f2dRJZpg=
+	t=1760713568; cv=none; b=PQp8CPDWa2MxIBXfsQWpLmOY9qrIv1O2ZJqmUhDn0oQZsOmn1l2Z4cSuH3kvp5zQ8oU03T/3TMK0Ra5MK8ghycoijGMKkXja9VyyhI5LzQbnXghMHAAXU4JDCIyvrQWLjM0frK6pXFRUbu+60Z0iSkKlF7cq8q5JyMFaY5afNvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713565; c=relaxed/simple;
-	bh=3YuaHOx6tgDqROUEaCIuQM36pFPLpmVA70sUlwRWeOQ=;
+	s=arc-20240116; t=1760713568; c=relaxed/simple;
+	bh=/NIMGXhwKXG8KO8Ia6nMbUyf7Fg9KzBX7OKshaOWILs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kgeca6zE0ogaro16XFvAeq+N60/hvxyc5nZX194VlWk5fU7eN879P6GnhLSSTkLcVpPHXzzozaMTRMHYnwBhFm11XKsumn7nuQ/Y8YFBoD7JqpJsIU+Q8IhsshDnXmE/5ksWswT29ZUcp3wsjQ09nNxJfRHXkA2fwAELJRHft30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcZqJ3dO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZejQtd3AUUxvlCQWaoHPCSRyFyssyvo+UfWrWFWnvPfD9hE1NYvh2zTRVv08Ywb3mQxE2Pl0uuV6v8k/DFP95HNUZoIoQxh9ZxaqlI6NIcJnaLGOVF5lJudJOZPDjjMet4hffCbCWn4sF3E+vmL00ukD0dvw1QUwSyVMg6yaF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4miB3w6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcZqJ3dO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0202CC4CEE7;
-	Fri, 17 Oct 2025 15:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4miB3w6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF65C4CEE7;
+	Fri, 17 Oct 2025 15:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713565;
-	bh=3YuaHOx6tgDqROUEaCIuQM36pFPLpmVA70sUlwRWeOQ=;
+	s=korg; t=1760713568;
+	bh=/NIMGXhwKXG8KO8Ia6nMbUyf7Fg9KzBX7OKshaOWILs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcZqJ3dOyJDUA98Lg3+fpOExaF4SVSrVBoFAWxCllEWGJyaPwmJiDIlEz0c/CwXVs
-	 yOe3Fa42iL3R/QeiQ+dOwW4/DKnGPkgRKAVOjSsG2gzMobhVtCaFfVs8RurhCRDDIj
-	 PNDFtErml6PMsRp31JE6FQK3QwoF8o77lxuJ4CRU=
+	b=Q4miB3w6mUOLRx9JJ+epeWBkzPfv/XHJmCEG7QqdtwkSM0VeV5twlbXuTyg27hfWJ
+	 cP2EkbaBepBROOkcczFjXdVE3Bu8k2dKe0+g0joNPeDy+dGnCwUv5+4tVqJffmM3Q4
+	 R8sibAacg0GKY9tlx91xeCcKO34+ueIIOaJTI4kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	linux-kernel@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/201] perf python: split Clang options when invoking Popen
-Date: Fri, 17 Oct 2025 16:51:41 +0200
-Message-ID: <20251017145136.218481580@linuxfoundation.org>
+Subject: [PATCH 6.6 041/201] tcp: take care of zero tp->window_clamp in tcp_set_rcvlowat()
+Date: Fri, 17 Oct 2025 16:51:42 +0200
+Message-ID: <20251017145136.255774022@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -69,80 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c6a43bc3e8f6102a47da0d2e53428d08f00172fb ]
+[ Upstream commit 21b29e74ffe5a6c851c235bb80bf5ee26292c67b ]
 
-When passing a list to subprocess.Popen, each element maps to one argv
-token. Current code bundles multiple Clang flags into a single element,
-something like:
+Some applications (like selftests/net/tcp_mmap.c) call SO_RCVLOWAT
+on their listener, before accept().
 
-  cmd = ['clang',
-         '--target=x86_64-linux-gnu -fintegrated-as -Wno-cast-function-type-mismatch',
-	 'test-hello.c']
+This has an unfortunate effect on wscale selection in
+tcp_select_initial_window() during 3WHS.
 
-So Clang only sees one long, invalid option instead of separate flags,
-as a result, the script cannot capture any log via PIPE.
+For instance, tcp_mmap was negotiating wscale 4, regardless
+of tcp_rmem[2] and sysctl_rmem_max.
 
-Fix this by using shlex.split() to separate the string so each option
-becomes its own argv element. The fixed list will be:
+Do not change tp->window_clamp if it is zero
+or bigger than our computed value.
 
-  cmd = ['clang',
-         '--target=x86_64-linux-gnu',
-	 '-fintegrated-as',
-	 '-Wno-cast-function-type-mismatch',
-	 'test-hello.c']
+Zero value is special, it allows tcp_select_initial_window()
+to enable autotuning.
 
-Fixes: 09e6f9f98370 ("perf python: Fix splitting CC into compiler and options")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-2-4305590795b2@arm.com
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: linux-riscv@lists.infradead.org
-Cc: llvm@lists.linux.dev
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-perf-users@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Note that SO_RCVLOWAT use on listener is probably not wise,
+because tp->scaling_ratio has a default value, possibly wrong.
+
+Fixes: d1361840f8c5 ("tcp: fix SO_RCVLOWAT and RCVBUF autotuning")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20251003184119.2526655-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/setup.py | 5 ++++-
+ net/ipv4/tcp.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
-index e837132d5031b..eecb462c021cd 100644
---- a/tools/perf/util/setup.py
-+++ b/tools/perf/util/setup.py
-@@ -1,6 +1,7 @@
- from os import getenv, path
- from subprocess import Popen, PIPE
- from re import sub
-+import shlex
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 7d824578f217a..5dde0aed31440 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1724,6 +1724,7 @@ EXPORT_SYMBOL(tcp_peek_len);
+ /* Make sure sk_rcvbuf is big enough to satisfy SO_RCVLOWAT hint */
+ int tcp_set_rcvlowat(struct sock *sk, int val)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	int space, cap;
  
- cc = getenv("CC")
- 
-@@ -16,7 +17,9 @@ cc_is_clang = b"clang version" in Popen([cc, "-v"], stderr=PIPE).stderr.readline
- src_feature_tests  = getenv('srctree') + '/tools/build/feature'
- 
- def clang_has_option(option):
--    cc_output = Popen([cc, cc_options + option, path.join(src_feature_tests, "test-hello.c") ], stderr=PIPE).stderr.readlines()
-+    cmd = shlex.split(f"{cc} {cc_options} {option}")
-+    cmd.append(path.join(src_feature_tests, "test-hello.c"))
-+    cc_output = Popen(cmd, stderr=PIPE).stderr.readlines()
-     return [o for o in cc_output if ((b"unknown argument" in o) or (b"is not supported" in o) or (b"unknown warning option" in o))] == [ ]
- 
- if cc_is_clang:
+ 	if (sk->sk_userlocks & SOCK_RCVBUF_LOCK)
+@@ -1742,7 +1743,9 @@ int tcp_set_rcvlowat(struct sock *sk, int val)
+ 	space = tcp_space_from_win(sk, val);
+ 	if (space > sk->sk_rcvbuf) {
+ 		WRITE_ONCE(sk->sk_rcvbuf, space);
+-		WRITE_ONCE(tcp_sk(sk)->window_clamp, val);
++
++		if (tp->window_clamp && tp->window_clamp < val)
++			WRITE_ONCE(tp->window_clamp, val);
+ 	}
+ 	return 0;
+ }
 -- 
 2.51.0
 
