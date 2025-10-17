@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B93B3370FB;
-	Fri, 17 Oct 2025 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B049F3370FB;
+	Fri, 17 Oct 2025 15:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714617; cv=none; b=hQtDlaXuCl0DTvVvxSqJsPk6Ml2/tcfvWIW2ynQ8HIoK5K6/l6TugZHdLw5BRB7ks81l9WcVeCxCULv+IdEBBzk9XUIg9iSE1/KNb9FkDUeBcfHTawuejK5NAl9t51ErBw63WC05mtsJ+WUTLrtd7VIFB9olp2AIVqPqPusWfng=
+	t=1760714620; cv=none; b=Le6X+2ngGqnHZzURWANTj0AD3niFEQNFZEcDuuUgO+Rd1Gdelri08/TfquHBBd/oX2Ls/3heVWyGbbwLuaikTK4a81t46x0aHrsvY4LkzqGpC1fFAzvK6ACwnV2szkTgiu7C2jvU+LVnFv/h85OYHTXhSxo6WgW5y8pTaBVV9ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714617; c=relaxed/simple;
-	bh=2ps53R5i75+ppRhNaIPxyvMl9I7E3xRL/5OjIZRrqGI=;
+	s=arc-20240116; t=1760714620; c=relaxed/simple;
+	bh=nsXaArORiI62BJOV4PWFgEt3jB+IQ6gddjX7qFrNJCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hy9npUWOCvSUa9DyRnBKc9zInwrQQ16XHmWcsEK7ZgJwP6Dq75DlTQVMG6sVeFzRjLHz8H87OQnLmf/Iqu6krNNAzBM9KgWzLK/rWWDIR/gMPmHuzfwY3xTzDRCt8D94f8nJxMRS4P3etsJOiHHAMrdVDGEDHtUdMfH1FqhyREg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk25VaA7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HiHOoOXjtpjy+3iZE3lURN7ht4DkRg/iRGnVe/IbBpuMvR1jEJN9UXnjCYIUi7up9r2yxLZzh+cZB8iPmCxcpaEIBBhMkhiR/BRgaRhM2PBMZYAU6ZAvLY16qutRllEZzPFeASEA8GcJlWahGH/g9GN4iCoU/k7x8/QrqfvL9ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/U2W6Fj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk25VaA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D791FC4CEE7;
-	Fri, 17 Oct 2025 15:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/U2W6Fj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7964C4CEE7;
+	Fri, 17 Oct 2025 15:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714617;
-	bh=2ps53R5i75+ppRhNaIPxyvMl9I7E3xRL/5OjIZRrqGI=;
+	s=korg; t=1760714620;
+	bh=nsXaArORiI62BJOV4PWFgEt3jB+IQ6gddjX7qFrNJCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rk25VaA7gSWxwBMuoBV9q6JR2SzWtH4JOuNrV+ssRrx6Ttp7mwS+QKQJbRUn3AmTv
-	 jxz0qu/hEw/+r7VDKbFKF48usqQNnp7rqBpmNM2cBdxdNl/Bsu2q/zsLqI50Dj3e4X
-	 PDRKwgM5c73zTp38gJzxtE39GHVoSrVyVYTU5aMc=
+	b=o/U2W6FjTK9wcabS3CPcoDgy1Gav5gSXpLbK/sjCe0o8ex6CHx4rdiVHwD5dg0rLg
+	 FDSbcCk4R2h0C2UULH4gtv9/DJGmSvP3X8QoNdixMJS3Rol1md+QPagw+ZxYRnSZmz
+	 diWvuozBlxPmF4JXU4S0OR27nfKkOo8lpk9ejI1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nurminen <jani.nurminen@windriver.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 175/277] PCI: xilinx-nwl: Fix ECAM programming
-Date: Fri, 17 Oct 2025 16:53:02 +0200
-Message-ID: <20251017145153.518444156@linuxfoundation.org>
+Subject: [PATCH 6.12 176/277] PCI: tegra: Convert struct tegra_msi mask_lock into raw spinlock
+Date: Fri, 17 Oct 2025 16:53:03 +0200
+Message-ID: <20251017145153.553948841@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,54 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nurminen <jani.nurminen@windriver.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-commit 98a4f5b7359205ced1b6a626df3963bf7c5e5052 upstream.
+commit 26fda92d3b56bf44a02bcb4001c5a5548e0ae8ee upstream.
 
-When PCIe has been set up by the bootloader, the ecam_size field in the
-E_ECAM_CONTROL register already contains a value.
+The tegra_msi_irq_unmask() function may be called from a PCI driver
+request_threaded_irq() function. This triggers kernel/irq/manage.c
+__setup_irq() which locks raw spinlock &desc->lock descriptor lock
+and with that descriptor lock held, calls tegra_msi_irq_unmask().
 
-The driver previously programmed it to 0xc (for 16 busses; 16 MB), but
-bumped to 0x10 (for 256 busses; 256 MB) by the commit 2fccd11518f1 ("PCI:
-xilinx-nwl: Modify ECAM size to enable support for 256 buses").
+Since the &desc->lock descriptor lock is a raw spinlock, and the tegra_msi
+.mask_lock is not a raw spinlock, this setup triggers 'BUG: Invalid wait
+context' with CONFIG_PROVE_RAW_LOCK_NESTING=y.
 
-Regardless of what the bootloader has programmed, the driver ORs in a
-new maximal value without doing a proper RMW sequence. This can lead to
-problems.
+Use scoped_guard() to simplify the locking.
 
-For example, if the bootloader programs in 0xc and the driver uses 0x10,
-the ORed result is 0x1c, which is beyond the ecam_max_size limit of 0x10
-(from E_ECAM_CAPABILITIES).
-
-Avoid the problems by doing a proper RMW.
-
-Fixes: 2fccd11518f1 ("PCI: xilinx-nwl: Modify ECAM size to enable support for 256 buses")
-Signed-off-by: Jani Nurminen <jani.nurminen@windriver.com>
-[mani: added stable tag]
+Fixes: 2c99e55f7955 ("PCI: tegra: Convert to MSI domains")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://patchwork.kernel.org/project/linux-pci/patch/20250909162707.13927-2-marek.vasut+renesas@mailbox.org/#26574451
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/e83a2af2-af0b-4670-bcf5-ad408571c2b0@windriver.com
+Link: https://patch.msgid.link/20250922150811.88450-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pci-tegra.c |   27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
---- a/drivers/pci/controller/pcie-xilinx-nwl.c
-+++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -721,9 +721,10 @@ static int nwl_pcie_bridge_init(struct n
- 	nwl_bridge_writel(pcie, nwl_bridge_readl(pcie, E_ECAM_CONTROL) |
- 			  E_ECAM_CR_ENABLE, E_ECAM_CONTROL);
+--- a/drivers/pci/controller/pci-tegra.c
++++ b/drivers/pci/controller/pci-tegra.c
+@@ -14,6 +14,7 @@
+  */
  
--	nwl_bridge_writel(pcie, nwl_bridge_readl(pcie, E_ECAM_CONTROL) |
--			  (NWL_ECAM_MAX_SIZE << E_ECAM_SIZE_SHIFT),
--			  E_ECAM_CONTROL);
-+	ecam_val = nwl_bridge_readl(pcie, E_ECAM_CONTROL);
-+	ecam_val &= ~E_ECAM_SIZE_LOC;
-+	ecam_val |= NWL_ECAM_MAX_SIZE << E_ECAM_SIZE_SHIFT;
-+	nwl_bridge_writel(pcie, ecam_val, E_ECAM_CONTROL);
+ #include <linux/clk.h>
++#include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/export.h>
+@@ -269,7 +270,7 @@ struct tegra_msi {
+ 	DECLARE_BITMAP(used, INT_PCI_MSI_NR);
+ 	struct irq_domain *domain;
+ 	struct mutex map_lock;
+-	spinlock_t mask_lock;
++	raw_spinlock_t mask_lock;
+ 	void *virt;
+ 	dma_addr_t phys;
+ 	int irq;
+@@ -1604,14 +1605,13 @@ static void tegra_msi_irq_mask(struct ir
+ 	struct tegra_msi *msi = irq_data_get_irq_chip_data(d);
+ 	struct tegra_pcie *pcie = msi_to_pcie(msi);
+ 	unsigned int index = d->hwirq / 32;
+-	unsigned long flags;
+ 	u32 value;
  
- 	nwl_bridge_writel(pcie, lower_32_bits(pcie->phys_ecam_base),
- 			  E_ECAM_BASE_LO);
+-	spin_lock_irqsave(&msi->mask_lock, flags);
+-	value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
+-	value &= ~BIT(d->hwirq % 32);
+-	afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
+-	spin_unlock_irqrestore(&msi->mask_lock, flags);
++	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
++		value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
++		value &= ~BIT(d->hwirq % 32);
++		afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
++	}
+ }
+ 
+ static void tegra_msi_irq_unmask(struct irq_data *d)
+@@ -1619,14 +1619,13 @@ static void tegra_msi_irq_unmask(struct
+ 	struct tegra_msi *msi = irq_data_get_irq_chip_data(d);
+ 	struct tegra_pcie *pcie = msi_to_pcie(msi);
+ 	unsigned int index = d->hwirq / 32;
+-	unsigned long flags;
+ 	u32 value;
+ 
+-	spin_lock_irqsave(&msi->mask_lock, flags);
+-	value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
+-	value |= BIT(d->hwirq % 32);
+-	afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
+-	spin_unlock_irqrestore(&msi->mask_lock, flags);
++	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
++		value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
++		value |= BIT(d->hwirq % 32);
++		afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
++	}
+ }
+ 
+ static void tegra_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+@@ -1736,7 +1735,7 @@ static int tegra_pcie_msi_setup(struct t
+ 	int err;
+ 
+ 	mutex_init(&msi->map_lock);
+-	spin_lock_init(&msi->mask_lock);
++	raw_spin_lock_init(&msi->mask_lock);
+ 
+ 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+ 		err = tegra_allocate_domains(msi);
 
 
