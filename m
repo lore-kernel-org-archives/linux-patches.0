@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA328288A2;
-	Fri, 17 Oct 2025 15:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDDA32C952;
+	Fri, 17 Oct 2025 15:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714033; cv=none; b=IWqSEbAdPfznbSIdQh0ibffOKU95cenX/1FhGru1YXquP6fXky9B2LJfNmVB1tXqz7yzHKrejSRCMd3Ffa8yUvPpoljB+GMA8lg99FvsBIwVUJ6Iisg5PvB+q7lcUYiFiWqm41El6kxW3IVpv4zprVEiXN1nPiTlvq0ZsdQSXfI=
+	t=1760714034; cv=none; b=uwIdWnaNaZ8ZeHB8h/191Z5fr40280vZMTPSEwXhIT4BjCekkyf5pwrukxyxbjQ9XOH5wJrUscfJ7Vdp3P/Jv7J/TIGjnX4r2PhBrUAJbYJ+VrNml4Hhs8znDCGK/ATFFCtyRf9pEH4faK4Pce8oY5poJLMOSrcG2e6Br3OWdTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714033; c=relaxed/simple;
-	bh=sqLSBkEHIXviSTLlST+j3Bn2Ghkg52RBd9U25p83G4I=;
+	s=arc-20240116; t=1760714034; c=relaxed/simple;
+	bh=fc176EVSHRVvp24Zr14/gQgGr8L2poZ8NTuLpEJN4MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hM/o4Cf5Cv/0Tghqs3nKXd5Vhdla6MhQOBP5lTo4FiLrWPX6/ExrD7zkDKN9HGkpixRacCxHhbhNnEYsiZ3y5bNW42g4mpvJAQHi1ufC5XXgIABkaY2Ip0HIvaX5Q4YSW2mVeSyvmnQg8D31/oebuDkigE6HN5SE7boqllgTm4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oShS2smx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qK8+EAWZ3wSuoth55QeHWQcY2Ln4Q70BK2/T8B/1jA8c7CSArdvSHspNjCzjN4ZyvXE0ROcEnC1IAacUZhqPfAnX+U869Y5335ImOwfFTvP+EpO8agQ0KOFpBPO9V77Fqfu7ZJL/0GMCWG1G76adWrD4GkCyu7g1CU1lRwBABHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuzMGIvP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oShS2smx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E23C4CEE7;
-	Fri, 17 Oct 2025 15:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuzMGIvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D309EC4CEF9;
+	Fri, 17 Oct 2025 15:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714031;
-	bh=sqLSBkEHIXviSTLlST+j3Bn2Ghkg52RBd9U25p83G4I=;
+	s=korg; t=1760714034;
+	bh=fc176EVSHRVvp24Zr14/gQgGr8L2poZ8NTuLpEJN4MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oShS2smx4u9mF6bY/xPSNxHDOmQtMGj4ep2iunyGeiEzCp4ZPT/i+PbcDUtZqgTWF
-	 nPr3IOo5T76PR+6cI5lImy8g+GXBM36cLY4oVUz2c89YmCYuo6Kyw+ldDrsUDtOUz3
-	 +hZoPo0F56P21grvaOogPbwgvUI/6ffM7tsgVaCQ=
+	b=WuzMGIvPzMR4+A6dlRggdS0/+xUFNnkBWTux+izzixKA2ELFg7RYnBfyUZg4ab2gZ
+	 7643YwJhO+v4bjXq4bNWanp6j/MVffwlGVbZnti3Jo0a10lZr20vxs78RIPMHH7C9O
+	 pcf9pYFOUnq9ywHThJCMBppmdR8WBY0p2dOBzi3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 190/201] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
-Date: Fri, 17 Oct 2025 16:54:11 +0200
-Message-ID: <20251017145141.741634778@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 191/201] mptcp: pm: in-kernel: usable client side with C-flag
+Date: Fri, 17 Oct 2025 16:54:12 +0200
+Message-ID: <20251017145141.778026486@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -54,192 +51,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
+commit 4b1ff850e0c1aacc23e923ed22989b827b9808f9 upstream.
 
-The madv_populate and soft-dirty kselftests currently fail on systems
-where CONFIG_MEM_SOFT_DIRTY is disabled.
+When servers set the C-flag in their MP_CAPABLE to tell clients not to
+create subflows to the initial address and port, clients will likely not
+use their other endpoints. That's because the in-kernel path-manager
+uses the 'subflow' endpoints to create subflows only to the initial
+address and port.
 
-Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
-tests are properly skipped when the feature is not enabled.
+If the limits have not been modified to accept ADD_ADDR, the client
+doesn't try to establish new subflows. If the limits accept ADD_ADDR,
+the routing routes will be used to select the source IP.
 
-Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
-Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The C-flag is typically set when the server is operating behind a legacy
+Layer 4 load balancer, or using anycast IP address. Clients having their
+different 'subflow' endpoints setup, don't end up creating multiple
+subflows as expected, and causing some deployment issues.
+
+A special case is then added here: when servers set the C-flag in the
+MPC and directly sends an ADD_ADDR, this single ADD_ADDR is accepted.
+The 'subflows' endpoints will then be used with this new remote IP and
+port. This exception is only allowed when the ADD_ADDR is sent
+immediately after the 3WHS, and makes the client switching to the 'fully
+established' mode. After that, 'select_local_address()' will not be able
+to find any subflows, because 'id_avail_bitmap' will be filled in
+mptcp_pm_create_subflow_or_signal_addr(), when switching to 'fully
+established' mode.
+
+Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/536
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-1-ad126cc47c6b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflict in pm.c, because commit 498d7d8b75f1 ("mptcp: pm: remove
+  '_nl' from mptcp_pm_nl_is_init_remote_addr") renamed an helper in the
+  context, and it is not in this version. The same new code can be
+  applied at the same place.
+  Conflict in pm_kernel.c, because the modified code has been moved from
+  pm_netlink.c to pm_kernel.c in commit 8617e85e04bd ("mptcp: pm: split
+  in-kernel PM specific code"), which is not in this version. The
+  resolution is easy: simply by applying the patch where 'pm_kernel.c'
+  has been replaced 'pm_netlink.c'.
+  Conflict in pm_netlink.c, because commit b83fbca1b4c9 ("mptcp: pm:
+  reduce entries iterations on connect") is not in this version. Instead
+  of using the 'locals' variable (struct mptcp_pm_local *) from the new
+  version and embedding a "struct mptcp_addr_info", we can simply
+  continue to use the 'addrs' variable (struct mptcp_addr_info *).
+  Conflict in protocol.h, because commit af3dc0ad3167 ("mptcp: Remove
+  unused declaration mptcp_sockopt_sync()") is not in this version and
+  it removed one line in the context. The resolution is easy because the
+  new function can still be added at the same place. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/madv_populate.c |   21 -------
- tools/testing/selftests/mm/soft-dirty.c    |    5 +
- tools/testing/selftests/mm/vm_util.c       |   77 +++++++++++++++++++++++++++++
- tools/testing/selftests/mm/vm_util.h       |    1 
- 4 files changed, 84 insertions(+), 20 deletions(-)
+ net/mptcp/pm.c         |    7 ++++--
+ net/mptcp/pm_netlink.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ net/mptcp/protocol.h   |    8 +++++++
+ 3 files changed, 64 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/mm/madv_populate.c
-+++ b/tools/testing/selftests/mm/madv_populate.c
-@@ -264,23 +264,6 @@ static void test_softdirty(void)
- 	munmap(addr, SIZE);
- }
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -227,9 +227,12 @@ void mptcp_pm_add_addr_received(const st
+ 		} else {
+ 			__MPTCP_INC_STATS(sock_net((struct sock *)msk), MPTCP_MIB_ADDADDRDROP);
+ 		}
+-	/* id0 should not have a different address */
++	/* - id0 should not have a different address
++	 * - special case for C-flag: linked to fill_local_addresses_vec()
++	 */
+ 	} else if ((addr->id == 0 && !mptcp_pm_nl_is_init_remote_addr(msk, addr)) ||
+-		   (addr->id > 0 && !READ_ONCE(pm->accept_addr))) {
++		   (addr->id > 0 && !READ_ONCE(pm->accept_addr) &&
++		    !mptcp_pm_add_addr_c_flag_case(msk))) {
+ 		mptcp_pm_announce_addr(msk, addr, true);
+ 		mptcp_pm_add_addr_send_ack(msk);
+ 	} else if (mptcp_pm_schedule_work(msk, MPTCP_PM_ADD_ADDR_RECEIVED)) {
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -675,10 +675,12 @@ static unsigned int fill_local_addresses
+ 	struct mptcp_addr_info mpc_addr;
+ 	struct pm_nl_pernet *pernet;
+ 	unsigned int subflows_max;
++	bool c_flag_case;
+ 	int i = 0;
  
--static int system_has_softdirty(void)
--{
--	/*
--	 * There is no way to check if the kernel supports soft-dirty, other
--	 * than by writing to a page and seeing if the bit was set. But the
--	 * tests are intended to check that the bit gets set when it should, so
--	 * doing that check would turn a potentially legitimate fail into a
--	 * skip. Fortunately, we know for sure that arm64 does not support
--	 * soft-dirty. So for now, let's just use the arch as a corse guide.
--	 */
--#if defined(__aarch64__)
--	return 0;
--#else
--	return 1;
--#endif
--}
--
- int main(int argc, char **argv)
- {
- 	int nr_tests = 16;
-@@ -288,7 +271,7 @@ int main(int argc, char **argv)
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
+ 	subflows_max = mptcp_pm_get_subflows_max(msk);
++	c_flag_case = remote->id && mptcp_pm_add_addr_c_flag_case(msk);
  
- 	pagesize = getpagesize();
+ 	mptcp_local_address((struct sock_common *)msk, &mpc_addr);
  
--	if (system_has_softdirty())
-+	if (softdirty_supported())
- 		nr_tests += 5;
+@@ -691,11 +693,26 @@ static unsigned int fill_local_addresses
+ 			continue;
  
- 	ksft_print_header();
-@@ -300,7 +283,7 @@ int main(int argc, char **argv)
- 	test_holes();
- 	test_populate_read();
- 	test_populate_write();
--	if (system_has_softdirty())
-+	if (softdirty_supported())
- 		test_softdirty();
+ 		if (msk->pm.subflows < subflows_max) {
++			bool is_id0;
++
+ 			msk->pm.subflows++;
+ 			addrs[i] = entry->addr;
  
- 	err = ksft_get_fail_cnt();
---- a/tools/testing/selftests/mm/soft-dirty.c
-+++ b/tools/testing/selftests/mm/soft-dirty.c
-@@ -193,8 +193,11 @@ int main(int argc, char **argv)
- 	int pagesize;
++			is_id0 = mptcp_addresses_equal(&entry->addr,
++						       &mpc_addr,
++						       entry->addr.port);
++
++			if (c_flag_case &&
++			    (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)) {
++				__clear_bit(addrs[i].id,
++					    msk->pm.id_avail_bitmap);
++
++				if (!is_id0)
++					msk->pm.local_addr_used++;
++			}
++
+ 			/* Special case for ID0: set the correct ID */
+-			if (mptcp_addresses_equal(&entry->addr, &mpc_addr, entry->addr.port))
++			if (is_id0)
+ 				addrs[i].id = 0;
  
- 	ksft_print_header();
--	ksft_set_plan(15);
+ 			i++;
+@@ -703,6 +720,39 @@ static unsigned int fill_local_addresses
+ 	}
+ 	rcu_read_unlock();
  
-+	if (!softdirty_supported())
-+		ksft_exit_skip("soft-dirty is not support\n");
++	/* Special case: peer sets the C flag, accept one ADD_ADDR if default
++	 * limits are used -- accepting no ADD_ADDR -- and use subflow endpoints
++	 */
++	if (!i && c_flag_case) {
++		unsigned int local_addr_max = mptcp_pm_get_local_addr_max(msk);
 +
-+	ksft_set_plan(15);
- 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
- 	if (pagemap_fd < 0)
- 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
---- a/tools/testing/selftests/mm/vm_util.c
-+++ b/tools/testing/selftests/mm/vm_util.c
-@@ -97,6 +97,42 @@ uint64_t read_pmd_pagesize(void)
- 	return strtoul(buf, NULL, 10);
- }
- 
-+char *__get_smap_entry(void *addr, const char *pattern, char *buf, size_t len)
-+{
-+	int ret;
-+	FILE *fp;
-+	char *entry = NULL;
-+	char addr_pattern[MAX_LINE_LENGTH];
++		while (msk->pm.local_addr_used < local_addr_max &&
++		       msk->pm.subflows < subflows_max) {
++			struct mptcp_pm_addr_entry local;
 +
-+	ret = snprintf(addr_pattern, MAX_LINE_LENGTH, "%08lx-",
-+		       (unsigned long)addr);
-+	if (ret >= MAX_LINE_LENGTH)
-+		ksft_exit_fail_msg("%s: Pattern is too long\n", __func__);
++			if (!select_local_address(pernet, msk, &local))
++				break;
 +
-+	fp = fopen(SMAP_FILE_PATH, "r");
-+	if (!fp)
-+		ksft_exit_fail_msg("%s: Failed to open file %s\n", __func__,
-+				   SMAP_FILE_PATH);
++			__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
 +
-+	if (!check_for_pattern(fp, addr_pattern, buf, len))
-+		goto err_out;
++			if (!mptcp_pm_addr_families_match(sk, &local.addr,
++							  remote))
++				continue;
 +
-+	/* Fetch the pattern in the same block */
-+	if (!check_for_pattern(fp, pattern, buf, len))
-+		goto err_out;
++			if (mptcp_addresses_equal(&local.addr, &mpc_addr,
++						  local.addr.port))
++				continue;
 +
-+	/* Trim trailing newline */
-+	entry = strchr(buf, '\n');
-+	if (entry)
-+		*entry = '\0';
++			addrs[i] = local.addr;
 +
-+	entry = buf + strlen(pattern);
++			msk->pm.local_addr_used++;
++			msk->pm.subflows++;
++			i++;
++		}
 +
-+err_out:
-+	fclose(fp);
-+	return entry;
-+}
-+
- bool __check_huge(void *addr, char *pattern, int nr_hpages,
- 		  uint64_t hpage_size)
- {
-@@ -269,3 +305,44 @@ int uffd_unregister(int uffd, void *addr
- 
- 	return ret;
- }
-+
-+static bool check_vmflag(void *addr, const char *flag)
-+{
-+	char buffer[MAX_LINE_LENGTH];
-+	const char *flags;
-+	size_t flaglen;
-+
-+	flags = __get_smap_entry(addr, "VmFlags:", buffer, sizeof(buffer));
-+	if (!flags)
-+		ksft_exit_fail_msg("%s: No VmFlags for %p\n", __func__, addr);
-+
-+	while (true) {
-+		flags += strspn(flags, " ");
-+
-+		flaglen = strcspn(flags, " ");
-+		if (!flaglen)
-+			return false;
-+
-+		if (flaglen == strlen(flag) && !memcmp(flags, flag, flaglen))
-+			return true;
-+
-+		flags += flaglen;
++		return i;
 +	}
-+}
 +
-+bool softdirty_supported(void)
-+{
-+	char *addr;
-+	bool supported = false;
-+	const size_t pagesize = getpagesize();
-+
-+	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
-+	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
-+		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-+	if (!addr)
-+		ksft_exit_fail_msg("mmap failed\n");
-+
-+	supported = check_vmflag(addr, "sd");
-+	munmap(addr, pagesize);
-+	return supported;
-+}
---- a/tools/testing/selftests/mm/vm_util.h
-+++ b/tools/testing/selftests/mm/vm_util.h
-@@ -51,6 +51,7 @@ int uffd_register(int uffd, void *addr,
- int uffd_unregister(int uffd, void *addr, uint64_t len);
- int uffd_register_with_ioctls(int uffd, void *addr, uint64_t len,
- 			      bool miss, bool wp, bool minor, uint64_t *ioctls);
-+bool softdirty_supported(void);
+ 	/* If the array is empty, fill in the single
+ 	 * 'IPADDRANY' local address
+ 	 */
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -1080,6 +1080,14 @@ static inline void mptcp_pm_close_subflo
+ 	spin_unlock_bh(&msk->pm.lock);
+ }
  
- /*
-  * On ppc64 this will only work with radix 2M hugepage size
++static inline bool mptcp_pm_add_addr_c_flag_case(struct mptcp_sock *msk)
++{
++	return READ_ONCE(msk->pm.remote_deny_join_id0) &&
++	       msk->pm.local_addr_used == 0 &&
++	       mptcp_pm_get_add_addr_accept_max(msk) == 0 &&
++	       msk->pm.subflows < mptcp_pm_get_subflows_max(msk);
++}
++
+ void mptcp_sockopt_sync(struct mptcp_sock *msk, struct sock *ssk);
+ void mptcp_sockopt_sync_locked(struct mptcp_sock *msk, struct sock *ssk);
+ 
 
 
