@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74813330B00;
-	Fri, 17 Oct 2025 15:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312D9330B04;
+	Fri, 17 Oct 2025 15:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716316; cv=none; b=giIPXvdQo71Z1bLFwKx5VQ023hWoZiSJ6nky1sUP7uDlZtvUQY6swY8M7IdhkY8EnELQf1TKqwCf53yKWQVMfJZHRAIgvPveHi4MIx53O3/DrdvlZ4i/44FTqd54bXDjEevQn/dqpgZpIeRsFbnlo5XayCcPM1UH8HozdgVDDrY=
+	t=1760716319; cv=none; b=kyHwTnNhic8B6i7k8pXaIoUJBB12aeMKLk2PkGacF1Bo1/5s/jxtcB3NNmHFkYOfWI8aAHmpxxbASUspVSPepRPCqPbkwlb0dAAI30I4jzhWOTBrjzdcPhj/foofVu1RneQwsg1nprVpXUWGdREDtudE6Zf4pVz6Yg1ScdluOq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716316; c=relaxed/simple;
-	bh=dM7wZMLBGA632tBXlln4Z9GSGYlNYGrdUTF50y/koe8=;
+	s=arc-20240116; t=1760716319; c=relaxed/simple;
+	bh=4KVUwCsbwSpG9bp7tFhpGS+Y2/5FQtl5SvfDD2KolXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIbJYOzDtZNCAmyTRS5AVu8rtT246nz0BRaw2KxFp7ay3IkUscHfy21CWCq2kZSzILGqXTiNC8GSPUkt6QZIsKa9mxxnVPRhBI/fk+2JSNgHHJcNMK+g5RT5KKDQfEVnNG1LkUHVMZnUia1t4MUie2fe/+2xdcYlr1SRAmwvO2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvgzt3tO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDgCUZAexQG131TyxdFYsxwJ899nm1vJpyXqBnsfb0guSeh3l4tTQzEzaLgs/f6bRFCGZzKB166e8hNePyKVTZXUAjsN+UGS7UQx5iKLLkSc/6PtmuAY3uBlngcXmKgrxasIXwCQeSBuvWVeeJhNa7/H17XqQu8+/rzpg7wH+rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueoXbmVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvgzt3tO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94A7C4CEE7;
-	Fri, 17 Oct 2025 15:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueoXbmVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3D5C4CEE7;
+	Fri, 17 Oct 2025 15:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716316;
-	bh=dM7wZMLBGA632tBXlln4Z9GSGYlNYGrdUTF50y/koe8=;
+	s=korg; t=1760716319;
+	bh=4KVUwCsbwSpG9bp7tFhpGS+Y2/5FQtl5SvfDD2KolXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvgzt3tOz9d7H7o2pIEXR7YccFactZTZ9j8t+AsmNhHwJAaPt1t8eaWzBKH8JAel6
-	 /prDFz48Fko3kVLOa9FtRDbkYlCAdbx2FMJBagsr2PRUmSmte3fD92desvwZFy7c1J
-	 zT5J4yNsAv8tr6IF9uJgxIsNPmb/W5Ijea1GQJvA=
+	b=ueoXbmVy3xYqkais6R5NPyFc2qSTe7tXbl6oevh6q7ChdGNf0HREOGzg9j6AWQgdx
+	 M5/wWqvg7MTcMSaLfMj7m7ELYknny+3igtN0tFnx79Ox2C0I1GWtSPNUiiflcuKT1e
+	 naKQ4nSbldRcEKmDGgUfHdCpjTVO5opztp24wFaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 116/276] Input: uinput - zero-initialize uinput_ff_upload_compat to avoid info leak
-Date: Fri, 17 Oct 2025 16:53:29 +0200
-Message-ID: <20251017145146.712460044@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 107/276] Squashfs: fix uninit-value in squashfs_get_parent
+Date: Fri, 17 Oct 2025 16:53:20 +0200
+Message-ID: <20251017145146.387498012@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,37 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit d3366a04770eea807f2826cbdb96934dd8c9bf79 upstream.
+commit 74058c0a9fc8b2b4d5f4a0ef7ee2cfa66a9e49cf upstream.
 
-Struct ff_effect_compat is embedded twice inside
-uinput_ff_upload_compat, contains internal padding. In particular, there
-is a hole after struct ff_replay to satisfy alignment requirements for
-the following union member. Without clearing the structure,
-copy_to_user() may leak stack data to userspace.
+Syzkaller reports a "KMSAN: uninit-value in squashfs_get_parent" bug.
 
-Initialize ff_up_compat to zero before filling valid fields.
+This is caused by open_by_handle_at() being called with a file handle
+containing an invalid parent inode number.  In particular the inode number
+is that of a symbolic link, rather than a directory.
 
-Fixes: 2d56f3a32c0e ("Input: refactor evdev 32bit compat to be shareable with uinput")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Link: https://lore.kernel.org/r/20250928063737.74590-1-zhen.ni@easystack.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Squashfs_get_parent() gets called with that symbolic link inode, and
+accesses the parent member field.
+
+	unsigned int parent_ino = squashfs_i(inode)->parent;
+
+Because non-directory inodes in Squashfs do not have a parent value, this
+is uninitialised, and this causes an uninitialised value access.
+
+The fix is to initialise parent with the invalid inode 0, which will cause
+an EINVAL error to be returned.
+
+Regular inodes used to share the parent field with the block_list_start
+field.  This is removed in this commit to enable the parent field to
+contain the invalid inode number 0.
+
+Link: https://lkml.kernel.org/r/20250918233308.293861-1-phillip@squashfs.org.uk
+Fixes: 122601408d20 ("Squashfs: export operations")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: syzbot+157bdef5cf596ad0da2c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68cc2431.050a0220.139b6.0001.GAE@google.com/
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/uinput.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/squashfs/inode.c         |    7 +++++++
+ fs/squashfs/squashfs_fs_i.h |    2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -741,6 +741,7 @@ static int uinput_ff_upload_to_user(char
- 	if (in_compat_syscall()) {
- 		struct uinput_ff_upload_compat ff_up_compat;
+--- a/fs/squashfs/inode.c
++++ b/fs/squashfs/inode.c
+@@ -165,6 +165,7 @@ int squashfs_read_inode(struct inode *in
+ 		squashfs_i(inode)->start = le32_to_cpu(sqsh_ino->start_block);
+ 		squashfs_i(inode)->block_list_start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 		inode->i_data.a_ops = &squashfs_aops;
  
-+		memset(&ff_up_compat, 0, sizeof(ff_up_compat));
- 		ff_up_compat.request_id = ff_up->request_id;
- 		ff_up_compat.retval = ff_up->retval;
- 		/*
+ 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
+@@ -212,6 +213,7 @@ int squashfs_read_inode(struct inode *in
+ 		squashfs_i(inode)->start = le64_to_cpu(sqsh_ino->start_block);
+ 		squashfs_i(inode)->block_list_start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 		inode->i_data.a_ops = &squashfs_aops;
+ 
+ 		TRACE("File inode %x:%x, start_block %llx, block_list_start "
+@@ -292,6 +294,7 @@ int squashfs_read_inode(struct inode *in
+ 		inode->i_mode |= S_IFLNK;
+ 		squashfs_i(inode)->start = block;
+ 		squashfs_i(inode)->offset = offset;
++		squashfs_i(inode)->parent = 0;
+ 
+ 		if (type == SQUASHFS_LSYMLINK_TYPE) {
+ 			__le32 xattr;
+@@ -329,6 +332,7 @@ int squashfs_read_inode(struct inode *in
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		rdev = le32_to_cpu(sqsh_ino->rdev);
+ 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
++		squashfs_i(inode)->parent = 0;
+ 
+ 		TRACE("Device inode %x:%x, rdev %x\n",
+ 				SQUASHFS_INODE_BLK(ino), offset, rdev);
+@@ -353,6 +357,7 @@ int squashfs_read_inode(struct inode *in
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		rdev = le32_to_cpu(sqsh_ino->rdev);
+ 		init_special_inode(inode, inode->i_mode, new_decode_dev(rdev));
++		squashfs_i(inode)->parent = 0;
+ 
+ 		TRACE("Device inode %x:%x, rdev %x\n",
+ 				SQUASHFS_INODE_BLK(ino), offset, rdev);
+@@ -373,6 +378,7 @@ int squashfs_read_inode(struct inode *in
+ 			inode->i_mode |= S_IFSOCK;
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		init_special_inode(inode, inode->i_mode, 0);
++		squashfs_i(inode)->parent = 0;
+ 		break;
+ 	}
+ 	case SQUASHFS_LFIFO_TYPE:
+@@ -392,6 +398,7 @@ int squashfs_read_inode(struct inode *in
+ 		inode->i_op = &squashfs_inode_ops;
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+ 		init_special_inode(inode, inode->i_mode, 0);
++		squashfs_i(inode)->parent = 0;
+ 		break;
+ 	}
+ 	default:
+--- a/fs/squashfs/squashfs_fs_i.h
++++ b/fs/squashfs/squashfs_fs_i.h
+@@ -16,6 +16,7 @@ struct squashfs_inode_info {
+ 	u64		xattr;
+ 	unsigned int	xattr_size;
+ 	int		xattr_count;
++	int		parent;
+ 	union {
+ 		struct {
+ 			u64		fragment_block;
+@@ -27,7 +28,6 @@ struct squashfs_inode_info {
+ 			u64		dir_idx_start;
+ 			int		dir_idx_offset;
+ 			int		dir_idx_cnt;
+-			int		parent;
+ 		};
+ 	};
+ 	struct inode	vfs_inode;
 
 
