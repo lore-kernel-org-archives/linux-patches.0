@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB08330B21;
-	Fri, 17 Oct 2025 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277CE330B2E;
+	Fri, 17 Oct 2025 15:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715872; cv=none; b=PgMwoAk2JQP9fil7FBtW8NhKpmIWivUhKTZ+SK6Jl1YwA5NvNkLg4azyNVirD20QwxoOIkoTGHrQekofDgiIAdR52ciECBy/RTVWdrYFN8qMVEFnzow/YVGl1Zz7h1meMb0db1g4dWmH+7E2VtK1lwWbHyjAFkPcNmaJ2/JyXCk=
+	t=1760715875; cv=none; b=WH1kKPJQBJgHO8PQSjy7IekBK2nNPb8hfeE45IiD2oLo88oeQRgfVn334ykle6P3/9EFp4f8M2WlK1Oc6T/UO7/ADV7WlgkowS2Oul1Dr3tL3r2Uv/dYxxW2xVH+9qB3sdVAbovkuKpxDrJGtR50x4KafszMe8L8Jp53Hl/F5W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715872; c=relaxed/simple;
-	bh=nClh2577163dlybQhCh9aInIp3JpLYOhJAxjoR9WOVk=;
+	s=arc-20240116; t=1760715875; c=relaxed/simple;
+	bh=0/2sL1Y4+5v96NLdl+A+2LySwB8y3wRwWCAaTzsBFsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G68WOG9o8AqdccpMN3NK1SbJDS81Loo5VKfNKnQqFs6rUzmgm944aM3Qnf6DE10bXp/LSQaRY3ysYIVQnjNGxoE29HvGFKwSqIn/1vKeJFCqA4rWPcivsagxKcOKUJZiOFDiOpiMhZJaddW+4q3DLQULVWRNF6yaHwgZcVXk9Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5uRUkiE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BD4i3uB4sTGM2A0DlzgZCcQoyLpO+45JnsXLQ/L9X6zje/8cjIF9cys0EXcReXvdBjcFLY/X2tYNn+nBWv4tGGdX3+t9yo01aMNg1VlJbg2G4r2aB7eWMXjTWI6aR+GXYKqdOHr6nuqpFn5Fl6bYPvaGcm0r/mwwHqQ7CskK/Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y15y4KqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5uRUkiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD1BC4CEFE;
-	Fri, 17 Oct 2025 15:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y15y4KqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A021EC4CEE7;
+	Fri, 17 Oct 2025 15:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715872;
-	bh=nClh2577163dlybQhCh9aInIp3JpLYOhJAxjoR9WOVk=;
+	s=korg; t=1760715875;
+	bh=0/2sL1Y4+5v96NLdl+A+2LySwB8y3wRwWCAaTzsBFsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5uRUkiErPhmUdjzUNkxvH8N0dw4feiinMYuKpyj0R/j+SMTePxSFnLuG3PxGT14e
-	 uRw7BsovC9BUEGMa2ujU53q+xzc91tYOQsF+oraK0FBEA03oPdr8cdvw+GSeHK1giq
-	 ZOsgYwvLDMTbt5EIUJIGrgVvgYptmCLiRRUdBKFI=
+	b=y15y4KqDwYJB9PNba15Nf1o4uks/y3o1hsrGBnfI0xV0e3wSeSGR/KwRUQX8qPq+F
+	 q6vdvfvJDe/CSRs6GKwGijj4abTsG7PGTOg8n7UZjlp03U+HtFwoRx1ZsPpxpXZi+D
+	 Vw5r8vDaH37ywujoaOlvl1mzKdCIq0Mp5lssNLts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 366/371] mnt_ns_tree_remove(): DTRT if mnt_ns had never been added to mnt_ns_list
-Date: Fri, 17 Oct 2025 16:55:41 +0200
-Message-ID: <20251017145215.327630736@linuxfoundation.org>
+Subject: [PATCH 6.17 367/371] writeback: Avoid softlockup when switching many inodes
+Date: Fri, 17 Oct 2025 16:55:42 +0200
+Message-ID: <20251017145215.363686117@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,37 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 38f4885088fc5ad41b8b0a2a2cfc73d01e709e5c ]
+[ Upstream commit 66c14dccd810d42ec5c73bb8a9177489dfd62278 ]
 
-Actual removal is done under the lock, but for checking if need to bother
-the lockless RB_EMPTY_NODE() is safe - either that namespace had never
-been added to mnt_ns_tree, in which case the the node will stay empty, or
-whoever had allocated it has called mnt_ns_tree_add() and it has already
-run to completion.  After that point RB_EMPTY_NODE() will become false and
-will remain false, no matter what we do with other nodes in the tree.
+process_inode_switch_wbs_work() can be switching over 100 inodes to a
+different cgroup. Since switching an inode requires counting all dirty &
+under-writeback pages in the address space of each inode, this can take
+a significant amount of time. Add a possibility to reschedule after
+processing each inode to avoid softlockups.
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 38609066cf330..fc4cbbefa70e2 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -196,7 +196,7 @@ static void mnt_ns_release_rcu(struct rcu_head *rcu)
- static void mnt_ns_tree_remove(struct mnt_namespace *ns)
- {
- 	/* remove from global mount namespace list */
--	if (!is_anon_ns(ns)) {
-+	if (!RB_EMPTY_NODE(&ns->mnt_ns_tree_node)) {
- 		mnt_ns_tree_write_lock();
- 		rb_erase(&ns->mnt_ns_tree_node, &mnt_ns_tree);
- 		list_bidir_del_rcu(&ns->mnt_ns_list);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index a07b8cf73ae27..b4aa78da7d94e 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -502,6 +502,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 */
+ 	down_read(&bdi->wb_switch_rwsem);
+ 
++	inodep = isw->inodes;
+ 	/*
+ 	 * By the time control reaches here, RCU grace period has passed
+ 	 * since I_WB_SWITCH assertion and all wb stat update transactions
+@@ -512,6 +513,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 * gives us exclusion against all wb related operations on @inode
+ 	 * including IO list manipulations and stat updates.
+ 	 */
++relock:
+ 	if (old_wb < new_wb) {
+ 		spin_lock(&old_wb->list_lock);
+ 		spin_lock_nested(&new_wb->list_lock, SINGLE_DEPTH_NESTING);
+@@ -520,10 +522,17 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 		spin_lock_nested(&old_wb->list_lock, SINGLE_DEPTH_NESTING);
+ 	}
+ 
+-	for (inodep = isw->inodes; *inodep; inodep++) {
++	while (*inodep) {
+ 		WARN_ON_ONCE((*inodep)->i_wb != old_wb);
+ 		if (inode_do_switch_wbs(*inodep, old_wb, new_wb))
+ 			nr_switched++;
++		inodep++;
++		if (*inodep && need_resched()) {
++			spin_unlock(&new_wb->list_lock);
++			spin_unlock(&old_wb->list_lock);
++			cond_resched();
++			goto relock;
++		}
+ 	}
+ 
+ 	spin_unlock(&new_wb->list_lock);
 -- 
 2.51.0
 
