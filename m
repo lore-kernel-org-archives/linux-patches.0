@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DF53370F7;
-	Fri, 17 Oct 2025 15:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE942F12BA;
+	Fri, 17 Oct 2025 15:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714658; cv=none; b=r9XD5P0vnmNf+tmNJTJSi7FrgrT0GoyjU2KnlmVFpYO1+YtqQtOB1xAk2DPq5fDp3ZlLcjJ00DkfWTYLUdwwI5oL6Vo9wgPsshQcEeUVym8AKd+MKTsLIDrvmiDQS9NUD5rh/aF26QdX5M8a8U8ZL6JletJVGUa9SFAT5D3MpSs=
+	t=1760714661; cv=none; b=mjuoBdQtqxDzjUj7oH/FOe8iQr3eGlI6St4asuauN6fxx7iR3WQiHo1j0HWX2WEePw61u02iqmPYbQCcwerMp3+9fHxdDewE/b0PXjKrBi5gw7u5jhT5Szer7n7/OeSqNmRojQ91omx41rX+aYLsF6/aX4J0KLICt4P0PxPTrMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714658; c=relaxed/simple;
-	bh=vwpDbTYrijwp6m5Ue7XT0w0UVM8s3eNPo3j9w/x0exw=;
+	s=arc-20240116; t=1760714661; c=relaxed/simple;
+	bh=8mhqw500W8xTzndSLjdXE5UZD5MndbMNsf47AeVTcBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGWeYSqC1XnAB41C1BFlVrIxONtC55k5XzR5PwzAWObIqHZfUn6V/Waz33TaJ+38Kh4qMlg/6rypbtlq0WSgBAmVdhsO3EBZIycoRh5rARe70nhCinXluQnHZvudREzgoLse1S4ENnr7WvUuRLzIQx/ur66opBjfCEiu9ZAoCOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peeWxfcO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hU4LdlmNjydMHPyDcaJ5AMaFw9OzKD72fn9eg+F4RbeUFaQfmU9onMguZqvnQYJolDQyZsW5QkvjscPeOqJMRSUu5loSdan8z2TjwAdwQj3vei9Y3RpJv5lHdU1ndGY7wltA42q7XhW63lcVd61KSK1PmiOuTr4dn7lj+lOhwnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dF6nBZ7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peeWxfcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFD7C4CEFE;
-	Fri, 17 Oct 2025 15:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dF6nBZ7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F58C4CEFE;
+	Fri, 17 Oct 2025 15:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714657;
-	bh=vwpDbTYrijwp6m5Ue7XT0w0UVM8s3eNPo3j9w/x0exw=;
+	s=korg; t=1760714660;
+	bh=8mhqw500W8xTzndSLjdXE5UZD5MndbMNsf47AeVTcBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peeWxfcOgTzLJemaQcTu3JT1vgY1oQnh+W3jUstJy5Gu0aoBbL+f7Y8i9zm2NRPJJ
-	 JL74LHtqUY3KXdcvMWWFig5L++7ibTc1jUPTmukpMBIFHJdz3kcoV1OwUqBGzvzvq2
-	 EriYzVNgPAFidoILj81TMmCe6OvoevRRtTO4c8Lo=
+	b=dF6nBZ7S6V6Etqbsxd++ft28wbyx+dEChnQujWWPyklXZfXOYRzyRtBNxJl0L2/pC
+	 mXxoCZpkAGsa+TlJYbhCvk1rWHtUvIGhi8wYz6+QBz9IFQhpcU5vEavg12FkubZPIB
+	 gH1npXtEOydWzLSf20CYutkVgdtuYdLUYhqGLMyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 6.12 222/277] lib/crypto/curve25519-hacl64: Disable KASAN with clang-17 and older
-Date: Fri, 17 Oct 2025 16:53:49 +0200
-Message-ID: <20251017145155.233091203@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 223/277] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
+Date: Fri, 17 Oct 2025 16:53:50 +0200
+Message-ID: <20251017145155.269342912@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,67 +54,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Lance Yang <lance.yang@linux.dev>
 
-commit 2f13daee2a72bb962f5fd356c3a263a6f16da965 upstream.
+commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
 
-After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
-causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
-allmodconfig builds with clang-17 and older show an instance of
--Wframe-larger-than (which breaks the build with CONFIG_WERROR=y):
+The madv_populate and soft-dirty kselftests currently fail on systems
+where CONFIG_MEM_SOFT_DIRTY is disabled.
 
-  lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (2336) exceeds limit (2048) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
-    757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
-        |      ^
+Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
+tests are properly skipped when the feature is not enabled.
 
-When KASAN is disabled, the stack usage is roughly quartered:
-
-  lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (608) exceeds limit (128) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
-    757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
-        |      ^
-
-Using '-Rpass-analysis=stack-frame-layout' shows the following variables
-and many, many 8-byte spills when KASAN is enabled:
-
-  Offset: [SP-144], Type: Variable, Align: 8, Size: 40
-  Offset: [SP-464], Type: Variable, Align: 8, Size: 320
-  Offset: [SP-784], Type: Variable, Align: 8, Size: 320
-  Offset: [SP-864], Type: Variable, Align: 32, Size: 80
-  Offset: [SP-896], Type: Variable, Align: 32, Size: 32
-  Offset: [SP-1016], Type: Variable, Align: 8, Size: 120
-
-When KASAN is disabled, there are still spills but not at many and the
-variables list is smaller:
-
-  Offset: [SP-192], Type: Variable, Align: 32, Size: 80
-  Offset: [SP-224], Type: Variable, Align: 32, Size: 32
-  Offset: [SP-344], Type: Variable, Align: 8, Size: 120
-
-Disable KASAN for this file when using clang-17 or older to avoid
-blowing out the stack, clearing up the warning.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250609-curve25519-hacl64-disable-kasan-clang-v1-1-08ea0ac5ccff@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
+Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand <david@redhat.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/mm/madv_populate.c |   21 -------
+ tools/testing/selftests/mm/soft-dirty.c    |    5 +
+ tools/testing/selftests/mm/vm_util.c       |   77 +++++++++++++++++++++++++++++
+ tools/testing/selftests/mm/vm_util.h       |    1 
+ 4 files changed, 84 insertions(+), 20 deletions(-)
 
---- a/lib/crypto/Makefile
-+++ b/lib/crypto/Makefile
-@@ -33,6 +33,10 @@ obj-$(CONFIG_CRYPTO_LIB_CURVE25519_GENER
- libcurve25519-generic-y				:= curve25519-fiat32.o
- libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)	:= curve25519-hacl64.o
- libcurve25519-generic-y				+= curve25519-generic.o
-+# clang versions prior to 18 may blow out the stack with KASAN
-+ifeq ($(call clang-min-version, 180000),)
-+KASAN_SANITIZE_curve25519-hacl64.o := n
-+endif
+--- a/tools/testing/selftests/mm/madv_populate.c
++++ b/tools/testing/selftests/mm/madv_populate.c
+@@ -264,23 +264,6 @@ static void test_softdirty(void)
+ 	munmap(addr, SIZE);
+ }
  
- obj-$(CONFIG_CRYPTO_LIB_CURVE25519)		+= libcurve25519.o
- libcurve25519-y					+= curve25519.o
+-static int system_has_softdirty(void)
+-{
+-	/*
+-	 * There is no way to check if the kernel supports soft-dirty, other
+-	 * than by writing to a page and seeing if the bit was set. But the
+-	 * tests are intended to check that the bit gets set when it should, so
+-	 * doing that check would turn a potentially legitimate fail into a
+-	 * skip. Fortunately, we know for sure that arm64 does not support
+-	 * soft-dirty. So for now, let's just use the arch as a corse guide.
+-	 */
+-#if defined(__aarch64__)
+-	return 0;
+-#else
+-	return 1;
+-#endif
+-}
+-
+ int main(int argc, char **argv)
+ {
+ 	int nr_tests = 16;
+@@ -288,7 +271,7 @@ int main(int argc, char **argv)
+ 
+ 	pagesize = getpagesize();
+ 
+-	if (system_has_softdirty())
++	if (softdirty_supported())
+ 		nr_tests += 5;
+ 
+ 	ksft_print_header();
+@@ -300,7 +283,7 @@ int main(int argc, char **argv)
+ 	test_holes();
+ 	test_populate_read();
+ 	test_populate_write();
+-	if (system_has_softdirty())
++	if (softdirty_supported())
+ 		test_softdirty();
+ 
+ 	err = ksft_get_fail_cnt();
+--- a/tools/testing/selftests/mm/soft-dirty.c
++++ b/tools/testing/selftests/mm/soft-dirty.c
+@@ -193,8 +193,11 @@ int main(int argc, char **argv)
+ 	int pagesize;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(15);
+ 
++	if (!softdirty_supported())
++		ksft_exit_skip("soft-dirty is not support\n");
++
++	ksft_set_plan(15);
+ 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
+ 	if (pagemap_fd < 0)
+ 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
+--- a/tools/testing/selftests/mm/vm_util.c
++++ b/tools/testing/selftests/mm/vm_util.c
+@@ -193,6 +193,42 @@ err_out:
+ 	return rss_anon;
+ }
+ 
++char *__get_smap_entry(void *addr, const char *pattern, char *buf, size_t len)
++{
++	int ret;
++	FILE *fp;
++	char *entry = NULL;
++	char addr_pattern[MAX_LINE_LENGTH];
++
++	ret = snprintf(addr_pattern, MAX_LINE_LENGTH, "%08lx-",
++		       (unsigned long)addr);
++	if (ret >= MAX_LINE_LENGTH)
++		ksft_exit_fail_msg("%s: Pattern is too long\n", __func__);
++
++	fp = fopen(SMAP_FILE_PATH, "r");
++	if (!fp)
++		ksft_exit_fail_msg("%s: Failed to open file %s\n", __func__,
++				   SMAP_FILE_PATH);
++
++	if (!check_for_pattern(fp, addr_pattern, buf, len))
++		goto err_out;
++
++	/* Fetch the pattern in the same block */
++	if (!check_for_pattern(fp, pattern, buf, len))
++		goto err_out;
++
++	/* Trim trailing newline */
++	entry = strchr(buf, '\n');
++	if (entry)
++		*entry = '\0';
++
++	entry = buf + strlen(pattern);
++
++err_out:
++	fclose(fp);
++	return entry;
++}
++
+ bool __check_huge(void *addr, char *pattern, int nr_hpages,
+ 		  uint64_t hpage_size)
+ {
+@@ -384,3 +420,44 @@ unsigned long get_free_hugepages(void)
+ 	fclose(f);
+ 	return fhp;
+ }
++
++static bool check_vmflag(void *addr, const char *flag)
++{
++	char buffer[MAX_LINE_LENGTH];
++	const char *flags;
++	size_t flaglen;
++
++	flags = __get_smap_entry(addr, "VmFlags:", buffer, sizeof(buffer));
++	if (!flags)
++		ksft_exit_fail_msg("%s: No VmFlags for %p\n", __func__, addr);
++
++	while (true) {
++		flags += strspn(flags, " ");
++
++		flaglen = strcspn(flags, " ");
++		if (!flaglen)
++			return false;
++
++		if (flaglen == strlen(flag) && !memcmp(flags, flag, flaglen))
++			return true;
++
++		flags += flaglen;
++	}
++}
++
++bool softdirty_supported(void)
++{
++	char *addr;
++	bool supported = false;
++	const size_t pagesize = getpagesize();
++
++	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
++	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
++		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
++	if (!addr)
++		ksft_exit_fail_msg("mmap failed\n");
++
++	supported = check_vmflag(addr, "sd");
++	munmap(addr, pagesize);
++	return supported;
++}
+--- a/tools/testing/selftests/mm/vm_util.h
++++ b/tools/testing/selftests/mm/vm_util.h
+@@ -53,6 +53,7 @@ int uffd_unregister(int uffd, void *addr
+ int uffd_register_with_ioctls(int uffd, void *addr, uint64_t len,
+ 			      bool miss, bool wp, bool minor, uint64_t *ioctls);
+ unsigned long get_free_hugepages(void);
++bool softdirty_supported(void);
+ 
+ /*
+  * On ppc64 this will only work with radix 2M hugepage size
 
 
