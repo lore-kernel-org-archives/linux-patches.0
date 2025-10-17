@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534AE289811;
-	Fri, 17 Oct 2025 15:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE4132C93B;
+	Fri, 17 Oct 2025 15:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715444; cv=none; b=qOeindsZ+x08aoFaaRITFpMEiLafZqoDyGNV9wBjhz/vGFzjPSCuCCrpX+WiK5nvW955CZ7JgxSsBW+Xzj02bYoHazYcm60qZlqgeY9lW4R9V4ypDACw9HeN/WEz5IVz2pbdnPxkPA43c6bIINIe4qEory2+1eOiXgs2Nu/aFIQ=
+	t=1760715447; cv=none; b=AvNKj65nbM3noppz1e2HkM+czgQyTwlC2z6L+Yy+4Y6EACt+kSVdVeviDtePotR1vP9qNQOeaqYoZJ1l93CXnIfKvzPAqob3DSfsbKMk9Z7/lQ1rhrAHPxw51u075KKla3UJ0Sq5a0+VCHT/pVQJOkQUCj98vz/x7xNbNeU9aAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715444; c=relaxed/simple;
-	bh=ujpjFsGqLgM1BTKzuNJY7v75XddsFX4OU9gMVSbz9yc=;
+	s=arc-20240116; t=1760715447; c=relaxed/simple;
+	bh=rmkrG0yAP7PbTHayt5mBz3B7t8YJ2SBAeeWkIk3CIuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chdm7oRLC2tRJrumSD6iWprUTjZLjYg7eFRE2/3gBsoFGGy+eTLK2YTVWix6B6ptKmf1972/Poimyff3lGkwHm1UjuRukooqjzCJCqflQRIz4Rj52b4vcXpcCY6z78pdAWJ5/4jg0q7WA3YbbtSofOnsRjcI+cz1zo0cwHqe5vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhZ78S3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mW/ShNCEUfXETYiq83brqpAUTFsnQi5OUVBIkgSwu80bHnlfC7L4tuadTf59cXXYgezxEFK3x8vNy6+rbC+9/60sIVondYCECCmIjjBAcFkm/TpkgJgGNNpOvq89owoa9GtMzHEgo/MSrh1LlPwDnBmGcooxI8zF1SQzmItOBzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/inRzd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhZ78S3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB52C4CEFE;
-	Fri, 17 Oct 2025 15:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/inRzd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB37C113D0;
+	Fri, 17 Oct 2025 15:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715444;
-	bh=ujpjFsGqLgM1BTKzuNJY7v75XddsFX4OU9gMVSbz9yc=;
+	s=korg; t=1760715447;
+	bh=rmkrG0yAP7PbTHayt5mBz3B7t8YJ2SBAeeWkIk3CIuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhZ78S3h7vNaZYtttBwGSnnQSjk5wVmPT4GChEfJ5wDm6nCvq0AMH6tq96gHgMfek
-	 VPsQgvFkjIP4jSxvJYnUaLqv0cC2ud3Vh9+VJq3UQswwW/gW7Fy8Nkrr6EBAtHgaql
-	 uj1EY2I+L4yJ8zLucqlieAf32koVai39URh0rJ4E=
+	b=o/inRzd919gJicAWVbk2n3ZXOqRow3OBnXsoJbqrbFeZKHuNe6GKPgrHubv2A2X5F
+	 DMr4Khbb0QPfDMRJj9pz6PssrydBNF3sNfaPqQL09FlKKXY2oli8UpO5P83wpsSsmf
+	 xYl3651OCXuJDoEytgiv8RCAya2DYbaQXLObVWw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.17 218/371] i3c: Fix default I2C adapter timeout value
-Date: Fri, 17 Oct 2025 16:53:13 +0200
-Message-ID: <20251017145209.974830213@linuxfoundation.org>
+	Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>,
+	Marius Cristea <marius.cristea@microchip.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Rene Straub <mailto:rene.straub@belden.com>
+Subject: [PATCH 6.17 219/371] iio/adc/pac1934: fix channel disable configuration
+Date: Fri, 17 Oct 2025 16:53:14 +0200
+Message-ID: <20251017145210.011265772@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,46 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>
 
-commit 9395b3c412933401a34845d5326afe4011bbd40f upstream.
+commit 3c63ba1c430af1c0dcd68dd36f2246980621dcba upstream.
 
-Commit 3a379bbcea0a ("i3c: Add core I3C infrastructure") set the default
-adapter timeout for I2C transfers as 1000 (ms). However that parameter
-is defined in jiffies not in milliseconds.
+There are two problems with the chip configuration in this driver:
+- First, is that writing 12 bytes (ARRAY_SIZE(regs)) would anyhow
+  lead to a config overflow due to HW auto increment implementation
+  in the chip.
+- Second, the i2c_smbus_write_block_data write ends up in writing
+  unexpected value to the channel_dis register, this is because
+  the smbus size that is 0x03 in this case gets written to the
+  register. The PAC1931/2/3/4 data sheet does not really specify
+  that block write is indeed supported.
 
-With mipi-i3c-hci driver this wasn't visible until commit c0a90eb55a69
-("i3c: mipi-i3c-hci: use adapter timeout value for I2C transfers").
+This problem is probably not visible on PAC1934 version where all
+channels are used as the chip is properly configured by luck,
+but in our case whenusing PAC1931 this leads to nonfunctional device.
 
-Fix this by setting the default timeout as HZ (CONFIG_HZ) not 1000.
-
-Fixes: 1b84691e7870 ("i3c: dw: use adapter timeout value for I2C transfers")
-Fixes: be27ed672878 ("i3c: master: cdns: use adapter timeout value for I2C transfers")
-Fixes: c0a90eb55a69 ("i3c: mipi-i3c-hci: use adapter timeout value for I2C transfers")
-Fixes: a747e01adad2 ("i3c: master: svc: use adapter timeout value for I2C transfers")
-Fixes: d028219a9f14 ("i3c: master: Add basic driver for the Renesas I3C controller")
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org # 6.17
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20250905100320.954536-1-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 0fb528c8255b (iio: adc: adding support for PAC193x)
+Suggested-by: Rene Straub <mailto:rene.straub@belden.com>
+Signed-off-by: Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>
+Reviewed-by: Marius Cristea <marius.cristea@microchip.com>
+Link: https://patch.msgid.link/20250811130904.2481790-1-aleksandar.gerasimovski@belden.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/pac1934.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2492,7 +2492,7 @@ static int i3c_master_i2c_adapter_init(s
- 	strscpy(adap->name, dev_name(master->dev.parent), sizeof(adap->name));
+--- a/drivers/iio/adc/pac1934.c
++++ b/drivers/iio/adc/pac1934.c
+@@ -88,6 +88,7 @@
+ #define PAC1934_VPOWER_3_ADDR			0x19
+ #define PAC1934_VPOWER_4_ADDR			0x1A
+ #define PAC1934_REFRESH_V_REG_ADDR		0x1F
++#define PAC1934_SLOW_REG_ADDR			0x20
+ #define PAC1934_CTRL_STAT_REGS_ADDR		0x1C
+ #define PAC1934_PID_REG_ADDR			0xFD
+ #define PAC1934_MID_REG_ADDR			0xFE
+@@ -1265,8 +1266,23 @@ static int pac1934_chip_configure(struct
+ 	/* no SLOW triggered REFRESH, clear POR */
+ 	regs[PAC1934_SLOW_REG_OFF] = 0;
  
- 	/* FIXME: Should we allow i3c masters to override these values? */
--	adap->timeout = 1000;
-+	adap->timeout = HZ;
- 	adap->retries = 3;
+-	ret =  i2c_smbus_write_block_data(client, PAC1934_CTRL_STAT_REGS_ADDR,
+-					  ARRAY_SIZE(regs), (u8 *)regs);
++	/*
++	 * Write the three bytes sequentially, as the device does not support
++	 * block write.
++	 */
++	ret = i2c_smbus_write_byte_data(client, PAC1934_CTRL_STAT_REGS_ADDR,
++					regs[PAC1934_CHANNEL_DIS_REG_OFF]);
++	if (ret)
++		return ret;
++
++	ret = i2c_smbus_write_byte_data(client,
++					PAC1934_CTRL_STAT_REGS_ADDR + PAC1934_NEG_PWR_REG_OFF,
++					regs[PAC1934_NEG_PWR_REG_OFF]);
++	if (ret)
++		return ret;
++
++	ret = i2c_smbus_write_byte_data(client, PAC1934_SLOW_REG_ADDR,
++					regs[PAC1934_SLOW_REG_OFF]);
+ 	if (ret)
+ 		return ret;
  
- 	id = of_alias_get_id(master->dev.of_node, "i2c");
 
 
