@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FE5330B26;
-	Fri, 17 Oct 2025 15:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4640330B06;
+	Fri, 17 Oct 2025 15:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716564; cv=none; b=kFwsvd6OQ31FnR+MWyCXAGmOfgIjhWUKMoYllIT+ZlKkJNHJXDhnveViW045kaOGhl5aXX+TQFBc2IyE3uMkLQiSJqN0RoczuV6BxF8BHpHxiv0utYHMy3Ueyl2/Cl3RoCEugyn34JflJZkDy1mEWXr5GxgSkBrdGBbw9GEpKNM=
+	t=1760716567; cv=none; b=rt5JxOz5G0dowY7x5GL+VvIgrJip4+XBOewl4PuOQHPlk3Fp5A9G+6pVwFojKcrUR9TU4KjvljF15Itn81rAIonU4dciwT5PFTP61tIOefCBy8F9wWPNJgknT3G/zcLXaqhlkP2AUCiOHagA9meSue2aUiNPrZ9dH/1Gvy9vUAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716564; c=relaxed/simple;
-	bh=13J0qMG8ZcpM0B+wcVvZJGJDrkAvEl6+fgUl6nahBpg=;
+	s=arc-20240116; t=1760716567; c=relaxed/simple;
+	bh=7x9QzPtvqOEK93ueLpz6jfyNAxoiadqxq9dxi5giihg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bkYTlJb3hYjcDKfQuBUS4iyXGmtule4WTBUyzkEs3OxgXowsnrIGw9l7QpNdz3nmHSM426bfj5se8R+rtMoeRiBstdvm1Paqpckm9GGy1hAuNjoc7moRz4x1s9aTXG4JQpCJheBWKLI4Od06BCqN9wksiW+Lbqoal43+fz77ags=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyb0kn+8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/KKCWs1D9CS+NIKFexU2dOOzRfd5xs7O14l/XXxZotvbVimixKE2bn/hic03yW5jWdIC0QJTr/olP/0Ls6u1DMCe9oEwn1iJktNBqtGu0wRVqhefpDyD2nqbPJ9ayh/NuWl+G46Lo+a+drmle/KZIcczlBxAhUWW0c4ZR10k8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTKtEhvj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyb0kn+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D4EC4CEE7;
-	Fri, 17 Oct 2025 15:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTKtEhvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB53C4CEFE;
+	Fri, 17 Oct 2025 15:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716563;
-	bh=13J0qMG8ZcpM0B+wcVvZJGJDrkAvEl6+fgUl6nahBpg=;
+	s=korg; t=1760716567;
+	bh=7x9QzPtvqOEK93ueLpz6jfyNAxoiadqxq9dxi5giihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyb0kn+824GGNt+hAqGViBQLUUZGHSftbM1MgD5C/BMrvUk4zBuKd2sn+YgdUlHjC
-	 n071e5ztqW2+QW9UDov1y6OINEWIFf53nwMFNkQnczgb0ZGhiWewurZr944lRCpQlX
-	 yxMrcRdwjaS2vdk7rjMrSJVRLGJ0CggL6tB4KN8M=
+	b=mTKtEhvjaOsGPTko5AmqXYkvPmIB3PoL/XekyqeZwKctk/cs7OCnRC2WHo6SCLJcd
+	 dMCxsiScHcVf5eLoDFL1f/DRRPn+ffq9zjm5ZO8TgwIiZqzW38Lk45O5tWnFz2S5y0
+	 tLe8vhYp8L0uROKbjdsHXmXY8hGLi5iec6X/j2Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matvey Kovalev <matvey.kovalev@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/276] net: usb: asix: hold PM usage ref to avoid PM/MDIO + RTNL deadlock
-Date: Fri, 17 Oct 2025 16:55:27 +0200
-Message-ID: <20251017145151.009921072@linuxfoundation.org>
+Subject: [PATCH 5.15 235/276] ksmbd: fix error code overwriting in smb2_get_info_filesystem()
+Date: Fri, 17 Oct 2025 16:55:28 +0200
+Message-ID: <20251017145151.046730557@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -47,121 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Matvey Kovalev <matvey.kovalev@ispras.ru>
 
-[ Upstream commit 3d3c4cd5c62f24bb3cb4511b7a95df707635e00a ]
+[ Upstream commit 88daf2f448aad05a2e6df738d66fe8b0cf85cee0 ]
 
-Prevent USB runtime PM (autosuspend) for AX88772* in bind.
+If client doesn't negotiate with SMB3.1.1 POSIX Extensions,
+then proper error code won't be returned due to overwriting.
 
-usbnet enables runtime PM (autosuspend) by default, so disabling it via
-the usb_driver flag is ineffective. On AX88772B, autosuspend shows no
-measurable power saving with current driver (no link partner, admin
-up/down). The ~0.453 W -> ~0.248 W drop on v6.1 comes from phylib powering
-the PHY off on admin-down, not from USB autosuspend.
+Return error immediately.
 
-The real hazard is that with runtime PM enabled, ndo_open() (under RTNL)
-may synchronously trigger autoresume (usb_autopm_get_interface()) into
-asix_resume() while the USB PM lock is held. Resume paths then invoke
-phylink/phylib and MDIO, which also expect RTNL, leading to possible
-deadlocks or PM lock vs MDIO wake issues.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-To avoid this, keep the device runtime-PM active by taking a usage
-reference in ax88772_bind() and dropping it in unbind(). A non-zero PM
-usage count blocks runtime suspend regardless of userspace policy
-(.../power/control - pm_runtime_allow/forbid), making this approach
-robust against sysfs overrides.
-
-Holding a runtime-PM usage ref does not affect system-wide suspend;
-system sleep/resume callbacks continue to run as before.
-
-Fixes: 4a2c7217cd5a ("net: usb: asix: ax88772: manage PHY PM from MAC")
-Reported-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Closes: https://lore.kernel.org/all/DCGHG5UJT9G3.2K1GHFZ3H87T0@gmail.com
-Tested-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com
+Fixes: e2f34481b24db ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20251005081203.3067982-1-o.rempel@pengutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted to phylib-only ]
+Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adjusted file path from fs/smb/server/smb2pdu.c to fs/ksmbd/smb2pdu.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c |   35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -608,6 +608,21 @@ static void ax88772_suspend(struct usbne
- 		   asix_read_medium_status(dev, 1));
- }
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -5204,7 +5204,8 @@ static int smb2_get_info_filesystem(stru
  
-+/* Notes on PM callbacks and locking context:
-+ *
-+ * - asix_suspend()/asix_resume() are invoked for both runtime PM and
-+ *   system-wide suspend/resume. For struct usb_driver the ->resume()
-+ *   callback does not receive pm_message_t, so the resume type cannot
-+ *   be distinguished here.
-+ *
-+ * - The MAC driver must hold RTNL when calling phylink interfaces such as
-+ *   phylink_suspend()/resume(). Those calls will also perform MDIO I/O.
-+ *
-+ * - Taking RTNL and doing MDIO from a runtime-PM resume callback (while
-+ *   the USB PM lock is held) is fragile. Since autosuspend brings no
-+ *   measurable power saving here, we block it by holding a PM usage
-+ *   reference in ax88772_bind().
-+ */
- static int asix_suspend(struct usb_interface *intf, pm_message_t message)
- {
- 	struct usbnet *dev = usb_get_intfdata(intf);
-@@ -809,7 +824,18 @@ static int ax88772_bind(struct usbnet *d
- 	if (ret)
- 		return ret;
- 
--	return ax88772_init_phy(dev);
-+	ret = ax88772_init_phy(dev);
-+	if (ret)
-+		return ret;
-+
-+	/* Keep this interface runtime-PM active by taking a usage ref.
-+	 * Prevents runtime suspend while bound and avoids resume paths
-+	 * that could deadlock (autoresume under RTNL while USB PM lock
-+	 * is held, phylink/MDIO wants RTNL).
-+	 */
-+	pm_runtime_get_noresume(&intf->dev);
-+
-+	return 0;
- }
- 
- static int ax88772_stop(struct usbnet *dev)
-@@ -827,6 +853,8 @@ static void ax88772_unbind(struct usbnet
- 
- 	phy_disconnect(priv->phydev);
- 	asix_rx_fixup_common_free(dev->driver_priv);
-+	/* Drop the PM usage ref taken in bind() */
-+	pm_runtime_put(&intf->dev);
- }
- 
- static void ax88178_unbind(struct usbnet *dev, struct usb_interface *intf)
-@@ -1452,6 +1480,11 @@ static struct usb_driver asix_driver = {
- 	.resume =	asix_resume,
- 	.reset_resume =	asix_resume,
- 	.disconnect =	usbnet_disconnect,
-+	/* usbnet enables autosuspend by default (supports_autosuspend=1).
-+	 * We keep runtime-PM active for AX88772* by taking a PM usage
-+	 * reference in ax88772_bind() (pm_runtime_get_noresume()) and
-+	 * dropping it in unbind(), which effectively blocks autosuspend.
-+	 */
- 	.supports_autosuspend = 1,
- 	.disable_hub_initiated_lpm = 1,
- };
+ 		if (!work->tcon->posix_extensions) {
+ 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
+-			rc = -EOPNOTSUPP;
++			path_put(&path);
++			return -EOPNOTSUPP;
+ 		} else {
+ 			info = (struct filesystem_posix_info *)(rsp->Buffer);
+ 			info->OptimalTransferSize = cpu_to_le32(stfs.f_bsize);
 
 
