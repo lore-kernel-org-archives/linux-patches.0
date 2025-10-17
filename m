@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F182F12D6;
-	Fri, 17 Oct 2025 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327C02F6926;
+	Fri, 17 Oct 2025 15:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713263; cv=none; b=PB/iTU2SvfrEPUBNb9Si4y7wiZXl/wKTEWQSl7eW1Mz2Oyqb/1i+NuuYTGdMrkyQWc7vp0zS4j3KlQ/VH29cS4nv6ZwuCJWNRxh8O+H7byle/qTOJfVwyd321L+CddDYQj05gKlqjiFxKqaQ0S9m3BFqpqt3zlkad0Rn4Bf1YCs=
+	t=1760713266; cv=none; b=kgF/o5VCEfXUrWTj2tmZpfD7p5h2wbgxeZl0HMw9Tr3pkLIwGrRtIk+c+jIZVVQmgpOJ5apqWMnrS65/wB2l0kdYGLCShHu5/piXPP+vXxMrspL+EEI30e26g2Gn9gv9awOj/xBzFnykfyqQs0Np0QQMOry3570PMzSEIxbjvaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713263; c=relaxed/simple;
-	bh=ga9xnGzZO3+LfhUahlJA0OGVApkTR53Cjd+aG08cJmU=;
+	s=arc-20240116; t=1760713266; c=relaxed/simple;
+	bh=RYFDbso/FGNK90Vg+KnMxnuA2TpenHYAhl1fHu3Au6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uy+HEF80rCreMOSH6gEOE4zGPaJUsij0rPa5D8gpFD/mY8ep/HGnSUxoq5r804lxpanOoK0/2MsZeCVKSGrb4ZuHFj9piicopAaghD1qgvHnnRb2ZTYqBeNUDcaiZXpJl4hkUp8NMclXPu+yGiWfnQfF2kCi/uL4RYD1v4Vnuj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6DuhV/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+B6FkzrqzONlN8KNsKVcvlg0zdUFftNhbuw+4P8ivre/CDptCrRbddzoEKPufxDqv+igWp+pRF2/EgZLCUYqoBLpPm10bTTR9k/OiZYJ7ZUcXY3hl/f30k7BE/dq4C/+HsH3OCpU4PIcR/58SgzRg7kLkiP2oaizjLmDmgNJHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4akann2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6DuhV/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04D2C4CEE7;
-	Fri, 17 Oct 2025 15:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4akann2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5FAC4CEE7;
+	Fri, 17 Oct 2025 15:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713263;
-	bh=ga9xnGzZO3+LfhUahlJA0OGVApkTR53Cjd+aG08cJmU=;
+	s=korg; t=1760713266;
+	bh=RYFDbso/FGNK90Vg+KnMxnuA2TpenHYAhl1fHu3Au6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6DuhV/A648othNB6ZkSVxLK2/LaSnajDIP1C8nWIcat+DiryN5rZcoUj7UFMMPgT
-	 5e+uDoxOnuF8XpXCU6Cnd/SCtx6/7CLfzsZwYjcuqWspf/9WOWXlyBerp6c05D/leo
-	 MltVu0GfMdh9rMsYKCW+tbGD070Mlv/vKghRM7ws=
+	b=L4akann2jC/olGNnstbRKd0tHSZy8uFND3eLpVdIN2lawc37/hl1eq9NusYiEF3m3
+	 bWb7j9wAFdeqfzV6ZIK0HqWxut61O5C3RCxxXNsdX/9eGYJb4MAQ0eCbt7eUDsCmX7
+	 KAFxJYorfCSl8N7e7dzapSAZapmCkIYxBJ0L97pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Esben Haabendal <esben@geanix.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 105/168] rtc: interface: Ensure alarm irq is enabled when UIE is enabled
-Date: Fri, 17 Oct 2025 16:53:04 +0200
-Message-ID: <20251017145132.894465369@linuxfoundation.org>
+Subject: [PATCH 6.1 106/168] rtc: interface: Fix long-standing race when setting alarm
+Date: Fri, 17 Oct 2025 16:53:05 +0200
+Message-ID: <20251017145132.931191914@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -52,37 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Esben Haabendal <esben@geanix.com>
 
-commit 9db26d5855d0374d4652487bfb5aacf40821c469 upstream.
+commit 795cda8338eab036013314dbc0b04aae728880ab upstream.
 
-When setting a normal alarm, user-space is responsible for using
-RTC_AIE_ON/RTC_AIE_OFF to control if alarm irq should be enabled.
+As described in the old comment dating back to
+commit 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
+from 2010, we have been living with a race window when setting alarm
+with an expiry in the near future (i.e. next second).
+With 1 second resolution, it can happen that the second ticks after the
+check for the timer having expired, but before the alarm is actually set.
+When this happen, no alarm IRQ is generated, at least not with some RTC
+chips (isl12022 is an example of this).
 
-But when RTC_UIE_ON is used, interrupts must be enabled so that the
-requested irq events are generated.
-When RTC_UIE_OFF is used, alarm irq is disabled if there are no other
-alarms queued, so this commit brings symmetry to that.
+With UIE RTC timer being implemented on top of alarm irq, being re-armed
+every second, UIE will occasionally fail to work, as an alarm irq lost
+due to this race will stop the re-arming loop.
 
-Signed-off-by: Esben Haabendal <esben@geanix.com>
+For now, I have limited the additional expiry check to only be done for
+alarms set to next seconds. I expect it should be good enough, although I
+don't know if we can now for sure that systems with loads could end up
+causing the same problems for alarms set 2 seconds or even longer in the
+future.
+
+I haven't been able to reproduce the problem with this check in place.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-5-3de8e530a39e@geanix.com
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-1-3de8e530a39e@geanix.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/rtc/interface.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 --- a/drivers/rtc/interface.c
 +++ b/drivers/rtc/interface.c
-@@ -594,6 +594,10 @@ int rtc_update_irq_enable(struct rtc_dev
- 		rtc->uie_rtctimer.node.expires = ktime_add(now, onesec);
- 		rtc->uie_rtctimer.period = ktime_set(1, 0);
- 		err = rtc_timer_enqueue(rtc, &rtc->uie_rtctimer);
-+		if (!err && rtc->ops && rtc->ops->alarm_irq_enable)
-+			err = rtc->ops->alarm_irq_enable(rtc->dev.parent, 1);
+@@ -443,6 +443,29 @@ static int __rtc_set_alarm(struct rtc_de
+ 	else
+ 		err = rtc->ops->set_alarm(rtc->dev.parent, alarm);
+ 
++	/*
++	 * Check for potential race described above. If the waiting for next
++	 * second, and the second just ticked since the check above, either
++	 *
++	 * 1) It ticked after the alarm was set, and an alarm irq should be
++	 *    generated.
++	 *
++	 * 2) It ticked before the alarm was set, and alarm irq most likely will
++	 * not be generated.
++	 *
++	 * While we cannot easily check for which of these two scenarios we
++	 * are in, we can return -ETIME to signal that the timer has already
++	 * expired, which is true in both cases.
++	 */
++	if ((scheduled - now) <= 1) {
++		err = __rtc_read_time(rtc, &tm);
 +		if (err)
-+			goto out;
- 	} else {
- 		rtc_timer_remove(rtc, &rtc->uie_rtctimer);
- 	}
++			return err;
++		now = rtc_tm_to_time64(&tm);
++		if (scheduled <= now)
++			return -ETIME;
++	}
++
+ 	trace_rtc_set_alarm(rtc_tm_to_time64(&alarm->time), err);
+ 	return err;
+ }
 
 
