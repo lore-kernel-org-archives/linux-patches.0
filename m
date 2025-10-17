@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BAF217722;
-	Fri, 17 Oct 2025 15:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC21330B0F;
+	Fri, 17 Oct 2025 15:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716687; cv=none; b=oEy/mIPd8I7vnBqDCa4iQCP4apdwSvpiEHC01bWZYKLKgfU8DG6NPtPqNlQBqDfV61pFlX91/bLEQNt9oX9xCUW5LCBplT9JjuHDR2ykBHIVAooUE8vNyJpryzAtt+GFH4v8rW6RHAkDgQsLWVe1hrYPaCcuMWHDh/+aqM5CtXc=
+	t=1760716690; cv=none; b=Jt96EqH+nFqqpCjyovGlEHlKbWqWM6qKN14VUlLTiio1ogoZjpsgbjwU63jnJcwYFWMn+hwI9J+IWxB7uK+cRsVh5xOnR8DiD5YhsMeWhUt812FhuLtVvgBP3PunGewMETzGGhQ+NjP0O2hgtB04km3PyYu163LZbqzGU3C591Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716687; c=relaxed/simple;
-	bh=pLwa3A1be5O/v8CttomnQHIFqovviGKCUgxNbMyNyc0=;
+	s=arc-20240116; t=1760716690; c=relaxed/simple;
+	bh=2U/hwjKP+IM6j2sfqbfOgVYBbBYiu0dnAo+QOGeFTPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vo75v0CCdLIYhFdG2iORxy1ZKDONkWqZZU4yE70H1KK0mOa/d6gg85DGrOpPBGirH8u72VPWM43QSbyEfXxUFffFiFLavAL2muWHE/VWUJERinoCTquggA6xZtDge6ReCXAWrPAs5eKapprvjrVKOW5bwCT3uKP6hfQEyS9RiDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLABbjCd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXL+SOum7b+rzE0wUOKcMqtV7dwWbPbBUYeeRFI9pitBy4CvmXy6VIjdNitLN5ILEhZfwZ+rhShp4jF2//8Oj6D8NEAQf2Q7fgjQlZ9QXnychjqwDB1Xffzf9gUyUEc6RDzLeCzUbMSHRtjAwGr7opffXsvQs0j4Js+4J4I5or8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfvZMvrR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLABbjCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D152EC4CEE7;
-	Fri, 17 Oct 2025 15:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfvZMvrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CC6C4CEE7;
+	Fri, 17 Oct 2025 15:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716687;
-	bh=pLwa3A1be5O/v8CttomnQHIFqovviGKCUgxNbMyNyc0=;
+	s=korg; t=1760716690;
+	bh=2U/hwjKP+IM6j2sfqbfOgVYBbBYiu0dnAo+QOGeFTPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLABbjCde6ZBVsx5Qan7P/ukOBa0E8S/lFP0iCr4GIQDC6ce+j+r+xuAF1JYw6XGU
-	 F53sHbDf8KX3wTDIQMz1oGPwDSf+ZuSTCk2l68u9kN7LqwMc75d/MbFnkgBBJx5WlX
-	 B/yemz799zjm/ER+ZCF/GjfEjf077XAJyhr5Ez60=
+	b=jfvZMvrRTbQsfeJoMO/3pEHfoHnxvanxuKDn7RHkmVyyy5Kbbp4eQ0Hyxe5Pe0y4y
+	 /k5VLmAor6c51S6LjArwfoRx9A17a0V6Gv+fGr4Aj2Ph14wdwbMaaaYkZmo7A22c9S
+	 qvbGT5wzvVQFyB6RxaoA801hpkObuOn98LA7DJfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 276/276] selftests: mptcp: join: validate C-flag + def limit
-Date: Fri, 17 Oct 2025 16:56:09 +0200
-Message-ID: <20251017145152.567050935@linuxfoundation.org>
+	David Laight <David.Laight@aculab.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 5.15 252/276] minmax: fix up min3() and max3() too
+Date: Fri, 17 Oct 2025 16:55:45 +0200
+Message-ID: <20251017145151.678182130@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,65 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 008385efd05e04d8dff299382df2e8be0f91d8a0 upstream.
+[ Upstream commit 21b136cc63d2a9ddd60d4699552b69c214b32964 ]
 
-The previous commit adds an exception for the C-flag case. The
-'mptcp_join.sh' selftest is extended to validate this case.
+David Laight pointed out that we should deal with the min3() and max3()
+mess too, which still does excessive expansion.
 
-In this subtest, there is a typical CDN deployment with a client where
-MPTCP endpoints have been 'automatically' configured:
+And our current macros are actually rather broken.
 
-- the server set net.mptcp.allow_join_initial_addr_port=0
+In particular, the macros did this:
 
-- the client has multiple 'subflow' endpoints, and the default limits:
-  not accepting ADD_ADDRs.
+  #define min3(x, y, z) min((typeof(x))min(x, y), z)
+  #define max3(x, y, z) max((typeof(x))max(x, y), z)
 
-Without the parent patch, the client is not able to establish new
-subflows using its 'subflow' endpoints. The parent commit fixes that.
+and that not only is a nested expansion of possibly very complex
+arguments with all that involves, the typing with that "typeof()" cast
+is completely wrong.
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+For example, imagine what happens in max3() if 'x' happens to be a
+'unsigned char', but 'y' and 'z' are 'unsigned long'.  The types are
+compatible, and there's no warning - but the result is just random
+garbage.
 
-Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-2-ad126cc47c6b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in mptcp_join.sh, because many different helpers have been
-  modified in newer kernel versions, e.g. in commit 03668c65d153
-  ("selftests: mptcp: join: rework detailed report"), or commit
-  985de45923e2 ("selftests: mptcp: centralize stats dumping"), etc.
-  Adaptations have been made to use the old way, similar to what is done
-  just above. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+No, I don't think we've ever hit that issue in practice, but since we
+now have sane infrastructure for doing this right, let's just use it.
+It fixes any excessive expansion, and also avoids these kinds of broken
+type issues.
+
+Requested-by: David Laight <David.Laight@aculab.com>
+Acked-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/minmax.h |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -1826,6 +1826,16 @@ deny_join_id0_tests()
- 	ip netns exec $ns2 ./pm_nl_ctl add 10.0.3.2 flags subflow
- 	run_tests $ns1 $ns2 10.0.1.1
- 	chk_join_nr "subflow and address allow join id0 2" 1 1 1
-+
-+	# default limits, server deny join id 0 + signal
-+	reset_with_allow_join_id0 0 1
-+	ip netns exec $ns1 ./pm_nl_ctl limits 0 2
-+	ip netns exec $ns2 ./pm_nl_ctl limits 0 2
-+	ip netns exec $ns1 ./pm_nl_ctl add 10.0.2.1 flags signal
-+	ip netns exec $ns2 ./pm_nl_ctl add 10.0.3.2 flags subflow
-+	ip netns exec $ns2 ./pm_nl_ctl add 10.0.4.2 flags subflow
-+	run_tests $ns1 $ns2 10.0.1.1
-+	chk_join_nr "default limits, server deny join id 0" 2 2 2
- }
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -152,13 +152,20 @@
+ #define umax(x, y)	\
+ 	__careful_cmp(max, (x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull)
  
- fullmesh_tests()
++#define __careful_op3(op, x, y, z, ux, uy, uz) ({			\
++	__auto_type ux = (x); __auto_type uy = (y);__auto_type uz = (z);\
++	BUILD_BUG_ON_MSG(!__types_ok3(x,y,z,ux,uy,uz),			\
++		#op"3("#x", "#y", "#z") signedness error");		\
++	__cmp(op, ux, __cmp(op, uy, uz)); })
++
+ /**
+  * min3 - return minimum of three values
+  * @x: first value
+  * @y: second value
+  * @z: third value
+  */
+-#define min3(x, y, z) min((typeof(x))min(x, y), z)
++#define min3(x, y, z) \
++	__careful_op3(min, x, y, z, __UNIQUE_ID(x_), __UNIQUE_ID(y_), __UNIQUE_ID(z_))
+ 
+ /**
+  * max3 - return maximum of three values
+@@ -166,7 +173,8 @@
+  * @y: second value
+  * @z: third value
+  */
+-#define max3(x, y, z) max((typeof(x))max(x, y), z)
++#define max3(x, y, z) \
++	__careful_op3(max, x, y, z, __UNIQUE_ID(x_), __UNIQUE_ID(y_), __UNIQUE_ID(z_))
+ 
+ /**
+  * min_not_zero - return the minimum that is _not_ zero, unless both are zero
 
 
