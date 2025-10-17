@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1165F3370E2;
-	Fri, 17 Oct 2025 15:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F0F335064;
+	Fri, 17 Oct 2025 15:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714282; cv=none; b=sFcICnxeIE12jLruwFUl69BUZYd+ZwBW7Gb5gGJA1SvyHvVMUk+KjCAm7XJLxMJ4pHkOT19q2uvArMF7wQXgX3Tp5XCb/U+JGRZW6G9yaVWAJf/c8repGMp51GodweZJzQMw2L6UqE6dU+tKVCzjBhL2fmSiv245loa1mca/Uwc=
+	t=1760714286; cv=none; b=dw21KNJlTZd/Nr0Jy2gNCXxjJ+dkri35lMdvYp0QCDq7/Ny0lEFnKAOIlXlZWKge6wiwgnrDB1pZUQbalJfxNaiycco5uF54aMOr5gn/Yn/WR4kUO3g7Qpn+FCS8hcwXUx6zUqc9Ryfb7MafG+tcT51UuwVIgi7NwB9nEizkvY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714282; c=relaxed/simple;
-	bh=++3zZpox1LSZVmOuqMo4YA6bQwTWfrm+FLGbnhuFanU=;
+	s=arc-20240116; t=1760714286; c=relaxed/simple;
+	bh=S3ynuzUfMkmML6qIBThewBBCqDteOkUHkyLKUNMxwzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EAjf1NasL6PIpOvgGAiVHYVZkSXluzK8KPLVJDkfOcx/iGtTOr/0gQXZl7MtRR8LBiOKvkZFK8ixdNUFCrQMKstYgxuH5MLmsubXjIUXhmZdzBNvYC/wkVXIzQL9MBLCv3UaS0x7dZ7d1AFV6+yQdV6qjU8trPVi90We1FqCXhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnpsf/l0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QnLfviDBU5t2T2kg/NKivhYjnPHdcFZWLzk6teEHOf+moG1/pDKHB7GGMHjK2ANNkgAWQa9/d+k7oWagCU8qihZ/x21IrnnMTTSxs/CqqlGZedeMlBISu07CVDgyrKZUhXmZZPy6aLN1SuWtzqlVmYCv8KXFuMZSHmmX0JkE4Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNQJsTcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnpsf/l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5934AC4CEE7;
-	Fri, 17 Oct 2025 15:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNQJsTcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73168C4CEE7;
+	Fri, 17 Oct 2025 15:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714281;
-	bh=++3zZpox1LSZVmOuqMo4YA6bQwTWfrm+FLGbnhuFanU=;
+	s=korg; t=1760714284;
+	bh=S3ynuzUfMkmML6qIBThewBBCqDteOkUHkyLKUNMxwzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dnpsf/l0jkyuNAPvpoHfev/6noUAXU4SbrWMKJZR6K9tK56g6ZZ7rKG0/du6On6C5
-	 TRyoqY2aEd4hyqXt4Di1z4gYwSp105UVmTNd6LOLEIDDFt1OHYkSw3Gc64aS3y7V9H
-	 pssJr8f+yvDpSZvZUKyFpxOQjQXYo8I8uuKiZtwE=
+	b=rNQJsTcsDH8rsICcsckX5a9AINg88PHHUuG3xO5xHa1QVXG7eoTsDZQrW4ZgZpHoR
+	 2GGg/AxuPYM8nTMgfHvnN+bmKeZGOeJDhuTIDZimFY7ARzPCz9LUhV14mKJ6JA6+9y
+	 Y6AzFM+AQ408EhpccppS1Koq3KUgIRiso/UWBz5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 090/277] arm64: dts: qcom: sdm845: Fix slimbam num-channels/ees
-Date: Fri, 17 Oct 2025 16:51:37 +0200
-Message-ID: <20251017145150.421819298@linuxfoundation.org>
+Subject: [PATCH 6.12 091/277] arm64: dts: qcom: x1e80100-pmics: Disable pm8010 by default
+Date: Fri, 17 Oct 2025 16:51:38 +0200
+Message-ID: <20251017145150.457728030@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,44 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-commit 316294bb6695a43a9181973ecd4e6fb3e576a9f7 upstream.
+commit b9a185198f96259311543b30d884d8c01da913f7 upstream.
 
-Reading the hardware registers of the &slimbam on RB3 reveals that the BAM
-supports only 23 pipes (channels) and supports 4 EEs instead of 2. This
-hasn't caused problems so far since nothing is using the extra channels,
-but attempting to use them would lead to crashes.
+pm8010 is a camera specific PMIC, and may not be present on some
+devices. These may instead use a dedicated vreg for this purpose (Dell
+XPS 9345, Dell Inspiron..) or use USB webcam instead of a MIPI one
+alltogether (Lenovo Thinbook 16, Lenovo Yoga..).
 
-The bam_dma driver might warn in the future if the num-channels in the DT
-are wrong, so correct the properties in the DT to avoid future regressions.
+Disable pm8010 by default, let platforms that actually have one onboard
+enable it instead.
 
 Cc: stable@vger.kernel.org
-Fixes: 27ca1de07dc3 ("arm64: dts: qcom: sdm845: add slimbus nodes")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250821-sdm845-slimbam-channels-v1-1-498f7d46b9ee@linaro.org
+Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Link: https://lore.kernel.org/r/20250701183625.1968246-2-alex.vinarskis@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -5365,11 +5365,11 @@
- 			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
- 			qcom,controlled-remotely;
- 			reg = <0 0x17184000 0 0x2a000>;
--			num-channels = <31>;
-+			num-channels = <23>;
- 			interrupts = <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
- 			#dma-cells = <1>;
- 			qcom,ee = <1>;
--			qcom,num-ees = <2>;
-+			qcom,num-ees = <4>;
- 			iommus = <&apps_smmu 0x1806 0x0>;
- 		};
+--- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+@@ -475,6 +475,8 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
  
++		status = "disabled";
++
+ 		pm8010_temp_alarm: temp-alarm@2400 {
+ 			compatible = "qcom,spmi-temp-alarm";
+ 			reg = <0x2400>;
 
 
