@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53E5288A2;
-	Fri, 17 Oct 2025 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7811A2459E1;
+	Fri, 17 Oct 2025 14:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713034; cv=none; b=J/WqKpL9Y6JvAMN/+q17A6A1Kq9R6qT9iu1Au6pD/ztQMq8t0+GMFBFrkyfBGhS747EAVb0I0iHgk+EOP9mgzUW3DakQxoHPDBMEh0oDlzJonMhOfaEQnaMZURwYzW/pCi2mwoxqKddx5CPduiBiHq1jGDUkbiUOwjxpiK6kqqg=
+	t=1760713037; cv=none; b=Ta5vYu4AxeWDCmE5MxhZdb3lcKbK1E327q3IS2tQoFR6Cki9iuT1NyO8fRbb2dQcCJNwHfk0Lsi/E6Jmqp53iYQQQVqZkloxn01Yh12z97+/sAhfK/eYhoudT2/OeTRRhIzDkV+hVCxvlo2HZnCDuyx1/8O7NTKhPXhI0BzgZEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713034; c=relaxed/simple;
-	bh=7X5qrAesmXQLtmF02s3XxF9qu+XfeL6sV2Ke0VfknOg=;
+	s=arc-20240116; t=1760713037; c=relaxed/simple;
+	bh=Rm6kYJ2vwMQI/tO+DssJgGSmi2kQKVFJu0E5b2uraQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnJ8VUjsysZtzr3E9jevuA0CutNqQf0Ar08BDI9XVEesxx8HXVuv1X3s4KJt6eMTVA4mV19X1Dvr641FbX2/SZg6zSFy69a3cVRc1lQn9lRqZkYsAblSaWsWSDhJMl93RIlOIJ7NQTLp16HsJBjLLfl7xpqtolrr3c4Cl+27BME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n49vTJL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzTgWzmIcmnzBW9QTdwZCzkwPXjuLA2dhJpKQSBqbzMjTVxJ0OXh3NVg7ig8F+Pb+YUdJBYTfQbi6p0IbvFQVskzv44zOneK2BGdbKbuhbIzqGiibfslICyyH2aPeGALYhgLmsMCcad5HlXmGbAiz2lE9BWn32g0ICbFo1a4uhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzO1z5zI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n49vTJL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0415C4CEFE;
-	Fri, 17 Oct 2025 14:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzO1z5zI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAABDC4CEF9;
+	Fri, 17 Oct 2025 14:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713034;
-	bh=7X5qrAesmXQLtmF02s3XxF9qu+XfeL6sV2Ke0VfknOg=;
+	s=korg; t=1760713037;
+	bh=Rm6kYJ2vwMQI/tO+DssJgGSmi2kQKVFJu0E5b2uraQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n49vTJL3hSd23LmDifkJNmz5WokyA0mfRC7qRN4SJbnDKF5UIYrK5w8hi5aMY9St0
-	 bp5LwDLbFAR/8URg5vm/VOZP7xmm/q6eSd/LvR8HOKFLOdVs0f/I5aNbDjbGQuWNiP
-	 cWybkn6QDwSBTni9gqKrq0vcssWAYgDbdMkUY9K8=
+	b=CzO1z5zIa9mCQcs/cfoF0jEh5MiVArC44h7fVZElBFNh2glnFrce3k9HKyWAcqLZ9
+	 qR0iRCtoYJV+KPvADJcyAzVzWB5zSvPrXm9uAyzOEZcepE7G2KtHv1fn3pn+T8oAj5
+	 4JvKAwGpDYxX2XfsVTU+5oq/y+ABNomh1sfyDnuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	John Garry <john.garry@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/168] perf test: Dont leak workload gopipe in PERF_RECORD_*
-Date: Fri, 17 Oct 2025 16:51:36 +0200
-Message-ID: <20251017145129.652229378@linuxfoundation.org>
+Subject: [PATCH 6.1 026/168] scsi: mvsas: Use sas_task_find_rq() for tagging
+Date: Fri, 17 Oct 2025 16:51:45 +0200
+Message-ID: <20251017145129.983413703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -63,200 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: John Garry <john.garry@huawei.com>
 
-[ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
+[ Upstream commit 2acf97f199f9eba8321390325519e9b6bff60108 ]
 
-The test starts a workload and then opens events. If the events fail
-to open, for example because of perf_event_paranoid, the gopipe of the
-workload is leaked and the file descriptor leak check fails when the
-test exits. To avoid this cancel the workload when opening the events
-fails.
+The request associated with a SCSI command coming from the block layer has
+a unique tag, so use that when possible for getting a slot.
 
-Before:
-```
-$ perf test -vv 7
-  7: PERF_RECORD_* events & perf_sample fields:
- --- start ---
-test child forked, pid 1189568
-Using CPUID GenuineIntel-6-B7-1
- ------------------------------------------------------------
-perf_event_attr:
-  type                    	   0 (PERF_TYPE_HARDWARE)
-  config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                	   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-Attempt to add: software/cpu-clock/
-..after resolving event: software/config=0/
-cpu-clock -> software/cpu-clock/
- ------------------------------------------------------------
-perf_event_attr:
-  type                             1 (PERF_TYPE_SOFTWARE)
-  size                             136
-  config                           0x9 (PERF_COUNT_SW_DUMMY)
-  sample_type                      IP|TID|TIME|CPU
-  read_format                      ID|LOST
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  enable_on_exec                   1
-  task                             1
-  sample_id_all                    1
-  mmap2                            1
-  comm_exec                        1
-  ksymbol                          1
-  bpf_event                        1
-  { wakeup_events, wakeup_watermark } 1
- ------------------------------------------------------------
-sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
-perf_evlist__open: Permission denied
- ---- end(-2) ----
-Leak of file descriptor 6 that opened: 'pipe:[14200347]'
- ---- unexpected signal (6) ----
-iFailed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-    #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
-    #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
-    #3 0x7f29ce849cc2 in raise raise.c:27
-    #4 0x7f29ce8324ac in abort abort.c:81
-    #5 0x565358f662d4 in check_leaks builtin-test.c:226
-    #6 0x565358f6682e in run_test_child builtin-test.c:344
-    #7 0x565358ef7121 in start_command run-command.c:128
-    #8 0x565358f67273 in start_test builtin-test.c:545
-    #9 0x565358f6771d in __cmd_test builtin-test.c:647
-    #10 0x565358f682bd in cmd_test builtin-test.c:849
-    #11 0x565358ee5ded in run_builtin perf.c:349
-    #12 0x565358ee6085 in handle_internal_command perf.c:401
-    #13 0x565358ee61de in run_argv perf.c:448
-    #14 0x565358ee6527 in main perf.c:555
-    #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #17 0x565358e391c1 in _start perf[851c1]
-  7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
-```
+Unfortunately we don't support reserved commands in the SCSI midlayer yet.
+As such, SMP tasks - as an example - will not have a request associated, so
+in the interim continue to manage those tags for that type of sas_task
+internally.
 
-After:
-```
-$ perf test 7
-  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-```
+We reserve an arbitrary 4 tags for these internal tags. Indeed, we already
+decrement MVS_RSVD_SLOTS by 2 for the shost can_queue when flag
+MVF_FLAG_SOC is set. This change was made in commit 20b09c2992fe ("[SCSI]
+mvsas: add support for 94xx; layout change; bug fixes"), but what those 2
+slots are used for is not obvious.
 
-Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Also make the tag management functions static, where possible.
+
+Signed-off-by: John Garry <john.garry@huawei.com>
+Link: https://lore.kernel.org/r/1666091763-11023-8-git-send-email-john.garry@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 60cd16a3b743 ("scsi: mvsas: Fix use-after-free bugs in mvs_work_queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/perf-record.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/mvsas/mv_defs.h |  1 +
+ drivers/scsi/mvsas/mv_init.c |  9 +++++----
+ drivers/scsi/mvsas/mv_sas.c  | 35 ++++++++++++++++++++++-------------
+ drivers/scsi/mvsas/mv_sas.h  |  7 +------
+ 4 files changed, 29 insertions(+), 23 deletions(-)
 
-diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
-index 7aa946aa886de..c410ce87323b0 100644
---- a/tools/perf/tests/perf-record.c
-+++ b/tools/perf/tests/perf-record.c
-@@ -113,6 +113,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("sched__get_first_possible_cpu: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
+diff --git a/drivers/scsi/mvsas/mv_defs.h b/drivers/scsi/mvsas/mv_defs.h
+index 7123a2efbf583..8ef174cd4d374 100644
+--- a/drivers/scsi/mvsas/mv_defs.h
++++ b/drivers/scsi/mvsas/mv_defs.h
+@@ -40,6 +40,7 @@ enum driver_configuration {
+ 	MVS_ATA_CMD_SZ		= 96,	/* SATA command table buffer size */
+ 	MVS_OAF_SZ		= 64,	/* Open address frame buffer size */
+ 	MVS_QUEUE_SIZE		= 64,	/* Support Queue depth */
++	MVS_RSVD_SLOTS		= 4,
+ 	MVS_SOC_CAN_QUEUE	= MVS_SOC_SLOTS - 2,
+ };
+ 
+diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
+index c85fb812ad437..cfe84473a5153 100644
+--- a/drivers/scsi/mvsas/mv_init.c
++++ b/drivers/scsi/mvsas/mv_init.c
+@@ -142,7 +142,7 @@ static void mvs_free(struct mvs_info *mvi)
+ 		scsi_host_put(mvi->shost);
+ 	list_for_each_entry(mwq, &mvi->wq_list, entry)
+ 		cancel_delayed_work(&mwq->work_q);
+-	kfree(mvi->tags);
++	kfree(mvi->rsvd_tags);
+ 	kfree(mvi);
+ }
+ 
+@@ -284,7 +284,6 @@ static int mvs_alloc(struct mvs_info *mvi, struct Scsi_Host *shost)
+ 			printk(KERN_DEBUG "failed to create dma pool %s.\n", pool_name);
+ 			goto err_out;
+ 	}
+-	mvi->tags_num = slot_nr;
+ 
+ 	return 0;
+ err_out:
+@@ -367,8 +366,8 @@ static struct mvs_info *mvs_pci_alloc(struct pci_dev *pdev,
+ 	mvi->sas = sha;
+ 	mvi->shost = shost;
+ 
+-	mvi->tags = kzalloc(MVS_CHIP_SLOT_SZ>>3, GFP_KERNEL);
+-	if (!mvi->tags)
++	mvi->rsvd_tags = bitmap_zalloc(MVS_RSVD_SLOTS, GFP_KERNEL);
++	if (!mvi->rsvd_tags)
+ 		goto err_out;
+ 
+ 	if (MVS_CHIP_DISP->chip_ioremap(mvi))
+@@ -469,6 +468,8 @@ static void  mvs_post_sas_ha_init(struct Scsi_Host *shost,
+ 	else
+ 		can_queue = MVS_CHIP_SLOT_SZ;
+ 
++	can_queue -= MVS_RSVD_SLOTS;
++
+ 	shost->sg_tablesize = min_t(u16, SG_ALL, MVS_MAX_SG);
+ 	shost->can_queue = can_queue;
+ 	mvi->shost->cmd_per_lun = MVS_QUEUE_SIZE;
+diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
+index 82a308840b117..fd73fcf71bd1d 100644
+--- a/drivers/scsi/mvsas/mv_sas.c
++++ b/drivers/scsi/mvsas/mv_sas.c
+@@ -20,31 +20,34 @@ static int mvs_find_tag(struct mvs_info *mvi, struct sas_task *task, u32 *tag)
+ 	return 0;
+ }
+ 
+-void mvs_tag_clear(struct mvs_info *mvi, u32 tag)
++static void mvs_tag_clear(struct mvs_info *mvi, u32 tag)
+ {
+-	void *bitmap = mvi->tags;
++	void *bitmap = mvi->rsvd_tags;
+ 	clear_bit(tag, bitmap);
+ }
+ 
+-void mvs_tag_free(struct mvs_info *mvi, u32 tag)
++static void mvs_tag_free(struct mvs_info *mvi, u32 tag)
+ {
++	if (tag >= MVS_RSVD_SLOTS)
++		return;
++
+ 	mvs_tag_clear(mvi, tag);
+ }
+ 
+-void mvs_tag_set(struct mvs_info *mvi, unsigned int tag)
++static void mvs_tag_set(struct mvs_info *mvi, unsigned int tag)
+ {
+-	void *bitmap = mvi->tags;
++	void *bitmap = mvi->rsvd_tags;
+ 	set_bit(tag, bitmap);
+ }
+ 
+-inline int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out)
++static int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out)
+ {
+ 	unsigned int index, tag;
+-	void *bitmap = mvi->tags;
++	void *bitmap = mvi->rsvd_tags;
+ 
+-	index = find_first_zero_bit(bitmap, mvi->tags_num);
++	index = find_first_zero_bit(bitmap, MVS_RSVD_SLOTS);
+ 	tag = index;
+-	if (tag >= mvi->tags_num)
++	if (tag >= MVS_RSVD_SLOTS)
+ 		return -SAS_QUEUE_FULL;
+ 	mvs_tag_set(mvi, tag);
+ 	*tag_out = tag;
+@@ -696,6 +699,7 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
+ 	struct mvs_task_exec_info tei;
+ 	struct mvs_slot_info *slot;
+ 	u32 tag = 0xdeadbeef, n_elem = 0;
++	struct request *rq;
+ 	int rc = 0;
+ 
+ 	if (!dev->port) {
+@@ -760,9 +764,14 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
+ 		n_elem = task->num_scatter;
  	}
  
-@@ -124,6 +125,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
- 		pr_debug("sched_setaffinity: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+-	rc = mvs_tag_alloc(mvi, &tag);
+-	if (rc)
+-		goto err_out;
++	rq = sas_task_find_rq(task);
++	if (rq) {
++		tag = rq->tag + MVS_RSVD_SLOTS;
++	} else {
++		rc = mvs_tag_alloc(mvi, &tag);
++		if (rc)
++			goto err_out;
++	}
  
-@@ -135,6 +137,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("perf_evlist__open: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ 	slot = &mvi->slot_info[tag];
  
-@@ -147,6 +150,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("evlist__mmap: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+@@ -857,7 +866,7 @@ int mvs_queue_command(struct sas_task *task, gfp_t gfp_flags)
+ static void mvs_slot_free(struct mvs_info *mvi, u32 rx_desc)
+ {
+ 	u32 slot_idx = rx_desc & RXQ_SLOT_MASK;
+-	mvs_tag_clear(mvi, slot_idx);
++	mvs_tag_free(mvi, slot_idx);
+ }
  
+ static void mvs_slot_task_free(struct mvs_info *mvi, struct sas_task *task,
+diff --git a/drivers/scsi/mvsas/mv_sas.h b/drivers/scsi/mvsas/mv_sas.h
+index fe57665bdb505..68df771e29759 100644
+--- a/drivers/scsi/mvsas/mv_sas.h
++++ b/drivers/scsi/mvsas/mv_sas.h
+@@ -370,8 +370,7 @@ struct mvs_info {
+ 	u32 chip_id;
+ 	const struct mvs_chip_info *chip;
+ 
+-	int tags_num;
+-	unsigned long *tags;
++	unsigned long *rsvd_tags;
+ 	/* further per-slot information */
+ 	struct mvs_phy phy[MVS_MAX_PHYS];
+ 	struct mvs_port port[MVS_MAX_PHYS];
+@@ -424,10 +423,6 @@ struct mvs_task_exec_info {
+ 
+ /******************** function prototype *********************/
+ void mvs_get_sas_addr(void *buf, u32 buflen);
+-void mvs_tag_clear(struct mvs_info *mvi, u32 tag);
+-void mvs_tag_free(struct mvs_info *mvi, u32 tag);
+-void mvs_tag_set(struct mvs_info *mvi, unsigned int tag);
+-int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out);
+ void mvs_iounmap(void __iomem *regs);
+ int mvs_ioremap(struct mvs_info *mvi, int bar, int bar_ex);
+ void mvs_phys_reset(struct mvs_info *mvi, u32 phy_mask, int hard);
 -- 
 2.51.0
 
