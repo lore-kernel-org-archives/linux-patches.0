@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8409B32C92B;
-	Fri, 17 Oct 2025 15:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DF53370F7;
+	Fri, 17 Oct 2025 15:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714656; cv=none; b=By87K/k3SUoTPIvZ5L8Rwx2KSCLfCWarv9gC3DHzdDJIUPFyCdhVQZMiIj0auds56IA2SF3eBirvH1gUgmEi9ac0msNKkFZQRClsEHTbYbnBhGRYb5iXD6FjtrKHcKnufkbOgmuYicH4K6g3IK6ZRxgBUPGdDBN6IIA+kb1c4fs=
+	t=1760714658; cv=none; b=r9XD5P0vnmNf+tmNJTJSi7FrgrT0GoyjU2KnlmVFpYO1+YtqQtOB1xAk2DPq5fDp3ZlLcjJ00DkfWTYLUdwwI5oL6Vo9wgPsshQcEeUVym8AKd+MKTsLIDrvmiDQS9NUD5rh/aF26QdX5M8a8U8ZL6JletJVGUa9SFAT5D3MpSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714656; c=relaxed/simple;
-	bh=dojiDWfAqV3Plj4bRvrNouSY1+THS4ao7Mk+2VeBASE=;
+	s=arc-20240116; t=1760714658; c=relaxed/simple;
+	bh=vwpDbTYrijwp6m5Ue7XT0w0UVM8s3eNPo3j9w/x0exw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPJk/lMF6gHS8ALyYZjbogFRjMtqOsVmum2VLYkuQe0/LW8hlzTJ9mm1WjEu9Cnxs0dnQn0pWPs2SzD7tJxSrbEpAaeXVS2iMIx6fUNUGQhFLgP40xBsKa9wm7S6rp2ISbkFBp/15mBT/nDdQNjBdjlBsCrrQMHY5VHh7isckWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmNMMpz9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGWeYSqC1XnAB41C1BFlVrIxONtC55k5XzR5PwzAWObIqHZfUn6V/Waz33TaJ+38Kh4qMlg/6rypbtlq0WSgBAmVdhsO3EBZIycoRh5rARe70nhCinXluQnHZvudREzgoLse1S4ENnr7WvUuRLzIQx/ur66opBjfCEiu9ZAoCOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peeWxfcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmNMMpz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A373EC4CEFE;
-	Fri, 17 Oct 2025 15:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peeWxfcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFD7C4CEFE;
+	Fri, 17 Oct 2025 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714655;
-	bh=dojiDWfAqV3Plj4bRvrNouSY1+THS4ao7Mk+2VeBASE=;
+	s=korg; t=1760714657;
+	bh=vwpDbTYrijwp6m5Ue7XT0w0UVM8s3eNPo3j9w/x0exw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmNMMpz9mIx/lIBpmIuEaibHyhxHvdp/uIMv1ejYMDJaqKUM+Lv+rZNzV+G2SlkAb
-	 rkUdYzisz/82MhPJZ2y64MINn63akjE23odHkXlP40iud9Aun4gDsfHvd+uutP4Akt
-	 UUjSL9qh84dDf6QNqLkkBjJoPoT25gGuY5AaRrL8=
+	b=peeWxfcOgTzLJemaQcTu3JT1vgY1oQnh+W3jUstJy5Gu0aoBbL+f7Y8i9zm2NRPJJ
+	 JL74LHtqUY3KXdcvMWWFig5L++7ibTc1jUPTmukpMBIFHJdz3kcoV1OwUqBGzvzvq2
+	 EriYzVNgPAFidoILj81TMmCe6OvoevRRtTO4c8Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.12 221/277] ext4: free orphan info with kvfree
-Date: Fri, 17 Oct 2025 16:53:48 +0200
-Message-ID: <20251017145155.196951852@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 6.12 222/277] lib/crypto/curve25519-hacl64: Disable KASAN with clang-17 and older
+Date: Fri, 17 Oct 2025 16:53:49 +0200
+Message-ID: <20251017145155.233091203@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,43 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 971843c511c3c2f6eda96c6b03442913bfee6148 upstream.
+commit 2f13daee2a72bb962f5fd356c3a263a6f16da965 upstream.
 
-Orphan info is now getting allocated with kvmalloc_array(). Free it with
-kvfree() instead of kfree() to avoid complaints from mm.
+After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
+causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
+allmodconfig builds with clang-17 and older show an instance of
+-Wframe-larger-than (which breaks the build with CONFIG_WERROR=y):
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251007134936.7291-2-jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+  lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (2336) exceeds limit (2048) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
+    757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
+        |      ^
+
+When KASAN is disabled, the stack usage is roughly quartered:
+
+  lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (608) exceeds limit (128) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
+    757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
+        |      ^
+
+Using '-Rpass-analysis=stack-frame-layout' shows the following variables
+and many, many 8-byte spills when KASAN is enabled:
+
+  Offset: [SP-144], Type: Variable, Align: 8, Size: 40
+  Offset: [SP-464], Type: Variable, Align: 8, Size: 320
+  Offset: [SP-784], Type: Variable, Align: 8, Size: 320
+  Offset: [SP-864], Type: Variable, Align: 32, Size: 80
+  Offset: [SP-896], Type: Variable, Align: 32, Size: 32
+  Offset: [SP-1016], Type: Variable, Align: 8, Size: 120
+
+When KASAN is disabled, there are still spills but not at many and the
+variables list is smaller:
+
+  Offset: [SP-192], Type: Variable, Align: 32, Size: 80
+  Offset: [SP-224], Type: Variable, Align: 32, Size: 32
+  Offset: [SP-344], Type: Variable, Align: 8, Size: 120
+
+Disable KASAN for this file when using clang-17 or older to avoid
+blowing out the stack, clearing up the warning.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20250609-curve25519-hacl64-disable-kasan-clang-v1-1-08ea0ac5ccff@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/crypto/Makefile |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -513,7 +513,7 @@ void ext4_release_orphan_info(struct sup
- 		return;
- 	for (i = 0; i < oi->of_blocks; i++)
- 		brelse(oi->of_binfo[i].ob_bh);
--	kfree(oi->of_binfo);
-+	kvfree(oi->of_binfo);
- }
+--- a/lib/crypto/Makefile
++++ b/lib/crypto/Makefile
+@@ -33,6 +33,10 @@ obj-$(CONFIG_CRYPTO_LIB_CURVE25519_GENER
+ libcurve25519-generic-y				:= curve25519-fiat32.o
+ libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)	:= curve25519-hacl64.o
+ libcurve25519-generic-y				+= curve25519-generic.o
++# clang versions prior to 18 may blow out the stack with KASAN
++ifeq ($(call clang-min-version, 180000),)
++KASAN_SANITIZE_curve25519-hacl64.o := n
++endif
  
- static struct ext4_orphan_block_tail *ext4_orphan_block_tail(
-@@ -638,7 +638,7 @@ int ext4_init_orphan_info(struct super_b
- out_free:
- 	for (i--; i >= 0; i--)
- 		brelse(oi->of_binfo[i].ob_bh);
--	kfree(oi->of_binfo);
-+	kvfree(oi->of_binfo);
- out_put:
- 	iput(inode);
- 	return ret;
+ obj-$(CONFIG_CRYPTO_LIB_CURVE25519)		+= libcurve25519.o
+ libcurve25519-y					+= curve25519.o
 
 
