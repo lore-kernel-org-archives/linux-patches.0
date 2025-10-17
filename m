@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992C732C93B;
-	Fri, 17 Oct 2025 15:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C83A242935;
+	Fri, 17 Oct 2025 15:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714559; cv=none; b=gLi9XcPMCeWIFoDCOxhyiDBB1WTBBNriIpqRdyc6qo6/TIJsurDb1WsFfxHpf74nrztCtnniC627m+xS3fKcD2ig9AIRLPN1YTn4baYOcEftB/V2Z7TyeA3r9Y24calSHowC668KKIkz8QALQgDMoIA4vAej9TcxZCvNgbapftQ=
+	t=1760714562; cv=none; b=HCGtMmGG6aoa1RVJLzjUeTrmqqOEQBemzaB6Jj7ZR7JZWWIacG76wFZD5RprTwuHAjZW7x9Ax/OSeGiB6jrRJpyUELGgWlicL2tdUF3fXNQvEsouwrdPMo02Vggr5PBmfvVLt59Vhu5Bub/FBYg8PJKyyjUgQ1KtGJmvyKql5MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714559; c=relaxed/simple;
-	bh=6QfVrfxTd2YqMkA2Vw6OuMMkOMdC3ADz3XoyE0CiOHM=;
+	s=arc-20240116; t=1760714562; c=relaxed/simple;
+	bh=Y5CWZFZ1zEa6KBnUuawu8PlVHuS2fQ+hvH3URgDqHNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuZf2pHYmol3A9bN99aYnfl8aS5zjcT+ANbuKHOG86q3nQSNOpvcMeY92H4Xi9OZjbF+WeQ1DfDs16HYjOwBawPHxGiPiv7RCLv26yXiwXw4kMoPfnNMRbrirlOBfJuu6v5fD4so7I/a0A5g14VGvL9qT4MXRI0AS/XkPF8k6OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dvbiyfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yaz/3LjON1OJ8smZywgIqK3l8W6+XGlaJMohY7VVGzG8d1OcF3JBm2OvVrnjIuzKPWY8nCXdtJqNWxCk3Q82vgP5e/otGsYtxTj1xHGrf7xedUvE6eJc6VmdXN9G/YBujUh41HGECnKsdKD21toIGXz50fUaEMPr4Fb4npzOvE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r31Zei+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dvbiyfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBAFC4CEE7;
-	Fri, 17 Oct 2025 15:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r31Zei+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC06C4CEE7;
+	Fri, 17 Oct 2025 15:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714559;
-	bh=6QfVrfxTd2YqMkA2Vw6OuMMkOMdC3ADz3XoyE0CiOHM=;
+	s=korg; t=1760714562;
+	bh=Y5CWZFZ1zEa6KBnUuawu8PlVHuS2fQ+hvH3URgDqHNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dvbiyfLSA53YGKkD0jNCxshSs8VR7g63hpxeSas3PUL612i9k+RcpjXjPjHy6yjj
-	 V/1aRjxDLLO+MCTyZc/KNJC7JAFkV1bR6H1x+6yHlZwpFrFIRt109yjLl/Pjip/AkL
-	 9DxCARR2B2z57/hQ2hirh8Ov4N0v4iEArYLbPfLg=
+	b=r31Zei+iJyuYfcN3TmmqFWj1GrC5VvCBps8S4c2gPqPFT4I16LdwyLe4/58Wkd6Zp
+	 4EiVkXNSHlC6LTDnBZHOwwfApCZ7F4RSTfv5quu855taSwdViZUbasGvJQA5aM4oq1
+	 73DfcPmvMu+FugKcKPWVSf52yLHheOfl7mZsrFMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
 	Niklas Cassel <cassel@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.12 188/277] PCI: tegra194: Handle errors in BPMP response
-Date: Fri, 17 Oct 2025 16:53:15 +0200
-Message-ID: <20251017145153.987376724@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.12 189/277] PCI: tegra194: Reset BARs when running in PCIe endpoint mode
+Date: Fri, 17 Oct 2025 16:53:16 +0200
+Message-ID: <20251017145154.022938839@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,104 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit f8c9ad46b00453a8c075453f3745f8d263f44834 upstream.
+commit 42f9c66a6d0cc45758dab77233c5460e1cf003df upstream.
 
-The return value from tegra_bpmp_transfer() indicates the success or
-failure of the IPC transaction with BPMP. If the transaction succeeded, we
-also need to check the actual command's result code.
+Tegra already defines all BARs except BAR0 as BAR_RESERVED.  This is
+sufficient for pci-epf-test to not allocate backing memory and to not call
+set_bar() for those BARs. However, marking a BAR as BAR_RESERVED does not
+mean that the BAR gets disabled.
 
-If we don't have error handling for tegra_bpmp_transfer(), we will set the
-pcie->ep_state to EP_STATE_ENABLED even when the tegra_bpmp_transfer()
-command fails. Thus, the pcie->ep_state will get out of sync with reality,
-and any further PERST# assert + deassert will be a no-op and will not
-trigger the hardware initialization sequence.
+The host side driver, pci_endpoint_test, simply does an ioremap for all
+enabled BARs and will run tests against all enabled BARs, so it will run
+tests against the BARs marked as BAR_RESERVED.
 
-This is because pex_ep_event_pex_rst_deassert() checks the current
-pcie->ep_state, and does nothing if the current state is already
-EP_STATE_ENABLED.
+After running the BAR tests (which will write to all enabled BARs), the
+inbound address translation is broken. This is because the tegra controller
+exposes the ATU Port Logic Structure in BAR4, so when BAR4 is written, the
+inbound address translation settings get overwritten.
 
-Thus, it is important to have error handling for tegra_bpmp_transfer(),
-such that the pcie->ep_state can not get out of sync with reality, so that
-we will try to initialize the hardware not only during the first PERST#
-assert + deassert, but also during any succeeding PERST# assert + deassert.
+To avoid this, implement the dw_pcie_ep_ops .init() callback and start off
+by disabling all BARs (pci-epf-test will later enable/configure BARs that
+are not defined as BAR_RESERVED).
 
-One example where this fix is needed is when using a rock5b as host.
-During the initial PERST# assert + deassert (triggered by the bootloader on
-the rock5b) pex_ep_event_pex_rst_deassert() will get called, but for some
-unknown reason, the tegra_bpmp_transfer() call to initialize the PHY fails.
-Once Linux has been loaded on the rock5b, the PCIe driver will once again
-assert + deassert PERST#. However, without tegra_bpmp_transfer() error
-handling, this second PERST# assert + deassert will not trigger the
-hardware initialization sequence.
+This matches the behavior of other PCIe endpoint drivers: dra7xx, imx6,
+layerscape-ep, artpec6, dw-rockchip, qcom-ep, rcar-gen4, and uniphier-ep.
 
-With tegra_bpmp_transfer() error handling, the second PERST# assert +
-deassert will once again trigger the hardware to be initialized and this
-time the tegra_bpmp_transfer() succeeds.
+With this, the PCI endpoint kselftest test case CONSECUTIVE_BAR_TEST (which
+was specifically made to detect address translation issues) passes.
 
 Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-[cassel: improve commit log]
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922140822.519796-8-cassel@kernel.org
+Link: https://patch.msgid.link/20250922140822.519796-7-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1205,6 +1205,7 @@ static int tegra_pcie_bpmp_set_ctrl_stat
- 	struct mrq_uphy_response resp;
- 	struct tegra_bpmp_message msg;
- 	struct mrq_uphy_request req;
-+	int err;
- 
- 	/*
- 	 * Controller-5 doesn't need to have its state set by BPMP-FW in
-@@ -1227,7 +1228,13 @@ static int tegra_pcie_bpmp_set_ctrl_stat
- 	msg.rx.data = &resp;
- 	msg.rx.size = sizeof(resp);
- 
--	return tegra_bpmp_transfer(pcie->bpmp, &msg);
-+	err = tegra_bpmp_transfer(pcie->bpmp, &msg);
-+	if (err)
-+		return err;
-+	if (msg.rx.ret)
-+		return -EINVAL;
-+
-+	return 0;
+@@ -1954,6 +1954,15 @@ static irqreturn_t tegra_pcie_ep_pex_rst
+ 	return IRQ_HANDLED;
  }
  
- static int tegra_pcie_bpmp_set_pll_state(struct tegra_pcie_dw *pcie,
-@@ -1236,6 +1243,7 @@ static int tegra_pcie_bpmp_set_pll_state
- 	struct mrq_uphy_response resp;
- 	struct tegra_bpmp_message msg;
- 	struct mrq_uphy_request req;
-+	int err;
- 
- 	memset(&req, 0, sizeof(req));
- 	memset(&resp, 0, sizeof(resp));
-@@ -1255,7 +1263,13 @@ static int tegra_pcie_bpmp_set_pll_state
- 	msg.rx.data = &resp;
- 	msg.rx.size = sizeof(resp);
- 
--	return tegra_bpmp_transfer(pcie->bpmp, &msg);
-+	err = tegra_bpmp_transfer(pcie->bpmp, &msg);
-+	if (err)
-+		return err;
-+	if (msg.rx.ret)
-+		return -EINVAL;
++static void tegra_pcie_ep_init(struct dw_pcie_ep *ep)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
++	enum pci_barno bar;
 +
-+	return 0;
++	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++)
++		dw_pcie_ep_reset_bar(pci, bar);
++};
++
+ static int tegra_pcie_ep_raise_intx_irq(struct tegra_pcie_dw *pcie, u16 irq)
+ {
+ 	/* Tegra194 supports only INTA */
+@@ -2030,6 +2039,7 @@ tegra_pcie_ep_get_features(struct dw_pci
  }
  
- static void tegra_pcie_downstream_dev_to_D0(struct tegra_pcie_dw *pcie)
+ static const struct dw_pcie_ep_ops pcie_ep_ops = {
++	.init = tegra_pcie_ep_init,
+ 	.raise_irq = tegra_pcie_ep_raise_irq,
+ 	.get_features = tegra_pcie_ep_get_features,
+ };
 
 
