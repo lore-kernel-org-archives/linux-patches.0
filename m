@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDFA21C9EA;
-	Fri, 17 Oct 2025 14:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54A621C9EA;
+	Fri, 17 Oct 2025 14:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713134; cv=none; b=jjDi/EAtw3xt4x6Q+ogSrpkgDBhQZgNQ3IeQ3R4rWT4FoEG61FbKwjBFrrGxbffRL/fyuOUc3lWD/Fqiksu/sM7Mfs2aWU0tOgRoShYBkaeK5ODyqpfNZgX9Tiewp0tf0aj8M+QSsAWC3se5VmlMJUEAVMLYqTonr8QGX+7U7Qw=
+	t=1760713137; cv=none; b=DW3CeA36bafq5h2PHyWwSVVxajnJOtEJrouTCYNDJx2yUUwYvr4gwIe/3JFWxXi2fDt2xSmtAqpeWTyaq7UukVEHE4hiH8Ta3ZWGvqZW2gDh013NVOvb/fwPTZAcCj0cz/cCVq0mgovoycXMUwq+CF85guX6sAG6t31BYNIsbT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713134; c=relaxed/simple;
-	bh=0s6657QeaQuP0ls9llG7qaJMiD9EoS+RAnoFHtkQDrk=;
+	s=arc-20240116; t=1760713137; c=relaxed/simple;
+	bh=rmStUZ6Fbsa7wqUeiDRjDZqC3y+70ifs02TQzQoZng0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nwdZBgM1l6RXgyhGiPx8pl/7+O73irGOMg1iWmj23/DmPRbi132vG8REz7+YDv6YEceVUZLqKEJzGmmhvq/7GQuTFPGATzHt9Qvg9JN01+A3IWQTu/R/lTM4gw0S6z1yDc0NC51dQnbGGCTYPhKJvKLYKddWeMAymavF5yAPAZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSoMzOa/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdBb8SymNsYNzxNyX/fWGE+Oh1ZGKmLmLfdP9ayT5GvIbE6Ajb4DII7ls5oShx6nuMSgUkO4vvlvNFxksrSp6OzsBmQmei1k7eEBp7jyj1BW4NrkjFpLWexQum/7Vzcy5meiGL8fSQqPbW9Uvoq//k8bBQAij25qrOASfGUgS9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCMpIJqO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSoMzOa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA525C4CEE7;
-	Fri, 17 Oct 2025 14:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCMpIJqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F719C4CEE7;
+	Fri, 17 Oct 2025 14:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713134;
-	bh=0s6657QeaQuP0ls9llG7qaJMiD9EoS+RAnoFHtkQDrk=;
+	s=korg; t=1760713136;
+	bh=rmStUZ6Fbsa7wqUeiDRjDZqC3y+70ifs02TQzQoZng0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSoMzOa/7BEUP8Q8hCXD3djfg9IGoUxYWco3W7j5xwiKyTB/NnYk1nWh3U2sLosr5
-	 /EXjMIdbJANEtTmvb25Qe9nN8cqJTqXIuo+WwSjWRp2hdJjlvjuwZXEzScTLHlH+li
-	 AHnSNDXgWqbOARwsw+EJK37vL58U3nk6Fo8dKzB4=
+	b=OCMpIJqObjfkd6robzScBEqVbfN9vmZNtnBbNC1xdHAg1tvasM2nC3STyZTOi8mLX
+	 BCbqlDlS2Hmap0tSXzymrVKNjYZDyU7QqKAIbk8TAdyqVXO2ow5Yn/OJmLgwfptJ+t
+	 aj9+TCnIqVj7elvZ6zz2MobObC+EspY+/+fDgaY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Zsoldos <tamas.zsoldos@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/168] perf session: Fix handling when buffer exceeds 2 GiB
-Date: Fri, 17 Oct 2025 16:51:35 +0200
-Message-ID: <20251017145129.614633589@linuxfoundation.org>
+	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 053/168] ACPI: debug: fix signedness issues in read/write helpers
+Date: Fri, 17 Oct 2025 16:52:12 +0200
+Message-ID: <20251017145130.973306286@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -50,57 +44,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-[ Upstream commit c17dda8013495d8132c976cbf349be9949d0fbd1 ]
+commit 496f9372eae14775e0524e83e952814691fe850a upstream.
 
-If a user specifies an AUX buffer larger than 2 GiB, the returned size
-may exceed 0x80000000. Since the err variable is defined as a signed
-32-bit integer, such a value overflows and becomes negative.
+In the ACPI debugger interface, the helper functions for read and write
+operations use "int" as the length parameter data type. When a large
+"size_t count" is passed from the file operations, this cast to "int"
+results in truncation and a negative value due to signed integer
+representation.
 
-As a result, the perf record command reports an error:
+Logically, this negative number propagates to the min() calculation,
+where it is selected over the positive buffer space value, leading to
+unexpected behavior. Subsequently, when this negative value is used in
+copy_to_user() or copy_from_user(), it is interpreted as a large positive
+value due to the unsigned nature of the size parameter in these functions,
+causing the copy operations to attempt handling sizes far beyond the
+intended buffer limits.
 
-  0x146e8 [0x30]: failed to process type: 71 [Unknown error 183711232]
+Address the issue by:
+ - Changing the length parameters in acpi_aml_read_user() and
+   acpi_aml_write_user() from "int" to "size_t", aligning with the
+   expected unsigned size semantics.
+ - Updating return types and local variables in acpi_aml_read() and
+   acpi_aml_write() to "ssize_t" for consistency with kernel file
+   operation conventions.
+ - Using "size_t" for the "n" variable to ensure calculations remain
+   unsigned.
+ - Using min_t() for circ_count_to_end() and circ_space_to_end() to
+   ensure type-safe comparisons and prevent integer overflow.
 
-Change the type of the err variable to a signed 64-bit integer to
-accommodate large buffer sizes correctly.
-
-Fixes: d5652d865ea734a1 ("perf session: Add ability to skip 4GiB or more")
-Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20250808-perf_fix_big_buffer_size-v1-1-45f45444a9a4@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Link: https://patch.msgid.link/20250923013113.20615-1-a.jahangirzad@gmail.com
+[ rjw: Changelog tweaks, local variable definitions ordering adjustments ]
+Fixes: 8cfb0cdf07e2 ("ACPI / debugger: Add IO interface to access debugger functionalities")
+Cc: 4.5+ <stable@vger.kernel.org> # 4.5+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/session.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_dbg.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-index c8f7634f9846c..1c4d124b10531 100644
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -1658,7 +1658,7 @@ static s64 perf_session__process_user_event(struct perf_session *session,
- 	struct perf_tool *tool = session->tool;
- 	struct perf_sample sample = { .time = 0, };
- 	int fd = perf_data__fd(session->data);
--	int err;
-+	s64 err;
+--- a/drivers/acpi/acpi_dbg.c
++++ b/drivers/acpi/acpi_dbg.c
+@@ -569,11 +569,11 @@ static int acpi_aml_release(struct inode
+ 	return 0;
+ }
  
- 	if (event->header.type != PERF_RECORD_COMPRESSED ||
- 	    tool->compressed == perf_session__process_compressed_event_stub)
--- 
-2.51.0
-
+-static int acpi_aml_read_user(char __user *buf, int len)
++static ssize_t acpi_aml_read_user(char __user *buf, size_t len)
+ {
+-	int ret;
+ 	struct circ_buf *crc = &acpi_aml_io.out_crc;
+-	int n;
++	ssize_t ret;
++	size_t n;
+ 	char *p;
+ 
+ 	ret = acpi_aml_lock_read(crc, ACPI_AML_OUT_USER);
+@@ -582,7 +582,7 @@ static int acpi_aml_read_user(char __use
+ 	/* sync head before removing logs */
+ 	smp_rmb();
+ 	p = &crc->buf[crc->tail];
+-	n = min(len, circ_count_to_end(crc));
++	n = min_t(size_t, len, circ_count_to_end(crc));
+ 	if (copy_to_user(buf, p, n)) {
+ 		ret = -EFAULT;
+ 		goto out;
+@@ -599,8 +599,8 @@ out:
+ static ssize_t acpi_aml_read(struct file *file, char __user *buf,
+ 			     size_t count, loff_t *ppos)
+ {
+-	int ret = 0;
+-	int size = 0;
++	ssize_t ret = 0;
++	ssize_t size = 0;
+ 
+ 	if (!count)
+ 		return 0;
+@@ -639,11 +639,11 @@ again:
+ 	return size > 0 ? size : ret;
+ }
+ 
+-static int acpi_aml_write_user(const char __user *buf, int len)
++static ssize_t acpi_aml_write_user(const char __user *buf, size_t len)
+ {
+-	int ret;
+ 	struct circ_buf *crc = &acpi_aml_io.in_crc;
+-	int n;
++	ssize_t ret;
++	size_t n;
+ 	char *p;
+ 
+ 	ret = acpi_aml_lock_write(crc, ACPI_AML_IN_USER);
+@@ -652,7 +652,7 @@ static int acpi_aml_write_user(const cha
+ 	/* sync tail before inserting cmds */
+ 	smp_mb();
+ 	p = &crc->buf[crc->head];
+-	n = min(len, circ_space_to_end(crc));
++	n = min_t(size_t, len, circ_space_to_end(crc));
+ 	if (copy_from_user(p, buf, n)) {
+ 		ret = -EFAULT;
+ 		goto out;
+@@ -663,14 +663,14 @@ static int acpi_aml_write_user(const cha
+ 	ret = n;
+ out:
+ 	acpi_aml_unlock_fifo(ACPI_AML_IN_USER, ret >= 0);
+-	return n;
++	return ret;
+ }
+ 
+ static ssize_t acpi_aml_write(struct file *file, const char __user *buf,
+ 			      size_t count, loff_t *ppos)
+ {
+-	int ret = 0;
+-	int size = 0;
++	ssize_t ret = 0;
++	ssize_t size = 0;
+ 
+ 	if (!count)
+ 		return 0;
 
 
