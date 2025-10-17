@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2FF32C93B;
-	Fri, 17 Oct 2025 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA474332ED8;
+	Fri, 17 Oct 2025 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714193; cv=none; b=JCmPfUo+ycpcW51NvSvdW3aC5m+FhUQ+NtbCKnea1ja9gHU1ann0U+a7Wb8PaKY2uWFV5OksuQ0jDmEHHIlxZUNprNNGPMoutlNJb27uSkIHNmCCht7QRq6oLIYYaoAlpoFQApSHn1mWUb6eS1ovXFAUS2hmMjpqqTihVXhq+i8=
+	t=1760714195; cv=none; b=UqSJQZM6u1Qyf7NPJcfhS+R/z0OcwRvDxVTqdAWvKSGXSYOrRgExXj6uaMpYZJYSOvQUv1+kx+Xx563eAkpuf5vsT8ARdD7NClmMI/oRqiPtSunyzUpd27UWScChDk5J0DNs2QF86VNPSA1AsMJJvcTvOOb5ibgFDLV23Z1VY18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714193; c=relaxed/simple;
-	bh=FJVmlgvH5D9rSLxtwrbxKmmWeMweUDF0H7CeyR0Tw5w=;
+	s=arc-20240116; t=1760714195; c=relaxed/simple;
+	bh=zB6NQKAjEfE6ojK2N7oLUveOdqM4KiUuJTG2WkOexVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFeWPYReRLv4LzhEpM7MNHsV2l4k/O/PDK6VKJprJ21BbVJEkjVGvaRCisfKTItwHo1ETNTafCP9+lEpuicVCZVP5LLJTMniKNnn4Y3E3ieGzWIQfqC64tDwW8m+2ZhexNcgZeqQ2OswyDHyL+NzvWKg7gvs5+mbAXcz6rH34iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBKOIW+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jfY/cc7zCVvWFJ6ehnWY1ExQ0Dpy8EcqFMuHb4J0wndoEW6CExJSN68UtVxSnDUgAFdrKHtWWrfow0meOJGH3/hd4+b/Y80x8fOrAwzPvQURAHTdTKpobWsiODO/AQiS8jzVGS4KwVTLph0mjCsqxaq3W9ZN5gDcpg41bnS37oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwqyoWRU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBKOIW+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3ADC4CEE7;
-	Fri, 17 Oct 2025 15:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwqyoWRU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288B2C4CEF9;
+	Fri, 17 Oct 2025 15:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714192;
-	bh=FJVmlgvH5D9rSLxtwrbxKmmWeMweUDF0H7CeyR0Tw5w=;
+	s=korg; t=1760714195;
+	bh=zB6NQKAjEfE6ojK2N7oLUveOdqM4KiUuJTG2WkOexVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBKOIW+wlXNY0EaJb2x2Lp0cYvKeg4+rPYbBMFKuWlSGl9h4xecE7h+AFm4ZQtiF5
-	 zgflETGBE5tqFHnN4Cr5o3+/nMPaIkjs+3moruPpMCQU9/oOICgvmDI/oKsLDLWCv1
-	 UUn/q536P8gouZKRz4QGzt5QFdLUw7b8VA6Fw+78=
+	b=jwqyoWRUMorT8ndxQ9T5UQLPX9mS25FifV2NDrMmc5f+wFxKC1nd+t+OV4ErMOEtY
+	 umgmMR3Mi2jLuxxFqMq/Hagt/rP1leKHQZ0KkhrljGx+4Qhw+odXCPCS+o0/OUobYb
+	 bqn6wlZV2GlJcfKFwG/HoSEPBzovfAuYaSBcdT8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-perf-users@vger.kernel.org,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/277] tools build: Align warning options with perf
-Date: Fri, 17 Oct 2025 16:51:05 +0200
-Message-ID: <20251017145149.262900452@linuxfoundation.org>
+Subject: [PATCH 6.12 059/277] perf python: split Clang options when invoking Popen
+Date: Fri, 17 Oct 2025 16:51:06 +0200
+Message-ID: <20251017145149.299711559@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -71,18 +71,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 53d067feb8c4f16d1f24ce3f4df4450bb18c555f ]
+[ Upstream commit c6a43bc3e8f6102a47da0d2e53428d08f00172fb ]
 
-The feature test programs are built without enabling '-Wall -Werror'
-options. As a result, a feature may appear to be available, but later
-building in perf can fail with stricter checks.
+When passing a list to subprocess.Popen, each element maps to one argv
+token. Current code bundles multiple Clang flags into a single element,
+something like:
 
-Make the feature test program use the same warning options as perf.
+  cmd = ['clang',
+         '--target=x86_64-linux-gnu -fintegrated-as -Wno-cast-function-type-mismatch',
+	 'test-hello.c']
 
-Fixes: 1925459b4d92 ("tools build: Fix feature Makefile issues with 'O='")
+So Clang only sees one long, invalid option instead of separate flags,
+as a result, the script cannot capture any log via PIPE.
+
+Fix this by using shlex.split() to separate the string so each option
+becomes its own argv element. The fixed list will be:
+
+  cmd = ['clang',
+         '--target=x86_64-linux-gnu',
+	 '-fintegrated-as',
+	 '-Wno-cast-function-type-mismatch',
+	 'test-hello.c']
+
+Fixes: 09e6f9f98370 ("perf python: Fix splitting CC into compiler and options")
 Signed-off-by: Leo Yan <leo.yan@arm.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-1-4305590795b2@arm.com
+Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-2-4305590795b2@arm.com
 Cc: Palmer Dabbelt <palmer@dabbelt.com>
 Cc: Albert Ou <aou@eecs.berkeley.edu>
 Cc: Alexandre Ghiti <alex@ghiti.fr>
@@ -103,26 +117,32 @@ Cc: linux-perf-users@vger.kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/setup.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index 1658596188bf8..592ca17b4b74a 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -327,10 +327,10 @@ $(OUTPUT)test-libcapstone.bin:
- 	$(BUILD) # -lcapstone provided by $(FEATURE_CHECK_LDFLAGS-libcapstone)
+diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
+index 649550e9b7aa8..abb567de3e8a9 100644
+--- a/tools/perf/util/setup.py
++++ b/tools/perf/util/setup.py
+@@ -1,6 +1,7 @@
+ from os import getenv, path
+ from subprocess import Popen, PIPE
+ from re import sub
++import shlex
  
- $(OUTPUT)test-compile-32.bin:
--	$(CC) -m32 -o $@ test-compile.c
-+	$(CC) -m32 -Wall -Werror -o $@ test-compile.c
+ cc = getenv("CC")
  
- $(OUTPUT)test-compile-x32.bin:
--	$(CC) -mx32 -o $@ test-compile.c
-+	$(CC) -mx32 -Wall -Werror -o $@ test-compile.c
+@@ -16,7 +17,9 @@ cc_is_clang = b"clang version" in Popen([cc, "-v"], stderr=PIPE).stderr.readline
+ src_feature_tests  = getenv('srctree') + '/tools/build/feature'
  
- $(OUTPUT)test-zlib.bin:
- 	$(BUILD) -lz
+ def clang_has_option(option):
+-    cc_output = Popen([cc, cc_options + option, path.join(src_feature_tests, "test-hello.c") ], stderr=PIPE).stderr.readlines()
++    cmd = shlex.split(f"{cc} {cc_options} {option}")
++    cmd.append(path.join(src_feature_tests, "test-hello.c"))
++    cc_output = Popen(cmd, stderr=PIPE).stderr.readlines()
+     return [o for o in cc_output if ((b"unknown argument" in o) or (b"is not supported" in o) or (b"unknown warning option" in o))] == [ ]
+ 
+ if cc_is_clang:
 -- 
 2.51.0
 
