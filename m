@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388FD337100;
-	Fri, 17 Oct 2025 15:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C23F3370FB;
+	Fri, 17 Oct 2025 15:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714490; cv=none; b=U5fWd2s/Pxt+Ggiu7fWFqdaYOim7qusLkYHd8CeichuDIk2A0tLmTw+NnS6fvzsegyVcNQs7Ag1MWuTgV1SAwhxv6Nmjli5JKohiOoJs2BiW87PEzpwoy43bgitMbirhr/fHVLVFhwI3W1W7GcTKSJ/vzk4cTBayli/apzFrz3U=
+	t=1760714493; cv=none; b=kLbPacqus9G6Orbv3XldUDRpz5E44wB5Lo6pE3PWxXMN5lF2F7z26UsUYppoLxZQT3tEVGToJMYsxTk0QL/qXAJq33r4co3/jMViBIXn6PBhtZ7a2aXWUmioEbUvuk0u8+QWFA8GOM0KVrnmvc9jyKguB7eqhKWKFQume3jQr0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714490; c=relaxed/simple;
-	bh=a0funOSoeVxYu9JmkiPPFrFkTmMyqLil6mVhWf2TqLg=;
+	s=arc-20240116; t=1760714493; c=relaxed/simple;
+	bh=7OotvQARDmN4rPgr44i+RiKX+9Ty9vLHBQUAhZ1fa0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMxbOlVGI7YSVlFr9sK6phD30oKNNVBlYjVy6HicLPbsObyzDhK+GlFuIb/gRs0eWRKcyzYamKlWZ7+ISEvbZNTTum5B75OPIcuYkqUhaZV4d/n8dMOg+4n7sBJ19UVW9LRNcTEbUnF6Y9gRcWCxfoDHl9ugaF+jyrsolWTJubc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0TUt0nq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBi2nga8PiiADxMf/OrHB05narhZhqxLG85ScZNpr3saou5pGdjBgens8zU77Rsf5bHgwlvm3aiuF5vhmYGMNjCadf4Z+eCTahjVKpl0rxyh1fW+lejdwaeL/3q7+L7JFoKN0TJvTlhuPNBt3Amu7PPyV9LP+qtzIzoDHHx/axo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWkePAo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0TUt0nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B235FC4CEE7;
-	Fri, 17 Oct 2025 15:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWkePAo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1EDC4CEE7;
+	Fri, 17 Oct 2025 15:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714490;
-	bh=a0funOSoeVxYu9JmkiPPFrFkTmMyqLil6mVhWf2TqLg=;
+	s=korg; t=1760714492;
+	bh=7OotvQARDmN4rPgr44i+RiKX+9Ty9vLHBQUAhZ1fa0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0TUt0nqDeOLoe6dB5By+LGmCAl0m89BL3z+KoKS9aLztlX03agfIJwO03iqouUiK
-	 8zI5mPgNDa2FDM21v+KigjFsTPxtTPLIusXxnJqN84efRQV5o9rpoNtEdNtJjCmgHP
-	 ChwUfdhOSqeGJpJCAuX2uTpeBVgUbd9qh/bc/oCY=
+	b=PWkePAo0rKqPhNlQcxaP2BpTQPUDPyK47gS8P6k2EST8ySpvZ+UmZW6FxHvYPMVO1
+	 bMFTLuBJmwBK9ttsA5c0MwJNm82ifQzbQBG4UKgfDszkgC2SzAYXg3dpSxH/XDDfRg
+	 sr3JGcP92fhAkgPjGfCWzWh4s6CpmBrJv7r28NSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 163/277] sctp: Fix MAC comparison to be constant-time
-Date: Fri, 17 Oct 2025 16:52:50 +0200
-Message-ID: <20251017145153.078609107@linuxfoundation.org>
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 137/277] iio: dac: ad5360: use int type to store negative error codes
+Date: Fri, 17 Oct 2025 16:52:24 +0200
+Message-ID: <20251017145152.128716065@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,62 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit dd91c79e4f58fbe2898dac84858033700e0e99fb upstream.
+commit f9381ece76de999a2065d5b4fdd87fa17883978c upstream.
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+Change the 'ret' variable in ad5360_update_ctrl() from unsigned int to
+int, as it needs to store either negative error codes or zero returned
+by ad5360_write_unlocked().
 
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20250818205426.30222-3-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a3e2940c24d3 ("staging:iio:dac: Add AD5360 driver")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20250901135726.17601-2-rongqianfeng@vivo.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    3 ++-
- net/sctp/sm_statefuns.c  |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/iio/dac/ad5360.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -31,6 +31,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+--- a/drivers/iio/dac/ad5360.c
++++ b/drivers/iio/dac/ad5360.c
+@@ -262,7 +262,7 @@ static int ad5360_update_ctrl(struct iio
+ 	unsigned int clr)
+ {
+ 	struct ad5360_state *st = iio_priv(indio_dev);
+-	unsigned int ret;
++	int ret;
  
- #include <crypto/hash.h>
-+#include <crypto/utils.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -1796,7 +1797,7 @@ struct sctp_association *sctp_unpack_coo
- 		}
- 	}
+ 	mutex_lock(&st->lock);
  
--	if (memcmp(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
- 		*error = -SCTP_IERROR_BAD_SIG;
- 		goto fail;
- 	}
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -30,6 +30,7 @@
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <crypto/utils.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -4417,7 +4418,7 @@ static enum sctp_ierror sctp_sf_authenti
- 				 sh_key, GFP_ATOMIC);
- 
- 	/* Discard the packet if the digests do not match */
--	if (memcmp(save_digest, digest, sig_len)) {
-+	if (crypto_memneq(save_digest, digest, sig_len)) {
- 		kfree(save_digest);
- 		return SCTP_IERROR_BAD_SIG;
- 	}
 
 
