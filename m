@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F6332C937;
-	Fri, 17 Oct 2025 15:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894A132C931;
+	Fri, 17 Oct 2025 15:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713800; cv=none; b=MQZ+OqhbfPOMvtKRYE9F6TW96u92OFsweoeGwYyBPwoUxr8FcgNhcvOAsrInRUsAo9DGyJe6OilEqHT0xvc6fsEN45sMmo3BAt4WUdoMKEqIgVykvlhsbdNku9wxUnQXxu5aXoCzi4xrzm2HSeQ7jrAfosCVv3FF2r/owMdvDpw=
+	t=1760713803; cv=none; b=Vednt3o6tAkbhYJaclFLpj3EkG4QWlvwMRMq0L0313to8n231R5tjkjXi9XRGllUhGohHce2du3dOiXzdlfkabFtrTX8NuSEFrA4wn+1txkMd3DjX1I8M0Mz7DzwaTquuS1rzKlbOFfN3g9iWQg6weNoJ26RQrl7aldJYtoLAhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713800; c=relaxed/simple;
-	bh=dWH0NZNJmQJ7Aq5HQ2drt7jVg+OJWzXB+sSFdpIMaSk=;
+	s=arc-20240116; t=1760713803; c=relaxed/simple;
+	bh=l4Tc/PGWzCPWXxNe30/bS/lIr4a5gMpPLd6GQE32WvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fg5sC47uSdsp7g0EIOQ0+m/FJkCoDuV1qWt8alECHTc+KtjFxHwkzr7wo9Zly7LkyCwWeW/PIIWHakDOzWSV6tFhGKI1B09dV2a2O87ZdzDB+dByhlRJoFPP/UCvA7I99ZsgBWRDaLnJPIs4Ky31bDuAaotcamuBRQpemgfzJSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6Iehm/I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bpGLYWGhMtHggxzb8ze52KgLVzu55hBKQ2W5gRWj7NpTY4YsVohOhAvoVOe3k3/OMyzfaXbIZ82+jrttgdJa2YPqOBHgR2zQXud62AtZKaa9KfJs/r0q9TDDEfPBod3a1D+R43vwQnxoVB/gJ6zMjGIbHnd32+zMuAQrijmYtCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tn3esRtW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6Iehm/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21378C4CEE7;
-	Fri, 17 Oct 2025 15:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tn3esRtW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1236DC4CEE7;
+	Fri, 17 Oct 2025 15:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713800;
-	bh=dWH0NZNJmQJ7Aq5HQ2drt7jVg+OJWzXB+sSFdpIMaSk=;
+	s=korg; t=1760713803;
+	bh=l4Tc/PGWzCPWXxNe30/bS/lIr4a5gMpPLd6GQE32WvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6Iehm/Ir4w0JdFWxem+lo2LcKO99csrlQHVXMqBAcJEGNPf6l5MBZx9xkS6jMJ0A
-	 h7a1D0m+uhIax2+knvSEGknUHpDJ2Qa70Qw5ixGg4RqFXHt4kPJ2T8EQFi2tD8LBDZ
-	 ciFa37ObC/VZA/Rgt5wuYy0wR+uaqqoSzt9Pfbao=
+	b=Tn3esRtWKgWlQ/OlGnTdx0OOzzXbamgZHXbpUBJ2jFYuaUcQDukHvMZCr8Htm7vSr
+	 lz3NMotTI6Q5zFk/WZsOJupuEn2dONHlfZ7ysKuoG0RDcZd/6hFiXSX+JSd9IpmsBr
+	 9bd3bTU3gggBSCF8+jHJGXQMYlh/BWRdM+7+dZrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Brian Norris <briannorris@google.com>,
+	Brian Norris <briannorris@chromium.org>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 125/201] PCI: tegra: Convert struct tegra_msi mask_lock into raw spinlock
-Date: Fri, 17 Oct 2025 16:53:06 +0200
-Message-ID: <20251017145139.333268096@linuxfoundation.org>
+Subject: [PATCH 6.6 126/201] PCI/sysfs: Ensure devices are powered for config reads
+Date: Fri, 17 Oct 2025 16:53:07 +0200
+Message-ID: <20251017145139.369369987@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,101 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Brian Norris <briannorris@google.com>
 
-commit 26fda92d3b56bf44a02bcb4001c5a5548e0ae8ee upstream.
+commit 48991e4935078b05f80616c75d1ee2ea3ae18e58 upstream.
 
-The tegra_msi_irq_unmask() function may be called from a PCI driver
-request_threaded_irq() function. This triggers kernel/irq/manage.c
-__setup_irq() which locks raw spinlock &desc->lock descriptor lock
-and with that descriptor lock held, calls tegra_msi_irq_unmask().
+The "max_link_width", "current_link_speed", "current_link_width",
+"secondary_bus_number", and "subordinate_bus_number" sysfs files all access
+config registers, but they don't check the runtime PM state. If the device
+is in D3cold or a parent bridge is suspended, we may see -EINVAL, bogus
+values, or worse, depending on implementation details.
 
-Since the &desc->lock descriptor lock is a raw spinlock, and the tegra_msi
-.mask_lock is not a raw spinlock, this setup triggers 'BUG: Invalid wait
-context' with CONFIG_PROVE_RAW_LOCK_NESTING=y.
+Wrap these access in pci_config_pm_runtime_{get,put}() like most of the
+rest of the similar sysfs attributes.
 
-Use scoped_guard() to simplify the locking.
+Notably, "max_link_speed" does not access config registers; it returns a
+cached value since d2bd39c0456b ("PCI: Store all PCIe Supported Link
+Speeds").
 
-Fixes: 2c99e55f7955 ("PCI: tegra: Convert to MSI domains")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://patchwork.kernel.org/project/linux-pci/patch/20250909162707.13927-2-marek.vasut+renesas@mailbox.org/#26574451
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: 56c1af4606f0 ("PCI: Add sysfs max_link_speed/width, current_link_speed/width, etc")
+Signed-off-by: Brian Norris <briannorris@google.com>
+Signed-off-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922150811.88450-1-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20250924095711.v2.1.Ibb5b6ca1e2c059e04ec53140cd98a44f2684c668@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-tegra.c |   27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/pci/pci-sysfs.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-tegra.c
-+++ b/drivers/pci/controller/pci-tegra.c
-@@ -14,6 +14,7 @@
-  */
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -196,8 +196,14 @@ static ssize_t max_link_width_show(struc
+ 				   struct device_attribute *attr, char *buf)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
++	ssize_t ret;
  
- #include <linux/clk.h>
-+#include <linux/cleanup.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/export.h>
-@@ -269,7 +270,7 @@ struct tegra_msi {
- 	DECLARE_BITMAP(used, INT_PCI_MSI_NR);
- 	struct irq_domain *domain;
- 	struct mutex map_lock;
--	spinlock_t mask_lock;
-+	raw_spinlock_t mask_lock;
- 	void *virt;
- 	dma_addr_t phys;
- 	int irq;
-@@ -1604,14 +1605,13 @@ static void tegra_msi_irq_mask(struct ir
- 	struct tegra_msi *msi = irq_data_get_irq_chip_data(d);
- 	struct tegra_pcie *pcie = msi_to_pcie(msi);
- 	unsigned int index = d->hwirq / 32;
--	unsigned long flags;
- 	u32 value;
- 
--	spin_lock_irqsave(&msi->mask_lock, flags);
--	value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
--	value &= ~BIT(d->hwirq % 32);
--	afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
--	spin_unlock_irqrestore(&msi->mask_lock, flags);
-+	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
-+		value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
-+		value &= ~BIT(d->hwirq % 32);
-+		afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
-+	}
+-	return sysfs_emit(buf, "%u\n", pcie_get_width_cap(pdev));
++	/* We read PCI_EXP_LNKCAP, so we need the device to be accessible. */
++	pci_config_pm_runtime_get(pdev);
++	ret = sysfs_emit(buf, "%u\n", pcie_get_width_cap(pdev));
++	pci_config_pm_runtime_put(pdev);
++
++	return ret;
  }
+ static DEVICE_ATTR_RO(max_link_width);
  
- static void tegra_msi_irq_unmask(struct irq_data *d)
-@@ -1619,14 +1619,13 @@ static void tegra_msi_irq_unmask(struct
- 	struct tegra_msi *msi = irq_data_get_irq_chip_data(d);
- 	struct tegra_pcie *pcie = msi_to_pcie(msi);
- 	unsigned int index = d->hwirq / 32;
--	unsigned long flags;
- 	u32 value;
+@@ -209,7 +215,10 @@ static ssize_t current_link_speed_show(s
+ 	int err;
+ 	enum pci_bus_speed speed;
  
--	spin_lock_irqsave(&msi->mask_lock, flags);
--	value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
--	value |= BIT(d->hwirq % 32);
--	afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
--	spin_unlock_irqrestore(&msi->mask_lock, flags);
-+	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
-+		value = afi_readl(pcie, AFI_MSI_EN_VEC(index));
-+		value |= BIT(d->hwirq % 32);
-+		afi_writel(pcie, value, AFI_MSI_EN_VEC(index));
-+	}
- }
++	pci_config_pm_runtime_get(pci_dev);
+ 	err = pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &linkstat);
++	pci_config_pm_runtime_put(pci_dev);
++
+ 	if (err)
+ 		return -EINVAL;
  
- static int tegra_msi_set_affinity(struct irq_data *d, const struct cpumask *mask, bool force)
-@@ -1742,7 +1741,7 @@ static int tegra_pcie_msi_setup(struct t
+@@ -226,7 +235,10 @@ static ssize_t current_link_width_show(s
+ 	u16 linkstat;
  	int err;
  
- 	mutex_init(&msi->map_lock);
--	spin_lock_init(&msi->mask_lock);
-+	raw_spin_lock_init(&msi->mask_lock);
++	pci_config_pm_runtime_get(pci_dev);
+ 	err = pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &linkstat);
++	pci_config_pm_runtime_put(pci_dev);
++
+ 	if (err)
+ 		return -EINVAL;
  
- 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
- 		err = tegra_allocate_domains(msi);
+@@ -242,7 +254,10 @@ static ssize_t secondary_bus_number_show
+ 	u8 sec_bus;
+ 	int err;
+ 
++	pci_config_pm_runtime_get(pci_dev);
+ 	err = pci_read_config_byte(pci_dev, PCI_SECONDARY_BUS, &sec_bus);
++	pci_config_pm_runtime_put(pci_dev);
++
+ 	if (err)
+ 		return -EINVAL;
+ 
+@@ -258,7 +273,10 @@ static ssize_t subordinate_bus_number_sh
+ 	u8 sub_bus;
+ 	int err;
+ 
++	pci_config_pm_runtime_get(pci_dev);
+ 	err = pci_read_config_byte(pci_dev, PCI_SUBORDINATE_BUS, &sub_bus);
++	pci_config_pm_runtime_put(pci_dev);
++
+ 	if (err)
+ 		return -EINVAL;
+ 
 
 
