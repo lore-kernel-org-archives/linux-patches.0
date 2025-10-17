@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C88B3370EE;
-	Fri, 17 Oct 2025 14:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DD3337102;
+	Fri, 17 Oct 2025 14:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760712991; cv=none; b=IEQpcKwboEi+ptOtHb0LG3YrpW+pKtXJ6Gd9YpBuxN32rIwDOgsal1G/WnXQykYV5PxsqUFXSoN7GMLQaQ5v7guM/lJzM72l1DQQjQzBpskclagRqlOD3heKJNUsyARwhPras8Enz6kVzUcGV2/2UkX4pggCDRw4xqvxgeVix5c=
+	t=1760712994; cv=none; b=rG0B5m9eTN2D2oM9er9lWPghG+Bo0OfMBYwIEYKJuNAAvUJM3C6RtJHvDH97tmPe3B86OO9srzIF6ehud7yjMaQN/azZErfEpDFGSrJ0JWNG5mWHgWliNln8GZ32X2mKvJRrqDUqXLcfVnjXaYdTLzuwwO71f1x0XHH7p9/pPWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760712991; c=relaxed/simple;
-	bh=8GHkwGehUtouf9lr/gRi6dbaF60iuRIXUitRfueV2Ts=;
+	s=arc-20240116; t=1760712994; c=relaxed/simple;
+	bh=xrmuG3/euQ5s7ThyJI3vPqwDhYrg1lYjSDIjpQrOoD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGpNIZK1tvQytfomRrdIqNAgfrXdLJlrWjsnYA9cRkuosuuvo0b1glpVZ5U1Hh0eNzUNNZhYkInRhXsuRdOfhGxTuQ4hEQT3pPd3TmSq3QatncJN0VmPjXpsb/XUNnui6SAcGdxcRLU5YHG00Fu5ucrv4jWAfU4ebpeORKS8FUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7DviAir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gVnRv9rGWhYRppaAfFC2yawQlNEHFbqHsEKJLR4N/s/VWskahfbn7ZRuhOz++xrg+oXfQvgmeNYYi6pRTJ4e2vyMKaKrLmItfDeZOUqfGc4TFJRCmTrDc9hlmA1g191sW80uuVQjh2KkyOeuK5oryzdqiuq+A+JjDRpS9uJO2Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+3vl8pM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7DviAir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C375C4CEE7;
-	Fri, 17 Oct 2025 14:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+3vl8pM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D505C4CEE7;
+	Fri, 17 Oct 2025 14:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760712990;
-	bh=8GHkwGehUtouf9lr/gRi6dbaF60iuRIXUitRfueV2Ts=;
+	s=korg; t=1760712993;
+	bh=xrmuG3/euQ5s7ThyJI3vPqwDhYrg1lYjSDIjpQrOoD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7DviAirxMxQ/QrLagDiorKqYUM+tDxJobVe62mYh3onGF575Za/6UWCbr1AV0OoJ
-	 tiLBydRflE0yRE9LUBtLjlAt85spx3q8bXxgHZbpG/8fy8PHi91MxzLcexOSWIzbuh
-	 62B5QmhXZGCKN6SfXjD5Gd+64A72YsLW4UqdQnWs=
+	b=Y+3vl8pMFilqpnVBUBc+X8NF6EQ4eWvAram0FnpqoygH0nHOTmEbzGNSxr9W3xnDD
+	 5ts+wOQZC+VkHrIw4NXMVMGnE19tbFhQVY46BVl9VkYbTs+1kpOcJ9WfgNxZfmvzpF
+	 8Xbt8eIHyjMUK0KHtRjMxDKB+FGhKxb1/+IzaSSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/168] rtc: x1205: Fix Xicor X1205 vendor prefix
-Date: Fri, 17 Oct 2025 16:51:29 +0200
-Message-ID: <20251017145129.393436810@linuxfoundation.org>
+Subject: [PATCH 6.1 011/168] rtc: optee: fix memory leak on driver removal
+Date: Fri, 17 Oct 2025 16:51:30 +0200
+Message-ID: <20251017145129.429682491@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -46,43 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Clément Le Goffic <clement.legoffic@foss.st.com>
 
-[ Upstream commit 606d19ee37de3a72f1b6e95a4ea544f6f20dbb46 ]
+[ Upstream commit a531350d2fe58f7fc4516e555f22391dee94efd9 ]
 
-The vendor for the X1205 RTC is not Xircom, but Xicor which was acquired
-by Intersil. Since the I2C subsystem drops the vendor prefix for driver
-matching, the vendor prefix hasn't mattered.
+Fix a memory leak in case of driver removal.
+Free the shared memory used for arguments exchanges between kernel and
+OP-TEE RTC PTA.
 
-Fixes: 6875404fdb44 ("rtc: x1205: Add DT probing support")
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250821215703.869628-2-robh@kernel.org
+Fixes: 81c2f059ab90 ("rtc: optee: add RTC driver for OP-TEE RTC PTA")
+Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
+Link: https://lore.kernel.org/r/20250715-upstream-optee-rtc-v1-1-e0fdf8aae545@foss.st.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-x1205.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-optee.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-x1205.c b/drivers/rtc/rtc-x1205.c
-index f587afa843573..6ae7b6f1f3167 100644
---- a/drivers/rtc/rtc-x1205.c
-+++ b/drivers/rtc/rtc-x1205.c
-@@ -669,7 +669,7 @@ static const struct i2c_device_id x1205_id[] = {
- MODULE_DEVICE_TABLE(i2c, x1205_id);
+diff --git a/drivers/rtc/rtc-optee.c b/drivers/rtc/rtc-optee.c
+index 9f8b5d4a8f6b6..6b77c122fdc10 100644
+--- a/drivers/rtc/rtc-optee.c
++++ b/drivers/rtc/rtc-optee.c
+@@ -320,6 +320,7 @@ static int optee_rtc_remove(struct device *dev)
+ {
+ 	struct optee_rtc *priv = dev_get_drvdata(dev);
  
- static const struct of_device_id x1205_dt_ids[] = {
--	{ .compatible = "xircom,x1205", },
-+	{ .compatible = "xicor,x1205", },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, x1205_dt_ids);
++	tee_shm_free(priv->shm);
+ 	tee_client_close_session(priv->ctx, priv->session_id);
+ 	tee_client_close_context(priv->ctx);
+ 
 -- 
 2.51.0
 
