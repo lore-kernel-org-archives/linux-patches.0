@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B025D3328E7;
-	Fri, 17 Oct 2025 15:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455F6257437;
+	Fri, 17 Oct 2025 15:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716535; cv=none; b=qAHWIpUN3c+5/dr4J8usBMQJUuT1RgtQkdAGlW6zrpZKGMgagZhmudd2WETOvkitRztUl/M8jARMufcpUZjHAsnR05dCX15E6s2ShA4a3Cn3bj4fdP03d+qwcPCcGbxA5A6eNi2XdRZa1KAgiM5fr3r7m6LSxrGPAGJ/bmOT9Ao=
+	t=1760716538; cv=none; b=D4Ly6sDh4Tn3TSi9DTuov6URFwZtLLi/o6VUb5IehQp1mArbsX0liOGyzd13JxST2cTlm6k3WU0+3YnAHhqd5UjMEGFZcPoZKuEAjO1uz7aFDnppG6TODF/Ay88dhoPc/OzQW+nxaKsawgY1zGaa1K8iP0uuPkHsdmNDgND40Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716535; c=relaxed/simple;
-	bh=MC98HymKBHm6ivaY8rmvqaUPE4wSH0KgEVJ6Ds3IijQ=;
+	s=arc-20240116; t=1760716538; c=relaxed/simple;
+	bh=Q9crB/YP9bQXwFg3tqrCJ1ALjbnvkCre0F7O3qUAWFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfc0e8QJyG+gCLqvnpsL1MODkh8+oAp2Yli5he+MR5ubSFq4CWcJhPSqvlYY1whamfus2u1xwMInoXJDGH1+VSdZVJAvC097A8x0RxuqMP+9rU659yNbY16V7TEPWL5XgPqzjzG7gIv0Zj0U0dCtd10fnk6D8Wgl+IVvSAf11SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF3Xs1lV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKtzXZjIOjezE82mKbJwCIqAEnvAfmsOkAcKrCADgf1RtfvmqXHb5TQt8X6MWpZO+hKKLRW9dfC/Zicdv6qXqCCsj4BPhDqWtZrmTg8uUO6wruqTKocEWfKXKZ5ky0N3F7sYIwjTggLZPhKciA6sB9CLtpjYsYiwu26sdVlejW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjMnvaIK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF3Xs1lV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C01C4CEFE;
-	Fri, 17 Oct 2025 15:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjMnvaIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B887C4CEE7;
+	Fri, 17 Oct 2025 15:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716535;
-	bh=MC98HymKBHm6ivaY8rmvqaUPE4wSH0KgEVJ6Ds3IijQ=;
+	s=korg; t=1760716538;
+	bh=Q9crB/YP9bQXwFg3tqrCJ1ALjbnvkCre0F7O3qUAWFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wF3Xs1lVh53/5c91r/+5q0btPxmJ3sVDhCwM9mp1g540fnRHy/EGT9GyfuSSYknky
-	 4G1zvu5zA4sFe45DqPjzsm9CtJYEZsCI0xlCgCKM7qtYJYbdSJZPGy5svuLzB/rS9p
-	 s5LAaNIS5X6UlKiqrNR+R/3K9QzL/aEVz02GxIwI=
+	b=KjMnvaIKt5f3JrurCoGKiqHMLEyNLV7FltMCq3pcJ/JbOXXlhhAeOZHxCbSXbmrLa
+	 GBaRnUYtNMHEbbeZ32PuoiWs1RXaiC6WI4vtENtobT1btTW3dC/0p6qG1eg2NjhgDV
+	 AcZ1iTSdBUFp/lO3EGiUQJKab9glJXkYwAgga0zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 225/276] KVM: x86: Dont (re)check L1 intercepts when completing userspace I/O
-Date: Fri, 17 Oct 2025 16:55:18 +0200
-Message-ID: <20251017145150.674879858@linuxfoundation.org>
+Subject: [PATCH 5.15 226/276] ASoC: codecs: wcd934x: Simplify with dev_err_probe
+Date: Fri, 17 Oct 2025 16:55:19 +0200
+Message-ID: <20251017145150.714237656@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,142 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e750f85391286a4c8100275516973324b621a269 ]
+[ Upstream commit fa92f4294283cc7d1f29151420be9e9336182518 ]
 
-When completing emulation of instruction that generated a userspace exit
-for I/O, don't recheck L1 intercepts as KVM has already finished that
-phase of instruction execution, i.e. has already committed to allowing L2
-to perform I/O.  If L1 (or host userspace) modifies the I/O permission
-bitmaps during the exit to userspace,  KVM will treat the access as being
-intercepted despite already having emulated the I/O access.
+Replace dev_err() in probe() path with dev_err_probe() to:
+1. Make code a bit simpler and easier to read,
+2. Do not print messages on deferred probe.
 
-Pivot on EMULTYPE_NO_DECODE to detect that KVM is completing emulation.
-Of the three users of EMULTYPE_NO_DECODE, only complete_emulated_io() (the
-intended "recipient") can reach the code in question.  gp_interception()'s
-use is mutually exclusive with is_guest_mode(), and
-complete_emulated_insn_gp() unconditionally pairs EMULTYPE_NO_DECODE with
-EMULTYPE_SKIP.
-
-The bad behavior was detected by a syzkaller program that toggles port I/O
-interception during the userspace I/O exit, ultimately resulting in a WARN
-on vcpu->arch.pio.count being non-zero due to KVM no completing emulation
-of the I/O instruction.
-
-  WARNING: CPU: 23 PID: 1083 at arch/x86/kvm/x86.c:8039 emulator_pio_in_out+0x154/0x170 [kvm]
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 23 UID: 1000 PID: 1083 Comm: repro Not tainted 6.16.0-rc5-c1610d2d66b1-next-vm #74 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:emulator_pio_in_out+0x154/0x170 [kvm]
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   kvm_fast_pio+0xd6/0x1d0 [kvm]
-   vmx_handle_exit+0x149/0x610 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0xda8/0x1ac0 [kvm]
-   kvm_vcpu_ioctl+0x244/0x8c0 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0x5d/0xc60
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-
-Reported-by: syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68790db4.a00a0220.3af5df.0020.GAE@google.com
-Fixes: 8a76d7f25f8f ("KVM: x86: Add x86 callback for intercept check")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20250715190638.1899116-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ is_guest_mode() was open coded ]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230418074630.8681-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c     |   11 ++++-------
- arch/x86/kvm/kvm_emulate.h |    2 +-
- arch/x86/kvm/x86.c         |    9 ++++++++-
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ sound/soc/codecs/wcd934x.c |   19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -5452,12 +5452,11 @@ void init_decode_cache(struct x86_emulat
- 	ctxt->mem_read.end = 0;
- }
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -5885,10 +5885,9 @@ static int wcd934x_codec_parse_data(stru
+ 	slim_get_logical_addr(wcd->sidev);
+ 	wcd->if_regmap = regmap_init_slimbus(wcd->sidev,
+ 				  &wcd934x_ifc_regmap_config);
+-	if (IS_ERR(wcd->if_regmap)) {
+-		dev_err(dev, "Failed to allocate ifc register map\n");
+-		return PTR_ERR(wcd->if_regmap);
+-	}
++	if (IS_ERR(wcd->if_regmap))
++		return dev_err_probe(dev, PTR_ERR(wcd->if_regmap),
++				     "Failed to allocate ifc register map\n");
  
--int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
-+int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts)
- {
- 	const struct x86_emulate_ops *ops = ctxt->ops;
- 	int rc = X86EMUL_CONTINUE;
- 	int saved_dst_type = ctxt->dst.type;
--	unsigned emul_flags;
+ 	of_property_read_u32(dev->parent->of_node, "qcom,dmic-sample-rate",
+ 			     &wcd->dmic_sample_rate);
+@@ -5940,19 +5939,15 @@ static int wcd934x_codec_probe(struct pl
+ 	memcpy(wcd->tx_chs, wcd934x_tx_chs, sizeof(wcd934x_tx_chs));
  
- 	ctxt->mem_read.pos = 0;
+ 	irq = regmap_irq_get_virq(data->irq_data, WCD934X_IRQ_SLIMBUS);
+-	if (irq < 0) {
+-		dev_err(wcd->dev, "Failed to get SLIM IRQ\n");
+-		return irq;
+-	}
++	if (irq < 0)
++		return dev_err_probe(wcd->dev, irq, "Failed to get SLIM IRQ\n");
  
-@@ -5471,8 +5470,6 @@ int x86_emulate_insn(struct x86_emulate_
- 		rc = emulate_ud(ctxt);
- 		goto done;
- 	}
--
--	emul_flags = ctxt->ops->get_hflags(ctxt);
- 	if (unlikely(ctxt->d &
- 		     (No64|Undefined|Sse|Mmx|Intercept|CheckPerm|Priv|Prot|String))) {
- 		if ((ctxt->mode == X86EMUL_MODE_PROT64 && (ctxt->d & No64)) ||
-@@ -5506,7 +5503,7 @@ int x86_emulate_insn(struct x86_emulate_
- 				fetch_possible_mmx_operand(&ctxt->dst);
- 		}
+ 	ret = devm_request_threaded_irq(dev, irq, NULL,
+ 					wcd934x_slim_irq_handler,
+ 					IRQF_TRIGGER_RISING | IRQF_ONESHOT,
+ 					"slim", wcd);
+-	if (ret) {
+-		dev_err(dev, "Failed to request slimbus irq\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to request slimbus irq\n");
  
--		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && ctxt->intercept) {
-+		if (unlikely(check_intercepts) && ctxt->intercept) {
- 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 						      X86_ICPT_PRE_EXCEPT);
- 			if (rc != X86EMUL_CONTINUE)
-@@ -5535,7 +5532,7 @@ int x86_emulate_insn(struct x86_emulate_
- 				goto done;
- 		}
- 
--		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
-+		if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
- 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 						      X86_ICPT_POST_EXCEPT);
- 			if (rc != X86EMUL_CONTINUE)
-@@ -5589,7 +5586,7 @@ int x86_emulate_insn(struct x86_emulate_
- 
- special_insn:
- 
--	if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
-+	if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
- 		rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 					      X86_ICPT_POST_MEMACCESS);
- 		if (rc != X86EMUL_CONTINUE)
---- a/arch/x86/kvm/kvm_emulate.h
-+++ b/arch/x86/kvm/kvm_emulate.h
-@@ -496,7 +496,7 @@ bool x86_page_table_writing_insn(struct
- #define EMULATION_RESTART 1
- #define EMULATION_INTERCEPTED 2
- void init_decode_cache(struct x86_emulate_ctxt *ctxt);
--int x86_emulate_insn(struct x86_emulate_ctxt *ctxt);
-+int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts);
- int emulator_task_switch(struct x86_emulate_ctxt *ctxt,
- 			 u16 tss_selector, int idt_index, int reason,
- 			 bool has_error_code, u32 error_code);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -8209,7 +8209,14 @@ restart:
- 		ctxt->exception.address = 0;
- 	}
- 
--	r = x86_emulate_insn(ctxt);
-+	/*
-+	 * Check L1's instruction intercepts when emulating instructions for
-+	 * L2, unless KVM is re-emulating a previously decoded instruction,
-+	 * e.g. to complete userspace I/O, in which case KVM has already
-+	 * checked the intercepts.
-+	 */
-+	r = x86_emulate_insn(ctxt, is_guest_mode(vcpu) &&
-+				   !(emulation_type & EMULTYPE_NO_DECODE));
- 
- 	if (r == EMULATION_INTERCEPTED)
- 		return 1;
+ 	wcd934x_register_mclk_output(wcd);
+ 	platform_set_drvdata(pdev, wcd);
 
 
