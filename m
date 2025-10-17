@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F7833710E;
-	Fri, 17 Oct 2025 15:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6CA3370E2;
+	Fri, 17 Oct 2025 15:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713670; cv=none; b=don66BDPSfdcirtBbIz0myNe6HO5IhuON+6qMraOpTDov/Rwo1mFRUSW2J9LJQbt28IaYbq87G4FXhCE0fSLl/GgBWHQR34P9LQVRY7FDSuVYwNrb5CVClIQ9f5EblhvbA6zzm6f5wo2VtiwfW9vKQLaarDPfyBLUBubzcChzlk=
+	t=1760713673; cv=none; b=CwJ1o/UmIkub6mnxIHNahlAF+EcIdDuqJHJEiSOLmaSfPSBCLxe9gkpZaeUpdsFqDdlj3cV1FlqPlBzAHxwKbtlVPLKSwcTa1Y15Ko0nWGd7Qba/p5vsNepWDB6iLRGmmf2aoQ9iBHPsLqnrlDVvlJSVIQ+ZWOvzUEdqyPvg6sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713670; c=relaxed/simple;
-	bh=+39OfO5iAHs+Ndaaby6J4/5cUG8WqaIP2iwnVf9SXIc=;
+	s=arc-20240116; t=1760713673; c=relaxed/simple;
+	bh=C3DwPdx+jhieXVmYXg5GYqYKq2gtJIlyGZBhYGReDVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6aDBRvmtmwcePyz/mKgFDOqzWi6fJU5klAhmDWBAEgkJhskY2gMhq7sNurOiw7xQTiTCLKr7mnau9sI9lu/1HV5WxhUdFOWU0VFkwWTRNMyC+17ZLOG1reIIqBEpgzHvwCyYAmmjsRtngDPOx+PP5vH3CWo/x2alfI+ZOoVTjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO0WWb+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NFrKV25h0f8jic+hd/l+CqRDJTspokzc3j3nDSr/Lr8nBmWzagY7JuFuOwV6Kj4TI5Axipsm/vt/3vj/R2LdShf8byqqlMQt9sDqySmG5X77l8CH0lJ7WfWDMcNS2ZldXqqEOs4WdqyExZ7JqybqZcc3BILw12IJD2WRA1jFQFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ10o0Kl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO0WWb+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB4FC4CEE7;
-	Fri, 17 Oct 2025 15:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ10o0Kl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA82C4CEE7;
+	Fri, 17 Oct 2025 15:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713670;
-	bh=+39OfO5iAHs+Ndaaby6J4/5cUG8WqaIP2iwnVf9SXIc=;
+	s=korg; t=1760713673;
+	bh=C3DwPdx+jhieXVmYXg5GYqYKq2gtJIlyGZBhYGReDVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO0WWb+MjqUHwnsB/nB513JGANO0JxEO6YwJ4e7RWeBzdmUVfqSEcUkfu/SpotKER
-	 ZMCAFVLmcT2UVm7FnId9WN4D+20dkk7oxkosulXx7k60HRLkPnm56Ikuzp13fKHHdV
-	 1Bg9Ts6KxpjzsNV+8ZN2JAH03hivXHkyZMG4pBE0=
+	b=jZ10o0KlNSmXC6K1jIeRM4jlTjXK0C1Hudo+OTf0UBrAfs1vdbCwAyqb6UnKnPzc4
+	 g6AZ1u01NGs5wmUhrzqwtY+DZavBLVfaOvljc5KmyAy0wjISBnq8aTmnyjYY7SxRMw
+	 W9p+VLPcIcvvh8XcS4WBH/cCDW4hd9AESZEN66PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 077/201] media: lirc: Fix error handling in lirc_register()
-Date: Fri, 17 Oct 2025 16:52:18 +0200
-Message-ID: <20251017145137.585017259@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 046/201] drm/amd/display: Add missing DCE6 SCL_HORZ_FILTER_INIT* SRIs
+Date: Fri, 17 Oct 2025 16:51:47 +0200
+Message-ID: <20251017145136.437903821@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -45,58 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 4f4098c57e139ad972154077fb45c3e3141555dd upstream.
+[ Upstream commit d60f9c45d1bff7e20ecd57492ef7a5e33c94a37c ]
 
-When cdev_device_add() failed, calling put_device() to explicitly
-release dev->lirc_dev. Otherwise, it could cause the fault of the
-reference count.
+Without these, it's impossible to program these registers.
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: a6ddd4fecbb0 ("media: lirc: remove last remnants of lirc kapi")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 102b2f587ac8 ("drm/amd/display: dce_transform: DCE6 Scaling Horizontal Filter Init (v2)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/lirc_dev.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_transform.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -735,11 +735,11 @@ int lirc_register(struct rc_dev *dev)
- 
- 	cdev_init(&dev->lirc_cdev, &lirc_fops);
- 
-+	get_device(&dev->dev);
-+
- 	err = cdev_device_add(&dev->lirc_cdev, &dev->lirc_dev);
- 	if (err)
--		goto out_ida;
--
--	get_device(&dev->dev);
-+		goto out_put_device;
- 
- 	switch (dev->driver_type) {
- 	case RC_DRIVER_SCANCODE:
-@@ -763,7 +763,8 @@ int lirc_register(struct rc_dev *dev)
- 
- 	return 0;
- 
--out_ida:
-+out_put_device:
-+	put_device(&dev->lirc_dev);
- 	ida_free(&lirc_ida, minor);
- 	return err;
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+index cbce194ec7b82..ff746fba850bc 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+@@ -155,6 +155,8 @@
+ 	SRI(SCL_COEF_RAM_TAP_DATA, SCL, id), \
+ 	SRI(VIEWPORT_START, SCL, id), \
+ 	SRI(VIEWPORT_SIZE, SCL, id), \
++	SRI(SCL_HORZ_FILTER_INIT_RGB_LUMA, SCL, id), \
++	SRI(SCL_HORZ_FILTER_INIT_CHROMA, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_SCALE_RATIO, SCL, id), \
+ 	SRI(SCL_VERT_FILTER_SCALE_RATIO, SCL, id), \
+ 	SRI(SCL_VERT_FILTER_INIT, SCL, id), \
+-- 
+2.51.0
+
 
 
