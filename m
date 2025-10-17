@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBF63370E3;
-	Fri, 17 Oct 2025 14:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EDE337100;
+	Fri, 17 Oct 2025 14:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713114; cv=none; b=OEeFTBPgSwFRSpNWEfumAsgocZQrfow2IIUEfQ4vi4OoA4Kk8fkqGqEVAq8C5gIi3wna7X/kVdMVJd5P0gOHUrXJ+nMxn0Yf+Et35U5lkvLbJdOotXKpjCoCHsFF0wppIskha53s6nbQYlUgp33VQY74uGWPgbdmlVr44OsUFCM=
+	t=1760713117; cv=none; b=PMXGg02dND1Uit6tfM2Effl9lhGvgFd1/COBOy57I1H4nZhM5hm4aR13ovWfOwxbbzri9XpjBcnRezbCt/Eheu+oHShH9G335cKbV0Ivp+4Fwi0WjM98CeWfu+rqSCOlbRD8zUNK4wJSEVqSnSRWZ7b+JQarACk34vdmR0twyOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713114; c=relaxed/simple;
-	bh=oa1Q0LBkeBN6aMcCnAt5YH6C1U+jKpeaKa9gEsBBYMA=;
+	s=arc-20240116; t=1760713117; c=relaxed/simple;
+	bh=8XIcjDTpwWtUowTtMMhMRxcnzUe2E+03RXfBQFuW7Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhQ0b1Zbw1xJrdVvDGv/p4A2J1BgcP4fOFXkfo6dDvg54S3vvL17QzSW4mdpMQqb05B8on7f17eE6HkddCG3HBZBhiWMShIm+zlx6LruqGrphJAhl6kOgzgQIZf1kI3ivqze8Jf4KqtELNu34mpLfywItpO/GFAsgiPDAkjxSI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbbk3eLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MezD/EgrKXwlxZBTm48Oa8lA00jCEsy3JJP4u8cWf1ulNm88+6FXl656KuXxZLIFTCF1vXoqLezTmSKCKIyXiXy97cbR+JfqT0Oah39F2nQGLsPirP5SUaRSEl6MubliUnNBeIaWTgNh947HekBQ1Vkn+wPCkn1vGcsZ9Llfx3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrkJcjba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbbk3eLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B721CC4CEE7;
-	Fri, 17 Oct 2025 14:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrkJcjba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923CBC113D0;
+	Fri, 17 Oct 2025 14:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713114;
-	bh=oa1Q0LBkeBN6aMcCnAt5YH6C1U+jKpeaKa9gEsBBYMA=;
+	s=korg; t=1760713116;
+	bh=8XIcjDTpwWtUowTtMMhMRxcnzUe2E+03RXfBQFuW7Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbbk3eLZXsUIIskQIEIaOCaXKuLjsYOgsFEAPudYoApBluVvygqkF3pkoOMx1tey2
-	 b8hg6vr4aX0pFm6AH5H1KDg1VE/QnnIG4y87wTH0ucUx3ChFbBJ6Qxy9n8YaEJm3l7
-	 J3bpcQgDcYdLlM0SpvoNvYJF7fajQPvb6jirqVaQ=
+	b=RrkJcjbadK/v+NFwbYW/K9GWA1MV1XYQ2b8pl3pgc4QpXhnoa4RSQ4uzDTgdTinlf
+	 /Ts9gAZXSTTbhBrID4zEThQz8cmnvz9+Dd2bWYkUy4XRtYrdKi9mOrD4mku8nfi59Z
+	 Bw2wIe9sciF+475v/EBp4ZuKDJtjXQkZV8no7Mk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.1 051/168] ACPI: property: Fix buffer properties extraction for subnodes
-Date: Fri, 17 Oct 2025 16:52:10 +0200
-Message-ID: <20251017145130.898878942@linuxfoundation.org>
+	Brian Masney <bmasney@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 020/168] clk: nxp: lpc18xx-cgu: convert from round_rate() to determine_rate()
+Date: Fri, 17 Oct 2025 16:51:39 +0200
+Message-ID: <20251017145129.764001504@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -50,92 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Brian Masney <bmasney@redhat.com>
 
-commit d0759b10989c5c5aae3d455458c9fc4e8cc694f7 upstream.
+[ Upstream commit b46a3d323a5b7942e65025254c13801d0f475f02 ]
 
-The ACPI handle passed to acpi_extract_properties() as the first
-argument represents the ACPI namespace scope in which to look for
-objects returning buffers associated with buffer properties.
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
 
-For _DSD objects located immediately under ACPI devices, this handle is
-the same as the handle of the device object holding the _DSD, but for
-data-only subnodes it is not so.
-
-First of all, data-only subnodes are represented by objects that
-cannot hold other objects in their scopes (like control methods).
-Therefore a data-only subnode handle cannot be used for completing
-relative pathname segments, so the current code in
-in acpi_nondev_subnode_extract() passing a data-only subnode handle
-to acpi_extract_properties() is invalid.
-
-Moreover, a data-only subnode of device A may be represented by an
-object located in the scope of device B (which kind of makes sense,
-for instance, if A is a B's child).  In that case, the scope in
-question would be the one of device B.  In other words, the scope
-mentioned above is the same as the scope used for subnode object
-lookup in acpi_nondev_subnode_extract().
-
-Accordingly, rearrange that function to use the same scope for the
-extraction of properties and subnode object lookup.
-
-Fixes: 103e10c69c61 ("ACPI: property: Add support for parsing buffer property UUID")
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Stable-dep-of: 1624dead9a4d ("clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c |   30 +++++++++++-------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ drivers/clk/nxp/clk-lpc18xx-cgu.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -74,6 +74,7 @@ static bool acpi_nondev_subnode_extract(
- 					struct fwnode_handle *parent)
+diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+index 69ebf65081b81..821155f79b015 100644
+--- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
++++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+@@ -371,23 +371,25 @@ static unsigned long lpc18xx_pll0_recalc_rate(struct clk_hw *hw,
+ 	return 0;
+ }
+ 
+-static long lpc18xx_pll0_round_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long *prate)
++static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
++				       struct clk_rate_request *req)
  {
- 	struct acpi_data_node *dn;
-+	acpi_handle scope = NULL;
- 	bool result;
+ 	unsigned long m;
  
- 	dn = kzalloc(sizeof(*dn), GFP_KERNEL);
-@@ -86,27 +87,18 @@ static bool acpi_nondev_subnode_extract(
- 	INIT_LIST_HEAD(&dn->data.properties);
- 	INIT_LIST_HEAD(&dn->data.subnodes);
+-	if (*prate < rate) {
++	if (req->best_parent_rate < req->rate) {
+ 		pr_warn("%s: pll dividers not supported\n", __func__);
+ 		return -EINVAL;
+ 	}
  
--	result = acpi_extract_properties(handle, desc, &dn->data);
-+	/*
-+	 * The scope for the completion of relative pathname segments and
-+	 * subnode object lookup is the one of the namespace node (device)
-+	 * containing the object that has returned the package.  That is, it's
-+	 * the scope of that object's parent device.
-+	 */
-+	if (handle)
-+		acpi_get_parent(handle, &scope);
+-	m = DIV_ROUND_UP_ULL(*prate, rate * 2);
++	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
+ 	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
+-		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
++		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
+ 		return -EINVAL;
+ 	}
  
--	if (handle) {
--		acpi_handle scope;
--		acpi_status status;
--
--		/*
--		 * The scope for the subnode object lookup is the one of the
--		 * namespace node (device) containing the object that has
--		 * returned the package.  That is, it's the scope of that
--		 * object's parent.
--		 */
--		status = acpi_get_parent(handle, &scope);
--		if (ACPI_SUCCESS(status)
--		    && acpi_enumerate_nondev_subnodes(scope, desc, &dn->data,
--						      &dn->fwnode))
--			result = true;
--	} else if (acpi_enumerate_nondev_subnodes(NULL, desc, &dn->data,
--						  &dn->fwnode)) {
-+	result = acpi_extract_properties(scope, desc, &dn->data);
-+	if (acpi_enumerate_nondev_subnodes(scope, desc, &dn->data, &dn->fwnode))
- 		result = true;
--	}
+-	return 2 * *prate * m;
++	req->rate = 2 * req->best_parent_rate * m;
++
++	return 0;
+ }
  
- 	if (result) {
- 		dn->handle = handle;
+ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -444,7 +446,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ static const struct clk_ops lpc18xx_pll0_ops = {
+ 	.recalc_rate	= lpc18xx_pll0_recalc_rate,
+-	.round_rate	= lpc18xx_pll0_round_rate,
++	.determine_rate = lpc18xx_pll0_determine_rate,
+ 	.set_rate	= lpc18xx_pll0_set_rate,
+ };
+ 
+-- 
+2.51.0
+
 
 
