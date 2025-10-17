@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBB632C931;
-	Fri, 17 Oct 2025 15:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045AB1D5CE0;
+	Fri, 17 Oct 2025 15:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713369; cv=none; b=UsMAEyxexsjNUbLBoVKYG+8BuvACpkLUulyrBsuTFytP2B/W54JRHK6ydAFuRVoTVq9YyoG1WEicm87q3e+vmnasNTUlzv2nKkU9cAs5chvjtue1WwMYzDS2o++uUDUucr9U1Xou8oXRLxbf3MJKmSEG8BZs5ASZPlb65KIf7UQ=
+	t=1760713372; cv=none; b=uGZ3JuSXVVHz/jkMzvO/0E77pnOYZ0gYC71lcqz3luej5RoFUyYh1m7n/NaPoyBZg7x9AvQv5XLye0XYqEDPkOLiIh20lDSDbOhqImv/B+vMEYwaMRfcyrxzfthwllnCtjoadPALRP0MRp4fxHPZFht40GpIvBVAVsw6WLVdID0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713369; c=relaxed/simple;
-	bh=pd5FXnzPp3ERjJDTTLOuniHrxWoUrzeT8DRTy5abx74=;
+	s=arc-20240116; t=1760713372; c=relaxed/simple;
+	bh=XlDU8NBS2PLZ+jMOXn6+wi7/cUF0FDeVBv3FLa3H8CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ORzIFPutSM7vdp7q+XNMP9omttToQEwpkN1P7qwGHPlofhmsso7A0kKpGtKmfZ8jgZ6OQlsVhk92wosjrDjNWKsC3UBeYP9kdq/LFmVwzq2llTbNqyXyrC19S90nF2eOaUKnRGzIW+8KeTm4z0f11l36QJMLlcVx0yOUb0dPM/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtWCrhs8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EoInbPJPV3bXf5BksT6x9TIgbF5fCOLJkuLfoNQLUn48zPNiemCrN2D/1nnT3dC1t8S4HIML0VTFSHI/MsSGB3zrmJnTyYTAWX65D1ttzfJrRRQG98yOGHjsE/F/LYTj0EPtxSaVPMZxlkf9o6qy+PKI6/e2+r8CHpm8k5BwUkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRVmm6W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtWCrhs8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5762CC4CEE7;
-	Fri, 17 Oct 2025 15:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRVmm6W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB81C4CEE7;
+	Fri, 17 Oct 2025 15:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713368;
-	bh=pd5FXnzPp3ERjJDTTLOuniHrxWoUrzeT8DRTy5abx74=;
+	s=korg; t=1760713371;
+	bh=XlDU8NBS2PLZ+jMOXn6+wi7/cUF0FDeVBv3FLa3H8CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtWCrhs8UezvYaxSNtWkj+mHE9df0Cm+Pi4vcDZhIBgbyb4iBwzIicvsTunf0cW91
-	 +3vtAyTXY1eASKQaS9Px+KaZtvKODWVTun+OL3GtY2SP9FqsrTSKxZ0opE0K+2Qibm
-	 bAErda77i+oHL68r8q/3X0DyEKsRvNooMW7lvu4s=
+	b=jRVmm6W1vcbokflM0M/YFH2l0qQxFblWNXnyRGCcfCDNAGUy4IshrQvK/2T7/1Dc3
+	 6WsJQ1KP47YAlgU9pOWI874VjSu2xkEasjFsNXnBcj2TvA+vNYYmAUJ41uq2c6M3LY
+	 E8fZ0rehGNukygfA+egdG5gfVuHK0f6UDLVETk0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/168] tracing: Fix race condition in kprobe initialization causing NULL pointer dereference
-Date: Fri, 17 Oct 2025 16:53:41 +0200
-Message-ID: <20251017145134.263563527@linuxfoundation.org>
+Subject: [PATCH 6.1 143/168] ksmbd: add max ip connections parameter
+Date: Fri, 17 Oct 2025 16:53:42 +0200
+Message-ID: <20251017145134.301185226@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -45,244 +45,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9cf9aa7b0acfde7545c1a1d912576e9bab28dc6f ]
+[ Upstream commit d8b6dc9256762293048bf122fc11c4e612d0ef5d ]
 
-There is a critical race condition in kprobe initialization that can lead to
-NULL pointer dereference and kernel crash.
+This parameter set the maximum number of connections per ip address.
+The default is 8.
 
-[1135630.084782] Unable to handle kernel paging request at virtual address 0000710a04630000
-...
-[1135630.260314] pstate: 404003c9 (nZcv DAIF +PAN -UAO)
-[1135630.269239] pc : kprobe_perf_func+0x30/0x260
-[1135630.277643] lr : kprobe_dispatcher+0x44/0x60
-[1135630.286041] sp : ffffaeff4977fa40
-[1135630.293441] x29: ffffaeff4977fa40 x28: ffffaf015340e400
-[1135630.302837] x27: 0000000000000000 x26: 0000000000000000
-[1135630.312257] x25: ffffaf029ed108a8 x24: ffffaf015340e528
-[1135630.321705] x23: ffffaeff4977fc50 x22: ffffaeff4977fc50
-[1135630.331154] x21: 0000000000000000 x20: ffffaeff4977fc50
-[1135630.340586] x19: ffffaf015340e400 x18: 0000000000000000
-[1135630.349985] x17: 0000000000000000 x16: 0000000000000000
-[1135630.359285] x15: 0000000000000000 x14: 0000000000000000
-[1135630.368445] x13: 0000000000000000 x12: 0000000000000000
-[1135630.377473] x11: 0000000000000000 x10: 0000000000000000
-[1135630.386411] x9 : 0000000000000000 x8 : 0000000000000000
-[1135630.395252] x7 : 0000000000000000 x6 : 0000000000000000
-[1135630.403963] x5 : 0000000000000000 x4 : 0000000000000000
-[1135630.412545] x3 : 0000710a04630000 x2 : 0000000000000006
-[1135630.421021] x1 : ffffaeff4977fc50 x0 : 0000710a04630000
-[1135630.429410] Call trace:
-[1135630.434828]  kprobe_perf_func+0x30/0x260
-[1135630.441661]  kprobe_dispatcher+0x44/0x60
-[1135630.448396]  aggr_pre_handler+0x70/0xc8
-[1135630.454959]  kprobe_breakpoint_handler+0x140/0x1e0
-[1135630.462435]  brk_handler+0xbc/0xd8
-[1135630.468437]  do_debug_exception+0x84/0x138
-[1135630.475074]  el1_dbg+0x18/0x8c
-[1135630.480582]  security_file_permission+0x0/0xd0
-[1135630.487426]  vfs_write+0x70/0x1c0
-[1135630.493059]  ksys_write+0x5c/0xc8
-[1135630.498638]  __arm64_sys_write+0x24/0x30
-[1135630.504821]  el0_svc_common+0x78/0x130
-[1135630.510838]  el0_svc_handler+0x38/0x78
-[1135630.516834]  el0_svc+0x8/0x1b0
-
-kernel/trace/trace_kprobe.c: 1308
-0xffff3df8995039ec <kprobe_perf_func+0x2c>:     ldr     x21, [x24,#120]
-include/linux/compiler.h: 294
-0xffff3df8995039f0 <kprobe_perf_func+0x30>:     ldr     x1, [x21,x0]
-
-kernel/trace/trace_kprobe.c
-1308: head = this_cpu_ptr(call->perf_events);
-1309: if (hlist_empty(head))
-1310: 	return 0;
-
-crash> struct trace_event_call -o
-struct trace_event_call {
-  ...
-  [120] struct hlist_head *perf_events;  //(call->perf_event)
-  ...
-}
-
-crash> struct trace_event_call ffffaf015340e528
-struct trace_event_call {
-  ...
-  perf_events = 0xffff0ad5fa89f088, //this value is correct, but x21 = 0
-  ...
-}
-
-Race Condition Analysis:
-
-The race occurs between kprobe activation and perf_events initialization:
-
-  CPU0                                    CPU1
-  ====                                    ====
-  perf_kprobe_init
-    perf_trace_event_init
-      tp_event->perf_events = list;(1)
-      tp_event->class->reg (2)← KPROBE ACTIVE
-                                          Debug exception triggers
-                                          ...
-                                          kprobe_dispatcher
-                                            kprobe_perf_func (tk->tp.flags & TP_FLAG_PROFILE)
-                                              head = this_cpu_ptr(call->perf_events)(3)
-                                              (perf_events is still NULL)
-
-Problem:
-1. CPU0 executes (1) assigning tp_event->perf_events = list
-2. CPU0 executes (2) enabling kprobe functionality via class->reg()
-3. CPU1 triggers and reaches kprobe_dispatcher
-4. CPU1 checks TP_FLAG_PROFILE - condition passes (step 2 completed)
-5. CPU1 calls kprobe_perf_func() and crashes at (3) because
-   call->perf_events is still NULL
-
-CPU1 sees that kprobe functionality is enabled but does not see that
-perf_events has been assigned.
-
-Add pairing read and write memory barriers to guarantee that if CPU1
-sees that kprobe functionality is enabled, it must also see that
-perf_events has been assigned.
-
-Link: https://lore.kernel.org/all/20251001022025.44626-1-chenyuan_fl@163.com/
-
-Fixes: 50d780560785 ("tracing/kprobes: Add probe handler dispatcher to support perf and ftrace concurrent use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ Drop fprobe changes + context ]
+Fixes: c0d41112f1a5 ("ksmbd: extend the connection limiting mechanism to support IPv6")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adjust reserved room ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c |   11 +++++++----
- kernel/trace/trace_probe.h  |    9 +++++++--
- kernel/trace/trace_uprobe.c |   13 +++++++++----
- 3 files changed, 23 insertions(+), 10 deletions(-)
+ fs/smb/server/ksmbd_netlink.h |    5 +++--
+ fs/smb/server/server.h        |    1 +
+ fs/smb/server/transport_ipc.c |    3 +++
+ fs/smb/server/transport_tcp.c |   27 ++++++++++++++++-----------
+ 4 files changed, 23 insertions(+), 13 deletions(-)
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -1715,14 +1715,15 @@ static int kprobe_register(struct trace_
- static int kprobe_dispatcher(struct kprobe *kp, struct pt_regs *regs)
- {
- 	struct trace_kprobe *tk = container_of(kp, struct trace_kprobe, rp.kp);
-+	unsigned int flags = trace_probe_load_flag(&tk->tp);
- 	int ret = 0;
+--- a/fs/smb/server/ksmbd_netlink.h
++++ b/fs/smb/server/ksmbd_netlink.h
+@@ -107,10 +107,11 @@ struct ksmbd_startup_request {
+ 	__u32	smb2_max_credits;	/* MAX credits */
+ 	__u32	smbd_max_io_size;	/* smbd read write size */
+ 	__u32	max_connections;	/* Number of maximum simultaneous connections */
+-	__u32	reserved[126];		/* Reserved room */
++	__u32	max_ip_connections;	/* Number of maximum connection per ip address */
++	__u32	reserved[125];		/* Reserved room */
+ 	__u32	ifc_list_sz;		/* interfaces list size */
+ 	__s8	____payload[];
+-};
++} __packed;
  
- 	raw_cpu_inc(*tk->nhit);
+ #define KSMBD_STARTUP_CONFIG_INTERFACES(s)	((s)->____payload)
  
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	if (flags & TP_FLAG_TRACE)
- 		kprobe_trace_func(tk, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret = kprobe_perf_func(tk, regs);
- #endif
- 	return ret;
-@@ -1734,6 +1735,7 @@ kretprobe_dispatcher(struct kretprobe_in
- {
- 	struct kretprobe *rp = get_kretprobe(ri);
- 	struct trace_kprobe *tk;
-+	unsigned int flags;
+--- a/fs/smb/server/server.h
++++ b/fs/smb/server/server.h
+@@ -42,6 +42,7 @@ struct ksmbd_server_config {
+ 	struct smb_sid		domain_sid;
+ 	unsigned int		auth_mechs;
+ 	unsigned int		max_connections;
++	unsigned int		max_ip_connections;
  
- 	/*
- 	 * There is a small chance that get_kretprobe(ri) returns NULL when
-@@ -1746,10 +1748,11 @@ kretprobe_dispatcher(struct kretprobe_in
- 	tk = container_of(rp, struct trace_kprobe, rp);
- 	raw_cpu_inc(*tk->nhit);
- 
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tk->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		kretprobe_trace_func(tk, ri, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		kretprobe_perf_func(tk, ri, regs);
- #endif
- 	return 0;	/* We don't tweak kernel, so just return 0 */
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -257,16 +257,21 @@ struct event_file_link {
- 	struct list_head		list;
+ 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
  };
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -318,6 +318,9 @@ static int ipc_server_config_on_startup(
+ 	if (req->max_connections)
+ 		server_conf.max_connections = req->max_connections;
  
-+static inline unsigned int trace_probe_load_flag(struct trace_probe *tp)
-+{
-+	return smp_load_acquire(&tp->event->flags);
-+}
++	if (req->max_ip_connections)
++		server_conf.max_ip_connections = req->max_ip_connections;
 +
- static inline bool trace_probe_test_flag(struct trace_probe *tp,
- 					 unsigned int flag)
- {
--	return !!(tp->event->flags & flag);
-+	return !!(trace_probe_load_flag(tp) & flag);
- }
+ 	ret = ksmbd_set_netbios_name(req->netbios_name);
+ 	ret |= ksmbd_set_server_string(req->server_string);
+ 	ret |= ksmbd_set_work_group(req->work_group);
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -236,6 +236,7 @@ static int ksmbd_kthread_fn(void *p)
+ 	struct interface *iface = (struct interface *)p;
+ 	struct ksmbd_conn *conn;
+ 	int ret;
++	unsigned int max_ip_conns;
  
- static inline void trace_probe_set_flag(struct trace_probe *tp,
- 					unsigned int flag)
- {
--	tp->event->flags |= flag;
-+	smp_store_release(&tp->event->flags, tp->event->flags | flag);
- }
+ 	while (!kthread_should_stop()) {
+ 		mutex_lock(&iface->sock_release_lock);
+@@ -253,34 +254,38 @@ static int ksmbd_kthread_fn(void *p)
+ 			continue;
+ 		}
  
- static inline void trace_probe_clear_flag(struct trace_probe *tp,
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1497,6 +1497,7 @@ static int uprobe_dispatcher(struct upro
- 	struct trace_uprobe *tu;
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
-+	unsigned int flags;
- 	int ret = 0;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
-@@ -1512,11 +1513,12 @@ static int uprobe_dispatcher(struct upro
- 
- 	ucb = prepare_uprobe_buffer(tu, regs);
- 
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		ret |= uprobe_trace_func(tu, regs, ucb);
- 
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret |= uprobe_perf_func(tu, regs, ucb);
- #endif
- 	uprobe_buffer_put(ucb);
-@@ -1529,6 +1531,7 @@ static int uretprobe_dispatcher(struct u
- 	struct trace_uprobe *tu;
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
-+	unsigned int flags;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
- 
-@@ -1541,11 +1544,13 @@ static int uretprobe_dispatcher(struct u
- 		return 0;
- 
- 	ucb = prepare_uprobe_buffer(tu, regs);
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
++		if (!server_conf.max_ip_connections)
++			goto skip_max_ip_conns_limit;
 +
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		uretprobe_trace_func(tu, func, regs, ucb);
+ 		/*
+ 		 * Limits repeated connections from clients with the same IP.
+ 		 */
++		max_ip_conns = 0;
+ 		down_read(&conn_list_lock);
+-		list_for_each_entry(conn, &conn_list, conns_list)
++		list_for_each_entry(conn, &conn_list, conns_list) {
+ #if IS_ENABLED(CONFIG_IPV6)
+ 			if (client_sk->sk->sk_family == AF_INET6) {
+ 				if (memcmp(&client_sk->sk->sk_v6_daddr,
+-					   &conn->inet6_addr, 16) == 0) {
+-					ret = -EAGAIN;
+-					break;
+-				}
++					   &conn->inet6_addr, 16) == 0)
++					max_ip_conns++;
+ 			} else if (inet_sk(client_sk->sk)->inet_daddr ==
+-				 conn->inet_addr) {
+-				ret = -EAGAIN;
+-				break;
+-			}
++				 conn->inet_addr)
++				max_ip_conns++;
+ #else
+ 			if (inet_sk(client_sk->sk)->inet_daddr ==
+-			    conn->inet_addr) {
++			    conn->inet_addr)
++				max_ip_conns++;
++#endif
++			if (server_conf.max_ip_connections <= max_ip_conns) {
+ 				ret = -EAGAIN;
+ 				break;
+ 			}
+-#endif
++		}
+ 		up_read(&conn_list_lock);
+ 		if (ret == -EAGAIN)
+ 			continue;
  
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		uretprobe_perf_func(tu, func, regs, ucb);
- #endif
- 	uprobe_buffer_put(ucb);
++skip_max_ip_conns_limit:
+ 		if (server_conf.max_connections &&
+ 		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
+ 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
 
 
