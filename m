@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F07242935;
-	Fri, 17 Oct 2025 15:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B87337110;
+	Fri, 17 Oct 2025 15:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714233; cv=none; b=F37lyIu/ItzNdvurUSN5LCMCImcvCzD+ENApqjpvzwuSgWtczfSzUk85B/QDJ70J8ZyRP8XXldvOGba/FY0+v2JUVqfaJCpKwky19G5TNfX7VSrKV7TxLgqeDhhiJJczanxr2MiHvjaub6Qrwv/3xb0cEZO555uPkC0VQWCK8iU=
+	t=1760714236; cv=none; b=OI3hlzdIuWMh5lVjqDtCnIY+Sil7LEbazHUSgBLPUjsZRDrAU/oKZjPv862AOHSYoKyqYuM7t/Q1wU05O4ajd7kDXQXZ7Avr7RWkw+tDIdHOpJFhcMW+7I2+3jd+rj/a8CAcendiFNpt4SIL4EjTEa3y6QRA0xOiPTe/QqOwfls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714233; c=relaxed/simple;
-	bh=Yuf2+TiE8+jXWYl39TGWsLfqRsBUuADy5rEIbVeGu/k=;
+	s=arc-20240116; t=1760714236; c=relaxed/simple;
+	bh=KpofKOfF9+mgR33eF9b2YXsbs9OIehEG3aoJbfGOqhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTG4BbUHF/yd6Ozqm8tdbCjPF/q9gXhu++kt8AO4DDA4XDKohJWpVHu63rV/UNcOAyPH/pPGEJ8lnZGcxdINMQbB2FDrfuF5Fjx2gzKQpI3vbZAm6o+OrxL4NBpPDq1NZTWW6ieC8h9uxbSe9QODv88U1HeqVIz5SBebCjkUhBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/nGsSYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9/ue8S5NUCpXHKBQeNVLUdke1zgGxyWtmEj9NXHe8q1tvtaxoWyZHV0b7T2gUdfU6nC33w6/67w8MnIEJqGHQN2XmmNxBHAEHdUS72Eit0ctuqJ2YT0hhW3FDLvBL/TQ/qbuJQrtRjDQxSIAF032K8FIZlsQ1U8zJ5vj6FD5T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEg4sONT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/nGsSYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB68C4CEE7;
-	Fri, 17 Oct 2025 15:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEg4sONT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D53C4CEE7;
+	Fri, 17 Oct 2025 15:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714233;
-	bh=Yuf2+TiE8+jXWYl39TGWsLfqRsBUuADy5rEIbVeGu/k=;
+	s=korg; t=1760714236;
+	bh=KpofKOfF9+mgR33eF9b2YXsbs9OIehEG3aoJbfGOqhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/nGsSYiNH45r0KwEMDiZ7qWP3Sp6HB3NfozOzxUheSsA/6FPyQ2oit3Jf2vXZcBa
-	 DUXPCuSvekGcD9Rl9XpJlOmEeQcmYCrHjaW7FCfdmHRwpm4xW8xgDwWtMJ5kJVaJlG
-	 JYGvJX7jAxiGESejISyDCn7eAL3tnQ6ZmfTfHwBo=
+	b=CEg4sONTuxMRHyn036y04qSLDOs3rp0H+U/aRyG3L3kZuZEsrGMOU4XYnONKX79+l
+	 UCy1hxrV1b7Nge61pbehTl+44ioj0VV08OZ67Ioobm2u25JnnChlj3w5bfbVGHd9+7
+	 HQ4SM+gAsu4qx6fa6hbAw6JsnsZDSEdC+mkR6iw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Woudstra <ericwouds@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/277] bridge: br_vlan_fill_forward_path_pvid: use br_vlan_group_rcu()
-Date: Fri, 17 Oct 2025 16:51:21 +0200
-Message-ID: <20251017145149.841901979@linuxfoundation.org>
+Subject: [PATCH 6.12 075/277] selftests: netfilter: query conntrack state to check for port clash resolution
+Date: Fri, 17 Oct 2025 16:51:22 +0200
+Message-ID: <20251017145149.877932950@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,48 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Woudstra <ericwouds@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit bbf0c98b3ad9edaea1f982de6c199cc11d3b7705 ]
+[ Upstream commit e84945bdc619ed4243ba4298dbb8ca2062026474 ]
 
-net/bridge/br_private.h:1627 suspicious rcu_dereference_protected() usage!
-other info that might help us debug this:
+Jakub reported this self test flaking occasionally (fails, but passes on
+re-run) on debug kernels.
 
-rcu_scheduler_active = 2, debug_locks = 1
-7 locks held by socat/410:
- #0: ffff88800d7a9c90 (sk_lock-AF_INET){+.+.}-{0:0}, at: inet_stream_connect+0x43/0xa0
- #1: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: __ip_queue_xmit+0x62/0x1830
- [..]
- #6: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: nf_hook.constprop.0+0x8a/0x440
+This is because the test checks for elapsed time to determine if both
+connections were established in parallel.
 
-Call Trace:
- lockdep_rcu_suspicious.cold+0x4f/0xb1
- br_vlan_fill_forward_path_pvid+0x32c/0x410 [bridge]
- br_fill_forward_path+0x7a/0x4d0 [bridge]
+Rework this to no longer depend on timing.
+Use busywait helper to check that both sockets have moved to established
+state and then query the conntrack engine for the two entries.
 
-Use to correct helper, non _rcu variant requires RTNL mutex.
-
-Fixes: bcf2766b1377 ("net: bridge: resolve forwarding path for VLAN tag actions in bridge devices")
-Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netfilter-devel/20250926163318.40d1a502@kernel.org/
+Fixes: 117e149e26d1 ("selftests: netfilter: test nat source port clash resolution interaction with tcp early demux")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/net/netfilter/nf_nat_edemux.sh  | 58 +++++++++++++------
+ 1 file changed, 41 insertions(+), 17 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index f2efb58d152bc..13d6c3f51c29d 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1455,7 +1455,7 @@ void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 	if (!br_opt_get(br, BROPT_VLAN_ENABLED))
- 		return;
+diff --git a/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh b/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
+index 1014551dd7694..6731fe1eaf2e9 100755
+--- a/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
++++ b/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
+@@ -17,9 +17,31 @@ cleanup()
  
--	vg = br_vlan_group(br);
-+	vg = br_vlan_group_rcu(br);
+ checktool "socat -h" "run test without socat"
+ checktool "iptables --version" "run test without iptables"
++checktool "conntrack --version" "run test without conntrack"
  
- 	if (idx >= 0 &&
- 	    ctx->vlan[idx].proto == br->vlan_proto) {
+ trap cleanup EXIT
+ 
++connect_done()
++{
++	local ns="$1"
++	local port="$2"
++
++	ip netns exec "$ns" ss -nt -o state established "dport = :$port" | grep -q "$port"
++}
++
++check_ctstate()
++{
++	local ns="$1"
++	local dp="$2"
++
++	if ! ip netns exec "$ns" conntrack --get -s 192.168.1.2 -d 192.168.1.1 -p tcp \
++	     --sport 10000 --dport "$dp" --state ESTABLISHED > /dev/null 2>&1;then
++		echo "FAIL: Did not find expected state for dport $2"
++		ip netns exec "$ns" bash -c 'conntrack -L; conntrack -S; ss -nt'
++		ret=1
++	fi
++}
++
+ setup_ns ns1 ns2
+ 
+ # Connect the namespaces using a veth pair
+@@ -44,15 +66,18 @@ socatpid=$!
+ ip netns exec "$ns2" sysctl -q net.ipv4.ip_local_port_range="10000 10000"
+ 
+ # add a virtual IP using DNAT
+-ip netns exec "$ns2" iptables -t nat -A OUTPUT -d 10.96.0.1/32 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.1:5201
++ip netns exec "$ns2" iptables -t nat -A OUTPUT -d 10.96.0.1/32 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.1:5201 || exit 1
+ 
+ # ... and route it to the other namespace
+ ip netns exec "$ns2" ip route add 10.96.0.1 via 192.168.1.1
+ 
+-# add a persistent connection from the other namespace
+-ip netns exec "$ns2" socat -t 10 - TCP:192.168.1.1:5201 > /dev/null &
++# listener should be up by now, wait if it isn't yet.
++wait_local_port_listen "$ns1" 5201 tcp
+ 
+-sleep 1
++# add a persistent connection from the other namespace
++sleep 10 | ip netns exec "$ns2" socat -t 10 - TCP:192.168.1.1:5201 > /dev/null &
++cpid0=$!
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" "5201"
+ 
+ # ip daddr:dport will be rewritten to 192.168.1.1 5201
+ # NAT must reallocate source port 10000 because
+@@ -71,26 +96,25 @@ fi
+ ip netns exec "$ns1" iptables -t nat -A PREROUTING -p tcp --dport 5202 -j REDIRECT --to-ports 5201
+ ip netns exec "$ns1" iptables -t nat -A PREROUTING -p tcp --dport 5203 -j REDIRECT --to-ports 5201
+ 
+-sleep 5 | ip netns exec "$ns2" socat -t 5 -u STDIN TCP:192.168.1.1:5202,connect-timeout=5 >/dev/null &
++sleep 5 | ip netns exec "$ns2" socat -T 5 -u STDIN TCP:192.168.1.1:5202,connect-timeout=5 >/dev/null &
++cpid1=$!
+ 
+-# if connect succeeds, client closes instantly due to EOF on stdin.
+-# if connect hangs, it will time out after 5s.
+-echo | ip netns exec "$ns2" socat -t 3 -u STDIN TCP:192.168.1.1:5203,connect-timeout=5 >/dev/null &
++sleep 5 | ip netns exec "$ns2" socat -T 5 -u STDIN TCP:192.168.1.1:5203,connect-timeout=5 >/dev/null &
+ cpid2=$!
+ 
+-time_then=$(date +%s)
+-wait $cpid2
+-rv=$?
+-time_now=$(date +%s)
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" 5202
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" 5203
+ 
+-# Check how much time has elapsed, expectation is for
+-# 'cpid2' to connect and then exit (and no connect delay).
+-delta=$((time_now - time_then))
++check_ctstate "$ns1" 5202
++check_ctstate "$ns1" 5203
+ 
+-if [ $delta -lt 2 ] && [ $rv -eq 0 ]; then
++kill $socatpid $cpid0 $cpid1 $cpid2
++socatpid=0
++
++if [ $ret -eq 0 ]; then
+ 	echo "PASS: could connect to service via redirected ports"
+ else
+-	echo "FAIL: socat cannot connect to service via redirect ($delta seconds elapsed, returned $rv)"
++	echo "FAIL: socat cannot connect to service via redirect"
+ 	ret=1
+ fi
+ 
 -- 
 2.51.0
 
