@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E2E330B2E;
-	Fri, 17 Oct 2025 15:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F30132F75D;
+	Fri, 17 Oct 2025 15:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716339; cv=none; b=qmKpH/ixK/4vzP5C45qj+KoxgnfaDEvfr5FQMZJtDNBCNcYCe3pMKqdXaaCQ+WVwWuM/fMPQ1ZWd7JRj7O2Y9QZWqrUMAcvbAbwbLMw4+1fqM94Z3lIbtx41nPiGOvxJ01KwWFLxCmLzwWC0c8FzBggaANSZuXcoV1mP+yJDonU=
+	t=1760716342; cv=none; b=O0hg6fRtFO23KdpHllhfJ/0NNNgiMH2yKoplH8YTeq4yhF83XznbM3aJKQVSGXaJb11gG/t0kRjQqzCQkPbSCbQaFfWmdUojfTFdN+jyE2p+MyDaBxH9EndfwhRhgbBUr+5c+kMi1rWE5VnAl1Mi6zyf/sUuf9vb9Ljk8S6QpwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716339; c=relaxed/simple;
-	bh=grzkNWZGpk04kzbbQg50j02d7QMyU1ZGUZQENbB6qs4=;
+	s=arc-20240116; t=1760716342; c=relaxed/simple;
+	bh=GRdMilTFudBmp96Wo4naiDV1yZbOu8Sk2X71OGFeQV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H8wWJgryFyTA4Zoxg6SB1jqwvzB6MSO4RR45O5ZeaMj6TQ7W+OAP/kzQwyVUABbvTceP8mlt2cD1YWd7lgOgeP7Q5hAlJ+JfVKoOK46Fk7yD2qXxMqq8oWjYKckVDRlxZDCPtZF/yV9qXNW95lzlEg1FJYPlT/evF/cJbUnIRn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FdpuJ/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qPCk1odREt8tQGtjAIhmXdJC4bzKUru+1Jds1Ul52J+rKY8a7eEjIHt0P9JTKAUeMe4Z6BfXS0ubjhZoFmO0EtVswFqb9/S1QfEzUVi3ydskmuM9UpGzdPlaz00dIqhQ0ikLvZW7Db+NrXq2wnVbLV9gdKKQvaSYcHcThWKMixs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OeYtzsl8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FdpuJ/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1773C4CEE7;
-	Fri, 17 Oct 2025 15:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeYtzsl8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC95FC4CEFE;
+	Fri, 17 Oct 2025 15:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716339;
-	bh=grzkNWZGpk04kzbbQg50j02d7QMyU1ZGUZQENbB6qs4=;
+	s=korg; t=1760716342;
+	bh=GRdMilTFudBmp96Wo4naiDV1yZbOu8Sk2X71OGFeQV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0FdpuJ/waObzLRmy06BZcXx+SRiCKlQb0p1M3b88JepwSytNJoDGZoFAqx+ERrnXI
-	 eL5PwK0FMQ1esBqsn1JlFTtb0eQsciw7+zEtQOzBGaj1Qjdjk3D1WvmoXtJEuQpqtz
-	 /rNMQaU0VTlTYjBhOuYS+AWqSGt6LDUSgJj+/DJo=
+	b=OeYtzsl8tQmydk2mPsAz9ZWRsGS32fVgSCrNikMZYL5eC4mOGRg+SMGhPS6hslzFN
+	 gdA1f5kt60lKUklIBSvrRMZI89bA/ptyegdGqYBFS772c/Bwjt9CE10iD0qHSsGTd9
+	 1PQxEcFJVFatO4GXNer4qOJHY0d8fGXbb7xaobEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/276] drm/amd/display: Add missing DCE6 SCL_HORZ_FILTER_INIT* SRIs
-Date: Fri, 17 Oct 2025 16:54:10 +0200
-Message-ID: <20251017145148.207987959@linuxfoundation.org>
+Subject: [PATCH 5.15 158/276] drm/amd/display: Properly clear SCL_*_FILTER_CONTROL on DCE6
+Date: Fri, 17 Oct 2025 16:54:11 +0200
+Message-ID: <20251017145148.244129809@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -54,32 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit d60f9c45d1bff7e20ecd57492ef7a5e33c94a37c ]
+[ Upstream commit c0aa7cf49dd6cb302fe28e7183992b772cb7420c ]
 
-Without these, it's impossible to program these registers.
+Previously, the code would set a bit field which didn't exist
+on DCE6 so it would be effectively a no-op.
 
-Fixes: 102b2f587ac8 ("drm/amd/display: dce_transform: DCE6 Scaling Horizontal Filter Init (v2)")
+Fixes: b70aaf5586f2 ("drm/amd/display: dce_transform: add DCE6 specific macros,functions")
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_transform.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dce/dce_transform.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
-index cbce194ec7b82..ff746fba850bc 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
-@@ -155,6 +155,8 @@
- 	SRI(SCL_COEF_RAM_TAP_DATA, SCL, id), \
- 	SRI(VIEWPORT_START, SCL, id), \
- 	SRI(VIEWPORT_SIZE, SCL, id), \
-+	SRI(SCL_HORZ_FILTER_INIT_RGB_LUMA, SCL, id), \
-+	SRI(SCL_HORZ_FILTER_INIT_CHROMA, SCL, id), \
- 	SRI(SCL_HORZ_FILTER_SCALE_RATIO, SCL, id), \
- 	SRI(SCL_VERT_FILTER_SCALE_RATIO, SCL, id), \
- 	SRI(SCL_VERT_FILTER_INIT, SCL, id), \
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+index 670d5ab9d9984..b761dda491d54 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+@@ -527,8 +527,7 @@ static void dce60_transform_set_scaler(
+ 		if (coeffs_v != xfm_dce->filter_v || coeffs_h != xfm_dce->filter_h) {
+ 			/* 4. Program vertical filters */
+ 			if (xfm_dce->filter_v == NULL)
+-				REG_SET(SCL_VERT_FILTER_CONTROL, 0,
+-						SCL_V_2TAP_HARDCODE_COEF_EN, 0);
++				REG_WRITE(SCL_VERT_FILTER_CONTROL, 0);
+ 			program_multi_taps_filter(
+ 					xfm_dce,
+ 					data->taps.v_taps,
+@@ -542,8 +541,7 @@ static void dce60_transform_set_scaler(
+ 
+ 			/* 5. Program horizontal filters */
+ 			if (xfm_dce->filter_h == NULL)
+-				REG_SET(SCL_HORZ_FILTER_CONTROL, 0,
+-						SCL_H_2TAP_HARDCODE_COEF_EN, 0);
++				REG_WRITE(SCL_HORZ_FILTER_CONTROL, 0);
+ 			program_multi_taps_filter(
+ 					xfm_dce,
+ 					data->taps.h_taps,
 -- 
 2.51.0
 
