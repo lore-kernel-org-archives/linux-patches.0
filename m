@@ -1,74 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79E42F12B4;
-	Fri, 17 Oct 2025 15:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817BB27FB03;
+	Fri, 17 Oct 2025 15:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714736; cv=none; b=hCy33cyc3QSK5tm26J6MV0rQqChK5YnZ/vOCfsDbmLcSX9wzYNQbIm6v0IpEY3EnfnVJHY+19QOBmqzjnLfxGv+KWccHAyRLf3YOS3gTf4h2gD7t20mBEUyiB1XIb7gIzI0P/b5Uoajow3/7GGpLk2z2Zy7Ti0VpRvGugco6B7c=
+	t=1760714739; cv=none; b=XrABuO0ZDZWJ/x8+G4uX8F+Kp1P0Nl0G7dcYaesJN4wHQlz7v6x5BV9CTd/b0zo4cBbz5MkHcp4X5T62vW4ZH7QYOnp1j0xKawM5L3oSs2DnYz8XF29o9WeIszH2STWFpEn6Kzt1zPUYo01iVKruGvd+OngPTgqJbUhOpuamd0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714736; c=relaxed/simple;
-	bh=8u+WcFdeDgUdZPrD/84H96U385GQqcTzIbbiT7t7RzU=;
+	s=arc-20240116; t=1760714739; c=relaxed/simple;
+	bh=ckTQYzHvxLVr+VNpYm/gB1eHeJ6q/M5SO1+3Su+DTrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ah0peO7pgQN2Z/3hohkssTXdnIHQ16T1Ppz7rR30wEIavWpigvmsh3hXkbonCRYvhza8d4SYLL5+snx9TZrPqBssoXDSXJqwwlr9IDj7bcJ2jozJMzH3EwnAZdLfm+tm4W/fpLXF9ieJhQKhesSTZ2ZknvMA1EKgF54nurVaYJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qW9OwIq9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YjB9Ggou1IxZImRPFDqI+frxKyqZBaeBDu++uADIZKz6uaxEqfZRDb4/nh2s6toEGMXuwYbb/h/3B4yZZMKwh4EJCpgYDDLgLDi2OuXQSlr50KI4R8btoibdmwZwMHK9pBmunWJPmf2LjmDfYkHVRG0K9btAXEgBLwCU6yDMNj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGqfreku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qW9OwIq9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5DEC4CEE7;
-	Fri, 17 Oct 2025 15:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGqfreku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06577C4CEE7;
+	Fri, 17 Oct 2025 15:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714736;
-	bh=8u+WcFdeDgUdZPrD/84H96U385GQqcTzIbbiT7t7RzU=;
+	s=korg; t=1760714739;
+	bh=ckTQYzHvxLVr+VNpYm/gB1eHeJ6q/M5SO1+3Su+DTrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qW9OwIq9rC/PgpZGdoOfGaoRPFql16s0XXABMMGNnmy++vmPIEACGJ6c3jP5qHeBU
-	 loWJP7G/xkoH2J5sP6QN26cr2TXdmAuwfg8wBmZjxh1yxhA9sqOyfT7HEXU5OB8mDJ
-	 Z2/GdjwJx9Mx54hQhlPzf2G3NruySghgluAvDNYk=
+	b=BGqfrekuNZbuglB8HXMwQJVg/2QUO/2WKBRnfbKZ2C88+xuYB0mTiaJ7c0QXE+BOQ
+	 jHUvg83XtM3fzNtXDIRVV+bwKA1BjFhAy7Sz7ohZAQzY61VjVkVVNu1USB47OxYKuK
+	 pkaHi5bqqdQN2ZHcEsgWzrJPjpg2uvRNtbPyoZ24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
-	David Hildenbrand <david@redhat.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	"andrew.yang" <andrew.yang@mediatek.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Chinwen Chang <chinwen.chang@mediatek.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Gregory Price <gourry@gourry.net>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Kairui Song <ryncsn@gmail.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	Mathew Brost <matthew.brost@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rik van Riel <riel@surriel.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 205/277] mm/thp: fix MTE tag mismatch when replacing zero-filled subpages
-Date: Fri, 17 Oct 2025 16:53:32 +0200
-Message-ID: <20251017145154.609266655@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	=?UTF-8?q?J=C3=BCrgen=20Gro=C3=9F?= <jgross@suse.com>,
+	Korakit Seemakhupt <korakit@google.com>,
+	Jianxiong Gao <jxgao@google.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 242/277] x86/kvm: Force legacy PCI hole to UC when overriding MTRRs for TDX/SNP
+Date: Fri, 17 Oct 2025 16:54:09 +0200
+Message-ID: <20251017145155.979733982@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -81,151 +52,203 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 1ce6473d17e78e3cb9a40147658231731a551828 upstream.
+[ Upstream commit 0dccbc75e18df85399a71933d60b97494110f559 ]
 
-When both THP and MTE are enabled, splitting a THP and replacing its
-zero-filled subpages with the shared zeropage can cause MTE tag mismatch
-faults in userspace.
+When running as an SNP or TDX guest under KVM, force the legacy PCI hole,
+i.e. memory between Top of Lower Usable DRAM and 4GiB, to be mapped as UC
+via a forced variable MTRR range.
 
-Remapping zero-filled subpages to the shared zeropage is unsafe, as the
-zeropage has a fixed tag of zero, which may not match the tag expected by
-the userspace pointer.
+In most KVM-based setups, legacy devices such as the HPET and TPM are
+enumerated via ACPI.  ACPI enumeration includes a Memory32Fixed entry, and
+optionally a SystemMemory descriptor for an OperationRegion, e.g. if the
+device needs to be accessed via a Control Method.
 
-KSM already avoids this problem by using memcmp_pages(), which on arm64
-intentionally reports MTE-tagged pages as non-identical to prevent unsafe
-merging.
+If a SystemMemory entry is present, then the kernel's ACPI driver will
+auto-ioremap the region so that it can be accessed at will.  However, the
+ACPI spec doesn't provide a way to enumerate the memory type of
+SystemMemory regions, i.e. there's no way to tell software that a region
+must be mapped as UC vs. WB, etc.  As a result, Linux's ACPI driver always
+maps SystemMemory regions using ioremap_cache(), i.e. as WB on x86.
 
-As suggested by David[1], this patch adopts the same pattern, replacing the
-memchr_inv() byte-level check with a call to pages_identical(). This
-leverages existing architecture-specific logic to determine if a page is
-truly identical to the shared zeropage.
+The dedicated device drivers however, e.g. the HPET driver and TPM driver,
+want to map their associated memory as UC or WC, as accessing PCI devices
+using WB is unsupported.
 
-Having both the THP shrinker and KSM rely on pages_identical() makes the
-design more future-proof, IMO. Instead of handling quirks in generic code,
-we just let the architecture decide what makes two pages identical.
+On bare metal and non-CoCO, the conflicting requirements "work" as firmware
+configures the PCI hole (and other device memory) to be UC in the MTRRs.
+So even though the ACPI mappings request WB, they are forced to UC- in the
+kernel's tracking due to the kernel properly handling the MTRR overrides,
+and thus are compatible with the drivers' requested WC/UC-.
 
-[1] https://lore.kernel.org/all/ca2106a3-4bb2-4457-81af-301fd99fbef4@redhat.com
+With force WB MTRRs on SNP and TDX guests, the ACPI mappings get their
+requested WB if the ACPI mappings are established before the dedicated
+driver code attempts to initialize the device.  E.g. if acpi_init()
+runs before the corresponding device driver is probed, ACPI's WB mapping
+will "win", and result in the driver's ioremap() failing because the
+existing WB mapping isn't compatible with the requested WC/UC-.
 
-Link: https://lkml.kernel.org/r/20250922021458.68123-1-lance.yang@linux.dev
-Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
-Closes: https://lore.kernel.org/all/a7944523fcc3634607691c35311a5d59d1a3f8d4.camel@mediatek.com
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: andrew.yang <andrew.yang@mediatek.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Chinwen Chang <chinwen.chang@mediatek.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Mathew Brost <matthew.brost@intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+E.g. when a TPM is emulated by the hypervisor (ignoring the security
+implications of relying on what is allegedly an untrusted entity to store
+measurements), the TPM driver will request UC and fail:
+
+  [  1.730459] ioremap error for 0xfed40000-0xfed45000, requested 0x2, got 0x0
+  [  1.732780] tpm_tis MSFT0101:00: probe with driver tpm_tis failed with error -12
+
+Note, the '0x2' and '0x0' values refer to "enum page_cache_mode", not x86's
+memtypes (which frustratingly are an almost pure inversion; 2 == WB, 0 == UC).
+E.g. tracing mapping requests for TPM TIS yields:
+
+ Mapping TPM TIS with req_type = 0
+ WARNING: CPU: 22 PID: 1 at arch/x86/mm/pat/memtype.c:530 memtype_reserve+0x2ab/0x460
+ Modules linked in:
+ CPU: 22 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W           6.16.0-rc7+ #2 VOLUNTARY
+ Tainted: [W]=WARN
+ Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/29/2025
+ RIP: 0010:memtype_reserve+0x2ab/0x460
+  __ioremap_caller+0x16d/0x3d0
+  ioremap_cache+0x17/0x30
+  x86_acpi_os_ioremap+0xe/0x20
+  acpi_os_map_iomem+0x1f3/0x240
+  acpi_os_map_memory+0xe/0x20
+  acpi_ex_system_memory_space_handler+0x273/0x440
+  acpi_ev_address_space_dispatch+0x176/0x4c0
+  acpi_ex_access_region+0x2ad/0x530
+  acpi_ex_field_datum_io+0xa2/0x4f0
+  acpi_ex_extract_from_field+0x296/0x3e0
+  acpi_ex_read_data_from_field+0xd1/0x460
+  acpi_ex_resolve_node_to_value+0x2ee/0x530
+  acpi_ex_resolve_to_value+0x1f2/0x540
+  acpi_ds_evaluate_name_path+0x11b/0x190
+  acpi_ds_exec_end_op+0x456/0x960
+  acpi_ps_parse_loop+0x27a/0xa50
+  acpi_ps_parse_aml+0x226/0x600
+  acpi_ps_execute_method+0x172/0x3e0
+  acpi_ns_evaluate+0x175/0x5f0
+  acpi_evaluate_object+0x213/0x490
+  acpi_evaluate_integer+0x6d/0x140
+  acpi_bus_get_status+0x93/0x150
+  acpi_add_single_object+0x43a/0x7c0
+  acpi_bus_check_add+0x149/0x3a0
+  acpi_bus_check_add_1+0x16/0x30
+  acpi_ns_walk_namespace+0x22c/0x360
+  acpi_walk_namespace+0x15c/0x170
+  acpi_bus_scan+0x1dd/0x200
+  acpi_scan_init+0xe5/0x2b0
+  acpi_init+0x264/0x5b0
+  do_one_initcall+0x5a/0x310
+  kernel_init_freeable+0x34f/0x4f0
+  kernel_init+0x1b/0x200
+  ret_from_fork+0x186/0x1b0
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+
+The above traces are from a Google-VMM based VM, but the same behavior
+happens with a QEMU based VM that is modified to add a SystemMemory range
+for the TPM TIS address space.
+
+The only reason this doesn't cause problems for HPET, which appears to
+require a SystemMemory region, is because HPET gets special treatment via
+x86_init.timers.timer_init(), and so gets a chance to create its UC-
+mapping before acpi_init() clobbers things.  Disabling the early call to
+hpet_time_init() yields the same behavior for HPET:
+
+  [  0.318264] ioremap error for 0xfed00000-0xfed01000, requested 0x2, got 0x0
+
+Hack around the ACPI gap by forcing the legacy PCI hole to UC when
+overriding the (virtual) MTRRs for CoCo guest, so that ioremap handling
+of MTRRs naturally kicks in and forces the ACPI mappings to be UC.
+
+Note, the requested/mapped memtype doesn't actually matter in terms of
+accessing the device.  In practically every setup, legacy PCI devices are
+emulated by the hypervisor, and accesses are intercepted and handled as
+emulated MMIO, i.e. never access physical memory and thus don't have an
+effective memtype.
+
+Even in a theoretical setup where such devices are passed through by the
+host, i.e. point at real MMIO memory, it is KVM's (as the hypervisor)
+responsibility to force the memory to be WC/UC, e.g. via EPT memtype
+under TDX or real hardware MTRRs under SNP.  Not doing so cannot work,
+and the hypervisor is highly motivated to do the right thing as letting
+the guest access hardware MMIO with WB would likely result in a variety
+of fatal #MCs.
+
+In other words, forcing the range to be UC is all about coercing the
+kernel's tracking into thinking that it has established UC mappings, so
+that the ioremap code doesn't reject mappings from e.g. the TPM driver and
+thus prevent the driver from loading and the device from functioning.
+
+Note #2, relying on guest firmware to handle this scenario, e.g. by setting
+virtual MTRRs and then consuming them in Linux, is not a viable option, as
+the virtual MTRR state is managed by the untrusted hypervisor, and because
+OVMF at least has stopped programming virtual MTRRs when running as a TDX
+guest.
+
+Link: https://lore.kernel.org/all/8137d98e-8825-415b-9282-1d2a115bb51a@linux.intel.com
+Fixes: 8e690b817e38 ("x86/kvm: Override default caching mode for SEV-SNP and TDX")
+Cc: stable@vger.kernel.org
+Cc: Peter Gonda <pgonda@google.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: Jürgen Groß <jgross@suse.com>
+Cc: Korakit Seemakhupt <korakit@google.com>
+Cc: Jianxiong Gao <jxgao@google.com>
+Cc: Nikolay Borisov <nik.borisov@suse.com>
+Suggested-by: Binbin Wu <binbin.wu@linux.intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Tested-by: Korakit Seemakhupt <korakit@google.com>
+Link: https://lore.kernel.org/r/20250828005249.39339-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   15 +++------------
- mm/migrate.c     |    8 +-------
- 2 files changed, 4 insertions(+), 19 deletions(-)
+ arch/x86/kernel/kvm.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3715,32 +3715,23 @@ static unsigned long deferred_split_coun
- static bool thp_underused(struct folio *folio)
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -933,6 +933,19 @@ static void kvm_sev_hc_page_enc_status(u
+ 
+ static void __init kvm_init_platform(void)
  {
- 	int num_zero_pages = 0, num_filled_pages = 0;
--	void *kaddr;
- 	int i;
++	u64 tolud = PFN_PHYS(e820__end_of_low_ram_pfn());
++	/*
++	 * Note, hardware requires variable MTRR ranges to be power-of-2 sized
++	 * and naturally aligned.  But when forcing guest MTRR state, Linux
++	 * doesn't program the forced ranges into hardware.  Don't bother doing
++	 * the math to generate a technically-legal range.
++	 */
++	struct mtrr_var_range pci_hole = {
++		.base_lo = tolud | X86_MEMTYPE_UC,
++		.mask_lo = (u32)(~(SZ_4G - tolud - 1)) | MTRR_PHYSMASK_V,
++		.mask_hi = (BIT_ULL(boot_cpu_data.x86_phys_bits) - 1) >> 32,
++	};
++
+ 	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT) &&
+ 	    kvm_para_has_feature(KVM_FEATURE_MIGRATION_CONTROL)) {
+ 		unsigned long nr_pages;
+@@ -982,8 +995,12 @@ static void __init kvm_init_platform(voi
+ 	kvmclock_init();
+ 	x86_platform.apic_post_init = kvm_apic_init;
  
- 	if (khugepaged_max_ptes_none == HPAGE_PMD_NR - 1)
- 		return false;
- 
- 	for (i = 0; i < folio_nr_pages(folio); i++) {
--		kaddr = kmap_local_folio(folio, i * PAGE_SIZE);
--		if (!memchr_inv(kaddr, 0, PAGE_SIZE)) {
--			num_zero_pages++;
--			if (num_zero_pages > khugepaged_max_ptes_none) {
--				kunmap_local(kaddr);
-+		if (pages_identical(folio_page(folio, i), ZERO_PAGE(0))) {
-+			if (++num_zero_pages > khugepaged_max_ptes_none)
- 				return true;
--			}
- 		} else {
- 			/*
- 			 * Another path for early exit once the number
- 			 * of non-zero filled pages exceeds threshold.
- 			 */
--			num_filled_pages++;
--			if (num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none) {
--				kunmap_local(kaddr);
-+			if (++num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none)
- 				return false;
--			}
- 		}
--		kunmap_local(kaddr);
- 	}
- 	return false;
+-	/* Set WB as the default cache mode for SEV-SNP and TDX */
+-	guest_force_mtrr_state(NULL, 0, MTRR_TYPE_WRBACK);
++	/*
++	 * Set WB as the default cache mode for SEV-SNP and TDX, with a single
++	 * UC range for the legacy PCI hole, e.g. so that devices that expect
++	 * to get UC/WC mappings don't get surprised with WB.
++	 */
++	guest_force_mtrr_state(&pci_hole, 1, MTRR_TYPE_WRBACK);
  }
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -202,9 +202,7 @@ static bool try_to_map_unused_to_zeropag
- 					  unsigned long idx)
- {
- 	struct page *page = folio_page(folio, idx);
--	bool contains_data;
- 	pte_t newpte;
--	void *addr;
  
- 	if (PageCompound(page))
- 		return false;
-@@ -221,11 +219,7 @@ static bool try_to_map_unused_to_zeropag
- 	 * this subpage has been non present. If the subpage is only zero-filled
- 	 * then map it to the shared zeropage.
- 	 */
--	addr = kmap_local_page(page);
--	contains_data = memchr_inv(addr, 0, PAGE_SIZE);
--	kunmap_local(addr);
--
--	if (contains_data)
-+	if (!pages_identical(page, ZERO_PAGE(0)))
- 		return false;
- 
- 	newpte = pte_mkspecial(pfn_pte(my_zero_pfn(pvmw->address),
+ #if defined(CONFIG_AMD_MEM_ENCRYPT)
 
 
