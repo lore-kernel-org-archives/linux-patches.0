@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A83B330B33;
-	Fri, 17 Oct 2025 15:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C72330B3A;
+	Fri, 17 Oct 2025 15:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715843; cv=none; b=tACnwtPXdAuiNKcT3KvMI+uh08ANIGolxnrTu5zcjr712EEQh68dCJkqmGPgdIfi1eTgF9DM/AYJi0mGkWy4wrcLrtDSPDftgHn3Bd/SUYgIQaPS9BJw6wV1GabV5om9F3ETYWak03OPVQHOAwTnt9I100TiYUk8d9PHFs9zA1k=
+	t=1760715846; cv=none; b=LY3Cgt+XyjfNmh8qw98zsuzNB97s6DUA8vleihQ3wpSuOrj/1+/DBeO7zxp+Qjf4ydWkOanPJpUxTr2Vehb68wFcrmHsbw/OhYKfSM3N0zuM6GwI5SzhV+u/BbrznMxb5jzbnCq7l0QKyByFj1COUdzA1EqpxfbdP5jryIzhtso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715843; c=relaxed/simple;
-	bh=jsxsC4tFLDDRArbI513/9XnAen4GUDXlBdg+6QZuS/I=;
+	s=arc-20240116; t=1760715846; c=relaxed/simple;
+	bh=ugJV6zFScW+SJJetd5EjTISELp5gmMJRBoDCJwS8BRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=US1Vjq3I+JU2yWIosgMbtnaXHCWrhEbIRQWk7Tvxi8hY/E2nX82wb3xW6Atcx7TlAc1z5evkDpeCux9H0UQnpN+cWK1YESMj1PK2WX6t42s9J1n8vW1L8Cn9qC/k/xPsljHEPBHf9XR6hhZNxd/lrsOwCBKpGPV2BabWnPtg4M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG4Cli2i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PM1Vc4+pgPszDQXW5RMhKXoGEQoL6diUQKSp3ZscxX7BJOUgasbt03eyZuCIYTLyfbxTnYJzPj+ucOyIOL4NhDb/t8LUaVlDtlZFBiyrAUwS7tIJHrxyAEhnLg2Nb4S24EBjhfUJ69oiECYxdwHmgaDrDUA5faRMOzYAZPMUQgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbsKz/ES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG4Cli2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1621CC4CEFE;
-	Fri, 17 Oct 2025 15:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbsKz/ES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FBCC113D0;
+	Fri, 17 Oct 2025 15:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715843;
-	bh=jsxsC4tFLDDRArbI513/9XnAen4GUDXlBdg+6QZuS/I=;
+	s=korg; t=1760715846;
+	bh=ugJV6zFScW+SJJetd5EjTISELp5gmMJRBoDCJwS8BRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG4Cli2iM8fqm5F2X75JSQ+yQmm3o8ngk+4CUyT0l3PCiBlrdf86nOql0wMmazxL4
-	 D9zaRz7tEvoXGoQjgr5OIzwTABzwaim2qMMBBVlewiwbLR3hF6RuXEQkhgs8exq5cg
-	 ln9pijDXwm70LJP3842FolUP/gmp6zaYdak6ueUo=
+	b=UbsKz/ESqe/F3tzTDiNGzQZqFmnbEeKrNNQ4T+xCz231bw5ZXDuSHdhi5sExQaTmH
+	 TES85SZkyjGVN45nSpXLaNP7eVelH0FNpufRMKjFkJJBQEH6ioHu7go8pabCd4sBly
+	 Jgr8Aq5IqarhSnGylj7g8yQtKI1YQiN6F59RMQa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Charles Mirabile <cmirabil@redhat.com>,
+	Lucas Zampieri <lzampier@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 357/371] ACPI: property: Do not pass NULL handles to acpi_attach_data()
-Date: Fri, 17 Oct 2025 16:55:32 +0200
-Message-ID: <20251017145215.003950940@linuxfoundation.org>
+Subject: [PATCH 6.17 358/371] irqchip/sifive-plic: Avoid interrupt ID 0 handling during suspend/resume
+Date: Fri, 17 Oct 2025 16:55:33 +0200
+Message-ID: <20251017145215.041008613@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,74 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Lucas Zampieri <lzampier@redhat.com>
 
-[ Upstream commit baf60d5cb8bc6b85511c5df5f0ad7620bb66d23c ]
+[ Upstream commit f75e07bf5226da640fa99a0594687c780d9bace4 ]
 
-In certain circumstances, the ACPI handle of a data-only node may be
-NULL, in which case it does not make sense to attempt to attach that
-node to an ACPI namespace object, so update the code to avoid attempts
-to do so.
+According to the PLIC specification[1], global interrupt sources are
+assigned small unsigned integer identifiers beginning at the value 1.
+An interrupt ID of 0 is reserved to mean "no interrupt".
 
-This prevents confusing and unuseful error messages from being printed.
+The current plic_irq_resume() and plic_irq_suspend() functions incorrectly
+start the loop from index 0, which accesses the register space for the
+reserved interrupt ID 0.
 
-Also document the fact that the ACPI handle of a data-only node may be
-NULL and when that happens in a code comment.  In addition, make
-acpi_add_nondev_subnodes() print a diagnostic message for each data-only
-node with an unknown ACPI namespace scope.
+Change the loop to start from index 1, skipping the reserved
+interrupt ID 0 as per the PLIC specification.
 
-Fixes: 1d52f10917a7 ("ACPI: property: Tie data nodes to acpi handles")
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+This prevents potential undefined behavior when accessing the reserved
+register space during suspend/resume cycles.
+
+Fixes: e80f0b6a2cf3 ("irqchip/irq-sifive-plic: Add syscore callbacks for hibernation")
+Co-developed-by: Jia Wang <wangjia@ultrarisc.com>
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Co-developed-by: Charles Mirabile <cmirabil@redhat.com>
+Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
+Signed-off-by: Lucas Zampieri <lzampier@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://github.com/riscv/riscv-plic-spec/releases/tag/1.0.0
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/property.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/irqchip/irq-sifive-plic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -124,6 +124,10 @@ static bool acpi_nondev_subnode_extract(
- 		result = true;
+diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
+index bf69a4802b71e..9c4af7d588463 100644
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -252,7 +252,8 @@ static int plic_irq_suspend(void)
  
- 	if (result) {
-+		/*
-+		 * This will be NULL if the desc package is embedded in an outer
-+		 * _DSD-equivalent package and its scope cannot be determined.
-+		 */
- 		dn->handle = handle;
- 		dn->data.pointer = desc;
- 		list_add_tail(&dn->sibling, list);
-@@ -224,6 +228,8 @@ static bool acpi_add_nondev_subnodes(acp
- 			 * strings because there is no way to build full
- 			 * pathnames out of them.
- 			 */
-+			acpi_handle_debug(scope, "subnode %s: Unknown scope\n",
-+					  link->package.elements[0].string.pointer);
- 			desc = &link->package.elements[1];
- 			result = acpi_nondev_subnode_extract(desc, NULL, link,
- 							     list, parent);
-@@ -396,6 +402,9 @@ static void acpi_untie_nondev_subnodes(s
- 	struct acpi_data_node *dn;
+ 	priv = per_cpu_ptr(&plic_handlers, smp_processor_id())->priv;
  
- 	list_for_each_entry(dn, &data->subnodes, sibling) {
-+		if (!dn->handle)
-+			continue;
-+
- 		acpi_detach_data(dn->handle, acpi_nondev_subnode_tag);
+-	for (i = 0; i < priv->nr_irqs; i++) {
++	/* irq ID 0 is reserved */
++	for (i = 1; i < priv->nr_irqs; i++) {
+ 		__assign_bit(i, priv->prio_save,
+ 			     readl(priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID));
+ 	}
+@@ -283,7 +284,8 @@ static void plic_irq_resume(void)
  
- 		acpi_untie_nondev_subnodes(&dn->data);
-@@ -410,6 +419,9 @@ static bool acpi_tie_nondev_subnodes(str
- 		acpi_status status;
- 		bool ret;
+ 	priv = per_cpu_ptr(&plic_handlers, smp_processor_id())->priv;
  
-+		if (!dn->handle)
-+			continue;
-+
- 		status = acpi_attach_data(dn->handle, acpi_nondev_subnode_tag, dn);
- 		if (ACPI_FAILURE(status) && status != AE_ALREADY_EXISTS) {
- 			acpi_handle_err(dn->handle, "Can't tag data node\n");
+-	for (i = 0; i < priv->nr_irqs; i++) {
++	/* irq ID 0 is reserved */
++	for (i = 1; i < priv->nr_irqs; i++) {
+ 		index = BIT_WORD(i);
+ 		writel((priv->prio_save[index] & BIT_MASK(i)) ? 1 : 0,
+ 		       priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID);
+-- 
+2.51.0
+
 
 
