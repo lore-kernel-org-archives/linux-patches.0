@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED25E330B1F;
-	Fri, 17 Oct 2025 15:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92F3330B1F;
+	Fri, 17 Oct 2025 15:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716391; cv=none; b=WVHm+7DWb32rHyUmnmDOW2XxviPDYmXj5SM6+Txfb6paWcF0Wfh10HxCPSH+8At23yBkrj5nQdHIMFOjskHXMA4ZY4aLr/EKnMeI+B+8IVMgAxFLn3w2oPIWCQrCTqDahFfBNShRDIAqKQuzKSBRaEAmzxcEUayuwsIQgxeeR7Q=
+	t=1760716394; cv=none; b=Vj94G39iSeGvh+ZQCWqtpZE7P4jFr8uYNlYkGZB7q0nQ5JF/4XEiUiwm1mldpNEvPT1Ah526QsHY5aVC92F5g37goag1qwsYh9kZ+nq2Y+BcDrfxify5aMJSP03o7ieY48skZJa4d0xkF5DOnPhzP1dKTNygAFes46YrKCszVv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716391; c=relaxed/simple;
-	bh=nmLJP/eVh18oR8Z7/BmuX/B88tbArMYum1mbDrIwTvQ=;
+	s=arc-20240116; t=1760716394; c=relaxed/simple;
+	bh=tEM7CUpDYALJWsB74BUF5dQWhkDaEjbkkVIohBGax/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpxyRKhsx6glpzw6ysFENt3RK1bv/N3cwrAyjGCs70cNbx0+zF6+SCsyVmPjRv3tJIV2mxSFEogpPzNFVDmpzTU3saHGEpO3qV/HbmvYCyJkbxgLjxJO32rnOa43PaFlXwy3lO8KHJrWEqslcxhGs+AXnFuC/r73mdksC3RXhtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzIvSKmq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4l2bLYiZp/OFfCg9YVqEDbLvBCyoCF12MB4RNaHsiOs4xGyjy+sH4GxUttJlZvvknrDOjY6D6gp4XeyzKTssjI96RVuNZQOeAn6k9S+OMgqobXj1C8w5H4tNK+o7+Dx4UN7IwkrD2AL3P3SHLmgSgO4ssTwJqib66vOKvc/EKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoxhgJDo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzIvSKmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBE3C4CEE7;
-	Fri, 17 Oct 2025 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoxhgJDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64589C4CEE7;
+	Fri, 17 Oct 2025 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716390;
-	bh=nmLJP/eVh18oR8Z7/BmuX/B88tbArMYum1mbDrIwTvQ=;
+	s=korg; t=1760716393;
+	bh=tEM7CUpDYALJWsB74BUF5dQWhkDaEjbkkVIohBGax/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzIvSKmqDbd5MtAi8F+H9gq2Yt4EwkVsNk/jcz34XL6OJcvzGcLh5PqNSMKRFX1C+
-	 RMm7CkjxpkrlsRCols03xwRBx4UPGDXPCgBjrkpdhGgmptfPIfGoMCr1dy+BpOamcQ
-	 ++A6LhzBh9NmbRA7r5EqMY+vUn6WnxQmZAlLtwVg=
+	b=JoxhgJDor9jnuw0JD/A2LA/YRzh8pv4IWMOL4OmtYTdN98+o7G3ngcABcf+S0Py9M
+	 iVZ8JVawAsh7eMiSbV3vPP0Qti211U6bUawnuAEZRVAGXay0yueH19hYk6hioDQDZT
+	 t+Jtu8CxQvLIDtUP/8t1JOBBtQ2RAIdWRXUhXVAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 173/276] media: i2c: mt9v111: fix incorrect type for ret
-Date: Fri, 17 Oct 2025 16:54:26 +0200
-Message-ID: <20251017145148.789904584@linuxfoundation.org>
+	Petr Vorel <pvorel@suse.cz>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.15 174/276] drm/nouveau: fix bad ret code in nouveau_bo_move_prep
+Date: Fri, 17 Oct 2025 16:54:27 +0200
+Message-ID: <20251017145148.827303825@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,41 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-commit bacd713145443dce7764bb2967d30832a95e5ec8 upstream.
+commit e4bea919584ff292c9156cf7d641a2ab3cbe27b0 upstream.
 
-Change "ret" from unsigned int to int type in mt9v111_calc_frame_rate()
-to store negative error codes or zero returned by __mt9v111_hw_reset()
-and other functions.
+In `nouveau_bo_move_prep`, if `nouveau_mem_map` fails, an error code
+should be returned. Currently, it returns zero even if vmm addr is not
+correctly mapped.
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants.
-
-No effect on runtime.
-
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Fixes: aab7ed1c3927 ("media: i2c: Add driver for Aptina MT9V111")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Fixes: 9ce523cc3bf2 ("drm/nouveau: separate buffer object backing memory from nvkm structures")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/mt9v111.c |    2 +-
+ drivers/gpu/drm/nouveau/nouveau_bo.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/mt9v111.c
-+++ b/drivers/media/i2c/mt9v111.c
-@@ -534,8 +534,8 @@ static int mt9v111_calc_frame_rate(struc
- static int mt9v111_hw_config(struct mt9v111_dev *mt9v111)
- {
- 	struct i2c_client *c = mt9v111->client;
--	unsigned int ret;
- 	u16 outfmtctrl2;
-+	int ret;
+--- a/drivers/gpu/drm/nouveau/nouveau_bo.c
++++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
+@@ -791,7 +791,7 @@ done:
+ 		nvif_vmm_put(vmm, &old_mem->vma[1]);
+ 		nvif_vmm_put(vmm, &old_mem->vma[0]);
+ 	}
+-	return 0;
++	return ret;
+ }
  
- 	/* Force device reset. */
- 	ret = __mt9v111_hw_reset(mt9v111);
+ static int
 
 
