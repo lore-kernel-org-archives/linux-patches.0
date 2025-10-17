@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F932F6932;
-	Fri, 17 Oct 2025 15:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230BF2F6932;
+	Fri, 17 Oct 2025 15:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713826; cv=none; b=WuB6PdRyZ0yq/BrE7hDF8/NzyETzUN3zTzkA9os+JhUziRgiMX26BZ+CWNHbNuVa8S2oQMAc1lx5h8VUcrQNrezKZ5cWQZgPf7zHHd3ghoIYy5jtVX5NCo17AXZ7h6h7I030+HVmHrxf9XbyIZvboXaqGug+6uH5HfuHD3im0h8=
+	t=1760713829; cv=none; b=jdOejBg33mpftZhS1QWBddNEGRy5yJeOdSgyS0MJ4mSxi4ArM3iDfGwrV8lXZqWgMq42/LUYDuAjbuEuH63MmYUf9moiEIbuY1vQDz58QK/a303DHe38pnZMrAA8ZdXrGHBQUdKc0QAXrTNKa/jwSCyNKEKeD3TA5LRlonUffXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713826; c=relaxed/simple;
-	bh=xiE6mJdRtPbSvZy/BsC4iQ8O8ip3pkZYtGpb6TV/mVg=;
+	s=arc-20240116; t=1760713829; c=relaxed/simple;
+	bh=GtHAm+yWoFSPTm2tsIvTzll27gCVqLTchPshyS94NXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffqmMAu5U+h4GyIrlKdta7gla6w/s8++V5T/eqXPHSSJ2SttL7QaBXNW8v5z1i+Y8iQkzgodtgYxYVdKnodvy8pXXcMMDNNYKAtL8nazGxZ2NuD8/FEfbbsng2DT/bAx6KNx7c4OIJtvqeUeGYErnGgRdH6xm1DZ622rihqjNQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERG5rcIN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cz9g6BFBYfNjKAk5tLqoJrl57OCFo6zVAQonsa4lgj+ma6NlkqafHLxdgm952+2iRjmH3ewXDBEEJnh+W/W3cuLX13Q4bU98OGsIjUJnodaGUhFaXsTjq9LfyLmWi2mqB18e5RjVCarag8wtlq3qtrg/XZ5UVVk9VEE/evuNMr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAgLwoQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERG5rcIN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE943C4CEE7;
-	Fri, 17 Oct 2025 15:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAgLwoQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED1CC4CEE7;
+	Fri, 17 Oct 2025 15:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713826;
-	bh=xiE6mJdRtPbSvZy/BsC4iQ8O8ip3pkZYtGpb6TV/mVg=;
+	s=korg; t=1760713829;
+	bh=GtHAm+yWoFSPTm2tsIvTzll27gCVqLTchPshyS94NXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERG5rcIN+EWl9UrKChSK1cGWdYqh7FKL/dBh1U08EiuifWUtexL28+BO4KENC/BCJ
-	 1w+c7eruAyJpy2a3Ua7EOG4MBDg/mXDNpsoKydu1cRXGpu9I0GGJgMR6cERCT9sxjE
-	 nwB9by/Fuk5oHiIkTcn+Ha+d2WXqvkm4SQhuX9Ss=
+	b=aAgLwoQmMJtIUMTorv0Rp/uUJPaXYZnp3tNG4D6Jtq10CQI4WpjeCKJr/2OcFG9c4
+	 LR95TECg4k+yA9FceocvTOcuxAN/Ma0oe9er/iiuudTfft8XF/Hnl943FOKoiSTxFY
+	 TM8izm0owp3r6IuuxMWM3FcEIn17im1GRci0tGoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Yznaga <anthony.yznaga@oracle.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Andreas Larsson <andreas@gaisler.com>
-Subject: [PATCH 6.6 116/201] sparc64: fix hugetlb for sun4u
-Date: Fri, 17 Oct 2025 16:52:57 +0200
-Message-ID: <20251017145139.005777503@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.6 134/201] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
+Date: Fri, 17 Oct 2025 16:53:15 +0200
+Message-ID: <20251017145139.661185447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,64 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Yznaga <anthony.yznaga@oracle.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 6fd44a481b3c6111e4801cec964627791d0f3ec5 upstream.
+commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
 
-An attempt to exercise sparc hugetlb code in a sun4u-based guest
-running under qemu results in the guest hanging due to being stuck
-in a trap loop. This is due to invalid hugetlb TTEs being installed
-that do not have the expected _PAGE_PMD_HUGE and page size bits set.
-Although the breakage has gone apparently unnoticed for several years,
-fix it now so there is the option to exercise sparc hugetlb code under
-qemu. This can be useful because sun4v support in qemu does not support
-linux guests currently and sun4v-based hardware resources may not be
-readily available.
+The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
+(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
 
-Fix tested with a 6.15.2 and 6.16-rc6 kernels by running libhugetlbfs
-tests on a qemu guest running Debian 13.
+But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
+the MSI vector. This causes wrong MSI vector to be triggered, leading to
+the failure of PCI endpoint Kselftest MSI_TEST test case.
 
-Fixes: c7d9f77d33a7 ("sparc64: Multi-page size support")
+To fix this issue, convert the interrupt number to MSI vector.
+
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Anthony Yznaga <anthony.yznaga@oracle.com>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20250716012446.10357-1-anthony.yznaga@oracle.com
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/mm/hugetlbpage.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/sparc/mm/hugetlbpage.c
-+++ b/arch/sparc/mm/hugetlbpage.c
-@@ -133,6 +133,26 @@ hugetlb_get_unmapped_area(struct file *f
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1963,10 +1963,10 @@ static int tegra_pcie_ep_raise_legacy_ir
  
- static pte_t sun4u_hugepage_shift_to_tte(pte_t entry, unsigned int shift)
+ static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
  {
-+	unsigned long hugepage_size = _PAGE_SZ4MB_4U;
-+
-+	pte_val(entry) = pte_val(entry) & ~_PAGE_SZALL_4U;
-+
-+	switch (shift) {
-+	case HPAGE_256MB_SHIFT:
-+		hugepage_size = _PAGE_SZ256MB_4U;
-+		pte_val(entry) |= _PAGE_PMD_HUGE;
-+		break;
-+	case HPAGE_SHIFT:
-+		pte_val(entry) |= _PAGE_PMD_HUGE;
-+		break;
-+	case HPAGE_64K_SHIFT:
-+		hugepage_size = _PAGE_SZ64K_4U;
-+		break;
-+	default:
-+		WARN_ONCE(1, "unsupported hugepage shift=%u\n", shift);
-+	}
-+
-+	pte_val(entry) = pte_val(entry) | hugepage_size;
- 	return entry;
- }
+-	if (unlikely(irq > 31))
++	if (unlikely(irq > 32))
+ 		return -EINVAL;
  
+-	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
++	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
+ 
+ 	return 0;
+ }
 
 
