@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CE82F6932;
-	Fri, 17 Oct 2025 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F0F2F12DB;
+	Fri, 17 Oct 2025 15:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713217; cv=none; b=epAMAbiFWatQvaYLIBHmpspn/O8GIUjR70q2UFMVI5Tep1oMPLTJsayAXYC3tBKHiv61EpyKUODXMkcL6MqRM7D8waYiV3FvgakdMANlWThn3yVXm3OqVHn6bkFOJ1Su8vIpIsyA+UQKk2w2AgWk4yTcE/6o75scD8ww9Voi5CM=
+	t=1760713221; cv=none; b=Suq7lfIgykev/GpesYtgnUlEQ8bIkfoYbnh9vJqR6mtu44wmxWQzkygDTq8/CHW6Ro+Il0FQT9yfFKe5HwPlZR+Q6JvF9gq9bOglPZbiADYlpiKQUVseZJbb59iNDHh23eR7t2m9rmpwlcJ7AhV14YMrcObcUSSs0KiKpW4NkDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713217; c=relaxed/simple;
-	bh=AtY7liOqmfkX+sWkW3oNqSn8sUZVuoYgIFzdrAbODis=;
+	s=arc-20240116; t=1760713221; c=relaxed/simple;
+	bh=AISeejv4wpXVz4V2T8EcC3q1Zi4FIalDx+CehiTRYh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHGginq9AwWnU/UzqaAoSPUaegE9scNrWYXxcbZNhKsPg/zjvrjkmii125vUYUjBs5FN3/Zyr3gRxRHgb1DAF1wt12VJLzo3TrZri7IQR1soxMw89d4dbx6u8sB56DU/izr2JH5R8KYLLIdZlO3ORXIOySy61QkNAfUFVRKZMlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK4mJ0X5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5lPlsYiaNeIm8X0lzVoqSvDIQ7wRRMTO1AnOJGLmA/n8oug7bJfOrlaggCeuubaLpTuKo7SQHUJe7LONbB7kdctCcsSmqPGGztpUSatc1uJfYLam/QIvVRo1rb5n/9PD55chVDeDJLt8ooXtcyeGQvC+dkdKueUBm/OHz+CNY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6Vxuwvh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK4mJ0X5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428B0C4CEE7;
-	Fri, 17 Oct 2025 15:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6Vxuwvh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F61BC113D0;
+	Fri, 17 Oct 2025 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713217;
-	bh=AtY7liOqmfkX+sWkW3oNqSn8sUZVuoYgIFzdrAbODis=;
+	s=korg; t=1760713220;
+	bh=AISeejv4wpXVz4V2T8EcC3q1Zi4FIalDx+CehiTRYh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VK4mJ0X5FD2GUcHC0D/e1XQ2lLGW6URA1FEWi9gUwAu5Kd2yL1d3BNyF5tSeClEYu
-	 gVTqDD1CcsY0oLkAdzPpgw3cxkNwaTDo+oXskTtR0+fKVn0ubfjL5Y+MXFwWxNnFGo
-	 Auhyg/wbwGSWEARYwpTlwJ5Oov/5X1TNSXBUO+Ng=
+	b=j6VxuwvhpRClpa7HtEjp6dqSWwhQKKbtofT3QFPW3fg615pa9xMH7QkS9zaIaGxWm
+	 GjOZXSQjQm6a5HUbK6Mn8sxMBDqIUcXE11+DSFtfHAmZug8lcqtnY7v08JHANq9q7S
+	 3pNNRVr/CgvlVbuTROKPxhmIoNPoLTg5rr0dQc+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 087/168] lib/genalloc: fix device leak in of_gen_pool_get()
-Date: Fri, 17 Oct 2025 16:52:46 +0200
-Message-ID: <20251017145132.230994374@linuxfoundation.org>
+	Vibhore Vardhan <vibhore@ti.com>,
+	Paresh Bhagat <p-bhagat@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.1 056/168] arm64: dts: ti: k3-am62a-main: Fix main padcfg length
+Date: Fri, 17 Oct 2025 16:52:15 +0200
+Message-ID: <20251017145131.085808997@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -52,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Vibhore Vardhan <vibhore@ti.com>
 
-commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
+commit 4c4e48afb6d85c1a8f9fdbae1fdf17ceef4a6f5b upstream.
 
-Make sure to drop the reference taken when looking up the genpool platform
-device in of_gen_pool_get() before returning the pool.
+The main pad configuration register region starts with the register
+MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG0 with address 0x000f4000 and ends
+with the MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG150 register with address
+0x000f4258, as a result of which, total size of the region is 0x25c
+instead of 0x2ac.
 
-Note that holding a reference to a device does typically not prevent its
-devres managed resources from being released so there is no point in
-keeping the reference.
+Reference Docs
+TRM (AM62A) - https://www.ti.com/lit/ug/spruj16b/spruj16b.pdf
+TRM (AM62D) - https://www.ti.com/lit/ug/sprujd4/sprujd4.pdf
 
-Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
-Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: <stable@vger.kernel.org>	[3.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5fc6b1b62639c ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vibhore Vardhan <vibhore@ti.com>
+Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://patch.msgid.link/20250903062513.813925-2-p-bhagat@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/genalloc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62a-main.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/genalloc.c
-+++ b/lib/genalloc.c
-@@ -899,8 +899,11 @@ struct gen_pool *of_gen_pool_get(struct
- 		if (!name)
- 			name = np_pool->name;
- 	}
--	if (pdev)
-+	if (pdev) {
- 		pool = gen_pool_get(&pdev->dev, name);
-+		put_device(&pdev->dev);
-+	}
-+
- 	of_node_put(np_pool);
+--- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+@@ -97,7 +97,7 @@
  
- 	return pool;
+ 	main_pmx0: pinctrl@f4000 {
+ 		compatible = "pinctrl-single";
+-		reg = <0x00 0xf4000 0x00 0x2ac>;
++		reg = <0x00 0xf4000 0x00 0x25c>;
+ 		#pinctrl-cells = <1>;
+ 		pinctrl-single,register-width = <32>;
+ 		pinctrl-single,function-mask = <0xffffffff>;
 
 
