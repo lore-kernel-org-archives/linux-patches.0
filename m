@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC06F2F12A7;
-	Fri, 17 Oct 2025 15:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446F330B1C;
+	Fri, 17 Oct 2025 15:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716225; cv=none; b=Ocy4PnQoF9Y9IXZVttgP4igguRhC8Oe29O8dP5tDe/FVAlQDiI2i7mMZjYqlGKtQJpSE7jCq0Yog66EKs0HOacEpV5CHX180nj5HuXp+f6YP0DrAf0sT/ATqyuhAatQgFCD4572jfdwcTw2vTSiUhJHKB14G3H6yWSFRGdQVptU=
+	t=1760716227; cv=none; b=EEepGX+OG0Z6Nd7Bf5c7pc0NmY+sSNYnRsmBz60vzqKbM3uoET+dBdcoyA0qHuHPp4N9sGadNGJsFH0Oty6WlXt8ouOfWpZ5yKOZ/4MHRJW80ZsYsGjVo1JV/2f7zXnFzllvK2RacblLqCBI9nzCsTm9BT3TNoGfbsCKvk2Tf+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716225; c=relaxed/simple;
-	bh=xw/AAb0DOkt14d+/tDZ39rJimsOWXaq184yIIzFC14g=;
+	s=arc-20240116; t=1760716227; c=relaxed/simple;
+	bh=iPZKSdS0a2wgMvmmgPfL175/zbpm9TVcPfArrdogL8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIaIubh5XEO36aVqeDVv9YwGSy9tO8/6t9MMAKF2nzLBN5H6qvbx3XyjC2bDPyh+6TyTGWrtoL7f+dPcpH/9TIYbxYstbRwEG1HZerwe6KRb6iG11oZA1qbFVqKDsW+md5gSUa+QKdieqnq+DbvOHLcM98QDo/8BVkK93JvLkXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi4qo1Gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHaL9E61JTwWwwevc0BdiSqRX5UR+ZZWgSN5ox93CaPsbWA+2yKDzK5rOWLfkzh++7XaeH3W0eBk0a2pnOQ6uRHmuWjqjYj7pn+gXPGLWpAbbVG9BROCYOovXrHxf0E82Lw7Zfx9uYUKxY6aPGHlJhpnMYK1OidJHRM0lwRjFO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i82wuRq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi4qo1Gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D47EC4CEE7;
-	Fri, 17 Oct 2025 15:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i82wuRq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BD3C4CEFE;
+	Fri, 17 Oct 2025 15:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716224;
-	bh=xw/AAb0DOkt14d+/tDZ39rJimsOWXaq184yIIzFC14g=;
+	s=korg; t=1760716227;
+	bh=iPZKSdS0a2wgMvmmgPfL175/zbpm9TVcPfArrdogL8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gi4qo1GgjOhSUCiCwIxRNNLDsNFZ/VODHmLt2lnclZVcHHVdjt2lMDa5VAkw3R2oz
-	 lZY/HURghUxDav3eo5g4Co+AHThid3lNdtHYOMVjNt8dL9h/3h3OUapgrJVwX3psid
-	 hW179ngTJfu0GEwCsxT7lJ+7K0jpM+6NiRHeVRbE=
+	b=i82wuRq83CnysB7qpkwe9sF+LTia4cw2CbY8rohfrwFbL006S9qrnjlA6xbaqLK/d
+	 /A2MV38mMCoqC3M3vB/hUlppjMHpMksyx4+gBFVXRn36e6xffvVuxNXilkQlrpeOgW
+	 PluEi4Awp3vhiTYhNVFakPcPuHQWVExJsJXTGQyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 117/276] pinctrl: check the return value of pinmux_ops::get_function_name()
-Date: Fri, 17 Oct 2025 16:53:30 +0200
-Message-ID: <20251017145146.748713293@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 5.15 118/276] bus: fsl-mc: Check return value of platform_get_resource()
+Date: Fri, 17 Oct 2025 16:53:31 +0200
+Message-ID: <20251017145146.785169301@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,37 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 4002ee98c022d671ecc1e4a84029e9ae7d8a5603 upstream.
+commit 25f526507b8ccc6ac3a43bc094d09b1f9b0b90ae upstream.
 
-While the API contract in docs doesn't specify it explicitly, the
-generic implementation of the get_function_name() callback from struct
-pinmux_ops - pinmux_generic_get_function_name() - can fail and return
-NULL. This is already checked in pinmux_check_ops() so add a similar
-check in pinmux_func_name_to_selector() instead of passing the returned
-pointer right down to strcmp() where the NULL can get dereferenced. This
-is normal operation when adding new pinfunctions.
+platform_get_resource() returns NULL in case of failure, so check its
+return value and propagate the error in order to prevent NULL pointer
+dereference.
 
+Fixes: 6305166c8771 ("bus: fsl-mc: Add ACPI support for fsl-mc")
 Cc: stable@vger.kernel.org
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/aKwuK6TRr5XNYQ8u@pc
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinmux.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pinctrl/pinmux.c
-+++ b/drivers/pinctrl/pinmux.c
-@@ -328,7 +328,7 @@ static int pinmux_func_name_to_selector(
- 	while (selector < nfuncs) {
- 		const char *fname = ops->get_function_name(pctldev, selector);
- 
--		if (!strcmp(function, fname))
-+		if (fname && !strcmp(function, fname))
- 			return selector;
- 
- 		selector++;
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -1169,6 +1169,9 @@ static int fsl_mc_bus_probe(struct platf
+ 	 * Get physical address of MC portal for the root DPRC:
+ 	 */
+ 	plat_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!plat_res)
++		return -EINVAL;
++
+ 	mc_portal_phys_addr = plat_res->start;
+ 	mc_portal_size = resource_size(plat_res);
+ 	mc_portal_base_phys_addr = mc_portal_phys_addr & ~0x3ffffff;
 
 
