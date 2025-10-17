@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EB33370F6;
-	Fri, 17 Oct 2025 14:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D223370F6;
+	Fri, 17 Oct 2025 14:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713099; cv=none; b=lSZstrVtdNgy2qdcRHhQscDcF27ufOrUIWTU2hAERPxII9/YqFqjVmWNIEzAZdaDu7XY/NL36Z0AP340hfw1Mf9nQ60byi016bTUkKWY3h1VoL5G74SfU8T12Vdf3Cas24G2F4lO7ERYV7DGAY6gjTbpTUVR+O+qUM54TvrEXT4=
+	t=1760713102; cv=none; b=KpYXMqBFQfnY29jNEkHz4vNewo9QHMxg+Cekpnu8FXHNQeuevKJz/zyGUabQLELyOW0ubU+VrM6JgqELqUX8qtd7tS41VArJ5Eo1kRZA/87FfBrdXfZngnLY8yha2KYXpOiH8B6iU5T/7YyCS4gKZUBfHIqyoL9BrMmHHdbUphU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713099; c=relaxed/simple;
-	bh=9XEr9q9pd6ILc+htHPKGz9rAKQ+x6E8MrrRwhD/uLSI=;
+	s=arc-20240116; t=1760713102; c=relaxed/simple;
+	bh=JLOD5OpUDghzSjL2W132UPza7QWjVkaqVaNCPcH1cA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdqkKOkB7bHodwsO9EXxnx4B6058+L3R0xAEejiRJeukyRsYdmtF826Q9lrWFiDxo3tiI1jxOle6coB18phdj/GyXz5Ic/tSjrd2XNCoxQ/+MBDV+4vaFygN1asFCFdlKehinQkYN5oZY+kUu6UEGEGkCOmA1syq/r8aVN0sLUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cv6zqgjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJahwbF8Di/K4kgPH8VLCgSp26g3e8VET9naph1F4cfj1CDj7NoG1iqdUyxj4CBnxbe/Sctf57+T8aKdDQuxSduCNwQOzZ+DgzuoqwMuUnocEGrks7LT50fWHH5S6w+DG/9IBl95WjuJGYn/fadz9mvsaZeRRjZeulR3myGzPXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwnawvbl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cv6zqgjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AB8C4CEE7;
-	Fri, 17 Oct 2025 14:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwnawvbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F44C4CEE7;
+	Fri, 17 Oct 2025 14:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713099;
-	bh=9XEr9q9pd6ILc+htHPKGz9rAKQ+x6E8MrrRwhD/uLSI=;
+	s=korg; t=1760713102;
+	bh=JLOD5OpUDghzSjL2W132UPza7QWjVkaqVaNCPcH1cA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv6zqgjjoxP0O04LYT979E1jvnp4h7eHXA1clx2sO93iYDjQvkO8O4vax0pYANMtg
-	 2utssLD6sl/aRoMAMxoPoW5A8E6mR571sq7Uh+W39r7p8JCPN1J/9dTiRYgnUqB6tJ
-	 SrDPpqXTeP8+C2rExnZJGXNrtWJKe1AmOTaxpvbo=
+	b=iwnawvblWByz3IrYT1G6K8RY+VFt0cXpnOJ5UumRVOmDTRw4rQnXuzpXEBWseKrD7
+	 i3G02SI8J3JjaeLi+x009u79N8XUubCDxatvmAyiymSZJePFxLugkumlrEf/o9QcOB
+	 bvVJsRKxCfKxH1v7xMOYfiC+xr9kmHa5IkUSC5kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Gunnar Kudrjavets <gunnarku@amazon.com>,
+	Justinien Bouron <jbouron@amazon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/168] crypto: essiv - Check ssize for decryption and in-place encryption
-Date: Fri, 17 Oct 2025 16:52:05 +0200
-Message-ID: <20251017145130.714686868@linuxfoundation.org>
+Subject: [PATCH 6.1 047/168] tpm_tis: Fix incorrect arguments in tpm_tis_probe_irq_single
+Date: Fri, 17 Oct 2025 16:52:06 +0200
+Message-ID: <20251017145130.751338534@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,61 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Gunnar Kudrjavets <gunnarku@amazon.com>
 
-[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
+[ Upstream commit 8a81236f2cb0882c7ea6c621ce357f7f3f601fe5 ]
 
-Move the ssize check to the start in essiv_aead_crypt so that
-it's also checked for decryption and in-place encryption.
+The tpm_tis_write8() call specifies arguments in wrong order. Should be
+(data, addr, value) not (data, value, addr). The initial correct order
+was changed during the major refactoring when the code was split.
 
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 41a5e1cf1fe1 ("tpm/tpm_tis: Split tpm_tis driver into a core and TCG TIS compliant phy")
+Signed-off-by: Gunnar Kudrjavets <gunnarku@amazon.com>
+Reviewed-by: Justinien Bouron <jbouron@amazon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/essiv.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/essiv.c b/crypto/essiv.c
-index 307eba74b901e..9aa8603fcf63b 100644
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -186,9 +186,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
- 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
- 	struct aead_request *subreq = &rctx->aead_req;
-+	int ivsize = crypto_aead_ivsize(tfm);
-+	int ssize = req->assoclen - ivsize;
- 	struct scatterlist *src = req->src;
- 	int err;
- 
-+	if (ssize < 0)
-+		return -EINVAL;
-+
- 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
- 
- 	/*
-@@ -198,19 +203,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index caf9ba2dc0b13..968b891bcb030 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -878,8 +878,8 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	 * will call disable_irq which undoes all of the above.
  	 */
- 	rctx->assoc = NULL;
- 	if (req->src == req->dst || !enc) {
--		scatterwalk_map_and_copy(req->iv, req->dst,
--					 req->assoclen - crypto_aead_ivsize(tfm),
--					 crypto_aead_ivsize(tfm), 1);
-+		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
- 	} else {
- 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
--		int ivsize = crypto_aead_ivsize(tfm);
--		int ssize = req->assoclen - ivsize;
- 		struct scatterlist *sg;
- 		int nents;
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+-		tpm_tis_write8(priv, original_int_vec,
+-			       TPM_INT_VECTOR(priv->locality));
++		tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality),
++			       original_int_vec);
+ 		rc = -1;
+ 	}
  
--		if (ssize < 0)
--			return -EINVAL;
--
- 		nents = sg_nents_for_len(req->src, ssize);
- 		if (nents < 0)
- 			return -EINVAL;
 -- 
 2.51.0
 
