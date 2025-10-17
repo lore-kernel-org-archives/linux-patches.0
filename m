@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B04C330B38;
-	Fri, 17 Oct 2025 15:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4478330B2E;
+	Fri, 17 Oct 2025 15:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715568; cv=none; b=IRtp6ZiaHPyKsMWtwUh0CjMs9U5Ij2QJ5wkdLgDeyIGda3lYp/0Fo31YYwqkct/8Hd42uQ2Ws/kv4ZKqIsE7a4o49O6Z+3jd3oMTfDPc8rId5mS4p0uSH5/eJ1U/oKsJp42H0JT0vfctAcN4Jn4SMT7PCCTaSbvIfJmKipoPmmI=
+	t=1760715570; cv=none; b=NDj91v/HpkORsVvlpoHc3myi0FrsQh193X3k3qilJjEvNaRqCJ5/ZIYPRRwvupV69HGvsCD9mVzhZkb+mVvBev09EW2ltGajKRanAJsrWm4QJg2undDBcP8wdoQ3WBgVOkPuKcpcl/5yRIuM3rBn+iHpKTUAOoEevlP+EzolWIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715568; c=relaxed/simple;
-	bh=Pe/LyNG8C2LUQHx03taKqlWf/4+mGKOb/XiuN72FSGc=;
+	s=arc-20240116; t=1760715570; c=relaxed/simple;
+	bh=iCzwsPQUy7D4TG/BLfVcrFRcIRqO8cqeBX6vWKMvR80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUQ9x5ofJ5lEedCSa22TUl7dqYwWA6ByhiL/0Bct71xP3E4r/zZ9LN8mMB7aCSVZ3ngH85tYU0su7MSOR1kUvjuUE3ZMRu2lczttt6o+rP9JFvtfunCcq0JQ3n/EMOzKU6ItOdIdr8ngjslhzA45pfE962BxPCh9TFK3zNElPKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1HMCJt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UiJsxl+PYZypx6fdZt0qwnu9yU0OqLdLcuQTVoLod7+PwUz2I72FxusSlkvpj0hes5z0QhmZCPm+cfPXU8Yaern2Yu/aj04rX7vs09dWqu5UozbkfJVolUWa1D5FdzIxPY2d+RO+3b6hhj+jfwqcFuod0TX03Hlut57Kyzxca0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CURUhsR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1HMCJt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB1CC4CEE7;
-	Fri, 17 Oct 2025 15:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CURUhsR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23369C4CEE7;
+	Fri, 17 Oct 2025 15:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715567;
-	bh=Pe/LyNG8C2LUQHx03taKqlWf/4+mGKOb/XiuN72FSGc=;
+	s=korg; t=1760715570;
+	bh=iCzwsPQUy7D4TG/BLfVcrFRcIRqO8cqeBX6vWKMvR80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1HMCJt4Oo7oDGJH1KEkhURhu+OLzH7mmdWH5bUWAr93lmHbTWI/pHH44R8CdDcwq
-	 qQ6oG8I+lkRpSfqHLTPrDCl3PM+bWoWgvB6n2yOibXiBuTHZ4mRNKrh2oZctPdYPoh
-	 iml8Lqn62H/yi4d1Q8D3U0iGvlhoR8oWGOz9DFLM=
+	b=CURUhsR+YYz85COx65HidnvUnSl/Joax16OyDmQmjkcpL/rqi349qAhOxBiEWqoMQ
+	 /KyEqdTyAF2+9led4eSVs+6byVViJP6ohmIthOTr4doquIXQJQ60hU9gI5PHJBIWYG
+	 0GRqMCvXP+NJ8VnEq0pRBgqdFKnCY27cnBlJO94E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Andreas Larsson <andreas@gaisler.com>
-Subject: [PATCH 6.17 261/371] sparc: fix error handling in scan_one_device()
-Date: Fri, 17 Oct 2025 16:53:56 +0200
-Message-ID: <20251017145211.524098728@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 235/371] lib/genalloc: fix device leak in of_gen_pool_get()
+Date: Fri, 17 Oct 2025 16:53:30 +0200
+Message-ID: <20251017145210.584391425@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 302c04110f0ce70d25add2496b521132548cd408 upstream.
+commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
 
-Once of_device_register() failed, we should call put_device() to
-decrement reference count for cleanup. Or it could cause memory leak.
-So fix this by calling put_device(), then the name can be freed in
-kobject_cleanup().
+Make sure to drop the reference taken when looking up the genpool platform
+device in of_gen_pool_get() before returning the pool.
 
-Calling path: of_device_register() -> of_device_add() -> device_add().
-As comment of device_add() says, 'if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count'.
+Note that holding a reference to a device does typically not prevent its
+devres managed resources from being released so there is no point in
+keeping the reference.
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: cf44bbc26cf1 ("[SPARC]: Beginnings of generic of_device framework.")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
+Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Vladimir Zapolskiy <vz@mleia.com>
+Cc: <stable@vger.kernel.org>	[3.10+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/kernel/of_device_32.c |    1 +
- arch/sparc/kernel/of_device_64.c |    1 +
- 2 files changed, 2 insertions(+)
+ lib/genalloc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/sparc/kernel/of_device_32.c
-+++ b/arch/sparc/kernel/of_device_32.c
-@@ -387,6 +387,7 @@ static struct platform_device * __init s
- 
- 	if (of_device_register(op)) {
- 		printk("%pOF: Could not register of device.\n", dp);
-+		put_device(&op->dev);
- 		kfree(op);
- 		op = NULL;
+--- a/lib/genalloc.c
++++ b/lib/genalloc.c
+@@ -899,8 +899,11 @@ struct gen_pool *of_gen_pool_get(struct
+ 		if (!name)
+ 			name = of_node_full_name(np_pool);
  	}
---- a/arch/sparc/kernel/of_device_64.c
-+++ b/arch/sparc/kernel/of_device_64.c
-@@ -677,6 +677,7 @@ static struct platform_device * __init s
+-	if (pdev)
++	if (pdev) {
+ 		pool = gen_pool_get(&pdev->dev, name);
++		put_device(&pdev->dev);
++	}
++
+ 	of_node_put(np_pool);
  
- 	if (of_device_register(op)) {
- 		printk("%pOF: Could not register of device.\n", dp);
-+		put_device(&op->dev);
- 		kfree(op);
- 		op = NULL;
- 	}
+ 	return pool;
 
 
