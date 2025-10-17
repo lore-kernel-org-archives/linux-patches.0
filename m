@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580B832C92B;
-	Fri, 17 Oct 2025 15:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C992A32C93E;
+	Fri, 17 Oct 2025 15:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715094; cv=none; b=kNWo8Z3wZo9YHM6L/6hfWFYQ4AsJaN9FcIrQRounuMmAsIjT9MMRmXlBWda6aOGyO6eRYV+H7aqdo7PnbHAOUlYK6XVjvkQRHXibfSo/X/CVYKaAyWXwW9EBm8jTvWKRlU52RrJiAIiVbjoLxs61gPb5KT4nuAsdWjt7ZzL43nw=
+	t=1760715095; cv=none; b=TyGNVRrGraWXbEHo4SywSCs85JONXzdEWvwADRGokPvHfht+RdHovRlp554rzMQVDDJwW1PCo5jTvF+XADoh8Xy0Z6o6VhGsuA09rIb5ST4cp59kPVVGwBc8ZHuw2nyyMMyrivRCfPHUTxuDvuedIagMOzp9R+b2v8S94eEY9N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715094; c=relaxed/simple;
-	bh=zBH4E2FhGmWm9AiZktmXlvox8tyodQxwsCaOffAlC9s=;
+	s=arc-20240116; t=1760715095; c=relaxed/simple;
+	bh=n5JT378is70nGsmUiCVr/+3lnjZSqc0fXDc1VDUynJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwfmqnswhdNHtNiXTV/H3mOKKxKEUQLDTfXjIEbdS5tx7yod0iirnZevYeKwtsOticNoX3ljvR6GAB7FHmISKCI/Opev8H4KeanUw3OAfoPeoNp+s1JsaTADxcONoGYDseL7E+SiUEYbpEufkNv1cPPeTgL/aS9XZqvDstNncqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht1004ha; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOj8OOjNut4amiT6Q5OJpejsuOerc5ex5iPwWnsTBzVQMJpEGvgbdyo9Mvee6Oo3o6BO6SaT6SdYtsXLNjTaKLqQ4YuxQS7l1sSLs9OxHVNFXGRv6uA+Unyf/wna+JlCc0aNM8qUJLYDndKdtm6lsDQWNA3uPHEFDjMUvT/mTmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4fwoDV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht1004ha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D458C4CEFE;
-	Fri, 17 Oct 2025 15:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4fwoDV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56718C4CEE7;
+	Fri, 17 Oct 2025 15:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715092;
-	bh=zBH4E2FhGmWm9AiZktmXlvox8tyodQxwsCaOffAlC9s=;
+	s=korg; t=1760715095;
+	bh=n5JT378is70nGsmUiCVr/+3lnjZSqc0fXDc1VDUynJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ht1004hakhpETTKH/1UwKnXW+ErrMpXWJEBLsP1lJ54Fr9cg4P7jQWcWNuv4PonHj
-	 9kWeXW3sCi7S58CpGL3anVjeZKl6ePUVVATbr+VLo0QRuFFLOfM524sg2SpWOefPJ0
-	 aEXmNNrnx9O4Oz448GjyFxGKxPqfPOf+lcibABLo=
+	b=d4fwoDV0dkyv9j+QuzBm9j/8pFOZ5i5YG4DEzV5vxozP/JE7v6v0SvVJLrTf5lzmi
+	 V7txOWPlNakdgPSfWWAXi18MG3lRlubMd2cZdQ3hhbdUEqtx4MgF6jhWX3RW1mK6U9
+	 yXyTF0RmoT7qrA2BxXxukAu1CGu8z5KIVo43P1Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 062/371] nfsd: fix timestamp updates in CB_GETATTR
-Date: Fri, 17 Oct 2025 16:50:37 +0200
-Message-ID: <20251017145204.043866901@linuxfoundation.org>
+Subject: [PATCH 6.17 053/371] clk: nxp: lpc18xx-cgu: convert from round_rate() to determine_rate()
+Date: Fri, 17 Oct 2025 16:50:28 +0200
+Message-ID: <20251017145203.718559098@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,55 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit b40b1ba37ad5b6099c426765c4bc327c08b390b9 ]
+[ Upstream commit b46a3d323a5b7942e65025254c13801d0f475f02 ]
 
-When updating the local timestamps from CB_GETATTR, the updated values
-are not being properly vetted.
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
 
-Compare the update times vs. the saved times in the delegation rather
-than the current times in the inode. Also, ensure that the ctime is
-properly vetted vs. its original value.
-
-Fixes: 6ae30d6eb26b ("nfsd: add support for delegated timestamps")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Stable-dep-of: 1624dead9a4d ("clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/clk/nxp/clk-lpc18xx-cgu.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index f2fd0cbe256b9..205ee8cc6fa2b 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -9175,20 +9175,19 @@ static int cb_getattr_update_times(struct dentry *dentry, struct nfs4_delegation
- 	int ret;
+diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+index 81efa885069b2..30e0b283ca608 100644
+--- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
++++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+@@ -370,23 +370,25 @@ static unsigned long lpc18xx_pll0_recalc_rate(struct clk_hw *hw,
+ 	return 0;
+ }
  
- 	if (deleg_attrs_deleg(dp->dl_type)) {
--		struct timespec64 atime = inode_get_atime(inode);
--		struct timespec64 mtime = inode_get_mtime(inode);
- 		struct timespec64 now = current_time(inode);
+-static long lpc18xx_pll0_round_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long *prate)
++static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
++				       struct clk_rate_request *req)
+ {
+ 	unsigned long m;
  
- 		attrs.ia_atime = ncf->ncf_cb_atime;
- 		attrs.ia_mtime = ncf->ncf_cb_mtime;
+-	if (*prate < rate) {
++	if (req->best_parent_rate < req->rate) {
+ 		pr_warn("%s: pll dividers not supported\n", __func__);
+ 		return -EINVAL;
+ 	}
  
--		if (nfsd4_vet_deleg_time(&attrs.ia_atime, &atime, &now))
-+		if (nfsd4_vet_deleg_time(&attrs.ia_atime, &dp->dl_atime, &now))
- 			attrs.ia_valid |= ATTR_ATIME | ATTR_ATIME_SET;
+-	m = DIV_ROUND_UP_ULL(*prate, rate * 2);
++	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
+ 	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
+-		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
++		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
+ 		return -EINVAL;
+ 	}
  
--		if (nfsd4_vet_deleg_time(&attrs.ia_mtime, &mtime, &now)) {
--			attrs.ia_valid |= ATTR_CTIME | ATTR_CTIME_SET |
--					  ATTR_MTIME | ATTR_MTIME_SET;
-+		if (nfsd4_vet_deleg_time(&attrs.ia_mtime, &dp->dl_mtime, &now)) {
-+			attrs.ia_valid |= ATTR_MTIME | ATTR_MTIME_SET;
- 			attrs.ia_ctime = attrs.ia_mtime;
-+			if (nfsd4_vet_deleg_time(&attrs.ia_ctime, &dp->dl_ctime, &now))
-+				attrs.ia_valid |= ATTR_CTIME | ATTR_CTIME_SET;
- 		}
- 	} else {
- 		attrs.ia_valid |= ATTR_MTIME | ATTR_CTIME;
+-	return 2 * *prate * m;
++	req->rate = 2 * req->best_parent_rate * m;
++
++	return 0;
+ }
+ 
+ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -443,7 +445,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ static const struct clk_ops lpc18xx_pll0_ops = {
+ 	.recalc_rate	= lpc18xx_pll0_recalc_rate,
+-	.round_rate	= lpc18xx_pll0_round_rate,
++	.determine_rate = lpc18xx_pll0_determine_rate,
+ 	.set_rate	= lpc18xx_pll0_set_rate,
+ };
+ 
 -- 
 2.51.0
 
