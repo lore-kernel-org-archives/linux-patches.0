@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA282F12D2;
-	Fri, 17 Oct 2025 15:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF6F3328F6;
+	Fri, 17 Oct 2025 15:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713531; cv=none; b=deK1p9+WG5P6Rf6V1e8LDFM35mi9+bwUcZLjQlkO99ZBZadxwvs+WrvS14ABmJobAKZNbYaCoQAqZoIQEPZkmpDCs4N2vTQWMWqtUO6KK+N6GcPtB3WOIRs4mNUrQLjbDExq3qgA2Zjq2A9w0iiVeyXoIexBp/C0tEIVMDzvqB4=
+	t=1760713534; cv=none; b=n9FQ3X13l779BAcwPSJUtfZPIUhFXI2MQK9obyxAiv6f/Qfw9+YkXknw239oZO1toF6MZFL0kHsZUAWf7/bsPm5T2jNv2zYpQCn8rlgE2vinET4SEpLCNDfqS0J/78FC+hmNX9Hy/6xlEVfo/ba2snMgOg2twSx9lGXTfizOJqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713531; c=relaxed/simple;
-	bh=4IMXBrYcG2BBxxlPBqefevzgE3uQekDmwm0nfJE1a+g=;
+	s=arc-20240116; t=1760713534; c=relaxed/simple;
+	bh=VVhPkF/ZQdjxuXuLGUKkwCBeeFt1Dj+n+Ab/crOIz60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/ley7SwL3SOx3tTOIvSs1ChF2V+/T4Fwgg5a/LtJBtGqqsakSaDXvF0EZID9TOESPPH+ZiHs5pMwamj0wXGqQA5wIWWHAA+ivkJWafyMc3pHPRjdnA6m7TLQkppsB4R6CMkiRFmTFBS9p5vLAFpJJlEFbhiqS/ebaKt55fvSss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQ7SKd2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lTO9e7BcAOBhesXw2rUT+RrYY1ctrwYLwHU9UgElCzor0tZzH3FepU6yGWLSNk5JouQQWuRfL5/+ZrM3yl6eyslx2AIyQwKj6DRR+hhCsC7GgXnY2KU5DZdsdxs8uc9Dzqp9QPYPk501vtLOPKYofQvWCYd6L8Cub6kvdXIQSOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qx/15kIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQ7SKd2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A35C4CEE7;
-	Fri, 17 Oct 2025 15:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qx/15kIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBB0C4CEE7;
+	Fri, 17 Oct 2025 15:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713531;
-	bh=4IMXBrYcG2BBxxlPBqefevzgE3uQekDmwm0nfJE1a+g=;
+	s=korg; t=1760713534;
+	bh=VVhPkF/ZQdjxuXuLGUKkwCBeeFt1Dj+n+Ab/crOIz60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQ7SKd2LgvvGla4VbcHXXJyfm3n3MshjBRmdMiE3z15q2aN9Qiv6tlRZ/2LsqRGQ2
-	 Qp2FGE7xGkPYh/GlmsgG/poyegqGXfIZ4Pt7+Y1FQctWhYHhbuwvUOsiPTABhehrzb
-	 PO3w7byL/YFPcx7T1RDdLtH6MTy/iGfxRhqlLqf4=
+	b=qx/15kIaeQFSTQMa07evwdT6Wz4YLzLqpyiQ1ipTa8ChsSPh8nn5YXj+xzcmwggq7
+	 i13l1ug3ynczog4zbJyNctTIK6bvCy6gCn0JTZYd2Sl3Tq8xuXS1cPEozxxDXQ8y53
+	 tSyYf7UHBG9H84b9mYIlGqu7P2AGISzscknJxvn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/201] LoongArch: Remove CONFIG_ACPI_TABLE_UPGRADE in platform_init()
-Date: Fri, 17 Oct 2025 16:51:30 +0200
-Message-ID: <20251017145135.814998054@linuxfoundation.org>
+Subject: [PATCH 6.6 030/201] LoongArch: Init acpi_gbl_use_global_lock to false
+Date: Fri, 17 Oct 2025 16:51:31 +0200
+Message-ID: <20251017145135.850881526@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,60 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 6c3ca6654a74dd396bc477839ba8d9792eced441 ]
+[ Upstream commit 98662be7ef20d2b88b598f72e7ce9b6ac26a40f9 ]
 
-Both acpi_table_upgrade() and acpi_boot_table_init() are defined as
-empty functions under !CONFIG_ACPI_TABLE_UPGRADE and !CONFIG_ACPI in
-include/linux/acpi.h, there are no implicit declaration errors with
-various configs.
+Init acpi_gbl_use_global_lock to false, in order to void error messages
+during boot phase:
 
-  #ifdef CONFIG_ACPI_TABLE_UPGRADE
-  void acpi_table_upgrade(void);
-  #else
-  static inline void acpi_table_upgrade(void) { }
-  #endif
+ ACPI Error: Could not enable GlobalLock event (20240827/evxfevnt-182)
+ ACPI Error: No response from Global Lock hardware, disabling lock (20240827/evglock-59)
 
-  #ifdef	CONFIG_ACPI
-  ...
-  void acpi_boot_table_init (void);
-  ...
-  #else	/* !CONFIG_ACPI */
-  ...
-  static inline void acpi_boot_table_init(void)
-  {
-  }
-  ...
-  #endif	/* !CONFIG_ACPI */
-
-As Huacai suggested, CONFIG_ACPI_TABLE_UPGRADE is ugly and not necessary
-here, just remove it. At the same time, just keep CONFIG_ACPI to prevent
-potential build errors in future, and give a signal to indicate the code
-is ACPI-specific. For the same reason, we also put acpi_table_upgrade()
-under CONFIG_ACPI.
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Fixes: 628c3bb40e9a8cefc0a6 ("LoongArch: Add boot and setup routines")
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Stable-dep-of: 98662be7ef20 ("LoongArch: Init acpi_gbl_use_global_lock to false")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/setup.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/loongarch/kernel/setup.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
-index 655dc2b1616f2..a494b13c9e90c 100644
+index a494b13c9e90c..31be0d00976e2 100644
 --- a/arch/loongarch/kernel/setup.c
 +++ b/arch/loongarch/kernel/setup.c
-@@ -363,10 +363,8 @@ void __init platform_init(void)
- 	arch_reserve_vmcore();
- 	arch_parse_crashkernel();
+@@ -365,6 +365,7 @@ void __init platform_init(void)
  
--#ifdef CONFIG_ACPI_TABLE_UPGRADE
--	acpi_table_upgrade();
--#endif
  #ifdef CONFIG_ACPI
-+	acpi_table_upgrade();
+ 	acpi_table_upgrade();
++	acpi_gbl_use_global_lock = false;
  	acpi_gbl_use_default_register_widths = false;
  	acpi_boot_table_init();
  #endif
