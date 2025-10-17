@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4729D337100;
-	Fri, 17 Oct 2025 15:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D453208;
+	Fri, 17 Oct 2025 15:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714766; cv=none; b=ZrTCZGnaNBXnn+CHr1wDPO7ZZcyrSqYZMR5eiO8B9rQa2+zk07Us754F5WD6alEqFO3ppkS22aacj5h6FvBEZgCIuZPt6ar5WfRekLM5eWMVokqjF3r4phegt1zsrYPuGXXQfjhMbomkBa3VOl3go/yWbrt6RNqKZ8DkSxwP5FU=
+	t=1760714769; cv=none; b=b9D8LCG0wsK68IXf78/RyCV/de93oCkly7FYcK9FmBj/jU7DCEY3UEJedhmW8psw97EbCUvBOaig3F98uefsE92rmrukp8iePbdro0e3gXJsYXyJrKPkUEs7codM4lx+rdZpKFH4Hqv/9Cc55/KaqnV3AynwB9QhTzb+cAOzcMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714766; c=relaxed/simple;
-	bh=5uOZoe906yRoRpAxGl8yBeraxN5FRp2BU9zj2J0HCZ0=;
+	s=arc-20240116; t=1760714769; c=relaxed/simple;
+	bh=2vOPkOUDpWhEsz5X/kkOXNz3vtYhJCsWaJVRfuL9FtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDYxu+3XkJgcwkT/cLiglUgEzlcVP45SJ6cKPvQFNob4p+bHDSnB05DffDQ+FC9OhvxAswJPjA3aziNiq/azHJRceVGEewtuhjsywf3LwLGt61oKh3ing/Qx+UnlIA8Mahrr2u4sMy+U9siSCKk+JtOE1+U285HziF8UIETEhys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoxEhiNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nDkkeWP+8e32MWdEY5AwmbEBJ1aS6qgH+BUtSyKZDY0SrHhkSDW0mLp+xleyupqIgfeCtHAn2YzkhcuebSYY3G0Mo+yuoM7XTvrS5f3ZgCIRr5zhfxHFcGJvVYjze/dJKVYByN2HUAf3+cZ3Ejh5U+kSm7UAUG3IkOqDxC8RXDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D38Ozhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoxEhiNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63514C4CEE7;
-	Fri, 17 Oct 2025 15:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D38Ozhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6EAC4CEE7;
+	Fri, 17 Oct 2025 15:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714765;
-	bh=5uOZoe906yRoRpAxGl8yBeraxN5FRp2BU9zj2J0HCZ0=;
+	s=korg; t=1760714768;
+	bh=2vOPkOUDpWhEsz5X/kkOXNz3vtYhJCsWaJVRfuL9FtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoxEhiNooplFXRWATw0jHLObFQdo9pO9oj6ZxcJl33zKnFxtJ8aMSVJGvYigBu4WR
-	 Nttye6PXom6ViN8S7MP76M7DbrmT/F+/1Dq778ZA5vQvaaX1EzWkrYmfbXxnOsEnei
-	 8aISY+6nrIvKz84euBbl4L61+eU6USxbR7jRoxXU=
+	b=1D38OzhdLABi52gMXzyL+n8+uzSoELtc7j989Yn2A+/zM6CdkUPPvXraO47hWJG8f
+	 gSN4sUGzCxAHyCBu2F8cFtYB1zlBEQM7/BnN97s5RbooI8NP0WOtUQ5vjYrL8W36M+
+	 a3PjRMgZ3CG5AlO2+CZ12EjEte/Po3f+X8nI1ctI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 259/277] s390/bpf: Centralize frame offset calculations
-Date: Fri, 17 Oct 2025 16:54:26 +0200
-Message-ID: <20251017145156.615400638@linuxfoundation.org>
+Subject: [PATCH 6.12 260/277] s390/bpf: Describe the frame using a struct instead of constants
+Date: Fri, 17 Oct 2025 16:54:27 +0200
+Message-ID: <20251017145156.653413736@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,221 +52,255 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit b2268d550d20ff860bddfe3a91b1aec00414689a upstream.
+commit e26d523edf2a62b142d2dd2dd9b87f61ed92f33a upstream.
 
-The calculation of the distance from %r15 to the caller-allocated
-portion of the stack frame is copy-pasted into multiple places in the
-JIT code.
+Currently the caller-allocated portion of the stack frame is described
+using constants, hardcoded values, and an ASCII drawing, making it
+harder than necessary to ensure that everything is in sync.
 
-Move it to bpf_jit_prog() and save the result into bpf_jit::frame_off,
-so that the other parts of the JIT can use it.
+Declare a struct and use offsetof() and offsetofend() macros to refer
+to various values stored within the frame.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250624121501.50536-2-iii@linux.ibm.com
+Link: https://lore.kernel.org/r/20250624121501.50536-3-iii@linux.ibm.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/net/bpf_jit_comp.c |   56 +++++++++++++++++++------------------------
- 1 file changed, 26 insertions(+), 30 deletions(-)
+ arch/s390/net/bpf_jit.h      |   55 ----------------------------------
+ arch/s390/net/bpf_jit_comp.c |   69 +++++++++++++++++++++++++++++--------------
+ 2 files changed, 47 insertions(+), 77 deletions(-)
+ delete mode 100644 arch/s390/net/bpf_jit.h
 
+--- a/arch/s390/net/bpf_jit.h
++++ /dev/null
+@@ -1,55 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-/*
+- * BPF Jit compiler defines
+- *
+- * Copyright IBM Corp. 2012,2015
+- *
+- * Author(s): Martin Schwidefsky <schwidefsky@de.ibm.com>
+- *	      Michael Holzheu <holzheu@linux.vnet.ibm.com>
+- */
+-
+-#ifndef __ARCH_S390_NET_BPF_JIT_H
+-#define __ARCH_S390_NET_BPF_JIT_H
+-
+-#ifndef __ASSEMBLY__
+-
+-#include <linux/filter.h>
+-#include <linux/types.h>
+-
+-#endif /* __ASSEMBLY__ */
+-
+-/*
+- * Stackframe layout (packed stack):
+- *
+- *				    ^ high
+- *	      +---------------+     |
+- *	      | old backchain |     |
+- *	      +---------------+     |
+- *	      |   r15 - r6    |     |
+- *	      +---------------+     |
+- *	      | 4 byte align  |     |
+- *	      | tail_call_cnt |     |
+- * BFP	   -> +===============+     |
+- *	      |		      |     |
+- *	      |   BPF stack   |     |
+- *	      |		      |     |
+- * R15+160 -> +---------------+     |
+- *	      | new backchain |     |
+- * R15+152 -> +---------------+     |
+- *	      | + 152 byte SA |     |
+- * R15	   -> +---------------+     + low
+- *
+- * We get 160 bytes stack space from calling function, but only use
+- * 12 * 8 byte for old backchain, r15..r6, and tail_call_cnt.
+- *
+- * The stack size used by the BPF program ("BPF stack" above) is passed
+- * via "aux->stack_depth".
+- */
+-#define STK_SPACE_ADD	(160)
+-#define STK_160_UNUSED	(160 - 12 * 8)
+-#define STK_OFF		(STK_SPACE_ADD - STK_160_UNUSED)
+-
+-#define STK_OFF_R6	(160 - 11 * 8)	/* Offset of r6 on stack */
+-#define STK_OFF_TCCNT	(160 - 12 * 8)	/* Offset of tail_call_cnt on stack */
+-
+-#endif /* __ARCH_S390_NET_BPF_JIT_H */
 --- a/arch/s390/net/bpf_jit_comp.c
 +++ b/arch/s390/net/bpf_jit_comp.c
-@@ -56,6 +56,7 @@ struct bpf_jit {
+@@ -32,7 +32,6 @@
+ #include <asm/set_memory.h>
+ #include <asm/text-patching.h>
+ #include <asm/unwind.h>
+-#include "bpf_jit.h"
+ 
+ struct bpf_jit {
+ 	u32 seen;		/* Flags to remember seen eBPF instructions */
+@@ -56,7 +55,7 @@ struct bpf_jit {
  	int prologue_plt;	/* Start of prologue hotpatch PLT */
  	int kern_arena;		/* Pool offset of kernel arena address */
  	u64 user_arena;		/* User arena address */
-+	u32 frame_off;		/* Offset of frame from %r15 */
+-	u32 frame_off;		/* Offset of frame from %r15 */
++	u32 frame_off;		/* Offset of struct bpf_prog from %r15 */
  };
  
  #define SEEN_MEM	BIT(0)		/* use mem[] for temporary storage */
-@@ -421,12 +422,9 @@ static void save_regs(struct bpf_jit *ji
+@@ -405,11 +404,25 @@ static void jit_fill_hole(void *area, un
+ }
+ 
  /*
-  * Restore registers from "rs" (register start) to "re" (register end) on stack
++ * Caller-allocated part of the frame.
++ * Thanks to packed stack, its otherwise unused initial part can be used for
++ * the BPF stack and for the next frame.
++ */
++struct prog_frame {
++	u64 unused[8];
++	/* BPF stack starts here and grows towards 0 */
++	u32 tail_call_cnt;
++	u32 pad;
++	u64 r6[10];  /* r6 - r15 */
++	u64 backchain;
++} __packed;
++
++/*
+  * Save registers from "rs" (register start) to "re" (register end) on stack
   */
--static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re, u32 stack_depth)
-+static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re)
+ static void save_regs(struct bpf_jit *jit, u32 rs, u32 re)
  {
 -	u32 off = STK_OFF_R6 + (rs - 6) * 8;
--
--	if (jit->seen & SEEN_STACK)
--		off += STK_OFF + stack_depth;
-+	u32 off = jit->frame_off + STK_OFF_R6 + (rs - 6) * 8;
++	u32 off = offsetof(struct prog_frame, r6) + (rs - 6) * 8;
+ 
+ 	if (rs == re)
+ 		/* stg %rs,off(%r15) */
+@@ -424,7 +437,7 @@ static void save_regs(struct bpf_jit *ji
+  */
+ static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re)
+ {
+-	u32 off = jit->frame_off + STK_OFF_R6 + (rs - 6) * 8;
++	u32 off = jit->frame_off + offsetof(struct prog_frame, r6) + (rs - 6) * 8;
  
  	if (rs == re)
  		/* lg %rs,off(%r15) */
-@@ -470,8 +468,7 @@ static int get_end(u16 seen_regs, int st
-  * Save and restore clobbered registers (6-15) on stack.
-  * We save/restore registers in chunks with gap >= 2 registers.
-  */
--static void save_restore_regs(struct bpf_jit *jit, int op, u32 stack_depth,
--			      u16 extra_regs)
-+static void save_restore_regs(struct bpf_jit *jit, int op, u16 extra_regs)
- {
- 	u16 seen_regs = jit->seen_regs | extra_regs;
- 	const int last = 15, save_restore_size = 6;
-@@ -494,7 +491,7 @@ static void save_restore_regs(struct bpf
- 		if (op == REGS_SAVE)
- 			save_regs(jit, rs, re);
- 		else
--			restore_regs(jit, rs, re, stack_depth);
-+			restore_regs(jit, rs, re);
- 		re++;
- 	} while (re <= last);
- }
-@@ -561,8 +558,7 @@ static void bpf_jit_plt(struct bpf_plt *
+@@ -556,10 +569,12 @@ static void bpf_jit_plt(struct bpf_plt *
+  * Emit function prologue
+  *
   * Save registers and create stack frame if necessary.
-  * See stack frame layout description in "bpf_jit.h"!
+- * See stack frame layout description in "bpf_jit.h"!
++ * Stack frame layout is described by struct prog_frame.
   */
--static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp,
--			     u32 stack_depth)
-+static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp)
+ static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp)
  {
++	BUILD_BUG_ON(sizeof(struct prog_frame) != STACK_FRAME_OVERHEAD);
++
  	/* No-op for hotpatching */
  	/* brcl 0,prologue_plt */
-@@ -595,7 +591,7 @@ static void bpf_jit_prologue(struct bpf_
- 		jit->seen_regs |= NVREGS;
+ 	EMIT6_PCREL_RILC(0xc0040000, 0, jit->prologue_plt);
+@@ -567,8 +582,9 @@ static void bpf_jit_prologue(struct bpf_
+ 
+ 	if (!bpf_is_subprog(fp)) {
+ 		/* Initialize the tail call counter in the main program. */
+-		/* xc STK_OFF_TCCNT(4,%r15),STK_OFF_TCCNT(%r15) */
+-		_EMIT6(0xd703f000 | STK_OFF_TCCNT, 0xf000 | STK_OFF_TCCNT);
++		/* xc tail_call_cnt(4,%r15),tail_call_cnt(%r15) */
++		_EMIT6(0xd703f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
  	} else {
- 		/* Save registers */
--		save_restore_regs(jit, REGS_SAVE, stack_depth,
-+		save_restore_regs(jit, REGS_SAVE,
- 				  fp->aux->exception_boundary ? NVREGS : 0);
- 	}
- 	/* Setup literal pool */
-@@ -617,8 +613,8 @@ static void bpf_jit_prologue(struct bpf_
+ 		/*
+ 		 * Skip the tail call counter initialization in subprograms.
+@@ -611,13 +627,15 @@ static void bpf_jit_prologue(struct bpf_
+ 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK)) {
+ 		/* lgr %w1,%r15 (backchain) */
  		EMIT4(0xb9040000, REG_W1, REG_15);
- 		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
- 		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
--		/* aghi %r15,-STK_OFF */
--		EMIT4_IMM(0xa70b0000, REG_15, -(STK_OFF + stack_depth));
-+		/* aghi %r15,-frame_off */
-+		EMIT4_IMM(0xa70b0000, REG_15, -jit->frame_off);
- 		/* stg %w1,152(%r15) (backchain) */
+-		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
+-		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
++		/* la %bfp,unused_end(%r15) (BPF frame pointer) */
++		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15,
++			   offsetofend(struct prog_frame, unused));
+ 		/* aghi %r15,-frame_off */
+ 		EMIT4_IMM(0xa70b0000, REG_15, -jit->frame_off);
+-		/* stg %w1,152(%r15) (backchain) */
++		/* stg %w1,backchain(%r15) */
  		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
- 			      REG_15, 152);
-@@ -665,13 +661,13 @@ static void call_r1(struct bpf_jit *jit)
- /*
-  * Function epilogue
-  */
--static void bpf_jit_epilogue(struct bpf_jit *jit, u32 stack_depth)
-+static void bpf_jit_epilogue(struct bpf_jit *jit)
- {
- 	jit->exit_ip = jit->prg;
- 	/* Load exit code: lgr %r2,%b0 */
- 	EMIT4(0xb9040000, REG_2, BPF_REG_0);
- 	/* Restore registers */
--	save_restore_regs(jit, REGS_RESTORE, stack_depth, 0);
-+	save_restore_regs(jit, REGS_RESTORE, 0);
- 	if (nospec_uses_trampoline()) {
- 		jit->r14_thunk_ip = jit->prg;
- 		/* Generate __s390_indirect_jump_r14 thunk */
-@@ -862,7 +858,7 @@ static int sign_extend(struct bpf_jit *j
-  * stack space for the large switch statement.
-  */
- static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
--				 int i, bool extra_pass, u32 stack_depth)
-+				 int i, bool extra_pass)
- {
- 	struct bpf_insn *insn = &fp->insnsi[i];
- 	s32 branch_oc_off = insn->off;
-@@ -1783,9 +1779,9 @@ static noinline int bpf_jit_insn(struct
+-			      REG_15, 152);
++			      REG_15,
++			      offsetof(struct prog_frame, backchain));
+ 	}
+ }
+ 
+@@ -1779,9 +1797,10 @@ static noinline int bpf_jit_insn(struct
  		 * Note 2: We assume that the verifier does not let us call the
  		 * main program, which clears the tail call counter on entry.
  		 */
--		/* mvc STK_OFF_TCCNT(4,%r15),N(%r15) */
-+		/* mvc STK_OFF_TCCNT(4,%r15),frame_off+STK_OFF_TCCNT(%r15) */
- 		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
--		       0xf000 | (STK_OFF_TCCNT + STK_OFF + stack_depth));
-+		       0xf000 | (jit->frame_off + STK_OFF_TCCNT));
+-		/* mvc STK_OFF_TCCNT(4,%r15),frame_off+STK_OFF_TCCNT(%r15) */
+-		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
+-		       0xf000 | (jit->frame_off + STK_OFF_TCCNT));
++		/* mvc tail_call_cnt(4,%r15),frame_off+tail_call_cnt(%r15) */
++		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | (jit->frame_off +
++				 offsetof(struct prog_frame, tail_call_cnt)));
  
  		/* Sign-extend the kfunc arguments. */
  		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
-@@ -1836,10 +1832,7 @@ static noinline int bpf_jit_insn(struct
+@@ -1832,7 +1851,8 @@ static noinline int bpf_jit_insn(struct
  		 *         goto out;
  		 */
  
--		if (jit->seen & SEEN_STACK)
--			off = STK_OFF_TCCNT + STK_OFF + stack_depth;
--		else
--			off = STK_OFF_TCCNT;
-+		off = jit->frame_off + STK_OFF_TCCNT;
+-		off = jit->frame_off + STK_OFF_TCCNT;
++		off = jit->frame_off +
++		      offsetof(struct prog_frame, tail_call_cnt);
  		/* lhi %w0,1 */
  		EMIT4_IMM(0xa7080000, REG_W0, 1);
  		/* laal %w1,%w0,off(%r15) */
-@@ -1869,7 +1862,7 @@ static noinline int bpf_jit_insn(struct
- 		/*
- 		 * Restore registers before calling function
- 		 */
--		save_restore_regs(jit, REGS_RESTORE, stack_depth, 0);
-+		save_restore_regs(jit, REGS_RESTORE, 0);
- 
- 		/*
- 		 * goto *(prog->bpf_func + tail_call_start);
-@@ -2161,7 +2154,7 @@ static int bpf_set_addr(struct bpf_jit *
-  * Compile eBPF program into s390x code
-  */
- static int bpf_jit_prog(struct bpf_jit *jit, struct bpf_prog *fp,
--			bool extra_pass, u32 stack_depth)
-+			bool extra_pass)
- {
- 	int i, insn_count, lit32_size, lit64_size;
- 	u64 kern_arena;
-@@ -2170,24 +2163,28 @@ static int bpf_jit_prog(struct bpf_jit *
- 	jit->lit64 = jit->lit64_start;
+@@ -2164,7 +2184,9 @@ static int bpf_jit_prog(struct bpf_jit *
  	jit->prg = 0;
  	jit->excnt = 0;
-+	if (is_first_pass(jit) || (jit->seen & SEEN_STACK))
-+		jit->frame_off = STK_OFF + round_up(fp->aux->stack_depth, 8);
-+	else
-+		jit->frame_off = 0;
+ 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK))
+-		jit->frame_off = STK_OFF + round_up(fp->aux->stack_depth, 8);
++		jit->frame_off = sizeof(struct prog_frame) -
++				 offsetofend(struct prog_frame, unused) +
++				 round_up(fp->aux->stack_depth, 8);
+ 	else
+ 		jit->frame_off = 0;
  
- 	kern_arena = bpf_arena_get_kern_vm_start(fp->aux->arena);
- 	if (kern_arena)
- 		jit->kern_arena = _EMIT_CONST_U64(kern_arena);
- 	jit->user_arena = bpf_arena_get_user_vm_start(fp->aux->arena);
- 
--	bpf_jit_prologue(jit, fp, stack_depth);
-+	bpf_jit_prologue(jit, fp);
- 	if (bpf_set_addr(jit, 0) < 0)
- 		return -1;
- 	for (i = 0; i < fp->len; i += insn_count) {
--		insn_count = bpf_jit_insn(jit, fp, i, extra_pass, stack_depth);
-+		insn_count = bpf_jit_insn(jit, fp, i, extra_pass);
- 		if (insn_count < 0)
- 			return -1;
- 		/* Next instruction address */
- 		if (bpf_set_addr(jit, i + insn_count) < 0)
- 			return -1;
- 	}
--	bpf_jit_epilogue(jit, stack_depth);
-+	bpf_jit_epilogue(jit);
- 
- 	lit32_size = jit->lit32 - jit->lit32_start;
- 	lit64_size = jit->lit64 - jit->lit64_start;
-@@ -2263,7 +2260,6 @@ static struct bpf_binary_header *bpf_jit
-  */
- struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
- {
--	u32 stack_depth = round_up(fp->aux->stack_depth, 8);
- 	struct bpf_prog *tmp, *orig_fp = fp;
- 	struct bpf_binary_header *header;
- 	struct s390_jit_data *jit_data;
-@@ -2316,7 +2312,7 @@ struct bpf_prog *bpf_int_jit_compile(str
- 	 *   - 3:   Calculate program size and addrs array
- 	 */
- 	for (pass = 1; pass <= 3; pass++) {
--		if (bpf_jit_prog(&jit, fp, extra_pass, stack_depth)) {
-+		if (bpf_jit_prog(&jit, fp, extra_pass)) {
- 			fp = orig_fp;
- 			goto free_addrs;
- 		}
-@@ -2330,7 +2326,7 @@ struct bpf_prog *bpf_int_jit_compile(str
- 		goto free_addrs;
- 	}
- skip_init_ctx:
--	if (bpf_jit_prog(&jit, fp, extra_pass, stack_depth)) {
-+	if (bpf_jit_prog(&jit, fp, extra_pass)) {
- 		bpf_jit_binary_free(header);
- 		fp = orig_fp;
- 		goto free_addrs;
+@@ -2647,9 +2669,10 @@ static int __arch_prepare_bpf_trampoline
+ 	/* stg %r1,backchain_off(%r15) */
+ 	EMIT6_DISP_LH(0xe3000000, 0x0024, REG_1, REG_0, REG_15,
+ 		      tjit->backchain_off);
+-	/* mvc tccnt_off(4,%r15),stack_size+STK_OFF_TCCNT(%r15) */
++	/* mvc tccnt_off(4,%r15),stack_size+tail_call_cnt(%r15) */
+ 	_EMIT6(0xd203f000 | tjit->tccnt_off,
+-	       0xf000 | (tjit->stack_size + STK_OFF_TCCNT));
++	       0xf000 | (tjit->stack_size +
++			 offsetof(struct prog_frame, tail_call_cnt)));
+ 	/* stmg %r2,%rN,fwd_reg_args_off(%r15) */
+ 	if (nr_reg_args)
+ 		EMIT6_DISP_LH(0xeb000000, 0x0024, REG_2,
+@@ -2786,8 +2809,9 @@ static int __arch_prepare_bpf_trampoline
+ 				       (nr_stack_args * sizeof(u64) - 1) << 16 |
+ 				       tjit->stack_args_off,
+ 			       0xf000 | tjit->orig_stack_args_off);
+-		/* mvc STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
+-		_EMIT6(0xd203f000 | STK_OFF_TCCNT, 0xf000 | tjit->tccnt_off);
++		/* mvc tail_call_cnt(4,%r15),tccnt_off(%r15) */
++		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | tjit->tccnt_off);
+ 		/* lgr %r1,%r8 */
+ 		EMIT4(0xb9040000, REG_1, REG_8);
+ 		/* %r1() */
+@@ -2844,8 +2868,9 @@ static int __arch_prepare_bpf_trampoline
+ 	if (flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET))
+ 		EMIT6_DISP_LH(0xe3000000, 0x0004, REG_2, REG_0, REG_15,
+ 			      tjit->retval_off);
+-	/* mvc stack_size+STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
+-	_EMIT6(0xd203f000 | (tjit->stack_size + STK_OFF_TCCNT),
++	/* mvc stack_size+tail_call_cnt(4,%r15),tccnt_off(%r15) */
++	_EMIT6(0xd203f000 | (tjit->stack_size +
++			     offsetof(struct prog_frame, tail_call_cnt)),
+ 	       0xf000 | tjit->tccnt_off);
+ 	/* aghi %r15,stack_size */
+ 	EMIT4_IMM(0xa70b0000, REG_15, tjit->stack_size);
 
 
