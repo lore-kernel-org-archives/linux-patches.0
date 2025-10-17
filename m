@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F5E3370F6;
-	Fri, 17 Oct 2025 14:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997C13370E3;
+	Fri, 17 Oct 2025 14:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713066; cv=none; b=sYfLv/qXrPscqpHmMnm58j0LmIcF0SLXO3By35ET9uFGnA8DAJIjglZG9d9tzR6R7uRH3h/kSjBL2luEKPlFKvJWIAheC16yOzpi3X1STovnEEpnfE4EOK4sXVLc9gpjSieEJzc/zcf7mOkSSzUcRyCf5dAbvZx5AO70pMATSLY=
+	t=1760713068; cv=none; b=c5rDWj07ksPqU4GtbcczClKIMW2dyjO2JtXJyfj6jP8metK8LWFaXzk0RbmFJ8VGIcwxKxxJqartzkR9WWwcIL8MfKpnREFcLAPh/wkxW23PkCNZxthhDRDM11B48sH2bxTiyQAEaqxvqwAg3s/7e8EGASu0U6t5csix003HWIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713066; c=relaxed/simple;
-	bh=smz7diFiyEc2LJ6HvOb3raVh6rpzwfoWWsah7muajvk=;
+	s=arc-20240116; t=1760713068; c=relaxed/simple;
+	bh=I/N797+3E8Nqdh/REmB7FKzQ4OZoINtYXU1RXmCbSes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=royxkC+P1dkYkkOo5y6BRsjOZdYRnFb+eMAaQ6k61iCcqiS2vHTcKQPvEzBLq0wEp1Y0fzEx/ngFF09WRYscgrDhNSwny2dxDBtJNQ6eRdiTB1VnPaZbGV5N8YcOOlsR6WyhMHbKrFWusDWBV8LbHZpxojKrDd44JoJ+yoNGcDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4+x9aPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHrS4hc5oSrJQHUvqAr1df7iMdo8dQ1Mtu3j0M3Olp4OZRLbamp2DcIPM7uZaMLhRTjAlmScFWTvXsZUHiY/8/Vm/D63Hph0kxETY3JsbIdByIebMB5vMwT1G9akewopgYRwoBNGSduP1WzG58cs0YN8BLuL5AUKzRUVDXVbmuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBK+7NDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4+x9aPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F21C4CEE7;
-	Fri, 17 Oct 2025 14:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBK+7NDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C54C4CEE7;
+	Fri, 17 Oct 2025 14:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713065;
-	bh=smz7diFiyEc2LJ6HvOb3raVh6rpzwfoWWsah7muajvk=;
+	s=korg; t=1760713068;
+	bh=I/N797+3E8Nqdh/REmB7FKzQ4OZoINtYXU1RXmCbSes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4+x9aPKB0Tla08ULIWBs+DOjzd6y65mWmT+XIvce+HwEshuzx6WeWVkfTr8p4KCE
-	 Yb4x86qOmLFyUeyi00TUwgHlgnW9cPshSgtdZyv1vJqB3SQQYdwfDsrCjnLpGqs/Qk
-	 VhuPExRWqee9O4/+tH0xeu5Va9GXfYs5PlJnAd3Y=
+	b=IBK+7NDXWkCwW5eecMKaPvHM0riAqsiae3ltQAnaXWqvH75EZ/UORdUHsJE7LDcg+
+	 I5Sw+hzmqMYCqWoFZNEjve/ktjY2k8++EktjREsT3AKD4lkyGIo1+Jr52WU7l2Lcos
+	 MSpJTbTSs11kA1+ZuS/6T/Qsazy+1tkisF1gr6/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Erick Karanja <karanja99erick@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/168] clk: mediatek: mt8195-infra_ao: Fix parent for infra_ao_hdmi_26m
-Date: Fri, 17 Oct 2025 16:51:37 +0200
-Message-ID: <20251017145129.689873888@linuxfoundation.org>
+Subject: [PATCH 6.1 036/168] net: fsl_pq_mdio: Fix device node reference leak in fsl_pq_mdio_probe
+Date: Fri, 17 Oct 2025 16:51:55 +0200
+Message-ID: <20251017145130.348229276@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Erick Karanja <karanja99erick@gmail.com>
 
-[ Upstream commit 6c4c26b624790098988c1034541087e3e5ed5bed ]
+[ Upstream commit 521405cb54cd2812bbb6dedd5afc14bca1e7e98a ]
 
-The infrastructure gate for the HDMI specific crystal needs the
-top_hdmi_xtal clock to be configured in order to ungate the 26m
-clock to the HDMI IP, and it wouldn't work without.
+Add missing of_node_put call to release device node tbi obtained
+via for_each_child_of_node.
 
-Reparent the infra_ao_hdmi_26m clock to top_hdmi_xtal to fix that.
-
-Fixes: e2edf59dec0b ("clk: mediatek: Add MT8195 infrastructure clock support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: afae5ad78b342 ("net/fsl_pq_mdio: streamline probing of MDIO nodes")
+Signed-off-by: Erick Karanja <karanja99erick@gmail.com>
+Link: https://patch.msgid.link/20251002174617.960521-1-karanja99erick@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt8195-infra_ao.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fsl_pq_mdio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt8195-infra_ao.c b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-index fcd410461d3bb..516b5830f16e1 100644
---- a/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-+++ b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-@@ -103,7 +103,7 @@ static const struct mtk_gate infra_ao_clks[] = {
- 	GATE_INFRA_AO0(CLK_INFRA_AO_CQ_DMA_FPC, "infra_ao_cq_dma_fpc", "fpc", 28),
- 	GATE_INFRA_AO0(CLK_INFRA_AO_UART5, "infra_ao_uart5", "top_uart", 29),
- 	/* INFRA_AO1 */
--	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "clk26m", 0),
-+	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "top_hdmi_xtal", 0),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_SPI0, "infra_ao_spi0", "top_spi", 1),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC0, "infra_ao_msdc0", "top_msdc50_0_hclk", 2),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC1, "infra_ao_msdc1", "top_axi", 4),
+diff --git a/drivers/net/ethernet/freescale/fsl_pq_mdio.c b/drivers/net/ethernet/freescale/fsl_pq_mdio.c
+index 9d58d83344670..ea49b0df397e5 100644
+--- a/drivers/net/ethernet/freescale/fsl_pq_mdio.c
++++ b/drivers/net/ethernet/freescale/fsl_pq_mdio.c
+@@ -482,10 +482,12 @@ static int fsl_pq_mdio_probe(struct platform_device *pdev)
+ 					"missing 'reg' property in node %pOF\n",
+ 					tbi);
+ 				err = -EBUSY;
++				of_node_put(tbi);
+ 				goto error;
+ 			}
+ 			set_tbipa(*prop, pdev,
+ 				  data->get_tbipa, priv->map, &res);
++			of_node_put(tbi);
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
