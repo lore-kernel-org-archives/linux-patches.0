@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B64330B00;
-	Fri, 17 Oct 2025 15:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15FF330B11;
+	Fri, 17 Oct 2025 15:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715925; cv=none; b=LoaSKgMw7MK1CPH6BY8YSWXxrVxUY4Gc4JIgU8bd9FJ5Lg7JdzsgA8tLUtt1wU6XgnfaEwXwkYdaoQwwvEaiQThwplFA6NIKSs+eeHG8tSa6L5P6+TH2VLKKap2c75Qcl5SlQPpbT2t10uq02pgN4I0UAUTsS0i0oon22SpQPBg=
+	t=1760715927; cv=none; b=uX0xiYU8TfGgyDZykrci/NKaFJv8aU3lnvwWYxnmi+wrsEw5DRPMSgcDudESpoTN2eEEAsZtXJhp4KDWwi5QTphB73W9Ci4lcVO05VGFqIBGgxSVU17rc56w3fVyW4FV9iA4Oji6nbOuNzIYop7uCMI0ni6q2TiZMh6hdDfEEvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715925; c=relaxed/simple;
-	bh=Uw7qoxz+AOJ63hesYAdCv+BbJgAjPeFOl63Uj0FNZ3w=;
+	s=arc-20240116; t=1760715927; c=relaxed/simple;
+	bh=cV5lJ8jz7ajbLmn8IRCgc9exwQuS89fwMJpjcTEyoEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1dL2+BwYQGOQ5Dc4zvgrgV45NwNOGuwHAY+oN8JcrUgSBuLWxjSLJ9i1dckCaxHAPqsIxQlU05JTxJTTy4OO0HsJKPsCX61llwjlZQTJzndz2eldW4z8O5wVBEj8zB3SkJlsNWW+Ub/s3rErSPxnQ2kYh5WotJ0GHyIUv8ns+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDNAl7VA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SyVbddLxIF+/IeOMb5keOILKulOA7Ay+wnAoMhDL8FuGlQe2ITXpBwx6O9mI0POLL0n+tfoLxp/TETH4jKUUcNKCMcyYmSfDPqlc/HN9ZA72cYZACWRk6+ZpXmdoiOWrJhbHfhy6U0ezGLsy5c28FO2gZm0dZszkZgX9RmRwpLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTkHLT2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDNAl7VA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A1FC4CEE7;
-	Fri, 17 Oct 2025 15:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTkHLT2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5CDC4CEE7;
+	Fri, 17 Oct 2025 15:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715924;
-	bh=Uw7qoxz+AOJ63hesYAdCv+BbJgAjPeFOl63Uj0FNZ3w=;
+	s=korg; t=1760715927;
+	bh=cV5lJ8jz7ajbLmn8IRCgc9exwQuS89fwMJpjcTEyoEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDNAl7VA0uA3gE52BbW429llql17ijQ69lYHxcvAT7QgJG6bONvWMTwTftnHdopXX
-	 icLNX47bkvhBZXbVjhmrzKeoUlrP3nwGCgCDMPlyINbutNUlq9Ift9vzdEy1WB2+3r
-	 aPdsKbXUMaFVmCr/Kz8ZQAmrJTQ4IVpwaXkm40YU=
+	b=yTkHLT2sUHtZVjN9yTvUMwnImGm03HjLEy1w64T2s6enrrfpDrFjq/J3fg6TcE3NY
+	 P0jtLHsJTTY0VliKYyTifh5AxKMFXybxoXdKaqjNCSUureVGnyJWqoboRBcTya1ydB
+	 Mylu5Je4+hfuDVa+qfREIhSyQ2MYwfVkhmawS688=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hupu <hupu.gm@gmail.com>,
-	Guilherme Amadio <amadio@gentoo.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/276] perf subcmd: avoid crash in exclude_cmds when excludes is empty
-Date: Fri, 17 Oct 2025 16:51:46 +0200
-Message-ID: <20251017145142.884260760@linuxfoundation.org>
+	syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com,
+	Arnaud Lecomte <contact@arnaud-lcm.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Romain Sioen <romain.sioen@microchip.com>
+Subject: [PATCH 5.15 014/276] hid: fix I2C read buffer overflow in raw_event() for mcp2221
+Date: Fri, 17 Oct 2025 16:51:47 +0200
+Message-ID: <20251017145142.920827807@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,49 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hupu <hupu.gm@gmail.com>
+From: Arnaud Lecomte <contact@arnaud-lcm.com>
 
-[ Upstream commit a5edf3550f4260504b7e0ab3d40d13ffe924b773 ]
+commit b56cc41a3ae7323aa3c6165f93c32e020538b6d2 upstream.
 
-When cross-compiling the perf tool for ARM64, `perf help` may crash
-with the following assertion failure:
+As reported by syzbot, mcp2221_raw_event lacked
+validation of incoming I2C read data sizes, risking buffer
+overflows in mcp->rxbuf during multi-part transfers.
+As highlighted in the DS20005565B spec, p44, we have:
+"The number of read-back data bytes to follow in this packet:
+from 0 to a maximum of 60 bytes of read-back bytes."
+This patch enforces we don't exceed this limit.
 
-  help.c:122: exclude_cmds: Assertion `cmds->names[ci] == NULL' failed.
-
-This happens when the perf binary is not named exactly "perf" or when
-multiple "perf-*" binaries exist in the same directory. In such cases,
-the `excludes` command list can be empty, which leads to the final
-assertion in exclude_cmds() being triggered.
-
-Add a simple guard at the beginning of exclude_cmds() to return early
-if excludes->cnt is zero, preventing the crash.
-
-Signed-off-by: hupu <hupu.gm@gmail.com>
-Reported-by: Guilherme Amadio <amadio@gentoo.org>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250909094953.106706-1-amadio@gentoo.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=52c1a7d3e5b361ccd346
+Tested-by: syzbot+52c1a7d3e5b361ccd346@syzkaller.appspotmail.com
+Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
+Link: https://patch.msgid.link/20250726220931.7126-1-contact@arnaud-lcm.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/subcmd/help.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-mcp2221.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/lib/subcmd/help.c b/tools/lib/subcmd/help.c
-index 42f57b640f119..687307f2fe0f7 100644
---- a/tools/lib/subcmd/help.c
-+++ b/tools/lib/subcmd/help.c
-@@ -72,6 +72,9 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
- 	size_t ci, cj, ei;
- 	int cmp;
- 
-+	if (!excludes->cnt)
-+		return;
-+
- 	ci = cj = ei = 0;
- 	while (ci < cmds->cnt && ei < excludes->cnt) {
- 		cmp = strcmp(cmds->names[ci]->name, excludes->names[ei]->name);
--- 
-2.51.0
-
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -791,6 +791,10 @@ static int mcp2221_raw_event(struct hid_
+ 			}
+ 			if (data[2] == MCP2221_I2C_READ_COMPL ||
+ 			    data[2] == MCP2221_I2C_READ_PARTIAL) {
++				if (!mcp->rxbuf || mcp->rxbuf_idx < 0 || data[3] > 60) {
++					mcp->status = -EINVAL;
++					break;
++				}
+ 				buf = mcp->rxbuf;
+ 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
+ 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
 
 
