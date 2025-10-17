@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF18219A7A;
-	Fri, 17 Oct 2025 15:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728B728935A;
+	Fri, 17 Oct 2025 15:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714987; cv=none; b=UTzzJLAZM1vJbDkS/koT9LFnyl6xNZp/Al66vndBSF4v4lAIxGbQGGFCD7dHlHSahXu6pF3kvBPG9MtQ7HQnGVxCRsU5OhIlwt7zTP47fFExnkKiKvw9yhWDxpZ5+IluLslscXRVSEbkGIMQKm/k3BMwtAKuV4RGh7ZBBsj/1dA=
+	t=1760714990; cv=none; b=h99lvE9R8Ejt1zEIoS77TZvP0y2HC3SJ6QRLFNP/+l97oGVrl5DB73/8wIeVlmSu048r3j03CUrYhHFHccUYk7RRzEfeKWgDAY8PC/27BT/67LmJefnrE2IP8Gl4hrN6SYWwSE4nV6pt4YukDgCJYVAZuOPpyTCWogjq/L5EWU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714987; c=relaxed/simple;
-	bh=OoPorNaBWe0ft3U7g1YxUiXcG+hyx2E5OnmVK6+PK3g=;
+	s=arc-20240116; t=1760714990; c=relaxed/simple;
+	bh=UX/Ske3T4oqx8UwEFw1YygNo4rMZSYRB6NYd2Sw8aqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQNU4esoJhabtg1YEJlLnDGhk8EnVW6OUI27+dQU37Rqg3K5zshgkwcS6nCSHHJuGtMIs7MFvHVmq/p7E398ceSmZETO3nS4axbYy+sgmNYPrpYBf1j62zNsZEhnoE9dXPFUbCYLk1w9Dhs7SMzfZ1up5LQBE5lgn9wV85iEKBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiJxBQVi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BI4JUc0m/qHqSYk2UIDM9iJJjy7beBmBINCnQIEd/OQEkegNtbabx0sGvEHRVFFYjjgKeD4caP8EUKblix7MmBbK7ED6YvnTGVnfD9fP+nO07HNGnDw0Ps/EmH7Oc/4HHS5OXx4ZIBG8lvePCRKvFD9U8Zhziqr92tunMwEeSgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7deEIks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiJxBQVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08CBC4CEE7;
-	Fri, 17 Oct 2025 15:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7deEIks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE927C4CEFE;
+	Fri, 17 Oct 2025 15:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714987;
-	bh=OoPorNaBWe0ft3U7g1YxUiXcG+hyx2E5OnmVK6+PK3g=;
+	s=korg; t=1760714990;
+	bh=UX/Ske3T4oqx8UwEFw1YygNo4rMZSYRB6NYd2Sw8aqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiJxBQVi0KBdcq/eZkdsLN0Yl5BcMcQGO0BMsGG1x95YfMRN3SNYhyV+4vHLCTXIR
-	 eXj5XqbPoYc51MTImlq/JGdQIE3LoQ1PBZuWcvDOJXh7Zjfg4cMQDPrLWVvPYeyuDF
-	 GulA8/grr220RF7d0bLkJj5HF9mzzzFGSHKFHeKo=
+	b=g7deEIkszUf8xtesz9fyXjUcVBybsOV0AaKHEQK7LnmITLiJ+FIgj6LhpbJAN/+BZ
+	 KdkhEwo/77iPgoO58PC1H/NNEi3PcN0NFgb/A0E37uEHoGYQDA8iV3jf4YPAIl2Z0+
+	 fhDEPgBxoPbN3QgYjEj9vC85OXOF+C0TapipbviA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -49,9 +49,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 026/371] perf test trace_btf_enum: Skip if permissions are insufficient
-Date: Fri, 17 Oct 2025 16:50:01 +0200
-Message-ID: <20251017145202.745147933@linuxfoundation.org>
+Subject: [PATCH 6.17 027/371] perf evsel: Avoid container_of on a NULL leader
+Date: Fri, 17 Oct 2025 16:50:02 +0200
+Message-ID: <20251017145202.781439671@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -72,12 +72,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 4bd5bd8dbd41a208fb73afb65bda6f38e2b5a637 ]
+[ Upstream commit 2354479026d726954ff86ce82f4b649637319661 ]
 
-Modify test behavior to skip if BPF calls fail with "Operation not
-permitted".
+An evsel should typically have a leader of itself, however, in tests
+like 'Sample parsing' a NULL leader may occur and the container_of
+will return a corrupt pointer.
 
-Fixes: d66763fed30f0bd8 ("perf test trace_btf_enum: Add regression test for the BTF augmentation of enums in 'perf trace'")
+Avoid this with an explicit NULL test.
+
+Fixes: fba7c86601e2e42d ("libperf: Move 'leader' from tools/perf to perf_evsel::leader")
 Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Ian Rogers <irogers@google.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
@@ -98,42 +101,26 @@ Cc: Nam Cao <namcao@linutronix.de>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: Steinar H. Gunderson <sesse@google.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250821163820.1132977-3-irogers@google.com
+Link: https://lore.kernel.org/r/20250821163820.1132977-4-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/trace_btf_enum.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/perf/util/evsel.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/tests/shell/trace_btf_enum.sh b/tools/perf/tests/shell/trace_btf_enum.sh
-index 572001d75d781..03e9f680a4a69 100755
---- a/tools/perf/tests/shell/trace_btf_enum.sh
-+++ b/tools/perf/tests/shell/trace_btf_enum.sh
-@@ -23,6 +23,14 @@ check_vmlinux() {
-   fi
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index d264c143b5925..496f42434327b 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -3935,6 +3935,8 @@ bool evsel__is_hybrid(const struct evsel *evsel)
+ 
+ struct evsel *evsel__leader(const struct evsel *evsel)
+ {
++	if (evsel->core.leader == NULL)
++		return NULL;
+ 	return container_of(evsel->core.leader, struct evsel, core);
  }
  
-+check_permissions() {
-+  if perf trace -e $syscall $TESTPROG 2>&1 | grep -q "Operation not permitted"
-+  then
-+    echo "trace+enum test [Skipped permissions]"
-+    err=2
-+  fi
-+}
-+
- trace_landlock() {
-   echo "Tracing syscall ${syscall}"
- 
-@@ -56,6 +64,9 @@ trace_non_syscall() {
- }
- 
- check_vmlinux
-+if [ $err = 0 ]; then
-+  check_permissions
-+fi
- 
- if [ $err = 0 ]; then
-   trace_landlock
 -- 
 2.51.0
 
