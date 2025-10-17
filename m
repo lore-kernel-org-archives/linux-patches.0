@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047EA19DF9A;
-	Fri, 17 Oct 2025 15:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD372745E;
+	Fri, 17 Oct 2025 15:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714868; cv=none; b=f3a421cBEXcYm3IRVFca1Qcub+OEb08At4lDQUKKOPIzSD2mOfh/NOXg7CP4aT5E770rk0YUf8MwUio7HqYs5RODAbp3e80l9oCWO5nEbTj3sVfnWNV7XtxPN5wGBBCJ8GGTj0yI/Zx35h6Ziq9jkBL6zRBsD6oXavfNlcl7jN4=
+	t=1760714870; cv=none; b=gVYaE9KEJIWDBtSQMeI6Ca6aYnFQCKMLB0iJWpXuabuEVdjfZPVHsPIrgJqpvUKIs7q7A8Z2UedtUhDe6KWfotG+3Pd2CiBsqneMfpHmb4BshwPzBLoyn26fphAVRGTKsKqVXkc2rJVk1Ix3sWbXWHLJZtg34Vkl/DaUO/tD51M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714868; c=relaxed/simple;
-	bh=CiUMNU3zgVSOJeYjssTPEHXpLWdXOD7sJPRLK1J7fVA=;
+	s=arc-20240116; t=1760714870; c=relaxed/simple;
+	bh=1fcXNKohraAviAAfhoIhQy8bk3y+PHB1677G70405R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oHWKoesx0FC9GYKTWbXer7NVP3gPvoWQhrRYFwHz1uBWPBwvY21iKkLeM1qTwNm+IypOxV44AvKScbBox5cAQJYnBImRg9OigfCpSFWHgqUObON9GJk7p6uD5obJVmQypywQWfeRwDN1LxTxk5XB7zq/VffbsGwN7S4S1ykeayY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Liarbc+1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKEHm3aqFup0GJ9TXw6ytquvtYo9s+vz9GuUBwqbnt+RRUKDKKW8xtg1KPFc9fNl8+ppCTRiRTh7D1LwLcFUPrXMyj0Li+Afc0jgG2y8D1FLCGQUfOg0TFzAowxC1aefu2IFEHk3VlCeyPmHJ61Iqs+H06fzcTnig8mchLOPIf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVv4mVOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Liarbc+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8033FC4CEE7;
-	Fri, 17 Oct 2025 15:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVv4mVOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DC8C4CEE7;
+	Fri, 17 Oct 2025 15:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714867;
-	bh=CiUMNU3zgVSOJeYjssTPEHXpLWdXOD7sJPRLK1J7fVA=;
+	s=korg; t=1760714870;
+	bh=1fcXNKohraAviAAfhoIhQy8bk3y+PHB1677G70405R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Liarbc+1Q/EXDS2t3nz6gIG++9ZD1IKPtwlQulBtuYF/d14D+jaU8jk9Q12/Yi1ND
-	 FL19QpTjEYl2LoUuXss/+WGzrwki/0Xj7xP/m6g9/o4dn0aSOydYNFQRqXFnwfhglB
-	 RCp71F0OktDzLJ7ulQOdF/IvWv2B4+X5Jvq9IwOI=
+	b=EVv4mVOXr1o5KBVgpQEkptyGGxDdNUosQIXXik+iQeWrX3XUZRMx3Ngb7qGb2mMua
+	 uw0tQoLWsVFUuCliJPCYZtQ0FqXIbkxrZws4voMuzktOvaJUo5bt9hfcgc2uIPqyDO
+	 YUx+g9ODaLdVmVeXuPox8OPZT8imrSXPvdv+E+f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.17 017/371] iio: frequency: adf4350: Fix ADF4350_REG3_12BIT_CLKDIV_MODE
-Date: Fri, 17 Oct 2025 16:49:52 +0200
-Message-ID: <20251017145202.421490638@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.17 002/371] fscontext: do not consume log entries when returning -EMSGSIZE
+Date: Fri, 17 Oct 2025 16:49:37 +0200
+Message-ID: <20251017145201.876404734@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -46,41 +45,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 1d8fdabe19267338f29b58f968499e5b55e6a3b6 upstream.
+commit 72d271a7baa7062cb27e774ac37c5459c6d20e22 upstream.
 
-The clk div bits (2 bits wide) do not start in bit 16 but in bit 15. Fix it
-accordingly.
+Userspace generally expects APIs that return -EMSGSIZE to allow for them
+to adjust their buffer size and retry the operation. However, the
+fscontext log would previously clear the message even in the -EMSGSIZE
+case.
 
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-2-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Given that it is very cheap for us to check whether the buffer is too
+small before we remove the message from the ring buffer, let's just do
+that instead. While we're at it, refactor some fscontext_read() into a
+separate helper to make the ring buffer logic a bit easier to read.
+
+Fixes: 007ec26cdc9f ("vfs: Implement logging through fs_context")
+Cc: David Howells <dhowells@redhat.com>
+Cc: stable@vger.kernel.org # v5.2+
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Link: https://lore.kernel.org/20250807-fscontext-log-cleanups-v3-1-8d91d6242dc3@cyphar.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iio/frequency/adf4350.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fsopen.c |   70 ++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
---- a/include/linux/iio/frequency/adf4350.h
-+++ b/include/linux/iio/frequency/adf4350.h
-@@ -51,7 +51,7 @@
+--- a/fs/fsopen.c
++++ b/fs/fsopen.c
+@@ -18,50 +18,56 @@
+ #include "internal.h"
+ #include "mount.h"
  
- /* REG3 Bit Definitions */
- #define ADF4350_REG3_12BIT_CLKDIV(x)		((x) << 3)
--#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 16)
-+#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 15)
- #define ADF4350_REG3_12BIT_CSR_EN		(1 << 18)
- #define ADF4351_REG3_CHARGE_CANCELLATION_EN	(1 << 21)
- #define ADF4351_REG3_ANTI_BACKLASH_3ns_EN	(1 << 22)
++static inline const char *fetch_message_locked(struct fc_log *log, size_t len,
++					       bool *need_free)
++{
++	const char *p;
++	int index;
++
++	if (unlikely(log->head == log->tail))
++		return ERR_PTR(-ENODATA);
++
++	index = log->tail & (ARRAY_SIZE(log->buffer) - 1);
++	p = log->buffer[index];
++	if (unlikely(strlen(p) > len))
++		return ERR_PTR(-EMSGSIZE);
++
++	log->buffer[index] = NULL;
++	*need_free = log->need_free & (1 << index);
++	log->need_free &= ~(1 << index);
++	log->tail++;
++
++	return p;
++}
++
+ /*
+  * Allow the user to read back any error, warning or informational messages.
++ * Only one message is returned for each read(2) call.
+  */
+ static ssize_t fscontext_read(struct file *file,
+ 			      char __user *_buf, size_t len, loff_t *pos)
+ {
+ 	struct fs_context *fc = file->private_data;
+-	struct fc_log *log = fc->log.log;
+-	unsigned int logsize = ARRAY_SIZE(log->buffer);
+-	ssize_t ret;
+-	char *p;
++	ssize_t err;
++	const char *p __free(kfree) = NULL, *message;
+ 	bool need_free;
+-	int index, n;
+-
+-	ret = mutex_lock_interruptible(&fc->uapi_mutex);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (log->head == log->tail) {
+-		mutex_unlock(&fc->uapi_mutex);
+-		return -ENODATA;
+-	}
++	int n;
+ 
+-	index = log->tail & (logsize - 1);
+-	p = log->buffer[index];
+-	need_free = log->need_free & (1 << index);
+-	log->buffer[index] = NULL;
+-	log->need_free &= ~(1 << index);
+-	log->tail++;
++	err = mutex_lock_interruptible(&fc->uapi_mutex);
++	if (err < 0)
++		return err;
++	message = fetch_message_locked(fc->log.log, len, &need_free);
+ 	mutex_unlock(&fc->uapi_mutex);
++	if (IS_ERR(message))
++		return PTR_ERR(message);
+ 
+-	ret = -EMSGSIZE;
+-	n = strlen(p);
+-	if (n > len)
+-		goto err_free;
+-	ret = -EFAULT;
+-	if (copy_to_user(_buf, p, n) != 0)
+-		goto err_free;
+-	ret = n;
+-
+-err_free:
+ 	if (need_free)
+-		kfree(p);
+-	return ret;
++		p = message;
++
++	n = strlen(message);
++	if (copy_to_user(_buf, message, n))
++		return -EFAULT;
++	return n;
+ }
+ 
+ static int fscontext_release(struct inode *inode, struct file *file)
 
 
