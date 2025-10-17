@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3258732C92F;
-	Fri, 17 Oct 2025 15:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909432F12D2;
+	Fri, 17 Oct 2025 15:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715818; cv=none; b=SaTbgJaKk3/K583uGKQ1zvTQ2DRuDx/WpE+hWIdSjcFe8rAP9THCo0uddqfJ7FU9C5R41yAwF+YNnjJWWtauD1o8nEVpCT0JfelJRBiSAh4bt/9bBTEr+pCzR18jUdB+H/8O2f3dZnSHGJ4kr81q9obZsJKhtiEupYUjborsUIk=
+	t=1760715820; cv=none; b=HmoXItEb4RHRJrAV/1uCey42a6oc6O9P2oJ4iBUJT8oUC2gX2goLUQJfmqYDdfX9T+4173NQx+krxwhCWITRZCbtT9z5gXixyesiieeWBzBoZy+gCHdG8eYAeI3oTbtPqWgAW7yWDyrvO75M6LbaFKcHgH+9SyrIMHb+YH/tz+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715818; c=relaxed/simple;
-	bh=3K6CGR82Lo/7/KfmD7Tc0Lz8YsmUaaqkEVgJLDB66iE=;
+	s=arc-20240116; t=1760715820; c=relaxed/simple;
+	bh=WXD8xMZtBMTcYcTj7YdIzzK53GB44W8bUWdOLD4qPwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKAxh5qSXyfgFmH9cYaKHpMxm+cL2stXxo+OF/q57l2eAPBIlND+JMhAWZnv2WW0G3tvx5vuaD4U5SB/cjP5TTA9XNW4dLDyK2nYvBLMGU9qjtPcKyhb0k4ZzZ6SrxhO4bsYMEHXyP26IeM7cXFM1+nG72BUWPEpr8yffYm3NB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+oHsthK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1iqi/7HiTHLt+jErFK0wrXoMZIBj++fK3QG+bkyIw6Z/FmfNQBLso36kcu5XimA8BjH/3qjMfoe3zmu1a34ERPzPyUyeSasvUYBldbBGzd9esm8/hde3X82DX+uWKf0yZPxuOWC8dcFhyU6OftlE8ap+wzsffDcak9qskG3nBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhzLm48Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+oHsthK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DA0C4CEE7;
-	Fri, 17 Oct 2025 15:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhzLm48Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9C0C116B1;
+	Fri, 17 Oct 2025 15:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715817;
-	bh=3K6CGR82Lo/7/KfmD7Tc0Lz8YsmUaaqkEVgJLDB66iE=;
+	s=korg; t=1760715820;
+	bh=WXD8xMZtBMTcYcTj7YdIzzK53GB44W8bUWdOLD4qPwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+oHsthKG0//RE0BIF6XUqbY2ZkNpPOvOaq6hLSeaBUw/VTsvukaNWlrIeODDo75Q
-	 S1BH7M5oNfjaUhuBQ5+1sVi571LLsYaJOk+B4t3XhvToU95q7fmLaX0OieoVNYdLB2
-	 S3J9HCo0jLBM3JNbTDXH9nT+hP3g51X94VHeCrrs=
+	b=OhzLm48Zf6MAtHzY1P+uZumc+nY5Hty9aq5yCT+InhZIMN60UWqDUOQKXMCDSSYut
+	 uirca99rQ55KAwOpQwhZZvRftG3wqFzpiFzIyirFrblAwD7Md6+CXFzfcF6XA3CuGm
+	 s6w4u+ksV/i9HlNXtLYgel7auyTzp+wbVMfKEamM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.17 340/371] ext4: verify orphan file size is not too big
-Date: Fri, 17 Oct 2025 16:55:15 +0200
-Message-ID: <20251017145214.383092515@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Greg Thelen <gthelen@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 6.17 349/371] ipmi: Fix handling of messages with provided receive message pointer
+Date: Fri, 17 Oct 2025 16:55:24 +0200
+Message-ID: <20251017145214.706522652@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,51 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 0a6ce20c156442a4ce2a404747bb0fb05d54eeb3 upstream.
+commit e2c69490dda5d4c9f1bfbb2898989c8f3530e354 upstream.
 
-In principle orphan file can be arbitrarily large. However orphan replay
-needs to traverse it all and we also pin all its buffers in memory. Thus
-filesystems with absurdly large orphan files can lead to big amounts of
-memory consumed. Limit orphan file size to a sane value and also use
-kvmalloc() for allocating array of block descriptor structures to avoid
-large order allocations for sane but large orphan files.
+Prior to commit b52da4054ee0 ("ipmi: Rework user message limit handling"),
+i_ipmi_request() used to increase the user reference counter if the receive
+message is provided by the caller of IPMI API functions. This is no longer
+the case. However, ipmi_free_recv_msg() is still called and decreases the
+reference counter. This results in the reference counter reaching zero,
+the user data pointer is released, and all kinds of interesting crashes are
+seen.
 
-Reported-by: syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Cc: stable@kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-ID: <20250909112206.10459-2-jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fix the problem by increasing user reference counter if the receive message
+has been provided by the caller.
+
+Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
+Reported-by: Eric Dumazet <edumazet@google.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Greg Thelen <gthelen@google.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Message-ID: <20251006201857.3433837-1-linux@roeck-us.net>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -583,9 +583,20 @@ int ext4_init_orphan_info(struct super_b
- 		ext4_msg(sb, KERN_ERR, "get orphan inode failed");
- 		return PTR_ERR(inode);
- 	}
-+	/*
-+	 * This is just an artificial limit to prevent corrupted fs from
-+	 * consuming absurd amounts of memory when pinning blocks of orphan
-+	 * file in memory.
-+	 */
-+	if (inode->i_size > 8 << 20) {
-+		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
-+			 (unsigned long long)inode->i_size);
-+		ret = -EFSCORRUPTED;
-+		goto out_put;
-+	}
- 	oi->of_blocks = inode->i_size >> sb->s_blocksize_bits;
- 	oi->of_csum_seed = EXT4_I(inode)->i_csum_seed;
--	oi->of_binfo = kmalloc_array(oi->of_blocks,
-+	oi->of_binfo = kvmalloc_array(oi->of_blocks,
- 				     sizeof(struct ext4_orphan_block),
- 				     GFP_KERNEL);
- 	if (!oi->of_binfo) {
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -2280,8 +2280,11 @@ static int i_ipmi_request(struct ipmi_us
+ 	if (supplied_recv) {
+ 		recv_msg = supplied_recv;
+ 		recv_msg->user = user;
+-		if (user)
++		if (user) {
+ 			atomic_inc(&user->nr_msgs);
++			/* The put happens when the message is freed. */
++			kref_get(&user->refcount);
++		}
+ 	} else {
+ 		recv_msg = ipmi_alloc_recv_msg(user);
+ 		if (IS_ERR(recv_msg))
 
 
