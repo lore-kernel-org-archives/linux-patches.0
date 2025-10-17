@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F3F330B17;
-	Fri, 17 Oct 2025 15:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2AC330B0C;
+	Fri, 17 Oct 2025 15:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716078; cv=none; b=HsQ63uOdIBIHyzhvsVI5fRat5KdgYbEh75JKRJzXvcvz39IWRy57jzhKZgfNSe8cihkwp9Gx6WpsaLPOJcETryfKbYQerXNi1vMWd27BAV31UwXLokC1zMRHsKcteyy7XiSmOg0jfpIxyegzrQH+AyutJ3LnBLDlcpzrn0Ay308=
+	t=1760716081; cv=none; b=K7wmZO7k8pDdoaU7KuAVahHMnjSM+1vYf0YqyPP4OwvKWZ6SK76DKm2hMmdu8V4O5s3FVboG9zQtPy/Zas1EHdAp0YWgSqHad5qD72YdclxAtd8xmqtXbXSNF5IKzCC3uZgxewMmuJzv67NmUzNJ0BZ/+7NALrgyUhIkMHXz7S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716078; c=relaxed/simple;
-	bh=5+OEJQd3bQDcuc7HkXF3tbOhh5r73lC2QSlfoZ5h0jM=;
+	s=arc-20240116; t=1760716081; c=relaxed/simple;
+	bh=0qDlesy/JIIobQyJ/+ziioU5vbgMRYLB1ip5flrO5kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uI8ANSamNRYRTY92hIAJRuVy6d/5Q5SZCZeqYF42uisgnvURn+ZYCCQHzMVHcMgXEMW1SXQ5As2+s/5uirNi3Hi0VKbD5alxUeOPAsa6lRZpWsklppVrMNBzQJsdk312Ee4xxjpojIqjPS/gNMchHwHy/5/uduri6tadOl/0bOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hW1alKUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfDOMUNeoq7x2y9kbgEvRMcV7UeSwdmpLIcKUSY0nbynvOa/egzcRlVNUwromtR2NktNUWBJQdSLKzdzQrVNuEzLazNY9tbzjBdzJts3s9YD0pHtHCL5RYNYRnHZoUhzCBhJ8IwG4mFvIrokA3Wvnleg6U0fHjBpN48oMQ5fLfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGjHnGQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hW1alKUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A039FC116B1;
-	Fri, 17 Oct 2025 15:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGjHnGQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BCEC4CEE7;
+	Fri, 17 Oct 2025 15:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716078;
-	bh=5+OEJQd3bQDcuc7HkXF3tbOhh5r73lC2QSlfoZ5h0jM=;
+	s=korg; t=1760716081;
+	bh=0qDlesy/JIIobQyJ/+ziioU5vbgMRYLB1ip5flrO5kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hW1alKUyDwhQmLvnx6zIlNVdFdHfOPXD1SaG0IfRu0Yx67pClDpAknLEFVyYWOSM3
-	 xsdE5l9BlZ/JKT8T7hpNnnZwv6HiayDs5aknqb04eFpZne5IVxTMjwsV1AGhhGurbJ
-	 hA6Bbx8kg9+6sobR8/PB9kiOSEXXcOG1No/FNsFQ=
+	b=wGjHnGQ6ePkXPztfoFXYcEb+OM5Xo/cIDp+1zW6RZNZYr3zsftf7E7OXe7eczZNrF
+	 kM7XRSknx9QyZF/SkPLaRhdCyjQKvvhsq+1UBR0mswHZowX1WCcGxjKSD/bLuy4Pbu
+	 Pt2Zuk2Z4+Bnqo2tLdi6PUwiS4qFP+vAx17iTMYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Wu <william.wu@rock-chips.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/276] usb: gadget: configfs: Correctly set use_os_string at bind
-Date: Fri, 17 Oct 2025 16:52:38 +0200
-Message-ID: <20251017145144.862152054@linuxfoundation.org>
+Subject: [PATCH 5.15 039/276] pinctrl: renesas: Use int type to store negative error codes
+Date: Fri, 17 Oct 2025 16:52:12 +0200
+Message-ID: <20251017145143.832604758@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,56 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Wu <william.wu@rock-chips.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit e271cc0d25015f4be6c88bd7731444644eb352c2 ]
+[ Upstream commit 9f062fc5b0ff44550088912ab89f9da40226a826 ]
 
-Once the use_os_string flag is set to true for some functions
-(e.g. adb/mtp) which need to response the OS string, and then
-if we re-bind the ConfigFS gadget to use the other functions
-(e.g. hid) which should not to response the OS string, however,
-because the use_os_string flag is still true, so the usb gadget
-response the OS string descriptor incorrectly, this can cause
-the USB device to be unrecognizable on the Windows system.
+Change the 'ret' variable in sh_pfc_pinconf_group_set() from unsigned
+int to int, as it needs to store either negative error codes or zero
+returned by sh_pfc_pinconf_set().
 
-An example of this as follows:
+No effect on runtime.
 
-echo 1 > os_desc/use
-ln -s functions/ffs.adb configs/b.1/function0
-start adbd
-echo "<udc device>" > UDC   #succeed
-
-stop adbd
-rm configs/b.1/function0
-echo 0 > os_desc/use
-ln -s functions/hid.gs0 configs/b.1/function0
-echo "<udc device>" > UDC  #fail to connect on Windows
-
-This patch sets the use_os_string flag to false at bind if
-the functions not support OS Descriptors.
-
-Signed-off-by: William Wu <william.wu@rock-chips.com>
-Fixes: 87213d388e92 ("usb: gadget: configfs: OS String support")
-Link: https://lore.kernel.org/r/1755833769-25434-1-git-send-email-william.wu@rock-chips.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Fixes: d0593c363f04ccc4 ("pinctrl: sh-pfc: Propagate errors on group config")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250831084958.431913-4-rongqianfeng@vivo.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/renesas/pinctrl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 6423930b0e72e..9a3de907de696 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -1364,6 +1364,8 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
- 		cdev->use_os_string = true;
- 		cdev->b_vendor_code = gi->b_vendor_code;
- 		memcpy(cdev->qw_sign, gi->qw_sign, OS_STRING_QW_SIGN_LEN);
-+	} else {
-+		cdev->use_os_string = false;
- 	}
+diff --git a/drivers/pinctrl/renesas/pinctrl.c b/drivers/pinctrl/renesas/pinctrl.c
+index f3eecb20c0869..37f8d51046b89 100644
+--- a/drivers/pinctrl/renesas/pinctrl.c
++++ b/drivers/pinctrl/renesas/pinctrl.c
+@@ -755,7 +755,8 @@ static int sh_pfc_pinconf_group_set(struct pinctrl_dev *pctldev, unsigned group,
+ 	struct sh_pfc_pinctrl *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	const unsigned int *pins;
+ 	unsigned int num_pins;
+-	unsigned int i, ret;
++	unsigned int i;
++	int ret;
  
- 	if (gadget_is_otg(gadget) && !otg_desc[0]) {
+ 	pins = pmx->pfc->info->groups[group].pins;
+ 	num_pins = pmx->pfc->info->groups[group].nr_pins;
 -- 
 2.51.0
 
