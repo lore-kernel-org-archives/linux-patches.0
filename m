@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1FD332ECA;
-	Fri, 17 Oct 2025 15:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F394B3328EA;
+	Fri, 17 Oct 2025 15:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714216; cv=none; b=DMRzMDFHwYpNOUdiAR27sX322NU9mnDovCPTCsOtsLTaxzRDF/YQNB4jH9bzkAk/0+mkEtNbcvQzphhrxCWUx9hmQ1b2PoUYGLtKQnWbbxNXibaJj+TnTzFO81Tf8HbNiMzmE03a5geIe3jN1145590xG2TxDLRb8r+UiVSRnBg=
+	t=1760714219; cv=none; b=sC/T9n1vtubTFlopf5I1XTKv2Bx4tGPGiWq5IIokqGl9z3nFcyIRsVSEfl6xxrRUlRKGp4begODPL3539k2uT7MJTDjo51k8y1O73n71ZASbnHNsiPyebIkq9mQzAHdv529Kq+6fmDgQf5oD1HaKbr5/MWfyMVMxoZUqkXKHgsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714216; c=relaxed/simple;
-	bh=mKGPDx8SfUnVKmer6hKDfS43QfWnO/fdv8YGrg2tZUA=;
+	s=arc-20240116; t=1760714219; c=relaxed/simple;
+	bh=GirmnxN6ZUpyf0Jjfshxhgx7kePdrTvFHgFkOaFoIBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsCv9L36wiBWYxZrgikbKFfNakNcAyebWoaPiuqVGbTAzMY55f69RU7fdUFSp6Ej+TrtRZN+a2dMU8y3aGcaGrWIYoy6bKxYzq3TcyrGx+u6H9+zbrndCtAKixat8rZM3vZ0GTEHtk5ccIcDD2gka9i5CVjk49wC8IIBQvS4NWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgLXHuRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMmzifuFFQ1riVNyjnCZ+EQFAyscXMds2nof9ExXfqBgNGx5z/2uiV+OFsB7g2IC7K95JyXvBsZgO8Gyq73Ym31enoub0MTWOXerkhwPhEWaVuT4spzd5E0pnw8nt4TKab09bHsmuLF1TExr4DsdI1a+xkFSBT+rTUfWyC2VgG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pc73ppT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgLXHuRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0F1C4CEE7;
-	Fri, 17 Oct 2025 15:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pc73ppT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFA9C4CEE7;
+	Fri, 17 Oct 2025 15:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714216;
-	bh=mKGPDx8SfUnVKmer6hKDfS43QfWnO/fdv8YGrg2tZUA=;
+	s=korg; t=1760714218;
+	bh=GirmnxN6ZUpyf0Jjfshxhgx7kePdrTvFHgFkOaFoIBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgLXHuRIdyeYMGyBzO7N9RkitbdlTPkwA3+4zKT24/30l8GenWxOkPkE+JQIzdequ
-	 46YMLhoGtRGvPs6owQIjfkrvoc7vA6cptSfP2Malsp+07NX0IoC+yrh6bliGmVJ4aP
-	 6ng140PGi/+V4bfECn5S/A5Xl9SFEYBs4zI61Tls=
+	b=Pc73ppT6aX3ehLp8ZmaEkoOjAF0BZUMa6tRLEo4rPFZCLjXFlqow/NptGlJ0j7BPX
+	 2W2MX5DHq3m8npqH9aji4oVXu3xgCz4u+8q3d1tbEULYQA5cWukaNkPj2mMcu6Yivs
+	 ryf5Qe5vHxpN57UfHNU57mxCI9ePoDlGY7JuqnXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/277] clk: mediatek: clk-mux: Do not pass flags to clk_mux_determine_rate_flags()
-Date: Fri, 17 Oct 2025 16:50:42 +0200
-Message-ID: <20251017145148.429915015@linuxfoundation.org>
+Subject: [PATCH 6.12 036/277] clk: nxp: lpc18xx-cgu: convert from round_rate() to determine_rate()
+Date: Fri, 17 Oct 2025 16:50:43 +0200
+Message-ID: <20251017145148.466105124@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,39 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 5e121370a7ad3414c7f3a77002e2b18abe5c6fe1 ]
+[ Upstream commit b46a3d323a5b7942e65025254c13801d0f475f02 ]
 
-The `flags` in |struct mtk_mux| are core clk flags, not mux clk flags.
-Passing one to the other is wrong.
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
 
-Since there aren't any actual users adding CLK_MUX_* flags, just drop it
-for now.
-
-Fixes: b05ea3314390 ("clk: mediatek: clk-mux: Add .determine_rate() callback")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Stable-dep-of: 1624dead9a4d ("clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mux.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/nxp/clk-lpc18xx-cgu.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mux.c b/drivers/clk/mediatek/clk-mux.c
-index 60990296450bb..9a12e58230bed 100644
---- a/drivers/clk/mediatek/clk-mux.c
-+++ b/drivers/clk/mediatek/clk-mux.c
-@@ -146,9 +146,7 @@ static int mtk_clk_mux_set_parent_setclr_lock(struct clk_hw *hw, u8 index)
- static int mtk_clk_mux_determine_rate(struct clk_hw *hw,
- 				      struct clk_rate_request *req)
- {
--	struct mtk_clk_mux *mux = to_mtk_clk_mux(hw);
--
--	return clk_mux_determine_rate_flags(hw, req, mux->data->flags);
-+	return clk_mux_determine_rate_flags(hw, req, 0);
+diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+index 81efa885069b2..30e0b283ca608 100644
+--- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
++++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+@@ -370,23 +370,25 @@ static unsigned long lpc18xx_pll0_recalc_rate(struct clk_hw *hw,
+ 	return 0;
  }
  
- const struct clk_ops mtk_mux_clr_set_upd_ops = {
+-static long lpc18xx_pll0_round_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long *prate)
++static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
++				       struct clk_rate_request *req)
+ {
+ 	unsigned long m;
+ 
+-	if (*prate < rate) {
++	if (req->best_parent_rate < req->rate) {
+ 		pr_warn("%s: pll dividers not supported\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 
+-	m = DIV_ROUND_UP_ULL(*prate, rate * 2);
++	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
+ 	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
+-		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
++		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
+ 		return -EINVAL;
+ 	}
+ 
+-	return 2 * *prate * m;
++	req->rate = 2 * req->best_parent_rate * m;
++
++	return 0;
+ }
+ 
+ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -443,7 +445,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ static const struct clk_ops lpc18xx_pll0_ops = {
+ 	.recalc_rate	= lpc18xx_pll0_recalc_rate,
+-	.round_rate	= lpc18xx_pll0_round_rate,
++	.determine_rate = lpc18xx_pll0_determine_rate,
+ 	.set_rate	= lpc18xx_pll0_set_rate,
+ };
+ 
 -- 
 2.51.0
 
