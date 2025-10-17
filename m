@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A413328FF;
-	Fri, 17 Oct 2025 15:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6F233711F;
+	Fri, 17 Oct 2025 15:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713443; cv=none; b=q2nA7wpcDYcL6pVHlRIWPAZ7HRqmNIRNBG4Wj9br21hGWBqTZE/o6Jewi+WIUnWQoc+nn0BjhStb7KMe1DTFsiGiCzR8+Uv/+tPHqpgYMoc5qHE5BMroR3kyao5mK6nVEGSBxAjcSr7JKJLLfKM8pUi0L/nLvbh33LjYWMygMJ0=
+	t=1760713446; cv=none; b=HTTrfHe6lVrxvg+ms1xWrc3OS16+pLYfqVaeWDq+l6QP8MalkkSKHSTLMAQ6f4uGRNRJwlaZAcFvwRCkwNdpRimSaioLSc0e02/xiPBLQa8o2L2P68frYh/gGt6U8nKNWKJJQ/xvnOOc/P/fWFNIFHdQfjzk5mZln0fWeDtssuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713443; c=relaxed/simple;
-	bh=L4MBiwTYQAuXSjfc5wNJ/SEQXMTaMFWW0k8eRJn7bsI=;
+	s=arc-20240116; t=1760713446; c=relaxed/simple;
+	bh=45o7xz+O4+HlcxcXpB9uzFJ/cOrfV2gnQYFogqGlXpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZbpncQYPvvwVgBMIlOnEwFN/xaMzg/3bmCz53AWm6ev53heOVN5cS+UqNSpELG0Hb0Bkxrrg0qGMqRut1HNdE2TtCDpUJzF3YPVu6tArSDO2YDX+ecda0Skins8ylCOfsVJhqWtM0DcZLREBbtSD92fWoogyhOyiyz9/4mT450=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JheWecW6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2JGkINxgG8nAN6z4SxiN3/ksx/7LfmDvrgQMwXdyyEasbjLL406JztlkuwpqocDexUMJ/joZmqZ78XdpM9787EGG0Q7wnbxxrSpI24rbZLPGHNn6Ci1LauRBWh/wF8hZWA0oqyERjPJNhvRI147JZVIgpZj1hwMDHOTwUO4yWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2HBTEVC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JheWecW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03791C4CEF9;
-	Fri, 17 Oct 2025 15:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2HBTEVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF15EC4CEE7;
+	Fri, 17 Oct 2025 15:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713443;
-	bh=L4MBiwTYQAuXSjfc5wNJ/SEQXMTaMFWW0k8eRJn7bsI=;
+	s=korg; t=1760713446;
+	bh=45o7xz+O4+HlcxcXpB9uzFJ/cOrfV2gnQYFogqGlXpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JheWecW69Gyoy+f6NtbLh4NexVYWc/5z3yq6ojCF/k3TBkPeIdMJ+VOwQozJVFLEL
-	 8waPtd1vt7UFzxSov/oD83Nte+PkEjC2x6iRmJnaeeWUMKyrgPa+lp6Hpk4SVQ4nEc
-	 FAG22CS1wm+WYAA0siSGYq2keBWWryjuTl9ZuXKw=
+	b=h2HBTEVCof0ZoMZgfxGk357dNkcVrgYO7DpWVTkiNL6Yb5mA6lV6So5MGgfsHflrg
+	 20ImyTPtEXIOiNLRvS4KT+Xd2G+bt2Wl1cyjQkh2519lfhgo3wEcqac9lzY2NVZbxb
+	 g1mp2PeRhR0siZ5l0Sz/vmsiq9nTgE+GTtWSzAIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.1 124/168] wifi: ath11k: HAL SRNG: dont deinitialize and re-initialize again
-Date: Fri, 17 Oct 2025 16:53:23 +0200
-Message-ID: <20251017145133.592189507@linuxfoundation.org>
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 161/168] minixfs: Verify inode mode when loading from disk
+Date: Fri, 17 Oct 2025 16:54:00 +0200
+Message-ID: <20251017145134.980113135@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,82 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 32be3ca4cf78b309dfe7ba52fe2d7cc3c23c5634 upstream.
+[ Upstream commit 73861970938ad1323eb02bbbc87f6fbd1e5bacca ]
 
-Don't deinitialize and reinitialize the HAL helpers. The dma memory is
-deallocated and there is high possibility that we'll not be able to get
-the same memory allocated from dma when there is high memory pressure.
+The inode mode loaded from corrupted disk can be invalid. Do like what
+commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
+does.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org
-Cc: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://patch.msgid.link/20250722053121.1145001-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/ec982681-84b8-4624-94fa-8af15b77cbd2@I-love.SAKURA.ne.jp
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c |    6 +-----
- drivers/net/wireless/ath/ath11k/hal.c  |   16 ++++++++++++++++
- drivers/net/wireless/ath/ath11k/hal.h  |    1 +
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ fs/minix/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -1596,14 +1596,10 @@ static int ath11k_core_reconfigure_on_cr
- 	mutex_unlock(&ab->core_lock);
- 
- 	ath11k_dp_free(ab);
--	ath11k_hal_srng_deinit(ab);
-+	ath11k_hal_srng_clear(ab);
- 
- 	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
- 
--	ret = ath11k_hal_srng_init(ab);
--	if (ret)
--		return ret;
--
- 	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
- 
- 	ret = ath11k_core_qmi_firmware_ready(ab);
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1351,6 +1351,22 @@ void ath11k_hal_srng_deinit(struct ath11
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index da8bdd1712a70..9da6903e306c6 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -470,8 +470,14 @@ void minix_set_inode(struct inode *inode, dev_t rdev)
+ 		inode->i_op = &minix_symlink_inode_operations;
+ 		inode_nohighmem(inode);
+ 		inode->i_mapping->a_ops = &minix_aops;
+-	} else
++	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
++		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
+ 		init_special_inode(inode, inode->i_mode, rdev);
++	} else {
++		printk(KERN_DEBUG "MINIX-fs: Invalid file type 0%04o for inode %lu.\n",
++		       inode->i_mode, inode->i_ino);
++		make_bad_inode(inode);
++	}
  }
- EXPORT_SYMBOL(ath11k_hal_srng_deinit);
  
-+void ath11k_hal_srng_clear(struct ath11k_base *ab)
-+{
-+	/* No need to memset rdp and wrp memory since each individual
-+	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
-+	 * and ath11k_hal_srng_dst_hw_init().
-+	 */
-+	memset(ab->hal.srng_list, 0,
-+	       sizeof(ab->hal.srng_list));
-+	memset(ab->hal.shadow_reg_addr, 0,
-+	       sizeof(ab->hal.shadow_reg_addr));
-+	ab->hal.avail_blk_resource = 0;
-+	ab->hal.current_blk_index = 0;
-+	ab->hal.num_shadow_reg_configured = 0;
-+}
-+EXPORT_SYMBOL(ath11k_hal_srng_clear);
-+
- void ath11k_hal_dump_srng_stats(struct ath11k_base *ab)
- {
- 	struct hal_srng *srng;
---- a/drivers/net/wireless/ath/ath11k/hal.h
-+++ b/drivers/net/wireless/ath/ath11k/hal.h
-@@ -957,6 +957,7 @@ int ath11k_hal_srng_setup(struct ath11k_
- 			  struct hal_srng_params *params);
- int ath11k_hal_srng_init(struct ath11k_base *ath11k);
- void ath11k_hal_srng_deinit(struct ath11k_base *ath11k);
-+void ath11k_hal_srng_clear(struct ath11k_base *ab);
- void ath11k_hal_dump_srng_stats(struct ath11k_base *ab);
- void ath11k_hal_srng_get_shadow_config(struct ath11k_base *ab,
- 				       u32 **cfg, u32 *len);
+ /*
+-- 
+2.51.0
+
 
 
