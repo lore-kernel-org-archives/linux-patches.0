@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBCA330B1F;
-	Fri, 17 Oct 2025 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1675330B2E;
+	Fri, 17 Oct 2025 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716641; cv=none; b=EkjaaXRfxR20UYKVxFldX2tcgNlUSL+jascAhBlWuEurW5TBaGPfz4ho9/36yww8NdY/svw5pH94CE7LtG9qsHoF4//ZTIuObRrBJa+5Ck5HzOZ2xbI0kM3bPMD4YifXr/iBRMSRQghaUd+bjiCJbvhvFq0j9mgPlFQW6CENNTc=
+	t=1760716644; cv=none; b=DZiyz1uVACuKkAEwbrrilI8D1hJL4ukn5egiZPx4Pcq1r2fmFMUlJbyXjhMU19/2uni/Ke5+xncKk2I+txL2kp2UkIgptdBqBLvipSZZxeuTko2r1IWC3RrFXhtCgyg8yAGvBoEjcAOjSJKf/3y5ApYMG06ZEY5nBoU8ZpFGld4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716641; c=relaxed/simple;
-	bh=b6ZVZhSjXFxrB4lMuI90B5d7qCAkj/Tu4nvl7Hszf0E=;
+	s=arc-20240116; t=1760716644; c=relaxed/simple;
+	bh=6zd5eHMARvAMDAf3z+YpE/HlK2S6ZDiEz+R7rjrun7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pTa1bXCVwm54H/K+VYCg4kTibRK+cNMiz+SUsEhnP/0FoCoEnWrg2/z84heCmpei6+s8+vuMc7Q387mgbtbUZHjKOkG37yE0UlT4bleQyhwVg2wM8bzTKbrBmRvbvTOly0fHtHHM0k2RUM3cozFjBKWpT9WHDVLSFM+jTr30ty4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDDcvjnS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dtOINIyhfm3ByCaF8Jm6ViZRbV8K/h5a3TcZV/hkHqyZRUftDdEFX83aPOwJTh+4QXllJFOIQtt/L/Ufv5ro/a6TwSIeiebfMAna//knevUTugS0LewV95X5YdU1bVLp6Ri/OVJkCvT3U/i+f7PgBUrvcAm1vjxG0oerwJASzBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldS0zGXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDDcvjnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9DCC4CEE7;
-	Fri, 17 Oct 2025 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldS0zGXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7CCC116B1;
+	Fri, 17 Oct 2025 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716641;
-	bh=b6ZVZhSjXFxrB4lMuI90B5d7qCAkj/Tu4nvl7Hszf0E=;
+	s=korg; t=1760716643;
+	bh=6zd5eHMARvAMDAf3z+YpE/HlK2S6ZDiEz+R7rjrun7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDDcvjnSGqc5QPUdWHINcOJW1ksUlODFlP4d9NhNsp6BHQV0mpCTL6XbE2AkANKkn
-	 NyhDMY7fFYcawD6taojDFJZ5n5EvhmxuiLt5C8eJDdBr3vmpZxtngGmEArU5L5ZxRk
-	 zHY3sBFMW99WD7gk87N/n4fWMHZqIfK/zf7iprhQ=
+	b=ldS0zGXCQXpMAqpAuoeEqYax9DmRyawwu8o7e2j3VFsUSchifaPaAAThkyESDFoXx
+	 0W5qCbE2l5CO8IyUPOVjh2qGlCDgB+J6FMfBLgfqLvLaeKQ3T+RVVBzFUEbdMa1TpR
+	 Welp8K3kJK2cbs6JOgJ/Kbmv/9pm9HPbu1D4C4Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoxiang17 <gaoxiang17@xiaomi.com>,
-	Baoquan He <bhe@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/276] pid: Add a judgment for ns null in pid_nr_ns
-Date: Fri, 17 Oct 2025 16:55:54 +0200
-Message-ID: <20251017145152.014502365@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?=E9=AB=98=E7=BF=94?= <gaoxiang17@xiaomi.com>
+Subject: [PATCH 5.15 262/276] pid: make __task_pid_nr_ns(ns => NULL) safe for zombie callers
+Date: Fri, 17 Oct 2025 16:55:55 +0200
+Message-ID: <20251017145152.050881253@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -46,99 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: gaoxiang17 <gaoxiang17@xiaomi.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 006568ab4c5ca2309ceb36fa553e390b4aa9c0c7 ]
+[ Upstream commit abdfd4948e45c51b19162cf8b3f5003f8f53c9b9 ]
 
-__task_pid_nr_ns
-        ns = task_active_pid_ns(current);
-        pid_nr_ns(rcu_dereference(*task_pid_ptr(task, type)), ns);
-                if (pid && ns->level <= pid->level) {
+task_pid_vnr(another_task) will crash if the caller was already reaped.
+The pid_alive(current) check can't really help, the parent/debugger can
+call release_task() right after this check.
 
-Sometimes null is returned for task_active_pid_ns. Then it will trigger kernel panic in pid_nr_ns.
+This also means that even task_ppid_nr_ns(current, NULL) is not safe,
+pid_alive() only ensures that it is safe to dereference ->real_parent.
 
-For example:
-	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000058
-	Mem abort info:
-	ESR = 0x0000000096000007
-	EC = 0x25: DABT (current EL), IL = 32 bits
-	SET = 0, FnV = 0
-	EA = 0, S1PTW = 0
-	FSC = 0x07: level 3 translation fault
-	Data abort info:
-	ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
-	CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-	GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-	user pgtable: 4k pages, 39-bit VAs, pgdp=00000002175aa000
-	[0000000000000058] pgd=08000002175ab003, p4d=08000002175ab003, pud=08000002175ab003, pmd=08000002175be003, pte=0000000000000000
-	pstate: 834000c5 (Nzcv daIF +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-	pc : __task_pid_nr_ns+0x74/0xd0
-	lr : __task_pid_nr_ns+0x24/0xd0
-	sp : ffffffc08001bd10
-	x29: ffffffc08001bd10 x28: ffffffd4422b2000 x27: 0000000000000001
-	x26: ffffffd442821168 x25: ffffffd442821000 x24: 00000f89492eab31
-	x23: 00000000000000c0 x22: ffffff806f5693c0 x21: ffffff806f5693c0
-	x20: 0000000000000001 x19: 0000000000000000 x18: 0000000000000000
-	x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 00000000023a1adc
-	x14: 0000000000000003 x13: 00000000007ef6d8 x12: 001167c391c78800
-	x11: 00ffffffffffffff x10: 0000000000000000 x9 : 0000000000000001
-	x8 : ffffff80816fa3c0 x7 : 0000000000000000 x6 : 49534d702d535449
-	x5 : ffffffc080c4c2c0 x4 : ffffffd43ee128c8 x3 : ffffffd43ee124dc
-	x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffffff806f5693c0
-	Call trace:
-	__task_pid_nr_ns+0x74/0xd0
-	...
-	__handle_irq_event_percpu+0xd4/0x284
-	handle_irq_event+0x48/0xb0
-	handle_fasteoi_irq+0x160/0x2d8
-	generic_handle_domain_irq+0x44/0x60
-	gic_handle_irq+0x4c/0x114
-	call_on_irq_stack+0x3c/0x74
-	do_interrupt_handler+0x4c/0x84
-	el1_interrupt+0x34/0x58
-	el1h_64_irq_handler+0x18/0x24
-	el1h_64_irq+0x68/0x6c
-	account_kernel_stack+0x60/0x144
-	exit_task_stack_account+0x1c/0x80
-	do_exit+0x7e4/0xaf8
-	...
-	get_signal+0x7bc/0x8d8
-	do_notify_resume+0x128/0x828
-	el0_svc+0x6c/0x70
-	el0t_64_sync_handler+0x68/0xbc
-	el0t_64_sync+0x1a8/0x1ac
-	Code: 35fffe54 911a02a8 f9400108 b4000128 (b9405a69)
-	---[ end trace 0000000000000000 ]---
-	Kernel panic - not syncing: Oops: Fatal exception in interrupt
+Change __task_pid_nr_ns() to ensure ns != NULL.
 
-Signed-off-by: gaoxiang17 <gaoxiang17@xiaomi.com>
-Link: https://lore.kernel.org/20250802022123.3536934-1-gxxa03070307@gmail.com
-Reviewed-by: Baoquan He <bhe@redhat.com>
+Originally-by: 高翔 <gaoxiang17@xiaomi.com>
+Link: https://lore.kernel.org/all/20250802022123.3536934-1-gxxa03070307@gmail.com/
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/20250810173604.GA19991@redhat.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/pid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/pid.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/pid.c b/kernel/pid.c
-index efe87db446836..61f6649568b25 100644
+index 61f6649568b25..18f67751d0a51 100644
 --- a/kernel/pid.c
 +++ b/kernel/pid.c
-@@ -474,7 +474,7 @@ pid_t pid_nr_ns(struct pid *pid, struct pid_namespace *ns)
- 	struct upid *upid;
- 	pid_t nr = 0;
+@@ -497,7 +497,8 @@ pid_t __task_pid_nr_ns(struct task_struct *task, enum pid_type type,
+ 	rcu_read_lock();
+ 	if (!ns)
+ 		ns = task_active_pid_ns(current);
+-	nr = pid_nr_ns(rcu_dereference(*task_pid_ptr(task, type)), ns);
++	if (ns)
++		nr = pid_nr_ns(rcu_dereference(*task_pid_ptr(task, type)), ns);
+ 	rcu_read_unlock();
  
--	if (pid && ns->level <= pid->level) {
-+	if (pid && ns && ns->level <= pid->level) {
- 		upid = &pid->numbers[ns->level];
- 		if (upid->ns == ns)
- 			nr = upid->nr;
+ 	return nr;
 -- 
 2.51.0
 
