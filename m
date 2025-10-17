@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC02C330B00;
-	Fri, 17 Oct 2025 15:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A8D330B00;
+	Fri, 17 Oct 2025 15:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716032; cv=none; b=iDpEX+dYijhVjTpRBJdhsLHxybjpzLbpWLkABkzNSvR6Y13Er0MQHdWDd5HUazk20J4RimtcU9BrACBmOg/frdQzFM7fX/SdhDjGUGCwx35T0kZnv50ns9GQRYH1tLizqkEk7eOk22iCiyGSpUSaJ4l1Ep1CnbZgvF3mUtPPt4M=
+	t=1760716036; cv=none; b=e4eT2jzWrFIYPObOL+Z2mPcc2Nug2D5L7AALYTTU6UfDyOW511fZ22f+6blaqthJ1dZV5YoBxNIfoXV+EKAnFWCDNXxeySaDsAAcEqxui7qI/zFfjiU1dUO772WcsVYkpVNTN9HOuBbKiv6ZeWe5K1zROdQTJ+5MzdUWd0R2Jjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716032; c=relaxed/simple;
-	bh=cme9UmgvngKn8YowYd3wbBG9V+P4/Fl1bv1RD9kjmQ4=;
+	s=arc-20240116; t=1760716036; c=relaxed/simple;
+	bh=GiZ7dwXX5mKeEer1tKWGmipym9oWDxAusoCk0uM4DHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHd2LkOQWxl+na1BSFMJlHb28BQRZ64v6xhnjAyU2G4y8SpmBufCJmvnSrcpCngP2GKEpEk3VSDoL7F/vbVdb1hLUIbeOlSc4VHMNmA9DmIQcAfUAV1V1egaF9lgTSFJgxjYjCVpZ7IGFutoCzk+RLMG8u58ciq8z0vylXrQ9SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MVqOVjQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dhQNslh1DlhuD6D0Y2dFWdsLGsa040CWtWpbVwRvnjUi2oFP0xCpSMiwugB+4oG5Qp68qTM6MfOTxpl4IPwWO9y+aL9Cx3VSM+S04yISuK2n6z3PCgMjQsU6iUY+/4GotI5jU0iiLmtl0yNATB2suDMTtXqAvfAEbCLo0FiVRN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQUTzijt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MVqOVjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5C2C4CEFE;
-	Fri, 17 Oct 2025 15:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQUTzijt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179FFC4CEE7;
+	Fri, 17 Oct 2025 15:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716031;
-	bh=cme9UmgvngKn8YowYd3wbBG9V+P4/Fl1bv1RD9kjmQ4=;
+	s=korg; t=1760716034;
+	bh=GiZ7dwXX5mKeEer1tKWGmipym9oWDxAusoCk0uM4DHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MVqOVjQ5mQmMxDpqxhh9risAziy9ew4H4mfZX68VYknsi4Tx/nF3EEnedyPjZu7D
-	 Du4Pd6rf5oh5i9vjoWVNoy6Tfw2PNtOGVaYPkXZ3ohyr5Bg2tp/zo8tvk0IT9CYeww
-	 xK8T5jKV0e+OsgzfaLD80YK6VZEpJonPZX1ZEYcw=
+	b=bQUTzijtTBiQVu/JtnvH9T6+5Ch54a7m38wGKllyTHlcNVH74UeUaFEW5O2JvnZRF
+	 Kwux3Ub69cFynDkMtTMRjVoUb3438nILtCemALCrS9f/S1/prKaOKLA0ptiQXXED79
+	 /k23p7gGbEGY/K9aZUtrB7j52sAkxg4W8iaZ2QXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Leilk.Liu" <leilk.liu@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/276] thermal/drivers/qcom/lmh: Add missing IRQ includes
-Date: Fri, 17 Oct 2025 16:52:23 +0200
-Message-ID: <20251017145144.315970683@linuxfoundation.org>
+Subject: [PATCH 5.15 051/276] i2c: mediatek: fix potential incorrect use of I2C_MASTER_WRRD
+Date: Fri, 17 Oct 2025 16:52:24 +0200
+Message-ID: <20251017145144.352103453@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -46,45 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Leilk.Liu <leilk.liu@mediatek.com>
 
-[ Upstream commit b50b2c53f98fcdb6957e184eb488c16502db9575 ]
+[ Upstream commit b492183652808e0f389272bf63dc836241b287ff ]
 
-As reported by LKP, the Qualcomm LMH driver needs to include several
-IRQ-related headers, which decrlare necessary IRQ functionality.
-Currently driver builds on ARM64 platforms, where the headers are pulled
-in implicitly by other headers, but fails to build on other platforms.
+The old IC does not support the I2C_MASTER_WRRD (write-then-read)
+function, but the current code’s handling of i2c->auto_restart may
+potentially lead to entering the I2C_MASTER_WRRD software flow,
+resulting in unexpected bugs.
 
-Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202507270042.KdK0KKht-lkp@intel.com/
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20250728-lmh-scm-v2-2-33bc58388ca5@oss.qualcomm.com
+Instead of repurposing the auto_restart flag, add a separate flag
+to signal I2C_MASTER_WRRD operations.
+
+Also fix handling of msgs. If the operation (i2c->op) is
+I2C_MASTER_WRRD, then the msgs pointer is incremented by 2.
+For all other operations, msgs is simply incremented by 1.
+
+Fixes: b2ed11e224a2 ("I2C: mediatek: Add driver for MediaTek MT8173 I2C controller")
+Signed-off-by: Leilk.Liu <leilk.liu@mediatek.com>
+Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/lmh.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-mt65xx.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
-index 9006e01e18c20..62c20d5c2a66a 100644
---- a/drivers/thermal/qcom/lmh.c
-+++ b/drivers/thermal/qcom/lmh.c
-@@ -5,6 +5,8 @@
-  */
- #include <linux/module.h>
- #include <linux/interrupt.h>
-+#include <linux/irq.h>
-+#include <linux/irqdesc.h>
- #include <linux/irqdomain.h>
- #include <linux/err.h>
- #include <linux/platform_device.h>
+diff --git a/drivers/i2c/busses/i2c-mt65xx.c b/drivers/i2c/busses/i2c-mt65xx.c
+index 72acda59eb399..03e5d488f874f 100644
+--- a/drivers/i2c/busses/i2c-mt65xx.c
++++ b/drivers/i2c/busses/i2c-mt65xx.c
+@@ -1067,6 +1067,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ {
+ 	int ret;
+ 	int left_num = num;
++	bool write_then_read_en = false;
+ 	struct mtk_i2c *i2c = i2c_get_adapdata(adap);
+ 
+ 	ret = mtk_i2c_clock_enable(i2c);
+@@ -1080,6 +1081,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		if (!(msgs[0].flags & I2C_M_RD) && (msgs[1].flags & I2C_M_RD) &&
+ 		    msgs[0].addr == msgs[1].addr) {
+ 			i2c->auto_restart = 0;
++			write_then_read_en = true;
+ 		}
+ 	}
+ 
+@@ -1104,12 +1106,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		else
+ 			i2c->op = I2C_MASTER_WR;
+ 
+-		if (!i2c->auto_restart) {
+-			if (num > 1) {
+-				/* combined two messages into one transaction */
+-				i2c->op = I2C_MASTER_WRRD;
+-				left_num--;
+-			}
++		if (write_then_read_en) {
++			/* combined two messages into one transaction */
++			i2c->op = I2C_MASTER_WRRD;
++			left_num--;
+ 		}
+ 
+ 		/* always use DMA mode. */
+@@ -1117,7 +1117,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		if (ret < 0)
+ 			goto err_exit;
+ 
+-		msgs++;
++		if (i2c->op == I2C_MASTER_WRRD)
++			msgs += 2;
++		else
++			msgs++;
+ 	}
+ 	/* the return value is number of executed messages */
+ 	ret = num;
 -- 
 2.51.0
 
