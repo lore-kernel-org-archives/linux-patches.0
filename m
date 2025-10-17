@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D924E3370FB;
-	Fri, 17 Oct 2025 14:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A253B337114;
+	Fri, 17 Oct 2025 14:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713119; cv=none; b=hSyRLDu8wZu2eUC1bq9VaQSL8vMsCW5hvEevcAYuVpqPFy25Z1TeN5IG3PiTE6Ul37fmUYeOGaHwAVOrTvBGKsSdyIOovWHPd+k06ZOhtTOLH+j3oMNqt0sfUEIjHhAkG7mEvIY+cv5gpJpQ9zGSwPK+7Hp3kxr+Go8Vl3mzD7c=
+	t=1760713122; cv=none; b=GFwjVs31aGH0LWW5JPvjpe+zLqMNTsf2MNnbsMkosNGK8bIf0RIOCYb70OW883TQLdQLliCsVZcgQH97ZwB5jOmf5Kxdp3QiqTs3cmfFJG9MXTAJmxz7/Rlgm8A15eEGCMVc2xKvyKW/+rXIWTmgeTN+xfxp0GunX4gqUwbZbwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713119; c=relaxed/simple;
-	bh=WxfrMWgp7y022tna2FxrONf2j3A5z6XFp3E2gmszvOQ=;
+	s=arc-20240116; t=1760713122; c=relaxed/simple;
+	bh=hmdmdGWbCCCmmSCPSJl7WvU0FSDmRWPLTjVjYGMyUYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfvqrJi5SZuXDLzpThwYcoqtg/KCY5RO6QVlmv1J7hWEOmGtMOxlohCvtF+xD2gFGmDpTxO+bFRxpx0ahQ3R73Yy4dqEfXH6mvd2heaao86vfJ1kBJV4G8ysR3ayURI0/s8BsKG4KMuyZLfoA7YW/m0m15c1iS1IZnC3u0BdPw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGkGbm0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsnHETDG+1gfjsfaFqi84R2ZP31YF1Im8WxoSIB6UbZ2Vn/TWk5MQqK44ZZYYZIe4Q6H+0IH3QiBeJ5dgyrw/dkJV8JShIhjKJVKOxs830/Jk7+BUskN3DbTROuZu5WEwYwvdZ2u4zTLXSv0nN8tZW1nukisp6CchjJo36fb33s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DISOHp+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGkGbm0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BC4C4CEE7;
-	Fri, 17 Oct 2025 14:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DISOHp+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C726C4CEE7;
+	Fri, 17 Oct 2025 14:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713119;
-	bh=WxfrMWgp7y022tna2FxrONf2j3A5z6XFp3E2gmszvOQ=;
+	s=korg; t=1760713122;
+	bh=hmdmdGWbCCCmmSCPSJl7WvU0FSDmRWPLTjVjYGMyUYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGkGbm0AAtIKmpqe+WnM4veuOMWVic9Sbzcfw86hc1ziKjsBcI0XrpSnPQ1MDDRiO
-	 JRf+5bKpiRseB5x3nZqX916XB4u+QJRQ2lJZSKxozTp1tRTBFUqTPUsvt1HjaSPdu7
-	 KFbBcTaCXuibuFvm4FpVld1v4KQxcmL1Tm4DXj1o=
+	b=DISOHp+unhNVfwuLJybtNEfkUGqKIFTH0U8Nzc4fc0K6SsVhcUnF6gw9frcMua1DY
+	 f2Y8yuxWjRCFmYBsLJW/vjjqdMCOQZ2Wp+asilhtNSQ31MEFkViyb7kjT39SKOumor
+	 DbJTSMQrZ2C7RKIHnfpBVzPx+pHBIKSbe6opICJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/168] clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver
-Date: Fri, 17 Oct 2025 16:51:40 +0200
-Message-ID: <20251017145129.800181773@linuxfoundation.org>
+Subject: [PATCH 6.1 022/168] clk: tegra: do not overallocate memory for bpmp clocks
+Date: Fri, 17 Oct 2025 16:51:41 +0200
+Message-ID: <20251017145129.836622970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,48 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 1624dead9a4d288a594fdf19735ebfe4bb567cb8 ]
+[ Upstream commit 49ef6491106209c595476fc122c3922dfd03253f ]
 
-The conditional check for the PLL0 multiplier 'm' used a logical AND
-instead of OR, making the range check ineffective. This patch replaces
-&& with || to correctly reject invalid values of 'm' that are either
-less than or equal to 0 or greater than LPC18XX_PLL0_MSEL_MAX.
+struct tegra_bpmp::clocks is a pointer to a dynamically allocated array
+of pointers to 'struct tegra_bpmp_clk'.
 
-This ensures proper bounds checking during clk rate setting and rounding.
+But the size of the allocated area is calculated like it is an array
+containing actual 'struct tegra_bpmp_clk' objects - it's not true, there
+are just pointers.
 
-Fixes: b04e0b8fd544 ("clk: add lpc18xx cgu clk driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-[sboyd@kernel.org: 'm' is unsigned so remove < condition]
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
+
+Fixes: 2db12b15c6f3 ("clk: tegra: Register clocks from root to leaf")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nxp/clk-lpc18xx-cgu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/tegra/clk-bpmp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-index 821155f79b015..bbd7d64038fab 100644
---- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
-+++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-@@ -382,7 +382,7 @@ static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
- 	}
+diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
+index 39241662a412a..3bc56a3c6b240 100644
+--- a/drivers/clk/tegra/clk-bpmp.c
++++ b/drivers/clk/tegra/clk-bpmp.c
+@@ -603,7 +603,7 @@ static int tegra_bpmp_register_clocks(struct tegra_bpmp *bpmp,
  
- 	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
- 		return -EINVAL;
- 	}
-@@ -405,7 +405,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
- 	}
+ 	bpmp->num_clocks = count;
  
- 	m = DIV_ROUND_UP_ULL(parent_rate, rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
- 		return -EINVAL;
- 	}
+-	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(struct tegra_bpmp_clk), GFP_KERNEL);
++	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(*bpmp->clocks), GFP_KERNEL);
+ 	if (!bpmp->clocks)
+ 		return -ENOMEM;
+ 
 -- 
 2.51.0
 
