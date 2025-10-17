@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0EC330B03;
-	Fri, 17 Oct 2025 15:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBD2330B03;
+	Fri, 17 Oct 2025 15:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715832; cv=none; b=odnvecv/1WutdVwwbj3mLVEczMe64kOYUt31YniRjzZ17BrJwAZaXg5ktcNfXhKjgsZcjkUQh+3BE+P1109EEuWMO8KjBCgZfnIdis72xtRAeUY3SeyHyOkN1DsD/z3mJedTYnnLiQkOktmUd6vxlWn75ExAtQbJU7n5aZV/OME=
+	t=1760715835; cv=none; b=aKbmfDeszrAxmN6FquNChYVZDc2mXlsusGc646AroXuTJBk3mMUDZMleuAxxLW9n/jbvtChZ+O7n0g8wXPAiVP2L0j+FHT26VwrSeYtYJYJaduPrVGAn5TIOUwUdXBYLBv1+1fE8WgK/wgqakGhBaPOM4YPL3oQEGBs0UQ49Eas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715832; c=relaxed/simple;
-	bh=Xp/yCJnO1q4mvyMEzqfIDrln5bgSpv3TOub/ChXHYOY=;
+	s=arc-20240116; t=1760715835; c=relaxed/simple;
+	bh=IIuYaI7EJ6s8AZ+/VtBNJrv9eujYMXjof7Wq7eN8/H0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4jtN+iS6BhgZLtkcsFg/oD8A+7wLvY+Tl7vm3LRjvwCyY95XvygesO9Y5eU/AayHdGXj5z1VsyQt2Ux5c0y64xkAOJ6FaQPRyGyMi7RaBrszBAQTddF6UcAu8vnU/KFJG10AS3TtwfAvEiOCiJud2gfRjN+RBlWHKR0K6d/Qn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y51KM4BM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDJaQDUnKcqUABdrmJJisGGoQ8G8GLcNR+pqHC+iwG/StDtxSrJGcBqLw5sDukNtn4lO/k297DKDpBO3BTO6seDsYVzJ8mB0OWBrmpX+U+Riuk1gBFAhgWGbnDm1ylNEjMANhX7CcP2T10Nn+ReSN1CPvyfdsGzMzLyfOWKU0sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEX1H6D1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y51KM4BM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8519AC4CEE7;
-	Fri, 17 Oct 2025 15:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEX1H6D1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84836C113D0;
+	Fri, 17 Oct 2025 15:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715831;
-	bh=Xp/yCJnO1q4mvyMEzqfIDrln5bgSpv3TOub/ChXHYOY=;
+	s=korg; t=1760715834;
+	bh=IIuYaI7EJ6s8AZ+/VtBNJrv9eujYMXjof7Wq7eN8/H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y51KM4BMdtL8XIkBORxWbPiKdOjIOMehafj0bpRPzZW7llxRE9E5xBKIBrpvSZQFp
-	 Zc1Q33tvSu5urKoZ832l2qP+rC512RzXo9InRKiSFfRivYJfcm/nBh0UtJ40TqYaPW
-	 fXg1fQ9E1lm+ac+28xSTiz2lapGzI+zijDPFSLqE=
+	b=nEX1H6D19Eqhd9BpO4zG8g0rjHxdjZzp2/4hxz+dzM0W8eCRf+WYHGJvcBfVGGw+f
+	 BdcWbDR7vPE0o4ISe3j5PhnHor6ZNm8YVMPJWayHNoVHocUKKqLbvDTIaYsiicUBJo
+	 Gm2t6Vo3j1j9so7cu0zRf7CVxrVv/gLD0U/zIpr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 353/371] media: mc: Clear minor number before put device
-Date: Fri, 17 Oct 2025 16:55:28 +0200
-Message-ID: <20251017145214.856658637@linuxfoundation.org>
+Subject: [PATCH 6.17 354/371] arm64: dts: qcom: qcs615: add missing dt property in QUP SEs
+Date: Fri, 17 Oct 2025 16:55:29 +0200
+Message-ID: <20251017145214.893160884@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,48 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
+[ Upstream commit 6a5e9b9738a32229e2673d4eccfcbfe2ef3a1ab4 ]
 
-The device minor should not be cleared after the device is released.
+Add the missing required-opps and operating-points-v2 properties to
+several I2C, SPI, and UART nodes in the QUP SEs.
 
-Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
+Fixes: f6746dc9e379 ("arm64: dts: qcom: qcs615: Add QUPv3 configuration")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
-Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250630064338.2487409-1-viken.dadhaniya@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-devnode.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs615.dtsi |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/mc/mc-devnode.c
-+++ b/drivers/media/mc/mc-devnode.c
-@@ -50,11 +50,6 @@ static void media_devnode_release(struct
- {
- 	struct media_devnode *devnode = to_media_devnode(cd);
+--- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+@@ -631,6 +631,7 @@
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				operating-points-v2 = <&qup_opp_table>;
+ 				status = "disabled";
+ 			};
  
--	mutex_lock(&media_devnode_lock);
--	/* Mark device node number as free */
--	clear_bit(devnode->minor, media_devnode_nums);
--	mutex_unlock(&media_devnode_lock);
--
- 	/* Release media_devnode and perform other cleanups as needed. */
- 	if (devnode->release)
- 		devnode->release(devnode);
-@@ -281,6 +276,7 @@ void media_devnode_unregister(struct med
- 	/* Delete the cdev on this minor as well */
- 	cdev_device_del(&devnode->cdev, &devnode->dev);
- 	devnode->media_dev = NULL;
-+	clear_bit(devnode->minor, media_devnode_nums);
- 	mutex_unlock(&media_devnode_lock);
+@@ -654,6 +655,7 @@
+ 						     "qup-config",
+ 						     "qup-memory";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+@@ -681,6 +683,7 @@
+ 						     "qup-config",
+ 						     "qup-memory";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+@@ -703,6 +706,7 @@
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				operating-points-v2 = <&qup_opp_table>;
+ 				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
+ 				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+@@ -728,6 +732,7 @@
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				operating-points-v2 = <&qup_opp_table>;
+ 				status = "disabled";
+ 			};
  
- 	put_device(&devnode->dev);
+@@ -751,6 +756,7 @@
+ 						     "qup-config",
+ 						     "qup-memory";
+ 				power-domains = <&rpmhpd RPMHPD_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
 
 
