@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CE5258ECA;
-	Fri, 17 Oct 2025 15:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76432E143;
+	Fri, 17 Oct 2025 15:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714455; cv=none; b=l3nzdPxf7+Z/xE90Nwh5Yq3WXlTcHUZDGNQ2GFdXi2yjng321FHZli74l/6XWHS7TP4xOEwkSljDUTVjd6cr02oO2eEm5CbtK6LfftbjGV9wbMAkTozbddN8a37oLVrhimZuLdBCv+qThb0WwSlsvYTqeXfo/KPj1EW5reoe7fk=
+	t=1760714458; cv=none; b=N4E+42jlMvoS2LpgJQY9bDrTrXfYsqKOOr6y+Q1bw1WVJXjmhvZq9c+oYoBhBIwfov1cQoOfzUqjhyjioCc769GOG1dN6y7dbP8f41CA6Tr3OykjJgGYFk+1r3sfdxibzoAn1HSPe/RJdzPgGV7EXORqQmdqRACo/umPq7Q4Xj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714455; c=relaxed/simple;
-	bh=aBjk32AYAkXY64RwJCBDCxqvV8qFDRVGW+PMJ17OHBo=;
+	s=arc-20240116; t=1760714458; c=relaxed/simple;
+	bh=ag9icF00RJ6CThBbFz+R1ZyrIGDduWbePoy+51VxMoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2vzg8+SOHCItQQ94x5kcAOOd+ofaqtUp/pXkbj60IOkSE931roY0QNRRrRF6fBBmQKQEPWcdzLB+gNuGY2jqLEsoBhcSaVmcobfNM5d0ED840xbMU+hmjdevDvjNh2u1tooVN8l24trjPv2Nhf6HjumfNxzDtVvMIxPV+tfkfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUriYYC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKFtA5smc7V683Lsp7aEv7pKI0t8DYgin1A25rZDCw/JbL2r4+91Kl7qIXKez54r5x4n1w6Jj8ih/+wnETxlFbSuHmAmxaFulQZuMSOFwhLllSTaL0B02wr7Yeao/UOs4Zk1I12rIiIwRVslYYEgGLDDzBePDdW4E79qSrjRzSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Er1T0gxD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUriYYC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B38C4CEE7;
-	Fri, 17 Oct 2025 15:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Er1T0gxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AFCC4CEE7;
+	Fri, 17 Oct 2025 15:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714455;
-	bh=aBjk32AYAkXY64RwJCBDCxqvV8qFDRVGW+PMJ17OHBo=;
+	s=korg; t=1760714458;
+	bh=ag9icF00RJ6CThBbFz+R1ZyrIGDduWbePoy+51VxMoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUriYYC9xhJg8BsHcTEiZsCvUjsVUvN5DNsWj8Ttd1e/nYi3Oo1eIXlDXcIooE4SW
-	 MjeTN460/QGL+vooKk1dF1UGXx2sscybCwC5rK1x7Qtj524aRqusjqjlT2HDCeB5cX
-	 sSkIP8KVH427RiLqueykVTRUwOLiEf7ToCldzlBw=
+	b=Er1T0gxD+LihPMTV/4T4zqffYwyyvNoTAmDIV+XbTVWldDXNdiKcjjFmh+KVbFqog
+	 jz+0NYhgwfvRxdQPObVRL3xoj/7yrBWSUNwdaqBXqEQFV6DzVWjfcAzyBVpRyaVQBD
+	 uQ0QKI/sEO3Si3cB+T2TC88a+W189HJhhXDP0yFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 152/277] parisc: Remove spurious if statement from raw_copy_from_user()
-Date: Fri, 17 Oct 2025 16:52:39 +0200
-Message-ID: <20251017145152.673883435@linuxfoundation.org>
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 153/277] nvme-pci: Add TUXEDO IBS Gen8 to Samsung sleep quirk
+Date: Fri, 17 Oct 2025 16:52:40 +0200
+Message-ID: <20251017145152.712157851@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,30 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Georg Gottleuber <ggo@tuxedocomputers.com>
 
-commit 16794e524d310780163fdd49d0bf7fac30f8dbc8 upstream.
+commit eeaed48980a7aeb0d3d8b438185d4b5a66154ff9 upstream.
 
-Accidently introduced in commit 91428ca9320e.
+On the TUXEDO InfinityBook S Gen8, a Samsung 990 Evo NVMe leads to
+a high power consumption in s2idle sleep (3.5 watts).
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: 91428ca9320e ("parisc: Check region is readable by user in raw_copy_from_user()")
-Cc: stable@vger.kernel.org # v5.12+
+This patch applies 'Force No Simple Suspend' quirk to achieve a sleep with
+a lower power consumption, typically around 1 watts.
+
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/lib/memcpy.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/parisc/lib/memcpy.c
-+++ b/arch/parisc/lib/memcpy.c
-@@ -41,7 +41,6 @@ unsigned long raw_copy_from_user(void *d
- 	mtsp(get_kernel_space(), SR_TEMP2);
- 
- 	/* Check region is user accessible */
--	if (start)
- 	while (start < end) {
- 		if (!prober_user(SR_TEMP1, start)) {
- 			newlen = (start - (unsigned long) src);
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3140,10 +3140,12 @@ static unsigned long check_vendor_combin
+ 		 * Exclude Samsung 990 Evo from NVME_QUIRK_SIMPLE_SUSPEND
+ 		 * because of high power consumption (> 2 Watt) in s2idle
+ 		 * sleep. Only some boards with Intel CPU are affected.
++		 * (Note for testing: Samsung 990 Evo Plus has same PCI ID)
+ 		 */
+ 		if (dmi_match(DMI_BOARD_NAME, "DN50Z-140HC-YD") ||
+ 		    dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
+ 		    dmi_match(DMI_BOARD_NAME, "GXxMRXx") ||
++		    dmi_match(DMI_BOARD_NAME, "NS5X_NS7XAU") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PG31") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH6PG01_PH6PG71"))
 
 
