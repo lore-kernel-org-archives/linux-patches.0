@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40E460DCF;
-	Fri, 17 Oct 2025 14:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDFA21C9EA;
+	Fri, 17 Oct 2025 14:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713131; cv=none; b=pumR3yzv1PzkUMdrd6d/t+SyR3KrrMj89fN/N3fx9aPf6y29UPZHyp+GUPC3m+HDJ80iEO3IuD+bmM3P2HiG5uDZCfwrGzGCnoxdzXpuqWHH/YEwTqnVeAwRbx9gzCLsF9/ygmEVDw7BrctpKXOTqAd95Q5fPwSPnrK4gcCD+W0=
+	t=1760713134; cv=none; b=jjDi/EAtw3xt4x6Q+ogSrpkgDBhQZgNQ3IeQ3R4rWT4FoEG61FbKwjBFrrGxbffRL/fyuOUc3lWD/Fqiksu/sM7Mfs2aWU0tOgRoShYBkaeK5ODyqpfNZgX9Tiewp0tf0aj8M+QSsAWC3se5VmlMJUEAVMLYqTonr8QGX+7U7Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713131; c=relaxed/simple;
-	bh=TVK7QLnMrEeWUKB/NUvYhEhCv2pzgxPk0FlT8t2GZYA=;
+	s=arc-20240116; t=1760713134; c=relaxed/simple;
+	bh=0s6657QeaQuP0ls9llG7qaJMiD9EoS+RAnoFHtkQDrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJhwJiQj3hOvhYmiM55utCKpdA6k4N0gLKfa0QrE+73fYMQ7W60uMDI4iFg/7pNWI1SuPWeVlWNIXJAxUrzOthDmVjFiBonUdL2R9GQlr63aqL4Ayz9+Ao8M+p6xNYTFjasGBkUqP3XwMzg4sUyy8LhBqS+IKS+H7aNOHwTuCBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCBIUeHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nwdZBgM1l6RXgyhGiPx8pl/7+O73irGOMg1iWmj23/DmPRbi132vG8REz7+YDv6YEceVUZLqKEJzGmmhvq/7GQuTFPGATzHt9Qvg9JN01+A3IWQTu/R/lTM4gw0S6z1yDc0NC51dQnbGGCTYPhKJvKLYKddWeMAymavF5yAPAZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSoMzOa/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCBIUeHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8195C4CEE7;
-	Fri, 17 Oct 2025 14:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSoMzOa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA525C4CEE7;
+	Fri, 17 Oct 2025 14:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713131;
-	bh=TVK7QLnMrEeWUKB/NUvYhEhCv2pzgxPk0FlT8t2GZYA=;
+	s=korg; t=1760713134;
+	bh=0s6657QeaQuP0ls9llG7qaJMiD9EoS+RAnoFHtkQDrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCBIUeHCaEReHOAh4Trl5b9CEuDKPKe55/5GsZi5I6bUhxqFi28hqWpXS67U0RLbO
-	 1azePozHWBgwA+1qkYb1+B3lG2V/Z6GGphiCM1kEUlWupcTdE0swrSV6X8unK32KO3
-	 2OHNbp4YBk9LNTNELlFwnszcQQ9vS1/Fs/8oX0Ps=
+	b=YSoMzOa/7BEUP8Q8hCXD3djfg9IGoUxYWco3W7j5xwiKyTB/NnYk1nWh3U2sLosr5
+	 /EXjMIdbJANEtTmvb25Qe9nN8cqJTqXIuo+WwSjWRp2hdJjlvjuwZXEzScTLHlH+li
+	 AHnSNDXgWqbOARwsw+EJK37vL58U3nk6Fo8dKzB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tamas Zsoldos <tamas.zsoldos@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/168] scsi: mvsas: Delete mvs_tag_init()
-Date: Fri, 17 Oct 2025 16:51:44 +0200
-Message-ID: <20251017145129.946011722@linuxfoundation.org>
+Subject: [PATCH 6.1 016/168] perf session: Fix handling when buffer exceeds 2 GiB
+Date: Fri, 17 Oct 2025 16:51:35 +0200
+Message-ID: <20251017145129.614633589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -47,76 +50,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ffc9f9bf3f14876d019f67ef17d41138802529a8 ]
+[ Upstream commit c17dda8013495d8132c976cbf349be9949d0fbd1 ]
 
-All mvs_tag_init() does is zero the tag bitmap, but this is already done
-with the kzalloc() call to alloc the tags, so delete this unneeded
-function.
+If a user specifies an AUX buffer larger than 2 GiB, the returned size
+may exceed 0x80000000. Since the err variable is defined as a signed
+32-bit integer, such a value overflows and becomes negative.
 
-Signed-off-by: John Garry <john.garry@huawei.com>
-Link: https://lore.kernel.org/r/1666091763-11023-7-git-send-email-john.garry@huawei.com
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 60cd16a3b743 ("scsi: mvsas: Fix use-after-free bugs in mvs_work_queue")
+As a result, the perf record command reports an error:
+
+  0x146e8 [0x30]: failed to process type: 71 [Unknown error 183711232]
+
+Change the type of the err variable to a signed 64-bit integer to
+accommodate large buffer sizes correctly.
+
+Fixes: d5652d865ea734a1 ("perf session: Add ability to skip 4GiB or more")
+Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20250808-perf_fix_big_buffer_size-v1-1-45f45444a9a4@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mvsas/mv_init.c | 2 --
- drivers/scsi/mvsas/mv_sas.c  | 7 -------
- drivers/scsi/mvsas/mv_sas.h  | 1 -
- 3 files changed, 10 deletions(-)
+ tools/perf/util/session.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index 2fde496fff5f7..c85fb812ad437 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -286,8 +286,6 @@ static int mvs_alloc(struct mvs_info *mvi, struct Scsi_Host *shost)
- 	}
- 	mvi->tags_num = slot_nr;
+diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
+index c8f7634f9846c..1c4d124b10531 100644
+--- a/tools/perf/util/session.c
++++ b/tools/perf/util/session.c
+@@ -1658,7 +1658,7 @@ static s64 perf_session__process_user_event(struct perf_session *session,
+ 	struct perf_tool *tool = session->tool;
+ 	struct perf_sample sample = { .time = 0, };
+ 	int fd = perf_data__fd(session->data);
+-	int err;
++	s64 err;
  
--	/* Initialize tags */
--	mvs_tag_init(mvi);
- 	return 0;
- err_out:
- 	return 1;
-diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
-index 1275f3be530f7..82a308840b117 100644
---- a/drivers/scsi/mvsas/mv_sas.c
-+++ b/drivers/scsi/mvsas/mv_sas.c
-@@ -51,13 +51,6 @@ inline int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out)
- 	return 0;
- }
- 
--void mvs_tag_init(struct mvs_info *mvi)
--{
--	int i;
--	for (i = 0; i < mvi->tags_num; ++i)
--		mvs_tag_clear(mvi, i);
--}
--
- static struct mvs_info *mvs_find_dev_mvi(struct domain_device *dev)
- {
- 	unsigned long i = 0, j = 0, hi = 0;
-diff --git a/drivers/scsi/mvsas/mv_sas.h b/drivers/scsi/mvsas/mv_sas.h
-index 509d8f32a04ff..fe57665bdb505 100644
---- a/drivers/scsi/mvsas/mv_sas.h
-+++ b/drivers/scsi/mvsas/mv_sas.h
-@@ -428,7 +428,6 @@ void mvs_tag_clear(struct mvs_info *mvi, u32 tag);
- void mvs_tag_free(struct mvs_info *mvi, u32 tag);
- void mvs_tag_set(struct mvs_info *mvi, unsigned int tag);
- int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out);
--void mvs_tag_init(struct mvs_info *mvi);
- void mvs_iounmap(void __iomem *regs);
- int mvs_ioremap(struct mvs_info *mvi, int bar, int bar_ex);
- void mvs_phys_reset(struct mvs_info *mvi, u32 phy_mask, int hard);
+ 	if (event->header.type != PERF_RECORD_COMPRESSED ||
+ 	    tool->compressed == perf_session__process_compressed_event_stub)
 -- 
 2.51.0
 
