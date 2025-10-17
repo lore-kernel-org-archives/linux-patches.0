@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7623C3370FB;
-	Fri, 17 Oct 2025 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D4D337118;
+	Fri, 17 Oct 2025 15:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713778; cv=none; b=TwZG8vtRw9Zt3gMugq8z+6wOIqFub0hNnQk4YI2eNxEugstg1XV1B2c/vvxxwTgHIpYyonf7mA78ca90TgriChgOHRaSATcVYMbpQhFy7bE+v0kifEJmD0sdASwVJmNsz3TiANcrXrNm8hinySEVpabR2wEpgkkKj9PmNqF3T30=
+	t=1760713781; cv=none; b=mbD7yh+6ZVxkbO8CsmiX3oK8XIqoLssve62U1wdLcjCHrrDDuGW8gylHyGaE7Vz/iTKXV1dO+BWhQw8zzIyV3wJIyHW0VAamAxj6GP8LkUMwQxpjD8twU8GECkMwaayNp0oP1iyhxHq4RcCfwkaJB1CkG5q0WQO+J27bOsNAlNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713778; c=relaxed/simple;
-	bh=J8hgi1dpJH06b0/LTrhimD62AnZze/hUoa9f8IC7skM=;
+	s=arc-20240116; t=1760713781; c=relaxed/simple;
+	bh=w2MAzWxEoJ2J9wsv6SKe16WlCQOftuoG8C1MGZ3ZKKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POsJrQsVCNxW26AyhESTSe/VWNrhNgdZZTcoq7tojzr9Vj74D6BMI1ocUyZ/Ois4bvawzkYTLqpmYSVdrawNU+A9bqVPl70IBiIGVZep/lU1cMcqwJPluvBxsNlYxilYnXXJIf8G7qgjlV/Sb+rNftrOYGtB1sEsYWLdMJlqa5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vk+4SBap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tucuI8JZ5/ReUqyy9iiUmBzs/j8+1pp8vRqXP8ixxwkSIJMgKad7LmwtVLxmogushqYr4IZyuyOBmBnQJyhsQYOHqW4n+zZ9USgsqeiXXdJjpmt5q2sb8cqwgoAvR5SIEVoGAcxC7URpOUISTF6lcTUJcP8uoEw1qMb5OmjS02Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18JyaKbZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vk+4SBap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6827C4CEE7;
-	Fri, 17 Oct 2025 15:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18JyaKbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758E9C4CEFE;
+	Fri, 17 Oct 2025 15:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713778;
-	bh=J8hgi1dpJH06b0/LTrhimD62AnZze/hUoa9f8IC7skM=;
+	s=korg; t=1760713780;
+	bh=w2MAzWxEoJ2J9wsv6SKe16WlCQOftuoG8C1MGZ3ZKKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vk+4SBapnmsHPOsF/9WGUD3hHkUB4uSluO0zeTOIzigH6WgxZFlgYyJa2Y3fNU4N5
-	 y/BV7+GIybVUbqWnuzZ+XP1JijC3yYYc7iaV8exDQs63F2JghprGTZ4XQ3pvou1KAG
-	 dBXsg1SkjVPa8ph93Gs6Wpzj4dLvw4/KwZ35wG1c=
+	b=18JyaKbZYS558qR17/lKIquqq+oe4dwGFdrOpuEuZW6zkAUOYVpIADaJKNqkA8J1v
+	 Cso385ppgf9WA7ga+vcl8QdOtY4CJjwXchO2eogoHf0CoKZNDGj+KmzAK7nHXgXI6/
+	 rRN7+9OtX2+m47qkK/ASATg0IAOpFta8cxqI6q9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Xue <zxue@semtech.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH 6.6 083/201] bus: mhi: host: Do not use uninitialized dev pointer in mhi_init_irq_setup()
-Date: Fri, 17 Oct 2025 16:52:24 +0200
-Message-ID: <20251017145137.803781665@linuxfoundation.org>
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.6 084/201] copy_sighand: Handle architectures where sizeof(unsigned long) < sizeof(u64)
+Date: Fri, 17 Oct 2025 16:52:25 +0200
+Message-ID: <20251017145137.840428041@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,53 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Xue <zxue@semtech.com>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-commit d0856a6dff57f95cc5d2d74e50880f01697d0cc4 upstream.
+commit 04ff48239f46e8b493571e260bd0e6c3a6400371 upstream.
 
-In mhi_init_irq_setup, the device pointer used for dev_err() was not
-initialized. Use the pointer from mhi_cntrl instead.
+With the introduction of clone3 in commit 7f192e3cd316 ("fork: add
+clone3") the effective bit width of clone_flags on all architectures was
+increased from 32-bit to 64-bit. However, the signature of the copy_*
+helper functions (e.g., copy_sighand) used by copy_process was not
+adapted.
 
-Fixes: b0fc0167f254 ("bus: mhi: core: Allow shared IRQ for event rings")
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Signed-off-by: Adam Xue <zxue@semtech.com>
-[mani: reworded subject/description and CCed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250905174118.38512-1-zxue@semtech.com
+As such, they truncate the flags on any 32-bit architectures that
+supports clone3 (arc, arm, csky, m68k, microblaze, mips32, openrisc,
+parisc32, powerpc32, riscv32, x86-32 and xtensa).
+
+For copy_sighand with CLONE_CLEAR_SIGHAND being an actual u64
+constant, this triggers an observable bug in kernel selftest
+clone3_clear_sighand:
+
+        if (clone_flags & CLONE_CLEAR_SIGHAND)
+
+in function copy_sighand within fork.c will always fail given:
+
+        unsigned long /* == uint32_t */ clone_flags
+        #define CLONE_CLEAR_SIGHAND 0x100000000ULL
+
+This commit fixes the bug by always passing clone_flags to copy_sighand
+via their declared u64 type, invariant of architecture-dependent integer
+sizes.
+
+Fixes: b612e5df4587 ("clone3: add CLONE_CLEAR_SIGHAND")
+Cc: stable@vger.kernel.org # linux-5.5+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Link: https://lore.kernel.org/20250901-nios2-implement-clone3-v2-1-53fcf5577d57@siemens-energy.com
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/init.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/fork.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -164,7 +164,6 @@ void mhi_deinit_free_irq(struct mhi_cont
- int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1799,7 +1799,7 @@ static int copy_files(unsigned long clon
+ 	return 0;
+ }
+ 
+-static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)
++static int copy_sighand(u64 clone_flags, struct task_struct *tsk)
  {
- 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
- 	int i, ret;
+ 	struct sighand_struct *sig;
  
-@@ -191,7 +190,7 @@ int mhi_init_irq_setup(struct mhi_contro
- 			continue;
- 
- 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
--			dev_err(dev, "irq %d not available for event ring\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "irq %d not available for event ring\n",
- 				mhi_event->irq);
- 			ret = -EINVAL;
- 			goto error_request;
-@@ -202,7 +201,7 @@ int mhi_init_irq_setup(struct mhi_contro
- 				  irq_flags,
- 				  "mhi", mhi_event);
- 		if (ret) {
--			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "Error requesting irq:%d for ev:%d\n",
- 				mhi_cntrl->irq[mhi_event->irq], i);
- 			goto error_request;
- 		}
 
 
