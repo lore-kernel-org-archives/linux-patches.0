@@ -1,39 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE75330B28;
-	Fri, 17 Oct 2025 15:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D361330B2C;
+	Fri, 17 Oct 2025 15:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715718; cv=none; b=n7CgZfSEH3JYuipfpiDPcIV+864346mASphcj45+n0ohCWvGDnrcqgdFta3N2LlZ8MEJr2TkXFOm2KoCBuVBC+mtF5AFskhhiVxBRU8enZ54++A/UYpFlWmB/VGwsNcA/6rlCW0FyEmppbLg0UX7l8A7djxSjQyM0HSBkKFp1f0=
+	t=1760715721; cv=none; b=kYY3SznhegCheYWUFaMParo5kRjXQxrXMCBScI/e/MWAUFtr/gaQZ2vdEa2moUwV+eZqvpWdtCKJVL/UkHmzT67qN4A85YgNtDmzgpneaVia30yFx9sarOUlKlePZMZgxK0WBezyWVQU5jFztI5INXpIoRe4ujQZCKsY5x/610c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715718; c=relaxed/simple;
-	bh=W4P4e0cOybGOGr9sRUWbeiZ0gm1pe13bfcIX8cEpcRI=;
+	s=arc-20240116; t=1760715721; c=relaxed/simple;
+	bh=lBk1VOWo+Hupd/X0Slp9nNTi02Bv+1U7ZFY6EHaFU5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRumhO39baHlxhPtLHLvl/0i1k+Bk6oR2GioYH5zZqwhd6Fq9IxyrNxB+lludpBIXBjWNDoptGXIHAvaTgIxTJYGDyEE/LclhS9c/47+j2fTrMUxxQh2gqKIKaMkvk7CbCwo0oVRBnQAad0KhSuv2Oatyp7iQD+tvdKb546KKaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si6RaHAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAoaDfHyTFi/ApJpG/Z0xY5dDJMsCnjwDy0Hu9h9sTDFccbJLeF2s7egvKllYFebDn+CO0p2w9v0uKbZbAVZYCD+2GRSUP0AkEpidcCOWSrnQyxo6VYhHBnCtcvIN+5Uyhhd7hPSOPfr4qVG7T/na4HA3YGD9uSBReUANIpUfbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzSqi+BC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si6RaHAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2F5C4CEE7;
-	Fri, 17 Oct 2025 15:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzSqi+BC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25CCC113D0;
+	Fri, 17 Oct 2025 15:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715718;
-	bh=W4P4e0cOybGOGr9sRUWbeiZ0gm1pe13bfcIX8cEpcRI=;
+	s=korg; t=1760715721;
+	bh=lBk1VOWo+Hupd/X0Slp9nNTi02Bv+1U7ZFY6EHaFU5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Si6RaHAvunKks8b+mqfvK3SjIJtx1k+l+hS4ueVygpbDyqgrS7o767pOOIzHWdyWQ
-	 q7oVzNKD/tlmyUef7wSLbexoQogCckRS96PBUvHP1rzUpKJhHMxmYtz7bY/CS11jOK
-	 FtKij/nLzV9zw5wWgJQut2VSclOS86DaelMv4uH8=
+	b=XzSqi+BCa4D++Bii8NQL13zLuagNcwlPgPh733qe8NNaEeFlOgLcKH3aJG1HhAYqI
+	 T4Zhkk12dnu18H2Pp5s926Q1wLLaUXCbjSRz8aRqNL+I05Bbj2Yofac66GvXD10WYo
+	 vo7SVYoVnE/lp45UCUgs+3bZRvhf3mEx8N+5WejA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Autumn Dececco <autumndececco@gmail.com>,
-	Nick Morrow <morrownr@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.17 314/371] wifi: mt76: mt7921u: Add VID/PID for Netgear A7500
-Date: Fri, 17 Oct 2025 16:54:49 +0200
-Message-ID: <20251017145213.435786733@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
+	David Hildenbrand <david@redhat.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	"andrew.yang" <andrew.yang@mediatek.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Byungchul Park <byungchul@sk.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Chinwen Chang <chinwen.chang@mediatek.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
+	Gregory Price <gourry@gourry.net>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Kairui Song <ryncsn@gmail.com>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Mariano Pache <npache@redhat.com>,
+	Mathew Brost <matthew.brost@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rik van Riel <riel@surriel.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 315/371] mm/thp: fix MTE tag mismatch when replacing zero-filled subpages
+Date: Fri, 17 Oct 2025 16:54:50 +0200
+Message-ID: <20251017145213.471668235@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,35 +87,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Morrow <morrownr@gmail.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-commit fc6627ca8a5f811b601aea74e934cf8a048c88ac upstream.
+commit 1ce6473d17e78e3cb9a40147658231731a551828 upstream.
 
-Add VID/PID 0846/9065 for Netgear A7500.
+When both THP and MTE are enabled, splitting a THP and replacing its
+zero-filled subpages with the shared zeropage can cause MTE tag mismatch
+faults in userspace.
 
-Reported-by: Autumn Dececco <autumndececco@gmail.com>
-Tested-by: Autumn Dececco <autumndececco@gmail.com>
-Signed-off-by: Nick Morrow <morrownr@gmail.com>
-Cc: stable@vger.kernel.org
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/80bacfd6-6073-4ce5-be32-ae9580832337@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Remapping zero-filled subpages to the shared zeropage is unsafe, as the
+zeropage has a fixed tag of zero, which may not match the tag expected by
+the userspace pointer.
+
+KSM already avoids this problem by using memcmp_pages(), which on arm64
+intentionally reports MTE-tagged pages as non-identical to prevent unsafe
+merging.
+
+As suggested by David[1], this patch adopts the same pattern, replacing the
+memchr_inv() byte-level check with a call to pages_identical(). This
+leverages existing architecture-specific logic to determine if a page is
+truly identical to the shared zeropage.
+
+Having both the THP shrinker and KSM rely on pages_identical() makes the
+design more future-proof, IMO. Instead of handling quirks in generic code,
+we just let the architecture decide what makes two pages identical.
+
+[1] https://lore.kernel.org/all/ca2106a3-4bb2-4457-81af-301fd99fbef4@redhat.com
+
+Link: https://lkml.kernel.org/r/20250922021458.68123-1-lance.yang@linux.dev
+Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
+Closes: https://lore.kernel.org/all/a7944523fcc3634607691c35311a5d59d1a3f8d4.camel@mediatek.com
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: andrew.yang <andrew.yang@mediatek.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Chinwen Chang <chinwen.chang@mediatek.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Kalesh Singh <kaleshsingh@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mariano Pache <npache@redhat.com>
+Cc: Mathew Brost <matthew.brost@intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Samuel Holland <samuel.holland@sifive.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/huge_memory.c |   15 +++------------
+ mm/migrate.c     |    8 +-------
+ 2 files changed, 4 insertions(+), 19 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -21,6 +21,9 @@ static const struct usb_device_id mt7921
- 	/* Netgear, Inc. [A8000,AXE3000] */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9060, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
-+	/* Netgear, Inc. A7500 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9065, 0xff, 0xff, 0xff),
-+		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
- 	/* TP-Link TXE50UH */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0107, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -4115,32 +4115,23 @@ static unsigned long deferred_split_coun
+ static bool thp_underused(struct folio *folio)
+ {
+ 	int num_zero_pages = 0, num_filled_pages = 0;
+-	void *kaddr;
+ 	int i;
+ 
+ 	if (khugepaged_max_ptes_none == HPAGE_PMD_NR - 1)
+ 		return false;
+ 
+ 	for (i = 0; i < folio_nr_pages(folio); i++) {
+-		kaddr = kmap_local_folio(folio, i * PAGE_SIZE);
+-		if (!memchr_inv(kaddr, 0, PAGE_SIZE)) {
+-			num_zero_pages++;
+-			if (num_zero_pages > khugepaged_max_ptes_none) {
+-				kunmap_local(kaddr);
++		if (pages_identical(folio_page(folio, i), ZERO_PAGE(0))) {
++			if (++num_zero_pages > khugepaged_max_ptes_none)
+ 				return true;
+-			}
+ 		} else {
+ 			/*
+ 			 * Another path for early exit once the number
+ 			 * of non-zero filled pages exceeds threshold.
+ 			 */
+-			num_filled_pages++;
+-			if (num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none) {
+-				kunmap_local(kaddr);
++			if (++num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none)
+ 				return false;
+-			}
+ 		}
+-		kunmap_local(kaddr);
+ 	}
+ 	return false;
+ }
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -301,9 +301,7 @@ static bool try_to_map_unused_to_zeropag
+ 					  unsigned long idx)
+ {
+ 	struct page *page = folio_page(folio, idx);
+-	bool contains_data;
+ 	pte_t newpte;
+-	void *addr;
+ 
+ 	if (PageCompound(page))
+ 		return false;
+@@ -320,11 +318,7 @@ static bool try_to_map_unused_to_zeropag
+ 	 * this subpage has been non present. If the subpage is only zero-filled
+ 	 * then map it to the shared zeropage.
+ 	 */
+-	addr = kmap_local_page(page);
+-	contains_data = memchr_inv(addr, 0, PAGE_SIZE);
+-	kunmap_local(addr);
+-
+-	if (contains_data)
++	if (!pages_identical(page, ZERO_PAGE(0)))
+ 		return false;
+ 
+ 	newpte = pte_mkspecial(pfn_pte(my_zero_pfn(pvmw->address),
 
 
