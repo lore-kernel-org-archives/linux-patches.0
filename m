@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFE6346A11;
-	Fri, 17 Oct 2025 15:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D65A34F466;
+	Fri, 17 Oct 2025 15:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715162; cv=none; b=SmZMx9Xln/5FFTIucc54VOtZYnpm4rdErbYareWjQtmXZ5vXVmQBoC812vr9zm+ZdWe7ObB0VzrqYTcQY4jJR+FJabdtQewA1GrSKGH/Dcux2GJubwudNrAJXyuB48cLXTOLCHDWpgkMrG7A1/+tjXvCls9sZ0juxRi0TorpoJY=
+	t=1760715165; cv=none; b=DbUjSCDsmTmDM5ztMTD+T6sRwUwT/aKQzCZAtfjxSFAUQlqw0xvS3z/a4I1YQlbcd4Lco2Q7R6+3qMbAOlB9otLLvt7F5MR9WegnyPV3Kkq7sod0dPNQVlzp1+OaHkcFzmT9VmM8/tj44PP99cOjW+g67KPYzceExdJpCaFrFgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715162; c=relaxed/simple;
-	bh=nEWVG1URKY+VvFx0KZQdN703roa3GVTZ2Akyq2bTKOA=;
+	s=arc-20240116; t=1760715165; c=relaxed/simple;
+	bh=dVhfVNGUHqfqqPbq/vsSYH9O1xMADlYVbqiIBdjLbA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgWW4P4AHjGy/buxVcdkE5WfMW9z8tt3+zy07LA3U14zmOVKzmdW5jU9zkXKFWnsBEBhfJvW8b30LLhXBTXf5Ns6i+dFcuu7ea4IFzijp1l2hqQTT5KSm5nvBzO0b7ZVwAUcgj3P8uUntrGgDTe73RJNbxcxH0mvx8Ckrobiaaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTDKYYDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E8exuk+6jbCdqzrIzCGo4GAFmWSh4V5MBYvV0w63DfiytnAWtLDx/XN3MOv7x995jgrWb3c9ak3g4EtJ4szbG6m1hGWuSJdteDXZX3nfwyjiBM3So5mEsg92L3SGy203pISj168cL+Uu4f2gVoXX0armwVz3+7yf8T2PaWK+iQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7AJRz5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTDKYYDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A08C113D0;
-	Fri, 17 Oct 2025 15:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7AJRz5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12AEC4CEE7;
+	Fri, 17 Oct 2025 15:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715162;
-	bh=nEWVG1URKY+VvFx0KZQdN703roa3GVTZ2Akyq2bTKOA=;
+	s=korg; t=1760715165;
+	bh=dVhfVNGUHqfqqPbq/vsSYH9O1xMADlYVbqiIBdjLbA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTDKYYDhTHkTUpE0DQWQ8FHJdx3O4z2zBZjgDdlR9k724Ik2JfLdhGzhJkEEvEIUv
-	 DXFOZQP+224U3y0eizSozPXrBsovfotC4IqFWv55pOMsRhOV0oIyt9dVb7krQuHQRb
-	 Ba1MxtkSLKTEvg0NgXtCOggapU7ChxTqbH7rQaig=
+	b=t7AJRz5XeAFYdS5vEjElGHy0lSkwaCGMfWGZWXpeeONw2NuUqO6XTkSP7CiskgcH8
+	 w/5IIlCz2MKbmztFRH2YH7FRRPnfEDTTJnJ6auLMYrx0tulkjzUNh/jb8TNRwfE1j/
+	 FkZVJI2CmNClWFrYyppdo6+OA9nn35zuQ0ZH2R8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 092/371] ice: ice_adapter: release xa entry on adapter allocation failure
-Date: Fri, 17 Oct 2025 16:51:07 +0200
-Message-ID: <20251017145205.267352810@linuxfoundation.org>
+Subject: [PATCH 6.17 119/371] selftests: netfilter: query conntrack state to check for port clash resolution
+Date: Fri, 17 Oct 2025 16:51:34 +0200
+Message-ID: <20251017145206.241544932@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -54,64 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 2db687f3469dbc5c59bc53d55acafd75d530b497 ]
+[ Upstream commit e84945bdc619ed4243ba4298dbb8ca2062026474 ]
 
-When ice_adapter_new() fails, the reserved XArray entry created by
-xa_insert() is not released. This causes subsequent insertions at
-the same index to return -EBUSY, potentially leading to
-NULL pointer dereferences.
+Jakub reported this self test flaking occasionally (fails, but passes on
+re-run) on debug kernels.
 
-Reorder the operations as suggested by Przemek Kitszel:
-1. Check if adapter already exists (xa_load)
-2. Reserve the XArray slot (xa_reserve)
-3. Allocate the adapter (ice_adapter_new)
-4. Store the adapter (xa_store)
+This is because the test checks for elapsed time to determine if both
+connections were established in parallel.
 
-Fixes: 0f0023c649c7 ("ice: do not init struct ice_adapter more times than needed")
-Suggested-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251001115336.1707-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Rework this to no longer depend on timing.
+Use busywait helper to check that both sockets have moved to established
+state and then query the conntrack engine for the two entries.
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netfilter-devel/20250926163318.40d1a502@kernel.org/
+Fixes: 117e149e26d1 ("selftests: netfilter: test nat source port clash resolution interaction with tcp early demux")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_adapter.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .../selftests/net/netfilter/nf_nat_edemux.sh  | 58 +++++++++++++------
+ 1 file changed, 41 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
-index b53561c347082..0a8a48cd4bce6 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.c
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
-@@ -99,19 +99,21 @@ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
+diff --git a/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh b/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
+index 1014551dd7694..6731fe1eaf2e9 100755
+--- a/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
++++ b/tools/testing/selftests/net/netfilter/nf_nat_edemux.sh
+@@ -17,9 +17,31 @@ cleanup()
  
- 	index = ice_adapter_xa_index(pdev);
- 	scoped_guard(mutex, &ice_adapters_mutex) {
--		err = xa_insert(&ice_adapters, index, NULL, GFP_KERNEL);
--		if (err == -EBUSY) {
--			adapter = xa_load(&ice_adapters, index);
-+		adapter = xa_load(&ice_adapters, index);
-+		if (adapter) {
- 			refcount_inc(&adapter->refcount);
- 			WARN_ON_ONCE(adapter->index != ice_adapter_index(pdev));
- 			return adapter;
- 		}
-+		err = xa_reserve(&ice_adapters, index, GFP_KERNEL);
- 		if (err)
- 			return ERR_PTR(err);
+ checktool "socat -h" "run test without socat"
+ checktool "iptables --version" "run test without iptables"
++checktool "conntrack --version" "run test without conntrack"
  
- 		adapter = ice_adapter_new(pdev);
--		if (!adapter)
-+		if (!adapter) {
-+			xa_release(&ice_adapters, index);
- 			return ERR_PTR(-ENOMEM);
-+		}
- 		xa_store(&ice_adapters, index, adapter, GFP_KERNEL);
- 	}
- 	return adapter;
+ trap cleanup EXIT
+ 
++connect_done()
++{
++	local ns="$1"
++	local port="$2"
++
++	ip netns exec "$ns" ss -nt -o state established "dport = :$port" | grep -q "$port"
++}
++
++check_ctstate()
++{
++	local ns="$1"
++	local dp="$2"
++
++	if ! ip netns exec "$ns" conntrack --get -s 192.168.1.2 -d 192.168.1.1 -p tcp \
++	     --sport 10000 --dport "$dp" --state ESTABLISHED > /dev/null 2>&1;then
++		echo "FAIL: Did not find expected state for dport $2"
++		ip netns exec "$ns" bash -c 'conntrack -L; conntrack -S; ss -nt'
++		ret=1
++	fi
++}
++
+ setup_ns ns1 ns2
+ 
+ # Connect the namespaces using a veth pair
+@@ -44,15 +66,18 @@ socatpid=$!
+ ip netns exec "$ns2" sysctl -q net.ipv4.ip_local_port_range="10000 10000"
+ 
+ # add a virtual IP using DNAT
+-ip netns exec "$ns2" iptables -t nat -A OUTPUT -d 10.96.0.1/32 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.1:5201
++ip netns exec "$ns2" iptables -t nat -A OUTPUT -d 10.96.0.1/32 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.1:5201 || exit 1
+ 
+ # ... and route it to the other namespace
+ ip netns exec "$ns2" ip route add 10.96.0.1 via 192.168.1.1
+ 
+-# add a persistent connection from the other namespace
+-ip netns exec "$ns2" socat -t 10 - TCP:192.168.1.1:5201 > /dev/null &
++# listener should be up by now, wait if it isn't yet.
++wait_local_port_listen "$ns1" 5201 tcp
+ 
+-sleep 1
++# add a persistent connection from the other namespace
++sleep 10 | ip netns exec "$ns2" socat -t 10 - TCP:192.168.1.1:5201 > /dev/null &
++cpid0=$!
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" "5201"
+ 
+ # ip daddr:dport will be rewritten to 192.168.1.1 5201
+ # NAT must reallocate source port 10000 because
+@@ -71,26 +96,25 @@ fi
+ ip netns exec "$ns1" iptables -t nat -A PREROUTING -p tcp --dport 5202 -j REDIRECT --to-ports 5201
+ ip netns exec "$ns1" iptables -t nat -A PREROUTING -p tcp --dport 5203 -j REDIRECT --to-ports 5201
+ 
+-sleep 5 | ip netns exec "$ns2" socat -t 5 -u STDIN TCP:192.168.1.1:5202,connect-timeout=5 >/dev/null &
++sleep 5 | ip netns exec "$ns2" socat -T 5 -u STDIN TCP:192.168.1.1:5202,connect-timeout=5 >/dev/null &
++cpid1=$!
+ 
+-# if connect succeeds, client closes instantly due to EOF on stdin.
+-# if connect hangs, it will time out after 5s.
+-echo | ip netns exec "$ns2" socat -t 3 -u STDIN TCP:192.168.1.1:5203,connect-timeout=5 >/dev/null &
++sleep 5 | ip netns exec "$ns2" socat -T 5 -u STDIN TCP:192.168.1.1:5203,connect-timeout=5 >/dev/null &
+ cpid2=$!
+ 
+-time_then=$(date +%s)
+-wait $cpid2
+-rv=$?
+-time_now=$(date +%s)
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" 5202
++busywait "$BUSYWAIT_TIMEOUT" connect_done "$ns2" 5203
+ 
+-# Check how much time has elapsed, expectation is for
+-# 'cpid2' to connect and then exit (and no connect delay).
+-delta=$((time_now - time_then))
++check_ctstate "$ns1" 5202
++check_ctstate "$ns1" 5203
+ 
+-if [ $delta -lt 2 ] && [ $rv -eq 0 ]; then
++kill $socatpid $cpid0 $cpid1 $cpid2
++socatpid=0
++
++if [ $ret -eq 0 ]; then
+ 	echo "PASS: could connect to service via redirected ports"
+ else
+-	echo "FAIL: socat cannot connect to service via redirect ($delta seconds elapsed, returned $rv)"
++	echo "FAIL: socat cannot connect to service via redirect"
+ 	ret=1
+ fi
+ 
 -- 
 2.51.0
 
