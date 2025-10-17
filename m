@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F24032C92D;
-	Fri, 17 Oct 2025 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4338932C92B;
+	Fri, 17 Oct 2025 15:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713916; cv=none; b=fqEcEf1Fwz/vhgs/14/Ut7e6gjUtuyVTBvxrpk2TLjlZeXGKc/Rf3GuWVaRaMBzbvLjFADv4dCPwjiVzfpV6slB1Lzy7vUEAXfkyuWfZSjEibEiMVoBnLfymJnKwkRfoeUQeISHZglCa4t/jN2DV5wvi10Ihi6FftsSf35/myTo=
+	t=1760713919; cv=none; b=JLntmJY8ClGhkwqsj9pmfXE8hJr8rm4/zJqtUigBNZZ/w1AGAyQso7N/PW2eA9BQzAm3zbAf7jKGrfo+wk4cf0CEmAsmBzN48EMH7Pq2LXrPF4MHmXiP/tZ7YL7br7J8oERXtX4nrc5s54ADBG/D2rzZzTykflWU3ShMsK6Qi4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713916; c=relaxed/simple;
-	bh=WeBzTB8+8Nv70qD+ppIaaYM2ncGVkx/8m4bfnievdCA=;
+	s=arc-20240116; t=1760713919; c=relaxed/simple;
+	bh=6aTWQWd79dioWS1LrupDTL9F44ycQt+8IcC9G1gXvXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tn1PXuzhtikJQbt/iPEl05/ARdrjUU2lw1offVNJgWkrtbSiNSUnB4BQLsccG5XiAXpBm/0+oHszVjTSE8Qknh8Dcm/uPUFpV9Qq5oMFC1itpGhI951Kz9nmY4/CMyk695+6ugS69kGeifm7GkXEsiknRQvckNPqT7tuaCpnLFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0Mw8ggj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzXAKB7Yj/A8dZvzVaEyWff3O0lTvjhM3D1CnfIeoq8/+N58v7u6AVmvuJyGO9tOfaTs20PlHpywd6cbEzF+QYeKKMz5imaQbcH2aaQCxR//zD067KWKMjmdUzeWffTdoUPbAL7sGkZ4pvrUaa8AHOJq+ZAqE8iAIKee3b5j3T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMVcacFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0Mw8ggj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F2DC4CEE7;
-	Fri, 17 Oct 2025 15:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMVcacFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FA4C4CEE7;
+	Fri, 17 Oct 2025 15:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713916;
-	bh=WeBzTB8+8Nv70qD+ppIaaYM2ncGVkx/8m4bfnievdCA=;
+	s=korg; t=1760713919;
+	bh=6aTWQWd79dioWS1LrupDTL9F44ycQt+8IcC9G1gXvXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0Mw8ggjJffG3gBYKFTgqy5eGQ5E1l8tlqFgtBOOp3QdQYGkiXqAmVHhgeYQQ4XGi
-	 pNp1Ud+mQ0qzcFaiC+KxR8puGEiS9CNs2aRTWVwCOTpG+aNaCf8P3cOJMDgCXZjmr5
-	 7nqTCZ0l4pfdC84qEvprmIhCdBONSRI+m6pCOs3M=
+	b=HMVcacFSStExZ+FQlAGnty3Fik9r+VoGhHJUu4k+9G7gBLNQPIxF6KhTbfPJz/jIL
+	 q+12ReLozwV97P0IsV70Jl8Kw6r69LsS7sV2U8njkRvaV2cTjHftrtVcW8ruo1fcGu
+	 JMD3LI6/p/j3aiCF+T6LKDOOgexd/57161rkB+tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/201] KVM: SVM: Skip fastpath emulation on VM-Exit if next RIP isnt valid
-Date: Fri, 17 Oct 2025 16:53:46 +0200
-Message-ID: <20251017145140.797556732@linuxfoundation.org>
+Subject: [PATCH 6.6 166/201] ksmbd: add max ip connections parameter
+Date: Fri, 17 Oct 2025 16:53:47 +0200
+Message-ID: <20251017145140.835319880@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -50,91 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 0910dd7c9ad45a2605c45fd2bf3d1bcac087687c ]
+[ Upstream commit d8b6dc9256762293048bf122fc11c4e612d0ef5d ]
 
-Skip the WRMSR and HLT fastpaths in SVM's VM-Exit handler if the next RIP
-isn't valid, e.g. because KVM is running with nrips=false.  SVM must
-decode and emulate to skip the instruction if the CPU doesn't provide the
-next RIP, and getting the instruction bytes to decode requires reading
-guest memory.  Reading guest memory through the emulator can fault, i.e.
-can sleep, which is disallowed since the fastpath handlers run with IRQs
-disabled.
+This parameter set the maximum number of connections per ip address.
+The default is 8.
 
- BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:106
- in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 32611, name: qemu
- preempt_count: 1, expected: 0
- INFO: lockdep is turned off.
- irq event stamp: 30580
- hardirqs last  enabled at (30579): [<ffffffffc08b2527>] vcpu_run+0x1787/0x1db0 [kvm]
- hardirqs last disabled at (30580): [<ffffffffb4f62e32>] __schedule+0x1e2/0xed0
- softirqs last  enabled at (30570): [<ffffffffb4247a64>] fpu_swap_kvm_fpstate+0x44/0x210
- softirqs last disabled at (30568): [<ffffffffb4247a64>] fpu_swap_kvm_fpstate+0x44/0x210
- CPU: 298 UID: 0 PID: 32611 Comm: qemu Tainted: G     U              6.16.0-smp--e6c618b51cfe-sleep #782 NONE
- Tainted: [U]=USER
- Hardware name: Google Astoria-Turin/astoria, BIOS 0.20241223.2-0 01/17/2025
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x7d/0xb0
-  __might_resched+0x271/0x290
-  __might_fault+0x28/0x80
-  kvm_vcpu_read_guest_page+0x8d/0xc0 [kvm]
-  kvm_fetch_guest_virt+0x92/0xc0 [kvm]
-  __do_insn_fetch_bytes+0xf3/0x1e0 [kvm]
-  x86_decode_insn+0xd1/0x1010 [kvm]
-  x86_emulate_instruction+0x105/0x810 [kvm]
-  __svm_skip_emulated_instruction+0xc4/0x140 [kvm_amd]
-  handle_fastpath_invd+0xc4/0x1a0 [kvm]
-  vcpu_run+0x11a1/0x1db0 [kvm]
-  kvm_arch_vcpu_ioctl_run+0x5cc/0x730 [kvm]
-  kvm_vcpu_ioctl+0x578/0x6a0 [kvm]
-  __se_sys_ioctl+0x6d/0xb0
-  do_syscall_64+0x8a/0x2c0
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- RIP: 0033:0x7f479d57a94b
-  </TASK>
-
-Note, this is essentially a reapply of commit 5c30e8101e8d ("KVM: SVM:
-Skip WRMSR fastpath on VM-Exit if next RIP isn't valid"), but with
-different justification (KVM now grabs SRCU when skipping the instruction
-for other reasons).
-
-Fixes: b439eb8ab578 ("Revert "KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isn't valid"")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250805190526.1453366-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ adapted switch-based MSR/HLT fastpath to if-based MSR-only check ]
+Fixes: c0d41112f1a5 ("ksmbd: extend the connection limiting mechanism to support IPv6")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Adjust reserved room ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/smb/server/ksmbd_netlink.h |    5 +++--
+ fs/smb/server/server.h        |    1 +
+ fs/smb/server/transport_ipc.c |    3 +++
+ fs/smb/server/transport_tcp.c |   28 +++++++++++++++++-----------
+ 4 files changed, 24 insertions(+), 13 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4156,11 +4156,20 @@ static int svm_vcpu_pre_run(struct kvm_v
+--- a/fs/smb/server/ksmbd_netlink.h
++++ b/fs/smb/server/ksmbd_netlink.h
+@@ -108,10 +108,11 @@ struct ksmbd_startup_request {
+ 	__u32	smb2_max_credits;	/* MAX credits */
+ 	__u32	smbd_max_io_size;	/* smbd read write size */
+ 	__u32	max_connections;	/* Number of maximum simultaneous connections */
+-	__u32	reserved[126];		/* Reserved room */
++	__u32	max_ip_connections;	/* Number of maximum connection per ip address */
++	__u32	reserved[125];		/* Reserved room */
+ 	__u32	ifc_list_sz;		/* interfaces list size */
+ 	__s8	____payload[];
+-};
++} __packed;
  
- static fastpath_t svm_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
- {
-+	struct vcpu_svm *svm = to_svm(vcpu);
+ #define KSMBD_STARTUP_CONFIG_INTERFACES(s)	((s)->____payload)
+ 
+--- a/fs/smb/server/server.h
++++ b/fs/smb/server/server.h
+@@ -43,6 +43,7 @@ struct ksmbd_server_config {
+ 	unsigned int		auth_mechs;
+ 	unsigned int		max_connections;
+ 	unsigned int		max_inflight_req;
++	unsigned int		max_ip_connections;
+ 
+ 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
+ };
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -321,6 +321,9 @@ static int ipc_server_config_on_startup(
+ 	if (req->max_connections)
+ 		server_conf.max_connections = req->max_connections;
+ 
++	if (req->max_ip_connections)
++		server_conf.max_ip_connections = req->max_ip_connections;
 +
-+	/*
-+	 * Next RIP must be provided as IRQs are disabled, and accessing guest
-+	 * memory to decode the instruction might fault, i.e. might sleep.
-+	 */
-+	if (!nrips || !svm->vmcb->control.next_rip)
-+		return EXIT_FASTPATH_NONE;
+ 	ret = ksmbd_set_netbios_name(req->netbios_name);
+ 	ret |= ksmbd_set_server_string(req->server_string);
+ 	ret |= ksmbd_set_work_group(req->work_group);
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -240,6 +240,7 @@ static int ksmbd_kthread_fn(void *p)
+ 	struct interface *iface = (struct interface *)p;
+ 	struct ksmbd_conn *conn;
+ 	int ret;
++	unsigned int max_ip_conns;
+ 
+ 	while (!kthread_should_stop()) {
+ 		mutex_lock(&iface->sock_release_lock);
+@@ -257,34 +258,39 @@ static int ksmbd_kthread_fn(void *p)
+ 			continue;
+ 		}
+ 
++		if (!server_conf.max_ip_connections)
++			goto skip_max_ip_conns_limit;
 +
- 	if (is_guest_mode(vcpu))
- 		return EXIT_FASTPATH_NONE;
+ 		/*
+ 		 * Limits repeated connections from clients with the same IP.
+ 		 */
++		max_ip_conns = 0;
+ 		down_read(&conn_list_lock);
+-		list_for_each_entry(conn, &conn_list, conns_list)
++		list_for_each_entry(conn, &conn_list, conns_list) {
+ #if IS_ENABLED(CONFIG_IPV6)
+ 			if (client_sk->sk->sk_family == AF_INET6) {
+ 				if (memcmp(&client_sk->sk->sk_v6_daddr,
+-					   &conn->inet6_addr, 16) == 0) {
+-					ret = -EAGAIN;
+-					break;
+-				}
++					   &conn->inet6_addr, 16) == 0)
++					max_ip_conns++;
+ 			} else if (inet_sk(client_sk->sk)->inet_daddr ==
+-				 conn->inet_addr) {
+-				ret = -EAGAIN;
+-				break;
+-			}
++				 conn->inet_addr)
++				max_ip_conns++;
+ #else
+ 			if (inet_sk(client_sk->sk)->inet_daddr ==
+-			    conn->inet_addr) {
++			    conn->inet_addr)
++				max_ip_conns++;
++#endif
++			if (server_conf.max_ip_connections <= max_ip_conns) {
+ 				ret = -EAGAIN;
+ 				break;
+ 			}
+-#endif
++		}
+ 		up_read(&conn_list_lock);
+ 		if (ret == -EAGAIN)
+ 			continue;
  
--	if (to_svm(vcpu)->vmcb->control.exit_code == SVM_EXIT_MSR &&
--	    to_svm(vcpu)->vmcb->control.exit_info_1)
-+	if (svm->vmcb->control.exit_code == SVM_EXIT_MSR &&
-+	    svm->vmcb->control.exit_info_1)
- 		return handle_fastpath_set_msr_irqoff(vcpu);
- 
- 	return EXIT_FASTPATH_NONE;
++skip_max_ip_conns_limit:
++
+ 		if (server_conf.max_connections &&
+ 		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
+ 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
 
 
