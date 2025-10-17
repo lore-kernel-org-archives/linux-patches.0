@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1844E330B2C;
-	Fri, 17 Oct 2025 15:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7B0330B37;
+	Fri, 17 Oct 2025 15:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715733; cv=none; b=o+KWBtpQ2v6g8yGHItuydP9DrKeiuLJ8PpV53hKK43VjIubWtkfQFuYfrxg1b52H+97jSeqHUBr/NWcGH0/21HWQC2tjQckschmcRFS8qm0afZ7FFMREIVAEDVvXe/MXabsoHTt6y9YebO7G9KT4/hRl8CxNX5RKRAMeL/sMZBw=
+	t=1760715736; cv=none; b=N4QUPdfk+k3hGO6mbk0sTeIcThY/q/Z92KbNIVFTkHrOWwv7LVfA3/t2XKOEnqtqidJV/fkc5A/lI9dMuI9vCYZV8dkAEKQbEDf9Aiy5Hb/BlSFdQ6XTbjX8ccU36rT//aHLbqHuIqp2KLXfPD5a9qRKsF64kiMIwC3PmEBQzoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715733; c=relaxed/simple;
-	bh=PaSwmobchi2WalGveLap8xWHNQjiuncQmze/JEsdUP8=;
+	s=arc-20240116; t=1760715736; c=relaxed/simple;
+	bh=g6q7BDclN8puxqITbZJNplTtJHvn6xR/7qxwLzk+D1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOYEdBONyhWIsMoiV461X6J7rhwxrqsnqMokjnROhT+wOfwl/t2tJks+WtZqoMMDs9VzIHf3nA8ZmugHWqFezHYQycHGOuZJDWPOIqX8BH7IhAQrIFY1fhPzP190wqqIvjKU5SIRgcI0VlT4jjR8LXpHFcOoYHP6e4CQXqR5O3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kluJVNKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSap71uu1nczyPtxvOeC2ZjUQvtc5B2hgzSBQhpIb4mTwIkhHVQL2JAEhA//C4OP1NuE6qVMwUZVWoeYJ6SqEtzvjgjrAFEreOZ/vjUNRGfMyxz7rpTZbUX/vttnEJnslkCzil58V7M55+lWNpQa2b5PuU+UsZ3WPtBpJkIH9V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsWEQtez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kluJVNKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D152C116C6;
-	Fri, 17 Oct 2025 15:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsWEQtez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70077C4CEE7;
+	Fri, 17 Oct 2025 15:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715733;
-	bh=PaSwmobchi2WalGveLap8xWHNQjiuncQmze/JEsdUP8=;
+	s=korg; t=1760715735;
+	bh=g6q7BDclN8puxqITbZJNplTtJHvn6xR/7qxwLzk+D1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kluJVNKGvdptHDEX3U3GoSSPwRjI3h3tyz2fWIglE54kq2C/Pn2XchW32q1RUeJcQ
-	 ZgDDOmbSnsPD47ImsfOJZ755hw47O0WF0YVGcYJwxoY0cS7ksdapkR8O4Tf/M1Bcgn
-	 e5xBVi9Va6iCfqHfx7yrmxmX27ir7iinzC6DjoUQ=
+	b=PsWEQtezOBe49Ae73+fObxziUawbzbgXcH5tAJkk7ABcL+cUb+VX1dxM0qrIcAvza
+	 vQOkRxLEjiWyH2a2iiW+MSV/elj3LjdKINRgEmRVWr3vYJ64UlHHNT0fhR/xtO2yGO
+	 MQ5rpMb3lG9OwhCH4Bdbz/RJuoV4Ujhh5UDIZhnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
-	Xinyu Zheng <zhengxinyu6@huawei.com>,
-	Hugh Dickins <hughd@google.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 319/371] mm/damon/vaddr: do not repeat pte_offset_map_lock() until success
-Date: Fri, 17 Oct 2025 16:54:54 +0200
-Message-ID: <20251017145213.617618688@linuxfoundation.org>
+Subject: [PATCH 6.17 320/371] mm/damon/lru_sort: use param_ctx for damon_attrs staging
+Date: Fri, 17 Oct 2025 16:54:55 +0200
+Message-ID: <20251017145213.654417813@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -54,62 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit b93af2cc8e036754c0d9970d9ddc47f43cc94b9f upstream.
+commit e18190b7e97e9db6546390e6e0ceddae606892b2 upstream.
 
-DAMON's virtual address space operation set implementation (vaddr) calls
-pte_offset_map_lock() inside the page table walk callback function.  This
-is for reading and writing page table accessed bits.  If
-pte_offset_map_lock() fails, it retries by returning the page table walk
-callback function with ACTION_AGAIN.
+damon_lru_sort_apply_parameters() allocates a new DAMON context, stages
+user-specified DAMON parameters on it, and commits to running DAMON
+context at once, using damon_commit_ctx().  The code is, however, directly
+updating the monitoring attributes of the running context.  And the
+attributes are over-written by later damon_commit_ctx() call.  This means
+that the monitoring attributes parameters are not really working.  Fix the
+wrong use of the parameter context.
 
-pte_offset_map_lock() can continuously fail if the target is a pmd
-migration entry, though.  Hence it could cause an infinite page table walk
-if the migration cannot be done until the page table walk is finished.
-This indeed caused a soft lockup when CPU hotplugging and DAMON were
-running in parallel.
-
-Avoid the infinite loop by simply not retrying the page table walk.  DAMON
-is promising only a best-effort accuracy, so missing access to such pages
-is no problem.
-
-Link: https://lkml.kernel.org/r/20250930004410.55228-1-sj@kernel.org
-Fixes: 7780d04046a2 ("mm/pagewalkers: ACTION_AGAIN if pte_offset_map_lock() fails")
+Link: https://lkml.kernel.org/r/20250916031549.115326-1-sj@kernel.org
+Fixes: a30969436428 ("mm/damon/lru_sort: use damon_commit_ctx()")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Xinyu Zheng <zhengxinyu6@huawei.com>
-Closes: https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: <stable@vger.kernel.org>	[6.5+]
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: <stable@vger.kernel.org>	[6.11+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ mm/damon/lru_sort.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -328,10 +328,8 @@ static int damon_mkold_pmd_entry(pmd_t *
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -203,7 +203,7 @@ static int damon_lru_sort_apply_paramete
+ 		goto out;
  	}
  
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
--	if (!pte) {
--		walk->action = ACTION_AGAIN;
-+	if (!pte)
- 		return 0;
--	}
- 	if (!pte_present(ptep_get(pte)))
+-	err = damon_set_attrs(ctx, &damon_lru_sort_mon_attrs);
++	err = damon_set_attrs(param_ctx, &damon_lru_sort_mon_attrs);
+ 	if (err)
  		goto out;
- 	damon_ptep_mkold(pte, walk->vma, addr);
-@@ -481,10 +479,8 @@ regular_page:
- #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
  
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
--	if (!pte) {
--		walk->action = ACTION_AGAIN;
-+	if (!pte)
- 		return 0;
--	}
- 	ptent = ptep_get(pte);
- 	if (!pte_present(ptent))
- 		goto out;
 
 
