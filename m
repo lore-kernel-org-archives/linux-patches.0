@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78EC23EA9E;
-	Fri, 17 Oct 2025 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EAE2F12BD;
+	Fri, 17 Oct 2025 15:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714579; cv=none; b=fj9Tg1bYprOk03BiA26TRPPYs700NHfvI+rXamIkjziudsSnOOJ8/NP7KqKKFSwZ4LQGW3lMFdg2NIwQllHVi6mFXtNsg8y3nkzdBnE3lpSIo1B5Bms78Lid0XdGi9ykbHxwDEJKQPRjdVc4gywhTfe1CKk8TtKfYWe4AhENOkg=
+	t=1760714583; cv=none; b=CUT5dVpX46Z3rRFJk/qeL0IKtYECkxmIhmgF0JME7FwBpXxDSMCzOEeB3im74sGEyKl1q+4eFp8fA5NtVQJ0HCD7Ciw3oNc0izjhiQ5n0KmyFPYWj1IKUJb3XkfQIuHu7AYXQfu3FxJ74vHrhFC/Ptbdk+TT//Rf7mnlBEawdeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714579; c=relaxed/simple;
-	bh=+P3+/LSxenvSyjWk2ZLyFlXLMh81Jx6M3gCB8bYOPmo=;
+	s=arc-20240116; t=1760714583; c=relaxed/simple;
+	bh=qylcD1/d+vX06zSW5+MZmqd6544unN+SV2/ZMXKQzks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQJZK+fzNJfLsFi/D7vbwFigfrOgJnLDI/DCPWaxQxPe4ADCofJZcuj9yzCKvDFmxvYrLKrGyE2gQTyxw1bjk9nu3Ipdxit35+nqlzj3YotuU8hMhniyZcFZbEKpxiZ9n44kOag1GJ2sZcLmu+qZOVIPYSNOdw2+2FFzbhC/sBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eI8VSxHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5LN3AjfzAW/KqgBbaLAXfCJSm9O30eIz01w126rriCBNdEIfwfdLOzF2RYynyOasfvXpailt7FNew3DLbDAhScHFzeeo4HR7hZAlD6UjTzxw0CoJfkHy53uhynCIalsL7Adao3+uwZymgj14StqDzpMhctNspTxu7Yi1j2iwpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/pOTOo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eI8VSxHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE48C4CEFE;
-	Fri, 17 Oct 2025 15:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/pOTOo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77396C4CEE7;
+	Fri, 17 Oct 2025 15:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714579;
-	bh=+P3+/LSxenvSyjWk2ZLyFlXLMh81Jx6M3gCB8bYOPmo=;
+	s=korg; t=1760714582;
+	bh=qylcD1/d+vX06zSW5+MZmqd6544unN+SV2/ZMXKQzks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eI8VSxHPBjT6ix/bAmO0Wt7KcKzGoDUL0prD4T588UGauzHHm4qApgVI0ZanCjC09
-	 bBjQ5b9hfkQnXo46TMXmewC6fiiAa1FdIBd/sLtIuaw9ev5AqZIUnW1NpvrX6uzEU+
-	 iWeZJ38n4kfebXS30dtvKXRchozoCbQyg5DbvZDc=
+	b=a/pOTOo+9f9mc966ToJCFQg3Of9Taj1IlFxIbhvEZDAi5RH8b9teYM4tbSlHfUjTR
+	 XPZBJlMSWpm0l4zyXTtnvUITDN2R4saxMGiUo5UrHe5FbttwZKQGtq5lnNaEiamDUl
+	 wUJ/037bMvkCUGh22QgtQ8kMdAAVohf6u7t9AOQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Snyder <dansnyder@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 194/277] x86/umip: Check that the instruction opcode is at least two bytes
-Date: Fri, 17 Oct 2025 16:53:21 +0200
-Message-ID: <20251017145154.204953080@linuxfoundation.org>
+Subject: [PATCH 6.12 195/277] x86/umip: Fix decoding of register forms of 0F 01 (SGDT and SIDT aliases)
+Date: Fri, 17 Oct 2025 16:53:22 +0200
+Message-ID: <20251017145154.241414888@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,54 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 32278c677947ae2f042c9535674a7fff9a245dd3 upstream.
+commit 27b1fd62012dfe9d3eb8ecde344d7aa673695ecf upstream.
 
-When checking for a potential UMIP violation on #GP, verify the decoder found
-at least two opcode bytes to avoid false positives when the kernel encounters
-an unknown instruction that starts with 0f.  Because the array of opcode.bytes
-is zero-initialized by insn_init(), peeking at bytes[1] will misinterpret
-garbage as a potential SLDT or STR instruction, and can incorrectly trigger
-emulation.
-
-E.g. if a VPALIGNR instruction
-
-   62 83 c5 05 0f 08 ff     vpalignr xmm17{k5},xmm23,XMMWORD PTR [r8],0xff
-
-hits a #GP, the kernel emulates it as STR and squashes the #GP (and corrupts
-the userspace code stream).
-
-Arguably the check should look for exactly two bytes, but no three byte
-opcodes use '0f 00 xx' or '0f 01 xx' as an escape, i.e. it should be
-impossible to get a false positive if the first two opcode bytes match '0f 00'
-or '0f 01'.  Go with a more conservative check with respect to the existing
-code to minimize the chances of breaking userspace, e.g. due to decoder
-weirdness.
-
-Analyzed by Nick Bray <ncbray@google.com>.
+Filter out the register forms of 0F 01 when determining whether or not to
+emulate in response to a potential UMIP violation #GP, as SGDT and SIDT only
+accept memory operands.  The register variants of 0F 01 are used to encode
+instructions for things like VMX and SGX, i.e. not checking the Mod field
+would cause the kernel to incorrectly emulate on #GP, e.g. due to a CPL
+violation on VMLAUNCH.
 
 Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
-Reported-by: Dan Snyder <dansnyder@google.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/umip.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/umip.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/arch/x86/kernel/umip.c
 +++ b/arch/x86/kernel/umip.c
-@@ -156,8 +156,8 @@ static int identify_insn(struct insn *in
- 	if (!insn->modrm.nbytes)
- 		return -EINVAL;
- 
--	/* All the instructions of interest start with 0x0f. */
--	if (insn->opcode.bytes[0] != 0xf)
-+	/* The instructions of interest have 2-byte opcodes: 0F 00 or 0F 01. */
-+	if (insn->opcode.nbytes < 2 || insn->opcode.bytes[0] != 0xf)
- 		return -EINVAL;
- 
+@@ -163,8 +163,19 @@ static int identify_insn(struct insn *in
  	if (insn->opcode.bytes[1] == 0x1) {
+ 		switch (X86_MODRM_REG(insn->modrm.value)) {
+ 		case 0:
++			/* The reg form of 0F 01 /0 encodes VMX instructions. */
++			if (X86_MODRM_MOD(insn->modrm.value) == 3)
++				return -EINVAL;
++
+ 			return UMIP_INST_SGDT;
+ 		case 1:
++			/*
++			 * The reg form of 0F 01 /1 encodes MONITOR/MWAIT,
++			 * STAC/CLAC, and ENCLS.
++			 */
++			if (X86_MODRM_MOD(insn->modrm.value) == 3)
++				return -EINVAL;
++
+ 			return UMIP_INST_SIDT;
+ 		case 4:
+ 			return UMIP_INST_SMSW;
 
 
