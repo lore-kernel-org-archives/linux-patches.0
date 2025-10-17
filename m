@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0672E330B2B;
-	Fri, 17 Oct 2025 15:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BA4330B36;
+	Fri, 17 Oct 2025 15:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716618; cv=none; b=NPpdIsoUsvClrLhjh013wrVoSz5bHVnLgShtydgCmyNAQp1pa13SU+/L3ge1du8R0vQiVOap6py3+bLTpaMNp/xUtOkJSGGA7xwH2tQVdUfX0uMTH2Y6v5eJj++o6JVWpSYrvTDKG48ndnHYSTzR0+eM7h/DZc9bm8se3xAfGkE=
+	t=1760716621; cv=none; b=r71tAMDdg+dyZEsu5fZHUvYat01BCL/9sv8dM9I8m+8EAdIEetNWucpm4cPBv3cQ6p+pvrzbxJiZ3ZaClaWCc13vo2wnamS6LfQMG2wkKgxqHkeyC3juRvVZCTNM3//4lMclYvluVPfoQDF9+mIcmiolvuWUAtfXN/JeVrpa5Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716618; c=relaxed/simple;
-	bh=xTZVvGMi4Rks5HTYdVCTEvt4C3FoevR8I1gnCyrUpQk=;
+	s=arc-20240116; t=1760716621; c=relaxed/simple;
+	bh=msU9vuifxP/R67luoj3DemoXevf6Wol7OY+5/efZNmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGt2i58dpjwle6D5ZnyJjPr/amxvROQKWGGHu6yI/EM8PldNXPGkW9ZUqu86yBnEqN1gE1ObmQu49vJdLlMri1k6V9PpbQ/MvVCeKj0A7WFoPRm1p/lV0B4BDpgiNWpzlb8O26V9c0BocluG09wIRJgn04gY9DBYzJZE8wpVNVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTb598jF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ag4B0JySUyY4GlhK7KT0ZyUDNARSG4HV8UXS53BP6m0cLmAY0M2BiBkEs/Fxpx4yx9H9agxdmILf8UzFOaZ0vW8rKpXrrtY9OhbOAK1Cov1hOJ/4lt4ZA8tnQgWBmha7v8/trO2aQTo5bQE/Ma4/cqXQjhU0PkrOFYVgWBASR9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=divyBtHg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTb598jF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882D5C4CEE7;
-	Fri, 17 Oct 2025 15:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="divyBtHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF9C4CEE7;
+	Fri, 17 Oct 2025 15:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716617;
-	bh=xTZVvGMi4Rks5HTYdVCTEvt4C3FoevR8I1gnCyrUpQk=;
+	s=korg; t=1760716620;
+	bh=msU9vuifxP/R67luoj3DemoXevf6Wol7OY+5/efZNmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTb598jFc1W6y/DyzdXW6rHYQ+XV6sKUvOX+7SHXu83a8cX0w1NCbAxmj8nPyvnO8
-	 DkWVFp+h9rarV5fQircPgt9iu2ChsqT3VYoi6WwEseUnKKhkPkMWVKMrmeS+zHtlXb
-	 tiXLpfqETmfDZ2wxStuj47QG+LuFynf30vr8t2SA=
+	b=divyBtHgqpNpPlRNLJskYWkd35MzxYstbeHGkH/GO1/ykzaYgMEpQSCENsX8R01/7
+	 vdFuO7DlT+9fbFexj7ZfTUnHfpJQyHKgUbHhn59Y5FlkvmD2C3+y+PSAiK5b/c1V+v
+	 /31N6fP9HLA50lbu27CujDoQK12vpJECiiwhs4Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com,
 	stable@kernel.org,
+	Yongjian Sun <sunyongjian1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 219/276] ext4: verify orphan file size is not too big
-Date: Fri, 17 Oct 2025 16:55:12 +0200
-Message-ID: <20251017145150.458385666@linuxfoundation.org>
+Subject: [PATCH 5.15 220/276] ext4: increase i_disksize to offset + len in ext4_update_disksize_before_punch()
+Date: Fri, 17 Oct 2025 16:55:13 +0200
+Message-ID: <20251017145150.494441206@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -46,57 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yongjian Sun <sunyongjian1@huawei.com>
 
-commit 0a6ce20c156442a4ce2a404747bb0fb05d54eeb3 upstream.
+commit 9d80eaa1a1d37539224982b76c9ceeee736510b9 upstream.
 
-In principle orphan file can be arbitrarily large. However orphan replay
-needs to traverse it all and we also pin all its buffers in memory. Thus
-filesystems with absurdly large orphan files can lead to big amounts of
-memory consumed. Limit orphan file size to a sane value and also use
-kvmalloc() for allocating array of block descriptor structures to avoid
-large order allocations for sane but large orphan files.
+After running a stress test combined with fault injection,
+we performed fsck -a followed by fsck -fn on the filesystem
+image. During the second pass, fsck -fn reported:
 
-Reported-by: syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Inode 131512, end of extent exceeds allowed value
+	(logical block 405, physical block 1180540, len 2)
+
+This inode was not in the orphan list. Analysis revealed the
+following call chain that leads to the inconsistency:
+
+                             ext4_da_write_end()
+                              //does not update i_disksize
+                             ext4_punch_hole()
+                              //truncate folio, keep size
+ext4_page_mkwrite()
+ ext4_block_page_mkwrite()
+  ext4_block_write_begin()
+    ext4_get_block()
+     //insert written extent without update i_disksize
+journal commit
+echo 1 > /sys/block/xxx/device/delete
+
+da-write path updates i_size but does not update i_disksize. Then
+ext4_punch_hole truncates the da-folio yet still leaves i_disksize
+unchanged(in the ext4_update_disksize_before_punch function, the
+condition offset + len < size is met). Then ext4_page_mkwrite sees
+ext4_nonda_switch return 1 and takes the nodioread_nolock path, the
+folio about to be written has just been punched out, and it’s offset
+sits beyond the current i_disksize. This may result in a written
+extent being inserted, but again does not update i_disksize. If the
+journal gets committed and then the block device is yanked, we might
+run into this. It should be noted that replacing ext4_punch_hole with
+ext4_zero_range in the call sequence may also trigger this issue, as
+neither will update i_disksize under these circumstances.
+
+To fix this, we can modify ext4_update_disksize_before_punch to
+increase i_disksize to min(i_size, offset + len) when both i_size and
+(offset + len) are greater than i_disksize.
+
 Cc: stable@kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-ID: <20250909112206.10459-2-jack@suse.cz>
+Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Message-ID: <20250911133024.1841027-1-sunyongjian@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -584,9 +584,20 @@ int ext4_init_orphan_info(struct super_b
- 		ext4_msg(sb, KERN_ERR, "get orphan inode failed");
- 		return PTR_ERR(inode);
- 	}
-+	/*
-+	 * This is just an artificial limit to prevent corrupted fs from
-+	 * consuming absurd amounts of memory when pinning blocks of orphan
-+	 * file in memory.
-+	 */
-+	if (inode->i_size > 8 << 20) {
-+		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
-+			 (unsigned long long)inode->i_size);
-+		ret = -EFSCORRUPTED;
-+		goto out_put;
-+	}
- 	oi->of_blocks = inode->i_size >> sb->s_blocksize_bits;
- 	oi->of_csum_seed = EXT4_I(inode)->i_csum_seed;
--	oi->of_binfo = kmalloc_array(oi->of_blocks,
-+	oi->of_binfo = kvmalloc_array(oi->of_blocks,
- 				     sizeof(struct ext4_orphan_block),
- 				     GFP_KERNEL);
- 	if (!oi->of_binfo) {
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -3906,7 +3906,11 @@ int ext4_can_truncate(struct inode *inod
+  * We have to make sure i_disksize gets properly updated before we truncate
+  * page cache due to hole punching or zero range. Otherwise i_disksize update
+  * can get lost as it may have been postponed to submission of writeback but
+- * that will never happen after we truncate page cache.
++ * that will never happen if we remove the folio containing i_size from the
++ * page cache. Also if we punch hole within i_size but above i_disksize,
++ * following ext4_page_mkwrite() may mistakenly allocate written blocks over
++ * the hole and thus introduce allocated blocks beyond i_disksize which is
++ * not allowed (e2fsck would complain in case of crash).
+  */
+ int ext4_update_disksize_before_punch(struct inode *inode, loff_t offset,
+ 				      loff_t len)
+@@ -3917,9 +3921,11 @@ int ext4_update_disksize_before_punch(st
+ 	loff_t size = i_size_read(inode);
+ 
+ 	WARN_ON(!inode_is_locked(inode));
+-	if (offset > size || offset + len < size)
++	if (offset > size)
+ 		return 0;
+ 
++	if (offset + len < size)
++		size = offset + len;
+ 	if (EXT4_I(inode)->i_disksize >= size)
+ 		return 0;
+ 
 
 
