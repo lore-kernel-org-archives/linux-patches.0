@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FB13370F7;
-	Fri, 17 Oct 2025 15:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FE43370F7;
+	Fri, 17 Oct 2025 15:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714310; cv=none; b=tL3RBrrOdPk27mHMzQS8f2bbS7dsEBNKXb5wX5f2SCf9L5QZw9rYXPIZdGsxsFHOBfVYvw4HrtzDdCA+ezGcSy3B1SFk9pWz2Giwc4Axf1VP9l51UTC3Lpv+D89aBoMEeGO+CJ1tbPakGe9THfzw8qrYfvQSEUi9x2jBG0XrgeY=
+	t=1760714313; cv=none; b=gO2jyiUqCumiXhQdb2u8/xufcQHZgefAp6+xHAhA0k+uiFcN4e/72kOgN33wDRYaRxk2ZeeI+MMqd7zI+fOAQEId91dDzCZ5mg75+KGixAujX68uJBGjhS777bzZlN0kkXUfd4PnJBl2UM3p4ETk0X/w1J02YDCtYZZpAeK0/1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714310; c=relaxed/simple;
-	bh=ce8Eh2HGPah8Pv4Jmmqb18+euf6IwC/Kgmg/TlE92JQ=;
+	s=arc-20240116; t=1760714313; c=relaxed/simple;
+	bh=QGhSPo5hOuxC+bojMT8/VhoIP2zeC4W7qb27xEZXBxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExxyC9RtS0W1WDv4s6LWdXzIf5klDTw7f8ba/sXrzeYNGlPSvQn9eqxD4xZtDQ+zrgwqU2nf+J09+25AtRYUorParlNXwqPEXwIpV+LStQPqgZDv9Qo4a6gWJL2QEABuPmOY6jwc/Fc31dS8ZuHr9NAAAproZQr5JhDcs4H7wek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfBU64Zj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qh/iQUG9iYnoZhQezYDNH4SVVaxGDkb5itfvnzU/QKrS82nC4cRjbTFOOx0yNQwYURZv/iXbe+2Xh5UMY97TenmC4+jMmybVBP/5gQlVy1zgXG9FYD5Q6lN+t1ColAyuFlV8CSwC80MHa2CajMqCU4apszDyct7eH+WOJn8TLpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txKN3DIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfBU64Zj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A3BC4CEE7;
-	Fri, 17 Oct 2025 15:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txKN3DIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F12DC4CEE7;
+	Fri, 17 Oct 2025 15:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714310;
-	bh=ce8Eh2HGPah8Pv4Jmmqb18+euf6IwC/Kgmg/TlE92JQ=;
+	s=korg; t=1760714313;
+	bh=QGhSPo5hOuxC+bojMT8/VhoIP2zeC4W7qb27xEZXBxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfBU64Zj3zbe5b9ZwoYw0kY5Q0h9xumbt4CKmQME7yBsKENq1pYxx/z5cC3eZiR2y
-	 K4WghMsS1MgeHRZqTIIOPeX4g904iy6fOWGidVziyhM265KDPVS7UZMhlGWm6gvk6y
-	 kzcc0MekocCZf2xrlrUENXg8kz59c2OQdB09fLnc=
+	b=txKN3DIrwhAdgurmJp2mNpK9hqp2mHo2FjlMoCHL/cTYT5Pc56R4qtlAM1Dswluxx
+	 +W2IDOoGjmTUqA224p96tlDm0prRK+xKDeinOE1qWOIFtT4Gq82r+rBbWd8q9kpCaB
+	 XSCFSLhCmx2NtNBCMvGKqPZBriWQ5bNZ/KX6hDbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jason-JH Lin <jason-jh.lin@mediatek.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/277] mailbox: mtk-cmdq: Switch to pm_runtime_put_autosuspend()
-Date: Fri, 17 Oct 2025 16:51:14 +0200
-Message-ID: <20251017145149.589172806@linuxfoundation.org>
+Subject: [PATCH 6.12 068/277] mailbox: mtk-cmdq: Remove pm_runtime APIs from cmdq_mbox_send_data()
+Date: Fri, 17 Oct 2025 16:51:15 +0200
+Message-ID: <20251017145149.626363180@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,70 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Jason-JH Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 472f8a3fccbb579cb98c1821da4cb9cbd51ee3e4 ]
+[ Upstream commit 3f39f56520374cf56872644acf9afcc618a4b674 ]
 
-__pm_runtime_put_autosuspend() was meant to be used by callers that needed
-to put the Runtime PM usage_count without marking the device's last busy
-timestamp. It was however seen that the Runtime PM autosuspend related
-functions should include that call. Thus switch the driver to
-use pm_runtime_put_autosuspend().
+pm_runtime_get_sync() and pm_runtime_put_autosuspend() were previously
+called in cmdq_mbox_send_data(), which is under a spinlock in msg_submit()
+(mailbox.c). This caused lockdep warnings such as "sleeping function
+called from invalid context" when running with lockdebug enabled.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The BUG report:
+  BUG: sleeping function called from invalid context at drivers/base/power/runtime.c:1164
+  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 3616, name: kworker/u17:3
+    preempt_count: 1, expected: 0
+    RCU nest depth: 0, expected: 0
+    INFO: lockdep is turned off.
+    irq event stamp: 0
+    CPU: 1 PID: 3616 Comm: kworker/u17:3 Not tainted 6.1.87-lockdep-14133-g26e933aca785 #1
+    Hardware name: Google Ciri sku0/unprovisioned board (DT)
+    Workqueue: imgsys_runner imgsys_runner_func
+    Call trace:
+     dump_backtrace+0x100/0x120
+     show_stack+0x20/0x2c
+     dump_stack_lvl+0x84/0xb4
+     dump_stack+0x18/0x48
+     __might_resched+0x354/0x4c0
+     __might_sleep+0x98/0xe4
+     __pm_runtime_resume+0x70/0x124
+     cmdq_mbox_send_data+0xe4/0xb1c
+     msg_submit+0x194/0x2dc
+     mbox_send_message+0x190/0x330
+     imgsys_cmdq_sendtask+0x1618/0x2224
+     imgsys_runner_func+0xac/0x11c
+     process_one_work+0x638/0xf84
+     worker_thread+0x808/0xcd0
+     kthread+0x24c/0x324
+     ret_from_fork+0x10/0x20
+
+Additionally, pm_runtime_put_autosuspend() should be invoked from the
+GCE IRQ handler to ensure the hardware has actually completed its work.
+
+To resolve these issues, remove the pm_runtime calls from
+cmdq_mbox_send_data() and delegate power management responsibilities
+to the client driver.
+
+Fixes: 8afe816b0c99 ("mailbox: mtk-cmdq-mailbox: Implement Runtime PM with autosuspend")
+Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Stable-dep-of: 3f39f5652037 ("mailbox: mtk-cmdq: Remove pm_runtime APIs from cmdq_mbox_send_data()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/mailbox/mtk-cmdq-mailbox.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index 4e093b58fb7b5..d24f71819c3d6 100644
+index d24f71819c3d6..38ab35157c85f 100644
 --- a/drivers/mailbox/mtk-cmdq-mailbox.c
 +++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -390,7 +390,7 @@ static int cmdq_mbox_send_data(struct mbox_chan *chan, void *data)
+@@ -379,20 +379,13 @@ static int cmdq_mbox_send_data(struct mbox_chan *chan, void *data)
+ 	struct cmdq *cmdq = dev_get_drvdata(chan->mbox->dev);
+ 	struct cmdq_task *task;
+ 	unsigned long curr_pa, end_pa;
+-	int ret;
  
+ 	/* Client should not flush new tasks if suspended. */
+ 	WARN_ON(cmdq->suspended);
+ 
+-	ret = pm_runtime_get_sync(cmdq->mbox.dev);
+-	if (ret < 0)
+-		return ret;
+-
  	task = kzalloc(sizeof(*task), GFP_ATOMIC);
- 	if (!task) {
--		__pm_runtime_put_autosuspend(cmdq->mbox.dev);
-+		pm_runtime_put_autosuspend(cmdq->mbox.dev);
+-	if (!task) {
+-		pm_runtime_put_autosuspend(cmdq->mbox.dev);
++	if (!task)
  		return -ENOMEM;
- 	}
+-	}
  
-@@ -440,7 +440,7 @@ static int cmdq_mbox_send_data(struct mbox_chan *chan, void *data)
+ 	task->cmdq = cmdq;
+ 	INIT_LIST_HEAD(&task->list_entry);
+@@ -439,9 +432,6 @@ static int cmdq_mbox_send_data(struct mbox_chan *chan, void *data)
+ 	}
  	list_move_tail(&task->list_entry, &thread->task_busy_list);
  
- 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
--	__pm_runtime_put_autosuspend(cmdq->mbox.dev);
-+	pm_runtime_put_autosuspend(cmdq->mbox.dev);
- 
- 	return 0;
- }
-@@ -488,7 +488,7 @@ static void cmdq_mbox_shutdown(struct mbox_chan *chan)
- 	spin_unlock_irqrestore(&thread->chan->lock, flags);
- 
- 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
--	__pm_runtime_put_autosuspend(cmdq->mbox.dev);
-+	pm_runtime_put_autosuspend(cmdq->mbox.dev);
- }
- 
- static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
-@@ -528,7 +528,7 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
- out:
- 	spin_unlock_irqrestore(&thread->chan->lock, flags);
- 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
--	__pm_runtime_put_autosuspend(cmdq->mbox.dev);
-+	pm_runtime_put_autosuspend(cmdq->mbox.dev);
- 
- 	return 0;
- 
-@@ -543,7 +543,7 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
- 		return -EFAULT;
- 	}
- 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
--	__pm_runtime_put_autosuspend(cmdq->mbox.dev);
-+	pm_runtime_put_autosuspend(cmdq->mbox.dev);
+-	pm_runtime_mark_last_busy(cmdq->mbox.dev);
+-	pm_runtime_put_autosuspend(cmdq->mbox.dev);
+-
  	return 0;
  }
  
