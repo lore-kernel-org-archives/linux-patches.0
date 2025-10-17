@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83C8330B34;
-	Fri, 17 Oct 2025 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD31526B96A;
+	Fri, 17 Oct 2025 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715798; cv=none; b=sssZ7cOmfEnKkZ/oHuoEGMytpRPzw7ouccOJAMH0KJppPCrQ8gjTq12a6ObVcoMFdrUapXQ7LjfiLwuojytVQh0VO+nLQY4XaJSBdLtkA8BVFLy9V/66oQav6sU6bY+hjHLLXAjCKQbwc4VGQp1HwMrs9Et/WnEteSUhyZNLJEo=
+	t=1760715800; cv=none; b=RQ7w0Qy7XkAluGsSSXMZ/cMhVxHp708C3xWXu7673DTmGKjLmOuObQu1L2nuTw+F6wnk+3SSVtJoMZkwadJqjYFmRBtof/ckPK0UHsdPmS6K4YA+QjlGBO8R4d1LcvXlksA01aFt8BS/+c+nM6vEUgAcR6Zd4eZMwdtgZCFGgD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715798; c=relaxed/simple;
-	bh=O4i+gv6X0q8UYoNwT9v+7ShjMhYTs+NA6RzI7jQGXc0=;
+	s=arc-20240116; t=1760715800; c=relaxed/simple;
+	bh=0MD3Ul0TKWwwqwQd4nkP/huX8q0fp0AzYk6uHYdReyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzkT38jeeCE+xPAdU0kJJQgYTu5tiz/saeybYE/yq8F18c8JqEiz7AFZvUyyzFD0YqlSPy7AH6gk5wfzsEvNIjItd8pl5ITCuSW7bo2DwrCUCQyzhRtqNIHMR6p3L1/Nmg1wbVEmFwE+86V4alRXTbBfrBr9DnIWPFL3rUW9Kjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgmRXZRR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pkshsnWbVamc3Yr1ujBBlG2eK+72Mwr3jdeZDhlQM3O5weS5KpKxlSivDZMytRsDKAieE8WdWSYvd5ZzlgxlIi/aQ+niw4qsNEjB9P4Xo38MV4ktpqWAPiiaamOXHso9drrPaXLJHuWTCpvyKEfUZ7if7OAe3VNoKRsL9XtyAGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgbxKPaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgmRXZRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A6CC4CEE7;
-	Fri, 17 Oct 2025 15:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgbxKPaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AE2C4CEE7;
+	Fri, 17 Oct 2025 15:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715797;
-	bh=O4i+gv6X0q8UYoNwT9v+7ShjMhYTs+NA6RzI7jQGXc0=;
+	s=korg; t=1760715800;
+	bh=0MD3Ul0TKWwwqwQd4nkP/huX8q0fp0AzYk6uHYdReyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgmRXZRRrmdkBPOIp0z8UedL1ANmI4LZ2hr8UTfRu0EIK+zx+C4jK0bhTNCwPuTgl
-	 /ZeE4nCSjc3Ce5puGooKWQd7u/6SiVXwAA5MgRe1nMQR5fKW73wVqtI/buoPlCewhN
-	 I7FdvcoRw5BAbMBdaaBNEmqiTJ0eMw/tFb0mz/vk=
+	b=JgbxKPaZ4oUXlbKkUBbOwRqOXoJKX/gvjd2d4uFtT4pMVcljvSbIUkRDeGm2RM3jC
+	 7N3B0iqvJAq1IFdNuWQVhTgMDw1cN/nNpzZLQEaF41zba9DratJvH46JqlZadQBlct
+	 O17FNYEhhUS7EhkabAuopah7TWBx34Sf3pTgFm5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.17 307/371] s390: Add -Wno-pointer-sign to KBUILD_CFLAGS_DECOMPRESSOR
-Date: Fri, 17 Oct 2025 16:54:42 +0200
-Message-ID: <20251017145213.184435797@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.17 308/371] slab: prevent warnings when slab obj_exts vector allocation fails
+Date: Fri, 17 Oct 2025 16:54:43 +0200
+Message-ID: <20251017145213.220244790@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-commit fa7a0a53eeb7e16402f82c3d5a9ef4bf5efe9357 upstream.
+commit 4038016397da5c1cebb10e7c85a36d06123724a8 upstream.
 
-If the decompressor is compiled with clang this can lead to the following
-warning:
+When object extension vector allocation fails, we set slab->obj_exts to
+OBJEXTS_ALLOC_FAIL to indicate the failure. Later, once the vector is
+successfully allocated, we will use this flag to mark codetag references
+stored in that vector as empty to avoid codetag warnings.
 
-In file included from arch/s390/boot/startup.c:4:
-...
-In file included from ./include/linux/pgtable.h:6:
-./arch/s390/include/asm/pgtable.h:2065:48: warning: passing 'unsigned long *' to parameter of type
-      'long *' converts between pointers to integer types with different sign [-Wpointer-sign]
- 2065 |                 value = __atomic64_or_barrier(PGSTE_PCL_BIT, ptr);
+slab_obj_exts() used to retrieve the slab->obj_exts vector pointer checks
+slab->obj_exts for being either NULL or a pointer with MEMCG_DATA_OBJEXTS
+bit set. However it does not handle the case when slab->obj_exts equals
+OBJEXTS_ALLOC_FAIL. Add the missing condition to avoid extra warning.
 
-Add -Wno-pointer-sign to the decompressor compile flags, like it is also
-done for the kernel. This is similar to what was done for x86 to address
-the same problem [1].
-
-[1] commit dca5203e3fe2 ("x86/boot: Add -Wno-pointer-sign to KBUILD_CFLAGS")
-
-Cc: stable@vger.kernel.org
-Reported-by: Gerd Bayer <gbayer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 09c46563ff6d ("codetag: debug: introduce OBJEXTS_ALLOC_FAIL to mark failed slab_ext allocations")
+Reported-by: Shakeel Butt <shakeel.butt@linux.dev>
+Closes: https://lore.kernel.org/all/jftidhymri2af5u3xtcqry3cfu6aqzte3uzlznhlaylgrdztsi@5vpjnzpsemf5/
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Cc: stable@vger.kernel.org # v6.10+
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ mm/slab.h |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -25,6 +25,7 @@ endif
- KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
- KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
- KBUILD_CFLAGS_DECOMPRESSOR += -D__DECOMPRESSOR
-+KBUILD_CFLAGS_DECOMPRESSOR += -Wno-pointer-sign
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
- KBUILD_CFLAGS_DECOMPRESSOR += -ffreestanding
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -526,8 +526,12 @@ static inline struct slabobj_ext *slab_o
+ 	unsigned long obj_exts = READ_ONCE(slab->obj_exts);
+ 
+ #ifdef CONFIG_MEMCG
+-	VM_BUG_ON_PAGE(obj_exts && !(obj_exts & MEMCG_DATA_OBJEXTS),
+-							slab_page(slab));
++	/*
++	 * obj_exts should be either NULL, a valid pointer with
++	 * MEMCG_DATA_OBJEXTS bit set or be equal to OBJEXTS_ALLOC_FAIL.
++	 */
++	VM_BUG_ON_PAGE(obj_exts && !(obj_exts & MEMCG_DATA_OBJEXTS) &&
++		       obj_exts != OBJEXTS_ALLOC_FAIL, slab_page(slab));
+ 	VM_BUG_ON_PAGE(obj_exts & MEMCG_DATA_KMEM, slab_page(slab));
+ #endif
+ 	return (struct slabobj_ext *)(obj_exts & ~OBJEXTS_FLAGS_MASK);
 
 
