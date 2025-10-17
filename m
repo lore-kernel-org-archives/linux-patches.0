@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37296330B17;
-	Fri, 17 Oct 2025 15:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7874C330B00;
+	Fri, 17 Oct 2025 15:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716299; cv=none; b=YsksGqpd+cMTQOJ8L9BOtjLjgSxXw0qvNp/y1hfj65o+IuNcVXZcqGH9B6DfgsJs0zg7nu9ORtsLlIlptHyF9MCl0Wp0d0bcNSR1UooGymul86EaNGy0609swG3hKpUlK9fYC7EyflzHfwKJ1ETo4QKEAqgqlKVY7RCHEiTj8xQ=
+	t=1760716302; cv=none; b=o1taiMVjQNVjFtZyyx5JXp5S8ZyTMvQWhu6VXdZUQBr/cyGf/ig4mLeI90pEcOYJHuWq+GajQOBQVijivVoufpzVUvp6fwDxNJUCk7aOxh47kawk/KsLHibpEe8e5rXrPLLBXd6S+m8ivEZcFCcHpT/VIKDj4OnidtQy4dECgwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716299; c=relaxed/simple;
-	bh=gohRUfHNiaTEUbv233h7qPKQnZTslC00ZfLleEvnZpA=;
+	s=arc-20240116; t=1760716302; c=relaxed/simple;
+	bh=i9Ayl5CAVvpTPwUZLDwwDvNLOeTXYkrjOEW+OOQ5Wqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KueARIjQLGYWhGLbI3NlJMkwIRXlj+b+Tvr1eOPKeFY9hOBylYEskN3KjTy8VjDZq+v2Duqmpkplb4Ndqjcz0pLdxjJ1v0KTgFHse7FMkS8+sOE0CDnDsvhaiDssmauOdIC15ETc6w7QR8HIfvHdr8DSe5TrQTTDdHb6fvZ/nH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8qmtZsx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNkfdivMAMwZp8iED329EOUzctyysjKq+xD4jacKyECzBQCDDg5sPFSG+QIX3fBxr5FFTeh3oAXq8kT1dl8VNvxmN6KSn8ovnhzO33PZsSJERMS36Ibi6XEtOfUTMEMOQV8gEeqrM2bhKVP23WrTuyAeBKkDImvHWQ+IyQ8kHPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmU1E2xt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8qmtZsx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B144DC4CEE7;
-	Fri, 17 Oct 2025 15:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmU1E2xt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0A5C4CEE7;
+	Fri, 17 Oct 2025 15:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716299;
-	bh=gohRUfHNiaTEUbv233h7qPKQnZTslC00ZfLleEvnZpA=;
+	s=korg; t=1760716302;
+	bh=i9Ayl5CAVvpTPwUZLDwwDvNLOeTXYkrjOEW+OOQ5Wqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8qmtZsxc3g8s++GlDl14gsuLgQ/QRHPvsulsH/rkcE4VzjxNEgRU6ASh2A2ZpPeR
-	 2Hpp8WNo4nUbQLpAl98LojnThdBHKQpMCF35pVK+Lz2gEdvfLCOF0DJ+RU0NcwyLBT
-	 zNyyK9ZxSxvNZSxSquQqnByhB5tePwF8XziJRn0g=
+	b=nmU1E2xt+KyqnwrUUpGY9R2dEFgrBuz7Dsl3FHQNoxngmI0znngNj4V/s6glliO02
+	 Jfyu2TFVC7mLvAhMTaZIAHAGYjYJ9vO81MTSLqUGSaGgByfRpDEDgOuHjL+aQZUine
+	 taC7WZKabZjlBE5666SQjsGO6hWfSw0gpLin5tio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 141/276] scsi: mvsas: Delete mvs_tag_init()
-Date: Fri, 17 Oct 2025 16:53:54 +0200
-Message-ID: <20251017145147.629838658@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 111/276] mfd: vexpress-sysreg: Check the return value of devm_gpiochip_add_data()
+Date: Fri, 17 Oct 2025 16:53:24 +0200
+Message-ID: <20251017145146.530857380@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,72 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit ffc9f9bf3f14876d019f67ef17d41138802529a8 ]
+commit 1efbee6852f1ff698a9981bd731308dd027189fb upstream.
 
-All mvs_tag_init() does is zero the tag bitmap, but this is already done
-with the kzalloc() call to alloc the tags, so delete this unneeded
-function.
+Commit 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+removed the return value check from the call to gpiochip_add_data() (or
+rather gpiochip_add() back then and later converted to devres) with no
+explanation. This function however can still fail, so check the return
+value and bail-out if it does.
 
-Signed-off-by: John Garry <john.garry@huawei.com>
-Link: https://lore.kernel.org/r/1666091763-11023-7-git-send-email-john.garry@huawei.com
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 60cd16a3b743 ("scsi: mvsas: Fix use-after-free bugs in mvs_work_queue")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250811-gpio-mmio-mfd-conv-v1-1-68c5c958cf80@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mvsas/mv_init.c | 2 --
- drivers/scsi/mvsas/mv_sas.c  | 7 -------
- drivers/scsi/mvsas/mv_sas.h  | 1 -
- 3 files changed, 10 deletions(-)
+ drivers/mfd/vexpress-sysreg.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index 1c98662db080f..e2093e7637d82 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -286,8 +286,6 @@ static int mvs_alloc(struct mvs_info *mvi, struct Scsi_Host *shost)
- 	}
- 	mvi->tags_num = slot_nr;
+--- a/drivers/mfd/vexpress-sysreg.c
++++ b/drivers/mfd/vexpress-sysreg.c
+@@ -98,6 +98,7 @@ static int vexpress_sysreg_probe(struct
+ 	struct resource *mem;
+ 	void __iomem *base;
+ 	struct gpio_chip *mmc_gpio_chip;
++	int ret;
  
--	/* Initialize tags */
--	mvs_tag_init(mvi);
- 	return 0;
- err_out:
- 	return 1;
-diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
-index efd11fabff937..3b4576dba590e 100644
---- a/drivers/scsi/mvsas/mv_sas.c
-+++ b/drivers/scsi/mvsas/mv_sas.c
-@@ -51,13 +51,6 @@ inline int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out)
- 	return 0;
- }
+ 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!mem)
+@@ -118,7 +119,10 @@ static int vexpress_sysreg_probe(struct
+ 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
+ 			NULL, NULL, NULL, NULL, 0);
+ 	mmc_gpio_chip->ngpio = 2;
+-	devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
++
++	ret = devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
++	if (ret)
++		return ret;
  
--void mvs_tag_init(struct mvs_info *mvi)
--{
--	int i;
--	for (i = 0; i < mvi->tags_num; ++i)
--		mvs_tag_clear(mvi, i);
--}
--
- static struct mvs_info *mvs_find_dev_mvi(struct domain_device *dev)
- {
- 	unsigned long i = 0, j = 0, hi = 0;
-diff --git a/drivers/scsi/mvsas/mv_sas.h b/drivers/scsi/mvsas/mv_sas.h
-index fa654c73beeee..8dd30f8b478ec 100644
---- a/drivers/scsi/mvsas/mv_sas.h
-+++ b/drivers/scsi/mvsas/mv_sas.h
-@@ -428,7 +428,6 @@ void mvs_tag_clear(struct mvs_info *mvi, u32 tag);
- void mvs_tag_free(struct mvs_info *mvi, u32 tag);
- void mvs_tag_set(struct mvs_info *mvi, unsigned int tag);
- int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out);
--void mvs_tag_init(struct mvs_info *mvi);
- void mvs_iounmap(void __iomem *regs);
- int mvs_ioremap(struct mvs_info *mvi, int bar, int bar_ex);
- void mvs_phys_reset(struct mvs_info *mvi, u32 phy_mask, int hard);
--- 
-2.51.0
-
+ 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
+ 			vexpress_sysreg_cells,
 
 
