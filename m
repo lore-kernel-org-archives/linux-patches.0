@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4E330B19;
-	Fri, 17 Oct 2025 15:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A50330B14;
+	Fri, 17 Oct 2025 15:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715427; cv=none; b=ssa/mu78t1gyL1RCzcD7hvHEBBVMbBfS8BmH7gwLKfFmOzxt2Gm/Uaernu72Tl0AEd4nVDkyhkBuBiGax8ryvF871k43Wy078CQEaIHIYObq3B7lN9ip9ZJesN3hfaO3SwGiwYUVBIMtcjmo7ydURUQHIN3hgDB+SReo1uIa9RI=
+	t=1760715429; cv=none; b=en+8dCicuXBvdKP1L0DjIxp1Kza773ccMAIe3EYzVxXfT+w7ZlLcEh3sFOEp+io8VXNo9uB1Krcc/VPjZlidzQvEOtW2bLHkwvvnAKt2rgolbZ6SP0ZiIVYhBUfGcJuWSk6v5rsgr8MHTWyTX+FLJ1owwxWh4oki9hUJy8ARi9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715427; c=relaxed/simple;
-	bh=Hls5LdZKP0uex+iOdGiigvm+3J/hFvy4YsjBNyg9/wA=;
+	s=arc-20240116; t=1760715429; c=relaxed/simple;
+	bh=1L0BwS4GE9ed+s6SKgkwUPiVlLVy8hNtzVFIomOCM5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2sM+cV+maH/mTiFyViyH4par+17OjlufdFk3s5s03g0zCFGOQO/hUXqEC2etIJLiGz0U4GzZxsJRCyo55EAvFYxqQVhOVMhq87ZPdBajt7oaR8LFx8rlHcX9iG3q06Ti50QgEx/E0nZ5xkCO4cwx/QvTkTbbigN6LW/qOgu+aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoFJewwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWV+ctGsi5NPu10zZ7UYARKXubHEE+VGfJGAGdI3zP05SYNo4giblKftFRFSzpYl7UBX1uLqJK2MfoWR7Hk94AArdbFhvZbNwXdrJtLcTTau1NuO8C6OMS0s86ToGpCXj/JSHXnzxCTnG9oFMzNA1TqWal5rl080r72JE91tV6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAf2xFoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoFJewwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEE2C4CEFE;
-	Fri, 17 Oct 2025 15:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAf2xFoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21318C4CEE7;
+	Fri, 17 Oct 2025 15:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715426;
-	bh=Hls5LdZKP0uex+iOdGiigvm+3J/hFvy4YsjBNyg9/wA=;
+	s=korg; t=1760715429;
+	bh=1L0BwS4GE9ed+s6SKgkwUPiVlLVy8hNtzVFIomOCM5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoFJewwJIc+9TTMQHwh7aEz6v0hQxjDrBssQwk5II3hrIpOhc6k8v8bI287H+KBUf
-	 uxL2+FUdosqGYxytPRYaMFORwdh9115uWIONYV1F1aWVlNvnwPrkk0lmzs8/HaDExy
-	 W+v6wguES1Sfi0pfqNZSRN2GAV6zZHBoohTQveu8=
+	b=ZAf2xFoLd7juoJR6xwVlpG/URZoz7yedGpzZvH8f9ZqsqbUzabAD3Swu8b9SSiaYo
+	 reN38qDooTMyozSuv44IdyeobAPRcSEKbGgfJfxBq204C3Q0+POjsSEqqDANJxsBCx
+	 QmJilFnYbZLpnXuxJkPC3nHnQ4TUbg6xmhJz3FPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank A P <shashank.ap@samsung.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.17 213/371] fs: quota: create dedicated workqueue for quota_release_work
-Date: Fri, 17 Oct 2025 16:53:08 +0200
-Message-ID: <20251017145209.792838461@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 214/371] fsnotify: pass correct offset to fsnotify_mmap_perm()
+Date: Fri, 17 Oct 2025 16:53:09 +0200
+Message-ID: <20251017145209.828417524@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,89 +59,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank A P <shashank.ap@samsung.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 72b7ceca857f38a8ca7c5629feffc63769638974 upstream.
+commit 28bba2c2935e219d6cb6946e16b9a0b7c47913be upstream.
 
-There is a kernel panic due to WARN_ONCE when panic_on_warn is set.
+fsnotify_mmap_perm() requires a byte offset for the file about to be
+mmap'ed.  But it is called from vm_mmap_pgoff(), which has a page offset.
+Previously the conversion was done incorrectly so let's fix it, being
+careful not to overflow on 32-bit platforms.
 
-This issue occurs when writeback is triggered due to sync call for an
-opened file(ie, writeback reason is WB_REASON_SYNC). When f2fs balance
-is needed at sync path, flush for quota_release_work is triggered.
-By default quota_release_work is queued to "events_unbound" queue which
-does not have WQ_MEM_RECLAIM flag. During f2fs balance "writeback"
-workqueue tries to flush quota_release_work causing kernel panic due to
-MEM_RECLAIM flag mismatch errors.
+Discovered during code review.
 
-This patch creates dedicated workqueue with WQ_MEM_RECLAIM flag
-for work quota_release_work.
-
-------------[ cut here ]------------
-WARNING: CPU: 4 PID: 14867 at kernel/workqueue.c:3721 check_flush_dependency+0x13c/0x148
-Call trace:
- check_flush_dependency+0x13c/0x148
- __flush_work+0xd0/0x398
- flush_delayed_work+0x44/0x5c
- dquot_writeback_dquots+0x54/0x318
- f2fs_do_quota_sync+0xb8/0x1a8
- f2fs_write_checkpoint+0x3cc/0x99c
- f2fs_gc+0x190/0x750
- f2fs_balance_fs+0x110/0x168
- f2fs_write_single_data_page+0x474/0x7dc
- f2fs_write_data_pages+0x7d0/0xd0c
- do_writepages+0xe0/0x2f4
- __writeback_single_inode+0x44/0x4ac
- writeback_sb_inodes+0x30c/0x538
- wb_writeback+0xf4/0x440
- wb_workfn+0x128/0x5d4
- process_scheduled_works+0x1c4/0x45c
- worker_thread+0x32c/0x3e8
- kthread+0x11c/0x1b0
- ret_from_fork+0x10/0x20
-Kernel panic - not syncing: kernel: panic_on_warn set ...
-
-Fixes: ac6f420291b3 ("quota: flush quota_release_work upon quota writeback")
-CC: stable@vger.kernel.org
-Signed-off-by: Shashank A P <shashank.ap@samsung.com>
-Link: https://patch.msgid.link/20250901092905.2115-1-shashank.ap@samsung.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lkml.kernel.org/r/20251003155238.2147410-1-ryan.roberts@arm.com
+Fixes: 066e053fe208 ("fsnotify: add pre-content hooks on mmap()")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: Amir Goldstein <amir73il@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/quota/dquot.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ mm/util.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -162,6 +162,9 @@ static struct quota_module_name module_n
- /* SLAB cache for dquot structures */
- static struct kmem_cache *dquot_cachep;
- 
-+/* workqueue for work quota_release_work*/
-+static struct workqueue_struct *quota_unbound_wq;
-+
- void register_quota_format(struct quota_format_type *fmt)
+diff --git a/mm/util.c b/mm/util.c
+index 6c1d64ed0221..8989d5767528 100644
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -566,6 +566,7 @@ unsigned long vm_mmap_pgoff(struct file *file, unsigned long addr,
+ 	unsigned long len, unsigned long prot,
+ 	unsigned long flag, unsigned long pgoff)
  {
- 	spin_lock(&dq_list_lock);
-@@ -881,7 +884,7 @@ void dqput(struct dquot *dquot)
- 	put_releasing_dquots(dquot);
- 	atomic_dec(&dquot->dq_count);
- 	spin_unlock(&dq_list_lock);
--	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
-+	queue_delayed_work(quota_unbound_wq, &quota_release_work, 1);
- }
- EXPORT_SYMBOL(dqput);
++	loff_t off = (loff_t)pgoff << PAGE_SHIFT;
+ 	unsigned long ret;
+ 	struct mm_struct *mm = current->mm;
+ 	unsigned long populate;
+@@ -573,7 +574,7 @@ unsigned long vm_mmap_pgoff(struct file *file, unsigned long addr,
  
-@@ -3041,6 +3044,11 @@ static int __init dquot_init(void)
- 
- 	shrinker_register(dqcache_shrinker);
- 
-+	quota_unbound_wq = alloc_workqueue("quota_events_unbound",
-+					   WQ_UNBOUND | WQ_MEM_RECLAIM, WQ_MAX_ACTIVE);
-+	if (!quota_unbound_wq)
-+		panic("Cannot create quota_unbound_wq\n");
-+
- 	return 0;
- }
- fs_initcall(dquot_init);
+ 	ret = security_mmap_file(file, prot, flag);
+ 	if (!ret)
+-		ret = fsnotify_mmap_perm(file, prot, pgoff >> PAGE_SHIFT, len);
++		ret = fsnotify_mmap_perm(file, prot, off, len);
+ 	if (!ret) {
+ 		if (mmap_write_lock_killable(mm))
+ 			return -EINTR;
+-- 
+2.51.0
+
 
 
