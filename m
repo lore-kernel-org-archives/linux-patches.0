@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F321432E121;
-	Fri, 17 Oct 2025 15:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CE82F6932;
+	Fri, 17 Oct 2025 15:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713215; cv=none; b=i+sgmE8oV6zWYXM7TPq/7o+usWzFOyKJJdm47WEJDVC5uNizEEkVAslPZbqfQjjLLwFb5vFndDplFY4ckxkWLSHbQHPhrWRqEv7erEFUlSV0TIM7ce82lv+9UXkOvxpk4OWgkibp3dCWPG6aRcw3n+wSj1YbDXGVxy2fjstns3A=
+	t=1760713217; cv=none; b=epAMAbiFWatQvaYLIBHmpspn/O8GIUjR70q2UFMVI5Tep1oMPLTJsayAXYC3tBKHiv61EpyKUODXMkcL6MqRM7D8waYiV3FvgakdMANlWThn3yVXm3OqVHn6bkFOJ1Su8vIpIsyA+UQKk2w2AgWk4yTcE/6o75scD8ww9Voi5CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713215; c=relaxed/simple;
-	bh=6JYK5QtRwCx2bN02h8gjVOOXa0OfTRjDrG++MtnK1TE=;
+	s=arc-20240116; t=1760713217; c=relaxed/simple;
+	bh=AtY7liOqmfkX+sWkW3oNqSn8sUZVuoYgIFzdrAbODis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4z45AfSIQ+fhqIcbRTvdmwtyb1mtGInHiyZYPRY8GgTKfdM3b52zQECzkN/YAX+MQZPUI6DkrX+UWuCt9Vlp14ICJtRDOXpAYNA2QnN6Wogk0406nCKZzFJtF/YgtyZ8nNKzewFwobHDIfEn7XZowfCpWdZSZXQrlbo6EjOaqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TMUehbC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHGginq9AwWnU/UzqaAoSPUaegE9scNrWYXxcbZNhKsPg/zjvrjkmii125vUYUjBs5FN3/Zyr3gRxRHgb1DAF1wt12VJLzo3TrZri7IQR1soxMw89d4dbx6u8sB56DU/izr2JH5R8KYLLIdZlO3ORXIOySy61QkNAfUFVRKZMlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK4mJ0X5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TMUehbC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CDFC4CEFE;
-	Fri, 17 Oct 2025 15:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK4mJ0X5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428B0C4CEE7;
+	Fri, 17 Oct 2025 15:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713214;
-	bh=6JYK5QtRwCx2bN02h8gjVOOXa0OfTRjDrG++MtnK1TE=;
+	s=korg; t=1760713217;
+	bh=AtY7liOqmfkX+sWkW3oNqSn8sUZVuoYgIFzdrAbODis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TMUehbCCGpZs879g7jE8PJh65Lg22IMKyBGdgbFjc2bBoekBaX98FssW+1dNMd6W
-	 Rngbezl9e8v9+mYI/1Jk9YUDTWGkX19FexqpHzeJDXqaLJG956U5cGYcM9nCYF+5Uj
-	 4M50hwE4jgpEnmxi6ubyJtCsxDQN7GauzTnfthho=
+	b=VK4mJ0X5FD2GUcHC0D/e1XQ2lLGW6URA1FEWi9gUwAu5Kd2yL1d3BNyF5tSeClEYu
+	 gVTqDD1CcsY0oLkAdzPpgw3cxkNwaTDo+oXskTtR0+fKVn0ubfjL5Y+MXFwWxNnFGo
+	 Auhyg/wbwGSWEARYwpTlwJ5Oov/5X1TNSXBUO+Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 086/168] KEYS: trusted_tpm1: Compare HMAC values in constant time
-Date: Fri, 17 Oct 2025 16:52:45 +0200
-Message-ID: <20251017145132.194589007@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 087/168] lib/genalloc: fix device leak in of_gen_pool_get()
+Date: Fri, 17 Oct 2025 16:52:46 +0200
+Message-ID: <20251017145132.230994374@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -50,63 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit eed0e3d305530066b4fc5370107cff8ef1a0d229 upstream.
+commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
 
-To prevent timing attacks, HMAC value comparison needs to be constant
-time.  Replace the memcmp() with the correct function, crypto_memneq().
+Make sure to drop the reference taken when looking up the genpool platform
+device in of_gen_pool_get() before returning the pool.
 
-[For the Fixes commit I used the commit that introduced the memcmp().
-It predates the introduction of crypto_memneq(), but it was still a bug
-at the time even though a helper function didn't exist yet.]
+Note that holding a reference to a device does typically not prevent its
+devres managed resources from being released so there is no point in
+keeping the reference.
 
-Fixes: d00a1c72f7f4 ("keys: add new trusted key-type")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
+Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Vladimir Zapolskiy <vz@mleia.com>
+Cc: <stable@vger.kernel.org>	[3.10+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm1.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ lib/genalloc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm1.c
-+++ b/security/keys/trusted-keys/trusted_tpm1.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <crypto/hash_info.h>
-+#include <crypto/algapi.h>
- #include <linux/init.h>
- #include <linux/slab.h>
- #include <linux/parser.h>
-@@ -241,7 +242,7 @@ int TSS_checkhmac1(unsigned char *buffer
- 	if (ret < 0)
- 		goto out;
- 
--	if (memcmp(testhmac, authdata, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac, authdata, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
-@@ -334,7 +335,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag1, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
-+	if (crypto_memneq(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
- 		ret = -EINVAL;
- 		goto out;
+--- a/lib/genalloc.c
++++ b/lib/genalloc.c
+@@ -899,8 +899,11 @@ struct gen_pool *of_gen_pool_get(struct
+ 		if (!name)
+ 			name = np_pool->name;
  	}
-@@ -343,7 +344,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag2, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac2, authdata2, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac2, authdata2, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
+-	if (pdev)
++	if (pdev) {
+ 		pool = gen_pool_get(&pdev->dev, name);
++		put_device(&pdev->dev);
++	}
++
+ 	of_node_put(np_pool);
+ 
+ 	return pool;
 
 
