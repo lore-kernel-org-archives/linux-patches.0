@@ -1,57 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728B728935A;
-	Fri, 17 Oct 2025 15:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656AC242935;
+	Fri, 17 Oct 2025 15:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714990; cv=none; b=h99lvE9R8Ejt1zEIoS77TZvP0y2HC3SJ6QRLFNP/+l97oGVrl5DB73/8wIeVlmSu048r3j03CUrYhHFHccUYk7RRzEfeKWgDAY8PC/27BT/67LmJefnrE2IP8Gl4hrN6SYWwSE4nV6pt4YukDgCJYVAZuOPpyTCWogjq/L5EWU4=
+	t=1760714993; cv=none; b=XPadyDnfoZ+rjTkhCFwtmabL8DE6OZ20k1M6Ww7klbN13LCDqhp/ncnaC5sYB5F+8y9t+XLsvuSl+o736TIGULvIcrjgaQMrw1+lNh8UJYFz6RFGgTlQTVHzmFwFjyxpy96PvIK/vIXtZE8bJnRXA3JgLleJT+Cqjn0eQiMMed4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714990; c=relaxed/simple;
-	bh=UX/Ske3T4oqx8UwEFw1YygNo4rMZSYRB6NYd2Sw8aqU=;
+	s=arc-20240116; t=1760714993; c=relaxed/simple;
+	bh=tbtvYNubnUSgwexitRY0qKQAmDqVCV6s/CHSXkzSO/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BI4JUc0m/qHqSYk2UIDM9iJJjy7beBmBINCnQIEd/OQEkegNtbabx0sGvEHRVFFYjjgKeD4caP8EUKblix7MmBbK7ED6YvnTGVnfD9fP+nO07HNGnDw0Ps/EmH7Oc/4HHS5OXx4ZIBG8lvePCRKvFD9U8Zhziqr92tunMwEeSgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7deEIks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOl7R2Kk9IMF9fCYqGtGceJBL3bs06/bYr+U/KVZz5Oo9kZF0wg36pHZfO+ur7lkF0vhhU5GoH3UOcI3Ft3kWoTqQq0qik7mmyFi+9PiLCiHHIiGJnlcU+8le0EnWeAE1fKBwwGrnG6c73V8JrrYBz2upBebBKI27T8Eqm91ctw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBn/gi/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7deEIks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE927C4CEFE;
-	Fri, 17 Oct 2025 15:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBn/gi/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE060C113D0;
+	Fri, 17 Oct 2025 15:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714990;
-	bh=UX/Ske3T4oqx8UwEFw1YygNo4rMZSYRB6NYd2Sw8aqU=;
+	s=korg; t=1760714993;
+	bh=tbtvYNubnUSgwexitRY0qKQAmDqVCV6s/CHSXkzSO/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7deEIkszUf8xtesz9fyXjUcVBybsOV0AaKHEQK7LnmITLiJ+FIgj6LhpbJAN/+BZ
-	 KdkhEwo/77iPgoO58PC1H/NNEi3PcN0NFgb/A0E37uEHoGYQDA8iV3jf4YPAIl2Z0+
-	 fhDEPgBxoPbN3QgYjEj9vC85OXOF+C0TapipbviA=
+	b=NBn/gi/cKdueU4SJmpn0TCVHekPZ3/SeMXg7EPVwS7SoT7y+8GnQ/xOjnAsc4YI6s
+	 CKN/ZIoh6iOZmNaSJGWznzCgw3Z+L98cnbff+93pfQRw16TzwLQEhvVaGvjSS3mXwI
+	 qT1Kogow9zE0YtaLtZzkElvSGwox9JnzxzKmoNR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Blake Jones <blakejones@google.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Li Huafei <lihuafei1@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Nam Cao <namcao@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 027/371] perf evsel: Avoid container_of on a NULL leader
-Date: Fri, 17 Oct 2025 16:50:02 +0200
-Message-ID: <20251017145202.781439671@linuxfoundation.org>
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.17 018/371] media: v4l2-subdev: Fix alloc failure check in v4l2_subdev_call_state_try()
+Date: Fri, 17 Oct 2025 16:49:53 +0200
+Message-ID: <20251017145202.458877260@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -70,59 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 2354479026d726954ff86ce82f4b649637319661 ]
+commit f37df9a0eb5e43fcfe02cbaef076123dc0d79c7e upstream.
 
-An evsel should typically have a leader of itself, however, in tests
-like 'Sample parsing' a NULL leader may occur and the container_of
-will return a corrupt pointer.
+v4l2_subdev_call_state_try() macro allocates a subdev state with
+__v4l2_subdev_state_alloc(), but does not check the returned value. If
+__v4l2_subdev_state_alloc fails, it returns an ERR_PTR, and that would
+cause v4l2_subdev_call_state_try() to crash.
 
-Avoid this with an explicit NULL test.
+Add proper error handling to v4l2_subdev_call_state_try().
 
-Fixes: fba7c86601e2e42d ("libperf: Move 'leader' from tools/perf to perf_evsel::leader")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Blake Jones <blakejones@google.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Collin Funk <collin.funk1@gmail.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Li Huafei <lihuafei1@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Nam Cao <namcao@linutronix.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250821163820.1132977-4-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Fixes: 982c0487185b ("media: subdev: Add v4l2_subdev_call_state_try() macro")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/aJTNtpDUbTz7eyJc%40stanley.mountain/
+Cc: stable@vger.kernel.org
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/evsel.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/media/v4l2-subdev.h |   30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index d264c143b5925..496f42434327b 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -3935,6 +3935,8 @@ bool evsel__is_hybrid(const struct evsel *evsel)
+--- a/include/media/v4l2-subdev.h
++++ b/include/media/v4l2-subdev.h
+@@ -1962,19 +1962,23 @@ extern const struct v4l2_subdev_ops v4l2
+  *
+  * Note: only legacy non-MC drivers may need this macro.
+  */
+-#define v4l2_subdev_call_state_try(sd, o, f, args...)                 \
+-	({                                                            \
+-		int __result;                                         \
+-		static struct lock_class_key __key;                   \
+-		const char *name = KBUILD_BASENAME                    \
+-			":" __stringify(__LINE__) ":state->lock";     \
+-		struct v4l2_subdev_state *state =                     \
+-			__v4l2_subdev_state_alloc(sd, name, &__key);  \
+-		v4l2_subdev_lock_state(state);                        \
+-		__result = v4l2_subdev_call(sd, o, f, state, ##args); \
+-		v4l2_subdev_unlock_state(state);                      \
+-		__v4l2_subdev_state_free(state);                      \
+-		__result;                                             \
++#define v4l2_subdev_call_state_try(sd, o, f, args...)                         \
++	({                                                                    \
++		int __result;                                                 \
++		static struct lock_class_key __key;                           \
++		const char *name = KBUILD_BASENAME                            \
++			":" __stringify(__LINE__) ":state->lock";             \
++		struct v4l2_subdev_state *state =                             \
++			__v4l2_subdev_state_alloc(sd, name, &__key);          \
++		if (IS_ERR(state)) {                                          \
++			__result = PTR_ERR(state);                            \
++		} else {                                                      \
++			v4l2_subdev_lock_state(state);                        \
++			__result = v4l2_subdev_call(sd, o, f, state, ##args); \
++			v4l2_subdev_unlock_state(state);                      \
++			__v4l2_subdev_state_free(state);                      \
++		}                                                             \
++		__result;                                                     \
+ 	})
  
- struct evsel *evsel__leader(const struct evsel *evsel)
- {
-+	if (evsel->core.leader == NULL)
-+		return NULL;
- 	return container_of(evsel->core.leader, struct evsel, core);
- }
- 
--- 
-2.51.0
-
+ /**
 
 
