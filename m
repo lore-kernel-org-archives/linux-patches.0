@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E3320A5E5;
-	Fri, 17 Oct 2025 15:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6B0219A7A;
+	Fri, 17 Oct 2025 15:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714931; cv=none; b=syXW2DHmYkrkktYqVQfuKDdmleyFpLo556mfs7YX4ABqADyUR8/8XPyLKCb90Lq7T96DPcwRsxePJlwwXYnuT6KsKPMQe1JVy5Csmj3tas7YXGYWRx0mcpgzlws5P7luq4FcNiRRrVpmumnGaaDbabwyx7ZPcGytsg9p20zIy6M=
+	t=1760714934; cv=none; b=Dzbw6pdTCIV/a5rtmb3on4rVCM8iGhwkuux0N5/Z6AJkb58V6LMJC85Re6PC3nOvxAwEJb45GV7AGmxXAjsHxftHgj4j7YdMr/N60pu2zE2lcyJjTp6OAH3wanBLkLZq2gxEy6tdxq9YIRp7c/SAsR2nrgqnlXZnpmW+Ljc4fKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714931; c=relaxed/simple;
-	bh=Sm9J04WPl+9X9m7pKUxKHneXEDfsF+VfHWa+Wh7/Kcs=;
+	s=arc-20240116; t=1760714934; c=relaxed/simple;
+	bh=wjkd/Q6hi8joFYdH8VAUSx75W5wpjf3bc1ervLnRfzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qHtBpMCKZuSBlUqQz9d6MHsxVltnH1g+MzClH3t5gFujc28Yd9IHENsadgDzp7evrucT4fk5dBg+xqkV38l7Z12dRAGZJrDtngai/GwIte8HGq9a6ozKW47++EtUtk68Liuj2KwqaSt+Ax9dUYenoYfwsmPblnAVCkOmzgbhMXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SR+TSRNI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbTDQkLH0tYjiam8sfilJtXe1ZrBr4hdsRI/58e1p67FEGCStvrq0ITk9r8WYtV2GP+pMskx4xTLHt1Nxt9UbEYluuTM56RSUESRt9ajrWXLqNCWyQ5lerplI9BUnlCW/Sk0RayALOwJ1f7mnLz1eZawQxV+s/8uH4BSRXzA1Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZtln1Fk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SR+TSRNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6840C4CEE7;
-	Fri, 17 Oct 2025 15:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZtln1Fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A191DC4CEE7;
+	Fri, 17 Oct 2025 15:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714931;
-	bh=Sm9J04WPl+9X9m7pKUxKHneXEDfsF+VfHWa+Wh7/Kcs=;
+	s=korg; t=1760714934;
+	bh=wjkd/Q6hi8joFYdH8VAUSx75W5wpjf3bc1ervLnRfzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SR+TSRNIFTz4GCjmg0B6m875IHJol77TB4/Gow5rrLxhjZYGTgrIN3YluxbEde42l
-	 vuDLXre0QrGaP1PEdCH4aJhKrRmnNAHDHmjWup63SBnRw+Ht6acUh0bBYHiaBGty1K
-	 ycOZc4C4R1YRHU295xoDV4xTsV0TGdEuMWpX4ghY=
+	b=cZtln1FkbNm5JyDMve0IuccIvZx8ng+/4IuTaVwNAko/GYKKBHLVL2Zt5XYXfhvjI
+	 CtqFPwmJ/5rEcKiQyUHjewzgkYrJKF7ze/rjz4u/BlPzoJYX8gBef92MeQ0rmkNqxA
+	 /7jH+l/0cKpLcWQusUux+yoJjtfvE3aOQsXA3lCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ali Saidi <alisaidi@amazon.com>,
+	German Gomez <german.gomez@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 038/371] rtc: optee: fix memory leak on driver removal
-Date: Fri, 17 Oct 2025 16:50:13 +0200
-Message-ID: <20251017145203.178537568@linuxfoundation.org>
+Subject: [PATCH 6.17 039/371] perf arm_spe: Correct setting remote access
+Date: Fri, 17 Oct 2025 16:50:14 +0200
+Message-ID: <20251017145203.214810538@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -45,42 +55,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit a531350d2fe58f7fc4516e555f22391dee94efd9 ]
+[ Upstream commit 039fd0634a0629132432632d7ac9a14915406b5c ]
 
-Fix a memory leak in case of driver removal.
-Free the shared memory used for arguments exchanges between kernel and
-OP-TEE RTC PTA.
+Set the mem_remote field for a remote access to appropriately represent
+the event.
 
-Fixes: 81c2f059ab90 ("rtc: optee: add RTC driver for OP-TEE RTC PTA")
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Link: https://lore.kernel.org/r/20250715-upstream-optee-rtc-v1-1-e0fdf8aae545@foss.st.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: a89dbc9b988f3ba8 ("perf arm-spe: Set sample's data source field")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ali Saidi <alisaidi@amazon.com>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-optee.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/arm-spe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-optee.c b/drivers/rtc/rtc-optee.c
-index 9f8b5d4a8f6b6..6b77c122fdc10 100644
---- a/drivers/rtc/rtc-optee.c
-+++ b/drivers/rtc/rtc-optee.c
-@@ -320,6 +320,7 @@ static int optee_rtc_remove(struct device *dev)
- {
- 	struct optee_rtc *priv = dev_get_drvdata(dev);
+diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+index 8942fa598a84f..8ecf7142dcd87 100644
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -839,7 +839,7 @@ static void arm_spe__synth_memory_level(const struct arm_spe_record *record,
+ 	}
  
-+	tee_shm_free(priv->shm);
- 	tee_client_close_session(priv->ctx, priv->session_id);
- 	tee_client_close_context(priv->ctx);
+ 	if (record->type & ARM_SPE_REMOTE_ACCESS)
+-		data_src->mem_lvl |= PERF_MEM_LVL_REM_CCE1;
++		data_src->mem_remote = PERF_MEM_REMOTE_REMOTE;
+ }
  
+ static bool arm_spe__synth_ds(struct arm_spe_queue *speq,
 -- 
 2.51.0
 
