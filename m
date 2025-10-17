@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8404133291F;
-	Fri, 17 Oct 2025 15:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443E4332ED8;
+	Fri, 17 Oct 2025 15:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715401; cv=none; b=c7bT0DaMHboDqGStI6bG5OM3BICOAvWG5Z2OWvcOH5n6F36Rf3bONtF39c5gzKuOPj0pEWn8nPar39w0NQbukcIhZnPEq9yRUPfJUd6/T1IDi5YG5BDInmimqCdCP8ZD7LNh/6zImNsuHIaABbRnjS5bBpTzSejxdFmA6Ut84Q0=
+	t=1760715404; cv=none; b=X0T3t3u8lIKhfQrbd/D7lRcXWhuZ8NFUWeaPE9goOOJ5GqguZcLUvJm/qqqOE4B3D+X4HK+G/RoKqCRYiq23cGAj6el/rQAPA60rbaSps5tI+YJA2cHAMHtfezpYy8iScVxD9Vl7Zhasa6cnJCbHZj1zGsKj/ltkd+HJhbPzXSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715401; c=relaxed/simple;
-	bh=Ko1Ulyzqpkhal3crmfTvgzFZteSxf/Ael6PKD8NQn0U=;
+	s=arc-20240116; t=1760715404; c=relaxed/simple;
+	bh=h2/ptWU9cY+AVSeEUUg76ozXCV0Q0Bv9qB5ILYuWZJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSpZGIg6+/jRrDyK/EGSIjXTj+KGgrEVexn63pGyu/dOTfUG4PHHvLfhVUsfICeTcK//ZCbSlOrHgd6NTE/hzjLbSt601eIGne7bpEkDXwhfFgxLBTKIPHMYBeImCH1XkMZIc1HPImwlsiEWONPM4aSat2b1Zqby2LDX70eB7ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wn6KAB1e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GarDm2QSKxUDnCOVM3JAsCKCjjZxUfhX7B+SVXMiQbA9KWut9gv0y6VhvmE9a2ArXqcJjQqwuCgQIbJMXwxWTxJsXyc846j7cbBWjtDPs3wlQUrYP7FPCcqDRCNIPRaeI4EgePwateEPNh9H/WtlEfhu5eWAOw0QqW5PoQ5k//0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hs9mqbm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wn6KAB1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E804C4CEE7;
-	Fri, 17 Oct 2025 15:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hs9mqbm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73E6C4CEE7;
+	Fri, 17 Oct 2025 15:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715401;
-	bh=Ko1Ulyzqpkhal3crmfTvgzFZteSxf/Ael6PKD8NQn0U=;
+	s=korg; t=1760715404;
+	bh=h2/ptWU9cY+AVSeEUUg76ozXCV0Q0Bv9qB5ILYuWZJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wn6KAB1eEgQYGP5Hx1s0rGgD83jjVOviSSMEnws6m/gHnCmWuri8kU0aFEzc2Tkqq
-	 V2Jgh/QcTUB8HITW6LuY9NfJsXbm6mSx5CXZ1O4jQXJL5Iv0cYlwcKtJL02cOY/1ra
-	 VjyK25qYdoCiKkFOXxWz4+0QyGEiMWqGGpNGutMc=
+	b=hs9mqbm0IkACgN+UvE1uwHXqYwM58kkOuM7VYIehpQrlsYZ/Ol4dD4hoRv0CaiUBz
+	 JIJoVnPdanQQ/jTYz61nnxlSeH6KoB3Dr8akUM31OzfE+vmJN6OQ8ccXB2kP0bOUgc
+	 V7vTVio7z2zwHHbDTDlAwqFhgZlXmQhgDmiIyZK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.17 160/371] dt-bindings: phy: rockchip-inno-csi-dphy: make power-domains non-required
-Date: Fri, 17 Oct 2025 16:52:15 +0200
-Message-ID: <20251017145207.722057708@linuxfoundation.org>
+	Akhil Vinod <akhil.vinod@oss.qualcomm.com>,
+	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 6.17 197/371] bus: mhi: ep: Fix chained transfer handling in read path
+Date: Fri, 17 Oct 2025 16:52:52 +0200
+Message-ID: <20251017145209.054631977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,54 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Riesch <michael.riesch@collabora.com>
+From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 
-commit c254815b02673cc77a84103c4c0d6197bd90c0ef upstream.
+commit f5225a34bd8f9f64eec37f6ae1461289aaa3eb86 upstream.
 
-There are variants of the Rockchip Innosilicon CSI DPHY (e.g., the RK3568
-variant) that are powered on by default as they are part of the ALIVE power
-domain.
-Remove 'power-domains' from the required properties in order to avoid false
-positives.
+The mhi_ep_read_channel function incorrectly assumes the End of Transfer
+(EOT) bit is present for each packet in a chained transactions, causing
+it to advance mhi_chan->rd_offset beyond wr_offset during host-to-device
+transfers when EOT has not yet arrived. This leads to access of unmapped
+host memory, causing IOMMU faults and processing of stale TREs.
 
-Fixes: 22c8e0a69b7f ("dt-bindings: phy: add compatible for rk356x to rockchip-inno-csi-dphy")
-Cc: stable@kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Michael Riesch <michael.riesch@collabora.com>
-Link: https://lore.kernel.org/r/20250616-rk3588-csi-dphy-v4-2-a4f340a7f0cf@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Modify the loop condition to ensure mhi_queue is not empty, allowing the
+function to process only valid TREs up to the current write pointer to
+prevent premature reads and ensure safe traversal of chained TREs.
+
+Due to this change, buf_left needs to be removed from the while loop
+condition to avoid exiting prematurely before reading the ring completely,
+and also remove write_offset since it will always be zero because the new
+cache buffer is allocated every time.
+
+Fixes: 5301258899773 ("bus: mhi: ep: Add support for reading from the host")
+Co-developed-by: Akhil Vinod <akhil.vinod@oss.qualcomm.com>
+Signed-off-by: Akhil Vinod <akhil.vinod@oss.qualcomm.com>
+Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+[mani: reworded description slightly]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250910-final_chained-v3-1-ec77c9d88ace@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml |   15 +++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/ep/main.c |   37 ++++++++++++-------------------------
+ 1 file changed, 12 insertions(+), 25 deletions(-)
 
---- a/Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
-+++ b/Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
-@@ -57,11 +57,24 @@ required:
-   - clocks
-   - clock-names
-   - '#phy-cells'
--  - power-domains
-   - resets
-   - reset-names
-   - rockchip,grf
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -403,17 +403,13 @@ static int mhi_ep_read_channel(struct mh
+ {
+ 	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+-	size_t tr_len, read_offset, write_offset;
++	size_t tr_len, read_offset;
+ 	struct mhi_ep_buf_info buf_info = {};
+ 	u32 len = MHI_EP_DEFAULT_MTU;
+ 	struct mhi_ring_element *el;
+-	bool tr_done = false;
+ 	void *buf_addr;
+-	u32 buf_left;
+ 	int ret;
  
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - rockchip,px30-csi-dphy
-+              - rockchip,rk1808-csi-dphy
-+              - rockchip,rk3326-csi-dphy
-+              - rockchip,rk3368-csi-dphy
-+    then:
-+      required:
-+        - power-domains
-+
- additionalProperties: false
+-	buf_left = len;
+-
+ 	do {
+ 		/* Don't process the transfer ring if the channel is not in RUNNING state */
+ 		if (mhi_chan->state != MHI_CH_STATE_RUNNING) {
+@@ -426,24 +422,23 @@ static int mhi_ep_read_channel(struct mh
+ 		/* Check if there is data pending to be read from previous read operation */
+ 		if (mhi_chan->tre_bytes_left) {
+ 			dev_dbg(dev, "TRE bytes remaining: %u\n", mhi_chan->tre_bytes_left);
+-			tr_len = min(buf_left, mhi_chan->tre_bytes_left);
++			tr_len = min(len, mhi_chan->tre_bytes_left);
+ 		} else {
+ 			mhi_chan->tre_loc = MHI_TRE_DATA_GET_PTR(el);
+ 			mhi_chan->tre_size = MHI_TRE_DATA_GET_LEN(el);
+ 			mhi_chan->tre_bytes_left = mhi_chan->tre_size;
  
- examples:
+-			tr_len = min(buf_left, mhi_chan->tre_size);
++			tr_len = min(len, mhi_chan->tre_size);
+ 		}
+ 
+ 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
+-		write_offset = len - buf_left;
+ 
+ 		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
+ 		if (!buf_addr)
+ 			return -ENOMEM;
+ 
+ 		buf_info.host_addr = mhi_chan->tre_loc + read_offset;
+-		buf_info.dev_addr = buf_addr + write_offset;
++		buf_info.dev_addr = buf_addr;
+ 		buf_info.size = tr_len;
+ 		buf_info.cb = mhi_ep_read_completion;
+ 		buf_info.cb_buf = buf_addr;
+@@ -459,16 +454,12 @@ static int mhi_ep_read_channel(struct mh
+ 			goto err_free_buf_addr;
+ 		}
+ 
+-		buf_left -= tr_len;
+ 		mhi_chan->tre_bytes_left -= tr_len;
+ 
+-		if (!mhi_chan->tre_bytes_left) {
+-			if (MHI_TRE_DATA_GET_IEOT(el))
+-				tr_done = true;
+-
++		if (!mhi_chan->tre_bytes_left)
+ 			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
+-		}
+-	} while (buf_left && !tr_done);
++	/* Read until the some buffer is left or the ring becomes not empty */
++	} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
+ 
+ 	return 0;
+ 
+@@ -502,15 +493,11 @@ static int mhi_ep_process_ch_ring(struct
+ 		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 	} else {
+ 		/* UL channel */
+-		do {
+-			ret = mhi_ep_read_channel(mhi_cntrl, ring);
+-			if (ret < 0) {
+-				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
+-				return ret;
+-			}
+-
+-			/* Read until the ring becomes empty */
+-		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
++		ret = mhi_ep_read_channel(mhi_cntrl, ring);
++		if (ret < 0) {
++			dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
++			return ret;
++		}
+ 	}
+ 
+ 	return 0;
 
 
