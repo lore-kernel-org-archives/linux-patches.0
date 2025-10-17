@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CC9330B0F;
-	Fri, 17 Oct 2025 15:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76390330B0C;
+	Fri, 17 Oct 2025 15:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715669; cv=none; b=kfyM2qEVaDyr5Xa7xPKsi1mitoyWahU2ebSsY92wWdLSdH7+IzZxYuQsSKBN1wLyzPH3xeTzm6kbuFqrMwtQjjtczZCgIzgZUDFuuMzfIso67e+18EZOqLkYd0YUjOZmRd7iO+7VEtndM/8OtRUnPZSVp39l8hHkUrMIoVBmn3Y=
+	t=1760715672; cv=none; b=u8msVgyWQWXBSuldEPM6MOHo3p1O87IzI6dYp7mpbsRY2TRTDQeA1sSG9BOrri1DLyfFmon3heU0ud5IviH2AQH0eVK1IeR2nCyhNt2jfBX0+trFd/VcJmd2AP5tGN7l10ago1e7L6X1fJIyhxLgejznfZRy7rsyxenxzH7U1q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715669; c=relaxed/simple;
-	bh=R59IotaoH+w3l/RqawE2jH+p8vj73VWN+R3I3or9MMM=;
+	s=arc-20240116; t=1760715672; c=relaxed/simple;
+	bh=nfgApfVrZIZtXGZuBZXScDN2+q9eT5KWTBnqpEYMVAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NbrqcbBQjF0gAjDmuq4xNINVndZFeUUhcdKy9QUxjuPnTgu9ryXBx3HaeVwZW374Psc0ud3gq6iCfBKiDOpmmRnxgRdCkO1DpgCsONriYtaw2jM0i/gVAkJ7udZ5RnNOqbqYvO4JNfgrfJof9QGB1gnpBG4s2eXD/8mRCOX0vxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8nwqm73; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjL3Opw6ZDo8WK9G3WLVMJav2lm6WDHromBEQFqyUZ3zAFOk51fmUTJWd1hmOY2eZRnsf7e3wf1R8YRJIhTxoCAGs1/pB7vZVQzsdtAu5dRePneG3Jg7rt2XpwNHSf0d9wbg8oVGhLpJtgTuHIiwOOgXruVYK261Myr77ymjomw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xkql3PP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8nwqm73"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E180BC4CEFE;
-	Fri, 17 Oct 2025 15:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xkql3PP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F21C4CEE7;
+	Fri, 17 Oct 2025 15:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715669;
-	bh=R59IotaoH+w3l/RqawE2jH+p8vj73VWN+R3I3or9MMM=;
+	s=korg; t=1760715672;
+	bh=nfgApfVrZIZtXGZuBZXScDN2+q9eT5KWTBnqpEYMVAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8nwqm73Pju3zVEpq5xUa0NjkZEGdpQw1eaPjMYWv2JiEqoZFUu7jBiEF9LN0NIIo
-	 gJf6gGJ2Ra6vPXJ1ChT/yCfCHfnzLkCe0wlaqX9ZXFKqZOh67pn1q/rELSrDytp/Xf
-	 +G2U/RpbG9EGlj9YmyzCqrdU1gSB/3qrsSfqF/hg=
+	b=Xkql3PP2Ib+vLkndxNwI4sc6imz8ZXybiXZOk70Gm60HyRkeZFbbtMXll9tKbUTpV
+	 /YzZJ7GpqzOQWnIHRk5R5lesyAtv99I7Wj4beG45Q6fCHBHUMyMrCPtjCVmV0DSwWu
+	 68RhHmYJ1S4XvnO5/uZgz3N68ngOv/g/6E952+ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Santhosh Kumar K <s-k6@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.17 296/371] spi: cadence-quadspi: Fix cqspi_setup_flash()
-Date: Fri, 17 Oct 2025 16:54:31 +0200
-Message-ID: <20251017145212.783076698@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.17 297/371] xfs: use deferred intent items for reaping crosslinked blocks
+Date: Fri, 17 Oct 2025 16:54:32 +0200
+Message-ID: <20251017145212.818685612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -46,75 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Santhosh Kumar K <s-k6@ti.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 858d4d9e0a9d6b64160ef3c824f428c9742172c4 upstream.
+commit cd32a0c0dcdf634f2e0e71f41c272e19dece6264 upstream.
 
-The 'max_cs' stores the largest chip select number. It should only
-be updated when the current 'cs' is greater than existing 'max_cs'. So,
-fix the condition accordingly.
+When we're removing rmap records for crosslinked blocks, use deferred
+intent items so that we can try to free/unmap as many of the old data
+structure's blocks as we can in the same transaction as the commit.
 
-Also, return failure if there are no flash device declared.
-
-Fixes: 0f3841a5e115 ("spi: cadence-qspi: report correct number of chip-select")
-CC: stable@vger.kernel.org
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
-Message-ID: <20250905185958.3575037-4-s-k6@ti.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.6
+Fixes: 1c7ce115e52106 ("xfs: reap large AG metadata extents when possible")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/xfs/scrub/reap.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1727,12 +1727,10 @@ static const struct spi_controller_mem_c
+--- a/fs/xfs/scrub/reap.c
++++ b/fs/xfs/scrub/reap.c
+@@ -416,8 +416,6 @@ xreap_agextent_iter(
+ 		trace_xreap_dispose_unmap_extent(pag_group(sc->sa.pag), agbno,
+ 				*aglenp);
  
- static int cqspi_setup_flash(struct cqspi_st *cqspi)
- {
--	unsigned int max_cs = cqspi->num_chipselect - 1;
- 	struct platform_device *pdev = cqspi->pdev;
- 	struct device *dev = &pdev->dev;
- 	struct cqspi_flash_pdata *f_pdata;
--	unsigned int cs;
--	int ret;
-+	int ret, cs, max_cs = -1;
- 
- 	/* Get flash device data */
- 	for_each_available_child_of_node_scoped(dev->of_node, np) {
-@@ -1745,10 +1743,10 @@ static int cqspi_setup_flash(struct cqsp
- 		if (cs >= cqspi->num_chipselect) {
- 			dev_err(dev, "Chip select %d out of range.\n", cs);
- 			return -EINVAL;
--		} else if (cs < max_cs) {
--			max_cs = cs;
+-		rs->force_roll = true;
+-
+ 		if (rs->oinfo == &XFS_RMAP_OINFO_COW) {
+ 			/*
+ 			 * If we're unmapping CoW staging extents, remove the
+@@ -426,11 +424,14 @@ xreap_agextent_iter(
+ 			 */
+ 			xfs_refcount_free_cow_extent(sc->tp, false, fsbno,
+ 					*aglenp);
++			rs->force_roll = true;
+ 			return 0;
  		}
  
-+		max_cs = max_t(int, cs, max_cs);
-+
- 		f_pdata = &cqspi->f_pdata[cs];
- 		f_pdata->cqspi = cqspi;
- 		f_pdata->cs = cs;
-@@ -1758,6 +1756,11 @@ static int cqspi_setup_flash(struct cqsp
- 			return ret;
+-		return xfs_rmap_free(sc->tp, sc->sa.agf_bp, sc->sa.pag, agbno,
+-				*aglenp, rs->oinfo);
++		xfs_rmap_free_extent(sc->tp, false, fsbno, *aglenp,
++				rs->oinfo->oi_owner);
++		rs->deferred++;
++		return 0;
  	}
  
-+	if (max_cs < 0) {
-+		dev_err(dev, "No flash device declared\n");
-+		return -ENODEV;
-+	}
-+
- 	cqspi->num_chipselect = max_cs + 1;
- 	return 0;
- }
+ 	trace_xreap_dispose_free_extent(pag_group(sc->sa.pag), agbno, *aglenp);
 
 
