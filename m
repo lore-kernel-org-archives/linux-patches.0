@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C4E32C951;
-	Fri, 17 Oct 2025 15:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F9F20C00A;
+	Fri, 17 Oct 2025 15:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715050; cv=none; b=PsFn6ub6sX72MwyzDJ5dFgbWxtcTu/bbLQSqqrONr05uiZe70U5bkhKy9uzwUGybsekxt7XvDFboMdRSW93yovVp7/WBN4M61BndtqT/NOOyoG7+gojYkFilXtHOVwOmeJjluiBaDVdxwHCA3lGeqVf8U6TOPS0OGZZckbW/PUE=
+	t=1760715052; cv=none; b=TVw4f9qgWaI4U1M+Rx0y4KY5Nu7GwkZH3uSquhl7tfvJqRX4vigkWWpADgg5DPl3J4IzVOL7zVE/HnTuXs3OWN0N+rkHdBoMeWMWVEyII8ONd1PhasP4BjEX0ns5fKJeAlSmRkYhfmAhItS6WhR06/SsNNcMXESGPnigEOHgVHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715050; c=relaxed/simple;
-	bh=cVmkrE9woRDMgW15j+B/ZgO1ksUIRhI9gd125U0twNc=;
+	s=arc-20240116; t=1760715052; c=relaxed/simple;
+	bh=YqqsTdxEtiQu/BMy8m59Z18uI1DsgaoARxN9g5J/8v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXOdORlNSecnbPqQfzebvw1WGGxG1113bW67OWAoCRmniEhxCvaGRPg/iLdGxGviO6teWRz8W4KopLqeirysOWQn+6cnZH4dVt7guytKoOrSVVaD3Ofz+i++oZNwtNShJK/zRI5D+OT1/XZkbetzfOMHb3C7mlMuFEPevpRGBnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeegNrwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlxFs6q9k7EI2wz3D8U4OteeG/hxTC01upYW5DhA8yuFLk+j3GrXhFuHQK38w2D0YAU9/DSpQ4t090NYnob9cz8uaCgaARLy28l/90ljflLHklogDhDhJ6pIHgloarJOy+hd64kij15Oi3CJVpi/MdUJ3cNruHg4zWyffrZON3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4HeowvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeegNrwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BD7C4CEFE;
-	Fri, 17 Oct 2025 15:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4HeowvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1F3C4CEE7;
+	Fri, 17 Oct 2025 15:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715049;
-	bh=cVmkrE9woRDMgW15j+B/ZgO1ksUIRhI9gd125U0twNc=;
+	s=korg; t=1760715052;
+	bh=YqqsTdxEtiQu/BMy8m59Z18uI1DsgaoARxN9g5J/8v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zeegNrwbe6S59X6Vjgzt2rJD/v1qtIB8XkljlPiOxni1MknBIQmRMQp39RO32FDf2
-	 wxr4eXk/9D0KZXZfVa30183CETL5hkD8O3jZK0/uNuOXH/U7cv0T7q62AWgv0iMNE9
-	 GPXKqWZPBjd6ECpb/cW4UPdZcSV77wG7fnZvD8gA=
+	b=N4HeowvEnW/Geo28u+6NFwmgA/n4sbP43GU1Dv1+EYLWaNmjir1fXqvDo4hR4umeI
+	 qL2Q58Qul5ZO3FzQ5GCgdYA/AvSoVJAI/5EJ+Utr6KQtfmvA1EKcIy3YKevHESIZtM
+	 LW/kPV4ZfQ7UayPyGPVWHNZU8PryLV0u3M76dwuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+62ec8226f01cb4ca19d9@syzkaller.appspotmail.com,
-	Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 080/371] net: usb: lan78xx: Fix lost EEPROM read timeout error(-ETIMEDOUT) in lan78xx_read_raw_eeprom
-Date: Fri, 17 Oct 2025 16:50:55 +0200
-Message-ID: <20251017145204.833916264@linuxfoundation.org>
+Subject: [PATCH 6.17 081/371] net/mlx4: prevent potential use after free in mlx4_en_do_uc_filter()
+Date: Fri, 17 Oct 2025 16:50:56 +0200
+Message-ID: <20251017145204.869419338@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,77 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 49bdb63ff64469a6de8ea901aef123c75be9bbe7 ]
+[ Upstream commit 4f0d91ba72811fd5dd577bcdccd7fed649aae62c ]
 
-Syzbot reported read of uninitialized variable BUG with following call stack.
+Print "entry->mac" before freeing "entry".  The "entry" pointer is
+freed with kfree_rcu() so it's unlikely that we would trigger this
+in real life, but it's safer to re-order it.
 
-lan78xx 8-1:1.0 (unnamed net_device) (uninitialized): EEPROM read operation timeout
-=====================================================
-BUG: KMSAN: uninit-value in lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1095 [inline]
-BUG: KMSAN: uninit-value in lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
-BUG: KMSAN: uninit-value in lan78xx_reset+0x999/0x2cd0 drivers/net/usb/lan78xx.c:3241
- lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1095 [inline]
- lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
- lan78xx_reset+0x999/0x2cd0 drivers/net/usb/lan78xx.c:3241
- lan78xx_bind+0x711/0x1690 drivers/net/usb/lan78xx.c:3766
- lan78xx_probe+0x225c/0x3310 drivers/net/usb/lan78xx.c:4707
-
-Local variable sig.i.i created at:
- lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1092 [inline]
- lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
- lan78xx_reset+0x77e/0x2cd0 drivers/net/usb/lan78xx.c:3241
- lan78xx_bind+0x711/0x1690 drivers/net/usb/lan78xx.c:3766
-
-The function lan78xx_read_raw_eeprom failed to properly propagate EEPROM
-read timeout errors (-ETIMEDOUT). In the fallthrough path, it first
-attempted to restore the pin configuration for LED outputs and then
-returned only the status of that restore operation, discarding the
-original timeout error.
-
-As a result, callers could mistakenly treat the data buffer as valid
-even though the EEPROM read had actually timed out with no data or partial
-data.
-
-To fix this, handle errors in restoring the LED pin configuration separately.
-If the restore succeeds, return any prior EEPROM timeout error correctly
-to the caller.
-
-Reported-by: syzbot+62ec8226f01cb4ca19d9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=62ec8226f01cb4ca19d9
-Fixes: 8b1b2ca83b20 ("net: usb: lan78xx: Improve error handling in EEPROM and OTP operations")
-Signed-off-by: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250930084902.19062-1-bhanuseshukumar@gmail.com
+Fixes: cc5387f7346a ("net/mlx4_en: Add unicast MAC filtering")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/aNvMHX4g8RksFFvV@stanley.mountain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/en_netdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 1ff25f57329a8..d75502ebbc0d9 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1079,10 +1079,13 @@ static int lan78xx_read_raw_eeprom(struct lan78xx_net *dev, u32 offset,
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_netdev.c b/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
+index d2071aff7b8f3..308b4458e0d44 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
+@@ -1180,9 +1180,9 @@ static void mlx4_en_do_uc_filter(struct mlx4_en_priv *priv,
+ 				mlx4_unregister_mac(mdev->dev, priv->port, mac);
  
- read_raw_eeprom_done:
--	if (dev->chipid == ID_REV_CHIP_ID_7800_)
--		return lan78xx_write_reg(dev, HW_CFG, saved);
--
--	return 0;
-+	if (dev->chipid == ID_REV_CHIP_ID_7800_) {
-+		int rc = lan78xx_write_reg(dev, HW_CFG, saved);
-+		/* If USB fails, there is nothing to do */
-+		if (rc < 0)
-+			return rc;
-+	}
-+	return ret;
- }
- 
- static int lan78xx_read_eeprom(struct lan78xx_net *dev, u32 offset,
+ 				hlist_del_rcu(&entry->hlist);
+-				kfree_rcu(entry, rcu);
+ 				en_dbg(DRV, priv, "Removed MAC %pM on port:%d\n",
+ 				       entry->mac, priv->port);
++				kfree_rcu(entry, rcu);
+ 				++removed;
+ 			}
+ 		}
 -- 
 2.51.0
 
