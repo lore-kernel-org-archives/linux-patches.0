@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65705332905;
-	Fri, 17 Oct 2025 15:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F16330B30;
+	Fri, 17 Oct 2025 15:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715330; cv=none; b=Ss18+VBzSoU5TcVRGOIT+kz427RoP0md++OuL1YntBfWFxPqBG5IaRw+c9Rmcq6J0cd5nG0zg5M1eZtjuRFMmf275qRRK2Hm1OtHDMcP9ZK0L+EATPKDDptL6caqyPrC2sNY9s0KIfAIVxH6YiLtYED+eeORhsPK7tKZLY2G/S8=
+	t=1760715333; cv=none; b=ma2t7EuqqIjTnUiXHdj0NA5W7s3ADPmeq4D6lgFYyxypMPwpISbTNmw74lVVJQtc5KtkWALUVEVAddtnD3VvuAHLzUtF/rDg9bVavMzBkyNnZfohlJbHkwho/dUuKwnv0RBVUM03bNSTcw44sHxMNwugvCkZmP5IyjPNZ314AFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715330; c=relaxed/simple;
-	bh=6w+utiZNYckTC1cZKGvvQhciMPIa8X6Ufb8v8ce7Ovs=;
+	s=arc-20240116; t=1760715333; c=relaxed/simple;
+	bh=A8drwjtBWRLj8sldcM6ki0n3qOH/ae7mG3yHNpeVBFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/LvVnJM+qpwu4WZ9SHrTXFYgS9G5B4I0ZNzOHyV3n9Vn+UPUPuJPAVS0+sfk88htmE93Y9FPgJbbpZU7WtNpEcHdO8tUnV1RZmokT27St6O5bgvE9aLHeLbqTr4q22N2Ijp45pXRoEVFEkLRyFrQAhcEIwgZ0NmoLjvQGm6itM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOmOi5g2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkiFTbXjxhhwfZt0QNr82jcubop1b5j2i4EzYznTszDlccmVeKFZDSpymiZe9HJ2RUFZM1yee1U/nK0kjRhE3fHNGDnixf5iN8rYsPNJ73X5bI2Pf8tG1n7ksIlGJNr8ZwOC8+TiuDhJmo1nlrKdT+sLsA04/8akw5JHlUCODhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkNiC5ma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOmOi5g2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3D2C4CEFE;
-	Fri, 17 Oct 2025 15:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkNiC5ma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F00C4CEE7;
+	Fri, 17 Oct 2025 15:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715329;
-	bh=6w+utiZNYckTC1cZKGvvQhciMPIa8X6Ufb8v8ce7Ovs=;
+	s=korg; t=1760715332;
+	bh=A8drwjtBWRLj8sldcM6ki0n3qOH/ae7mG3yHNpeVBFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOmOi5g25OM5TrmL1kk2iHe0Gs+bLdKzFWF9HS0iuKBq26qE4ObtNxOLNWIMuP+TG
-	 kFoyre+2fLCOVO9P2dbxT1EdZQZowQfo+JXLNEaL7oMu8g40no1FpmB/KI9iRGn0fT
-	 mQsSjKLv/s6W8TfkF75XQp8TcuoYW2tucZM1CJJk=
+	b=PkNiC5maTlye+idtGe/s+4kC94EO4qj1y+xFlDO2cjggMwdNC0LrJwPQeCbwdevtZ
+	 tS4PhQ6YNR2otCOkpk8U72gLj6m9auv0qiBwrsFEB0i47E3PUQIcwrFg1yFSezEYwO
+	 VfzZwPwEkeVUD0F8GywiCv4XT9k96wRY6usUvq1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 179/371] media: venus: firmware: Use correct reset sequence for IRIS2
-Date: Fri, 17 Oct 2025 16:52:34 +0200
-Message-ID: <20251017145208.404269427@linuxfoundation.org>
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.17 162/371] xen/events: Cleanup find_virq() return codes
+Date: Fri, 17 Oct 2025 16:52:17 +0200
+Message-ID: <20251017145207.794668417@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -55,72 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit 93f213b444a40f1e7a4383b499b65e782dcb14b9 upstream.
+commit 08df2d7dd4ab2db8a172d824cda7872d5eca460a upstream.
 
-When starting venus with the "no_tz" code path, IRIS2 needs the same
-boot/reset sequence as IRIS2_1. This is because most of the registers were
-moved to the "wrapper_tz_base", which is already defined for both IRIS2 and
-IRIS2_1 inside core.c. Add IRIS2 to the checks inside firmware.c as well to
-make sure that it uses the correct reset sequence.
+rc is overwritten by the evtchn_status hypercall in each iteration, so
+the return value will be whatever the last iteration is.  This could
+incorrectly return success even if the event channel was not found.
+Change to an explicit -ENOENT for an un-found virq and return 0 on a
+successful match.
 
-Both IRIS2 and IRIS2_1 are HFI v6 variants, so the correct sequence was
-used before commit c38610f8981e ("media: venus: firmware: Sanitize
-per-VPU-version").
-
-Fixes: c38610f8981e ("media: venus: firmware: Sanitize per-VPU-version")
+Fixes: 62cc5fc7b2e0 ("xen/pv-on-hvm kexec: rebind virqs to existing eventchannel ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-[bod: Fixed commit log IRIS -> IRIS2]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250828003604.8949-2-jason.andryuk@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/firmware.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/xen/events/events_base.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -30,7 +30,7 @@ static void venus_reset_cpu(struct venus
- 	u32 fw_size = core->fw.mapped_mem_size;
- 	void __iomem *wrapper_base;
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1318,10 +1318,11 @@ static int find_virq(unsigned int virq,
+ {
+ 	struct evtchn_status status;
+ 	evtchn_port_t port;
+-	int rc = -ENOENT;
  
--	if (IS_IRIS2_1(core))
-+	if (IS_IRIS2(core) || IS_IRIS2_1(core))
- 		wrapper_base = core->wrapper_tz_base;
- 	else
- 		wrapper_base = core->wrapper_base;
-@@ -42,7 +42,7 @@ static void venus_reset_cpu(struct venus
- 	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
- 	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+ 	memset(&status, 0, sizeof(status));
+ 	for (port = 0; port < xen_evtchn_max_channels(); port++) {
++		int rc;
++
+ 		status.dom = DOMID_SELF;
+ 		status.port = port;
+ 		rc = HYPERVISOR_event_channel_op(EVTCHNOP_status, &status);
+@@ -1331,10 +1332,10 @@ static int find_virq(unsigned int virq,
+ 			continue;
+ 		if (status.u.virq == virq && status.vcpu == xen_vcpu_nr(cpu)) {
+ 			*evtchn = port;
+-			break;
++			return 0;
+ 		}
+ 	}
+-	return rc;
++	return -ENOENT;
+ }
  
--	if (IS_IRIS2_1(core)) {
-+	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
- 		/* Bring XTSS out of reset */
- 		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
- 	} else {
-@@ -68,7 +68,7 @@ int venus_set_hw_state(struct venus_core
- 	if (resume) {
- 		venus_reset_cpu(core);
- 	} else {
--		if (IS_IRIS2_1(core))
-+		if (IS_IRIS2(core) || IS_IRIS2_1(core))
- 			writel(WRAPPER_XTSS_SW_RESET_BIT,
- 			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
- 		else
-@@ -181,7 +181,7 @@ static int venus_shutdown_no_tz(struct v
- 	void __iomem *wrapper_base = core->wrapper_base;
- 	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
- 
--	if (IS_IRIS2_1(core)) {
-+	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
- 		/* Assert the reset to XTSS */
- 		reg = readl(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
- 		reg |= WRAPPER_XTSS_SW_RESET_BIT;
+ /**
 
 
