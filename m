@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277CE330B2E;
-	Fri, 17 Oct 2025 15:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713CD330B04;
+	Fri, 17 Oct 2025 15:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715875; cv=none; b=WH1kKPJQBJgHO8PQSjy7IekBK2nNPb8hfeE45IiD2oLo88oeQRgfVn334ykle6P3/9EFp4f8M2WlK1Oc6T/UO7/ADV7WlgkowS2Oul1Dr3tL3r2Uv/dYxxW2xVH+9qB3sdVAbovkuKpxDrJGtR50x4KafszMe8L8Jp53Hl/F5W0=
+	t=1760715878; cv=none; b=K4rQO4N3p7Vh3Wn/gOEywlHwJqOj1+q/Pqo99Zbh+7VmPBfIt/TPkqs5r7TvSMrQ+QAd5xVql7IMYBTxX5SO1QkOvetMeRCOQ3R0S47Cd9f9jRNcOocVNXNbq/Vj+4PQQOpDIM27plUnFtqZ8iWL9Nk7C3XqSAKAj3KSz+YZL8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715875; c=relaxed/simple;
-	bh=0/2sL1Y4+5v96NLdl+A+2LySwB8y3wRwWCAaTzsBFsg=;
+	s=arc-20240116; t=1760715878; c=relaxed/simple;
+	bh=m27qljO1fjbvdahMLUfP+U4xzQCq49f/AwVqpVOfcoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BD4i3uB4sTGM2A0DlzgZCcQoyLpO+45JnsXLQ/L9X6zje/8cjIF9cys0EXcReXvdBjcFLY/X2tYNn+nBWv4tGGdX3+t9yo01aMNg1VlJbg2G4r2aB7eWMXjTWI6aR+GXYKqdOHr6nuqpFn5Fl6bYPvaGcm0r/mwwHqQ7CskK/Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y15y4KqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fygpl71WLc3EpYBuNo18d8ssraHfAuCDe326SFlWi1z0n6fWmhFViAyOeizF6Vahws/hwM2F91TyOdljRvrDdFiCBrnptBok+LReKa6renyFmfkIr/L5nJK9s0Ay41/Lux6nMsBFLU9wfShlCDTgn3HJ7TitG1WTxE92jgLgooA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4sWmubY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y15y4KqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A021EC4CEE7;
-	Fri, 17 Oct 2025 15:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4sWmubY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9794CC4CEE7;
+	Fri, 17 Oct 2025 15:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715875;
-	bh=0/2sL1Y4+5v96NLdl+A+2LySwB8y3wRwWCAaTzsBFsg=;
+	s=korg; t=1760715878;
+	bh=m27qljO1fjbvdahMLUfP+U4xzQCq49f/AwVqpVOfcoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y15y4KqDwYJB9PNba15Nf1o4uks/y3o1hsrGBnfI0xV0e3wSeSGR/KwRUQX8qPq+F
-	 q6vdvfvJDe/CSRs6GKwGijj4abTsG7PGTOg8n7UZjlp03U+HtFwoRx1ZsPpxpXZi+D
-	 Vw5r8vDaH37ywujoaOlvl1mzKdCIq0Mp5lssNLts=
+	b=n4sWmubYQKJlRsyWFLuGs33L/mP+3KoEu4fRwwhZtkMGQvRsSapcuRL0k8CpLdE3Z
+	 OkcA9GVus7bnn7EUa/cnwUDYnnurrdc3XmLo90DDR3o6GVsqyHQcWqLyGpRUCVwoJD
+	 x07AZQMoYDyoAAJe79N7Ibp/pucw113tc6bXzmO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 367/371] writeback: Avoid softlockup when switching many inodes
-Date: Fri, 17 Oct 2025 16:55:42 +0200
-Message-ID: <20251017145215.363686117@linuxfoundation.org>
+Subject: [PATCH 6.17 368/371] writeback: Avoid excessively long inode switching times
+Date: Fri, 17 Oct 2025 16:55:43 +0200
+Message-ID: <20251017145215.400206416@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -54,61 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 66c14dccd810d42ec5c73bb8a9177489dfd62278 ]
+[ Upstream commit 9a6ebbdbd41235ea3bc0c4f39e2076599b8113cc ]
 
-process_inode_switch_wbs_work() can be switching over 100 inodes to a
-different cgroup. Since switching an inode requires counting all dirty &
-under-writeback pages in the address space of each inode, this can take
-a significant amount of time. Add a possibility to reschedule after
-processing each inode to avoid softlockups.
+With lazytime mount option enabled we can be switching many dirty inodes
+on cgroup exit to the parent cgroup. The numbers observed in practice
+when systemd slice of a large cron job exits can easily reach hundreds
+of thousands or millions. The logic in inode_do_switch_wbs() which sorts
+the inode into appropriate place in b_dirty list of the target wb
+however has linear complexity in the number of dirty inodes thus overall
+time complexity of switching all the inodes is quadratic leading to
+workers being pegged for hours consuming 100% of the CPU and switching
+inodes to the parent wb.
+
+Simple reproducer of the issue:
+  FILES=10000
+  # Filesystem mounted with lazytime mount option
+  MNT=/mnt/
+  echo "Creating files and switching timestamps"
+  for (( j = 0; j < 50; j ++ )); do
+      mkdir $MNT/dir$j
+      for (( i = 0; i < $FILES; i++ )); do
+          echo "foo" >$MNT/dir$j/file$i
+      done
+      touch -a -t 202501010000 $MNT/dir$j/file*
+  done
+  wait
+  echo "Syncing and flushing"
+  sync
+  echo 3 >/proc/sys/vm/drop_caches
+
+  echo "Reading all files from a cgroup"
+  mkdir /sys/fs/cgroup/unified/mycg1 || exit
+  echo $$ >/sys/fs/cgroup/unified/mycg1/cgroup.procs || exit
+  for (( j = 0; j < 50; j ++ )); do
+      cat /mnt/dir$j/file* >/dev/null &
+  done
+  wait
+  echo "Switching wbs"
+  # Now rmdir the cgroup after the script exits
+
+We need to maintain b_dirty list ordering to keep writeback happy so
+instead of sorting inode into appropriate place just append it at the
+end of the list and clobber dirtied_time_when. This may result in inode
+writeback starting later after cgroup switch however cgroup switches are
+rare so it shouldn't matter much. Since the cgroup had write access to
+the inode, there are no practical concerns of the possible DoS issues.
 
 Acked-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/fs-writeback.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index a07b8cf73ae27..b4aa78da7d94e 100644
+index b4aa78da7d94e..3bfc430ef74dc 100644
 --- a/fs/fs-writeback.c
 +++ b/fs/fs-writeback.c
-@@ -502,6 +502,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+@@ -445,22 +445,23 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 	 * Transfer to @new_wb's IO list if necessary.  If the @inode is dirty,
+ 	 * the specific list @inode was on is ignored and the @inode is put on
+ 	 * ->b_dirty which is always correct including from ->b_dirty_time.
+-	 * The transfer preserves @inode->dirtied_when ordering.  If the @inode
+-	 * was clean, it means it was on the b_attached list, so move it onto
+-	 * the b_attached list of @new_wb.
++	 * If the @inode was clean, it means it was on the b_attached list, so
++	 * move it onto the b_attached list of @new_wb.
  	 */
- 	down_read(&bdi->wb_switch_rwsem);
+ 	if (!list_empty(&inode->i_io_list)) {
+ 		inode->i_wb = new_wb;
  
-+	inodep = isw->inodes;
- 	/*
- 	 * By the time control reaches here, RCU grace period has passed
- 	 * since I_WB_SWITCH assertion and all wb stat update transactions
-@@ -512,6 +513,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
- 	 * gives us exclusion against all wb related operations on @inode
- 	 * including IO list manipulations and stat updates.
- 	 */
-+relock:
- 	if (old_wb < new_wb) {
- 		spin_lock(&old_wb->list_lock);
- 		spin_lock_nested(&new_wb->list_lock, SINGLE_DEPTH_NESTING);
-@@ -520,10 +522,17 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
- 		spin_lock_nested(&old_wb->list_lock, SINGLE_DEPTH_NESTING);
- 	}
- 
--	for (inodep = isw->inodes; *inodep; inodep++) {
-+	while (*inodep) {
- 		WARN_ON_ONCE((*inodep)->i_wb != old_wb);
- 		if (inode_do_switch_wbs(*inodep, old_wb, new_wb))
- 			nr_switched++;
-+		inodep++;
-+		if (*inodep && need_resched()) {
-+			spin_unlock(&new_wb->list_lock);
-+			spin_unlock(&old_wb->list_lock);
-+			cond_resched();
-+			goto relock;
-+		}
- 	}
- 
- 	spin_unlock(&new_wb->list_lock);
+ 		if (inode->i_state & I_DIRTY_ALL) {
+-			struct inode *pos;
+-
+-			list_for_each_entry(pos, &new_wb->b_dirty, i_io_list)
+-				if (time_after_eq(inode->dirtied_when,
+-						  pos->dirtied_when))
+-					break;
++			/*
++			 * We need to keep b_dirty list sorted by
++			 * dirtied_time_when. However properly sorting the
++			 * inode in the list gets too expensive when switching
++			 * many inodes. So just attach inode at the end of the
++			 * dirty list and clobber the dirtied_time_when.
++			 */
++			inode->dirtied_time_when = jiffies;
+ 			inode_io_list_move_locked(inode, new_wb,
+-						  pos->i_io_list.prev);
++						  &new_wb->b_dirty);
+ 		} else {
+ 			inode_cgwb_move_to_attached(inode, new_wb);
+ 		}
 -- 
 2.51.0
 
