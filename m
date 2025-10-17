@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B0D330B0F;
-	Fri, 17 Oct 2025 15:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D415330B30;
+	Fri, 17 Oct 2025 15:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715692; cv=none; b=US1AwGLyh/9b6VB8gcOw4n+FEWhokBftb3YFYzkBc8LZyDByvm+tqTagyuDhMZlWNSvSBw/c5vvBxwAdyMYBQVC41dS8nbJVjud7hp5IenAkIJ1276B3KrmPOLsUnACKHIQHw800sUfMW7SWLTfNH02wAoxBoop2gfhzu9ip/1U=
+	t=1760715695; cv=none; b=NBBx/2yU7QYS2tz2sTGFn9wqAToVBXpOFBWTZyvHeFM8UaN6awjp0Q9sckkFGpgE/QjCyRSYlfGAlBTwNsFeFb+CMcpESEywTRSI/HFXf59vqQmbW1CnMQv2IRG2a2Qa/dvT2pDx6fUKQV99kwzPdeDJV4vBueHJYNxhhzusPAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715692; c=relaxed/simple;
-	bh=t7ii8yKltPIRiVdnhXHYrrpdh+0PDXUc/hvq0ek4jrA=;
+	s=arc-20240116; t=1760715695; c=relaxed/simple;
+	bh=1Htt8wIo7DV7bUp68eZLEe2kyhvnehkKs/ezxOb6MFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENH1sboXTThtghf/1OJmbRcpaAKIpgR2a3FaNvX+cSkUIx7gz7d05BFyPqqeE4zYJdLylK9RtxoZyrjp5uNhPWBg5bqHzXC/bbxLmmZoFMJyN0cxVt6GsQ3ssR0sopXwI3ixAC/ciGH9c+Jxw+Qnac3G5K0fOTF0QpaVGL3Dt98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpY7lZ88; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ex8YR7n7TP2Z/ZOIDOZmhOyQqKAht75m/nTDLpM7Rbr4JVNCoY4GJb/roJ5Y0WMs1dSTBMdysyklIILh6pEEcZnZgBDOO+66SHOOgs99or6GTQg2j5vUfh0Os5WSV0GWZPWgWH2M2gnYk42LJUaLux3avRXjXOs1zA3WPgtKgFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Y6qk6L/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpY7lZ88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B259CC113D0;
-	Fri, 17 Oct 2025 15:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Y6qk6L/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FAEC4CEE7;
+	Fri, 17 Oct 2025 15:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715692;
-	bh=t7ii8yKltPIRiVdnhXHYrrpdh+0PDXUc/hvq0ek4jrA=;
+	s=korg; t=1760715695;
+	bh=1Htt8wIo7DV7bUp68eZLEe2kyhvnehkKs/ezxOb6MFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpY7lZ88BKKCGoyoHXQBv9/CloXiuTdTL0xQs0at6offMNY0qa6twMvvLqo8B9HaQ
-	 DHIbINhTJqOj7xr6GF/2Iu+2BJetM3doG1EEPeIXXN/++THvlzinerkPc0SkzdQvWx
-	 9sQtzFKTOJMYNKPL1nvkaMdyL9raZBS1vPfT5g2k=
+	b=1Y6qk6L/CBzhFoYXKE1xLM/apIGWzIlPL0ljR7EgQ8TTS8p9OCdnwQBZiiNRdAFiC
+	 yL2isvIhjoqJuOn4wsqjaHFz0erw4kdPJE5jD3RZn/oUDuVeVCEGGMU09FQXLqeR/4
+	 lsimwJPRh2vaEzzZbTHbaeUZgxbqeXOt+VhIy3sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Florian Weimer <fweimer@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Subject: [PATCH 6.17 272/371] rseq/selftests: Use weak symbol reference, not definition, to link with glibc
-Date: Fri, 17 Oct 2025 16:54:07 +0200
-Message-ID: <20251017145211.915818304@linuxfoundation.org>
+	Jani Nurminen <jani.nurminen@windriver.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.17 273/371] PCI: xilinx-nwl: Fix ECAM programming
+Date: Fri, 17 Oct 2025 16:54:08 +0200
+Message-ID: <20251017145211.951542077@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,63 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jani Nurminen <jani.nurminen@windriver.com>
 
-commit a001cd248ab244633c5fabe4f7c707e13fc1d1cc upstream.
+commit 98a4f5b7359205ced1b6a626df3963bf7c5e5052 upstream.
 
-Add "extern" to the glibc-defined weak rseq symbols to convert the rseq
-selftest's usage from weak symbol definitions to weak symbol _references_.
-Effectively re-defining the glibc symbols wreaks havoc when building with
--fno-common, e.g. generates segfaults when running multi-threaded programs,
-as dynamically linked applications end up with multiple versions of the
-symbols.
+When PCIe has been set up by the bootloader, the ecam_size field in the
+E_ECAM_CONTROL register already contains a value.
 
-Building with -fcommon, which until recently has the been the default for
-GCC and clang, papers over the bug by allowing the linker to resolve the
-weak/tentative definition to glibc's "real" definition.
+The driver previously programmed it to 0xc (for 16 busses; 16 MB), but
+bumped to 0x10 (for 256 busses; 256 MB) by the commit 2fccd11518f1 ("PCI:
+xilinx-nwl: Modify ECAM size to enable support for 256 buses").
 
-Note, the symbol itself (or rather its address), not the value of the
-symbol, is set to 0/NULL for unresolved weak symbol references, as the
-symbol doesn't exist and thus can't have a value.  Check for a NULL rseq
-size pointer to handle the scenario where the test is statically linked
-against a libc that doesn't support rseq in any capacity.
+Regardless of what the bootloader has programmed, the driver ORs in a
+new maximal value without doing a proper RMW sequence. This can lead to
+problems.
 
-Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
-Reported-by: Thomas Gleixner <tglx@linutronix.de>
-Suggested-by: Florian Weimer <fweimer@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+For example, if the bootloader programs in 0xc and the driver uses 0x10,
+the ORed result is 0x1c, which is beyond the ecam_max_size limit of 0x10
+(from E_ECAM_CAPABILITIES).
+
+Avoid the problems by doing a proper RMW.
+
+Fixes: 2fccd11518f1 ("PCI: xilinx-nwl: Modify ECAM size to enable support for 256 buses")
+Signed-off-by: Jani Nurminen <jani.nurminen@windriver.com>
+[mani: added stable tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/87frdoybk4.ffs@tglx
+Link: https://patch.msgid.link/e83a2af2-af0b-4670-bcf5-ad408571c2b0@windriver.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/rseq.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-xilinx-nwl.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -40,9 +40,9 @@
-  * Define weak versions to play nice with binaries that are statically linked
-  * against a libc that doesn't support registering its own rseq.
-  */
--__weak ptrdiff_t __rseq_offset;
--__weak unsigned int __rseq_size;
--__weak unsigned int __rseq_flags;
-+extern __weak ptrdiff_t __rseq_offset;
-+extern __weak unsigned int __rseq_size;
-+extern __weak unsigned int __rseq_flags;
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -718,9 +718,10 @@ static int nwl_pcie_bridge_init(struct n
+ 	nwl_bridge_writel(pcie, nwl_bridge_readl(pcie, E_ECAM_CONTROL) |
+ 			  E_ECAM_CR_ENABLE, E_ECAM_CONTROL);
  
- static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
- static const unsigned int *libc_rseq_size_p = &__rseq_size;
-@@ -209,7 +209,7 @@ void rseq_init(void)
- 	 * libc not having registered a restartable sequence.  Try to find the
- 	 * symbols if that's the case.
- 	 */
--	if (!*libc_rseq_size_p) {
-+	if (!libc_rseq_size_p || !*libc_rseq_size_p) {
- 		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
- 		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
- 		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
+-	nwl_bridge_writel(pcie, nwl_bridge_readl(pcie, E_ECAM_CONTROL) |
+-			  (NWL_ECAM_MAX_SIZE << E_ECAM_SIZE_SHIFT),
+-			  E_ECAM_CONTROL);
++	ecam_val = nwl_bridge_readl(pcie, E_ECAM_CONTROL);
++	ecam_val &= ~E_ECAM_SIZE_LOC;
++	ecam_val |= NWL_ECAM_MAX_SIZE << E_ECAM_SIZE_SHIFT;
++	nwl_bridge_writel(pcie, ecam_val, E_ECAM_CONTROL);
+ 
+ 	nwl_bridge_writel(pcie, lower_32_bits(pcie->phys_ecam_base),
+ 			  E_ECAM_BASE_LO);
 
 
