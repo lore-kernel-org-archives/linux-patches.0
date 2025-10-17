@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B9330B00;
-	Fri, 17 Oct 2025 15:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1947D330B0F;
+	Fri, 17 Oct 2025 15:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716469; cv=none; b=Trd7+TwSTrcFjzyIup8cRWNOeuIYmtifxUQcpylMFuLNHJddIL1jkchPdQqXcKWjAm4P78Dpl97f2ytsLjE6utzEyzgm0ZZz/lxutuIf6TeN2YZnfiST7vW0EvO1pLQ5JrbamW0ytbpuPMIw8jlL1D7OnjuR+R22vd0Nk0/SZlE=
+	t=1760716472; cv=none; b=uuRfi8A8I7FxsDA5nQvQrIMxaMUA+PgUbj5Kx1CsxySRTdTxYMNJaV9SnjvtPwSutOjg2SPUaSp29ryAGcnd8XxtY4d+Z84+vty22YNY9Hs+ILP7tVSPsV0xeLxqr8KGl/4Oek6AjeJsAY3euJrmCLoSO5q4M4gR50hwsUp1EFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716469; c=relaxed/simple;
-	bh=T1EyJ+iEYDRszEU4RT0XMuYCnGds6OTmMhW4i2zYozE=;
+	s=arc-20240116; t=1760716472; c=relaxed/simple;
+	bh=Vf6eDq0zkVRdwgrrJ1hLpTzAQfsp9cvLF/+v92zGmrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghpZMDzRhyLxa3971eb3Luo1Yvxb3onbLd4hhh4WrFJ40cfulMlbF3qF6l5ugyspiS7yodCvm+jVKlTdHA5YoO4hKpf/r7oQuqXv0GtGoxQJ/iIBH5anGNdBzno7rd9nN0i+dpNqygDi9pUAJIB4AkXDaICw4Jqj462fIHhOR8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOGXknH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BB6ezS8wOseN05Sxc2V+V1Ui3y+nmDjmKCMXrSc3cXPGuPhdQb6v6saqwAtUNB2+0cV6uB3M96W2TEo1yAZ1eD9OACP3mr8fbqCvQBum1JSFVid5/rmal0owxeD6qZx9mW0ordAdt7YtIAPbv0px2AvGtBH1i1gxpYgRvjtNlz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1BNaVE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOGXknH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A175AC4CEE7;
-	Fri, 17 Oct 2025 15:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1BNaVE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F9BC4CEE7;
+	Fri, 17 Oct 2025 15:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716469;
-	bh=T1EyJ+iEYDRszEU4RT0XMuYCnGds6OTmMhW4i2zYozE=;
+	s=korg; t=1760716472;
+	bh=Vf6eDq0zkVRdwgrrJ1hLpTzAQfsp9cvLF/+v92zGmrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOGXknH67AbDJhrjxCFUkp9TatL1/FyJDqZotqtyAwljCmRuAzQimrZZLCX2iutF0
-	 uDcCS5SyCjOVJpR4qg038dBATxxlng2d9n8RiNZJLf9KpA3zRKSYOx6epYlsCYBe8R
-	 y43KNjBwsw7EHdUECw7ODM6fiE5G2hAMzBWUupl8=
+	b=F1BNaVE20aFdIMU9Q53uNHslF5/TQB1lwDSQmDGUWzdny03YH+K0RX+Sb9D3UM7tN
+	 425Bmp0lEuTTbUH3FIJGdbB6dcoQe2YQoBrWluILmFoSqZb3qI9NZLGgioqwB+gDT3
+	 k3S4bbgR5SYhiZMZeo331N3jyzC4J8SctfQ3pv1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.15 201/276] memory: samsung: exynos-srom: Fix of_iomap leak in exynos_srom_probe
-Date: Fri, 17 Oct 2025 16:54:54 +0200
-Message-ID: <20251017145149.806689942@linuxfoundation.org>
+	Esben Haabendal <esben@geanix.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 202/276] rtc: interface: Ensure alarm irq is enabled when UIE is enabled
+Date: Fri, 17 Oct 2025 16:54:55 +0200
+Message-ID: <20251017145149.843353388@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,56 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Esben Haabendal <esben@geanix.com>
 
-commit 6744085079e785dae5f7a2239456135407c58b25 upstream.
+commit 9db26d5855d0374d4652487bfb5aacf40821c469 upstream.
 
-The of_platform_populate() call at the end of the function has a
-possible failure path, causing a resource leak.
+When setting a normal alarm, user-space is responsible for using
+RTC_AIE_ON/RTC_AIE_OFF to control if alarm irq should be enabled.
 
-Replace of_iomap() with devm_platform_ioremap_resource() to ensure
-automatic cleanup of srom->reg_base.
+But when RTC_UIE_ON is used, interrupts must be enabled so that the
+requested irq events are generated.
+When RTC_UIE_OFF is used, alarm irq is disabled if there are no other
+alarms queued, so this commit brings symmetry to that.
 
-This issue was detected by smatch static analysis:
-drivers/memory/samsung/exynos-srom.c:155 exynos_srom_probe()warn:
-'srom->reg_base' from of_iomap() not released on lines: 155.
-
-Fixes: 8ac2266d8831 ("memory: samsung: exynos-srom: Add support for bank configuration")
+Signed-off-by: Esben Haabendal <esben@geanix.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Link: https://lore.kernel.org/r/20250806025538.306593-1-zhen.ni@easystack.cn
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-5-3de8e530a39e@geanix.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memory/samsung/exynos-srom.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/rtc/interface.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/memory/samsung/exynos-srom.c
-+++ b/drivers/memory/samsung/exynos-srom.c
-@@ -121,20 +121,18 @@ static int exynos_srom_probe(struct plat
- 		return -ENOMEM;
- 
- 	srom->dev = dev;
--	srom->reg_base = of_iomap(np, 0);
--	if (!srom->reg_base) {
-+	srom->reg_base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(srom->reg_base)) {
- 		dev_err(&pdev->dev, "iomap of exynos srom controller failed\n");
--		return -ENOMEM;
-+		return PTR_ERR(srom->reg_base);
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -583,6 +583,10 @@ int rtc_update_irq_enable(struct rtc_dev
+ 		rtc->uie_rtctimer.node.expires = ktime_add(now, onesec);
+ 		rtc->uie_rtctimer.period = ktime_set(1, 0);
+ 		err = rtc_timer_enqueue(rtc, &rtc->uie_rtctimer);
++		if (!err && rtc->ops && rtc->ops->alarm_irq_enable)
++			err = rtc->ops->alarm_irq_enable(rtc->dev.parent, 1);
++		if (err)
++			goto out;
+ 	} else {
+ 		rtc_timer_remove(rtc, &rtc->uie_rtctimer);
  	}
- 
- 	platform_set_drvdata(pdev, srom);
- 
- 	srom->reg_offset = exynos_srom_alloc_reg_dump(exynos_srom_offsets,
- 						      ARRAY_SIZE(exynos_srom_offsets));
--	if (!srom->reg_offset) {
--		iounmap(srom->reg_base);
-+	if (!srom->reg_offset)
- 		return -ENOMEM;
--	}
- 
- 	for_each_child_of_node(np, child) {
- 		if (exynos_srom_configure_bank(srom, child)) {
 
 
