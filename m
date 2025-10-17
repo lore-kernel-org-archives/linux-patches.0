@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7605695;
-	Fri, 17 Oct 2025 14:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9794C2F12A7;
+	Fri, 17 Oct 2025 14:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713145; cv=none; b=PmjdeWJvuvtrU/MU0Lf06mMYJIzg7xOetL8UJR+0ClhIL4R7KkM1GdD7XiUMuOAVOIbkfDXS/UMQ6UaJ7fRVi9LA8NzQETRAbquLU4QZ+08/iRqyXlF8V+wK829702eR1Iv0nkRN9Hsm1aYPcVmb0O8vx1M/NlJ1HN+Jm/EUcAU=
+	t=1760713148; cv=none; b=YII0TXQvuxuE2twBkYAbgbc4lHEpGShIG/ET9/01sxVT6vZt0ttUMklgqwqwcUga50By+6ff1OXWCkkYrgK4c38vUJG0jd2ST3J/AWz9qVXadHTjsH9iKGyaIk247ikxelwmuFsOje51d6WCZNsAiPewc1M1vMK3o78A1IOHH/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713145; c=relaxed/simple;
-	bh=B213RrO1cXTwr3yQ6aikYRiBeLBdxdt8duXJYMyLa4s=;
+	s=arc-20240116; t=1760713148; c=relaxed/simple;
+	bh=8NTixbD231uBATNE8bmhi3mMzjretl9EXof1CPHYfnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3/aGLDzr5MYVduv5fsyKByKHxjZ1EVp0a3IA/Ray3nhmInFAg2dNutjPyYAFi0GKEzvez3EVKCdzJWb5bPy6bcqbrkDrlQjuM2qhNEjPMCGx9N4BUauB4RLL3N8q1SDpfQszJKiDuFL+GsWp8lglF53NMXfO063e4rtfBP/YSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqKlFdi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WBNsge91lH2v8D1b3AdE4/4njrDeOGvwgKJmKDCFz/E2jV74ij1hbSUo/gb7e3ACUftp7exhyo5XS0o+adS1EFvFHXYL73x/D3mkN3TXL4jxn6y/5dBH5VSdLbWM/D2w7nJnF6OWCsVteYHizG3mJwCq4zZkIe7Jwg8hV1Shafc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyfqNSet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqKlFdi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16663C4CEE7;
-	Fri, 17 Oct 2025 14:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyfqNSet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60F2C4CEE7;
+	Fri, 17 Oct 2025 14:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713145;
-	bh=B213RrO1cXTwr3yQ6aikYRiBeLBdxdt8duXJYMyLa4s=;
+	s=korg; t=1760713148;
+	bh=8NTixbD231uBATNE8bmhi3mMzjretl9EXof1CPHYfnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqKlFdi4RB2aDJq3ZKqricmhx+48YZO5I2MplCoH85x0HJDAPo9OHNlqXdgTNKRtl
-	 DjQOjsbB+hiZ76iHvhVl4tjfJz9pY42QZ1oUYCauhDp+aOAibILh7lKUn51NgY4vgA
-	 WLUs1PRUnl9rTLmg5+x67r9UPvF5tQKGJPmUUHAs=
+	b=SyfqNSetgp76Pv5PUOyWvSb/PUhhZoalaYD+n7DZ0DhihDwYJQQZOhpYIeSyfToTX
+	 CBo2YkpHhxprSaIBukN55vLzbjWsgl+f/6XSksWw0CJ/888h1Tn6+MAELWcnirU1iG
+	 D/ru1NNb+OC/UJSplQ79ngtIn07sd0jjazsLjsyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	=?UTF-8?q?Martin=20Kepplinger-Novakovi=C4=87?= <martink@posteo.de>,
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 064/168] media: i2c: mt9v111: fix incorrect type for ret
-Date: Fri, 17 Oct 2025 16:52:23 +0200
-Message-ID: <20251017145131.382040965@linuxfoundation.org>
+Subject: [PATCH 6.1 065/168] media: mc: Fix MUST_CONNECT handling for pads with no links
+Date: Fri, 17 Oct 2025 16:52:24 +0200
+Message-ID: <20251017145131.420171511@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -46,47 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-commit bacd713145443dce7764bb2967d30832a95e5ec8 upstream.
+commit eec81250219a209b863f11d02128ec1dd8e20877 upstream.
 
-Change "ret" from unsigned int to int type in mt9v111_calc_frame_rate()
-to store negative error codes or zero returned by __mt9v111_hw_reset()
-and other functions.
+Commit b3decc5ce7d7 ("media: mc: Expand MUST_CONNECT flag to always
+require an enabled link") expanded the meaning of the MUST_CONNECT flag
+to require an enabled link in all cases. To do so, the link exploration
+code was expanded to cover unconnected pads, in order to reject those
+that have the MUST_CONNECT flag set. The implementation was however
+incorrect, ignoring unconnected pads instead of ignoring connected pads.
+Fix it.
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants.
-
-No effect on runtime.
-
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Fixes: aab7ed1c3927 ("media: i2c: Add driver for Aptina MT9V111")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reported-by: Martin Kepplinger-Novaković <martink@posteo.de>
+Closes: https://lore.kernel.org/linux-media/20250205172957.182362-1-martink@posteo.de
+Reported-by: Maud Spierings <maudspierings@gocontroll.com>
+Closes: https://lore.kernel.org/linux-media/20250818-imx8_isi-v1-1-e9cfe994c435@gocontroll.com
+Fixes: b3decc5ce7d7 ("media: mc: Expand MUST_CONNECT flag to always require an enabled link")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Maud Spierings <maudspierings@gocontroll.com>
+Tested-by: Martin Kepplinger-Novaković <martink@posteo.de>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/mt9v111.c |    2 +-
+ drivers/media/mc/mc-entity.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/mt9v111.c
-+++ b/drivers/media/i2c/mt9v111.c
-@@ -534,8 +534,8 @@ static int mt9v111_calc_frame_rate(struc
- static int mt9v111_hw_config(struct mt9v111_dev *mt9v111)
- {
- 	struct i2c_client *c = mt9v111->client;
--	unsigned int ret;
- 	u16 outfmtctrl2;
-+	int ret;
- 
- 	/* Force device reset. */
- 	ret = __mt9v111_hw_reset(mt9v111);
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -665,7 +665,7 @@ done:
+ 		 * (already discovered through iterating over links) and pads
+ 		 * not internally connected.
+ 		 */
+-		if (origin == local || !local->num_links ||
++		if (origin == local || local->num_links ||
+ 		    !media_entity_has_pad_interdep(origin->entity, origin->index,
+ 						   local->index))
+ 			continue;
 
 
