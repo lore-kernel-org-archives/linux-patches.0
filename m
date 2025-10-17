@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7C3370E2;
-	Fri, 17 Oct 2025 15:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB46A2F12DD;
+	Fri, 17 Oct 2025 15:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713415; cv=none; b=nRxcGhBynbSjRxOe+dilk0C3cENtX9wUZ+RxRkdDn78RfINIGk8WQbRii0u3E6Cci82U6wpHXadl1a+M0+k8dcRKj/7I5uRIw9me06k2GRhSpxOXLM/m4DcMgtEwW39wyIOqzqwEURpdmHfVFkU/pzNCPa5yjNSxjGe4LufwEsY=
+	t=1760713417; cv=none; b=To3QU/68DOnfgHyfEZIUs+YJ8g0xIUzKquM3QPZcjd6V6NityyT1l7leETily7R12zqUTRu6nDut9gCjbQDFLr98+Ui/oADK+Z4RZO/OQQ3HqSUIa0gDUi9Z670ptLOzp79/Nt6rqPLRUiAq20/jAPMDrwSjEpRIR1au0LW/VG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713415; c=relaxed/simple;
-	bh=NMOxBXNpV79OA/b5c/49CCEb0girFwchHcVsMNtMuDg=;
+	s=arc-20240116; t=1760713417; c=relaxed/simple;
+	bh=bCbuORchekpWTZxd9oSEow1gmh9/sUlEcD+OrFzeGYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0gzlwhivxDWe8C9L1xIxwLzJKpfsrbP3jWxBs2F5IJl0MtstJ0WR+jsLcFoKrjYrHPZfnMVmNA1WY1iwzk9sbKr06QaAMjg3F15v0KN5VQHG5j2v+/HjDywtMu/4dBk0zeCM1k+zxuCbtlfiQ6MZiaYVyIAc64yW5dEEu+xXSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7HelXhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5oN0hT06yHiEj8/38yNOPtsep9qTU/ep7GNqA8JJ0y6Ol0uEgMKAcEvQafc+gw3YncHY/9F6VyRbZiNM5r7BrL+x5WotWwicp1lK+z+GBv4q/sbeNDRF0xDgBmamL7+1vRio/4a5UyL6lLawgI3ZR/9OmZyuwdbbSJqTE72wgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHiPxSIm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7HelXhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F22C4CEFE;
-	Fri, 17 Oct 2025 15:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHiPxSIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C6FC4CEE7;
+	Fri, 17 Oct 2025 15:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713414;
-	bh=NMOxBXNpV79OA/b5c/49CCEb0girFwchHcVsMNtMuDg=;
+	s=korg; t=1760713417;
+	bh=bCbuORchekpWTZxd9oSEow1gmh9/sUlEcD+OrFzeGYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7HelXhXphlwKiZcoGI68UcKSoyql0cu5C80e0BBL2WkXD5VQgkZZJoKqofm9NH4Z
-	 42dl/THrEAa2/+l38e62y4aUCQbrXUo45D2f5CIo4awFjl8H8sSsLt1Y4KnwW4zmPj
-	 bEAK7P3gWpRur04GoE1SSgutvSV6rLTebMKFv3oo=
+	b=SHiPxSImzHL40Kj3AR5UbsDl/cHHCcZtyW+SEhWRUX51Q5+HilbUHJhios1d328XM
+	 UjAjkAFnEioy0AS2ueayiuMp2Y4aJ9ir1LLgsPcEfHl3FwthD8UTy0hOH+HM+TNLrg
+	 1iO2Uhfq7Ir4njLavHrlahDkDezwDngQxugpa5sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 156/168] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
-Date: Fri, 17 Oct 2025 16:53:55 +0200
-Message-ID: <20251017145134.792833722@linuxfoundation.org>
+	Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 157/168] asm-generic/io: Add _RET_IP_ to MMIO trace for more accurate debug info
+Date: Fri, 17 Oct 2025 16:53:56 +0200
+Message-ID: <20251017145134.830175354@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -54,183 +51,457 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
-commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
+[ Upstream commit 5e5ff73c2e5863f93fc5fd78d178cd8f2af12464 ]
 
-The madv_populate and soft-dirty kselftests currently fail on systems
-where CONFIG_MEM_SOFT_DIRTY is disabled.
+Due to compiler optimizations like inlining, there are cases where
+MMIO traces using _THIS_IP_ for caller information might not be
+sufficient to provide accurate debug traces.
 
-Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
-tests are properly skipped when the feature is not enabled.
+1) With optimizations (Seen with GCC):
 
-Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
-Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+In this case, _THIS_IP_ works fine and prints the caller information
+since it will be inlined into the caller and we get the debug traces
+on who made the MMIO access, for ex:
+
+rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 val=0x0 addr=0xffff8000087447f4
+
+2) Without optimizations (Seen with Clang):
+
+_THIS_IP_ will not be sufficient in this case as it will print only
+the MMIO accessors itself which is of not much use since it is not
+inlined as below for example:
+
+rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 addr=0xffff8000087447f4
+
+So in order to handle this second case as well irrespective of the compiler
+optimizations, add _RET_IP_ to MMIO trace to make it provide more accurate
+debug information in all these scenarios.
+
+Before:
+
+rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 addr=0xffff8000087447f4
+
+After:
+
+rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 val=0x0 addr=0xffff8000087447f4
+
+Fixes: 210031971cdd ("asm-generic/io: Add logging support for MMIO accessors")
+Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Stable-dep-of: 8327bd4fcb6c ("asm-generic/io.h: Skip trace helpers if rwmmio events are disabled")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/madv_populate.c |    9 ++-
- tools/testing/selftests/vm/soft-dirty.c    |    5 +
- tools/testing/selftests/vm/vm_util.c       |   77 +++++++++++++++++++++++++++++
- tools/testing/selftests/vm/vm_util.h       |    2 
- 4 files changed, 90 insertions(+), 3 deletions(-)
+ include/asm-generic/io.h      |   80 +++++++++++++++++++++---------------------
+ include/trace/events/rwmmio.h |   43 ++++++++++++++--------
+ lib/trace_readwrite.c         |   16 ++++----
+ 3 files changed, 75 insertions(+), 64 deletions(-)
 
---- a/tools/testing/selftests/vm/madv_populate.c
-+++ b/tools/testing/selftests/vm/madv_populate.c
-@@ -274,12 +274,16 @@ static void test_softdirty(void)
+--- a/include/asm-generic/io.h
++++ b/include/asm-generic/io.h
+@@ -80,24 +80,24 @@ DECLARE_TRACEPOINT(rwmmio_read);
+ DECLARE_TRACEPOINT(rwmmio_post_read);
  
- int main(int argc, char **argv)
+ void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-		    unsigned long caller_addr);
++		    unsigned long caller_addr, unsigned long caller_addr0);
+ void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-			 unsigned long caller_addr);
++			 unsigned long caller_addr, unsigned long caller_addr0);
+ void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-		   unsigned long caller_addr);
++		   unsigned long caller_addr, unsigned long caller_addr0);
+ void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-			unsigned long caller_addr);
++			unsigned long caller_addr, unsigned long caller_addr0);
+ 
+ #else
+ 
+ static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-				  unsigned long caller_addr) {}
++				  unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-				       unsigned long caller_addr) {}
++				       unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-				 unsigned long caller_addr) {}
++				 unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-				      unsigned long caller_addr) {}
++				      unsigned long caller_addr, unsigned long caller_addr0) {}
+ 
+ #endif /* CONFIG_TRACE_MMIO_ACCESS */
+ 
+@@ -188,11 +188,11 @@ static inline u8 readb(const volatile vo
  {
-+	int nr_tests = 16;
- 	int err;
+ 	u8 val;
  
- 	pagesize = getpagesize();
- 
-+	if (softdirty_supported())
-+		nr_tests += 5;
-+
- 	ksft_print_header();
--	ksft_set_plan(21);
-+	ksft_set_plan(nr_tests);
- 
- 	sense_support();
- 	test_prot_read();
-@@ -287,7 +291,8 @@ int main(int argc, char **argv)
- 	test_holes();
- 	test_populate_read();
- 	test_populate_write();
--	test_softdirty();
-+	if (softdirty_supported())
-+		test_softdirty();
- 
- 	err = ksft_get_fail_cnt();
- 	if (err)
---- a/tools/testing/selftests/vm/soft-dirty.c
-+++ b/tools/testing/selftests/vm/soft-dirty.c
-@@ -190,8 +190,11 @@ int main(int argc, char **argv)
- 	int pagesize;
- 
- 	ksft_print_header();
--	ksft_set_plan(15);
- 
-+	if (!softdirty_supported())
-+		ksft_exit_skip("soft-dirty is not support\n");
-+
-+	ksft_set_plan(15);
- 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
- 	if (pagemap_fd < 0)
- 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
---- a/tools/testing/selftests/vm/vm_util.c
-+++ b/tools/testing/selftests/vm/vm_util.c
-@@ -72,6 +72,42 @@ uint64_t read_pmd_pagesize(void)
- 	return strtoul(buf, NULL, 10);
+-	log_read_mmio(8, addr, _THIS_IP_);
++	log_read_mmio(8, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __raw_readb(addr);
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 8, addr, _THIS_IP_);
++	log_post_read_mmio(val, 8, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
  }
+ #endif
+@@ -203,11 +203,11 @@ static inline u16 readw(const volatile v
+ {
+ 	u16 val;
  
-+char *__get_smap_entry(void *addr, const char *pattern, char *buf, size_t len)
-+{
-+	int ret;
-+	FILE *fp;
-+	char *entry = NULL;
-+	char addr_pattern[MAX_LINE_LENGTH];
-+
-+	ret = snprintf(addr_pattern, MAX_LINE_LENGTH, "%08lx-",
-+		       (unsigned long)addr);
-+	if (ret >= MAX_LINE_LENGTH)
-+		ksft_exit_fail_msg("%s: Pattern is too long\n", __func__);
-+
-+	fp = fopen(SMAP_FILE_PATH, "r");
-+	if (!fp)
-+		ksft_exit_fail_msg("%s: Failed to open file %s\n", __func__,
-+				   SMAP_FILE_PATH);
-+
-+	if (!check_for_pattern(fp, addr_pattern, buf, len))
-+		goto err_out;
-+
-+	/* Fetch the pattern in the same block */
-+	if (!check_for_pattern(fp, pattern, buf, len))
-+		goto err_out;
-+
-+	/* Trim trailing newline */
-+	entry = strchr(buf, '\n');
-+	if (entry)
-+		*entry = '\0';
-+
-+	entry = buf + strlen(pattern);
-+
-+err_out:
-+	fclose(fp);
-+	return entry;
-+}
-+
- bool __check_huge(void *addr, char *pattern, int nr_hpages,
- 		  uint64_t hpage_size)
- {
-@@ -124,3 +160,44 @@ bool check_huge_shmem(void *addr, int nr
- {
- 	return __check_huge(addr, "ShmemPmdMapped:", nr_hpages, hpage_size);
+-	log_read_mmio(16, addr, _THIS_IP_);
++	log_read_mmio(16, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le16_to_cpu((__le16 __force)__raw_readw(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 16, addr, _THIS_IP_);
++	log_post_read_mmio(val, 16, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
  }
-+
-+static bool check_vmflag(void *addr, const char *flag)
-+{
-+	char buffer[MAX_LINE_LENGTH];
-+	const char *flags;
-+	size_t flaglen;
-+
-+	flags = __get_smap_entry(addr, "VmFlags:", buffer, sizeof(buffer));
-+	if (!flags)
-+		ksft_exit_fail_msg("%s: No VmFlags for %p\n", __func__, addr);
-+
-+	while (true) {
-+		flags += strspn(flags, " ");
-+
-+		flaglen = strcspn(flags, " ");
-+		if (!flaglen)
-+			return false;
-+
-+		if (flaglen == strlen(flag) && !memcmp(flags, flag, flaglen))
-+			return true;
-+
-+		flags += flaglen;
-+	}
-+}
-+
-+bool softdirty_supported(void)
-+{
-+	char *addr;
-+	bool supported = false;
-+	const size_t pagesize = getpagesize();
-+
-+	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
-+	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
-+		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-+	if (!addr)
-+		ksft_exit_fail_msg("mmap failed\n");
-+
-+	supported = check_vmflag(addr, "sd");
-+	munmap(addr, pagesize);
-+	return supported;
-+}
---- a/tools/testing/selftests/vm/vm_util.h
-+++ b/tools/testing/selftests/vm/vm_util.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- #include <stdint.h>
- #include <stdbool.h>
-+#include <sys/mman.h>
+ #endif
+@@ -218,11 +218,11 @@ static inline u32 readl(const volatile v
+ {
+ 	u32 val;
  
- uint64_t pagemap_get_entry(int fd, char *start);
- bool pagemap_is_softdirty(int fd, char *start);
-@@ -10,3 +11,4 @@ uint64_t read_pmd_pagesize(void);
- bool check_huge_anon(void *addr, int nr_hpages, uint64_t hpage_size);
- bool check_huge_file(void *addr, int nr_hpages, uint64_t hpage_size);
- bool check_huge_shmem(void *addr, int nr_hpages, uint64_t hpage_size);
-+bool softdirty_supported(void);
+-	log_read_mmio(32, addr, _THIS_IP_);
++	log_read_mmio(32, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le32_to_cpu((__le32 __force)__raw_readl(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 32, addr, _THIS_IP_);
++	log_post_read_mmio(val, 32, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -234,11 +234,11 @@ static inline u64 readq(const volatile v
+ {
+ 	u64 val;
+ 
+-	log_read_mmio(64, addr, _THIS_IP_);
++	log_read_mmio(64, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le64_to_cpu((__le64 __force)__raw_readq(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 64, addr, _THIS_IP_);
++	log_post_read_mmio(val, 64, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -248,11 +248,11 @@ static inline u64 readq(const volatile v
+ #define writeb writeb
+ static inline void writeb(u8 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 8, addr, _THIS_IP_);
++	log_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writeb(value, addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 8, addr, _THIS_IP_);
++	log_post_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -260,11 +260,11 @@ static inline void writeb(u8 value, vola
+ #define writew writew
+ static inline void writew(u16 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 16, addr, _THIS_IP_);
++	log_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writew((u16 __force)cpu_to_le16(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 16, addr, _THIS_IP_);
++	log_post_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -272,11 +272,11 @@ static inline void writew(u16 value, vol
+ #define writel writel
+ static inline void writel(u32 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 32, addr, _THIS_IP_);
++	log_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writel((u32 __force)__cpu_to_le32(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 32, addr, _THIS_IP_);
++	log_post_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -285,11 +285,11 @@ static inline void writel(u32 value, vol
+ #define writeq writeq
+ static inline void writeq(u64 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 64, addr, _THIS_IP_);
++	log_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writeq((u64 __force)__cpu_to_le64(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 64, addr, _THIS_IP_);
++	log_post_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ #endif /* CONFIG_64BIT */
+@@ -305,9 +305,9 @@ static inline u8 readb_relaxed(const vol
+ {
+ 	u8 val;
+ 
+-	log_read_mmio(8, addr, _THIS_IP_);
++	log_read_mmio(8, addr, _THIS_IP_, _RET_IP_);
+ 	val = __raw_readb(addr);
+-	log_post_read_mmio(val, 8, addr, _THIS_IP_);
++	log_post_read_mmio(val, 8, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -318,9 +318,9 @@ static inline u16 readw_relaxed(const vo
+ {
+ 	u16 val;
+ 
+-	log_read_mmio(16, addr, _THIS_IP_);
++	log_read_mmio(16, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le16_to_cpu(__raw_readw(addr));
+-	log_post_read_mmio(val, 16, addr, _THIS_IP_);
++	log_post_read_mmio(val, 16, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -331,9 +331,9 @@ static inline u32 readl_relaxed(const vo
+ {
+ 	u32 val;
+ 
+-	log_read_mmio(32, addr, _THIS_IP_);
++	log_read_mmio(32, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le32_to_cpu(__raw_readl(addr));
+-	log_post_read_mmio(val, 32, addr, _THIS_IP_);
++	log_post_read_mmio(val, 32, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -344,9 +344,9 @@ static inline u64 readq_relaxed(const vo
+ {
+ 	u64 val;
+ 
+-	log_read_mmio(64, addr, _THIS_IP_);
++	log_read_mmio(64, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le64_to_cpu(__raw_readq(addr));
+-	log_post_read_mmio(val, 64, addr, _THIS_IP_);
++	log_post_read_mmio(val, 64, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -355,9 +355,9 @@ static inline u64 readq_relaxed(const vo
+ #define writeb_relaxed writeb_relaxed
+ static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 8, addr, _THIS_IP_);
++	log_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writeb(value, addr);
+-	log_post_write_mmio(value, 8, addr, _THIS_IP_);
++	log_post_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -365,9 +365,9 @@ static inline void writeb_relaxed(u8 val
+ #define writew_relaxed writew_relaxed
+ static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 16, addr, _THIS_IP_);
++	log_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writew(cpu_to_le16(value), addr);
+-	log_post_write_mmio(value, 16, addr, _THIS_IP_);
++	log_post_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -375,9 +375,9 @@ static inline void writew_relaxed(u16 va
+ #define writel_relaxed writel_relaxed
+ static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 32, addr, _THIS_IP_);
++	log_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writel(__cpu_to_le32(value), addr);
+-	log_post_write_mmio(value, 32, addr, _THIS_IP_);
++	log_post_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -385,9 +385,9 @@ static inline void writel_relaxed(u32 va
+ #define writeq_relaxed writeq_relaxed
+ static inline void writeq_relaxed(u64 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 64, addr, _THIS_IP_);
++	log_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writeq(__cpu_to_le64(value), addr);
+-	log_post_write_mmio(value, 64, addr, _THIS_IP_);
++	log_post_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+--- a/include/trace/events/rwmmio.h
++++ b/include/trace/events/rwmmio.h
+@@ -12,12 +12,14 @@
+ 
+ DECLARE_EVENT_CLASS(rwmmio_rw_template,
+ 
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, val, width, addr),
++	TP_ARGS(caller, caller0, val, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u64, val)
+ 		__field(u8, width)
+@@ -25,56 +27,64 @@ DECLARE_EVENT_CLASS(rwmmio_rw_template,
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->val = val;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+-		(void *)__entry->caller, __entry->width,
++	TP_printk("%pS -> %pS width=%d val=%#llx addr=%#lx",
++		(void *)__entry->caller0, (void *)__entry->caller, __entry->width,
+ 		__entry->val, __entry->addr)
+ );
+ 
+ DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+-	TP_ARGS(caller, val, width, addr)
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
++	TP_ARGS(caller, caller0, val, width, addr)
+ );
+ 
+ DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+-	TP_ARGS(caller, val, width, addr)
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
++	TP_ARGS(caller, caller0, val, width, addr)
+ );
+ 
+ TRACE_EVENT(rwmmio_read,
+ 
+-	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u8 width,
++		 const volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, width, addr),
++	TP_ARGS(caller, caller0, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u8, width)
+ 	),
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d addr=%#lx",
+-		 (void *)__entry->caller, __entry->width, __entry->addr)
++	TP_printk("%pS -> %pS width=%d addr=%#lx",
++		 (void *)__entry->caller0, (void *)__entry->caller, __entry->width, __entry->addr)
+ );
+ 
+ TRACE_EVENT(rwmmio_post_read,
+ 
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 const volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, val, width, addr),
++	TP_ARGS(caller, caller0, val, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u64, val)
+ 		__field(u8, width)
+@@ -82,13 +92,14 @@ TRACE_EVENT(rwmmio_post_read,
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->val = val;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+-		 (void *)__entry->caller, __entry->width,
++	TP_printk("%pS -> %pS width=%d val=%#llx addr=%#lx",
++		 (void *)__entry->caller0, (void *)__entry->caller, __entry->width,
+ 		 __entry->val, __entry->addr)
+ );
+ 
+--- a/lib/trace_readwrite.c
++++ b/lib/trace_readwrite.c
+@@ -14,33 +14,33 @@
+ 
+ #ifdef CONFIG_TRACE_MMIO_ACCESS
+ void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-		    unsigned long caller_addr)
++		    unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_write(caller_addr, val, width, addr);
++	trace_rwmmio_write(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_write_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
+ 
+ void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-			 unsigned long caller_addr)
++			 unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_post_write(caller_addr, val, width, addr);
++	trace_rwmmio_post_write(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_post_write_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
+ 
+ void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-		   unsigned long caller_addr)
++		   unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_read(caller_addr, width, addr);
++	trace_rwmmio_read(caller_addr, caller_addr0, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_read_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
+ 
+ void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-			unsigned long caller_addr)
++			unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_post_read(caller_addr, val, width, addr);
++	trace_rwmmio_post_read(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_post_read_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
 
 
