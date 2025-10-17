@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE8332E14D;
-	Fri, 17 Oct 2025 15:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA7932F743;
+	Fri, 17 Oct 2025 15:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714079; cv=none; b=Mus/Cv5ed72K4w1s9k/BjrBHSn3LAXGU0vA6tW3/r6ImPFjLUi3tPxF7DvftYUjKvkLW186foAMXFLNDl69TS/BmkTDkjBEtsefA6J/LBulOpFQDqUQuVL6oM5DfjHM0px5b2LcFc7ECghG5BUz6ukRyZpbTm0nWAEszSez3I70=
+	t=1760714082; cv=none; b=g1gxGVIOVInG3bF0jsmZEglqugman23F1z1IIx8ibGuX5Dkw0bflKyA3126QDKwiUvRT94yjQdjfVnAOMmxKnaphZoEI6TCEqM9zrPOSnYKBuQaGsf3kipXNEvB+jf3TZQzUdhRz1us+MxocCmedvydkfC/MkNkBF9l3QxH1Mok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714079; c=relaxed/simple;
-	bh=esOiWYu9JxgqvuxwQdJRm+E6lcLXG0V/syg8fxVSePk=;
+	s=arc-20240116; t=1760714082; c=relaxed/simple;
+	bh=sq1aeEF8PN1g+1pOYSEqyHV/V0JqRhDmn2cS8nktt6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fft5Ns4i7OowBNSlcvpq1Giq4niKGFa9woku52HvRlYR0q9H8piEMhgvOplYqRBS/HqA2wanRzB0V/+19A8jn5e4LvI5TmcGXR3lZ6NUc5pkdVIUitRVIAMxDR+FeH91nhrg+hUJxZqjSqZJWtOdyA5N+KzMOMP/Oskrhk7hkXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIDVcqe/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNfyI2IcLXwjiKKM9VZFQdi8gLzzKmWC1tuASbtgBRKHskvz/JVKSE2VlPmDkN4iw3mSxE0+QsR0zsA0UuyRn2LjW97N58mLYeu8EFhXUpGCNVJMpvfDkn9fbNWX/BEMnTht3qmr5Fwu6jOl1BHTtlLNuPmlMPRgcW4PfOTgBbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heiGLIv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIDVcqe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33D0C116B1;
-	Fri, 17 Oct 2025 15:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heiGLIv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BFBC116B1;
+	Fri, 17 Oct 2025 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714079;
-	bh=esOiWYu9JxgqvuxwQdJRm+E6lcLXG0V/syg8fxVSePk=;
+	s=korg; t=1760714082;
+	bh=sq1aeEF8PN1g+1pOYSEqyHV/V0JqRhDmn2cS8nktt6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIDVcqe/+D8VPdI6plSZuWFnqzRsnIrmlmxNyFnr3xqertIVahL/uMEP6Ou6SntXx
-	 yQg2+AVGZw6OkWyLvl/2O1Ycaz/i2iYNOHAbKjAaZYgjEt+TnpmJrCF4LgA4hPiSg0
-	 PO+DCaLiIYY8jZa+81+/f9SyIXQoTV+8dC/r5y5Q=
+	b=heiGLIv6tn9FVcuY2TE9VV2IRCKZZT5BBlGd8l8GKIZbdn3a8P5O4A97OltPb0MPt
+	 bkbwhsYIldsYz/Uq/3ZM3HDs3sdn0ItMiDOmhHrG5fD0Gff4GlhYhZO27761p9TDhF
+	 C3HDi85J6D0nyarRroM4+mM4T6/jvGlJqtAVw5jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 002/277] fscontext: do not consume log entries when returning -EMSGSIZE
-Date: Fri, 17 Oct 2025 16:50:09 +0200
-Message-ID: <20251017145147.232638275@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Yunseong Kim <ysk@kzalloc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 020/277] perf util: Fix compression checks returning -1 as bool
+Date: Fri, 17 Oct 2025 16:50:27 +0200
+Message-ID: <20251017145147.885374080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,121 +58,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Yunseong Kim <ysk@kzalloc.com>
 
-commit 72d271a7baa7062cb27e774ac37c5459c6d20e22 upstream.
+[ Upstream commit 43fa1141e2c1af79c91aaa4df03e436c415a6fc3 ]
 
-Userspace generally expects APIs that return -EMSGSIZE to allow for them
-to adjust their buffer size and retry the operation. However, the
-fscontext log would previously clear the message even in the -EMSGSIZE
-case.
+The lzma_is_compressed and gzip_is_compressed functions are declared
+to return a "bool" type, but in case of an error (e.g., file open
+failure), they incorrectly returned -1.
 
-Given that it is very cheap for us to check whether the buffer is too
-small before we remove the message from the ring buffer, let's just do
-that instead. While we're at it, refactor some fscontext_read() into a
-separate helper to make the ring buffer logic a bit easier to read.
+A bool type is a boolean value that is either true or false.
+Returning -1 for a bool return type can lead to unexpected behavior
+and may violate strict type-checking in some compilers.
 
-Fixes: 007ec26cdc9f ("vfs: Implement logging through fs_context")
-Cc: David Howells <dhowells@redhat.com>
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/20250807-fscontext-log-cleanups-v3-1-8d91d6242dc3@cyphar.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the return value to be false in error cases, ensuring the function
+adheres to its declared return type improves for preventing potential
+bugs related to type mismatch.
+
+Fixes: 4b57fd44b61beb51 ("perf tools: Add lzma_is_compressed function")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
+Link: https://lore.kernel.org/r/20250822162506.316844-3-ysk@kzalloc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fsopen.c |   70 ++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ tools/perf/util/lzma.c | 2 +-
+ tools/perf/util/zlib.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fsopen.c
-+++ b/fs/fsopen.c
-@@ -18,50 +18,56 @@
- #include "internal.h"
- #include "mount.h"
+diff --git a/tools/perf/util/lzma.c b/tools/perf/util/lzma.c
+index af9a97612f9df..f61574d1581e3 100644
+--- a/tools/perf/util/lzma.c
++++ b/tools/perf/util/lzma.c
+@@ -113,7 +113,7 @@ bool lzma_is_compressed(const char *input)
+ 	ssize_t rc;
  
-+static inline const char *fetch_message_locked(struct fc_log *log, size_t len,
-+					       bool *need_free)
-+{
-+	const char *p;
-+	int index;
-+
-+	if (unlikely(log->head == log->tail))
-+		return ERR_PTR(-ENODATA);
-+
-+	index = log->tail & (ARRAY_SIZE(log->buffer) - 1);
-+	p = log->buffer[index];
-+	if (unlikely(strlen(p) > len))
-+		return ERR_PTR(-EMSGSIZE);
-+
-+	log->buffer[index] = NULL;
-+	*need_free = log->need_free & (1 << index);
-+	log->need_free &= ~(1 << index);
-+	log->tail++;
-+
-+	return p;
-+}
-+
- /*
-  * Allow the user to read back any error, warning or informational messages.
-+ * Only one message is returned for each read(2) call.
-  */
- static ssize_t fscontext_read(struct file *file,
- 			      char __user *_buf, size_t len, loff_t *pos)
- {
- 	struct fs_context *fc = file->private_data;
--	struct fc_log *log = fc->log.log;
--	unsigned int logsize = ARRAY_SIZE(log->buffer);
--	ssize_t ret;
--	char *p;
-+	ssize_t err;
-+	const char *p __free(kfree) = NULL, *message;
- 	bool need_free;
--	int index, n;
--
--	ret = mutex_lock_interruptible(&fc->uapi_mutex);
--	if (ret < 0)
--		return ret;
--
--	if (log->head == log->tail) {
--		mutex_unlock(&fc->uapi_mutex);
--		return -ENODATA;
--	}
-+	int n;
+ 	if (fd < 0)
+-		return -1;
++		return false;
  
--	index = log->tail & (logsize - 1);
--	p = log->buffer[index];
--	need_free = log->need_free & (1 << index);
--	log->buffer[index] = NULL;
--	log->need_free &= ~(1 << index);
--	log->tail++;
-+	err = mutex_lock_interruptible(&fc->uapi_mutex);
-+	if (err < 0)
-+		return err;
-+	message = fetch_message_locked(fc->log.log, len, &need_free);
- 	mutex_unlock(&fc->uapi_mutex);
-+	if (IS_ERR(message))
-+		return PTR_ERR(message);
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
+diff --git a/tools/perf/util/zlib.c b/tools/perf/util/zlib.c
+index 78d2297c1b674..1f7c065230599 100644
+--- a/tools/perf/util/zlib.c
++++ b/tools/perf/util/zlib.c
+@@ -88,7 +88,7 @@ bool gzip_is_compressed(const char *input)
+ 	ssize_t rc;
  
--	ret = -EMSGSIZE;
--	n = strlen(p);
--	if (n > len)
--		goto err_free;
--	ret = -EFAULT;
--	if (copy_to_user(_buf, p, n) != 0)
--		goto err_free;
--	ret = n;
--
--err_free:
- 	if (need_free)
--		kfree(p);
--	return ret;
-+		p = message;
-+
-+	n = strlen(message);
-+	if (copy_to_user(_buf, message, n))
-+		return -EFAULT;
-+	return n;
- }
+ 	if (fd < 0)
+-		return -1;
++		return false;
  
- static int fscontext_release(struct inode *inode, struct file *file)
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
+-- 
+2.51.0
+
 
 
