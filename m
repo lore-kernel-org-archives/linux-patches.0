@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591FC3328EC;
-	Fri, 17 Oct 2025 15:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243A728935A;
+	Fri, 17 Oct 2025 15:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714542; cv=none; b=hSMKeNmMUheDMEYEj67Z1f2ikGIrDaTtr6eHnR/4kiqxwGhRLGMlDCzBDmBZwzn025mRbJHQMaa+xtIyO6qDGnkcwUtjy8TAxlyZTfT5L+LnQpmLZFOKQ50mS/y9iOatovYAy/nN75Ui6U/ldcDqpUkE5h3qQuQkRfVv+N8neEY=
+	t=1760714545; cv=none; b=FjRkGxlOGTT2uJHL2xz/JjeRukPDUY8NPWh7SBJsBDGwVWBmTSdP/+abqRkz1Ch+Md8wqi+cDN0NWVz0/WOczpE2QXSTKl9dUGhdeJaTD/X4PGFmUXqXbxFJXnAYrARNOwc2cPuOnxXC+sUiwhC0QCoJU1oA8qMeKOuZvqht05M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714542; c=relaxed/simple;
-	bh=eD+hD/awVNVP61Ad//xgSneMCc8Uz8msrCTQhF1Xowo=;
+	s=arc-20240116; t=1760714545; c=relaxed/simple;
+	bh=dHEH3ioIGug+pX0fo0FeF3O0RDkU0Myg+Ojx8Bttl6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sW30QbpxbbeyAEsw8lZTGSamyJuMYs4Cs55P/xCgEAOaYuyixyJMbmxtiSEEHuE4APnBxKr0y3IdLT0ZsCNFefvfVuFi6iV3h1giSVx8E2YZ5MdeQEab9ZEMJ3c7AEYlPBHmrpdGLpvQIK12l8lOx5m6y4KuPU/CfFqY9umXVwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCqm00yy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkYzd4k1khfG1vs/2gJWDgpvu6t44aXu91Z81DelKCxakbs1rxNAdw3qhmtJZmKV2/T8WPK10yQV2openZdg4IOrbBeF7GlWXd9cXPYnWTCjimO+boAez55qoRdLwRsle2nF4yVqwFbC/Mb+uP7XjjZhfx+9yQ6IT6fQJbFM8X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTxDEoc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCqm00yy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2591C113D0;
-	Fri, 17 Oct 2025 15:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTxDEoc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA12C4CEE7;
+	Fri, 17 Oct 2025 15:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714542;
-	bh=eD+hD/awVNVP61Ad//xgSneMCc8Uz8msrCTQhF1Xowo=;
+	s=korg; t=1760714545;
+	bh=dHEH3ioIGug+pX0fo0FeF3O0RDkU0Myg+Ojx8Bttl6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCqm00yyYna1QIy9XwJgB9EHL+68R7FDh6s+08FsrQqJSdbAHoL7cr+4Lld/HPujS
-	 SeLXpI5hs499PKmv9RPAMSTy17O3F6kenmx0oBZFtBJTHlktJfMtXBhx6Flxec3bpD
-	 JwHwo6039fY4D/KB2RABcm3T8ubyKom3Su3z6ejc=
+	b=QTxDEoc7Xxr5zKBARbebQLKq0mm9ydxNwQjMWAf3I1FazuGsbDWwKtrT9s01pA/oH
+	 RkxveMTfqjNPx2dD0bLUh9ni5IIkJnkgrz37OLyA4locrnZ8fg1XMI2DOTmGHHpw3v
+	 fN5wGXi7D7jIqaVHt+77kkgGASi0dqLMpz8TVM+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.12 182/277] PCI: j721e: Fix programming sequence of "strap" settings
-Date: Fri, 17 Oct 2025 16:53:09 +0200
-Message-ID: <20251017145153.771720546@linuxfoundation.org>
+Subject: [PATCH 6.12 183/277] PCI: keystone: Use devm_request_irq() to free "ks-pcie-error-irq" on exit
+Date: Fri, 17 Oct 2025 16:53:10 +0200
+Message-ID: <20251017145153.807729617@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,84 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit f842d3313ba179d4005096357289c7ad09cec575 upstream.
+commit e51d05f523e43ce5d2bad957943a2b14f68078cd upstream.
 
-The Cadence PCIe Controller integrated in the TI K3 SoCs supports both
-Root-Complex and Endpoint modes of operation. The Glue Layer allows
-"strapping" the Mode of operation of the Controller, the Link Speed
-and the Link Width. This is enabled by programming the "PCIEn_CTRL"
-register (n corresponds to the PCIe instance) within the CTRL_MMR
-memory-mapped register space. The "reset-values" of the registers are
-also different depending on the mode of operation.
+Commit under Fixes introduced the IRQ handler for "ks-pcie-error-irq".
+The interrupt is acquired using "request_irq()" but is never freed if
+the driver exits due to an error. Although the section in the driver that
+invokes "request_irq()" has moved around over time, the issue hasn't been
+addressed until now.
 
-Since the PCIe Controller latches onto the "reset-values" immediately
-after being powered on, if the Glue Layer configuration is not done while
-the PCIe Controller is off, it will result in the PCIe Controller latching
-onto the wrong "reset-values". In practice, this will show up as a wrong
-representation of the PCIe Controller's capability structures in the PCIe
-Configuration Space. Some such capabilities which are supported by the PCIe
-Controller in the Root-Complex mode but are incorrectly latched onto as
-being unsupported are:
-- Link Bandwidth Notification
-- Alternate Routing ID (ARI) Forwarding Support
-- Next capability offset within Advanced Error Reporting (AER) capability
+Fix this by using "devm_request_irq()" which automatically frees the
+interrupt if the driver exits.
 
-Fix this by powering off the PCIe Controller before programming the "strap"
-settings and powering it on after that. The runtime PM APIs namely
-pm_runtime_put_sync() and pm_runtime_get_sync() will decrement and
-increment the usage counter respectively, causing GENPD to power off and
-power on the PCIe Controller.
-
-Fixes: f3e25911a430 ("PCI: j721e: Add TI J721E PCIe driver")
+Fixes: 025dd3daeda7 ("PCI: keystone: Add error IRQ handler")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://lore.kernel.org/r/3d3a4b52-e343-42f3-9d69-94c259812143@kernel.org
 Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250908120828.1471776-1-s-vadapalli@ti.com
+Link: https://patch.msgid.link/20250912100802.3136121-2-s-vadapalli@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/cadence/pci-j721e.c
-+++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -277,6 +277,25 @@ static int j721e_pcie_ctrl_init(struct j
- 	if (!ret)
- 		offset = args.args[0];
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1202,8 +1202,8 @@ static int ks_pcie_probe(struct platform
+ 	if (irq < 0)
+ 		return irq;
  
-+	/*
-+	 * The PCIe Controller's registers have different "reset-values"
-+	 * depending on the "strap" settings programmed into the PCIEn_CTRL
-+	 * register within the CTRL_MMR memory-mapped register space.
-+	 * The registers latch onto a "reset-value" based on the "strap"
-+	 * settings sampled after the PCIe Controller is powered on.
-+	 * To ensure that the "reset-values" are sampled accurately, power
-+	 * off the PCIe Controller before programming the "strap" settings
-+	 * and power it on after that. The runtime PM APIs namely
-+	 * pm_runtime_put_sync() and pm_runtime_get_sync() will decrement and
-+	 * increment the usage counter respectively, causing GENPD to power off
-+	 * and power on the PCIe Controller.
-+	 */
-+	ret = pm_runtime_put_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to power off PCIe Controller\n");
-+		return ret;
-+	}
-+
- 	ret = j721e_pcie_set_mode(pcie, syscon, offset);
+-	ret = request_irq(irq, ks_pcie_err_irq_handler, IRQF_SHARED,
+-			  "ks-pcie-error-irq", ks_pcie);
++	ret = devm_request_irq(dev, irq, ks_pcie_err_irq_handler, IRQF_SHARED,
++			       "ks-pcie-error-irq", ks_pcie);
  	if (ret < 0) {
- 		dev_err(dev, "Failed to set pci mode\n");
-@@ -295,6 +314,12 @@ static int j721e_pcie_ctrl_init(struct j
- 		return ret;
- 	}
- 
-+	ret = pm_runtime_get_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to power on PCIe Controller\n");
-+		return ret;
-+	}
-+
- 	/* Enable ACSPCIE refclk output if the optional property exists */
- 	syscon = syscon_regmap_lookup_by_phandle_optional(node,
- 						"ti,syscon-acspcie-proxy-ctrl");
+ 		dev_err(dev, "failed to request error IRQ %d\n",
+ 			irq);
 
 
