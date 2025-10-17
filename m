@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100CA3370E0;
-	Fri, 17 Oct 2025 15:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F82335086;
+	Fri, 17 Oct 2025 15:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713432; cv=none; b=KsiGVE1M8ginuCzKbwRT5qJ3ekZnZmzn5vGA80a2Wf1eQV8AyjZtZDwpSRPZ5rZ2tredhISVJvRCBYF10EMKvNZrL4vXoyI8gnK+yx/orCXz1aethAca6+YXcStAoEy6cIbNmaPOe1FV333pmrcZMStBaHAmmtHRk7gBNfjxkZk=
+	t=1760713435; cv=none; b=Z9hPh/PJytD+0T5hDhRhnHOSocnc7oK0FNcB0mha6kA0kJUBiQE/XMwSD1j3xyWbPGlvcW1a59VEGSnaCfm0hKJf8TSeQzSisC49EPkM8MgPMYhSpDDRa1pNFz7GWwMxxqrRRgMB4/roktPr6qF7ba5emR8ma+5RsFsWBS3Vetw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713432; c=relaxed/simple;
-	bh=xoODPbniTobvfUhspqbP85L4zH3vBC7VfvVlPSjSXIQ=;
+	s=arc-20240116; t=1760713435; c=relaxed/simple;
+	bh=BylwX1voFGhef7PzssjVFsbxPftXOKuSvkzdhNg6RV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EvQ9Hau+c4iV+/vuddSNMZ+fx2FxQY+dGIQtsamNE1lzXaT/imd7Go86EiPjVTqC7/eL1J6rwHwoZ39gJPFUJSH07X3EJJhTFRqKvcrdx6qC37YLmCfwhpII7kWHUBrPQAWtsN2ZIZQKvsGndg+c903vHJEntX7MVRZ+co34GI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/M4ibiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRKGxsFhQTM+5sFlNT8JtPKJUz26CVbpjFb1o6IIhdKcdTZZhABOXD0Ey173ER6UokrC+8dvKqaN7MG7HwSzou/dA26m/OhzDyvdKsJTgJYrzNwXgFJuw3w2J1zk90jWlXLZtssnKfwH9LtQv7ESzfHyjrIbQSvbM+9X4CKHbRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOqWxdm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/M4ibiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F073C4CEE7;
-	Fri, 17 Oct 2025 15:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOqWxdm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABDDC4CEE7;
+	Fri, 17 Oct 2025 15:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713431;
-	bh=xoODPbniTobvfUhspqbP85L4zH3vBC7VfvVlPSjSXIQ=;
+	s=korg; t=1760713434;
+	bh=BylwX1voFGhef7PzssjVFsbxPftXOKuSvkzdhNg6RV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/M4ibiJdbsc2F1CLpnn4raLdCliv02fvwMi7iYpH80iFZCgPOytS3Hk/nD30+e2j
-	 t0tcHT6Xg/82R9F8nMWr6GH1ermhVwJWczBcnrOnbDF1C6byTGxddemKXCfM8NcEsB
-	 QDRXg/YhBeTySVuAQdNLJboD0zbZCube4RY3Z460=
+	b=tOqWxdm5IjuwGUblLBbZ5SiZZQHZAUJHGFL/2dg0v470dJdfxPoQvp8+fcEMGPtBh
+	 4UNAGJnOZCwxzLv29A8WfJpjp2T9BV3LlFUhC2bXYH5+yLR0mKR/bDimPj2wmh3ME/
+	 v981t000w/5gXDsuxP2UcGQmhxxz6Sfjrmv/JkAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	stable@kernel.org,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 130/168] ext4: increase i_disksize to offset + len in ext4_update_disksize_before_punch()
-Date: Fri, 17 Oct 2025 16:53:29 +0200
-Message-ID: <20251017145133.814611266@linuxfoundation.org>
+Subject: [PATCH 6.1 131/168] ext4: correctly handle queries for metadata mappings
+Date: Fri, 17 Oct 2025 16:53:30 +0200
+Message-ID: <20251017145133.851668990@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -48,95 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit 9d80eaa1a1d37539224982b76c9ceeee736510b9 upstream.
+commit 46c22a8bb4cb03211da1100d7ee4a2005bf77c70 upstream.
 
-After running a stress test combined with fault injection,
-we performed fsck -a followed by fsck -fn on the filesystem
-image. During the second pass, fsck -fn reported:
+Currently, our handling of metadata is _ambiguous_ in some scenarios,
+that is, we end up returning unknown if the range only covers the
+mapping partially.
 
-Inode 131512, end of extent exceeds allowed value
-	(logical block 405, physical block 1180540, len 2)
+For example, in the following case:
 
-This inode was not in the orphan list. Analysis revealed the
-following call chain that leads to the inconsistency:
+$ xfs_io -c fsmap -d
 
-                             ext4_da_write_end()
-                              //does not update i_disksize
-                             ext4_punch_hole()
-                              //truncate folio, keep size
-ext4_page_mkwrite()
- ext4_block_page_mkwrite()
-  ext4_block_write_begin()
-    ext4_get_block()
-     //insert written extent without update i_disksize
-journal commit
-echo 1 > /sys/block/xxx/device/delete
+  0: 254:16 [0..7]: static fs metadata 8
+  1: 254:16 [8..15]: special 102:1 8
+  2: 254:16 [16..5127]: special 102:2 5112
+  3: 254:16 [5128..5255]: special 102:3 128
+  4: 254:16 [5256..5383]: special 102:4 128
+  5: 254:16 [5384..70919]: inodes 65536
+  6: 254:16 [70920..70967]: unknown 48
+  ...
 
-da-write path updates i_size but does not update i_disksize. Then
-ext4_punch_hole truncates the da-folio yet still leaves i_disksize
-unchanged(in the ext4_update_disksize_before_punch function, the
-condition offset + len < size is met). Then ext4_page_mkwrite sees
-ext4_nonda_switch return 1 and takes the nodioread_nolock path, the
-folio about to be written has just been punched out, and it’s offset
-sits beyond the current i_disksize. This may result in a written
-extent being inserted, but again does not update i_disksize. If the
-journal gets committed and then the block device is yanked, we might
-run into this. It should be noted that replacing ext4_punch_hole with
-ext4_zero_range in the call sequence may also trigger this issue, as
-neither will update i_disksize under these circumstances.
+$ xfs_io -c fsmap -d 24 33
 
-To fix this, we can modify ext4_update_disksize_before_punch to
-increase i_disksize to min(i_size, offset + len) when both i_size and
-(offset + len) are greater than i_disksize.
+  0: 254:16 [24..39]: unknown 16  <--- incomplete reporting
 
+$ xfs_io -c fsmap -d 24 33  (With patch)
+
+    0: 254:16 [16..5127]: special 102:2 5112
+
+This is because earlier in ext4_getfsmap_meta_helper, we end up ignoring
+any extent that starts before our queried range, but overlaps it. While
+the man page [1] is a bit ambiguous on this, this fix makes the output
+make more sense since we are anyways returning an "unknown" extent. This
+is also consistent to how XFS does it:
+
+$ xfs_io -c fsmap -d
+
+  ...
+  6: 254:16 [104..127]: free space 24
+  7: 254:16 [128..191]: inodes 64
+  ...
+
+$ xfs_io -c fsmap -d 137 150
+
+  0: 254:16 [128..191]: inodes 64   <-- full extent returned
+
+ [1] https://man7.org/linux/man-pages/man2/ioctl_getfsmap.2.html
+
+Reported-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Cc: stable@kernel.org
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Message-ID: <20250911133024.1841027-1-sunyongjian@huaweicloud.com>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Message-ID: <023f37e35ee280cd9baac0296cbadcbe10995cab.1757058211.git.ojaswin@linux.ibm.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/fsmap.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -3945,7 +3945,11 @@ int ext4_can_truncate(struct inode *inod
-  * We have to make sure i_disksize gets properly updated before we truncate
-  * page cache due to hole punching or zero range. Otherwise i_disksize update
-  * can get lost as it may have been postponed to submission of writeback but
-- * that will never happen after we truncate page cache.
-+ * that will never happen if we remove the folio containing i_size from the
-+ * page cache. Also if we punch hole within i_size but above i_disksize,
-+ * following ext4_page_mkwrite() may mistakenly allocate written blocks over
-+ * the hole and thus introduce allocated blocks beyond i_disksize which is
-+ * not allowed (e2fsck would complain in case of crash).
-  */
- int ext4_update_disksize_before_punch(struct inode *inode, loff_t offset,
- 				      loff_t len)
-@@ -3956,9 +3960,11 @@ int ext4_update_disksize_before_punch(st
- 	loff_t size = i_size_read(inode);
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -74,7 +74,8 @@ static int ext4_getfsmap_dev_compare(con
+ static bool ext4_getfsmap_rec_before_low_key(struct ext4_getfsmap_info *info,
+ 					     struct ext4_fsmap *rec)
+ {
+-	return rec->fmr_physical < info->gfi_low.fmr_physical;
++	return rec->fmr_physical + rec->fmr_length <=
++	       info->gfi_low.fmr_physical;
+ }
  
- 	WARN_ON(!inode_is_locked(inode));
--	if (offset > size || offset + len < size)
-+	if (offset > size)
- 		return 0;
+ /*
+@@ -200,15 +201,18 @@ static int ext4_getfsmap_meta_helper(str
+ 			  ext4_group_first_block_no(sb, agno));
+ 	fs_end = fs_start + EXT4_C2B(sbi, len);
  
-+	if (offset + len < size)
-+		size = offset + len;
- 	if (EXT4_I(inode)->i_disksize >= size)
- 		return 0;
- 
+-	/* Return relevant extents from the meta_list */
++	/*
++	 * Return relevant extents from the meta_list. We emit all extents that
++	 * partially/fully overlap with the query range
++	 */
+ 	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+-		if (p->fmr_physical < info->gfi_next_fsblk) {
++		if (p->fmr_physical + p->fmr_length <= info->gfi_next_fsblk) {
+ 			list_del(&p->fmr_list);
+ 			kfree(p);
+ 			continue;
+ 		}
+-		if (p->fmr_physical <= fs_start ||
+-		    p->fmr_physical + p->fmr_length <= fs_end) {
++		if (p->fmr_physical <= fs_end &&
++		    p->fmr_physical + p->fmr_length > fs_start) {
+ 			/* Emit the retained free extent record if present */
+ 			if (info->gfi_lastfree.fmr_owner) {
+ 				error = ext4_getfsmap_helper(sb, info,
 
 
