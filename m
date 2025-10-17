@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22082F12D0;
-	Fri, 17 Oct 2025 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE7F36CDEC;
+	Fri, 17 Oct 2025 15:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714392; cv=none; b=d4nmwuOvQ0AHO46yxcpu5HV+7xLw6+DLCsg+eWVpPkMcN1mmcHgUkPKz8M4n8ngZ2mD8Nnot3fuih0u12mcrgzIDzH57Gbc1Ima4bG6oJ/dn/gMpFg1TC0IFZeIewCKk8ZCu4Pdbfpofo1OdROm9xkkTnae633bL3ELE3/N7dgE=
+	t=1760714395; cv=none; b=EPsbuhX+88QGHWFzNr4eMK/7sxuaMcDRC2qhrQpkEyoiwmn3X5LF1cmI5edgYREzKYUV6djTtMfJpbF1j0bBerWbgbLxCt2RN3Z9rzmU4MxGWffamPaFQGLlGpyzKW0MfMWA1wo14RTWxLtwS0VHC44wSYbkGztuROHGTtlB7r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714392; c=relaxed/simple;
-	bh=nLY3efeGIhLj+aGRzrzsixXrncuFqa/wpBe259jJoR4=;
+	s=arc-20240116; t=1760714395; c=relaxed/simple;
+	bh=xFWPzTwwf9VW9ZTqoSxSm0UlmC/0m8FLvqqdL3nxtEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mX45ZRMs4JZjheLFLrWy9DcG02wbUL046TORSXQv1RuPRQ6Rn+uAez02iVoFQqcS8CS1QqrYNeWceYsAiPx7oOIb4bwUfr81un0CK0F638fSV1gpKIfha2GjBPtJSDD4KdJgE8kKcnSprMeU4F2weKtaXYzIzvAUrwBHRzfN5dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNMf7zND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWoWCDrHF1ge+pKhskSzh9UA0cTW0uZQcSMU9sLhd9X7m2avYpfta64EEmSZNYND4OtHG/d+I+zvQKhq47PuGQwpgUDoS761mzSUoJYpm7ymbPxuI8tZoQcCdfWTyS8cXu77fMRz8cdhr6JNTeuImmAodFyIoCB5NBty/IFBRxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5XnmSIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNMf7zND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56951C4CEE7;
-	Fri, 17 Oct 2025 15:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5XnmSIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4DFC4CEFE;
+	Fri, 17 Oct 2025 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714392;
-	bh=nLY3efeGIhLj+aGRzrzsixXrncuFqa/wpBe259jJoR4=;
+	s=korg; t=1760714395;
+	bh=xFWPzTwwf9VW9ZTqoSxSm0UlmC/0m8FLvqqdL3nxtEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNMf7zNDV4Evw3R/dPqAMXIgczIVxkJEpRcJzqm6EUhYlfZ81kVcyCcn1Rft+hBpw
-	 2hbCu5dAjY3/DyHQSianTHwzMGJtnaGfGnFqb+Bi0UUNRsmQLNqffuol46H3/y3YQY
-	 2HvsjAXhHV8oWGydPBZmVpE+sTeHR8cnzYZGGWP0=
+	b=K5XnmSIuiVC32azxFppeZhBf83G58OVo4uN0gNF71N+qi06Xv6n6LLN54J2QNjCuJ
+	 Q0YFYYymbhPKF+aECUaQe3R4naCvwy+4ZBX2g/gQYeQDjl3dJzpF+VnLth3kzPXF6Z
+	 zr0V/1XU2epKBh3zxukUrUwdq1vsNSO7fi3ptfNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 128/277] crypto: atmel - Fix dma_unmap_sg() direction
-Date: Fri, 17 Oct 2025 16:52:15 +0200
-Message-ID: <20251017145151.801056331@linuxfoundation.org>
+Subject: [PATCH 6.12 129/277] crypto: rockchip - Fix dma_unmap_sg() nents value
+Date: Fri, 17 Oct 2025 16:52:16 +0200
+Message-ID: <20251017145151.837000412@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,30 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit f5d643156ef62216955c119216d2f3815bd51cb1 upstream.
+commit 21140e5caf019e4a24e1ceabcaaa16bd693b393f upstream.
 
-It seems like everywhere in this file, dd->in_sg is mapped with
-DMA_TO_DEVICE and dd->out_sg is mapped with DMA_FROM_DEVICE.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
+Fixes: 57d67c6e8219 ("crypto: rockchip - rework by using crypto_engine")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-tdes.c |    2 +-
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -512,7 +512,7 @@ static int atmel_tdes_crypt_start(struct
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -252,7 +252,7 @@ static void rk_hash_unprepare(struct cry
+ 	struct rk_ahash_rctx *rctx = ahash_request_ctx(areq);
+ 	struct rk_crypto_info *rkc = rctx->dev;
  
- 	if (err && (dd->flags & TDES_FLAGS_FAST)) {
- 		dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
--		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_TO_DEVICE);
-+		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
- 	}
+-	dma_unmap_sg(rkc->dev, areq->src, rctx->nrsg, DMA_TO_DEVICE);
++	dma_unmap_sg(rkc->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
+ }
  
- 	return err;
+ static int rk_hash_run(struct crypto_engine *engine, void *breq)
 
 
