@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A732C93B;
-	Fri, 17 Oct 2025 15:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F226520C00A;
+	Fri, 17 Oct 2025 15:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714707; cv=none; b=XDbJdo4xca18CWXW6QkAXXkz/aE3jtAxS5ABCyuFRlRgRY6MqlBXxNdQPr9jKgymBznXXKX/h2V9OmvPVg4a9dd140vAyh3HQ08geovmir6WDpkejoISKrrlLT3prDNtLuMO5BpAf62AAZFpTuBrYyAZSZbN3zDIjyLn/EOrlgU=
+	t=1760714711; cv=none; b=fBfMURqTwevMVBqZoSE9fEtBs+fnXWdnekX5b0SRQ/Ms0q5na16LMi9S7qvSUch41nV01Kd7CjTKl+fCwE9Ye3dx+w20omm041Mzf5hRA6giup4MSpKm7yuVe5u0nCGdcMYZ8PlpzICpWtUo6C49sAq77EXhOXqE8HJjeArQ66c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714707; c=relaxed/simple;
-	bh=BLo3klvGw/RyW3fP1dsC4zzjFsPD9+ewzfwfVmNTJRI=;
+	s=arc-20240116; t=1760714711; c=relaxed/simple;
+	bh=fJCLxE255BPNnpZJST0VdkcP1I/EmBrUTPDGQqG+M7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGqHDODmj+aVl7SjSacyDTQRlxAWxGmJtxTNEatJAhp6HveRKUKxcMe+4+3e9Y2c5mZlJipYjX1EdrUfIDcJFuTR+P7XbEO1DC+5hsL6Q7XV8vR029rs1sFM0/+EwG5cB/kq9lA8qTtpAQmKkso9h6+HoCuo+hU/ncox6uZBEkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTcwgptb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s036Fp9p9KxyTW87laiO/7lIeP8YPLjFADDZGbfYwlSnlTbOsc9+avqn8B4pMH/YM6MH8tKFTr+YPTVlrvxCPvbBLXBnPMaagN2oFxbhY+9RYnkXmjckieHp+IU+YyklEV68iocgHdDK6mEaVlZq2/TRtmol4cxKyskFtRF42gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a63jTBl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTcwgptb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262E7C4CEE7;
-	Fri, 17 Oct 2025 15:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a63jTBl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB69C4CEE7;
+	Fri, 17 Oct 2025 15:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714707;
-	bh=BLo3klvGw/RyW3fP1dsC4zzjFsPD9+ewzfwfVmNTJRI=;
+	s=korg; t=1760714710;
+	bh=fJCLxE255BPNnpZJST0VdkcP1I/EmBrUTPDGQqG+M7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTcwgptbJJiLDtwzW3Kad7no35XMKrMx9BrnquTk39jwyX4cQUF/bhH3lzJKmYpDJ
-	 tU2sOhPZyv3BKPtfBcAl8ZqZHXE/rdBT/GzMCYiyjZ4IYy61k6C38vj+Sb1s9kKtjv
-	 wqBPg+lFTXpIdTn6nRRqiU8raIFiue87dT2j/MdE=
+	b=a63jTBl5A4hinjJf0cQEBB9RboJRI3brCPZ5Srn1gf8EHgl7EQDffHVI2smVDlen6
+	 8yqthpTo2ErY1rqLVTjhvy3E+A7/iYJ1tG4dXwz12nU6600Cc0l22twq4xM5PV4IQ0
+	 Nl9k5h9gOCMVJkeVmxqsXWFS3qSoIypGv2wLo43k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Qais Yousef <qyousef@layalina.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 237/277] cpufreq: Make drivers using CPUFREQ_ETERNAL specify transition latency
-Date: Fri, 17 Oct 2025 16:54:04 +0200
-Message-ID: <20251017145155.792023259@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 238/277] KVM: x86: Advertise SRSO_USER_KERNEL_NO to userspace
+Date: Fri, 17 Oct 2025 16:54:05 +0200
+Message-ID: <20251017145155.829311022@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -55,140 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit f97aef092e199c10a3da96ae79b571edd5362faa ]
+[ Upstream commit 716f86b523d8ec3c17015ee0b03135c7aa6f2f08 ]
 
-Commit a755d0e2d41b ("cpufreq: Honour transition_latency over
-transition_delay_us") caused platforms where cpuinfo.transition_latency
-is CPUFREQ_ETERNAL to get a very large transition latency whereas
-previously it had been capped at 10 ms (and later at 2 ms).
+SRSO_USER_KERNEL_NO denotes whether the CPU is affected by SRSO across
+user/kernel boundaries. Advertise it to guest userspace.
 
-This led to a user-observable regression between 6.6 and 6.12 as
-described by Shawn:
-
-"The dbs sampling_rate was 10000 us on 6.6 and suddently becomes
- 6442450 us (4294967295 / 1000 * 1.5) on 6.12 for these platforms
- because the default transition delay was dropped [...].
-
- It slows down dbs governor's reacting to CPU loading change
- dramatically.  Also, as transition_delay_us is used by schedutil
- governor as rate_limit_us, it shows a negative impact on device
- idle power consumption, because the device gets slightly less time
- in the lowest OPP."
-
-Evidently, the expectation of the drivers using CPUFREQ_ETERNAL as
-cpuinfo.transition_latency was that it would be capped by the core,
-but they may as well return a default transition latency value instead
-of CPUFREQ_ETERNAL and the core need not do anything with it.
-
-Accordingly, introduce CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS and make
-all of the drivers in question use it instead of CPUFREQ_ETERNAL.  Also
-update the related Rust binding.
-
-Fixes: a755d0e2d41b ("cpufreq: Honour transition_latency over transition_delay_us")
-Closes: https://lore.kernel.org/linux-pm/20250922125929.453444-1-shawnguo2@yeah.net/
-Reported-by: Shawn Guo <shawnguo@kernel.org>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2264949.irdbgypaU6@rafael.j.wysocki
-[ rjw: Fix typo in new symbol name, drop redundant type cast from Rust binding ]
-Tested-by: Shawn Guo <shawnguo@kernel.org> # with cpufreq-dt driver
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ omitted Rust changes ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://lore.kernel.org/r/20241202120416.6054-3-bp@kernel.org
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq-dt.c          |    2 +-
- drivers/cpufreq/imx6q-cpufreq.c       |    2 +-
- drivers/cpufreq/mediatek-cpufreq-hw.c |    2 +-
- drivers/cpufreq/scmi-cpufreq.c        |    2 +-
- drivers/cpufreq/scpi-cpufreq.c        |    2 +-
- drivers/cpufreq/spear-cpufreq.c       |    2 +-
- include/linux/cpufreq.h               |    3 +++
- 7 files changed, 9 insertions(+), 6 deletions(-)
+Boris Ostrovsky suggested that we backport this commit to 6.12.y as we
+have commit: 6f0f23ef76be ("KVM: x86: Add IBPB_BRTYPE support") in 6.12.y
 
---- a/drivers/cpufreq/cpufreq-dt.c
-+++ b/drivers/cpufreq/cpufreq-dt.c
-@@ -110,7 +110,7 @@ static int cpufreq_init(struct cpufreq_p
+Hi borislav: Can you please ACK before stable maintainers pick this ?
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/x86/kvm/cpuid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -816,7 +816,7 @@ void kvm_set_cpu_caps(void)
+ 		F(NO_NESTED_DATA_BP) | F(LFENCE_RDTSC) | 0 /* SmmPgCfgLock */ |
+ 		F(VERW_CLEAR) |
+ 		F(NULL_SEL_CLR_BASE) | F(AUTOIBRS) | 0 /* PrefetchCtlMsr */ |
+-		F(WRMSR_XX_BASE_NS)
++		F(WRMSR_XX_BASE_NS) | F(SRSO_USER_KERNEL_NO)
+ 	);
  
- 	transition_latency = dev_pm_opp_get_max_transition_latency(cpu_dev);
- 	if (!transition_latency)
--		transition_latency = CPUFREQ_ETERNAL;
-+		transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	cpumask_copy(policy->cpus, priv->cpus);
- 	policy->driver_data = priv;
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -443,7 +443,7 @@ soc_opp_out:
- 	}
- 
- 	if (of_property_read_u32(np, "clock-latency", &transition_latency))
--		transition_latency = CPUFREQ_ETERNAL;
-+		transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	/*
- 	 * Calculate the ramp time for max voltage change in the
---- a/drivers/cpufreq/mediatek-cpufreq-hw.c
-+++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
-@@ -238,7 +238,7 @@ static int mtk_cpufreq_hw_cpu_init(struc
- 
- 	latency = readl_relaxed(data->reg_bases[REG_FREQ_LATENCY]) * 1000;
- 	if (!latency)
--		latency = CPUFREQ_ETERNAL;
-+		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	policy->cpuinfo.transition_latency = latency;
- 	policy->fast_switch_possible = true;
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -280,7 +280,7 @@ static int scmi_cpufreq_init(struct cpuf
- 
- 	latency = perf_ops->transition_latency_get(ph, domain);
- 	if (!latency)
--		latency = CPUFREQ_ETERNAL;
-+		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	policy->cpuinfo.transition_latency = latency;
- 
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -157,7 +157,7 @@ static int scpi_cpufreq_init(struct cpuf
- 
- 	latency = scpi_ops->get_transition_latency(cpu_dev);
- 	if (!latency)
--		latency = CPUFREQ_ETERNAL;
-+		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	policy->cpuinfo.transition_latency = latency;
- 
---- a/drivers/cpufreq/spear-cpufreq.c
-+++ b/drivers/cpufreq/spear-cpufreq.c
-@@ -183,7 +183,7 @@ static int spear_cpufreq_probe(struct pl
- 
- 	if (of_property_read_u32(np, "clock-latency",
- 				&spear_cpufreq.transition_latency))
--		spear_cpufreq.transition_latency = CPUFREQ_ETERNAL;
-+		spear_cpufreq.transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
- 
- 	cnt = of_property_count_u32_elems(np, "cpufreq_tbl");
- 	if (cnt <= 0) {
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -32,6 +32,9 @@
-  */
- 
- #define CPUFREQ_ETERNAL			(-1)
-+
-+#define CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS	NSEC_PER_MSEC
-+
- #define CPUFREQ_NAME_LEN		16
- /* Print length for names. Extra 1 space for accommodating '\n' in prints */
- #define CPUFREQ_NAME_PLEN		(CPUFREQ_NAME_LEN + 1)
+ 	kvm_cpu_cap_check_and_set(X86_FEATURE_SBPB);
 
 
