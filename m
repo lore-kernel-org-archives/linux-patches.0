@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F746330B24;
-	Fri, 17 Oct 2025 15:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7023330B30;
+	Fri, 17 Oct 2025 15:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715881; cv=none; b=Bn5MzzJs1RVufdx8WUBaYket2cHPgiRUKk91cgC/L+/j35trbgm1+mzVVudIBAaQYqFJQ8kUMS2TX+j2vwCTTSnYZyvPJ6AbX3VpZ1j295UhL2A+ET1aCA4U9zgst96sJtzgjpZDHEIW0cu2B3KLUHut3HYcOUWy9bCkGiz9TlA=
+	t=1760715883; cv=none; b=LmjgN+u4IjOzKFRBNYTa/EayZ5gTGTPXa1Gj3FmTUnfzLZpmr0Jzd4cPggebPtoSthWJqbatiOUiJ9uzaLTTpCm6Gf8Cl+2kEhjXAwk55yr5TIfw6VKsJ+zQhBZq+YhPIdGWps1hh7Z2wHeI0A4ikvRxweYO34j8SInzJKT7HLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715881; c=relaxed/simple;
-	bh=nQzHJ31iIRhHMqIFuxDWSQtUrTs90ANnC4Ex4xUgsGA=;
+	s=arc-20240116; t=1760715883; c=relaxed/simple;
+	bh=Kf3M8WOVHmWNlju8hfxYgOYethboVlaOMFU8Tgy/994=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjc+fXuBQS/HfCYu7+eG0cOqODGmpa1M56iYMRlXXN6J0PhzG/MJAEnWvrI4UKDyzltqoCFg31iVpSUwklnWGID6llavss6nfY3tpf8kT99k0dVgW1+5VJGdiT7cCx5xw0gKCXhPZNhJduibw7qhHvLJEyHN4MyGCPtHNVWvKpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUii8c0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3YhJ20qRiHqfz6Rv7P3p8u9CpGg3BxcCBbQ803WHiTf19REFikkymhTnJjC6Xv+4Qw8k/+VyOyXkOKSH5Zrm+HvcinQLy9BjFfawrMJNxgQ4+6sBwtat/j5TQwl+NCwTPJy/FAh3MxfkOhRpCG5xmZZL5mmrz03i0mZqn+WMZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gA9Pv3VX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUii8c0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77273C4CEE7;
-	Fri, 17 Oct 2025 15:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gA9Pv3VX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D689C116B1;
+	Fri, 17 Oct 2025 15:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715880;
-	bh=nQzHJ31iIRhHMqIFuxDWSQtUrTs90ANnC4Ex4xUgsGA=;
+	s=korg; t=1760715883;
+	bh=Kf3M8WOVHmWNlju8hfxYgOYethboVlaOMFU8Tgy/994=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUii8c0a2pqiii7lsOnVW3PoQPytthpV0475U4TVU2BXW0D+ny7GVMpaBN1009mCd
-	 8tuWHFWD944IieScT1ky41fdI1roUtWpbzKUtOoVg/TBSFQ7mMENeTb6WeYg0dKfNJ
-	 FkGutuslxCsee1bTfkxgQlZvMHGq3D/Z8UO0GUVc=
+	b=gA9Pv3VXFOlY+kGwIghQ6Jy01D2xEpNf1+Si7r6biqBqC2W9GyVe4P11nUlk3Wz+y
+	 VP36Z0hQiLb+s8WmM9QZF5GE/d/cndiyMjC4tA7a2JUu0HaPzkw/OV87Fy+6TITewG
+	 hRpbA7Li9B8N7+hXlar9QYle3AcwJN25o+cRCZaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.17 342/371] ext4: correctly handle queries for metadata mappings
-Date: Fri, 17 Oct 2025 16:55:17 +0200
-Message-ID: <20251017145214.455177917@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 369/371] iomap: error out on file IO when there is no inline_data buffer
+Date: Fri, 17 Oct 2025 16:55:44 +0200
+Message-ID: <20251017145215.435208683@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,98 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 46c22a8bb4cb03211da1100d7ee4a2005bf77c70 upstream.
+[ Upstream commit 6a96fb653b6481ec73e9627ade216b299e4de9ea ]
 
-Currently, our handling of metadata is _ambiguous_ in some scenarios,
-that is, we end up returning unknown if the range only covers the
-mapping partially.
+Return IO errors if an ->iomap_begin implementation returns an
+IOMAP_INLINE buffer but forgets to set the inline_data pointer.
+Filesystems should never do this, but we could help fs developers (me)
+fix their bugs by handling this more gracefully than crashing the
+kernel.
 
-For example, in the following case:
-
-$ xfs_io -c fsmap -d
-
-  0: 254:16 [0..7]: static fs metadata 8
-  1: 254:16 [8..15]: special 102:1 8
-  2: 254:16 [16..5127]: special 102:2 5112
-  3: 254:16 [5128..5255]: special 102:3 128
-  4: 254:16 [5256..5383]: special 102:4 128
-  5: 254:16 [5384..70919]: inodes 65536
-  6: 254:16 [70920..70967]: unknown 48
-  ...
-
-$ xfs_io -c fsmap -d 24 33
-
-  0: 254:16 [24..39]: unknown 16  <--- incomplete reporting
-
-$ xfs_io -c fsmap -d 24 33  (With patch)
-
-    0: 254:16 [16..5127]: special 102:2 5112
-
-This is because earlier in ext4_getfsmap_meta_helper, we end up ignoring
-any extent that starts before our queried range, but overlaps it. While
-the man page [1] is a bit ambiguous on this, this fix makes the output
-make more sense since we are anyways returning an "unknown" extent. This
-is also consistent to how XFS does it:
-
-$ xfs_io -c fsmap -d
-
-  ...
-  6: 254:16 [104..127]: free space 24
-  7: 254:16 [128..191]: inodes 64
-  ...
-
-$ xfs_io -c fsmap -d 137 150
-
-  0: 254:16 [128..191]: inodes 64   <-- full extent returned
-
- [1] https://man7.org/linux/man-pages/man2/ioctl_getfsmap.2.html
-
-Reported-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Cc: stable@kernel.org
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <023f37e35ee280cd9baac0296cbadcbe10995cab.1757058211.git.ojaswin@linux.ibm.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/175803480324.966383.7414345025943296442.stgit@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/fsmap.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/iomap/buffered-io.c | 15 ++++++++++-----
+ fs/iomap/direct-io.c   |  3 +++
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -74,7 +74,8 @@ static int ext4_getfsmap_dev_compare(con
- static bool ext4_getfsmap_rec_before_low_key(struct ext4_getfsmap_info *info,
- 					     struct ext4_fsmap *rec)
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index fd827398afd2f..6fa653d83f703 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -304,6 +304,9 @@ static int iomap_read_inline_data(const struct iomap_iter *iter,
+ 	size_t size = i_size_read(iter->inode) - iomap->offset;
+ 	size_t offset = offset_in_folio(folio, iomap->offset);
+ 
++	if (WARN_ON_ONCE(!iomap->inline_data))
++		return -EIO;
++
+ 	if (folio_test_uptodate(folio))
+ 		return 0;
+ 
+@@ -894,7 +897,7 @@ static bool __iomap_write_end(struct inode *inode, loff_t pos, size_t len,
+ 	return true;
+ }
+ 
+-static void iomap_write_end_inline(const struct iomap_iter *iter,
++static bool iomap_write_end_inline(const struct iomap_iter *iter,
+ 		struct folio *folio, loff_t pos, size_t copied)
  {
--	return rec->fmr_physical < info->gfi_low.fmr_physical;
-+	return rec->fmr_physical + rec->fmr_length <=
-+	       info->gfi_low.fmr_physical;
+ 	const struct iomap *iomap = &iter->iomap;
+@@ -903,12 +906,16 @@ static void iomap_write_end_inline(const struct iomap_iter *iter,
+ 	WARN_ON_ONCE(!folio_test_uptodate(folio));
+ 	BUG_ON(!iomap_inline_data_valid(iomap));
+ 
++	if (WARN_ON_ONCE(!iomap->inline_data))
++		return false;
++
+ 	flush_dcache_folio(folio);
+ 	addr = kmap_local_folio(folio, pos);
+ 	memcpy(iomap_inline_data(iomap, pos), addr, copied);
+ 	kunmap_local(addr);
+ 
+ 	mark_inode_dirty(iter->inode);
++	return true;
  }
  
  /*
-@@ -200,15 +201,18 @@ static int ext4_getfsmap_meta_helper(str
- 			  ext4_group_first_block_no(sb, agno));
- 	fs_end = fs_start + EXT4_C2B(sbi, len);
+@@ -921,10 +928,8 @@ static bool iomap_write_end(struct iomap_iter *iter, size_t len, size_t copied,
+ 	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+ 	loff_t pos = iter->pos;
  
--	/* Return relevant extents from the meta_list */
-+	/*
-+	 * Return relevant extents from the meta_list. We emit all extents that
-+	 * partially/fully overlap with the query range
-+	 */
- 	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
--		if (p->fmr_physical < info->gfi_next_fsblk) {
-+		if (p->fmr_physical + p->fmr_length <= info->gfi_next_fsblk) {
- 			list_del(&p->fmr_list);
- 			kfree(p);
- 			continue;
- 		}
--		if (p->fmr_physical <= fs_start ||
--		    p->fmr_physical + p->fmr_length <= fs_end) {
-+		if (p->fmr_physical <= fs_end &&
-+		    p->fmr_physical + p->fmr_length > fs_start) {
- 			/* Emit the retained free extent record if present */
- 			if (info->gfi_lastfree.fmr_owner) {
- 				error = ext4_getfsmap_helper(sb, info,
+-	if (srcmap->type == IOMAP_INLINE) {
+-		iomap_write_end_inline(iter, folio, pos, copied);
+-		return true;
+-	}
++	if (srcmap->type == IOMAP_INLINE)
++		return iomap_write_end_inline(iter, folio, pos, copied);
+ 
+ 	if (srcmap->flags & IOMAP_F_BUFFER_HEAD) {
+ 		size_t bh_written;
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index b84f6af2eb4c8..46aa85af13dc5 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -519,6 +519,9 @@ static int iomap_dio_inline_iter(struct iomap_iter *iomi, struct iomap_dio *dio)
+ 	loff_t pos = iomi->pos;
+ 	u64 copied;
+ 
++	if (WARN_ON_ONCE(!inline_data))
++		return -EIO;
++
+ 	if (WARN_ON_ONCE(!iomap_inline_data_valid(iomap)))
+ 		return -EIO;
+ 
+-- 
+2.51.0
+
 
 
