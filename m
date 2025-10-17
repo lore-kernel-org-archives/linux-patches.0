@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11812337110;
-	Fri, 17 Oct 2025 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDA82F12A5;
+	Fri, 17 Oct 2025 15:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714239; cv=none; b=dfp2ANczKkg0VkbOFq7PGp2Vmr48HkmI8+3aGvTeomUKln28JjMGABGmZC1ZhVqAbuUrnNfzz0l1F9gzLikwaJB+4e8kdPcmk8aLOzTgov9FY2mg4NCQpXL/OtjNSK6TXGUZs6HQrW/xJpC3P7jtrxLyIKN1Fy0hoYTSUhnXkXM=
+	t=1760714241; cv=none; b=u49q2qiXeT3Q7CujhQgc3EUqI8gYjJONjfLmxA4cIopooEKRBb0qTv2Wr3XHCOILZff5Qqyq0bwERT3wVrTp7Bh6enMSUGXz6N8eGBc2ApxiA5UExsCpsIEE7kvuQV4F2r6Vf22WJjrkRaLiodnK9U9lgYo7xKH1Y2mgK89lnBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714239; c=relaxed/simple;
-	bh=BXjdk4BLCZi/rZIfHbZ+FlW49/xvup9c44uEdZZYOyY=;
+	s=arc-20240116; t=1760714241; c=relaxed/simple;
+	bh=55wU2Ro8g08cl0ye4Z4UiQhubOXzexzAveiTgYnQtwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1ricB4UhKXwhZZtgKREsVH4xpz25oUyZLDdG6EbJkmF/KvYUkxFdbhBs5jqG1EEvhOzJMheLwrtS/PnXlQiUz01s+EDNl/dCTYQHqymkbS6HTrcrG5OnJcg0ylycouwjPFIEcPaWmkXzmCpydvavXMIDLt4hLUiVimt2rw1oIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0ZSDEre; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ii4cT5HDu894IZ5kTMctEUsxyW58vrY34u03nQg+XRbm47ZoqewpzrV7WwgXuT/+3hEhX0V8HzuQEl3P7MNueiQ3Sw/j++CHLXkhc29FGWVzAAVQ0+81sbvjvThVQqZP4t1bUwqPJUDQWAt0b1p0x13wn8qGTMvmZuLfkCt4Y0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnTt9QCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0ZSDEre"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C90C4CEE7;
-	Fri, 17 Oct 2025 15:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnTt9QCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555B8C4CEE7;
+	Fri, 17 Oct 2025 15:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714238;
-	bh=BXjdk4BLCZi/rZIfHbZ+FlW49/xvup9c44uEdZZYOyY=;
+	s=korg; t=1760714241;
+	bh=55wU2Ro8g08cl0ye4Z4UiQhubOXzexzAveiTgYnQtwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0ZSDEre3c3mHiO91BapXBTsp6nuGiLgtc7+z48pwS3HtUzcYKDign+BWTUQBHheD
-	 U2syBTZaG+zxdC2mdvINEpxsig04VQQ1PXF7dEYsr7GJLGZQSAK+r7Sa+1vzSobLHP
-	 dKnHfQ1WUGCGuoiaTKV+8xzEURSNn0WPN4Z7XEaE=
+	b=BnTt9QCwltMc+gwuYTBEUDSZBybY7/v3XQ8Yo7V0G8qtX39eERWtqbgLuE7S71oWe
+	 Ik5LyAevuIXFX1L+/zfH3s173Tr1MbYiqCf7b2DuQ4VlJJzfznt4Pjq061TyujOB8T
+	 3nmEsOZvrBPKe+sKMqOsLu4fsOeGofsAh0aH9Z7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tom Talpey <tom@talpey.com>,
+	David Howells <dhowells@redhat.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/277] crypto: essiv - Check ssize for decryption and in-place encryption
-Date: Fri, 17 Oct 2025 16:51:23 +0200
-Message-ID: <20251017145149.913648752@linuxfoundation.org>
+Subject: [PATCH 6.12 077/277] cifs: Fix copy_to_iter return value check
+Date: Fri, 17 Oct 2025 16:51:24 +0200
+Message-ID: <20251017145149.949513575@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,61 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
+[ Upstream commit 0cc380d0e1d36b8f2703379890e90f896f68e9e8 ]
 
-Move the ssize check to the start in essiv_aead_crypt so that
-it's also checked for decryption and in-place encryption.
+The return value of copy_to_iter() function will never be negative,
+it is the number of bytes copied, or zero if nothing was copied.
+Update the check to treat 0 as an error, and return -1 in that case.
 
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Acked-by: Tom Talpey <tom@talpey.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/essiv.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ fs/smb/client/smb2ops.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/essiv.c b/crypto/essiv.c
-index e63fc6442e320..aa7ebc1235274 100644
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -186,9 +186,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
- 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
- 	struct aead_request *subreq = &rctx->aead_req;
-+	int ivsize = crypto_aead_ivsize(tfm);
-+	int ssize = req->assoclen - ivsize;
- 	struct scatterlist *src = req->src;
- 	int err;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index c946c3a09245c..1b30035d02bc5 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4657,7 +4657,7 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ 	unsigned int pad_len;
+ 	struct cifs_io_subrequest *rdata = mid->callback_data;
+ 	struct smb2_hdr *shdr = (struct smb2_hdr *)buf;
+-	int length;
++	size_t copied;
+ 	bool use_rdma_mr = false;
  
-+	if (ssize < 0)
-+		return -EINVAL;
-+
- 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
- 
- 	/*
-@@ -198,19 +203,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	 */
- 	rctx->assoc = NULL;
- 	if (req->src == req->dst || !enc) {
--		scatterwalk_map_and_copy(req->iv, req->dst,
--					 req->assoclen - crypto_aead_ivsize(tfm),
--					 crypto_aead_ivsize(tfm), 1);
-+		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
+ 	if (shdr->Command != SMB2_READ) {
+@@ -4770,10 +4770,10 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ 	} else if (buf_len >= data_offset + data_len) {
+ 		/* read response payload is in buf */
+ 		WARN_ONCE(buffer, "read data can be either in buf or in buffer");
+-		length = copy_to_iter(buf + data_offset, data_len, &rdata->subreq.io_iter);
+-		if (length < 0)
+-			return length;
+-		rdata->got_bytes = data_len;
++		copied = copy_to_iter(buf + data_offset, data_len, &rdata->subreq.io_iter);
++		if (copied == 0)
++			return -EIO;
++		rdata->got_bytes = copied;
  	} else {
- 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
--		int ivsize = crypto_aead_ivsize(tfm);
--		int ssize = req->assoclen - ivsize;
- 		struct scatterlist *sg;
- 		int nents;
- 
--		if (ssize < 0)
--			return -EINVAL;
--
- 		nents = sg_nents_for_len(req->src, ssize);
- 		if (nents < 0)
- 			return -EINVAL;
+ 		/* read response payload cannot be in both buf and pages */
+ 		WARN_ONCE(1, "buf can not contain only a part of read data");
 -- 
 2.51.0
 
