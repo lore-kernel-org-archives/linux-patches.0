@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A44B2745E;
-	Fri, 17 Oct 2025 15:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA062F12D2;
+	Fri, 17 Oct 2025 15:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715190; cv=none; b=RICNOFv6ES2rWPJHTsJQt3M6vkCX4kC6iWCiPdWf/XnvQ8FMWGs/zPFVIn8Zqp40Mn4rdXygTr6qdt49GZ8DcJr+2Ise9RPiy9rcuthMiN0vhKoYYQdeCm0O35vwdrQVyHSa0lMG0XI+uwIvg0kM6e4rNZ3Spu/SIodWDxsLHGs=
+	t=1760715193; cv=none; b=d/f18cDmKpDEGzEY0u3gtSPnodIxJEXc9LOvXk9bHS22ISui4F2aikvCbOqQvsgvYcXgHMnSKEBbmUr1i5h1YiR/2+bxpkVG1BYOGkosEqocNzsWJdIUj/dNmA345Ew5bxYUJnlUADvf15htT4G8DFsPM8dssIS8dySDlJPQDP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715190; c=relaxed/simple;
-	bh=iu8fcFo2tPu44R+hm7aNJFVNMhne7iClZZCj73upYVI=;
+	s=arc-20240116; t=1760715193; c=relaxed/simple;
+	bh=prZ+SxKAALX0E7j5/RDaUmxdKGieSF4xl9NMJd+Wwcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sagcU+UB73k+PjdkukRQ3vaDWQ9yWcYAAQE1kb9d3kiBpVnDDP1iysQa9dwzVu4riuDJsY+/ZgaBdg2bFK1oarnuOeCmuF0xyE10nGUj3comNAlBG/sn6yIdWFKHxfJ5OPSVApinLWGP7qaZcvACctIpJupACF2shoqYQPfwypQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHnkF0yx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RtqRSY+7HjUeGaNdYxVOkgU3sHTE2I+muxw6hHaba81fyU2EE2cRUtRY21GIm2rRkU00ab0MbYz2wN3X+JPMvU/YE0VSUhK97BVYmFtrIULLwO9Y39P9i9tQPgz36i1Cjt0dkJC6+pfWgj9e3ywkLg9gHSoBysxtmh/UXAn6Qjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANaiT67Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHnkF0yx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14015C4CEE7;
-	Fri, 17 Oct 2025 15:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANaiT67Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D2CC4CEE7;
+	Fri, 17 Oct 2025 15:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715190;
-	bh=iu8fcFo2tPu44R+hm7aNJFVNMhne7iClZZCj73upYVI=;
+	s=korg; t=1760715193;
+	bh=prZ+SxKAALX0E7j5/RDaUmxdKGieSF4xl9NMJd+Wwcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHnkF0yxAKIR74FmHMwnhYITQrm0V9qoFgFt4D+ghrnfe8txlbmLtstY1S7szMk8B
-	 fFeRp43gsmZXLxE5Nnbw5YWi+e8r9UxMv9UfXquMX/ndpHsMa0uH4NV2g+PTmqO9B0
-	 yR5MU3XD311gAiVh1M+ImoCJ8Yf7lhLRTcu8YiyY=
+	b=ANaiT67YXMcFTEJVSAxtoZBbH9gNo/5z2cE9ZuwsYTtYC+E38F2wC1hbQ+c8/jkOP
+	 NMqH4eIc03xjmG2iOhjmTJNj5jkygD9UGyCHl1bSB2jQQidNkE8rS+CihJbZHjtAXK
+	 zIsoXr6D8KRJrHEWQPDjqXMF3KY4Xx/1iJRcDZX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Vincent Minet <v.minet@criteo.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 097/371] perf tools: Fix arm64 libjvmti build by generating unistd_64.h
-Date: Fri, 17 Oct 2025 16:51:12 +0200
-Message-ID: <20251017145205.451062252@linuxfoundation.org>
+Subject: [PATCH 6.17 098/371] mailbox: zynqmp-ipi: Remove redundant mbox_controller_unregister() call
+Date: Fri, 17 Oct 2025 16:51:13 +0200
+Message-ID: <20251017145205.487641679@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Minet <v.minet@criteo.com>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit f3b601f900902ab80902c44f820a8985384ac021 ]
+[ Upstream commit 341867f730d3d3bb54491ee64e8b1a0c446656e7 ]
 
-Since commit 22f72088ffe6 ("tools headers: Update the syscall table with
-the kernel sources") the arm64 syscall header is generated at build
-time. Later, commit bfb713ea53c7 ("perf tools: Fix arm64 build by
-generating unistd_64.h") added a dependency to libperf to guarantee that
-this header was created before building libperf or perf itself.
+The controller is registered using the device-managed function
+'devm_mbox_controller_register()'. As documented in mailbox.c, this
+ensures the devres framework automatically calls
+mbox_controller_unregister() when device_unregister() is invoked, making
+the explicit call unnecessary.
 
-However, libjvmti also requires this header but does not depend on
-libperf, leading to build failures such as:
+Remove redundant mbox_controller_unregister() call as
+device_unregister() handles controller cleanup.
 
-  In file included from /usr/include/sys/syscall.h:24,
-                   from /usr/include/syscall.h:1,
-                   from jvmti/jvmti_agent.c:36:
-  tools/arch/arm64/include/uapi/asm/unistd.h:2:10: fatal error: asm/unistd_64.h: No such file or directory
-      2 | #include <asm/unistd_64.h>
-
-Fix this by ensuring that libperf is built before libjvmti, so that
-unistd_64.h is always available.
-
-Fixes: 22f72088ffe69a37 ("tools headers: Update the syscall table with the kernel sources")
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Vincent Minet <v.minet@criteo.com>
-Link: https://lore.kernel.org/r/20250922053702.2688374-1-v.minet@criteo.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index e2150acc2c133..f561025d4085e 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -941,7 +941,7 @@ $(OUTPUT)dlfilters/%.so: $(OUTPUT)dlfilters/%.o
- ifndef NO_JVMTI
- LIBJVMTI_IN := $(OUTPUT)jvmti/jvmti-in.o
- 
--$(LIBJVMTI_IN): FORCE
-+$(LIBJVMTI_IN): prepare FORCE
- 	$(Q)$(MAKE) -f $(srctree)/tools/build/Makefile.build dir=jvmti obj=jvmti
- 
- $(OUTPUT)$(LIBJVMTI): $(LIBJVMTI_IN)
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 0c143beaafda6..263a3413a8c7f 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -894,7 +894,6 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+-			mbox_controller_unregister(&ipi_mbox->mbox);
+ 			if (device_is_registered(&ipi_mbox->dev))
+ 				device_unregister(&ipi_mbox->dev);
+ 		}
 -- 
 2.51.0
 
