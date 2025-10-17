@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5766932C929;
-	Fri, 17 Oct 2025 15:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AAA27B33B;
+	Fri, 17 Oct 2025 15:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715010; cv=none; b=PVA04uiqeNIFjHLPL9m042+Wyrw9K6J26bEcOoKcgT6qSUdnTAHKT/Hun7zmYeKefhRgsKA7MxcWcYAaKF7mFkdOAkADeskg3/4BIdo6nL5YHiyIO15yg2iWhB+VmN5I1bL8m+cugA9tutjDd5mNR98enUOn8DpeE2yvZ5hIl3Y=
+	t=1760715013; cv=none; b=ru9q9FmXU8QsYGNtjEurL2ecGkXjvmwEe1p15oV5akvzZTtyKRjdYNzuLo6m9j4Wwcqiow+1Cj6wO1CupgPUH3BohrSX+2zIK1dA9vTTCpDq5GS6a78bNmAie5GOkcr/54fUyL5Chtd2UOkwy6yOL1H8HNcL4vx9BuZEE3AlQe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715010; c=relaxed/simple;
-	bh=+Lmg8IxSprLhdGzdG+BecBuWLqzJXhFOUaIHLsGadRY=;
+	s=arc-20240116; t=1760715013; c=relaxed/simple;
+	bh=G4rWnLBGCx0s4yBRj2rg2h8ulo4YbiHnSuiSrBjjNFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bs6XVLHhz3gEqQIf+2g86gEO87YLq6rVG0XH9vgNeNhbPQCXOf6LiDiw0puGDaXy34eOaGxW8+1LGgN3esxH0x9qJBXQwPrlkzHg6HZHnjsH+6kRFPw4ir/Kkp8pEXcOE7EvRyy1ZJrax5KusuAsBBPDXVn80H0/t2OSR215bro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKG3XvPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fA7aGTT2ai0HMy6A1sAW1ejm6esP+ffvlj7D17KQRgrx2732dMI11nVK1Tg7/bvnCRgFo2ICfGyHkGmgO+L/CtEwQ86IRawoMV5OM9dHD71Gv935O+pVx8DJ2rxdAMjzbc0mzFoonI4AOmjTuhibTdPthNbttPDIdZglEBtqvlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LmJa93j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKG3XvPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D501DC4CEE7;
-	Fri, 17 Oct 2025 15:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LmJa93j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC99C4CEE7;
+	Fri, 17 Oct 2025 15:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715010;
-	bh=+Lmg8IxSprLhdGzdG+BecBuWLqzJXhFOUaIHLsGadRY=;
+	s=korg; t=1760715013;
+	bh=G4rWnLBGCx0s4yBRj2rg2h8ulo4YbiHnSuiSrBjjNFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKG3XvPEpVNkpmDrCt+SEf8RqrT/B2CosQLqxYx4FDEdZbK1jtG9RfwrI7Y28T6Lo
-	 c86J8A9i5CqFDi8qDhrn8LeUrTZK9x620L91u+MXYEFAUw5L7bAsGtB2/RIU4gn+il
-	 O5iuZY86M7wWKGmT0TYh9P0zF6NrOA0cPui5xc5Y=
+	b=1LmJa93joiPdwe1HlaP1MNhWdQJJdrnrwi351uQjGHPrrR8n99LL3FrwNIU+H9cN2
+	 cetw+6s5u7ERBlty2ztDakvM2U9qEqyX8WtVGtmmg6AxvttfsD1wtYqcfDc6otREK+
+	 DTW7Uevem/CbDJq+H8xB+zRfUouZ0v/pKn9BEPPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 067/371] cpufreq: tegra186: Set target frequency for all cpus in policy
-Date: Fri, 17 Oct 2025 16:50:42 +0200
-Message-ID: <20251017145204.359294573@linuxfoundation.org>
+Subject: [PATCH 6.17 068/371] scsi: mvsas: Fix use-after-free bugs in mvs_work_queue
+Date: Fri, 17 Oct 2025 16:50:43 +0200
+Message-ID: <20251017145204.396281006@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,44 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 0b1bb980fd7cae126ee3d59f817068a13e321b07 ]
+[ Upstream commit 60cd16a3b7439ccb699d0bf533799eeb894fd217 ]
 
-The original commit set all cores in a cluster to a shared policy, but
-did not update set_target to apply a frequency change to all cores for
-the policy. This caused most cores to remain stuck at their boot
-frequency.
+During the detaching of Marvell's SAS/SATA controller, the original code
+calls cancel_delayed_work() in mvs_free() to cancel the delayed work
+item mwq->work_q. However, if mwq->work_q is already running, the
+cancel_delayed_work() may fail to cancel it. This can lead to
+use-after-free scenarios where mvs_free() frees the mvs_info while
+mvs_work_queue() is still executing and attempts to access the
+already-freed mvs_info.
 
-Fixes: be4ae8c19492 ("cpufreq: tegra186: Share policy per cluster")
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+A typical race condition is illustrated below:
+
+CPU 0 (remove)            | CPU 1 (delayed work callback)
+mvs_pci_remove()          |
+  mvs_free()              | mvs_work_queue()
+    cancel_delayed_work() |
+      kfree(mvi)          |
+                          |   mvi-> // UAF
+
+Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
+that the delayed work item is properly canceled and any executing
+delayed work item completes before the mvs_info is deallocated.
+
+This bug was found by static analysis.
+
+Fixes: 20b09c2992fe ("[SCSI] mvsas: add support for 94xx; layout change; bug fixes")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/tegra186-cpufreq.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/scsi/mvsas/mv_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
-index cbabb726c6645..6c394b429b618 100644
---- a/drivers/cpufreq/tegra186-cpufreq.c
-+++ b/drivers/cpufreq/tegra186-cpufreq.c
-@@ -93,10 +93,14 @@ static int tegra186_cpufreq_set_target(struct cpufreq_policy *policy,
- {
- 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
- 	struct cpufreq_frequency_table *tbl = policy->freq_table + index;
--	unsigned int edvd_offset = data->cpus[policy->cpu].edvd_offset;
-+	unsigned int edvd_offset;
- 	u32 edvd_val = tbl->driver_data;
-+	u32 cpu;
- 
--	writel(edvd_val, data->regs + edvd_offset);
-+	for_each_cpu(cpu, policy->cpus) {
-+		edvd_offset = data->cpus[cpu].edvd_offset;
-+		writel(edvd_val, data->regs + edvd_offset);
-+	}
- 
- 	return 0;
+diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
+index 2c72da6b8cf0c..7f1ad305eee63 100644
+--- a/drivers/scsi/mvsas/mv_init.c
++++ b/drivers/scsi/mvsas/mv_init.c
+@@ -124,7 +124,7 @@ static void mvs_free(struct mvs_info *mvi)
+ 	if (mvi->shost)
+ 		scsi_host_put(mvi->shost);
+ 	list_for_each_entry(mwq, &mvi->wq_list, entry)
+-		cancel_delayed_work(&mwq->work_q);
++		cancel_delayed_work_sync(&mwq->work_q);
+ 	kfree(mvi->rsvd_tags);
+ 	kfree(mvi);
  }
 -- 
 2.51.0
