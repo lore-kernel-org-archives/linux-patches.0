@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB84330B04;
-	Fri, 17 Oct 2025 15:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6540C330B2D;
+	Fri, 17 Oct 2025 15:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716152; cv=none; b=TstOTQzSjLMl8L+IKXhJNqRN8G+mm8AJfIgeXPssihwGLso19wvLqoi0HSBd/ipAIo108KTF79Ag6pgYoComlzwYneT4AJ32BtSB15rLe7A+taEuCTSp/qFU8wezLAUEiU5C/Dv1Vpg7f+OpgTH8SPEj/XhiOAupM2Xw6qSFbw8=
+	t=1760716155; cv=none; b=ieDhJ8G/ZWN9hrkykrsFnDUQhgxzbzkRjtdwtOolKHOLgOQ0ODqV4HBCX9nc61fn8oD1CmDnDCpxO5Tb4JBCgipy4qkb0XsTCG9F+PDY9LJVb9/mW4PIlnrRiN4U9nBqXrUnR7LZlGvk5Ifx2cblzIZ7Gk0WL3KZylwA7NfFOZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716152; c=relaxed/simple;
-	bh=0DPAEYtiAP4JPcM9PJkIbchTvTr6vXQ0hm+2+PHHep0=;
+	s=arc-20240116; t=1760716155; c=relaxed/simple;
+	bh=4hTX4CVoyzrHK+QJbnyUiCfJibAO/ZVtwGjtphCxwRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UItDGjH1KBvB16pf1Q466TlwHT+cvfTBa0lmjQ/xhLh4bd4CMh552JQc2txR8hXd0NGMfQPF7rbvpnJnOQv6RB6LPpvNS9/I1rsRhgwgxHFBK+f2axr6CiBre3/EYA01Zt7m0J9GHT1Gh6DnwhQ1vvBIx67V674c63NyQL+TcFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYT9HqBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LI4w8q0gKO04ekF5fjqhEDv70D+v+UCO+Clr1jedTwg/7b5aipRbSb1a/sbCwQ+kQEnXKBq3CbFFG7e4sQLFrEiRgTGbYBmhU/qMCLQDBzdf4RDIycFFZFv+rMPWynTu8pxNxHbG12Wr7zHVad+OL8aDO3dlaxlH6HiNQ+keg8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPsOscxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYT9HqBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D48C4CEE7;
-	Fri, 17 Oct 2025 15:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPsOscxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4AAC4CEFE;
+	Fri, 17 Oct 2025 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716152;
-	bh=0DPAEYtiAP4JPcM9PJkIbchTvTr6vXQ0hm+2+PHHep0=;
+	s=korg; t=1760716155;
+	bh=4hTX4CVoyzrHK+QJbnyUiCfJibAO/ZVtwGjtphCxwRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYT9HqBwxQxIw22j9coE4XCUHh3S8v6RuXC6qFwhQbZ7owRFkd4exxJt2lIDYkRcV
-	 GjqYGM+MHT9KpPfn+EYvWTU1z84YKw07I/u6lo/Zt4xl4TW1dvDm8gBDytSsXIXr2t
-	 li/OBOAPTEW2gGaO0rzF556YQzpd7SDH6eVWtyNU=
+	b=lPsOscxY0hLnSvlqe7Q/DZVZmvsqo/sW0xSf2WCvnHAxvjsFqaF2pWP63iQTVaDax
+	 aiV4BPcXPrBNFs8qffmFr9BmUQifFVzq/N5gcWbJaoLjd5DJotx9vZ4TrJbS6bxhG1
+	 a2f7a6wLOJn7SXj44cA+EAgzxALz3U/PYv6Rgqe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Tamas Zsoldos <tamas.zsoldos@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/276] watchdog: mpc8xxx_wdt: Reload the watchdog timer when enabling the watchdog
-Date: Fri, 17 Oct 2025 16:52:47 +0200
-Message-ID: <20251017145145.189034603@linuxfoundation.org>
+Subject: [PATCH 5.15 092/276] coresight: trbe: Return NULL pointer for allocation failures
+Date: Fri, 17 Oct 2025 16:53:05 +0200
+Message-ID: <20251017145145.845752980@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,46 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 7dfd80f70ef00d871df5af7c391133f7ba61ad9b ]
+[ Upstream commit 8a55c161f7f9c1aa1c70611b39830d51c83ef36d ]
 
-When the watchdog gets enabled with this driver, it leaves enough time
-for the core watchdog subsystem to start pinging it. But when the
-watchdog is already started by hardware or by the boot loader, little
-time remains before it fires and it happens that the core watchdog
-subsystem doesn't have time to start pinging it.
+When the TRBE driver fails to allocate a buffer, it currently returns
+the error code "-ENOMEM". However, the caller etm_setup_aux() only
+checks for a NULL pointer, so it misses the error. As a result, the
+driver continues and eventually causes a kernel panic.
 
-Until commit 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker
-function") pinging was managed by the driver itself and the watchdog
-was immediately pinged by setting the timer expiry to 0.
+Fix this by returning a NULL pointer from arm_trbe_alloc_buffer() on
+allocation failures. This allows that the callers can properly handle
+the failure.
 
-So restore similar behaviour by pinging it when enabling it so that
-if it was already enabled the watchdog timer counter is reloaded.
-
-Fixes: 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker function")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
+Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250904-cs_etm_auxsetup_fix_error_handling-v2-1-a502d0bafb95@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/mpc8xxx_wdt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwtracing/coresight/coresight-trbe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/mpc8xxx_wdt.c b/drivers/watchdog/mpc8xxx_wdt.c
-index 1c569be72ea29..15644ae2387fd 100644
---- a/drivers/watchdog/mpc8xxx_wdt.c
-+++ b/drivers/watchdog/mpc8xxx_wdt.c
-@@ -100,6 +100,8 @@ static int mpc8xxx_wdt_start(struct watchdog_device *w)
- 	ddata->swtc = tmp >> 16;
- 	set_bit(WDOG_HW_RUNNING, &ddata->wdd.status);
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+index 732a4bed3f207..dfdb5d4263259 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.c
++++ b/drivers/hwtracing/coresight/coresight-trbe.c
+@@ -503,12 +503,12 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
  
-+	mpc8xxx_wdt_keepalive(ddata);
-+
- 	return 0;
- }
+ 	buf = kzalloc_node(sizeof(*buf), GFP_KERNEL, trbe_alloc_node(event));
+ 	if (!buf)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
  
+ 	pglist = kcalloc(nr_pages, sizeof(*pglist), GFP_KERNEL);
+ 	if (!pglist) {
+ 		kfree(buf);
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 	}
+ 
+ 	for (i = 0; i < nr_pages; i++)
+@@ -518,7 +518,7 @@ static void *arm_trbe_alloc_buffer(struct coresight_device *csdev,
+ 	if (!buf->trbe_base) {
+ 		kfree(pglist);
+ 		kfree(buf);
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 	}
+ 	buf->trbe_limit = buf->trbe_base + nr_pages * PAGE_SIZE;
+ 	buf->trbe_write = buf->trbe_base;
 -- 
 2.51.0
 
