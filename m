@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AF0336EC5;
-	Fri, 17 Oct 2025 15:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD27E336EC4;
+	Fri, 17 Oct 2025 15:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714499; cv=none; b=nVl2+TG1BDORWHKgbBxrGkIBIU5wACSDR8JrVuYdA7j+KwCLo5QdrvjgEVGw+ettBiVRZHORsBpDmNtkQpl+hdf7+RxIYRuTorV6fiLQrtpBC8Y8bFn3HjeTKc2rUq4BGP1UOGUA2lW1HaP2K7JyDBkTmW2vKyHwWxjyzeWw6Oc=
+	t=1760714501; cv=none; b=u7RfiewDcQhUrMYQr44Rn/AYn8LTBdT/SPT2c+gk3ym5gA73QDP/6u+o73uwwkq05ziXPWKWXl1IOLuKUZdLzBQJxBgjGk7GM8f+pS2lKFsg4curu/AHVGn6EQi4mpKq5LN91zyNQv5OTkWaW2rebetErkZYatIU0yoTO1TKCnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714499; c=relaxed/simple;
-	bh=wzIOe8SpDSARu5fbflSkjUJ8U35+BAWpuO0POXXWRpU=;
+	s=arc-20240116; t=1760714501; c=relaxed/simple;
+	bh=EwHW+tjCu6hyrRoMfrrfKiJ+MyrF2bp7LE7YQrS4lvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgJNIIcG+B71jZMDGu9Fd69rQhkV+Qf7OxaI09Nrs3ZrsJVwRzPXw7U7QLjxXlc90ma0aYS9zWzEemyoWrGyyBQ+0ZusgVR+S7tNj8B7b922Q3i6BBaPdgSfxF0h9lSN5Bj9diTU7aUpW6+3Bm32bJbcZ6Y7RSsEG+tSJqYS1Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVqc89gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+6QwwZc1mtFGIIsDt3SZK1uQivLdNqs2lF2lTUC4xnEHrRnhOVENhAkDKCaMrclo0bUPXgqD/KtIb67wPupM+x6FbZhwWtVLtM4FsDtlq+5MJoFCQqcL/PF5SsZN4rrIZaaPYbmWD4loxMAr+/585p2mAjdhJ4w4X254vvzIW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqsVCXhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVqc89gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702D5C4CEE7;
-	Fri, 17 Oct 2025 15:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqsVCXhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C762C4CEE7;
+	Fri, 17 Oct 2025 15:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714498;
-	bh=wzIOe8SpDSARu5fbflSkjUJ8U35+BAWpuO0POXXWRpU=;
+	s=korg; t=1760714501;
+	bh=EwHW+tjCu6hyrRoMfrrfKiJ+MyrF2bp7LE7YQrS4lvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVqc89gcSHFQpZuwhw0QDRG1y3hDqa2dZef1qwcrTbzW0JixdFIyOvJVfiTIiMfbp
-	 i4yBqhswDN5ka5Ba2gW/P7C1GQnp1VQ9FvRZ0I0Ef/jmHkaDOPlHRZGYzZAvp2fUua
-	 K7kLZ2NJNl7Y+kAb5YmvcT1BzYMRP1//Kr6AzbwU=
+	b=RqsVCXhvnhrsM/E6jM2DoGzxlB6tYEU0GJFr1T5e+x91zZHmSxae4DWB/dtsBpRn2
+	 ntYBfsf0suvmzMrhzgN7Ea6PSJPQbAWxn1hUOekAM3setWMCK8/yhPkCVL1pz1Gjuu
+	 b2NpdyItp8Of32jx9di/oEwCQsq0/fhGZlimI6p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Andreas Larsson <andreas@gaisler.com>
-Subject: [PATCH 6.12 165/277] sparc: fix error handling in scan_one_device()
-Date: Fri, 17 Oct 2025 16:52:52 +0200
-Message-ID: <20251017145153.150740869@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.12 166/277] xtensa: simdisk: add input size check in proc_write_simdisk
+Date: Fri, 17 Oct 2025 16:52:53 +0200
+Message-ID: <20251017145153.186983308@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,52 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 302c04110f0ce70d25add2496b521132548cd408 upstream.
+commit 5d5f08fd0cd970184376bee07d59f635c8403f63 upstream.
 
-Once of_device_register() failed, we should call put_device() to
-decrement reference count for cleanup. Or it could cause memory leak.
-So fix this by calling put_device(), then the name can be freed in
-kobject_cleanup().
+A malicious user could pass an arbitrarily bad value
+to memdup_user_nul(), potentially causing kernel crash.
 
-Calling path: of_device_register() -> of_device_add() -> device_add().
-As comment of device_add() says, 'if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count'.
+This follows the same pattern as commit ee76746387f6
+("netdevsim: prevent bad user input in nsim_dev_health_break_write()")
 
-Found by code review.
-
+Fixes: b6c7e873daf7 ("xtensa: ISS: add host file-based simulated disk")
+Fixes: 16e5c1fc3604 ("convert a bunch of open-coded instances of memdup_user_nul()")
 Cc: stable@vger.kernel.org
-Fixes: cf44bbc26cf1 ("[SPARC]: Beginnings of generic of_device framework.")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Message-Id: <20250829083015.1992751-1-linmq006@gmail.com>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/kernel/of_device_32.c |    1 +
- arch/sparc/kernel/of_device_64.c |    1 +
- 2 files changed, 2 insertions(+)
+ arch/xtensa/platforms/iss/simdisk.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/sparc/kernel/of_device_32.c
-+++ b/arch/sparc/kernel/of_device_32.c
-@@ -387,6 +387,7 @@ static struct platform_device * __init s
+--- a/arch/xtensa/platforms/iss/simdisk.c
++++ b/arch/xtensa/platforms/iss/simdisk.c
+@@ -230,10 +230,14 @@ static ssize_t proc_read_simdisk(struct
+ static ssize_t proc_write_simdisk(struct file *file, const char __user *buf,
+ 			size_t count, loff_t *ppos)
+ {
+-	char *tmp = memdup_user_nul(buf, count);
++	char *tmp;
+ 	struct simdisk *dev = pde_data(file_inode(file));
+ 	int err;
  
- 	if (of_device_register(op)) {
- 		printk("%pOF: Could not register of device.\n", dp);
-+		put_device(&op->dev);
- 		kfree(op);
- 		op = NULL;
- 	}
---- a/arch/sparc/kernel/of_device_64.c
-+++ b/arch/sparc/kernel/of_device_64.c
-@@ -677,6 +677,7 @@ static struct platform_device * __init s
++	if (count == 0 || count > PAGE_SIZE)
++		return -EINVAL;
++
++	tmp = memdup_user_nul(buf, count);
+ 	if (IS_ERR(tmp))
+ 		return PTR_ERR(tmp);
  
- 	if (of_device_register(op)) {
- 		printk("%pOF: Could not register of device.\n", dp);
-+		put_device(&op->dev);
- 		kfree(op);
- 		op = NULL;
- 	}
 
 
