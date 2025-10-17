@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91308330B04;
-	Fri, 17 Oct 2025 15:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A51330B22;
+	Fri, 17 Oct 2025 15:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716106; cv=none; b=oYFzX3RGSwV4QoFOMxD+zOwkj6d3pXQKJ/L4Jrd5Q3e6O9wJ4Sz5svsB7TAR+xF2NIpNQqZ6HDVRWvep+ASJyKb4NF4W2U8f9oExgAHpGUH5ZQ2j4GKAQibTLMJ4Y5dzHuOrE9d/8fVc3/Gkn44lSrOXmtxJpExsbxgub1yzlEg=
+	t=1760716109; cv=none; b=Z9axj0t141grX7MTC2NV00ZtGpyutBIniA//KomvTqr0DxfDOi0wgGF9IA8HzEft9hqKf/OugBj8yasx2HK/NBW//phSybf/BaL7Rsshmu+7r7lmxvcnanhT5WOMAife7pX+O2nw3Adv9J856NgFWUBEidPqzrTL7AHk2vcfpGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716106; c=relaxed/simple;
-	bh=3cbZ8CzGijzoRf7Y3hGGchQx2S5YyH0CMLCJ5UitXDI=;
+	s=arc-20240116; t=1760716109; c=relaxed/simple;
+	bh=CpC3NOPKw3hUvicdXL7odml6Tml+wP730cOFA7TNhew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mt1C0sTJqrO+z/oapw8eFD2RPsq/949JeoEsTzpl2PbptrB1dWg2c+wAKKWks6OBDFbxUKNPxFx0zq3Q2KoQxpdhbKaymWG02XB64bdBsxaGvz27SKZ9xWuykTm6jp2L9c65WZHZ/oVBBkmGTIbvJwMQsKLau+YVgS3zl7CKoGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ABtTKiK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ekK1A/ETCInXbtnFocCL0n3PasGs3f42cGCPnK3FmPpnvpFV3l5P84TqbyeyWucoqcCTk33o/khyT8zlzyg2uqGdhjUzKwoTWl/+f5hXhjB3SB3aZplFn0BV4k8AUmfLH8W9MB3whfsK1OBn+1YKMX+U9S3oUrMZTQWryUS5qxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBtjUOPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ABtTKiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6EFC4CEE7;
-	Fri, 17 Oct 2025 15:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBtjUOPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8883C113D0;
+	Fri, 17 Oct 2025 15:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716106;
-	bh=3cbZ8CzGijzoRf7Y3hGGchQx2S5YyH0CMLCJ5UitXDI=;
+	s=korg; t=1760716109;
+	bh=CpC3NOPKw3hUvicdXL7odml6Tml+wP730cOFA7TNhew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ABtTKiKWbOFYrhS7cpG9nrdZCigzc021gdzm+zqX8CKBKRyDnOIGxHd1Rv0pQbOe
-	 fLnzobgqvy9OYSgfUj8RDICLMIeMa+45lO61L+8xt274iVoxgkwfFPuKbg+nslPUjy
-	 aaA+UDNeFFac4zk3KuRj2/X8s4R3DfG+OJzw7tWs=
+	b=HBtjUOPoiUYmb5d9h96Er3CBK7+xw/TNZh3WnBKsR094VON7DPA3j1R3DIp5Lp8ir
+	 nsKB9wwFTnMNRbmKGW4ka7EIZ8eO6ymR6a8P8f30pXT/+e/vBxwLEYcE9CS4yBxX94
+	 WkVrfV2B148U3/bvckGvyDk+LMDPb1em9Z9wGsEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/276] pwm: tiehrpwm: Fix corner case in clock divisor calculation
-Date: Fri, 17 Oct 2025 16:52:15 +0200
-Message-ID: <20251017145143.941220897@linuxfoundation.org>
+Subject: [PATCH 5.15 043/276] nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
+Date: Fri, 17 Oct 2025 16:52:16 +0200
+Message-ID: <20251017145143.977421156@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,48 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
+[ Upstream commit db5a5406fb7e5337a074385c7a3e53c77f2c1bd3 ]
 
-The function set_prescale_div() is responsible for calculating the clock
-divisor settings such that the input clock rate is divided down such that
-the required period length is at most 0x10000 clock ticks. If period_cycles
-is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
-good enough. So round up in the calculation of the required divisor and
-compare it using >= instead of >.
+It’s possible for more than one async command to be in flight from
+__nvmet_fc_send_ls_req. For each command, a tgtport reference is taken.
 
-Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+In the current code, only one put work item is queued at a time, which
+results in a leaked reference.
+
+To fix this, move the work item to the nvmet_fc_ls_req_op struct, which
+already tracks all resources related to the command.
+
+Fixes: 710c69dbaccd ("nvmet-fc: avoid deadlock on delete association path")
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fc.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index 5b723a48c5f1d..3fef7d7987736 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -167,7 +167,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 812d085d49c99..4c4b528b89ebe 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -54,6 +54,8 @@ struct nvmet_fc_ls_req_op {		/* for an LS RQST XMT */
+ 	int				ls_error;
+ 	struct list_head		lsreq_list; /* tgtport->ls_req_list */
+ 	bool				req_queued;
++
++	struct work_struct		put_work;
+ };
  
- 			*prescale_div = (1 << clkdiv) *
- 					(hspclkdiv ? (hspclkdiv * 2) : 1);
--			if (*prescale_div > rqst_prescaler) {
-+			if (*prescale_div >= rqst_prescaler) {
- 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
- 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
- 				return 0;
-@@ -266,7 +266,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	pc->period_cycles[pwm->hwpwm] = period_cycles;
  
- 	/* Configure clock prescaler to support Low frequency PWM wave */
--	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
-+	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
- 			     &tb_divval)) {
- 		dev_err(chip->dev, "Unsupported values\n");
- 		return -EINVAL;
+@@ -111,8 +113,6 @@ struct nvmet_fc_tgtport {
+ 	struct nvmet_fc_port_entry	*pe;
+ 	struct kref			ref;
+ 	u32				max_sg_cnt;
+-
+-	struct work_struct		put_work;
+ };
+ 
+ struct nvmet_fc_port_entry {
+@@ -236,12 +236,13 @@ static int nvmet_fc_tgt_a_get(struct nvmet_fc_tgt_assoc *assoc);
+ static void nvmet_fc_tgt_q_put(struct nvmet_fc_tgt_queue *queue);
+ static int nvmet_fc_tgt_q_get(struct nvmet_fc_tgt_queue *queue);
+ static void nvmet_fc_tgtport_put(struct nvmet_fc_tgtport *tgtport);
+-static void nvmet_fc_put_tgtport_work(struct work_struct *work)
++static void nvmet_fc_put_lsop_work(struct work_struct *work)
+ {
+-	struct nvmet_fc_tgtport *tgtport =
+-		container_of(work, struct nvmet_fc_tgtport, put_work);
++	struct nvmet_fc_ls_req_op *lsop =
++		container_of(work, struct nvmet_fc_ls_req_op, put_work);
+ 
+-	nvmet_fc_tgtport_put(tgtport);
++	nvmet_fc_tgtport_put(lsop->tgtport);
++	kfree(lsop);
+ }
+ static int nvmet_fc_tgtport_get(struct nvmet_fc_tgtport *tgtport);
+ static void nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
+@@ -368,7 +369,7 @@ __nvmet_fc_finish_ls_req(struct nvmet_fc_ls_req_op *lsop)
+ 				  DMA_BIDIRECTIONAL);
+ 
+ out_putwork:
+-	queue_work(nvmet_wq, &tgtport->put_work);
++	queue_work(nvmet_wq, &lsop->put_work);
+ }
+ 
+ static int
+@@ -389,6 +390,7 @@ __nvmet_fc_send_ls_req(struct nvmet_fc_tgtport *tgtport,
+ 	lsreq->done = done;
+ 	lsop->req_queued = false;
+ 	INIT_LIST_HEAD(&lsop->lsreq_list);
++	INIT_WORK(&lsop->put_work, nvmet_fc_put_lsop_work);
+ 
+ 	lsreq->rqstdma = fc_dma_map_single(tgtport->dev, lsreq->rqstaddr,
+ 				  lsreq->rqstlen + lsreq->rsplen,
+@@ -448,8 +450,6 @@ nvmet_fc_disconnect_assoc_done(struct nvmefc_ls_req *lsreq, int status)
+ 	__nvmet_fc_finish_ls_req(lsop);
+ 
+ 	/* fc-nvme target doesn't care about success or failure of cmd */
+-
+-	kfree(lsop);
+ }
+ 
+ /*
+@@ -1407,7 +1407,6 @@ nvmet_fc_register_targetport(struct nvmet_fc_port_info *pinfo,
+ 	kref_init(&newrec->ref);
+ 	ida_init(&newrec->assoc_cnt);
+ 	newrec->max_sg_cnt = template->max_sgl_segments;
+-	INIT_WORK(&newrec->put_work, nvmet_fc_put_tgtport_work);
+ 
+ 	ret = nvmet_fc_alloc_ls_iodlist(newrec);
+ 	if (ret) {
 -- 
 2.51.0
 
