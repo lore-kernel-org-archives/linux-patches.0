@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE142330B30;
-	Fri, 17 Oct 2025 15:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97D3330B00;
+	Fri, 17 Oct 2025 15:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715298; cv=none; b=laG7MBC84HRL6F6S9XJWIk5RXEZSDWZgE+2LXzWiasd60q2uhYfo21v3GAINp4Oc8hGikAG4ZoVm+u6BlWS5jXqYp8Ci6GIQYJoG/I3LvJUi8tf6Zo0S5blNCxaIMyY4OQEoz0nQofoFDHJSsbxiyaD2imFY9CIkh/NFq9chGyg=
+	t=1760715302; cv=none; b=GspYp4g2vEqt4KZ72p8xSjeyF48oWhnEJvh8Iifabogdk9xb5NIxuqvSk86bNA2KzGKWUDr/GqjkPOf+ZoM3/FLFAXsRNTqBko7mPPt36MXLA/FUwFluRv9JGPKE8VDKOKYq+ljVTyzuhce2eFffYU19V2ES1sEwNETG8c8vOtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715298; c=relaxed/simple;
-	bh=tVOrh7QmWggo/YjM1kuPjz1xilQxS6y9g5M6O+HoT9s=;
+	s=arc-20240116; t=1760715302; c=relaxed/simple;
+	bh=KGi12mQzl5Nbxic9SstdI0k+nC2rqA3l9JUn0BMtF80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAUEO+3TCH0aJs/J/P2ZRCotHX5O47iwEhtwCtF3LzgtxFSQ+rdQTn9drya1KNZzgSR8/eryL6bI6GiWYn8W2zxfi62BW+Jb1/LPu074MHv3J+5srP4Iu2OIfL3qLGKrFaQNvW1vFw6tcLL0cbEwyQtyUzdNlZDCOooURJkLOJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuJgo86+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hgl26K4PhM4uttxd/ggKTOHe4D9mtm5fft5E7VJFYHBb2LQ+BIv135MKvPW+xsRQ4jAnBR8AsUXYe+EXdtuX+PKBSg6rwcR6R5sqVe+yHylKUMCwcsI19OnxK6LKmvDusjBnszygCw/tKrMqBFXPfSwGXdL414EFOIlioVo5VQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YntX9UUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuJgo86+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDDBC4CEE7;
-	Fri, 17 Oct 2025 15:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YntX9UUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD70C4CEFE;
+	Fri, 17 Oct 2025 15:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715298;
-	bh=tVOrh7QmWggo/YjM1kuPjz1xilQxS6y9g5M6O+HoT9s=;
+	s=korg; t=1760715301;
+	bh=KGi12mQzl5Nbxic9SstdI0k+nC2rqA3l9JUn0BMtF80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuJgo86+jejT7y2rmnN41i21KDfGjBAb/td7AoCF9c/gaeT0fxgZVTZuQAdWxWxFl
-	 W+7aavpMw+jczm5j3RVDfLQcZjbUtAViedu7gvxn6TCRO4LC7watYrBsEY4wMvI0tj
-	 H7mJ7oc7UHQsNp/63czFZ4me8iVOHsRi/ZMQNHS8=
+	b=YntX9UUZTINL6S1nbNhepi1jzoeeilfoCA9XqzZJAunjt7X/PpSgHCYAAEYJ39ZOb
+	 Hg9+SDpEkwL6zYIexKHNPsevByFhATnpDQPoP5H3YP63H4ZmpomhTkaCSL/YcJozw8
+	 JCLs08JvQDaOifgGafr4irwM8bc3OaJiM5VAkvqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 124/371] smb: client: fix missing timestamp updates after utime(2)
-Date: Fri, 17 Oct 2025 16:51:39 +0200
-Message-ID: <20251017145206.420700415@linuxfoundation.org>
+	=?UTF-8?q?J=C3=BCrgen=20Gro=C3=9F?= <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
+Subject: [PATCH 6.17 161/371] xen: take system_transition_mutex on suspend
+Date: Fri, 17 Oct 2025 16:52:16 +0200
+Message-ID: <20251017145207.758066930@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -48,114 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 
-[ Upstream commit b95cd1bdf5aa9221c98fc9259014b8bb8d1829d7 ]
+commit 9d52b0b41be5b932a0a929c10038f1bb04af4ca5 upstream.
 
-Don't reuse open handle when changing timestamps to prevent the server
-from disabling automatic timestamp updates as per MS-FSA 2.1.4.17.
+Xen's do_suspend() calls dpm_suspend_start() without taking required
+system_transition_mutex. Since 12ffc3b1513eb moved the
+pm_restrict_gfp_mask() call, not taking that mutex results in a WARN.
 
----8<---
-import os
-import time
+Take the mutex in do_suspend(), and use mutex_trylock() to follow
+how enter_state() does this.
 
-filename = '/mnt/foo'
-
-def print_stat(prefix):
-    st = os.stat(filename)
-    print(prefix, ': ', time.ctime(st.st_atime), time.ctime(st.st_ctime))
-
-fd = os.open(filename, os.O_CREAT|os.O_TRUNC|os.O_WRONLY, 0o644)
-print_stat('old')
-os.utime(fd, None)
-time.sleep(2)
-os.write(fd, b'foo')
-os.close(fd)
-time.sleep(2)
-print_stat('new')
----8<---
-
-Before patch:
-
-$ mount.cifs //srv/share /mnt -o ...
-$ python3 run.py
-old :  Fri Oct  3 14:01:21 2025 Fri Oct  3 14:01:21 2025
-new :  Fri Oct  3 14:01:21 2025 Fri Oct  3 14:01:21 2025
-
-After patch:
-
-$ mount.cifs //srv/share /mnt -o ...
-$ python3 run.py
-old :  Fri Oct  3 17:03:34 2025 Fri Oct  3 17:03:34 2025
-new :  Fri Oct  3 17:03:36 2025 Fri Oct  3 17:03:36 2025
-
-Fixes: b6f2a0f89d7e ("cifs: for compound requests, use open handle if possible")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Cc: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Jürgen Groß <jgross@suse.com>
+Fixes: 12ffc3b1513eb "PM: Restrict swap use to later in the suspend sequence"
+Link: https://lore.kernel.org/xen-devel/aKiBJeqsYx_4Top5@mail-itl/
+Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Cc: stable@vger.kernel.org # v6.16+
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250921162853.223116-1-marmarek@invisiblethingslab.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/xen/manage.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 0985db9f86e51..e441fa2e76897 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1382,31 +1382,33 @@ int
- smb2_set_file_info(struct inode *inode, const char *full_path,
- 		   FILE_BASIC_INFO *buf, const unsigned int xid)
- {
--	struct cifs_open_parms oparms;
-+	struct kvec in_iov = { .iov_base = buf, .iov_len = sizeof(*buf), };
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct cifsFileInfo *cfile = NULL;
-+	struct cifs_open_parms oparms;
- 	struct tcon_link *tlink;
- 	struct cifs_tcon *tcon;
--	struct cifsFileInfo *cfile;
--	struct kvec in_iov = { .iov_base = buf, .iov_len = sizeof(*buf), };
--	int rc;
--
--	if ((buf->CreationTime == 0) && (buf->LastAccessTime == 0) &&
--	    (buf->LastWriteTime == 0) && (buf->ChangeTime == 0) &&
--	    (buf->Attributes == 0))
--		return 0; /* would be a no op, no sense sending this */
-+	int rc = 0;
+--- a/drivers/xen/manage.c
++++ b/drivers/xen/manage.c
+@@ -11,6 +11,7 @@
+ #include <linux/reboot.h>
+ #include <linux/sysrq.h>
+ #include <linux/stop_machine.h>
++#include <linux/suspend.h>
+ #include <linux/freezer.h>
+ #include <linux/syscore_ops.h>
+ #include <linux/export.h>
+@@ -95,10 +96,16 @@ static void do_suspend(void)
  
- 	tlink = cifs_sb_tlink(cifs_sb);
- 	if (IS_ERR(tlink))
- 		return PTR_ERR(tlink);
- 	tcon = tlink_tcon(tlink);
+ 	shutting_down = SHUTDOWN_SUSPEND;
  
--	cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
-+	if ((buf->CreationTime == 0) && (buf->LastAccessTime == 0) &&
-+	    (buf->LastWriteTime == 0) && (buf->ChangeTime == 0)) {
-+		if (buf->Attributes == 0)
-+			goto out; /* would be a no op, no sense sending this */
-+		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
++	if (!mutex_trylock(&system_transition_mutex))
++	{
++		pr_err("%s: failed to take system_transition_mutex\n", __func__);
++		goto out;
 +	}
 +
- 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path, FILE_WRITE_ATTRIBUTES,
- 			     FILE_OPEN, 0, ACL_NO_MODE);
- 	rc = smb2_compound_op(xid, tcon, cifs_sb,
- 			      full_path, &oparms, &in_iov,
- 			      &(int){SMB2_OP_SET_INFO}, 1,
- 			      cfile, NULL, NULL, NULL);
-+out:
- 	cifs_put_tlink(tlink);
- 	return rc;
+ 	err = freeze_processes();
+ 	if (err) {
+ 		pr_err("%s: freeze processes failed %d\n", __func__, err);
+-		goto out;
++		goto out_unlock;
+ 	}
+ 
+ 	err = freeze_kernel_threads();
+@@ -154,6 +161,8 @@ out_resume:
+ 
+ out_thaw:
+ 	thaw_processes();
++out_unlock:
++	mutex_unlock(&system_transition_mutex);
+ out:
+ 	shutting_down = SHUTDOWN_INVALID;
  }
--- 
-2.51.0
-
 
 
