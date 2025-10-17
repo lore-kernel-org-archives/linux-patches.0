@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777AC2F12D0;
-	Fri, 17 Oct 2025 15:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6C62F12D0;
+	Fri, 17 Oct 2025 15:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714388; cv=none; b=kAk0aQdkRZN3aE5vvMUL5nivKyBUxaCD2+pirfiMyk2tugOhg7aDzpBbQQQFjGyv/VKy7ZvevT92AaX6H1pDXIlTX9GaOD2lNjMhlmAgojtZCr5+WKxtDpZaaVOpVlgxvA9hrD4ift8zC9Y6rVCSDLNcYCHVg8iWdymCccKupHM=
+	t=1760714390; cv=none; b=GNXKJzsER5IXiFEImbeZAcPt1AtQaiGALCUcCrGd9dCNJb/y48tX2FolyHVk2ETpVSwmtaFM4U7PF1R6Rw+Yb173EHG6m1uNQUqwJD/Dv44Uizl7+WgUxJLL3aEByUCVUm1SzD4+pUoDx4mmvgCQ8xpiCf1iVZ9PFwK+LZXo2CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714388; c=relaxed/simple;
-	bh=S/MXThZFr5NvVqMRt9V1ubHqakFOoL3t7qLKEKEAoDk=;
+	s=arc-20240116; t=1760714390; c=relaxed/simple;
+	bh=3ylKpRZqMBDYArYQiFRnxZ74Ds7Bf56+jX0hQ/GiCAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKpW2HKDOqIVX9yp5es5jphCWnB1IkCJl2Q/RNf0F0SJZHXuUcmw3LsBMd5WnTd7KBSxH2DLnPnrUlmcBpdoKcI3g7dHD4QgqdjJUa6A86G76XG+oMC3MzG3ngpab6sHj0JYVF1CIdcJFe7iDqkcU1Csf1dZNZXTQFBs0NMn3B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8i42/Zr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jb5xZ1d8uI1qqxjRWEm98LtUtlo9Uyljw/T5MwCysgvqTJJHWH4SYl+MpRsAD6W3k+QhLg6jqfrZJVHAj0rCAVU08R8gEGs6TId4YR0U4upIfin55A6iCc7euPFi/6qtPCd8KH97CKa41Gwak+F13bpy/kWLE/QI2VtrTk5I4qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiR4znRA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8i42/Zr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC888C4CEE7;
-	Fri, 17 Oct 2025 15:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiR4znRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C685C4CEE7;
+	Fri, 17 Oct 2025 15:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714387;
-	bh=S/MXThZFr5NvVqMRt9V1ubHqakFOoL3t7qLKEKEAoDk=;
+	s=korg; t=1760714389;
+	bh=3ylKpRZqMBDYArYQiFRnxZ74Ds7Bf56+jX0hQ/GiCAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8i42/ZrgY2MlzsGVqxAZpUUmxyJV3hiK36HBfJBgmgVcBAVE/L3SiusciudVEA//
-	 X7e564i8f7fLPhTz31sMJ6Hx/VlJ5In9qF1ES2dkOS+l/BfiL+8xGqEv0A19Gx5uai
-	 hx8jwZN5tYFgMrNug2AUzjn0+Lm+D8c9ljXhu4W8=
+	b=QiR4znRA46d6EBiUjv8Eq4yX3dm/MucZWGUC6GQD2ramPaLcs290R3+Wg08VQijj+
+	 LmQrqz6Qv6H75hzj4uZ6BMbLzWoP3FBckDWP9+ovVnsFp1YB9sPzcB+6pLQyRAQlii
+	 ISRJhyxEMPvwPj4qaqOYjL3ZxNQFZ0jCAJ3bOHxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 127/277] crypto: aspeed - Fix dma_unmap_sg() direction
-Date: Fri, 17 Oct 2025 16:52:14 +0200
-Message-ID: <20251017145151.765147109@linuxfoundation.org>
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 101/277] xen/events: Update virq_to_irq on migration
+Date: Fri, 17 Oct 2025 16:51:48 +0200
+Message-ID: <20251017145150.819144960@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,33 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit 838d2d51513e6d2504a678e906823cfd2ecaaa22 upstream.
+commit 3fcc8e146935415d69ffabb5df40ecf50e106131 upstream.
 
-It seems like everywhere in this file, when the request is not
-bidirectionala, req->src is mapped with DMA_TO_DEVICE and req->dst is
-mapped with DMA_FROM_DEVICE.
+VIRQs come in 3 flavors, per-VPU, per-domain, and global, and the VIRQs
+are tracked in per-cpu virq_to_irq arrays.
 
-Fixes: 62f58b1637b7 ("crypto: aspeed - add HACE crypto driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Per-domain and global VIRQs must be bound on CPU 0, and
+bind_virq_to_irq() sets the per_cpu virq_to_irq at registration time
+Later, the interrupt can migrate, and info->cpu is updated.  When
+calling __unbind_from_irq(), the per-cpu virq_to_irq is cleared for a
+different cpu.  If bind_virq_to_irq() is called again with CPU 0, the
+stale irq is returned.  There won't be any irq_info for the irq, so
+things break.
+
+Make xen_rebind_evtchn_to_cpu() update the per_cpu virq_to_irq mappings
+to keep them update to date with the current cpu.  This ensures the
+correct virq_to_irq is cleared in __unbind_from_irq().
+
+Fixes: e46cdb66c8fc ("xen: event channels")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250828003604.8949-4-jason.andryuk@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/aspeed/aspeed-hace-crypto.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/events/events_base.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/aspeed/aspeed-hace-crypto.c
-+++ b/drivers/crypto/aspeed/aspeed-hace-crypto.c
-@@ -346,7 +346,7 @@ free_req:
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1803,9 +1803,20 @@ static int xen_rebind_evtchn_to_cpu(stru
+ 	 * virq or IPI channel, which don't actually need to be rebound. Ignore
+ 	 * it, but don't do the xenlinux-level rebind in that case.
+ 	 */
+-	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0)
++	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0) {
++		int old_cpu = info->cpu;
++
+ 		bind_evtchn_to_cpu(info, tcpu, false);
  
- 	} else {
- 		dma_unmap_sg(hace_dev->dev, req->dst, rctx->dst_nents,
--			     DMA_TO_DEVICE);
-+			     DMA_FROM_DEVICE);
- 		dma_unmap_sg(hace_dev->dev, req->src, rctx->src_nents,
- 			     DMA_TO_DEVICE);
- 	}
++		if (info->type == IRQT_VIRQ) {
++			int virq = info->u.virq;
++			int irq = per_cpu(virq_to_irq, old_cpu)[virq];
++
++			per_cpu(virq_to_irq, old_cpu)[virq] = -1;
++			per_cpu(virq_to_irq, tcpu)[virq] = irq;
++		}
++	}
++
+ 	do_unmask(info, EVT_MASK_REASON_TEMPORARY);
+ 
+ 	return 0;
 
 
