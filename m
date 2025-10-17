@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3182333509E;
-	Fri, 17 Oct 2025 15:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E397233507F;
+	Fri, 17 Oct 2025 15:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715347; cv=none; b=sQpQBbfAjtUp1WJpGj7I1JY+ped4NDp4vXvR2lakYQHnq/0LooZXIVsyHNkQ8DnQETsHTlG0t7ycBjgeZXJeEHM/jlq2ePFSRg8NCP+g/wJmHQ5Nje40muCCVpJlweFnZ6eraOWt5+LwMt0b8Et/8STed4RpXxV/zESA+xickYw=
+	t=1760715350; cv=none; b=C1nzWgfmo2Ws5FBJAG4ji1OQvdg+rg7qAY8CY3FnXJPsuDqWPXyYamiHtyCXmusE2Sg/SboV3fkipsHFzzHJAvFQyZECXNmJFpyucSWPBFsRILbli+6ABKEQeyihg3NffRfvwP7Ka3V5KX8SRcd8COAULaMlHvmkLbP5SdDU6RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715347; c=relaxed/simple;
-	bh=Mj2Vj5YwDG6G402LwTownvMoXurLN+6hVDqDstCj030=;
+	s=arc-20240116; t=1760715350; c=relaxed/simple;
+	bh=HpaBeYs2nD8GQa7ckrWZqhF7rdIh4kYJ9Mai8T+1LIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3mKXWeu4+BFJe5c+g/YFSm9bil2p5TtjgVt/oxVLE8QcxVqMo45RBCfJBwv9f+Bb6opUVJ+oJGg0Kjnirn49UZq2XCkSh7gmxeFBn856IrryfvARbre2TY/HF13yBPPFcqcGHeuoy90IIwvOsWQyKBhMtIzq68Qt8CX7sm5kT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoA32IsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f0Y3HwHrgj3f65t8vqHiOoVAX+Jt3eLoNz+Gs379rSObRfdftf8Ee5e/TTqSqcCjBnyu8qRTKVUgutuykd2PJjKt5vUw1zm3YPEgTw9pCsOf+u1EvFPvNtYN959AUGYLOlGz757mk+kAUFbN7DEBkNNRcy/MnctZIZM/pq6UkiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pzMZuQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoA32IsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0293C4CEFE;
-	Fri, 17 Oct 2025 15:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pzMZuQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D480C4CEE7;
+	Fri, 17 Oct 2025 15:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715347;
-	bh=Mj2Vj5YwDG6G402LwTownvMoXurLN+6hVDqDstCj030=;
+	s=korg; t=1760715349;
+	bh=HpaBeYs2nD8GQa7ckrWZqhF7rdIh4kYJ9Mai8T+1LIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoA32IsUEDRy07ddok2+Q+9B2KKKBI4OU7T9bIkxbDYQjANfqB7n+cQqk6XsAo+3y
-	 lYotqfM56VRCDwgZkJTi5wMvjGo+y+ZFmO3XfaO8gN3tvoq4Rn//2iTr/7g77g6iYy
-	 iyhAP5dfEZ0DYJAr1QZ4M2Q/9CJ0bztF53qmX6vI=
+	b=0pzMZuQf8CSq8XM1N180rsLJrT+T0s2p19H9AaHr5SAy9qvm+I472va8PoeAFz5v9
+	 qyAhsDBfwiL2XJ5R+UZyFvzhry7y8+/tO/no+/0Jst7/EzIPSrhgJZtzraE1gV2DQj
+	 +oRFpYZhBGnkQi3exV45c83e6SAfrt7Q+wY7owis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Subject: [PATCH 6.17 184/371] media: ti: j721e-csi2rx: Fix source subdev link creation
-Date: Fri, 17 Oct 2025 16:52:39 +0200
-Message-ID: <20251017145208.582621566@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.17 185/371] media: lirc: Fix error handling in lirc_register()
+Date: Fri, 17 Oct 2025 16:52:40 +0200
+Message-ID: <20251017145208.618807986@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,56 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <jai.luthra@ideasonboard.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 3e743cd0a73246219da117ee99061aad51c4748c upstream.
+commit 4f4098c57e139ad972154077fb45c3e3141555dd upstream.
 
-We don't use OF ports and remote-endpoints to connect the CSI2RX bridge
-and this device in the device tree, thus it is wrong to use
-v4l2_create_fwnode_links_to_pad() to create the media graph link between
-the two.
+When cdev_device_add() failed, calling put_device() to explicitly
+release dev->lirc_dev. Otherwise, it could cause the fault of the
+reference count.
 
-It works out on accident, as neither the source nor the sink implement
-the .get_fwnode_pad() callback, and the framework helper falls back on
-using the first source and sink pads to create the link between them.
+Found by code review.
 
-Instead, manually create the media link from the first source pad of the
-bridge to the first sink pad of the J721E CSI2RX.
-
-Fixes: b4a3d877dc92 ("media: ti: Add CSI2RX support for J721E")
 Cc: stable@vger.kernel.org
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Tested-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com> (on SK-AM68)
-Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: a6ddd4fecbb0 ("media: lirc: remove last remnants of lirc kapi")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/rc/lirc_dev.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-+++ b/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-@@ -52,6 +52,8 @@
- #define DRAIN_TIMEOUT_MS		50
- #define DRAIN_BUFFER_SIZE		SZ_32K
+--- a/drivers/media/rc/lirc_dev.c
++++ b/drivers/media/rc/lirc_dev.c
+@@ -736,11 +736,11 @@ int lirc_register(struct rc_dev *dev)
  
-+#define CSI2RX_BRIDGE_SOURCE_PAD	1
+ 	cdev_init(&dev->lirc_cdev, &lirc_fops);
+ 
++	get_device(&dev->dev);
 +
- struct ti_csi2rx_fmt {
- 	u32				fourcc;	/* Four character code. */
- 	u32				code;	/* Mbus code. */
-@@ -426,8 +428,9 @@ static int csi_async_notifier_complete(s
- 	if (ret)
- 		return ret;
+ 	err = cdev_device_add(&dev->lirc_cdev, &dev->lirc_dev);
+ 	if (err)
+-		goto out_ida;
+-
+-	get_device(&dev->dev);
++		goto out_put_device;
  
--	ret = v4l2_create_fwnode_links_to_pad(csi->source, &csi->pad,
--					      MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
-+	ret = media_create_pad_link(&csi->source->entity, CSI2RX_BRIDGE_SOURCE_PAD,
-+				    &vdev->entity, csi->pad.index,
-+				    MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
+ 	switch (dev->driver_type) {
+ 	case RC_DRIVER_SCANCODE:
+@@ -764,7 +764,8 @@ int lirc_register(struct rc_dev *dev)
  
- 	if (ret) {
- 		video_unregister_device(vdev);
+ 	return 0;
+ 
+-out_ida:
++out_put_device:
++	put_device(&dev->lirc_dev);
+ 	ida_free(&lirc_ida, minor);
+ 	return err;
+ }
 
 
