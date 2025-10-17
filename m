@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEDE330B1A;
-	Fri, 17 Oct 2025 15:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA00330B2E;
+	Fri, 17 Oct 2025 15:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715707; cv=none; b=eU/f5Rr3nFpajKPbnoohCbKoQtxKiSjiJ84bugTFCihF1+P6sFLBdh4RBDT8GsGg4hVhfSX4BPifqo9tsWW4lkUD5TJFhNTau27twb07dfb2flK9IPCpyAyCcOUrIJDrGAs9qDrK1kGTmsJVqGOm0mA+4fnoBoCKEsL4ip0N6Aw=
+	t=1760715710; cv=none; b=JoWw3gSAa/9JFkFdwogDXyS/O7gj3sv8VQZQd88G2ZIKFNU7NUeNfKDKe0mlxDkLZ+GD7lhhS16gdh71ZA/LTHSU8PoBC+Tgg1Z3Sy7krySffkXVl/PqNCqvo/946yjMeWdUeowUfLw78ZmBVabgJZpMasy0PQK+BbwrBEKRgzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715707; c=relaxed/simple;
-	bh=fAUTC9QNLCc9rZLyKI1SUNxKDYlXJ69hG6meHPo5UFA=;
+	s=arc-20240116; t=1760715710; c=relaxed/simple;
+	bh=NS+ZCr4lFoH8tkbwmNhdltYbvP/x/UmSPFFF5rvl/S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIaXNiKhHBvZ91KMKUEV25pgRXEHnEQ4GyyH1Ig0dWs3sWyxCufW+lzcP3NMcnrY+ga66dd7Fd16mi4scHjMprjDgjDt8Xh9fYlpbJIlP+aNdz+YBKLV7tQXA5oubl8SoYM1flIwMbsqMRRLfJP2ROcXoS+5eJYUCtis5ZJXawA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVHfZiwK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mapIqoGC1qfjrGwBE+/Tn8p7nCGEiQCvr/lnNXhvCtugA6lWZJZR5COurnqKM0kNKRFmuAHumumvRqwD6SKTQ6QmK+MJJWrSISCe2+I43hd0pZd+qXEYf4DPjvdhLVuYJSAZ0ZCgDZyZlaQ9WhRbVZvjAq+7doqEos+w94AaYJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwECPKGG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVHfZiwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA1AC4CEE7;
-	Fri, 17 Oct 2025 15:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwECPKGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65719C4CEE7;
+	Fri, 17 Oct 2025 15:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715706;
-	bh=fAUTC9QNLCc9rZLyKI1SUNxKDYlXJ69hG6meHPo5UFA=;
+	s=korg; t=1760715709;
+	bh=NS+ZCr4lFoH8tkbwmNhdltYbvP/x/UmSPFFF5rvl/S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVHfZiwKuypgQRgIMrT1oAu7KEX9473ovSvR6FbdYjwzAGASzPcMxRyMaA2RoF/kd
-	 lo/ZaiVKkXcupY2GhfbRqN7KdRywotStFEQAO0nTjPnsDX+ZJEnbgv4R+DShh7MiJQ
-	 0q3JPCYfBJ5Wn4Gu/BCoFewm5S7EzkYdugxpCmvc=
+	b=SwECPKGGwyEjqYsNG+74oBHGGz1NzHf9dgNqrVb1coE3d/EXYRkvKGf0ooLfzVUEo
+	 nKDB3ZsK1PN1uTgP1uGpHTwFMI2cOVrjfczQcL7CKvKJVyTQiOSY4ZoscrYBp/OIgF
+	 Y6o1wvZWUN/Tf6QI10EE7j4r1EkDo8W2yD10elHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.17 277/371] PCI/ERR: Fix uevent on failure to recover
-Date: Fri, 17 Oct 2025 16:54:12 +0200
-Message-ID: <20251017145212.095872051@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.17 268/371] memory: samsung: exynos-srom: Fix of_iomap leak in exynos_srom_probe
+Date: Fri, 17 Oct 2025 16:54:03 +0200
+Message-ID: <20251017145211.774123112@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,59 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit 1cbc5e25fb70e942a7a735a1f3d6dd391afc9b29 upstream.
+commit 6744085079e785dae5f7a2239456135407c58b25 upstream.
 
-Upon failure to recover from a PCIe error through AER, DPC or EDR, a
-uevent is sent to inform user space about disconnection of the bridge
-whose subordinate devices failed to recover.
+The of_platform_populate() call at the end of the function has a
+possible failure path, causing a resource leak.
 
-However the bridge itself is not disconnected.  Instead, a uevent should
-be sent for each of the subordinate devices.
+Replace of_iomap() with devm_platform_ioremap_resource() to ensure
+automatic cleanup of srom->reg_base.
 
-Only if the "bridge" happens to be a Root Complex Event Collector or
-Integrated Endpoint does it make sense to send a uevent for it (because
-there are no subordinate devices).
+This issue was detected by smatch static analysis:
+drivers/memory/samsung/exynos-srom.c:155 exynos_srom_probe()warn:
+'srom->reg_base' from of_iomap() not released on lines: 155.
 
-Right now if there is a mix of subordinate devices with and without
-pci_error_handlers, a BEGIN_RECOVERY event is sent for those with
-pci_error_handlers but no FAILED_RECOVERY event is ever sent for them
-afterwards.  Fix it.
-
-Fixes: 856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org  # v4.16+
-Link: https://patch.msgid.link/68fc527a380821b5d861dd554d2ce42cb739591c.1755008151.git.lukas@wunner.de
+Fixes: 8ac2266d8831 ("memory: samsung: exynos-srom: Add support for bank configuration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250806025538.306593-1-zhen.ni@easystack.cn
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/err.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/memory/samsung/exynos-srom.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/pcie/err.c
-+++ b/drivers/pci/pcie/err.c
-@@ -108,6 +108,12 @@ static int report_normal_detected(struct
- 	return report_error_detected(dev, pci_channel_io_normal, data);
- }
+--- a/drivers/memory/samsung/exynos-srom.c
++++ b/drivers/memory/samsung/exynos-srom.c
+@@ -121,20 +121,18 @@ static int exynos_srom_probe(struct plat
+ 		return -ENOMEM;
  
-+static int report_perm_failure_detected(struct pci_dev *dev, void *data)
-+{
-+	pci_uevent_ers(dev, PCI_ERS_RESULT_DISCONNECT);
-+	return 0;
-+}
-+
- static int report_mmio_enabled(struct pci_dev *dev, void *data)
- {
- 	struct pci_driver *pdrv;
-@@ -269,7 +275,7 @@ pci_ers_result_t pcie_do_recovery(struct
- failed:
- 	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
+ 	srom->dev = dev;
+-	srom->reg_base = of_iomap(np, 0);
+-	if (!srom->reg_base) {
++	srom->reg_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(srom->reg_base)) {
+ 		dev_err(&pdev->dev, "iomap of exynos srom controller failed\n");
+-		return -ENOMEM;
++		return PTR_ERR(srom->reg_base);
+ 	}
  
--	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
-+	pci_walk_bridge(bridge, report_perm_failure_detected, NULL);
+ 	platform_set_drvdata(pdev, srom);
  
- 	pci_info(bridge, "device recovery failed\n");
+ 	srom->reg_offset = exynos_srom_alloc_reg_dump(exynos_srom_offsets,
+ 						      ARRAY_SIZE(exynos_srom_offsets));
+-	if (!srom->reg_offset) {
+-		iounmap(srom->reg_base);
++	if (!srom->reg_offset)
+ 		return -ENOMEM;
+-	}
  
+ 	for_each_child_of_node(np, child) {
+ 		if (exynos_srom_configure_bank(srom, child)) {
 
 
