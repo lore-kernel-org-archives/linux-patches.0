@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC681336ED7;
-	Fri, 17 Oct 2025 15:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB22A3328E8;
+	Fri, 17 Oct 2025 15:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715499; cv=none; b=VP+OeP6Z/hJPfH9lua3vVD4nKpGdomUWWZ7pmpu0KXmga3T6ABBsGXb5E464+u149dHrkK9upC8lylS64opWAe7A+rDKBADx6+znE6T7+FOFBSdjOI5heUiJ2aDGptp4ZxJVBhI+fQBDGXERRDq8KVz5Ngum1TrgcmoI1PAZijo=
+	t=1760715501; cv=none; b=Ym5dBPtB8311uvFllwo35fP/gFYp5wur9dIcje4H+hhRaxn0Muk9ZXNXdvPislHMMSen7tFul3Bi/deSvSuES3jqcTqhWLdV8ZQtTsm5cZhIrEY8n+o9DWEGVruB5JBcBhce7dXBjLknvyhC0VL6jfinw/E8J/RfvkZWl7bvmbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715499; c=relaxed/simple;
-	bh=wqkOyTjsZu1X+Jc7wFhoEvxherud7w4mk4xhgmFX34o=;
+	s=arc-20240116; t=1760715501; c=relaxed/simple;
+	bh=jiOmg4R4OfEV+91qmPy20qwWNuBsclMT2slKLkaoM3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dN6G3aKdk7ElVMHHAIlBH23hhTtegtryVCqBoc9wpmqZFM6O/zenRsVJJM40pkjjCyB/6iiD0to6AUBoteqtwYSLi2+xn8+5zX8bvssXNzOLIHRMR5KVGbiF2ZyKPBvY7vmV8O445zZ8th/73Mm3pfOiZdEiYk29axoSkAHKsjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1cxOKx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iuSoSrwx9GKtqm1wI8bJU7tv1CLUrxpK44W3mhlzjr+Q8wPmcJXJFmMofAXzXmOCcrJEoE7oOOIXdSzVb00j3K1fdXV2n91EiFxVm1ensjNx65hx3dXxmMt9wI/94YnPQqx6EZcmQLHhR7noXr1R7oYjRUfy1904h6ObfSWiq+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsX0M9Ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1cxOKx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3640EC4CEE7;
-	Fri, 17 Oct 2025 15:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsX0M9Ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D34C4CEE7;
+	Fri, 17 Oct 2025 15:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715498;
-	bh=wqkOyTjsZu1X+Jc7wFhoEvxherud7w4mk4xhgmFX34o=;
+	s=korg; t=1760715501;
+	bh=jiOmg4R4OfEV+91qmPy20qwWNuBsclMT2slKLkaoM3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1cxOKx5lmYDM18OFZ1tSjiTBr8YORkpeQXJhtV95pdfVHeWFoLtyV0LH1GzwelRr
-	 P8FIfc5L6DSFWCzOihesTmrXdenOQOafi2h2Mvg0VQTAz7ThlS1vrRG61j61HYpNTS
-	 KUS78/l6nWgueRnJxR/jcL9/C9h36tACAUv9iSys=
+	b=WsX0M9Juflm2cLQLgAtlZR6UZ+pKGQneRgECSINZTclO0bja5LySQgcKZ6wMiyccy
+	 LYjkM0dGLbJ3kVQKOvhspbf1fDXsA0RM2SFQ5RAuO9EDu7IF+qdqpr8S/n18lQX4lW
+	 /GfxWXiBtrHJBx3tXCHx37DI38yZG+O8webf4Osc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.17 204/371] copy_sighand: Handle architectures where sizeof(unsigned long) < sizeof(u64)
-Date: Fri, 17 Oct 2025 16:52:59 +0200
-Message-ID: <20251017145209.469063846@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Qais Yousef <qyousef@layalina.io>
+Subject: [PATCH 6.17 205/371] cpufreq: CPPC: Avoid using CPUFREQ_ETERNAL as transition delay
+Date: Fri, 17 Oct 2025 16:53:00 +0200
+Message-ID: <20251017145209.505538093@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,58 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 04ff48239f46e8b493571e260bd0e6c3a6400371 upstream.
+commit f965d111e68f4a993cc44d487d416e3d954eea11 upstream.
 
-With the introduction of clone3 in commit 7f192e3cd316 ("fork: add
-clone3") the effective bit width of clone_flags on all architectures was
-increased from 32-bit to 64-bit. However, the signature of the copy_*
-helper functions (e.g., copy_sighand) used by copy_process was not
-adapted.
+If cppc_get_transition_latency() returns CPUFREQ_ETERNAL to indicate a
+failure to retrieve the transition latency value from the platform
+firmware, the CPPC cpufreq driver will use that value (converted to
+microseconds) as the policy transition delay, but it is way too large
+for any practical use.
 
-As such, they truncate the flags on any 32-bit architectures that
-supports clone3 (arc, arm, csky, m68k, microblaze, mips32, openrisc,
-parisc32, powerpc32, riscv32, x86-32 and xtensa).
+Address this by making the driver use the cpufreq's default
+transition latency value (in microseconds) as the transition delay
+if CPUFREQ_ETERNAL is returned by cppc_get_transition_latency().
 
-For copy_sighand with CLONE_CLEAR_SIGHAND being an actual u64
-constant, this triggers an observable bug in kernel selftest
-clone3_clear_sighand:
-
-        if (clone_flags & CLONE_CLEAR_SIGHAND)
-
-in function copy_sighand within fork.c will always fail given:
-
-        unsigned long /* == uint32_t */ clone_flags
-        #define CLONE_CLEAR_SIGHAND 0x100000000ULL
-
-This commit fixes the bug by always passing clone_flags to copy_sighand
-via their declared u64 type, invariant of architecture-dependent integer
-sizes.
-
-Fixes: b612e5df4587 ("clone3: add CLONE_CLEAR_SIGHAND")
-Cc: stable@vger.kernel.org # linux-5.5+
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Link: https://lore.kernel.org/20250901-nios2-implement-clone3-v2-1-53fcf5577d57@siemens-energy.com
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: d4f3388afd48 ("cpufreq / CPPC: Set platform specific transition_delay_us")
+Cc: 5.19+ <stable@vger.kernel.org> # 5.19
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cppc_cpufreq.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1596,7 +1596,7 @@ static int copy_files(unsigned long clon
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -310,6 +310,16 @@ static int cppc_verify_policy(struct cpu
  	return 0;
  }
  
--static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)
-+static int copy_sighand(u64 clone_flags, struct task_struct *tsk)
++static unsigned int __cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
++{
++	unsigned int transition_latency_ns = cppc_get_transition_latency(cpu);
++
++	if (transition_latency_ns == CPUFREQ_ETERNAL)
++		return CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS / NSEC_PER_USEC;
++
++	return transition_latency_ns / NSEC_PER_USEC;
++}
++
+ /*
+  * The PCC subspace describes the rate at which platform can accept commands
+  * on the shared PCC channel (including READs which do not count towards freq
+@@ -332,12 +342,12 @@ static unsigned int cppc_cpufreq_get_tra
+ 			return 10000;
+ 		}
+ 	}
+-	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
++	return __cppc_cpufreq_get_transition_delay_us(cpu);
+ }
+ #else
+ static unsigned int cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
  {
- 	struct sighand_struct *sig;
+-	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
++	return __cppc_cpufreq_get_transition_delay_us(cpu);
+ }
+ #endif
  
 
 
