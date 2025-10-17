@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27067330B0D;
-	Fri, 17 Oct 2025 15:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03478330B11;
+	Fri, 17 Oct 2025 15:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715945; cv=none; b=L/Xf0GO6FRsS+bpvfh9as31PEVa2TGkcWEspDF/TFDHMoSokhxGG0NZ6FhhIX/fhNEufstDBB5a6HL2zP0rrFsw0GiFMk3LmH8o4mmeE+GeGmc7KkUJ2Ee78VwbBoaJC/4ndJ4qis5EZZEUdKhcwDras1Q+VkX0fhz7ECItK3rE=
+	t=1760715948; cv=none; b=LaqlNKtV1nVG70ae/ehnIAl7QtIIWhG7S6y0yH0VPnFVMOVcvmoQFBpz6oxA/H8iwqe/0SRgb4jHVUs9ho3akXcQKCyXi1VF7+3QBZYLqyld51Sf1EKN9pGRCZ2PouMED4MmkmfL48Q73XknCLEv0l4ZJR8sp4HBsavEh8CEKuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715945; c=relaxed/simple;
-	bh=xu9e8hvJyJhj44FEhZKAfkLln261VGTWny8cXndnCII=;
+	s=arc-20240116; t=1760715948; c=relaxed/simple;
+	bh=XMRetHSpKS/R1jWK1QRQZRzQOufJb4COPQ4mIMbcV/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+akpdw+3O2YGRpN/xn7upUMIC+eNpRmd5QyMNmen8Kip5AvjLKjuf4SQjPp/IoJRzExav9Yefrd7F2nxyq/7UXKdY+9fM7dRPdTN0wWGg/h7jFS7+YP4jsypZRDA5GR/FKu9Dv3zVKwPo6AecGcbxAEggIt+tSNhF/k/tLJxYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GR6716nj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/7EjB5YC3+V2cyBz5PI9Y3TFhMOE/zaOW9qKOELssZBkzSGlTUfoPWl0TSjf6nZFjA+5LhPinJwP59pBhH4OhPXa79FXOv8MnReCVWy/EmI2AMlsC25izrnVJhzJ7HUgu8R52NotKJPUEZ2TW5RbPCbs0T5lfM3cxVaC69mlSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoF0VEZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GR6716nj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0529C4CEE7;
-	Fri, 17 Oct 2025 15:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoF0VEZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E50C4CEE7;
+	Fri, 17 Oct 2025 15:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715945;
-	bh=xu9e8hvJyJhj44FEhZKAfkLln261VGTWny8cXndnCII=;
+	s=korg; t=1760715947;
+	bh=XMRetHSpKS/R1jWK1QRQZRzQOufJb4COPQ4mIMbcV/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GR6716njfBnPF0ok2hXIp2Wr4qmpRqQ03JSF3hE+8XgxZVq6GJk6hL0Z/LyVXAeGQ
-	 clVhTIgbnGNZ4WxilTBSfgUamC/XTvWTTxC3AZoNLj2rrQvDpCOYl0Ke9T8NEbqSve
-	 idCxfMkWt+8GpfZrqnrFoVBTc+B6isJz3mt6VZFE=
+	b=AoF0VEZy4fnpMA3fpLmd6bwba1v0YRNamj/SWSp5Ob9APH48ev27GdNca3COY4Mh/
+	 w6Q3snq2g/fzvlAgpKGCNeXZ0m2LFPxFNf8L3YXZ9wZXJwE7FdnlEFeVZ0roz+rSIr
+	 VNU5Uaq0ykFslNgaJ1fmzqvGcblqI1lpra5rVjVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	ziiiro <yuanmingbuaa@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 002/276] scsi: target: target_core_configfs: Add length check to avoid buffer overflow
-Date: Fri, 17 Oct 2025 16:51:35 +0200
-Message-ID: <20251017145142.477812533@linuxfoundation.org>
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 020/276] crypto: rng - Ensure set_ent is always present
+Date: Fri, 17 Oct 2025 16:51:53 +0200
+Message-ID: <20251017145143.138615380@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,47 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Haoran <haoranwangsec@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 27e06650a5eafe832a90fd2604f0c5e920857fae upstream.
+commit c0d36727bf39bb16ef0a67ed608e279535ebf0da upstream.
 
-A buffer overflow arises from the usage of snprintf to write into the
-buffer "buf" in target_lu_gp_members_show function located in
-/drivers/target/target_core_configfs.c. This buffer is allocated with
-size LU_GROUP_NAME_BUF (256 bytes).
+Ensure that set_ent is always set since only drbg provides it.
 
-snprintf(...) formats multiple strings into buf with the HBA name
-(hba->hba_group.cg_item), a slash character, a devicename (dev->
-dev_group.cg_item) and a newline character, the total formatted string
-length may exceed the buffer size of 256 bytes.
-
-Since snprintf() returns the total number of bytes that would have been
-written (the length of %s/%sn ), this value may exceed the buffer length
-(256 bytes) passed to memcpy(), this will ultimately cause function
-memcpy reporting a buffer overflow error.
-
-An additional check of the return value of snprintf() can avoid this
-buffer overflow.
-
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Reported-by: ziiiro <yuanmingbuaa@gmail.com>
-Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 77ebdabe8de7 ("crypto: af_alg - add extra parameters for DRBG interface")
+Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_configfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/rng.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/target/target_core_configfs.c
-+++ b/drivers/target/target_core_configfs.c
-@@ -2679,7 +2679,7 @@ static ssize_t target_lu_gp_members_show
- 			config_item_name(&dev->dev_group.cg_item));
- 		cur_len++; /* Extra byte for NULL terminator */
+--- a/crypto/rng.c
++++ b/crypto/rng.c
+@@ -174,6 +174,11 @@ out:
+ EXPORT_SYMBOL_GPL(crypto_del_default_rng);
+ #endif
  
--		if ((cur_len + len) > PAGE_SIZE) {
-+		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
- 			pr_warn("Ran out of lu_gp_show_attr"
- 				"_members buffer\n");
- 			break;
++static void rng_default_set_ent(struct crypto_rng *tfm, const u8 *data,
++				unsigned int len)
++{
++}
++
+ int crypto_register_rng(struct rng_alg *alg)
+ {
+ 	struct crypto_alg *base = &alg->base;
+@@ -185,6 +190,9 @@ int crypto_register_rng(struct rng_alg *
+ 	base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
+ 	base->cra_flags |= CRYPTO_ALG_TYPE_RNG;
+ 
++	if (!alg->set_ent)
++		alg->set_ent = rng_default_set_ent;
++
+ 	return crypto_register_alg(base);
+ }
+ EXPORT_SYMBOL_GPL(crypto_register_rng);
 
 
