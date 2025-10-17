@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838702F12BE;
-	Fri, 17 Oct 2025 15:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3008F32C940;
+	Fri, 17 Oct 2025 15:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714124; cv=none; b=uIRTMGPat44kLtWKU4Q+PcZSbXtLL41WQBECxOtAEfUAkRwRlTeHQDfZMpVKUu3+9GJe8oryrqcXP1ETrPEdeQt56IGno5wEKFy5N0OrAdqRQ2iECGdxMmwfhx5AFTIkRf/YvFRm4rIWaHc7u02gO/+p1pAYH4DHDdebmg5AnjM=
+	t=1760714127; cv=none; b=RdaHlVIUJWXJmZZRvnmf0aSNBQa646AbBO6o2vla5N6ueFxv3/UlVSmw3EhK4wLvnZCu5R0AEl8aQAfZik5RN9wELGc18U0Rkfr/NLgAm+6WaXTavu6H361YdooOjV+8RwYmaDMkRxQEa8p2iwMZHPcZIp0c9/sDRQPXUVv/t2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714124; c=relaxed/simple;
-	bh=L00Dx/A4cjInJ9BK6MsY3I+D9YH/5aUTzKqjXVV65XI=;
+	s=arc-20240116; t=1760714127; c=relaxed/simple;
+	bh=lv3BEcdxBzJiKpOQRON2w29mDI4Vz31QpaRa2iJETkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMUygIXbmigRs/B3surlZEcChuXYM0Ue9uptX/JdbeV6O2cIUXpfLcdoua4B9+Xao+i0hPH6BaJ+kk7+pEAhYLrVOfQimlBAoYvZNWl7aJHRfPSCkE+sYp+fDMZpOyMVK1/okhfEbBsPfZIgbg3SOapt1Hwr42H1Fjx765SgkKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH5bgA72; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QfAdG+5P0SPs5eevAPPhIuFNbC6uUlM1AcC2KI9852Okf0zwwe1+uoHPri9VJHVKU6qZrhCZzETbfPxsQxWCngpoZu+hTR927WeD+EqP/VQmI3mYHSy+zrAaVDWL8fAAJFq/+i/vgNZ1+191sDpkuQhG9XfNS4OKJb6hzfaq5RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8FXN8mp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH5bgA72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32E2C4CEE7;
-	Fri, 17 Oct 2025 15:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8FXN8mp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36F2C4CEE7;
+	Fri, 17 Oct 2025 15:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714124;
-	bh=L00Dx/A4cjInJ9BK6MsY3I+D9YH/5aUTzKqjXVV65XI=;
+	s=korg; t=1760714127;
+	bh=lv3BEcdxBzJiKpOQRON2w29mDI4Vz31QpaRa2iJETkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qH5bgA72k2yv3Z/rZzhPQCc6v1uF/72mEPD/FzRAlFrFYYOaP8F6scVRZr0ZPf24B
-	 5om3E6d+AVmE7TR3yO3AsKyBgvQ4/y5ac0zAkASGwM1VU0Y7t64IUUemQ1/OKPJZ2e
-	 2t738ZGwtueLGZmyZbSqWzQxHLk3D9p4Fy7Qnhec=
+	b=m8FXN8mpk3XKGLB/xyuNlMkOdjMtkX8feSJeQX3W17gmzGbveN07xB+7JS8nUGO/l
+	 z9bQK+Mt5GCDZJU7qsioh3dWoYRaiAZH8+n0m8lQpkoDCFOAKKXAq6PQJxtufRqRNf
+	 vqJsib3pfzYsJuN7o2GVF+B1tZrp3np5bUIbkWBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/277] perf test shell lbr: Avoid failures with perf event paranoia
-Date: Fri, 17 Oct 2025 16:50:35 +0200
-Message-ID: <20251017145148.175738822@linuxfoundation.org>
+Subject: [PATCH 6.12 037/277] clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver
+Date: Fri, 17 Oct 2025 16:50:44 +0200
+Message-ID: <20251017145148.503355126@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -62,111 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 48314d20fe467d6653783cbf5536cb2fcc9bdd7c ]
+[ Upstream commit 1624dead9a4d288a594fdf19735ebfe4bb567cb8 ]
 
-When not running as root and with higher perf event paranoia values
-the perf record LBR tests could fail rather than skipping the
-problematic tests.
+The conditional check for the PLL0 multiplier 'm' used a logical AND
+instead of OR, making the range check ineffective. This patch replaces
+&& with || to correctly reject invalid values of 'm' that are either
+less than or equal to 0 or greater than LPC18XX_PLL0_MSEL_MAX.
 
-Add the sensitivity to the test and confirm it passes with paranoia
-values from -1 to 2.
+This ensures proper bounds checking during clk rate setting and rounding.
 
-Committer testing:
-
-Testing with '$ perf test -vv lbr', i.e. as non root, and then comparing
-the output shows the mentioned errors before this patch:
-
-  acme@x1:~$ grep -m1 "model name" /proc/cpuinfo
-  model name	: 13th Gen Intel(R) Core(TM) i7-1365U
-  acme@x1:~$
-
-Before:
-
- 132: perf record LBR tests            : Skip
-
-After:
-
- 132: perf record LBR tests            : Ok
-
-Fixes: 32559b99e0f59070 ("perf test: Add set of perf record LBR tests")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b04e0b8fd544 ("clk: add lpc18xx cgu clk driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+[sboyd@kernel.org: 'm' is unsigned so remove < condition]
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/record_lbr.sh | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/clk/nxp/clk-lpc18xx-cgu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/tests/shell/record_lbr.sh b/tools/perf/tests/shell/record_lbr.sh
-index ab6f2825f7903..5984ca9b78f8a 100755
---- a/tools/perf/tests/shell/record_lbr.sh
-+++ b/tools/perf/tests/shell/record_lbr.sh
-@@ -4,6 +4,10 @@
+diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+index 30e0b283ca608..b9e204d63a972 100644
+--- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
++++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
+@@ -381,7 +381,7 @@ static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
+ 	}
  
- set -e
+ 	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
+-	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
++	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
+ 		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
+ 		return -EINVAL;
+ 	}
+@@ -404,7 +404,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	}
  
-+ParanoidAndNotRoot() {
-+  [ "$(id -u)" != 0 ] && [ "$(cat /proc/sys/kernel/perf_event_paranoid)" -gt $1 ]
-+}
-+
- if [ ! -f /sys/bus/event_source/devices/cpu/caps/branches ] &&
-    [ ! -f /sys/bus/event_source/devices/cpu_core/caps/branches ]
- then
-@@ -23,6 +27,7 @@ cleanup() {
- }
- 
- trap_cleanup() {
-+  echo "Unexpected signal in ${FUNCNAME[1]}"
-   cleanup
-   exit 1
- }
-@@ -123,8 +128,11 @@ lbr_test "-j ind_call" "any indirect call" 2
- lbr_test "-j ind_jmp" "any indirect jump" 100
- lbr_test "-j call" "direct calls" 2
- lbr_test "-j ind_call,u" "any indirect user call" 100
--lbr_test "-a -b" "system wide any branch" 2
--lbr_test "-a -j any_call" "system wide any call" 2
-+if ! ParanoidAndNotRoot 1
-+then
-+  lbr_test "-a -b" "system wide any branch" 2
-+  lbr_test "-a -j any_call" "system wide any call" 2
-+fi
- 
- # Parallel
- parallel_lbr_test "-b" "parallel any branch" 100 &
-@@ -141,10 +149,16 @@ parallel_lbr_test "-j call" "parallel direct calls" 100 &
- pid6=$!
- parallel_lbr_test "-j ind_call,u" "parallel any indirect user call" 100 &
- pid7=$!
--parallel_lbr_test "-a -b" "parallel system wide any branch" 100 &
--pid8=$!
--parallel_lbr_test "-a -j any_call" "parallel system wide any call" 100 &
--pid9=$!
-+if ParanoidAndNotRoot 1
-+then
-+  pid8=
-+  pid9=
-+else
-+  parallel_lbr_test "-a -b" "parallel system wide any branch" 100 &
-+  pid8=$!
-+  parallel_lbr_test "-a -j any_call" "parallel system wide any call" 100 &
-+  pid9=$!
-+fi
- 
- for pid in $pid1 $pid2 $pid3 $pid4 $pid5 $pid6 $pid7 $pid8 $pid9
- do
+ 	m = DIV_ROUND_UP_ULL(parent_rate, rate * 2);
+-	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
++	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
+ 		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
+ 		return -EINVAL;
+ 	}
 -- 
 2.51.0
 
