@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93EE332912;
-	Fri, 17 Oct 2025 15:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CBF289811;
+	Fri, 17 Oct 2025 15:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714161; cv=none; b=RPQWKxgV6LgWBfJ8dB22HT26vaqdisSPOqJFjHAWfbnQIO6S1Ul4BHohbUKrRLrQWhnasuVi6r7e6Wj/gQKR/8tOY3DmGmCNoQnGX9SpIZH45BDjPmvbynTUozcibb92uXYATwBU3WN9BtBQzSILlfjSgILQS6ubxZdl6XaibGA=
+	t=1760714164; cv=none; b=he+BLr4QzGWDkHu72q1+GoRJjsyQYIwEoXmA/gU1RkPnZStlRV5wIg5+E2mZCtBo2wJrD9Brj8IGLqByvojW7XeRTAjdNhM7ZrLkoytlrjvBrEZDDzJeVZBTUXnr61DZ5+zFqV29RQ5BsTr7jx3MGFh6CBfWRkb5Kaf34+jQpvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714161; c=relaxed/simple;
-	bh=dpIX9f4kzzNW/VICsSW3L8uSkqW3ZKxjGbBEZkU73d0=;
+	s=arc-20240116; t=1760714164; c=relaxed/simple;
+	bh=s/mmSxuPL3QpQVdkv7PzHZGv525uBgv/tfGzBO0M7Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9ooh/rnoKoY3ZlmI5YMEdfbCHrXyG1ZpZqRWFz/495feomU9Hi0EEuMnhyqojgswm0AmSkwBT41/jc8GS+H3Lf0ImcoLYWdUy1+/6bOerBnTltI4kcfe0oUcRbUvo4/rdcjobY4yDtA04e8nblWdWhhyyrLDzQ0kriszlmIKDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9xFaCDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqdFOfTmHNuohhfWaPx3SNGAmkfFil9JFldDCy6XmkrZ+t6fEqNfHFNKQysCiAQyMAGlNHz6lD3Pc4cFWMwjy8fBwfa9BkbBEmGyCyo+tBZNtHU/8OlsbS6JnnvztMK6KzBYrlZL+oGYvDwnvtKgHNKvEMQrZ8Zx+Jt5XVXCb1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7eAm/AM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9xFaCDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2304C4CEFE;
-	Fri, 17 Oct 2025 15:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7eAm/AM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3DC4CEE7;
+	Fri, 17 Oct 2025 15:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714161;
-	bh=dpIX9f4kzzNW/VICsSW3L8uSkqW3ZKxjGbBEZkU73d0=;
+	s=korg; t=1760714164;
+	bh=s/mmSxuPL3QpQVdkv7PzHZGv525uBgv/tfGzBO0M7Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9xFaCDL06QqxOXXjDrf/GH9AUT/kaA5UKPjypdx+EJ5nQFF/+XwjLbB5GDcpBYtf
-	 RdXJ6KoBtJpWiO2Dlz0xTpjL7iDKExbIY0rdKaCcle623617s3UBSRB3OnSOw0hhOc
-	 1XRM7267o29JZR7eriC8Zww/HlyufL5T7cU/IsLQ=
+	b=D7eAm/AMvxGCiXM7E3mxfJyzFdDpOkd1c9Qp5+avWLTBgWAq0xOR5wd7O4DKPNU/Y
+	 qYP9c3gGBGZ9DcH777vgQnjiLsFFFmI4G/bFv6TqhpOYmgEONuuYF0uUkI273Qhnm7
+	 euPpwMjiz6/mIqxsGqKlEhC4/VM7BzAECjfqkcEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francois Dugast <francois.dugast@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/277] drm/xe/hw_engine_group: Fix double write lock release in error path
-Date: Fri, 17 Oct 2025 16:50:55 +0200
-Message-ID: <20251017145148.901352533@linuxfoundation.org>
+Subject: [PATCH 6.12 049/277] s390/cio: Update purge function to unregister the unused subchannels
+Date: Fri, 17 Oct 2025 16:50:56 +0200
+Message-ID: <20251017145148.939164192@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,57 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 08fdfd260e641da203f80aff8d3ed19c5ecceb7d ]
+[ Upstream commit 9daa5a8795865f9a3c93d8d1066785b07ded6073 ]
 
-In xe_hw_engine_group_get_mode(), a write lock is acquired before
-calling switch_mode(), which in turn invokes
-xe_hw_engine_group_suspend_faulting_lr_jobs().
+Starting with 'commit 2297791c92d0 ("s390/cio: dont unregister
+subchannel from child-drivers")', cio no longer unregisters
+subchannels when the attached device is invalid or unavailable.
 
-On failure inside xe_hw_engine_group_suspend_faulting_lr_jobs(),
-the write lock is released there, and then again in
-xe_hw_engine_group_get_mode(), leading to a double release.
+As an unintended side-effect, the cio_ignore purge function no longer
+removes subchannels for devices on the cio_ignore list if no CCW device
+is attached. This situation occurs when a CCW device is non-operational
+or unavailable
 
-Fix this by keeping both acquire and release operation in
-xe_hw_engine_group_get_mode().
+To ensure the same outcome of the purge function as when the
+current cio_ignore list had been active during boot, update the purge
+function to remove I/O subchannels without working CCW devices if the
+associated device number is found on the cio_ignore list.
 
-Fixes: 770bd1d34113 ("drm/xe/hw_engine_group: Ensure safe transition between execution modes")
-Cc: Francois Dugast <francois.dugast@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Francois Dugast <francois.dugast@intel.com>
-Link: https://lore.kernel.org/r/20250925023145.1203004-2-shuicheng.lin@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 662d98b8b373007fa1b08ba93fee11f6fd3e387c)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
+Suggested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hw_engine_group.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/s390/cio/device.c | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hw_engine_group.c b/drivers/gpu/drm/xe/xe_hw_engine_group.c
-index 82750520a90a5..f14a3cc7d1173 100644
---- a/drivers/gpu/drm/xe/xe_hw_engine_group.c
-+++ b/drivers/gpu/drm/xe/xe_hw_engine_group.c
-@@ -237,17 +237,13 @@ static int xe_hw_engine_group_suspend_faulting_lr_jobs(struct xe_hw_engine_group
- 
- 		err = q->ops->suspend_wait(q);
- 		if (err)
--			goto err_suspend;
-+			return err;
- 	}
- 
- 	if (need_resume)
- 		xe_hw_engine_group_resume_faulting_lr_jobs(group);
- 
- 	return 0;
--
--err_suspend:
--	up_write(&group->mode_sem);
--	return err;
+diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
+index 9498825d9c7a5..858a9e171351b 100644
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1318,23 +1318,34 @@ void ccw_device_schedule_recovery(void)
+ 	spin_unlock_irqrestore(&recovery_lock, flags);
  }
  
- /**
+-static int purge_fn(struct device *dev, void *data)
++static int purge_fn(struct subchannel *sch, void *data)
+ {
+-	struct ccw_device *cdev = to_ccwdev(dev);
+-	struct ccw_dev_id *id = &cdev->private->dev_id;
+-	struct subchannel *sch = to_subchannel(cdev->dev.parent);
++	struct ccw_device *cdev;
+ 
+-	spin_lock_irq(cdev->ccwlock);
+-	if (is_blacklisted(id->ssid, id->devno) &&
+-	    (cdev->private->state == DEV_STATE_OFFLINE) &&
+-	    (atomic_cmpxchg(&cdev->private->onoff, 0, 1) == 0)) {
+-		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
+-			      id->devno);
++	spin_lock_irq(&sch->lock);
++	if (sch->st != SUBCHANNEL_TYPE_IO || !sch->schib.pmcw.dnv)
++		goto unlock;
++
++	if (!is_blacklisted(sch->schid.ssid, sch->schib.pmcw.dev))
++		goto unlock;
++
++	cdev = sch_get_cdev(sch);
++	if (cdev) {
++		if (cdev->private->state != DEV_STATE_OFFLINE)
++			goto unlock;
++
++		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
++			goto unlock;
+ 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
+-		css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 		atomic_set(&cdev->private->onoff, 0);
+ 	}
+-	spin_unlock_irq(cdev->ccwlock);
++
++	css_sched_sch_todo(sch, SCH_TODO_UNREG);
++	CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x%s\n", sch->schid.ssid,
++		      sch->schib.pmcw.dev, cdev ? "" : " (no cdev)");
++
++unlock:
++	spin_unlock_irq(&sch->lock);
+ 	/* Abort loop in case of pending signal. */
+ 	if (signal_pending(current))
+ 		return -EINTR;
+@@ -1350,7 +1361,7 @@ static int purge_fn(struct device *dev, void *data)
+ int ccw_purge_blacklisted(void)
+ {
+ 	CIO_MSG_EVENT(2, "ccw: purging blacklisted devices\n");
+-	bus_for_each_dev(&ccw_bus_type, NULL, NULL, purge_fn);
++	for_each_subchannel_staged(purge_fn, NULL, NULL);
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
