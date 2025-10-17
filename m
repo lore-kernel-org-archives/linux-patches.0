@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3FF330B1C;
-	Fri, 17 Oct 2025 15:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F11330B1C;
+	Fri, 17 Oct 2025 15:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716061; cv=none; b=Z4Gbnoz68mN/gH1FXH62Uek0zUWcu4P8opJDwX5NSiNHyergIuCgXAqVZa2fymkae9R7DfLcepaD/eFwclsHoGIPafORN81UUJYZ2WHeHOvb3huX2uwvnACWMnmNCE9XGue7gHyGE5yNhvalWycomPQv65aR0/LTFb0j822VX2k=
+	t=1760716063; cv=none; b=K19rpjnbSaFrUPdcEpeeeBpS6ZVSYvST8Y8Cfc2lFb5TBvF4IvYuNIQxwQQ0j4cQewAbfDmxpd+VqkjLNDrj1I08HYIm74wcc4CH1veNLb3xOHT3kGVuXaMjLtkBb4fvknFDV4m3pUoodA0KWwaKwpjTq5wqW3T7sS4gNOe3f8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716061; c=relaxed/simple;
-	bh=UxNSqUCemrbACV6NrfVKozlYt13z6JT6FE0FP/vnaNA=;
+	s=arc-20240116; t=1760716063; c=relaxed/simple;
+	bh=91vXonBSQQyLT2dbHxndQMIrzqldcs/cNACB2HUnTOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VL4nPmHkmgFCbkhGzR3qCq9EhJlcXGNAwghR9/K3WwdPJ8E+Jb/fiY6MqXC/r0RBFaZ+0oJbROzG41lCPGvAbD0zKu5YgSi7m5WlE5fS0Y34J/gaKkCDdaJvXADLDl4EZlEBUPsLD4kMhYNGacVjA0kwS3uDwoEF6IX08GDiAMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmoYnINK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQCh5uo7GJHtseIbXi9NJ1qDyODiLKZ/nDORJqsU/FNLYB09yem4ut4CffZo2yAdU16ExXlScormsfadCPmwylk2KMgKbSaAfxW53oUTWQ29oeudUDzHlUsjIOwlioFVdycL2D/n5Zz07R8jXKFRSJoCSOtWRx0ry6l41ebBk7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBqcgy5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmoYnINK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657B6C4CEE7;
-	Fri, 17 Oct 2025 15:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBqcgy5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36065C4CEE7;
+	Fri, 17 Oct 2025 15:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716060;
-	bh=UxNSqUCemrbACV6NrfVKozlYt13z6JT6FE0FP/vnaNA=;
+	s=korg; t=1760716063;
+	bh=91vXonBSQQyLT2dbHxndQMIrzqldcs/cNACB2HUnTOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmoYnINK4C6oYJNpUH0a+27Agn8SqmP7FrZ/3fFlQBmHFRG+hOErzhj+2O2pOobF1
-	 oIoxmTlQPgS4QBBCv0s8wnGucP5wN+rW6hGGfjYycajgIrHLH+9jbONBFE3yXVOCdM
-	 No22eGlYYk9hI6xsyvO7Gw8qdyhb3zoz3K0oootc=
+	b=NBqcgy5xiTKRm/lppd3XW+nq4R4eKqCBcb96VGzubp4BVmqmBgy1CLeRQS+3COMvL
+	 XjFV8sewJ/rU8uw3dgBewPARQD1tX5JLXpdJiZfj0E36gQD7R0Rve/MyB4i6fyH5PF
+	 BGCkI5DmuzrrrXIkKWTAdvZRw3ZvbFOS5Q8JJkF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
+	Jeff Chen <jeff.chen_1@nxp.con>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/276] drm/amdgpu: Power up UVD 3 for FW validation (v2)
-Date: Fri, 17 Oct 2025 16:52:32 +0200
-Message-ID: <20251017145144.643282829@linuxfoundation.org>
+Subject: [PATCH 5.15 060/276] wifi: mwifiex: send world regulatory domain to driver
+Date: Fri, 17 Oct 2025 16:52:33 +0200
+Message-ID: <20251017145144.679342889@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -45,91 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Stefan Kerkmann <s.kerkmann@pengutronix.de>
 
-[ Upstream commit c661219cd7be75bb5599b525f16a455a058eb516 ]
+[ Upstream commit 56819d00bc2ebaa6308913c28680da5d896852b8 ]
 
-Unlike later versions, UVD 3 has firmware validation.
-For this to work, the UVD should be powered up correctly.
+The world regulatory domain is a restrictive subset of channel
+configurations which allows legal operation of the adapter all over the
+world. Changing to this domain should not be prevented.
 
-When DPM is enabled and the display clock is off,
-the SMU may choose a power state which doesn't power
-the UVD, which can result in failure to initialize UVD.
-
-v2:
-Add code comments to explain about the UVD power state
-and how UVD clock is turned on/off.
-
-Fixes: b38f3e80ecec ("drm amdgpu: SI UVD v3_1 (v2)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: dd4a9ac05c8e1 ("mwifiex: send regulatory domain info to firmware only if alpha2 changed") changed
+Signed-off-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.con>
+Link: https://patch.msgid.link/20250804-fix-mwifiex-regulatory-domain-v1-1-e4715c770c4d@pengutronix.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 29 +++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 0fef925b66024..e458e0d5801b0 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -625,7 +625,22 @@ static void uvd_v3_1_enable_mgcg(struct amdgpu_device *adev,
-  *
-  * @handle: handle used to pass amdgpu_device pointer
-  *
-- * Initialize the hardware, boot up the VCPU and do some testing
-+ * Initialize the hardware, boot up the VCPU and do some testing.
-+ *
-+ * On SI, the UVD is meant to be used in a specific power state,
-+ * or alternatively the driver can manually enable its clock.
-+ * In amdgpu we use the dedicated UVD power state when DPM is enabled.
-+ * Calling amdgpu_dpm_enable_uvd makes DPM select the UVD power state
-+ * for the SMU and afterwards enables the UVD clock.
-+ * This is automatically done by amdgpu_uvd_ring_begin_use when work
-+ * is submitted to the UVD ring. Here, we have to call it manually
-+ * in order to power up UVD before firmware validation.
-+ *
-+ * Note that we must not disable the UVD clock here, as that would
-+ * cause the ring test to fail. However, UVD is powered off
-+ * automatically after the ring test: amdgpu_uvd_ring_end_use calls
-+ * the UVD idle work handler which will disable the UVD clock when
-+ * all fences are signalled.
-  */
- static int uvd_v3_1_hw_init(void *handle)
- {
-@@ -635,6 +650,15 @@ static int uvd_v3_1_hw_init(void *handle)
- 	int r;
- 
- 	uvd_v3_1_mc_resume(adev);
-+	uvd_v3_1_enable_mgcg(adev, true);
-+
-+	/* Make sure UVD is powered during FW validation.
-+	 * It's going to be automatically powered off after the ring test.
-+	 */
-+	if (adev->pm.dpm_enabled)
-+		amdgpu_dpm_enable_uvd(adev, true);
-+	else
-+		amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
- 
- 	r = uvd_v3_1_fw_validate(adev);
- 	if (r) {
-@@ -642,9 +666,6 @@ static int uvd_v3_1_hw_init(void *handle)
- 		return r;
+diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+index d76a8523ef1d3..8978f18d98de4 100644
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -663,10 +663,9 @@ static void mwifiex_reg_notifier(struct wiphy *wiphy,
+ 		return;
  	}
  
--	uvd_v3_1_enable_mgcg(adev, true);
--	amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
--
- 	uvd_v3_1_start(adev);
- 
- 	r = amdgpu_ring_test_helper(ring);
+-	/* Don't send world or same regdom info to firmware */
+-	if (strncmp(request->alpha2, "00", 2) &&
+-	    strncmp(request->alpha2, adapter->country_code,
+-		    sizeof(request->alpha2))) {
++	/* Don't send same regdom info to firmware */
++	if (strncmp(request->alpha2, adapter->country_code,
++		    sizeof(request->alpha2)) != 0) {
+ 		memcpy(adapter->country_code, request->alpha2,
+ 		       sizeof(request->alpha2));
+ 		mwifiex_send_domain_info_cmd_fw(wiphy);
 -- 
 2.51.0
 
