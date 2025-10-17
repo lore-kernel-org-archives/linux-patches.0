@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A2B32C94B;
-	Fri, 17 Oct 2025 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C4E32C951;
+	Fri, 17 Oct 2025 15:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715048; cv=none; b=o4jjLv9JoEuI8LFw1b33hk9O4h0lvtv2AusR4QRkae8t1ZP0fDCJHUCKJerOMoME4+PLKL9GjlXznkIHf6mRkzyx6RRj2F3DQG0ZOcvTlBswSGQl0GD7RqU5bnvK97r556PRikTtfPHmwbNHiHWhV+RyBJ7lfv9AQrsi6dsFn1U=
+	t=1760715050; cv=none; b=PsFn6ub6sX72MwyzDJ5dFgbWxtcTu/bbLQSqqrONr05uiZe70U5bkhKy9uzwUGybsekxt7XvDFboMdRSW93yovVp7/WBN4M61BndtqT/NOOyoG7+gojYkFilXtHOVwOmeJjluiBaDVdxwHCA3lGeqVf8U6TOPS0OGZZckbW/PUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715048; c=relaxed/simple;
-	bh=j4KienSS+lDgxMqRwrzla0RtTgE+T5fx7Sj1oUK7a4s=;
+	s=arc-20240116; t=1760715050; c=relaxed/simple;
+	bh=cVmkrE9woRDMgW15j+B/ZgO1ksUIRhI9gd125U0twNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2uZ/J7gZnIObeZNWbgZlI52VEd9ojisSQjDqdU9WQIv6sj0tGDTmIxdIz4zBQ8xmENVYRIPrurkhmydUcNeFOIZhoQgmM8ck94VEM+ykbDj7zed8QdRqqPe1L/LRWpddAEOx2RtEGt+FLrNt8AaRj+pWREiVgj0fPsHY0c2XtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1BqRZEL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qXOdORlNSecnbPqQfzebvw1WGGxG1113bW67OWAoCRmniEhxCvaGRPg/iLdGxGviO6teWRz8W4KopLqeirysOWQn+6cnZH4dVt7guytKoOrSVVaD3Ofz+i++oZNwtNShJK/zRI5D+OT1/XZkbetzfOMHb3C7mlMuFEPevpRGBnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeegNrwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1BqRZEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFC1C4CEE7;
-	Fri, 17 Oct 2025 15:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeegNrwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BD7C4CEFE;
+	Fri, 17 Oct 2025 15:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715046;
-	bh=j4KienSS+lDgxMqRwrzla0RtTgE+T5fx7Sj1oUK7a4s=;
+	s=korg; t=1760715049;
+	bh=cVmkrE9woRDMgW15j+B/ZgO1ksUIRhI9gd125U0twNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1BqRZEL2VK3R/3jq/xNEY/ID1DPqeMHXsSauJ80wM00+jrjPOtuBeyk5n0O/yh16
-	 ck7ry2EqTcF3wf4SYui2bchAsLj+Q7cp1IZoTLg6JQiQ5S8Y4QSeCxfX5/pB8b++Ao
-	 KbLZw9TXBytqj1QRx+c3WErLpzyeLoAAI9FGRI8o=
+	b=zeegNrwbe6S59X6Vjgzt2rJD/v1qtIB8XkljlPiOxni1MknBIQmRMQp39RO32FDf2
+	 wxr4eXk/9D0KZXZfVa30183CETL5hkD8O3jZK0/uNuOXH/U7cv0T7q62AWgv0iMNE9
+	 GPXKqWZPBjd6ECpb/cW4UPdZcSV77wG7fnZvD8gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+62ec8226f01cb4ca19d9@syzkaller.appspotmail.com,
+	Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/371] ASoC: SOF: Intel: Read the LLP via the associated Link DMA channel
-Date: Fri, 17 Oct 2025 16:50:54 +0200
-Message-ID: <20251017145204.798279140@linuxfoundation.org>
+Subject: [PATCH 6.17 080/371] net: usb: lan78xx: Fix lost EEPROM read timeout error(-ETIMEDOUT) in lan78xx_read_raw_eeprom
+Date: Fri, 17 Oct 2025 16:50:55 +0200
+Message-ID: <20251017145204.833916264@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,80 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
 
-[ Upstream commit aaab61de1f1e44a2ab527e935474e2e03a0f6b08 ]
+[ Upstream commit 49bdb63ff64469a6de8ea901aef123c75be9bbe7 ]
 
-It is allowed to mix Link and Host DMA channels in a way that their index
-is different. In this case we would read the LLP from a channel which is
-not used or used for other operation.
+Syzbot reported read of uninitialized variable BUG with following call stack.
 
-Such case can be reproduced on cAVS2.5 or ACE1 platforms with soundwire
-configuration:
-playback to SDW would take Host channel 0 (stream_tag 1) and no Link DMA
-used
-Second playback to HDMI (HDA) would use Host channel 1 (stream_tag 2) and
-Link channel 0 (stream_tag 1).
+lan78xx 8-1:1.0 (unnamed net_device) (uninitialized): EEPROM read operation timeout
+=====================================================
+BUG: KMSAN: uninit-value in lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1095 [inline]
+BUG: KMSAN: uninit-value in lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
+BUG: KMSAN: uninit-value in lan78xx_reset+0x999/0x2cd0 drivers/net/usb/lan78xx.c:3241
+ lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1095 [inline]
+ lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
+ lan78xx_reset+0x999/0x2cd0 drivers/net/usb/lan78xx.c:3241
+ lan78xx_bind+0x711/0x1690 drivers/net/usb/lan78xx.c:3766
+ lan78xx_probe+0x225c/0x3310 drivers/net/usb/lan78xx.c:4707
 
-In this case reading the LLP from channel 2 is incorrect as that is not the
-Link channel used for the HDMI playback.
+Local variable sig.i.i created at:
+ lan78xx_read_eeprom drivers/net/usb/lan78xx.c:1092 [inline]
+ lan78xx_init_mac_address drivers/net/usb/lan78xx.c:1937 [inline]
+ lan78xx_reset+0x77e/0x2cd0 drivers/net/usb/lan78xx.c:3241
+ lan78xx_bind+0x711/0x1690 drivers/net/usb/lan78xx.c:3766
 
-To correct this, we should look up the BE and get the channel used on the
-Link side.
+The function lan78xx_read_raw_eeprom failed to properly propagate EEPROM
+read timeout errors (-ETIMEDOUT). In the fallthrough path, it first
+attempted to restore the pin configuration for LED outputs and then
+returned only the status of that restore operation, discarding the
+original timeout error.
 
-Fixes: 67b182bea08a ("ASoC: SOF: Intel: hda: Implement get_stream_position (Linear Link Position)")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20251002074719.2084-6-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+As a result, callers could mistakenly treat the data buffer as valid
+even though the EEPROM read had actually timed out with no data or partial
+data.
+
+To fix this, handle errors in restoring the LED pin configuration separately.
+If the restore succeeds, return any prior EEPROM timeout error correctly
+to the caller.
+
+Reported-by: syzbot+62ec8226f01cb4ca19d9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=62ec8226f01cb4ca19d9
+Fixes: 8b1b2ca83b20 ("net: usb: lan78xx: Improve error handling in EEPROM and OTP operations")
+Signed-off-by: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250930084902.19062-1-bhanuseshukumar@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-stream.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ drivers/net/usb/lan78xx.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
-index a34f472ef1751..9c3b3a9aaf83c 100644
---- a/sound/soc/sof/intel/hda-stream.c
-+++ b/sound/soc/sof/intel/hda-stream.c
-@@ -1129,10 +1129,35 @@ u64 hda_dsp_get_stream_llp(struct snd_sof_dev *sdev,
- 			   struct snd_soc_component *component,
- 			   struct snd_pcm_substream *substream)
- {
--	struct hdac_stream *hstream = substream->runtime->private_data;
--	struct hdac_ext_stream *hext_stream = stream_to_hdac_ext_stream(hstream);
-+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
-+	struct snd_soc_pcm_runtime *be_rtd = NULL;
-+	struct hdac_ext_stream *hext_stream;
-+	struct snd_soc_dai *cpu_dai;
-+	struct snd_soc_dpcm *dpcm;
- 	u32 llp_l, llp_u;
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 1ff25f57329a8..d75502ebbc0d9 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1079,10 +1079,13 @@ static int lan78xx_read_raw_eeprom(struct lan78xx_net *dev, u32 offset,
+ 	}
  
-+	/*
-+	 * The LLP needs to be read from the Link DMA used for this FE as it is
-+	 * allowed to use any combination of Link and Host channels
-+	 */
-+	for_each_dpcm_be(rtd, substream->stream, dpcm) {
-+		if (dpcm->fe != rtd)
-+			continue;
-+
-+		be_rtd = dpcm->be;
+ read_raw_eeprom_done:
+-	if (dev->chipid == ID_REV_CHIP_ID_7800_)
+-		return lan78xx_write_reg(dev, HW_CFG, saved);
+-
+-	return 0;
++	if (dev->chipid == ID_REV_CHIP_ID_7800_) {
++		int rc = lan78xx_write_reg(dev, HW_CFG, saved);
++		/* If USB fails, there is nothing to do */
++		if (rc < 0)
++			return rc;
 +	}
-+
-+	if (!be_rtd)
-+		return 0;
-+
-+	cpu_dai = snd_soc_rtd_to_cpu(be_rtd, 0);
-+	if (!cpu_dai)
-+		return 0;
-+
-+	hext_stream = snd_soc_dai_get_dma_data(cpu_dai, substream);
-+	if (!hext_stream)
-+		return 0;
-+
- 	/*
- 	 * The pplc_addr have been calculated during probe in
- 	 * hda_dsp_stream_init():
++	return ret;
+ }
+ 
+ static int lan78xx_read_eeprom(struct lan78xx_net *dev, u32 offset,
 -- 
 2.51.0
 
