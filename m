@@ -1,74 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D361330B2C;
-	Fri, 17 Oct 2025 15:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46E330B11;
+	Fri, 17 Oct 2025 15:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715721; cv=none; b=kYY3SznhegCheYWUFaMParo5kRjXQxrXMCBScI/e/MWAUFtr/gaQZ2vdEa2moUwV+eZqvpWdtCKJVL/UkHmzT67qN4A85YgNtDmzgpneaVia30yFx9sarOUlKlePZMZgxK0WBezyWVQU5jFztI5INXpIoRe4ujQZCKsY5x/610c=
+	t=1760715724; cv=none; b=OCRBIvodM2p0LF5qsh7nW8NJTU5+1ktmPtwoFSg1L92IUVxd2WJQwNfpRFgk8bJKESXdNPLhq6lyGiiPnCURBZiVnw6R2u3RMXiAt40l1SfWWGb53+GuJcQBvbCeyDgkYIiSI4S9qycdVKRQn+KT/LAFyW3nGV96r2geAT370zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715721; c=relaxed/simple;
-	bh=lBk1VOWo+Hupd/X0Slp9nNTi02Bv+1U7ZFY6EHaFU5U=;
+	s=arc-20240116; t=1760715724; c=relaxed/simple;
+	bh=MKdLkD3XMiHrL11gnyW1Pxa/VzodDzHZMUxQBWOcQvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAoaDfHyTFi/ApJpG/Z0xY5dDJMsCnjwDy0Hu9h9sTDFccbJLeF2s7egvKllYFebDn+CO0p2w9v0uKbZbAVZYCD+2GRSUP0AkEpidcCOWSrnQyxo6VYhHBnCtcvIN+5Uyhhd7hPSOPfr4qVG7T/na4HA3YGD9uSBReUANIpUfbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzSqi+BC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLfopJYUn5bts/lcMmveoQLtgyGjFERPlx9b9xjizCGpOGEJYOtN2x+tWGw8HcXD/SD6bz0P1/4Sa7BtMl5tkEfnm4fl7jgMkzCsIFvk+S/8kxv7yD8SJ/BRIsTlIp32YjLKIjEZ+sggf2WnfMQi52QZuWpsS/olIH+VwagbfLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrEXMdTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzSqi+BC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25CCC113D0;
-	Fri, 17 Oct 2025 15:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrEXMdTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2AAC4CEE7;
+	Fri, 17 Oct 2025 15:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715721;
-	bh=lBk1VOWo+Hupd/X0Slp9nNTi02Bv+1U7ZFY6EHaFU5U=;
+	s=korg; t=1760715724;
+	bh=MKdLkD3XMiHrL11gnyW1Pxa/VzodDzHZMUxQBWOcQvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzSqi+BCa4D++Bii8NQL13zLuagNcwlPgPh733qe8NNaEeFlOgLcKH3aJG1HhAYqI
-	 T4Zhkk12dnu18H2Pp5s926Q1wLLaUXCbjSRz8aRqNL+I05Bbj2Yofac66GvXD10WYo
-	 vo7SVYoVnE/lp45UCUgs+3bZRvhf3mEx8N+5WejA=
+	b=IrEXMdTVFE1ehm/I97A4cf2kUdJolYaIlBDKXuu8SztlfpSFzhAZURmoWWabLbjkX
+	 154zeHBBTzJatI2YIPGObk8X/C3znwiCddNMk/pBeeDF/3eyaK5ldA0ZDOH9aM7P8x
+	 4PawlstB9SQtV+s52R6H+snjf0OCCGez3ri4SN3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lance Yang <lance.yang@linux.dev>,
-	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
 	David Hildenbrand <david@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
 	Zi Yan <ziy@nvidia.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
 	Alistair Popple <apopple@nvidia.com>,
-	"andrew.yang" <andrew.yang@mediatek.com>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Barry Song <baohua@kernel.org>,
 	Byungchul Park <byungchul@sk.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Chinwen Chang <chinwen.chang@mediatek.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
 	Gregory Price <gourry@gourry.net>,
 	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Jann Horn <jannh@google.com>,
 	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Kairui Song <ryncsn@gmail.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Mariano Pache <npache@redhat.com>,
 	Mathew Brost <matthew.brost@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Peter Xu <peterx@redhat.com>,
 	Rakie Kim <rakie.kim@sk.com>,
 	Rik van Riel <riel@surriel.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
 	Ryan Roberts <ryan.roberts@arm.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 315/371] mm/thp: fix MTE tag mismatch when replacing zero-filled subpages
-Date: Fri, 17 Oct 2025 16:54:50 +0200
-Message-ID: <20251017145213.471668235@linuxfoundation.org>
+Subject: [PATCH 6.17 316/371] mm/rmap: fix soft-dirty and uffd-wp bit loss when remapping zero-filled mTHP subpage to shared zeropage
+Date: Fri, 17 Oct 2025 16:54:51 +0200
+Message-ID: <20251017145213.509363664@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -89,143 +75,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Lance Yang <lance.yang@linux.dev>
 
-commit 1ce6473d17e78e3cb9a40147658231731a551828 upstream.
+commit 9658d698a8a83540bf6a6c80d13c9a61590ee985 upstream.
 
-When both THP and MTE are enabled, splitting a THP and replacing its
-zero-filled subpages with the shared zeropage can cause MTE tag mismatch
-faults in userspace.
+When splitting an mTHP and replacing a zero-filled subpage with the shared
+zeropage, try_to_map_unused_to_zeropage() currently drops several
+important PTE bits.
 
-Remapping zero-filled subpages to the shared zeropage is unsafe, as the
-zeropage has a fixed tag of zero, which may not match the tag expected by
-the userspace pointer.
+For userspace tools like CRIU, which rely on the soft-dirty mechanism for
+incremental snapshots, losing the soft-dirty bit means modified pages are
+missed, leading to inconsistent memory state after restore.
 
-KSM already avoids this problem by using memcmp_pages(), which on arm64
-intentionally reports MTE-tagged pages as non-identical to prevent unsafe
-merging.
+As pointed out by David, the more critical uffd-wp bit is also dropped.
+This breaks the userfaultfd write-protection mechanism, causing writes to
+be silently missed by monitoring applications, which can lead to data
+corruption.
 
-As suggested by David[1], this patch adopts the same pattern, replacing the
-memchr_inv() byte-level check with a call to pages_identical(). This
-leverages existing architecture-specific logic to determine if a page is
-truly identical to the shared zeropage.
+Preserve both the soft-dirty and uffd-wp bits from the old PTE when
+creating the new zeropage mapping to ensure they are correctly tracked.
 
-Having both the THP shrinker and KSM rely on pages_identical() makes the
-design more future-proof, IMO. Instead of handling quirks in generic code,
-we just let the architecture decide what makes two pages identical.
-
-[1] https://lore.kernel.org/all/ca2106a3-4bb2-4457-81af-301fd99fbef4@redhat.com
-
-Link: https://lkml.kernel.org/r/20250922021458.68123-1-lance.yang@linux.dev
+Link: https://lkml.kernel.org/r/20250930081040.80926-1-lance.yang@linux.dev
 Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
 Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
-Closes: https://lore.kernel.org/all/a7944523fcc3634607691c35311a5d59d1a3f8d4.camel@mediatek.com
 Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
+Suggested-by: Dev Jain <dev.jain@arm.com>
 Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
 Cc: Alistair Popple <apopple@nvidia.com>
-Cc: andrew.yang <andrew.yang@mediatek.com>
 Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: Barry Song <baohua@kernel.org>
 Cc: Byungchul Park <byungchul@sk.com>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Chinwen Chang <chinwen.chang@mediatek.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
 Cc: Gregory Price <gourry@gourry.net>
 Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Jann Horn <jannh@google.com>
 Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: Mariano Pache <npache@redhat.com>
 Cc: Mathew Brost <matthew.brost@intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Peter Xu <peterx@redhat.com>
 Cc: Rakie Kim <rakie.kim@sk.com>
 Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: Yu Zhao <yuzhao@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   15 +++------------
- mm/migrate.c     |    8 +-------
- 2 files changed, 4 insertions(+), 19 deletions(-)
+ mm/migrate.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4115,32 +4115,23 @@ static unsigned long deferred_split_coun
- static bool thp_underused(struct folio *folio)
- {
- 	int num_zero_pages = 0, num_filled_pages = 0;
--	void *kaddr;
- 	int i;
- 
- 	if (khugepaged_max_ptes_none == HPAGE_PMD_NR - 1)
- 		return false;
- 
- 	for (i = 0; i < folio_nr_pages(folio); i++) {
--		kaddr = kmap_local_folio(folio, i * PAGE_SIZE);
--		if (!memchr_inv(kaddr, 0, PAGE_SIZE)) {
--			num_zero_pages++;
--			if (num_zero_pages > khugepaged_max_ptes_none) {
--				kunmap_local(kaddr);
-+		if (pages_identical(folio_page(folio, i), ZERO_PAGE(0))) {
-+			if (++num_zero_pages > khugepaged_max_ptes_none)
- 				return true;
--			}
- 		} else {
- 			/*
- 			 * Another path for early exit once the number
- 			 * of non-zero filled pages exceeds threshold.
- 			 */
--			num_filled_pages++;
--			if (num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none) {
--				kunmap_local(kaddr);
-+			if (++num_filled_pages >= HPAGE_PMD_NR - khugepaged_max_ptes_none)
- 				return false;
--			}
- 		}
--		kunmap_local(kaddr);
- 	}
- 	return false;
- }
 --- a/mm/migrate.c
 +++ b/mm/migrate.c
-@@ -301,9 +301,7 @@ static bool try_to_map_unused_to_zeropag
- 					  unsigned long idx)
+@@ -297,8 +297,7 @@ bool isolate_folio_to_list(struct folio
+ }
+ 
+ static bool try_to_map_unused_to_zeropage(struct page_vma_mapped_walk *pvmw,
+-					  struct folio *folio,
+-					  unsigned long idx)
++		struct folio *folio, pte_t old_pte, unsigned long idx)
  {
  	struct page *page = folio_page(folio, idx);
--	bool contains_data;
  	pte_t newpte;
--	void *addr;
+@@ -307,7 +306,7 @@ static bool try_to_map_unused_to_zeropag
+ 		return false;
+ 	VM_BUG_ON_PAGE(!PageAnon(page), page);
+ 	VM_BUG_ON_PAGE(!PageLocked(page), page);
+-	VM_BUG_ON_PAGE(pte_present(ptep_get(pvmw->pte)), page);
++	VM_BUG_ON_PAGE(pte_present(old_pte), page);
  
- 	if (PageCompound(page))
- 		return false;
-@@ -320,11 +318,7 @@ static bool try_to_map_unused_to_zeropag
- 	 * this subpage has been non present. If the subpage is only zero-filled
- 	 * then map it to the shared zeropage.
- 	 */
--	addr = kmap_local_page(page);
--	contains_data = memchr_inv(addr, 0, PAGE_SIZE);
--	kunmap_local(addr);
--
--	if (contains_data)
-+	if (!pages_identical(page, ZERO_PAGE(0)))
- 		return false;
+ 	if (folio_test_mlocked(folio) || (pvmw->vma->vm_flags & VM_LOCKED) ||
+ 	    mm_forbids_zeropage(pvmw->vma->vm_mm))
+@@ -323,6 +322,12 @@ static bool try_to_map_unused_to_zeropag
  
  	newpte = pte_mkspecial(pfn_pte(my_zero_pfn(pvmw->address),
+ 					pvmw->vma->vm_page_prot));
++
++	if (pte_swp_soft_dirty(old_pte))
++		newpte = pte_mksoft_dirty(newpte);
++	if (pte_swp_uffd_wp(old_pte))
++		newpte = pte_mkuffd_wp(newpte);
++
+ 	set_pte_at(pvmw->vma->vm_mm, pvmw->address, pvmw->pte, newpte);
+ 
+ 	dec_mm_counter(pvmw->vma->vm_mm, mm_counter(folio));
+@@ -365,13 +370,13 @@ static bool remove_migration_pte(struct
+ 			continue;
+ 		}
+ #endif
++		old_pte = ptep_get(pvmw.pte);
+ 		if (rmap_walk_arg->map_unused_to_zeropage &&
+-		    try_to_map_unused_to_zeropage(&pvmw, folio, idx))
++		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
+ 			continue;
+ 
+ 		folio_get(folio);
+ 		pte = mk_pte(new, READ_ONCE(vma->vm_page_prot));
+-		old_pte = ptep_get(pvmw.pte);
+ 
+ 		entry = pte_to_swp_entry(old_pte);
+ 		if (!is_migration_entry_young(entry))
 
 
