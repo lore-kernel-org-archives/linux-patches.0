@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF992F12C6;
-	Fri, 17 Oct 2025 15:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D043277A9;
+	Fri, 17 Oct 2025 15:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715582; cv=none; b=n3qRgzn/KI8ktlUd3FbFphBw9AAjeV/5Kna0GjOTFV2WFvfuOqIgu4leJy2DrDvY5IrakYmqXYoxAmnmfwnCRAcBeMGi4ou9/1ZjwnyBAETFByLfjPmqOL/kQP84Wo9X3DDzliiv53+RkYCzHjH59lmCBNDDGpSpW6oHn5vHOgU=
+	t=1760715585; cv=none; b=cUHOnv0q9DkLrRKYU/BszxK9bLWgadGLGQCgAz4J9ZZ9caaBbLNH9a/BAkx1QJ9TzT4s84vvbaywOrMtaQJVfinCeTfJm54HG/Rd4SpwhouTSDrFaC6b1v1U0XwaPeF/j2M7fMvTgxyLqtBzwAgqc39QWwIQ7ci5oM855nvhPxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715582; c=relaxed/simple;
-	bh=8/KUQ0GUD7RO7Nt3s+ycZX/CtYgRyMFeRlQJW9eHI64=;
+	s=arc-20240116; t=1760715585; c=relaxed/simple;
+	bh=4zdpdPRCqq7CZdYwpS6UvU5dUA8aktcfgard61GO3ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFnole+UTZoutxOvsOPoAc3RmWDKa4sF9bNMk8E/auqo8R95p7oqtGz0px07tpjDBbWyFI2Bd1+xg+phsK/2na/3IEeIsWFZQnvXbf7wlrigSBqeP1ZIeBOr4ZYS3LLOtQTR8rHqUUe2Zh4VWFGNPqx0qRCa5CpwtortkiMO6EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6GM4K6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVAnbmfusl8UH5ZcR7R0V849920bscOtlENv2KN7xGUnKgP01EIxKofheprX4Kb7sl+8vLntMXQq03k2pPcNploPFxzi4xr7n3I/QRct1hGXHwHyPspvoRbdWKYjtU/PGQ2DZq+0Hm960g2pvS2wmIr08uskgiVWZcAI4bvaER4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THQayXcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6GM4K6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125E4C4CEFE;
-	Fri, 17 Oct 2025 15:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THQayXcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6389C4CEE7;
+	Fri, 17 Oct 2025 15:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715582;
-	bh=8/KUQ0GUD7RO7Nt3s+ycZX/CtYgRyMFeRlQJW9eHI64=;
+	s=korg; t=1760715585;
+	bh=4zdpdPRCqq7CZdYwpS6UvU5dUA8aktcfgard61GO3ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6GM4K6XfIdi149DPEo3WU1aAhBFqygmqMhErmGBvsB3+W4PLkyKJrBJqjq8h+JMy
-	 ylEXS5dQFLDaFlm7Sq/4BynuqZ49WGO6smXa5p1H2BPrerf0WBG2wPRvtSf1apwZL0
-	 8iUuZTos1n+a0tkkQ7qw5iIL3SONtSfQ5eJrzAPM=
+	b=THQayXcOs+PNuhADrZnG4Ti9LQRJVQGHOKKpJVLhi2UPBqOKW2/1eiiljQtXAg5Ke
+	 yRfr6jaJFhPh00DaucJoRxpJ3D3Jk2P8KpftgD2nWN3TO8vGrQBmRb9fpdeXXaRlwx
+	 xISg+jX7jmM8Mn3/SS+i5/gniX1J7fHFMpzXSJHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Zanders <maarten@zanders.be>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.17 265/371] mtd: nand: raw: gpmi: fix clocks when CONFIG_PM=N
-Date: Fri, 17 Oct 2025 16:54:00 +0200
-Message-ID: <20251017145211.666416306@linuxfoundation.org>
+	Rex Chen <rex.chen_1@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.17 266/371] mmc: core: SPI mode remove cmd7
+Date: Fri, 17 Oct 2025 16:54:01 +0200
+Message-ID: <20251017145211.702201309@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,70 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Zanders <maarten@zanders.be>
+From: Rex Chen <rex.chen_1@nxp.com>
 
-commit 1001cc1171248ebb21d371fbe086b5d3f11b410b upstream.
+commit fec40f44afdabcbc4a7748e4278f30737b54bb1a upstream.
 
-Commit f04ced6d545e ("mtd: nand: raw: gpmi: improve power management
-handling") moved all clock handling into PM callbacks. With CONFIG_PM
-disabled, those callbacks are missing, leaving the driver unusable.
+SPI mode doesn't support cmd7, so remove it in mmc_sdio_alive() and
+confirm if sdio is active by checking CCCR register value is available
+or not.
 
-Add clock init/teardown for !CONFIG_PM builds to restore basic operation.
-Keeping the driver working without requiring CONFIG_PM is preferred over
-adding a Kconfig dependency.
-
-Fixes: f04ced6d545e ("mtd: nand: raw: gpmi: improve power management handling")
-Signed-off-by: Maarten Zanders <maarten@zanders.be>
+Signed-off-by: Rex Chen <rex.chen_1@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20250728082230.1037917-2-rex.chen_1@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/mmc/core/sdio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
-+++ b/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
-@@ -145,6 +145,9 @@ err_clk:
- 	return ret;
- }
- 
-+#define gpmi_enable_clk(x)	__gpmi_enable_clk(x, true)
-+#define gpmi_disable_clk(x)	__gpmi_enable_clk(x, false)
-+
- static int gpmi_init(struct gpmi_nand_data *this)
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -945,7 +945,11 @@ static void mmc_sdio_remove(struct mmc_h
+  */
+ static int mmc_sdio_alive(struct mmc_host *host)
  {
- 	struct resources *r = &this->resources;
-@@ -2765,6 +2768,11 @@ static int gpmi_nand_probe(struct platfo
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
- 	pm_runtime_use_autosuspend(&pdev->dev);
-+#ifndef CONFIG_PM
-+	ret = gpmi_enable_clk(this);
-+	if (ret)
-+		goto exit_acquire_resources;
-+#endif
- 
- 	ret = gpmi_init(this);
- 	if (ret)
-@@ -2800,6 +2808,9 @@ static void gpmi_nand_remove(struct plat
- 	release_resources(this);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+#ifndef CONFIG_PM
-+	gpmi_disable_clk(this);
-+#endif
+-	return mmc_select_card(host->card);
++	if (!mmc_host_is_spi(host))
++		return mmc_select_card(host->card);
++	else
++		return mmc_io_rw_direct(host->card, 0, 0, SDIO_CCCR_CCCR, 0,
++					NULL);
  }
  
- static int gpmi_pm_suspend(struct device *dev)
-@@ -2846,9 +2857,6 @@ static int gpmi_pm_resume(struct device
- 	return 0;
- }
- 
--#define gpmi_enable_clk(x)	__gpmi_enable_clk(x, true)
--#define gpmi_disable_clk(x)	__gpmi_enable_clk(x, false)
--
- static int gpmi_runtime_suspend(struct device *dev)
- {
- 	struct gpmi_nand_data *this = dev_get_drvdata(dev);
+ /*
 
 
