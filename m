@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7828032C92B;
-	Fri, 17 Oct 2025 15:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FA7270568;
+	Fri, 17 Oct 2025 15:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715806; cv=none; b=bEi7AxMB/TYHdGn16nPLnFFdhkzQyOjJE0c84LFcKtjVhc617N7ZeSMlI1C5ggqKd+dRyITs+JIm1J6curzPHjFMeWW95kra32ohD43OWWPcDL/k4vuahKUkytDZcwfGXtRXabyz2XaAPDfSTso8bdLjvlsjeYNT1nSfupQVLrs=
+	t=1760715809; cv=none; b=WpE++S2n4pK4Q83ujfYOm8WbCFsq+nkCc7uKb/+fVOBB4sOSvK3Z/0ksCd9rYO3N23mF65+8SeOPX/0u54gAco5AaEqe8AGQTCx0lUbsU9Zbt40fKY84YTDpd4Yt2Am5em+bnrysoU71ezMeJD2xNpEEE/PLOUsGqSyCSpFajMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715806; c=relaxed/simple;
-	bh=mEkHf2V/ncKdm0G3SzWTg07tePbaBA4LSr4AkW+dFvk=;
+	s=arc-20240116; t=1760715809; c=relaxed/simple;
+	bh=Dwn2RLsp81F5LJ2JO10Ku8MEGCLe0NVukoEMY57PwtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJzvGSL4b8rFQ5SlNiJo+s4lZ/5dPRttwPbFmrIr4NMU3JOgDdMmH7rlr359Ct66dosWyxGuLFLQPFZYjt1xK7W2ZnhyrHG0j6/hJXmXhhenQG1+E13N+OOC3J1MmBkos0/+cUqYYMGyZZnYd6Dt+ll3hp1P9qxbUbkB3nEc+Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQEMkLO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQXsG7P9zVdqepbwbcRQleuqKM6tbsy6N4s1a0J8ik6unZm2wSX9GQxqFiITANkkGl5ZAaXjGnnPYZyLcGIuaU6T7ecOQbcPuaDAANn1vdxFoJYpWqhNAQHay1aq0L0SIDdPRCFWuKmLdyBk3QsXWrEp5tNsbMt+gwsWfHbN/L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBjyltvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQEMkLO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE72C4CEE7;
-	Fri, 17 Oct 2025 15:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBjyltvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFC3C4CEE7;
+	Fri, 17 Oct 2025 15:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715806;
-	bh=mEkHf2V/ncKdm0G3SzWTg07tePbaBA4LSr4AkW+dFvk=;
+	s=korg; t=1760715808;
+	bh=Dwn2RLsp81F5LJ2JO10Ku8MEGCLe0NVukoEMY57PwtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQEMkLO7bpO1YXg3ze/IASoFnpYepqie1rTK/lujwM8a3TEmiJQ7D8cLzt3FN7df0
-	 q5dRq0QsnHizKn4L9+r+WzACkfv9Nic54fbNdDMCIyE3g2jsHtSmpIKTpffbkQdfI8
-	 JR51NK0zEMdvmaKExrW3SZOB3equrqtqR42zoPzA=
+	b=xBjyltvt/u8mJStKP4Gm1Xtk6OYJ1SLDSJ01t6sBod6Zh3aN2slKnxRd5zCpivwL/
+	 Lc0UZzoGmfWg14jIqUYuAnuowZRUzkncLOuotEwa9HOH0nlsQ+hjjo8uPWhqT+Oq2n
+	 1t2RCN6Hi8DnmYF73PJG5C1xwwT+t92cwPPaaxOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.17 310/371] wifi: ath11k: HAL SRNG: dont deinitialize and re-initialize again
-Date: Fri, 17 Oct 2025 16:54:45 +0200
-Message-ID: <20251017145213.293797142@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.17 311/371] wifi: iwlwifi: Fix dentry reference leak in iwl_mld_add_link_debugfs
+Date: Fri, 17 Oct 2025 16:54:46 +0200
+Message-ID: <20251017145213.329465016@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,82 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 32be3ca4cf78b309dfe7ba52fe2d7cc3c23c5634 upstream.
+commit ff46e2e7034c78489fa7a6bc35f7c9dd8ab82905 upstream.
 
-Don't deinitialize and reinitialize the HAL helpers. The dma memory is
-deallocated and there is high possibility that we'll not be able to get
-the same memory allocated from dma when there is high memory pressure.
+The debugfs_lookup() function increases the dentry reference count.
+Add missing dput() call to release the reference when the "iwlmld"
+directory already exists.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
 Cc: stable@vger.kernel.org
-Cc: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://patch.msgid.link/20250722053121.1145001-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20250902040955.2362472-1-linmq006@gmail.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c |    6 +-----
- drivers/net/wireless/ath/ath11k/hal.c  |   16 ++++++++++++++++
- drivers/net/wireless/ath/ath11k/hal.h  |    1 +
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/debugfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -2215,14 +2215,10 @@ static int ath11k_core_reconfigure_on_cr
- 	mutex_unlock(&ab->core_lock);
- 
- 	ath11k_dp_free(ab);
--	ath11k_hal_srng_deinit(ab);
-+	ath11k_hal_srng_clear(ab);
- 
- 	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
- 
--	ret = ath11k_hal_srng_init(ab);
--	if (ret)
--		return ret;
--
- 	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
- 
- 	ret = ath11k_core_qmi_firmware_ready(ab);
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1386,6 +1386,22 @@ void ath11k_hal_srng_deinit(struct ath11
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mld/debugfs.c
+index cc052b0aa53f..372204bf8452 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/debugfs.c
+@@ -1001,8 +1001,12 @@ void iwl_mld_add_link_debugfs(struct ieee80211_hw *hw,
+ 	 * If not, this is a per-link dir of a MLO vif, add in it the iwlmld
+ 	 * dir.
+ 	 */
+-	if (!mld_link_dir)
++	if (!mld_link_dir) {
+ 		mld_link_dir = debugfs_create_dir("iwlmld", dir);
++	} else {
++		/* Release the reference from debugfs_lookup */
++		dput(mld_link_dir);
++	}
  }
- EXPORT_SYMBOL(ath11k_hal_srng_deinit);
  
-+void ath11k_hal_srng_clear(struct ath11k_base *ab)
-+{
-+	/* No need to memset rdp and wrp memory since each individual
-+	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
-+	 * and ath11k_hal_srng_dst_hw_init().
-+	 */
-+	memset(ab->hal.srng_list, 0,
-+	       sizeof(ab->hal.srng_list));
-+	memset(ab->hal.shadow_reg_addr, 0,
-+	       sizeof(ab->hal.shadow_reg_addr));
-+	ab->hal.avail_blk_resource = 0;
-+	ab->hal.current_blk_index = 0;
-+	ab->hal.num_shadow_reg_configured = 0;
-+}
-+EXPORT_SYMBOL(ath11k_hal_srng_clear);
-+
- void ath11k_hal_dump_srng_stats(struct ath11k_base *ab)
- {
- 	struct hal_srng *srng;
---- a/drivers/net/wireless/ath/ath11k/hal.h
-+++ b/drivers/net/wireless/ath/ath11k/hal.h
-@@ -965,6 +965,7 @@ int ath11k_hal_srng_setup(struct ath11k_
- 			  struct hal_srng_params *params);
- int ath11k_hal_srng_init(struct ath11k_base *ath11k);
- void ath11k_hal_srng_deinit(struct ath11k_base *ath11k);
-+void ath11k_hal_srng_clear(struct ath11k_base *ab);
- void ath11k_hal_dump_srng_stats(struct ath11k_base *ab);
- void ath11k_hal_srng_get_shadow_config(struct ath11k_base *ab,
- 				       u32 **cfg, u32 *len);
+ static ssize_t _iwl_dbgfs_fixed_rate_write(struct iwl_mld *mld, char *buf,
+-- 
+2.51.0
+
 
 
