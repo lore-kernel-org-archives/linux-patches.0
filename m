@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B20F30CD9F;
-	Fri, 17 Oct 2025 15:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EA220C00A;
+	Fri, 17 Oct 2025 15:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715236; cv=none; b=jxL+S+0s5OaxsnwHHBoaUdkX9yZ7tnE3gKmDj/NCjhQ/IxUqGP/slEJ2eNLGHxBpqNMKQnG7lLPsPmbbX6NY4M+vAHMwVUolDRxUpqssVjNk6zzIouL34J2Q9iX8r/CV1ct2B9uBKzVk7DUWJBdwZx+FKUVrbMFPLu4tNE6HFQs=
+	t=1760715239; cv=none; b=AoOG6siyl+gfV5WM2Ju//igR94/mTF1TmdNXt0vmP388WYf4KjGtelhDqgzHSoNuNGWnAVCY0z0E1wHHbJdXN4wXPQgP2tjbGExzU85gMwqPa+FEgCVgLJ/OS73T/JoYgEIlMbq64qN5SboC+wF4gelwii+IS+adrWozm9l+k5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715236; c=relaxed/simple;
-	bh=b3DxJHtjV8jf8EgGqEUY/vSoA7DrNj/nvfv0Ker0gsE=;
+	s=arc-20240116; t=1760715239; c=relaxed/simple;
+	bh=xdjgqEEj0vlczWQF61oB6MHJ+F21styJLUwD/yAhjQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLIGv5fY7lNPXIOwHKG6SdVdhZyAOqYTPh7cjQIks1y7r3xWJ0sBV32It0LkeqWM6JcPLW963Dwt+hMJF6qGHc5tpUAsXEKS59+0/+NxKSxwFnCHeY+BJXkkpts/rFX/fdqP/KvnHMvcyHZiSDbDJZtSM9Qn3sOTKNdNZCfnLxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKEFsQ6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HnT9da7u0psbPzvZu15kVX7hugVz9zUSXdHNkARdDNzdTexiNJ/IjqIeC/Fj/t48HQROMCZ1KF3G5c2IasHwU4F4VqXqnL1WfPrA3P3u3mJ3WcFqbyhIJyrqkA9a69mE86FI2gAkT6VpPQU5Q77YoHS3k5pyQwsb4GWK23ooYeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMkc/YGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKEFsQ6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88705C113D0;
-	Fri, 17 Oct 2025 15:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMkc/YGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DA7C4CEE7;
+	Fri, 17 Oct 2025 15:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715235;
-	bh=b3DxJHtjV8jf8EgGqEUY/vSoA7DrNj/nvfv0Ker0gsE=;
+	s=korg; t=1760715238;
+	bh=xdjgqEEj0vlczWQF61oB6MHJ+F21styJLUwD/yAhjQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKEFsQ6fGiixXKdftvWuqQkg3ZqZA13HXnKxhggS6wfIMy1xrizyHfHObkIFdTsni
-	 ES/PL/hNwLA/fp6dOzkiZUm48b23Wcvc9ztiBYsrMerKICdEeF5GB0+QHwEaKiT9Bo
-	 JsulBpcI5rUs12n8uFCT3BPymZSMSd/af6Z5qeM8=
+	b=RMkc/YGDnU5T8/t+ZXRwTvwBGBAsvn7zcCt+0LtQ2Y4sBw8m0tq+TMPEquk1d/xQV
+	 sVULe5MZF0Lwex0snRGSj4e2Z221cBcACW2dr+pLys9E2OGDLFW5D/kZcn022AfJxu
+	 4euFQYbFWgT1LKU45PEFg8sNXpJWY/VzMdc7yBUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.17 145/371] arm64: dts: qcom: x1e80100-pmics: Disable pm8010 by default
-Date: Fri, 17 Oct 2025 16:52:00 +0200
-Message-ID: <20251017145207.180859045@linuxfoundation.org>
+	Vibhore Vardhan <vibhore@ti.com>,
+	Paresh Bhagat <p-bhagat@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.17 146/371] arm64: dts: ti: k3-am62a-main: Fix main padcfg length
+Date: Fri, 17 Oct 2025 16:52:01 +0200
+Message-ID: <20251017145207.217185675@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Vibhore Vardhan <vibhore@ti.com>
 
-commit b9a185198f96259311543b30d884d8c01da913f7 upstream.
+commit 4c4e48afb6d85c1a8f9fdbae1fdf17ceef4a6f5b upstream.
 
-pm8010 is a camera specific PMIC, and may not be present on some
-devices. These may instead use a dedicated vreg for this purpose (Dell
-XPS 9345, Dell Inspiron..) or use USB webcam instead of a MIPI one
-alltogether (Lenovo Thinbook 16, Lenovo Yoga..).
+The main pad configuration register region starts with the register
+MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG0 with address 0x000f4000 and ends
+with the MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG150 register with address
+0x000f4258, as a result of which, total size of the region is 0x25c
+instead of 0x2ac.
 
-Disable pm8010 by default, let platforms that actually have one onboard
-enable it instead.
+Reference Docs
+TRM (AM62A) - https://www.ti.com/lit/ug/spruj16b/spruj16b.pdf
+TRM (AM62D) - https://www.ti.com/lit/ug/sprujd4/sprujd4.pdf
 
+Fixes: 5fc6b1b62639c ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
 Cc: stable@vger.kernel.org
-Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Link: https://lore.kernel.org/r/20250701183625.1968246-2-alex.vinarskis@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Vibhore Vardhan <vibhore@ti.com>
+Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://patch.msgid.link/20250903062513.813925-2-p-bhagat@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am62a-main.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-@@ -475,6 +475,8 @@
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+--- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+@@ -267,7 +267,7 @@
  
-+		status = "disabled";
-+
- 		pm8010_temp_alarm: temp-alarm@2400 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0x2400>;
+ 	main_pmx0: pinctrl@f4000 {
+ 		compatible = "pinctrl-single";
+-		reg = <0x00 0xf4000 0x00 0x2ac>;
++		reg = <0x00 0xf4000 0x00 0x25c>;
+ 		#pinctrl-cells = <1>;
+ 		pinctrl-single,register-width = <32>;
+ 		pinctrl-single,function-mask = <0xffffffff>;
 
 
