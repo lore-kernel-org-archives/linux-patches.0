@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA16330B0D;
-	Fri, 17 Oct 2025 15:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4886E330B0D;
+	Fri, 17 Oct 2025 15:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716002; cv=none; b=d8mBIXaebuD5T/ZrntIvU2c8TNnOw+XWM32CgaxgZQWF1f3o9+ecFcpch1fe9SZOVkanR/kYQ9z3SFyaaNMSa1tjoDgvzpniujRoUcB7r+Ylwf6SPwyGtI6BG57SOvNApGmAR3TQzQ9Pyfbdah5pK3INU92aq7STzSYH49mpCGk=
+	t=1760716005; cv=none; b=Sx54gfsxVoFipiP5JruS9IAzKbUCQxTkr+oZd/OcFv+7S0WEhlTYPpJoWPTZKyUAvru2RGut85JR4/w0AxiEb8A04/dS4SX0QWCUj5FpQ2L+KIDENbRhdTNEC33fFguls49F7DsxNUs7zh4OGjZjDc82Hn1bmo4yrBxiJzCFK58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716002; c=relaxed/simple;
-	bh=55CRuIIZCwYF/aT1EM5zqsDHS9LJSH6swStgFtSAeik=;
+	s=arc-20240116; t=1760716005; c=relaxed/simple;
+	bh=l0houY8h9YowyC6x7nkJOW15sptWF4IZzujGatGZBeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alEJ7eKHrF7QabDRTYPNueDz3L/hp0Kz5pSgEisnEwiqARY0/RR4ABZ/d23271DsedY/lpDmJWP3bvI5AM/EqZTMR0/m5Bw+h9NhGVazXsRu3IjhrKp9lkeupHuqCPI8MZa0jkXQ+SI7LaNiPuIepspdKQl4k1E1F/CGcIlbGh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v63/97Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i31xHrUgIzTF7Eni9siBW+ZVVEljndh0CjUNfUPodZQkQcNOCMqbofHIUxOHNhS3x42EEZzGzikXGNcqZS84XcDiae4ryIpZg4/BNT+OsTSs7TKSDhpYjXi8A9EfTu+DXbOrWq54p1jYfN1+Aa0NVjikLC7qD2HYzkCwKmCKKWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIihUKi5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v63/97Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BDFC4CEE7;
-	Fri, 17 Oct 2025 15:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIihUKi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72D4C116B1;
+	Fri, 17 Oct 2025 15:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716002;
-	bh=55CRuIIZCwYF/aT1EM5zqsDHS9LJSH6swStgFtSAeik=;
+	s=korg; t=1760716005;
+	bh=l0houY8h9YowyC6x7nkJOW15sptWF4IZzujGatGZBeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v63/97DcK9LgrfFfJYFLECCpf+JpGv5mpiCg10PNsUSoF0p9kv9oOoeEFbY8Wxz76
-	 C7WFabgcQQ6YploLKlJ46w9D2EROWkgtNi7WjgQwBxG2faOPKP2dvBWQn0B3d//UkL
-	 bSeBpixjWSuolPhHrAyOvuw1h5FmW0sJ9dEkkMuw=
+	b=vIihUKi5DMmynKs7d+PjcDLMmvj/jykkMzK+9xcYR/XOvlVHCGBbiJoIG2MIykIYv
+	 OpN9PVROUIS8JLKKGdHSyIm0elO8mU25c8hB5TeZQkHkQ37EFJGeDRqhILrZkTJjNA
+	 2WpOO0nhgjvR3sT1pLxnFRkYlqANnMiU+xgrj9mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Dowling <madowlin@amazon.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yifei Liu <yifei.l.liu@oracle.com>
-Subject: [PATCH 5.15 006/276] udp: Fix memory accounting leak.
-Date: Fri, 17 Oct 2025 16:51:39 +0200
-Message-ID: <20251017145142.623460185@linuxfoundation.org>
+	Shuah Khan <shuah.kh@samsung.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 007/276] media: tunner: xc5000: Refactor firmware load
+Date: Fri, 17 Oct 2025 16:51:40 +0200
+Message-ID: <20251017145142.659320827@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,168 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit df207de9d9e7a4d92f8567e2c539d9c8c12fd99d upstream.
+[ Upstream commit 8e1f5da59dd4a1966f859639860b803a7e8b8bfb ]
 
-Matt Dowling reported a weird UDP memory usage issue.
+Make sure the firmware is released when we leave
+xc_load_fw_and_init_tuner()
 
-Under normal operation, the UDP memory usage reported in /proc/net/sockstat
-remains close to zero.  However, it occasionally spiked to 524,288 pages
-and never dropped.  Moreover, the value doubled when the application was
-terminated.  Finally, it caused intermittent packet drops.
+This change makes smatch happy:
+drivers/media/tuners/xc5000.c:1213 xc_load_fw_and_init_tuner() warn: 'fw' from request_firmware() not released on lines: 1213.
 
-We can reproduce the issue with the script below [0]:
-
-  1. /proc/net/sockstat reports 0 pages
-
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 0
-
-  2. Run the script till the report reaches 524,288
-
-    # python3 test.py & sleep 5
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> PAGE_SHIFT
-
-  3. Kill the socket and confirm the number never drops
-
-    # pkill python3 && sleep 5
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 524288
-
-  4. (necessary since v6.0) Trigger proto_memory_pcpu_drain()
-
-    # python3 test.py & sleep 1 && pkill python3
-
-  5. The number doubles
-
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 1048577
-
-The application set INT_MAX to SO_RCVBUF, which triggered an integer
-overflow in udp_rmem_release().
-
-When a socket is close()d, udp_destruct_common() purges its receive
-queue and sums up skb->truesize in the queue.  This total is calculated
-and stored in a local unsigned integer variable.
-
-The total size is then passed to udp_rmem_release() to adjust memory
-accounting.  However, because the function takes a signed integer
-argument, the total size can wrap around, causing an overflow.
-
-Then, the released amount is calculated as follows:
-
-  1) Add size to sk->sk_forward_alloc.
-  2) Round down sk->sk_forward_alloc to the nearest lower multiple of
-      PAGE_SIZE and assign it to amount.
-  3) Subtract amount from sk->sk_forward_alloc.
-  4) Pass amount >> PAGE_SHIFT to __sk_mem_reduce_allocated().
-
-When the issue occurred, the total in udp_destruct_common() was 2147484480
-(INT_MAX + 833), which was cast to -2147482816 in udp_rmem_release().
-
-At 1) sk->sk_forward_alloc is changed from 3264 to -2147479552, and
-2) sets -2147479552 to amount.  3) reverts the wraparound, so we don't
-see a warning in inet_sock_destruct().  However, udp_memory_allocated
-ends up doubling at 4).
-
-Since commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
-memory_allocated"), memory usage no longer doubles immediately after
-a socket is close()d because __sk_mem_reduce_allocated() caches the
-amount in udp_memory_per_cpu_fw_alloc.  However, the next time a UDP
-socket receives a packet, the subtraction takes effect, causing UDP
-memory usage to double.
-
-This issue makes further memory allocation fail once the socket's
-sk->sk_rmem_alloc exceeds net.ipv4.udp_rmem_min, resulting in packet
-drops.
-
-To prevent this issue, let's use unsigned int for the calculation and
-call sk_forward_alloc_add() only once for the small delta.
-
-Note that first_packet_length() also potentially has the same problem.
-
-[0]:
-from socket import *
-
-SO_RCVBUFFORCE = 33
-INT_MAX = (2 ** 31) - 1
-
-s = socket(AF_INET, SOCK_DGRAM)
-s.bind(('', 0))
-s.setsockopt(SOL_SOCKET, SO_RCVBUFFORCE, INT_MAX)
-
-c = socket(AF_INET, SOCK_DGRAM)
-c.connect(s.getsockname())
-
-data = b'a' * 100
-
-while True:
-    c.send(data)
-
-Fixes: f970bd9e3a06 ("udp: implement memory accounting helpers")
-Reported-by: Matt Dowling <madowlin@amazon.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250401184501.67377-3-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Yifei: resolve minor conflicts ]
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
+Cc: Shuah Khan <shuah.kh@samsung.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 40b7a19f321e ("media: tuner: xc5000: Fix use-after-free in xc5000_release")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/media/tuners/xc5000.c |   41 ++++++++++++++++++-----------------------
+ 1 file changed, 18 insertions(+), 23 deletions(-)
 
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1459,12 +1459,12 @@ static bool udp_skb_has_head_state(struc
+--- a/drivers/media/tuners/xc5000.c
++++ b/drivers/media/tuners/xc5000.c
+@@ -58,7 +58,7 @@ struct xc5000_priv {
+ 	struct dvb_frontend *fe;
+ 	struct delayed_work timer_sleep;
+ 
+-	const struct firmware   *firmware;
++	bool inited;
+ };
+ 
+ /* Misc Defines */
+@@ -1110,23 +1110,19 @@ static int xc_load_fw_and_init_tuner(str
+ 	if (!force && xc5000_is_firmware_loaded(fe) == 0)
+ 		return 0;
+ 
+-	if (!priv->firmware) {
+-		ret = request_firmware(&fw, desired_fw->name,
+-					priv->i2c_props.adap->dev.parent);
+-		if (ret) {
+-			pr_err("xc5000: Upload failed. rc %d\n", ret);
+-			return ret;
+-		}
+-		dprintk(1, "firmware read %zu bytes.\n", fw->size);
+-
+-		if (fw->size != desired_fw->size) {
+-			pr_err("xc5000: Firmware file with incorrect size\n");
+-			release_firmware(fw);
+-			return -EINVAL;
+-		}
+-		priv->firmware = fw;
+-	} else
+-		fw = priv->firmware;
++	ret = request_firmware(&fw, desired_fw->name,
++			       priv->i2c_props.adap->dev.parent);
++	if (ret) {
++		pr_err("xc5000: Upload failed. rc %d\n", ret);
++		return ret;
++	}
++	dprintk(1, "firmware read %zu bytes.\n", fw->size);
++
++	if (fw->size != desired_fw->size) {
++		pr_err("xc5000: Firmware file with incorrect size\n");
++		release_firmware(fw);
++		return -EINVAL;
++	}
+ 
+ 	/* Try up to 5 times to load firmware */
+ 	for (i = 0; i < 5; i++) {
+@@ -1204,6 +1200,7 @@ static int xc_load_fw_and_init_tuner(str
+ 	}
+ 
+ err:
++	release_firmware(fw);
+ 	if (!ret)
+ 		printk(KERN_INFO "xc5000: Firmware %s loaded and running.\n",
+ 		       desired_fw->name);
+@@ -1274,7 +1271,7 @@ static int xc5000_resume(struct dvb_fron
+ 
+ 	/* suspended before firmware is loaded.
+ 	   Avoid firmware load in resume path. */
+-	if (!priv->firmware)
++	if (!priv->inited)
+ 		return 0;
+ 
+ 	return xc5000_set_params(fe);
+@@ -1293,6 +1290,8 @@ static int xc5000_init(struct dvb_fronte
+ 	if (debug)
+ 		xc_debug_dump(priv);
+ 
++	priv->inited = true;
++
+ 	return 0;
  }
  
- /* fully reclaim rmem/fwd memory allocated for skb */
--static void udp_rmem_release(struct sock *sk, int size, int partial,
--			     bool rx_queue_lock_held)
-+static void udp_rmem_release(struct sock *sk, unsigned int size,
-+			     int partial, bool rx_queue_lock_held)
- {
- 	struct udp_sock *up = udp_sk(sk);
- 	struct sk_buff_head *sk_queue;
--	int amt;
-+	unsigned int amt;
+@@ -1306,10 +1305,6 @@ static void xc5000_release(struct dvb_fr
  
- 	if (likely(partial)) {
- 		up->forward_deficit += size;
-@@ -1484,10 +1484,8 @@ static void udp_rmem_release(struct sock
- 	if (!rx_queue_lock_held)
- 		spin_lock(&sk_queue->lock);
+ 	if (priv) {
+ 		cancel_delayed_work(&priv->timer_sleep);
+-		if (priv->firmware) {
+-			release_firmware(priv->firmware);
+-			priv->firmware = NULL;
+-		}
+ 		hybrid_tuner_release_state(priv);
+ 	}
  
--
--	sk->sk_forward_alloc += size;
--	amt = (sk->sk_forward_alloc - partial) & ~(SK_MEM_QUANTUM - 1);
--	sk->sk_forward_alloc -= amt;
-+	amt = (size + sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
-+	sk->sk_forward_alloc += size - amt;
- 
- 	if (amt)
- 		__sk_mem_reduce_allocated(sk, amt >> SK_MEM_QUANTUM_SHIFT);
-@@ -1671,7 +1669,7 @@ EXPORT_SYMBOL_GPL(skb_consume_udp);
- 
- static struct sk_buff *__first_packet_length(struct sock *sk,
- 					     struct sk_buff_head *rcvq,
--					     int *total)
-+					     unsigned int *total)
- {
- 	struct sk_buff *skb;
- 
-@@ -1704,8 +1702,8 @@ static int first_packet_length(struct so
- {
- 	struct sk_buff_head *rcvq = &udp_sk(sk)->reader_queue;
- 	struct sk_buff_head *sk_queue = &sk->sk_receive_queue;
-+	unsigned int total = 0;
- 	struct sk_buff *skb;
--	int total = 0;
- 	int res;
- 
- 	spin_lock_bh(&rcvq->lock);
 
 
