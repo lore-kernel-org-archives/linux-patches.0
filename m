@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2E2332919;
-	Fri, 17 Oct 2025 15:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E49332ED8;
+	Fri, 17 Oct 2025 15:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714551; cv=none; b=bqEtOalvtzOFCq4DDwUoeJiWUgsq1JaWyCW8Vw7EaqPkxlsC4Fuk77oRmk/8x+7Bz8DVEgiAtWHdbQodTz4+pl2cyGarKR+mc+0VFNQfPSC/INcX7UBYVyzZxEO9Ij0aXOMATy9bKWdJXiGgdg7BIAUptdnDFLG6eKafZtJOGgA=
+	t=1760714553; cv=none; b=L5h2lmYdSpIc6I93mKH5H/wOjrqSmhzLnVonFo4AA1bPjFRbI3Q2DntyHvdU7xi4Nujc9zXhvc/ATIc3Zcdny/Fps6WS3NCyoaSKRAcvnKlUWRIrxyIPFZ7fjI+Pl4WfsRgS6HK8bL4oKneo0JdXADaGgt5ktCeHNkJ0Rb7wcIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714551; c=relaxed/simple;
-	bh=BBfpX87JK1A1fn2/D502fvQevvSoP9MO9FuxCMUIYEQ=;
+	s=arc-20240116; t=1760714553; c=relaxed/simple;
+	bh=VuzeDgYbFsS3PHbvvC109hRpFhqoGUJBu5IfnYYy2b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pgn5CTjkreSczrm1bYGuW4/ND51IJ8RAlS91sQdX/5SEvVyFjN2tsz0qnQIcAho1S/wiYOXK/4ALgUOf/nYi4MWgThAOJZ7Wc/k2kFPa3syuBI9KsL4VrPdDKNwgKZf0cUZq3day2K3qZDrV9oMtJVf6v23OQdi9DgW/5YFFYn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIORxSM4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHpzlSgnFpk+lgH21W0qvZYVkY6pggPdQm/i++g8aygPDn2Lnv4TWAfris4MXt8G53TnXDz9wXZstMBBSiG5nONqgdrHk8R19Km1UC1cLH0svGSfmKV6Aih3Qpk/fuOmqRHrPQNcrUGg2Rg2LXoR8hdMJg8aLYoBr/kqUtPaPz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKwI/x3p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIORxSM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C8EC4CEE7;
-	Fri, 17 Oct 2025 15:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKwI/x3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871CCC4CEFE;
+	Fri, 17 Oct 2025 15:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714551;
-	bh=BBfpX87JK1A1fn2/D502fvQevvSoP9MO9FuxCMUIYEQ=;
+	s=korg; t=1760714553;
+	bh=VuzeDgYbFsS3PHbvvC109hRpFhqoGUJBu5IfnYYy2b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIORxSM4u6bXbL5IaqLtHafubkhiFt8WuIHbdUXXY7X7uyPlCizUHnA3RJ2Zn3Cgp
-	 HOUS6drWAlGEQbbefaCcVMKQNON+WqxqvldPHMf3ZKGtsdaRbKFy6mRXfUQn/PtN3v
-	 TZw1xDn7ZKSdMJZVgRO07b4peKwnBz29nwTKTPxQ=
+	b=jKwI/x3pSAodHIX8nA/8Qjaf3vryGLwVxHOKagZW42M36g5OEAMtGb4e203AY0dNp
+	 wWf/YrB2LSwP1D09r1bDZCWVG5uaZGMF9d43d9qI8vQW2oG9m35hyUH32lBPsI2WGb
+	 +teyHxWbs/nOzWrEz+jpdpIgfj6ephZAL7vTm0/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,10 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
 	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.12 185/277] PCI: rcar-host: Drop PMSR spinlock
-Date: Fri, 17 Oct 2025 16:53:12 +0200
-Message-ID: <20251017145153.878923454@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 186/277] PCI: rcar-host: Convert struct rcar_msi mask_lock into raw spinlock
+Date: Fri, 17 Oct 2025 16:53:13 +0200
+Message-ID: <20251017145153.914544398@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -55,77 +57,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-commit 0a8f173d9dad13930d5888505dc4c4fd6a1d4262 upstream.
+commit 5ed35b4d490d8735021cce9b715b62a418310864 upstream.
 
-The pmsr_lock spinlock used to be necessary to synchronize access to the
-PMSR register, because that access could have been triggered from either
-config space access in rcar_pcie_config_access() or an exception handler
-rcar_pcie_aarch32_abort_handler().
+The rcar_msi_irq_unmask() function may be called from a PCI driver
+request_threaded_irq() function. This triggers kernel/irq/manage.c
+__setup_irq() which locks raw spinlock &desc->lock descriptor lock
+and with that descriptor lock held, calls rcar_msi_irq_unmask().
 
-The rcar_pcie_aarch32_abort_handler() case is no longer applicable since
-commit 6e36203bc14c ("PCI: rcar: Use PCI_SET_ERROR_RESPONSE after read
-which triggered an exception"), which performs more accurate, controlled
-invocation of the exception, and a fixup.
+Since the &desc->lock descriptor lock is a raw spinlock, and the rcar_msi
+.mask_lock is not a raw spinlock, this setup triggers 'BUG: Invalid wait
+context' with CONFIG_PROVE_RAW_LOCK_NESTING=y.
 
-This leaves rcar_pcie_config_access() as the only call site from which
-rcar_pcie_wakeup() is called. The rcar_pcie_config_access() can only be
-called from the controller struct pci_ops .read and .write callbacks,
-and those are serialized in drivers/pci/access.c using raw spinlock
-'pci_lock' . It should be noted that CONFIG_PCI_LOCKLESS_CONFIG is never
-set on this platform.
+Use scoped_guard() to simplify the locking.
 
-Since the 'pci_lock' is a raw spinlock , and the 'pmsr_lock' is not a
-raw spinlock, this constellation triggers 'BUG: Invalid wait context'
-with CONFIG_PROVE_RAW_LOCK_NESTING=y .
-
-Remove the pmsr_lock to fix the locking.
-
-Fixes: a115b1bd3af0 ("PCI: rcar: Add L1 link state fix into data abort hook")
+Fixes: 83ed8d4fa656 ("PCI: rcar: Convert to MSI domains")
 Reported-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
 Reported-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
 Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250909162707.13927-1-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20250909162707.13927-2-marek.vasut+renesas@mailbox.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c |   13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ drivers/pci/controller/pcie-rcar-host.c |   27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
 --- a/drivers/pci/controller/pcie-rcar-host.c
 +++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -51,20 +51,13 @@ struct rcar_pcie_host {
- 	int			(*phy_init_fn)(struct rcar_pcie_host *host);
+@@ -12,6 +12,7 @@
+  */
+ 
+ #include <linux/bitops.h>
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/delay.h>
+@@ -37,7 +38,7 @@ struct rcar_msi {
+ 	DECLARE_BITMAP(used, INT_PCI_MSI_NR);
+ 	struct irq_domain *domain;
+ 	struct mutex map_lock;
+-	spinlock_t mask_lock;
++	raw_spinlock_t mask_lock;
+ 	int irq1;
+ 	int irq2;
  };
- 
--static DEFINE_SPINLOCK(pmsr_lock);
--
- static int rcar_pcie_wakeup(struct device *pcie_dev, void __iomem *pcie_base)
+@@ -625,28 +626,26 @@ static void rcar_msi_irq_mask(struct irq
  {
+ 	struct rcar_msi *msi = irq_data_get_irq_chip_data(d);
+ 	struct rcar_pcie *pcie = &msi_to_host(msi)->pcie;
 -	unsigned long flags;
- 	u32 pmsr, val;
- 	int ret = 0;
+ 	u32 value;
  
--	spin_lock_irqsave(&pmsr_lock, flags);
--
--	if (!pcie_base || pm_runtime_suspended(pcie_dev)) {
--		ret = -EINVAL;
--		goto unlock_exit;
--	}
-+	if (!pcie_base || pm_runtime_suspended(pcie_dev))
-+		return -EINVAL;
- 
- 	pmsr = readl(pcie_base + PMSR);
- 
-@@ -86,8 +79,6 @@ static int rcar_pcie_wakeup(struct devic
- 		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
- 	}
- 
--unlock_exit:
--	spin_unlock_irqrestore(&pmsr_lock, flags);
- 	return ret;
+-	spin_lock_irqsave(&msi->mask_lock, flags);
+-	value = rcar_pci_read_reg(pcie, PCIEMSIIER);
+-	value &= ~BIT(d->hwirq);
+-	rcar_pci_write_reg(pcie, value, PCIEMSIIER);
+-	spin_unlock_irqrestore(&msi->mask_lock, flags);
++	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
++		value = rcar_pci_read_reg(pcie, PCIEMSIIER);
++		value &= ~BIT(d->hwirq);
++		rcar_pci_write_reg(pcie, value, PCIEMSIIER);
++	}
  }
  
+ static void rcar_msi_irq_unmask(struct irq_data *d)
+ {
+ 	struct rcar_msi *msi = irq_data_get_irq_chip_data(d);
+ 	struct rcar_pcie *pcie = &msi_to_host(msi)->pcie;
+-	unsigned long flags;
+ 	u32 value;
+ 
+-	spin_lock_irqsave(&msi->mask_lock, flags);
+-	value = rcar_pci_read_reg(pcie, PCIEMSIIER);
+-	value |= BIT(d->hwirq);
+-	rcar_pci_write_reg(pcie, value, PCIEMSIIER);
+-	spin_unlock_irqrestore(&msi->mask_lock, flags);
++	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
++		value = rcar_pci_read_reg(pcie, PCIEMSIIER);
++		value |= BIT(d->hwirq);
++		rcar_pci_write_reg(pcie, value, PCIEMSIIER);
++	}
+ }
+ 
+ static void rcar_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+@@ -756,7 +755,7 @@ static int rcar_pcie_enable_msi(struct r
+ 	int err;
+ 
+ 	mutex_init(&msi->map_lock);
+-	spin_lock_init(&msi->mask_lock);
++	raw_spin_lock_init(&msi->mask_lock);
+ 
+ 	err = of_address_to_resource(dev->of_node, 0, &res);
+ 	if (err)
 
 
