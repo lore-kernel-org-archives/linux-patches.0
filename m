@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5478132C92B;
-	Fri, 17 Oct 2025 15:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6F63208;
+	Fri, 17 Oct 2025 15:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713246; cv=none; b=qP9n2w0mOEplKwFAjd/FL28kADETtKaZa45tMEDxGY1HofFoX/cjGY2vWrZrNN+tMFHv4yXlkDKWdwbehZZilTxTR0qSgkd7duwci/kWHOmwXLg9k/d1ZwZkjYJVtgCECpyS6lcCasAwih7qO3TRTUm028ZWAoh91SXcDmajR3E=
+	t=1760713249; cv=none; b=n688XgbtOQ1xhzA/OTMzJqcQaup2End8JClZWtFRBy1A3I6aZUDE8HykVIIlOw0YGSIoto/mVKVZJpsiXcqzwzxSarD0JL1A5TPniVHnJEzMhdNv3TbPFjx2ZXd2OLwOEAaD/5pDNJPkKE+SzQGJUPlv68F6UkNJqEoek8bu/14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713246; c=relaxed/simple;
-	bh=aHub4z773bHMZtzrng7UmVVziu/PPNlKiduVsCGn/8Y=;
+	s=arc-20240116; t=1760713249; c=relaxed/simple;
+	bh=FQL6hD/vBxd/zkvIaSnEHNBUOZw1E4gpBoVqpoy6Aao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uneVtVHKITNQHA4HIuE+ysgsBRvekeX6tEyCaosUiLxVKRIpZ7qQb939kI0rmdob+M1DDzvO63zBZEFq3f5m/oyckvC/JEsy6Bs5mA1M/3eNo6pxdPUQl6vMl/5OFmQrp7t3HytpFDW2EuutLA0bj6/F2m6JMpLOEypRAHqagLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKqrws5j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcqHZHV7OVoN3RNeu6M4JMh0J9L7u+x9vwzKKeUh6/Sq5ORfV+KcNp8UuK18ZcuAtHbQ/q8ZhnRCi5aKPgv5gxGUBu+tEsTLxIAPWzzPAFRxFslGTxUQvHy9yaEaajl7y5GciZ9I76cRZOWppOVPcGFFqixQn8fmHzLsxCtpxO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGnkff9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKqrws5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD16AC4CEF9;
-	Fri, 17 Oct 2025 15:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGnkff9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E58C4CEE7;
+	Fri, 17 Oct 2025 15:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713246;
-	bh=aHub4z773bHMZtzrng7UmVVziu/PPNlKiduVsCGn/8Y=;
+	s=korg; t=1760713249;
+	bh=FQL6hD/vBxd/zkvIaSnEHNBUOZw1E4gpBoVqpoy6Aao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKqrws5jZbbxET+r4fsDWYMzVfRbA0mwkgUYVuEvRJXR4y2e0WoKZqYMeQuNn3JT/
-	 c9e4M7GOHEx9cTMBStz2GwQbesTnKR9D9gtGXw9XN0gopFBBDlO0MRv0RTzN65VArj
-	 CkAZpY0hvGyZwJD7M1Nurn6BNQhVMvULQ2GeJITg=
+	b=JGnkff9am4I3Tj+EOPcT88oo2Zy4upo4MBvUEPmcaQDSTdtIyt7Sv8QVd30RV72EX
+	 FhXW+wdkaKxVnCV5uQZWAcH3aG7l1PKAqfWWU9iUW0zwTeoaHyOn2L80bsNabl70HP
+	 FDtDK6nqPAetK5PMkFZKy/iTZFcu/VvNUAVJFZZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Yznaga <anthony.yznaga@oracle.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Andreas Larsson <andreas@gaisler.com>
-Subject: [PATCH 6.1 099/168] sparc64: fix hugetlb for sun4u
-Date: Fri, 17 Oct 2025 16:52:58 +0200
-Message-ID: <20251017145132.675333477@linuxfoundation.org>
+Subject: [PATCH 6.1 100/168] sparc: fix error handling in scan_one_device()
+Date: Fri, 17 Oct 2025 16:52:59 +0200
+Message-ID: <20251017145132.711741445@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,64 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Yznaga <anthony.yznaga@oracle.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 6fd44a481b3c6111e4801cec964627791d0f3ec5 upstream.
+commit 302c04110f0ce70d25add2496b521132548cd408 upstream.
 
-An attempt to exercise sparc hugetlb code in a sun4u-based guest
-running under qemu results in the guest hanging due to being stuck
-in a trap loop. This is due to invalid hugetlb TTEs being installed
-that do not have the expected _PAGE_PMD_HUGE and page size bits set.
-Although the breakage has gone apparently unnoticed for several years,
-fix it now so there is the option to exercise sparc hugetlb code under
-qemu. This can be useful because sun4v support in qemu does not support
-linux guests currently and sun4v-based hardware resources may not be
-readily available.
+Once of_device_register() failed, we should call put_device() to
+decrement reference count for cleanup. Or it could cause memory leak.
+So fix this by calling put_device(), then the name can be freed in
+kobject_cleanup().
 
-Fix tested with a 6.15.2 and 6.16-rc6 kernels by running libhugetlbfs
-tests on a qemu guest running Debian 13.
+Calling path: of_device_register() -> of_device_add() -> device_add().
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
 
-Fixes: c7d9f77d33a7 ("sparc64: Multi-page size support")
+Found by code review.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Anthony Yznaga <anthony.yznaga@oracle.com>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: cf44bbc26cf1 ("[SPARC]: Beginnings of generic of_device framework.")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20250716012446.10357-1-anthony.yznaga@oracle.com
 Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/mm/hugetlbpage.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/sparc/kernel/of_device_32.c |    1 +
+ arch/sparc/kernel/of_device_64.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/arch/sparc/mm/hugetlbpage.c
-+++ b/arch/sparc/mm/hugetlbpage.c
-@@ -133,6 +133,26 @@ hugetlb_get_unmapped_area(struct file *f
+--- a/arch/sparc/kernel/of_device_32.c
++++ b/arch/sparc/kernel/of_device_32.c
+@@ -387,6 +387,7 @@ static struct platform_device * __init s
  
- static pte_t sun4u_hugepage_shift_to_tte(pte_t entry, unsigned int shift)
- {
-+	unsigned long hugepage_size = _PAGE_SZ4MB_4U;
-+
-+	pte_val(entry) = pte_val(entry) & ~_PAGE_SZALL_4U;
-+
-+	switch (shift) {
-+	case HPAGE_256MB_SHIFT:
-+		hugepage_size = _PAGE_SZ256MB_4U;
-+		pte_val(entry) |= _PAGE_PMD_HUGE;
-+		break;
-+	case HPAGE_SHIFT:
-+		pte_val(entry) |= _PAGE_PMD_HUGE;
-+		break;
-+	case HPAGE_64K_SHIFT:
-+		hugepage_size = _PAGE_SZ64K_4U;
-+		break;
-+	default:
-+		WARN_ONCE(1, "unsupported hugepage shift=%u\n", shift);
-+	}
-+
-+	pte_val(entry) = pte_val(entry) | hugepage_size;
- 	return entry;
- }
+ 	if (of_device_register(op)) {
+ 		printk("%pOF: Could not register of device.\n", dp);
++		put_device(&op->dev);
+ 		kfree(op);
+ 		op = NULL;
+ 	}
+--- a/arch/sparc/kernel/of_device_64.c
++++ b/arch/sparc/kernel/of_device_64.c
+@@ -680,6 +680,7 @@ static struct platform_device * __init s
  
+ 	if (of_device_register(op)) {
+ 		printk("%pOF: Could not register of device.\n", dp);
++		put_device(&op->dev);
+ 		kfree(op);
+ 		op = NULL;
+ 	}
 
 
