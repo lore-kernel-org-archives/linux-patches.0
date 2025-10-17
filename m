@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97D3330B00;
-	Fri, 17 Oct 2025 15:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB75330B3F;
+	Fri, 17 Oct 2025 15:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715302; cv=none; b=GspYp4g2vEqt4KZ72p8xSjeyF48oWhnEJvh8Iifabogdk9xb5NIxuqvSk86bNA2KzGKWUDr/GqjkPOf+ZoM3/FLFAXsRNTqBko7mPPt36MXLA/FUwFluRv9JGPKE8VDKOKYq+ljVTyzuhce2eFffYU19V2ES1sEwNETG8c8vOtE=
+	t=1760715304; cv=none; b=jj3xCUZGOVHtfjK+ch2lbNTTgDyOTh8dAoBg7R8Swy0i2ysS6HIcr7RGAYSRuO9VpRya0ThbxKjQIvYChYFqPZkc0Sst98ltuMapTbqzGywTmjBnEjqU+LHqcGxqfcHzvYqbPjT3WngVP8TJafi3KWAjjZ9U34FAonRMq5TkkWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715302; c=relaxed/simple;
-	bh=KGi12mQzl5Nbxic9SstdI0k+nC2rqA3l9JUn0BMtF80=;
+	s=arc-20240116; t=1760715304; c=relaxed/simple;
+	bh=pUZmdwm6OjVsJZJhRE/qmUnDLo7xpZkOUNXGz2l3IXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hgl26K4PhM4uttxd/ggKTOHe4D9mtm5fft5E7VJFYHBb2LQ+BIv135MKvPW+xsRQ4jAnBR8AsUXYe+EXdtuX+PKBSg6rwcR6R5sqVe+yHylKUMCwcsI19OnxK6LKmvDusjBnszygCw/tKrMqBFXPfSwGXdL414EFOIlioVo5VQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YntX9UUZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+fUHm3f6rdy7O5uc37vlFNVqmEsDdBDSRrdiGJlzLIOURTD2QyFnjS5TM4bPvojVlbgiJ1BFaUFhrT+S8w2vOutc+rrax2Hfj0scf74C1zS7liW1D3zegCzlxl+ysdH/7WPQtBtKWv6zdLerItGgCV6fzFCesCmkD07vRtrD6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJ1Antth; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YntX9UUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD70C4CEFE;
-	Fri, 17 Oct 2025 15:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJ1Antth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8BEC4CEE7;
+	Fri, 17 Oct 2025 15:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715301;
-	bh=KGi12mQzl5Nbxic9SstdI0k+nC2rqA3l9JUn0BMtF80=;
+	s=korg; t=1760715304;
+	bh=pUZmdwm6OjVsJZJhRE/qmUnDLo7xpZkOUNXGz2l3IXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YntX9UUZTINL6S1nbNhepi1jzoeeilfoCA9XqzZJAunjt7X/PpSgHCYAAEYJ39ZOb
-	 Hg9+SDpEkwL6zYIexKHNPsevByFhATnpDQPoP5H3YP63H4ZmpomhTkaCSL/YcJozw8
-	 JCLs08JvQDaOifgGafr4irwM8bc3OaJiM5VAkvqY=
+	b=EJ1AntthCBtnh7LhzAyGzs1b/qABLXYqN+ImmyXMgMjL5rKtN4HcEj5FBWpJ1Uive
+	 D3O5z8/nLecaT2UAUeqNkZtaDBZLAmU1uTvNQ4T2Crww9utqlLk7h2idRgimoIV+QU
+	 E59NmHt/2Q7CVJajnDarVDZJE7BSxB5mILsGOHmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=BCrgen=20Gro=C3=9F?= <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-Subject: [PATCH 6.17 161/371] xen: take system_transition_mutex on suspend
-Date: Fri, 17 Oct 2025 16:52:16 +0200
-Message-ID: <20251017145207.758066930@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.17 170/371] media: i2c: mt9p031: fix mbus code initialization
+Date: Fri, 17 Oct 2025 16:52:25 +0200
+Message-ID: <20251017145208.081524346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -44,73 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 9d52b0b41be5b932a0a929c10038f1bb04af4ca5 upstream.
+commit 075710b670d96cf9edca1894abecba7402fe4f34 upstream.
 
-Xen's do_suspend() calls dpm_suspend_start() without taking required
-system_transition_mutex. Since 12ffc3b1513eb moved the
-pm_restrict_gfp_mask() call, not taking that mutex results in a WARN.
+The mediabus code is device dependent, but the probe() function
+thought that device_get_match_data() would return the code directly,
+when in fact it returned a pointer to a struct mt9p031_model_info.
 
-Take the mutex in do_suspend(), and use mutex_trylock() to follow
-how enter_state() does this.
+As a result, the initial mbus code was garbage.
 
-Suggested-by: Jürgen Groß <jgross@suse.com>
-Fixes: 12ffc3b1513eb "PM: Restrict swap use to later in the suspend sequence"
-Link: https://lore.kernel.org/xen-devel/aKiBJeqsYx_4Top5@mail-itl/
-Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Cc: stable@vger.kernel.org # v6.16+
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250921162853.223116-1-marmarek@invisiblethingslab.com>
+Tested with a BeagleBoard xM and a Leopard Imaging LI-5M03 sensor board.
+
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: a80b1bbff88b ("media: mt9p031: Refactor format handling for different sensor models")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/manage.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/media/i2c/mt9p031.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/xen/manage.c
-+++ b/drivers/xen/manage.c
-@@ -11,6 +11,7 @@
- #include <linux/reboot.h>
- #include <linux/sysrq.h>
- #include <linux/stop_machine.h>
-+#include <linux/suspend.h>
- #include <linux/freezer.h>
- #include <linux/syscore_ops.h>
- #include <linux/export.h>
-@@ -95,10 +96,16 @@ static void do_suspend(void)
+--- a/drivers/media/i2c/mt9p031.c
++++ b/drivers/media/i2c/mt9p031.c
+@@ -1092,6 +1092,7 @@ static int mt9p031_parse_properties(stru
+ static int mt9p031_probe(struct i2c_client *client)
+ {
+ 	struct i2c_adapter *adapter = client->adapter;
++	const struct mt9p031_model_info *info;
+ 	struct mt9p031 *mt9p031;
+ 	unsigned int i;
+ 	int ret;
+@@ -1112,7 +1113,8 @@ static int mt9p031_probe(struct i2c_clie
  
- 	shutting_down = SHUTDOWN_SUSPEND;
+ 	mt9p031->output_control	= MT9P031_OUTPUT_CONTROL_DEF;
+ 	mt9p031->mode2 = MT9P031_READ_MODE_2_ROW_BLC;
+-	mt9p031->code = (uintptr_t)device_get_match_data(&client->dev);
++	info = device_get_match_data(&client->dev);
++	mt9p031->code = info->code;
  
-+	if (!mutex_trylock(&system_transition_mutex))
-+	{
-+		pr_err("%s: failed to take system_transition_mutex\n", __func__);
-+		goto out;
-+	}
-+
- 	err = freeze_processes();
- 	if (err) {
- 		pr_err("%s: freeze processes failed %d\n", __func__, err);
--		goto out;
-+		goto out_unlock;
- 	}
- 
- 	err = freeze_kernel_threads();
-@@ -154,6 +161,8 @@ out_resume:
- 
- out_thaw:
- 	thaw_processes();
-+out_unlock:
-+	mutex_unlock(&system_transition_mutex);
- out:
- 	shutting_down = SHUTDOWN_INVALID;
- }
+ 	mt9p031->regulators[0].supply = "vdd";
+ 	mt9p031->regulators[1].supply = "vdd_io";
 
 
