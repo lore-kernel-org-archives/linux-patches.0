@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F8C32C94E;
-	Fri, 17 Oct 2025 15:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4D732C931;
+	Fri, 17 Oct 2025 15:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713809; cv=none; b=GnlL35wod8Ab0NhbEEz+2y2XbtkuqK/dHsG3XZqGAuIWAhUkAqxrNEL1WUyDXySGJhR6qgIcCg2dawyDZrKOZwL67O/9usObOmu/zMtJWAhJGUiqwgsyG0VuVvj2frxoxZpaJ7ea4WPC3aOTzlLQv/dsCVElV/8wGMOakqXaGKg=
+	t=1760713811; cv=none; b=nD40RwJNNDpmDqwF/TFSSaREKYcPzzBxVx4U+1YPDHA0Em8vInvsvK01v88SfrefLbsNy2Fh++K2iNm+tYkJRSs2zb6PHjq18Mwr8/gN4FygG62ipW6hjKZk8/xKVUDk/vSmewLWL/rg7wracJsqGaDDfn78fHJdoPQ2Gfre6wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713809; c=relaxed/simple;
-	bh=mdqvXTuO29B7LluOqvIApCMvQdrpmRRKcA1W8YS5e70=;
+	s=arc-20240116; t=1760713811; c=relaxed/simple;
+	bh=QEWQq3tH6RaKFAZehKi0pinYMw8u6UF0tNxba3hOEV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7cxqdfA3LaKMFpcPWBmUSjg1s9+O+9duNfbxJuiumdb1ZOfxoAGawmAPoS05wwvbkoLB55hZLhEKoMtlrssJY2zADsFzkRHx69wkeYw9VXvHJH/GMbAuGuQ/BTXaKFyLcfPVyUSR4cjfvwrtCMPLtUQHnmA7sIR1Nymy0icOyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+rSXsvA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrTnWd4V90Va027SoXR4edNvVr99EbWAw+2mHDKlEMGceRnjhrV7w+OhIPjONDt5W/HXfaQB2FsmBQEN1YSHgC8m//HYTWJYKNNzsNIPYyuY/1h17f5l1HFDGJu9hRQ+xI8bv7pCAcENXDRgmqBvO7y/5Bx95STvvCEXIDucX+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kO/1d31g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+rSXsvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5744C4CEF9;
-	Fri, 17 Oct 2025 15:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kO/1d31g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658E9C4CEE7;
+	Fri, 17 Oct 2025 15:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713809;
-	bh=mdqvXTuO29B7LluOqvIApCMvQdrpmRRKcA1W8YS5e70=;
+	s=korg; t=1760713811;
+	bh=QEWQq3tH6RaKFAZehKi0pinYMw8u6UF0tNxba3hOEV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+rSXsvAj+fvF72dvyvA6m9OgDOGcWW77X3LRRBA+q8CsK9cZVS0EoNJjEW0S2Xrm
-	 RwtvBlmgdsf2iEsYLlmLtL8eo7pnZV4ChlUEeHxTteUZXBd1Ky44rKyEro6iq+S+RP
-	 EED1ksK4x/jukufSf6aOM9oYvipL1UGUqeb4mBk4=
+	b=kO/1d31gCd6HzwbjQy/7pEEI4mZvoPosUUbmW+mXZRueMmVNtxAdHt0QuT9HfZ0ZR
+	 X0b8ZOO0yVYG7qXmQsBaAHiEylW3chcY6xxRayKsSLCSr+UP7whi4Y6EQV/4pIynXj
+	 ENAAc+8twZseWGexHAEiQnkG21QrIiOllS0rz4Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 128/201] PCI/ERR: Fix uevent on failure to recover
-Date: Fri, 17 Oct 2025 16:53:09 +0200
-Message-ID: <20251017145139.442170723@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.6 129/201] PCI/AER: Fix missing uevent on recovery when a reset is requested
+Date: Fri, 17 Oct 2025 16:53:10 +0200
+Message-ID: <20251017145139.479827212@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -50,59 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 1cbc5e25fb70e942a7a735a1f3d6dd391afc9b29 upstream.
+commit bbf7d0468d0da71d76cc6ec9bc8a224325d07b6b upstream.
 
-Upon failure to recover from a PCIe error through AER, DPC or EDR, a
-uevent is sent to inform user space about disconnection of the bridge
-whose subordinate devices failed to recover.
+Since commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery
+status for udev") AER uses the result of error_detected() as parameter
+to pci_uevent_ers(). As pci_uevent_ers() however does not handle
+PCI_ERS_RESULT_NEED_RESET this results in a missing uevent for the
+beginning of recovery if drivers request a reset. Fix this by treating
+PCI_ERS_RESULT_NEED_RESET as beginning recovery.
 
-However the bridge itself is not disconnected.  Instead, a uevent should
-be sent for each of the subordinate devices.
-
-Only if the "bridge" happens to be a Root Complex Event Collector or
-Integrated Endpoint does it make sense to send a uevent for it (because
-there are no subordinate devices).
-
-Right now if there is a mix of subordinate devices with and without
-pci_error_handlers, a BEGIN_RECOVERY event is sent for those with
-pci_error_handlers but no FAILED_RECOVERY event is ever sent for them
-afterwards.  Fix it.
-
-Fixes: 856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for udev")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org  # v4.16+
-Link: https://patch.msgid.link/68fc527a380821b5d861dd554d2ce42cb739591c.1755008151.git.lukas@wunner.de
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-1-adf85b0620b0@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/err.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pci/pci-driver.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/pcie/err.c
-+++ b/drivers/pci/pcie/err.c
-@@ -108,6 +108,12 @@ static int report_normal_detected(struct
- 	return report_error_detected(dev, pci_channel_io_normal, data);
- }
- 
-+static int report_perm_failure_detected(struct pci_dev *dev, void *data)
-+{
-+	pci_uevent_ers(dev, PCI_ERS_RESULT_DISCONNECT);
-+	return 0;
-+}
-+
- static int report_mmio_enabled(struct pci_dev *dev, void *data)
- {
- 	struct pci_driver *pdrv;
-@@ -275,7 +281,7 @@ pci_ers_result_t pcie_do_recovery(struct
- failed:
- 	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
- 
--	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
-+	pci_walk_bridge(bridge, report_perm_failure_detected, NULL);
- 
- 	/* TODO: Should kernel panic here? */
- 	pci_info(bridge, "device recovery failed\n");
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1612,6 +1612,7 @@ void pci_uevent_ers(struct pci_dev *pdev
+ 	switch (err_type) {
+ 	case PCI_ERS_RESULT_NONE:
+ 	case PCI_ERS_RESULT_CAN_RECOVER:
++	case PCI_ERS_RESULT_NEED_RESET:
+ 		envp[idx++] = "ERROR_EVENT=BEGIN_RECOVERY";
+ 		envp[idx++] = "DEVICE_ONLINE=0";
+ 		break;
 
 
