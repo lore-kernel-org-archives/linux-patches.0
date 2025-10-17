@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD31526B96A;
-	Fri, 17 Oct 2025 15:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3C43277A9;
+	Fri, 17 Oct 2025 15:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715800; cv=none; b=RQ7w0Qy7XkAluGsSSXMZ/cMhVxHp708C3xWXu7673DTmGKjLmOuObQu1L2nuTw+F6wnk+3SSVtJoMZkwadJqjYFmRBtof/ckPK0UHsdPmS6K4YA+QjlGBO8R4d1LcvXlksA01aFt8BS/+c+nM6vEUgAcR6Zd4eZMwdtgZCFGgD0=
+	t=1760715803; cv=none; b=DGkm72lj3hgWPuZAg4tOqlu/5KbxhHuKX/3Tc/4gcaOB2eYuYoGy1bXWdReda+2W1Y3C/+pVn6sGTri1NiyxDVW78MKYOFNpBm4QUTPWuR2CuxBA8rEy0AW6ZCp9DTDJcGQ2uPAP4wrQ17/KR9RFdfvUbsXKm2vdgsaaTrSP0mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715800; c=relaxed/simple;
-	bh=0MD3Ul0TKWwwqwQd4nkP/huX8q0fp0AzYk6uHYdReyM=;
+	s=arc-20240116; t=1760715803; c=relaxed/simple;
+	bh=iOZULuCdutpkvtqfpluC5w1a6InFip9njT+35CBXwKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkshsnWbVamc3Yr1ujBBlG2eK+72Mwr3jdeZDhlQM3O5weS5KpKxlSivDZMytRsDKAieE8WdWSYvd5ZzlgxlIi/aQ+niw4qsNEjB9P4Xo38MV4ktpqWAPiiaamOXHso9drrPaXLJHuWTCpvyKEfUZ7if7OAe3VNoKRsL9XtyAGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgbxKPaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSd8oTRIL6ywRg0gEbfD43vzW2WFlbGoB7THMrkgTttW430moBctb7T4UbHmGNjzfWnaYskiUWXq69gMuhxdof6oM5Drkph3xaTJDQ5zHWNPU9Hj0ykMvS6noCA+TOhiN57BSWlrFLFGwxKmfU0EeZUvTTyNO363b+yD8zAoAzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bswaFi+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgbxKPaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AE2C4CEE7;
-	Fri, 17 Oct 2025 15:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bswaFi+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7122C4CEE7;
+	Fri, 17 Oct 2025 15:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715800;
-	bh=0MD3Ul0TKWwwqwQd4nkP/huX8q0fp0AzYk6uHYdReyM=;
+	s=korg; t=1760715803;
+	bh=iOZULuCdutpkvtqfpluC5w1a6InFip9njT+35CBXwKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgbxKPaZ4oUXlbKkUBbOwRqOXoJKX/gvjd2d4uFtT4pMVcljvSbIUkRDeGm2RM3jC
-	 7N3B0iqvJAq1IFdNuWQVhTgMDw1cN/nNpzZLQEaF41zba9DratJvH46JqlZadQBlct
-	 O17FNYEhhUS7EhkabAuopah7TWBx34Sf3pTgFm5E=
+	b=2bswaFi+7NbQ5tGOxtdDo4n1RpoYx1+OGhKcAbOPRhFGuhdMjbwIVTsdmX5fbj464
+	 so0phpiB/ngWD+j8h60elnk/cWcW8koDo0XrajooacpMerNk+ej7FDNsPKFdKNdz6j
+	 C7f73MdfPv+p0N0xjajfprzYV6AYOqz2MC3LdflY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.17 308/371] slab: prevent warnings when slab obj_exts vector allocation fails
-Date: Fri, 17 Oct 2025 16:54:43 +0200
-Message-ID: <20251017145213.220244790@linuxfoundation.org>
+Subject: [PATCH 6.17 309/371] slab: mark slab->obj_exts allocation failures unconditionally
+Date: Fri, 17 Oct 2025 16:54:44 +0200
+Message-ID: <20251017145213.257067646@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,46 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Suren Baghdasaryan <surenb@google.com>
 
-commit 4038016397da5c1cebb10e7c85a36d06123724a8 upstream.
+commit f7381b9116407ba2a429977c80ff8df953ea9354 upstream.
 
-When object extension vector allocation fails, we set slab->obj_exts to
-OBJEXTS_ALLOC_FAIL to indicate the failure. Later, once the vector is
-successfully allocated, we will use this flag to mark codetag references
-stored in that vector as empty to avoid codetag warnings.
-
-slab_obj_exts() used to retrieve the slab->obj_exts vector pointer checks
-slab->obj_exts for being either NULL or a pointer with MEMCG_DATA_OBJEXTS
-bit set. However it does not handle the case when slab->obj_exts equals
-OBJEXTS_ALLOC_FAIL. Add the missing condition to avoid extra warning.
+alloc_slab_obj_exts() should mark failed obj_exts vector allocations
+independent on whether the vector is being allocated for a new or an
+existing slab. Current implementation skips doing this for existing
+slabs. Fix this by marking failed allocations unconditionally.
 
 Fixes: 09c46563ff6d ("codetag: debug: introduce OBJEXTS_ALLOC_FAIL to mark failed slab_ext allocations")
 Reported-by: Shakeel Butt <shakeel.butt@linux.dev>
-Closes: https://lore.kernel.org/all/jftidhymri2af5u3xtcqry3cfu6aqzte3uzlznhlaylgrdztsi@5vpjnzpsemf5/
+Closes: https://lore.kernel.org/all/avhakjldsgczmq356gkwmvfilyvf7o6temvcmtt5lqd4fhp5rk@47gp2ropyixg/
 Signed-off-by: Suren Baghdasaryan <surenb@google.com>
 Cc: stable@vger.kernel.org # v6.10+
 Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ mm/slub.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -526,8 +526,12 @@ static inline struct slabobj_ext *slab_o
- 	unsigned long obj_exts = READ_ONCE(slab->obj_exts);
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -2034,8 +2034,7 @@ int alloc_slab_obj_exts(struct slab *sla
+ 			   slab_nid(slab));
+ 	if (!vec) {
+ 		/* Mark vectors which failed to allocate */
+-		if (new_slab)
+-			mark_failed_objexts_alloc(slab);
++		mark_failed_objexts_alloc(slab);
  
- #ifdef CONFIG_MEMCG
--	VM_BUG_ON_PAGE(obj_exts && !(obj_exts & MEMCG_DATA_OBJEXTS),
--							slab_page(slab));
-+	/*
-+	 * obj_exts should be either NULL, a valid pointer with
-+	 * MEMCG_DATA_OBJEXTS bit set or be equal to OBJEXTS_ALLOC_FAIL.
-+	 */
-+	VM_BUG_ON_PAGE(obj_exts && !(obj_exts & MEMCG_DATA_OBJEXTS) &&
-+		       obj_exts != OBJEXTS_ALLOC_FAIL, slab_page(slab));
- 	VM_BUG_ON_PAGE(obj_exts & MEMCG_DATA_KMEM, slab_page(slab));
- #endif
- 	return (struct slabobj_ext *)(obj_exts & ~OBJEXTS_FLAGS_MASK);
+ 		return -ENOMEM;
+ 	}
 
 
