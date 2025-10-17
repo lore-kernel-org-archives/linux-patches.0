@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DDC330B17;
-	Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BA4330B17;
+	Fri, 17 Oct 2025 15:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716241; cv=none; b=tqKOedD0vfZEs03Ambq2sX4eou576dxoiEOQYzQCwdoWftNP/X7TajzRLXUKFFuy7D4Z6VetKC97Qvw6v0XJGf+s89y/oKdKhZ/jx9um95C3J9MdvNGLKQqCDP5YL4NyMBsLS6tnQyBzJiQONJkMuNbkvmMT8uSA6KNjf/6czdg=
+	t=1760716244; cv=none; b=B90/zOt3OiZagwNUszpcyZX/BTbKPjzCMaxna0BZr3jDpeVhyGFqDHE/0+1yGbdkBidJWZ+8kwjw0oIuGotjB046oW7wH8PAKJ/u2CLeJmjrJMuKmK1ratTHqBfpxjgsIKS0izSEaghEmsC/osAESdeXOM2SbGOaoLh3Fw2WXAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716241; c=relaxed/simple;
-	bh=OdvT9fvFH76Yt4QCDaTPHmxIo+rw0jPYH3xK+97kKC4=;
+	s=arc-20240116; t=1760716244; c=relaxed/simple;
+	bh=ol6rMaWelqdOn7ooNngXAXOwqTegJlq38kO2w/VAnlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvwIA9ADW53tamd6PmoAlPNkFpFTOmlSqoPO7djE7wAATeC72j2dwYnudMQrJlgryyoJxzlndP3jdEr5pRlf186iIa56K7NMNFT4MLdh+4C4O0p8c64U+VYVdaKfy+qBjXVyGKNUeIQpCS3uP9Z9shs1HxN/LoLO/l3F8t9yXCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJoitGMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7+h8LH+zeqSsfvFOFyhQWTNIQDtfle6/amTqfQ5k19Tvj9EGuCT2aIzO2nI2XooJzKTA4iKDXqiZVvM9r9Bk1kp8tBrmCTYQXQvcrvcRRsUl6yUsY+qdaQrQ3A8Qed2xPRb9P3d/b3DUJcbPWBMGfL/4SxGpZvjA7kmYglNorc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yn9D3Oqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJoitGMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2DBC4CEE7;
-	Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yn9D3Oqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7142C4CEE7;
+	Fri, 17 Oct 2025 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716241;
-	bh=OdvT9fvFH76Yt4QCDaTPHmxIo+rw0jPYH3xK+97kKC4=;
+	s=korg; t=1760716244;
+	bh=ol6rMaWelqdOn7ooNngXAXOwqTegJlq38kO2w/VAnlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJoitGMHNtBwrmqeB1gQhq5Lkv6FKDFMiO+dKQX5vgBtgJSh+wP8IHIW4Z85U9zeY
-	 qY+Ad21AflVM82J3rRs+KBamWxALg26UP+OHvn/P4zMKuWY9L0qteQbO/HRaI3c/JW
-	 rinf1QOFJZBY5AaPl9iPQpWbi0rgzO6XFncFtJLg=
+	b=yn9D3Oqfwu7r5MEx7YSeitLSo3tX0CArD3eah6eyzRRacihYMmU4yQGJYnqmFsXYv
+	 d1rcBZiTxzuby8sbg788YDtaxlkTk2ZOWVQXw7xN5daa4xfTSWQx4V3Jns6O+1TUEb
+	 DXZ0sjI7xG8DIUw7+PvOge8NcXH33BJxM8bmKB7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,6 +30,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Clark <james.clark@linaro.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Athira Rajeev <atrajeev@linux.ibm.com>,
@@ -47,11 +48,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	"Steinar H. Gunderson" <sesse@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/276] perf evsel: Avoid container_of on a NULL leader
-Date: Fri, 17 Oct 2025 16:53:36 +0200
-Message-ID: <20251017145146.969045018@linuxfoundation.org>
+Subject: [PATCH 5.15 124/276] libperf event: Ensure tracing data is multiple of 8 sized
+Date: Fri, 17 Oct 2025 16:53:37 +0200
+Message-ID: <20251017145147.005782915@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -72,18 +72,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 2354479026d726954ff86ce82f4b649637319661 ]
+[ Upstream commit b39c915a4f365cce6bdc0e538ed95d31823aea8f ]
 
-An evsel should typically have a leader of itself, however, in tests
-like 'Sample parsing' a NULL leader may occur and the container_of
-will return a corrupt pointer.
+Perf's synthetic-events.c will ensure 8-byte alignment of tracing
+data, writing it after a perf_record_header_tracing_data event.
 
-Avoid this with an explicit NULL test.
+Add padding to struct perf_record_header_tracing_data to make it 16-byte
+rather than 12-byte sized.
 
-Fixes: fba7c86601e2e42d ("libperf: Move 'leader' from tools/perf to perf_evsel::leader")
+Fixes: 055c67ed39887c55 ("perf tools: Move event synthesizing routines to separate .c file")
 Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Ian Rogers <irogers@google.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Athira Rajeev <atrajeev@linux.ibm.com>
@@ -101,26 +102,25 @@ Cc: Nam Cao <namcao@linutronix.de>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: Steinar H. Gunderson <sesse@google.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250821163820.1132977-4-irogers@google.com
+Link: https://lore.kernel.org/r/20250821163820.1132977-6-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/lib/perf/include/perf/event.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index f14c83e6829a8..a9cb1aede476e 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2930,6 +2930,8 @@ bool evsel__is_hybrid(struct evsel *evsel)
+diff --git a/tools/lib/perf/include/perf/event.h b/tools/lib/perf/include/perf/event.h
+index 4d0c02ba3f7d3..1187415e26990 100644
+--- a/tools/lib/perf/include/perf/event.h
++++ b/tools/lib/perf/include/perf/event.h
+@@ -211,6 +211,7 @@ struct perf_record_header_event_type {
+ struct perf_record_header_tracing_data {
+ 	struct perf_event_header header;
+ 	__u32			 size;
++	__u32			 pad;
+ };
  
- struct evsel *evsel__leader(struct evsel *evsel)
- {
-+	if (evsel->core.leader == NULL)
-+		return NULL;
- 	return container_of(evsel->core.leader, struct evsel, core);
- }
- 
+ #define PERF_RECORD_MISC_BUILD_ID_SIZE (1 << 15)
 -- 
 2.51.0
 
