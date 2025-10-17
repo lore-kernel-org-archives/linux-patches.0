@@ -1,49 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C8D32C93E;
-	Fri, 17 Oct 2025 15:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD95519DF9A;
+	Fri, 17 Oct 2025 15:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714634; cv=none; b=bd5w18tnqZgEOsxizCUzjHuuef6aM3KKrRbQPwooiqnrl02z+J8crdcwpxIZFkLA2UcQyTu6SkiyyLWLyC5khV7Y6zGX4bNmbtqBofU4yDfG3UfXRBsrcRbKWYDo4EZuOgeD8vby4iOghWdi6JhYWH5biyqLTENlDL2UG7mkAHQ=
+	t=1760714637; cv=none; b=aTWA/eSr3tHxSB4/LRiZiABvuZJX8weu7ubzBxkzxRb0PCcYBYNrxbYe6MG6K8L76zWGxeYqPVBzKW9IHDv1eGFjV+88seUbAk37L9+5vk8m8GzDVoQbvZDzG5hCd4LJ/C8ZF/78STghJ03OABXwvT7hP2o1XwvImbdbzggKd4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714634; c=relaxed/simple;
-	bh=jHBFVl3JDvQWmR7ph+Djko6RU0MAdi/ThyB4pbquLlo=;
+	s=arc-20240116; t=1760714637; c=relaxed/simple;
+	bh=IgzlHYpJEVFzEsj+ZxOWS0h9UOabYBthMND4yP5pq0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pooa+Zy0WeIJRXj8+nobk2Y9N/xtDSmVYrxxB2EKWRNblI6GasLUDJsSucMcqKyW9GN1im92d5JhiyjceKFvej5OV3Iqyh+3C5UYQJ755ljQzuNN4tJvhTQCNN/bJJ4PZGxEbsgMFIyzwYNcrIwCDQOXtw1BFUUJpEWnN77oDus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrA4lql8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XWD+lMq+uZGuVAMYHzh4D0YnXfKHVEnd3fdY3JFFK9fUABcTPuCrCXhJzMJ40Lw1fxb4wIPSxJXMmmpZyskASpyhkwPM3BCQz7wQA2Fm/V/3R+bpIjFnhs/Xe8t4ERruZKdVgjcUN8RyRt8Jr21aRIcfc+bGdzfBB2D3YQGd9hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSUNrqhV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrA4lql8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB150C4CEE7;
-	Fri, 17 Oct 2025 15:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSUNrqhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F3CC4CEFE;
+	Fri, 17 Oct 2025 15:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714634;
-	bh=jHBFVl3JDvQWmR7ph+Djko6RU0MAdi/ThyB4pbquLlo=;
+	s=korg; t=1760714637;
+	bh=IgzlHYpJEVFzEsj+ZxOWS0h9UOabYBthMND4yP5pq0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrA4lql8IdFY3st5Ynb7yp1Gf0prD6RR9sOVy+dWQVhkT4nqPWVt0hUhwdEMAnNij
-	 fu8r9e3VIyAEot9ju5X9IWfrtK/baityUXhfitF8Zm/eQ3JLGZOV/LH4PZKJhUBAYA
-	 HPQcmeMUvOGenAciXVMFIa4Xg/UA65API96dWobo=
+	b=FSUNrqhVWhOQReHoBpm9kZVHGt3a+uh49bUiblPmTjQQOIlD/2O1gNGEe0hLTAfi/
+	 s0fBfjbzCwX7qof7wU6XTuTtVZJJ/GD6Hu1ls/ScCNBMKpiuPtAYpyGMyZEpfHj2cq
+	 xYqu5Z0Ke/GlA68R2HOsKU27RYOEwEg0l6uAjU3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Helen Koike <koike@igalia.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Matthew Wilcox <willy@infradead.org>,
-	NeilBrown <neilb@suse.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 206/277] mm/page_alloc: only set ALLOC_HIGHATOMIC for __GPF_HIGH allocations
-Date: Fri, 17 Oct 2025 16:53:33 +0200
-Message-ID: <20251017145154.647498521@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.12 215/277] ext4: correctly handle queries for metadata mappings
+Date: Fri, 17 Oct 2025 16:53:42 +0200
+Message-ID: <20251017145154.980837826@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -62,73 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit 6a204d4b14c99232e05d35305c27ebce1c009840 upstream.
+commit 46c22a8bb4cb03211da1100d7ee4a2005bf77c70 upstream.
 
-Commit 524c48072e56 ("mm/page_alloc: rename ALLOC_HIGH to
-ALLOC_MIN_RESERVE") is the start of a series that explains how __GFP_HIGH,
-which implies ALLOC_MIN_RESERVE, is going to be used instead of
-__GFP_ATOMIC for high atomic reserves.
+Currently, our handling of metadata is _ambiguous_ in some scenarios,
+that is, we end up returning unknown if the range only covers the
+mapping partially.
 
-Commit eb2e2b425c69 ("mm/page_alloc: explicitly record high-order atomic
-allocations in alloc_flags") introduced ALLOC_HIGHATOMIC for such
-allocations of order higher than 0.  It still used __GFP_ATOMIC, though.
+For example, in the following case:
 
-Then, commit 1ebbb21811b7 ("mm/page_alloc: explicitly define how
-__GFP_HIGH non-blocking allocations accesses reserves") just turned that
-check for !__GFP_DIRECT_RECLAIM, ignoring that high atomic reserves were
-expected to test for __GFP_HIGH.
+$ xfs_io -c fsmap -d
 
-This leads to high atomic reserves being added for high-order GFP_NOWAIT
-allocations and others that clear __GFP_DIRECT_RECLAIM, which is
-unexpected.  Later, those reserves lead to 0-order allocations going to
-the slow path and starting reclaim.
+  0: 254:16 [0..7]: static fs metadata 8
+  1: 254:16 [8..15]: special 102:1 8
+  2: 254:16 [16..5127]: special 102:2 5112
+  3: 254:16 [5128..5255]: special 102:3 128
+  4: 254:16 [5256..5383]: special 102:4 128
+  5: 254:16 [5384..70919]: inodes 65536
+  6: 254:16 [70920..70967]: unknown 48
+  ...
 
->From /proc/pagetypeinfo, without the patch:
+$ xfs_io -c fsmap -d 24 33
 
-Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
-Node    0, zone    DMA32, type   HighAtomic      1      8     10      9      7      3      0      0      0      0      0
-Node    0, zone   Normal, type   HighAtomic     64     20     12      5      0      0      0      0      0      0      0
+  0: 254:16 [24..39]: unknown 16  <--- incomplete reporting
 
-With the patch:
+$ xfs_io -c fsmap -d 24 33  (With patch)
 
-Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
-Node    0, zone    DMA32, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
-Node    0, zone   Normal, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+    0: 254:16 [16..5127]: special 102:2 5112
 
-Link: https://lkml.kernel.org/r/20250814172245.1259625-1-cascardo@igalia.com
-Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Tested-by: Helen Koike <koike@igalia.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: NeilBrown <neilb@suse.de>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This is because earlier in ext4_getfsmap_meta_helper, we end up ignoring
+any extent that starts before our queried range, but overlaps it. While
+the man page [1] is a bit ambiguous on this, this fix makes the output
+make more sense since we are anyways returning an "unknown" extent. This
+is also consistent to how XFS does it:
+
+$ xfs_io -c fsmap -d
+
+  ...
+  6: 254:16 [104..127]: free space 24
+  7: 254:16 [128..191]: inodes 64
+  ...
+
+$ xfs_io -c fsmap -d 137 150
+
+  0: 254:16 [128..191]: inodes 64   <-- full extent returned
+
+ [1] https://man7.org/linux/man-pages/man2/ioctl_getfsmap.2.html
+
+Reported-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: stable@kernel.org
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Message-ID: <023f37e35ee280cd9baac0296cbadcbe10995cab.1757058211.git.ojaswin@linux.ibm.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/fsmap.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4052,7 +4052,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask, unsig
- 		if (!(gfp_mask & __GFP_NOMEMALLOC)) {
- 			alloc_flags |= ALLOC_NON_BLOCK;
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -74,7 +74,8 @@ static int ext4_getfsmap_dev_compare(con
+ static bool ext4_getfsmap_rec_before_low_key(struct ext4_getfsmap_info *info,
+ 					     struct ext4_fsmap *rec)
+ {
+-	return rec->fmr_physical < info->gfi_low.fmr_physical;
++	return rec->fmr_physical + rec->fmr_length <=
++	       info->gfi_low.fmr_physical;
+ }
  
--			if (order > 0)
-+			if (order > 0 && (alloc_flags & ALLOC_MIN_RESERVE))
- 				alloc_flags |= ALLOC_HIGHATOMIC;
+ /*
+@@ -200,15 +201,18 @@ static int ext4_getfsmap_meta_helper(str
+ 			  ext4_group_first_block_no(sb, agno));
+ 	fs_end = fs_start + EXT4_C2B(sbi, len);
+ 
+-	/* Return relevant extents from the meta_list */
++	/*
++	 * Return relevant extents from the meta_list. We emit all extents that
++	 * partially/fully overlap with the query range
++	 */
+ 	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+-		if (p->fmr_physical < info->gfi_next_fsblk) {
++		if (p->fmr_physical + p->fmr_length <= info->gfi_next_fsblk) {
+ 			list_del(&p->fmr_list);
+ 			kfree(p);
+ 			continue;
  		}
- 
+-		if (p->fmr_physical <= fs_start ||
+-		    p->fmr_physical + p->fmr_length <= fs_end) {
++		if (p->fmr_physical <= fs_end &&
++		    p->fmr_physical + p->fmr_length > fs_start) {
+ 			/* Emit the retained free extent record if present */
+ 			if (info->gfi_lastfree.fmr_owner) {
+ 				error = ext4_getfsmap_helper(sb, info,
 
 
