@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C5A32E14C;
-	Fri, 17 Oct 2025 15:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A5B258ECA;
+	Fri, 17 Oct 2025 15:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713876; cv=none; b=iqPpO80hLzCZCoWi8r2icGphQW0c1LXS4aMGy/XrhY05Y4cGWQ6YcNDEKeA5nnMty1NXYjOxrFaEfK/LGCYonUBo2rfjL8XcRenfazIfKy0u9BvX+6y3TJduabH/ypM3Ty2OWt7xUQ/6qVi4NtPewPiKD2pM2dFW7e4KEkpsIWk=
+	t=1760713879; cv=none; b=T0mEzmoQuAyFaVv4AfnEHB19FIKKBnZH87zhXcuAfH6DQpCFBgpvIzMylZw+4jEGtUoZDWSJUt5FShVcPzyw4Gyob/OD1lddVX12phVyG20j7oV5CB4YuTZKglusjDOQ7k+udXQ0by8XIYta8Y4dTbLaiS2vGE4C9dS8vW815ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713876; c=relaxed/simple;
-	bh=Il8Eb49sxnGljse7TIkxKI6JgZWPyZZ0PgkF1bQe4Eo=;
+	s=arc-20240116; t=1760713879; c=relaxed/simple;
+	bh=+jcCHtsWQXDtv9U71she+nJPYGQa9mV3dGHStpplQRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GrFbXOCKrUKW7TuglEJpLOQA+bLIve0xGu/JNQddO+CSrT76LXthbpdYZoXkyM/OPAxjVSIKKl8O2E11Zkt3lYWKRP3BXsO3NkAarDzsIzcCy27C2b722gOU5PGMI3OvehJSzV3iy5L4NreYDN/rLv0InvemrkjsXIC+xI9hgos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMAycgG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFCvKwLZ8FIkblIq1Dg99mRDlix8AuQZUk880RBCfoc0hg3TXZKtIGwxaiWH5jMu5JP9MqcYkTrBLxR5kiW+7JILclzAobgf2U1Pt4iC6jFEEuBT0WTuvDwMKazwLLamNtdEBBLkMP0k6m3QQhPeG2IglsV46jrQIO22h2q52oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne5DKVgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMAycgG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F7DC4CEE7;
-	Fri, 17 Oct 2025 15:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne5DKVgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61E4C4CEE7;
+	Fri, 17 Oct 2025 15:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713876;
-	bh=Il8Eb49sxnGljse7TIkxKI6JgZWPyZZ0PgkF1bQe4Eo=;
+	s=korg; t=1760713879;
+	bh=+jcCHtsWQXDtv9U71she+nJPYGQa9mV3dGHStpplQRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMAycgG87FZHDLXoSvWpSnxp/phIayHrlMlAO7V3WSZF0bX/5/zj97GJWBAs+/6sM
-	 L15zKfRuRtumDIxFCvsK6XQ25HDDGXbFrJfdxF2ltlyFkIhRprfkZICr6GqUDLgnr8
-	 O9xfqGxmcj4g/PTKegwrckK0TRNCDLZ09UpSgsto=
+	b=Ne5DKVgpxl9M5ERE+NryaIAvcH9sywtK4A4AY4PQjWGGFptIzJl9eVgo6zw1pqf/X
+	 znvYbkl9oShAUv1X6j4FwSJpg1ySbygZDHu+IfDLs5BXKi+N7aSumGkQHP3ZFVTfgo
+	 mSdHQRFGEBbFv+FdYfPss86bELO7vaYEWtpukI2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 149/201] ext4: increase i_disksize to offset + len in ext4_update_disksize_before_punch()
-Date: Fri, 17 Oct 2025 16:53:30 +0200
-Message-ID: <20251017145140.207078188@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.6 118/201] xtensa: simdisk: add input size check in proc_write_simdisk
+Date: Fri, 17 Oct 2025 16:52:59 +0200
+Message-ID: <20251017145139.079174525@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -48,95 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 9d80eaa1a1d37539224982b76c9ceeee736510b9 upstream.
+commit 5d5f08fd0cd970184376bee07d59f635c8403f63 upstream.
 
-After running a stress test combined with fault injection,
-we performed fsck -a followed by fsck -fn on the filesystem
-image. During the second pass, fsck -fn reported:
+A malicious user could pass an arbitrarily bad value
+to memdup_user_nul(), potentially causing kernel crash.
 
-Inode 131512, end of extent exceeds allowed value
-	(logical block 405, physical block 1180540, len 2)
+This follows the same pattern as commit ee76746387f6
+("netdevsim: prevent bad user input in nsim_dev_health_break_write()")
 
-This inode was not in the orphan list. Analysis revealed the
-following call chain that leads to the inconsistency:
-
-                             ext4_da_write_end()
-                              //does not update i_disksize
-                             ext4_punch_hole()
-                              //truncate folio, keep size
-ext4_page_mkwrite()
- ext4_block_page_mkwrite()
-  ext4_block_write_begin()
-    ext4_get_block()
-     //insert written extent without update i_disksize
-journal commit
-echo 1 > /sys/block/xxx/device/delete
-
-da-write path updates i_size but does not update i_disksize. Then
-ext4_punch_hole truncates the da-folio yet still leaves i_disksize
-unchanged(in the ext4_update_disksize_before_punch function, the
-condition offset + len < size is met). Then ext4_page_mkwrite sees
-ext4_nonda_switch return 1 and takes the nodioread_nolock path, the
-folio about to be written has just been punched out, and it’s offset
-sits beyond the current i_disksize. This may result in a written
-extent being inserted, but again does not update i_disksize. If the
-journal gets committed and then the block device is yanked, we might
-run into this. It should be noted that replacing ext4_punch_hole with
-ext4_zero_range in the call sequence may also trigger this issue, as
-neither will update i_disksize under these circumstances.
-
-To fix this, we can modify ext4_update_disksize_before_punch to
-increase i_disksize to min(i_size, offset + len) when both i_size and
-(offset + len) are greater than i_disksize.
-
-Cc: stable@kernel.org
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Message-ID: <20250911133024.1841027-1-sunyongjian@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: b6c7e873daf7 ("xtensa: ISS: add host file-based simulated disk")
+Fixes: 16e5c1fc3604 ("convert a bunch of open-coded instances of memdup_user_nul()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Message-Id: <20250829083015.1992751-1-linmq006@gmail.com>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/xtensa/platforms/iss/simdisk.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -3871,7 +3871,11 @@ int ext4_can_truncate(struct inode *inod
-  * We have to make sure i_disksize gets properly updated before we truncate
-  * page cache due to hole punching or zero range. Otherwise i_disksize update
-  * can get lost as it may have been postponed to submission of writeback but
-- * that will never happen after we truncate page cache.
-+ * that will never happen if we remove the folio containing i_size from the
-+ * page cache. Also if we punch hole within i_size but above i_disksize,
-+ * following ext4_page_mkwrite() may mistakenly allocate written blocks over
-+ * the hole and thus introduce allocated blocks beyond i_disksize which is
-+ * not allowed (e2fsck would complain in case of crash).
-  */
- int ext4_update_disksize_before_punch(struct inode *inode, loff_t offset,
- 				      loff_t len)
-@@ -3882,9 +3886,11 @@ int ext4_update_disksize_before_punch(st
- 	loff_t size = i_size_read(inode);
+--- a/arch/xtensa/platforms/iss/simdisk.c
++++ b/arch/xtensa/platforms/iss/simdisk.c
+@@ -230,10 +230,14 @@ static ssize_t proc_read_simdisk(struct
+ static ssize_t proc_write_simdisk(struct file *file, const char __user *buf,
+ 			size_t count, loff_t *ppos)
+ {
+-	char *tmp = memdup_user_nul(buf, count);
++	char *tmp;
+ 	struct simdisk *dev = pde_data(file_inode(file));
+ 	int err;
  
- 	WARN_ON(!inode_is_locked(inode));
--	if (offset > size || offset + len < size)
-+	if (offset > size)
- 		return 0;
- 
-+	if (offset + len < size)
-+		size = offset + len;
- 	if (EXT4_I(inode)->i_disksize >= size)
- 		return 0;
++	if (count == 0 || count > PAGE_SIZE)
++		return -EINVAL;
++
++	tmp = memdup_user_nul(buf, count);
+ 	if (IS_ERR(tmp))
+ 		return PTR_ERR(tmp);
  
 
 
