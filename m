@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6580F33711C;
-	Fri, 17 Oct 2025 15:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E378445C0B;
+	Fri, 17 Oct 2025 15:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713727; cv=none; b=LepTcdQMlKCR/QneXimc0/8q4Sdc6mD6WA+HYnE7eWEThhbEsgNWRVFcUiPumutuhuPZ3Lg7kJkW1yOfPY6OeONkzxVF1qytXG1qH9lasuUB8DR7wqqkjvnsc/aY37hiuYM/bveGAxuzX1Q5lKz9D3T3QUldOu+eaVMLclhMDjc=
+	t=1760713730; cv=none; b=fSSjuIhu0IXzp7Ei8VmPPYGsJ8HtvN1QxIUWUOck445rgMFKU/e99IU6srH5Qg9/Bh5TV81/DAUVCLFQ2kpLeKhZUubQJttpef9OSjVe2ocXq5PVWzgRU9k2cZLRf0roCG2OT5t0pWtx/s7r17dUzG1V+NGG3o8rwoTlmaPYyng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713727; c=relaxed/simple;
-	bh=JKQtEKH45s0f9odsipS7gM6flVmaQ173y0oxX8US73A=;
+	s=arc-20240116; t=1760713730; c=relaxed/simple;
+	bh=zlN5XZLx7Vy0hhYh1hsTGvuv8lqAIgQYqfKTEdE4cjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eB7ykkJc5myc41j908ptVK3Wz2nuSTtZ8qLpq0SL/Fy1mHozfQIWMCrK+5HWr2OvF+nKKrc1M8RFJOIZJz6r/SfLVMlzxAS1Go+gVL4ZJG5hT5u8WOC8EPDwVL3HlDI7tTqy+eaclXQMNpZyclN7w8GzrOTiT/RXeATDjJ7CGus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbIl9gUh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XTuLY8XbggX2G4Eq8zXDhZKinWn+UOJT2VGMnVxkl03mQg17hqwXrVZm8MUrqjAdOSURjVi4WjLDgYUj3aQhwQBYTDiiRU5PhR2PuduYzqSPm2V/Toda9BzxCsYrk7FDP/movWY3Zu4ZGfzqtOUTPRgTamhjX7vL+HSsVsQYLLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ9ip/mH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbIl9gUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9380BC4CEF9;
-	Fri, 17 Oct 2025 15:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ9ip/mH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE7FC4CEF9;
+	Fri, 17 Oct 2025 15:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713727;
-	bh=JKQtEKH45s0f9odsipS7gM6flVmaQ173y0oxX8US73A=;
+	s=korg; t=1760713729;
+	bh=zlN5XZLx7Vy0hhYh1hsTGvuv8lqAIgQYqfKTEdE4cjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbIl9gUhclKgv+ot6rkVxWwjQu63I420gYYxSZMtyXkksXgcuaRfsxMwEh825vgC+
-	 97z44cD9crzfz7u1RHaUE06C+qr3VHdAP9EMwrD4q6QKZm23yF+D7gXMX6qIHwXiS2
-	 lMaVZaeuYJsCaeloaQ75IZieX1RigppPFW01Tajk=
+	b=yZ9ip/mHTjkzr4nX6lOQfWhxSrIHOu639R8G2OQoaZMok5aIEk6HkR21Xu0JzF8K2
+	 kCZ5wqUqaM2AIZ02oC+NUkd82bONQlaD455wh+N4Wyzfr+wkCbEjDVgsSwRgkDD4sW
+	 OsBjyNlnImDDiYRpThw2caslR201tGkRKFZALJ74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Granados <joel.granados@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.6 098/201] iommu/vt-d: PRS isnt usable if PDS isnt supported
-Date: Fri, 17 Oct 2025 16:52:39 +0200
-Message-ID: <20251017145138.349835735@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 099/201] kernel/sys.c: fix the racy usage of task_lock(tsk->group_leader) in sys_prlimit64() paths
+Date: Fri, 17 Oct 2025 16:52:40 +0200
+Message-ID: <20251017145138.386170973@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,50 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit 5ef7e24c742038a5d8c626fdc0e3a21834358341 upstream.
+commit a15f37a40145c986cdf289a4b88390f35efdecc4 upstream.
 
-The specification, Section 7.10, "Software Steps to Drain Page Requests &
-Responses," requires software to submit an Invalidation Wait Descriptor
-(inv_wait_dsc) with the Page-request Drain (PD=1) flag set, along with
-the Invalidation Wait Completion Status Write flag (SW=1). It then waits
-for the Invalidation Wait Descriptor's completion.
+The usage of task_lock(tsk->group_leader) in sys_prlimit64()->do_prlimit()
+path is very broken.
 
-However, the PD field in the Invalidation Wait Descriptor is optional, as
-stated in Section 6.5.2.9, "Invalidation Wait Descriptor":
+sys_prlimit64() does get_task_struct(tsk) but this only protects task_struct
+itself. If tsk != current and tsk is not a leader, this process can exit/exec
+and task_lock(tsk->group_leader) may use the already freed task_struct.
 
-"Page-request Drain (PD): Remapping hardware implementations reporting
- Page-request draining as not supported (PDS = 0 in ECAP_REG) treat this
- field as reserved."
+Another problem is that sys_prlimit64() can race with mt-exec which changes
+->group_leader. In this case do_prlimit() may take the wrong lock, or (worse)
+->group_leader may change between task_lock() and task_unlock().
 
-This implies that if the IOMMU doesn't support the PDS capability, software
-can't drain page requests and group responses as expected.
+Change sys_prlimit64() to take tasklist_lock when necessary. This is not
+nice, but I don't see a better fix for -stable.
 
-Do not enable PCI/PRI if the IOMMU doesn't support PDS.
-
-Reported-by: Joel Granados <joel.granados@kernel.org>
-Closes: https://lore.kernel.org/r/20250909-jag-pds-v1-1-ad8cba0e494e@kernel.org
-Fixes: 66ac4db36f4c ("iommu/vt-d: Add page request draining support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250915062946.120196-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Link: https://lkml.kernel.org/r/20250915120917.GA27702@redhat.com
+Fixes: 18c91bb2d872 ("prlimit: do not grab the tasklist_lock")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sys.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4415,7 +4415,7 @@ static struct iommu_device *intel_iommu_
- 			}
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -1689,6 +1689,7 @@ SYSCALL_DEFINE4(prlimit64, pid_t, pid, u
+ 	struct rlimit old, new;
+ 	struct task_struct *tsk;
+ 	unsigned int checkflags = 0;
++	bool need_tasklist;
+ 	int ret;
  
- 			if (info->ats_supported && ecap_prs(iommu->ecap) &&
--			    pci_pri_supported(pdev))
-+			    ecap_pds(iommu->ecap) && pci_pri_supported(pdev))
- 				info->pri_supported = 1;
- 		}
- 	}
+ 	if (old_rlim)
+@@ -1715,8 +1716,25 @@ SYSCALL_DEFINE4(prlimit64, pid_t, pid, u
+ 	get_task_struct(tsk);
+ 	rcu_read_unlock();
+ 
+-	ret = do_prlimit(tsk, resource, new_rlim ? &new : NULL,
+-			old_rlim ? &old : NULL);
++	need_tasklist = !same_thread_group(tsk, current);
++	if (need_tasklist) {
++		/*
++		 * Ensure we can't race with group exit or de_thread(),
++		 * so tsk->group_leader can't be freed or changed until
++		 * read_unlock(tasklist_lock) below.
++		 */
++		read_lock(&tasklist_lock);
++		if (!pid_alive(tsk))
++			ret = -ESRCH;
++	}
++
++	if (!ret) {
++		ret = do_prlimit(tsk, resource, new_rlim ? &new : NULL,
++				old_rlim ? &old : NULL);
++	}
++
++	if (need_tasklist)
++		read_unlock(&tasklist_lock);
+ 
+ 	if (!ret && old_rlim) {
+ 		rlim_to_rlim64(&old, &old64);
 
 
