@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147BA330B28;
-	Fri, 17 Oct 2025 15:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E135D28935A;
+	Fri, 17 Oct 2025 15:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715852; cv=none; b=rFzwoLUQiinqIRH/jW4gtggaH7tXOXc7/paQ0ixbHYbeGZCZsnOSn3HY7lkP1UwDhGI7Mg0PyeskyB5WVp47fVY32BOHzchQvpk3qnUz0Rn97JnH5NUp2yMYr3Ul1ftiqYeWOayiGa7ev75tBYgZ4z4ihsL5HuxcB/ZVIn6xPpQ=
+	t=1760715855; cv=none; b=RxmrxR5ExMpUInYYN6K37edcIwHPwFCFiLucTwJ+RzFPPSkUBfxcE/stlzv+ctTDGhpkyu/9mhYPu3PEpHQtjGKA/alxd1vFFaHNyATJa+kA4kMqZuEJeKpcV2CEZVCf5tHj8O+RvChATzZNgB1x3sZl3e62tpPN3YWvhzENaTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715852; c=relaxed/simple;
-	bh=cazlg7xiAYvneiHJXyMG6pfAsAfaUyvXPcYH5zrteeE=;
+	s=arc-20240116; t=1760715855; c=relaxed/simple;
+	bh=BqFOVS9nlOgYj/3aibV3raqXR/TgZuDvtvQQ6WQLNx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElijljNuq7ZViFrl28DaRoLlRcSwKWIhvc2jndEpzSg9O5qxAQVVrFwMQ7a5Zne3wvpBXXDgBnoHVnzSxQsjdLAFKmQfbAyrCstFr6S5JVjOBO7hASGAhqnhZmbmcUs8qcmC5hTMy7kePl7bvRlqVJ8rcNbQA3VAgyDPlso9png=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Id72Ligv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUoHaxzMAaHosDI3yJoZjnk4u5a5g3W8ozuSfsaNRrpr680v0s4ZJ0HNKndKu2CJmBaDfMs9bNqGxE8IxMXayf9jF3LxVA9b2XWysd4ET8wP/nw3lCsdxbbYNAVrfM9c0RNfXnyjN+M9Mgd9V2vPQO/nthyCuEKXN9tolt58+3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4faZ3pu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Id72Ligv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D88BC4CEE7;
-	Fri, 17 Oct 2025 15:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4faZ3pu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8D6C4CEE7;
+	Fri, 17 Oct 2025 15:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715852;
-	bh=cazlg7xiAYvneiHJXyMG6pfAsAfaUyvXPcYH5zrteeE=;
+	s=korg; t=1760715854;
+	bh=BqFOVS9nlOgYj/3aibV3raqXR/TgZuDvtvQQ6WQLNx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Id72Ligvd6a67sEZeSm2b3dRw+ROVAdqmn1HVloxiCGLULXcO+q4kmvSt83gO65Bb
-	 kC9LnyQk8jlhZtv7cLhPaH9XOBd+wWyGrjmZzxOTRJXtYL04tRzPfju4llpIPMEtIz
-	 eHXiFJLVoZ9OxS3FQLjgIlgkyh2sjhRt0Z2XDoO8=
+	b=S4faZ3puoOgM8azPEdHkCcgB7jbMKcktIB8ZDGUQIevujqhGdJoeWAMwSuEet3Oah
+	 hRVNJ7JVcGRh5r6lqpSeEyzzbUsaIvwuV/qWWM16UV+2DAo9S6i+eG6v1VPIECWgu5
+	 MXUgnBwAUTxiwHXSl6nYe3+VuJBS5C+2pJaPdK0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Weimer <fweimer@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 359/371] copy_file_range: limit size if in compat mode
-Date: Fri, 17 Oct 2025 16:55:34 +0200
-Message-ID: <20251017145215.076250110@linuxfoundation.org>
+Subject: [PATCH 6.17 360/371] minixfs: Verify inode mode when loading from disk
+Date: Fri, 17 Oct 2025 16:55:35 +0200
+Message-ID: <20251017145215.112519780@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,64 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit f8f59a2c05dc16d19432e3154a9ac7bc385f4b92 ]
+[ Upstream commit 73861970938ad1323eb02bbbc87f6fbd1e5bacca ]
 
-If the process runs in 32-bit compat mode, copy_file_range results can be
-in the in-band error range.  In this case limit copy length to MAX_RW_COUNT
-to prevent a signed overflow.
+The inode mode loaded from corrupted disk can be invalid. Do like what
+commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
+does.
 
-Reported-by: Florian Weimer <fweimer@redhat.com>
-Closes: https://lore.kernel.org/all/lhuh5ynl8z5.fsf@oldenburg.str.redhat.com/
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://lore.kernel.org/20250813151107.99856-1-mszeredi@redhat.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/ec982681-84b8-4624-94fa-8af15b77cbd2@I-love.SAKURA.ne.jp
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/read_write.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/minix/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/read_write.c b/fs/read_write.c
-index c5b6265d984ba..833bae068770a 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -1576,6 +1576,13 @@ ssize_t vfs_copy_file_range(struct file *file_in, loff_t pos_in,
- 	if (len == 0)
- 		return 0;
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index df9d11479caf1..32db676127a9e 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -492,8 +492,14 @@ void minix_set_inode(struct inode *inode, dev_t rdev)
+ 		inode->i_op = &minix_symlink_inode_operations;
+ 		inode_nohighmem(inode);
+ 		inode->i_mapping->a_ops = &minix_aops;
+-	} else
++	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
++		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
+ 		init_special_inode(inode, inode->i_mode, rdev);
++	} else {
++		printk(KERN_DEBUG "MINIX-fs: Invalid file type 0%04o for inode %lu.\n",
++		       inode->i_mode, inode->i_ino);
++		make_bad_inode(inode);
++	}
+ }
  
-+	/*
-+	 * Make sure return value doesn't overflow in 32bit compat mode.  Also
-+	 * limit the size for all cases except when calling ->copy_file_range().
-+	 */
-+	if (splice || !file_out->f_op->copy_file_range || in_compat_syscall())
-+		len = min_t(size_t, MAX_RW_COUNT, len);
-+
- 	file_start_write(file_out);
- 
- 	/*
-@@ -1589,9 +1596,7 @@ ssize_t vfs_copy_file_range(struct file *file_in, loff_t pos_in,
- 						      len, flags);
- 	} else if (!splice && file_in->f_op->remap_file_range && samesb) {
- 		ret = file_in->f_op->remap_file_range(file_in, pos_in,
--				file_out, pos_out,
--				min_t(loff_t, MAX_RW_COUNT, len),
--				REMAP_FILE_CAN_SHORTEN);
-+				file_out, pos_out, len, REMAP_FILE_CAN_SHORTEN);
- 		/* fallback to splice */
- 		if (ret <= 0)
- 			splice = true;
-@@ -1624,8 +1629,7 @@ ssize_t vfs_copy_file_range(struct file *file_in, loff_t pos_in,
- 	 * to splicing from input file, while file_start_write() is held on
- 	 * the output file on a different sb.
- 	 */
--	ret = do_splice_direct(file_in, &pos_in, file_out, &pos_out,
--			       min_t(size_t, len, MAX_RW_COUNT), 0);
-+	ret = do_splice_direct(file_in, &pos_in, file_out, &pos_out, len, 0);
- done:
- 	if (ret > 0) {
- 		fsnotify_access(file_in);
+ /*
 -- 
 2.51.0
 
