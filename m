@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6975533290F;
-	Fri, 17 Oct 2025 15:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4C232C931;
+	Fri, 17 Oct 2025 15:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715393; cv=none; b=ur+9+p1VXQawbFVHwTdOBMXd2tOMXfOd/Lu26EoDy/l7mfalHOBrAZ0124r7JZ0zf0+2tUZKL5XccUX55sFbw+OU9BtUPLzqLcFydc/zWTtB7V2ORHTnvm++/F7FCNre0lhHqBqHYISCgdfBRsmJ4av+ZspInHThwuvBGyoLWo0=
+	t=1760715396; cv=none; b=bKWJ0lBSoHmF5vzx+275QEpqACrVdULPDElpOJh5c1u0r8umigxxLmZ3ZfZbSOcQPTYqqWppml2sQgfiUAbAwIitrCwiXJrULtxUYuBFHsskhi+aCrHjz/gF6sho+XZJkoI8TKNIc1iqbh0OqFNIhfVlaxrnqu82X8SRJFB4+dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715393; c=relaxed/simple;
-	bh=5dkni71eDFhpG5ubnTEZmtj1jzIGrduSX1eknOCvjx0=;
+	s=arc-20240116; t=1760715396; c=relaxed/simple;
+	bh=1RBgBjGESXyPbFHih0+6Wm7ubliVLyFhA/lie/xG3nY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2o8ZWsk5GmSaBfnsD9zmF3WNzrwU7i15/KElXX7CJtbmS/LtHauVIwbKa7wA5ETSQatdkCsMLDHM433zKz6H/WIBNPcKiRB+tvoP5RV3j4t808uklSqDNCouvbpVlZgHoQKHLEzgMga8BWN0v1VQz/GAnU6lC5RU7xXfccZaXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwJADT7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1qe+Bd2ULuClHUdc4yfbpOdtU5QdOSmFZxfAQZyAP7icknLstcemgzS5Ijc4vp/mwacWN+6JWb+vOveNO5UkIUPNXd2Gb4jLhg0FRMJZygQ+7NS9KAgF8TRZwE3tIRVIJWDP3PVpZnf/ufHzOpr1+U6fhWCvZWpNnNhanjPVY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/60ykfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwJADT7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CCFC4CEE7;
-	Fri, 17 Oct 2025 15:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/60ykfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B585C4CEE7;
+	Fri, 17 Oct 2025 15:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715392;
-	bh=5dkni71eDFhpG5ubnTEZmtj1jzIGrduSX1eknOCvjx0=;
+	s=korg; t=1760715395;
+	bh=1RBgBjGESXyPbFHih0+6Wm7ubliVLyFhA/lie/xG3nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwJADT7vLd5keZVD3a1XNNKcKhmKy/IOgTtHSg2SLqzpREXCyzYoVkJ1dERAxPP4Q
-	 xRjvhedRdTwVbupMUOaJWSy08H4ul2VPafkErPvqBUk3ynM6+YP3ACitzOgl7MnUP1
-	 lD/ji5muhqD/4957DmHjiRL7uvv4mnyWfgnyd6ao=
+	b=b/60ykfY3rtjvLSfwK0kbNQsCkw5EpR5wb6Nj2iKBRi5TJLanqgsCS1DTmkEuZqEV
+	 +O6wDH2AFLLRx0kkai2G2v4tQYx2ecWL8wj2lVu18E0V/YSREcod1zR0nXdEKyWeJd
+	 bKxJ9pN/5HFP0IpxXDR9702g1Tua6AhYwxhnkKkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlo Caione <ccaione@baylibre.com>,
-	Johan Hovold <johan@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.17 167/371] firmware: meson_sm: fix device leak at probe
-Date: Fri, 17 Oct 2025 16:52:22 +0200
-Message-ID: <20251017145207.973007285@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.17 168/371] media: cec: extron-da-hd-4k-plus: drop external-module make commands
+Date: Fri, 17 Oct 2025 16:52:23 +0200
+Message-ID: <20251017145208.011029132@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,49 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 8ece3173f87df03935906d0c612c2aeda9db92ca upstream.
+commit d5d12cc03e501c38925e544abe44d5bfe23dc930 upstream.
 
-Make sure to drop the reference to the secure monitor device taken by
-of_find_device_by_node() when looking up its driver data on behalf of
-other drivers (e.g. during probe).
+Delete the external-module style Makefile commands. They are not needed
+for in-tree modules.
 
-Note that holding a reference to the platform device does not prevent
-its driver data from going away so there is no point in keeping the
-reference after the helper returns.
+This is the only Makefile in the kernel tree (aside from tools/ and
+samples/) that uses this Makefile style.
 
-Fixes: 8cde3c2153e8 ("firmware: meson_sm: Rework driver as a proper platform driver")
-Cc: stable@vger.kernel.org	# 5.5
-Cc: Carlo Caione <ccaione@baylibre.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250725074019.8765-1-johan@kernel.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+The same files are built with or without this patch.
+
+Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/meson/meson_sm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/cec/usb/extron-da-hd-4k-plus/Makefile |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/firmware/meson/meson_sm.c
-+++ b/drivers/firmware/meson/meson_sm.c
-@@ -232,11 +232,16 @@ EXPORT_SYMBOL(meson_sm_call_write);
- struct meson_sm_firmware *meson_sm_get(struct device_node *sm_node)
- {
- 	struct platform_device *pdev = of_find_device_by_node(sm_node);
-+	struct meson_sm_firmware *fw;
- 
- 	if (!pdev)
- 		return NULL;
- 
--	return platform_get_drvdata(pdev);
-+	fw = platform_get_drvdata(pdev);
-+
-+	put_device(&pdev->dev);
-+
-+	return fw;
- }
- EXPORT_SYMBOL_GPL(meson_sm_get);
- 
+--- a/drivers/media/cec/usb/extron-da-hd-4k-plus/Makefile
++++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/Makefile
+@@ -1,8 +1,2 @@
+ extron-da-hd-4k-plus-cec-objs := extron-da-hd-4k-plus.o cec-splitter.o
+ obj-$(CONFIG_USB_EXTRON_DA_HD_4K_PLUS_CEC) := extron-da-hd-4k-plus-cec.o
+-
+-all:
+-	$(MAKE) -C $(KDIR) M=$(shell pwd) modules
+-
+-install:
+-	$(MAKE) -C $(KDIR) M=$(shell pwd) modules_install
 
 
