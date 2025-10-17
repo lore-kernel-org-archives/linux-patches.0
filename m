@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C104C3208;
-	Fri, 17 Oct 2025 15:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2242F12A4;
+	Fri, 17 Oct 2025 15:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714965; cv=none; b=sCsQVPMsdPrsD1xGa5l38zdbQBwy1Pxm3YP4zn7ANNkvRQE5VoXY+liHH136OVLxL5vXBJAP3O/ZGyjLu3MMg6E8lPvpYusFzLg7h7pzYHEYVEcA1vmu2eLniz7Y/Vv9qn3eUtxv8XVpoqXuQSQjjIUWUxIn54CQ73Pg3cJVthc=
+	t=1760714968; cv=none; b=F1Wbk0ZALOepKk2DnT58R9EUkFRY/y9IWITbaDEIRQ969O3c6DCtNyZaKEvZ0WyuYbvWA+rrd9CyCPkGXfHs7KHqJAVBbtPk3UXiM81yZgT52xPXTbDIHwyeSn9Sqlc229OFehfdkiYWQyY26KJAYwEP6EZ0cqV0IGSIwfauO6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714965; c=relaxed/simple;
-	bh=8ySNtICvVZNY53qoOGa8lQGGvr7wsJaH+tHbrAfS7C4=;
+	s=arc-20240116; t=1760714968; c=relaxed/simple;
+	bh=jXGJUrTajEohdUAeGNTgC/pn8bOfyhvevIXp+WjaH10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRUgndA5ams8ctvU3SlDBRT0anwMGURNHS8ac8ddGdtVxQUaNr8I20ra5N8/RTSvru5z5rzLjGzeHAyTuY2/AQD181fXvPD4z9cbFo+/bhgXQbaMVlbqp941xltrpOV6np1Qsw4NdmbyB0iM174k7f2PjfnxjT6w1YcHc6Gdets=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovBkiHyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YsIrBUvaFmAqOYYn/jidTmIPx77x7OoROd+cYTLM7dM2h4r71+8FTiLfgocozqYlS7B5FwxS2IT22NA1kpRmTGXW2p6dGrZUHSs4sd4QtaVLuFGVj2eHmH8VpgcDQfoxyL0EE0iTVC4YL9o7Ghue04scn3UmSKz1I0sz0P/c+Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhkGfVjl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovBkiHyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F73C4CEE7;
-	Fri, 17 Oct 2025 15:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhkGfVjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5DAC113D0;
+	Fri, 17 Oct 2025 15:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714965;
-	bh=8ySNtICvVZNY53qoOGa8lQGGvr7wsJaH+tHbrAfS7C4=;
+	s=korg; t=1760714968;
+	bh=jXGJUrTajEohdUAeGNTgC/pn8bOfyhvevIXp+WjaH10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovBkiHyhJDHcPhnfCXFUyV1JYDNg3eiDe2dz9c2NojJTHXEK0eBQ1SM8DTOXZ1ED7
-	 8XKkXwfuhOnwbIzUhIWG0IaxEh5CdSRcioYYx2XiSEF9r0JAStkooJiqwJzv4sV2bC
-	 FFQxUGPwid0uXkXJmRe3S4SOrNAmFJj+AgyzO054=
+	b=UhkGfVjlVH+M0/VW3G8vKNQOvnnFGx5mdFqHkK8hBG9zfaItA5StDAgyNsSTo/2YL
+	 pg/C7Ryl4Q8EHrg2oQi0P6jU0sV+VppPJZldezMZqqz77qXxT0mIB04ILPuHhPzqwU
+	 7Aq2eK05+yCNHfvXybjVEzmej/vBDg7qEOxIssyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 049/371] perf evsel: Ensure the fallback message is always written to
-Date: Fri, 17 Oct 2025 16:50:24 +0200
-Message-ID: <20251017145203.575834814@linuxfoundation.org>
+Subject: [PATCH 6.17 050/371] perf build-id: Ensure snprintf string is empty when size is 0
+Date: Fri, 17 Oct 2025 16:50:25 +0200
+Message-ID: <20251017145203.611608647@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -63,15 +63,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 24937ee839e4bbc097acde73eeed67812bad2d99 ]
+[ Upstream commit 0dc96cae063cbf9ebf6631b33b08e9ba02324248 ]
 
-The fallback message is unconditionally printed in places like
-record__open().
+The string result of build_id__snprintf() is unconditionally used in
+places like dsos__fprintf_buildid_cb(). If the build id has size 0 then
+this creates a use of uninitialized memory. Add null termination for the
+size 0 case.
 
-If no fallback is attempted this can lead to printing uninitialized
-data, crashes, etc.
+A similar fix was written by Jiri Olsa in commit 6311951d4f8f28c4 ("perf
+tools: Initialize output buffer in build_id__sprintf") but lost in the
+transition to snprintf.
 
-Fixes: c0a54341c0e89333 ("perf evsel: Introduce event fallback method")
+Fixes: fccaaf6fbbc59910 ("perf build-id: Change sprintf functions to snprintf")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
@@ -86,53 +89,26 @@ Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ tools/perf/util/build-id.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 9c086d743d344..5df59812b80ca 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -3562,7 +3562,7 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
+diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
+index bf7f3268b9a2f..35505a1ffd111 100644
+--- a/tools/perf/util/build-id.c
++++ b/tools/perf/util/build-id.c
+@@ -86,6 +86,13 @@ int build_id__snprintf(const struct build_id *build_id, char *bf, size_t bf_size
+ {
+ 	size_t offs = 0;
  
- 		/* If event has exclude user then don't exclude kernel. */
- 		if (evsel->core.attr.exclude_user)
--			return false;
-+			goto no_fallback;
- 
- 		/* Is there already the separator in the name. */
- 		if (strchr(name, '/') ||
-@@ -3570,7 +3570,7 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
- 			sep = "";
- 
- 		if (asprintf(&new_name, "%s%su", name, sep) < 0)
--			return false;
-+			goto no_fallback;
- 
- 		free(evsel->name);
- 		evsel->name = new_name;
-@@ -3593,17 +3593,19 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
- 			sep = "";
- 
- 		if (asprintf(&new_name, "%s%sH", name, sep) < 0)
--			return false;
-+			goto no_fallback;
- 
- 		free(evsel->name);
- 		evsel->name = new_name;
- 		/* Apple M1 requires exclude_guest */
--		scnprintf(msg, msgsize, "trying to fall back to excluding guest samples");
-+		scnprintf(msg, msgsize, "Trying to fall back to excluding guest samples");
- 		evsel->core.attr.exclude_guest = 1;
- 
- 		return true;
- 	}
--
-+no_fallback:
-+	scnprintf(msg, msgsize, "No fallback found for '%s' for error %d",
-+		  evsel__name(evsel), err);
- 	return false;
- }
++	if (build_id->size == 0) {
++		/* Ensure bf is always \0 terminated. */
++		if (bf_size > 0)
++			bf[0] = '\0';
++		return 0;
++	}
++
+ 	for (size_t i = 0; i < build_id->size && offs < bf_size; ++i)
+ 		offs += snprintf(bf + offs, bf_size - offs, "%02x", build_id->data[i]);
  
 -- 
 2.51.0
