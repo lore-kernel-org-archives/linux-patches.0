@@ -1,52 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9D5337110;
-	Fri, 17 Oct 2025 15:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5732428935A;
+	Fri, 17 Oct 2025 15:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714908; cv=none; b=IaQHfP32haBi65Rs5KHNO5td/7B0ZPZuWKdlGY1OebILyvILKVqZvD7F3sfXBHlMRjIJmA3HxjamMdvZDhweG0KsxQ1SDKaDLOFHqxJO9v4ASs6dWellLWxzdUf29qvPi5SlKTfnYSq+YjbOG/kpY4xaN2QLfgqfIsP28xx/G3U=
+	t=1760714911; cv=none; b=AubtJyPigHtBpkC7ocm0sFsMhOhYA0HnNxKucrsKoL/QJnaEH4hMv406bRxR4Me7uFwPDw+QpFWctdJuhrYM828DpdpxUAflSPF2aoH8bsm/7tdXVYP+l9zS2nNgPDqB70WQvVeT+tmblfS2J0skuwDlujRDumwAvtazhP0x6IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714908; c=relaxed/simple;
-	bh=q8Cmy4mhb/TQDlCmxgeZaqZsvs4wrAuWbFN/B/ZTGd0=;
+	s=arc-20240116; t=1760714911; c=relaxed/simple;
+	bh=XVEqHUwKBnl9AG8/VImMhbmqzl5UWjY0QYvurcrVxD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NQTsoMHQPRMwsGhWm/ggrkgQNvFGbT0pY0DY340ooVf0acogNf1qr2TQiWkggOi4aGx6PaiH7RbCJ7RRj5tQQohCctHulCjlwgj9UDSTY1pqnDeUHmszk3g0Bs4iTallSnwcP7U2WSCLpDiog66yDg92eTv2W0yneW4ca1l67r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUZi4K5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HugY0jbgurKmWZYeVIC9duCHNOzbx73RyTF6sTVYTyT4QlJVOxE/OcDcAvuvovkGVMIHiwhzPPfgaY52IlDP6LHbJAIpyxRFUx1+aK57oaxnihtm/EFHwt8WJDr+PFSZNH53j8/vT/NhDDaAW+4QZ9KYsojTj2CWkn9UHNoZH0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEZ6AsHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUZi4K5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9359FC4CEE7;
-	Fri, 17 Oct 2025 15:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEZ6AsHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5063C4CEE7;
+	Fri, 17 Oct 2025 15:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714908;
-	bh=q8Cmy4mhb/TQDlCmxgeZaqZsvs4wrAuWbFN/B/ZTGd0=;
+	s=korg; t=1760714911;
+	bh=XVEqHUwKBnl9AG8/VImMhbmqzl5UWjY0QYvurcrVxD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUZi4K5FO7oW0QjGjaUx85gVW1tteDYF3c3r5hvoCYfwanDglaclMr9qpEKB9vhwC
-	 NVEPsNWWhdVgpe65F6pUbqAiicHj7YhfCLd83Wo81Fx9ZkukVKROxu5Koocm5zjwWA
-	 VjqhY8JsHrd2l/P1GgumUelr+r22Id2q9zhpwevs=
+	b=QEZ6AsHO88RaMYNuheLWYj4OrsRY6gROr7JWm/1tiGJ4o1vy+oIBwbjoIBt8Z62xr
+	 DEJQMezHe11fLzjoD7twD4im/TJQRKKG115qjDLCghpreiBoeDKyTSHhXAfD/5u5uR
+	 VwtA/Fw96V/84vIJ4AzRoBsjH4AjaFg0sAUw+IEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Caleb Biggers <caleb.biggers@intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	linux-actions@lists.infradead.org,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Weilin Wang <weilin.wang@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 031/371] perf parse-events: Handle fake PMUs in CPU terms
-Date: Fri, 17 Oct 2025 16:50:06 +0200
-Message-ID: <20251017145202.925727015@linuxfoundation.org>
+Subject: [PATCH 6.17 032/371] clk: at91: peripheral: fix return value
+Date: Fri, 17 Oct 2025 16:50:07 +0200
+Message-ID: <20251017145202.962009774@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -59,394 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 1a461a62fb422db9cf870a4f184885cc69873b7f ]
+[ Upstream commit 47b13635dabc14f1c2fdcaa5468b47ddadbdd1b5 ]
 
-The "Parsing of PMU event table metrics with fake PMUs" will test
-metrics on machines/models that may be missing a PMU, in such a case
-the fake_pmu should be used to avoid errors.
+determine_rate() is expected to return an error code, or 0 on success.
+clk_sam9x5_peripheral_determine_rate() has a branch that returns the
+parent rate on a certain case. This is the behavior of round_rate(),
+so let's go ahead and fix this by setting req->rate.
 
-Metrics that get the cpumask from a different PMU, such as
-"tsc/cpu=cpu_atom/", also need to be resilient in this test.
-
-The parse_events_state fake_pmu is set when missing PMUs should be
-ignored.
-
-So that it can be queried, pass it to the config term functions, as well
-as to get_config_cpu, then ignore failures when fake_pmu is set.
-
-Some minor code refactoring to cut down on the indent and remove some
-redundant checks.
-
-Fixes: bd741d80dc65922c ("perf parse-events: Allow the cpu term to be a PMU or CPU range")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andreas Färber <afaerber@suse.de>
-Cc: Caleb Biggers <caleb.biggers@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: linux-actions@lists.infradead.org
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Falcon <thomas.falcon@intel.com>
-Cc: Weilin Wang <weilin.wang@intel.com>
-Link: https://lore.kernel.org/r/20250818190416.145274-2-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b4c115c76184f ("clk: at91: clk-peripheral: add support for changeable parent rate")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.c | 116 +++++++++++++++++----------------
- 1 file changed, 60 insertions(+), 56 deletions(-)
+ drivers/clk/at91/clk-peripheral.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 8282ddf68b983..0026cff4d69e4 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -126,7 +126,8 @@ static char *get_config_name(const struct parse_events_terms *head_terms)
- 	return get_config_str(head_terms, PARSE_EVENTS__TERM_TYPE_NAME);
- }
+diff --git a/drivers/clk/at91/clk-peripheral.c b/drivers/clk/at91/clk-peripheral.c
+index c173a44c800aa..629f050a855aa 100644
+--- a/drivers/clk/at91/clk-peripheral.c
++++ b/drivers/clk/at91/clk-peripheral.c
+@@ -279,8 +279,11 @@ static int clk_sam9x5_peripheral_determine_rate(struct clk_hw *hw,
+ 	long best_diff = LONG_MIN;
+ 	u32 shift;
  
--static struct perf_cpu_map *get_config_cpu(const struct parse_events_terms *head_terms)
-+static struct perf_cpu_map *get_config_cpu(const struct parse_events_terms *head_terms,
-+					   bool fake_pmu)
- {
- 	struct parse_events_term *term;
- 	struct perf_cpu_map *cpus = NULL;
-@@ -135,24 +136,33 @@ static struct perf_cpu_map *get_config_cpu(const struct parse_events_terms *head
- 		return NULL;
- 
- 	list_for_each_entry(term, &head_terms->terms, list) {
--		if (term->type_term == PARSE_EVENTS__TERM_TYPE_CPU) {
--			struct perf_cpu_map *term_cpus;
-+		struct perf_cpu_map *term_cpus;
- 
--			if (term->type_val == PARSE_EVENTS__TERM_TYPE_NUM) {
--				term_cpus = perf_cpu_map__new_int(term->val.num);
-+		if (term->type_term != PARSE_EVENTS__TERM_TYPE_CPU)
-+			continue;
+-	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max)
+-		return parent_rate;
++	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max) {
++		req->rate = parent_rate;
 +
-+		if (term->type_val == PARSE_EVENTS__TERM_TYPE_NUM) {
-+			term_cpus = perf_cpu_map__new_int(term->val.num);
-+		} else {
-+			struct perf_pmu *pmu = perf_pmus__find(term->val.str);
-+
-+			if (pmu) {
-+				term_cpus = pmu->is_core && perf_cpu_map__is_empty(pmu->cpus)
-+					    ? cpu_map__online()
-+					    : perf_cpu_map__get(pmu->cpus);
- 			} else {
--				struct perf_pmu *pmu = perf_pmus__find(term->val.str);
--
--				if (pmu && perf_cpu_map__is_empty(pmu->cpus))
--					term_cpus = pmu->is_core ? cpu_map__online() : NULL;
--				else if (pmu)
--					term_cpus = perf_cpu_map__get(pmu->cpus);
--				else
--					term_cpus = perf_cpu_map__new(term->val.str);
-+				term_cpus = perf_cpu_map__new(term->val.str);
-+				if (!term_cpus && fake_pmu) {
-+					/*
-+					 * Assume the PMU string makes sense on a different
-+					 * machine and fake a value with all online CPUs.
-+					 */
-+					term_cpus = cpu_map__online();
-+				}
- 			}
--			perf_cpu_map__merge(&cpus, term_cpus);
--			perf_cpu_map__put(term_cpus);
- 		}
-+		perf_cpu_map__merge(&cpus, term_cpus);
-+		perf_cpu_map__put(term_cpus);
- 	}
++		return 0;
++	}
  
- 	return cpus;
-@@ -369,13 +379,13 @@ static int parse_aliases(const char *str, const char *const names[][EVSEL__MAX_A
- 
- typedef int config_term_func_t(struct perf_event_attr *attr,
- 			       struct parse_events_term *term,
--			       struct parse_events_error *err);
-+			       struct parse_events_state *parse_state);
- static int config_term_common(struct perf_event_attr *attr,
- 			      struct parse_events_term *term,
--			      struct parse_events_error *err);
-+			      struct parse_events_state *parse_state);
- static int config_attr(struct perf_event_attr *attr,
- 		       const struct parse_events_terms *head,
--		       struct parse_events_error *err,
-+		       struct parse_events_state *parse_state,
- 		       config_term_func_t config_term);
- 
- /**
-@@ -471,7 +481,7 @@ int parse_events_add_cache(struct list_head *list, int *idx, const char *name,
- 	bool found_supported = false;
- 	const char *config_name = get_config_name(parsed_terms);
- 	const char *metric_id = get_config_metric_id(parsed_terms);
--	struct perf_cpu_map *cpus = get_config_cpu(parsed_terms);
-+	struct perf_cpu_map *cpus = get_config_cpu(parsed_terms, parse_state->fake_pmu);
- 	int ret = 0;
- 	struct evsel *first_wildcard_match = NULL;
- 
-@@ -514,8 +524,7 @@ int parse_events_add_cache(struct list_head *list, int *idx, const char *name,
- 		found_supported = true;
- 
- 		if (parsed_terms) {
--			if (config_attr(&attr, parsed_terms, parse_state->error,
--					config_term_common)) {
-+			if (config_attr(&attr, parsed_terms, parse_state, config_term_common)) {
- 				ret = -EINVAL;
- 				goto out_err;
- 			}
-@@ -767,8 +776,7 @@ int parse_events_add_breakpoint(struct parse_events_state *parse_state,
- 	attr.sample_period = 1;
- 
- 	if (head_config) {
--		if (config_attr(&attr, head_config, parse_state->error,
--				config_term_common))
-+		if (config_attr(&attr, head_config, parse_state, config_term_common))
- 			return -EINVAL;
- 
- 		if (get_config_terms(head_config, &config_terms))
-@@ -903,12 +911,12 @@ void parse_events__shrink_config_terms(void)
- 
- static int config_term_common(struct perf_event_attr *attr,
- 			      struct parse_events_term *term,
--			      struct parse_events_error *err)
-+			      struct parse_events_state *parse_state)
- {
--#define CHECK_TYPE_VAL(type)						   \
--do {									   \
--	if (check_type_val(term, err, PARSE_EVENTS__TERM_TYPE_ ## type)) \
--		return -EINVAL;						   \
-+#define CHECK_TYPE_VAL(type)								\
-+do {											\
-+	if (check_type_val(term, parse_state->error, PARSE_EVENTS__TERM_TYPE_ ## type))	\
-+		return -EINVAL;								\
- } while (0)
- 
- 	switch (term->type_term) {
-@@ -939,7 +947,7 @@ do {									   \
- 		if (strcmp(term->val.str, "no") &&
- 		    parse_branch_str(term->val.str,
- 				    &attr->branch_sample_type)) {
--			parse_events_error__handle(err, term->err_val,
-+			parse_events_error__handle(parse_state->error, term->err_val,
- 					strdup("invalid branch sample type"),
- 					NULL);
- 			return -EINVAL;
-@@ -948,7 +956,7 @@ do {									   \
- 	case PARSE_EVENTS__TERM_TYPE_TIME:
- 		CHECK_TYPE_VAL(NUM);
- 		if (term->val.num > 1) {
--			parse_events_error__handle(err, term->err_val,
-+			parse_events_error__handle(parse_state->error, term->err_val,
- 						strdup("expected 0 or 1"),
- 						NULL);
- 			return -EINVAL;
-@@ -990,7 +998,7 @@ do {									   \
- 	case PARSE_EVENTS__TERM_TYPE_PERCORE:
- 		CHECK_TYPE_VAL(NUM);
- 		if ((unsigned int)term->val.num > 1) {
--			parse_events_error__handle(err, term->err_val,
-+			parse_events_error__handle(parse_state->error, term->err_val,
- 						strdup("expected 0 or 1"),
- 						NULL);
- 			return -EINVAL;
-@@ -1005,7 +1013,7 @@ do {									   \
- 	case PARSE_EVENTS__TERM_TYPE_AUX_SAMPLE_SIZE:
- 		CHECK_TYPE_VAL(NUM);
- 		if (term->val.num > UINT_MAX) {
--			parse_events_error__handle(err, term->err_val,
-+			parse_events_error__handle(parse_state->error, term->err_val,
- 						strdup("too big"),
- 						NULL);
- 			return -EINVAL;
-@@ -1016,7 +1024,7 @@ do {									   \
- 
- 		if (term->type_val == PARSE_EVENTS__TERM_TYPE_NUM) {
- 			if (term->val.num >= (u64)cpu__max_present_cpu().cpu) {
--				parse_events_error__handle(err, term->err_val,
-+				parse_events_error__handle(parse_state->error, term->err_val,
- 							strdup("too big"),
- 							/*help=*/NULL);
- 				return -EINVAL;
-@@ -1028,8 +1036,8 @@ do {									   \
- 			break;
- 
- 		map = perf_cpu_map__new(term->val.str);
--		if (!map) {
--			parse_events_error__handle(err, term->err_val,
-+		if (!map && !parse_state->fake_pmu) {
-+			parse_events_error__handle(parse_state->error, term->err_val,
- 						   strdup("not a valid PMU or CPU number"),
- 						   /*help=*/NULL);
- 			return -EINVAL;
-@@ -1042,7 +1050,7 @@ do {									   \
- 	case PARSE_EVENTS__TERM_TYPE_LEGACY_CACHE:
- 	case PARSE_EVENTS__TERM_TYPE_HARDWARE:
- 	default:
--		parse_events_error__handle(err, term->err_term,
-+		parse_events_error__handle(parse_state->error, term->err_term,
- 					strdup(parse_events__term_type_str(term->type_term)),
- 					parse_events_formats_error_string(NULL));
- 		return -EINVAL;
-@@ -1057,7 +1065,7 @@ do {									   \
- 	 * if an invalid config term is provided for legacy events
- 	 * (for example, instructions/badterm/...), which is confusing.
- 	 */
--	if (!config_term_avail(term->type_term, err))
-+	if (!config_term_avail(term->type_term, parse_state->error))
- 		return -EINVAL;
- 	return 0;
- #undef CHECK_TYPE_VAL
-@@ -1065,7 +1073,7 @@ do {									   \
- 
- static int config_term_pmu(struct perf_event_attr *attr,
- 			   struct parse_events_term *term,
--			   struct parse_events_error *err)
-+			   struct parse_events_state *parse_state)
- {
- 	if (term->type_term == PARSE_EVENTS__TERM_TYPE_LEGACY_CACHE) {
- 		struct perf_pmu *pmu = perf_pmus__find_by_type(attr->type);
-@@ -1074,7 +1082,7 @@ static int config_term_pmu(struct perf_event_attr *attr,
- 			char *err_str;
- 
- 			if (asprintf(&err_str, "Failed to find PMU for type %d", attr->type) >= 0)
--				parse_events_error__handle(err, term->err_term,
-+				parse_events_error__handle(parse_state->error, term->err_term,
- 							   err_str, /*help=*/NULL);
- 			return -EINVAL;
- 		}
-@@ -1100,7 +1108,7 @@ static int config_term_pmu(struct perf_event_attr *attr,
- 			char *err_str;
- 
- 			if (asprintf(&err_str, "Failed to find PMU for type %d", attr->type) >= 0)
--				parse_events_error__handle(err, term->err_term,
-+				parse_events_error__handle(parse_state->error, term->err_term,
- 							   err_str, /*help=*/NULL);
- 			return -EINVAL;
- 		}
-@@ -1128,12 +1136,12 @@ static int config_term_pmu(struct perf_event_attr *attr,
- 		 */
- 		return 0;
- 	}
--	return config_term_common(attr, term, err);
-+	return config_term_common(attr, term, parse_state);
- }
- 
- static int config_term_tracepoint(struct perf_event_attr *attr,
- 				  struct parse_events_term *term,
--				  struct parse_events_error *err)
-+				  struct parse_events_state *parse_state)
- {
- 	switch (term->type_term) {
- 	case PARSE_EVENTS__TERM_TYPE_CALLGRAPH:
-@@ -1147,7 +1155,7 @@ static int config_term_tracepoint(struct perf_event_attr *attr,
- 	case PARSE_EVENTS__TERM_TYPE_AUX_OUTPUT:
- 	case PARSE_EVENTS__TERM_TYPE_AUX_ACTION:
- 	case PARSE_EVENTS__TERM_TYPE_AUX_SAMPLE_SIZE:
--		return config_term_common(attr, term, err);
-+		return config_term_common(attr, term, parse_state);
- 	case PARSE_EVENTS__TERM_TYPE_USER:
- 	case PARSE_EVENTS__TERM_TYPE_CONFIG:
- 	case PARSE_EVENTS__TERM_TYPE_CONFIG1:
-@@ -1166,12 +1174,10 @@ static int config_term_tracepoint(struct perf_event_attr *attr,
- 	case PARSE_EVENTS__TERM_TYPE_HARDWARE:
- 	case PARSE_EVENTS__TERM_TYPE_CPU:
- 	default:
--		if (err) {
--			parse_events_error__handle(err, term->err_term,
-+		parse_events_error__handle(parse_state->error, term->err_term,
- 					strdup(parse_events__term_type_str(term->type_term)),
- 					strdup("valid terms: call-graph,stack-size\n")
- 				);
--		}
- 		return -EINVAL;
- 	}
- 
-@@ -1180,13 +1186,13 @@ static int config_term_tracepoint(struct perf_event_attr *attr,
- 
- static int config_attr(struct perf_event_attr *attr,
- 		       const struct parse_events_terms *head,
--		       struct parse_events_error *err,
-+		       struct parse_events_state *parse_state,
- 		       config_term_func_t config_term)
- {
- 	struct parse_events_term *term;
- 
- 	list_for_each_entry(term, &head->terms, list)
--		if (config_term(attr, term, err))
-+		if (config_term(attr, term, parse_state))
- 			return -EINVAL;
- 
- 	return 0;
-@@ -1378,8 +1384,7 @@ int parse_events_add_tracepoint(struct parse_events_state *parse_state,
- 	if (head_config) {
- 		struct perf_event_attr attr;
- 
--		if (config_attr(&attr, head_config, err,
--				config_term_tracepoint))
-+		if (config_attr(&attr, head_config, parse_state, config_term_tracepoint))
- 			return -EINVAL;
- 	}
- 
-@@ -1408,8 +1413,7 @@ static int __parse_events_add_numeric(struct parse_events_state *parse_state,
- 	}
- 
- 	if (head_config) {
--		if (config_attr(&attr, head_config, parse_state->error,
--				config_term_common))
-+		if (config_attr(&attr, head_config, parse_state, config_term_common))
- 			return -EINVAL;
- 
- 		if (get_config_terms(head_config, &config_terms))
-@@ -1418,7 +1422,7 @@ static int __parse_events_add_numeric(struct parse_events_state *parse_state,
- 
- 	name = get_config_name(head_config);
- 	metric_id = get_config_metric_id(head_config);
--	cpus = get_config_cpu(head_config);
-+	cpus = get_config_cpu(head_config, parse_state->fake_pmu);
- 	ret = __add_event(list, &parse_state->idx, &attr, /*init_attr*/true, name,
- 			metric_id, pmu, &config_terms, first_wildcard_match,
- 			cpus, /*alternate_hw_config=*/PERF_COUNT_HW_MAX) ? 0 : -ENOMEM;
-@@ -1531,7 +1535,7 @@ static int parse_events_add_pmu(struct parse_events_state *parse_state,
- 	fix_raw(&parsed_terms, pmu);
- 
- 	/* Configure attr/terms with a known PMU, this will set hardcoded terms. */
--	if (config_attr(&attr, &parsed_terms, parse_state->error, config_term_pmu)) {
-+	if (config_attr(&attr, &parsed_terms, parse_state, config_term_pmu)) {
- 		parse_events_terms__exit(&parsed_terms);
- 		return -EINVAL;
- 	}
-@@ -1555,7 +1559,7 @@ static int parse_events_add_pmu(struct parse_events_state *parse_state,
- 
- 	/* Configure attr/terms again if an alias was expanded. */
- 	if (alias_rewrote_terms &&
--	    config_attr(&attr, &parsed_terms, parse_state->error, config_term_pmu)) {
-+	    config_attr(&attr, &parsed_terms, parse_state, config_term_pmu)) {
- 		parse_events_terms__exit(&parsed_terms);
- 		return -EINVAL;
- 	}
-@@ -1583,7 +1587,7 @@ static int parse_events_add_pmu(struct parse_events_state *parse_state,
- 		return -EINVAL;
- 	}
- 
--	term_cpu = get_config_cpu(&parsed_terms);
-+	term_cpu = get_config_cpu(&parsed_terms, parse_state->fake_pmu);
- 	evsel = __add_event(list, &parse_state->idx, &attr, /*init_attr=*/true,
- 			    get_config_name(&parsed_terms),
- 			    get_config_metric_id(&parsed_terms), pmu,
+ 	/* Fist step: check the available dividers. */
+ 	for (shift = 0; shift <= PERIPHERAL_MAX_SHIFT; shift++) {
 -- 
 2.51.0
 
