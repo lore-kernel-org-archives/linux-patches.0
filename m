@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852B32745E;
-	Fri, 17 Oct 2025 15:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379393370E2;
+	Fri, 17 Oct 2025 15:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713755; cv=none; b=e3XNuUxNJs3GFStkONBzz+pO6Ks4dxx/Wiuno/Yx17MwCJPJ7yJdDlxHRCfBg7HHDlp4rjE4KkAvccU6y8hva6O5J9y4dJNmlHu/+tFm4LbuUYrSCbbQ5Od450BrMuAx9Q2XDkzUGJR8I80PCeBCdjeiFCZGoras7IVqB7FM3ss=
+	t=1760713758; cv=none; b=IvjyVreGAFpILdaZt9/Us4zp3vzRh/5x37PTI/Uzu7FNoDp8epbVHPVJiMcDzQYnxpkd0ndA78vhoydTDv0pMLmxB+bye1ObGoWTFJSywwDDDDegXLPw/4DOXj7SU5l+4MXwAsvxYsFV17TG14GDRGleyit6ULIwN+cW3ItUma8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713755; c=relaxed/simple;
-	bh=C/fDUuNrohORP4XeDgRwX3Y8aFyZ5aQiL5i2eDU80XY=;
+	s=arc-20240116; t=1760713758; c=relaxed/simple;
+	bh=bswwtk2QnRDIuVfepEN9XVdNMZtbHJ9RJ46AKieXmVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dx9zCCIbjpmAiGQ9hU9jluAqv+GMcAtUoAiLK6cdKpnmdlod3LVjltngBLuxYlMDZzcf6XOU8oXpi+BmUhClWbKz6qqLSkAUqTHT1nMoLUkFngfIgAhbbX/u9jd+RqVwazqNHntRGD0UnRZA/hYR1zGqOHLnBoMxDkHNnUYnvrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEph1q6J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6WPh5ELPlvZU+VVWumzYm8EQj+yXq7sv3EBavfq+NFtO+x6BnkJKYUsCqQWBx49a8E1Mi8lS+0rVkqi7UHVrf0nFqbAExXQmLPidBJ00ATKCzW2rtPP2+ldgKl1Z+uldrJlG4djbrBnStJD/Cylz5+bqwgJaVwB/OaD6apQMTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JI3c5aJV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEph1q6J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133B7C4CEE7;
-	Fri, 17 Oct 2025 15:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JI3c5aJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA707C4CEE7;
+	Fri, 17 Oct 2025 15:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713755;
-	bh=C/fDUuNrohORP4XeDgRwX3Y8aFyZ5aQiL5i2eDU80XY=;
+	s=korg; t=1760713758;
+	bh=bswwtk2QnRDIuVfepEN9XVdNMZtbHJ9RJ46AKieXmVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEph1q6J3Hsp6PBsSnz0MUpYs/TJbbKW1m0WV6/EtRoJ/ugvFjUMndVCRYmmila6e
-	 eeBPAQ1HBqLEAhrZtnkf6fu7CrJDZJdqRJGgZiyZm3YJNUg7ENd5Ry8AJzcG+TVK84
-	 rly0A1C4u00l+sVJeEW2JoquRfN6BE6YctuMHmj8=
+	b=JI3c5aJVZPHV0jR3rL5NvZVnQSC4s/6BZrl5qawW4pbFgIokjLTwxGbX7Gu8/52TQ
+	 HKSGpIuZf0KBo/I0rJI1tu73Fxu9fC67kQdLtuk0if1uuQ31gZrzMsToNLWRb6UhSl
+	 I2+3x7lyA1TXaeMmHBhibAUoN5khrhlm9GnS/bFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 081/201] btrfs: avoid potential out-of-bounds in btrfs_encode_fh()
-Date: Fri, 17 Oct 2025 16:52:22 +0200
-Message-ID: <20251017145137.730714131@linuxfoundation.org>
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.6 108/201] power: supply: max77976_charger: fix constant current reporting
+Date: Fri, 17 Oct 2025 16:52:49 +0200
+Message-ID: <20251017145138.711846268@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -50,71 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-commit dff4f9ff5d7f289e4545cc936362e01ed3252742 upstream.
+commit ee6cd8f3e28ee5a929c3b67c01a350f550f9b73a upstream.
 
-The function btrfs_encode_fh() does not properly account for the three
-cases it handles.
+CHARGE_CONTROL_LIMIT is a wrong property to report charge current limit,
+because `CHARGE_*` attributes represents capacity, not current. The
+correct attribute to report and set charge current limit is
+CONSTANT_CHARGE_CURRENT.
 
-Before writing to the file handle (fh), the function only returns to the
-user BTRFS_FID_SIZE_NON_CONNECTABLE (5 dwords, 20 bytes) or
-BTRFS_FID_SIZE_CONNECTABLE (8 dwords, 32 bytes).
+Rename CHARGE_CONTROL_LIMIT to CONSTANT_CHARGE_CURRENT.
 
-However, when a parent exists and the root ID of the parent and the
-inode are different, the function writes BTRFS_FID_SIZE_CONNECTABLE_ROOT
-(10 dwords, 40 bytes).
-
-If *max_len is not large enough, this write goes out of bounds because
-BTRFS_FID_SIZE_CONNECTABLE_ROOT is greater than
-BTRFS_FID_SIZE_CONNECTABLE originally returned.
-
-This results in an 8-byte out-of-bounds write at
-fid->parent_root_objectid = parent_root_id.
-
-A previous attempt to fix this issue was made but was lost.
-
-https://lore.kernel.org/all/4CADAEEC020000780001B32C@vpn.id2.novell.com/
-
-Although this issue does not seem to be easily triggerable, it is a
-potential memory corruption bug that should be fixed. This patch
-resolves the issue by ensuring the function returns the appropriate size
-for all three cases and validates that *max_len is large enough before
-writing any data.
-
-Fixes: be6e8dc0ba84 ("NFS support for btrfs - v3")
-CC: stable@vger.kernel.org # 3.0+
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 715ecbc10d6a ("power: supply: max77976: add Maxim MAX77976 charger driver")
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/export.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/power/supply/max77976_charger.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/export.c
-+++ b/fs/btrfs/export.c
-@@ -24,7 +24,11 @@ static int btrfs_encode_fh(struct inode
- 	int type;
+--- a/drivers/power/supply/max77976_charger.c
++++ b/drivers/power/supply/max77976_charger.c
+@@ -292,10 +292,10 @@ static int max77976_get_property(struct
+ 	case POWER_SUPPLY_PROP_ONLINE:
+ 		err = max77976_get_online(chg, &val->intval);
+ 		break;
+-	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX:
++	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX:
+ 		val->intval = MAX77976_CHG_CC_MAX;
+ 		break;
+-	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
++	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
+ 		err = max77976_get_integer(chg, CHG_CC,
+ 					   MAX77976_CHG_CC_MIN,
+ 					   MAX77976_CHG_CC_MAX,
+@@ -330,7 +330,7 @@ static int max77976_set_property(struct
+ 	int err = 0;
  
- 	if (parent && (len < BTRFS_FID_SIZE_CONNECTABLE)) {
--		*max_len = BTRFS_FID_SIZE_CONNECTABLE;
-+		if (btrfs_root_id(BTRFS_I(inode)->root) !=
-+		    btrfs_root_id(BTRFS_I(parent)->root))
-+			*max_len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
-+		else
-+			*max_len = BTRFS_FID_SIZE_CONNECTABLE;
- 		return FILEID_INVALID;
- 	} else if (len < BTRFS_FID_SIZE_NON_CONNECTABLE) {
- 		*max_len = BTRFS_FID_SIZE_NON_CONNECTABLE;
-@@ -46,6 +50,8 @@ static int btrfs_encode_fh(struct inode
- 		parent_root_id = BTRFS_I(parent)->root->root_key.objectid;
- 
- 		if (parent_root_id != fid->root_objectid) {
-+			if (*max_len < BTRFS_FID_SIZE_CONNECTABLE_ROOT)
-+				return FILEID_INVALID;
- 			fid->parent_root_objectid = parent_root_id;
- 			len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
- 			type = FILEID_BTRFS_WITH_PARENT_ROOT;
+ 	switch (psp) {
+-	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
++	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
+ 		err = max77976_set_integer(chg, CHG_CC,
+ 					   MAX77976_CHG_CC_MIN,
+ 					   MAX77976_CHG_CC_MAX,
+@@ -355,7 +355,7 @@ static int max77976_property_is_writeabl
+ 					  enum power_supply_property psp)
+ {
+ 	switch (psp) {
+-	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
++	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
+ 	case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT:
+ 		return true;
+ 	default:
+@@ -368,8 +368,8 @@ static enum power_supply_property max779
+ 	POWER_SUPPLY_PROP_CHARGE_TYPE,
+ 	POWER_SUPPLY_PROP_HEALTH,
+ 	POWER_SUPPLY_PROP_ONLINE,
+-	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT,
+-	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX,
++	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT,
++	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
+ 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
+ 	POWER_SUPPLY_PROP_MODEL_NAME,
+ 	POWER_SUPPLY_PROP_MANUFACTURER,
 
 
