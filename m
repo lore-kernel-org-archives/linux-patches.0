@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EBE32C92F;
-	Fri, 17 Oct 2025 15:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5730CD9F;
+	Fri, 17 Oct 2025 15:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715150; cv=none; b=sgo4lJhrcabOOjC59sluHfY1t4qa/u7idhWCKDpXHdchJyI60QILzh63wLlrdDbQXpU7X587D5g9VP4pCrzQlfxQz1g3CWLKQ6W77x+uBgoFx7LjpIco4BcTOe5EE6UackS75MYKditNQsvXt2Xl0DvbEico0KOYuLOz/HTZ9ug=
+	t=1760715153; cv=none; b=HA2bYkP4UscBjA31TO2TsYbztwjfSJJSyolZNxeiEYebcTiT9L5kjRdFbQkN1fBKBh8wsxJyc/AJYHJDA0VQp5z8x/nMzs5Wh7QtF+LihvJglgbh8JTA5YTnfOJL43N3b9U7gssCslmfdjzOgsOGP9sXdZHtyrfINk+23KsE2Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715150; c=relaxed/simple;
-	bh=psbUfIyhL647v7u7+iAdVKmRMR7etGqegPGP3VQRFps=;
+	s=arc-20240116; t=1760715153; c=relaxed/simple;
+	bh=rc9jlm/gw+dqqK3lSkEkmpXdgIEs4d4J0zeJ4H1nfHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyDPt5AYP92uxd/jCfjn65EyqNkvNar/xaCBZmWxH7hL5tJ30OV9Cm5yiS+QiMVksltr6pG8tan06o437EAp3wZit8hyumJZeTVUSEVxQP0wkrZo3JnJQZsppwH16vNCpTSnHu0iWhiOmChArwLrYBR32wnHIR9e0idIpVYh+MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YD2CW8xF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q96PEgVowAY6EOlCjhVI6s7AhDMJ7Naxx47c8DMrYYwq2idX78s3LxOPfVahSumuEfgoQqxQhqTH3nhqV3E7YMBqUn+8Ky+hCjBPoDI8sLITdJ/xOMWi8V4+2KGBkwas8ukTSE/ZVytFIz1+FMg3TZX5FHmr3jN8OGSoW2e4i/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttRiPuQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD2CW8xF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30384C113D0;
-	Fri, 17 Oct 2025 15:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttRiPuQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D09C113D0;
+	Fri, 17 Oct 2025 15:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715150;
-	bh=psbUfIyhL647v7u7+iAdVKmRMR7etGqegPGP3VQRFps=;
+	s=korg; t=1760715153;
+	bh=rc9jlm/gw+dqqK3lSkEkmpXdgIEs4d4J0zeJ4H1nfHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YD2CW8xFxNgtZTXU5hIxsf7mcnHpVwUEFezXs1obIYvLJMvYB9QrjEhFcrkxoN0vT
-	 HkHeFs5SHtIzYqSboVmR/0nqNsmGJG7rA9ctRMlTlnZg1vBDBBf9CpXDPCzPVfHpaD
-	 KdPFCBLfJExdWp77z21zuYfElU6r2qm2cxYvcYxU=
+	b=ttRiPuQfjapSNyV+HKvVQgqziKJ8xFDD88b+EEpehmLFCyv+1M5Fr3oOwpWxfH8Lf
+	 x4uVTaKcARsWm6BxkSf+wTT632Znij7MNaF1rNjV0jrOHQit9GbgCnnKjTlh3hZInm
+	 /q4JTSXZMrzO486C8C9On4bM7oc3IsEUwlIhA+eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 115/371] crypto: skcipher - Fix reqsize handling
-Date: Fri, 17 Oct 2025 16:51:30 +0200
-Message-ID: <20251017145206.097092869@linuxfoundation.org>
+Subject: [PATCH 6.17 116/371] netfilter: nft_objref: validate objref and objrefmap expressions
+Date: Fri, 17 Oct 2025 16:51:31 +0200
+Message-ID: <20251017145206.132640174@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,50 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T Pratham <t-pratham@ti.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 229c586b5e86979badb7cb0d38717b88a9e95ddd ]
+[ Upstream commit f359b809d54c6e3dd1d039b97e0b68390b0e53e4 ]
 
-Commit afddce13ce81d ("crypto: api - Add reqsize to crypto_alg")
-introduced cra_reqsize field in crypto_alg struct to replace type
-specific reqsize fields. It looks like this was introduced specifically
-for ahash and acomp from the commit description as subsequent commits
-add necessary changes in these alg frameworks.
+Referencing a synproxy stateful object from OUTPUT hook causes kernel
+crash due to infinite recursive calls:
 
-However, this is being recommended for use in all crypto algs [1]
-instead of setting reqsize using crypto_*_set_reqsize(). Using
-cra_reqsize in skcipher algorithms, hence, causes memory
-corruptions and crashes as the underlying functions in the algorithm
-framework have not been updated to set the reqsize properly from
-cra_reqsize. [2]
+BUG: TASK stack guard page was hit at 000000008bda5b8c (stack is 000000003ab1c4a5..00000000494d8b12)
+[...]
+Call Trace:
+ __find_rr_leaf+0x99/0x230
+ fib6_table_lookup+0x13b/0x2d0
+ ip6_pol_route+0xa4/0x400
+ fib6_rule_lookup+0x156/0x240
+ ip6_route_output_flags+0xc6/0x150
+ __nf_ip6_route+0x23/0x50
+ synproxy_send_tcp_ipv6+0x106/0x200
+ synproxy_send_client_synack_ipv6+0x1aa/0x1f0
+ nft_synproxy_do_eval+0x263/0x310
+ nft_do_chain+0x5a8/0x5f0 [nf_tables
+ nft_do_chain_inet+0x98/0x110
+ nf_hook_slow+0x43/0xc0
+ __ip6_local_out+0xf0/0x170
+ ip6_local_out+0x17/0x70
+ synproxy_send_tcp_ipv6+0x1a2/0x200
+ synproxy_send_client_synack_ipv6+0x1aa/0x1f0
+[...]
 
-Add proper set_reqsize calls in the skcipher init function to
-properly initialize reqsize for these algorithms in the framework.
+Implement objref and objrefmap expression validate functions.
 
-[1]: https://lore.kernel.org/linux-crypto/aCL8BxpHr5OpT04k@gondor.apana.org.au/
-[2]: https://gist.github.com/Pratham-T/24247446f1faf4b7843e4014d5089f6b
+Currently, only NFT_OBJECT_SYNPROXY object type requires validation.
+This will also handle a jump to a chain using a synproxy object from the
+OUTPUT hook.
 
-Fixes: afddce13ce81d ("crypto: api - Add reqsize to crypto_alg")
-Fixes: 52f641bc63a4 ("crypto: ti - Add driver for DTHE V2 AES Engine (ECB, CBC)")
-Signed-off-by: T Pratham <t-pratham@ti.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Now when trying to reference a synproxy object in the OUTPUT hook, nft
+will produce the following error:
+
+synproxy_crash.nft: Error: Could not process rule: Operation not supported
+  synproxy name mysynproxy
+  ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
+Reported-by: Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>
+Closes: https://bugzilla.suse.com/1250237
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/skcipher.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_objref.c | 39 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/crypto/skcipher.c b/crypto/skcipher.c
-index de5fc91bba267..8fa5d9686d085 100644
---- a/crypto/skcipher.c
-+++ b/crypto/skcipher.c
-@@ -294,6 +294,8 @@ static int crypto_skcipher_init_tfm(struct crypto_tfm *tfm)
- 		return crypto_init_lskcipher_ops_sg(tfm);
- 	}
+diff --git a/net/netfilter/nft_objref.c b/net/netfilter/nft_objref.c
+index 8ee66a86c3bc7..1a62e384766a7 100644
+--- a/net/netfilter/nft_objref.c
++++ b/net/netfilter/nft_objref.c
+@@ -22,6 +22,35 @@ void nft_objref_eval(const struct nft_expr *expr,
+ 	obj->ops->eval(obj, regs, pkt);
+ }
  
-+	crypto_skcipher_set_reqsize(skcipher, crypto_tfm_alg_reqsize(tfm));
++static int nft_objref_validate_obj_type(const struct nft_ctx *ctx, u32 type)
++{
++	unsigned int hooks;
 +
- 	if (alg->exit)
- 		skcipher->base.exit = crypto_skcipher_exit_tfm;
++	switch (type) {
++	case NFT_OBJECT_SYNPROXY:
++		if (ctx->family != NFPROTO_IPV4 &&
++		    ctx->family != NFPROTO_IPV6 &&
++		    ctx->family != NFPROTO_INET)
++			return -EOPNOTSUPP;
++
++		hooks = (1 << NF_INET_LOCAL_IN) | (1 << NF_INET_FORWARD);
++
++		return nft_chain_validate_hooks(ctx->chain, hooks);
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int nft_objref_validate(const struct nft_ctx *ctx,
++			       const struct nft_expr *expr)
++{
++	struct nft_object *obj = nft_objref_priv(expr);
++
++	return nft_objref_validate_obj_type(ctx, obj->ops->type->type);
++}
++
+ static int nft_objref_init(const struct nft_ctx *ctx,
+ 			   const struct nft_expr *expr,
+ 			   const struct nlattr * const tb[])
+@@ -93,6 +122,7 @@ static const struct nft_expr_ops nft_objref_ops = {
+ 	.activate	= nft_objref_activate,
+ 	.deactivate	= nft_objref_deactivate,
+ 	.dump		= nft_objref_dump,
++	.validate	= nft_objref_validate,
+ 	.reduce		= NFT_REDUCE_READONLY,
+ };
+ 
+@@ -197,6 +227,14 @@ static void nft_objref_map_destroy(const struct nft_ctx *ctx,
+ 	nf_tables_destroy_set(ctx, priv->set);
+ }
+ 
++static int nft_objref_map_validate(const struct nft_ctx *ctx,
++				   const struct nft_expr *expr)
++{
++	const struct nft_objref_map *priv = nft_expr_priv(expr);
++
++	return nft_objref_validate_obj_type(ctx, priv->set->objtype);
++}
++
+ static const struct nft_expr_ops nft_objref_map_ops = {
+ 	.type		= &nft_objref_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_objref_map)),
+@@ -206,6 +244,7 @@ static const struct nft_expr_ops nft_objref_map_ops = {
+ 	.deactivate	= nft_objref_map_deactivate,
+ 	.destroy	= nft_objref_map_destroy,
+ 	.dump		= nft_objref_map_dump,
++	.validate	= nft_objref_map_validate,
+ 	.reduce		= NFT_REDUCE_READONLY,
+ };
  
 -- 
 2.51.0
