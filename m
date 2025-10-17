@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8818A2F12BB;
-	Fri, 17 Oct 2025 15:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9B62F12DE;
+	Fri, 17 Oct 2025 15:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715004; cv=none; b=LZ9UVa1gv8Bqq2o1CWbC4JcQxFBGSDCUFlq9ZPbtHMmKnjYokhCEwo5g46f/Bm+8WavFF8SEBcYKnZs4P9SU+7IpVDKVuluRH1VB4yxzP/HcQibyQZXiVGzCO8ZyJHVdEPpy8lYRHSyQ2UGTdoN0DNorhwIRz97j3j6wwO/4Ql8=
+	t=1760715007; cv=none; b=bAaEA34c4Jq0Hb26/nhOAliC4zdINr3RKWwWZMSApUzBQNxvLJH8q41lsztAnDic6Ni3CvXXzToRbvm+j5K3Zvjoqwab2pN5JjlkCgKoJ07PZB7txbubiu+BPDkBvDCdD7YoCYO4DZPUoSLWl8psy/2qkOiS/vwGes6nKOJuKkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715004; c=relaxed/simple;
-	bh=dVxbcjnJzA7d/tntgS14H5imO4owwALwE1Sb5duitcc=;
+	s=arc-20240116; t=1760715007; c=relaxed/simple;
+	bh=hdD1bYoR5kKdEK9bTeQjN5oWawvtwkFpHWbYvtWjUKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzbBqlTPXXXmPAnTUeWBTwpjpqwVHYS5bJC5xQIVeNe2UZnCPsIbzlM/qRpRgpMK91xjsy3B+pLDhLtcIf0dVEtas55l+ubX0Jr/Lj/BP4VyBPp9qgF6iNzB6EpZt7YeBi7r9R1NVLCDxiAwmTY3eaUiLX8CHfO8l7GNSIdmMOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/6iL+R9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IokPopEvBBbl+7kidt855tzZUgYxCmiU2z3ebRF7Y+x7v94lRLIIEQ5iYKEUp0FdWdVVO0iRmB6QDXWqeaVPUTaKa72Jp2MfdFEBWPaeZbsEbb66o/1K4hJi9PsNmbslca/qYr7HyCwpNqYnUbJjVLTHGHP4RzhVbWMfYWtm/+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwP6fz9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/6iL+R9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E58C4CEE7;
-	Fri, 17 Oct 2025 15:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwP6fz9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31D1C4CEE7;
+	Fri, 17 Oct 2025 15:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715004;
-	bh=dVxbcjnJzA7d/tntgS14H5imO4owwALwE1Sb5duitcc=;
+	s=korg; t=1760715007;
+	bh=hdD1bYoR5kKdEK9bTeQjN5oWawvtwkFpHWbYvtWjUKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/6iL+R9uS//An1OT8nJANAtILJRDzV2Bh0n8bgy2T2kj83Mxjp8lHb2P0Fape7Gi
-	 b8gdvdf62gWAHtWOo1oSUkkSdIpzawUD932zju+lKRKauuoybeR1qk8qCgVqFiBfy3
-	 80UhbCSbbQKbeUmGv4ow9EwuJe+8XgTrTxL/VQSI=
+	b=DwP6fz9UD45O2rzhXpE83TUvhji47SmPFIsPFoSlllRlzoQS3Dntca0N3Ob9SLvrw
+	 r/xHfsfm8urCzxPg5cyQ7USvo3PIcFNqOTIt9VNz1CUWaLikrbsjblOQVkpi216aMh
+	 FgJuTIJH7S5zsK8sqo6GV/qL7WgUcpVshHFFqCNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pin-yen Lin <treapking@chromium.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 065/371] PM: core: Add two macros for walking device links
-Date: Fri, 17 Oct 2025 16:50:40 +0200
-Message-ID: <20251017145204.152294812@linuxfoundation.org>
+Subject: [PATCH 6.17 066/371] PM: sleep: Do not wait on SYNC_STATE_ONLY device links
+Date: Fri, 17 Oct 2025 16:50:41 +0200
+Message-ID: <20251017145204.188960438@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,143 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 3ce3f569991347d2085925041f4932232da43bcf ]
+[ Upstream commit 632d31067be2f414c57955efcf29c79290cc749b ]
 
-Add separate macros for walking links to suppliers and consumers of a
-device to help device links users to avoid exposing the internals of
-struct dev_links_info in their code and possible coding mistakes related
-to that.
+Device links with DL_FLAG_SYNC_STATE_ONLY should not affect system
+suspend and resume, and functions like device_reorder_to_tail() and
+device_link_add() don't try to reorder the consumers with that flag.
 
-Accordingly, use the new macros to replace open-coded device links list
-walks in the core power management code.
+However, dpm_wait_for_consumers() and dpm_wait_for_suppliers() don't
+check thas flag before triggering dpm_wait(), leading to potential hang
+during suspend/resume.
 
-No intentional functional impact.
+This can be reproduced on MT8186 Corsola Chromebook with devicetree like:
 
+usb-a-connector {
+        compatible = "usb-a-connector";
+        port {
+                usb_a_con: endpoint {
+                        remote-endpoint = <&usb_hs>;
+                };
+        };
+};
+
+usb_host {
+        compatible = "mediatek,mt8186-xhci", "mediatek,mtk-xhci";
+        port {
+                usb_hs: endpoint {
+                        remote-endpoint = <&usb_a_con>;
+                };
+        };
+};
+
+In this case, the two nodes form a cycle and a SYNC_STATE_ONLY devlink
+between usb_host (supplier) and usb-a-connector (consumer) is created.
+
+Address this by exporting device_link_flag_is_sync_state_only() and
+making dpm_wait_for_consumers() and dpm_wait_for_suppliers() use it
+when deciding if dpm_wait() should be called.
+
+Fixes: 05ef983e0d65a ("driver core: Add device link support for SYNC_STATE_ONLY flag")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Link: https://patch.msgid.link/20250926102320.4053167-1-treapking@chromium.org
+[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/1944671.tdWV9SEqCh@rafael.j.wysocki
-Stable-dep-of: 632d31067be2 ("PM: sleep: Do not wait on SYNC_STATE_ONLY device links")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/base.h          |  8 ++++++++
- drivers/base/power/main.c    | 18 +++++++-----------
- drivers/base/power/runtime.c |  3 +--
- 3 files changed, 16 insertions(+), 13 deletions(-)
+ drivers/base/base.h       | 1 +
+ drivers/base/core.c       | 2 +-
+ drivers/base/power/main.c | 6 ++++--
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/base/base.h b/drivers/base/base.h
-index 123031a757d91..700aecd22fd34 100644
+index 700aecd22fd34..86fa7fbb35489 100644
 --- a/drivers/base/base.h
 +++ b/drivers/base/base.h
-@@ -251,6 +251,14 @@ void device_links_unbind_consumers(struct device *dev);
+@@ -248,6 +248,7 @@ void device_links_driver_cleanup(struct device *dev);
+ void device_links_no_driver(struct device *dev);
+ bool device_links_busy(struct device *dev);
+ void device_links_unbind_consumers(struct device *dev);
++bool device_link_flag_is_sync_state_only(u32 flags);
  void fw_devlink_drivers_done(void);
  void fw_devlink_probing_done(void);
  
-+#define dev_for_each_link_to_supplier(__link, __dev)	\
-+	list_for_each_entry_srcu(__link, &(__dev)->links.suppliers, c_node, \
-+				 device_links_read_lock_held())
-+
-+#define dev_for_each_link_to_consumer(__link, __dev)	\
-+	list_for_each_entry_srcu(__link, &(__dev)->links.consumers, s_node, \
-+				 device_links_read_lock_held())
-+
- /* device pm support */
- void device_pm_move_to_tail(struct device *dev);
- 
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index d22d6b23e7589..a54ec6df1058f 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -287,7 +287,7 @@ static bool device_is_ancestor(struct device *dev, struct device *target)
+ #define DL_MARKER_FLAGS		(DL_FLAG_INFERRED | \
+ 				 DL_FLAG_CYCLE | \
+ 				 DL_FLAG_MANAGED)
+-static inline bool device_link_flag_is_sync_state_only(u32 flags)
++bool device_link_flag_is_sync_state_only(u32 flags)
+ {
+ 	return (flags & ~DL_MARKER_FLAGS) == DL_FLAG_SYNC_STATE_ONLY;
+ }
 diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index b6ab41265d7a3..b9a34c3425ecf 100644
+index b9a34c3425ecf..e83503bdc1fdb 100644
 --- a/drivers/base/power/main.c
 +++ b/drivers/base/power/main.c
-@@ -40,10 +40,6 @@
- 
- typedef int (*pm_callback_t)(struct device *);
- 
--#define list_for_each_entry_srcu_locked(pos, head, member) \
--	list_for_each_entry_srcu(pos, head, member, \
--			device_links_read_lock_held())
--
- /*
-  * The entries in the dpm_list list are in a depth first order, simply
-  * because children are guaranteed to be discovered after parents, and
-@@ -281,7 +277,7 @@ static void dpm_wait_for_suppliers(struct device *dev, bool async)
- 	 * callbacks freeing the link objects for the links in the list we're
+@@ -278,7 +278,8 @@ static void dpm_wait_for_suppliers(struct device *dev, bool async)
  	 * walking.
  	 */
--	list_for_each_entry_srcu_locked(link, &dev->links.suppliers, c_node)
-+	dev_for_each_link_to_supplier(link, dev)
- 		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
+ 	dev_for_each_link_to_supplier(link, dev)
+-		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
++		if (READ_ONCE(link->status) != DL_STATE_DORMANT &&
++		    !device_link_flag_is_sync_state_only(link->flags))
  			dpm_wait(link->supplier, async);
  
-@@ -338,7 +334,7 @@ static void dpm_wait_for_consumers(struct device *dev, bool async)
- 	 * continue instead of trying to continue in parallel with its
+ 	device_links_read_unlock(idx);
+@@ -335,7 +336,8 @@ static void dpm_wait_for_consumers(struct device *dev, bool async)
  	 * unregistration).
  	 */
--	list_for_each_entry_srcu_locked(link, &dev->links.consumers, s_node)
-+	dev_for_each_link_to_consumer(link, dev)
- 		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
+ 	dev_for_each_link_to_consumer(link, dev)
+-		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
++		if (READ_ONCE(link->status) != DL_STATE_DORMANT &&
++		    !device_link_flag_is_sync_state_only(link->flags))
  			dpm_wait(link->consumer, async);
  
-@@ -675,7 +671,7 @@ static void dpm_async_resume_subordinate(struct device *dev, async_func_t func)
- 	idx = device_links_read_lock();
- 
- 	/* Start processing the device's "async" consumers. */
--	list_for_each_entry_srcu_locked(link, &dev->links.consumers, s_node)
-+	dev_for_each_link_to_consumer(link, dev)
- 		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
- 			dpm_async_with_cleanup(link->consumer, func);
- 
-@@ -1342,7 +1338,7 @@ static void dpm_async_suspend_superior(struct device *dev, async_func_t func)
- 	idx = device_links_read_lock();
- 
- 	/* Start processing the device's "async" suppliers. */
--	list_for_each_entry_srcu_locked(link, &dev->links.suppliers, c_node)
-+	dev_for_each_link_to_supplier(link, dev)
- 		if (READ_ONCE(link->status) != DL_STATE_DORMANT)
- 			dpm_async_with_cleanup(link->supplier, func);
- 
-@@ -1396,7 +1392,7 @@ static void dpm_superior_set_must_resume(struct device *dev)
- 
- 	idx = device_links_read_lock();
- 
--	list_for_each_entry_srcu_locked(link, &dev->links.suppliers, c_node)
-+	dev_for_each_link_to_supplier(link, dev)
- 		link->supplier->power.must_resume = true;
- 
  	device_links_read_unlock(idx);
-@@ -1825,7 +1821,7 @@ static void dpm_clear_superiors_direct_complete(struct device *dev)
- 
- 	idx = device_links_read_lock();
- 
--	list_for_each_entry_srcu_locked(link, &dev->links.suppliers, c_node) {
-+	dev_for_each_link_to_supplier(link, dev) {
- 		spin_lock_irq(&link->supplier->power.lock);
- 		link->supplier->power.direct_complete = false;
- 		spin_unlock_irq(&link->supplier->power.lock);
-@@ -2077,7 +2073,7 @@ static bool device_prepare_smart_suspend(struct device *dev)
- 
- 	idx = device_links_read_lock();
- 
--	list_for_each_entry_srcu_locked(link, &dev->links.suppliers, c_node) {
-+	dev_for_each_link_to_supplier(link, dev) {
- 		if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
- 			continue;
- 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 8c23a11e80176..7420b9851fe0f 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1903,8 +1903,7 @@ void pm_runtime_get_suppliers(struct device *dev)
- 
- 	idx = device_links_read_lock();
- 
--	list_for_each_entry_srcu(link, &dev->links.suppliers, c_node,
--				 device_links_read_lock_held())
-+	dev_for_each_link_to_supplier(link, dev)
- 		if (device_link_test(link, DL_FLAG_PM_RUNTIME)) {
- 			link->supplier_preactivated = true;
- 			pm_runtime_get_sync(link->supplier);
 -- 
 2.51.0
 
