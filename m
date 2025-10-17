@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E44330B00;
-	Fri, 17 Oct 2025 15:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FB4330B00;
+	Fri, 17 Oct 2025 15:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716040; cv=none; b=WTkJPD2lzY0Ad6h9f0tB4G16AG2u6v9lR7pcH07Rr45EPiJJ0xr9ZSO8SaGJd8lw42hdaqIO7fvqtniZJkOdZ8Dwj0yq45Ky2RXqDDRyW5Y7820pF0rdT4mDOIx5C7HTff86XWQbyJ4OjX3vpr+QOAWfaaRGR9Ma3pVdAQs8dhk=
+	t=1760716043; cv=none; b=B/ZwRVRGrgZ/sEa2jokrf4ZCEpV/9KlzfTThBCowN1VvIVts+ugdF3mQAPv1CpNNWtsxD3gO5Ox50UhCwEF3/+o6Hm3ga5SvvYFFAic+qQTl+TeXw3x6Gw3rPzwDYLK+a3yTmlN2xQTbsSugCHgWHE/jUNEDEcq7uKcR4yUCCms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716040; c=relaxed/simple;
-	bh=dZ0YrpOjS+qRqCLgOM09Uj2OLT7vF78ul235n06w1Uw=;
+	s=arc-20240116; t=1760716043; c=relaxed/simple;
+	bh=h1lK8tOEGtxRnQ+iqg23CK/rU8PxEWc3Hvnq08gWsx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jq0z4zE1Qqcuz9IYU9r6DtfpSOmoXxMFwjpS83+gAC6H4OmIZoYgnB8xB1nwdUQ5nJj8o2kn5U6lQscTXDF4A0pwTHeMzSZQeNpGEXrQ4wo4VJ7isitV4JApwFpUoVLFEJtYg2PHekniG4QHD+5ASHXQu5djGN6z873RTsXJi/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Li2N/8R7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G74LW8gqm69s98/RvzcxW7A5KvvCRyzCAXF0gPBv78zio1vQRWryh9hf2UYHIgFFiBRx46/35as0rpSLaE1dcSgxe/uT4nuGexqQHyN8Za/pmfzUQIDiPDQiYubvCJkttTA/0h7OuOwgeBSQUom437huD+d+FH+JLUqb7Zuc6F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvCX7tK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Li2N/8R7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D9BC4CEE7;
-	Fri, 17 Oct 2025 15:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvCX7tK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEF2C4CEE7;
+	Fri, 17 Oct 2025 15:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716040;
-	bh=dZ0YrpOjS+qRqCLgOM09Uj2OLT7vF78ul235n06w1Uw=;
+	s=korg; t=1760716043;
+	bh=h1lK8tOEGtxRnQ+iqg23CK/rU8PxEWc3Hvnq08gWsx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Li2N/8R7U9bV9whOa7mcKuTrC5wsh7gcB8Thdi4vHb38tSr5BtTuDywpEwQKCoAQ+
-	 gZlSVpNeDeg1IlRMQpIc3642RbqnlzGsMUUhsW6J8inB//LHgH2efszeXJ/lq/4OKR
-	 5U9vybzyZCo7I6/lAdmOWNNds98qTIXU8FLu3nRY=
+	b=QvCX7tK7zKu0fh8oO9jJAHpVhma2UjlUcBWFQcxiBjOBi0cmFGYCkByjZyQ5nFaAH
+	 jCpuZEfQhj2O1TBDm5K8dHudd4W1hDeYC0NqcDFndg/3bHTHK4I9uw6Peg6PZ7gga6
+	 guBLN9JnQnU94BXy5j7vuk7fZ3uPiAqF416oaPc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Brahmajit Das <listout@listout.xyz>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/276] drm/radeon/r600_cs: clean up of dead code in r600_cs
-Date: Fri, 17 Oct 2025 16:52:26 +0200
-Message-ID: <20251017145144.424178195@linuxfoundation.org>
+Subject: [PATCH 5.15 054/276] usb: host: max3421-hcd: Fix error pointer dereference in probe cleanup
+Date: Fri, 17 Oct 2025 16:52:27 +0200
+Message-ID: <20251017145144.460768352@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -46,62 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 260dcf5b06d519bcf27a5dfdb5c626821a55c170 ]
+[ Upstream commit 186e8f2bdba551f3ae23396caccd452d985c23e3 ]
 
-GCC 16 enables -Werror=unused-but-set-variable= which results in build
-error with the following message.
+The kthread_run() function returns error pointers so the
+max3421_hcd->spi_thread pointer can be either error pointers or NULL.
+Check for both before dereferencing it.
 
-drivers/gpu/drm/radeon/r600_cs.c: In function ‘r600_texture_size’:
-drivers/gpu/drm/radeon/r600_cs.c:1411:29: error: variable ‘level’ set but not used [-Werror=unused-but-set-variable=]
- 1411 |         unsigned offset, i, level;
-      |                             ^~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:287: drivers/gpu/drm/radeon/r600_cs.o] Error 1
-
-level although is set, but in never used in the function
-r600_texture_size. Thus resulting in dead code and this error getting
-triggered.
-
-Fixes: 60b212f8ddcd ("drm/radeon: overhaul texture checking. (v3)")
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 05dfa5c9bc37 ("usb: host: max3421-hcd: fix "spi_rd8" uses dynamic stack allocation warning")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aJTMVAPtRe5H6jug@stanley.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/max3421-hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
-index 7fe2c49854987..d5e5f08deeec5 100644
---- a/drivers/gpu/drm/radeon/r600_cs.c
-+++ b/drivers/gpu/drm/radeon/r600_cs.c
-@@ -1410,7 +1410,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
- 			      unsigned block_align, unsigned height_align, unsigned base_align,
- 			      unsigned *l0_size, unsigned *mipmap_size)
- {
--	unsigned offset, i, level;
-+	unsigned offset, i;
- 	unsigned width, height, depth, size;
- 	unsigned blocksize;
- 	unsigned nbx, nby;
-@@ -1422,7 +1422,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
- 	w0 = r600_mip_minify(w0, 0);
- 	h0 = r600_mip_minify(h0, 0);
- 	d0 = r600_mip_minify(d0, 0);
--	for(i = 0, offset = 0, level = blevel; i < nlevels; i++, level++) {
-+	for (i = 0, offset = 0; i < nlevels; i++) {
- 		width = r600_mip_minify(w0, i);
- 		nbx = r600_fmt_get_nblocksx(format, width);
- 
+diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
+index 37a5914f79871..b2641009519b5 100644
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -1925,7 +1925,7 @@ max3421_probe(struct spi_device *spi)
+ 	if (hcd) {
+ 		kfree(max3421_hcd->tx);
+ 		kfree(max3421_hcd->rx);
+-		if (max3421_hcd->spi_thread)
++		if (!IS_ERR_OR_NULL(max3421_hcd->spi_thread))
+ 			kthread_stop(max3421_hcd->spi_thread);
+ 		usb_put_hcd(hcd);
+ 	}
 -- 
 2.51.0
 
