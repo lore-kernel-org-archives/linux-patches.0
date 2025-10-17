@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18A12F12D2;
-	Fri, 17 Oct 2025 15:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E199033711C;
+	Fri, 17 Oct 2025 15:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713540; cv=none; b=BVtEs3sjEjqBMfMoRdlVR0pckmdIe8S7vEhOmPz4rrj7tLKLy+XQbNKY6ErbBlHteK7HKOe2N/A4v0mX9n1c+3gmS4zBtG9/xz6C4tKKXliQfloKgXecruSFaqwY0Lq9psoo//ZZ5adXhcR/ZECxmEcPIRhItntZkijZ8PbQdmk=
+	t=1760713543; cv=none; b=D0u6NjPmfHFv/meQ4+Fkq8AXouTSi0XpxX0oFixUeFct2c2lwxj/emdfO+z3w8LR/tXbe3jtHzYf0iUmuxROn0IJ8BfX+tpdEP73xSo+520vgQ11yeRF6UKRfeeCWh+rrirVAieLTclzLfQ4QHcwQh0RxGvPWMwrXHL+L95yXuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713540; c=relaxed/simple;
-	bh=wvgLntdA80+sTfwPMpjlVd6/XG0S/nproutMjPZHBso=;
+	s=arc-20240116; t=1760713543; c=relaxed/simple;
+	bh=jd2Oz//zHIxBpGFXepWRdskcnPG6U7GEtIK76+QESCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQVtJ+0EY2tIdzZhvCC5kbohvifR5zAD5eBpCMdnbaYd1GR4tCAM8CHOIVgJPNn9P5crCgw+yrJCDFV2/VCvk7rK8E69uudU5JQAcxQHOBE8tNapDIs6P6R38FH8M7Zey42OOlCi4KEyxKXQ8LytijErINgYCh5KAgp/ZNEmbIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o+jHnQU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uu/2IsAguv7VZ7s+BXicISvLpgNJoJ+KI8Dw0pathpl6EPABrIeZcPz/k8iGb9hzy/j5GapgZ99CbAHA5ghLyV66CpwvqgeQmhUAFZP9Il2fR+teQzMJ8O/v8EZefOJlRSGTALhzMYC1r+L9U9jkjcuG2kj5w/iuBlWhUmdy/W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHxYZTvF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o+jHnQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C247C4CEE7;
-	Fri, 17 Oct 2025 15:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHxYZTvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F015C4CEE7;
+	Fri, 17 Oct 2025 15:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713539;
-	bh=wvgLntdA80+sTfwPMpjlVd6/XG0S/nproutMjPZHBso=;
+	s=korg; t=1760713542;
+	bh=jd2Oz//zHIxBpGFXepWRdskcnPG6U7GEtIK76+QESCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0o+jHnQUoZq78LA3K4888Ds/u5Qo3QuWgJ4PbOShosffk/LWJk6S8BRcAtHnNwQcx
-	 cvg+a7xAEEYS983KrhDYlkTDeZ0UOmHjg/QVwTQ9P7Ih35/8HHb+E8A541O10fU+iy
-	 Wg+5xwSTjDzTYOcmdT8IA3mWMtEbZQZ0N3a2NBAc=
+	b=kHxYZTvFLiZNn4iJRPnYJzc895Hhh9m31REP7yKsAoaAGpGpjfG6w/lGnQXGvJSoa
+	 POrPPnXQObj7rwadO5ZpLAfVRQWN8ekPr2v4nYk824dYm2njkgOLiqy2cgxCtjT9Xl
+	 kvDEqeacj6UFWWnRjx0a1sF6uDmq05zArWbtAYog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Ian Forbes <ian.forbes@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/201] s390/cio: Update purge function to unregister the unused subchannels
-Date: Fri, 17 Oct 2025 16:51:33 +0200
-Message-ID: <20251017145135.923131975@linuxfoundation.org>
+Subject: [PATCH 6.6 033/201] drm/vmwgfx: Fix a null-ptr access in the cursor snooper
+Date: Fri, 17 Oct 2025 16:51:34 +0200
+Message-ID: <20251017145135.961739138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,94 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 9daa5a8795865f9a3c93d8d1066785b07ded6073 ]
+[ Upstream commit 5ac2c0279053a2c5265d46903432fb26ae2d0da2 ]
 
-Starting with 'commit 2297791c92d0 ("s390/cio: dont unregister
-subchannel from child-drivers")', cio no longer unregisters
-subchannels when the attached device is invalid or unavailable.
+Check that the resource which is converted to a surface exists before
+trying to use the cursor snooper on it.
 
-As an unintended side-effect, the cio_ignore purge function no longer
-removes subchannels for devices on the cio_ignore list if no CCW device
-is attached. This situation occurs when a CCW device is non-operational
-or unavailable
+vmw_cmd_res_check allows explicit invalid (SVGA3D_INVALID_ID) identifiers
+because some svga commands accept SVGA3D_INVALID_ID to mean "no surface",
+unfortunately functions that accept the actual surfaces as objects might
+(and in case of the cursor snooper, do not) be able to handle null
+objects. Make sure that we validate not only the identifier (via the
+vmw_cmd_res_check) but also check that the actual resource exists before
+trying to do something with it.
 
-To ensure the same outcome of the purge function as when the
-current cio_ignore list had been active during boot, update the purge
-function to remove I/O subchannels without working CCW devices if the
-associated device number is found on the cio_ignore list.
+Fixes unchecked null-ptr reference in the snooping code.
 
-Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
-Suggested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: c0951b797e7d ("drm/vmwgfx: Refactor resource management")
+Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://lore.kernel.org/r/20250917153655.1968583-1-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/device.c | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index 6b374026cd4f4..31f46b56e049d 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -1318,23 +1318,34 @@ void ccw_device_schedule_recovery(void)
- 	spin_unlock_irqrestore(&recovery_lock, flags);
- }
- 
--static int purge_fn(struct device *dev, void *data)
-+static int purge_fn(struct subchannel *sch, void *data)
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index b129ce873af3f..b235e7cc41f3f 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1514,6 +1514,7 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
+ 		       SVGA3dCmdHeader *header)
  {
--	struct ccw_device *cdev = to_ccwdev(dev);
--	struct ccw_dev_id *id = &cdev->private->dev_id;
--	struct subchannel *sch = to_subchannel(cdev->dev.parent);
-+	struct ccw_device *cdev;
+ 	struct vmw_bo *vmw_bo = NULL;
++	struct vmw_resource *res;
+ 	struct vmw_surface *srf = NULL;
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSurfaceDMA);
+ 	int ret;
+@@ -1549,18 +1550,24 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
  
--	spin_lock_irq(cdev->ccwlock);
--	if (is_blacklisted(id->ssid, id->devno) &&
--	    (cdev->private->state == DEV_STATE_OFFLINE) &&
--	    (atomic_cmpxchg(&cdev->private->onoff, 0, 1) == 0)) {
--		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
--			      id->devno);
-+	spin_lock_irq(&sch->lock);
-+	if (sch->st != SUBCHANNEL_TYPE_IO || !sch->schib.pmcw.dnv)
-+		goto unlock;
-+
-+	if (!is_blacklisted(sch->schid.ssid, sch->schib.pmcw.dev))
-+		goto unlock;
-+
-+	cdev = sch_get_cdev(sch);
-+	if (cdev) {
-+		if (cdev->private->state != DEV_STATE_OFFLINE)
-+			goto unlock;
-+
-+		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
-+			goto unlock;
- 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
--		css_sched_sch_todo(sch, SCH_TODO_UNREG);
- 		atomic_set(&cdev->private->onoff, 0);
+ 	dirty = (cmd->body.transfer == SVGA3D_WRITE_HOST_VRAM) ?
+ 		VMW_RES_DIRTY_SET : 0;
+-	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface,
+-				dirty, user_surface_converter,
+-				&cmd->body.host.sid, NULL);
++	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface, dirty,
++				user_surface_converter, &cmd->body.host.sid,
++				NULL);
+ 	if (unlikely(ret != 0)) {
+ 		if (unlikely(ret != -ERESTARTSYS))
+ 			VMW_DEBUG_USER("could not find surface for DMA.\n");
+ 		return ret;
  	}
--	spin_unlock_irq(cdev->ccwlock);
-+
-+	css_sched_sch_todo(sch, SCH_TODO_UNREG);
-+	CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x%s\n", sch->schid.ssid,
-+		      sch->schib.pmcw.dev, cdev ? "" : " (no cdev)");
-+
-+unlock:
-+	spin_unlock_irq(&sch->lock);
- 	/* Abort loop in case of pending signal. */
- 	if (signal_pending(current))
- 		return -EINTR;
-@@ -1350,7 +1361,7 @@ static int purge_fn(struct device *dev, void *data)
- int ccw_purge_blacklisted(void)
- {
- 	CIO_MSG_EVENT(2, "ccw: purging blacklisted devices\n");
--	bus_for_each_dev(&ccw_bus_type, NULL, NULL, purge_fn);
-+	for_each_subchannel_staged(purge_fn, NULL, NULL);
+ 
+-	srf = vmw_res_to_srf(sw_context->res_cache[vmw_res_surface].res);
++	res = sw_context->res_cache[vmw_res_surface].res;
++	if (!res) {
++		VMW_DEBUG_USER("Invalid DMA surface.\n");
++		return -EINVAL;
++	}
+ 
+-	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->tbo, header);
++	srf = vmw_res_to_srf(res);
++	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->tbo,
++			     header);
+ 
  	return 0;
  }
- 
 -- 
 2.51.0
 
