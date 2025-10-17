@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC7A330B17;
-	Fri, 17 Oct 2025 15:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6216330B1F;
+	Fri, 17 Oct 2025 15:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716290; cv=none; b=j/IXlCxbhBFEVtOw5EG2CyJ07JWEytj+nD1OcfyjDAweMD8ekAb9HgnPIG/z6VWek6pagivyG3WhzsipKelk4VpPA1QDc+mCCnOJCTB2/nrKOiFohETLt7cN1Qdr5+8PCdvvPPnzm1/OUBgwZBTP0eQNEEX8rPaatNLysCBDxok=
+	t=1760716293; cv=none; b=KsQjswtd6X2Y9K7H+hBDg0W+4iMgh/Azv3Egnq/QZuglMdThg5y8my3OMciWlhTU07QVXWXDjGHsWP0QKdmnW6C+/Vox8hOCDT/WBlis209WTkdqe5+3/ZpS1B9O+madASmMEEQDQSMzQlt+vR2NNFifJy54jw4mzNXSmTXeupI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716290; c=relaxed/simple;
-	bh=g7hlPvH7xbb9XhlN4E6Hr8EPKkjTwdT89ctVOP7qRK8=;
+	s=arc-20240116; t=1760716293; c=relaxed/simple;
+	bh=MvgxDz3p8JW8qd07lAkDY4m1qcktZCpiOZ5vL/r5k/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5llRRgqr3uptQU1ESYcib2Yf1KH/3kLHA99jYQTqlgYCdp8As4TGjuj+gDw+huyZWiCwXe5gS7JMIr/96pCPL5UIJ/+ez2C4xubvuUDXNje3NDufdZBA7d196jRfg2x3/uWCUHmwIXP8xLN8gZcqHPziTMAhst6XnkhZCQKG2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O960Bc1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HIU1qG92jENQj0sSO235f7/eizvXIs6ks41JMs8BWbdL8gVuqkuReTthpKF1lNMJZLEWaovIyCJCJ/9JVxjRfqLQO6w6VRmJ3UiNU83ry2FiJSBKKunaCQLlirbHQIPoqcbEnFBMi/TZ0rpMIpOOp4cQp8wDllfQDA6flU1hzkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2b3NMJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O960Bc1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E489BC4CEE7;
-	Fri, 17 Oct 2025 15:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2b3NMJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9215C4CEE7;
+	Fri, 17 Oct 2025 15:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716290;
-	bh=g7hlPvH7xbb9XhlN4E6Hr8EPKkjTwdT89ctVOP7qRK8=;
+	s=korg; t=1760716293;
+	bh=MvgxDz3p8JW8qd07lAkDY4m1qcktZCpiOZ5vL/r5k/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O960Bc1dlGBJzr/ERVmLQy9sblalq621NMGkRqWKYZw2Mdn3cmKzrEmyqEFEBXwdy
-	 Ic1aAtcLzdsMEXb4WReazhmGV7avC39Lkhp0AFuBccPEOaRd+YD3bAhVNZPwCX2GO0
-	 f4dxexzBek1Dt/TlJdL5lpiFCV2con8dwk734r1A=
+	b=x2b3NMJTR7UpCxN5mKj+5EuSIjo2Ehan+HG/3/xtqUI08V9/xYOhdlSZWy9vkPPUc
+	 uI5oUzFEv48dRxUCLahKzu3Whw2oOS6uuvsqeKeWcTw3DJMHQ78Mz2KL4gP7IRIeVl
+	 mZLRk3/7UIP7ZBnkjg0BOhqo3XMErovQ64ehZies=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/276] clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver
-Date: Fri, 17 Oct 2025 16:53:51 +0200
-Message-ID: <20251017145147.520814463@linuxfoundation.org>
+Subject: [PATCH 5.15 139/276] cpufreq: tegra186: Set target frequency for all cpus in policy
+Date: Fri, 17 Oct 2025 16:53:52 +0200
+Message-ID: <20251017145147.557335939@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 1624dead9a4d288a594fdf19735ebfe4bb567cb8 ]
+[ Upstream commit 0b1bb980fd7cae126ee3d59f817068a13e321b07 ]
 
-The conditional check for the PLL0 multiplier 'm' used a logical AND
-instead of OR, making the range check ineffective. This patch replaces
-&& with || to correctly reject invalid values of 'm' that are either
-less than or equal to 0 or greater than LPC18XX_PLL0_MSEL_MAX.
+The original commit set all cores in a cluster to a shared policy, but
+did not update set_target to apply a frequency change to all cores for
+the policy. This caused most cores to remain stuck at their boot
+frequency.
 
-This ensures proper bounds checking during clk rate setting and rounding.
-
-Fixes: b04e0b8fd544 ("clk: add lpc18xx cgu clk driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-[sboyd@kernel.org: 'm' is unsigned so remove < condition]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: be4ae8c19492 ("cpufreq: tegra186: Share policy per cluster")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nxp/clk-lpc18xx-cgu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/tegra186-cpufreq.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-index 44e07a3c253b9..ab8741fe57c99 100644
---- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
-+++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-@@ -385,7 +385,7 @@ static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
- 	}
+diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
+index 5d1943e787b0c..af7edddaa84e4 100644
+--- a/drivers/cpufreq/tegra186-cpufreq.c
++++ b/drivers/cpufreq/tegra186-cpufreq.c
+@@ -86,10 +86,14 @@ static int tegra186_cpufreq_set_target(struct cpufreq_policy *policy,
+ {
+ 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
+ 	struct cpufreq_frequency_table *tbl = policy->freq_table + index;
+-	unsigned int edvd_offset = data->cpus[policy->cpu].edvd_offset;
++	unsigned int edvd_offset;
+ 	u32 edvd_val = tbl->driver_data;
++	u32 cpu;
  
- 	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
- 		return -EINVAL;
- 	}
-@@ -408,7 +408,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
- 	}
+-	writel(edvd_val, data->regs + edvd_offset);
++	for_each_cpu(cpu, policy->cpus) {
++		edvd_offset = data->cpus[cpu].edvd_offset;
++		writel(edvd_val, data->regs + edvd_offset);
++	}
  
- 	m = DIV_ROUND_UP_ULL(parent_rate, rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
- 		return -EINVAL;
- 	}
+ 	return 0;
+ }
 -- 
 2.51.0
 
