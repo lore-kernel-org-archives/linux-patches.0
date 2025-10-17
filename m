@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56144330B2D;
-	Fri, 17 Oct 2025 15:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451E121C9EA;
+	Fri, 17 Oct 2025 15:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716583; cv=none; b=vCGXA9veYwyaxL44MzMq8iYdDJwlve1+i4cUmn4tjfiVBST0Pe12S1WPCjgLrSOLXOfvjCIR19rr+5VdAdAXpstSDiC9gdMAA9L8KcMTlYueUGc6mp37nlnzwxxSOJoyuZivPZZA+0tbRg1eK3NnHy167vcqFIVr4cpvRRAaxZE=
+	t=1760716586; cv=none; b=K7/w3RaSw7LkTP9EDe99yq18ilq3NG9M1ryCqINx4hp4Wny86svlimE6XPKugPxVEzU3wE4ibmlEpv9XZmIxdpBA61bsmZq75sA1jMulNmm9vh38mE6kGTlTo3UhDS271LAT52FaGlqQoVOMEO70TpMCZmCdTnefz2BFraNMwiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716583; c=relaxed/simple;
-	bh=66YS9PCK0aaIP+YNtH1ke7OG9iyhksEiAdDTCXfNjbs=;
+	s=arc-20240116; t=1760716586; c=relaxed/simple;
+	bh=QbAwGDAedkg68d5zy06yFYsWongnZkcUfLTYAB2/kZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oB2H4clDtLfuLnSh5krmMNNY9J4CmQ8bmhKgAMTUlVjrHqAF/Y5vItMNE3hcuprCqe10HFlxMMOr97Ef76aN18u4oHSZ+SlZGyLjEDm/mFzkS5WHi+FTtHuU3S4jth2HAakjtv78gOGqMsCv56svoVCVzPUd3hFyAI5llVvKYLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqFse60V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iGYEGHjcoUWsBLbHIUZ5Yg2EfWMM3IO462RV+bZS1w914NELuGk3OryKwgsk9CyIean/vtyuQOK8XPKJ+OZfGdmH9fWRfHiy2RvbQFuxne9/xE980rDecF2Cw58n5GdNn+rJBH5s3WDJq2IcHs2b8/2w+hcH7Gj7nOrjhgB8o04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyZzSQhs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqFse60V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE1EC4CEE7;
-	Fri, 17 Oct 2025 15:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyZzSQhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EE3C4CEE7;
+	Fri, 17 Oct 2025 15:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716583;
-	bh=66YS9PCK0aaIP+YNtH1ke7OG9iyhksEiAdDTCXfNjbs=;
+	s=korg; t=1760716586;
+	bh=QbAwGDAedkg68d5zy06yFYsWongnZkcUfLTYAB2/kZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqFse60V3DaCepBaUws55oya2YAEIZWiLx5rBGUBRmz5wK6dh0htrSGyJyhG9iJNh
-	 LHfMSJ8dFfe79eHDlxSZjaN+RfH2qd0k4p5DBZlO31tYldanJA5meW67iyVlIvFttz
-	 zKa9+Bq5SGchMfDVwbvRaYc9lFI/YB56C7HOaUWs=
+	b=WyZzSQhsRJE+yEJH0t3wZ8hadvK95QaIlvFF7E5dBvaMkonYkmwPQy1289M4r5FcW
+	 cW5qr2H/yoEzdPdTz+1A+LI78tKWduVkanVZQsFK/Gz3br2lWe4bDnZKeKj4xZLjaP
+	 b+Xiqq9VoZwQvMpipojPCBcblRa9cJBM9ZEtNv3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/276] btrfs: fix the incorrect max_bytes value for find_lock_delalloc_range()
-Date: Fri, 17 Oct 2025 16:55:33 +0200
-Message-ID: <20251017145151.232962239@linuxfoundation.org>
+Subject: [PATCH 5.15 241/276] arm64: dts: qcom: sdm845: Fix slimbam num-channels/ees
+Date: Fri, 17 Oct 2025 16:55:34 +0200
+Message-ID: <20251017145151.270159081@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,144 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 7b26da407420e5054e3f06c5d13271697add9423 ]
+[ Upstream commit 316294bb6695a43a9181973ecd4e6fb3e576a9f7 ]
 
-[BUG]
-With my local branch to enable bs > ps support for btrfs, sometimes I
-hit the following ASSERT() inside submit_one_sector():
+Reading the hardware registers of the &slimbam on RB3 reveals that the BAM
+supports only 23 pipes (channels) and supports 4 EEs instead of 2. This
+hasn't caused problems so far since nothing is using the extra channels,
+but attempting to use them would lead to crashes.
 
-	ASSERT(block_start != EXTENT_MAP_HOLE);
+The bam_dma driver might warn in the future if the num-channels in the DT
+are wrong, so correct the properties in the DT to avoid future regressions.
 
-Please note that it's not yet possible to hit this ASSERT() in the wild
-yet, as it requires btrfs bs > ps support, which is not even in the
-development branch.
-
-But on the other hand, there is also a very low chance to hit above
-ASSERT() with bs < ps cases, so this is an existing bug affect not only
-the incoming bs > ps support but also the existing bs < ps support.
-
-[CAUSE]
-Firstly that ASSERT() means we're trying to submit a dirty block but
-without a real extent map nor ordered extent map backing it.
-
-Furthermore with extra debugging, the folio triggering such ASSERT() is
-always larger than the fs block size in my bs > ps case.
-(8K block size, 4K page size)
-
-After some more debugging, the ASSERT() is trigger by the following
-sequence:
-
- extent_writepage()
- |  We got a 32K folio (4 fs blocks) at file offset 0, and the fs block
- |  size is 8K, page size is 4K.
- |  And there is another 8K folio at file offset 32K, which is also
- |  dirty.
- |  So the filemap layout looks like the following:
- |
- |  "||" is the filio boundary in the filemap.
- |  "//| is the dirty range.
- |
- |  0        8K       16K        24K         32K       40K
- |  |////////|        |//////////////////////||////////|
- |
- |- writepage_delalloc()
- |  |- find_lock_delalloc_range() for [0, 8K)
- |  |  Now range [0, 8K) is properly locked.
- |  |
- |  |- find_lock_delalloc_range() for [16K, 40K)
- |  |  |- btrfs_find_delalloc_range() returned range [16K, 40K)
- |  |  |- lock_delalloc_folios() locked folio 0 successfully
- |  |  |
- |  |  |  The filemap range [32K, 40K) got dropped from filemap.
- |  |  |
- |  |  |- lock_delalloc_folios() failed with -EAGAIN on folio 32K
- |  |  |  As the folio at 32K is dropped.
- |  |  |
- |  |  |- loops = 1;
- |  |  |- max_bytes = PAGE_SIZE;
- |  |  |- goto again;
- |  |  |  This will re-do the lookup for dirty delalloc ranges.
- |  |  |
- |  |  |- btrfs_find_delalloc_range() called with @max_bytes == 4K
- |  |  |  This is smaller than block size, so
- |  |  |  btrfs_find_delalloc_range() is unable to return any range.
- |  |  \- return false;
- |  |
- |  \- Now only range [0, 8K) has an OE for it, but for dirty range
- |     [16K, 32K) it's dirty without an OE.
- |     This breaks the assumption that writepage_delalloc() will find
- |     and lock all dirty ranges inside the folio.
- |
- |- extent_writepage_io()
-    |- submit_one_sector() for [0, 8K)
-    |  Succeeded
-    |
-    |- submit_one_sector() for [16K, 24K)
-       Triggering the ASSERT(), as there is no OE, and the original
-       extent map is a hole.
-
-Please note that, this also exposed the same problem for bs < ps
-support. E.g. with 64K page size and 4K block size.
-
-If we failed to lock a folio, and falls back into the "loops = 1;"
-branch, we will re-do the search using 64K as max_bytes.
-Which may fail again to lock the next folio, and exit early without
-handling all dirty blocks inside the folio.
-
-[FIX]
-Instead of using the fixed size PAGE_SIZE as @max_bytes, use
-@sectorsize, so that we are ensured to find and lock any remaining
-blocks inside the folio.
-
-And since we're here, add an extra ASSERT() to
-before calling btrfs_find_delalloc_range() to make sure the @max_bytes is
-at least no smaller than a block to avoid false negative.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ adapted folio terminology and API calls to page-based equivalents ]
+Cc: stable@vger.kernel.org
+Fixes: 27ca1de07dc3 ("arm64: dts: qcom: sdm845: add slimbus nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250821-sdm845-slimbam-channels-v1-1-498f7d46b9ee@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2000,6 +2000,13 @@ again:
- 	/* step one, find a bunch of delalloc bytes starting at start */
- 	delalloc_start = *start;
- 	delalloc_end = 0;
-+
-+	/*
-+	 * If @max_bytes is smaller than a block, btrfs_find_delalloc_range() can
-+	 * return early without handling any dirty ranges.
-+	 */
-+	ASSERT(max_bytes >= fs_info->sectorsize);
-+
- 	found = btrfs_find_delalloc_range(tree, &delalloc_start, &delalloc_end,
- 					  max_bytes, &cached_state);
- 	if (!found || delalloc_end <= *start) {
-@@ -2028,13 +2035,14 @@ again:
- 				  delalloc_start, delalloc_end);
- 	ASSERT(!ret || ret == -EAGAIN);
- 	if (ret == -EAGAIN) {
--		/* some of the pages are gone, lets avoid looping by
--		 * shortening the size of the delalloc range we're searching
-+		/*
-+		 * Some of the pages are gone, lets avoid looping by
-+		 * shortening the size of the delalloc range we're searching.
- 		 */
- 		free_extent_state(cached_state);
- 		cached_state = NULL;
- 		if (!loops) {
--			max_bytes = PAGE_SIZE;
-+			max_bytes = fs_info->sectorsize;
- 			loops = 1;
- 			goto again;
- 		} else {
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4839,11 +4839,11 @@
+ 			compatible = "qcom,bam-v1.7.0";
+ 			qcom,controlled-remotely;
+ 			reg = <0 0x17184000 0 0x2a000>;
+-			num-channels  = <31>;
++			num-channels = <23>;
+ 			interrupts = <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <1>;
+-			qcom,num-ees = <2>;
++			qcom,num-ees = <4>;
+ 			iommus = <&apps_smmu 0x1806 0x0>;
+ 		};
+ 
 
 
