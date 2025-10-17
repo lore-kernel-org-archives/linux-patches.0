@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8252F330B0C;
-	Fri, 17 Oct 2025 15:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB84330B04;
+	Fri, 17 Oct 2025 15:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716149; cv=none; b=Oy7M2RjaXMfooRhdCUh9RrszNSczyA3whEwuzxR3uXHWxMbOI1T+CNqrlkrVWK+QlbmpYSghSTECi/souCWmKNNzpAUTsW9kBlXHIacjj4DVxuw/nmYTZRWQtaKgsGMHfXB1nExICImCmb2p3ets3zHixvlUZ/c9sYwI+yjdyBw=
+	t=1760716152; cv=none; b=TstOTQzSjLMl8L+IKXhJNqRN8G+mm8AJfIgeXPssihwGLso19wvLqoi0HSBd/ipAIo108KTF79Ag6pgYoComlzwYneT4AJ32BtSB15rLe7A+taEuCTSp/qFU8wezLAUEiU5C/Dv1Vpg7f+OpgTH8SPEj/XhiOAupM2Xw6qSFbw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716149; c=relaxed/simple;
-	bh=RCzuVqCmYba3yIG9x5D9eMAixHmiR2O08qasezbOaJI=;
+	s=arc-20240116; t=1760716152; c=relaxed/simple;
+	bh=0DPAEYtiAP4JPcM9PJkIbchTvTr6vXQ0hm+2+PHHep0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efgGS/YELz6XC+NFFkb1TqJPdUuUJJXHws4lPl4Ek0yGwlQj8x6ToPy1HYQSJ0dxXYROPOQA5Ero1zKQ7Mc6FKTJo139RE0ZDTQ8gTQZy88Qb6nYUWyF2P5bafarE/UEdxAXHrX5uG9FzecL6RmB8Hh6nSQTQwqtpRmAaOaKVK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNyjsxjC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UItDGjH1KBvB16pf1Q466TlwHT+cvfTBa0lmjQ/xhLh4bd4CMh552JQc2txR8hXd0NGMfQPF7rbvpnJnOQv6RB6LPpvNS9/I1rsRhgwgxHFBK+f2axr6CiBre3/EYA01Zt7m0J9GHT1Gh6DnwhQ1vvBIx67V674c63NyQL+TcFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYT9HqBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNyjsxjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E863C4CEE7;
-	Fri, 17 Oct 2025 15:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYT9HqBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D48C4CEE7;
+	Fri, 17 Oct 2025 15:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716149;
-	bh=RCzuVqCmYba3yIG9x5D9eMAixHmiR2O08qasezbOaJI=;
+	s=korg; t=1760716152;
+	bh=0DPAEYtiAP4JPcM9PJkIbchTvTr6vXQ0hm+2+PHHep0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNyjsxjCNd4n3LJs4LbK7rZDgLULmQdXYnjVfMIxVXpG0vhN8lpZS6Z5tVTaZe1xs
-	 f2ru+VwC09rVrcEQ2DjFdIXAxkgWwcvYHIfLy8VPTEFILQO5+h22Mby7V/IbdWrBTN
-	 PbOXZC3vmRwk3JlMUv9WFnfOBb0KqO1n1lVS+5vE=
+	b=sYT9HqBwxQxIw22j9coE4XCUHh3S8v6RuXC6qFwhQbZ7owRFkd4exxJt2lIDYkRcV
+	 GjqYGM+MHT9KpPfn+EYvWTU1z84YKw07I/u6lo/Zt4xl4TW1dvDm8gBDytSsXIXr2t
+	 li/OBOAPTEW2gGaO0rzF556YQzpd7SDH6eVWtyNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/276] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
-Date: Fri, 17 Oct 2025 16:53:04 +0200
-Message-ID: <20251017145145.809846558@linuxfoundation.org>
+Subject: [PATCH 5.15 074/276] watchdog: mpc8xxx_wdt: Reload the watchdog timer when enabling the watchdog
+Date: Fri, 17 Oct 2025 16:52:47 +0200
+Message-ID: <20251017145145.189034603@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,47 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
+[ Upstream commit 7dfd80f70ef00d871df5af7c391133f7ba61ad9b ]
 
-enable_irq() and disable_irq() are reference counted, so we must make sure
-that each enable_irq() is always paired with a single disable_irq(). If we
-call disable_irq() twice followed by just a single enable_irq(), the IRQ
-will remain disabled forever.
+When the watchdog gets enabled with this driver, it leaves enough time
+for the core watchdog subsystem to start pinging it. But when the
+watchdog is already started by hardware or by the boot loader, little
+time remains before it fires and it happens that the core watchdog
+subsystem doesn't have time to start pinging it.
 
-For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
-will end up being called twice, because disable_irq() also happens in
-qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
+Until commit 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker
+function") pinging was managed by the driver itself and the watchdog
+was immediately pinged by setting the timer expiry to 0.
 
-Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
-qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
-sense to have the rollback handled always by qcom_q6v5_unprepare().
+So restore similar behaviour by pinging it when enabling it so that
+if it was already enabled the watchdog timer counter is reloaded.
 
-Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker function")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/watchdog/mpc8xxx_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 7e9244c748da6..515c6d68e47ce 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -116,9 +116,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
- 	int ret;
+diff --git a/drivers/watchdog/mpc8xxx_wdt.c b/drivers/watchdog/mpc8xxx_wdt.c
+index 1c569be72ea29..15644ae2387fd 100644
+--- a/drivers/watchdog/mpc8xxx_wdt.c
++++ b/drivers/watchdog/mpc8xxx_wdt.c
+@@ -100,6 +100,8 @@ static int mpc8xxx_wdt_start(struct watchdog_device *w)
+ 	ddata->swtc = tmp >> 16;
+ 	set_bit(WDOG_HW_RUNNING, &ddata->wdd.status);
  
- 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
--	if (!ret)
--		disable_irq(q6v5->handover_irq);
--
- 	return !ret ? -ETIMEDOUT : 0;
++	mpc8xxx_wdt_keepalive(ddata);
++
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
+ 
 -- 
 2.51.0
 
