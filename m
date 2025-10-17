@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EA220C00A;
-	Fri, 17 Oct 2025 15:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B802232F75D;
+	Fri, 17 Oct 2025 15:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715239; cv=none; b=AoOG6siyl+gfV5WM2Ju//igR94/mTF1TmdNXt0vmP388WYf4KjGtelhDqgzHSoNuNGWnAVCY0z0E1wHHbJdXN4wXPQgP2tjbGExzU85gMwqPa+FEgCVgLJ/OS73T/JoYgEIlMbq64qN5SboC+wF4gelwii+IS+adrWozm9l+k5s=
+	t=1760715241; cv=none; b=buQl1BQMh7pR4SALAQ6ewBcujDwWJ6EO5UDtvyl7GTqW9BuC4h91kuZrKmhFMLfQOEQzmAOU7dE9vEK6ecmzFLb378rET9cjl1biObIvY6QFWHP8PpdURx7GoRDOnEDYd9aHy6ArcpWw8QaL3OmsU/zMpEffIsc/8cVF/jKKlpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715239; c=relaxed/simple;
-	bh=xdjgqEEj0vlczWQF61oB6MHJ+F21styJLUwD/yAhjQM=;
+	s=arc-20240116; t=1760715241; c=relaxed/simple;
+	bh=Qaeo/fvPJKc02q7jW+RtjiEypdW3Ah1iCgS1j9yo6kY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnT9da7u0psbPzvZu15kVX7hugVz9zUSXdHNkARdDNzdTexiNJ/IjqIeC/Fj/t48HQROMCZ1KF3G5c2IasHwU4F4VqXqnL1WfPrA3P3u3mJ3WcFqbyhIJyrqkA9a69mE86FI2gAkT6VpPQU5Q77YoHS3k5pyQwsb4GWK23ooYeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMkc/YGD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIl/5jar4JrBvQFu1I7ePBMQKItpjzZy435JKBFFVqWGwOqYzCGc77le8ztsDd8T6nrSXpLdt1uHTfYrZxPB0ahGknwgz2DkmvmRR2ki+ErmNmdRonqT+Cm1hoMfgpK17Tmait+eg/Rekv3Fyu4pIEI3K8EPNA9Dgj1jSZPP/D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwljKspH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMkc/YGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DA7C4CEE7;
-	Fri, 17 Oct 2025 15:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwljKspH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42642C4CEE7;
+	Fri, 17 Oct 2025 15:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715238;
-	bh=xdjgqEEj0vlczWQF61oB6MHJ+F21styJLUwD/yAhjQM=;
+	s=korg; t=1760715241;
+	bh=Qaeo/fvPJKc02q7jW+RtjiEypdW3Ah1iCgS1j9yo6kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMkc/YGDnU5T8/t+ZXRwTvwBGBAsvn7zcCt+0LtQ2Y4sBw8m0tq+TMPEquk1d/xQV
-	 sVULe5MZF0Lwex0snRGSj4e2Z221cBcACW2dr+pLys9E2OGDLFW5D/kZcn022AfJxu
-	 4euFQYbFWgT1LKU45PEFg8sNXpJWY/VzMdc7yBUo=
+	b=fwljKspHJcQ4wQaC8D/w6LpmPjyzmEOs2yUSkiHYETwXADUSY9SsAZdr7ckHvzk+h
+	 lWfEMlq/7ZrrNIVAUu5A+jnjXKGcP7wqIpGteN0estlP6mLTJOyfC6kpH7BGGjDRyk
+	 lH+wmiPd30xu7UTtQd/veyBjqKcs7HV+6W9RXQo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vibhore Vardhan <vibhore@ti.com>,
-	Paresh Bhagat <p-bhagat@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.17 146/371] arm64: dts: ti: k3-am62a-main: Fix main padcfg length
-Date: Fri, 17 Oct 2025 16:52:01 +0200
-Message-ID: <20251017145207.217185675@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.17 147/371] arm64: dts: ti: k3-am62p: Fix supported hardware for 1GHz OPP
+Date: Fri, 17 Oct 2025 16:52:02 +0200
+Message-ID: <20251017145207.252899698@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vibhore Vardhan <vibhore@ti.com>
+From: Judith Mendez <jm@ti.com>
 
-commit 4c4e48afb6d85c1a8f9fdbae1fdf17ceef4a6f5b upstream.
+commit f434ec2200667d5362bd19f93a498d9b3f121588 upstream.
 
-The main pad configuration register region starts with the register
-MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG0 with address 0x000f4000 and ends
-with the MAIN_PADCFG_CTRL_MMR_CFG0_PADCONFIG150 register with address
-0x000f4258, as a result of which, total size of the region is 0x25c
-instead of 0x2ac.
+The 1GHz OPP is supported on speed grade "O" as well according to the
+device datasheet [0], so fix the opp-supported-hw property to support
+this speed grade for 1GHz OPP.
 
-Reference Docs
-TRM (AM62A) - https://www.ti.com/lit/ug/spruj16b/spruj16b.pdf
-TRM (AM62D) - https://www.ti.com/lit/ug/sprujd4/sprujd4.pdf
-
-Fixes: 5fc6b1b62639c ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
+[0] https://www.ti.com/lit/gpn/am62p
+Fixes: 76d855f05801 ("arm64: dts: ti: k3-am62p: add opp frequencies")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vibhore Vardhan <vibhore@ti.com>
-Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20250903062513.813925-2-p-bhagat@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Judith Mendez <jm@ti.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a-main.dtsi |    2 +-
+ arch/arm64/boot/dts/ti/k3-am62p5.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
-@@ -267,7 +267,7 @@
+--- a/arch/arm64/boot/dts/ti/k3-am62p5.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62p5.dtsi
+@@ -135,7 +135,7 @@
  
- 	main_pmx0: pinctrl@f4000 {
- 		compatible = "pinctrl-single";
--		reg = <0x00 0xf4000 0x00 0x2ac>;
-+		reg = <0x00 0xf4000 0x00 0x25c>;
- 		#pinctrl-cells = <1>;
- 		pinctrl-single,register-width = <32>;
- 		pinctrl-single,function-mask = <0xffffffff>;
+ 		opp-1000000000 {
+ 			opp-hz = /bits/ 64 <1000000000>;
+-			opp-supported-hw = <0x01 0x0006>;
++			opp-supported-hw = <0x01 0x0007>;
+ 			clock-latency-ns = <6000000>;
+ 		};
+ 
 
 
