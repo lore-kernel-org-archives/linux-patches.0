@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3EC1D5CE0;
-	Fri, 17 Oct 2025 15:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5159732E15D;
+	Fri, 17 Oct 2025 15:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714253; cv=none; b=pX2KqV3GnsiL/16w2KMUvyUIbmtLHjXHdfZbynzUMiTcqfpOynupRLvLJuNu9W0l+blLBkrugILH1xqYumO/X+cUdaDBLyRXQ6FRISzDcPMV1C59pAwI204yYV03XChO74ApbFekgmbrKgxE7GBuZNOHFIdkpz5cWPe6va95yuI=
+	t=1760714256; cv=none; b=PjlTMUiKQzA8WGPuKx98Nqk0onxfPBVTYHdMQ6XYaqe1BoVmZ2dj8tSeTP+BzSqXdcDPIgm148eyuYM4XGZ4YqSO/OzM1OtthaSU6ykuvEgPi421s3186ghDbWjRMcJmkxbnLdtpr587fVREF2AIWvyGSOVKX4H56lqHVx+LTQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714253; c=relaxed/simple;
-	bh=UsGhDM1nIWk0ari7BLXKPa0sxUQ7DAPRBVPjS5cvSQw=;
+	s=arc-20240116; t=1760714256; c=relaxed/simple;
+	bh=a3YoWmr1ZMUMiCm9DBzi4zZSqwe/Wx9t9MRqt9V2HWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFxrG7Rh3b9lVmH11PQ7F2o5bHsEbImgzcDAElAALvrGhpCHQ7ncfOrvn6JBV4BI5EViwmutkCfHLNHf0YAk3hpcCBSlqWA/mGwitQz0v1l178Tb9PH4Zk0WdHhJcAEyPtwO3tmKBYPFvD2nyTDjsX5jeaVUuKb6V3y1v+D5Lg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJQVtppn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMkTFMDhXUzTvDMy/FW90w4R8W/GmvpzpvmO4+eGZkiXEHzFTHgRQub/NNHHXqZPFUnFcD3YxzojQpnakfh2pOl/lCBG+WXD4FDFldnr7SfQeiXpUu69fmIeCsdA1eE+gt778Nmfk8W0dHLAFY3bbPLyApSx1VEKwrJYhd1+ETU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtlC6JzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJQVtppn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E384C4CEE7;
-	Fri, 17 Oct 2025 15:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtlC6JzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26CDC4CEF9;
+	Fri, 17 Oct 2025 15:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714253;
-	bh=UsGhDM1nIWk0ari7BLXKPa0sxUQ7DAPRBVPjS5cvSQw=;
+	s=korg; t=1760714256;
+	bh=a3YoWmr1ZMUMiCm9DBzi4zZSqwe/Wx9t9MRqt9V2HWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJQVtppn9yktxZBxTxDUuCFyKQjfivT/8yWQOz9/pjTWmX++LPDtDC1UlfWlu2LCA
-	 TKqMMgFxDB3Rfdy28K0sZsFwy0SmvHlzmm/AVbUEjToP2QXixYBPiFdLFRR+8OT3RF
-	 Z49CpfVeMwlS0SbTrDgBrD9UJ2ylZhKPyQkp9zZ0=
+	b=GtlC6JzTUbglXAwECqt5E9Z80z6OM1Rjz/AmO6w5HQ5PoR1cdEU0dE7ebVpugBdvc
+	 6GCiqJjMlYGih883rtC/ApEZLIFIeiS9aeYOuGILJHw+s00qlZ0jH6r8p+dOvZ0f1D
+	 Pw30iD7qbCaeL2t1gCMUiJBSDIoa64SI8ssCNQ90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/277] gpio: wcd934x: mark the GPIO controller as sleeping
-Date: Fri, 17 Oct 2025 16:51:28 +0200
-Message-ID: <20251017145150.092838064@linuxfoundation.org>
+Subject: [PATCH 6.12 064/277] mailbox: zynqmp-ipi: Fix SGI cleanup on unbind
+Date: Fri, 17 Oct 2025 16:51:11 +0200
+Message-ID: <20251017145149.481095604@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,35 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit b5f8aa8d4bde0cf3e4595af5a536da337e5f1c78 ]
+[ Upstream commit bb160e791ab15b89188a7a19589b8e11f681bef3 ]
 
-The slimbus regmap passed to the GPIO driver down from MFD does not use
-fast_io. This means a mutex is used for locking and thus this GPIO chip
-must not be used in atomic context. Change the can_sleep switch in
-struct gpio_chip to true.
+The driver incorrectly determines SGI vs SPI interrupts by checking IRQ
+number < 16, which fails with dynamic IRQ allocation. During unbind,
+this causes improper SGI cleanup leading to kernel crash.
 
-Fixes: 59c324683400 ("gpio: wcd934x: Add support to wcd934x gpio controller")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Add explicit irq_type field to pdata for reliable identification of SGI
+interrupts (type-2) and only clean up SGI resources when appropriate.
+
+Fixes: 6ffb1635341b ("mailbox: zynqmp: handle SGI for shared IPI")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
-index cfa7b0a50c8e3..03b16b8f639ad 100644
---- a/drivers/gpio/gpio-wcd934x.c
-+++ b/drivers/gpio/gpio-wcd934x.c
-@@ -102,7 +102,7 @@ static int wcd_gpio_probe(struct platform_device *pdev)
- 	chip->base = -1;
- 	chip->ngpio = WCD934X_NPINS;
- 	chip->label = dev_name(dev);
--	chip->can_sleep = false;
-+	chip->can_sleep = true;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index fab897b5724c1..5bf81b60e9e67 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -62,7 +62,8 @@
+ #define DST_BIT_POS	9U
+ #define SRC_BITMASK	GENMASK(11, 8)
  
- 	return devm_gpiochip_add_data(dev, chip, data);
- }
+-#define MAX_SGI 16
++/* Macro to represent SGI type for IPI IRQs */
++#define IPI_IRQ_TYPE_SGI	2
+ 
+ /*
+  * Module parameters
+@@ -121,6 +122,7 @@ struct zynqmp_ipi_mbox {
+  * @dev:                  device pointer corresponding to the Xilinx ZynqMP
+  *                        IPI agent
+  * @irq:                  IPI agent interrupt ID
++ * @irq_type:             IPI SGI or SPI IRQ type
+  * @method:               IPI SMC or HVC is going to be used
+  * @local_id:             local IPI agent ID
+  * @virq_sgi:             IRQ number mapped to SGI
+@@ -130,6 +132,7 @@ struct zynqmp_ipi_mbox {
+ struct zynqmp_ipi_pdata {
+ 	struct device *dev;
+ 	int irq;
++	unsigned int irq_type;
+ 	unsigned int method;
+ 	u32 local_id;
+ 	int virq_sgi;
+@@ -887,7 +890,7 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	struct zynqmp_ipi_mbox *ipi_mbox;
+ 	int i;
+ 
+-	if (pdata->irq < MAX_SGI)
++	if (pdata->irq_type == IPI_IRQ_TYPE_SGI)
+ 		xlnx_mbox_cleanup_sgi(pdata);
+ 
+ 	i = pdata->num_mboxes - 1;
+@@ -956,14 +959,16 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 		dev_err(dev, "failed to parse interrupts\n");
+ 		goto free_mbox_dev;
+ 	}
+-	ret = out_irq.args[1];
++
++	/* Use interrupt type to distinguish SGI and SPI interrupts */
++	pdata->irq_type = out_irq.args[0];
+ 
+ 	/*
+ 	 * If Interrupt number is in SGI range, then request SGI else request
+ 	 * IPI system IRQ.
+ 	 */
+-	if (ret < MAX_SGI) {
+-		pdata->irq = ret;
++	if (pdata->irq_type == IPI_IRQ_TYPE_SGI) {
++		pdata->irq = out_irq.args[1];
+ 		ret = xlnx_mbox_init_sgi(pdev, pdata->irq, pdata);
+ 		if (ret)
+ 			goto free_mbox_dev;
 -- 
 2.51.0
 
