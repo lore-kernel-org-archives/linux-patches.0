@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B93C33711F;
-	Fri, 17 Oct 2025 15:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA262F12B0;
+	Fri, 17 Oct 2025 15:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715067; cv=none; b=PkxQK6eRnLygXG/CXek80sv3b/Qn2NMJzZQJHpkcQeI3LqOFIoqBvbasIV3XwUC26GaNox26mM9yr3qeotuh+PeE2IVOGsdLOD+UY9oKYUATc5VLOQ2FnZ6VXzA/I+r/gIz72+QlBV74d0m6UcjuulfxCAX6eQSuz2sHNipVYnI=
+	t=1760715070; cv=none; b=SicjAbe7Zwiu6RHhVcmh02mW41R1bs50g0vbsw/WZnvlW9P00m1lXTmJ7WJ6mgti/9vnzXIKXzLIJrXznKadKyCk6gJ3t9ULjYP5jSNPR0zekrfmfAn+CQjRirsKuKoVwiMDQ+ONlkybVVVG/6zAsRCoDxkOdIhRRL9xESdVpWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715067; c=relaxed/simple;
-	bh=8MB0VEECLqUOz874kLsTLnzq23KMQ1l3ZOQ1jFCWMxo=;
+	s=arc-20240116; t=1760715070; c=relaxed/simple;
+	bh=9L6OiiQQSimbIJjAF3KE4ce9v/7g09pCzZiLHMpV9HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pe1l4w3ENxsCAXy3fifx9yS3uATLrkBC6beI3RcA3v7/FHYBEIeFhvT9sgtY4j4OnsrXlDIO47GMZdLDUgI1qlqyKX2omIrEDLsETF1/swBfuonaUdkvhPBX2Jva8DbN7iYCJezYypvudxCXbBTqF22ovvwJGwiC1Y0vPzpX4XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQzaeh3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNp7JboTl7LpQVPt7p6hjsJb/umMjcB8wQW6LFpZ6GfCO8c3LFVhmDrh/W1+fBenv1y10x6eKfbNrwXetsTOGi3B1/2vEfQcR6HaBjGL2PDLtbFT1QMEtAYvn5NoZ3CoULmio97+IFqRvNZoaN0aUcHOfkqkh2kg0PJcnmm5Wyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAwbJcgM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQzaeh3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C08C4CEFE;
-	Fri, 17 Oct 2025 15:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAwbJcgM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B79AC4CEE7;
+	Fri, 17 Oct 2025 15:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715067;
-	bh=8MB0VEECLqUOz874kLsTLnzq23KMQ1l3ZOQ1jFCWMxo=;
+	s=korg; t=1760715070;
+	bh=9L6OiiQQSimbIJjAF3KE4ce9v/7g09pCzZiLHMpV9HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQzaeh3OjPecv0VfE3ITZ3IFFpAGvMh3sBuWE5lzuA8c45QlQbrPhSQSScCKmRm3C
-	 qE46k8nsEaVFsQWHbVlf5bK9gtUG9kSHbdzYHoOOzNforZbfdvaPaPnagbCx70AyO4
-	 y4ot7VMML3FXbmiVFEDKVtSGQESgBMDkQ1ASgEVU=
+	b=pAwbJcgMAmRg1b8mRGi8OaI/p9Fno78ogkD0qbaVlEIJhe7HbmuBLy0MHofqB/eC5
+	 5DX4MOpvGpBTlChPpf690y+sWu/PT52dfARJ+4dL7/ux7Mzs2EboyVjDZBaLF7Ve89
+	 Y7byJmVF+zsi/x9GmNL1w9wp15wkb6H2yPX76VjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
 	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
 	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 085/371] drm/vmwgfx: Fix a null-ptr access in the cursor snooper
-Date: Fri, 17 Oct 2025 16:51:00 +0200
-Message-ID: <20251017145205.014199888@linuxfoundation.org>
+Subject: [PATCH 6.17 086/371] drm/vmwgfx: Fix Use-after-free in validation
+Date: Fri, 17 Oct 2025 16:51:01 +0200
+Message-ID: <20251017145205.050501808@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -54,77 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit 5ac2c0279053a2c5265d46903432fb26ae2d0da2 ]
+[ Upstream commit dfe1323ab3c8a4dd5625ebfdba44dc47df84512a ]
 
-Check that the resource which is converted to a surface exists before
-trying to use the cursor snooper on it.
+Nodes stored in the validation duplicates hashtable come from an arena
+allocator that is cleared at the end of vmw_execbuf_process. All nodes
+are expected to be cleared in vmw_validation_drop_ht but this node escaped
+because its resource was destroyed prematurely.
 
-vmw_cmd_res_check allows explicit invalid (SVGA3D_INVALID_ID) identifiers
-because some svga commands accept SVGA3D_INVALID_ID to mean "no surface",
-unfortunately functions that accept the actual surfaces as objects might
-(and in case of the cursor snooper, do not) be able to handle null
-objects. Make sure that we validate not only the identifier (via the
-vmw_cmd_res_check) but also check that the actual resource exists before
-trying to do something with it.
-
-Fixes unchecked null-ptr reference in the snooping code.
-
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: c0951b797e7d ("drm/vmwgfx: Refactor resource management")
+Fixes: 64ad2abfe9a6 ("drm/vmwgfx: Adapt validation code for reference-free lookups")
 Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://lore.kernel.org/r/20250917153655.1968583-1-zack.rusin@broadcom.com
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://lore.kernel.org/r/20250926195427.1405237-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_validation.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 819704ac675d0..d539f25b5fbe0 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1497,6 +1497,7 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
- 		       SVGA3dCmdHeader *header)
- {
- 	struct vmw_bo *vmw_bo = NULL;
-+	struct vmw_resource *res;
- 	struct vmw_surface *srf = NULL;
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSurfaceDMA);
- 	int ret;
-@@ -1532,18 +1533,24 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
- 
- 	dirty = (cmd->body.transfer == SVGA3D_WRITE_HOST_VRAM) ?
- 		VMW_RES_DIRTY_SET : 0;
--	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface,
--				dirty, user_surface_converter,
--				&cmd->body.host.sid, NULL);
-+	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface, dirty,
-+				user_surface_converter, &cmd->body.host.sid,
-+				NULL);
- 	if (unlikely(ret != 0)) {
- 		if (unlikely(ret != -ERESTARTSYS))
- 			VMW_DEBUG_USER("could not find surface for DMA.\n");
- 		return ret;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
+index 7ee93e7191c7f..4d0fb71f62111 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
+@@ -308,8 +308,10 @@ int vmw_validation_add_resource(struct vmw_validation_context *ctx,
+ 		hash_add_rcu(ctx->sw_context->res_ht, &node->hash.head, node->hash.key);
  	}
- 
--	srf = vmw_res_to_srf(sw_context->res_cache[vmw_res_surface].res);
-+	res = sw_context->res_cache[vmw_res_surface].res;
-+	if (!res) {
-+		VMW_DEBUG_USER("Invalid DMA surface.\n");
-+		return -EINVAL;
+ 	node->res = vmw_resource_reference_unless_doomed(res);
+-	if (!node->res)
++	if (!node->res) {
++		hash_del_rcu(&node->hash.head);
+ 		return -ESRCH;
 +	}
  
--	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->tbo, header);
-+	srf = vmw_res_to_srf(res);
-+	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->tbo,
-+			     header);
- 
- 	return 0;
- }
+ 	node->first_usage = 1;
+ 	if (!res->dev_priv->has_mob) {
 -- 
 2.51.0
 
