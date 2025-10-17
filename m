@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3471D336ED3;
-	Fri, 17 Oct 2025 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8FA3321C5;
+	Fri, 17 Oct 2025 15:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715643; cv=none; b=udyX9sN5+AoQLJggavff+NsXDmtjDpIgeGm3k6TKREFhWB9Ar9nmnNx43lW8FQxwk9m//Pw8UyWtBRTY6Q/BYWGPiRy+kZAq7kQrboLV1t5LqiR4C9vgWGckE1CpQrc2wAGpcrINMcXDEsy4Tvesnz4h7IL6106wPpC7ms+TADk=
+	t=1760715646; cv=none; b=EdOh++ZqoH6ssGJc7ZVXsGf9+Es8zRzcgY6fBPYwB9YZaj3UCe1gku72+Ta13khNRNycMJNnb4FDpVGTEfwz8w4M6qZJDg4mdfMICq11yz0tRc7ulP1q7IoIBgsjzz5bv8Rh12ukd60j4J1riTjvdHO+PvzqVPBFJldZJg+ujcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715643; c=relaxed/simple;
-	bh=bLAux8F1T1ZQtUEVLAbxdsOEsJ2Q3fPdezjgv6GIPaQ=;
+	s=arc-20240116; t=1760715646; c=relaxed/simple;
+	bh=nfISmVc063pBvm9eoShwBRDyLVu00CbxGlTiUlzaRJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQbPjUqXTe74Sx/YYJao/O3HfidLIX/BWSAVJ4vhxo4X2ufmERHB++Xfhk0yDtbM3RQHJmX8eox7sr/dUR98Z24HDdeEQ7hyCZTEz+pLGHTbdPT5FN4b+79zaUhMB7PJoxxuYXi67wKrWju0cQ5/x7UjBy5TT5szlQS888qxNlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIReMBX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOnKJ4v2hvDxgJCBcy5mHthitIF64JSROZQVpDQzgicFTTAPR7hW84SHRqr1lnhzupsfHBc2fU8SITl/yC4TxGd8QwkWvYKyMfvsy7nvp1SRDIO14OeBMx94do5ySR491eK3iBf9dCqLk+A66NT6LXJjGxQE3M61Mm7FKdRwU7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+z4vlHD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIReMBX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAEBC4CEE7;
-	Fri, 17 Oct 2025 15:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+z4vlHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2EFC4CEE7;
+	Fri, 17 Oct 2025 15:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715643;
-	bh=bLAux8F1T1ZQtUEVLAbxdsOEsJ2Q3fPdezjgv6GIPaQ=;
+	s=korg; t=1760715645;
+	bh=nfISmVc063pBvm9eoShwBRDyLVu00CbxGlTiUlzaRJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIReMBX5NqLUT43XkxRSXyiMNSFVeLe6F7TjqyPwOot+laMuU9Sm/p5A0QycF8UXs
-	 st+Evj618EdL9zodIzRQDRMfDkBs7j5m2NvKjmiUkM1kGmkVTHsKmGsiRVgqcM3vWZ
-	 RlGLffcFws/5EqSrYZOrVfFmgXLdqJNpYxOpDYMY=
+	b=j+z4vlHDhqP+SBJxjL0S82HyT0vErzb7Dtb+DQ0fcTGtv8hYtrr+o1wJQmhTJliyd
+	 olss8wc3PkMs0E0mrMcWq7bZTY+4E4C/t4qMO3Hwu5F71UjHmS+EYlJseBDz8j8Lf/
+	 ZkXhfEZaDEL2OEQdy3F0ZG9LUCJRJCzCWjEC8snY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esben Haabendal <esben@geanix.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.17 270/371] rtc: interface: Ensure alarm irq is enabled when UIE is enabled
-Date: Fri, 17 Oct 2025 16:54:05 +0200
-Message-ID: <20251017145211.844380027@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.17 288/371] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
+Date: Fri, 17 Oct 2025 16:54:23 +0200
+Message-ID: <20251017145212.492875421@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,39 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 9db26d5855d0374d4652487bfb5aacf40821c469 upstream.
+commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
 
-When setting a normal alarm, user-space is responsible for using
-RTC_AIE_ON/RTC_AIE_OFF to control if alarm irq should be enabled.
+The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
+(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
 
-But when RTC_UIE_ON is used, interrupts must be enabled so that the
-requested irq events are generated.
-When RTC_UIE_OFF is used, alarm irq is disabled if there are no other
-alarms queued, so this commit brings symmetry to that.
+But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
+the MSI vector. This causes wrong MSI vector to be triggered, leading to
+the failure of PCI endpoint Kselftest MSI_TEST test case.
 
-Signed-off-by: Esben Haabendal <esben@geanix.com>
+To fix this issue, convert the interrupt number to MSI vector.
+
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-5-3de8e530a39e@geanix.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -594,6 +594,10 @@ int rtc_update_irq_enable(struct rtc_dev
- 		rtc->uie_rtctimer.node.expires = ktime_add(now, onesec);
- 		rtc->uie_rtctimer.period = ktime_set(1, 0);
- 		err = rtc_timer_enqueue(rtc, &rtc->uie_rtctimer);
-+		if (!err && rtc->ops && rtc->ops->alarm_irq_enable)
-+			err = rtc->ops->alarm_irq_enable(rtc->dev.parent, 1);
-+		if (err)
-+			goto out;
- 	} else {
- 		rtc_timer_remove(rtc, &rtc->uie_rtctimer);
- 	}
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1955,10 +1955,10 @@ static int tegra_pcie_ep_raise_intx_irq(
+ 
+ static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
+ {
+-	if (unlikely(irq > 31))
++	if (unlikely(irq > 32))
+ 		return -EINVAL;
+ 
+-	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
++	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
+ 
+ 	return 0;
+ }
 
 
