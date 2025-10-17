@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064AB2F12D2;
-	Fri, 17 Oct 2025 15:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D73335061;
+	Fri, 17 Oct 2025 15:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713957; cv=none; b=SU1se9LUvvWIyLXj6RVDXxV0cFCabjnBKSg67nJYFL89J6BHAQTdZwVIVJ7+rBoIIDVNjRgfkeVvlvFckoDAazebt4qA52u4gR+j5AVqNwFnbWzd9f4cmNiRpsllb1RfnLHr4UaqET8Tk8nePbpqqBgdWG26xpxZPCtYxj8BeMM=
+	t=1760713959; cv=none; b=nl/Axxa//MpjpkGPF0v0En+lQ7cHXzh8slKXpnvhsdW6AuL4fQI/bpfljh/w91LWjaXdOdb+In83Hl7KbX9y89luSnPKZ6ONsQpP5QcFt9anD1457OM3jn/r7/FlbPFyqQYacnl8EDguh/1fs6dBvj1hxvYLNDtuF/l4LMrmwgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713957; c=relaxed/simple;
-	bh=HYdtQ/JOG9cRZTJ/ScftzHCtv/uoXtjyL7LHm4DEqmo=;
+	s=arc-20240116; t=1760713959; c=relaxed/simple;
+	bh=o8YiwCO933TL13t6fRAFJrlh12nLLILY9mb5AGbA+rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GMWKY/ai3X2VXgpRXNfwz6BMI39LGE89pVsRJqwwE1Hjejo3WcAan7sg5+mCRl2eGn+/xxqCd3aZqyR+4kYQQME93mavBp9T4wUIBK8CQo7+LIwmF8LBVsqqshhoffgr7bqbaGY1qdpzg5Z4VMYtiIBMgoCAfk04OEwsJ3DIPWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6bglqga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=URKxDB7/cOZ8y0290DkxpTJaijcqUr8BajGAi4NqE4hJz5QgU3b4LftiGfNJLld62hI7pVKzF24Hvjji/qjvNOkbkYMpPoEnyrWuhZcGgIl85bPhJouoJAP505B6KgBIFkcD2kkHL94jS46PoeUwxlner4jEpAKHoFScNFFjmPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ujr2zfad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6bglqga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F40CC4CEE7;
-	Fri, 17 Oct 2025 15:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ujr2zfad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD72C4CEFE;
+	Fri, 17 Oct 2025 15:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713956;
-	bh=HYdtQ/JOG9cRZTJ/ScftzHCtv/uoXtjyL7LHm4DEqmo=;
+	s=korg; t=1760713959;
+	bh=o8YiwCO933TL13t6fRAFJrlh12nLLILY9mb5AGbA+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6bglqgavR0WMKyRZzsNS7/Dgioz9IfRyR7jYDsuQwillRmyJRR6xU72zuVOIPIHJ
-	 6mXOeOkTKdGE7FfNt6gWen1XlS9XmE+Cz1NM18VPUoRxdNG9fBNWRslGvF5GGrDHrt
-	 s3lk/0gHRQQMKzvCiysmyMCsRx9emCnxImPM1cxs=
+	b=Ujr2zfadt2OJjuCsKCFnY/OIif9GAum8SkiftvK5+WAeyfKDUNMA5tldORdZAhY+a
+	 64LFtiS/I+uT7ADujNe3uWIMJpdBwEBxDzVJoPTp9fO3ZDWZGONAvt7WRy1L/btzTo
+	 glaqYX2Z5LWmhxUp0kC9239U6CwY14MI9kQd/i7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/201] ACPI: battery: allocate driver data through devm_ APIs
-Date: Fri, 17 Oct 2025 16:53:59 +0200
-Message-ID: <20251017145141.292919823@linuxfoundation.org>
+Subject: [PATCH 6.6 179/201] ACPI: battery: initialize mutexes through devm_ APIs
+Date: Fri, 17 Oct 2025 16:54:00 +0200
+Message-ID: <20251017145141.330216724@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -54,44 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 909dfc60692331e1599d5e28a8f08a611f353aef ]
+[ Upstream commit 0710c1ce50455ed0db91bffa0eebbaa4f69b1773 ]
 
 Simplify the cleanup logic a bit.
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20240904-acpi-battery-cleanups-v1-2-a3bf74f22d40@weissschuh.net
+Link: https://patch.msgid.link/20240904-acpi-battery-cleanups-v1-3-a3bf74f22d40@weissschuh.net
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 399dbcadc01e ("ACPI: battery: Add synchronization between interface updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/acpi/battery.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
 --- a/drivers/acpi/battery.c
 +++ b/drivers/acpi/battery.c
-@@ -1203,7 +1203,7 @@ static int acpi_battery_add(struct acpi_
- 	if (device->dep_unmet)
- 		return -EPROBE_DEFER;
+@@ -1210,8 +1210,8 @@ static int acpi_battery_add(struct acpi_
+ 	strcpy(acpi_device_name(device), ACPI_BATTERY_DEVICE_NAME);
+ 	strcpy(acpi_device_class(device), ACPI_BATTERY_CLASS);
+ 	device->driver_data = battery;
+-	mutex_init(&battery->lock);
+-	mutex_init(&battery->sysfs_lock);
++	devm_mutex_init(&device->dev, &battery->lock);
++	devm_mutex_init(&device->dev, &battery->sysfs_lock);
+ 	if (acpi_has_method(battery->device->handle, "_BIX"))
+ 		set_bit(ACPI_BATTERY_XINFO_PRESENT, &battery->flags);
  
--	battery = kzalloc(sizeof(struct acpi_battery), GFP_KERNEL);
-+	battery = devm_kzalloc(&device->dev, sizeof(*battery), GFP_KERNEL);
- 	if (!battery)
- 		return -ENOMEM;
- 	battery->device = device;
-@@ -1241,7 +1241,6 @@ fail:
+@@ -1239,8 +1239,6 @@ fail_pm:
+ 	unregister_pm_notifier(&battery->pm_nb);
+ fail:
  	sysfs_remove_battery(battery);
- 	mutex_destroy(&battery->lock);
- 	mutex_destroy(&battery->sysfs_lock);
--	kfree(battery);
+-	mutex_destroy(&battery->lock);
+-	mutex_destroy(&battery->sysfs_lock);
  
  	return result;
  }
-@@ -1264,7 +1263,6 @@ static void acpi_battery_remove(struct a
- 
- 	mutex_destroy(&battery->lock);
- 	mutex_destroy(&battery->sysfs_lock);
--	kfree(battery);
+@@ -1260,9 +1258,6 @@ static void acpi_battery_remove(struct a
+ 	device_init_wakeup(&device->dev, 0);
+ 	unregister_pm_notifier(&battery->pm_nb);
+ 	sysfs_remove_battery(battery);
+-
+-	mutex_destroy(&battery->lock);
+-	mutex_destroy(&battery->sysfs_lock);
  }
  
  #ifdef CONFIG_PM_SLEEP
