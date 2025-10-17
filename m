@@ -1,39 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A31330B1E;
-	Fri, 17 Oct 2025 15:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DDC330B17;
+	Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716238; cv=none; b=uAn8zdYf8ewyJkhWtp6h+jzk36oI730ElRXjPL/nFkSdkXrRblqYqjn/ov14LdSsmp2tHsblLo5HG2MJ/l9cHkixcP8AUmo1gmvi6kcR2PUZFWeWgWWR5TmaZXY3oI+IUD8GpSy1gzcNRV51j9oOEiLh5yMQ8MwDkEzhEW/XcbE=
+	t=1760716241; cv=none; b=tqKOedD0vfZEs03Ambq2sX4eou576dxoiEOQYzQCwdoWftNP/X7TajzRLXUKFFuy7D4Z6VetKC97Qvw6v0XJGf+s89y/oKdKhZ/jx9um95C3J9MdvNGLKQqCDP5YL4NyMBsLS6tnQyBzJiQONJkMuNbkvmMT8uSA6KNjf/6czdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716238; c=relaxed/simple;
-	bh=Iu0usOAScNv8DssVWEu4ti4rc/UtdHtdz+21fteVC0o=;
+	s=arc-20240116; t=1760716241; c=relaxed/simple;
+	bh=OdvT9fvFH76Yt4QCDaTPHmxIo+rw0jPYH3xK+97kKC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q+m6yZp1a0BWbswe+hl+GuUb8deOLbE5Qy+eI+9ziVcQi2kL9Rgmzjzau5eiToQ8aztRV55oymYZ9SB4HocUUXB6kzFAmbI6hYyCc6p+leWMjwtAjxGCatk0pFE6uS6akzLb9X47a0amIUmV2TwDM73WMOAPnEssxj75i6VAO2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8Jk8hvx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AvwIA9ADW53tamd6PmoAlPNkFpFTOmlSqoPO7djE7wAATeC72j2dwYnudMQrJlgryyoJxzlndP3jdEr5pRlf186iIa56K7NMNFT4MLdh+4C4O0p8c64U+VYVdaKfy+qBjXVyGKNUeIQpCS3uP9Z9shs1HxN/LoLO/l3F8t9yXCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJoitGMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8Jk8hvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401B8C4CEE7;
-	Fri, 17 Oct 2025 15:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJoitGMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2DBC4CEE7;
+	Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716238;
-	bh=Iu0usOAScNv8DssVWEu4ti4rc/UtdHtdz+21fteVC0o=;
+	s=korg; t=1760716241;
+	bh=OdvT9fvFH76Yt4QCDaTPHmxIo+rw0jPYH3xK+97kKC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8Jk8hvxXhdqQ3K1eC+8i72lXmDfOEyOqxIjVSQ2A89QZVhnN/xZ4Z7sY/O7LRhfU
-	 W20fZc/n37tSAAd8sOw4EyzCqqLKbZh5TbueySYnZ+DJwOnz4G99LPCEORnC/Cm3l1
-	 /B92T8IBick84zx5eQtXD2xfZbnWmcuxXf07rVmo=
+	b=YJoitGMHNtBwrmqeB1gQhq5Lkv6FKDFMiO+dKQX5vgBtgJSh+wP8IHIW4Z85U9zeY
+	 qY+Ad21AflVM82J3rRs+KBamWxALg26UP+OHvn/P4zMKuWY9L0qteQbO/HRaI3c/JW
+	 rinf1QOFJZBY5AaPl9iPQpWbi0rgzO6XFncFtJLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 122/276] iio: frequency: adf4350: Fix ADF4350_REG3_12BIT_CLKDIV_MODE
-Date: Fri, 17 Oct 2025 16:53:35 +0200
-Message-ID: <20251017145146.931220970@linuxfoundation.org>
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Blake Jones <blakejones@google.com>,
+	Chun-Tse Shao <ctshao@google.com>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 123/276] perf evsel: Avoid container_of on a NULL leader
+Date: Fri, 17 Oct 2025 16:53:36 +0200
+Message-ID: <20251017145146.969045018@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -46,41 +64,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 1d8fdabe19267338f29b58f968499e5b55e6a3b6 upstream.
+[ Upstream commit 2354479026d726954ff86ce82f4b649637319661 ]
 
-The clk div bits (2 bits wide) do not start in bit 16 but in bit 15. Fix it
-accordingly.
+An evsel should typically have a leader of itself, however, in tests
+like 'Sample parsing' a NULL leader may occur and the container_of
+will return a corrupt pointer.
 
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-2-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Avoid this with an explicit NULL test.
+
+Fixes: fba7c86601e2e42d ("libperf: Move 'leader' from tools/perf to perf_evsel::leader")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Blake Jones <blakejones@google.com>
+Cc: Chun-Tse Shao <ctshao@google.com>
+Cc: Collin Funk <collin.funk1@gmail.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jan Polensky <japo@linux.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Nam Cao <namcao@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250821163820.1132977-4-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iio/frequency/adf4350.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/evsel.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/iio/frequency/adf4350.h
-+++ b/include/linux/iio/frequency/adf4350.h
-@@ -51,7 +51,7 @@
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index f14c83e6829a8..a9cb1aede476e 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2930,6 +2930,8 @@ bool evsel__is_hybrid(struct evsel *evsel)
  
- /* REG3 Bit Definitions */
- #define ADF4350_REG3_12BIT_CLKDIV(x)		((x) << 3)
--#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 16)
-+#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 15)
- #define ADF4350_REG3_12BIT_CSR_EN		(1 << 18)
- #define ADF4351_REG3_CHARGE_CANCELLATION_EN	(1 << 21)
- #define ADF4351_REG3_ANTI_BACKLASH_3ns_EN	(1 << 22)
+ struct evsel *evsel__leader(struct evsel *evsel)
+ {
++	if (evsel->core.leader == NULL)
++		return NULL;
+ 	return container_of(evsel->core.leader, struct evsel, core);
+ }
+ 
+-- 
+2.51.0
+
 
 
