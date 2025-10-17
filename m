@@ -1,50 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAC4336EFB;
-	Fri, 17 Oct 2025 15:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69CD332916;
+	Fri, 17 Oct 2025 15:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713494; cv=none; b=HjeC34B/o3ZUCMtOr5arAf7ECXNDvMhnfCPkafbKzDhwX+XxfUoAALbN05f1yPxjHpSUZLvQxo96T52v7Ko84+58Ti2Xg1finaMUUWSWOtf3qfz+OTSfPcWGUEhEVQxSHHUR9/ZtTQJM69vVIPQXttFhKXwG/ZaPPPa5tUpCB5U=
+	t=1760713497; cv=none; b=NtVw1Bg7kJYjvXG89v2Vh8SOIySsuLGp/LxbI4ZVbBgkYKhJRLii6e/UcTl289CZE0lgWaXb+p+qh2vdS3JE0hZwes+LnI6GUF2/rn1DhwSv+bpKT6L1sq+l6Uq7o2owD/hNABJJPe2N62AiQiiQl10W30418xOGys38P5rWqSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713494; c=relaxed/simple;
-	bh=/WMDMeoYCqBhqKesin2Sw2hEfs+JSq02kaiOJQAsv1Q=;
+	s=arc-20240116; t=1760713497; c=relaxed/simple;
+	bh=a1j31TYJKqx2mT0afuLiEaai3JjlnoEc/sojQHUdEDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GdPBWUNdsrdaFsxOf5RLrj9pb7L8jn5QecHNaKKnXQugicav+pzicr0+oB5JpyAYPxxM3S06rjnnvgK9YCm+UEoC8/KBIx1HEkpTaG0v8GiYN7h2MHwphRQPMW/u+SksGhqJ0btJYOzkxu11DAn5QcCcN06XKYPr3gnnPwQVmoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NubfD+rb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e42zGSGaoPdNxu618YDkkoxr/sYJqLbigsum/6G5W4bO9g520nSWMAuICWRjVJGJXVcuLupjzSos2MwWQpuC8jvqssiALTRyKFfYdwDY6v3m2fmKjEQu6+pzSdSp4Yr5iYI7TD/ua3eAkEt7pW/FNjgYPQlBU9uGn2E8QDxL9Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnmxM1DL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NubfD+rb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BE7C4CEE7;
-	Fri, 17 Oct 2025 15:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnmxM1DL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBA1C4CEE7;
+	Fri, 17 Oct 2025 15:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713494;
-	bh=/WMDMeoYCqBhqKesin2Sw2hEfs+JSq02kaiOJQAsv1Q=;
+	s=korg; t=1760713497;
+	bh=a1j31TYJKqx2mT0afuLiEaai3JjlnoEc/sojQHUdEDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NubfD+rbeo2LjWJeZfP4cOYb40sjh0i/2KupEfRx9mnpHvbj+b77FtK1pv5sHjGoA
-	 OxBaq75Ap+aoxKWqKXjNE00juLsHg1XazNv48f4oETF/Xmk/BR7ITNMOHLgS/sdzdk
-	 aVI4es8m6yQYk2Bk0wioheU5wcnCJGK9iswrtwbA=
+	b=bnmxM1DLEGPF0fvD+lgPfFOID2P9vxboij8sY7aajB/4W1DJ2C5DmzWYS0WR4Somo
+	 oAHsPWrWZh/VDo2wqvcMbTPvcYYTlr+BI67PbhxU0Xg/zb216+Pz1ASsoMvhHjjY6L
+	 CrphJ/l5T2cPo2tRJKzMDVQRtklYvp4qRW494bDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	James Clark <james.clark@linaro.org>,
+	Yang Jihong <yangjihong@bytedance.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ze Gao <zegao2021@gmail.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Will Deacon <will@kernel.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	ak@linux.intel.com,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Sun Haiyong <sunhaiyong@loongson.cn>,
+	John Garry <john.g.garry@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/201] perf test: Dont leak workload gopipe in PERF_RECORD_*
-Date: Fri, 17 Oct 2025 16:51:18 +0200
-Message-ID: <20251017145135.368414497@linuxfoundation.org>
+Subject: [PATCH 6.6 018/201] perf test: Add a test for default perf stat command
+Date: Fri, 17 Oct 2025 16:51:19 +0200
+Message-ID: <20251017145135.405992496@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -63,200 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
+[ Upstream commit 65d11821910bd910a2b4b5b005360d036c76ecef ]
 
-The test starts a workload and then opens events. If the events fail
-to open, for example because of perf_event_paranoid, the gopipe of the
-workload is leaked and the file descriptor leak check fails when the
-test exits. To avoid this cancel the workload when opening the events
-fails.
+Test that one cycles event is opened for each core PMU when "perf stat"
+is run without arguments.
 
-Before:
-```
-$ perf test -vv 7
-  7: PERF_RECORD_* events & perf_sample fields:
- --- start ---
-test child forked, pid 1189568
-Using CPUID GenuineIntel-6-B7-1
- ------------------------------------------------------------
-perf_event_attr:
-  type                    	   0 (PERF_TYPE_HARDWARE)
-  config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                	   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-Attempt to add: software/cpu-clock/
-..after resolving event: software/config=0/
-cpu-clock -> software/cpu-clock/
- ------------------------------------------------------------
-perf_event_attr:
-  type                             1 (PERF_TYPE_SOFTWARE)
-  size                             136
-  config                           0x9 (PERF_COUNT_SW_DUMMY)
-  sample_type                      IP|TID|TIME|CPU
-  read_format                      ID|LOST
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  enable_on_exec                   1
-  task                             1
-  sample_id_all                    1
-  mmap2                            1
-  comm_exec                        1
-  ksymbol                          1
-  bpf_event                        1
-  { wakeup_events, wakeup_watermark } 1
- ------------------------------------------------------------
-sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
-perf_evlist__open: Permission denied
- ---- end(-2) ----
-Leak of file descriptor 6 that opened: 'pipe:[14200347]'
- ---- unexpected signal (6) ----
-iFailed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-    #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
-    #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
-    #3 0x7f29ce849cc2 in raise raise.c:27
-    #4 0x7f29ce8324ac in abort abort.c:81
-    #5 0x565358f662d4 in check_leaks builtin-test.c:226
-    #6 0x565358f6682e in run_test_child builtin-test.c:344
-    #7 0x565358ef7121 in start_command run-command.c:128
-    #8 0x565358f67273 in start_test builtin-test.c:545
-    #9 0x565358f6771d in __cmd_test builtin-test.c:647
-    #10 0x565358f682bd in cmd_test builtin-test.c:849
-    #11 0x565358ee5ded in run_builtin perf.c:349
-    #12 0x565358ee6085 in handle_internal_command perf.c:401
-    #13 0x565358ee61de in run_argv perf.c:448
-    #14 0x565358ee6527 in main perf.c:555
-    #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #17 0x565358e391c1 in _start perf[851c1]
-  7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
-```
+The event line can either be output as "pmu/cycles/" or just "cycles" if
+there is only one PMU. Include 2 spaces for padding in the one PMU case
+to avoid matching when the word cycles is included in metric
+descriptions.
 
-After:
-```
-$ perf test 7
-  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-```
-
-Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Cc: Yang Jihong <yangjihong@bytedance.com>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
 Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Ze Gao <zegao2021@gmail.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Cc: Weilin Wang <weilin.wang@intel.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Jing Zhang <renyu.zj@linux.alibaba.com>
+Cc: Yang Li <yang.lee@linux.alibaba.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: ak@linux.intel.com
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Sun Haiyong <sunhaiyong@loongson.cn>
+Cc: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20240926144851.245903-8-james.clark@linaro.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 24937ee839e4 ("perf evsel: Ensure the fallback message is always written to")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/perf-record.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/tests/shell/stat.sh | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
-index 1c4feec1adff1..6e7f053006b4f 100644
---- a/tools/perf/tests/perf-record.c
-+++ b/tools/perf/tests/perf-record.c
-@@ -115,6 +115,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("sched__get_first_possible_cpu: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+diff --git a/tools/perf/tests/shell/stat.sh b/tools/perf/tests/shell/stat.sh
+index 3f1e67795490a..c6df7eec96b98 100755
+--- a/tools/perf/tests/shell/stat.sh
++++ b/tools/perf/tests/shell/stat.sh
+@@ -146,6 +146,30 @@ test_cputype() {
+   echo "cputype test [Success]"
+ }
  
-@@ -126,6 +127,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
- 		pr_debug("sched_setaffinity: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
-@@ -137,6 +139,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("perf_evlist__open: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
-@@ -149,6 +152,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("evlist__mmap: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
++test_hybrid() {
++  # Test the default stat command on hybrid devices opens one cycles event for
++  # each CPU type.
++  echo "hybrid test"
++
++  # Count the number of core PMUs, assume minimum of 1
++  pmus=$(ls /sys/bus/event_source/devices/*/cpus 2>/dev/null | wc -l)
++  if [ "$pmus" -lt 1 ]
++  then
++    pmus=1
++  fi
++
++  # Run default Perf stat
++  cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/|  cycles  " | wc -l)
++
++  if [ "$pmus" -ne "$cycles_events" ]
++  then
++    echo "hybrid test [Found $pmus PMUs but $cycles_events cycles events. Failed]"
++    err=1
++    return
++  fi
++  echo "hybrid test [Success]"
++}
++
+ test_default_stat
+ test_stat_record_report
+ test_stat_record_script
+@@ -153,4 +177,5 @@ test_stat_repeat_weak_groups
+ test_topdown_groups
+ test_topdown_weak_groups
+ test_cputype
++test_hybrid
+ exit $err
 -- 
 2.51.0
 
