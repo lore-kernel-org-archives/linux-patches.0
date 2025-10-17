@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9586A3370FE;
-	Fri, 17 Oct 2025 15:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE8332E14D;
+	Fri, 17 Oct 2025 15:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714076; cv=none; b=OdcIEzhzdTSTQFFIxzqF/ogVwXRfkH15JMS2x1w0YuDVzs0jVSe/LPFaTAhQytRRIA99AwxDTEtRzX8QuZas4b+wYjqvsWk35StXCGuPztCypc+YiitS7eSLtFNJtS1HxZ6uLMw6T9snq71p5qEktA0J61Z3V4UTZoKD3kCVzyE=
+	t=1760714079; cv=none; b=Mus/Cv5ed72K4w1s9k/BjrBHSn3LAXGU0vA6tW3/r6ImPFjLUi3tPxF7DvftYUjKvkLW186foAMXFLNDl69TS/BmkTDkjBEtsefA6J/LBulOpFQDqUQuVL6oM5DfjHM0px5b2LcFc7ECghG5BUz6ukRyZpbTm0nWAEszSez3I70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714076; c=relaxed/simple;
-	bh=5KdrJOStEEvYcaBJCd8YBKarSJJkSoCExirv0A+Ds+o=;
+	s=arc-20240116; t=1760714079; c=relaxed/simple;
+	bh=esOiWYu9JxgqvuxwQdJRm+E6lcLXG0V/syg8fxVSePk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjoaOe++7mYlZKx0U+Nz5Tkt+YpmeZdQMHXm5Ibj6YNOBaEm0fPvu6VVfbLj0xfHLMNEvNILg6CS9aCPaYWCUzyeo33aHEsKUFDifLVgpTUZae9iPgrtP56HbnziPi/MJTKtjqDE/hWQiBHNi1xHIrZquTLZeLgUnm+7tfUaIk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+yTd3Yv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fft5Ns4i7OowBNSlcvpq1Giq4niKGFa9woku52HvRlYR0q9H8piEMhgvOplYqRBS/HqA2wanRzB0V/+19A8jn5e4LvI5TmcGXR3lZ6NUc5pkdVIUitRVIAMxDR+FeH91nhrg+hUJxZqjSqZJWtOdyA5N+KzMOMP/Oskrhk7hkXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIDVcqe/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+yTd3Yv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD7EC116B1;
-	Fri, 17 Oct 2025 15:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIDVcqe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33D0C116B1;
+	Fri, 17 Oct 2025 15:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714076;
-	bh=5KdrJOStEEvYcaBJCd8YBKarSJJkSoCExirv0A+Ds+o=;
+	s=korg; t=1760714079;
+	bh=esOiWYu9JxgqvuxwQdJRm+E6lcLXG0V/syg8fxVSePk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+yTd3YvZjkrg37blRmJDXV9Yw7JnaSztaoEg0a/2gujQFGmEcfN59qZb3TIyHX7B
-	 sk5H8ZGxOl8DJ8aZFw20OuB72ibblBVPeWpcbEJ22+QlplDLiYneM+qP8gjDv6ypf9
-	 9vj8UA/J/VTnagh6+nRhowmuE2yJVNxk4EhCZlhU=
+	b=DIDVcqe/+D8VPdI6plSZuWFnqzRsnIrmlmxNyFnr3xqertIVahL/uMEP6Ou6SntXx
+	 yQg2+AVGZw6OkWyLvl/2O1Ycaz/i2iYNOHAbKjAaZYgjEt+TnpmJrCF4LgA4hPiSg0
+	 PO+DCaLiIYY8jZa+81+/f9SyIXQoTV+8dC/r5y5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan CHen <chenyuan@kylinos.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/277] clk: renesas: cpg-mssr: Fix memory leak in cpg_mssr_reserved_init()
-Date: Fri, 17 Oct 2025 16:50:26 +0200
-Message-ID: <20251017145147.849665107@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 002/277] fscontext: do not consume log entries when returning -EMSGSIZE
+Date: Fri, 17 Oct 2025 16:50:09 +0200
+Message-ID: <20251017145147.232638275@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,54 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan CHen <chenyuan@kylinos.cn>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-[ Upstream commit cc55fc58fc1b7f405003fd2ecf79e74653461f0b ]
+commit 72d271a7baa7062cb27e774ac37c5459c6d20e22 upstream.
 
-In case of krealloc_array() failure, the current error handling just
-returns from the function without freeing the original array.
-Fix this memory leak by freeing the original array.
+Userspace generally expects APIs that return -EMSGSIZE to allow for them
+to adjust their buffer size and retry the operation. However, the
+fscontext log would previously clear the message even in the -EMSGSIZE
+case.
 
-Fixes: 6aa1754764901668 ("clk: renesas: cpg-mssr: Ignore all clocks assigned to non-Linux system")
-Signed-off-by: Yuan CHen <chenyuan@kylinos.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250908012810.4767-1-chenyuan_fl@163.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Given that it is very cheap for us to check whether the buffer is too
+small before we remove the message from the ring buffer, let's just do
+that instead. While we're at it, refactor some fscontext_read() into a
+separate helper to make the ring buffer logic a bit easier to read.
+
+Fixes: 007ec26cdc9f ("vfs: Implement logging through fs_context")
+Cc: David Howells <dhowells@redhat.com>
+Cc: stable@vger.kernel.org # v5.2+
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Link: https://lore.kernel.org/20250807-fscontext-log-cleanups-v3-1-8d91d6242dc3@cyphar.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fsopen.c |   70 ++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 0f27c33192e10..112ed81f648ee 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -1012,6 +1012,7 @@ static int __init cpg_mssr_reserved_init(struct cpg_mssr_priv *priv,
+--- a/fs/fsopen.c
++++ b/fs/fsopen.c
+@@ -18,50 +18,56 @@
+ #include "internal.h"
+ #include "mount.h"
  
- 		of_for_each_phandle(&it, rc, node, "clocks", "#clock-cells", -1) {
- 			int idx;
-+			unsigned int *new_ids;
++static inline const char *fetch_message_locked(struct fc_log *log, size_t len,
++					       bool *need_free)
++{
++	const char *p;
++	int index;
++
++	if (unlikely(log->head == log->tail))
++		return ERR_PTR(-ENODATA);
++
++	index = log->tail & (ARRAY_SIZE(log->buffer) - 1);
++	p = log->buffer[index];
++	if (unlikely(strlen(p) > len))
++		return ERR_PTR(-EMSGSIZE);
++
++	log->buffer[index] = NULL;
++	*need_free = log->need_free & (1 << index);
++	log->need_free &= ~(1 << index);
++	log->tail++;
++
++	return p;
++}
++
+ /*
+  * Allow the user to read back any error, warning or informational messages.
++ * Only one message is returned for each read(2) call.
+  */
+ static ssize_t fscontext_read(struct file *file,
+ 			      char __user *_buf, size_t len, loff_t *pos)
+ {
+ 	struct fs_context *fc = file->private_data;
+-	struct fc_log *log = fc->log.log;
+-	unsigned int logsize = ARRAY_SIZE(log->buffer);
+-	ssize_t ret;
+-	char *p;
++	ssize_t err;
++	const char *p __free(kfree) = NULL, *message;
+ 	bool need_free;
+-	int index, n;
+-
+-	ret = mutex_lock_interruptible(&fc->uapi_mutex);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (log->head == log->tail) {
+-		mutex_unlock(&fc->uapi_mutex);
+-		return -ENODATA;
+-	}
++	int n;
  
- 			if (it.node != priv->np)
- 				continue;
-@@ -1022,11 +1023,13 @@ static int __init cpg_mssr_reserved_init(struct cpg_mssr_priv *priv,
- 			if (args[0] != CPG_MOD)
- 				continue;
+-	index = log->tail & (logsize - 1);
+-	p = log->buffer[index];
+-	need_free = log->need_free & (1 << index);
+-	log->buffer[index] = NULL;
+-	log->need_free &= ~(1 << index);
+-	log->tail++;
++	err = mutex_lock_interruptible(&fc->uapi_mutex);
++	if (err < 0)
++		return err;
++	message = fetch_message_locked(fc->log.log, len, &need_free);
+ 	mutex_unlock(&fc->uapi_mutex);
++	if (IS_ERR(message))
++		return PTR_ERR(message);
  
--			ids = krealloc_array(ids, (num + 1), sizeof(*ids), GFP_KERNEL);
--			if (!ids) {
-+			new_ids = krealloc_array(ids, (num + 1), sizeof(*ids), GFP_KERNEL);
-+			if (!new_ids) {
- 				of_node_put(it.node);
-+				kfree(ids);
- 				return -ENOMEM;
- 			}
-+			ids = new_ids;
+-	ret = -EMSGSIZE;
+-	n = strlen(p);
+-	if (n > len)
+-		goto err_free;
+-	ret = -EFAULT;
+-	if (copy_to_user(_buf, p, n) != 0)
+-		goto err_free;
+-	ret = n;
+-
+-err_free:
+ 	if (need_free)
+-		kfree(p);
+-	return ret;
++		p = message;
++
++	n = strlen(message);
++	if (copy_to_user(_buf, message, n))
++		return -EFAULT;
++	return n;
+ }
  
- 			if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
- 				idx = MOD_CLK_PACK_10(args[1]);	/* for DEF_MOD_STB() */
--- 
-2.51.0
-
+ static int fscontext_release(struct inode *inode, struct file *file)
 
 
