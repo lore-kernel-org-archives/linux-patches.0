@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23E4330B09;
-	Fri, 17 Oct 2025 15:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CC2330B03;
+	Fri, 17 Oct 2025 15:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715545; cv=none; b=gZ9fuuM1YrbGTyGdRzR6vZnv/C8i9rogh873jae8cTNL8sm7sfdzi4Lp27+C6YFz0Yrl+pVk3VsSh1FzZMO87ipPmjlXRVL8oO3oeBKr8Kl7+eUiYrOhNMq1MvwRyj+l+2ouzmYFw8/0cybwH4MBnf9q/JbDNnKkMuBdm9sHRTo=
+	t=1760715548; cv=none; b=gh6Qh6mV50gpAp3hGBspZBTUesBp0caOUC6NKMm757z/k/YSUzsGxrhW+9VAaRzA/N4jyQESJ8xnVrfbhbwKe+FIysemFWr413ZUthAGuOuhmBXpFxzAX0VL+Utouuel0hvMvhaZrMhAsyoFpP1OG7bjSwV6szJD3/iwzNQBafs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715545; c=relaxed/simple;
-	bh=ARujz2a98pzGFpGAUWmbs2DeaeIubSE82hC0RqRLS84=;
+	s=arc-20240116; t=1760715548; c=relaxed/simple;
+	bh=K3DWd1bPHL7Zt4lI1IldnI3/Qpm4NofqyWP6TtcJwQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fubwwdV2t2gcm7D+uHmWZeL/oLeUNq0cLFxQm2vrflezJuUr2omraxur3OlS/uMm+23csc/t6LQRgkGsX0cI1DNpKgRcKxH9edE61l3b0jQPYvgCVYpok6joTfAFsUx6q/RryTbs0w7PPe6AgoaJaVxUZ5AWKCjUuw6UfC/NZPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6B1PDHp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dV2oXH1rnmw92Pm/ySQNUy1SuuzGP9g2pcO2y9qFE0V8/E6UweNk+KUFKgQSR7wRhFO60eK027og9+MVZjM7FX4bhiqeb3+QpHR0VRvXBEvTTG9ZIrXR0lGj/k79JpmGORNSKaChI/CaYS9hLU58l01Y71a3BKLDJwg3TWT+NzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTzB2wLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6B1PDHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F35C4CEE7;
-	Fri, 17 Oct 2025 15:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTzB2wLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DF3C4CEE7;
+	Fri, 17 Oct 2025 15:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715544;
-	bh=ARujz2a98pzGFpGAUWmbs2DeaeIubSE82hC0RqRLS84=;
+	s=korg; t=1760715547;
+	bh=K3DWd1bPHL7Zt4lI1IldnI3/Qpm4NofqyWP6TtcJwQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6B1PDHprx570C2qQ1Vz20khZCz+dRFPoQZp367vo8EqqyfGDDjTQ4eDIJ9ABq9XB
-	 f4AUIG9SnfKrxu7HzUPZYEI0xP3FrpHhC66jW7KaTmmm70/KOR6Y0ym3qF1vo6a8sE
-	 i80mJwUG7pUD5SDRbmYyMilxH0gpL+9vSlBqLRYo=
+	b=GTzB2wLDPAKKEKu3uIxCfOgk/oTrKNkksi4xN7VUflOoMl8cwl+VzTY/oC4iBeb+b
+	 YWii18VpcA8+RNyaa6gCA+90WNQ9Mz9SMipNiOiDDlxBCBtN9MpxV7J16WHkI34ehz
+	 thaSvziKSXbbFagJYh2Z5Hp9iTRUbzJ3hkBCw4dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <corey@minyard.net>,
-	Eric Hagberg <ehagberg@janestreet.com>
-Subject: [PATCH 6.17 253/371] Revert "ipmi: fix msg stack when IPMI is disconnected"
-Date: Fri, 17 Oct 2025 16:53:48 +0200
-Message-ID: <20251017145211.233428865@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 254/371] riscv: use an atomic xchg in pudp_huge_get_and_clear()
+Date: Fri, 17 Oct 2025 16:53:49 +0200
+Message-ID: <20251017145211.272190287@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,71 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit 5d09ee1bec870263f4ace439402ea840503b503b upstream.
+commit 668208b161a0b679427e7d0f34c0a65fd7d23979 upstream.
 
-This reverts commit c608966f3f9c2dca596967501d00753282b395fc.
+Make sure we return the right pud value and not a value that could have
+been overwritten in between by a different core.
 
-This patch has a subtle bug that can cause the IPMI driver to go into an
-infinite loop if the BMC misbehaves in a certain way.  Apparently
-certain BMCs do misbehave this way because several reports have come in
-recently about this.
-
-Signed-off-by: Corey Minyard <corey@minyard.net>
-Tested-by: Eric Hagberg <ehagberg@janestreet.com>
-Cc: <stable@vger.kernel.org> # 6.2
+Link: https://lkml.kernel.org/r/20250814-dev-alex-thp_pud_xchg-v1-1-b4704dfae206@rivosinc.com
+Fixes: c3cc2a4a3a23 ("riscv: Add support for PUD THP")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Cc: Andrew Donnellan <ajd@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_kcs_sm.c |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ arch/riscv/include/asm/pgtable.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_kcs_sm.c
-+++ b/drivers/char/ipmi/ipmi_kcs_sm.c
-@@ -122,10 +122,10 @@ struct si_sm_data {
- 	unsigned long  error0_timeout;
- };
- 
--static unsigned int init_kcs_data_with_state(struct si_sm_data *kcs,
--				  struct si_sm_io *io, enum kcs_states state)
-+static unsigned int init_kcs_data(struct si_sm_data *kcs,
-+				  struct si_sm_io *io)
- {
--	kcs->state = state;
-+	kcs->state = KCS_IDLE;
- 	kcs->io = io;
- 	kcs->write_pos = 0;
- 	kcs->write_count = 0;
-@@ -140,12 +140,6 @@ static unsigned int init_kcs_data_with_s
- 	return 2;
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -959,6 +959,17 @@ static inline pud_t pudp_huge_get_and_cl
+ 	return pud;
  }
  
--static unsigned int init_kcs_data(struct si_sm_data *kcs,
--				  struct si_sm_io *io)
--{
--	return init_kcs_data_with_state(kcs, io, KCS_IDLE);
--}
--
- static inline unsigned char read_status(struct si_sm_data *kcs)
++#define __HAVE_ARCH_PUDP_HUGE_GET_AND_CLEAR
++static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
++					    unsigned long address, pud_t *pudp)
++{
++	pud_t pud = __pud(atomic_long_xchg((atomic_long_t *)pudp, 0));
++
++	page_table_check_pud_clear(mm, pud);
++
++	return pud;
++}
++
+ static inline int pud_young(pud_t pud)
  {
- 	return kcs->io->inputb(kcs->io, 1);
-@@ -276,7 +270,7 @@ static int start_kcs_transaction(struct
- 	if (size > MAX_KCS_WRITE_SIZE)
- 		return IPMI_REQ_LEN_EXCEEDED_ERR;
- 
--	if (kcs->state != KCS_IDLE) {
-+	if ((kcs->state != KCS_IDLE) && (kcs->state != KCS_HOSED)) {
- 		dev_warn(kcs->io->dev, "KCS in invalid state %d\n", kcs->state);
- 		return IPMI_NOT_IN_MY_STATE_ERR;
- 	}
-@@ -501,7 +495,7 @@ static enum si_sm_result kcs_event(struc
- 	}
- 
- 	if (kcs->state == KCS_HOSED) {
--		init_kcs_data_with_state(kcs, kcs->io, KCS_ERROR0);
-+		init_kcs_data(kcs, kcs->io);
- 		return SI_SM_HOSED;
- 	}
- 
+ 	return pte_young(pud_pte(pud));
 
 
