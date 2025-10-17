@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1EA330B06;
-	Fri, 17 Oct 2025 15:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738FD330B2E;
+	Fri, 17 Oct 2025 15:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716629; cv=none; b=ngZpaHT3GzK7TNBXGghGyHqWYNX3FjXuvb7Y3mUdZSvZBm7osBRFWZfuU5S5+giC/vzBeGIDIxMIpFwABwxMZrppMOCXaoB7RxYfHxVNhnOBxMEmRfYJBIGpbxR4eSNekcmrDB/MxauvUUPEAERaCnepI1TPGxORguRq1rrL5Wk=
+	t=1760716629; cv=none; b=Dt7hgiV4D7IxeEqIeT6qOHbwckfWK6M7voVC0Nn1QVhkPLtPJ9xEZ65yLT8phtR6yOVo92Lwvpl1aFhxn0WlxmIBDCkbdKDQM34fdH6+a5wcLJeP6W1Sda2YVPqITw73INO6k7dF7LMpwenR85i6FkOhxbAXIEbQBup2qZSu10w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760716629; c=relaxed/simple;
-	bh=dWTt1jFUvSrvSiM5+2q0qng0lWpbinsN4cJDSnFmHCw=;
+	bh=2f8Vsg9XE0Rb2Y0VNB9Idl2MGmXzVk26P4wyJUEFOhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQUnCG/v9G8qFBAynGjdCiKEBg0tWt1vNhl1n4phoAiiZsu82u/UiJjan26cVVb/4DBWueu0hmhuBUN8Hg8kBVgOtr4eXWmjJt4rmA+hRc2pHJsb5gf1ekSITneTtpgoxUhrTYCRh1qiIuWp2NUZL/eVia5V8d+KYA4mXkGG2Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKMa45Qy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNMawlmMplR2FYbO3nF1th3iJSHKzbB46fnql3SsR+ZJ27ofXIGJAj0Ya8pLSwNCVqwkaKKtJ5oejuXPPpz0TeI1NkksZB95njDMjYK39kyC9Q/IOg00jRlnKre/jY2NtpINCdPNuuzYbB1zuu/3pQlhC650tAFu2BAIm9Yy6yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wamz2mFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKMa45Qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270BAC4CEE7;
-	Fri, 17 Oct 2025 15:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wamz2mFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F266DC4CEFE;
+	Fri, 17 Oct 2025 15:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716626;
-	bh=dWTt1jFUvSrvSiM5+2q0qng0lWpbinsN4cJDSnFmHCw=;
+	s=korg; t=1760716629;
+	bh=2f8Vsg9XE0Rb2Y0VNB9Idl2MGmXzVk26P4wyJUEFOhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKMa45QyI1v8YiH2EKRhKb3R3APT/TLCOQebJ1E6oncu6sRuHF5P2BK31fzIu5z7g
-	 YaUlqKXGiRgwSGdVPWJ78Y/9QG+fWyA/SMTQ8hDQfCrKJVXKJug661+88pkykSgohg
-	 ajHCHOfMqAYV9SXYpg1Ja9z4BUE2KjwkxI1WHtrE=
+	b=wamz2mFnOL5SQ14IIs/b/SxyU1lrp/ODaAts0GPOxagyF8ckxEJhwlv2/tw4OJuKF
+	 Isf9lnxt5TfxeHAAWQeD1dKXhhbQ6tKuS+nkllBztT8W4kuKwaUxL75hlTP55luy1X
+	 qf7ayQd1pPRZcjaZTRA+jPUSoh4Bg+wN5qQe3zOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0be4f339a8218d2a5bb1@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Albin Babu Varghese <albinbabuvarghese20@gmail.com>,
-	Ahmet Eray Karadag <eraykrdg1@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 222/276] ext4: guard against EA inode refcount underflow in xattr update
-Date: Fri, 17 Oct 2025 16:55:15 +0200
-Message-ID: <20251017145150.566786515@linuxfoundation.org>
+	Pratyush Yadav <pratyush@kernel.org>,
+	Santhosh Kumar K <s-k6@ti.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 213/276] spi: cadence-quadspi: Flush posted register writes before DAC access
+Date: Fri, 17 Oct 2025 16:55:06 +0200
+Message-ID: <20251017145150.238666805@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,80 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmet Eray Karadag <eraykrdg1@gmail.com>
+From: Pratyush Yadav <pratyush@kernel.org>
 
-commit 57295e835408d8d425bef58da5253465db3d6888 upstream.
+commit 1ad55767e77a853c98752ed1e33b68049a243bd7 upstream.
 
-syzkaller found a path where ext4_xattr_inode_update_ref() reads an EA
-inode refcount that is already <= 0 and then applies ref_change (often
--1). That lets the refcount underflow and we proceed with a bogus value,
-triggering errors like:
+cqspi_read_setup() and cqspi_write_setup() program the address width as
+the last step in the setup. This is likely to be immediately followed by
+a DAC region read/write. On TI K3 SoCs the DAC region is on a different
+endpoint from the register region. This means that the order of the two
+operations is not guaranteed, and they might be reordered at the
+interconnect level. It is possible that the DAC read/write goes through
+before the address width update goes through. In this situation if the
+previous command used a different address width the OSPI command is sent
+with the wrong number of address bytes, resulting in an invalid command
+and undefined behavior.
 
-  EXT4-fs error: EA inode <n> ref underflow: ref_count=-1 ref_change=-1
-  EXT4-fs warning: ea_inode dec ref err=-117
+Read back the size register to make sure the write gets flushed before
+accessing the DAC region.
 
-Make the invariant explicit: if the current refcount is non-positive,
-treat this as on-disk corruption, emit ext4_error_inode(), and fail the
-operation with -EFSCORRUPTED instead of updating the refcount. Delete the
-WARN_ONCE() as negative refcounts are now impossible; keep error reporting
-in ext4_error_inode().
-
-This prevents the underflow and the follow-on orphan/cleanup churn.
-
-Reported-by: syzbot+0be4f339a8218d2a5bb1@syzkaller.appspotmail.com
-Fixes: https://syzbot.org/bug?extid=0be4f339a8218d2a5bb1
-Cc: stable@kernel.org
-Co-developed-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
-Signed-off-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
-Signed-off-by: Ahmet Eray Karadag <eraykrdg1@gmail.com>
-Message-ID: <20250920021342.45575-1-eraykrdg1@gmail.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+CC: stable@vger.kernel.org
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
+Message-ID: <20250905185958.3575037-3-s-k6@ti.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -987,7 +987,7 @@ static int ext4_xattr_inode_update_ref(h
- 				       int ref_change)
- {
- 	struct ext4_iloc iloc;
--	s64 ref_count;
-+	u64 ref_count;
- 	int ret;
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -666,6 +666,7 @@ static int cqspi_read_setup(struct cqspi
+ 	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
+ 	reg |= (op->addr.nbytes - 1);
+ 	writel(reg, reg_base + CQSPI_REG_SIZE);
++	readl(reg_base + CQSPI_REG_SIZE); /* Flush posted write. */
+ 	return 0;
+ }
  
- 	inode_lock_nested(ea_inode, I_MUTEX_XATTR);
-@@ -997,13 +997,17 @@ static int ext4_xattr_inode_update_ref(h
- 		goto out;
+@@ -810,6 +811,7 @@ static int cqspi_write_setup(struct cqsp
+ 	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
+ 	reg |= (op->addr.nbytes - 1);
+ 	writel(reg, reg_base + CQSPI_REG_SIZE);
++	readl(reg_base + CQSPI_REG_SIZE); /* Flush posted write. */
+ 	return 0;
+ }
  
- 	ref_count = ext4_xattr_inode_get_ref(ea_inode);
-+	if ((ref_count == 0 && ref_change < 0) || (ref_count == U64_MAX && ref_change > 0)) {
-+		ext4_error_inode(ea_inode, __func__, __LINE__, 0,
-+			"EA inode %lu ref wraparound: ref_count=%lld ref_change=%d",
-+			ea_inode->i_ino, ref_count, ref_change);
-+		ret = -EFSCORRUPTED;
-+		goto out;
-+	}
- 	ref_count += ref_change;
- 	ext4_xattr_inode_set_ref(ea_inode, ref_count);
- 
- 	if (ref_change > 0) {
--		WARN_ONCE(ref_count <= 0, "EA inode %lu ref_count=%lld",
--			  ea_inode->i_ino, ref_count);
--
- 		if (ref_count == 1) {
- 			WARN_ONCE(ea_inode->i_nlink, "EA inode %lu i_nlink=%u",
- 				  ea_inode->i_ino, ea_inode->i_nlink);
-@@ -1012,9 +1016,6 @@ static int ext4_xattr_inode_update_ref(h
- 			ext4_orphan_del(handle, ea_inode);
- 		}
- 	} else {
--		WARN_ONCE(ref_count < 0, "EA inode %lu ref_count=%lld",
--			  ea_inode->i_ino, ref_count);
--
- 		if (ref_count == 0) {
- 			WARN_ONCE(ea_inode->i_nlink != 1,
- 				  "EA inode %lu i_nlink=%u",
 
 
