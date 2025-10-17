@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CC2330B03;
-	Fri, 17 Oct 2025 15:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8528330B08;
+	Fri, 17 Oct 2025 15:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715548; cv=none; b=gh6Qh6mV50gpAp3hGBspZBTUesBp0caOUC6NKMm757z/k/YSUzsGxrhW+9VAaRzA/N4jyQESJ8xnVrfbhbwKe+FIysemFWr413ZUthAGuOuhmBXpFxzAX0VL+Utouuel0hvMvhaZrMhAsyoFpP1OG7bjSwV6szJD3/iwzNQBafs=
+	t=1760715550; cv=none; b=gEqOigQdQ6SKGZXX6l+AxqO5MiaR6ye9rBqW1FgRMgj3pYhMJ0yKQ1taoVc2732iw/GGSjjI6YqlpyivP2K75c5Rj/8Hmcew59/0SWqVvi3RhUHs9BH0ipCruFiiqdT0/0cOBOv2PEppZNtlgHi6IkHs4TnvnZS7tU92NDDitu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715548; c=relaxed/simple;
-	bh=K3DWd1bPHL7Zt4lI1IldnI3/Qpm4NofqyWP6TtcJwQE=;
+	s=arc-20240116; t=1760715550; c=relaxed/simple;
+	bh=89SgChmy7vN+/msLHJ90G+XgfyPa71jUndCb7EajY7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dV2oXH1rnmw92Pm/ySQNUy1SuuzGP9g2pcO2y9qFE0V8/E6UweNk+KUFKgQSR7wRhFO60eK027og9+MVZjM7FX4bhiqeb3+QpHR0VRvXBEvTTG9ZIrXR0lGj/k79JpmGORNSKaChI/CaYS9hLU58l01Y71a3BKLDJwg3TWT+NzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTzB2wLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGbG3OMqaHlmy11/SDUIXg2aG2Hh/v6vW2sGgPpsIDar51UQZXBey0FNmPuucgzJeaVXzjBAGRoTgSI647z02CbERnH6hjNjmeTOG+FApraI8PZBjxzTjEp9ZWaQtKow75ZnSbeFnoWIn2bmdStx7YBxvr2BZQ5bjlfLqZ/cxys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJEhaIVd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTzB2wLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DF3C4CEE7;
-	Fri, 17 Oct 2025 15:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJEhaIVd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F70C4CEE7;
+	Fri, 17 Oct 2025 15:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715547;
-	bh=K3DWd1bPHL7Zt4lI1IldnI3/Qpm4NofqyWP6TtcJwQE=;
+	s=korg; t=1760715550;
+	bh=89SgChmy7vN+/msLHJ90G+XgfyPa71jUndCb7EajY7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTzB2wLDPAKKEKu3uIxCfOgk/oTrKNkksi4xN7VUflOoMl8cwl+VzTY/oC4iBeb+b
-	 YWii18VpcA8+RNyaa6gCA+90WNQ9Mz9SMipNiOiDDlxBCBtN9MpxV7J16WHkI34ehz
-	 thaSvziKSXbbFagJYh2Z5Hp9iTRUbzJ3hkBCw4dw=
+	b=BJEhaIVddZDOr24Vi9bDtqopkxgTufoe+8gMuQc87Aziw8yULrJGJ5pHE5dX58IUC
+	 1PshWlqx/vdScn8vBDb1qLgeRLkMVUfULBTMsRqyz7BNRA4eE3JkhFJDQRUPBWSWY4
+	 B5iQ4pjjwZI2seY07/foQ6HrJSOA/bN5VqKBtvNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 254/371] riscv: use an atomic xchg in pudp_huge_get_and_clear()
-Date: Fri, 17 Oct 2025 16:53:49 +0200
-Message-ID: <20251017145211.272190287@linuxfoundation.org>
+	Harshit Agarwal <harshit@nutanix.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>
+Subject: [PATCH 6.17 255/371] sched/deadline: Fix race in push_dl_task()
+Date: Fri, 17 Oct 2025 16:53:50 +0200
+Message-ID: <20251017145211.308907504@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,43 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Harshit Agarwal <harshit@nutanix.com>
 
-commit 668208b161a0b679427e7d0f34c0a65fd7d23979 upstream.
+commit 8fd5485fb4f3d9da3977fd783fcb8e5452463420 upstream.
 
-Make sure we return the right pud value and not a value that could have
-been overwritten in between by a different core.
+When a CPU chooses to call push_dl_task and picks a task to push to
+another CPU's runqueue then it will call find_lock_later_rq method
+which would take a double lock on both CPUs' runqueues. If one of the
+locks aren't readily available, it may lead to dropping the current
+runqueue lock and reacquiring both the locks at once. During this window
+it is possible that the task is already migrated and is running on some
+other CPU. These cases are already handled. However, if the task is
+migrated and has already been executed and another CPU is now trying to
+wake it up (ttwu) such that it is queued again on the runqeue
+(on_rq is 1) and also if the task was run by the same CPU, then the
+current checks will pass even though the task was migrated out and is no
+longer in the pushable tasks list.
+Please go through the original rt change for more details on the issue.
 
-Link: https://lkml.kernel.org/r/20250814-dev-alex-thp_pud_xchg-v1-1-b4704dfae206@rivosinc.com
-Fixes: c3cc2a4a3a23 ("riscv: Add support for PUD THP")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Andrew Donnellan <ajd@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+To fix this, after the lock is obtained inside the find_lock_later_rq,
+it ensures that the task is still at the head of pushable tasks list.
+Also removed some checks that are no longer needed with the addition of
+this new check.
+However, the new check of pushable tasks list only applies when
+find_lock_later_rq is called by push_dl_task. For the other caller i.e.
+dl_task_offline_migration, existing checks are used.
+
+Signed-off-by: Harshit Agarwal <harshit@nutanix.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250408045021.3283624-1-harshit@nutanix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/pgtable.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/sched/deadline.c |   73 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 49 insertions(+), 24 deletions(-)
 
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -959,6 +959,17 @@ static inline pud_t pudp_huge_get_and_cl
- 	return pud;
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2551,6 +2551,25 @@ static int find_later_rq(struct task_str
+ 	return -1;
  }
  
-+#define __HAVE_ARCH_PUDP_HUGE_GET_AND_CLEAR
-+static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
-+					    unsigned long address, pud_t *pudp)
++static struct task_struct *pick_next_pushable_dl_task(struct rq *rq)
 +{
-+	pud_t pud = __pud(atomic_long_xchg((atomic_long_t *)pudp, 0));
++	struct task_struct *p;
 +
-+	page_table_check_pud_clear(mm, pud);
++	if (!has_pushable_dl_tasks(rq))
++		return NULL;
 +
-+	return pud;
++	p = __node_2_pdl(rb_first_cached(&rq->dl.pushable_dl_tasks_root));
++
++	WARN_ON_ONCE(rq->cpu != task_cpu(p));
++	WARN_ON_ONCE(task_current(rq, p));
++	WARN_ON_ONCE(p->nr_cpus_allowed <= 1);
++
++	WARN_ON_ONCE(!task_on_rq_queued(p));
++	WARN_ON_ONCE(!dl_task(p));
++
++	return p;
 +}
 +
- static inline int pud_young(pud_t pud)
+ /* Locks the rq it finds */
+ static struct rq *find_lock_later_rq(struct task_struct *task, struct rq *rq)
  {
- 	return pte_young(pud_pte(pud));
+@@ -2578,12 +2597,37 @@ static struct rq *find_lock_later_rq(str
+ 
+ 		/* Retry if something changed. */
+ 		if (double_lock_balance(rq, later_rq)) {
+-			if (unlikely(task_rq(task) != rq ||
++			/*
++			 * double_lock_balance had to release rq->lock, in the
++			 * meantime, task may no longer be fit to be migrated.
++			 * Check the following to ensure that the task is
++			 * still suitable for migration:
++			 * 1. It is possible the task was scheduled,
++			 *    migrate_disabled was set and then got preempted,
++			 *    so we must check the task migration disable
++			 *    flag.
++			 * 2. The CPU picked is in the task's affinity.
++			 * 3. For throttled task (dl_task_offline_migration),
++			 *    check the following:
++			 *    - the task is not on the rq anymore (it was
++			 *      migrated)
++			 *    - the task is not on CPU anymore
++			 *    - the task is still a dl task
++			 *    - the task is not queued on the rq anymore
++			 * 4. For the non-throttled task (push_dl_task), the
++			 *    check to ensure that this task is still at the
++			 *    head of the pushable tasks list is enough.
++			 */
++			if (unlikely(is_migration_disabled(task) ||
+ 				     !cpumask_test_cpu(later_rq->cpu, &task->cpus_mask) ||
+-				     task_on_cpu(rq, task) ||
+-				     !dl_task(task) ||
+-				     is_migration_disabled(task) ||
+-				     !task_on_rq_queued(task))) {
++				     (task->dl.dl_throttled &&
++				      (task_rq(task) != rq ||
++				       task_on_cpu(rq, task) ||
++				       !dl_task(task) ||
++				       !task_on_rq_queued(task))) ||
++				     (!task->dl.dl_throttled &&
++				      task != pick_next_pushable_dl_task(rq)))) {
++
+ 				double_unlock_balance(rq, later_rq);
+ 				later_rq = NULL;
+ 				break;
+@@ -2606,25 +2650,6 @@ static struct rq *find_lock_later_rq(str
+ 	return later_rq;
+ }
+ 
+-static struct task_struct *pick_next_pushable_dl_task(struct rq *rq)
+-{
+-	struct task_struct *p;
+-
+-	if (!has_pushable_dl_tasks(rq))
+-		return NULL;
+-
+-	p = __node_2_pdl(rb_first_cached(&rq->dl.pushable_dl_tasks_root));
+-
+-	WARN_ON_ONCE(rq->cpu != task_cpu(p));
+-	WARN_ON_ONCE(task_current(rq, p));
+-	WARN_ON_ONCE(p->nr_cpus_allowed <= 1);
+-
+-	WARN_ON_ONCE(!task_on_rq_queued(p));
+-	WARN_ON_ONCE(!dl_task(p));
+-
+-	return p;
+-}
+-
+ /*
+  * See if the non running -deadline tasks on this rq
+  * can be sent to some other CPU where they can preempt
 
 
