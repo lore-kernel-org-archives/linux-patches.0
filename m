@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99602F12D1;
-	Fri, 17 Oct 2025 15:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E0C2F12D1;
+	Fri, 17 Oct 2025 15:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714573; cv=none; b=uLZHQ/u5ZjUd5s/jv4khD7dhswmmTOl4ME5zvKRSNLLjfVyzcNTlkvRaIvHyY0A00JiLN+1WLeMyFCaZMfi1eP7HT/ICeU7hi8hXTwV0S+tlxFZu7OeUQii6J1n6BfYt+YSe0TV9KsXtpmQI+HT3n2/sdZPAHpKNaRRmzpF8Hrg=
+	t=1760714576; cv=none; b=Zqjav+Z2wQGTrb11Z+djpW1K67ovqGAesnmKQOcvQRlnmJ0CSW4iVSrpIp3LrtziszDvZ8Ojq7EHKGj6qPglNT0Qo7eVj2xvgZR3j9HWT+995PilhS059kneSqBZhU3l+neryAvg0n7BYorrXRVMVw6QJntYzaBRbD9O2E17rwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714573; c=relaxed/simple;
-	bh=/cR7M66wyCAUXIyWtfLf6d7/Shj08HFfNezndlre/CE=;
+	s=arc-20240116; t=1760714576; c=relaxed/simple;
+	bh=Bh+ryoqV0Io3w698RKQsoZQannSlch7/hLTHGGYvGxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ukj4dPdH4Llq7+GJHNhzuKlart19ZZgD/M/WXQzyNOgN9ZLlnxAQngJd6Pxc7AmDts8x7AtSIAwQ4Qzrd8+qkY9KVyMlHsCze0aUhaq9dzilHOHWHIgs79d1zxM1BHhmr9NIyMNUPud5XoqscNYd9P175cWG1DL4zLu5Vykeo+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaQJrsVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNUkZHIrTAN2eUgVUR21f7kg+9snhTqp1i/tSTvDLxZxW1KUAKZb9BWKxJu0QH7EIDLTAvXJ1kx3N/1coVkZFWU22WR2up48z0LvRiI44FxLq/dvPzg0R0f4sRkabgDSJvlzw4wfZeXsHgMAXQe4ZfUfPOo1IopY1jET0ZwKpCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=va/TZ9vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaQJrsVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEF4C4CEE7;
-	Fri, 17 Oct 2025 15:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="va/TZ9vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2545FC4CEE7;
+	Fri, 17 Oct 2025 15:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714573;
-	bh=/cR7M66wyCAUXIyWtfLf6d7/Shj08HFfNezndlre/CE=;
+	s=korg; t=1760714576;
+	bh=Bh+ryoqV0Io3w698RKQsoZQannSlch7/hLTHGGYvGxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaQJrsVZamUMS+RpMXD64mI3slwH4etGKZSXZz6ov3VDX52BcVTmg1hI6ET7VVX3h
-	 iqbahVi9WhnEdFMYVln7D2nJj5OoZRBCA/AAUPrt16OizeiyqknXTPAMY7Z7/exGf2
-	 EfzK+W37oVFLiXa4/vMxSSELIMmP5JuFVBly64LE=
+	b=va/TZ9vIbPdXfGU5Yjd+coKLIcwI9b+bf0Blk33Jj9e6h59wQVzXCxHxrLFFZnYXY
+	 kn/a+CEv9/pIMBSrk091f0cUBSMNzQa4nhspO1UNcBOMC5gLS7ynxKRgp6PerG5WDw
+	 DLC+wpb6qdaONF3Ln+lfKWee4cVsFEVIqqAqTUiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Santhosh Kumar K <s-k6@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 192/277] spi: cadence-quadspi: Fix cqspi_setup_flash()
-Date: Fri, 17 Oct 2025 16:53:19 +0200
-Message-ID: <20251017145154.130808093@linuxfoundation.org>
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: [PATCH 6.12 193/277] x86/fred: Remove ENDBR64 from FRED entry points
+Date: Fri, 17 Oct 2025 16:53:20 +0200
+Message-ID: <20251017145154.166574506@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -46,75 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Santhosh Kumar K <s-k6@ti.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-commit 858d4d9e0a9d6b64160ef3c824f428c9742172c4 upstream.
+commit 3da01ffe1aeaa0d427ab5235ba735226670a80d9 upstream.
 
-The 'max_cs' stores the largest chip select number. It should only
-be updated when the current 'cs' is greater than existing 'max_cs'. So,
-fix the condition accordingly.
+The FRED specification has been changed in v9.0 to state that there
+is no need for FRED event handlers to begin with ENDBR64, because
+in the presence of supervisor indirect branch tracking, FRED event
+delivery does not enter the WAIT_FOR_ENDBRANCH state.
 
-Also, return failure if there are no flash device declared.
+As a result, remove ENDBR64 from FRED entry points.
 
-Fixes: 0f3841a5e115 ("spi: cadence-qspi: report correct number of chip-select")
-CC: stable@vger.kernel.org
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
-Message-ID: <20250905185958.3575037-4-s-k6@ti.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Then add ANNOTATE_NOENDBR to indicate that FRED entry points will
+never be used for indirect calls to suppress an objtool warning.
+
+This change implies that any indirect CALL/JMP to FRED entry points
+causes #CP in the presence of supervisor indirect branch tracking.
+
+Credit goes to Jennifer Miller <jmill@asu.edu> and other contributors
+from Arizona State University whose research shows that placing ENDBR
+at entry points has negative value thus led to this change.
+
+Note: This is obviously an incompatible change to the FRED
+architecture.  But, it's OK because there no FRED systems out in the
+wild today. All production hardware and late pre-production hardware
+will follow the FRED v9 spec and be compatible with this approach.
+
+[ dhansen: add note to changelog about incompatibility ]
+
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/linux-hardening/Z60NwR4w%2F28Z7XUa@ubun/
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250716063320.1337818-1-xin%40zytor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/entry/entry_64_fred.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1673,12 +1673,10 @@ static const struct spi_controller_mem_c
+--- a/arch/x86/entry/entry_64_fred.S
++++ b/arch/x86/entry/entry_64_fred.S
+@@ -16,7 +16,7 @@
  
- static int cqspi_setup_flash(struct cqspi_st *cqspi)
- {
--	unsigned int max_cs = cqspi->num_chipselect - 1;
- 	struct platform_device *pdev = cqspi->pdev;
- 	struct device *dev = &pdev->dev;
- 	struct cqspi_flash_pdata *f_pdata;
--	unsigned int cs;
--	int ret;
-+	int ret, cs, max_cs = -1;
- 
- 	/* Get flash device data */
- 	for_each_available_child_of_node_scoped(dev->of_node, np) {
-@@ -1691,10 +1689,10 @@ static int cqspi_setup_flash(struct cqsp
- 		if (cs >= cqspi->num_chipselect) {
- 			dev_err(dev, "Chip select %d out of range.\n", cs);
- 			return -EINVAL;
--		} else if (cs < max_cs) {
--			max_cs = cs;
- 		}
- 
-+		max_cs = max_t(int, cs, max_cs);
-+
- 		f_pdata = &cqspi->f_pdata[cs];
- 		f_pdata->cqspi = cqspi;
- 		f_pdata->cs = cs;
-@@ -1704,6 +1702,11 @@ static int cqspi_setup_flash(struct cqsp
- 			return ret;
- 	}
- 
-+	if (max_cs < 0) {
-+		dev_err(dev, "No flash device declared\n");
-+		return -ENODEV;
-+	}
-+
- 	cqspi->num_chipselect = max_cs + 1;
- 	return 0;
- }
+ .macro FRED_ENTER
+ 	UNWIND_HINT_END_OF_STACK
+-	ENDBR
++	ANNOTATE_NOENDBR
+ 	PUSH_AND_CLEAR_REGS
+ 	movq	%rsp, %rdi	/* %rdi -> pt_regs */
+ .endm
 
 
