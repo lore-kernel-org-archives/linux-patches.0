@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06CA32C946;
-	Fri, 17 Oct 2025 15:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E15332903;
+	Fri, 17 Oct 2025 15:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715507; cv=none; b=Gp8wDvZDjh5I7uxGpC0+DeLhl9yZdKoIkN+CMYKVuaEnCkMEemcVYIqDd3C1rmdFNktwLhdAHHxpCwx9etmE6b0lulayRsV+k9tQOzdnmGLr5jxCb8zbiS2ZlQYAnfaZSx9O8rTuRuc7LuQFptCLUB9Gck+7NNOfXR9sQE9ozUc=
+	t=1760715510; cv=none; b=qKhLtzhPIoFg2ppPMo5jbet1U2Xl9BUFjYHPfoAsV3BVz3FDECmteD6aES/iW/N9phbR7HwQoCSdxzJcjwSl2R0LlHw/r+Ksdg8EWmyaFmCTUQ3h/Hj4SLg10LwZcyUiKr5xu6P5msj/7YrvDpvzc/DLOjs+kZfd4rdczrXJG6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715507; c=relaxed/simple;
-	bh=OuQ4+1FCCUBVSz1eROIkM+eRG+gwF2zPRzO6f/uGHf8=;
+	s=arc-20240116; t=1760715510; c=relaxed/simple;
+	bh=Rx58Q4Bzprceacy6NkF2dZ9eM+lHff+vYo6f+Mh3TJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2NsrcfCYSbittoapDg255IM6pBvH/RlaOKV0G8WK+bFrpsUNlilFMl2DCCar7KSOXNueohfnGhkh+snvzuYIbEwPI0+ixcemK9byEfnLnUXJPsACJ3re8cZ8LqiA/qCBiQVgTrcIhDco6SDpMLd24UT0ZiWoMGQ7RqPNRafgD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETZPqQdd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzAd29zsu/CHUwKW/BXNz8kJt6hzmz4eAWqMhSef7aUd5XxNo5BtbQaOzm0FdnccdEopx0KJCTS/c90Wp9+rkJPe1gWDZyyj8vbshAyt5oDCx+wbK2Uw95A1Hfok+6GLgRkTK32/Xj0pBRchmV0WgNc5VsIGtP6XgWzTHtAERPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/7Fc5p6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETZPqQdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0647CC4CEE7;
-	Fri, 17 Oct 2025 15:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/7Fc5p6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EDFC4CEE7;
+	Fri, 17 Oct 2025 15:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715507;
-	bh=OuQ4+1FCCUBVSz1eROIkM+eRG+gwF2zPRzO6f/uGHf8=;
+	s=korg; t=1760715510;
+	bh=Rx58Q4Bzprceacy6NkF2dZ9eM+lHff+vYo6f+Mh3TJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETZPqQddl/XCkLntsNtV+tJyMnekqY8n00yMdSS+fR5CjKoap2Vr0QSHQzz7eJ7dK
-	 H5C10TVJcZwlYTaHHTA9hx2ft/Cdje7u1pwhJLGATUh30hGv1n8F0ibcuX3CFsR5Yf
-	 OFeCDcqhS06+OKWid2tzPZ3HUiQ2AqHsGzztihZQ=
+	b=G/7Fc5p6DpWGiXncSmBOR3zH/2UdhtRobfyB2BAfIBRCt8b9/XwZ2mBDKFQw0WrCW
+	 2WXAFO9BO9GFATtuNxJXbGFwhxK7mr5w9m6sO9YbXiDLhp1/fniV22K3YICqPoqGqR
+	 FQ5jO2hr/SciMdTwevVqSLOWkyoaOot7mruKpOsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.17 233/371] KEYS: trusted_tpm1: Compare HMAC values in constant time
-Date: Fri, 17 Oct 2025 16:53:28 +0200
-Message-ID: <20251017145210.513772383@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.17 242/371] parisc: Remove spurious if statement from raw_copy_from_user()
+Date: Fri, 17 Oct 2025 16:53:37 +0200
+Message-ID: <20251017145210.833546625@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,63 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: John David Anglin <dave.anglin@bell.net>
 
-commit eed0e3d305530066b4fc5370107cff8ef1a0d229 upstream.
+commit 16794e524d310780163fdd49d0bf7fac30f8dbc8 upstream.
 
-To prevent timing attacks, HMAC value comparison needs to be constant
-time.  Replace the memcmp() with the correct function, crypto_memneq().
+Accidently introduced in commit 91428ca9320e.
 
-[For the Fixes commit I used the commit that introduced the memcmp().
-It predates the introduction of crypto_memneq(), but it was still a bug
-at the time even though a helper function didn't exist yet.]
-
-Fixes: d00a1c72f7f4 ("keys: add new trusted key-type")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 91428ca9320e ("parisc: Check region is readable by user in raw_copy_from_user()")
+Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm1.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/parisc/lib/memcpy.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm1.c
-+++ b/security/keys/trusted-keys/trusted_tpm1.c
-@@ -7,6 +7,7 @@
-  */
+--- a/arch/parisc/lib/memcpy.c
++++ b/arch/parisc/lib/memcpy.c
+@@ -41,7 +41,6 @@ unsigned long raw_copy_from_user(void *d
+ 	mtsp(get_kernel_space(), SR_TEMP2);
  
- #include <crypto/hash_info.h>
-+#include <crypto/utils.h>
- #include <linux/init.h>
- #include <linux/slab.h>
- #include <linux/parser.h>
-@@ -241,7 +242,7 @@ int TSS_checkhmac1(unsigned char *buffer
- 	if (ret < 0)
- 		goto out;
- 
--	if (memcmp(testhmac, authdata, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac, authdata, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
-@@ -334,7 +335,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag1, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
-+	if (crypto_memneq(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -343,7 +344,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag2, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac2, authdata2, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac2, authdata2, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
+ 	/* Check region is user accessible */
+-	if (start)
+ 	while (start < end) {
+ 		if (!prober_user(SR_TEMP1, start)) {
+ 			newlen = (start - (unsigned long) src);
 
 
