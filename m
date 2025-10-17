@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A53E3BB5A;
-	Fri, 17 Oct 2025 15:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42169217722;
+	Fri, 17 Oct 2025 15:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714510; cv=none; b=u7spm9XCR38Qj3YeIncmRiqyMRpEMKHrThNOCvZpe8qwD+xF3AE9iU80mc5ysvxvoGYt5YyQVvXJwoEIi2DQIb56SrEpRe8Bq3vVY6iEGkV8O29lQ/8O+FZ28KubMofGiUP6TP5mJU+Xzp2ZDgbPJmsc3ZcO6gDQG/HhISjU2Cw=
+	t=1760714513; cv=none; b=IttUwqJm/1ry+kkNJXaXx1nspJw10cQR5o2RvAOcjlAdWIUPBDp4GJ4rLTV3Nc1HCLuTSFu2GQ3chl6mow1S4D5sjBhZvDUdRaMJ6qmrG9LprzNzhRwR+WrGz2CK62dxtUVUBCOWR5f+SGc0CJDp4LI7mczJJ61JyP80avg4b88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714510; c=relaxed/simple;
-	bh=FAQIZP5txqK6j11Ly+swF6oau2ML6MnNpptR2HK2Sz8=;
+	s=arc-20240116; t=1760714513; c=relaxed/simple;
+	bh=7fR0/toLM85dMz53/R45BPA2+TKlCvmh1RBbgywTLJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rs1I7LbMUHrN999FDJy6V3aQdbL9GgweePkcROwg5biQPJKXNu6puWdGfgXmWdCSazkHYTdulq3LOa56sq0wZLBFiQ0rc1scQ/6PwzqAfl9/8PF02hAd7mRGaRzN1BJkzt8HV8yFHGl2SDy43qyZZiHO7TKEhGuVWGKIMeY1lU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLZVsBAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtJb4LV9braQCYS+ZtgUpy4JzDYR5bWeP0upZXgWBgEq3zI/3W7DQRsIuC6iYtEMsWSTvmtEO6FyxL+C5xOaqTzHGopC2YkHBpjGmwUDazK7QzdYKMCs308xqqdnIEwVp6ZvQK/5IkGtAhracJgh4/nRJ2/JTQL60hwMNN/um4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c80+fQH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLZVsBAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE206C113D0;
-	Fri, 17 Oct 2025 15:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c80+fQH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C5EC4CEFE;
+	Fri, 17 Oct 2025 15:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714510;
-	bh=FAQIZP5txqK6j11Ly+swF6oau2ML6MnNpptR2HK2Sz8=;
+	s=korg; t=1760714513;
+	bh=7fR0/toLM85dMz53/R45BPA2+TKlCvmh1RBbgywTLJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLZVsBArlgjHSnK58uKkNmuKCYhuWt8tZv0qAaCQj7mNMrXBHa03j+PAZUVEC68mE
-	 6KWXnSe6SGFcL9rdwt6ZZPfaga6Km91BQW0tNWnGgRFAm8MBod1Dlcigpl+ToUa5Y8
-	 ij1/G4YvhnQT01QLGDhPLuz2esq/8n/t13Ne3YKU=
+	b=c80+fQH472vLmHLjYbf6chQmAi2P3cnvbmcnQ/z4O2bTrSkj5smSZUSZBnSy/hI3N
+	 w3tEuPUVLBNcvufoANaom1Xr7MpIKA/EfBe30Gj5inbcJmktkQtppxKvzWSM+HPgIb
+	 sUTAtQaKzNrKSuBpbEiga1WXuHmhfx2xkWiuiep4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Chen <rex.chen_1@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 169/277] mmc: core: SPI mode remove cmd7
-Date: Fri, 17 Oct 2025 16:52:56 +0200
-Message-ID: <20251017145153.299940508@linuxfoundation.org>
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 138/277] iio: dac: ad5421: use int type to store negative error codes
+Date: Fri, 17 Oct 2025 16:52:25 +0200
+Message-ID: <20251017145152.164824595@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Chen <rex.chen_1@nxp.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit fec40f44afdabcbc4a7748e4278f30737b54bb1a upstream.
+commit 3379c900320954d768ed9903691fb2520926bbe3 upstream.
 
-SPI mode doesn't support cmd7, so remove it in mmc_sdio_alive() and
-confirm if sdio is active by checking CCCR register value is available
-or not.
+Change the 'ret' variable in ad5421_update_ctrl() from unsigned int to
+int, as it needs to store either negative error codes or zero returned
+by ad5421_write_unlocked().
 
-Signed-off-by: Rex Chen <rex.chen_1@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250728082230.1037917-2-rex.chen_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 5691b23489db ("staging:iio:dac: Add AD5421 driver")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20250901135726.17601-3-rongqianfeng@vivo.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ad5421.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/sdio.c
-+++ b/drivers/mmc/core/sdio.c
-@@ -945,7 +945,11 @@ static void mmc_sdio_remove(struct mmc_h
-  */
- static int mmc_sdio_alive(struct mmc_host *host)
+--- a/drivers/iio/dac/ad5421.c
++++ b/drivers/iio/dac/ad5421.c
+@@ -186,7 +186,7 @@ static int ad5421_update_ctrl(struct iio
+ 	unsigned int clr)
  {
--	return mmc_select_card(host->card);
-+	if (!mmc_host_is_spi(host))
-+		return mmc_select_card(host->card);
-+	else
-+		return mmc_io_rw_direct(host->card, 0, 0, SDIO_CCCR_CCCR, 0,
-+					NULL);
- }
+ 	struct ad5421_state *st = iio_priv(indio_dev);
+-	unsigned int ret;
++	int ret;
  
- /*
+ 	mutex_lock(&st->lock);
+ 
 
 
