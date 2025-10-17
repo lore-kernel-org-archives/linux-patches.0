@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063AE2F12D9;
-	Fri, 17 Oct 2025 15:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B34339711;
+	Fri, 17 Oct 2025 15:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715229; cv=none; b=uTGdXH7VNrwyDDi1kUNiNP7aHgM1d8Magdm6bw6IY/owLlfntpbEwXQ3vzpkQGuItx1Rx75J3eGg7wxJ51XclLo6sfKzgkvoB3C154bNlEl/9tHE5x6HN+OLYyBL5VyNeOes6EhA1MxOjVCkpH+/0JvVj1QmBdBfHSXt+mwmJKw=
+	t=1760715230; cv=none; b=ho3IH8Sy5mUBv1MKXrE7VnbyRGPIOYH9yKE53YdANAJnz69WG3plXWoxseFJsY1b3nselYkGfr/wGtO6dInKzO+tWRqfy1Fbkb7EyJ6oPkxlb/CVUaMaXtK7uEwH+y/nPjf0Ow8xO6nh/NUUF1YUJuOW0o79kef5V8V/Eo2zLJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715229; c=relaxed/simple;
-	bh=UG42y1ktzQdfwF5MSQL2BEUijxJY504B8wQ8FA4CLKs=;
+	s=arc-20240116; t=1760715230; c=relaxed/simple;
+	bh=0Os194jqDh01CVkU7lL1yuZzeYVaphZBGWwHiVi/OIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbNVaJq2RLYc03KM0LhBQOEWnKdAhA7+N6zVdOJlbF3zyaaNJmSMBUo7iY5Bt2eazVlzYqtC841aqxHkXodqlyV77HisdVF6N6QWTdTTZyfLdMtpTfGCQ9PJadRUAsXavV4OoiBCMkz0NmtWxME5B/wbLK/XmvCmfkwT/N/OD1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIF/bK0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n2XBKmfdM7brk2z5ZA3t93Fi3mGRxT4WMz8EWkCDOFzVzUl8PAoqa3Mp50awVosL59WhhF5RMfaWQldMtH1J5GUPcJ60DKAPIkE6tTIft9K4relx/JkNmdV/64E8fDmU0lAGgvjJQf+jYbnaioI+1bVyeN8kgfChlxL6vWbuCqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gB7zr3Yr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIF/bK0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BEBC4CEE7;
-	Fri, 17 Oct 2025 15:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gB7zr3Yr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0993BC4CEE7;
+	Fri, 17 Oct 2025 15:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715227;
-	bh=UG42y1ktzQdfwF5MSQL2BEUijxJY504B8wQ8FA4CLKs=;
+	s=korg; t=1760715230;
+	bh=0Os194jqDh01CVkU7lL1yuZzeYVaphZBGWwHiVi/OIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIF/bK0AjmpEMx57BuXWuPZsnZQqXhH47ZaNEZeFHN8qGqAxYreY9t57ScG+gbwhj
-	 13uHBNsXqTa0ewxe0SKwlfFZCLgHp08TJRNQZI/LOs69MDO+EWKkN1m59AqwRuPXrm
-	 7DmjlCVfmlWaljxHyOgdUJB5l449lKv9VmvcD9ts=
+	b=gB7zr3Yr39K2fSlBc+xpJbSJmI/uccqRdpZZ2zKud60dQ/bTC/VC6lFkaO3rv4Shn
+	 AUQQDBUUgR+DiejnxPjbkIE6rlfMOV0Snogl6j1kjEPzzg+VIs78zjL3o6aD/cnArH
+	 7hgF9kYDH/KqOfm8laelpHLmqd0lOsqILoCviPEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.17 143/371] arm64: dts: qcom: msm8939: Add missing MDSS reset
-Date: Fri, 17 Oct 2025 16:51:58 +0200
-Message-ID: <20251017145207.109815946@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 126/371] cifs: Query EA $LXMOD in cifs_query_path_info() for WSL reparse points
+Date: Fri, 17 Oct 2025 16:51:41 +0200
+Message-ID: <20251017145206.492397359@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -46,60 +45,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Pali Rohár <pali@kernel.org>
 
-commit f73c82c855e186e9b67125e3eee743960320e43c upstream.
+[ Upstream commit 057ac50638bcece64b3b436d3a61b70ed6c01a34 ]
 
-On most MSM8939 devices, the bootloader already initializes the display to
-show the boot splash screen. In this situation, MDSS is already configured
-and left running when starting Linux. To avoid side effects from the
-bootloader configuration, the MDSS reset can be specified in the device
-tree to start again with a clean hardware state.
+EA $LXMOD is required for WSL non-symlink reparse points.
 
-The reset for MDSS is currently missing in msm8939.dtsi, which causes
-errors when the MDSS driver tries to re-initialize the registers:
-
- dsi_err_worker: status=6
- dsi_err_worker: status=6
- dsi_err_worker: status=6
- ...
-
-It turns out that we have always indirectly worked around this by building
-the MDSS driver as a module. Before v6.17, the power domain was temporarily
-turned off until the module was loaded, long enough to clear the register
-contents. In v6.17, power domains are not turned off during boot until
-sync_state() happens, so this is no longer working. Even before v6.17 this
-resulted in broken behavior, but notably only when the MDSS driver was
-built-in instead of a module.
-
-Cc: stable@vger.kernel.org
-Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250915-msm8916-resets-v1-2-a5c705df0c45@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ef86ab131d91 ("cifs: Fix querying of WSL CHR and BLK reparse points over SMB1")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/smb1ops.c | 62 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 60 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -1249,6 +1249,8 @@
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index a02d41d1ce4a3..3fdbb71036cff 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -651,14 +651,72 @@ static int cifs_query_path_info(const unsigned int xid,
+ 	}
  
- 			power-domains = <&gcc MDSS_GDSC>;
- 
-+			resets = <&gcc GCC_MDSS_BCR>;
+ #ifdef CONFIG_CIFS_XATTR
++	/*
++	 * For non-symlink WSL reparse points it is required to fetch
++	 * EA $LXMOD which contains in its S_DT part the mandatory file type.
++	 */
++	if (!rc && data->reparse_point) {
++		struct smb2_file_full_ea_info *ea;
++		u32 next = 0;
 +
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			#interrupt-cells = <1>;
++		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
++		do {
++			ea = (void *)((u8 *)ea + next);
++			next = le32_to_cpu(ea->next_entry_offset);
++		} while (next);
++		if (le16_to_cpu(ea->ea_value_length)) {
++			ea->next_entry_offset = cpu_to_le32(ALIGN(sizeof(*ea) +
++						ea->ea_name_length + 1 +
++						le16_to_cpu(ea->ea_value_length), 4));
++			ea = (void *)((u8 *)ea + le32_to_cpu(ea->next_entry_offset));
++		}
++
++		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_MODE,
++				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
++				    SMB2_WSL_XATTR_MODE_SIZE, cifs_sb);
++		if (rc == SMB2_WSL_XATTR_MODE_SIZE) {
++			ea->next_entry_offset = cpu_to_le32(0);
++			ea->flags = 0;
++			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
++			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_MODE_SIZE);
++			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_MODE, SMB2_WSL_XATTR_NAME_LEN + 1);
++			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
++						   SMB2_WSL_XATTR_MODE_SIZE, 4);
++			rc = 0;
++		} else if (rc >= 0) {
++			/* It is an error if EA $LXMOD has wrong size. */
++			rc = -EINVAL;
++		} else {
++			/*
++			 * In all other cases ignore error if fetching
++			 * of EA $LXMOD failed. It is needed only for
++			 * non-symlink WSL reparse points and wsl_to_fattr()
++			 * handle the case when EA is missing.
++			 */
++			rc = 0;
++		}
++	}
++
+ 	/*
+ 	 * For WSL CHR and BLK reparse points it is required to fetch
+ 	 * EA $LXDEV which contains major and minor device numbers.
+ 	 */
+ 	if (!rc && data->reparse_point) {
+ 		struct smb2_file_full_ea_info *ea;
++		u32 next = 0;
+ 
+ 		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
++		do {
++			ea = (void *)((u8 *)ea + next);
++			next = le32_to_cpu(ea->next_entry_offset);
++		} while (next);
++		if (le16_to_cpu(ea->ea_value_length)) {
++			ea->next_entry_offset = cpu_to_le32(ALIGN(sizeof(*ea) +
++						ea->ea_name_length + 1 +
++						le16_to_cpu(ea->ea_value_length), 4));
++			ea = (void *)((u8 *)ea + le32_to_cpu(ea->next_entry_offset));
++		}
++
+ 		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_DEV,
+ 				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
+ 				    SMB2_WSL_XATTR_DEV_SIZE, cifs_sb);
+@@ -668,8 +726,8 @@ static int cifs_query_path_info(const unsigned int xid,
+ 			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
+ 			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
+ 			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
+-			data->wsl.eas_len = sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
+-					    SMB2_WSL_XATTR_DEV_SIZE;
++			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
++						   SMB2_WSL_XATTR_MODE_SIZE, 4);
+ 			rc = 0;
+ 		} else if (rc >= 0) {
+ 			/* It is an error if EA $LXDEV has wrong size. */
+-- 
+2.51.0
+
 
 
