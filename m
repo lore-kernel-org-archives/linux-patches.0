@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B7C33710B;
-	Fri, 17 Oct 2025 15:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D11F337110;
+	Fri, 17 Oct 2025 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713896; cv=none; b=fXuviy8Q07XNOwtXHwCPnxsJlyfwNrKreh3/rDq6KlI4CjRLOeE8n6B2YFfH6A7IpMZBaUiXnQsHor050JDh0C4uXuQZEY8gbA/XBfd+Ni0I5fNZDexzr3/uqSP6DTc6E44i7k3CmASVinqIXcr6g9dADApgFWLHJtaYfnUJ510=
+	t=1760713899; cv=none; b=gVg93dozuYSXXjvKQs69vpJp3zfTQiKJhF99eJeMgZi0WWAqy++X8ZzTcY3fkIEUveHnkuJeJ4kklo+UYymCR66YPtt/qOiq/0DjCPmmU8GFQD0zZgt+Qc0p1EkvG3lmWixTMDOPvhmkktk2hqSC30fTM/kYLIeV5CodzT0cxMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713896; c=relaxed/simple;
-	bh=Ff04YEs9R8NlLvkQUuyJ94H+D0BjW61oH2fEtnbO2yE=;
+	s=arc-20240116; t=1760713899; c=relaxed/simple;
+	bh=brsEMo2Qb9mYTX86VLstFPzczHOpyMvZKEolEg3CDCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTVp9IoynvgwNwYr/+m42vrFDGiFiFVweGAC3RgaMYBYwxI9xbcAhe0zMEj47EOPIn7Yaatbe4vCcLPDrsv7UwlRG7pTVfRMCcOQoUNjccScReTWw75U9JgUk01OrKnA4bycK7kfbKxdevMohYAReWGZwD4OrlDl9sAKuLuCt/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLj4V0Yk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8C8gQGdoo9A7+fIXmh3IFoRReLJvIxYZmoYJTiQ0Is1D1eNcdGm5XdyYoqHJZZlUq/dIbeITwXi5ijt1F7dYOU32ObQeHQGn+GZhg4M+57PkG4mK3GjEajMwXOB1wCJO/+aM3tZAR4FuOaR4UUkM4OyH73twEoDEqL3rEQD/lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxJzHuBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLj4V0Yk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA44C4CEFE;
-	Fri, 17 Oct 2025 15:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxJzHuBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E466C4CEE7;
+	Fri, 17 Oct 2025 15:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713896;
-	bh=Ff04YEs9R8NlLvkQUuyJ94H+D0BjW61oH2fEtnbO2yE=;
+	s=korg; t=1760713898;
+	bh=brsEMo2Qb9mYTX86VLstFPzczHOpyMvZKEolEg3CDCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLj4V0YkFcXlXUtnvkcVeT7vYO59w/1R3eLUTMUA1kQVtvph27NjNHKkaQpTgtfLs
-	 fsLi+vYJec2FkSUxo9Q1oE1C/X26yK0RiO4AvsL7UuoAWlV5Q/bdklH/SlNui1JBKr
-	 has7agqOYRMsjN7oiP+QwjWJ+vB+Xddy7cHUoxOU=
+	b=WxJzHuBJF4WSs1fv/3dJchjm7y/bPpyICwr9PORqsJ5+18U6gkI2HOQBKSWEy3akM
+	 tjSDP/79OaqIXK2s3I2GukQ1jSDgiyvBm+vD243iHs783WkLckuLDR24kg56T3PXms
+	 QT4kg2P/IGVnb4dmiYx4ex+iHAKhzXsVEiq+ihDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 114/201] scsi: hpsa: Fix potential memory leak in hpsa_big_passthru_ioctl()
-Date: Fri, 17 Oct 2025 16:52:55 +0200
-Message-ID: <20251017145138.932878469@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.6 151/201] ext4: fix an off-by-one issue during moving extents
+Date: Fri, 17 Oct 2025 16:53:32 +0200
+Message-ID: <20251017145140.280016363@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,60 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit b81296591c567b12d3873b05a37b975707959b94 upstream.
+commit 12e803c8827d049ae8f2c743ef66ab87ae898375 upstream.
 
-Replace kmalloc() followed by copy_from_user() with memdup_user() to fix
-a memory leak that occurs when copy_from_user(buff[sg_used],,) fails and
-the 'cleanup1:' path does not free the memory for 'buff[sg_used]'. Using
-memdup_user() avoids this by freeing the memory internally.
+During the movement of a written extent, mext_page_mkuptodate() is
+called to read data in the range [from, to) into the page cache and to
+update the corresponding buffers. Therefore, we should not wait on any
+buffer whose start offset is >= 'to'. Otherwise, it will return -EIO and
+fail the extents movement.
 
-Since memdup_user() already allocates memory, use kzalloc() in the else
-branch instead of manually zeroing 'buff[sg_used]' using memset(0).
+ $ for i in `seq 3 -1 0`; \
+   do xfs_io -fs -c "pwrite -b 1024 $((i * 1024)) 1024" /mnt/foo; \
+   done
+ $ umount /mnt && mount /dev/pmem1s /mnt  # drop cache
+ $ e4defrag /mnt/foo
+   e4defrag 1.47.0 (5-Feb-2023)
+   ext4 defragmentation for /mnt/foo
+   [1/1]/mnt/foo:    0%    [ NG ]
+   Success:                       [0/1]
 
-Cc: stable@vger.kernel.org
-Fixes: edd163687ea5 ("[SCSI] hpsa: add driver for HP Smart Array controllers.")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@kernel.org
+Fixes: a40759fb16ae ("ext4: remove array of buffer_heads from mext_page_mkuptodate()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250912105841.1886799-1-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ fs/ext4/move_extent.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -6528,18 +6528,21 @@ static int hpsa_big_passthru_ioctl(struc
- 	while (left) {
- 		sz = (left > ioc->malloc_size) ? ioc->malloc_size : left;
- 		buff_size[sg_used] = sz;
--		buff[sg_used] = kmalloc(sz, GFP_KERNEL);
--		if (buff[sg_used] == NULL) {
--			status = -ENOMEM;
--			goto cleanup1;
--		}
-+
- 		if (ioc->Request.Type.Direction & XFER_WRITE) {
--			if (copy_from_user(buff[sg_used], data_ptr, sz)) {
--				status = -EFAULT;
-+			buff[sg_used] = memdup_user(data_ptr, sz);
-+			if (IS_ERR(buff[sg_used])) {
-+				status = PTR_ERR(buff[sg_used]);
-+				goto cleanup1;
-+			}
-+		} else {
-+			buff[sg_used] = kzalloc(sz, GFP_KERNEL);
-+			if (!buff[sg_used]) {
-+				status = -ENOMEM;
- 				goto cleanup1;
- 			}
--		} else
--			memset(buff[sg_used], 0, sz);
-+		}
-+
- 		left -= sz;
- 		data_ptr += sz;
- 		sg_used++;
+diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
+index adae3caf175a..4b091c21908f 100644
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -225,7 +225,7 @@ static int mext_page_mkuptodate(struct folio *folio, size_t from, size_t to)
+ 	do {
+ 		if (bh_offset(bh) + blocksize <= from)
+ 			continue;
+-		if (bh_offset(bh) > to)
++		if (bh_offset(bh) >= to)
+ 			break;
+ 		wait_on_buffer(bh);
+ 		if (buffer_uptodate(bh))
+-- 
+2.51.0
+
 
 
