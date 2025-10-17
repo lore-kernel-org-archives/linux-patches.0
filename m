@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C762330B2E;
-	Fri, 17 Oct 2025 15:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED25E330B1F;
+	Fri, 17 Oct 2025 15:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716388; cv=none; b=OiEtSFT0F/ikpB59K/qnF/0YmXpQWBCLRQqw291O7K/gBMSsJ8KvayZ1LMZRFrWhsYYL8vvcRRf8+a545MYTF9pwZ+KxRiUD/QGv0Q63rO9eiByZguHq6DM2j1oiqzEcrb9wV02sWD9VdbUYJygB9Inb9vK2f0otnmxEJ5bHN6c=
+	t=1760716391; cv=none; b=WVHm+7DWb32rHyUmnmDOW2XxviPDYmXj5SM6+Txfb6paWcF0Wfh10HxCPSH+8At23yBkrj5nQdHIMFOjskHXMA4ZY4aLr/EKnMeI+B+8IVMgAxFLn3w2oPIWCQrCTqDahFfBNShRDIAqKQuzKSBRaEAmzxcEUayuwsIQgxeeR7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716388; c=relaxed/simple;
-	bh=lEC1f3AhIhNqmgXiR/J54P0djRE4HniWO02qaV0kSPw=;
+	s=arc-20240116; t=1760716391; c=relaxed/simple;
+	bh=nmLJP/eVh18oR8Z7/BmuX/B88tbArMYum1mbDrIwTvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHfHCgp5QemwvS0BgxhRlYnJxZj66Zt13L/UT0YZHuq1L5RWd8YhVSJG1FC21yazQsR4EsLbCT/94uuk3CCQ3vAVLrE+i5oZ6vz+ejcVCcgNjJBXhU7xWhXjfRj9ZtcVE6IGefoVLEOIadoqi8pS8M2V9Uxwz+xJCABCtdgX56c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaKW6y8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpxyRKhsx6glpzw6ysFENt3RK1bv/N3cwrAyjGCs70cNbx0+zF6+SCsyVmPjRv3tJIV2mxSFEogpPzNFVDmpzTU3saHGEpO3qV/HbmvYCyJkbxgLjxJO32rnOa43PaFlXwy3lO8KHJrWEqslcxhGs+AXnFuC/r73mdksC3RXhtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzIvSKmq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaKW6y8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17AFC4CEE7;
-	Fri, 17 Oct 2025 15:53:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzIvSKmq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBE3C4CEE7;
+	Fri, 17 Oct 2025 15:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716388;
-	bh=lEC1f3AhIhNqmgXiR/J54P0djRE4HniWO02qaV0kSPw=;
+	s=korg; t=1760716390;
+	bh=nmLJP/eVh18oR8Z7/BmuX/B88tbArMYum1mbDrIwTvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GaKW6y8xANQTWlNjftugjKcNaXqIT3jag1Tkd027/ojc01kH2syA0twQaiXHsTz/d
-	 6nURYGVMtU6u0jCKcWdIeS39/cuxUpp1YO4dL2RmXM2HDrl4M8m1CaILhYGqVDuKcg
-	 P8jkBAZlpw8licZ32PWtGZ5dUM2SmLTc/mPUlgd8=
+	b=UzIvSKmqDbd5MtAi8F+H9gq2Yt4EwkVsNk/jcz34XL6OJcvzGcLh5PqNSMKRFX1C+
+	 RMm7CkjxpkrlsRCols03xwRBx4UPGDXPCgBjrkpdhGgmptfPIfGoMCr1dy+BpOamcQ
+	 ++A6LhzBh9NmbRA7r5EqMY+vUn6WnxQmZAlLtwVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlo Caione <ccaione@baylibre.com>,
-	Johan Hovold <johan@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 172/276] firmware: meson_sm: fix device leak at probe
-Date: Fri, 17 Oct 2025 16:54:25 +0200
-Message-ID: <20251017145148.751839918@linuxfoundation.org>
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 173/276] media: i2c: mt9v111: fix incorrect type for ret
+Date: Fri, 17 Oct 2025 16:54:26 +0200
+Message-ID: <20251017145148.789904584@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit 8ece3173f87df03935906d0c612c2aeda9db92ca upstream.
+commit bacd713145443dce7764bb2967d30832a95e5ec8 upstream.
 
-Make sure to drop the reference to the secure monitor device taken by
-of_find_device_by_node() when looking up its driver data on behalf of
-other drivers (e.g. during probe).
+Change "ret" from unsigned int to int type in mt9v111_calc_frame_rate()
+to store negative error codes or zero returned by __mt9v111_hw_reset()
+and other functions.
 
-Note that holding a reference to the platform device does not prevent
-its driver data from going away so there is no point in keeping the
-reference after the helper returns.
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants.
 
-Fixes: 8cde3c2153e8 ("firmware: meson_sm: Rework driver as a proper platform driver")
-Cc: stable@vger.kernel.org	# 5.5
-Cc: Carlo Caione <ccaione@baylibre.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250725074019.8765-1-johan@kernel.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+No effect on runtime.
+
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Fixes: aab7ed1c3927 ("media: i2c: Add driver for Aptina MT9V111")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/meson/meson_sm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/i2c/mt9v111.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/meson/meson_sm.c
-+++ b/drivers/firmware/meson/meson_sm.c
-@@ -225,11 +225,16 @@ EXPORT_SYMBOL(meson_sm_call_write);
- struct meson_sm_firmware *meson_sm_get(struct device_node *sm_node)
+--- a/drivers/media/i2c/mt9v111.c
++++ b/drivers/media/i2c/mt9v111.c
+@@ -534,8 +534,8 @@ static int mt9v111_calc_frame_rate(struc
+ static int mt9v111_hw_config(struct mt9v111_dev *mt9v111)
  {
- 	struct platform_device *pdev = of_find_device_by_node(sm_node);
-+	struct meson_sm_firmware *fw;
+ 	struct i2c_client *c = mt9v111->client;
+-	unsigned int ret;
+ 	u16 outfmtctrl2;
++	int ret;
  
- 	if (!pdev)
- 		return NULL;
- 
--	return platform_get_drvdata(pdev);
-+	fw = platform_get_drvdata(pdev);
-+
-+	put_device(&pdev->dev);
-+
-+	return fw;
- }
- EXPORT_SYMBOL_GPL(meson_sm_get);
- 
+ 	/* Force device reset. */
+ 	ret = __mt9v111_hw_reset(mt9v111);
 
 
