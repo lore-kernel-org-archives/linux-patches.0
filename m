@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6627B2F12B0;
-	Fri, 17 Oct 2025 15:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419DB32E159;
+	Fri, 17 Oct 2025 15:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714210; cv=none; b=U97Ydj7iieBiilMMOQFSTm4r/lDyvsBpW2lvbx21ulZnQYcta259qZ0vmLrUf/Usb1eqG4DCJ02YFjNw23vbyM9/46cL/6l2RWODMmvk12PvqyTbFWplTfebSNX29U2iZ87CYWfB1KT44yXx7kHd8DeUakVYlDHZEZCHqntgCyE=
+	t=1760714213; cv=none; b=i1NDHbltHxm83HWDxd+NN1HrQv1v8kEo9TGGR1UVWaDTNbHcSWejjkEZkjqjvhhdGR/0deSGyxLz5ro+2/8Iym7wo0hgn75a4T8jhbmdOp7ajFivbzwA5REA3LQlFZOzvQfp5nzFtRpe4IdClzZVmKxFWUuuGMlS/1f3Vj26XUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714210; c=relaxed/simple;
-	bh=VZbeOEBd2VjpvhZYsfsF9sjTtL6l7wemHjQ/8mx5m1I=;
+	s=arc-20240116; t=1760714213; c=relaxed/simple;
+	bh=mCk8Hr4S4U+KITbY5rSowzpl6P9jQG/+++lY0x+1aj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMOCChHCofxaSheyFEWTvFz5LuY8AwkAUvHU69Gbw9AtuYspcJwqCs2zYDAN705YqjAeCjeRKvr1L0ZBFbHuvlDCRW+8RK2WhHwPUvTWAg0gKxrcU3etNECtJP3NAPhzC31XKKpoJBVA53jdQGCCFvjxJelYxAR7zteODAXvyHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XfDx7Aa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEnDiFwg7IcAaTZ+zw3hIF9KkGVcncGN3SGDvhsKXY+o4KxY4MSphHNWhLdNt4rBC9D+sI3YCxtxd3J/IiYLGAdQFACN1JD4wFc9mom2nrbX7vhErCGZVZ+PrVOdJBly2CbwcceKiuqUWADWvyO46YG7jU+ZQ7yZIJ0Ssn8TiyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOiuSaqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XfDx7Aa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF29C4CEF9;
-	Fri, 17 Oct 2025 15:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOiuSaqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB1FC4CEF9;
+	Fri, 17 Oct 2025 15:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714210;
-	bh=VZbeOEBd2VjpvhZYsfsF9sjTtL6l7wemHjQ/8mx5m1I=;
+	s=korg; t=1760714213;
+	bh=mCk8Hr4S4U+KITbY5rSowzpl6P9jQG/+++lY0x+1aj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XfDx7AaBZZbt7zoTfuXiMI6jkLL4XM9Zf+YE+735aNTPgvtHcIorGd9zYaPgXpSy
-	 GJEWSftsdAWiBIs9meRizB2lWj2o+d1+P6Q5v0SAeVhN3Tg1VjqjvOJWTlxd2Gq9Uw
-	 Ckcca0lcT7/QslLmjoO1dBby8FS8fqhj17UqcwfE=
+	b=NOiuSaqguJyY17n1j9d1gZY7GBKOk4UG4YTMTyfBiuPVQ+ClsCIkgOa0E95xsUjWt
+	 PiLshelyy+yE6UENSSXmgi1vXIB8wLqlYkttvU1WWMIWTE2pQL38jKYQLWTU6wXwOL
+	 dbHZ17u8q91Kygp7ZWkadOi7U+PXonT9iT95FECU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/277] perf evsel: Ensure the fallback message is always written to
-Date: Fri, 17 Oct 2025 16:50:40 +0200
-Message-ID: <20251017145148.357302957@linuxfoundation.org>
+Subject: [PATCH 6.12 034/277] clk: mediatek: mt8195-infra_ao: Fix parent for infra_ao_hdmi_26m
+Date: Fri, 17 Oct 2025 16:50:41 +0200
+Message-ID: <20251017145148.393480156@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -61,79 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 24937ee839e4bbc097acde73eeed67812bad2d99 ]
+[ Upstream commit 6c4c26b624790098988c1034541087e3e5ed5bed ]
 
-The fallback message is unconditionally printed in places like
-record__open().
+The infrastructure gate for the HDMI specific crystal needs the
+top_hdmi_xtal clock to be configured in order to ungate the 26m
+clock to the HDMI IP, and it wouldn't work without.
 
-If no fallback is attempted this can lead to printing uninitialized
-data, crashes, etc.
+Reparent the infra_ao_hdmi_26m clock to top_hdmi_xtal to fix that.
 
-Fixes: c0a54341c0e89333 ("perf evsel: Introduce event fallback method")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: e2edf59dec0b ("clk: mediatek: Add MT8195 infrastructure clock support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/clk/mediatek/clk-mt8195-infra_ao.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 70c4e06da7a03..dda107b12b8c6 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -3237,7 +3237,7 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
- 
- 		/* If event has exclude user then don't exclude kernel. */
- 		if (evsel->core.attr.exclude_user)
--			return false;
-+			goto no_fallback;
- 
- 		/* Is there already the separator in the name. */
- 		if (strchr(name, '/') ||
-@@ -3245,7 +3245,7 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
- 			sep = "";
- 
- 		if (asprintf(&new_name, "%s%su", name, sep) < 0)
--			return false;
-+			goto no_fallback;
- 
- 		free(evsel->name);
- 		evsel->name = new_name;
-@@ -3268,17 +3268,19 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
- 			sep = "";
- 
- 		if (asprintf(&new_name, "%s%sH", name, sep) < 0)
--			return false;
-+			goto no_fallback;
- 
- 		free(evsel->name);
- 		evsel->name = new_name;
- 		/* Apple M1 requires exclude_guest */
--		scnprintf(msg, msgsize, "trying to fall back to excluding guest samples");
-+		scnprintf(msg, msgsize, "Trying to fall back to excluding guest samples");
- 		evsel->core.attr.exclude_guest = 1;
- 
- 		return true;
- 	}
--
-+no_fallback:
-+	scnprintf(msg, msgsize, "No fallback found for '%s' for error %d",
-+		  evsel__name(evsel), err);
- 	return false;
- }
- 
+diff --git a/drivers/clk/mediatek/clk-mt8195-infra_ao.c b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
+index bb648a88e43af..ad47fdb234607 100644
+--- a/drivers/clk/mediatek/clk-mt8195-infra_ao.c
++++ b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
+@@ -103,7 +103,7 @@ static const struct mtk_gate infra_ao_clks[] = {
+ 	GATE_INFRA_AO0(CLK_INFRA_AO_CQ_DMA_FPC, "infra_ao_cq_dma_fpc", "fpc", 28),
+ 	GATE_INFRA_AO0(CLK_INFRA_AO_UART5, "infra_ao_uart5", "top_uart", 29),
+ 	/* INFRA_AO1 */
+-	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "clk26m", 0),
++	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "top_hdmi_xtal", 0),
+ 	GATE_INFRA_AO1(CLK_INFRA_AO_SPI0, "infra_ao_spi0", "top_spi", 1),
+ 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC0, "infra_ao_msdc0", "top_msdc50_0_hclk", 2),
+ 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC1, "infra_ao_msdc1", "top_axi", 4),
 -- 
 2.51.0
 
