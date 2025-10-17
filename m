@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D5332C931;
-	Fri, 17 Oct 2025 15:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B432E13C;
+	Fri, 17 Oct 2025 15:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714222; cv=none; b=THj3M1an2vJjvdxNPkSRiRMuPqpbhtr5bnKuE4l9u11Xx4mGofOAIv92Oao18u8UDQfFCjcf2BPCO1T8GH6hlJBYY/jnHmZjQ19abtXJ5HbaRNlzm58lwmbYGUCByr7RzBJfH83/JZGBmlBrWAjiWNk4c4AYYuW//ERDrikfzmc=
+	t=1760714224; cv=none; b=cKj3i+S//kvlW+6D7ioRrSRpXTvRNB9wpqDCokCih5vwsFd6knr0Ms0y5IiGTnu1cNhph/19lg4CzwcxlSDz9xRTwE2j4KkLDR3ETjsaDZjdQ+V83mhX22v5wRHxuJpmB0Th7wxIpTtaG8z4/ycQVOHAE/p1PK/WLZ0R2Rdd73Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714222; c=relaxed/simple;
-	bh=OjCny0HLemGW6V36Txh0NbN5DIowv9KhmcdFkdhXp1s=;
+	s=arc-20240116; t=1760714224; c=relaxed/simple;
+	bh=WBnkIiEbGbssaWzKTCswtW93IqRnrUlvdswIFUhiM5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5PbvPsMqTvwjj+jRjzbQwP6PfhJAM98Vtgw2LjTZ3e8+v3tB2if8Nx6WRDcoTTwRqdBL+L9pFOdIRHQHtqK62+1u2ecwcg6HadR36Dsyc4TYNHDDJ0yVp14jWPwfjQjihvK6HKWilHPjRVr0qF6nCwWIvgt25HUmVg6BdPyy2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLiJumm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFird6QCYQ26ZExXNPCCVs7gz+77Qv4CUl+rcKYqpHtN6OBh7OnmD03suD/oN3osMyThOgl6d53Q/g8dALNDngxDv8VxE5lHHEOjusIyrjPqgABmSDGNl3BSB1Pgj9x5lHJXQO2Qn1j9+1wKTGfU7EXbZJtkwqqOOTk9Lr21xvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/ZJ3X5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLiJumm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE5EC4CEE7;
-	Fri, 17 Oct 2025 15:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/ZJ3X5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5B5C4CEE7;
+	Fri, 17 Oct 2025 15:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714221;
-	bh=OjCny0HLemGW6V36Txh0NbN5DIowv9KhmcdFkdhXp1s=;
+	s=korg; t=1760714224;
+	bh=WBnkIiEbGbssaWzKTCswtW93IqRnrUlvdswIFUhiM5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLiJumm8fq2P8KOrSwrqkNHBld0Gx6E2Xsy8I+WDwO4TP27sisb5GqQXi5YSq/dNv
-	 DXAOqe2tilsiq//ypb1uZRIh7zZwf/ObSa2VbIi0AGPRWI3+Z7CBYBVsP/HKwuAY1z
-	 wXY+hEpl1shqrsd6rNseRdnburAUTAwT0bDNd43Y=
+	b=e/ZJ3X5lrKn6S+DAEwT1TeBBdXS11XrXCVJbqK/Djh9ErwIVrwkhMYhm7ldzn/3h0
+	 6w7b9jWyEmuyT9j9bc8v01gbcV3oscKpHYxBLV9oAZNRDwDz6ZfLrOXQ8kYo2I+Jx7
+	 pUKvncOTQVzEzWqKcYMbd7B1YaCszn1lUtGQGX1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/277] perf test: Update sysfs path for core PMU caps
-Date: Fri, 17 Oct 2025 16:50:34 +0200
-Message-ID: <20251017145148.140156618@linuxfoundation.org>
+Subject: [PATCH 6.12 063/277] mailbox: zynqmp-ipi: Fix out-of-bounds access in mailbox cleanup loop
+Date: Fri, 17 Oct 2025 16:51:10 +0200
+Message-ID: <20251017145149.445233912@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -57,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit b9228817127430356c929847f111197776201225 ]
+[ Upstream commit 0aead8197fc1a85b0a89646e418feb49a564b029 ]
 
-While CPU is a system device, it'd be better to use a path for
-event_source devices when it checks PMU capability.
+The cleanup loop was starting at the wrong array index, causing
+out-of-bounds access.
+Start the loop at the correct index for zero-indexed arrays to prevent
+accessing memory beyond the allocated array bounds.
 
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250509213017.204343-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 48314d20fe46 ("perf test shell lbr: Avoid failures with perf event paranoia")
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/record_lbr.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/shell/record_lbr.sh b/tools/perf/tests/shell/record_lbr.sh
-index 32314641217e6..ab6f2825f7903 100755
---- a/tools/perf/tests/shell/record_lbr.sh
-+++ b/tools/perf/tests/shell/record_lbr.sh
-@@ -4,7 +4,8 @@
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 411bbc10edeaf..fab897b5724c1 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -890,7 +890,7 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	if (pdata->irq < MAX_SGI)
+ 		xlnx_mbox_cleanup_sgi(pdata);
  
- set -e
- 
--if [ ! -f /sys/devices/cpu/caps/branches ] && [ ! -f /sys/devices/cpu_core/caps/branches ]
-+if [ ! -f /sys/bus/event_source/devices/cpu/caps/branches ] &&
-+   [ ! -f /sys/bus/event_source/devices/cpu_core/caps/branches ]
- then
-   echo "Skip: only x86 CPUs support LBR"
-   exit 2
+-	i = pdata->num_mboxes;
++	i = pdata->num_mboxes - 1;
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (device_is_registered(&ipi_mbox->dev))
 -- 
 2.51.0
 
