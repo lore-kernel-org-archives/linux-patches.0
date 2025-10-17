@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A365330B1D;
-	Fri, 17 Oct 2025 15:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3A0330B1D;
+	Fri, 17 Oct 2025 15:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715753; cv=none; b=WtLUAP+k9zWZQsvJchyY9RNWKN2Jbrdma852Fux6JBAd5WIhEYsyOlyv7lSjbqv5zjkiiCvLVHPWV1QfcpoWsa16naq+5NCOyUDmIFHZnhKF81CbMX4Z9+9bMJmlwB3cPTC7j+9BM14JEz80vBFeDN5J84wNhhxsBUUzqu8yFx8=
+	t=1760715756; cv=none; b=alQPZ5+K16KzhC7lM4GfOG+EHFV3Qeqbi2USphZLCQk/BJR23K0HPUmqbGkUB0jHCjqwfNts1Cbg9mwed22N7lN9Aj07eON/OFl9t9lj5nIAmS3HZdzKDWTatlIkOqjvdD7hut3S61jbcADqo+grblRPB5RFn2Rf/LhY8mQuUJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715753; c=relaxed/simple;
-	bh=XE2eW8hCI6OYe2t9I2OqBAAXstre8dlHIVpG1yelcl4=;
+	s=arc-20240116; t=1760715756; c=relaxed/simple;
+	bh=9rRvqXIorU9r5l7Yo2rWEEaW3ES64D1CKcmKEwWR6S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8QMBOvVVMkpCuak3rRXGx8Jd8oqpVQW2ocLKSa1dxVQe47/Br+p9toG4Y9fDqGFVZBKrCoEG7YcsnSNez6/U/04H14mHvY239GZiynd3TWZjo15AUx1yNn3gGfwJ4/Ofu/GkP4HIhoT206k3/s7sCTMx/PvMA/rkhl/b76Tq0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzEMzYk0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRDljCiJDAo3C0DVgCWSYrKoXPk1MnxVIDRVlLWJRK3qy3NulHlBndUp/hUIH3jSoRpzqu2oxY+l07Ao6a0WQmIUvO0EyrIIrYJs7JmXvgVwXYQ8iimwDXgScMbtPyYFmJr37z3ojHeBF1haMcFRK9DBDKvebGCV4MJaijIv6Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t916Edo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzEMzYk0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA0EC4CEE7;
-	Fri, 17 Oct 2025 15:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t916Edo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3285EC4CEE7;
+	Fri, 17 Oct 2025 15:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715753;
-	bh=XE2eW8hCI6OYe2t9I2OqBAAXstre8dlHIVpG1yelcl4=;
+	s=korg; t=1760715756;
+	bh=9rRvqXIorU9r5l7Yo2rWEEaW3ES64D1CKcmKEwWR6S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzEMzYk07qorHDHqQuoNMjk39qAqlYKNHsqOUbo04zrO6aVcWYRvCwDGY10uS1pTH
-	 gTM+z7C3dVmt9hKUvZkvK3f9kUmE6e76LbCljavkVzmar0Bew2Br4ntnIUO2JNvCze
-	 U7nALFlXScsMaT/oLaIjDyAk/n3mcI6TnFpBHwps=
+	b=0t916EdoqreF1URd9+zfNnWPsuef4cmTnTTcm4RkGJVWn+Cyd+bG7yf3wBNdjLDL2
+	 tJsD60rpVKj5Pt95LPy3k57KXwDl9nfMPtuHUvNGydqh24dySslkCOK5lGdJ35Bav7
+	 3QzDDUTehOWMRBmfof0CgszIUZhyPORo5be6hJac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 325/371] media: iris: Fix firmware reference leak and unmap memory after load
-Date: Fri, 17 Oct 2025 16:55:00 +0200
-Message-ID: <20251017145213.835227195@linuxfoundation.org>
+Subject: [PATCH 6.17 326/371] media: iris: fix module removal if firmware download failed
+Date: Fri, 17 Oct 2025 16:55:01 +0200
+Message-ID: <20251017145213.871152658@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,70 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit 57429b0fddfe3cea21a56326576451a4a4c2019b upstream.
+commit fde38008fc4f43db8c17869491870df24b501543 upstream.
 
-When we succeed loading the firmware, we don't want to hold on to the
-firmware pointer anymore, since it won't be freed anywhere else. The same
-applies for the mapped memory. Unmapping the memory is particularly
-important since the memory will be protected after the Iris firmware is
-started, so we need to make sure there will be no accidental access to this
-region (even if just a speculative one from the CPU).
+Fix remove if firmware failed to load:
+qcom-iris aa00000.video-codec: Direct firmware load for qcom/vpu/vpu33_p4.mbn failed with error -2
+qcom-iris aa00000.video-codec: firmware download failed
+qcom-iris aa00000.video-codec: core init failed
 
-Almost the same firmware loading code also exists in venus/firmware.c,
-there it is implemented correctly.
+then:
+$ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
 
-Fix this by dropping the early "return ret" and move the call of
-qcom_scm_pas_auth_and_reset() out of iris_load_fw_to_memory(). We should
-unmap the memory before bringing the firmware out of reset.
+Triggers:
+genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
+------------[ cut here ]------------
+video_cc_mvs0_clk already disabled
+WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1: sh/542
+<snip>
+pc : clk_core_disable+0xa4/0xac
+lr : clk_core_disable+0xa4/0xac
+<snip>
+Call trace:
+ clk_core_disable+0xa4/0xac (P)
+ clk_disable+0x30/0x4c
+ iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+ iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+ iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+ iris_vpu_power_off+0x34/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
+------------[ cut here ]------------
+video_cc_mvs0_clk already unprepared
+WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2: sh/542
+<snip>
+pc : clk_core_unprepare+0xf0/0x110
+lr : clk_core_unprepare+0xf0/0x110
+<snip>
+Call trace:
+ clk_core_unprepare+0xf0/0x110 (P)
+ clk_unprepare+0x2c/0x44
+ iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+ iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+ iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+ iris_vpu_power_off+0x34/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
+genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
+------------[ cut here ]------------
+gcc_video_axi0_clk already disabled
+WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4: sh/542
+<snip>
+pc : clk_core_disable+0xa4/0xac
+lr : clk_core_disable+0xa4/0xac
+<snip>
+Call trace:
+ clk_core_disable+0xa4/0xac (P)
+ clk_disable+0x30/0x4c
+ iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+ iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+ iris_vpu_power_off+0x48/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+------------[ cut here ]------------
+gcc_video_axi0_clk already unprepared
+WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4: sh/542
+<snip>
+pc : clk_core_unprepare+0xf0/0x110
+lr : clk_core_unprepare+0xf0/0x110
+<snip>
+Call trace:
+ clk_core_unprepare+0xf0/0x110 (P)
+ clk_unprepare+0x2c/0x44
+ iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+ iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+ iris_vpu_power_off+0x48/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
 
-Cc: stable@vger.kernel.org
+Skip deinit if initialization never succeeded.
+
+Fixes: d7378f84e94e ("media: iris: introduce iris core state management with shared queues")
 Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fixes: bb8a95aa038e ("media: iris: implement power management")
+Cc: stable@vger.kernel.org
 Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_firmware.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-index f1b5cd56db32..9ab499fad946 100644
---- a/drivers/media/platform/qcom/iris/iris_firmware.c
-+++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-@@ -60,16 +60,7 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+index 0fa0a3b549a2..8406c48d635b 100644
+--- a/drivers/media/platform/qcom/iris/iris_core.c
++++ b/drivers/media/platform/qcom/iris/iris_core.c
+@@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
+ 	pm_runtime_resume_and_get(core->dev);
  
- 	ret = qcom_mdt_load(dev, firmware, fw_name,
- 			    pas_id, mem_virt, mem_phys, res_size, NULL);
--	if (ret)
--		goto err_mem_unmap;
- 
--	ret = qcom_scm_pas_auth_and_reset(pas_id);
--	if (ret)
--		goto err_mem_unmap;
--
--	return ret;
--
--err_mem_unmap:
- 	memunmap(mem_virt);
- err_release_fw:
- 	release_firmware(firmware);
-@@ -94,6 +85,12 @@ int iris_fw_load(struct iris_core *core)
- 		return -ENOMEM;
- 	}
- 
-+	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
-+	if (ret)  {
-+		dev_err(core->dev, "auth and reset failed: %d\n", ret);
-+		return ret;
+ 	mutex_lock(&core->lock);
+-	iris_fw_unload(core);
+-	iris_vpu_power_off(core);
+-	iris_hfi_queues_deinit(core);
+-	core->state = IRIS_CORE_DEINIT;
++	if (core->state != IRIS_CORE_DEINIT) {
++		iris_fw_unload(core);
++		iris_vpu_power_off(core);
++		iris_hfi_queues_deinit(core);
++		core->state = IRIS_CORE_DEINIT;
 +	}
-+
- 	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
- 					     cp_config->cp_size,
- 					     cp_config->cp_nonpixel_start,
+ 	mutex_unlock(&core->lock);
+ 
+ 	pm_runtime_put_sync(core->dev);
 -- 
 2.51.0
 
