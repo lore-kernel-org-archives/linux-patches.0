@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCE4217722;
-	Fri, 17 Oct 2025 15:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27C71A0728;
+	Fri, 17 Oct 2025 15:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716348; cv=none; b=uo0Fu11SllpKeFOhGTyT6NGi8kcgiDEkHzaoSM52Qi9qVssSkZuviqA5fatTdyssStiw6uzV+0H+CJ5weVAgMc0KnXcld+Ux7U8S9jHPOhCJAcmULRFUGCmPrKRaZ4Z4tB7lCnsZHsn4EnTVmixEmMQpz/kCjZF97TnFlL6mzbs=
+	t=1760716350; cv=none; b=giVTNxc2P+EjYN4kzEtduxgwv8nuY9CWm1A+xKQ7p81WD9dB8j2z4FeHcFnzmxUBjfPGECaNtzS+aMlDJyDivdF3mPXCx+5IEnZIs9/jggQitqZa+Cim96Ptr3Xf+TlypqZ23WwV52Tv70cR/EVFlCpjsmLcewX9PHXtYesuJDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716348; c=relaxed/simple;
-	bh=sBdAxypGKKlpq86yb5ijMyiFwMne3kFR7q29kuF42do=;
+	s=arc-20240116; t=1760716350; c=relaxed/simple;
+	bh=p4ghoImUWmuIFTgI7f95GO4qfQWBFOYMJHrua2Q/csc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIjlzkUvw1dFwKCmt/s6ptqRsf5tiJFV1r0uoD7ETNXEQE6gb1ufpx7zSgEJS4Hm2jw/HZjiFp2O74BGKib/DPoirsi3PTdO+SwVfr/RhPu+SEf7YkUs+bkQ8Ymnjn85TAmcZl6i7lA0Q9AjrUk8DkMn0gvDTb/EAHeEfhhyvg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywd+0PkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2Uj/RKllXtH2PseqW3mDIbFVqoXgBoHOTSlGYkvrvBI9WiY+glXU2qdI3nQmXmVQAMmPrIpWc/ZRo/MFR2nGzbKoRAEl1WIWdMXL8YK71NB+GZVUIEs5z2mfvpJrzfDqHLYvNLcVs0Vl3Me46blf5n8SbPMogr9rXi+bqWTRvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czhrkZrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywd+0PkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6911CC4CEE7;
-	Fri, 17 Oct 2025 15:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czhrkZrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37386C4CEE7;
+	Fri, 17 Oct 2025 15:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716347;
-	bh=sBdAxypGKKlpq86yb5ijMyiFwMne3kFR7q29kuF42do=;
+	s=korg; t=1760716350;
+	bh=p4ghoImUWmuIFTgI7f95GO4qfQWBFOYMJHrua2Q/csc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywd+0PkJGkdN0M1dRidaHE7W9NTR9dTVj3bmOzfhqhTyJXB2RFScZOeZ6ICuE/BGK
-	 gEgmIzM8c8CPyq9vZdJL7z7xey/TP3FtVQhT3lwSim8Pkqm9nMe690IcFvm1ZsEhKo
-	 hSW6XdlcgiTh3WfP9KQrSCB86F328fdIPiGLl8Go=
+	b=czhrkZrkcAnxsQftj5ay3u4sE1wztM7Zljj2+o4fwygq5weySAogvI9QqQZsXyOSk
+	 wTkYUQCkGCiro7h0v0gtemlvYB+X7xL41hknmqJT3p9+dNO4VDwnBNrqxW16P+0kXR
+	 EkR4F5tRSnyUqM9uw26evjD7CWypW6ohVTK88lZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Woudstra <ericwouds@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/276] bridge: br_vlan_fill_forward_path_pvid: use br_vlan_group_rcu()
-Date: Fri, 17 Oct 2025 16:54:13 +0200
-Message-ID: <20251017145148.315441016@linuxfoundation.org>
+Subject: [PATCH 5.15 161/276] crypto: essiv - Check ssize for decryption and in-place encryption
+Date: Fri, 17 Oct 2025 16:54:14 +0200
+Message-ID: <20251017145148.351152499@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,48 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Woudstra <ericwouds@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit bbf0c98b3ad9edaea1f982de6c199cc11d3b7705 ]
+[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
 
-net/bridge/br_private.h:1627 suspicious rcu_dereference_protected() usage!
-other info that might help us debug this:
+Move the ssize check to the start in essiv_aead_crypt so that
+it's also checked for decryption and in-place encryption.
 
-rcu_scheduler_active = 2, debug_locks = 1
-7 locks held by socat/410:
- #0: ffff88800d7a9c90 (sk_lock-AF_INET){+.+.}-{0:0}, at: inet_stream_connect+0x43/0xa0
- #1: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: __ip_queue_xmit+0x62/0x1830
- [..]
- #6: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: nf_hook.constprop.0+0x8a/0x440
-
-Call Trace:
- lockdep_rcu_suspicious.cold+0x4f/0xb1
- br_vlan_fill_forward_path_pvid+0x32c/0x410 [bridge]
- br_fill_forward_path+0x7a/0x4d0 [bridge]
-
-Use to correct helper, non _rcu variant requires RTNL mutex.
-
-Fixes: bcf2766b1377 ("net: bridge: resolve forwarding path for VLAN tag actions in bridge devices")
-Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/essiv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 86441ff78a0f8..055d988d280cd 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1391,7 +1391,7 @@ void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 	if (!br_opt_get(br, BROPT_VLAN_ENABLED))
- 		return;
+diff --git a/crypto/essiv.c b/crypto/essiv.c
+index 3505b071e6471..365f3082ea041 100644
+--- a/crypto/essiv.c
++++ b/crypto/essiv.c
+@@ -186,9 +186,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+ 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
+ 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
+ 	struct aead_request *subreq = &rctx->aead_req;
++	int ivsize = crypto_aead_ivsize(tfm);
++	int ssize = req->assoclen - ivsize;
+ 	struct scatterlist *src = req->src;
+ 	int err;
  
--	vg = br_vlan_group(br);
-+	vg = br_vlan_group_rcu(br);
++	if (ssize < 0)
++		return -EINVAL;
++
+ 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
  
- 	if (idx >= 0 &&
- 	    ctx->vlan[idx].proto == br->vlan_proto) {
+ 	/*
+@@ -198,19 +203,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+ 	 */
+ 	rctx->assoc = NULL;
+ 	if (req->src == req->dst || !enc) {
+-		scatterwalk_map_and_copy(req->iv, req->dst,
+-					 req->assoclen - crypto_aead_ivsize(tfm),
+-					 crypto_aead_ivsize(tfm), 1);
++		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
+ 	} else {
+ 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
+-		int ivsize = crypto_aead_ivsize(tfm);
+-		int ssize = req->assoclen - ivsize;
+ 		struct scatterlist *sg;
+ 		int nents;
+ 
+-		if (ssize < 0)
+-			return -EINVAL;
+-
+ 		nents = sg_nents_for_len(req->src, ssize);
+ 		if (nents < 0)
+ 			return -EINVAL;
 -- 
 2.51.0
 
