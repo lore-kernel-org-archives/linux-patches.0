@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D303328EE;
-	Fri, 17 Oct 2025 15:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE3F335083;
+	Fri, 17 Oct 2025 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713843; cv=none; b=ZD26JmTLA0rMewWs2KAuXHbgZSzcxZVHj1aP60YAzt/vUDvn22rP97m5SM0XWbUV8BU5N8ZlB7/uy1qOGFhmEUjUIlHruuSQbdQxPJ8jrbpU+Dat0gR6fhB1e6FU55UkSAtgn6phl4UdpprCFVcNOidn0LObOth5achKxFszZ5Y=
+	t=1760713846; cv=none; b=WUFFVN/GD3fMS76w9oU0VBaAAE3VheNH0h8oQJ3gLJONLVxfp1KXrq3bxZXeSvQHjbLFa86UJxXw0E6RPyvxQhIV7Rn5aVAY4wmIA1GSv46hlWAlh2lm6aIW5Zuga72EgDFnSsZ83hiUv3xfDnrT3/sKRES4U8NejadikxFdUFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713843; c=relaxed/simple;
-	bh=Z48An+sFSpjUxoFkyrNfamoTOygVS6J50AvalY4/lp0=;
+	s=arc-20240116; t=1760713846; c=relaxed/simple;
+	bh=/hjoNa8DKdIifD+jeK2CUD3oPEG/krinkXc0BbO497s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nyvd0Qc2rdGtOOhnMEKJn9OshHQued0TiAjTEPhpIS/Dvh/HrGBMYZ43M2JTaN0Ty0HdjiDNo4as/NM5Jo6VaHxrSu58y6NVEBL04PsZJaCFOlQNp+TLVZ2AC9jgIuUIZSwctNFRgF67inzYe5d1yc84O5WSnuaC7Px9yprO3ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyMEbJyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9UHCQmgWFIt02nrtqiHBOFJHq7fwOZYV+unH/Z0QNLauwofX99sX9KzAU/7k31w6KCbaSZMjhf9sJOGfUpjkDRbE8jSXMp5xOrfolIQF0iDplV4NUKm5fnlajAnoTf5rIuZOmTqRfEL3P6dMKvJuDu94aUSDDUG5akMe3u0BEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijpOCdRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyMEbJyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CBFC4CEE7;
-	Fri, 17 Oct 2025 15:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijpOCdRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CABC4CEE7;
+	Fri, 17 Oct 2025 15:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713843;
-	bh=Z48An+sFSpjUxoFkyrNfamoTOygVS6J50AvalY4/lp0=;
+	s=korg; t=1760713846;
+	bh=/hjoNa8DKdIifD+jeK2CUD3oPEG/krinkXc0BbO497s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyMEbJyTzh5x3vHQRtHX0or8eYor3DGmtJl+jbespxtOzU2yL+od19YdGfBMGWb0X
-	 qA/7y+wT7BLl7Ie601M6Zcnzhm1C9Ui0jwClEbneiMORL+7DuY5HUegtebuEY+E4Bm
-	 t4kUrwGF6hBEPUCKb8EX2A3J6hV3GM7+GKK4l6n4=
+	b=ijpOCdRG2O11bCp4rxokhBqqk63cNCSEarbS9Z8/aG11P7gR1yZa4pVG64c0Qls2Q
+	 CoGGQ4/Nqtevwlg4V6JCwyt4vqMnasOE+r9N9qzmoUerTnF5bKVvMLoxA7Ix1PZbdc
+	 qElMu4O2c6nWYvCCMRjSbNip0Y9kBK7yg4oWT5qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 139/201] x86/umip: Fix decoding of register forms of 0F 01 (SGDT and SIDT aliases)
-Date: Fri, 17 Oct 2025 16:53:20 +0200
-Message-ID: <20251017145139.842300583@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 140/201] selftests: mptcp: join: validate C-flag + def limit
+Date: Fri, 17 Oct 2025 16:53:21 +0200
+Message-ID: <20251017145139.879135798@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,48 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 27b1fd62012dfe9d3eb8ecde344d7aa673695ecf upstream.
+commit 008385efd05e04d8dff299382df2e8be0f91d8a0 upstream.
 
-Filter out the register forms of 0F 01 when determining whether or not to
-emulate in response to a potential UMIP violation #GP, as SGDT and SIDT only
-accept memory operands.  The register variants of 0F 01 are used to encode
-instructions for things like VMX and SGX, i.e. not checking the Mod field
-would cause the kernel to incorrectly emulate on #GP, e.g. due to a CPL
-violation on VMLAUNCH.
+The previous commit adds an exception for the C-flag case. The
+'mptcp_join.sh' selftest is extended to validate this case.
 
-Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+In this subtest, there is a typical CDN deployment with a client where
+MPTCP endpoints have been 'automatically' configured:
+
+- the server set net.mptcp.allow_join_initial_addr_port=0
+
+- the client has multiple 'subflow' endpoints, and the default limits:
+  not accepting ADD_ADDRs.
+
+Without the parent patch, the client is not able to establish new
+subflows using its 'subflow' endpoints. The parent commit fixes that.
+
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
 Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-2-ad126cc47c6b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/umip.c |   11 +++++++++++
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   11 +++++++++++
  1 file changed, 11 insertions(+)
 
---- a/arch/x86/kernel/umip.c
-+++ b/arch/x86/kernel/umip.c
-@@ -163,8 +163,19 @@ static int identify_insn(struct insn *in
- 	if (insn->opcode.bytes[1] == 0x1) {
- 		switch (X86_MODRM_REG(insn->modrm.value)) {
- 		case 0:
-+			/* The reg form of 0F 01 /0 encodes VMX instructions. */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3234,6 +3234,17 @@ deny_join_id0_tests()
+ 		run_tests $ns1 $ns2 10.0.1.1
+ 		chk_join_nr 1 1 1
+ 	fi
 +
- 			return UMIP_INST_SGDT;
- 		case 1:
-+			/*
-+			 * The reg form of 0F 01 /1 encodes MONITOR/MWAIT,
-+			 * STAC/CLAC, and ENCLS.
-+			 */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
-+
- 			return UMIP_INST_SIDT;
- 		case 4:
- 			return UMIP_INST_SMSW;
++	# default limits, server deny join id 0 + signal
++	if reset_with_allow_join_id0 "default limits, server deny join id 0" 0 1; then
++		pm_nl_set_limits $ns1 0 2
++		pm_nl_set_limits $ns2 0 2
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
++		pm_nl_add_endpoint $ns2 10.0.3.2 flags subflow
++		pm_nl_add_endpoint $ns2 10.0.4.2 flags subflow
++		run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 2 2 2
++	fi
+ }
+ 
+ fullmesh_tests()
 
 
