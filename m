@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBD532C929;
-	Fri, 17 Oct 2025 15:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F368732C93E;
+	Fri, 17 Oct 2025 15:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714447; cv=none; b=u1C+wSzU9DeSNaPkXyrO5n/PPHQPZms05Hl5ueWVmP5g+Tq30EAcGXEgWDaZJyvfzJDNBfskdV2FZtZUqlZuAPCLhSXKri0YcuuDh/EftozObHROZio3M8Et/l2G/bfPBBUNXWCHUx0NRLyGF55ogRsKWsqdy/bZ+DRMJQWkIRc=
+	t=1760714450; cv=none; b=Ih9K3X9TG7QdHE7vK3RzArgAD2WpL2hhzLiDjm6gnjjx6VuzrDHLvue+NKcOHWt6xKH8HR9S3sgKoRfWx/OQgBMns213hAlSSXJ5rcGPmgzSzDVCgFz8+it4Zawd2joh6lwcNwu47Secxlx/FYWA+dv1i/1ZR49JtAYMkci+GUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714447; c=relaxed/simple;
-	bh=mtmEA/s9YJYQSldrLN/aw2x7mpH10CMvoXwnDX0Wksc=;
+	s=arc-20240116; t=1760714450; c=relaxed/simple;
+	bh=o7xltGhrKlGPZcttTbs3nPrl79TAMpYmcSk8HxHPND4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMd8jWmO+vOONtERuFVANpe4Ax+wcrdq0avXBvUKINWVlXunJDtY6gf24L5tz0xgDDABI/cmqT/fTXYRXm4yS1Ljy07PGiDBprsCiuEfGTqB7nvblAYtpL5Uj9q+5vOrD4HE5Tp/vwGLVXiJbmFV1bIFsXyfFZo2mZ1VPe1/GCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQ1MXEp+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuwSgorcFkOJcPfI4B/v6qjE2dng+vIua82bpiIK5WnwfqTNnBOG1Y+utSj6wZHIEVWML2utxoMoPgQyrufshYQeU8GdO7rMUx2O1aBY8BwEFNmuPVDpJLo5eDqx+GNNjFqs6aso1mThJ8yzwEj8Lq6CagEeauWqJsKr613OBGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdVoBJzp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQ1MXEp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F9C4CEE7;
-	Fri, 17 Oct 2025 15:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdVoBJzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D38C4CEE7;
+	Fri, 17 Oct 2025 15:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714447;
-	bh=mtmEA/s9YJYQSldrLN/aw2x7mpH10CMvoXwnDX0Wksc=;
+	s=korg; t=1760714449;
+	bh=o7xltGhrKlGPZcttTbs3nPrl79TAMpYmcSk8HxHPND4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQ1MXEp+OSzDwMjdrPUW+Lakccmt80wG8W74HWQzlE6wfST/oK5VUhRZxul0i1k//
-	 Tv1qP5wdC4GySaMGTIHQUA5GoOYABrYEl9l14JLzBvSdmHGAov3XshvQke+v9gTwiJ
-	 ejpAUtQmm6qXfg9dyPIPWDhotpljnlhd7QfIkeDo=
+	b=xdVoBJzpHY89gB9VXYOk4Qd49od8laRFJypU6D61ruSmkWIoTUR8irjmqTwYBa+ql
+	 AgTbMXQDKJ0UOubtiK0A9OPse3kXAOmS0A+WimdcfAnsYsyyaqVHKGWCdI+scYuwl8
+	 II+m9HP2v41PWr150KQSPhBuZXhwlNmCWJCjJQvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 149/277] of: unittest: Fix device reference count leak in of_unittest_pci_node_verify
-Date: Fri, 17 Oct 2025 16:52:36 +0200
-Message-ID: <20251017145152.564633211@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 150/277] openat2: dont trigger automounts with RESOLVE_NO_XDEV
+Date: Fri, 17 Oct 2025 16:52:37 +0200
+Message-ID: <20251017145152.600707042@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,41 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Askar Safin <safinaskar@zohomail.com>
 
-commit a8de554774ae48efbe48ace79f8badae2daa2bf1 upstream.
+commit 042a60680de43175eb4df0977ff04a4eba9da082 upstream.
 
-In of_unittest_pci_node_verify(), when the add parameter is false,
-device_find_any_child() obtains a reference to a child device. This
-function implicitly calls get_device() to increment the device's
-reference count before returning the pointer. However, the caller
-fails to properly release this reference by calling put_device(),
-leading to a device reference count leak. Add put_device() in the else
-branch immediately after child_dev is no longer needed.
+openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
+doesn't traverse through automounts, but may still trigger them.
+(See the link for full bug report with reproducer.)
 
-As the comment of device_find_any_child states: "NOTE: you will need
-to drop the reference with put_device() after use".
+This commit fixes this bug.
 
-Found by code review.
-
+Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safinaskar@zohomail.com/
+Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
 Cc: stable@vger.kernel.org
-Fixes: 26409dd04589 ("of: unittest: Add pci_dt_testdrv pci driver")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Askar Safin <safinaskar@zohomail.com>
+Link: https://lore.kernel.org/20250825181233.2464822-5-safinaskar@zohomail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/unittest.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/namei.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -4191,6 +4191,7 @@ static int of_unittest_pci_node_verify(s
- 		unittest(!np, "Child device tree node is not removed\n");
- 		child_dev = device_find_any_child(&pdev->dev);
- 		unittest(!child_dev, "Child device is not removed\n");
-+		put_device(child_dev);
- 	}
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -1388,6 +1388,10 @@ static int follow_automount(struct path
+ 	    dentry->d_inode)
+ 		return -EISDIR;
  
- failed:
++	/* No need to trigger automounts if mountpoint crossing is disabled. */
++	if (lookup_flags & LOOKUP_NO_XDEV)
++		return -EXDEV;
++
+ 	if (count && (*count)++ >= MAXSYMLINKS)
+ 		return -ELOOP;
+ 
+@@ -1411,6 +1415,10 @@ static int __traverse_mounts(struct path
+ 		/* Allow the filesystem to manage the transit without i_mutex
+ 		 * being held. */
+ 		if (flags & DCACHE_MANAGE_TRANSIT) {
++			if (lookup_flags & LOOKUP_NO_XDEV) {
++				ret = -EXDEV;
++				break;
++			}
+ 			ret = path->dentry->d_op->d_manage(path, false);
+ 			flags = smp_load_acquire(&path->dentry->d_flags);
+ 			if (ret < 0)
 
 
