@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091EC337110;
-	Fri, 17 Oct 2025 15:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF433BB5A;
+	Fri, 17 Oct 2025 15:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714877; cv=none; b=tkdyNPYvfUd2xcYiXtGPZWRTakI2Mm140MDcKFw7iP7aooM/KndQeZ95X0LP6ri6bxORyhph4ZL3QZh4zS+H9JoQCFQ0MYkbRrkxFihzWcQ0KmbtwPunQuzjLt/+Uwl1aqo+l8wOQV/pzS1ribjbwXQtyLGSMZ5OEGeyXq+97gw=
+	t=1760714879; cv=none; b=H6lLxr5o11oe34xrabDTsxZgWYS9bMHopoDLTH9YN8crrFZ65WBSwSR/Je4O7kA1gjdAog4x25yaazubQ/0GuqkSWwhrPdo/z927CVF6d5bI+sbgnY8qgG/7b5mk7m2yaPh2rZt6mAZ04sS65BXOP08AaV79IRK2PrbhjUV+tGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714877; c=relaxed/simple;
-	bh=0NIVJRpVktzXlAoDRjPlqGC4apFkoIJZ3ZaAQcdLSrs=;
+	s=arc-20240116; t=1760714879; c=relaxed/simple;
+	bh=cgSd88vY28Rcz0tvHVU13W29xKKatSBa9s5YKSquHxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSqxgXYxR5wjRrKp6MdqQpjpzT+qcV7ICWS/klSca8Lg2ev0/jI2MuhFH2LDCGteyFEzK0lQ4x2qbqKmo75a+cm++3Ch/eYJURjZf73koOhrgJAyjxO34nq8I+8QFcK5exGCw1jqUSRJCSphzXFMLjbHPCJytcEfomRhghlqh+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOsvcIi0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6/D2wYCOC8l+AfuY4QaH0T98AoxkEK9QACPIQqUxVqfE4SeJdj5EVdnv6zl7keUd8mqq51uzSrBkWpzfPqo/PtotaQSMTRquffQ9SgBWzSGr1bUebCJA45TG+2GUlvAVeyezzVd3UFlF5kUnTg43Ne2TovBSzSXBnALrFrXyMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N46jR9sS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOsvcIi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401D8C4CEE7;
-	Fri, 17 Oct 2025 15:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N46jR9sS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396E9C4CEE7;
+	Fri, 17 Oct 2025 15:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714876;
-	bh=0NIVJRpVktzXlAoDRjPlqGC4apFkoIJZ3ZaAQcdLSrs=;
+	s=korg; t=1760714879;
+	bh=cgSd88vY28Rcz0tvHVU13W29xKKatSBa9s5YKSquHxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOsvcIi0afyAChTI9bir4ONKQmyKBkjtr7ItEYNoHGN+s1zMXOf7kURuCSR42wogy
-	 ZrKDjKuWY/qFZhfDytxDizKng/trpfKRF3p/Tzkd9Lc7MhHUaAuLXzNjUQxt3t52a1
-	 a/rJCFOMP7tVM5YFN23SSrm0JRWoB1bXTittQ6kk=
+	b=N46jR9sSvIi2fRICJ1d0CWLhGL1Br9jjLyLvu4Tp71308zly+eX7DOmO2r5pLkTYc
+	 STDm2toxMlX7Zf1oYxusviCKCxi7YJZKk/bnnEQqHLHF12UjSbJfAVrrnJAIUoOA1B
+	 xv80YYhPg1pZmKhO2GPCvt7GXpkkazRBVAcyfX/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Sandoval <osandov@fb.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.17 004/371] arm64: map [_text, _stext) virtual address range non-executable+read-only
-Date: Fri, 17 Oct 2025 16:49:39 +0200
-Message-ID: <20251017145201.950315563@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH 6.17 005/371] rseq: Protect event mask against membarrier IPI
+Date: Fri, 17 Oct 2025 16:49:40 +0200
+Message-ID: <20251017145201.986091275@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,146 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Sandoval <osandov@fb.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 5973a62efa34c80c9a4e5eac1fca6f6209b902af upstream.
+commit 6eb350a2233100a283f882c023e5ad426d0ed63b upstream.
 
-Since the referenced fixes commit, the kernel's .text section is only
-mapped starting from _stext; the region [_text, _stext) is omitted. As a
-result, other vmalloc/vmap allocations may use the virtual addresses
-nominally in the range [_text, _stext). This address reuse confuses
-multiple things:
+rseq_need_restart() reads and clears task::rseq_event_mask with preemption
+disabled to guard against the scheduler.
 
-1. crash_prepare_elf64_headers() sets up a segment in /proc/vmcore
-   mapping the entire range [_text, _end) to
-   [__pa_symbol(_text), __pa_symbol(_end)). Reading an address in
-   [_text, _stext) from /proc/vmcore therefore gives the incorrect
-   result.
-2. Tools doing symbolization (either by reading /proc/kallsyms or based
-   on the vmlinux ELF file) will incorrectly identify vmalloc/vmap
-   allocations in [_text, _stext) as kernel symbols.
+But membarrier() uses an IPI and sets the PREEMPT bit in the event mask
+from the IPI, which leaves that RMW operation unprotected.
 
-In practice, both of these issues affect the drgn debugger.
-Specifically, there were cases where the vmap IRQ stacks for some CPUs
-were allocated in [_text, _stext). As a result, drgn could not get the
-stack trace for a crash in an IRQ handler because the core dump
-contained invalid data for the IRQ stack address. The stack addresses
-were also symbolized as being in the _text symbol.
+Use guard(irq) if CONFIG_MEMBARRIER is enabled to fix that.
 
-Fix this by bringing back the mapping of [_text, _stext), but now make
-it non-executable and read-only. This prevents other allocations from
-using it while still achieving the original goal of not mapping
-unpredictable data as executable. Other than the changed protection,
-this is effectively a revert of the fixes commit.
-
-Fixes: e2a073dde921 ("arm64: omit [_text, _stext) from permanent kernel mapping")
+Fixes: 2a36ab717e8f ("rseq/membarrier: Add MEMBARRIER_CMD_PRIVATE_EXPEDITED_RSEQ")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Omar Sandoval <osandov@fb.com>
-Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/pi/map_kernel.c |    6 ++++++
- arch/arm64/kernel/setup.c         |    4 ++--
- arch/arm64/mm/init.c              |    2 +-
- arch/arm64/mm/mmu.c               |   14 +++++++++-----
- 4 files changed, 18 insertions(+), 8 deletions(-)
+ include/linux/rseq.h |   11 ++++++++---
+ kernel/rseq.c        |   10 +++++-----
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/kernel/pi/map_kernel.c
-+++ b/arch/arm64/kernel/pi/map_kernel.c
-@@ -78,6 +78,12 @@ static void __init map_kernel(u64 kaslr_
- 	twopass |= enable_scs;
- 	prot = twopass ? data_prot : text_prot;
+--- a/include/linux/rseq.h
++++ b/include/linux/rseq.h
+@@ -7,6 +7,12 @@
+ #include <linux/preempt.h>
+ #include <linux/sched.h>
  
-+	/*
-+	 * [_stext, _text) isn't executed after boot and contains some
-+	 * non-executable, unpredictable data, so map it non-executable.
-+	 */
-+	map_segment(init_pg_dir, &pgdp, va_offset, _text, _stext, data_prot,
-+		    false, root_level);
- 	map_segment(init_pg_dir, &pgdp, va_offset, _stext, _etext, prot,
- 		    !twopass, root_level);
- 	map_segment(init_pg_dir, &pgdp, va_offset, __start_rodata,
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -214,7 +214,7 @@ static void __init request_standard_reso
- 	unsigned long i = 0;
- 	size_t res_size;
- 
--	kernel_code.start   = __pa_symbol(_stext);
-+	kernel_code.start   = __pa_symbol(_text);
- 	kernel_code.end     = __pa_symbol(__init_begin - 1);
- 	kernel_data.start   = __pa_symbol(_sdata);
- 	kernel_data.end     = __pa_symbol(_end - 1);
-@@ -280,7 +280,7 @@ u64 cpu_logical_map(unsigned int cpu)
- 
- void __init __no_sanitize_address setup_arch(char **cmdline_p)
++#ifdef CONFIG_MEMBARRIER
++# define RSEQ_EVENT_GUARD	irq
++#else
++# define RSEQ_EVENT_GUARD	preempt
++#endif
++
+ /*
+  * Map the event mask on the user-space ABI enum rseq_cs_flags
+  * for direct mask checks.
+@@ -41,9 +47,8 @@ static inline void rseq_handle_notify_re
+ static inline void rseq_signal_deliver(struct ksignal *ksig,
+ 				       struct pt_regs *regs)
  {
--	setup_initial_init_mm(_stext, _etext, _edata, _end);
-+	setup_initial_init_mm(_text, _etext, _edata, _end);
- 
- 	*cmdline_p = boot_command_line;
- 
---- a/arch/arm64/mm/init.c
-+++ b/arch/arm64/mm/init.c
-@@ -279,7 +279,7 @@ void __init arm64_memblock_init(void)
- 	 * Register the kernel text, kernel data, initrd, and initial
- 	 * pagetables with memblock.
- 	 */
--	memblock_reserve(__pa_symbol(_stext), _end - _stext);
-+	memblock_reserve(__pa_symbol(_text), _end - _text);
- 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && phys_initrd_size) {
- 		/* the generic initrd code expects virtual addresses */
- 		initrd_start = __phys_to_virt(phys_initrd_start);
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -574,8 +574,8 @@ void __init mark_linear_text_alias_ro(vo
- 	/*
- 	 * Remove the write permissions from the linear alias of .text/.rodata
- 	 */
--	update_mapping_prot(__pa_symbol(_stext), (unsigned long)lm_alias(_stext),
--			    (unsigned long)__init_begin - (unsigned long)_stext,
-+	update_mapping_prot(__pa_symbol(_text), (unsigned long)lm_alias(_text),
-+			    (unsigned long)__init_begin - (unsigned long)_text,
- 			    PAGE_KERNEL_RO);
+-	preempt_disable();
+-	__set_bit(RSEQ_EVENT_SIGNAL_BIT, &current->rseq_event_mask);
+-	preempt_enable();
++	scoped_guard(RSEQ_EVENT_GUARD)
++		__set_bit(RSEQ_EVENT_SIGNAL_BIT, &current->rseq_event_mask);
+ 	rseq_handle_notify_resume(ksig, regs);
  }
  
-@@ -636,7 +636,7 @@ static inline void arm64_kfence_map_pool
- static void __init map_mem(pgd_t *pgdp)
- {
- 	static const u64 direct_map_end = _PAGE_END(VA_BITS_MIN);
--	phys_addr_t kernel_start = __pa_symbol(_stext);
-+	phys_addr_t kernel_start = __pa_symbol(_text);
- 	phys_addr_t kernel_end = __pa_symbol(__init_begin);
- 	phys_addr_t start, end;
- 	phys_addr_t early_kfence_pool;
-@@ -683,7 +683,7 @@ static void __init map_mem(pgd_t *pgdp)
- 	}
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -342,12 +342,12 @@ static int rseq_need_restart(struct task
  
  	/*
--	 * Map the linear alias of the [_stext, __init_begin) interval
-+	 * Map the linear alias of the [_text, __init_begin) interval
- 	 * as non-executable now, and remove the write permission in
- 	 * mark_linear_text_alias_ro() below (which will be called after
- 	 * alternative patching has completed). This makes the contents
-@@ -710,6 +710,10 @@ void mark_rodata_ro(void)
- 	WRITE_ONCE(rodata_is_rw, false);
- 	update_mapping_prot(__pa_symbol(__start_rodata), (unsigned long)__start_rodata,
- 			    section_size, PAGE_KERNEL_RO);
-+	/* mark the range between _text and _stext as read only. */
-+	update_mapping_prot(__pa_symbol(_text), (unsigned long)_text,
-+			    (unsigned long)_stext - (unsigned long)_text,
-+			    PAGE_KERNEL_RO);
+ 	 * Load and clear event mask atomically with respect to
+-	 * scheduler preemption.
++	 * scheduler preemption and membarrier IPIs.
+ 	 */
+-	preempt_disable();
+-	event_mask = t->rseq_event_mask;
+-	t->rseq_event_mask = 0;
+-	preempt_enable();
++	scoped_guard(RSEQ_EVENT_GUARD) {
++		event_mask = t->rseq_event_mask;
++		t->rseq_event_mask = 0;
++	}
+ 
+ 	return !!event_mask;
  }
- 
- static void __init declare_vma(struct vm_struct *vma,
-@@ -780,7 +784,7 @@ static void __init declare_kernel_vmas(v
- {
- 	static struct vm_struct vmlinux_seg[KERNEL_SEGMENT_COUNT];
- 
--	declare_vma(&vmlinux_seg[0], _stext, _etext, VM_NO_GUARD);
-+	declare_vma(&vmlinux_seg[0], _text, _etext, VM_NO_GUARD);
- 	declare_vma(&vmlinux_seg[1], __start_rodata, __inittext_begin, VM_NO_GUARD);
- 	declare_vma(&vmlinux_seg[2], __inittext_begin, __inittext_end, VM_NO_GUARD);
- 	declare_vma(&vmlinux_seg[3], __initdata_begin, __initdata_end, VM_NO_GUARD);
 
 
