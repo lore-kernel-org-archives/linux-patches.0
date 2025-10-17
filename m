@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5DA32E147;
-	Fri, 17 Oct 2025 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411D8332909;
+	Fri, 17 Oct 2025 15:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714011; cv=none; b=G2px6xZM+KS56lDzprh7XvswTIAi8/yn7Ld/8BbR+WYe4Vo2RC/AuoX8jtDias0qYx4bnNP+vAW+PTm13W5RECKzmCUG/E8cBaQ4l3c5bs0Z17tC50UezCzILUhRYDYx6tPuwu9Pu6VfM/1QIn8oSo74Ov1rsyyUwgiMedQkxfE=
+	t=1760714014; cv=none; b=tt+O0NZd/XBUMZNdZHMUtmtERqgqdM0nMsP7G4LhDHcyB6m9CJJPVigHeN3oSY0izN8VNNzdU7NLfj9eorMXa+tBxlkwvtNY2+vZXMvnAJWJwtQsMVNo4dG4r20nP8/dwiK5lYwcBssqKHTXf1Xfe2enE31eIhruEG/whKGwkoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714011; c=relaxed/simple;
-	bh=69XIVgZAi45SwiSqMgY4xzqxYOlDv2XLkd6a7EV8hvs=;
+	s=arc-20240116; t=1760714014; c=relaxed/simple;
+	bh=Tnks1huSEwz0MnqUlfdV/bDB+tuHdByTW6UK3h875iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDztPf67Wgz0HqYKwRQsz2myGwetllzafIEOQVmF/IVFR9nl0FCzmpsEUFLSdKLLGZEo3lZmZIVkk2RRua6yQ+ETPV/gt2y0a+RG4weFwTO+bUVaA+XAbLQuX1i9rp7WPkdOK1mrioICwvyQXtDiW6sbdG2dxBLxG2fx0sU3wus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5bWBv05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Px/JCd/TOPFBvOu8quTIF/b2+W685eoOD5nR0CC/7UoeZQNIoGdD7rA+eVBVXwerS5uGX5H6sd8T8QAfldeKs7IrV7mSwEMHZGgiYJrIoBAM1DgqVPfOzOoDX4rn0gR7iZOCL51fbFvl5HtVgc4gfWDLoEHggj8LyycT/QUBs/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVg++CK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5bWBv05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2287C4CEE7;
-	Fri, 17 Oct 2025 15:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVg++CK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA49C4CEE7;
+	Fri, 17 Oct 2025 15:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714011;
-	bh=69XIVgZAi45SwiSqMgY4xzqxYOlDv2XLkd6a7EV8hvs=;
+	s=korg; t=1760714014;
+	bh=Tnks1huSEwz0MnqUlfdV/bDB+tuHdByTW6UK3h875iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5bWBv05fPfPZmDHytFPQe30uVVu5EpJ6KVGolHfKN6I/yiEb83PvnoStfgmLFwR/
-	 2wF4bDm0XN5GtshIG4Iy/vtORCnu0HkA910fFM19v+ccH5cgUqgwoGTYxyxBfVw5sJ
-	 tWYairWsg3+nkckNg+5WFa3L8GCtMz93jfymCCzE=
+	b=NVg++CK+F5xaIsXJNpeX6F/ow2HkmyqzgKx1U5XkUMkHMGanKKZ7J2hOSJ1g/HIcw
+	 AHOT8dYbsPXsyZmlKCVemUZ6hP/afntfvDTJYdzcBJOhc3d32MaWF/tPBh3spT2+2b
+	 xGJNVxmgEaITHmc4DmszLmwfq9gcWIgrPV42n6QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Nicolas Pitre <nico@fluxnic.net>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/201] cramfs: Verify inode mode when loading from disk
-Date: Fri, 17 Oct 2025 16:54:19 +0200
-Message-ID: <20251017145142.034215423@linuxfoundation.org>
+Subject: [PATCH 6.6 199/201] writeback: Avoid softlockup when switching many inodes
+Date: Fri, 17 Oct 2025 16:54:20 +0200
+Message-ID: <20251017145142.070450352@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -53,49 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 7f9d34b0a7cb93d678ee7207f0634dbf79e47fe5 ]
+[ Upstream commit 66c14dccd810d42ec5c73bb8a9177489dfd62278 ]
 
-The inode mode loaded from corrupted disk can be invalid. Do like what
-commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
-does.
+process_inode_switch_wbs_work() can be switching over 100 inodes to a
+different cgroup. Since switching an inode requires counting all dirty &
+under-writeback pages in the address space of each inode, this can take
+a significant amount of time. Add a possibility to reschedule after
+processing each inode to avoid softlockups.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://lore.kernel.org/429b3ef1-13de-4310-9a8e-c2dc9a36234a@I-love.SAKURA.ne.jp
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cramfs/inode.c | 11 ++++++++++-
+ fs/fs-writeback.c | 11 ++++++++++-
  1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cramfs/inode.c b/fs/cramfs/inode.c
-index 2fbf97077ce91..3f06362985b5a 100644
---- a/fs/cramfs/inode.c
-+++ b/fs/cramfs/inode.c
-@@ -117,9 +117,18 @@ static struct inode *get_cramfs_inode(struct super_block *sb,
- 		inode_nohighmem(inode);
- 		inode->i_data.a_ops = &cramfs_aops;
- 		break;
--	default:
-+	case S_IFCHR:
-+	case S_IFBLK:
-+	case S_IFIFO:
-+	case S_IFSOCK:
- 		init_special_inode(inode, cramfs_inode->mode,
- 				old_decode_dev(cramfs_inode->size));
-+		break;
-+	default:
-+		printk(KERN_DEBUG "CRAMFS: Invalid file type 0%04o for inode %lu.\n",
-+		       inode->i_mode, inode->i_ino);
-+		iget_failed(inode);
-+		return ERR_PTR(-EIO);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index ed110568d6127..0454a1f0fc636 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -479,6 +479,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 */
+ 	down_read(&bdi->wb_switch_rwsem);
+ 
++	inodep = isw->inodes;
+ 	/*
+ 	 * By the time control reaches here, RCU grace period has passed
+ 	 * since I_WB_SWITCH assertion and all wb stat update transactions
+@@ -489,6 +490,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 * gives us exclusion against all wb related operations on @inode
+ 	 * including IO list manipulations and stat updates.
+ 	 */
++relock:
+ 	if (old_wb < new_wb) {
+ 		spin_lock(&old_wb->list_lock);
+ 		spin_lock_nested(&new_wb->list_lock, SINGLE_DEPTH_NESTING);
+@@ -497,10 +499,17 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 		spin_lock_nested(&old_wb->list_lock, SINGLE_DEPTH_NESTING);
  	}
  
- 	inode->i_mode = cramfs_inode->mode;
+-	for (inodep = isw->inodes; *inodep; inodep++) {
++	while (*inodep) {
+ 		WARN_ON_ONCE((*inodep)->i_wb != old_wb);
+ 		if (inode_do_switch_wbs(*inodep, old_wb, new_wb))
+ 			nr_switched++;
++		inodep++;
++		if (*inodep && need_resched()) {
++			spin_unlock(&new_wb->list_lock);
++			spin_unlock(&old_wb->list_lock);
++			cond_resched();
++			goto relock;
++		}
+ 	}
+ 
+ 	spin_unlock(&new_wb->list_lock);
 -- 
 2.51.0
 
