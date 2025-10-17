@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D0D330B1E;
-	Fri, 17 Oct 2025 15:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633A2330B1E;
+	Fri, 17 Oct 2025 15:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716381; cv=none; b=nSX6ZNBg5hdz3e38f1KPgkHkX/hgxalAYT++eU/BI2Iga8QTp39SnaSsm9AEnzuLS8itQWZyJxFFncovG2lHAF/C96yVmE4tKzMM0hq8pv8Fcmo+XgdFEmPEbdp3BQAOUqTZSKXz6+skPLJijlBz2rvmqLBuMUVx2trhyl7A9kg=
+	t=1760716382; cv=none; b=E1HTdsdpdLiOkOVMswd+cKg9YNRYkY7GYvTxj/4L3BDbssW8cwoltb5pkug1b5IlPUiWldknLVOSLXaiB6AmnZHd19kbIxxRGoayEgluRIekeXxIDDsBJYeKe26DaYWUkGtPpMGcQBObtOpdsDkjRN/DbCsakeVZJuoc3ls43rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716381; c=relaxed/simple;
-	bh=QPBj88U6r+yN+vUKWdJMa4fdeRJQ1FGbMsukZ0Wgw6A=;
+	s=arc-20240116; t=1760716382; c=relaxed/simple;
+	bh=rsqAAjT3XsIbOnYuzWFjmVU1RM8DIx2934+/gQdI2S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oa6tZLO57zgtzrW32p4TVfQ/wVjsXiSKT34efHNmFSgqXIo60AkPh08ipeLCBpGuqneGYd0QKfB2FcXptFvSm/39Kpt1OnRnR48hUMB720ieG4H8/t7JU1QlvGOfF+VP8GjV8T+ssREkg9Dooq8835+6YvCcmo0k/+mz3fYCFBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KItJLihZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVZcSrMo8+l7mTWSdykK47u7JYQHIZtU2cCxjFdzQNnPR5qJKhawM/9SPu8Ow/TFsyJ63VrKtt9cnqgJnzPHdJiYnRLGIVxS3brsfgBF0ATOmPTrN1uOwee2zu788B/MRnLqxd2PefRF8jGD6CPnbaoNtmK3LsIEE9WIGUSVRRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JXAWjQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KItJLihZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C37C4CEE7;
-	Fri, 17 Oct 2025 15:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JXAWjQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1104C4CEE7;
+	Fri, 17 Oct 2025 15:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716379;
-	bh=QPBj88U6r+yN+vUKWdJMa4fdeRJQ1FGbMsukZ0Wgw6A=;
+	s=korg; t=1760716382;
+	bh=rsqAAjT3XsIbOnYuzWFjmVU1RM8DIx2934+/gQdI2S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KItJLihZ6c9WQOkOK2N77t3uKpa0h3RI/6ihH0XQ+hR0P+EYl5tz7q9WRE4fOGGjX
-	 Q+pVc3QQYlfZIyco/qx+yjwNSDjsh2+9Y237Te/D30V6SihAn/edu+Abd5Ag1bmw2K
-	 jorAzECpoNtZxqR9YpT544D1whMYF4YOWVBRTK4E=
+	b=2JXAWjQyJ6Ad7mfOYmcs+HLaz1Jsz+ljFZ9rSRwcUjCaaw4ATshVaXfxejkO/SQ6v
+	 mo9ULtSPb1b4jqujTJ6iQ3CuI4TgKk8CXEnxC7QsW6ius4vDVuzd3lEfDEFu04k/i5
+	 Z9RBkODDPqGW0p+W2lKi+Gm+7GbdTyYnVHZHTtlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Jan Beulich <jbeulich@suse.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
 	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 170/276] xen/events: Cleanup find_virq() return codes
-Date: Fri, 17 Oct 2025 16:54:23 +0200
-Message-ID: <20251017145148.677668300@linuxfoundation.org>
+Subject: [PATCH 5.15 171/276] xen/manage: Fix suspend error path
+Date: Fri, 17 Oct 2025 16:54:24 +0200
+Message-ID: <20251017145148.714572775@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,55 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 08df2d7dd4ab2db8a172d824cda7872d5eca460a upstream.
+commit f770c3d858687252f1270265ba152d5c622e793f upstream.
 
-rc is overwritten by the evtchn_status hypercall in each iteration, so
-the return value will be whatever the last iteration is.  This could
-incorrectly return success even if the event channel was not found.
-Change to an explicit -ENOENT for an un-found virq and return 0 on a
-successful match.
+The device power management API has the following asymmetry:
+* dpm_suspend_start() does not clean up on failure
+  (it requires a call to dpm_resume_end())
+* dpm_suspend_end() does clean up on failure
+  (it does not require a call to dpm_resume_start())
 
-Fixes: 62cc5fc7b2e0 ("xen/pv-on-hvm kexec: rebind virqs to existing eventchannel ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
+patches for 2.6.27") in June 2008:  It removed a call to device_resume()
+from device_suspend() (which was later renamed to dpm_suspend_start()).
+
+When Xen began using the device power management API in May 2008 with
+commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
+not yet exist.  But since it was introduced, a call to dpm_resume_end()
+is missing in the error path of dpm_suspend_start().  Fix it.
+
+Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org  # v2.6.27
+Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250828003604.8949-2-jason.andryuk@amd.com>
+Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/events/events_base.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/xen/manage.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -1331,10 +1331,11 @@ static int find_virq(unsigned int virq,
- {
- 	struct evtchn_status status;
- 	evtchn_port_t port;
--	int rc = -ENOENT;
- 
- 	memset(&status, 0, sizeof(status));
- 	for (port = 0; port < xen_evtchn_max_channels(); port++) {
-+		int rc;
-+
- 		status.dom = DOMID_SELF;
- 		status.port = port;
- 		rc = HYPERVISOR_event_channel_op(EVTCHNOP_status, &status);
-@@ -1344,10 +1345,10 @@ static int find_virq(unsigned int virq,
- 			continue;
- 		if (status.u.virq == virq && status.vcpu == xen_vcpu_nr(cpu)) {
- 			*evtchn = port;
--			break;
-+			return 0;
- 		}
+--- a/drivers/xen/manage.c
++++ b/drivers/xen/manage.c
+@@ -116,7 +116,7 @@ static void do_suspend(void)
+ 	err = dpm_suspend_start(PMSG_FREEZE);
+ 	if (err) {
+ 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
+-		goto out_thaw;
++		goto out_resume_end;
  	}
--	return rc;
-+	return -ENOENT;
- }
  
- /**
+ 	printk(KERN_DEBUG "suspending xenstore...\n");
+@@ -156,6 +156,7 @@ out_resume:
+ 	else
+ 		xs_suspend_cancel();
+ 
++out_resume_end:
+ 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
+ 
+ out_thaw:
 
 
