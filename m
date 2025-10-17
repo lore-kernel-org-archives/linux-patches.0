@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ED1330B1F;
-	Fri, 17 Oct 2025 15:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514A5330B2D;
+	Fri, 17 Oct 2025 15:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716411; cv=none; b=hOC8fztOt1y24bukr9C8NrU6X3aCds6hjat/5aBHNnVLOwXVNyq/1d0Y73pouRm5ksvbGgKUijF8HapyvgMCnoQTcLVgpLwJ2yj3mbc+YoAGaabZTfceIhzHnXVMaHFefEy4aLfsDuYVxRr1D9LK/69BbW6groZisNIBMd5ii/k=
+	t=1760716414; cv=none; b=X1UoqZTdScFtKJapYgO33nvymj5QO7sqXnV9YDqinsbC2dIoGEFVVQygj9jtEHnTFFgqw4mHEOYn/J4jR2N5MzE+HMeRHXEc2aRLPw7YQx6fHAX6EyKLvfz3VJignXG/JdP2p4ZVOLoE/kZE4wjyxcSMSse0pfuOE5CN60/jhRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716411; c=relaxed/simple;
-	bh=b7V0KUifPXVhl2cLin2edyVU8QHkRD8jEzNCA9Dm0zY=;
+	s=arc-20240116; t=1760716414; c=relaxed/simple;
+	bh=5DqIMIlzfYJ4srFBuM7FaCGxLMb2HAmVIIAud92B2iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpwvxw8iXZJOg7z/Jw17kslvdTGkChtdtJe6c6PBVPZwphp/upL2ewfrOB1flWhgfzlKCBQ3Rc7jCbvGmBIptm2csB0S7vnQlKS37Yvq8fK/AnbIxjoHR2tqdQ+N01pMKW7rsWiX/8LpxkH8EuDnNDD9kqVh4Uzood1AyJs3lIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BftHGoZb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoN8mJiYbGZH1kqLhC6doL/t+JSUCEvsLNVwI2uX3MjdVYezdWH+cjX5aU2HnFFRVpcb7v87iV9BEB1dWpiBn4HpO/wz2tMHLA1GTnkmFAzCAZ27EiUsKZApyEIqSnIPKvzLiQMs/G2X/pBQdP4JVtbLlZc9oSJBvRiyPRmTIaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuAX2l0v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BftHGoZb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34C6C4CEE7;
-	Fri, 17 Oct 2025 15:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuAX2l0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF72C4CEE7;
+	Fri, 17 Oct 2025 15:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716411;
-	bh=b7V0KUifPXVhl2cLin2edyVU8QHkRD8jEzNCA9Dm0zY=;
+	s=korg; t=1760716414;
+	bh=5DqIMIlzfYJ4srFBuM7FaCGxLMb2HAmVIIAud92B2iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BftHGoZb5FbTr4SC5iZozI8Y5cUXKhW6V/GuHlOoWCqZkcuCrGF5zkBX22d2al4Jn
-	 w4HlPEyhoXtG02hnqIg9VkvfoB9LB89AYS4eKqQN0G/cXvX/jwIFpsfC8EMnafWBIJ
-	 GeNFxoxMBeicIZnZC4YHdOTRVCBIiQ/tqfsQDalI=
+	b=TuAX2l0vcL+aCQSRoNcbPU2YresCn0hYz/7RXBJ9aMd9uvVvDMoQ5SkD+or8YjToa
+	 cXxCqkSidoBVe9rwWFspbBp37AbfFYaLtbxJ71uuCa7szg9HWOPvaYEqGFvbRZY1bs
+	 Ht/khbHC7PPCfh4x09n9LMo/aG+vPKoyIN2zkiJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/276] net/sctp: fix a null dereference in sctp_disposition sctp_sf_do_5_1D_ce()
-Date: Fri, 17 Oct 2025 16:54:02 +0200
-Message-ID: <20251017145147.919428915@linuxfoundation.org>
+Subject: [PATCH 5.15 150/276] tcp: Dont call reqsk_fastopen_remove() in tcp_conn_request().
+Date: Fri, 17 Oct 2025 16:54:03 +0200
+Message-ID: <20251017145147.955382336@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,39 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandr Sapozhnikov <alsp705@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 2f3119686ef50319490ccaec81a575973da98815 ]
+[ Upstream commit 2e7cbbbe3d61c63606994b7ff73c72537afe2e1c ]
 
-If new_asoc->peer.adaptation_ind=0 and sctp_ulpevent_make_authkey=0
-and sctp_ulpevent_make_authkey() returns 0, then the variable
-ai_ev remains zero and the zero will be dereferenced
-in the sctp_ulpevent_free() function.
+syzbot reported the splat below in tcp_conn_request(). [0]
 
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Fixes: 30f6ebf65bc4 ("sctp: add SCTP_AUTH_NO_AUTH type for AUTHENTICATION_EVENT")
-Link: https://patch.msgid.link/20251002091448.11-1-alsp705@gmail.com
+If a listener is close()d while a TFO socket is being processed in
+tcp_conn_request(), inet_csk_reqsk_queue_add() does not set reqsk->sk
+and calls inet_child_forget(), which calls tcp_disconnect() for the
+TFO socket.
+
+After the cited commit, tcp_disconnect() calls reqsk_fastopen_remove(),
+where reqsk_put() is called due to !reqsk->sk.
+
+Then, reqsk_fastopen_remove() in tcp_conn_request() decrements the
+last req->rsk_refcnt and frees reqsk, and __reqsk_free() at the
+drop_and_free label causes the refcount underflow for the listener
+and double-free of the reqsk.
+
+Let's remove reqsk_fastopen_remove() in tcp_conn_request().
+
+Note that other callers make sure tp->fastopen_rsk is not NULL.
+
+[0]:
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 12 PID: 5563 at lib/refcount.c:28 refcount_warn_saturate (lib/refcount.c:28)
+Modules linked in:
+CPU: 12 UID: 0 PID: 5563 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+RIP: 0010:refcount_warn_saturate (lib/refcount.c:28)
+Code: ab e8 8e b4 98 ff 0f 0b c3 cc cc cc cc cc 80 3d a4 e4 d6 01 00 75 9c c6 05 9b e4 d6 01 01 48 c7 c7 e8 df fb ab e8 6a b4 98 ff <0f> 0b e9 03 5b 76 00 cc 80 3d 7d e4 d6 01 00 0f 85 74 ff ff ff c6
+RSP: 0018:ffffa79fc0304a98 EFLAGS: 00010246
+RAX: d83af4db1c6b3900 RBX: ffff9f65c7a69020 RCX: d83af4db1c6b3900
+RDX: 0000000000000000 RSI: 00000000ffff7fff RDI: ffffffffac78a280
+RBP: 000000009d781b60 R08: 0000000000007fff R09: ffffffffac6ca280
+R10: 0000000000017ffd R11: 0000000000000004 R12: ffff9f65c7b4f100
+R13: ffff9f65c7d23c00 R14: ffff9f65c7d26000 R15: ffff9f65c7a64ef8
+FS:  00007f9f962176c0(0000) GS:ffff9f65fcf00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000180 CR3: 000000000dbbe006 CR4: 0000000000372ef0
+Call Trace:
+ <IRQ>
+ tcp_conn_request (./include/linux/refcount.h:400 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/net/sock.h:1965 ./include/net/request_sock.h:131 net/ipv4/tcp_input.c:7301)
+ tcp_rcv_state_process (net/ipv4/tcp_input.c:6708)
+ tcp_v6_do_rcv (net/ipv6/tcp_ipv6.c:1670)
+ tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1906)
+ ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:438)
+ ip6_input (net/ipv6/ip6_input.c:500)
+ ipv6_rcv (net/ipv6/ip6_input.c:311)
+ __netif_receive_skb (net/core/dev.c:6104)
+ process_backlog (net/core/dev.c:6456)
+ __napi_poll (net/core/dev.c:7506)
+ net_rx_action (net/core/dev.c:7569 net/core/dev.c:7696)
+ handle_softirqs (kernel/softirq.c:579)
+ do_softirq (kernel/softirq.c:480)
+ </IRQ>
+
+Fixes: 45c8a6cc2bcd ("tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20251001233755.1340927-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index b5f5ee233b59d..5a883bd722f5d 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -880,7 +880,8 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 	return SCTP_DISPOSITION_CONSUME;
- 
- nomem_authev:
--	sctp_ulpevent_free(ai_ev);
-+	if (ai_ev)
-+		sctp_ulpevent_free(ai_ev);
- nomem_aiev:
- 	sctp_ulpevent_free(ev);
- nomem_ev:
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index fea019cc92d3c..15548dc3cc5c5 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7060,7 +7060,6 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 				    &foc, TCP_SYNACK_FASTOPEN, skb);
+ 		/* Add the child socket directly into the accept queue */
+ 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
+-			reqsk_fastopen_remove(fastopen_sk, req, false);
+ 			bh_unlock_sock(fastopen_sk);
+ 			sock_put(fastopen_sk);
+ 			goto drop_and_free;
 -- 
 2.51.0
 
