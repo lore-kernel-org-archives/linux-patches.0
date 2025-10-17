@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230BF2F6932;
-	Fri, 17 Oct 2025 15:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00F4332ED8;
+	Fri, 17 Oct 2025 15:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713829; cv=none; b=jdOejBg33mpftZhS1QWBddNEGRy5yJeOdSgyS0MJ4mSxi4ArM3iDfGwrV8lXZqWgMq42/LUYDuAjbuEuH63MmYUf9moiEIbuY1vQDz58QK/a303DHe38pnZMrAA8ZdXrGHBQUdKc0QAXrTNKa/jwSCyNKEKeD3TA5LRlonUffXU=
+	t=1760713832; cv=none; b=ntusNQV1IWspO+r310H+4S6eoXQxNMntnXt/N1+II6Q/8zM3uYCYUZj+gB1u42NpP4qsjqPR2/YrPF5pOwbJMJz5MFnHLS/3yJRDlrb8O2VnqfL672+mnNosDnKAGVTYnfKRSjzGnCcLI80sbeUKysKkLBwkXnJ+45V/xcOP6Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713829; c=relaxed/simple;
-	bh=GtHAm+yWoFSPTm2tsIvTzll27gCVqLTchPshyS94NXw=;
+	s=arc-20240116; t=1760713832; c=relaxed/simple;
+	bh=AKh6kw8KCR2bjvYjA6Ve5BuHitM+96EYTmP+p0b8cG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cz9g6BFBYfNjKAk5tLqoJrl57OCFo6zVAQonsa4lgj+ma6NlkqafHLxdgm952+2iRjmH3ewXDBEEJnh+W/W3cuLX13Q4bU98OGsIjUJnodaGUhFaXsTjq9LfyLmWi2mqB18e5RjVCarag8wtlq3qtrg/XZ5UVVk9VEE/evuNMr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAgLwoQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftr7k84SnqPXBeQ1/8DXs3OH7A2GG83gYlljC8jAlPQFJLzOz78Mo2y8g++uJJqjw4YaSaFp7UVujSe3wadIQuDfL0PxD9OMeulJiWvw/lJaRtgfSvrevxKHAfYj0itbwWlhnkXDaYO2e+syOna4PDh6m+TXFEatnb4vo6Yt18Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJJyAr2w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAgLwoQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED1CC4CEE7;
-	Fri, 17 Oct 2025 15:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJJyAr2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B807C4CEF9;
+	Fri, 17 Oct 2025 15:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713829;
-	bh=GtHAm+yWoFSPTm2tsIvTzll27gCVqLTchPshyS94NXw=;
+	s=korg; t=1760713831;
+	bh=AKh6kw8KCR2bjvYjA6Ve5BuHitM+96EYTmP+p0b8cG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAgLwoQmMJtIUMTorv0Rp/uUJPaXYZnp3tNG4D6Jtq10CQI4WpjeCKJr/2OcFG9c4
-	 LR95TECg4k+yA9FceocvTOcuxAN/Ma0oe9er/iiuudTfft8XF/Hnl943FOKoiSTxFY
-	 TM8izm0owp3r6IuuxMWM3FcEIn17im1GRci0tGoU=
+	b=lJJyAr2wxntIp4dZ91pOTJ2RmBBvfyouvLkb1wNKXgEdYF4jmUbD8CeTzc9utxxHT
+	 Netqk0TK5dkJfh9jCnFvpZBW1vC2yDLCQg3rd8TOQPvG1m9wEtGm3jpCLK4K7VG7Qt
+	 HMpnqlqeIUX7+BxX+EDQzgC1npXUejddqSW1XR34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vidya Sagar <vidyas@nvidia.com>,
 	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.6 134/201] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
-Date: Fri, 17 Oct 2025 16:53:15 +0200
-Message-ID: <20251017145139.661185447@linuxfoundation.org>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.6 135/201] PCI: tegra194: Handle errors in BPMP response
+Date: Fri, 17 Oct 2025 16:53:16 +0200
+Message-ID: <20251017145139.696743720@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -50,43 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
+commit f8c9ad46b00453a8c075453f3745f8d263f44834 upstream.
 
-The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
-(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
+The return value from tegra_bpmp_transfer() indicates the success or
+failure of the IPC transaction with BPMP. If the transaction succeeded, we
+also need to check the actual command's result code.
 
-But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
-the MSI vector. This causes wrong MSI vector to be triggered, leading to
-the failure of PCI endpoint Kselftest MSI_TEST test case.
+If we don't have error handling for tegra_bpmp_transfer(), we will set the
+pcie->ep_state to EP_STATE_ENABLED even when the tegra_bpmp_transfer()
+command fails. Thus, the pcie->ep_state will get out of sync with reality,
+and any further PERST# assert + deassert will be a no-op and will not
+trigger the hardware initialization sequence.
 
-To fix this issue, convert the interrupt number to MSI vector.
+This is because pex_ep_event_pex_rst_deassert() checks the current
+pcie->ep_state, and does nothing if the current state is already
+EP_STATE_ENABLED.
+
+Thus, it is important to have error handling for tegra_bpmp_transfer(),
+such that the pcie->ep_state can not get out of sync with reality, so that
+we will try to initialize the hardware not only during the first PERST#
+assert + deassert, but also during any succeeding PERST# assert + deassert.
+
+One example where this fix is needed is when using a rock5b as host.
+During the initial PERST# assert + deassert (triggered by the bootloader on
+the rock5b) pex_ep_event_pex_rst_deassert() will get called, but for some
+unknown reason, the tegra_bpmp_transfer() call to initialize the PHY fails.
+Once Linux has been loaded on the rock5b, the PCIe driver will once again
+assert + deassert PERST#. However, without tegra_bpmp_transfer() error
+handling, this second PERST# assert + deassert will not trigger the
+hardware initialization sequence.
+
+With tegra_bpmp_transfer() error handling, the second PERST# assert +
+deassert will once again trigger the hardware to be initialized and this
+time the tegra_bpmp_transfer() succeeds.
 
 Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+[cassel: improve commit log]
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
+Link: https://patch.msgid.link/20250922140822.519796-8-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1963,10 +1963,10 @@ static int tegra_pcie_ep_raise_legacy_ir
+@@ -1218,6 +1218,7 @@ static int tegra_pcie_bpmp_set_ctrl_stat
+ 	struct mrq_uphy_response resp;
+ 	struct tegra_bpmp_message msg;
+ 	struct mrq_uphy_request req;
++	int err;
  
- static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
- {
--	if (unlikely(irq > 31))
-+	if (unlikely(irq > 32))
- 		return -EINVAL;
+ 	/*
+ 	 * Controller-5 doesn't need to have its state set by BPMP-FW in
+@@ -1240,7 +1241,13 @@ static int tegra_pcie_bpmp_set_ctrl_stat
+ 	msg.rx.data = &resp;
+ 	msg.rx.size = sizeof(resp);
  
--	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
-+	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
- 
- 	return 0;
+-	return tegra_bpmp_transfer(pcie->bpmp, &msg);
++	err = tegra_bpmp_transfer(pcie->bpmp, &msg);
++	if (err)
++		return err;
++	if (msg.rx.ret)
++		return -EINVAL;
++
++	return 0;
  }
+ 
+ static int tegra_pcie_bpmp_set_pll_state(struct tegra_pcie_dw *pcie,
+@@ -1249,6 +1256,7 @@ static int tegra_pcie_bpmp_set_pll_state
+ 	struct mrq_uphy_response resp;
+ 	struct tegra_bpmp_message msg;
+ 	struct mrq_uphy_request req;
++	int err;
+ 
+ 	memset(&req, 0, sizeof(req));
+ 	memset(&resp, 0, sizeof(resp));
+@@ -1268,7 +1276,13 @@ static int tegra_pcie_bpmp_set_pll_state
+ 	msg.rx.data = &resp;
+ 	msg.rx.size = sizeof(resp);
+ 
+-	return tegra_bpmp_transfer(pcie->bpmp, &msg);
++	err = tegra_bpmp_transfer(pcie->bpmp, &msg);
++	if (err)
++		return err;
++	if (msg.rx.ret)
++		return -EINVAL;
++
++	return 0;
+ }
+ 
+ static void tegra_pcie_downstream_dev_to_D0(struct tegra_pcie_dw *pcie)
 
 
