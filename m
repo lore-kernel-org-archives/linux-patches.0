@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DEF336EDB;
-	Fri, 17 Oct 2025 15:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AF6343210;
+	Fri, 17 Oct 2025 15:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713323; cv=none; b=ZEm7wlSJzCubiN1xI7zcvLcdHzbejeKkiqahjDGoFQKHu2cJP3KAiwnLVd93Ml8sfVl08BE1XfedQgqUOdSSZXg24y4wxaucwD2sKReBCYFI2LoOgToxKHRWmUVrGthoH8LCtDrrVf1QfYYt7OAdwGVaPNyQD4MUVCNL+vKTF0c=
+	t=1760713326; cv=none; b=aRtdYYE2s85Ud2V49YEknTyFjxNXGcQIGrRJc9SjNlMTfWYPoSzkq4cQ353RX75ywTczIttIzutt3vKJY5TihXO0qhljCPjRKmmAWpG3/EtYxVVQb6W74EQjDJrybD6qSsCFqz4SCBaH+jBIoMiqgYQJ+CZ9apFFAuQYJFhokkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713323; c=relaxed/simple;
-	bh=2vAsuNcocdCbZlHFpWWYweYChc1N1YoFh15856wRIb4=;
+	s=arc-20240116; t=1760713326; c=relaxed/simple;
+	bh=c7Llca/0NMrPhKrc8BbhJG95zlOC6nRegVZ7s2SZSkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMqm0veaHATSfd1Kkryw4bEzMaTo12kOOypaIUK7g8pgdcQ5nE2KXBXratTfN9ex/VrNi236ZI1C4NRJs//xGwVIpiMXo/xMmjcz3wAqYrltngAZZ05/6cuaEiHr+w4lMt5EN9nXfx8kji0pMDXo9re4L717p5dbHskvw9DlgbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huGJhrM0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fZaNRHtZZPw38geY4XrnOrQnRb6RoTqVPdEzrYpCOU9Uc0SMBDv5tcRJMv8epmjvUP/NMaLGmZzGWWzJ8ganM8h2IXLf6An9J1jNXLrv95/zQXHq4q1CsYhteOy6dKJuHGEvgN92HxR4X7sxL/4EWcOWaODda003kUH6rG38H0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHLG2Tqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huGJhrM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF46C19421;
-	Fri, 17 Oct 2025 15:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHLG2Tqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2125C4CEF9;
+	Fri, 17 Oct 2025 15:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713323;
-	bh=2vAsuNcocdCbZlHFpWWYweYChc1N1YoFh15856wRIb4=;
+	s=korg; t=1760713326;
+	bh=c7Llca/0NMrPhKrc8BbhJG95zlOC6nRegVZ7s2SZSkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=huGJhrM0obcBhL1x/s2LIJJI98NrI45InGcNbYDzKmPG0cunJ4FWhtnBdFndF8eA3
-	 s1KqxusDzQF2FhCHIth9xrA7WaXs9uYqSWHoRKmv+sSUxP8TZkiDWRboZkiIPySc4W
-	 ErSeOWG3oJJBsi3zI3oj3cO31yg0vPRYt3HbIXa0=
+	b=jHLG2TqdhyV+prI7MMWo3MFMBJCn8FsuHS1QwM8AxgIXofVHH4dnMi1B+Yi7bnysx
+	 wsKoMAQuL2Ya7xG2OwUT24j8mWTt/B9bIUPHPB3fudpmvt3Fwvv7VHPnzjbXt6oXBQ
+	 Eb5O8TtheM2LMLRMLRU9WDtYlf1t3tGNtKS6Q8nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 092/168] power: supply: max77976_charger: fix constant current reporting
-Date: Fri, 17 Oct 2025 16:52:51 +0200
-Message-ID: <20251017145132.417148285@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 093/168] powerpc/powernv/pci: Fix underflow and leak issue
+Date: Fri, 17 Oct 2025 16:52:52 +0200
+Message-ID: <20251017145132.454115039@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -44,75 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit ee6cd8f3e28ee5a929c3b67c01a350f550f9b73a upstream.
+commit a39087905af9ffecaa237a918a2c03a04e479934 upstream.
 
-CHARGE_CONTROL_LIMIT is a wrong property to report charge current limit,
-because `CHARGE_*` attributes represents capacity, not current. The
-correct attribute to report and set charge current limit is
-CONSTANT_CHARGE_CURRENT.
+pnv_irq_domain_alloc() allocates interrupts at parent's interrupt
+domain. If it fails in the progress, all allocated interrupts are
+freed.
 
-Rename CHARGE_CONTROL_LIMIT to CONSTANT_CHARGE_CURRENT.
+The number of successfully allocated interrupts so far is stored
+"i". However, "i - 1" interrupts are freed. This is broken:
 
+    - One interrupt is not be freed
+
+    - If "i" is zero, "i - 1" wraps around
+
+Correct the number of freed interrupts to "i".
+
+Fixes: 0fcfe2247e75 ("powerpc/powernv/pci: Add MSI domains")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 715ecbc10d6a ("power: supply: max77976: add Maxim MAX77976 charger driver")
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/70f8debe8688e0b467367db769b71c20146a836d.1754300646.git.namcao@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max77976_charger.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/powerpc/platforms/powernv/pci-ioda.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/max77976_charger.c
-+++ b/drivers/power/supply/max77976_charger.c
-@@ -292,10 +292,10 @@ static int max77976_get_property(struct
- 	case POWER_SUPPLY_PROP_ONLINE:
- 		err = max77976_get_online(chg, &val->intval);
- 		break;
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX:
-+	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX:
- 		val->intval = MAX77976_CHG_CC_MAX;
- 		break;
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
-+	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
- 		err = max77976_get_integer(chg, CHG_CC,
- 					   MAX77976_CHG_CC_MIN,
- 					   MAX77976_CHG_CC_MAX,
-@@ -330,7 +330,7 @@ static int max77976_set_property(struct
- 	int err = 0;
+--- a/arch/powerpc/platforms/powernv/pci-ioda.c
++++ b/arch/powerpc/platforms/powernv/pci-ioda.c
+@@ -2234,7 +2234,7 @@ static int pnv_irq_domain_alloc(struct i
+ 	return 0;
  
- 	switch (psp) {
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
-+	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
- 		err = max77976_set_integer(chg, CHG_CC,
- 					   MAX77976_CHG_CC_MIN,
- 					   MAX77976_CHG_CC_MAX,
-@@ -355,7 +355,7 @@ static int max77976_property_is_writeabl
- 					  enum power_supply_property psp)
- {
- 	switch (psp) {
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
-+	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
- 	case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT:
- 		return true;
- 	default:
-@@ -368,8 +368,8 @@ static enum power_supply_property max779
- 	POWER_SUPPLY_PROP_CHARGE_TYPE,
- 	POWER_SUPPLY_PROP_HEALTH,
- 	POWER_SUPPLY_PROP_ONLINE,
--	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT,
--	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX,
-+	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT,
-+	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
- 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
- 	POWER_SUPPLY_PROP_MODEL_NAME,
- 	POWER_SUPPLY_PROP_MANUFACTURER,
+ out:
+-	irq_domain_free_irqs_parent(domain, virq, i - 1);
++	irq_domain_free_irqs_parent(domain, virq, i);
+ 	msi_bitmap_free_hwirqs(&phb->msi_bmp, hwirq, nr_irqs);
+ 	return ret;
+ }
 
 
