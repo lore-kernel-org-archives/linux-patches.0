@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65A6335099;
-	Fri, 17 Oct 2025 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A892F6932;
+	Fri, 17 Oct 2025 15:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713582; cv=none; b=DHarnKQG+0j/zkdlq/NEZXbs6OY9eEERhlu4gYbVmC1ZtHOwRLtiyTi205wRGrRxhBl+lDOkj595dksDV3OVJf+2JeRdFYun1r7gb2M04yTv65BRfRbB/9dzIvaw+JXNtlcmCAMYePpyZ3wzj8xdHsguYSR9qj+aVCxjWCs5X6c=
+	t=1760713585; cv=none; b=S+Xkh9Vf8AJGsS+DmiRkdWG1VS6xrpzvsEBq0fZPJMUe8w4pCqALQYjow1gRoTuTtUurXrSKJQMA2ECtU8gKNi3GPbohG382fANWo8Nb0QxVCbRFihMhCWppZbtOWLbD+CVlnF0CH3hG2pjj8hvergbR8++kTeGPKjVViNkXCzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713582; c=relaxed/simple;
-	bh=XDcrVmrvgN2Ysq+7CbQ6cTuMyIkKlMcEyCpWuVM551Y=;
+	s=arc-20240116; t=1760713585; c=relaxed/simple;
+	bh=b4Y2sPiiJ2YG847m2UIHrShijfwWU8HVrEI2Ov/paUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwyJs97iEgppMG++KlBPXD7LG3AeH2CsZZ1I2QBBOsEcVnQYbbcX9nOyV/Vh4LajU5qfZTNyDJq0mtFxQz44NfvA7kAQgm7mQ9AUMjRyNBrF6FtWNvgqBrd33QsQiuL3otesEaHMXCi78krqKoyTzJp20bm77cNPR/UsXL70XhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urD54npU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uGePixJu84ZXcg9CicTfC4nVYwUHoAA+EkIONNFCFEpFxb1ErSyFADAmQBYPN6rbUzULLDD+yNJ9q3kqriqR4U8fxr0QweBMDFfUxqdOPu2tChbs8pbMsq+3CnzwQ/kaAahmPua88rjlMS+mqP0XBzdUN4f2pXhbOnqaudRhiyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPujA2PY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urD54npU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D946C4CEE7;
-	Fri, 17 Oct 2025 15:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPujA2PY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B58C4CEE7;
+	Fri, 17 Oct 2025 15:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713582;
-	bh=XDcrVmrvgN2Ysq+7CbQ6cTuMyIkKlMcEyCpWuVM551Y=;
+	s=korg; t=1760713585;
+	bh=b4Y2sPiiJ2YG847m2UIHrShijfwWU8HVrEI2Ov/paUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=urD54npUk9iKDH1lmVIz2moJoRHswRwIDoexyk7R4kbsW3jBu/ok5NpXvtNJKJNAL
-	 XUQYbox4HLEsAaAjPJAJeNjuOp54NQl1ZLosMaANnvLRxPCinKL4jH2dCGy5SxBolt
-	 Pc5NDYINP1sOFxRSk78Re36WZvYgTub+UQH7rRWs=
+	b=IPujA2PYvezfvjmDwYx3QOkTlbbw9p5kMqEAJ7godANk7kfGOvrsY2DDCVTZXwCP3
+	 C26w4tFq6LEtyCE4ov+/6W6eB34SO+Rl4rgYT59aWpvlPHKGSnZijGN9qNRzPHR5tT
+	 ycnhLV6mA1gPTb2hEiAI2eCWapmTDPEM6X95tmvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
+	Tamas Zsoldos <tamas.zsoldos@arm.com>,
 	Leo Yan <leo.yan@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ali Saidi <alisaidi@amazon.com>,
-	German Gomez <german.gomez@arm.com>,
 	Ian Rogers <irogers@google.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Will Deacon <will@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/201] perf arm_spe: Correct memory level for remote access
-Date: Fri, 17 Oct 2025 16:51:16 +0200
-Message-ID: <20251017145135.294166711@linuxfoundation.org>
+Subject: [PATCH 6.6 016/201] perf session: Fix handling when buffer exceeds 2 GiB
+Date: Fri, 17 Oct 2025 16:51:17 +0200
+Message-ID: <20251017145135.331571381@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -55,6 +50,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -63,45 +59,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit cb300e3515057fb555983ce47e8acc86a5c69c3c ]
+[ Upstream commit c17dda8013495d8132c976cbf349be9949d0fbd1 ]
 
-For remote accesses, the data source packet does not contain information
-about the memory level. To avoid misinformation, set the memory level to
-NA (Not Available).
+If a user specifies an AUX buffer larger than 2 GiB, the returned size
+may exceed 0x80000000. Since the err variable is defined as a signed
+32-bit integer, such a value overflows and becomes negative.
 
-Fixes: 4e6430cbb1a9f1dc ("perf arm-spe: Use SPE data source for neoverse cores")
-Reviewed-by: James Clark <james.clark@linaro.org>
+As a result, the perf record command reports an error:
+
+  0x146e8 [0x30]: failed to process type: 71 [Unknown error 183711232]
+
+Change the type of the err variable to a signed 64-bit integer to
+accommodate large buffer sizes correctly.
+
+Fixes: d5652d865ea734a1 ("perf session: Add ability to skip 4GiB or more")
+Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
 Signed-off-by: Leo Yan <leo.yan@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ali Saidi <alisaidi@amazon.com>
-Cc: German Gomez <german.gomez@arm.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250808-perf_fix_big_buffer_size-v1-1-45f45444a9a4@arm.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/arm-spe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/session.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index ba83cd13ff756..0302e6407b5a2 100644
---- a/tools/perf/util/arm-spe.c
-+++ b/tools/perf/util/arm-spe.c
-@@ -479,8 +479,8 @@ static void arm_spe__synth_data_source_common(const struct arm_spe_record *recor
- 	 * socket
- 	 */
- 	case ARM_SPE_COMMON_DS_REMOTE:
--		data_src->mem_lvl = PERF_MEM_LVL_REM_CCE1;
--		data_src->mem_lvl_num = PERF_MEM_LVLNUM_ANY_CACHE;
-+		data_src->mem_lvl = PERF_MEM_LVL_NA;
-+		data_src->mem_lvl_num = PERF_MEM_LVLNUM_NA;
- 		data_src->mem_remote = PERF_MEM_REMOTE_REMOTE;
- 		data_src->mem_snoopx = PERF_MEM_SNOOPX_PEER;
- 		break;
+diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
+index 277b2cbd51861..e4d57e7df7ae1 100644
+--- a/tools/perf/util/session.c
++++ b/tools/perf/util/session.c
+@@ -1662,7 +1662,7 @@ static s64 perf_session__process_user_event(struct perf_session *session,
+ 	struct perf_tool *tool = session->tool;
+ 	struct perf_sample sample = { .time = 0, };
+ 	int fd = perf_data__fd(session->data);
+-	int err;
++	s64 err;
+ 
+ 	if (event->header.type != PERF_RECORD_COMPRESSED ||
+ 	    tool->compressed == perf_session__process_compressed_event_stub)
 -- 
 2.51.0
 
