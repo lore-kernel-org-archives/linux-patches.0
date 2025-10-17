@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8D8330B20;
-	Fri, 17 Oct 2025 15:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FD4253B42;
+	Fri, 17 Oct 2025 15:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716330; cv=none; b=FbS6DN4o/smYqxJAK9q0LzmhRXhDDYoBA+Fu5stp1INIMOwRmlIdBi7fJLqBi67x108qbbCI+cMFHInKI7zFwFVD1YeTzXxkhJadIdzZtSO3AwNFtcLQ/UpOKwzNTEo2KFQ5LAtnA1UWM4gmvpPkwR5eFzIKxAh4RJ2I0f3MD8k=
+	t=1760716333; cv=none; b=pxA01wXWJRQCBn6sjnLWaNsNfXN6upRdS9fFrmadfuMTQpoW+SAEXwMg2ITtwb/zKF/8IcgLj7JnjzeUNTaNmwkb9ysqoBBLchUkAEpberp/4veTR9S60ZqmBiHRwxAmcVxL0R/xKDkgcXb4+hO6hNZ0hAP9XQPRILN6tG69uqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716330; c=relaxed/simple;
-	bh=VwL8OmYJW/m9krcT/HJbB/M5Xin7kctI5vXPyh3NuHc=;
+	s=arc-20240116; t=1760716333; c=relaxed/simple;
+	bh=Diep5EFJPuYWAXYxX3TDNtu+Glb2C2GFLTJ+k6/ixsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMEayLagIpGq5u4UXuQYH8e+dwlRh+LUtLSj2BzJlJzJ0wbyQ5zsoq4iHTwo3b8EVyKkqOO2+f/Wvkm/wOwUlGHOvWYBi6ImTDr/qqyZdoiCxSfkZbxEbzVDz++5tkUqWAeODE7WH9Hvg3voUN83gAfAUMC5ua2aCt0jzz+wzJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLfocC8m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhRPcsN7h2CO9L/7YE6ryN5Y1HKnpeOWG81u0sDkjo/5vWyU14+5CnhMClFcN9rVoV1fvZOKos7ojFW7u5PSMENEJrlSKcXXS/IASI66b2HTMagF3I6h/GNm++ksi5ZKB/bHnxGHrMkWaIq8WwYk+MRfv/J0fzqjqY4ebBVmYfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRwN3aAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLfocC8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453D0C4CEFE;
-	Fri, 17 Oct 2025 15:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRwN3aAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C834C116C6;
+	Fri, 17 Oct 2025 15:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716330;
-	bh=VwL8OmYJW/m9krcT/HJbB/M5Xin7kctI5vXPyh3NuHc=;
+	s=korg; t=1760716333;
+	bh=Diep5EFJPuYWAXYxX3TDNtu+Glb2C2GFLTJ+k6/ixsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLfocC8m2I0+Ct4Fdw1bTlk/mjao9V0kn2nOOoNHdyrv8WEPIe2J8WNhzytTKb1hK
-	 wwuKgmOOQnq+62rbjR7aiqbiE93al7QcVxO+nlRlX2TjpLtF+MZhbkPaJudySsrOIs
-	 qCkRQiT5SxJT4asHrtT9DLghWJQBzGt9qGMIwhyU=
+	b=SRwN3aAVxy5jK3NCCgJqAX31LVFqrLeKsFfzwOr5rXmr6aF4C06c2wtfw5i0FyFzw
+	 36kcFLYodZm859XOxdMC4tGtXZkBZkrA5uT18DDTRl0MVh3XaMOAquaUXdTlq9q8Bj
+	 a9/00/AzXWrZA1r+htCi7I9LUZ9Az7hRy0QJ/wFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini T <harini.t@amd.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Yusuke Suzuki <yusuke.suzuki@isovalent.com>,
+	Julian Wiedmann <jwi@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/276] mailbox: zynqmp-ipi: Remove dev.parent check in zynqmp_ipi_free_mboxes
-Date: Fri, 17 Oct 2025 16:54:07 +0200
-Message-ID: <20251017145148.100077445@linuxfoundation.org>
+Subject: [PATCH 5.15 155/276] bpf: Fix metadata_dst leak __bpf_redirect_neigh_v{4,6}
+Date: Fri, 17 Oct 2025 16:54:08 +0200
+Message-ID: <20251017145148.136136246@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,44 +57,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harini T <harini.t@amd.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 019e3f4550fc7d319a7fd03eff487255f8e8aecd ]
+[ Upstream commit 23f3770e1a53e6c7a553135011f547209e141e72 ]
 
-The ipi_mbox->dev.parent check is unreliable proxy for registration
-status as it fails to protect against probe failures that occur after
-the parent is assigned but before device_register() completes.
+Cilium has a BPF egress gateway feature which forces outgoing K8s Pod
+traffic to pass through dedicated egress gateways which then SNAT the
+traffic in order to interact with stable IPs outside the cluster.
 
-device_is_registered() is the canonical and robust method to verify the
-registration status.
+The traffic is directed to the gateway via vxlan tunnel in collect md
+mode. A recent BPF change utilized the bpf_redirect_neigh() helper to
+forward packets after the arrival and decap on vxlan, which turned out
+over time that the kmalloc-256 slab usage in kernel was ever-increasing.
 
-Remove ipi_mbox->dev.parent check in zynqmp_ipi_free_mboxes().
+The issue was that vxlan allocates the metadata_dst object and attaches
+it through a fake dst entry to the skb. The latter was never released
+though given bpf_redirect_neigh() was merely setting the new dst entry
+via skb_dst_set() without dropping an existing one first.
 
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Harini T <harini.t@amd.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
+Reported-by: Yusuke Suzuki <yusuke.suzuki@isovalent.com>
+Reported-by: Julian Wiedmann <jwi@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20251003073418.291171-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/core/filter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 136c1f67dd223..e64f7157f065f 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -618,10 +618,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
- 	i = pdata->num_mboxes;
- 	for (; i >= 0; i--) {
- 		ipi_mbox = &pdata->ipi_mboxes[i];
--		if (ipi_mbox->dev.parent) {
--			if (device_is_registered(&ipi_mbox->dev))
--				device_unregister(&ipi_mbox->dev);
--		}
-+		if (device_is_registered(&ipi_mbox->dev))
-+			device_unregister(&ipi_mbox->dev);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index b95af925b9c27..1403829b96db9 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2257,6 +2257,7 @@ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
+ 		if (IS_ERR(dst))
+ 			goto out_drop;
+ 
++		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 	} else if (nh->nh_family != AF_INET6) {
+ 		goto out_drop;
+@@ -2364,6 +2365,7 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_drop;
+ 		}
+ 
++		skb_dst_drop(skb);
+ 		skb_dst_set(skb, &rt->dst);
  	}
- }
  
 -- 
 2.51.0
