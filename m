@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF928330B1F;
-	Fri, 17 Oct 2025 15:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E68A257437;
+	Fri, 17 Oct 2025 15:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716096; cv=none; b=nX7yCQg6hgP/O7RrbLhQgibgRSb4V3NOBOjQuuvra6lMUsUI8wh9Mde2WGlyW3TPTPNxmiSno8+rhUKicJ4LFUqLFBCvqh3ssZnFk+s+Up32FQ1su4G8J2bdwwmc9xAs/f9Rvb4/uDcKguRYLM9nhg7hhn8tJPElZQSvDuMb6zo=
+	t=1760716098; cv=none; b=eZr96WcEHV4YdptJGO5iPIdy/m5KgoSwAqRFwDPrDMkmzSsknD8zAz3/Rysz87isCoL0RVrGgKJdpePwLOgzbQJsmDYbhScszBvpzqAKgGaz58a2Abg5KHXfV2LNle1lF2Dzr9HuX/t9nj3i93KZ8VMKgFZ3cg5sERw0b8RGK9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716096; c=relaxed/simple;
-	bh=+QBR/FgeydHqMwRMWSpZtkr591EqGbKpvcUycY9V9eo=;
+	s=arc-20240116; t=1760716098; c=relaxed/simple;
+	bh=iERE1/Jb2HJn4+EENqyhvOBZ9nwmQjC9I6rgC6hLOFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNC5e4UNES5c9Tby3tV2rejx+xCtdcoVVxHGlLr6HHvicIb6p2WgH/hqb/qSqSGEt0tQ/+udeh8rcU5cXyb4nA84y7KiAg6l+Ywan3Q8RNFJInOcrhMTymJ47Zy5yQqd57Mwi/pBcuUVhcuuRNe+vTI0KnjnVgtenX6UKStNH80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmdO/ZYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxBPSIU/GzwFN+VBnPwGiptnuycYcAyTfRKfMU7rhx8Zk7yeuaDakDVXE141WtrPcQZJsfS2TGZ+e6nTrFEeZE7UYnhJRfxlB77aw02xwh01RDorsV+ai7G7U9G+2LIgvhszlzmgvpJcWQ9TJVAL1i7RwlAWni+sYjQmFtY4n30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1feZ3om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmdO/ZYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACEFC4CEFE;
-	Fri, 17 Oct 2025 15:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1feZ3om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD95C113D0;
+	Fri, 17 Oct 2025 15:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716095;
-	bh=+QBR/FgeydHqMwRMWSpZtkr591EqGbKpvcUycY9V9eo=;
+	s=korg; t=1760716097;
+	bh=iERE1/Jb2HJn4+EENqyhvOBZ9nwmQjC9I6rgC6hLOFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmdO/ZYOQESlu5tq2+SFYi8Lff2vn8EWSG4Ruhi4v5Of4Xa2E+ki4572JkLewb+SZ
-	 WQZlCa7kO4fpbAUeum2qz+cPtAoTHhdrhmOoBBZOurGTwNvJHG5W6d6BRFyYuUU7ir
-	 uWyZzrd+PQf/Nre6yyGTmFFEQ+dxx+PDP/ZLAy2E=
+	b=c1feZ3omm6dq33wMVrFJ+CGhUXpflEC6L7TDI6X2QcC0b6j04kW32NiXtJt3xA+8H
+	 /5zCMjBwFIOh2c625qU5a+tmpUZ9NwGn7n2M6ywXL+u04E6oLdREpO7oHHoqG51vRe
+	 5hF8w1kYshGMkkdSAJdRaCHo4+K7LbYsgMiz7k1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/276] ASoC: Intel: bytcr_rt5651: Fix invalid quirk input mapping
-Date: Fri, 17 Oct 2025 16:52:43 +0200
-Message-ID: <20251017145145.042338068@linuxfoundation.org>
+Subject: [PATCH 5.15 071/276] fs: ntfs3: Fix integer overflow in run_unpack()
+Date: Fri, 17 Oct 2025 16:52:44 +0200
+Message-ID: <20251017145145.078427558@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,74 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
 
-[ Upstream commit 4336efb59ef364e691ef829a73d9dbd4d5ed7c7b ]
+[ Upstream commit 736fc7bf5f68f6b74a0925b7e072c571838657d2 ]
 
-When an invalid value is passed via quirk option, currently
-bytcr_rt5640 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+The MFT record relative to the file being opened contains its runlist,
+an array containing information about the file's location on the physical
+disk. Analysis of all Call Stack paths showed that the values of the
+runlist array, from which LCNs are calculated, are not validated before
+run_unpack function.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
+The run_unpack function decodes the compressed runlist data format
+from MFT attributes (for example, $DATA), converting them into a runs_tree
+structure, which describes the mapping of virtual clusters (VCN) to
+logical clusters (LCN). The NTFS3 subsystem also has a shortcut for
+deleting files from MFT records - in this case, the RUN_DEALLOCATE
+command is sent to the run_unpack input, and the function logic
+provides that all data transferred to the runlist about file or
+directory is deleted without creating a runs_tree structure.
 
-Fixes: 64484ccee7af ("ASoC: Intel: bytcr_rt5651: Set card long_name based on quirks")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-4-tiwai@suse.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Substituting the runlist in the $DATA attribute of the MFT record for an
+arbitrary file can lead either to access to arbitrary data on the disk
+bypassing access checks to them (since the inode access check
+occurs above) or to destruction of arbitrary data on the disk.
+
+Add overflow check for addition operation.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ fs/ntfs3/run.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 93cec4d916273..b0b41a03c083e 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -58,7 +58,8 @@ enum {
- 	BYT_RT5651_OVCD_SF_1P5	= (RT5651_OVCD_SF_1P5 << 13),
- };
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 6940ee5432ba3..52ce16218b299 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -9,6 +9,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/fs.h>
+ #include <linux/log2.h>
++#include <linux/overflow.h>
  
--#define BYT_RT5651_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_RT5651_MAP_MASK		GENMASK(3, 0)
-+#define BYT_RT5651_MAP(quirk)		((quirk) & BYT_RT5651_MAP_MASK)
- #define BYT_RT5651_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
- #define BYT_RT5651_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
- #define BYT_RT5651_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
-@@ -100,14 +101,29 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
+ #include "debug.h"
+ #include "ntfs.h"
+@@ -935,12 +936,16 @@ int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
  
- static void log_quirks(struct device *dev)
- {
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_DMIC_MAP)
-+	int map;
+ 			if (!dlcn)
+ 				return -EINVAL;
+-			lcn = prev_lcn + dlcn;
 +
-+	map = BYT_RT5651_MAP(byt_rt5651_quirk);
-+	switch (map) {
-+	case BYT_RT5651_DMIC_MAP:
- 		dev_info(dev, "quirk DMIC_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_MAP)
-+		break;
-+	case BYT_RT5651_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
--	if (BYT_RT5651_MAP(byt_rt5651_quirk) == BYT_RT5651_IN1_IN2_MAP)
-+		break;
-+	case BYT_RT5651_IN1_IN2_MAP:
- 		dev_info(dev, "quirk IN1_IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC_MAP\n", map);
-+		byt_rt5651_quirk &= ~BYT_RT5651_MAP_MASK;
-+		byt_rt5651_quirk |= BYT_RT5651_DMIC_MAP;
-+		break;
-+	}
++			if (check_add_overflow(prev_lcn, dlcn, &lcn))
++				return -EINVAL;
+ 			prev_lcn = lcn;
+ 		} else
+ 			return -EINVAL;
+ 
+-		next_vcn = vcn64 + len;
++		if (check_add_overflow(vcn64, len, &next_vcn))
++			return -EINVAL;
 +
- 	if (BYT_RT5651_JDSRC(byt_rt5651_quirk)) {
- 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
- 			 BYT_RT5651_JDSRC(byt_rt5651_quirk));
+ 		/* Check boundary. */
+ 		if (next_vcn > evcn + 1)
+ 			return -EINVAL;
+@@ -1101,7 +1106,8 @@ int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
+ 			return -EINVAL;
+ 
+ 		run_buf += size_size + offset_size;
+-		vcn64 += len;
++		if (check_add_overflow(vcn64, len, &vcn64))
++			return -EINVAL;
+ 
+ #ifndef CONFIG_NTFS3_64BIT_CLUSTER
+ 		if (vcn64 > 0x100000000ull)
 -- 
 2.51.0
 
