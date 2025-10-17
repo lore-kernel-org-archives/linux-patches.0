@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80941239591;
-	Fri, 17 Oct 2025 14:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A0C3370F6;
+	Fri, 17 Oct 2025 14:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713054; cv=none; b=infKh4iSRy9RjG2bF+mwgAWCqxbpyZOW1Sh6q0TNl8SLpWE04vfaCag/mHcg/jsodx2VKd7IirNaGFVgck9CIo0bb25aDsEvtDgiHiDQ86aqdIqe8yaAyxMe8GuxjyQI1d0vAVRXOOiDkUE3gEpOMu3fVvc6DnFPz9JhYutD4ms=
+	t=1760713057; cv=none; b=AXCG+K441oGnnU3Z2ABh5roZ6WPcTlZPZoxXiK4z88O0eKISzaiNLGbpkOdGkvqCvd50lAiJQcA4uKBuuvVPawUULDqJLJwimp+fnYL1mieHoTGB5rf5nCfRJoO8PY48RGymc+BJOpiX0B6LF7chFgDpwikmamtmu1FZFni11E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713054; c=relaxed/simple;
-	bh=cbz7kgi7sd+fgeBulgOoLLyAkmFHPHJDnWojJMpX51A=;
+	s=arc-20240116; t=1760713057; c=relaxed/simple;
+	bh=ccxUa492ijo0pcI1M0muyHOHsNnBCm7tiktwjC3KqrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXzLDOrJC0+9AJBuXZt7T2FI1SAhM2tfI3JdnJhj5cKAMShmND+7GUWMTUDRMBbZw6vjpe5TXIsPeid8OWirhsI+szFKyf2/IbBqDyScjLhv8BBK26gkMVm3bZ3xbVX6FityV7E09u02q3dm5xxg45kOrNT/8Gp+erTy7N8wgVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPMcM+Ip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExpIiJ9K1CUxLDL9f6oh2AaH6cnUWrxTLa8DZUSaRcS4MMTel/bNmGo4bqoRNVQ/HzRsOnwPhK6KziJR+cjfWNgmShXYBNDgL5diFLPvS73MkHTH5sUNrwenRNERhcQjnlv/Ax333YKEBzxmbT2O9Gjsl9T16xmsMcmKZBMX68Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN/9ph89; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPMcM+Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA3EC4CEE7;
-	Fri, 17 Oct 2025 14:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN/9ph89"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC98CC4CEE7;
+	Fri, 17 Oct 2025 14:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713054;
-	bh=cbz7kgi7sd+fgeBulgOoLLyAkmFHPHJDnWojJMpX51A=;
+	s=korg; t=1760713057;
+	bh=ccxUa492ijo0pcI1M0muyHOHsNnBCm7tiktwjC3KqrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPMcM+IpcF7MLvRn5RSdRUnjNtr9jcxg5/FqIzE48pFdWKb61YD6IQmY0TS9b6RkQ
-	 V8YMopL9Aj0gSEFpUm7zj4Enho7ikkm2AnF2bGmADdpUKC8jO0IRoxK+delcVkZdaM
-	 Zz+lGyAluGPAW98rOCXhbmljP3Ea9ZdnUdGuSQzY=
+	b=kN/9ph89BHcMLLoAahNhI4AQBGd9oHM/e8Wpx74AdZIJZxuR14O76cEMxnLpYb+eV
+	 2SiKGpOaGTuOPDfc4dpbvr3564WekZXxhBczymErYINuq1FpMS5+6LXIaZH5z0ukuy
+	 kEL+FQlocNwS7B2l4mDGQhSLj5vwrMarKTD8o0CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
 	Ian Forbes <ian.forbes@broadcom.com>,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/168] drm/vmwgfx: Fix Use-after-free in validation
-Date: Fri, 17 Oct 2025 16:51:51 +0200
-Message-ID: <20251017145130.203005012@linuxfoundation.org>
+Subject: [PATCH 6.1 033/168] drm/vmwgfx: Fix copy-paste typo in validation
+Date: Fri, 17 Oct 2025 16:51:52 +0200
+Message-ID: <20251017145130.239105722@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -54,40 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit dfe1323ab3c8a4dd5625ebfdba44dc47df84512a ]
+[ Upstream commit 228c5d44dffe8c293cd2d2f0e7ea45e64565b1c4 ]
 
-Nodes stored in the validation duplicates hashtable come from an arena
-allocator that is cleared at the end of vmw_execbuf_process. All nodes
-are expected to be cleared in vmw_validation_drop_ht but this node escaped
-because its resource was destroyed prematurely.
+'entry' should be 'val' which is the loop iterator.
 
-Fixes: 64ad2abfe9a6 ("drm/vmwgfx: Adapt validation code for reference-free lookups")
-Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
+Fixes: 9e931f2e0970 ("drm/vmwgfx: Refactor resource validation hashtable to use linux/hashtable implementation.")
 Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
 Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://lore.kernel.org/r/20250926195427.1405237-1-ian.forbes@broadcom.com
+Link: https://lore.kernel.org/r/20250926195427.1405237-2-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_validation.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_validation.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-index f5c4a40fb16d7..d37cf22e9caeb 100644
+index d37cf22e9caeb..27f33297fcf3e 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-@@ -339,8 +339,10 @@ int vmw_validation_add_resource(struct vmw_validation_context *ctx,
- 		hash_add_rcu(ctx->sw_context->res_ht, &node->hash.head, node->hash.key);
- 	}
- 	node->res = vmw_resource_reference_unless_doomed(res);
--	if (!node->res)
-+	if (!node->res) {
-+		hash_del_rcu(&node->hash.head);
- 		return -ESRCH;
-+	}
+@@ -692,7 +692,7 @@ void vmw_validation_drop_ht(struct vmw_validation_context *ctx)
+ 		hash_del_rcu(&val->hash.head);
  
- 	node->first_usage = 1;
- 	if (!res->dev_priv->has_mob) {
+ 	list_for_each_entry(val, &ctx->resource_ctx_list, head)
+-		hash_del_rcu(&entry->hash.head);
++		hash_del_rcu(&val->hash.head);
+ 
+ 	ctx->sw_context = NULL;
+ }
 -- 
 2.51.0
 
