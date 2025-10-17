@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50411330B26;
-	Fri, 17 Oct 2025 15:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204872E716A;
+	Fri, 17 Oct 2025 15:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716664; cv=none; b=TQjiP/R1obgZ92IJcdP/E7RegKuPKpc3PsYKKAGk0lpV4F+aS2Ob61/Z/zwxy95mi0vK+F3j3b0QdOiCQ2aBqBW5Rjr/Ohxl8li48oxWp/ryffcLMNhWzPUVs5CB8Ki7Qf7VjX7f0rsaTn1EOohXcpB015tpJrWJJftrXWKCFpQ=
+	t=1760716667; cv=none; b=jGoKwLKCEHQCxlk68kkS5a45NH+pUdQ/Oq2iP1iBYxETDfFROAgtUt2/JI0CMwTGEChfcvdrNn7+YJf8yiVGU5Kf2vziVOgfK7oh/o7HVurLcU/pWI0XidOp8yiEcFZlHsRPOczU9W3qe3cbLSIrUDfa4cZntl4+2QwwB7lTmwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716664; c=relaxed/simple;
-	bh=ynHSONR9qfUN1R7Wz6ooZRTj0UwgjuDxUy6JrXbmnSY=;
+	s=arc-20240116; t=1760716667; c=relaxed/simple;
+	bh=jXv28jACPLnRd9v6WMM9i0gaEED/o9aZyFfA53cXwoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGXRUWL+Fy9JMTLsFqu2O57iT0/rjvqsqwFprA2fbzv/CDyK4bGb9FqC2al6yt6oQeDVYfgKIaJh6NOvtTa9ZoOjfIWhO249S7YC8a68UKq7ejNj8LXt7oj1SlwAfIngFnkNFkwnI05A88vUZMkuthJ8RsNlZ7y3s8H4Hi87CfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfV+nX24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U5xw9dgW51pCQEGlQ0+ImbXGXTiyfttB1zggrJi1zuLZLtfD8QVNp+aUGg5W93/Y3R6/K/PBNVAp4ZsFsm9e5U17M0M9KaWd/9JWD0lZaeRLCW5UfxOSEVQRNl880JZhF5P1z+u9oUkxooc9dSfSdBjvJeUz8s31t+n7aZSsaBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJpganeo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfV+nX24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4921C4CEE7;
-	Fri, 17 Oct 2025 15:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJpganeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D659C4CEFE;
+	Fri, 17 Oct 2025 15:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716664;
-	bh=ynHSONR9qfUN1R7Wz6ooZRTj0UwgjuDxUy6JrXbmnSY=;
+	s=korg; t=1760716667;
+	bh=jXv28jACPLnRd9v6WMM9i0gaEED/o9aZyFfA53cXwoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfV+nX24YLEMP+RbmjOPrrywjM6+//+uiT3LtvYQC66i5+LZhLXIgCWH65bKD7LQa
-	 wqZZ+VVVomtVpTE0MUDYU3pVOCD8u7LrklmYCmYIA/MIKjn+S1iftrw0b9IDo02bz6
-	 dMzBg3yPb4pw4r8Zmd3G43MqfoghVvbLDtMXeVmg=
+	b=EJpganeovK2Ojt6ey+Y1vzSHVoWLgqpObph7r3XRGJ7VfoMdQhdp0ygKqk8OU9N7b
+	 RSQtmPyYQKzEEOQSPDJtRjKTop9BsVoBkz/yPBmpWsELYhj/cH4R4h65wk1Wt4jRoU
+	 ARLVOvRFDwVsPmrI9tGIRwxQ8APC5sJfafKj7FRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@kernel.org>,
-	David Laight <David.Laight@aculab.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.15 251/276] minmax: improve macro expansion and type checking
-Date: Fri, 17 Oct 2025 16:55:44 +0200
-Message-ID: <20251017145151.640450711@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Gergely Kovacs <Gergely.Kovacs2@arm.com>,
+	Will Deacon <will@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 269/276] arm64: mte: Do not flag the zero page as PG_mte_tagged
+Date: Fri, 17 Oct 2025 16:56:02 +0200
+Message-ID: <20251017145152.306567785@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,199 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 22f5468731491e53356ba7c028f0fdea20b18e2c ]
+[ Upstream commit f620d66af3165838bfa845dcf9f5f9b4089bf508 ]
 
-This clarifies the rules for min()/max()/clamp() type checking and makes
-them a much more efficient macro expansion.
+Commit 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the
+zero page") attempted to fix ptrace() reading of tags from the zero page
+by marking it as PG_mte_tagged during cpu_enable_mte(). The same commit
+also changed the ptrace() tag access permission check to the VM_MTE vma
+flag while turning the page flag test into a WARN_ON_ONCE().
 
-In particular, we now look at the type and range of the inputs to see
-whether they work together, generating a mask of acceptable comparisons,
-and then just verifying that the inputs have a shared case:
+Attempting to set the PG_mte_tagged flag early with
+CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled may either hang (after commit
+d77e59a8fccd "arm64: mte: Lock a page for MTE tag initialisation") or
+have the flags cleared later during page_alloc_init_late(). In addition,
+pages_identical() -> memcmp_pages() will reject any comparison with the
+zero page as it is marked as tagged.
 
- - an expression with a signed type can be used for
-    (1) signed comparisons
-    (2) unsigned comparisons if it is statically known to have a
-        non-negative value
+Partially revert the above commit to avoid setting PG_mte_tagged on the
+zero page. Update the __access_remote_tags() warning on untagged pages
+to ignore the zero page since it is known to have the tags initialised.
 
- - an expression with an unsigned type can be used for
-    (3) unsigned comparison
-    (4) signed comparisons if the type is smaller than 'int' and thus
-        the C integer promotion rules will make it signed anyway
+Note that all user mapping of the zero page are marked as pte_special().
+The arm64 set_pte_at() will not call mte_sync_tags() on such pages, so
+PG_mte_tagged will remain cleared.
 
-Here rule (1) and (3) are obvious, and rule (2) is important in order to
-allow obvious trivial constants to be used together with unsigned
-values.
-
-Rule (4) is not necessarily a good idea, but matches what we used to do,
-and we have extant cases of this situation in the kernel.  Notably with
-bcachefs having an expression like
-
-	min(bch2_bucket_sectors_dirty(a), ca->mi.bucket_size)
-
-where bch2_bucket_sectors_dirty() returns an 's64', and
-'ca->mi.bucket_size' is of type 'u16'.
-
-Technically that bcachefs comparison is clearly sensible on a C type
-level, because the 'u16' will go through the normal C integer promotion,
-and become 'int', and then we're comparing two signed values and
-everything looks sane.
-
-However, it's not entirely clear that a 'min(s64,u16)' operation makes a
-lot of conceptual sense, and it's possible that we will remove rule (4).
-After all, the _reason_ we have these complicated type checks is exactly
-that the C type promotion rules are not very intuitive.
-
-But at least for now the rule is in place for backwards compatibility.
-
-Also note that rule (2) existed before, but is hugely relaxed by this
-commit.  It used to be true only for the simplest compile-time
-non-negative integer constants.  The new macro model will allow cases
-where the compiler can trivially see that an expression is non-negative
-even if it isn't necessarily a constant.
-
-For example, the amdgpu driver does
-
-	min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
-
-because our old 'min()' macro would see that 'pia[addr] & 0x3F' is of
-type 'int' and clearly not a C constant expression, so doing a 'min()'
-with a 'size_t' is a signedness violation.
-
-Our new 'min()' macro still sees that 'pia[addr] & 0x3F' is of type
-'int', but is smart enough to also see that it is clearly non-negative,
-and thus would allow that case without any complaints.
-
-Cc: Arnd Bergmann <arnd@kernel.org>
-Cc: David Laight <David.Laight@aculab.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Eliav Farber <farbere@amazon.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the zero page")
+Reported-by: Gergely Kovacs <Gergely.Kovacs2@arm.com>
+Cc: stable@vger.kernel.org # 5.10.x
+Cc: Will Deacon <will@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Acked-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ replaced page_mte_tagged() and is_zero_page() with test_bit() and is_zero_pfn() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler.h |    9 +++++
- include/linux/minmax.h   |   78 ++++++++++++++++++++++++++++++++++++-----------
- 2 files changed, 70 insertions(+), 17 deletions(-)
+ arch/arm64/kernel/cpufeature.c |   10 ++++++++--
+ arch/arm64/kernel/mte.c        |    3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -259,6 +259,15 @@ static inline void *offset_to_ptr(const
- #define is_signed_type(type) (((type)(-1)) < (__force type)1)
- 
- /*
-+ * Useful shorthand for "is this condition known at compile-time?"
-+ *
-+ * Note that the condition may involve non-constant values,
-+ * but the compiler may know enough about the details of the
-+ * values to determine that the condition is statically true.
-+ */
-+#define statically_true(x) (__builtin_constant_p(x) && (x))
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1948,16 +1948,22 @@ static void bti_enable(const struct arm6
+ #ifdef CONFIG_ARM64_MTE
+ static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
+ {
++	static bool cleared_zero_page = false;
 +
-+/*
-  * This is needed in functions which generate the stack canary, see
-  * arch/x86/kernel/smpboot.c::start_secondary() for an example.
-  */
---- a/include/linux/minmax.h
-+++ b/include/linux/minmax.h
-@@ -26,19 +26,63 @@
- #define __typecheck(x, y) \
- 	(!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+ 	sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_ATA | SCTLR_EL1_ATA0);
  
--/* is_signed_type() isn't a constexpr for pointer types */
--#define __is_signed(x) 								\
--	__builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),	\
--		is_signed_type(typeof(x)), 0)
--
--/* True for a non-negative signed int constant */
--#define __is_noneg_int(x)	\
--	(__builtin_choose_expr(__is_constexpr(x) && __is_signed(x), x, -1) >= 0)
--
--#define __types_ok(x, y, ux, uy) 				\
--	(__is_signed(ux) == __is_signed(uy) ||			\
--	 __is_signed((ux) + 0) == __is_signed((uy) + 0) ||	\
--	 __is_noneg_int(x) || __is_noneg_int(y))
-+/*
-+ * __sign_use for integer expressions:
-+ *   bit #0 set if ok for unsigned comparisons
-+ *   bit #1 set if ok for signed comparisons
-+ *
-+ * In particular, statically non-negative signed integer
-+ * expressions are ok for both.
-+ *
-+ * NOTE! Unsigned types smaller than 'int' are implicitly
-+ * converted to 'int' in expressions, and are accepted for
-+ * signed conversions for now. This is debatable.
-+ *
-+ * Note that 'x' is the original expression, and 'ux' is
-+ * the unique variable that contains the value.
-+ *
-+ * We use 'ux' for pure type checking, and 'x' for when
-+ * we need to look at the value (but without evaluating
-+ * it for side effects! Careful to only ever evaluate it
-+ * with sizeof() or __builtin_constant_p() etc).
-+ *
-+ * Pointers end up being checked by the normal C type
-+ * rules at the actual comparison, and these expressions
-+ * only need to be careful to not cause warnings for
-+ * pointer use.
-+ */
-+#define __signed_type_use(x,ux) (2+__is_nonneg(x,ux))
-+#define __unsigned_type_use(x,ux) (1+2*(sizeof(ux)<4))
-+#define __sign_use(x,ux) (is_signed_type(typeof(ux))? \
-+	__signed_type_use(x,ux):__unsigned_type_use(x,ux))
-+
-+/*
-+ * To avoid warnings about casting pointers to integers
-+ * of different sizes, we need that special sign type.
-+ *
-+ * On 64-bit we can just always use 'long', since any
-+ * integer or pointer type can just be cast to that.
-+ *
-+ * This does not work for 128-bit signed integers since
-+ * the cast would truncate them, but we do not use s128
-+ * types in the kernel (we do use 'u128', but they will
-+ * be handled by the !is_signed_type() case).
-+ *
-+ * NOTE! The cast is there only to avoid any warnings
-+ * from when values that aren't signed integer types.
-+ */
-+#ifdef CONFIG_64BIT
-+  #define __signed_type(ux) long
-+#else
-+  #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux)>4,1LL,1L))
-+#endif
-+#define __is_nonneg(x,ux) statically_true((__signed_type(ux))(x)>=0)
-+
-+#define __types_ok(x,y,ux,uy) \
-+	(__sign_use(x,ux) & __sign_use(y,uy))
-+
-+#define __types_ok3(x,y,z,ux,uy,uz) \
-+	(__sign_use(x,ux) & __sign_use(y,uy) & __sign_use(z,uz))
+ 	mte_cpu_setup();
  
- #define __cmp_op_min <
- #define __cmp_op_max >
-@@ -53,8 +97,8 @@
+ 	/*
+ 	 * Clear the tags in the zero page. This needs to be done via the
+-	 * linear map which has the Tagged attribute.
++	 * linear map which has the Tagged attribute. Since this page is
++	 * always mapped as pte_special(), set_pte_at() will not attempt to
++	 * clear the tags or set PG_mte_tagged.
+ 	 */
+-	if (!test_and_set_bit(PG_mte_tagged, &ZERO_PAGE(0)->flags))
++	if (!cleared_zero_page) {
++		cleared_zero_page = true;
+ 		mte_clear_page_tags(lm_alias(empty_zero_page));
++	}
  
- #define __careful_cmp_once(op, x, y, ux, uy) ({		\
- 	__auto_type ux = (x); __auto_type uy = (y);	\
--	static_assert(__types_ok(x, y, ux, uy),		\
--		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
-+	BUILD_BUG_ON_MSG(!__types_ok(x,y,ux,uy),	\
-+		#op"("#x", "#y") signedness error");	\
- 	__cmp(op, ux, uy); })
+ 	kasan_init_hw_tags_cpu();
+ }
+--- a/arch/arm64/kernel/mte.c
++++ b/arch/arm64/kernel/mte.c
+@@ -370,7 +370,8 @@ static int __access_remote_tags(struct m
+ 			put_page(page);
+ 			break;
+ 		}
+-		WARN_ON_ONCE(!test_bit(PG_mte_tagged, &page->flags));
++		WARN_ON_ONCE(!test_bit(PG_mte_tagged, &page->flags) &&
++			     !is_zero_pfn(page_to_pfn(page)));
  
- #define __careful_cmp(op, x, y) \
-@@ -70,8 +114,8 @@
- 	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
- 			(lo) <= (hi), true),					\
- 		"clamp() low limit " #lo " greater than high limit " #hi);	\
--	static_assert(__types_ok(uval, lo, uval, ulo), "clamp() 'lo' signedness error");	\
--	static_assert(__types_ok(uval, hi, uval, uhi), "clamp() 'hi' signedness error");	\
-+	BUILD_BUG_ON_MSG(!__types_ok3(val,lo,hi,uval,ulo,uhi),			\
-+		"clamp("#val", "#lo", "#hi") signedness error");		\
- 	__clamp(uval, ulo, uhi); })
- 
- #define __careful_clamp(val, lo, hi) \
+ 		/* limit access to the end of the page */
+ 		offset = offset_in_page(addr);
 
 
