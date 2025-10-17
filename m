@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6402F12D4;
-	Fri, 17 Oct 2025 15:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B996B32C941;
+	Fri, 17 Oct 2025 15:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714334; cv=none; b=Zj7dNyF+y7gEKPUuUT2hdZyDkqTmQ9XC2PDp8xmjFG+VcZHycGjjl5DolT/o4bDl6GUcAvjT9iI0ynWbSrl/Hrl1svHJGlmaE7d5OjZwHaDHkji98gFoV3hiH8/4gmayktzcjCFUxhbhqtWAZY6YcUP381x1Vr8cig1O+khW/BA=
+	t=1760714336; cv=none; b=JyzOe0wyWeCUAgJWJTCDnQdqXVzCiVNqW9BQzuAjGog0qi3kJuLbPVnQPCeGTAWQA0s3ts0/jZFJ4V1nxsl2y8RLO6mYsGldf88skZoMEeir4kGtKOEe3vYsmqb8mUgBuhXq3e8T53XUCJQGTuQz8hC6pbeBBRGjVgTf2z70OH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714334; c=relaxed/simple;
-	bh=bjGl0sFJURQzzfReBcwrljt7wEHNuda61o/6pdJZbCQ=;
+	s=arc-20240116; t=1760714336; c=relaxed/simple;
+	bh=1MRwlwoxzgexOIRaBkzMXTZ10siFRZD2ONv4xt1J95M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h16PcHmowK2beBigCMOVzO3eZa59BLWEx8Fz1cbXJrh/tiVGrjd5sKIQzMTs/Yuv1XG9wUnmgmgGEgVSx2aobqZuEhwvKjMEv/21fkaFo7KX4k9Jvx+qm2yyH+3OMUrdQmtXf0fnAo26/uiMG+Itr21slMhGVYXxDywdMwY+0iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9yoRX2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZHHKlbQOsviQV5AeLC0vWwsCNOlhGxp6UtkQvrNYXVMuSl3GMKigk5r8wxn4BC7M+5x+Z0hNOwSkLNzh+/MA+Fx7oCFb+8HZQmJpKiMNpTbq1uaUBjGRDfVG4T8r2X0FZCDCJGkC1InP3VJxxombhwQYVWB2frFm5hF32NeEFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6NV6CO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9yoRX2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA2FC4CEE7;
-	Fri, 17 Oct 2025 15:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6NV6CO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE96CC4CEE7;
+	Fri, 17 Oct 2025 15:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714333;
-	bh=bjGl0sFJURQzzfReBcwrljt7wEHNuda61o/6pdJZbCQ=;
+	s=korg; t=1760714336;
+	bh=1MRwlwoxzgexOIRaBkzMXTZ10siFRZD2ONv4xt1J95M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9yoRX2RUOgHka/kGv6Mbh8nKE0h+dXa/Le61hcSnhrmGxFh5/2AN84/885eWoz/J
-	 5UT9hTfo8ThSBasgh/cs52+dHHCgg28kwAt/x57WVaGTqf2hVoR33O8nkijIgVvY93
-	 e+sptkycOvUQTP+vCMMrXQv8Q/KoJkeNC29bVs6M=
+	b=L6NV6CO7ROu6LATrnDJBawSeZF5vQe5nSxHKzr2HRsc7sjei5ZseNG8NdZ17LTxdl
+	 qDgfnXcjDhJyPOJtOvj41gmKi2OUIVO3bcy0GeTPaP6rAJ/ytr4s0TUm3hzIcp9YFS
+	 4LqlCSMj22vY4GWzEMmw3IY17HijtLK6CkkVkKYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 109/277] media: s5p-mfc: remove an unused/uninitialized variable
-Date: Fri, 17 Oct 2025 16:51:56 +0200
-Message-ID: <20251017145151.107611445@linuxfoundation.org>
+Subject: [PATCH 6.12 110/277] media: venus: firmware: Use correct reset sequence for IRIS2
+Date: Fri, 17 Oct 2025 16:51:57 +0200
+Message-ID: <20251017145151.143755136@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,130 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 7fa37ba25a1dfc084e24ea9acc14bf1fad8af14c upstream.
+commit 93f213b444a40f1e7a4383b499b65e782dcb14b9 upstream.
 
-The s5p_mfc_cmd_args structure in the v6 driver is never used, not
-initialized to anything other than zero, but as of clang-21 this
-causes a warning:
+When starting venus with the "no_tz" code path, IRIS2 needs the same
+boot/reset sequence as IRIS2_1. This is because most of the registers were
+moved to the "wrapper_tz_base", which is already defined for both IRIS2 and
+IRIS2_1 inside core.c. Add IRIS2 to the checks inside firmware.c as well to
+make sure that it uses the correct reset sequence.
 
-drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:45:7: error: variable 'h2r_args' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   45 |                                         &h2r_args);
-      |                                          ^~~~~~~~
+Both IRIS2 and IRIS2_1 are HFI v6 variants, so the correct sequence was
+used before commit c38610f8981e ("media: venus: firmware: Sanitize
+per-VPU-version").
 
-Just remove this for simplicity. Since the function is also called
-through a callback, this does require adding a trivial wrapper with
-the correct prototype.
-
-Fixes: f96f3cfa0bb8 ("[media] s5p-mfc: Update MFC v4l2 driver to support MFC6.x")
+Fixes: c38610f8981e ("media: venus: firmware: Sanitize per-VPU-version")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[bod: Fixed commit log IRIS -> IRIS2]
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c |   35 +++++-----------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ drivers/media/platform/qcom/venus/firmware.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
-@@ -14,8 +14,7 @@
- #include "s5p_mfc_opr.h"
- #include "s5p_mfc_cmd_v6.h"
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -30,7 +30,7 @@ static void venus_reset_cpu(struct venus
+ 	u32 fw_size = core->fw.mapped_mem_size;
+ 	void __iomem *wrapper_base;
  
--static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd,
--				    const struct s5p_mfc_cmd_args *args)
-+static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd)
- {
- 	mfc_debug(2, "Issue the command: %d\n", cmd);
+-	if (IS_IRIS2_1(core))
++	if (IS_IRIS2(core) || IS_IRIS2_1(core))
+ 		wrapper_base = core->wrapper_tz_base;
+ 	else
+ 		wrapper_base = core->wrapper_base;
+@@ -42,7 +42,7 @@ static void venus_reset_cpu(struct venus
+ 	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+ 	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
  
-@@ -31,7 +30,6 @@ static int s5p_mfc_cmd_host2risc_v6(stru
- 
- static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev *dev)
- {
--	struct s5p_mfc_cmd_args h2r_args;
- 	const struct s5p_mfc_buf_size_v6 *buf_size = dev->variant->buf_size->priv;
- 	int ret;
- 
-@@ -41,33 +39,23 @@ static int s5p_mfc_sys_init_cmd_v6(struc
- 
- 	mfc_write(dev, dev->ctx_buf.dma, S5P_FIMV_CONTEXT_MEM_ADDR_V6);
- 	mfc_write(dev, buf_size->dev_ctx, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
--	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6,
--					&h2r_args);
-+	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6);
- }
- 
- static int s5p_mfc_sleep_cmd_v6(struct s5p_mfc_dev *dev)
- {
--	struct s5p_mfc_cmd_args h2r_args;
--
--	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
--	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6,
--			&h2r_args);
-+	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6);
- }
- 
- static int s5p_mfc_wakeup_cmd_v6(struct s5p_mfc_dev *dev)
- {
--	struct s5p_mfc_cmd_args h2r_args;
--
--	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
--	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6,
--					&h2r_args);
-+	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6);
- }
- 
- /* Open a new instance and get its number */
- static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
- {
- 	struct s5p_mfc_dev *dev = ctx->dev;
--	struct s5p_mfc_cmd_args h2r_args;
- 	int codec_type;
- 
- 	mfc_debug(2, "Requested codec mode: %d\n", ctx->codec_mode);
-@@ -129,23 +117,20 @@ static int s5p_mfc_open_inst_cmd_v6(stru
- 	mfc_write(dev, ctx->ctx.size, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
- 	mfc_write(dev, 0, S5P_FIMV_D_CRC_CTRL_V6); /* no crc */
- 
--	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6,
--					&h2r_args);
-+	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6);
- }
- 
- /* Close instance */
- static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
- {
- 	struct s5p_mfc_dev *dev = ctx->dev;
--	struct s5p_mfc_cmd_args h2r_args;
- 	int ret = 0;
- 
- 	dev->curr_ctx = ctx->num;
- 	if (ctx->state != MFCINST_FREE) {
- 		mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
- 		ret = s5p_mfc_cmd_host2risc_v6(dev,
--					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6,
--					&h2r_args);
-+					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6);
+-	if (IS_IRIS2_1(core)) {
++	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+ 		/* Bring XTSS out of reset */
+ 		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
  	} else {
- 		ret = -EINVAL;
- 	}
-@@ -153,9 +138,15 @@ static int s5p_mfc_close_inst_cmd_v6(str
- 	return ret;
- }
+@@ -68,7 +68,7 @@ int venus_set_hw_state(struct venus_core
+ 	if (resume) {
+ 		venus_reset_cpu(core);
+ 	} else {
+-		if (IS_IRIS2_1(core))
++		if (IS_IRIS2(core) || IS_IRIS2_1(core))
+ 			writel(WRAPPER_XTSS_SW_RESET_BIT,
+ 			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+ 		else
+@@ -181,7 +181,7 @@ static int venus_shutdown_no_tz(struct v
+ 	void __iomem *wrapper_base = core->wrapper_base;
+ 	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
  
-+static int s5p_mfc_cmd_host2risc_v6_args(struct s5p_mfc_dev *dev, int cmd,
-+				    const struct s5p_mfc_cmd_args *ignored)
-+{
-+	return s5p_mfc_cmd_host2risc_v6(dev, cmd);
-+}
-+
- /* Initialize cmd function pointers for MFC v6 */
- static const struct s5p_mfc_hw_cmds s5p_mfc_cmds_v6 = {
--	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6,
-+	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6_args,
- 	.sys_init_cmd = s5p_mfc_sys_init_cmd_v6,
- 	.sleep_cmd = s5p_mfc_sleep_cmd_v6,
- 	.wakeup_cmd = s5p_mfc_wakeup_cmd_v6,
+-	if (IS_IRIS2_1(core)) {
++	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+ 		/* Assert the reset to XTSS */
+ 		reg = readl(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+ 		reg |= WRAPPER_XTSS_SW_RESET_BIT;
 
 
