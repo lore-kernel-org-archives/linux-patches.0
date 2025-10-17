@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999752D7D3A;
-	Fri, 17 Oct 2025 15:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F58C32E144;
+	Fri, 17 Oct 2025 15:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715074; cv=none; b=YNYdKmjSCHww+P2AJ9e8jY+EZCE7ElrpQ+HPo9UA/NI383WeHOmZB1CV84s5jjviuHuzh24B/muyBjdot2TwnAjHU6ubauuATOPeqQ2adLOHSSCqoCKKCYEyBkMBeg2mZWth1xBDmvZFxzlUhkWP52hHxCf43lRw3PtjKuvY9lA=
+	t=1760715076; cv=none; b=mujuDYRXIgjtX6bqn0KFS/LPSyevCk4Ih9+Y1zlZjZyCh4j5pv0wOjUIsnV8s1Nej+gOd7D8oMr4wJXiLck1/pS48KukIExSlXFN8Regg6D+cyNCliNYJwQ3OlCnoJASOhaQwc/mqBCHZFd+/WPDwcPXncaPg4TS7R32QpX1Gk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715074; c=relaxed/simple;
-	bh=bQ9Ip8OMrzWXaCCNueT+VYbztdbJuMkPjljbB0TVol4=;
+	s=arc-20240116; t=1760715076; c=relaxed/simple;
+	bh=h3MM86bhAY6ETnw1nEVUtcQGqmEhQxSRwnIIfEjhsek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDOR2gqjKebSWhT6yIS6gvtkGv/ql8/Uzoykyqun+1cQM7VFElp7HpN/ZnK0qYpYbX5P4iM/6W+GfWzVQd20cmQM6arDA0GjafybXJhYLXHYW9FwVyHssZTkN8w00VhX4RD31vKEGQMS6rAqy75K1xMzb/phsJ3EdTCOBVMUfsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui89dojH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNfowAMXqyFWusuVHgQ4BQdf9Q+M6bUsUA7fxgrAvdzh6wGp/25glGgIH4Bru1mZgdhvCkd9OEEMDi6IrHpPSBClX4yziWtAX7P/Q7jJNTNav8zLZYTL82l5xSSZ2FybojucWn4CzjutteQQ2YU9E+oaXraPaQIFpdrUk1ao9F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6QOkAkc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui89dojH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C0CC4CEE7;
-	Fri, 17 Oct 2025 15:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6QOkAkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9284CC116C6;
+	Fri, 17 Oct 2025 15:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715073;
-	bh=bQ9Ip8OMrzWXaCCNueT+VYbztdbJuMkPjljbB0TVol4=;
+	s=korg; t=1760715075;
+	bh=h3MM86bhAY6ETnw1nEVUtcQGqmEhQxSRwnIIfEjhsek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ui89dojH+3GqHIshqco1Sr/EkfM1vvQqltc1RfTInHEzd3EXuoGu2wgUbe4d4VgZv
-	 R21unleg2HOprR12F5WYCyGPnhzjlJuR0ErMEH5aY5yHt0c38syNSe0Y8Z5bu2juTx
-	 Zw23VfNZZBk9bSQi047OTuQ6ArVG14bSQsSSsxUU=
+	b=a6QOkAkcuuIy/r4InlNDt64MmKprqv7klxXloN6IeICHrFGEjFD8etRC/DTm6Lluy
+	 wnPYi2XXe2++Ssa+QY7LbMND7D2k2tbKNa+nY4a7Ndv58OvdtaWIcxjFGJtFFtLZNn
+	 5o571urMnzd3a1osoiQ/ur4OBdoy84HMWZOATaRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Alexandr Sapozhnikov <alsp705@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 087/371] drm/vmwgfx: Fix copy-paste typo in validation
-Date: Fri, 17 Oct 2025 16:51:02 +0200
-Message-ID: <20251017145205.087024385@linuxfoundation.org>
+Subject: [PATCH 6.17 088/371] net/sctp: fix a null dereference in sctp_disposition sctp_sf_do_5_1D_ce()
+Date: Fri, 17 Oct 2025 16:51:03 +0200
+Message-ID: <20251017145205.122549800@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Alexandr Sapozhnikov <alsp705@gmail.com>
 
-[ Upstream commit 228c5d44dffe8c293cd2d2f0e7ea45e64565b1c4 ]
+[ Upstream commit 2f3119686ef50319490ccaec81a575973da98815 ]
 
-'entry' should be 'val' which is the loop iterator.
+If new_asoc->peer.adaptation_ind=0 and sctp_ulpevent_make_authkey=0
+and sctp_ulpevent_make_authkey() returns 0, then the variable
+ai_ev remains zero and the zero will be dereferenced
+in the sctp_ulpevent_free() function.
 
-Fixes: 9e931f2e0970 ("drm/vmwgfx: Refactor resource validation hashtable to use linux/hashtable implementation.")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://lore.kernel.org/r/20250926195427.1405237-2-ian.forbes@broadcom.com
+Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Fixes: 30f6ebf65bc4 ("sctp: add SCTP_AUTH_NO_AUTH type for AUTHENTICATION_EVENT")
+Link: https://patch.msgid.link/20251002091448.11-1-alsp705@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_validation.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sm_statefuns.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-index 4d0fb71f62111..35dc94c3db399 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-@@ -638,7 +638,7 @@ void vmw_validation_drop_ht(struct vmw_validation_context *ctx)
- 		hash_del_rcu(&val->hash.head);
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index a0524ba8d7878..93cac73472c79 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -885,7 +885,8 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
+ 	return SCTP_DISPOSITION_CONSUME;
  
- 	list_for_each_entry(val, &ctx->resource_ctx_list, head)
--		hash_del_rcu(&entry->hash.head);
-+		hash_del_rcu(&val->hash.head);
- 
- 	ctx->sw_context = NULL;
- }
+ nomem_authev:
+-	sctp_ulpevent_free(ai_ev);
++	if (ai_ev)
++		sctp_ulpevent_free(ai_ev);
+ nomem_aiev:
+ 	sctp_ulpevent_free(ev);
+ nomem_ev:
 -- 
 2.51.0
 
