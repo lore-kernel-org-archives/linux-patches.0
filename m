@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30245339717;
-	Fri, 17 Oct 2025 15:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AE9339717;
+	Fri, 17 Oct 2025 15:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715407; cv=none; b=YX2sb//YGwKOzCLEoT383kwGGIAeuEBjrAIHX5vxbUqW1G0XXUofZuE9k5TmOIiEgruozjggCpb8YlrVM5qVEapGwT9yH8WJK71FfBSI1o9KOWVcHWy2GHw8jDPgM+gLc+fsJ2nvdGoSb3eusDCk5iF6FvZ9mDTdfMFJvZfuMH8=
+	t=1760715410; cv=none; b=rz6hfvJsAfszSItF+q4twEjHlDIhRv6ohEzR7fE1/Jn65OaBVFNZnRIZir4gikHeT0TiEtTrfBLVn2wurhUUeKnrxIgwWsBhRUwCUaQiEN3fEQDKeUQamXqcDTZBbtq3Z9XbgDRCGE++Qlrc0IlPBwSnB739TW1u3YRnH6Kqyo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715407; c=relaxed/simple;
-	bh=8w6DjhsfDrc9tgYKKDym2U6zAu/ee7/anxzR7lHwhRA=;
+	s=arc-20240116; t=1760715410; c=relaxed/simple;
+	bh=cildoYq5y6sdk+tpyoDrgMBRhpmZWb9+HiRaduBjxas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t89asaUwrnVxkJqbFKHS7jizBfuBseA+N3MEUR1bK1lSvPRsUKEg7WWj9r0i0OZbUdO3Xooi45FdGcPhJ8SRWR6wLUp4fkfBLLpI5ujf6Rbukmt7MGhd2FInFM8og1RYCgwkJLHLtQJ2FzaCvL7ghl8mfveFfUq1i10nVzIXqtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBM4EtAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BdEFtVWt6PlV1gkvN6bYcHZOFIs/s6weFwWx57BWHzOeS9RBQNqEb60bTYH7FC/ivSogNk40vy7Yarfs/BOzC81v/bnRWBr+x+0i8APO/O/3oJkJ56i9FxuEnlt2Q77Wp7gumz3Yn5ZVXXcGg7yGRskVr9GdtI5O3JW4crks2CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnkPW63W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBM4EtAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E9BC4CEE7;
-	Fri, 17 Oct 2025 15:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnkPW63W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737D8C4CEE7;
+	Fri, 17 Oct 2025 15:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715407;
-	bh=8w6DjhsfDrc9tgYKKDym2U6zAu/ee7/anxzR7lHwhRA=;
+	s=korg; t=1760715409;
+	bh=cildoYq5y6sdk+tpyoDrgMBRhpmZWb9+HiRaduBjxas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBM4EtAqw1RW0BYQZEO3USrFJ/o+tsHVkIko4BiKnK6sM+V7rLDYRZb201w6m2mpE
-	 ojxaVOb75SsMpX2fjPquxG33XnBJ8fkJmWHf7ffIg9o9gXo8LdyJ3A4OaSzXZ/0ng0
-	 fxcbJdaBoNx2HtGRi5aqnrICJWDzTIHhlRNsM33M=
+	b=EnkPW63WATopuwjbjsY0mQEIwmuiBBSgzgfhn54UW1/l/j+T8c+grOneOojBUxxNn
+	 ehQX9dPrBmFxeBvjwLxOEaU7UAzNnyT/j1BkPRvHkj7ghPxWV4fQCMC/qZO1WXfnje
+	 cwYnRH+fL0CR4Gi2WUWr72vzL9igaM/Sh3Lk2d9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zihuan Zhang <zhangzihuan@kylinos.cn>
-Subject: [PATCH 6.17 206/371] cpufreq: intel_pstate: Fix object lifecycle issue in update_qos_request()
-Date: Fri, 17 Oct 2025 16:53:01 +0200
-Message-ID: <20251017145209.543335182@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.17 207/371] crypto: aspeed - Fix dma_unmap_sg() direction
+Date: Fri, 17 Oct 2025 16:53:02 +0200
+Message-ID: <20251017145209.580300378@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,58 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 69e5d50fcf4093fb3f9f41c4f931f12c2ca8c467 upstream.
+commit 838d2d51513e6d2504a678e906823cfd2ecaaa22 upstream.
 
-The cpufreq_cpu_put() call in update_qos_request() takes place too early
-because the latter subsequently calls freq_qos_update_request() that
-indirectly accesses the policy object in question through the QoS request
-object passed to it.
+It seems like everywhere in this file, when the request is not
+bidirectionala, req->src is mapped with DMA_TO_DEVICE and req->dst is
+mapped with DMA_FROM_DEVICE.
 
-Fortunately, update_qos_request() is called under intel_pstate_driver_lock,
-so this issue does not matter for changing the intel_pstate operation
-mode, but it theoretically can cause a crash to occur on CPU device hot
-removal (which currently can only happen in virt, but it is formally
-supported nevertheless).
-
-Address this issue by modifying update_qos_request() to drop the
-reference to the policy later.
-
-Fixes: da5c504c7aae ("cpufreq: intel_pstate: Implement QoS supported freq constraints")
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zihuan Zhang <zhangzihuan@kylinos.cn>
-Link: https://patch.msgid.link/2255671.irdbgypaU6@rafael.j.wysocki
+Fixes: 62f58b1637b7 ("crypto: aspeed - add HACE crypto driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/crypto/aspeed/aspeed-hace-crypto.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1710,10 +1710,10 @@ static void update_qos_request(enum freq
- 			continue;
+--- a/drivers/crypto/aspeed/aspeed-hace-crypto.c
++++ b/drivers/crypto/aspeed/aspeed-hace-crypto.c
+@@ -346,7 +346,7 @@ free_req:
  
- 		req = policy->driver_data;
--		cpufreq_cpu_put(policy);
--
--		if (!req)
-+		if (!req) {
-+			cpufreq_cpu_put(policy);
- 			continue;
-+		}
- 
- 		if (hwp_active)
- 			intel_pstate_get_hwp_cap(cpu);
-@@ -1729,6 +1729,8 @@ static void update_qos_request(enum freq
- 
- 		if (freq_qos_update_request(req, freq) < 0)
- 			pr_warn("Failed to update freq constraint: CPU%d\n", i);
-+
-+		cpufreq_cpu_put(policy);
+ 	} else {
+ 		dma_unmap_sg(hace_dev->dev, req->dst, rctx->dst_nents,
+-			     DMA_TO_DEVICE);
++			     DMA_FROM_DEVICE);
+ 		dma_unmap_sg(hace_dev->dev, req->src, rctx->src_nents,
+ 			     DMA_TO_DEVICE);
  	}
- }
- 
 
 
