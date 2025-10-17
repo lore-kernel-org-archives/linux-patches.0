@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6443208;
-	Fri, 17 Oct 2025 15:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D223208;
+	Fri, 17 Oct 2025 15:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713254; cv=none; b=eD8JZPEaQwUtCv0IyOX1L/05afPIRapxgSyZ/s783Mn6cux/ZoO9qrGgJVyVMPH/QwWkcj6/rpz6fp54WrECn60f8b4KtdIGjTiSJd2BZ1E2bRvnEFnUpJuRrM2GAoEURx4D/DUXjuqI5GTBD0YaF+DrQOv+Hj0KKq5l4zMg9GY=
+	t=1760713257; cv=none; b=VpO4ipzOu9EvRZpawQ8aSRzTjUNgxBdDvb3D2mXUVBu19CMWuXGx0dvmTGMAJ9t6FMpYuN+paWlW5+z1EMFdyDI5ZrKP6US/VJT51wKTxTEK1yWOzG1RWX22aE1a8LJnecwtTBHG7QFXQixsNPgpJsccb1c3vkyzrJVK3cDtBrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713254; c=relaxed/simple;
-	bh=bXFEJrj7rmBkJtipbwAPysAKbqQl6dr5/CE9QKvy8jg=;
+	s=arc-20240116; t=1760713257; c=relaxed/simple;
+	bh=Ogi7HJ2VpwkbCCqEdrWzJXHpAXA0LeZ7bOFaOadCHgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBzPAjAoVxtdyVNbAFH90PywptoFONo1RV+3qErDoZaZg8OmfWEhKjiBFP4FerdXxRtqlILqGUkCf9tArtzykR1B4H+MbOBTvRKFYA70vc2d6GxhkilEMXxK7RpEYB5YC6Lu7lwgYmiPuZUsTn5b9VYK3sbc35Vna9OmQL8JdB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9lLSabu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pP2Bdg+jCLfWDKUou9NFsJb6SUVx7AAx9sNG6DMJV/jvpAsjiJOZmRawr84Nthi4WbOkOdrojPmHI8V5NpeZk1dQXx5upTqsNRUlOVXdcliOdhU3fIr+dmRYNKZFxKwHOuw2bMDECSoCGHN0JXxizXcigyQdBp5uNQhRIeZAYVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sS8K5Gq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9lLSabu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A170C4CEE7;
-	Fri, 17 Oct 2025 15:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sS8K5Gq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBFAC4CEFE;
+	Fri, 17 Oct 2025 15:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713254;
-	bh=bXFEJrj7rmBkJtipbwAPysAKbqQl6dr5/CE9QKvy8jg=;
+	s=korg; t=1760713257;
+	bh=Ogi7HJ2VpwkbCCqEdrWzJXHpAXA0LeZ7bOFaOadCHgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9lLSabubPU7HAUZBxosva7HV0Y0N8Y0d5Ig1boVr6GB/S9mJeyCZkPGrX3d3LB3g
-	 thH8nUdJeixtqDHja9iwNWW0VE7gTB635AgJXhlBRX14zQ9uugeU7gfy6QwkIvr/E2
-	 Ltpfmj4ZXye7MJ9n1LXo8JXQdViR0sEy2t8o6Mt0=
+	b=sS8K5Gq3p7RQ65/zBtMK954GEltOU37jfkUgMhwkVx7DmxAdBFbBzpuN7RyYBYrOB
+	 bRC3hk/4tixcbfWZioXt1sIyHYHtfYrmSdOEbn6SiArMsfdO3w4qmp6hMbiFFMiAz8
+	 W8laUu/eMYf188N43k6LrApr3YEBm6KessJ+LGn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 102/168] mtd: rawnand: fsmc: Default to autodetect buswidth
-Date: Fri, 17 Oct 2025 16:53:01 +0200
-Message-ID: <20251017145132.784784949@linuxfoundation.org>
+	Rex Chen <rex.chen_1@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 103/168] mmc: core: SPI mode remove cmd7
+Date: Fri, 17 Oct 2025 16:53:02 +0200
+Message-ID: <20251017145132.821666014@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -50,61 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Rex Chen <rex.chen_1@nxp.com>
 
-commit b8df622cf7f6808c85764e681847150ed6d85f3d upstream.
+commit fec40f44afdabcbc4a7748e4278f30737b54bb1a upstream.
 
-If you don't specify buswidth 2 (16 bits) in the device
-tree, FSMC doesn't even probe anymore:
+SPI mode doesn't support cmd7, so remove it in mmc_sdio_alive() and
+confirm if sdio is active by checking CCCR register value is available
+or not.
 
-fsmc-nand 10100000.flash: FSMC device partno 090,
-  manufacturer 80, revision 00, config 00
-nand: device found, Manufacturer ID: 0x20, Chip ID: 0xb1
-nand: ST Micro 10100000.flash
-nand: bus width 8 instead of 16 bits
-nand: No NAND device found
-fsmc-nand 10100000.flash: probe with driver fsmc-nand failed
-  with error -22
-
-With this patch to use autodetection unless buswidth is
-specified, the device is properly detected again:
-
-fsmc-nand 10100000.flash: FSMC device partno 090,
-  manufacturer 80, revision 00, config 00
-nand: device found, Manufacturer ID: 0x20, Chip ID: 0xb1
-nand: ST Micro NAND 128MiB 1,8V 16-bit
-nand: 128 MiB, SLC, erase size: 128 KiB, page size: 2048, OOB size: 64
-fsmc-nand 10100000.flash: Using 1-bit HW ECC scheme
-Scanning device for bad blocks
-
-I don't know where or how this happened, I think some change
-in the nand core.
-
+Signed-off-by: Rex Chen <rex.chen_1@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20250728082230.1037917-2-rex.chen_1@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/fsmc_nand.c |    6 +++++-
+ drivers/mmc/core/sdio.c |    6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/fsmc_nand.c
-+++ b/drivers/mtd/nand/raw/fsmc_nand.c
-@@ -876,10 +876,14 @@ static int fsmc_nand_probe_config_dt(str
- 	if (!of_property_read_u32(np, "bank-width", &val)) {
- 		if (val == 2) {
- 			nand->options |= NAND_BUSWIDTH_16;
--		} else if (val != 1) {
-+		} else if (val == 1) {
-+			nand->options |= NAND_BUSWIDTH_AUTO;
-+		} else {
- 			dev_err(&pdev->dev, "invalid bank-width %u\n", val);
- 			return -EINVAL;
- 		}
-+	} else {
-+		nand->options |= NAND_BUSWIDTH_AUTO;
- 	}
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -945,7 +945,11 @@ static void mmc_sdio_remove(struct mmc_h
+  */
+ static int mmc_sdio_alive(struct mmc_host *host)
+ {
+-	return mmc_select_card(host->card);
++	if (!mmc_host_is_spi(host))
++		return mmc_select_card(host->card);
++	else
++		return mmc_io_rw_direct(host->card, 0, 0, SDIO_CCCR_CCCR, 0,
++					NULL);
+ }
  
- 	if (of_get_property(np, "nand-skip-bbtscan", NULL))
+ /*
 
 
