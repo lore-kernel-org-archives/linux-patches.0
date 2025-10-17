@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5D72F12D1;
-	Fri, 17 Oct 2025 15:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D112036E9;
+	Fri, 17 Oct 2025 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715316; cv=none; b=bPj38Rd+pDngsbV7jB2uxXFlWerunaXZnjoxPsK5NggXi43I4E1KkY5+STRrhBsdYCzpNvSGShft4XlfOn6ZU1D9VUbeBIiNoL4P4bjxU03Dp4RkMgXe5wn7oQtsoSdeltZ0U985qy0ZFSQD8TBvbmwreMH15UxDUSwecJeYBPw=
+	t=1760715318; cv=none; b=Us15kj4S/WDFn6qdZwgnrpYWxbooO3czj912l2/T2BgyzqlOEpFN7xye3muiklOkjOcuXDBCQ67cX4/4BsY60igyt3vOjJan4vzlBIRR4hGCYZYAT+hT3rirxlyTYVT277FK4dogaO9IuQrmeaOmYYBQULUwqvCn4rCt4Jigmx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715316; c=relaxed/simple;
-	bh=ay2TSw3HC/SUGTmT6eV6o+yno0VajNsBXhziLCx1o+4=;
+	s=arc-20240116; t=1760715318; c=relaxed/simple;
+	bh=sNfk25xPdowTHFQkpp6qUX3CRe0G7HCDYr8MSauWpXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTCLaSkb8HbpDlvvLY8AD0w1VgusoOgkqz4W7zFNgQMA1QgZfgsheqkfV3kR3MFYb9M83b5AkM8S/XEyKit/pmzEkyUTJb+2dpRsFqwwUkwhATbxSAWDB13AbNn1oho7uabH7s1mD33yE+hPkEnzbv8LSWOM8BGCC7vtJJnvVaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPGfA2tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lu4K6LxW6co6COsSqdpkVYb/UpfYoBIg8BXhAaJPVCF3fjLopMiEH7TgdGu+PadyqYEFwM5+oZtNWYkMChwUBwSW9PQsg5F9h4Fgm70edLI6vYMYmMCgvz8KVMCkNT/ATxR/uW2X3z1QVkipR3xzMgbz09kpxB2gvtzk4aLEaKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oC5TMBEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPGfA2tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D57C113D0;
-	Fri, 17 Oct 2025 15:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oC5TMBEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D347C4CEE7;
+	Fri, 17 Oct 2025 15:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715315;
-	bh=ay2TSw3HC/SUGTmT6eV6o+yno0VajNsBXhziLCx1o+4=;
+	s=korg; t=1760715318;
+	bh=sNfk25xPdowTHFQkpp6qUX3CRe0G7HCDYr8MSauWpXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPGfA2tjhRwrI0ho8cZGrZZzYlr0FmmUe6LEc0TbWGGehGgcCH8Qd7Z2Ey+JXRqmq
-	 Ze3OieczR6o2QNlz02jesawghspCgmNdFAa7Tl3ublNhXaqW3ag8SAoQ4mBYqY1ble
-	 JvOJ2B7IZeHGzdVUoWQhiPLrgDDHMspWJTpsXpSc=
+	b=oC5TMBEWkaZMYBNFBsALmWRZruAXTuoDnq9zi1ZZYU6IpjtcD5dxd21Or9HPtzoZs
+	 eH0ClxudOr2uGUiRIBzi+D99wNjhP5FNeYKg4RBI+Zc99soJQHUM9tYTwCpAr0z0Ud
+	 NzoAXMvlY4KCGcZQPMjZNiP43xr4gBHDFJ7Cp3Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 174/371] media: pci: mg4b: fix uninitialized iio scan data
-Date: Fri, 17 Oct 2025 16:52:29 +0200
-Message-ID: <20251017145208.226033658@linuxfoundation.org>
+Subject: [PATCH 6.17 175/371] media: platform: mtk-mdp3: Add missing MT8188 compatible to comp_dt_ids
+Date: Fri, 17 Oct 2025 16:52:30 +0200
+Message-ID: <20251017145208.261800231@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -45,39 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-commit c0d3f6969bb4d72476cfe7ea9263831f1c283704 upstream.
+commit bbcc6d16dea4b5c878d56a8d25daf996c6b8a1d4 upstream.
 
-Fix potential leak of uninitialized stack data to userspace by ensuring
-that the `scan` structure is zeroed before use.
+Commit 4a81656c8eaa ("arm64: dts: mediatek: mt8188: Address binding
+warnings for MDP3 nodes") caused a regression on the MDP functionality
+when it removed the MT8195 compatibles from the MDP3 nodes, since the
+MT8188 compatible was not yet listed as a possible MDP component
+compatible in mdp_comp_dt_ids. This resulted in an empty output
+bitstream when using the MDP from userspace, as well as the following
+errors:
 
-Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
+  mtk-mdp3 14001000.dma-controller: Uninit component inner id 4
+  mtk-mdp3 14001000.dma-controller: mdp_path_ctx_init error 0
+  mtk-mdp3 14001000.dma-controller: CMDQ sendtask failed: -22
+
+Add the missing compatible to the array to restore functionality.
+
+Fixes: 4a81656c8eaa ("arm64: dts: mediatek: mt8188: Address binding warnings for MDP3 nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/mgb4/mgb4_trigger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/pci/mgb4/mgb4_trigger.c
-+++ b/drivers/media/pci/mgb4/mgb4_trigger.c
-@@ -91,7 +91,7 @@ static irqreturn_t trigger_handler(int i
- 	struct {
- 		u32 data;
- 		s64 ts __aligned(8);
--	} scan;
-+	} scan = { };
- 
- 	scan.data = mgb4_read_reg(&st->mgbdev->video, 0xA0);
- 	mgb4_write_reg(&st->mgbdev->video, 0xA0, scan.data);
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
+@@ -1530,6 +1530,9 @@ static const struct of_device_id mdp_com
+ 	}, {
+ 		.compatible = "mediatek,mt8195-mdp3-tcc",
+ 		.data = (void *)MDP_COMP_TYPE_TCC,
++	}, {
++		.compatible = "mediatek,mt8188-mdp3-rdma",
++		.data = (void *)MDP_COMP_TYPE_RDMA,
+ 	},
+ 	{}
+ };
 
 
