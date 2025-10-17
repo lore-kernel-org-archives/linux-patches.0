@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8626B330B06;
-	Fri, 17 Oct 2025 15:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0EC330B03;
+	Fri, 17 Oct 2025 15:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715829; cv=none; b=XEZr5nitCuoe+H/aT5SSehccrU6wM9jlcN9qFYa2E0dji7l+1rH0Birl4QNWKl4pSn8cbwwn+f2LK95w5SmrD7+w7dQ4bHZrGy6NhDMJAsqE2ASrWzQV6DErLJT+jaLq7s1loppkXXfOLJi3rytlARqfezbjqXAfbFNryi3ybKs=
+	t=1760715832; cv=none; b=odnvecv/1WutdVwwbj3mLVEczMe64kOYUt31YniRjzZ17BrJwAZaXg5ktcNfXhKjgsZcjkUQh+3BE+P1109EEuWMO8KjBCgZfnIdis72xtRAeUY3SeyHyOkN1DsD/z3mJedTYnnLiQkOktmUd6vxlWn75ExAtQbJU7n5aZV/OME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715829; c=relaxed/simple;
-	bh=3CEnRYP7QFo231K8F26IIGE/yH7agaoo6tLnET3HbYo=;
+	s=arc-20240116; t=1760715832; c=relaxed/simple;
+	bh=Xp/yCJnO1q4mvyMEzqfIDrln5bgSpv3TOub/ChXHYOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKus3gMzIHABw0oI7E5MjLnZJP7EBTRlF+nJh8OS3zAiMfYI28QWlqmzO57NMldaZ0whEeg2crvgaUZsa8hGVlpchxDR6u5GNikDiPNciSVTpN4kE6OaDPvfjh5EyxZ3+iN+DTGtiAT5YF+92FV0rdYsYPB+0gYaNWYuRV+DtiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvkEhSah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u4jtN+iS6BhgZLtkcsFg/oD8A+7wLvY+Tl7vm3LRjvwCyY95XvygesO9Y5eU/AayHdGXj5z1VsyQt2Ux5c0y64xkAOJ6FaQPRyGyMi7RaBrszBAQTddF6UcAu8vnU/KFJG10AS3TtwfAvEiOCiJud2gfRjN+RBlWHKR0K6d/Qn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y51KM4BM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvkEhSah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB086C4CEE7;
-	Fri, 17 Oct 2025 15:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y51KM4BM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8519AC4CEE7;
+	Fri, 17 Oct 2025 15:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715829;
-	bh=3CEnRYP7QFo231K8F26IIGE/yH7agaoo6tLnET3HbYo=;
+	s=korg; t=1760715831;
+	bh=Xp/yCJnO1q4mvyMEzqfIDrln5bgSpv3TOub/ChXHYOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvkEhSahJHfwzIUsfvzZzCJIcv9UpH3Nofz7mT1WCnV5GCCXgQT6cvthzsr1pABN2
-	 CChheCMk2Nlf2jHMNHEH3ferLY1pDMP6n7qIyQqLDJsZYbtcv8azyfrzJahRakK4os
-	 RurD0rauQ16Y97V1O0VuKCE1aPOetm0eSqKxBtwc=
+	b=Y51KM4BMdtL8XIkBORxWbPiKdOjIOMehafj0bpRPzZW7llxRE9E5xBKIBrpvSZQFp
+	 Zc1Q33tvSu5urKoZ832l2qP+rC512RzXo9InRKiSFfRivYJfcm/nBh0UtJ40TqYaPW
+	 fXg1fQ9E1lm+ac+28xSTiz2lapGzI+zijDPFSLqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 352/371] mm/ksm: fix incorrect KSM counter handling in mm_struct during fork
-Date: Fri, 17 Oct 2025 16:55:27 +0200
-Message-ID: <20251017145214.818337701@linuxfoundation.org>
+Subject: [PATCH 6.17 353/371] media: mc: Clear minor number before put device
+Date: Fri, 17 Oct 2025 16:55:28 +0200
+Message-ID: <20251017145214.856658637@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -57,101 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 4d6fc29f36341d7795db1d1819b4c15fe9be7b23 ]
+[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
 
-Patch series "mm/ksm: Fix incorrect accounting of KSM counters during
-fork", v3.
+The device minor should not be cleared after the device is released.
 
-The first patch in this series fixes the incorrect accounting of KSM
-counters such as ksm_merging_pages, ksm_rmap_items, and the global
-ksm_zero_pages during fork.
-
-The following patch add a selftest to verify the ksm_merging_pages counter
-was updated correctly during fork.
-
-Test Results
-============
-Without the first patch
------------------------
- # [RUN] test_fork_ksm_merging_page_count
- not ok 10 ksm_merging_page in child: 32
-
-With the first patch
---------------------
- # [RUN] test_fork_ksm_merging_page_count
- ok 10 ksm_merging_pages is not inherited after fork
-
-This patch (of 2):
-
-Currently, the KSM-related counters in `mm_struct`, such as
-`ksm_merging_pages`, `ksm_rmap_items`, and `ksm_zero_pages`, are inherited
-by the child process during fork.  This results in inconsistent
-accounting.
-
-When a process uses KSM, identical pages are merged and an rmap item is
-created for each merged page.  The `ksm_merging_pages` and
-`ksm_rmap_items` counters are updated accordingly.  However, after a fork,
-these counters are copied to the child while the corresponding rmap items
-are not.  As a result, when the child later triggers an unmerge, there are
-no rmap items present in the child, so the counters remain stale, leading
-to incorrect accounting.
-
-A similar issue exists with `ksm_zero_pages`, which maintains both a
-global counter and a per-process counter.  During fork, the per-process
-counter is inherited by the child, but the global counter is not
-incremented.  Since the child also references zero pages, the global
-counter should be updated as well.  Otherwise, during zero-page unmerge,
-both the global and per-process counters are decremented, causing the
-global counter to become inconsistent.
-
-To fix this, ksm_merging_pages and ksm_rmap_items are reset to 0 during
-fork, and the global ksm_zero_pages counter is updated with the
-per-process ksm_zero_pages value inherited by the child.  This ensures
-that KSM statistics remain accurate and reflect the activity of each
-process correctly.
-
-Link: https://lkml.kernel.org/r/cover.1758648700.git.donettom@linux.ibm.com
-Link: https://lkml.kernel.org/r/7b9870eb67ccc0d79593940d9dbd4a0b39b5d396.1758648700.git.donettom@linux.ibm.com
-Fixes: 7609385337a4 ("ksm: count ksm merging pages for each process")
-Fixes: cb4df4cae4f2 ("ksm: count allocated ksm rmap_items for each process")
-Fixes: e2942062e01d ("ksm: count all zero pages placed by KSM")
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Donet Tom <donettom@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: <stable@vger.kernel.org>	[6.6+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replaced mm_flags_test() calls with test_bit() ]
+Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
+Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ksm.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/mc/mc-devnode.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/include/linux/ksm.h
-+++ b/include/linux/ksm.h
-@@ -56,8 +56,14 @@ static inline long mm_ksm_zero_pages(str
- static inline void ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -50,11 +50,6 @@ static void media_devnode_release(struct
  {
- 	/* Adding mm to ksm is best effort on fork. */
--	if (test_bit(MMF_VM_MERGEABLE, &oldmm->flags))
-+	if (test_bit(MMF_VM_MERGEABLE, &oldmm->flags)) {
-+		long nr_ksm_zero_pages = atomic_long_read(&mm->ksm_zero_pages);
-+
-+		mm->ksm_merging_pages = 0;
-+		mm->ksm_rmap_items = 0;
-+		atomic_long_add(nr_ksm_zero_pages, &ksm_zero_pages);
- 		__ksm_enter(mm);
-+	}
- }
+ 	struct media_devnode *devnode = to_media_devnode(cd);
  
- static inline int ksm_execve(struct mm_struct *mm)
+-	mutex_lock(&media_devnode_lock);
+-	/* Mark device node number as free */
+-	clear_bit(devnode->minor, media_devnode_nums);
+-	mutex_unlock(&media_devnode_lock);
+-
+ 	/* Release media_devnode and perform other cleanups as needed. */
+ 	if (devnode->release)
+ 		devnode->release(devnode);
+@@ -281,6 +276,7 @@ void media_devnode_unregister(struct med
+ 	/* Delete the cdev on this minor as well */
+ 	cdev_device_del(&devnode->cdev, &devnode->dev);
+ 	devnode->media_dev = NULL;
++	clear_bit(devnode->minor, media_devnode_nums);
+ 	mutex_unlock(&media_devnode_lock);
+ 
+ 	put_device(&devnode->dev);
 
 
