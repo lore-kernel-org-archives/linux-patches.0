@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633A2330B1E;
-	Fri, 17 Oct 2025 15:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B55330B1E;
+	Fri, 17 Oct 2025 15:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716382; cv=none; b=E1HTdsdpdLiOkOVMswd+cKg9YNRYkY7GYvTxj/4L3BDbssW8cwoltb5pkug1b5IlPUiWldknLVOSLXaiB6AmnZHd19kbIxxRGoayEgluRIekeXxIDDsBJYeKe26DaYWUkGtPpMGcQBObtOpdsDkjRN/DbCsakeVZJuoc3ls43rg=
+	t=1760716385; cv=none; b=TfnyprH91C+PuCCZ11yd2IOWrhSNHcJ2n3MQu1UnOJUo+LD1vt2PydtYc0KG06L6dlWuu1sYiEcjKKzAfXBC7TVc5DUe7ad4JnH38sM3Sb7mRWezH7DhqydRs25VEG4ythc2XAwwgBpevlkORJdvS7kVRRpNvcK2lzMAK8N7oqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716382; c=relaxed/simple;
-	bh=rsqAAjT3XsIbOnYuzWFjmVU1RM8DIx2934+/gQdI2S4=;
+	s=arc-20240116; t=1760716385; c=relaxed/simple;
+	bh=lg17htMOMrwpIcBZo4PdmJ6Z8sQc6QgDCLDO/X6X9OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVZcSrMo8+l7mTWSdykK47u7JYQHIZtU2cCxjFdzQNnPR5qJKhawM/9SPu8Ow/TFsyJ63VrKtt9cnqgJnzPHdJiYnRLGIVxS3brsfgBF0ATOmPTrN1uOwee2zu788B/MRnLqxd2PefRF8jGD6CPnbaoNtmK3LsIEE9WIGUSVRRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JXAWjQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JuOctm84MTU4DrfM3l5ZHMT8nNf5hjcslOcek+Th/CNejkAZ9rZjv8P/wezx2nARat92BWvzxJrDC3ZL7ev2dlqOs0g2o90+06ajHg/G+yvAYMo6dEknwZxugx3DAibDqbUdNGnjyGnX4UkcBEpFXHVt01HGq0nS36jkL5h62AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkII3PCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JXAWjQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1104C4CEE7;
-	Fri, 17 Oct 2025 15:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkII3PCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEB0C4CEE7;
+	Fri, 17 Oct 2025 15:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716382;
-	bh=rsqAAjT3XsIbOnYuzWFjmVU1RM8DIx2934+/gQdI2S4=;
+	s=korg; t=1760716385;
+	bh=lg17htMOMrwpIcBZo4PdmJ6Z8sQc6QgDCLDO/X6X9OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JXAWjQyJ6Ad7mfOYmcs+HLaz1Jsz+ljFZ9rSRwcUjCaaw4ATshVaXfxejkO/SQ6v
-	 mo9ULtSPb1b4jqujTJ6iQ3CuI4TgKk8CXEnxC7QsW6ius4vDVuzd3lEfDEFu04k/i5
-	 Z9RBkODDPqGW0p+W2lKi+Gm+7GbdTyYnVHZHTtlk=
+	b=vkII3PCPBwyeqK3AfcAY6CZBx+9mdyl7ZC6x/g1KQ3Su2YYfSXuS6wz2sXgJp0VRs
+	 2FIVPDnrj6c+nY9z7ChBOjvoLN6d+LqzRdLKNbn12kdJ+yIRdR/pJn+tFuvk8KBke2
+	 qb3u2PyzAu6LJCkGHZ+h+eDLGwjYJvIKV302ktBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 171/276] xen/manage: Fix suspend error path
-Date: Fri, 17 Oct 2025 16:54:24 +0200
-Message-ID: <20251017145148.714572775@linuxfoundation.org>
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 145/276] s390/cio: unregister the subchannel while purging
+Date: Fri, 17 Oct 2025 16:53:58 +0200
+Message-ID: <20251017145147.775205972@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,54 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-commit f770c3d858687252f1270265ba152d5c622e793f upstream.
+[ Upstream commit fa172f043f5bc21c357c54a6ca2e9c8acd18c3db ]
 
-The device power management API has the following asymmetry:
-* dpm_suspend_start() does not clean up on failure
-  (it requires a call to dpm_resume_end())
-* dpm_suspend_end() does clean up on failure
-  (it does not require a call to dpm_resume_start())
+The cio_ignore list is used to create and maintain the list of devices
+which is to be ignored by Linux. During boot-time, this list is adjusted
+and accommodate all the devices which are configured on the HMC
+interface. Once these devices are accessible, they are then available to
+Linux and set online.
 
-The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
-patches for 2.6.27") in June 2008:  It removed a call to device_resume()
-from device_suspend() (which was later renamed to dpm_suspend_start()).
+cio_ignore purge function should align with this functionality. But
+currently, the subchannel associated with the offline-devices are not
+unregistered during purge. Add an explicit subchannel-unregister function
+in the purge_fn callback.
 
-When Xen began using the device power management API in May 2008 with
-commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
-not yet exist.  But since it was introduced, a call to dpm_resume_end()
-is missing in the error path of dpm_suspend_start().  Fix it.
-
-Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v2.6.27
-Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 9daa5a879586 ("s390/cio: Update purge function to unregister the unused subchannels")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/manage.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/cio/device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/xen/manage.c
-+++ b/drivers/xen/manage.c
-@@ -116,7 +116,7 @@ static void do_suspend(void)
- 	err = dpm_suspend_start(PMSG_FREEZE);
- 	if (err) {
- 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
--		goto out_thaw;
-+		goto out_resume_end;
+diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
+index c2ed91b69f079..70c5b85d2dfc9 100644
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1327,6 +1327,7 @@ static int purge_fn(struct device *dev, void *data)
+ {
+ 	struct ccw_device *cdev = to_ccwdev(dev);
+ 	struct ccw_dev_id *id = &cdev->private->dev_id;
++	struct subchannel *sch = to_subchannel(cdev->dev.parent);
+ 
+ 	spin_lock_irq(cdev->ccwlock);
+ 	if (is_blacklisted(id->ssid, id->devno) &&
+@@ -1335,6 +1336,7 @@ static int purge_fn(struct device *dev, void *data)
+ 		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
+ 			      id->devno);
+ 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
++		css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 		atomic_set(&cdev->private->onoff, 0);
  	}
- 
- 	printk(KERN_DEBUG "suspending xenstore...\n");
-@@ -156,6 +156,7 @@ out_resume:
- 	else
- 		xs_suspend_cancel();
- 
-+out_resume_end:
- 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
- 
- out_thaw:
+ 	spin_unlock_irq(cdev->ccwlock);
+-- 
+2.51.0
+
 
 
