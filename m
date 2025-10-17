@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C8F2745E;
-	Fri, 17 Oct 2025 15:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091EC337110;
+	Fri, 17 Oct 2025 15:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714873; cv=none; b=U/SZmhSVSnuBIOg7ofUUdFy+Nt0kKSjAO3/bTQQ5MJfT76ogqKYePzv6AsQ0biJb6llokOONYIqTOXyC8U4VmNi+j/UxPxSeKp4+jCQfhV00mok+SMKHQ4QTAM7yRSctDJQbYA4lUxgEu2qNGXoLwvGaQ4Gone80FLsk6VpVctI=
+	t=1760714877; cv=none; b=tkdyNPYvfUd2xcYiXtGPZWRTakI2Mm140MDcKFw7iP7aooM/KndQeZ95X0LP6ri6bxORyhph4ZL3QZh4zS+H9JoQCFQ0MYkbRrkxFihzWcQ0KmbtwPunQuzjLt/+Uwl1aqo+l8wOQV/pzS1ribjbwXQtyLGSMZ5OEGeyXq+97gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714873; c=relaxed/simple;
-	bh=PhE3YzaxSxBSDQxJKOe6m8iuT7AKQqk1H76G7I2ZMZ8=;
+	s=arc-20240116; t=1760714877; c=relaxed/simple;
+	bh=0NIVJRpVktzXlAoDRjPlqGC4apFkoIJZ3ZaAQcdLSrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxDgGQme0Fttvz8s+NpTbEO5SnPPFTKa+rWNlzUBQdef8au1+rZ50E1HjRfeAYpPfBLp38LyYqi/N+W9789Gs2LfkFYr5Igtr3j3inC+AOSQwA0fb8x8lpiFf8k3XFnO8pQ5pxGzMBMVrhXbiXSKfPLwfKgdYhhA6w3lD/YdYDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnfSr0+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSqxgXYxR5wjRrKp6MdqQpjpzT+qcV7ICWS/klSca8Lg2ev0/jI2MuhFH2LDCGteyFEzK0lQ4x2qbqKmo75a+cm++3Ch/eYJURjZf73koOhrgJAyjxO34nq8I+8QFcK5exGCw1jqUSRJCSphzXFMLjbHPCJytcEfomRhghlqh+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOsvcIi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnfSr0+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C33BC4CEE7;
-	Fri, 17 Oct 2025 15:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOsvcIi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401D8C4CEE7;
+	Fri, 17 Oct 2025 15:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714873;
-	bh=PhE3YzaxSxBSDQxJKOe6m8iuT7AKQqk1H76G7I2ZMZ8=;
+	s=korg; t=1760714876;
+	bh=0NIVJRpVktzXlAoDRjPlqGC4apFkoIJZ3ZaAQcdLSrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnfSr0+Z7Jwp9D7RnNsDCuCScelM2hVKR6r/w9C5/MuNoTVaNjbRXwyxQM4kpPw39
-	 SEusYsSnAkN7H5Gz8phDNpVZDN9e/i9I3I77dmHNUPTYT6r82pV017bT745dQBTh2M
-	 ZG5/KfZxIepMEXvlsjW1qQfMBpvwE0B/4p1i+DLU=
+	b=QOsvcIi0afyAChTI9bir4ONKQmyKBkjtr7ItEYNoHGN+s1zMXOf7kURuCSR42wogy
+	 ZrKDjKuWY/qFZhfDytxDizKng/trpfKRF3p/Tzkd9Lc7MhHUaAuLXzNjUQxt3t52a1
+	 a/rJCFOMP7tVM5YFN23SSrm0JRWoB1bXTittQ6kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.17 003/371] btrfs: fix the incorrect max_bytes value for find_lock_delalloc_range()
-Date: Fri, 17 Oct 2025 16:49:38 +0200
-Message-ID: <20251017145201.913683496@linuxfoundation.org>
+	Omar Sandoval <osandov@fb.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.17 004/371] arm64: map [_text, _stext) virtual address range non-executable+read-only
+Date: Fri, 17 Oct 2025 16:49:39 +0200
+Message-ID: <20251017145201.950315563@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,142 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Omar Sandoval <osandov@fb.com>
 
-commit 7b26da407420e5054e3f06c5d13271697add9423 upstream.
+commit 5973a62efa34c80c9a4e5eac1fca6f6209b902af upstream.
 
-[BUG]
-With my local branch to enable bs > ps support for btrfs, sometimes I
-hit the following ASSERT() inside submit_one_sector():
+Since the referenced fixes commit, the kernel's .text section is only
+mapped starting from _stext; the region [_text, _stext) is omitted. As a
+result, other vmalloc/vmap allocations may use the virtual addresses
+nominally in the range [_text, _stext). This address reuse confuses
+multiple things:
 
-	ASSERT(block_start != EXTENT_MAP_HOLE);
+1. crash_prepare_elf64_headers() sets up a segment in /proc/vmcore
+   mapping the entire range [_text, _end) to
+   [__pa_symbol(_text), __pa_symbol(_end)). Reading an address in
+   [_text, _stext) from /proc/vmcore therefore gives the incorrect
+   result.
+2. Tools doing symbolization (either by reading /proc/kallsyms or based
+   on the vmlinux ELF file) will incorrectly identify vmalloc/vmap
+   allocations in [_text, _stext) as kernel symbols.
 
-Please note that it's not yet possible to hit this ASSERT() in the wild
-yet, as it requires btrfs bs > ps support, which is not even in the
-development branch.
+In practice, both of these issues affect the drgn debugger.
+Specifically, there were cases where the vmap IRQ stacks for some CPUs
+were allocated in [_text, _stext). As a result, drgn could not get the
+stack trace for a crash in an IRQ handler because the core dump
+contained invalid data for the IRQ stack address. The stack addresses
+were also symbolized as being in the _text symbol.
 
-But on the other hand, there is also a very low chance to hit above
-ASSERT() with bs < ps cases, so this is an existing bug affect not only
-the incoming bs > ps support but also the existing bs < ps support.
+Fix this by bringing back the mapping of [_text, _stext), but now make
+it non-executable and read-only. This prevents other allocations from
+using it while still achieving the original goal of not mapping
+unpredictable data as executable. Other than the changed protection,
+this is effectively a revert of the fixes commit.
 
-[CAUSE]
-Firstly that ASSERT() means we're trying to submit a dirty block but
-without a real extent map nor ordered extent map backing it.
-
-Furthermore with extra debugging, the folio triggering such ASSERT() is
-always larger than the fs block size in my bs > ps case.
-(8K block size, 4K page size)
-
-After some more debugging, the ASSERT() is trigger by the following
-sequence:
-
- extent_writepage()
- |  We got a 32K folio (4 fs blocks) at file offset 0, and the fs block
- |  size is 8K, page size is 4K.
- |  And there is another 8K folio at file offset 32K, which is also
- |  dirty.
- |  So the filemap layout looks like the following:
- |
- |  "||" is the filio boundary in the filemap.
- |  "//| is the dirty range.
- |
- |  0        8K       16K        24K         32K       40K
- |  |////////|        |//////////////////////||////////|
- |
- |- writepage_delalloc()
- |  |- find_lock_delalloc_range() for [0, 8K)
- |  |  Now range [0, 8K) is properly locked.
- |  |
- |  |- find_lock_delalloc_range() for [16K, 40K)
- |  |  |- btrfs_find_delalloc_range() returned range [16K, 40K)
- |  |  |- lock_delalloc_folios() locked folio 0 successfully
- |  |  |
- |  |  |  The filemap range [32K, 40K) got dropped from filemap.
- |  |  |
- |  |  |- lock_delalloc_folios() failed with -EAGAIN on folio 32K
- |  |  |  As the folio at 32K is dropped.
- |  |  |
- |  |  |- loops = 1;
- |  |  |- max_bytes = PAGE_SIZE;
- |  |  |- goto again;
- |  |  |  This will re-do the lookup for dirty delalloc ranges.
- |  |  |
- |  |  |- btrfs_find_delalloc_range() called with @max_bytes == 4K
- |  |  |  This is smaller than block size, so
- |  |  |  btrfs_find_delalloc_range() is unable to return any range.
- |  |  \- return false;
- |  |
- |  \- Now only range [0, 8K) has an OE for it, but for dirty range
- |     [16K, 32K) it's dirty without an OE.
- |     This breaks the assumption that writepage_delalloc() will find
- |     and lock all dirty ranges inside the folio.
- |
- |- extent_writepage_io()
-    |- submit_one_sector() for [0, 8K)
-    |  Succeeded
-    |
-    |- submit_one_sector() for [16K, 24K)
-       Triggering the ASSERT(), as there is no OE, and the original
-       extent map is a hole.
-
-Please note that, this also exposed the same problem for bs < ps
-support. E.g. with 64K page size and 4K block size.
-
-If we failed to lock a folio, and falls back into the "loops = 1;"
-branch, we will re-do the search using 64K as max_bytes.
-Which may fail again to lock the next folio, and exit early without
-handling all dirty blocks inside the folio.
-
-[FIX]
-Instead of using the fixed size PAGE_SIZE as @max_bytes, use
-@sectorsize, so that we are ensured to find and lock any remaining
-blocks inside the folio.
-
-And since we're here, add an extra ASSERT() to
-before calling btrfs_find_delalloc_range() to make sure the @max_bytes is
-at least no smaller than a block to avoid false negative.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: e2a073dde921 ("arm64: omit [_text, _stext) from permanent kernel mapping")
+Cc: stable@vger.kernel.org
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/pi/map_kernel.c |    6 ++++++
+ arch/arm64/kernel/setup.c         |    4 ++--
+ arch/arm64/mm/init.c              |    2 +-
+ arch/arm64/mm/mmu.c               |   14 +++++++++-----
+ 4 files changed, 18 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -345,6 +345,13 @@ again:
- 	/* step one, find a bunch of delalloc bytes starting at start */
- 	delalloc_start = *start;
- 	delalloc_end = 0;
-+
+--- a/arch/arm64/kernel/pi/map_kernel.c
++++ b/arch/arm64/kernel/pi/map_kernel.c
+@@ -78,6 +78,12 @@ static void __init map_kernel(u64 kaslr_
+ 	twopass |= enable_scs;
+ 	prot = twopass ? data_prot : text_prot;
+ 
 +	/*
-+	 * If @max_bytes is smaller than a block, btrfs_find_delalloc_range() can
-+	 * return early without handling any dirty ranges.
++	 * [_stext, _text) isn't executed after boot and contains some
++	 * non-executable, unpredictable data, so map it non-executable.
 +	 */
-+	ASSERT(max_bytes >= fs_info->sectorsize);
-+
- 	found = btrfs_find_delalloc_range(tree, &delalloc_start, &delalloc_end,
- 					  max_bytes, &cached_state);
- 	if (!found || delalloc_end <= *start || delalloc_start > orig_end) {
-@@ -375,13 +382,14 @@ again:
- 				   delalloc_end);
- 	ASSERT(!ret || ret == -EAGAIN);
- 	if (ret == -EAGAIN) {
--		/* some of the folios are gone, lets avoid looping by
--		 * shortening the size of the delalloc range we're searching
-+		/*
-+		 * Some of the folios are gone, lets avoid looping by
-+		 * shortening the size of the delalloc range we're searching.
- 		 */
- 		btrfs_free_extent_state(cached_state);
- 		cached_state = NULL;
- 		if (!loops) {
--			max_bytes = PAGE_SIZE;
-+			max_bytes = fs_info->sectorsize;
- 			loops = 1;
- 			goto again;
- 		} else {
++	map_segment(init_pg_dir, &pgdp, va_offset, _text, _stext, data_prot,
++		    false, root_level);
+ 	map_segment(init_pg_dir, &pgdp, va_offset, _stext, _etext, prot,
+ 		    !twopass, root_level);
+ 	map_segment(init_pg_dir, &pgdp, va_offset, __start_rodata,
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -214,7 +214,7 @@ static void __init request_standard_reso
+ 	unsigned long i = 0;
+ 	size_t res_size;
+ 
+-	kernel_code.start   = __pa_symbol(_stext);
++	kernel_code.start   = __pa_symbol(_text);
+ 	kernel_code.end     = __pa_symbol(__init_begin - 1);
+ 	kernel_data.start   = __pa_symbol(_sdata);
+ 	kernel_data.end     = __pa_symbol(_end - 1);
+@@ -280,7 +280,7 @@ u64 cpu_logical_map(unsigned int cpu)
+ 
+ void __init __no_sanitize_address setup_arch(char **cmdline_p)
+ {
+-	setup_initial_init_mm(_stext, _etext, _edata, _end);
++	setup_initial_init_mm(_text, _etext, _edata, _end);
+ 
+ 	*cmdline_p = boot_command_line;
+ 
+--- a/arch/arm64/mm/init.c
++++ b/arch/arm64/mm/init.c
+@@ -279,7 +279,7 @@ void __init arm64_memblock_init(void)
+ 	 * Register the kernel text, kernel data, initrd, and initial
+ 	 * pagetables with memblock.
+ 	 */
+-	memblock_reserve(__pa_symbol(_stext), _end - _stext);
++	memblock_reserve(__pa_symbol(_text), _end - _text);
+ 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && phys_initrd_size) {
+ 		/* the generic initrd code expects virtual addresses */
+ 		initrd_start = __phys_to_virt(phys_initrd_start);
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -574,8 +574,8 @@ void __init mark_linear_text_alias_ro(vo
+ 	/*
+ 	 * Remove the write permissions from the linear alias of .text/.rodata
+ 	 */
+-	update_mapping_prot(__pa_symbol(_stext), (unsigned long)lm_alias(_stext),
+-			    (unsigned long)__init_begin - (unsigned long)_stext,
++	update_mapping_prot(__pa_symbol(_text), (unsigned long)lm_alias(_text),
++			    (unsigned long)__init_begin - (unsigned long)_text,
+ 			    PAGE_KERNEL_RO);
+ }
+ 
+@@ -636,7 +636,7 @@ static inline void arm64_kfence_map_pool
+ static void __init map_mem(pgd_t *pgdp)
+ {
+ 	static const u64 direct_map_end = _PAGE_END(VA_BITS_MIN);
+-	phys_addr_t kernel_start = __pa_symbol(_stext);
++	phys_addr_t kernel_start = __pa_symbol(_text);
+ 	phys_addr_t kernel_end = __pa_symbol(__init_begin);
+ 	phys_addr_t start, end;
+ 	phys_addr_t early_kfence_pool;
+@@ -683,7 +683,7 @@ static void __init map_mem(pgd_t *pgdp)
+ 	}
+ 
+ 	/*
+-	 * Map the linear alias of the [_stext, __init_begin) interval
++	 * Map the linear alias of the [_text, __init_begin) interval
+ 	 * as non-executable now, and remove the write permission in
+ 	 * mark_linear_text_alias_ro() below (which will be called after
+ 	 * alternative patching has completed). This makes the contents
+@@ -710,6 +710,10 @@ void mark_rodata_ro(void)
+ 	WRITE_ONCE(rodata_is_rw, false);
+ 	update_mapping_prot(__pa_symbol(__start_rodata), (unsigned long)__start_rodata,
+ 			    section_size, PAGE_KERNEL_RO);
++	/* mark the range between _text and _stext as read only. */
++	update_mapping_prot(__pa_symbol(_text), (unsigned long)_text,
++			    (unsigned long)_stext - (unsigned long)_text,
++			    PAGE_KERNEL_RO);
+ }
+ 
+ static void __init declare_vma(struct vm_struct *vma,
+@@ -780,7 +784,7 @@ static void __init declare_kernel_vmas(v
+ {
+ 	static struct vm_struct vmlinux_seg[KERNEL_SEGMENT_COUNT];
+ 
+-	declare_vma(&vmlinux_seg[0], _stext, _etext, VM_NO_GUARD);
++	declare_vma(&vmlinux_seg[0], _text, _etext, VM_NO_GUARD);
+ 	declare_vma(&vmlinux_seg[1], __start_rodata, __inittext_begin, VM_NO_GUARD);
+ 	declare_vma(&vmlinux_seg[2], __inittext_begin, __inittext_end, VM_NO_GUARD);
+ 	declare_vma(&vmlinux_seg[3], __initdata_begin, __initdata_end, VM_NO_GUARD);
 
 
