@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CC1337109;
-	Fri, 17 Oct 2025 15:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE5D33711F;
+	Fri, 17 Oct 2025 15:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714071; cv=none; b=umbyrxnoIoUX0bUE5fLXHDBnTIXZcbJEcjdkcRtQBbYnu8ToPsQvwhptcpREWG9Eb5378HCApLAp7pYmLAP0ozdUMVXw8tgq8oMYreL0z1pH2tK1ReaTvKhw9ywy2WaK3qcpz63LeAnaYJxUk7GaO/hMo/VJdkrSxoxOa/rqdjw=
+	t=1760714074; cv=none; b=Tzc0a/EqiEtEiThnxKiNujVxe3S4kFw21sDbLZI+yjEE2pTFEqzEmkUC+kKO1MrLTF2bbmkUvUDV2jow4wXqXHTvi/MsiEp8h98FVR/bxvQmOd0kwjUg9z+ws904F9aoaR0EP75BiX+BfsrTOISub0RxDFGiSF2id3DVQio1C70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714071; c=relaxed/simple;
-	bh=ElAQBsbhrFchuyneKsBJ7eXnvkM7kXvHrCwh2ZuLPvM=;
+	s=arc-20240116; t=1760714074; c=relaxed/simple;
+	bh=MS1tc/jjsvpYCTjexqy0g9ry6FbPATnixCe7OOa4cSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ls7YDV7z+WfqibFhQDqciEDFPu0gR7kYxzERmeoL+JrjgABen2nbe71EDG8THfHRawA4hA/Rzz3PKHK4A0N6+weKdomTDdAIk0LtNrMbBzNkUzzGR0NwP3VP3YAa9lSIvD9NzEZYOD+6nJq/zqVdwtqpxvmr3bPikJ7RBStWkgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLKm18rw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mpFehDmZ6kH4MAmt0vj7veu0X7Df09yHu36N4I8Kv96LnfUOvstuYIplFGl5NmrBdBJ8B54xs4WJXHxAWWTuARbPuLPIuSL/7P4oadcy1JWpQbxqV555ZkJFbVzT4p5HPdKxAgE8TmVRR5lgODx1SC5PGkjJ6W2fDhBV7Lp082E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1BkDOWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLKm18rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1F4C4CEE7;
-	Fri, 17 Oct 2025 15:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1BkDOWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C68AC4CEE7;
+	Fri, 17 Oct 2025 15:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714071;
-	bh=ElAQBsbhrFchuyneKsBJ7eXnvkM7kXvHrCwh2ZuLPvM=;
+	s=korg; t=1760714073;
+	bh=MS1tc/jjsvpYCTjexqy0g9ry6FbPATnixCe7OOa4cSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLKm18rwWzMPtcasmcKuhaaBaBEdzV5flXPVfVVPAYRtEzWqBaO+Y+O1m8Ert8BgZ
-	 buvpv58MgThoeCzqU4pCr7/qCZ6kYhK8WBmmn+gfhmP7NTlUdBvBqEDaqKccDcK4xT
-	 LRTydqgZpXzlPYKzsCnJgEi+g/sya5Szp1KhbMvY=
+	b=A1BkDOWMMlGzaCAvhk0Nn9LBGjJ7f76DuMDYry63O+nhqZEo0EMQYwQkaNrwv6hF7
+	 7UGT24SajmaDSDVLPX2YEjIwxJU19PfbGu6M3S3QvIvhzoDx+/0cU1Sry4vxioFZu3
+	 htUjEFv9Je++EB/OaY9fsmYgM7ueZMyu+0cpad4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/277] clk: qcom: common: Fix NULL vs IS_ERR() check in qcom_cc_icc_register()
-Date: Fri, 17 Oct 2025 16:50:24 +0200
-Message-ID: <20251017145147.778050933@linuxfoundation.org>
+Subject: [PATCH 6.12 018/277] clk: at91: peripheral: fix return value
+Date: Fri, 17 Oct 2025 16:50:25 +0200
+Message-ID: <20251017145147.814184173@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 1e50f5c9965252ed6657b8692cd7366784d60616 ]
+[ Upstream commit 47b13635dabc14f1c2fdcaa5468b47ddadbdd1b5 ]
 
-The devm_clk_hw_get_clk() function doesn't return NULL, it returns error
-pointers.  Update the checking to match.
+determine_rate() is expected to return an error code, or 0 on success.
+clk_sam9x5_peripheral_determine_rate() has a branch that returns the
+parent rate on a certain case. This is the behavior of round_rate(),
+so let's go ahead and fix this by setting req->rate.
 
-Fixes: 8737ec830ee3 ("clk: qcom: common: Add interconnect clocks support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/aLaPwL2gFS85WsfD@stanley.mountain
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: b4c115c76184f ("clk: at91: clk-peripheral: add support for changeable parent rate")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/at91/clk-peripheral.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 33cc1f73c69d1..cab2dbb7a8d49 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -273,8 +273,8 @@ static int qcom_cc_icc_register(struct device *dev,
- 		icd[i].slave_id = desc->icc_hws[i].slave_id;
- 		hws = &desc->clks[desc->icc_hws[i].clk_id]->hw;
- 		icd[i].clk = devm_clk_hw_get_clk(dev, hws, "icc");
--		if (!icd[i].clk)
--			return dev_err_probe(dev, -ENOENT,
-+		if (IS_ERR(icd[i].clk))
-+			return dev_err_probe(dev, PTR_ERR(icd[i].clk),
- 					     "(%d) clock entry is null\n", i);
- 		icd[i].name = clk_hw_get_name(hws);
- 	}
+diff --git a/drivers/clk/at91/clk-peripheral.c b/drivers/clk/at91/clk-peripheral.c
+index c173a44c800aa..629f050a855aa 100644
+--- a/drivers/clk/at91/clk-peripheral.c
++++ b/drivers/clk/at91/clk-peripheral.c
+@@ -279,8 +279,11 @@ static int clk_sam9x5_peripheral_determine_rate(struct clk_hw *hw,
+ 	long best_diff = LONG_MIN;
+ 	u32 shift;
+ 
+-	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max)
+-		return parent_rate;
++	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max) {
++		req->rate = parent_rate;
++
++		return 0;
++	}
+ 
+ 	/* Fist step: check the available dividers. */
+ 	for (shift = 0; shift <= PERIPHERAL_MAX_SHIFT; shift++) {
 -- 
 2.51.0
 
