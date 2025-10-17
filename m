@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506EF32C94B;
-	Fri, 17 Oct 2025 15:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBCB2F12B0;
+	Fri, 17 Oct 2025 15:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713517; cv=none; b=T2FxpY8kIC/3vS5tgCurs+V3Zn1WswCyTgO4urKeTbKuW4uOsK1gBw2pjCe5kLvEMWXzqjTxwJRz0n2Cqs4/YiC95NfcKRh0Sxy64IBILlHEUtRVNpgF1w9Um+OotpeaogF5sFCPFL4dIkcJ6YEefmqJTH9amSV3Y3zOIPaAQU4=
+	t=1760713520; cv=none; b=CTenXUdogM0mZUgPKkpHnLvHFzPxCPAC0LzP2e1P37qbImarsBXxcHB29gAH9+unZ8m6CgXaz/ey3ZTAQrDoCy/L+haxsyhZLlaCAjqie+KAiGtb+Z8ojyiAl2cE5/ZPvBXarsdhL8WhK/gCftekQ+kQp/0xe+fe3VmEcc8ISCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713517; c=relaxed/simple;
-	bh=Pf0uggoZUKRhYnTJmchDdDc3AdHKRn8IK99nyw7oYss=;
+	s=arc-20240116; t=1760713520; c=relaxed/simple;
+	bh=g71SR9oCoux/U8+rH/cyqoLXFKWS6Kl3KRNSSefY4UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjkZdvraWklUxD1mcnzb9ZxBpPXHVuLLGLuAX0TUHO70Sw9BPpPp6FqWRr5Be+km/fjdG8u09Tvl4K+wHc0lqqVUCjZFUONXLoreR/SXCSh1jeXoMxusnOpqKYQB01+EyH7N9zovjgipCiCAWDn8zVXe5NVcB5GJphrjsEXut5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ8RGwyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1INI7jtMwbRZZc2JDRXCj23ctGQr9XX/dkoPzHTl+I8b+NPrXrRhnAFgJWlDRJtJtlhVCsBCeQwk63gav/qwt/1sw4yEl8o/9UEUy2Tw6l0kKVjSSeXvRVXUtKUnsxCuL6DdoXvBFKDz8Mr7TIPKh7tf57crBfIWOgmLJBKACU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IADPSama; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ8RGwyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C9DC4CEE7;
-	Fri, 17 Oct 2025 15:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IADPSama"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B25C4CEE7;
+	Fri, 17 Oct 2025 15:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713517;
-	bh=Pf0uggoZUKRhYnTJmchDdDc3AdHKRn8IK99nyw7oYss=;
+	s=korg; t=1760713520;
+	bh=g71SR9oCoux/U8+rH/cyqoLXFKWS6Kl3KRNSSefY4UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZ8RGwydpTdR4/g1eAWg62sUFcIMuEARjejkRmVfBflxX6aDw1An5Iw9zAYWn2Uen
-	 j/h9GMf46zdxf0GeAB1ThdTOlBkAV0mkmKNye1HmkAVvN/rRfBuivaJtjnrsrxjM/S
-	 0gDnZf9zzbUcS7JbtgxYdxPU88QA513oTqcLiRPE=
+	b=IADPSamaYY2S4UEPl4k1aavNzWjDeMETegHlyO8KkHA60QHUxzPb+S5EfJHtjkANG
+	 UqefxyFAvmVeTQiZhpDs9BBVSZxN/Z8SBrxLlM2VOkl0n8vGfC/OFMTaZiCY3n9F8N
+	 2d7xFQ4unITv+WU1go0X2da/6D0cID4LF/KKJTQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/201] clk: tegra: do not overallocate memory for bpmp clocks
-Date: Fri, 17 Oct 2025 16:51:26 +0200
-Message-ID: <20251017145135.668793126@linuxfoundation.org>
+Subject: [PATCH 6.6 026/201] cpufreq: tegra186: Set target frequency for all cpus in policy
+Date: Fri, 17 Oct 2025 16:51:27 +0200
+Message-ID: <20251017145135.704172472@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,41 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 49ef6491106209c595476fc122c3922dfd03253f ]
+[ Upstream commit 0b1bb980fd7cae126ee3d59f817068a13e321b07 ]
 
-struct tegra_bpmp::clocks is a pointer to a dynamically allocated array
-of pointers to 'struct tegra_bpmp_clk'.
+The original commit set all cores in a cluster to a shared policy, but
+did not update set_target to apply a frequency change to all cores for
+the policy. This caused most cores to remain stuck at their boot
+frequency.
 
-But the size of the allocated area is calculated like it is an array
-containing actual 'struct tegra_bpmp_clk' objects - it's not true, there
-are just pointers.
-
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: 2db12b15c6f3 ("clk: tegra: Register clocks from root to leaf")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: be4ae8c19492 ("cpufreq: tegra186: Share policy per cluster")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-bpmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/tegra186-cpufreq.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index 7bfba0afd7783..4ec408c3a26aa 100644
---- a/drivers/clk/tegra/clk-bpmp.c
-+++ b/drivers/clk/tegra/clk-bpmp.c
-@@ -635,7 +635,7 @@ static int tegra_bpmp_register_clocks(struct tegra_bpmp *bpmp,
+diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
+index 7b8fcfa55038b..39186008afbfd 100644
+--- a/drivers/cpufreq/tegra186-cpufreq.c
++++ b/drivers/cpufreq/tegra186-cpufreq.c
+@@ -86,10 +86,14 @@ static int tegra186_cpufreq_set_target(struct cpufreq_policy *policy,
+ {
+ 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
+ 	struct cpufreq_frequency_table *tbl = policy->freq_table + index;
+-	unsigned int edvd_offset = data->cpus[policy->cpu].edvd_offset;
++	unsigned int edvd_offset;
+ 	u32 edvd_val = tbl->driver_data;
++	u32 cpu;
  
- 	bpmp->num_clocks = count;
+-	writel(edvd_val, data->regs + edvd_offset);
++	for_each_cpu(cpu, policy->cpus) {
++		edvd_offset = data->cpus[cpu].edvd_offset;
++		writel(edvd_val, data->regs + edvd_offset);
++	}
  
--	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(struct tegra_bpmp_clk), GFP_KERNEL);
-+	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(*bpmp->clocks), GFP_KERNEL);
- 	if (!bpmp->clocks)
- 		return -ENOMEM;
- 
+ 	return 0;
+ }
 -- 
 2.51.0
 
