@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68D13370F8;
-	Fri, 17 Oct 2025 14:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7417F337100;
+	Fri, 17 Oct 2025 14:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713188; cv=none; b=BuW+e28bBFOcV+QY1peGxVaK/qvKHIb5mN8QQLtk9fZS8mJyInkaKsOp9wf2l2cSXB4POWQIdONkpB9Pu5F8y8IQUcVIHS998+RAHqpeQywsw4k2OqSCIcgwO87ETqGXBY6jenPx2rN4opgdsk8ngwQqdGmce+CvSwIoEezCivM=
+	t=1760713191; cv=none; b=O2OvnsS7neh+Fm8/1H7C5Nt5D8A2WJnWM7SrDBO0FZCA+MibolID3ihXspEej30JS8qEBXu2kI9uFl+ADON+iWCrI5oh0CS9mYzi7YeLkBj4Kqma8UqyHFk/RXiEb7D8d0sINvCXNtOH3JUH55oMeSYf6vNdR/P/DU5mBFtua0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713188; c=relaxed/simple;
-	bh=YFpxyDAvZJufuFgQHRH69Zz0pherE8tOe9oCyk1+hSY=;
+	s=arc-20240116; t=1760713191; c=relaxed/simple;
+	bh=d4E9WAZFSvLYoAc0hr2q3hKetWsW3KFaAqx3OE/nU9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rC/G2iU+C0ziwAPHqJZ772QGg8CWE2zN44GX1oGCVbvlZ3cGaTZlJvj7iAk0zvPJLISOpV5DORJUOVlJWO6Dwmtg13fRtlk18XpxPTvjk49O7YiS36Gbwy4Rg5Y9DqSm2JuHxArorLOAQL4Dxom2j+zdlynQ0aTbbhZtV5340wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzToPjHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KH2JauTY8vrQ1XQDDUJelVI1pTbTmSclvOyvjDsHN64zM6264rGcy+LAUHIAa0JvcouzTidsOd5SY4Zd5CurmVT4ENNfTK3GogSUcQrgXlj85u1nbQ+c99hnA5CroJb9qiwt5WVAsRlA8+/GqAQ4CNYdr9iFp2n9ZmsVXgB7fAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kC/kZPfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzToPjHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EC9C4CEE7;
-	Fri, 17 Oct 2025 14:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kC/kZPfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0063C4CEF9;
+	Fri, 17 Oct 2025 14:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713188;
-	bh=YFpxyDAvZJufuFgQHRH69Zz0pherE8tOe9oCyk1+hSY=;
+	s=korg; t=1760713191;
+	bh=d4E9WAZFSvLYoAc0hr2q3hKetWsW3KFaAqx3OE/nU9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzToPjHF+7kimbX6hwCJbpNCoXqw8vTg+7A/fI4nSDfbZHwj7KPCGqWr4tsrxbLsx
-	 ETezuJTopZqOUJMPo3jCjdJp1OR4rSGcEC9TuDjJEuRqnJ4AX0UhOIGrxQJj6f5Z2I
-	 NEztiHoP9yY2hPQUtM7p+qJfAHwPsPwgaWWE3mV4=
+	b=kC/kZPfX1VxDX5/P1Rm8bolVPdwcAzR+Pw8fWz46Io1/ByXizgLI7YEuaTMdo4AI4
+	 Amc0tWS0+WnAY/TfDgHIR39t6HrsuTjpbexp/ea9goeZjMbVLLnbW8MciENBSQ7tDL
+	 OngZ1TqRmP2D3hzD88VDBh6nwsLk+P5Gj3cZ1DMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 078/168] iio: dac: ad5421: use int type to store negative error codes
-Date: Fri, 17 Oct 2025 16:52:37 +0200
-Message-ID: <20251017145131.901041250@linuxfoundation.org>
+Subject: [PATCH 6.1 079/168] iio: frequency: adf4350: Fix prescaler usage.
+Date: Fri, 17 Oct 2025 16:52:38 +0200
+Message-ID: <20251017145131.937881925@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -46,41 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Michael Hennerich <michael.hennerich@analog.com>
 
-commit 3379c900320954d768ed9903691fb2520926bbe3 upstream.
+commit 33d7ecbf69aa7dd4145e3b77962bcb8759eede3d upstream.
 
-Change the 'ret' variable in ad5421_update_ctrl() from unsigned int to
-int, as it needs to store either negative error codes or zero returned
-by ad5421_write_unlocked().
+The ADF4350/1 features a programmable dual-modulus prescaler of 4/5 or 8/9.
+When set to 4/5, the maximum RF frequency allowed is 3 GHz.
+Therefore, when operating the ADF4351 above 3 GHz, this must be set to 8/9.
+In this context not the RF output frequency is meant
+- it's the VCO frequency.
 
-Fixes: 5691b23489db ("staging:iio:dac: Add AD5421 driver")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20250901135726.17601-3-rongqianfeng@vivo.com
+Therefore move the prescaler selection after we derived the VCO frequency
+from the desired RF output frequency.
+
+This BUG may have caused PLL lock instabilities when operating the VCO at
+the very high range close to 4.4 GHz.
+
+Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
+Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20250829-adf4350-fix-v2-1-0bf543ba797d@analog.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5421.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/frequency/adf4350.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/dac/ad5421.c
-+++ b/drivers/iio/dac/ad5421.c
-@@ -186,7 +186,7 @@ static int ad5421_update_ctrl(struct iio
- 	unsigned int clr)
- {
- 	struct ad5421_state *st = iio_priv(indio_dev);
--	unsigned int ret;
-+	int ret;
+--- a/drivers/iio/frequency/adf4350.c
++++ b/drivers/iio/frequency/adf4350.c
+@@ -143,6 +143,19 @@ static int adf4350_set_freq(struct adf43
+ 	if (freq > ADF4350_MAX_OUT_FREQ || freq < st->min_out_freq)
+ 		return -EINVAL;
  
- 	mutex_lock(&st->lock);
++	st->r4_rf_div_sel = 0;
++
++	/*
++	 * !\TODO: The below computation is making sure we get a power of 2
++	 * shift (st->r4_rf_div_sel) so that freq becomes higher or equal to
++	 * ADF4350_MIN_VCO_FREQ. This might be simplified with fls()/fls_long()
++	 * and friends.
++	 */
++	while (freq < ADF4350_MIN_VCO_FREQ) {
++		freq <<= 1;
++		st->r4_rf_div_sel++;
++	}
++
+ 	if (freq > ADF4350_MAX_FREQ_45_PRESC) {
+ 		prescaler = ADF4350_REG1_PRESCALER;
+ 		mdiv = 75;
+@@ -151,13 +164,6 @@ static int adf4350_set_freq(struct adf43
+ 		mdiv = 23;
+ 	}
  
+-	st->r4_rf_div_sel = 0;
+-
+-	while (freq < ADF4350_MIN_VCO_FREQ) {
+-		freq <<= 1;
+-		st->r4_rf_div_sel++;
+-	}
+-
+ 	/*
+ 	 * Allow a predefined reference division factor
+ 	 * if not set, compute our own
 
 
