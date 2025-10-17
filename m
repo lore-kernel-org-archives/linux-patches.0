@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09D9330B36;
-	Fri, 17 Oct 2025 15:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0103330B28;
+	Fri, 17 Oct 2025 15:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716135; cv=none; b=N9goz5FUFUhRc/vktxF5C1gj2JdC73dwVH1QlbGTnKsDH5BYo1ekcJsxuJ1kULGugeKt/9W64gmzkO0wqYg1GqrE/LmU0ugcM9stJMdoVw5CbE1bKc7564oezkUXoCCBaRtIoI+/7NlCEalFk5KwTywKp/IgjvLP2K4hpcr03mM=
+	t=1760716137; cv=none; b=e6JHFG9mYcb+FquPpYOLWT6R0EpYbzCWOfYxI68X2rpc938oQY9G49rSk0/1bRv7FUZRujg0bHsaxifWD+kRZfQcVgG691pCsCfPRYzJ76xH+2pW/A3pxFXXAvT4tlCWJfEpgPwAdCbz639zYDZ1NK6ixb9jI5+SwDr3UUY0abc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716135; c=relaxed/simple;
-	bh=QsQnqv4FmVlZWN7set1fMS+QWnS8p39AixwY8RZAqNU=;
+	s=arc-20240116; t=1760716137; c=relaxed/simple;
+	bh=vAtW9AklGZGhem25t1BSMoyo66plGjHbru/ACfKxtbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K1rsISqD/btYv78Gc+tQRR/Y9SJ1QbxtMUvfYRX+dInup0U1MsW7n+aLXoWZ/RGA2g0O0VL4O5glW6EMGc0CWAHNr/Vx3uxuG06GKuCsocLd2yC8+tvQHeS6vfOpKHaR4DPOG4LV7naAPPOJJX9XDvVK4oOBEB6gQQnOcSgmMmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6a5FZj1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BKIY6JSXnx4plpkFa4IxvS0z01mSiPPhkHcjiJK6iFV0kgp8nvTAsUtjA0slQMFd/B8YZpzR6E/S1BTlkEgD+8wg4CulfzP2VPaZnrcR7nPJa8J97pVngb+RP8j5/o+oMVsaJLCKRdGQn/h+p/xA0mpMczdJWjUGeBNaKhFv8PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJMrn1Hs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6a5FZj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770E9C4CEE7;
-	Fri, 17 Oct 2025 15:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJMrn1Hs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A640C4CEE7;
+	Fri, 17 Oct 2025 15:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716134;
-	bh=QsQnqv4FmVlZWN7set1fMS+QWnS8p39AixwY8RZAqNU=;
+	s=korg; t=1760716137;
+	bh=vAtW9AklGZGhem25t1BSMoyo66plGjHbru/ACfKxtbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6a5FZj18Lr6MiamTjlHgwkAmK5Ai3NB/UjFneDFeQHnntnutjAaYqNpqoiP1mjDc
-	 TxRwOjbdApgzUseMZDpacIurRzOzRvSNE+Vf4ND+tWSBiKMiPvU3aO08GOwfUre7ME
-	 fVRYOA5ES8E4gsBRd9l9ipIx1Yf+BD/k6a+IAIUs=
+	b=QJMrn1HskLyfhGNf79E79TIw10kluKXDIeLmnGPEmKJLgh2lh1wtqNTqOTUjEpL3w
+	 l+OBnSM2u4t1wwsxIHU1C5lbaRPU63AB5woKaAKQq5en51Z2xnWS8yovnoFhbqp3md
+	 tMUd5SXWAbembHxWPMVHqG4hKg+fix1jVSZEg19g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anthony Yznaga <anthony.yznaga@oracle.com>,
 	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
 	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>,
 	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.com>,
-	Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk>
-Subject: [PATCH 5.15 086/276] sparc: fix accurate exception reporting in copy_{from_to}_user for UltraSPARC
-Date: Fri, 17 Oct 2025 16:52:59 +0200
-Message-ID: <20251017145145.624460631@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.com>
+Subject: [PATCH 5.15 087/276] sparc: fix accurate exception reporting in copy_{from_to}_user for UltraSPARC III
+Date: Fri, 17 Oct 2025 16:53:00 +0200
+Message-ID: <20251017145145.662054810@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -57,79 +57,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 4fba1713001195e59cfc001ff1f2837dab877efb ]
+[ Upstream commit 47b49c06eb62504075f0f2e2227aee2e2c2a58b3 ]
+
+Anthony Yznaga tracked down that a BUG_ON in ext4 code with large folios
+enabled resulted from copy_from_user() returning impossibly large values
+greater than the size to be copied. This lead to __copy_from_iter()
+returning impossible values instead of the actual number of bytes it was
+able to copy.
+
+The BUG_ON has been reported in
+https://lore.kernel.org/r/b14f55642207e63e907965e209f6323a0df6dcee.camel@physik.fu-berlin.de
 
 The referenced commit introduced exception handlers on user-space memory
 references in copy_from_user and copy_to_user. These handlers return from
 the respective function and calculate the remaining bytes left to copy
-using the current register contents. This commit fixes a couple of bad
-calculations. This will fix the return value of copy_from_user and
-copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
+using the current register contents. The exception handlers expect that
+%o2 has already been masked during the bulk copy loop, but the masking was
+performed after that loop. This will fix the return value of copy_from_user
+and copy_to_user in the faulting case. The behaviour of memcpy stays
+unchanged.
 
-Fixes: cb736fdbb208 ("sparc64: Convert U1copy_{from,to}_user to accurate exception reporting.")
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on QEMU 10.0.3
-Tested-by: René Rebe <rene@exactcode.com> # on Ultra 5 UltraSparc IIi
-Tested-by: Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk> # on Sun Netra T1
+Fixes: ee841d0aff64 ("sparc64: Convert U3copy_{from,to}_user to accurate exception reporting.")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on Sun Netra 240
+Reviewed-by: Anthony Yznaga <anthony.yznaga@oracle.com>
+Tested-by: René Rebe <rene@exactcode.com> # on UltraSparc III+ and UltraSparc IIIi
 Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-1-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-2-1ca72dda195b@mkarcher.dialup.fu-berlin.de
 Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/lib/U1memcpy.S | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ arch/sparc/lib/U3memcpy.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sparc/lib/U1memcpy.S b/arch/sparc/lib/U1memcpy.S
-index a6f4ee3918977..021b94a383d13 100644
---- a/arch/sparc/lib/U1memcpy.S
-+++ b/arch/sparc/lib/U1memcpy.S
-@@ -164,17 +164,18 @@ ENTRY(U1_gs_40_fp)
- 	retl
- 	 add		%o0, %o2, %o0
- ENDPROC(U1_gs_40_fp)
--ENTRY(U1_g3_0_fp)
--	VISExitHalf
--	retl
--	 add		%g3, %o2, %o0
--ENDPROC(U1_g3_0_fp)
- ENTRY(U1_g3_8_fp)
- 	VISExitHalf
- 	add		%g3, 8, %g3
- 	retl
- 	 add		%g3, %o2, %o0
- ENDPROC(U1_g3_8_fp)
-+ENTRY(U1_g3_16_fp)
-+	VISExitHalf
-+	add		%g3, 16, %g3
-+	retl
-+	 add		%g3, %o2, %o0
-+ENDPROC(U1_g3_16_fp)
- ENTRY(U1_o2_0_fp)
- 	VISExitHalf
- 	retl
-@@ -547,18 +548,18 @@ FUNC_NAME:		/* %o0=dst, %o1=src, %o2=len */
- 62:	FINISH_VISCHUNK(o0, f44, f46)
- 63:	UNEVEN_VISCHUNK_LAST(o0, f46, f0)
+diff --git a/arch/sparc/lib/U3memcpy.S b/arch/sparc/lib/U3memcpy.S
+index 9248d59c734ce..bace3a18f836f 100644
+--- a/arch/sparc/lib/U3memcpy.S
++++ b/arch/sparc/lib/U3memcpy.S
+@@ -267,6 +267,7 @@ FUNC_NAME:	/* %o0=dst, %o1=src, %o2=len */
+ 	faligndata	%f10, %f12, %f26
+ 	EX_LD_FP(LOAD(ldd, %o1 + 0x040, %f0), U3_retl_o2)
  
--93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_0_fp)
-+93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_8_fp)
- 	add		%o1, 8, %o1
- 	subcc		%g3, 8, %g3
- 	faligndata	%f0, %f2, %f8
--	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
-+	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
- 	bl,pn		%xcc, 95f
- 	 add		%o0, 8, %o0
--	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_0_fp)
-+	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_8_fp)
- 	add		%o1, 8, %o1
- 	subcc		%g3, 8, %g3
- 	faligndata	%f2, %f0, %f8
--	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
-+	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
- 	bge,pt		%xcc, 93b
- 	 add		%o0, 8, %o0
- 
++	and		%o2, 0x3f, %o2
+ 	subcc		GLOBAL_SPARE, 0x80, GLOBAL_SPARE
+ 	add		%o1, 0x40, %o1
+ 	bgu,pt		%XCC, 1f
+@@ -336,7 +337,6 @@ FUNC_NAME:	/* %o0=dst, %o1=src, %o2=len */
+ 	 * Also notice how this code is careful not to perform a
+ 	 * load past the end of the src buffer.
+ 	 */
+-	and		%o2, 0x3f, %o2
+ 	andcc		%o2, 0x38, %g2
+ 	be,pn		%XCC, 2f
+ 	 subcc		%g2, 0x8, %g2
 -- 
 2.51.0
 
