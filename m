@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6D45695;
-	Fri, 17 Oct 2025 15:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9B82D7D3A;
+	Fri, 17 Oct 2025 15:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715116; cv=none; b=Ky6JqFn5/DiCNEOxZmiW96MA2cZlUxoGJhT84Uo4sQ4VhUmFbOrHZ5jLuEecP5ySeEKYRDVgoX6kre1zKCQUJLmQrndin16s9rmAq8n+ReqGyxyo5r2+nbhezGgdWulNqLpdWRIuY7AU5jf1g9itF2jpFVToudS2UZ/2kFD5J5E=
+	t=1760715119; cv=none; b=H3qzIvmof9ArJUE+3KNs3xKazeMCGbYP4Yd3RlhIhHXdUnZ/qjhdQqeFtBfYNIwIZbUk8327Xu73bQhnynZSMBAeTgkx69bxv4NEOZqoaWvwKill1kA0GLAdMEybIz6a2XlPKlKWsb3O0mH7vD8UFZhG16QWzyeiNkYCLflw2dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715116; c=relaxed/simple;
-	bh=wreVg/ekLFJWuMJ6HaXpFVNOr2djj8BZO9dGX7dwmEk=;
+	s=arc-20240116; t=1760715119; c=relaxed/simple;
+	bh=YEW0mpSaqr/w9p0oo7d8cd9XuXxALoc93qWCUv/eYio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cJQOXwv1ZJHyQwmYjHuIF+hrewyo/SSF/GZ083ePXtJVubicf0czcjkqlPUSYtdYO0y7K9T6VJAN+2y7zYiVhGkpGqcWGoGwF2sgXN3wYs5wMKyGsOxSSDdqo0z699lvtuOD8Wfc1BZJGT+3vbil2Rw5xlU4BGF8SBzbfIXJ2vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDucsCdH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QpBGX+sXM6RQdvedUrVDfkE+A0GeoD3z2fUEcmQEq09pM0zuuICcoDjPqhp1xl7ppniCqwFLBsNUDIxvDlZbd/g6RG6cABkn9/eNayyzrAy1V/dsJCaeGWaETIfDqeUjrUwQcmBq6LAM4+GahFEa76ds53Lbz7139eqj4YWJ5ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQegvwY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDucsCdH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8915AC4CEE7;
-	Fri, 17 Oct 2025 15:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQegvwY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B4EC4CEE7;
+	Fri, 17 Oct 2025 15:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715115;
-	bh=wreVg/ekLFJWuMJ6HaXpFVNOr2djj8BZO9dGX7dwmEk=;
+	s=korg; t=1760715118;
+	bh=YEW0mpSaqr/w9p0oo7d8cd9XuXxALoc93qWCUv/eYio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDucsCdHkm1vlWND7+XfpB8E0HygaAHoooQgEtLdPXGae+MvnIaYMMypbQs9H78At
-	 G+zZCWPiYAU1OgI+3DJaYLw17ieoFCGg73e2zkQ2Qp1wqYxfy6lzk++cQwPw1BcJRJ
-	 s+zJz5IzVm3T3jogDbx8iNceo7X8vVeumttKsHzo=
+	b=vQegvwY5aomFSv0tSZCCVozmNd9gq/iXtC3hMKAVe9NXCYDHTp68OxS8SutFJeurx
+	 fyzHXZ+fiS7cGniPVBFFGcLsCqMb1y5u5rOfYNH9ZYnJ9o9pBx9rHSGf54qgl2efTK
+	 x00kUDpzU+UmdXdRFPVOgNGSAN3tDOvu8+1o9Dvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 104/371] net: sparx5/lan969x: fix flooding configuration on bridge join/leave
-Date: Fri, 17 Oct 2025 16:51:19 +0200
-Message-ID: <20251017145205.702569795@linuxfoundation.org>
+Subject: [PATCH 6.17 105/371] net/mlx5: Prevent tunnel mode conflicts between FDB and NIC IPsec tables
+Date: Fri, 17 Oct 2025 16:51:20 +0200
+Message-ID: <20251017145205.737923710@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,145 +55,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit c9d1b0b54258ba13b567dd116ead3c7c30cba7d8 ]
+[ Upstream commit 7593439c13933164f701eed9c83d89358f203469 ]
 
-The sparx5 driver programs UC/MC/BC flooding in sparx5_update_fwd() by
-unconditionally applying bridge_fwd_mask to all flood PGIDs. Any bridge
-topology change that triggers sparx5_update_fwd() (for example enslaving
-another port) therefore reinstalls flooding in hardware for already
-bridged ports, regardless of their per-port flood flags.
+When creating IPsec flow tables with tunnel mode enabled, the driver
+uses mlx5_eswitch_block_encap() to prevent tunnel encapsulation
+conflicts across different domains (NIC_RX/NIC_TX and FDB), since the
+firmware doesn’t allow both at the same time.
 
-This results in clobbering of the flood masks, and desynchronization
-between software and hardware: the bridge still reports “flood off” for
-the port, but hardware has flooding enabled due to unconditional PGID
-reprogramming.
+Currently, the driver attempts to reserve tunnel mode unconditionally
+for both NIC and FDB IPsec tables. This can lead to conflicting tunnel
+mode setups, for example, if a flow table was created in the FDB
+domain with tunnel offload enabled, and we later try to create another
+one in the NIC, or vice versa.
 
-Steps to reproduce:
+To resolve this, adjust the blocking logic so that tunnel mode is only
+reserved by NIC flows. This ensures that tunnel offload is exclusively
+used in either the NIC or the FDB, and avoids unintended offload
+conflicts.
 
-    $ ip link add br0 type bridge
-    $ ip link set br0 up
-    $ ip link set eth0 master br0
-    $ ip link set eth0 up
-    $ bridge link set dev eth0 flood off
-    $ ip link set eth1 master br0
-    $ ip link set eth1 up
-
-At this point, flooding is silently re-enabled for eth0. Software still
-shows “flood off” for eth0, but hardware has flooding enabled.
-
-To fix this, flooding is now set explicitly during bridge join/leave,
-through sparx5_port_attr_bridge_flags():
-
-    On bridge join, UC/MC/BC flooding is enabled by default.
-
-    On bridge leave, UC/MC/BC flooding is disabled.
-
-    sparx5_update_fwd() no longer touches the flood PGIDs, clobbering
-    the flood masks, and desynchronizing software and hardware.
-
-    Initialization of the flooding PGIDs have been moved to
-    sparx5_start(). This is required as flooding PGIDs defaults to
-    0x3fffffff in hardware and the initialization was previously handled
-    in sparx5_update_fwd(), which was removed.
-
-With this change, user-configured flooding flags persist across bridge
-updates and are no longer overridden by sparx5_update_fwd().
-
-Fixes: d6fce5141929 ("net: sparx5: add switching support")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251003-fix-flood-fwd-v1-1-48eb478b2904@microchip.com
+Fixes: 1762f132d542 ("net/mlx5e: Support IPsec packet offload for RX in switchdev mode")
+Fixes: c6c2bf5db4ea ("net/mlx5e: Support IPsec packet offload for TX in switchdev mode")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1759652999-858513-2-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c  |  5 +++++
- .../net/ethernet/microchip/sparx5/sparx5_switchdev.c | 12 ++++++++++++
- drivers/net/ethernet/microchip/sparx5/sparx5_vlan.c  | 10 ----------
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c     |  8 ++++++--
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h  |  5 +++--
+ .../mellanox/mlx5/core/eswitch_offloads.c      | 18 ++++++++++--------
+ 3 files changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 74ad1d73b4652..40b1bfc600a79 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -708,6 +708,11 @@ static int sparx5_start(struct sparx5 *sparx5)
- 	/* Init masks */
- 	sparx5_update_fwd(sparx5);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index 65dc3529283b6..b525f3f21c51f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -1045,7 +1045,9 @@ static int rx_create(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
  
-+	/* Init flood masks */
-+	for (int pgid = sparx5_get_pgid(sparx5, PGID_UC_FLOOD);
-+	     pgid <= sparx5_get_pgid(sparx5, PGID_BCAST); pgid++)
-+		sparx5_pgid_clear(sparx5, pgid);
+ 	/* Create FT */
+ 	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
+-		rx->allow_tunnel_mode = mlx5_eswitch_block_encap(mdev);
++		rx->allow_tunnel_mode =
++			mlx5_eswitch_block_encap(mdev, rx == ipsec->rx_esw);
 +
- 	/* CPU copy CPU pgids */
- 	spx5_wr(ANA_AC_PGID_MISC_CFG_PGID_CPU_COPY_ENA_SET(1), sparx5,
- 		ANA_AC_PGID_MISC_CFG(sparx5_get_pgid(sparx5, PGID_CPU)));
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
-index bc9ecb9392cd3..0a71abbd3da58 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
-@@ -176,6 +176,7 @@ static int sparx5_port_bridge_join(struct sparx5_port *port,
- 				   struct net_device *bridge,
- 				   struct netlink_ext_ack *extack)
- {
-+	struct switchdev_brport_flags flags = {0};
- 	struct sparx5 *sparx5 = port->sparx5;
- 	struct net_device *ndev = port->ndev;
- 	int err;
-@@ -205,6 +206,11 @@ static int sparx5_port_bridge_join(struct sparx5_port *port,
- 	 */
- 	__dev_mc_unsync(ndev, sparx5_mc_unsync);
+ 	if (rx->allow_tunnel_mode)
+ 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
+ 	ft = ipsec_ft_create(attr.ns, attr.sa_level, attr.prio, 1, 2, flags);
+@@ -1286,7 +1288,9 @@ static int tx_create(struct mlx5e_ipsec *ipsec, struct mlx5e_ipsec_tx *tx,
+ 		goto err_status_rule;
  
-+	/* Enable uc/mc/bc flooding */
-+	flags.mask = BR_FLOOD | BR_MCAST_FLOOD | BR_BCAST_FLOOD;
-+	flags.val = flags.mask;
-+	sparx5_port_attr_bridge_flags(port, flags);
+ 	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
+-		tx->allow_tunnel_mode = mlx5_eswitch_block_encap(mdev);
++		tx->allow_tunnel_mode =
++			mlx5_eswitch_block_encap(mdev, tx == ipsec->tx_esw);
 +
+ 	if (tx->allow_tunnel_mode)
+ 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
+ 	ft = ipsec_ft_create(tx->ns, attr.sa_level, attr.prio, 1, 4, flags);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 45506ad568470..53d7e33d6c0b1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -851,7 +851,7 @@ void mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
+ 					      struct mlx5_eswitch *slave_esw);
+ int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw);
+ 
+-bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev);
++bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb);
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
+ 
+ int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev);
+@@ -943,7 +943,8 @@ mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
  	return 0;
- 
- err_switchdev_offload:
-@@ -215,6 +221,7 @@ static int sparx5_port_bridge_join(struct sparx5_port *port,
- static void sparx5_port_bridge_leave(struct sparx5_port *port,
- 				     struct net_device *bridge)
- {
-+	struct switchdev_brport_flags flags = {0};
- 	struct sparx5 *sparx5 = port->sparx5;
- 
- 	switchdev_bridge_port_unoffload(port->ndev, NULL, NULL, NULL);
-@@ -234,6 +241,11 @@ static void sparx5_port_bridge_leave(struct sparx5_port *port,
- 
- 	/* Port enters in host more therefore restore mc list */
- 	__dev_mc_sync(port->ndev, sparx5_mc_sync, sparx5_mc_unsync);
-+
-+	/* Disable uc/mc/bc flooding */
-+	flags.mask = BR_FLOOD | BR_MCAST_FLOOD | BR_BCAST_FLOOD;
-+	flags.val = 0;
-+	sparx5_port_attr_bridge_flags(port, flags);
  }
  
- static int sparx5_port_changeupper(struct net_device *dev,
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_vlan.c b/drivers/net/ethernet/microchip/sparx5/sparx5_vlan.c
-index d42097aa60a0e..4947828719038 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_vlan.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_vlan.c
-@@ -167,16 +167,6 @@ void sparx5_update_fwd(struct sparx5 *sparx5)
- 	/* Divide up fwd mask in 32 bit words */
- 	bitmap_to_arr32(mask, sparx5->bridge_fwd_mask, SPX5_PORTS);
+-static inline bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev)
++static inline bool
++mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
+ {
+ 	return true;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index bee906661282a..f358e8fe432cf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -3938,23 +3938,25 @@ int mlx5_devlink_eswitch_inline_mode_get(struct devlink *devlink, u8 *mode)
+ 	return esw_inline_mode_to_devlink(esw->offloads.inline_mode, mode);
+ }
  
--	/* Update flood masks */
--	for (port = sparx5_get_pgid(sparx5, PGID_UC_FLOOD);
--	     port <= sparx5_get_pgid(sparx5, PGID_BCAST); port++) {
--		spx5_wr(mask[0], sparx5, ANA_AC_PGID_CFG(port));
--		if (is_sparx5(sparx5)) {
--			spx5_wr(mask[1], sparx5, ANA_AC_PGID_CFG1(port));
--			spx5_wr(mask[2], sparx5, ANA_AC_PGID_CFG2(port));
--		}
--	}
+-bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev)
++bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
+ {
+ 	struct mlx5_eswitch *esw = dev->priv.eswitch;
++	enum devlink_eswitch_encap_mode encap;
++	bool allow_tunnel = false;
+ 
+ 	if (!mlx5_esw_allowed(esw))
+ 		return true;
+ 
+ 	down_write(&esw->mode_lock);
+-	if (esw->mode != MLX5_ESWITCH_LEGACY &&
+-	    esw->offloads.encap != DEVLINK_ESWITCH_ENCAP_MODE_NONE) {
+-		up_write(&esw->mode_lock);
+-		return false;
++	encap = esw->offloads.encap;
++	if (esw->mode == MLX5_ESWITCH_LEGACY ||
++	    (encap == DEVLINK_ESWITCH_ENCAP_MODE_NONE && !from_fdb)) {
++		allow_tunnel = true;
++		esw->offloads.num_block_encap++;
+ 	}
 -
- 	/* Update SRC masks */
- 	for (port = 0; port < sparx5->data->consts->n_ports; port++) {
- 		if (test_bit(port, sparx5->bridge_fwd_mask)) {
+-	esw->offloads.num_block_encap++;
+ 	up_write(&esw->mode_lock);
+-	return true;
++
++	return allow_tunnel;
+ }
+ 
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev)
 -- 
 2.51.0
 
