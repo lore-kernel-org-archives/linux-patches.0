@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6A92F12C5;
-	Fri, 17 Oct 2025 15:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6476320C00A;
+	Fri, 17 Oct 2025 15:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714678; cv=none; b=MjxtPxhb4xYnkO0tt6LL+P/YTiARh7gdePgwxnJzG4qWfUZjouJ+l4AmgqG2MWec2yNO+/m2w71XruFOaLG+mcluC8T62v0RMqaQPZ0dB7MMuLRjOKdDINJzkah8kV1SZ3SFzT4Lo7HEe3Le5LmDohZIYTvWAX95MCp0snzMvKs=
+	t=1760714681; cv=none; b=TRJ3OFtd7DE9utoFgSiezSZHYClFLXM7Au3SVKOim5FiLgmZZfttuVOAVT7Iyxb+VoTy5WaqYZt2woo58YBrYEy0QDDKvKunmBfiMF8hxqcVQzIxz4Ot2FnhBJxd/PKBMnzYj9GQiFLVPcV/fIgXMDwNVswTZB3Mpbcc25Njhq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714678; c=relaxed/simple;
-	bh=2c+o32Z0vIdPqsOhF+rfgqZ26QCm4UxXfRTs1Z+qH1s=;
+	s=arc-20240116; t=1760714681; c=relaxed/simple;
+	bh=cjkAKOOU3wEzSx/lz5jqphL8kpVLtUd0s6pjySWKcoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnJgRgR9lY8VVjSaWUxBW0BXHnHF8uRPJAaVSraR61AObJPRB7d9aEli1/99bxNuqQ5AZQRHDYtrjwAEeBYAWS30BywyGzdn5L0NVxHhFOCBRpHsl/Tf0yGaI7D5S3zk4v9BUU7YuOt2a4D1SuFtB5LjVbeChtH+oEGLW7q3q3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWKBdBSH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J90wVU2USmRqTQh3FGEXbFT+mzGRv4VV/cSAKsVD8ZKwz124znfXR0rQSHgmpNaI95qhY4vp1GyFcAsB9GXF6Wu3wyDJ0czuXcYp/9Vm+RyaW8AACcMAhlv8o9EJbI8McSTkfF2l4WcSE8lrFLkklkECvu8ULyaA5Cx7VtwMABg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/frXeV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWKBdBSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D98C4CEE7;
-	Fri, 17 Oct 2025 15:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/frXeV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A18C4CEE7;
+	Fri, 17 Oct 2025 15:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714678;
-	bh=2c+o32Z0vIdPqsOhF+rfgqZ26QCm4UxXfRTs1Z+qH1s=;
+	s=korg; t=1760714681;
+	bh=cjkAKOOU3wEzSx/lz5jqphL8kpVLtUd0s6pjySWKcoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWKBdBSHyVd1z39dGd6Ly7hDgKiubsgIeXeTNnBe9ajtYyz8u3tWDYay6Kfzj9W3E
-	 VbwuL7VavH7y81D/yRoRpeg4EyxiGhIYdNCuD/TJf8n+SApQJ9iYvd/E+k3EHTRg95
-	 AJKtFkOBKBKOtBYfHSES2uE6ErxnUFvn8rfVXVn4=
+	b=A/frXeV3+cdsRB+cmtzFOhHQkBqab6bigd8YZshP72ZJQqqa8ufRJ5CI1V/etZyZJ
+	 rh4ghIWice0coG56Ha6x3bNAhNLXmHNSQPzFIqfLTlllyTScOd6LCQg8qdezFhmxOC
+	 5JIM/P1CtrcJ3B2Bx/vt72RjSvqOkK8XsAAuacsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wang Jiang <jiangwang@kylinos.cn>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/277] mm/ksm: fix incorrect KSM counter handling in mm_struct during fork
-Date: Fri, 17 Oct 2025 16:53:55 +0200
-Message-ID: <20251017145155.457236143@linuxfoundation.org>
+Subject: [PATCH 6.12 229/277] PCI: endpoint: Remove surplus return statement from pci_epf_test_clean_dma_chan()
+Date: Fri, 17 Oct 2025 16:53:56 +0200
+Message-ID: <20251017145155.494557906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,107 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Wang Jiang <jiangwang@kylinos.cn>
 
-[ Upstream commit 4d6fc29f36341d7795db1d1819b4c15fe9be7b23 ]
+[ Upstream commit 9b80bdb10aee04ce7289896e6bdad13e33972636 ]
 
-Patch series "mm/ksm: Fix incorrect accounting of KSM counters during
-fork", v3.
+Remove a surplus return statement from the void function that has been
+added in the commit commit 8353813c88ef ("PCI: endpoint: Enable DMA
+tests for endpoints with DMA capabilities").
 
-The first patch in this series fixes the incorrect accounting of KSM
-counters such as ksm_merging_pages, ksm_rmap_items, and the global
-ksm_zero_pages during fork.
+Especially, as an empty return statements at the end of a void functions
+serve little purpose.
 
-The following patch add a selftest to verify the ksm_merging_pages counter
-was updated correctly during fork.
+This fixes the following checkpatch.pl script warning:
 
-Test Results
-============
-Without the first patch
------------------------
- # [RUN] test_fork_ksm_merging_page_count
- not ok 10 ksm_merging_page in child: 32
+  WARNING: void function return statements are not generally useful
+  #296: FILE: drivers/pci/endpoint/functions/pci-epf-test.c:296:
+  +     return;
+  +}
 
-With the first patch
---------------------
- # [RUN] test_fork_ksm_merging_page_count
- ok 10 ksm_merging_pages is not inherited after fork
-
-This patch (of 2):
-
-Currently, the KSM-related counters in `mm_struct`, such as
-`ksm_merging_pages`, `ksm_rmap_items`, and `ksm_zero_pages`, are inherited
-by the child process during fork.  This results in inconsistent
-accounting.
-
-When a process uses KSM, identical pages are merged and an rmap item is
-created for each merged page.  The `ksm_merging_pages` and
-`ksm_rmap_items` counters are updated accordingly.  However, after a fork,
-these counters are copied to the child while the corresponding rmap items
-are not.  As a result, when the child later triggers an unmerge, there are
-no rmap items present in the child, so the counters remain stale, leading
-to incorrect accounting.
-
-A similar issue exists with `ksm_zero_pages`, which maintains both a
-global counter and a per-process counter.  During fork, the per-process
-counter is inherited by the child, but the global counter is not
-incremented.  Since the child also references zero pages, the global
-counter should be updated as well.  Otherwise, during zero-page unmerge,
-both the global and per-process counters are decremented, causing the
-global counter to become inconsistent.
-
-To fix this, ksm_merging_pages and ksm_rmap_items are reset to 0 during
-fork, and the global ksm_zero_pages counter is updated with the
-per-process ksm_zero_pages value inherited by the child.  This ensures
-that KSM statistics remain accurate and reflect the activity of each
-process correctly.
-
-Link: https://lkml.kernel.org/r/cover.1758648700.git.donettom@linux.ibm.com
-Link: https://lkml.kernel.org/r/7b9870eb67ccc0d79593940d9dbd4a0b39b5d396.1758648700.git.donettom@linux.ibm.com
-Fixes: 7609385337a4 ("ksm: count ksm merging pages for each process")
-Fixes: cb4df4cae4f2 ("ksm: count allocated ksm rmap_items for each process")
-Fixes: e2942062e01d ("ksm: count all zero pages placed by KSM")
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Donet Tom <donettom@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: <stable@vger.kernel.org>	[6.6+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replaced mm_flags_test() calls with test_bit() ]
+Link: https://lore.kernel.org/r/tencent_F250BEE2A65745A524E2EFE70CF615CA8F06@qq.com
+Signed-off-by: Wang Jiang <jiangwang@kylinos.cn>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Stable-dep-of: 85afa9ea122d ("PCI: endpoint: pci-epf-test: Add NULL check for DMA channels before release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ksm.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-test.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/linux/ksm.h
-+++ b/include/linux/ksm.h
-@@ -57,8 +57,14 @@ static inline long mm_ksm_zero_pages(str
- static inline void ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
- {
- 	/* Adding mm to ksm is best effort on fork. */
--	if (test_bit(MMF_VM_MERGEABLE, &oldmm->flags))
-+	if (test_bit(MMF_VM_MERGEABLE, &oldmm->flags)) {
-+		long nr_ksm_zero_pages = atomic_long_read(&mm->ksm_zero_pages);
-+
-+		mm->ksm_merging_pages = 0;
-+		mm->ksm_rmap_items = 0;
-+		atomic_long_add(nr_ksm_zero_pages, &ksm_zero_pages);
- 		__ksm_enter(mm);
-+	}
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -291,8 +291,6 @@ static void pci_epf_test_clean_dma_chan(
+ 
+ 	dma_release_channel(epf_test->dma_chan_rx);
+ 	epf_test->dma_chan_rx = NULL;
+-
+-	return;
  }
  
- static inline int ksm_execve(struct mm_struct *mm)
+ static void pci_epf_test_print_rate(struct pci_epf_test *epf_test,
 
 
