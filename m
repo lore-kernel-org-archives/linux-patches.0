@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB851D5CE0;
-	Fri, 17 Oct 2025 15:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDC91D5CE0;
+	Fri, 17 Oct 2025 15:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714184; cv=none; b=SRKgwRqJTK6BdMuekl5rJtTZuB6HzIuvv3Qc6UzpLX54g7x5vUjGqJOvDojDmk74Oe+XM1QLZczhy1mufpAneAsVfCPc759si/FC/zIqHLCzaU4ZYcyLVCDezbDCe1KMZuoj0Asg00w0S1SIHXURN8SrtyRFxfHenROpvqT8cAY=
+	t=1760714187; cv=none; b=opDRUQGH2FwP9+L9TOEtR/Usrr3wF5A0V3CIKZmjw0jgSmw4Tp41So5PtJexN1Nb4fKUe9E5Yqx9JvVYNSOUTSk7iWyib9rKPEfLjahDLUXKxMB0N88XZe3cfdRouSVy6M2LYHC21uZdJKTYAGTfs98xrWdGC41ZuDPfS+L23ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714184; c=relaxed/simple;
-	bh=jkQnQLqC9lBrrKnHylJ7OmwcTDjm0wLdxr2y78mnXzE=;
+	s=arc-20240116; t=1760714187; c=relaxed/simple;
+	bh=19oTGHDn11xH/3mkCrOTRxC7L9KSdrtvKUfuQVGzk/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSg8Wf6hwKY7dPt76yCRFOO/rWiln1BeHzHT8qkTCkRzLdilrert3i4iI7Pnc1vHdA+EDXPtv+cprNvqYcJwmeRV05qRf5/6MccuuigwF4kD+Uz265TIIuR4lvh1y78MGjuivA9Ii25L/e8A4t5+NY4p6xy4LNEeVFcMfggvRBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QDm6RM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BVtHPh9KF/ZMi8yv6ViYp603jz58aVmHXydLvifiXU+8rod9N4WEy/C1G/4O/TLix8Ofh6MCDAYsGTCWPM/d8zrZDYJJEn42rIpNpD1HSs8szI+4IT9gfpxz4j0bC53phOBq4r1/oDEfrSOxBmnPTWJpD4s7rGhNtuX51+FLgQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDysZqhf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QDm6RM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC138C4CEE7;
-	Fri, 17 Oct 2025 15:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDysZqhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A228CC4CEE7;
+	Fri, 17 Oct 2025 15:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714184;
-	bh=jkQnQLqC9lBrrKnHylJ7OmwcTDjm0wLdxr2y78mnXzE=;
+	s=korg; t=1760714187;
+	bh=19oTGHDn11xH/3mkCrOTRxC7L9KSdrtvKUfuQVGzk/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QDm6RM9DKNXVewfsCQ2KXFQv17mxLRREZvpgx1DH7eRD66vWM6MA03hcyQ/ZTw5c
-	 Mub4PmuE7kibbJzTSEXKNN0ibiA9XbswaDrg6EK2W6cFuzNfOUii2nEva3OS4LnxWy
-	 9duoeJLnxJGKhujDSXFZKm9KLSNlHwY54UHMEOwc=
+	b=rDysZqhfW/xve+yEBw8ktCeEki3gARyx2RmCwIOcB5LhTj1vf4ovswUwKRxWjh+xb
+	 s4lX6eDI3j46Isxsq+dOUNhqnXscBGGS9dlN4kjTF/U7l5s5KUGTNQtAQdHKvZRt+c
+	 428vfZK+E4JXfUSSsTpzlapzaoWcBJCtPYMJIkU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Chun-Tse Shao <ctshao@google.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/277] ice: ice_adapter: release xa entry on adapter allocation failure
-Date: Fri, 17 Oct 2025 16:51:03 +0200
-Message-ID: <20251017145149.191065190@linuxfoundation.org>
+Subject: [PATCH 6.12 030/277] perf test: Dont leak workload gopipe in PERF_RECORD_*
+Date: Fri, 17 Oct 2025 16:50:37 +0200
+Message-ID: <20251017145148.247315367@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,64 +63,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 2db687f3469dbc5c59bc53d55acafd75d530b497 ]
+[ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
 
-When ice_adapter_new() fails, the reserved XArray entry created by
-xa_insert() is not released. This causes subsequent insertions at
-the same index to return -EBUSY, potentially leading to
-NULL pointer dereferences.
+The test starts a workload and then opens events. If the events fail
+to open, for example because of perf_event_paranoid, the gopipe of the
+workload is leaked and the file descriptor leak check fails when the
+test exits. To avoid this cancel the workload when opening the events
+fails.
 
-Reorder the operations as suggested by Przemek Kitszel:
-1. Check if adapter already exists (xa_load)
-2. Reserve the XArray slot (xa_reserve)
-3. Allocate the adapter (ice_adapter_new)
-4. Store the adapter (xa_store)
+Before:
+```
+$ perf test -vv 7
+  7: PERF_RECORD_* events & perf_sample fields:
+ --- start ---
+test child forked, pid 1189568
+Using CPUID GenuineIntel-6-B7-1
+ ------------------------------------------------------------
+perf_event_attr:
+  type                    	   0 (PERF_TYPE_HARDWARE)
+  config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
+  disabled                	   1
+ ------------------------------------------------------------
+sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
+sys_perf_event_open failed, error -13
+ ------------------------------------------------------------
+perf_event_attr:
+  type                             0 (PERF_TYPE_HARDWARE)
+  config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
+  disabled                         1
+  exclude_kernel                   1
+ ------------------------------------------------------------
+sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
+ ------------------------------------------------------------
+perf_event_attr:
+  type                             0 (PERF_TYPE_HARDWARE)
+  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
+  disabled                         1
+ ------------------------------------------------------------
+sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
+sys_perf_event_open failed, error -13
+ ------------------------------------------------------------
+perf_event_attr:
+  type                             0 (PERF_TYPE_HARDWARE)
+  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
+  disabled                         1
+  exclude_kernel                   1
+ ------------------------------------------------------------
+sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
+Attempt to add: software/cpu-clock/
+..after resolving event: software/config=0/
+cpu-clock -> software/cpu-clock/
+ ------------------------------------------------------------
+perf_event_attr:
+  type                             1 (PERF_TYPE_SOFTWARE)
+  size                             136
+  config                           0x9 (PERF_COUNT_SW_DUMMY)
+  sample_type                      IP|TID|TIME|CPU
+  read_format                      ID|LOST
+  disabled                         1
+  inherit                          1
+  mmap                             1
+  comm                             1
+  enable_on_exec                   1
+  task                             1
+  sample_id_all                    1
+  mmap2                            1
+  comm_exec                        1
+  ksymbol                          1
+  bpf_event                        1
+  { wakeup_events, wakeup_watermark } 1
+ ------------------------------------------------------------
+sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
+sys_perf_event_open failed, error -13
+perf_evlist__open: Permission denied
+ ---- end(-2) ----
+Leak of file descriptor 6 that opened: 'pipe:[14200347]'
+ ---- unexpected signal (6) ----
+iFailed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+Failed to read build ID for //anon
+    #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
+    #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
+    #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
+    #3 0x7f29ce849cc2 in raise raise.c:27
+    #4 0x7f29ce8324ac in abort abort.c:81
+    #5 0x565358f662d4 in check_leaks builtin-test.c:226
+    #6 0x565358f6682e in run_test_child builtin-test.c:344
+    #7 0x565358ef7121 in start_command run-command.c:128
+    #8 0x565358f67273 in start_test builtin-test.c:545
+    #9 0x565358f6771d in __cmd_test builtin-test.c:647
+    #10 0x565358f682bd in cmd_test builtin-test.c:849
+    #11 0x565358ee5ded in run_builtin perf.c:349
+    #12 0x565358ee6085 in handle_internal_command perf.c:401
+    #13 0x565358ee61de in run_argv perf.c:448
+    #14 0x565358ee6527 in main perf.c:555
+    #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
+    #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
+    #17 0x565358e391c1 in _start perf[851c1]
+  7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
+```
 
-Fixes: 0f0023c649c7 ("ice: do not init struct ice_adapter more times than needed")
-Suggested-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251001115336.1707-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+After:
+```
+$ perf test 7
+  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
+```
+
+Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Chun-Tse Shao <ctshao@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_adapter.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/perf/tests/perf-record.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
-index 10285995c9edd..cc4798026182e 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.c
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
-@@ -98,19 +98,21 @@ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
- 
- 	index = ice_adapter_xa_index(pdev);
- 	scoped_guard(mutex, &ice_adapters_mutex) {
--		err = xa_insert(&ice_adapters, index, NULL, GFP_KERNEL);
--		if (err == -EBUSY) {
--			adapter = xa_load(&ice_adapters, index);
-+		adapter = xa_load(&ice_adapters, index);
-+		if (adapter) {
- 			refcount_inc(&adapter->refcount);
- 			WARN_ON_ONCE(adapter->index != ice_adapter_index(pdev));
- 			return adapter;
- 		}
-+		err = xa_reserve(&ice_adapters, index, GFP_KERNEL);
- 		if (err)
- 			return ERR_PTR(err);
- 
- 		adapter = ice_adapter_new(pdev);
--		if (!adapter)
-+		if (!adapter) {
-+			xa_release(&ice_adapters, index);
- 			return ERR_PTR(-ENOMEM);
-+		}
- 		xa_store(&ice_adapters, index, adapter, GFP_KERNEL);
+diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
+index 1c4feec1adff1..6e7f053006b4f 100644
+--- a/tools/perf/tests/perf-record.c
++++ b/tools/perf/tests/perf-record.c
+@@ -115,6 +115,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
+ 	if (err < 0) {
+ 		pr_debug("sched__get_first_possible_cpu: %s\n",
+ 			 str_error_r(errno, sbuf, sizeof(sbuf)));
++		evlist__cancel_workload(evlist);
+ 		goto out_delete_evlist;
  	}
- 	return adapter;
+ 
+@@ -126,6 +127,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
+ 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
+ 		pr_debug("sched_setaffinity: %s\n",
+ 			 str_error_r(errno, sbuf, sizeof(sbuf)));
++		evlist__cancel_workload(evlist);
+ 		goto out_delete_evlist;
+ 	}
+ 
+@@ -137,6 +139,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
+ 	if (err < 0) {
+ 		pr_debug("perf_evlist__open: %s\n",
+ 			 str_error_r(errno, sbuf, sizeof(sbuf)));
++		evlist__cancel_workload(evlist);
+ 		goto out_delete_evlist;
+ 	}
+ 
+@@ -149,6 +152,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
+ 	if (err < 0) {
+ 		pr_debug("evlist__mmap: %s\n",
+ 			 str_error_r(errno, sbuf, sizeof(sbuf)));
++		evlist__cancel_workload(evlist);
+ 		goto out_delete_evlist;
+ 	}
+ 
 -- 
 2.51.0
 
