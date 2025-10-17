@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AAA27B33B;
-	Fri, 17 Oct 2025 15:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3C31946C8;
+	Fri, 17 Oct 2025 15:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715013; cv=none; b=ru9q9FmXU8QsYGNtjEurL2ecGkXjvmwEe1p15oV5akvzZTtyKRjdYNzuLo6m9j4Wwcqiow+1Cj6wO1CupgPUH3BohrSX+2zIK1dA9vTTCpDq5GS6a78bNmAie5GOkcr/54fUyL5Chtd2UOkwy6yOL1H8HNcL4vx9BuZEE3AlQe4=
+	t=1760715016; cv=none; b=FClpBazV8+egeVw+kE7o2rnPZETIk7gWcZw5jjUMoB0RqRezotbhhEHpErr/gTni4oLutUcEvdjqQE7jjyQtFDRMHp7hfrh01IyUujin4DnoAHWBwV7q3XUs/2o1pByO5AKZXL+no8za5EjrbIYOJ8/D4vhRrlIxj4zT0Yv1ndU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715013; c=relaxed/simple;
-	bh=G4rWnLBGCx0s4yBRj2rg2h8ulo4YbiHnSuiSrBjjNFI=;
+	s=arc-20240116; t=1760715016; c=relaxed/simple;
+	bh=uowemTQlJiYgMGrbUDmHstGZHrwBihs94XchgZk6xHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fA7aGTT2ai0HMy6A1sAW1ejm6esP+ffvlj7D17KQRgrx2732dMI11nVK1Tg7/bvnCRgFo2ICfGyHkGmgO+L/CtEwQ86IRawoMV5OM9dHD71Gv935O+pVx8DJ2rxdAMjzbc0mzFoonI4AOmjTuhibTdPthNbttPDIdZglEBtqvlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LmJa93j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGiQDWvPWOauVYNCaCnbqEMRCu8xwlsDGQrJ37wxpqek/j8VVDM8ywOesuWR78y+D+43FFyJc892OooJs1SNILl6J+pmMb7QLhqScC58EMtmPwyxLMmrr5gvohjBwfmjTld2x1Hs0J6ib5YVsFNktdGLVhRmY4WG4G2hBmmdoKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQPa0+TW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LmJa93j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC99C4CEE7;
-	Fri, 17 Oct 2025 15:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQPa0+TW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4EBC4CEE7;
+	Fri, 17 Oct 2025 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715013;
-	bh=G4rWnLBGCx0s4yBRj2rg2h8ulo4YbiHnSuiSrBjjNFI=;
+	s=korg; t=1760715016;
+	bh=uowemTQlJiYgMGrbUDmHstGZHrwBihs94XchgZk6xHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LmJa93joiPdwe1HlaP1MNhWdQJJdrnrwi351uQjGHPrrR8n99LL3FrwNIU+H9cN2
-	 cetw+6s5u7ERBlty2ztDakvM2U9qEqyX8WtVGtmmg6AxvttfsD1wtYqcfDc6otREK+
-	 DTW7Uevem/CbDJq+H8xB+zRfUouZ0v/pKn9BEPPQ=
+	b=xQPa0+TW0xXQ7b6GUESetvOUAXBdmfDlwHkCX4B8KSvlc4vaZv8SOd+4vkeL0rqSO
+	 JMwaMY9nTBvHWEVBwBS2jBVBeBW1SQhF9sbdPEj8fvpSdtbIRaH0V9xmufQru2msAB
+	 3MIgE4aA++zQdtVlPEeaCuexf7kHJLjEdsnTuSkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	bpf@vger.kernel.org,
+	Hao Ge <gehao@kylinos.cn>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 068/371] scsi: mvsas: Fix use-after-free bugs in mvs_work_queue
-Date: Fri, 17 Oct 2025 16:50:43 +0200
-Message-ID: <20251017145204.396281006@linuxfoundation.org>
+Subject: [PATCH 6.17 069/371] perf bpf-filter: Fix opts declaration on older libbpfs
+Date: Fri, 17 Oct 2025 16:50:44 +0200
+Message-ID: <20251017145204.432766505@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,54 +64,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 60cd16a3b7439ccb699d0bf533799eeb894fd217 ]
+[ Upstream commit 3a0f56d72a7575f03187a85b7869c76a862b40ab ]
 
-During the detaching of Marvell's SAS/SATA controller, the original code
-calls cancel_delayed_work() in mvs_free() to cancel the delayed work
-item mwq->work_q. However, if mwq->work_q is already running, the
-cancel_delayed_work() may fail to cancel it. This can lead to
-use-after-free scenarios where mvs_free() frees the mvs_info while
-mvs_work_queue() is still executing and attempts to access the
-already-freed mvs_info.
+Building perf with LIBBPF_DYNAMIC (ie not the default static linking of
+libbpf with perf) is breaking as the libbpf isn't version 1.7 or newer,
+where dont_enable is added to bpf_perf_event_opts.
 
-A typical race condition is illustrated below:
+To avoid this breakage add a compile time version check and don't
+declare the variable when not present.
 
-CPU 0 (remove)            | CPU 1 (delayed work callback)
-mvs_pci_remove()          |
-  mvs_free()              | mvs_work_queue()
-    cancel_delayed_work() |
-      kfree(mvi)          |
-                          |   mvi-> // UAF
-
-Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the delayed work item is properly canceled and any executing
-delayed work item completes before the mvs_info is deallocated.
-
-This bug was found by static analysis.
-
-Fixes: 20b09c2992fe ("[SCSI] mvsas: add support for 94xx; layout change; bug fixes")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 5e2ac8e8571df54d ("perf bpf-filter: Enable events manually")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: bpf@vger.kernel.org
+Cc: Hao Ge <gehao@kylinos.cn>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mvsas/mv_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/bpf-filter.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index 2c72da6b8cf0c..7f1ad305eee63 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -124,7 +124,7 @@ static void mvs_free(struct mvs_info *mvi)
- 	if (mvi->shost)
- 		scsi_host_put(mvi->shost);
- 	list_for_each_entry(mwq, &mvi->wq_list, entry)
--		cancel_delayed_work(&mwq->work_q);
-+		cancel_delayed_work_sync(&mwq->work_q);
- 	kfree(mvi->rsvd_tags);
- 	kfree(mvi);
+diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
+index a0b11f35395f8..92308c38fbb56 100644
+--- a/tools/perf/util/bpf-filter.c
++++ b/tools/perf/util/bpf-filter.c
+@@ -443,6 +443,10 @@ static int create_idx_hash(struct evsel *evsel, struct perf_bpf_filter_entry *en
+ 	return -1;
  }
+ 
++#define LIBBPF_CURRENT_VERSION_GEQ(major, minor)			\
++	(LIBBPF_MAJOR_VERSION > (major) ||				\
++	 (LIBBPF_MAJOR_VERSION == (major) && LIBBPF_MINOR_VERSION >= (minor)))
++
+ int perf_bpf_filter__prepare(struct evsel *evsel, struct target *target)
+ {
+ 	int i, x, y, fd, ret;
+@@ -451,8 +455,12 @@ int perf_bpf_filter__prepare(struct evsel *evsel, struct target *target)
+ 	struct bpf_link *link;
+ 	struct perf_bpf_filter_entry *entry;
+ 	bool needs_idx_hash = !target__has_cpu(target);
++#if LIBBPF_CURRENT_VERSION_GEQ(1, 7)
+ 	DECLARE_LIBBPF_OPTS(bpf_perf_event_opts, pe_opts,
+ 			    .dont_enable = true);
++#else
++	DECLARE_LIBBPF_OPTS(bpf_perf_event_opts, pe_opts);
++#endif
+ 
+ 	entry = calloc(MAX_FILTERS, sizeof(*entry));
+ 	if (entry == NULL)
 -- 
 2.51.0
 
