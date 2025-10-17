@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032D03370E2;
-	Fri, 17 Oct 2025 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5289B33291D;
+	Fri, 17 Oct 2025 15:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713676; cv=none; b=HeansRhGeLj1pDzIE+oAUDZZsYqoetS/Hr4jRDHtoLwfoFJ+n1O1T7O9IJ9HN+h6Oulwt717hoKgPYVdqERwRY5ZjjHfGzIVFrsRVydhIjnorDdtQoCYTzZTVxG6Gck2g9Y3ItejcOdMvk3uvSy09GgSlIqL8106rbQMcxlWGqA=
+	t=1760713679; cv=none; b=OscYgVJTz4/k5QgBZFRuXPeTcN6V/yhjSwpVaxv9P1OqR33PJA4xlmW0uCLJoy9avQxQyinJNWJDUyq7Bf+DltFvVVqs6B050NRYpkn3gk7i54o9F9z8bZ6EgMjPN0g92IfsKmn/YnZ/E9N9eyoZd9AVv4ytPPgWiumYU/PBn2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713676; c=relaxed/simple;
-	bh=YXAMbnhZTMKCbIhpSsRk/HtM18Tw+fGeuAhYGi81HHg=;
+	s=arc-20240116; t=1760713679; c=relaxed/simple;
+	bh=3EyeH/sCtb+qeJ7ICXNf8XdpF6Z1zenjDYfi5yXPsio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G7K5Ov60ONMOXe2/DB7uYD/L+fuCORusNAd46Idq1yYdO9tmvJA5v3SH8mNu/mqn3Nj3U1rSKYaUx8JVtIBvFTOWBKl96pdXyKCNZfeE97pFRH6aBUQLNRrS4xUK3mgME0kO7IMr57YonBse0sB49u3w8fp1Oosiin2mGm1E/2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsqx+n9x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HhSSRynMdeUM4pCp7AmCJ8sZKXGBItctLB42SjcxKEC2dgv5QH5aAjyTeOI9GoqdD7478k+yKhCzMrbCGSH+yJLWS3W6eyXfyOTqSiRQYaH6vg01BlyIPtE77PwCOUECL30eJxruj1DG+lltnkhaeS6AW14cpL7eBEIIe9HLzFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVybHtlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsqx+n9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836C5C4CEE7;
-	Fri, 17 Oct 2025 15:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVybHtlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B1BC4CEE7;
+	Fri, 17 Oct 2025 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713675;
-	bh=YXAMbnhZTMKCbIhpSsRk/HtM18Tw+fGeuAhYGi81HHg=;
+	s=korg; t=1760713678;
+	bh=3EyeH/sCtb+qeJ7ICXNf8XdpF6Z1zenjDYfi5yXPsio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsqx+n9xvNAVAgSqQgevcZtQ+v4SNNA5FdQkBp7+uzDfyr/N8JnIWMUFqh36puZ1O
-	 ygTNCGrqKlB6rTpgSifSpXGapA4l21dsgRyFZ9a/Yx7VjSJ1zvOxvz72dcVnUHei8t
-	 GyNLDixDSOEGrPwPgou1kSlAcCW3F6Yqsu0Bjfd0=
+	b=XVybHtlKh3k5hXhYsmSfOKlmn7AwjZOdl7gDULKnhZCjG1V49DihrkgRxx0pwso1e
+	 Tx4Ut7lUur15C+j3COPIIPkdQed9Aucf68p1ZxcLYxhGoRaUiZ2zC0Kjcgs0UXbUb0
+	 KF8GH+T9+QYoyFkSaDiJ9XMiH44vH4hJN7Di5ZzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/201] drm/amd/display: Properly clear SCL_*_FILTER_CONTROL on DCE6
-Date: Fri, 17 Oct 2025 16:51:48 +0200
-Message-ID: <20251017145136.474520167@linuxfoundation.org>
+Subject: [PATCH 6.6 048/201] drm/amd/display: Properly disable scaling on DCE6
+Date: Fri, 17 Oct 2025 16:51:49 +0200
+Message-ID: <20251017145136.510211691@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -54,10 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit c0aa7cf49dd6cb302fe28e7183992b772cb7420c ]
+[ Upstream commit a7dc87f3448bea5ebe054f14e861074b9c289c65 ]
 
-Previously, the code would set a bit field which didn't exist
-on DCE6 so it would be effectively a no-op.
+SCL_SCALER_ENABLE can be used to enable/disable the scaler
+on DCE6. Program it to 0 when scaling isn't used, 1 when used.
+Additionally, clear some other registers when scaling is
+disabled and program the SCL_UPDATE register as recommended.
+
+This fixes visible glitches for users whose BIOS sets up a
+mode with scaling at boot, which DC was unable to clean up.
 
 Fixes: b70aaf5586f2 ("drm/amd/display: dce_transform: add DCE6 specific macros,functions")
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
@@ -65,33 +70,78 @@ Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_transform.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ .../gpu/drm/amd/display/dc/dce/dce_transform.c    | 15 +++++++++++----
+ .../gpu/drm/amd/display/dc/dce/dce_transform.h    |  2 ++
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
-index 670d5ab9d9984..b761dda491d54 100644
+index b761dda491d54..f97c182677082 100644
 --- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
 +++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
-@@ -527,8 +527,7 @@ static void dce60_transform_set_scaler(
- 		if (coeffs_v != xfm_dce->filter_v || coeffs_h != xfm_dce->filter_h) {
- 			/* 4. Program vertical filters */
- 			if (xfm_dce->filter_v == NULL)
--				REG_SET(SCL_VERT_FILTER_CONTROL, 0,
--						SCL_V_2TAP_HARDCODE_COEF_EN, 0);
-+				REG_WRITE(SCL_VERT_FILTER_CONTROL, 0);
- 			program_multi_taps_filter(
- 					xfm_dce,
- 					data->taps.v_taps,
-@@ -542,8 +541,7 @@ static void dce60_transform_set_scaler(
+@@ -154,10 +154,13 @@ static bool dce60_setup_scaling_configuration(
+ 	REG_SET(SCL_BYPASS_CONTROL, 0, SCL_BYPASS_MODE, 0);
  
- 			/* 5. Program horizontal filters */
- 			if (xfm_dce->filter_h == NULL)
--				REG_SET(SCL_HORZ_FILTER_CONTROL, 0,
--						SCL_H_2TAP_HARDCODE_COEF_EN, 0);
-+				REG_WRITE(SCL_HORZ_FILTER_CONTROL, 0);
- 			program_multi_taps_filter(
- 					xfm_dce,
- 					data->taps.h_taps,
+ 	if (data->taps.h_taps + data->taps.v_taps <= 2) {
+-		/* Set bypass */
+-
+-		/* DCE6 has no SCL_MODE register, skip scale mode programming */
++		/* Disable scaler functionality */
++		REG_WRITE(SCL_SCALER_ENABLE, 0);
+ 
++		/* Clear registers that can cause glitches even when the scaler is off */
++		REG_WRITE(SCL_TAP_CONTROL, 0);
++		REG_WRITE(SCL_AUTOMATIC_MODE_CONTROL, 0);
++		REG_WRITE(SCL_F_SHARP_CONTROL, 0);
+ 		return false;
+ 	}
+ 
+@@ -165,7 +168,7 @@ static bool dce60_setup_scaling_configuration(
+ 			SCL_H_NUM_OF_TAPS, data->taps.h_taps - 1,
+ 			SCL_V_NUM_OF_TAPS, data->taps.v_taps - 1);
+ 
+-	/* DCE6 has no SCL_MODE register, skip scale mode programming */
++	REG_WRITE(SCL_SCALER_ENABLE, 1);
+ 
+ 	/* DCE6 has no SCL_BOUNDARY_MODE bit, skip replace out of bound pixels */
+ 
+@@ -502,6 +505,8 @@ static void dce60_transform_set_scaler(
+ 	REG_SET(DC_LB_MEM_SIZE, 0,
+ 		DC_LB_MEM_SIZE, xfm_dce->lb_memory_size);
+ 
++	REG_WRITE(SCL_UPDATE, 0x00010000);
++
+ 	/* Clear SCL_F_SHARP_CONTROL value to 0 */
+ 	REG_WRITE(SCL_F_SHARP_CONTROL, 0);
+ 
+@@ -564,6 +569,8 @@ static void dce60_transform_set_scaler(
+ 	/* DCE6 has no SCL_COEF_UPDATE_COMPLETE bit to flip to new coefficient memory */
+ 
+ 	/* DCE6 DATA_FORMAT register does not support ALPHA_EN */
++
++	REG_WRITE(SCL_UPDATE, 0);
+ }
+ #endif
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+index ff746fba850bc..eb716e8337e23 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+@@ -155,6 +155,7 @@
+ 	SRI(SCL_COEF_RAM_TAP_DATA, SCL, id), \
+ 	SRI(VIEWPORT_START, SCL, id), \
+ 	SRI(VIEWPORT_SIZE, SCL, id), \
++	SRI(SCL_SCALER_ENABLE, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_INIT_RGB_LUMA, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_INIT_CHROMA, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_SCALE_RATIO, SCL, id), \
+@@ -592,6 +593,7 @@ struct dce_transform_registers {
+ 	uint32_t SCL_VERT_FILTER_SCALE_RATIO;
+ 	uint32_t SCL_HORZ_FILTER_INIT;
+ #if defined(CONFIG_DRM_AMD_DC_SI)
++	uint32_t SCL_SCALER_ENABLE;
+ 	uint32_t SCL_HORZ_FILTER_INIT_RGB_LUMA;
+ 	uint32_t SCL_HORZ_FILTER_INIT_CHROMA;
+ #endif
 -- 
 2.51.0
 
