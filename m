@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E68A257437;
-	Fri, 17 Oct 2025 15:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F457330B29;
+	Fri, 17 Oct 2025 15:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716098; cv=none; b=eZr96WcEHV4YdptJGO5iPIdy/m5KgoSwAqRFwDPrDMkmzSsknD8zAz3/Rysz87isCoL0RVrGgKJdpePwLOgzbQJsmDYbhScszBvpzqAKgGaz58a2Abg5KHXfV2LNle1lF2Dzr9HuX/t9nj3i93KZ8VMKgFZ3cg5sERw0b8RGK9A=
+	t=1760716101; cv=none; b=ZxBYCrpO2gp/weTklT2SOqfRjwPY4dhCbuQjoHMG42ULWKOTo1JVH9gWBSEVMya7px0f72hDy4xA7SqnlR3iDLcNZ/224Xo1pDWECkjoTwSjgr//hXDqSgfI4ysFBskq/uG8sBjM7lvVxu7jLBxNrC5eL91BUenFOzhEYm/I3QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716098; c=relaxed/simple;
-	bh=iERE1/Jb2HJn4+EENqyhvOBZ9nwmQjC9I6rgC6hLOFo=;
+	s=arc-20240116; t=1760716101; c=relaxed/simple;
+	bh=mRL8vPyLg3Gx+GcuPbAXKjsiLkiYBEA8gyrGp4LGk7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxBPSIU/GzwFN+VBnPwGiptnuycYcAyTfRKfMU7rhx8Zk7yeuaDakDVXE141WtrPcQZJsfS2TGZ+e6nTrFEeZE7UYnhJRfxlB77aw02xwh01RDorsV+ai7G7U9G+2LIgvhszlzmgvpJcWQ9TJVAL1i7RwlAWni+sYjQmFtY4n30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1feZ3om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uHeTr0dFtOnisjXpBlsglHYft7/fsvyLf3E4VMyPryz5EtPe6iv5YM7yV3N4Fk/1SxLOySL9dSHHFmO5AOyh74zZShfSKo5mtUFHTizFYx9HIB4BVcX2y4EQGLyh7Wc29r3lAymDJo+crPclN1DJPj0duOFRFd/SbHin8rUR3Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq1C+57G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1feZ3om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD95C113D0;
-	Fri, 17 Oct 2025 15:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq1C+57G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D22C113D0;
+	Fri, 17 Oct 2025 15:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716097;
-	bh=iERE1/Jb2HJn4+EENqyhvOBZ9nwmQjC9I6rgC6hLOFo=;
+	s=korg; t=1760716100;
+	bh=mRL8vPyLg3Gx+GcuPbAXKjsiLkiYBEA8gyrGp4LGk7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1feZ3omm6dq33wMVrFJ+CGhUXpflEC6L7TDI6X2QcC0b6j04kW32NiXtJt3xA+8H
-	 /5zCMjBwFIOh2c625qU5a+tmpUZ9NwGn7n2M6ywXL+u04E6oLdREpO7oHHoqG51vRe
-	 5hF8w1kYshGMkkdSAJdRaCHo4+K7LbYsgMiz7k1o=
+	b=oq1C+57G1F/lO7bT+/6Ax726DvlMPUCvegSf25mDEpyMfhgmLH/BhqkgG7Iboc6o1
+	 qsX+eUX+uPwE3uw6O0UHqf/Vv+UDWU7M8CK5CPWm/YCLOs/rqPwD1lp3poP01PAi1t
+	 9aM6DQ2fPGKUhQuE1LfJVChZTpUKubVd6cJ+nQUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Johan Hovold <johan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/276] fs: ntfs3: Fix integer overflow in run_unpack()
-Date: Fri, 17 Oct 2025 16:52:44 +0200
-Message-ID: <20251017145145.078427558@linuxfoundation.org>
+Subject: [PATCH 5.15 040/276] firmware: firmware: meson-sm: fix compile-test default
+Date: Fri, 17 Oct 2025 16:52:13 +0200
+Message-ID: <20251017145143.868493300@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,83 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 736fc7bf5f68f6b74a0925b7e072c571838657d2 ]
+[ Upstream commit 0454346d1c5f7fccb3ef6e3103985de8ab3469f3 ]
 
-The MFT record relative to the file being opened contains its runlist,
-an array containing information about the file's location on the physical
-disk. Analysis of all Call Stack paths showed that the values of the
-runlist array, from which LCNs are calculated, are not validated before
-run_unpack function.
+Enabling compile testing should not enable every individual driver (we
+have "allyesconfig" for that).
 
-The run_unpack function decodes the compressed runlist data format
-from MFT attributes (for example, $DATA), converting them into a runs_tree
-structure, which describes the mapping of virtual clusters (VCN) to
-logical clusters (LCN). The NTFS3 subsystem also has a shortcut for
-deleting files from MFT records - in this case, the RUN_DEALLOCATE
-command is sent to the run_unpack input, and the function logic
-provides that all data transferred to the runlist about file or
-directory is deleted without creating a runs_tree structure.
-
-Substituting the runlist in the $DATA attribute of the MFT record for an
-arbitrary file can lead either to access to arbitrary data on the disk
-bypassing access checks to them (since the inode access check
-occurs above) or to destruction of arbitrary data on the disk.
-
-Add overflow check for addition operation.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Signed-off-by: Vitaly Grigoryev <Vitaly.Grigoryev@kaspersky.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 4a434abc40d2 ("firmware: meson-sm: enable build as module")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250725075429.10056-1-johan@kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/run.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/firmware/meson/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
-index 6940ee5432ba3..52ce16218b299 100644
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -9,6 +9,7 @@
- #include <linux/blkdev.h>
- #include <linux/fs.h>
- #include <linux/log2.h>
-+#include <linux/overflow.h>
- 
- #include "debug.h"
- #include "ntfs.h"
-@@ -935,12 +936,16 @@ int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 
- 			if (!dlcn)
- 				return -EINVAL;
--			lcn = prev_lcn + dlcn;
-+
-+			if (check_add_overflow(prev_lcn, dlcn, &lcn))
-+				return -EINVAL;
- 			prev_lcn = lcn;
- 		} else
- 			return -EINVAL;
- 
--		next_vcn = vcn64 + len;
-+		if (check_add_overflow(vcn64, len, &next_vcn))
-+			return -EINVAL;
-+
- 		/* Check boundary. */
- 		if (next_vcn > evcn + 1)
- 			return -EINVAL;
-@@ -1101,7 +1106,8 @@ int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
- 			return -EINVAL;
- 
- 		run_buf += size_size + offset_size;
--		vcn64 += len;
-+		if (check_add_overflow(vcn64, len, &vcn64))
-+			return -EINVAL;
- 
- #ifndef CONFIG_NTFS3_64BIT_CLUSTER
- 		if (vcn64 > 0x100000000ull)
+diff --git a/drivers/firmware/meson/Kconfig b/drivers/firmware/meson/Kconfig
+index f2fdd37566482..179f5d46d8ddf 100644
+--- a/drivers/firmware/meson/Kconfig
++++ b/drivers/firmware/meson/Kconfig
+@@ -5,7 +5,7 @@
+ config MESON_SM
+ 	tristate "Amlogic Secure Monitor driver"
+ 	depends on ARCH_MESON || COMPILE_TEST
+-	default y
++	default ARCH_MESON
+ 	depends on ARM64_4K_PAGES
+ 	help
+ 	  Say y here to enable the Amlogic secure monitor driver
 -- 
 2.51.0
 
