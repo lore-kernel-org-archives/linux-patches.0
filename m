@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AC032E12B;
-	Fri, 17 Oct 2025 15:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDC832C93B;
+	Fri, 17 Oct 2025 15:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714272; cv=none; b=GOnoxHQ1ZuukgPNVjKckNPBgGrchA1KhtTV5j4WnUNzZUOYExzcMBdFynkXHvqsdTpeomPa/kFmoiPVwN3evIRJIk3ZTiD1isd9GWli5l2QcYLznNePrzOCd6RLpr58EvSunD9mXmw4iI2+qgcbFrT4BzuPsfpxCnjIb8l2YpE8=
+	t=1760714273; cv=none; b=GE+0r9yISN4jBYA018W69rDR017/JcRfYqrG+fN6KnNjFebvlmBZfAzkVW9omKExPxyWJFXAu5dSRGvkn3PSAENkRr1pbNk0a/IMT1XJPE0q8cS0EbHygs4llkaknw4y7B/lLSiPdKmGPhmpUBRCvi36nMw09uWcJ6PEmWi7xdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714272; c=relaxed/simple;
-	bh=pcZsxkKqKaQ3hLLtWHb8OnUdFuNR06rGwa3jzgRsuGM=;
+	s=arc-20240116; t=1760714273; c=relaxed/simple;
+	bh=IBfMeR00MoQhgjpN1fogb9sVNDJp8f0qmqdpxQjw4ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzcppsDejdyn1dxXwLQqCydZxS5AVBbBWZxSGSpbQDqduIZFACdgvOeA+f+AohHaDRjU5fGkCccKhCTm7vY+hrOsPYms/UKV3qx+EZFovy1JErslCvnVgzwqywHFSnEynmnkJVJ7uFYVTy/F7r6spyaGKH51r7UAlVyLgAhjA+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqJTZoZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3qF1KmHwsJ4mXV10MJdNzZe8YKJ1xh3qvrL5PP82wAQWnY+p2zoMD0EZfPZGxJMHHajAPrp79LOnggfku5aQGqu2EJMBkrtFUtel2tzt68JpN1UJ/Xcv3WEtT0d/oQiJs2ia6nLsoTKCtCS6d16ZKnPE72u1sl8e2/vk4dGyA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOo0j3ST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqJTZoZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15510C4CEFE;
-	Fri, 17 Oct 2025 15:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOo0j3ST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA279C4CEE7;
+	Fri, 17 Oct 2025 15:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714270;
-	bh=pcZsxkKqKaQ3hLLtWHb8OnUdFuNR06rGwa3jzgRsuGM=;
+	s=korg; t=1760714273;
+	bh=IBfMeR00MoQhgjpN1fogb9sVNDJp8f0qmqdpxQjw4ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqJTZoZrC5WYwGL0R1g1y2tAY2yyzkMtmsUlW/SnLxLV3gqRYuyv2aJ0DzKnSXbHp
-	 pIaTSLy5kdF7g7rnBG6d2vrE66wc7OVvM3n8TfdpagrR0vY/c1Lfy1uOI7PI6SG/7y
-	 ZWyAr+MqdkD69PpAeP6LfFnFkbpvw3U2JP8dVsdI=
+	b=zOo0j3STNU79IWYwHDaLOrxTyizI9ick2ZXJrZqsZ2Z+vvCOWy0LGG6Nhlgh59mWF
+	 j2TD84b4MgeBrhGxBKAye2jUK1n3x+fIUTzcgIyxgEJ4CdyYU38r7He6HexGGWdIbq
+	 LLmScN8OF3eDJ5VrX3MqKPWYqc7qhJGnix9QVnOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Tang <danielzgtg.opensource@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 086/277] ACPI: TAD: Add missing sysfs_remove_group() for ACPI_TAD_RT
-Date: Fri, 17 Oct 2025 16:51:33 +0200
-Message-ID: <20251017145150.274159859@linuxfoundation.org>
+Subject: [PATCH 6.12 087/277] ACPI: debug: fix signedness issues in read/write helpers
+Date: Fri, 17 Oct 2025 16:51:34 +0200
+Message-ID: <20251017145150.311300762@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,49 +50,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Tang <danielzgtg.opensource@gmail.com>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-commit 4aac453deca0d9c61df18d968f8864c3ae7d3d8d upstream.
+commit 496f9372eae14775e0524e83e952814691fe850a upstream.
 
-Previously, after `rmmod acpi_tad`, `modprobe acpi_tad` would fail
-with this dmesg:
+In the ACPI debugger interface, the helper functions for read and write
+operations use "int" as the length parameter data type. When a large
+"size_t count" is passed from the file operations, this cast to "int"
+results in truncation and a negative value due to signed integer
+representation.
 
-sysfs: cannot create duplicate filename '/devices/platform/ACPI000E:00/time'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6c/0x90
- dump_stack+0x10/0x20
- sysfs_warn_dup+0x8b/0xa0
- sysfs_add_file_mode_ns+0x122/0x130
- internal_create_group+0x1dd/0x4c0
- sysfs_create_group+0x13/0x20
- acpi_tad_probe+0x147/0x1f0 [acpi_tad]
- platform_probe+0x42/0xb0
- </TASK>
-acpi-tad ACPI000E:00: probe with driver acpi-tad failed with error -17
+Logically, this negative number propagates to the min() calculation,
+where it is selected over the positive buffer space value, leading to
+unexpected behavior. Subsequently, when this negative value is used in
+copy_to_user() or copy_from_user(), it is interpreted as a large positive
+value due to the unsigned nature of the size parameter in these functions,
+causing the copy operations to attempt handling sizes far beyond the
+intended buffer limits.
 
-Fixes: 3230b2b3c1ab ("ACPI: TAD: Add low-level support for real time capability")
-Signed-off-by: Daniel Tang <danielzgtg.opensource@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/2881298.hMirdbgypa@daniel-desktop3
-Cc: 5.2+ <stable@vger.kernel.org> # 5.2+
+Address the issue by:
+ - Changing the length parameters in acpi_aml_read_user() and
+   acpi_aml_write_user() from "int" to "size_t", aligning with the
+   expected unsigned size semantics.
+ - Updating return types and local variables in acpi_aml_read() and
+   acpi_aml_write() to "ssize_t" for consistency with kernel file
+   operation conventions.
+ - Using "size_t" for the "n" variable to ensure calculations remain
+   unsigned.
+ - Using min_t() for circ_count_to_end() and circ_space_to_end() to
+   ensure type-safe comparisons and prevent integer overflow.
+
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Link: https://patch.msgid.link/20250923013113.20615-1-a.jahangirzad@gmail.com
+[ rjw: Changelog tweaks, local variable definitions ordering adjustments ]
+Fixes: 8cfb0cdf07e2 ("ACPI / debugger: Add IO interface to access debugger functionalities")
+Cc: 4.5+ <stable@vger.kernel.org> # 4.5+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_tad.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/acpi_dbg.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -565,6 +565,9 @@ static void acpi_tad_remove(struct platf
+--- a/drivers/acpi/acpi_dbg.c
++++ b/drivers/acpi/acpi_dbg.c
+@@ -569,11 +569,11 @@ static int acpi_aml_release(struct inode
+ 	return 0;
+ }
  
- 	pm_runtime_get_sync(dev);
+-static int acpi_aml_read_user(char __user *buf, int len)
++static ssize_t acpi_aml_read_user(char __user *buf, size_t len)
+ {
+-	int ret;
+ 	struct circ_buf *crc = &acpi_aml_io.out_crc;
+-	int n;
++	ssize_t ret;
++	size_t n;
+ 	char *p;
  
-+	if (dd->capabilities & ACPI_TAD_RT)
-+		sysfs_remove_group(&dev->kobj, &acpi_tad_time_attr_group);
-+
- 	if (dd->capabilities & ACPI_TAD_DC_WAKE)
- 		sysfs_remove_group(&dev->kobj, &acpi_tad_dc_attr_group);
+ 	ret = acpi_aml_lock_read(crc, ACPI_AML_OUT_USER);
+@@ -582,7 +582,7 @@ static int acpi_aml_read_user(char __use
+ 	/* sync head before removing logs */
+ 	smp_rmb();
+ 	p = &crc->buf[crc->tail];
+-	n = min(len, circ_count_to_end(crc));
++	n = min_t(size_t, len, circ_count_to_end(crc));
+ 	if (copy_to_user(buf, p, n)) {
+ 		ret = -EFAULT;
+ 		goto out;
+@@ -599,8 +599,8 @@ out:
+ static ssize_t acpi_aml_read(struct file *file, char __user *buf,
+ 			     size_t count, loff_t *ppos)
+ {
+-	int ret = 0;
+-	int size = 0;
++	ssize_t ret = 0;
++	ssize_t size = 0;
  
+ 	if (!count)
+ 		return 0;
+@@ -639,11 +639,11 @@ again:
+ 	return size > 0 ? size : ret;
+ }
+ 
+-static int acpi_aml_write_user(const char __user *buf, int len)
++static ssize_t acpi_aml_write_user(const char __user *buf, size_t len)
+ {
+-	int ret;
+ 	struct circ_buf *crc = &acpi_aml_io.in_crc;
+-	int n;
++	ssize_t ret;
++	size_t n;
+ 	char *p;
+ 
+ 	ret = acpi_aml_lock_write(crc, ACPI_AML_IN_USER);
+@@ -652,7 +652,7 @@ static int acpi_aml_write_user(const cha
+ 	/* sync tail before inserting cmds */
+ 	smp_mb();
+ 	p = &crc->buf[crc->head];
+-	n = min(len, circ_space_to_end(crc));
++	n = min_t(size_t, len, circ_space_to_end(crc));
+ 	if (copy_from_user(p, buf, n)) {
+ 		ret = -EFAULT;
+ 		goto out;
+@@ -663,14 +663,14 @@ static int acpi_aml_write_user(const cha
+ 	ret = n;
+ out:
+ 	acpi_aml_unlock_fifo(ACPI_AML_IN_USER, ret >= 0);
+-	return n;
++	return ret;
+ }
+ 
+ static ssize_t acpi_aml_write(struct file *file, const char __user *buf,
+ 			      size_t count, loff_t *ppos)
+ {
+-	int ret = 0;
+-	int size = 0;
++	ssize_t ret = 0;
++	ssize_t size = 0;
+ 
+ 	if (!count)
+ 		return 0;
 
 
