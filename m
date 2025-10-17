@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940F032E13C;
-	Fri, 17 Oct 2025 15:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83122217722;
+	Fri, 17 Oct 2025 15:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713814; cv=none; b=jjmPJwxA1Oq+XuJEGurBHqTwBUTbUL/PhDBl0XDRrqBRraj0HkSQMvSdCg4z/nvJIg+t7QwwV5wQfJ1fgSnWeTraBVeLkFfzy4Q5wAatmRFlPsyiJZTbgDafxwfE7Kdb+SiWRbMX2/jXBQQJzpvl0L0AW2ZESDMV1rfYJXIHb+A=
+	t=1760713817; cv=none; b=Vlh5KXQobNQqCcAraLLILcG0na+lV9ND8SXRLtyNj3TYAzE2H0c2JdVFmDlpemcwjh6aRL2R4ddKfW3LyHeM/SiJxcmY2vqwaePfl/pZLuhrPpNfROMjN8iedWqxzi7Odmg1g2RDr1cMurkrDUhmxf0sQxL838Wnt3xRtPcLCUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713814; c=relaxed/simple;
-	bh=GZKeEfy34uMMei66ABlBuf2NXcWn9+kZwHIOCWIJ2OI=;
+	s=arc-20240116; t=1760713817; c=relaxed/simple;
+	bh=ZWgkloJajqlO1jzPvjOWBVb4fvfA6Be5cA0VpBWafJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rz2bbhlz/Rvd/6BcPe4qmFu+2KNN3lYo7luQ8/QHMmdaFjJQ/Dxgahf9mZu5tWR7LKvbTB/rEsdFLOTrfcbT7c3ceeo7+ASAdtTx5KGWAjruwvvLPFDdGEVr2wPa/6sYrnJJAcrgQ3iyHKPJvKXtp3N9xrFrZgaM3O1zDZQRZmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN1v9NWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCJBJPlOSptVMHFBN2JxWINUIPQtVE5o+zQMFgJ2gBUJrr9ri7eYwxKgRFuSVQEj0/2ksQsDBxEfJ4kImbqGKo+y3e3cXn8kFFCmVPneWQ1VCY8RsNcl7YS7QvZqo3U4y7tFgiNb/EYtE2/1x6HFR6kkp160pC5S4QNKtPGcyH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT64U8iW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN1v9NWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4E6C4CEE7;
-	Fri, 17 Oct 2025 15:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT64U8iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4A2C4CEE7;
+	Fri, 17 Oct 2025 15:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713814;
-	bh=GZKeEfy34uMMei66ABlBuf2NXcWn9+kZwHIOCWIJ2OI=;
+	s=korg; t=1760713817;
+	bh=ZWgkloJajqlO1jzPvjOWBVb4fvfA6Be5cA0VpBWafJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vN1v9NWFVg4cYKmnn5XQjAfvR9/+YMpe6Mu/jubBLXqb4HhsLTvlJKkCrOgZpvGWH
-	 jqiZ6nyP5EsJ0EskHKyd9hP9ZDwI7PtfMddFaPDRWqSsNo2+8XPA29g5FwO/nKCcuR
-	 44pS4fnM2tYA0aR3EuTSrblnbQ9bf/Ha/EWLoAqk=
+	b=LT64U8iWkcUa7EJ8pdux3rUWKkns3fu/D9KBgSqgRUsqlaDtCHXtXcYqqJu9hBB8V
+	 P44mC5wMtl5p73g5khYX5N32eH81IPlteoneKWbs8oYHbhyJCi61RsLEkUaKEL2Mou
+	 KXT+cCQbsEeAKwOGd6RgGUTVr/GWrICZLEQPS1WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Subject: [PATCH 6.6 130/201] PCI/AER: Support errors introduced by PCIe r6.0
-Date: Fri, 17 Oct 2025 16:53:11 +0200
-Message-ID: <20251017145139.516613718@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.6 131/201] PCI: keystone: Use devm_request_irq() to free "ks-pcie-error-irq" on exit
+Date: Fri, 17 Oct 2025 16:53:12 +0200
+Message-ID: <20251017145139.552260111@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,58 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit 6633875250b38b18b8638cf01e695de031c71f02 upstream.
+commit e51d05f523e43ce5d2bad957943a2b14f68078cd upstream.
 
-PCIe r6.0 defined five additional errors in the Uncorrectable Error
-Status, Mask and Severity Registers (PCIe r7.0 sec 7.8.4.2ff).
+Commit under Fixes introduced the IRQ handler for "ks-pcie-error-irq".
+The interrupt is acquired using "request_irq()" but is never freed if
+the driver exits due to an error. Although the section in the driver that
+invokes "request_irq()" has moved around over time, the issue hasn't been
+addressed until now.
 
-lspci has been supporting them since commit 144b0911cc0b ("ls-ecaps:
-extend decode support for more fields for AER CE and UE status"):
+Fix this by using "devm_request_irq()" which automatically frees the
+interrupt if the driver exits.
 
-  https://git.kernel.org/pub/scm/utils/pciutils/pciutils.git/commit/?id=144b0911cc0b
-
-Amend the AER driver to recognize them as well, instead of logging them as
-"Unknown Error Bit".
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: 025dd3daeda7 ("PCI: keystone: Add error IRQ handler")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://lore.kernel.org/r/3d3a4b52-e343-42f3-9d69-94c259812143@kernel.org
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/21f1875b18d4078c99353378f37dcd6b994f6d4e.1756301211.git.lukas@wunner.de
+Link: https://patch.msgid.link/20250912100802.3136121-2-s-vadapalli@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/aer.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -38,7 +38,7 @@
- #define AER_ERROR_SOURCES_MAX		128
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1213,8 +1213,8 @@ static int ks_pcie_probe(struct platform
+ 	if (irq < 0)
+ 		return irq;
  
- #define AER_MAX_TYPEOF_COR_ERRS		16	/* as per PCI_ERR_COR_STATUS */
--#define AER_MAX_TYPEOF_UNCOR_ERRS	27	/* as per PCI_ERR_UNCOR_STATUS*/
-+#define AER_MAX_TYPEOF_UNCOR_ERRS	32	/* as per PCI_ERR_UNCOR_STATUS*/
- 
- struct aer_err_source {
- 	unsigned int status;
-@@ -510,11 +510,11 @@ static const char *aer_uncorrectable_err
- 	"AtomicOpBlocked",		/* Bit Position 24	*/
- 	"TLPBlockedErr",		/* Bit Position 25	*/
- 	"PoisonTLPBlocked",		/* Bit Position 26	*/
--	NULL,				/* Bit Position 27	*/
--	NULL,				/* Bit Position 28	*/
--	NULL,				/* Bit Position 29	*/
--	NULL,				/* Bit Position 30	*/
--	NULL,				/* Bit Position 31	*/
-+	"DMWrReqBlocked",		/* Bit Position 27	*/
-+	"IDECheck",			/* Bit Position 28	*/
-+	"MisIDETLP",			/* Bit Position 29	*/
-+	"PCRC_CHECK",			/* Bit Position 30	*/
-+	"TLPXlatBlocked",		/* Bit Position 31	*/
- };
- 
- static const char *aer_agent_string[] = {
+-	ret = request_irq(irq, ks_pcie_err_irq_handler, IRQF_SHARED,
+-			  "ks-pcie-error-irq", ks_pcie);
++	ret = devm_request_irq(dev, irq, ks_pcie_err_irq_handler, IRQF_SHARED,
++			       "ks-pcie-error-irq", ks_pcie);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to request error IRQ %d\n",
+ 			irq);
 
 
