@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032871946C8;
-	Fri, 17 Oct 2025 15:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBF723EA9E;
+	Fri, 17 Oct 2025 15:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715208; cv=none; b=cQEy+AQz0mxhp5veMRmlPLR7Gyhiz98SMCKCJCQ4hbbCqfT8u4e4onRG3rqGvHxU6KHsV3szA9LZBnpS2MMYVDcGmqClkzLIOlZN5u7mGYCkmFjuXGJLeX0+uy0tWLAeyLtfjYeIbh3y8CU22FbASiVOXBXpaqXy7D/XOsuKdzM=
+	t=1760715211; cv=none; b=J//j88OBfLzST7jPlNu0JX5M8f77Imlvb9YpBkhEdmsV/ebBrWJ/eMlZZ+jRRonOPOCYN4sYdbtZsBdbOLrcASGM0JCbA34U0HKeEaeymrLpB7gEbjdO5mAZBMWsj1rg/X/1/G8EXwJMwgSC6Q00YJrQYZSJwPfCGkMRqMIbahY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715208; c=relaxed/simple;
-	bh=48AoGztM5cfLKnNy3g3BBvbCMqeVp5yjkapTG709wJU=;
+	s=arc-20240116; t=1760715211; c=relaxed/simple;
+	bh=IhQJEJbeWB1fmD+QZe8GdlQj9ScsTrN+vAckScriXIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHdtTB0UOvoilYgntCYZQZD2stQdTTic3E5HTBja1N47Fjd/+QvmyBddA3RhBe2HJshcwGFLyOf4kuO8dtjCIZamdcUgyHNIFG2tri0SQQf9Trf5K6/r7N2tXgXZSq35LUbPu9LcT3T6MeSC5701fHD71s4d+LR8Yg6ru9WsrUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlMXN1Tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6WWXwyc7uHtYZ58WqW/RS4SXkTNcQh4YWM7L7KqiIaEEAPYjrBR6ibdVxQWnYofRMq142QyYyoaTYRWutP0jWqKspYCdThtgoiCfOPhkH0ZV1r1IMrX+E9LehpVDLDGtJXyk97q4qhR0ob71htiolhzEZ6T5KVAv8kO7m3Bjh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WjmGXiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlMXN1Tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B34C4CEE7;
-	Fri, 17 Oct 2025 15:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WjmGXiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D2C4CEE7;
+	Fri, 17 Oct 2025 15:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715207;
-	bh=48AoGztM5cfLKnNy3g3BBvbCMqeVp5yjkapTG709wJU=;
+	s=korg; t=1760715210;
+	bh=IhQJEJbeWB1fmD+QZe8GdlQj9ScsTrN+vAckScriXIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlMXN1TxQ1adnBKI+3V4nyksd93SbzNzzjxg8r1yjMJa7HriF7zJe6EUT8k1WWqyz
-	 I9H76PZSHAa5FqZQ1h6kLg8H24XVnit7AdqhtblUxcGtVQQ1mPI43hZzocj0qzBHLj
-	 mHKHy1m+Bpkx+nq1Ydplt0gGatKu1aLw5YXOh2Og=
+	b=0WjmGXiqGgCbCB3V4GrtEtIcD1mKN0hpYDuxG+F81iYRA5Xv0hWWdAZUHU48bwtAH
+	 1kr10CMgdDEVgxvP+D3xD3QAYIMesFW1jg7D1w3+nQdSfhDqFeATNapuiLUj2nUB1/
+	 QCXFzeScz0a29eNYtFxUMWmvDJW4gSGyzN18pteY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Collin Funk <collin.funk1@gmail.com>,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 136/371] ACPICA: acpidump: drop ACPI_NONSTRING attribute from file_name
-Date: Fri, 17 Oct 2025 16:51:51 +0200
-Message-ID: <20251017145206.848314332@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.17 137/371] ACPI: property: Fix buffer properties extraction for subnodes
+Date: Fri, 17 Oct 2025 16:51:52 +0200
+Message-ID: <20251017145206.887404642@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,42 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 16ae95800b1cc46c0d69d8d90c9c7be488421a40 upstream.
+commit d0759b10989c5c5aae3d455458c9fc4e8cc694f7 upstream.
 
-Partially revert commit 70662db73d54 ("ACPICA: Apply ACPI_NONSTRING in
-more places") as I've yet again incorrectly applied the ACPI_NONSTRING
-attribute where it is not needed.
+The ACPI handle passed to acpi_extract_properties() as the first
+argument represents the ACPI namespace scope in which to look for
+objects returning buffers associated with buffer properties.
 
-A warning was initially reported by Collin Funk [1], and further review
-by Jiri Slaby [2] highlighted another issue related to the same commit.
+For _DSD objects located immediately under ACPI devices, this handle is
+the same as the handle of the device object holding the _DSD, but for
+data-only subnodes it is not so.
 
-Drop the ACPI_NONSTRING attribute to fix the issue.
+First of all, data-only subnodes are represented by objects that
+cannot hold other objects in their scopes (like control methods).
+Therefore a data-only subnode handle cannot be used for completing
+relative pathname segments, so the current code in
+in acpi_nondev_subnode_extract() passing a data-only subnode handle
+to acpi_extract_properties() is invalid.
 
-Fixes: 70662db73d54 ("ACPICA: Apply ACPI_NONSTRING in more places")
-Link: https://lore.kernel.org/all/87ecvpcypw.fsf@gmail.com [1]
-Link: https://lore.kernel.org/all/5c210121-c9b8-4458-b1ad-0da24732ac72@kernel.org [2]
-Link: https://github.com/acpica/acpica/commit/a6ee09ca
-Reported-by: Collin Funk <collin.funk1@gmail.com>
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
+Moreover, a data-only subnode of device A may be represented by an
+object located in the scope of device B (which kind of makes sense,
+for instance, if A is a B's child).  In that case, the scope in
+question would be the one of device B.  In other words, the scope
+mentioned above is the same as the scope used for subnode object
+lookup in acpi_nondev_subnode_extract().
+
+Accordingly, rearrange that function to use the same scope for the
+extraction of properties and subnode object lookup.
+
+Fixes: 103e10c69c61 ("ACPI: property: Add support for parsing buffer property UUID")
+Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/power/acpi/tools/acpidump/apfiles.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/property.c |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
---- a/tools/power/acpi/tools/acpidump/apfiles.c
-+++ b/tools/power/acpi/tools/acpidump/apfiles.c
-@@ -103,7 +103,7 @@ int ap_open_output_file(char *pathname)
- 
- int ap_write_to_binary_file(struct acpi_table_header *table, u32 instance)
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -83,6 +83,7 @@ static bool acpi_nondev_subnode_extract(
+ 					struct fwnode_handle *parent)
  {
--	char filename[ACPI_NAMESEG_SIZE + 16] ACPI_NONSTRING;
-+	char filename[ACPI_NAMESEG_SIZE + 16];
- 	char instance_str[16];
- 	ACPI_FILE file;
- 	acpi_size actual;
+ 	struct acpi_data_node *dn;
++	acpi_handle scope = NULL;
+ 	bool result;
+ 
+ 	if (acpi_graph_ignore_port(handle))
+@@ -98,27 +99,18 @@ static bool acpi_nondev_subnode_extract(
+ 	INIT_LIST_HEAD(&dn->data.properties);
+ 	INIT_LIST_HEAD(&dn->data.subnodes);
+ 
+-	result = acpi_extract_properties(handle, desc, &dn->data);
++	/*
++	 * The scope for the completion of relative pathname segments and
++	 * subnode object lookup is the one of the namespace node (device)
++	 * containing the object that has returned the package.  That is, it's
++	 * the scope of that object's parent device.
++	 */
++	if (handle)
++		acpi_get_parent(handle, &scope);
+ 
+-	if (handle) {
+-		acpi_handle scope;
+-		acpi_status status;
+-
+-		/*
+-		 * The scope for the subnode object lookup is the one of the
+-		 * namespace node (device) containing the object that has
+-		 * returned the package.  That is, it's the scope of that
+-		 * object's parent.
+-		 */
+-		status = acpi_get_parent(handle, &scope);
+-		if (ACPI_SUCCESS(status)
+-		    && acpi_enumerate_nondev_subnodes(scope, desc, &dn->data,
+-						      &dn->fwnode))
+-			result = true;
+-	} else if (acpi_enumerate_nondev_subnodes(NULL, desc, &dn->data,
+-						  &dn->fwnode)) {
++	result = acpi_extract_properties(scope, desc, &dn->data);
++	if (acpi_enumerate_nondev_subnodes(scope, desc, &dn->data, &dn->fwnode))
+ 		result = true;
+-	}
+ 
+ 	if (result) {
+ 		dn->handle = handle;
 
 
