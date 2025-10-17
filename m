@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDFB3328F5;
-	Fri, 17 Oct 2025 15:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D472F12D0;
+	Fri, 17 Oct 2025 15:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714640; cv=none; b=NrYtarA5JUuEDCqNoxUGTxDtb0/LYftvMFxPM/c6xD55+kas/k2cyJf1jaY+TmCT+8XxOUojYaIa2wjarpLtibi5yfjjjlOfqG+NijborakSOULiMIgqcV0BV+YPKz6TdaSwmNzc8Vf0x1OG7DG/gvlbOfx3Z77bRrf7ZucgdfY=
+	t=1760714643; cv=none; b=T30c/MCgoz+NkEkIWcQHLfG0rPb6GdbC/VHqaU23luGfkfnmcUGPxFx3Wn5AKRySKUf8gcpQPDSd1nDbiC9y+q7FBXgfQGRl6XSVzmY8YJBmKShUm2jcxPl6f5AGv+FTRhKPcX/YLS/Wm9gkI4YBH4+3Xe0IKtnWzNbmOFxf9oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714640; c=relaxed/simple;
-	bh=8VpkkCZutAVLxCL4Fq6u5hokSDgeidODHFtUktqSbSs=;
+	s=arc-20240116; t=1760714643; c=relaxed/simple;
+	bh=QOovSz7EcVuLPXOkZdVqM0SoM8Du7NscYI2cBk4CEVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEbNd4QAT87FpVlZTFuoY8afg/SLFI9wAwkpWxEwTyWrlFDH8k4+idWFmlX56SKOl63jEQYSM4chB126nqx5dG5GZJ6XVsqhdA+qh005nB6/GCo7ELWFyt0W6eOU7p9Uggi1mRJi/QyOcBmwGgg2zqBkc5PJCaC7trmCLB8p+Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFIeVWGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ub+nigTrE+GdHYHhBhH6GIMqS4FB6qJrM0Hc5Enc14Qvq3fyOgsZgqFcYXYrecI250Z3cQTFnPmDgvxYtKHxWM28L/ie50M9bR95EzsFpKaX2qUJlIAc0jpEyM3rElPL/RePltN7lNjCzq+GEXBS0NEKg8EkqPkw6opMF1DO9YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/PGo1Gf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFIeVWGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29247C4CEE7;
-	Fri, 17 Oct 2025 15:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/PGo1Gf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48816C4CEE7;
+	Fri, 17 Oct 2025 15:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714640;
-	bh=8VpkkCZutAVLxCL4Fq6u5hokSDgeidODHFtUktqSbSs=;
+	s=korg; t=1760714643;
+	bh=QOovSz7EcVuLPXOkZdVqM0SoM8Du7NscYI2cBk4CEVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BFIeVWGwEOdsaFGu4lrgkcOVACAJrPPIK4mdSkiqo4z7ef7bQouWA2te6vv/l2UDT
-	 TD7F4OmwIBwDw0LCq/GUDiUGFVAvUXvMnHmReKtLcfRUk7WQSHGzMNVGHZuicTAthY
-	 /STQbxTGKq9p/gL78H8kXYM+gFqtF/I2a6HjIlVY=
+	b=h/PGo1GfrA7sxbwFYvKjuceIirIuh5zJdCvrETbNRJPXJOl//4ycMVbtSPXbqGKQ6
+	 A5UjvDzr7QZPhmzjvVCHE+EfF8/QIpie6I4JTFDwwPUJczvFrBHAm/LnOoQ5oghS0a
+	 eAmpsMQkS3/qyrHnkaOJzrLAWp7kiZdk8ni6uDNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.12 216/277] ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()
-Date: Fri, 17 Oct 2025 16:53:43 +0200
-Message-ID: <20251017145155.017120126@linuxfoundation.org>
+Subject: [PATCH 6.12 217/277] ext4: fix an off-by-one issue during moving extents
+Date: Fri, 17 Oct 2025 16:53:44 +0200
+Message-ID: <20251017145155.053021357@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,69 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 8ecb790ea8c3fc69e77bace57f14cf0d7c177bd8 upstream.
+commit 12e803c8827d049ae8f2c743ef66ab87ae898375 upstream.
 
-Unlike other strings in the ext4 superblock, we rely on tune2fs to
-make sure s_mount_opts is NUL terminated.  Harden
-parse_apply_sb_mount_options() by treating s_mount_opts as a potential
-__nonstring.
+During the movement of a written extent, mext_page_mkuptodate() is
+called to read data in the range [from, to) into the page cache and to
+update the corresponding buffers. Therefore, we should not wait on any
+buffer whose start offset is >= 'to'. Otherwise, it will return -EIO and
+fail the extents movement.
 
-Cc: stable@vger.kernel.org
-Fixes: 8b67f04ab9de ("ext4: Add mount options in superblock")
+ $ for i in `seq 3 -1 0`; \
+   do xfs_io -fs -c "pwrite -b 1024 $((i * 1024)) 1024" /mnt/foo; \
+   done
+ $ umount /mnt && mount /dev/pmem1s /mnt  # drop cache
+ $ e4defrag /mnt/foo
+   e4defrag 1.47.0 (5-Feb-2023)
+   ext4 defragmentation for /mnt/foo
+   [1/1]/mnt/foo:    0%    [ NG ]
+   Success:                       [0/1]
+
+Cc: stable@kernel.org
+Fixes: a40759fb16ae ("ext4: remove array of buffer_heads from mext_page_mkuptodate()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Message-ID: <20250916-tune2fs-v2-1-d594dc7486f0@mit.edu>
+Message-ID: <20250912105841.1886799-1-yi.zhang@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |   17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/ext4/move_extent.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2493,7 +2493,7 @@ static int parse_apply_sb_mount_options(
- 					struct ext4_fs_context *m_ctx)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	char *s_mount_opts = NULL;
-+	char s_mount_opts[65];
- 	struct ext4_fs_context *s_ctx = NULL;
- 	struct fs_context *fc = NULL;
- 	int ret = -ENOMEM;
-@@ -2501,15 +2501,11 @@ static int parse_apply_sb_mount_options(
- 	if (!sbi->s_es->s_mount_opts[0])
- 		return 0;
- 
--	s_mount_opts = kstrndup(sbi->s_es->s_mount_opts,
--				sizeof(sbi->s_es->s_mount_opts),
--				GFP_KERNEL);
--	if (!s_mount_opts)
--		return ret;
-+	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts);
- 
- 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
- 	if (!fc)
--		goto out_free;
-+		return -ENOMEM;
- 
- 	s_ctx = kzalloc(sizeof(struct ext4_fs_context), GFP_KERNEL);
- 	if (!s_ctx)
-@@ -2541,11 +2537,8 @@ parse_failed:
- 	ret = 0;
- 
- out_free:
--	if (fc) {
--		ext4_fc_free(fc);
--		kfree(fc);
--	}
--	kfree(s_mount_opts);
-+	ext4_fc_free(fc);
-+	kfree(fc);
- 	return ret;
- }
- 
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -225,7 +225,7 @@ static int mext_page_mkuptodate(struct f
+ 	do {
+ 		if (bh_offset(bh) + blocksize <= from)
+ 			continue;
+-		if (bh_offset(bh) > to)
++		if (bh_offset(bh) >= to)
+ 			break;
+ 		wait_on_buffer(bh);
+ 		if (buffer_uptodate(bh))
 
 
