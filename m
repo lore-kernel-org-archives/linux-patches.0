@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CAC270568;
-	Fri, 17 Oct 2025 15:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3258732C92F;
+	Fri, 17 Oct 2025 15:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715814; cv=none; b=qRKIqTJOW2MD1z7nLn5VtlA1EEikE49innFzdO6GtH0LU9bu6iGvjR+mzeps3o7fqaUYvOGUMv2RfpjbBj/bMa48FD2OU4wpH3w8JQepVgtKYR3Ezfj426m+Oo2RwkvGhoIJfD8edFZ21lgfPcOzVIDAT3LsRYNSWjYSk/SUlIc=
+	t=1760715818; cv=none; b=SaTbgJaKk3/K583uGKQ1zvTQ2DRuDx/WpE+hWIdSjcFe8rAP9THCo0uddqfJ7FU9C5R41yAwF+YNnjJWWtauD1o8nEVpCT0JfelJRBiSAh4bt/9bBTEr+pCzR18jUdB+H/8O2f3dZnSHGJ4kr81q9obZsJKhtiEupYUjborsUIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715814; c=relaxed/simple;
-	bh=YOVR9eIhMiABCnOMF4tUgDE1NTRPqmT0aQYfViFKXbQ=;
+	s=arc-20240116; t=1760715818; c=relaxed/simple;
+	bh=3K6CGR82Lo/7/KfmD7Tc0Lz8YsmUaaqkEVgJLDB66iE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crvKT0hpaLMPFIJ4jcRt8vXYVNLxqonnOi+N1hPXGxZ7Fqynbu529MKNVq+60zBbuExVvCQFHGWs71zRl2IbsR/exAjIQUYk9FXoBGT2bO3P+YmmmE+oMQxCjgQzvPZwVIQw376RB/Wf+NBGNV9vr9mamutdKeG3/iDXXEqenWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqkgxuX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKAxh5qSXyfgFmH9cYaKHpMxm+cL2stXxo+OF/q57l2eAPBIlND+JMhAWZnv2WW0G3tvx5vuaD4U5SB/cjP5TTA9XNW4dLDyK2nYvBLMGU9qjtPcKyhb0k4ZzZ6SrxhO4bsYMEHXyP26IeM7cXFM1+nG72BUWPEpr8yffYm3NB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+oHsthK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqkgxuX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40839C4CEE7;
-	Fri, 17 Oct 2025 15:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+oHsthK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DA0C4CEE7;
+	Fri, 17 Oct 2025 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715814;
-	bh=YOVR9eIhMiABCnOMF4tUgDE1NTRPqmT0aQYfViFKXbQ=;
+	s=korg; t=1760715817;
+	bh=3K6CGR82Lo/7/KfmD7Tc0Lz8YsmUaaqkEVgJLDB66iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqkgxuX7GGQ5khozsp2RE0VsO7JnBec7PXXdap4TErrZezy0Cd3/SGaT75c5Zp/Or
-	 pEEHm4ATSS+uTXnoLWjLLLiTCtRrYMIBkuWkt5nEnSUppvAlqaV5OEFyC2QCZRMIlq
-	 KjyTBgbeTbHFdqZtZkIoHT9OXjThP/A3aQpl3OVk=
+	b=1+oHsthKG0//RE0BIF6XUqbY2ZkNpPOvOaq6hLSeaBUw/VTsvukaNWlrIeODDo75Q
+	 S1BH7M5oNfjaUhuBQ5+1sVi571LLsYaJOk+B4t3XhvToU95q7fmLaX0OieoVNYdLB2
+	 S3J9HCo0jLBM3JNbTDXH9nT+hP3g51X94VHeCrrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 303/371] selftests: mptcp: join: validate C-flag + def limit
-Date: Fri, 17 Oct 2025 16:54:38 +0200
-Message-ID: <20251017145213.039985494@linuxfoundation.org>
+	syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.17 340/371] ext4: verify orphan file size is not too big
+Date: Fri, 17 Oct 2025 16:55:15 +0200
+Message-ID: <20251017145214.383092515@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,59 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 008385efd05e04d8dff299382df2e8be0f91d8a0 upstream.
+commit 0a6ce20c156442a4ce2a404747bb0fb05d54eeb3 upstream.
 
-The previous commit adds an exception for the C-flag case. The
-'mptcp_join.sh' selftest is extended to validate this case.
+In principle orphan file can be arbitrarily large. However orphan replay
+needs to traverse it all and we also pin all its buffers in memory. Thus
+filesystems with absurdly large orphan files can lead to big amounts of
+memory consumed. Limit orphan file size to a sane value and also use
+kvmalloc() for allocating array of block descriptor structures to avoid
+large order allocations for sane but large orphan files.
 
-In this subtest, there is a typical CDN deployment with a client where
-MPTCP endpoints have been 'automatically' configured:
-
-- the server set net.mptcp.allow_join_initial_addr_port=0
-
-- the client has multiple 'subflow' endpoints, and the default limits:
-  not accepting ADD_ADDRs.
-
-Without the parent patch, the client is not able to establish new
-subflows using its 'subflow' endpoints. The parent commit fixes that.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-2-ad126cc47c6b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+0b92850d68d9b12934f5@syzkaller.appspotmail.com
+Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Cc: stable@kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250909112206.10459-2-jack@suse.cz>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ext4/orphan.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3187,6 +3187,17 @@ deny_join_id0_tests()
- 		run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
- 	fi
-+
-+	# default limits, server deny join id 0 + signal
-+	if reset_with_allow_join_id0 "default limits, server deny join id 0" 0 1; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 0 2
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.3.2 flags subflow
-+		pm_nl_add_endpoint $ns2 10.0.4.2 flags subflow
-+		run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 2 2 2
-+	fi
- }
- 
- fullmesh_tests()
+--- a/fs/ext4/orphan.c
++++ b/fs/ext4/orphan.c
+@@ -583,9 +583,20 @@ int ext4_init_orphan_info(struct super_b
+ 		ext4_msg(sb, KERN_ERR, "get orphan inode failed");
+ 		return PTR_ERR(inode);
+ 	}
++	/*
++	 * This is just an artificial limit to prevent corrupted fs from
++	 * consuming absurd amounts of memory when pinning blocks of orphan
++	 * file in memory.
++	 */
++	if (inode->i_size > 8 << 20) {
++		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
++			 (unsigned long long)inode->i_size);
++		ret = -EFSCORRUPTED;
++		goto out_put;
++	}
+ 	oi->of_blocks = inode->i_size >> sb->s_blocksize_bits;
+ 	oi->of_csum_seed = EXT4_I(inode)->i_csum_seed;
+-	oi->of_binfo = kmalloc_array(oi->of_blocks,
++	oi->of_binfo = kvmalloc_array(oi->of_blocks,
+ 				     sizeof(struct ext4_orphan_block),
+ 				     GFP_KERNEL);
+ 	if (!oi->of_binfo) {
 
 
