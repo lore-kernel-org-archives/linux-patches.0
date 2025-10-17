@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909432F12D2;
-	Fri, 17 Oct 2025 15:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B2732E143;
+	Fri, 17 Oct 2025 15:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715820; cv=none; b=HmoXItEb4RHRJrAV/1uCey42a6oc6O9P2oJ4iBUJT8oUC2gX2goLUQJfmqYDdfX9T+4173NQx+krxwhCWITRZCbtT9z5gXixyesiieeWBzBoZy+gCHdG8eYAeI3oTbtPqWgAW7yWDyrvO75M6LbaFKcHgH+9SyrIMHb+YH/tz+g=
+	t=1760715823; cv=none; b=K8Jw2Yc8hrxjKLyte/Ba20Ofcucfc9FsxOO5nzFbnNlQG0KBz3PDgmHUrgJ0Zjvq8fYwnrK0PRxtGyz2qBmx3axxmIqqQ060sM0vOAEilUj25/KQ0NPjg2HsPYz+9KNeUyHEle5FwfquEF07w7P/QA6fABPSfIc8Navr/eL4ojg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715820; c=relaxed/simple;
-	bh=WXD8xMZtBMTcYcTj7YdIzzK53GB44W8bUWdOLD4qPwc=;
+	s=arc-20240116; t=1760715823; c=relaxed/simple;
+	bh=xev15njzajOi2pr6uIztIIg8fl/LR+VC9lFhhpBre6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1iqi/7HiTHLt+jErFK0wrXoMZIBj++fK3QG+bkyIw6Z/FmfNQBLso36kcu5XimA8BjH/3qjMfoe3zmu1a34ERPzPyUyeSasvUYBldbBGzd9esm8/hde3X82DX+uWKf0yZPxuOWC8dcFhyU6OftlE8ap+wzsffDcak9qskG3nBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhzLm48Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XosjTp8+GOm6r/OJf6Pi0hi0TwNL2zM1fXPqdcejGY6qajynFjxNVYQOuPnbcFJF1VPguswib6UkPFuNilDgXPlNQJyQYOd/aETs5Rd8fN7feG/VEPlwjhbldKwc1z2TyGiUrjDtzlG6PhEC2FxI5IaOrmNCcz6e0NIpnDZVn18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MMCaTmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhzLm48Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9C0C116B1;
-	Fri, 17 Oct 2025 15:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MMCaTmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14D4C4CEFE;
+	Fri, 17 Oct 2025 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715820;
-	bh=WXD8xMZtBMTcYcTj7YdIzzK53GB44W8bUWdOLD4qPwc=;
+	s=korg; t=1760715823;
+	bh=xev15njzajOi2pr6uIztIIg8fl/LR+VC9lFhhpBre6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OhzLm48Zf6MAtHzY1P+uZumc+nY5Hty9aq5yCT+InhZIMN60UWqDUOQKXMCDSSYut
-	 uirca99rQ55KAwOpQwhZZvRftG3wqFzpiFzIyirFrblAwD7Md6+CXFzfcF6XA3CuGm
-	 s6w4u+ksV/i9HlNXtLYgel7auyTzp+wbVMfKEamM=
+	b=1MMCaTmO+KA5I6qPV/WCINR//qHIHP9AKNSge51aSKTwMrYsKS6T98AyG0AIFuLDC
+	 y/3wmjxm4Z7GQ3fQFbF8Nz7nnizP1tndSzA2t8lZ6XNjo6WGVj41XnFTt1WI2BvKvM
+	 2SRXYaRplf6Ey9hOdd2Fac9dGVjh9p9CbaAmVnhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Greg Thelen <gthelen@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.17 349/371] ipmi: Fix handling of messages with provided receive message pointer
-Date: Fri, 17 Oct 2025 16:55:24 +0200
-Message-ID: <20251017145214.706522652@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 350/371] Squashfs: add additional inode sanity checking
+Date: Fri, 17 Oct 2025 16:55:25 +0200
+Message-ID: <20251017145214.742281176@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,47 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit e2c69490dda5d4c9f1bfbb2898989c8f3530e354 upstream.
+[ Upstream commit 9ee94bfbe930a1b39df53fa2d7b31141b780eb5a ]
 
-Prior to commit b52da4054ee0 ("ipmi: Rework user message limit handling"),
-i_ipmi_request() used to increase the user reference counter if the receive
-message is provided by the caller of IPMI API functions. This is no longer
-the case. However, ipmi_free_recv_msg() is still called and decreases the
-reference counter. This results in the reference counter reaching zero,
-the user data pointer is released, and all kinds of interesting crashes are
-seen.
+Patch series "Squashfs: performance improvement and a sanity check".
 
-Fix the problem by increasing user reference counter if the receive message
-has been provided by the caller.
+This patchset adds an additional sanity check when reading regular file
+inodes, and adds support for SEEK_DATA/SEEK_HOLE lseek() whence values.
 
-Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
-Reported-by: Eric Dumazet <edumazet@google.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Greg Thelen <gthelen@google.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <20251006201857.3433837-1-linux@roeck-us.net>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+This patch (of 2):
+
+Add an additional sanity check when reading regular file inodes.
+
+A regular file if the file size is an exact multiple of the filesystem
+block size cannot have a fragment.  This is because by definition a
+fragment block stores tailends which are not a whole block in size.
+
+Link: https://lkml.kernel.org/r/20250923220652.568416-1-phillip@squashfs.org.uk
+Link: https://lkml.kernel.org/r/20250923220652.568416-2-phillip@squashfs.org.uk
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 9f1c14c1de1b ("Squashfs: reject negative file sizes in squashfs_read_inode()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/squashfs/inode.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -2280,8 +2280,11 @@ static int i_ipmi_request(struct ipmi_us
- 	if (supplied_recv) {
- 		recv_msg = supplied_recv;
- 		recv_msg->user = user;
--		if (user)
-+		if (user) {
- 			atomic_inc(&user->nr_msgs);
-+			/* The put happens when the message is freed. */
-+			kref_get(&user->refcount);
-+		}
- 	} else {
- 		recv_msg = ipmi_alloc_recv_msg(user);
- 		if (IS_ERR(recv_msg))
+--- a/fs/squashfs/inode.c
++++ b/fs/squashfs/inode.c
+@@ -140,8 +140,17 @@ int squashfs_read_inode(struct inode *in
+ 		if (err < 0)
+ 			goto failed_read;
+ 
++		inode->i_size = le32_to_cpu(sqsh_ino->file_size);
+ 		frag = le32_to_cpu(sqsh_ino->fragment);
+ 		if (frag != SQUASHFS_INVALID_FRAG) {
++			/*
++			 * the file cannot have a fragment (tailend) and have a
++			 * file size a multiple of the block size
++			 */
++			if ((inode->i_size & (msblk->block_size - 1)) == 0) {
++				err = -EINVAL;
++				goto failed_read;
++			}
+ 			frag_offset = le32_to_cpu(sqsh_ino->offset);
+ 			frag_size = squashfs_frag_lookup(sb, frag, &frag_blk);
+ 			if (frag_size < 0) {
+@@ -155,7 +164,6 @@ int squashfs_read_inode(struct inode *in
+ 		}
+ 
+ 		set_nlink(inode, 1);
+-		inode->i_size = le32_to_cpu(sqsh_ino->file_size);
+ 		inode->i_fop = &generic_ro_fops;
+ 		inode->i_mode |= S_IFREG;
+ 		inode->i_blocks = ((inode->i_size - 1) >> 9) + 1;
+@@ -184,8 +192,17 @@ int squashfs_read_inode(struct inode *in
+ 		if (err < 0)
+ 			goto failed_read;
+ 
++		inode->i_size = le64_to_cpu(sqsh_ino->file_size);
+ 		frag = le32_to_cpu(sqsh_ino->fragment);
+ 		if (frag != SQUASHFS_INVALID_FRAG) {
++			/*
++			 * the file cannot have a fragment (tailend) and have a
++			 * file size a multiple of the block size
++			 */
++			if ((inode->i_size & (msblk->block_size - 1)) == 0) {
++				err = -EINVAL;
++				goto failed_read;
++			}
+ 			frag_offset = le32_to_cpu(sqsh_ino->offset);
+ 			frag_size = squashfs_frag_lookup(sb, frag, &frag_blk);
+ 			if (frag_size < 0) {
+@@ -200,7 +217,6 @@ int squashfs_read_inode(struct inode *in
+ 
+ 		xattr_id = le32_to_cpu(sqsh_ino->xattr);
+ 		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
+-		inode->i_size = le64_to_cpu(sqsh_ino->file_size);
+ 		inode->i_op = &squashfs_inode_ops;
+ 		inode->i_fop = &generic_ro_fops;
+ 		inode->i_mode |= S_IFREG;
 
 
