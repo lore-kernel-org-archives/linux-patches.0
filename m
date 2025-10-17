@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6C62F12D0;
-	Fri, 17 Oct 2025 15:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22082F12D0;
+	Fri, 17 Oct 2025 15:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714390; cv=none; b=GNXKJzsER5IXiFEImbeZAcPt1AtQaiGALCUcCrGd9dCNJb/y48tX2FolyHVk2ETpVSwmtaFM4U7PF1R6Rw+Yb173EHG6m1uNQUqwJD/Dv44Uizl7+WgUxJLL3aEByUCVUm1SzD4+pUoDx4mmvgCQ8xpiCf1iVZ9PFwK+LZXo2CY=
+	t=1760714392; cv=none; b=d4nmwuOvQ0AHO46yxcpu5HV+7xLw6+DLCsg+eWVpPkMcN1mmcHgUkPKz8M4n8ngZ2mD8Nnot3fuih0u12mcrgzIDzH57Gbc1Ima4bG6oJ/dn/gMpFg1TC0IFZeIewCKk8ZCu4Pdbfpofo1OdROm9xkkTnae633bL3ELE3/N7dgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714390; c=relaxed/simple;
-	bh=3ylKpRZqMBDYArYQiFRnxZ74Ds7Bf56+jX0hQ/GiCAs=;
+	s=arc-20240116; t=1760714392; c=relaxed/simple;
+	bh=nLY3efeGIhLj+aGRzrzsixXrncuFqa/wpBe259jJoR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jb5xZ1d8uI1qqxjRWEm98LtUtlo9Uyljw/T5MwCysgvqTJJHWH4SYl+MpRsAD6W3k+QhLg6jqfrZJVHAj0rCAVU08R8gEGs6TId4YR0U4upIfin55A6iCc7euPFi/6qtPCd8KH97CKa41Gwak+F13bpy/kWLE/QI2VtrTk5I4qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiR4znRA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mX45ZRMs4JZjheLFLrWy9DcG02wbUL046TORSXQv1RuPRQ6Rn+uAez02iVoFQqcS8CS1QqrYNeWceYsAiPx7oOIb4bwUfr81un0CK0F638fSV1gpKIfha2GjBPtJSDD4KdJgE8kKcnSprMeU4F2weKtaXYzIzvAUrwBHRzfN5dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNMf7zND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiR4znRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C685C4CEE7;
-	Fri, 17 Oct 2025 15:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNMf7zND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56951C4CEE7;
+	Fri, 17 Oct 2025 15:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714389;
-	bh=3ylKpRZqMBDYArYQiFRnxZ74Ds7Bf56+jX0hQ/GiCAs=;
+	s=korg; t=1760714392;
+	bh=nLY3efeGIhLj+aGRzrzsixXrncuFqa/wpBe259jJoR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiR4znRA46d6EBiUjv8Eq4yX3dm/MucZWGUC6GQD2ramPaLcs290R3+Wg08VQijj+
-	 LmQrqz6Qv6H75hzj4uZ6BMbLzWoP3FBckDWP9+ovVnsFp1YB9sPzcB+6pLQyRAQlii
-	 ISRJhyxEMPvwPj4qaqOYjL3ZxNQFZ0jCAJ3bOHxs=
+	b=VNMf7zNDV4Evw3R/dPqAMXIgczIVxkJEpRcJzqm6EUhYlfZ81kVcyCcn1Rft+hBpw
+	 2hbCu5dAjY3/DyHQSianTHwzMGJtnaGfGnFqb+Bi0UUNRsmQLNqffuol46H3/y3YQY
+	 2HvsjAXhHV8oWGydPBZmVpE+sTeHR8cnzYZGGWP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.12 101/277] xen/events: Update virq_to_irq on migration
-Date: Fri, 17 Oct 2025 16:51:48 +0200
-Message-ID: <20251017145150.819144960@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 128/277] crypto: atmel - Fix dma_unmap_sg() direction
+Date: Fri, 17 Oct 2025 16:52:15 +0200
+Message-ID: <20251017145151.801056331@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,59 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 3fcc8e146935415d69ffabb5df40ecf50e106131 upstream.
+commit f5d643156ef62216955c119216d2f3815bd51cb1 upstream.
 
-VIRQs come in 3 flavors, per-VPU, per-domain, and global, and the VIRQs
-are tracked in per-cpu virq_to_irq arrays.
+It seems like everywhere in this file, dd->in_sg is mapped with
+DMA_TO_DEVICE and dd->out_sg is mapped with DMA_FROM_DEVICE.
 
-Per-domain and global VIRQs must be bound on CPU 0, and
-bind_virq_to_irq() sets the per_cpu virq_to_irq at registration time
-Later, the interrupt can migrate, and info->cpu is updated.  When
-calling __unbind_from_irq(), the per-cpu virq_to_irq is cleared for a
-different cpu.  If bind_virq_to_irq() is called again with CPU 0, the
-stale irq is returned.  There won't be any irq_info for the irq, so
-things break.
-
-Make xen_rebind_evtchn_to_cpu() update the per_cpu virq_to_irq mappings
-to keep them update to date with the current cpu.  This ensures the
-correct virq_to_irq is cleared in __unbind_from_irq().
-
-Fixes: e46cdb66c8fc ("xen: event channels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250828003604.8949-4-jason.andryuk@amd.com>
+Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/events/events_base.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/crypto/atmel-tdes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -1803,9 +1803,20 @@ static int xen_rebind_evtchn_to_cpu(stru
- 	 * virq or IPI channel, which don't actually need to be rebound. Ignore
- 	 * it, but don't do the xenlinux-level rebind in that case.
- 	 */
--	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0)
-+	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0) {
-+		int old_cpu = info->cpu;
-+
- 		bind_evtchn_to_cpu(info, tcpu, false);
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -512,7 +512,7 @@ static int atmel_tdes_crypt_start(struct
  
-+		if (info->type == IRQT_VIRQ) {
-+			int virq = info->u.virq;
-+			int irq = per_cpu(virq_to_irq, old_cpu)[virq];
-+
-+			per_cpu(virq_to_irq, old_cpu)[virq] = -1;
-+			per_cpu(virq_to_irq, tcpu)[virq] = irq;
-+		}
-+	}
-+
- 	do_unmask(info, EVT_MASK_REASON_TEMPORARY);
+ 	if (err && (dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
+-		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_TO_DEVICE);
++		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
+ 	}
  
- 	return 0;
+ 	return err;
 
 
