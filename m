@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7D20C00A;
-	Fri, 17 Oct 2025 15:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BA23208;
+	Fri, 17 Oct 2025 15:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714822; cv=none; b=bXeQeo5DiwEyHNwyIjGae/fFwcbP1BeNlg04asp5sSJVBwfmC9BS3MwzoEh7JudQViyJRc5aDBONCVhuG85Jyf2jBOIrPx/lpBjOJB5N8he1GcSkYya1elQoFV7knuvF1BkY22AvqXuzGJ1/qfxRYL3SMuEkfH/UccjetYvuee4=
+	t=1760714828; cv=none; b=suMZU/NDUEIZqfqO+MRRG3dZUvj8Xl9m+R3iBVHua1fNhQ3MvjS984pQrBomDVOlI5k5YIrOETRSelQ8+cNmOOIqNcFj0IRTyaNjeS5auc9NapAzVkeubnwviNqRufY8O1JGoN+UaLU7eOs7fBJzAxZSElNyKgvlc735eomXdYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714822; c=relaxed/simple;
-	bh=Nrn0LGqikKAlqXAAm1b3bguqk/6L2Ex6KYjGP4uRJog=;
+	s=arc-20240116; t=1760714828; c=relaxed/simple;
+	bh=Y347/JGdeW8yFuxpZy4b+uMOfsBKE3/xPfka3EjAgcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+NwpC/51r1v+djSXweLF127IM93hPmrOp3XdbpJZxCcB9l5F+96SHlK1iKcSi5ewnecl5USWNYhZn1i/eMOpTSXVL/QkvvLGe3rpCVxIxdSHFbq2FGMMo/goZgM0v++u4D7Ls9O5cv99U7usDVivbNdnEnX2rhjfoWRzYH6GzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4XaTUyx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNejQHSE627NWpL+Hr1NJfvOh+f5XjU4I6/1ZQrqcfuluSsVrNMI9RFYpkuwGwoxJ+CLPLnRulz/0vFBjzjWIC9qOlIXksBRrnuJgSIis8PtrY09lrjiYz3hV2TPyIlInSPNBekdId0Yw8lGi49vbqsreLQTenX296Y4KSjiDKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR9Decud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4XaTUyx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D15C4CEE7;
-	Fri, 17 Oct 2025 15:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR9Decud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE322C4CEE7;
+	Fri, 17 Oct 2025 15:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714822;
-	bh=Nrn0LGqikKAlqXAAm1b3bguqk/6L2Ex6KYjGP4uRJog=;
+	s=korg; t=1760714825;
+	bh=Y347/JGdeW8yFuxpZy4b+uMOfsBKE3/xPfka3EjAgcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4XaTUyxboGVXV4Y/0WJM6aXmJ5PPQOBnn1u7HJHAom6NmuXvu+3SBasMplVovTan
-	 fQ/j5oxp6ezTYLUnOj9RVYGVFooxKaiCoGNhDbiyDlyCpSIVWfi+jVKqomahnTIUTA
-	 zVycy/IYP20qE447Gk+oJRmhcCoGtdO/F1E4CsOc=
+	b=NR9DecudJqQBV2sMhkWHhlkRxpFSPfW8O5Qr9VyjSXbacSJDLRAvtT8aRnXrzmm9b
+	 ZI862fo7P0HSgm44IO1oy//B/Qjh8ECACJC+nyayVxavninB/kH3EhmEwUAC/TUY/A
+	 oVIXA1o+ReX2ckztDOM02wNfB3rbuJ+PaPRxB5TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 245/277] nfsd: refine and rename NFSD_MAY_LOCK
-Date: Fri, 17 Oct 2025 16:54:12 +0200
-Message-ID: <20251017145156.092358763@linuxfoundation.org>
+Subject: [PATCH 6.12 246/277] nfsd: dont use sv_nrthreads in connection limiting calculations.
+Date: Fri, 17 Oct 2025 16:54:13 +0200
+Message-ID: <20251017145156.130086673@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,139 +54,198 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 4cc9b9f2bf4dfe13fe573da978e626e2248df388 ]
+[ Upstream commit eccbbc7c00a5aae5e704d4002adfaf4c3fa4b30d ]
 
-NFSD_MAY_LOCK means a few different things.
-- it means that GSS is not required.
-- it means that with NFSEXP_NOAUTHNLM, authentication is not required
-- it means that OWNER_OVERRIDE is allowed.
+The heuristic for limiting the number of incoming connections to nfsd
+currently uses sv_nrthreads - allowing more connections if more threads
+were configured.
 
-None of these are specific to locking, they are specific to the NLM
-protocol.
-So:
- - rename to NFSD_MAY_NLM
- - set NFSD_MAY_OWNER_OVERRIDE and NFSD_MAY_BYPASS_GSS in nlm_fopen()
-   so that NFSD_MAY_NLM doesn't need to imply these.
- - move the test on NFSEXP_NOAUTHNLM out of nfsd_permission() and
-   into fh_verify where other special-case tests on the MAY flags
-   happen.  nfsd_permission() can be called from other places than
-   fh_verify(), but none of these will have NFSD_MAY_NLM.
+A future patch will allow number of threads to grow dynamically so that
+there will be no need to configure sv_nrthreads.  So we need a different
+solution for limiting connections.
+
+It isn't clear what problem is solved by limiting connections (as
+mentioned in a code comment) but the most likely problem is a connection
+storm - many connections that are not doing productive work.  These will
+be closed after about 6 minutes already but it might help to slow down a
+storm.
+
+This patch adds a per-connection flag XPT_PEER_VALID which indicates
+that the peer has presented a filehandle for which it has some sort of
+access.  i.e the peer is known to be trusted in some way.  We now only
+count connections which have NOT been determined to be valid.  There
+should be relative few of these at any given time.
+
+If the number of non-validated peer exceed a limit - currently 64 - we
+close the oldest non-validated peer to avoid having too many of these
+useless connections.
+
+Note that this patch significantly changes the meaning of the various
+configuration parameters for "max connections".  The next patch will
+remove all of these.
 
 Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: 898374fdd7f0 ("nfsd: unregister with rpcbind when deleting a transport")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/lockd.c |   13 +++++++++++--
- fs/nfsd/nfsfh.c |   12 ++++--------
- fs/nfsd/trace.h |    2 +-
- fs/nfsd/vfs.c   |   12 +-----------
- fs/nfsd/vfs.h   |    2 +-
- 5 files changed, 18 insertions(+), 23 deletions(-)
+ fs/nfs/callback.c               |    4 ----
+ fs/nfs/callback_xdr.c           |    1 +
+ fs/nfsd/netns.h                 |    4 ++--
+ fs/nfsd/nfsfh.c                 |    2 ++
+ include/linux/sunrpc/svc.h      |    2 +-
+ include/linux/sunrpc/svc_xprt.h |   16 ++++++++++++++++
+ net/sunrpc/svc_xprt.c           |   32 ++++++++++++++++----------------
+ 7 files changed, 38 insertions(+), 23 deletions(-)
 
---- a/fs/nfsd/lockd.c
-+++ b/fs/nfsd/lockd.c
-@@ -38,11 +38,20 @@ nlm_fopen(struct svc_rqst *rqstp, struct
- 	memcpy(&fh.fh_handle.fh_raw, f->data, f->size);
- 	fh.fh_export = NULL;
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -211,10 +211,6 @@ static struct svc_serv *nfs_callback_cre
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 	cb_info->serv = serv;
+-	/* As there is only one thread we need to over-ride the
+-	 * default maximum of 80 connections
+-	 */
+-	serv->sv_maxconn = 1024;
+ 	dprintk("nfs_callback_create_svc: service created\n");
+ 	return serv;
+ }
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -984,6 +984,7 @@ static __be32 nfs4_callback_compound(str
+ 			nfs_put_client(cps.clp);
+ 			goto out_invalidcred;
+ 		}
++		svc_xprt_set_valid(rqstp->rq_xprt);
+ 	}
  
-+	/*
-+	 * Allow BYPASS_GSS as some client implementations use AUTH_SYS
-+	 * for NLM even when GSS is used for NFS.
-+	 * Allow OWNER_OVERRIDE as permission might have been changed
-+	 * after the file was opened.
-+	 * Pass MAY_NLM so that authentication can be completely bypassed
-+	 * if NFSEXP_NOAUTHNLM is set.  Some older clients use AUTH_NULL
-+	 * for NLM requests.
-+	 */
- 	access = (mode == O_WRONLY) ? NFSD_MAY_WRITE : NFSD_MAY_READ;
--	access |= NFSD_MAY_LOCK;
-+	access |= NFSD_MAY_NLM | NFSD_MAY_OWNER_OVERRIDE | NFSD_MAY_BYPASS_GSS;
- 	nfserr = nfsd_open(rqstp, &fh, S_IFREG, access, filp);
- 	fh_put(&fh);
-- 	/* We return nlm error codes as nlm doesn't know
-+	/* We return nlm error codes as nlm doesn't know
- 	 * about nfsd, but nfsd does know about nlm..
+ 	cps.minorversion = hdr_arg.minorversion;
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -129,8 +129,8 @@ struct nfsd_net {
+ 	unsigned char writeverf[8];
+ 
+ 	/*
+-	 * Max number of connections this nfsd container will allow. Defaults
+-	 * to '0' which is means that it bases this on the number of threads.
++	 * Max number of non-validated connections this nfsd container
++	 * will allow.  Defaults to '0' gets mapped to 64.
  	 */
- 	switch (nfserr) {
+ 	unsigned int max_connections;
+ 
 --- a/fs/nfsd/nfsfh.c
 +++ b/fs/nfsd/nfsfh.c
-@@ -363,13 +363,10 @@ __fh_verify(struct svc_rqst *rqstp,
+@@ -382,6 +382,8 @@ __fh_verify(struct svc_rqst *rqstp,
  	if (error)
  		goto out;
  
--	/*
--	 * pseudoflavor restrictions are not enforced on NLM,
--	 * which clients virtually always use auth_sys for,
--	 * even while using RPCSEC_GSS for NFS.
--	 */
--	if (access & NFSD_MAY_LOCK)
--		goto skip_pseudoflavor_check;
-+	if ((access & NFSD_MAY_NLM) && (exp->ex_flags & NFSEXP_NOAUTHNLM))
-+		/* NLM is allowed to fully bypass authentication */
-+		goto out;
++	svc_xprt_set_valid(rqstp->rq_xprt);
 +
- 	if (access & NFSD_MAY_BYPASS_GSS)
- 		may_bypass_gss = true;
- 	/*
-@@ -385,7 +382,6 @@ __fh_verify(struct svc_rqst *rqstp,
- 	if (error)
- 		goto out;
- 
--skip_pseudoflavor_check:
  	/* Finally, check access permissions. */
  	error = nfsd_permission(cred, exp, dentry, access);
  out:
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -79,7 +79,7 @@ DEFINE_NFSD_XDR_ERR_EVENT(cant_encode);
- 		{ NFSD_MAY_READ,		"READ" },		\
- 		{ NFSD_MAY_SATTR,		"SATTR" },		\
- 		{ NFSD_MAY_TRUNC,		"TRUNC" },		\
--		{ NFSD_MAY_LOCK,		"LOCK" },		\
-+		{ NFSD_MAY_NLM,			"NLM" },		\
- 		{ NFSD_MAY_OWNER_OVERRIDE,	"OWNER_OVERRIDE" },	\
- 		{ NFSD_MAY_LOCAL_ACCESS,	"LOCAL_ACCESS" },	\
- 		{ NFSD_MAY_BYPASS_GSS_ON_ROOT,	"BYPASS_GSS_ON_ROOT" },	\
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -2519,7 +2519,7 @@ nfsd_permission(struct svc_cred *cred, s
- 		(acc & NFSD_MAY_EXEC)?	" exec"  : "",
- 		(acc & NFSD_MAY_SATTR)?	" sattr" : "",
- 		(acc & NFSD_MAY_TRUNC)?	" trunc" : "",
--		(acc & NFSD_MAY_LOCK)?	" lock"  : "",
-+		(acc & NFSD_MAY_NLM)?	" nlm"  : "",
- 		(acc & NFSD_MAY_OWNER_OVERRIDE)? " owneroverride" : "",
- 		inode->i_mode,
- 		IS_IMMUTABLE(inode)?	" immut" : "",
-@@ -2544,16 +2544,6 @@ nfsd_permission(struct svc_cred *cred, s
- 	if ((acc & NFSD_MAY_TRUNC) && IS_APPEND(inode))
- 		return nfserr_perm;
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -81,7 +81,7 @@ struct svc_serv {
+ 	unsigned int		sv_xdrsize;	/* XDR buffer size */
+ 	struct list_head	sv_permsocks;	/* all permanent sockets */
+ 	struct list_head	sv_tempsocks;	/* all temporary sockets */
+-	int			sv_tmpcnt;	/* count of temporary sockets */
++	int			sv_tmpcnt;	/* count of temporary "valid" sockets */
+ 	struct timer_list	sv_temptimer;	/* timer for aging temporary sockets */
  
--	if (acc & NFSD_MAY_LOCK) {
--		/* If we cannot rely on authentication in NLM requests,
--		 * just allow locks, otherwise require read permission, or
--		 * ownership
--		 */
--		if (exp->ex_flags & NFSEXP_NOAUTHNLM)
--			return 0;
--		else
--			acc = NFSD_MAY_READ | NFSD_MAY_OWNER_OVERRIDE;
--	}
- 	/*
- 	 * The file owner always gets access permission for accesses that
- 	 * would normally be checked at open time. This is to make
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -20,7 +20,7 @@
- #define NFSD_MAY_READ			0x004 /* == MAY_READ */
- #define NFSD_MAY_SATTR			0x008
- #define NFSD_MAY_TRUNC			0x010
--#define NFSD_MAY_LOCK			0x020
-+#define NFSD_MAY_NLM			0x020 /* request is from lockd */
- #define NFSD_MAY_MASK			0x03f
+ 	char *			sv_name;	/* service name */
+--- a/include/linux/sunrpc/svc_xprt.h
++++ b/include/linux/sunrpc/svc_xprt.h
+@@ -99,8 +99,24 @@ enum {
+ 	XPT_HANDSHAKE,		/* xprt requests a handshake */
+ 	XPT_TLS_SESSION,	/* transport-layer security established */
+ 	XPT_PEER_AUTH,		/* peer has been authenticated */
++	XPT_PEER_VALID,		/* peer has presented a filehandle that
++				 * it has access to.  It is NOT counted
++				 * in ->sv_tmpcnt.
++				 */
+ };
  
- /* extra hints to permission and open routines: */
++static inline void svc_xprt_set_valid(struct svc_xprt *xpt)
++{
++	if (test_bit(XPT_TEMP, &xpt->xpt_flags) &&
++	    !test_and_set_bit(XPT_PEER_VALID, &xpt->xpt_flags)) {
++		struct svc_serv *serv = xpt->xpt_server;
++
++		spin_lock(&serv->sv_lock);
++		serv->sv_tmpcnt -= 1;
++		spin_unlock(&serv->sv_lock);
++	}
++}
++
+ static inline void unregister_xpt_user(struct svc_xprt *xpt, struct svc_xpt_user *u)
+ {
+ 	spin_lock(&xpt->xpt_lock);
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -606,7 +606,8 @@ int svc_port_is_privileged(struct sockad
+ }
+ 
+ /*
+- * Make sure that we don't have too many active connections. If we have,
++ * Make sure that we don't have too many connections that have not yet
++ * demonstrated that they have access to the NFS server. If we have,
+  * something must be dropped. It's not clear what will happen if we allow
+  * "too many" connections, but when dealing with network-facing software,
+  * we have to code defensively. Here we do that by imposing hard limits.
+@@ -625,27 +626,25 @@ int svc_port_is_privileged(struct sockad
+  */
+ static void svc_check_conn_limits(struct svc_serv *serv)
+ {
+-	unsigned int limit = serv->sv_maxconn ? serv->sv_maxconn :
+-				(serv->sv_nrthreads+3) * 20;
++	unsigned int limit = serv->sv_maxconn ? serv->sv_maxconn : 64;
+ 
+ 	if (serv->sv_tmpcnt > limit) {
+-		struct svc_xprt *xprt = NULL;
++		struct svc_xprt *xprt = NULL, *xprti;
+ 		spin_lock_bh(&serv->sv_lock);
+ 		if (!list_empty(&serv->sv_tempsocks)) {
+-			/* Try to help the admin */
+-			net_notice_ratelimited("%s: too many open connections, consider increasing the %s\n",
+-					       serv->sv_name, serv->sv_maxconn ?
+-					       "max number of connections" :
+-					       "number of threads");
+ 			/*
+ 			 * Always select the oldest connection. It's not fair,
+-			 * but so is life
++			 * but nor is life.
+ 			 */
+-			xprt = list_entry(serv->sv_tempsocks.prev,
+-					  struct svc_xprt,
+-					  xpt_list);
+-			set_bit(XPT_CLOSE, &xprt->xpt_flags);
+-			svc_xprt_get(xprt);
++			list_for_each_entry_reverse(xprti, &serv->sv_tempsocks,
++						    xpt_list) {
++				if (!test_bit(XPT_PEER_VALID, &xprti->xpt_flags)) {
++					xprt = xprti;
++					set_bit(XPT_CLOSE, &xprt->xpt_flags);
++					svc_xprt_get(xprt);
++					break;
++				}
++			}
+ 		}
+ 		spin_unlock_bh(&serv->sv_lock);
+ 
+@@ -1039,7 +1038,8 @@ static void svc_delete_xprt(struct svc_x
+ 
+ 	spin_lock_bh(&serv->sv_lock);
+ 	list_del_init(&xprt->xpt_list);
+-	if (test_bit(XPT_TEMP, &xprt->xpt_flags))
++	if (test_bit(XPT_TEMP, &xprt->xpt_flags) &&
++	    !test_bit(XPT_PEER_VALID, &xprt->xpt_flags))
+ 		serv->sv_tmpcnt--;
+ 	spin_unlock_bh(&serv->sv_lock);
+ 
 
 
