@@ -1,53 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CD33370E3;
-	Fri, 17 Oct 2025 14:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7093370FB;
+	Fri, 17 Oct 2025 14:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713000; cv=none; b=qPjkuZ1bgdWOWoYO2WqkzbFw8PYBIoqAkU3j8r0vnFSOqwg710IMvNM5G+21uvbuTOoSSuOSZ63ziFjilj0a/OY5xR8+9ysX+DN724M5JyxN7jd7+VUmPmVIcG8n0Ad7yzWWOrJ5HwTwSSxaLVVpS1Y/XCgvKyTkpaJH4qy7Esk=
+	t=1760713002; cv=none; b=eHRmqupfwLO107ccrmXSJ4UgV6XRpJdieSuPhuAz6LyzAMtno1X/mhy2Pz0G+Bx7gchlCgm8HfA6FDV5/dYdTbCF4xg0nRiqVOb9Z6syJw0v+VBznHGxpc/2EDOTJK8hIH1mJCN712jDnftAAbaZCGxAJKENaQY7qLm5cYeQQD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713000; c=relaxed/simple;
-	bh=ieT8OusigDlh5XfTvEABKWMyRdC0NcYMvTVGU9bVJDs=;
+	s=arc-20240116; t=1760713002; c=relaxed/simple;
+	bh=JVhcPo+jrtOtemg6BRif60chBRk7BeDDCeQ9ZyIeQYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYOfU04HwZyj0MuC6UWUt5FR2CTCY4MIP32THW4f4jF2d/qHZmLLGjkrHkWqTxNP874K/W60SsVRD0A3abDsjtVyaWxyQ6aU2xw4tCnIMbG95HFctDAQqKW+wvqAR5pI5N7xzLae+1lqGAmYzCX0p32D/Hp+38EfeABizFhEUJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhtmlQXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CpJ2g3ZdGCPr6RQqWQX2fh0Ny8MIqJDk3se6peHyShaH0Fx7rMX6whDWxamKL3Hcbg5k74f+6CtMB1+BS1KzjFm90XQv2kPkEzPsiqu8WL3IcAsnFWb9aYb7zz+LyfOvjjf7B7K/RLpdE+Lx9pxTR42jAC1Wu8l9AAT79/SbCa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VR1hV9mX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhtmlQXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0934CC4CEE7;
-	Fri, 17 Oct 2025 14:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VR1hV9mX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC824C4CEFE;
+	Fri, 17 Oct 2025 14:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760712999;
-	bh=ieT8OusigDlh5XfTvEABKWMyRdC0NcYMvTVGU9bVJDs=;
+	s=korg; t=1760713002;
+	bh=JVhcPo+jrtOtemg6BRif60chBRk7BeDDCeQ9ZyIeQYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhtmlQXvT/6UcIDiSQ2iui3YOhXQn/7LgeFr6bPciPhlMITqSQY3dqAIymbEXKtzS
-	 5SHeS6BA438LD6jfSMalPIAhMu7SgJJxCasLVBE/9WEdTQ9ihavv9DmRnfai+QMIDV
-	 weuiFO5q4qCjVq8uAaIcqCjD7BASx7v24luPQto0=
+	b=VR1hV9mXQAM/MtLCLUhdDmqckkVwm/68S1ojOyd2pQQHzIAv7Xz74zqumH6Qnpg4v
+	 u16oYmnXhtJrN0uWYMt+ozOh/HDR6uRTOi0oI7a9VSQgmwOa/ms68nHfhZxwgT+dFl
+	 7D1mIV+2o++iq3Ebl445xlYvca0SvRo03y2dgttg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	German Gomez <german.gomez@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Anshuman.Khandual@arm.com,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	James Clark <james.clark@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/168] perf arm-spe: Refactor arm-spe to support operation packet type
-Date: Fri, 17 Oct 2025 16:51:32 +0200
-Message-ID: <20251017145129.503944696@linuxfoundation.org>
+Subject: [PATCH 6.1 014/168] perf arm-spe: Rename the common data source encoding
+Date: Fri, 17 Oct 2025 16:51:33 +0200
+Message-ID: <20251017145129.540581612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -66,181 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: German Gomez <german.gomez@arm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 0066015a3d8f9c01a17eb04579edba7dac9510af ]
+[ Upstream commit 50b8f1d5bf4ad7f09ef8012ccf5f94f741df827b ]
 
-Extend the decoder of Arm SPE records to support more fields from the
-operation packet type.
+The Neoverse CPUs follow the common data source encoding, and other
+CPU variants can share the same format.
 
-Not all fields are being decoded by this commit. Only those needed to
-support the use-case SVE load/store/other operations.
+Rename the CPU list and data source definitions as common data source
+names. This change prepares for appending more CPU variants.
 
-Suggested-by: Leo Yan <leo.yan@linaro.org>
-Signed-off-by: German Gomez <german.gomez@arm.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Anshuman.Khandual@arm.com
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Link: https://lore.kernel.org/r/20230320151509.1137462-2-james.clark@arm.com
-Signed-off-by: James Clark <james.clark@arm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20241003185322.192357-3-leo.yan@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: cb300e351505 ("perf arm_spe: Correct memory level for remote access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../util/arm-spe-decoder/arm-spe-decoder.c    | 30 ++++++++++--
- .../util/arm-spe-decoder/arm-spe-decoder.h    | 47 +++++++++++++++----
- tools/perf/util/arm-spe.c                     |  8 ++--
- 3 files changed, 67 insertions(+), 18 deletions(-)
+ .../util/arm-spe-decoder/arm-spe-decoder.h    | 18 ++++++------
+ tools/perf/util/arm-spe.c                     | 28 +++++++++----------
+ 2 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-decoder.c b/tools/perf/util/arm-spe-decoder/arm-spe-decoder.c
-index 091987dd39668..709d3f6b58c68 100644
---- a/tools/perf/util/arm-spe-decoder/arm-spe-decoder.c
-+++ b/tools/perf/util/arm-spe-decoder/arm-spe-decoder.c
-@@ -186,11 +186,27 @@ static int arm_spe_read_record(struct arm_spe_decoder *decoder)
- 			decoder->record.context_id = payload;
- 			break;
- 		case ARM_SPE_OP_TYPE:
--			if (idx == SPE_OP_PKT_HDR_CLASS_LD_ST_ATOMIC) {
--				if (payload & 0x1)
--					decoder->record.op = ARM_SPE_ST;
-+			switch (idx) {
-+			case SPE_OP_PKT_HDR_CLASS_LD_ST_ATOMIC:
-+				decoder->record.op |= ARM_SPE_OP_LDST;
-+				if (payload & SPE_OP_PKT_ST)
-+					decoder->record.op |= ARM_SPE_OP_ST;
- 				else
--					decoder->record.op = ARM_SPE_LD;
-+					decoder->record.op |= ARM_SPE_OP_LD;
-+				if (SPE_OP_PKT_IS_LDST_SVE(payload))
-+					decoder->record.op |= ARM_SPE_OP_SVE_LDST;
-+				break;
-+			case SPE_OP_PKT_HDR_CLASS_OTHER:
-+				decoder->record.op |= ARM_SPE_OP_OTHER;
-+				if (SPE_OP_PKT_IS_OTHER_SVE_OP(payload))
-+					decoder->record.op |= ARM_SPE_OP_SVE_OTHER;
-+				break;
-+			case SPE_OP_PKT_HDR_CLASS_BR_ERET:
-+				decoder->record.op |= ARM_SPE_OP_BRANCH_ERET;
-+				break;
-+			default:
-+				pr_err("Get packet error!\n");
-+				return -1;
- 			}
- 			break;
- 		case ARM_SPE_EVENTS:
-@@ -218,6 +234,12 @@ static int arm_spe_read_record(struct arm_spe_decoder *decoder)
- 			if (payload & BIT(EV_MISPRED))
- 				decoder->record.type |= ARM_SPE_BRANCH_MISS;
- 
-+			if (payload & BIT(EV_PARTIAL_PREDICATE))
-+				decoder->record.type |= ARM_SPE_SVE_PARTIAL_PRED;
-+
-+			if (payload & BIT(EV_EMPTY_PREDICATE))
-+				decoder->record.type |= ARM_SPE_SVE_EMPTY_PRED;
-+
- 			break;
- 		case ARM_SPE_DATA_SOURCE:
- 			decoder->record.source = payload;
 diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-decoder.h b/tools/perf/util/arm-spe-decoder/arm-spe-decoder.h
-index 46a61df1145b6..1443c28545a94 100644
+index 1443c28545a94..358c611eeddbb 100644
 --- a/tools/perf/util/arm-spe-decoder/arm-spe-decoder.h
 +++ b/tools/perf/util/arm-spe-decoder/arm-spe-decoder.h
-@@ -14,19 +14,46 @@
- #include "arm-spe-pkt-decoder.h"
- 
- enum arm_spe_sample_type {
--	ARM_SPE_L1D_ACCESS	= 1 << 0,
--	ARM_SPE_L1D_MISS	= 1 << 1,
--	ARM_SPE_LLC_ACCESS	= 1 << 2,
--	ARM_SPE_LLC_MISS	= 1 << 3,
--	ARM_SPE_TLB_ACCESS	= 1 << 4,
--	ARM_SPE_TLB_MISS	= 1 << 5,
--	ARM_SPE_BRANCH_MISS	= 1 << 6,
--	ARM_SPE_REMOTE_ACCESS	= 1 << 7,
-+	ARM_SPE_L1D_ACCESS		= 1 << 0,
-+	ARM_SPE_L1D_MISS		= 1 << 1,
-+	ARM_SPE_LLC_ACCESS		= 1 << 2,
-+	ARM_SPE_LLC_MISS		= 1 << 3,
-+	ARM_SPE_TLB_ACCESS		= 1 << 4,
-+	ARM_SPE_TLB_MISS		= 1 << 5,
-+	ARM_SPE_BRANCH_MISS		= 1 << 6,
-+	ARM_SPE_REMOTE_ACCESS		= 1 << 7,
-+	ARM_SPE_SVE_PARTIAL_PRED	= 1 << 8,
-+	ARM_SPE_SVE_EMPTY_PRED		= 1 << 9,
+@@ -56,15 +56,15 @@ enum arm_spe_op_type {
+ 	ARM_SPE_OP_BR_INDIRECT	= 1 << 17,
  };
  
- enum arm_spe_op_type {
--	ARM_SPE_LD		= 1 << 0,
--	ARM_SPE_ST		= 1 << 1,
-+	/* First level operation type */
-+	ARM_SPE_OP_OTHER	= 1 << 0,
-+	ARM_SPE_OP_LDST		= 1 << 1,
-+	ARM_SPE_OP_BRANCH_ERET	= 1 << 2,
-+
-+	/* Second level operation type for OTHER */
-+	ARM_SPE_OP_SVE_OTHER		= 1 << 16,
-+	ARM_SPE_OP_SVE_FP		= 1 << 17,
-+	ARM_SPE_OP_SVE_PRED_OTHER	= 1 << 18,
-+
-+	/* Second level operation type for LDST */
-+	ARM_SPE_OP_LD			= 1 << 16,
-+	ARM_SPE_OP_ST			= 1 << 17,
-+	ARM_SPE_OP_ATOMIC		= 1 << 18,
-+	ARM_SPE_OP_EXCL			= 1 << 19,
-+	ARM_SPE_OP_AR			= 1 << 20,
-+	ARM_SPE_OP_SIMD_FP		= 1 << 21,
-+	ARM_SPE_OP_GP_REG		= 1 << 22,
-+	ARM_SPE_OP_UNSPEC_REG		= 1 << 23,
-+	ARM_SPE_OP_NV_SYSREG		= 1 << 24,
-+	ARM_SPE_OP_SVE_LDST		= 1 << 25,
-+	ARM_SPE_OP_SVE_PRED_LDST	= 1 << 26,
-+	ARM_SPE_OP_SVE_SG		= 1 << 27,
-+
-+	/* Second level operation type for BRANCH_ERET */
-+	ARM_SPE_OP_BR_COND	= 1 << 16,
-+	ARM_SPE_OP_BR_INDIRECT	= 1 << 17,
+-enum arm_spe_neoverse_data_source {
+-	ARM_SPE_NV_L1D		 = 0x0,
+-	ARM_SPE_NV_L2		 = 0x8,
+-	ARM_SPE_NV_PEER_CORE	 = 0x9,
+-	ARM_SPE_NV_LOCAL_CLUSTER = 0xa,
+-	ARM_SPE_NV_SYS_CACHE	 = 0xb,
+-	ARM_SPE_NV_PEER_CLUSTER	 = 0xc,
+-	ARM_SPE_NV_REMOTE	 = 0xd,
+-	ARM_SPE_NV_DRAM		 = 0xe,
++enum arm_spe_common_data_source {
++	ARM_SPE_COMMON_DS_L1D		= 0x0,
++	ARM_SPE_COMMON_DS_L2		= 0x8,
++	ARM_SPE_COMMON_DS_PEER_CORE	= 0x9,
++	ARM_SPE_COMMON_DS_LOCAL_CLUSTER = 0xa,
++	ARM_SPE_COMMON_DS_SYS_CACHE	= 0xb,
++	ARM_SPE_COMMON_DS_PEER_CLUSTER	= 0xc,
++	ARM_SPE_COMMON_DS_REMOTE	= 0xd,
++	ARM_SPE_COMMON_DS_DRAM		= 0xe,
  };
  
- enum arm_spe_neoverse_data_source {
+ struct arm_spe_record {
 diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index 98e3c3fce05a2..9f0c4565bc5be 100644
+index 9f0c4565bc5be..36f03d532d5bc 100644
 --- a/tools/perf/util/arm-spe.c
 +++ b/tools/perf/util/arm-spe.c
-@@ -411,7 +411,7 @@ static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *rec
- 	 * We have no data on the hit level or data source for stores in the
- 	 * Neoverse SPE records.
- 	 */
--	if (record->op & ARM_SPE_ST) {
-+	if (record->op & ARM_SPE_OP_ST) {
- 		data_src->mem_lvl = PERF_MEM_LVL_NA;
- 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_NA;
- 		data_src->mem_snoop = PERF_MEM_SNOOP_NA;
-@@ -497,12 +497,12 @@ static void arm_spe__synth_data_source_generic(const struct arm_spe_record *reco
+@@ -389,15 +389,15 @@ static int arm_spe__synth_instruction_sample(struct arm_spe_queue *speq,
+ 	return arm_spe_deliver_synth_event(spe, speq, event, &sample);
+ }
  
+-static const struct midr_range neoverse_spe[] = {
++static const struct midr_range common_ds_encoding_cpus[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+ 	{},
+ };
+ 
+-static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *record,
+-						union perf_mem_data_src *data_src)
++static void arm_spe__synth_data_source_common(const struct arm_spe_record *record,
++					      union perf_mem_data_src *data_src)
+ {
+ 	/*
+ 	 * Even though four levels of cache hierarchy are possible, no known
+@@ -419,17 +419,17 @@ static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *rec
+ 	}
+ 
+ 	switch (record->source) {
+-	case ARM_SPE_NV_L1D:
++	case ARM_SPE_COMMON_DS_L1D:
+ 		data_src->mem_lvl = PERF_MEM_LVL_L1 | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_L1;
+ 		data_src->mem_snoop = PERF_MEM_SNOOP_NONE;
+ 		break;
+-	case ARM_SPE_NV_L2:
++	case ARM_SPE_COMMON_DS_L2:
+ 		data_src->mem_lvl = PERF_MEM_LVL_L2 | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_L2;
+ 		data_src->mem_snoop = PERF_MEM_SNOOP_NONE;
+ 		break;
+-	case ARM_SPE_NV_PEER_CORE:
++	case ARM_SPE_COMMON_DS_PEER_CORE:
+ 		data_src->mem_lvl = PERF_MEM_LVL_L2 | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_L2;
+ 		data_src->mem_snoopx = PERF_MEM_SNOOPX_PEER;
+@@ -438,8 +438,8 @@ static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *rec
+ 	 * We don't know if this is L1, L2 but we do know it was a cache-2-cache
+ 	 * transfer, so set SNOOPX_PEER
+ 	 */
+-	case ARM_SPE_NV_LOCAL_CLUSTER:
+-	case ARM_SPE_NV_PEER_CLUSTER:
++	case ARM_SPE_COMMON_DS_LOCAL_CLUSTER:
++	case ARM_SPE_COMMON_DS_PEER_CLUSTER:
+ 		data_src->mem_lvl = PERF_MEM_LVL_L3 | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_L3;
+ 		data_src->mem_snoopx = PERF_MEM_SNOOPX_PEER;
+@@ -447,7 +447,7 @@ static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *rec
+ 	/*
+ 	 * System cache is assumed to be L3
+ 	 */
+-	case ARM_SPE_NV_SYS_CACHE:
++	case ARM_SPE_COMMON_DS_SYS_CACHE:
+ 		data_src->mem_lvl = PERF_MEM_LVL_L3 | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_L3;
+ 		data_src->mem_snoop = PERF_MEM_SNOOP_HIT;
+@@ -456,13 +456,13 @@ static void arm_spe__synth_data_source_neoverse(const struct arm_spe_record *rec
+ 	 * We don't know what level it hit in, except it came from the other
+ 	 * socket
+ 	 */
+-	case ARM_SPE_NV_REMOTE:
++	case ARM_SPE_COMMON_DS_REMOTE:
+ 		data_src->mem_lvl = PERF_MEM_LVL_REM_CCE1;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_ANY_CACHE;
+ 		data_src->mem_remote = PERF_MEM_REMOTE_REMOTE;
+ 		data_src->mem_snoopx = PERF_MEM_SNOOPX_PEER;
+ 		break;
+-	case ARM_SPE_NV_DRAM:
++	case ARM_SPE_COMMON_DS_DRAM:
+ 		data_src->mem_lvl = PERF_MEM_LVL_LOC_RAM | PERF_MEM_LVL_HIT;
+ 		data_src->mem_lvl_num = PERF_MEM_LVLNUM_RAM;
+ 		data_src->mem_snoop = PERF_MEM_SNOOP_NONE;
+@@ -498,7 +498,7 @@ static void arm_spe__synth_data_source_generic(const struct arm_spe_record *reco
  static u64 arm_spe__synth_data_source(const struct arm_spe_record *record, u64 midr)
  {
--	union perf_mem_data_src	data_src = { 0 };
-+	union perf_mem_data_src	data_src = { .mem_op = PERF_MEM_OP_NA };
- 	bool is_neoverse = is_midr_in_range_list(midr, neoverse_spe);
+ 	union perf_mem_data_src	data_src = { .mem_op = PERF_MEM_OP_NA };
+-	bool is_neoverse = is_midr_in_range_list(midr, neoverse_spe);
++	bool is_common = is_midr_in_range_list(midr, common_ds_encoding_cpus);
  
--	if (record->op == ARM_SPE_LD)
-+	if (record->op & ARM_SPE_OP_LD)
+ 	if (record->op & ARM_SPE_OP_LD)
  		data_src.mem_op = PERF_MEM_OP_LOAD;
--	else if (record->op == ARM_SPE_ST)
-+	else if (record->op & ARM_SPE_OP_ST)
- 		data_src.mem_op = PERF_MEM_OP_STORE;
+@@ -507,8 +507,8 @@ static u64 arm_spe__synth_data_source(const struct arm_spe_record *record, u64 m
  	else
  		return 0;
+ 
+-	if (is_neoverse)
+-		arm_spe__synth_data_source_neoverse(record, &data_src);
++	if (is_common)
++		arm_spe__synth_data_source_common(record, &data_src);
+ 	else
+ 		arm_spe__synth_data_source_generic(record, &data_src);
+ 
 -- 
 2.51.0
 
