@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B415336EE7;
-	Fri, 17 Oct 2025 15:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773363328EA;
+	Fri, 17 Oct 2025 15:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715361; cv=none; b=XfZR4I+y3IEmRTbZQc/dFS1+Raquhdyk1VJyR+PmO8P1QdCCQYuxiH+e+2My153Rdf4NKPFFBAOlPUIX/fp9TlHh3QiTJKghZ1o+12CZkW1WEc/jXR4WJtpK/wXvCJjhFUTtWp3qHVfTiPW1ZeGsbDLSzsQAbdDdGfDwLU5dAl4=
+	t=1760715365; cv=none; b=qsbgBPglKWyHAnSHmEBYNyx93DPGgWqz/966hMA5biGbm7jmdWI5P7q+pBsxn74iPiruNuF6859O0RPVkbC/OHJDKJeHSILdQxdu+q3PBQoytJVRyHRIJvIyOjmtdVnPHEWbJb55wElzQCwAwr0EDmTiq4G3mQDXB7tirhR7zJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715361; c=relaxed/simple;
-	bh=6KxM+rrZADtaDKG6AXfMt7JpQGEzUJxR0sZfli734Ro=;
+	s=arc-20240116; t=1760715365; c=relaxed/simple;
+	bh=bnrub2W215sTQaywyEdFtK8nKRY70LNJ5+vZkJQHulM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DkEGyy0Dg3kfBNlt0y2Ma+kWcfRNuf3YNQFhDPHsP8cJGMlZd0xSx5zG4V3CmUyw4yESb4Tb4wDL8twsaPN07wLi3h0ADTTF/0AM1DvWaqavOffyvH6u1xJ7FlCUryxYJ9JoJQ7wyLyk4mkWwpEQlHE0e6089feMpVqhXMC+m1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLphSnr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=agMOruo8j0EqRBd/zojb2P4AAOngd9z/JjbWHEBq8euVRuc7f9NxcOW6FWiTesfUAXqmyvepyUESuC2iDPTiI9cWLUo2HZ55O5JVZI1rHTitAft5qEHx7GLfm72KWGbwqAKHFoVJRjaFs5OWBUvTSi3iG0x4tKaOYhkacKbx5l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcNpQgB5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLphSnr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6446C4CEFE;
-	Fri, 17 Oct 2025 15:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcNpQgB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2BCC4CEFE;
+	Fri, 17 Oct 2025 15:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715361;
-	bh=6KxM+rrZADtaDKG6AXfMt7JpQGEzUJxR0sZfli734Ro=;
+	s=korg; t=1760715364;
+	bh=bnrub2W215sTQaywyEdFtK8nKRY70LNJ5+vZkJQHulM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dLphSnr3zBRsZsnhOeMcDOqqCpcu0iWNKkgHy3cZ2pXSPbjl/beFaGnH/q4Q0MHv6
-	 jkBccD5ci3JaWack4OmVPPYoTZocA/dD2FTBiGo9DETiGY371C2mewQwHvdBkqZpU2
-	 iwbsipOxmYHJjGlfj3vkc2fSEU7NK4Zbjh6A9EFY=
+	b=GcNpQgB5mLsFkv9bf7nnsffhfErsYZT7l7q+n3gjmdyConVrRNJIcgkDWNakZ0KwE
+	 xIVK/3X3JTeXxRxzkd9ET4aBNUKbfEf1kZTDJ8wUgQ9aGleeNMwv7IVRlkzIoFQBm0
+	 iMwefQp1R+PwjQcVwJThP2fqwm8/CLaPPFFDXy3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.17 189/371] drm/rcar-du: dsi: Fix 1/2/3 lane support
-Date: Fri, 17 Oct 2025 16:52:44 +0200
-Message-ID: <20251017145208.761207823@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.17 163/371] xen/manage: Fix suspend error path
+Date: Fri, 17 Oct 2025 16:52:18 +0200
+Message-ID: <20251017145207.829961903@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,73 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit d83f1d19c898ac1b54ae64d1c950f5beff801982 upstream.
+commit f770c3d858687252f1270265ba152d5c622e793f upstream.
 
-Remove fixed PPI lane count setup. The R-Car DSI host is capable
-of operating in 1..4 DSI lane mode. Remove the hard-coded 4-lane
-configuration from PPI register settings and instead configure
-the PPI lane count according to lane count information already
-obtained by this driver instance.
+The device power management API has the following asymmetry:
+* dpm_suspend_start() does not clean up on failure
+  (it requires a call to dpm_resume_end())
+* dpm_suspend_end() does clean up on failure
+  (it does not require a call to dpm_resume_start())
 
-Configure TXSETR register to match PPI lane count. The R-Car V4H
-Reference Manual R19UH0186EJ0121 Rev.1.21 section 67.2.2.3 Tx Set
-Register (TXSETR), field LANECNT description indicates that the
-TXSETR register LANECNT bitfield lane count must be configured
-such, that it matches lane count configuration in PPISETR register
-DLEN bitfield. Make sure the LANECNT and DLEN bitfields are
-configured to match.
+The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
+patches for 2.6.27") in June 2008:  It removed a call to device_resume()
+from device_suspend() (which was later renamed to dpm_suspend_start()).
 
-Fixes: 155358310f01 ("drm: rcar-du: Add R-Car DSI driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250813210840.97621-1-marek.vasut+renesas@mailbox.org
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+When Xen began using the device power management API in May 2008 with
+commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
+not yet exist.  But since it was introduced, a call to dpm_resume_end()
+is missing in the error path of dpm_suspend_start().  Fix it.
+
+Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org  # v2.6.27
+Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c      |    5 ++++-
- drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h |    8 ++++----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/xen/manage.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c
-@@ -576,7 +576,10 @@ static int rcar_mipi_dsi_startup(struct
- 	udelay(10);
- 	rcar_mipi_dsi_clr(dsi, CLOCKSET1, CLOCKSET1_UPDATEPLL);
+--- a/drivers/xen/manage.c
++++ b/drivers/xen/manage.c
+@@ -117,7 +117,7 @@ static void do_suspend(void)
+ 	err = dpm_suspend_start(PMSG_FREEZE);
+ 	if (err) {
+ 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
+-		goto out_thaw;
++		goto out_resume_end;
+ 	}
  
--	ppisetr = PPISETR_DLEN_3 | PPISETR_CLEN;
-+	rcar_mipi_dsi_clr(dsi, TXSETR, TXSETR_LANECNT_MASK);
-+	rcar_mipi_dsi_set(dsi, TXSETR, dsi->lanes - 1);
-+
-+	ppisetr = ((BIT(dsi->lanes) - 1) & PPISETR_DLEN_MASK) | PPISETR_CLEN;
- 	rcar_mipi_dsi_write(dsi, PPISETR, ppisetr);
+ 	printk(KERN_DEBUG "suspending xenstore...\n");
+@@ -157,6 +157,7 @@ out_resume:
+ 	else
+ 		xs_suspend_cancel();
  
- 	rcar_mipi_dsi_set(dsi, PHYSETUP, PHYSETUP_SHUTDOWNZ);
---- a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
-+++ b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
-@@ -12,6 +12,9 @@
- #define LINKSR_LPBUSY			(1 << 1)
- #define LINKSR_HSBUSY			(1 << 0)
++out_resume_end:
+ 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
  
-+#define TXSETR				0x100
-+#define TXSETR_LANECNT_MASK		(0x3 << 0)
-+
- /*
-  * Video Mode Register
-  */
-@@ -80,10 +83,7 @@
-  * PHY-Protocol Interface (PPI) Registers
-  */
- #define PPISETR				0x700
--#define PPISETR_DLEN_0			(0x1 << 0)
--#define PPISETR_DLEN_1			(0x3 << 0)
--#define PPISETR_DLEN_2			(0x7 << 0)
--#define PPISETR_DLEN_3			(0xf << 0)
-+#define PPISETR_DLEN_MASK		(0xf << 0)
- #define PPISETR_CLEN			(1 << 8)
- 
- #define PPICLCR				0x710
+ out_thaw:
 
 
