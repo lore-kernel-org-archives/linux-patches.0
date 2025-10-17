@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B32330B0D;
-	Fri, 17 Oct 2025 15:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0816330B06;
+	Fri, 17 Oct 2025 15:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715996; cv=none; b=JKpuQ27PqpSAimnM6qZhRDLxQx+KfEhQb+XiQ0wG7RUP8Gw168b9KpaPUmE0AlOyEf5DNp6wLwrPCuHifxFK9q3NpNMF3AWjT3kcWIt1/3UjHECg/TiomOj/YdYy/wErpYqZxkAoSKZmtHZZOfkmTx582a3LA4bAFEiuSHnlyjE=
+	t=1760716000; cv=none; b=cGcUlttyPwy55EkGczqk7STJmLgjW+fpN+GzZXh+DQ8PUGdMnqWP+nSdd2zHRpcPMJag/lTdsmuQ0b7IJ7KwDv61DteCcdoxQZwpEyLxNnfwo1ES6/b9VBwrCSMNZkG7g+wSR/n5HquSuJv7I08C6u2+AxgjeU0quKbto1YZCAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715996; c=relaxed/simple;
-	bh=DbZkbudMhN3I+kBTaMETc40Z7v0mawy4O8gcogcOPkA=;
+	s=arc-20240116; t=1760716000; c=relaxed/simple;
+	bh=HNspkJCvI+h13bhY1MiPT71cylGE/CVZAI3/llVuIBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owrjBz4Tt68aFeJzgbUszCqlTfOn365Puu3igsQzddP+D0pdMw8MHr7JpP9pGS0yoiFi51668EPgEuiBPvWZ6Mes76eBh2g82hDX0oxpWSm8SOksshfq1gRIHaSudRx2AWkHKLsZtfPnS9pKtbbRGsnlZJyJkLMFBkRjkjgnmyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knguhcNp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJgyUiNkKiNhxtnWn0o3p9m+lnQsDXa3MIVQNBxR4ewt802oBF4UaIFTeLvxs4hfB4nF4cr87HGOxgRJOYZLbBLRcUVcoyHwBkIhcFsBXaY21h4v0LVYKUlvuSSSrk3EpQm44pM1WTdtEyy/yqGvNF6EMbllX+CbZ/DVYMwU+lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhRCFskb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knguhcNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CE2C4CEFE;
-	Fri, 17 Oct 2025 15:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhRCFskb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AD5C4CEE7;
+	Fri, 17 Oct 2025 15:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715996;
-	bh=DbZkbudMhN3I+kBTaMETc40Z7v0mawy4O8gcogcOPkA=;
+	s=korg; t=1760715999;
+	bh=HNspkJCvI+h13bhY1MiPT71cylGE/CVZAI3/llVuIBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knguhcNpGwxxpwFRv35wpEaay4ERf+h/YP2HnoIJj4hqw4ok3qJt9xFmBQGLXrc9N
-	 Cjxl82njfBmA333mtETVpA+n86dVu0G3jnFoEvhK9WUmzfpv4TCtPubo7PuS4jcl88
-	 mzPyZ0dGs3W8T4mgSyFsrvfhLSmF211/ilu+mLxI=
+	b=DhRCFskb23qcoTqJr7DQl5Yfm/yEJP/BTbYcPlMAWu21rBTlhrCs1u8qPxVWH7+Ez
+	 enRtzl1Xe+kneOhP4McJWXjDst55uTLCibU11SkJ1i+LmZkDQ1strDuxou4QGIxNKq
+	 GrmrrshL35lwZeK5sl2YKIw85HJSv5FSwibgVG0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
-	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 004/276] media: rc: fix races with imon_disconnect()
-Date: Fri, 17 Oct 2025 16:51:37 +0200
-Message-ID: <20251017145142.550290771@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Kenneth Van Alstyne <kvanals@kvanals.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.15 005/276] KVM: arm64: Fix softirq masking in FPSIMD register saving sequence
+Date: Fri, 17 Oct 2025 16:51:38 +0200
+Message-ID: <20251017145142.586192403@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,160 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+From: Will Deacon <will@kernel.org>
 
-commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
+Stable commit 23249dade24e ("KVM: arm64: Fix kernel BUG() due to bad
+backport of FPSIMD/SVE/SME fix") fixed a kernel BUG() caused by a bad
+backport of upstream commit fbc7e61195e2 ("KVM: arm64: Unconditionally
+save+flush host FPSIMD/SVE/SME state") by ensuring that softirqs are
+disabled/enabled across the fpsimd register save operation.
 
-Syzbot reports a KASAN issue as below:
-BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
-BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
+Unfortunately, although this fixes the original issue, it can now lead
+to deadlock when re-enabling softirqs causes pending softirqs to be
+handled with locks already held:
 
-CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
-Call Trace:
- <TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-__create_pipe include/linux/usb.h:1945 [inline]
-send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
-vfs_write+0x2d7/0xdd0 fs/read_write.c:576
-ksys_write+0x127/0x250 fs/read_write.c:631
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ | BUG: spinlock recursion on CPU#7, CPU 3/KVM/57616
+ |  lock: 0xffff3045ef850240, .magic: dead4ead, .owner: CPU 3/KVM/57616, .owner_cpu: 7
+ | CPU: 7 PID: 57616 Comm: CPU 3/KVM Tainted: G           O       6.1.152 #1
+ | Hardware name: SoftIron SoftIron Platform Mainboard/SoftIron Platform Mainboard, BIOS 1.31 May 11 2023
+ | Call trace:
+ |  dump_backtrace+0xe4/0x110
+ |  show_stack+0x20/0x30
+ |  dump_stack_lvl+0x6c/0x88
+ |  dump_stack+0x18/0x34
+ |  spin_dump+0x98/0xac
+ |  do_raw_spin_lock+0x70/0x128
+ |  _raw_spin_lock+0x18/0x28
+ |  raw_spin_rq_lock_nested+0x18/0x28
+ |  update_blocked_averages+0x70/0x550
+ |  run_rebalance_domains+0x50/0x70
+ |  handle_softirqs+0x198/0x328
+ |  __do_softirq+0x1c/0x28
+ |  ____do_softirq+0x18/0x28
+ |  call_on_irq_stack+0x30/0x48
+ |  do_softirq_own_stack+0x24/0x30
+ |  do_softirq+0x74/0x90
+ |  __local_bh_enable_ip+0x64/0x80
+ |  fpsimd_save_and_flush_cpu_state+0x5c/0x68
+ |  kvm_arch_vcpu_put_fp+0x4c/0x88
+ |  kvm_arch_vcpu_put+0x28/0x88
+ |  kvm_sched_out+0x38/0x58
+ |  __schedule+0x55c/0x6c8
+ |  schedule+0x60/0xa8
 
-The iMON driver improperly releases the usb_device reference in
-imon_disconnect without coordinating with active users of the
-device.
+Take a tiny step towards the upstream fix in 9b19700e623f ("arm64:
+fpsimd: Drop unneeded 'busy' flag") by additionally disabling hardirqs
+while saving the fpsimd registers.
 
-Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
-protected by the users counter (ictx->users). During probe,
-imon_init_intf0 or imon_init_intf1 increments the usb_device
-reference count depending on the interface. However, during
-disconnect, usb_put_dev is called unconditionally, regardless of
-actual usage.
-
-As a result, if vfd_write or other operations are still in
-progress after disconnect, this can lead to a use-after-free of
-the usb_device pointer.
-
-Thread 1 vfd_write                      Thread 2 imon_disconnect
-                                        ...
-                                        if
-                                          usb_put_dev(ictx->usbdev_intf0)
-                                        else
-                                          usb_put_dev(ictx->usbdev_intf1)
-...
-while
-  send_packet
-    if
-      pipe = usb_sndintpipe(
-        ictx->usbdev_intf0) UAF
-    else
-      pipe = usb_sndctrlpipe(
-        ictx->usbdev_intf0, 0) UAF
-
-Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
-checking ictx->disconnected in all writer paths. Add early return
-with -ENODEV in send_packet(), vfd_write(), lcd_write() and
-display_open() if the device is no longer present.
-
-Set and read ictx->disconnected under ictx->lock to ensure memory
-synchronization. Acquire the lock in imon_disconnect() before setting
-the flag to synchronize with any ongoing operations.
-
-Ensure writers exit early and safely after disconnect before the USB
-core proceeds with cleanup.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Cc: stable@vger.kernel.org
-
-Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.y
+Fixes: 23249dade24e ("KVM: arm64: Fix kernel BUG() due to bad backport of FPSIMD/SVE/SME fix")
+Reported-by: Kenneth Van Alstyne <kvanals@kvanals.org>
+Link: https://lore.kernel.org/r/010001999bae0958-4d80d25d-8dda-4006-a6b9-798f3e774f6c-000000@email.amazonses.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ arch/arm64/kernel/fpsimd.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -536,7 +536,9 @@ static int display_open(struct inode *in
- 
- 	mutex_lock(&ictx->lock);
- 
--	if (!ictx->display_supported) {
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+	} else if (!ictx->display_supported) {
- 		pr_err("display not supported by device\n");
- 		retval = -ENODEV;
- 	} else if (ictx->display_isopen) {
-@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
- 	int retval = 0;
- 	struct usb_ctrlrequest *control_req = NULL;
- 
-+	if (ictx->disconnected)
-+		return -ENODEV;
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1300,13 +1300,17 @@ static void fpsimd_flush_cpu_state(void)
+  */
+ void fpsimd_save_and_flush_cpu_state(void)
+ {
++	unsigned long flags;
 +
- 	/* Check if we need to use control or interrupt urb */
- 	if (!ictx->tx_control) {
- 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
-@@ -951,12 +956,14 @@ static ssize_t vfd_write(struct file *fi
- 	static const unsigned char vfd_packet6[] = {
- 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
+ 	if (!system_supports_fpsimd())
+ 		return;
+ 	WARN_ON(preemptible());
+-	get_cpu_fpsimd_context();
++	local_irq_save(flags);
++	__get_cpu_fpsimd_context();
+ 	fpsimd_save();
+ 	fpsimd_flush_cpu_state();
+-	put_cpu_fpsimd_context();
++	__put_cpu_fpsimd_context();
++	local_irq_restore(flags);
+ }
  
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	if (mutex_lock_interruptible(&ictx->lock))
- 		return -ERESTARTSYS;
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
- 		retval = -ENODEV;
-@@ -1031,11 +1038,13 @@ static ssize_t lcd_write(struct file *fi
- 	int retval = 0;
- 	struct imon_context *ictx = file->private_data;
- 
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	mutex_lock(&ictx->lock);
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->display_supported) {
- 		pr_err_ratelimited("no iMON display present\n");
- 		retval = -ENODEV;
-@@ -2499,7 +2508,11 @@ static void imon_disconnect(struct usb_i
- 	int ifnum;
- 
- 	ictx = usb_get_intfdata(interface);
-+
-+	mutex_lock(&ictx->lock);
- 	ictx->disconnected = true;
-+	mutex_unlock(&ictx->lock);
-+
- 	dev = ictx->dev;
- 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
- 
+ #ifdef CONFIG_KERNEL_MODE_NEON
 
 
