@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5EA23EABB;
-	Fri, 17 Oct 2025 15:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882EF32E136;
+	Fri, 17 Oct 2025 15:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713237; cv=none; b=o5lT5m+BO+wASzs+vox+Ia1Rz6yDKTOBha1FO/Nz6Ik9F6Hq/4hXJwES/Z1AXPqAYC2Tv124QIZSbqOtZRA38kuvSsHSDSyWIL+IyZBakvQ+0DWQIPT2dZWw2b20fWv0NO7pd8c4m1E+35h6R5QbGhE5LEts1wRvJqFzZUm6vC8=
+	t=1760713240; cv=none; b=U4FGcoQ9DhSfXUKpFfVT+2cc30FTdNhU1KTanfWHM9UrfYFuzYxRn7SbXo32Vd59L/Sym5PyjldI/OsXpK2B8nUQk8b3Hu0RvD7CPksh7vNzqvfJIRMJPNWZq6uk96A74zm4nixk+FhhBnQ0PBnzeNV2XnnKAU2V1h/pg7uH2pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713237; c=relaxed/simple;
-	bh=fk+B3A0uEqxoJkjlz9rvuFfHx9/nIZbj7xHuILV0WZA=;
+	s=arc-20240116; t=1760713240; c=relaxed/simple;
+	bh=n9f0GABA94tWDsyz9LIlTQvqNg90hPwyhgABs1LP4bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olOMe67O9ylkmS4enDOhfrBeIqOM3sHEOX+jU78t3XFDhivHbmZB1yUH61UGRGxh0Kd9Yf7w6Bmnz3B0uo5g835KC5U4Xb26KcP/SwBhAE2LFh9U0VBouDsCK69fVJcq1gyS4NU0UVeDJ3IpOs+REJvrKvYfM6RuQwB0sTFPf3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ec3QZiEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWCs+ehplH84MvOIvijMc/+iADFkTp/vs7+tyPIjp2PIf5P9LzqklfdJWuTsLOZnBM5wXUeFQ2rAcIZFhaqIcdVefRSkSTt8xsVHXoE/erl1BOmMmdkcOG+N05cCEOIj1MMjRWzZUnhQOcT8Vmq/4drC6wkLyN1YPgsdNTYMupQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hs6IjD6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ec3QZiEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFF8C113D0;
-	Fri, 17 Oct 2025 15:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hs6IjD6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D14FC4CEFE;
+	Fri, 17 Oct 2025 15:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713237;
-	bh=fk+B3A0uEqxoJkjlz9rvuFfHx9/nIZbj7xHuILV0WZA=;
+	s=korg; t=1760713240;
+	bh=n9f0GABA94tWDsyz9LIlTQvqNg90hPwyhgABs1LP4bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ec3QZiEP3lqQwCSp4Jcs3bTgUjtqKtW8hGvkgX+iF7i/YVqmQ6/SmonLpqTirZ/5r
-	 ONfoNU1STARuxuUkwdsI1i9jC9rGnnE8e8KzShA4uQKSsVrvnp5jdFMEolylUmcuJ1
-	 5GfVnIFdvpZYZBCt/P64pxYaDDErMBZdaxIc4wOc=
+	b=hs6IjD6Zu9IB86wnYc1OZAlVjYtPIfCFCsaH6JR5Ycx7717jDcMH37QxtWGGdV5B/
+	 jCYuRrfuvo8KxtBmoPgSxmXUpGeDbEp2ToJCZGxlWrz09WehXSAiZ4EABMVpQk/QyS
+	 dFM7rGGDz6t84YfWXyrmCVGytirgrO7R03mTWUh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Tang <danielzgtg.opensource@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 052/168] ACPI: TAD: Add missing sysfs_remove_group() for ACPI_TAD_RT
-Date: Fri, 17 Oct 2025 16:52:11 +0200
-Message-ID: <20251017145130.935736506@linuxfoundation.org>
+	Sam James <sam@gentoo.org>,
+	Helge Deller <deller@gmx.de>,
+	Stian Halseth <stian@itx.no>
+Subject: [PATCH 6.1 089/168] parisc: dont reference obsolete termio struct for TC* constants
+Date: Fri, 17 Oct 2025 16:52:48 +0200
+Message-ID: <20251017145132.306294973@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Tang <danielzgtg.opensource@gmail.com>
+From: Sam James <sam@gentoo.org>
 
-commit 4aac453deca0d9c61df18d968f8864c3ae7d3d8d upstream.
+commit 8ec5a066f88f89bd52094ba18792b34c49dcd55a upstream.
 
-Previously, after `rmmod acpi_tad`, `modprobe acpi_tad` would fail
-with this dmesg:
+Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
+drops the legacy termio struct, but the ioctls.h header still defines some
+TC* constants in terms of termio (via sizeof). Hardcode the values instead.
 
-sysfs: cannot create duplicate filename '/devices/platform/ACPI000E:00/time'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6c/0x90
- dump_stack+0x10/0x20
- sysfs_warn_dup+0x8b/0xa0
- sysfs_add_file_mode_ns+0x122/0x130
- internal_create_group+0x1dd/0x4c0
- sysfs_create_group+0x13/0x20
- acpi_tad_probe+0x147/0x1f0 [acpi_tad]
- platform_probe+0x42/0xb0
- </TASK>
-acpi-tad ACPI000E:00: probe with driver acpi-tad failed with error -17
+This fixes building Python for example, which falls over like:
+  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
 
-Fixes: 3230b2b3c1ab ("ACPI: TAD: Add low-level support for real time capability")
-Signed-off-by: Daniel Tang <danielzgtg.opensource@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/2881298.hMirdbgypa@daniel-desktop3
-Cc: 5.2+ <stable@vger.kernel.org> # 5.2+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://bugs.gentoo.org/961769
+Link: https://bugs.gentoo.org/962600
+Co-authored-by: Stian Halseth <stian@itx.no>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_tad.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/parisc/include/uapi/asm/ioctls.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -563,6 +563,9 @@ static int acpi_tad_remove(struct platfo
- 
- 	pm_runtime_get_sync(dev);
- 
-+	if (dd->capabilities & ACPI_TAD_RT)
-+		sysfs_remove_group(&dev->kobj, &acpi_tad_time_attr_group);
-+
- 	if (dd->capabilities & ACPI_TAD_DC_WAKE)
- 		sysfs_remove_group(&dev->kobj, &acpi_tad_dc_attr_group);
- 
+--- a/arch/parisc/include/uapi/asm/ioctls.h
++++ b/arch/parisc/include/uapi/asm/ioctls.h
+@@ -10,10 +10,10 @@
+ #define TCSETS		_IOW('T', 17, struct termios) /* TCSETATTR */
+ #define TCSETSW		_IOW('T', 18, struct termios) /* TCSETATTRD */
+ #define TCSETSF		_IOW('T', 19, struct termios) /* TCSETATTRF */
+-#define TCGETA		_IOR('T', 1, struct termio)
+-#define TCSETA		_IOW('T', 2, struct termio)
+-#define TCSETAW		_IOW('T', 3, struct termio)
+-#define TCSETAF		_IOW('T', 4, struct termio)
++#define TCGETA          0x40125401
++#define TCSETA          0x80125402
++#define TCSETAW         0x80125403
++#define TCSETAF         0x80125404
+ #define TCSBRK		_IO('T', 5)
+ #define TCXONC		_IO('T', 6)
+ #define TCFLSH		_IO('T', 7)
 
 
