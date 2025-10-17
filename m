@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48341332912;
-	Fri, 17 Oct 2025 15:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131CD242935;
+	Fri, 17 Oct 2025 15:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714259; cv=none; b=NT1hV9c2yySbS/HBKCNTMfsbVoNXZD032foKVUqUnLbgJ+fNH1nyNMdJ36ReQrLLXGwBtSOqiSAi2yQzUEp5diNhWHnKbUF/D39KNenngdUwJHEmUsii1/xVUFGVJdtD6T57uCGd7FzyjqOAVm73mDnUfKgEVeM0eBQ0gRez3hg=
+	t=1760714262; cv=none; b=muShhQYuo5x25P9i9mDqNwtJOd5uiOPmVGvmpeC5nOZf3W7Wnuh2mamI48AYd1iU0ilmBb27lQVHA2x2r08r690eIdLwuB1jjWEDGsR2vnHagzrRy5phdlBlaq4ANaUrheBti3MzMXm7QsnSEdOXYNrKONpR2wWSh7Uq+MoBZRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714259; c=relaxed/simple;
-	bh=70TN6uJLtL6/y8tOmhiJLgiorjdltspeBsGs0lpr2kI=;
+	s=arc-20240116; t=1760714262; c=relaxed/simple;
+	bh=FTb1AAcHaLUm7kq+lzMKEc885htHBb4B002scHRzRNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqcPqp6S0L4ppu//2RxgUjmdOc9PgmZSt804Jp1JMv4rtJ0kzY+CXrj6ccQI4UG8zRXQyC4EMY2SMtybfQ85qffxHSZqCwIhxMV+zxG3J3KqwwxrVPBS990o4kbs6bXbG3RgorQOC9IR1Hl1t7lRNygcMH4g++yTBkGXtu0YRrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkdNz5ah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HIC6vFSQsJTA/8cGOj8HhGF0L7W82qiDN4YB0ksGf9ZOy3GgjhArJcLTY9AeOcOZGHQsHxSsIPKJTMtL+7pwqOpPmMCGzwbBJQG3s/oeRDb/R/I8Ciks8FywDQAyVAh2eebyA8+TrN5IS2f6GYFgFmg2wFH7dyzmQesPE1yucio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCdWzyg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkdNz5ah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDCBC4CEE7;
-	Fri, 17 Oct 2025 15:17:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCdWzyg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91101C4CEE7;
+	Fri, 17 Oct 2025 15:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714259;
-	bh=70TN6uJLtL6/y8tOmhiJLgiorjdltspeBsGs0lpr2kI=;
+	s=korg; t=1760714261;
+	bh=FTb1AAcHaLUm7kq+lzMKEc885htHBb4B002scHRzRNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkdNz5ahZ+3PUEK+6IcX0qnvV8ZBSJQyeQHGTGGseU5jggHQRIWaxxGsUuyN6A9Tm
-	 +d9I4uJghMEbm5TP/xYACslLzyGiO1HtodNj+p1m6HxfMClq5mM/v0OHsZzc3JICu0
-	 +BycpsnJ5hQaz1CPuEdwDU/PPwWO8tryWqNeVKjQ=
+	b=eCdWzyg71kI+G3fVi7QCWZ56ffFt9GrdyXfTHStxkVc1ghgZ6wSnpwVZmvRUD8wO2
+	 RAP4jqJYiGZDUGcLn0Rj9tHOMTXqeTbWnF/Rztgv3GoSkU+Gi0hJQTgb2EZiVj7TEm
+	 Wov6e1f2Lbhue9Bw4v/T9fQtScu+bQqgFoGHmiOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Le Chen <tom2cat@sjtu.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	KaFai Wan <kafai.wan@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	linux-s390@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	Alexey Gladkov <legion@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/277] bpf: Avoid RCU context warning when unpinning htab with internal structs
-Date: Fri, 17 Oct 2025 16:51:29 +0200
-Message-ID: <20251017145150.128493786@linuxfoundation.org>
+Subject: [PATCH 6.12 083/277] s390: vmlinux.lds.S: Reorder sections
+Date: Fri, 17 Oct 2025 16:51:30 +0200
+Message-ID: <20251017145150.164358049@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,71 +56,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KaFai Wan <kafai.wan@linux.dev>
+From: Alexey Gladkov <legion@kernel.org>
 
-[ Upstream commit 4f375ade6aa9f37fd72d7a78682f639772089eed ]
+[ Upstream commit 8d18ef04f940a8d336fe7915b5ea419c3eb0c0a6 ]
 
-When unpinning a BPF hash table (htab or htab_lru) that contains internal
-structures (timer, workqueue, or task_work) in its values, a BUG warning
-is triggered:
- BUG: sleeping function called from invalid context at kernel/bpf/hashtab.c:244
- in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 14, name: ksoftirqd/0
- ...
+In the upcoming changes, the ELF_DETAILS macro will be extended with
+the ".modinfo" section, which will cause an error:
 
-The issue arises from the interaction between BPF object unpinning and
-RCU callback mechanisms:
-1. BPF object unpinning uses ->free_inode() which schedules cleanup via
-   call_rcu(), deferring the actual freeing to an RCU callback that
-   executes within the RCU_SOFTIRQ context.
-2. During cleanup of hash tables containing internal structures,
-   htab_map_free_internal_structs() is invoked, which includes
-   cond_resched() or cond_resched_rcu() calls to yield the CPU during
-   potentially long operations.
+>> s390x-linux-ld: .tmp_vmlinux1: warning: allocated section `.modinfo' not in segment
+>> s390x-linux-ld: .tmp_vmlinux2: warning: allocated section `.modinfo' not in segment
+>> s390x-linux-ld: vmlinux.unstripped: warning: allocated section `.modinfo' not in segment
 
-However, cond_resched() or cond_resched_rcu() cannot be safely called from
-atomic RCU softirq context, leading to the BUG warning when attempting
-to reschedule.
+This happens because the .vmlinux.info use :NONE to override the default
+segment and tell the linker to not put the section in any segment at all.
 
-Fix this by changing from ->free_inode() to ->destroy_inode() and rename
-bpf_free_inode() to bpf_destroy_inode() for BPF objects (prog, map, link).
-This allows direct inode freeing without RCU callback scheduling,
-avoiding the invalid context warning.
+To avoid this, we need to change the sections order that will be placed
+in the default segment.
 
-Reported-by: Le Chen <tom2cat@sjtu.edu.cn>
-Closes: https://lore.kernel.org/all/1444123482.1827743.1750996347470.JavaMail.zimbra@sjtu.edu.cn/
-Fixes: 68134668c17f ("bpf: Add map side support for bpf timers.")
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20251008102628.808045-2-kafai.wan@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: linux-s390@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506062053.zbkFBEnJ-lkp@intel.com/
+Signed-off-by: Alexey Gladkov <legion@kernel.org>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://patch.msgid.link/20d40a7a3a053ba06a54155e777dcde7fdada1db.1758182101.git.legion@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Stable-dep-of: 9338d660b79a ("s390/vmlinux.lds.S: Move .vmlinux.info to end of allocatable sections")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/inode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kernel/vmlinux.lds.S | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/inode.c b/kernel/bpf/inode.c
-index 9aaf5124648bd..746b5644d9a19 100644
---- a/kernel/bpf/inode.c
-+++ b/kernel/bpf/inode.c
-@@ -775,7 +775,7 @@ static int bpf_show_options(struct seq_file *m, struct dentry *root)
- 	return 0;
- }
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index ff1ddba96352a..3f2f90e38808c 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -202,6 +202,11 @@ SECTIONS
+ 	. = ALIGN(PAGE_SIZE);
+ 	_end = . ;
  
--static void bpf_free_inode(struct inode *inode)
-+static void bpf_destroy_inode(struct inode *inode)
- {
- 	enum bpf_type type;
++	/* Debugging sections.	*/
++	STABS_DEBUG
++	DWARF_DEBUG
++	ELF_DETAILS
++
+ 	/*
+ 	 * uncompressed image info used by the decompressor
+ 	 * it should match struct vmlinux_info
+@@ -232,11 +237,6 @@ SECTIONS
+ #endif
+ 	} :NONE
  
-@@ -790,7 +790,7 @@ const struct super_operations bpf_super_ops = {
- 	.statfs		= simple_statfs,
- 	.drop_inode	= generic_delete_inode,
- 	.show_options	= bpf_show_options,
--	.free_inode	= bpf_free_inode,
-+	.destroy_inode	= bpf_destroy_inode,
- };
- 
- enum {
+-	/* Debugging sections.	*/
+-	STABS_DEBUG
+-	DWARF_DEBUG
+-	ELF_DETAILS
+-
+ 	/*
+ 	 * Make sure that the .got.plt is either completely empty or it
+ 	 * contains only the three reserved double words.
 -- 
 2.51.0
 
