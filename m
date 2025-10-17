@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA630330B35;
-	Fri, 17 Oct 2025 15:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272F6330B2E;
+	Fri, 17 Oct 2025 15:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716501; cv=none; b=lgH8pgoNHVur68qa0cjnHBrtglJZFSnypXj3dPXpHxbxvZTZW7Wh07cSUb5sGC/dHa0EPWrTjX72IkquMVxIIW0wgWuVpx6v209MhE4nXpWU5B/Zeyx1z+A+ath558V9oe935tBGSJ8ou8MQEFvRDc23z21KexTfIZUfTJjkuMk=
+	t=1760716504; cv=none; b=uYtQ49EaVZsdEETRb5OrUpSpqcAiDQl1eXk7DEJ30fBHe9yZskhkSj9xIzfgVAqQZL7ynxnZAFF8/EvsbEbf1bvn2IOTc2Tfa9SNo1tbfu7MSHSO4WOlEZ0vEHReQVtnZHCCOJ1O67TgRCEx9BpKYvrw6i0JdxDrRpKqS+WPEDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716501; c=relaxed/simple;
-	bh=Kk2su6eOPOc5zW7fGpxymRAAgI6rVJOnja2uu82+DAU=;
+	s=arc-20240116; t=1760716504; c=relaxed/simple;
+	bh=G6jyDXm09ma55RMnvWp4wfuPzomf4M3W9lRKTBtV4PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3nCDAzLGmdMVFURNOChIr8iqtihq7P18j+/PghgvR+elo0/y/t+hqFDXn+Zsfc9U5mUUAnHz5s33ze+xP5eIVKAeS/J7Qn7ULNYeGMwo5EWpMlRWYzrkPqUviPHKw1AZkXA4ArwI4EEdBil3dyOMcssopatCdDwkx58oYnwDkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eODKn5SZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYKJWThPf06VRYoJxt3eoOaReDPVwdvtCkchKbvWgQRzGmJyO6UJ1ZhrOCzQk7tR7TYjIKf4Yr6wzho1c0gmrnlw9QD4hmtGgwLstsRs/0CJvBHOtL831EAZTkGOFoQWghUDvpb8p4JI0bCuxjgCn4uPRWu3N7GGMb5i1OE6QZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxr3eUHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eODKn5SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3751C4CEFE;
-	Fri, 17 Oct 2025 15:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxr3eUHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A001BC113D0;
+	Fri, 17 Oct 2025 15:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716501;
-	bh=Kk2su6eOPOc5zW7fGpxymRAAgI6rVJOnja2uu82+DAU=;
+	s=korg; t=1760716504;
+	bh=G6jyDXm09ma55RMnvWp4wfuPzomf4M3W9lRKTBtV4PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eODKn5SZAHh0drSoaGMW0zTDhV2znwck1K9/Lc8ivoZrMJ5nodKzadlExF7JQ4iV0
-	 s5RXpexM+4dY+f4qQ7O5in5QYPa8DWiMVez/jrtsKxRnfMmQsStkizzsq9PLa/PY2Z
-	 654Psdr5edn5SMLLfZaK4RsGBBb062MCjuzG0JII=
+	b=gxr3eUHnssTg1s/Gwq88rzJfiHk42yJkqqDX0l9U3PhGFjL9Vs4JZOqtj8129YdkX
+	 nrQe2F5JOSjyxe+srcfyA3/myE3/Ym3/dF7o4FXCdIg0487Vyvsh3LOuaucx4Q9gor
+	 28yRVjMAN/PnjbCbB5rl1W1hR0aNRs+4rWrsD4+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.15 211/276] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
-Date: Fri, 17 Oct 2025 16:55:04 +0200
-Message-ID: <20251017145150.167269028@linuxfoundation.org>
+	Pratyush Yadav <pratyush@kernel.org>,
+	Santhosh Kumar K <s-k6@ti.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 212/276] spi: cadence-quadspi: Flush posted register writes before INDAC access
+Date: Fri, 17 Oct 2025 16:55:05 +0200
+Message-ID: <20251017145150.203042791@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,43 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Pratyush Yadav <pratyush@kernel.org>
 
-commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
+commit 29e0b471ccbd674d20d4bbddea1a51e7105212c5 upstream.
 
-The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
-(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
+cqspi_indirect_read_execute() and cqspi_indirect_write_execute() first
+set the enable bit on APB region and then start reading/writing to the
+AHB region. On TI K3 SoCs these regions lie on different endpoints. This
+means that the order of the two operations is not guaranteed, and they
+might be reordered at the interconnect level.
 
-But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
-the MSI vector. This causes wrong MSI vector to be triggered, leading to
-the failure of PCI endpoint Kselftest MSI_TEST test case.
+It is possible for the AHB write to be executed before the APB write to
+enable the indirect controller, causing the transaction to be invalid
+and the write erroring out. Read back the APB region write before
+accessing the AHB region to make sure the write got flushed and the race
+condition is eliminated.
 
-To fix this issue, convert the interrupt number to MSI vector.
-
-Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+CC: stable@vger.kernel.org
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
+Message-ID: <20250905185958.3575037-2-s-k6@ti.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1839,10 +1839,10 @@ static int tegra_pcie_ep_raise_legacy_ir
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -694,6 +694,7 @@ static int cqspi_indirect_read_execute(s
+ 	reinit_completion(&cqspi->transfer_complete);
+ 	writel(CQSPI_REG_INDIRECTRD_START_MASK,
+ 	       reg_base + CQSPI_REG_INDIRECTRD);
++	readl(reg_base + CQSPI_REG_INDIRECTRD); /* Flush posted write. */
  
- static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
- {
--	if (unlikely(irq > 31))
-+	if (unlikely(irq > 32))
- 		return -EINVAL;
- 
--	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
-+	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
- 
- 	return 0;
- }
+ 	while (remaining > 0) {
+ 		if (!wait_for_completion_timeout(&cqspi->transfer_complete,
+@@ -834,6 +835,8 @@ static int cqspi_indirect_write_execute(
+ 	reinit_completion(&cqspi->transfer_complete);
+ 	writel(CQSPI_REG_INDIRECTWR_START_MASK,
+ 	       reg_base + CQSPI_REG_INDIRECTWR);
++	readl(reg_base + CQSPI_REG_INDIRECTWR); /* Flush posted write. */
++
+ 	/*
+ 	 * As per 66AK2G02 TRM SPRUHY8F section 11.15.5.3 Indirect Access
+ 	 * Controller programming sequence, couple of cycles of
 
 
