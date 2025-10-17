@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D354432C929;
-	Fri, 17 Oct 2025 15:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F112F12B8;
+	Fri, 17 Oct 2025 15:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714663; cv=none; b=KLmAIJGGJXdIfUSkjw0+cGCsVEQyaMtsHRrFdm5Rzq9ZIb7jdcVr9/Mgl/vjn+WRpParl8Va/Rq/t27+EglHO0ARlmqRESewXpixxc9Zl02CcC8b5imE8zhG7jCRKOqsNBEdyOu3UpKIcMI9Zx/mvHQz0dAmpbWXiiD+8Fno/yw=
+	t=1760714667; cv=none; b=Al+tWdtN3aVWRQurwjSYG6eSNU05u4dW/2Td4djv7RjII7eBahycpN5Q/Hgx61BAPzGv6QgRrDU02PmZ7DbuPkLHkqvJEHmg069mcxlR1n3wRqH74PtLOjtp6xgG12LzByjpuVoFKqYGy/aMgE8/us+OVoR/m2yVxzRPmrWQbo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714663; c=relaxed/simple;
-	bh=Z9dcxC8+YDYCIF1CQ2FGbQOt+VNTcnbEkZHLL56o3aU=;
+	s=arc-20240116; t=1760714667; c=relaxed/simple;
+	bh=NMEBeymKL/irGjf0DLObdTX4+vmfyndE7yt2kshBPw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbDdbRqoOrVgNi4RJR2FSh6dYAe/HQWzqfxfbDGaH/Sr8+3/A2b71igrSVjya1WkfDoFbpbzgxeUtFFkPymQbBBrFDbrakTbZXWU1gtPSkNANIbtpAarGNXq82fCAfP7+sbJsot+MgKiV00kH7XitF/KUuCchZ/52rl7TOGnYCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kisic/eB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gG3uR8ecPeKRAocyfIrFYyGAAk9tq0j/v8LnyoJBQEFqfmulOi8MAdQ/5PVft9ZR6Jn7A3Tsj/7McmXEUHEQVHjpfoz3MCbio3hY1PX+8Nzvp34KY2pE92+XAfz0cvi8NKODZYU7uk1ADkLYfXuO9yROtOSp/WbzREzpJZENY3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUQdudIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kisic/eB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573F1C4CEE7;
-	Fri, 17 Oct 2025 15:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUQdudIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CB5C4CEE7;
+	Fri, 17 Oct 2025 15:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714663;
-	bh=Z9dcxC8+YDYCIF1CQ2FGbQOt+VNTcnbEkZHLL56o3aU=;
+	s=korg; t=1760714666;
+	bh=NMEBeymKL/irGjf0DLObdTX4+vmfyndE7yt2kshBPw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kisic/eBJf6KDA3ZXsgHoPXJzmAx8TciBvBnhT6SHBUAzrZTE0vS6EO2cDtdy8fgc
-	 IJomI/m8nN5by5rqioTv+VPbvXWCiGP77UZC6/8kpCj2Fe2sJJDtJntgVeEhiRsdFc
-	 ABHsrSRVvKgwHLTptyblZW55duLzY96H6Wz5iNvM=
+	b=dUQdudICjXT4p7BJFc0F26PM5vqbSc1sMgHxu4tMte4oxq4LXXvUbjFnns3a3WcRR
+	 ALMbkiRmTQOBHw4c0DMC+tg3cQPWIwvomySTmcmmlPDf0oqCewfLb/1BEbT3EFru4O
+	 NoUy8OhbwPDux2iIV4Yx6a/OnHe0QRau9uN5CvRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/277] media: mc: Clear minor number before put device
-Date: Fri, 17 Oct 2025 16:53:51 +0200
-Message-ID: <20251017145155.305578612@linuxfoundation.org>
+	Li RongQing <lirongqing@baidu.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 207/277] mm/hugetlb: early exit from hugetlb_pages_alloc_boot() when max_huge_pages=0
+Date: Fri, 17 Oct 2025 16:53:34 +0200
+Message-ID: <20251017145154.684562505@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,48 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
+commit b322e88b3d553e85b4e15779491c70022783faa4 upstream.
 
-The device minor should not be cleared after the device is released.
+Optimize hugetlb_pages_alloc_boot() to return immediately when
+max_huge_pages is 0, avoiding unnecessary CPU cycles and the below log
+message when hugepages aren't configured in the kernel command line.
+[    3.702280] HugeTLB: allocation took 0ms with hugepage_allocation_threads=32
 
-Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
-Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250814102333.4428-1-lirongqing@baidu.com
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Tested-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-devnode.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ mm/hugetlb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/mc/mc-devnode.c
-+++ b/drivers/media/mc/mc-devnode.c
-@@ -50,11 +50,6 @@ static void media_devnode_release(struct
- {
- 	struct media_devnode *devnode = to_media_devnode(cd);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3453,6 +3453,9 @@ static void __init hugetlb_hstate_alloc_
+ 		initialized = true;
+ 	}
  
--	mutex_lock(&media_devnode_lock);
--	/* Mark device node number as free */
--	clear_bit(devnode->minor, media_devnode_nums);
--	mutex_unlock(&media_devnode_lock);
--
- 	/* Release media_devnode and perform other cleanups as needed. */
- 	if (devnode->release)
- 		devnode->release(devnode);
-@@ -281,6 +276,7 @@ void media_devnode_unregister(struct med
- 	/* Delete the cdev on this minor as well */
- 	cdev_device_del(&devnode->cdev, &devnode->dev);
- 	devnode->media_dev = NULL;
-+	clear_bit(devnode->minor, media_devnode_nums);
- 	mutex_unlock(&media_devnode_lock);
- 
- 	put_device(&devnode->dev);
++	if (!h->max_huge_pages)
++		return;
++
+ 	/* do node specific alloc */
+ 	if (hugetlb_hstate_alloc_pages_specific_nodes(h))
+ 		return;
 
 
