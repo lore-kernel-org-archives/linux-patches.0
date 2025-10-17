@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01069330B1E;
-	Fri, 17 Oct 2025 15:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F9E330B2D;
+	Fri, 17 Oct 2025 15:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716423; cv=none; b=sqNwW02nSrWjApvuA0apsJeY6XLlHBn1SAtlvu7E6UlA+aLBnd/1XuQVjU5Hx9j9C77qVL5jZ02U+ehMp7aJykrYCq5WFjEGFdZAAt5NSFj95HNbb+6fFZ6Wds5jTfQ+zN6GTwHpbZP6aHi6NHawa/NJaiNCVY3HnF4PAQm8c0E=
+	t=1760716425; cv=none; b=EagPoHNUQnRkPrMGobKe/xZREWVGk4DOH5DIruilHSL5aCTBLPSJd2A5JiJCFFDWOs4y88hUbyJ/2LZKeukbwYa6+rAn6vZ9FzzpCG2g9en9u8mqYkOwA6ZVf4RzADbviT6Ohbj5iursRssAKVf1W277INDhPkYr1/EH6psdVrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716423; c=relaxed/simple;
-	bh=k563CMuYSM/A0GodW9u8VvWAFpHI6rZmmZuwinTZXKY=;
+	s=arc-20240116; t=1760716425; c=relaxed/simple;
+	bh=yPeBbmUN45EpIBGWzOpqqPTc3GEoz8TOYgcEMz/uj80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=syz7cNCDXgUxc5r2LGzGgIpoB0y7lnI+QH7oNjpAZQ2lLhZrQAu1Z9zXS66NevpbpIGFbLQ+25SjTdH0xwF2OzA/I7ovgFJNvUrbTQaZHp6lLVqCsd+j4hZpU5WOWMqthOoTjN99nmhKBoGf0SIsfD5wmZFjMLbOypnB4OvHfIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9h+zVMA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fUAkks37+Mac55+qyKrsAbaLDoLvpD8ReHk6yY1FMKryw6PZ6pgyqrjXD8MrSAXLmxEmJlQ9sP+s0c1FH1cUOPw27/dYflVCe4EpLlBVTVtSl9FL1iB0YwrrNPumU0F4yjPWa9vdVCuSht8bAYh6OOD7+ttCCPwB0+viZgs3z4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjln1DzL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9h+zVMA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACD7C4CEE7;
-	Fri, 17 Oct 2025 15:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjln1DzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5248FC4CEE7;
+	Fri, 17 Oct 2025 15:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716422;
-	bh=k563CMuYSM/A0GodW9u8VvWAFpHI6rZmmZuwinTZXKY=;
+	s=korg; t=1760716425;
+	bh=yPeBbmUN45EpIBGWzOpqqPTc3GEoz8TOYgcEMz/uj80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9h+zVMAUjAlM2eQbzXBN8yzk3G4bBwrTd31Hof/7hO9jziMVc5Ys+rCaAOQhggyN
-	 RLQJYsANaoO2GwEEUkdBgCaeX3+vJJYB+lDGVmgFCplNB7mCZ11D9OPElo/fcNXG9E
-	 uU0IjX5D/cAICpKD4gFnSuJYQ5FM0PoLN/W71YU8=
+	b=fjln1DzLpV0pE57wYzvd336bemn/zPEDu+BNc0l9E2DHgkxkRYwAgtwVETv2GX/Bu
+	 bXUAjngBVlpm1xWRBWzp56UPYKom6lK3bdcwAxoh+IQLC4Qu9gnCFRoH6cKHLKaFp9
+	 /a5qCX8pUCq18Jb+xj3si3Az6IOtlegqOctLbKHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zihuan Zhang <zhangzihuan@kylinos.cn>
-Subject: [PATCH 5.15 178/276] cpufreq: intel_pstate: Fix object lifecycle issue in update_qos_request()
-Date: Fri, 17 Oct 2025 16:54:31 +0200
-Message-ID: <20251017145148.974165070@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 187/276] KEYS: trusted_tpm1: Compare HMAC values in constant time
+Date: Fri, 17 Oct 2025 16:54:40 +0200
+Message-ID: <20251017145149.298937964@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,58 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 69e5d50fcf4093fb3f9f41c4f931f12c2ca8c467 upstream.
+commit eed0e3d305530066b4fc5370107cff8ef1a0d229 upstream.
 
-The cpufreq_cpu_put() call in update_qos_request() takes place too early
-because the latter subsequently calls freq_qos_update_request() that
-indirectly accesses the policy object in question through the QoS request
-object passed to it.
+To prevent timing attacks, HMAC value comparison needs to be constant
+time.  Replace the memcmp() with the correct function, crypto_memneq().
 
-Fortunately, update_qos_request() is called under intel_pstate_driver_lock,
-so this issue does not matter for changing the intel_pstate operation
-mode, but it theoretically can cause a crash to occur on CPU device hot
-removal (which currently can only happen in virt, but it is formally
-supported nevertheless).
+[For the Fixes commit I used the commit that introduced the memcmp().
+It predates the introduction of crypto_memneq(), but it was still a bug
+at the time even though a helper function didn't exist yet.]
 
-Address this issue by modifying update_qos_request() to drop the
-reference to the policy later.
-
-Fixes: da5c504c7aae ("cpufreq: intel_pstate: Implement QoS supported freq constraints")
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zihuan Zhang <zhangzihuan@kylinos.cn>
-Link: https://patch.msgid.link/2255671.irdbgypaU6@rafael.j.wysocki
+Fixes: d00a1c72f7f4 ("keys: add new trusted key-type")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ security/keys/trusted-keys/trusted_tpm1.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1307,10 +1307,10 @@ static void update_qos_request(enum freq
- 			continue;
+--- a/security/keys/trusted-keys/trusted_tpm1.c
++++ b/security/keys/trusted-keys/trusted_tpm1.c
+@@ -7,6 +7,7 @@
+  */
  
- 		req = policy->driver_data;
--		cpufreq_cpu_put(policy);
--
--		if (!req)
-+		if (!req) {
-+			cpufreq_cpu_put(policy);
- 			continue;
-+		}
+ #include <crypto/hash_info.h>
++#include <crypto/algapi.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
+ #include <linux/parser.h>
+@@ -241,7 +242,7 @@ int TSS_checkhmac1(unsigned char *buffer
+ 	if (ret < 0)
+ 		goto out;
  
- 		if (hwp_active)
- 			intel_pstate_get_hwp_cap(cpu);
-@@ -1326,6 +1326,8 @@ static void update_qos_request(enum freq
- 
- 		if (freq_qos_update_request(req, freq) < 0)
- 			pr_warn("Failed to update freq constraint: CPU%d\n", i);
-+
-+		cpufreq_cpu_put(policy);
+-	if (memcmp(testhmac, authdata, SHA1_DIGEST_SIZE))
++	if (crypto_memneq(testhmac, authdata, SHA1_DIGEST_SIZE))
+ 		ret = -EINVAL;
+ out:
+ 	kfree_sensitive(sdesc);
+@@ -334,7 +335,7 @@ static int TSS_checkhmac2(unsigned char
+ 			  TPM_NONCE_SIZE, ononce, 1, continueflag1, 0, 0);
+ 	if (ret < 0)
+ 		goto out;
+-	if (memcmp(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
++	if (crypto_memneq(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
+ 		ret = -EINVAL;
+ 		goto out;
  	}
- }
- 
+@@ -343,7 +344,7 @@ static int TSS_checkhmac2(unsigned char
+ 			  TPM_NONCE_SIZE, ononce, 1, continueflag2, 0, 0);
+ 	if (ret < 0)
+ 		goto out;
+-	if (memcmp(testhmac2, authdata2, SHA1_DIGEST_SIZE))
++	if (crypto_memneq(testhmac2, authdata2, SHA1_DIGEST_SIZE))
+ 		ret = -EINVAL;
+ out:
+ 	kfree_sensitive(sdesc);
 
 
