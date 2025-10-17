@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAF369985;
-	Fri, 17 Oct 2025 15:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6580F33711C;
+	Fri, 17 Oct 2025 15:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713724; cv=none; b=JB64s9IYXKb4OMSvh9EMRa3LAZl5Q/YQ4VQ8/CbjsIdnqxc5O58jgyNolDDlX8mSridxUQXuljnGLh6n0VaOTQkFXoCTbX8f3GrNMietO44E7lESTGD6oYyi02rGU3CmFWF+S+qNoYI01xAYe9IXB3YrroZZfHhWxxOek5IFWtI=
+	t=1760713727; cv=none; b=LepTcdQMlKCR/QneXimc0/8q4Sdc6mD6WA+HYnE7eWEThhbEsgNWRVFcUiPumutuhuPZ3Lg7kJkW1yOfPY6OeONkzxVF1qytXG1qH9lasuUB8DR7wqqkjvnsc/aY37hiuYM/bveGAxuzX1Q5lKz9D3T3QUldOu+eaVMLclhMDjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713724; c=relaxed/simple;
-	bh=LWuxLdyMCdsgCgIN32Yv9/0I81MIDjsLi4fFOUyhyk4=;
+	s=arc-20240116; t=1760713727; c=relaxed/simple;
+	bh=JKQtEKH45s0f9odsipS7gM6flVmaQ173y0oxX8US73A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwN1Ecw/e9gxk3ADdJyKoUCYLdtuZAgnZiFMTzpSkbU58NO6f2dMmuGnldNMwyy3tm14qvAKL1+e5TkseU8DThzlo6z5XKUPXbIebmcDb87FIUPU0k2nQzZKy6SlhoyBbaO7/yVqkFOXK+8ggoUAJAaPHguf37r6U5M3yJA78F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAiAn/Fv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eB7ykkJc5myc41j908ptVK3Wz2nuSTtZ8qLpq0SL/Fy1mHozfQIWMCrK+5HWr2OvF+nKKrc1M8RFJOIZJz6r/SfLVMlzxAS1Go+gVL4ZJG5hT5u8WOC8EPDwVL3HlDI7tTqy+eaclXQMNpZyclN7w8GzrOTiT/RXeATDjJ7CGus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbIl9gUh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAiAn/Fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C73C4CEF9;
-	Fri, 17 Oct 2025 15:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbIl9gUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9380BC4CEF9;
+	Fri, 17 Oct 2025 15:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713724;
-	bh=LWuxLdyMCdsgCgIN32Yv9/0I81MIDjsLi4fFOUyhyk4=;
+	s=korg; t=1760713727;
+	bh=JKQtEKH45s0f9odsipS7gM6flVmaQ173y0oxX8US73A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAiAn/Fv60fOogo8neKugqmZxv0BJUqKMZqOjhxC2+j13XRp0jgc+A1A6nvtygnyx
-	 4qJ11am1I3PE6JUlpEjNqvBEmWVd3ANgVTe3QTLVH+O1yop7Ss9hjJTLvs+YBpWyN+
-	 uXoS5WmMMPZ1hymoNdT4pgL6tOHQVO+vQfBKb9a8=
+	b=xbIl9gUhclKgv+ot6rkVxWwjQu63I420gYYxSZMtyXkksXgcuaRfsxMwEh825vgC+
+	 97z44cD9crzfz7u1RHaUE06C+qr3VHdAP9EMwrD4q6QKZm23yF+D7gXMX6qIHwXiS2
+	 lMaVZaeuYJsCaeloaQ75IZieX1RigppPFW01Tajk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 080/201] blk-crypto: fix missing blktrace bio split events
-Date: Fri, 17 Oct 2025 16:52:21 +0200
-Message-ID: <20251017145137.694188183@linuxfoundation.org>
+	Joel Granados <joel.granados@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.6 098/201] iommu/vt-d: PRS isnt usable if PDS isnt supported
+Date: Fri, 17 Oct 2025 16:52:39 +0200
+Message-ID: <20251017145138.349835735@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,43 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 06d712d297649f48ebf1381d19bd24e942813b37 upstream.
+commit 5ef7e24c742038a5d8c626fdc0e3a21834358341 upstream.
 
-trace_block_split() is missing, resulting in blktrace inability to catch
-BIO split events and making it harder to analyze the BIO sequence.
+The specification, Section 7.10, "Software Steps to Drain Page Requests &
+Responses," requires software to submit an Invalidation Wait Descriptor
+(inv_wait_dsc) with the Page-request Drain (PD=1) flag set, along with
+the Invalidation Wait Completion Status Write flag (SW=1). It then waits
+for the Invalidation Wait Descriptor's completion.
 
+However, the PD field in the Invalidation Wait Descriptor is optional, as
+stated in Section 6.5.2.9, "Invalidation Wait Descriptor":
+
+"Page-request Drain (PD): Remapping hardware implementations reporting
+ Page-request draining as not supported (PDS = 0 in ECAP_REG) treat this
+ field as reserved."
+
+This implies that if the IOMMU doesn't support the PDS capability, software
+can't drain page requests and group responses as expected.
+
+Do not enable PCI/PRI if the IOMMU doesn't support PDS.
+
+Reported-by: Joel Granados <joel.granados@kernel.org>
+Closes: https://lore.kernel.org/r/20250909-jag-pds-v1-1-ad8cba0e494e@kernel.org
+Fixes: 66ac4db36f4c ("iommu/vt-d: Add page request draining support")
 Cc: stable@vger.kernel.org
-Fixes: 488f6682c832 ("block: blk-crypto-fallback for Inline Encryption")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20250915062946.120196-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-crypto-fallback.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/intel/iommu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/blk-crypto-fallback.c
-+++ b/block/blk-crypto-fallback.c
-@@ -18,6 +18,7 @@
- #include <linux/module.h>
- #include <linux/random.h>
- #include <linux/scatterlist.h>
-+#include <trace/events/block.h>
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4415,7 +4415,7 @@ static struct iommu_device *intel_iommu_
+ 			}
  
- #include "blk-cgroup.h"
- #include "blk-crypto-internal.h"
-@@ -229,7 +230,9 @@ static bool blk_crypto_fallback_split_bi
- 			bio->bi_status = BLK_STS_RESOURCE;
- 			return false;
+ 			if (info->ats_supported && ecap_prs(iommu->ecap) &&
+-			    pci_pri_supported(pdev))
++			    ecap_pds(iommu->ecap) && pci_pri_supported(pdev))
+ 				info->pri_supported = 1;
  		}
-+
- 		bio_chain(split_bio, bio);
-+		trace_block_split(split_bio, bio->bi_iter.bi_sector);
- 		submit_bio_noacct(bio);
- 		*bio_ptr = split_bio;
  	}
 
 
