@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA386217722;
-	Fri, 17 Oct 2025 15:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FE732C928;
+	Fri, 17 Oct 2025 15:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714611; cv=none; b=EcvOUtQgO2sqT+i2dkR8bwEUpCY7UBWr6PaYnPw4utjvItgWhOcSOY0D/xQuw4UdQlmp3QcQbVWjpMwscXesTrv6BCEGpE+nup4i2LqeONEt/hPrPftDQEJo8Y2ymdLSW8UInLqs48S2wSaNygM4amy9glnCyG5e7zr672PA5dU=
+	t=1760714614; cv=none; b=reT/JWiP9QDf2WOdoDNJdZDz8ReRESlr7qKQZaYD0H58HYDY3RCUA8hj5dtPh+MeA3aMq99AjJu/BLa+KA5GrJEnZ4IKMa9jecGj7dA9uC+OUbOEu5IJni5dnihIw4hCiicPLZlQPo/cxk6XH4W4xUgZLbnT7fA9PXyfWrdP8us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714611; c=relaxed/simple;
-	bh=1YvF/OkCqQzO+BiTpKaPvb3000KCsi3DJ6c2Lmf/Qbw=;
+	s=arc-20240116; t=1760714614; c=relaxed/simple;
+	bh=Yb8jkMOsyZ5+WSIJb1opEdICDiNOi5pe9kqUA0ggC/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9/pH2hdR7gGpDHeBknKcX84VGZV1ZfPqOi3HSwFe6njd93EzgVYYT5S2CBBcm56uRPvF5OgGYcnESk9dnBxQ5tK1GBkT6/ZSdeGHqEeX47yUeZiUdGWh4PZDknDrwVFU85/IGo6jTvTeYI1c8tzZl5+9cEiX+0iSrjXhk6hoMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H86zWnOu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCoxWR/QUmhpTSW0PBaqVNMKxicz+VayO5HBwd8UaZoBoqy6CkMDaZvX0Ovs4sr2Vvxi57BmGeIctqHcYTXb0XLBnIlgezyNV1F3cE7/sofpoODLXKx1P4+Foh0lV/0mzyyrMrF7Kw0FvQS0Woy6vBLEp56cbmzt+HVBwNPmDl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxkfEbS8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H86zWnOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C97DC4CEE7;
-	Fri, 17 Oct 2025 15:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxkfEbS8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032DBC113D0;
+	Fri, 17 Oct 2025 15:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714611;
-	bh=1YvF/OkCqQzO+BiTpKaPvb3000KCsi3DJ6c2Lmf/Qbw=;
+	s=korg; t=1760714614;
+	bh=Yb8jkMOsyZ5+WSIJb1opEdICDiNOi5pe9kqUA0ggC/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H86zWnOu3fsoqZg1HgBBlgReekxyU7rNjcHDtMDGGUAO0IG506jYX2/hNC9Y2s87I
-	 7glI9yaPOrw0hEBWILlU6YzBlKbo+hJ/MchbppYqVLJYE0cEYm6HVbK4tBJAi8DNQe
-	 QXx1ICgt5NtDuMPvLnagOM9+vPzt5sK1B/wV/NtU=
+	b=lxkfEbS8t7PJJZjnN3nqBB3fkrdZNnoLKsDU0hdtJGcZbU1V/KdG+qCUMOG2p6jsY
+	 Co+IBgwR0TD2b3LRrzjoELZ36r4MLZYef05x6xbjkIbAaGm/AYDqMiMCnMHFKCbxp8
+	 tkyblA9WaDaD2TPXKXf++Ja/2UtUC/G+ycSKauRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Autumn Dececco <autumndececco@gmail.com>,
-	Nick Morrow <morrownr@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 204/277] wifi: mt76: mt7921u: Add VID/PID for Netgear A7500
-Date: Fri, 17 Oct 2025 16:53:31 +0200
-Message-ID: <20251017145154.572193102@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Florian Weimer <fweimer@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH 6.12 174/277] rseq/selftests: Use weak symbol reference, not definition, to link with glibc
+Date: Fri, 17 Oct 2025 16:53:01 +0200
+Message-ID: <20251017145153.482123368@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,35 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Morrow <morrownr@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit fc6627ca8a5f811b601aea74e934cf8a048c88ac upstream.
+commit a001cd248ab244633c5fabe4f7c707e13fc1d1cc upstream.
 
-Add VID/PID 0846/9065 for Netgear A7500.
+Add "extern" to the glibc-defined weak rseq symbols to convert the rseq
+selftest's usage from weak symbol definitions to weak symbol _references_.
+Effectively re-defining the glibc symbols wreaks havoc when building with
+-fno-common, e.g. generates segfaults when running multi-threaded programs,
+as dynamically linked applications end up with multiple versions of the
+symbols.
 
-Reported-by: Autumn Dececco <autumndececco@gmail.com>
-Tested-by: Autumn Dececco <autumndececco@gmail.com>
-Signed-off-by: Nick Morrow <morrownr@gmail.com>
+Building with -fcommon, which until recently has the been the default for
+GCC and clang, papers over the bug by allowing the linker to resolve the
+weak/tentative definition to glibc's "real" definition.
+
+Note, the symbol itself (or rather its address), not the value of the
+symbol, is set to 0/NULL for unresolved weak symbol references, as the
+symbol doesn't exist and thus can't have a value.  Check for a NULL rseq
+size pointer to handle the scenario where the test is statically linked
+against a libc that doesn't support rseq in any capacity.
+
+Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
+Reported-by: Thomas Gleixner <tglx@linutronix.de>
+Suggested-by: Florian Weimer <fweimer@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: stable@vger.kernel.org
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/80bacfd6-6073-4ce5-be32-ae9580832337@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Closes: https://lore.kernel.org/all/87frdoybk4.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/rseq/rseq.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -21,6 +21,9 @@ static const struct usb_device_id mt7921
- 	/* Netgear, Inc. [A8000,AXE3000] */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9060, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
-+	/* Netgear, Inc. A7500 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9065, 0xff, 0xff, 0xff),
-+		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
- 	/* TP-Link TXE50UH */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0107, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -40,9 +40,9 @@
+  * Define weak versions to play nice with binaries that are statically linked
+  * against a libc that doesn't support registering its own rseq.
+  */
+-__weak ptrdiff_t __rseq_offset;
+-__weak unsigned int __rseq_size;
+-__weak unsigned int __rseq_flags;
++extern __weak ptrdiff_t __rseq_offset;
++extern __weak unsigned int __rseq_size;
++extern __weak unsigned int __rseq_flags;
+ 
+ static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
+ static const unsigned int *libc_rseq_size_p = &__rseq_size;
+@@ -198,7 +198,7 @@ void rseq_init(void)
+ 	 * libc not having registered a restartable sequence.  Try to find the
+ 	 * symbols if that's the case.
+ 	 */
+-	if (!*libc_rseq_size_p) {
++	if (!libc_rseq_size_p || !*libc_rseq_size_p) {
+ 		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
+ 		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
+ 		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
 
 
