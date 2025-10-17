@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83F8330B17;
-	Fri, 17 Oct 2025 15:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE458330B1F;
+	Fri, 17 Oct 2025 15:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716281; cv=none; b=UHOm/BUEINImdi9nOtkxHJrFP01HSL6HxwP5f4Htw2ArKM4l14LfRZt5jkhjhYFKjYHhTAIUlAEauAhCw4ylQaineGd3a3KH83tAMfg0Hbwbfnco5bxRNRBk34YDJBYxz3bTnBi3TA603ejX8Au1JsTRhSmba7CblLo0GhJb9pQ=
+	t=1760716284; cv=none; b=tMj5GC7KTTyoSkhV6QQkIw9hfJDhiLv4asIDAhr4gs+TimfapeneUMSBp3xWwSoid1udxCt9/nTbx5CB75jZv+PLRNNFhHJp/zp1SzcCgaAXaY+6OhyP4PinQ5+lvjv8jIgj3thwF2TvZO0/QqaubXAFe6QJoa+0/eVoBVkDtnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716281; c=relaxed/simple;
-	bh=So/p1SbtBgXV4xqINdRsJ4+T82XnKlysSTPk49p3Zt0=;
+	s=arc-20240116; t=1760716284; c=relaxed/simple;
+	bh=QXGdPL9HsrLejOgnyfgGuEcqwpj7te9zfl0Q+cAvLRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhI2kLlx3oXxdpHm2LrTtGrnmyx/2+HJ+RfxHR5rcb4DqYT84rykfrXXbLSkVaHDvNlHX9hdQW76bOdpM7x/uzx9XNWwbeEyfZYtMZ9+ztpKcCO9mGOS/dd2mKLxmrq03g9I24mYNCGEgdUeGTVq8Soj3O9uD/Rgn2AJRQtm21A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNODGOQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WjcUzbZRzG89lSRWIoEFD8FbH1iTdcKujlCWI6HXlK44pt1ettpP0g1mV5dcsZkgvJbtSzYP1+KoUZTY03//4GBsBtd/5wXheY+neOG6hXAd+sUqcaH+vDdlMHPO+wiRtvu9gVd14HiXMFZvp0GJ907ygnrmZCe1pZN7x3dlYmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJIzi0qR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNODGOQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89BBC4CEFE;
-	Fri, 17 Oct 2025 15:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJIzi0qR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E85C4CEE7;
+	Fri, 17 Oct 2025 15:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716281;
-	bh=So/p1SbtBgXV4xqINdRsJ4+T82XnKlysSTPk49p3Zt0=;
+	s=korg; t=1760716284;
+	bh=QXGdPL9HsrLejOgnyfgGuEcqwpj7te9zfl0Q+cAvLRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNODGOQs+glT8b/v+k0Rq1AgL250EDXJHP3mkYDFCU2xPcA4PlOnBdwQknwC8H3as
-	 npiUI0lo+dUbP8zyQNnod1zMGrv/UnKOQJw2Q9+a/Y2dbJ1GwnADMUVG/aKI1RPyJS
-	 FBQ/5dMu/uXVA+7UqFeSv9XKsxdGmyBI4U05JV24=
+	b=jJIzi0qRbThE295kBcNgDpYXdKM3jC14OvIdlrv47GpDg20PRnvUMXAOqoYZToMNL
+	 BabZup7EzxEPDxObxg1IfPdWtag1jOh8jF3MepuJNZ7rRJ09cIAkF434xckCaaSekj
+	 39tG+MBpqUAUGYdbH/uxYk+tVBJV++z7IQVAHP+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/276] perf test: Dont leak workload gopipe in PERF_RECORD_*
-Date: Fri, 17 Oct 2025 16:53:49 +0200
-Message-ID: <20251017145147.447011793@linuxfoundation.org>
+	syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com,
+	Deepak Sharma <deepak.sharma.472935@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 110/276] net: nfc: nci: Add parameter validation for packet data
+Date: Fri, 17 Oct 2025 16:53:23 +0200
+Message-ID: <20251017145146.495441235@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -63,202 +52,342 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Deepak Sharma <deepak.sharma.472935@gmail.com>
 
-[ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
+commit 9c328f54741bd5465ca1dc717c84c04242fac2e1 upstream.
 
-The test starts a workload and then opens events. If the events fail
-to open, for example because of perf_event_paranoid, the gopipe of the
-workload is leaked and the file descriptor leak check fails when the
-test exits. To avoid this cancel the workload when opening the events
-fails.
+Syzbot reported an uninitialized value bug in nci_init_req, which was
+introduced by commit 5aca7966d2a7 ("Merge tag
+'perf-tools-fixes-for-v6.17-2025-09-16' of
+git://git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools").
 
-Before:
-```
-$ perf test -vv 7
-  7: PERF_RECORD_* events & perf_sample fields:
- --- start ---
-test child forked, pid 1189568
-Using CPUID GenuineIntel-6-B7-1
- ------------------------------------------------------------
-perf_event_attr:
-  type                    	   0 (PERF_TYPE_HARDWARE)
-  config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                	   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-Attempt to add: software/cpu-clock/
-..after resolving event: software/config=0/
-cpu-clock -> software/cpu-clock/
- ------------------------------------------------------------
-perf_event_attr:
-  type                             1 (PERF_TYPE_SOFTWARE)
-  size                             136
-  config                           0x9 (PERF_COUNT_SW_DUMMY)
-  sample_type                      IP|TID|TIME|CPU
-  read_format                      ID|LOST
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  enable_on_exec                   1
-  task                             1
-  sample_id_all                    1
-  mmap2                            1
-  comm_exec                        1
-  ksymbol                          1
-  bpf_event                        1
-  { wakeup_events, wakeup_watermark } 1
- ------------------------------------------------------------
-sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
-perf_evlist__open: Permission denied
- ---- end(-2) ----
-Leak of file descriptor 6 that opened: 'pipe:[14200347]'
- ---- unexpected signal (6) ----
-iFailed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-    #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
-    #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
-    #3 0x7f29ce849cc2 in raise raise.c:27
-    #4 0x7f29ce8324ac in abort abort.c:81
-    #5 0x565358f662d4 in check_leaks builtin-test.c:226
-    #6 0x565358f6682e in run_test_child builtin-test.c:344
-    #7 0x565358ef7121 in start_command run-command.c:128
-    #8 0x565358f67273 in start_test builtin-test.c:545
-    #9 0x565358f6771d in __cmd_test builtin-test.c:647
-    #10 0x565358f682bd in cmd_test builtin-test.c:849
-    #11 0x565358ee5ded in run_builtin perf.c:349
-    #12 0x565358ee6085 in handle_internal_command perf.c:401
-    #13 0x565358ee61de in run_argv perf.c:448
-    #14 0x565358ee6527 in main perf.c:555
-    #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #17 0x565358e391c1 in _start perf[851c1]
-  7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
-```
+This bug arises due to very limited and poor input validation
+that was done at nic_valid_size(). This validation only
+validates the skb->len (directly reflects size provided at the
+userspace interface) with the length provided in the buffer
+itself (interpreted as NCI_HEADER). This leads to the processing
+of memory content at the address assuming the correct layout
+per what opcode requires there. This leads to the accesses to
+buffer of `skb_buff->data` which is not assigned anything yet.
 
-After:
-```
-$ perf test 7
-  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-```
+Following the same silent drop of packets of invalid sizes at
+`nic_valid_size()`, add validation of the data in the respective
+handlers and return error values in case of failure. Release
+the skb if error values are returned from handlers in
+`nci_nft_packet` and effectively do a silent drop
 
-Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Possible TODO: because we silently drop the packets, the
+call to `nci_request` will be waiting for completion of request
+and will face timeouts. These timeouts can get excessively logged
+in the dmesg. A proper handling of them may require to export
+`nci_request_cancel` (or propagate error handling from the
+nft packets handlers).
+
+Reported-by: syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=740e04c2a93467a0f8c8
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Tested-by: syzbot+740e04c2a93467a0f8c8@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Deepak Sharma <deepak.sharma.472935@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250925132846.213425-1-deepak.sharma.472935@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/perf-record.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/nfc/nci/ntf.c |  135 +++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 99 insertions(+), 36 deletions(-)
 
-diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
-index 0df471bf1590e..b215e89b65f7d 100644
---- a/tools/perf/tests/perf-record.c
-+++ b/tools/perf/tests/perf-record.c
-@@ -115,6 +115,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
- 	if (err < 0) {
- 		pr_debug("sched__get_first_possible_cpu: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -27,11 +27,16 @@
+ 
+ /* Handle NCI Notification packets */
+ 
+-static void nci_core_reset_ntf_packet(struct nci_dev *ndev,
+-				      const struct sk_buff *skb)
++static int nci_core_reset_ntf_packet(struct nci_dev *ndev,
++				     const struct sk_buff *skb)
+ {
+ 	/* Handle NCI 2.x core reset notification */
+-	const struct nci_core_reset_ntf *ntf = (void *)skb->data;
++	const struct nci_core_reset_ntf *ntf;
++
++	if (skb->len < sizeof(struct nci_core_reset_ntf))
++		return -EINVAL;
++
++	ntf = (struct nci_core_reset_ntf *)skb->data;
+ 
+ 	ndev->nci_ver = ntf->nci_ver;
+ 	pr_debug("nci_ver 0x%x, config_status 0x%x\n",
+@@ -42,15 +47,22 @@ static void nci_core_reset_ntf_packet(st
+ 		__le32_to_cpu(ntf->manufact_specific_info);
+ 
+ 	nci_req_complete(ndev, NCI_STATUS_OK);
++
++	return 0;
+ }
+ 
+-static void nci_core_conn_credits_ntf_packet(struct nci_dev *ndev,
+-					     struct sk_buff *skb)
++static int nci_core_conn_credits_ntf_packet(struct nci_dev *ndev,
++					    struct sk_buff *skb)
+ {
+-	struct nci_core_conn_credit_ntf *ntf = (void *) skb->data;
++	struct nci_core_conn_credit_ntf *ntf;
+ 	struct nci_conn_info *conn_info;
+ 	int i;
+ 
++	if (skb->len < sizeof(struct nci_core_conn_credit_ntf))
++		return -EINVAL;
++
++	ntf = (struct nci_core_conn_credit_ntf *)skb->data;
++
+ 	pr_debug("num_entries %d\n", ntf->num_entries);
+ 
+ 	if (ntf->num_entries > NCI_MAX_NUM_CONN)
+@@ -68,7 +80,7 @@ static void nci_core_conn_credits_ntf_pa
+ 		conn_info = nci_get_conn_info_by_conn_id(ndev,
+ 							 ntf->conn_entries[i].conn_id);
+ 		if (!conn_info)
+-			return;
++			return 0;
+ 
+ 		atomic_add(ntf->conn_entries[i].credits,
+ 			   &conn_info->credits_cnt);
+@@ -77,12 +89,19 @@ static void nci_core_conn_credits_ntf_pa
+ 	/* trigger the next tx */
+ 	if (!skb_queue_empty(&ndev->tx_q))
+ 		queue_work(ndev->tx_wq, &ndev->tx_work);
++
++	return 0;
+ }
+ 
+-static void nci_core_generic_error_ntf_packet(struct nci_dev *ndev,
+-					      const struct sk_buff *skb)
++static int nci_core_generic_error_ntf_packet(struct nci_dev *ndev,
++					     const struct sk_buff *skb)
+ {
+-	__u8 status = skb->data[0];
++	__u8 status;
++
++	if (skb->len < 1)
++		return -EINVAL;
++
++	status = skb->data[0];
+ 
+ 	pr_debug("status 0x%x\n", status);
+ 
+@@ -91,12 +110,19 @@ static void nci_core_generic_error_ntf_p
+ 		   (the state remains the same) */
+ 		nci_req_complete(ndev, status);
+ 	}
++
++	return 0;
+ }
+ 
+-static void nci_core_conn_intf_error_ntf_packet(struct nci_dev *ndev,
+-						struct sk_buff *skb)
++static int nci_core_conn_intf_error_ntf_packet(struct nci_dev *ndev,
++					       struct sk_buff *skb)
+ {
+-	struct nci_core_intf_error_ntf *ntf = (void *) skb->data;
++	struct nci_core_intf_error_ntf *ntf;
++
++	if (skb->len < sizeof(struct nci_core_intf_error_ntf))
++		return -EINVAL;
++
++	ntf = (struct nci_core_intf_error_ntf *)skb->data;
+ 
+ 	ntf->conn_id = nci_conn_id(&ntf->conn_id);
+ 
+@@ -105,6 +131,8 @@ static void nci_core_conn_intf_error_ntf
+ 	/* complete the data exchange transaction, if exists */
+ 	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
+ 		nci_data_exchange_complete(ndev, NULL, ntf->conn_id, -EIO);
++
++	return 0;
+ }
+ 
+ static const __u8 *
+@@ -329,13 +357,18 @@ void nci_clear_target_list(struct nci_de
+ 	ndev->n_targets = 0;
+ }
+ 
+-static void nci_rf_discover_ntf_packet(struct nci_dev *ndev,
+-				       const struct sk_buff *skb)
++static int nci_rf_discover_ntf_packet(struct nci_dev *ndev,
++				      const struct sk_buff *skb)
+ {
+ 	struct nci_rf_discover_ntf ntf;
+-	const __u8 *data = skb->data;
++	const __u8 *data;
+ 	bool add_target = true;
+ 
++	if (skb->len < sizeof(struct nci_rf_discover_ntf))
++		return -EINVAL;
++
++	data = skb->data;
++
+ 	ntf.rf_discovery_id = *data++;
+ 	ntf.rf_protocol = *data++;
+ 	ntf.rf_tech_and_mode = *data++;
+@@ -390,6 +423,8 @@ static void nci_rf_discover_ntf_packet(s
+ 		nfc_targets_found(ndev->nfc_dev, ndev->targets,
+ 				  ndev->n_targets);
+ 	}
++
++	return 0;
+ }
+ 
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+@@ -531,14 +566,19 @@ static int nci_store_general_bytes_nfc_d
+ 	return NCI_STATUS_OK;
+ }
+ 
+-static void nci_rf_intf_activated_ntf_packet(struct nci_dev *ndev,
+-					     const struct sk_buff *skb)
++static int nci_rf_intf_activated_ntf_packet(struct nci_dev *ndev,
++					    const struct sk_buff *skb)
+ {
+ 	struct nci_conn_info *conn_info;
+ 	struct nci_rf_intf_activated_ntf ntf;
+-	const __u8 *data = skb->data;
++	const __u8 *data;
+ 	int err = NCI_STATUS_OK;
+ 
++	if (skb->len < sizeof(struct nci_rf_intf_activated_ntf))
++		return -EINVAL;
++
++	data = skb->data;
++
+ 	ntf.rf_discovery_id = *data++;
+ 	ntf.rf_interface = *data++;
+ 	ntf.rf_protocol = *data++;
+@@ -645,7 +685,7 @@ exit:
+ 	if (err == NCI_STATUS_OK) {
+ 		conn_info = ndev->rf_conn_info;
+ 		if (!conn_info)
+-			return;
++			return 0;
+ 
+ 		conn_info->max_pkt_payload_len = ntf.max_data_pkt_payload_size;
+ 		conn_info->initial_num_credits = ntf.initial_num_credits;
+@@ -691,19 +731,26 @@ listen:
+ 				pr_err("error when signaling tm activation\n");
+ 		}
+ 	}
++
++	return 0;
+ }
+ 
+-static void nci_rf_deactivate_ntf_packet(struct nci_dev *ndev,
+-					 const struct sk_buff *skb)
++static int nci_rf_deactivate_ntf_packet(struct nci_dev *ndev,
++					const struct sk_buff *skb)
+ {
+ 	const struct nci_conn_info *conn_info;
+-	const struct nci_rf_deactivate_ntf *ntf = (void *)skb->data;
++	const struct nci_rf_deactivate_ntf *ntf;
++
++	if (skb->len < sizeof(struct nci_rf_deactivate_ntf))
++		return -EINVAL;
++
++	ntf = (struct nci_rf_deactivate_ntf *)skb->data;
+ 
+ 	pr_debug("entry, type 0x%x, reason 0x%x\n", ntf->type, ntf->reason);
+ 
+ 	conn_info = ndev->rf_conn_info;
+ 	if (!conn_info)
+-		return;
++		return 0;
+ 
+ 	/* drop tx data queue */
+ 	skb_queue_purge(&ndev->tx_q);
+@@ -735,14 +782,20 @@ static void nci_rf_deactivate_ntf_packet
  	}
  
-@@ -126,6 +127,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
- 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
- 		pr_debug("sched_setaffinity: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ 	nci_req_complete(ndev, NCI_STATUS_OK);
++
++	return 0;
+ }
  
-@@ -137,6 +139,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
- 	if (err < 0) {
- 		pr_debug("perf_evlist__open: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+-static void nci_nfcee_discover_ntf_packet(struct nci_dev *ndev,
+-					  const struct sk_buff *skb)
++static int nci_nfcee_discover_ntf_packet(struct nci_dev *ndev,
++					 const struct sk_buff *skb)
+ {
+ 	u8 status = NCI_STATUS_OK;
+-	const struct nci_nfcee_discover_ntf *nfcee_ntf =
+-				(struct nci_nfcee_discover_ntf *)skb->data;
++	const struct nci_nfcee_discover_ntf *nfcee_ntf;
++
++	if (skb->len < sizeof(struct nci_nfcee_discover_ntf))
++		return -EINVAL;
++
++	nfcee_ntf = (struct nci_nfcee_discover_ntf *)skb->data;
  
-@@ -149,6 +152,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
- 	if (err < 0) {
- 		pr_debug("evlist__mmap: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ 	pr_debug("\n");
  
--- 
-2.51.0
-
+@@ -755,6 +808,8 @@ static void nci_nfcee_discover_ntf_packe
+ 	ndev->cur_params.id = nfcee_ntf->nfcee_id;
+ 
+ 	nci_req_complete(ndev, status);
++
++	return 0;
+ }
+ 
+ static void nci_nfcee_action_ntf_packet(struct nci_dev *ndev,
+@@ -787,35 +842,43 @@ void nci_ntf_packet(struct nci_dev *ndev
+ 
+ 	switch (ntf_opcode) {
+ 	case NCI_OP_CORE_RESET_NTF:
+-		nci_core_reset_ntf_packet(ndev, skb);
++		if (nci_core_reset_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_CORE_CONN_CREDITS_NTF:
+-		nci_core_conn_credits_ntf_packet(ndev, skb);
++		if (nci_core_conn_credits_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_CORE_GENERIC_ERROR_NTF:
+-		nci_core_generic_error_ntf_packet(ndev, skb);
++		if (nci_core_generic_error_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_CORE_INTF_ERROR_NTF:
+-		nci_core_conn_intf_error_ntf_packet(ndev, skb);
++		if (nci_core_conn_intf_error_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_RF_DISCOVER_NTF:
+-		nci_rf_discover_ntf_packet(ndev, skb);
++		if (nci_rf_discover_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_RF_INTF_ACTIVATED_NTF:
+-		nci_rf_intf_activated_ntf_packet(ndev, skb);
++		if (nci_rf_intf_activated_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_RF_DEACTIVATE_NTF:
+-		nci_rf_deactivate_ntf_packet(ndev, skb);
++		if (nci_rf_deactivate_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_NFCEE_DISCOVER_NTF:
+-		nci_nfcee_discover_ntf_packet(ndev, skb);
++		if (nci_nfcee_discover_ntf_packet(ndev, skb))
++			goto end;
+ 		break;
+ 
+ 	case NCI_OP_RF_NFCEE_ACTION_NTF:
 
 
