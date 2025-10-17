@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410D0335074;
-	Fri, 17 Oct 2025 15:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35C2F12CF;
+	Fri, 17 Oct 2025 15:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714020; cv=none; b=q/7u5jWfZvU5XLdl1BtpTRpGdv4z4BRg1MBsVqg6iPuo4ZRQlO+RFDr8P97toA6oYPdTr/c9lQ4DzHDWkQ5bwsJb/ZfvBxzy1qdCnCD3SF+WLBZxe9piyavRBasCiiW9cX8hZk0G1XDwY/vyGBPBlaWc1Jqx96cWpbU4d9AE3Ho=
+	t=1760714023; cv=none; b=Dd8Oq0am9hingm29hl/r7J/yop4liyA55beHSE6l9ecHYWVYnrDTLmvqQw3lwvliW6JdSpO9nwCW8OmAvumBvJvifpbT6+g1W6mu11kaqDhRJmZIyQtcizirlutBMDwOxxhggQIi6rLzohhBjd/EAcnCqxOs8ExlttzSt8CkkN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714020; c=relaxed/simple;
-	bh=XFiIlztGF5J0Jn4XgCDcUI0ujsToq0b575g5XAx5KF0=;
+	s=arc-20240116; t=1760714023; c=relaxed/simple;
+	bh=sqRLk5+OCJwO7l1weCccojd91xIERHWYsIBqF5LVXkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbK8ZUCQALFL6ZwZe/akRx5Mo0ze5Di2qwG0zPkpqH2ZrnmVG31zv1n5GX4ZfYPr/g7zOSdrRa29I5KRVm5vJUegVpZIa2IwaJjkNjgpInjePsma2RPL2c91zF8mcMS57p2fKyNUw0DFZwZd1lmA91Wb3Dx7qRe3h8bOKIwbJcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzRLHvLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvzHd1SGd95YffpLgqZ8Dgph6GvBj6aMxzND2NfK63ur0PWF+WlZqUo7EhkvYbEi98FE3jLFarST0k8TUSlZpuprBIOXKGMWNi1MIYk6e3BR7wM94X8LgTt5QrQrqGDDxBfNOhCown+wIPfNH+xUouegk9lXLgg8znS+RDmJ+ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeoZD7UF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzRLHvLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C583C4CEF9;
-	Fri, 17 Oct 2025 15:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeoZD7UF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C69DC4CEE7;
+	Fri, 17 Oct 2025 15:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714020;
-	bh=XFiIlztGF5J0Jn4XgCDcUI0ujsToq0b575g5XAx5KF0=;
+	s=korg; t=1760714022;
+	bh=sqRLk5+OCJwO7l1weCccojd91xIERHWYsIBqF5LVXkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzRLHvLDTsFqAM5NXyKarUfjuRleYUQ+A2BlwYPrVduRtMd+n2v3gDebGn4VGZFid
-	 yy7KNLxA1KUl+TlIkAkToPNIaRyIPfseo/7Nh9nni+Cdpr/mrBjIi3QB3+QRAVP+eA
-	 3NAUHufyBmBBPAv7AJCR/+l4VVq41o9CCt0h0+oQ=
+	b=MeoZD7UFiCd8OcmNq/oTqXP/QLUkmOWPkmFnDeT4pYvzg3wodaC9KeJYYkmAiks2P
+	 KwPqwtaJQ/A1bG+m3XDlgVeqomtsdbwOEUCA1Rq2od9r0ZSeqOAkuABhCikSqQrU9+
+	 t2l84T7z6WsHosrGHGsNgrDu9VttoqwfcrJHO5UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.6 201/201] perf test stat: Avoid hybrid assumption when virtualized
-Date: Fri, 17 Oct 2025 16:54:22 +0200
-Message-ID: <20251017145142.142372435@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 187/201] s390/bpf: Describe the frame using a struct instead of constants
+Date: Fri, 17 Oct 2025 16:54:08 +0200
+Message-ID: <20251017145141.628939808@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -59,45 +50,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit f9c506fb69bdcfb9d7138281378129ff037f2aa1 upstream.
+commit e26d523edf2a62b142d2dd2dd9b87f61ed92f33a upstream.
 
-The cycles event will fallback to task-clock in the hybrid test when
-running virtualized. Change the test to not fail for this.
+Currently the caller-allocated portion of the stack frame is described
+using constants, hardcoded values, and an ASCII drawing, making it
+harder than necessary to ensure that everything is in sync.
 
-Fixes: 65d11821910bd910 ("perf test: Add a test for default perf stat command")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241212173354.9860-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Declare a struct and use offsetof() and offsetofend() macros to refer
+to various values stored within the frame.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250624121501.50536-3-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/stat.sh |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/s390/net/bpf_jit.h      |   55 ----------------------------------
+ arch/s390/net/bpf_jit_comp.c |   69 +++++++++++++++++++++++++++++--------------
+ 2 files changed, 47 insertions(+), 77 deletions(-)
+ delete mode 100644 arch/s390/net/bpf_jit.h
 
---- a/tools/perf/tests/shell/stat.sh
-+++ b/tools/perf/tests/shell/stat.sh
-@@ -161,7 +161,11 @@ test_hybrid() {
-   # Run default Perf stat
-   cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/[uH]*|  cycles[:uH]*  " -c)
+--- a/arch/s390/net/bpf_jit.h
++++ /dev/null
+@@ -1,55 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-/*
+- * BPF Jit compiler defines
+- *
+- * Copyright IBM Corp. 2012,2015
+- *
+- * Author(s): Martin Schwidefsky <schwidefsky@de.ibm.com>
+- *	      Michael Holzheu <holzheu@linux.vnet.ibm.com>
+- */
+-
+-#ifndef __ARCH_S390_NET_BPF_JIT_H
+-#define __ARCH_S390_NET_BPF_JIT_H
+-
+-#ifndef __ASSEMBLY__
+-
+-#include <linux/filter.h>
+-#include <linux/types.h>
+-
+-#endif /* __ASSEMBLY__ */
+-
+-/*
+- * Stackframe layout (packed stack):
+- *
+- *				    ^ high
+- *	      +---------------+     |
+- *	      | old backchain |     |
+- *	      +---------------+     |
+- *	      |   r15 - r6    |     |
+- *	      +---------------+     |
+- *	      | 4 byte align  |     |
+- *	      | tail_call_cnt |     |
+- * BFP	   -> +===============+     |
+- *	      |		      |     |
+- *	      |   BPF stack   |     |
+- *	      |		      |     |
+- * R15+160 -> +---------------+     |
+- *	      | new backchain |     |
+- * R15+152 -> +---------------+     |
+- *	      | + 152 byte SA |     |
+- * R15	   -> +---------------+     + low
+- *
+- * We get 160 bytes stack space from calling function, but only use
+- * 12 * 8 byte for old backchain, r15..r6, and tail_call_cnt.
+- *
+- * The stack size used by the BPF program ("BPF stack" above) is passed
+- * via "aux->stack_depth".
+- */
+-#define STK_SPACE_ADD	(160)
+-#define STK_160_UNUSED	(160 - 12 * 8)
+-#define STK_OFF		(STK_SPACE_ADD - STK_160_UNUSED)
+-
+-#define STK_OFF_R6	(160 - 11 * 8)	/* Offset of r6 on stack */
+-#define STK_OFF_TCCNT	(160 - 12 * 8)	/* Offset of tail_call_cnt on stack */
+-
+-#endif /* __ARCH_S390_NET_BPF_JIT_H */
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -31,7 +31,6 @@
+ #include <asm/nospec-branch.h>
+ #include <asm/set_memory.h>
+ #include <asm/text-patching.h>
+-#include "bpf_jit.h"
  
--  if [ "$pmus" -ne "$cycles_events" ]
-+  # The expectation is that default output will have a cycles events on each
-+  # hybrid PMU. In situations with no cycles PMU events, like virtualized, this
-+  # can fall back to task-clock and so the end count may be 0. Fail if neither
-+  # condition holds.
-+  if [ "$pmus" -ne "$cycles_events" ] && [ "0" -ne "$cycles_events" ]
-   then
-     echo "hybrid test [Found $pmus PMUs but $cycles_events cycles events. Failed]"
-     err=1
+ struct bpf_jit {
+ 	u32 seen;		/* Flags to remember seen eBPF instructions */
+@@ -53,7 +52,7 @@ struct bpf_jit {
+ 	int excnt;		/* Number of exception table entries */
+ 	int prologue_plt_ret;	/* Return address for prologue hotpatch PLT */
+ 	int prologue_plt;	/* Start of prologue hotpatch PLT */
+-	u32 frame_off;		/* Offset of frame from %r15 */
++	u32 frame_off;		/* Offset of struct bpf_prog from %r15 */
+ };
+ 
+ #define SEEN_MEM	BIT(0)		/* use mem[] for temporary storage */
+@@ -400,11 +399,25 @@ static void jit_fill_hole(void *area, un
+ }
+ 
+ /*
++ * Caller-allocated part of the frame.
++ * Thanks to packed stack, its otherwise unused initial part can be used for
++ * the BPF stack and for the next frame.
++ */
++struct prog_frame {
++	u64 unused[8];
++	/* BPF stack starts here and grows towards 0 */
++	u32 tail_call_cnt;
++	u32 pad;
++	u64 r6[10];  /* r6 - r15 */
++	u64 backchain;
++} __packed;
++
++/*
+  * Save registers from "rs" (register start) to "re" (register end) on stack
+  */
+ static void save_regs(struct bpf_jit *jit, u32 rs, u32 re)
+ {
+-	u32 off = STK_OFF_R6 + (rs - 6) * 8;
++	u32 off = offsetof(struct prog_frame, r6) + (rs - 6) * 8;
+ 
+ 	if (rs == re)
+ 		/* stg %rs,off(%r15) */
+@@ -419,7 +432,7 @@ static void save_regs(struct bpf_jit *ji
+  */
+ static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re)
+ {
+-	u32 off = jit->frame_off + STK_OFF_R6 + (rs - 6) * 8;
++	u32 off = jit->frame_off + offsetof(struct prog_frame, r6) + (rs - 6) * 8;
+ 
+ 	if (rs == re)
+ 		/* lg %rs,off(%r15) */
+@@ -551,10 +564,12 @@ static void bpf_jit_plt(struct bpf_plt *
+  * Emit function prologue
+  *
+  * Save registers and create stack frame if necessary.
+- * See stack frame layout description in "bpf_jit.h"!
++ * Stack frame layout is described by struct prog_frame.
+  */
+ static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp)
+ {
++	BUILD_BUG_ON(sizeof(struct prog_frame) != STACK_FRAME_OVERHEAD);
++
+ 	/* No-op for hotpatching */
+ 	/* brcl 0,prologue_plt */
+ 	EMIT6_PCREL_RILC(0xc0040000, 0, jit->prologue_plt);
+@@ -562,8 +577,9 @@ static void bpf_jit_prologue(struct bpf_
+ 
+ 	if (fp->aux->func_idx == 0) {
+ 		/* Initialize the tail call counter in the main program. */
+-		/* xc STK_OFF_TCCNT(4,%r15),STK_OFF_TCCNT(%r15) */
+-		_EMIT6(0xd703f000 | STK_OFF_TCCNT, 0xf000 | STK_OFF_TCCNT);
++		/* xc tail_call_cnt(4,%r15),tail_call_cnt(%r15) */
++		_EMIT6(0xd703f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
+ 	} else {
+ 		/*
+ 		 * Skip the tail call counter initialization in subprograms.
+@@ -593,13 +609,15 @@ static void bpf_jit_prologue(struct bpf_
+ 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK)) {
+ 		/* lgr %w1,%r15 (backchain) */
+ 		EMIT4(0xb9040000, REG_W1, REG_15);
+-		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
+-		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
++		/* la %bfp,unused_end(%r15) (BPF frame pointer) */
++		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15,
++			   offsetofend(struct prog_frame, unused));
+ 		/* aghi %r15,-frame_off */
+ 		EMIT4_IMM(0xa70b0000, REG_15, -jit->frame_off);
+-		/* stg %w1,152(%r15) (backchain) */
++		/* stg %w1,backchain(%r15) */
+ 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
+-			      REG_15, 152);
++			      REG_15,
++			      offsetof(struct prog_frame, backchain));
+ 	}
+ }
+ 
+@@ -1429,9 +1447,10 @@ static noinline int bpf_jit_insn(struct
+ 		 * Note 2: We assume that the verifier does not let us call the
+ 		 * main program, which clears the tail call counter on entry.
+ 		 */
+-		/* mvc STK_OFF_TCCNT(4,%r15),frame_off+STK_OFF_TCCNT(%r15) */
+-		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
+-		       0xf000 | (jit->frame_off + STK_OFF_TCCNT));
++		/* mvc tail_call_cnt(4,%r15),frame_off+tail_call_cnt(%r15) */
++		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | (jit->frame_off +
++				 offsetof(struct prog_frame, tail_call_cnt)));
+ 
+ 		/* Sign-extend the kfunc arguments. */
+ 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
+@@ -1482,7 +1501,8 @@ static noinline int bpf_jit_insn(struct
+ 		 *         goto out;
+ 		 */
+ 
+-		off = jit->frame_off + STK_OFF_TCCNT;
++		off = jit->frame_off +
++		      offsetof(struct prog_frame, tail_call_cnt);
+ 		/* lhi %w0,1 */
+ 		EMIT4_IMM(0xa7080000, REG_W0, 1);
+ 		/* laal %w1,%w0,off(%r15) */
+@@ -1824,7 +1844,9 @@ static int bpf_jit_prog(struct bpf_jit *
+ 	jit->prg = 0;
+ 	jit->excnt = 0;
+ 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK))
+-		jit->frame_off = STK_OFF + round_up(fp->aux->stack_depth, 8);
++		jit->frame_off = sizeof(struct prog_frame) -
++				 offsetofend(struct prog_frame, unused) +
++				 round_up(fp->aux->stack_depth, 8);
+ 	else
+ 		jit->frame_off = 0;
+ 
+@@ -2281,9 +2303,10 @@ static int __arch_prepare_bpf_trampoline
+ 	/* stg %r1,backchain_off(%r15) */
+ 	EMIT6_DISP_LH(0xe3000000, 0x0024, REG_1, REG_0, REG_15,
+ 		      tjit->backchain_off);
+-	/* mvc tccnt_off(4,%r15),stack_size+STK_OFF_TCCNT(%r15) */
++	/* mvc tccnt_off(4,%r15),stack_size+tail_call_cnt(%r15) */
+ 	_EMIT6(0xd203f000 | tjit->tccnt_off,
+-	       0xf000 | (tjit->stack_size + STK_OFF_TCCNT));
++	       0xf000 | (tjit->stack_size +
++			 offsetof(struct prog_frame, tail_call_cnt)));
+ 	/* stmg %r2,%rN,fwd_reg_args_off(%r15) */
+ 	if (nr_reg_args)
+ 		EMIT6_DISP_LH(0xeb000000, 0x0024, REG_2,
+@@ -2420,8 +2443,9 @@ static int __arch_prepare_bpf_trampoline
+ 				       (nr_stack_args * sizeof(u64) - 1) << 16 |
+ 				       tjit->stack_args_off,
+ 			       0xf000 | tjit->orig_stack_args_off);
+-		/* mvc STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
+-		_EMIT6(0xd203f000 | STK_OFF_TCCNT, 0xf000 | tjit->tccnt_off);
++		/* mvc tail_call_cnt(4,%r15),tccnt_off(%r15) */
++		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
++		       0xf000 | tjit->tccnt_off);
+ 		/* lgr %r1,%r8 */
+ 		EMIT4(0xb9040000, REG_1, REG_8);
+ 		/* %r1() */
+@@ -2478,8 +2502,9 @@ static int __arch_prepare_bpf_trampoline
+ 	if (flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET))
+ 		EMIT6_DISP_LH(0xe3000000, 0x0004, REG_2, REG_0, REG_15,
+ 			      tjit->retval_off);
+-	/* mvc stack_size+STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
+-	_EMIT6(0xd203f000 | (tjit->stack_size + STK_OFF_TCCNT),
++	/* mvc stack_size+tail_call_cnt(4,%r15),tccnt_off(%r15) */
++	_EMIT6(0xd203f000 | (tjit->stack_size +
++			     offsetof(struct prog_frame, tail_call_cnt)),
+ 	       0xf000 | tjit->tccnt_off);
+ 	/* aghi %r15,stack_size */
+ 	EMIT4_IMM(0xa70b0000, REG_15, tjit->stack_size);
 
 
