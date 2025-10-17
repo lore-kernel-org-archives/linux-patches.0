@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506DE257437;
-	Fri, 17 Oct 2025 15:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49528330B0C;
+	Fri, 17 Oct 2025 15:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716247; cv=none; b=rwkSeCxa1QH2dxyq0V1M94eUwdEGikfHDJj+/NibWmdhVAqWLjGTaM6hCTsX1e6qtc6xgamFQWsKOVhq5CqwQiQn9vFDby+2zbU/i3P8K6yBUi+oNNzfh/Td6ndDqeoH+o+AT8cdvey7NY9zFlGWJGVZZSWrLRedMEVu/7N5AMQ=
+	t=1760716250; cv=none; b=p0IsqyV55Lhzz7JLxKCb2kcXx8rAPwdSoEIItucOhKyYfguO+qHXPngyeddaXcvVHo57KiCzc8gBp0feext9uRFYlbBPDcZp9rmgxJyCkBTsAjkndTCXra06wLoWOiJHA6bzFKVV4d4Ml4iEV6iSMJtZXENiZ5b/nLBn/nO8lBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716247; c=relaxed/simple;
-	bh=I1TaytGV5QJX2+8NcXEtp+PJw9OzDX8kslkSDxO5UBk=;
+	s=arc-20240116; t=1760716250; c=relaxed/simple;
+	bh=2OvkWyR1hhgfepRyaGI3FcTf2RM2p9SkeUDXM+YpU08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFWMeKOWZgAMAPH1lY6fKaYexRTWq/JmNTqFGAkLVhQSTYzzHzfb8LVWLXUxzRRNRXRjETiwEeumihFnZiOTfPWzgN7dAcyO8XVqKvgrcS0l99ESJJ83dqp9ZOTJ7wYabWw1prc8auXsz52lRIoDRWQ9P6I8RM0tAQMnYLOW690=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8rHVrwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVIbFR573FmsOhENlvDxpBSnhXm1KjN05kC0SQ7i8msJKBEC6njrT4bNtDTxQ4tlzCUNNCBktfXbj8ztAuXbvdRAR2lWSwAWYM9VUH+yiq8wA0Khqy/2HMVHEYOOyiiO1QgrcpjZsPzD3ytU6k0E5F+nIikI/pAND9lsaGGzSZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5CFYHRd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8rHVrwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFA5C4CEE7;
-	Fri, 17 Oct 2025 15:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5CFYHRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84790C4CEE7;
+	Fri, 17 Oct 2025 15:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716247;
-	bh=I1TaytGV5QJX2+8NcXEtp+PJw9OzDX8kslkSDxO5UBk=;
+	s=korg; t=1760716250;
+	bh=2OvkWyR1hhgfepRyaGI3FcTf2RM2p9SkeUDXM+YpU08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8rHVrwHYZRx/OTqmgxL1KiHtMQ+lbWmjGjUqZRuLBFC0+XPeyrsdTSVqFrQtN5IE
-	 O8ahYA1brI9jo5qDlfo7LrljtdUkTdJCqMf1ah01uwaccXLhBtcAAvLO3o19BIaLR3
-	 TSmd/KyIZm3DmebmTbb+/s6mJip4nW7jevv5QbWI=
+	b=f5CFYHRdaVhEqlAeib/XNi3xJ3rk3jdxE2ms1aTAifPIoFv8JxJusjT2noh4tL471
+	 0e7Z8005gDgPOCeicPpv3xU97MxXN4dIQzbEzZPw8rOIwcxjJSZ8dKn9MYmpLX4TPc
+	 blIKZbCqh4Zl2xZk9ImVmiO0jdnn/CSML9SwyMjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Yunseong Kim <ysk@kzalloc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 125/276] clk: at91: peripheral: fix return value
-Date: Fri, 17 Oct 2025 16:53:38 +0200
-Message-ID: <20251017145147.044245739@linuxfoundation.org>
+Subject: [PATCH 5.15 126/276] perf util: Fix compression checks returning -1 as bool
+Date: Fri, 17 Oct 2025 16:53:39 +0200
+Message-ID: <20251017145147.080628977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -52,42 +58,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Yunseong Kim <ysk@kzalloc.com>
 
-[ Upstream commit 47b13635dabc14f1c2fdcaa5468b47ddadbdd1b5 ]
+[ Upstream commit 43fa1141e2c1af79c91aaa4df03e436c415a6fc3 ]
 
-determine_rate() is expected to return an error code, or 0 on success.
-clk_sam9x5_peripheral_determine_rate() has a branch that returns the
-parent rate on a certain case. This is the behavior of round_rate(),
-so let's go ahead and fix this by setting req->rate.
+The lzma_is_compressed and gzip_is_compressed functions are declared
+to return a "bool" type, but in case of an error (e.g., file open
+failure), they incorrectly returned -1.
 
-Fixes: b4c115c76184f ("clk: at91: clk-peripheral: add support for changeable parent rate")
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+A bool type is a boolean value that is either true or false.
+Returning -1 for a bool return type can lead to unexpected behavior
+and may violate strict type-checking in some compilers.
+
+Fix the return value to be false in error cases, ensuring the function
+adheres to its declared return type improves for preventing potential
+bugs related to type mismatch.
+
+Fixes: 4b57fd44b61beb51 ("perf tools: Add lzma_is_compressed function")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
+Link: https://lore.kernel.org/r/20250822162506.316844-3-ysk@kzalloc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-peripheral.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/lzma.c | 2 +-
+ tools/perf/util/zlib.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/at91/clk-peripheral.c b/drivers/clk/at91/clk-peripheral.c
-index 7a27ba8e05779..7605ab23dc8ed 100644
---- a/drivers/clk/at91/clk-peripheral.c
-+++ b/drivers/clk/at91/clk-peripheral.c
-@@ -268,8 +268,11 @@ static int clk_sam9x5_peripheral_determine_rate(struct clk_hw *hw,
- 	long best_diff = LONG_MIN;
- 	u32 shift;
+diff --git a/tools/perf/util/lzma.c b/tools/perf/util/lzma.c
+index 51424cdc3b682..aa9a0ebc1f937 100644
+--- a/tools/perf/util/lzma.c
++++ b/tools/perf/util/lzma.c
+@@ -115,7 +115,7 @@ bool lzma_is_compressed(const char *input)
+ 	ssize_t rc;
  
--	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max)
--		return parent_rate;
-+	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max) {
-+		req->rate = parent_rate;
-+
-+		return 0;
-+	}
+ 	if (fd < 0)
+-		return -1;
++		return false;
  
- 	/* Fist step: check the available dividers. */
- 	for (shift = 0; shift <= PERIPHERAL_MAX_SHIFT; shift++) {
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
+diff --git a/tools/perf/util/zlib.c b/tools/perf/util/zlib.c
+index 78d2297c1b674..1f7c065230599 100644
+--- a/tools/perf/util/zlib.c
++++ b/tools/perf/util/zlib.c
+@@ -88,7 +88,7 @@ bool gzip_is_compressed(const char *input)
+ 	ssize_t rc;
+ 
+ 	if (fd < 0)
+-		return -1;
++		return false;
+ 
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
 -- 
 2.51.0
 
