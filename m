@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88F63370FB;
-	Fri, 17 Oct 2025 15:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B862F231C9F;
+	Fri, 17 Oct 2025 15:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714780; cv=none; b=gnYvAvTLzPYDTb/SlXGk3EJFVrNocD5kFakpBs9gSaR4V2LyOBoj9bjfNkFxyc+qTHxwVPpTWf5oVXjdUl/9gAu832pCxtCSt8Zs3fagX7GqvTBbakQUuY5XUIcPBM1ZmotUV9fBQGKOV48XEjeAmOvzVCFRP9eNzx4cCcdQ/ko=
+	t=1760714782; cv=none; b=ZGXmOCQokbfLxeXFoKgs1IKRltXH4boUEfDV1VAuQHk+LX2ln1TszspVvcVeKDPkAmGQJzbAm8OsjwysHnMRK3KsFjzemIeinKe01Bi5G/ib1vBnNKfF82uPZyZUHg3556Qwjt1fRjlkctOFO7tiYPspZqS2BSia3rhU0htkcP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714780; c=relaxed/simple;
-	bh=xzkJh9Uv+sZJiuE2iPc1fKxX77O69ml8U5wmLqSYyO4=;
+	s=arc-20240116; t=1760714782; c=relaxed/simple;
+	bh=X2JLOnXs/xG6zFKj51jawaReg7XrqZhPBumDsesmTBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uggOy76Bn4L9HsNIxSFlCGPa7kjrYhGeNv6sHOwefQEPFyBH5KQDVeMSB3yI/9g+h/cEL6/xpNPNBGK5p2KmXBGspdrzAyNACAhwwJZiJkhVFwGUIkCPlYmN59Tu+1D7kAq54FzkGcBc2LAORVu6+8VYRUJ7PIJyXukWhdNHf6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjP1NJKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOiCKYgNHsJFsLYYz+wp/nmEGl7wpBuJqoUQ3cjq6SVJw0Qdyg3rM7KJq/cmtEMd88Qfpc1BxVsTbXNh3mqo/XPX2jqcARg4Vc+7wHhUQ9iaVIu2is3YCHH+Kqa94Nb85gf0kP3PxqryXjMy2qsaQ/cBnrxddSDfm9SGerqGMhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huPOKEIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjP1NJKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D436C4CEE7;
-	Fri, 17 Oct 2025 15:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huPOKEIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41681C4CEE7;
+	Fri, 17 Oct 2025 15:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714779;
-	bh=xzkJh9Uv+sZJiuE2iPc1fKxX77O69ml8U5wmLqSYyO4=;
+	s=korg; t=1760714782;
+	bh=X2JLOnXs/xG6zFKj51jawaReg7XrqZhPBumDsesmTBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjP1NJKqFogcpud3NXiiYDgJr+zRtULf06e+fz2BcRzD5Md5vNNwrupEHY+bDzMw4
-	 NH7tgB7e53mrO0YGtOrQRXPcWxIiMVcrkVWNdurVV778z6irNcfKCY4+HKf3Elzclk
-	 j35pnPQLSPQLlYoozGGItk4611DvBVr9Rl7pVzAY=
+	b=huPOKEIBYzHe13NBKRhFWCBLFuekzClklU+NxFGTqlyfutqIRYtxcXASwJKdK94mW
+	 NoOc5F5/IwYavkdaEgOzTx8aw5nxGnsxEM6F637R9w6XawItONwHeRHaF6jxfyAUvn
+	 OAJl9J+w6wp5yZQWnM//yQWsiXgPH9X7aTR/5g+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Li <lihongbo22@huawei.com>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Charles Mirabile <cmirabil@redhat.com>,
+	Lucas Zampieri <lzampier@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 263/277] irqchip/sifive-plic: Make use of __assign_bit()
-Date: Fri, 17 Oct 2025 16:54:30 +0200
-Message-ID: <20251017145156.765346792@linuxfoundation.org>
+Subject: [PATCH 6.12 264/277] irqchip/sifive-plic: Avoid interrupt ID 0 handling during suspend/resume
+Date: Fri, 17 Oct 2025 16:54:31 +0200
+Message-ID: <20251017145156.801310033@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,49 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongbo Li <lihongbo22@huawei.com>
+From: Lucas Zampieri <lzampier@redhat.com>
 
-[ Upstream commit 40d7af5375a4e27d8576d9d11954ac213d06f09e ]
+[ Upstream commit f75e07bf5226da640fa99a0594687c780d9bace4 ]
 
-Replace the open coded
+According to the PLIC specification[1], global interrupt sources are
+assigned small unsigned integer identifiers beginning at the value 1.
+An interrupt ID of 0 is reserved to mean "no interrupt".
 
-if (foo)
-        __set_bit(n, bar);
-    else
-        __clear_bit(n, bar);
+The current plic_irq_resume() and plic_irq_suspend() functions incorrectly
+start the loop from index 0, which accesses the register space for the
+reserved interrupt ID 0.
 
-with __assign_bit(). No functional change intended.
+Change the loop to start from index 1, skipping the reserved
+interrupt ID 0 as per the PLIC specification.
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+This prevents potential undefined behavior when accessing the reserved
+register space during suspend/resume cycles.
+
+Fixes: e80f0b6a2cf3 ("irqchip/irq-sifive-plic: Add syscore callbacks for hibernation")
+Co-developed-by: Jia Wang <wangjia@ultrarisc.com>
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Co-developed-by: Charles Mirabile <cmirabil@redhat.com>
+Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
+Signed-off-by: Lucas Zampieri <lzampier@redhat.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/all/20240902130824.2878644-1-lihongbo22@huawei.com
-Stable-dep-of: f75e07bf5226 ("irqchip/sifive-plic: Avoid interrupt ID 0 handling during suspend/resume")
+Link: https://github.com/riscv/riscv-plic-spec/releases/tag/1.0.0
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sifive-plic.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
-index 36dbcf2d728a5..bf69a4802b71e 100644
+index bf69a4802b71e..9c4af7d588463 100644
 --- a/drivers/irqchip/irq-sifive-plic.c
 +++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -252,11 +252,10 @@ static int plic_irq_suspend(void)
+@@ -252,7 +252,8 @@ static int plic_irq_suspend(void)
  
  	priv = per_cpu_ptr(&plic_handlers, smp_processor_id())->priv;
  
--	for (i = 0; i < priv->nr_irqs; i++)
--		if (readl(priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID))
--			__set_bit(i, priv->prio_save);
--		else
--			__clear_bit(i, priv->prio_save);
-+	for (i = 0; i < priv->nr_irqs; i++) {
-+		__assign_bit(i, priv->prio_save,
-+			     readl(priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID));
-+	}
+-	for (i = 0; i < priv->nr_irqs; i++) {
++	/* irq ID 0 is reserved */
++	for (i = 1; i < priv->nr_irqs; i++) {
+ 		__assign_bit(i, priv->prio_save,
+ 			     readl(priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID));
+ 	}
+@@ -283,7 +284,8 @@ static void plic_irq_resume(void)
  
- 	for_each_cpu(cpu, cpu_present_mask) {
- 		struct plic_handler *handler = per_cpu_ptr(&plic_handlers, cpu);
+ 	priv = per_cpu_ptr(&plic_handlers, smp_processor_id())->priv;
+ 
+-	for (i = 0; i < priv->nr_irqs; i++) {
++	/* irq ID 0 is reserved */
++	for (i = 1; i < priv->nr_irqs; i++) {
+ 		index = BIT_WORD(i);
+ 		writel((priv->prio_save[index] & BIT_MASK(i)) ? 1 : 0,
+ 		       priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID);
 -- 
 2.51.0
 
