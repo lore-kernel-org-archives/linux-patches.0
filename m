@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446F330B1C;
-	Fri, 17 Oct 2025 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD9E2D6E40;
+	Fri, 17 Oct 2025 15:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716227; cv=none; b=EEepGX+OG0Z6Nd7Bf5c7pc0NmY+sSNYnRsmBz60vzqKbM3uoET+dBdcoyA0qHuHPp4N9sGadNGJsFH0Oty6WlXt8ouOfWpZ5yKOZ/4MHRJW80ZsYsGjVo1JV/2f7zXnFzllvK2RacblLqCBI9nzCsTm9BT3TNoGfbsCKvk2Tf+U=
+	t=1760716230; cv=none; b=X/4o1tS1Ha5Y6I74Q+M1SZN4ieFSECZUl5vuocX9EO7P3YZucTG9epUAxdETRS3EHpgwZU4T4LgzMIVqF1+YC+qxEfXa1Z1y/az1RUBnDRkJ2iE6mIlRpjxKUXM+UqSWg98A6SabjtaltZaM9fpvPQgJHmCo03rEsuNkoPCJI5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716227; c=relaxed/simple;
-	bh=iPZKSdS0a2wgMvmmgPfL175/zbpm9TVcPfArrdogL8s=;
+	s=arc-20240116; t=1760716230; c=relaxed/simple;
+	bh=yGXoHX4Hg7kdxVJrmWm2WaIqovPeQqtYxJFrzsAiZHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHaL9E61JTwWwwevc0BdiSqRX5UR+ZZWgSN5ox93CaPsbWA+2yKDzK5rOWLfkzh++7XaeH3W0eBk0a2pnOQ6uRHmuWjqjYj7pn+gXPGLWpAbbVG9BROCYOovXrHxf0E82Lw7Zfx9uYUKxY6aPGHlJhpnMYK1OidJHRM0lwRjFO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i82wuRq8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oyTjqedp6iYuHCeFjuYuXjscwqEw2SqN0V0UVAOkBFut6hg0yg+McI7hcXRf+px9QzNZrtqxm65ycDH+9RJFFIRCBH3+cs8xDnv4vx1IzcAI2azIUFL2mDLrpXyj01Vu3cl2htNybh61pV1pq+UeEWlPpW0754guVoVCRxcdQTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSFmCvGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i82wuRq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BD3C4CEFE;
-	Fri, 17 Oct 2025 15:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSFmCvGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983B1C113D0;
+	Fri, 17 Oct 2025 15:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716227;
-	bh=iPZKSdS0a2wgMvmmgPfL175/zbpm9TVcPfArrdogL8s=;
+	s=korg; t=1760716230;
+	bh=yGXoHX4Hg7kdxVJrmWm2WaIqovPeQqtYxJFrzsAiZHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i82wuRq83CnysB7qpkwe9sF+LTia4cw2CbY8rohfrwFbL006S9qrnjlA6xbaqLK/d
-	 /A2MV38mMCoqC3M3vB/hUlppjMHpMksyx4+gBFVXRn36e6xffvVuxNXilkQlrpeOgW
-	 PluEi4Awp3vhiTYhNVFakPcPuHQWVExJsJXTGQyY=
+	b=HSFmCvGmdkmcqYxQT/nBnVkJtnhrZA2IbaXGaF4pUT2BS/G/qSCzP9fSOXTYCv/yp
+	 umw5Q1I2XxBSI3un1BkyYhndUE6ztZFwOGk65s53C5zgHO4XRbWDos9HWEW/gCf0XF
+	 OmQ1QwmwmrFJ9zHy0VZMtyqakhFCIIoUUnHQ54nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 5.15 118/276] bus: fsl-mc: Check return value of platform_get_resource()
-Date: Fri, 17 Oct 2025 16:53:31 +0200
-Message-ID: <20251017145146.785169301@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>
+Subject: [PATCH 5.15 119/276] usb: cdns3: cdnsp-pci: remove redundant pci_disable_device() call
+Date: Fri, 17 Oct 2025 16:53:32 +0200
+Message-ID: <20251017145146.822069265@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,36 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 25f526507b8ccc6ac3a43bc094d09b1f9b0b90ae upstream.
+commit e9c206324eeb213957a567a9d066bdeb355c7491 upstream.
 
-platform_get_resource() returns NULL in case of failure, so check its
-return value and propagate the error in order to prevent NULL pointer
-dereference.
+The cdnsp-pci driver uses pcim_enable_device() to enable a PCI device,
+which means the device will be automatically disabled on driver detach
+through the managed device framework. The manual pci_disable_device()
+call in the error path is therefore redundant.
 
-Fixes: 6305166c8771 ("bus: fsl-mc: Add ACPI support for fsl-mc")
+Found via static anlaysis and this is similar to commit 99ca0b57e49f
+("thermal: intel: int340x: processor: Fix warning during module unload").
+
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/aKwuK6TRr5XNYQ8u@pc
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250903141613.2535472-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/cdns3/cdnsp-pci.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -1169,6 +1169,9 @@ static int fsl_mc_bus_probe(struct platf
- 	 * Get physical address of MC portal for the root DPRC:
- 	 */
- 	plat_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!plat_res)
-+		return -EINVAL;
-+
- 	mc_portal_phys_addr = plat_res->start;
- 	mc_portal_size = resource_size(plat_res);
- 	mc_portal_base_phys_addr = mc_portal_phys_addr & ~0x3ffffff;
+--- a/drivers/usb/cdns3/cdnsp-pci.c
++++ b/drivers/usb/cdns3/cdnsp-pci.c
+@@ -90,7 +90,7 @@ static int cdnsp_pci_probe(struct pci_de
+ 		cdnsp = kzalloc(sizeof(*cdnsp), GFP_KERNEL);
+ 		if (!cdnsp) {
+ 			ret = -ENOMEM;
+-			goto disable_pci;
++			goto put_pci;
+ 		}
+ 	}
+ 
+@@ -173,9 +173,6 @@ free_cdnsp:
+ 	if (!pci_is_enabled(func))
+ 		kfree(cdnsp);
+ 
+-disable_pci:
+-	pci_disable_device(pdev);
+-
+ put_pci:
+ 	pci_dev_put(func);
+ 
 
 
