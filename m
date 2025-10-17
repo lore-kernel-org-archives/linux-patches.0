@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F9F20C00A;
-	Fri, 17 Oct 2025 15:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5E62F12D2;
+	Fri, 17 Oct 2025 15:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715052; cv=none; b=TVw4f9qgWaI4U1M+Rx0y4KY5Nu7GwkZH3uSquhl7tfvJqRX4vigkWWpADgg5DPl3J4IzVOL7zVE/HnTuXs3OWN0N+rkHdBoMeWMWVEyII8ONd1PhasP4BjEX0ns5fKJeAlSmRkYhfmAhItS6WhR06/SsNNcMXESGPnigEOHgVHo=
+	t=1760715055; cv=none; b=O5J5w6guqrAHTgCQD6TcOP0y92AYcPLNP7Aci2oitdST/jlh/ceKKiA5OMQ1qM90Ggn2MIUWPYyns+8vPOYou6ayLTEVtwT9+6LG9FKPD/wVNHcLIbrYr+URIF6i/u38UsJjVtxHejtDZTJWGZJowDm2n5xOxM574jdsKfX4VCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715052; c=relaxed/simple;
-	bh=YqqsTdxEtiQu/BMy8m59Z18uI1DsgaoARxN9g5J/8v4=;
+	s=arc-20240116; t=1760715055; c=relaxed/simple;
+	bh=eHUsPuyZmir5MY4+b2+32Afamx5Aajo8cZxxHzkxil0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlxFs6q9k7EI2wz3D8U4OteeG/hxTC01upYW5DhA8yuFLk+j3GrXhFuHQK38w2D0YAU9/DSpQ4t090NYnob9cz8uaCgaARLy28l/90ljflLHklogDhDhJ6pIHgloarJOy+hd64kij15Oi3CJVpi/MdUJ3cNruHg4zWyffrZON3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4HeowvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APCNJpTSJ4x5TJgi7AIlqzpa8szhuXR1qr28G90SwlD/HS8cEXHFGKCXqYC2iZJW0hVadOVBDTwodaCxKT1qjne5BPWnd+MaERTxR694tmj18Bv65O/9GGOoUWaYH6CGKB4Y2ZjNq57RyziA1Z8OwNAAKOMwHtb/+w/gQkT23QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1lrIOB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4HeowvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1F3C4CEE7;
-	Fri, 17 Oct 2025 15:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1lrIOB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B941C4CEE7;
+	Fri, 17 Oct 2025 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715052;
-	bh=YqqsTdxEtiQu/BMy8m59Z18uI1DsgaoARxN9g5J/8v4=;
+	s=korg; t=1760715055;
+	bh=eHUsPuyZmir5MY4+b2+32Afamx5Aajo8cZxxHzkxil0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4HeowvEnW/Geo28u+6NFwmgA/n4sbP43GU1Dv1+EYLWaNmjir1fXqvDo4hR4umeI
-	 qL2Q58Qul5ZO3FzQ5GCgdYA/AvSoVJAI/5EJ+Utr6KQtfmvA1EKcIy3YKevHESIZtM
-	 LW/kPV4ZfQ7UayPyGPVWHNZU8PryLV0u3M76dwuY=
+	b=Q1lrIOB2dwHHfeV3f+N1JMUjD/OF4WqMji6sAprSdFonEfN78J1UnnvpPmhyzCzlH
+	 0UHpprvHxbi25wMl6Hv9H0KNqmW8PKn9Mad8yvjOG7P+60FxIw0PfygUjnbA6XO3m5
+	 JY2idVHjyhgT1Y6Yw8vR4Wb8//z0lwCFR56ilbjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francois Dugast <francois.dugast@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 081/371] net/mlx4: prevent potential use after free in mlx4_en_do_uc_filter()
-Date: Fri, 17 Oct 2025 16:50:56 +0200
-Message-ID: <20251017145204.869419338@linuxfoundation.org>
+Subject: [PATCH 6.17 082/371] drm/xe/hw_engine_group: Fix double write lock release in error path
+Date: Fri, 17 Oct 2025 16:50:57 +0200
+Message-ID: <20251017145204.905611538@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,39 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 4f0d91ba72811fd5dd577bcdccd7fed649aae62c ]
+[ Upstream commit 08fdfd260e641da203f80aff8d3ed19c5ecceb7d ]
 
-Print "entry->mac" before freeing "entry".  The "entry" pointer is
-freed with kfree_rcu() so it's unlikely that we would trigger this
-in real life, but it's safer to re-order it.
+In xe_hw_engine_group_get_mode(), a write lock is acquired before
+calling switch_mode(), which in turn invokes
+xe_hw_engine_group_suspend_faulting_lr_jobs().
 
-Fixes: cc5387f7346a ("net/mlx4_en: Add unicast MAC filtering")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/aNvMHX4g8RksFFvV@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On failure inside xe_hw_engine_group_suspend_faulting_lr_jobs(),
+the write lock is released there, and then again in
+xe_hw_engine_group_get_mode(), leading to a double release.
+
+Fix this by keeping both acquire and release operation in
+xe_hw_engine_group_get_mode().
+
+Fixes: 770bd1d34113 ("drm/xe/hw_engine_group: Ensure safe transition between execution modes")
+Cc: Francois Dugast <francois.dugast@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Francois Dugast <francois.dugast@intel.com>
+Link: https://lore.kernel.org/r/20250925023145.1203004-2-shuicheng.lin@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 662d98b8b373007fa1b08ba93fee11f6fd3e387c)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/en_netdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_hw_engine_group.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/en_netdev.c b/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
-index d2071aff7b8f3..308b4458e0d44 100644
---- a/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/en_netdev.c
-@@ -1180,9 +1180,9 @@ static void mlx4_en_do_uc_filter(struct mlx4_en_priv *priv,
- 				mlx4_unregister_mac(mdev->dev, priv->port, mac);
+diff --git a/drivers/gpu/drm/xe/xe_hw_engine_group.c b/drivers/gpu/drm/xe/xe_hw_engine_group.c
+index c926f840c87b0..cb1d7ed54f429 100644
+--- a/drivers/gpu/drm/xe/xe_hw_engine_group.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine_group.c
+@@ -213,17 +213,13 @@ static int xe_hw_engine_group_suspend_faulting_lr_jobs(struct xe_hw_engine_group
  
- 				hlist_del_rcu(&entry->hlist);
--				kfree_rcu(entry, rcu);
- 				en_dbg(DRV, priv, "Removed MAC %pM on port:%d\n",
- 				       entry->mac, priv->port);
-+				kfree_rcu(entry, rcu);
- 				++removed;
- 			}
- 		}
+ 		err = q->ops->suspend_wait(q);
+ 		if (err)
+-			goto err_suspend;
++			return err;
+ 	}
+ 
+ 	if (need_resume)
+ 		xe_hw_engine_group_resume_faulting_lr_jobs(group);
+ 
+ 	return 0;
+-
+-err_suspend:
+-	up_write(&group->mode_sem);
+-	return err;
+ }
+ 
+ /**
 -- 
 2.51.0
 
