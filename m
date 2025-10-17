@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0C93370F6;
-	Fri, 17 Oct 2025 14:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0D1337107;
+	Fri, 17 Oct 2025 14:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713171; cv=none; b=BzZy3cE8pfWXTFb4ppB8Al24Pd2K6WvMyEhWLUXKjSsPZJGZoHF9op0Zw0s/fwWGkMAAcpwROCZNNbwqiohht+qnqUsjmjzcAuYfbRWwNVL1wJYSPBv/DYyRBEZyJCBNDsdlxrl3PkLWjns/pjh4vJNdkaRlY2PwL5+TPoYTK6A=
+	t=1760713174; cv=none; b=sN5mWZpI8X4cCb2y2+avm1Jk8mU3PtajzVWipmAWZ8TfFn69t+z5866RCsgR7bxoyCXZ0rfTjqmSOP5CfenLL/O7HO5Xm1gDQfT4c7Hl8RMVaI274TASs4Biefpudz7YkRwjJif0NDvdJ12ZTzqGetBQ2iheiMgqybIuKsq8ZaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713171; c=relaxed/simple;
-	bh=hBVlUDe83yNCPDz1mAQiaDHfiyDe2/Xnn3NWZjJ5SC0=;
+	s=arc-20240116; t=1760713174; c=relaxed/simple;
+	bh=FqaC8SsDggUL8Jvd8dELw4YJRpEN4tEFqhSFVry/YZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvUN7QJO87xCk18VXSJrQJGfQTpKBEJlXTNKvSEEyDMOsgVE7U7SP7fP/mGUO3h3Y6ZkynwD+8iPRlWcizPd+D6Sd3wlrPf4/O4dA9wcT9OTvqI+zsTyZZYXEqorTwtTQkiOoqM1IeqPVgFs/yEpDN9Ho6Sj/WB4dXrrmZk4GUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAw7th1t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GES4R03mszevC7uRqdGtJCxC0leI2Xx3m1lDg7CToMxdqHZSpSgy9zynZom78Agf+BXu1xOBVIr3b24nY6GhB0Gn8ZRWJguTI3HtL0epryo/K+D5EfVSK6AEcNIYM0MgkHP+nRolaT5zVqwVJ2qRLXqW5e5CVaLJPBTC+OL8l2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t80fgNf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAw7th1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88DDC4CEE7;
-	Fri, 17 Oct 2025 14:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t80fgNf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8681BC4CEE7;
+	Fri, 17 Oct 2025 14:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713171;
-	bh=hBVlUDe83yNCPDz1mAQiaDHfiyDe2/Xnn3NWZjJ5SC0=;
+	s=korg; t=1760713173;
+	bh=FqaC8SsDggUL8Jvd8dELw4YJRpEN4tEFqhSFVry/YZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAw7th1tLCV6h+VCQdF7ZeKPrC5pNRJZ51kTT5sPgseLJ2FH26znkIHOtMGAMElm/
-	 nxRHghae9OhcSd3ZJ5J+fn/30rYMOV9rTLfnStaMqh51NRgBqdGdX3/4Br18OBOs84
-	 7tVTUugv9nOACgWPlN0vFQk5j80tczrDx+TXkxak=
+	b=t80fgNf37OZpJTwr80GHSeZQmf4/0ZmMXOY5vfTH9Urp5Pa95tGK/mXOXF7CXdOx4
+	 +7wSmpLY0scWnAqFYderqo6QPEIRnDuhdfP1vqXtaZXrIHZWXkDsDYd79Z5SNlZW1/
+	 hY0NRLEIrFiiLnXbeEkqA7xz9mYqb5kxyPSxAZ+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 072/168] copy_sighand: Handle architectures where sizeof(unsigned long) < sizeof(u64)
-Date: Fri, 17 Oct 2025 16:52:31 +0200
-Message-ID: <20251017145131.679234866@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zihuan Zhang <zhangzihuan@kylinos.cn>
+Subject: [PATCH 6.1 073/168] cpufreq: intel_pstate: Fix object lifecycle issue in update_qos_request()
+Date: Fri, 17 Oct 2025 16:52:32 +0200
+Message-ID: <20251017145131.716977994@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -53,58 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 04ff48239f46e8b493571e260bd0e6c3a6400371 upstream.
+commit 69e5d50fcf4093fb3f9f41c4f931f12c2ca8c467 upstream.
 
-With the introduction of clone3 in commit 7f192e3cd316 ("fork: add
-clone3") the effective bit width of clone_flags on all architectures was
-increased from 32-bit to 64-bit. However, the signature of the copy_*
-helper functions (e.g., copy_sighand) used by copy_process was not
-adapted.
+The cpufreq_cpu_put() call in update_qos_request() takes place too early
+because the latter subsequently calls freq_qos_update_request() that
+indirectly accesses the policy object in question through the QoS request
+object passed to it.
 
-As such, they truncate the flags on any 32-bit architectures that
-supports clone3 (arc, arm, csky, m68k, microblaze, mips32, openrisc,
-parisc32, powerpc32, riscv32, x86-32 and xtensa).
+Fortunately, update_qos_request() is called under intel_pstate_driver_lock,
+so this issue does not matter for changing the intel_pstate operation
+mode, but it theoretically can cause a crash to occur on CPU device hot
+removal (which currently can only happen in virt, but it is formally
+supported nevertheless).
 
-For copy_sighand with CLONE_CLEAR_SIGHAND being an actual u64
-constant, this triggers an observable bug in kernel selftest
-clone3_clear_sighand:
+Address this issue by modifying update_qos_request() to drop the
+reference to the policy later.
 
-        if (clone_flags & CLONE_CLEAR_SIGHAND)
-
-in function copy_sighand within fork.c will always fail given:
-
-        unsigned long /* == uint32_t */ clone_flags
-        #define CLONE_CLEAR_SIGHAND 0x100000000ULL
-
-This commit fixes the bug by always passing clone_flags to copy_sighand
-via their declared u64 type, invariant of architecture-dependent integer
-sizes.
-
-Fixes: b612e5df4587 ("clone3: add CLONE_CLEAR_SIGHAND")
-Cc: stable@vger.kernel.org # linux-5.5+
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Link: https://lore.kernel.org/20250901-nios2-implement-clone3-v2-1-53fcf5577d57@siemens-energy.com
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: da5c504c7aae ("cpufreq: intel_pstate: Implement QoS supported freq constraints")
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zihuan Zhang <zhangzihuan@kylinos.cn>
+Link: https://patch.msgid.link/2255671.irdbgypaU6@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1641,7 +1641,7 @@ static int copy_files(unsigned long clon
- 	return 0;
- }
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1308,10 +1308,10 @@ static void update_qos_request(enum freq
+ 			continue;
  
--static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)
-+static int copy_sighand(u64 clone_flags, struct task_struct *tsk)
- {
- 	struct sighand_struct *sig;
+ 		req = policy->driver_data;
+-		cpufreq_cpu_put(policy);
+-
+-		if (!req)
++		if (!req) {
++			cpufreq_cpu_put(policy);
+ 			continue;
++		}
+ 
+ 		if (hwp_active)
+ 			intel_pstate_get_hwp_cap(cpu);
+@@ -1327,6 +1327,8 @@ static void update_qos_request(enum freq
+ 
+ 		if (freq_qos_update_request(req, freq) < 0)
+ 			pr_warn("Failed to update freq constraint: CPU%d\n", i);
++
++		cpufreq_cpu_put(policy);
+ 	}
+ }
  
 
 
