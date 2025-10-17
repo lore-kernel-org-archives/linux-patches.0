@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C832330B04;
-	Fri, 17 Oct 2025 15:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F37330B06;
+	Fri, 17 Oct 2025 15:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716115; cv=none; b=X9cNDaKUw5pX4LKOsg7vOoZbrnokkmiOMbZCNOVrTMtN2cvWJeHyA559+A981VVh6iLCdsUvOQafcwvrow5AMaWxUcrY3ScQuRCBl0wLC3ST2xzQstspEKEkYClpjX/RDcbMUWPhNuyztLqerWxHwX0y3paizsTXopjhmtNFR2E=
+	t=1760716118; cv=none; b=HCgO10zSyNV3qt4QgaToJb4q29FzqY7nq8pWFVA02MpciWNNIQMZQcBwS5o+C2mYVnfCZWuvjHHzohWwNUR7m1VBR4RsONrnQEPdjW5Oj7/GuDF7TL3Suw1OSbNchxlxBKUSCtjgj9+MhW9TjQOB7g8aodZHv6bq/fz8IyBJ534=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716115; c=relaxed/simple;
-	bh=7vmZjezO3AIBblq7USCH5XVMgRlMQMS53JGX4mWJzhQ=;
+	s=arc-20240116; t=1760716118; c=relaxed/simple;
+	bh=PG0ZqXrF5GWH85BsXMtgF1id3vvt/07sF2AI6pG1PaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pc1EQ2EzfwEsSMLd05qcEUWvMgxOwnPlCsZCrhaVGhDpIpyPOiSwx7vq5NfVc/xmfMktXjpOWorp966mhndHWGCYTt1FdkHSaTX0qL0HnOY2srRE4zLLjYV6MCjIc2ODpInN2MlJ51L7Cd2v4+jfKWMcM50PNFNBU1+uSkJyMPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnv8FX56; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k16QIsb4idVxnTOM2yS5+ajkWSSlhJZNVpWROimdSLBLcX05rjrmq+rMngumh5b8wCqrAXNjQukfgPS0L2MYqDtIy/DdWJkGsTUb6DGgPEgvU887yfT+3KI0bO8ODFwrbVCt+J4sY9lnR3uyE8SQlEEWQ1K1nrIzxp5R+2P8SIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7iqFI+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnv8FX56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDEBC4CEE7;
-	Fri, 17 Oct 2025 15:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7iqFI+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D38C4CEE7;
+	Fri, 17 Oct 2025 15:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716115;
-	bh=7vmZjezO3AIBblq7USCH5XVMgRlMQMS53JGX4mWJzhQ=;
+	s=korg; t=1760716117;
+	bh=PG0ZqXrF5GWH85BsXMtgF1id3vvt/07sF2AI6pG1PaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wnv8FX56f4vjtSPPe9GF7BRRrQCwl5DtLZt1hU4LX55Ei6RgXYBEbF/gdLOAJFzqp
-	 MpIvJCp7mBLM99QzpOnykmFiRY6NOeNcihfwEZ86FTXswFzoEYTdEbPzto2Qj5xPj8
-	 8ctQuA1M7lIQ7wNeMeE8NYwLQhu//Hdk3LlHc19s=
+	b=r7iqFI+9RmO/5aCxJO85KvcfTaF/4KWzoCOBnQBLOjWNZSnKCKhRtiGmgWz8V7Lgu
+	 71vbfAO8pjBWFR/oWbzqUQespWm6B0F8F6MJvoSerWF7UYQWDUEH4dlk/C4frGQKHj
+	 h66YJLCzWwH1JnWWGlQR5cUlPsqD0emv/Hpdnw5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhilesh Patil <akhilesh@ee.iitb.ac.in>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/276] selftests: watchdog: skip ping loop if WDIOF_KEEPALIVEPING not supported
-Date: Fri, 17 Oct 2025 16:52:18 +0200
-Message-ID: <20251017145144.049028021@linuxfoundation.org>
+Subject: [PATCH 5.15 036/276] regulator: scmi: Use int type to store negative error codes
+Date: Fri, 17 Oct 2025 16:52:09 +0200
+Message-ID: <20251017145143.723643422@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,64 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit e8cfc524eaf3c0ed88106177edb6961e202e6716 ]
+[ Upstream commit 9d35d068fb138160709e04e3ee97fe29a6f8615b ]
 
-Check if watchdog device supports WDIOF_KEEPALIVEPING option before
-entering keep_alive() ping test loop. Fix watchdog-test silently looping
-if ioctl based ping is not supported by the device. Exit from test in
-such case instead of getting stuck in loop executing failing keep_alive()
+Change the 'ret' variable from u32 to int to store negative error codes or
+zero returned by of_property_read_u32().
 
-watchdog_info:
- identity:              m41t93 rtc Watchdog
- firmware_version:      0
-Support/Status: Set timeout (in seconds)
-Support/Status: Watchdog triggers a management or other external alarm not a reboot
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants. Additionally, assigning negative error
+codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
+flag is enabled.
 
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-WDIOC_KEEPALIVE not supported by this device
+No effect on runtime.
 
-without this change
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-Watchdog Ticking Away!
-(Where test stuck here forver silently)
-
-Updated change log at commit time:
-Shuah Khan <skhan@linuxfoundation.org>
-
-Link: https://lore.kernel.org/r/20250914152840.GA3047348@bhairav-test.ee.iitb.ac.in
-Fixes: d89d08ffd2c5 ("selftests: watchdog: Fix ioctl SET* error paths to take oneshot exit path")
-Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
+Link: https://patch.msgid.link/20250829101411.625214-1-rongqianfeng@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/regulator/scmi-regulator.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
-index 09773695d219f..4056706d63f7e 100644
---- a/tools/testing/selftests/watchdog/watchdog-test.c
-+++ b/tools/testing/selftests/watchdog/watchdog-test.c
-@@ -240,6 +240,12 @@ int main(int argc, char *argv[])
- 	if (oneshot)
- 		goto end;
+diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
+index 41ae7ac27ff6a..7c0d29c7856bb 100644
+--- a/drivers/regulator/scmi-regulator.c
++++ b/drivers/regulator/scmi-regulator.c
+@@ -257,7 +257,8 @@ static int process_scmi_regulator_of_node(struct scmi_device *sdev,
+ 					  struct device_node *np,
+ 					  struct scmi_regulator_info *rinfo)
+ {
+-	u32 dom, ret;
++	u32 dom;
++	int ret;
  
-+	/* Check if WDIOF_KEEPALIVEPING is supported */
-+	if (!(info.options & WDIOF_KEEPALIVEPING)) {
-+		printf("WDIOC_KEEPALIVE not supported by this device\n");
-+		goto end;
-+	}
-+
- 	printf("Watchdog Ticking Away!\n");
- 
- 	/*
+ 	ret = of_property_read_u32(np, "reg", &dom);
+ 	if (ret)
 -- 
 2.51.0
 
