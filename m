@@ -1,60 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE35D2745E;
-	Fri, 17 Oct 2025 15:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4729D337100;
+	Fri, 17 Oct 2025 15:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714763; cv=none; b=KWZcvpMk0+hJKN4UFFXoP/iZjBYNp2qf9i00NUK4rdcmK3sBI15Wer0ZZu2c74uJJx5hsSfZ0OziR5Wf3xmNwsxdqLDNqjvYb1kmQppVIL2SUoIk/BYYk0lLQ5RaK01Hbjsn9CjqNrEztcQac8YmyuUHxzuZhNLlf9sQQvIo1nA=
+	t=1760714766; cv=none; b=ZrTCZGnaNBXnn+CHr1wDPO7ZZcyrSqYZMR5eiO8B9rQa2+zk07Us754F5WD6alEqFO3ppkS22aacj5h6FvBEZgCIuZPt6ar5WfRekLM5eWMVokqjF3r4phegt1zsrYPuGXXQfjhMbomkBa3VOl3go/yWbrt6RNqKZ8DkSxwP5FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714763; c=relaxed/simple;
-	bh=SuCwcZn/g0I1I3vGGr8tm5Is4t6LrVRpExMjh6niHdc=;
+	s=arc-20240116; t=1760714766; c=relaxed/simple;
+	bh=5uOZoe906yRoRpAxGl8yBeraxN5FRp2BU9zj2J0HCZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Js8GGFMWKyv+VPcWmBdJ/bBZmTAjedxIsb4Dd4wGlEbAaGrqE+hx0UpPBvEdbVw/ia3wXl4ADvHCndDmyCyepgrA83c90NZ0/z1k8my37iJJjVnT2veLOYqXoeOS6/fCdnZk4i5VzCvP2ftJudIzXrF2n6SySbYjQVN/tQ3zajI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBCDL/SC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDYxu+3XkJgcwkT/cLiglUgEzlcVP45SJ6cKPvQFNob4p+bHDSnB05DffDQ+FC9OhvxAswJPjA3aziNiq/azHJRceVGEewtuhjsywf3LwLGt61oKh3ing/Qx+UnlIA8Mahrr2u4sMy+U9siSCKk+JtOE1+U285HziF8UIETEhys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoxEhiNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBCDL/SC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F4AC4CEE7;
-	Fri, 17 Oct 2025 15:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoxEhiNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63514C4CEE7;
+	Fri, 17 Oct 2025 15:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714762;
-	bh=SuCwcZn/g0I1I3vGGr8tm5Is4t6LrVRpExMjh6niHdc=;
+	s=korg; t=1760714765;
+	bh=5uOZoe906yRoRpAxGl8yBeraxN5FRp2BU9zj2J0HCZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBCDL/SCtJGDNmx/CMN3kI2RahM2SGMyrwZdqsKETSxph6N6gp/8jp6FGuBlv0mQT
-	 bZUAK/tvm9AQwCDr92a0hxb3ckmMufKmzyuastiHhkH5usG5dc/nfLkxSJS8brwou3
-	 nTeNtL92ymTLMFAnFU873YGJhdfjddBFrdyFyNh4=
+	b=PoxEhiNooplFXRWATw0jHLObFQdo9pO9oj6ZxcJl33zKnFxtJ8aMSVJGvYigBu4WR
+	 Nttye6PXom6ViN8S7MP76M7DbrmT/F+/1Dq778ZA5vQvaaX1EzWkrYmfbXxnOsEnei
+	 8aISY+6nrIvKz84euBbl4L61+eU6USxbR7jRoxXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	Mathew Brost <matthew.brost@intel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 258/277] mm/rmap: fix soft-dirty and uffd-wp bit loss when remapping zero-filled mTHP subpage to shared zeropage
-Date: Fri, 17 Oct 2025 16:54:25 +0200
-Message-ID: <20251017145156.577742769@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 259/277] s390/bpf: Centralize frame offset calculations
+Date: Fri, 17 Oct 2025 16:54:26 +0200
+Message-ID: <20251017145156.615400638@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -73,110 +50,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit 9658d698a8a83540bf6a6c80d13c9a61590ee985 upstream.
+commit b2268d550d20ff860bddfe3a91b1aec00414689a upstream.
 
-When splitting an mTHP and replacing a zero-filled subpage with the shared
-zeropage, try_to_map_unused_to_zeropage() currently drops several
-important PTE bits.
+The calculation of the distance from %r15 to the caller-allocated
+portion of the stack frame is copy-pasted into multiple places in the
+JIT code.
 
-For userspace tools like CRIU, which rely on the soft-dirty mechanism for
-incremental snapshots, losing the soft-dirty bit means modified pages are
-missed, leading to inconsistent memory state after restore.
+Move it to bpf_jit_prog() and save the result into bpf_jit::frame_off,
+so that the other parts of the JIT can use it.
 
-As pointed out by David, the more critical uffd-wp bit is also dropped.
-This breaks the userfaultfd write-protection mechanism, causing writes to
-be silently missed by monitoring applications, which can lead to data
-corruption.
-
-Preserve both the soft-dirty and uffd-wp bits from the old PTE when
-creating the new zeropage mapping to ensure they are correctly tracked.
-
-Link: https://lkml.kernel.org/r/20250930081040.80926-1-lance.yang@linux.dev
-Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Mathew Brost <matthew.brost@intel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250624121501.50536-2-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ arch/s390/net/bpf_jit_comp.c |   56 +++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 30 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -198,8 +198,7 @@ bool isolate_folio_to_list(struct folio
- }
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -56,6 +56,7 @@ struct bpf_jit {
+ 	int prologue_plt;	/* Start of prologue hotpatch PLT */
+ 	int kern_arena;		/* Pool offset of kernel arena address */
+ 	u64 user_arena;		/* User arena address */
++	u32 frame_off;		/* Offset of frame from %r15 */
+ };
  
- static bool try_to_map_unused_to_zeropage(struct page_vma_mapped_walk *pvmw,
--					  struct folio *folio,
--					  unsigned long idx)
-+		struct folio *folio, pte_t old_pte, unsigned long idx)
+ #define SEEN_MEM	BIT(0)		/* use mem[] for temporary storage */
+@@ -421,12 +422,9 @@ static void save_regs(struct bpf_jit *ji
+ /*
+  * Restore registers from "rs" (register start) to "re" (register end) on stack
+  */
+-static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re, u32 stack_depth)
++static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re)
  {
- 	struct page *page = folio_page(folio, idx);
- 	pte_t newpte;
-@@ -208,7 +207,7 @@ static bool try_to_map_unused_to_zeropag
- 		return false;
- 	VM_BUG_ON_PAGE(!PageAnon(page), page);
- 	VM_BUG_ON_PAGE(!PageLocked(page), page);
--	VM_BUG_ON_PAGE(pte_present(*pvmw->pte), page);
-+	VM_BUG_ON_PAGE(pte_present(old_pte), page);
+-	u32 off = STK_OFF_R6 + (rs - 6) * 8;
+-
+-	if (jit->seen & SEEN_STACK)
+-		off += STK_OFF + stack_depth;
++	u32 off = jit->frame_off + STK_OFF_R6 + (rs - 6) * 8;
  
- 	if (folio_test_mlocked(folio) || (pvmw->vma->vm_flags & VM_LOCKED) ||
- 	    mm_forbids_zeropage(pvmw->vma->vm_mm))
-@@ -224,6 +223,12 @@ static bool try_to_map_unused_to_zeropag
+ 	if (rs == re)
+ 		/* lg %rs,off(%r15) */
+@@ -470,8 +468,7 @@ static int get_end(u16 seen_regs, int st
+  * Save and restore clobbered registers (6-15) on stack.
+  * We save/restore registers in chunks with gap >= 2 registers.
+  */
+-static void save_restore_regs(struct bpf_jit *jit, int op, u32 stack_depth,
+-			      u16 extra_regs)
++static void save_restore_regs(struct bpf_jit *jit, int op, u16 extra_regs)
+ {
+ 	u16 seen_regs = jit->seen_regs | extra_regs;
+ 	const int last = 15, save_restore_size = 6;
+@@ -494,7 +491,7 @@ static void save_restore_regs(struct bpf
+ 		if (op == REGS_SAVE)
+ 			save_regs(jit, rs, re);
+ 		else
+-			restore_regs(jit, rs, re, stack_depth);
++			restore_regs(jit, rs, re);
+ 		re++;
+ 	} while (re <= last);
+ }
+@@ -561,8 +558,7 @@ static void bpf_jit_plt(struct bpf_plt *
+  * Save registers and create stack frame if necessary.
+  * See stack frame layout description in "bpf_jit.h"!
+  */
+-static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp,
+-			     u32 stack_depth)
++static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp)
+ {
+ 	/* No-op for hotpatching */
+ 	/* brcl 0,prologue_plt */
+@@ -595,7 +591,7 @@ static void bpf_jit_prologue(struct bpf_
+ 		jit->seen_regs |= NVREGS;
+ 	} else {
+ 		/* Save registers */
+-		save_restore_regs(jit, REGS_SAVE, stack_depth,
++		save_restore_regs(jit, REGS_SAVE,
+ 				  fp->aux->exception_boundary ? NVREGS : 0);
+ 	}
+ 	/* Setup literal pool */
+@@ -617,8 +613,8 @@ static void bpf_jit_prologue(struct bpf_
+ 		EMIT4(0xb9040000, REG_W1, REG_15);
+ 		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
+ 		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
+-		/* aghi %r15,-STK_OFF */
+-		EMIT4_IMM(0xa70b0000, REG_15, -(STK_OFF + stack_depth));
++		/* aghi %r15,-frame_off */
++		EMIT4_IMM(0xa70b0000, REG_15, -jit->frame_off);
+ 		/* stg %w1,152(%r15) (backchain) */
+ 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
+ 			      REG_15, 152);
+@@ -665,13 +661,13 @@ static void call_r1(struct bpf_jit *jit)
+ /*
+  * Function epilogue
+  */
+-static void bpf_jit_epilogue(struct bpf_jit *jit, u32 stack_depth)
++static void bpf_jit_epilogue(struct bpf_jit *jit)
+ {
+ 	jit->exit_ip = jit->prg;
+ 	/* Load exit code: lgr %r2,%b0 */
+ 	EMIT4(0xb9040000, REG_2, BPF_REG_0);
+ 	/* Restore registers */
+-	save_restore_regs(jit, REGS_RESTORE, stack_depth, 0);
++	save_restore_regs(jit, REGS_RESTORE, 0);
+ 	if (nospec_uses_trampoline()) {
+ 		jit->r14_thunk_ip = jit->prg;
+ 		/* Generate __s390_indirect_jump_r14 thunk */
+@@ -862,7 +858,7 @@ static int sign_extend(struct bpf_jit *j
+  * stack space for the large switch statement.
+  */
+ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+-				 int i, bool extra_pass, u32 stack_depth)
++				 int i, bool extra_pass)
+ {
+ 	struct bpf_insn *insn = &fp->insnsi[i];
+ 	s32 branch_oc_off = insn->off;
+@@ -1783,9 +1779,9 @@ static noinline int bpf_jit_insn(struct
+ 		 * Note 2: We assume that the verifier does not let us call the
+ 		 * main program, which clears the tail call counter on entry.
+ 		 */
+-		/* mvc STK_OFF_TCCNT(4,%r15),N(%r15) */
++		/* mvc STK_OFF_TCCNT(4,%r15),frame_off+STK_OFF_TCCNT(%r15) */
+ 		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
+-		       0xf000 | (STK_OFF_TCCNT + STK_OFF + stack_depth));
++		       0xf000 | (jit->frame_off + STK_OFF_TCCNT));
  
- 	newpte = pte_mkspecial(pfn_pte(my_zero_pfn(pvmw->address),
- 					pvmw->vma->vm_page_prot));
-+
-+	if (pte_swp_soft_dirty(old_pte))
-+		newpte = pte_mksoft_dirty(newpte);
-+	if (pte_swp_uffd_wp(old_pte))
-+		newpte = pte_mkuffd_wp(newpte);
-+
- 	set_pte_at(pvmw->vma->vm_mm, pvmw->address, pvmw->pte, newpte);
+ 		/* Sign-extend the kfunc arguments. */
+ 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
+@@ -1836,10 +1832,7 @@ static noinline int bpf_jit_insn(struct
+ 		 *         goto out;
+ 		 */
  
- 	dec_mm_counter(pvmw->vma->vm_mm, mm_counter(folio));
-@@ -266,13 +271,13 @@ static bool remove_migration_pte(struct
- 			continue;
+-		if (jit->seen & SEEN_STACK)
+-			off = STK_OFF_TCCNT + STK_OFF + stack_depth;
+-		else
+-			off = STK_OFF_TCCNT;
++		off = jit->frame_off + STK_OFF_TCCNT;
+ 		/* lhi %w0,1 */
+ 		EMIT4_IMM(0xa7080000, REG_W0, 1);
+ 		/* laal %w1,%w0,off(%r15) */
+@@ -1869,7 +1862,7 @@ static noinline int bpf_jit_insn(struct
+ 		/*
+ 		 * Restore registers before calling function
+ 		 */
+-		save_restore_regs(jit, REGS_RESTORE, stack_depth, 0);
++		save_restore_regs(jit, REGS_RESTORE, 0);
+ 
+ 		/*
+ 		 * goto *(prog->bpf_func + tail_call_start);
+@@ -2161,7 +2154,7 @@ static int bpf_set_addr(struct bpf_jit *
+  * Compile eBPF program into s390x code
+  */
+ static int bpf_jit_prog(struct bpf_jit *jit, struct bpf_prog *fp,
+-			bool extra_pass, u32 stack_depth)
++			bool extra_pass)
+ {
+ 	int i, insn_count, lit32_size, lit64_size;
+ 	u64 kern_arena;
+@@ -2170,24 +2163,28 @@ static int bpf_jit_prog(struct bpf_jit *
+ 	jit->lit64 = jit->lit64_start;
+ 	jit->prg = 0;
+ 	jit->excnt = 0;
++	if (is_first_pass(jit) || (jit->seen & SEEN_STACK))
++		jit->frame_off = STK_OFF + round_up(fp->aux->stack_depth, 8);
++	else
++		jit->frame_off = 0;
+ 
+ 	kern_arena = bpf_arena_get_kern_vm_start(fp->aux->arena);
+ 	if (kern_arena)
+ 		jit->kern_arena = _EMIT_CONST_U64(kern_arena);
+ 	jit->user_arena = bpf_arena_get_user_vm_start(fp->aux->arena);
+ 
+-	bpf_jit_prologue(jit, fp, stack_depth);
++	bpf_jit_prologue(jit, fp);
+ 	if (bpf_set_addr(jit, 0) < 0)
+ 		return -1;
+ 	for (i = 0; i < fp->len; i += insn_count) {
+-		insn_count = bpf_jit_insn(jit, fp, i, extra_pass, stack_depth);
++		insn_count = bpf_jit_insn(jit, fp, i, extra_pass);
+ 		if (insn_count < 0)
+ 			return -1;
+ 		/* Next instruction address */
+ 		if (bpf_set_addr(jit, i + insn_count) < 0)
+ 			return -1;
+ 	}
+-	bpf_jit_epilogue(jit, stack_depth);
++	bpf_jit_epilogue(jit);
+ 
+ 	lit32_size = jit->lit32 - jit->lit32_start;
+ 	lit64_size = jit->lit64 - jit->lit64_start;
+@@ -2263,7 +2260,6 @@ static struct bpf_binary_header *bpf_jit
+  */
+ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ {
+-	u32 stack_depth = round_up(fp->aux->stack_depth, 8);
+ 	struct bpf_prog *tmp, *orig_fp = fp;
+ 	struct bpf_binary_header *header;
+ 	struct s390_jit_data *jit_data;
+@@ -2316,7 +2312,7 @@ struct bpf_prog *bpf_int_jit_compile(str
+ 	 *   - 3:   Calculate program size and addrs array
+ 	 */
+ 	for (pass = 1; pass <= 3; pass++) {
+-		if (bpf_jit_prog(&jit, fp, extra_pass, stack_depth)) {
++		if (bpf_jit_prog(&jit, fp, extra_pass)) {
+ 			fp = orig_fp;
+ 			goto free_addrs;
  		}
- #endif
-+		old_pte = ptep_get(pvmw.pte);
- 		if (rmap_walk_arg->map_unused_to_zeropage &&
--		    try_to_map_unused_to_zeropage(&pvmw, folio, idx))
-+		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
- 			continue;
- 
- 		folio_get(folio);
- 		pte = mk_pte(new, READ_ONCE(vma->vm_page_prot));
--		old_pte = ptep_get(pvmw.pte);
- 
- 		entry = pte_to_swp_entry(old_pte);
- 		if (!is_migration_entry_young(entry))
+@@ -2330,7 +2326,7 @@ struct bpf_prog *bpf_int_jit_compile(str
+ 		goto free_addrs;
+ 	}
+ skip_init_ctx:
+-	if (bpf_jit_prog(&jit, fp, extra_pass, stack_depth)) {
++	if (bpf_jit_prog(&jit, fp, extra_pass)) {
+ 		bpf_jit_binary_free(header);
+ 		fp = orig_fp;
+ 		goto free_addrs;
 
 
