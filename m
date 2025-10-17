@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EF12F12C2;
-	Fri, 17 Oct 2025 15:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADCF1A0728;
+	Fri, 17 Oct 2025 15:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715907; cv=none; b=pGcg7JFnnCv0Mb4XsJJu9Tsjnss9WZL+U5umHvC7eBiVAUqXZhWeCsDL+W0FIrUG/UN7IcrejY7h652qfr+4F5iRF0V2ia/4fNVDcHKCL1Ls/y+tZAmxRtkcv+3cL2UgD7Ou3CPo1kUjPDyppOw39GJFaUVLGJ0u1k9VsaSxT+w=
+	t=1760715910; cv=none; b=aQRDnlFCLc4NaJeEALTf/GinuMh8JzPblSzhqFiLTUtTWe8T60vdwzq8INGjDyzctV4ALT75iqUT2wThAYu8H3cf2OmaHcxYEvxuy/u2lBjHE46aqC0o/RSwQ3ae6xZSCi5Mm11Iqjw7YG9DTl7OJ3A3jfbzx4tcjYYt3nuyD7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715907; c=relaxed/simple;
-	bh=bM/I2MXpFBbKDyWg9aGE5QtrfkuouZRXuMMcEXy9GN0=;
+	s=arc-20240116; t=1760715910; c=relaxed/simple;
+	bh=j6j6+CoMgMDrsz8JwYg8HM0UCLcNHdSmCOWJ2b0yKqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfFjslnK1lsVLSH0FyRJCuxUc74bp4Z3GYj7B88rHK6BqtxLMc+Qgy11XJOR7sTYY7IqomXjbMGirdcWrtwaHYv3J4GJzdVGBB8lnn6b4YPYkuSxj+JZYtbCaFB9hEOkP6DpfEiYBF/P78u5ddv9Q4kh7N8BkgdVrtF7OBbHy+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRx7tQeW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i77p9TQc0KqTxCgTy8BWceumEiE0/0fpHY8Pr2DKs5kH3vHI6hlH9NkeFUtb8oZ2g1rIe4mxTQDKtJkiKuc+LeugB6uLIBpr1MQPulaYGL/p7YX9lgw5pOChtrv4JaenjpdTxgq+Z9MfyzhnUoUAVnjk/a5tjaqB+nebu4I6bRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNk79abc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRx7tQeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2ABDC116C6;
-	Fri, 17 Oct 2025 15:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNk79abc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEE9C4CEE7;
+	Fri, 17 Oct 2025 15:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715907;
-	bh=bM/I2MXpFBbKDyWg9aGE5QtrfkuouZRXuMMcEXy9GN0=;
+	s=korg; t=1760715910;
+	bh=j6j6+CoMgMDrsz8JwYg8HM0UCLcNHdSmCOWJ2b0yKqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRx7tQeWVNfbq134NFqRdoE7plPvmvDmGvmIGqKwN1ho/q6jg3OnZW8GW3ae+Tj57
-	 DOyE8d58HRSi0JHPHC54it0HFwg90pfxObcKBsjY+/OrlDzx4x6LocPYljNdJQmtSt
-	 q1HF+X+pU4Gq/aKI0dptY3mCGn2qqj1jd8yzfguA=
+	b=tNk79abc4QMQPZA63L1eqMlrV48z3RTgtciXwMvriIwvtxHPceTfJVJyK/IRcdr7G
+	 BYPf6wRAyQtvqANrO7PPYo5oV6FZCAZ4bV0Ylh/QxPrujNtemTO2yBhP2S8ROCs644
+	 qpdw6zEi03t2QY5qjCEQS5k5Sh/LawHCyo2SHWIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
+	stable@kernel.org,
 	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.17 348/371] ext4: free orphan info with kvfree
-Date: Fri, 17 Oct 2025 16:55:23 +0200
-Message-ID: <20251017145214.670106263@linuxfoundation.org>
+Subject: [PATCH 6.17 339/371] ext4: fail unaligned direct IO write with EINVAL
+Date: Fri, 17 Oct 2025 16:55:14 +0200
+Message-ID: <20251017145214.347947647@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,41 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit 971843c511c3c2f6eda96c6b03442913bfee6148 upstream.
+commit 963845748fe67125006859229487b45485564db7 upstream.
 
-Orphan info is now getting allocated with kvmalloc_array(). Free it with
-kvfree() instead of kfree() to avoid complaints from mm.
+Commit bc264fea0f6f ("iomap: support incremental iomap_iter advances")
+changed the error handling logic in iomap_iter(). Previously any error
+from iomap_dio_bio_iter() got propagated to userspace, after this commit
+if ->iomap_end returns error, it gets propagated to userspace instead of
+an error from iomap_dio_bio_iter(). This results in unaligned writes to
+ext4 to silently fallback to buffered IO instead of erroring out.
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-Cc: stable@vger.kernel.org
+Now returning ENOTBLK for DIO writes from ext4_iomap_end() seems
+unnecessary these days. It is enough to return ENOTBLK from
+ext4_iomap_begin() when we don't support DIO write for that particular
+file offset (due to hole).
+
+Fixes: bc264fea0f6f ("iomap: support incremental iomap_iter advances")
+Cc: stable@kernel.org
 Signed-off-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251007134936.7291-2-jack@suse.cz>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Message-ID: <20250901112739.32484-2-jack@suse.cz>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/inode.c | 35 -----------------------------------
+ 1 file changed, 35 deletions(-)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -513,7 +513,7 @@ void ext4_release_orphan_info(struct sup
- 		return;
- 	for (i = 0; i < oi->of_blocks; i++)
- 		brelse(oi->of_binfo[i].ob_bh);
--	kfree(oi->of_binfo);
-+	kvfree(oi->of_binfo);
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 5b7a15db4953..c3b23c90fd11 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -3872,47 +3872,12 @@ static int ext4_iomap_overwrite_begin(struct inode *inode, loff_t offset,
+ 	return ret;
  }
  
- static struct ext4_orphan_block_tail *ext4_orphan_block_tail(
-@@ -637,7 +637,7 @@ int ext4_init_orphan_info(struct super_b
- out_free:
- 	for (i--; i >= 0; i--)
- 		brelse(oi->of_binfo[i].ob_bh);
--	kfree(oi->of_binfo);
-+	kvfree(oi->of_binfo);
- out_put:
- 	iput(inode);
- 	return ret;
+-static inline bool ext4_want_directio_fallback(unsigned flags, ssize_t written)
+-{
+-	/* must be a directio to fall back to buffered */
+-	if ((flags & (IOMAP_WRITE | IOMAP_DIRECT)) !=
+-		    (IOMAP_WRITE | IOMAP_DIRECT))
+-		return false;
+-
+-	/* atomic writes are all-or-nothing */
+-	if (flags & IOMAP_ATOMIC)
+-		return false;
+-
+-	/* can only try again if we wrote nothing */
+-	return written == 0;
+-}
+-
+-static int ext4_iomap_end(struct inode *inode, loff_t offset, loff_t length,
+-			  ssize_t written, unsigned flags, struct iomap *iomap)
+-{
+-	/*
+-	 * Check to see whether an error occurred while writing out the data to
+-	 * the allocated blocks. If so, return the magic error code for
+-	 * non-atomic write so that we fallback to buffered I/O and attempt to
+-	 * complete the remainder of the I/O.
+-	 * For non-atomic writes, any blocks that may have been
+-	 * allocated in preparation for the direct I/O will be reused during
+-	 * buffered I/O. For atomic write, we never fallback to buffered-io.
+-	 */
+-	if (ext4_want_directio_fallback(flags, written))
+-		return -ENOTBLK;
+-
+-	return 0;
+-}
+-
+ const struct iomap_ops ext4_iomap_ops = {
+ 	.iomap_begin		= ext4_iomap_begin,
+-	.iomap_end		= ext4_iomap_end,
+ };
+ 
+ const struct iomap_ops ext4_iomap_overwrite_ops = {
+ 	.iomap_begin		= ext4_iomap_overwrite_begin,
+-	.iomap_end		= ext4_iomap_end,
+ };
+ 
+ static int ext4_iomap_begin_report(struct inode *inode, loff_t offset,
+-- 
+2.51.0
+
 
 
