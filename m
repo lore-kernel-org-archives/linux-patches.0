@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83983BB5A;
-	Fri, 17 Oct 2025 15:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA33D2745E;
+	Fri, 17 Oct 2025 15:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714996; cv=none; b=G5PQ3tox3MGGwzywhsuDymYLifIuYwQReCAqORovHYJoVSN+DGU4BIKvpXm0kVl+iuiNDGYkkjF69tlybA79nPFaxcCK/DDTeHzWpkGNwm0ulUtaEj2eLi4XeU9YTPhlF4HbGzO91aWWaO0VPu3uZCjww8KsWpBWO/2y6/ZRASs=
+	t=1760714998; cv=none; b=O16z+F9TkXyL3pU7bLtlS3RxAW22GLvL06hFwaLHrJoQz1tMEHcel3e8h4Svqe9NrjpomlrLeqkFROEnbe+cPVEAhxqQDqPBHd1Eg2zunqp/DaoatjcDV3KIyP0XSi6zmVpx2MZzFHtih+AKZwd6XRCcYdJF7ekc7nAG8Tt5xlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714996; c=relaxed/simple;
-	bh=4c8DG67dUV6cbjG5kCICuIE6p9OaFv6rZLsHF+zQdKw=;
+	s=arc-20240116; t=1760714998; c=relaxed/simple;
+	bh=1+X/4wPr1aTZe9ePH3KHjwxxwc73LJWOVF4LNvsIi5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFmz+bsHgBYE4JGBsdWAL/6MjPUlje2aL9WAygi5wO4zLEslYDG/qyeodu5hQtpxnfhcMKxEGNIc9vXnpUDvKuAsjZ/gds5f0mMVTxVQCxuTVGVeOXcCWZdj7pcb7YO0+B8YHB6xnsCOR8YKqSf/0mqsVE62JFts1R2B1+TxlNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgGZQJW2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WU01RLZjbqxvrMIvHRGjEYPhjqhneZxSRliAe7x5cFUbDi6/syYqpzFYiwdGEDadq3icN/UR69jgXz6JBgr+Kp8LXJgAOcbE/gLb/bxTOHHNNkrScGC7k5LdhNcnmsgNiv6qZOQXPEg2nokMaG3XvcUtX/kZRNLottlVljNcoe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrT6gFCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgGZQJW2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B517C4CEE7;
-	Fri, 17 Oct 2025 15:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrT6gFCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED24C4CEE7;
+	Fri, 17 Oct 2025 15:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714995;
-	bh=4c8DG67dUV6cbjG5kCICuIE6p9OaFv6rZLsHF+zQdKw=;
+	s=korg; t=1760714998;
+	bh=1+X/4wPr1aTZe9ePH3KHjwxxwc73LJWOVF4LNvsIi5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgGZQJW2TxA8DRPP/xmYQ2HyCe5ekWEQbbk64nyvTEMSOhZnXlQNIu6nhkUlPQsxU
-	 fPsZe3ee9mvOm+EYqEt84VFKJIk0Mvgt47iCrojM4/bys4Rq4PeBTvzhDFRsj1fa8M
-	 9wV+GPeQrrM7lzUvl46aBErlTCz1agxZnpKlNbc4=
+	b=rrT6gFCciJ2gTqCQ/s6kIA9AIhXQ/cP3GRN3NanUNCPq69BCtlJBZKmpO6AF+6lvh
+	 TJ6dFgXrWxXsDQ/Qw5aBpQGWcCG71bUd7I+hwQjEUR8QjJHZOiDBbYxdUE80mynvJ7
+	 7ufB7GJguTzWftPQbxQAuavKGHpuMiqTDHxXCM4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 054/371] clk: nxp: Fix pll0 rate check condition in LPC18xx CGU driver
-Date: Fri, 17 Oct 2025 16:50:29 +0200
-Message-ID: <20251017145203.755537723@linuxfoundation.org>
+Subject: [PATCH 6.17 063/371] tracing: Fix the bug where bpf_get_stackid returns -EFAULT on the ARM64
+Date: Fri, 17 Oct 2025 16:50:38 +0200
+Message-ID: <20251017145204.080079181@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,48 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 1624dead9a4d288a594fdf19735ebfe4bb567cb8 ]
+[ Upstream commit fd2f74f8f3d3c1a524637caf5bead9757fae4332 ]
 
-The conditional check for the PLL0 multiplier 'm' used a logical AND
-instead of OR, making the range check ineffective. This patch replaces
-&& with || to correctly reject invalid values of 'm' that are either
-less than or equal to 0 or greater than LPC18XX_PLL0_MSEL_MAX.
+When using bpf_program__attach_kprobe_multi_opts on ARM64 to hook a BPF program
+that contains the bpf_get_stackid function, the BPF program fails
+to obtain the stack trace and returns -EFAULT.
 
-This ensures proper bounds checking during clk rate setting and rounding.
+This is because ftrace_partial_regs omits the configuration of the pstate register,
+leaving pstate at the default value of 0. When get_perf_callchain executes,
+it uses user_mode(regs) to determine whether it is in kernel mode.
+This leads to a misjudgment that the code is in user mode,
+so perf_callchain_kernel is not executed and the function returns directly.
+As a result, trace->nr becomes 0, and finally -EFAULT is returned.
 
-Fixes: b04e0b8fd544 ("clk: add lpc18xx cgu clk driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-[sboyd@kernel.org: 'm' is unsigned so remove < condition]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Therefore, the assignment of the pstate register is added here.
+
+Fixes: b9b55c8912ce ("tracing: Add ftrace_partial_regs() for converting ftrace_regs to pt_regs")
+Closes: https://lore.kernel.org/bpf/20250919071902.554223-1-yangfeng59949@163.com/
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Tested-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nxp/clk-lpc18xx-cgu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/ftrace.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/nxp/clk-lpc18xx-cgu.c b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-index 30e0b283ca608..b9e204d63a972 100644
---- a/drivers/clk/nxp/clk-lpc18xx-cgu.c
-+++ b/drivers/clk/nxp/clk-lpc18xx-cgu.c
-@@ -381,7 +381,7 @@ static int lpc18xx_pll0_determine_rate(struct clk_hw *hw,
- 	}
+diff --git a/arch/arm64/include/asm/ftrace.h b/arch/arm64/include/asm/ftrace.h
+index bfe3ce9df1978..ba7cf7fec5e97 100644
+--- a/arch/arm64/include/asm/ftrace.h
++++ b/arch/arm64/include/asm/ftrace.h
+@@ -153,6 +153,7 @@ ftrace_partial_regs(const struct ftrace_regs *fregs, struct pt_regs *regs)
+ 	regs->pc = afregs->pc;
+ 	regs->regs[29] = afregs->fp;
+ 	regs->regs[30] = afregs->lr;
++	regs->pstate = PSR_MODE_EL1h;
+ 	return regs;
+ }
  
- 	m = DIV_ROUND_UP_ULL(req->best_parent_rate, req->rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, req->rate);
- 		return -EINVAL;
- 	}
-@@ -404,7 +404,7 @@ static int lpc18xx_pll0_set_rate(struct clk_hw *hw, unsigned long rate,
- 	}
- 
- 	m = DIV_ROUND_UP_ULL(parent_rate, rate * 2);
--	if (m <= 0 && m > LPC18XX_PLL0_MSEL_MAX) {
-+	if (m == 0 || m > LPC18XX_PLL0_MSEL_MAX) {
- 		pr_warn("%s: unable to support rate %lu\n", __func__, rate);
- 		return -EINVAL;
- 	}
 -- 
 2.51.0
 
