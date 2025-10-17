@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11CA330B20;
-	Fri, 17 Oct 2025 15:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985E1330B1E;
+	Fri, 17 Oct 2025 15:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716396; cv=none; b=bq0wHwFAsY1/mwKSui8VfYpNAw4Bxl3auY4iyxd/SmSiucYwiTskXW761yXbqnvoZlVCazehnJr+j+cmKiJ7nQ2Tm8ea3NXFckoNYYZmGIdYHju9IXzvLntaqlIFRcRdfmAObIGgnXdDRWpWZoqGqPqrxJwAumVNejLj7sDuDjE=
+	t=1760716399; cv=none; b=R+/N+Ia4JGHqbDkkIAJmOnxerqy0a/X/GCk32GhF/e41+fFM8XSaipesrg8A6vK0jqbYFLXRG7C+/DjypHU2ExeoCuF1qnxfJFClvUr4R6/db63lnvq750GhVh0rzQjc6klmcRoyrm/M26cpXswrUPjNt/jC2k8GnYVlAxBB9ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716396; c=relaxed/simple;
-	bh=uXh0zbTld5MHPDqXt0aS5nw/gxNmUp6lmrwqKqE0lI8=;
+	s=arc-20240116; t=1760716399; c=relaxed/simple;
+	bh=HIDRVfzES7Wj2MgF+VxceUelMXuz3NFPXRPqfxwFaa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxBrfLiHrDVxZRW+CtzjjdwYyhqAlZJvOJ7ek0rPldZyKVN7Rj1UUYrATfIJwLglD2W5pYdWPnP4CE4BB6in5RUbRj/Sgruu3Pa/TGqQDvTVHyNkdFx9/EEEN7vxJiJfEfBHmC52MvPln9g5C2Tzz8W6XKHFuIN+kYa2UR6kUeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gclN0KI+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WPGYtghJGbnDkoLGEb1hQIZWTRc95t1xmplZ2q6dCyKRvscrdJvggG1efFFKoRVQ8PAZtoSSWAwTcu3/lZSSfQewqZPg1sErvxmm5rm+KIr7qxS/rZO7V1tai7ZQYJydIdSQCKq6utIbLjmw6Or/33QdJgCrY0ckiZhhq8eVg6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOZe4nrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gclN0KI+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5511AC4CEE7;
-	Fri, 17 Oct 2025 15:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOZe4nrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D5CC4CEE7;
+	Fri, 17 Oct 2025 15:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716396;
-	bh=uXh0zbTld5MHPDqXt0aS5nw/gxNmUp6lmrwqKqE0lI8=;
+	s=korg; t=1760716399;
+	bh=HIDRVfzES7Wj2MgF+VxceUelMXuz3NFPXRPqfxwFaa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gclN0KI+1/+e6TcTPBnOELJo2XyspOBgMi/cYeQqDw5udhnBNVPIkFUVW0AElU5ek
-	 6DeSuLql0k7/BxKAj2lGg9omJB/XtNferGgFzTTn+82vq7vtcfM0U2eDxWa7BDd5gU
-	 K3Krux33UfNhvds9cTLrMEGY1Ucp2rl5SK3A+8ak=
+	b=SOZe4nrW53nvQF+XKwgcxqQQERhu0fuXjurqpApPZf9u8VIybWzgAsGoaLXBnqR9S
+	 1zLgMoArGr6F+S5QGEy41iURKPVMzY1BJfp5tKgO2h9gKKRX4pU8lOsBQUTPNVH2Uh
+	 oi3PjZylPZI0MBzreYv9lC4HbpfbGr3tzLYYoAmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 175/276] btrfs: avoid potential out-of-bounds in btrfs_encode_fh()
-Date: Fri, 17 Oct 2025 16:54:28 +0200
-Message-ID: <20251017145148.863461386@linuxfoundation.org>
+	Adam Xue <zxue@semtech.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 5.15 176/276] bus: mhi: host: Do not use uninitialized dev pointer in mhi_init_irq_setup()
+Date: Fri, 17 Oct 2025 16:54:29 +0200
+Message-ID: <20251017145148.900673208@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,71 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Adam Xue <zxue@semtech.com>
 
-commit dff4f9ff5d7f289e4545cc936362e01ed3252742 upstream.
+commit d0856a6dff57f95cc5d2d74e50880f01697d0cc4 upstream.
 
-The function btrfs_encode_fh() does not properly account for the three
-cases it handles.
+In mhi_init_irq_setup, the device pointer used for dev_err() was not
+initialized. Use the pointer from mhi_cntrl instead.
 
-Before writing to the file handle (fh), the function only returns to the
-user BTRFS_FID_SIZE_NON_CONNECTABLE (5 dwords, 20 bytes) or
-BTRFS_FID_SIZE_CONNECTABLE (8 dwords, 32 bytes).
-
-However, when a parent exists and the root ID of the parent and the
-inode are different, the function writes BTRFS_FID_SIZE_CONNECTABLE_ROOT
-(10 dwords, 40 bytes).
-
-If *max_len is not large enough, this write goes out of bounds because
-BTRFS_FID_SIZE_CONNECTABLE_ROOT is greater than
-BTRFS_FID_SIZE_CONNECTABLE originally returned.
-
-This results in an 8-byte out-of-bounds write at
-fid->parent_root_objectid = parent_root_id.
-
-A previous attempt to fix this issue was made but was lost.
-
-https://lore.kernel.org/all/4CADAEEC020000780001B32C@vpn.id2.novell.com/
-
-Although this issue does not seem to be easily triggerable, it is a
-potential memory corruption bug that should be fixed. This patch
-resolves the issue by ensuring the function returns the appropriate size
-for all three cases and validates that *max_len is large enough before
-writing any data.
-
-Fixes: be6e8dc0ba84 ("NFS support for btrfs - v3")
-CC: stable@vger.kernel.org # 3.0+
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: b0fc0167f254 ("bus: mhi: core: Allow shared IRQ for event rings")
+Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+Signed-off-by: Adam Xue <zxue@semtech.com>
+[mani: reworded subject/description and CCed stable]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250905174118.38512-1-zxue@semtech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/export.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/init.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/export.c
-+++ b/fs/btrfs/export.c
-@@ -22,7 +22,11 @@ static int btrfs_encode_fh(struct inode
- 	int type;
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -161,7 +161,6 @@ void mhi_deinit_free_irq(struct mhi_cont
+ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ {
+ 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
+-	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+ 	int i, ret;
  
- 	if (parent && (len < BTRFS_FID_SIZE_CONNECTABLE)) {
--		*max_len = BTRFS_FID_SIZE_CONNECTABLE;
-+		if (btrfs_root_id(BTRFS_I(inode)->root) !=
-+		    btrfs_root_id(BTRFS_I(parent)->root))
-+			*max_len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
-+		else
-+			*max_len = BTRFS_FID_SIZE_CONNECTABLE;
- 		return FILEID_INVALID;
- 	} else if (len < BTRFS_FID_SIZE_NON_CONNECTABLE) {
- 		*max_len = BTRFS_FID_SIZE_NON_CONNECTABLE;
-@@ -44,6 +48,8 @@ static int btrfs_encode_fh(struct inode
- 		parent_root_id = BTRFS_I(parent)->root->root_key.objectid;
+@@ -182,7 +181,7 @@ int mhi_init_irq_setup(struct mhi_contro
+ 			continue;
  
- 		if (parent_root_id != fid->root_objectid) {
-+			if (*max_len < BTRFS_FID_SIZE_CONNECTABLE_ROOT)
-+				return FILEID_INVALID;
- 			fid->parent_root_objectid = parent_root_id;
- 			len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
- 			type = FILEID_BTRFS_WITH_PARENT_ROOT;
+ 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
+-			dev_err(dev, "irq %d not available for event ring\n",
++			dev_err(mhi_cntrl->cntrl_dev, "irq %d not available for event ring\n",
+ 				mhi_event->irq);
+ 			ret = -EINVAL;
+ 			goto error_request;
+@@ -193,7 +192,7 @@ int mhi_init_irq_setup(struct mhi_contro
+ 				  irq_flags,
+ 				  "mhi", mhi_event);
+ 		if (ret) {
+-			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
++			dev_err(mhi_cntrl->cntrl_dev, "Error requesting irq:%d for ev:%d\n",
+ 				mhi_cntrl->irq[mhi_event->irq], i);
+ 			goto error_request;
+ 		}
 
 
