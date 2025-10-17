@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE372D7D3A;
-	Fri, 17 Oct 2025 15:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F002745E;
+	Fri, 17 Oct 2025 15:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714595; cv=none; b=o+yVSn8LG4z2mm8NL4fwnvqp/sheFf/boiuPh68KNt3DniS79WLreqSYMpZwof4rVqaAoSNFFJrehgtdV6DYpBpJNoeC4uJhvkZ001WgJbIihcI2aH7n7lUxUotVXVn087QzdJZ0bUQ14SQMNe8DEeuBsnmG6otcfzrjqba0BU0=
+	t=1760714597; cv=none; b=bM4rAemoNa73OG0MCUKhmIvQ6Hz/7eA6OFd1p4cux6UNatx7DcLvYsMAizI3Do1Sqx/tqyT3Nf5Y2CVqhd5pJgX8SaYhFn3eP624yPMQmCjOd+rNTwamBmehIJkwQH0khE2QZtqGfLJV4Q2oruXjENwTglQLJj4JBTUb92SnX4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714595; c=relaxed/simple;
-	bh=MPHDx2iYt5rcyrvssBnqrXz+aofLKbAO49DPJMsTH04=;
+	s=arc-20240116; t=1760714597; c=relaxed/simple;
+	bh=bme+BhO+x9d2wELrVtxwzUsZO9mDNOB7TzQIT0tgwic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnoyoBtnXV4HCNJnd1WY1mSpCS704z8o6LSZZH2TDeJwVNLrUqp5mE7ITDQQz/cWbsOxzwP6Ml40omqiU9+bTlHiYBdVJCGkJWxB/h/sSUwbgPl44C+FjcF1UwID7pW2jA+y20D8Pdh2AE7Fr4GSmRnbYAXa4zOLuwOp2ZXG1P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHKDg6Vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBsbWDAelLNK43ax9HIe6zf6WZNCn8Ok6M3k9VpgfHeL/Kph9IvROZF5UQb3Kt+ZM6y2izKSp89w8bz6vU2yzFsQ7wdmAeAW3B/SrQdwyPtx31wvyqy8SngXuTcD2m68ztUS+WykflR0IcsOiKi7ALBpWiV6KGtZmHgFKbM93J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+6s8VMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHKDg6Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173FDC4CEE7;
-	Fri, 17 Oct 2025 15:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+6s8VMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7DFC4CEE7;
+	Fri, 17 Oct 2025 15:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714594;
-	bh=MPHDx2iYt5rcyrvssBnqrXz+aofLKbAO49DPJMsTH04=;
+	s=korg; t=1760714597;
+	bh=bme+BhO+x9d2wELrVtxwzUsZO9mDNOB7TzQIT0tgwic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fHKDg6Vl+LPAqOImCb0t9dsxA5utMuPmcWt1oCiW+zntjQ2XI4KxH8+iCVctRXe1C
-	 vQFGTi/M4rIs1mAFdIWQavhd99JsUzK3Xdiwt4CySfJ6cSoROQghMJeUiJvLMT1UjN
-	 fbTrgqopeTCyEwIQGpHToKs55xR8fhtSo/VZkSCs=
+	b=W+6s8VMKZ34iTEFKV5ksBtGEcjKO6ZhrpVC6U3jv34RT1DHU4QH7rdBvJFa1D9nyu
+	 i7EX3XbU5d7fRZ2sqnSNhZh78HR/vY687RREjT65Ctqy1nJXRIUN0Mr9+4aZOwz6Qw
+	 Yia/vIbMZqglQwag6eb0MMa1VvijBj3mjMMht4ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.12 199/277] s390: Add -Wno-pointer-sign to KBUILD_CFLAGS_DECOMPRESSOR
-Date: Fri, 17 Oct 2025 16:53:26 +0200
-Message-ID: <20251017145154.387293260@linuxfoundation.org>
+	Esben Haabendal <esben@geanix.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.12 173/277] rtc: interface: Fix long-standing race when setting alarm
+Date: Fri, 17 Oct 2025 16:53:00 +0200
+Message-ID: <20251017145153.445500780@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,45 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Esben Haabendal <esben@geanix.com>
 
-commit fa7a0a53eeb7e16402f82c3d5a9ef4bf5efe9357 upstream.
+commit 795cda8338eab036013314dbc0b04aae728880ab upstream.
 
-If the decompressor is compiled with clang this can lead to the following
-warning:
+As described in the old comment dating back to
+commit 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
+from 2010, we have been living with a race window when setting alarm
+with an expiry in the near future (i.e. next second).
+With 1 second resolution, it can happen that the second ticks after the
+check for the timer having expired, but before the alarm is actually set.
+When this happen, no alarm IRQ is generated, at least not with some RTC
+chips (isl12022 is an example of this).
 
-In file included from arch/s390/boot/startup.c:4:
-...
-In file included from ./include/linux/pgtable.h:6:
-./arch/s390/include/asm/pgtable.h:2065:48: warning: passing 'unsigned long *' to parameter of type
-      'long *' converts between pointers to integer types with different sign [-Wpointer-sign]
- 2065 |                 value = __atomic64_or_barrier(PGSTE_PCL_BIT, ptr);
+With UIE RTC timer being implemented on top of alarm irq, being re-armed
+every second, UIE will occasionally fail to work, as an alarm irq lost
+due to this race will stop the re-arming loop.
 
-Add -Wno-pointer-sign to the decompressor compile flags, like it is also
-done for the kernel. This is similar to what was done for x86 to address
-the same problem [1].
+For now, I have limited the additional expiry check to only be done for
+alarms set to next seconds. I expect it should be good enough, although I
+don't know if we can now for sure that systems with loads could end up
+causing the same problems for alarms set 2 seconds or even longer in the
+future.
 
-[1] commit dca5203e3fe2 ("x86/boot: Add -Wno-pointer-sign to KBUILD_CFLAGS")
+I haven't been able to reproduce the problem with this check in place.
 
 Cc: stable@vger.kernel.org
-Reported-by: Gerd Bayer <gbayer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-1-3de8e530a39e@geanix.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/interface.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -25,6 +25,7 @@ endif
- KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
- KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
- KBUILD_CFLAGS_DECOMPRESSOR += -D__DECOMPRESSOR
-+KBUILD_CFLAGS_DECOMPRESSOR += -Wno-pointer-sign
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
- KBUILD_CFLAGS_DECOMPRESSOR += -ffreestanding
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -443,6 +443,29 @@ static int __rtc_set_alarm(struct rtc_de
+ 	else
+ 		err = rtc->ops->set_alarm(rtc->dev.parent, alarm);
+ 
++	/*
++	 * Check for potential race described above. If the waiting for next
++	 * second, and the second just ticked since the check above, either
++	 *
++	 * 1) It ticked after the alarm was set, and an alarm irq should be
++	 *    generated.
++	 *
++	 * 2) It ticked before the alarm was set, and alarm irq most likely will
++	 * not be generated.
++	 *
++	 * While we cannot easily check for which of these two scenarios we
++	 * are in, we can return -ETIME to signal that the timer has already
++	 * expired, which is true in both cases.
++	 */
++	if ((scheduled - now) <= 1) {
++		err = __rtc_read_time(rtc, &tm);
++		if (err)
++			return err;
++		now = rtc_tm_to_time64(&tm);
++		if (scheduled <= now)
++			return -ETIME;
++	}
++
+ 	trace_rtc_set_alarm(rtc_tm_to_time64(&alarm->time), err);
+ 	return err;
+ }
 
 
