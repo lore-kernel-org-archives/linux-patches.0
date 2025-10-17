@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FD42745E;
-	Fri, 17 Oct 2025 15:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3A2745E;
+	Fri, 17 Oct 2025 15:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714589; cv=none; b=o55xHxQpx7WBN8tpRZM60TYJBt/HzjT53qfBUFB56yxlrhAc3oHnpzo66paB6//ppGnXShyMR6yGnhEQLvCfg7ATXoAV/Udbf8Ajl9Nj2hTIdWZH9Og23w/+WJv54U8YaSB7jnwoGS3Pl2LuKzLia6BKnTucM+DOQv0LdX0bhig=
+	t=1760714591; cv=none; b=kuVqr014HzDB8iBl3ZVG+JUpoR87Ai2CZqPFBPOrf96FlOwyNj1Nu4a6WGLrXvA59qJLXMYpxeDs/p2xl5jES7grbSgAMnc+dKvaVJQUwfk6++E/aawj/lYURW5I+gOzG2Yk5NEgcR1z7LYjA7fQ/OltEBLCKQmpYDOF7HjPDa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714589; c=relaxed/simple;
-	bh=lIjRt/ZenAZ6zc6vE26sBj2CU1hiN9aj3DDAhniwphE=;
+	s=arc-20240116; t=1760714591; c=relaxed/simple;
+	bh=afC/sd76cIlCYaHCU11yRAKxNpmaPnjNIRHKsAmgCmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLn0/DLvxs1LaptRJcyCRgTMWp7pZ8bQdzZgtj7z89cMB49IFcf/umlUw81yt7PBsSyyphI1hSebnszid43FEQB1kSHdCEytbXk/EdFgTDu4gSuBtL8sDUrMevj4yn6vbOX2mycl/CAIuYSPb/JGWNStH8e++dN3sVbK35E6SWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiHmb6+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aqhTnIElOdXmzds0P/6hHcSc7O7M6I/VugYFXR+2YuUsJF/uPodaw2sh0MDuyjDBLnfNwViTgzLHbS2Tu2AVh4uZlBB/ieSixfIB6MtbO54sePweD4WDitGLfweSl36r66bApXBvGFWdbFF7Ai5iipJsC9ExED65A+I1B4dk5gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5PnzOrE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiHmb6+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425C6C4CEE7;
-	Fri, 17 Oct 2025 15:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5PnzOrE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB17C4CEFE;
+	Fri, 17 Oct 2025 15:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714588;
-	bh=lIjRt/ZenAZ6zc6vE26sBj2CU1hiN9aj3DDAhniwphE=;
+	s=korg; t=1760714591;
+	bh=afC/sd76cIlCYaHCU11yRAKxNpmaPnjNIRHKsAmgCmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WiHmb6+Dk5bI3o6wq27+fIrV9zkCk/BL3jxt61UWIDsmT7Ki145fj4+F11rTde+qK
-	 iK+jqO156Dv33/YNRtmBA+FfnsT0T0ircVQVBPlK3jEho8rCjRB3jHP6T6eFzRNDjP
-	 eaHvKWKVZoEs5OV9vQN5oIqkX+WOG7M2tZVMx0cA=
+	b=J5PnzOrEuxzoKdl6g7BAscUN7RyE0qwH8o4W7gffY2WvpmawLpDCI8oZRQy0CkouH
+	 G2FQ3ATKKdCKQVK7nZPHWBqSvmqxeYCD4B9Eq8p5bKzeq6VxUCGYxn9QNOjEYLPbRx
+	 eQGYGfZma+YdjZM+3wVV/7ORmmrEr93F2CulXluQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Haberland <sth@linux.ibm.com>,
 	Jaehoon Kim <jhkim@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 197/277] s390/dasd: enforce dma_alignment to ensure proper buffer validation
-Date: Fri, 17 Oct 2025 16:53:24 +0200
-Message-ID: <20251017145154.312286599@linuxfoundation.org>
+Subject: [PATCH 6.12 198/277] s390/dasd: Return BLK_STS_INVAL for EINVAL from do_dasd_request
+Date: Fri, 17 Oct 2025 16:53:25 +0200
+Message-ID: <20251017145154.350309956@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,18 +53,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaehoon Kim <jhkim@linux.ibm.com>
 
-commit 130e6de62107116eba124647116276266be0f84c upstream.
+commit 8f4ed0ce4857ceb444174503fc9058720d4faaa1 upstream.
 
-The block layer validates buffer alignment using the device's
-dma_alignment value. If dma_alignment is smaller than
-logical_block_size(bp_block) -1, misaligned buffer incorrectly pass
-validation and propagate to the lower-level driver.
+Currently, if CCW request creation fails with -EINVAL, the DASD driver
+returns BLK_STS_IOERR to the block layer.
 
-This patch adjusts dma_alignment to be at least logical_block_size -1,
-ensuring that misalignment buffers are properly rejected at the block
-layer and do not reach the DASD driver unnecessarily.
+This can happen, for example, when a user-space application such as QEMU
+passes a misaligned buffer, but the original cause of the error is
+masked as a generic I/O error.
 
-Fixes: 2a07bb64d801 ("s390/dasd: Remove DMA alignment")
+This patch changes the behavior so that -EINVAL is returned as
+BLK_STS_INVAL, allowing user space to properly detect alignment issues
+instead of interpreting them as I/O errors.
+
 Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
 Cc: stable@vger.kernel.org #6.11+
 Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
@@ -72,22 +73,30 @@ Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/s390/block/dasd.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 --- a/drivers/s390/block/dasd.c
 +++ b/drivers/s390/block/dasd.c
-@@ -332,6 +332,11 @@ static int dasd_state_basic_to_ready(str
- 	lim.max_dev_sectors = device->discipline->max_sectors(block);
- 	lim.max_hw_sectors = lim.max_dev_sectors;
- 	lim.logical_block_size = block->bp_block;
-+	/*
-+	 * Adjust dma_alignment to match block_size - 1
-+	 * to ensure proper buffer alignment checks in the block layer.
-+	 */
-+	lim.dma_alignment = lim.logical_block_size - 1;
- 
- 	if (device->discipline->has_discard) {
- 		unsigned int max_bytes;
+@@ -3117,12 +3117,14 @@ static blk_status_t do_dasd_request(stru
+ 		    PTR_ERR(cqr) == -ENOMEM ||
+ 		    PTR_ERR(cqr) == -EAGAIN) {
+ 			rc = BLK_STS_RESOURCE;
+-			goto out;
++		} else if (PTR_ERR(cqr) == -EINVAL) {
++			rc = BLK_STS_INVAL;
++		} else {
++			DBF_DEV_EVENT(DBF_ERR, basedev,
++				      "CCW creation failed (rc=%ld) on request %p",
++				      PTR_ERR(cqr), req);
++			rc = BLK_STS_IOERR;
+ 		}
+-		DBF_DEV_EVENT(DBF_ERR, basedev,
+-			      "CCW creation failed (rc=%ld) on request %p",
+-			      PTR_ERR(cqr), req);
+-		rc = BLK_STS_IOERR;
+ 		goto out;
+ 	}
+ 	/*
 
 
