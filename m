@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C26B253B42;
-	Fri, 17 Oct 2025 15:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508DD2F12A7;
+	Fri, 17 Oct 2025 15:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716524; cv=none; b=pX9DBKFna1lJH+BQPntYs2GoV7HGckAaNBbihswl1ZQOHOPRUfVz/S3J6EuONN7KVcuOGrJcxZ8igpikw7YclK8NFMvia1Xkmk2Fr8xLBoFg4GLr8IR9qRcU0T9hPLhZzrNJyltoKL3wnptEd/hMKn7nru9hCIb1KDmqPApns9Q=
+	t=1760716527; cv=none; b=IlnRCBDmHJVDi4jAOhhX15L3ZYgW/YrZrjtH/Z4HO0Ylk4qFy5Uz8MXYBrkZWxhZmylUr45X+DXrptxs7rintEOvxTDUj30dvm5hinW4ClU0CHfnJqPaXGSsRstlzEjB0/p70s2IxE8BHXTs1b+PucUmnjqgU/BdhdVqB7K0llU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716524; c=relaxed/simple;
-	bh=qdoW3kjwOJyQO6MoUpz9PBrIId2n2BnnzkI9MOb9Cf4=;
+	s=arc-20240116; t=1760716527; c=relaxed/simple;
+	bh=pT2o1lYYVNQGnR+9MMOC/XH9xi9zs74gQs+XcYqMHTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f68nW1VUokCXY6ZgmWwNEa9ohSBquIKIA93ga9jmmvXOl4ex+nUFIzOUU7qIU5ctxvoys7VkRbgvvZ8vVBO0e7Qsm60GcZCu+GDgw9iLYPCpKzOTJvrUNb05WV78cSWJfajERQ6rGe4CD/HDkH2auBCxDlp97kvpVtqK+83l4oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kScnX6RP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsJAnsV7hDLClyOlpT6xtMwK2MsJfgmG8327qHYeNLaOPv9Y/8FtZhr/IQoDAiwEXgAua/svCrEk6+cml11YP1GejmP6W8xSdP7tYtyT7pJ5kcZWvuI54D0jZEE4hM1sVqyE+AVcpoukEhLxnd6hxpp5XVryX6g5Q2VDWraD8nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lnc+0s0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kScnX6RP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96272C4CEE7;
-	Fri, 17 Oct 2025 15:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lnc+0s0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81079C4CEFE;
+	Fri, 17 Oct 2025 15:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716524;
-	bh=qdoW3kjwOJyQO6MoUpz9PBrIId2n2BnnzkI9MOb9Cf4=;
+	s=korg; t=1760716526;
+	bh=pT2o1lYYVNQGnR+9MMOC/XH9xi9zs74gQs+XcYqMHTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kScnX6RPsCJKZuGuJkqs25R0I9gAXE0Gag01nPysVphDpSyRSMZzCCpievVAICH/F
-	 THxqYKBGtwXlWN34sDxBFmrLoLyj13dgFacndn1sUqfH9Leim5xgRTzdITTvfI5Pxf
-	 eiFfNiYGeKu2F5DP/lWyxVxopMunNKZVeeXxSJbY=
+	b=Lnc+0s0xq4wlEMxV6TH3NouVJuQFwU69S3TyNUQFIIli8FJQMgUqDPO4DBQUa0Yoq
+	 0Pnwpx1vc4en61Ou93SCfrMNlbslLX643T3qd3LXntgT8QqEr9Bv5qOKFWSlrKbD0/
+	 GUpIinXejxNpXSNOFgCNWz8OZLVZo+uMfFEvPOds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 177/276] copy_sighand: Handle architectures where sizeof(unsigned long) < sizeof(u64)
-Date: Fri, 17 Oct 2025 16:54:30 +0200
-Message-ID: <20251017145148.936557421@linuxfoundation.org>
+	Dan Snyder <dansnyder@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 214/276] x86/umip: Check that the instruction opcode is at least two bytes
+Date: Fri, 17 Oct 2025 16:55:07 +0200
+Message-ID: <20251017145150.274356748@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,58 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 04ff48239f46e8b493571e260bd0e6c3a6400371 upstream.
+commit 32278c677947ae2f042c9535674a7fff9a245dd3 upstream.
 
-With the introduction of clone3 in commit 7f192e3cd316 ("fork: add
-clone3") the effective bit width of clone_flags on all architectures was
-increased from 32-bit to 64-bit. However, the signature of the copy_*
-helper functions (e.g., copy_sighand) used by copy_process was not
-adapted.
+When checking for a potential UMIP violation on #GP, verify the decoder found
+at least two opcode bytes to avoid false positives when the kernel encounters
+an unknown instruction that starts with 0f.  Because the array of opcode.bytes
+is zero-initialized by insn_init(), peeking at bytes[1] will misinterpret
+garbage as a potential SLDT or STR instruction, and can incorrectly trigger
+emulation.
 
-As such, they truncate the flags on any 32-bit architectures that
-supports clone3 (arc, arm, csky, m68k, microblaze, mips32, openrisc,
-parisc32, powerpc32, riscv32, x86-32 and xtensa).
+E.g. if a VPALIGNR instruction
 
-For copy_sighand with CLONE_CLEAR_SIGHAND being an actual u64
-constant, this triggers an observable bug in kernel selftest
-clone3_clear_sighand:
+   62 83 c5 05 0f 08 ff     vpalignr xmm17{k5},xmm23,XMMWORD PTR [r8],0xff
 
-        if (clone_flags & CLONE_CLEAR_SIGHAND)
+hits a #GP, the kernel emulates it as STR and squashes the #GP (and corrupts
+the userspace code stream).
 
-in function copy_sighand within fork.c will always fail given:
+Arguably the check should look for exactly two bytes, but no three byte
+opcodes use '0f 00 xx' or '0f 01 xx' as an escape, i.e. it should be
+impossible to get a false positive if the first two opcode bytes match '0f 00'
+or '0f 01'.  Go with a more conservative check with respect to the existing
+code to minimize the chances of breaking userspace, e.g. due to decoder
+weirdness.
 
-        unsigned long /* == uint32_t */ clone_flags
-        #define CLONE_CLEAR_SIGHAND 0x100000000ULL
+Analyzed by Nick Bray <ncbray@google.com>.
 
-This commit fixes the bug by always passing clone_flags to copy_sighand
-via their declared u64 type, invariant of architecture-dependent integer
-sizes.
-
-Fixes: b612e5df4587 ("clone3: add CLONE_CLEAR_SIGHAND")
-Cc: stable@vger.kernel.org # linux-5.5+
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Link: https://lore.kernel.org/20250901-nios2-implement-clone3-v2-1-53fcf5577d57@siemens-energy.com
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
+Reported-by: Dan Snyder <dansnyder@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/umip.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1595,7 +1595,7 @@ static int copy_io(unsigned long clone_f
- 	return 0;
- }
+--- a/arch/x86/kernel/umip.c
++++ b/arch/x86/kernel/umip.c
+@@ -156,8 +156,8 @@ static int identify_insn(struct insn *in
+ 	if (!insn->modrm.nbytes)
+ 		return -EINVAL;
  
--static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)
-+static int copy_sighand(u64 clone_flags, struct task_struct *tsk)
- {
- 	struct sighand_struct *sig;
+-	/* All the instructions of interest start with 0x0f. */
+-	if (insn->opcode.bytes[0] != 0xf)
++	/* The instructions of interest have 2-byte opcodes: 0F 00 or 0F 01. */
++	if (insn->opcode.nbytes < 2 || insn->opcode.bytes[0] != 0xf)
+ 		return -EINVAL;
  
+ 	if (insn->opcode.bytes[1] == 0x1) {
 
 
