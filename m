@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CE627B33B;
-	Fri, 17 Oct 2025 15:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA191946C8;
+	Fri, 17 Oct 2025 15:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715027; cv=none; b=dvYI24RJs7TDkS0rdu3YhmCoY+sD6icICDGmTH1l96kLr2a33w2LYm0F0uTrMcoNcEAVyG8bDxZ00bO2JBigd83BrdnZH9MnjHoITpm7PszxKFWHVDqhW4H8fUz5mEGwJUKNCSv0l0VuOzunIr9uYSVvEBp9e8zDN+nH5a8QnLU=
+	t=1760715030; cv=none; b=MTHzVHcGGbCQqmoF2uSVd6Py3kBYQacvEWdpz3lcCCLNUq2GWknAQIcFP9uJ/px5A43OeNPqM6cjh8AM9f3A4jT/DEGuepTASsdYfgEAS/HNtxNEHpvRGxpzboJ8HMfj3XlgnoksNGuLyr2OBCxH958efQ+wUHGXROM6Azfjorg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715027; c=relaxed/simple;
-	bh=3BiFqtjLotVhipRdSCX3x+JOjbOikjtbYCMQUmW4uWc=;
+	s=arc-20240116; t=1760715030; c=relaxed/simple;
+	bh=QfTyGlMhyBYPhoP2Ef8kz9iEmHf7ma959dHkMXloRB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THKGol404HxKuiulZM6YVEPn1W+cs5f7a5NZDuDIEoFXDhDkfODrMIXjENaygZzSjrM7pn8yiTQOQf69XWCU3vOMMIQOC2xz05OJHzU7lK+s/1xSQwA4kFBNzHUvlMU6R0ge1BF7ovxYy7bzuQ8eEwRdNBl+Rj17iOSJSS2QWYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4ip5PwW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqWh0WppTgqKoEcL8P59YUhcPbp+r6e0snG8Y4vrI9x/8sl+dY2k4c+YRaGxWSzExFh/SQvc66DeMY1yt9T+ftRDpqCcByRuUMJfvRoDeDPhE9ZVokF5ErH3FHA8WEQOpQ4cpLF1inTw2SPin/aYq7ipVzP0va0MzOl6MKujhFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNVso1PF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4ip5PwW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6578C4CEFE;
-	Fri, 17 Oct 2025 15:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNVso1PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B368C4CEE7;
+	Fri, 17 Oct 2025 15:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715027;
-	bh=3BiFqtjLotVhipRdSCX3x+JOjbOikjtbYCMQUmW4uWc=;
+	s=korg; t=1760715029;
+	bh=QfTyGlMhyBYPhoP2Ef8kz9iEmHf7ma959dHkMXloRB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4ip5PwWwtQftxtZdbjG54HT4lvzqLo3lz6Q6m3dj+2mjtNt0nY+1IQgGnk0TO1Xw
-	 9F0AgIdH2nACIv498fXNR0apbqykZHO+w31fZVJ6EGq0ITIf/9foGJP3C+qD6M2hU7
-	 M26LX2xmuO0uRrmquTA4NpWrUWqH+sOIIjMkIKtQ=
+	b=DNVso1PF0OLA7FgaHArRL2+G28qELJxdUOmSw9PXdEjNxaADL5nYYWo1rfOXfokNB
+	 0h0ug95fLF/44MOlKekKtED4J0rYkLVRBQ5SgEPtMqalKoUax+BzMmlBLkUzuces0q
+	 cXbns1WS5D056ohUUf7khCXQH9lQY4ndhZknjcPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 055/371] clk: tegra: do not overallocate memory for bpmp clocks
-Date: Fri, 17 Oct 2025 16:50:30 +0200
-Message-ID: <20251017145203.790860488@linuxfoundation.org>
+Subject: [PATCH 6.17 073/371] ASoC: SOF: ipc4-topology: Correct the minimum host DMA buffer size
+Date: Fri, 17 Oct 2025 16:50:48 +0200
+Message-ID: <20251017145204.583181916@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,41 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 49ef6491106209c595476fc122c3922dfd03253f ]
+[ Upstream commit a7fe5ff832d61d9393095bc3dd5f06f4af7da3c1 ]
 
-struct tegra_bpmp::clocks is a pointer to a dynamically allocated array
-of pointers to 'struct tegra_bpmp_clk'.
+The firmware has changed the minimum host buffer size from 2 periods to
+4 periods (1 period is 1ms) which was missed by the kernel side.
 
-But the size of the allocated area is calculated like it is an array
-containing actual 'struct tegra_bpmp_clk' objects - it's not true, there
-are just pointers.
+Adjust the SOF_IPC4_MIN_DMA_BUFFER_SIZE to 4 ms to align with firmware.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: 2db12b15c6f3 ("clk: tegra: Register clocks from root to leaf")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://github.com/thesofproject/sof/commit/f0a14a3f410735db18a79eb7a5f40dc49fdee7a7
+Fixes: 594c1bb9ff73 ("ASoC: SOF: ipc4-topology: Do not parse the DMA_BUFFER_SIZE token")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20251002135752.2430-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-bpmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/ipc4-topology.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index b2323cb8eddcc..77a2586dbe000 100644
---- a/drivers/clk/tegra/clk-bpmp.c
-+++ b/drivers/clk/tegra/clk-bpmp.c
-@@ -635,7 +635,7 @@ static int tegra_bpmp_register_clocks(struct tegra_bpmp *bpmp,
+diff --git a/sound/soc/sof/ipc4-topology.h b/sound/soc/sof/ipc4-topology.h
+index 659e1ae0a85f9..ce5c69cb9ea4e 100644
+--- a/sound/soc/sof/ipc4-topology.h
++++ b/sound/soc/sof/ipc4-topology.h
+@@ -61,8 +61,8 @@
+ #define SOF_IPC4_CHAIN_DMA_NODE_ID	0x7fffffff
+ #define SOF_IPC4_INVALID_NODE_ID	0xffffffff
  
- 	bpmp->num_clocks = count;
+-/* FW requires minimum 2ms DMA buffer size */
+-#define SOF_IPC4_MIN_DMA_BUFFER_SIZE	2
++/* FW requires minimum 4ms DMA buffer size */
++#define SOF_IPC4_MIN_DMA_BUFFER_SIZE	4
  
--	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(struct tegra_bpmp_clk), GFP_KERNEL);
-+	bpmp->clocks = devm_kcalloc(bpmp->dev, count, sizeof(*bpmp->clocks), GFP_KERNEL);
- 	if (!bpmp->clocks)
- 		return -ENOMEM;
- 
+ /*
+  * The base of multi-gateways. Multi-gateways addressing starts from
 -- 
 2.51.0
 
