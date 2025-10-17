@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F099D217722;
-	Fri, 17 Oct 2025 15:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4D520C00A;
+	Fri, 17 Oct 2025 15:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714179; cv=none; b=rcwipedhV1Cbae9FpfUeScp7H8YBy+w4NGDautXylGmqoEJO2yQoJSzzhxoK1LyKawI5cn+e3UWD4kDal9Jte7rtUL+tcdVwZvgL2CoqRm5Y6CsyQvoqHsdIAxf/8VVXBJ6g5zU0z2ZSBXcbzqmcJ8nbxTXiBwII5GBbvFjVy+Y=
+	t=1760714181; cv=none; b=l7RHBIK9QEgqh+kXGeaFyeyP8LInOKyOM4LYRpoZMIYtkcQCqCylamTgCHE0rPRfI1dLwdXy57p3eCOxzoKq0Ocdl7goanxexHy+j2voFBd1ihrintyof50A7vF+hTbD67EbGdZuiRbl5ogJVk2IGd7aIKNLnl+sjhvOPOOlPZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714179; c=relaxed/simple;
-	bh=JHfwEVafEVUcGSmnJ0xWCwN4OwPES+7TKc8tCE4zxiQ=;
+	s=arc-20240116; t=1760714181; c=relaxed/simple;
+	bh=zY9FLYYpN0x6N+aksGn27xgqm5mLo66O+H4m2fYViEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elbggfTry0qxaTHvL27PdJDMkukoB2gcRkCEJpL08nIVZ9b2VGx5y57G6k7u2YD5Z58kRYilWGDt6zSp5njhpq2hCYXrVR3Z8whaDsMw/QG6MNYbslg775vhJmNobf2rRSp+A48HyJG/rWN5NJmX6CITNcdsPvZshCDhyD7+hn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYns8pXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpSxae/zzXP8ot4nhO3IibUS8uAE2iKaQdVw3MqOeqaIE2KoikRzf++NPvVwbVJjbuTuLSmi1fj92PlD+44sTrGR0XIhGKcTufvfv0h2++wRczCEW+SAuQz/e/IX0TbG5bW+qy6qf7wAd0Prx9EsXxQs9DZy4uawAImR30R5MPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqDN6SEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYns8pXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214B6C4CEE7;
-	Fri, 17 Oct 2025 15:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqDN6SEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F43DC4CEE7;
+	Fri, 17 Oct 2025 15:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714178;
-	bh=JHfwEVafEVUcGSmnJ0xWCwN4OwPES+7TKc8tCE4zxiQ=;
+	s=korg; t=1760714181;
+	bh=zY9FLYYpN0x6N+aksGn27xgqm5mLo66O+H4m2fYViEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYns8pXXNagU9VO0p4w3/bLBDKP8yAfKfFYIc6q8h4vL1RkGIOC0NC6qMPaXs5Vhn
-	 oeNvYOBuvziT8IypOTnCsu2oTmbmI4MwgngWPI/u9reDxBjuAh8ak8+RGnFBZRzxTe
-	 nDSOLA9sMStd5h+6kmCSq6Jmw/W8hN3X2eBWC1IM=
+	b=eqDN6SEPSuGsW3v0vDIMFXT4iAzCwG7z8/LwsyU/Jkgxu4rjxVYAEV26XW8bchieg
+	 1OI8vAlgK6x7L3nYYP5sM5RU4KgyP834CWzqQXiGIEZ448pauqsbPHHXAJO8N3qIn4
+	 NVX18nRf7KFaYccZRk8sLQHtnkw0O4xoQQR6bYbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/277] tcp: Dont call reqsk_fastopen_remove() in tcp_conn_request().
-Date: Fri, 17 Oct 2025 16:51:01 +0200
-Message-ID: <20251017145149.118650840@linuxfoundation.org>
+Subject: [PATCH 6.12 055/277] net: mscc: ocelot: Fix use-after-free caused by cyclic delayed work
+Date: Fri, 17 Oct 2025 16:51:02 +0200
+Message-ID: <20251017145149.154847280@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,85 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 2e7cbbbe3d61c63606994b7ff73c72537afe2e1c ]
+[ Upstream commit bc9ea787079671cb19a8b25ff9f02be5ef6bfcf5 ]
 
-syzbot reported the splat below in tcp_conn_request(). [0]
+The origin code calls cancel_delayed_work() in ocelot_stats_deinit()
+to cancel the cyclic delayed work item ocelot->stats_work. However,
+cancel_delayed_work() may fail to cancel the work item if it is already
+executing. While destroy_workqueue() does wait for all pending work items
+in the work queue to complete before destroying the work queue, it cannot
+prevent the delayed work item from being rescheduled within the
+ocelot_check_stats_work() function. This limitation exists because the
+delayed work item is only enqueued into the work queue after its timer
+expires. Before the timer expiration, destroy_workqueue() has no visibility
+of this pending work item. Once the work queue appears empty,
+destroy_workqueue() proceeds with destruction. When the timer eventually
+expires, the delayed work item gets queued again, leading to the following
+warning:
 
-If a listener is close()d while a TFO socket is being processed in
-tcp_conn_request(), inet_csk_reqsk_queue_add() does not set reqsk->sk
-and calls inet_child_forget(), which calls tcp_disconnect() for the
-TFO socket.
-
-After the cited commit, tcp_disconnect() calls reqsk_fastopen_remove(),
-where reqsk_put() is called due to !reqsk->sk.
-
-Then, reqsk_fastopen_remove() in tcp_conn_request() decrements the
-last req->rsk_refcnt and frees reqsk, and __reqsk_free() at the
-drop_and_free label causes the refcount underflow for the listener
-and double-free of the reqsk.
-
-Let's remove reqsk_fastopen_remove() in tcp_conn_request().
-
-Note that other callers make sure tp->fastopen_rsk is not NULL.
-
-[0]:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 12 PID: 5563 at lib/refcount.c:28 refcount_warn_saturate (lib/refcount.c:28)
-Modules linked in:
-CPU: 12 UID: 0 PID: 5563 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:refcount_warn_saturate (lib/refcount.c:28)
-Code: ab e8 8e b4 98 ff 0f 0b c3 cc cc cc cc cc 80 3d a4 e4 d6 01 00 75 9c c6 05 9b e4 d6 01 01 48 c7 c7 e8 df fb ab e8 6a b4 98 ff <0f> 0b e9 03 5b 76 00 cc 80 3d 7d e4 d6 01 00 0f 85 74 ff ff ff c6
-RSP: 0018:ffffa79fc0304a98 EFLAGS: 00010246
-RAX: d83af4db1c6b3900 RBX: ffff9f65c7a69020 RCX: d83af4db1c6b3900
-RDX: 0000000000000000 RSI: 00000000ffff7fff RDI: ffffffffac78a280
-RBP: 000000009d781b60 R08: 0000000000007fff R09: ffffffffac6ca280
-R10: 0000000000017ffd R11: 0000000000000004 R12: ffff9f65c7b4f100
-R13: ffff9f65c7d23c00 R14: ffff9f65c7d26000 R15: ffff9f65c7a64ef8
-FS:  00007f9f962176c0(0000) GS:ffff9f65fcf00000(0000) knlGS:0000000000000000
+workqueue: cannot queue ocelot_check_stats_work on wq ocelot-switch-stats
+WARNING: CPU: 2 PID: 0 at kernel/workqueue.c:2255 __queue_work+0x875/0xaf0
+...
+RIP: 0010:__queue_work+0x875/0xaf0
+...
+RSP: 0018:ffff88806d108b10 EFLAGS: 00010086
+RAX: 0000000000000000 RBX: 0000000000000101 RCX: 0000000000000027
+RDX: 0000000000000027 RSI: 0000000000000004 RDI: ffff88806d123e88
+RBP: ffffffff813c3170 R08: 0000000000000000 R09: ffffed100da247d2
+R10: ffffed100da247d1 R11: ffff88806d123e8b R12: ffff88800c00f000
+R13: ffff88800d7285c0 R14: ffff88806d0a5580 R15: ffff88800d7285a0
+FS:  0000000000000000(0000) GS:ffff8880e5725000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000180 CR3: 000000000dbbe006 CR4: 0000000000372ef0
+CR2: 00007fe18e45ea10 CR3: 0000000005e6c000 CR4: 00000000000006f0
 Call Trace:
  <IRQ>
- tcp_conn_request (./include/linux/refcount.h:400 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/net/sock.h:1965 ./include/net/request_sock.h:131 net/ipv4/tcp_input.c:7301)
- tcp_rcv_state_process (net/ipv4/tcp_input.c:6708)
- tcp_v6_do_rcv (net/ipv6/tcp_ipv6.c:1670)
- tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1906)
- ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:438)
- ip6_input (net/ipv6/ip6_input.c:500)
- ipv6_rcv (net/ipv6/ip6_input.c:311)
- __netif_receive_skb (net/core/dev.c:6104)
- process_backlog (net/core/dev.c:6456)
- __napi_poll (net/core/dev.c:7506)
- net_rx_action (net/core/dev.c:7569 net/core/dev.c:7696)
- handle_softirqs (kernel/softirq.c:579)
- do_softirq (kernel/softirq.c:480)
+ ? kasan_report+0xc6/0xf0
+ ? __pfx_delayed_work_timer_fn+0x10/0x10
+ ? __pfx_delayed_work_timer_fn+0x10/0x10
+ call_timer_fn+0x25/0x1c0
+ __run_timer_base.part.0+0x3be/0x8c0
+ ? __pfx_delayed_work_timer_fn+0x10/0x10
+ ? rcu_sched_clock_irq+0xb06/0x27d0
+ ? __pfx___run_timer_base.part.0+0x10/0x10
+ ? try_to_wake_up+0xb15/0x1960
+ ? _raw_spin_lock_irq+0x80/0xe0
+ ? __pfx__raw_spin_lock_irq+0x10/0x10
+ tmigr_handle_remote_up+0x603/0x7e0
+ ? __pfx_tmigr_handle_remote_up+0x10/0x10
+ ? sched_balance_trigger+0x1c0/0x9f0
+ ? sched_tick+0x221/0x5a0
+ ? _raw_spin_lock_irq+0x80/0xe0
+ ? __pfx__raw_spin_lock_irq+0x10/0x10
+ ? tick_nohz_handler+0x339/0x440
+ ? __pfx_tmigr_handle_remote_up+0x10/0x10
+ __walk_groups.isra.0+0x42/0x150
+ tmigr_handle_remote+0x1f4/0x2e0
+ ? __pfx_tmigr_handle_remote+0x10/0x10
+ ? ktime_get+0x60/0x140
+ ? lapic_next_event+0x11/0x20
+ ? clockevents_program_event+0x1d4/0x2a0
+ ? hrtimer_interrupt+0x322/0x780
+ handle_softirqs+0x16a/0x550
+ irq_exit_rcu+0xaf/0xe0
+ sysvec_apic_timer_interrupt+0x70/0x80
  </IRQ>
+...
 
-Fixes: 45c8a6cc2bcd ("tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251001233755.1340927-1-kuniyu@google.com
+The following diagram reveals the cause of the above warning:
+
+CPU 0 (remove)             | CPU 1 (delayed work callback)
+mscc_ocelot_remove()       |
+  ocelot_deinit()          | ocelot_check_stats_work()
+    ocelot_stats_deinit()  |
+      cancel_delayed_work()|   ...
+                           |   queue_delayed_work()
+      destroy_workqueue()  | (wait a time)
+                           | __queue_work() //UAF
+
+The above scenario actually constitutes a UAF vulnerability.
+
+The ocelot_stats_deinit() is only invoked when initialization
+failure or resource destruction, so we must ensure that any
+delayed work items cannot be rescheduled.
+
+Replace cancel_delayed_work() with disable_delayed_work_sync()
+to guarantee proper cancellation of the delayed work item and
+ensure completion of any currently executing work before the
+workqueue is deallocated.
+
+A deadlock concern was considered: ocelot_stats_deinit() is called
+in a process context and is not holding any locks that the delayed
+work item might also need. Therefore, the use of the _sync() variant
+is safe here.
+
+This bug was identified through static analysis. To reproduce the
+issue and validate the fix, I simulated ocelot-switch device by
+writing a kernel module and prepared the necessary resources for
+the virtual ocelot-switch device's probe process. Then, removing
+the virtual device will trigger the mscc_ocelot_remove() function,
+which in turn destroys the workqueue.
+
+Fixes: a556c76adc05 ("net: mscc: Add initial Ocelot switch support")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://patch.msgid.link/20251001011149.55073-1-duoming@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/mscc/ocelot_stats.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 30f4375f8431b..4c8d84fc27ca3 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7338,7 +7338,6 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 				    &foc, TCP_SYNACK_FASTOPEN, skb);
- 		/* Add the child socket directly into the accept queue */
- 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
--			reqsk_fastopen_remove(fastopen_sk, req, false);
- 			bh_unlock_sock(fastopen_sk);
- 			sock_put(fastopen_sk);
- 			goto drop_and_free;
+diff --git a/drivers/net/ethernet/mscc/ocelot_stats.c b/drivers/net/ethernet/mscc/ocelot_stats.c
+index c018783757fb2..858d4cbc83d3f 100644
+--- a/drivers/net/ethernet/mscc/ocelot_stats.c
++++ b/drivers/net/ethernet/mscc/ocelot_stats.c
+@@ -984,6 +984,6 @@ int ocelot_stats_init(struct ocelot *ocelot)
+ 
+ void ocelot_stats_deinit(struct ocelot *ocelot)
+ {
+-	cancel_delayed_work(&ocelot->stats_work);
++	disable_delayed_work_sync(&ocelot->stats_work);
+ 	destroy_workqueue(ocelot->stats_queue);
+ }
 -- 
 2.51.0
 
