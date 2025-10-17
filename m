@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6E7330B21;
-	Fri, 17 Oct 2025 15:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDFC330B16;
+	Fri, 17 Oct 2025 15:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715683; cv=none; b=HNzfb21UhVpaxlF8tzeckljncYrr/I15PnRzqF4bOHPT2PIFksV2UDlzxLknE69F24M2yc3X7Y7SXehM91NT23xau7vdzXhxcJK83laUZ1Q3zpuYSoRYvpVV8utkFVWLym876egs1aqNc3CIU9bc9V0Tdn6Xe298CX7oa9lEW7E=
+	t=1760715686; cv=none; b=hFFsYtJJzZC5oGl8Hw4zCHTxY0X8OcRKkjiv6l7VtqoKSgtSA16bEZtEkN2AZRxkOggeS8rkXlA5mGJIxeMzGZ/jo0ChkR8radHAZDM5D2t8LwdjALU/24rfA0pJFejKqC0NsC2oxkbye+KPgpjq9kVC9FLqQCIK/AHvChqNjww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715683; c=relaxed/simple;
-	bh=agoHfRWVX1Nvfu/m0Wz4yJV77PPUkugxVOzI/vuhmaY=;
+	s=arc-20240116; t=1760715686; c=relaxed/simple;
+	bh=HgF5lQYWif1C0P2RHRtCoMMAlW6Cncxen6hEqYa09Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyTtfjBybUFkFiq0wquOUN+Ecvo2YZzSuPkDjIpTSUq2272Kzh7TnFfavG3r8HF/ZEtJQrSJcy8P0Adw/QPz7h35nML5sXwjskdfsb3SUJOAFsJLinbUAVMKRBJovpaAtMmjxZiup6isKVt+/nb6pZagjloXg+wY4dUrKoUT6kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F81MaSy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VgAAyx87mtcWhUm9nqoNstccfStCiqZkuB7bX339hnFKFpQjH4lbdXemHd2Q6Inuq0tYINohrt42nhh/M1HD8pTaO7UTHvsDXxgEPqAk1NKypWa7BSio4zFWcfut4RCyNn4XtyRkoJeiB34j+1Hfu45/K7CKbF1aaobjmOo2ldM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFSLxNd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F81MaSy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377E4C116B1;
-	Fri, 17 Oct 2025 15:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFSLxNd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5E6C4CEFE;
+	Fri, 17 Oct 2025 15:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715683;
-	bh=agoHfRWVX1Nvfu/m0Wz4yJV77PPUkugxVOzI/vuhmaY=;
+	s=korg; t=1760715686;
+	bh=HgF5lQYWif1C0P2RHRtCoMMAlW6Cncxen6hEqYa09Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F81MaSy50Z2t62cUifxi8uij5lzg4mWC7DoPIHxu+YW7tYSpnPCCH9ddO1sejjY0G
-	 LqZFUMIqGQAiUO0m1xTwAYzRtvll6PqwbzDGDYHDvHCF5rp36uh5dCmtNPWyshgl+c
-	 qqv46G3+DulHVb/B/Fc0GyF++O0MN3z8V56609nM=
+	b=RFSLxNd2iRKRUI6j6Xgd94NVqV76mVQptU4zQjBsGzHF2mk7soKz2tBvkG7j42+WM
+	 Q2yy+jQnaBjMHChVi9UZ8Vup27GmoexHVXVx7KYjSykB36XBlhNj7DzwF0qy3XsstW
+	 2Dof2gHanxNWIJSir/33hFrWiGYKPFvXHQscvIkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.17 300/371] x86/umip: Fix decoding of register forms of 0F 01 (SGDT and SIDT aliases)
-Date: Fri, 17 Oct 2025 16:54:35 +0200
-Message-ID: <20251017145212.928889941@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 301/371] mptcp: pm: in-kernel: usable client side with C-flag
+Date: Fri, 17 Oct 2025 16:54:36 +0200
+Message-ID: <20251017145212.965197021@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,48 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 27b1fd62012dfe9d3eb8ecde344d7aa673695ecf upstream.
+commit 4b1ff850e0c1aacc23e923ed22989b827b9808f9 upstream.
 
-Filter out the register forms of 0F 01 when determining whether or not to
-emulate in response to a potential UMIP violation #GP, as SGDT and SIDT only
-accept memory operands.  The register variants of 0F 01 are used to encode
-instructions for things like VMX and SGX, i.e. not checking the Mod field
-would cause the kernel to incorrectly emulate on #GP, e.g. due to a CPL
-violation on VMLAUNCH.
+When servers set the C-flag in their MP_CAPABLE to tell clients not to
+create subflows to the initial address and port, clients will likely not
+use their other endpoints. That's because the in-kernel path-manager
+uses the 'subflow' endpoints to create subflows only to the initial
+address and port.
 
-Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+If the limits have not been modified to accept ADD_ADDR, the client
+doesn't try to establish new subflows. If the limits accept ADD_ADDR,
+the routing routes will be used to select the source IP.
+
+The C-flag is typically set when the server is operating behind a legacy
+Layer 4 load balancer, or using anycast IP address. Clients having their
+different 'subflow' endpoints setup, don't end up creating multiple
+subflows as expected, and causing some deployment issues.
+
+A special case is then added here: when servers set the C-flag in the
+MPC and directly sends an ADD_ADDR, this single ADD_ADDR is accepted.
+The 'subflows' endpoints will then be used with this new remote IP and
+port. This exception is only allowed when the ADD_ADDR is sent
+immediately after the 3WHS, and makes the client switching to the 'fully
+established' mode. After that, 'select_local_address()' will not be able
+to find any subflows, because 'id_avail_bitmap' will be filled in
+mptcp_pm_create_subflow_or_signal_addr(), when switching to 'fully
+established' mode.
+
+Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
 Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/536
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-1-ad126cc47c6b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/umip.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/mptcp/pm.c        |    7 +++++--
+ net/mptcp/pm_kernel.c |   50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ net/mptcp/protocol.h  |    8 ++++++++
+ 3 files changed, 62 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/umip.c
-+++ b/arch/x86/kernel/umip.c
-@@ -163,8 +163,19 @@ static int identify_insn(struct insn *in
- 	if (insn->opcode.bytes[1] == 0x1) {
- 		switch (X86_MODRM_REG(insn->modrm.value)) {
- 		case 0:
-+			/* The reg form of 0F 01 /0 encodes VMX instructions. */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -617,9 +617,12 @@ void mptcp_pm_add_addr_received(const st
+ 		} else {
+ 			__MPTCP_INC_STATS(sock_net((struct sock *)msk), MPTCP_MIB_ADDADDRDROP);
+ 		}
+-	/* id0 should not have a different address */
++	/* - id0 should not have a different address
++	 * - special case for C-flag: linked to fill_local_addresses_vec()
++	 */
+ 	} else if ((addr->id == 0 && !mptcp_pm_is_init_remote_addr(msk, addr)) ||
+-		   (addr->id > 0 && !READ_ONCE(pm->accept_addr))) {
++		   (addr->id > 0 && !READ_ONCE(pm->accept_addr) &&
++		    !mptcp_pm_add_addr_c_flag_case(msk))) {
+ 		mptcp_pm_announce_addr(msk, addr, true);
+ 		mptcp_pm_add_addr_send_ack(msk);
+ 	} else if (mptcp_pm_schedule_work(msk, MPTCP_PM_ADD_ADDR_RECEIVED)) {
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -389,10 +389,12 @@ static unsigned int fill_local_addresses
+ 	struct mptcp_addr_info mpc_addr;
+ 	struct pm_nl_pernet *pernet;
+ 	unsigned int subflows_max;
++	bool c_flag_case;
+ 	int i = 0;
+ 
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
+ 	subflows_max = mptcp_pm_get_subflows_max(msk);
++	c_flag_case = remote->id && mptcp_pm_add_addr_c_flag_case(msk);
+ 
+ 	mptcp_local_address((struct sock_common *)msk, &mpc_addr);
+ 
+@@ -405,12 +407,27 @@ static unsigned int fill_local_addresses
+ 			continue;
+ 
+ 		if (msk->pm.subflows < subflows_max) {
++			bool is_id0;
 +
- 			return UMIP_INST_SGDT;
- 		case 1:
-+			/*
-+			 * The reg form of 0F 01 /1 encodes MONITOR/MWAIT,
-+			 * STAC/CLAC, and ENCLS.
-+			 */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
+ 			locals[i].addr = entry->addr;
+ 			locals[i].flags = entry->flags;
+ 			locals[i].ifindex = entry->ifindex;
+ 
++			is_id0 = mptcp_addresses_equal(&locals[i].addr,
++						       &mpc_addr,
++						       locals[i].addr.port);
 +
- 			return UMIP_INST_SIDT;
- 		case 4:
- 			return UMIP_INST_SMSW;
++			if (c_flag_case &&
++			    (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)) {
++				__clear_bit(locals[i].addr.id,
++					    msk->pm.id_avail_bitmap);
++
++				if (!is_id0)
++					msk->pm.local_addr_used++;
++			}
++
+ 			/* Special case for ID0: set the correct ID */
+-			if (mptcp_addresses_equal(&locals[i].addr, &mpc_addr, locals[i].addr.port))
++			if (is_id0)
+ 				locals[i].addr.id = 0;
+ 
+ 			msk->pm.subflows++;
+@@ -419,6 +436,37 @@ static unsigned int fill_local_addresses
+ 	}
+ 	rcu_read_unlock();
+ 
++	/* Special case: peer sets the C flag, accept one ADD_ADDR if default
++	 * limits are used -- accepting no ADD_ADDR -- and use subflow endpoints
++	 */
++	if (!i && c_flag_case) {
++		unsigned int local_addr_max = mptcp_pm_get_local_addr_max(msk);
++
++		while (msk->pm.local_addr_used < local_addr_max &&
++		       msk->pm.subflows < subflows_max) {
++			struct mptcp_pm_local *local = &locals[i];
++
++			if (!select_local_address(pernet, msk, local))
++				break;
++
++			__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
++
++			if (!mptcp_pm_addr_families_match(sk, &local->addr,
++							  remote))
++				continue;
++
++			if (mptcp_addresses_equal(&local->addr, &mpc_addr,
++						  local->addr.port))
++				continue;
++
++			msk->pm.local_addr_used++;
++			msk->pm.subflows++;
++			i++;
++		}
++
++		return i;
++	}
++
+ 	/* If the array is empty, fill in the single
+ 	 * 'IPADDRANY' local address
+ 	 */
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -1201,6 +1201,14 @@ static inline void mptcp_pm_close_subflo
+ 	spin_unlock_bh(&msk->pm.lock);
+ }
+ 
++static inline bool mptcp_pm_add_addr_c_flag_case(struct mptcp_sock *msk)
++{
++	return READ_ONCE(msk->pm.remote_deny_join_id0) &&
++	       msk->pm.local_addr_used == 0 &&
++	       mptcp_pm_get_add_addr_accept_max(msk) == 0 &&
++	       msk->pm.subflows < mptcp_pm_get_subflows_max(msk);
++}
++
+ void mptcp_sockopt_sync_locked(struct mptcp_sock *msk, struct sock *ssk);
+ 
+ static inline struct mptcp_ext *mptcp_get_ext(const struct sk_buff *skb)
 
 
