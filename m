@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D223208;
-	Fri, 17 Oct 2025 15:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1772F12DD;
+	Fri, 17 Oct 2025 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713257; cv=none; b=VpO4ipzOu9EvRZpawQ8aSRzTjUNgxBdDvb3D2mXUVBu19CMWuXGx0dvmTGMAJ9t6FMpYuN+paWlW5+z1EMFdyDI5ZrKP6US/VJT51wKTxTEK1yWOzG1RWX22aE1a8LJnecwtTBHG7QFXQixsNPgpJsccb1c3vkyzrJVK3cDtBrY=
+	t=1760713260; cv=none; b=AKOLRIKHfaaC4espolFNhxVMfHWcjj39hsUohQtN2cckhq8Tsh7DUsVPTFEQXOHcnW0yZGhDIM8b294s7wUJb6FI5VEBByxoV3veBbDe95mAHzaVk5mUC2rY+OqDwPY/sK41b2oMmz5xHc11qLoN2cvs6GNjat/Lqt8s+7KD1no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713257; c=relaxed/simple;
-	bh=Ogi7HJ2VpwkbCCqEdrWzJXHpAXA0LeZ7bOFaOadCHgc=;
+	s=arc-20240116; t=1760713260; c=relaxed/simple;
+	bh=e03P0yfc0AHMPo1VqLmHiq86qES0NFJ5pc5xyFNyU9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pP2Bdg+jCLfWDKUou9NFsJb6SUVx7AAx9sNG6DMJV/jvpAsjiJOZmRawr84Nthi4WbOkOdrojPmHI8V5NpeZk1dQXx5upTqsNRUlOVXdcliOdhU3fIr+dmRYNKZFxKwHOuw2bMDECSoCGHN0JXxizXcigyQdBp5uNQhRIeZAYVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sS8K5Gq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBhou4WhuhEct2+1nH5u4GXDcIsCPO0Nab/aqhuDP05ejkUD5aAlSE2qf30FPtOmPRLIRU16sV8ntepvzvuttEHpivVHV9wO2ilxpfkuqRHjnA7FN/I54slRPBMlxCKxufFhK++S5nGdl5myZRxsqL1CJ+W4k/vlcuj+NoWC5Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQsvZdZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sS8K5Gq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBFAC4CEFE;
-	Fri, 17 Oct 2025 15:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQsvZdZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CAFC4CEF9;
+	Fri, 17 Oct 2025 15:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713257;
-	bh=Ogi7HJ2VpwkbCCqEdrWzJXHpAXA0LeZ7bOFaOadCHgc=;
+	s=korg; t=1760713260;
+	bh=e03P0yfc0AHMPo1VqLmHiq86qES0NFJ5pc5xyFNyU9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sS8K5Gq3p7RQ65/zBtMK954GEltOU37jfkUgMhwkVx7DmxAdBFbBzpuN7RyYBYrOB
-	 bRC3hk/4tixcbfWZioXt1sIyHYHtfYrmSdOEbn6SiArMsfdO3w4qmp6hMbiFFMiAz8
-	 W8laUu/eMYf188N43k6LrApr3YEBm6KessJ+LGn8=
+	b=sQsvZdZ1bbv/79T4gIrFA7Mbb7siqqY8Q74JqZFVYaLNWBKGsDaTX4W0BKtDh3fvV
+	 EI/0zB+bnOVI+8qBss2M+Wz25HFMl0Rtn/BUi4fN6lxsHq/GDx3+A7ci6y+jJiBV0P
+	 7jQPcXvkM457XaiD4BetWXcCCN7zmMtB8wXXokVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Chen <rex.chen_1@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 103/168] mmc: core: SPI mode remove cmd7
-Date: Fri, 17 Oct 2025 16:53:02 +0200
-Message-ID: <20251017145132.821666014@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.1 104/168] memory: samsung: exynos-srom: Fix of_iomap leak in exynos_srom_probe
+Date: Fri, 17 Oct 2025 16:53:03 +0200
+Message-ID: <20251017145132.858343449@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -50,37 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Chen <rex.chen_1@nxp.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit fec40f44afdabcbc4a7748e4278f30737b54bb1a upstream.
+commit 6744085079e785dae5f7a2239456135407c58b25 upstream.
 
-SPI mode doesn't support cmd7, so remove it in mmc_sdio_alive() and
-confirm if sdio is active by checking CCCR register value is available
-or not.
+The of_platform_populate() call at the end of the function has a
+possible failure path, causing a resource leak.
 
-Signed-off-by: Rex Chen <rex.chen_1@nxp.com>
+Replace of_iomap() with devm_platform_ioremap_resource() to ensure
+automatic cleanup of srom->reg_base.
+
+This issue was detected by smatch static analysis:
+drivers/memory/samsung/exynos-srom.c:155 exynos_srom_probe()warn:
+'srom->reg_base' from of_iomap() not released on lines: 155.
+
+Fixes: 8ac2266d8831 ("memory: samsung: exynos-srom: Add support for bank configuration")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250728082230.1037917-2-rex.chen_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250806025538.306593-1-zhen.ni@easystack.cn
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/memory/samsung/exynos-srom.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/mmc/core/sdio.c
-+++ b/drivers/mmc/core/sdio.c
-@@ -945,7 +945,11 @@ static void mmc_sdio_remove(struct mmc_h
-  */
- static int mmc_sdio_alive(struct mmc_host *host)
- {
--	return mmc_select_card(host->card);
-+	if (!mmc_host_is_spi(host))
-+		return mmc_select_card(host->card);
-+	else
-+		return mmc_io_rw_direct(host->card, 0, 0, SDIO_CCCR_CCCR, 0,
-+					NULL);
- }
+--- a/drivers/memory/samsung/exynos-srom.c
++++ b/drivers/memory/samsung/exynos-srom.c
+@@ -121,20 +121,18 @@ static int exynos_srom_probe(struct plat
+ 		return -ENOMEM;
  
- /*
+ 	srom->dev = dev;
+-	srom->reg_base = of_iomap(np, 0);
+-	if (!srom->reg_base) {
++	srom->reg_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(srom->reg_base)) {
+ 		dev_err(&pdev->dev, "iomap of exynos srom controller failed\n");
+-		return -ENOMEM;
++		return PTR_ERR(srom->reg_base);
+ 	}
+ 
+ 	platform_set_drvdata(pdev, srom);
+ 
+ 	srom->reg_offset = exynos_srom_alloc_reg_dump(exynos_srom_offsets,
+ 						      ARRAY_SIZE(exynos_srom_offsets));
+-	if (!srom->reg_offset) {
+-		iounmap(srom->reg_base);
++	if (!srom->reg_offset)
+ 		return -ENOMEM;
+-	}
+ 
+ 	for_each_child_of_node(np, child) {
+ 		if (exynos_srom_configure_bank(srom, child)) {
 
 
