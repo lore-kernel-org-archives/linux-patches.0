@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9B82D7D3A;
-	Fri, 17 Oct 2025 15:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE532C95D;
+	Fri, 17 Oct 2025 15:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715119; cv=none; b=H3qzIvmof9ArJUE+3KNs3xKazeMCGbYP4Yd3RlhIhHXdUnZ/qjhdQqeFtBfYNIwIZbUk8327Xu73bQhnynZSMBAeTgkx69bxv4NEOZqoaWvwKill1kA0GLAdMEybIz6a2XlPKlKWsb3O0mH7vD8UFZhG16QWzyeiNkYCLflw2dA=
+	t=1760715121; cv=none; b=FJhdvkgM0CWBbtv7kJnxfbPqSfnPGVT6T3fSvoTKNUfz86whJqd6S8Kz3hKaPjRkyHZy0yzYO6k/plShIR8jBSHfc6pauNSfFYG9cXBJNVwGvMq7d0sULbjISLRT6F3uOLybskJO6Yfk6jcR0vMJkR/4Fu/wZ2P3xxeYJE0o+9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715119; c=relaxed/simple;
-	bh=YEW0mpSaqr/w9p0oo7d8cd9XuXxALoc93qWCUv/eYio=;
+	s=arc-20240116; t=1760715121; c=relaxed/simple;
+	bh=PORR6t8hxDRXzpyn3AYHKxEMrZE4eWHl7Stn3GRkoSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QpBGX+sXM6RQdvedUrVDfkE+A0GeoD3z2fUEcmQEq09pM0zuuICcoDjPqhp1xl7ppniCqwFLBsNUDIxvDlZbd/g6RG6cABkn9/eNayyzrAy1V/dsJCaeGWaETIfDqeUjrUwQcmBq6LAM4+GahFEa76ds53Lbz7139eqj4YWJ5ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQegvwY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C3BQk4d7DlrKF6XNB4kwPFj4OGPqEUqf3jh+EgyGee0OHE8VLU3FJlBpCW3WrQyZwqsdHfoSgspTPCJpYGfnm8tDla/FU3fts9WH+kTw5cFrxX9+9f3DGKESREsEE/reTMkmdDJLTKiA4BgM6JqlSX6F8cvtYTsE5gTw8vzvxqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHQaq2fF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQegvwY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B4EC4CEE7;
-	Fri, 17 Oct 2025 15:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHQaq2fF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504FAC113D0;
+	Fri, 17 Oct 2025 15:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715118;
-	bh=YEW0mpSaqr/w9p0oo7d8cd9XuXxALoc93qWCUv/eYio=;
+	s=korg; t=1760715121;
+	bh=PORR6t8hxDRXzpyn3AYHKxEMrZE4eWHl7Stn3GRkoSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQegvwY5aomFSv0tSZCCVozmNd9gq/iXtC3hMKAVe9NXCYDHTp68OxS8SutFJeurx
-	 fyzHXZ+fiS7cGniPVBFFGcLsCqMb1y5u5rOfYNH9ZYnJ9o9pBx9rHSGf54qgl2efTK
-	 x00kUDpzU+UmdXdRFPVOgNGSAN3tDOvu8+1o9Dvk=
+	b=gHQaq2fFx2gs33JJRCd3pmzR9jxLiIh6LAX+hAScywQGe+r7SrpJmd11exgUFE2//
+	 F1GcpW0kkuEQ4QfWfGVTMZQRrIviuZFUViAQ9gR3CXr7doqMIGEq5v4n0ieOFZWWBk
+	 b75RD65WnxErsc5MltKiw5E+aZJqdaB2XPKRlXME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 105/371] net/mlx5: Prevent tunnel mode conflicts between FDB and NIC IPsec tables
-Date: Fri, 17 Oct 2025 16:51:20 +0200
-Message-ID: <20251017145205.737923710@linuxfoundation.org>
+Subject: [PATCH 6.17 106/371] net/mlx5e: Prevent tunnel reformat when tunnel mode not allowed
+Date: Fri, 17 Oct 2025 16:51:21 +0200
+Message-ID: <20251017145205.773537044@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -48,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
@@ -57,126 +56,183 @@ Content-Transfer-Encoding: 8bit
 
 From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 7593439c13933164f701eed9c83d89358f203469 ]
+[ Upstream commit 22239eb258bc1e6ccdb2d3502fce1cc2b2a88386 ]
 
-When creating IPsec flow tables with tunnel mode enabled, the driver
-uses mlx5_eswitch_block_encap() to prevent tunnel encapsulation
-conflicts across different domains (NIC_RX/NIC_TX and FDB), since the
-firmware doesn’t allow both at the same time.
+When configuring IPsec packet offload in tunnel mode, the driver tries
+to create tunnel reformat objects unconditionally. This is incorrect,
+because tunnel mode is only permitted under specific encapsulation
+settings, and that decision is already made when the flow table is
+created.
 
-Currently, the driver attempts to reserve tunnel mode unconditionally
-for both NIC and FDB IPsec tables. This can lead to conflicting tunnel
-mode setups, for example, if a flow table was created in the FDB
-domain with tunnel offload enabled, and we later try to create another
-one in the NIC, or vice versa.
+The offending commit attempted to block this case in the state add
+path, but the check there happens too late and does not prevent the
+reformat from being configured.
 
-To resolve this, adjust the blocking logic so that tunnel mode is only
-reserved by NIC flows. This ensures that tunnel offload is exclusively
-used in either the NIC or the FDB, and avoids unintended offload
-conflicts.
+Fix by taking short reservations for both the eswitch mode and the
+encap at the start of state setup. This preserves the block ordering
+(mode --> encap) used later: the mode is blocked during RX/TX get, and
+the encap is blocked during flow-table creation. This lets us fail
+early if either reservation cannot be obtained, it means a mode
+transition is underway or a conflicting configuration already owns
+encap. If both succeed, the flow-table path later takes the ownership
+and the reservations are released on exit.
 
-Fixes: 1762f132d542 ("net/mlx5e: Support IPsec packet offload for RX in switchdev mode")
-Fixes: c6c2bf5db4ea ("net/mlx5e: Support IPsec packet offload for TX in switchdev mode")
+Fixes: 146c196b60e4 ("net/mlx5e: Create IPsec table with tunnel support only when encap is disabled")
 Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
 Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1759652999-858513-2-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1759652999-858513-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec_fs.c     |  8 ++++++--
- .../net/ethernet/mellanox/mlx5/core/eswitch.h  |  5 +++--
- .../mellanox/mlx5/core/eswitch_offloads.c      | 18 ++++++++++--------
- 3 files changed, 19 insertions(+), 12 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec.c       | 38 +++++++++++++------
+ .../mellanox/mlx5/core/en_accel/ipsec.h       |  2 +-
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c    | 24 +++++++-----
+ 3 files changed, 43 insertions(+), 21 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 00e77c71e201f..0a4fb8c922684 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -772,6 +772,7 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 				struct netlink_ext_ack *extack)
+ {
+ 	struct mlx5e_ipsec_sa_entry *sa_entry = NULL;
++	bool allow_tunnel_mode = false;
+ 	struct mlx5e_ipsec *ipsec;
+ 	struct mlx5e_priv *priv;
+ 	gfp_t gfp;
+@@ -803,6 +804,20 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 		goto err_xfrm;
+ 	}
+ 
++	if (mlx5_eswitch_block_mode(priv->mdev))
++		goto unblock_ipsec;
++
++	if (x->props.mode == XFRM_MODE_TUNNEL &&
++	    x->xso.type == XFRM_DEV_OFFLOAD_PACKET) {
++		allow_tunnel_mode = mlx5e_ipsec_fs_tunnel_allowed(sa_entry);
++		if (!allow_tunnel_mode) {
++			NL_SET_ERR_MSG_MOD(extack,
++					   "Packet offload tunnel mode is disabled due to encap settings");
++			err = -EINVAL;
++			goto unblock_mode;
++		}
++	}
++
+ 	/* check esn */
+ 	if (x->props.flags & XFRM_STATE_ESN)
+ 		mlx5e_ipsec_update_esn_state(sa_entry);
+@@ -817,7 +832,7 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 
+ 	err = mlx5_ipsec_create_work(sa_entry);
+ 	if (err)
+-		goto unblock_ipsec;
++		goto unblock_encap;
+ 
+ 	err = mlx5e_ipsec_create_dwork(sa_entry);
+ 	if (err)
+@@ -832,14 +847,6 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 	if (err)
+ 		goto err_hw_ctx;
+ 
+-	if (x->props.mode == XFRM_MODE_TUNNEL &&
+-	    x->xso.type == XFRM_DEV_OFFLOAD_PACKET &&
+-	    !mlx5e_ipsec_fs_tunnel_enabled(sa_entry)) {
+-		NL_SET_ERR_MSG_MOD(extack, "Packet offload tunnel mode is disabled due to encap settings");
+-		err = -EINVAL;
+-		goto err_add_rule;
+-	}
+-
+ 	/* We use *_bh() variant because xfrm_timer_handler(), which runs
+ 	 * in softirq context, can reach our state delete logic and we need
+ 	 * xa_erase_bh() there.
+@@ -855,8 +862,7 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 		queue_delayed_work(ipsec->wq, &sa_entry->dwork->dwork,
+ 				   MLX5_IPSEC_RESCHED);
+ 
+-	if (x->xso.type == XFRM_DEV_OFFLOAD_PACKET &&
+-	    x->props.mode == XFRM_MODE_TUNNEL) {
++	if (allow_tunnel_mode) {
+ 		xa_lock_bh(&ipsec->sadb);
+ 		__xa_set_mark(&ipsec->sadb, sa_entry->ipsec_obj_id,
+ 			      MLX5E_IPSEC_TUNNEL_SA);
+@@ -865,6 +871,11 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 
+ out:
+ 	x->xso.offload_handle = (unsigned long)sa_entry;
++	if (allow_tunnel_mode)
++		mlx5_eswitch_unblock_encap(priv->mdev);
++
++	mlx5_eswitch_unblock_mode(priv->mdev);
++
+ 	return 0;
+ 
+ err_add_rule:
+@@ -877,6 +888,11 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 	if (sa_entry->work)
+ 		kfree(sa_entry->work->data);
+ 	kfree(sa_entry->work);
++unblock_encap:
++	if (allow_tunnel_mode)
++		mlx5_eswitch_unblock_encap(priv->mdev);
++unblock_mode:
++	mlx5_eswitch_unblock_mode(priv->mdev);
+ unblock_ipsec:
+ 	mlx5_eswitch_unblock_ipsec(priv->mdev);
+ err_xfrm:
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+index 23703f28386ad..5d7c15abfcaf6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+@@ -319,7 +319,7 @@ void mlx5e_accel_ipsec_fs_del_rule(struct mlx5e_ipsec_sa_entry *sa_entry);
+ int mlx5e_accel_ipsec_fs_add_pol(struct mlx5e_ipsec_pol_entry *pol_entry);
+ void mlx5e_accel_ipsec_fs_del_pol(struct mlx5e_ipsec_pol_entry *pol_entry);
+ void mlx5e_accel_ipsec_fs_modify(struct mlx5e_ipsec_sa_entry *sa_entry);
+-bool mlx5e_ipsec_fs_tunnel_enabled(struct mlx5e_ipsec_sa_entry *sa_entry);
++bool mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry);
+ 
+ int mlx5_ipsec_create_sa_ctx(struct mlx5e_ipsec_sa_entry *sa_entry);
+ void mlx5_ipsec_free_sa_ctx(struct mlx5e_ipsec_sa_entry *sa_entry);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index 65dc3529283b6..b525f3f21c51f 100644
+index b525f3f21c51f..9e23652535638 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -1045,7 +1045,9 @@ static int rx_create(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
- 
- 	/* Create FT */
- 	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
--		rx->allow_tunnel_mode = mlx5_eswitch_block_encap(mdev);
-+		rx->allow_tunnel_mode =
-+			mlx5_eswitch_block_encap(mdev, rx == ipsec->rx_esw);
-+
- 	if (rx->allow_tunnel_mode)
- 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
- 	ft = ipsec_ft_create(attr.ns, attr.sa_level, attr.prio, 1, 2, flags);
-@@ -1286,7 +1288,9 @@ static int tx_create(struct mlx5e_ipsec *ipsec, struct mlx5e_ipsec_tx *tx,
- 		goto err_status_rule;
- 
- 	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
--		tx->allow_tunnel_mode = mlx5_eswitch_block_encap(mdev);
-+		tx->allow_tunnel_mode =
-+			mlx5_eswitch_block_encap(mdev, tx == ipsec->tx_esw);
-+
- 	if (tx->allow_tunnel_mode)
- 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
- 	ft = ipsec_ft_create(tx->ns, attr.sa_level, attr.prio, 1, 4, flags);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 45506ad568470..53d7e33d6c0b1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -851,7 +851,7 @@ void mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
- 					      struct mlx5_eswitch *slave_esw);
- int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw);
- 
--bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev);
-+bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb);
- void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
- 
- int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev);
-@@ -943,7 +943,8 @@ mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
- 	return 0;
+@@ -2826,18 +2826,24 @@ void mlx5e_accel_ipsec_fs_modify(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 	memcpy(sa_entry, &sa_entry_shadow, sizeof(*sa_entry));
  }
  
--static inline bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev)
-+static inline bool
-+mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
+-bool mlx5e_ipsec_fs_tunnel_enabled(struct mlx5e_ipsec_sa_entry *sa_entry)
++bool mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry)
  {
- 	return true;
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index bee906661282a..f358e8fe432cf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3938,23 +3938,25 @@ int mlx5_devlink_eswitch_inline_mode_get(struct devlink *devlink, u8 *mode)
- 	return esw_inline_mode_to_devlink(esw->offloads.inline_mode, mode);
- }
+-	struct mlx5_accel_esp_xfrm_attrs *attrs = &sa_entry->attrs;
+-	struct mlx5e_ipsec_rx *rx;
+-	struct mlx5e_ipsec_tx *tx;
++	struct mlx5e_ipsec *ipsec = sa_entry->ipsec;
++	struct xfrm_state *x = sa_entry->x;
++	bool from_fdb;
  
--bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev)
-+bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
- {
- 	struct mlx5_eswitch *esw = dev->priv.eswitch;
-+	enum devlink_eswitch_encap_mode encap;
-+	bool allow_tunnel = false;
- 
- 	if (!mlx5_esw_allowed(esw))
- 		return true;
- 
- 	down_write(&esw->mode_lock);
--	if (esw->mode != MLX5_ESWITCH_LEGACY &&
--	    esw->offloads.encap != DEVLINK_ESWITCH_ENCAP_MODE_NONE) {
--		up_write(&esw->mode_lock);
--		return false;
-+	encap = esw->offloads.encap;
-+	if (esw->mode == MLX5_ESWITCH_LEGACY ||
-+	    (encap == DEVLINK_ESWITCH_ENCAP_MODE_NONE && !from_fdb)) {
-+		allow_tunnel = true;
-+		esw->offloads.num_block_encap++;
- 	}
--
--	esw->offloads.num_block_encap++;
- 	up_write(&esw->mode_lock);
--	return true;
+-	rx = ipsec_rx(sa_entry->ipsec, attrs->addrs.family, attrs->type);
+-	tx = ipsec_tx(sa_entry->ipsec, attrs->type);
+-	if (sa_entry->attrs.dir == XFRM_DEV_OFFLOAD_OUT)
+-		return tx->allow_tunnel_mode;
++	if (x->xso.dir == XFRM_DEV_OFFLOAD_OUT) {
++		struct mlx5e_ipsec_tx *tx = ipsec_tx(ipsec, x->xso.type);
 +
-+	return allow_tunnel;
++		from_fdb = (tx == ipsec->tx_esw);
++	} else {
++		struct mlx5e_ipsec_rx *rx = ipsec_rx(ipsec, x->props.family,
++						     x->xso.type);
++
++		from_fdb = (rx == ipsec->rx_esw);
++	}
+ 
+-	return rx->allow_tunnel_mode;
++	return mlx5_eswitch_block_encap(ipsec->mdev, from_fdb);
  }
  
- void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev)
+ void mlx5e_ipsec_handle_mpv_event(int event, struct mlx5e_priv *slave_priv,
 -- 
 2.51.0
 
