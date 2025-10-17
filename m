@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1CF2F12D2;
-	Fri, 17 Oct 2025 15:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2396A1A9FB7;
+	Fri, 17 Oct 2025 15:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715310; cv=none; b=tXqYjTWY5CoHe4SCto0VXkvCWQEnAGY6FfqFnn0/0yk3mH2egOSXFs2atPMKHorNffk/xNJRMJe/6Ysf/tjqA+F9N6CWaSC1UefxbYq5h3HaSip2pZ0BxY5vQUqPj6O/Sd/WYTp6+GYFlK5yl9S8COELERLccZrpjD3h/O177qs=
+	t=1760715313; cv=none; b=oF2u0+xTKuKnqu8qfH9D3HF12GQxyUt2by3jxvmNXyKzRGy70ICE0YTxhTX3x5iGwDvvGI0MsoukKLIFXLd9csZ5k8bbW2RkSbntlTlBtKpMKHpfjx2o/qOQluDYZ167f3/twu1JCc41rVYyz43Bzms2gqlfkJZYacJBqbfvcN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715310; c=relaxed/simple;
-	bh=QwGCUbYA1GGMuuu2m6o4+5W0u5aitfUUpfeqZK727y8=;
+	s=arc-20240116; t=1760715313; c=relaxed/simple;
+	bh=3r4GNGpt68Bug7LQiozU9fryIEAoGWp4Px8ena1fruU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QP7rQpWv0vRNT8dzneMYVBAdbcYTuEKsYZgfiTF8qcan0Pt9JLwsDSVasH7wifI842G+5XyuQhs5sZq+Ow+vmWS7sWw0uChbSfjYUazIHhx3S5KDmuO+fev3SjsVCExR/ZNSIBLTdpS8N1v5v8dSavJO4lSV9iryCP94RZb9kuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KLSUuqK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=II/BI8nRX16mCMMAHjLFzH4mk8va8LzMyVUVeiErqdq4xJnx82O7f/BamNBlqhnrlFlpqu8c9MLhcIixbhdJOWVAg4eBSUfWc6PFppOUhZ5yn8SjamJT+4b9GqmanPDXFV8adPRMxiNyWl8PwCb/dOJMJVdXG/jAVnazMQIfIUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp6rsGhn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KLSUuqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB185C4CEE7;
-	Fri, 17 Oct 2025 15:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp6rsGhn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973F6C4CEE7;
+	Fri, 17 Oct 2025 15:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715310;
-	bh=QwGCUbYA1GGMuuu2m6o4+5W0u5aitfUUpfeqZK727y8=;
+	s=korg; t=1760715313;
+	bh=3r4GNGpt68Bug7LQiozU9fryIEAoGWp4Px8ena1fruU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KLSUuqKGDgU8J+K5JZQX1XTLv0WNr+F7PiqQCJhbgPAC3YqH2P3isYXr1ik8BpXf
-	 LI54vy6RzHveG4axBLiZS4DSeRRlR03C60Ho5luwlXE5Y6TXDVzuwzNG0eQWN+vLzg
-	 Njaar1puSH0xqfQaMVmvk8sgKYiSgevtoKp2rJDI=
+	b=mp6rsGhnHDXBGJ3H3ZXDuCK7k+iJvV8lwlQcuWP0YMvuKt4FUwjZEA5qXfhGwj2jN
+	 05grsT5ozwy2XCicqqya2qMxFGQsVrVsAhjZBF/jsJyS8PUE1OJQ8DYE51pl38rXXN
+	 HT4+9PDbuSwrOqQTFcpHPSvkbDl0Anp3bq1IX0mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Kepplinger-Novakovi=C4=87?= <martink@posteo.de>,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.17 172/371] media: mc: Fix MUST_CONNECT handling for pads with no links
-Date: Fri, 17 Oct 2025 16:52:27 +0200
-Message-ID: <20251017145208.152203548@linuxfoundation.org>
+Subject: [PATCH 6.17 173/371] media: pci: ivtv: Add missing check after DMA map
+Date: Fri, 17 Oct 2025 16:52:28 +0200
+Message-ID: <20251017145208.189181202@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -47,51 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit eec81250219a209b863f11d02128ec1dd8e20877 upstream.
+commit 1069a4fe637d0e3e4c163e3f8df9be306cc299b4 upstream.
 
-Commit b3decc5ce7d7 ("media: mc: Expand MUST_CONNECT flag to always
-require an enabled link") expanded the meaning of the MUST_CONNECT flag
-to require an enabled link in all cases. To do so, the link exploration
-code was expanded to cover unconnected pads, in order to reject those
-that have the MUST_CONNECT flag set. The implementation was however
-incorrect, ignoring unconnected pads instead of ignoring connected pads.
-Fix it.
+The DMA map functions can fail and should be tested for errors.
+If the mapping fails, free blanking_ptr and set it to 0.  As 0 is a
+valid DMA address, use blanking_ptr to test if the DMA address
+is set.
 
-Reported-by: Martin Kepplinger-Novaković <martink@posteo.de>
-Closes: https://lore.kernel.org/linux-media/20250205172957.182362-1-martink@posteo.de
-Reported-by: Maud Spierings <maudspierings@gocontroll.com>
-Closes: https://lore.kernel.org/linux-media/20250818-imx8_isi-v1-1-e9cfe994c435@gocontroll.com
-Fixes: b3decc5ce7d7 ("media: mc: Expand MUST_CONNECT flag to always require an enabled link")
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Maud Spierings <maudspierings@gocontroll.com>
-Tested-by: Martin Kepplinger-Novaković <martink@posteo.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 1a0adaf37c30 ("V4L/DVB (5345): ivtv driver for Conexant cx23416/cx23415 MPEG encoder/decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-entity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/ivtv/ivtv-irq.c |    2 +-
+ drivers/media/pci/ivtv/ivtv-yuv.c |    8 +++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -691,7 +691,7 @@ done:
- 		 * (already discovered through iterating over links) and pads
- 		 * not internally connected.
- 		 */
--		if (origin == local || !local->num_links ||
-+		if (origin == local || local->num_links ||
- 		    !media_entity_has_pad_interdep(origin->entity, origin->index,
- 						   local->index))
- 			continue;
+--- a/drivers/media/pci/ivtv/ivtv-irq.c
++++ b/drivers/media/pci/ivtv/ivtv-irq.c
+@@ -351,7 +351,7 @@ void ivtv_dma_stream_dec_prepare(struct
+ 
+ 	/* Insert buffer block for YUV if needed */
+ 	if (s->type == IVTV_DEC_STREAM_TYPE_YUV && f->offset_y) {
+-		if (yi->blanking_dmaptr) {
++		if (yi->blanking_ptr) {
+ 			s->sg_pending[idx].src = yi->blanking_dmaptr;
+ 			s->sg_pending[idx].dst = offset;
+ 			s->sg_pending[idx].size = 720 * 16;
+--- a/drivers/media/pci/ivtv/ivtv-yuv.c
++++ b/drivers/media/pci/ivtv/ivtv-yuv.c
+@@ -125,7 +125,7 @@ static int ivtv_yuv_prep_user_dma(struct
+ 	ivtv_udma_fill_sg_array(dma, y_buffer_offset, uv_buffer_offset, y_size);
+ 
+ 	/* If we've offset the y plane, ensure top area is blanked */
+-	if (f->offset_y && yi->blanking_dmaptr) {
++	if (f->offset_y && yi->blanking_ptr) {
+ 		dma->SGarray[dma->SG_length].size = cpu_to_le32(720*16);
+ 		dma->SGarray[dma->SG_length].src = cpu_to_le32(yi->blanking_dmaptr);
+ 		dma->SGarray[dma->SG_length].dst = cpu_to_le32(IVTV_DECODER_OFFSET + yuv_offset[frame]);
+@@ -929,6 +929,12 @@ static void ivtv_yuv_init(struct ivtv *i
+ 		yi->blanking_dmaptr = dma_map_single(&itv->pdev->dev,
+ 						     yi->blanking_ptr,
+ 						     720 * 16, DMA_TO_DEVICE);
++		if (dma_mapping_error(&itv->pdev->dev, yi->blanking_dmaptr)) {
++			kfree(yi->blanking_ptr);
++			yi->blanking_ptr = NULL;
++			yi->blanking_dmaptr = 0;
++			IVTV_DEBUG_WARN("Failed to dma_map yuv blanking buffer\n");
++		}
+ 	} else {
+ 		yi->blanking_dmaptr = 0;
+ 		IVTV_DEBUG_WARN("Failed to allocate yuv blanking buffer\n");
 
 
