@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CEB3328E6;
-	Fri, 17 Oct 2025 15:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA65B23EA9E;
+	Fri, 17 Oct 2025 15:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713764; cv=none; b=GuqcgecRMvUU+q/38wnpejcsC9prC5PJ80bPmJNs+1KB4rP/zCepMgrm/zIPYp1jLDGzKq+kdGyUB/nPj0j8MiTPkoY0x4nDzlwQrvP/IKjRPoZflgE+vlZyhVY92Xx4d0EWvIfTcCSowFxj98tf0ewsNPESJyAH0mKkgu5pUGM=
+	t=1760713766; cv=none; b=Pvowpt6kATxviYCPj+pEkAKsqYRnCIOZFOkWW3VzX0dycBdlq2UjYfergdVUYriWWDW7XyvTY93eufJpPOohxsyKteJzyxs9zQIEoqZImAh1FCEiUXEUTyj3L/CMdcTir1w8oqr/5JoFCqQJqhiaVSrsL50IALxRU2yubLIFHL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713764; c=relaxed/simple;
-	bh=oQ/ooIRWtzzKkZVuSxdFw03M7X9jNFsvK7AhSv4XWGM=;
+	s=arc-20240116; t=1760713766; c=relaxed/simple;
+	bh=S4mwUKq6IzKdZLam4NbzyvjwxFdtk2BhHvhkyceRIWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TYloA0D0sX2SoqCLVXCIqpIH9bLOADWc5VncJL1JN3skUjHMGIrGlJzL5e7K2vSmecT0v0FPVU84eH6JQDij0TTj2NTBFDqJWX0qY6eN5Imzw1UlbI+MnxT8/pK+BN5lJh5CiJeXZpoYQiEbofhnWLagcCfZVmqJwrWVfE73Xgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UX5CLqXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rvIJh5qHckLpqqKjqLYAHg0iCy++3ZxZEWOHG9CcPfApJiX+cOTY8OZRs8Th4KT/t1tMA79ZrbHVBMuOal96opnId258mjSaFrPTGpJVx729cH9MlqcUrEQ7VZ+uGJP3qJc0L/cGcOM5lj3dXLNTY/rJtq1nXu1dQTDTDJ1pVoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUkNMlLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UX5CLqXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7082FC4CEE7;
-	Fri, 17 Oct 2025 15:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUkNMlLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596F0C4CEE7;
+	Fri, 17 Oct 2025 15:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713763;
-	bh=oQ/ooIRWtzzKkZVuSxdFw03M7X9jNFsvK7AhSv4XWGM=;
+	s=korg; t=1760713766;
+	bh=S4mwUKq6IzKdZLam4NbzyvjwxFdtk2BhHvhkyceRIWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UX5CLqXQpZVE5ZL7avoUi1adekMl9VLwJItDQlNj/2Z/mpdRGv2lMRsxLPXkcBv4W
-	 DoSn7YRcqhhJ+IoJIs93LTcLwx0/Xk1rvibUSVtFGK8CfV+9gEuQXt7+8zg7Wjy8ms
-	 gnNRwXpvdxarLI8DBxE4JFZX60uEWz1TjwnTxbO8=
+	b=VUkNMlLArd54A/tiocxL7dOvubXSsfYfuGNQrZdwbmwDhNeV+j1Hke3UKwW64KFXa
+	 x2KuG7zE0lFWr5QTkRBEqn+OIfWBWpz3DFZOo6u1+J3JqqykOUADa/FuGdiptkhVqk
+	 CCk4dikET55Wy+JG9A4fIlqvRQpBFvDyy0y/w/xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 110/201] powerpc/pseries/msi: Fix potential underflow and leak issue
-Date: Fri, 17 Oct 2025 16:52:51 +0200
-Message-ID: <20251017145138.784357877@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 111/201] pwm: berlin: Fix wrong register in suspend/resume
+Date: Fri, 17 Oct 2025 16:52:52 +0200
+Message-ID: <20251017145138.821106042@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit 3443ff3be6e59b80d74036bb39f5b6409eb23cc9 upstream.
+commit 3a4b9d027e4061766f618292df91760ea64a1fcc upstream.
 
-pseries_irq_domain_alloc() allocates interrupts at parent's interrupt
-domain. If it fails in the progress, all allocated interrupts are
-freed.
+The 'enable' register should be BERLIN_PWM_EN rather than
+BERLIN_PWM_ENABLE, otherwise, the driver accesses wrong address, there
+will be cpu exception then kernel panic during suspend/resume.
 
-The number of successfully allocated interrupts so far is stored
-"i". However, "i - 1" interrupts are freed. This is broken:
-
-  - One interrupt is not be freed
-
-  - If "i" is zero, "i - 1" wraps around
-
-Correct the number of freed interrupts to 'i'.
-
-Fixes: a5f3d2c17b07 ("powerpc/pseries/pci: Add MSI domains")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Fixes: bbf0722c1c66 ("pwm: berlin: Add suspend/resume support")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://lore.kernel.org/r/20250819114224.31825-1-jszhang@kernel.org
 Cc: stable@vger.kernel.org
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/a980067f2b256bf716b4cd713bc1095966eed8cd.1754300646.git.namcao@linutronix.de
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/msi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-berlin.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/msi.c
-+++ b/arch/powerpc/platforms/pseries/msi.c
-@@ -587,7 +587,7 @@ static int pseries_irq_domain_alloc(stru
+--- a/drivers/pwm/pwm-berlin.c
++++ b/drivers/pwm/pwm-berlin.c
+@@ -273,7 +273,7 @@ static int berlin_pwm_suspend(struct dev
+ 		if (!channel)
+ 			continue;
  
- out:
- 	/* TODO: handle RTAS cleanup in ->msi_finish() ? */
--	irq_domain_free_irqs_parent(domain, virq, i - 1);
-+	irq_domain_free_irqs_parent(domain, virq, i);
- 	return ret;
- }
+-		channel->enable = berlin_pwm_readl(bpc, i, BERLIN_PWM_ENABLE);
++		channel->enable = berlin_pwm_readl(bpc, i, BERLIN_PWM_EN);
+ 		channel->ctrl = berlin_pwm_readl(bpc, i, BERLIN_PWM_CONTROL);
+ 		channel->duty = berlin_pwm_readl(bpc, i, BERLIN_PWM_DUTY);
+ 		channel->tcnt = berlin_pwm_readl(bpc, i, BERLIN_PWM_TCNT);
+@@ -304,7 +304,7 @@ static int berlin_pwm_resume(struct devi
+ 		berlin_pwm_writel(bpc, i, channel->ctrl, BERLIN_PWM_CONTROL);
+ 		berlin_pwm_writel(bpc, i, channel->duty, BERLIN_PWM_DUTY);
+ 		berlin_pwm_writel(bpc, i, channel->tcnt, BERLIN_PWM_TCNT);
+-		berlin_pwm_writel(bpc, i, channel->enable, BERLIN_PWM_ENABLE);
++		berlin_pwm_writel(bpc, i, channel->enable, BERLIN_PWM_EN);
+ 	}
  
+ 	return 0;
 
 
