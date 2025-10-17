@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B409F330B28;
-	Fri, 17 Oct 2025 15:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864DC330B34;
+	Fri, 17 Oct 2025 15:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715435; cv=none; b=uphWx5yOnTup7pVSxvJ3g+Ydh/M1KRpHzZp01qNx1qBnSWDt3XWHN7daYXMqIr1HSqGO6j0+elSyg7KNIjCfu9yNu2nHlh3zyzuvnzOLJjHxTywWnlR1L54YEScX2osoXZSNnzL4PL3s8F34YgbRFFGVAb16JbLIct1WQE5CIJw=
+	t=1760715438; cv=none; b=PxpHJRCmao6RIvzIQCCJNC5vZawLN6W1SFTZuJhWbcS734AfZ0oLmV8el7HS524+IOtVpCcHhLIdB4UB/G1cuSBSPARELLipqMacKD3EyRZzNZJPIC6YMR0jQt47SieDh0L3aCdM1csG7Dy7oJUjysEUdtAn/N5Lmm6sQigYNIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715435; c=relaxed/simple;
-	bh=IVqR2RtrYA7uk5butDsVMqgUPWIHF0jot70oeVVA5dY=;
+	s=arc-20240116; t=1760715438; c=relaxed/simple;
+	bh=1fKaLqJ6eZX3ovi/mgkbC73Ha8q2vEtZcgGGF/NYx0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYgEq2nHszp1FlAmjl+Ewt8cWY8FCKbO4q3BXkMtqF6O/ZrpvEbCIU7klq/SU29jQnF1AuGiXxlJ/K8Wc8BL5Ql6rieJgibKohu4yfgKHhsAimUaATZt4r8fW2NEZQ/lL4X8gWUCgB0A7XHAfJcSAezEThng+tAKHMYXb/LlA5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBCbL3ca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBLMJdBakWzIgLYRHmhulYD+qtDMod3MRkBHvuPiybbFK00fMuTEinc5GKoTbrlq2DR4cZUdjmWpWUgimCockwPmU722Xg34q7eWic4g3/i//jvH7/fk0qKcalMv94XrV+ez78Q5y7RU2i6Z8Dbn4kyVGwl7aHXzQzAlh55UVrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQL/h/P+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBCbL3ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F71C4CEFE;
-	Fri, 17 Oct 2025 15:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQL/h/P+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F90FC113D0;
+	Fri, 17 Oct 2025 15:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715435;
-	bh=IVqR2RtrYA7uk5butDsVMqgUPWIHF0jot70oeVVA5dY=;
+	s=korg; t=1760715438;
+	bh=1fKaLqJ6eZX3ovi/mgkbC73Ha8q2vEtZcgGGF/NYx0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBCbL3caNqs4KKQbAEbeQF9qz8pZGYdqBI32rx/yMtTasFT/ArWtq3WBCRJEJTblU
-	 HXj4i+2R32ui3grjXBn7Q8B8CgrOFk5Q0coWjsP269rtltxO+AbVHfZ1fJx+jFHVE6
-	 JUtYa7L2kykvA9LMos+/nCMTM/fdUlyb96IQVaxg=
+	b=UQL/h/P+ofIJKyZLfSdjooU61Cgi91Ig3+ZjR1OXWslS2NbQn3mVPJXW5PZi0gpM/
+	 duBDYH5sc3vN/MdgYVAE3mxdWGc6TTWjDs7huDJrNHuWvAUEI+/l1qOBUEoLTV+5g8
+	 tnSCOkOKVYHh+T4Q7myNXsGk+CzxAzTFcTwRjv8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Xue <zxue@semtech.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH 6.17 198/371] bus: mhi: host: Do not use uninitialized dev pointer in mhi_init_irq_setup()
-Date: Fri, 17 Oct 2025 16:52:53 +0200
-Message-ID: <20251017145209.090347930@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.17 216/371] fuse: fix livelock in synchronous file put from fuseblk workers
+Date: Fri, 17 Oct 2025 16:53:11 +0200
+Message-ID: <20251017145209.902491583@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,53 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Xue <zxue@semtech.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit d0856a6dff57f95cc5d2d74e50880f01697d0cc4 upstream.
+commit 26e5c67deb2e1f42a951f022fdf5b9f7eb747b01 upstream.
 
-In mhi_init_irq_setup, the device pointer used for dev_err() was not
-initialized. Use the pointer from mhi_cntrl instead.
+I observed a hang when running generic/323 against a fuseblk server.
+This test opens a file, initiates a lot of AIO writes to that file
+descriptor, and closes the file descriptor before the writes complete.
+Unsurprisingly, the AIO exerciser threads are mostly stuck waiting for
+responses from the fuseblk server:
 
-Fixes: b0fc0167f254 ("bus: mhi: core: Allow shared IRQ for event rings")
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Signed-off-by: Adam Xue <zxue@semtech.com>
-[mani: reworded subject/description and CCed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250905174118.38512-1-zxue@semtech.com
+# cat /proc/372265/task/372313/stack
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_do_getattr+0xfc/0x1f0 [fuse]
+[<0>] fuse_file_read_iter+0xbe/0x1c0 [fuse]
+[<0>] aio_read+0x130/0x1e0
+[<0>] io_submit_one+0x542/0x860
+[<0>] __x64_sys_io_submit+0x98/0x1a0
+[<0>] do_syscall_64+0x37/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+But the /weird/ part is that the fuseblk server threads are waiting for
+responses from itself:
+
+# cat /proc/372210/task/372232/stack
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_file_put+0x9a/0xd0 [fuse]
+[<0>] fuse_release+0x36/0x50 [fuse]
+[<0>] __fput+0xec/0x2b0
+[<0>] task_work_run+0x55/0x90
+[<0>] syscall_exit_to_user_mode+0xe9/0x100
+[<0>] do_syscall_64+0x43/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+The fuseblk server is fuse2fs so there's nothing all that exciting in
+the server itself.  So why is the fuse server calling fuse_file_put?
+The commit message for the fstest sheds some light on that:
+
+"By closing the file descriptor before calling io_destroy, you pretty
+much guarantee that the last put on the ioctx will be done in interrupt
+context (during I/O completion).
+
+Aha.  AIO fgets a new struct file from the fd when it queues the ioctx.
+The completion of the FUSE_WRITE command from userspace causes the fuse
+server to call the AIO completion function.  The completion puts the
+struct file, queuing a delayed fput to the fuse server task.  When the
+fuse server task returns to userspace, it has to run the delayed fput,
+which in the case of a fuseblk server, it does synchronously.
+
+Sending the FUSE_RELEASE command sychronously from fuse server threads
+is a bad idea because a client program can initiate enough simultaneous
+AIOs such that all the fuse server threads end up in delayed_fput, and
+now there aren't any threads left to handle the queued fuse commands.
+
+Fix this by only using asynchronous fputs when closing files, and leave
+a comment explaining why.
+
+Cc: stable@vger.kernel.org # v2.6.38
+Fixes: 5a18ec176c934c ("fuse: fix hang of single threaded fuseblk filesystem")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/init.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/fuse/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -194,7 +194,6 @@ static void mhi_deinit_free_irq(struct m
- static int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- {
- 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
- 	int i, ret;
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -356,8 +356,14 @@ void fuse_file_release(struct inode *ino
+ 	 * Make the release synchronous if this is a fuseblk mount,
+ 	 * synchronous RELEASE is allowed (and desirable) in this case
+ 	 * because the server can be trusted not to screw up.
++	 *
++	 * Always use the asynchronous file put because the current thread
++	 * might be the fuse server.  This can happen if a process starts some
++	 * aio and closes the fd before the aio completes.  Since aio takes its
++	 * own ref to the file, the IO completion has to drop the ref, which is
++	 * how the fuse server can end up closing its clients' files.
+ 	 */
+-	fuse_file_put(ff, ff->fm->fc->destroy);
++	fuse_file_put(ff, false);
+ }
  
-@@ -221,7 +220,7 @@ static int mhi_init_irq_setup(struct mhi
- 			continue;
- 
- 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
--			dev_err(dev, "irq %d not available for event ring\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "irq %d not available for event ring\n",
- 				mhi_event->irq);
- 			ret = -EINVAL;
- 			goto error_request;
-@@ -232,7 +231,7 @@ static int mhi_init_irq_setup(struct mhi
- 				  irq_flags,
- 				  "mhi", mhi_event);
- 		if (ret) {
--			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "Error requesting irq:%d for ev:%d\n",
- 				mhi_cntrl->irq[mhi_event->irq], i);
- 			goto error_request;
- 		}
+ void fuse_release_common(struct file *file, bool isdir)
 
 
