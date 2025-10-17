@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456AE1D5CE0;
-	Fri, 17 Oct 2025 15:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137AB337110;
+	Fri, 17 Oct 2025 15:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714971; cv=none; b=pBc7+eFGeQAo9dTCj+Xm+WVY652mXWXH92fHeicIx18eTggWmDKZXFUwuvqwTJDWqQfWq3qhT9FxtGq6M+uoEFe8/ecrbqwyVn2oiYIG+Yk3NtnXawuZwyvqJOesk2OupWmnRiERYu1e1kQrsjktfCzFN8Bd4R6dWN03Zl9n+zQ=
+	t=1760714974; cv=none; b=fQNhvvpDOXgxM3GIqcTcMJn5z/D3ijU25ww3ZxEzavDDWYj0f00MhoIW22tzA1MsKA78jMsXCQIwr73Y+TDFhIADBoQU9p7WfjzgSe3DyAYJ37NzjN3WnI4JXIMDjULTGn0lBVIzzCOyeoPUH0rDtwCOGv43tMjKa+1OeN/FJ+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714971; c=relaxed/simple;
-	bh=DHEUTo8zD25xyxvs/bmG3WKhMmxW6e465rydmOG8cZA=;
+	s=arc-20240116; t=1760714974; c=relaxed/simple;
+	bh=zqSQGbjneAmNbXgQIx0nPA+gjBzReAe3wSrmiAQL7pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpj4ldTk4TlhiYbci/O4hJ/ojCudrq94PWHRvVkyYUV1yeOAkhf9x1Qm8Z77nXi+fsheQsTDSsS3cEfzeCXchPdlzfmi8m6rXff7jYSvOmGqjwO3j62u//chH0inDeoJL+UCJowVEsN7bg6Eg2ks66dsYc35VpK/5Ddk2SMOhco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctFE1gWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jpcf6pkUSMoWHX87+TbfR3oArWNzLF1wZncr+TGf9n6Ptw6DNJAbs9PY7bojN+MtxXEYoz1xTwhmGeOui9k3eq+oUFYlEsrhGnFw19GQf4sSpVlcwK07Orr6khPC3bNQARzyvmLRIXZRuA0NJ/s7vGtg98BoozBf1e+lwrEYA1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff6107Z/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctFE1gWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5E0C113D0;
-	Fri, 17 Oct 2025 15:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff6107Z/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878FBC4CEE7;
+	Fri, 17 Oct 2025 15:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714971;
-	bh=DHEUTo8zD25xyxvs/bmG3WKhMmxW6e465rydmOG8cZA=;
+	s=korg; t=1760714973;
+	bh=zqSQGbjneAmNbXgQIx0nPA+gjBzReAe3wSrmiAQL7pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctFE1gWFaZWZZ/0ahHJksOF2xf1x0/zKTAYGu8foiJGdXbqtTX3krqKcmEiMFNJj0
-	 aZXRq2wGPTbA5a45hiVqFzTQ71lvg+hXXtde01Y61uVEuImZH/FWJHtBROtcf5qccL
-	 N06u+Q+v1eHeDVs25h58u2rjVkQAArNwg/yU+pHY=
+	b=Ff6107Z/jDaENsVmx7kKSMGPf0D49NUDt9hqRb8nPMyM0CZtobhVm6W18wBjqndl/
+	 daIHiWYaxpsI+4IX/zZd8ZeMWLOOKLfEUScOgzn1wx4o5GDT6EA8HW2E3gBJri5Ej4
+	 1H+py+xADcTL9eVzXBgBoWLoFMpPR68fvVCtOTpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 051/371] clk: mediatek: mt8195-infra_ao: Fix parent for infra_ao_hdmi_26m
-Date: Fri, 17 Oct 2025 16:50:26 +0200
-Message-ID: <20251017145203.647730117@linuxfoundation.org>
+Subject: [PATCH 6.17 052/371] clk: mediatek: clk-mux: Do not pass flags to clk_mux_determine_rate_flags()
+Date: Fri, 17 Oct 2025 16:50:27 +0200
+Message-ID: <20251017145203.682865354@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 6c4c26b624790098988c1034541087e3e5ed5bed ]
+[ Upstream commit 5e121370a7ad3414c7f3a77002e2b18abe5c6fe1 ]
 
-The infrastructure gate for the HDMI specific crystal needs the
-top_hdmi_xtal clock to be configured in order to ungate the 26m
-clock to the HDMI IP, and it wouldn't work without.
+The `flags` in |struct mtk_mux| are core clk flags, not mux clk flags.
+Passing one to the other is wrong.
 
-Reparent the infra_ao_hdmi_26m clock to top_hdmi_xtal to fix that.
+Since there aren't any actual users adding CLK_MUX_* flags, just drop it
+for now.
 
-Fixes: e2edf59dec0b ("clk: mediatek: Add MT8195 infrastructure clock support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b05ea3314390 ("clk: mediatek: clk-mux: Add .determine_rate() callback")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt8195-infra_ao.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/mediatek/clk-mux.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt8195-infra_ao.c b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-index bb648a88e43af..ad47fdb234607 100644
---- a/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-+++ b/drivers/clk/mediatek/clk-mt8195-infra_ao.c
-@@ -103,7 +103,7 @@ static const struct mtk_gate infra_ao_clks[] = {
- 	GATE_INFRA_AO0(CLK_INFRA_AO_CQ_DMA_FPC, "infra_ao_cq_dma_fpc", "fpc", 28),
- 	GATE_INFRA_AO0(CLK_INFRA_AO_UART5, "infra_ao_uart5", "top_uart", 29),
- 	/* INFRA_AO1 */
--	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "clk26m", 0),
-+	GATE_INFRA_AO1(CLK_INFRA_AO_HDMI_26M, "infra_ao_hdmi_26m", "top_hdmi_xtal", 0),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_SPI0, "infra_ao_spi0", "top_spi", 1),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC0, "infra_ao_msdc0", "top_msdc50_0_hclk", 2),
- 	GATE_INFRA_AO1(CLK_INFRA_AO_MSDC1, "infra_ao_msdc1", "top_axi", 4),
+diff --git a/drivers/clk/mediatek/clk-mux.c b/drivers/clk/mediatek/clk-mux.c
+index 60990296450bb..9a12e58230bed 100644
+--- a/drivers/clk/mediatek/clk-mux.c
++++ b/drivers/clk/mediatek/clk-mux.c
+@@ -146,9 +146,7 @@ static int mtk_clk_mux_set_parent_setclr_lock(struct clk_hw *hw, u8 index)
+ static int mtk_clk_mux_determine_rate(struct clk_hw *hw,
+ 				      struct clk_rate_request *req)
+ {
+-	struct mtk_clk_mux *mux = to_mtk_clk_mux(hw);
+-
+-	return clk_mux_determine_rate_flags(hw, req, mux->data->flags);
++	return clk_mux_determine_rate_flags(hw, req, 0);
+ }
+ 
+ const struct clk_ops mtk_mux_clr_set_upd_ops = {
 -- 
 2.51.0
 
