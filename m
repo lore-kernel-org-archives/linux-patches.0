@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD4F332914;
-	Fri, 17 Oct 2025 15:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6046332ECA;
+	Fri, 17 Oct 2025 15:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715171; cv=none; b=g8yFw3LJPrDCTkJSn4Xuu/NfKi9PN62C/UUjC9Uc9ATMoZGuFMTQ1hK3Axv9agaAfY5urGVRyZ9NKst/Lh4hTaWqixZ2hRlOhlQPifjaDErziHoNJ7GVS/s9vyvVr84vK+quCxFqf9HL3Quh+tZkIGQIg5sKtnqOK5rXIAfDrB0=
+	t=1760715173; cv=none; b=WxziAO4gX0gSqI25k8d5o6gY2trod0M5lvsg2+4t6mloHlb6b1zc2ar+lT4xFA8X4GBkN0BswKbYuD0awK7NFPCgVg9dcHMKUxVyzaHtlV/BjvsjJwg4enqqtTDXWJPGUPQOmi3nu07HSb9fDlwTt+92t6rFl6MFsEBSmMmdme0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715171; c=relaxed/simple;
-	bh=bcUW84U/bK9ys2SDFyF+U4o2PopTMsr41ajvXEDgb9o=;
+	s=arc-20240116; t=1760715173; c=relaxed/simple;
+	bh=MTLs49ZwJCoX9jBOxPcsYNNDz6qxAwSXyX2qPv+NRSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYolOb6vqpBfNDIRDHwl/A56j1NFXEdpNpD1CvEohyyhTkdwaQU2XWrQkFV3a/jpkNeWrzEOWyFnGhZbEqXjdeyVMxq0FGaDHLG/7XBVO/KXtZ7NYnA2zZhsez1ZaJYcu5PPIobO7oTGefJrMYP32PMQgbrPx28Mc1NT7te6jsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGd2VemZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Out2nKstrVFSEJp47JHBndJlNALS6jt6L77tmddUvTPhbFlQnDNnQ4vwdeLlq4ejxRGKiLLMQIors/pY2KNSO/RorrqaRXBZBdtsemZySzXO5odP0XqxDkuPIO6EB0gqBi+voIHjjsI1PSCo9j9W0Z47y3nCEGNf5EUCiIOt1M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kY62XCAZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGd2VemZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6CC4CEE7;
-	Fri, 17 Oct 2025 15:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kY62XCAZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F1AC4CEFE;
+	Fri, 17 Oct 2025 15:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715171;
-	bh=bcUW84U/bK9ys2SDFyF+U4o2PopTMsr41ajvXEDgb9o=;
+	s=korg; t=1760715173;
+	bh=MTLs49ZwJCoX9jBOxPcsYNNDz6qxAwSXyX2qPv+NRSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGd2VemZoF0l8t3SKsDxKTFZhf0bZRtq8/XLXt5Ic42i9nmNX3XWxy4cVP4FUWY8B
-	 RdVWVNLWoTgieDMUtKtswzShtTZ7TPLVYkGfLh5nruWOgQQyTV1kHV9ZfoOK3QgJRO
-	 nIVRLNK7c3khh/3YyzQDAgidjBeY5X1eoLRaaFYI=
+	b=kY62XCAZUPeAouk6sT+ySKDiAo/+E4gCNk4pMgrlX4KxC+TVg/lIkyOiLMLJS0hqF
+	 6pRgtLh1iNuMjeIEGZs7OR+dsL/U/AHgA9rBSHgy4TURujct/jxHkyaz4orMAtz30h
+	 r8BMwOaSa0xyIAcNk1+pyipbnvK0uPTWezGwrd1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 121/371] crypto: essiv - Check ssize for decryption and in-place encryption
-Date: Fri, 17 Oct 2025 16:51:36 +0200
-Message-ID: <20251017145206.312401153@linuxfoundation.org>
+Subject: [PATCH 6.17 122/371] net: airoha: Fix loopback mode configuration for GDM2 port
+Date: Fri, 17 Oct 2025 16:51:37 +0200
+Message-ID: <20251017145206.348122356@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,61 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
+[ Upstream commit fea8cdf6738a8b25fccbb7b109b440795a0892cb ]
 
-Move the ssize check to the start in essiv_aead_crypt so that
-it's also checked for decryption and in-place encryption.
+Add missing configuration for loopback mode in airhoha_set_gdm2_loopback
+routine.
 
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 9cd451d414f6e ("net: airoha: Add loopback support for GDM2")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20251008-airoha-loopback-mode-fix-v2-1-045694fe7f60@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/essiv.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c  | 4 +++-
+ drivers/net/ethernet/airoha/airoha_regs.h | 3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/essiv.c b/crypto/essiv.c
-index d003b78fcd855..a47a3eab69351 100644
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -186,9 +186,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
- 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
- 	struct aead_request *subreq = &rctx->aead_req;
-+	int ivsize = crypto_aead_ivsize(tfm);
-+	int ssize = req->assoclen - ivsize;
- 	struct scatterlist *src = req->src;
- 	int err;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index e6b802e3d8449..6d23c5c049b9a 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -1709,7 +1709,9 @@ static void airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
+ 	airoha_fe_wr(eth, REG_GDM_RXCHN_EN(2), 0xffff);
+ 	airoha_fe_rmw(eth, REG_GDM_LPBK_CFG(2),
+ 		      LPBK_CHAN_MASK | LPBK_MODE_MASK | LPBK_EN_MASK,
+-		      FIELD_PREP(LPBK_CHAN_MASK, chan) | LPBK_EN_MASK);
++		      FIELD_PREP(LPBK_CHAN_MASK, chan) |
++		      LBK_GAP_MODE_MASK | LBK_LEN_MODE_MASK |
++		      LBK_CHAN_MODE_MASK | LPBK_EN_MASK);
+ 	airoha_fe_rmw(eth, REG_GDM_LEN_CFG(2),
+ 		      GDM_SHORT_LEN_MASK | GDM_LONG_LEN_MASK,
+ 		      FIELD_PREP(GDM_SHORT_LEN_MASK, 60) |
+diff --git a/drivers/net/ethernet/airoha/airoha_regs.h b/drivers/net/ethernet/airoha/airoha_regs.h
+index 150c85995cc1a..0c8f61081699c 100644
+--- a/drivers/net/ethernet/airoha/airoha_regs.h
++++ b/drivers/net/ethernet/airoha/airoha_regs.h
+@@ -151,6 +151,9 @@
+ #define LPBK_LEN_MASK			GENMASK(23, 10)
+ #define LPBK_CHAN_MASK			GENMASK(8, 4)
+ #define LPBK_MODE_MASK			GENMASK(3, 1)
++#define LBK_GAP_MODE_MASK		BIT(3)
++#define LBK_LEN_MODE_MASK		BIT(2)
++#define LBK_CHAN_MODE_MASK		BIT(1)
+ #define LPBK_EN_MASK			BIT(0)
  
-+	if (ssize < 0)
-+		return -EINVAL;
-+
- 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
- 
- 	/*
-@@ -198,19 +203,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	 */
- 	rctx->assoc = NULL;
- 	if (req->src == req->dst || !enc) {
--		scatterwalk_map_and_copy(req->iv, req->dst,
--					 req->assoclen - crypto_aead_ivsize(tfm),
--					 crypto_aead_ivsize(tfm), 1);
-+		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
- 	} else {
- 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
--		int ivsize = crypto_aead_ivsize(tfm);
--		int ssize = req->assoclen - ivsize;
- 		struct scatterlist *sg;
- 		int nents;
- 
--		if (ssize < 0)
--			return -EINVAL;
--
- 		nents = sg_nents_for_len(req->src, ssize);
- 		if (nents < 0)
- 			return -EINVAL;
+ #define REG_GDM_TXCHN_EN(_n)		(GDM_BASE(_n) + 0x24)
 -- 
 2.51.0
 
