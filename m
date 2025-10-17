@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D5533290B;
-	Fri, 17 Oct 2025 15:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4F2335060;
+	Fri, 17 Oct 2025 15:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715611; cv=none; b=qN0M3FGEsPJwZIERLepWxr2zLMXpE8LsEZ3Wj7/AOapIL9kLPlFggiVPzqW2SgYalvRIPH3pAcp8cqGJrhKOjLHcd8UKGcyZgFB2pCqut45/eRfAc6HmPb5tyM730oA4woebxZTFQrvSu+ICvjuIOr6SOud+fOcGiLgMfcnyp9A=
+	t=1760715615; cv=none; b=UJdBTmntsEysL/L6KQ6q7oo5lL0loj6qMNk8YYcyl/65eezlMlOCSn12AFFxeaojrAH604Hgz8cSrmK/dToOOPwezYA3eNc40vN9ttfAV1ZlIzk5OhOTpDdjjtNmAcUMRe9vTbk9YHO5pHRn3O0jY5pQw1ikEaF8quKcPBYk/Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715611; c=relaxed/simple;
-	bh=1A2S8ghDJ8TW+ZRqaSS27HQUcka5Nny7bzp2xI/ujtU=;
+	s=arc-20240116; t=1760715615; c=relaxed/simple;
+	bh=pAc5hxjrvgx6th/pR6Oj54E/SPgxcH3/ivxD3ZGX340=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKxc6SJA9d/zYsVBQWOye7iJi3CVRhvel+plcYJTG+rMNW50iBYiOLUcbZ+EnQHBBk4U4TcmTW5/ygSdtqYL3rOEiiBUVCEqnqQ867m5E6olsnAC/F5YanupHk2WT9XzxEATTPiDoLCoNXwnAhKl5hBn7le5g/dbXfgORnT8yuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ldn704uU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLv9t3crwXPy4DvuTUDRxajnDQtSwV9ZN7QO7dw1Q5Zz758j0CtbZUnVsr+1nMpkoYBg6n8BVwrFv11z/QZiYgij8AeeE2kUuBonKHPleapZQLchiuWwp8T3nFwxy8kylflHVtaaEIXE1Jo+MujIz8iG4UtD8rV2RAzZwAHXHgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss6p7e3N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ldn704uU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA30C4CEE7;
-	Fri, 17 Oct 2025 15:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss6p7e3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED12C4CEFE;
+	Fri, 17 Oct 2025 15:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715611;
-	bh=1A2S8ghDJ8TW+ZRqaSS27HQUcka5Nny7bzp2xI/ujtU=;
+	s=korg; t=1760715614;
+	bh=pAc5hxjrvgx6th/pR6Oj54E/SPgxcH3/ivxD3ZGX340=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ldn704uUWAu0MxwLhg8Mi8FDPi8t9bUpVmdnBUmZqEW1dr0/FYpNAO8hpgrtAVxfm
-	 YYppBoSWhs28GzQXD4yAJltMgep5bwgHTrWoW8RXRXCdpld86BMyogp4BWuyoBYdLb
-	 cH8Gd1ycERY3tTOneEdlqF+amRJxJGANBm951Mqc=
+	b=ss6p7e3Nqrezg7AJmKOdoR4PtlSl6MDXL+qQRHhMf7evBB+P/8TiLFiARuXB6Gvne
+	 Ye/MyPhNT4TKwgagLkr9zc5fDjVFGVC9BiWGoOKw7Na/nzCroNpCWjrYXsuUmuDs4Q
+	 02KAw8O5fLIP5+nzcSqVEEAL48GUwHWZB58GQ4b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.17 269/371] memory: stm32_omm: Fix req2ack update test
-Date: Fri, 17 Oct 2025 16:54:04 +0200
-Message-ID: <20251017145211.809442628@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.17 278/371] PCI/AER: Fix missing uevent on recovery when a reset is requested
+Date: Fri, 17 Oct 2025 16:54:13 +0200
+Message-ID: <20251017145212.132657907@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,39 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrice Chotard <patrice.chotard@foss.st.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit d140f3ba76ac98faad7f9b37ef5a3dcbd57f59e2 upstream.
+commit bbf7d0468d0da71d76cc6ec9bc8a224325d07b6b upstream.
 
-If "st,omm-req2ack-ns" property is found and its value is not 0,
-the current test doesn't allow to compute and set req2ack value,
-Fix this test.
+Since commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery
+status for udev") AER uses the result of error_detected() as parameter
+to pci_uevent_ers(). As pci_uevent_ers() however does not handle
+PCI_ERS_RESULT_NEED_RESET this results in a missing uevent for the
+beginning of recovery if drivers request a reset. Fix this by treating
+PCI_ERS_RESULT_NEED_RESET as beginning recovery.
 
-Fixes: 8181d061dcff ("memory: Add STM32 Octo Memory Manager driver")
-Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://lore.kernel.org/r/20250807-upstream_omm_fix_req2ack_test_condition-v2-1-d7df4af2b48b@foss.st.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for udev")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-1-adf85b0620b0@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memory/stm32_omm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci-driver.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/memory/stm32_omm.c b/drivers/memory/stm32_omm.c
-index bee2ecc8c2b9..5d06623f3f68 100644
---- a/drivers/memory/stm32_omm.c
-+++ b/drivers/memory/stm32_omm.c
-@@ -238,7 +238,7 @@ static int stm32_omm_configure(struct device *dev)
- 		if (mux & CR_MUXEN) {
- 			ret = of_property_read_u32(dev->of_node, "st,omm-req2ack-ns",
- 						   &req2ack);
--			if (!ret && !req2ack) {
-+			if (!ret && req2ack) {
- 				req2ack = DIV_ROUND_UP(req2ack, NSEC_PER_SEC / clk_rate_max) - 1;
- 
- 				if (req2ack > 256)
--- 
-2.51.0
-
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1596,6 +1596,7 @@ void pci_uevent_ers(struct pci_dev *pdev
+ 	switch (err_type) {
+ 	case PCI_ERS_RESULT_NONE:
+ 	case PCI_ERS_RESULT_CAN_RECOVER:
++	case PCI_ERS_RESULT_NEED_RESET:
+ 		envp[idx++] = "ERROR_EVENT=BEGIN_RECOVERY";
+ 		envp[idx++] = "DEVICE_ONLINE=0";
+ 		break;
 
 
