@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F6C1D5CE0;
-	Fri, 17 Oct 2025 15:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F18289811;
+	Fri, 17 Oct 2025 15:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714244; cv=none; b=QgqkwiP2A9sFNxVj+TtGFp+B17790rp3SCLAtA80ZUyTpJEIrbXONGr/iBeUYX87e7WqsVI0SXJRiy0K289DAnxfl2U+6ehFq5oakYovUt5SmMEzvjco4FtlSyhtrvgVOVKdborR5kORCY/uj9M9Bm8h5nFE5UYdwUojWqAAn0s=
+	t=1760714247; cv=none; b=BUcT+65sx89noKT0jNRRhvGQodRRZJivdbd6xYFbuhx5p62WBQcET8KmNfIAenkLZORqx/rNY/dq7ye4bXpBc4I5C4mm3Tc5MpxmS2XRLAooF5I1QzA+9lMRKf0KAygPDjXnUevKCoWMwQiGiyu0u1gL2uIizQhRdamdRnZ8j7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714244; c=relaxed/simple;
-	bh=9wacYYWiBL/E7YaJ1TKlKkcnGqg1RremJa4VaO/vWsU=;
+	s=arc-20240116; t=1760714247; c=relaxed/simple;
+	bh=PObRQY1DI4rYFluVzHUidWLnY+7lSO1A5m1h/qMeQRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9FosUGfvjUdn/nmZyIu7Jm+qBzEgrn8Qf8h1RopBNUAu0yA0+JrwvX+oX+/6TXUGf6X0puS+sx/AH2U9c8SwlZaaFiT1TEhYn1TvUkyOE6iurOE82Ksur/DccvbVgj/Z+XcWia4ScCz1H8+QTRefiREJr+FQePROx55m/jy60w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFJ/M/6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=htNvPccPioUggbQ+F+NR9pq74zhPKsmyVSOSeFarQ8dSnK7Tms2PO/mIYoIV2aHPST5GIPRb+SGlN0q88LV0lvIok2lWBpmclfkEgYHK6Tc1yI50XSlwMPOl+ZRkZ6kEJTp83lYkAekZm9+v0mf25Sj0F/ijaKrzdDi6LhW0Hgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpCJ3xLN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFJ/M/6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8B4C4CEE7;
-	Fri, 17 Oct 2025 15:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpCJ3xLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC6FC4CEE7;
+	Fri, 17 Oct 2025 15:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714244;
-	bh=9wacYYWiBL/E7YaJ1TKlKkcnGqg1RremJa4VaO/vWsU=;
+	s=korg; t=1760714247;
+	bh=PObRQY1DI4rYFluVzHUidWLnY+7lSO1A5m1h/qMeQRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFJ/M/6wJK0CMxpaELY3nW2JOIFQzgkb0sqrZGwag9UVFsigKOJtymxQPM78bCKW9
-	 nvZk8wryUfs95o79VB7BpSgCiuTt+lE+ueAgklRm04uCjm1q9UQWHhem7ND41v+sm0
-	 UoXck+e+IzZ1qGWyDmaqoNmak2WAXPoLUuSqw/Os=
+	b=rpCJ3xLNKsWRw0hBj0KT/mXRLpeZg5JiXh9nCNilDoD3txj4MvYODWxzvxIUTpN20
+	 B1geANhcJ3woevNwA5ojw5QrD50gKbIzBRzepNuFrD0qngCIygxLuCmHdDEcCNKHv5
+	 e3MKBhQlyWgeLTdnmx310tgK3/38FT7b/iGEjlm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-cifs@vger.kernel.org,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/277] smb: client: fix missing timestamp updates after utime(2)
-Date: Fri, 17 Oct 2025 16:51:25 +0200
-Message-ID: <20251017145149.985444186@linuxfoundation.org>
+Subject: [PATCH 6.12 079/277] cifs: Query EA $LXMOD in cifs_query_path_info() for WSL reparse points
+Date: Fri, 17 Oct 2025 16:51:26 +0200
+Message-ID: <20251017145150.021310148@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -48,112 +45,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit b95cd1bdf5aa9221c98fc9259014b8bb8d1829d7 ]
+[ Upstream commit 057ac50638bcece64b3b436d3a61b70ed6c01a34 ]
 
-Don't reuse open handle when changing timestamps to prevent the server
-from disabling automatic timestamp updates as per MS-FSA 2.1.4.17.
+EA $LXMOD is required for WSL non-symlink reparse points.
 
----8<---
-import os
-import time
-
-filename = '/mnt/foo'
-
-def print_stat(prefix):
-    st = os.stat(filename)
-    print(prefix, ': ', time.ctime(st.st_atime), time.ctime(st.st_ctime))
-
-fd = os.open(filename, os.O_CREAT|os.O_TRUNC|os.O_WRONLY, 0o644)
-print_stat('old')
-os.utime(fd, None)
-time.sleep(2)
-os.write(fd, b'foo')
-os.close(fd)
-time.sleep(2)
-print_stat('new')
----8<---
-
-Before patch:
-
-$ mount.cifs //srv/share /mnt -o ...
-$ python3 run.py
-old :  Fri Oct  3 14:01:21 2025 Fri Oct  3 14:01:21 2025
-new :  Fri Oct  3 14:01:21 2025 Fri Oct  3 14:01:21 2025
-
-After patch:
-
-$ mount.cifs //srv/share /mnt -o ...
-$ python3 run.py
-old :  Fri Oct  3 17:03:34 2025 Fri Oct  3 17:03:34 2025
-new :  Fri Oct  3 17:03:36 2025 Fri Oct  3 17:03:36 2025
-
-Fixes: b6f2a0f89d7e ("cifs: for compound requests, use open handle if possible")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Cc: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: linux-cifs@vger.kernel.org
+Fixes: ef86ab131d91 ("cifs: Fix querying of WSL CHR and BLK reparse points over SMB1")
+Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/smb/client/smb1ops.c | 62 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 60 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 104a563dc317f..cb049bc70e0cb 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1220,31 +1220,33 @@ int
- smb2_set_file_info(struct inode *inode, const char *full_path,
- 		   FILE_BASIC_INFO *buf, const unsigned int xid)
- {
--	struct cifs_open_parms oparms;
-+	struct kvec in_iov = { .iov_base = buf, .iov_len = sizeof(*buf), };
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct cifsFileInfo *cfile = NULL;
-+	struct cifs_open_parms oparms;
- 	struct tcon_link *tlink;
- 	struct cifs_tcon *tcon;
--	struct cifsFileInfo *cfile;
--	struct kvec in_iov = { .iov_base = buf, .iov_len = sizeof(*buf), };
--	int rc;
--
--	if ((buf->CreationTime == 0) && (buf->LastAccessTime == 0) &&
--	    (buf->LastWriteTime == 0) && (buf->ChangeTime == 0) &&
--	    (buf->Attributes == 0))
--		return 0; /* would be a no op, no sense sending this */
-+	int rc = 0;
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index 0385a514f59e9..4670c3e451a75 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -671,14 +671,72 @@ static int cifs_query_path_info(const unsigned int xid,
+ 	}
  
- 	tlink = cifs_sb_tlink(cifs_sb);
- 	if (IS_ERR(tlink))
- 		return PTR_ERR(tlink);
- 	tcon = tlink_tcon(tlink);
- 
--	cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
-+	if ((buf->CreationTime == 0) && (buf->LastAccessTime == 0) &&
-+	    (buf->LastWriteTime == 0) && (buf->ChangeTime == 0)) {
-+		if (buf->Attributes == 0)
-+			goto out; /* would be a no op, no sense sending this */
-+		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
+ #ifdef CONFIG_CIFS_XATTR
++	/*
++	 * For non-symlink WSL reparse points it is required to fetch
++	 * EA $LXMOD which contains in its S_DT part the mandatory file type.
++	 */
++	if (!rc && data->reparse_point) {
++		struct smb2_file_full_ea_info *ea;
++		u32 next = 0;
++
++		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
++		do {
++			ea = (void *)((u8 *)ea + next);
++			next = le32_to_cpu(ea->next_entry_offset);
++		} while (next);
++		if (le16_to_cpu(ea->ea_value_length)) {
++			ea->next_entry_offset = cpu_to_le32(ALIGN(sizeof(*ea) +
++						ea->ea_name_length + 1 +
++						le16_to_cpu(ea->ea_value_length), 4));
++			ea = (void *)((u8 *)ea + le32_to_cpu(ea->next_entry_offset));
++		}
++
++		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_MODE,
++				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
++				    SMB2_WSL_XATTR_MODE_SIZE, cifs_sb);
++		if (rc == SMB2_WSL_XATTR_MODE_SIZE) {
++			ea->next_entry_offset = cpu_to_le32(0);
++			ea->flags = 0;
++			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
++			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_MODE_SIZE);
++			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_MODE, SMB2_WSL_XATTR_NAME_LEN + 1);
++			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
++						   SMB2_WSL_XATTR_MODE_SIZE, 4);
++			rc = 0;
++		} else if (rc >= 0) {
++			/* It is an error if EA $LXMOD has wrong size. */
++			rc = -EINVAL;
++		} else {
++			/*
++			 * In all other cases ignore error if fetching
++			 * of EA $LXMOD failed. It is needed only for
++			 * non-symlink WSL reparse points and wsl_to_fattr()
++			 * handle the case when EA is missing.
++			 */
++			rc = 0;
++		}
 +	}
 +
- 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path, FILE_WRITE_ATTRIBUTES,
- 			     FILE_OPEN, 0, ACL_NO_MODE);
- 	rc = smb2_compound_op(xid, tcon, cifs_sb,
- 			      full_path, &oparms, &in_iov,
- 			      &(int){SMB2_OP_SET_INFO}, 1,
- 			      cfile, NULL, NULL, NULL);
-+out:
- 	cifs_put_tlink(tlink);
- 	return rc;
- }
+ 	/*
+ 	 * For WSL CHR and BLK reparse points it is required to fetch
+ 	 * EA $LXDEV which contains major and minor device numbers.
+ 	 */
+ 	if (!rc && data->reparse_point) {
+ 		struct smb2_file_full_ea_info *ea;
++		u32 next = 0;
+ 
+ 		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
++		do {
++			ea = (void *)((u8 *)ea + next);
++			next = le32_to_cpu(ea->next_entry_offset);
++		} while (next);
++		if (le16_to_cpu(ea->ea_value_length)) {
++			ea->next_entry_offset = cpu_to_le32(ALIGN(sizeof(*ea) +
++						ea->ea_name_length + 1 +
++						le16_to_cpu(ea->ea_value_length), 4));
++			ea = (void *)((u8 *)ea + le32_to_cpu(ea->next_entry_offset));
++		}
++
+ 		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_DEV,
+ 				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
+ 				    SMB2_WSL_XATTR_DEV_SIZE, cifs_sb);
+@@ -688,8 +746,8 @@ static int cifs_query_path_info(const unsigned int xid,
+ 			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
+ 			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
+ 			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
+-			data->wsl.eas_len = sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
+-					    SMB2_WSL_XATTR_DEV_SIZE;
++			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
++						   SMB2_WSL_XATTR_MODE_SIZE, 4);
+ 			rc = 0;
+ 		} else if (rc >= 0) {
+ 			/* It is an error if EA $LXDEV has wrong size. */
 -- 
 2.51.0
 
