@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6476320C00A;
-	Fri, 17 Oct 2025 15:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3222F12A5;
+	Fri, 17 Oct 2025 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714681; cv=none; b=TRJ3OFtd7DE9utoFgSiezSZHYClFLXM7Au3SVKOim5FiLgmZZfttuVOAVT7Iyxb+VoTy5WaqYZt2woo58YBrYEy0QDDKvKunmBfiMF8hxqcVQzIxz4Ot2FnhBJxd/PKBMnzYj9GQiFLVPcV/fIgXMDwNVswTZB3Mpbcc25Njhq0=
+	t=1760714684; cv=none; b=V3OYZKQXUtE4adC8bRUeKwmSDkA3KeXcgLrKCc4gbR5x2Qf2YCo+eOwEZyl1J203LOqr+M4CdZdEs7EFk18UJMCaROO+Pi75msOcqTO4m2IpMvCudsi+mJG7eP8+RFIp1iGKXowHc+6pLK4pIn5U+HLJfzgPijIVRT/hItOoh3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714681; c=relaxed/simple;
-	bh=cjkAKOOU3wEzSx/lz5jqphL8kpVLtUd0s6pjySWKcoU=;
+	s=arc-20240116; t=1760714684; c=relaxed/simple;
+	bh=XHlBTjrMRiokzcz0YCKL4ryJZYJdrklWaOB+x2P4+MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J90wVU2USmRqTQh3FGEXbFT+mzGRv4VV/cSAKsVD8ZKwz124znfXR0rQSHgmpNaI95qhY4vp1GyFcAsB9GXF6Wu3wyDJ0czuXcYp/9Vm+RyaW8AACcMAhlv8o9EJbI8McSTkfF2l4WcSE8lrFLkklkECvu8ULyaA5Cx7VtwMABg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/frXeV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fy43d6dt/zT3BZB5ScNYFE6kz5IcLTcV3QD8dT2qVbiZJOc+b3yQsAMo76JuO756pirBlmaMaJDHGKS4j/c9mnz7i2U/FE4C/VnDn0HtEH7w5D7zD4pJrAUZL4Zp2dVum/FGDu65av1s0nptp75llFqyXDpSP/2ZOW5Upo3CaAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzZ6S3Rg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/frXeV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A18C4CEE7;
-	Fri, 17 Oct 2025 15:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzZ6S3Rg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72FCC4CEE7;
+	Fri, 17 Oct 2025 15:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714681;
-	bh=cjkAKOOU3wEzSx/lz5jqphL8kpVLtUd0s6pjySWKcoU=;
+	s=korg; t=1760714684;
+	bh=XHlBTjrMRiokzcz0YCKL4ryJZYJdrklWaOB+x2P4+MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/frXeV3+cdsRB+cmtzFOhHQkBqab6bigd8YZshP72ZJQqqa8ufRJ5CI1V/etZyZJ
-	 rh4ghIWice0coG56Ha6x3bNAhNLXmHNSQPzFIqfLTlllyTScOd6LCQg8qdezFhmxOC
-	 5JIM/P1CtrcJ3B2Bx/vt72RjSvqOkK8XsAAuacsY=
+	b=VzZ6S3RgRlN4PksEU0jAnlssg3uMVY/MCJdQv7doqYGNIRxFdpW95YsSFfmN3jMMy
+	 jpmx7v+b1WCS7dq3H2uVRkRsalzPglio4+98IFzzsTQ32uiCxzub3dw58zyTXPIq66
+	 myu64WEUEvV8doq2zCnTYRhk+riP5q5lsorvifNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jiang <jiangwang@kylinos.cn>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/277] PCI: endpoint: Remove surplus return statement from pci_epf_test_clean_dma_chan()
-Date: Fri, 17 Oct 2025 16:53:56 +0200
-Message-ID: <20251017145155.494557906@linuxfoundation.org>
+Subject: [PATCH 6.12 230/277] PCI: endpoint: pci-epf-test: Add NULL check for DMA channels before release
+Date: Fri, 17 Oct 2025 16:53:57 +0200
+Message-ID: <20251017145155.532113056@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,43 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jiang <jiangwang@kylinos.cn>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 9b80bdb10aee04ce7289896e6bdad13e33972636 ]
+[ Upstream commit 85afa9ea122dd9d4a2ead104a951d318975dcd25 ]
 
-Remove a surplus return statement from the void function that has been
-added in the commit commit 8353813c88ef ("PCI: endpoint: Enable DMA
-tests for endpoints with DMA capabilities").
+The fields dma_chan_tx and dma_chan_rx of the struct pci_epf_test can be
+NULL even after EPF initialization. Then it is prudent to check that
+they have non-NULL values before releasing the channels. Add the checks
+in pci_epf_test_clean_dma_chan().
 
-Especially, as an empty return statements at the end of a void functions
-serve little purpose.
+Without the checks, NULL pointer dereferences happen and they can lead
+to a kernel panic in some cases:
 
-This fixes the following checkpatch.pl script warning:
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000050
+  Call trace:
+   dma_release_channel+0x2c/0x120 (P)
+   pci_epf_test_epc_deinit+0x94/0xc0 [pci_epf_test]
+   pci_epc_deinit_notify+0x74/0xc0
+   tegra_pcie_ep_pex_rst_irq+0x250/0x5d8
+   irq_thread_fn+0x34/0xb8
+   irq_thread+0x18c/0x2e8
+   kthread+0x14c/0x210
+   ret_from_fork+0x10/0x20
 
-  WARNING: void function return statements are not generally useful
-  #296: FILE: drivers/pci/endpoint/functions/pci-epf-test.c:296:
-  +     return;
-  +}
-
-Link: https://lore.kernel.org/r/tencent_F250BEE2A65745A524E2EFE70CF615CA8F06@qq.com
-Signed-off-by: Wang Jiang <jiangwang@kylinos.cn>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Stable-dep-of: 85afa9ea122d ("PCI: endpoint: pci-epf-test: Add NULL check for DMA channels before release")
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Fixes: 5ebf3fc59bd2 ("PCI: endpoint: functions/pci-epf-test: Add DMA support to transfer data")
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+[mani: trimmed the stack trace]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250916025756.34807-1-shinichiro.kawasaki@wdc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-test.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 --- a/drivers/pci/endpoint/functions/pci-epf-test.c
 +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -291,8 +291,6 @@ static void pci_epf_test_clean_dma_chan(
+@@ -282,15 +282,20 @@ static void pci_epf_test_clean_dma_chan(
+ 	if (!epf_test->dma_supported)
+ 		return;
  
- 	dma_release_channel(epf_test->dma_chan_rx);
- 	epf_test->dma_chan_rx = NULL;
--
--	return;
+-	dma_release_channel(epf_test->dma_chan_tx);
+-	if (epf_test->dma_chan_tx == epf_test->dma_chan_rx) {
++	if (epf_test->dma_chan_tx) {
++		dma_release_channel(epf_test->dma_chan_tx);
++		if (epf_test->dma_chan_tx == epf_test->dma_chan_rx) {
++			epf_test->dma_chan_tx = NULL;
++			epf_test->dma_chan_rx = NULL;
++			return;
++		}
+ 		epf_test->dma_chan_tx = NULL;
+-		epf_test->dma_chan_rx = NULL;
+-		return;
+ 	}
+ 
+-	dma_release_channel(epf_test->dma_chan_rx);
+-	epf_test->dma_chan_rx = NULL;
++	if (epf_test->dma_chan_rx) {
++		dma_release_channel(epf_test->dma_chan_rx);
++		epf_test->dma_chan_rx = NULL;
++	}
  }
  
  static void pci_epf_test_print_rate(struct pci_epf_test *epf_test,
