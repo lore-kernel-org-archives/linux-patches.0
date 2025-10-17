@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE942F12BA;
-	Fri, 17 Oct 2025 15:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D354432C929;
+	Fri, 17 Oct 2025 15:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714661; cv=none; b=mjuoBdQtqxDzjUj7oH/FOe8iQr3eGlI6St4asuauN6fxx7iR3WQiHo1j0HWX2WEePw61u02iqmPYbQCcwerMp3+9fHxdDewE/b0PXjKrBi5gw7u5jhT5Szer7n7/OeSqNmRojQ91omx41rX+aYLsF6/aX4J0KLICt4P0PxPTrMA=
+	t=1760714663; cv=none; b=KLmAIJGGJXdIfUSkjw0+cGCsVEQyaMtsHRrFdm5Rzq9ZIb7jdcVr9/Mgl/vjn+WRpParl8Va/Rq/t27+EglHO0ARlmqRESewXpixxc9Zl02CcC8b5imE8zhG7jCRKOqsNBEdyOu3UpKIcMI9Zx/mvHQz0dAmpbWXiiD+8Fno/yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714661; c=relaxed/simple;
-	bh=8mhqw500W8xTzndSLjdXE5UZD5MndbMNsf47AeVTcBQ=;
+	s=arc-20240116; t=1760714663; c=relaxed/simple;
+	bh=Z9dcxC8+YDYCIF1CQ2FGbQOt+VNTcnbEkZHLL56o3aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hU4LdlmNjydMHPyDcaJ5AMaFw9OzKD72fn9eg+F4RbeUFaQfmU9onMguZqvnQYJolDQyZsW5QkvjscPeOqJMRSUu5loSdan8z2TjwAdwQj3vei9Y3RpJv5lHdU1ndGY7wltA42q7XhW63lcVd61KSK1PmiOuTr4dn7lj+lOhwnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dF6nBZ7S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbDdbRqoOrVgNi4RJR2FSh6dYAe/HQWzqfxfbDGaH/Sr8+3/A2b71igrSVjya1WkfDoFbpbzgxeUtFFkPymQbBBrFDbrakTbZXWU1gtPSkNANIbtpAarGNXq82fCAfP7+sbJsot+MgKiV00kH7XitF/KUuCchZ/52rl7TOGnYCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kisic/eB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dF6nBZ7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F58C4CEFE;
-	Fri, 17 Oct 2025 15:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kisic/eB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573F1C4CEE7;
+	Fri, 17 Oct 2025 15:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714660;
-	bh=8mhqw500W8xTzndSLjdXE5UZD5MndbMNsf47AeVTcBQ=;
+	s=korg; t=1760714663;
+	bh=Z9dcxC8+YDYCIF1CQ2FGbQOt+VNTcnbEkZHLL56o3aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dF6nBZ7S6V6Etqbsxd++ft28wbyx+dEChnQujWWPyklXZfXOYRzyRtBNxJl0L2/pC
-	 mXxoCZpkAGsa+TlJYbhCvk1rWHtUvIGhi8wYz6+QBz9IFQhpcU5vEavg12FkubZPIB
-	 gH1npXtEOydWzLSf20CYutkVgdtuYdLUYhqGLMyQ=
+	b=kisic/eBJf6KDA3ZXsgHoPXJzmAx8TciBvBnhT6SHBUAzrZTE0vS6EO2cDtdy8fgc
+	 IJomI/m8nN5by5rqioTv+VPbvXWCiGP77UZC6/8kpCj2Fe2sJJDtJntgVeEhiRsdFc
+	 ABHsrSRVvKgwHLTptyblZW55duLzY96H6Wz5iNvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 223/277] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
-Date: Fri, 17 Oct 2025 16:53:50 +0200
-Message-ID: <20251017145155.269342912@linuxfoundation.org>
+	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 224/277] media: mc: Clear minor number before put device
+Date: Fri, 17 Oct 2025 16:53:51 +0200
+Message-ID: <20251017145155.305578612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,192 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
+[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
 
-The madv_populate and soft-dirty kselftests currently fail on systems
-where CONFIG_MEM_SOFT_DIRTY is disabled.
+The device minor should not be cleared after the device is released.
 
-Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
-tests are properly skipped when the feature is not enabled.
-
-Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
-Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
+Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/madv_populate.c |   21 -------
- tools/testing/selftests/mm/soft-dirty.c    |    5 +
- tools/testing/selftests/mm/vm_util.c       |   77 +++++++++++++++++++++++++++++
- tools/testing/selftests/mm/vm_util.h       |    1 
- 4 files changed, 84 insertions(+), 20 deletions(-)
+ drivers/media/mc/mc-devnode.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/tools/testing/selftests/mm/madv_populate.c
-+++ b/tools/testing/selftests/mm/madv_populate.c
-@@ -264,23 +264,6 @@ static void test_softdirty(void)
- 	munmap(addr, SIZE);
- }
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -50,11 +50,6 @@ static void media_devnode_release(struct
+ {
+ 	struct media_devnode *devnode = to_media_devnode(cd);
  
--static int system_has_softdirty(void)
--{
--	/*
--	 * There is no way to check if the kernel supports soft-dirty, other
--	 * than by writing to a page and seeing if the bit was set. But the
--	 * tests are intended to check that the bit gets set when it should, so
--	 * doing that check would turn a potentially legitimate fail into a
--	 * skip. Fortunately, we know for sure that arm64 does not support
--	 * soft-dirty. So for now, let's just use the arch as a corse guide.
--	 */
--#if defined(__aarch64__)
--	return 0;
--#else
--	return 1;
--#endif
--}
+-	mutex_lock(&media_devnode_lock);
+-	/* Mark device node number as free */
+-	clear_bit(devnode->minor, media_devnode_nums);
+-	mutex_unlock(&media_devnode_lock);
 -
- int main(int argc, char **argv)
- {
- 	int nr_tests = 16;
-@@ -288,7 +271,7 @@ int main(int argc, char **argv)
+ 	/* Release media_devnode and perform other cleanups as needed. */
+ 	if (devnode->release)
+ 		devnode->release(devnode);
+@@ -281,6 +276,7 @@ void media_devnode_unregister(struct med
+ 	/* Delete the cdev on this minor as well */
+ 	cdev_device_del(&devnode->cdev, &devnode->dev);
+ 	devnode->media_dev = NULL;
++	clear_bit(devnode->minor, media_devnode_nums);
+ 	mutex_unlock(&media_devnode_lock);
  
- 	pagesize = getpagesize();
- 
--	if (system_has_softdirty())
-+	if (softdirty_supported())
- 		nr_tests += 5;
- 
- 	ksft_print_header();
-@@ -300,7 +283,7 @@ int main(int argc, char **argv)
- 	test_holes();
- 	test_populate_read();
- 	test_populate_write();
--	if (system_has_softdirty())
-+	if (softdirty_supported())
- 		test_softdirty();
- 
- 	err = ksft_get_fail_cnt();
---- a/tools/testing/selftests/mm/soft-dirty.c
-+++ b/tools/testing/selftests/mm/soft-dirty.c
-@@ -193,8 +193,11 @@ int main(int argc, char **argv)
- 	int pagesize;
- 
- 	ksft_print_header();
--	ksft_set_plan(15);
- 
-+	if (!softdirty_supported())
-+		ksft_exit_skip("soft-dirty is not support\n");
-+
-+	ksft_set_plan(15);
- 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
- 	if (pagemap_fd < 0)
- 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
---- a/tools/testing/selftests/mm/vm_util.c
-+++ b/tools/testing/selftests/mm/vm_util.c
-@@ -193,6 +193,42 @@ err_out:
- 	return rss_anon;
- }
- 
-+char *__get_smap_entry(void *addr, const char *pattern, char *buf, size_t len)
-+{
-+	int ret;
-+	FILE *fp;
-+	char *entry = NULL;
-+	char addr_pattern[MAX_LINE_LENGTH];
-+
-+	ret = snprintf(addr_pattern, MAX_LINE_LENGTH, "%08lx-",
-+		       (unsigned long)addr);
-+	if (ret >= MAX_LINE_LENGTH)
-+		ksft_exit_fail_msg("%s: Pattern is too long\n", __func__);
-+
-+	fp = fopen(SMAP_FILE_PATH, "r");
-+	if (!fp)
-+		ksft_exit_fail_msg("%s: Failed to open file %s\n", __func__,
-+				   SMAP_FILE_PATH);
-+
-+	if (!check_for_pattern(fp, addr_pattern, buf, len))
-+		goto err_out;
-+
-+	/* Fetch the pattern in the same block */
-+	if (!check_for_pattern(fp, pattern, buf, len))
-+		goto err_out;
-+
-+	/* Trim trailing newline */
-+	entry = strchr(buf, '\n');
-+	if (entry)
-+		*entry = '\0';
-+
-+	entry = buf + strlen(pattern);
-+
-+err_out:
-+	fclose(fp);
-+	return entry;
-+}
-+
- bool __check_huge(void *addr, char *pattern, int nr_hpages,
- 		  uint64_t hpage_size)
- {
-@@ -384,3 +420,44 @@ unsigned long get_free_hugepages(void)
- 	fclose(f);
- 	return fhp;
- }
-+
-+static bool check_vmflag(void *addr, const char *flag)
-+{
-+	char buffer[MAX_LINE_LENGTH];
-+	const char *flags;
-+	size_t flaglen;
-+
-+	flags = __get_smap_entry(addr, "VmFlags:", buffer, sizeof(buffer));
-+	if (!flags)
-+		ksft_exit_fail_msg("%s: No VmFlags for %p\n", __func__, addr);
-+
-+	while (true) {
-+		flags += strspn(flags, " ");
-+
-+		flaglen = strcspn(flags, " ");
-+		if (!flaglen)
-+			return false;
-+
-+		if (flaglen == strlen(flag) && !memcmp(flags, flag, flaglen))
-+			return true;
-+
-+		flags += flaglen;
-+	}
-+}
-+
-+bool softdirty_supported(void)
-+{
-+	char *addr;
-+	bool supported = false;
-+	const size_t pagesize = getpagesize();
-+
-+	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
-+	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
-+		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-+	if (!addr)
-+		ksft_exit_fail_msg("mmap failed\n");
-+
-+	supported = check_vmflag(addr, "sd");
-+	munmap(addr, pagesize);
-+	return supported;
-+}
---- a/tools/testing/selftests/mm/vm_util.h
-+++ b/tools/testing/selftests/mm/vm_util.h
-@@ -53,6 +53,7 @@ int uffd_unregister(int uffd, void *addr
- int uffd_register_with_ioctls(int uffd, void *addr, uint64_t len,
- 			      bool miss, bool wp, bool minor, uint64_t *ioctls);
- unsigned long get_free_hugepages(void);
-+bool softdirty_supported(void);
- 
- /*
-  * On ppc64 this will only work with radix 2M hugepage size
+ 	put_device(&devnode->dev);
 
 
