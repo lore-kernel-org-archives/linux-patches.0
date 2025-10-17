@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF002F12CF;
-	Fri, 17 Oct 2025 15:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113C945C0B;
+	Fri, 17 Oct 2025 15:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713554; cv=none; b=Vkoy5Sl8k+d5I7bov7Kq0QMU3pqlTTL6fFFIDIwYz1BATAPlqO0AUULIJ0WqbThQyw9AS7iDnJUTMpz4o+k7SBpj1v4jCSDrR9HdIYJ3iV198gwOoDRWidOnwrBdmLSs5P8Ju9JnoIDWCbUd+upPD8qdCy9XGLnljfWalEb47yU=
+	t=1760713557; cv=none; b=d2KythsE33jMx+dE0k6UfAl8RIpMfS/GGI5FWz6VRaseVmhBeGZnSvKvW0LpyH0mbOm2bnljXwJTs6leKkr+27L1oN+soxmx7cKRbX1nkvxZWbqZ9fTI69y/7GEjqZaFy+ympUD6aIakZqjgtHTRBuvJ1QOLuADbzQlQxv1KFDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713554; c=relaxed/simple;
-	bh=tLa+yd5rfnCjrcDVjtqz1NpRStbSaFdCSnIWpzmyJIk=;
+	s=arc-20240116; t=1760713557; c=relaxed/simple;
+	bh=AvbkBZsF/Cv/G38P0XGmkH6kbJyrFcyVj4e8ZLbcbTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9q/Xln7U/pKoEFR1OE+FhbDuvIx4SofbUNq64SkKLH8xY2PMELshCcfVeXe6TILl1+XxjdcjPEEUoQ8wCWikCU3hRDeZhUG3e9cIzWD9HhfA7mWZiWUavKrd5mjGX26NQ9w+sSS6TyXUrLzk12iwcnW4eGpwCyCj39vnwvLcMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLWRfsVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0hsLX27rZvAtdShKu9vRK8EU2vZt7aftDGxnjfzwYaWIr3OUzrMju8MFulKPElkcXgPWziEUzi4BD4oqQ6DopsfaDIePS/PhFXyqjEhzbU1twXe3fYGD+J0OnEWKq6jkkTaeuf/J54y3hYvWfEnOltQORiu3U5zPyr9AE5UCe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6zMRfjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLWRfsVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741ECC4CEE7;
-	Fri, 17 Oct 2025 15:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6zMRfjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F9BC4CEE7;
+	Fri, 17 Oct 2025 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713554;
-	bh=tLa+yd5rfnCjrcDVjtqz1NpRStbSaFdCSnIWpzmyJIk=;
+	s=korg; t=1760713556;
+	bh=AvbkBZsF/Cv/G38P0XGmkH6kbJyrFcyVj4e8ZLbcbTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLWRfsVm2fILKgj4/AuaZA+cjRjWD98p2yef5EJqR8Rw6ULYEy6+lIF2M8alw2DU2
-	 PBaDs5dcDLFdGIaSgEn/MasdktqKvuLfaZ1j83HFsNP8Hlqbhc9M1LW8lCZ4PLL9u/
-	 X+l7oXUmwvZHTLwhZIGRhHPQYwZbdIC5RoxyDKUg=
+	b=y6zMRfjKy9PjeSB0yF+i+9YzGsa6Hzw93xo9L136iYezYcRV1r1NwFJylz+zLsNLQ
+	 f9a8gIhOF3/VxZeywvg8Z3bAHx1LMTyqgtRR10W1mq9ECgD1RKWVaz8P7ixFNHeE2Y
+	 DZ5JgW/vsWlZbnROyMJvOaiMnMkOxSFKS8Y8rpCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/201] perf util: Fix compression checks returning -1 as bool
-Date: Fri, 17 Oct 2025 16:51:11 +0200
-Message-ID: <20251017145135.110100365@linuxfoundation.org>
+Subject: [PATCH 6.6 037/201] tcp: Dont call reqsk_fastopen_remove() in tcp_conn_request().
+Date: Fri, 17 Oct 2025 16:51:38 +0200
+Message-ID: <20251017145136.106261588@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -58,65 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunseong Kim <ysk@kzalloc.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 43fa1141e2c1af79c91aaa4df03e436c415a6fc3 ]
+[ Upstream commit 2e7cbbbe3d61c63606994b7ff73c72537afe2e1c ]
 
-The lzma_is_compressed and gzip_is_compressed functions are declared
-to return a "bool" type, but in case of an error (e.g., file open
-failure), they incorrectly returned -1.
+syzbot reported the splat below in tcp_conn_request(). [0]
 
-A bool type is a boolean value that is either true or false.
-Returning -1 for a bool return type can lead to unexpected behavior
-and may violate strict type-checking in some compilers.
+If a listener is close()d while a TFO socket is being processed in
+tcp_conn_request(), inet_csk_reqsk_queue_add() does not set reqsk->sk
+and calls inet_child_forget(), which calls tcp_disconnect() for the
+TFO socket.
 
-Fix the return value to be false in error cases, ensuring the function
-adheres to its declared return type improves for preventing potential
-bugs related to type mismatch.
+After the cited commit, tcp_disconnect() calls reqsk_fastopen_remove(),
+where reqsk_put() is called due to !reqsk->sk.
 
-Fixes: 4b57fd44b61beb51 ("perf tools: Add lzma_is_compressed function")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
-Link: https://lore.kernel.org/r/20250822162506.316844-3-ysk@kzalloc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Then, reqsk_fastopen_remove() in tcp_conn_request() decrements the
+last req->rsk_refcnt and frees reqsk, and __reqsk_free() at the
+drop_and_free label causes the refcount underflow for the listener
+and double-free of the reqsk.
+
+Let's remove reqsk_fastopen_remove() in tcp_conn_request().
+
+Note that other callers make sure tp->fastopen_rsk is not NULL.
+
+[0]:
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 12 PID: 5563 at lib/refcount.c:28 refcount_warn_saturate (lib/refcount.c:28)
+Modules linked in:
+CPU: 12 UID: 0 PID: 5563 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+RIP: 0010:refcount_warn_saturate (lib/refcount.c:28)
+Code: ab e8 8e b4 98 ff 0f 0b c3 cc cc cc cc cc 80 3d a4 e4 d6 01 00 75 9c c6 05 9b e4 d6 01 01 48 c7 c7 e8 df fb ab e8 6a b4 98 ff <0f> 0b e9 03 5b 76 00 cc 80 3d 7d e4 d6 01 00 0f 85 74 ff ff ff c6
+RSP: 0018:ffffa79fc0304a98 EFLAGS: 00010246
+RAX: d83af4db1c6b3900 RBX: ffff9f65c7a69020 RCX: d83af4db1c6b3900
+RDX: 0000000000000000 RSI: 00000000ffff7fff RDI: ffffffffac78a280
+RBP: 000000009d781b60 R08: 0000000000007fff R09: ffffffffac6ca280
+R10: 0000000000017ffd R11: 0000000000000004 R12: ffff9f65c7b4f100
+R13: ffff9f65c7d23c00 R14: ffff9f65c7d26000 R15: ffff9f65c7a64ef8
+FS:  00007f9f962176c0(0000) GS:ffff9f65fcf00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000180 CR3: 000000000dbbe006 CR4: 0000000000372ef0
+Call Trace:
+ <IRQ>
+ tcp_conn_request (./include/linux/refcount.h:400 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/net/sock.h:1965 ./include/net/request_sock.h:131 net/ipv4/tcp_input.c:7301)
+ tcp_rcv_state_process (net/ipv4/tcp_input.c:6708)
+ tcp_v6_do_rcv (net/ipv6/tcp_ipv6.c:1670)
+ tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1906)
+ ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:438)
+ ip6_input (net/ipv6/ip6_input.c:500)
+ ipv6_rcv (net/ipv6/ip6_input.c:311)
+ __netif_receive_skb (net/core/dev.c:6104)
+ process_backlog (net/core/dev.c:6456)
+ __napi_poll (net/core/dev.c:7506)
+ net_rx_action (net/core/dev.c:7569 net/core/dev.c:7696)
+ handle_softirqs (kernel/softirq.c:579)
+ do_softirq (kernel/softirq.c:480)
+ </IRQ>
+
+Fixes: 45c8a6cc2bcd ("tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20251001233755.1340927-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/lzma.c | 2 +-
- tools/perf/util/zlib.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_input.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/perf/util/lzma.c b/tools/perf/util/lzma.c
-index af9a97612f9df..f61574d1581e3 100644
---- a/tools/perf/util/lzma.c
-+++ b/tools/perf/util/lzma.c
-@@ -113,7 +113,7 @@ bool lzma_is_compressed(const char *input)
- 	ssize_t rc;
- 
- 	if (fd < 0)
--		return -1;
-+		return false;
- 
- 	rc = read(fd, buf, sizeof(buf));
- 	close(fd);
-diff --git a/tools/perf/util/zlib.c b/tools/perf/util/zlib.c
-index 78d2297c1b674..1f7c065230599 100644
---- a/tools/perf/util/zlib.c
-+++ b/tools/perf/util/zlib.c
-@@ -88,7 +88,7 @@ bool gzip_is_compressed(const char *input)
- 	ssize_t rc;
- 
- 	if (fd < 0)
--		return -1;
-+		return false;
- 
- 	rc = read(fd, buf, sizeof(buf));
- 	close(fd);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index c6d00817ad3fd..8834cd41b3840 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7200,7 +7200,6 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 				    &foc, TCP_SYNACK_FASTOPEN, skb);
+ 		/* Add the child socket directly into the accept queue */
+ 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
+-			reqsk_fastopen_remove(fastopen_sk, req, false);
+ 			bh_unlock_sock(fastopen_sk);
+ 			sock_put(fastopen_sk);
+ 			goto drop_and_free;
 -- 
 2.51.0
 
