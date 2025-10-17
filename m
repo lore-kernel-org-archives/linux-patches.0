@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2127C2F12A7;
-	Fri, 17 Oct 2025 15:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA630330B35;
+	Fri, 17 Oct 2025 15:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716498; cv=none; b=PcYZd5dyIInGnvIFlF8wlvMODcDHP6883tbmxciJO6cm8Ue0KHY7M/MJIaEul6LW/bPmJNaQ547J7V0oCE3AtDfV+dFjnBaJ22PX7djOePxEfNNyIZzFMwey897F+9IL++F3NwsqvYg+CTiyUk5NZr2XBPgCNJLGzJxVgp+3SFw=
+	t=1760716501; cv=none; b=lgH8pgoNHVur68qa0cjnHBrtglJZFSnypXj3dPXpHxbxvZTZW7Wh07cSUb5sGC/dHa0EPWrTjX72IkquMVxIIW0wgWuVpx6v209MhE4nXpWU5B/Zeyx1z+A+ath558V9oe935tBGSJ8ou8MQEFvRDc23z21KexTfIZUfTJjkuMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716498; c=relaxed/simple;
-	bh=eER2uhQccXwk8LU7DMgARBjZ7n2q9jT3I7tq66PrDQI=;
+	s=arc-20240116; t=1760716501; c=relaxed/simple;
+	bh=Kk2su6eOPOc5zW7fGpxymRAAgI6rVJOnja2uu82+DAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0IWcUv6Y71H4h2kdy1h+xIloqByVa8YZP17Pczsu9AMAO1JZDvMUh/xGvWFiwvID3eKI8WjSD70WQutcdukmjaKVR5HdNqqG2FsL1Vqv/eVBVLCpRerZ3DJe5G5Bolv5WS+TqjSwFkNm68x0vzMCFj54lRNJC1VbAl9S43UsF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFFrTb/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3nCDAzLGmdMVFURNOChIr8iqtihq7P18j+/PghgvR+elo0/y/t+hqFDXn+Zsfc9U5mUUAnHz5s33ze+xP5eIVKAeS/J7Qn7ULNYeGMwo5EWpMlRWYzrkPqUviPHKw1AZkXA4ArwI4EEdBil3dyOMcssopatCdDwkx58oYnwDkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eODKn5SZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFFrTb/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69882C116C6;
-	Fri, 17 Oct 2025 15:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eODKn5SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3751C4CEFE;
+	Fri, 17 Oct 2025 15:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716498;
-	bh=eER2uhQccXwk8LU7DMgARBjZ7n2q9jT3I7tq66PrDQI=;
+	s=korg; t=1760716501;
+	bh=Kk2su6eOPOc5zW7fGpxymRAAgI6rVJOnja2uu82+DAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFFrTb/1Vfp3DNaoHelyE0Q3IO0XmWVVnme5hK+ofRsdfY/oSCu/y5GQ6YebyBLj+
-	 Wve8eo5JChPnz05K7r8RA+0M8st2+vVSbEwkM9VaASvkGfIC6S41vicLCGf+0fkPKB
-	 EJcAaiOKUS6lEfkWoa28yo2Lj5bgG6WEXP20f4L0=
+	b=eODKn5SZAHh0drSoaGMW0zTDhV2znwck1K9/Lc8ivoZrMJ5nodKzadlExF7JQ4iV0
+	 s5RXpexM+4dY+f4qQ7O5in5QYPa8DWiMVez/jrtsKxRnfMmQsStkizzsq9PLa/PY2Z
+	 654Psdr5edn5SMLLfZaK4RsGBBb062MCjuzG0JII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.15 210/276] PCI: keystone: Use devm_request_irq() to free "ks-pcie-error-irq" on exit
-Date: Fri, 17 Oct 2025 16:55:03 +0200
-Message-ID: <20251017145150.131061399@linuxfoundation.org>
+Subject: [PATCH 5.15 211/276] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
+Date: Fri, 17 Oct 2025 16:55:04 +0200
+Message-ID: <20251017145150.167269028@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,43 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit e51d05f523e43ce5d2bad957943a2b14f68078cd upstream.
+commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
 
-Commit under Fixes introduced the IRQ handler for "ks-pcie-error-irq".
-The interrupt is acquired using "request_irq()" but is never freed if
-the driver exits due to an error. Although the section in the driver that
-invokes "request_irq()" has moved around over time, the issue hasn't been
-addressed until now.
+The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
+(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
 
-Fix this by using "devm_request_irq()" which automatically frees the
-interrupt if the driver exits.
+But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
+the MSI vector. This causes wrong MSI vector to be triggered, leading to
+the failure of PCI endpoint Kselftest MSI_TEST test case.
 
-Fixes: 025dd3daeda7 ("PCI: keystone: Add error IRQ handler")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Closes: https://lore.kernel.org/r/3d3a4b52-e343-42f3-9d69-94c259812143@kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+To fix this issue, convert the interrupt number to MSI vector.
+
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250912100802.3136121-2-s-vadapalli@ti.com
+Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
+ drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1200,8 +1200,8 @@ static int ks_pcie_probe(struct platform
- 	if (irq < 0)
- 		return irq;
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1839,10 +1839,10 @@ static int tegra_pcie_ep_raise_legacy_ir
  
--	ret = request_irq(irq, ks_pcie_err_irq_handler, IRQF_SHARED,
--			  "ks-pcie-error-irq", ks_pcie);
-+	ret = devm_request_irq(dev, irq, ks_pcie_err_irq_handler, IRQF_SHARED,
-+			       "ks-pcie-error-irq", ks_pcie);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to request error IRQ %d\n",
- 			irq);
+ static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
+ {
+-	if (unlikely(irq > 31))
++	if (unlikely(irq > 32))
+ 		return -EINVAL;
+ 
+-	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
++	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
+ 
+ 	return 0;
+ }
 
 
