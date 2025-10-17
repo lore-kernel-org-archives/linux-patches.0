@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3D8330B00;
-	Fri, 17 Oct 2025 15:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBBC330B1E;
+	Fri, 17 Oct 2025 15:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716431; cv=none; b=oDH8waLvXx98yrWFCW4j/De9mNGs1wOZgUxP2EGzssKyYNs7UtNhNxsvYMkmmak57qr6NzieazlBsKTkDfn/w2QlOzrc4o48ZBDzFcnREM/FNVZkoJB8W172gMX4PRYGzkzu0v8PAT0qMQHfozL1OLXKefzRcezPgCFosOsMEx8=
+	t=1760716434; cv=none; b=XNsJHBbHY/QfYXnPODcnUJNn+EHi3ohuHX8P4HTz8RA/CEgH3iEUDrLJZyOVNAgh4KUqffTSu/hEA39U47dTcsq4mQmX1ULdBjsyOg/Gv0DCgN6tATu0Rtlaq9xhTIyXCurFNOCDHOGh4BdLfD4Bvk/LrNv1dQ3lslFme0zUl80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716431; c=relaxed/simple;
-	bh=HGDqRkJpf6oiOs3Gy3QkUCY1iywHwdjHBMuB/HDd188=;
+	s=arc-20240116; t=1760716434; c=relaxed/simple;
+	bh=S24wiqjIAXDg1tVADkkc4bu7okNZS9rvUyGMZKVeICA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaeKrUdYO3I1LHAvrqLL0zyVjaoAZ3T2yzYhGpWlVmuSL2cI9Uln6cNB6gnM6gkc3dfJobvusL6jm914mjR4Pqoq/syFM1GL8OJ0cv/8UzYT7bdY9atArF7ixg0c+N8tx+5g/5EW3dylSI0h4+eZCLIde/O1XwUSi55fsZBzN88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwSpSmZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVjRpRsGiY9ZqVzsqoOrVBP/6neFyZMoffSXoAM1v76zrzaJTax+hTTwiScXv9muEPA0FwHHOb9fBcAy71BPrqi2/9b9bq+Yv9HlmxmCCmsGjNktsw4Ltb3rVTTysR4HCLt1z8D51iLSGabmvIoJSDiLX7np0Pxc5l77PkQ2cIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhv8QDSs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwSpSmZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195B9C4CEE7;
-	Fri, 17 Oct 2025 15:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhv8QDSs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E188AC4CEE7;
+	Fri, 17 Oct 2025 15:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716431;
-	bh=HGDqRkJpf6oiOs3Gy3QkUCY1iywHwdjHBMuB/HDd188=;
+	s=korg; t=1760716434;
+	bh=S24wiqjIAXDg1tVADkkc4bu7okNZS9rvUyGMZKVeICA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwSpSmZF9BU2vcNcqx996p0tlQT+CctHJvolIdZpxRrqY2h0vl/LnbXg4IflODNN7
-	 T54649vAEBH1pXWDw4lWBwWo2qX8G/8cHMgaHIaO1y2m7YsLJpcpS6/GCfStF6dssm
-	 htLgJum0Ke39UQ6HbB8/aXKK4ys28ADQ5ggmDQjs=
+	b=lhv8QDSsz/MuteUJPtBv1o3R3lT/BQTgXAA2kXeQwjF/uAWLDhlTDp8+h36QCUBgJ
+	 oK0zdzS+yHxCWh0czcfcKVyjhCaMHy/ZWptfHRQ8TH6+HNZ8mLhCSGhaTSD73XCgMW
+	 q71hVEEWmXO1bFOF9AJ8HSz729jQHERBo9tyn5a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Askar Safin <safinaskar@zohomail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 189/276] openat2: dont trigger automounts with RESOLVE_NO_XDEV
-Date: Fri, 17 Oct 2025 16:54:42 +0200
-Message-ID: <20251017145149.371193004@linuxfoundation.org>
+	Sam James <sam@gentoo.org>,
+	Helge Deller <deller@gmx.de>,
+	Stian Halseth <stian@itx.no>
+Subject: [PATCH 5.15 190/276] parisc: dont reference obsolete termio struct for TC* constants
+Date: Fri, 17 Oct 2025 16:54:43 +0200
+Message-ID: <20251017145149.406983016@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Askar Safin <safinaskar@zohomail.com>
+From: Sam James <sam@gentoo.org>
 
-commit 042a60680de43175eb4df0977ff04a4eba9da082 upstream.
+commit 8ec5a066f88f89bd52094ba18792b34c49dcd55a upstream.
 
-openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
-doesn't traverse through automounts, but may still trigger them.
-(See the link for full bug report with reproducer.)
+Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
+drops the legacy termio struct, but the ioctls.h header still defines some
+TC* constants in terms of termio (via sizeof). Hardcode the values instead.
 
-This commit fixes this bug.
+This fixes building Python for example, which falls over like:
+  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
 
-Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safinaskar@zohomail.com/
-Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Link: https://bugs.gentoo.org/961769
+Link: https://bugs.gentoo.org/962600
+Co-authored-by: Stian Halseth <stian@itx.no>
 Cc: stable@vger.kernel.org
-Signed-off-by: Askar Safin <safinaskar@zohomail.com>
-Link: https://lore.kernel.org/20250825181233.2464822-5-safinaskar@zohomail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sam James <sam@gentoo.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namei.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/parisc/include/uapi/asm/ioctls.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -1307,6 +1307,10 @@ static int follow_automount(struct path
- 	    dentry->d_inode)
- 		return -EISDIR;
- 
-+	/* No need to trigger automounts if mountpoint crossing is disabled. */
-+	if (lookup_flags & LOOKUP_NO_XDEV)
-+		return -EXDEV;
-+
- 	if (count && (*count)++ >= MAXSYMLINKS)
- 		return -ELOOP;
- 
-@@ -1330,6 +1334,10 @@ static int __traverse_mounts(struct path
- 		/* Allow the filesystem to manage the transit without i_mutex
- 		 * being held. */
- 		if (flags & DCACHE_MANAGE_TRANSIT) {
-+			if (lookup_flags & LOOKUP_NO_XDEV) {
-+				ret = -EXDEV;
-+				break;
-+			}
- 			ret = path->dentry->d_op->d_manage(path, false);
- 			flags = smp_load_acquire(&path->dentry->d_flags);
- 			if (ret < 0)
+--- a/arch/parisc/include/uapi/asm/ioctls.h
++++ b/arch/parisc/include/uapi/asm/ioctls.h
+@@ -10,10 +10,10 @@
+ #define TCSETS		_IOW('T', 17, struct termios) /* TCSETATTR */
+ #define TCSETSW		_IOW('T', 18, struct termios) /* TCSETATTRD */
+ #define TCSETSF		_IOW('T', 19, struct termios) /* TCSETATTRF */
+-#define TCGETA		_IOR('T', 1, struct termio)
+-#define TCSETA		_IOW('T', 2, struct termio)
+-#define TCSETAW		_IOW('T', 3, struct termio)
+-#define TCSETAF		_IOW('T', 4, struct termio)
++#define TCGETA          0x40125401
++#define TCSETA          0x80125402
++#define TCSETAW         0x80125403
++#define TCSETAF         0x80125404
+ #define TCSBRK		_IO('T', 5)
+ #define TCXONC		_IO('T', 6)
+ #define TCFLSH		_IO('T', 7)
 
 
