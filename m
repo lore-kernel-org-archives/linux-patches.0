@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B7F32E14F;
-	Fri, 17 Oct 2025 15:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3712E1F08;
+	Fri, 17 Oct 2025 15:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713688; cv=none; b=VAG9uMwupNpuRuIgYlPHRc0r0wn/fB5xQ40tJB3trc9F/DdieLcm5cjs1Rg4G2fGva76cnfczgjuk9atCh5uAS+fTZmYE9PFwjuoASr+B62FrgkKNd5KXLRwxQNFMLgoens6fOxPLEUsTSE0w9BBnxlDSIeVCRYhoblzvAsc7kU=
+	t=1760713690; cv=none; b=Qf4uu/50nni1Kn8mxRD268KdJHn1AhyiCVrTqrIGTakhypPypsQtwEOFRjrASJoTA0lqcN3Tlr0tFyQ9vRkP1Tsz+alXK5uRksjKqOpPTQjxHKy2cNgSJXBFQCJdUESmEXC20BLdi/l5dPYpvC4Dxq2PkchRQMM3XO4Dqg82Zu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713688; c=relaxed/simple;
-	bh=Iwv6qradxyLqU/p6IbgDgiR60ynA0hYbbmT5V9czOTw=;
+	s=arc-20240116; t=1760713690; c=relaxed/simple;
+	bh=OGp2OfnRaFvRRnxNjX/WbWkUK8F2MBZ/KhCrNteqz+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBMY3IUAakwzUiVDQly41Z5n+zB9MopRUTKhm+72VzrXkTS+dM7UB8lVWW8mGDmV0GJS26wF3enQGdIl9WftladbBJot1zUvS95HTpkeqCiSZ8V9VEC59sjnfIAjntV1yUgc1AP00TtWysZNuBM/ilx/AyG25/7foVy9Hx4hPU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcji2Mgq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O0FNVkDxZLqW3nIB/EKjcMLo2cj7dPN+1sIseR6odsrHpYbyUvjeoB8YOl/zBvR5A5X02l4jOIYIaFw0prDYLLNTj0sceqCPT9vl6ek7Z5uOoKnqPnfBrxnynslAhGGP0wqNJIvQXiR2vtW4fcL3FckjBJUWePMznWC+eKl3Rqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZnYK4ad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcji2Mgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64D2C4CEF9;
-	Fri, 17 Oct 2025 15:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZnYK4ad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72265C4CEF9;
+	Fri, 17 Oct 2025 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713687;
-	bh=Iwv6qradxyLqU/p6IbgDgiR60ynA0hYbbmT5V9czOTw=;
+	s=korg; t=1760713689;
+	bh=OGp2OfnRaFvRRnxNjX/WbWkUK8F2MBZ/KhCrNteqz+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcji2Mgqni7m8pp7PgvO4EQUm2Iu6G9cqxig41Uy2GFKs4K3NeSQfGQsGGGQGWVxv
-	 EvSEsME2TiWT+ZVhM1qzS81mgoiDtzE6r02OOxoB6Rim9BFpud7VPlDEtIt/QBdMN2
-	 nGLSlKOoGHuJ9/NbQ8zSwX2VDZGyC2kLYFBGtLUE=
+	b=XZnYK4adiuhMS5kbOBBS58QPWEYnoUd+fPAHv1S7jhgQW0VAbNZ5wLIEaYwd1yL0Y
+	 vdqzwn4ETOzdloED3KUUMqTBt49syZmP5YsDm3+PCrSWfqa+Jm3I6/aiNSYC7pwWjH
+	 mOAzA2M6QS1b1+Co5o3eGgee7nPAf3gxLNVqH1cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Woudstra <ericwouds@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/201] bridge: br_vlan_fill_forward_path_pvid: use br_vlan_group_rcu()
-Date: Fri, 17 Oct 2025 16:51:52 +0200
-Message-ID: <20251017145136.619664443@linuxfoundation.org>
+Subject: [PATCH 6.6 042/201] mailbox: zynqmp-ipi: Remove redundant mbox_controller_unregister() call
+Date: Fri, 17 Oct 2025 16:51:43 +0200
+Message-ID: <20251017145136.292391748@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -51,48 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Woudstra <ericwouds@gmail.com>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit bbf0c98b3ad9edaea1f982de6c199cc11d3b7705 ]
+[ Upstream commit 341867f730d3d3bb54491ee64e8b1a0c446656e7 ]
 
-net/bridge/br_private.h:1627 suspicious rcu_dereference_protected() usage!
-other info that might help us debug this:
+The controller is registered using the device-managed function
+'devm_mbox_controller_register()'. As documented in mailbox.c, this
+ensures the devres framework automatically calls
+mbox_controller_unregister() when device_unregister() is invoked, making
+the explicit call unnecessary.
 
-rcu_scheduler_active = 2, debug_locks = 1
-7 locks held by socat/410:
- #0: ffff88800d7a9c90 (sk_lock-AF_INET){+.+.}-{0:0}, at: inet_stream_connect+0x43/0xa0
- #1: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: __ip_queue_xmit+0x62/0x1830
- [..]
- #6: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: nf_hook.constprop.0+0x8a/0x440
+Remove redundant mbox_controller_unregister() call as
+device_unregister() handles controller cleanup.
 
-Call Trace:
- lockdep_rcu_suspicious.cold+0x4f/0xb1
- br_vlan_fill_forward_path_pvid+0x32c/0x410 [bridge]
- br_fill_forward_path+0x7a/0x4d0 [bridge]
-
-Use to correct helper, non _rcu variant requires RTNL mutex.
-
-Fixes: bcf2766b1377 ("net: bridge: resolve forwarding path for VLAN tag actions in bridge devices")
-Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index a1c22eab71ffe..cc54b8267bcc7 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1455,7 +1455,7 @@ void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 	if (!br_opt_get(br, BROPT_VLAN_ENABLED))
- 		return;
- 
--	vg = br_vlan_group(br);
-+	vg = br_vlan_group_rcu(br);
- 
- 	if (idx >= 0 &&
- 	    ctx->vlan[idx].proto == br->vlan_proto) {
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index e4fcac97dbfaa..06529dc0daf3f 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -617,7 +617,6 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+-			mbox_controller_unregister(&ipi_mbox->mbox);
+ 			if (device_is_registered(&ipi_mbox->dev))
+ 				device_unregister(&ipi_mbox->dev);
+ 		}
 -- 
 2.51.0
 
