@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A82A219A7A;
-	Fri, 17 Oct 2025 15:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA293208;
+	Fri, 17 Oct 2025 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714925; cv=none; b=q8F2I4jVZV1rvKt1hVJgVXmJnK5UvwlwBjSuUOxfBOTuDQWEg2La24mBJG75kmgUqNygNA4iWuNd02SW8L+Wjo2hLhVNvIbF7UVGWtFSdSEVFbFUamLXHL1sLOeKXhTaN29vtRmqCUJ66ZYk9qhB+PxhpBX/i55Y2Y5tYw9+mnk=
+	t=1760714928; cv=none; b=mSYvWJtGC6AzYkSAgunnvquB0u0Wid5VLWykvNJhWv7CARuTglqrQ527xljE+/6ROR8Nl+MbuF36LhKNbi1dST5Er8xAeSVW6Q4xSDJHHyl89RHsWn7gMFjFPrf6lmBLdjKJX7EzfbJKP+2cIndOj2C30lpxX3nnCf891glVR4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714925; c=relaxed/simple;
-	bh=vSWOj3RvklGhB64ok8cEeMgYLvHSfvGji0YszZLqmvc=;
+	s=arc-20240116; t=1760714928; c=relaxed/simple;
+	bh=Vf6MeSwb7y6e7AmI0QehpWPNBVg64snF10cBQlTMb+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q38hA0XwOUK1OU+p9GN3JFOzVKssiOW7w5ggElzDKWJ9KfXTdwCqqRouGyqAtiAhOM0jchosWtxwyCiLNcmJlWj7UU4fef4obKovPmfcKOxgGYib1ZgG+DBGnxhgYQDpUXVwexnlihDGvTZQ60rzDuqkF90pjStWDY99KhcdJVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUeLkDOS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLlDFE/fL0EVHRkAYReKyLBKXyVaAGn1ACg644VHFt5R8SKyHcD9OE2h1p0cQwFhnxqeFtkOCyz/GE++0l3PrjX5i3pz3Y93ZnAKSOSANX1oHWPZfvSoyz8nJWEFUrreaELOCLtD8QWZV9JlKKzS/ZsnloPLFwas4yJCktc8fxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2d5NtYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUeLkDOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7CFC4CEFE;
-	Fri, 17 Oct 2025 15:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2d5NtYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7D3C4CEE7;
+	Fri, 17 Oct 2025 15:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714925;
-	bh=vSWOj3RvklGhB64ok8cEeMgYLvHSfvGji0YszZLqmvc=;
+	s=korg; t=1760714928;
+	bh=Vf6MeSwb7y6e7AmI0QehpWPNBVg64snF10cBQlTMb+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUeLkDOSpwYRo8D75kg3JiFWFsBEmcvIPQkLcAWoiOWzIKW9oqZLPyoR6mu8pIXML
-	 gdthZhwx3X9bqhyUzVHMJjadsadKJWGcdkw8njBYJh9nq8jI+r4m/seDDALZBjZrCr
-	 WKVBMi/rhIOd+giVX8cQp5nYnfnGf3PIWhSfBBfs=
+	b=O2d5NtYrRDhVwbMtNGQ3V3Atb+m7kFxoTcZ99iAgL2ktZ+2Doh4PnxUPwdowpdhzL
+	 AJux9Euc9fgg7SC2mBpMLDs/X/l3ylB7eChFreIu7LZ7Mp0KNPx1biTMWqGdkjPx8R
+	 5CS6VEQblrEOlEwkZQTxBdb9M3G3aodwwPVTO3cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 037/371] rtc: x1205: Fix Xicor X1205 vendor prefix
-Date: Fri, 17 Oct 2025 16:50:12 +0200
-Message-ID: <20251017145203.142700636@linuxfoundation.org>
+Subject: [PATCH 6.17 020/371] clk: npcm: select CONFIG_AUXILIARY_BUS
+Date: Fri, 17 Oct 2025 16:49:55 +0200
+Message-ID: <20251017145202.529734231@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,37 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 606d19ee37de3a72f1b6e95a4ea544f6f20dbb46 ]
+[ Upstream commit c123519bffd29e6320d3a8c4977f9e5a86d6b83d ]
 
-The vendor for the X1205 RTC is not Xircom, but Xicor which was acquired
-by Intersil. Since the I2C subsystem drops the vendor prefix for driver
-matching, the vendor prefix hasn't mattered.
+There are very rare randconfig builds that turn on this driver but
+don't already select CONFIG_AUXILIARY_BUS from another driver, and
+this results in a build failure:
 
-Fixes: 6875404fdb44 ("rtc: x1205: Add DT probing support")
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250821215703.869628-2-robh@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+arm-linux-gnueabi-ld: drivers/clk/clk-npcm8xx.o: in function `npcm8xx_clock_driver_init':
+clk-npcm8xx.c:(.init.text+0x18): undefined reference to `__auxiliary_driver_register'
+
+Select the bus here, as all other clk drivers using it do.
+
+Fixes: e0b255df027e ("clk: npcm8xx: add clock controller")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250807072241.4190376-1-arnd@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-x1205.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-x1205.c b/drivers/rtc/rtc-x1205.c
-index 4bcd7ca32f27b..b8a0fccef14e0 100644
---- a/drivers/rtc/rtc-x1205.c
-+++ b/drivers/rtc/rtc-x1205.c
-@@ -669,7 +669,7 @@ static const struct i2c_device_id x1205_id[] = {
- MODULE_DEVICE_TABLE(i2c, x1205_id);
- 
- static const struct of_device_id x1205_dt_ids[] = {
--	{ .compatible = "xircom,x1205", },
-+	{ .compatible = "xicor,x1205", },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, x1205_dt_ids);
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 4d56475f94fc1..b1425aed65938 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -364,6 +364,7 @@ config COMMON_CLK_LOCHNAGAR
+ config COMMON_CLK_NPCM8XX
+ 	tristate "Clock driver for the NPCM8XX SoC Family"
+ 	depends on ARCH_NPCM || COMPILE_TEST
++	select AUXILIARY_BUS
+ 	help
+ 	  This driver supports the clocks on the Nuvoton BMC NPCM8XX SoC Family,
+ 	  all the clocks are initialized by the bootloader, so this driver
 -- 
 2.51.0
 
