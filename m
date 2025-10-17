@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF36330B03;
-	Fri, 17 Oct 2025 15:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457EC330B03;
+	Fri, 17 Oct 2025 15:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715559; cv=none; b=osEXM+ZfIE+VA/GwQhZoZahIGJurJg1JCfhJbMsFO1I73c/CUoQIdQ1dB84kFG4tg7xodxjg7MlUa78ZawtBdwwytaFLuaIF4engkgoFyIZU75HIxfBdeYnHO0szN87DwR99sZGNcOp1oG43Rll1rJo2mSAuZVig/TC1j6o+haQ=
+	t=1760715562; cv=none; b=bmhG5f62irtijHQOVnqj6CqjiLG+KPXKvaUSDk61yG9syBI/OYmOj6+3fPew9UCggGqIbGu74p7BQzgmfZUlSUxVZN9h9OwOH3tzvQWsDoUTE6P0aK+pju/9BPwylQe11j1ip9/3ymt1A1+rrzQ/UC3rquU9lbBsZ0MrFst2B5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715559; c=relaxed/simple;
-	bh=qLBpOGM8PE+HnQmlEp0zIGoaGFwubDq7C3oVTGtlBV4=;
+	s=arc-20240116; t=1760715562; c=relaxed/simple;
+	bh=tBTcVQFUs9CmJdnBKnwtsoBDw74fHD0WMKHWBR3eZ3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDW4c4zOGOIIHGpMakwOiC1WTYLTJLAZSHXRbqCgc6Kfq/JFuCj1skPV76VPag7y2YanF1Kp9FPBD6NPKQkXHK8x1nGnPF/3djo/jbrVC+1rNwpdMVShCrmGGca5tGYciyzJHGTirzZxwWAeHQwL78NUu22xPm3Sjs3xCekbWtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhtfiW/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVALmbt+8JWGQAInddMY45YZMxIPXHeuDJBNUBar5TYslvugKJfqcox6I5pzVQxLfGEgMIRA8PQeG/WEC+ZqFWrH4UdzzsVwj8BnBEDGQ1ePALO+cgZRNSIJttUWny7NDELxPCKMaaoig7C3qEJ8O95cMq97KWk3Ng47mKfvbQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL8gsyze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhtfiW/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1890C4CEE7;
-	Fri, 17 Oct 2025 15:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL8gsyze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD95BC4CEFE;
+	Fri, 17 Oct 2025 15:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715559;
-	bh=qLBpOGM8PE+HnQmlEp0zIGoaGFwubDq7C3oVTGtlBV4=;
+	s=korg; t=1760715562;
+	bh=tBTcVQFUs9CmJdnBKnwtsoBDw74fHD0WMKHWBR3eZ3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhtfiW/F4gY/ZYtM/6e+ewWSxDuSi3ngNSmUs5Q2zY2SkdWjPOh03rm60FVrVdihv
-	 9pitxfH3yePRsZrG/ZafpjuFo03/DaBhwT4qAYMX06T54svTxr5z7eoP04N3wjoZ4j
-	 DBCrhppHMGeP4szXIvHPKoJ9/G0CD/tA3NpBQ12w=
+	b=DL8gsyzeG7e/03soF9g2LUQEqAp3HxGN0gWy/0VKLUFTuMVYMz5LGGrbWKnjIRb7r
+	 vXTnjsIoZSxw8ehGJKrLmOoaHmNjws0eENoFevrCFbRipCd3j2Yb/OtUyjoy5t+XCm
+	 cpL9rizLyMJw/eyIW4wHe/wZsn4sHlg+TkVp7RVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 258/371] sctp: Fix MAC comparison to be constant-time
-Date: Fri, 17 Oct 2025 16:53:53 +0200
-Message-ID: <20251017145211.416720409@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.17 259/371] smb client: fix bug with newly created file in cached dir
+Date: Fri, 17 Oct 2025 16:53:54 +0200
+Message-ID: <20251017145211.452474312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,62 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Bharath SM <bharathsm@microsoft.com>
 
-commit dd91c79e4f58fbe2898dac84858033700e0e99fb upstream.
+commit aa12118dbcfe659697567c9daa0eac2c71e3fd37 upstream.
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+Test generic/637 spotted a problem with create of a new file in a
+cached directory (by the same client) could cause cases where the
+new file does not show up properly in ls on that client until the
+lease times out.
 
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 037e1bae588e ("smb: client: use ParentLeaseKey in cifs_do_create")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20250818205426.30222-3-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    3 ++-
- net/sctp/sm_statefuns.c  |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/dir.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -31,6 +31,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <crypto/hash.h>
-+#include <crypto/utils.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -1788,7 +1789,7 @@ struct sctp_association *sctp_unpack_coo
- 		}
- 	}
- 
--	if (memcmp(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
- 		*error = -SCTP_IERROR_BAD_SIG;
- 		goto fail;
- 	}
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -30,6 +30,7 @@
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <crypto/utils.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -4417,7 +4418,7 @@ static enum sctp_ierror sctp_sf_authenti
- 				 sh_key, GFP_ATOMIC);
- 
- 	/* Discard the packet if the digests do not match */
--	if (memcmp(save_digest, digest, sig_len)) {
-+	if (crypto_memneq(save_digest, digest, sig_len)) {
- 		kfree(save_digest);
- 		return SCTP_IERROR_BAD_SIG;
- 	}
+diff --git a/fs/smb/client/dir.c b/fs/smb/client/dir.c
+index bc145436eba4..a233a5fe377b 100644
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -329,6 +329,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 					       parent_cfid->fid.lease_key,
+ 					       SMB2_LEASE_KEY_SIZE);
+ 					parent_cfid->dirents.is_valid = false;
++					parent_cfid->dirents.is_failed = true;
+ 				}
+ 				break;
+ 			}
+-- 
+2.51.0
+
 
 
