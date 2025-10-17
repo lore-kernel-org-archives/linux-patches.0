@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534172036E9;
-	Fri, 17 Oct 2025 14:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C88B3370EE;
+	Fri, 17 Oct 2025 14:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760712988; cv=none; b=SMUdlBN3x3NehNtj1yBCseatJvZHJ+QRAs0xPWm9FQqanTkXSVcvIYwzrsQw1M70dd7rBThYShfH+fisiOpZAXZopJbn13b8gQTs3RrUpKQ38rnNzBz8DBHe1jOljMDgsm68Ea8gojxXkVYsyt8AldXDUv0Q998jZoRNPeerw48=
+	t=1760712991; cv=none; b=IEQpcKwboEi+ptOtHb0LG3YrpW+pKtXJ6Gd9YpBuxN32rIwDOgsal1G/WnXQykYV5PxsqUFXSoN7GMLQaQ5v7guM/lJzM72l1DQQjQzBpskclagRqlOD3heKJNUsyARwhPras8Enz6kVzUcGV2/2UkX4pggCDRw4xqvxgeVix5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760712988; c=relaxed/simple;
-	bh=2+YBKuuvlla75+G566nnl83BDJkpPFD/VX/D7iwUgls=;
+	s=arc-20240116; t=1760712991; c=relaxed/simple;
+	bh=8GHkwGehUtouf9lr/gRi6dbaF60iuRIXUitRfueV2Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PF7PO2QwU0MFxW+KS1T6u6WxMvw0sBL2XTrwRQec8N1T2VW8NXtuPD/NZyXcAmNqLxa8HktGxcXHbSholmnb+LCojNdt40jexPVcxksJ3iVfn4jhcB6DoaBb6UH4FRVL23PbL58X4gXbHbzWwnO8H7pNdgY6kOWD5qqG8e0OP+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrHxkV/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jGpNIZK1tvQytfomRrdIqNAgfrXdLJlrWjsnYA9cRkuosuuvo0b1glpVZ5U1Hh0eNzUNNZhYkInRhXsuRdOfhGxTuQ4hEQT3pPd3TmSq3QatncJN0VmPjXpsb/XUNnui6SAcGdxcRLU5YHG00Fu5ucrv4jWAfU4ebpeORKS8FUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7DviAir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrHxkV/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613A9C4CEFE;
-	Fri, 17 Oct 2025 14:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7DviAir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C375C4CEE7;
+	Fri, 17 Oct 2025 14:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760712987;
-	bh=2+YBKuuvlla75+G566nnl83BDJkpPFD/VX/D7iwUgls=;
+	s=korg; t=1760712990;
+	bh=8GHkwGehUtouf9lr/gRi6dbaF60iuRIXUitRfueV2Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrHxkV/QRtwd9Crlr/BdN9WntRJVlu9osZqFbiPHbHp5pwPmG74WFGPYFgIkHAb9v
-	 AJxZHyCuyfBCzSZygvi3RWr5Aw2J/RSWFuoqG2tM83p/RU5MrULfo8eBqkkf9sJb/E
-	 j5FEtIIEBs3wjHm/QPQsGR+/wSOCGpuUm9oCKO1o=
+	b=P7DviAirxMxQ/QrLagDiorKqYUM+tDxJobVe62mYh3onGF575Za/6UWCbr1AV0OoJ
+	 tiLBydRflE0yRE9LUBtLjlAt85spx3q8bXxgHZbpG/8fy8PHi91MxzLcexOSWIzbuh
+	 62B5QmhXZGCKN6SfXjD5Gd+64A72YsLW4UqdQnWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 001/168] fs: always return zero on success from replace_fd()
-Date: Fri, 17 Oct 2025 16:51:20 +0200
-Message-ID: <20251017145129.057771056@linuxfoundation.org>
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/168] rtc: x1205: Fix Xicor X1205 vendor prefix
+Date: Fri, 17 Oct 2025 16:51:29 +0200
+Message-ID: <20251017145129.393436810@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -45,52 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit 708c04a5c2b78e22f56e2350de41feba74dfccd9 upstream.
+[ Upstream commit 606d19ee37de3a72f1b6e95a4ea544f6f20dbb46 ]
 
-replace_fd() returns the number of the new file descriptor through the
-return value of do_dup2(). However its callers never care about the
-specific returned number. In fact the caller in receive_fd_replace() treats
-any non-zero return value as an error and therefore never calls
-__receive_sock() for most file descriptors, which is a bug.
+The vendor for the X1205 RTC is not Xircom, but Xicor which was acquired
+by Intersil. Since the I2C subsystem drops the vendor prefix for driver
+matching, the vendor prefix hasn't mattered.
 
-To fix the bug in receive_fd_replace() and to avoid the same issue
-happening in future callers, signal success through a plain zero.
-
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/lkml/20250801220215.GS222315@ZenIV/
-Fixes: 173817151b15 ("fs: Expand __receive_fd() to accept existing fd")
-Fixes: 42eb0d54c08a ("fs: split receive_fd_replace from __receive_fd")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://lore.kernel.org/20250805-fix-receive_fd_replace-v3-1-b72ba8b34bac@linutronix.de
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6875404fdb44 ("rtc: x1205: Add DT probing support")
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250821215703.869628-2-robh@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-x1205.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1136,7 +1136,10 @@ int replace_fd(unsigned fd, struct file
- 	err = expand_files(files, fd);
- 	if (unlikely(err < 0))
- 		goto out_unlock;
--	return do_dup2(files, file, fd, flags);
-+	err = do_dup2(files, file, fd, flags);
-+	if (err < 0)
-+		return err;
-+	return 0;
+diff --git a/drivers/rtc/rtc-x1205.c b/drivers/rtc/rtc-x1205.c
+index f587afa843573..6ae7b6f1f3167 100644
+--- a/drivers/rtc/rtc-x1205.c
++++ b/drivers/rtc/rtc-x1205.c
+@@ -669,7 +669,7 @@ static const struct i2c_device_id x1205_id[] = {
+ MODULE_DEVICE_TABLE(i2c, x1205_id);
  
- out_unlock:
- 	spin_unlock(&files->file_lock);
+ static const struct of_device_id x1205_dt_ids[] = {
+-	{ .compatible = "xircom,x1205", },
++	{ .compatible = "xicor,x1205", },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, x1205_dt_ids);
+-- 
+2.51.0
+
 
 
