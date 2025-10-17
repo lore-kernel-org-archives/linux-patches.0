@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B62C337110;
-	Fri, 17 Oct 2025 15:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68723337100;
+	Fri, 17 Oct 2025 15:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714802; cv=none; b=fAZHnETArhojSLNucUI8pJBBjnthQvQSv9ATk2ERlO6R+mQFvOVcndoU8Bw0LLoKkgaQUL9P8XSWbWGK2Yx7x9QT1ulYwhTB9jNUsYx4Q1PlLC/e3FdXJgwGOPSmajkx6pz+VxI5Vx4m7suNWGtRPtvnSZzALKYnl+xjPi8bkpc=
+	t=1760714805; cv=none; b=Xtby9Z43lzfT77ASv/dv9iJdW+kwrMU3dfr6p7feIZWuhIxFwlTwt+JrO4GdCWcGkhgz7KykXhfYTAY9ElhWdYcvwfEol9OqpZRnEDyZz3QkCwtuHjBw6MgK5uv87d3CUVB9GmQsiU/zON+IHtzeJ/hgEDv+kK2o9/kbrQjcrKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714802; c=relaxed/simple;
-	bh=Kt30bplBa9QnXuGK2Snj8Enaf+jGRn44ezra9aDxZI4=;
+	s=arc-20240116; t=1760714805; c=relaxed/simple;
+	bh=rDfxg2ZNLXHTgaFTkHp+8eYzskVn3z8W5IVDalR8C2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdDbBOV6mRkCz5JtDmhhs9CywEqKt5HKPOsIyNf0Vu7JuYevqUBIib4dGwgzdMlr3d/5m1OM4AxbMhDluUTGN/UxKvT2qev1Q63+b28ACDt+ZnxqbOoRHGiBs1zz5vQQWhrykqa1lBN6j7k4h2YdcUU86bH3/32OHy85zbB+GtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXbQf7ZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYgJEAjnpAjLKOv0QseRdTZ5+TlzBnY6Ksviwcd1PB/g8RyGDUQ/4ND7aFxuMmrA9fS+F6xhiPHOHQXOia5t3AsWllUhy5nL6eZjfMsSILLeBrd67gISk0ZXDuuXlHlLlsQw43WcNylsclafot6gfr3oVFwI3URhxnU2ZellNZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/HMSPj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXbQf7ZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035CAC4CEE7;
-	Fri, 17 Oct 2025 15:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/HMSPj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF787C4CEE7;
+	Fri, 17 Oct 2025 15:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714802;
-	bh=Kt30bplBa9QnXuGK2Snj8Enaf+jGRn44ezra9aDxZI4=;
+	s=korg; t=1760714805;
+	bh=rDfxg2ZNLXHTgaFTkHp+8eYzskVn3z8W5IVDalR8C2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXbQf7ZSU13vCR+FbTz9sOG0dJJ7ix+fOZltlSW3aernEQ49X45/161IRwU0AsCI+
-	 k0+EqRHole9Ut5T6Co+NrlvDrzRuddINhbWK5RPYJRxk4yur8FMiUCenBi7HgqLWwx
-	 4eOm8ioxz7DH/yMSjMoW54cd1Xl+P7HQnp/XYpUM=
+	b=J/HMSPj0VCmSrQC7iVYNHKLiNiUYTEbIWwN5NewNVu+3BF43Ad+iD2QINouNJtix8
+	 DzlCHcUpYmZaHevYE2Q6HHdGDzlOMaMo1sUl+YvQV5q+Ptya5YaE8yPctv98AvfEbk
+	 DWGG2QL01l9KN1YtNdYTLaxqKMR+1/wSIYKfJkWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/277] NFSD: Replace use of NFSD_MAY_LOCK in nfsd4_lock()
-Date: Fri, 17 Oct 2025 16:54:11 +0200
-Message-ID: <20251017145156.055132341@linuxfoundation.org>
+Subject: [PATCH 6.12 271/277] writeback: Avoid softlockup when switching many inodes
+Date: Fri, 17 Oct 2025 16:54:38 +0200
+Message-ID: <20251017145157.054321145@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,42 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 6640556b0c80edc66d6f50abe53f00311a873536 ]
+[ Upstream commit 66c14dccd810d42ec5c73bb8a9177489dfd62278 ]
 
-NFSv4 LOCK operations should not avoid the set of authorization
-checks that apply to all other NFSv4 operations. Also, the
-"no_auth_nlm" export option should apply only to NLM LOCK requests.
-It's not necessary or sensible to apply it to NFSv4 LOCK operations.
+process_inode_switch_wbs_work() can be switching over 100 inodes to a
+different cgroup. Since switching an inode requires counting all dirty &
+under-writeback pages in the address space of each inode, this can take
+a significant amount of time. Add a possibility to reschedule after
+processing each inode to avoid softlockups.
 
-Instead, set no permission bits when calling fh_verify(). Subsequent
-stateid processing handles authorization checks.
-
-Reported-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 898374fdd7f0 ("nfsd: unregister with rpcbind when deleting a transport")
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/fs-writeback.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7998,11 +7998,9 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
- 	if (check_lock_length(lock->lk_offset, lock->lk_length))
- 		 return nfserr_inval;
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 4ae226778d646..eff778dc0386c 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -503,6 +503,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 */
+ 	down_read(&bdi->wb_switch_rwsem);
  
--	if ((status = fh_verify(rqstp, &cstate->current_fh,
--				S_IFREG, NFSD_MAY_LOCK))) {
--		dprintk("NFSD: nfsd4_lock: permission denied!\n");
-+	status = fh_verify(rqstp, &cstate->current_fh, S_IFREG, 0);
-+	if (status != nfs_ok)
- 		return status;
--	}
- 	sb = cstate->current_fh.fh_dentry->d_sb;
++	inodep = isw->inodes;
+ 	/*
+ 	 * By the time control reaches here, RCU grace period has passed
+ 	 * since I_WB_SWITCH assertion and all wb stat update transactions
+@@ -513,6 +514,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	 * gives us exclusion against all wb related operations on @inode
+ 	 * including IO list manipulations and stat updates.
+ 	 */
++relock:
+ 	if (old_wb < new_wb) {
+ 		spin_lock(&old_wb->list_lock);
+ 		spin_lock_nested(&new_wb->list_lock, SINGLE_DEPTH_NESTING);
+@@ -521,10 +523,17 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 		spin_lock_nested(&old_wb->list_lock, SINGLE_DEPTH_NESTING);
+ 	}
  
- 	if (lock->lk_is_new) {
+-	for (inodep = isw->inodes; *inodep; inodep++) {
++	while (*inodep) {
+ 		WARN_ON_ONCE((*inodep)->i_wb != old_wb);
+ 		if (inode_do_switch_wbs(*inodep, old_wb, new_wb))
+ 			nr_switched++;
++		inodep++;
++		if (*inodep && need_resched()) {
++			spin_unlock(&new_wb->list_lock);
++			spin_unlock(&old_wb->list_lock);
++			cond_resched();
++			goto relock;
++		}
+ 	}
+ 
+ 	spin_unlock(&new_wb->list_lock);
+-- 
+2.51.0
+
 
 
