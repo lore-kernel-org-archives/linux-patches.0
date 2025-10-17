@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AF42F12BC;
-	Fri, 17 Oct 2025 14:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EB33370F6;
+	Fri, 17 Oct 2025 14:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713097; cv=none; b=EBN1fNJXW/JdkVCDNeWtFWHpgCI/1plKeZJPO7YlNKtv/LH+2LFX50o3JAYnJcEH2zZUGzRdTzwgG2caTAbnbVp6L6fxT+tcorg0M0OOaYXcup34uOWzFlLSn4/42cbhxi7fSJuT2K7fnFedg9EIL22++0SPPeLCp1ryHWWzgMk=
+	t=1760713099; cv=none; b=lSZstrVtdNgy2qdcRHhQscDcF27ufOrUIWTU2hAERPxII9/YqFqjVmWNIEzAZdaDu7XY/NL36Z0AP340hfw1Mf9nQ60byi016bTUkKWY3h1VoL5G74SfU8T12Vdf3Cas24G2F4lO7ERYV7DGAY6gjTbpTUVR+O+qUM54TvrEXT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713097; c=relaxed/simple;
-	bh=Hx92tjnXU/tJSO1lLukhIChRcXGc6OTkWzvCXdP2BdI=;
+	s=arc-20240116; t=1760713099; c=relaxed/simple;
+	bh=9XEr9q9pd6ILc+htHPKGz9rAKQ+x6E8MrrRwhD/uLSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/tsvM3i0dOMKJGaHTKmRDhXc8IScHk663w3j5hhoDpFPtqfbYYk83i91cOjQ4oNsnaVZ/FK6IGMi9tBl9wB5lTE5DKtHOpyB5RI6hvz3KtkHjmYAkLTq9QV/PDOOkF5qHoDTQt87SVk9TpIypxBi+Vt/nMTmJZR3+SdbSUcwoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOZPctlo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdqkKOkB7bHodwsO9EXxnx4B6058+L3R0xAEejiRJeukyRsYdmtF826Q9lrWFiDxo3tiI1jxOle6coB18phdj/GyXz5Ic/tSjrd2XNCoxQ/+MBDV+4vaFygN1asFCFdlKehinQkYN5oZY+kUu6UEGEGkCOmA1syq/r8aVN0sLUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cv6zqgjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOZPctlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B87C4CEE7;
-	Fri, 17 Oct 2025 14:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cv6zqgjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AB8C4CEE7;
+	Fri, 17 Oct 2025 14:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713096;
-	bh=Hx92tjnXU/tJSO1lLukhIChRcXGc6OTkWzvCXdP2BdI=;
+	s=korg; t=1760713099;
+	bh=9XEr9q9pd6ILc+htHPKGz9rAKQ+x6E8MrrRwhD/uLSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dOZPctloOavEmNWf8aRzLL4zn3PL2y8aEYLiUqMN+cjdN6ymsWrm4VegLCwANSTeO
-	 frvigH2G3Z08bj7kN+B16zB4aIDHmSYQbzfBhs1ZSbZkxmK56Ti+z+Twtsw04Yxe5L
-	 ZxXasSTrFRtXLWg3YcXY/q1NsRrBPgpFKlB5y+YI=
+	b=Cv6zqgjjoxP0O04LYT979E1jvnp4h7eHXA1clx2sO93iYDjQvkO8O4vax0pYANMtg
+	 2utssLD6sl/aRoMAMxoPoW5A8E6mR571sq7Uh+W39r7p8JCPN1J/9dTiRYgnUqB6tJ
+	 SrDPpqXTeP8+C2rExnZJGXNrtWJKe1AmOTaxpvbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/168] clk: mediatek: clk-mux: Do not pass flags to clk_mux_determine_rate_flags()
-Date: Fri, 17 Oct 2025 16:51:38 +0200
-Message-ID: <20251017145129.727075030@linuxfoundation.org>
+Subject: [PATCH 6.1 046/168] crypto: essiv - Check ssize for decryption and in-place encryption
+Date: Fri, 17 Oct 2025 16:52:05 +0200
+Message-ID: <20251017145130.714686868@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,39 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 5e121370a7ad3414c7f3a77002e2b18abe5c6fe1 ]
+[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
 
-The `flags` in |struct mtk_mux| are core clk flags, not mux clk flags.
-Passing one to the other is wrong.
+Move the ssize check to the start in essiv_aead_crypt so that
+it's also checked for decryption and in-place encryption.
 
-Since there aren't any actual users adding CLK_MUX_* flags, just drop it
-for now.
-
-Fixes: b05ea3314390 ("clk: mediatek: clk-mux: Add .determine_rate() callback")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mux.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ crypto/essiv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mux.c b/drivers/clk/mediatek/clk-mux.c
-index c8593554239d6..93fa67294e5ab 100644
---- a/drivers/clk/mediatek/clk-mux.c
-+++ b/drivers/clk/mediatek/clk-mux.c
-@@ -132,9 +132,7 @@ static int mtk_clk_mux_set_parent_setclr_lock(struct clk_hw *hw, u8 index)
- static int mtk_clk_mux_determine_rate(struct clk_hw *hw,
- 				      struct clk_rate_request *req)
- {
--	struct mtk_clk_mux *mux = to_mtk_clk_mux(hw);
--
--	return clk_mux_determine_rate_flags(hw, req, mux->data->flags);
-+	return clk_mux_determine_rate_flags(hw, req, 0);
- }
+diff --git a/crypto/essiv.c b/crypto/essiv.c
+index 307eba74b901e..9aa8603fcf63b 100644
+--- a/crypto/essiv.c
++++ b/crypto/essiv.c
+@@ -186,9 +186,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+ 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
+ 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
+ 	struct aead_request *subreq = &rctx->aead_req;
++	int ivsize = crypto_aead_ivsize(tfm);
++	int ssize = req->assoclen - ivsize;
+ 	struct scatterlist *src = req->src;
+ 	int err;
  
- const struct clk_ops mtk_mux_clr_set_upd_ops = {
++	if (ssize < 0)
++		return -EINVAL;
++
+ 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
+ 
+ 	/*
+@@ -198,19 +203,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+ 	 */
+ 	rctx->assoc = NULL;
+ 	if (req->src == req->dst || !enc) {
+-		scatterwalk_map_and_copy(req->iv, req->dst,
+-					 req->assoclen - crypto_aead_ivsize(tfm),
+-					 crypto_aead_ivsize(tfm), 1);
++		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
+ 	} else {
+ 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
+-		int ivsize = crypto_aead_ivsize(tfm);
+-		int ssize = req->assoclen - ivsize;
+ 		struct scatterlist *sg;
+ 		int nents;
+ 
+-		if (ssize < 0)
+-			return -EINVAL;
+-
+ 		nents = sg_nents_for_len(req->src, ssize);
+ 		if (nents < 0)
+ 			return -EINVAL;
 -- 
 2.51.0
 
