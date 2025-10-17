@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6046332ECA;
-	Fri, 17 Oct 2025 15:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC936998F;
+	Fri, 17 Oct 2025 15:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715173; cv=none; b=WxziAO4gX0gSqI25k8d5o6gY2trod0M5lvsg2+4t6mloHlb6b1zc2ar+lT4xFA8X4GBkN0BswKbYuD0awK7NFPCgVg9dcHMKUxVyzaHtlV/BjvsjJwg4enqqtTDXWJPGUPQOmi3nu07HSb9fDlwTt+92t6rFl6MFsEBSmMmdme0=
+	t=1760715176; cv=none; b=NmkFwjmVsM8dGSak/ZQU9xm9qBOutrGedA7C4Ibq8rq95OWpS+xH5qdMLSYB9eXZan3gTdhFHo/lFVRr8jVkswLBMMPEMMMdZXmA4rp4OCvfvco2m4pkCLQaVq5fzGTI/ZEQvfxTfLkZp8iDesCN2YZ3Yc/7Hpk5adTJ3PBiczg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715173; c=relaxed/simple;
-	bh=MTLs49ZwJCoX9jBOxPcsYNNDz6qxAwSXyX2qPv+NRSg=;
+	s=arc-20240116; t=1760715176; c=relaxed/simple;
+	bh=pED2M9IhZvvWx22CbBYd8PBOJPWyp8hOaRNqu10GjFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Out2nKstrVFSEJp47JHBndJlNALS6jt6L77tmddUvTPhbFlQnDNnQ4vwdeLlq4ejxRGKiLLMQIors/pY2KNSO/RorrqaRXBZBdtsemZySzXO5odP0XqxDkuPIO6EB0gqBi+voIHjjsI1PSCo9j9W0Z47y3nCEGNf5EUCiIOt1M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kY62XCAZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiBr37fipWEttnP+QIvkCYYyX9Q9F7NpUWfQZnyLyu0nNiZJooVGi8uVIXGohxpeNBJxOHSoUydyJELHgGT4etmVh/wr2CjPOtEFJYzv5CmjzfXj2AQ3tmN4N/piKAoPgmtaTUCOsK2w44SDGM3c1bIjfT6TgiKZcHlC/iRPAFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmJs73Gb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kY62XCAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F1AC4CEFE;
-	Fri, 17 Oct 2025 15:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmJs73Gb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D151C113D0;
+	Fri, 17 Oct 2025 15:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715173;
-	bh=MTLs49ZwJCoX9jBOxPcsYNNDz6qxAwSXyX2qPv+NRSg=;
+	s=korg; t=1760715176;
+	bh=pED2M9IhZvvWx22CbBYd8PBOJPWyp8hOaRNqu10GjFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kY62XCAZUPeAouk6sT+ySKDiAo/+E4gCNk4pMgrlX4KxC+TVg/lIkyOiLMLJS0hqF
-	 6pRgtLh1iNuMjeIEGZs7OR+dsL/U/AHgA9rBSHgy4TURujct/jxHkyaz4orMAtz30h
-	 r8BMwOaSa0xyIAcNk1+pyipbnvK0uPTWezGwrd1o=
+	b=nmJs73GbjzLdEnWWtncH8f8ikf6BEfEcll47fbo5K/Afn69RtPmxyRwWKFl0es65h
+	 z3XZznDzdZx9xYx7EjixZetJo/xActjR+HCkzz2F4vMZ99YtmpYiIsl5cRXiSmvf69
+	 LdBAk2YWMmGho5g5gyOEmLOrfNcIupvKYmUNFnvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tom Talpey <tom@talpey.com>,
+	David Howells <dhowells@redhat.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 122/371] net: airoha: Fix loopback mode configuration for GDM2 port
-Date: Fri, 17 Oct 2025 16:51:37 +0200
-Message-ID: <20251017145206.348122356@linuxfoundation.org>
+Subject: [PATCH 6.17 123/371] cifs: Fix copy_to_iter return value check
+Date: Fri, 17 Oct 2025 16:51:38 +0200
+Message-ID: <20251017145206.384255466@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,53 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit fea8cdf6738a8b25fccbb7b109b440795a0892cb ]
+[ Upstream commit 0cc380d0e1d36b8f2703379890e90f896f68e9e8 ]
 
-Add missing configuration for loopback mode in airhoha_set_gdm2_loopback
-routine.
+The return value of copy_to_iter() function will never be negative,
+it is the number of bytes copied, or zero if nothing was copied.
+Update the check to treat 0 as an error, and return -1 in that case.
 
-Fixes: 9cd451d414f6e ("net: airoha: Add loopback support for GDM2")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251008-airoha-loopback-mode-fix-v2-1-045694fe7f60@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Acked-by: Tom Talpey <tom@talpey.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c  | 4 +++-
- drivers/net/ethernet/airoha/airoha_regs.h | 3 +++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index e6b802e3d8449..6d23c5c049b9a 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1709,7 +1709,9 @@ static void airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- 	airoha_fe_wr(eth, REG_GDM_RXCHN_EN(2), 0xffff);
- 	airoha_fe_rmw(eth, REG_GDM_LPBK_CFG(2),
- 		      LPBK_CHAN_MASK | LPBK_MODE_MASK | LPBK_EN_MASK,
--		      FIELD_PREP(LPBK_CHAN_MASK, chan) | LPBK_EN_MASK);
-+		      FIELD_PREP(LPBK_CHAN_MASK, chan) |
-+		      LBK_GAP_MODE_MASK | LBK_LEN_MODE_MASK |
-+		      LBK_CHAN_MODE_MASK | LPBK_EN_MASK);
- 	airoha_fe_rmw(eth, REG_GDM_LEN_CFG(2),
- 		      GDM_SHORT_LEN_MASK | GDM_LONG_LEN_MASK,
- 		      FIELD_PREP(GDM_SHORT_LEN_MASK, 60) |
-diff --git a/drivers/net/ethernet/airoha/airoha_regs.h b/drivers/net/ethernet/airoha/airoha_regs.h
-index 150c85995cc1a..0c8f61081699c 100644
---- a/drivers/net/ethernet/airoha/airoha_regs.h
-+++ b/drivers/net/ethernet/airoha/airoha_regs.h
-@@ -151,6 +151,9 @@
- #define LPBK_LEN_MASK			GENMASK(23, 10)
- #define LPBK_CHAN_MASK			GENMASK(8, 4)
- #define LPBK_MODE_MASK			GENMASK(3, 1)
-+#define LBK_GAP_MODE_MASK		BIT(3)
-+#define LBK_LEN_MODE_MASK		BIT(2)
-+#define LBK_CHAN_MODE_MASK		BIT(1)
- #define LPBK_EN_MASK			BIT(0)
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 68286673afc99..328fdeecae29a 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4653,7 +4653,7 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ 	unsigned int pad_len;
+ 	struct cifs_io_subrequest *rdata = mid->callback_data;
+ 	struct smb2_hdr *shdr = (struct smb2_hdr *)buf;
+-	int length;
++	size_t copied;
+ 	bool use_rdma_mr = false;
  
- #define REG_GDM_TXCHN_EN(_n)		(GDM_BASE(_n) + 0x24)
+ 	if (shdr->Command != SMB2_READ) {
+@@ -4766,10 +4766,10 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ 	} else if (buf_len >= data_offset + data_len) {
+ 		/* read response payload is in buf */
+ 		WARN_ONCE(buffer, "read data can be either in buf or in buffer");
+-		length = copy_to_iter(buf + data_offset, data_len, &rdata->subreq.io_iter);
+-		if (length < 0)
+-			return length;
+-		rdata->got_bytes = data_len;
++		copied = copy_to_iter(buf + data_offset, data_len, &rdata->subreq.io_iter);
++		if (copied == 0)
++			return -EIO;
++		rdata->got_bytes = copied;
+ 	} else {
+ 		/* read response payload cannot be in both buf and pages */
+ 		WARN_ONCE(1, "buf can not contain only a part of read data");
 -- 
 2.51.0
 
