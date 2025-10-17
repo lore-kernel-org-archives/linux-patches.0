@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74254330B3C;
-	Fri, 17 Oct 2025 15:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534AE289811;
+	Fri, 17 Oct 2025 15:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715441; cv=none; b=ievSIGBYdxlC+pAanHbeClF46TQ7dBubtuYT+71tZ0i0YUfcPbzDmZnQXIrEU1dRgg+u3pRJM3PDIp/Sysew0BCqJZPXbm1CvZhevH6UZJu5ymf3bfcySL/Eq2iC1IrzQUwjPDDsHQpaiC/BYtekzOmsCaqwrLmZZopwjVV+JXg=
+	t=1760715444; cv=none; b=qOeindsZ+x08aoFaaRITFpMEiLafZqoDyGNV9wBjhz/vGFzjPSCuCCrpX+WiK5nvW955CZ7JgxSsBW+Xzj02bYoHazYcm60qZlqgeY9lW4R9V4ypDACw9HeN/WEz5IVz2pbdnPxkPA43c6bIINIe4qEory2+1eOiXgs2Nu/aFIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715441; c=relaxed/simple;
-	bh=SmX2aW+6fy+2nr/JaMRvviepMuEZF9iPwPGl9hDV670=;
+	s=arc-20240116; t=1760715444; c=relaxed/simple;
+	bh=ujpjFsGqLgM1BTKzuNJY7v75XddsFX4OU9gMVSbz9yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci3THBW8nWTD8PpL7+7tyhK/fSF0sfzqMxlCaNLfY+YH9Mz0ZHN66jcIwRtMzYBSEK0RJeeMMoLPLsg7UYQWM4B89LoePPgQQQdhEk+pRJEN4gSNTdqZ0Sfzr4gJtk1/SUYoLgfFVJHuzKx9GwuSrFDFUt9DFKB4pm/TfsdOOGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O63uBnQp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chdm7oRLC2tRJrumSD6iWprUTjZLjYg7eFRE2/3gBsoFGGy+eTLK2YTVWix6B6ptKmf1972/Poimyff3lGkwHm1UjuRukooqjzCJCqflQRIz4Rj52b4vcXpcCY6z78pdAWJ5/4jg0q7WA3YbbtSofOnsRjcI+cz1zo0cwHqe5vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhZ78S3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O63uBnQp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4996C4CEFE;
-	Fri, 17 Oct 2025 15:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhZ78S3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB52C4CEFE;
+	Fri, 17 Oct 2025 15:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715441;
-	bh=SmX2aW+6fy+2nr/JaMRvviepMuEZF9iPwPGl9hDV670=;
+	s=korg; t=1760715444;
+	bh=ujpjFsGqLgM1BTKzuNJY7v75XddsFX4OU9gMVSbz9yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O63uBnQp+b/a74W5RWaoONlPq/7aAax19ul6FCa67btYAHZPjYMNKy3GMia9foLeA
-	 mf7ux72uXz0EXJVR2pyTY56q/gKAJe8G6HR6a0FN3hN3LmODW02ycqaNWQvtsGQeoi
-	 5gIHp0qdxS4TCUVfdfbl9RG+G81lg48XweoLebps=
+	b=jhZ78S3h7vNaZYtttBwGSnnQSjk5wVmPT4GChEfJ5wDm6nCvq0AMH6tq96gHgMfek
+	 VPsQgvFkjIP4jSxvJYnUaLqv0cC2ud3Vh9+VJq3UQswwW/gW7Fy8Nkrr6EBAtHgaql
+	 uj1EY2I+L4yJ8zLucqlieAf32koVai39URh0rJ4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.17 217/371] gpio: mpfs: fix setting gpio direction to output
-Date: Fri, 17 Oct 2025 16:53:12 +0200
-Message-ID: <20251017145209.938991831@linuxfoundation.org>
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.17 218/371] i3c: Fix default I2C adapter timeout value
+Date: Fri, 17 Oct 2025 16:53:13 +0200
+Message-ID: <20251017145209.974830213@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-commit bc061143637532c08d9fc657eec93fdc2588068e upstream.
+commit 9395b3c412933401a34845d5326afe4011bbd40f upstream.
 
-mpfs_gpio_direction_output() actually sets the line to input mode.
-Use the correct register settings for output mode so that this function
-actually works as intended.
+Commit 3a379bbcea0a ("i3c: Add core I3C infrastructure") set the default
+adapter timeout for I2C transfers as 1000 (ms). However that parameter
+is defined in jiffies not in milliseconds.
 
-This was a copy-paste mistake made when converting to regmap during the
-driver submission process. It went unnoticed because my test for output
-mode is toggling LEDs on an Icicle kit which functions with the
-incorrect code. The internal reporter has yet to test the patch, but on
-their system the incorrect setting may be the reason for failures to
-drive the GPIO lines on the BeagleV-fire board.
+With mipi-i3c-hci driver this wasn't visible until commit c0a90eb55a69
+("i3c: mipi-i3c-hci: use adapter timeout value for I2C transfers").
 
-CC: stable@vger.kernel.org
-Fixes: a987b78f3615e ("gpio: mpfs: add polarfire soc gpio support")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20250925-boogieman-carrot-82989ff75d10@spud
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fix this by setting the default timeout as HZ (CONFIG_HZ) not 1000.
+
+Fixes: 1b84691e7870 ("i3c: dw: use adapter timeout value for I2C transfers")
+Fixes: be27ed672878 ("i3c: master: cdns: use adapter timeout value for I2C transfers")
+Fixes: c0a90eb55a69 ("i3c: mipi-i3c-hci: use adapter timeout value for I2C transfers")
+Fixes: a747e01adad2 ("i3c: master: svc: use adapter timeout value for I2C transfers")
+Fixes: d028219a9f14 ("i3c: master: Add basic driver for the Renesas I3C controller")
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Cc: stable@vger.kernel.org # 6.17
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20250905100320.954536-1-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mpfs.c |    2 +-
+ drivers/i3c/master.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-mpfs.c
-+++ b/drivers/gpio/gpio-mpfs.c
-@@ -69,7 +69,7 @@ static int mpfs_gpio_direction_output(st
- 	struct mpfs_gpio_chip *mpfs_gpio = gpiochip_get_data(gc);
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2492,7 +2492,7 @@ static int i3c_master_i2c_adapter_init(s
+ 	strscpy(adap->name, dev_name(master->dev.parent), sizeof(adap->name));
  
- 	regmap_update_bits(mpfs_gpio->regs, MPFS_GPIO_CTRL(gpio_index),
--			   MPFS_GPIO_DIR_MASK, MPFS_GPIO_EN_IN);
-+			   MPFS_GPIO_DIR_MASK, MPFS_GPIO_EN_OUT | MPFS_GPIO_EN_OUT_BUF);
- 	regmap_update_bits(mpfs_gpio->regs, mpfs_gpio->offsets->outp, BIT(gpio_index),
- 			   value << gpio_index);
+ 	/* FIXME: Should we allow i3c masters to override these values? */
+-	adap->timeout = 1000;
++	adap->timeout = HZ;
+ 	adap->retries = 3;
  
+ 	id = of_alias_get_id(master->dev.of_node, "i2c");
 
 
