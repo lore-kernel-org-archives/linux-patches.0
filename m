@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5C12F12B0;
-	Fri, 17 Oct 2025 15:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F033370FB;
+	Fri, 17 Oct 2025 15:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715058; cv=none; b=Sx2UUhqT9FaFuTFcJ7INCHlOuK4O71CyiYuNm1lBfzphI+lFit8Dd0D/GwaS2ZIREEZZoVkJalKGLmRCO8h/g/4Nl4m6yixaHOdpqSpVVS2jxDfrtTmFID6TX9LE4NbT7892jt7TlXExiZTtp14xiyMmLhg/n2Qg2CdOIugnN1k=
+	t=1760715061; cv=none; b=c8gjDVyhwvN1KHM9HOROK5zgVVcHXWWxS5GP8vSwVXjLbCmikYNel/wdHrnVufR5LJ4FrGm+rL2k8MCQvm2pDAuKRlUowN3pTkiiChEtQCQh2PaDcmw2PfXP1s9v+WUCOEqp3KVaNFszVloSoNYQBQirKSkbuJoV7DawdDUaQFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715058; c=relaxed/simple;
-	bh=7QVYlt5+IpthiKEMyRUImFvAaA0nA/mi4e+5oHYajLc=;
+	s=arc-20240116; t=1760715061; c=relaxed/simple;
+	bh=TPvulGeYaVaKGeTksUcjuySdRUjqe6+V3iUb7cxRujE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HN2OHSC9s1IMxfuYqK8PonSAjYR6wvTFOLNyxiuZZ9zfXI8UPwgbRUl1EV7ubJGI+/9sRfhfjdjOBnPU77QEOHzGp1gU2PlC/6QXma2cJSeofshdc4HtJWGgg2FLjnvRr3/ScGbNK7Sv7P4zhRW98cTql+JQ4C8QtqLfEuhRZp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4bSaVj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ouj5Kf8OSrLl8fmy48LnkMTs5yo+MTCFArN/yyUiZpbRK5ZoAiZaDVa0fhpzJanJNTd0gk46bTjoljpRSJVQmBDsbImAI2SHFdO9Ai6sr4OmS29E5BJHp8SvVio6xjSPdDPw5fYp2tF9sy56VAP95AoRLSlcKFz4Lj9rw78bmKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxM+gmFY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4bSaVj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D89C4CEE7;
-	Fri, 17 Oct 2025 15:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxM+gmFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B25C4CEE7;
+	Fri, 17 Oct 2025 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715058;
-	bh=7QVYlt5+IpthiKEMyRUImFvAaA0nA/mi4e+5oHYajLc=;
+	s=korg; t=1760715061;
+	bh=TPvulGeYaVaKGeTksUcjuySdRUjqe6+V3iUb7cxRujE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4bSaVj//HvQQCqY4hR8qPdjVPvWMMnDEElkQ/32VlqtNUcP363rvDIwvul6TxTuR
-	 z1OjyjZpjpqCpkfmc5vlxgBHOvTVvLYHUI7dt6fB1Vxa4K6gMBMRwo8xO7q423IAgu
-	 Qc+lr53H/zBzsHhynt8R7FxaX4J4Yp1n5XNaFxoE=
+	b=NxM+gmFYTFp0h1WrvQoc65qcyDnDOOCU7eydLZtSt4Mj6os8kA5GpEeulCWIxTGlU
+	 NQso/mYXk1ZsQXwC6tMvypFhyl9Yc5Pjk8VT68M1UKHomPY8y6/AX0ocB8djAAXWA+
+	 pcwQy7NyPiGn0aojubPqQKtZ+ePBTK1KeUuAxTLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 056/371] nfsd: fix assignment of ia_ctime.tv_nsec on delegated mtime update
-Date: Fri, 17 Oct 2025 16:50:31 +0200
-Message-ID: <20251017145203.826414293@linuxfoundation.org>
+Subject: [PATCH 6.17 083/371] drm/xe/i2c: Dont rely on d3cold.allowed flag in system PM path
+Date: Fri, 17 Oct 2025 16:50:58 +0200
+Message-ID: <20251017145204.942180796@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,32 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 2990b5a47984c27873d165de9e88099deee95c8d ]
+[ Upstream commit 1af59cd5cc2b65d7fc95165f056695ce3f171133 ]
 
-The ia_ctime.tv_nsec field should be set to modify.nseconds.
+In S3 and above sleep states, the device can loose power regardless of
+d3cold.allowed flag. Bring up I2C controller explicitly in system PM
+path to ensure its normal operation after losing power.
 
-Fixes: 7e13f4f8d27d ("nfsd: handle delegated timestamps in SETATTR")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+v2: Cover S3 and above states (Rodrigo)
+
+Fixes: 0ea07b69517a ("drm/xe/pm: Wire up suspend/resume for I2C controller")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lore.kernel.org/r/20250918103200.2952576-1-raag.jadav@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit e4863f1159befcd70df24fcb5458afaf2feab043)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 2 +-
+ drivers/gpu/drm/xe/xe_pm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index ea91bad4eee2c..1f3a20360d0c2 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -538,7 +538,7 @@ nfsd4_decode_fattr4(struct nfsd4_compoundargs *argp, u32 *bmval, u32 bmlen,
- 		iattr->ia_mtime.tv_sec = modify.seconds;
- 		iattr->ia_mtime.tv_nsec = modify.nseconds;
- 		iattr->ia_ctime.tv_sec = modify.seconds;
--		iattr->ia_ctime.tv_nsec = modify.seconds;
-+		iattr->ia_ctime.tv_nsec = modify.nseconds;
- 		iattr->ia_valid |= ATTR_CTIME | ATTR_MTIME | ATTR_MTIME_SET | ATTR_DELEG;
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
+index bb9b6ecad2afc..3e301e42b2f19 100644
+--- a/drivers/gpu/drm/xe/xe_pm.c
++++ b/drivers/gpu/drm/xe/xe_pm.c
+@@ -194,7 +194,7 @@ int xe_pm_resume(struct xe_device *xe)
+ 	if (err)
+ 		goto err;
+ 
+-	xe_i2c_pm_resume(xe, xe->d3cold.allowed);
++	xe_i2c_pm_resume(xe, true);
+ 
+ 	xe_irq_resume(xe);
  
 -- 
 2.51.0
