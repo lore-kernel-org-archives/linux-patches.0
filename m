@@ -1,65 +1,52 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9433126D5
-	for <patches@lists.linux.dev>; Fri, 17 Oct 2025 22:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225E73128BC
+	for <patches@lists.linux.dev>; Fri, 17 Oct 2025 23:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760741880; cv=none; b=QNTLx3qirZrqksqKhKbRqcbCHTJx50DDyxS8MIG0TI+xtxvhQhijF3oCzyvqkoXWd8M8jvBLF4kCzu0WaM8sh0pTlme1mkKV7cDZ/GH+N69usnw4d2NgHoctUJZB5YDiYH+sBEkUuTuysvG+gYyEdaxrK5CCVUDcTqCiX4nKny8=
+	t=1760742270; cv=none; b=S6I4QUcZDgTghh8deZEoq2KobUJuKeUAOCEGnepfNugomNhZTjFRFi/SbZ0G3NTPnGDCGcIZMgave1wVgVlH1ewjb3mL50j2OS+lGGJvp0X6XOzPwoCsHd1KC6NWToPTw+EbOLVXLgZmDmTDh65KnBInP3Qwa2Big/LjUKb4gZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760741880; c=relaxed/simple;
-	bh=TVTG+O8iKJqOlsONKOctFtR5vUb2qk74Xxw1eeL6LKs=;
+	s=arc-20240116; t=1760742270; c=relaxed/simple;
+	bh=Jq/H+/b1GArkCNQOxIQJRBTfifohop9pfe++XjDov1k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s12BAdOuA0jEnQQh1siBOORiL4FPznb+kSO67mfXCS3CoA9cZy3kSMIHXrqIiMkSxbr+4xVyot7FtqpJlH+OnSgjisRl1hHBTi19Efy3xVSM4pSQ9R85DBTUDTT9TWL05VU2JVPSXqlIul/IXtdJJRpBwyxGV2KtQRiLi/Z7Xzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T3/FREhu; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=ha/mO2XEhAwwnt6+qD9pKf9GBsZx2zYyX2JRNy2+5VcuA7xBBBGDVhRU6kbfJDJTZ5yYBjUY+RFPnAlfKoxsh4rWVBGDaKdlYOmeqa44eF4fr+veKAiP9fJ34eLZigmog4BBLenvuEjLxIAITVK28rqvx3D/BDkevKm7DOENiA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=mFCHNQ4m; arc=none smtp.client-ip=35.89.44.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T3/FREhu"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8738c6fdbe8so37972186d6.1
-        for <patches@lists.linux.dev>; Fri, 17 Oct 2025 15:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760741878; x=1761346678; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pucK7w/tDLEJVDkMQTugbZEqJtDfp6Kr9NZGNFPGjzE=;
-        b=T3/FREhuXyBXEGdQeKMS5fjZicUju6H8c+zJn3r20XKVVPhFBqy6uK7tFIxHQzRIhf
-         sHBkm6GbyFSSJNH+579TnaunuhIqL8HzPH9667Z21JlfhUh7HgjomlojTJu5DD9ifleN
-         cujswbMW0b/tSU4cVsDyh/j51E8uRuINpQ3TaMEFWOUitXQjhK11gdmqXN05yrJZh3V3
-         H6on/m3qT1l9F3X7PX+RC1WlS0XVJ4yBeditx+ojEQ+ZNgkyvXOM53EuP2ukScAkdfYY
-         WFHeFHcOqIv6gIbK2E+MZUiJmf0sF3TowSsWU3PAlHXo8eFqoWdt5yyTSYtNJiQlfzcp
-         SgIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760741878; x=1761346678;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pucK7w/tDLEJVDkMQTugbZEqJtDfp6Kr9NZGNFPGjzE=;
-        b=v79/1lyesC45nBH0nUaWZHaOo5r8Qn0vy/pQaC8E+ZRb0TrYdBhWpLe2io8Jk9JLfd
-         kpRzj8uFjBJdscYZafS4MkVIErQS+NHvbb5x1YmOa2tYXURoAKjc/ixu8PtAe1jN1e26
-         FwPRbD15/qXbabfcNZbioxuvz07rQ/cRHs8EeuGTb4uBDgVWAknBRzQPWV3onEBS7C27
-         SCULmKgt3XbSqaM/xz3/nRzUrInaryfy+535Ezxt2O1giSngaFgMhhqzWkqBMLNPPt5s
-         NMTCzhUAx+c1JyPSrsGaKu3FTv+h0X1/qM74qMixYteE2MR4mp9clS18siezTh+OYmp9
-         PNBA==
-X-Gm-Message-State: AOJu0YyVKXqumEoSZskHGk+qhSqJHGvYg0U155nVg5c3PNHY8v4MAMbS
-	ue9MjzD2AtAvNPRsPSM75AA/Vcbhy+RiTtspLcOMe6T3uxyb08Tz8Pun
-X-Gm-Gg: ASbGncsDRnI/RZdjojDm7DO+KodCMWkd3NsYjgUnUWuQ9jUTkZPlfHbq+vVbTKWSYwl
-	UXO8aY9xHdUgpzCUef1Wf+KIHx3vcHQ5SCj0Jf3yJ40LZK82PDCuuw2ngA0KSHybuNLZ4O3845l
-	8AgbmBWm/3nh8oB/H2G1sFadBZX6jSt6gV/q2eK/9+XmVP1yP7lyWjYPA5Yi4K91jOr7Mmjm+rM
-	A9t31DGI9aBh6POso8iWvKzsR1nP1Dr7V3qMnL5yjR14ePE2ypZitbc9f/hz08bmwJZ701ia/+6
-	ohW2i+h5ItGLv8HKzC0GewnWyGVdWhIQLqKMRN9k+LxrohcdWJC6ZKrqz4j2HGEGWXhfeohgkJj
-	DjrPC7r7rnpXRZcWzO3HUyEUftrBesmJCMYdrGOiflw9laq24X/qeFTUnbJSh1PbWYo+508+189
-	w39hLi3dhK+FNq0XJKRnItM53+w68=
-X-Google-Smtp-Source: AGHT+IFtOTk+TeUWYZvFwbJ/WtL4J7f8SdXdsAQcBbwmd+vwHRetDEZvhB/XNjVaLuhKRvl+qTdF4g==
-X-Received: by 2002:a05:6214:518c:b0:87c:2095:c582 with SMTP id 6a1803df08f44-87c2095cb68mr80609666d6.18.1760741877657;
-        Fri, 17 Oct 2025 15:57:57 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87ce9d474fdsm6863656d6.0.2025.10.17.15.57.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 15:57:57 -0700 (PDT)
-Message-ID: <c1b098d5-3499-4e24-aff9-6e5a293b4b1b@gmail.com>
-Date: Fri, 17 Oct 2025 15:57:53 -0700
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="mFCHNQ4m"
+Received: from eig-obgw-5002b.ext.cloudfilter.net ([10.0.29.226])
+	by cmsmtp with ESMTPS
+	id 9qcOv8ezweNqi9tUov5mrb; Fri, 17 Oct 2025 23:04:26 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id 9tUnvNJcwHyqZ9tUnvIRkQ; Fri, 17 Oct 2025 23:04:26 +0000
+X-Authority-Analysis: v=2.4 cv=G4EcE8k5 c=1 sm=1 tr=0 ts=68f2cb7a
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=TfA6R2l6Ho_dUAMD9YgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Q30APisvJzq6aSX98cdE30C6F5BhW+o0cOfsgqyy9YA=; b=mFCHNQ4mDeLhcfyHalwstifybz
+	MI01e26lOhKrVa/9H/NfD84j0Oe6H6grBDhaovdd0wmGgP3mkKhS+4Ye8O+ammc3sWB4Zep7WcMze
+	fqjspB5NKHsN3ptar73bvUV7SnIZJPpO3AvVAjWYuUngJlR2S0C3zMd7Aj5VH98YdYxxaDNOfeT6G
+	Kj2IRN428IxniTv36TL8XBaTjsZeRyN0C0cASBy0giJUVewmNYeqpOlecdH9kLow8OK1vdcIkBzyz
+	wJ5zSP5iAZa3GlQroektpt4PBHPh8VyscnJhA29Or42brNN93OZ4CX8hdfxeO7BOOCy9BpyEHTQ2E
+	e11CNG2Q==;
+Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:44386 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <re@w6rz.net>)
+	id 1v9tUn-00000001Xiu-1FXj;
+	Fri, 17 Oct 2025 17:04:25 -0600
+Message-ID: <90bc04ea-e7ec-49b9-ae6e-d0e2c85bbf96@w6rz.net>
+Date: Fri, 17 Oct 2025 16:04:23 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,50 +54,79 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/276] 5.15.195-rc1 review
+Subject: Re: [PATCH 6.17 000/371] 6.17.4-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-References: <20251017145142.382145055@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+References: <20251017145201.780251198@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.92.56.26
+X-Source-L: No
+X-Exim-ID: 1v9tUn-00000001Xiu-1FXj
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.116]) [73.92.56.26]:44386
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfBuChwDhfVYZw4Unt+nxfOsLSWRtyTA3wcBxidBtj4gSxdGGIbbasfX3yqKuJVV5NRP3GjQPSClTU7zJlyvx8Fb0dEgJOlZJ4OS9y0vvfys/QzTH5noI
+ gQt/9F89mgU/ckk+EzsMAf8zH2XW6Sj5/inaq9OTOHKiRk2EvZIyWqwaHa6e4HWaxbBmHowhEJHp5A==
 
-On 10/17/25 07:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.195 release.
-> There are 276 patches in this series, all will be posted as a response
+On 10/17/25 07:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.17.4 release.
+> There are 371 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Sun, 19 Oct 2025 14:50:59 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.195-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.4-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
 
-perf fails to build on ARM, ARM64 and MIPS with:
+Build fails for RISC-V with:
 
-In file included from util/arm-spe.c:37:
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/include/../../arch/arm64/include/asm/cputype.h:198:10: 
-fatal error: asm/sysreg.h: No such file or directory
-   198 | #include <asm/sysreg.h>
-       |          ^~~~~~~~~~~~~~
-compilation terminated.
+In file included from ./include/linux/pgtable.h:6,
+                  from ./include/linux/mm.h:31,
+                  from arch/riscv/kernel/asm-offsets.c:8:
+./arch/riscv/include/asm/pgtable.h:963:21: error: redefinition of 
+'pudp_huge_get_and_clear'
+   963 | static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
+       |                     ^~~~~~~~~~~~~~~~~~~~~~~
+./arch/riscv/include/asm/pgtable.h:946:21: note: previous definition of 
+'pudp_huge_get_and_clear' with type 'pud_t(struct mm_struct *, long 
+unsigned int,  pud_t *)'
+   946 | static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
+       |                     ^~~~~~~~~~~~~~~~~~~~~~~
 
-I was not able to run a bisection but will attempt to do that later 
-during the weekend.
--- 
-Florian
+Reverting 06536c4857271eeb19d76dbb4af989e2654a94e0 riscv: use an atomic 
+xchg in pudp_huge_get_and_clear() fixes the build.
+
+The problem is that this patch was already applied to 6.17 just before 
+release, so the function pudp_huge_get_and_clear() ends up being 
+duplicated in the file.
+
