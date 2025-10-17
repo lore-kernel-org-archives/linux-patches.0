@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8B62F12DC;
-	Fri, 17 Oct 2025 15:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B7F32E14F;
+	Fri, 17 Oct 2025 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713686; cv=none; b=HHc5baJqvvET23t7VHhMEJylf3bew2MkW+frjIM/oyZMSsM6bO79okSUpYnu7pzcPUFdgbOTCUuN/B/SsfKrUhqvHfbG37puSBkf7VAV4Am9wh41z9BkO81YOa/HQ3oEmOrQSSJ+3ctvtC2PARLz4oMVNv1UGpS4tOHJbIYgpes=
+	t=1760713688; cv=none; b=VAG9uMwupNpuRuIgYlPHRc0r0wn/fB5xQ40tJB3trc9F/DdieLcm5cjs1Rg4G2fGva76cnfczgjuk9atCh5uAS+fTZmYE9PFwjuoASr+B62FrgkKNd5KXLRwxQNFMLgoens6fOxPLEUsTSE0w9BBnxlDSIeVCRYhoblzvAsc7kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713686; c=relaxed/simple;
-	bh=ffG2V3IA8UoUQiiB3ZJJsfWGNOHOD/V92sAe2ST+eNw=;
+	s=arc-20240116; t=1760713688; c=relaxed/simple;
+	bh=Iwv6qradxyLqU/p6IbgDgiR60ynA0hYbbmT5V9czOTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLNQgbnKeT0ZeNLF9l9LgBm/u4ktpL1v8XXaVaioqn/yeFOYq8XhIctw+ab08r5uanguN/4tHRmooJqSRvgRYTSKYyU6ObbndsNzYyf3iI/CXJZ22xXHlhGKWGNC7O2xpkn9KYuX6Jz6u7AGXJ2FTfuGPR9bB+j0hfdMSUdsxZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0g7Y7ON; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dBMY3IUAakwzUiVDQly41Z5n+zB9MopRUTKhm+72VzrXkTS+dM7UB8lVWW8mGDmV0GJS26wF3enQGdIl9WftladbBJot1zUvS95HTpkeqCiSZ8V9VEC59sjnfIAjntV1yUgc1AP00TtWysZNuBM/ilx/AyG25/7foVy9Hx4hPU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcji2Mgq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0g7Y7ON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08732C4CEE7;
-	Fri, 17 Oct 2025 15:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcji2Mgq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64D2C4CEF9;
+	Fri, 17 Oct 2025 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713684;
-	bh=ffG2V3IA8UoUQiiB3ZJJsfWGNOHOD/V92sAe2ST+eNw=;
+	s=korg; t=1760713687;
+	bh=Iwv6qradxyLqU/p6IbgDgiR60ynA0hYbbmT5V9czOTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0g7Y7ONIrWncl5427b78T+eS0SlSYc33W1e6/8M+Af9S6PUNHx7h1Q8ksceI3fjv
-	 MSpaZbFZ5MZD3ElvOyf9/j6JpFDZBzBqVDc6hvKyWYK46BuqtfyXvWMnHjOtqhB/jv
-	 HD7KPK9aMSn++lB93fr+jKUlDZbrGSvvYri6Kbn4=
+	b=qcji2Mgqni7m8pp7PgvO4EQUm2Iu6G9cqxig41Uy2GFKs4K3NeSQfGQsGGGQGWVxv
+	 EvSEsME2TiWT+ZVhM1qzS81mgoiDtzE6r02OOxoB6Rim9BFpud7VPlDEtIt/QBdMN2
+	 nGLSlKOoGHuJ9/NbQ8zSwX2VDZGyC2kLYFBGtLUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Woudstra <ericwouds@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/201] netfilter: nft_objref: validate objref and objrefmap expressions
-Date: Fri, 17 Oct 2025 16:51:51 +0200
-Message-ID: <20251017145136.583903050@linuxfoundation.org>
+Subject: [PATCH 6.6 051/201] bridge: br_vlan_fill_forward_path_pvid: use br_vlan_group_rcu()
+Date: Fri, 17 Oct 2025 16:51:52 +0200
+Message-ID: <20251017145136.619664443@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -53,129 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Eric Woudstra <ericwouds@gmail.com>
 
-[ Upstream commit f359b809d54c6e3dd1d039b97e0b68390b0e53e4 ]
+[ Upstream commit bbf0c98b3ad9edaea1f982de6c199cc11d3b7705 ]
 
-Referencing a synproxy stateful object from OUTPUT hook causes kernel
-crash due to infinite recursive calls:
+net/bridge/br_private.h:1627 suspicious rcu_dereference_protected() usage!
+other info that might help us debug this:
 
-BUG: TASK stack guard page was hit at 000000008bda5b8c (stack is 000000003ab1c4a5..00000000494d8b12)
-[...]
+rcu_scheduler_active = 2, debug_locks = 1
+7 locks held by socat/410:
+ #0: ffff88800d7a9c90 (sk_lock-AF_INET){+.+.}-{0:0}, at: inet_stream_connect+0x43/0xa0
+ #1: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: __ip_queue_xmit+0x62/0x1830
+ [..]
+ #6: ffffffff9a779900 (rcu_read_lock){....}-{1:3}, at: nf_hook.constprop.0+0x8a/0x440
+
 Call Trace:
- __find_rr_leaf+0x99/0x230
- fib6_table_lookup+0x13b/0x2d0
- ip6_pol_route+0xa4/0x400
- fib6_rule_lookup+0x156/0x240
- ip6_route_output_flags+0xc6/0x150
- __nf_ip6_route+0x23/0x50
- synproxy_send_tcp_ipv6+0x106/0x200
- synproxy_send_client_synack_ipv6+0x1aa/0x1f0
- nft_synproxy_do_eval+0x263/0x310
- nft_do_chain+0x5a8/0x5f0 [nf_tables
- nft_do_chain_inet+0x98/0x110
- nf_hook_slow+0x43/0xc0
- __ip6_local_out+0xf0/0x170
- ip6_local_out+0x17/0x70
- synproxy_send_tcp_ipv6+0x1a2/0x200
- synproxy_send_client_synack_ipv6+0x1aa/0x1f0
-[...]
+ lockdep_rcu_suspicious.cold+0x4f/0xb1
+ br_vlan_fill_forward_path_pvid+0x32c/0x410 [bridge]
+ br_fill_forward_path+0x7a/0x4d0 [bridge]
 
-Implement objref and objrefmap expression validate functions.
+Use to correct helper, non _rcu variant requires RTNL mutex.
 
-Currently, only NFT_OBJECT_SYNPROXY object type requires validation.
-This will also handle a jump to a chain using a synproxy object from the
-OUTPUT hook.
-
-Now when trying to reference a synproxy object in the OUTPUT hook, nft
-will produce the following error:
-
-synproxy_crash.nft: Error: Could not process rule: Operation not supported
-  synproxy name mysynproxy
-  ^^^^^^^^^^^^^^^^^^^^^^^^
-
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Reported-by: Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>
-Closes: https://bugzilla.suse.com/1250237
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bcf2766b1377 ("net: bridge: resolve forwarding path for VLAN tag actions in bridge devices")
+Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_objref.c | 39 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ net/bridge/br_vlan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_objref.c b/net/netfilter/nft_objref.c
-index 509011b1ef597..08a27433e2f5f 100644
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -22,6 +22,35 @@ void nft_objref_eval(const struct nft_expr *expr,
- 	obj->ops->eval(obj, regs, pkt);
- }
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index a1c22eab71ffe..cc54b8267bcc7 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -1455,7 +1455,7 @@ void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
+ 	if (!br_opt_get(br, BROPT_VLAN_ENABLED))
+ 		return;
  
-+static int nft_objref_validate_obj_type(const struct nft_ctx *ctx, u32 type)
-+{
-+	unsigned int hooks;
-+
-+	switch (type) {
-+	case NFT_OBJECT_SYNPROXY:
-+		if (ctx->family != NFPROTO_IPV4 &&
-+		    ctx->family != NFPROTO_IPV6 &&
-+		    ctx->family != NFPROTO_INET)
-+			return -EOPNOTSUPP;
-+
-+		hooks = (1 << NF_INET_LOCAL_IN) | (1 << NF_INET_FORWARD);
-+
-+		return nft_chain_validate_hooks(ctx->chain, hooks);
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int nft_objref_validate(const struct nft_ctx *ctx,
-+			       const struct nft_expr *expr)
-+{
-+	struct nft_object *obj = nft_objref_priv(expr);
-+
-+	return nft_objref_validate_obj_type(ctx, obj->ops->type->type);
-+}
-+
- static int nft_objref_init(const struct nft_ctx *ctx,
- 			   const struct nft_expr *expr,
- 			   const struct nlattr * const tb[])
-@@ -93,6 +122,7 @@ static const struct nft_expr_ops nft_objref_ops = {
- 	.activate	= nft_objref_activate,
- 	.deactivate	= nft_objref_deactivate,
- 	.dump		= nft_objref_dump,
-+	.validate	= nft_objref_validate,
- 	.reduce		= NFT_REDUCE_READONLY,
- };
+-	vg = br_vlan_group(br);
++	vg = br_vlan_group_rcu(br);
  
-@@ -198,6 +228,14 @@ static void nft_objref_map_destroy(const struct nft_ctx *ctx,
- 	nf_tables_destroy_set(ctx, priv->set);
- }
- 
-+static int nft_objref_map_validate(const struct nft_ctx *ctx,
-+				   const struct nft_expr *expr)
-+{
-+	const struct nft_objref_map *priv = nft_expr_priv(expr);
-+
-+	return nft_objref_validate_obj_type(ctx, priv->set->objtype);
-+}
-+
- static const struct nft_expr_ops nft_objref_map_ops = {
- 	.type		= &nft_objref_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_objref_map)),
-@@ -207,6 +245,7 @@ static const struct nft_expr_ops nft_objref_map_ops = {
- 	.deactivate	= nft_objref_map_deactivate,
- 	.destroy	= nft_objref_map_destroy,
- 	.dump		= nft_objref_map_dump,
-+	.validate	= nft_objref_map_validate,
- 	.reduce		= NFT_REDUCE_READONLY,
- };
- 
+ 	if (idx >= 0 &&
+ 	    ctx->vlan[idx].proto == br->vlan_proto) {
 -- 
 2.51.0
 
