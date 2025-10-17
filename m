@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077E95695;
-	Fri, 17 Oct 2025 15:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E69032C95D;
+	Fri, 17 Oct 2025 15:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715222; cv=none; b=PCG6+CkNPZIftAZ7f5scLUk0QFxyDvx9ob809wiWDCdnSGV1RxCNqNBMqEXKenmfGLTsZtYZnc66JBGWLBBDqlkXSsQ2xCUUC2EQcmIXuzhRn+M+U09ihAwx0U4dG7aSTT7EWPmjGixZ6XUbXJb03HOyjIPcLKSda0R25BQcwXs=
+	t=1760715225; cv=none; b=Q4wO5sZLPBSuNrqklL2O3tjPVvuBNkCPV8pAruLZ3zKY6BDYRqZI2Xtc3apdacBAUC18vUrYs0B8iISMJ0zpXOKkMReeM7KbkPubY9pwpR6dx60dLK2mLYaDWVq3YtZNGlEG9fnpLK+dtDpIyUdb4s9IUaEPvo4j2/bnEhyDqns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715222; c=relaxed/simple;
-	bh=GmL9Wi4n+5JleojEYTjpavEhX1lx6F4bqTCnus+PkJQ=;
+	s=arc-20240116; t=1760715225; c=relaxed/simple;
+	bh=eSla8AgxdrxCQhpeOdzVHlOaaD4rKhlUoBSj1c0mLmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWFir7P+dpsus/JAesExQG8gjgdmJm/fBkWzoTz8jsfogOh363sQWi2QjAKwLdCau2B2dneHS3kp3mWrCLht4H+JHx8/zBNfxwFCjCjIjDDNIfYBhNq9m1OAmAFcYQDGXMif4ozn/S0nPME0XUkcHptDRL3HqQ46wmM66sKmq/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7WpLa5g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0GPkLdho5kAwLLvJYT0vrZwm811Xqatwp3jssv/dtYcDYQln7YqcFUFogiq6jJX0HnPtLsrl7j5SpgHPQLtCPeqVHmh+EPPP+bUXVkEEvlNaYC6jvXENJR9K4Knqcg66o/E0wkyp1LF7gdnc6/1VWuO4uSYXOMGWp7X1n+La/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCChpabb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7WpLa5g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BC3C4CEE7;
-	Fri, 17 Oct 2025 15:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCChpabb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0D3C4CEE7;
+	Fri, 17 Oct 2025 15:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715221;
-	bh=GmL9Wi4n+5JleojEYTjpavEhX1lx6F4bqTCnus+PkJQ=;
+	s=korg; t=1760715224;
+	bh=eSla8AgxdrxCQhpeOdzVHlOaaD4rKhlUoBSj1c0mLmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7WpLa5grwwPgQSAj2oogh5gXwRsMuqbWW3j5F+vejYqx+mfvRckSEbeczxPXsIyV
-	 vt03IaZfa/vCnCNiFGmhOoKM2NXLw7gdE/zxkDHOZKPSrAgEbTZGoTraWm9PzsZLgr
-	 2JPZlPQrFtTUm0rh847C5UYIZ6IbEyM+/ffutwUY=
+	b=DCChpabbJ4hrxT+dWc53gJnLgUQxP98zWbpscuuWy16GsKb7K2rd1rWre1w06dYUk
+	 /grwdiWoCc6U1KE0W0jRTxb8OlIIQIIeLn4xgDq3Redix/bed9mJjgABbHlUDJZRG0
+	 Wfpnr/h0EGYXbIYOuw6GwBYCTgbzdewlB3yWN3s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GuangFei Luo <luogf2025@163.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 141/371] ACPI: battery: Add synchronization between interface updates
-Date: Fri, 17 Oct 2025 16:51:56 +0200
-Message-ID: <20251017145207.037006098@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.17 142/371] arm64: dts: qcom: msm8916: Add missing MDSS reset
+Date: Fri, 17 Oct 2025 16:51:57 +0200
+Message-ID: <20251017145207.074276241@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,213 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 399dbcadc01ebf0035f325eaa8c264f8b5cd0a14 upstream.
+commit 99b78773c2ae55dcc01025f94eae8ce9700ae985 upstream.
 
-There is no synchronization between different code paths in the ACPI
-battery driver that update its sysfs interface or its power supply
-class device interface.  In some cases this results to functional
-failures due to race conditions.
+On most MSM8916 devices (aside from the DragonBoard 410c), the bootloader
+already initializes the display to show the boot splash screen. In this
+situation, MDSS is already configured and left running when starting Linux.
+To avoid side effects from the bootloader configuration, the MDSS reset can
+be specified in the device tree to start again with a clean hardware state.
 
-One example of this is when two ACPI notifications:
+The reset for MDSS is currently missing in msm8916.dtsi, which causes
+errors when the MDSS driver tries to re-initialize the registers:
 
-  - ACPI_BATTERY_NOTIFY_STATUS (0x80)
-  - ACPI_BATTERY_NOTIFY_INFO   (0x81)
+ dsi_err_worker: status=6
+ dsi_err_worker: status=6
+ dsi_err_worker: status=6
+ ...
 
-are triggered (by the platform firmware) in a row with a little delay
-in between after removing and reinserting a laptop battery.  Both
-notifications cause acpi_battery_update() to be called and if the delay
-between them is sufficiently small, sysfs_add_battery() can be re-entered
-before battery->bat is set which leads to a duplicate sysfs entry error:
+It turns out that we have always indirectly worked around this by building
+the MDSS driver as a module. Before v6.17, the power domain was temporarily
+turned off until the module was loaded, long enough to clear the register
+contents. In v6.17, power domains are not turned off during boot until
+sync_state() happens, so this is no longer working. Even before v6.17 this
+resulted in broken behavior, but notably only when the MDSS driver was
+built-in instead of a module.
 
- sysfs: cannot create duplicate filename '/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1'
- CPU: 1 UID: 0 PID: 185 Comm: kworker/1:4 Kdump: loaded Not tainted 6.12.38+deb13-amd64 #1  Debian 6.12.38-1
- Hardware name: Gateway          NV44             /SJV40-MV        , BIOS V1.3121 04/08/2009
- Workqueue: kacpi_notify acpi_os_execute_deferred
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x5d/0x80
-  sysfs_warn_dup.cold+0x17/0x23
-  sysfs_create_dir_ns+0xce/0xe0
-  kobject_add_internal+0xba/0x250
-  kobject_add+0x96/0xc0
-  ? get_device_parent+0xde/0x1e0
-  device_add+0xe2/0x870
-  __power_supply_register.part.0+0x20f/0x3f0
-  ? wake_up_q+0x4e/0x90
-  sysfs_add_battery+0xa4/0x1d0 [battery]
-  acpi_battery_update+0x19e/0x290 [battery]
-  acpi_battery_notify+0x50/0x120 [battery]
-  acpi_ev_notify_dispatch+0x49/0x70
-  acpi_os_execute_deferred+0x1a/0x30
-  process_one_work+0x177/0x330
-  worker_thread+0x251/0x390
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xd2/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x34/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- kobject: kobject_add_internal failed for BAT1 with -EEXIST, don't try to register things with the same name in the same directory.
-
-There are also other scenarios in which analogous issues may occur.
-
-Address this by using a common lock in all of the code paths leading
-to updates of driver interfaces: ACPI Notify () handler, system resume
-callback and post-resume notification, device addition and removal.
-
-This new lock replaces sysfs_lock that has been used only in
-sysfs_remove_battery() which now is going to be always called under
-the new lock, so it doesn't need any internal locking any more.
-
-Fixes: 10666251554c ("ACPI: battery: Install Notify() handler directly")
-Closes: https://lore.kernel.org/linux-acpi/20250910142653.313360-1-luogf2025@163.com/
-Reported-by: GuangFei Luo <luogf2025@163.com>
-Tested-by: GuangFei Luo <luogf2025@163.com>
-Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 305410ffd1b2 ("arm64: dts: msm8916: Add display support")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250915-msm8916-resets-v1-1-a5c705df0c45@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c |   43 +++++++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -92,7 +92,7 @@ enum {
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1562,6 +1562,8 @@
  
- struct acpi_battery {
- 	struct mutex lock;
--	struct mutex sysfs_lock;
-+	struct mutex update_lock;
- 	struct power_supply *bat;
- 	struct power_supply_desc bat_desc;
- 	struct acpi_device *device;
-@@ -904,15 +904,12 @@ static int sysfs_add_battery(struct acpi
+ 			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
  
- static void sysfs_remove_battery(struct acpi_battery *battery)
- {
--	mutex_lock(&battery->sysfs_lock);
--	if (!battery->bat) {
--		mutex_unlock(&battery->sysfs_lock);
-+	if (!battery->bat)
- 		return;
--	}
++			resets = <&gcc GCC_MDSS_BCR>;
 +
- 	battery_hook_remove_battery(battery);
- 	power_supply_unregister(battery->bat);
- 	battery->bat = NULL;
--	mutex_unlock(&battery->sysfs_lock);
- }
+ 			interrupt-controller;
+ 			#interrupt-cells = <1>;
  
- static void find_battery(const struct dmi_header *dm, void *private)
-@@ -1072,6 +1069,9 @@ static void acpi_battery_notify(acpi_han
- 
- 	if (!battery)
- 		return;
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	old = battery->bat;
- 	/*
- 	 * On Acer Aspire V5-573G notifications are sometimes triggered too
-@@ -1094,21 +1094,22 @@ static void acpi_battery_notify(acpi_han
- }
- 
- static int battery_notify(struct notifier_block *nb,
--			       unsigned long mode, void *_unused)
-+			  unsigned long mode, void *_unused)
- {
- 	struct acpi_battery *battery = container_of(nb, struct acpi_battery,
- 						    pm_nb);
--	int result;
- 
--	switch (mode) {
--	case PM_POST_HIBERNATION:
--	case PM_POST_SUSPEND:
-+	if (mode == PM_POST_SUSPEND || mode == PM_POST_HIBERNATION) {
-+		guard(mutex)(&battery->update_lock);
-+
- 		if (!acpi_battery_present(battery))
- 			return 0;
- 
- 		if (battery->bat) {
- 			acpi_battery_refresh(battery);
- 		} else {
-+			int result;
-+
- 			result = acpi_battery_get_info(battery);
- 			if (result)
- 				return result;
-@@ -1120,7 +1121,6 @@ static int battery_notify(struct notifie
- 
- 		acpi_battery_init_alarm(battery);
- 		acpi_battery_get_state(battery);
--		break;
- 	}
- 
- 	return 0;
-@@ -1198,6 +1198,8 @@ static int acpi_battery_update_retry(str
- {
- 	int retry, ret;
- 
-+	guard(mutex)(&battery->update_lock);
-+
- 	for (retry = 5; retry; retry--) {
- 		ret = acpi_battery_update(battery, false);
- 		if (!ret)
-@@ -1208,6 +1210,13 @@ static int acpi_battery_update_retry(str
- 	return ret;
- }
- 
-+static void sysfs_battery_cleanup(struct acpi_battery *battery)
-+{
-+	guard(mutex)(&battery->update_lock);
-+
-+	sysfs_remove_battery(battery);
-+}
-+
- static int acpi_battery_add(struct acpi_device *device)
- {
- 	int result = 0;
-@@ -1230,7 +1239,7 @@ static int acpi_battery_add(struct acpi_
- 	if (result)
- 		return result;
- 
--	result = devm_mutex_init(&device->dev, &battery->sysfs_lock);
-+	result = devm_mutex_init(&device->dev, &battery->update_lock);
- 	if (result)
- 		return result;
- 
-@@ -1262,7 +1271,7 @@ fail_pm:
- 	device_init_wakeup(&device->dev, 0);
- 	unregister_pm_notifier(&battery->pm_nb);
- fail:
--	sysfs_remove_battery(battery);
-+	sysfs_battery_cleanup(battery);
- 
- 	return result;
- }
-@@ -1281,6 +1290,9 @@ static void acpi_battery_remove(struct a
- 
- 	device_init_wakeup(&device->dev, 0);
- 	unregister_pm_notifier(&battery->pm_nb);
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	sysfs_remove_battery(battery);
- }
- 
-@@ -1297,6 +1309,9 @@ static int acpi_battery_resume(struct de
- 		return -EINVAL;
- 
- 	battery->update_time = 0;
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	acpi_battery_update(battery, true);
- 	return 0;
- }
 
 
