@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD5335076;
-	Fri, 17 Oct 2025 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982293370FF;
+	Fri, 17 Oct 2025 15:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713297; cv=none; b=W1Ur7SoKsT6H47VEFkukpHlGqSA/c48fTpG2J1CpQZR4Ec8WpVY51bZatqT7QMIyk2yDrkR/xHhqGrHlqUoOfSoUarZP+QuS7GT1ryv59F1z2j3GYxO5Z+B4TVt+U8e/SMochpPbBT9VCLIqxbscOmvXMzhQDikJGLH0p7j5zcQ=
+	t=1760713300; cv=none; b=g9UZFIOe4kqDtbR5lp3BRUIDXSTkoEHDi7/7eqxzJ/p1pu/6PI/IwR9uSLY3goeKc7V2SZXhro1rSxgI8oRPr18nFrsQUAHja2Drq/sWfY59b+/iey3zVEEDdsYCdEZJsg7zDlms3eqqzPt1npFJm2R+xSmMDyWdPygQNzl11Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713297; c=relaxed/simple;
-	bh=Uw3zf6w5zgwcCoMqH7YflfRZa4uj9FXqxFlVI/haaNY=;
+	s=arc-20240116; t=1760713300; c=relaxed/simple;
+	bh=EslSBIqLlzGKT+xeGGneK0+RPOmJvOoj6YHPa8MFRt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jm0bUyx7P5FWuJ7hRfzsibxEZPYRK6yuc2p3H1P8qX0PAbtxDcsRZxvwcAAnXI9U7HroeOM5y4w2QYM7fMqYn+/1HrU2YvvTIZhKin7sJD/U6xDv0GoGOdqtp8JqXbx42mYLF6eUliFFOcj3vd47yEdW3oXj5fud0cpf2Y6HG/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIsVwFCW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ja6nWI6/FeOYucrgSwIwQpPCPo7MWSg+4H8FK7uaSVMQJXLvT2T76u90+kOhlnoPCcSMxGsVSTD3vIvzmuxZNz0saDSX35HvbHLLOlpfJcrI7TY6hgXYGjezdI2l6rfpuluEd1VgDmBzDoH5VX2d9B8z84dJfA0yQW6rdfPvtVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT79YolG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIsVwFCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192F7C4CEE7;
-	Fri, 17 Oct 2025 15:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT79YolG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6CBC4CEE7;
+	Fri, 17 Oct 2025 15:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713297;
-	bh=Uw3zf6w5zgwcCoMqH7YflfRZa4uj9FXqxFlVI/haaNY=;
+	s=korg; t=1760713300;
+	bh=EslSBIqLlzGKT+xeGGneK0+RPOmJvOoj6YHPa8MFRt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIsVwFCWn0NELGqXYHuvGEKpr/bVeYNfNu+UAEX3at7dmKJnSBGLgdIdoxh/ssDfe
-	 o5iF5CoBtg3hqjY7u3o5xTeGCCoz8f81LMZlGBHHjSIYAQAa3L22ckvi0ENCulZYEg
-	 5Qra/yRpKfkOqC+TRvHZuCy2EMJf1GmoUsuDC7c0=
+	b=OT79YolGkM3G5FYuoA2AD6u7xJZT5fS4IA4s2C9TCIvKDXDTl9JBFV+tJcYv3sbpJ
+	 mSdb/4vTyHtb2PpJDtx6F6NSJTCKmd5YTFgF1rnr/MDMT1yspwQNrVB6Tcnig06t26
+	 pcAw7dQO0F0ICO3WcoNWpKLQFeJHKmpif3PyPenk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
-	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 116/168] PCI: rcar-host: Convert struct rcar_msi mask_lock into raw spinlock
-Date: Fri, 17 Oct 2025 16:53:15 +0200
-Message-ID: <20251017145133.298611420@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.1 117/168] PCI: tegra194: Fix broken tegra_pcie_ep_raise_msi_irq()
+Date: Fri, 17 Oct 2025 16:53:16 +0200
+Message-ID: <20251017145133.334964269@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -55,102 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 5ed35b4d490d8735021cce9b715b62a418310864 upstream.
+commit b640d42a6ac9ba01abe65ec34f7c73aaf6758ab8 upstream.
 
-The rcar_msi_irq_unmask() function may be called from a PCI driver
-request_threaded_irq() function. This triggers kernel/irq/manage.c
-__setup_irq() which locks raw spinlock &desc->lock descriptor lock
-and with that descriptor lock held, calls rcar_msi_irq_unmask().
+The pci_epc_raise_irq() supplies a MSI or MSI-X interrupt number in range
+(1-N), as per the pci_epc_raise_irq() kdoc, where N is 32 for MSI.
 
-Since the &desc->lock descriptor lock is a raw spinlock, and the rcar_msi
-.mask_lock is not a raw spinlock, this setup triggers 'BUG: Invalid wait
-context' with CONFIG_PROVE_RAW_LOCK_NESTING=y.
+But tegra_pcie_ep_raise_msi_irq() incorrectly uses the interrupt number as
+the MSI vector. This causes wrong MSI vector to be triggered, leading to
+the failure of PCI endpoint Kselftest MSI_TEST test case.
 
-Use scoped_guard() to simplify the locking.
+To fix this issue, convert the interrupt number to MSI vector.
 
-Fixes: 83ed8d4fa656 ("PCI: rcar: Convert to MSI domains")
-Reported-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Reported-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250909162707.13927-2-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20250922140822.519796-6-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c |   27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/pcie-rcar-host.c
-+++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -12,6 +12,7 @@
-  */
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1949,10 +1949,10 @@ static int tegra_pcie_ep_raise_legacy_ir
  
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/delay.h>
-@@ -36,7 +37,7 @@ struct rcar_msi {
- 	DECLARE_BITMAP(used, INT_PCI_MSI_NR);
- 	struct irq_domain *domain;
- 	struct mutex map_lock;
--	spinlock_t mask_lock;
-+	raw_spinlock_t mask_lock;
- 	int irq1;
- 	int irq2;
- };
-@@ -639,28 +640,26 @@ static void rcar_msi_irq_mask(struct irq
+ static int tegra_pcie_ep_raise_msi_irq(struct tegra_pcie_dw *pcie, u16 irq)
  {
- 	struct rcar_msi *msi = irq_data_get_irq_chip_data(d);
- 	struct rcar_pcie *pcie = &msi_to_host(msi)->pcie;
--	unsigned long flags;
- 	u32 value;
+-	if (unlikely(irq > 31))
++	if (unlikely(irq > 32))
+ 		return -EINVAL;
  
--	spin_lock_irqsave(&msi->mask_lock, flags);
--	value = rcar_pci_read_reg(pcie, PCIEMSIIER);
--	value &= ~BIT(d->hwirq);
--	rcar_pci_write_reg(pcie, value, PCIEMSIIER);
--	spin_unlock_irqrestore(&msi->mask_lock, flags);
-+	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
-+		value = rcar_pci_read_reg(pcie, PCIEMSIIER);
-+		value &= ~BIT(d->hwirq);
-+		rcar_pci_write_reg(pcie, value, PCIEMSIIER);
-+	}
+-	appl_writel(pcie, BIT(irq), APPL_MSI_CTRL_1);
++	appl_writel(pcie, BIT(irq - 1), APPL_MSI_CTRL_1);
+ 
+ 	return 0;
  }
- 
- static void rcar_msi_irq_unmask(struct irq_data *d)
- {
- 	struct rcar_msi *msi = irq_data_get_irq_chip_data(d);
- 	struct rcar_pcie *pcie = &msi_to_host(msi)->pcie;
--	unsigned long flags;
- 	u32 value;
- 
--	spin_lock_irqsave(&msi->mask_lock, flags);
--	value = rcar_pci_read_reg(pcie, PCIEMSIIER);
--	value |= BIT(d->hwirq);
--	rcar_pci_write_reg(pcie, value, PCIEMSIIER);
--	spin_unlock_irqrestore(&msi->mask_lock, flags);
-+	scoped_guard(raw_spinlock_irqsave, &msi->mask_lock) {
-+		value = rcar_pci_read_reg(pcie, PCIEMSIIER);
-+		value |= BIT(d->hwirq);
-+		rcar_pci_write_reg(pcie, value, PCIEMSIIER);
-+	}
- }
- 
- static int rcar_msi_set_affinity(struct irq_data *d, const struct cpumask *mask, bool force)
-@@ -776,7 +775,7 @@ static int rcar_pcie_enable_msi(struct r
- 	int err;
- 
- 	mutex_init(&msi->map_lock);
--	spin_lock_init(&msi->mask_lock);
-+	raw_spin_lock_init(&msi->mask_lock);
- 
- 	err = of_address_to_resource(dev->of_node, 0, &res);
- 	if (err)
 
 
