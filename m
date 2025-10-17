@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76390330B0C;
-	Fri, 17 Oct 2025 15:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B630330B0F;
+	Fri, 17 Oct 2025 15:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715672; cv=none; b=u8msVgyWQWXBSuldEPM6MOHo3p1O87IzI6dYp7mpbsRY2TRTDQeA1sSG9BOrri1DLyfFmon3heU0ud5IviH2AQH0eVK1IeR2nCyhNt2jfBX0+trFd/VcJmd2AP5tGN7l10ago1e7L6X1fJIyhxLgejznfZRy7rsyxenxzH7U1q0=
+	t=1760715675; cv=none; b=q+1qilMb2njv65SoJ/g66VYIj4DEWxRofUhgjJyCS8k1R4eYB9frWrAO+5KPwfe7llKh+/DhYm+mqFYhYAFrbwJcUvLD4jMK6hEhf2c7XGh/5qR1ufyKmgQ5KkUGWPNIbvuv+KpvUVhc+UJdSa10Mybj708wlR3pSv+kSoVmb0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715672; c=relaxed/simple;
-	bh=nfgApfVrZIZtXGZuBZXScDN2+q9eT5KWTBnqpEYMVAs=;
+	s=arc-20240116; t=1760715675; c=relaxed/simple;
+	bh=sOEWN7onPNQwrblPCuq0FCZ0eL4EeNlt5y3nu8Q+6cI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjL3Opw6ZDo8WK9G3WLVMJav2lm6WDHromBEQFqyUZ3zAFOk51fmUTJWd1hmOY2eZRnsf7e3wf1R8YRJIhTxoCAGs1/pB7vZVQzsdtAu5dRePneG3Jg7rt2XpwNHSf0d9wbg8oVGhLpJtgTuHIiwOOgXruVYK261Myr77ymjomw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xkql3PP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F14Hm1WgcEj9fzoKIe3R2OK7hZenx8S4jmZu4k4KFDkrAWWPYjaSVpdUtM8SeKUyt7KgE0B43WfNCIiKm5gOivj1odg7By8fkXfdLB2di5i/cnXHWCoLdcZMomq7cwYbFEtu+BF33bsXMPkKE9QN2MG4M5MiOSuA2L1G+zkqMwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAMBlteo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xkql3PP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F21C4CEE7;
-	Fri, 17 Oct 2025 15:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAMBlteo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AB7C4CEE7;
+	Fri, 17 Oct 2025 15:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715672;
-	bh=nfgApfVrZIZtXGZuBZXScDN2+q9eT5KWTBnqpEYMVAs=;
+	s=korg; t=1760715675;
+	bh=sOEWN7onPNQwrblPCuq0FCZ0eL4EeNlt5y3nu8Q+6cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xkql3PP2Ib+vLkndxNwI4sc6imz8ZXybiXZOk70Gm60HyRkeZFbbtMXll9tKbUTpV
-	 /YzZJ7GpqzOQWnIHRk5R5lesyAtv99I7Wj4beG45Q6fCHBHUMyMrCPtjCVmV0DSwWu
-	 68RhHmYJ1S4XvnO5/uZgz3N68ngOv/g/6E952+ZE=
+	b=jAMBlteophL1PPlIpE4qJOUTe4zDNVQxVmraaKGNC80rIpnk5izn5e9VEbhkzMMQg
+	 56BbrPjPgIYghhC90e1Bk7eA/TyoU99hc+K4z8uHOQd/XAAo5Afq5rWdaI+79a3vZe
+	 JEubvox3pmPWlJq8cRD6tW5+KU948QTM/tD/n2vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.17 297/371] xfs: use deferred intent items for reaping crosslinked blocks
-Date: Fri, 17 Oct 2025 16:54:32 +0200
-Message-ID: <20251017145212.818685612@linuxfoundation.org>
+	Esben Haabendal <esben@geanix.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.17 271/371] rtc: interface: Fix long-standing race when setting alarm
+Date: Fri, 17 Oct 2025 16:54:06 +0200
+Message-ID: <20251017145211.880030361@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,50 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Esben Haabendal <esben@geanix.com>
 
-commit cd32a0c0dcdf634f2e0e71f41c272e19dece6264 upstream.
+commit 795cda8338eab036013314dbc0b04aae728880ab upstream.
 
-When we're removing rmap records for crosslinked blocks, use deferred
-intent items so that we can try to free/unmap as many of the old data
-structure's blocks as we can in the same transaction as the commit.
+As described in the old comment dating back to
+commit 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
+from 2010, we have been living with a race window when setting alarm
+with an expiry in the near future (i.e. next second).
+With 1 second resolution, it can happen that the second ticks after the
+check for the timer having expired, but before the alarm is actually set.
+When this happen, no alarm IRQ is generated, at least not with some RTC
+chips (isl12022 is an example of this).
 
-Cc: <stable@vger.kernel.org> # v6.6
-Fixes: 1c7ce115e52106 ("xfs: reap large AG metadata extents when possible")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+With UIE RTC timer being implemented on top of alarm irq, being re-armed
+every second, UIE will occasionally fail to work, as an alarm irq lost
+due to this race will stop the re-arming loop.
+
+For now, I have limited the additional expiry check to only be done for
+alarms set to next seconds. I expect it should be good enough, although I
+don't know if we can now for sure that systems with loads could end up
+causing the same problems for alarms set 2 seconds or even longer in the
+future.
+
+I haven't been able to reproduce the problem with this check in place.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-1-3de8e530a39e@geanix.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/reap.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/rtc/interface.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -416,8 +416,6 @@ xreap_agextent_iter(
- 		trace_xreap_dispose_unmap_extent(pag_group(sc->sa.pag), agbno,
- 				*aglenp);
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -443,6 +443,29 @@ static int __rtc_set_alarm(struct rtc_de
+ 	else
+ 		err = rtc->ops->set_alarm(rtc->dev.parent, alarm);
  
--		rs->force_roll = true;
--
- 		if (rs->oinfo == &XFS_RMAP_OINFO_COW) {
- 			/*
- 			 * If we're unmapping CoW staging extents, remove the
-@@ -426,11 +424,14 @@ xreap_agextent_iter(
- 			 */
- 			xfs_refcount_free_cow_extent(sc->tp, false, fsbno,
- 					*aglenp);
-+			rs->force_roll = true;
- 			return 0;
- 		}
- 
--		return xfs_rmap_free(sc->tp, sc->sa.agf_bp, sc->sa.pag, agbno,
--				*aglenp, rs->oinfo);
-+		xfs_rmap_free_extent(sc->tp, false, fsbno, *aglenp,
-+				rs->oinfo->oi_owner);
-+		rs->deferred++;
-+		return 0;
- 	}
- 
- 	trace_xreap_dispose_free_extent(pag_group(sc->sa.pag), agbno, *aglenp);
++	/*
++	 * Check for potential race described above. If the waiting for next
++	 * second, and the second just ticked since the check above, either
++	 *
++	 * 1) It ticked after the alarm was set, and an alarm irq should be
++	 *    generated.
++	 *
++	 * 2) It ticked before the alarm was set, and alarm irq most likely will
++	 * not be generated.
++	 *
++	 * While we cannot easily check for which of these two scenarios we
++	 * are in, we can return -ETIME to signal that the timer has already
++	 * expired, which is true in both cases.
++	 */
++	if ((scheduled - now) <= 1) {
++		err = __rtc_read_time(rtc, &tm);
++		if (err)
++			return err;
++		now = rtc_tm_to_time64(&tm);
++		if (scheduled <= now)
++			return -ETIME;
++	}
++
+ 	trace_rtc_set_alarm(rtc_tm_to_time64(&alarm->time), err);
+ 	return err;
+ }
 
 
