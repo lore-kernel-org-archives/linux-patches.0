@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB343328F5;
-	Fri, 17 Oct 2025 15:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAD232C93E;
+	Fri, 17 Oct 2025 15:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715258; cv=none; b=awfjfnkbQt0ziyePS9YqieBFzdmQMHl5DKiRBoIXxdXmiL3WQ2hPWWVbdQbxR6N/SG6l8huMYAezy8nRJHX2DrAYqZ3mlnkqqHJKktQQXf5nb7OcOATjZli3UPoNEObRdcV50yUfcTx8aspzTGfaWgmFUSnqzvFCCjKoWpuwjfQ=
+	t=1760715261; cv=none; b=bbRsrDku8a+gJhzlS037EZHG+r7BAzKX6nI5pjr6oynOy+c1UNKPpvVittvUhE11KBIJPHOJPos6wJ3fOT3LzK87qeqYaaWYRvyqm60DZVBbnCpSPOSDeVStDypV1KKE1vLozBs/QLdDRdT7rRMH98VnCTHcE62J+mjH/bSSyw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715258; c=relaxed/simple;
-	bh=DdBsN6XYBr9n4TkQVlNypUjiKPKKOh585wPpBv+MIM4=;
+	s=arc-20240116; t=1760715261; c=relaxed/simple;
+	bh=vyg+jOriZ6ashjFAkExDWCqMJKboJZqZ7t/hzCqe02Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldh6jR9N7YpVY56P+gjV1DBBsECLpeFNR/7I8KwbIZt8IQfkTnV+MvlM8E83/T8Vj3CN3gAadZkZHuRA7teigDQ/D/Ej141w0RXvRM3fRwSEUSVsRtu0g03bDxGnTqbXNAnLguPAW/dZBOwurVAQa2pS2sfU2L9Spfvqfd/3DQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opuKQnsA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdlGSNHrcGLl+ZKTwMjtPV1hRJgftTjwkQJUBbucv8uqf5PCXMhvnbKKSFMp2r8NRuAH4OZtOIsWUeqs7S1fBZxAuCVVo6R1eJNd1BKhQXMRTdV3+YBCt/cFAwjsqHAzeokValVVV17QnuPcIFSUxF968g3LfqCb0HDj5fcGEuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tId/1dRK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opuKQnsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371D8C113D0;
-	Fri, 17 Oct 2025 15:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tId/1dRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22547C113D0;
+	Fri, 17 Oct 2025 15:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715258;
-	bh=DdBsN6XYBr9n4TkQVlNypUjiKPKKOh585wPpBv+MIM4=;
+	s=korg; t=1760715261;
+	bh=vyg+jOriZ6ashjFAkExDWCqMJKboJZqZ7t/hzCqe02Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opuKQnsAAmV5X6qJ6UisFGjQSgwkGoZjShZ2a1+c4m/ce/EPtSHEVafWnh1LsoKKL
-	 4bUqvno/XeFAFVRK+Oo2sosVM/6UJaBJu2+hZZiz/T0PcEtIiBm3IulsfaGbolricm
-	 xMjbdSAhtcNbIqfk96i6FDbcApVui4BWN0DB5/rc=
+	b=tId/1dRKcTtojzmZgwGv7s+TInE83d9LV+3sgk7cVRGxGKjOp7iLLdkTIpYXJupPx
+	 c09gZKNTI46ceFMGNoz3BaiUPuV3v5N85yq8HiYzi2SsPtiO/avcp+ma26uNN+b6lq
+	 2q3a1KtENNCknlijuAiNmawLcNNnuiKGtrPREuUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.17 153/371] perf/arm-cmn: Fix CMN S3 DTM offset
-Date: Fri, 17 Oct 2025 16:52:08 +0200
-Message-ID: <20251017145207.469323064@linuxfoundation.org>
+	Gunnar Kudrjavets <gunnarku@amazon.com>,
+	Justinien Bouron <jbouron@amazon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 127/371] tpm_tis: Fix incorrect arguments in tpm_tis_probe_irq_single
+Date: Fri, 17 Oct 2025 16:51:42 +0200
+Message-ID: <20251017145206.527712096@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,54 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Gunnar Kudrjavets <gunnarku@amazon.com>
 
-commit b3fe1c83a56f3cb7c475747ee1c6ec5a9dd5f60e upstream.
+[ Upstream commit 8a81236f2cb0882c7ea6c621ce357f7f3f601fe5 ]
 
-CMN S3's DTM offset is different between r0px and r1p0, and it
-turns out this was not a error in the earlier documentation, but
-does actually exist in the design. Lovely.
+The tpm_tis_write8() call specifies arguments in wrong order. Should be
+(data, addr, value) not (data, value, addr). The initial correct order
+was changed during the major refactoring when the code was split.
 
-Cc: stable@vger.kernel.org
-Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 41a5e1cf1fe1 ("tpm/tpm_tis: Split tpm_tis driver into a core and TCG TIS compliant phy")
+Signed-off-by: Gunnar Kudrjavets <gunnarku@amazon.com>
+Reviewed-by: Justinien Bouron <jbouron@amazon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -65,7 +65,7 @@
- /* PMU registers occupy the 3rd 4KB page of each node's region */
- #define CMN_PMU_OFFSET			0x2000
- /* ...except when they don't :( */
--#define CMN_S3_DTM_OFFSET		0xa000
-+#define CMN_S3_R1_DTM_OFFSET		0xa000
- #define CMN_S3_PMU_OFFSET		0xd900
- 
- /* For most nodes, this is all there is */
-@@ -233,6 +233,9 @@ enum cmn_revision {
- 	REV_CMN700_R1P0,
- 	REV_CMN700_R2P0,
- 	REV_CMN700_R3P0,
-+	REV_CMNS3_R0P0 = 0,
-+	REV_CMNS3_R0P1,
-+	REV_CMNS3_R1P0,
- 	REV_CI700_R0P0 = 0,
- 	REV_CI700_R1P0,
- 	REV_CI700_R2P0,
-@@ -425,8 +428,8 @@ static enum cmn_model arm_cmn_model(cons
- static int arm_cmn_pmu_offset(const struct arm_cmn *cmn, const struct arm_cmn_node *dn)
- {
- 	if (cmn->part == PART_CMN_S3) {
--		if (dn->type == CMN_TYPE_XP)
--			return CMN_S3_DTM_OFFSET;
-+		if (cmn->rev >= REV_CMNS3_R1P0 && dn->type == CMN_TYPE_XP)
-+			return CMN_S3_R1_DTM_OFFSET;
- 		return CMN_S3_PMU_OFFSET;
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 4b12c4b9da8be..8954a8660ffc5 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -978,8 +978,8 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	 * will call disable_irq which undoes all of the above.
+ 	 */
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+-		tpm_tis_write8(priv, original_int_vec,
+-			       TPM_INT_VECTOR(priv->locality));
++		tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality),
++			       original_int_vec);
+ 		rc = -1;
  	}
- 	return CMN_PMU_OFFSET;
+ 
+-- 
+2.51.0
+
 
 
