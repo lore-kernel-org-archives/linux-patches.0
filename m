@@ -1,191 +1,94 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5776230F818
-	for <patches@lists.linux.dev>; Fri, 17 Oct 2025 06:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FBB30F931
+	for <patches@lists.linux.dev>; Fri, 17 Oct 2025 06:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760681484; cv=none; b=O6FKo1dVHFzkjM7yYLD9xfxnMf40CQappwzY2Gv/UFlEGTifWdGLf5mN8Tg90K9T5XPqRFXAcNmFKZPoG9VmMJ/maL2WljzyfG9V9UkdX/WDMQBxYoh6/UKp1A+T7I/MWQV/Sa0AlM4ghj2+Fr10sqTWFCof5NalW6gFhSlgisw=
+	t=1760683270; cv=none; b=GhegW4cpH829j2AmWXuW+ef5TbvJte4UkdTJ3Nu36yv8Ags1RmeOsLCJvD8b3ke4HZdh4HDeqHJWSv3v7lKKqed0FOwPiJUmxpVY4WK0Wju/ihAvamVYjHWDM3wT3VgqRQ+jQMyO8Lg4734j4UAY5ndODtBrvtYHYY7WbSir0N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760681484; c=relaxed/simple;
-	bh=ulNxyjs+7P2Oi91QTv8ZCqiBF+ih61EgQsdAC1fi7Y0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsG5eODaBxvB56ENmIOg/pkLETZoP9hgN4dvswbUekyHMRfR0KGIebAIob85EWZgLOfi3PmZe21pR9GqvLh0c/Lwn0oWdDNYrADhJZ7SpLfI4agBxuYsMPAhtTcBvPUnM8R7qXy2k6Ago8eB5HT4zk39bFZ4siaIMSTL9RzMvrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Up1kYFXe; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760683270; c=relaxed/simple;
+	bh=HEI/VMPAQm/lLBFNuj+LnsxSRZt1uuVXLn4zoDoHKcA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WVseeUrHFecUe2tTCAaY3OgWyR2PFdLF4hvoOzGHH3ME7C0kjULX59vafYgczX+A9WpUJ+SNEmToihhzopYM0pKtxhApqkWE7XrI5wNwsDBiLk7ovjZQurN7JZ9OIWfl8/1XHjr2C26foBqw4UVDAwq9MR7xv5I9Xm+l/edyJLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uz9NQD78; arc=none smtp.client-ip=209.85.160.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Up1kYFXe"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3ee12807d97so1430270f8f.0
-        for <patches@lists.linux.dev>; Thu, 16 Oct 2025 23:11:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uz9NQD78"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-30cce892b7dso726267fac.1
+        for <patches@lists.linux.dev>; Thu, 16 Oct 2025 23:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760681481; x=1761286281; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1760683266; x=1761288066; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OqXHg8fIVhNftDZOE9plbEgrQCbIv7x8GRINtPvlAdM=;
-        b=Up1kYFXeFUU6Yre5Ubf4u3MZeSYpS2YflR6JJN6Isi4KKqRdxq96vz6F9w/qz6P5AV
-         hwJrlMEctw2SquBvXLWqsVHUTYPTtkK6zfwAip11dDmmMYdKnVZ/YwTewzYmnQvZyKYy
-         R9FWomyhvjXXJ4vU/E2LM0tjWbRRloLfz8dhWPGgK7Olo5RpIX01/wfKLhaIHWZX+gsJ
-         cJ6aRgqkrT4lrK7qewctFLatHvFBOdgbzeQvHszykFI2R0xMWbmMcCxZGpkQvbMHCdcp
-         6QdOwQjRiZ6Gr6syRKBkgbaelFMgH87hBZz2C142Kz81zxTh2Ye9H0klmHwkQ4XDtmPw
-         fV4A==
+        bh=HEI/VMPAQm/lLBFNuj+LnsxSRZt1uuVXLn4zoDoHKcA=;
+        b=uz9NQD789TMh5gbNkwBRzuhoQEJz8YQElKJzaG7CToyvUVcM1ZgJjapiMfoTmVWrms
+         /ygH89J+5pKSSRAZjjUBrfdJO5TO0XWxRmNcD0p7geMud10Wf16v+z+QzdYcEuaAuovA
+         xfvLz/k/B1UBn5lijMJaBXZMxy3fOLW/+5EVZVv2E8R+ZywX98Rb91K7145p6KmR4Hiy
+         i2VHLEc7JA0nwjhg9aQHfNdwbWUQYzJfp76cZ6A3KpA7SzIhv6o0rYcGN42B0+LD7K0L
+         BojriZQ4qc3upDO9xZy9TSy8gIKSDJpwetBLIuJt3Sso44ON74OsNFL7IwWcXaaceHnA
+         Y5lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760681481; x=1761286281;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1760683266; x=1761288066;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OqXHg8fIVhNftDZOE9plbEgrQCbIv7x8GRINtPvlAdM=;
-        b=uH63+vKkyn+DVlUlsREUjaz5hBnOY9HbWjKYcVLSc3FAp1Mh/JgkFGzIrBUiwcSi07
-         z9cMMez9kdnmhCaoHpCnKpf6leHjZEaycg3/a+VmtXjZ5gW92tuFdYeXdO0mdqTOPC23
-         KXGC+uSibnj6Z0F9WlMsAhz9eV3duMnQrLfjDUJ9AZo/1R9SXkbBY7PJcStE7Ymn8EdC
-         boLyz4i9voH18V8qPfYablgU12X0AJmHDpGbax2T18TROMUFiC2RXk7RSKNpXPOyk1fa
-         d6/f+sNEsfjMvJ1AZVD8yc0SUR/O4dyR8+ijmTcFYR+HzbOuhO4HXzeNAf433W2ykK/3
-         kjcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU0wdmlIlGJjOd5A6PYPL6uIk/djoPcNo52l6lR8k/yxXCLa0Y7gHSMdgzAJLoxH/mkdsXTmAcY@lists.linux.dev
-X-Gm-Message-State: AOJu0YwxeEWz4WVy3AJWSEqReTmcAsQFa1lh667t/rGctucBk9PRKz9U
-	/UaaY7Nf+CohQ1WI2Q3jBpDzt8jdNQEgab/0j+ARgs7IiO9kRDsIyORF
-X-Gm-Gg: ASbGnctuoEfehA+ibIIrY0yAZGRraXw0YMcFUpsaO4fYg4i2ZPEptUz8a7wzH8Sznqf
-	qrrxoozEW1/cTOgFl0zz5P83Monb/kb4VsEK4A23iFAs/i+F0Rcg1pZEXclNKmgQUXHFR8HFYHb
-	XG8GRQd4Xly2qb41H7difmYsJn13aUeQFSl70ArOJmZaQc7BY65A80XLE5Jg7YuEXXLURyPiP7R
-	+JqEw4qNJmeP2+Lvh1kl4aHVyODmIAR45FFI+zWuTUSYZZ0esKUYJk1AlMNYjh8MJtCHjVMVvFh
-	0wazqaGOgiZrMX4U5a4vS6sE68LrfgwxRwhLdz65IHxtSon7LzgcNltZBKqw90khFM5IFvZH6f9
-	2XA18PRWwG2MEWpHBMB1I3P6tmWgMgcpCYmXUPIkZiKLzWfZ10elZOjEt+0pTVIICWGE+YTeJMI
-	7Mphde4wfgvhY=
-X-Google-Smtp-Source: AGHT+IG9nFyXU6/YzYNrNEKOmFbcI73aJtoTWz3HhvfOqLzAHFD1KIWSe0W31I+6MYQb5EK9zvZOHQ==
-X-Received: by 2002:a05:6000:2507:b0:425:737a:4804 with SMTP id ffacd0b85a97d-42704d4422dmr1625416f8f.4.1760681480389;
-        Thu, 16 Oct 2025 23:11:20 -0700 (PDT)
-Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-426ff84cbb7sm7231059f8f.23.2025.10.16.23.11.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 23:11:19 -0700 (PDT)
-From: Askar Safin <safinaskar@gmail.com>
-To: linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jan Kara <jack@suse.cz>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Julian Stecklina <julian.stecklina@cyberus-technology.de>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Art Nikpal <email2tema@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Graf <graf@amazon.com>,
-	Rob Landley <rob@landley.net>,
-	Lennart Poettering <mzxreary@0pointer.de>,
-	linux-arch@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	initramfs@vger.kernel.org,
-	linux-api@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	Michal Simek <monstr@monstr.eu>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Young <dyoung@redhat.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Jessica Clarke <jrtc27@jrtc27.com>,
-	Nicolas Schichan <nschichan@freebox.fr>,
-	David Disseldorp <ddiss@suse.de>,
-	patches@lists.linux.dev
-Subject: [PATCH v3 3/3] init: remove /proc/sys/kernel/real-root-dev
-Date: Fri, 17 Oct 2025 06:09:56 +0000
-Message-ID: <20251017060956.1151347-4-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251017060956.1151347-1-safinaskar@gmail.com>
-References: <20251017060956.1151347-1-safinaskar@gmail.com>
+        bh=HEI/VMPAQm/lLBFNuj+LnsxSRZt1uuVXLn4zoDoHKcA=;
+        b=KTmIexB/jeyf/ti5hRu9jF25lEnDXM6+PKUKNWPUueT+/0fNXz29kh7FogFijUfZiV
+         gNDfR4KobTTAMbLlI5/HvPCA2uUXd+IeCTa+lmYS6EfPsgBFQRsRzJj7o5zAHJdBvx0O
+         7x7EnraSW7t3GIEWQAWwu20YUjuaY8yKPP2Pn4fkMU9Ne7MyB4y3Ks0m0JZymZFwrqpp
+         z/Sw4Yv8MWSdLusB6k49YBJTW4OUmz+gFY/U3/m3xyQs4qPDWfwHNrpH/vrrmxTMvXzG
+         DOquzxMXSiKfst93Lyxgs3elALLDPeJOX4aBH5ApObk6IhJ9oLov8JEWQfUU/b6n/6rA
+         vZAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUVED/h0nyU1e/Yc9ghJNfwzkcSYAUJNDHoNOI5OxLsZxDo88Tus7uYiRlRGVpxPKSJ1cPL3kpl@lists.linux.dev
+X-Gm-Message-State: AOJu0YzHiX5EyV6qlslK6BzTDSRpORxDDQ8/G+GVQ6Mo3p0LfFrOQKO8
+	p2Ucm2ESYSQHsCtjhOJnFCKrkWOpMrBRf7ycOGNMttKTEEMQXm/VdKMbACdro7rVCRvuWBKCPfW
+	BtDaMm2TLZkkxtVlJlB139vGdOZet3OtGDU1OKwHH
+X-Gm-Gg: ASbGncuVN/CnmuvXCDLz0zpdElOqNpSDI/8YVSuRE2uGgvf/7yRW2EVciaxXOe1OgHO
+	pzul00BjIy7qV0SoTwj/H5gEuL2d5yP/ORhREzjC+K6zQroaKqTqDqUY2PEFna+OHlYWsOoKIqd
+	t7dwW9AMHE62zzQwPdmt981cn+XbzAbyhaY8g3ifxMhbT8bjO2scfuiWSLtGFVNyL6DI+AH6wDJ
+	fZZyUu0zw/nmd+3yVIo1YzA1YXJXCnhku6smaNborgqZ7WrzBGk2z2tfwx0hXi5FSIBK6z4b9Mp
+	uSy1pXMBwtgynA==
+X-Google-Smtp-Source: AGHT+IEVtA11UBYxqTUAD8SJlzk4igtsVuiFNGs1Vhi/4XOyirUuja1zneYwNbjp9heEcW9jRoymFU8GQqzMWhfMiik=
+X-Received: by 2002:a05:6870:255:b0:368:e03:c3d5 with SMTP id
+ 586e51a60fabf-3c98d0fb311mr1107954fac.38.1760683266224; Thu, 16 Oct 2025
+ 23:41:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251016232118.1419895-1-ojeda@kernel.org>
+In-Reply-To: <20251016232118.1419895-1-ojeda@kernel.org>
+From: Burak Emir <bqe@google.com>
+Date: Fri, 17 Oct 2025 14:40:53 +0800
+X-Gm-Features: AS18NWAA1df5ukuaz1ezqHuBrLDNG8qPNJzmhm1IkYGRA3GoDbqAJNDFS4-e_5w
+Message-ID: <CACQBu=U6fDA2MHB3PsWe-+gEjcGKZs_hGftFKuLjhW2z3LnkhQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: bitmap: fix formatting
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alice Ryhl <aliceryhl@google.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Yury Norov <yury.norov@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It is not used anymore.
+On Fri, Oct 17, 2025 at 7:21=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> We do our best to keep the repository `rustfmt`-clean, thus run the tool
+> to fix the formatting issue.
+>
+> Link: https://docs.kernel.org/rust/coding-guidelines.html#style-formattin=
+g
+> Link: https://rust-for-linux.com/contributing#submit-checklist-addendum
+> Fixes: 0f5878834d6c ("rust: bitmap: clean Rust 1.92.0 `unused_unsafe` war=
+ning")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Signed-off-by: Askar Safin <safinaskar@gmail.com>
----
- Documentation/admin-guide/sysctl/kernel.rst |  6 ------
- include/uapi/linux/sysctl.h                 |  1 -
- init/do_mounts_initrd.c                     | 20 --------------------
- 3 files changed, 27 deletions(-)
-
-diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
-index f3ee807b5d8b..218265babaf9 100644
---- a/Documentation/admin-guide/sysctl/kernel.rst
-+++ b/Documentation/admin-guide/sysctl/kernel.rst
-@@ -1215,12 +1215,6 @@ that support this feature.
- ==  ===========================================================================
- 
- 
--real-root-dev
--=============
--
--See Documentation/admin-guide/initrd.rst.
--
--
- reboot-cmd (SPARC only)
- =======================
- 
-diff --git a/include/uapi/linux/sysctl.h b/include/uapi/linux/sysctl.h
-index 63d1464cb71c..1c7fe0f4dca4 100644
---- a/include/uapi/linux/sysctl.h
-+++ b/include/uapi/linux/sysctl.h
-@@ -92,7 +92,6 @@ enum
- 	KERN_DOMAINNAME=8,	/* string: domainname */
- 
- 	KERN_PANIC=15,		/* int: panic timeout */
--	KERN_REALROOTDEV=16,	/* real root device to mount after initrd */
- 
- 	KERN_SPARC_REBOOT=21,	/* reboot command on Sparc */
- 	KERN_CTLALTDEL=22,	/* int: allow ctl-alt-del to reboot */
-diff --git a/init/do_mounts_initrd.c b/init/do_mounts_initrd.c
-index bf381aa0400f..82613a3be756 100644
---- a/init/do_mounts_initrd.c
-+++ b/init/do_mounts_initrd.c
-@@ -8,31 +8,11 @@
- 
- unsigned long initrd_start, initrd_end;
- int initrd_below_start_ok;
--static unsigned int real_root_dev;	/* do_proc_dointvec cannot handle kdev_t */
- static int __initdata mount_initrd = 1;
- 
- phys_addr_t phys_initrd_start __initdata;
- unsigned long phys_initrd_size __initdata;
- 
--#ifdef CONFIG_SYSCTL
--static const struct ctl_table kern_do_mounts_initrd_table[] = {
--	{
--		.procname       = "real-root-dev",
--		.data           = &real_root_dev,
--		.maxlen         = sizeof(int),
--		.mode           = 0644,
--		.proc_handler   = proc_dointvec,
--	},
--};
--
--static __init int kernel_do_mounts_initrd_sysctls_init(void)
--{
--	register_sysctl_init("kernel", kern_do_mounts_initrd_table);
--	return 0;
--}
--late_initcall(kernel_do_mounts_initrd_sysctls_init);
--#endif /* CONFIG_SYSCTL */
--
- static int __init no_initrd(char *str)
- {
- 	pr_warn("noinitrd option is deprecated and will be removed soon\n");
--- 
-2.47.3
-
+Reviewed-by: Burak Emir <bqe@google.com>
