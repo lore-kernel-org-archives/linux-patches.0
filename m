@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0816330B06;
-	Fri, 17 Oct 2025 15:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA16330B0D;
+	Fri, 17 Oct 2025 15:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716000; cv=none; b=cGcUlttyPwy55EkGczqk7STJmLgjW+fpN+GzZXh+DQ8PUGdMnqWP+nSdd2zHRpcPMJag/lTdsmuQ0b7IJ7KwDv61DteCcdoxQZwpEyLxNnfwo1ES6/b9VBwrCSMNZkG7g+wSR/n5HquSuJv7I08C6u2+AxgjeU0quKbto1YZCAE=
+	t=1760716002; cv=none; b=d8mBIXaebuD5T/ZrntIvU2c8TNnOw+XWM32CgaxgZQWF1f3o9+ecFcpch1fe9SZOVkanR/kYQ9z3SFyaaNMSa1tjoDgvzpniujRoUcB7r+Ylwf6SPwyGtI6BG57SOvNApGmAR3TQzQ9Pyfbdah5pK3INU92aq7STzSYH49mpCGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716000; c=relaxed/simple;
-	bh=HNspkJCvI+h13bhY1MiPT71cylGE/CVZAI3/llVuIBo=;
+	s=arc-20240116; t=1760716002; c=relaxed/simple;
+	bh=55CRuIIZCwYF/aT1EM5zqsDHS9LJSH6swStgFtSAeik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJgyUiNkKiNhxtnWn0o3p9m+lnQsDXa3MIVQNBxR4ewt802oBF4UaIFTeLvxs4hfB4nF4cr87HGOxgRJOYZLbBLRcUVcoyHwBkIhcFsBXaY21h4v0LVYKUlvuSSSrk3EpQm44pM1WTdtEyy/yqGvNF6EMbllX+CbZ/DVYMwU+lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhRCFskb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alEJ7eKHrF7QabDRTYPNueDz3L/hp0Kz5pSgEisnEwiqARY0/RR4ABZ/d23271DsedY/lpDmJWP3bvI5AM/EqZTMR0/m5Bw+h9NhGVazXsRu3IjhrKp9lkeupHuqCPI8MZa0jkXQ+SI7LaNiPuIepspdKQl4k1E1F/CGcIlbGh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v63/97Dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhRCFskb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AD5C4CEE7;
-	Fri, 17 Oct 2025 15:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v63/97Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BDFC4CEE7;
+	Fri, 17 Oct 2025 15:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715999;
-	bh=HNspkJCvI+h13bhY1MiPT71cylGE/CVZAI3/llVuIBo=;
+	s=korg; t=1760716002;
+	bh=55CRuIIZCwYF/aT1EM5zqsDHS9LJSH6swStgFtSAeik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhRCFskb23qcoTqJr7DQl5Yfm/yEJP/BTbYcPlMAWu21rBTlhrCs1u8qPxVWH7+Ez
-	 enRtzl1Xe+kneOhP4McJWXjDst55uTLCibU11SkJ1i+LmZkDQ1strDuxou4QGIxNKq
-	 GrmrrshL35lwZeK5sl2YKIw85HJSv5FSwibgVG0o=
+	b=v63/97DcK9LgrfFfJYFLECCpf+JpGv5mpiCg10PNsUSoF0p9kv9oOoeEFbY8Wxz76
+	 C7WFabgcQQ6YploLKlJ46w9D2EROWkgtNi7WjgQwBxG2faOPKP2dvBWQn0B3d//UkL
+	 bSeBpixjWSuolPhHrAyOvuw1h5FmW0sJ9dEkkMuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Kenneth Van Alstyne <kvanals@kvanals.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 005/276] KVM: arm64: Fix softirq masking in FPSIMD register saving sequence
-Date: Fri, 17 Oct 2025 16:51:38 +0200
-Message-ID: <20251017145142.586192403@linuxfoundation.org>
+	Matt Dowling <madowlin@amazon.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yifei Liu <yifei.l.liu@oracle.com>
+Subject: [PATCH 5.15 006/276] udp: Fix memory accounting leak.
+Date: Fri, 17 Oct 2025 16:51:39 +0200
+Message-ID: <20251017145142.623460185@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,86 +53,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-Stable commit 23249dade24e ("KVM: arm64: Fix kernel BUG() due to bad
-backport of FPSIMD/SVE/SME fix") fixed a kernel BUG() caused by a bad
-backport of upstream commit fbc7e61195e2 ("KVM: arm64: Unconditionally
-save+flush host FPSIMD/SVE/SME state") by ensuring that softirqs are
-disabled/enabled across the fpsimd register save operation.
+commit df207de9d9e7a4d92f8567e2c539d9c8c12fd99d upstream.
 
-Unfortunately, although this fixes the original issue, it can now lead
-to deadlock when re-enabling softirqs causes pending softirqs to be
-handled with locks already held:
+Matt Dowling reported a weird UDP memory usage issue.
 
- | BUG: spinlock recursion on CPU#7, CPU 3/KVM/57616
- |  lock: 0xffff3045ef850240, .magic: dead4ead, .owner: CPU 3/KVM/57616, .owner_cpu: 7
- | CPU: 7 PID: 57616 Comm: CPU 3/KVM Tainted: G           O       6.1.152 #1
- | Hardware name: SoftIron SoftIron Platform Mainboard/SoftIron Platform Mainboard, BIOS 1.31 May 11 2023
- | Call trace:
- |  dump_backtrace+0xe4/0x110
- |  show_stack+0x20/0x30
- |  dump_stack_lvl+0x6c/0x88
- |  dump_stack+0x18/0x34
- |  spin_dump+0x98/0xac
- |  do_raw_spin_lock+0x70/0x128
- |  _raw_spin_lock+0x18/0x28
- |  raw_spin_rq_lock_nested+0x18/0x28
- |  update_blocked_averages+0x70/0x550
- |  run_rebalance_domains+0x50/0x70
- |  handle_softirqs+0x198/0x328
- |  __do_softirq+0x1c/0x28
- |  ____do_softirq+0x18/0x28
- |  call_on_irq_stack+0x30/0x48
- |  do_softirq_own_stack+0x24/0x30
- |  do_softirq+0x74/0x90
- |  __local_bh_enable_ip+0x64/0x80
- |  fpsimd_save_and_flush_cpu_state+0x5c/0x68
- |  kvm_arch_vcpu_put_fp+0x4c/0x88
- |  kvm_arch_vcpu_put+0x28/0x88
- |  kvm_sched_out+0x38/0x58
- |  __schedule+0x55c/0x6c8
- |  schedule+0x60/0xa8
+Under normal operation, the UDP memory usage reported in /proc/net/sockstat
+remains close to zero.  However, it occasionally spiked to 524,288 pages
+and never dropped.  Moreover, the value doubled when the application was
+terminated.  Finally, it caused intermittent packet drops.
 
-Take a tiny step towards the upstream fix in 9b19700e623f ("arm64:
-fpsimd: Drop unneeded 'busy' flag") by additionally disabling hardirqs
-while saving the fpsimd registers.
+We can reproduce the issue with the script below [0]:
 
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.y
-Fixes: 23249dade24e ("KVM: arm64: Fix kernel BUG() due to bad backport of FPSIMD/SVE/SME fix")
-Reported-by: Kenneth Van Alstyne <kvanals@kvanals.org>
-Link: https://lore.kernel.org/r/010001999bae0958-4d80d25d-8dda-4006-a6b9-798f3e774f6c-000000@email.amazonses.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+  1. /proc/net/sockstat reports 0 pages
+
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 0
+
+  2. Run the script till the report reaches 524,288
+
+    # python3 test.py & sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> PAGE_SHIFT
+
+  3. Kill the socket and confirm the number never drops
+
+    # pkill python3 && sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 524288
+
+  4. (necessary since v6.0) Trigger proto_memory_pcpu_drain()
+
+    # python3 test.py & sleep 1 && pkill python3
+
+  5. The number doubles
+
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 1048577
+
+The application set INT_MAX to SO_RCVBUF, which triggered an integer
+overflow in udp_rmem_release().
+
+When a socket is close()d, udp_destruct_common() purges its receive
+queue and sums up skb->truesize in the queue.  This total is calculated
+and stored in a local unsigned integer variable.
+
+The total size is then passed to udp_rmem_release() to adjust memory
+accounting.  However, because the function takes a signed integer
+argument, the total size can wrap around, causing an overflow.
+
+Then, the released amount is calculated as follows:
+
+  1) Add size to sk->sk_forward_alloc.
+  2) Round down sk->sk_forward_alloc to the nearest lower multiple of
+      PAGE_SIZE and assign it to amount.
+  3) Subtract amount from sk->sk_forward_alloc.
+  4) Pass amount >> PAGE_SHIFT to __sk_mem_reduce_allocated().
+
+When the issue occurred, the total in udp_destruct_common() was 2147484480
+(INT_MAX + 833), which was cast to -2147482816 in udp_rmem_release().
+
+At 1) sk->sk_forward_alloc is changed from 3264 to -2147479552, and
+2) sets -2147479552 to amount.  3) reverts the wraparound, so we don't
+see a warning in inet_sock_destruct().  However, udp_memory_allocated
+ends up doubling at 4).
+
+Since commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
+memory_allocated"), memory usage no longer doubles immediately after
+a socket is close()d because __sk_mem_reduce_allocated() caches the
+amount in udp_memory_per_cpu_fw_alloc.  However, the next time a UDP
+socket receives a packet, the subtraction takes effect, causing UDP
+memory usage to double.
+
+This issue makes further memory allocation fail once the socket's
+sk->sk_rmem_alloc exceeds net.ipv4.udp_rmem_min, resulting in packet
+drops.
+
+To prevent this issue, let's use unsigned int for the calculation and
+call sk_forward_alloc_add() only once for the small delta.
+
+Note that first_packet_length() also potentially has the same problem.
+
+[0]:
+from socket import *
+
+SO_RCVBUFFORCE = 33
+INT_MAX = (2 ** 31) - 1
+
+s = socket(AF_INET, SOCK_DGRAM)
+s.bind(('', 0))
+s.setsockopt(SOL_SOCKET, SO_RCVBUFFORCE, INT_MAX)
+
+c = socket(AF_INET, SOCK_DGRAM)
+c.connect(s.getsockname())
+
+data = b'a' * 100
+
+while True:
+    c.send(data)
+
+Fixes: f970bd9e3a06 ("udp: implement memory accounting helpers")
+Reported-by: Matt Dowling <madowlin@amazon.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250401184501.67377-3-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Yifei: resolve minor conflicts ]
+Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv4/udp.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1300,13 +1300,17 @@ static void fpsimd_flush_cpu_state(void)
-  */
- void fpsimd_save_and_flush_cpu_state(void)
- {
-+	unsigned long flags;
-+
- 	if (!system_supports_fpsimd())
- 		return;
- 	WARN_ON(preemptible());
--	get_cpu_fpsimd_context();
-+	local_irq_save(flags);
-+	__get_cpu_fpsimd_context();
- 	fpsimd_save();
- 	fpsimd_flush_cpu_state();
--	put_cpu_fpsimd_context();
-+	__put_cpu_fpsimd_context();
-+	local_irq_restore(flags);
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1459,12 +1459,12 @@ static bool udp_skb_has_head_state(struc
  }
  
- #ifdef CONFIG_KERNEL_MODE_NEON
+ /* fully reclaim rmem/fwd memory allocated for skb */
+-static void udp_rmem_release(struct sock *sk, int size, int partial,
+-			     bool rx_queue_lock_held)
++static void udp_rmem_release(struct sock *sk, unsigned int size,
++			     int partial, bool rx_queue_lock_held)
+ {
+ 	struct udp_sock *up = udp_sk(sk);
+ 	struct sk_buff_head *sk_queue;
+-	int amt;
++	unsigned int amt;
+ 
+ 	if (likely(partial)) {
+ 		up->forward_deficit += size;
+@@ -1484,10 +1484,8 @@ static void udp_rmem_release(struct sock
+ 	if (!rx_queue_lock_held)
+ 		spin_lock(&sk_queue->lock);
+ 
+-
+-	sk->sk_forward_alloc += size;
+-	amt = (sk->sk_forward_alloc - partial) & ~(SK_MEM_QUANTUM - 1);
+-	sk->sk_forward_alloc -= amt;
++	amt = (size + sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
++	sk->sk_forward_alloc += size - amt;
+ 
+ 	if (amt)
+ 		__sk_mem_reduce_allocated(sk, amt >> SK_MEM_QUANTUM_SHIFT);
+@@ -1671,7 +1669,7 @@ EXPORT_SYMBOL_GPL(skb_consume_udp);
+ 
+ static struct sk_buff *__first_packet_length(struct sock *sk,
+ 					     struct sk_buff_head *rcvq,
+-					     int *total)
++					     unsigned int *total)
+ {
+ 	struct sk_buff *skb;
+ 
+@@ -1704,8 +1702,8 @@ static int first_packet_length(struct so
+ {
+ 	struct sk_buff_head *rcvq = &udp_sk(sk)->reader_queue;
+ 	struct sk_buff_head *sk_queue = &sk->sk_receive_queue;
++	unsigned int total = 0;
+ 	struct sk_buff *skb;
+-	int total = 0;
+ 	int res;
+ 
+ 	spin_lock_bh(&rcvq->lock);
 
 
