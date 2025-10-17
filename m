@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93966335084;
-	Fri, 17 Oct 2025 15:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A100336EF2;
+	Fri, 17 Oct 2025 15:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714367; cv=none; b=OtjwmcPqsDjoFhn5ydlrVHInKvuOJrLBcUWyPCV181jEYHb7BYGniCtJ4dof818BtW01lw1985c2oy2juOfMk804NZC94aSZbTISLUcSAkqsu9KJk6VhR4yjUan4kNB24wOeCCOvLwzGsVGV3r/zEeDLcRz6Teu94RoHzWPAUkI=
+	t=1760714370; cv=none; b=RjO39d83JWaUh40+T7IPs9nJ3VUH6Z8wQ4TuzzY+jfyiX/FSQWlx6mUsjXohQgNZZYxFJx3mywe89Oz6u8X3H+AXi0wmwDbAyWT/+EhVVtJcU78bkm02TJ//K4Ajc1HL7lWzU5/8gV+Hbw9NQ/PkYc7WGoWY8QjZlR1ec2w/pm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714367; c=relaxed/simple;
-	bh=1QoD1IIR1jfwwIzVio6d4hfwJ6pZoWZMcjeueHoIp7Q=;
+	s=arc-20240116; t=1760714370; c=relaxed/simple;
+	bh=paOije8csh3MN959o43H3mDO+0wFlV/ZOG1T09IgxZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgurn5yAdeK2e4i1/2CCBI8xfTVlRI3F1b5jJ7AUErejtx9ak4gNfrfaWrmrbxsz/cL9Dq0b4+QntNsQ9Yz0aOtzvBy9vk9/f8pd46qNGeeGtpvtE/Z4CINSn3ufhRZkPnneZqJdTRGxSBRsIYaLB084jbyQOHbwxMBl1oTAxhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXECxm79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgGfwEU+QwMUzIefFJIMiIihsSZPr0am9noJTx+X3A32B8VEIkVHsO2DIeXE6t12z2dDmjwQv2PwsBZeIVLW2D9NqC63ll2qk43JaC4yyAEMI7BIiX41qBJiJ4TZS8kKxlTbDtgm1gclQxw2aZJz9lAQRg8kyrVosDUOQY0h7PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT/4Ez0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXECxm79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17316C116B1;
-	Fri, 17 Oct 2025 15:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT/4Ez0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BB2C4CEE7;
+	Fri, 17 Oct 2025 15:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714367;
-	bh=1QoD1IIR1jfwwIzVio6d4hfwJ6pZoWZMcjeueHoIp7Q=;
+	s=korg; t=1760714370;
+	bh=paOije8csh3MN959o43H3mDO+0wFlV/ZOG1T09IgxZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXECxm79QT28QbN3UUy+gqJ23xv4dxjHjh3hIH1ltZDkif638595iRIK6rtKCcFZP
-	 T35hmK6Hqm9qNUxUtn08nXDYzOAHdtsxXTq0ApLmeF8QUVXPHpauPeCCh6xlLukIZz
-	 cSxzUVA6yWDSZeMSH/WPyqLO+1S71ebG3AdgSOsY=
+	b=wT/4Ez0IitTUbbuTJIDJ6Dk7wvnEB+acf3I+C9QJsekdPk1OsV3sz4dc9Q52BOROT
+	 /ZojIE5oWvDAGy72P9loPI7A+ZaOqHGtCk6RA1NmuM6d77ZaOZlvmZzAd7k1vLCjPW
+	 V1WJvO1ZkZeljVDN3k0U6Mc6ZkapQrwZ5wbWsSSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 120/277] blk-crypto: fix missing blktrace bio split events
-Date: Fri, 17 Oct 2025 16:52:07 +0200
-Message-ID: <20251017145151.506943464@linuxfoundation.org>
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 121/277] btrfs: avoid potential out-of-bounds in btrfs_encode_fh()
+Date: Fri, 17 Oct 2025 16:52:08 +0200
+Message-ID: <20251017145151.542851547@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -52,43 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
 
-commit 06d712d297649f48ebf1381d19bd24e942813b37 upstream.
+commit dff4f9ff5d7f289e4545cc936362e01ed3252742 upstream.
 
-trace_block_split() is missing, resulting in blktrace inability to catch
-BIO split events and making it harder to analyze the BIO sequence.
+The function btrfs_encode_fh() does not properly account for the three
+cases it handles.
 
-Cc: stable@vger.kernel.org
-Fixes: 488f6682c832 ("block: blk-crypto-fallback for Inline Encryption")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Before writing to the file handle (fh), the function only returns to the
+user BTRFS_FID_SIZE_NON_CONNECTABLE (5 dwords, 20 bytes) or
+BTRFS_FID_SIZE_CONNECTABLE (8 dwords, 32 bytes).
+
+However, when a parent exists and the root ID of the parent and the
+inode are different, the function writes BTRFS_FID_SIZE_CONNECTABLE_ROOT
+(10 dwords, 40 bytes).
+
+If *max_len is not large enough, this write goes out of bounds because
+BTRFS_FID_SIZE_CONNECTABLE_ROOT is greater than
+BTRFS_FID_SIZE_CONNECTABLE originally returned.
+
+This results in an 8-byte out-of-bounds write at
+fid->parent_root_objectid = parent_root_id.
+
+A previous attempt to fix this issue was made but was lost.
+
+https://lore.kernel.org/all/4CADAEEC020000780001B32C@vpn.id2.novell.com/
+
+Although this issue does not seem to be easily triggerable, it is a
+potential memory corruption bug that should be fixed. This patch
+resolves the issue by ensuring the function returns the appropriate size
+for all three cases and validates that *max_len is large enough before
+writing any data.
+
+Fixes: be6e8dc0ba84 ("NFS support for btrfs - v3")
+CC: stable@vger.kernel.org # 3.0+
+Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-crypto-fallback.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/export.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/block/blk-crypto-fallback.c
-+++ b/block/blk-crypto-fallback.c
-@@ -18,6 +18,7 @@
- #include <linux/module.h>
- #include <linux/random.h>
- #include <linux/scatterlist.h>
-+#include <trace/events/block.h>
+--- a/fs/btrfs/export.c
++++ b/fs/btrfs/export.c
+@@ -23,7 +23,11 @@ static int btrfs_encode_fh(struct inode
+ 	int type;
  
- #include "blk-cgroup.h"
- #include "blk-crypto-internal.h"
-@@ -230,7 +231,9 @@ static bool blk_crypto_fallback_split_bi
- 			bio->bi_status = BLK_STS_RESOURCE;
- 			return false;
- 		}
-+
- 		bio_chain(split_bio, bio);
-+		trace_block_split(split_bio, bio->bi_iter.bi_sector);
- 		submit_bio_noacct(bio);
- 		*bio_ptr = split_bio;
- 	}
+ 	if (parent && (len < BTRFS_FID_SIZE_CONNECTABLE)) {
+-		*max_len = BTRFS_FID_SIZE_CONNECTABLE;
++		if (btrfs_root_id(BTRFS_I(inode)->root) !=
++		    btrfs_root_id(BTRFS_I(parent)->root))
++			*max_len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
++		else
++			*max_len = BTRFS_FID_SIZE_CONNECTABLE;
+ 		return FILEID_INVALID;
+ 	} else if (len < BTRFS_FID_SIZE_NON_CONNECTABLE) {
+ 		*max_len = BTRFS_FID_SIZE_NON_CONNECTABLE;
+@@ -45,6 +49,8 @@ static int btrfs_encode_fh(struct inode
+ 		parent_root_id = btrfs_root_id(BTRFS_I(parent)->root);
+ 
+ 		if (parent_root_id != fid->root_objectid) {
++			if (*max_len < BTRFS_FID_SIZE_CONNECTABLE_ROOT)
++				return FILEID_INVALID;
+ 			fid->parent_root_objectid = parent_root_id;
+ 			len = BTRFS_FID_SIZE_CONNECTABLE_ROOT;
+ 			type = FILEID_BTRFS_WITH_PARENT_ROOT;
 
 
