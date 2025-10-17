@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D453208;
-	Fri, 17 Oct 2025 15:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777153370FB;
+	Fri, 17 Oct 2025 15:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714769; cv=none; b=b9D8LCG0wsK68IXf78/RyCV/de93oCkly7FYcK9FmBj/jU7DCEY3UEJedhmW8psw97EbCUvBOaig3F98uefsE92rmrukp8iePbdro0e3gXJsYXyJrKPkUEs7codM4lx+rdZpKFH4Hqv/9Cc55/KaqnV3AynwB9QhTzb+cAOzcMw=
+	t=1760714771; cv=none; b=AmBIyE8FCMZgdR6eAprAahp6N8GQ5oosWMQbmx9fP6Tfc1I6pJP93zNBiVl1beeIxd5RalneVgx2JuE3FhZ4Vu+M1hOZbWyU+Nv/hFV7aK4vJQSa6hh+HcN1cbePbJ4WRiyMU6GKRV5fBTh8jWVK7yom1DxikfwG03uYPNn5iiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714769; c=relaxed/simple;
-	bh=2vOPkOUDpWhEsz5X/kkOXNz3vtYhJCsWaJVRfuL9FtM=;
+	s=arc-20240116; t=1760714771; c=relaxed/simple;
+	bh=EvbPkAKtNth04i8mVyKqS01f7wE0SdnkIYWNyFxeuAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDkkeWP+8e32MWdEY5AwmbEBJ1aS6qgH+BUtSyKZDY0SrHhkSDW0mLp+xleyupqIgfeCtHAn2YzkhcuebSYY3G0Mo+yuoM7XTvrS5f3ZgCIRr5zhfxHFcGJvVYjze/dJKVYByN2HUAf3+cZ3Ejh5U+kSm7UAUG3IkOqDxC8RXDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D38Ozhd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ugvo1QiD131/htGkpLkPbsufTsOXLPD0G+YcXYUYh+V0OZVGOvBkcY/IagItAbQdO9Vkj3domEowUcN7UM83eLpmo4kpGmJmxjyiB306gt6QgjGR80tqKMAIqp1ll8B8x3qK7Jr17lSZ9xujwTyImwmdCPAJglZFNw1sSJ415Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hgckip5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D38Ozhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6EAC4CEE7;
-	Fri, 17 Oct 2025 15:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hgckip5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01265C4CEFE;
+	Fri, 17 Oct 2025 15:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714768;
-	bh=2vOPkOUDpWhEsz5X/kkOXNz3vtYhJCsWaJVRfuL9FtM=;
+	s=korg; t=1760714771;
+	bh=EvbPkAKtNth04i8mVyKqS01f7wE0SdnkIYWNyFxeuAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1D38OzhdLABi52gMXzyL+n8+uzSoELtc7j989Yn2A+/zM6CdkUPPvXraO47hWJG8f
-	 gSN4sUGzCxAHyCBu2F8cFtYB1zlBEQM7/BnN97s5RbooI8NP0WOtUQ5vjYrL8W36M+
-	 a3PjRMgZ3CG5AlO2+CZ12EjEte/Po3f+X8nI1ctI=
+	b=Hgckip5autjf2jH89DV1SFqXUi5SiOHmUUV4SEC/f2GSkfY/ITAMCOJz/H+KYkORC
+	 cCZNvvcDXw59gR2Gq3KjXGX6AWRMyYt2E7KtkYKSw/WE8kN0J707JIuqePnl6yv5Cq
+	 YW69v84UrlKE3Eyf7ZzhjmcaAP+UjrpTCrLdzKgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 260/277] s390/bpf: Describe the frame using a struct instead of constants
-Date: Fri, 17 Oct 2025 16:54:27 +0200
-Message-ID: <20251017145156.653413736@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 243/277] nfsd: Fix NFSD_MAY_BYPASS_GSS and NFSD_MAY_BYPASS_GSS_ON_ROOT
+Date: Fri, 17 Oct 2025 16:54:10 +0200
+Message-ID: <20251017145156.017494561@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -44,263 +46,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Pali Rohár <pali@kernel.org>
 
-commit e26d523edf2a62b142d2dd2dd9b87f61ed92f33a upstream.
+[ Upstream commit bb4f07f2409c26c01e97e6f9b432545f353e3b66 ]
 
-Currently the caller-allocated portion of the stack frame is described
-using constants, hardcoded values, and an ASCII drawing, making it
-harder than necessary to ensure that everything is in sync.
+Currently NFSD_MAY_BYPASS_GSS and NFSD_MAY_BYPASS_GSS_ON_ROOT do not bypass
+only GSS, but bypass any method. This is a problem specially for NFS3
+AUTH_NULL-only exports.
 
-Declare a struct and use offsetof() and offsetofend() macros to refer
-to various values stored within the frame.
+The purpose of NFSD_MAY_BYPASS_GSS_ON_ROOT is described in RFC 2623,
+section 2.3.2, to allow mounting NFS2/3 GSS-only export without
+authentication. So few procedures which do not expose security risk used
+during mount time can be called also with AUTH_NONE or AUTH_SYS, to allow
+client mount operation to finish successfully.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250624121501.50536-3-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The problem with current implementation is that for AUTH_NULL-only exports,
+the NFSD_MAY_BYPASS_GSS_ON_ROOT is active also for NFS3 AUTH_UNIX mount
+attempts which confuse NFS3 clients, and make them think that AUTH_UNIX is
+enabled and is working. Linux NFS3 client never switches from AUTH_UNIX to
+AUTH_NONE on active mount, which makes the mount inaccessible.
+
+Fix the NFSD_MAY_BYPASS_GSS and NFSD_MAY_BYPASS_GSS_ON_ROOT implementation
+and really allow to bypass only exports which have enabled some real
+authentication (GSS, TLS, or any other).
+
+The result would be: For AUTH_NULL-only export if client attempts to do
+mount with AUTH_UNIX flavor then it will receive access errors, which
+instruct client that AUTH_UNIX flavor is not usable and will either try
+other auth flavor (AUTH_NULL if enabled) or fails mount procedure.
+Similarly if client attempt to do mount with AUTH_NULL flavor and only
+AUTH_UNIX flavor is enabled then the client will receive access error.
+
+This should fix problems with AUTH_NULL-only or AUTH_UNIX-only exports if
+client attempts to mount it with other auth flavor (e.g. with AUTH_NULL for
+AUTH_UNIX-only export, or with AUTH_UNIX for AUTH_NULL-only export).
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 898374fdd7f0 ("nfsd: unregister with rpcbind when deleting a transport")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/net/bpf_jit.h      |   55 ----------------------------------
- arch/s390/net/bpf_jit_comp.c |   69 +++++++++++++++++++++++++++++--------------
- 2 files changed, 47 insertions(+), 77 deletions(-)
- delete mode 100644 arch/s390/net/bpf_jit.h
+ fs/nfsd/export.c   |   21 ++++++++++++++++++++-
+ fs/nfsd/export.h   |    3 ++-
+ fs/nfsd/nfs4proc.c |    2 +-
+ fs/nfsd/nfs4xdr.c  |    2 +-
+ fs/nfsd/nfsfh.c    |    9 ++++++---
+ fs/nfsd/vfs.c      |    2 +-
+ 6 files changed, 31 insertions(+), 8 deletions(-)
 
---- a/arch/s390/net/bpf_jit.h
-+++ /dev/null
-@@ -1,55 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/*
-- * BPF Jit compiler defines
-- *
-- * Copyright IBM Corp. 2012,2015
-- *
-- * Author(s): Martin Schwidefsky <schwidefsky@de.ibm.com>
-- *	      Michael Holzheu <holzheu@linux.vnet.ibm.com>
-- */
--
--#ifndef __ARCH_S390_NET_BPF_JIT_H
--#define __ARCH_S390_NET_BPF_JIT_H
--
--#ifndef __ASSEMBLY__
--
--#include <linux/filter.h>
--#include <linux/types.h>
--
--#endif /* __ASSEMBLY__ */
--
--/*
-- * Stackframe layout (packed stack):
-- *
-- *				    ^ high
-- *	      +---------------+     |
-- *	      | old backchain |     |
-- *	      +---------------+     |
-- *	      |   r15 - r6    |     |
-- *	      +---------------+     |
-- *	      | 4 byte align  |     |
-- *	      | tail_call_cnt |     |
-- * BFP	   -> +===============+     |
-- *	      |		      |     |
-- *	      |   BPF stack   |     |
-- *	      |		      |     |
-- * R15+160 -> +---------------+     |
-- *	      | new backchain |     |
-- * R15+152 -> +---------------+     |
-- *	      | + 152 byte SA |     |
-- * R15	   -> +---------------+     + low
-- *
-- * We get 160 bytes stack space from calling function, but only use
-- * 12 * 8 byte for old backchain, r15..r6, and tail_call_cnt.
-- *
-- * The stack size used by the BPF program ("BPF stack" above) is passed
-- * via "aux->stack_depth".
-- */
--#define STK_SPACE_ADD	(160)
--#define STK_160_UNUSED	(160 - 12 * 8)
--#define STK_OFF		(STK_SPACE_ADD - STK_160_UNUSED)
--
--#define STK_OFF_R6	(160 - 11 * 8)	/* Offset of r6 on stack */
--#define STK_OFF_TCCNT	(160 - 12 * 8)	/* Offset of tail_call_cnt on stack */
--
--#endif /* __ARCH_S390_NET_BPF_JIT_H */
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -32,7 +32,6 @@
- #include <asm/set_memory.h>
- #include <asm/text-patching.h>
- #include <asm/unwind.h>
--#include "bpf_jit.h"
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -1078,12 +1078,14 @@ static struct svc_export *exp_find(struc
+  * check_nfsd_access - check if access to export is allowed.
+  * @exp: svc_export that is being accessed.
+  * @rqstp: svc_rqst attempting to access @exp (will be NULL for LOCALIO).
++ * @may_bypass_gss: reduce strictness of authorization check
+  *
+  * Return values:
+  *   %nfs_ok if access is granted, or
+  *   %nfserr_wrongsec if access is denied
+  */
+-__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp)
++__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp,
++			 bool may_bypass_gss)
+ {
+ 	struct exp_flavor_info *f, *end = exp->ex_flavors + exp->ex_nflavors;
+ 	struct svc_xprt *xprt;
+@@ -1140,6 +1142,23 @@ ok:
+ 	if (nfsd4_spo_must_allow(rqstp))
+ 		return nfs_ok;
  
- struct bpf_jit {
- 	u32 seen;		/* Flags to remember seen eBPF instructions */
-@@ -56,7 +55,7 @@ struct bpf_jit {
- 	int prologue_plt;	/* Start of prologue hotpatch PLT */
- 	int kern_arena;		/* Pool offset of kernel arena address */
- 	u64 user_arena;		/* User arena address */
--	u32 frame_off;		/* Offset of frame from %r15 */
-+	u32 frame_off;		/* Offset of struct bpf_prog from %r15 */
- };
- 
- #define SEEN_MEM	BIT(0)		/* use mem[] for temporary storage */
-@@ -405,11 +404,25 @@ static void jit_fill_hole(void *area, un
++	/* Some calls may be processed without authentication
++	 * on GSS exports. For example NFS2/3 calls on root
++	 * directory, see section 2.3.2 of rfc 2623.
++	 * For "may_bypass_gss" check that export has really
++	 * enabled some flavor with authentication (GSS or any
++	 * other) and also check that the used auth flavor is
++	 * without authentication (none or sys).
++	 */
++	if (may_bypass_gss && (
++	     rqstp->rq_cred.cr_flavor == RPC_AUTH_NULL ||
++	     rqstp->rq_cred.cr_flavor == RPC_AUTH_UNIX)) {
++		for (f = exp->ex_flavors; f < end; f++) {
++			if (f->pseudoflavor >= RPC_AUTH_DES)
++				return 0;
++		}
++	}
++
+ denied:
+ 	return nfserr_wrongsec;
  }
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -101,7 +101,8 @@ struct svc_expkey {
+ 
+ struct svc_cred;
+ int nfsexp_flags(struct svc_cred *cred, struct svc_export *exp);
+-__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp);
++__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp,
++			 bool may_bypass_gss);
  
  /*
-+ * Caller-allocated part of the frame.
-+ * Thanks to packed stack, its otherwise unused initial part can be used for
-+ * the BPF stack and for the next frame.
-+ */
-+struct prog_frame {
-+	u64 unused[8];
-+	/* BPF stack starts here and grows towards 0 */
-+	u32 tail_call_cnt;
-+	u32 pad;
-+	u64 r6[10];  /* r6 - r15 */
-+	u64 backchain;
-+} __packed;
-+
-+/*
-  * Save registers from "rs" (register start) to "re" (register end) on stack
-  */
- static void save_regs(struct bpf_jit *jit, u32 rs, u32 re)
+  * Function declarations
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -2799,7 +2799,7 @@ nfsd4_proc_compound(struct svc_rqst *rqs
+ 
+ 			if (current_fh->fh_export &&
+ 					need_wrongsec_check(rqstp))
+-				op->status = check_nfsd_access(current_fh->fh_export, rqstp);
++				op->status = check_nfsd_access(current_fh->fh_export, rqstp, false);
+ 		}
+ encode_op:
+ 		if (op->status == nfserr_replay_me) {
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3784,7 +3784,7 @@ nfsd4_encode_entry4_fattr(struct nfsd4_r
+ 			nfserr = nfserrno(err);
+ 			goto out_put;
+ 		}
+-		nfserr = check_nfsd_access(exp, cd->rd_rqstp);
++		nfserr = check_nfsd_access(exp, cd->rd_rqstp, false);
+ 		if (nfserr)
+ 			goto out_put;
+ 
+--- a/fs/nfsd/nfsfh.c
++++ b/fs/nfsd/nfsfh.c
+@@ -320,6 +320,7 @@ __fh_verify(struct svc_rqst *rqstp,
  {
--	u32 off = STK_OFF_R6 + (rs - 6) * 8;
-+	u32 off = offsetof(struct prog_frame, r6) + (rs - 6) * 8;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct svc_export *exp = NULL;
++	bool may_bypass_gss = false;
+ 	struct dentry	*dentry;
+ 	__be32		error;
  
- 	if (rs == re)
- 		/* stg %rs,off(%r15) */
-@@ -424,7 +437,7 @@ static void save_regs(struct bpf_jit *ji
-  */
- static void restore_regs(struct bpf_jit *jit, u32 rs, u32 re)
- {
--	u32 off = jit->frame_off + STK_OFF_R6 + (rs - 6) * 8;
-+	u32 off = jit->frame_off + offsetof(struct prog_frame, r6) + (rs - 6) * 8;
+@@ -367,8 +368,10 @@ __fh_verify(struct svc_rqst *rqstp,
+ 	 * which clients virtually always use auth_sys for,
+ 	 * even while using RPCSEC_GSS for NFS.
+ 	 */
+-	if (access & NFSD_MAY_LOCK || access & NFSD_MAY_BYPASS_GSS)
++	if (access & NFSD_MAY_LOCK)
+ 		goto skip_pseudoflavor_check;
++	if (access & NFSD_MAY_BYPASS_GSS)
++		may_bypass_gss = true;
+ 	/*
+ 	 * Clients may expect to be able to use auth_sys during mount,
+ 	 * even if they use gss for everything else; see section 2.3.2
+@@ -376,9 +379,9 @@ __fh_verify(struct svc_rqst *rqstp,
+ 	 */
+ 	if (access & NFSD_MAY_BYPASS_GSS_ON_ROOT
+ 			&& exp->ex_path.dentry == dentry)
+-		goto skip_pseudoflavor_check;
++		may_bypass_gss = true;
  
- 	if (rs == re)
- 		/* lg %rs,off(%r15) */
-@@ -556,10 +569,12 @@ static void bpf_jit_plt(struct bpf_plt *
-  * Emit function prologue
-  *
-  * Save registers and create stack frame if necessary.
-- * See stack frame layout description in "bpf_jit.h"!
-+ * Stack frame layout is described by struct prog_frame.
-  */
- static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp)
- {
-+	BUILD_BUG_ON(sizeof(struct prog_frame) != STACK_FRAME_OVERHEAD);
-+
- 	/* No-op for hotpatching */
- 	/* brcl 0,prologue_plt */
- 	EMIT6_PCREL_RILC(0xc0040000, 0, jit->prologue_plt);
-@@ -567,8 +582,9 @@ static void bpf_jit_prologue(struct bpf_
+-	error = check_nfsd_access(exp, rqstp);
++	error = check_nfsd_access(exp, rqstp, may_bypass_gss);
+ 	if (error)
+ 		goto out;
  
- 	if (!bpf_is_subprog(fp)) {
- 		/* Initialize the tail call counter in the main program. */
--		/* xc STK_OFF_TCCNT(4,%r15),STK_OFF_TCCNT(%r15) */
--		_EMIT6(0xd703f000 | STK_OFF_TCCNT, 0xf000 | STK_OFF_TCCNT);
-+		/* xc tail_call_cnt(4,%r15),tail_call_cnt(%r15) */
-+		_EMIT6(0xd703f000 | offsetof(struct prog_frame, tail_call_cnt),
-+		       0xf000 | offsetof(struct prog_frame, tail_call_cnt));
- 	} else {
- 		/*
- 		 * Skip the tail call counter initialization in subprograms.
-@@ -611,13 +627,15 @@ static void bpf_jit_prologue(struct bpf_
- 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK)) {
- 		/* lgr %w1,%r15 (backchain) */
- 		EMIT4(0xb9040000, REG_W1, REG_15);
--		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
--		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
-+		/* la %bfp,unused_end(%r15) (BPF frame pointer) */
-+		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15,
-+			   offsetofend(struct prog_frame, unused));
- 		/* aghi %r15,-frame_off */
- 		EMIT4_IMM(0xa70b0000, REG_15, -jit->frame_off);
--		/* stg %w1,152(%r15) (backchain) */
-+		/* stg %w1,backchain(%r15) */
- 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
--			      REG_15, 152);
-+			      REG_15,
-+			      offsetof(struct prog_frame, backchain));
- 	}
- }
- 
-@@ -1779,9 +1797,10 @@ static noinline int bpf_jit_insn(struct
- 		 * Note 2: We assume that the verifier does not let us call the
- 		 * main program, which clears the tail call counter on entry.
- 		 */
--		/* mvc STK_OFF_TCCNT(4,%r15),frame_off+STK_OFF_TCCNT(%r15) */
--		_EMIT6(0xd203f000 | STK_OFF_TCCNT,
--		       0xf000 | (jit->frame_off + STK_OFF_TCCNT));
-+		/* mvc tail_call_cnt(4,%r15),frame_off+tail_call_cnt(%r15) */
-+		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
-+		       0xf000 | (jit->frame_off +
-+				 offsetof(struct prog_frame, tail_call_cnt)));
- 
- 		/* Sign-extend the kfunc arguments. */
- 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
-@@ -1832,7 +1851,8 @@ static noinline int bpf_jit_insn(struct
- 		 *         goto out;
- 		 */
- 
--		off = jit->frame_off + STK_OFF_TCCNT;
-+		off = jit->frame_off +
-+		      offsetof(struct prog_frame, tail_call_cnt);
- 		/* lhi %w0,1 */
- 		EMIT4_IMM(0xa7080000, REG_W0, 1);
- 		/* laal %w1,%w0,off(%r15) */
-@@ -2164,7 +2184,9 @@ static int bpf_jit_prog(struct bpf_jit *
- 	jit->prg = 0;
- 	jit->excnt = 0;
- 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK))
--		jit->frame_off = STK_OFF + round_up(fp->aux->stack_depth, 8);
-+		jit->frame_off = sizeof(struct prog_frame) -
-+				 offsetofend(struct prog_frame, unused) +
-+				 round_up(fp->aux->stack_depth, 8);
- 	else
- 		jit->frame_off = 0;
- 
-@@ -2647,9 +2669,10 @@ static int __arch_prepare_bpf_trampoline
- 	/* stg %r1,backchain_off(%r15) */
- 	EMIT6_DISP_LH(0xe3000000, 0x0024, REG_1, REG_0, REG_15,
- 		      tjit->backchain_off);
--	/* mvc tccnt_off(4,%r15),stack_size+STK_OFF_TCCNT(%r15) */
-+	/* mvc tccnt_off(4,%r15),stack_size+tail_call_cnt(%r15) */
- 	_EMIT6(0xd203f000 | tjit->tccnt_off,
--	       0xf000 | (tjit->stack_size + STK_OFF_TCCNT));
-+	       0xf000 | (tjit->stack_size +
-+			 offsetof(struct prog_frame, tail_call_cnt)));
- 	/* stmg %r2,%rN,fwd_reg_args_off(%r15) */
- 	if (nr_reg_args)
- 		EMIT6_DISP_LH(0xeb000000, 0x0024, REG_2,
-@@ -2786,8 +2809,9 @@ static int __arch_prepare_bpf_trampoline
- 				       (nr_stack_args * sizeof(u64) - 1) << 16 |
- 				       tjit->stack_args_off,
- 			       0xf000 | tjit->orig_stack_args_off);
--		/* mvc STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
--		_EMIT6(0xd203f000 | STK_OFF_TCCNT, 0xf000 | tjit->tccnt_off);
-+		/* mvc tail_call_cnt(4,%r15),tccnt_off(%r15) */
-+		_EMIT6(0xd203f000 | offsetof(struct prog_frame, tail_call_cnt),
-+		       0xf000 | tjit->tccnt_off);
- 		/* lgr %r1,%r8 */
- 		EMIT4(0xb9040000, REG_1, REG_8);
- 		/* %r1() */
-@@ -2844,8 +2868,9 @@ static int __arch_prepare_bpf_trampoline
- 	if (flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET))
- 		EMIT6_DISP_LH(0xe3000000, 0x0004, REG_2, REG_0, REG_15,
- 			      tjit->retval_off);
--	/* mvc stack_size+STK_OFF_TCCNT(4,%r15),tccnt_off(%r15) */
--	_EMIT6(0xd203f000 | (tjit->stack_size + STK_OFF_TCCNT),
-+	/* mvc stack_size+tail_call_cnt(4,%r15),tccnt_off(%r15) */
-+	_EMIT6(0xd203f000 | (tjit->stack_size +
-+			     offsetof(struct prog_frame, tail_call_cnt)),
- 	       0xf000 | tjit->tccnt_off);
- 	/* aghi %r15,stack_size */
- 	EMIT4_IMM(0xa70b0000, REG_15, tjit->stack_size);
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -321,7 +321,7 @@ nfsd_lookup(struct svc_rqst *rqstp, stru
+ 	err = nfsd_lookup_dentry(rqstp, fhp, name, len, &exp, &dentry);
+ 	if (err)
+ 		return err;
+-	err = check_nfsd_access(exp, rqstp);
++	err = check_nfsd_access(exp, rqstp, false);
+ 	if (err)
+ 		goto out;
+ 	/*
 
 
