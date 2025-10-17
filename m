@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2703B2F12C2;
-	Fri, 17 Oct 2025 15:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9859330B11;
+	Fri, 17 Oct 2025 15:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715600; cv=none; b=Z4bZPwQonjSxAYSLKTQARJgPbFlqNcTj1s7eElTD5CQOfrgHfHpurwE1nvHvjcsRggynqZUuqFIpg27fFgQdGV7WofapMqx31RcUHdk0J5E8o61Nn5H2g6DJ/4708Ba4kVtLnJmwsE8pRwrwVgftPs0mksPhBZ90xcAkHPLccdM=
+	t=1760715603; cv=none; b=I1uXr/LzhpVUeS4RhjM8zrhVMxcyf/Q+Rm5RjynysuutV1Mr00jUgOaC5OMWfaoD8lCE6IKRaFL0CIckn4i0E9hk2ZuC2vfrQygF/3iAA/cjvIwijLFr7I8P2bN5eieRf7lyHfcbt5zAAcBrtJUSof/97/UdIH4PKFIdAEUvMYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715600; c=relaxed/simple;
-	bh=JSWQ1ct0lSI/xoaFuAbUZ3H36yOyNdtOlc2cikxPqP8=;
+	s=arc-20240116; t=1760715603; c=relaxed/simple;
+	bh=X88paqly145GE6k6iCgOIzcFqQC1osCuCDSsjFt4Mhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvI2baq5bhOkS4xd+tffB/2qipS2g1PsIx+1XNIDnHkUMeRzvY8i2K/KZBQBobsdkVtHN1tloG9W7jmNQNOoxbNG50EAYQAgQOHb2vqg1pjLTi24zjowyhriv8mvASuXopB1LfACTyh85004l5r/m8Z55zZGR1SARka6iufe2rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye5Hc5U5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPkbT1Hd+tWBFmHpcrY7plQqxASK5ISrxla/YyHv7bZ5n7YaAgmSNc79rrWLh4I7JCi1uysYV6/QrQX1U1gk6PgA1pheFg83GW/7h7MB9HXZk2XTHRZ4dMMCmBSwOEnnSy5ybqFJGye0lIprmUZIWd5TQSBNGoteMbrznXOsct0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fajYiVyk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye5Hc5U5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4A6C4CEE7;
-	Fri, 17 Oct 2025 15:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fajYiVyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A93C4CEE7;
+	Fri, 17 Oct 2025 15:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715599;
-	bh=JSWQ1ct0lSI/xoaFuAbUZ3H36yOyNdtOlc2cikxPqP8=;
+	s=korg; t=1760715602;
+	bh=X88paqly145GE6k6iCgOIzcFqQC1osCuCDSsjFt4Mhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ye5Hc5U51MPtRNYithQJc3S91HTMVQJGnJvPqorewAG5belpINfNzOA//SQWA21kr
-	 L/ysDQU+shtyPu1f6Z2/PkkKJmIfAE4QL+DPOyasCzyxBW6CJNzxOMIvmop/+oZOqA
-	 XqffVx56/Vjl/uTRc744qS6CsZX9B+uIEo3o+IFs=
+	b=fajYiVykv3dddYrboKMxWcLTJghJTBo9gCtS4o9UDGO1IJq6Okf6+dSMKzYyvp5jW
+	 1Ln2MfnmIyys4BCJrsIAUl3wZdMrNdnMi9w1qA5tiignae2hDXIhQ9X/5K2h/TEzD7
+	 3bkMVllF4jdlSYA90dr/VF92VBblyxTmC1Q2XLMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Askar Safin <safinaskar@zohomail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.17 239/371] openat2: dont trigger automounts with RESOLVE_NO_XDEV
-Date: Fri, 17 Oct 2025 16:53:34 +0200
-Message-ID: <20251017145210.727008590@linuxfoundation.org>
+	Xiao Liang <shaw.leon@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.17 240/371] padata: Reset next CPU when reorder sequence wraps around
+Date: Fri, 17 Oct 2025 16:53:35 +0200
+Message-ID: <20251017145210.762675574@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,51 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Askar Safin <safinaskar@zohomail.com>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-commit 042a60680de43175eb4df0977ff04a4eba9da082 upstream.
+commit 501302d5cee0d8e8ec2c4a5919c37e0df9abc99b upstream.
 
-openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
-doesn't traverse through automounts, but may still trigger them.
-(See the link for full bug report with reproducer.)
+When seq_nr wraps around, the next reorder job with seq 0 is hashed to
+the first CPU in padata_do_serial(). Correspondingly, need reset pd->cpu
+to the first one when pd->processed wraps around. Otherwise, if the
+number of used CPUs is not a power of 2, padata_find_next() will be
+checking a wrong list, hence deadlock.
 
-This commit fixes this bug.
-
-Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safinaskar@zohomail.com/
-Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Askar Safin <safinaskar@zohomail.com>
-Link: https://lore.kernel.org/20250825181233.2464822-5-safinaskar@zohomail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 6fc4dbcf0276 ("padata: Replace delayed timer with immediate workqueue in padata_reorder")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namei.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/padata.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -1449,6 +1449,10 @@ static int follow_automount(struct path
- 	    dentry->d_inode)
- 		return -EISDIR;
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -291,8 +291,12 @@ static void padata_reorder(struct padata
+ 		struct padata_serial_queue *squeue;
+ 		int cb_cpu;
  
-+	/* No need to trigger automounts if mountpoint crossing is disabled. */
-+	if (lookup_flags & LOOKUP_NO_XDEV)
-+		return -EXDEV;
-+
- 	if (count && (*count)++ >= MAXSYMLINKS)
- 		return -ELOOP;
+-		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu);
+ 		processed++;
++		/* When sequence wraps around, reset to the first CPU. */
++		if (unlikely(processed == 0))
++			cpu = cpumask_first(pd->cpumask.pcpu);
++		else
++			cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu);
  
-@@ -1472,6 +1476,10 @@ static int __traverse_mounts(struct path
- 		/* Allow the filesystem to manage the transit without i_rwsem
- 		 * being held. */
- 		if (flags & DCACHE_MANAGE_TRANSIT) {
-+			if (lookup_flags & LOOKUP_NO_XDEV) {
-+				ret = -EXDEV;
-+				break;
-+			}
- 			ret = path->dentry->d_op->d_manage(path, false);
- 			flags = smp_load_acquire(&path->dentry->d_flags);
- 			if (ret < 0)
+ 		cb_cpu = padata->cb_cpu;
+ 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
 
 
