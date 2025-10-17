@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693052F12DB;
-	Fri, 17 Oct 2025 15:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427E832E151;
+	Fri, 17 Oct 2025 15:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713633; cv=none; b=GHEeHBIuft3zJapuexjd9CJv36ZhzZtWhNs2XNLml6s0RvG1bWqhvf+TqylDRUu707/Uzo3hUh30/vkvBvFh/KIv8NsK1UoQp++oZe9/eNmYNHoEo4kfCJnfWOPXccNq/zeC1CWard5/IckpEASYuCgtgQKnpIgLYiEpnKHIc0c=
+	t=1760713636; cv=none; b=OQ3nHNLOx6M98GVfGclE/mmULDJqkA24TetDqt08BGC7HqxrEULqQqkqH16vqpAYMD/outNrEFgdP/c6u5IA9ADUkhXgCPDSjLmugzdhMMK4gRtCMdcMcRR+ow31H6c/0XPwtDC5hDEy2qrf8DfK5lHy6JYF6byqCH8DcZhs/3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713633; c=relaxed/simple;
-	bh=+NmEGl5gRvoxqn5oXPBglvnDESQduxFyjjmYF0P7F0Q=;
+	s=arc-20240116; t=1760713636; c=relaxed/simple;
+	bh=eQDCpbcMp0gdFF4jYC/oa99LYIOXddUYcnboA7QpS0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc7Z3dfbbmpDOnwQE24Y2qcBPfNCttPnQvBiLiK5/EIsS4Wlu3d9bKCUnfl85Ru7cCMN8xb6u65CGayC5RpTmZYMynFCj2AiD0cFEAuDxtjWNNobgTrXX9UE3uBn+9XthGv90G1hIrc3Vv0TsXTkYTMuqjBQ2tBotcIiujJ/n2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxkE8cDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSLuYE9rsGppn4s/8NMQs04h2ay8RMSe5713ERdhd+5brBrJbwkvHxkYBPRe3U50RE0R3FLLSI5N8j9/Bn6WpXKniFpwAIAjpt9HUVbgMb4HJpD2B8KZ/oJ9tf7a6sA8gcicGpGQKzlEWOrtFVyyk9JxFGqQErbQr2e2Eprhrl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH63XLNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxkE8cDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15D2C4CEF9;
-	Fri, 17 Oct 2025 15:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH63XLNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AB1C4CEE7;
+	Fri, 17 Oct 2025 15:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713633;
-	bh=+NmEGl5gRvoxqn5oXPBglvnDESQduxFyjjmYF0P7F0Q=;
+	s=korg; t=1760713636;
+	bh=eQDCpbcMp0gdFF4jYC/oa99LYIOXddUYcnboA7QpS0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxkE8cDjyl0qldIntLgIGPXLfHWxPiwNpK/THBXtT5pK3dV7FOORdqg1lWlzTjeoJ
-	 lNkbpdGP/T2/1UxmrC5CLCO/bkfFw159M6dCwOpHuIT2jg8kmqpSJLu4sANm2HiNn/
-	 JK4Uczyee/k0UeoHyJIEeBuiaYhf3Ehm2fBqWKVo=
+	b=IH63XLNNRAPh0rqX/pPoaDyEYm8CyhuLQPn8vtykVIo7EleBWOoTZxi3TzAus2TLH
+	 SRZnco889HQUiorKPVBUCTTuYw7rbaA2nKokSbpO0YE3ZlNHUouOJdYyDnW0pwG35a
+	 TMhapbXvEJq4hkXDBLKXuc8H6dD6wcTlED64WSTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Kevin Hilman <khilman@baylibre.com>
-Subject: [PATCH 6.6 065/201] ARM: OMAP2+: pm33xx-core: ix device node reference leaks in amx3_idle_init
-Date: Fri, 17 Oct 2025 16:52:06 +0200
-Message-ID: <20251017145137.139219766@linuxfoundation.org>
+	stable@kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 066/201] dt-bindings: phy: rockchip-inno-csi-dphy: make power-domains non-required
+Date: Fri, 17 Oct 2025 16:52:07 +0200
+Message-ID: <20251017145137.176334889@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -50,49 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Michael Riesch <michael.riesch@collabora.com>
 
-commit 74139a64e8cedb6d971c78d5d17384efeced1725 upstream.
+commit c254815b02673cc77a84103c4c0d6197bd90c0ef upstream.
 
-Add missing of_node_put() calls to release
-device node references obtained via of_parse_phandle().
+There are variants of the Rockchip Innosilicon CSI DPHY (e.g., the RK3568
+variant) that are powered on by default as they are part of the ALIVE power
+domain.
+Remove 'power-domains' from the required properties in order to avoid false
+positives.
 
-Fixes: 06ee7a950b6a ("ARM: OMAP2+: pm33xx-core: Add cpuidle_ops for am335x/am437x")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250902075943.2408832-1-linmq006@gmail.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: 22c8e0a69b7f ("dt-bindings: phy: add compatible for rk356x to rockchip-inno-csi-dphy")
+Cc: stable@kernel.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Michael Riesch <michael.riesch@collabora.com>
+Link: https://lore.kernel.org/r/20250616-rk3588-csi-dphy-v4-2-a4f340a7f0cf@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-omap2/pm33xx-core.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml |   15 +++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/arch/arm/mach-omap2/pm33xx-core.c
-+++ b/arch/arm/mach-omap2/pm33xx-core.c
-@@ -388,12 +388,15 @@ static int __init amx3_idle_init(struct
- 		if (!state_node)
- 			break;
+--- a/Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
++++ b/Documentation/devicetree/bindings/phy/rockchip-inno-csi-dphy.yaml
+@@ -57,11 +57,24 @@ required:
+   - clocks
+   - clock-names
+   - '#phy-cells'
+-  - power-domains
+   - resets
+   - reset-names
+   - rockchip,grf
  
--		if (!of_device_is_available(state_node))
-+		if (!of_device_is_available(state_node)) {
-+			of_node_put(state_node);
- 			continue;
-+		}
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - rockchip,px30-csi-dphy
++              - rockchip,rk1808-csi-dphy
++              - rockchip,rk3326-csi-dphy
++              - rockchip,rk3368-csi-dphy
++    then:
++      required:
++        - power-domains
++
+ additionalProperties: false
  
- 		if (i == CPUIDLE_STATE_MAX) {
- 			pr_warn("%s: cpuidle states reached max possible\n",
- 				__func__);
-+			of_node_put(state_node);
- 			break;
- 		}
- 
-@@ -403,6 +406,7 @@ static int __init amx3_idle_init(struct
- 			states[state_count].wfi_flags |= WFI_FLAG_WAKE_M3 |
- 							 WFI_FLAG_FLUSH_CACHE;
- 
-+		of_node_put(state_node);
- 		state_count++;
- 	}
- 
+ examples:
 
 
