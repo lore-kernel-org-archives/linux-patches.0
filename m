@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF97242935;
-	Fri, 17 Oct 2025 15:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC62A242935;
+	Fri, 17 Oct 2025 15:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714265; cv=none; b=B1qGm5g/fDFXYUt3ht9Y14j+PkrpYEMv5vCg7qXLR9sgCG49bMKm5N8j1CfnBEwtbeb9XDUmOBWK4TfBkdVSCoQ+RmuGZQ3sxCI5wWYbOfa6htN1X0zRfQsTyJP4+EzZS0gjl5Fx9NvjCvoca4c5cq3hj5gz1IbHIX94yok4Ays=
+	t=1760714267; cv=none; b=PvfRd+PQ5uafcx0U2cBOiLmJMJH5a9dIenZvdhCxnbdFGmFA1fI5SfbCxIhOzxhJv01I8yQK9dxzbbNGwmNoA+pC1QduBLOHZqMQdjtm8KxnwpLf/4KOQ/j4tZpPfc5W6m2s0Wnv0CwkQFtmkCGRgJfXcw1+U01Q62pAmvqrl5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714265; c=relaxed/simple;
-	bh=qaVn1EfSCoq/X/UjKkqcIvx5tNmh0D9GKE60MXiKX6s=;
+	s=arc-20240116; t=1760714267; c=relaxed/simple;
+	bh=gjcgqEJo+3oJ+bZlrdR+ZkvhNZdhdfV0YbI4PYMVUAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWzMZp3yAcGE1PuK30x1blh2U+XSxUhD9T54NS0Drno9jOWtuWzqqnklXPo73JLQDGp97MM1aJP5MzOO0oLa4df63I4vjlMQ81PfsFoIIC+lyTeiGKQvI6X4SE1j68/sb7qAoxKhWrWj2kRss7qa0yTaj9f9DkbO5IEIEfgMhAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skYTIl5I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNpsYuk90AUkyRBguAvb/KxRtatycPbi8gssD9S95JfttYsQ3M39VaO53JR5yc3P4u2fPtTaZIZPugVVxeL0lc6NIhOBy8gPUkym/7sOwkNxHp5FpAT10V5GXC1YiQEDNr+GlY9IL+ncdfHQ9OP3rzFkb7fjihak3R8D2GxbMqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp/6BxZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skYTIl5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAF3C4CEE7;
-	Fri, 17 Oct 2025 15:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp/6BxZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BA6C4CEFE;
+	Fri, 17 Oct 2025 15:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714264;
-	bh=qaVn1EfSCoq/X/UjKkqcIvx5tNmh0D9GKE60MXiKX6s=;
+	s=korg; t=1760714267;
+	bh=gjcgqEJo+3oJ+bZlrdR+ZkvhNZdhdfV0YbI4PYMVUAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skYTIl5IMTckDVlNYgX8ZEZn+SD6mhjGfHeLoB6pTU6aLyWh6GvU/EF7BskTlAE+L
-	 05bH2qWi/SAwwkDvk1J4NAjSEJ8tOfGImQEwJLolRSGQe/ES4nGNIRp9WT8ufdx023
-	 X9AHWeinjDtXJP8oXbg7orv93d1tE88SpwxGrxmw=
+	b=tp/6BxZ1qQNvLOvGxYC9hhbUDMJtOdmIyJcp8CTiTpTP4hzDI/VylOWRXeMbNdZp3
+	 Lkza2lJv04MRux+dfjmV2O8wAgiAZVSSsmfL9b7aPQjCtUOLA50PSnxlmfpzUTVt4q
+	 e06oEPwBAgMF4J7Z8zqWectmlaOTkyNRZzdqtZAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexey Gladkov <legion@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/277] s390/vmlinux.lds.S: Move .vmlinux.info to end of allocatable sections
-Date: Fri, 17 Oct 2025 16:51:31 +0200
-Message-ID: <20251017145150.200875376@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.12 085/277] ACPI: property: Fix buffer properties extraction for subnodes
+Date: Fri, 17 Oct 2025 16:51:32 +0200
+Message-ID: <20251017145150.236880038@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,104 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9338d660b79a0dfe4eb3fe9bd748054cded87d4f ]
+commit d0759b10989c5c5aae3d455458c9fc4e8cc694f7 upstream.
 
-When building s390 defconfig with binutils older than 2.32, there are
-several warnings during the final linking stage:
+The ACPI handle passed to acpi_extract_properties() as the first
+argument represents the ACPI namespace scope in which to look for
+objects returning buffers associated with buffer properties.
 
-  s390-linux-ld: .tmp_vmlinux1: warning: allocated section `.got.plt' not in segment
-  s390-linux-ld: .tmp_vmlinux2: warning: allocated section `.got.plt' not in segment
-  s390-linux-ld: vmlinux.unstripped: warning: allocated section `.got.plt' not in segment
-  s390-linux-objcopy: vmlinux: warning: allocated section `.got.plt' not in segment
-  s390-linux-objcopy: st7afZyb: warning: allocated section `.got.plt' not in segment
+For _DSD objects located immediately under ACPI devices, this handle is
+the same as the handle of the device object holding the _DSD, but for
+data-only subnodes it is not so.
 
-binutils commit afca762f598 ("S/390: Improve partial relro support for
-64 bit") [1] in 2.32 changed where .got.plt is emitted, avoiding the
-warning.
+First of all, data-only subnodes are represented by objects that
+cannot hold other objects in their scopes (like control methods).
+Therefore a data-only subnode handle cannot be used for completing
+relative pathname segments, so the current code in
+in acpi_nondev_subnode_extract() passing a data-only subnode handle
+to acpi_extract_properties() is invalid.
 
-The :NONE in the .vmlinux.info output section description changes the
-segment for subsequent allocated sections. Move .vmlinux.info right
-above the discards section to place all other sections in the previously
-defined segment, .data.
+Moreover, a data-only subnode of device A may be represented by an
+object located in the scope of device B (which kind of makes sense,
+for instance, if A is a B's child).  In that case, the scope in
+question would be the one of device B.  In other words, the scope
+mentioned above is the same as the scope used for subnode object
+lookup in acpi_nondev_subnode_extract().
 
-Fixes: 30226853d6ec ("s390: vmlinux.lds.S: explicitly handle '.got' and '.plt' sections")
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=afca762f598d453c563f244cd3777715b1a0cb72 [1]
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Acked-by: Alexey Gladkov <legion@kernel.org>
-Acked-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251008-kbuild-fix-modinfo-regressions-v1-3-9fc776c5887c@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Accordingly, rearrange that function to use the same scope for the
+extraction of properties and subnode object lookup.
+
+Fixes: 103e10c69c61 ("ACPI: property: Add support for parsing buffer property UUID")
+Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/vmlinux.lds.S | 44 +++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ drivers/acpi/property.c |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
-diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index 3f2f90e38808c..0d18d3267bc4f 100644
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -207,6 +207,28 @@ SECTIONS
- 	DWARF_DEBUG
- 	ELF_DETAILS
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -83,6 +83,7 @@ static bool acpi_nondev_subnode_extract(
+ 					struct fwnode_handle *parent)
+ {
+ 	struct acpi_data_node *dn;
++	acpi_handle scope = NULL;
+ 	bool result;
  
-+	/*
-+	 * Make sure that the .got.plt is either completely empty or it
-+	 * contains only the three reserved double words.
-+	 */
-+	.got.plt : {
-+		*(.got.plt)
-+	}
-+	ASSERT(SIZEOF(.got.plt) == 0 || SIZEOF(.got.plt) == 0x18, "Unexpected GOT/PLT entries detected!")
-+
-+	/*
-+	 * Sections that should stay zero sized, which is safer to
-+	 * explicitly check instead of blindly discarding.
-+	 */
-+	.plt : {
-+		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
-+	}
-+	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
-+	.rela.dyn : {
-+		*(.rela.*) *(.rela_*)
-+	}
-+	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
-+
- 	/*
- 	 * uncompressed image info used by the decompressor
- 	 * it should match struct vmlinux_info
-@@ -237,28 +259,6 @@ SECTIONS
- #endif
- 	} :NONE
+ 	if (acpi_graph_ignore_port(handle))
+@@ -98,27 +99,18 @@ static bool acpi_nondev_subnode_extract(
+ 	INIT_LIST_HEAD(&dn->data.properties);
+ 	INIT_LIST_HEAD(&dn->data.subnodes);
  
--	/*
--	 * Make sure that the .got.plt is either completely empty or it
--	 * contains only the three reserved double words.
--	 */
--	.got.plt : {
--		*(.got.plt)
--	}
--	ASSERT(SIZEOF(.got.plt) == 0 || SIZEOF(.got.plt) == 0x18, "Unexpected GOT/PLT entries detected!")
+-	result = acpi_extract_properties(handle, desc, &dn->data);
++	/*
++	 * The scope for the completion of relative pathname segments and
++	 * subnode object lookup is the one of the namespace node (device)
++	 * containing the object that has returned the package.  That is, it's
++	 * the scope of that object's parent device.
++	 */
++	if (handle)
++		acpi_get_parent(handle, &scope);
+ 
+-	if (handle) {
+-		acpi_handle scope;
+-		acpi_status status;
 -
--	/*
--	 * Sections that should stay zero sized, which is safer to
--	 * explicitly check instead of blindly discarding.
--	 */
--	.plt : {
--		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
+-		/*
+-		 * The scope for the subnode object lookup is the one of the
+-		 * namespace node (device) containing the object that has
+-		 * returned the package.  That is, it's the scope of that
+-		 * object's parent.
+-		 */
+-		status = acpi_get_parent(handle, &scope);
+-		if (ACPI_SUCCESS(status)
+-		    && acpi_enumerate_nondev_subnodes(scope, desc, &dn->data,
+-						      &dn->fwnode))
+-			result = true;
+-	} else if (acpi_enumerate_nondev_subnodes(NULL, desc, &dn->data,
+-						  &dn->fwnode)) {
++	result = acpi_extract_properties(scope, desc, &dn->data);
++	if (acpi_enumerate_nondev_subnodes(scope, desc, &dn->data, &dn->fwnode))
+ 		result = true;
 -	}
--	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
--	.rela.dyn : {
--		*(.rela.*) *(.rela_*)
--	}
--	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
--
- 	/* Sections to be discarded */
- 	DISCARDS
- 	/DISCARD/ : {
--- 
-2.51.0
-
+ 
+ 	if (result) {
+ 		dn->handle = handle;
 
 
