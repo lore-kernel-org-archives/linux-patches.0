@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81743328EA;
-	Fri, 17 Oct 2025 15:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6BF32C946;
+	Fri, 17 Oct 2025 15:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715518; cv=none; b=PU8KfpOGeM1VSbawpB9B7+IeBejnQYH7jJJCXRKeWBVjNnGgOhaSBNtTEzk/GP3iUxXRxE/85iF33ypYSihcyp5RRZNsQhUh+tVNzlvMbiDpAK5I0BbkPdmAZuOMWlt3QiShhXGXJhPAveeHXKw57YmOh5nSJP7AFDmk656PlSc=
+	t=1760715521; cv=none; b=m5etz/5RF6UuRXgnCjqrkci1cYUmLLyBBumQXUVJgjVN6tyya7JPoiZwElkWlmciqej66pz0ThN2ki3rvM3zzmN0cvkdliqvub7p6fUllGFsniEwZZrvnQbwkFKrzQT2u7FsdO33yocchdI+84nkRN81oKXlIKg8xfg+0Mqu3ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715518; c=relaxed/simple;
-	bh=ouaEqCDwMMj6teC84ThAPmd5HMKz2FeDb+ab2Yk+Bkc=;
+	s=arc-20240116; t=1760715521; c=relaxed/simple;
+	bh=7CWQcc11qa+fWcom4jAC+eQ/e131CH5Ts2ehnOc5zpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaOTgRhv6yFlYulsbkh+LAe0xuwvMHU5OZIbN5jRMUFdj3n+g6yHIidwvHq27u22KjLE64Zo31ceqIvAC06XZhj92Y1THU9xbxXkBdL8UFN7tSMWGjpuKB17uGWtR68qZpZnn8wW2ZVgWtT7Wf06kDpft042weBP8ESjB6ZVb1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoAaUJmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owNy4SkqQxwvDTBpXrtqVCgbIU1zMhnRPvFOdmK4rPJoiD6BvGZCmNs8KZG8hhPnh4meKR01jV4gDHsM6KVZdJHih0nYcfFdeeedBtWc3QnH2v9aCuUp1nRd8e14uCKs/VNV84OKY6hWtO/5T3uEaF59NjZekqe/b1LKu6vjPks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FViVXBzO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoAaUJmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C71FC4CEE7;
-	Fri, 17 Oct 2025 15:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FViVXBzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44698C4CEE7;
+	Fri, 17 Oct 2025 15:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715518;
-	bh=ouaEqCDwMMj6teC84ThAPmd5HMKz2FeDb+ab2Yk+Bkc=;
+	s=korg; t=1760715521;
+	bh=7CWQcc11qa+fWcom4jAC+eQ/e131CH5Ts2ehnOc5zpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoAaUJmYxXh3h0t2hk+QjrbqV8lG2efsB6DoWM+fOGPiP/PrjIOLVVmuh2Lw+OJV9
-	 1Ztbh1zEaZqSiimMbIrs94j/h55pHkCrc01JV7OnBRY6DYyQ39tcycLPUX86yYf7HI
-	 zjm5QGyptmEFgc2+piycUdvc1PrYpZGf+8TnZpW4=
+	b=FViVXBzOE2Li9tXbX4w2gNrp0RW5IEL53BRyW+uPX3X2O/NZvUeAY+aRxwaciQ1rr
+	 /IfkFUZ3oDYrnIaHyku0oDu+9vLHxR+B4xMZ3fYWoAFVauqYYRqFY2JN5cg+mKi2wJ
+	 oy2wjy7y5SZH2sY3yQuETqq1OOfKv2bx69S5hzQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Crudup <kenneth.crudup@gmail.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Ionut Nechita <ionut_n2001@yahoo.com>,
+	Kenneth Crudup <kenny@panix.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 245/371] PM: EM: Fix late boot with holes in CPU topology
-Date: Fri, 17 Oct 2025 16:53:40 +0200
-Message-ID: <20251017145210.942982380@linuxfoundation.org>
+Subject: [PATCH 6.17 246/371] PM: hibernate: Fix hybrid-sleep
+Date: Fri, 17 Oct 2025 16:53:41 +0200
+Message-ID: <20251017145210.979235509@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,68 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 1ebe8f7e782523e62cd1fa8237f7afba5d1dae83 upstream.
+commit 469d80a3712c66a00b5bb888e62e809db8887ba7 upstream.
 
-Commit e3f1164fc9ee ("PM: EM: Support late CPUs booting and capacity
-adjustment") added a mechanism to handle CPUs that come up late by
-retrying when any of the `cpufreq_cpu_get()` call fails.
+Hybrid sleep will hibernate the system followed by running through
+the suspend routine.  Since both the hibernate and the suspend routine
+will call pm_restrict_gfp_mask(), pm_restore_gfp_mask() must be called
+before starting the suspend sequence.
 
-However, if there are holes in the CPU topology (offline CPUs, e.g.
-nosmt), the first missing CPU causes the loop to break, preventing
-subsequent online CPUs from being updated.
+Add an explicit call to pm_restore_gfp_mask() to power_down() before
+the suspend sequence starts. Add an extra call for pm_restrict_gfp_mask()
+when exiting suspend so that the pm_restore_gfp_mask() call in hibernate()
+is balanced.
 
-Instead of aborting on the first missing CPU policy, loop through all
-and retry if any were missing.
-
-Fixes: e3f1164fc9ee ("PM: EM: Support late CPUs booting and capacity adjustment")
-Suggested-by: Kenneth Crudup <kenneth.crudup@gmail.com>
-Reported-by: Kenneth Crudup <kenneth.crudup@gmail.com>
-Link: https://lore.kernel.org/linux-pm/40212796-734c-4140-8a85-854f72b8144d@panix.com/
-Cc: 6.9+ <stable@vger.kernel.org> # 6.9+
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20250831214357.2020076-1-christian.loehle@arm.com
-[ rjw: Drop the new pr_debug() message which is not very useful ]
+Reported-by: Ionut Nechita <ionut_n2001@yahoo.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4573
+Tested-by: Ionut Nechita <ionut_n2001@yahoo.com>
+Fixes: 12ffc3b1513eb ("PM: Restrict swap use to later in the suspend sequence")
+Tested-by: Kenneth Crudup <kenny@panix.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20250925185108.2968494-2-superm1@kernel.org
+[ rjw: Add comment explainig the new pm_restrict_gfp_mask() call purpose ]
+Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/energy_model.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/power/hibernate.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -799,7 +799,7 @@ void em_adjust_cpu_capacity(unsigned int
- static void em_check_capacity_update(void)
- {
- 	cpumask_var_t cpu_done_mask;
--	int cpu;
-+	int cpu, failed_cpus = 0;
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -695,12 +695,16 @@ static void power_down(void)
  
- 	if (!zalloc_cpumask_var(&cpu_done_mask, GFP_KERNEL)) {
- 		pr_warn("no free memory\n");
-@@ -817,10 +817,8 @@ static void em_check_capacity_update(voi
- 
- 		policy = cpufreq_cpu_get(cpu);
- 		if (!policy) {
--			pr_debug("Accessing cpu%d policy failed\n", cpu);
--			schedule_delayed_work(&em_update_work,
--					      msecs_to_jiffies(1000));
--			break;
-+			failed_cpus++;
-+			continue;
- 		}
- 		cpufreq_cpu_put(policy);
- 
-@@ -835,6 +833,9 @@ static void em_check_capacity_update(voi
- 		em_adjust_new_capacity(cpu, dev, pd);
- 	}
- 
-+	if (failed_cpus)
-+		schedule_delayed_work(&em_update_work, msecs_to_jiffies(1000));
+ #ifdef CONFIG_SUSPEND
+ 	if (hibernation_mode == HIBERNATION_SUSPEND) {
++		pm_restore_gfp_mask();
+ 		error = suspend_devices_and_enter(mem_sleep_current);
+ 		if (error) {
+ 			hibernation_mode = hibernation_ops ?
+ 						HIBERNATION_PLATFORM :
+ 						HIBERNATION_SHUTDOWN;
+ 		} else {
++			/* Match pm_restore_gfp_mask() call in hibernate() */
++			pm_restrict_gfp_mask();
 +
- 	free_cpumask_var(cpu_done_mask);
- }
- 
+ 			/* Restore swap signature. */
+ 			error = swsusp_unmark();
+ 			if (error)
 
 
