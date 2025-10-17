@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B432E13C;
-	Fri, 17 Oct 2025 15:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26942F692B;
+	Fri, 17 Oct 2025 15:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714224; cv=none; b=cKj3i+S//kvlW+6D7ioRrSRpXTvRNB9wpqDCokCih5vwsFd6knr0Ms0y5IiGTnu1cNhph/19lg4CzwcxlSDz9xRTwE2j4KkLDR3ETjsaDZjdQ+V83mhX22v5wRHxuJpmB0Th7wxIpTtaG8z4/ycQVOHAE/p1PK/WLZ0R2Rdd73Y=
+	t=1760714227; cv=none; b=omX52tzqMvKmaRszTI+a58Y4j9sv/wZZItwYNFumDTYqSS+Jmm6a0We9DFoLX42yVOK+HDY+WwEQlcwC0DCkWo4D4B6FACBPj83MdBm5PnU8/x5BTDkoWfBmu8Keq+KTX4VkW40PQcpg05H3vF+/yLEUVVMn/Pe8zEVxGgGemlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714224; c=relaxed/simple;
-	bh=WBnkIiEbGbssaWzKTCswtW93IqRnrUlvdswIFUhiM5Y=;
+	s=arc-20240116; t=1760714227; c=relaxed/simple;
+	bh=cRLcu4cmn+a7weeZ6tUtkgVJRNbXs9aR9z+mFWUnjYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFird6QCYQ26ZExXNPCCVs7gz+77Qv4CUl+rcKYqpHtN6OBh7OnmD03suD/oN3osMyThOgl6d53Q/g8dALNDngxDv8VxE5lHHEOjusIyrjPqgABmSDGNl3BSB1Pgj9x5lHJXQO2Qn1j9+1wKTGfU7EXbZJtkwqqOOTk9Lr21xvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/ZJ3X5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HSqLCDjTVMrEaktMTBQb88OPKojJ18f40ROCYBXkA/20AWAfr7vCdolggRuAgs7RHFGgsV+M0asGvBBioFRNfMkN4BSv6zbB4nmWdoniOmttTX1gCmYQHWtK5pWwx9v3sbaRi6ozGHFe5alhnqAdc+DE5gzGl9jAzimx5btINUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyuiLF8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/ZJ3X5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5B5C4CEE7;
-	Fri, 17 Oct 2025 15:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyuiLF8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6A2C4CEE7;
+	Fri, 17 Oct 2025 15:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714224;
-	bh=WBnkIiEbGbssaWzKTCswtW93IqRnrUlvdswIFUhiM5Y=;
+	s=korg; t=1760714227;
+	bh=cRLcu4cmn+a7weeZ6tUtkgVJRNbXs9aR9z+mFWUnjYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/ZJ3X5lrKn6S+DAEwT1TeBBdXS11XrXCVJbqK/Djh9ErwIVrwkhMYhm7ldzn/3h0
-	 6w7b9jWyEmuyT9j9bc8v01gbcV3oscKpHYxBLV9oAZNRDwDz6ZfLrOXQ8kYo2I+Jx7
-	 pUKvncOTQVzEzWqKcYMbd7B1YaCszn1lUtGQGX1E=
+	b=AyuiLF8kgLVdyMU69IIPZoEqNyAg0H8FJVESAyoTYLO6DWnR3XJ1EBbaybL8xifir
+	 hIL8L6IX/HoGBmWdV2UpV/M6mkttboqQhqhQ3ORJEjd9oli0YluTf109+mpIG9dwtT
+	 9Ioc49kjzT8S4VDiZgoLd2V0k1mySQYt1/1MnLr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini T <harini.t@amd.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/277] mailbox: zynqmp-ipi: Fix out-of-bounds access in mailbox cleanup loop
-Date: Fri, 17 Oct 2025 16:51:10 +0200
-Message-ID: <20251017145149.445233912@linuxfoundation.org>
+Subject: [PATCH 6.12 072/277] drm/amd/display: Properly disable scaling on DCE6
+Date: Fri, 17 Oct 2025 16:51:19 +0200
+Message-ID: <20251017145149.770000655@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -46,43 +45,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harini T <harini.t@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 0aead8197fc1a85b0a89646e418feb49a564b029 ]
+[ Upstream commit a7dc87f3448bea5ebe054f14e861074b9c289c65 ]
 
-The cleanup loop was starting at the wrong array index, causing
-out-of-bounds access.
-Start the loop at the correct index for zero-indexed arrays to prevent
-accessing memory beyond the allocated array bounds.
+SCL_SCALER_ENABLE can be used to enable/disable the scaler
+on DCE6. Program it to 0 when scaling isn't used, 1 when used.
+Additionally, clear some other registers when scaling is
+disabled and program the SCL_UPDATE register as recommended.
 
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Harini T <harini.t@amd.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+This fixes visible glitches for users whose BIOS sets up a
+mode with scaling at boot, which DC was unable to clean up.
+
+Fixes: b70aaf5586f2 ("drm/amd/display: dce_transform: add DCE6 specific macros,functions")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/dce/dce_transform.c    | 15 +++++++++++----
+ .../gpu/drm/amd/display/dc/dce/dce_transform.h    |  2 ++
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 411bbc10edeaf..fab897b5724c1 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -890,7 +890,7 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
- 	if (pdata->irq < MAX_SGI)
- 		xlnx_mbox_cleanup_sgi(pdata);
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+index e5c2fb134d14d..1ab5ae9b5ea51 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+@@ -154,10 +154,13 @@ static bool dce60_setup_scaling_configuration(
+ 	REG_SET(SCL_BYPASS_CONTROL, 0, SCL_BYPASS_MODE, 0);
  
--	i = pdata->num_mboxes;
-+	i = pdata->num_mboxes - 1;
- 	for (; i >= 0; i--) {
- 		ipi_mbox = &pdata->ipi_mboxes[i];
- 		if (device_is_registered(&ipi_mbox->dev))
+ 	if (data->taps.h_taps + data->taps.v_taps <= 2) {
+-		/* Set bypass */
+-
+-		/* DCE6 has no SCL_MODE register, skip scale mode programming */
++		/* Disable scaler functionality */
++		REG_WRITE(SCL_SCALER_ENABLE, 0);
+ 
++		/* Clear registers that can cause glitches even when the scaler is off */
++		REG_WRITE(SCL_TAP_CONTROL, 0);
++		REG_WRITE(SCL_AUTOMATIC_MODE_CONTROL, 0);
++		REG_WRITE(SCL_F_SHARP_CONTROL, 0);
+ 		return false;
+ 	}
+ 
+@@ -165,7 +168,7 @@ static bool dce60_setup_scaling_configuration(
+ 			SCL_H_NUM_OF_TAPS, data->taps.h_taps - 1,
+ 			SCL_V_NUM_OF_TAPS, data->taps.v_taps - 1);
+ 
+-	/* DCE6 has no SCL_MODE register, skip scale mode programming */
++	REG_WRITE(SCL_SCALER_ENABLE, 1);
+ 
+ 	/* DCE6 has no SCL_BOUNDARY_MODE bit, skip replace out of bound pixels */
+ 
+@@ -502,6 +505,8 @@ static void dce60_transform_set_scaler(
+ 	REG_SET(DC_LB_MEM_SIZE, 0,
+ 		DC_LB_MEM_SIZE, xfm_dce->lb_memory_size);
+ 
++	REG_WRITE(SCL_UPDATE, 0x00010000);
++
+ 	/* Clear SCL_F_SHARP_CONTROL value to 0 */
+ 	REG_WRITE(SCL_F_SHARP_CONTROL, 0);
+ 
+@@ -564,6 +569,8 @@ static void dce60_transform_set_scaler(
+ 	/* DCE6 has no SCL_COEF_UPDATE_COMPLETE bit to flip to new coefficient memory */
+ 
+ 	/* DCE6 DATA_FORMAT register does not support ALPHA_EN */
++
++	REG_WRITE(SCL_UPDATE, 0);
+ }
+ #endif
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+index ff746fba850bc..eb716e8337e23 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.h
+@@ -155,6 +155,7 @@
+ 	SRI(SCL_COEF_RAM_TAP_DATA, SCL, id), \
+ 	SRI(VIEWPORT_START, SCL, id), \
+ 	SRI(VIEWPORT_SIZE, SCL, id), \
++	SRI(SCL_SCALER_ENABLE, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_INIT_RGB_LUMA, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_INIT_CHROMA, SCL, id), \
+ 	SRI(SCL_HORZ_FILTER_SCALE_RATIO, SCL, id), \
+@@ -592,6 +593,7 @@ struct dce_transform_registers {
+ 	uint32_t SCL_VERT_FILTER_SCALE_RATIO;
+ 	uint32_t SCL_HORZ_FILTER_INIT;
+ #if defined(CONFIG_DRM_AMD_DC_SI)
++	uint32_t SCL_SCALER_ENABLE;
+ 	uint32_t SCL_HORZ_FILTER_INIT_RGB_LUMA;
+ 	uint32_t SCL_HORZ_FILTER_INIT_CHROMA;
+ #endif
 -- 
 2.51.0
 
