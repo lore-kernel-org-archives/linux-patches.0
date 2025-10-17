@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB596336EC2;
-	Fri, 17 Oct 2025 15:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B323E2F12B0;
+	Fri, 17 Oct 2025 15:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713851; cv=none; b=hV8/2oaqEtyAFFeBUMkUnwpkRlyE/zpw0p9dCw5q1o8s4yDx0r3oMp+4rTRGdj+pM9T/vSCLyDHwt0Cw3ar5ebD/YKCo3JVuLr8zomMNCbby/yqT+IdCKa/SDRmG5DlYvOv43u5jqix9V67/yT07rXxu71eHMc7T30LBtMjFlnI=
+	t=1760713854; cv=none; b=rLs3lL3v+n5RDZAW7SDQclZ8ykt4jDcMl2aZ1IJddNnWRWdfNWuNrCDl4U3mrN9Kpo4WpjxfRIGAURI4beo3lorc+nhchfuxhkxOGJN1GOpKXglOSA2LDtxNVbT+6pKN6Lw70urR3cPHaz9VtFtZorZBPlGjyQjDEciCUrrsROY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713851; c=relaxed/simple;
-	bh=znz6ppy9Idt5WffpUI+QzPw4/qWysPZzzbcfsve3UMI=;
+	s=arc-20240116; t=1760713854; c=relaxed/simple;
+	bh=qbTbmOaRuktCsq7mBpIWy2T+r0ue7K2I+QF63H/6+Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b79QbZH6wjHvIEKDy6pp0/LqN8AbafT/rnucMFmNNlafEuJ04vlxxUdboY5NPJbz1jYJBzmqasxFpqW3xrDEx/2QUQ0pLbcyYUwBwsHFLNmnVkQtPYPQvtAdBtXv1F0cXg2e2bdULRLHMbBrAtNx/TCEELl2Jxc0OgB71QzFpuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHUgOPHG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opkVYvEnjTEKjlhiUkciS9cBjWRzQzRprLkCkc27LJPGiMx/uf+mSSy+mnZOSpr47cZ6KTmzzDrKnnGOIsh7fFbqvuuhgo8whWvot9LorkkV1+4VCeSWzQMwqm1mPa/7pLGD9y65nAdIPE+jrfsF5yNWInrJoWc+Qduf/ain25c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYm151Qn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHUgOPHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F93C4CEE7;
-	Fri, 17 Oct 2025 15:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYm151Qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A60C4CEE7;
+	Fri, 17 Oct 2025 15:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713851;
-	bh=znz6ppy9Idt5WffpUI+QzPw4/qWysPZzzbcfsve3UMI=;
+	s=korg; t=1760713854;
+	bh=qbTbmOaRuktCsq7mBpIWy2T+r0ue7K2I+QF63H/6+Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHUgOPHGJ3d+q++0LbeKx15zAxuPf7crUMc19PkGSmLmP0lRSpsC4N91qtRpR61+X
-	 /SHk3+P597PVj4U05RydRQieeOOvnhdysjmX1EbG0jbzT32SbLDxblIE9UY7hFAvn4
-	 EPCjAtefWbhT1U7CWEi7q8Hqx+emBUTKfjXlkttI=
+	b=tYm151Qn5/O2fTN2EbwZ97eckgHOwzJVtJeC+c56w/e7PR6DqXiziaGDbRyHYN/Cc
+	 1ET9ksEu8I6299IaGJHY4WBYoV8VZ9PtMdaLpe7I+ns2ybKTzUj5hrBT1ngnnQW6Rj
+	 AaXp5K+L9OIWrGWqtCN/AI2J0tL+EHx9kAZM0DR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Autumn Dececco <autumndececco@gmail.com>,
-	Nick Morrow <morrownr@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 142/201] wifi: mt76: mt7921u: Add VID/PID for Netgear A7500
-Date: Fri, 17 Oct 2025 16:53:23 +0200
-Message-ID: <20251017145139.950663633@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Helen Koike <koike@igalia.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	NeilBrown <neilb@suse.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 143/201] mm/page_alloc: only set ALLOC_HIGHATOMIC for __GPF_HIGH allocations
+Date: Fri, 17 Oct 2025 16:53:24 +0200
+Message-ID: <20251017145139.986882932@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,35 +62,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Morrow <morrownr@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit fc6627ca8a5f811b601aea74e934cf8a048c88ac upstream.
+commit 6a204d4b14c99232e05d35305c27ebce1c009840 upstream.
 
-Add VID/PID 0846/9065 for Netgear A7500.
+Commit 524c48072e56 ("mm/page_alloc: rename ALLOC_HIGH to
+ALLOC_MIN_RESERVE") is the start of a series that explains how __GFP_HIGH,
+which implies ALLOC_MIN_RESERVE, is going to be used instead of
+__GFP_ATOMIC for high atomic reserves.
 
-Reported-by: Autumn Dececco <autumndececco@gmail.com>
-Tested-by: Autumn Dececco <autumndececco@gmail.com>
-Signed-off-by: Nick Morrow <morrownr@gmail.com>
-Cc: stable@vger.kernel.org
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/80bacfd6-6073-4ce5-be32-ae9580832337@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Commit eb2e2b425c69 ("mm/page_alloc: explicitly record high-order atomic
+allocations in alloc_flags") introduced ALLOC_HIGHATOMIC for such
+allocations of order higher than 0.  It still used __GFP_ATOMIC, though.
+
+Then, commit 1ebbb21811b7 ("mm/page_alloc: explicitly define how
+__GFP_HIGH non-blocking allocations accesses reserves") just turned that
+check for !__GFP_DIRECT_RECLAIM, ignoring that high atomic reserves were
+expected to test for __GFP_HIGH.
+
+This leads to high atomic reserves being added for high-order GFP_NOWAIT
+allocations and others that clear __GFP_DIRECT_RECLAIM, which is
+unexpected.  Later, those reserves lead to 0-order allocations going to
+the slow path and starting reclaim.
+
+>From /proc/pagetypeinfo, without the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      1      8     10      9      7      3      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic     64     20     12      5      0      0      0      0      0      0      0
+
+With the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+
+Link: https://lkml.kernel.org/r/20250814172245.1259625-1-cascardo@igalia.com
+Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Tested-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: NeilBrown <neilb@suse.de>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/page_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -21,6 +21,9 @@ static const struct usb_device_id mt7921
- 	/* Netgear, Inc. [A8000,AXE3000] */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9060, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
-+	/* Netgear, Inc. A7500 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9065, 0xff, 0xff, 0xff),
-+		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
- 	/* TP-Link TXE50UH */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0107, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -3738,7 +3738,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask, unsig
+ 		if (!(gfp_mask & __GFP_NOMEMALLOC)) {
+ 			alloc_flags |= ALLOC_NON_BLOCK;
+ 
+-			if (order > 0)
++			if (order > 0 && (alloc_flags & ALLOC_MIN_RESERVE))
+ 				alloc_flags |= ALLOC_HIGHATOMIC;
+ 		}
+ 
 
 
