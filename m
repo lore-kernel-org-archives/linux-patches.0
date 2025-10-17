@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF6D2745E;
-	Fri, 17 Oct 2025 15:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC2D3370FB;
+	Fri, 17 Oct 2025 15:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714742; cv=none; b=brfzoHLmEpQ1VecSC723s6usXor7H0eZjDuB+lbn90LwmbLfPH8khkTXrBHBozGKPlY+npfJl7jK/mPSb4W4YT87JYWUmaurUzoiQ5u6Q2Ief601Dhap8CQRBmB7Un9O6gzo6zYAs+Cy3e7c9lLfJ7Q7+A6QkRm7N3sF55o5SLY=
+	t=1760714745; cv=none; b=Vxzw+jDY/jcKUASOyf2I1KkcZBoToJoC/SNMMZeIpOlfEIZsgJHXuMiK/2wFCk85/+L/nEuGGuNpVeiDIUgn03KQPOu7j0Ou6t/jwAnRAHnFhW+VULCKeMotEyuqKTJ9zUpQsFbPJBOjnCKqrLPA5yEQeKQ3g/p0U0tyShf8SZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714742; c=relaxed/simple;
-	bh=IT6ch72AK/M0hGNW12mBy/P3vgIpD5lDkYY/7qWb5Gw=;
+	s=arc-20240116; t=1760714745; c=relaxed/simple;
+	bh=l+SLFD5FjJvJ6jC7Q8e2/dpMc/h2ZRUR/Nr87inc3MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWufuHExQx79v0kY1U3KwWIMlqKNZNrsA/vD4fDK/UMcYSObWAPiR9romNNpN+/3UkZqXAW1Pn0500XV5DEvwmDNxlLd9NPJBYkFIsow5gkyPND8WytQCGP32B5wMimHzc4hivDvsTeCnuIrOYd36letBFhuzas4zMPzPAXgb9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+gmTOyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z/mueMOZ700wzdJpNagwFcvglwpAi9FGKBIXRgqNTWltYgTdwBPNkyTMO52lAVuSj91xR08WehvMtnBLffK0S5MCBHaSKwOuNKvqzvWyvNrscc3a2abMOHYgboI+/l3sO1RJ1SJOn/9F4uVXst63EvbrA/1MGz6Ak39fO+qxOMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCUHVPWm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+gmTOyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B7C4CEE7;
-	Fri, 17 Oct 2025 15:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCUHVPWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF0EC4CEE7;
+	Fri, 17 Oct 2025 15:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714742;
-	bh=IT6ch72AK/M0hGNW12mBy/P3vgIpD5lDkYY/7qWb5Gw=;
+	s=korg; t=1760714745;
+	bh=l+SLFD5FjJvJ6jC7Q8e2/dpMc/h2ZRUR/Nr87inc3MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+gmTOywu/nS6z3NiY0QlfZNkFAqAsW8wS3457lNjS1dlNCVHATpY148nxHX8YVz1
-	 oKBnmJnkhYhx//ioC4rjkbGZ6g+ihjWOlFpX5/AFtFOJu+sCseVGv+vcLvD8djb66y
-	 wmcivVcXSucPnaMTc6AdgCqPfoZxuS4j/54XNA0o=
+	b=iCUHVPWmsNAxuyppjBdppnitVtCjPa5fRpgErpV3WffpM80fbX0nGuUBBDo6vjMhm
+	 7oPpbB2QeqYyAu976W3efIVCSPBFG7LYdVLyajaG6k1HcwgnKpueQntROHm431MsB7
+	 QPkXdR3yUWz2SpMeGsiaQmE9VQs8hi2/HwAmOR5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GuangFei Luo <luogf2025@163.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/277] ACPI: battery: Add synchronization between interface updates
-Date: Fri, 17 Oct 2025 16:54:18 +0200
-Message-ID: <20251017145156.316690893@linuxfoundation.org>
+Subject: [PATCH 6.12 252/277] ACPI: property: Disregard references in data-only subnode lists
+Date: Fri, 17 Oct 2025 16:54:19 +0200
+Message-ID: <20251017145156.353454888@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -53,212 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 399dbcadc01ebf0035f325eaa8c264f8b5cd0a14 ]
+[ Upstream commit d06118fe9b03426484980ed4c189a8c7b99fa631 ]
 
-There is no synchronization between different code paths in the ACPI
-battery driver that update its sysfs interface or its power supply
-class device interface.  In some cases this results to functional
-failures due to race conditions.
+Data-only subnode links following the ACPI data subnode GUID in a _DSD
+package are expected to point to named objects returning _DSD-equivalent
+packages.  If a reference to such an object is used in the target field
+of any of those links, that object will be evaluated in place (as a
+named object) and its return data will be embedded in the outer _DSD
+package.
 
-One example of this is when two ACPI notifications:
+For this reason, it is not expected to see a subnode link with the
+target field containing a local reference (that would mean pointing
+to a device or another object that cannot be evaluated in place and
+therefore cannot return a _DSD-equivalent package).
 
-  - ACPI_BATTERY_NOTIFY_STATUS (0x80)
-  - ACPI_BATTERY_NOTIFY_INFO   (0x81)
+Accordingly, simplify the code parsing data-only subnode links to
+simply print a message when it encounters a local reference in the
+target field of one of those links.
 
-are triggered (by the platform firmware) in a row with a little delay
-in between after removing and reinserting a laptop battery.  Both
-notifications cause acpi_battery_update() to be called and if the delay
-between them is sufficiently small, sysfs_add_battery() can be re-entered
-before battery->bat is set which leads to a duplicate sysfs entry error:
+Moreover, since acpi_nondev_subnode_data_ok() would only have one
+caller after the change above, fold it into that caller.
 
- sysfs: cannot create duplicate filename '/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1'
- CPU: 1 UID: 0 PID: 185 Comm: kworker/1:4 Kdump: loaded Not tainted 6.12.38+deb13-amd64 #1  Debian 6.12.38-1
- Hardware name: Gateway          NV44             /SJV40-MV        , BIOS V1.3121 04/08/2009
- Workqueue: kacpi_notify acpi_os_execute_deferred
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x5d/0x80
-  sysfs_warn_dup.cold+0x17/0x23
-  sysfs_create_dir_ns+0xce/0xe0
-  kobject_add_internal+0xba/0x250
-  kobject_add+0x96/0xc0
-  ? get_device_parent+0xde/0x1e0
-  device_add+0xe2/0x870
-  __power_supply_register.part.0+0x20f/0x3f0
-  ? wake_up_q+0x4e/0x90
-  sysfs_add_battery+0xa4/0x1d0 [battery]
-  acpi_battery_update+0x19e/0x290 [battery]
-  acpi_battery_notify+0x50/0x120 [battery]
-  acpi_ev_notify_dispatch+0x49/0x70
-  acpi_os_execute_deferred+0x1a/0x30
-  process_one_work+0x177/0x330
-  worker_thread+0x251/0x390
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xd2/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x34/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- kobject: kobject_add_internal failed for BAT1 with -EEXIST, don't try to register things with the same name in the same directory.
-
-There are also other scenarios in which analogous issues may occur.
-
-Address this by using a common lock in all of the code paths leading
-to updates of driver interfaces: ACPI Notify () handler, system resume
-callback and post-resume notification, device addition and removal.
-
-This new lock replaces sysfs_lock that has been used only in
-sysfs_remove_battery() which now is going to be always called under
-the new lock, so it doesn't need any internal locking any more.
-
-Fixes: 10666251554c ("ACPI: battery: Install Notify() handler directly")
-Closes: https://lore.kernel.org/linux-acpi/20250910142653.313360-1-luogf2025@163.com/
-Reported-by: GuangFei Luo <luogf2025@163.com>
-Tested-by: GuangFei Luo <luogf2025@163.com>
-Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
+Link: https://lore.kernel.org/linux-acpi/CAJZ5v0jVeSrDO6hrZhKgRZrH=FpGD4vNUjFD8hV9WwN9TLHjzQ@mail.gmail.com/
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Stable-dep-of: baf60d5cb8bc ("ACPI: property: Do not pass NULL handles to acpi_attach_data()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c |   43 +++++++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 14 deletions(-)
+ drivers/acpi/property.c |   51 ++++++++++++++++++++----------------------------
+ 1 file changed, 22 insertions(+), 29 deletions(-)
 
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -92,7 +92,7 @@ enum {
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -124,32 +124,12 @@ static bool acpi_nondev_subnode_extract(
+ 	return false;
+ }
  
- struct acpi_battery {
- 	struct mutex lock;
--	struct mutex sysfs_lock;
-+	struct mutex update_lock;
- 	struct power_supply *bat;
- 	struct power_supply_desc bat_desc;
- 	struct acpi_device *device;
-@@ -903,15 +903,12 @@ static int sysfs_add_battery(struct acpi
- 
- static void sysfs_remove_battery(struct acpi_battery *battery)
+-static bool acpi_nondev_subnode_data_ok(acpi_handle handle,
+-					const union acpi_object *link,
+-					struct list_head *list,
+-					struct fwnode_handle *parent)
+-{
+-	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER };
+-	acpi_status status;
+-
+-	status = acpi_evaluate_object_typed(handle, NULL, NULL, &buf,
+-					    ACPI_TYPE_PACKAGE);
+-	if (ACPI_FAILURE(status))
+-		return false;
+-
+-	if (acpi_nondev_subnode_extract(buf.pointer, handle, link, list,
+-					parent))
+-		return true;
+-
+-	ACPI_FREE(buf.pointer);
+-	return false;
+-}
+-
+ static bool acpi_nondev_subnode_ok(acpi_handle scope,
+ 				   const union acpi_object *link,
+ 				   struct list_head *list,
+ 				   struct fwnode_handle *parent)
  {
--	mutex_lock(&battery->sysfs_lock);
--	if (!battery->bat) {
--		mutex_unlock(&battery->sysfs_lock);
-+	if (!battery->bat)
- 		return;
--	}
++	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER };
+ 	acpi_handle handle;
+ 	acpi_status status;
+ 
+@@ -161,7 +141,17 @@ static bool acpi_nondev_subnode_ok(acpi_
+ 	if (ACPI_FAILURE(status))
+ 		return false;
+ 
+-	return acpi_nondev_subnode_data_ok(handle, link, list, parent);
++	status = acpi_evaluate_object_typed(handle, NULL, NULL, &buf,
++					    ACPI_TYPE_PACKAGE);
++	if (ACPI_FAILURE(status))
++		return false;
 +
- 	battery_hook_remove_battery(battery);
- 	power_supply_unregister(battery->bat);
- 	battery->bat = NULL;
--	mutex_unlock(&battery->sysfs_lock);
++	if (acpi_nondev_subnode_extract(buf.pointer, handle, link, list,
++					parent))
++		return true;
++
++	ACPI_FREE(buf.pointer);
++	return false;
  }
  
- static void find_battery(const struct dmi_header *dm, void *private)
-@@ -1071,6 +1068,9 @@ static void acpi_battery_notify(acpi_han
+ static bool acpi_add_nondev_subnodes(acpi_handle scope,
+@@ -174,7 +164,6 @@ static bool acpi_add_nondev_subnodes(acp
  
- 	if (!battery)
- 		return;
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	old = battery->bat;
- 	/*
- 	 * On Acer Aspire V5-573G notifications are sometimes triggered too
-@@ -1093,21 +1093,22 @@ static void acpi_battery_notify(acpi_han
- }
+ 	for (i = 0; i < links->package.count; i++) {
+ 		union acpi_object *link, *desc;
+-		acpi_handle handle;
+ 		bool result;
  
- static int battery_notify(struct notifier_block *nb,
--			       unsigned long mode, void *_unused)
-+			  unsigned long mode, void *_unused)
- {
- 	struct acpi_battery *battery = container_of(nb, struct acpi_battery,
- 						    pm_nb);
--	int result;
+ 		link = &links->package.elements[i];
+@@ -186,22 +175,26 @@ static bool acpi_add_nondev_subnodes(acp
+ 		if (link->package.elements[0].type != ACPI_TYPE_STRING)
+ 			continue;
  
--	switch (mode) {
--	case PM_POST_HIBERNATION:
--	case PM_POST_SUSPEND:
-+	if (mode == PM_POST_SUSPEND || mode == PM_POST_HIBERNATION) {
-+		guard(mutex)(&battery->update_lock);
-+
- 		if (!acpi_battery_present(battery))
- 			return 0;
- 
- 		if (battery->bat) {
- 			acpi_battery_refresh(battery);
- 		} else {
-+			int result;
-+
- 			result = acpi_battery_get_info(battery);
- 			if (result)
- 				return result;
-@@ -1119,7 +1120,6 @@ static int battery_notify(struct notifie
- 
- 		acpi_battery_init_alarm(battery);
- 		acpi_battery_get_state(battery);
--		break;
- 	}
- 
- 	return 0;
-@@ -1197,6 +1197,8 @@ static int acpi_battery_update_retry(str
- {
- 	int retry, ret;
- 
-+	guard(mutex)(&battery->update_lock);
-+
- 	for (retry = 5; retry; retry--) {
- 		ret = acpi_battery_update(battery, false);
- 		if (!ret)
-@@ -1207,6 +1209,13 @@ static int acpi_battery_update_retry(str
- 	return ret;
- }
- 
-+static void sysfs_battery_cleanup(struct acpi_battery *battery)
-+{
-+	guard(mutex)(&battery->update_lock);
-+
-+	sysfs_remove_battery(battery);
-+}
-+
- static int acpi_battery_add(struct acpi_device *device)
- {
- 	int result = 0;
-@@ -1229,7 +1238,7 @@ static int acpi_battery_add(struct acpi_
- 	if (result)
- 		return result;
- 
--	result = devm_mutex_init(&device->dev, &battery->sysfs_lock);
-+	result = devm_mutex_init(&device->dev, &battery->update_lock);
- 	if (result)
- 		return result;
- 
-@@ -1259,7 +1268,7 @@ fail_pm:
- 	device_init_wakeup(&device->dev, 0);
- 	unregister_pm_notifier(&battery->pm_nb);
- fail:
--	sysfs_remove_battery(battery);
-+	sysfs_battery_cleanup(battery);
- 
- 	return result;
- }
-@@ -1278,6 +1287,9 @@ static void acpi_battery_remove(struct a
- 
- 	device_init_wakeup(&device->dev, 0);
- 	unregister_pm_notifier(&battery->pm_nb);
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	sysfs_remove_battery(battery);
- }
- 
-@@ -1295,6 +1307,9 @@ static int acpi_battery_resume(struct de
- 		return -EINVAL;
- 
- 	battery->update_time = 0;
-+
-+	guard(mutex)(&battery->update_lock);
-+
- 	acpi_battery_update(battery, true);
- 	return 0;
- }
+-		/* The second one may be a string, a reference or a package. */
++		/* The second one may be a string or a package. */
+ 		switch (link->package.elements[1].type) {
+ 		case ACPI_TYPE_STRING:
+ 			result = acpi_nondev_subnode_ok(scope, link, list,
+ 							 parent);
+ 			break;
+-		case ACPI_TYPE_LOCAL_REFERENCE:
+-			handle = link->package.elements[1].reference.handle;
+-			result = acpi_nondev_subnode_data_ok(handle, link, list,
+-							     parent);
+-			break;
+ 		case ACPI_TYPE_PACKAGE:
+ 			desc = &link->package.elements[1];
+ 			result = acpi_nondev_subnode_extract(desc, NULL, link,
+ 							     list, parent);
+ 			break;
++		case ACPI_TYPE_LOCAL_REFERENCE:
++			/*
++			 * It is not expected to see any local references in
++			 * the links package because referencing a named object
++			 * should cause it to be evaluated in place.
++			 */
++			acpi_handle_info(scope, "subnode %s: Unexpected reference\n",
++					 link->package.elements[0].string.pointer);
++			fallthrough;
+ 		default:
+ 			result = false;
+ 			break;
 
 
