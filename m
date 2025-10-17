@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B7D330B26;
-	Fri, 17 Oct 2025 15:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED4D330B35;
+	Fri, 17 Oct 2025 15:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716558; cv=none; b=go7Parh+M7P4H7fWudlpuJheWO9b23CRNpVPmFI3gn6e0mn/tV/YkxkHhHh6fLtpkatUwG3AewbqQfoneZhIdTipc9B3JpGalQ3yWjnd2Hj32LHD1H0wzhE9eJ6qwaaX+y0SBrtTl92HUqlBiirGtUynbsmqsh0jz06NPD66FOM=
+	t=1760716561; cv=none; b=fHRD/P7laPaUgqnI9frddmdzQAZqckSV0ewL0HPy3o8sWwI8VWBJbDaQ/ErfQzYiukuUo2V/GuxeqVzi7XuQ8ENkyXHjOrEUivalcQmhWa/aeBQUHK0CCkqPCiX7eA31shaz0XgLjujMNVOrvIo2ituUguFgm2TiNN3eqjpmLuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716558; c=relaxed/simple;
-	bh=uEkR7L9fteXpRDclGfc8eemi5Jc7Ts1de9MDjyfkHXM=;
+	s=arc-20240116; t=1760716561; c=relaxed/simple;
+	bh=9WTAIZd12++TL3ZfMmh88ToMNcH6JBfbrZRbzr/kTj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eR+2dnXphVGLX+7QnIhsYwD/3+Yk8RhZN5btIAZqcJD8q1xTZigf5bFS62vNvM48rELyA6NjOt74TvoEP77KAIgkCWVR3cQ30yctrusWYejPCeuEN2ghYsANu69GIch/rjONhgYa33TsMf2uXMb4NKirwHiGHpNs3jS6hwPKyTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IL04oPFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmCQLpQXvOksMAE3c7aAt3I4pAujGpYYWvpD9rvCCj6tfxo/On+w+5E5wf4J8f+Kj1f28frHE0wyDS+Trnve3FoV9GTS/9ZnMacA/XvNGm4v+19FtqQqbKfUFnwx52VwhVW0+MDCmM57NSXX9Tc2oXqeFRqPTRulm0e4hguMTak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXWX5s6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IL04oPFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F149C4CEE7;
-	Fri, 17 Oct 2025 15:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXWX5s6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0F1C4CEE7;
+	Fri, 17 Oct 2025 15:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716557;
-	bh=uEkR7L9fteXpRDclGfc8eemi5Jc7Ts1de9MDjyfkHXM=;
+	s=korg; t=1760716561;
+	bh=9WTAIZd12++TL3ZfMmh88ToMNcH6JBfbrZRbzr/kTj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IL04oPFlEZXC7M/BWBY5Q52Dtw6u6sv3we5M7SJ8LbUY8FsqIoiSjVinh8fx0vNax
-	 Y0bEwLsxjm/d6A6vK+1O6AfwW8ShzJjN/4CoOukNVOsXj95MQRG6PMGJdezqxEg4F5
-	 nDouqSptONfYxdachy+J0tMGAKCaI3elfDuh+2Xs=
+	b=yXWX5s6QEXIb7dtj3dw5Is8Y6pWUf5AnoFUkWiOHoe2yEpujVaWppPGH1gHJseJDE
+	 I7TlrsoQg5VvcShynUvXTt9uDa1rJho92lDFOuGhPelb9TGQPYN7emdEyDhtdvFFZH
+	 1CAaK4MPrCNhXvRWq2iEoZy4WRhF+GmHTY4Qftlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 215/276] x86/umip: Fix decoding of register forms of 0F 01 (SGDT and SIDT aliases)
-Date: Fri, 17 Oct 2025 16:55:08 +0200
-Message-ID: <20251017145150.312095517@linuxfoundation.org>
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hansg@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 233/276] mfd: intel_soc_pmic_chtdc_ti: Set use_single_read regmap_config flag
+Date: Fri, 17 Oct 2025 16:55:26 +0200
+Message-ID: <20251017145150.972890787@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,48 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Hans de Goede <hansg@kernel.org>
 
-commit 27b1fd62012dfe9d3eb8ecde344d7aa673695ecf upstream.
+[ Upstream commit 64e0d839c589f4f2ecd2e3e5bdb5cee6ba6bade9 ]
 
-Filter out the register forms of 0F 01 when determining whether or not to
-emulate in response to a potential UMIP violation #GP, as SGDT and SIDT only
-accept memory operands.  The register variants of 0F 01 are used to encode
-instructions for things like VMX and SGX, i.e. not checking the Mod field
-would cause the kernel to incorrectly emulate on #GP, e.g. due to a CPL
-violation on VMLAUNCH.
+Testing has shown that reading multiple registers at once (for 10-bit
+ADC values) does not work. Set the use_single_read regmap_config flag
+to make regmap split these for us.
 
-Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+This should fix temperature opregion accesses done by
+drivers/acpi/pmic/intel_pmic_chtdc_ti.c and is also necessary for
+the upcoming drivers for the ADC and battery MFD cells.
+
+Fixes: 6bac0606fdba ("mfd: Add support for Cherry Trail Dollar Cove TI PMIC")
 Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250804133240.312383-1-hansg@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/umip.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/mfd/intel_soc_pmic_chtdc_ti.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kernel/umip.c
-+++ b/arch/x86/kernel/umip.c
-@@ -163,8 +163,19 @@ static int identify_insn(struct insn *in
- 	if (insn->opcode.bytes[1] == 0x1) {
- 		switch (X86_MODRM_REG(insn->modrm.value)) {
- 		case 0:
-+			/* The reg form of 0F 01 /0 encodes VMX instructions. */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
-+
- 			return UMIP_INST_SGDT;
- 		case 1:
-+			/*
-+			 * The reg form of 0F 01 /1 encodes MONITOR/MWAIT,
-+			 * STAC/CLAC, and ENCLS.
-+			 */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
-+
- 			return UMIP_INST_SIDT;
- 		case 4:
- 			return UMIP_INST_SMSW;
+--- a/drivers/mfd/intel_soc_pmic_chtdc_ti.c
++++ b/drivers/mfd/intel_soc_pmic_chtdc_ti.c
+@@ -82,6 +82,8 @@ static const struct regmap_config chtdc_
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+ 	.max_register = 0xff,
++	/* The hardware does not support reading multiple registers at once */
++	.use_single_read = true,
+ };
+ 
+ static const struct regmap_irq chtdc_ti_irqs[] = {
 
 
