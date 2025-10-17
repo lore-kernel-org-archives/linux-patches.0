@@ -1,57 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1690336EC9;
-	Fri, 17 Oct 2025 15:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F803370F7;
+	Fri, 17 Oct 2025 15:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714204; cv=none; b=X30fx+P4gxDPT3WLC1kAx8+Y3BH8vmDJRPomzGO3cJS6YqZwROTERTvIWiMB6aRoib9ZYySVx5Ypffum+RRbIKMUaMtjnECrBbHf9c9mUISuljDnpPW5BCvTOOpi+FQIN/x3bx8P6ZMYgfGXAkl1dEjP5emeMoN902DTSBeTE2c=
+	t=1760714208; cv=none; b=QR5PjoI+MNzeghxjaBsH7FTUvCBsYmkp/KoNUepilR21lOb7XyjPaNdfvIUPklKEJZkhe09UKQXRszi6GIX+SW+TWNvc+gJYW6Zf7pEDSZljOrQonSdCRqf7NRI7tePzFZsjLv2ySxqfL87gXY/zOImybPSA+8VOKsE0L4zoWgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714204; c=relaxed/simple;
-	bh=aSPhKdG/ToVZJ5+8kusvPngAyPgxFlWXvpGemVX22Dw=;
+	s=arc-20240116; t=1760714208; c=relaxed/simple;
+	bh=R6NCgdkiEt5TcDbGKA96MtJ2gi0ornyGddmGwE5DMvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krhNfTNAJcCiVNMU6j1IBl6Rl8qDyYwMGYYpg9P6W3gNHIatSjlV8I7Ttm9OTLf5+0WYTL717F67WdeXRzrK97+rOEcGV/9zMQglvarFS9loc5jLkcAXk1qXphObZGd5nSS30vG2BxD1+DIUBfSLexrFmXbyewUOq9VBdBARZUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0MlxUnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiLT1s2coumqCyQTST+0q7jnLrDCUnWTxzm4xG2z8vd4IZjg12xFbe3YKLQim51zQQ8N3GhOEDB85AISBJsVZwY6Eqi39w978O/F1H8ApBUG5JWYfb4tqM7/6CMHsaTc1tT/x6WFUTT3culSH8yYIUaWxfT2aiNDX292qMwYKdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abArV4Ky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0MlxUnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE63CC4CEE7;
-	Fri, 17 Oct 2025 15:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abArV4Ky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A1EC4CEF9;
+	Fri, 17 Oct 2025 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714204;
-	bh=aSPhKdG/ToVZJ5+8kusvPngAyPgxFlWXvpGemVX22Dw=;
+	s=korg; t=1760714207;
+	bh=R6NCgdkiEt5TcDbGKA96MtJ2gi0ornyGddmGwE5DMvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0MlxUnID93NFGJpRzPgr4RYfL6biZA5+XSk21KgZiWUcfAaZWdocGpmqxAeq+4Py
-	 +57y3prS+YUoZ0NSeeOEPTOXdUNenjvu1Jn7dC3fOz/IZtUTLc+8VTo6tYRVjBmG63
-	 4OKACN2ZBD0X5UzE/Y+MDJTV0b/3o1YfiwK1yYCA=
+	b=abArV4KyCyJnXmzu4r4VRzcLdsqxfu+RjgZz6tX+P0rU8OxkFHa4qQKvxwuxqM5R7
+	 t1//fujYhMiPwpdup3GgTKYfneEdhv5WrusJkR01rXyZaQ49CS74h6zMfa3R/6nkNy
+	 PPLFiUvmuokPaU0ka0MyxpPtzvcUkPeA2Y//B0Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
 	James Clark <james.clark@linaro.org>,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ze Gao <zegao2021@gmail.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Weilin Wang <weilin.wang@intel.com>,
-	Will Deacon <will@kernel.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Jing Zhang <renyu.zj@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	ak@linux.intel.com,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Sun Haiyong <sunhaiyong@loongson.cn>,
-	John Garry <john.g.garry@oracle.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	James Clark <james.clark@arm.com>,
+	Atish Patra <atishp@atishpatra.org>,
+	Mingwei Zhang <mizhang@google.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/277] perf test: Add a test for default perf stat command
-Date: Fri, 17 Oct 2025 16:50:38 +0200
-Message-ID: <20251017145148.283904974@linuxfoundation.org>
+Subject: [PATCH 6.12 032/277] perf tools: Add fallback for exclude_guest
+Date: Fri, 17 Oct 2025 16:50:39 +0200
+Message-ID: <20251017145148.321034957@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -70,88 +60,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 65d11821910bd910a2b4b5b005360d036c76ecef ]
+[ Upstream commit bb6e7cb11d97ce1957894d30d13bfad3e8bfefe9 ]
 
-Test that one cycles event is opened for each core PMU when "perf stat"
-is run without arguments.
+Commit 7b100989b4f6bce70 ("perf evlist: Remove __evlist__add_default")
+changed to parse "cycles:P" event instead of creating a new cycles
+event for perf record.  But it also changed the way how modifiers are
+handled so it doesn't set the exclude_guest bit by default.
 
-The event line can either be output as "pmu/cycles/" or just "cycles" if
-there is only one PMU. Include 2 spaces for padding in the one PMU case
-to avoid matching when the word cycles is included in metric
-descriptions.
+It seems Apple M1 PMU requires exclude_guest set and returns EOPNOTSUPP
+if not.  Let's add a fallback so that it can work with default events.
 
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+Also update perf stat hybrid tests to handle possible u or H modifiers.
+
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Acked-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Cc: Yang Jihong <yangjihong@bytedance.com>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ze Gao <zegao2021@gmail.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Cc: Weilin Wang <weilin.wang@intel.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Jing Zhang <renyu.zj@linux.alibaba.com>
-Cc: Yang Li <yang.lee@linux.alibaba.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: ak@linux.intel.com
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Sun Haiyong <sunhaiyong@loongson.cn>
-Cc: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20240926144851.245903-8-james.clark@linaro.org
+Cc: James Clark <james.clark@arm.com>
+Cc: Atish Patra <atishp@atishpatra.org>
+Cc: Mingwei Zhang <mizhang@google.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20241016062359.264929-2-namhyung@kernel.org
+Fixes: 7b100989b4f6bce70 ("perf evlist: Remove __evlist__add_default")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: 24937ee839e4 ("perf evsel: Ensure the fallback message is always written to")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ tools/perf/builtin-stat.c      | 18 +++++++++++++++---
+ tools/perf/tests/shell/stat.sh |  2 +-
+ tools/perf/util/evsel.c        | 21 +++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 4 deletions(-)
 
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index 628c61397d2d3..b578930ed76a4 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -639,8 +639,7 @@ static enum counter_recovery stat_handle_error(struct evsel *counter)
+ 	 * (behavior changed with commit b0a873e).
+ 	 */
+ 	if (errno == EINVAL || errno == ENOSYS ||
+-	    errno == ENOENT || errno == EOPNOTSUPP ||
+-	    errno == ENXIO) {
++	    errno == ENOENT || errno == ENXIO) {
+ 		if (verbose > 0)
+ 			ui__warning("%s event is not supported by the kernel.\n",
+ 				    evsel__name(counter));
+@@ -658,7 +657,7 @@ static enum counter_recovery stat_handle_error(struct evsel *counter)
+ 		if (verbose > 0)
+ 			ui__warning("%s\n", msg);
+ 		return COUNTER_RETRY;
+-	} else if (target__has_per_thread(&target) &&
++	} else if (target__has_per_thread(&target) && errno != EOPNOTSUPP &&
+ 		   evsel_list->core.threads &&
+ 		   evsel_list->core.threads->err_thread != -1) {
+ 		/*
+@@ -679,6 +678,19 @@ static enum counter_recovery stat_handle_error(struct evsel *counter)
+ 		return COUNTER_SKIP;
+ 	}
+ 
++	if (errno == EOPNOTSUPP) {
++		if (verbose > 0) {
++			ui__warning("%s event is not supported by the kernel.\n",
++				    evsel__name(counter));
++		}
++		counter->supported = false;
++		counter->errored = true;
++
++		if ((evsel__leader(counter) != counter) ||
++		    !(counter->core.leader->nr_members > 1))
++			return COUNTER_SKIP;
++	}
++
+ 	evsel__open_strerror(counter, &target, errno, msg, sizeof(msg));
+ 	ui__error("%s\n", msg);
+ 
 diff --git a/tools/perf/tests/shell/stat.sh b/tools/perf/tests/shell/stat.sh
-index 3f1e67795490a..c6df7eec96b98 100755
+index c6df7eec96b98..c4bef71568970 100755
 --- a/tools/perf/tests/shell/stat.sh
 +++ b/tools/perf/tests/shell/stat.sh
-@@ -146,6 +146,30 @@ test_cputype() {
-   echo "cputype test [Success]"
- }
+@@ -159,7 +159,7 @@ test_hybrid() {
+   fi
  
-+test_hybrid() {
-+  # Test the default stat command on hybrid devices opens one cycles event for
-+  # each CPU type.
-+  echo "hybrid test"
+   # Run default Perf stat
+-  cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/|  cycles  " | wc -l)
++  cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/[uH]*|  cycles[:uH]*  " -c)
+ 
+   if [ "$pmus" -ne "$cycles_events" ]
+   then
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index b3de8ce559998..70c4e06da7a03 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -3255,6 +3255,27 @@ bool evsel__fallback(struct evsel *evsel, struct target *target, int err,
+ 		evsel->core.attr.exclude_kernel = 1;
+ 		evsel->core.attr.exclude_hv     = 1;
+ 
++		return true;
++	} else if (err == EOPNOTSUPP && !evsel->core.attr.exclude_guest &&
++		   !evsel->exclude_GH) {
++		const char *name = evsel__name(evsel);
++		char *new_name;
++		const char *sep = ":";
 +
-+  # Count the number of core PMUs, assume minimum of 1
-+  pmus=$(ls /sys/bus/event_source/devices/*/cpus 2>/dev/null | wc -l)
-+  if [ "$pmus" -lt 1 ]
-+  then
-+    pmus=1
-+  fi
++		/* Is there already the separator in the name. */
++		if (strchr(name, '/') ||
++		    (strchr(name, ':') && !evsel->is_libpfm_event))
++			sep = "";
 +
-+  # Run default Perf stat
-+  cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/|  cycles  " | wc -l)
++		if (asprintf(&new_name, "%s%sH", name, sep) < 0)
++			return false;
 +
-+  if [ "$pmus" -ne "$cycles_events" ]
-+  then
-+    echo "hybrid test [Found $pmus PMUs but $cycles_events cycles events. Failed]"
-+    err=1
-+    return
-+  fi
-+  echo "hybrid test [Success]"
-+}
++		free(evsel->name);
++		evsel->name = new_name;
++		/* Apple M1 requires exclude_guest */
++		scnprintf(msg, msgsize, "trying to fall back to excluding guest samples");
++		evsel->core.attr.exclude_guest = 1;
 +
- test_default_stat
- test_stat_record_report
- test_stat_record_script
-@@ -153,4 +177,5 @@ test_stat_repeat_weak_groups
- test_topdown_groups
- test_topdown_weak_groups
- test_cputype
-+test_hybrid
- exit $err
+ 		return true;
+ 	}
+ 
 -- 
 2.51.0
 
