@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAE23EA9E;
-	Fri, 17 Oct 2025 15:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D60323EA9E;
+	Fri, 17 Oct 2025 15:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715107; cv=none; b=HhQcfKf5cfPIJzjgDnV84vkHXo1X117iaScZRG3iH4wO9x1vzXYJJiVB+me9Jay5ca2PMmgkjJbItAb45elcc3UIljGMm66QUo7qRtibD4Vq104jkSSbxeMT8bi50liv1PklCEOAS/Drea+my/Gv8WjbiFIgEiJj8rrkSHrEmTY=
+	t=1760715110; cv=none; b=B05ubAk3L4VDKu2zZjfZKOBFnuCxQ4CBch7koOPDfr9WYGzyDEeooaLfnBwZhPveDz6bscgoyeG4xyPypM8j1ZJWwsMIApbfXKQnIWkW0FKkgVGojcTq+kzHU9/7HlKvLLxJeWJXb4gUDcGp7Y/nHR8cCfU1lhOvVSN34zFKRtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715107; c=relaxed/simple;
-	bh=W95GDdIEnuveakDgJ9+DhoIY4RbCL6Eirz0+pey6Jik=;
+	s=arc-20240116; t=1760715110; c=relaxed/simple;
+	bh=yoPgXsbvlUIBu3QnWUMtqxhokOgAUV6VI+4h4UzYF2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKd1BNwIBLmN6yZwpvXxlvZWwdBc2wFQrxl3KCQecBjZ1FmlDRSOEDJi3ig7668fs7eiUK7l66fyK7+/3MMOjAWDFyl5OsYxnND66a3I8TTd2Ka/PVyhtFSra9PeUs7AbH6HrD/YbPePfaAVBwKrimk/r2fJjFarQrQB8hdJgVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGQAOyw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZMKbMw4LAtNGX5JWdmqzeylNXsM/roKTtQ1nF1aNJs99Cdk4RipFoKEahYZ7xLhOQMF0iEwHE5halUTIQWIGt4NqeRkeb569gu86LmUkGe9F8tTH+MRzI2GVdkG7VWdIDLH2a8tUlB5wnt3QSajU0ZQrj3wgnicUdRsR17OG54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI9C46DE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGQAOyw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E32FC4CEFE;
-	Fri, 17 Oct 2025 15:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI9C46DE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC97C4CEE7;
+	Fri, 17 Oct 2025 15:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715107;
-	bh=W95GDdIEnuveakDgJ9+DhoIY4RbCL6Eirz0+pey6Jik=;
+	s=korg; t=1760715110;
+	bh=yoPgXsbvlUIBu3QnWUMtqxhokOgAUV6VI+4h4UzYF2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jGQAOyw0eZ124FAJu1pDYjuT/E8ktOOhQo/uLpsfPC2PsblphjzP8rLlZP2+c5QZd
-	 2O0BI0lA78kH2j6dOF+3fIi+ywws8ArQ1qgAXCAM0E3Q6zzfyDjocD8FPWb8SFret7
-	 B6FxNvwt+QXIBg8/eciq1h3BR/65our1WZ87Scvs=
+	b=cI9C46DEzccEjoM5XY7dnIKT4CUl5kMWXGlJMCOmdM6KsZF5um9aPAYuQms6GEtZQ
+	 6gDQsOMhlH7SSopWEF0upDkM0nXRTWPTEr8GloiVacuLvo5QDT2Df3ACOCGklnx1bF
+	 eNZpgVSFwlLoqz9A336Tp6ZdIoI8IymAeJNGYQZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini T <harini.t@amd.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Yusuke Suzuki <yusuke.suzuki@isovalent.com>,
+	Julian Wiedmann <jwi@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 101/371] mailbox: zynqmp-ipi: Fix SGI cleanup on unbind
-Date: Fri, 17 Oct 2025 16:51:16 +0200
-Message-ID: <20251017145205.595680643@linuxfoundation.org>
+Subject: [PATCH 6.17 102/371] bpf: Fix metadata_dst leak __bpf_redirect_neigh_v{4,6}
+Date: Fri, 17 Oct 2025 16:51:17 +0200
+Message-ID: <20251017145205.631191487@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,85 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harini T <harini.t@amd.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit bb160e791ab15b89188a7a19589b8e11f681bef3 ]
+[ Upstream commit 23f3770e1a53e6c7a553135011f547209e141e72 ]
 
-The driver incorrectly determines SGI vs SPI interrupts by checking IRQ
-number < 16, which fails with dynamic IRQ allocation. During unbind,
-this causes improper SGI cleanup leading to kernel crash.
+Cilium has a BPF egress gateway feature which forces outgoing K8s Pod
+traffic to pass through dedicated egress gateways which then SNAT the
+traffic in order to interact with stable IPs outside the cluster.
 
-Add explicit irq_type field to pdata for reliable identification of SGI
-interrupts (type-2) and only clean up SGI resources when appropriate.
+The traffic is directed to the gateway via vxlan tunnel in collect md
+mode. A recent BPF change utilized the bpf_redirect_neigh() helper to
+forward packets after the arrival and decap on vxlan, which turned out
+over time that the kmalloc-256 slab usage in kernel was ever-increasing.
 
-Fixes: 6ffb1635341b ("mailbox: zynqmp: handle SGI for shared IPI")
-Signed-off-by: Harini T <harini.t@amd.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+The issue was that vxlan allocates the metadata_dst object and attaches
+it through a fake dst entry to the skb. The latter was never released
+though given bpf_redirect_neigh() was merely setting the new dst entry
+via skb_dst_set() without dropping an existing one first.
+
+Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
+Reported-by: Yusuke Suzuki <yusuke.suzuki@isovalent.com>
+Reported-by: Julian Wiedmann <jwi@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20251003073418.291171-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/core/filter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index dddbef6b2cb8f..967967b2b8a96 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -62,7 +62,8 @@
- #define DST_BIT_POS	9U
- #define SRC_BITMASK	GENMASK(11, 8)
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 2d326d35c3871..c5cdf3b08341a 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2281,6 +2281,7 @@ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
+ 		if (IS_ERR(dst))
+ 			goto out_drop;
  
--#define MAX_SGI 16
-+/* Macro to represent SGI type for IPI IRQs */
-+#define IPI_IRQ_TYPE_SGI	2
++		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 	} else if (nh->nh_family != AF_INET6) {
+ 		goto out_drop;
+@@ -2389,6 +2390,7 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_drop;
+ 		}
  
- /*
-  * Module parameters
-@@ -121,6 +122,7 @@ struct zynqmp_ipi_mbox {
-  * @dev:                  device pointer corresponding to the Xilinx ZynqMP
-  *                        IPI agent
-  * @irq:                  IPI agent interrupt ID
-+ * @irq_type:             IPI SGI or SPI IRQ type
-  * @method:               IPI SMC or HVC is going to be used
-  * @local_id:             local IPI agent ID
-  * @virq_sgi:             IRQ number mapped to SGI
-@@ -130,6 +132,7 @@ struct zynqmp_ipi_mbox {
- struct zynqmp_ipi_pdata {
- 	struct device *dev;
- 	int irq;
-+	unsigned int irq_type;
- 	unsigned int method;
- 	u32 local_id;
- 	int virq_sgi;
-@@ -887,7 +890,7 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
- 	struct zynqmp_ipi_mbox *ipi_mbox;
- 	int i;
- 
--	if (pdata->irq < MAX_SGI)
-+	if (pdata->irq_type == IPI_IRQ_TYPE_SGI)
- 		xlnx_mbox_cleanup_sgi(pdata);
- 
- 	i = pdata->num_mboxes - 1;
-@@ -956,14 +959,16 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
- 		dev_err(dev, "failed to parse interrupts\n");
- 		goto free_mbox_dev;
++		skb_dst_drop(skb);
+ 		skb_dst_set(skb, &rt->dst);
  	}
--	ret = out_irq.args[1];
-+
-+	/* Use interrupt type to distinguish SGI and SPI interrupts */
-+	pdata->irq_type = out_irq.args[0];
  
- 	/*
- 	 * If Interrupt number is in SGI range, then request SGI else request
- 	 * IPI system IRQ.
- 	 */
--	if (ret < MAX_SGI) {
--		pdata->irq = ret;
-+	if (pdata->irq_type == IPI_IRQ_TYPE_SGI) {
-+		pdata->irq = out_irq.args[1];
- 		ret = xlnx_mbox_init_sgi(pdev, pdata->irq, pdata);
- 		if (ret)
- 			goto free_mbox_dev;
 -- 
 2.51.0
 
