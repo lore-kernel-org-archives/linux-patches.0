@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEF020A5E5;
-	Fri, 17 Oct 2025 15:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FAF337110;
+	Fri, 17 Oct 2025 15:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714954; cv=none; b=uO3wCzNMnpj2Qv0cqMrKz6l/1lUO0aKeVa72L0ylNFsK1iqcrvmJjMusSiiEIayaqfgc7Xt+4RuQGSyTQ+NpUpobgx8hPjLD+ehwv3fDI5A8c/h1D+Zig1MKcLgzcMKRgCjIlRZ9pV0M6RcyoGgzmateuHmCakvJnhWbI0AWHAQ=
+	t=1760714957; cv=none; b=WJLhm0B+mpHa8ORRKKFy3LI8wWew/b+oXG+8iltd+uLqE8O6s8q1Rk1sxz6ejIz5PNVx7bmeyC6cWi0jz9E1t/xMJbn1WpDl3O3irnpGNxhswOMdVFaL9/9miG8N3oYmWkcqGAdp51PKJPWskkuhcdBmj626jw+IykU1qMysFxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714954; c=relaxed/simple;
-	bh=9NJupjVmVP0sbru65WuuVAKjdMmjQGvaZwSYaiwK+Y0=;
+	s=arc-20240116; t=1760714957; c=relaxed/simple;
+	bh=6Fnne7VHaWH9/VTe5Fze+2Jc2HXqu0ZZtKiNCluX6ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqBSxakkaWGkaat9y40m6PLHEJhUIVSllzq5hKbsvoUsD/5qWLMGr5op3XShTi5wnxSNKXHrbr7fJmpqYv1d9UD/ahC/UdcI9JUsV6ysJHn0GH+dhHpYhodYuUNvDA0mCuWL9gemtijdeFeOVdL5u4lOcBzQXihs+WxDZEr6+vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX3pdH/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vErul7glYemtAYkcVimUFjO6dPtuCWA0ZxowZb7h8WtQdClsGjlUGrGs5rY4s+c6Wn80ZpJa7mUm6kR6i8a31FziReXblEMe1jepz0GsfXjGiPfb0FSPebAFGosIj81zzJdgnMa/FXhd0cTYBvShXpU3GOpTHA4j5ePTcD9h+Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3oIJtcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX3pdH/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7DAC4CEE7;
-	Fri, 17 Oct 2025 15:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3oIJtcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C23FC4CEE7;
+	Fri, 17 Oct 2025 15:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714954;
-	bh=9NJupjVmVP0sbru65WuuVAKjdMmjQGvaZwSYaiwK+Y0=;
+	s=korg; t=1760714957;
+	bh=6Fnne7VHaWH9/VTe5Fze+2Jc2HXqu0ZZtKiNCluX6ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX3pdH/PCil5P0HDz3l+HVwcWSePhOhlQbFm/9JkV4ASgY6TccKP+fmMK2pvgwd8U
-	 lAMWdYU0bIWL/c4li0BPwOvtRjn8HhjdgPUBcSOkgFJn66Fec8In9WWtkZjrc2v6On
-	 edbyYSCKJS5K4lIYQocp2RRDrJiempFnJXlH90Xc=
+	b=s3oIJtcN2zSz1F25Yg6/vpxRzm1NyVenLT/RajFKCHjdI2flvtS+xRvBnxcvz0Nyq
+	 hyhPFtA8BUYwD2o7EOgtt/kCmkzG1KS+UMbXnkrUL7w1VztrXF5M/fS2jsk4BZ98pa
+	 49b35k07oF2Cm5Mj3WN4cYrS4tT8t7G/aHdmpDo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -42,9 +42,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 046/371] perf test: Dont leak workload gopipe in PERF_RECORD_*
-Date: Fri, 17 Oct 2025 16:50:21 +0200
-Message-ID: <20251017145203.466941157@linuxfoundation.org>
+Subject: [PATCH 6.17 047/371] perf evsel: Fix uniquification when PMU given without suffix
+Date: Fri, 17 Oct 2025 16:50:22 +0200
+Message-ID: <20251017145203.502501600@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -65,142 +65,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
+[ Upstream commit 693101792e45eefc888c7ba10b91108047399f5d ]
 
-The test starts a workload and then opens events. If the events fail
-to open, for example because of perf_event_paranoid, the gopipe of the
-workload is leaked and the file descriptor leak check fails when the
-test exits. To avoid this cancel the workload when opening the events
-fails.
-
-Before:
+The PMU name is appearing twice in:
 ```
-$ perf test -vv 7
-  7: PERF_RECORD_* events & perf_sample fields:
- --- start ---
-test child forked, pid 1189568
-Using CPUID GenuineIntel-6-B7-1
- ------------------------------------------------------------
-perf_event_attr:
-  type                    	   0 (PERF_TYPE_HARDWARE)
-  config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                	   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
- ------------------------------------------------------------
-perf_event_attr:
-  type                             0 (PERF_TYPE_HARDWARE)
-  config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-  disabled                         1
-  exclude_kernel                   1
- ------------------------------------------------------------
-sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-Attempt to add: software/cpu-clock/
-..after resolving event: software/config=0/
-cpu-clock -> software/cpu-clock/
- ------------------------------------------------------------
-perf_event_attr:
-  type                             1 (PERF_TYPE_SOFTWARE)
-  size                             136
-  config                           0x9 (PERF_COUNT_SW_DUMMY)
-  sample_type                      IP|TID|TIME|CPU
-  read_format                      ID|LOST
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  enable_on_exec                   1
-  task                             1
-  sample_id_all                    1
-  mmap2                            1
-  comm_exec                        1
-  ksymbol                          1
-  bpf_event                        1
-  { wakeup_events, wakeup_watermark } 1
- ------------------------------------------------------------
-sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
-sys_perf_event_open failed, error -13
-perf_evlist__open: Permission denied
- ---- end(-2) ----
-Leak of file descriptor 6 that opened: 'pipe:[14200347]'
- ---- unexpected signal (6) ----
-iFailed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-Failed to read build ID for //anon
-    #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
-    #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
-    #3 0x7f29ce849cc2 in raise raise.c:27
-    #4 0x7f29ce8324ac in abort abort.c:81
-    #5 0x565358f662d4 in check_leaks builtin-test.c:226
-    #6 0x565358f6682e in run_test_child builtin-test.c:344
-    #7 0x565358ef7121 in start_command run-command.c:128
-    #8 0x565358f67273 in start_test builtin-test.c:545
-    #9 0x565358f6771d in __cmd_test builtin-test.c:647
-    #10 0x565358f682bd in cmd_test builtin-test.c:849
-    #11 0x565358ee5ded in run_builtin perf.c:349
-    #12 0x565358ee6085 in handle_internal_command perf.c:401
-    #13 0x565358ee61de in run_argv perf.c:448
-    #14 0x565358ee6527 in main perf.c:555
-    #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #17 0x565358e391c1 in _start perf[851c1]
-  7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
+$ perf stat -e uncore_imc_free_running/data_total/ -A true
+
+ Performance counter stats for 'system wide':
+
+CPU0                 1.57 MiB  uncore_imc_free_running_0/uncore_imc_free_running,data_total/
+CPU0                 1.58 MiB  uncore_imc_free_running_1/uncore_imc_free_running,data_total/
+       0.000892376 seconds time elapsed
 ```
 
-After:
-```
-$ perf test 7
-  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-```
+Use the pmu_name_len_no_suffix to avoid this problem.
 
-Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
+Committer testing:
+
+After this patch:
+
+  root@x1:~# perf stat -e uncore_imc_free_running/data_total/ -A true
+
+   Performance counter stats for 'system wide':
+
+  CPU0                 1.69 MiB  uncore_imc_free_running_0/data_total/
+  CPU0                 1.68 MiB  uncore_imc_free_running_1/data_total/
+
+         0.002141605 seconds time elapsed
+
+  root@x1:~#
+
+Fixes: 7d45f402d3117e0b ("perf evlist: Make uniquifying counter names consistent")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
@@ -218,45 +113,65 @@ Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/perf-record.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/evsel.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
-index 0b3c37e668717..8c79b5166a058 100644
---- a/tools/perf/tests/perf-record.c
-+++ b/tools/perf/tests/perf-record.c
-@@ -115,6 +115,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("sched__get_first_possible_cpu: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 496f42434327b..9c086d743d344 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -4050,9 +4050,9 @@ bool evsel__set_needs_uniquify(struct evsel *counter, const struct perf_stat_con
  
-@@ -126,6 +127,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
- 		pr_debug("sched_setaffinity: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ void evsel__uniquify_counter(struct evsel *counter)
+ {
+-	const char *name, *pmu_name;
+-	char *new_name, *config;
+-	int ret;
++	const char *name, *pmu_name, *config;
++	char *new_name;
++	int len, ret;
  
-@@ -137,6 +139,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("perf_evlist__open: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ 	/* No uniquification necessary. */
+ 	if (!counter->needs_uniquify)
+@@ -4066,15 +4066,23 @@ void evsel__uniquify_counter(struct evsel *counter)
+ 	counter->uniquified_name = true;
  
-@@ -149,6 +152,7 @@ static int test__PERF_RECORD(struct test_suite *test __maybe_unused, int subtest
- 	if (err < 0) {
- 		pr_debug("evlist__mmap: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
-+		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
+ 	name = evsel__name(counter);
++	config = strchr(name, '/');
+ 	pmu_name = counter->pmu->name;
+-	/* Already prefixed by the PMU name. */
+-	if (!strncmp(name, pmu_name, strlen(pmu_name)))
+-		return;
  
+-	config = strchr(name, '/');
+-	if (config) {
+-		int len = config - name;
++	/* Already prefixed by the PMU name? */
++	len = pmu_name_len_no_suffix(pmu_name);
++
++	if (!strncmp(name, pmu_name, len)) {
++		/*
++		 * If the PMU name is there, then there is no sense in not
++		 * having a slash. Do this for robustness.
++		 */
++		if (config == NULL)
++			config = name - 1;
+ 
++		ret = asprintf(&new_name, "%s/%s", pmu_name, config + 1);
++	} else if (config) {
++		len = config - name;
+ 		if (config[1] == '/') {
+ 			/* case: event// */
+ 			ret = asprintf(&new_name, "%s/%.*s/%s", pmu_name, len, name, config + 2);
+@@ -4086,7 +4094,7 @@ void evsel__uniquify_counter(struct evsel *counter)
+ 		config = strchr(name, ':');
+ 		if (config) {
+ 			/* case: event:.. */
+-			int len = config - name;
++			len = config - name;
+ 
+ 			ret = asprintf(&new_name, "%s/%.*s/%s", pmu_name, len, name, config + 1);
+ 		} else {
 -- 
 2.51.0
 
