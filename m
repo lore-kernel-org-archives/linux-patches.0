@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9D1330B00;
-	Fri, 17 Oct 2025 15:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30378330B04;
+	Fri, 17 Oct 2025 15:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716126; cv=none; b=TxW4NkNuvi9YajfrZKQAj3fOFVoBKMeEOe+PdsDGHaWvgDDfMyJK2h1eSfmfskwoAJtIcT17ANPCkSmiHkXDla4D9b+C8S6j7LgsCcNwI1k4ugXvUlsgHB0mSQhy3IHum/POJ+KgI0U6DNC67TdH+qgewY0uzZgAsK/KaKA9tgE=
+	t=1760716129; cv=none; b=TbfFA4Pz1DCHZChQrdYgvPmb6Mw74IFJo0k20BEzwaJF1+HshHQ4hMdTPCNo6QSEyeMnXq8sJTOlscvbWj2DgZfhM8z7dGHaao/bYxOWggwF5qg1d/pWnfzCIO7HhQROIAvUen9SLz2EPgZSUM09eYuDXs7wgX22NEQe837bxUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716126; c=relaxed/simple;
-	bh=YO34k4xF9iAhAP9CvBrInnQ0B/4VOjjoYMjB5WWJp0U=;
+	s=arc-20240116; t=1760716129; c=relaxed/simple;
+	bh=wf7JPTHi08JDNh7UDhR+Tg/dpqME9BC0E/zkPk/fRv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TouE810PM3jv3W9aLMfyi4MHU9d/70HVt+9QF8TeZ+rh83stam1gEJRJO6pskK5ZFqpAPrR8m1gU3KK7gecz8P3ArDDOATD43+e9/o/fCZwW4xYR25sWwRST0gSg8x0HP11QvVALbOAp1SNTlisql2TTgYy+3ESDmbdvGg/t4oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtLxEYiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hibA+pl+uDgtY4BL6NhY5crTFC+qqHp0X21EGqBWgptqx0+ZwnlOd/iwyBG0cu8qEWyDJN/zTKSJ5qlK640kcD9jysNPZmrClR5KHAQiRK6zH2dM3+Rku7DLlpFDJVpCEB3O+4h34VxXjhi02H6OnDDN5xo9kl9n6szpDgDV7R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y97w/0Kr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtLxEYiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11A5C4CEE7;
-	Fri, 17 Oct 2025 15:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y97w/0Kr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC4BC4CEE7;
+	Fri, 17 Oct 2025 15:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716126;
-	bh=YO34k4xF9iAhAP9CvBrInnQ0B/4VOjjoYMjB5WWJp0U=;
+	s=korg; t=1760716129;
+	bh=wf7JPTHi08JDNh7UDhR+Tg/dpqME9BC0E/zkPk/fRv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtLxEYiD2kGyvJ3P7eYH4tlZGcRGf6UVCCcbc5rjKAgMoI6b1NGUfsf0tQkISSnSk
-	 tLh8RQUEZS9kPrdpZ74echE5dZpdKjNAw70ZLNfhvGfXi4D7g6PE0iMWF4U9XoxKZJ
-	 V0FlRmD1jD3AX6O83BXq5/MwRlGbXaEW2HHsyVvM=
+	b=y97w/0KrRK/6Ig35mnL9HRdWHz2Vaqw7GcqcNwcrxG/zRULZcUeqAFt5MwkPEzgK6
+	 Qcv7JvbVzxoDymONA+gbI9Q41shFNA7fGhDHUqk0cONpEuzMuclBzRGFgQicxl7afk
+	 FEVZFOZlYG5gyJ/yDj8aAyLGKtjVmGeIVKCrIneY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/276] IB/sa: Fix sa_local_svc_timeout_ms read race
-Date: Fri, 17 Oct 2025 16:52:56 +0200
-Message-ID: <20251017145145.515813253@linuxfoundation.org>
+Subject: [PATCH 5.15 084/276] Documentation: trace: historgram-design: Separate sched_waking histogram section heading and the following diagram
+Date: Fri, 17 Oct 2025 16:52:57 +0200
+Message-ID: <20251017145145.552055961@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -53,59 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 1428cd764cd708d53a072a2f208d87014bfe05bc ]
+[ Upstream commit 8c716e87ea33519920811338100d6d8a7fb32456 ]
 
-When computing the delta, the sa_local_svc_timeout_ms is read without
-ib_nl_request_lock held. Though unlikely in practice, this can cause
-a race condition if multiple local service threads are managing the
-timeout.
+Section heading for sched_waking histogram is shown as normal paragraph
+instead due to codeblock marker for the following diagram being in the
+same line as the section underline. Separate them.
 
-Fixes: 2ca546b92a02 ("IB/sa: Route SA pathrecord query through netlink")
-Signed-off-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
-Reviewed-by: Mark Zhang <markzhang@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20250916163112.98414-1-edwards@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: daceabf1b494 ("tracing/doc: Fix ascii-art in histogram-design.rst")
+Reviewed-by: Tom Zanussi <zanussi@kernel.org>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20250916054202.582074-5-bagasdotme@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/sa_query.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Documentation/trace/histogram-design.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
-index 1557c71dd152f..2b13cf6e827c6 100644
---- a/drivers/infiniband/core/sa_query.c
-+++ b/drivers/infiniband/core/sa_query.c
-@@ -982,6 +982,8 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
- 	if (timeout > IB_SA_LOCAL_SVC_TIMEOUT_MAX)
- 		timeout = IB_SA_LOCAL_SVC_TIMEOUT_MAX;
+diff --git a/Documentation/trace/histogram-design.rst b/Documentation/trace/histogram-design.rst
+index 088c8cce738ba..6e0d1a48bd505 100644
+--- a/Documentation/trace/histogram-design.rst
++++ b/Documentation/trace/histogram-design.rst
+@@ -380,7 +380,9 @@ entry, ts0, corresponding to the ts0 variable in the sched_waking
+ trigger above.
  
-+	spin_lock_irqsave(&ib_nl_request_lock, flags);
+ sched_waking histogram
+-----------------------::
++----------------------
 +
- 	delta = timeout - sa_local_svc_timeout_ms;
- 	if (delta < 0)
- 		abs_delta = -delta;
-@@ -989,7 +991,6 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
- 		abs_delta = delta;
++.. code-block::
  
- 	if (delta != 0) {
--		spin_lock_irqsave(&ib_nl_request_lock, flags);
- 		sa_local_svc_timeout_ms = timeout;
- 		list_for_each_entry(query, &ib_nl_request_list, list) {
- 			if (delta < 0 && abs_delta > query->timeout)
-@@ -1007,9 +1008,10 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
- 		if (delay)
- 			mod_delayed_work(ib_nl_wq, &ib_nl_timed_work,
- 					 (unsigned long)delay);
--		spin_unlock_irqrestore(&ib_nl_request_lock, flags);
- 	}
- 
-+	spin_unlock_irqrestore(&ib_nl_request_lock, flags);
-+
- settimeout_out:
- 	return 0;
- }
+   +------------------+
+   | hist_data        |<-------------------------------------------------------+
 -- 
 2.51.0
 
