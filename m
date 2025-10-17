@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAD3330B04;
-	Fri, 17 Oct 2025 15:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506FD330B08;
+	Fri, 17 Oct 2025 15:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715278; cv=none; b=kiOgqXj0SCV/SSfqM+mdy5g0kGa8p1D0IxKCjpkokkBCwMLkoeAbpSbEyUHtaacr/7cCRWVeDAJMs89YXj6nhCLH3XcK2htvozOSzjY+NqUW5M80NO/3S0vvEC1Ky7PYfSNIyt0R2ULTlgqY/CeWNsQbTx4nVxlyoiRPSfU5asI=
+	t=1760715281; cv=none; b=AsFOB8UWigbUHD7sZrryk27NVxsEsBJG8akUofLtU5PCYwmC0bPMaBBKVUMyh5Ef+EB+Gn3P6ZwNotkBkQeX6ipvWUqRd47ICnMy6TQci4f7GdMdSOiG/5CiV/stSNDL8fSrIYcd+/leqd/nRjKf0QLRkRKrVQcUUaj15tzDQZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715278; c=relaxed/simple;
-	bh=ARXmK2ldV2BwMGHZNaJxHRyhMdmdcvAHkaWO22VtKdw=;
+	s=arc-20240116; t=1760715281; c=relaxed/simple;
+	bh=3v0iIOgjeLj6wXUIlaJP0Bo+PX8Kllf8I5EA1vQIJOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qjxe+W8mglZhbEzd8IVryvsjxQNzueFVDfmPBLovBxMxbcZXFxLgCiNHn4PsmRQmj5nKLeSJsOc668/uMhuavQDNGw7AcUJAjCrw7Kxu5bBV8kyFX247xv3i3p8Vr0Ff/qAEkHTDbB2l3GbtHKMxyb6RTKtO4OXng6K65L0R1fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0hn+4E7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L4feIi07hh8LBCQ1tV8AxnPjPGCeG58//fEdIOfigZkxRN2vWUAaiatjYgDjt0stAaLC7eanxi/W6RizLc+4jW/lzQkt6GY9TnGEldx88rpdMPVzGFv3mw4BBU/HGp5WVF3yAlkDl1vQkh2ThEURhGsKbe9xzIXDsJQ2QT2eKBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFq+VefN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0hn+4E7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E344C4CEE7;
-	Fri, 17 Oct 2025 15:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFq+VefN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED4DC4CEE7;
+	Fri, 17 Oct 2025 15:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715278;
-	bh=ARXmK2ldV2BwMGHZNaJxHRyhMdmdcvAHkaWO22VtKdw=;
+	s=korg; t=1760715281;
+	bh=3v0iIOgjeLj6wXUIlaJP0Bo+PX8Kllf8I5EA1vQIJOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0hn+4E7tf56CeBVrm79Dp4ykhfW7HIiTSwMKU+vF8fP1VkfOFv8PZ+08gq0Agv8s
-	 JqhzJppE9KH0v7Vk/u4XpvpBG4q7I8uglspjWWYjGQoXlFqu7WI6QYNeRZnMSU4lGX
-	 DmEMR2zVZBc18g8dV0k6o73e37mfkXeuy8ZraACM=
+	b=qFq+VefNlpPbO4JNRT2kZzQkRGBYYeSKrziZspjcKmuL5b6AD8B6u+cMecAdx3t1N
+	 PNfjrLcZxIucVg0+7vrI8Ik2lfZx38S45hRYJM8sLn76loT+6WW/hgdFUV3l9o/YAh
+	 d8ZO99qzfR1JTUUOuJNTFPMj5w5UDcvRQV6YlmVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Tony Lindgren <tony.lindgren@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.17 159/371] KVM: TDX: Fix uninitialized error code for __tdx_bringup()
-Date: Fri, 17 Oct 2025 16:52:14 +0200
-Message-ID: <20251017145207.685746269@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 128/371] gpio: wcd934x: mark the GPIO controller as sleeping
+Date: Fri, 17 Oct 2025 16:51:43 +0200
+Message-ID: <20251017145206.563184631@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,64 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony.lindgren@linux.intel.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 510c47f165f0c1f0b57329a30a9a797795519831 upstream.
+[ Upstream commit b5f8aa8d4bde0cf3e4595af5a536da337e5f1c78 ]
 
-Fix a Smatch static checker warning reported by Dan:
+The slimbus regmap passed to the GPIO driver down from MFD does not use
+fast_io. This means a mutex is used for locking and thus this GPIO chip
+must not be used in atomic context. Change the can_sleep switch in
+struct gpio_chip to true.
 
-	arch/x86/kvm/vmx/tdx.c:3464 __tdx_bringup()
-	warn: missing error code 'r'
-
-Initialize r to -EINVAL before tdx_get_sysinfo() to simplify the code and
-to prevent similar issues from sneaking in later on as suggested by Kai.
-
-Cc: stable@vger.kernel.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 61bb28279623 ("KVM: TDX: Get system-wide info about TDX module on initialization")
-Suggested-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Signed-off-by: Tony Lindgren <tony.lindgren@linux.intel.com>
-Link: https://lore.kernel.org/r/20250918053226.802204-1-tony.lindgren@linux.intel.com
-[sean: tag for stable]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 59c324683400 ("gpio: wcd934x: Add support to wcd934x gpio controller")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/tdx.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-wcd934x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -3457,12 +3457,11 @@ static int __init __tdx_bringup(void)
- 	if (r)
- 		goto tdx_bringup_err;
+diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
+index 4af504c23e6ff..572b85e773700 100644
+--- a/drivers/gpio/gpio-wcd934x.c
++++ b/drivers/gpio/gpio-wcd934x.c
+@@ -103,7 +103,7 @@ static int wcd_gpio_probe(struct platform_device *pdev)
+ 	chip->base = -1;
+ 	chip->ngpio = WCD934X_NPINS;
+ 	chip->label = dev_name(dev);
+-	chip->can_sleep = false;
++	chip->can_sleep = true;
  
-+	r = -EINVAL;
- 	/* Get TDX global information for later use */
- 	tdx_sysinfo = tdx_get_sysinfo();
--	if (WARN_ON_ONCE(!tdx_sysinfo)) {
--		r = -EINVAL;
-+	if (WARN_ON_ONCE(!tdx_sysinfo))
- 		goto get_sysinfo_err;
--	}
- 
- 	/* Check TDX module and KVM capabilities */
- 	if (!tdx_get_supported_attrs(&tdx_sysinfo->td_conf) ||
-@@ -3505,14 +3504,11 @@ static int __init __tdx_bringup(void)
- 	if (td_conf->max_vcpus_per_td < num_present_cpus()) {
- 		pr_err("Disable TDX: MAX_VCPU_PER_TD (%u) smaller than number of logical CPUs (%u).\n",
- 				td_conf->max_vcpus_per_td, num_present_cpus());
--		r = -EINVAL;
- 		goto get_sysinfo_err;
- 	}
- 
--	if (misc_cg_set_capacity(MISC_CG_RES_TDX, tdx_get_nr_guest_keyids())) {
--		r = -EINVAL;
-+	if (misc_cg_set_capacity(MISC_CG_RES_TDX, tdx_get_nr_guest_keyids()))
- 		goto get_sysinfo_err;
--	}
- 
- 	/*
- 	 * Leave hardware virtualization enabled after TDX is enabled
+ 	return devm_gpiochip_add_data(dev, chip, data);
+ }
+-- 
+2.51.0
+
 
 
