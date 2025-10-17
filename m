@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364392745E;
-	Fri, 17 Oct 2025 15:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FD42745E;
+	Fri, 17 Oct 2025 15:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714586; cv=none; b=UmRZi9mBQR38HDhR9sYvpK0AVI8W83qC00wsHBTe0nCm5z2rly2EsUsXyNUnaqmtlZqJLzMlIFGi/GtvIZW5Z6hQSX5fHdg5AeGAKlmCqLUiNJvQpat9x5egDUUNr5QINR6idctggjet5W2d8nWuRYY8ypfN9RwgVS0mLfrO0ws=
+	t=1760714589; cv=none; b=o55xHxQpx7WBN8tpRZM60TYJBt/HzjT53qfBUFB56yxlrhAc3oHnpzo66paB6//ppGnXShyMR6yGnhEQLvCfg7ATXoAV/Udbf8Ajl9Nj2hTIdWZH9Og23w/+WJv54U8YaSB7jnwoGS3Pl2LuKzLia6BKnTucM+DOQv0LdX0bhig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714586; c=relaxed/simple;
-	bh=U/VLIcJKhbdpLJWxBF2/WsAFT2v0Q4KMI50k2fTb190=;
+	s=arc-20240116; t=1760714589; c=relaxed/simple;
+	bh=lIjRt/ZenAZ6zc6vE26sBj2CU1hiN9aj3DDAhniwphE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mcld1CfNzs/3tNcVjRBST7BpEcyZ5Asg/F6qsOBvAG+6zjsP7B/YX20PxCA6PfWNuI2QmSnSJCU4yOENK+AxeWMGmBqJ68whZVORfdwdAi6jxmjKhXbSNATTcxQY3e2zT8ikOsutv8GjNX+tllccik/Bzu+XwMvhfsAaPHqkXx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2B4paeO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLn0/DLvxs1LaptRJcyCRgTMWp7pZ8bQdzZgtj7z89cMB49IFcf/umlUw81yt7PBsSyyphI1hSebnszid43FEQB1kSHdCEytbXk/EdFgTDu4gSuBtL8sDUrMevj4yn6vbOX2mycl/CAIuYSPb/JGWNStH8e++dN3sVbK35E6SWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiHmb6+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2B4paeO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF89C4CEE7;
-	Fri, 17 Oct 2025 15:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiHmb6+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425C6C4CEE7;
+	Fri, 17 Oct 2025 15:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714585;
-	bh=U/VLIcJKhbdpLJWxBF2/WsAFT2v0Q4KMI50k2fTb190=;
+	s=korg; t=1760714588;
+	bh=lIjRt/ZenAZ6zc6vE26sBj2CU1hiN9aj3DDAhniwphE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2B4paeO/ZSNIqNl+kqPoWJKfmkWJ+0+iWB23KZAvE/zZsDusJ9DpoSkBTyELydzYs
-	 ECAIHGh5Ct9B57EiyT2UHcZdrF5rmgMj/ql8VfprYrXE1Aiqn1zBfTtxYbcbWeuUFz
-	 jqImSyts/hrTkT/0C+/2PQfRhI7SuMKPeyCuVaE0=
+	b=WiHmb6+Dk5bI3o6wq27+fIrV9zkCk/BL3jxt61UWIDsmT7Ki145fj4+F11rTde+qK
+	 iK+jqO156Dv33/YNRtmBA+FfnsT0T0ircVQVBPlK3jEho8rCjRB3jHP6T6eFzRNDjP
+	 eaHvKWKVZoEs5OV9vQN5oIqkX+WOG7M2tZVMx0cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 196/277] selftests: mptcp: join: validate C-flag + def limit
-Date: Fri, 17 Oct 2025 16:53:23 +0200
-Message-ID: <20251017145154.277083912@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jaehoon Kim <jhkim@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 197/277] s390/dasd: enforce dma_alignment to ensure proper buffer validation
+Date: Fri, 17 Oct 2025 16:53:24 +0200
+Message-ID: <20251017145154.312286599@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,59 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jaehoon Kim <jhkim@linux.ibm.com>
 
-commit 008385efd05e04d8dff299382df2e8be0f91d8a0 upstream.
+commit 130e6de62107116eba124647116276266be0f84c upstream.
 
-The previous commit adds an exception for the C-flag case. The
-'mptcp_join.sh' selftest is extended to validate this case.
+The block layer validates buffer alignment using the device's
+dma_alignment value. If dma_alignment is smaller than
+logical_block_size(bp_block) -1, misaligned buffer incorrectly pass
+validation and propagate to the lower-level driver.
 
-In this subtest, there is a typical CDN deployment with a client where
-MPTCP endpoints have been 'automatically' configured:
+This patch adjusts dma_alignment to be at least logical_block_size -1,
+ensuring that misalignment buffers are properly rejected at the block
+layer and do not reach the DASD driver unnecessarily.
 
-- the server set net.mptcp.allow_join_initial_addr_port=0
-
-- the client has multiple 'subflow' endpoints, and the default limits:
-  not accepting ADD_ADDRs.
-
-Without the parent patch, the client is not able to establish new
-subflows using its 'subflow' endpoints. The parent commit fixes that.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250925-net-next-mptcp-c-flag-laminar-v1-2-ad126cc47c6b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2a07bb64d801 ("s390/dasd: Remove DMA alignment")
+Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
+Cc: stable@vger.kernel.org #6.11+
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/s390/block/dasd.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3160,6 +3160,17 @@ deny_join_id0_tests()
- 		run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
- 	fi
-+
-+	# default limits, server deny join id 0 + signal
-+	if reset_with_allow_join_id0 "default limits, server deny join id 0" 0 1; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 0 2
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.3.2 flags subflow
-+		pm_nl_add_endpoint $ns2 10.0.4.2 flags subflow
-+		run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 2 2 2
-+	fi
- }
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -332,6 +332,11 @@ static int dasd_state_basic_to_ready(str
+ 	lim.max_dev_sectors = device->discipline->max_sectors(block);
+ 	lim.max_hw_sectors = lim.max_dev_sectors;
+ 	lim.logical_block_size = block->bp_block;
++	/*
++	 * Adjust dma_alignment to match block_size - 1
++	 * to ensure proper buffer alignment checks in the block layer.
++	 */
++	lim.dma_alignment = lim.logical_block_size - 1;
  
- fullmesh_tests()
+ 	if (device->discipline->has_discard) {
+ 		unsigned int max_bytes;
 
 
