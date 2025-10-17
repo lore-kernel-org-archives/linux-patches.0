@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD9E2D6E40;
-	Fri, 17 Oct 2025 15:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088C1330B26;
+	Fri, 17 Oct 2025 15:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716230; cv=none; b=X/4o1tS1Ha5Y6I74Q+M1SZN4ieFSECZUl5vuocX9EO7P3YZucTG9epUAxdETRS3EHpgwZU4T4LgzMIVqF1+YC+qxEfXa1Z1y/az1RUBnDRkJ2iE6mIlRpjxKUXM+UqSWg98A6SabjtaltZaM9fpvPQgJHmCo03rEsuNkoPCJI5s=
+	t=1760716233; cv=none; b=YIVmJcL+or0qwSiot+ppIR3GYsukDnpkgKx8FgfT0s+NrDailpCH0u++F71g8fgRzGFD80vIRRvRxPJugif2Z4JQRvo0GmIkCnUh1qFWglO5hsNNMNS7s2lz1THr76PAmHy6nhMx1pl28BPBNI67QTaOvzNA27ACAhg1E7UPGvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716230; c=relaxed/simple;
-	bh=yGXoHX4Hg7kdxVJrmWm2WaIqovPeQqtYxJFrzsAiZHk=;
+	s=arc-20240116; t=1760716233; c=relaxed/simple;
+	bh=NW2aKZJZbUt+Jzz1WpcWFfahtlWBZevyHAFiLPPdu30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyTjqedp6iYuHCeFjuYuXjscwqEw2SqN0V0UVAOkBFut6hg0yg+McI7hcXRf+px9QzNZrtqxm65ycDH+9RJFFIRCBH3+cs8xDnv4vx1IzcAI2azIUFL2mDLrpXyj01Vu3cl2htNybh61pV1pq+UeEWlPpW0754guVoVCRxcdQTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSFmCvGm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hn5ZMMcB05xjqCbzzkuvgEXMqgUcoSKT4g/qzMINu5e6vYn5btko6PRRDg7v8cFVyzoga/T+9Bxt8uKU6iS2t/reAMjTXVu26uxQ+H6FmmRqtaBcNtq/PgFO7PITUFrZKkbPdTejL+wv3LP0sSdOJbM25XmPZqvU2++0T26nO4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSh1GU2I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSFmCvGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983B1C113D0;
-	Fri, 17 Oct 2025 15:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSh1GU2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839E7C4CEE7;
+	Fri, 17 Oct 2025 15:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716230;
-	bh=yGXoHX4Hg7kdxVJrmWm2WaIqovPeQqtYxJFrzsAiZHk=;
+	s=korg; t=1760716232;
+	bh=NW2aKZJZbUt+Jzz1WpcWFfahtlWBZevyHAFiLPPdu30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSFmCvGmdkmcqYxQT/nBnVkJtnhrZA2IbaXGaF4pUT2BS/G/qSCzP9fSOXTYCv/yp
-	 umw5Q1I2XxBSI3un1BkyYhndUE6ztZFwOGk65s53C5zgHO4XRbWDos9HWEW/gCf0XF
-	 OmQ1QwmwmrFJ9zHy0VZMtyqakhFCIIoUUnHQ54nk=
+	b=TSh1GU2I5ZpSwjc8FT2S4Wz90Cx6ZPDrUZwIZCmJckJmxu/8SKZX51Qw1dMCrhWus
+	 7RRPd/cDv31ybl1j7Kw0RUgqWEs5ia6eCA/l2nvf6a6MmshUDHQrHECT32yvB7OQle
+	 R7cWJtifnE9eBw9QFJ+HJ96bTJansaWlzGAcZnaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>
-Subject: [PATCH 5.15 119/276] usb: cdns3: cdnsp-pci: remove redundant pci_disable_device() call
-Date: Fri, 17 Oct 2025 16:53:32 +0200
-Message-ID: <20251017145146.822069265@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 120/276] fs: always return zero on success from replace_fd()
+Date: Fri, 17 Oct 2025 16:53:33 +0200
+Message-ID: <20251017145146.858285975@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -43,53 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit e9c206324eeb213957a567a9d066bdeb355c7491 upstream.
+commit 708c04a5c2b78e22f56e2350de41feba74dfccd9 upstream.
 
-The cdnsp-pci driver uses pcim_enable_device() to enable a PCI device,
-which means the device will be automatically disabled on driver detach
-through the managed device framework. The manual pci_disable_device()
-call in the error path is therefore redundant.
+replace_fd() returns the number of the new file descriptor through the
+return value of do_dup2(). However its callers never care about the
+specific returned number. In fact the caller in receive_fd_replace() treats
+any non-zero return value as an error and therefore never calls
+__receive_sock() for most file descriptors, which is a bug.
 
-Found via static anlaysis and this is similar to commit 99ca0b57e49f
-("thermal: intel: int340x: processor: Fix warning during module unload").
+To fix the bug in receive_fd_replace() and to avoid the same issue
+happening in future callers, signal success through a plain zero.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://lore.kernel.org/lkml/20250801220215.GS222315@ZenIV/
+Fixes: 173817151b15 ("fs: Expand __receive_fd() to accept existing fd")
+Fixes: 42eb0d54c08a ("fs: split receive_fd_replace from __receive_fd")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250903141613.2535472-1-linmq006@gmail.com
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/20250805-fix-receive_fd_replace-v3-1-b72ba8b34bac@linutronix.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-pci.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/file.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-pci.c
-+++ b/drivers/usb/cdns3/cdnsp-pci.c
-@@ -90,7 +90,7 @@ static int cdnsp_pci_probe(struct pci_de
- 		cdnsp = kzalloc(sizeof(*cdnsp), GFP_KERNEL);
- 		if (!cdnsp) {
- 			ret = -ENOMEM;
--			goto disable_pci;
-+			goto put_pci;
- 		}
- 	}
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1154,7 +1154,10 @@ int replace_fd(unsigned fd, struct file
+ 	err = expand_files(files, fd);
+ 	if (unlikely(err < 0))
+ 		goto out_unlock;
+-	return do_dup2(files, file, fd, flags);
++	err = do_dup2(files, file, fd, flags);
++	if (err < 0)
++		return err;
++	return 0;
  
-@@ -173,9 +173,6 @@ free_cdnsp:
- 	if (!pci_is_enabled(func))
- 		kfree(cdnsp);
- 
--disable_pci:
--	pci_disable_device(pdev);
--
- put_pci:
- 	pci_dev_put(func);
- 
+ out_unlock:
+ 	spin_unlock(&files->file_lock);
 
 
