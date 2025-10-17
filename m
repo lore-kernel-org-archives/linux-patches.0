@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C557B330B36;
-	Fri, 17 Oct 2025 15:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900612F12A8;
+	Fri, 17 Oct 2025 15:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716678; cv=none; b=KqmDm7N11p85hf6hZEoDkMz2U201T3B7KZ01orbVe0coyIb7rAwma08a7GS4NGboOBH6hHgEXD2mZVf9ZXVgeTILJtyxOGUPhLgptdLyFX+W31US6jhrGAWY3YccCyDgPuRc5EKGqigjhI5VbhqDHLZHEjNUwkRnI9iXLf1tTpY=
+	t=1760716681; cv=none; b=jy38Wj85V3zCDh/RDLzXj0gDTKM5dw4QSt+X/btrWKeWsiEl0WlBAti05xKPEMbrMEnqxXlT52L3+KnAcgJxUL0RHufFaoBYKdzXQ6YZxipakcOi97fENM9ddOLWMEY4zr0YW4SrDZOp48uB5fwSOh6oBcdikFgG6pRhexR3aDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716678; c=relaxed/simple;
-	bh=ET9FkovHB0tB+vFwfSfQKqYUIrKqzrQlX75ty9uhGyM=;
+	s=arc-20240116; t=1760716681; c=relaxed/simple;
+	bh=UNhUvuLTGXkJb5irK0m6qZ9Df+eG9NylDbSWPiuCeW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu60tgl6mc1N74Bn+ChBvKHPzvnkx/9atHxksjfN4/FE+O7e0z+2qfhdxiiWGi5TrXSd5r2Q6g7ls/Q7XdxPxWfRth4J4DYx3IDz9/kMVumv94mYZzCqwezqSV/jsv1qAwBdnjCK05qb1AYEQN0lAf1/U/usxwubqoJ81408R5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8obA+Oe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7LQQ0rTh4cUwxmYVegddLDZ34uWv1a22+khy4mt3aEM5yYJNpcroOYNcSUloWcitxZXtFY1pAl2N1ky1edWESQU3yhypfZ7/wOeH9IjoqXPoG00yPzGNbeKsz0ReFekIqu7GtfwavUlHBIRbORbclnA8bCJ2zTTepL7a+tLql0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR7EUPzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8obA+Oe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F6DC4CEE7;
-	Fri, 17 Oct 2025 15:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR7EUPzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151EAC4CEE7;
+	Fri, 17 Oct 2025 15:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716678;
-	bh=ET9FkovHB0tB+vFwfSfQKqYUIrKqzrQlX75ty9uhGyM=;
+	s=korg; t=1760716681;
+	bh=UNhUvuLTGXkJb5irK0m6qZ9Df+eG9NylDbSWPiuCeW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8obA+OeIjuRY4XyLI2zWek8y6hAhpmIib7DSYQqK4tgDIwwGI/rorsWrfLAWSj0i
-	 TZItgqheEJpWdmNMNdDITiccgpNpJkgEyHVbk9E8sxa6QA9jcZQmUZygmahjTlPPPg
-	 YDONNCqt6PCyQk8a29AsnfQ2sTwxHqpH69HvjS8I=
+	b=JR7EUPzQyYpWRr29eZoP0wTuLuWxEwb6qM4scQ85LumoGzb5WgTW0VGLzNz1CJ3ei
+	 76ZjVnRjnCCle8ykUS7TwVQ1oNDdRZBGR2IigjUoHWPTWw7zHK9mAT85a3wSsrFjL0
+	 sDRKPwTPOntq8FJwuQ6mLO3TAaqHEJsVSuS2yuuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 273/276] media: pci: ivtv: Add check for DMA map result
-Date: Fri, 17 Oct 2025 16:56:06 +0200
-Message-ID: <20251017145152.458195037@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Rientjes <rientjes@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 5.15 274/276] mm/slab: make __free(kfree) accept error pointers
+Date: Fri, 17 Oct 2025 16:56:07 +0200
+Message-ID: <20251017145152.493966100@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -50,82 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kobuk <m.kobuk@ispras.ru>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 629913d6d79508b166c66e07e4857e20233d85a9 upstream.
+commit cd7eb8f83fcf258f71e293f7fc52a70be8ed0128 upstream.
 
-In case DMA fails, 'dma->SG_length' is 0. This value is later used to
-access 'dma->SGarray[dma->SG_length - 1]', which will cause out of
-bounds access.
+Currently, if an automatically freed allocation is an error pointer that
+will lead to a crash.  An example of this is in wm831x_gpio_dbg_show().
 
-Add check to return early on invalid value. Adjust warnings accordingly.
+   171	char *label __free(kfree) = gpiochip_dup_line_label(chip, i);
+   172	if (IS_ERR(label)) {
+   173		dev_err(wm831x->dev, "Failed to duplicate label\n");
+   174		continue;
+   175  }
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The auto clean up function should check for error pointers as well,
+otherwise we're going to keep hitting issues like this.
 
-Fixes: 1932dc2f4cf6 ("media: pci/ivtv: switch from 'pci_' to 'dma_' API")
-Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 54da6a092431 ("locking: Introduce __cleanup() based infrastructure")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/ivtv/ivtv-udma.c |    8 ++++++++
- drivers/media/pci/ivtv/ivtv-yuv.c  |    6 ++++++
- drivers/media/pci/ivtv/ivtvfb.c    |    6 +++---
- 3 files changed, 17 insertions(+), 3 deletions(-)
+ include/linux/slab.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/pci/ivtv/ivtv-udma.c
-+++ b/drivers/media/pci/ivtv/ivtv-udma.c
-@@ -131,6 +131,8 @@ int ivtv_udma_setup(struct ivtv *itv, un
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -187,7 +187,7 @@ void kfree(const void *objp);
+ void kfree_sensitive(const void *objp);
+ size_t __ksize(const void *objp);
  
- 	/* Fill SG List with new values */
- 	if (ivtv_udma_fill_sg_list(dma, &user_dma, 0) < 0) {
-+		IVTV_DEBUG_WARN("%s: could not allocate bounce buffers for highmem userspace buffers\n",
-+				__func__);
- 		unpin_user_pages(dma->map, dma->page_count);
- 		dma->page_count = 0;
- 		return -ENOMEM;
-@@ -139,6 +141,12 @@ int ivtv_udma_setup(struct ivtv *itv, un
- 	/* Map SG List */
- 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
- 				    dma->page_count, DMA_TO_DEVICE);
-+	if (!dma->SG_length) {
-+		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
-+		unpin_user_pages(dma->map, dma->page_count);
-+		dma->page_count = 0;
-+		return -EINVAL;
-+	}
+-DEFINE_FREE(kfree, void *, if (_T) kfree(_T))
++DEFINE_FREE(kfree, void *, if (!IS_ERR_OR_NULL(_T)) kfree(_T))
  
- 	/* Fill SG Array with new values */
- 	ivtv_udma_fill_sg_array (dma, ivtv_dest_addr, 0, -1);
---- a/drivers/media/pci/ivtv/ivtv-yuv.c
-+++ b/drivers/media/pci/ivtv/ivtv-yuv.c
-@@ -115,6 +115,12 @@ static int ivtv_yuv_prep_user_dma(struct
- 	}
- 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
- 				    dma->page_count, DMA_TO_DEVICE);
-+	if (!dma->SG_length) {
-+		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
-+		unpin_user_pages(dma->map, dma->page_count);
-+		dma->page_count = 0;
-+		return -EINVAL;
-+	}
- 
- 	/* Fill SG Array with new values */
- 	ivtv_udma_fill_sg_array(dma, y_buffer_offset, uv_buffer_offset, y_size);
---- a/drivers/media/pci/ivtv/ivtvfb.c
-+++ b/drivers/media/pci/ivtv/ivtvfb.c
-@@ -281,10 +281,10 @@ static int ivtvfb_prep_dec_dma_to_device
- 	/* Map User DMA */
- 	if (ivtv_udma_setup(itv, ivtv_dest_addr, userbuf, size_in_bytes) <= 0) {
- 		mutex_unlock(&itv->udma.lock);
--		IVTVFB_WARN("ivtvfb_prep_dec_dma_to_device, Error with pin_user_pages: %d bytes, %d pages returned\n",
--			       size_in_bytes, itv->udma.page_count);
-+		IVTVFB_WARN("%s, Error in ivtv_udma_setup: %d bytes, %d pages returned\n",
-+			       __func__, size_in_bytes, itv->udma.page_count);
- 
--		/* pin_user_pages must have failed completely */
-+		/* pin_user_pages or DMA must have failed completely */
- 		return -EIO;
- 	}
- 
+ /**
+  * ksize - Report actual allocation size of associated object
 
 
