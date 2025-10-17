@@ -1,60 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46E330B11;
-	Fri, 17 Oct 2025 15:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FA0330B37;
+	Fri, 17 Oct 2025 15:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715724; cv=none; b=OCRBIvodM2p0LF5qsh7nW8NJTU5+1ktmPtwoFSg1L92IUVxd2WJQwNfpRFgk8bJKESXdNPLhq6lyGiiPnCURBZiVnw6R2u3RMXiAt40l1SfWWGb53+GuJcQBvbCeyDgkYIiSI4S9qycdVKRQn+KT/LAFyW3nGV96r2geAT370zE=
+	t=1760715727; cv=none; b=O9NVW0Yk0T7e7z3/nbGJ6H9j+iI1bpE0pofz4NBVqVkKwsDZw0aGRzlpWF7AEdeTTUkncoNwh0Pjm+Qnx5FLaSu435Wx53d34S0IZ8UsnS42Iioca7qG4veMuokUC9x8is+zgmDTMcWZ2xV2+g+MYl8vPPg12AlFko73K9EcLvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715724; c=relaxed/simple;
-	bh=MKdLkD3XMiHrL11gnyW1Pxa/VzodDzHZMUxQBWOcQvQ=;
+	s=arc-20240116; t=1760715727; c=relaxed/simple;
+	bh=hoiWqCQQIg0bcRVnRxu3mJkPivtAhV+TFJwpNYGo+AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLfopJYUn5bts/lcMmveoQLtgyGjFERPlx9b9xjizCGpOGEJYOtN2x+tWGw8HcXD/SD6bz0P1/4Sa7BtMl5tkEfnm4fl7jgMkzCsIFvk+S/8kxv7yD8SJ/BRIsTlIp32YjLKIjEZ+sggf2WnfMQi52QZuWpsS/olIH+VwagbfLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrEXMdTV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d1x0QBL5WyX5XYd5RFK9NTvGNwXIHlNb1QBdYhYNtIHMIv7/Q4FuxGGY31MF/J3fnYVeVW5Z4hJ5smbnT1pW1UdpwwZvn1RyDX+Y7TZz1mg/pqx+bfy92l9IsB7b7CIku5a5VL5c+Lf8ByE+Op3+3qtT8Mx5p0x6f43PEOf3CZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XLYmRqi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrEXMdTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2AAC4CEE7;
-	Fri, 17 Oct 2025 15:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XLYmRqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FA8C4CEE7;
+	Fri, 17 Oct 2025 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715724;
-	bh=MKdLkD3XMiHrL11gnyW1Pxa/VzodDzHZMUxQBWOcQvQ=;
+	s=korg; t=1760715727;
+	bh=hoiWqCQQIg0bcRVnRxu3mJkPivtAhV+TFJwpNYGo+AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrEXMdTVFE1ehm/I97A4cf2kUdJolYaIlBDKXuu8SztlfpSFzhAZURmoWWabLbjkX
-	 154zeHBBTzJatI2YIPGObk8X/C3znwiCddNMk/pBeeDF/3eyaK5ldA0ZDOH9aM7P8x
-	 4PawlstB9SQtV+s52R6H+snjf0OCCGez3ri4SN3U=
+	b=2XLYmRqiWJIgGIH56sO/R7dxdiHEuHkQX24x1gZIQ8IOAMxIpazAdFEdC+gFyqWza
+	 DOgORlCjZpWZ6gkLnooAItIzsAjvK+BYrxXPzUYChOZPSDGsyJG1CNGDLMRughTpSx
+	 Ne7qL4bDd2zu71rfR1DTKianENM8wPmZiMVXEf0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	Mathew Brost <matthew.brost@intel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Helen Koike <koike@igalia.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	Yu Zhao <yuzhao@google.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	NeilBrown <neilb@suse.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 316/371] mm/rmap: fix soft-dirty and uffd-wp bit loss when remapping zero-filled mTHP subpage to shared zeropage
-Date: Fri, 17 Oct 2025 16:54:51 +0200
-Message-ID: <20251017145213.509363664@linuxfoundation.org>
+Subject: [PATCH 6.17 317/371] mm/page_alloc: only set ALLOC_HIGHATOMIC for __GPF_HIGH allocations
+Date: Fri, 17 Oct 2025 16:54:52 +0200
+Message-ID: <20251017145213.546298440@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -73,110 +62,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 9658d698a8a83540bf6a6c80d13c9a61590ee985 upstream.
+commit 6a204d4b14c99232e05d35305c27ebce1c009840 upstream.
 
-When splitting an mTHP and replacing a zero-filled subpage with the shared
-zeropage, try_to_map_unused_to_zeropage() currently drops several
-important PTE bits.
+Commit 524c48072e56 ("mm/page_alloc: rename ALLOC_HIGH to
+ALLOC_MIN_RESERVE") is the start of a series that explains how __GFP_HIGH,
+which implies ALLOC_MIN_RESERVE, is going to be used instead of
+__GFP_ATOMIC for high atomic reserves.
 
-For userspace tools like CRIU, which rely on the soft-dirty mechanism for
-incremental snapshots, losing the soft-dirty bit means modified pages are
-missed, leading to inconsistent memory state after restore.
+Commit eb2e2b425c69 ("mm/page_alloc: explicitly record high-order atomic
+allocations in alloc_flags") introduced ALLOC_HIGHATOMIC for such
+allocations of order higher than 0.  It still used __GFP_ATOMIC, though.
 
-As pointed out by David, the more critical uffd-wp bit is also dropped.
-This breaks the userfaultfd write-protection mechanism, causing writes to
-be silently missed by monitoring applications, which can lead to data
-corruption.
+Then, commit 1ebbb21811b7 ("mm/page_alloc: explicitly define how
+__GFP_HIGH non-blocking allocations accesses reserves") just turned that
+check for !__GFP_DIRECT_RECLAIM, ignoring that high atomic reserves were
+expected to test for __GFP_HIGH.
 
-Preserve both the soft-dirty and uffd-wp bits from the old PTE when
-creating the new zeropage mapping to ensure they are correctly tracked.
+This leads to high atomic reserves being added for high-order GFP_NOWAIT
+allocations and others that clear __GFP_DIRECT_RECLAIM, which is
+unexpected.  Later, those reserves lead to 0-order allocations going to
+the slow path and starting reclaim.
 
-Link: https://lkml.kernel.org/r/20250930081040.80926-1-lance.yang@linux.dev
-Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Mathew Brost <matthew.brost@intel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Yu Zhao <yuzhao@google.com>
+>From /proc/pagetypeinfo, without the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      1      8     10      9      7      3      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic     64     20     12      5      0      0      0      0      0      0      0
+
+With the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+
+Link: https://lkml.kernel.org/r/20250814172245.1259625-1-cascardo@igalia.com
+Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Tested-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: NeilBrown <neilb@suse.de>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ mm/page_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -297,8 +297,7 @@ bool isolate_folio_to_list(struct folio
- }
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4408,7 +4408,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask, unsig
+ 		if (!(gfp_mask & __GFP_NOMEMALLOC)) {
+ 			alloc_flags |= ALLOC_NON_BLOCK;
  
- static bool try_to_map_unused_to_zeropage(struct page_vma_mapped_walk *pvmw,
--					  struct folio *folio,
--					  unsigned long idx)
-+		struct folio *folio, pte_t old_pte, unsigned long idx)
- {
- 	struct page *page = folio_page(folio, idx);
- 	pte_t newpte;
-@@ -307,7 +306,7 @@ static bool try_to_map_unused_to_zeropag
- 		return false;
- 	VM_BUG_ON_PAGE(!PageAnon(page), page);
- 	VM_BUG_ON_PAGE(!PageLocked(page), page);
--	VM_BUG_ON_PAGE(pte_present(ptep_get(pvmw->pte)), page);
-+	VM_BUG_ON_PAGE(pte_present(old_pte), page);
- 
- 	if (folio_test_mlocked(folio) || (pvmw->vma->vm_flags & VM_LOCKED) ||
- 	    mm_forbids_zeropage(pvmw->vma->vm_mm))
-@@ -323,6 +322,12 @@ static bool try_to_map_unused_to_zeropag
- 
- 	newpte = pte_mkspecial(pfn_pte(my_zero_pfn(pvmw->address),
- 					pvmw->vma->vm_page_prot));
-+
-+	if (pte_swp_soft_dirty(old_pte))
-+		newpte = pte_mksoft_dirty(newpte);
-+	if (pte_swp_uffd_wp(old_pte))
-+		newpte = pte_mkuffd_wp(newpte);
-+
- 	set_pte_at(pvmw->vma->vm_mm, pvmw->address, pvmw->pte, newpte);
- 
- 	dec_mm_counter(pvmw->vma->vm_mm, mm_counter(folio));
-@@ -365,13 +370,13 @@ static bool remove_migration_pte(struct
- 			continue;
+-			if (order > 0)
++			if (order > 0 && (alloc_flags & ALLOC_MIN_RESERVE))
+ 				alloc_flags |= ALLOC_HIGHATOMIC;
  		}
- #endif
-+		old_pte = ptep_get(pvmw.pte);
- 		if (rmap_walk_arg->map_unused_to_zeropage &&
--		    try_to_map_unused_to_zeropage(&pvmw, folio, idx))
-+		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
- 			continue;
  
- 		folio_get(folio);
- 		pte = mk_pte(new, READ_ONCE(vma->vm_page_prot));
--		old_pte = ptep_get(pvmw.pte);
- 
- 		entry = pte_to_swp_entry(old_pte);
- 		if (!is_migration_entry_young(entry))
 
 
