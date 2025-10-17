@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7B25695;
-	Fri, 17 Oct 2025 15:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077E95695;
+	Fri, 17 Oct 2025 15:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715219; cv=none; b=nUdDlDQ+tYLWfq6B0mwN+kKvfM+RVZQ73UXp3to0XXGT0xxUaQfc4IYL922F672H3MalL5UkPK1w29KwUc1dAXXS+e86aZKNnUz40YdQ1xPqN7vmfXGsfnqgBJbCI+W+u2VuST4yrqaGTB9oYM+R7x2nxGIReZQy8L/RNpdf2V0=
+	t=1760715222; cv=none; b=PCG6+CkNPZIftAZ7f5scLUk0QFxyDvx9ob809wiWDCdnSGV1RxCNqNBMqEXKenmfGLTsZtYZnc66JBGWLBBDqlkXSsQ2xCUUC2EQcmIXuzhRn+M+U09ihAwx0U4dG7aSTT7EWPmjGixZ6XUbXJb03HOyjIPcLKSda0R25BQcwXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715219; c=relaxed/simple;
-	bh=9kqXmnP9ri4KIwqB5kWANg9f0114zfDH58tBC2FDPNw=;
+	s=arc-20240116; t=1760715222; c=relaxed/simple;
+	bh=GmL9Wi4n+5JleojEYTjpavEhX1lx6F4bqTCnus+PkJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nz9JiMay1hKXiLKGX1/IBaxh9yhYgKwhYjN+67qkT8ugY2NSS6ts6BkgZGGIqk9VqHNQSKYYqYiwl98gzW8Q86G0dghKKVSkJpaE+P2vlpfc+G7wOD+qif0WWiGF2VD14GuoUXs9oS/ZXWG+S1KgUJErh12U3qxFRF4gVV2RvW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=je1hOEb5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWFir7P+dpsus/JAesExQG8gjgdmJm/fBkWzoTz8jsfogOh363sQWi2QjAKwLdCau2B2dneHS3kp3mWrCLht4H+JHx8/zBNfxwFCjCjIjDDNIfYBhNq9m1OAmAFcYQDGXMif4ozn/S0nPME0XUkcHptDRL3HqQ46wmM66sKmq/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7WpLa5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="je1hOEb5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3F0C4CEE7;
-	Fri, 17 Oct 2025 15:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7WpLa5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BC3C4CEE7;
+	Fri, 17 Oct 2025 15:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715219;
-	bh=9kqXmnP9ri4KIwqB5kWANg9f0114zfDH58tBC2FDPNw=;
+	s=korg; t=1760715221;
+	bh=GmL9Wi4n+5JleojEYTjpavEhX1lx6F4bqTCnus+PkJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=je1hOEb51AEq+9ISrmlBpfBMunyn+/t4DAFz0WqCTAYMFQZ3RLQG5aEjqM92dMsuQ
-	 yrVK2LUt7j6v4zHWTTozPNso415V+XQ3OwabOj9CyjPYIo83SKgKOwvN6gtRYOBx7h
-	 TaR+opFBb8PLn/FAMYwfUPYeex6PK5BfLxvB1zqY=
+	b=g7WpLa5grwwPgQSAj2oogh5gXwRsMuqbWW3j5F+vejYqx+mfvRckSEbeczxPXsIyV
+	 vt03IaZfa/vCnCNiFGmhOoKM2NXLw7gdE/zxkDHOZKPSrAgEbTZGoTraWm9PzsZLgr
+	 2JPZlPQrFtTUm0rh847C5UYIZ6IbEyM+/ffutwUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	GuangFei Luo <luogf2025@163.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 140/371] ACPI: debug: fix signedness issues in read/write helpers
-Date: Fri, 17 Oct 2025 16:51:55 +0200
-Message-ID: <20251017145206.999907515@linuxfoundation.org>
+Subject: [PATCH 6.17 141/371] ACPI: battery: Add synchronization between interface updates
+Date: Fri, 17 Oct 2025 16:51:56 +0200
+Message-ID: <20251017145207.037006098@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -50,125 +50,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 496f9372eae14775e0524e83e952814691fe850a upstream.
+commit 399dbcadc01ebf0035f325eaa8c264f8b5cd0a14 upstream.
 
-In the ACPI debugger interface, the helper functions for read and write
-operations use "int" as the length parameter data type. When a large
-"size_t count" is passed from the file operations, this cast to "int"
-results in truncation and a negative value due to signed integer
-representation.
+There is no synchronization between different code paths in the ACPI
+battery driver that update its sysfs interface or its power supply
+class device interface.  In some cases this results to functional
+failures due to race conditions.
 
-Logically, this negative number propagates to the min() calculation,
-where it is selected over the positive buffer space value, leading to
-unexpected behavior. Subsequently, when this negative value is used in
-copy_to_user() or copy_from_user(), it is interpreted as a large positive
-value due to the unsigned nature of the size parameter in these functions,
-causing the copy operations to attempt handling sizes far beyond the
-intended buffer limits.
+One example of this is when two ACPI notifications:
 
-Address the issue by:
- - Changing the length parameters in acpi_aml_read_user() and
-   acpi_aml_write_user() from "int" to "size_t", aligning with the
-   expected unsigned size semantics.
- - Updating return types and local variables in acpi_aml_read() and
-   acpi_aml_write() to "ssize_t" for consistency with kernel file
-   operation conventions.
- - Using "size_t" for the "n" variable to ensure calculations remain
-   unsigned.
- - Using min_t() for circ_count_to_end() and circ_space_to_end() to
-   ensure type-safe comparisons and prevent integer overflow.
+  - ACPI_BATTERY_NOTIFY_STATUS (0x80)
+  - ACPI_BATTERY_NOTIFY_INFO   (0x81)
 
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Link: https://patch.msgid.link/20250923013113.20615-1-a.jahangirzad@gmail.com
-[ rjw: Changelog tweaks, local variable definitions ordering adjustments ]
-Fixes: 8cfb0cdf07e2 ("ACPI / debugger: Add IO interface to access debugger functionalities")
-Cc: 4.5+ <stable@vger.kernel.org> # 4.5+
+are triggered (by the platform firmware) in a row with a little delay
+in between after removing and reinserting a laptop battery.  Both
+notifications cause acpi_battery_update() to be called and if the delay
+between them is sufficiently small, sysfs_add_battery() can be re-entered
+before battery->bat is set which leads to a duplicate sysfs entry error:
+
+ sysfs: cannot create duplicate filename '/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1'
+ CPU: 1 UID: 0 PID: 185 Comm: kworker/1:4 Kdump: loaded Not tainted 6.12.38+deb13-amd64 #1  Debian 6.12.38-1
+ Hardware name: Gateway          NV44             /SJV40-MV        , BIOS V1.3121 04/08/2009
+ Workqueue: kacpi_notify acpi_os_execute_deferred
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5d/0x80
+  sysfs_warn_dup.cold+0x17/0x23
+  sysfs_create_dir_ns+0xce/0xe0
+  kobject_add_internal+0xba/0x250
+  kobject_add+0x96/0xc0
+  ? get_device_parent+0xde/0x1e0
+  device_add+0xe2/0x870
+  __power_supply_register.part.0+0x20f/0x3f0
+  ? wake_up_q+0x4e/0x90
+  sysfs_add_battery+0xa4/0x1d0 [battery]
+  acpi_battery_update+0x19e/0x290 [battery]
+  acpi_battery_notify+0x50/0x120 [battery]
+  acpi_ev_notify_dispatch+0x49/0x70
+  acpi_os_execute_deferred+0x1a/0x30
+  process_one_work+0x177/0x330
+  worker_thread+0x251/0x390
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xd2/0x100
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x34/0x50
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ kobject: kobject_add_internal failed for BAT1 with -EEXIST, don't try to register things with the same name in the same directory.
+
+There are also other scenarios in which analogous issues may occur.
+
+Address this by using a common lock in all of the code paths leading
+to updates of driver interfaces: ACPI Notify () handler, system resume
+callback and post-resume notification, device addition and removal.
+
+This new lock replaces sysfs_lock that has been used only in
+sysfs_remove_battery() which now is going to be always called under
+the new lock, so it doesn't need any internal locking any more.
+
+Fixes: 10666251554c ("ACPI: battery: Install Notify() handler directly")
+Closes: https://lore.kernel.org/linux-acpi/20250910142653.313360-1-luogf2025@163.com/
+Reported-by: GuangFei Luo <luogf2025@163.com>
+Tested-by: GuangFei Luo <luogf2025@163.com>
+Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_dbg.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/acpi/battery.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
---- a/drivers/acpi/acpi_dbg.c
-+++ b/drivers/acpi/acpi_dbg.c
-@@ -569,11 +569,11 @@ static int acpi_aml_release(struct inode
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -92,7 +92,7 @@ enum {
+ 
+ struct acpi_battery {
+ 	struct mutex lock;
+-	struct mutex sysfs_lock;
++	struct mutex update_lock;
+ 	struct power_supply *bat;
+ 	struct power_supply_desc bat_desc;
+ 	struct acpi_device *device;
+@@ -904,15 +904,12 @@ static int sysfs_add_battery(struct acpi
+ 
+ static void sysfs_remove_battery(struct acpi_battery *battery)
+ {
+-	mutex_lock(&battery->sysfs_lock);
+-	if (!battery->bat) {
+-		mutex_unlock(&battery->sysfs_lock);
++	if (!battery->bat)
+ 		return;
+-	}
++
+ 	battery_hook_remove_battery(battery);
+ 	power_supply_unregister(battery->bat);
+ 	battery->bat = NULL;
+-	mutex_unlock(&battery->sysfs_lock);
+ }
+ 
+ static void find_battery(const struct dmi_header *dm, void *private)
+@@ -1072,6 +1069,9 @@ static void acpi_battery_notify(acpi_han
+ 
+ 	if (!battery)
+ 		return;
++
++	guard(mutex)(&battery->update_lock);
++
+ 	old = battery->bat;
+ 	/*
+ 	 * On Acer Aspire V5-573G notifications are sometimes triggered too
+@@ -1094,21 +1094,22 @@ static void acpi_battery_notify(acpi_han
+ }
+ 
+ static int battery_notify(struct notifier_block *nb,
+-			       unsigned long mode, void *_unused)
++			  unsigned long mode, void *_unused)
+ {
+ 	struct acpi_battery *battery = container_of(nb, struct acpi_battery,
+ 						    pm_nb);
+-	int result;
+ 
+-	switch (mode) {
+-	case PM_POST_HIBERNATION:
+-	case PM_POST_SUSPEND:
++	if (mode == PM_POST_SUSPEND || mode == PM_POST_HIBERNATION) {
++		guard(mutex)(&battery->update_lock);
++
+ 		if (!acpi_battery_present(battery))
+ 			return 0;
+ 
+ 		if (battery->bat) {
+ 			acpi_battery_refresh(battery);
+ 		} else {
++			int result;
++
+ 			result = acpi_battery_get_info(battery);
+ 			if (result)
+ 				return result;
+@@ -1120,7 +1121,6 @@ static int battery_notify(struct notifie
+ 
+ 		acpi_battery_init_alarm(battery);
+ 		acpi_battery_get_state(battery);
+-		break;
+ 	}
+ 
+ 	return 0;
+@@ -1198,6 +1198,8 @@ static int acpi_battery_update_retry(str
+ {
+ 	int retry, ret;
+ 
++	guard(mutex)(&battery->update_lock);
++
+ 	for (retry = 5; retry; retry--) {
+ 		ret = acpi_battery_update(battery, false);
+ 		if (!ret)
+@@ -1208,6 +1210,13 @@ static int acpi_battery_update_retry(str
+ 	return ret;
+ }
+ 
++static void sysfs_battery_cleanup(struct acpi_battery *battery)
++{
++	guard(mutex)(&battery->update_lock);
++
++	sysfs_remove_battery(battery);
++}
++
+ static int acpi_battery_add(struct acpi_device *device)
+ {
+ 	int result = 0;
+@@ -1230,7 +1239,7 @@ static int acpi_battery_add(struct acpi_
+ 	if (result)
+ 		return result;
+ 
+-	result = devm_mutex_init(&device->dev, &battery->sysfs_lock);
++	result = devm_mutex_init(&device->dev, &battery->update_lock);
+ 	if (result)
+ 		return result;
+ 
+@@ -1262,7 +1271,7 @@ fail_pm:
+ 	device_init_wakeup(&device->dev, 0);
+ 	unregister_pm_notifier(&battery->pm_nb);
+ fail:
+-	sysfs_remove_battery(battery);
++	sysfs_battery_cleanup(battery);
+ 
+ 	return result;
+ }
+@@ -1281,6 +1290,9 @@ static void acpi_battery_remove(struct a
+ 
+ 	device_init_wakeup(&device->dev, 0);
+ 	unregister_pm_notifier(&battery->pm_nb);
++
++	guard(mutex)(&battery->update_lock);
++
+ 	sysfs_remove_battery(battery);
+ }
+ 
+@@ -1297,6 +1309,9 @@ static int acpi_battery_resume(struct de
+ 		return -EINVAL;
+ 
+ 	battery->update_time = 0;
++
++	guard(mutex)(&battery->update_lock);
++
+ 	acpi_battery_update(battery, true);
  	return 0;
  }
- 
--static int acpi_aml_read_user(char __user *buf, int len)
-+static ssize_t acpi_aml_read_user(char __user *buf, size_t len)
- {
--	int ret;
- 	struct circ_buf *crc = &acpi_aml_io.out_crc;
--	int n;
-+	ssize_t ret;
-+	size_t n;
- 	char *p;
- 
- 	ret = acpi_aml_lock_read(crc, ACPI_AML_OUT_USER);
-@@ -582,7 +582,7 @@ static int acpi_aml_read_user(char __use
- 	/* sync head before removing logs */
- 	smp_rmb();
- 	p = &crc->buf[crc->tail];
--	n = min(len, circ_count_to_end(crc));
-+	n = min_t(size_t, len, circ_count_to_end(crc));
- 	if (copy_to_user(buf, p, n)) {
- 		ret = -EFAULT;
- 		goto out;
-@@ -599,8 +599,8 @@ out:
- static ssize_t acpi_aml_read(struct file *file, char __user *buf,
- 			     size_t count, loff_t *ppos)
- {
--	int ret = 0;
--	int size = 0;
-+	ssize_t ret = 0;
-+	ssize_t size = 0;
- 
- 	if (!count)
- 		return 0;
-@@ -639,11 +639,11 @@ again:
- 	return size > 0 ? size : ret;
- }
- 
--static int acpi_aml_write_user(const char __user *buf, int len)
-+static ssize_t acpi_aml_write_user(const char __user *buf, size_t len)
- {
--	int ret;
- 	struct circ_buf *crc = &acpi_aml_io.in_crc;
--	int n;
-+	ssize_t ret;
-+	size_t n;
- 	char *p;
- 
- 	ret = acpi_aml_lock_write(crc, ACPI_AML_IN_USER);
-@@ -652,7 +652,7 @@ static int acpi_aml_write_user(const cha
- 	/* sync tail before inserting cmds */
- 	smp_mb();
- 	p = &crc->buf[crc->head];
--	n = min(len, circ_space_to_end(crc));
-+	n = min_t(size_t, len, circ_space_to_end(crc));
- 	if (copy_from_user(p, buf, n)) {
- 		ret = -EFAULT;
- 		goto out;
-@@ -663,14 +663,14 @@ static int acpi_aml_write_user(const cha
- 	ret = n;
- out:
- 	acpi_aml_unlock_fifo(ACPI_AML_IN_USER, ret >= 0);
--	return n;
-+	return ret;
- }
- 
- static ssize_t acpi_aml_write(struct file *file, const char __user *buf,
- 			      size_t count, loff_t *ppos)
- {
--	int ret = 0;
--	int size = 0;
-+	ssize_t ret = 0;
-+	ssize_t size = 0;
- 
- 	if (!count)
- 		return 0;
 
 
