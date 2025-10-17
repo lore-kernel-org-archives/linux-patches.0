@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580C81D5CE0;
-	Fri, 17 Oct 2025 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBD532C929;
+	Fri, 17 Oct 2025 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714444; cv=none; b=XCbWv9mSTGf3/oGMSko+mHnK5l+F8QF2knd2cCSRyEAFgLGg1TTG8wq1atrPpVcyGdhq5sLwu6onR4R7MTMGKjdwGwaByKO2Y4fKkFPeFz+p1yxBNYgx8katRCfVt31JCCRqGb6v2/2F0sDLZP+3qKxmUl6CkakNO0JSe2ielqU=
+	t=1760714447; cv=none; b=u1C+wSzU9DeSNaPkXyrO5n/PPHQPZms05Hl5ueWVmP5g+Tq30EAcGXEgWDaZJyvfzJDNBfskdV2FZtZUqlZuAPCLhSXKri0YcuuDh/EftozObHROZio3M8Et/l2G/bfPBBUNXWCHUx0NRLyGF55ogRsKWsqdy/bZ+DRMJQWkIRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714444; c=relaxed/simple;
-	bh=VJBHMiXlBaLTuCNDqJWMXG55sXIucT25bpf4D8VjP/0=;
+	s=arc-20240116; t=1760714447; c=relaxed/simple;
+	bh=mtmEA/s9YJYQSldrLN/aw2x7mpH10CMvoXwnDX0Wksc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQ/d600ejmsn7fD4IVDjUflyzpIWuddnHKMHIpC7obMu+8r46iKa7fq5Dr0aoJKVWI393p72y0uoYXKvGtnP4lKmFQdXmuV8jMYHxFxdOi0kZHYzQymRI9qmYjCXcKEEUQos2XJlJB5BT/n2vg7D602xJBO8962PydP6dUSXkWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/T8xDFO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMd8jWmO+vOONtERuFVANpe4Ax+wcrdq0avXBvUKINWVlXunJDtY6gf24L5tz0xgDDABI/cmqT/fTXYRXm4yS1Ljy07PGiDBprsCiuEfGTqB7nvblAYtpL5Uj9q+5vOrD4HE5Tp/vwGLVXiJbmFV1bIFsXyfFZo2mZ1VPe1/GCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQ1MXEp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/T8xDFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB028C4CEE7;
-	Fri, 17 Oct 2025 15:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQ1MXEp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F9C4CEE7;
+	Fri, 17 Oct 2025 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714444;
-	bh=VJBHMiXlBaLTuCNDqJWMXG55sXIucT25bpf4D8VjP/0=;
+	s=korg; t=1760714447;
+	bh=mtmEA/s9YJYQSldrLN/aw2x7mpH10CMvoXwnDX0Wksc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/T8xDFOo4nStfFTMRy5GEpSQ5Qwe6fAsikRS9Mc2LnDozwv2Ck3JGnQq9DoIYXqi
-	 2yhJC3yevCoyjkrnPNlc/GgO+wv/H2nyRg8Cfif/DS+LqjgO2nc4posKGRYFfOIj76
-	 lgfhulF8UbK45qbajipLf/IR3+mTom6GfXoHigvE=
+	b=TQ1MXEp+OSzDwMjdrPUW+Lakccmt80wG8W74HWQzlE6wfST/oK5VUhRZxul0i1k//
+	 Tv1qP5wdC4GySaMGTIHQUA5GoOYABrYEl9l14JLzBvSdmHGAov3XshvQke+v9gTwiJ
+	 ejpAUtQmm6qXfg9dyPIPWDhotpljnlhd7QfIkeDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <Markus.Elfring@web.de>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai1@huaweicloud.com>,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 148/277] loop: fix backing file reference leak on validation error
-Date: Fri, 17 Oct 2025 16:52:35 +0200
-Message-ID: <20251017145152.528627400@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.12 149/277] of: unittest: Fix device reference count leak in of_unittest_pci_node_verify
+Date: Fri, 17 Oct 2025 16:52:36 +0200
+Message-ID: <20251017145152.564633211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -54,56 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 98b7bf54338b797e3a11e8178ce0e806060d8fa3 upstream.
+commit a8de554774ae48efbe48ace79f8badae2daa2bf1 upstream.
 
-loop_change_fd() and loop_configure() call loop_check_backing_file()
-to validate the new backing file. If validation fails, the reference
-acquired by fget() was not dropped, leaking a file reference.
+In of_unittest_pci_node_verify(), when the add parameter is false,
+device_find_any_child() obtains a reference to a child device. This
+function implicitly calls get_device() to increment the device's
+reference count before returning the pointer. However, the caller
+fails to properly release this reference by calling put_device(),
+leading to a device reference count leak. Add put_device() in the else
+branch immediately after child_dev is no longer needed.
 
-Fix this by calling fput(file) before returning the error.
+As the comment of device_find_any_child states: "NOTE: you will need
+to drop the reference with put_device() after use".
+
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Cc: Markus Elfring <Markus.Elfring@web.de>
-CC: Yang Erkun <yangerkun@huawei.com>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Yu Kuai <yukuai1@huaweicloud.com>
-Fixes: f5c84eff634b ("loop: Add sanity check for read/write_iter")
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yang Erkun <yangerkun@huawei.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 26409dd04589 ("of: unittest: Add pci_dt_testdrv pci driver")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/of/unittest.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -536,8 +536,10 @@ static int loop_change_fd(struct loop_de
- 		return -EBADF;
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -4191,6 +4191,7 @@ static int of_unittest_pci_node_verify(s
+ 		unittest(!np, "Child device tree node is not removed\n");
+ 		child_dev = device_find_any_child(&pdev->dev);
+ 		unittest(!child_dev, "Child device is not removed\n");
++		put_device(child_dev);
+ 	}
  
- 	error = loop_check_backing_file(file);
--	if (error)
-+	if (error) {
-+		fput(file);
- 		return error;
-+	}
- 
- 	/* suppress uevents while reconfiguring the device */
- 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
-@@ -973,8 +975,10 @@ static int loop_configure(struct loop_de
- 		return -EBADF;
- 
- 	error = loop_check_backing_file(file);
--	if (error)
-+	if (error) {
-+		fput(file);
- 		return error;
-+	}
- 
- 	is_loop = is_loop_device(file);
- 
+ failed:
 
 
