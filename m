@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247E23370E2;
-	Fri, 17 Oct 2025 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7C3370E2;
+	Fri, 17 Oct 2025 15:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713412; cv=none; b=urgkbS1WquwShq2UbFR3MLPhdNLc657jFgbr3CXFvk8Ma7AuiMrtWGe1Aa2/j25pzGUxEBukyE4/pnMQY5Oh6WyzimJH8jCN4eTQR+a/TYoYP05LgxPFzY3YI5OZWuKwFnu0vqVAq2KBWIAp7y5mSHIs5mUcZ97mlNKrKsIp0rg=
+	t=1760713415; cv=none; b=nRxcGhBynbSjRxOe+dilk0C3cENtX9wUZ+RxRkdDn78RfINIGk8WQbRii0u3E6Cci82U6wpHXadl1a+M0+k8dcRKj/7I5uRIw9me06k2GRhSpxOXLM/m4DcMgtEwW39wyIOqzqwEURpdmHfVFkU/pzNCPa5yjNSxjGe4LufwEsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713412; c=relaxed/simple;
-	bh=iORQ6r9HiT/2yBqAX8oTTHxnnHvStAuXbZWokibFEx0=;
+	s=arc-20240116; t=1760713415; c=relaxed/simple;
+	bh=NMOxBXNpV79OA/b5c/49CCEb0girFwchHcVsMNtMuDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0jRAdqF+VJmjMGaraBZ40N/PMK0nRAbvsoswYrsBDoEsVqlBE9wj2dVxYKkDWHzz7/VbCQziXYWBjEkj+q/SnFHqP4sSXc/D3qsXbGxEc8emcTFjox8so+M5o2JZqIM3qnZxTSUhRKpamrsDI67cVrl1MPlg2eB5FMKUDUrQW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp2SVPQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0gzlwhivxDWe8C9L1xIxwLzJKpfsrbP3jWxBs2F5IJl0MtstJ0WR+jsLcFoKrjYrHPZfnMVmNA1WY1iwzk9sbKr06QaAMjg3F15v0KN5VQHG5j2v+/HjDywtMu/4dBk0zeCM1k+zxuCbtlfiQ6MZiaYVyIAc64yW5dEEu+xXSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7HelXhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp2SVPQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DFDC4CEE7;
-	Fri, 17 Oct 2025 15:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7HelXhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F22C4CEFE;
+	Fri, 17 Oct 2025 15:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713412;
-	bh=iORQ6r9HiT/2yBqAX8oTTHxnnHvStAuXbZWokibFEx0=;
+	s=korg; t=1760713414;
+	bh=NMOxBXNpV79OA/b5c/49CCEb0girFwchHcVsMNtMuDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yp2SVPQqVdesX8/mLIualqHzLVUy+Mt+f1r1JpytRpM8aLiepAjIgQXO3XikZkQtg
-	 Jryw2img0GbO0CIEDe2J5Ly5oEn8qLcCuSpimG9dE7MByCGhl1llIkKbNbN37nGlro
-	 yUgnbFeVwTPXbEq5PXMXANAUWUtfaicg3Eklul68=
+	b=W7HelXhXphlwKiZcoGI68UcKSoyql0cu5C80e0BBL2WkXD5VQgkZZJoKqofm9NH4Z
+	 42dl/THrEAa2/+l38e62y4aUCQbrXUo45D2f5CIo4awFjl8H8sSsLt1Y4KnwW4zmPj
+	 bEAK7P3gWpRur04GoE1SSgutvSV6rLTebMKFv3oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/168] ACPI: property: Do not pass NULL handles to acpi_attach_data()
-Date: Fri, 17 Oct 2025 16:53:54 +0200
-Message-ID: <20251017145134.755234233@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 156/168] selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled
+Date: Fri, 17 Oct 2025 16:53:55 +0200
+Message-ID: <20251017145134.792833722@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 References: <20251017145129.000176255@linuxfoundation.org>
@@ -51,74 +54,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-[ Upstream commit baf60d5cb8bc6b85511c5df5f0ad7620bb66d23c ]
+commit 0389c305ef56cbadca4cbef44affc0ec3213ed30 upstream.
 
-In certain circumstances, the ACPI handle of a data-only node may be
-NULL, in which case it does not make sense to attempt to attach that
-node to an ACPI namespace object, so update the code to avoid attempts
-to do so.
+The madv_populate and soft-dirty kselftests currently fail on systems
+where CONFIG_MEM_SOFT_DIRTY is disabled.
 
-This prevents confusing and unuseful error messages from being printed.
+Introduce a new helper softdirty_supported() into vm_util.c/h to ensure
+tests are properly skipped when the feature is not enabled.
 
-Also document the fact that the ACPI handle of a data-only node may be
-NULL and when that happens in a code comment.  In addition, make
-acpi_add_nondev_subnodes() print a diagnostic message for each data-only
-node with an unknown ACPI namespace scope.
-
-Fixes: 1d52f10917a7 ("ACPI: property: Tie data nodes to acpi handles")
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250917133137.62802-1-lance.yang@linux.dev
+Fixes: 9f3265db6ae8 ("selftests: vm: add test for Soft-Dirty PTE bit")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand <david@redhat.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Gabriel Krisman Bertazi <krisman@collabora.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/property.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ tools/testing/selftests/vm/madv_populate.c |    9 ++-
+ tools/testing/selftests/vm/soft-dirty.c    |    5 +
+ tools/testing/selftests/vm/vm_util.c       |   77 +++++++++++++++++++++++++++++
+ tools/testing/selftests/vm/vm_util.h       |    2 
+ 4 files changed, 90 insertions(+), 3 deletions(-)
 
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -112,6 +112,10 @@ static bool acpi_nondev_subnode_extract(
- 		result = true;
+--- a/tools/testing/selftests/vm/madv_populate.c
++++ b/tools/testing/selftests/vm/madv_populate.c
+@@ -274,12 +274,16 @@ static void test_softdirty(void)
  
- 	if (result) {
-+		/*
-+		 * This will be NULL if the desc package is embedded in an outer
-+		 * _DSD-equivalent package and its scope cannot be determined.
-+		 */
- 		dn->handle = handle;
- 		dn->data.pointer = desc;
- 		list_add_tail(&dn->sibling, list);
-@@ -212,6 +216,8 @@ static bool acpi_add_nondev_subnodes(acp
- 			 * strings because there is no way to build full
- 			 * pathnames out of them.
- 			 */
-+			acpi_handle_debug(scope, "subnode %s: Unknown scope\n",
-+					  link->package.elements[0].string.pointer);
- 			desc = &link->package.elements[1];
- 			result = acpi_nondev_subnode_extract(desc, NULL, link,
- 							     list, parent);
-@@ -384,6 +390,9 @@ static void acpi_untie_nondev_subnodes(s
- 	struct acpi_data_node *dn;
+ int main(int argc, char **argv)
+ {
++	int nr_tests = 16;
+ 	int err;
  
- 	list_for_each_entry(dn, &data->subnodes, sibling) {
-+		if (!dn->handle)
-+			continue;
+ 	pagesize = getpagesize();
+ 
++	if (softdirty_supported())
++		nr_tests += 5;
 +
- 		acpi_detach_data(dn->handle, acpi_nondev_subnode_tag);
+ 	ksft_print_header();
+-	ksft_set_plan(21);
++	ksft_set_plan(nr_tests);
  
- 		acpi_untie_nondev_subnodes(&dn->data);
-@@ -398,6 +407,9 @@ static bool acpi_tie_nondev_subnodes(str
- 		acpi_status status;
- 		bool ret;
+ 	sense_support();
+ 	test_prot_read();
+@@ -287,7 +291,8 @@ int main(int argc, char **argv)
+ 	test_holes();
+ 	test_populate_read();
+ 	test_populate_write();
+-	test_softdirty();
++	if (softdirty_supported())
++		test_softdirty();
  
-+		if (!dn->handle)
-+			continue;
+ 	err = ksft_get_fail_cnt();
+ 	if (err)
+--- a/tools/testing/selftests/vm/soft-dirty.c
++++ b/tools/testing/selftests/vm/soft-dirty.c
+@@ -190,8 +190,11 @@ int main(int argc, char **argv)
+ 	int pagesize;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(15);
+ 
++	if (!softdirty_supported())
++		ksft_exit_skip("soft-dirty is not support\n");
 +
- 		status = acpi_attach_data(dn->handle, acpi_nondev_subnode_tag, dn);
- 		if (ACPI_FAILURE(status) && status != AE_ALREADY_EXISTS) {
- 			acpi_handle_err(dn->handle, "Can't tag data node\n");
++	ksft_set_plan(15);
+ 	pagemap_fd = open(PAGEMAP_FILE_PATH, O_RDONLY);
+ 	if (pagemap_fd < 0)
+ 		ksft_exit_fail_msg("Failed to open %s\n", PAGEMAP_FILE_PATH);
+--- a/tools/testing/selftests/vm/vm_util.c
++++ b/tools/testing/selftests/vm/vm_util.c
+@@ -72,6 +72,42 @@ uint64_t read_pmd_pagesize(void)
+ 	return strtoul(buf, NULL, 10);
+ }
+ 
++char *__get_smap_entry(void *addr, const char *pattern, char *buf, size_t len)
++{
++	int ret;
++	FILE *fp;
++	char *entry = NULL;
++	char addr_pattern[MAX_LINE_LENGTH];
++
++	ret = snprintf(addr_pattern, MAX_LINE_LENGTH, "%08lx-",
++		       (unsigned long)addr);
++	if (ret >= MAX_LINE_LENGTH)
++		ksft_exit_fail_msg("%s: Pattern is too long\n", __func__);
++
++	fp = fopen(SMAP_FILE_PATH, "r");
++	if (!fp)
++		ksft_exit_fail_msg("%s: Failed to open file %s\n", __func__,
++				   SMAP_FILE_PATH);
++
++	if (!check_for_pattern(fp, addr_pattern, buf, len))
++		goto err_out;
++
++	/* Fetch the pattern in the same block */
++	if (!check_for_pattern(fp, pattern, buf, len))
++		goto err_out;
++
++	/* Trim trailing newline */
++	entry = strchr(buf, '\n');
++	if (entry)
++		*entry = '\0';
++
++	entry = buf + strlen(pattern);
++
++err_out:
++	fclose(fp);
++	return entry;
++}
++
+ bool __check_huge(void *addr, char *pattern, int nr_hpages,
+ 		  uint64_t hpage_size)
+ {
+@@ -124,3 +160,44 @@ bool check_huge_shmem(void *addr, int nr
+ {
+ 	return __check_huge(addr, "ShmemPmdMapped:", nr_hpages, hpage_size);
+ }
++
++static bool check_vmflag(void *addr, const char *flag)
++{
++	char buffer[MAX_LINE_LENGTH];
++	const char *flags;
++	size_t flaglen;
++
++	flags = __get_smap_entry(addr, "VmFlags:", buffer, sizeof(buffer));
++	if (!flags)
++		ksft_exit_fail_msg("%s: No VmFlags for %p\n", __func__, addr);
++
++	while (true) {
++		flags += strspn(flags, " ");
++
++		flaglen = strcspn(flags, " ");
++		if (!flaglen)
++			return false;
++
++		if (flaglen == strlen(flag) && !memcmp(flags, flag, flaglen))
++			return true;
++
++		flags += flaglen;
++	}
++}
++
++bool softdirty_supported(void)
++{
++	char *addr;
++	bool supported = false;
++	const size_t pagesize = getpagesize();
++
++	/* New mappings are expected to be marked with VM_SOFTDIRTY (sd). */
++	addr = mmap(0, pagesize, PROT_READ | PROT_WRITE,
++		    MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
++	if (!addr)
++		ksft_exit_fail_msg("mmap failed\n");
++
++	supported = check_vmflag(addr, "sd");
++	munmap(addr, pagesize);
++	return supported;
++}
+--- a/tools/testing/selftests/vm/vm_util.h
++++ b/tools/testing/selftests/vm/vm_util.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #include <stdint.h>
+ #include <stdbool.h>
++#include <sys/mman.h>
+ 
+ uint64_t pagemap_get_entry(int fd, char *start);
+ bool pagemap_is_softdirty(int fd, char *start);
+@@ -10,3 +11,4 @@ uint64_t read_pmd_pagesize(void);
+ bool check_huge_anon(void *addr, int nr_hpages, uint64_t hpage_size);
+ bool check_huge_file(void *addr, int nr_hpages, uint64_t hpage_size);
+ bool check_huge_shmem(void *addr, int nr_hpages, uint64_t hpage_size);
++bool softdirty_supported(void);
 
 
