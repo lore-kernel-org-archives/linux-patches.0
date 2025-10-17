@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B292F3208;
-	Fri, 17 Oct 2025 15:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A732C93B;
+	Fri, 17 Oct 2025 15:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714704; cv=none; b=HBqKzVYTMepkebwUcU7XbC98XlrozZsxoAepFiNHURDiqq+gc2BA0V7SNZHBRaBAy/S09BU1m5aboJz/aw5bA9Gl5Fmsj/4ItaWmfchDRZPM+gcIPxSDhjnHNRdr+5C3Smvwut7WHPghfGNWvtMKOiTJA4UfD17V4sLS8RErc0s=
+	t=1760714707; cv=none; b=XDbJdo4xca18CWXW6QkAXXkz/aE3jtAxS5ABCyuFRlRgRY6MqlBXxNdQPr9jKgymBznXXKX/h2V9OmvPVg4a9dd140vAyh3HQ08geovmir6WDpkejoISKrrlLT3prDNtLuMO5BpAf62AAZFpTuBrYyAZSZbN3zDIjyLn/EOrlgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714704; c=relaxed/simple;
-	bh=PZ0qkQHwxUCWD0zMYJHHOiZHKbOhun7Aual+OboE2uc=;
+	s=arc-20240116; t=1760714707; c=relaxed/simple;
+	bh=BLo3klvGw/RyW3fP1dsC4zzjFsPD9+ewzfwfVmNTJRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUgDVGZ34mN7YfnM1aZBr3JvPOoaOGYZMSiA9X74qXxSyLPiG2SrtZN9x1YH0uSwgGLJ1YLdKwAeTvLUawESXIYw+9FicTxMSp2Xe/3Da4Bby3GD2bUNYdXBfitkad3x76DHi87U7DzbOOyi4vXOES0xAaWSoE874VLAMP3SbPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFC3fTjC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGqHDODmj+aVl7SjSacyDTQRlxAWxGmJtxTNEatJAhp6HveRKUKxcMe+4+3e9Y2c5mZlJipYjX1EdrUfIDcJFuTR+P7XbEO1DC+5hsL6Q7XV8vR029rs1sFM0/+EwG5cB/kq9lA8qTtpAQmKkso9h6+HoCuo+hU/ncox6uZBEkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTcwgptb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFC3fTjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F90C4CEE7;
-	Fri, 17 Oct 2025 15:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTcwgptb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262E7C4CEE7;
+	Fri, 17 Oct 2025 15:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714704;
-	bh=PZ0qkQHwxUCWD0zMYJHHOiZHKbOhun7Aual+OboE2uc=;
+	s=korg; t=1760714707;
+	bh=BLo3klvGw/RyW3fP1dsC4zzjFsPD9+ewzfwfVmNTJRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFC3fTjCDSYkuytaIjhrJp679JneO2qc7p33BHOmIFIAV3IOFUpWLccbFLcwWJ6wO
-	 rbzwhOTxLOOexVw3Nk0NTlRcSjXrLDC8zBHjESu/obqlCJtKdidRgHnDrMqDj7A4Ou
-	 CpxEFkcJjqOqLIyeRjZrA4LqciLb7ohNwtVfwXjk=
+	b=WTcwgptbJJiLDtwzW3Kad7no35XMKrMx9BrnquTk39jwyX4cQUF/bhH3lzJKmYpDJ
+	 tU2sOhPZyv3BKPtfBcAl8ZqZHXE/rdBT/GzMCYiyjZ4IYy61k6C38vj+Sb1s9kKtjv
+	 wqBPg+lFTXpIdTn6nRRqiU8raIFiue87dT2j/MdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Qais Yousef <qyousef@layalina.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 236/277] btrfs: fix the incorrect max_bytes value for find_lock_delalloc_range()
-Date: Fri, 17 Oct 2025 16:54:03 +0200
-Message-ID: <20251017145155.755456973@linuxfoundation.org>
+Subject: [PATCH 6.12 237/277] cpufreq: Make drivers using CPUFREQ_ETERNAL specify transition latency
+Date: Fri, 17 Oct 2025 16:54:04 +0200
+Message-ID: <20251017145155.792023259@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -51,143 +55,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 7b26da407420e5054e3f06c5d13271697add9423 ]
+[ Upstream commit f97aef092e199c10a3da96ae79b571edd5362faa ]
 
-[BUG]
-With my local branch to enable bs > ps support for btrfs, sometimes I
-hit the following ASSERT() inside submit_one_sector():
+Commit a755d0e2d41b ("cpufreq: Honour transition_latency over
+transition_delay_us") caused platforms where cpuinfo.transition_latency
+is CPUFREQ_ETERNAL to get a very large transition latency whereas
+previously it had been capped at 10 ms (and later at 2 ms).
 
-	ASSERT(block_start != EXTENT_MAP_HOLE);
+This led to a user-observable regression between 6.6 and 6.12 as
+described by Shawn:
 
-Please note that it's not yet possible to hit this ASSERT() in the wild
-yet, as it requires btrfs bs > ps support, which is not even in the
-development branch.
+"The dbs sampling_rate was 10000 us on 6.6 and suddently becomes
+ 6442450 us (4294967295 / 1000 * 1.5) on 6.12 for these platforms
+ because the default transition delay was dropped [...].
 
-But on the other hand, there is also a very low chance to hit above
-ASSERT() with bs < ps cases, so this is an existing bug affect not only
-the incoming bs > ps support but also the existing bs < ps support.
+ It slows down dbs governor's reacting to CPU loading change
+ dramatically.  Also, as transition_delay_us is used by schedutil
+ governor as rate_limit_us, it shows a negative impact on device
+ idle power consumption, because the device gets slightly less time
+ in the lowest OPP."
 
-[CAUSE]
-Firstly that ASSERT() means we're trying to submit a dirty block but
-without a real extent map nor ordered extent map backing it.
+Evidently, the expectation of the drivers using CPUFREQ_ETERNAL as
+cpuinfo.transition_latency was that it would be capped by the core,
+but they may as well return a default transition latency value instead
+of CPUFREQ_ETERNAL and the core need not do anything with it.
 
-Furthermore with extra debugging, the folio triggering such ASSERT() is
-always larger than the fs block size in my bs > ps case.
-(8K block size, 4K page size)
+Accordingly, introduce CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS and make
+all of the drivers in question use it instead of CPUFREQ_ETERNAL.  Also
+update the related Rust binding.
 
-After some more debugging, the ASSERT() is trigger by the following
-sequence:
-
- extent_writepage()
- |  We got a 32K folio (4 fs blocks) at file offset 0, and the fs block
- |  size is 8K, page size is 4K.
- |  And there is another 8K folio at file offset 32K, which is also
- |  dirty.
- |  So the filemap layout looks like the following:
- |
- |  "||" is the filio boundary in the filemap.
- |  "//| is the dirty range.
- |
- |  0        8K       16K        24K         32K       40K
- |  |////////|        |//////////////////////||////////|
- |
- |- writepage_delalloc()
- |  |- find_lock_delalloc_range() for [0, 8K)
- |  |  Now range [0, 8K) is properly locked.
- |  |
- |  |- find_lock_delalloc_range() for [16K, 40K)
- |  |  |- btrfs_find_delalloc_range() returned range [16K, 40K)
- |  |  |- lock_delalloc_folios() locked folio 0 successfully
- |  |  |
- |  |  |  The filemap range [32K, 40K) got dropped from filemap.
- |  |  |
- |  |  |- lock_delalloc_folios() failed with -EAGAIN on folio 32K
- |  |  |  As the folio at 32K is dropped.
- |  |  |
- |  |  |- loops = 1;
- |  |  |- max_bytes = PAGE_SIZE;
- |  |  |- goto again;
- |  |  |  This will re-do the lookup for dirty delalloc ranges.
- |  |  |
- |  |  |- btrfs_find_delalloc_range() called with @max_bytes == 4K
- |  |  |  This is smaller than block size, so
- |  |  |  btrfs_find_delalloc_range() is unable to return any range.
- |  |  \- return false;
- |  |
- |  \- Now only range [0, 8K) has an OE for it, but for dirty range
- |     [16K, 32K) it's dirty without an OE.
- |     This breaks the assumption that writepage_delalloc() will find
- |     and lock all dirty ranges inside the folio.
- |
- |- extent_writepage_io()
-    |- submit_one_sector() for [0, 8K)
-    |  Succeeded
-    |
-    |- submit_one_sector() for [16K, 24K)
-       Triggering the ASSERT(), as there is no OE, and the original
-       extent map is a hole.
-
-Please note that, this also exposed the same problem for bs < ps
-support. E.g. with 64K page size and 4K block size.
-
-If we failed to lock a folio, and falls back into the "loops = 1;"
-branch, we will re-do the search using 64K as max_bytes.
-Which may fail again to lock the next folio, and exit early without
-handling all dirty blocks inside the folio.
-
-[FIX]
-Instead of using the fixed size PAGE_SIZE as @max_bytes, use
-@sectorsize, so that we are ensured to find and lock any remaining
-blocks inside the folio.
-
-And since we're here, add an extra ASSERT() to
-before calling btrfs_find_delalloc_range() to make sure the @max_bytes is
-at least no smaller than a block to avoid false negative.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: a755d0e2d41b ("cpufreq: Honour transition_latency over transition_delay_us")
+Closes: https://lore.kernel.org/linux-pm/20250922125929.453444-1-shawnguo2@yeah.net/
+Reported-by: Shawn Guo <shawnguo@kernel.org>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2264949.irdbgypaU6@rafael.j.wysocki
+[ rjw: Fix typo in new symbol name, drop redundant type cast from Rust binding ]
+Tested-by: Shawn Guo <shawnguo@kernel.org> # with cpufreq-dt driver
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ omitted Rust changes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq-dt.c          |    2 +-
+ drivers/cpufreq/imx6q-cpufreq.c       |    2 +-
+ drivers/cpufreq/mediatek-cpufreq-hw.c |    2 +-
+ drivers/cpufreq/scmi-cpufreq.c        |    2 +-
+ drivers/cpufreq/scpi-cpufreq.c        |    2 +-
+ drivers/cpufreq/spear-cpufreq.c       |    2 +-
+ include/linux/cpufreq.h               |    3 +++
+ 7 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -355,6 +355,13 @@ again:
- 	/* step one, find a bunch of delalloc bytes starting at start */
- 	delalloc_start = *start;
- 	delalloc_end = 0;
+--- a/drivers/cpufreq/cpufreq-dt.c
++++ b/drivers/cpufreq/cpufreq-dt.c
+@@ -110,7 +110,7 @@ static int cpufreq_init(struct cpufreq_p
+ 
+ 	transition_latency = dev_pm_opp_get_max_transition_latency(cpu_dev);
+ 	if (!transition_latency)
+-		transition_latency = CPUFREQ_ETERNAL;
++		transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	cpumask_copy(policy->cpus, priv->cpus);
+ 	policy->driver_data = priv;
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -443,7 +443,7 @@ soc_opp_out:
+ 	}
+ 
+ 	if (of_property_read_u32(np, "clock-latency", &transition_latency))
+-		transition_latency = CPUFREQ_ETERNAL;
++		transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	/*
+ 	 * Calculate the ramp time for max voltage change in the
+--- a/drivers/cpufreq/mediatek-cpufreq-hw.c
++++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+@@ -238,7 +238,7 @@ static int mtk_cpufreq_hw_cpu_init(struc
+ 
+ 	latency = readl_relaxed(data->reg_bases[REG_FREQ_LATENCY]) * 1000;
+ 	if (!latency)
+-		latency = CPUFREQ_ETERNAL;
++		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	policy->cpuinfo.transition_latency = latency;
+ 	policy->fast_switch_possible = true;
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -280,7 +280,7 @@ static int scmi_cpufreq_init(struct cpuf
+ 
+ 	latency = perf_ops->transition_latency_get(ph, domain);
+ 	if (!latency)
+-		latency = CPUFREQ_ETERNAL;
++		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	policy->cpuinfo.transition_latency = latency;
+ 
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -157,7 +157,7 @@ static int scpi_cpufreq_init(struct cpuf
+ 
+ 	latency = scpi_ops->get_transition_latency(cpu_dev);
+ 	if (!latency)
+-		latency = CPUFREQ_ETERNAL;
++		latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	policy->cpuinfo.transition_latency = latency;
+ 
+--- a/drivers/cpufreq/spear-cpufreq.c
++++ b/drivers/cpufreq/spear-cpufreq.c
+@@ -183,7 +183,7 @@ static int spear_cpufreq_probe(struct pl
+ 
+ 	if (of_property_read_u32(np, "clock-latency",
+ 				&spear_cpufreq.transition_latency))
+-		spear_cpufreq.transition_latency = CPUFREQ_ETERNAL;
++		spear_cpufreq.transition_latency = CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS;
+ 
+ 	cnt = of_property_count_u32_elems(np, "cpufreq_tbl");
+ 	if (cnt <= 0) {
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -32,6 +32,9 @@
+  */
+ 
+ #define CPUFREQ_ETERNAL			(-1)
 +
-+	/*
-+	 * If @max_bytes is smaller than a block, btrfs_find_delalloc_range() can
-+	 * return early without handling any dirty ranges.
-+	 */
-+	ASSERT(max_bytes >= fs_info->sectorsize);
++#define CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS	NSEC_PER_MSEC
 +
- 	found = btrfs_find_delalloc_range(tree, &delalloc_start, &delalloc_end,
- 					  max_bytes, &cached_state);
- 	if (!found || delalloc_end <= *start || delalloc_start > orig_end) {
-@@ -385,13 +392,14 @@ again:
- 				   delalloc_end);
- 	ASSERT(!ret || ret == -EAGAIN);
- 	if (ret == -EAGAIN) {
--		/* some of the folios are gone, lets avoid looping by
--		 * shortening the size of the delalloc range we're searching
-+		/*
-+		 * Some of the folios are gone, lets avoid looping by
-+		 * shortening the size of the delalloc range we're searching.
- 		 */
- 		free_extent_state(cached_state);
- 		cached_state = NULL;
- 		if (!loops) {
--			max_bytes = PAGE_SIZE;
-+			max_bytes = fs_info->sectorsize;
- 			loops = 1;
- 			goto again;
- 		} else {
+ #define CPUFREQ_NAME_LEN		16
+ /* Print length for names. Extra 1 space for accommodating '\n' in prints */
+ #define CPUFREQ_NAME_PLEN		(CPUFREQ_NAME_LEN + 1)
 
 
