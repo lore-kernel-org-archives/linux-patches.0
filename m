@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B9330B01;
-	Fri, 17 Oct 2025 15:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40D9330B18;
+	Fri, 17 Oct 2025 15:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715290; cv=none; b=kug62AErjaMtfn+sySealLKmTswjFadAyazOM209PLbZKM/DS1IklPCg0r6ffGNcQJsYZICkGKueLPD+8XjaZ4Bd/ThQ9iNcsUdqb/4Himg5iPkrDTetDA6NXXB7PKK2qaiZhYmAA5ltA13OgCrcltnVhfL87SuSpcex1Scs+wU=
+	t=1760715293; cv=none; b=GmRRc87QNwWV3w2KplcPUh8JJx+OlUZd2FoiDpxF3PLWnz0VoP+Ukn/dooR6taz+XUpg/FcZwwebKZZwLJakk3iGZRmaanetQTC1kTuPzGh7nKIONds9nyXxj38bJSgoUgx/0fluh7KgV1993RSx18ue6aMleeKlXXvgOqj5aRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715290; c=relaxed/simple;
-	bh=gjJ9GLFTY/q3i1HOH6nxLcYGM1jeHZEsVAZM4Mf1paM=;
+	s=arc-20240116; t=1760715293; c=relaxed/simple;
+	bh=BvXKYQ3z1FQ8ccm1BspOZPEEl9fLa7p+hViOc5QD2Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vj3vvxDAMeZe6VnQerGDhq47tXM9q/7KKwqHcef9q1TcmXq6vLm3h3/U9G7pPWoUHqxVAURZCTXW4xHtgYBZPeFyJLCBMijS0LeNJ01lDZ3gisKqT38JEfe/irOkttMNPPg4zrFObK6+/miTglrJP3nLJXnluEH6MKSq41+qtGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbwgjpcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNzy2N3Cl/l60KPj5Y4b1BDFkKdFtvVeLmW6hCr0dNXJah3mZUDWe7xQCdJEk2/DnS0FgFLbIlnxBF/4cBLehgf9UksMhs+qhCUmemQE37R2ukQtvaQeq+tnMyNHHTDT19Tzth+FkFGJgO5k08lsujRCk/x9l0ip/lSP1ksyurw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/Lnjw54; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbwgjpcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A38AC4CEFE;
-	Fri, 17 Oct 2025 15:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/Lnjw54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C552C4CEE7;
+	Fri, 17 Oct 2025 15:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715289;
-	bh=gjJ9GLFTY/q3i1HOH6nxLcYGM1jeHZEsVAZM4Mf1paM=;
+	s=korg; t=1760715292;
+	bh=BvXKYQ3z1FQ8ccm1BspOZPEEl9fLa7p+hViOc5QD2Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbwgjpcUCNFhY7QR3kiTY5hUajWzPTvHOUViH1XXScPlX09zQmzptH4UHV8+9HhOK
-	 BFCZpPY2Mp9nfZiIIJYgg0mYNj/fzzTxz95IDGttRTrr9etCPufjAnkVYIDagxuy87
-	 aZZMr8qw5eu13qzuKSUhaON7y/P7ilmBEU8qaQ/4=
+	b=r/Lnjw54LPJQ8kCBB7/V1iLqfOKYEdeWUV169WLOswHvzFaETJsH7mnNjpBq9f2ps
+	 VXBMgERusnjYyBQEOHHBVHAP5LY9jM6JM88RdWGlzinClfMTR5ERu21bfF2x5mhiOz
+	 W+fPJpGIIMvBgdiYKyqRwm/fZohx1lBSropcd5rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Alexey Gladkov <legion@kernel.org>,
 	Nicolas Schier <nsc@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 131/371] kbuild: keep .modinfo section in vmlinux.unstripped
-Date: Fri, 17 Oct 2025 16:51:46 +0200
-Message-ID: <20251017145206.670774308@linuxfoundation.org>
+Subject: [PATCH 6.17 132/371] kbuild: Restore pattern to avoid stripping .rela.dyn from vmlinux
+Date: Fri, 17 Oct 2025 16:51:47 +0200
+Message-ID: <20251017145206.705974245@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -53,86 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 3e86e4d74c0490e5fc5a7f8de8f29e7579c9ffe5 ]
+[ Upstream commit 4b47a3aefb29c523ca66f0d28de8db15a10f9352 ]
 
-Keep the .modinfo section during linking, but strip it from the final
+Commit 0ce5139fd96e ("kbuild: always create intermediate
+vmlinux.unstripped") removed the pattern to avoid stripping .rela.dyn
+sections added by commit e9d86b8e17e7 ("scripts: Do not strip .rela.dyn
+section"). Restore it so that .rela.dyn sections remain in the final
 vmlinux.
 
-Adjust scripts/mksysmap to exclude modinfo symbols from kallsyms.
-
-This change will allow the next commit to extract the .modinfo section
-from the vmlinux.unstripped intermediate.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Alexey Gladkov <legion@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/aaf67c07447215463300fccaa758904bac42f992.1758182101.git.legion@kernel.org
+Fixes: 0ce5139fd96e ("kbuild: always create intermediate vmlinux.unstripped")
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Alexey Gladkov <legion@kernel.org>
+Acked-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251008-kbuild-fix-modinfo-regressions-v1-1-9fc776c5887c@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Stable-dep-of: 8ec3af916fe3 ("kbuild: Add '.rel.*' strip pattern for vmlinux")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 2 +-
- scripts/Makefile.vmlinux          | 7 +++++--
- scripts/mksysmap                  | 3 +++
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ scripts/Makefile.vmlinux | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 8efbe8c4874ee..d61a02fce7274 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -832,6 +832,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
- 
- /* Required sections not related to debugging. */
- #define ELF_DETAILS							\
-+		.modinfo : { *(.modinfo) }				\
- 		.comment 0 : { *(.comment) }				\
- 		.symtab 0 : { *(.symtab) }				\
- 		.strtab 0 : { *(.strtab) }				\
-@@ -1045,7 +1046,6 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
- 	*(.discard.*)							\
- 	*(.export_symbol)						\
- 	*(.no_trim_symbol)						\
--	*(.modinfo)							\
- 	/* ld.bfd warns about .gnu.version* even when not emitted */	\
- 	*(.gnu.version*)						\
- 
 diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
-index 4f2d4c3fb7372..70856dab0f541 100644
+index 70856dab0f541..7c6f0e882eabb 100644
 --- a/scripts/Makefile.vmlinux
 +++ b/scripts/Makefile.vmlinux
-@@ -86,11 +86,14 @@ endif
- # vmlinux
+@@ -87,7 +87,7 @@ endif
  # ---------------------------------------------------------------------------
  
--remove-section-y                                   :=
-+remove-section-y                                   := .modinfo
- remove-section-$(CONFIG_ARCH_VMLINUX_NEEDS_RELOCS) += '.rel*'
+ remove-section-y                                   := .modinfo
+-remove-section-$(CONFIG_ARCH_VMLINUX_NEEDS_RELOCS) += '.rel*'
++remove-section-$(CONFIG_ARCH_VMLINUX_NEEDS_RELOCS) += '.rel*' '!.rel*.dyn'
  
-+# To avoid warnings: "empty loadable segment detected at ..." from GNU objcopy,
-+# it is necessary to remove the PT_LOAD flag from the segment.
- quiet_cmd_strip_relocs = OBJCOPY $@
--      cmd_strip_relocs = $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $< $@
-+      cmd_strip_relocs = $(OBJCOPY) $(patsubst %,--set-section-flags %=noload,$(remove-section-y)) $< $@; \
-+                         $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $@
- 
- targets += vmlinux
- vmlinux: vmlinux.unstripped FORCE
-diff --git a/scripts/mksysmap b/scripts/mksysmap
-index 3accbdb269ac7..a607a0059d119 100755
---- a/scripts/mksysmap
-+++ b/scripts/mksysmap
-@@ -79,6 +79,9 @@
- / _SDA_BASE_$/d
- / _SDA2_BASE_$/d
- 
-+# MODULE_INFO()
-+/ __UNIQUE_ID_modinfo[0-9]*$/d
-+
- # ---------------------------------------------------------------------------
- # Ignored patterns
- #  (symbols that contain the pattern are ignored)
+ # To avoid warnings: "empty loadable segment detected at ..." from GNU objcopy,
+ # it is necessary to remove the PT_LOAD flag from the segment.
 -- 
 2.51.0
 
