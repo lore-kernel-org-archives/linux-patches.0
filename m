@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49528330B0C;
-	Fri, 17 Oct 2025 15:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BE5330B0C;
+	Fri, 17 Oct 2025 15:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716250; cv=none; b=p0IsqyV55Lhzz7JLxKCb2kcXx8rAPwdSoEIItucOhKyYfguO+qHXPngyeddaXcvVHo57KiCzc8gBp0feext9uRFYlbBPDcZp9rmgxJyCkBTsAjkndTCXra06wLoWOiJHA6bzFKVV4d4Ml4iEV6iSMJtZXENiZ5b/nLBn/nO8lBA=
+	t=1760716253; cv=none; b=YU+CR8p4h7rc4RUKJe0s/h7kwEvX5lHcgl65tr96RoDFrvH8Hwm5Cw8lUaF/ccfOqzl5H+uCLTyTJPYaN30rq+haI4/7XwE4TtaEmD+H8a4Z24KgqeODW8uBLCV2g+FD5g5jWHr/XLaRVqJNStVpVZrodPISvlWMp2h6E4DmYCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716250; c=relaxed/simple;
-	bh=2OvkWyR1hhgfepRyaGI3FcTf2RM2p9SkeUDXM+YpU08=;
+	s=arc-20240116; t=1760716253; c=relaxed/simple;
+	bh=81R5L6WD3deupGjV5E4/iOlw/VUk+GBaTmxDxWLnp80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVIbFR573FmsOhENlvDxpBSnhXm1KjN05kC0SQ7i8msJKBEC6njrT4bNtDTxQ4tlzCUNNCBktfXbj8ztAuXbvdRAR2lWSwAWYM9VUH+yiq8wA0Khqy/2HMVHEYOOyiiO1QgrcpjZsPzD3ytU6k0E5F+nIikI/pAND9lsaGGzSZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5CFYHRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCG1Ksbs/nd8ZQR/LNvIyI2beEGLfOfQ2UCSJPeUHHMAy4wbAaWEpfe4JEbBTzlE/qGeuNbKfv6skZCZl3z7hyPBpaFRo17hBK2ee1N5dL04WUjJsLfLcoSHYrbgshsdmSvngmYpDMaR6PTTApXLabcwv+eYp5P3UnCtUAKaHmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSuQES1N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5CFYHRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84790C4CEE7;
-	Fri, 17 Oct 2025 15:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSuQES1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850D2C4CEE7;
+	Fri, 17 Oct 2025 15:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716250;
-	bh=2OvkWyR1hhgfepRyaGI3FcTf2RM2p9SkeUDXM+YpU08=;
+	s=korg; t=1760716252;
+	bh=81R5L6WD3deupGjV5E4/iOlw/VUk+GBaTmxDxWLnp80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5CFYHRdaVhEqlAeib/XNi3xJ3rk3jdxE2ms1aTAifPIoFv8JxJusjT2noh4tL471
-	 0e7Z8005gDgPOCeicPpv3xU97MxXN4dIQzbEzZPw8rOIwcxjJSZ8dKn9MYmpLX4TPc
-	 blIKZbCqh4Zl2xZk9ImVmiO0jdnn/CSML9SwyMjY=
+	b=HSuQES1NumGfvskK0cJaVnTHju20VUxnjY5Zlo7MNIPOczCy6TEGYi3hrLMQ/zCWb
+	 LdQNw4tsWzpOjrx9nt2A5x77V2LjjCrNooINS4C+aWFJrQyaEaR6ol8MVLx4aXnXAF
+	 4LGlK21cdmgoSOMFzqHfidszrLahf1RkrD/u9Nu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/276] perf util: Fix compression checks returning -1 as bool
-Date: Fri, 17 Oct 2025 16:53:39 +0200
-Message-ID: <20251017145147.080628977@linuxfoundation.org>
+	syzbot+8743fca924afed42f93e@syzkaller.appspotmail.com,
+	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.15 109/276] fs: udf: fix OOB read in lengthAllocDescs handling
+Date: Fri, 17 Oct 2025 16:53:22 +0200
+Message-ID: <20251017145146.459286365@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -58,67 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunseong Kim <ysk@kzalloc.com>
+From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
 
-[ Upstream commit 43fa1141e2c1af79c91aaa4df03e436c415a6fc3 ]
+commit 3bd5e45c2ce30e239d596becd5db720f7eb83c99 upstream.
 
-The lzma_is_compressed and gzip_is_compressed functions are declared
-to return a "bool" type, but in case of an error (e.g., file open
-failure), they incorrectly returned -1.
+When parsing Allocation Extent Descriptor, lengthAllocDescs comes from
+on-disk data and must be validated against the block size. Crafted or
+corrupted images may set lengthAllocDescs so that the total descriptor
+length (sizeof(allocExtDesc) + lengthAllocDescs) exceeds the buffer,
+leading udf_update_tag() to call crc_itu_t() on out-of-bounds memory and
+trigger a KASAN use-after-free read.
 
-A bool type is a boolean value that is either true or false.
-Returning -1 for a bool return type can lead to unexpected behavior
-and may violate strict type-checking in some compilers.
+BUG: KASAN: use-after-free in crc_itu_t+0x1d5/0x2b0 lib/crc-itu-t.c:60
+Read of size 1 at addr ffff888041e7d000 by task syz-executor317/5309
 
-Fix the return value to be false in error cases, ensuring the function
-adheres to its declared return type improves for preventing potential
-bugs related to type mismatch.
+CPU: 0 UID: 0 PID: 5309 Comm: syz-executor317 Not tainted 6.12.0-rc4-syzkaller-00261-g850925a8133c #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ crc_itu_t+0x1d5/0x2b0 lib/crc-itu-t.c:60
+ udf_update_tag+0x70/0x6a0 fs/udf/misc.c:261
+ udf_write_aext+0x4d8/0x7b0 fs/udf/inode.c:2179
+ extent_trunc+0x2f7/0x4a0 fs/udf/truncate.c:46
+ udf_truncate_tail_extent+0x527/0x7e0 fs/udf/truncate.c:106
+ udf_release_file+0xc1/0x120 fs/udf/file.c:185
+ __fput+0x23f/0x880 fs/file_table.c:431
+ task_work_run+0x24f/0x310 kernel/task_work.c:239
+ exit_task_work include/linux/task_work.h:43 [inline]
+ do_exit+0xa2f/0x28e0 kernel/exit.c:939
+ do_group_exit+0x207/0x2c0 kernel/exit.c:1088
+ __do_sys_exit_group kernel/exit.c:1099 [inline]
+ __se_sys_exit_group kernel/exit.c:1097 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
+ x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Fixes: 4b57fd44b61beb51 ("perf tools: Add lzma_is_compressed function")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
-Link: https://lore.kernel.org/r/20250822162506.316844-3-ysk@kzalloc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Validate the computed total length against epos->bh->b_size.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Reported-by: syzbot+8743fca924afed42f93e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8743fca924afed42f93e
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+Link: https://patch.msgid.link/20250922131358.745579-1-Sergey.Larshin@kaspersky.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/lzma.c | 2 +-
- tools/perf/util/zlib.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/udf/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/util/lzma.c b/tools/perf/util/lzma.c
-index 51424cdc3b682..aa9a0ebc1f937 100644
---- a/tools/perf/util/lzma.c
-+++ b/tools/perf/util/lzma.c
-@@ -115,7 +115,7 @@ bool lzma_is_compressed(const char *input)
- 	ssize_t rc;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -2109,6 +2109,9 @@ int8_t udf_current_aext(struct inode *in
+ 		if (check_add_overflow(sizeof(struct allocExtDesc),
+ 				le32_to_cpu(header->lengthAllocDescs), &alen))
+ 			return -1;
++
++		if (alen > epos->bh->b_size)
++			return -1;
+ 	}
  
- 	if (fd < 0)
--		return -1;
-+		return false;
- 
- 	rc = read(fd, buf, sizeof(buf));
- 	close(fd);
-diff --git a/tools/perf/util/zlib.c b/tools/perf/util/zlib.c
-index 78d2297c1b674..1f7c065230599 100644
---- a/tools/perf/util/zlib.c
-+++ b/tools/perf/util/zlib.c
-@@ -88,7 +88,7 @@ bool gzip_is_compressed(const char *input)
- 	ssize_t rc;
- 
- 	if (fd < 0)
--		return -1;
-+		return false;
- 
- 	rc = read(fd, buf, sizeof(buf));
- 	close(fd);
--- 
-2.51.0
-
+ 	switch (iinfo->i_alloc_type) {
 
 
