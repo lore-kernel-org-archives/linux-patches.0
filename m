@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE142F12DD;
-	Fri, 17 Oct 2025 15:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EF02F12CF;
+	Fri, 17 Oct 2025 15:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713735; cv=none; b=uRMmRvqLFIG394TUpXg2R9x28bxElutWIJKSvH+dcFhXbZlfCf3n6JdePHijj0wQLXs8/5nlWOkGzry41OKIX1DoFGCw/1GDym9ku/n/srodQpBXYBQcHiF6Qz6lay2YWLz2z54K4GgOdU4cTo/wVQGdbXykDewzocVgSbgL3QI=
+	t=1760713738; cv=none; b=CkkIgpEk/6qo/sDMPRQY8ZMlWxoYRQznbyZ1g5T1dDytpdSaoTahshOd34iZSEAGTjwGqWe3bNQz3m3Z5nGGM5yaMY55oqw8cwdPCCnFaN1yEQf6WPWgU+1IKZeyMlFEvU28C/IY0cr/kG9m5GlBCX2k5HoFbyKx99qFQijimhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713735; c=relaxed/simple;
-	bh=fRselGrkgSb4tIu2huIn5vHNrlm7PXCn3gEJ9SrcgUQ=;
+	s=arc-20240116; t=1760713738; c=relaxed/simple;
+	bh=fL6FuuMvOCJJ7UodCKlCl9NlEfoobFOfv5X8KSxyNOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8Ejwzzhna6ZJ9ikuZddMfqOWmYbG2OfGEBsRwytkY28cCCMcroAg/8iTSXOO8WKSa9protmwbFLp+GlCQdPmng9jJ5Nc+MRtXNSIg2JhGrDg0UUwjvaC1oWQJzW2pX/XsqFOKgYU7W0aJtVROzUZez/LVqYWDdQFZpTHDBYrGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZS9S8hxV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqs14ZB8EEui8u1oO26QBOmcUrRkznfne1FDDADC1d06oKUDKXvFITxC9DvBC+9isUDxkzXdaBIIaLNhhDCYopYNfWR3YOwb3hUYx+9eNNH5oY9G6LXRObRwdjRb5+BgDYJ/jbE19GiZEwYSZRQFDNFwProXHQrKuOFnhxTfIAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzLBoEDK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZS9S8hxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F72C4CEFE;
-	Fri, 17 Oct 2025 15:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzLBoEDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2F2C4CEE7;
+	Fri, 17 Oct 2025 15:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713735;
-	bh=fRselGrkgSb4tIu2huIn5vHNrlm7PXCn3gEJ9SrcgUQ=;
+	s=korg; t=1760713738;
+	bh=fL6FuuMvOCJJ7UodCKlCl9NlEfoobFOfv5X8KSxyNOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZS9S8hxVX3j1ikVv01c2+rLhe/qqzPI9XDytzLmTxofYyhyFX1NVSQlTbL20j63AY
-	 1Gan89tG9feXt6Y3miB8Dp980XLccAGhyVDpQZm+7yawAwk7EPFZi0M32xFWf+wscH
-	 sOMGWip2erSYTeUH91kOi5llX6JtDfHWemZgbV4k=
+	b=pzLBoEDKOmB/POAUeU9i2v7Xe5VDtMUF+XNfJrcgkZpBYGMG6neHYV+QLUOonc3C6
+	 wxhrTw1cyVVkPrpxdl2Ps/teqPKF0qxeAHcnEk6skdaITFPJdaPk/rXlGx7aapphdI
+	 haeDz7RcBQD1vnRXqSdue2n8mbH62tAdEHHCe9lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 101/201] lib/genalloc: fix device leak in of_gen_pool_get()
-Date: Fri, 17 Oct 2025 16:52:42 +0200
-Message-ID: <20251017145138.458067055@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.6 102/201] of: unittest: Fix device reference count leak in of_unittest_pci_node_verify
+Date: Fri, 17 Oct 2025 16:52:43 +0200
+Message-ID: <20251017145138.495482537@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -52,43 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
+commit a8de554774ae48efbe48ace79f8badae2daa2bf1 upstream.
 
-Make sure to drop the reference taken when looking up the genpool platform
-device in of_gen_pool_get() before returning the pool.
+In of_unittest_pci_node_verify(), when the add parameter is false,
+device_find_any_child() obtains a reference to a child device. This
+function implicitly calls get_device() to increment the device's
+reference count before returning the pointer. However, the caller
+fails to properly release this reference by calling put_device(),
+leading to a device reference count leak. Add put_device() in the else
+branch immediately after child_dev is no longer needed.
 
-Note that holding a reference to a device does typically not prevent its
-devres managed resources from being released so there is no point in
-keeping the reference.
+As the comment of device_find_any_child states: "NOTE: you will need
+to drop the reference with put_device() after use".
 
-Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
-Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: <stable@vger.kernel.org>	[3.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 26409dd04589 ("of: unittest: Add pci_dt_testdrv pci driver")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/genalloc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/of/unittest.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/lib/genalloc.c
-+++ b/lib/genalloc.c
-@@ -899,8 +899,11 @@ struct gen_pool *of_gen_pool_get(struct
- 		if (!name)
- 			name = of_node_full_name(np_pool);
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -3957,6 +3957,7 @@ static int of_unittest_pci_node_verify(s
+ 		unittest(!np, "Child device tree node is not removed\n");
+ 		child_dev = device_find_any_child(&pdev->dev);
+ 		unittest(!child_dev, "Child device is not removed\n");
++		put_device(child_dev);
  	}
--	if (pdev)
-+	if (pdev) {
- 		pool = gen_pool_get(&pdev->dev, name);
-+		put_device(&pdev->dev);
-+	}
-+
- 	of_node_put(np_pool);
  
- 	return pool;
+ failed:
 
 
