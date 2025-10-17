@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D843328F0;
-	Fri, 17 Oct 2025 15:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C8D32C93E;
+	Fri, 17 Oct 2025 15:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714632; cv=none; b=BzEzkqK7EQKWHl4sv2W8KnJNrOWiQo3D6/SVsRfVq5JU1HEGv1achoXiJcJFT08nRpUaX3G4/6erY/DC6U1klf+zi1/EJJL3eA1QtXAnNa0q6YImSnqVkaBxx5hdpX47/cUTjo1a43W5nJ4wPfnTzsRN+A5VIT1fcxi1tk5g4yQ=
+	t=1760714634; cv=none; b=bd5w18tnqZgEOsxizCUzjHuuef6aM3KKrRbQPwooiqnrl02z+J8crdcwpxIZFkLA2UcQyTu6SkiyyLWLyC5khV7Y6zGX4bNmbtqBofU4yDfG3UfXRBsrcRbKWYDo4EZuOgeD8vby4iOghWdi6JhYWH5biyqLTENlDL2UG7mkAHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714632; c=relaxed/simple;
-	bh=DkJI+akXtsiHS7eeh/v5qc6nvYmFSKHGG8DHZpuCPUo=;
+	s=arc-20240116; t=1760714634; c=relaxed/simple;
+	bh=jHBFVl3JDvQWmR7ph+Djko6RU0MAdi/ThyB4pbquLlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2pCjhmvYfxpdW3TrtmCezoDooO06XCwq7O+70VdTFhASAwZ8t7pj4qxS4IkuFSf1WOJcI9db6ZhC2ugqbOBd4L9NhbxFC4lm0sDh32olhsL830JyhIizggZFxnt2lHHGnCyq1XITJMgAx0tj39VoBj7Zkn6WmGz0aco06nevgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4K74C+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pooa+Zy0WeIJRXj8+nobk2Y9N/xtDSmVYrxxB2EKWRNblI6GasLUDJsSucMcqKyW9GN1im92d5JhiyjceKFvej5OV3Iqyh+3C5UYQJ755ljQzuNN4tJvhTQCNN/bJJ4PZGxEbsgMFIyzwYNcrIwCDQOXtw1BFUUJpEWnN77oDus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrA4lql8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4K74C+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC78C4CEFE;
-	Fri, 17 Oct 2025 15:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrA4lql8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB150C4CEE7;
+	Fri, 17 Oct 2025 15:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714631;
-	bh=DkJI+akXtsiHS7eeh/v5qc6nvYmFSKHGG8DHZpuCPUo=;
+	s=korg; t=1760714634;
+	bh=jHBFVl3JDvQWmR7ph+Djko6RU0MAdi/ThyB4pbquLlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4K74C+mFVREZgfOwrfZtPvZtYQ8QFEgqCkhTgGp6jNzho0+VoscDpgUQUoz+vflQ
-	 1K/bTEwKvBE0AWsnqJoF+fU97RJ8w+lZVYMXaOe2EcnNyYNbJ56A4yth5Wk//Lm6ON
-	 kTkzrTUG9TCwgiVlnaINLeXGczLZPZmARcXxN7Sg=
+	b=OrA4lql8IdFY3st5Ynb7yp1Gf0prD6RR9sOVy+dWQVhkT4nqPWVt0hUhwdEMAnNij
+	 fu8r9e3VIyAEot9ju5X9IWfrtK/baityUXhfitF8Zm/eQ3JLGZOV/LH4PZKJhUBAYA
+	 HPQcmeMUvOGenAciXVMFIa4Xg/UA65API96dWobo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Chen <rex.chen_1@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 170/277] mmc: mmc_spi: multiple block read remove read crc ack
-Date: Fri, 17 Oct 2025 16:52:57 +0200
-Message-ID: <20251017145153.335654950@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Helen Koike <koike@igalia.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	NeilBrown <neilb@suse.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 206/277] mm/page_alloc: only set ALLOC_HIGHATOMIC for __GPF_HIGH allocations
+Date: Fri, 17 Oct 2025 16:53:33 +0200
+Message-ID: <20251017145154.647498521@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,46 +62,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Chen <rex.chen_1@nxp.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit fef12d9f5bcf7e2b19a7cf1295c6abd5642dd241 upstream.
+commit 6a204d4b14c99232e05d35305c27ebce1c009840 upstream.
 
-For multiple block read, the current implementation, transfer packet
-includes cmd53 + cmd53 response + block nums*(1byte token +
-block length bytes payload + 2bytes CRC + 1byte transfer), the last
-1byte transfer of every block is not needed, so remove it.
+Commit 524c48072e56 ("mm/page_alloc: rename ALLOC_HIGH to
+ALLOC_MIN_RESERVE") is the start of a series that explains how __GFP_HIGH,
+which implies ALLOC_MIN_RESERVE, is going to be used instead of
+__GFP_ATOMIC for high atomic reserves.
 
-Why doesn't multiple block read need CRC ack?
-For read operation, host side get the payload and CRC value, then
-will only check the CRC value to confirm if the data is correct or
-not, but not send CRC ack to card. If the data is correct, save it,
-or discard it and retransmit if data is error, so the last 1byte
-transfer of every block make no sense.
+Commit eb2e2b425c69 ("mm/page_alloc: explicitly record high-order atomic
+allocations in alloc_flags") introduced ALLOC_HIGHATOMIC for such
+allocations of order higher than 0.  It still used __GFP_ATOMIC, though.
 
-What's the side effect of this 1byte transfer?
-As the SPI is full duplex, if add this redundant 1byte transfer, SDIO
-card side take it as the token of next block, then all the next sub
-blocks sequence distort.
+Then, commit 1ebbb21811b7 ("mm/page_alloc: explicitly define how
+__GFP_HIGH non-blocking allocations accesses reserves") just turned that
+check for !__GFP_DIRECT_RECLAIM, ignoring that high atomic reserves were
+expected to test for __GFP_HIGH.
 
-Signed-off-by: Rex Chen <rex.chen_1@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250728082230.1037917-3-rex.chen_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+This leads to high atomic reserves being added for high-order GFP_NOWAIT
+allocations and others that clear __GFP_DIRECT_RECLAIM, which is
+unexpected.  Later, those reserves lead to 0-order allocations going to
+the slow path and starting reclaim.
+
+>From /proc/pagetypeinfo, without the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      1      8     10      9      7      3      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic     64     20     12      5      0      0      0      0      0      0      0
+
+With the patch:
+
+Node    0, zone      DMA, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone    DMA32, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+Node    0, zone   Normal, type   HighAtomic      0      0      0      0      0      0      0      0      0      0      0
+
+Link: https://lkml.kernel.org/r/20250814172245.1259625-1-cascardo@igalia.com
+Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Tested-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: NeilBrown <neilb@suse.de>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmc_spi.c |    2 +-
+ mm/page_alloc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -563,7 +563,7 @@ mmc_spi_setup_data_message(struct mmc_sp
- 	 * the next token (next data block, or STOP_TRAN).  We can try to
- 	 * minimize I/O ops by using a single read to collect end-of-busy.
- 	 */
--	if (multiple || write) {
-+	if (write) {
- 		t = &host->early_status;
- 		memset(t, 0, sizeof(*t));
- 		t->len = write ? sizeof(scratch->status) : 1;
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4052,7 +4052,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask, unsig
+ 		if (!(gfp_mask & __GFP_NOMEMALLOC)) {
+ 			alloc_flags |= ALLOC_NON_BLOCK;
+ 
+-			if (order > 0)
++			if (order > 0 && (alloc_flags & ALLOC_MIN_RESERVE))
+ 				alloc_flags |= ALLOC_HIGHATOMIC;
+ 		}
+ 
 
 
