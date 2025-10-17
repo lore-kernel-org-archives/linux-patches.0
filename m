@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4478330B2E;
-	Fri, 17 Oct 2025 15:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98A2330B3F;
+	Fri, 17 Oct 2025 15:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715570; cv=none; b=NDj91v/HpkORsVvlpoHc3myi0FrsQh193X3k3qilJjEvNaRqCJ5/ZIYPRRwvupV69HGvsCD9mVzhZkb+mVvBev09EW2ltGajKRanAJsrWm4QJg2undDBcP8wdoQ3WBgVOkPuKcpcl/5yRIuM3rBn+iHpKTUAOoEevlP+EzolWIs=
+	t=1760715573; cv=none; b=Mf0V0VxBdA9FLhVmo3HxuAxparA8vVzK4lF2FpNMySjWmAMsQB+pEItqu4iY/3n94zfryqzF8F3i+IW5Sy8nJc5UCCw9U1FD1ummV1m0saHbLStThck7IUSgAHsFkgV8XyP8DLcUL1mWqwauV7JpnbEfbMulKfGRLM9sj4ccj1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715570; c=relaxed/simple;
-	bh=iCzwsPQUy7D4TG/BLfVcrFRcIRqO8cqeBX6vWKMvR80=;
+	s=arc-20240116; t=1760715573; c=relaxed/simple;
+	bh=6OItmhq2sMhSbffNK2NgQiyKO4TwDCVKTBsBWrxW7ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiJsxl+PYZypx6fdZt0qwnu9yU0OqLdLcuQTVoLod7+PwUz2I72FxusSlkvpj0hes5z0QhmZCPm+cfPXU8Yaern2Yu/aj04rX7vs09dWqu5UozbkfJVolUWa1D5FdzIxPY2d+RO+3b6hhj+jfwqcFuod0TX03Hlut57Kyzxca0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CURUhsR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpGJEsxZgJfU07gKzFNP22VUldj9k+TZ7c7YbtUpOpNpMRbhv5o/hs/WbZL/xfDqKbHU2rhilXC/5N85P8dEXkaKxNBxp6HcBGHiYK9Z9IDTIlhQcrpBHLf/Kf6zXJEYMi35akZumidsX6rq2wLOncVtwjd1tsv7vnX7Bqjtdbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xtqm/sRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CURUhsR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23369C4CEE7;
-	Fri, 17 Oct 2025 15:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xtqm/sRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E615C4CEE7;
+	Fri, 17 Oct 2025 15:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715570;
-	bh=iCzwsPQUy7D4TG/BLfVcrFRcIRqO8cqeBX6vWKMvR80=;
+	s=korg; t=1760715573;
+	bh=6OItmhq2sMhSbffNK2NgQiyKO4TwDCVKTBsBWrxW7ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CURUhsR+YYz85COx65HidnvUnSl/Joax16OyDmQmjkcpL/rqi349qAhOxBiEWqoMQ
-	 /KyEqdTyAF2+9led4eSVs+6byVViJP6ohmIthOTr4doquIXQJQ60hU9gI5PHJBIWYG
-	 0GRqMCvXP+NJ8VnEq0pRBgqdFKnCY27cnBlJO94E=
+	b=Xtqm/sRkwe8Tt5tCkpm7b7ql9huIat6Cp0OEbAW5y975HZWohmdcS40GGC3qafLtX
+	 /evGeno7YI9WjZsgnSNKXgg1ItSVN1Up3M/aIOkhG+KZTzlKBaymuFl8h129mebHbF
+	 qTyjic04QKQoLRvswjqVYaz/gz1lEQxyyvbNcXbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 235/371] lib/genalloc: fix device leak in of_gen_pool_get()
-Date: Fri, 17 Oct 2025 16:53:30 +0200
-Message-ID: <20251017145210.584391425@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.17 262/371] xtensa: simdisk: add input size check in proc_write_simdisk
+Date: Fri, 17 Oct 2025 16:53:57 +0200
+Message-ID: <20251017145211.559244075@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -52,43 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
+commit 5d5f08fd0cd970184376bee07d59f635c8403f63 upstream.
 
-Make sure to drop the reference taken when looking up the genpool platform
-device in of_gen_pool_get() before returning the pool.
+A malicious user could pass an arbitrarily bad value
+to memdup_user_nul(), potentially causing kernel crash.
 
-Note that holding a reference to a device does typically not prevent its
-devres managed resources from being released so there is no point in
-keeping the reference.
+This follows the same pattern as commit ee76746387f6
+("netdevsim: prevent bad user input in nsim_dev_health_break_write()")
 
-Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
-Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: <stable@vger.kernel.org>	[3.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b6c7e873daf7 ("xtensa: ISS: add host file-based simulated disk")
+Fixes: 16e5c1fc3604 ("convert a bunch of open-coded instances of memdup_user_nul()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Message-Id: <20250829083015.1992751-1-linmq006@gmail.com>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/genalloc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/xtensa/platforms/iss/simdisk.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/lib/genalloc.c
-+++ b/lib/genalloc.c
-@@ -899,8 +899,11 @@ struct gen_pool *of_gen_pool_get(struct
- 		if (!name)
- 			name = of_node_full_name(np_pool);
- 	}
--	if (pdev)
-+	if (pdev) {
- 		pool = gen_pool_get(&pdev->dev, name);
-+		put_device(&pdev->dev);
-+	}
-+
- 	of_node_put(np_pool);
+--- a/arch/xtensa/platforms/iss/simdisk.c
++++ b/arch/xtensa/platforms/iss/simdisk.c
+@@ -231,10 +231,14 @@ static ssize_t proc_read_simdisk(struct
+ static ssize_t proc_write_simdisk(struct file *file, const char __user *buf,
+ 			size_t count, loff_t *ppos)
+ {
+-	char *tmp = memdup_user_nul(buf, count);
++	char *tmp;
+ 	struct simdisk *dev = pde_data(file_inode(file));
+ 	int err;
  
- 	return pool;
++	if (count == 0 || count > PAGE_SIZE)
++		return -EINVAL;
++
++	tmp = memdup_user_nul(buf, count);
+ 	if (IS_ERR(tmp))
+ 		return PTR_ERR(tmp);
+ 
 
 
