@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4F2335060;
-	Fri, 17 Oct 2025 15:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897E1335091;
+	Fri, 17 Oct 2025 15:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760715615; cv=none; b=UJdBTmntsEysL/L6KQ6q7oo5lL0loj6qMNk8YYcyl/65eezlMlOCSn12AFFxeaojrAH604Hgz8cSrmK/dToOOPwezYA3eNc40vN9ttfAV1ZlIzk5OhOTpDdjjtNmAcUMRe9vTbk9YHO5pHRn3O0jY5pQw1ikEaF8quKcPBYk/Fc=
+	t=1760715617; cv=none; b=pmzBcryjD/9lvrPcfwlysCzEQZL1+M1YbbsX5DwFx43Zl2+xsBcDoRBgwc8Xm2yAbGP7KPz7N/krzfNF24xSzMWmdMmCS3QQm5Mo8k4JPRYujNIBXOaDTsP4ynn5yFOp7QNToZUj4YKRFZIV/wzKgz0bAoEu9hfaKTkIxmC4nxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760715615; c=relaxed/simple;
-	bh=pAc5hxjrvgx6th/pR6Oj54E/SPgxcH3/ivxD3ZGX340=;
+	s=arc-20240116; t=1760715617; c=relaxed/simple;
+	bh=fQrM4HQNX2RGu9gbDSZ1C6xB1qZZNy9T3jmI+RwZmEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLv9t3crwXPy4DvuTUDRxajnDQtSwV9ZN7QO7dw1Q5Zz758j0CtbZUnVsr+1nMpkoYBg6n8BVwrFv11z/QZiYgij8AeeE2kUuBonKHPleapZQLchiuWwp8T3nFwxy8kylflHVtaaEIXE1Jo+MujIz8iG4UtD8rV2RAzZwAHXHgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss6p7e3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S74G165QNH1blGv70tnSu4covl85EcgIFRXbLdy6BouPdofZ1HQGAi4B0CHC1FH9X9sKq1UtC9z2HpdxW5Rpoq6BIZSnUAnhc1UCQlktINk6iWkgFyWDzuL2gbSINNWSwzL3IjdILmrjLCIwGXetOD9IsQ9l9YayNk/olljTXs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpPvY1lE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss6p7e3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED12C4CEFE;
-	Fri, 17 Oct 2025 15:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpPvY1lE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E629C4CEE7;
+	Fri, 17 Oct 2025 15:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760715614;
-	bh=pAc5hxjrvgx6th/pR6Oj54E/SPgxcH3/ivxD3ZGX340=;
+	s=korg; t=1760715617;
+	bh=fQrM4HQNX2RGu9gbDSZ1C6xB1qZZNy9T3jmI+RwZmEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ss6p7e3Nqrezg7AJmKOdoR4PtlSl6MDXL+qQRHhMf7evBB+P/8TiLFiARuXB6Gvne
-	 Ye/MyPhNT4TKwgagLkr9zc5fDjVFGVC9BiWGoOKw7Na/nzCroNpCWjrYXsuUmuDs4Q
-	 02KAw8O5fLIP5+nzcSqVEEAL48GUwHWZB58GQ4b0=
+	b=KpPvY1lE4NMW/cDyTDoi40rrgKiEjVgAHQpMT2G2z/dHNo1avOBJYyqAiDSCdyhqR
+	 KTYiWG31KEYpimh3tQnbWSfLv7iBzjrXNn+fCSwybka/YQRtWN7cGEpIzhWCq9tLOS
+	 wG3ALrXC+dRs37b+C1UaYsYSFwQk+xDOcstb88GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.17 278/371] PCI/AER: Fix missing uevent on recovery when a reset is requested
-Date: Fri, 17 Oct 2025 16:54:13 +0200
-Message-ID: <20251017145212.132657907@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.17 279/371] PCI/AER: Support errors introduced by PCIe r6.0
+Date: Fri, 17 Oct 2025 16:54:14 +0200
+Message-ID: <20251017145212.169741172@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145201.780251198@linuxfoundation.org>
 References: <20251017145201.780251198@linuxfoundation.org>
@@ -51,37 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit bbf7d0468d0da71d76cc6ec9bc8a224325d07b6b upstream.
+commit 6633875250b38b18b8638cf01e695de031c71f02 upstream.
 
-Since commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery
-status for udev") AER uses the result of error_detected() as parameter
-to pci_uevent_ers(). As pci_uevent_ers() however does not handle
-PCI_ERS_RESULT_NEED_RESET this results in a missing uevent for the
-beginning of recovery if drivers request a reset. Fix this by treating
-PCI_ERS_RESULT_NEED_RESET as beginning recovery.
+PCIe r6.0 defined five additional errors in the Uncorrectable Error
+Status, Mask and Severity Registers (PCIe r7.0 sec 7.8.4.2ff).
 
-Fixes: 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for udev")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+lspci has been supporting them since commit 144b0911cc0b ("ls-ecaps:
+extend decode support for more fields for AER CE and UE status"):
+
+  https://git.kernel.org/pub/scm/utils/pciutils/pciutils.git/commit/?id=144b0911cc0b
+
+Amend the AER driver to recognize them as well, instead of logging them as
+"Unknown Error Bit".
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-1-adf85b0620b0@linux.ibm.com
+Link: https://patch.msgid.link/21f1875b18d4078c99353378f37dcd6b994f6d4e.1756301211.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-driver.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pcie/aer.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -1596,6 +1596,7 @@ void pci_uevent_ers(struct pci_dev *pdev
- 	switch (err_type) {
- 	case PCI_ERS_RESULT_NONE:
- 	case PCI_ERS_RESULT_CAN_RECOVER:
-+	case PCI_ERS_RESULT_NEED_RESET:
- 		envp[idx++] = "ERROR_EVENT=BEGIN_RECOVERY";
- 		envp[idx++] = "DEVICE_ONLINE=0";
- 		break;
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -43,7 +43,7 @@
+ #define AER_ERROR_SOURCES_MAX		128
+ 
+ #define AER_MAX_TYPEOF_COR_ERRS		16	/* as per PCI_ERR_COR_STATUS */
+-#define AER_MAX_TYPEOF_UNCOR_ERRS	27	/* as per PCI_ERR_UNCOR_STATUS*/
++#define AER_MAX_TYPEOF_UNCOR_ERRS	32	/* as per PCI_ERR_UNCOR_STATUS*/
+ 
+ struct aer_err_source {
+ 	u32 status;			/* PCI_ERR_ROOT_STATUS */
+@@ -525,11 +525,11 @@ static const char *aer_uncorrectable_err
+ 	"AtomicOpBlocked",		/* Bit Position 24	*/
+ 	"TLPBlockedErr",		/* Bit Position 25	*/
+ 	"PoisonTLPBlocked",		/* Bit Position 26	*/
+-	NULL,				/* Bit Position 27	*/
+-	NULL,				/* Bit Position 28	*/
+-	NULL,				/* Bit Position 29	*/
+-	NULL,				/* Bit Position 30	*/
+-	NULL,				/* Bit Position 31	*/
++	"DMWrReqBlocked",		/* Bit Position 27	*/
++	"IDECheck",			/* Bit Position 28	*/
++	"MisIDETLP",			/* Bit Position 29	*/
++	"PCRC_CHECK",			/* Bit Position 30	*/
++	"TLPXlatBlocked",		/* Bit Position 31	*/
+ };
+ 
+ static const char *aer_agent_string[] = {
 
 
