@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C693332C92B;
-	Fri, 17 Oct 2025 15:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7669E337112;
+	Fri, 17 Oct 2025 15:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713993; cv=none; b=NiYT2/ETmMaiMETECZ2/0Sf0I5MJWnBKeD84gzPrU8hgKRZcHzKz72ZOcprBVt0zoXNCeqdPvNYUn+pKvRx3Q5EOrRoUR4e+u87Xjq4T1FO7ffKKReMeD8S/VSoeNqFQ1Uq6xthg2Wrh/Y3nHHhUnjEOl+jhUx0FBaRM2HcYbZw=
+	t=1760713994; cv=none; b=qlXUR2BTPYPPMBd3Dwx369GY8Wco7DY3LvwFkG3Kbj2zMnrtgWw9Ys80hj0TDB7I5WmmuUxoIf2yVdylv+TsKTai2P52LY1QSE2cteM2Vr7s8VW+3N2MIEcbmvo/gsQ9GH/mB67jr6YVdtqoAWaHjbjnMhmPGQUU+/udrJm7wcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713993; c=relaxed/simple;
-	bh=shAYL50+/CDPTAWYy3jHTWWe0wzxMYxpGXY4HlWerIY=;
+	s=arc-20240116; t=1760713994; c=relaxed/simple;
+	bh=p6fwrnJNCtoDXnIs8fyURu06t9OyU+I0+XcIRogyJ8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcnEZJFnquh4OIdncK7LhfJtV8wypxp9fijp+9zRrZs+08yS0ewTLrukVX8XuxCP0pFfm0sC3EhGS1oppMckRTYak9vUt/ty5qDpYBHgpBKUdjfvEP682mDvv7bw+dvvGyv+Z/MeR06BYvVLy7aeST3XhNRBdI6gaallH4A1NbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRtCCDoJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYOA4Iy31EPqYaSYKj7QtdDFOsl10aF6ihFn8/avqMFRR0MWLxPQpC0Ne7RvsKWMvu92K5oVKTRDV38ve/feS1WAvWcYMBWVLKkESlRm7435Jvmc/xmDyXjIy+zUnQ+SVpiPHq36W5Rj8cyK/42H30SbaeUv2mnRw7CWihUVRTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPColP1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRtCCDoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6634C4CEE7;
-	Fri, 17 Oct 2025 15:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPColP1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA30C4CEF9;
+	Fri, 17 Oct 2025 15:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760713991;
-	bh=shAYL50+/CDPTAWYy3jHTWWe0wzxMYxpGXY4HlWerIY=;
+	s=korg; t=1760713994;
+	bh=p6fwrnJNCtoDXnIs8fyURu06t9OyU+I0+XcIRogyJ8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRtCCDoJXnC16KqCAmNIA4tjnQO+sNcyAdao7AXB83BjN6+vsV/bMVsxp9HA5kNQn
-	 +egbPEUQKw0qsMXHfoo2yzTZud5EZk+Jcgx+zh6/g1Ol+Yf/DNl3rL6SEodAYe1IDV
-	 fXEKVQ/e8COYE0+sPPl5tSk3uR+ZI8PRgFu3C8P0=
+	b=EPColP1UUohQ0X7Ycdn6HPrRBpOYxRgIV6t7zcIyIA/YPc+w2yIvYPwkMCEIHxbMe
+	 4T+XoAK4Khi0LVihnoYlxruAokWf946gDWGoUI999+GSJNyU98SCDeGRB5LT9K6VW1
+	 vsQ8NKwyRbrlEzg9CKzMrCRNx4eZ1iKKwAurJYLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	syzbot+f754e01116421e9754b9@syzkaller.appspotmail.com,
-	Amir Goldstein <amir73il@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/201] Squashfs: reject negative file sizes in squashfs_read_inode()
-Date: Fri, 17 Oct 2025 16:53:39 +0200
-Message-ID: <20251017145140.535634484@linuxfoundation.org>
+Subject: [PATCH 6.6 159/201] media: mc: Clear minor number before put device
+Date: Fri, 17 Oct 2025 16:53:40 +0200
+Message-ID: <20251017145140.572833027@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
 References: <20251017145134.710337454@linuxfoundation.org>
@@ -53,45 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 9f1c14c1de1bdde395f6cc893efa4f80a2ae3b2b ]
+[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
 
-Syskaller reports a "WARNING in ovl_copy_up_file" in overlayfs.
+The device minor should not be cleared after the device is released.
 
-This warning is ultimately caused because the underlying Squashfs file
-system returns a file with a negative file size.
-
-This commit checks for a negative file size and returns EINVAL.
-
-[phillip@squashfs.org.uk: only need to check 64 bit quantity]
-  Link: https://lkml.kernel.org/r/20250926222305.110103-1-phillip@squashfs.org.uk
-Link: https://lkml.kernel.org/r/20250926215935.107233-1-phillip@squashfs.org.uk
-Fixes: 6545b246a2c8 ("Squashfs: inode operations")
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: syzbot+f754e01116421e9754b9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68d580e5.a00a0220.303701.0019.GAE@google.com/
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
+Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/inode.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/mc/mc-devnode.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/fs/squashfs/inode.c
-+++ b/fs/squashfs/inode.c
-@@ -193,6 +193,10 @@ int squashfs_read_inode(struct inode *in
- 			goto failed_read;
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -50,11 +50,6 @@ static void media_devnode_release(struct
+ {
+ 	struct media_devnode *devnode = to_media_devnode(cd);
  
- 		inode->i_size = le64_to_cpu(sqsh_ino->file_size);
-+		if (inode->i_size < 0) {
-+			err = -EINVAL;
-+			goto failed_read;
-+		}
- 		frag = le32_to_cpu(sqsh_ino->fragment);
- 		if (frag != SQUASHFS_INVALID_FRAG) {
- 			/*
+-	mutex_lock(&media_devnode_lock);
+-	/* Mark device node number as free */
+-	clear_bit(devnode->minor, media_devnode_nums);
+-	mutex_unlock(&media_devnode_lock);
+-
+ 	/* Release media_devnode and perform other cleanups as needed. */
+ 	if (devnode->release)
+ 		devnode->release(devnode);
+@@ -283,6 +278,7 @@ void media_devnode_unregister(struct med
+ 	/* Delete the cdev on this minor as well */
+ 	cdev_device_del(&devnode->cdev, &devnode->dev);
+ 	devnode->media_dev = NULL;
++	clear_bit(devnode->minor, media_devnode_nums);
+ 	mutex_unlock(&media_devnode_lock);
+ 
+ 	put_device(&devnode->dev);
 
 
