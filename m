@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBBC330B1E;
-	Fri, 17 Oct 2025 15:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDDE330B1E;
+	Fri, 17 Oct 2025 15:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716434; cv=none; b=XNsJHBbHY/QfYXnPODcnUJNn+EHi3ohuHX8P4HTz8RA/CEgH3iEUDrLJZyOVNAgh4KUqffTSu/hEA39U47dTcsq4mQmX1ULdBjsyOg/Gv0DCgN6tATu0Rtlaq9xhTIyXCurFNOCDHOGh4BdLfD4Bvk/LrNv1dQ3lslFme0zUl80=
+	t=1760716437; cv=none; b=CB0Wl1PEgbcrNNUg6KXzeKActgM4zsV/DR80gseTDi3vjo3fzjKO2jWKbcFYUIttd8a6cNEW0DSnSE7Jl0R2JJ3SqsZjorEhzJ3yAljvj68E7WgwpbX+X0ioXTN3PMJqg5HZbxiNVt4Mo5s/fivDmq4HtXEtO2pvCpdrEFZ+Pak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716434; c=relaxed/simple;
-	bh=S24wiqjIAXDg1tVADkkc4bu7okNZS9rvUyGMZKVeICA=;
+	s=arc-20240116; t=1760716437; c=relaxed/simple;
+	bh=JWDKO63b8KSYeF//QI/sphXlryThGhNnpIZ4Ah1o+ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVjRpRsGiY9ZqVzsqoOrVBP/6neFyZMoffSXoAM1v76zrzaJTax+hTTwiScXv9muEPA0FwHHOb9fBcAy71BPrqi2/9b9bq+Yv9HlmxmCCmsGjNktsw4Ltb3rVTTysR4HCLt1z8D51iLSGabmvIoJSDiLX7np0Pxc5l77PkQ2cIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhv8QDSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upSmSDXoBtQOHlraNWdD4wSOWApm8xfMn5Os1Vx+gWbpPs9X56bYnP1H2k8wrq8aPDAmoQ+osCaXanwddIXSzPMokgpgUZk14T//lsKPsHN+69NFyrj6ddJ11n2vVc3ear+GdBZ+qixxM389MDzS2x5LWVICtEFTGlJbBr32wsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6k+7uSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhv8QDSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E188AC4CEE7;
-	Fri, 17 Oct 2025 15:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6k+7uSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1063C4CEE7;
+	Fri, 17 Oct 2025 15:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760716434;
-	bh=S24wiqjIAXDg1tVADkkc4bu7okNZS9rvUyGMZKVeICA=;
+	s=korg; t=1760716437;
+	bh=JWDKO63b8KSYeF//QI/sphXlryThGhNnpIZ4Ah1o+ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhv8QDSsz/MuteUJPtBv1o3R3lT/BQTgXAA2kXeQwjF/uAWLDhlTDp8+h36QCUBgJ
-	 oK0zdzS+yHxCWh0czcfcKVyjhCaMHy/ZWptfHRQ8TH6+HNZ8mLhCSGhaTSD73XCgMW
-	 q71hVEEWmXO1bFOF9AJ8HSz729jQHERBo9tyn5a8=
+	b=g6k+7uSE1Hy38WH2lABz792FokxmEt0Q3qWTepAMrPuIEJTtjaf1tVsMq6wyK6o1O
+	 AS+kBmiRM5zlJqb3EyDlSGPF7ENtV+arHTp2pWk/B/SW2kQhdwB+pM/yDJ/5tU6SaZ
+	 lCXFtA+l+uHFS8qZzkx7gpxuHfLpniXiK7orPAys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Helge Deller <deller@gmx.de>,
-	Stian Halseth <stian@itx.no>
-Subject: [PATCH 5.15 190/276] parisc: dont reference obsolete termio struct for TC* constants
-Date: Fri, 17 Oct 2025 16:54:43 +0200
-Message-ID: <20251017145149.406983016@linuxfoundation.org>
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 191/276] nvme-pci: Add TUXEDO IBS Gen8 to Samsung sleep quirk
+Date: Fri, 17 Oct 2025 16:54:44 +0200
+Message-ID: <20251017145149.442865919@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145142.382145055@linuxfoundation.org>
 References: <20251017145142.382145055@linuxfoundation.org>
@@ -51,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam James <sam@gentoo.org>
+From: Georg Gottleuber <ggo@tuxedocomputers.com>
 
-commit 8ec5a066f88f89bd52094ba18792b34c49dcd55a upstream.
+commit eeaed48980a7aeb0d3d8b438185d4b5a66154ff9 upstream.
 
-Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
-drops the legacy termio struct, but the ioctls.h header still defines some
-TC* constants in terms of termio (via sizeof). Hardcode the values instead.
+On the TUXEDO InfinityBook S Gen8, a Samsung 990 Evo NVMe leads to
+a high power consumption in s2idle sleep (3.5 watts).
 
-This fixes building Python for example, which falls over like:
-  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+This patch applies 'Force No Simple Suspend' quirk to achieve a sleep with
+a lower power consumption, typically around 1 watts.
 
-Link: https://bugs.gentoo.org/961769
-Link: https://bugs.gentoo.org/962600
-Co-authored-by: Stian Halseth <stian@itx.no>
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sam James <sam@gentoo.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/uapi/asm/ioctls.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/parisc/include/uapi/asm/ioctls.h
-+++ b/arch/parisc/include/uapi/asm/ioctls.h
-@@ -10,10 +10,10 @@
- #define TCSETS		_IOW('T', 17, struct termios) /* TCSETATTR */
- #define TCSETSW		_IOW('T', 18, struct termios) /* TCSETATTRD */
- #define TCSETSF		_IOW('T', 19, struct termios) /* TCSETATTRF */
--#define TCGETA		_IOR('T', 1, struct termio)
--#define TCSETA		_IOW('T', 2, struct termio)
--#define TCSETAW		_IOW('T', 3, struct termio)
--#define TCSETAF		_IOW('T', 4, struct termio)
-+#define TCGETA          0x40125401
-+#define TCSETA          0x80125402
-+#define TCSETAW         0x80125403
-+#define TCSETAF         0x80125404
- #define TCSBRK		_IO('T', 5)
- #define TCXONC		_IO('T', 6)
- #define TCFLSH		_IO('T', 7)
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2979,10 +2979,12 @@ static unsigned long check_vendor_combin
+ 		 * Exclude Samsung 990 Evo from NVME_QUIRK_SIMPLE_SUSPEND
+ 		 * because of high power consumption (> 2 Watt) in s2idle
+ 		 * sleep. Only some boards with Intel CPU are affected.
++		 * (Note for testing: Samsung 990 Evo Plus has same PCI ID)
+ 		 */
+ 		if (dmi_match(DMI_BOARD_NAME, "DN50Z-140HC-YD") ||
+ 		    dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
+ 		    dmi_match(DMI_BOARD_NAME, "GXxMRXx") ||
++		    dmi_match(DMI_BOARD_NAME, "NS5X_NS7XAU") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PG31") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH6PG01_PH6PG71"))
 
 
