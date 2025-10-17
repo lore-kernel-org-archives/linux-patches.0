@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996C6332901;
-	Fri, 17 Oct 2025 15:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BA95695;
+	Fri, 17 Oct 2025 15:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760714415; cv=none; b=lpfPyg8pForMWXSlKQ9R8bldFyJkaAhCN30f1b7zSYzeamB9M7wGXtCbeKIf6j2HiE4gCI2VnbNYQrONsE3A8/mrxoUWoKAuwMbMyOdokD7KINLo2Rn1xmOhkiDIwg0YTv+B1e6OVrkqUoh4NanYfmE9NKtZG+/uPOT9ALkGvQ8=
+	t=1760714418; cv=none; b=HKVt3M0XkvGW2xojuUcQH6D0CWGJDe0FkfvlyKiEpGGshTFJFhWdlkgZAOKI2PZSsZT+CYjnZ2P9xzWupfE6PGdNDurMdslwBMguFLYMuJqkTzgxIwl8idXsg3u+aoXLW0DaV3/CB4MLXy8v4ldSOtQI84GixIvvrBu9hxIOSbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760714415; c=relaxed/simple;
-	bh=bC6VSP9KSwHzrvHhg7M9Zvw0ET0xMm+oWz8Ya+mtvU4=;
+	s=arc-20240116; t=1760714418; c=relaxed/simple;
+	bh=wRfIDixHeSabQnrIzlbOmjhvY9KWQHEiy1u+PvxSWqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z86aN2eTnj4U/wqfHZq1JvmxZ7F/VtIbFxpiaYXCR5onBrlNkBHoMbTTYQrW3Fs+aT80TZJyTyTFItYWch9lP6b+jAKL9JuudvRzqUo2m0+7MyK1ElCOA9tIOffbOa95Iu6ptdHUesWgp3vPSEcndtTjgtcMGPxMPLMQInJktF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RztcfTlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMaJgi6C92DXaVlH3RnZsPDCnr02DDRxiWfKJMB622/bJz8aGRzepDEIOei9hqBmuhkq74zGU5qeFDoVylZJ+AkztntQpWy3kjraTDRdr+hDkvz95OBUGkkwQdZ0tDur5Huvp13v1C5YGywjsPZMUNERpPdbvSWcSk+TdK1uNZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/MQnJqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RztcfTlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EA4C4CEE7;
-	Fri, 17 Oct 2025 15:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/MQnJqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF04C4CEE7;
+	Fri, 17 Oct 2025 15:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760714415;
-	bh=bC6VSP9KSwHzrvHhg7M9Zvw0ET0xMm+oWz8Ya+mtvU4=;
+	s=korg; t=1760714418;
+	bh=wRfIDixHeSabQnrIzlbOmjhvY9KWQHEiy1u+PvxSWqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RztcfTljji/yR6KslvnZBQsHts7sYvuYaxfbsy2ie93Hvbn7VAxmbBGJYGLRzETrc
-	 54PPcQcHJMzjv7ItjT74Nfi710r1YMRyagVfZygaArCml3r+ehjhJ8/9ruxavlEKB5
-	 PLsQGtFxd2ki7+JJsJO1uGJe0G8a1FDXLsSzEyK8=
+	b=O/MQnJqsxixplbOyZ4QYkyCm5ae6iytTZPBBHuCWj4ACpLRnYFMtsSe2jlfFbYyyf
+	 2GvR3Vh9v8J2dbYcYtvPgqrAYhj2ygoCIc3DlhnvNbaf3biIoHi2fbcPn4budYBSOk
+	 a+H0J/i5NFJB4QJJakggBWfPcQL+spbnXnhBQbTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 104/277] media: cx18: Add missing check after DMA map
-Date: Fri, 17 Oct 2025 16:51:51 +0200
-Message-ID: <20251017145150.928044298@linuxfoundation.org>
+Subject: [PATCH 6.12 105/277] media: i2c: mt9v111: fix incorrect type for ret
+Date: Fri, 17 Oct 2025 16:51:52 +0200
+Message-ID: <20251017145150.963898779@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017145147.138822285@linuxfoundation.org>
 References: <20251017145147.138822285@linuxfoundation.org>
@@ -50,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit 23b53639a793477326fd57ed103823a8ab63084f upstream.
+commit bacd713145443dce7764bb2967d30832a95e5ec8 upstream.
 
-The DMA map functions can fail and should be tested for errors.
-If the mapping fails, dealloc buffers, and return.
+Change "ret" from unsigned int to int type in mt9v111_calc_frame_rate()
+to store negative error codes or zero returned by __mt9v111_hw_reset()
+and other functions.
 
-Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants.
+
+No effect on runtime.
+
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Fixes: aab7ed1c3927 ("media: i2c: Add driver for Aptina MT9V111")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx18/cx18-queue.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/media/i2c/mt9v111.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/pci/cx18/cx18-queue.c
-+++ b/drivers/media/pci/cx18/cx18-queue.c
-@@ -379,15 +379,22 @@ int cx18_stream_alloc(struct cx18_stream
- 			break;
- 		}
+--- a/drivers/media/i2c/mt9v111.c
++++ b/drivers/media/i2c/mt9v111.c
+@@ -532,8 +532,8 @@ static int mt9v111_calc_frame_rate(struc
+ static int mt9v111_hw_config(struct mt9v111_dev *mt9v111)
+ {
+ 	struct i2c_client *c = mt9v111->client;
+-	unsigned int ret;
+ 	u16 outfmtctrl2;
++	int ret;
  
-+		buf->dma_handle = dma_map_single(&s->cx->pci_dev->dev,
-+						 buf->buf, s->buf_size,
-+						 s->dma);
-+		if (dma_mapping_error(&s->cx->pci_dev->dev, buf->dma_handle)) {
-+			kfree(buf->buf);
-+			kfree(mdl);
-+			kfree(buf);
-+			break;
-+		}
-+
- 		INIT_LIST_HEAD(&mdl->list);
- 		INIT_LIST_HEAD(&mdl->buf_list);
- 		mdl->id = s->mdl_base_idx; /* a somewhat safe value */
- 		cx18_enqueue(s, mdl, &s->q_idle);
- 
- 		INIT_LIST_HEAD(&buf->list);
--		buf->dma_handle = dma_map_single(&s->cx->pci_dev->dev,
--						 buf->buf, s->buf_size,
--						 s->dma);
- 		cx18_buf_sync_for_cpu(s, buf);
- 		list_add_tail(&buf->list, &s->buf_pool);
- 	}
+ 	/* Force device reset. */
+ 	ret = __mt9v111_hw_reset(mt9v111);
 
 
