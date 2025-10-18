@@ -1,62 +1,63 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233C4A3E
-	for <patches@lists.linux.dev>; Sat, 18 Oct 2025 00:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5654199FAC
+	for <patches@lists.linux.dev>; Sat, 18 Oct 2025 00:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760747154; cv=none; b=qqcZk80FHFl9nG2YzZO41h3klTj9vd2fEZiXED+lygfCPhrmBOdNtA18YAaKjhMZCy4uEYKuWeHgc0SxDQH/9xcnPUGp+2PGHgIOJGvFqahvLqxDRfjhYZbLWghwSmqOqFijZP816N1wEnsc6y4anpr4nYpRC5JOMR8uHBTnDOw=
+	t=1760747941; cv=none; b=NHGKiSRQInOtRYxLRqXNxS4nbt5xJqCTvPC+0GLzbhZIPHAYBqVBMUrdgyVNwVuHNynQuAKVbuTxbfHryToIrELponLEjNxCzzewu+JMww7PbwERhoz5+LAoaUOWyO3fCtDRRB5VyfKhAf0XFZcXrX8Z6YLxqCmRrGT+Uc9XaHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760747154; c=relaxed/simple;
-	bh=wYDlpw74Z3cyAlrGrGpo5UDCI9NbA92k8W5CCOz2vbQ=;
+	s=arc-20240116; t=1760747941; c=relaxed/simple;
+	bh=TfkrOdViFaSEovMzB0nSzeBVuPcuZ5Q4h4pTegO9HiM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YPJI1JWaF9gpHhdmcgkbzsS0f4AoZ27v5XQCQkTf0LK1qTV23eew1WKlu5Hl0llenWWsvt4sxrNRkw+b8Wl2fZ0f5tJFW8332Ha3cg/ceH8Di+Ni2+EAUY7orCMeQ6g23URk+YMXrUtt1GwEZXefwUSvAIZ/2eAwxtailbbX1WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DygXehP0; arc=none smtp.client-ip=209.85.166.175
+	 In-Reply-To:Content-Type; b=EiPMNrYhrGh0T3RJA+D87vMHL+v8OX/2HQ5oLbtjzUJYSULdvBA1BOSbvWwx4xq5cJzIFwEegzrUKJ92SZ42X4z2MCYcrBvybOC8QmWs7OosRdrc4vdqhkJen4O3Slb8I0zWaX3sMc5XpnUvE/HBos+WnEql8/PSSXO7/Fm8eys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GISOKvbF; arc=none smtp.client-ip=209.85.166.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DygXehP0"
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-430cd27de3eso3430425ab.1
-        for <patches@lists.linux.dev>; Fri, 17 Oct 2025 17:25:52 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GISOKvbF"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-430d06546d3so4060305ab.3
+        for <patches@lists.linux.dev>; Fri, 17 Oct 2025 17:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1760747152; x=1761351952; darn=lists.linux.dev;
+        d=linuxfoundation.org; s=google; t=1760747937; x=1761352737; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ii45rQqKjwtGH5Psho54TOQP3QBwhKcT/rt69FEd2QU=;
-        b=DygXehP05iCb+lXrXbyxc+ySZtzNrOa/oWDPNJsDjLSlYWozJY0kPC5QuU9d7LSBrY
-         3YqebUIQqGi9nKT1V0KnuBk/WDMbmnbe8tJ0qAAGx/JyUwaiwxUZJYnOyzy7XBk/O0iz
-         eaE8JZIP663s+L+JtxZj9hf4Ov8zxIKudTjYE=
+        bh=f6Kl7ZV/gVS/yfGRDqrKMc7VJq5dimqOMeIoI+yFLws=;
+        b=GISOKvbFTwxixmMahVPhtUG1OqTBE6wxgGLKN+52X1pLlu5iEuwroI9GRDXmDOhaUx
+         sRqb5VB+Y4GARp4QdmLLbqLVcII+15RG1J8NA7zDEEQqlVDrkkMmQySkUWSy+5nMaqMM
+         jKILsNNji8RNTIq7ymi/E+v4TWjNvNECcSV9w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760747152; x=1761351952;
+        d=1e100.net; s=20230601; t=1760747937; x=1761352737;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ii45rQqKjwtGH5Psho54TOQP3QBwhKcT/rt69FEd2QU=;
-        b=dxfzOW8q7YDRLk18xhWo2ySGvqSCV2dZDof3XyNpFBcZXLGId7vw+IyV8qP97nFwzr
-         tBumEK2bV5QJu4L81ahjomH8GbrmWAw7Pmx3JYd2OjwhyIIyuMZqp7V4miwJ/aiIvy0o
-         0538NAFGDzsMFHs7dOohJDbCBNB1muzq5CCyPN7C+4RhBRKIM5c4YPc1xoOIJQ5PZU0T
-         mR6F7tIA4F0gBa3vAqzyMHAk6pCWmFFukh2TNdNrOLS6P1iVRdOtBGe/XGS0U0XlMMbM
-         6uqXd0HOl8WlFq/T2CnoiidJ6pOIPea4EIjyy0nmmSftO41OvmOEyxwue1J2Ze9edkb2
-         lMtg==
-X-Gm-Message-State: AOJu0Yy16mOJGgeQFdHkNA/7tF3kqo4K1o1q4r7Xl5DbGHz978b47UgT
-	aQbDDHQ5pGMBhgn9txCpXnUZYTsBpzmyH44OUKH92wnrkIzmYCilzYCOTJagzeZjqzM=
-X-Gm-Gg: ASbGncvHmYKx+nj8r+WPPfhyBZMWLKM0lInctJKGjCkTqzd+DDyKQg6hWS/EIdMg6SE
-	BZ9m2smsonukjaB4dLZe0mJyG72fyyHgZOxU8r20h+PWYNEtLZLOjaCWy6gdnQKtGFmoM+tcfVf
-	NgIrcwaAWlr0KMKNK+hexUYn9TVwvbZiDoPrPs9vCZeRA4bgMWq2CoMUTWd3VOU+TT0L1zz2iR2
-	zn1XtVT0mnvZvEWzXgDb2Y54xKjcrtoPOOMUDpECc2/y/EphY/o4dcJbOT0z6PYTNC6ZJwTHqPe
-	cD10YFN6iX0yDZ12hti1zZ/vZ8cPIA4GO744RjGY0TaIbvn/B99IzlygD+qqBSCrhs+N15fYOnj
-	LLnE0Em+bFDU+9/h9wxcFhYY3wbO8uKvBJA6JjWSbpa6i4WGiqaewQzEukBfDA4xF0DgIICpaOO
-	4Mre0zUeKrK28WLcCQEKVaqiU=
-X-Google-Smtp-Source: AGHT+IGo2Se2kxunEF/SZg2Y4xCxWJXIASoIB5WJpf6wAy+KaI73tMOnfXy92b899FQW/8z6rJQpuA==
-X-Received: by 2002:a05:6e02:156c:b0:430:af13:accc with SMTP id e9e14a558f8ab-430c5208df1mr78329755ab.7.1760747151996;
-        Fri, 17 Oct 2025 17:25:51 -0700 (PDT)
+        bh=f6Kl7ZV/gVS/yfGRDqrKMc7VJq5dimqOMeIoI+yFLws=;
+        b=utOaDbD84Rz3GnBHyZc4gMfbhKlqvb48M+YmDrmkUw+W5a3NEEkVfU3NzLhdlOXnD3
+         0VqVhz2batSUQKge7i5tG35t05g1FO211AHcc/UsDcBq0Zf48dlXWg7F0aH36s4sYxON
+         U5LcW042rxmrBcMaJYEiONJ2dwCO6oKn9MmsYOv/hWm0vsxOOu1VKeT3/mt5+L1J+dsA
+         2YTLvpVwz3xByIa3TS7FJCqtSEVFGzb5wZYRDmgbjgDeCsVHr57fE3TZ4fVvSi2BajwT
+         9i35a23MmnEZwo7KGWG09tci1yuNUfKwf404eZYOvQwRa2gKwH7qxKf1yMy/9jQChJQk
+         DZtA==
+X-Gm-Message-State: AOJu0Yx8KKjopMj1QcNYYGNKX2OENcbjgoagw4/hHQe8MIWVZQAK39ZU
+	7sioxPfUJX00LG/fIE+Jy9nT21IQfwe8TO6LDafy5ovxgWAf9a5Ay3Brvn5JkEyx2Q+Ysc3ZPJB
+	2T6q6
+X-Gm-Gg: ASbGncspP81aeUJK8DOCFB3oN01hJPhhjQvXxVcPAdgmvdfGCGmm6jQLLLg2ujkVdf1
+	OY8gT/znyK27IyBWoUWHL003JaMDlHIdvA48w42b92+cvuCa25F9GdGFYKkJe9WGrNA0Z44NuyA
+	rt6NqZZYJrDKhMK+q85xq7rji5mD7AflwvIxbsYBUw5XkBUSAcNAXQNjmT0LD7AyOLcejZuZaQF
+	E5Q0SdDQDU6KQDG2cWQAwnA1O7DpaUO8uMVCEn8X5XzQDuD/qL3Xlpw0Y2nGdLi29jyA7W1UVRU
+	nmmUDTVAkrYyl40506GwBvc64WiasVjeuv0fgXNOFBE9FPStARF8YCmUpOiSj5moHS3OYQXgBLD
+	+Hc7iPXbqzHEYlIZ/FcWefR0o9jbFjs19BfzO5Pflah4bJkkpetD4gsTadkkBzSdLTMSOmG0OSd
+	F88BQFUkoJe3eLNnpK14F/6Xg=
+X-Google-Smtp-Source: AGHT+IFQ1arpM4XiIHOzegBMIippzM4fh8WNlEEgxxDEdrMw5sQl3E/rQ4YiBNkwMyu4gNlwkvHgmw==
+X-Received: by 2002:a05:6e02:3e06:b0:430:9f96:23c7 with SMTP id e9e14a558f8ab-430c524fcd9mr83643375ab.4.1760747937361;
+        Fri, 17 Oct 2025 17:38:57 -0700 (PDT)
 Received: from [192.168.1.14] ([38.175.187.108])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a95fed66sm413846173.1.2025.10.17.17.25.50
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-430d07b3eccsm5151775ab.28.2025.10.17.17.38.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 17:25:51 -0700 (PDT)
-Message-ID: <3c6f1571-8e24-4d03-aaee-5852fc9fd943@linuxfoundation.org>
-Date: Fri, 17 Oct 2025 18:25:50 -0600
+        Fri, 17 Oct 2025 17:38:56 -0700 (PDT)
+Message-ID: <95598231-ae6a-4a0a-8697-7ff273b6124e@linuxfoundation.org>
+Date: Fri, 17 Oct 2025 18:38:55 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,7 +65,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/201] 6.6.113-rc1 review
+Subject: Re: [PATCH 6.1 000/168] 6.1.157-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -73,16 +74,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <20251017145134.710337454@linuxfoundation.org>
+References: <20251017145129.000176255@linuxfoundation.org>
 Content-Language: en-US
 From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20251017145134.710337454@linuxfoundation.org>
+In-Reply-To: <20251017145129.000176255@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 10/17/25 08:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.113 release.
-> There are 201 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.157 release.
+> There are 168 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -90,9 +91,9 @@ On 10/17/25 08:51, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.113-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.157-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
