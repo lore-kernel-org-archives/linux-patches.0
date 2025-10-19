@@ -1,95 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A976366;
-	Sun, 19 Oct 2025 12:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070552066DE;
+	Sun, 19 Oct 2025 12:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760875355; cv=none; b=m05KfdJ7yITNt9K9uOw8wk7OVQSOGwdkZ0DdkiJ7OEFn7zPMp5T5aYAv6xBkGQVqDlyY4ZVjcyXJ4FM3pxrAqt52ZdO+q3BRKA91+bir/WSRJXDzBnH8hc+HcyJim/SOp35cffj5kFEumeXJF1l09w/CTJbth86wX6XkVHqmBf8=
+	t=1760875522; cv=none; b=SCO0eHkmV9n6uATEtRrB0x7PKomKonhuM76t3UKVZCSC3bet0FoRRXXr0tCxqhzg2OHZJws8pJ+2WzcQcYbd7rYwJJZ3PkBWp9vCYsjCupuVhEevRIAwtN5lCxJM3na+f7ZXak4yq8YVp8xVHzR5K5DIB3Kf2DyREZR/24/Cjz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760875355; c=relaxed/simple;
-	bh=0IuCpk9UxBeR+C9BHxVRSSL+EJ0KV/W4DsG0DkKDkSI=;
+	s=arc-20240116; t=1760875522; c=relaxed/simple;
+	bh=fxBWX9RealHrVvF/cKYRG6ekOm40LsemzdSSOnLjHb0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WriEqZCKD1T6ZlN9IAzs0PkhPM72HmuZQQsI/i1j1AjnWp7ndBy9gOLTuJ+ZAM7gGaNesqQ7iYFg7OKbzMft2e/aSXt43ib7nHpLTVSlV6Trj7oDxGQRcLs+Qf3ZZrib4WFk95WFV7iwNZjCOytoPzmaizcQIynNOBLK9rSgYdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=di5lqBUV; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gufrMp6ywGb/S5R5Php2uOCIczg4M8IoqfqrmJzfBulzBH0080N2iA99cw7oIhlrLybX1df7n9Ck8XFuLiLwQM1wM9Mw8zbX9o1fdPcRu+BQBb2Fta4ZdhK79akt+fej7H5MB/3OZgbJo0o006nhVgTqfLw+33eROJCIfROVb9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJDiuqM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="di5lqBUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85973C4CEE7;
-	Sun, 19 Oct 2025 12:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJDiuqM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EAFC4CEE7;
+	Sun, 19 Oct 2025 12:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760875355;
-	bh=0IuCpk9UxBeR+C9BHxVRSSL+EJ0KV/W4DsG0DkKDkSI=;
+	s=korg; t=1760875520;
+	bh=fxBWX9RealHrVvF/cKYRG6ekOm40LsemzdSSOnLjHb0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=di5lqBUVapMsNjAmHde4l/1zbpAPQ0Y9jbgnJMb6MfVVfsqnWGxpkLuvxF7ykFsJS
-	 YEK7RZM8EkxwYS75qQlM4pp3yfQzz4zvsUBgT8eeGEh0ynbVS8miL9U9AEfjcBNcWN
-	 UM6MeUxrWgPLxACiTW6GzYlGxlWEegXzaBKrnW0o=
-Date: Sun, 19 Oct 2025 14:02:32 +0200
+	b=ZJDiuqM6WwUEzPusQ58NOWBUnaHr9/nrDSz4NQEfinJR94WZvB+B8PqoT/wAnxBA5
+	 mx86MngunwDSBwz1cSXY2qLfAskMQ1XSGRqXoNWzzBIYcNOPpgVBDvHcsy7UCJyL16
+	 C0cqUR+ouxg0H075m4EFdd3RS5UGEFWQaZ+KczCw=
+Date: Sun, 19 Oct 2025 14:05:17 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-Subject: Re: [PATCH 6.17 000/371] 6.17.4-rc1 review
-Message-ID: <2025101933-utensil-campfire-75f8@gregkh>
-References: <20251017145201.780251198@linuxfoundation.org>
- <90bc04ea-e7ec-49b9-ae6e-d0e2c85bbf96@w6rz.net>
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	=?utf-8?B?6auY57+U?= <gaoxiang17@xiaomi.com>
+Subject: Re: [PATCH 6.1 163/168] pid: make __task_pid_nr_ns(ns => NULL) safe
+ for zombie callers
+Message-ID: <2025101904-fantasy-creamlike-a8f0@gregkh>
+References: <20251017145129.000176255@linuxfoundation.org>
+ <20251017145135.053471068@linuxfoundation.org>
+ <20251017153126.GD21102@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <90bc04ea-e7ec-49b9-ae6e-d0e2c85bbf96@w6rz.net>
+In-Reply-To: <20251017153126.GD21102@redhat.com>
 
-On Fri, Oct 17, 2025 at 04:04:23PM -0700, Ron Economos wrote:
-> On 10/17/25 07:49, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.17.4 release.
-> > There are 371 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sun, 19 Oct 2025 14:50:59 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.4-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
+On Fri, Oct 17, 2025 at 05:31:26PM +0200, Oleg Nesterov wrote:
+> On 10/17, Greg Kroah-Hartman wrote:
+> >
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Build fails for RISC-V with:
+> Well, I don't think this is a -stable material...
 > 
-> In file included from ./include/linux/pgtable.h:6,
->                  from ./include/linux/mm.h:31,
->                  from arch/riscv/kernel/asm-offsets.c:8:
-> ./arch/riscv/include/asm/pgtable.h:963:21: error: redefinition of
-> 'pudp_huge_get_and_clear'
->   963 | static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
->       |                     ^~~~~~~~~~~~~~~~~~~~~~~
-> ./arch/riscv/include/asm/pgtable.h:946:21: note: previous definition of
-> 'pudp_huge_get_and_clear' with type 'pud_t(struct mm_struct *, long unsigned
-> int,  pud_t *)'
->   946 | static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
->       |                     ^~~~~~~~~~~~~~~~~~~~~~~
+> This patch tried to make the usage of __task_pid_nr_ns() more simple/safe,
+> but I don't think we have the problematic users right now.
 > 
-> Reverting 06536c4857271eeb19d76dbb4af989e2654a94e0 riscv: use an atomic xchg
-> in pudp_huge_get_and_clear() fixes the build.
+> And please see
 > 
-> The problem is that this patch was already applied to 6.17 just before
-> release, so the function pudp_huge_get_and_clear() ends up being duplicated
-> in the file.
+> 	[PATCH 1/2] Revert "pid: make __task_pid_nr_ns(ns => NULL) safe for zombie callers"
+> 	https://lore.kernel.org/all/20251015123613.GA9456@redhat.com/
+> 
+> because we have another commit 006568ab4c5c ("pid: Add a judgment for ns null in pid_nr_ns").
+> Which too (imo) is not for -stable. The panic fixed by this patch was caused
+> by the out-of-tree and buggy code.
 
-Thanks, I'll go drop this patch now, thanks.
+Thanks for letting me know, I'll go drop this patch from all stable
+queues now.
 
 greg k-h
