@@ -1,108 +1,77 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8BF238D32
-	for <patches@lists.linux.dev>; Mon, 20 Oct 2025 08:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9B32EBB83;
+	Mon, 20 Oct 2025 08:28:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760948239; cv=none; b=SM/5+b7NYGC/ETYecelulktSlEOxkpz3NkMNja1oEttiPGO8cCsicsHsdxvedKnG9ppt8jxAMxynihMAhuJDHaxhvM+0cBe8AD4EtWrJdgkE1LxIAlwNkvTVnNcc5ugs/r2heNlCz/p6IevFFlzzpdFaMr2TbKmdihsmkWXFp9c=
+	t=1760948897; cv=none; b=coEU+C5C3koHxWhdLriswkLYW2kR6NSDHfOmEAcBeV8ywy78afcMSIzGg4JZb5MyROXO4Pr8QhLWYE6CjicbvXpOKNSbMXOLhK0woXz0Mvm6gtBBoaBr8ZQEajmWuo/Qj5hdCs+0eaBsoudzJWyScVdSWQGFE27qptMTpfhf334=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760948239; c=relaxed/simple;
-	bh=H0tga9DZv6zHPlXhb6ysF3xK2cSNnzfEhWaT6A6Prn0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=BDqd16QCX1JTZFwicuzan52zP27xkbUQxxgRRPhUNsKct0RK75+KsS1k8aCPJZqoLLJR4gTsS6yuDtuxU+rBDgNLZ4+ORGZgEuSyinGy2xoDvs3qI2im4L+8APGLPWNVC1RpeqR78Tx4m+dF9rhNdvXyOBfuPlKrBxF/vacQNUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iWxhFHmk; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1760948897; c=relaxed/simple;
+	bh=zeGVUJQKM0VxiUKiRwCXA3JlS8XFgA6+AtvAVygUk0k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LSkd0RsS7e2z2Lz6vjNiM3bGiDGgI3wbym3387xxYFNJbYg0Xv3asvNiIGsxgSL48qr2txHMn1Lvf+yJbt0VGReVE+S+v1obdirkfL07XwSuYe5TN/wtDFksx86aMT4t614We06kT2mcnD15ahKNwVyLuJm90/U9z73lpRtbPiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h94D+eQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iWxhFHmk"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-46e39567579so25385935e9.0
-        for <patches@lists.linux.dev>; Mon, 20 Oct 2025 01:17:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1760948236; x=1761553036; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LjMEk6mNBH8WSN8eHPXPJ3fCRbx/T8IK9tLp1EWYzkM=;
-        b=iWxhFHmktgefbPRcBu4EwT25VfVgFufvP4GJaFWrq42EGK9RMRrrTFKh9IBshuhFMn
-         CA8gdtZu/B7XgNmigM2IlV/vWD3TdYcVvNweqGAKLoWTvK8Fj149YMlKqtBK+p1n4EZr
-         xoqLSx1OXagADsM5Txxal6aXOJMev9RYHGp+owrelSMgHnpIjTuwGqGgobvL6bMB/2HT
-         8T2lzY6kf2W9XkXa6cmdXwDu6BPr3gQTqAA5q4Q99EM4evopgrdV6Xx2CBbdjjcA+qpp
-         LIcDw77jmyaECeDaOdVMuBpDaP0z4Nkct0iNvdE4uhekGBHc3UgQNePzmSwyF8qVa1Fa
-         jRyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760948236; x=1761553036;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LjMEk6mNBH8WSN8eHPXPJ3fCRbx/T8IK9tLp1EWYzkM=;
-        b=BK0V96zn+HLylt6vqIpF4OHo0IqCdv0ePc2D+otwdhq+FIMgyNfcMu9+H6t+hMj2tt
-         qUD3PN1qHguyxllIYphjvTV8gqO3OK6Rc81kfM0S/LYaTfat1tpwD91ZdOdnS5bggD+C
-         PaR4m4jLrfuPHjz5AOR3qW2/3eCNGVzzI8j/u+L5AQzY9n1If50nO2CtHCoZj3SzVnT9
-         HtBUk0EopVsqzg3G09YDRhyhyN5YZR1APRkiFhw77KiviRPI/njNpHxX/DiH/Tdy1LDL
-         yUGJWnCmsBGGhIk0aaXvCLIrJ0mKSAmvtYNKyWtDnBQz+2L4aYG8iUOjx2sZgPLokacG
-         7Y5g==
-X-Forwarded-Encrypted: i=1; AJvYcCVcBYltbLW9TMEfQ2cs97jWQa96UKBZdjQD3tOmrtCUxsGkngfR5WO0breQDr+/COTcXa/mVMOs@lists.linux.dev
-X-Gm-Message-State: AOJu0YxRyxe1A/oNkh9osXKEGGMylex8xq5qikfzSVjDkgC8m87SARS8
-	uxYJotvfV6aeA2exRaTp8EvhTv8VgcjSmyobyWwL8CucJx5eLMcU9NqMkMJr4R2Ad75ghw8B/Hh
-	9nbaXu5ZldWUrM6f0iA==
-X-Google-Smtp-Source: AGHT+IFFA8Am2fnybv9rvlh//I4Iw/BUP5vE4Qrvs/2x2IMy3Yp6BBWo4VkpWJV7hHHYkfYEkHZgL37ArvDw8k0=
-X-Received: from wmbdr13.prod.google.com ([2002:a05:600c:608d:b0:46f:aa50:d6ff])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:548a:b0:471:ff3:7514 with SMTP id 5b1f17b1804b1-47117877736mr89174955e9.12.1760948235873;
- Mon, 20 Oct 2025 01:17:15 -0700 (PDT)
-Date: Mon, 20 Oct 2025 08:17:15 +0000
-In-Reply-To: <20251020020714.2511718-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h94D+eQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B44C4CEF9;
+	Mon, 20 Oct 2025 08:28:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1760948897;
+	bh=zeGVUJQKM0VxiUKiRwCXA3JlS8XFgA6+AtvAVygUk0k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=h94D+eQL3uAjXGsKaORgbEgieezjGS6hy/s9BHL3iiQmOZHUQKcnss33uwt/6RK5C
+	 JE2KTCOz/nbe/de8G3e6gv5yRvf5fLxPQSfkiONiXrNehz4MQybCuYvdLAbdp++SJQ
+	 mwiR7ZNrfD3ye4PWKCgdnlAYFcqtAth2bp1qh2Nk=
+Date: Mon, 20 Oct 2025 10:28:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Eric Naim <dnaim@cachyos.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>, Kenneth Crudup <kenny@panix.com>,
+	Genes Lists <lists@sapience.com>, Jens Axboe <axboe@kernel.dk>,
+	Todd Brandt <todd.e.brandt@intel.com>
+Subject: Re: [PATCH 6.17 068/563] PCI/MSI: Add startup/shutdown for per
+ device domains
+Message-ID: <2025102008-preheated-diffused-015d@gregkh>
+References: <20251013144413.753811471@linuxfoundation.org>
+ <20251013211648.GA864848@bhelgaas>
+ <2025101753-borough-perm-365d@gregkh>
+ <6f19c559-35b4-4cd8-8bcd-615898dd8a4d@cachyos.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20251020020714.2511718-1-ojeda@kernel.org>
-Message-ID: <aPXwCwc4uevRO951@google.com>
-Subject: Re: [PATCH] objtool/rust: add one more `noreturn` Rust function
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f19c559-35b4-4cd8-8bcd-615898dd8a4d@cachyos.org>
 
-On Mon, Oct 20, 2025 at 04:07:14AM +0200, Miguel Ojeda wrote:
-> Between Rust 1.79 and 1.86, under `CONFIG_RUST_KERNEL_DOCTESTS=y`,
-> `objtool` may report:
+On Sun, Oct 19, 2025 at 01:29:18PM +0800, Eric Naim wrote:
+> On 10/17/25 14:56, Greg Kroah-Hartman wrote:
+> > On Mon, Oct 13, 2025 at 04:16:48PM -0500, Bjorn Helgaas wrote:
+> >> [+cc Kenny, Gene, Jens, Todd]
+> >>
+> >> On Mon, Oct 13, 2025 at 04:38:49PM +0200, Greg Kroah-Hartman wrote:
+> >>> 6.17-stable review patch.  If anyone has any objections, please let me know.
+> >>
+> >> We have open regression reports about this, so I don't think we
+> >> should backport it yet:
+> >>
+> >>   https://lore.kernel.org/r/af5f1790-c3b3-4f43-97d5-759d43e09c7b@panix.com
+> > 
+> > It's already in a release :(
+> > 
+> > If someone will be so kind as to forward me the git id of the fix when
+> > it lands in Linus's tree, I will be glad to queue that up.
+> > 
+> > thanks,
+> > 
 > 
->     rust/doctests_kernel_generated.o: warning: objtool:
->     rust_doctest_kernel_alloc_kbox_rs_13() falls through to next
->     function rust_doctest_kernel_alloc_kvec_rs_0()
-> 
-> (as well as in rust_doctest_kernel_alloc_kvec_rs_0) due to calls to the
-> `noreturn` symbol:
-> 
->     core::option::expect_failed
-> 
-> from code added in commits 779db37373a3 ("rust: alloc: kvec: implement
-> AsPageIter for VVec") and 671618432f46 ("rust: alloc: kbox: implement
-> AsPageIter for VBox").
-> 
-> Thus add the mangled one to the list so that `objtool` knows it is
-> actually `noreturn`.
-> 
-> This can be reproduced as well in other versions by tweaking the code,
-> such as the latest stable Rust (1.90.0).
-> 
-> Stable does not have code that triggers this, but it could have it in
-> the future. Downstream forks could too. Thus tag it for backport.
-> 
-> See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-> for more details.
-> 
-> Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
-> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-> Cc: Peter Zijlstra <peterz@infradead.org>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Hi Greg, the fix has made it into Linus's tree. The git hash is e433110eb5bf067f74d3d15c5fb252206c66ae0b
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Thanks, now queued up.
