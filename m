@@ -1,97 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BCF1E25E3;
-	Sun, 19 Oct 2025 21:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741D3594A;
+	Mon, 20 Oct 2025 02:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760909482; cv=none; b=BsPNEhxzX0DkfRjLa0v8PIOgjR30oAMWIXdHCrmrUiX/62uFJzrWPnn5qVi/WghfkI4nadyJ1pLTbOXW5LlmUK9Vm2hIMo7Kga/RtzqXfxhZ928gQgXhBO/270+Z0w/FedTAmc95rZLiW8mz4WeJOuwFr7Mu5TvJ03gLYpQz10s=
+	t=1760926065; cv=none; b=Ewmy5nd2Y0jXVSKhKB18pkr+aD4Z82o7480TbYeAoY8pxgJzP0/0tw2ufAk4Oq10iXaRmzsUpljVcYiYAOf1C3DNoV5rDppJT/y96Z1xBvAJl7te/Opn3xEkBuQoackzYHFQ5YBrtRe7PQ7PPnryqCdcjinDYe+cjCkB8WnMEJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760909482; c=relaxed/simple;
-	bh=sApG3ZbJWTksJqIVkodaBxHNS4Hr0anMh4n685JAKh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A587zlBMqhjdJ5maAPOoGm4n53v/QP5aef7qHkL4g+ezYTMUBataeFOIik38jxs3CirawcNueCQzuIZJbTL6ba9zmShGu3N1oxPDhnl950a7QXCmKgX68kkERlXP6gJirExPNowi1h5FSwKMX7gfyX1+XaWwUDT2zNKNTnCg4i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IcBgCSzH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760926065; c=relaxed/simple;
+	bh=rheH6Ia6DijJ7OprwEpFfSq6P7ogPSfbX6TYiHJYnvs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lx/ybaole9BAG67XERRfTbpp3sjtpy4TzHIyE5Lr6zXaL6VLR5HeGi7d121lEpjsHKp0+p1LbXJgCZokXnUJK00yx+ztDAX9hYhOrbJhgNceTqxfQoJro4cD2dVWre1/4qtaxGAoLwzhKrlbVCYMzye6QJdYpg094UvQ1I6tikY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kl4l2Izi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IcBgCSzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC02AC4CEE7;
-	Sun, 19 Oct 2025 21:31:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kl4l2Izi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA61C4CEE7;
+	Mon, 20 Oct 2025 02:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760909481;
-	bh=sApG3ZbJWTksJqIVkodaBxHNS4Hr0anMh4n685JAKh0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IcBgCSzHByUTg0KSFE2YM1558TixTmxwF02MD0Ww3VADciu/Lgk9WrbXSXsGsOcaC
-	 v6kMEo34mZA0JLdIPDM43OncXFjvRLZLRwVW7vZr7fMYiZgAndiThkdqHZg5bAjnpC
-	 94jwtQi5u8uivbJ/4fvAOYbSXhEt/PxHcW8V6BdzK0MWoXpKbXOunAy3ffRXj7R1M6
-	 dnsL/PYJUOmW7BfALr3gW9l/dimBr5iaveWEIDvnxLR0wsLf1XI3GeetXX1sqjLHb6
-	 Bv5r/a7HIE0buC/WueXJh7mVyIA3XNlCEAZ9ktEMuAVTaUiKBm2F727HQEcgVsHa4Z
-	 TYLOgNQsBVxGA==
+	s=k20201202; t=1760926065;
+	bh=rheH6Ia6DijJ7OprwEpFfSq6P7ogPSfbX6TYiHJYnvs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Kl4l2IziLW8kHFxHkhddlY0BAI82TlrFICtCwi6lmXdVXcmlXLYUJRdV6Ch2NxQgR
+	 jg9eFTQc32ZOmnELADfLFrd+K3Wah/AUiJz5AhEzpZbhep8QXiVxpssLDQakUxUPIJ
+	 zuv747Tvrex4uzl/DoqkMhJdaXEH7QY+WG3Bo+jqDfWfwAycM/ysxbiP5YnTK+gSM9
+	 A0SXW9yKhu7L0UNfHhLTYRfADgUfeERZF2JOltNyOCfxDrKOAvxFjl6mdin2kUb+9f
+	 NLVCLoql1vlvOkH9ocRWQunmc7EAtX3iIPWCT5MpUv2ItlmXsH36p2G2U1HkC3/Dn0
+	 2QTLSJPV8jIBw==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: tamird@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+To: Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Liam.Howlett@oracle.com,
-	a.hindborg@kernel.org,
-	airlied@gmail.com,
-	aliceryhl@google.com,
-	arve@android.com,
-	axboe@kernel.dk,
-	bhelgaas@google.com,
-	bjorn3_gh@protonmail.com,
-	boqun.feng@gmail.com,
-	brauner@kernel.org,
-	broonie@kernel.org,
-	cmllamas@google.com,
-	dri-devel@lists.freedesktop.org,
-	gary@garyguo.net,
-	jack@suse.cz,
-	joelagnelf@nvidia.com,
-	justinstitt@google.com,
-	kwilczynski@kernel.org,
-	leitao@debian.org,
-	lgirdwood@gmail.com,
-	linux-block@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	llvm@lists.linux.dev,
-	longman@redhat.com,
-	lorenzo.stoakes@oracle.com,
-	lossin@kernel.org,
-	maco@android.com,
-	mcgrof@kernel.org,
-	mingo@redhat.com,
-	mmaurer@google.com,
-	morbo@google.com,
-	mturquette@baylibre.com,
-	nathan@kernel.org,
-	nick.desaulniers+lkml@gmail.com,
-	nm@ti.com,
-	peterz@infradead.org,
-	russ.weight@linux.dev,
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
 	rust-for-linux@vger.kernel.org,
-	sboyd@kernel.org,
-	simona@ffwll.ch,
-	surenb@google.com,
-	tamird@gmail.com,
-	tkjos@android.com,
-	tmgross@umich.edu,
-	urezki@gmail.com,
-	vbabka@suse.cz,
-	vireshk@kernel.org,
-	viro@zeniv.linux.org.uk,
-	will@kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] samples: rust: debugfs: use `core::ffi::CStr` method names
-Date: Sun, 19 Oct 2025 23:30:49 +0200
-Message-ID: <20251019213049.2060970-1-ojeda@kernel.org>
-In-Reply-To: <20251018-cstr-core-v18-7-9378a54385f8@gmail.com>
-References: <20251018-cstr-core-v18-7-9378a54385f8@gmail.com>
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: [PATCH] objtool/rust: add one more `noreturn` Rust function
+Date: Mon, 20 Oct 2025 04:07:14 +0200
+Message-ID: <20251020020714.2511718-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -100,32 +53,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Prepare for `core::ffi::CStr` taking the place of `kernel::str::CStr` by
-avoiding methods that only exist on the latter.
+Between Rust 1.79 and 1.86, under `CONFIG_RUST_KERNEL_DOCTESTS=y`,
+`objtool` may report:
 
-This backslid in commit d4a5d397c7fb ("samples: rust: Add scoped debugfs
-sample driver").
+    rust/doctests_kernel_generated.o: warning: objtool:
+    rust_doctest_kernel_alloc_kbox_rs_13() falls through to next
+    function rust_doctest_kernel_alloc_kvec_rs_0()
 
+(as well as in rust_doctest_kernel_alloc_kvec_rs_0) due to calls to the
+`noreturn` symbol:
+
+    core::option::expect_failed
+
+from code added in commits 779db37373a3 ("rust: alloc: kvec: implement
+AsPageIter for VVec") and 671618432f46 ("rust: alloc: kbox: implement
+AsPageIter for VBox").
+
+Thus add the mangled one to the list so that `objtool` knows it is
+actually `noreturn`.
+
+This can be reproduced as well in other versions by tweaking the code,
+such as the latest stable Rust (1.90.0).
+
+Stable does not have code that triggers this, but it could have it in
+the future. Downstream forks could too. Thus tag it for backport.
+
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- samples/rust/rust_debugfs_scoped.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/samples/rust/rust_debugfs_scoped.rs b/samples/rust/rust_debugfs_scoped.rs
-index b0c4e76b123e..eb870e9986b8 100644
---- a/samples/rust/rust_debugfs_scoped.rs
-+++ b/samples/rust/rust_debugfs_scoped.rs
-@@ -38,7 +38,7 @@ fn remove_file_write(
-     mod_data
-         .devices
-         .lock()
--        .retain(|device| device.name.as_bytes() != to_remove.as_bytes());
-+        .retain(|device| device.name.to_bytes() != to_remove.to_bytes());
-     Ok(())
- }
- 
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index a5770570b106..3c7ab910b189 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -217,6 +217,7 @@ static bool is_rust_noreturn(const struct symbol *func)
+ 	 * these come from the Rust standard library).
+ 	 */
+ 	return str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
++	       str_ends_with(func->name, "_4core6option13expect_failed")				||
+ 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
+ 	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
+ 	       str_ends_with(func->name, "_4core9panicking5panic")					||
 
-base-commit: b214b442f2fa78aad04ebe1b5cad2c1d94120cb7
+base-commit: 211ddde0823f1442e4ad052a2f30f050145ccada
 -- 
 2.51.0
 
