@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB0265CDD;
-	Tue, 21 Oct 2025 20:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26F0350A0D;
+	Tue, 21 Oct 2025 20:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077214; cv=none; b=Q57GtjaYx1BYH/L4GKOnUGRyLf4AhBXsciM9nekojgOwjWmBecx2LPD1q3qBYIs4VrggmBWZEjYVRsJrlMmd0CF9gnzoPVGzElJrb8qJ3nTFG9vMwRZB8+RHIOHZLvhzQu2u8q7b6Dc4sJ4XuScPi87lk69Kr5mRNKqgITubzgE=
+	t=1761077218; cv=none; b=qvIfysibAC4TE4J2FbI2zanZz+LRVeqMlSn749ySXGOSHVppTPZbIAqqh1om3rylqC10S3VrwUMUf2p5vMRKGpw62qFje0AJ7vwF2/nrIAvXStzMneZn5Cvre28VlG7flN/U+UcHUWFU8EKXgxGErKulATqsEmn50TLPJk/ZBR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077214; c=relaxed/simple;
-	bh=iG4mrDt0BcWH0Y1Fm6ParEKGdd675sF3ZK6SBkz/5/I=;
+	s=arc-20240116; t=1761077218; c=relaxed/simple;
+	bh=2qen5h23h4pwmvMga4vw2MjQsv995gDzYNKy9878tcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXJdIgNksnf205GcE9FipnGq1sp/EwZmuuzN+e66NExGo6W1CnD+DF05d5QDUa68K8WqKkog/+loJc0RKs8hEdUv5SGdhL+1DhV+4fUnCcqYoKOf0hE2PScFnrC6xt7a9SJeFlbT3aMF8Nt0+MdYouBP5wJac4AxE8JLn2Stins=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubEhet+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGom3O2TSEHSwD4Q/Xflm79fBjw9BB4fWHF3dRUJBPe0yvmfZKSAL2LefR2JwFZlJXYA6zShXiX94rQa0S4J8Ep2TM/AnhozyRWrBhK8544LHXgtGlvEsZgY4effoW6GGcFE7WxXCV1XW4S3GCpJn35T6Wes9qoxyuUJ7PIDqeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcQoW2bR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubEhet+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FABC4CEF1;
-	Tue, 21 Oct 2025 20:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcQoW2bR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4099BC4CEF1;
+	Tue, 21 Oct 2025 20:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077214;
-	bh=iG4mrDt0BcWH0Y1Fm6ParEKGdd675sF3ZK6SBkz/5/I=;
+	s=korg; t=1761077217;
+	bh=2qen5h23h4pwmvMga4vw2MjQsv995gDzYNKy9878tcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubEhet+r4LUK0tYHntleDicd52si/1rk1kIPO6JSYOafyAuBl752Yb2NRcF9FOlS6
-	 X5UK+q8ORujKmQhIYpQNPgGLHgXIyGDIVcOCcY/FZ3PZJcKhng8S4mFkZc2rLf1xWg
-	 QA84bcweLHxGcpwfMpFmx6NPeJizbE349hhfajBg=
+	b=AcQoW2bRtD3nbazaY+BuoiVlnXxOc4ky6INXjDBlN2/tIfsd8AmlYZ6o/rsWopi8C
+	 kkoUSrumkw0vKMDz0uhctb8jf3Y9oFMb2VFMt2v4AX6HL/O0KFoGH4s6EJpBXjOCi8
+	 tkcujbKM3nvxa04QqpaNfsYY7OvqQyM/900MdRPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.17 034/159] cxl/acpi: Fix setup of memory resource in cxl_acpi_set_cache_size()
-Date: Tue, 21 Oct 2025 21:50:11 +0200
-Message-ID: <20251021195044.016408773@linuxfoundation.org>
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.17 035/159] ALSA: hda/intel: Add MSI X870E Tomahawk to denylist
+Date: Tue, 21 Oct 2025 21:50:12 +0200
+Message-ID: <20251021195044.041584460@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,46 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-commit 2e41e5a91a37202ff6743c3ae5329e106aeb1c6c upstream.
+commit 30b3211aa24161856134b2c2ea2ab1c6eb534b36 upstream.
 
-In order to compare the resource against the HMAT memory target,
-the resource needs to be memory type. Change the DEFINE_RES()
-macro to DEFINE_RES_MEM() in order to set the correct resource type.
-hmat_get_extended_linear_cache_size() uses resource_contains()
-internally. This causes a regression for platforms with the
-extended linear cache enabled as the comparison always fails and the
-cache size is not set. User visible impact is that when 'cxl list' is
-issued, a CXL region with extended linear cache support will only
-report half the size of the actual size. And this also breaks MCE
-reporting of the memory region due to incorrect offset calculation
-for the memory.
+This motherboard uses USB audio instead, causing this driver to complain
+about "no codecs found!".
+Add it to the denylist to silence the warning.
 
-[dj: Fixup commit log suggested by djbw]
-[dj: Fixup stable address for cc]
-
-Fixes: 12b3d697c812 ("cxl: Remove core/acpi.c and cxl core dependency on ACPI")
-Cc: stable@vger.kernel.org
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/acpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/controllers/intel.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -345,7 +345,7 @@ static int cxl_acpi_set_cache_size(struc
- 	struct resource res;
- 	int nid, rc;
+--- a/sound/hda/controllers/intel.c
++++ b/sound/hda/controllers/intel.c
+@@ -2077,6 +2077,7 @@ static const struct pci_device_id driver
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1043, 0x874f) }, /* ASUS ROG Zenith II / Strix */
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb59) }, /* MSI TRX40 Creator */
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb60) }, /* MSI TRX40 */
++	{ PCI_DEVICE_SUB(0x1022, 0x15e3, 0x1462, 0xee59) }, /* MSI X870E Tomahawk WiFi */
+ 	{}
+ };
  
--	res = DEFINE_RES(start, size, 0);
-+	res = DEFINE_RES_MEM(start, size);
- 	nid = phys_to_target_node(start);
- 
- 	rc = hmat_get_extended_linear_cache_size(&res, nid, &cache_size);
 
 
