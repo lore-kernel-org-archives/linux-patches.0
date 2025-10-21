@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407B92797B5;
-	Tue, 21 Oct 2025 20:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B2279918;
+	Tue, 21 Oct 2025 20:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077055; cv=none; b=hnXKPnz+IK3iQ16QOufcFdw81cIuWmfC7X1oJOXEdn/tj4c8NWChkQqKkG+D9n5WPy8dC5r5oGu8SSeEE/jkb1upNQGqbIu8j4piAjIewsGdYdVxuwDAPXi8zREov4Te6A7NFuO2codDC4MqwF9SNX+JPbkW79mPVKBQHtv++Mk=
+	t=1761077056; cv=none; b=hoCo47Tr3o8LHXwINS32oEdZFUtH1Js0F8Mfo4SOKbSmdpqhbSSreVDTCGFkWyNzJF7guZUamWrcMzfaJgdGu4es7JDB9pTUnRBtY5FMH7vygVDKgevF40KXT0BoENO3+iAbuQdOZhtTh01oZDdcvKNYWBEbuLJt3Uy6E8rFj+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077055; c=relaxed/simple;
-	bh=PDDGSU8pGE+xHeQ5JfQSeYRAxq6m5ggG0L9JslDH/tk=;
+	s=arc-20240116; t=1761077056; c=relaxed/simple;
+	bh=QXyKEWUx4U7sE4m6uShbqHkOhLOpk8vf7EMW+38N+9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ITgO97Q2onW8CbxY9W2DiwI/Clez/+/pIAErnebNCM4R4ExouwIscWLmQK64mpukQPpYBL+bnpN1g1ouJ3SE3HK3wMTdIWUEpwGx1TrC6v4kq7KILv6cZvHqB/zWgaNPMloDZL07pRwtiqbN0ZrsERmInffGRDNbwT2zamdI5AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pimYKT+t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QLkIzwyPMjJCbVsbgTXE0R3dLnd7lc8mY9ZjkgjxnkEMPlHzYNK53/5G+eHUqBt0keiFXOfQjUeYvdae1WuUqN49KtMF0Sm7NLYoFxrg9ZsViOpJj7klfn5xF/r4S9xaA0qYIFw+9YDWp581FUNyO1L8wyEWixQgHiqFjnOICF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyofo+L/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pimYKT+t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCDBC4CEF1;
-	Tue, 21 Oct 2025 20:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyofo+L/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAE2C4CEF5;
+	Tue, 21 Oct 2025 20:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077053;
-	bh=PDDGSU8pGE+xHeQ5JfQSeYRAxq6m5ggG0L9JslDH/tk=;
+	s=korg; t=1761077056;
+	bh=QXyKEWUx4U7sE4m6uShbqHkOhLOpk8vf7EMW+38N+9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pimYKT+tF9DmEi7SKIbztRo9Tq283rpFZEjp4532mtkuY02nmTQMejwrQUnUjcvmv
-	 n2sKnB9aY/3tIusdWAEmGQEBvObWtlakdtpuzRAKbYR5dp2jxMMhxOgNM6Imws1CGq
-	 CTbeGBdH5wgg+Dc2viRj3TaZddW1mdlJJslqQx08=
+	b=oyofo+L/IX/wig5PNcHg6peevatJkDiJ+S54i5wFz9QP2aB5G2yWV2vtGusZJRT2n
+	 N6mziEH944CU3hQO9TdsXsa2NdIKqh7MvnbisO6CIcb9mcoTvDc1RFh9PZc4l7qbxS
+	 nIHw4ZpqNekAcKMjQJPXzpQLHJrMVyjDoIrEH0p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Wilczynski <andrzejx.wilczynski@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/136] ixgbevf: fix getting link speed data for E610 devices
-Date: Tue, 21 Oct 2025 21:51:49 +0200
-Message-ID: <20251021195038.888628022@linuxfoundation.org>
+Subject: [PATCH 6.12 095/136] xfs: rename the old_crc variable in xlog_recover_process
+Date: Tue, 21 Oct 2025 21:51:23 +0200
+Message-ID: <20251021195038.240763216@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -56,303 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 53f0eb62b4d23d40686f2dd51776b8220f2887bb ]
+[ Upstream commit 0b737f4ac1d3ec093347241df74bbf5f54a7e16c ]
 
-E610 adapters no longer use the VFLINKS register to read PF's link
-speed and linkup state. As a result VF driver cannot get actual link
-state and it incorrectly reports 10G which is the default option.
-It leads to a situation where even 1G adapters print 10G as actual
-link speed. The same happens when PF driver set speed different than 10G.
+old_crc is a very misleading name.  Rename it to expected_crc as that
+described the usage much better.
 
-Add new mailbox operation to let the VF driver request a PF driver
-to provide actual link data. Update the mailbox api to v1.6.
-
-Incorporate both ways of getting link status within the legacy
-ixgbe_check_mac_link_vf() function.
-
-Fixes: 4c44b450c69b ("ixgbevf: Add support for Intel(R) E610 device")
-Co-developed-by: Andrzej Wilczynski <andrzejx.wilczynski@intel.com>
-Signed-off-by: Andrzej Wilczynski <andrzejx.wilczynski@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251009-jk-iwl-net-2025-10-01-v3-2-ef32a425b92a@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by negotiating supported features")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: e747883c7d73 ("xfs: fix log CRC mismatches between i386 and other architectures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/defines.h      |    1 
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    6 
- drivers/net/ethernet/intel/ixgbevf/mbx.h          |    4 
- drivers/net/ethernet/intel/ixgbevf/vf.c           |  137 +++++++++++++++++-----
- 4 files changed, 116 insertions(+), 32 deletions(-)
+ fs/xfs/xfs_log_recover.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/defines.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/defines.h
-@@ -28,6 +28,7 @@
- 
- /* Link speed */
- typedef u32 ixgbe_link_speed;
-+#define IXGBE_LINK_SPEED_UNKNOWN	0
- #define IXGBE_LINK_SPEED_1GB_FULL	0x0020
- #define IXGBE_LINK_SPEED_10GB_FULL	0x0080
- #define IXGBE_LINK_SPEED_100_FULL	0x0008
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -2278,6 +2278,7 @@ static void ixgbevf_negotiate_api(struct
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2890,20 +2890,19 @@ xlog_recover_process(
+ 	int			pass,
+ 	struct list_head	*buffer_list)
  {
- 	struct ixgbe_hw *hw = &adapter->hw;
- 	static const int api[] = {
-+		ixgbe_mbox_api_16,
- 		ixgbe_mbox_api_15,
- 		ixgbe_mbox_api_14,
- 		ixgbe_mbox_api_13,
-@@ -2297,7 +2298,8 @@ static void ixgbevf_negotiate_api(struct
- 		idx++;
- 	}
+-	__le32			old_crc = rhead->h_crc;
+-	__le32			crc;
++	__le32			expected_crc = rhead->h_crc, crc;
  
--	if (hw->api_version >= ixgbe_mbox_api_15) {
-+	/* Following is not supported by API 1.6, it is specific for 1.5 */
-+	if (hw->api_version == ixgbe_mbox_api_15) {
- 		hw->mbx.ops.init_params(hw);
- 		memcpy(&hw->mbx.ops, &ixgbevf_mbx_ops,
- 		       sizeof(struct ixgbe_mbx_operations));
-@@ -2654,6 +2656,7 @@ static void ixgbevf_set_num_queues(struc
- 		case ixgbe_mbox_api_13:
- 		case ixgbe_mbox_api_14:
- 		case ixgbe_mbox_api_15:
-+		case ixgbe_mbox_api_16:
- 			if (adapter->xdp_prog &&
- 			    hw->mac.max_tx_queues == rss)
- 				rss = rss > 3 ? 2 : 1;
-@@ -4648,6 +4651,7 @@ static int ixgbevf_probe(struct pci_dev
- 	case ixgbe_mbox_api_13:
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
-+	case ixgbe_mbox_api_16:
- 		netdev->max_mtu = IXGBE_MAX_JUMBO_FRAME_SIZE -
- 				  (ETH_HLEN + ETH_FCS_LEN);
- 		break;
---- a/drivers/net/ethernet/intel/ixgbevf/mbx.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/mbx.h
-@@ -66,6 +66,7 @@ enum ixgbe_pfvf_api_rev {
- 	ixgbe_mbox_api_13,	/* API version 1.3, linux/freebsd VF driver */
- 	ixgbe_mbox_api_14,	/* API version 1.4, linux/freebsd VF driver */
- 	ixgbe_mbox_api_15,	/* API version 1.5, linux/freebsd VF driver */
-+	ixgbe_mbox_api_16,      /* API version 1.6, linux/freebsd VF driver */
- 	/* This value should always be last */
- 	ixgbe_mbox_api_unknown,	/* indicates that API version is not known */
- };
-@@ -102,6 +103,9 @@ enum ixgbe_pfvf_api_rev {
+ 	crc = xlog_cksum(log, rhead, dp, be32_to_cpu(rhead->h_len));
  
- #define IXGBE_VF_GET_LINK_STATE 0x10 /* get vf link state */
- 
-+/* mailbox API, version 1.6 VF requests */
-+#define IXGBE_VF_GET_PF_LINK_STATE	0x11 /* request PF to send link info */
-+
- /* length of permanent address message returned from PF */
- #define IXGBE_VF_PERMADDR_MSG_LEN	4
- /* word in permanent address message with the current multicast type */
---- a/drivers/net/ethernet/intel/ixgbevf/vf.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
-@@ -313,6 +313,7 @@ int ixgbevf_get_reta_locked(struct ixgbe
- 	 * is not supported for this device type.
+ 	/*
+ 	 * Nothing else to do if this is a CRC verification pass. Just return
+ 	 * if this a record with a non-zero crc. Unfortunately, mkfs always
+-	 * sets old_crc to 0 so we must consider this valid even on v5 supers.
+-	 * Otherwise, return EFSBADCRC on failure so the callers up the stack
+-	 * know precisely what failed.
++	 * sets expected_crc to 0 so we must consider this valid even on v5
++	 * supers.  Otherwise, return EFSBADCRC on failure so the callers up the
++	 * stack know precisely what failed.
  	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_13:
-@@ -382,6 +383,7 @@ int ixgbevf_get_rss_key_locked(struct ix
- 	 * or if the operation is not supported for this device type.
- 	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_13:
-@@ -552,6 +554,7 @@ static s32 ixgbevf_update_xcast_mode(str
- 	case ixgbe_mbox_api_13:
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
-+	case ixgbe_mbox_api_16:
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -625,6 +628,48 @@ static s32 ixgbevf_hv_get_link_state_vf(
- }
- 
- /**
-+ * ixgbevf_get_pf_link_state - Get PF's link status
-+ * @hw: pointer to the HW structure
-+ * @speed: link speed
-+ * @link_up: indicate if link is up/down
-+ *
-+ * Ask PF to provide link_up state and speed of the link.
-+ *
-+ * Return: IXGBE_ERR_MBX in the case of mailbox error,
-+ * -EOPNOTSUPP if the op is not supported or 0 on success.
-+ */
-+static int ixgbevf_get_pf_link_state(struct ixgbe_hw *hw, ixgbe_link_speed *speed,
-+				     bool *link_up)
-+{
-+	u32 msgbuf[3] = {};
-+	int err;
-+
-+	switch (hw->api_version) {
-+	case ixgbe_mbox_api_16:
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	msgbuf[0] = IXGBE_VF_GET_PF_LINK_STATE;
-+
-+	err = ixgbevf_write_msg_read_ack(hw, msgbuf, msgbuf,
-+					 ARRAY_SIZE(msgbuf));
-+	if (err || (msgbuf[0] & IXGBE_VT_MSGTYPE_FAILURE)) {
-+		err = IXGBE_ERR_MBX;
-+		*speed = IXGBE_LINK_SPEED_UNKNOWN;
-+		/* No need to set @link_up to false as it will be done by
-+		 * ixgbe_check_mac_link_vf().
-+		 */
-+	} else {
-+		*speed = msgbuf[1];
-+		*link_up = msgbuf[2];
-+	}
-+
-+	return err;
-+}
-+
-+/**
-  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
-  *  @hw: pointer to the HW structure
-  *  @vlan: 12 bit VLAN ID
-@@ -659,6 +704,58 @@ mbx_err:
- }
- 
- /**
-+ * ixgbe_read_vflinks - Read VFLINKS register
-+ * @hw: pointer to the HW structure
-+ * @speed: link speed
-+ * @link_up: indicate if link is up/down
-+ *
-+ * Get linkup status and link speed from the VFLINKS register.
-+ */
-+static void ixgbe_read_vflinks(struct ixgbe_hw *hw, ixgbe_link_speed *speed,
-+			       bool *link_up)
-+{
-+	u32 vflinks = IXGBE_READ_REG(hw, IXGBE_VFLINKS);
-+
-+	/* if link status is down no point in checking to see if PF is up */
-+	if (!(vflinks & IXGBE_LINKS_UP)) {
-+		*link_up = false;
-+		return;
-+	}
-+
-+	/* for SFP+ modules and DA cables on 82599 it can take up to 500usecs
-+	 * before the link status is correct
-+	 */
-+	if (hw->mac.type == ixgbe_mac_82599_vf) {
-+		for (int i = 0; i < 5; i++) {
-+			udelay(100);
-+			vflinks = IXGBE_READ_REG(hw, IXGBE_VFLINKS);
-+
-+			if (!(vflinks & IXGBE_LINKS_UP)) {
-+				*link_up = false;
-+				return;
-+			}
-+		}
-+	}
-+
-+	/* We reached this point so there's link */
-+	*link_up = true;
-+
-+	switch (vflinks & IXGBE_LINKS_SPEED_82599) {
-+	case IXGBE_LINKS_SPEED_10G_82599:
-+		*speed = IXGBE_LINK_SPEED_10GB_FULL;
-+		break;
-+	case IXGBE_LINKS_SPEED_1G_82599:
-+		*speed = IXGBE_LINK_SPEED_1GB_FULL;
-+		break;
-+	case IXGBE_LINKS_SPEED_100_82599:
-+		*speed = IXGBE_LINK_SPEED_100_FULL;
-+		break;
-+	default:
-+		*speed = IXGBE_LINK_SPEED_UNKNOWN;
-+	}
-+}
-+
-+/**
-  * ixgbevf_hv_set_vfta_vf - * Hyper-V variant - just a stub.
-  * @hw: unused
-  * @vlan: unused
-@@ -705,7 +802,6 @@ static s32 ixgbevf_check_mac_link_vf(str
- 	struct ixgbe_mbx_info *mbx = &hw->mbx;
- 	struct ixgbe_mac_info *mac = &hw->mac;
- 	s32 ret_val = 0;
--	u32 links_reg;
- 	u32 in_msg = 0;
- 
- 	/* If we were hit with a reset drop the link */
-@@ -715,36 +811,14 @@ static s32 ixgbevf_check_mac_link_vf(str
- 	if (!mac->get_link_status)
- 		goto out;
- 
--	/* if link status is down no point in checking to see if pf is up */
--	links_reg = IXGBE_READ_REG(hw, IXGBE_VFLINKS);
--	if (!(links_reg & IXGBE_LINKS_UP))
--		goto out;
--
--	/* for SFP+ modules and DA cables on 82599 it can take up to 500usecs
--	 * before the link status is correct
--	 */
--	if (mac->type == ixgbe_mac_82599_vf) {
--		int i;
--
--		for (i = 0; i < 5; i++) {
--			udelay(100);
--			links_reg = IXGBE_READ_REG(hw, IXGBE_VFLINKS);
--
--			if (!(links_reg & IXGBE_LINKS_UP))
--				goto out;
--		}
--	}
--
--	switch (links_reg & IXGBE_LINKS_SPEED_82599) {
--	case IXGBE_LINKS_SPEED_10G_82599:
--		*speed = IXGBE_LINK_SPEED_10GB_FULL;
--		break;
--	case IXGBE_LINKS_SPEED_1G_82599:
--		*speed = IXGBE_LINK_SPEED_1GB_FULL;
--		break;
--	case IXGBE_LINKS_SPEED_100_82599:
--		*speed = IXGBE_LINK_SPEED_100_FULL;
--		break;
-+	if (hw->mac.type == ixgbe_mac_e610_vf) {
-+		ret_val = ixgbevf_get_pf_link_state(hw, speed, link_up);
-+		if (ret_val)
-+			goto out;
-+	} else {
-+		ixgbe_read_vflinks(hw, speed, link_up);
-+		if (*link_up == false)
-+			goto out;
- 	}
- 
- 	/* if the read failed it could just be a mailbox collision, best wait
-@@ -951,6 +1025,7 @@ int ixgbevf_get_queues(struct ixgbe_hw *
- 	case ixgbe_mbox_api_13:
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
-+	case ixgbe_mbox_api_16:
- 		break;
- 	default:
+ 	if (pass == XLOG_RECOVER_CRCPASS) {
+-		if (old_crc && crc != old_crc)
++		if (expected_crc && crc != expected_crc)
+ 			return -EFSBADCRC;
  		return 0;
+ 	}
+@@ -2914,11 +2913,11 @@ xlog_recover_process(
+ 	 * zero CRC check prevents warnings from being emitted when upgrading
+ 	 * the kernel from one that does not add CRCs by default.
+ 	 */
+-	if (crc != old_crc) {
+-		if (old_crc || xfs_has_crc(log->l_mp)) {
++	if (crc != expected_crc) {
++		if (expected_crc || xfs_has_crc(log->l_mp)) {
+ 			xfs_alert(log->l_mp,
+ 		"log record CRC mismatch: found 0x%x, expected 0x%x.",
+-					le32_to_cpu(old_crc),
++					le32_to_cpu(expected_crc),
+ 					le32_to_cpu(crc));
+ 			xfs_hex_dump(dp, 32);
+ 		}
 
 
