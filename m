@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CB12797B5;
-	Tue, 21 Oct 2025 20:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A339350A07;
+	Tue, 21 Oct 2025 20:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077529; cv=none; b=JtvMHD1bJK81mDOjcYI3IEMF6p8WCSGG8fGYQn6wSryqPXk4r1bSE1xA1hlK893KDYg1Jqy+ybD56BR1gLaIi6sXzLozuiS14pzmiDFjkl0WnT/+OfiLsZvAJNpNwAfbye3J2E6OgXvbI6hKuTy/2olTC1imF/x9vHWAb5Z8qmk=
+	t=1761077533; cv=none; b=NHMfH+PymC+4BmEtV6lyXSFKeFgHco/0ih7gWzKfCTCRTQzps32uDrbqVtUMOJ6w+idJ0xQKg4q3dlMRAjM8qmW7b5Gbb/JlkJlYVPzERwaLo/3ybLjicT2+92DMvRHhE8ZXd91gt2vOZR3hIbr+6cK4Up1Xsl9IRRMBK7gGJZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077529; c=relaxed/simple;
-	bh=SW2plMvQUerm5wL4tJFZ38P1Xuh4aF6Uut1g0C8XTT8=;
+	s=arc-20240116; t=1761077533; c=relaxed/simple;
+	bh=rJekpz0B7fZlbZtjyC+f4MIVRAE+aHiufvrPYZj8E4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHdzRoG4arqFo2oXzCYKEFBM6qq5qtHbG3abT4MEOkXoU+jJArljv1EKofCnAofvTFox+SIZPU+g9v+RbiOCpxa+3r1UaQN+RseaTycOvzYEZlzunISaUVZ/Ra/szYqbY6SVLTuIQ81M5QtHsMsepjo+aAnW4iJDzV1IqxKIVr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Rk8TWnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFTfHMhFaXv6gZ+bVi4F3C5TV75fegDP24Gxrlt3N3QVqJA9slgvyb0jHwzTjTC/5XMmhmfnAapFmjH9W9+s/Hx70XNHpyB3hsyzxeD70LxabTGYk4l6HXHGUaowMYmCVN8QoFwqFqQ1IS+5kVTferg4LZ1SxGs27srccHgt8BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU4gpna/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Rk8TWnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3534C4CEF1;
-	Tue, 21 Oct 2025 20:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU4gpna/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B070CC4CEF1;
+	Tue, 21 Oct 2025 20:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077529;
-	bh=SW2plMvQUerm5wL4tJFZ38P1Xuh4aF6Uut1g0C8XTT8=;
+	s=korg; t=1761077533;
+	bh=rJekpz0B7fZlbZtjyC+f4MIVRAE+aHiufvrPYZj8E4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Rk8TWnr5fI+PW7IB1tJZL1XSTdcJE8LxECnDQckmVyW9Jdg+NefojujwKBKfKQvu
-	 Vz3mi26umxAqi0ogvWDMhCsmBuV5aQUBROS27kP1Jk2dq5Efhcp3fTITmiFGwnShMc
-	 rAPfJPBybaZMZbgeyYGlS1hQawnare8VlPa5bb8c=
+	b=qU4gpna/iFvEzcrBvx9wYtI/xrwjaJHBIpjkLl/s7V6c+FCaFdpHhkaotGAaxoQIG
+	 juPScpNwM2B3s3lCojv9ci1bBzJrrGjt9ey5oMPPV4Zw+lyjyIDoxgwOnIuPCNjqFe
+	 bRayyyTSgOBjegDmFHdkNdAtYPMkGGRQp/faIUOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	I Viswanath <viswanathiyyappan@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Khalid Aziz <khalid@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 132/159] ASoC: amd/sdw_utils: avoid NULL deref when devm_kasprintf() fails
-Date: Tue, 21 Oct 2025 21:51:49 +0200
-Message-ID: <20251021195046.324082972@linuxfoundation.org>
+Subject: [PATCH 6.17 091/159] net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset
+Date: Tue, 21 Oct 2025 21:51:08 +0200
+Message-ID: <20251021195045.376727051@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,39 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: I Viswanath <viswanathiyyappan@gmail.com>
 
-[ Upstream commit 5726b68473f7153a7f6294185e5998b7e2a230a2 ]
+[ Upstream commit 8d93ff40d49d70e05c82a74beae31f883fe0eaf8 ]
 
-devm_kasprintf() may return NULL on memory allocation failure,
-but the debug message prints cpus->dai_name before checking it.
-Move the dev_dbg() call after the NULL check to prevent potential
-NULL pointer dereference.
+dev->chipid is used in lan78xx_init_mac_address before it's initialized:
 
-Fixes: cb8ea62e64020 ("ASoC: amd/sdw_utils: add sof based soundwire generic machine driver")
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Link: https://patch.msgid.link/20251015075530.146851-1-liqiang01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+lan78xx_reset() {
+    lan78xx_init_mac_address()
+        lan78xx_read_eeprom()
+            lan78xx_read_raw_eeprom() <- dev->chipid is used here
+
+    dev->chipid = ... <- dev->chipid is initialized correctly here
+}
+
+Reorder initialization so that dev->chipid is set before calling
+lan78xx_init_mac_address().
+
+Fixes: a0db7d10b76e ("lan78xx: Add to handle mux control per chip id")
+Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Khalid Aziz <khalid@kernel.org>
+Link: https://patch.msgid.link/20251013181648.35153-1-viswanathiyyappan@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-sof-mach.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/lan78xx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-index 91d72d4bb9a26..d055582a3bf1a 100644
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -176,9 +176,9 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 			cpus->dai_name = devm_kasprintf(dev, GFP_KERNEL,
- 							"SDW%d Pin%d",
- 							link_num, cpu_pin_id);
--			dev_dbg(dev, "cpu->dai_name:%s\n", cpus->dai_name);
- 			if (!cpus->dai_name)
- 				return -ENOMEM;
-+			dev_dbg(dev, "cpu->dai_name:%s\n", cpus->dai_name);
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 5ccbe6ae2ebe9..e0c425779e67f 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3244,10 +3244,6 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 		}
+ 	} while (buf & HW_CFG_LRST_);
  
- 			codec_maps[j].cpu = 0;
- 			codec_maps[j].codec = j;
+-	ret = lan78xx_init_mac_address(dev);
+-	if (ret < 0)
+-		return ret;
+-
+ 	/* save DEVID for later usage */
+ 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
+ 	if (ret < 0)
+@@ -3256,6 +3252,10 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 	dev->chipid = (buf & ID_REV_CHIP_ID_MASK_) >> 16;
+ 	dev->chiprev = buf & ID_REV_CHIP_REV_MASK_;
+ 
++	ret = lan78xx_init_mac_address(dev);
++	if (ret < 0)
++		return ret;
++
+ 	/* Respond to the IN token with a NAK */
+ 	ret = lan78xx_read_reg(dev, USB_CFG0, &buf);
+ 	if (ret < 0)
 -- 
 2.51.0
 
