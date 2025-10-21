@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93921279798;
-	Tue, 21 Oct 2025 20:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F333A275861;
+	Tue, 21 Oct 2025 20:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077427; cv=none; b=FVcnIWFvpPKjp6HUpD8IhutDMJq/VGAjlrNfsMVxhOES+Wve4L4jyO4VkbaaNDkQQAh1gmX+KmBIre8u7ZdBdwu06yeYCEra/rF1XayoSiyapiULyzxcP8dRMoEWpPRJHSKh5w4lxTq+e+mZdXhyzpacukJA/fHL5syO34bGDKI=
+	t=1761077431; cv=none; b=TCEbC6/6/fDRJy5F+t7xq+NHURO7LQ/g8zACN/3srkMsqcU2uP3J2OGIxaFdcLTxXddXsfx1k2MLuLxViDUA+JHrWJsdiN/cS9by9zyo62k0ayPjZkN9RigRvYIAVda+lbihe8KmODJ8yTO2CalFA37UZ4mnJWKyEURE8XwLzjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077427; c=relaxed/simple;
-	bh=cpn/a45Dw1tz7fQ7MQIQOybeglSH9Plfewf6nzfvEfc=;
+	s=arc-20240116; t=1761077431; c=relaxed/simple;
+	bh=XimFrROINM5e0vl04U2r8Fke20RxLLaDWO8mekCJhgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R3CL96UAMTtXjadkDyvut0O2eVq7WVMuVzrUS1pCNqB7FOBZzd03UGIHmTY2ydU2qr67iS0tci/VD+BRSLSTd2huXTAV6UhjuGIxYBWPemrS3KHc3JKYmuNOIZ0ytL6VaJllS/RpYId0E92uTJSKJtLtQj6xRGAszilQTVKnKzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OU55APoc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QNP20UFK8efG/a+zXq3vc/r7P7Vt5HQUJdnrB6XQyxikFZeOKTOlCPfsVa/TZEzcs2UBkvadXX5oJFWuPJZHbKSyGxv8xDNAneEomtWMCzeg+Bq93wY23zzKSpoqDwc/eRRCLfJbRI5u63m8lGIcvcHBWCAw08c6wpMFjQAGT14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5tHmcp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OU55APoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21755C4CEF1;
-	Tue, 21 Oct 2025 20:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5tHmcp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610B4C113D0;
+	Tue, 21 Oct 2025 20:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077427;
-	bh=cpn/a45Dw1tz7fQ7MQIQOybeglSH9Plfewf6nzfvEfc=;
+	s=korg; t=1761077430;
+	bh=XimFrROINM5e0vl04U2r8Fke20RxLLaDWO8mekCJhgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OU55APocT1j+1jueEwPPE3b6s74716Q/lTl3bSa4wcK6mtFDGdcCOB8HyzpU3aMTl
-	 hwZXwjlq5ncuDypZJwCeciuSa8yKJCU83QvqoWS27zuZ+A1j/+DFLFo7LfOhfdD2r4
-	 KyAZLOI4+rdA1JE/kzq86qOo8vcY5jorWWM09K4A=
+	b=B5tHmcp6IGkPf3Nfnj/no6QFwm9L5EzMWpiAWpHOYZHLzylbj6KgJaUE8w99svNJh
+	 PRwQYVD8KfeUzZxtriUZUDjFv97I+Tm5OMy5vt6e4kwIhkI0/7ZLsDVU+iDb77ezKS
+	 XMwminszQN20sN1dZac8BvLMXPcisja3iz6c2Z0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 103/159] drm/i915/frontbuffer: Move bo refcounting intel_frontbuffer_{get,release}()
-Date: Tue, 21 Oct 2025 21:51:20 +0200
-Message-ID: <20251021195045.660427244@linuxfoundation.org>
+Subject: [PATCH 6.17 104/159] drm/i915/fb: Fix the set_tiling vs. addfb race, again
+Date: Tue, 21 Oct 2025 21:51:21 +0200
+Message-ID: <20251021195045.682295352@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -55,87 +56,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 760039c95c78490c5c66ef584fcd536797ed6a2f ]
+[ Upstream commit 86af6b90e0556fcefbc6e98eb78bdce90327ee76 ]
 
-Currently xe's intel_frontbuffer implementation forgets to
-hold a reference on the bo. This makes the entire thing
-extremely fragile as the cleanup order now depends on bo
-references held by other things
-(namely intel_fb_bo_framebuffer_fini()).
+intel_frontbuffer_get() is what locks out subsequent set_tiling
+changes to the bo. Thus the fence vs. modifier check must be done
+after intel_frontbuffer_get(), or else a concurrent set_tiling ioctl
+might sneak in and change the fence after the check has been done.
 
-Move the bo refcounting to intel_frontbuffer_{get,release}()
-so that both i915 and xe do this the same way.
+Close the race again. See commit dd689287b977 ("drm/i915: Prevent
+concurrent tiling/framebuffer modifications") for the previous
+instance.
 
-I first tried to fix this by having xe do the refcounting
-from its intel_bo_set_frontbuffer() implementation
-(which is what i915 does currently), but turns out xe's
-drm_gem_object_free() can sleep and thus drm_gem_object_put()
-isn't safe to call while we hold fb_tracking.lock.
+v2: Reorder intel_user_framebuffer_destroy() to match the unwind (Jani)
 
+Cc: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Fixes: 10690b8a49bc ("drm/i915/display: Add intel_fb_bo_framebuffer_fini")
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20251003145734.7634-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit eb4d490729a5fd8dc5a76d334f8d01fec7c14bbe)
+Link: https://patchwork.freedesktop.org/patch/msgid/20251003145734.7634-3-ville.syrjala@linux.intel.com
+(cherry picked from commit 1d1e4ded216017f8febd91332ee337f0e0e79285)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_frontbuffer.c       | 10 +++++++++-
- drivers/gpu/drm/i915/gem/i915_gem_object_frontbuffer.h |  2 --
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fb.c | 38 +++++++++++++------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_frontbuffer.c b/drivers/gpu/drm/i915/display/intel_frontbuffer.c
-index 43be5377ddc1a..73ed28ac95734 100644
---- a/drivers/gpu/drm/i915/display/intel_frontbuffer.c
-+++ b/drivers/gpu/drm/i915/display/intel_frontbuffer.c
-@@ -270,6 +270,8 @@ static void frontbuffer_release(struct kref *ref)
- 	spin_unlock(&display->fb_tracking.lock);
+diff --git a/drivers/gpu/drm/i915/display/intel_fb.c b/drivers/gpu/drm/i915/display/intel_fb.c
+index 0da842bd2f2f1..974e5b547d886 100644
+--- a/drivers/gpu/drm/i915/display/intel_fb.c
++++ b/drivers/gpu/drm/i915/display/intel_fb.c
+@@ -2111,10 +2111,10 @@ static void intel_user_framebuffer_destroy(struct drm_framebuffer *fb)
+ 	if (intel_fb_uses_dpt(fb))
+ 		intel_dpt_destroy(intel_fb->dpt_vm);
  
- 	i915_active_fini(&front->write);
+-	intel_frontbuffer_put(intel_fb->frontbuffer);
+-
+ 	intel_fb_bo_framebuffer_fini(intel_fb_bo(fb));
+ 
++	intel_frontbuffer_put(intel_fb->frontbuffer);
 +
-+	drm_gem_object_put(obj);
- 	kfree_rcu(front, rcu);
+ 	kfree(intel_fb);
  }
  
-@@ -287,6 +289,8 @@ intel_frontbuffer_get(struct drm_gem_object *obj)
- 	if (!front)
- 		return NULL;
+@@ -2216,15 +2216,17 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 	int ret = -EINVAL;
+ 	int i;
  
-+	drm_gem_object_get(obj);
++	/*
++	 * intel_frontbuffer_get() must be done before
++	 * intel_fb_bo_framebuffer_init() to avoid set_tiling vs. addfb race.
++	 */
++	intel_fb->frontbuffer = intel_frontbuffer_get(obj);
++	if (!intel_fb->frontbuffer)
++		return -ENOMEM;
 +
- 	front->obj = obj;
- 	kref_init(&front->ref);
- 	atomic_set(&front->bits, 0);
-@@ -299,8 +303,12 @@ intel_frontbuffer_get(struct drm_gem_object *obj)
- 	spin_lock(&display->fb_tracking.lock);
- 	cur = intel_bo_set_frontbuffer(obj, front);
- 	spin_unlock(&display->fb_tracking.lock);
--	if (cur != front)
-+
-+	if (cur != front) {
-+		drm_gem_object_put(obj);
- 		kfree(front);
-+	}
-+
- 	return cur;
- }
+ 	ret = intel_fb_bo_framebuffer_init(fb, obj, mode_cmd);
+ 	if (ret)
+-		return ret;
+-
+-	intel_fb->frontbuffer = intel_frontbuffer_get(obj);
+-	if (!intel_fb->frontbuffer) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
++		goto err_frontbuffer_put;
  
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object_frontbuffer.h b/drivers/gpu/drm/i915/gem/i915_gem_object_frontbuffer.h
-index b6dc3d1b9bb13..b682969e3a293 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_object_frontbuffer.h
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_object_frontbuffer.h
-@@ -89,12 +89,10 @@ i915_gem_object_set_frontbuffer(struct drm_i915_gem_object *obj,
- 
- 	if (!front) {
- 		RCU_INIT_POINTER(obj->frontbuffer, NULL);
--		drm_gem_object_put(intel_bo_to_drm_bo(obj));
- 	} else if (rcu_access_pointer(obj->frontbuffer)) {
- 		cur = rcu_dereference_protected(obj->frontbuffer, true);
- 		kref_get(&cur->ref);
- 	} else {
--		drm_gem_object_get(intel_bo_to_drm_bo(obj));
- 		rcu_assign_pointer(obj->frontbuffer, front);
+ 	ret = -EINVAL;
+ 	if (!drm_any_plane_has_format(display->drm,
+@@ -2233,7 +2235,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 		drm_dbg_kms(display->drm,
+ 			    "unsupported pixel format %p4cc / modifier 0x%llx\n",
+ 			    &mode_cmd->pixel_format, mode_cmd->modifier[0]);
+-		goto err_frontbuffer_put;
++		goto err_bo_framebuffer_fini;
  	}
+ 
+ 	max_stride = intel_fb_max_stride(display, mode_cmd->pixel_format,
+@@ -2244,7 +2246,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 			    mode_cmd->modifier[0] != DRM_FORMAT_MOD_LINEAR ?
+ 			    "tiled" : "linear",
+ 			    mode_cmd->pitches[0], max_stride);
+-		goto err_frontbuffer_put;
++		goto err_bo_framebuffer_fini;
+ 	}
+ 
+ 	/* FIXME need to adjust LINOFF/TILEOFF accordingly. */
+@@ -2252,7 +2254,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 		drm_dbg_kms(display->drm,
+ 			    "plane 0 offset (0x%08x) must be 0\n",
+ 			    mode_cmd->offsets[0]);
+-		goto err_frontbuffer_put;
++		goto err_bo_framebuffer_fini;
+ 	}
+ 
+ 	drm_helper_mode_fill_fb_struct(display->drm, fb, info, mode_cmd);
+@@ -2262,7 +2264,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 
+ 		if (mode_cmd->handles[i] != mode_cmd->handles[0]) {
+ 			drm_dbg_kms(display->drm, "bad plane %d handle\n", i);
+-			goto err_frontbuffer_put;
++			goto err_bo_framebuffer_fini;
+ 		}
+ 
+ 		stride_alignment = intel_fb_stride_alignment(fb, i);
+@@ -2270,7 +2272,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 			drm_dbg_kms(display->drm,
+ 				    "plane %d pitch (%d) must be at least %u byte aligned\n",
+ 				    i, fb->pitches[i], stride_alignment);
+-			goto err_frontbuffer_put;
++			goto err_bo_framebuffer_fini;
+ 		}
+ 
+ 		if (intel_fb_is_gen12_ccs_aux_plane(fb, i)) {
+@@ -2280,7 +2282,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 				drm_dbg_kms(display->drm,
+ 					    "ccs aux plane %d pitch (%d) must be %d\n",
+ 					    i, fb->pitches[i], ccs_aux_stride);
+-				goto err_frontbuffer_put;
++				goto err_bo_framebuffer_fini;
+ 			}
+ 		}
+ 
+@@ -2289,7 +2291,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 
+ 	ret = intel_fill_fb_info(display, intel_fb);
+ 	if (ret)
+-		goto err_frontbuffer_put;
++		goto err_bo_framebuffer_fini;
+ 
+ 	if (intel_fb_uses_dpt(fb)) {
+ 		struct i915_address_space *vm;
+@@ -2315,10 +2317,10 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+ err_free_dpt:
+ 	if (intel_fb_uses_dpt(fb))
+ 		intel_dpt_destroy(intel_fb->dpt_vm);
++err_bo_framebuffer_fini:
++	intel_fb_bo_framebuffer_fini(obj);
+ err_frontbuffer_put:
+ 	intel_frontbuffer_put(intel_fb->frontbuffer);
+-err:
+-	intel_fb_bo_framebuffer_fini(obj);
+ 	return ret;
+ }
  
 -- 
 2.51.0
