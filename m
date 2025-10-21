@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B969C274FDF;
-	Tue, 21 Oct 2025 19:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75260274B30;
+	Tue, 21 Oct 2025 19:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076632; cv=none; b=tEfcOJLMh9rPG3xMBVwbbdRj7JwRwXneapz2KANMuDSG95kwwE2M/m73vq3CfoEqoKA0yn0kThkjl/xCiw9EN9DPJJpoeAnvqdG+3IBQbWrYA/zbHFwgmloqwh0a/a9OilZjjc1+M+Pn/5H46lNJV7GmYCcQycKgdWA5SGmU8Mk=
+	t=1761076635; cv=none; b=VXdCjHZFmN31jGJQPI+XqO1roS+H/ccugUjssuicZwqVTv+KzFm5jJln7PVjVb3Ic22sXctdcasdAiH01aTIgDDdba06ZC5w+pCzh9X83SwauOmR1viifZ0youxM8pSIGC1PJHzZcIeXy8hDr15rJY7aSYXXbviMSFqNu1+qsSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076632; c=relaxed/simple;
-	bh=oz/rJN3aDz8X+q6hUghA6YPbxPXw0lamfkxUnMB6pDQ=;
+	s=arc-20240116; t=1761076635; c=relaxed/simple;
+	bh=hhmNHPmOCCkoFyGVzJ0133E9W5cp1zZyIyVZpqiN144=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdbtOtxChxy/0uKFgthQN1rQXzmgiczEWdgDecUyk/Ay7Zy3ulzvLWLxTWNr0G1/SSeDzSDi5kTh6YY4CaY0UR2GHfhD5wcFULWVdAAolzQXS4kc0+n5EUjYmMSf51Xqzp1lxw/dC02iOauPF5yfG/l5mYKhcLX6Fr+eOmwLntk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/M/+9wN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJs0yzAk56KGwowv7tFYzbQm/RhkS1ClH7xSqrimI1znLtHGkAbvlPjxvJkzncrKaQgf+wlRfVyKOPoskTK8mis/2TbV41PpV8iOnwdO7Yp2Alx6iTOAEKwin8sd/VLokUYTGshURfeKVpHBgXMfuYaAaJ509m9nicS4YPw134k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWAzid1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/M/+9wN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C6EC4CEF1;
-	Tue, 21 Oct 2025 19:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWAzid1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033CAC4CEF1;
+	Tue, 21 Oct 2025 19:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076632;
-	bh=oz/rJN3aDz8X+q6hUghA6YPbxPXw0lamfkxUnMB6pDQ=;
+	s=korg; t=1761076635;
+	bh=hhmNHPmOCCkoFyGVzJ0133E9W5cp1zZyIyVZpqiN144=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/M/+9wNiI7TXZ4qXqlaIKd9PcdZGgy/TrAz3BiCT8pC/HG3I3Sur0v6iafYOwcqz
-	 T5VAMBN1LplpBkexalUrcmDzOt5E2LDofAqgXyIqqrUDvXgHvi32x28tYUqblSckUg
-	 Yy7X7KaSFuPm8y6YGi+W42l0K/tzZo+lCs7V2MY0=
+	b=kWAzid1nb9hD9dVdUi9hjoTh1nHTtIMepwZe8fkuuyrgjGb5F10OV0VWKk+dCjlus
+	 NuEd4hC/S9RzLxJNmsJ3+iTEdH3csLreu/KzwPONM2Ubv2pUzuG8fXQi2yopHI0Iro
+	 EB0C2IauhFgY2D7Si2b4u2Kj/EnTHQHpFRIu43hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Harikrishna Shenoy <h-shenoy@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/105] ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()
-Date: Tue, 21 Oct 2025 21:51:42 +0200
-Message-ID: <20251021195023.861158864@linuxfoundation.org>
+Subject: [PATCH 6.6 094/105] phy: cadence: cdns-dphy: Update calibration wait time for startup state machine
+Date: Tue, 21 Oct 2025 21:51:43 +0200
+Message-ID: <20251021195023.884111243@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,71 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Devarsh Thakkar <devarsht@ti.com>
 
-[ Upstream commit 8ecb790ea8c3fc69e77bace57f14cf0d7c177bd8 ]
+[ Upstream commit 2c27aaee934a1b5229152fe33a14f1fdf50da143 ]
 
-Unlike other strings in the ext4 superblock, we rely on tune2fs to
-make sure s_mount_opts is NUL terminated.  Harden
-parse_apply_sb_mount_options() by treating s_mount_opts as a potential
-__nonstring.
+Do read-modify-write so that we re-use the characterized reset value as
+specified in TRM [1] to program calibration wait time which defines number
+of cycles to wait for after startup state machine is in bandgap enable
+state.
+
+This fixes PLL lock timeout error faced while using RPi DSI Panel on TI's
+AM62L and J721E SoC since earlier calibration wait time was getting
+overwritten to zero value thus failing the PLL to lockup and causing
+timeout.
+
+[1] AM62P TRM (Section 14.8.6.3.2.1.1 DPHY_TX_DPHYTX_CMN0_CMN_DIG_TBIT2):
+Link: https://www.ti.com/lit/pdf/spruj83
 
 Cc: stable@vger.kernel.org
-Fixes: 8b67f04ab9de ("ext4: Add mount options in superblock")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Message-ID: <20250916-tune2fs-v2-1-d594dc7486f0@mit.edu>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ added sizeof() third argument to strscpy_pad() ]
+Fixes: 7a343c8bf4b5 ("phy: Add Cadence D-PHY support")
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Tested-by: Harikrishna Shenoy <h-shenoy@ti.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250704125915.1224738-3-devarsht@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |   17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/phy/cadence/cdns-dphy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2506,7 +2506,7 @@ static int parse_apply_sb_mount_options(
- 					struct ext4_fs_context *m_ctx)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	char *s_mount_opts = NULL;
-+	char s_mount_opts[65];
- 	struct ext4_fs_context *s_ctx = NULL;
- 	struct fs_context *fc = NULL;
- 	int ret = -ENOMEM;
-@@ -2514,15 +2514,11 @@ static int parse_apply_sb_mount_options(
- 	if (!sbi->s_es->s_mount_opts[0])
- 		return 0;
+--- a/drivers/phy/cadence/cdns-dphy.c
++++ b/drivers/phy/cadence/cdns-dphy.c
+@@ -30,6 +30,7 @@
  
--	s_mount_opts = kstrndup(sbi->s_es->s_mount_opts,
--				sizeof(sbi->s_es->s_mount_opts),
--				GFP_KERNEL);
--	if (!s_mount_opts)
--		return ret;
-+	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts, sizeof(s_mount_opts));
+ #define DPHY_CMN_SSM			DPHY_PMA_CMN(0x20)
+ #define DPHY_CMN_SSM_EN			BIT(0)
++#define DPHY_CMN_SSM_CAL_WAIT_TIME	GENMASK(8, 1)
+ #define DPHY_CMN_TX_MODE_EN		BIT(9)
  
- 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
- 	if (!fc)
--		goto out_free;
-+		return -ENOMEM;
+ #define DPHY_CMN_PWM			DPHY_PMA_CMN(0x40)
+@@ -421,7 +422,8 @@ static int cdns_dphy_power_on(struct phy
+ 	writel(reg, dphy->regs + DPHY_BAND_CFG);
  
- 	s_ctx = kzalloc(sizeof(struct ext4_fs_context), GFP_KERNEL);
- 	if (!s_ctx)
-@@ -2554,11 +2550,8 @@ parse_failed:
- 	ret = 0;
+ 	/* Start TX state machine. */
+-	writel(DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
++	reg = readl(dphy->regs + DPHY_CMN_SSM);
++	writel((reg & DPHY_CMN_SSM_CAL_WAIT_TIME) | DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
+ 	       dphy->regs + DPHY_CMN_SSM);
  
- out_free:
--	if (fc) {
--		ext4_fc_free(fc);
--		kfree(fc);
--	}
--	kfree(s_mount_opts);
-+	ext4_fc_free(fc);
-+	kfree(fc);
- 	return ret;
- }
- 
+ 	ret = cdns_dphy_wait_for_pll_lock(dphy);
 
 
