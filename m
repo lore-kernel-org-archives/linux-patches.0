@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41160246798;
-	Tue, 21 Oct 2025 19:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99AF350A2A;
+	Tue, 21 Oct 2025 19:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076696; cv=none; b=d8ucUMByRzxXdXETWKEFfcvToF2C1K5pTqxtr98ozzW8VdPUZK3mIaAnRPuFULSkFX2OhlbJv8JcCuY9yM6eNrdjrA0dRG8FvKMkG9hQ7OLx2Ef8lCFW+DIX9y05qPyQYgzPyUo2yXbpX3KhpDPfGwMuBDYYJ3QCsQpgxRb3dnM=
+	t=1761076699; cv=none; b=HoDA5fOee3xrTg1uhaUiHglFUd+uCqistzW0daxymagEyG7d3g1Hyz71WRkBp8vHGByrFtBDfAsRI4bVNTqGJf75clBt0AIu2Id3EHa4/1Xq/g1CiIMQCaDiInY7eEi1Ixuj+iG4QNqX3qOi6B50RNgV1d4dS6r4R0uQsXzihFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076696; c=relaxed/simple;
-	bh=ku87VREVJZ87wzyL5gn07V2xs4Ni8P32YXGaR3fr/EI=;
+	s=arc-20240116; t=1761076699; c=relaxed/simple;
+	bh=D02AMEQXQ1Dcduqd2s9h8FK7nc4ui3EgNK6ZK5JL9dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+yWQtRh2RdZ/TRIDki0F6/C6Tci2lvuS6ERIPCxQbtg+uTADorleToQUgJsQ4IwQQCmIs7RXkAtzMgSVGjGOKsqW9X7fn7ZBZvr6WaWWlFe4c2ig8rw8FPJ8dkwDKh2BEeVLWyqUGhpzCSCFkxLbuw+z6L3NHVpCs5+LFUv1OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SjDH7vM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dn8PpNNpRFIM9RNGUKukspxkELg2Chxxqd2Oq+TpSinbd6Q+frvGlC1JC/sAxTe/FvRQBSjr2Q9gaxxLIDhwBKEbm6whLyBAXLHjpSot1HIS8sr3dcE2LrppnUun2JP6YliZRLgKv31DZkkvH7S3gRQ847CLHtI0ymTTl39g74Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJfhag6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SjDH7vM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C4EC116B1;
-	Tue, 21 Oct 2025 19:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJfhag6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E225BC4CEF1;
+	Tue, 21 Oct 2025 19:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076695;
-	bh=ku87VREVJZ87wzyL5gn07V2xs4Ni8P32YXGaR3fr/EI=;
+	s=korg; t=1761076699;
+	bh=D02AMEQXQ1Dcduqd2s9h8FK7nc4ui3EgNK6ZK5JL9dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SjDH7vMbhpN/dMHlBT8Vc4GBO8IhquUfkiTupnKIAITOAgX8YnkLpINMBrf6jBj+
-	 D+B4rVW3s81mEgdTGiECrZq9AIaLuhefkPJPtgJyLZXlldJN1QjbtU0Wb4ybtKhsoS
-	 yFA8py4iFgr4lsinMtMnsIGZFipXs0EBlA/aRdkQ=
+	b=PJfhag6CjiPLbyiFUx9bYyCEYHGWI8WLsZHunA+/4rXOCsOU1q32C1jYXYn3wFz+3
+	 1vXkA8u1KjZe9Ze3rub9AErcKq5mjuBiAq2C5qByqioD8cjBlQ7iXhdf+EznNYM77Y
+	 HmloPLHqkwqNIxCAFTomDQYuAQoBXQlEmaYy54bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 010/136] ext4: detect invalid INLINE_DATA + EXTENTS flag combination
-Date: Tue, 21 Oct 2025 21:49:58 +0200
-Message-ID: <20251021195036.209695898@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 011/136] btrfs: fix clearing of BTRFS_FS_RELOC_RUNNING if relocation already running
+Date: Tue, 21 Oct 2025 21:49:59 +0200
+Message-ID: <20251021195036.233834777@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -53,63 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 1d3ad183943b38eec2acf72a0ae98e635dc8456b upstream.
+commit 7e5a5983edda664e8e4bb20af17b80f5135c655c upstream.
 
-syzbot reported a BUG_ON in ext4_es_cache_extent() when opening a verity
-file on a corrupted ext4 filesystem mounted without a journal.
+When starting relocation, at reloc_chunk_start(), if we happen to find
+the flag BTRFS_FS_RELOC_RUNNING is already set we return an error
+(-EINPROGRESS) to the callers, however the callers call reloc_chunk_end()
+which will clear the flag BTRFS_FS_RELOC_RUNNING, which is wrong since
+relocation was started by another task and still running.
 
-The issue is that the filesystem has an inode with both the INLINE_DATA
-and EXTENTS flags set:
+Finding the BTRFS_FS_RELOC_RUNNING flag already set is an unexpected
+scenario, but still our current behaviour is not correct.
 
-    EXT4-fs error (device loop0): ext4_cache_extents:545: inode #15:
-    comm syz.0.17: corrupted extent tree: lblk 0 < prev 66
+Fix this by never calling reloc_chunk_end() if reloc_chunk_start() has
+returned an error, which is what logically makes sense, since the general
+widespread pattern is to have end functions called only if the counterpart
+start functions succeeded. This requires changing reloc_chunk_start() to
+clear BTRFS_FS_RELOC_RUNNING if there's a pending cancel request.
 
-Investigation revealed that the inode has both flags set:
-    DEBUG: inode 15 - flag=1, i_inline_off=164, has_inline=1, extents_flag=1
-
-This is an invalid combination since an inode should have either:
-- INLINE_DATA: data stored directly in the inode
-- EXTENTS: data stored in extent-mapped blocks
-
-Having both flags causes ext4_has_inline_data() to return true, skipping
-extent tree validation in __ext4_iget(). The unvalidated out-of-order
-extents then trigger a BUG_ON in ext4_es_cache_extent() due to integer
-underflow when calculating hole sizes.
-
-Fix this by detecting this invalid flag combination early in ext4_iget()
-and rejecting the corrupted inode.
-
-Cc: stable@kernel.org
-Reported-and-tested-by: syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=038b7bf43423e132b308
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Message-ID: <20250930112810.315095-1-kartikey406@gmail.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 907d2710d727 ("btrfs: add cancellable chunk relocation support")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/btrfs/relocation.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4904,6 +4904,14 @@ struct inode *__ext4_iget(struct super_b
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -3906,6 +3906,7 @@ out:
+ /*
+  * Mark start of chunk relocation that is cancellable. Check if the cancellation
+  * has been requested meanwhile and don't start in that case.
++ * NOTE: if this returns an error, reloc_chunk_end() must not be called.
+  *
+  * Return:
+  *   0             success
+@@ -3922,10 +3923,8 @@ static int reloc_chunk_start(struct btrf
+ 
+ 	if (atomic_read(&fs_info->reloc_cancel_req) > 0) {
+ 		btrfs_info(fs_info, "chunk relocation canceled on start");
+-		/*
+-		 * On cancel, clear all requests but let the caller mark
+-		 * the end after cleanup operations.
+-		 */
++		/* On cancel, clear all requests. */
++		clear_and_wake_up_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags);
+ 		atomic_set(&fs_info->reloc_cancel_req, 0);
+ 		return -ECANCELED;
  	}
- 	ei->i_flags = le32_to_cpu(raw_inode->i_flags);
- 	ext4_set_inode_flags(inode, true);
-+	/* Detect invalid flag combination - can't have both inline data and extents */
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_INLINE_DATA) &&
-+	    ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)) {
-+		ext4_error_inode(inode, function, line, 0,
-+			"inode has both inline data and extents flags");
-+		ret = -EFSCORRUPTED;
-+		goto bad_inode;
-+	}
- 	inode->i_blocks = ext4_inode_blocks(raw_inode, ei);
- 	ei->i_file_acl = le32_to_cpu(raw_inode->i_file_acl_lo);
- 	if (ext4_has_feature_64bit(sb))
+@@ -3934,9 +3933,11 @@ static int reloc_chunk_start(struct btrf
+ 
+ /*
+  * Mark end of chunk relocation that is cancellable and wake any waiters.
++ * NOTE: call only if a previous call to reloc_chunk_start() succeeded.
+  */
+ static void reloc_chunk_end(struct btrfs_fs_info *fs_info)
+ {
++	ASSERT(test_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags));
+ 	/* Requested after start, clear bit first so any waiters can continue */
+ 	if (atomic_read(&fs_info->reloc_cancel_req) > 0)
+ 		btrfs_info(fs_info, "chunk relocation canceled during operation");
+@@ -4145,9 +4146,9 @@ out:
+ 	if (err && rw)
+ 		btrfs_dec_block_group_ro(rc->block_group);
+ 	iput(rc->data_inode);
++	reloc_chunk_end(fs_info);
+ out_put_bg:
+ 	btrfs_put_block_group(bg);
+-	reloc_chunk_end(fs_info);
+ 	free_reloc_control(rc);
+ 	return err;
+ }
+@@ -4331,8 +4332,8 @@ out_clean:
+ 		ret = ret2;
+ out_unset:
+ 	unset_reloc_control(rc);
+-out_end:
+ 	reloc_chunk_end(fs_info);
++out_end:
+ 	free_reloc_control(rc);
+ out:
+ 	free_reloc_roots(&reloc_roots);
 
 
