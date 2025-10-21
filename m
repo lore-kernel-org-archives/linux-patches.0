@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F13273D9A;
-	Tue, 21 Oct 2025 19:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B1E26C3BE;
+	Tue, 21 Oct 2025 19:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076409; cv=none; b=mIwGuRK3QSku9S8wJWDWcc/xdC6NIws6WSjAiBI6ApJkQotuQdl+eocFFLtge2aYnP2bAJBrl2auZaLgVwJ8a3/Lgve2d+j8tnOfIFNu8XbCObqCsaIVhWNzSgSvT5xG9WE0FrHHCmM5dKQn03kxzgI1m4Te9O0s9xw5bN4PEVY=
+	t=1761076412; cv=none; b=cdOXQ/v82ti58Mih3JfcksuWRzRylSAlaj68NOkh4WcUvdMC82Y1PZbQuXqDOkaNMlupxsLTUd69FQsY+sgUA7KMnak4a380L608T5zLjDp6IzxvLeTiUy4DWdIGNeSK/wa1E6a0LPnmahiLYYqqqZZTYs0nie4TmRBWNpX+RmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076409; c=relaxed/simple;
-	bh=Hx7ABR0y5wTlKw02KoVhS9CBqNc+umyMQ/5En07uDDk=;
+	s=arc-20240116; t=1761076412; c=relaxed/simple;
+	bh=sFvRo7wFSThEHtZfMRAwrs1FQ7OH+g3Eyt6YnQaUpW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSfUSs2u9M2Jj4KCRaTEg7xDZO8FmI22HVu6DTZbKmmFu/3EbKm3X3odh2VSy7M+911Ykk2RNlbO73y3tRB0SBBVAaTG7MDnpm4wuiHHjWlMmmxRpe9DNowf2AXyKnMFoCc6ydf820vG5Xk0D1RgI0o3QtvuF3hoRq/WerU/GIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCngF8BW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEbHX9CBDvyUAmu/l2dt/u+z7M52osOIQfREzSbYF3gsAWFOLr7g6R4VxPlK0xOhO7htKjHc2JFMF9nN4hNqcaqgzQtjI5xtCDS+nl5cDuAIF+k+Fgljrg6h7Ax49GC+LMS/1oP2Zj3k78wobhYAOSjgn2XHOJNVm1+wEZl2fk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqwOTQTA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCngF8BW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A27CC4CEF1;
-	Tue, 21 Oct 2025 19:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqwOTQTA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF57C4CEF1;
+	Tue, 21 Oct 2025 19:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076409;
-	bh=Hx7ABR0y5wTlKw02KoVhS9CBqNc+umyMQ/5En07uDDk=;
+	s=korg; t=1761076412;
+	bh=sFvRo7wFSThEHtZfMRAwrs1FQ7OH+g3Eyt6YnQaUpW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCngF8BW5tDvXJSw2/w9AKDIdQREQAjxWBnMu888xUDfzYrQagHck2Kt2OaXX6anD
-	 WnenPjlb0U7WvN3BSNwzQ86pOHTRAj582AeCqbjqrRH9oru3jP5+UCZ6TZ1hK5lSDw
-	 Ubpx/a2HjR6sCD0YcoIHD4erjaMkAsL4fbEiKmjE=
+	b=NqwOTQTA4+NljJ6hJG6zPzvYAMpTlbbtc4dOzqU/BVSTxVDp/kWgjzPXA4kW0LlTb
+	 LOHeR+/w4JHcqc2Xld2m/wYE8iN60Mpjbz6utSymZffUhDdM47yZpVF3yh5qaBd5m8
+	 XdmMNjuhBvACMnGbTGa43XJVuRYxTqvt3+DxYWBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/105] drm/exynos: exynos7_drm_decon: remove ctx->suspended
-Date: Tue, 21 Oct 2025 21:50:34 +0200
-Message-ID: <20251021195022.296204143@linuxfoundation.org>
+Subject: [PATCH 6.6 026/105] media: nxp: imx8-isi: Drop unused argument to mxc_isi_channel_chain()
+Date: Tue, 21 Oct 2025 21:50:35 +0200
+Message-ID: <20251021195022.320505489@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -51,163 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit e1361a4f1be9cb69a662c6d7b5ce218007d6e82b ]
+[ Upstream commit 9a21ffeade25cbf310f5db39a1f9932695dd41bb ]
 
-Condition guards are found to be redundant, as the call flow is properly
-managed now, as also observed in the Exynos5433 DECON driver. Since
-state checking is no longer necessary, remove it.
+The bypass argument to the mxc_isi_channel_chain() function is unused.
+Drop it.
 
-This also fixes an issue which prevented decon_commit() from
-decon_atomic_enable() due to an incorrect state change setting.
-
-Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
-Cc: stable@vger.kernel.org
-Suggested-by: Inki Dae <inki.dae@samsung.com>
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Link: https://lore.kernel.org/r/20250813225501.20762-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Stable-dep-of: 178aa3360220 ("media: nxp: imx8-isi: m2m: Fix streaming cleanup on release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos7_drm_decon.c |   36 -----------------------------
- 1 file changed, 36 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.h |    2 +-
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c   |    2 +-
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c  |   11 +++++------
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c |    2 +-
+ 4 files changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -51,7 +51,6 @@ struct decon_context {
- 	void __iomem			*regs;
- 	unsigned long			irq_flags;
- 	bool				i80_if;
--	bool				suspended;
- 	wait_queue_head_t		wait_vsync_queue;
- 	atomic_t			wait_vsync_event;
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.h
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.h
+@@ -361,7 +361,7 @@ void mxc_isi_channel_get(struct mxc_isi_
+ void mxc_isi_channel_put(struct mxc_isi_pipe *pipe);
+ void mxc_isi_channel_enable(struct mxc_isi_pipe *pipe);
+ void mxc_isi_channel_disable(struct mxc_isi_pipe *pipe);
+-int mxc_isi_channel_chain(struct mxc_isi_pipe *pipe, bool bypass);
++int mxc_isi_channel_chain(struct mxc_isi_pipe *pipe);
+ void mxc_isi_channel_unchain(struct mxc_isi_pipe *pipe);
  
-@@ -105,9 +104,6 @@ static void decon_shadow_protect_win(str
- 
- static void decon_wait_for_vblank(struct decon_context *ctx)
+ void mxc_isi_channel_config(struct mxc_isi_pipe *pipe,
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c
+@@ -589,7 +589,7 @@ void mxc_isi_channel_release(struct mxc_
+  *
+  * TODO: Support secondary line buffer for downscaling YUV420 images.
+  */
+-int mxc_isi_channel_chain(struct mxc_isi_pipe *pipe, bool bypass)
++int mxc_isi_channel_chain(struct mxc_isi_pipe *pipe)
  {
--	if (ctx->suspended)
--		return;
--
- 	atomic_set(&ctx->wait_vsync_event, 1);
- 
- 	/*
-@@ -183,9 +179,6 @@ static void decon_commit(struct exynos_d
- 	struct drm_display_mode *mode = &crtc->base.state->adjusted_mode;
- 	u32 val, clkdiv;
- 
--	if (ctx->suspended)
--		return;
--
- 	/* nothing to do if we haven't set the mode yet */
- 	if (mode->htotal == 0 || mode->vtotal == 0)
- 		return;
-@@ -247,9 +240,6 @@ static int decon_enable_vblank(struct ex
- 	struct decon_context *ctx = crtc->ctx;
- 	u32 val;
- 
--	if (ctx->suspended)
--		return -EPERM;
--
- 	if (!test_and_set_bit(0, &ctx->irq_flags)) {
- 		val = readl(ctx->regs + VIDINTCON0);
- 
-@@ -272,9 +262,6 @@ static void decon_disable_vblank(struct
- 	struct decon_context *ctx = crtc->ctx;
- 	u32 val;
- 
--	if (ctx->suspended)
--		return;
--
- 	if (test_and_clear_bit(0, &ctx->irq_flags)) {
- 		val = readl(ctx->regs + VIDINTCON0);
- 
-@@ -376,9 +363,6 @@ static void decon_atomic_begin(struct ex
- 	struct decon_context *ctx = crtc->ctx;
- 	int i;
- 
--	if (ctx->suspended)
--		return;
--
- 	for (i = 0; i < WINDOWS_NR; i++)
- 		decon_shadow_protect_win(ctx, i, true);
- }
-@@ -398,9 +382,6 @@ static void decon_update_plane(struct ex
- 	unsigned int cpp = fb->format->cpp[0];
- 	unsigned int pitch = fb->pitches[0];
- 
--	if (ctx->suspended)
--		return;
--
- 	/*
- 	 * SHADOWCON/PRTCON register is used for enabling timing.
- 	 *
-@@ -488,9 +469,6 @@ static void decon_disable_plane(struct e
- 	unsigned int win = plane->index;
- 	u32 val;
- 
--	if (ctx->suspended)
--		return;
--
- 	/* protect windows */
- 	decon_shadow_protect_win(ctx, win, true);
- 
-@@ -509,9 +487,6 @@ static void decon_atomic_flush(struct ex
- 	struct decon_context *ctx = crtc->ctx;
- 	int i;
- 
--	if (ctx->suspended)
--		return;
--
- 	for (i = 0; i < WINDOWS_NR; i++)
- 		decon_shadow_protect_win(ctx, i, false);
- 	exynos_crtc_handle_event(crtc);
-@@ -539,9 +514,6 @@ static void decon_atomic_enable(struct e
- 	struct decon_context *ctx = crtc->ctx;
+ 	/* Channel chaining requires both line and output buffer. */
+ 	const u8 resources = MXC_ISI_CHANNEL_RES_OUTPUT_BUF
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c
+@@ -493,7 +493,6 @@ static int mxc_isi_m2m_streamon(struct f
+ 	const struct mxc_isi_format_info *cap_info = ctx->queues.cap.info;
+ 	const struct mxc_isi_format_info *out_info = ctx->queues.out.info;
+ 	struct mxc_isi_m2m *m2m = ctx->m2m;
+-	bool bypass;
  	int ret;
  
--	if (!ctx->suspended)
--		return;
--
- 	ret = pm_runtime_resume_and_get(ctx->dev);
- 	if (ret < 0) {
- 		DRM_DEV_ERROR(ctx->dev, "failed to enable DECON device.\n");
-@@ -555,8 +527,6 @@ static void decon_atomic_enable(struct e
- 		decon_enable_vblank(ctx->crtc);
+ 	if (q->streaming)
+@@ -506,15 +505,15 @@ static int mxc_isi_m2m_streamon(struct f
+ 		goto unlock;
+ 	}
  
- 	decon_commit(ctx->crtc);
--
--	ctx->suspended = false;
- }
- 
- static void decon_atomic_disable(struct exynos_drm_crtc *crtc)
-@@ -564,9 +534,6 @@ static void decon_atomic_disable(struct
- 	struct decon_context *ctx = crtc->ctx;
- 	int i;
- 
--	if (ctx->suspended)
--		return;
+-	bypass = cap_pix->width == out_pix->width &&
+-		 cap_pix->height == out_pix->height &&
+-		 cap_info->encoding == out_info->encoding;
 -
  	/*
- 	 * We need to make sure that all windows are disabled before we
- 	 * suspend that connector. Otherwise we might try to scan from
-@@ -576,8 +543,6 @@ static void decon_atomic_disable(struct
- 		decon_disable_plane(crtc, &ctx->planes[i]);
+ 	 * Acquire the pipe and initialize the channel with the first user of
+ 	 * the M2M device.
+ 	 */
+ 	if (m2m->usage_count == 0) {
++		bool bypass = cap_pix->width == out_pix->width &&
++			      cap_pix->height == out_pix->height &&
++			      cap_info->encoding == out_info->encoding;
++
+ 		ret = mxc_isi_channel_acquire(m2m->pipe,
+ 					      &mxc_isi_m2m_frame_write_done,
+ 					      bypass);
+@@ -531,7 +530,7 @@ static int mxc_isi_m2m_streamon(struct f
+ 	 * buffer chaining.
+ 	 */
+ 	if (!ctx->chained && out_pix->width > MXC_ISI_MAX_WIDTH_UNCHAINED) {
+-		ret = mxc_isi_channel_chain(m2m->pipe, bypass);
++		ret = mxc_isi_channel_chain(m2m->pipe);
+ 		if (ret)
+ 			goto deinit;
  
- 	pm_runtime_put_sync(ctx->dev);
--
--	ctx->suspended = true;
- }
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
+@@ -851,7 +851,7 @@ int mxc_isi_pipe_acquire(struct mxc_isi_
  
- static const struct exynos_drm_crtc_ops decon_crtc_ops = {
-@@ -698,7 +663,6 @@ static int decon_probe(struct platform_d
- 		return -ENOMEM;
- 
- 	ctx->dev = dev;
--	ctx->suspended = true;
- 
- 	i80_if_timings = of_get_child_by_name(dev->of_node, "i80-if-timings");
- 	if (i80_if_timings)
+ 	/* Chain the channel if needed for wide resolutions. */
+ 	if (sink_fmt->width > MXC_ISI_MAX_WIDTH_UNCHAINED) {
+-		ret = mxc_isi_channel_chain(pipe, bypass);
++		ret = mxc_isi_channel_chain(pipe);
+ 		if (ret)
+ 			mxc_isi_channel_release(pipe);
+ 	}
 
 
