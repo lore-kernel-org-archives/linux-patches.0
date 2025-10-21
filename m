@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B4E2773F1;
-	Tue, 21 Oct 2025 20:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EB52773F1;
+	Tue, 21 Oct 2025 20:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077456; cv=none; b=ueowuL0T9ww/JByA3XdSjtYRP5k1C/73RJ+7IhIpbw8rZG9CxrRyIqWlQ7/EknaIQW6KrC74atPHfLmymNe04NJ9e+0kHcbjOSuTjCjz5enQwP76fE93Wx2Jf6oZdbKs4d0yLuhg7jh9Z+GXPg4Du5SipeJ80M/cnX7zkJV6UuY=
+	t=1761077459; cv=none; b=hUAc8HzPw7tUvJu2mJify/6uHN+g9/GePFucQ5I8mxjK8LHgDhy+anyFBChz688PbFtVJFLTUz3Untm8ivQWBEKfTWEcxPyhYjbZIYxNCtZDI6BJ1jhb4hzPs9+4AZo1vIRfr+egK2n5OQevseTwhGR9fEw4EbEWUlbTBnHnLro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077456; c=relaxed/simple;
-	bh=zUCB2teSguGcry1D0MpUNo8ViGBuqPrHpVtdVfrvZx8=;
+	s=arc-20240116; t=1761077459; c=relaxed/simple;
+	bh=To6xkbsE9hOoyTPRGXO37Jy6h9h4kmXdTXmFwg2AZYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jn6o4xGlie2tYoNaJrf49dqjqdlaGzsJ/uZCHWUvHQdTnoS4AHqXonveQE3PUiDY87fjlTBqG7Xtd57EVRerXZiUS2T2nrZOKX8y9Q5EcJShqPuzffMZGfSd145n2zP6rxbQpWD06JIdnjx8k0FL6Ed459gCBrCRUAldXNknfaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cj23OmIh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRsrb5NFg+0aybNZ34Zqcf5JNgHJvSEQuNJipSB9t1gdSLJYu2fSy77SU/jS55wmyJnqxWxIf0utB7chlPOPezmZxauToNE8+R+P3oyETYeFcwkJuCCsv2aFehpMt7ZBYZ+zE7CZkj0IZ8Md2xysa1r+/EJjrO3yXHD5eQi/nzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2eCD23W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cj23OmIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E737C4CEF1;
-	Tue, 21 Oct 2025 20:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2eCD23W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CAEC4CEF1;
+	Tue, 21 Oct 2025 20:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077456;
-	bh=zUCB2teSguGcry1D0MpUNo8ViGBuqPrHpVtdVfrvZx8=;
+	s=korg; t=1761077459;
+	bh=To6xkbsE9hOoyTPRGXO37Jy6h9h4kmXdTXmFwg2AZYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cj23OmIhIxA850CkSRe0wWyfg1xeUTZQIZ/6MFWSQXxS97hSRwAPt/JgeC/2P/duM
-	 B9nTHtsURe580V4m/G9yaBYoCjm3I76noSlCFLRlag23IEJnGvSgJ8yFBY+WluQBVZ
-	 o/n+c3Z31jLOK2H5sACDix1/h35wTz8xcDsuyEIw=
+	b=M2eCD23WOCJlDr5aOEPoX7vnJQOhEBAQy1JrBmYxNw81LCOhglEh/x6d+zr6SMr1E
+	 pCklka9mkcceqwsWnvgPssa5S99MmxxBeeFbXHqaFVBmC4uCgxwTCg4UjeSz5bOpxb
+	 xvpwpf4R/tEFHWjsHd9mTMnkX1N3t1pOgQUxLQiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 111/159] drm/amd/powerplay: Fix CIK shutdown temperature
-Date: Tue, 21 Oct 2025 21:51:28 +0200
-Message-ID: <20251021195045.840048660@linuxfoundation.org>
+Subject: [PATCH 6.17 112/159] drm/xe: Enable media sampler power gating
+Date: Tue, 21 Oct 2025 21:51:29 +0200
+Message-ID: <20251021195045.861637242@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -45,47 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit 6917112af2ba36c5f19075eb9f2933ffd07e55bf ]
+[ Upstream commit 1852d27aa998272696680607b65a2ceac966104e ]
 
-Remove extra multiplication.
+Where applicable, enable media sampler power gating. Also, add
+it to the powergate_info debugfs.
 
-CIK GPUs such as Hawaii appear to use PP_TABLE_V0 in which case
-the shutdown temperature is hardcoded in smu7_init_dpm_defaults
-and is already multiplied by 1000. The value was mistakenly
-multiplied another time by smu7_get_thermal_temperature_range.
+v2: Remove the sampler powergate status since it is cleared quickly anyway.
+v3: Use vcs mask (Rodrigo) and fix the version check for media
+v4: Remove extra spaces
+v5: Media samplers are independent of vcs mask,
+    use Media version 1255 (Matt Roper)
 
-Fixes: 4ba082572a42 ("drm/amd/powerplay: export the thermal ranges of VI asics (V2)")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1676
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 38e8c4184ea0 ("drm/xe: Enable Coarse Power Gating")
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://lore.kernel.org/r/20251010011047.2047584-1-vinay.belgaumkar@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 4cbc08649a54c3d533df9832342d52d409dfbbf0)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
+ drivers/gpu/drm/xe/xe_gt_idle.c      | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index 8da882c518565..9b28c07282699 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5444,8 +5444,7 @@ static int smu7_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
- 		thermal_data->max = table_info->cac_dtp_table->usSoftwareShutdownTemp *
- 			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 	else if (hwmgr->pp_table_version == PP_TABLE_V0)
--		thermal_data->max = data->thermal_temp_setting.temperature_shutdown *
--			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
-+		thermal_data->max = data->thermal_temp_setting.temperature_shutdown;
+diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+index 5cd5ab8529c5c..9994887fc73f9 100644
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -342,6 +342,7 @@
+ #define POWERGATE_ENABLE			XE_REG(0xa210)
+ #define   RENDER_POWERGATE_ENABLE		REG_BIT(0)
+ #define   MEDIA_POWERGATE_ENABLE		REG_BIT(1)
++#define   MEDIA_SAMPLERS_POWERGATE_ENABLE	REG_BIT(2)
+ #define   VDN_HCP_POWERGATE_ENABLE(n)		REG_BIT(3 + 2 * (n))
+ #define   VDN_MFXVDENC_POWERGATE_ENABLE(n)	REG_BIT(4 + 2 * (n))
  
- 	thermal_data->sw_ctf_threshold = thermal_data->max;
+diff --git a/drivers/gpu/drm/xe/xe_gt_idle.c b/drivers/gpu/drm/xe/xe_gt_idle.c
+index ffb210216aa99..9bd197da60279 100644
+--- a/drivers/gpu/drm/xe/xe_gt_idle.c
++++ b/drivers/gpu/drm/xe/xe_gt_idle.c
+@@ -124,6 +124,9 @@ void xe_gt_idle_enable_pg(struct xe_gt *gt)
+ 	if (xe_gt_is_main_type(gt))
+ 		gtidle->powergate_enable |= RENDER_POWERGATE_ENABLE;
+ 
++	if (MEDIA_VERx100(xe) >= 1100 && MEDIA_VERx100(xe) < 1255)
++		gtidle->powergate_enable |= MEDIA_SAMPLERS_POWERGATE_ENABLE;
++
+ 	if (xe->info.platform != XE_DG1) {
+ 		for (i = XE_HW_ENGINE_VCS0, j = 0; i <= XE_HW_ENGINE_VCS7; ++i, ++j) {
+ 			if ((gt->info.engine_mask & BIT(i)))
+@@ -246,6 +249,11 @@ int xe_gt_idle_pg_print(struct xe_gt *gt, struct drm_printer *p)
+ 				drm_printf(p, "Media Slice%d Power Gate Status: %s\n", n,
+ 					   str_up_down(pg_status & media_slices[n].status_bit));
+ 	}
++
++	if (MEDIA_VERx100(xe) >= 1100 && MEDIA_VERx100(xe) < 1255)
++		drm_printf(p, "Media Samplers Power Gating Enabled: %s\n",
++			   str_yes_no(pg_enabled & MEDIA_SAMPLERS_POWERGATE_ENABLE));
++
+ 	return 0;
+ }
  
 -- 
 2.51.0
