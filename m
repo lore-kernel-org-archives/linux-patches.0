@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B16A26E6F5;
-	Tue, 21 Oct 2025 20:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354ED350A0D;
+	Tue, 21 Oct 2025 20:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077405; cv=none; b=HibhE7toeV69/h++Sx3JSAzeX3PbRoomR0SzMvKYxmxvUVn7Nd1DUBXcNGnlTW5MdJEMLvhPp9g5PruPVv/iLzKc+XeaduOF+8Re0lrVnxMF20O0Z/070jKTkju2Y13Cy5bwlMRZM4qjX1x1q6pmYUI6vvruOVQAcqMkc5qpqlw=
+	t=1761077409; cv=none; b=jZ5/5dmYWg87yWC//pYBQT4W2ro5QOGmitEQoDGz34d8HTeTYuP4E/kCqZ6Q7h8T6d+KtympbvLAXrcFwWgCqrmykqr8WJP/YFWel59JnnMgJGZiS3PtkOWFRXawnatwBjU8e/zwRry1YlAqZwlAg39ID1eiqceMMrlvu9L0EFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077405; c=relaxed/simple;
-	bh=bHctqq02osBEGEv5mrDuVGAqNPkW1x43ncoTaDG+KkA=;
+	s=arc-20240116; t=1761077409; c=relaxed/simple;
+	bh=ng4rekKwuBfKqLd5ZuxSeaqrcffjzOW262wuGcZbQNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekcQsbSD/udfJSJpYxHKi+hTuXVknzvV0p6YCYadfZiUy0eL7BtELVAfEqEyyjHrjpqTUAHjqcg8H+X1GqAUzJibSQbfUAGbYZMX0+PYLTtX/KtRJpn4uPlXEV1uwpyhjh/4JcxvNmrg0jR5eQ3WeflVzuKcSpXoX1M3HV/Uyrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvVNQcVR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpw9qcB73zUDBNj/ELyg3sz1nvQbxibIqmaU68yPmiQR3l1hS7dh7v00MvHCxNpwTz/NXI/EjZ2HkBbubFMqb8e91th3RTRnVxhHrwsIHAmcO88svUmn5zCzH4RrfDFeDYShwZH9Mvb4zv/btNhim3UjK83slFwQ06ffxSI3VNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k21urNBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvVNQcVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D6EC4CEF5;
-	Tue, 21 Oct 2025 20:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k21urNBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C33AC4CEF1;
+	Tue, 21 Oct 2025 20:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077405;
-	bh=bHctqq02osBEGEv5mrDuVGAqNPkW1x43ncoTaDG+KkA=;
+	s=korg; t=1761077409;
+	bh=ng4rekKwuBfKqLd5ZuxSeaqrcffjzOW262wuGcZbQNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvVNQcVR/NHNvC8ANW0v0TSOBTU5AI3HzKrdHeDXYUror4QPlsn4/fQmzfvW4MFnb
-	 ChV2CO/U6DVeoWeytmvlvMYySsnHC4oxhwTM66KD6nhIamOmxS7fuE3Fmj5nN0IhP+
-	 9FcSc8po+MsOZTBbaNz3h8JdP3/TzCyvQjq1PhFs=
+	b=k21urNBwVjyHXMd37OvBjJ7TxkEixNq9+g8uxMJr1r9Ld+ZKQNlk34Q/0xZbG/R9y
+	 kTOp84rrRcSBKqsWN557gIDYawwFnBlrjZEIk822GZcqAIsHjp9vRZTcXVHeS1lEUb
+	 u0sAV0CdLhR0kOTvo8d+BJbjQsbnjXGbr9pmo8ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 096/159] powerpc/fadump: skip parameter area allocation when fadump is disabled
-Date: Tue, 21 Oct 2025 21:51:13 +0200
-Message-ID: <20251021195045.493162321@linuxfoundation.org>
+Subject: [PATCH 6.17 097/159] ASoC: codecs: Fix gain setting ranges for Renesas IDT821034 codec
+Date: Tue, 21 Oct 2025 21:51:14 +0200
+Message-ID: <20251021195045.515994742@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,40 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 0843ba458439f38efdc14aa359c14ad0127edb01 ]
+[ Upstream commit 6370a996f308ea3276030769b7482b346e7cc7c1 ]
 
-Fadump allocates memory to pass additional kernel command-line argument
-to the fadump kernel. However, this allocation is not needed when fadump
-is disabled. So avoid allocating memory for the additional parameter
-area in such cases.
+The gain ranges specified in Renesas IDT821034 codec documentation
+are [-3dB;+13dB] in the transmit path (ADC) and [-13dB;+3dB] in the
+receive path (DAC). Allthough the registers allow programming values
+outside those ranges, the signal S/N and distorsion are only
+guaranteed in the specified ranges.
 
-Fixes: f4892c68ecc1 ("powerpc/fadump: allocate memory for additional parameters early")
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Fixes: f4892c68ecc1 ("powerpc/fadump: allocate memory for additional  parameters early")
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251008032934.262683-1-sourabhjain@linux.ibm.com
+Set ranges to the specified ones.
+
+Fixes: e51166990e81 ("ASoC: codecs: Add support for the Renesas IDT821034 codec")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://patch.msgid.link/2bd547194f3398e6182f770d7d6be711c702b4b2.1760029099.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/fadump.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/idt821034.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
-index 5782e743fd270..4ebc333dd786f 100644
---- a/arch/powerpc/kernel/fadump.c
-+++ b/arch/powerpc/kernel/fadump.c
-@@ -1747,6 +1747,9 @@ void __init fadump_setup_param_area(void)
- {
- 	phys_addr_t range_start, range_end;
+diff --git a/sound/soc/codecs/idt821034.c b/sound/soc/codecs/idt821034.c
+index a03d4e5e7d144..cab2f2eecdfba 100644
+--- a/sound/soc/codecs/idt821034.c
++++ b/sound/soc/codecs/idt821034.c
+@@ -548,14 +548,14 @@ static int idt821034_kctrl_mute_put(struct snd_kcontrol *kcontrol,
+ 	return ret;
+ }
  
-+	if (!fw_dump.fadump_enabled)
-+		return;
-+
- 	if (!fw_dump.param_area_supported || fw_dump.dump_active)
- 		return;
+-static const DECLARE_TLV_DB_LINEAR(idt821034_gain_in, -6520, 1306);
+-#define IDT821034_GAIN_IN_MIN_RAW	1 /* -65.20 dB -> 10^(-65.2/20.0) * 1820 = 1 */
+-#define IDT821034_GAIN_IN_MAX_RAW	8191 /* 13.06 dB -> 10^(13.06/20.0) * 1820 = 8191 */
++static const DECLARE_TLV_DB_LINEAR(idt821034_gain_in, -300, 1300);
++#define IDT821034_GAIN_IN_MIN_RAW	1288 /* -3.0 dB -> 10^(-3.0/20.0) * 1820 = 1288 */
++#define IDT821034_GAIN_IN_MAX_RAW	8130 /* 13.0 dB -> 10^(13.0/20.0) * 1820 = 8130 */
+ #define IDT821034_GAIN_IN_INIT_RAW	1820 /* 0dB -> 10^(0/20) * 1820 = 1820 */
  
+-static const DECLARE_TLV_DB_LINEAR(idt821034_gain_out, -6798, 1029);
+-#define IDT821034_GAIN_OUT_MIN_RAW	1 /* -67.98 dB -> 10^(-67.98/20.0) * 2506 = 1*/
+-#define IDT821034_GAIN_OUT_MAX_RAW	8191 /* 10.29 dB -> 10^(10.29/20.0) * 2506 = 8191 */
++static const DECLARE_TLV_DB_LINEAR(idt821034_gain_out, -1300, 300);
++#define IDT821034_GAIN_OUT_MIN_RAW	561 /* -13.0 dB -> 10^(-13.0/20.0) * 2506 = 561 */
++#define IDT821034_GAIN_OUT_MAX_RAW	3540 /* 3.0 dB -> 10^(3.0/20.0) * 2506 = 3540 */
+ #define IDT821034_GAIN_OUT_INIT_RAW	2506 /* 0dB -> 10^(0/20) * 2506 = 2506 */
+ 
+ static const struct snd_kcontrol_new idt821034_controls[] = {
 -- 
 2.51.0
 
