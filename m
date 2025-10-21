@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75260274B30;
-	Tue, 21 Oct 2025 19:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9DF274B2E;
+	Tue, 21 Oct 2025 19:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076635; cv=none; b=VXdCjHZFmN31jGJQPI+XqO1roS+H/ccugUjssuicZwqVTv+KzFm5jJln7PVjVb3Ic22sXctdcasdAiH01aTIgDDdba06ZC5w+pCzh9X83SwauOmR1viifZ0youxM8pSIGC1PJHzZcIeXy8hDr15rJY7aSYXXbviMSFqNu1+qsSU=
+	t=1761076639; cv=none; b=rtltIeX6CVS7VqM9ryDcFbzUb85XcGvjgz/Tr4Giz9f2igbiaVuyQhk6dEfBu6C2UWF7TueU+9mI4xjOP8evb5T3l6ojHFo2HeamZLQe7KqW9SE6f/MfOhgjTrFqFblOi1yndqZzhIJxnq8YrSUztmNr+fRlREdHs2QZIy93mgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076635; c=relaxed/simple;
-	bh=hhmNHPmOCCkoFyGVzJ0133E9W5cp1zZyIyVZpqiN144=;
+	s=arc-20240116; t=1761076639; c=relaxed/simple;
+	bh=ALHH4l/Dq5vDThnp3rB+HhbB05y9zty6VXYahHNEcUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJs0yzAk56KGwowv7tFYzbQm/RhkS1ClH7xSqrimI1znLtHGkAbvlPjxvJkzncrKaQgf+wlRfVyKOPoskTK8mis/2TbV41PpV8iOnwdO7Yp2Alx6iTOAEKwin8sd/VLokUYTGshURfeKVpHBgXMfuYaAaJ509m9nicS4YPw134k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWAzid1n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpL8vHUkacYdkV0FzA7MchY1y7ZAU4czaR3XUXDOmMqyZLj/p58LG2HhXtP9wDkB1PX8qE846oHlouwFlDSMjwq6lMIu/7lR0fIWM5+722ixzCGL+TVe51H9bi22k/zVbXwQy5zeGfn7wCcfTVMwyaDEH6uQ0oZk6l1eOeo54b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkf6YXgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWAzid1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033CAC4CEF1;
-	Tue, 21 Oct 2025 19:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkf6YXgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0C1C4CEF1;
+	Tue, 21 Oct 2025 19:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076635;
-	bh=hhmNHPmOCCkoFyGVzJ0133E9W5cp1zZyIyVZpqiN144=;
+	s=korg; t=1761076638;
+	bh=ALHH4l/Dq5vDThnp3rB+HhbB05y9zty6VXYahHNEcUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWAzid1nb9hD9dVdUi9hjoTh1nHTtIMepwZe8fkuuyrgjGb5F10OV0VWKk+dCjlus
-	 NuEd4hC/S9RzLxJNmsJ3+iTEdH3csLreu/KzwPONM2Ubv2pUzuG8fXQi2yopHI0Iro
-	 EB0C2IauhFgY2D7Si2b4u2Kj/EnTHQHpFRIu43hI=
+	b=tkf6YXgfJc8fKUUzGeGt1DLIMfhaHW6vEXchhRMiebBpPlahSeGPLK31j8XDqS1ro
+	 ysUkIyjLaxLRI4q1u1NEBkNyzoXXYfg+EiXbGNeCfG0zpLD98AmzL7BAAzbwVJQF8Y
+	 IpLI09vkg5AtwOh8Osd3NSxEWJdAfw9ELOSmgw/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Piotr Kwapulinski <piotr.kwapulinski@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/105] phy: cadence: cdns-dphy: Update calibration wait time for startup state machine
-Date: Tue, 21 Oct 2025 21:51:43 +0200
-Message-ID: <20251021195023.884111243@linuxfoundation.org>
+Subject: [PATCH 6.6 095/105] PCI: Add PCI_VDEVICE_SUB helper macro
+Date: Tue, 21 Oct 2025 21:51:44 +0200
+Message-ID: <20251021195023.907502378@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -53,55 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devarsh Thakkar <devarsht@ti.com>
+From: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
 
-[ Upstream commit 2c27aaee934a1b5229152fe33a14f1fdf50da143 ]
+[ Upstream commit 208fff3f567e2a3c3e7e4788845e90245c3891b4 ]
 
-Do read-modify-write so that we re-use the characterized reset value as
-specified in TRM [1] to program calibration wait time which defines number
-of cycles to wait for after startup state machine is in bandgap enable
-state.
+PCI_VDEVICE_SUB generates the pci_device_id struct layout for
+the specific PCI device/subdevice. Private data may follow the
+output.
 
-This fixes PLL lock timeout error faced while using RPi DSI Panel on TI's
-AM62L and J721E SoC since earlier calibration wait time was getting
-overwritten to zero value thus failing the PLL to lockup and causing
-timeout.
-
-[1] AM62P TRM (Section 14.8.6.3.2.1.1 DPHY_TX_DPHYTX_CMN0_CMN_DIG_TBIT2):
-Link: https://www.ti.com/lit/pdf/spruj83
-
-Cc: stable@vger.kernel.org
-Fixes: 7a343c8bf4b5 ("phy: Add Cadence D-PHY support")
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-Tested-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250704125915.1224738-3-devarsht@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by negotiating supported features")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/cadence/cdns-dphy.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/pci.h |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -30,6 +30,7 @@
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1035,6 +1035,20 @@ static inline struct pci_driver *to_pci_
+ 	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, 0, 0
  
- #define DPHY_CMN_SSM			DPHY_PMA_CMN(0x20)
- #define DPHY_CMN_SSM_EN			BIT(0)
-+#define DPHY_CMN_SSM_CAL_WAIT_TIME	GENMASK(8, 1)
- #define DPHY_CMN_TX_MODE_EN		BIT(9)
- 
- #define DPHY_CMN_PWM			DPHY_PMA_CMN(0x40)
-@@ -421,7 +422,8 @@ static int cdns_dphy_power_on(struct phy
- 	writel(reg, dphy->regs + DPHY_BAND_CFG);
- 
- 	/* Start TX state machine. */
--	writel(DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
-+	reg = readl(dphy->regs + DPHY_CMN_SSM);
-+	writel((reg & DPHY_CMN_SSM_CAL_WAIT_TIME) | DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
- 	       dphy->regs + DPHY_CMN_SSM);
- 
- 	ret = cdns_dphy_wait_for_pll_lock(dphy);
+ /**
++ * PCI_VDEVICE_SUB - describe a specific PCI device/subdevice in a short form
++ * @vend: the vendor name
++ * @dev: the 16 bit PCI Device ID
++ * @subvend: the 16 bit PCI Subvendor ID
++ * @subdev: the 16 bit PCI Subdevice ID
++ *
++ * Generate the pci_device_id struct layout for the specific PCI
++ * device/subdevice. Private data may follow the output.
++ */
++#define PCI_VDEVICE_SUB(vend, dev, subvend, subdev) \
++	.vendor = PCI_VENDOR_ID_##vend, .device = (dev), \
++	.subvendor = (subvend), .subdevice = (subdev), 0, 0
++
++/**
+  * PCI_DEVICE_DATA - macro used to describe a specific PCI device in very short form
+  * @vend: the vendor name (without PCI_VENDOR_ID_ prefix)
+  * @dev: the device name (without PCI_DEVICE_ID_<vend>_ prefix)
 
 
