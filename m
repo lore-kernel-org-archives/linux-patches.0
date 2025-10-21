@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52EC23D7E8;
-	Tue, 21 Oct 2025 20:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFBC350A0D;
+	Tue, 21 Oct 2025 20:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077126; cv=none; b=bh8YqKlt/oVUpxrLjP4ovS43EQMx4QJ32qBB8I74yAl4CzX0/g1pKz7Pt1upaDIPENTCENJSHQRr7BWd5uBlsgPXJL4FtmZSfO+HEG1wPvY1/kdAPaKXuhOGA5At8Vc1Ck7xrDtOMWL9eGDtvs77T8IGCwkHxNDA0S+NaZlp+/4=
+	t=1761077129; cv=none; b=DCoi2tPDayup0/AQLFYW2bpRY62cYMm6P+atmEbfKfxnLFlk20FCfUcdBRx++ctPaWh7CqLOSdkWUacxmk32yWIO3Kj/2Pjr1gh601C2pp011LHZ3vTkhr8LUqjKnp9ngBSLw+BwDc7PtxzIFR325zUx6OdQyBDix/tXQ9OkqJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077126; c=relaxed/simple;
-	bh=J3/lGoeOKPWcyT6SB44c/NLzl+dB+vwQzwBqYngwYDM=;
+	s=arc-20240116; t=1761077129; c=relaxed/simple;
+	bh=vds5mw64kIr4o9ac3qP5ZAJMnRf0lJvjvyjlL0YB8M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvUsKiT+t/wXAH3BANOgeUmERjmxUMf3ALac9OERqetX2LzhI6WwiKg85LE1x//YyEMegjc+QZMU9tTbPIkLCk/A53WyYlDX2Ga218CedSXCYbYnULu/1JvdELRftLAIiEwpd4OcvaWCvd8L2hi2ToSrOvNxNCPOrrczY51yg1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5WPuQvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lpbmv/o06wdkd82ofl3jMD7lpT+1ewTmEyLFDuplQEtmYYnXG/1EOYc/XQsjqmzlj+OEOy9FS/gdbQvIZk+UlZP3ZK58ZohfYjTiv8oARLOW33nlq+vlT2PGay9JRBoEBmG376uPT1jH5rNMo1zsogikNWRYzMyaqmW+KCxOT6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuqgMDq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5WPuQvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20224C4CEF1;
-	Tue, 21 Oct 2025 20:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuqgMDq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F89C4CEF1;
+	Tue, 21 Oct 2025 20:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077126;
-	bh=J3/lGoeOKPWcyT6SB44c/NLzl+dB+vwQzwBqYngwYDM=;
+	s=korg; t=1761077129;
+	bh=vds5mw64kIr4o9ac3qP5ZAJMnRf0lJvjvyjlL0YB8M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5WPuQvfpi3Sg3/bkNY6fqiSXpxjA42/9v85/eKssMZDImOpgojBDUeYCu4T8LQDj
-	 j8BgA5u61LZxHpgNzMXAoAdGi9hdyoAoVfVP5yVvA8Xo9jWdXwGCW2jtLO43HtTZXJ
-	 NnMBiUDXZ+dJ8D+9RDDn+MqOGKIXPgObjbhyCfdk=
+	b=TuqgMDq/fFYM8XSE22DqBiORG63FciuJYXFGHG5xPRjNc674AjzOxGY1OKT/ZcNrn
+	 1wUFlmQ5Pn5VYAxACWpbfvQQT/3bZHOktAGTxfTmnZdex2GKn2IFrULr+BpMK2NLOT
+	 M6MXnWWkS1noatyud4PUbuY9l7pCWYczUECpr/eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xing Guo <higuoxing@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/136] selftests: arg_parsing: Ensure data is flushed to disk before reading.
-Date: Tue, 21 Oct 2025 21:51:20 +0200
-Message-ID: <20251021195038.171447171@linuxfoundation.org>
+	Zhixu Liu <zhixu.liu@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 6.17 001/159] docs: kdoc: handle the obsolescensce of docutils.ErrorString()
+Date: Tue, 21 Oct 2025 21:49:38 +0200
+Message-ID: <20251021195043.219137110@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
-References: <20251021195035.953989698@linuxfoundation.org>
+In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
+References: <20251021195043.182511864@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xing Guo <higuoxing@gmail.com>
+From: Jonathan Corbet <corbet@lwn.net>
 
-[ Upstream commit 0c1999ed33722f85476a248186d6e0eb2bf3dd2a ]
+commit 00d95fcc4dee66dfb6980de6f2973b32f973a1eb upstream.
 
-test_parse_test_list_file writes some data to
-/tmp/bpf_arg_parsing_test.XXXXXX and parse_test_list_file() will read
-the data back.  However, after writing data to that file, we forget to
-call fsync() and it's causing testing failure in my laptop.  This patch
-helps fix it by adding the missing fsync() call.
+The ErrorString() and SafeString() docutils functions were helpers meant to
+ease the handling of encodings during the Python 3 transition.  There is no
+real need for them after Python 3.6, and docutils 0.22 removes them,
+breaking the docs build
 
-Fixes: 64276f01dce8 ("selftests/bpf: Test_progs can read test lists from file")
-Signed-off-by: Xing Guo <higuoxing@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20251016035330.3217145-1-higuoxing@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Handle this by just injecting our own one-liner version of ErrorString(),
+and removing the sole SafeString() call entirely.
+
+Reported-by: Zhixu Liu <zhixu.liu@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <87ldmnv2pi.fsf@trenco.lwn.net>
+[ Salvatore Bonaccorso: Backport to v6.17.y for context changes in
+  Documentation/sphinx/kernel_include.py with major refactorings for the v6.18
+  development cycle ]
+Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/arg_parsing.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/sphinx/kernel_feat.py         |    4 +++-
+ Documentation/sphinx/kernel_include.py      |    6 ++++--
+ Documentation/sphinx/maintainers_include.py |    4 +++-
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-index fbf0d9c2f58b3..e27d66b75fb1f 100644
---- a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-+++ b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-@@ -144,6 +144,9 @@ static void test_parse_test_list_file(void)
- 	if (!ASSERT_OK(ferror(fp), "prepare tmp"))
- 		goto out_fclose;
+--- a/Documentation/sphinx/kernel_feat.py
++++ b/Documentation/sphinx/kernel_feat.py
+@@ -40,9 +40,11 @@ import sys
+ from docutils import nodes, statemachine
+ from docutils.statemachine import ViewList
+ from docutils.parsers.rst import directives, Directive
+-from docutils.utils.error_reporting import ErrorString
+ from sphinx.util.docutils import switch_source_input
  
-+	if (!ASSERT_OK(fsync(fileno(fp)), "fsync tmp"))
-+		goto out_fclose;
++def ErrorString(exc):  # Shamelessly stolen from docutils
++    return f'{exc.__class__.__name}: {exc}'
 +
- 	init_test_filter_set(&set);
+ __version__  = '1.0'
  
- 	if (!ASSERT_OK(parse_test_list_file(tmpfile, &set, true), "parse file"))
--- 
-2.51.0
-
+ def setup(app):
+--- a/Documentation/sphinx/kernel_include.py
++++ b/Documentation/sphinx/kernel_include.py
+@@ -35,13 +35,15 @@
+ import os.path
+ 
+ from docutils import io, nodes, statemachine
+-from docutils.utils.error_reporting import SafeString, ErrorString
+ from docutils.parsers.rst import directives
+ from docutils.parsers.rst.directives.body import CodeBlock, NumberLines
+ from docutils.parsers.rst.directives.misc import Include
+ 
+ __version__  = '1.0'
+ 
++def ErrorString(exc):  # Shamelessly stolen from docutils
++    return f'{exc.__class__.__name}: {exc}'
++
+ # ==============================================================================
+ def setup(app):
+ # ==============================================================================
+@@ -112,7 +114,7 @@ class KernelInclude(Include):
+             raise self.severe('Problems with "%s" directive path:\n'
+                               'Cannot encode input file path "%s" '
+                               '(wrong locale?).' %
+-                              (self.name, SafeString(path)))
++                              (self.name, path))
+         except IOError as error:
+             raise self.severe('Problems with "%s" directive path:\n%s.' %
+                       (self.name, ErrorString(error)))
+--- a/Documentation/sphinx/maintainers_include.py
++++ b/Documentation/sphinx/maintainers_include.py
+@@ -22,10 +22,12 @@ import re
+ import os.path
+ 
+ from docutils import statemachine
+-from docutils.utils.error_reporting import ErrorString
+ from docutils.parsers.rst import Directive
+ from docutils.parsers.rst.directives.misc import Include
+ 
++def ErrorString(exc):  # Shamelessly stolen from docutils
++    return f'{exc.__class__.__name}: {exc}'
++
+ __version__  = '1.0'
+ 
+ def setup(app):
 
 
