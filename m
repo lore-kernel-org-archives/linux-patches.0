@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2131A3029;
-	Tue, 21 Oct 2025 20:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10F7350A0D;
+	Tue, 21 Oct 2025 20:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077448; cv=none; b=GtP9Q03acwejnEVfrpLvO6zSPkngQuQbceyaOJGbJUzcqB9Vsw/b6+ia2WZ5+6BXRdWefl0o2HFxjNn1LbTqTRgzjwzvWW/1g354L3WgBvoxsu5YFtLoshxCf4gR9cjOU0+bgRXANGjmJMvBHR1Bxl2rnoFMHaPZJ+fZDkYL6IA=
+	t=1761077449; cv=none; b=ViOdI/CKNMW6xJBfZr/TECl6qHrwbAnZVJQWLxlg202+GA2JWmULiI5qiVGTbzphkIjU1sbiRArZIGqBfpwF8XBaLamBtl2GFN89NJuzaR5nYmEPVU4XA57TC2RZI4dG7O18VRJf7Q2bO9szu+PbUkJ/PBqHLV9AExZjTv8mno0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077448; c=relaxed/simple;
-	bh=P5VN19pZKtJX1y+/NT0R8KReeQm0aV5sPx+Hyy+EgCE=;
+	s=arc-20240116; t=1761077449; c=relaxed/simple;
+	bh=qeraax/UNPw0dBEbMkOoJsXSnCSZNJHQZMIjp+hmvSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rHUhXx5r4dE5sbVGVI44iBvBPTZzNu3OkzfI7TkQKrbojUCmxACLP55CxFq3X76D/RG5z8Q0TGw8eTIFb4Z+zP3837mG6YL5ppp8JvjDs79JvJq2bAL8mSKld6bK4HbHkSc5L/8MO2auo9sKhw+MFLjpXavf1m3JhkqQsIdlVoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKabGVQ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=THi3p1Aeofuwx7A2OO4NYPBC2qZj2gbtWKUtM/SXeKnJqN1jdtMB6SSgFic80GBPKtvk1DZUeMT75w0svcqNg2sqM4025ivZ2wcFH6bD8b7Xa4xQBtr3glhKvZf380vkmROY3oYUNjt6gA7f2P0zEGwsBOE11/qB9gY5NdZv9/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5xdiu4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKabGVQ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B47C4CEF7;
-	Tue, 21 Oct 2025 20:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5xdiu4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF91C4CEF7;
+	Tue, 21 Oct 2025 20:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077446;
-	bh=P5VN19pZKtJX1y+/NT0R8KReeQm0aV5sPx+Hyy+EgCE=;
+	s=korg; t=1761077449;
+	bh=qeraax/UNPw0dBEbMkOoJsXSnCSZNJHQZMIjp+hmvSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKabGVQ8m3UU+b5VKRwcc9l5Von7YQHJGxg8fUlyB6cXf3HiuhTw23WRzt7t/6/YP
-	 65YSxKfVles3emd2JZXlf8jnbnPAjpb4RfT12Q0KJZZin6TwsHvMxQ+9gGJ9gmfgV0
-	 5KzNR2zKxSueteVeDILZJyIukcHITEzHloMgWTWg=
+	b=k5xdiu4AW0C648/NpP0pETDtCc62LCGujdwixuzM+7P3UvqHjYtCHai1S19u7keyF
+	 zNQ/IBlAqRwN4scuZ0aS1wwW9NakdD4wEnKjF0wpf+gHjpcAXATHLpYhQRXzHZZ8kW
+	 Yj/MCHgRY2F65dguTkfVZOjB6cDbnFvsisf0W0oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 108/159] drm/amdgpu: handle wrap around in reemit handling
-Date: Tue, 21 Oct 2025 21:51:25 +0200
-Message-ID: <20251021195045.772267103@linuxfoundation.org>
+Subject: [PATCH 6.17 109/159] drm/amdgpu: set an error on all fences from a bad context
+Date: Tue, 21 Oct 2025 21:51:26 +0200
+Message-ID: <20251021195045.794566682@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -54,55 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 1f22fcb88bfef26a966e9eb242c692c6bf253d47 ]
+[ Upstream commit ff780f4f80323148d43198f2052c14160c8428d3 ]
 
-Compare the sequence numbers directly.
+When we backup ring contents to reemit after a queue reset,
+we don't backup ring contents from the bad context.  When
+we signal the fences, we should set an error on those
+fences as well.
+
+v2: misc cleanups
+v3: add locking for fence error, fix comment (Christian)
+v4: fix wrap around, locking (Christian)
 
 Fixes: 77cc0da39c7c ("drm/amdgpu: track ring state associated with a fence")
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c | 39 ++++++++++++++++++++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c  |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h  |  2 +-
+ 3 files changed, 37 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-index 9e7506965cab2..bb17af79c24a6 100644
+index bb17af79c24a6..9f79f0cc5ff83 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-@@ -791,14 +791,19 @@ void amdgpu_ring_backup_unprocessed_commands(struct amdgpu_ring *ring,
- 	struct dma_fence *unprocessed;
- 	struct dma_fence __rcu **ptr;
- 	struct amdgpu_fence *fence;
--	u64 wptr, i, seqno;
-+	u64 wptr;
+@@ -759,11 +759,42 @@ void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring)
+  * @fence: fence of the ring to signal
+  *
+  */
+-void amdgpu_fence_driver_guilty_force_completion(struct amdgpu_fence *fence)
++void amdgpu_fence_driver_guilty_force_completion(struct amdgpu_fence *af)
+ {
+-	dma_fence_set_error(&fence->base, -ETIME);
+-	amdgpu_fence_write(fence->ring, fence->seq);
+-	amdgpu_fence_process(fence->ring);
++	struct dma_fence *unprocessed;
++	struct dma_fence __rcu **ptr;
++	struct amdgpu_fence *fence;
++	struct amdgpu_ring *ring = af->ring;
++	unsigned long flags;
 +	u32 seq, last_seq;
- 
--	seqno = amdgpu_fence_read(ring);
++
 +	last_seq = amdgpu_fence_read(ring) & ring->fence_drv.num_fences_mask;
 +	seq = ring->fence_drv.sync_seq & ring->fence_drv.num_fences_mask;
- 	wptr = ring->fence_drv.signalled_wptr;
- 	ring->ring_backup_entries_to_copy = 0;
- 
--	for (i = seqno + 1; i <= ring->fence_drv.sync_seq; ++i) {
--		ptr = &ring->fence_drv.fences[i & ring->fence_drv.num_fences_mask];
++
++	/* mark all fences from the guilty context with an error */
++	spin_lock_irqsave(&ring->fence_drv.lock, flags);
 +	do {
 +		last_seq++;
 +		last_seq &= ring->fence_drv.num_fences_mask;
 +
 +		ptr = &ring->fence_drv.fences[last_seq];
- 		rcu_read_lock();
- 		unprocessed = rcu_dereference(*ptr);
- 
-@@ -814,7 +819,7 @@ void amdgpu_ring_backup_unprocessed_commands(struct amdgpu_ring *ring,
- 			wptr = fence->wptr;
- 		}
- 		rcu_read_unlock();
--	}
++		rcu_read_lock();
++		unprocessed = rcu_dereference(*ptr);
++
++		if (unprocessed && !dma_fence_is_signaled_locked(unprocessed)) {
++			fence = container_of(unprocessed, struct amdgpu_fence, base);
++
++			if (fence == af)
++				dma_fence_set_error(&fence->base, -ETIME);
++			else if (fence->context == af->context)
++				dma_fence_set_error(&fence->base, -ECANCELED);
++		}
++		rcu_read_unlock();
 +	} while (last_seq != seq);
++	spin_unlock_irqrestore(&ring->fence_drv.lock, flags);
++	/* signal the guilty fence */
++	amdgpu_fence_write(ring, af->seq);
++	amdgpu_fence_process(ring);
  }
  
- /*
+ void amdgpu_fence_save_wptr(struct dma_fence *fence)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+index 8f6ce948c6841..5ec5c3ff22bb0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -811,7 +811,7 @@ int amdgpu_ring_reset_helper_end(struct amdgpu_ring *ring,
+ 	if (r)
+ 		return r;
+ 
+-	/* signal the fence of the bad job */
++	/* signal the guilty fence and set an error on all fences from the context */
+ 	if (guilty_fence)
+ 		amdgpu_fence_driver_guilty_force_completion(guilty_fence);
+ 	/* Re-emit the non-guilty commands */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+index 12783ea3ba0f1..869b486168f3e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+@@ -155,7 +155,7 @@ extern const struct drm_sched_backend_ops amdgpu_sched_ops;
+ void amdgpu_fence_driver_clear_job_fences(struct amdgpu_ring *ring);
+ void amdgpu_fence_driver_set_error(struct amdgpu_ring *ring, int error);
+ void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring);
+-void amdgpu_fence_driver_guilty_force_completion(struct amdgpu_fence *fence);
++void amdgpu_fence_driver_guilty_force_completion(struct amdgpu_fence *af);
+ void amdgpu_fence_save_wptr(struct dma_fence *fence);
+ 
+ int amdgpu_fence_driver_init_ring(struct amdgpu_ring *ring);
 -- 
 2.51.0
 
