@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903A41A3029;
-	Tue, 21 Oct 2025 20:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE571A3029;
+	Tue, 21 Oct 2025 20:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076977; cv=none; b=taCsQoJQII1zEVV5Z0eNqmCRFCH0mUdahjL+IBtrhHmsbLuvx37mBJh08Rn9w+FeNfRs6yiHBwxFdEiwcsUb1183LqC26L/cwKle2FqYNn4wOXpPGbnGirihbnZvZX+o9Pec4FzrAYH1GpwA6U825az0JS2Y5uRR2c1yh+Ootw8=
+	t=1761076980; cv=none; b=c5i3hHS8aqajh5XNIkn130CF+1ErgAGHGt/Zcg0WBiNH3ox1wYXgpH8/mq2yKP9Z3d87wL+v96xrvQM1Hc94B5Mk3jhGWw62soeXDLaQRzjtcRjijs+L2wUsAu5Fkm6r607A8FbMv2nEuGYs/QtwwrYrVEP+K8DEUju4zA6rvPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076977; c=relaxed/simple;
-	bh=SGWZ001JtS3LyV+yjfGDTXS4JNMK5HPzQbsNsJ+ZEwk=;
+	s=arc-20240116; t=1761076980; c=relaxed/simple;
+	bh=iLqa7WmHDRNuOvU1B6yntRaSPtpGaSeC+Pw2oouLztE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iA4nbhqxJ8memSNGpRq6GKN8uXJRM1SRqJjvyWtos3HCGiUXwNPrDLflzovNxylfRqw40T4nr0qMipQzT8wfzpEa9Pt8SZ4PnWe+VIpwKFVqGvnwkS94h2DsLNM8/v2lvTuWyMs1mrMChZrFlbqti3w7wY1G43jzTpnUM0P7Aco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xj9NU/Ps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcIoHKtSfmwM7g1P7RJVQwRO+S/v/UK1EUClhs0/tFb4MxjP6nDHamjjLF2e1WrjSU39s0XHEtMs3X9ym3tT+hxtbE0K/R19VRxJcFp+paBybNJp/Sfe2v6yzv+is4hqQNnmTdmGD7xZ2W52srgAJPmW1c5lRzyWTHObttZf46o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hk9KP3hT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xj9NU/Ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AD2C4CEF1;
-	Tue, 21 Oct 2025 20:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk9KP3hT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0143EC4CEF1;
+	Tue, 21 Oct 2025 20:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076977;
-	bh=SGWZ001JtS3LyV+yjfGDTXS4JNMK5HPzQbsNsJ+ZEwk=;
+	s=korg; t=1761076980;
+	bh=iLqa7WmHDRNuOvU1B6yntRaSPtpGaSeC+Pw2oouLztE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xj9NU/Ps7DxXDKfKlXTlmvynwNR07me7CboIRwLwvoIjBHEvskh89lfzkK8mw/Hof
-	 9KDxHSIGDv60hUFauC+cAwLZ1+wrPRugmaZjwQELNO+ZAvCxrEmNAL4ADoMivOxykr
-	 oHLvu3/CWAM0gteyWKPoI3Lamea/k209w+P5S6Xo=
+	b=Hk9KP3hTJkbzb0d8cej3dm7dgEjG8XyoeEefbwdHcswhjZT28oDwCq0Mt6ZTt3fqK
+	 ZYoYUGNId82Eqs1UsjK4Ox6tV2JP9MFKCF0v0Cr2AqDS2pQnJ5wX7NOelCww6KMIKb
+	 u2bqm3PI9Ow88IWB8ciAaJ4ML2IdDLaJRUmw0FsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Guibert <philippe.guibert@6wind.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/136] doc: fix seg6_flowlabel path
-Date: Tue, 21 Oct 2025 21:50:40 +0200
-Message-ID: <20251021195037.231435093@linuxfoundation.org>
+Subject: [PATCH 6.12 053/136] r8169: fix packet truncation after S4 resume on RTL8168H/RTL8111H
+Date: Tue, 21 Oct 2025 21:50:41 +0200
+Message-ID: <20251021195037.256462382@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -53,36 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 0b4b77eff5f8cd9be062783a1c1e198d46d0a753 ]
+[ Upstream commit 70f92ab97042f243e1c8da1c457ff56b9b3e49f1 ]
 
-This sysctl is not per interface; it's global per netns.
+After resume from S4 (hibernate), RTL8168H/RTL8111H truncates incoming
+packets. Packet captures show messages like "IP truncated-ip - 146 bytes
+missing!".
 
-Fixes: 292ecd9f5a94 ("doc: move seg6_flowlabel to seg6-sysctl.rst")
-Reported-by: Philippe Guibert <philippe.guibert@6wind.com>
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The issue is caused by RxConfig not being properly re-initialized after
+resume. Re-initializing the RxConfig register before the chip
+re-initialization sequence avoids the truncation and restores correct
+packet reception.
+
+This follows the same pattern as commit ef9da46ddef0 ("r8169: fix data
+corruption issue on RTL8402").
+
+Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20251009122549.3955845-1-lilinmao@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/seg6-sysctl.rst | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/networking/seg6-sysctl.rst b/Documentation/networking/seg6-sysctl.rst
-index 07c20e470bafe..1b6af4779be11 100644
---- a/Documentation/networking/seg6-sysctl.rst
-+++ b/Documentation/networking/seg6-sysctl.rst
-@@ -25,6 +25,9 @@ seg6_require_hmac - INTEGER
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 7b82779e4cd5d..80b5262d0d572 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -5060,8 +5060,9 @@ static int rtl8169_resume(struct device *device)
+ 	if (!device_may_wakeup(tp_to_dev(tp)))
+ 		clk_prepare_enable(tp->clk);
  
- 	Default is 0.
+-	/* Reportedly at least Asus X453MA truncates packets otherwise */
+-	if (tp->mac_version == RTL_GIGA_MAC_VER_37)
++	/* Some chip versions may truncate packets without this initialization */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_37 ||
++	    tp->mac_version == RTL_GIGA_MAC_VER_46)
+ 		rtl_init_rxcfg(tp);
  
-+/proc/sys/net/ipv6/seg6_* variables:
-+====================================
-+
- seg6_flowlabel - INTEGER
- 	Controls the behaviour of computing the flowlabel of outer
- 	IPv6 header in case of SR T.encaps
+ 	return rtl8169_runtime_resume(device);
 -- 
 2.51.0
 
