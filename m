@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CF6279DAB;
-	Tue, 21 Oct 2025 20:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550F027A12B;
+	Tue, 21 Oct 2025 20:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077620; cv=none; b=Bi2PQjcmkbVE9d0ClrLg0adkLP6iPWHtdT8g5trc5fJZyadObbFm8QU+KGw3IfDWs9A2GywOCiXFf5jPXURhSJHfo+zYKC3RK45tyN5o7KKAbOsnJCpe0WO2GOoesAdR5tIk11RdpT4/BGWGrrgZ3MkE1qEViK/218ZIJFcu19M=
+	t=1761077624; cv=none; b=MZvTxktrecdODMnb90dWz3Ziu63VOoSzXeAJX5Y9Ez4miPYnlGbWJyNQA25KJxoTAC7ybALV0C6fj9GbTGcTW/jwscq0U5OcJdZbDLZaldms4Qsup4FUK8XjTARjb6FsVaU6D883Cgrt2UNXBR/BHxTzUrDhWvFNk6MgZwcq79Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077620; c=relaxed/simple;
-	bh=N7zQqSlafgBSsp2sSjATkYmM/bGCaRwnQXCV5NStkx8=;
+	s=arc-20240116; t=1761077624; c=relaxed/simple;
+	bh=auamJeqepmngFXzVZLPyD5yDrj0ZuQ6uG1l0ZlWN5Ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3j0qhx4OV7d7TAlZtyG2C8nv6aB0UuTB8LJQl7tCUeuRwuX27e4+7+qnquuc90zoeFG8jYOK5VrIzvor2S+HYEWYjO9wTtiujDwmLRzmmzSykYcsv3vTm0qDPWCckIyC9YuJ3LLBLEKEc/ZjdIk4fBFGpKkDeq9y++kJ8HPIsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsxvM5D3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYHq3HZdxDIyk2UBp9WSsaAq1n8YNmDbpuZ4ctCf2qyunyCk7qsxz7O44c5iv1JS8s/VUd6O9NeZmhurUKnZLSWCCUqSF/wySKzfXUUymU/qMEEMM+vUnCauSnvH3COqnpOzaEG3pD/J5oGZCGXpI44E1o7Mtx7+i/ZCUXebH50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsGZ9Ja7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsxvM5D3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E520DC4CEF1;
-	Tue, 21 Oct 2025 20:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsGZ9Ja7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A92C4CEF5;
+	Tue, 21 Oct 2025 20:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077620;
-	bh=N7zQqSlafgBSsp2sSjATkYmM/bGCaRwnQXCV5NStkx8=;
+	s=korg; t=1761077624;
+	bh=auamJeqepmngFXzVZLPyD5yDrj0ZuQ6uG1l0ZlWN5Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsxvM5D3e/uyljlYkxqiRiPZMnUhBOXYss3dPqUiiwEtaAJHgygM4J7djRX9+DhYQ
-	 U46neMIpXHp5qG+4QYK6ka9F2MdqDvtBgeVbiynIpclXymsB8G05s1Hrm9G/cyfOba
-	 mshcLL/B3/6Qs4QSAmuEMH94Gs11Ic6OXECYqoAI=
+	b=xsGZ9Ja7fSEp7d5TJnQJC+kACvafFeYYWSjXDP/82K3VJXGUNZoNnT//Zfg1Ea9ky
+	 yEpit/xTpGktFLLCbMG/viqyfITy6ZMKNaH2CFdJTPVjxr5ARFDBN1/MnjQmHfqWhX
+	 ThuNrp3nsu2cjD1jFeMjQc5Z1LlOpa4qJgdZ2mNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.17 138/159] arm64: debug: always unmask interrupts in el0_softstp()
-Date: Tue, 21 Oct 2025 21:51:55 +0200
-Message-ID: <20251021195046.461640467@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: [PATCH 6.17 139/159] arm64: cputype: Add Neoverse-V3AE definitions
+Date: Tue, 21 Oct 2025 21:51:56 +0200
+Message-ID: <20251021195046.487637758@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,69 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit ea0d55ae4b3207c33691a73da3443b1fd379f1d2 upstream.
+commit 3bbf004c4808e2c3241e5c1ad6cc102f38a03c39 upstream.
 
-We intend that EL0 exception handlers unmask all DAIF exceptions
-before calling exit_to_user_mode().
+Add cputype definitions for Neoverse-V3AE. These will be used for errata
+detection in subsequent patches.
 
-When completing single-step of a suspended breakpoint, we do not call
-local_daif_restore(DAIF_PROCCTX) before calling exit_to_user_mode(),
-leaving all DAIF exceptions masked.
+These values can be found in the Neoverse-V3AE TRM:
 
-When pseudo-NMIs are not in use this is benign.
+  https://developer.arm.com/documentation/SDEN-2615521/9-0/
 
-When pseudo-NMIs are in use, this is unsound. At this point interrupts
-are masked by both DAIF.IF and PMR_EL1, and subsequent irq flag
-manipulation may not work correctly. For example, a subsequent
-local_irq_enable() within exit_to_user_mode_loop() will only unmask
-interrupts via PMR_EL1 (leaving those masked via DAIF.IF), and
-anything depending on interrupts being unmasked (e.g. delivery of
-signals) will not work correctly.
+... in section A.6.1 ("MIDR_EL1, Main ID Register").
 
-This was detected by CONFIG_ARM64_DEBUG_PRIORITY_MASKING.
-
-Move the call to `try_step_suspended_breakpoints()` outside of the check
-so that interrupts can be unmasked even if we don't call the step handler.
-
-Fixes: 0ac7584c08ce ("arm64: debug: split single stepping exception entry")
-Cc: <stable@vger.kernel.org> # 6.17
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-[catalin.marinas@arm.com: added Mark's rewritten commit log and some whitespace]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ada.coupriediaz@arm.com: Fix conflict for v6.17 stable]
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/entry-common.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -832,6 +832,8 @@ static void noinstr el0_breakpt(struct p
- 
- static void noinstr el0_softstp(struct pt_regs *regs, unsigned long esr)
- {
-+	bool step_done;
-+
- 	if (!is_ttbr0_addr(regs->pc))
- 		arm64_apply_bp_hardening();
- 
-@@ -842,10 +844,10 @@ static void noinstr el0_softstp(struct p
- 	 * If we are stepping a suspended breakpoint there's nothing more to do:
- 	 * the single-step is complete.
- 	 */
--	if (!try_step_suspended_breakpoints(regs)) {
--		local_daif_restore(DAIF_PROCCTX);
-+	step_done = try_step_suspended_breakpoints(regs);
-+	local_daif_restore(DAIF_PROCCTX);
-+	if (!step_done)
- 		do_el0_softstep(esr, regs);
--	}
- 	exit_to_user_mode(regs);
- }
- 
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -93,6 +93,7 @@
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
++#define ARM_CPU_PART_NEOVERSE_V3AE	0xD83
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
+ #define ARM_CPU_PART_CORTEX_A725	0xD87
+@@ -182,6 +183,7 @@
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
++#define MIDR_NEOVERSE_V3AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3AE)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
 
 
