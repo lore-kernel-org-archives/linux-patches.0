@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543781A00CE;
-	Tue, 21 Oct 2025 20:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A73350A0D;
+	Tue, 21 Oct 2025 20:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077139; cv=none; b=YPs/o7CtKL0ZCbDQmRDTE2XwhsGCtz26B8fARC541aM8do2yCFh5VW1eiRXkMNrfK+obnc9LfqKu1AQdgJczjAJcMF/sU/570Qm6dDn9USiIjhqN+pBfJZpNW4VVJy2IzxijEElO/YgFIkLu5XSnqwGXyDHfW8AC3wX6N0qKW5s=
+	t=1761077142; cv=none; b=qwjXsC0PmYKoZP4B3525X/cEleqhoaGNTEojrdHhmCLbKtWzsZtlQ+LvN7q+3E4l3UZ13I9s0XpWHm6F2Drq2O+BSCde0Iu1WdxZ/0k0xBqR0RvzhpFuzu+HE1GVHGFaXc+Xh4heQ7S5KTcp3Tcz4ql4YoGt7gOxwcYdg1wI8JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077139; c=relaxed/simple;
-	bh=JSpZ2LgfnqNhK8doxqza0A7czdKvp/kM7Uw8h4MwmT4=;
+	s=arc-20240116; t=1761077142; c=relaxed/simple;
+	bh=mRnpE8+rDAJnRxePqINrdZXgczFEmGhiFcB7Xh86OlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdVbJiJACyP6rxsVpWr0wy7DaFJjORYcpypYdkLVIDQpKRrf6ZgCBFMiyVDxMDoc/0iZvybPN4gFFigfHEMCMO1mpsuOIZ3U6MHoq16k0Zvt9oKCUnaO8eKvEE1CmlxNiDUy10Fo5xkUwji+TPNfZNHsPPWbeUgHAr+55t1OFEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gk2fXIZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RvbKiJ5i8fdA7wCIW/vXNACEoyDbU8U6fZNgJXb1O86DngIwN9XpWSOaGSOIgMToBaVH4YxBfQHu2Tzc/zYpUxgrZRo1R8YjUhRK+aw/3WswsbvdHp20dWrE3MHUDDW/TpBz/pD53qhuDWALLhZWDuVPaR9/3iznjHcuSP907m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEtjdFv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gk2fXIZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69CCC4CEF1;
-	Tue, 21 Oct 2025 20:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEtjdFv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B15C4CEF1;
+	Tue, 21 Oct 2025 20:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077139;
-	bh=JSpZ2LgfnqNhK8doxqza0A7czdKvp/kM7Uw8h4MwmT4=;
+	s=korg; t=1761077141;
+	bh=mRnpE8+rDAJnRxePqINrdZXgczFEmGhiFcB7Xh86OlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gk2fXIZU9/pzu8Ih5o3KEmho0pssrBJ4DfX41CeuvVONKVesZXZut4/UPw2v7SkBt
-	 9Dz+gy9zlhqXL3uPM5P5yFd911m1as1xzynEk0s5C24OwUqAnnU186xzRwjwQtxxaG
-	 nrAItIsgojDQn59u7PM9mu8UlSGcVKs9nQ5LaBYg=
+	b=DEtjdFv/lwI2lb0cp1r59HE8aLjK0h/EimsheBXi/g5xOqW8d+VsYrCCM6665I6GQ
+	 yOUTOb/HeVMeU47gIXTGFWbweo9BmQ/I/dPC0BPnqqIS0gvhzySIHGdLss05WniiH7
+	 hu1WYxUtvv1z94vTotQ3hP9sNpfqXj625afZig+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.17 012/159] x86/CPU/AMD: Prevent reset reasons from being retained across reboot
-Date: Tue, 21 Oct 2025 21:49:49 +0200
-Message-ID: <20251021195043.479090565@linuxfoundation.org>
+	Hao Ge <gehao@kylinos.cn>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.17 013/159] slab: reset slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL
+Date: Tue, 21 Oct 2025 21:49:50 +0200
+Message-ID: <20251021195043.504485875@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -53,71 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit e6416c2dfe23c9a6fec881fda22ebb9ae486cfc5 upstream.
+commit 86f54f9b6c17d6567c69e3a6fed52fdf5d7dbe93 upstream.
 
-The S5_RESET_STATUS register is parsed on boot and printed to kmsg.
-However, this could sometimes be misleading and lead to users wasting a
-lot of time on meaningless debugging for two reasons:
+If obj_exts allocation failed, slab->obj_exts is set to OBJEXTS_ALLOC_FAIL,
+But we do not clear it when freeing the slab. Since OBJEXTS_ALLOC_FAIL and
+MEMCG_DATA_OBJEXTS currently share the same bit position, during the
+release of the associated folio, a VM_BUG_ON_FOLIO() check in
+folio_memcg_kmem() is triggered because the OBJEXTS_ALLOC_FAIL flag was
+not cleared, causing it to be interpreted as a kmem folio (non-slab)
+with MEMCG_OBJEXTS_DATA flag set, which is invalid because
+MEMCG_OBJEXTS_DATA is supposed to be set only on slabs.
 
-* Some bits are never cleared by hardware. It's the software's
-responsibility to clear them as per the Processor Programming Reference
-(see [1]).
+Another problem that predates sharing the OBJEXTS_ALLOC_FAIL and
+MEMCG_DATA_OBJEXTS bits is that on configurations with
+is_check_pages_enabled(), the non-cleared bit in page->memcg_data will
+trigger a free_page_is_bad() failure "page still charged to cgroup"
 
-* Some rare hardware-initiated platform resets do not update the
-register at all.
+When freeing a slab, we clear slab->obj_exts if the obj_ext array has
+been successfully allocated. So let's clear it also when the allocation
+has failed.
 
-In both cases, a previous reboot could leave its trace in the register,
-resulting in users seeing unrelated reboot reasons while debugging random
-reboots afterward.
-
-Write the read value back to the register in order to clear all reason bits
-since they are write-1-to-clear while the others must be preserved.
-
-  [1]: https://bugzilla.kernel.org/show_bug.cgi?id=206537#attach_303991
-
-  [ bp: Massage commit message. ]
-
-Fixes: ab8131028710 ("x86/CPU/AMD: Print the reason for the last reset")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/all/20250913144245.23237-1-i@rong.moe/
+Fixes: 09c46563ff6d ("codetag: debug: introduce OBJEXTS_ALLOC_FAIL to mark failed slab_ext allocations")
+Fixes: 7612833192d5 ("slab: Reuse first bit for OBJEXTS_ALLOC_FAIL")
+Link: https://lore.kernel.org/all/20251015141642.700170-1-hao.ge@linux.dev/
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ mm/slub.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1338,11 +1338,23 @@ static __init int print_s5_reset_status_
- 		return 0;
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -2073,8 +2073,15 @@ static inline void free_slab_obj_exts(st
+ 	struct slabobj_ext *obj_exts;
  
- 	value = ioread32(addr);
--	iounmap(addr);
- 
- 	/* Value with "all bits set" is an error response and should be ignored. */
--	if (value == U32_MAX)
-+	if (value == U32_MAX) {
-+		iounmap(addr);
- 		return 0;
+ 	obj_exts = slab_obj_exts(slab);
+-	if (!obj_exts)
++	if (!obj_exts) {
++		/*
++		 * If obj_exts allocation failed, slab->obj_exts is set to
++		 * OBJEXTS_ALLOC_FAIL. In this case, we end up here and should
++		 * clear the flag.
++		 */
++		slab->obj_exts = 0;
+ 		return;
 +	}
-+
-+	/*
-+	 * Clear all reason bits so they won't be retained if the next reset
-+	 * does not update the register. Besides, some bits are never cleared by
-+	 * hardware so it's software's responsibility to clear them.
-+	 *
-+	 * Writing the value back effectively clears all reason bits as they are
-+	 * write-1-to-clear.
-+	 */
-+	iowrite32(value, addr);
-+	iounmap(addr);
  
- 	for (i = 0; i < ARRAY_SIZE(s5_reset_reason_txt); i++) {
- 		if (!(value & BIT(i)))
+ 	/*
+ 	 * obj_exts was created with __GFP_NO_OBJ_EXT flag, therefore its
 
 
