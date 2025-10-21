@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29E8350A39;
-	Tue, 21 Oct 2025 19:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3452741A6;
+	Tue, 21 Oct 2025 19:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076584; cv=none; b=dMvr3tU9s11fDecfBZgiX69KPcu3HnZyGEDf/zgA3rkWQtRBKARoX1goYT3GeGkKAfjeTRlD+y/3FDVi7BiZofqAH7CfWU2R+Yln1FMm5EjJlobQf4IpPP4IbHIsa/pW/Mzc0r1YmYWPnAkr9Dfr73PZ2jfYynakHciGyLzAVQo=
+	t=1761076587; cv=none; b=CvF3RbMB1A0dBOyRrXDsfCdQ99TfQOnauPyi9of7ger1BgDb36L4maaUgumgevDGk+lVpkFKzguOrJOycKxhP6TIKzFoMmt9n2VAoxY5rh6MtUNfVEe24SORGu40o1Av/mCrQARTNzoe5og2W/fkOhw1NHOjesXHw7rnFXfVloM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076584; c=relaxed/simple;
-	bh=y59dyb65cW/FjuX2ppFEsf8Gj2NfFgo3hnc2S/fcjAs=;
+	s=arc-20240116; t=1761076587; c=relaxed/simple;
+	bh=Ia8VmxPaWnYi7A1iuWJBzcsfdh4Wo4z8CUmo2I5BGDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAToZ+06jD8cvFc7HMXfW9r/iURmQlck6CBOBTPrOqaaYDswsddZFvLBNpywrqHnyuXOXjsw/HATjtRy/w6TAsG1hdnlfAAXmhZO6qBNx0r/Rj4f4Gs40iaI400giSmYteQ3e3FIYbV83eOAYlwb448+awMSuOyVbIE08t8PwHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lcg34TCi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k66Qj3PQKEaDddKpuaWsnLlor3UGvEWMeorndkUpZkkPnYawqxgooYnW3lQcicskXYrmVMfKUec7DA5yTrnPPgDr//WYR+9oCUZgshSFDo3NXJU96zZOYMRSNfs56dcrO3hn0GsLcnS6LejtGWELTuWlfhgiEzEFXgskKs/jCQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJcF8K7n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lcg34TCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C94CC4CEF1;
-	Tue, 21 Oct 2025 19:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJcF8K7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F12FC4CEF1;
+	Tue, 21 Oct 2025 19:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076584;
-	bh=y59dyb65cW/FjuX2ppFEsf8Gj2NfFgo3hnc2S/fcjAs=;
+	s=korg; t=1761076587;
+	bh=Ia8VmxPaWnYi7A1iuWJBzcsfdh4Wo4z8CUmo2I5BGDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lcg34TCiHjfDEjteUAOK1dF0LUiuGSZhX8EjgMBWoR80lf1tn4kwx9aP2ybzP/V30
-	 szkck5C3Y8Singe19dIU2vKYgltjURMr/uoclV/6u0wu2ixZku8RFVuzOUXIxlrh5f
-	 yOxDJr64gxkhOYe6QYe+P/k++f2CVHhpXUj3mT3w=
+	b=dJcF8K7nmpgFXfpaMyh9MY5vJN+fuxLBPwSn/V4JehP6hFb3yySIoA6x+2ZdUypTI
+	 lDHzmR5pqIJLZUlRo8i73qj1QNyP8R7AO5l0GZcIph+UupujsbS3FB44dUy0mYmyHY
+	 sjkkG5kDMAOG1lXO6+9a/UVY0D/TiHPehgMPD/Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/105] xfs: fix log CRC mismatches between i386 and other architectures
-Date: Tue, 21 Oct 2025 21:51:29 +0200
-Message-ID: <20251021195023.549636358@linuxfoundation.org>
+Subject: [PATCH 6.6 081/105] PM: runtime: Add new devm functions
+Date: Tue, 21 Oct 2025 21:51:30 +0200
+Message-ID: <20251021195023.572948664@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -45,175 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-[ Upstream commit e747883c7d7306acb4d683038d881528fbfbe749 ]
+[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
 
-When mounting file systems with a log that was dirtied on i386 on
-other architectures or vice versa, log recovery is unhappy:
+Add `devm_pm_runtime_set_active_enabled()` and
+`devm_pm_runtime_get_noresume()` for simplifying
+common cases in drivers.
 
-[   11.068052] XFS (vdb): Torn write (CRC failure) detected at log block 0x2. Truncating head block from 0xc.
-
-This is because the CRCs generated by i386 and other architectures
-always diff.  The reason for that is that sizeof(struct xlog_rec_header)
-returns different values for i386 vs the rest (324 vs 328), because the
-struct is not sizeof(uint64_t) aligned, and i386 has odd struct size
-alignment rules.
-
-This issue goes back to commit 13cdc853c519 ("Add log versioning, and new
-super block field for the log stripe") in the xfs-import tree, which
-adds log v2 support and the h_size field that causes the unaligned size.
-At that time it only mattered for the crude debug only log header
-checksum, but with commit 0e446be44806 ("xfs: add CRC checks to the log")
-it became a real issue for v5 file system, because now there is a proper
-CRC, and regular builds actually expect it match.
-
-Fix this by allowing checksums with and without the padding.
-
-Fixes: 0e446be44806 ("xfs: add CRC checks to the log")
-Cc: <stable@vger.kernel.org> # v3.8
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_log_format.h |   30 +++++++++++++++++++++++++++++-
- fs/xfs/xfs_log.c               |    8 ++++----
- fs/xfs/xfs_log_priv.h          |    4 ++--
- fs/xfs/xfs_log_recover.c       |   19 +++++++++++++++++--
- fs/xfs/xfs_ondisk.h            |    2 ++
- 5 files changed, 54 insertions(+), 9 deletions(-)
+ drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/pm_runtime.h   |    4 +++
+ 2 files changed, 48 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_log_format.h
-+++ b/fs/xfs/libxfs/xfs_log_format.h
-@@ -171,12 +171,40 @@ typedef struct xlog_rec_header {
- 	__be32	  h_prev_block; /* block number to previous LR		:  4 */
- 	__be32	  h_num_logops;	/* number of log operations in this LR	:  4 */
- 	__be32	  h_cycle_data[XLOG_HEADER_CYCLE_SIZE / BBSIZE];
--	/* new fields */
-+
-+	/* fields added by the Linux port: */
- 	__be32    h_fmt;        /* format of log record                 :  4 */
- 	uuid_t	  h_fs_uuid;    /* uuid of FS                           : 16 */
-+
-+	/* fields added for log v2: */
- 	__be32	  h_size;	/* iclog size				:  4 */
-+
-+	/*
-+	 * When h_size added for log v2 support, it caused structure to have
-+	 * a different size on i386 vs all other architectures because the
-+	 * sum of the size ofthe  member is not aligned by that of the largest
-+	 * __be64-sized member, and i386 has really odd struct alignment rules.
-+	 *
-+	 * Due to the way the log headers are placed out on-disk that alone is
-+	 * not a problem becaue the xlog_rec_header always sits alone in a
-+	 * BBSIZEs area, and the rest of that area is padded with zeroes.
-+	 * But xlog_cksum used to calculate the checksum based on the structure
-+	 * size, and thus gives different checksums for i386 vs the rest.
-+	 * We now do two checksum validation passes for both sizes to allow
-+	 * moving v5 file systems with unclean logs between i386 and other
-+	 * (little-endian) architectures.
-+	 */
-+	__u32	  h_pad0;
- } xlog_rec_header_t;
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1552,6 +1552,32 @@ out:
+ }
+ EXPORT_SYMBOL_GPL(pm_runtime_enable);
  
-+#ifdef __i386__
-+#define XLOG_REC_SIZE		offsetofend(struct xlog_rec_header, h_size)
-+#define XLOG_REC_SIZE_OTHER	sizeof(struct xlog_rec_header)
-+#else
-+#define XLOG_REC_SIZE		sizeof(struct xlog_rec_header)
-+#define XLOG_REC_SIZE_OTHER	offsetofend(struct xlog_rec_header, h_size)
-+#endif /* __i386__ */
++static void pm_runtime_set_suspended_action(void *data)
++{
++	pm_runtime_set_suspended(data);
++}
 +
- typedef struct xlog_rec_ext_header {
- 	__be32	  xh_cycle;	/* write cycle of log			: 4 */
- 	__be32	  xh_cycle_data[XLOG_HEADER_CYCLE_SIZE / BBSIZE]; /*	: 256 */
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1807,13 +1807,13 @@ xlog_cksum(
- 	struct xlog		*log,
- 	struct xlog_rec_header	*rhead,
- 	char			*dp,
--	int			size)
-+	unsigned int		hdrsize,
-+	unsigned int		size)
++/**
++ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_set_active_enabled(struct device *dev)
++{
++	int err;
++
++	err = pm_runtime_set_active(dev);
++	if (err)
++		return err;
++
++	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
++	if (err)
++		return err;
++
++	return devm_pm_runtime_enable(dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
++
+ static void pm_runtime_disable_action(void *data)
  {
- 	uint32_t		crc;
+ 	pm_runtime_dont_use_autosuspend(data);
+@@ -1574,6 +1600,24 @@ int devm_pm_runtime_enable(struct device
+ }
+ EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
  
- 	/* first generate the crc for the record header ... */
--	crc = xfs_start_cksum_update((char *)rhead,
--			      sizeof(struct xlog_rec_header),
-+	crc = xfs_start_cksum_update((char *)rhead, hdrsize,
- 			      offsetof(struct xlog_rec_header, h_crc));
- 
- 	/* ... then for additional cycle data for v2 logs ... */
-@@ -2077,7 +2077,7 @@ xlog_sync(
- 
- 	/* calculcate the checksum */
- 	iclog->ic_header.h_crc = xlog_cksum(log, &iclog->ic_header,
--					    iclog->ic_datap, size);
-+			iclog->ic_datap, XLOG_REC_SIZE, size);
- 	/*
- 	 * Intentionally corrupt the log record CRC based on the error injection
- 	 * frequency, if defined. This facilitates testing log recovery in the
---- a/fs/xfs/xfs_log_priv.h
-+++ b/fs/xfs/xfs_log_priv.h
-@@ -503,8 +503,8 @@ xlog_recover_finish(
- extern void
- xlog_recover_cancel(struct xlog *);
- 
--extern __le32	 xlog_cksum(struct xlog *log, struct xlog_rec_header *rhead,
--			    char *dp, int size);
-+__le32	 xlog_cksum(struct xlog *log, struct xlog_rec_header *rhead,
-+		char *dp, unsigned int hdrsize, unsigned int size);
- 
- extern struct kmem_cache *xfs_log_ticket_cache;
- struct xlog_ticket *xlog_ticket_alloc(struct xlog *log, int unit_bytes,
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2860,9 +2860,24 @@ xlog_recover_process(
- 	int			pass,
- 	struct list_head	*buffer_list)
- {
--	__le32			expected_crc = rhead->h_crc, crc;
-+	__le32			expected_crc = rhead->h_crc, crc, other_crc;
- 
--	crc = xlog_cksum(log, rhead, dp, be32_to_cpu(rhead->h_len));
-+	crc = xlog_cksum(log, rhead, dp, XLOG_REC_SIZE,
-+			be32_to_cpu(rhead->h_len));
++static void pm_runtime_put_noidle_action(void *data)
++{
++	pm_runtime_put_noidle(data);
++}
 +
-+	/*
-+	 * Look at the end of the struct xlog_rec_header definition in
-+	 * xfs_log_format.h for the glory details.
-+	 */
-+	if (expected_crc && crc != expected_crc) {
-+		other_crc = xlog_cksum(log, rhead, dp, XLOG_REC_SIZE_OTHER,
-+				be32_to_cpu(rhead->h_len));
-+		if (other_crc == expected_crc) {
-+			xfs_notice_once(log->l_mp,
-+	"Fixing up incorrect CRC due to padding.");
-+			crc = other_crc;
-+		}
-+	}
++/**
++ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_get_noresume(struct device *dev)
++{
++	pm_runtime_get_noresume(dev);
++
++	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
++
+ /**
+  * pm_runtime_forbid - Block runtime PM of a device.
+  * @dev: Device to handle.
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -94,7 +94,9 @@ extern void pm_runtime_new_link(struct d
+ extern void pm_runtime_drop_link(struct device_link *link);
+ extern void pm_runtime_release_supplier(struct device_link *link);
  
- 	/*
- 	 * Nothing else to do if this is a CRC verification pass. Just return
---- a/fs/xfs/xfs_ondisk.h
-+++ b/fs/xfs/xfs_ondisk.h
-@@ -143,6 +143,8 @@ xfs_check_ondisk_structs(void)
- 	XFS_CHECK_STRUCT_SIZE(struct xfs_rud_log_format,	16);
- 	XFS_CHECK_STRUCT_SIZE(struct xfs_map_extent,		32);
- 	XFS_CHECK_STRUCT_SIZE(struct xfs_phys_extent,		16);
-+	XFS_CHECK_STRUCT_SIZE(struct xlog_rec_header,		328);
-+	XFS_CHECK_STRUCT_SIZE(struct xlog_rec_ext_header,	260);
++int devm_pm_runtime_set_active_enabled(struct device *dev);
+ extern int devm_pm_runtime_enable(struct device *dev);
++int devm_pm_runtime_get_noresume(struct device *dev);
  
- 	XFS_CHECK_OFFSET(struct xfs_bui_log_format, bui_extents,	16);
- 	XFS_CHECK_OFFSET(struct xfs_cui_log_format, cui_extents,	16);
+ /**
+  * pm_suspend_ignore_children - Set runtime PM behavior regarding children.
+@@ -278,7 +280,9 @@ static inline void __pm_runtime_disable(
+ static inline void pm_runtime_allow(struct device *dev) {}
+ static inline void pm_runtime_forbid(struct device *dev) {}
+ 
++static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
+ static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
++static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
+ 
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+ static inline void pm_runtime_get_noresume(struct device *dev) {}
 
 
