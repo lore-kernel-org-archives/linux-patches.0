@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A6B274B29;
-	Tue, 21 Oct 2025 20:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1157274B29;
+	Tue, 21 Oct 2025 20:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077291; cv=none; b=dVhJD3Ii3+urLQAbvyYOPR/xG4EEjYQ3oQJtOR8LK5M7sWcVeFNKkc24wLj4bO/cAlqT5iKBmeCZMBVHwWlXN+SlQFQ4fmC2vlNmLAMRzXOUCAqtcPWsfy+hcu7CvBWcwUFiyOjHx2NSWHrYQBxkr3NQWCgHXCFk6FyyJ9BYHFw=
+	t=1761077294; cv=none; b=G1eTkSnIUX5K7LWyHlL1MjuBlgvy88giWOYhKxmzvDEYCuY6/0HyP8aGZA2D1DOoIK9U0nrr391MI7JPiUIMUOB5anlez5N+ZIfH+8SZsWEFwemQRQ3bq3CJFOWIQv+VduiPaee4F0a5JhxCD1qfzAnQYbXB9J2qxFDqsl0ZyS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077291; c=relaxed/simple;
-	bh=FrTyMk6yXfQJHwRBrmXu8ta+PqkSxX0uSqg1Xp3WQ0E=;
+	s=arc-20240116; t=1761077294; c=relaxed/simple;
+	bh=Jaj65oYTG900KevAcPRgvr+7Iyv6ZAY9s71HWtkPZ8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oezN/fEs9fvKQ+lMTe49KHXF9pXaSuDI6ahJqLhUY9x77e0yhGoH7OrwaRHiwVLDaZs/nmEy7hO6GLLsuTp3k5b9CHxjJnLaLNrcaWCNi2AwQGW9N4r8c40o9YnFyyJ85p8tpkRh6RdZzeriBXPtnPrlVHsSy4QA2IvagMbsMuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3pq+/vR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EGGV/D2niEEBAfIE5rmij1ewOU+lL0C3nZxWZkD8nJsYkCI0H0udcfkkHdN8LC7O/43rggab8yiKY8d4LrGI0nlGaf31R74raxuG+oJtaG7xqvfkjbRktigQBgMJbuYqmVG6WLSJXH5WPCKt4ASgi479zqW9b8Hy9b1zZwD6bZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGZHiTgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3pq+/vR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB182C4CEF1;
-	Tue, 21 Oct 2025 20:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGZHiTgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ED6C4CEF1;
+	Tue, 21 Oct 2025 20:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077291;
-	bh=FrTyMk6yXfQJHwRBrmXu8ta+PqkSxX0uSqg1Xp3WQ0E=;
+	s=korg; t=1761077294;
+	bh=Jaj65oYTG900KevAcPRgvr+7Iyv6ZAY9s71HWtkPZ8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3pq+/vR+axRMaTzqnVnB554mIVrByHCCjnT9NLz7KllabgKPMRc7mvOTkr2H1cmb
-	 2DTiGAZOiWIwuLxv6LP+USjXwUKaMrrfwcU1f5phG9fbXyvKg3elg6tNGrgMXmdF/8
-	 vuxuOotiD7kUSRjirAlIuB8h0A05W5UM+DcLtyB8=
+	b=uGZHiTgija98MMjjrM2LIv99wZ+5gwvViJBiOMjs8EmFMiOTeVxOGq22dVh7g15fP
+	 AYWy7LC2ui84SxmkyWM17n/YP/5255hghnMlN9dF57dg7UIStJk3PvVVzTprWA6M8G
+	 Bo8xa8M3iL+JSvtO8QglACEYKRh5Gy+aCHbMP3Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Kim <jonathan.kim@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 042/159] drm/amdgpu: fix gfx12 mes packet status return check
-Date: Tue, 21 Oct 2025 21:50:19 +0200
-Message-ID: <20251021195044.215711106@linuxfoundation.org>
+	Patrik Flykt <patrik.flykt@linux.intel.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 060/159] can: m_can: m_can_plat_remove(): add missing pm_runtime_disable()
+Date: Tue, 21 Oct 2025 21:50:37 +0200
+Message-ID: <20251021195044.658225664@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -50,40 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Kim <jonathan.kim@amd.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit d0de79f66a80eeb849033fae34bd07a69ce72235 upstream.
+[ Upstream commit ba569fb07a7e9e9b71e9282e27e993ba859295c2 ]
 
-GFX12 MES uses low 32 bits of status return for success (1 or 0)
-and high bits for debug information if low bits are 0.
+Commit 227619c3ff7c ("can: m_can: move runtime PM enable/disable to
+m_can_platform") moved the PM runtime enable from the m_can core
+driver into the m_can_platform.
 
-GFX11 MES doesn't do this so checking full 64-bit status return
-for 1 or 0 is still valid.
+That patch forgot to move the pm_runtime_disable() to
+m_can_plat_remove(), so that unloading the m_can_platform driver
+causes an "Unbalanced pm_runtime_enable!" error message.
 
-Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the missing pm_runtime_disable() to m_can_plat_remove() to fix the
+problem.
+
+Cc: Patrik Flykt <patrik.flykt@linux.intel.com>
+Fixes: 227619c3ff7c ("can: m_can: move runtime PM enable/disable to m_can_platform")
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://patch.msgid.link/20250929-m_can-fix-state-handling-v4-1-682b49b49d9a@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can_platform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -225,7 +225,12 @@ static int mes_v12_0_submit_pkt_and_poll
- 			pipe, x_pkt->header.opcode);
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index b832566efda04..057eaa7b8b4b2 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -180,7 +180,7 @@ static void m_can_plat_remove(struct platform_device *pdev)
+ 	struct m_can_classdev *mcan_class = &priv->cdev;
  
- 	r = amdgpu_fence_wait_polling(ring, seq, timeout);
--	if (r < 1 || !*status_ptr) {
-+
-+	/*
-+	 * status_ptr[31:0] == 0 (fail) or status_ptr[63:0] == 1 (success).
-+	 * If status_ptr[31:0] == 0 then status_ptr[63:32] will have debug error information.
-+	 */
-+	if (r < 1 || !(lower_32_bits(*status_ptr))) {
+ 	m_can_class_unregister(mcan_class);
+-
++	pm_runtime_disable(mcan_class->dev);
+ 	m_can_class_free_dev(mcan_class->net);
+ }
  
- 		if (misc_op_str)
- 			dev_err(adev->dev, "MES(%d) failed to respond to msg=%s (%s)\n",
+-- 
+2.51.0
+
 
 
