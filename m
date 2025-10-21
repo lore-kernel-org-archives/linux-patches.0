@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354ED350A0D;
-	Tue, 21 Oct 2025 20:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461B6350A0D;
+	Tue, 21 Oct 2025 20:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077409; cv=none; b=jZ5/5dmYWg87yWC//pYBQT4W2ro5QOGmitEQoDGz34d8HTeTYuP4E/kCqZ6Q7h8T6d+KtympbvLAXrcFwWgCqrmykqr8WJP/YFWel59JnnMgJGZiS3PtkOWFRXawnatwBjU8e/zwRry1YlAqZwlAg39ID1eiqceMMrlvu9L0EFw=
+	t=1761077412; cv=none; b=Q8Sai6JCaUJvqXSpTmsiscdiF0M3Av7F4wydwLD7lYbA7dxpClaMF2cDUpvtd1EQfWFs66xXrJVIGpU6AYLdNAt9/eXGirauAxO33ncfGhjgMXM3oA5g7EggB1MRYOAQx274a0DiPFuJPKDx647NXI484pliwM1ERK6j3WbXs68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077409; c=relaxed/simple;
-	bh=ng4rekKwuBfKqLd5ZuxSeaqrcffjzOW262wuGcZbQNM=;
+	s=arc-20240116; t=1761077412; c=relaxed/simple;
+	bh=y9bDKodxjS1cbFJJFxu5v+UrxcKcTbeG20yZy5qybno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpw9qcB73zUDBNj/ELyg3sz1nvQbxibIqmaU68yPmiQR3l1hS7dh7v00MvHCxNpwTz/NXI/EjZ2HkBbubFMqb8e91th3RTRnVxhHrwsIHAmcO88svUmn5zCzH4RrfDFeDYShwZH9Mvb4zv/btNhim3UjK83slFwQ06ffxSI3VNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k21urNBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1bSusco2A7r50EEbsCMu/qXr1Cgmc2gdmxj27KQMXvqQMtNjrtsdFF4h9qMDHSPze4K3ih9ABSR0nD3fgo1zahDLlwPH2SchE7ojkZnwBfviQRv6pui08L3eLGRR1BASimVBlSZDZ2YSWsuENQV+WEaEwNAdTOZTj+dR0+tf5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVrg8PxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k21urNBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C33AC4CEF1;
-	Tue, 21 Oct 2025 20:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVrg8PxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF27C4CEF1;
+	Tue, 21 Oct 2025 20:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077409;
-	bh=ng4rekKwuBfKqLd5ZuxSeaqrcffjzOW262wuGcZbQNM=;
+	s=korg; t=1761077412;
+	bh=y9bDKodxjS1cbFJJFxu5v+UrxcKcTbeG20yZy5qybno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k21urNBwVjyHXMd37OvBjJ7TxkEixNq9+g8uxMJr1r9Ld+ZKQNlk34Q/0xZbG/R9y
-	 kTOp84rrRcSBKqsWN557gIDYawwFnBlrjZEIk822GZcqAIsHjp9vRZTcXVHeS1lEUb
-	 u0sAV0CdLhR0kOTvo8d+BJbjQsbnjXGbr9pmo8ak=
+	b=HVrg8PxQFQ0tJuQb1aQA7T0UagxMCZ2my2lIech8q3Q+bP7zeSxt2CM8Y1PTAIdmi
+	 arNIH6CuxKNMa2lhtG9RJghwYEMP1G+nEruue/tbnh/aLK3aFk9bo2WrWJwuEnm98I
+	 tU1mQa24SXOeE8UgnriiknjUxLM/9sNzDL+eKaIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 097/159] ASoC: codecs: Fix gain setting ranges for Renesas IDT821034 codec
-Date: Tue, 21 Oct 2025 21:51:14 +0200
-Message-ID: <20251021195045.515994742@linuxfoundation.org>
+Subject: [PATCH 6.17 098/159] ASoC: nau8821: Cancel jdet_work before handling jack ejection
+Date: Tue, 21 Oct 2025 21:51:15 +0200
+Message-ID: <20251021195045.538663104@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,52 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 6370a996f308ea3276030769b7482b346e7cc7c1 ]
+[ Upstream commit 6e54919cb541fdf1063b16f3254c28d01bc9e5ff ]
 
-The gain ranges specified in Renesas IDT821034 codec documentation
-are [-3dB;+13dB] in the transmit path (ADC) and [-13dB;+3dB] in the
-receive path (DAC). Allthough the registers allow programming values
-outside those ranges, the signal S/N and distorsion are only
-guaranteed in the specified ranges.
+The microphone detection work scheduled by a prior jack insertion
+interrupt may still be in a pending state or under execution when a jack
+ejection interrupt has been fired.
 
-Set ranges to the specified ones.
+This might lead to a racing condition or nau8821_jdet_work() completing
+after nau8821_eject_jack(), which will override the currently
+disconnected state of the jack and incorrectly report the headphone or
+the headset as being connected.
 
-Fixes: e51166990e81 ("ASoC: codecs: Add support for the Renesas IDT821034 codec")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://patch.msgid.link/2bd547194f3398e6182f770d7d6be711c702b4b2.1760029099.git.christophe.leroy@csgroup.eu
+Cancel any pending jdet_work or wait for its execution to finish before
+attempting to handle the ejection interrupt.
+
+Proceed similarly before launching the eject handler as a consequence of
+detecting an invalid insert interrupt.
+
+Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-1-f7b0e2543f09@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/idt821034.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/codecs/nau8821.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/idt821034.c b/sound/soc/codecs/idt821034.c
-index a03d4e5e7d144..cab2f2eecdfba 100644
---- a/sound/soc/codecs/idt821034.c
-+++ b/sound/soc/codecs/idt821034.c
-@@ -548,14 +548,14 @@ static int idt821034_kctrl_mute_put(struct snd_kcontrol *kcontrol,
- 	return ret;
- }
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index edb95f869a4a6..fed5d51fa5c3b 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -1185,6 +1185,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
  
--static const DECLARE_TLV_DB_LINEAR(idt821034_gain_in, -6520, 1306);
--#define IDT821034_GAIN_IN_MIN_RAW	1 /* -65.20 dB -> 10^(-65.2/20.0) * 1820 = 1 */
--#define IDT821034_GAIN_IN_MAX_RAW	8191 /* 13.06 dB -> 10^(13.06/20.0) * 1820 = 8191 */
-+static const DECLARE_TLV_DB_LINEAR(idt821034_gain_in, -300, 1300);
-+#define IDT821034_GAIN_IN_MIN_RAW	1288 /* -3.0 dB -> 10^(-3.0/20.0) * 1820 = 1288 */
-+#define IDT821034_GAIN_IN_MAX_RAW	8130 /* 13.0 dB -> 10^(13.0/20.0) * 1820 = 8130 */
- #define IDT821034_GAIN_IN_INIT_RAW	1820 /* 0dB -> 10^(0/20) * 1820 = 1820 */
- 
--static const DECLARE_TLV_DB_LINEAR(idt821034_gain_out, -6798, 1029);
--#define IDT821034_GAIN_OUT_MIN_RAW	1 /* -67.98 dB -> 10^(-67.98/20.0) * 2506 = 1*/
--#define IDT821034_GAIN_OUT_MAX_RAW	8191 /* 10.29 dB -> 10^(10.29/20.0) * 2506 = 8191 */
-+static const DECLARE_TLV_DB_LINEAR(idt821034_gain_out, -1300, 300);
-+#define IDT821034_GAIN_OUT_MIN_RAW	561 /* -13.0 dB -> 10^(-13.0/20.0) * 2506 = 561 */
-+#define IDT821034_GAIN_OUT_MAX_RAW	3540 /* 3.0 dB -> 10^(3.0/20.0) * 2506 = 3540 */
- #define IDT821034_GAIN_OUT_INIT_RAW	2506 /* 0dB -> 10^(0/20) * 2506 = 2506 */
- 
- static const struct snd_kcontrol_new idt821034_controls[] = {
+ 	if ((active_irq & NAU8821_JACK_EJECT_IRQ_MASK) ==
+ 		NAU8821_JACK_EJECT_DETECTED) {
++		cancel_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_DIS);
+ 		nau8821_eject_jack(nau8821);
+@@ -1199,11 +1200,11 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 		clear_irq = NAU8821_KEY_RELEASE_IRQ;
+ 	} else if ((active_irq & NAU8821_JACK_INSERT_IRQ_MASK) ==
+ 		NAU8821_JACK_INSERT_DETECTED) {
++		cancel_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_EN);
+ 		if (nau8821_is_jack_inserted(regmap)) {
+ 			/* detect microphone and jack type */
+-			cancel_work_sync(&nau8821->jdet_work);
+ 			schedule_work(&nau8821->jdet_work);
+ 			/* Turn off insertion interruption at manual mode */
+ 			regmap_update_bits(regmap,
 -- 
 2.51.0
 
