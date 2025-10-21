@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363D82773F4;
-	Tue, 21 Oct 2025 20:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770112798E5;
+	Tue, 21 Oct 2025 20:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077601; cv=none; b=k/FHjBKhRlWKa18YouwrTVUu54h9mXsQhURg6ns8Jqp8GH2ffpCxjeA0hQp7hMzWgPcw3xWw7DD3j1HitFrQAE+hvpKSXo4s7iThCHm5/1TH+rs9VZ/+ukdaR7uEuV/8dgiMFJxstVCSRyoWpcqyDK2sTenXvguB6TDTZnNKlHE=
+	t=1761077604; cv=none; b=T8DUgzSf833iWECbp+YX6V432NBCADwJmz83q/Ncrouy68xG6r73ZXCKX8wPwuNMw32bEmw7Fy0z4bV3ehGHi0za4rABzAa8pF7S1nc+IOYCFMdnM30wyxoakR+iEXDxSJfDtspMkOpfyC0cHSD+5usvJ6SRFJRMAsfKZpcuKgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077601; c=relaxed/simple;
-	bh=NoT6ZXm+VeiHlXEpE/2P2UD89ev1rEc29cAdxBprxVY=;
+	s=arc-20240116; t=1761077604; c=relaxed/simple;
+	bh=wR3eZxM0LtWNkvQhIOz9sgBHmKF/IMtkyN67qRQqdH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VLZsuDYtb1BpsjIBAjMRwypZ32OrCklTFRZHv0BRO372WKMV/16TvJ0AGp4X61NBRrketYOUdd6zu6JohWqczL5GL3L8jPZv4AUcO1heCI/5tytgRNkKkmpCHfptdW3AVRC2usJggZA0/pAWDorqOYEVs5BcOd8iUla2F6uvGtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsllmSQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D9Xs+bWLwI1rVzJv2yrzXfCjqlaYsM/4eges73HSNYqKpD9QzXgWQ6iUw3a01fV/++ONMPN0HmeBO4vFdQYDkyoOwJmdw3hXHzkNGxxfUC+TTHfaf2DxWZSSya+In63wUo3/0SpIsWS4DA36Vn+sDHej8iwIwazZL7gUXDlFPNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFQxdbM+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsllmSQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECBBC4CEF1;
-	Tue, 21 Oct 2025 20:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFQxdbM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06535C4CEF1;
+	Tue, 21 Oct 2025 20:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077601;
-	bh=NoT6ZXm+VeiHlXEpE/2P2UD89ev1rEc29cAdxBprxVY=;
+	s=korg; t=1761077604;
+	bh=wR3eZxM0LtWNkvQhIOz9sgBHmKF/IMtkyN67qRQqdH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsllmSQDCiewTNFav1qKwqRdCnQErymqFBZLbGAwwFi7SWjsjwt149WATNru8EH8Q
-	 hw1KTUWPnfGIE26p3gqKTgyqsyIyRZsAr0MMyqGn/R2FuYQ3E1c5H95XqtCUmbU2QI
-	 XTxVzt/QVCf/1Xs+eGvF/B868KkJc+it/5lNBa0E=
+	b=eFQxdbM+wefJ2QJ1KKtbmgysplkpd9fUt/JLm6F5Zn/dBSY74LElRrdRt14dCxmSX
+	 EwE6LJrdsJuTjcEuud+K0lxVpTtezKKfp97owJg6DZPpGcnX0bMTdw1FCnr37rYtAC
+	 rTfy++mb61/WqrtJ7XeS1/pWanq0AsAKC++R6srU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
-Subject: [PATCH 6.17 156/159] drm/xe: Move struct xe_vram_region to a dedicated header
-Date: Tue, 21 Oct 2025 21:52:13 +0200
-Message-ID: <20251021195046.928645258@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 157/159] drm/xe: Unify the initialization of VRAM regions
+Date: Tue, 21 Oct 2025 21:52:14 +0200
+Message-ID: <20251021195046.954164841@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -57,350 +58,664 @@ Content-Transfer-Encoding: 8bit
 
 From: Piotr Piórkowski <piotr.piorkowski@intel.com>
 
-[ Upstream commit 7a20b4f558f4291161f71a5b7384262db9ccd6b0 ]
+[ Upstream commit 4b0a5f5ce7849aab7a67ba9f113ed75626f6de36 ]
 
-Let's move the xe_vram_region structure to a new header dedicated to VRAM
-to improve modularity and avoid unnecessary dependencies when only
-VRAM-related structures are needed.
+Currently in the drivers we have defined VRAM regions per device and per
+tile. Initialization of these regions is done in two completely different
+ways. To simplify the logic of the code and make it easier to add new
+regions in the future, let's unify the way we initialize VRAM regions.
 
-v2: Fix build if CONFIG_DRM_XE_DEVMEM_MIRROR is enabled
-v3: Fix build if CONFIG_DRM_XE_DISPLAY is enabled
-v4: Move helper to get tile dpagemap to xe_svm.c
+v2:
+- fix doc comments in struct xe_vram_region
+- remove unnecessary includes (Jani)
+v3:
+- move code from xe_vram_init_regions_managers to xe_tile_init_noalloc
+  (Matthew)
+- replace ioremap_wc to devm_ioremap_wc for mapping VRAM BAR
+  (Matthew)
+- Replace the tile id parameter with vram region in the xe_pf_begin
+  function.
+v4:
+- remove tile back pointer from struct xe_vram_region
+- add new back pointers: xe and migarte to xe_vram_region
 
 Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Suggested-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com> # rev3
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com> # rev3
 Acked-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://lore.kernel.org/r/20250714184818.89201-4-piotr.piorkowski@intel.com
+Link: https://lore.kernel.org/r/20250714184818.89201-6-piotr.piorkowski@intel.com
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Stable-dep-of: d30203739be7 ("drm/xe: Move rebar to be done earlier")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/display/xe_fb_pin.c        |    1 
- drivers/gpu/drm/xe/display/xe_plane_initial.c |    1 
- drivers/gpu/drm/xe/xe_bo.c                    |    1 
- drivers/gpu/drm/xe/xe_bo_types.h              |    1 
- drivers/gpu/drm/xe/xe_device.c                |    1 
- drivers/gpu/drm/xe/xe_device_types.h          |   60 ---------------------
- drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c    |    1 
- drivers/gpu/drm/xe/xe_svm.c                   |    8 ++
- drivers/gpu/drm/xe/xe_tile.c                  |    1 
- drivers/gpu/drm/xe/xe_tile.h                  |   12 ----
- drivers/gpu/drm/xe/xe_ttm_vram_mgr.c          |    1 
- drivers/gpu/drm/xe/xe_vram.c                  |    1 
- drivers/gpu/drm/xe/xe_vram_types.h            |   74 ++++++++++++++++++++++++++
- 13 files changed, 91 insertions(+), 72 deletions(-)
- create mode 100644 drivers/gpu/drm/xe/xe_vram_types.h
+ drivers/gpu/drm/xe/xe_bo.h           |    4 
+ drivers/gpu/drm/xe/xe_gt_pagefault.c |   13 +--
+ drivers/gpu/drm/xe/xe_query.c        |    3 
+ drivers/gpu/drm/xe/xe_svm.c          |   43 ++++-----
+ drivers/gpu/drm/xe/xe_tile.c         |   37 ++------
+ drivers/gpu/drm/xe/xe_ttm_vram_mgr.c |   16 ++-
+ drivers/gpu/drm/xe/xe_ttm_vram_mgr.h |    3 
+ drivers/gpu/drm/xe/xe_vram.c         |  151 +++++++++++++++++++++--------------
+ drivers/gpu/drm/xe/xe_vram.h         |    2 
+ drivers/gpu/drm/xe/xe_vram_types.h   |   17 +++
+ 10 files changed, 164 insertions(+), 125 deletions(-)
 
---- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
-+++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
-@@ -16,6 +16,7 @@
- #include "xe_device.h"
- #include "xe_ggtt.h"
- #include "xe_pm.h"
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -12,6 +12,7 @@
+ #include "xe_macros.h"
+ #include "xe_vm_types.h"
+ #include "xe_vm.h"
 +#include "xe_vram_types.h"
  
- static void
- write_dpt_rotated(struct xe_bo *bo, struct iosys_map *map, u32 *dpt_ofs, u32 bo_ofs,
---- a/drivers/gpu/drm/xe/display/xe_plane_initial.c
-+++ b/drivers/gpu/drm/xe/display/xe_plane_initial.c
-@@ -21,6 +21,7 @@
- #include "intel_plane.h"
- #include "intel_plane_initial.h"
- #include "xe_bo.h"
-+#include "xe_vram_types.h"
- #include "xe_wa.h"
+ #define XE_DEFAULT_GTT_SIZE_MB          3072ULL /* 3GB by default */
  
- #include <generated/xe_wa_oob.h>
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -36,6 +36,7 @@
+@@ -23,8 +24,9 @@
+ #define XE_BO_FLAG_VRAM_MASK		(XE_BO_FLAG_VRAM0 | XE_BO_FLAG_VRAM1)
+ /* -- */
+ #define XE_BO_FLAG_STOLEN		BIT(4)
++#define XE_BO_FLAG_VRAM(vram)		(XE_BO_FLAG_VRAM0 << ((vram)->id))
+ #define XE_BO_FLAG_VRAM_IF_DGFX(tile)	(IS_DGFX(tile_to_xe(tile)) ? \
+-					 XE_BO_FLAG_VRAM0 << (tile)->id : \
++					 XE_BO_FLAG_VRAM((tile)->mem.vram) : \
+ 					 XE_BO_FLAG_SYSTEM)
+ #define XE_BO_FLAG_GGTT			BIT(5)
+ #define XE_BO_FLAG_IGNORE_MIN_PAGE_SIZE BIT(6)
+--- a/drivers/gpu/drm/xe/xe_gt_pagefault.c
++++ b/drivers/gpu/drm/xe/xe_gt_pagefault.c
+@@ -23,6 +23,7 @@
+ #include "xe_svm.h"
  #include "xe_trace_bo.h"
- #include "xe_ttm_stolen_mgr.h"
  #include "xe_vm.h"
 +#include "xe_vram_types.h"
  
- const char *const xe_mem_type_to_name[TTM_NUM_MEM_TYPES]  = {
- 	[XE_PL_SYSTEM] = "system",
---- a/drivers/gpu/drm/xe/xe_bo_types.h
-+++ b/drivers/gpu/drm/xe/xe_bo_types.h
-@@ -9,6 +9,7 @@
- #include <linux/iosys-map.h>
+ struct pagefault {
+ 	u64 page_addr;
+@@ -74,7 +75,7 @@ static bool vma_is_valid(struct xe_tile
+ }
  
- #include <drm/drm_gpusvm.h>
-+#include <drm/drm_pagemap.h>
- #include <drm/ttm/ttm_bo.h>
- #include <drm/ttm/ttm_device.h>
- #include <drm/ttm/ttm_placement.h>
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -64,6 +64,7 @@
- #include "xe_ttm_sys_mgr.h"
- #include "xe_vm.h"
- #include "xe_vram.h"
-+#include "xe_vram_types.h"
- #include "xe_vsec.h"
- #include "xe_wait_user_fence.h"
- #include "xe_wa.h"
---- a/drivers/gpu/drm/xe/xe_device_types.h
-+++ b/drivers/gpu/drm/xe/xe_device_types.h
-@@ -10,7 +10,6 @@
+ static int xe_pf_begin(struct drm_exec *exec, struct xe_vma *vma,
+-		       bool atomic, unsigned int id)
++		       bool atomic, struct xe_vram_region *vram)
+ {
+ 	struct xe_bo *bo = xe_vma_bo(vma);
+ 	struct xe_vm *vm = xe_vma_vm(vma);
+@@ -84,14 +85,16 @@ static int xe_pf_begin(struct drm_exec *
+ 	if (err)
+ 		return err;
  
- #include <drm/drm_device.h>
- #include <drm/drm_file.h>
--#include <drm/drm_pagemap.h>
- #include <drm/ttm/ttm_device.h>
+-	if (atomic && IS_DGFX(vm->xe)) {
++	if (atomic && vram) {
++		xe_assert(vm->xe, IS_DGFX(vm->xe));
++
+ 		if (xe_vma_is_userptr(vma)) {
+ 			err = -EACCES;
+ 			return err;
+ 		}
  
- #include "xe_devcoredump_types.h"
-@@ -26,7 +25,6 @@
- #include "xe_sriov_vf_types.h"
- #include "xe_step_types.h"
- #include "xe_survivability_mode_types.h"
--#include "xe_ttm_vram_mgr_types.h"
- 
- #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
- #define TEST_VM_OPS_ERROR
-@@ -39,6 +37,7 @@ struct xe_ggtt;
- struct xe_i2c;
- struct xe_pat_ops;
- struct xe_pxp;
-+struct xe_vram_region;
- 
- #define XE_BO_INVALID_OFFSET	LONG_MAX
- 
-@@ -72,63 +71,6 @@ struct xe_pxp;
- 		 struct xe_tile * : (tile__)->xe)
- 
- /**
-- * struct xe_vram_region - memory region structure
-- * This is used to describe a memory region in xe
-- * device, such as HBM memory or CXL extension memory.
-- */
--struct xe_vram_region {
--	/** @tile: Back pointer to tile */
--	struct xe_tile *tile;
--	/** @io_start: IO start address of this VRAM instance */
--	resource_size_t io_start;
--	/**
--	 * @io_size: IO size of this VRAM instance
--	 *
--	 * This represents how much of this VRAM we can access
--	 * via the CPU through the VRAM BAR. This can be smaller
--	 * than @usable_size, in which case only part of VRAM is CPU
--	 * accessible (typically the first 256M). This
--	 * configuration is known as small-bar.
--	 */
--	resource_size_t io_size;
--	/** @dpa_base: This memory regions's DPA (device physical address) base */
--	resource_size_t dpa_base;
--	/**
--	 * @usable_size: usable size of VRAM
--	 *
--	 * Usable size of VRAM excluding reserved portions
--	 * (e.g stolen mem)
--	 */
--	resource_size_t usable_size;
--	/**
--	 * @actual_physical_size: Actual VRAM size
--	 *
--	 * Actual VRAM size including reserved portions
--	 * (e.g stolen mem)
--	 */
--	resource_size_t actual_physical_size;
--	/** @mapping: pointer to VRAM mappable space */
--	void __iomem *mapping;
--	/** @ttm: VRAM TTM manager */
--	struct xe_ttm_vram_mgr ttm;
--#if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
--	/** @pagemap: Used to remap device memory as ZONE_DEVICE */
--	struct dev_pagemap pagemap;
--	/**
--	 * @dpagemap: The struct drm_pagemap of the ZONE_DEVICE memory
--	 * pages of this tile.
--	 */
--	struct drm_pagemap dpagemap;
--	/**
--	 * @hpa_base: base host physical address
--	 *
--	 * This is generated when remap device memory as ZONE_DEVICE
--	 */
--	resource_size_t hpa_base;
--#endif
--};
--
--/**
-  * struct xe_mmio - register mmio structure
-  *
-  * Represents an MMIO region that the CPU may use to access registers.  A
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-@@ -33,6 +33,7 @@
- #include "xe_migrate.h"
- #include "xe_sriov.h"
+ 		/* Migrate to VRAM, move should invalidate the VMA first */
+-		err = xe_bo_migrate(bo, XE_PL_VRAM0 + id);
++		err = xe_bo_migrate(bo, vram->placement);
+ 		if (err)
+ 			return err;
+ 	} else if (bo) {
+@@ -138,7 +141,7 @@ retry_userptr:
+ 	/* Lock VM and BOs dma-resv */
+ 	drm_exec_init(&exec, 0, 0);
+ 	drm_exec_until_all_locked(&exec) {
+-		err = xe_pf_begin(&exec, vma, atomic, tile->id);
++		err = xe_pf_begin(&exec, vma, atomic, tile->mem.vram);
+ 		drm_exec_retry_on_contention(&exec);
+ 		if (xe_vm_validate_should_retry(&exec, err, &end))
+ 			err = -EAGAIN;
+@@ -573,7 +576,7 @@ static int handle_acc(struct xe_gt *gt,
+ 	/* Lock VM and BOs dma-resv */
+ 	drm_exec_init(&exec, 0, 0);
+ 	drm_exec_until_all_locked(&exec) {
+-		ret = xe_pf_begin(&exec, vma, true, tile->id);
++		ret = xe_pf_begin(&exec, vma, true, tile->mem.vram);
+ 		drm_exec_retry_on_contention(&exec);
+ 		if (ret)
+ 			break;
+--- a/drivers/gpu/drm/xe/xe_query.c
++++ b/drivers/gpu/drm/xe/xe_query.c
+@@ -27,6 +27,7 @@
+ #include "xe_oa.h"
+ #include "xe_pxp.h"
  #include "xe_ttm_vram_mgr.h"
 +#include "xe_vram_types.h"
- #include "xe_wopcm.h"
+ #include "xe_wa.h"
  
- #define make_u64_from_u32(hi, lo) ((u64)((u64)(u32)(hi) << 32 | (u32)(lo)))
+ static const u16 xe_to_user_engine_class[] = {
+@@ -407,7 +408,7 @@ static int query_gt_list(struct xe_devic
+ 			gt_list->gt_list[iter].near_mem_regions = 0x1;
+ 		else
+ 			gt_list->gt_list[iter].near_mem_regions =
+-				BIT(gt_to_tile(gt)->id) << 1;
++				BIT(gt_to_tile(gt)->mem.vram->id) << 1;
+ 		gt_list->gt_list[iter].far_mem_regions = xe->info.mem_region_mask ^
+ 			gt_list->gt_list[iter].near_mem_regions;
+ 
 --- a/drivers/gpu/drm/xe/xe_svm.c
 +++ b/drivers/gpu/drm/xe/xe_svm.c
-@@ -17,6 +17,7 @@
- #include "xe_ttm_vram_mgr.h"
- #include "xe_vm.h"
- #include "xe_vm_types.h"
-+#include "xe_vram_types.h"
- 
- static bool xe_svm_range_in_vram(struct xe_svm_range *range)
+@@ -311,12 +311,11 @@ static u64 xe_vram_region_page_to_dpa(st
+ 				      struct page *page)
  {
-@@ -989,6 +990,11 @@ int xe_svm_range_get_pages(struct xe_vm
+ 	u64 dpa;
+-	struct xe_tile *tile = vr->tile;
+ 	u64 pfn = page_to_pfn(page);
+ 	u64 offset;
  
- #if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
+-	xe_tile_assert(tile, is_device_private_page(page));
+-	xe_tile_assert(tile, (pfn << PAGE_SHIFT) >= vr->hpa_base);
++	xe_assert(vr->xe, is_device_private_page(page));
++	xe_assert(vr->xe, (pfn << PAGE_SHIFT) >= vr->hpa_base);
  
-+static struct drm_pagemap *tile_local_pagemap(struct xe_tile *tile)
+ 	offset = (pfn << PAGE_SHIFT) - vr->hpa_base;
+ 	dpa = vr->dpa_base + offset;
+@@ -333,7 +332,7 @@ static int xe_svm_copy(struct page **pag
+ 		       unsigned long npages, const enum xe_svm_copy_dir dir)
+ {
+ 	struct xe_vram_region *vr = NULL;
+-	struct xe_tile *tile;
++	struct xe_device *xe;
+ 	struct dma_fence *fence = NULL;
+ 	unsigned long i;
+ #define XE_VRAM_ADDR_INVALID	~0x0ull
+@@ -366,7 +365,7 @@ static int xe_svm_copy(struct page **pag
+ 
+ 		if (!vr && spage) {
+ 			vr = page_to_vr(spage);
+-			tile = vr->tile;
++			xe = vr->xe;
+ 		}
+ 		XE_WARN_ON(spage && page_to_vr(spage) != vr);
+ 
+@@ -398,18 +397,18 @@ static int xe_svm_copy(struct page **pag
+ 
+ 			if (vram_addr != XE_VRAM_ADDR_INVALID) {
+ 				if (sram) {
+-					vm_dbg(&tile->xe->drm,
++					vm_dbg(&xe->drm,
+ 					       "COPY TO SRAM - 0x%016llx -> 0x%016llx, NPAGES=%ld",
+ 					       vram_addr, (u64)dma_addr[pos], i - pos + incr);
+-					__fence = xe_migrate_from_vram(tile->migrate,
++					__fence = xe_migrate_from_vram(vr->migrate,
+ 								       i - pos + incr,
+ 								       vram_addr,
+ 								       dma_addr + pos);
+ 				} else {
+-					vm_dbg(&tile->xe->drm,
++					vm_dbg(&xe->drm,
+ 					       "COPY TO VRAM - 0x%016llx -> 0x%016llx, NPAGES=%ld",
+ 					       (u64)dma_addr[pos], vram_addr, i - pos + incr);
+-					__fence = xe_migrate_to_vram(tile->migrate,
++					__fence = xe_migrate_to_vram(vr->migrate,
+ 								     i - pos + incr,
+ 								     dma_addr + pos,
+ 								     vram_addr);
+@@ -434,17 +433,17 @@ static int xe_svm_copy(struct page **pag
+ 			/* Extra mismatched device page, copy it */
+ 			if (!match && last && vram_addr != XE_VRAM_ADDR_INVALID) {
+ 				if (sram) {
+-					vm_dbg(&tile->xe->drm,
++					vm_dbg(&xe->drm,
+ 					       "COPY TO SRAM - 0x%016llx -> 0x%016llx, NPAGES=%d",
+ 					       vram_addr, (u64)dma_addr[pos], 1);
+-					__fence = xe_migrate_from_vram(tile->migrate, 1,
++					__fence = xe_migrate_from_vram(vr->migrate, 1,
+ 								       vram_addr,
+ 								       dma_addr + pos);
+ 				} else {
+-					vm_dbg(&tile->xe->drm,
++					vm_dbg(&xe->drm,
+ 					       "COPY TO VRAM - 0x%016llx -> 0x%016llx, NPAGES=%d",
+ 					       (u64)dma_addr[pos], vram_addr, 1);
+-					__fence = xe_migrate_to_vram(tile->migrate, 1,
++					__fence = xe_migrate_to_vram(vr->migrate, 1,
+ 								     dma_addr + pos,
+ 								     vram_addr);
+ 				}
+@@ -502,9 +501,9 @@ static u64 block_offset_to_pfn(struct xe
+ 	return PHYS_PFN(offset + vr->hpa_base);
+ }
+ 
+-static struct drm_buddy *tile_to_buddy(struct xe_tile *tile)
++static struct drm_buddy *vram_to_buddy(struct xe_vram_region *vram)
+ {
+-	return &tile->mem.vram->ttm.mm;
++	return &vram->ttm.mm;
+ }
+ 
+ static int xe_svm_populate_devmem_pfn(struct drm_pagemap_devmem *devmem_allocation,
+@@ -518,8 +517,7 @@ static int xe_svm_populate_devmem_pfn(st
+ 
+ 	list_for_each_entry(block, blocks, link) {
+ 		struct xe_vram_region *vr = block->private;
+-		struct xe_tile *tile = vr->tile;
+-		struct drm_buddy *buddy = tile_to_buddy(tile);
++		struct drm_buddy *buddy = vram_to_buddy(vr);
+ 		u64 block_pfn = block_offset_to_pfn(vr, drm_buddy_block_offset(block));
+ 		int i;
+ 
+@@ -685,8 +683,7 @@ static int xe_drm_pagemap_populate_mm(st
+ 				      unsigned long timeslice_ms)
+ {
+ 	struct xe_vram_region *vr = container_of(dpagemap, typeof(*vr), dpagemap);
+-	struct xe_tile *tile = vr->tile;
+-	struct xe_device *xe = tile_to_xe(tile);
++	struct xe_device *xe = vr->xe;
+ 	struct device *dev = xe->drm.dev;
+ 	struct drm_buddy_block *block;
+ 	struct list_head *blocks;
+@@ -700,9 +697,9 @@ static int xe_drm_pagemap_populate_mm(st
+ 	xe_pm_runtime_get(xe);
+ 
+  retry:
+-	bo = xe_bo_create_locked(tile_to_xe(tile), NULL, NULL, end - start,
++	bo = xe_bo_create_locked(vr->xe, NULL, NULL, end - start,
+ 				 ttm_bo_type_device,
+-				 XE_BO_FLAG_VRAM_IF_DGFX(tile) |
++				 (IS_DGFX(xe) ? XE_BO_FLAG_VRAM(vr) : XE_BO_FLAG_SYSTEM) |
+ 				 XE_BO_FLAG_CPU_ADDR_MIRROR);
+ 	if (IS_ERR(bo)) {
+ 		err = PTR_ERR(bo);
+@@ -712,9 +709,7 @@ static int xe_drm_pagemap_populate_mm(st
+ 	}
+ 
+ 	drm_pagemap_devmem_init(&bo->devmem_allocation, dev, mm,
+-				&dpagemap_devmem_ops,
+-				&tile->mem.vram->dpagemap,
+-				end - start);
++				&dpagemap_devmem_ops, dpagemap, end - start);
+ 
+ 	blocks = &to_xe_ttm_vram_mgr_resource(bo->ttm.resource)->blocks;
+ 	list_for_each_entry(block, blocks, link)
+--- a/drivers/gpu/drm/xe/xe_tile.c
++++ b/drivers/gpu/drm/xe/xe_tile.c
+@@ -7,6 +7,7 @@
+ 
+ #include <drm/drm_managed.h>
+ 
++#include "xe_bo.h"
+ #include "xe_device.h"
+ #include "xe_ggtt.h"
+ #include "xe_gt.h"
+@@ -114,11 +115,9 @@ int xe_tile_alloc_vram(struct xe_tile *t
+ 	if (!IS_DGFX(xe))
+ 		return 0;
+ 
+-	vram = drmm_kzalloc(&xe->drm, sizeof(*vram), GFP_KERNEL);
+-	if (!vram)
+-		return -ENOMEM;
+-
+-	vram->tile = tile;
++	vram = xe_vram_region_alloc(xe, tile->id, XE_PL_VRAM0 + tile->id);
++	if (IS_ERR(vram))
++		return PTR_ERR(vram);
+ 	tile->mem.vram = vram;
+ 
+ 	return 0;
+@@ -156,21 +155,6 @@ int xe_tile_init_early(struct xe_tile *t
+ }
+ ALLOW_ERROR_INJECTION(xe_tile_init_early, ERRNO); /* See xe_pci_probe() */
+ 
+-static int tile_ttm_mgr_init(struct xe_tile *tile)
+-{
+-	struct xe_device *xe = tile_to_xe(tile);
+-	int err;
+-
+-	if (tile->mem.vram) {
+-		err = xe_ttm_vram_mgr_init(tile, &tile->mem.vram->ttm);
+-		if (err)
+-			return err;
+-		xe->info.mem_region_mask |= BIT(tile->id) << 1;
+-	}
+-
+-	return 0;
+-}
+-
+ /**
+  * xe_tile_init_noalloc - Init tile up to the point where allocations can happen.
+  * @tile: The tile to initialize.
+@@ -188,17 +172,20 @@ static int tile_ttm_mgr_init(struct xe_t
+ int xe_tile_init_noalloc(struct xe_tile *tile)
+ {
+ 	struct xe_device *xe = tile_to_xe(tile);
+-	int err;
+-
+-	err = tile_ttm_mgr_init(tile);
+-	if (err)
+-		return err;
+ 
+ 	xe_wa_apply_tile_workarounds(tile);
+ 
+ 	if (xe->info.has_usm && IS_DGFX(xe))
+ 		xe_devm_add(tile, tile->mem.vram);
+ 
++	if (IS_DGFX(xe) && !ttm_resource_manager_used(&tile->mem.vram->ttm.manager)) {
++		int err = xe_ttm_vram_mgr_init(xe, tile->mem.vram);
++
++		if (err)
++			return err;
++		xe->info.mem_region_mask |= BIT(tile->mem.vram->id) << 1;
++	}
++
+ 	return xe_tile_sysfs_init(tile);
+ }
+ 
+--- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
++++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+@@ -338,12 +338,18 @@ int __xe_ttm_vram_mgr_init(struct xe_dev
+ 	return drmm_add_action_or_reset(&xe->drm, ttm_vram_mgr_fini, mgr);
+ }
+ 
+-int xe_ttm_vram_mgr_init(struct xe_tile *tile, struct xe_ttm_vram_mgr *mgr)
++/**
++ * xe_ttm_vram_mgr_init - initialize TTM VRAM region
++ * @xe: pointer to Xe device
++ * @vram: pointer to xe_vram_region that contains the memory region attributes
++ *
++ * Initialize the Xe TTM for given @vram region using the given parameters.
++ *
++ * Returns 0 for success, negative error code otherwise.
++ */
++int xe_ttm_vram_mgr_init(struct xe_device *xe, struct xe_vram_region *vram)
+ {
+-	struct xe_device *xe = tile_to_xe(tile);
+-	struct xe_vram_region *vram = tile->mem.vram;
+-
+-	return __xe_ttm_vram_mgr_init(xe, mgr, XE_PL_VRAM0 + tile->id,
++	return __xe_ttm_vram_mgr_init(xe, &vram->ttm, vram->placement,
+ 				      xe_vram_region_usable_size(vram),
+ 				      xe_vram_region_io_size(vram),
+ 				      PAGE_SIZE);
+--- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.h
++++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.h
+@@ -11,11 +11,12 @@
+ enum dma_data_direction;
+ struct xe_device;
+ struct xe_tile;
++struct xe_vram_region;
+ 
+ int __xe_ttm_vram_mgr_init(struct xe_device *xe, struct xe_ttm_vram_mgr *mgr,
+ 			   u32 mem_type, u64 size, u64 io_size,
+ 			   u64 default_page_size);
+-int xe_ttm_vram_mgr_init(struct xe_tile *tile, struct xe_ttm_vram_mgr *mgr);
++int xe_ttm_vram_mgr_init(struct xe_device *xe, struct xe_vram_region *vram);
+ int xe_ttm_vram_mgr_alloc_sgt(struct xe_device *xe,
+ 			      struct ttm_resource *res,
+ 			      u64 offset, u64 length,
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -20,6 +20,7 @@
+ #include "xe_mmio.h"
+ #include "xe_module.h"
+ #include "xe_sriov.h"
++#include "xe_ttm_vram_mgr.h"
+ #include "xe_vram.h"
+ #include "xe_vram_types.h"
+ 
+@@ -138,7 +139,7 @@ static bool resource_is_valid(struct pci
+ 	return true;
+ }
+ 
+-static int determine_lmem_bar_size(struct xe_device *xe)
++static int determine_lmem_bar_size(struct xe_device *xe, struct xe_vram_region *lmem_bar)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
+ 
+@@ -149,17 +150,16 @@ static int determine_lmem_bar_size(struc
+ 
+ 	resize_vram_bar(xe);
+ 
+-	xe->mem.vram->io_start = pci_resource_start(pdev, LMEM_BAR);
+-	xe->mem.vram->io_size = pci_resource_len(pdev, LMEM_BAR);
+-	if (!xe->mem.vram->io_size)
++	lmem_bar->io_start = pci_resource_start(pdev, LMEM_BAR);
++	lmem_bar->io_size = pci_resource_len(pdev, LMEM_BAR);
++	if (!lmem_bar->io_size)
+ 		return -EIO;
+ 
+ 	/* XXX: Need to change when xe link code is ready */
+-	xe->mem.vram->dpa_base = 0;
++	lmem_bar->dpa_base = 0;
+ 
+ 	/* set up a map to the total memory area. */
+-	xe->mem.vram->mapping = devm_ioremap_wc(&pdev->dev, xe->mem.vram->io_start,
+-						xe->mem.vram->io_size);
++	lmem_bar->mapping = devm_ioremap_wc(&pdev->dev, lmem_bar->io_start, lmem_bar->io_size);
+ 
+ 	return 0;
+ }
+@@ -287,6 +287,67 @@ static void vram_fini(void *arg)
+ 		tile->mem.vram->mapping = NULL;
+ }
+ 
++struct xe_vram_region *xe_vram_region_alloc(struct xe_device *xe, u8 id, u32 placement)
 +{
-+	return &tile->mem.vram->dpagemap;
++	struct xe_vram_region *vram;
++	struct drm_device *drm = &xe->drm;
++
++	xe_assert(xe, id < xe->info.tile_count);
++
++	vram = drmm_kzalloc(drm, sizeof(*vram), GFP_KERNEL);
++	if (!vram)
++		return NULL;
++
++	vram->xe = xe;
++	vram->id = id;
++	vram->placement = placement;
++#if defined(CONFIG_DRM_XE_PAGEMAP)
++	vram->migrate = xe->tiles[id].migrate;
++#endif
++	return vram;
++}
++
++static void print_vram_region_info(struct xe_device *xe, struct xe_vram_region *vram)
++{
++	struct drm_device *drm = &xe->drm;
++
++	if (vram->io_size < vram->usable_size)
++		drm_info(drm, "Small BAR device\n");
++
++	drm_info(drm,
++		 "VRAM[%u]: Actual physical size %pa, usable size exclude stolen %pa, CPU accessible size %pa\n",
++		 vram->id, &vram->actual_physical_size, &vram->usable_size, &vram->io_size);
++	drm_info(drm, "VRAM[%u]: DPA range: [%pa-%llx], io range: [%pa-%llx]\n",
++		 vram->id, &vram->dpa_base, vram->dpa_base + (u64)vram->actual_physical_size,
++		 &vram->io_start, vram->io_start + (u64)vram->io_size);
++}
++
++static int vram_region_init(struct xe_device *xe, struct xe_vram_region *vram,
++			    struct xe_vram_region *lmem_bar, u64 offset, u64 usable_size,
++			    u64 region_size, resource_size_t remain_io_size)
++{
++	/* Check if VRAM region is already initialized */
++	if (vram->mapping)
++		return 0;
++
++	vram->actual_physical_size = region_size;
++	vram->io_start = lmem_bar->io_start + offset;
++	vram->io_size = min_t(u64, usable_size, remain_io_size);
++
++	if (!vram->io_size) {
++		drm_err(&xe->drm, "Tile without any CPU visible VRAM. Aborting.\n");
++		return -ENODEV;
++	}
++
++	vram->dpa_base = lmem_bar->dpa_base + offset;
++	vram->mapping = lmem_bar->mapping + offset;
++	vram->usable_size = usable_size;
++
++	print_vram_region_info(xe, vram);
++
++	return 0;
 +}
 +
  /**
-  * xe_svm_alloc_vram()- Allocate device memory pages for range,
-  * migrating existing data.
-@@ -1006,7 +1012,7 @@ int xe_svm_alloc_vram(struct xe_tile *ti
- 	xe_assert(tile_to_xe(tile), range->base.flags.migrate_devmem);
- 	range_debug(range, "ALLOCATE VRAM");
+  * xe_vram_probe() - Probe VRAM configuration
+  * @xe: the &xe_device
+@@ -298,82 +359,52 @@ static void vram_fini(void *arg)
+ int xe_vram_probe(struct xe_device *xe)
+ {
+ 	struct xe_tile *tile;
+-	resource_size_t io_size;
++	struct xe_vram_region lmem_bar;
++	resource_size_t remain_io_size;
+ 	u64 available_size = 0;
+ 	u64 total_size = 0;
+-	u64 tile_offset;
+-	u64 tile_size;
+-	u64 vram_size;
+ 	int err;
+ 	u8 id;
  
--	dpagemap = xe_tile_local_pagemap(tile);
-+	dpagemap = tile_local_pagemap(tile);
- 	return drm_pagemap_populate_mm(dpagemap, xe_svm_range_start(range),
- 				       xe_svm_range_end(range),
- 				       range->base.gpusvm->mm,
---- a/drivers/gpu/drm/xe/xe_tile.c
-+++ b/drivers/gpu/drm/xe/xe_tile.c
-@@ -20,6 +20,7 @@
- #include "xe_ttm_vram_mgr.h"
- #include "xe_wa.h"
- #include "xe_vram.h"
-+#include "xe_vram_types.h"
+ 	if (!IS_DGFX(xe))
+ 		return 0;
+ 
+-	/* Get the size of the root tile's vram for later accessibility comparison */
+-	tile = xe_device_get_root_tile(xe);
+-	err = tile_vram_size(tile, &vram_size, &tile_size, &tile_offset);
++	err = determine_lmem_bar_size(xe, &lmem_bar);
+ 	if (err)
+ 		return err;
++	drm_info(&xe->drm, "VISIBLE VRAM: %pa, %pa\n", &lmem_bar.io_start, &lmem_bar.io_size);
+ 
+-	err = determine_lmem_bar_size(xe);
+-	if (err)
+-		return err;
+-
+-	drm_info(&xe->drm, "VISIBLE VRAM: %pa, %pa\n", &xe->mem.vram->io_start,
+-		 &xe->mem.vram->io_size);
+-
+-	io_size = xe->mem.vram->io_size;
++	remain_io_size = lmem_bar.io_size;
+ 
+-	/* tile specific ranges */
+ 	for_each_tile(tile, xe, id) {
+-		err = tile_vram_size(tile, &vram_size, &tile_size, &tile_offset);
++		u64 region_size;
++		u64 usable_size;
++		u64 tile_offset;
++
++		err = tile_vram_size(tile, &usable_size, &region_size, &tile_offset);
+ 		if (err)
+ 			return err;
+ 
+-		tile->mem.vram->actual_physical_size = tile_size;
+-		tile->mem.vram->io_start = xe->mem.vram->io_start + tile_offset;
+-		tile->mem.vram->io_size = min_t(u64, vram_size, io_size);
+-
+-		if (!tile->mem.vram->io_size) {
+-			drm_err(&xe->drm, "Tile without any CPU visible VRAM. Aborting.\n");
+-			return -ENODEV;
+-		}
++		total_size += region_size;
++		available_size += usable_size;
+ 
+-		tile->mem.vram->dpa_base = xe->mem.vram->dpa_base + tile_offset;
+-		tile->mem.vram->usable_size = vram_size;
+-		tile->mem.vram->mapping = xe->mem.vram->mapping + tile_offset;
+-
+-		if (tile->mem.vram->io_size < tile->mem.vram->usable_size)
+-			drm_info(&xe->drm, "Small BAR device\n");
+-		drm_info(&xe->drm,
+-			 "VRAM[%u, %u]: Actual physical size %pa, usable size exclude stolen %pa, CPU accessible size %pa\n",
+-			 id, tile->id, &tile->mem.vram->actual_physical_size,
+-			 &tile->mem.vram->usable_size, &tile->mem.vram->io_size);
+-		drm_info(&xe->drm, "VRAM[%u, %u]: DPA range: [%pa-%llx], io range: [%pa-%llx]\n",
+-			 id, tile->id, &tile->mem.vram->dpa_base,
+-			 tile->mem.vram->dpa_base + (u64)tile->mem.vram->actual_physical_size,
+-			 &tile->mem.vram->io_start,
+-			 tile->mem.vram->io_start + (u64)tile->mem.vram->io_size);
+-
+-		/* calculate total size using tile size to get the correct HW sizing */
+-		total_size += tile_size;
+-		available_size += vram_size;
++		err = vram_region_init(xe, tile->mem.vram, &lmem_bar, tile_offset, usable_size,
++				       region_size, remain_io_size);
++		if (err)
++			return err;
+ 
+-		if (total_size > xe->mem.vram->io_size) {
++		if (total_size > lmem_bar.io_size) {
+ 			drm_info(&xe->drm, "VRAM: %pa is larger than resource %pa\n",
+-				 &total_size, &xe->mem.vram->io_size);
++				 &total_size, &lmem_bar.io_size);
+ 		}
+ 
+-		io_size -= min_t(u64, tile_size, io_size);
++		remain_io_size -= min_t(u64, tile->mem.vram->actual_physical_size, remain_io_size);
+ 	}
+ 
+-	xe->mem.vram->actual_physical_size = total_size;
+-
+-	drm_info(&xe->drm, "Total VRAM: %pa, %pa\n", &xe->mem.vram->io_start,
+-		 &xe->mem.vram->actual_physical_size);
+-	drm_info(&xe->drm, "Available VRAM: %pa, %pa\n", &xe->mem.vram->io_start,
+-		 &available_size);
++	err = vram_region_init(xe, xe->mem.vram, &lmem_bar, 0, available_size, total_size,
++			       lmem_bar.io_size);
++	if (err)
++		return err;
+ 
+ 	return devm_add_action_or_reset(xe->drm.dev, vram_fini, xe);
+ }
+--- a/drivers/gpu/drm/xe/xe_vram.h
++++ b/drivers/gpu/drm/xe/xe_vram.h
+@@ -13,6 +13,8 @@ struct xe_vram_region;
+ 
+ int xe_vram_probe(struct xe_device *xe);
+ 
++struct xe_vram_region *xe_vram_region_alloc(struct xe_device *xe, u8 id, u32 placement);
++
+ resource_size_t xe_vram_region_io_start(const struct xe_vram_region *vram);
+ resource_size_t xe_vram_region_io_size(const struct xe_vram_region *vram);
+ resource_size_t xe_vram_region_dpa_base(const struct xe_vram_region *vram);
+--- a/drivers/gpu/drm/xe/xe_vram_types.h
++++ b/drivers/gpu/drm/xe/xe_vram_types.h
+@@ -12,7 +12,8 @@
+ 
+ #include "xe_ttm_vram_mgr_types.h"
+ 
+-struct xe_tile;
++struct xe_device;
++struct xe_migrate;
  
  /**
-  * DOC: Multi-tile Design
---- a/drivers/gpu/drm/xe/xe_tile.h
-+++ b/drivers/gpu/drm/xe/xe_tile.h
-@@ -18,18 +18,6 @@ int xe_tile_alloc_vram(struct xe_tile *t
- 
- void xe_tile_migrate_wait(struct xe_tile *tile);
- 
--#if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
--static inline struct drm_pagemap *xe_tile_local_pagemap(struct xe_tile *tile)
--{
--	return &tile->mem.vram->dpagemap;
--}
--#else
--static inline struct drm_pagemap *xe_tile_local_pagemap(struct xe_tile *tile)
--{
--	return NULL;
--}
--#endif
--
- static inline bool xe_tile_is_root(struct xe_tile *tile)
- {
- 	return tile->id == 0;
---- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
-+++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
-@@ -15,6 +15,7 @@
- #include "xe_gt.h"
- #include "xe_res_cursor.h"
- #include "xe_ttm_vram_mgr.h"
-+#include "xe_vram_types.h"
- 
- static inline struct drm_buddy_block *
- xe_ttm_vram_mgr_first_block(struct list_head *list)
---- a/drivers/gpu/drm/xe/xe_vram.c
-+++ b/drivers/gpu/drm/xe/xe_vram.c
-@@ -21,6 +21,7 @@
- #include "xe_module.h"
- #include "xe_sriov.h"
- #include "xe_vram.h"
-+#include "xe_vram_types.h"
- 
- #define BAR_SIZE_SHIFT 20
- 
---- /dev/null
-+++ b/drivers/gpu/drm/xe/xe_vram_types.h
-@@ -0,0 +1,74 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2025 Intel Corporation
-+ */
-+
-+#ifndef _XE_VRAM_TYPES_H_
-+#define _XE_VRAM_TYPES_H_
-+
-+#if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
-+#include <drm/drm_pagemap.h>
-+#endif
-+
-+#include "xe_ttm_vram_mgr_types.h"
-+
-+struct xe_tile;
-+
-+/**
-+ * struct xe_vram_region - memory region structure
-+ * This is used to describe a memory region in xe
-+ * device, such as HBM memory or CXL extension memory.
-+ */
-+struct xe_vram_region {
-+	/** @tile: Back pointer to tile */
-+	struct xe_tile *tile;
-+	/** @io_start: IO start address of this VRAM instance */
-+	resource_size_t io_start;
+  * struct xe_vram_region - memory region structure
+@@ -20,8 +21,14 @@ struct xe_tile;
+  * device, such as HBM memory or CXL extension memory.
+  */
+ struct xe_vram_region {
+-	/** @tile: Back pointer to tile */
+-	struct xe_tile *tile;
++	/** @xe: Back pointer to xe device */
++	struct xe_device *xe;
 +	/**
-+	 * @io_size: IO size of this VRAM instance
++	 * @id: VRAM region instance id
 +	 *
-+	 * This represents how much of this VRAM we can access
-+	 * via the CPU through the VRAM BAR. This can be smaller
-+	 * than @usable_size, in which case only part of VRAM is CPU
-+	 * accessible (typically the first 256M). This
-+	 * configuration is known as small-bar.
++	 * The value should be unique for VRAM region.
 +	 */
-+	resource_size_t io_size;
-+	/** @dpa_base: This memory regions's DPA (device physical address) base */
-+	resource_size_t dpa_base;
-+	/**
-+	 * @usable_size: usable size of VRAM
-+	 *
-+	 * Usable size of VRAM excluding reserved portions
-+	 * (e.g stolen mem)
-+	 */
-+	resource_size_t usable_size;
-+	/**
-+	 * @actual_physical_size: Actual VRAM size
-+	 *
-+	 * Actual VRAM size including reserved portions
-+	 * (e.g stolen mem)
-+	 */
-+	resource_size_t actual_physical_size;
-+	/** @mapping: pointer to VRAM mappable space */
-+	void __iomem *mapping;
-+	/** @ttm: VRAM TTM manager */
-+	struct xe_ttm_vram_mgr ttm;
-+#if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
-+	/** @pagemap: Used to remap device memory as ZONE_DEVICE */
-+	struct dev_pagemap pagemap;
-+	/**
-+	 * @dpagemap: The struct drm_pagemap of the ZONE_DEVICE memory
-+	 * pages of this tile.
-+	 */
-+	struct drm_pagemap dpagemap;
-+	/**
-+	 * @hpa_base: base host physical address
-+	 *
-+	 * This is generated when remap device memory as ZONE_DEVICE
-+	 */
-+	resource_size_t hpa_base;
-+#endif
-+};
-+
-+#endif
++	u8 id;
+ 	/** @io_start: IO start address of this VRAM instance */
+ 	resource_size_t io_start;
+ 	/**
+@@ -54,7 +61,11 @@ struct xe_vram_region {
+ 	void __iomem *mapping;
+ 	/** @ttm: VRAM TTM manager */
+ 	struct xe_ttm_vram_mgr ttm;
++	/** @placement: TTM placement dedicated for this region */
++	u32 placement;
+ #if IS_ENABLED(CONFIG_DRM_XE_PAGEMAP)
++	/** @migrate: Back pointer to migrate */
++	struct xe_migrate *migrate;
+ 	/** @pagemap: Used to remap device memory as ZONE_DEVICE */
+ 	struct dev_pagemap pagemap;
+ 	/**
 
 
