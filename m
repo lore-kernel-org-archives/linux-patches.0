@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9F22737F6;
-	Tue, 21 Oct 2025 19:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737A02737E7;
+	Tue, 21 Oct 2025 19:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076379; cv=none; b=cVGeF84/CLHm6Ojpb1rULkSEHTL4Lcc/TtRnKBVzh4crgcZTnxB2Q0nxmq+chcfL1PW1ti7rOIvpwLVFj6OIYt5ssZT45X6DQOByPQc17Sh/UIjcWrtOiePax4BoqhEjjdp23oHUM/GHd5PTwxYQkPBR7ZMxMv13T76JY9q1kk8=
+	t=1761076386; cv=none; b=oC9xYEC6RmD45Til5oS0YcVAqHREQauPuM9w9EPj9Qf+Bwk7vof4L9+ZFQ1eYKnbuY8+QmZTyEUd1rctD3aZzK5eCqMbIDYDb2UQ6VBO3ITEB1gAkXKuGKGZEKXZBGg0Zo/ImVfOco61/T3/KeaOA5C3MMTLBsRrEiGFdXzOdxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076379; c=relaxed/simple;
-	bh=ED7UoZ00ULBkA476RJnsQNQE1QMgmXwkNkB1JBntgGQ=;
+	s=arc-20240116; t=1761076386; c=relaxed/simple;
+	bh=oSbWMEAej/lce0E2ZCxHHg0Gs4I2PYms8DmJwzKnsr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=feUr4rulFkkY3h0ZO+S49u5bRoxJCDu1cseT+Yqp9/w8fAir4z1Z1XN5qXy4FraY0//ntXdkaBVGdJ91NJhJFOZyXFiMhSQ35YQwJ1ZykS/yp3fhiL6pb4AMxsQMsiIdoTWWSau82wzccPVSPoXIJ4KX/ceUH75YlVsKIUFzAGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQvLlD06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0o1k2w79ChogBYTZ3i0M2vCMHvzBQs9HIFq25xHTj4J2tDkTmAuwzY66PSc56+Uffcgsy+PqmM+CIKHn3/JuOn9Qw9abhC04P96/II4BVi1ltL/24n26IZSJAnDGVRTf2QXXUgARFirfZTWR43+ttX6QepVShxZ78+/4Uk7iBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsg718IK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQvLlD06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B670C4CEF1;
-	Tue, 21 Oct 2025 19:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsg718IK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E377C113D0;
+	Tue, 21 Oct 2025 19:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076379;
-	bh=ED7UoZ00ULBkA476RJnsQNQE1QMgmXwkNkB1JBntgGQ=;
+	s=korg; t=1761076382;
+	bh=oSbWMEAej/lce0E2ZCxHHg0Gs4I2PYms8DmJwzKnsr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQvLlD065MVEvNV8sIzfLnOT6UZOEz4Uq9nmL/wwY+6YFByUEUkoExnGjnQzOq58m
-	 1MGjwXQZKtb6+R0acuyywWk3gP7H2fG633EcUGKljOS6fW0I4d46xMWzF/VO3EcxXJ
-	 F5ZMnzVYJYg2zkCo3JaDgDcqMOk8rcztC9YVp1T4=
+	b=Tsg718IKLcPW2ZPz7+dZJZNOMp5QaiPQKHiyN4yqzajd8fOkcOpRGaasfZ/rfSgbm
+	 oQN7Bab0xxbkS9jG6D+aSLp1Al2CwNM8FUWkO3BN0JRPbIP9ZXjiG7icDhpLKFd7EK
+	 xF3bQ+XfXw6NX+MPfZmQv8vXKvM2VQ01KAePuEhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/105] cpufreq: CPPC: Avoid using CPUFREQ_ETERNAL as transition delay
-Date: Tue, 21 Oct 2025 21:50:26 +0200
-Message-ID: <20251021195021.901746052@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 018/105] Bluetooth: btusb: Add USB ID 2001:332a for D-Link AX9U rev. A1
+Date: Tue, 21 Oct 2025 21:50:27 +0200
+Message-ID: <20251021195021.926301466@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -54,80 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit f965d111e68f4a993cc44d487d416e3d954eea11 ]
+commit 34ecb8760190606472f71ebf4ca2817928ce5d40 upstream.
 
-If cppc_get_transition_latency() returns CPUFREQ_ETERNAL to indicate a
-failure to retrieve the transition latency value from the platform
-firmware, the CPPC cpufreq driver will use that value (converted to
-microseconds) as the policy transition delay, but it is way too large
-for any practical use.
+Add USB ID 2001:332a for D-Link AX9U rev. A1 which is based on a Realtek
+RTL8851BU chip.
 
-Address this by making the driver use the cpufreq's default
-transition latency value (in microseconds) as the transition delay
-if CPUFREQ_ETERNAL is returned by cppc_get_transition_latency().
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
 
-Fixes: d4f3388afd48 ("cpufreq / CPPC: Set platform specific transition_delay_us")
-Cc: 5.19+ <stable@vger.kernel.org> # 5.19
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-[ added CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS definition to include/linux/cpufreq.h ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2001 ProdID=332a Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=802.11ax WLAN Adapter
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtw89_8851bu_git
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org # 6.12.x
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c |   14 ++++++++++++--
- include/linux/cpufreq.h        |    3 +++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -344,6 +344,16 @@ static int cppc_verify_policy(struct cpu
- 	return 0;
- }
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -511,6 +511,8 @@ static const struct usb_device_id quirks
+ 	/* Realtek 8851BU Bluetooth devices */
+ 	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2001, 0x332a), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+static unsigned int __cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
-+{
-+	unsigned int transition_latency_ns = cppc_get_transition_latency(cpu);
-+
-+	if (transition_latency_ns == CPUFREQ_ETERNAL)
-+		return CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS / NSEC_PER_USEC;
-+
-+	return transition_latency_ns / NSEC_PER_USEC;
-+}
-+
- /*
-  * The PCC subspace describes the rate at which platform can accept commands
-  * on the shared PCC channel (including READs which do not count towards freq
-@@ -366,12 +376,12 @@ static unsigned int cppc_cpufreq_get_tra
- 			return 10000;
- 		}
- 	}
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
- }
- #else
- static unsigned int cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
- {
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
- }
- #endif
- 
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -32,6 +32,9 @@
-  */
- 
- #define CPUFREQ_ETERNAL			(-1)
-+
-+#define CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS	NSEC_PER_MSEC
-+
- #define CPUFREQ_NAME_LEN		16
- /* Print length for names. Extra 1 space for accommodating '\n' in prints */
- #define CPUFREQ_NAME_PLEN		(CPUFREQ_NAME_LEN + 1)
+ 	/* Realtek 8852AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
 
 
