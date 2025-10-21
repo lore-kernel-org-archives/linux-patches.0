@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D67F25A355;
-	Tue, 21 Oct 2025 20:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF80925A355;
+	Tue, 21 Oct 2025 20:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077364; cv=none; b=UMJGdJQ/VfpDFSxcZGgobDSaSIZTCjX4h90GQjfYFr4SBcalFhIVPYgz541YH0kvGLfhxodtOi4YB/dqD5FKo2Zsbr5Gy9G2ZjxY0aqBCipCU1eiaMkOTXPpADl9+Z3hWpbowRL1olamGDCNOPtuOqf1Se8+GK5lGx8LVCoPdlA=
+	t=1761077367; cv=none; b=CEEUqAIps9raJzSBevo8qhUwKAjWuRbg34Lu2IMnq3iOmIn3eWsjWuVWrtgczeo5k3LdkHycQqj4Z/dC7Awggs9Fubr3XYivVxYgTPDIzhSMLL6XPkUvsIQ2x1dXi7I8aKBvYWVQjBhnSWOhhyZDGpPo+WDF5iOlR+F9yvJYCUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077364; c=relaxed/simple;
-	bh=y566A7en1hCGn2QES0oYbz71TwpRboM04xzlnwlm4Kc=;
+	s=arc-20240116; t=1761077367; c=relaxed/simple;
+	bh=Bu9SRkgzDP0RaQTOtzJfO2q56qRzEjJZwogK+WTvZAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A46sziM5d2AFAA37h4vY/9xnM3wJ5jI4nlFYv8OeMZsGdTaqxzDUTdKWbsKPo+4ZMPdBZjaD/9epPYQsMXdZls69Jd0I+P0ma6suo8EjTdbpHue0CMdH9YIzjjkt8ow3xYfU3JWeNQfbTIozEfsjC84PAMEuz89p3JXoeSuf7Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6dLbpg3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mpAeTJ4+X+17NPzQQmF+7Lj42UxXeadzTsyGvEcyK1w60Dm/aH+hp3kn8OZmsBBXJyuMdq/QhzIuAT2mB67Aq2CURa2rPx8i1Y/DsMzeZ8iZ7Z6ktH9eVHLqQcO8FHKd0FgFsaIE0UBt/KR3Sr56pK3GyySexMxH3Dn55yGzLqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+gNFij2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6dLbpg3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC328C4CEF1;
-	Tue, 21 Oct 2025 20:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+gNFij2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FA3C4CEF1;
+	Tue, 21 Oct 2025 20:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077364;
-	bh=y566A7en1hCGn2QES0oYbz71TwpRboM04xzlnwlm4Kc=;
+	s=korg; t=1761077367;
+	bh=Bu9SRkgzDP0RaQTOtzJfO2q56qRzEjJZwogK+WTvZAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6dLbpg3/TadLZRu11G8GSqq90Ng8y2h34r5CbbE7BuEL0NtdEsj6a6MvFNg9Yl1x
-	 1VenQG0kfQdi3PpK8GuRVJxZQBwTwugcNqSy8LHtMKSlWAkD3Jxg4JgOkS07wvaMgO
-	 bBiskZKeocdLzSKRTcGeKpe4TAdVyPdjPf1f4g+k=
+	b=s+gNFij2VNS4MuQ1MbJ4uPB/5oK4sgKk0Eds3bYEji1I1NQu/U6w9OvtWCyCfMxGS
+	 T2SFsLotZqoZjfBclIfFHKaAUFUCbrLDQg2FdQbYy3E9miPqRvujdMQ40XRL72sacu
+	 Syg1OnP4g/D8zEzSTpINzKbNGiv3EjNHZO81Zgyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Wang Liang <wangliang74@huawei.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 080/159] net: airoha: Take into account out-of-order tx completions in airoha_dev_xmit()
-Date: Tue, 21 Oct 2025 21:50:57 +0200
-Message-ID: <20251021195045.120551583@linuxfoundation.org>
+Subject: [PATCH 6.17 081/159] selftests: net: check jq command is supported
+Date: Tue, 21 Oct 2025 21:50:58 +0200
+Message-ID: <20251021195045.144830414@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,61 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit bd5afca115f181c85f992d42a57cd497bc823ccb ]
+[ Upstream commit 4f86eb0a38bc719ba966f155071a6f0594327f34 ]
 
-Completion napi can free out-of-order tx descriptors if hw QoS is
-enabled and packets with different priority are queued to same DMA ring.
-Take into account possible out-of-order reports checking if the tx queue
-is full using circular buffer head/tail pointer instead of the number of
-queued packets.
+The jq command is used in vlan_bridge_binding.sh, if it is not supported,
+the test will spam the following log.
 
-Fixes: 23020f0493270 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251012-airoha-tx-busy-queue-v2-1-a600b08bab2d@kernel.org
+  # ./vlan_bridge_binding.sh: line 51: jq: command not found
+  # ./vlan_bridge_binding.sh: line 51: jq: command not found
+  # ./vlan_bridge_binding.sh: line 51: jq: command not found
+  # ./vlan_bridge_binding.sh: line 51: jq: command not found
+  # ./vlan_bridge_binding.sh: line 51: jq: command not found
+  # TEST: Test bridge_binding on->off when lower down                   [FAIL]
+  #       Got operstate of , expected 0
+
+The rtnetlink.sh has the same problem. It makes sense to check if jq is
+installed before running these tests. After this patch, the
+vlan_bridge_binding.sh skipped if jq is not supported:
+
+  # timeout set to 3600
+  # selftests: net: vlan_bridge_binding.sh
+  # TEST: jq not installed                                              [SKIP]
+
+Fixes: dca12e9ab760 ("selftests: net: Add a VLAN bridge binding selftest")
+Fixes: 6a414fd77f61 ("selftests: rtnetlink: Add an address proto test")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20251013080039.3035898-1-wangliang74@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/rtnetlink.sh           | 2 ++
+ tools/testing/selftests/net/vlan_bridge_binding.sh | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 6d23c5c049b9a..ffb10c758c293 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1872,6 +1872,20 @@ static u32 airoha_get_dsa_tag(struct sk_buff *skb, struct net_device *dev)
- #endif
+diff --git a/tools/testing/selftests/net/rtnetlink.sh b/tools/testing/selftests/net/rtnetlink.sh
+index d6c00efeb6642..281758e407888 100755
+--- a/tools/testing/selftests/net/rtnetlink.sh
++++ b/tools/testing/selftests/net/rtnetlink.sh
+@@ -1453,6 +1453,8 @@ usage: ${0##*/} OPTS
+ EOF
  }
  
-+static bool airoha_dev_tx_queue_busy(struct airoha_queue *q, u32 nr_frags)
-+{
-+	u32 tail = q->tail <= q->head ? q->tail + q->ndesc : q->tail;
-+	u32 index = q->head + nr_frags;
++require_command jq
 +
-+	/* completion napi can free out-of-order tx descriptors if hw QoS is
-+	 * enabled and packets with different priorities are queued to the same
-+	 * DMA ring. Take into account possible out-of-order reports checking
-+	 * if the tx queue is full using circular buffer head/tail pointers
-+	 * instead of the number of queued packets.
-+	 */
-+	return index >= tail;
-+}
-+
- static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 				   struct net_device *dev)
- {
-@@ -1925,7 +1939,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 	txq = netdev_get_tx_queue(dev, qid);
- 	nr_frags = 1 + skb_shinfo(skb)->nr_frags;
+ #check for needed privileges
+ if [ "$(id -u)" -ne 0 ];then
+ 	end_test "SKIP: Need root privileges"
+diff --git a/tools/testing/selftests/net/vlan_bridge_binding.sh b/tools/testing/selftests/net/vlan_bridge_binding.sh
+index e7cb8c678bdee..fe5472d844243 100755
+--- a/tools/testing/selftests/net/vlan_bridge_binding.sh
++++ b/tools/testing/selftests/net/vlan_bridge_binding.sh
+@@ -249,6 +249,8 @@ test_binding_toggle_off_when_upper_down()
+ 	do_test_binding_off : "on->off when upper down"
+ }
  
--	if (q->queued + nr_frags > q->ndesc) {
-+	if (airoha_dev_tx_queue_busy(q, nr_frags)) {
- 		/* not enough space in the queue */
- 		netif_tx_stop_queue(txq);
- 		spin_unlock_bh(&q->lock);
++require_command jq
++
+ trap defer_scopes_cleanup EXIT
+ setup_prepare
+ tests_run
 -- 
 2.51.0
 
