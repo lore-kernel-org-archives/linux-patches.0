@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C7A274652;
-	Tue, 21 Oct 2025 19:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA07350A2A;
+	Tue, 21 Oct 2025 19:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076734; cv=none; b=fUqNJ3RCbCF8+90/BXWt6VQ36jzcnq5cG/TqA72XbwmJnPrZp9mCPKaVRBJi4BjYw51Jz7vrViHbj9w+1GAvWOXX+aG9UAHRtlmnsQ9hGnrcuUtgHd4mZaEKfkfso/ipFNJd3pF/FvoLqqkhjuFO9q5RmRqzPYvsKwPNf2K87UM=
+	t=1761076738; cv=none; b=BkqpZN8QeSCz9iHh+CZNBmvaVjOUbwcfU1rUyUpuorcAmL2tHo41jPtZJHEb7QUmhFSeCcyKHTIp/pPvO1l1l/+mRgjOQ1hi+9rbSNiS2NhXdaP5eXrL8PuWGGfDo+zJDYgcZK+DZaCKRKGeB3b5z5u+TpawLIxe187g7hgvRgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076734; c=relaxed/simple;
-	bh=Mb3hzVQjNGYG+ZCBzv2DShmiJmAW9U1kKJY+dYcx3kw=;
+	s=arc-20240116; t=1761076738; c=relaxed/simple;
+	bh=p7EpDIzG+Cg/4SBzsJVJpXnelA2QTEvYvNhgULeOBgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbWu3lDbMsAArDoMthdENMz8LupxWbZKbtAftnzeBgmfcU7ZCeNVsJGBn3WDOE9rld3tAgzB4VHCvASVMzMcB2uEDrgV4O7UYLWasBigbfe4zt/lXZKmMA6d2LWdAeyGO8hJdIjVSC5v5bn9wjl15VP0kd1HmV2QWFzdcdWDFpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xii6aHaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ghpq8A+O40/eqkDMso0SRxCwCJ5gF8IZB+v8GLtJ+o76Nzt/eGR0Mq07TSXdqxcYguT0ZpYhdoxYv9AsgU7+0YAIvjhgC/wouuMq7B12w2nwa6VnDqajO7EQOFwIFEQMFXMTIKp8+bIRDz+Atw4equ/Pli8aBy2E9ayy8Hhq3Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3vqsbfH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xii6aHaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E354DC116B1;
-	Tue, 21 Oct 2025 19:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3vqsbfH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0D9C4CEF1;
+	Tue, 21 Oct 2025 19:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076734;
-	bh=Mb3hzVQjNGYG+ZCBzv2DShmiJmAW9U1kKJY+dYcx3kw=;
+	s=korg; t=1761076737;
+	bh=p7EpDIzG+Cg/4SBzsJVJpXnelA2QTEvYvNhgULeOBgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xii6aHaUf913eBI3/o6BAfjqTZyP1roNaX9A5qrZy7Dqo0cECRX4vLnGg+p6v5lxu
-	 xUCDVaLUdq8MrKvPfZSNyORmBPP+WL/vLl0AM3JSKUXayu35tUtgUh6xlitkQkw8kC
-	 uPRHpFEY/rNM36FdEUQ/dKIFCOWepzAaUEqh2mn8=
+	b=a3vqsbfH4lU3KFgz1mb8bXPf5S+27VrxBdvpvzIsxJsZktSCZ9D53mOrk/f1JiJmt
+	 sjuh0QxFBvqWP78CmV5p/k1NvbU0FIXrlATsKbm9y3n0vYR6yOTMVNl22+5qrSEks8
+	 q6xIrXkVpFo/j8UsztOuv3sQK1hkDM5HSzBStywU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 021/136] drm/amdgpu: use atomic functions with memory barriers for vm fault info
-Date: Tue, 21 Oct 2025 21:50:09 +0200
-Message-ID: <20251021195036.484778431@linuxfoundation.org>
+Subject: [PATCH 6.12 022/136] drm/amdgpu: fix gfx12 mes packet status return check
+Date: Tue, 21 Oct 2025 21:50:10 +0200
+Message-ID: <20251021195036.508383897@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,119 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-commit 6df8e84aa6b5b1812cc2cacd6b3f5ccbb18cda2b upstream.
+commit d0de79f66a80eeb849033fae34bd07a69ce72235 upstream.
 
-The atomic variable vm_fault_info_updated is used to synchronize access to
-adev->gmc.vm_fault_info between the interrupt handler and
-get_vm_fault_info().
+GFX12 MES uses low 32 bits of status return for success (1 or 0)
+and high bits for debug information if low bits are 0.
 
-The default atomic functions like atomic_set() and atomic_read() do not
-provide memory barriers. This allows for CPU instruction reordering,
-meaning the memory accesses to vm_fault_info and the vm_fault_info_updated
-flag are not guaranteed to occur in the intended order. This creates a
-race condition that can lead to inconsistent or stale data being used.
+GFX11 MES doesn't do this so checking full 64-bit status return
+for 1 or 0 is still valid.
 
-The previous implementation, which used an explicit mb(), was incomplete
-and inefficient. It failed to account for all potential CPU reorderings,
-such as the access of vm_fault_info being reordered before the atomic_read
-of the flag. This approach is also more verbose and less performant than
-using the proper atomic functions with acquire/release semantics.
-
-Fix this by switching to atomic_set_release() and atomic_read_acquire().
-These functions provide the necessary acquire and release semantics,
-which act as memory barriers to ensure the correct order of operations.
-It is also more efficient and idiomatic than using explicit full memory
-barriers.
-
-Fixes: b97dfa27ef3a ("drm/amdgpu: save vm fault information for amdkfd")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    5 ++---
- drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c            |    7 +++----
- drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c            |    7 +++----
- 3 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2353,10 +2353,9 @@ void amdgpu_amdkfd_gpuvm_unmap_gtt_bo_fr
- int amdgpu_amdkfd_gpuvm_get_vm_fault_info(struct amdgpu_device *adev,
- 					  struct kfd_vm_fault_info *mem)
- {
--	if (atomic_read(&adev->gmc.vm_fault_info_updated) == 1) {
-+	if (atomic_read_acquire(&adev->gmc.vm_fault_info_updated) == 1) {
- 		*mem = *adev->gmc.vm_fault_info;
--		mb(); /* make sure read happened */
--		atomic_set(&adev->gmc.vm_fault_info_updated, 0);
-+		atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
- 	}
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
-@@ -1055,7 +1055,7 @@ static int gmc_v7_0_sw_init(void *handle
- 					GFP_KERNEL);
- 	if (!adev->gmc.vm_fault_info)
- 		return -ENOMEM;
--	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
-+	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+@@ -224,7 +224,12 @@ static int mes_v12_0_submit_pkt_and_poll
+ 			pipe, x_pkt->header.opcode);
  
- 	return 0;
- }
-@@ -1287,7 +1287,7 @@ static int gmc_v7_0_process_interrupt(st
- 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
- 			     VMID);
- 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
--		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
-+		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
- 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
- 		u32 protections = REG_GET_FIELD(status,
- 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
-@@ -1303,8 +1303,7 @@ static int gmc_v7_0_process_interrupt(st
- 		info->prot_read = protections & 0x8 ? true : false;
- 		info->prot_write = protections & 0x10 ? true : false;
- 		info->prot_exec = protections & 0x20 ? true : false;
--		mb();
--		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
-+		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
- 	}
+ 	r = amdgpu_fence_wait_polling(ring, seq, timeout);
+-	if (r < 1 || !*status_ptr) {
++
++	/*
++	 * status_ptr[31:0] == 0 (fail) or status_ptr[63:0] == 1 (success).
++	 * If status_ptr[31:0] == 0 then status_ptr[63:32] will have debug error information.
++	 */
++	if (r < 1 || !(lower_32_bits(*status_ptr))) {
  
- 	return 0;
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
-@@ -1168,7 +1168,7 @@ static int gmc_v8_0_sw_init(void *handle
- 					GFP_KERNEL);
- 	if (!adev->gmc.vm_fault_info)
- 		return -ENOMEM;
--	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
-+	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
- 
- 	return 0;
- }
-@@ -1468,7 +1468,7 @@ static int gmc_v8_0_process_interrupt(st
- 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
- 			     VMID);
- 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
--		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
-+		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
- 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
- 		u32 protections = REG_GET_FIELD(status,
- 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
-@@ -1484,8 +1484,7 @@ static int gmc_v8_0_process_interrupt(st
- 		info->prot_read = protections & 0x8 ? true : false;
- 		info->prot_write = protections & 0x10 ? true : false;
- 		info->prot_exec = protections & 0x20 ? true : false;
--		mb();
--		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
-+		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
- 	}
- 
- 	return 0;
+ 		if (misc_op_str)
+ 			dev_err(adev->dev, "MES(%d) failed to respond to msg=%s (%s)\n",
 
 
