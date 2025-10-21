@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679041A3029;
-	Tue, 21 Oct 2025 20:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E712D27587D;
+	Tue, 21 Oct 2025 20:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077516; cv=none; b=vAV+v8KZOleJmU5303ZcqGSlo2gXECZSXqBonlnJgQw5h/VAlXLfQ6ON4zXMkktQPQYRwO1FcgR7skxkZ1g17AaYUY/PwPInGcD+KqiHX7ilLq/gDcMmeXCx/ezHMo3sk1eWqQyfHhORZRVnYYqcaFO7cZgg54/8SfFxDqmxkwk=
+	t=1761077522; cv=none; b=r1EqQ4ONqetkDuy/B+gSx3VyDhFaW20Laif5yAGxByEzugIyT/47FbI4MWYZKQSYsImzYvrDJcVIDQAGsn1IIcJgyJWL1ycrqpK87V9A3xB/qFeOAoNdr6yUz7xP3YQHDigWnyHFmfYEHbTGwtm3A6TB8UbxGeSHCsIolNveUrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077516; c=relaxed/simple;
-	bh=5fKqL36pzUJf0EGpeExgb4DW6diH/+332jE5ypoU5xo=;
+	s=arc-20240116; t=1761077522; c=relaxed/simple;
+	bh=jYM53U8sdsA5Uofovq5AIWDWh/umPhjxzXbb1rWMyF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N02fyB3/+rBz7sK64XwK7QnjudLpdhngBsQ6b9bCBX4nVUjDH2Uj1jrf6fpSIPuNN2LFsJhRb4+aVDVLr910wE2SveWsIPxsWp6aLTDyEq9xy9Ist5ORDW22OsJxOV7ocW1WxhTlBo1nY4oKAsLrHlO/o+jeDLk0PBvo0kZoGfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iolnhRfl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qPiTMfoj23+n5swkqDi/gFijdGhZaUyTCr+7GCpj1XRTOrCaTbLoIlm6n5PJYWS8cLFBcQ1fstVqIoDHl/jUMUJnhXjmKvh01TCa3iYgaeeZkVpe11wAGGWnngyVRUG59Vpn0dtMs3c+nRsSRdho25TpsHQoKOd7SnyHwe/f30I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pNgLxhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iolnhRfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E912BC4CEF1;
-	Tue, 21 Oct 2025 20:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pNgLxhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CDDC4CEF1;
+	Tue, 21 Oct 2025 20:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077516;
-	bh=5fKqL36pzUJf0EGpeExgb4DW6diH/+332jE5ypoU5xo=;
+	s=korg; t=1761077519;
+	bh=jYM53U8sdsA5Uofovq5AIWDWh/umPhjxzXbb1rWMyF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iolnhRflNY6Jt5a3tFQCyPcWFaAMM5e5C2O+oCgJz/V0MDKJh8yZ6E61Fi6V+mE6t
-	 JZrcsR/1Y39MJdsB0wRCq3YHMRerdRY9HCh+L+jPlSGCTGZhrmnINUgHXs9ndlESej
-	 IO+Ocvs9MqoivEd7dkhWfiK4MBW1cTBElwIYB3uA=
+	b=1pNgLxhXSjl3v31O8eeDeobEhgRdrl4M6kzOx3utNSMulu026ZL9523W6DgW7D/0U
+	 WowAEIp1leiGWsy55HWWQkB+Eh4DqFnR4q/7778dcwG/2NO6RCmH19IBwb67JnSVqG
+	 fKm4Dmmd5mP3TjcoYW1al8DaqCDieLDdm7V9o8pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Nilay Shroff <nilay@linux.ibm.com>,
-	Chris Mason <clm@meta.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 128/159] blk-mq: fix stale tag depth for shared sched tags in blk_mq_update_nr_requests()
-Date: Tue, 21 Oct 2025 21:51:45 +0200
-Message-ID: <20251021195046.229856162@linuxfoundation.org>
+Subject: [PATCH 6.17 129/159] block: Remove elevator_lock usage from blkg_conf frozen operations
+Date: Tue, 21 Oct 2025 21:51:46 +0200
+Message-ID: <20251021195046.252364262@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -48,96 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit dc96cefef0d3032c69e46a21b345c60e56b18934 ]
+[ Upstream commit 08823e89e3e269bf4c4a20b4c24a8119920cc7a4 ]
 
-Commit 7f2799c546db ("blk-mq: cleanup shared tags case in
-blk_mq_update_nr_requests()") moves blk_mq_tag_update_sched_shared_tags()
-before q->nr_requests is updated, however, it's still using the old
-q->nr_requests to resize tag depth.
+Remove the acquisition and release of q->elevator_lock in the
+blkg_conf_open_bdev_frozen() and blkg_conf_exit_frozen() functions. The
+elevator lock is no longer needed in these code paths since commit
+78c271344b6f ("block: move wbt_enable_default() out of queue freezing
+from sched ->exit()") which introduces `disk->rqos_state_mutex` for
+protecting wbt state change, and not necessary to abuse elevator_lock
+for this purpose.
 
-Fix this problem by passing in expected new tag depth.
+This change helps to solve the lockdep warning reported from Yu Kuai[1].
 
-Fixes: 7f2799c546db ("blk-mq: cleanup shared tags case in blk_mq_update_nr_requests()")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Pass blktests/throtl with lockdep enabled.
+
+Links: https://lore.kernel.org/linux-block/e5e7ac3f-2063-473a-aafb-4d8d43e5576e@yukuai.org.cn/ [1]
+Fixes: commit 78c271344b6f ("block: move wbt_enable_default() out of queue freezing from sched ->exit()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reported-by: Chris Mason <clm@meta.com>
-Link: https://lore.kernel.org/linux-block/20251014130507.4187235-2-clm@meta.com/
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sched.c | 2 +-
- block/blk-mq-tag.c   | 5 +++--
- block/blk-mq.c       | 2 +-
- block/blk-mq.h       | 3 ++-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ block/blk-cgroup.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index d06bb137a7437..e0bed16485c34 100644
---- a/block/blk-mq-sched.c
-+++ b/block/blk-mq-sched.c
-@@ -557,7 +557,7 @@ int blk_mq_init_sched(struct request_queue *q, struct elevator_type *e,
- 	if (blk_mq_is_shared_tags(flags)) {
- 		/* Shared tags are stored at index 0 in @et->tags. */
- 		q->sched_shared_tags = et->tags[0];
--		blk_mq_tag_update_sched_shared_tags(q);
-+		blk_mq_tag_update_sched_shared_tags(q, et->nr_requests);
- 	}
- 
- 	queue_for_each_hw_ctx(q, hctx, i) {
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index aed84c5d5c2b2..12f48e7a0f774 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -622,10 +622,11 @@ void blk_mq_tag_resize_shared_tags(struct blk_mq_tag_set *set, unsigned int size
- 	sbitmap_queue_resize(&tags->bitmap_tags, size - set->reserved_tags);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 7246fc2563152..091e9623bc294 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -812,8 +812,7 @@ int blkg_conf_open_bdev(struct blkg_conf_ctx *ctx)
  }
+ /*
+  * Similar to blkg_conf_open_bdev, but additionally freezes the queue,
+- * acquires q->elevator_lock, and ensures the correct locking order
+- * between q->elevator_lock and q->rq_qos_mutex.
++ * ensures the correct locking order between freeze queue and q->rq_qos_mutex.
+  *
+  * This function returns negative error on failure. On success it returns
+  * memflags which must be saved and later passed to blkg_conf_exit_frozen
+@@ -834,13 +833,11 @@ unsigned long __must_check blkg_conf_open_bdev_frozen(struct blkg_conf_ctx *ctx)
+ 	 * At this point, we haven’t started protecting anything related to QoS,
+ 	 * so we release q->rq_qos_mutex here, which was first acquired in blkg_
+ 	 * conf_open_bdev. Later, we re-acquire q->rq_qos_mutex after freezing
+-	 * the queue and acquiring q->elevator_lock to maintain the correct
+-	 * locking order.
++	 * the queue to maintain the correct locking order.
+ 	 */
+ 	mutex_unlock(&ctx->bdev->bd_queue->rq_qos_mutex);
  
--void blk_mq_tag_update_sched_shared_tags(struct request_queue *q)
-+void blk_mq_tag_update_sched_shared_tags(struct request_queue *q,
-+					 unsigned int nr)
+ 	memflags = blk_mq_freeze_queue(ctx->bdev->bd_queue);
+-	mutex_lock(&ctx->bdev->bd_queue->elevator_lock);
+ 	mutex_lock(&ctx->bdev->bd_queue->rq_qos_mutex);
+ 
+ 	return memflags;
+@@ -1002,9 +999,8 @@ void blkg_conf_exit(struct blkg_conf_ctx *ctx)
+ EXPORT_SYMBOL_GPL(blkg_conf_exit);
+ 
+ /*
+- * Similar to blkg_conf_exit, but also unfreezes the queue and releases
+- * q->elevator_lock. Should be used when blkg_conf_open_bdev_frozen
+- * is used to open the bdev.
++ * Similar to blkg_conf_exit, but also unfreezes the queue. Should be used
++ * when blkg_conf_open_bdev_frozen is used to open the bdev.
+  */
+ void blkg_conf_exit_frozen(struct blkg_conf_ctx *ctx, unsigned long memflags)
  {
- 	sbitmap_queue_resize(&q->sched_shared_tags->bitmap_tags,
--			     q->nr_requests - q->tag_set->reserved_tags);
-+			     nr - q->tag_set->reserved_tags);
+@@ -1012,7 +1008,6 @@ void blkg_conf_exit_frozen(struct blkg_conf_ctx *ctx, unsigned long memflags)
+ 		struct request_queue *q = ctx->bdev->bd_queue;
+ 
+ 		blkg_conf_exit(ctx);
+-		mutex_unlock(&q->elevator_lock);
+ 		blk_mq_unfreeze_queue(q, memflags);
+ 	}
  }
- 
- /**
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index f8a8a23b90402..19f62b070ca9d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4942,7 +4942,7 @@ struct elevator_tags *blk_mq_update_nr_requests(struct request_queue *q,
- 		 * tags can't grow, see blk_mq_alloc_sched_tags().
- 		 */
- 		if (q->elevator)
--			blk_mq_tag_update_sched_shared_tags(q);
-+			blk_mq_tag_update_sched_shared_tags(q, nr);
- 		else
- 			blk_mq_tag_resize_shared_tags(set, nr);
- 	} else if (!q->elevator) {
-diff --git a/block/blk-mq.h b/block/blk-mq.h
-index 6c9d03625ba12..2fdc8eeb40040 100644
---- a/block/blk-mq.h
-+++ b/block/blk-mq.h
-@@ -188,7 +188,8 @@ int blk_mq_tag_update_depth(struct blk_mq_hw_ctx *hctx,
- 		struct blk_mq_tags **tags, unsigned int depth);
- void blk_mq_tag_resize_shared_tags(struct blk_mq_tag_set *set,
- 		unsigned int size);
--void blk_mq_tag_update_sched_shared_tags(struct request_queue *q);
-+void blk_mq_tag_update_sched_shared_tags(struct request_queue *q,
-+					 unsigned int nr);
- 
- void blk_mq_tag_wakeup_all(struct blk_mq_tags *tags, bool);
- void blk_mq_queue_tag_busy_iter(struct request_queue *q, busy_tag_iter_fn *fn,
 -- 
 2.51.0
 
