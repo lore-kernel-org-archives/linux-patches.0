@@ -1,113 +1,360 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012069.outbound.protection.outlook.com [52.101.53.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA9234C82A;
-	Tue, 21 Oct 2025 17:19:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761067149; cv=none; b=HDMNTPKyXMa9u2lcnIxxPDdBezxUXplh2Z5IPJ6f4bRCot0AqHAeke0i1/U69iNJ9pNf3ksUCMCe+nAHY4ph1QSh9YUQ25rTsyxeiIUFC4CFYDpr9qvapL2Ws8cW4fi6myj1tpUlaqCateLb+zBcRm/5EMR1hEpJEc1E058Y0NA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761067149; c=relaxed/simple;
-	bh=APDtLhXblBwS9DQRReD0gd2A85Zk53l59rWi0MPQ0rk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BG2Xfmiv1pdZvuAn93UWenrPRFAv/QAkAofCu9nIn+sS7F/DNbV4Z+kffc4APtri7lth5cpjOzYT+Nu2kqriooXrWK4+Wor40J5/SG/xzis/zhonAzQqafG+z6n/7uME53SP+hJKl0IzccQvZalvisGpbnmLWNqGoNAT8NdNzBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Z+uBgZ0q; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AB353ADF;
+	Tue, 21 Oct 2025 17:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761067159; cv=fail; b=aoQ6sWlC6P5sEQ283I1/nOR6oV1ZJ7FPj2DFn6YX5IYQFGn78X4krcLN+7ln7rqx758+ugoXTEsXwohe4jtLZjSD6dRRdYf6pyvbeUjhKoMCwB5Etf/fK7xB9ztm396Pc3EfcAl7ie0O1Hc1vdcFKjhZJqThi4VjhkUeBWawql8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761067159; c=relaxed/simple;
+	bh=boRjueFfVm5BcH40R0qPsSpmiiqE/qMvUAyb+ku5vvQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qsWkINCA0bQAWUlDfBSWUsxXtRNABWDdmCBvSVnBOFrb2MoryVW6owvCpMK4B0P1fcQQsT20fA0JRyexKUqrIOefxBkin0LXpaKW5N5x2q/UN//JpM3TfPjIq6UY6GZyHAAv++OArv52eDKweqiMi93B9fNxTbXXxQj6aO9uknI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pX9pcdQX; arc=fail smtp.client-ip=52.101.53.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Z+uBgZ0q"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=QzchzrjP8FlIuKSYCzJ8pjq9HCBr1gD14zJzjcDAwDs=; b=Z+uBgZ0qsiHGtjo8dv8YdnexnA
-	JasO0byS3J/dlOB9ulPFmIBg7VmhciiE+D6ghI94XCSEzZ3d9pR4fAwPsxMhMbO38FCNC0YB3M8VH
-	pdqZJ8APAjVTCOLjSOfvXg9L/CHHyNybafQBnexilywkjRf5S0UNBJKi0W52C7MpdGH6ccpxlLBPg
-	67fg0xZO0Noc2Og65nJTMPG6uLkpJuQwlCyazSzCeoC3VUi5GdmTLKQqVWUuHU4YWjmqW9dBaO2hd
-	pMzttx1cf0+S6EleJkT8bqHmJzy/bwg1Mz4FKwSbhWIUZXNrOYP+HxXGZ0kbmDACqC6vnGnG94H0F
-	UDbfek8A==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vBF8z-00000000tCI-2tgG;
-	Tue, 21 Oct 2025 16:23:30 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id A45FC3030BE; Mon, 20 Oct 2025 12:51:54 +0200 (CEST)
-Date: Mon, 20 Oct 2025 12:51:54 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] objtool/rust: add one more `noreturn` Rust function
-Message-ID: <20251020105154.GR3419281@noisy.programming.kicks-ass.net>
-References: <20251020020714.2511718-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pX9pcdQX"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pGkEcOcFNnS2XLuvly0YaKe9c9ubFdXiHv8imZnvGVfR9xO2wZDZpOSkB28jqe1kiSi87DwvE060JRrIN7ojuLvhVx9l1bhp3yMo2jDSYHtzwNGU5gvBdqbPO5t/2GSM0ED4Psr5p7s/jFDAbGggTR9U2gLnyINfcE1vAJzoCEcIE9WmmCXWi+On0lotYtornzrgfuODpIV+ZT7kOoD9qrTnK+rUJ77zjHVbrIgkxWfdVaOelSdq9hcr5DQFs7IsKX14BJb1Hr1qe5ICYSSld6LnRHzufIeGTqwGhd21CcxBf/Mzqp0jJQ01ms426KbymwC708HInxBrGEk7/5rUvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pfIKvKbhlf5nDV/5OBreet7fe0jiPdOlAySlXWfdjII=;
+ b=dFmjOVlJNQcYJYbFQ1WRZilA5rBYGdk5e2FchcZImFQKCDyf1F3uNCKJ1YDOfC+aQWubxhvqbrQL1bm7/pReSDwBE8SYA0DdVA+kf+4PJ5cvNTawkvFAGFcpmpDiYIPXBQB/0EZ9zIB93vNQmjXgOX7aR7jBXZF2KCwEhz5bV1JSoODzJN6PhrktF9xpbr6OuR1tRY6zvHKdaYgRw0LWV3Jbvf2/DrpolxC/n10trlugsTRvwaIb1cCKhvz5370ccHz+fC4lqopaFN5MMtbDfcfUAaHrXtkQBYfjzJJN9R+WmqfViuPRnJsDpA42uvorY0ar1spDqSfhz33YWR2XfQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pfIKvKbhlf5nDV/5OBreet7fe0jiPdOlAySlXWfdjII=;
+ b=pX9pcdQX7tOoJEvzP0wMI/Mp58cAB+xRckDXH4c72zS3mtYZsviTxwZEFnXAWKim/g2drHcL651h62RyA1VbWnnNs1tJMKWUARsXZbZ47qRDERIy3YsCTsyD5RDBl3++SZETVk3F2JtGtbwOTKfJUXBbRc/zEh3TSfbmgzM6+Jdw8A9q7A8tCNuC6y2arPV6EQGrctjHt3y2+n6VPa3wERbkcAgtfdopXCYd7BJO7I4xvw91+ThgZRPVteZs76JT0aFpYBa0/SfV4LibXPBYw2i2TAGvg89mprzZWqgGeCggXOmVoUb5Y0PhJ8iNhF/B7PQhCvpAhObxJnnFfNzoGw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BN8PR12MB3604.namprd12.prod.outlook.com (2603:10b6:408:45::31)
+ by CY8PR12MB8066.namprd12.prod.outlook.com (2603:10b6:930:70::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.17; Tue, 21 Oct
+ 2025 17:19:12 +0000
+Received: from BN8PR12MB3604.namprd12.prod.outlook.com
+ ([fe80::9629:2c9f:f386:841f]) by BN8PR12MB3604.namprd12.prod.outlook.com
+ ([fe80::9629:2c9f:f386:841f%5]) with mapi id 15.20.9228.015; Tue, 21 Oct 2025
+ 17:19:12 +0000
+Date: Tue, 21 Oct 2025 14:19:10 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+Cc: Jonathan Corbet <corbet@lwn.net>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>,
+	Justin Stitt <justinstitt@google.com>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	James Gowans <jgowans@amazon.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v6 07/15] iommupt: Add map_pages op
+Message-ID: <20251021171910.GH712833@nvidia.com>
+References: <0-v6-0fb54a1d9850+36b-iommu_pt_jgg@nvidia.com>
+ <7-v6-0fb54a1d9850+36b-iommu_pt_jgg@nvidia.com>
+ <BN9PR11MB5276271302BF0AAAE2C7085A8CE9A@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BN9PR11MB5276271302BF0AAAE2C7085A8CE9A@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-ClientProxiedBy: DM6PR08CA0026.namprd08.prod.outlook.com
+ (2603:10b6:5:80::39) To BN8PR12MB3604.namprd12.prod.outlook.com
+ (2603:10b6:408:45::31)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251020020714.2511718-1-ojeda@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3604:EE_|CY8PR12MB8066:EE_
+X-MS-Office365-Filtering-Correlation-Id: 530355b8-ae8a-465a-5a4c-08de10c5f3b8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?8dG68tBnWUQ2FjH7OlabvaABt8OQek9Z/FWYSpte3T+uWZpO8qiCxuNw+A0v?=
+ =?us-ascii?Q?36XWSnqyt1hNNG5OjLXgpy+k6msCU+4BsoWF69CRMkJ4KZHn4Nuv63s50Tby?=
+ =?us-ascii?Q?JhQBXff5UkN2sOGoxavHWQk+kZ9wjwd+OS8x/H8rg6Ean02CrvPOlrYIGQnk?=
+ =?us-ascii?Q?luMmEc4kAuTKIORFNKJfo5jFFV5J0E4Hp/3mage05A/TjlL07QVf3hrqfOw5?=
+ =?us-ascii?Q?ioIClO3CyWH/bj0TxVPv+ddPVX4K2xwgKWccAx/Fna3hMK4/Pw55DfniltWh?=
+ =?us-ascii?Q?NvcdQJqCvai5ZjtrcEU5QtVVkZzNP7Ri4gjPdja7ILAcBOHc+TpypeNwwXCt?=
+ =?us-ascii?Q?nXwxKj5c9kaT/cn0CvApVTHhIpEO5zUQdDgKq9IJ1baT34PQXsz0gqP80FFT?=
+ =?us-ascii?Q?HprymI9vUUUlgBWPSuiLVkyt3GhpTP39c5qhSXd306+yZySIVfpJJakuy7mM?=
+ =?us-ascii?Q?bZI4FI6HjwG9plCAj140oOZWcBZyZ/hk2R3TayISo0SMvygZzYWXcpjg/wOv?=
+ =?us-ascii?Q?wWzFgsJsRuXe6tpn+l1eCAZM+Pvab6aSH1tO1QqWpayYsavPyyPahKXw/Iln?=
+ =?us-ascii?Q?DBuMezqbNVkLYkZnJlepE3wvuGX3vabd06CJngWDe5y3by/NXFCA/btTl0L4?=
+ =?us-ascii?Q?o1p+g1f6ZlYK2kSg7Ulul0YeSsJDxzZI/Z+HJhkNlmo41QNpxmkvRw7vRSHd?=
+ =?us-ascii?Q?b852nbmGiverNLL+GWLwSRxcJSdEWV/pf3YNfyOIWeSyLZgmJKc8oVKRzT6/?=
+ =?us-ascii?Q?IUBusSXLJDNNGbPD5qK4R4B16FyA7iTyMvPvX2TbJEhnE8abXwi/ND4dSsyP?=
+ =?us-ascii?Q?9awo8jYHHkJEaurdX6H8F0xFQjDnoRnvekNC9qxkmSvsHzFF20a7bK7bj60A?=
+ =?us-ascii?Q?Mj7zaYk6GDC6Wq6MjzG7Gu7KdqXZjA+BVbxGTNnTFEuqr5JXw0pfvBhJKMOI?=
+ =?us-ascii?Q?QJVZvVkI40TBoUM7z+TXRWqbuzAAYIPMmLWa0kRGdtJ+L0g2PPHdSwPpbi+F?=
+ =?us-ascii?Q?eycY+8G+80NqpEvbVqDFMTkuJMxFTN+iOyboUixMihTLuu4+DSxGbw9LlQ83?=
+ =?us-ascii?Q?cKJMw4MeQcIffJAalsDwwipeblTAfu0zUJFHorUh0joAzJqJt4Unw/Xa9f3D?=
+ =?us-ascii?Q?BRnfz1/UT6TSeii3l2y4rx6LlC6OJQP8iki0NmtzKIZK5C/emmBR/4vV39IR?=
+ =?us-ascii?Q?hp0XsGtqIrcElJPBdlcyaaynV21awaqugQg3vapDy8g4lok1Uq7wh5kndjqF?=
+ =?us-ascii?Q?qV+AR0YHR1gW3ZvEp7+/GrtsTjTQHj8E6Tq7tVUWbAFKUTbUG3ka9lpc6XpR?=
+ =?us-ascii?Q?YtwBBNJozxhRfV/jeqj964C+ge9kFa4VFAmwYZ8rwRsx2cBBMd2qpppgelBs?=
+ =?us-ascii?Q?OvffeSS2hhLnzCAx39yGAHiLy3Il3JnC8WjBGM/k0Er1ASnZcdngSBUtdpIP?=
+ =?us-ascii?Q?+vGahPAH/T83/K7839TH4gNwspTY7gcl?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3604.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?w0wiwYuSx8ITDfxktoTYYCIB3JPyIOoVfM1RMNkqEZtBm66eF0MOFL6+Q0l9?=
+ =?us-ascii?Q?tyeLlyimrlMswMDVsOGo0Ey41JiJW8cJBCe2sTnYH9hle8jdiu7kzjnDzxwi?=
+ =?us-ascii?Q?RTiNhI+LaFUMYdpo0joxxbwcmX2FjLgRGHYRRRAf9NI7mcPubiEnNTn9MjGg?=
+ =?us-ascii?Q?B6Ir4bjq+yIL9IMa6ocavYwhsqhv+FzQ2R5Z5OVNBtVCwbVdFO1DAaEG55eD?=
+ =?us-ascii?Q?PFkX/bLlYd4+K9IH12HrM5JHNACIQY7BgcrIs5UaC4DpgigSq3z4PZjIP0MP?=
+ =?us-ascii?Q?33rq0HjfA+2P7C+95RHlUGeJDAfo6ycV/ivdKlqdfWQ31bwoWam10DV5Isd8?=
+ =?us-ascii?Q?OjW3aHLUG7TfCwku5BbNvF1wxIM3q/UksiM5CK4AcqQClBYyRWJw6KdKwWdK?=
+ =?us-ascii?Q?pyMqTr6z6RektOquJey9TMgASVVmYNpKXhCWbZ1J3FigZZFgUYOpVEqVx/qW?=
+ =?us-ascii?Q?RLi3tnF+ncOjgDQwqR7BywuzbBvhAmCBFPglrcz5QlZbRJu0gjHAPGK6iiwi?=
+ =?us-ascii?Q?9msy8zz+A8IX9yVdbIWRTFvQgtziyWoAYELHOPx95IfBrnatcRBpp9nnu8/F?=
+ =?us-ascii?Q?BhIfU8gDq3V3L63WylyqwJLMBO9+katDFcW30MJDb0MSXyGD1MXcHyKgsuiV?=
+ =?us-ascii?Q?ukQOsNJERvXFVeIEHrQFQD2lHYgCoiVtDoaWw63DLLKMqzgQPDOP8V+wg1f6?=
+ =?us-ascii?Q?Yo6lwfhnAjVaXt3nUm/rQxnSwsf+gZBxtKYFkl3PtUC/knnPiUeM6OqAbBNB?=
+ =?us-ascii?Q?wQ1AJK45xxDKu3nWTvdlAl7oauLM6OzG0QadGEotEtKjOQ2jutMOxFAgqfty?=
+ =?us-ascii?Q?gLQPPkoxh4IILEYikw3BrvG3KhhjoVLNn6VP7p41BRnMAmOK0goPfhz5EJJQ?=
+ =?us-ascii?Q?61as0ztzkl4IHUgrBBoDBPGYFp0noVHgXCog3076SLBhZ2+4/vWE3G+pvjap?=
+ =?us-ascii?Q?9rqKIMCFh9a9p5mb53geBK9Ydku5RlfnT2W92VOa9yGB2LrXZg7SYxjpStvC?=
+ =?us-ascii?Q?JN1zAzFMqS2XMVyUCxw5ZG2+FdQd0BLgLHBanubW0z8o+00gdMp7PZxQM5fb?=
+ =?us-ascii?Q?VPhzNeFyoIF80fgOiCwFj4+x0YTJstA8qrr5UT1jBMpOaK1t5BuSuEZUBGRc?=
+ =?us-ascii?Q?C6BfLO11I59BCFKExvDcDQ4/MnieShSyDmHogHRPmiDp+hRg23mCv/vN1D2B?=
+ =?us-ascii?Q?sRiOpjGOooFosWPfqPpexdarM5XM+RIgn6Amb0mNiiA3EAYPhT7rdkjPIkX7?=
+ =?us-ascii?Q?ROkdmC3IsLEKK7TxPOwzbj9lXeMu/h/nZ27GiNHAb3Z3QPcJmLFn8g77CLyT?=
+ =?us-ascii?Q?B/FM8BJ++jWjCD4VNzjR+SFS/xHWh/uRwAMdXnjhqQdFcX0DIIu7mgkPJYWB?=
+ =?us-ascii?Q?EV9e08md6DrVZewZiUdl4ao5s5Ga35VmHqF5P40+oPCQxMM0vSI1d8w2TTby?=
+ =?us-ascii?Q?52J0yuyth+WzvWaZlEzsZHqo1fLrvvHAGu41O49IzN1/hRjzJvQAGYYkBX/7?=
+ =?us-ascii?Q?Ml9zr0K7WBO9F2WBsxUwnT5B0iRS8HNqVs1VeKm+Sjmpy4nWLpv3/GLEbveQ?=
+ =?us-ascii?Q?wnrq0Ok3+uo0AyRCOw9s1Gb2SkAV5zJEaGnvMKuD?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 530355b8-ae8a-465a-5a4c-08de10c5f3b8
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3604.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2025 17:19:12.5702
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NlAqYFmKnLyZYPgGhhCXDb9us2epLyEivFdS4TDVkn5Eii8h1ddxel3jKivNMtNe
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8066
 
-On Mon, Oct 20, 2025 at 04:07:14AM +0200, Miguel Ojeda wrote:
-> Between Rust 1.79 and 1.86, under `CONFIG_RUST_KERNEL_DOCTESTS=y`,
-> `objtool` may report:
+On Thu, Oct 16, 2025 at 06:52:09AM +0000, Tian, Kevin wrote:
+> > +static __always_inline int __do_map_single_page(struct pt_range *range,
+> > +						void *arg, unsigned int level,
+> > +						struct pt_table_p *table,
+> > +						pt_level_fn_t descend_fn)
+> > +{
+> > +	struct pt_state pts = pt_init(range, level, table);
+> > +	struct pt_iommu_map_args *map = arg;
+> > +
+> > +	pts.type = pt_load_single_entry(&pts);
+> > +	if (level == 0) {
+> > +		if (pts.type != PT_ENTRY_EMPTY)
+> > +			return -EADDRINUSE;
+> > +		pt_install_leaf_entry(&pts, map->oa, PAGE_SHIFT,
+> > +				      &map->attrs);
+> > +		map->oa += PAGE_SIZE;
+> > +		return 0;
+> > +	}
+> > +	if (pts.type != PT_ENTRY_TABLE)
+> > +		return -EAGAIN;
 > 
->     rust/doctests_kernel_generated.o: warning: objtool:
->     rust_doctest_kernel_alloc_kbox_rs_13() falls through to next
->     function rust_doctest_kernel_alloc_kvec_rs_0()
-> 
-> (as well as in rust_doctest_kernel_alloc_kvec_rs_0) due to calls to the
-> `noreturn` symbol:
-> 
->     core::option::expect_failed
-> 
-> from code added in commits 779db37373a3 ("rust: alloc: kvec: implement
-> AsPageIter for VVec") and 671618432f46 ("rust: alloc: kbox: implement
-> AsPageIter for VBox").
-> 
-> Thus add the mangled one to the list so that `objtool` knows it is
-> actually `noreturn`.
-> 
-> This can be reproduced as well in other versions by tweaking the code,
-> such as the latest stable Rust (1.90.0).
-> 
-> Stable does not have code that triggers this, but it could have it in
-> the future. Downstream forks could too. Thus tag it for backport.
-> 
-> See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-> for more details.
-> 
-> Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
-> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-> Cc: Peter Zijlstra <peterz@infradead.org>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  tools/objtool/check.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-> index a5770570b106..3c7ab910b189 100644
-> --- a/tools/objtool/check.c
-> +++ b/tools/objtool/check.c
-> @@ -217,6 +217,7 @@ static bool is_rust_noreturn(const struct symbol *func)
->  	 * these come from the Rust standard library).
->  	 */
->  	return str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
-> +	       str_ends_with(func->name, "_4core6option13expect_failed")				||
->  	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
->  	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
->  	       str_ends_with(func->name, "_4core9panicking5panic")					||
-> 
+> return -EADDRINUSE if PT_ENTRY_OA. No need to retry if no empty.
 
-I'll go stick it in tip/objtool/core; but I gotta ask, where are we with
-the toolchain support for noreturn?
+I wanted to keep it small this catches if the table needs to be
+allocated too. This is a bit clearer:
+
+	if (pts.type == PT_ENTRY_TABLE)
+		return pt_descend(&pts, arg, descend_fn);
+	/* Something else, use the slow path */
+	return -EAGAIN;
+
+> > +/**
+> > + * map_pages() - Install translation for an IOVA range
+> > + * @domain: Domain to manipulate
+> > + * @iova: IO virtual address to start
+> > + * @paddr: Physical/Output address to start
+> > + * @pgsize: Length of each page
+> > + * @pgcount: Length of the range in pgsize units starting from @iova
+> > + * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
+> > + * @gfp: GFP flags for any memory allocations
+> > + * @mapped: Total bytes successfully mapped
+> > + *
+> > + * The range starting at IOVA will have paddr installed into it. The caller
+> > + * must specify a valid pgsize and pgcount to segment the range into
+> > compatible
+> > + * blocks.
+> > + *
+> > + * On error the caller will probably want to invoke unmap on the range from
+> > iova
+> > + * up to the amount indicated by @mapped to return the table back to an
+> > + * unchanged state.
+> > + *
+> > + * Context: The caller must hold a write range lock that includes the whole
+> > + * range.
+> > + *
+> > + * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA that
+> > were
+> > + * mapped are added to @mapped, @mapped is not zerod first.
+> 
+> hmm seems drivers are not consistent on this, e.g. Intel and several
+> others (virtio, rockchip. etc.) don't use addition. and there is no such
+> guidance from iommu.h.
+
+Yes. At least ARM64 does addition though.
+
+> Existing callers e.g. iommu_map_nosync() initializes mmaped to 0,
+> so this difference doesn't lead to observable problem so far. 
+
+Yep
+
+> But it may be good to unify drivers while at it.
+
+As it doesn't cause any issue, I'm just going to leave it.. The new
+implementation will consistently use the addition mode like ARM did
+and that is convenient for the kunit as well.
+
+> > +	/* Calculate target page size and level for the leaves */
+> > +	if (pt_has_system_page_size(common) && pgsize == PAGE_SIZE &&
+> > +	    pgcount == 1) {
+> > +		PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
+> > +		if (log2_mod(iova | paddr, PAGE_SHIFT))
+> > +			return -ENXIO;
+> > +		map.leaf_pgsize_lg2 = PAGE_SHIFT;
+> > +		map.leaf_level = 0;
+> > +		single_page = true;
+> > +	} else {
+> > +		map.leaf_pgsize_lg2 = pt_compute_best_pgsize(
+> > +			pgsize_bitmap, range.va, range.last_va, paddr);
+> > +		if (!map.leaf_pgsize_lg2)
+> > +			return -ENXIO;
+> > +		map.leaf_level =
+> > +			pt_pgsz_lg2_to_level(common, map.leaf_pgsize_lg2);
+> > +	}
+> > +
+> > +	ret = check_map_range(iommu_table, &range, &map);
+> > +	if (ret)
+> > +		return ret;
+> 
+> single_page should aways pass the check then could skip it.
+
+Even single_page needs this check, it checks if iova is with in range.
+
+> > +	PT_WARN_ON(map.leaf_level > range.top_level);
+> > +
+> > +	do {
+> > +		if (single_page) {
+> > +			ret = pt_walk_range(&range, __map_single_page,
+> > &map);
+> > +			if (ret != -EAGAIN)
+> > +				break;
+> > +		}
+> > +
+> > +		if (map.leaf_level == range.top_level)
+> > +			ret = pt_walk_range(&range, __map_range_leaf,
+> > &map);
+> > +		else
+> > +			ret = pt_walk_range(&range, __map_range, &map);
+> > +	} while (false);
+> 
+> what is the point of do...while(false) compared to 'goto'?
+
+Didn't want to use goto for something other than an error exit
+
+Let's put it in a function:
+
+static int do_map(struct pt_range *range, bool single_page,
+		  struct pt_iommu_map_args *map)
+{
+	if (single_page) {
+		int ret;
+
+		ret = pt_walk_range(range, __map_single_page, map);
+		if (ret != -EAGAIN)
+			return ret;
+		/* EAGAIN falls through to the full path */
+	}
+
+	if (map->leaf_level == range->top_level)
+		return pt_walk_range(range, __map_range_leaf, map);
+	return pt_walk_range(range, __map_range, map);
+}
+
+> > +/**
+> > + * struct pt_iommu_flush_ops - HW IOTLB cache flushing operations
+> > + *
+> > + * The IOMMU driver should implement these using
+> > container_of(iommu_table) to
+> > + * get to it's iommu_domain derived structure. All ops can be called in
+> > atomic
+> > + * contexts as they are buried under DMA API calls.
+> > + */
+> > +struct pt_iommu_flush_ops {
+> 
+> not sure it's appropriate to call it flush_ops. It's not purely about flush,
+> e.g. @change_top requires the driver to actually change the top.
+
+Hmm, at one point it did have flush related calls but now it is just
+about change top..
+
+I'll change it to pt_iommu_driver_ops
+
+> > +	 * HW references to this domain with a new top address and
+> > +	 * configuration. On return mappings placed in the new top must be
+> > +	 * reachable by the HW.
+> > +	 *
+> > +	 * top_level encodes the level in IOMMU PT format, level 0 is the
+> > +	 * smallest page size increasing from there. This has to be translated
+> > +	 * to any HW specific format. During this call the new top will not be
+> > +	 * visible to any other API.
+> > +	 *
+> > +	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
+> > +	 * enabled.
+> > +	 */
+> > +	void (*change_top)(struct pt_iommu *iommu_table, phys_addr_t
+> > top_paddr,
+> > +			   unsigned int top_level);
+> > +
+> > +	/**
+> > +	 * @get_top_lock: Return a lock to hold when changing the table top
+> > +	 * @iommu_table: Table to operate on
+> > +	 *
+> 
+> blank line
+
+
+	/**
+	 * @get_top_lock: lock to hold when changing the table top
+	 * @iommu_table: Table to operate on
+	 *
+	 * Return a lock to hold when changing the table top page table from
+	 * being stored in HW. The lock will be held prior to calling
+	 * change_top() and released once the top is fully visible.
+	 *
+	 * Typically this would be a lock that protects the iommu_domain's
+	 * attachment list.
+	 *
+	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
+	 * enabled.
+	 */
+
+Thanks,
+Jason
