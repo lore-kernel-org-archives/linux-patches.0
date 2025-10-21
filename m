@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75842274B35;
-	Tue, 21 Oct 2025 20:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D3C25A355;
+	Tue, 21 Oct 2025 20:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077332; cv=none; b=HL/j8mPKTmYXfL7W1TdHF45MzUC6vEojX9QHkxxvUb4F/NCtgfMEFYXHhfMH4m0acdkVK+ryBib9iiGTXstNW1KmcyE6TxlAT3DfUtp+SVDOdK8gwSxEoveby79wedkfCfHfdL5dYhEyT2h71yQyLzrvr17i3nrif5qs90cT+UA=
+	t=1761077335; cv=none; b=XItpsnPDmoJ8czny5d5YqpkRE2z+Wo4oszR0ytzI/BpBbYO94pfjNKwLoX3pSLuCclNRkeFnYCIkFC5CGst7uspKCncTNKgZHxK1ZPskD0JTSS4dgYrPMIDIj5w0zreokLlc9uYDAN6ajibjVkodV7Ln0hXEvVusN6fzMHiJVZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077332; c=relaxed/simple;
-	bh=O8SifLQzVVWR7AAyoG3exJC4322XAD3bAoATqXEYd9A=;
+	s=arc-20240116; t=1761077335; c=relaxed/simple;
+	bh=U1RzlRZtT8hj1fXz6gXUo0uTlgELCvgvtZvOwJKUCQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ghRRsUla7v2t/I4QIuTXK+tBy/9WiKf9zVbYlEiA27ZyT2zTXd6a4XJqhtJf1zSAWorVQZLkZXxceLpsNxdzxP5Ajizh5f6Bz6lEUvdXv9ekNypbxTBB/5Ny/aIslVWfTnqb35TL30Vt22IAVoYXlEVIQiCQePDd/1HxJ6CttYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmsvrtbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XARluyoqleBz6cW7ZY5CW+eP5IGNMizegDxvMb3vi7kJpJeUi5BlPUXJ4yCMsFjeiyAXrtzRhrch/SNejz8kb2v/ZSwqdLb18VT/oKQR+ptrumfEZb9KN03MJNzs44sWYK3YYCRJgHdsBCrHxbcSgu2TbjmjfUrG9eqk83vHa8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ic1u4XPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmsvrtbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2664C4CEF1;
-	Tue, 21 Oct 2025 20:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ic1u4XPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF421C4CEF1;
+	Tue, 21 Oct 2025 20:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077332;
-	bh=O8SifLQzVVWR7AAyoG3exJC4322XAD3bAoATqXEYd9A=;
+	s=korg; t=1761077335;
+	bh=U1RzlRZtT8hj1fXz6gXUo0uTlgELCvgvtZvOwJKUCQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmsvrtbQcFJxpa1cwIJgXyKjYhowBVK3qxTLuKTblGfgl7smq2kVPveL/YnGC72Qo
-	 b/+I0TelS/+T8DMRMGT5CSNBaewPgYm3nq3hvKrAuZSc7gdnYapW/AU06nTP8F/WF7
-	 NNr9+6LfdhvzcYbxy7Jt/SR3A2O5KWktbWiFazAg=
+	b=ic1u4XPtPYL6w0SvcPv4za/ZfZAeI1h0g/dStfBeVUwXxW6HE6dkI0P0FwCmDQjlh
+	 LhU3+OLXjJd6tZCcL8N7uODWKHJnCCdXFyxxLI1u2rrU3BKuvgmDv2xucNufmCqtCx
+	 BY3ObToe4g4ESXRSUHyw+t4HKQkHv63P9R3kcP5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kamil=20Hor=C3=A1k=20-=202N?= <kamilh@axis.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Florian Westphal <fw@strlen.de>,
+	Francesco Ruggeri <fruggeri05@gmail.com>,
+	Dmitry Safonov <dima@arista.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 071/159] net: phy: bcm54811: Fix GMII/MII/MII-Lite selection
-Date: Tue, 21 Oct 2025 21:50:48 +0200
-Message-ID: <20251021195044.913196620@linuxfoundation.org>
+Subject: [PATCH 6.17 072/159] net/ip6_tunnel: Prevent perpetual tunnel growth
+Date: Tue, 21 Oct 2025 21:50:49 +0200
+Message-ID: <20251021195044.937586359@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -46,83 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kamil Horák - 2N <kamilh@axis.com>
+From: Dmitry Safonov <dima@arista.com>
 
-[ Upstream commit e4d0c909bf8328d986bf3aadba0c33a72b5ae30d ]
+[ Upstream commit 21f4d45eba0b2dcae5dbc9e5e0ad08735c993f16 ]
 
-The Broadcom bcm54811 is hardware-strapped to select among RGMII and
-GMII/MII/MII-Lite modes. However, the corresponding bit, RGMII Enable
-in Miscellaneous Control Register must be also set to select desired
-RGMII or MII(-lite)/GMII mode.
+Similarly to ipv4 tunnel, ipv6 version updates dev->needed_headroom, too.
+While ipv4 tunnel headroom adjustment growth was limited in
+commit 5ae1e9922bbd ("net: ip_tunnel: prevent perpetual headroom growth"),
+ipv6 tunnel yet increases the headroom without any ceiling.
 
-Fixes: 3117a11fff5af9e7 ("net: phy: bcm54811: PHY initialization")
-Signed-off-by: Kamil Horák - 2N <kamilh@axis.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251009130656.1308237-2-kamilh@axis.com
+Reflect ipv4 tunnel headroom adjustment limit on ipv6 version.
+
+Credits to Francesco Ruggeri, who was originally debugging this issue
+and wrote local Arista-specific patch and a reproducer.
+
+Fixes: 8eb30be0352d ("ipv6: Create ip6_tnl_xmit")
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Francesco Ruggeri <fruggeri05@gmail.com>
+Signed-off-by: Dmitry Safonov <dima@arista.com>
+Link: https://patch.msgid.link/20251009-ip6_tunnel-headroom-v2-1-8e4dbd8f7e35@arista.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/broadcom.c | 20 +++++++++++++++++++-
- include/linux/brcmphy.h    |  1 +
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ include/net/ip_tunnels.h | 15 +++++++++++++++
+ net/ipv4/ip_tunnel.c     | 14 --------------
+ net/ipv6/ip6_tunnel.c    |  3 +--
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
-index a60e58ef90c4e..6884eaccc3e1d 100644
---- a/drivers/net/phy/broadcom.c
-+++ b/drivers/net/phy/broadcom.c
-@@ -407,7 +407,7 @@ static int bcm5481x_set_brrmode(struct phy_device *phydev, bool on)
- static int bcm54811_config_init(struct phy_device *phydev)
- {
- 	struct bcm54xx_phy_priv *priv = phydev->priv;
--	int err, reg, exp_sync_ethernet;
-+	int err, reg, exp_sync_ethernet, aux_rgmii_en;
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 8cf1380f36562..63154c8faecc3 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -609,6 +609,21 @@ struct metadata_dst *iptunnel_metadata_reply(struct metadata_dst *md,
+ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 			  int headroom, bool reply);
  
- 	/* Enable CLK125 MUX on LED4 if ref clock is enabled. */
- 	if (!(phydev->dev_flags & PHY_BRCM_RX_REFCLK_UNUSED)) {
-@@ -436,6 +436,24 @@ static int bcm54811_config_init(struct phy_device *phydev)
- 	if (err < 0)
- 		return err;
- 
-+	/* Enable RGMII if configured */
-+	if (phy_interface_is_rgmii(phydev))
-+		aux_rgmii_en = MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RGMII_EN |
-+			       MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RGMII_SKEW_EN;
-+	else
-+		aux_rgmii_en = 0;
-+
-+	/* Also writing Reserved bits 6:5 because the documentation requires
-+	 * them to be written to 0b11
++static inline void ip_tunnel_adj_headroom(struct net_device *dev,
++					  unsigned int headroom)
++{
++	/* we must cap headroom to some upperlimit, else pskb_expand_head
++	 * will overflow header offsets in skb_headers_offset_update().
 +	 */
-+	err = bcm54xx_auxctl_write(phydev,
-+				   MII_BCM54XX_AUXCTL_SHDWSEL_MISC,
-+				   MII_BCM54XX_AUXCTL_MISC_WREN |
-+				   aux_rgmii_en |
-+				   MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RSVD);
-+	if (err < 0)
-+		return err;
++	const unsigned int max_allowed = 512;
 +
- 	return bcm5481x_set_brrmode(phydev, priv->brr_mode);
++	if (headroom > max_allowed)
++		headroom = max_allowed;
++
++	if (headroom > READ_ONCE(dev->needed_headroom))
++		WRITE_ONCE(dev->needed_headroom, headroom);
++}
++
+ int iptunnel_handle_offloads(struct sk_buff *skb, int gso_type_mask);
+ 
+ static inline int iptunnel_pull_offloads(struct sk_buff *skb)
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index aaeb5d16f0c9a..158a30ae7c5f2 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -568,20 +568,6 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
+ 	return 0;
  }
  
-diff --git a/include/linux/brcmphy.h b/include/linux/brcmphy.h
-index 15c35655f4826..115a964f30069 100644
---- a/include/linux/brcmphy.h
-+++ b/include/linux/brcmphy.h
-@@ -137,6 +137,7 @@
+-static void ip_tunnel_adj_headroom(struct net_device *dev, unsigned int headroom)
+-{
+-	/* we must cap headroom to some upperlimit, else pskb_expand_head
+-	 * will overflow header offsets in skb_headers_offset_update().
+-	 */
+-	static const unsigned int max_allowed = 512;
+-
+-	if (headroom > max_allowed)
+-		headroom = max_allowed;
+-
+-	if (headroom > READ_ONCE(dev->needed_headroom))
+-		WRITE_ONCE(dev->needed_headroom, headroom);
+-}
+-
+ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		       u8 proto, int tunnel_hlen)
+ {
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 3262e81223dfc..6405072050e0e 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1257,8 +1257,7 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
+ 	 */
+ 	max_headroom = LL_RESERVED_SPACE(tdev) + sizeof(struct ipv6hdr)
+ 			+ dst->header_len + t->hlen;
+-	if (max_headroom > READ_ONCE(dev->needed_headroom))
+-		WRITE_ONCE(dev->needed_headroom, max_headroom);
++	ip_tunnel_adj_headroom(dev, max_headroom);
  
- #define MII_BCM54XX_AUXCTL_SHDWSEL_MISC			0x07
- #define MII_BCM54XX_AUXCTL_SHDWSEL_MISC_WIRESPEED_EN	0x0010
-+#define MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RSVD		0x0060
- #define MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RGMII_EN	0x0080
- #define MII_BCM54XX_AUXCTL_SHDWSEL_MISC_RGMII_SKEW_EN	0x0100
- #define MII_BCM54XX_AUXCTL_MISC_FORCE_AMDIX		0x0200
+ 	err = ip6_tnl_encap(skb, t, &proto, fl6);
+ 	if (err)
 -- 
 2.51.0
 
