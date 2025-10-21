@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E2B23D7E8;
-	Tue, 21 Oct 2025 20:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17495265CDD;
+	Tue, 21 Oct 2025 20:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077279; cv=none; b=YX/iVI6roFaa4tmLymbFpVKZOJaYb/d70WwoZ46RHgiFwnysYahkcvYJt67YAryD+GWxmon+O2me9/E7VT6HEYwYzf9Amp3Q6wu41Ru1CPiOq8jXRzAC0HWWNoMqrTwkm44BqSalfnmA4PlD8ZitZkJPtcbh8JjNWx4G/bGYZlY=
+	t=1761077282; cv=none; b=Ei7B0eYIst3wXAxHlmuekaJWxaIqsNPEWK3Th6IPBTAGZ5gB+LsgFUmZ0ZrZ/xbRXXpvY83apoQDaTRgIvNLGPcvezj46eLtLpiej9tqYo40Naf9GtOs94LH0+rCPq9ZugcTJo3phRgCFtHKu+a3JyaxFvq9jfPzI93fBtk/b50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077279; c=relaxed/simple;
-	bh=rPyC1am/uKj68mBku2frsQSLHafYRPa3U7d7GIVOaAg=;
+	s=arc-20240116; t=1761077282; c=relaxed/simple;
+	bh=aSsbQLatBIKL3r2Bog28U9wn9AR9lMfbYKCKTfKWIyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiBQArS+K8Rro4UTwJ4N2BJ0xvLr7YVrKu+Tl4Yd+euhDGV1xcPwoXSrDA1eqtzBfrNFSVFyja79H8/CvTv5w52nbvx8KCG1RokmNPbeAiSG+Gvt7AjF+fqdtirJH7Cng6F5n7dirFgCj7CFKXDdH8QCcpZ52XlFXwY0q5jyvsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNboYt+5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DAGcPYgjJTT47LUvHNhrUgxYGMR+fT4KoQ5sQvtyxE4tnQDWx0FJ/GVV4+v0YK1VFk5OuYf/psufX1V2OrzwvZ2305kQ718nLDkSj/Sy++DXoZ1oK3Me1q3D6kIX2OudUitfebnQUDTOVVMR4DemeNXgoGYpMf1H3vTXD+AApjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3ESUHSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNboYt+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34044C4CEF1;
-	Tue, 21 Oct 2025 20:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3ESUHSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB28C4CEF1;
+	Tue, 21 Oct 2025 20:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077278;
-	bh=rPyC1am/uKj68mBku2frsQSLHafYRPa3U7d7GIVOaAg=;
+	s=korg; t=1761077282;
+	bh=aSsbQLatBIKL3r2Bog28U9wn9AR9lMfbYKCKTfKWIyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNboYt+5jfzvgW8g2yxlR+ZBHOo+LsPiaVcXCrQmkz6c41J5zlyI/5st+LwdPlJH6
-	 B6ylaMbPNyzZ0mYMTp8etiMb/EzZHsTJC8VzvJDiSB3XkQtju1AbDe3YpbuDAjDEGH
-	 KWjfaXrFtaMFb3CpOw3FQawzM1wom56DLVFMpQBc=
+	b=r3ESUHSqQJlbfLaivK9O9nnhXgUDmfcSJRFihsBAW0uDShtbz4pT2SaX3Vycrr+3X
+	 tBh5cYODpqCNt82stwg3w6GdK58eUIog3LIL1u6GE7QdKxkO9nW76rkR7UXz0lneRZ
+	 lqv68CUG8Do0l2BKyHwLGlurg+qOnm6yWfTl+7NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 056/159] usb: gadget: f_ncm: Refactor bind path to use __free()
-Date: Tue, 21 Oct 2025 21:50:33 +0200
-Message-ID: <20251021195044.561371171@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.17 057/159] HID: multitouch: fix sticky fingers
+Date: Tue, 21 Oct 2025 21:50:34 +0200
+Message-ID: <20251021195044.587404982@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,227 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 75a5b8d4ddd4eb6b16cb0b475d14ff4ae64295ef ]
+commit 46f781e0d151844589dc2125c8cce3300546f92a upstream.
 
-After an bind/unbind cycle, the ncm->notify_req is left stale. If a
-subsequent bind fails, the unified error label attempts to free this
-stale request, leading to a NULL pointer dereference when accessing
-ep->ops->free_request.
+The sticky fingers quirk (MT_QUIRK_STICKY_FINGERS) was only considering
+the case when slots were not released during the last report.
+This can be problematic if the firmware forgets to release a finger
+while others are still present.
 
-Refactor the error handling in the bind path to use the __free()
-automatic cleanup mechanism.
+This was observed on the Synaptics DLL0945 touchpad found on the Dell
+XPS 9310 and the Dell Inspiron 5406.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-Call trace:
- usb_ep_free_request+0x2c/0xec
- ncm_bind+0x39c/0x3dc
- usb_add_function+0xcc/0x1f0
- configfs_composite_bind+0x468/0x588
- gadget_bind_driver+0x104/0x270
- really_probe+0x190/0x374
- __driver_probe_device+0xa0/0x12c
- driver_probe_device+0x3c/0x218
- __device_attach_driver+0x14c/0x188
- bus_for_each_drv+0x10c/0x168
- __device_attach+0xfc/0x198
- device_initial_probe+0x14/0x24
- bus_probe_device+0x94/0x11c
- device_add+0x268/0x48c
- usb_add_gadget+0x198/0x28c
- dwc3_gadget_init+0x700/0x858
- __dwc3_set_mode+0x3cc/0x664
- process_scheduled_works+0x1d8/0x488
- worker_thread+0x244/0x334
- kthread+0x114/0x1bc
- ret_from_fork+0x10/0x20
-
-Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
-Cc: stable@kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   78 +++++++++++++++---------------------
- 1 file changed, 33 insertions(+), 45 deletions(-)
+ drivers/hid/hid-multitouch.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -11,6 +11,7 @@
-  * Copyright (C) 2008 Nokia Corporation
-  */
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -92,9 +92,8 @@ enum report_mode {
+ 	TOUCHPAD_REPORT_ALL = TOUCHPAD_REPORT_BUTTONS | TOUCHPAD_REPORT_CONTACTS,
+ };
  
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
-@@ -20,6 +21,7 @@
- #include <linux/string_choices.h>
+-#define MT_IO_FLAGS_RUNNING		0
+-#define MT_IO_FLAGS_ACTIVE_SLOTS	1
+-#define MT_IO_FLAGS_PENDING_SLOTS	2
++#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
++#define MT_IO_FLAGS_RUNNING		32
  
- #include <linux/usb/cdc.h>
-+#include <linux/usb/gadget.h>
+ static const bool mtrue = true;		/* default for true */
+ static const bool mfalse;		/* default for false */
+@@ -169,7 +168,11 @@ struct mt_device {
+ 	struct mt_class mtclass;	/* our mt device class */
+ 	struct timer_list release_timer;	/* to release sticky fingers */
+ 	struct hid_device *hdev;	/* hid_device we're attached to */
+-	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_*) */
++	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
++					 * first 8 bits are reserved for keeping the slot
++					 * states, this is fine because we only support up
++					 * to 250 slots (MT_MAX_MAXCONTACT)
++					 */
+ 	__u8 inputmode_value;	/* InputMode HID feature value */
+ 	__u8 maxcontacts;
+ 	bool is_buttonpad;	/* is this device a button pad? */
+@@ -977,6 +980,7 @@ static void mt_release_pending_palms(str
  
- #include "u_ether.h"
- #include "u_ether_configfs.h"
-@@ -1436,18 +1438,18 @@ static int ncm_bind(struct usb_configura
- 	struct usb_ep		*ep;
- 	struct f_ncm_opts	*ncm_opts;
+ 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
+ 		clear_bit(slotnum, app->pending_palm_slots);
++		clear_bit(slotnum, &td->mt_io_flags);
  
-+	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
-+	struct usb_request		*request __free(free_usb_request) = NULL;
-+
- 	if (!can_support_ecm(cdev->gadget))
- 		return -EINVAL;
+ 		input_mt_slot(input, slotnum);
+ 		input_mt_report_slot_inactive(input);
+@@ -1008,12 +1012,6 @@ static void mt_sync_frame(struct mt_devi
  
- 	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
- 
- 	if (cdev->use_os_string) {
--		f->os_desc_table = kzalloc(sizeof(*f->os_desc_table),
--					   GFP_KERNEL);
--		if (!f->os_desc_table)
-+		os_desc_table = kzalloc(sizeof(*os_desc_table), GFP_KERNEL);
-+		if (!os_desc_table)
- 			return -ENOMEM;
--		f->os_desc_n = 1;
--		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
- 	}
- 
- 	mutex_lock(&ncm_opts->lock);
-@@ -1459,16 +1461,15 @@ static int ncm_bind(struct usb_configura
- 	mutex_unlock(&ncm_opts->lock);
- 
- 	if (status)
--		goto fail;
-+		return status;
- 
- 	ncm_opts->bound = true;
- 
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
--	if (IS_ERR(us)) {
--		status = PTR_ERR(us);
--		goto fail;
--	}
-+	if (IS_ERR(us))
-+		return PTR_ERR(us);
-+
- 	ncm_control_intf.iInterface = us[STRING_CTRL_IDX].id;
- 	ncm_data_nop_intf.iInterface = us[STRING_DATA_IDX].id;
- 	ncm_data_intf.iInterface = us[STRING_DATA_IDX].id;
-@@ -1478,20 +1479,16 @@ static int ncm_bind(struct usb_configura
- 	/* allocate instance-specific interface IDs */
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	ncm->ctrl_id = status;
- 	ncm_iad_desc.bFirstInterface = status;
- 
- 	ncm_control_intf.bInterfaceNumber = status;
- 	ncm_union_desc.bMasterInterface0 = status;
- 
--	if (cdev->use_os_string)
--		f->os_desc_table[0].if_id =
--			ncm_iad_desc.bFirstInterface;
+ 	app->num_received = 0;
+ 	app->left_button_state = 0;
 -
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	ncm->data_id = status;
- 
- 	ncm_data_nop_intf.bInterfaceNumber = status;
-@@ -1500,35 +1497,31 @@ static int ncm_bind(struct usb_configura
- 
- 	ecm_desc.wMaxSegmentSize = cpu_to_le16(ncm_opts->max_segment_size);
- 
--	status = -ENODEV;
--
- 	/* allocate instance-specific endpoints */
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_in_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->port.in_ep = ep;
- 
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_out_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->port.out_ep = ep;
- 
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_notify_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->notify = ep;
- 
--	status = -ENOMEM;
--
- 	/* allocate notification request and buffer */
--	ncm->notify_req = usb_ep_alloc_request(ep, GFP_KERNEL);
--	if (!ncm->notify_req)
--		goto fail;
--	ncm->notify_req->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
--	if (!ncm->notify_req->buf)
--		goto fail;
--	ncm->notify_req->context = ncm;
--	ncm->notify_req->complete = ncm_notify_complete;
-+	request = usb_ep_alloc_request(ep, GFP_KERNEL);
-+	if (!request)
-+		return -ENOMEM;
-+	request->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
-+	if (!request->buf)
-+		return -ENOMEM;
-+	request->context = ncm;
-+	request->complete = ncm_notify_complete;
- 
- 	/*
- 	 * support all relevant hardware speeds... we expect that when
-@@ -1548,7 +1541,7 @@ static int ncm_bind(struct usb_configura
- 	status = usb_assign_descriptors(f, ncm_fs_function, ncm_hs_function,
- 			ncm_ss_function, ncm_ss_function);
- 	if (status)
--		goto fail;
-+		return status;
- 
- 	/*
- 	 * NOTE:  all that is done without knowing or caring about
-@@ -1561,23 +1554,18 @@ static int ncm_bind(struct usb_configura
- 
- 	hrtimer_setup(&ncm->task_timer, ncm_tx_timeout, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 
-+	if (cdev->use_os_string) {
-+		os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
-+		os_desc_table[0].if_id = ncm_iad_desc.bFirstInterface;
-+		f->os_desc_table = no_free_ptr(os_desc_table);
-+		f->os_desc_n = 1;
-+	}
-+	ncm->notify_req = no_free_ptr(request);
-+
- 	DBG(cdev, "CDC Network: IN/%s OUT/%s NOTIFY/%s\n",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
- 			ncm->notify->name);
- 	return 0;
--
--fail:
--	kfree(f->os_desc_table);
--	f->os_desc_n = 0;
--
--	if (ncm->notify_req) {
--		kfree(ncm->notify_req->buf);
--		usb_ep_free_request(ncm->notify, ncm->notify_req);
--	}
--
--	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
--
--	return status;
+-	if (test_bit(MT_IO_FLAGS_ACTIVE_SLOTS, &td->mt_io_flags))
+-		set_bit(MT_IO_FLAGS_PENDING_SLOTS, &td->mt_io_flags);
+-	else
+-		clear_bit(MT_IO_FLAGS_PENDING_SLOTS, &td->mt_io_flags);
+-	clear_bit(MT_IO_FLAGS_ACTIVE_SLOTS, &td->mt_io_flags);
  }
  
- static inline struct f_ncm_opts *to_f_ncm_opts(struct config_item *item)
+ static int mt_compute_timestamp(struct mt_application *app, __s32 value)
+@@ -1188,7 +1186,9 @@ static int mt_process_slot(struct mt_dev
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
+ 
+-		set_bit(MT_IO_FLAGS_ACTIVE_SLOTS, &td->mt_io_flags);
++		set_bit(slotnum, &td->mt_io_flags);
++	} else {
++		clear_bit(slotnum, &td->mt_io_flags);
+ 	}
+ 
+ 	return 0;
+@@ -1323,7 +1323,7 @@ static void mt_touch_report(struct hid_d
+ 	 * defect.
+ 	 */
+ 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
+-		if (test_bit(MT_IO_FLAGS_PENDING_SLOTS, &td->mt_io_flags))
++		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
+ 			mod_timer(&td->release_timer,
+ 				  jiffies + msecs_to_jiffies(100));
+ 		else
+@@ -1782,6 +1782,7 @@ static void mt_release_contacts(struct h
+ 			for (i = 0; i < mt->num_slots; i++) {
+ 				input_mt_slot(input_dev, i);
+ 				input_mt_report_slot_inactive(input_dev);
++				clear_bit(i, &td->mt_io_flags);
+ 			}
+ 			input_mt_sync_frame(input_dev);
+ 			input_sync(input_dev);
+@@ -1804,7 +1805,7 @@ static void mt_expired_timeout(struct ti
+ 	 */
+ 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
+ 		return;
+-	if (test_bit(MT_IO_FLAGS_PENDING_SLOTS, &td->mt_io_flags))
++	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
+ 		mt_release_contacts(hdev);
+ 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
+ }
 
 
