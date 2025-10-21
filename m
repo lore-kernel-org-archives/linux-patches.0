@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B873F26738B;
-	Tue, 21 Oct 2025 19:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C531026738B;
+	Tue, 21 Oct 2025 19:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076448; cv=none; b=bek/yGucgEpubsOqzULQnqJc70O7aQniAaDS47AD9jvYQ9gt/a+Ok2Llyq7fCl7CtR7clX2l0QDGIYFSbZrXKJXa1j/4BdavPx/Ov2T3hM4h0SWwGjmQc/U+sPLPvbPoq/IClVU21X/oEQz5PgRWcuq4tEO7iPfHT69h+axC59U=
+	t=1761076449; cv=none; b=iHLNf8nIffPZcQJ0GOnOuaJ2D41Qs9uEy49rrlH3zob5U91ry3ZL5K8ZfRoPJR3kReTwpsHpx0N8FlgHqRTWHMxQ5s7O0j5WAJok/h7RCF2kzeF7c9ESCVvdWK2KjY6gbhwFrl6eVwPRQRC8eOKtTdeyjw9wGdnp2JFt1wAYQBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076448; c=relaxed/simple;
-	bh=0M9W7mZ8lHve0m9YRtioTjORhANvrBNVSJQGkQmfP98=;
+	s=arc-20240116; t=1761076449; c=relaxed/simple;
+	bh=LZHrH7/XCBsbrCStNMghNcar9g4/QoflSmOWUnFmFTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8GjFTOeys26yC1iHL0l9MsQM4IFj+1P4Af7aZTQEKbSsOTcvEhuZf44/V3Xne7QdQC5RslGNxxoLYE59ezxZaZfrnJSYfNWXbZlOo0p1awA5SgwbQiU85Qdo1e5bYiSWMtu7qg596tZpDZqUCkc4yVwRTlLy1pwZa1E9s0frSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfnaJQqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnDA1150o5ql47mA7lsO0i4qsrpgG6EkEbiLIidmVhp2bRdWXBKwNuDNGNyg1rnE78G9AffIM3oJ3VZb502NvZRe5cnAL36N1XTxDkIVcu7IRTeTi1Nv51bp6xQOrQBgvoX6wYGweWmt6CNSNocpIbm0k5Ev9xx6g8Qa4yaoPw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLhSIryG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfnaJQqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6528C4CEF5;
-	Tue, 21 Oct 2025 19:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLhSIryG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54570C4CEF5;
+	Tue, 21 Oct 2025 19:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076444;
-	bh=0M9W7mZ8lHve0m9YRtioTjORhANvrBNVSJQGkQmfP98=;
+	s=korg; t=1761076449;
+	bh=LZHrH7/XCBsbrCStNMghNcar9g4/QoflSmOWUnFmFTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfnaJQqHvKa/MlY6UWwJVFVU74v5Nefa2QbWh6nY56522Eti04LRIOWf8FpDRyGgD
-	 0PmkAYb53dRjY+I1o2OcCixJU91IdpMP0L5BumH5sXlwBMgld4kWmYAZaRDopQVHNF
-	 4j6xxERvHMZlXoDG+kTvIW6dzEIjYGJYHASApnho=
+	b=oLhSIryGRd7UaV7TUCncYFLCQcKYJwLVe0P0Z68Ocl76npghZaEt0zI/Zxaj38O9t
+	 CSTopY/PP4uiMl5g8uaFTKl0stxsk56rnrgQZ8TvKjoej4rYtgii7hifL8ojq4Neh5
+	 0XP6W+HWmwpLr0tlvjExxXNFp3R4WHalgB6xiTC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Friendy Su <friendy.su@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/105] dax: skip read lock assertion for read-only filesystems
-Date: Tue, 21 Oct 2025 21:50:44 +0200
-Message-ID: <20251021195022.527432075@linuxfoundation.org>
+Subject: [PATCH 6.6 037/105] net: dlink: handle dma_map_single() failure properly
+Date: Tue, 21 Oct 2025 21:50:46 +0200
+Message-ID: <20251021195022.572694947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -54,44 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit 154d1e7ad9e5ce4b2aaefd3862b3dba545ad978d ]
+[ Upstream commit 65946eac6d888d50ae527c4e5c237dbe5cc3a2f2 ]
 
-The commit 168316db3583("dax: assert that i_rwsem is held
-exclusive for writes") added lock assertions to ensure proper
-locking in DAX operations. However, these assertions trigger
-false-positive lockdep warnings since read lock is unnecessary
-on read-only filesystems(e.g., erofs).
+There is no error handling for `dma_map_single()` failures.
 
-This patch skips the read lock assertion for read-only filesystems,
-eliminating the spurious warnings while maintaining the integrity
-checks for writable filesystems.
+Add error handling by checking `dma_mapping_error()` and freeing
+the `skb` using `dev_kfree_skb()` (process context) when it fails.
 
-Fixes: 168316db3583 ("dax: assert that i_rwsem is held exclusive for writes")
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Friendy Su <friendy.su@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Tested-on: D-Link DGE-550T Rev-A3
+Suggested-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/dlink/dl2k.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 8c09578fa0357..e1451efaab140 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1578,7 +1578,7 @@ dax_iomap_rw(struct kiocb *iocb, struct iov_iter *iter,
- 	if (iov_iter_rw(iter) == WRITE) {
- 		lockdep_assert_held_write(&iomi.inode->i_rwsem);
- 		iomi.flags |= IOMAP_WRITE;
--	} else {
-+	} else if (!sb_rdonly(iomi.inode->i_sb)) {
- 		lockdep_assert_held(&iomi.inode->i_rwsem);
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 1c3a5cf379cd0..72c97dcd0fee0 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -498,25 +498,34 @@ static int alloc_list(struct net_device *dev)
+ 	for (i = 0; i < RX_RING_SIZE; i++) {
+ 		/* Allocated fixed size of skbuff */
+ 		struct sk_buff *skb;
++		dma_addr_t addr;
+ 
+ 		skb = netdev_alloc_skb_ip_align(dev, np->rx_buf_sz);
+ 		np->rx_skbuff[i] = skb;
+-		if (!skb) {
+-			free_list(dev);
+-			return -ENOMEM;
+-		}
++		if (!skb)
++			goto err_free_list;
++
++		addr = dma_map_single(&np->pdev->dev, skb->data,
++				      np->rx_buf_sz, DMA_FROM_DEVICE);
++		if (dma_mapping_error(&np->pdev->dev, addr))
++			goto err_kfree_skb;
+ 
+ 		np->rx_ring[i].next_desc = cpu_to_le64(np->rx_ring_dma +
+ 						((i + 1) % RX_RING_SIZE) *
+ 						sizeof(struct netdev_desc));
+ 		/* Rubicon now supports 40 bits of addressing space. */
+-		np->rx_ring[i].fraginfo =
+-		    cpu_to_le64(dma_map_single(&np->pdev->dev, skb->data,
+-					       np->rx_buf_sz, DMA_FROM_DEVICE));
++		np->rx_ring[i].fraginfo = cpu_to_le64(addr);
+ 		np->rx_ring[i].fraginfo |= cpu_to_le64((u64)np->rx_buf_sz << 48);
  	}
  
+ 	return 0;
++
++err_kfree_skb:
++	dev_kfree_skb(np->rx_skbuff[i]);
++	np->rx_skbuff[i] = NULL;
++err_free_list:
++	free_list(dev);
++	return -ENOMEM;
+ }
+ 
+ static void rio_hw_init(struct net_device *dev)
 -- 
 2.51.0
 
