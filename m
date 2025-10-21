@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051C350A0D;
-	Tue, 21 Oct 2025 20:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88504350A0D;
+	Tue, 21 Oct 2025 20:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077167; cv=none; b=u6D1rCTcgi375I/BCNKlzB86wMTvOMp8m7tLnrxRJREKcUjKONqpDwhFib/VoUrXJoa7TPAm+Val+Moq7RbphtNp+IuaYj0pkWkXybZaetMGpJFWq1FL1GUBtgD+hjoBQ5IkhB9uf1VBvzHRS0kyPvXmcyYjPUzxUzSM66HqMTI=
+	t=1761077170; cv=none; b=O6Ku5x5Ze0mmqw2ncIOWKcQhHpk6Edvs+Nzj9EjzZ/qbl9PV+3tuFv8QptxT7Wv2yucYjXX0+wu5vHMd9L4JwqB3PrjErtb+lSWiZdp1xe8oytuYpwSs+9CuzAJT6z4SjQ/MkXBtXZEGhj+px2DtZ+hdR+pzU/VGNdkmJpIjLTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077167; c=relaxed/simple;
-	bh=QL1SqG1fM6t8UT3bSbamwMxIivgobjePrkA6K7bXzxQ=;
+	s=arc-20240116; t=1761077170; c=relaxed/simple;
+	bh=8LVBgDO+OzMB62PHN4W7gaOnZxueAZHqL6pGsT1DVmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+fauDiZArpltKDerP1kPchW2p7gyx2hjRmSxTCe/bfT72+k7px+4zyBDrjRWdAc224bhC7Jnf+I2L5TRc9odfUePbITjP0+4EWU+eiI7QnG+U9/nyTZ0vkUenz/VLHrvCDfXQkE2q4fyReHWhI8+2vpbGdT2sqzI0pdYAgJ1lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWgcykZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dnLJbIjWDc8PbXgNUOFmVOwhumiudIRs/Dd/+ZK+a6VT3uU2EfJxvXWxa72K6IctMlvfISaTtskX1kR5nScHiVVSCn31vixWHt+pWD7IG6g2k1yzfPNnyu0ThDufqaNX9/HEeeejD0tAPUkoNMWOJGKWX2qLweDNX3X/RFUYcMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIvAWh2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWgcykZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A83C4CEF1;
-	Tue, 21 Oct 2025 20:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIvAWh2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07C1C4CEF1;
+	Tue, 21 Oct 2025 20:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077167;
-	bh=QL1SqG1fM6t8UT3bSbamwMxIivgobjePrkA6K7bXzxQ=;
+	s=korg; t=1761077170;
+	bh=8LVBgDO+OzMB62PHN4W7gaOnZxueAZHqL6pGsT1DVmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWgcykZ6PKpg5/VG1KPr6C6JZRsuSgH2SfsUvp/S6U/M6h3E8hs3wgRX4C/IKU+yw
-	 mnKwxLrz2d1RU0EO/rTNd1SuQGPc0HdBaYGCDpTIvlKU1fQKnTA/Dt/A82me4oyV6z
-	 PdkjpodCB1RZ/KHf8etSPUSrkQ1IW5jr5cL5lBqc=
+	b=cIvAWh2WewF/6puJxyJwSB/LV3tbLZ7EjCr49jQKPP5m1LVkn3aIq8+Mk8koaWByz
+	 kba5XKD8osVoqujVKHYx6mo2V6tKVl8mz4+4nvfmjXOPvFO1ez2IEe59eO5ZI0nmCl
+	 YZYarhTJZMfhRX/zhlScbz28tkBOwzFRll5YQ7E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.17 020/159] f2fs: fix wrong block mapping for multi-devices
-Date: Tue, 21 Oct 2025 21:49:57 +0200
-Message-ID: <20251021195043.675417895@linuxfoundation.org>
+	Joshua Washington <joshwash@google.com>,
+	Tim Hostetler <thostet@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 021/159] gve: Check valid ts bit on RX descriptor before hw timestamping
+Date: Tue, 21 Oct 2025 21:49:58 +0200
+Message-ID: <20251021195043.699417231@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -50,55 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Tim Hostetler <thostet@google.com>
 
-commit 9d5c4f5c7a2c7677e1b3942772122b032c265aae upstream.
+commit bfdd74166a639930baaba27a8d729edaacd46907 upstream.
 
-Assuming the disk layout as below,
-
-disk0: 0            --- 0x00035abfff
-disk1: 0x00035ac000 --- 0x00037abfff
-disk2: 0x00037ac000 --- 0x00037ebfff
-
-and we want to read data from offset=13568 having len=128 across the block
-devices, we can illustrate the block addresses like below.
-
-0 .. 0x00037ac000 ------------------- 0x00037ebfff, 0x00037ec000 -------
-          |          ^            ^                                ^
-          |   fofs   0            13568                            13568+128
-          |       ------------------------------------------------------
-          |   LBA    0x37e8aa9    0x37ebfa9                        0x37ec029
-          --- map    0x3caa9      0x3ffa9
-
-In this example, we should give the relative map of the target block device
-ranging from 0x3caa9 to 0x3ffa9 where the length should be calculated by
-0x37ebfff + 1 - 0x37ebfa9.
-
-In the below equation, however, map->m_pblk was supposed to be the original
-address instead of the one from the target block address.
-
- - map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
+The device returns a valid bit in the LSB of the low timestamp byte in
+the completion descriptor that the driver should check before
+setting the SKB's hardware timestamp. If the timestamp is not valid, do not
+hardware timestamp the SKB.
 
 Cc: stable@vger.kernel.org
-Fixes: 71f2c8206202 ("f2fs: multidevice: support direct IO")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b2c7aeb49056 ("gve: Implement ndo_hwtstamp_get/set for RX timestamping")
+Reviewed-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Tim Hostetler <thostet@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20251014004740.2775957-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve.h          |    2 ++
+ drivers/net/ethernet/google/gve/gve_desc_dqo.h |    3 ++-
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c   |   16 +++++++++++-----
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1504,8 +1504,8 @@ static bool f2fs_map_blocks_cached(struc
- 		struct f2fs_dev_info *dev = &sbi->devs[bidx];
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -100,6 +100,8 @@
+  */
+ #define GVE_DQO_QPL_ONDEMAND_ALLOC_THRESHOLD 96
  
- 		map->m_bdev = dev->bdev;
--		map->m_pblk -= dev->start_blk;
- 		map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
-+		map->m_pblk -= dev->start_blk;
- 	} else {
- 		map->m_bdev = inode->i_sb->s_bdev;
- 	}
++#define GVE_DQO_RX_HWTSTAMP_VALID 0x1
++
+ /* Each slot in the desc ring has a 1:1 mapping to a slot in the data ring */
+ struct gve_rx_desc_queue {
+ 	struct gve_rx_desc *desc_ring; /* the descriptor ring */
+--- a/drivers/net/ethernet/google/gve/gve_desc_dqo.h
++++ b/drivers/net/ethernet/google/gve/gve_desc_dqo.h
+@@ -236,7 +236,8 @@ struct gve_rx_compl_desc_dqo {
+ 
+ 	u8 status_error1;
+ 
+-	__le16 reserved5;
++	u8 reserved5;
++	u8 ts_sub_nsecs_low;
+ 	__le16 buf_id; /* Buffer ID which was sent on the buffer queue. */
+ 
+ 	union {
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -456,14 +456,20 @@ static void gve_rx_skb_hash(struct sk_bu
+  * Note that this means if the time delta between packet reception and the last
+  * clock read is greater than ~2 seconds, this will provide invalid results.
+  */
+-static void gve_rx_skb_hwtstamp(struct gve_rx_ring *rx, u32 hwts)
++static void gve_rx_skb_hwtstamp(struct gve_rx_ring *rx,
++				const struct gve_rx_compl_desc_dqo *desc)
+ {
+ 	u64 last_read = READ_ONCE(rx->gve->last_sync_nic_counter);
+ 	struct sk_buff *skb = rx->ctx.skb_head;
+-	u32 low = (u32)last_read;
+-	s32 diff = hwts - low;
++	u32 ts, low;
++	s32 diff;
+ 
+-	skb_hwtstamps(skb)->hwtstamp = ns_to_ktime(last_read + diff);
++	if (desc->ts_sub_nsecs_low & GVE_DQO_RX_HWTSTAMP_VALID) {
++		ts = le32_to_cpu(desc->ts);
++		low = (u32)last_read;
++		diff = ts - low;
++		skb_hwtstamps(skb)->hwtstamp = ns_to_ktime(last_read + diff);
++	}
+ }
+ 
+ static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
+@@ -919,7 +925,7 @@ static int gve_rx_complete_skb(struct gv
+ 		gve_rx_skb_csum(rx->ctx.skb_head, desc, ptype);
+ 
+ 	if (rx->gve->ts_config.rx_filter == HWTSTAMP_FILTER_ALL)
+-		gve_rx_skb_hwtstamp(rx, le32_to_cpu(desc->ts));
++		gve_rx_skb_hwtstamp(rx, desc);
+ 
+ 	/* RSC packets must set gso_size otherwise the TCP stack will complain
+ 	 * that packets are larger than MTU.
 
 
