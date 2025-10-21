@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204F2272E7C;
-	Tue, 21 Oct 2025 19:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177C8272E7C;
+	Tue, 21 Oct 2025 19:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076496; cv=none; b=jRBVgweAwtGuo5Ny7t5eLEOM8YqUb2kes0k25MnQX9UuabfY2zV+0Mb5I1pevCvdf5Oaal/fz82QfzHYFabO0jbzCkUQhOrZCECp51DOVeMwmctc+ij5T+9X1jNW/6VSWlQHIDES7/uWd7eZrtRRHJGXJaALNidst54CVE34RuU=
+	t=1761076499; cv=none; b=GiTwX2Xn3hz8hd+9mSKuvxVRP96dczbFDaAwGNkulo1YtrIN9MktNPBUckSRwAU552EL0Om96xCYdP0GeBPUGCzJJ9vhoI7VI0LUj0E8cR4feO7dl/AsRhIMklDXiXOr5qTwUnMplv0iv7TMUXU87aCXu5YmN3VBJ/orM3t1p68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076496; c=relaxed/simple;
-	bh=1Fl7qpbFcqcupis5agngzOfYR//B5jI91nEm6FO3jCE=;
+	s=arc-20240116; t=1761076499; c=relaxed/simple;
+	bh=XmCcVR0gxM0rNEpBYPYZGBaBhSNxsab3c1zTaZI0dNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOcXDpX1NmLYDdH2P4WsACn9l9Xo41fP2qbIMtIkT5cHkZ636OzgGX3ujIXq96kE8JtEzqFEqGCoBZsK/jYorKqgRFAE/ZsptdvEvXGCd2PJWX23dqNkMr1VCF8KcXSM/wmrZr6D319FPcIvSUcqr1yM4QCfgmcrgEcoaXrI2lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uubDZSsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiXHo1zrmn2YNPyGtWvCJKJbl/KoLl4hqTGbthB1mta6KtotOeIejdQcQv4Xgy46C6G1KpCWcf0obJPgZJoy+HWb/2JdbR5XrX59SCHYfZXtILfv/sdGd4X6YKGP+0yOF01jQHMN36rCMP4Poet/6nYn0aerVMnYZRv2W2x3vGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19+bbJ0L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uubDZSsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451A3C4CEF1;
-	Tue, 21 Oct 2025 19:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19+bbJ0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCEAC4CEF1;
+	Tue, 21 Oct 2025 19:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076495;
-	bh=1Fl7qpbFcqcupis5agngzOfYR//B5jI91nEm6FO3jCE=;
+	s=korg; t=1761076499;
+	bh=XmCcVR0gxM0rNEpBYPYZGBaBhSNxsab3c1zTaZI0dNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uubDZSsKONhCKt/HJTU9YVcDP88VPa/c9X2sAfkJFrQv/soqmAfGEDrCcTBXWJce7
-	 i/gv+yMCWAY4d8/j9nsQ+CjAq8VNkZcm4M5dAEHWyoDKjfcuxXbcsxnHWfegp9RXjU
-	 +97MW8A2ny9oeFEqm7u/SSuuEXMr5lIlpMUOWy3A=
+	b=19+bbJ0LGqbsonJQSr0NAfgHQbLLZGmhVZtqDuT1unf/cjOctxHl4vh0eJHVUCdpH
+	 0oW77DR96RC4+XaUJGmLfPzqoezrLroQIoPucMeJEwDpNTswEYh3r0Jj1wE8xutDxh
+	 U4j4u6fky/HgMg+Obrbc/Z4AGUvff7Sf7vJYj7fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	I Viswanath <viswanathiyyappan@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Khalid Aziz <khalid@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/105] net: usb: lan78xx: Add error handling to lan78xx_init_mac_address
-Date: Tue, 21 Oct 2025 21:50:59 +0200
-Message-ID: <20251021195022.870635726@linuxfoundation.org>
+Subject: [PATCH 6.6 051/105] net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset
+Date: Tue, 21 Oct 2025 21:51:00 +0200
+Message-ID: <20251021195022.894125677@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,94 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: I Viswanath <viswanathiyyappan@gmail.com>
 
-[ Upstream commit 6f31135894ec96481e2bda93a1da70712f5e57c1 ]
+[ Upstream commit 8d93ff40d49d70e05c82a74beae31f883fe0eaf8 ]
 
-Convert `lan78xx_init_mac_address` to return error codes and handle
-failures in register read and write operations. Update `lan78xx_reset`
-to check for errors during MAC address initialization and propagate them
-appropriately.
+dev->chipid is used in lan78xx_init_mac_address before it's initialized:
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241209130751.703182-3-o.rempel@pengutronix.de
+lan78xx_reset() {
+    lan78xx_init_mac_address()
+        lan78xx_read_eeprom()
+            lan78xx_read_raw_eeprom() <- dev->chipid is used here
+
+    dev->chipid = ... <- dev->chipid is initialized correctly here
+}
+
+Reorder initialization so that dev->chipid is set before calling
+lan78xx_init_mac_address().
+
+Fixes: a0db7d10b76e ("lan78xx: Add to handle mux control per chip id")
+Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Khalid Aziz <khalid@kernel.org>
+Link: https://patch.msgid.link/20251013181648.35153-1-viswanathiyyappan@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8d93ff40d49d ("net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/net/usb/lan78xx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index ec5689cd240aa..712530d6738fa 100644
+index 712530d6738fa..121f1c15c6793 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -1940,13 +1940,19 @@ static const struct ethtool_ops lan78xx_ethtool_ops = {
- 	.get_regs	= lan78xx_get_regs,
- };
- 
--static void lan78xx_init_mac_address(struct lan78xx_net *dev)
-+static int lan78xx_init_mac_address(struct lan78xx_net *dev)
- {
- 	u32 addr_lo, addr_hi;
- 	u8 addr[6];
-+	int ret;
-+
-+	ret = lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
-+	if (ret < 0)
-+		return ret;
- 
--	lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
--	lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
-+	ret = lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
-+	if (ret < 0)
-+		return ret;
- 
- 	addr[0] = addr_lo & 0xFF;
- 	addr[1] = (addr_lo >> 8) & 0xFF;
-@@ -1979,14 +1985,26 @@ static void lan78xx_init_mac_address(struct lan78xx_net *dev)
- 			  (addr[2] << 16) | (addr[3] << 24);
- 		addr_hi = addr[4] | (addr[5] << 8);
- 
--		lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
--		lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
-+		ret = lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
-+		if (ret < 0)
-+			return ret;
- 	}
- 
--	lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
--	lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
-+	ret = lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
-+	if (ret < 0)
-+		return ret;
- 
- 	eth_hw_addr_set(dev->net, addr);
-+
-+	return 0;
- }
- 
- /* MDIO read and write wrappers for phylib */
-@@ -2910,7 +2928,9 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+@@ -2928,10 +2928,6 @@ static int lan78xx_reset(struct lan78xx_net *dev)
  		}
  	} while (buf & HW_CFG_LRST_);
  
--	lan78xx_init_mac_address(dev);
+-	ret = lan78xx_init_mac_address(dev);
+-	if (ret < 0)
+-		return ret;
+-
+ 	/* save DEVID for later usage */
+ 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
+ 	if (ret < 0)
+@@ -2940,6 +2936,10 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 	dev->chipid = (buf & ID_REV_CHIP_ID_MASK_) >> 16;
+ 	dev->chiprev = buf & ID_REV_CHIP_REV_MASK_;
+ 
 +	ret = lan78xx_init_mac_address(dev);
 +	if (ret < 0)
 +		return ret;
- 
- 	/* save DEVID for later usage */
- 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
++
+ 	/* Respond to the IN token with a NAK */
+ 	ret = lan78xx_read_reg(dev, USB_CFG0, &buf);
+ 	if (ret < 0)
 -- 
 2.51.0
 
