@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A3A268688;
-	Tue, 21 Oct 2025 19:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5DE350A2A;
+	Tue, 21 Oct 2025 19:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076604; cv=none; b=XFMQnbdOhFZ3R3P8LhD8DmMw5w6wUOPJfNAsOXwrgc0S9dLjZPjJsX29bXHF7tK/jutCgV5qJOfJt0gIP1edJofOfXAbsnruoTQx1A/3pYLOferC7wzqw8arFO8mjPLhW4CjxZ1Yss1zooRmpCZqH21nKk09f/x7ahFyCP5Tazw=
+	t=1761076607; cv=none; b=NhveIdxrhUEAw4FXA+9pQ0DbF0iH79+mbZnLMwUsNyMfqs6gMIJ9hP5VbJyEYUj+8dXWhdW07e7M8ldlI5S/3mkuU8DxlU/O3vs5WHvh3UcAd82HVYyBxTNCAv9uakVwbu3Qm0mQZ+9Ixbdh5WYH5IW026aZrGRrvodmuTy1QHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076604; c=relaxed/simple;
-	bh=GcpWNeFivdp1eznU3eQz6nXCH0L01Vi0wx2yNHrIeIo=;
+	s=arc-20240116; t=1761076607; c=relaxed/simple;
+	bh=2Prqgprh4/K7ZHlJwGDs1BzBxfR1vEv0376I1+uzzhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pg1KWxY6vq3toPLIg/gRRIqyeK+Ls+/MZ70fZ1NXTdO7yfuNGRcrO9ISwM94FcBRsDZhvoewq3qNNCtEtQc+uISaCuVkI+Izt8uMSgZ0KmZjz3debb9JJ67yDm+8DHlOOddtH7TdxL/Uv53uYDJ30cDZoh9joXHXujcbw5XuvoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imF1CDGQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbNRF8rJUXuXErSIaS5i04iIsKkybWgSQ32y4VDjfLbHhVJxTUH/4p+nzUcRELG4x55EXbsiUbMiLAzbNk6pwFB/dd62tAhIFtpBN5NN772xMHzg7607o3en5S7fYizsgdz1tG3dXl6cNeKKhTd61BJOgyQVG+jRIeNpa/4Wgl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIg1K70N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imF1CDGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A71C4CEF1;
-	Tue, 21 Oct 2025 19:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIg1K70N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FE6C4CEF1;
+	Tue, 21 Oct 2025 19:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076603;
-	bh=GcpWNeFivdp1eznU3eQz6nXCH0L01Vi0wx2yNHrIeIo=;
+	s=korg; t=1761076607;
+	bh=2Prqgprh4/K7ZHlJwGDs1BzBxfR1vEv0376I1+uzzhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imF1CDGQ0ICqRs+wPRA0GRZ3dW1GzchZ5JMwAevxj1mSKd8aBSMcKeu9aSHVBKWAL
-	 oMjgbPufMwTBbH4WPpRbLphyk8JUfoFDeiFlQ7olE14ReXlgZaIKo3b99zq2dni9Ci
-	 7sC9nd9TogEOoS+WseV391nuBxQCLmXzB25ngvVk=
+	b=cIg1K70NMbMz2gBgG/zEiu2FPXSA6WMm+h6N0nxUJPLHOuzF+iQaccw0kSzLwRc5v
+	 vZRzXQu7+Ucm4/gmW6GhsSFXDQsr9f/PRaq9bE3cpFYrYWrrScCpC2ojckVF6014mW
+	 /JzXEiMe8lz5MTFJOSHL7MSgLEq3cu80gIlv4z0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/105] iio: imu: inv_icm42600: reorganize DMA aligned buffers in structure
-Date: Tue, 21 Oct 2025 21:51:34 +0200
-Message-ID: <20251021195023.668840108@linuxfoundation.org>
+Subject: [PATCH 6.6 086/105] iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended
+Date: Tue, 21 Oct 2025 21:51:35 +0200
+Message-ID: <20251021195023.693162764@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -51,59 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit 0c122c280e78150b0c666fb69db0000cdd1d7e0a ]
+[ Upstream commit 466f7a2fef2a4e426f809f79845a1ec1aeb558f4 ]
 
-Move all DMA aligned buffers together at the end of the structure.
+Do as in suspend, skip resume configuration steps if the device is already
+pm_runtime suspended. This avoids reconfiguring a device that is already
+in the correct low-power state and ensures that pm_runtime handles the
+power state transitions properly.
 
-1. Timestamp anynomous structure is not used with DMA so it doesn't
-belong after __aligned(IIO_DMA_MINALIGN).
-2. struct inv_icm42600_fifo contains it's own __aligned(IIO_DMA_MINALIGN)
-within it at the end so it should not be after __aligned(IIO_DMA_MINALIGN)
-in the outer struct either.
-3. Normally 1 would have been considered a bug, but because of the extra
-alignment from 2, it actually was OK, but we shouldn't be relying on such
-quirks.
-
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://patch.msgid.link/20250630-losd-3-inv-icm42600-add-wom-support-v6-1-5bb0c84800d9@tdk.com
+Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250901-icm42pmreg-v3-3-ef1336246960@geanix.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 466f7a2fef2a ("iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended")
+[ adjusted context due to missing APEX/WoM features in older kernel version ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600.h
-@@ -126,9 +126,9 @@ struct inv_icm42600_suspended {
-  *  @suspended:		suspended sensors configuration.
-  *  @indio_gyro:	gyroscope IIO device.
-  *  @indio_accel:	accelerometer IIO device.
-- *  @buffer:		data transfer buffer aligned for DMA.
-- *  @fifo:		FIFO management structure.
-  *  @timestamp:		interrupt timestamps.
-+ *  @fifo:		FIFO management structure.
-+ *  @buffer:		data transfer buffer aligned for DMA.
-  */
- struct inv_icm42600_state {
- 	struct mutex lock;
-@@ -142,12 +142,12 @@ struct inv_icm42600_state {
- 	struct inv_icm42600_suspended suspended;
- 	struct iio_dev *indio_gyro;
- 	struct iio_dev *indio_accel;
--	u8 buffer[2] __aligned(IIO_DMA_MINALIGN);
--	struct inv_icm42600_fifo fifo;
- 	struct {
- 		s64 gyro;
- 		s64 accel;
- 	} timestamp;
-+	struct inv_icm42600_fifo fifo;
-+	u8 buffer[2] __aligned(IIO_DMA_MINALIGN);
- };
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -687,17 +687,15 @@ EXPORT_SYMBOL_NS_GPL(inv_icm42600_core_p
+ static int inv_icm42600_suspend(struct device *dev)
+ {
+ 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
+-	int ret;
++	int ret = 0;
  
- /* Virtual register addresses: @bank on MSB (4 upper bits), @address on LSB */
+ 	mutex_lock(&st->lock);
+ 
+ 	st->suspended.gyro = st->conf.gyro.mode;
+ 	st->suspended.accel = st->conf.accel.mode;
+ 	st->suspended.temp = st->conf.temp_en;
+-	if (pm_runtime_suspended(dev)) {
+-		ret = 0;
++	if (pm_runtime_suspended(dev))
+ 		goto out_unlock;
+-	}
+ 
+ 	/* disable FIFO data streaming */
+ 	if (st->fifo.on) {
+@@ -729,10 +727,13 @@ static int inv_icm42600_resume(struct de
+ 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
+ 	struct inv_sensors_timestamp *gyro_ts = iio_priv(st->indio_gyro);
+ 	struct inv_sensors_timestamp *accel_ts = iio_priv(st->indio_accel);
+-	int ret;
++	int ret = 0;
+ 
+ 	mutex_lock(&st->lock);
+ 
++	if (pm_runtime_suspended(dev))
++		goto out_unlock;
++
+ 	ret = inv_icm42600_enable_regulator_vddio(st);
+ 	if (ret)
+ 		goto out_unlock;
 
 
