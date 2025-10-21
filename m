@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6211A00CE;
-	Tue, 21 Oct 2025 20:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279B350A3A;
+	Tue, 21 Oct 2025 20:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077236; cv=none; b=inRmMLtVG4SpWRQ3xtw/Kow+2tGnjEjt0ICXUQL2lRyoXw9gS8vm7eYzMqzxOZUbuST5LZkyJgY7r0bI9eL3GIqiJGsbt/6tAAX6mhauKZrBA4ae+UStunCezgHEN9y0k/MviDd4vdGz3X60TUnsRnTBVZXYIVqi0nJ7VsZzOyU=
+	t=1761077238; cv=none; b=FQ7ouVKTdyY9TJMH+fIibXITAtEL917iG1DdGrDuZtPDhJpvrxhYrkgd8EXg8jR8NsUf1T92e3g3zKJXzoxXs6OenGEZTTMF5dlUH5ryneWGesO85vx+qk883v5i2HZqMzbHs1CAyw1V4HkaiIMwjqBhyzhsMkwlqATNQxTJ7uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077236; c=relaxed/simple;
-	bh=5EAdD67OSDkbGuXXCwlFUhKwl4MPCUnCXugnmzfM/0I=;
+	s=arc-20240116; t=1761077238; c=relaxed/simple;
+	bh=KYwAOLLRmoL6lu7FcGcnQ9Ur4WsQUNFamy03ori4Z5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gz2nGQZUE5+f2iWEXpCWaUk49T4nEQW7qdMyWXpYHEyYYNKQwPQAZeLkiR6FXSxPq0kgXph9ienFWsAdLp4K3BVJkB5SmGNqJi+gWqqQC7tMFHIBj9/p8TUG9kIIRWazJHwxwL4lqHcrbMGZb201xt/qC8Owk19xh5UwWnFYvkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+Xa1jn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPDx33uO79SXQ8EDlFAJX5c7eijiDFr8zUINye01xCragWpFAYspTZE3+Ze9+BZCMP4mr+y30sqOe31V2oV/DlC3oGDHbYYH+Y2jcoA+QhxTDxohHx2nuO8WeTAiLU47pXjAnnW3bux53/yzQPf/NaNJAFfoRZRIMVMeYpwnvQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIHDvR3P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+Xa1jn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903DFC4CEF5;
-	Tue, 21 Oct 2025 20:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIHDvR3P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C76BC4CEF7;
+	Tue, 21 Oct 2025 20:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077233;
-	bh=5EAdD67OSDkbGuXXCwlFUhKwl4MPCUnCXugnmzfM/0I=;
+	s=korg; t=1761077236;
+	bh=KYwAOLLRmoL6lu7FcGcnQ9Ur4WsQUNFamy03ori4Z5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+Xa1jn3O6EYubXNFsKSPBhrUeMk5UiEDFfdxzO+D+otzIW/OsbU1qnpmFm5w8yn+
-	 3kCMpgJKX/GAMoueP9YOj9iUrFhCqyIwRLnkAT5nglIHbDj97lFboKVm1QmL9KcrQr
-	 iPw82tZezRjcU9kBiYwaf6RrGqiCH7fym+0uTRq0=
+	b=HIHDvR3P1v36S2H1DM/5pbWUF+PT6nosrUL82C4w2lFvkytl7jrz2AnjWQ5/sYkGI
+	 aeydFwI2xP2M9UPqz8O7usTrec4jAoyLjFnvox+pp6bxts9u1TspZajEo0sPb0i4Mg
+	 6q9m2hYAcJBGfDGr1BTXQ/94ugb8bTBcmcTjIlB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d79ebe5383fc016cf07@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.17 004/159] vfs: Dont leak disconnected dentries on umount
-Date: Tue, 21 Oct 2025 21:49:41 +0200
-Message-ID: <20251021195043.291409172@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.17 005/159] ata: libata-core: relax checks in ata_read_log_directory()
+Date: Tue, 21 Oct 2025 21:49:42 +0200
+Message-ID: <20251021195043.315285716@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,53 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 56094ad3eaa21e6621396cc33811d8f72847a834 upstream.
+commit 12d724f2852d094d68dccaf5101e0ef89a971cde upstream.
 
-When user calls open_by_handle_at() on some inode that is not cached, we
-will create disconnected dentry for it. If such dentry is a directory,
-exportfs_decode_fh_raw() will then try to connect this dentry to the
-dentry tree through reconnect_path(). It may happen for various reasons
-(such as corrupted fs or race with rename) that the call to
-lookup_one_unlocked() in reconnect_one() will fail to find the dentry we
-are trying to reconnect and instead create a new dentry under the
-parent. Now this dentry will not be marked as disconnected although the
-parent still may well be disconnected (at least in case this
-inconsistency happened because the fs is corrupted and .. doesn't point
-to the real parent directory). This creates inconsistency in
-disconnected flags but AFAICS it was mostly harmless. At least until
-commit f1ee616214cb ("VFS: don't keep disconnected dentries on d_anon")
-which removed adding of most disconnected dentries to sb->s_anon list.
-Thus after this commit cleanup of disconnected dentries implicitely
-relies on the fact that dput() will immediately reclaim such dentries.
-However when some leaf dentry isn't marked as disconnected, as in the
-scenario described above, the reclaim doesn't happen and the dentries
-are "leaked". Memory reclaim can eventually reclaim them but otherwise
-they stay in memory and if umount comes first, we hit infamous "Busy
-inodes after unmount" bug. Make sure all dentries created under a
-disconnected parent are marked as disconnected as well.
+Commit 6d4405b16d37 ("ata: libata-core: Cache the general purpose log
+directory") introduced caching of a device general purpose log directory
+to avoid repeated access to this log page during device scan. This
+change also added a check on this log page to verify that the log page
+version is 0x0001 as mandated by the ACS specifications.
 
-Reported-by: syzbot+1d79ebe5383fc016cf07@syzkaller.appspotmail.com
-Fixes: f1ee616214cb ("VFS: don't keep disconnected dentries on d_anon")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+And it turns out that some devices do not bother reporting this version,
+instead reporting a version 0, resulting in error messages such as:
+
+ata6.00: Invalid log directory version 0x0000
+
+and to the device being marked as not supporting the general purpose log
+directory log page.
+
+Since before commit 6d4405b16d37 the log page version check did not
+exist and things were still working correctly for these devices, relax
+ata_read_log_directory() version check and only warn about the invalid
+log page version number without disabling access to the log directory
+page.
+
+Fixes: 6d4405b16d37 ("ata: libata-core: Cache the general purpose log directory")
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220635
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dcache.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/libata-core.c | 11 ++++-------
+ include/linux/libata.h    |  6 ++++++
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -2557,6 +2557,8 @@ struct dentry *d_alloc_parallel(struct d
- 	spin_lock(&parent->d_lock);
- 	new->d_parent = dget_dlock(parent);
- 	hlist_add_head(&new->d_sib, &parent->d_children);
-+	if (parent->d_flags & DCACHE_DISCONNECTED)
-+		new->d_flags |= DCACHE_DISCONNECTED;
- 	spin_unlock(&parent->d_lock);
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index ff53f5f029b4..2a210719c4ce 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2174,13 +2174,10 @@ static int ata_read_log_directory(struct ata_device *dev)
+ 	}
  
- retry:
+ 	version = get_unaligned_le16(&dev->gp_log_dir[0]);
+-	if (version != 0x0001) {
+-		ata_dev_err(dev, "Invalid log directory version 0x%04x\n",
+-			    version);
+-		ata_clear_log_directory(dev);
+-		dev->quirks |= ATA_QUIRK_NO_LOG_DIR;
+-		return -EINVAL;
+-	}
++	if (version != 0x0001)
++		ata_dev_warn_once(dev,
++				  "Invalid log directory version 0x%04x\n",
++				  version);
+ 
+ 	return 0;
+ }
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index 21de0935775d..7a98de1cc995 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -1594,6 +1594,12 @@ do {								\
+ #define ata_dev_dbg(dev, fmt, ...)				\
+ 	ata_dev_printk(debug, dev, fmt, ##__VA_ARGS__)
+ 
++#define ata_dev_warn_once(dev, fmt, ...)			\
++	pr_warn_once("ata%u.%02u: " fmt,			\
++		     (dev)->link->ap->print_id,			\
++		     (dev)->link->pmp + (dev)->devno,		\
++		     ##__VA_ARGS__)
++
+ static inline void ata_print_version_once(const struct device *dev,
+ 					  const char *version)
+ {
+-- 
+2.51.1.dirty
+
 
 
