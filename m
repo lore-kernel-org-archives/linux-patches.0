@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931042080C0;
-	Tue, 21 Oct 2025 20:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761902080C0;
+	Tue, 21 Oct 2025 20:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076821; cv=none; b=uB+y/2VaVVJmdXWkMVsQNqxkosO6NL1CxjSqeyBTh69NC8rtGI2xk7SFjy8GsCIviNRHAJCJLjI18qRQSQ67ddaUE+zDDbdRDp7N0qBZSqbWqQ25I2GpwIbMZ2zVX7Nw1z4G8v7hvwfcFcbk3cYD9DOGmvNs85dAwKnsSxsT44Q=
+	t=1761076824; cv=none; b=sp2BcrPbXp50PFZDfWbQNK0b0u+fdmUM2htIdkaWhUM+h7d055MANQ7FPMPMS89xCZCkrcsqDKn+xrfRSgZUnP1cd2i/m5XFxlEu32RAARRkxmNs5F1OmBR8qPMKAZ1pze3cGuhGWqUJAfksAn7l/pFRvU5EPOXzM+73Vm4gJyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076821; c=relaxed/simple;
-	bh=WR87Yq4vI1PrROXFdVB9WDk4OeiAjNwFyrdJEiplDog=;
+	s=arc-20240116; t=1761076824; c=relaxed/simple;
+	bh=m4FN5xZ+03ZJabrncKLM/m1sureZOoGipambBm5tC0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWDW6YdjwyNmw4UlsqLSID1A/5j1/fGE1BGutCbIXvitwrK62qbM0FW/xai24SkCGgdMRIOrxyDXoVvGHQvzdEeWELSY7NPmmFJsAznFJlE9//tTIMMoVttXQRmfag7ecJIkRUBrxLn9Cgas5lHmtmAWfdcoOMiK+c2cS6BfV+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNpvoPMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ibTkaPUKVN1JsA8VdGJV+JY+2l1HtHmE7nJD97649xwEsa8Qm9maM0b1lwtzGebt5iOMYOuQGPL/NqzonDFge6lB2BZyj+ewLEFBaRacCYfnq+4Cr/YaPV3ee4xbNQI9S0KSkEwySPxCZBFmFwRB7dRFf9lHOlW05wTpyi10VvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqAOo/gq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNpvoPMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F76C4CEF1;
-	Tue, 21 Oct 2025 20:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqAOo/gq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02542C4CEF1;
+	Tue, 21 Oct 2025 20:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076821;
-	bh=WR87Yq4vI1PrROXFdVB9WDk4OeiAjNwFyrdJEiplDog=;
+	s=korg; t=1761076824;
+	bh=m4FN5xZ+03ZJabrncKLM/m1sureZOoGipambBm5tC0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNpvoPMZ7Gw6u97kiNe04KEQG6bcjsvzaBmDZL7p18NKLbWeqUFjdnYHVLQNf8MDP
-	 U3aTNutpgfgrzvi1iVR+/DAzn0XkNOa1mYRFR4H7kqkrMRAM0VSG3owZew0zJ/v40b
-	 6Ss1kc3p9Fs2J+kY5+rmq3yPFnp6bFbFIGHFeISI=
+	b=SqAOo/gqdytuNGqg6sbKo3CeX8Rd22R05ePs0XwqqNZB0Xt0rqxJ/caKLC37QP52f
+	 U9RpuD7Q93pX3TN1/QYqJAmPu1u0aK27Oi8llzy4AMw5zbDBNF/FHNKYdPU4988zxW
+	 dfmawAUurRUemZD9jVFUd1JoiY2XOPGJMHweL/zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 007/136] f2fs: fix wrong block mapping for multi-devices
-Date: Tue, 21 Oct 2025 21:49:55 +0200
-Message-ID: <20251021195036.136797926@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.12 008/136] jbd2: ensure that all ongoing I/O complete before freeing blocks
+Date: Tue, 21 Oct 2025 21:49:56 +0200
+Message-ID: <20251021195036.162934501@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -50,55 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 9d5c4f5c7a2c7677e1b3942772122b032c265aae upstream.
+commit 3c652c3a71de1d30d72dc82c3bead8deb48eb749 upstream.
 
-Assuming the disk layout as below,
+When releasing file system metadata blocks in jbd2_journal_forget(), if
+this buffer has not yet been checkpointed, it may have already been
+written back, currently be in the process of being written back, or has
+not yet written back.  jbd2_journal_forget() calls
+jbd2_journal_try_remove_checkpoint() to check the buffer's status and
+add it to the current transaction if it has not been written back. This
+buffer can only be reallocated after the transaction is committed.
 
-disk0: 0            --- 0x00035abfff
-disk1: 0x00035ac000 --- 0x00037abfff
-disk2: 0x00037ac000 --- 0x00037ebfff
+jbd2_journal_try_remove_checkpoint() attempts to lock the buffer and
+check its dirty status while holding the buffer lock. If the buffer has
+already been written back, everything proceeds normally. However, there
+are two issues. First, the function returns immediately if the buffer is
+locked by the write-back process. It does not wait for the write-back to
+complete. Consequently, until the current transaction is committed and
+the block is reallocated, there is no guarantee that the I/O will
+complete. This means that ongoing I/O could write stale metadata to the
+newly allocated block, potentially corrupting data. Second, the function
+unlocks the buffer as soon as it detects that the buffer is still dirty.
+If a concurrent write-back occurs immediately after this unlocking and
+before clear_buffer_dirty() is called in jbd2_journal_forget(), data
+corruption can theoretically still occur.
 
-and we want to read data from offset=13568 having len=128 across the block
-devices, we can illustrate the block addresses like below.
+Although these two issues are unlikely to occur in practice since the
+undergoing metadata writeback I/O does not take this long to complete,
+it's better to explicitly ensure that all ongoing I/O operations are
+completed.
 
-0 .. 0x00037ac000 ------------------- 0x00037ebfff, 0x00037ec000 -------
-          |          ^            ^                                ^
-          |   fofs   0            13568                            13568+128
-          |       ------------------------------------------------------
-          |   LBA    0x37e8aa9    0x37ebfa9                        0x37ec029
-          --- map    0x3caa9      0x3ffa9
-
-In this example, we should give the relative map of the target block device
-ranging from 0x3caa9 to 0x3ffa9 where the length should be calculated by
-0x37ebfff + 1 - 0x37ebfa9.
-
-In the below equation, however, map->m_pblk was supposed to be the original
-address instead of the one from the target block address.
-
- - map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
-
-Cc: stable@vger.kernel.org
-Fixes: 71f2c8206202 ("f2fs: multidevice: support direct IO")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 597599268e3b ("jbd2: discard dirty data when forgetting an un-journalled buffer")
+Cc: stable@kernel.org
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250916093337.3161016-2-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jbd2/transaction.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1508,8 +1508,8 @@ static bool f2fs_map_blocks_cached(struc
- 		struct f2fs_dev_info *dev = &sbi->devs[bidx];
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1663,6 +1663,7 @@ int jbd2_journal_forget(handle_t *handle
+ 	int drop_reserve = 0;
+ 	int err = 0;
+ 	int was_modified = 0;
++	int wait_for_writeback = 0;
  
- 		map->m_bdev = dev->bdev;
--		map->m_pblk -= dev->start_blk;
- 		map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
-+		map->m_pblk -= dev->start_blk;
- 	} else {
- 		map->m_bdev = inode->i_sb->s_bdev;
+ 	if (is_handle_aborted(handle))
+ 		return -EROFS;
+@@ -1786,18 +1787,22 @@ int jbd2_journal_forget(handle_t *handle
+ 		}
+ 
+ 		/*
+-		 * The buffer is still not written to disk, we should
+-		 * attach this buffer to current transaction so that the
+-		 * buffer can be checkpointed only after the current
+-		 * transaction commits.
++		 * The buffer has not yet been written to disk. We should
++		 * either clear the buffer or ensure that the ongoing I/O
++		 * is completed, and attach this buffer to current
++		 * transaction so that the buffer can be checkpointed only
++		 * after the current transaction commits.
+ 		 */
+ 		clear_buffer_dirty(bh);
++		wait_for_writeback = 1;
+ 		__jbd2_journal_file_buffer(jh, transaction, BJ_Forget);
+ 		spin_unlock(&journal->j_list_lock);
  	}
+ drop:
+ 	__brelse(bh);
+ 	spin_unlock(&jh->b_state_lock);
++	if (wait_for_writeback)
++		wait_on_buffer(bh);
+ 	jbd2_journal_put_journal_head(jh);
+ 	if (drop_reserve) {
+ 		/* no need to reserve log space for this block -bzzz */
 
 
