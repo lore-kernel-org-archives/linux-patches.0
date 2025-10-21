@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01C92773F4;
-	Tue, 21 Oct 2025 20:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023AE1A3029;
+	Tue, 21 Oct 2025 20:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077607; cv=none; b=tDG0+PadOb5+HYUwdTLCKotaaLkbC0PZxfl2F+X/WCfuNmvb6S35fe3TU97AmKEWXC3LChNRIsd+EY8gP61zgzoLNXNBnofPvLPHYNk5XqNV+IG7B9RpqiAmjwrSPHj6KhXnhrJyNm9LXq0zY9Pg4vTxY91L1phGMDE3bNiMFtA=
+	t=1761077611; cv=none; b=qi0vgw7/OoxMqAimMaBdSCKCYZHJupaFH5wLeYCNw+EKEuiBn6+1KPGp3v8GL4D8HgHBlurxwx40Z6fCuWxWQz0zZxisWuxEW/KosQIipE/GSTGW5ho/TPN4B62PMJOppZZ1ntqXMPfzfZNwK8132GILTyBL2wnOmmdQ8/f91G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077607; c=relaxed/simple;
-	bh=5d+bbL8szPp25YP1OJbpjzWF7d1IsUPYygq9QA8IwT0=;
+	s=arc-20240116; t=1761077611; c=relaxed/simple;
+	bh=rEgQto0lP9Hu4aSOUfq70RzL4erAQ3PL41T7RJ9EDUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EMeuHNwkQloCIDMHTCApEU7Dv0+u6m1iMdw2xFwFm6xLzHnrdblJq8E2xFZhPbgPAoSvpcSZKCNVcQ7DLMuf144oSZ79rIdSn8gsTEXdsEXv/D3XDCi8tAMrAmGHHc/EYpC/h1YH+m0wf3+QN/IlhD0VZQIpe8YpaFJUyhIReaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/e2tUfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UIReRUAGopAVO35Y7AGJ3sm7iQYuVb0xYNmE7E5z6HtcnGW/kY5tbzpV+Od+0TH7F9w4cYG7JnNvokFpzeS2rKpd1n3CH1LQOh9/Fbzz7huxqh+SL+GeVaSSO2MmsE5VbjIFRMCpNWaWZTTVDrHMMIBbERmkDFrBUP8t8Ye+1Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxl+RmR5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/e2tUfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB565C4CEF1;
-	Tue, 21 Oct 2025 20:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxl+RmR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E508C4CEF1;
+	Tue, 21 Oct 2025 20:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077607;
-	bh=5d+bbL8szPp25YP1OJbpjzWF7d1IsUPYygq9QA8IwT0=;
+	s=korg; t=1761077610;
+	bh=rEgQto0lP9Hu4aSOUfq70RzL4erAQ3PL41T7RJ9EDUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/e2tUfExc25BkgpQLfhzRr7S7e9697KmLNJnrxyqDtUMdLGX6J5Dxon47f/HFTKX
-	 N9Xbj/nqPIMacy0NzAxSc0fn5TDNXwDJuXnHwZvDfitUhMDNNdSsheM4GwSqssM3QJ
-	 o/jnzW/21XX6LfXQceCIhW7F46pb5I+jayOh/XHw=
+	b=rxl+RmR5bOu5vCLL/9dJKOol2LUzjWjyv1de6XDhl2lT5JZSXKzdMFryJkkb2XY/y
+	 bwG67lpVquVCrBIUV+qPcWj+hRrLp6jbwNjMTdErowoOGjKyFnDc1VaottbchdjiU1
+	 mEzcWlPXqiSPUx8LEj/fK9h7PhHDMbD4O7l91imc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Paulo Zanoni <paulo.r.zanoni@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 158/159] drm/xe: Move rebar to be done earlier
-Date: Tue, 21 Oct 2025 21:52:15 +0200
-Message-ID: <20251021195046.980942991@linuxfoundation.org>
+Subject: [PATCH 6.17 159/159] drm/xe: Dont allow evicting of BOs in same VM in array of VM binds
+Date: Tue, 21 Oct 2025 21:52:16 +0200
+Message-ID: <20251021195047.006545030@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,154 +54,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit d30203739be798d3de5c84db3060e96f00c54e82 ]
+[ Upstream commit 7ac74613e5f2ef3450f44fd2127198662c2563a9 ]
 
-There may be cases in which the BAR0 also needs to move to accommodate
-the bigger BAR2. However if it's not released, the BAR2 resize fails.
-During the vram probe it can't be released as it's already in use by
-xe_mmio for early register access.
+An array of VM binds can potentially evict other buffer objects (BOs)
+within the same VM under certain conditions, which may lead to NULL
+pointer dereferences later in the bind pipeline. To prevent this, clear
+the allow_res_evict flag in the xe_bo_validate call.
 
-Add a new function in xe_vram and let xe_pci call it directly before
-even early device probe. This allows the BAR2 to resize in cases BAR0
-also needs to move, assuming there aren't other reasons to hold that
-move:
+v2:
+ - Invert polarity of no_res_evict (Thomas)
+ - Add comment in code explaining issue (Thomas)
 
-	[] xe 0000:03:00.0: vgaarb: deactivate vga console
-	[] xe 0000:03:00.0: [drm] Attempting to resize bar from 8192MiB -> 16384MiB
-	[] xe 0000:03:00.0: BAR 0 [mem 0x83000000-0x83ffffff 64bit]: releasing
-	[] xe 0000:03:00.0: BAR 2 [mem 0x4000000000-0x41ffffffff 64bit pref]: releasing
-	[] pcieport 0000:02:01.0: bridge window [mem 0x4000000000-0x41ffffffff 64bit pref]: releasing
-	[] pcieport 0000:01:00.0: bridge window [mem 0x4000000000-0x41ffffffff 64bit pref]: releasing
-	[] pcieport 0000:01:00.0: bridge window [mem 0x4000000000-0x43ffffffff 64bit pref]: assigned
-	[] pcieport 0000:02:01.0: bridge window [mem 0x4000000000-0x43ffffffff 64bit pref]: assigned
-	[] xe 0000:03:00.0: BAR 2 [mem 0x4000000000-0x43ffffffff 64bit pref]: assigned
-	[] xe 0000:03:00.0: BAR 0 [mem 0x83000000-0x83ffffff 64bit]: assigned
-	[] pcieport 0000:00:01.0: PCI bridge to [bus 01-04]
-	[] pcieport 0000:00:01.0:   bridge window [mem 0x83000000-0x840fffff]
-	[] pcieport 0000:00:01.0:   bridge window [mem 0x4000000000-0x44007fffff 64bit pref]
-	[] pcieport 0000:01:00.0: PCI bridge to [bus 02-04]
-	[] pcieport 0000:01:00.0:   bridge window [mem 0x83000000-0x840fffff]
-	[] pcieport 0000:01:00.0:   bridge window [mem 0x4000000000-0x43ffffffff 64bit pref]
-	[] pcieport 0000:02:01.0: PCI bridge to [bus 03]
-	[] pcieport 0000:02:01.0:   bridge window [mem 0x83000000-0x83ffffff]
-	[] pcieport 0000:02:01.0:   bridge window [mem 0x4000000000-0x43ffffffff 64bit pref]
-	[] xe 0000:03:00.0: [drm] BAR2 resized to 16384M
-	[] xe 0000:03:00.0: [drm:xe_pci_probe [xe]] BATTLEMAGE  e221:0000 dgfx:1 gfx:Xe2_HPG (20.02) ...
-
-For BMG there are additional fix needed in the PCI side, but this
-helps getting it to a working resize.
-
-All the rebar logic is more pci-specific than xe-specific and can be
-done very early in the probe sequence. In future it would be good to
-move it out of xe_vram.c, but this refactor is left for later.
-
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: stable@vger.kernel.org # 6.12+
-Link: https://lore.kernel.org/intel-xe/fafda2a3-fc63-ce97-d22b-803f771a4d19@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20250918-xe-pci-rebar-2-v1-2-6c094702a074@intel.com
+Cc: stable@vger.kernel.org
+Reported-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6268
+Fixes: 774b5fa509a9 ("drm/xe: Avoid evicting object of the same vm in none fault mode")
+Fixes: 77f2ef3f16f5 ("drm/xe: Lock all gpuva ops during VM bind IOCTL")
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Tested-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://lore.kernel.org/r/20251009110618.3481870-1-matthew.brost@intel.com
+(cherry picked from commit 8b9ba8d6d95fe75fed6b0480bb03da4b321bea08)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 45e33f220fd625492c11e15733d8e9b4f9db82a4)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+[ removed exec parameter from xe_bo_validate() calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c  |    2 ++
- drivers/gpu/drm/xe/xe_vram.c |   34 ++++++++++++++++++++++++++--------
- drivers/gpu/drm/xe/xe_vram.h |    1 +
- 3 files changed, 29 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c       |   32 +++++++++++++++++++++++---------
+ drivers/gpu/drm/xe/xe_vm_types.h |    2 ++
+ 2 files changed, 25 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -805,6 +805,8 @@ static int xe_pci_probe(struct pci_dev *
- 	if (err)
- 		return err;
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -2894,7 +2894,7 @@ static void vm_bind_ioctl_ops_unwind(str
+ }
  
-+	xe_vram_resize_bar(xe);
-+
- 	err = xe_device_probe_early(xe);
- 	/*
- 	 * In Boot Survivability mode, no drm card is exposed and driver
---- a/drivers/gpu/drm/xe/xe_vram.c
-+++ b/drivers/gpu/drm/xe/xe_vram.c
-@@ -26,15 +26,35 @@
- 
- #define BAR_SIZE_SHIFT 20
- 
--static void
--_resize_bar(struct xe_device *xe, int resno, resource_size_t size)
-+/*
-+ * Release all the BARs that could influence/block LMEMBAR resizing, i.e.
-+ * assigned IORESOURCE_MEM_64 BARs
-+ */
-+static void release_bars(struct pci_dev *pdev)
-+{
-+	struct resource *res;
-+	int i;
-+
-+	pci_dev_for_each_resource(pdev, res, i) {
-+		/* Resource already un-assigned, do not reset it */
-+		if (!res->parent)
-+			continue;
-+
-+		/* No need to release unrelated BARs */
-+		if (!(res->flags & IORESOURCE_MEM_64))
-+			continue;
-+
-+		pci_release_resource(pdev, i);
-+	}
-+}
-+
-+static void resize_bar(struct xe_device *xe, int resno, resource_size_t size)
+ static int vma_lock_and_validate(struct drm_exec *exec, struct xe_vma *vma,
+-				 bool validate)
++				 bool res_evict, bool validate)
  {
- 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
- 	int bar_size = pci_rebar_bytes_to_size(size);
- 	int ret;
- 
--	if (pci_resource_len(pdev, resno))
--		pci_release_resource(pdev, resno);
-+	release_bars(pdev);
- 
- 	ret = pci_resize_resource(pdev, resno, bar_size);
- 	if (ret) {
-@@ -50,7 +70,7 @@ _resize_bar(struct xe_device *xe, int re
-  * if force_vram_bar_size is set, attempt to set to the requested size
-  * else set to maximum possible size
-  */
--static void resize_vram_bar(struct xe_device *xe)
-+void xe_vram_resize_bar(struct xe_device *xe)
- {
- 	int force_vram_bar_size = xe_modparam.force_vram_bar_size;
- 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
-@@ -119,7 +139,7 @@ static void resize_vram_bar(struct xe_de
- 	pci_read_config_dword(pdev, PCI_COMMAND, &pci_cmd);
- 	pci_write_config_dword(pdev, PCI_COMMAND, pci_cmd & ~PCI_COMMAND_MEMORY);
- 
--	_resize_bar(xe, LMEM_BAR, rebar_size);
-+	resize_bar(xe, LMEM_BAR, rebar_size);
- 
- 	pci_assign_unassigned_bus_resources(pdev->bus);
- 	pci_write_config_dword(pdev, PCI_COMMAND, pci_cmd);
-@@ -148,8 +168,6 @@ static int determine_lmem_bar_size(struc
- 		return -ENXIO;
+ 	struct xe_bo *bo = xe_vma_bo(vma);
+ 	struct xe_vm *vm = xe_vma_vm(vma);
+@@ -2905,7 +2905,8 @@ static int vma_lock_and_validate(struct
+ 			err = drm_exec_lock_obj(exec, &bo->ttm.base);
+ 		if (!err && validate)
+ 			err = xe_bo_validate(bo, vm,
+-					     !xe_vm_in_preempt_fence_mode(vm));
++					     !xe_vm_in_preempt_fence_mode(vm) &&
++					     res_evict);
  	}
  
--	resize_vram_bar(xe);
--
- 	lmem_bar->io_start = pci_resource_start(pdev, LMEM_BAR);
- 	lmem_bar->io_size = pci_resource_len(pdev, LMEM_BAR);
- 	if (!lmem_bar->io_size)
---- a/drivers/gpu/drm/xe/xe_vram.h
-+++ b/drivers/gpu/drm/xe/xe_vram.h
-@@ -11,6 +11,7 @@
- struct xe_device;
- struct xe_vram_region;
+ 	return err;
+@@ -2978,14 +2979,23 @@ static int prefetch_ranges(struct xe_vm
+ }
  
-+void xe_vram_resize_bar(struct xe_device *xe);
- int xe_vram_probe(struct xe_device *xe);
+ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+-			    struct xe_vma_op *op)
++			    struct xe_vma_ops *vops, struct xe_vma_op *op)
+ {
+ 	int err = 0;
++	bool res_evict;
++
++	/*
++	 * We only allow evicting a BO within the VM if it is not part of an
++	 * array of binds, as an array of binds can evict another BO within the
++	 * bind.
++	 */
++	res_evict = !(vops->flags & XE_VMA_OPS_ARRAY_OF_BINDS);
  
- struct xe_vram_region *xe_vram_region_alloc(struct xe_device *xe, u8 id, u32 placement);
+ 	switch (op->base.op) {
+ 	case DRM_GPUVA_OP_MAP:
+ 		if (!op->map.invalidate_on_bind)
+ 			err = vma_lock_and_validate(exec, op->map.vma,
++						    res_evict,
+ 						    !xe_vm_in_fault_mode(vm) ||
+ 						    op->map.immediate);
+ 		break;
+@@ -2996,11 +3006,13 @@ static int op_lock_and_prep(struct drm_e
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.remap.unmap->va),
+-					    false);
++					    res_evict, false);
+ 		if (!err && op->remap.prev)
+-			err = vma_lock_and_validate(exec, op->remap.prev, true);
++			err = vma_lock_and_validate(exec, op->remap.prev,
++						    res_evict, true);
+ 		if (!err && op->remap.next)
+-			err = vma_lock_and_validate(exec, op->remap.next, true);
++			err = vma_lock_and_validate(exec, op->remap.next,
++						    res_evict, true);
+ 		break;
+ 	case DRM_GPUVA_OP_UNMAP:
+ 		err = check_ufence(gpuva_to_vma(op->base.unmap.va));
+@@ -3009,7 +3021,7 @@ static int op_lock_and_prep(struct drm_e
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.unmap.va),
+-					    false);
++					    res_evict, false);
+ 		break;
+ 	case DRM_GPUVA_OP_PREFETCH:
+ 	{
+@@ -3025,7 +3037,7 @@ static int op_lock_and_prep(struct drm_e
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.prefetch.va),
+-					    false);
++					    res_evict, false);
+ 		if (!err && !xe_vma_has_no_bo(vma))
+ 			err = xe_bo_migrate(xe_vma_bo(vma),
+ 					    region_to_mem_type[region]);
+@@ -3069,7 +3081,7 @@ static int vm_bind_ioctl_ops_lock_and_pr
+ 		return err;
+ 
+ 	list_for_each_entry(op, &vops->list, link) {
+-		err = op_lock_and_prep(exec, vm, op);
++		err = op_lock_and_prep(exec, vm, vops, op);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -3698,6 +3710,8 @@ int xe_vm_bind_ioctl(struct drm_device *
+ 	}
+ 
+ 	xe_vma_ops_init(&vops, vm, q, syncs, num_syncs);
++	if (args->num_binds > 1)
++		vops.flags |= XE_VMA_OPS_ARRAY_OF_BINDS;
+ 	for (i = 0; i < args->num_binds; ++i) {
+ 		u64 range = bind_ops[i].range;
+ 		u64 addr = bind_ops[i].addr;
+--- a/drivers/gpu/drm/xe/xe_vm_types.h
++++ b/drivers/gpu/drm/xe/xe_vm_types.h
+@@ -467,6 +467,8 @@ struct xe_vma_ops {
+ 	struct xe_vm_pgtable_update_ops pt_update_ops[XE_MAX_TILES_PER_DEVICE];
+ 	/** @flag: signify the properties within xe_vma_ops*/
+ #define XE_VMA_OPS_FLAG_HAS_SVM_PREFETCH BIT(0)
++#define XE_VMA_OPS_FLAG_MADVISE          BIT(1)
++#define XE_VMA_OPS_ARRAY_OF_BINDS	 BIT(2)
+ 	u32 flags;
+ #ifdef TEST_VM_OPS_ERROR
+ 	/** @inject_error: inject error to test error handling */
 
 
