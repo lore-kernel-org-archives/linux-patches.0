@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF35D350A39;
-	Tue, 21 Oct 2025 19:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3881E350A39;
+	Tue, 21 Oct 2025 19:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076577; cv=none; b=l3DVloSX3uoSH3kRkM1hMUE82BGfJUtHt0f321xWwptz4+atCMq9UH1D2pewCgM3Dq6N6oH6olbTrKuHTwb5RqpExjkoMrBBZIEJmFUAIdv2Y63WKDSKMwM2ILHZJu6VwIvon7OF1Uvt1g49IrQ4i+zizPEpu3EtqRnwIdQH0rk=
+	t=1761076581; cv=none; b=S2h463ImvdIASABuW2IOoMHezT/EHUnTK8/Nu9QG9OhX2a5rRof+YAcBD/kJZ2AOQQkmhpudIH/z4O83E4OuuYLUeKp8NbnngPoYUEvBsGCquD3/BiR77iyz/JhjLh6msxSfSRgXeX6DnqsxcoI0IdAuGvYDW5aXMiiGsUsOuNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076577; c=relaxed/simple;
-	bh=Zrpm/nv1eaiOVg0+wnXpzjoVek55o6A4xTxMeRgDP44=;
+	s=arc-20240116; t=1761076581; c=relaxed/simple;
+	bh=0dB62Ns56rxduhCNVD/tH3XdpjVxapTFHXMzwxcpR0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgrOtcSTbvTwdaPMbWN+1b4s4E6Y5ucS8UqfbqPNe5xSvGco5kq9+zWyIw2HeX0JGfmIFm1HD7YpgwA324U26QvCtFnONw90J5y11vK7Z2+aJC/NOv5UpjsuHHj4XGb3tZ7mMkMTB2rM4Wk6pqKab7SJPt+AmwF7I/sy6O2kUxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDzLdBN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSdk+JxYua8c/bmM/UO5lZ2MjnYsDNhTTLOlieB3zM8tksONeQL8YCn/FsJEY766DPWnWvHwnByaEv9OQNMz6p7jC+/9qs7bM2GQScUwo5F234iJeztwNZwlTgrF4214nqAo0hgFfiVDe8As3V6ON26H/zWwcc+5hmkCWhYgGgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSc9nV92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDzLdBN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49726C4CEF1;
-	Tue, 21 Oct 2025 19:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSc9nV92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973E5C4CEF1;
+	Tue, 21 Oct 2025 19:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076577;
-	bh=Zrpm/nv1eaiOVg0+wnXpzjoVek55o6A4xTxMeRgDP44=;
+	s=korg; t=1761076581;
+	bh=0dB62Ns56rxduhCNVD/tH3XdpjVxapTFHXMzwxcpR0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDzLdBN2V30jEng7P4iNFRdnCfQl4V8Fwy9hm/iHEpV868/x/1Coo/u7UUa1WBcUm
-	 5KR2U0PXOvr+PMakMWvcSkFSKXq4ND9OLGY5kpFtekkdmQ8zrE1gwusDUKTaU/FO7v
-	 HQU17YC9wCIRWmxBjOHJ0I1eKait0PnYYa8q8rMs=
+	b=KSc9nV92w/tOEb0DJjEwRcUz7idGSRceaUpGWgL027jL/BvXBbkzLf4mONSRPfV8b
+	 ZWnRpyzv8XIRFhx7k2uhALHtjqXTe4n1fc0T7ZrJb+hAU6BGE5P35vDBU4l9Q4sv9j
+	 OyTKVofoIGtI79cUdj95ux2VWzdIDk4ZoMiTZTAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/105] NFSD: Fix last write offset handling in layoutcommit
-Date: Tue, 21 Oct 2025 21:51:27 +0200
-Message-ID: <20251021195023.504016304@linuxfoundation.org>
+Subject: [PATCH 6.6 079/105] xfs: rename the old_crc variable in xlog_recover_process
+Date: Tue, 21 Oct 2025 21:51:28 +0200
+Message-ID: <20251021195023.527664682@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -54,111 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit d68886bae76a4b9b3484d23e5b7df086f940fa38 ]
+[ Upstream commit 0b737f4ac1d3ec093347241df74bbf5f54a7e16c ]
 
-The data type of loca_last_write_offset is newoffset4 and is switched
-on a boolean value, no_newoffset, that indicates if a previous write
-occurred or not. If no_newoffset is FALSE, an offset is not given.
-This means that client does not try to update the file size. Thus,
-server should not try to calculate new file size and check if it fits
-into the segment range. See RFC 8881, section 12.5.4.2.
+old_crc is a very misleading name.  Rename it to expected_crc as that
+described the usage much better.
 
-Sometimes the current incorrect logic may cause clients to hang when
-trying to sync an inode. If layoutcommit fails, the client marks the
-inode as dirty again.
-
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
-Cc: stable@vger.kernel.org
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ removed rqstp parameter from proc_layoutcommit ]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: e747883c7d73 ("xfs: fix log CRC mismatches between i386 and other architectures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    5 ++---
- fs/nfsd/nfs4proc.c    |   30 +++++++++++++++---------------
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ fs/xfs/xfs_log_recover.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -117,7 +117,6 @@ static __be32
- nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
- 		struct iomap *iomaps, int nr_iomaps)
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2860,20 +2860,19 @@ xlog_recover_process(
+ 	int			pass,
+ 	struct list_head	*buffer_list)
  {
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct iattr iattr = { .ia_valid = 0 };
- 	int error;
+-	__le32			old_crc = rhead->h_crc;
+-	__le32			crc;
++	__le32			expected_crc = rhead->h_crc, crc;
  
-@@ -127,9 +126,9 @@ nfsd4_block_commit_blocks(struct inode *
- 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
- 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
+ 	crc = xlog_cksum(log, rhead, dp, be32_to_cpu(rhead->h_len));
  
--	if (new_size > i_size_read(inode)) {
-+	if (lcp->lc_size_chg) {
- 		iattr.ia_valid |= ATTR_SIZE;
--		iattr.ia_size = new_size;
-+		iattr.ia_size = lcp->lc_newsize;
+ 	/*
+ 	 * Nothing else to do if this is a CRC verification pass. Just return
+ 	 * if this a record with a non-zero crc. Unfortunately, mkfs always
+-	 * sets old_crc to 0 so we must consider this valid even on v5 supers.
+-	 * Otherwise, return EFSBADCRC on failure so the callers up the stack
+-	 * know precisely what failed.
++	 * sets expected_crc to 0 so we must consider this valid even on v5
++	 * supers.  Otherwise, return EFSBADCRC on failure so the callers up the
++	 * stack know precisely what failed.
+ 	 */
+ 	if (pass == XLOG_RECOVER_CRCPASS) {
+-		if (old_crc && crc != old_crc)
++		if (expected_crc && crc != expected_crc)
+ 			return -EFSBADCRC;
+ 		return 0;
  	}
- 
- 	error = inode->i_sb->s_export_op->commit_blocks(inode, iomaps,
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2308,7 +2308,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	const struct nfsd4_layout_seg *seg = &lcp->lc_seg;
- 	struct svc_fh *current_fh = &cstate->current_fh;
- 	const struct nfsd4_layout_ops *ops;
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct inode *inode;
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
-@@ -2324,13 +2323,21 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 		goto out;
- 	inode = d_inode(current_fh->fh_dentry);
- 
--	nfserr = nfserr_inval;
--	if (new_size <= seg->offset)
--		goto out;
--	if (new_size > seg->offset + seg->length)
--		goto out;
--	if (!lcp->lc_newoffset && new_size > i_size_read(inode))
--		goto out;
-+	lcp->lc_size_chg = false;
-+	if (lcp->lc_newoffset) {
-+		loff_t new_size = lcp->lc_last_wr + 1;
-+
-+		nfserr = nfserr_inval;
-+		if (new_size <= seg->offset)
-+			goto out;
-+		if (new_size > seg->offset + seg->length)
-+			goto out;
-+
-+		if (new_size > i_size_read(inode)) {
-+			lcp->lc_size_chg = true;
-+			lcp->lc_newsize = new_size;
-+		}
-+	}
- 
- 	nfserr = nfsd4_preprocess_layout_stateid(rqstp, cstate, &lcp->lc_sid,
- 						false, lcp->lc_layout_type,
-@@ -2346,13 +2353,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	/* LAYOUTCOMMIT does not require any serialization */
- 	mutex_unlock(&ls->ls_mutex);
- 
--	if (new_size > i_size_read(inode)) {
--		lcp->lc_size_chg = 1;
--		lcp->lc_newsize = new_size;
--	} else {
--		lcp->lc_size_chg = 0;
--	}
--
- 	nfserr = ops->proc_layoutcommit(inode, lcp);
- 	nfs4_put_stid(&ls->ls_stid);
- out:
+@@ -2884,11 +2883,11 @@ xlog_recover_process(
+ 	 * zero CRC check prevents warnings from being emitted when upgrading
+ 	 * the kernel from one that does not add CRCs by default.
+ 	 */
+-	if (crc != old_crc) {
+-		if (old_crc || xfs_has_crc(log->l_mp)) {
++	if (crc != expected_crc) {
++		if (expected_crc || xfs_has_crc(log->l_mp)) {
+ 			xfs_alert(log->l_mp,
+ 		"log record CRC mismatch: found 0x%x, expected 0x%x.",
+-					le32_to_cpu(old_crc),
++					le32_to_cpu(expected_crc),
+ 					le32_to_cpu(crc));
+ 			xfs_hex_dump(dp, 32);
+ 		}
 
 
