@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FB22773DA;
-	Tue, 21 Oct 2025 20:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637FE277C81;
+	Tue, 21 Oct 2025 20:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077476; cv=none; b=knybDHSla38gV9WrSd/euN0HL7lkij5jh2IAWfm3+HcyBxuX6SJr18jq39VpCntiwTbzbDAvSGeYJ54YgcUoZJJgCWJg9H6hRlLppA/A/mGuAhkj69DLmCX10bc3ZlGlUuMwtycFbZZNf7PaIaLACL9aoC+Q9Lbo3CIPw4Y1xQI=
+	t=1761077479; cv=none; b=oYt4MH1MDRmOLF6Y8L9Je8BDoN/DLIt81MnDMIvtaRN3uAhfMGP+nx16hmwR1RfFP4FgavmY/yJ5hGOdNUKiXs9fJZI8Ji4Ott0BRXSm9vtKYD0AC8ywnHyNH63fljm6vJ7Nxv++Yo5B7ICWgy7CKe7KqRrxJqqJ7tGFDswSLUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077476; c=relaxed/simple;
-	bh=RSqLpOVdIBc1CF6vdtKA0RS3Uxdlmdk+5RYieTfUTEo=;
+	s=arc-20240116; t=1761077479; c=relaxed/simple;
+	bh=D3d/q+MkHu/2UC5zVcRufNbZ1WzUA6qkDtiMWuZK7Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwHmBTFLot6R1euYc7wduqHGKWot5ykIPkxJDFMVUde9GfLQCxURO2fmOrn7Bg3YGQuGovgk8K1TSs/faccgJzEbXOm8OFILRBErgDfO1lZ9tQlYf6qKCak5sVDvXAxMISV97DC6Ilf9Lk3eVP71h3TLZ/TOonZN7c2iuYqMBr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCxDpmKV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baMsuu5IKVAiI2ETPQDD1ChHIXX9CrHIaq0GAzZPzdZI9umgMAYCkYCZbQ0E6bkd5MFlbjVk5zEAHcoYn5bi8+348TLX7s4WUbagB6ArIWQaiNzGhx+Q50QNTjNu+5rYmrE7/V8hj7UYYK+SmJurgxsZEyQTjAnFwtDOQRu73cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLPVynyR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCxDpmKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413DFC4CEF1;
-	Tue, 21 Oct 2025 20:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLPVynyR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D630C4CEF1;
+	Tue, 21 Oct 2025 20:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077475;
-	bh=RSqLpOVdIBc1CF6vdtKA0RS3Uxdlmdk+5RYieTfUTEo=;
+	s=korg; t=1761077479;
+	bh=D3d/q+MkHu/2UC5zVcRufNbZ1WzUA6qkDtiMWuZK7Is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCxDpmKVhgKGo/SOwaMpJImePZFFviA0s4zJWiHPkOZndbwOJUNCIbKYl30T3B0/g
-	 qD2/NKsCHsS0lI5orF4MBRgIOaa9GTs7u/YeWu9QRXM+5Dr8+XvDALPpOtNmsbmW7t
-	 o3qJJdQ2bjRjFN0IhSdYV4DnyEGeGr3HuGWaWDNU=
+	b=BLPVynyRjjVhqiahUhXN0cbu4tcv9WSCFKtPpHTTH6qRxFgbLQljAH55x+B81jSau
+	 6+GsepTiY4Pgf7UCDppEImRiU8GgCeahnJSgJ5SMifmDOuA095mSCklgXE4GmrQLte
+	 b0O7/a/3KUUQyHIkO0B24BfTLY+ABaCXhP4U2XOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Rui Zhang <rui1.zhang@intel.com>,
+	Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 116/159] drm/rockchip: vop2: use correct destination rectangle height check
-Date: Tue, 21 Oct 2025 21:51:33 +0200
-Message-ID: <20251021195045.953315121@linuxfoundation.org>
+Subject: [PATCH 6.17 117/159] HID: intel-thc-hid: Intel-quickspi: switch first interrupt from level to edge detection
+Date: Tue, 21 Oct 2025 21:51:34 +0200
+Message-ID: <20251021195045.977113699@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,38 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit 7f38a1487555604bc4e210fa7cc9b1bce981c40e ]
+[ Upstream commit 8fe2cd8ec84b3592b57f40b080f9d5aeebd553af ]
 
-The vop2_plane_atomic_check() function incorrectly checks
-drm_rect_width(dest) twice instead of verifying both width and height.
-Fix the second condition to use drm_rect_height(dest) so that invalid
-destination rectangles with height < 4 are correctly rejected.
+The original implementation used level detection for the first interrupt
+after device reset to avoid potential interrupt line noise and missed
+interrupts during the initialization phase. However, this approach
+introduced unintended side effects when tested with certain touch panels,
+including:
+ - Delayed hardware interrupt response
+ - Multiple spurious interrupt triggers
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20251012142005.660727-1-alok.a.tiwari@oracle.com
+Switching back to edge detection for the first interrupt resolves these
+issues while maintaining reliable interrupt handling.
+
+Extensive testing across multiple platforms with touch panels from
+various vendors confirms this change introduces no regressions.
+
+[jkosina@suse.com: properly capitalize shortlog]
+Fixes: 9d8d51735a3a ("HID: intel-thc-hid: intel-quickspi: Add HIDSPI protocol implementation")
+Tested-by: Rui Zhang <rui1.zhang@intel.com>
+Signed-off-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index b50927a824b40..7ec7bea5e38e6 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1031,7 +1031,7 @@ static int vop2_plane_atomic_check(struct drm_plane *plane,
- 		return format;
+diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+index e6ba2ddcc9cbc..16f780bc879b1 100644
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+@@ -280,8 +280,7 @@ int reset_tic(struct quickspi_device *qsdev)
  
- 	if (drm_rect_width(src) >> 16 < 4 || drm_rect_height(src) >> 16 < 4 ||
--	    drm_rect_width(dest) < 4 || drm_rect_width(dest) < 4) {
-+	    drm_rect_width(dest) < 4 || drm_rect_height(dest) < 4) {
- 		drm_err(vop2->drm, "Invalid size: %dx%d->%dx%d, min size is 4x4\n",
- 			drm_rect_width(src) >> 16, drm_rect_height(src) >> 16,
- 			drm_rect_width(dest), drm_rect_height(dest));
+ 	qsdev->reset_ack = false;
+ 
+-	/* First interrupt uses level trigger to avoid missing interrupt */
+-	thc_int_trigger_type_select(qsdev->thc_hw, false);
++	thc_int_trigger_type_select(qsdev->thc_hw, true);
+ 
+ 	ret = acpi_tic_reset(qsdev);
+ 	if (ret)
 -- 
 2.51.0
 
