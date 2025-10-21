@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C9F350A2A;
-	Tue, 21 Oct 2025 19:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B9B274B5C;
+	Tue, 21 Oct 2025 19:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076667; cv=none; b=bDWLrpMn8BpRFCvenRptipYz52EvFrMw1cSmJZGQNuSRjD+UevOC+M9+0o15acqBVOfDNjPw2Xe+5aC6IsjXtnH1yz8cxZ19VXk0Awjh5YZwNsrCn/omC2Q2Rhmp/sBE0RKFgGolfCjh5p6kVJQcsqKnGgSfTq5gd2aVLWJRz5w=
+	t=1761076670; cv=none; b=hOHUvw4N9lMce4kHgXaYIrOShobtqIiJd/L+tAP5xOPqhTsXr9EnPRLKFKFC4WpVKiRLyRfgDO6pGbhppinaDetUgzWnsHoNe8bhC7DZT5PDenMGk4N0qEfu99NlzRHNUrXYKVsZ1kb2V4S+wzvlMLauSTwrt0+vKEbMO0dOEYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076667; c=relaxed/simple;
-	bh=Y5dMUwEgR3vjqTyfBjXhBo1Wrp0nGotSblMRwefZ0GU=;
+	s=arc-20240116; t=1761076670; c=relaxed/simple;
+	bh=jMJ33baitd62FvM916VQTmi1SFf/wRWkJY/6NULfzZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNYSwrAYfZpdpdc5GPehbF9lIQTN874tLtuFbeHtSk3cKZodU9FW5pTu21JJAoCqf+w5zu4iajzr55n3ZWYViqmjRAn2pdeBoU94ihkW/dDT0LhEiQIdTs6cgQKVkhyGmVMnrpR+7pPABnWY/wA035zYCw+b5r4S99WzK98BNNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLUcyI1G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7PSm2hsYzD3p86XBFoHadkIrxShdILefD/ncOBxEabnqU+N/aCjRIjPrpkwROVmf3e0rdstY1jKu4l+PbMoCKpetKfqFQPJFXJcI9RKZ0c8bSEpwDU050DzA0uKIwa7Ld559P2oAwa0yzU8BZ1iKfPzGXrPkiUFHpON7GSTw2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCTCkNRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLUcyI1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323F3C4CEF1;
-	Tue, 21 Oct 2025 19:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCTCkNRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA337C4CEF1;
+	Tue, 21 Oct 2025 19:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076667;
-	bh=Y5dMUwEgR3vjqTyfBjXhBo1Wrp0nGotSblMRwefZ0GU=;
+	s=korg; t=1761076670;
+	bh=jMJ33baitd62FvM916VQTmi1SFf/wRWkJY/6NULfzZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLUcyI1G4VSnJCky9pQiUwZ36Hd/Ue411AyXIRGG13wxNNh0T37XLZgrIpmguUbtw
-	 1/ChuX8KQfb3+SNrkh3ul3k/rwlHFLoXCtUwdOWNxP5vSS6/b6Ty+6wkCMW9P/UMjJ
-	 nI3NM18WZiial0s6JnxngWLziqCAxutbatv/GHR8=
+	b=yCTCkNRjVRfoZeYv0wGojuxPmBz2ZfLBxAf4RuyBS2z7ybFog4z99zElD8X7dljbi
+	 pclK6par9cwjd2Ddd7ML/QYAdS7Ff2R/qDvtAqISx+JP+dt6x0s81B5gsjLhA9jwbV
+	 4sVsLYJ/lcLWxUKRhaXHgPyDdgRrLaRszXgs1yTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabian Vogt <fvogt@suse.de>,
-	Marvin Friedrich <marvin.friedrich@suse.com>,
-	Guo Ren <guoren@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/105] riscv: kprobes: Fix probe address validation
-Date: Tue, 21 Oct 2025 21:51:02 +0200
-Message-ID: <20251021195022.939372649@linuxfoundation.org>
+	Brian Norris <briannorris@google.com>,
+	Brian Norris <briannorris@chromium.org>
+Subject: [PATCH 6.6 100/105] PCI/sysfs: Ensure devices are powered for config reads (part 2)
+Date: Tue, 21 Oct 2025 21:51:49 +0200
+Message-ID: <20251021195024.028643471@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -53,64 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabian Vogt <fvogt@suse.de>
+From: Brian Norris <briannorris@google.com>
 
-[ Upstream commit 9e68bd803fac49274fde914466fd3b07c4d602c8 ]
+Commit 48991e493507 ("PCI/sysfs: Ensure devices are powered for config
+reads") was applied to various linux-stable trees. However, prior to
+6.12.y, we do not have commit d2bd39c0456b ("PCI: Store all PCIe
+Supported Link Speeds"). Therefore, we also need to apply the change to
+max_link_speed_show().
 
-When adding a kprobe such as "p:probe/tcp_sendmsg _text+15392192",
-arch_check_kprobe would start iterating all instructions starting from
-_text until the probed address. Not only is this very inefficient, but
-literal values in there (e.g. left by function patching) are
-misinterpreted in a way that causes a desync.
+This was pointed out here:
 
-Fix this by doing it like x86: start the iteration at the closest
-preceding symbol instead of the given starting point.
+  Re: Patch "PCI/sysfs: Ensure devices are powered for config reads" has been added to the 6.6-stable tree
+  https://lore.kernel.org/all/aPEMIreBYZ7yk3cm@google.com/
 
-Fixes: 87f48c7ccc73 ("riscv: kprobe: Fixup kernel panic when probing an illegal position")
-Signed-off-by: Fabian Vogt <fvogt@suse.de>
-Signed-off-by: Marvin Friedrich <marvin.friedrich@suse.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/6191817.lOV4Wx5bFT@fvogt-thinkpad
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Original change description follows:
+
+    The "max_link_width", "current_link_speed", "current_link_width",
+    "secondary_bus_number", and "subordinate_bus_number" sysfs files all access
+    config registers, but they don't check the runtime PM state. If the device
+    is in D3cold or a parent bridge is suspended, we may see -EINVAL, bogus
+    values, or worse, depending on implementation details.
+
+    Wrap these access in pci_config_pm_runtime_{get,put}() like most of the
+    rest of the similar sysfs attributes.
+
+    Notably, "max_link_speed" does not access config registers; it returns a
+    cached value since d2bd39c0456b ("PCI: Store all PCIe Supported Link
+    Speeds").
+
+Fixes: 56c1af4606f0 ("PCI: Add sysfs max_link_speed/width, current_link_speed/width, etc")
+Link: https://lore.kernel.org/all/aPEMIreBYZ7yk3cm@google.com/
+Signed-off-by: Brian Norris <briannorris@google.com>
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/probes/kprobes.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/pci/pci-sysfs.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
-index 297427ffc4e04..8a6ea7d270188 100644
---- a/arch/riscv/kernel/probes/kprobes.c
-+++ b/arch/riscv/kernel/probes/kprobes.c
-@@ -48,10 +48,15 @@ static void __kprobes arch_simulate_insn(struct kprobe *p, struct pt_regs *regs)
- 	post_kprobe_handler(p, kcb, regs);
- }
- 
--static bool __kprobes arch_check_kprobe(struct kprobe *p)
-+static bool __kprobes arch_check_kprobe(unsigned long addr)
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -186,9 +186,15 @@ static ssize_t max_link_speed_show(struc
+ 				   struct device_attribute *attr, char *buf)
  {
--	unsigned long tmp  = (unsigned long)p->addr - p->offset;
--	unsigned long addr = (unsigned long)p->addr;
-+	unsigned long tmp, offset;
+ 	struct pci_dev *pdev = to_pci_dev(dev);
++	ssize_t ret;
+ 
+-	return sysfs_emit(buf, "%s\n",
+-			  pci_speed_string(pcie_get_speed_cap(pdev)));
++	/* We read PCI_EXP_LNKCAP, so we need the device to be accessible. */
++	pci_config_pm_runtime_get(pdev);
++	ret = sysfs_emit(buf, "%s\n",
++			 pci_speed_string(pcie_get_speed_cap(pdev)));
++	pci_config_pm_runtime_put(pdev);
 +
-+	/* start iterating at the closest preceding symbol */
-+	if (!kallsyms_lookup_size_offset(addr, NULL, &offset))
-+		return false;
-+
-+	tmp = addr - offset;
++	return ret;
+ }
+ static DEVICE_ATTR_RO(max_link_speed);
  
- 	while (tmp <= addr) {
- 		if (tmp == addr)
-@@ -70,7 +75,7 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
- 	if ((unsigned long)insn & 0x1)
- 		return -EILSEQ;
- 
--	if (!arch_check_kprobe(p))
-+	if (!arch_check_kprobe((unsigned long)p->addr))
- 		return -EILSEQ;
- 
- 	/* copy instruction */
--- 
-2.51.0
-
 
 
