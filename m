@@ -1,104 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A01D296BB2;
-	Tue, 21 Oct 2025 21:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52523299AAC;
+	Tue, 21 Oct 2025 22:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761083067; cv=none; b=Jwgnva7ZAPGQJjxZlLfZGuDxxQoUuEIGWZfvZeysCEHQwgJeC1m7S14516x5LR9xxcjNJXGicFun8fC1REmUWchsREahEQhp2cg/fL4x5kJHPl6/9kkCT05ZbXlLgl5N6BTced/Yb0QqcZftlp4goo4UL13uHY/iu62vtZdyKV8=
+	t=1761086958; cv=none; b=qvGa3i1SSNg1DcVMokT2ny5R4u6VMe14y0/NSlTSkTqhbj4T3CAlIYzFAhq2uhuz1StpEmFjiAM//8cnZxmrAuX42xPMynZhRTQq052wmJIXwOUq1OnN0oP1jGXDJaGmVFJPuhNEJYwrE4AOuMjSkCs+Q9dnsJUVo0uX1ZTLD9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761083067; c=relaxed/simple;
-	bh=LH5PVxY5EL733clxfZZcW9q1PxHHbZTzuaiYx5J9AH4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hk+m8boWbexN0iz1JPNotUwSQtuGTOVC4vo5qL43tmqjG3VU9zXPpu7KnARHgFUP3iQ+7n06iK95A4XiuXAMKvc3nR8S9w/W3noKSA5eKU5K+Ts7wVNhvPoAn0uRRMzKLa9YD3VCJtcrHmp/hQc8WtO5HrCjjTy+omHfsck4oHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hburrdRR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761086958; c=relaxed/simple;
+	bh=afMwNk4H6CfXYhM/Mntmd/AwB1P/ReKaPUkcX6yAGC4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=CsT3sS0xmpkt1vuECdeorXL6fiBQBHtWernP3bbvrkKoiGQtSTyAxagbgKFN3DHTocwmvHbkkMjFitO7HE4XK1lSK/5XDNyapfmFUa258o/R83qsQS5MizpKZkpxDcc2BfJKOwV9ERnQVnkMYWcIWwqD4fZlUmIyMRk0+pbKYNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lb+Ydi/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hburrdRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE4FC4CEF1;
-	Tue, 21 Oct 2025 21:44:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lb+Ydi/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDEFC4CEF1;
+	Tue, 21 Oct 2025 22:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761083067;
-	bh=LH5PVxY5EL733clxfZZcW9q1PxHHbZTzuaiYx5J9AH4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hburrdRRG6qRTf5+j96MsAPMyXqiCGl5cNTlx8oh0PpcD6F2R0pgsaQ3j7q9xx68/
-	 Axk4AQribaYivfqXd/isTTrzui5e5FA9vr1E0kCbM5t6sSTiDhwGitrWIYkZzhJuOO
-	 QHvEKRWLjoQgMXdej/EYdk4ZPrDOIkkS+H+TnF1ANwO9fTBW/Hp/4o7+lKVI6suBWd
-	 sWTjVGoii5+2HtOu/qCKzQhwn0Cp1HOtyidzCNsAv/6idJSJ8DEPs1MzComYwOONkE
-	 +DEDF+s+z6xUYm5NAtghSP9I0hgvY337dsaOJl5c0Kvj8+dyW5Jcxlsf35+G9EQQQ0
-	 yLcp4e7IB4+JA==
-Message-ID: <f5c4f35d-6305-49a5-8408-a418761c6a6a@kernel.org>
-Date: Tue, 21 Oct 2025 16:44:23 -0500
+	s=k20201202; t=1761086957;
+	bh=afMwNk4H6CfXYhM/Mntmd/AwB1P/ReKaPUkcX6yAGC4=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Lb+Ydi/k4eFirtXg0sLErurW+5I5z1gomh+64L+pggWY9L94GPaXhxYRS1TXjnm63
+	 AgD88ohUxzSKGOnaBR6LK7vLBYSnTaI1xxXMMUgbclTDTu8xUCAVJ/j9ke6HX9I3y4
+	 ytRLv20JcbPt2nCOcqMpniD1SQxYRYAQtiCsSDiieR+wkaM43hSQ++GJyPX1N4YNxc
+	 G9cfpW6FdCt9Wq0mA3JrGgsezdrS7UaRuDKw13DsbDdzYO2p+2qmLHiL1TFxAOXGK+
+	 mGoIVrCEaHI7CckzBCmw8lcBlDEoQs+XNxIdYsalgDHBhhnC29pukxgC3LRyt7qilK
+	 5g4Hf7PqF2Npg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 22 Oct 2025 00:49:08 +0200
+Subject: [PATCH] HID: intel-ish-hid: Fix -Wcast-function-type-strict in
+ devm_ishtp_alloc_workqueue()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.17 000/159] 6.17.5-rc1 review
-To: =?UTF-8?Q?Holger_Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-References: <20251021195043.182511864@linuxfoundation.org>
- <fc400181-7c76-6344-c6ea-a4e48d722f55@applied-asynchrony.com>
- <b7c17e91-cae7-46ef-bfc8-a9014d11346a@kernel.org>
- <b01cf3f0-fef4-e8f7-180d-903a84bc69a7@applied-asynchrony.com>
-Content-Language: en-US
-From: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
-In-Reply-To: <b01cf3f0-fef4-e8f7-180d-903a84bc69a7@applied-asynchrony.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251022-ishtp-fix-function-cast-warn-v1-1-bfb06464f8ca@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOMN+GgC/x3MwQqDMAyA4VeRnBdo6ybiq8gOoU1nLlWa6gbiu
+ xt2/OHjP0G5CitM3QmVD1FZi4V/dBAXKh9GSdYQXHh5FzyKLm3DLD/Me4nNOEbShl+qBYfBpT4
+ Rj5SfYIutssn/fn5f1w0EQ+ADbgAAAA==
+X-Change-ID: 20251021-ishtp-fix-function-cast-warn-660d3dae8af4
+To: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>, 
+ Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <bentiss@kernel.org>, 
+ Zhang Lixu <lixu.zhang@intel.com>
+Cc: Kees Cook <kees@kernel.org>, linux-input@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2468; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=afMwNk4H6CfXYhM/Mntmd/AwB1P/ReKaPUkcX6yAGC4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBk/eF/fY42+UnHrbh5D8mFr62nhGhtVEz6ttBIOW755c
+ X7m2g9WHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiZ2Yw/I9U/9y0xvnNo1SZ
+ LazZP0vSnxT+CC+VEeoxmhf6/PCKI/MZGd7omLw6/fLw6slBh+wkHEumPDx+hm1hW6Fm7ifDHzu
+ kp/AAAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+Clang warns (or errors with CONFIG_WERROR=y / W=e):
 
+  drivers/hid/intel-ish-hid/ipc/ipc.c:935:36: error: cast from 'void (*)(struct workqueue_struct *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+    935 |         if (devm_add_action_or_reset(dev, (void (*)(void *))destroy_workqueue,
+        |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  include/linux/device/devres.h:168:34: note: expanded from macro 'devm_add_action_or_reset'
+    168 |         __devm_add_action_or_ireset(dev, action, data, #action)
+        |                                         ^~~~~~
 
-On 10/21/2025 4:43 PM, Holger Hoffstätte wrote:
-> On 2025-10-21 23:33, Mario Limonciello (AMD) (kernel.org) wrote:
->>
->>
->> On 10/21/2025 4:30 PM, Holger Hoffstätte wrote:
->>> On 2025-10-21 21:49, Greg Kroah-Hartman wrote:
->>>> This is the start of the stable review cycle for the 6.17.5 release.
->>>
->>> Hmm:
->>>
->>> *  LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
->>> *  MODPOST Module.symvers
->>> *ERROR: modpost: "pm_hibernation_mode_is_suspend" [drivers/gpu/drm/ 
->>> amd/ amdgpu/amdgpu.ko] undefined!
->>>
->>> Caused by drm-amd-fix-hybrid-sleep.patch
->>>
->>> I have CONFIG_SUSPEND enabled, exactly same config as 6.17.4.
->>>
->>> Looking at mainline it seems we also need parts of:
->>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ 
->>> commit/?id=495c8d35035edb66e3284113bef01f3b1b843832
->>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ 
->>> commit/?id=bbfe987c5a2854705393ad79813074e5eadcbde6
->>>
->>> cheers
->>> Holger
->>
->> Can you please share your kconfig?
->>
->> Specifically interesting are CONFIG_SUSPEND, CONFIG_HIBERNATION, 
->> CONFIG_HIBERNATE_CALLBACKS.
-> 
-> $grep -e CONFIG_SUSPEND -e CONFIG_HIBERNATION -e 
-> CONFIG_HIBERNATE_CALLBACKS /etc/kernels/kernel-config-x86_64-6.17.5
-> CONFIG_SUSPEND=y
-> CONFIG_SUSPEND_FREEZER=y
-> # CONFIG_SUSPEND_SKIP_SYNC is not set
-> # CONFIG_HIBERNATION is not set
-> 
-> This is intentional as I don't use hibernation, only suspend-to-ram.
-> 
-> thanks,
-> Holger
+This warning is pointing out a kernel control flow integrity (kCFI /
+CONFIG_CFI=y) violation will occur due to this function cast when the
+destroy_workqueue() is indirectly called via devm_action_release()
+because the prototype of destroy_workqueue() does not match the
+prototype of (*action)().
 
-OK I think that we need those other commits you identified brought back too.
+Use a local function with the correct prototype to wrap
+destroy_workqueue() to resolve the warning and CFI violation.
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2139
+Fixes: 0d30dae38fe0 ("HID: intel-ish-hid: Use dedicated unbound workqueues to prevent resume blocking")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/hid/intel-ish-hid/ipc/ipc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
+index 59355e4a61f8..abf9c9a31c39 100644
+--- a/drivers/hid/intel-ish-hid/ipc/ipc.c
++++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
+@@ -924,6 +924,11 @@ static const struct ishtp_hw_ops ish_hw_ops = {
+ 	.dma_no_cache_snooping = _dma_no_cache_snooping
+ };
+ 
++static void ishtp_free_workqueue(void *wq)
++{
++	destroy_workqueue(wq);
++}
++
+ static struct workqueue_struct *devm_ishtp_alloc_workqueue(struct device *dev)
+ {
+ 	struct workqueue_struct *wq;
+@@ -932,8 +937,7 @@ static struct workqueue_struct *devm_ishtp_alloc_workqueue(struct device *dev)
+ 	if (!wq)
+ 		return NULL;
+ 
+-	if (devm_add_action_or_reset(dev, (void (*)(void *))destroy_workqueue,
+-				     wq))
++	if (devm_add_action_or_reset(dev, ishtp_free_workqueue, wq))
+ 		return NULL;
+ 
+ 	return wq;
+
+---
+base-commit: 828aeac92901c1f31b51ae0b9d792b9af5bd3e27
+change-id: 20251021-ishtp-fix-function-cast-warn-660d3dae8af4
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
+
