@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031A923D7E8;
-	Tue, 21 Oct 2025 20:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52EC23D7E8;
+	Tue, 21 Oct 2025 20:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077123; cv=none; b=axsW1zOsAfQ7LB4589D/OvdtlLOSm1ENMtqlgBW+JLbp+MR/Ux4N7Kkfir/MpzSfoGd4RAH6gWpM/LZROtQAGaYWDK5vxYjn9rsLsod+i/tkgNRYPBuR1gsPoOwDZKmZHfND+TSQWhWgw1fNLTvADa9XoHQOfJCB+ouHRsB19Yw=
+	t=1761077126; cv=none; b=bh8YqKlt/oVUpxrLjP4ovS43EQMx4QJ32qBB8I74yAl4CzX0/g1pKz7Pt1upaDIPENTCENJSHQRr7BWd5uBlsgPXJL4FtmZSfO+HEG1wPvY1/kdAPaKXuhOGA5At8Vc1Ck7xrDtOMWL9eGDtvs77T8IGCwkHxNDA0S+NaZlp+/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077123; c=relaxed/simple;
-	bh=XWePQsprpOMovf/pD7BjjCpZKH/3QT+Gh+grIG8yrOs=;
+	s=arc-20240116; t=1761077126; c=relaxed/simple;
+	bh=J3/lGoeOKPWcyT6SB44c/NLzl+dB+vwQzwBqYngwYDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFjhofg1zBgB0MxF4Jcnvn5X34dYVPTVgPlJN2+uFlOzuJ4Cf1zSBUw5oqT5dnsNDNTA7HAt8sxjCqyA7SIhS6BKTU9Phi0LUh33IVKL5Loxdwnezhks80a9K0AbwspR4j076+m/btkL2UM/ZnmE4zYhgh/xMl++Pwdnq7pmtfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d50vXyg9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvUsKiT+t/wXAH3BANOgeUmERjmxUMf3ALac9OERqetX2LzhI6WwiKg85LE1x//YyEMegjc+QZMU9tTbPIkLCk/A53WyYlDX2Ga218CedSXCYbYnULu/1JvdELRftLAIiEwpd4OcvaWCvd8L2hi2ToSrOvNxNCPOrrczY51yg1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5WPuQvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d50vXyg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC0CC4CEF1;
-	Tue, 21 Oct 2025 20:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5WPuQvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20224C4CEF1;
+	Tue, 21 Oct 2025 20:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077122;
-	bh=XWePQsprpOMovf/pD7BjjCpZKH/3QT+Gh+grIG8yrOs=;
+	s=korg; t=1761077126;
+	bh=J3/lGoeOKPWcyT6SB44c/NLzl+dB+vwQzwBqYngwYDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d50vXyg9SOq0FU8LQGbH7Ely31bJR7Jxt6aK3t2jJ/CweZm8BMxLSA4rlT6tyz3Rl
-	 4/1DeGsjLq6kB2ITWO4P0nZ23viDxXl2OTmw6p0Dr0DvCeZDA1NoXIc1jtB+xsu22+
-	 ollHcYQ2gJFsHZ3GDb30FrII5gdNPTZADhd5OijE=
+	b=G5WPuQvfpi3Sg3/bkNY6fqiSXpxjA42/9v85/eKssMZDImOpgojBDUeYCu4T8LQDj
+	 j8BgA5u61LZxHpgNzMXAoAdGi9hdyoAoVfVP5yVvA8Xo9jWdXwGCW2jtLO43HtTZXJ
+	 NnMBiUDXZ+dJ8D+9RDDn+MqOGKIXPgObjbhyCfdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Xing Guo <higuoxing@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/136] iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended
-Date: Tue, 21 Oct 2025 21:51:29 +0200
-Message-ID: <20251021195038.387478095@linuxfoundation.org>
+Subject: [PATCH 6.12 092/136] selftests: arg_parsing: Ensure data is flushed to disk before reading.
+Date: Tue, 21 Oct 2025 21:51:20 +0200
+Message-ID: <20251021195038.171447171@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -52,63 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Xing Guo <higuoxing@gmail.com>
 
-[ Upstream commit 466f7a2fef2a4e426f809f79845a1ec1aeb558f4 ]
+[ Upstream commit 0c1999ed33722f85476a248186d6e0eb2bf3dd2a ]
 
-Do as in suspend, skip resume configuration steps if the device is already
-pm_runtime suspended. This avoids reconfiguring a device that is already
-in the correct low-power state and ensures that pm_runtime handles the
-power state transitions properly.
+test_parse_test_list_file writes some data to
+/tmp/bpf_arg_parsing_test.XXXXXX and parse_test_list_file() will read
+the data back.  However, after writing data to that file, we forget to
+call fsync() and it's causing testing failure in my laptop.  This patch
+helps fix it by adding the missing fsync() call.
 
-Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250901-icm42pmreg-v3-3-ef1336246960@geanix.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ removed apex/wakeup variable declarations ]
+Fixes: 64276f01dce8 ("selftests/bpf: Test_progs can read test lists from file")
+Signed-off-by: Xing Guo <higuoxing@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20251016035330.3217145-1-higuoxing@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/arg_parsing.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -787,17 +787,15 @@ EXPORT_SYMBOL_NS_GPL(inv_icm42600_core_p
- static int inv_icm42600_suspend(struct device *dev)
- {
- 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
--	int ret;
-+	int ret = 0;
+diff --git a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
+index fbf0d9c2f58b3..e27d66b75fb1f 100644
+--- a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
++++ b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
+@@ -144,6 +144,9 @@ static void test_parse_test_list_file(void)
+ 	if (!ASSERT_OK(ferror(fp), "prepare tmp"))
+ 		goto out_fclose;
  
- 	mutex_lock(&st->lock);
- 
- 	st->suspended.gyro = st->conf.gyro.mode;
- 	st->suspended.accel = st->conf.accel.mode;
- 	st->suspended.temp = st->conf.temp_en;
--	if (pm_runtime_suspended(dev)) {
--		ret = 0;
-+	if (pm_runtime_suspended(dev))
- 		goto out_unlock;
--	}
- 
- 	/* disable FIFO data streaming */
- 	if (st->fifo.on) {
-@@ -829,10 +827,13 @@ static int inv_icm42600_resume(struct de
- 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
- 	struct inv_icm42600_sensor_state *gyro_st = iio_priv(st->indio_gyro);
- 	struct inv_icm42600_sensor_state *accel_st = iio_priv(st->indio_accel);
--	int ret;
-+	int ret = 0;
- 
- 	mutex_lock(&st->lock);
- 
-+	if (pm_runtime_suspended(dev))
-+		goto out_unlock;
++	if (!ASSERT_OK(fsync(fileno(fp)), "fsync tmp"))
++		goto out_fclose;
 +
- 	ret = inv_icm42600_enable_regulator_vddio(st);
- 	if (ret)
- 		goto out_unlock;
+ 	init_test_filter_set(&set);
+ 
+ 	if (!ASSERT_OK(parse_test_list_file(tmpfile, &set, true), "parse file"))
+-- 
+2.51.0
+
 
 
