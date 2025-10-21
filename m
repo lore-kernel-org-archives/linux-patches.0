@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14767350A0D;
-	Tue, 21 Oct 2025 20:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279527815E;
+	Tue, 21 Oct 2025 20:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077079; cv=none; b=a9nJPIO3H4sJQmvL67JMDv1/44Ika72v9g077/9GyeTMJU4s3q7z8Zvd7HbLj8U0GR5E1V8pMCYqtQCeMXAqEUmals1qapRA1NNvtxGoZOUt/5V/hlGVOBlv4xA47EBBYL62Lsi8G+/95xXQVEOfOCu/aQhMVdqQuAeth9UAkcc=
+	t=1761077082; cv=none; b=fsSHLPj4apHu7F0BwSbzaRtJeEfq2rFbPTNTmPzJnWPYqZbotqm8icRqZtU+sILNRFV7X0KmMDD7EHaoxwafdifRwT3m0lJPbpUXKgbk/uN3P8o+LjAD6GxLj00SxmDG2nrIa9i+rCrbRoAioLzz23Ldb8yPM5wACrrJoXTpj08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077079; c=relaxed/simple;
-	bh=/hUFGAC0TVC/geyMV5dQoEvVDt3I9zRlXX5YZiCFtYk=;
+	s=arc-20240116; t=1761077082; c=relaxed/simple;
+	bh=6YEDFmJNQayL1TWBo39454LEvHaX5RuB68yz+X8sBAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXcQNkhg/d2yYQ+YO86lYgNfhB5H78dGZ4J6eI2Rfq8n8diAUIckws7zQAwWTQ1RJW2MAFdBwAdU3akdKWyuTZc+TMuQrjuP4orIgfCjbP7Lyna0auZ2EVE6Mt+KjSm3o78E+0yFRJcpLPZ5ThK4O94Yi94M+dqj6VGAAbWcTSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvPqTl/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IcswqRV3N0k3RWWUJ7wlSvRhpErIBpPFB0V/Uur4nD5yLjLXVQ5qrvm75ACpOoxTx2YWNwX/RlTQPcpTfP6TAeC1meJTORCrd2oUAs8zbVdSgLDEj/EX+aJw0fiOA0PG3dnSQ8hSy/+O8xvBK45rU821VXTbgZlQlad4Ff7hQhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1ABVvj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvPqTl/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933CBC4CEF1;
-	Tue, 21 Oct 2025 20:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1ABVvj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9ADC4CEF1;
+	Tue, 21 Oct 2025 20:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077079;
-	bh=/hUFGAC0TVC/geyMV5dQoEvVDt3I9zRlXX5YZiCFtYk=;
+	s=korg; t=1761077081;
+	bh=6YEDFmJNQayL1TWBo39454LEvHaX5RuB68yz+X8sBAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dvPqTl/QILro9agpEN3DOhHgf2c6GySaB3lcIoYnG7NRVgifIeb1WPt91RvOuwB36
-	 0AQJzU6Sw9Yl4TnSRXOAQ2lLu70dZC+ggFxWlvhFWwXKiB8EZdc/pryl3ZF1n84JL1
-	 VGPE7y9KUGukrpSHzJTOTlGjoxxef2AQHedxkWbQ=
+	b=L1ABVvj6bRdY2ecIyZTcLnRHPodHKLFFusVXppFmqNhSLdpnR1bnUVo70fhzCW2Fo
+	 d0QB/2VD65xGXKaxsR3VX1Z7vuUMPBMX/oaFb9B0m2/XDF/6S6YlGWf8Z9QwSZh3p9
+	 plhpwfDbVEYLlSB7ChTx+pGm/G3S9PZRlc+E38+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/136] mptcp: Call dst_release() in mptcp_active_enable().
-Date: Tue, 21 Oct 2025 21:51:56 +0200
-Message-ID: <20251021195039.062650307@linuxfoundation.org>
+Subject: [PATCH 6.12 129/136] mptcp: Use __sk_dst_get() and dst_dev_rcu() in mptcp_active_enable().
+Date: Tue, 21 Oct 2025 21:51:57 +0200
+Message-ID: <20251021195039.088834210@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -55,35 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 108a86c71c93ff28087994e6107bc99ebe336629 ]
+[ Upstream commit 893c49a78d9f85e4b8081b908fb7c407d018106a ]
 
-mptcp_active_enable() calls sk_dst_get(), which returns dst with its
-refcount bumped, but forgot dst_release().
+mptcp_active_enable() is called from subflow_finish_connect(),
+which is icsk->icsk_af_ops->sk_rx_dst_set() and it's not always
+under RCU.
 
-Let's add missing dst_release().
+Using sk_dst_get(sk)->dev could trigger UAF.
 
-Cc: stable@vger.kernel.org
+Let's use __sk_dst_get() and dst_dev_rcu().
+
 Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-7-kuniyu@google.com
+Link: https://patch.msgid.link/20250916214758.650211-8-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 833d4313bc1e ("mptcp: reset blackhole on success with non-loopback ifaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/ctrl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/ctrl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 --- a/net/mptcp/ctrl.c
 +++ b/net/mptcp/ctrl.c
-@@ -385,6 +385,8 @@ void mptcp_active_enable(struct sock *sk
+@@ -381,12 +381,15 @@ void mptcp_active_enable(struct sock *sk
+ 	struct mptcp_pernet *pernet = mptcp_get_pernet(sock_net(sk));
  
- 		if (dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK))
+ 	if (atomic_read(&pernet->active_disable_times)) {
+-		struct dst_entry *dst = sk_dst_get(sk);
++		struct net_device *dev;
++		struct dst_entry *dst;
+ 
+-		if (dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK))
++		rcu_read_lock();
++		dst = __sk_dst_get(sk);
++		dev = dst ? dst_dev_rcu(dst) : NULL;
++		if (dev && (dev->flags & IFF_LOOPBACK))
  			atomic_set(&pernet->active_disable_times, 0);
-+
-+		dst_release(dst);
+-
+-		dst_release(dst);
++		rcu_read_unlock();
  	}
  }
  
