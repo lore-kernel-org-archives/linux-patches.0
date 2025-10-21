@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C19C350A2C;
-	Tue, 21 Oct 2025 20:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB4D350A2C;
+	Tue, 21 Oct 2025 20:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076907; cv=none; b=RRsK5+MpOiUlS/byObqH8Fmh9+oBurJ8ITO6/DKdG64/wqi1x87tsP4AYeikD/3XqU53pHVI2rV1s17SPTUCKu4KsevL8P6X1+/rbwkGMTQAi1S6lVFa56RX5zTv+u7J1UkpHyOllOP/xIRDDVOpdXtQMXOEdQ+m1bEwVMTA/RI=
+	t=1761076910; cv=none; b=gjdfuhrgFu8Nr2rjp74H2lNTAzlEL0cTWw9poz7W1eP8Tnte4FfT+XLojAlyU7p52L7qUbTFGHOBcznGNtsi9r54wivfk7bwga5LoWXKyCOpuJotku3KIfnt+nxJMa1gF/ZM1QrYvkHNJaTKHVZsIn6zL7EkZ0BpmSPhEGi77e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076907; c=relaxed/simple;
-	bh=FfWW0DRBpPIJz9uif73rAsWoyStvM7tpizDjS87Ys9A=;
+	s=arc-20240116; t=1761076910; c=relaxed/simple;
+	bh=oHGOpscUARyeq4u7M1CHmxA/ZBZfzOVTnIMeDFkxFBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oY2LzxR4dbGDq50t21kDAMj8gtBP41hgN/yR72tR6Ka9MW+H095jAS7O/qkbgrwgkMvx823ubSMAvQnyPosUUhPwFh6IBDagf2gv2YS4FRzGuDg1LUMS6ZCFwYs0TZgkhyO2L/6J0T5otLKn3lcCDvF1FxwULkkJoz0jK+9ZTJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLk4KqAf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSB1iHBnkW0PyyCTQUbavJqXhCgudYIcMHpMKxrC9F8vI4d4kE88dlxLChLGvpGQtMY+rotZCVXTXk0RJR9sT8bpoGJGOB0LCDWC/Io/eIEYDndtQl2RLPqmlEFu5d7gSRwKXUPv6gGB4AfT3pGuNXQwsqDnZhgRTWvrWCWjlwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUPo7wh1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLk4KqAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADFAC4CEF1;
-	Tue, 21 Oct 2025 20:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUPo7wh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CCCC4CEF1;
+	Tue, 21 Oct 2025 20:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076907;
-	bh=FfWW0DRBpPIJz9uif73rAsWoyStvM7tpizDjS87Ys9A=;
+	s=korg; t=1761076910;
+	bh=oHGOpscUARyeq4u7M1CHmxA/ZBZfzOVTnIMeDFkxFBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLk4KqAfhnXIh10Y6jcOtsOLu2x0bQIrDwprXHrtgffFCMVsanUUrhjeTCtH4Mb2k
-	 9SaObUY61VvvuUwFaU4N1cnk0oYxj3xRe/iWsgoFBCyxOhHkD3oYxPtNg42KMDP4FF
-	 wn1AmreQVwtp4Cy3viqZMXUXtIY+Ae/ozjyUcra0=
+	b=KUPo7wh1g1v4vTMJRz3HXbrvmBgPtUBGt4HYZtF0gq8StF7ih9p4qFaHhNYW2mfLs
+	 H2muMxh8lWyaIXd894JPHzJkJcG9eThP53x2alUSWT1rxh/O+mJPXdkPLWGJz6pld0
+	 buzaRqTYqYc7zeia31WtJSWcLzEdzgdma08PFrn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/136] ASoC: nau8821: Add DMI quirk to bypass jack debounce circuit
-Date: Tue, 21 Oct 2025 21:51:02 +0200
-Message-ID: <20251021195037.749191237@linuxfoundation.org>
+Subject: [PATCH 6.12 075/136] drm/i915/guc: Skip communication warning on reset in progress
+Date: Tue, 21 Oct 2025 21:51:03 +0200
+Message-ID: <20251021195037.776565600@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,101 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Zhanjun Dong <zhanjun.dong@intel.com>
 
-[ Upstream commit 2b4eda7bf7d8a4e2f7575a98f55d8336dec0f302 ]
+[ Upstream commit 1696b0cfcf004a3af34ffe4c57a14e837ef18144 ]
 
-Stress testing the audio jack hotplug handling on a few Steam Deck units
-revealed that the debounce circuit is responsible for having a negative
-impact on the detection reliability, e.g. in some cases the ejection
-interrupt is not fired, while in other instances it goes into a kind of
-invalid state and generates a flood of misleading interrupts.
+GuC IRQ and tasklet handler receive just single G2H message, and let other
+messages to be received from next tasklet. During this chained tasklet
+process, if reset process started, communication will be disabled.
+Skip warning for this condition.
 
-Add new entries to the DMI table introduced via commit 1bc40efdaf4a
-("ASoC: nau8821: Add DMI quirk mechanism for active-high jack-detect")
-and extend the quirk logic to allow bypassing the debounce circuit used
-for jack detection on Valve Steam Deck LCD and OLED models.
-
-While at it, rename existing NAU8821_JD_ACTIVE_HIGH quirk bitfield to
-NAU8821_QUIRK_JD_ACTIVE_HIGH.  This should help improve code readability
-by differentiating from similarly named register bits.
-
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-4-f7b0e2543f09@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 65dd4ed0f4e1 ("drm/i915/guc: Don't receive all G2H messages in irq handler")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15018
+Signed-off-by: Zhanjun Dong <zhanjun.dong@intel.com>
+Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://lore.kernel.org/r/20250929152904.269776-1-zhanjun.dong@intel.com
+(cherry picked from commit 604b5ee4a653a70979ce689dbd6a5d942eb016bf)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_ct.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 56e769446eb30..bfb719ca4c2cf 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -26,7 +26,8 @@
- #include <sound/tlv.h>
- #include "nau8821.h"
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_ct.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_ct.c
+index 0d5197c0824a9..5cf3a516ccfb3 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_ct.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_ct.c
+@@ -1324,9 +1324,16 @@ static int ct_receive(struct intel_guc_ct *ct)
  
--#define NAU8821_JD_ACTIVE_HIGH			BIT(0)
-+#define NAU8821_QUIRK_JD_ACTIVE_HIGH			BIT(0)
-+#define NAU8821_QUIRK_JD_DB_BYPASS			BIT(1)
+ static void ct_try_receive_message(struct intel_guc_ct *ct)
+ {
++	struct intel_guc *guc = ct_to_guc(ct);
+ 	int ret;
  
- static int nau8821_quirk;
- static int quirk_override = -1;
-@@ -1166,9 +1167,10 @@ static void nau8821_setup_inserted_irq(struct nau8821 *nau8821)
- 	regmap_update_bits(regmap, NAU8821_R1D_I2S_PCM_CTRL2,
- 		NAU8821_I2S_MS_MASK, NAU8821_I2S_MS_SLAVE);
- 
--	/* Not bypass de-bounce circuit */
--	regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
--		NAU8821_JACK_DET_DB_BYPASS, 0);
-+	/* Do not bypass de-bounce circuit */
-+	if (!(nau8821_quirk & NAU8821_QUIRK_JD_DB_BYPASS))
-+		regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
-+				   NAU8821_JACK_DET_DB_BYPASS, 0);
- 
- 	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
- 		NAU8821_IRQ_EJECT_EN, 0);
-@@ -1863,7 +1865,23 @@ static const struct dmi_system_id nau8821_quirk_table[] = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
- 			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P-V2"),
- 		},
--		.driver_data = (void *)(NAU8821_JD_ACTIVE_HIGH),
-+		.driver_data = (void *)(NAU8821_QUIRK_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Valve Steam Deck LCD */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Jupiter"),
-+		},
-+		.driver_data = (void *)(NAU8821_QUIRK_JD_DB_BYPASS),
-+	},
-+	{
-+		/* Valve Steam Deck OLED */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
-+		},
-+		.driver_data = (void *)(NAU8821_QUIRK_JD_DB_BYPASS),
- 	},
- 	{}
- };
-@@ -1905,9 +1923,12 @@ static int nau8821_i2c_probe(struct i2c_client *i2c)
- 
- 	nau8821_check_quirks();
- 
--	if (nau8821_quirk & NAU8821_JD_ACTIVE_HIGH)
-+	if (nau8821_quirk & NAU8821_QUIRK_JD_ACTIVE_HIGH)
- 		nau8821->jkdet_polarity = 0;
- 
-+	if (nau8821_quirk & NAU8821_QUIRK_JD_DB_BYPASS)
-+		dev_dbg(dev, "Force bypassing jack detection debounce circuit\n");
+-	if (GEM_WARN_ON(!ct->enabled))
++	if (!ct->enabled) {
++		GEM_WARN_ON(!guc_to_gt(guc)->uc.reset_in_progress);
++		return;
++	}
 +
- 	nau8821_print_device_properties(nau8821);
++	/* When interrupt disabled, message handling is not expected */
++	if (!guc->interrupts.enabled)
+ 		return;
  
- 	nau8821_reset_chip(nau8821->regmap);
+ 	ret = ct_receive(ct);
 -- 
 2.51.0
 
