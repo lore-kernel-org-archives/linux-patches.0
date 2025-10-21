@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1CE350A2A;
-	Tue, 21 Oct 2025 19:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41160246798;
+	Tue, 21 Oct 2025 19:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076694; cv=none; b=jDUTyA1cn15PiYtFB3ZblcDzSOVq76vH0dJT4IcQBPzz5ObIGowpLrUBlqypLflXFZdmxP1kPrjmKqnWexU7f4SLkqWpdJ19Ilk043GHKodnYquSinXcSykT6fuakPPKqEU5SJgfhjtvZ9G0ikZI3uk0OSzoCCoQ2AMAYzJUbaQ=
+	t=1761076696; cv=none; b=d8ucUMByRzxXdXETWKEFfcvToF2C1K5pTqxtr98ozzW8VdPUZK3mIaAnRPuFULSkFX2OhlbJv8JcCuY9yM6eNrdjrA0dRG8FvKMkG9hQ7OLx2Ef8lCFW+DIX9y05qPyQYgzPyUo2yXbpX3KhpDPfGwMuBDYYJ3QCsQpgxRb3dnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076694; c=relaxed/simple;
-	bh=wFVLpyKImQbsGKPiM2Bjiu1EXngTC4M3/lGBlg+EUdM=;
+	s=arc-20240116; t=1761076696; c=relaxed/simple;
+	bh=ku87VREVJZ87wzyL5gn07V2xs4Ni8P32YXGaR3fr/EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfwT2qLm26wrCQFEDSr2fNXv5i0yC9Fd5wiycXsLt9EKT73EMBT0ZdUAqkLa3swqDIMpBJK7W6udlLeqR0zCZUEaqRPgJLFzBpg/ucDTGe8DQ1lS6SLSRSiZJGpvktN9UDFUSweV4psGPozmAjrNroN/1ihus25/2FlCDHKobIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/PmiyuJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+yWQtRh2RdZ/TRIDki0F6/C6Tci2lvuS6ERIPCxQbtg+uTADorleToQUgJsQ4IwQQCmIs7RXkAtzMgSVGjGOKsqW9X7fn7ZBZvr6WaWWlFe4c2ig8rw8FPJ8dkwDKh2BEeVLWyqUGhpzCSCFkxLbuw+z6L3NHVpCs5+LFUv1OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SjDH7vM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/PmiyuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200CFC4CEF1;
-	Tue, 21 Oct 2025 19:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SjDH7vM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C4EC116B1;
+	Tue, 21 Oct 2025 19:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076692;
-	bh=wFVLpyKImQbsGKPiM2Bjiu1EXngTC4M3/lGBlg+EUdM=;
+	s=korg; t=1761076695;
+	bh=ku87VREVJZ87wzyL5gn07V2xs4Ni8P32YXGaR3fr/EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/PmiyuJbLA51xWt+4+YhExMryo/3vox2FoJfqVG1nJ6YpTebY6nN/1DO+qUZEye9
-	 JCpWybPbcsPJZDmKOdZNGZkrfEdsz0PRVm2dTEPajq3mLLqSqDcffa118VOqN3K7Pi
-	 3LHU1dxWsGZk8UterROg66cYrU54kjHcWpUeSHWw=
+	b=2SjDH7vMbhpN/dMHlBT8Vc4GBO8IhquUfkiTupnKIAITOAgX8YnkLpINMBrf6jBj+
+	 D+B4rVW3s81mEgdTGiECrZq9AIaLuhefkPJPtgJyLZXlldJN1QjbtU0Wb4ybtKhsoS
+	 yFA8py4iFgr4lsinMtMnsIGZFipXs0EBlA/aRdkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.12 001/136] drm/xe/guc: Check GuC running state before deregistering exec queue
-Date: Tue, 21 Oct 2025 21:49:49 +0200
-Message-ID: <20251021195035.992460476@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
+Subject: [PATCH 6.12 010/136] ext4: detect invalid INLINE_DATA + EXTENTS flag combination
+Date: Tue, 21 Oct 2025 21:49:58 +0200
+Message-ID: <20251021195036.209695898@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,76 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 9f64b3cd051b825de0a2a9f145c8e003200cedd5 upstream.
+commit 1d3ad183943b38eec2acf72a0ae98e635dc8456b upstream.
 
-In normal operation, a registered exec queue is disabled and
-deregistered through the GuC, and freed only after the GuC confirms
-completion. However, if the driver is forced to unbind while the exec
-queue is still running, the user may call exec_destroy() after the GuC
-has already been stopped and CT communication disabled.
+syzbot reported a BUG_ON in ext4_es_cache_extent() when opening a verity
+file on a corrupted ext4 filesystem mounted without a journal.
 
-In this case, the driver cannot receive a response from the GuC,
-preventing proper cleanup of exec queue resources. Fix this by directly
-releasing the resources when GuC is not running.
+The issue is that the filesystem has an inode with both the INLINE_DATA
+and EXTENTS flags set:
 
-Here is the failure dmesg log:
-"
-[  468.089581] ---[ end trace 0000000000000000 ]---
-[  468.089608] pci 0000:03:00.0: [drm] *ERROR* GT0: GUC ID manager unclean (1/65535)
-[  468.090558] pci 0000:03:00.0: [drm] GT0:     total 65535
-[  468.090562] pci 0000:03:00.0: [drm] GT0:     used 1
-[  468.090564] pci 0000:03:00.0: [drm] GT0:     range 1..1 (1)
-[  468.092716] ------------[ cut here ]------------
-[  468.092719] WARNING: CPU: 14 PID: 4775 at drivers/gpu/drm/xe/xe_ttm_vram_mgr.c:298 ttm_vram_mgr_fini+0xf8/0x130 [xe]
-"
+    EXT4-fs error (device loop0): ext4_cache_extents:545: inode #15:
+    comm syz.0.17: corrupted extent tree: lblk 0 < prev 66
 
-v2: use xe_uc_fw_is_running() instead of xe_guc_ct_enabled().
-    As CT may go down and come back during VF migration.
+Investigation revealed that the inode has both flags set:
+    DEBUG: inode 15 - flag=1, i_inline_off=164, has_inline=1, extents_flag=1
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: stable@vger.kernel.org
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://lore.kernel.org/r/20251010172529.2967639-2-shuicheng.lin@intel.com
-(cherry picked from commit 9b42321a02c50a12b2beb6ae9469606257fbecea)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+This is an invalid combination since an inode should have either:
+- INLINE_DATA: data stored directly in the inode
+- EXTENTS: data stored in extent-mapped blocks
+
+Having both flags causes ext4_has_inline_data() to return true, skipping
+extent tree validation in __ext4_iget(). The unvalidated out-of-order
+extents then trigger a BUG_ON in ext4_es_cache_extent() due to integer
+underflow when calculating hole sizes.
+
+Fix this by detecting this invalid flag combination early in ext4_iget()
+and rejecting the corrupted inode.
+
+Cc: stable@kernel.org
+Reported-and-tested-by: syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=038b7bf43423e132b308
+Suggested-by: Zhang Yi <yi.zhang@huawei.com>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Message-ID: <20250930112810.315095-1-kartikey406@gmail.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -41,6 +41,7 @@
- #include "xe_ring_ops_types.h"
- #include "xe_sched_job.h"
- #include "xe_trace.h"
-+#include "xe_uc_fw.h"
- #include "xe_vm.h"
- 
- static struct xe_guc *
-@@ -1285,7 +1286,17 @@ static void __guc_exec_queue_process_msg
- 	xe_assert(xe, !(q->flags & EXEC_QUEUE_FLAG_PERMANENT));
- 	trace_xe_exec_queue_cleanup_entity(q);
- 
--	if (exec_queue_registered(q))
-+	/*
-+	 * Expected state transitions for cleanup:
-+	 * - If the exec queue is registered and GuC firmware is running, we must first
-+	 *   disable scheduling and deregister the queue to ensure proper teardown and
-+	 *   resource release in the GuC, then destroy the exec queue on driver side.
-+	 * - If the GuC is already stopped (e.g., during driver unload or GPU reset),
-+	 *   we cannot expect a response for the deregister request. In this case,
-+	 *   it is safe to directly destroy the exec queue on driver side, as the GuC
-+	 *   will not process further requests and all resources must be cleaned up locally.
-+	 */
-+	if (exec_queue_registered(q) && xe_uc_fw_is_running(&guc->fw))
- 		disable_scheduling_deregister(guc, q);
- 	else
- 		__guc_exec_queue_fini(guc, q);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4904,6 +4904,14 @@ struct inode *__ext4_iget(struct super_b
+ 	}
+ 	ei->i_flags = le32_to_cpu(raw_inode->i_flags);
+ 	ext4_set_inode_flags(inode, true);
++	/* Detect invalid flag combination - can't have both inline data and extents */
++	if (ext4_test_inode_flag(inode, EXT4_INODE_INLINE_DATA) &&
++	    ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)) {
++		ext4_error_inode(inode, function, line, 0,
++			"inode has both inline data and extents flags");
++		ret = -EFSCORRUPTED;
++		goto bad_inode;
++	}
+ 	inode->i_blocks = ext4_inode_blocks(raw_inode, ei);
+ 	ei->i_file_acl = le32_to_cpu(raw_inode->i_file_acl_lo);
+ 	if (ext4_has_feature_64bit(sb))
 
 
