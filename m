@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1EE350A2A;
-	Tue, 21 Oct 2025 19:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1CE350A2A;
+	Tue, 21 Oct 2025 19:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076690; cv=none; b=p4KO+dkay5/l7VC/t4R0SIZC95+9hw70RRnf0tVnBkx0VzKtsEZ35NaTRolCTd2WNg0eI/A31dDPqShhCLqCWpQGoHIHlKVJX0TlpU4NSqFqNENuUBWgBCbtdCl3fLbxryTajcgRDNPrFbekQqpFHx8aZZtMiKcB1RtWZwqTdyY=
+	t=1761076694; cv=none; b=jDUTyA1cn15PiYtFB3ZblcDzSOVq76vH0dJT4IcQBPzz5ObIGowpLrUBlqypLflXFZdmxP1kPrjmKqnWexU7f4SLkqWpdJ19Ilk043GHKodnYquSinXcSykT6fuakPPKqEU5SJgfhjtvZ9G0ikZI3uk0OSzoCCoQ2AMAYzJUbaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076690; c=relaxed/simple;
-	bh=fCv3RlD/BtvkgOeL6/zXEvNzoI8q9VJmW/ND8RSpSHU=;
+	s=arc-20240116; t=1761076694; c=relaxed/simple;
+	bh=wFVLpyKImQbsGKPiM2Bjiu1EXngTC4M3/lGBlg+EUdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQmG5aQkMceE/USqc9Se2++82yY+R/3lfq9uPTkJ05HMSYrnUIsFe6CMRQdn/n5jQIq6TjpNI1SoB2GYSFamUnULugcDgZ6ad7djdcqN9iN7Qqn6CRxvL83vqYem1GIa7FMDQFsXrPyoturH+8NWfUD1F3qiSm3qw75Gl7mpXsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3W9vTaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IfwT2qLm26wrCQFEDSr2fNXv5i0yC9Fd5wiycXsLt9EKT73EMBT0ZdUAqkLa3swqDIMpBJK7W6udlLeqR0zCZUEaqRPgJLFzBpg/ucDTGe8DQ1lS6SLSRSiZJGpvktN9UDFUSweV4psGPozmAjrNroN/1ihus25/2FlCDHKobIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/PmiyuJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3W9vTaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1E8C4CEF1;
-	Tue, 21 Oct 2025 19:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/PmiyuJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200CFC4CEF1;
+	Tue, 21 Oct 2025 19:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076689;
-	bh=fCv3RlD/BtvkgOeL6/zXEvNzoI8q9VJmW/ND8RSpSHU=;
+	s=korg; t=1761076692;
+	bh=wFVLpyKImQbsGKPiM2Bjiu1EXngTC4M3/lGBlg+EUdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3W9vTaWycyyJry4svmckl4Grlhte0j+NeNqKL6ZqsVk13eaN9aIHnJVxAw/gKu4M
-	 e9TqFLCySx2H8NZGmD0Ppr+t2UjF2UGw9r/Iq+kjEwj9DRK2ry+aA1nFIoKNEAFESj
-	 171QmeXfiRha6e49+2+gJ9+WfVlmu/GDJ9PqXOuI=
+	b=u/PmiyuJbLA51xWt+4+YhExMryo/3vox2FoJfqVG1nJ6YpTebY6nN/1DO+qUZEye9
+	 JCpWybPbcsPJZDmKOdZNGZkrfEdsz0PRVm2dTEPajq3mLLqSqDcffa118VOqN3K7Pi
+	 3LHU1dxWsGZk8UterROg66cYrU54kjHcWpUeSHWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chuck.lever@oracle.com,
-	Scott Mayhew <smayhew@redhat.com>
-Subject: [PATCH 6.6 099/105] nfsd: decouple the xprtsec policy check from check_nfsd_access()
-Date: Tue, 21 Oct 2025 21:51:48 +0200
-Message-ID: <20251021195024.004492578@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 001/136] drm/xe/guc: Check GuC running state before deregistering exec queue
+Date: Tue, 21 Oct 2025 21:49:49 +0200
+Message-ID: <20251021195035.992460476@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
-References: <20251021195021.492915002@linuxfoundation.org>
+In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
+References: <20251021195035.953989698@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,178 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit e4f574ca9c6dfa66695bb054ff5df43ecea873ec ]
+commit 9f64b3cd051b825de0a2a9f145c8e003200cedd5 upstream.
 
-This is a backport of e4f574ca9c6d specifically for the 6.6-stable
-kernel.  It differs from the upstream version mainly in that it's
-working around the absence of some 6.12-era commits:
-- 1459ad57673b nfsd: Move error code mapping to per-version proc code.
-- 0a183f24a7ae NFSD: Handle @rqstp == NULL in check_nfsd_access()
-- 5e66d2d92a1c nfsd: factor out __fh_verify to allow NULL rqstp to be
-  passed
+In normal operation, a registered exec queue is disabled and
+deregistered through the GuC, and freed only after the GuC confirms
+completion. However, if the driver is forced to unbind while the exec
+queue is still running, the user may call exec_destroy() after the GuC
+has already been stopped and CT communication disabled.
 
-A while back I had reported that an NFSv3 client could successfully
-mount using '-o xprtsec=none' an export that had been exported with
-'xprtsec=tls:mtls'.  By "successfully" I mean that the mount command
-would succeed and the mount would show up in /proc/mount.  Attempting
-to do anything futher with the mount would be met with NFS3ERR_ACCES.
+In this case, the driver cannot receive a response from the GuC,
+preventing proper cleanup of exec queue resources. Fix this by directly
+releasing the resources when GuC is not running.
 
-Transport Layer Security isn't an RPC security flavor or pseudo-flavor,
-so we shouldn't be conflating them when determining whether the access
-checks can be bypassed.  Split check_nfsd_access() into two helpers, and
-have fh_verify() call the helpers directly since fh_verify() has
-logic that allows one or both of the checks to be skipped.  All other
-sites will continue to call check_nfsd_access().
+Here is the failure dmesg log:
+"
+[  468.089581] ---[ end trace 0000000000000000 ]---
+[  468.089608] pci 0000:03:00.0: [drm] *ERROR* GT0: GUC ID manager unclean (1/65535)
+[  468.090558] pci 0000:03:00.0: [drm] GT0:     total 65535
+[  468.090562] pci 0000:03:00.0: [drm] GT0:     used 1
+[  468.090564] pci 0000:03:00.0: [drm] GT0:     range 1..1 (1)
+[  468.092716] ------------[ cut here ]------------
+[  468.092719] WARNING: CPU: 14 PID: 4775 at drivers/gpu/drm/xe/xe_ttm_vram_mgr.c:298 ttm_vram_mgr_fini+0xf8/0x130 [xe]
+"
 
-Link: https://lore.kernel.org/linux-nfs/ZjO3Qwf_G87yNXb2@aion/
-Fixes: 9280c5774314 ("NFSD: Handle new xprtsec= export option")
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
+v2: use xe_uc_fw_is_running() instead of xe_guc_ct_enabled().
+    As CT may go down and come back during VF migration.
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: stable@vger.kernel.org
+Cc: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20251010172529.2967639-2-shuicheng.lin@intel.com
+(cherry picked from commit 9b42321a02c50a12b2beb6ae9469606257fbecea)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++--------
- fs/nfsd/export.h |    2 +
- fs/nfsd/nfsfh.c  |   12 ++++++++++-
- 3 files changed, 65 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_submit.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -1071,28 +1071,62 @@ static struct svc_export *exp_find(struc
- 	return exp;
- }
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -41,6 +41,7 @@
+ #include "xe_ring_ops_types.h"
+ #include "xe_sched_job.h"
+ #include "xe_trace.h"
++#include "xe_uc_fw.h"
+ #include "xe_vm.h"
  
--__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp)
-+/**
-+ * check_xprtsec_policy - check if access to export is allowed by the
-+ * 			  xprtsec policy
-+ * @exp: svc_export that is being accessed.
-+ * @rqstp: svc_rqst attempting to access @exp.
-+ *
-+ * Helper function for check_nfsd_access().  Note that callers should be
-+ * using check_nfsd_access() instead of calling this function directly.  The
-+ * one exception is fh_verify() since it has logic that may result in one
-+ * or both of the helpers being skipped.
-+ *
-+ * Return values:
-+ *   %nfs_ok if access is granted, or
-+ *   %nfserr_acces or %nfserr_wrongsec if access is denied
-+ */
-+__be32 check_xprtsec_policy(struct svc_export *exp, struct svc_rqst *rqstp)
- {
--	struct exp_flavor_info *f, *end = exp->ex_flavors + exp->ex_nflavors;
- 	struct svc_xprt *xprt = rqstp->rq_xprt;
+ static struct xe_guc *
+@@ -1285,7 +1286,17 @@ static void __guc_exec_queue_process_msg
+ 	xe_assert(xe, !(q->flags & EXEC_QUEUE_FLAG_PERMANENT));
+ 	trace_xe_exec_queue_cleanup_entity(q);
  
- 	if (exp->ex_xprtsec_modes & NFSEXP_XPRTSEC_NONE) {
- 		if (!test_bit(XPT_TLS_SESSION, &xprt->xpt_flags))
--			goto ok;
-+			return nfs_ok;
- 	}
- 	if (exp->ex_xprtsec_modes & NFSEXP_XPRTSEC_TLS) {
- 		if (test_bit(XPT_TLS_SESSION, &xprt->xpt_flags) &&
- 		    !test_bit(XPT_PEER_AUTH, &xprt->xpt_flags))
--			goto ok;
-+			return nfs_ok;
- 	}
- 	if (exp->ex_xprtsec_modes & NFSEXP_XPRTSEC_MTLS) {
- 		if (test_bit(XPT_TLS_SESSION, &xprt->xpt_flags) &&
- 		    test_bit(XPT_PEER_AUTH, &xprt->xpt_flags))
--			goto ok;
-+			return nfs_ok;
- 	}
--	goto denied;
- 
--ok:
-+	return rqstp->rq_vers < 4 ? nfserr_acces : nfserr_wrongsec;
-+}
-+
-+/**
-+ * check_security_flavor - check if access to export is allowed by the
-+ * 			  xprtsec policy
-+ * @exp: svc_export that is being accessed.
-+ * @rqstp: svc_rqst attempting to access @exp.
-+ *
-+ * Helper function for check_nfsd_access().  Note that callers should be
-+ * using check_nfsd_access() instead of calling this function directly.  The
-+ * one exception is fh_verify() since it has logic that may result in one
-+ * or both of the helpers being skipped.
-+ *
-+ * Return values:
-+ *   %nfs_ok if access is granted, or
-+ *   %nfserr_acces or %nfserr_wrongsec if access is denied
-+ */
-+__be32 check_security_flavor(struct svc_export *exp, struct svc_rqst *rqstp)
-+{
-+	struct exp_flavor_info *f, *end = exp->ex_flavors + exp->ex_nflavors;
-+
- 	/* legacy gss-only clients are always OK: */
- 	if (exp->ex_client == rqstp->rq_gssclient)
- 		return 0;
-@@ -1117,10 +1151,20 @@ ok:
- 	if (nfsd4_spo_must_allow(rqstp))
- 		return 0;
- 
--denied:
- 	return rqstp->rq_vers < 4 ? nfserr_acces : nfserr_wrongsec;
- }
- 
-+__be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp)
-+{
-+	__be32 status;
-+
-+	status = check_xprtsec_policy(exp, rqstp);
-+	if (status != nfs_ok)
-+		return status;
-+
-+	return check_security_flavor(exp, rqstp);
-+}
-+
- /*
-  * Uses rq_client and rq_gssclient to find an export; uses rq_client (an
-  * auth_unix client) if it's available and has secinfo information;
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -100,6 +100,8 @@ struct svc_expkey {
- #define EX_WGATHER(exp)		((exp)->ex_flags & NFSEXP_GATHERED_WRITES)
- 
- int nfsexp_flags(struct svc_rqst *rqstp, struct svc_export *exp);
-+__be32 check_xprtsec_policy(struct svc_export *exp, struct svc_rqst *rqstp);
-+__be32 check_security_flavor(struct svc_export *exp, struct svc_rqst *rqstp);
- __be32 check_nfsd_access(struct svc_export *exp, struct svc_rqst *rqstp);
- 
- /*
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -371,6 +371,16 @@ fh_verify(struct svc_rqst *rqstp, struct
- 		goto out;
- 
- 	/*
-+	 * NLM is allowed to bypass the xprtsec policy check because lockd
-+	 * doesn't support xprtsec.
-+	 */
-+	if (!(access & NFSD_MAY_LOCK)) {
-+		error = check_xprtsec_policy(exp, rqstp);
-+		if (error)
-+			goto out;
-+	}
-+
+-	if (exec_queue_registered(q))
 +	/*
- 	 * pseudoflavor restrictions are not enforced on NLM,
- 	 * which clients virtually always use auth_sys for,
- 	 * even while using RPCSEC_GSS for NFS.
-@@ -386,7 +396,7 @@ fh_verify(struct svc_rqst *rqstp, struct
- 			&& exp->ex_path.dentry == dentry)
- 		goto skip_pseudoflavor_check;
- 
--	error = check_nfsd_access(exp, rqstp);
-+	error = check_security_flavor(exp, rqstp);
- 	if (error)
- 		goto out;
- 
++	 * Expected state transitions for cleanup:
++	 * - If the exec queue is registered and GuC firmware is running, we must first
++	 *   disable scheduling and deregister the queue to ensure proper teardown and
++	 *   resource release in the GuC, then destroy the exec queue on driver side.
++	 * - If the GuC is already stopped (e.g., during driver unload or GPU reset),
++	 *   we cannot expect a response for the deregister request. In this case,
++	 *   it is safe to directly destroy the exec queue on driver side, as the GuC
++	 *   will not process further requests and all resources must be cleaned up locally.
++	 */
++	if (exec_queue_registered(q) && xe_uc_fw_is_running(&guc->fw))
+ 		disable_scheduling_deregister(guc, q);
+ 	else
+ 		__guc_exec_queue_fini(guc, q);
 
 
