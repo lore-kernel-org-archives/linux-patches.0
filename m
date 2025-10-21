@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB47274B35;
-	Tue, 21 Oct 2025 20:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240C22773F1;
+	Tue, 21 Oct 2025 20:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077357; cv=none; b=tmDjg7dPOjO7dRoozVp1RmKUG0NqQX0uHNJlPYB+Guo5lHD8k5iCQ4sScEhUm86QwSXmwyUW0tBXlfdxlF3nJWfSTECJlqmBrfekHy1S3BnCy4CXFQwa7KMOzaie6uGZYKHn922lxLjHsIZXL8fmGc7W17+DZb/2QMvW+WIQf80=
+	t=1761077361; cv=none; b=fHoko4tZlMk1U0SwFhf4HOW+KG3e8im0B/BCztbaj0uVgugzq+rk88ML3OQV9Lijqznh0bW5zA2R2WdczW6kaRzkVcKkK8kNhevocv5HZdqz8oChcKo7CjaYaVOJlvebwB2eScC2C2TLfFHMj9D6TXUTyndSt63mAIvXEqzHaaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077357; c=relaxed/simple;
-	bh=FulxzIZzwhmvtSGHV867pvvBI7VKYugsae2Z8y2l11w=;
+	s=arc-20240116; t=1761077361; c=relaxed/simple;
+	bh=xogXHObruw5FGgFprr1rM6FTNT2FvKOtjKm04d3BbHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmQ6EPfqKjFcJluunaMUeOBG6V1NPtV6DOI+xaUCN52mPRp59N2DAqSFk5aCKbTZsaiXvAQ5LF88aO8qOBwfZ9RU50p/bRK+UQ3mlEfeX126Ct/IEDEFtksiYHGQ08HoDM+47b90oEqwWS/2UkPihbHj2QF16m2y8QUSw1Nbwr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIBKH8AG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTdsrbnmfYfgQ06lKTaiA43JHc5M+f8mnBLXLFFzbbR5TjtvAbbzzyJNxDe0DIVhwJsR9tsqbnL6yWY2bThseb/f3YAoIDzAo6ce6/5HIb9+phAFx4t+7+v1TSAneg2IdB9F5DJ7+yFAtOQk63davLXJ0W3Vg9Pt/7pOe1A56mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGmwK7DW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIBKH8AG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8AC4CEF1;
-	Tue, 21 Oct 2025 20:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGmwK7DW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DC7C4CEF1;
+	Tue, 21 Oct 2025 20:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077357;
-	bh=FulxzIZzwhmvtSGHV867pvvBI7VKYugsae2Z8y2l11w=;
+	s=korg; t=1761077360;
+	bh=xogXHObruw5FGgFprr1rM6FTNT2FvKOtjKm04d3BbHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIBKH8AGO9M5GRDwSL1//5msVugy+vJoHvRP+IAOlohp3+uqcomgLE3S3l9fegODV
-	 r+0B0LAFx24IUdMX0AHlRu5uAXFH1Iz1XfRObF6L+7t3UW2EzK1e8sdLQ9B7S6kRBe
-	 Q+6ZGoWgsAC2ZW33Komt2HPyJoZZxGNs8rBIucEk=
+	b=BGmwK7DWp3609HZdceW6jHTXqYszxQCRQANEIU0el3SM3NswWBe5ujNyNxwxeSVgd
+	 zqQt5RWDndcIfLccb1/k5o7vvF/ZIG9Nb2yk8V99XC7yc/M80MP+KmsnphQSTOd9rp
+	 szFjiTBnBPYvabglzfkAnW/NVcou54iZUp4XWRx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/159] tcp: fix tcp_tso_should_defer() vs large RTT
-Date: Tue, 21 Oct 2025 21:50:56 +0200
-Message-ID: <20251021195045.096918697@linuxfoundation.org>
+	Edd Barrett <edd@theunixzoo.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.17 044/159] perf/core: Fix address filter match with backing files
+Date: Tue, 21 Oct 2025 21:50:21 +0200
+Message-ID: <20251021195044.261503558@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,86 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 295ce1eb36ae47dc862d6c8a1012618a25516208 ]
+commit ebfc8542ad62d066771e46c8aa30f5624b89cad8 upstream.
 
-Neal reported that using neper tcp_stream with TCP_TX_DELAY
-set to 50ms would often lead to flows stuck in a small cwnd mode,
-regardless of the congestion control.
+It was reported that Intel PT address filters do not work in Docker
+containers.  That relates to the use of overlayfs.
 
-While tcp_stream sets TCP_TX_DELAY too late after the connect(),
-it highlighted two kernel bugs.
+overlayfs records the backing file in struct vm_area_struct vm_file,
+instead of the user file that the user mmapped.  In order for an address
+filter to match, it must compare to the user file inode.  There is an
+existing helper file_user_inode() for that situation.
 
-The following heuristic in tcp_tso_should_defer() seems wrong
-for large RTT:
+Use file_user_inode() instead of file_inode() to get the inode for address
+filter matching.
 
-delta = tp->tcp_clock_cache - head->tstamp;
-/* If next ACK is likely to come too late (half srtt), do not defer */
-if ((s64)(delta - (u64)NSEC_PER_USEC * (tp->srtt_us >> 4)) < 0)
-      goto send_now;
+Example:
 
-If next ACK is expected to come in more than 1 ms, we should
-not defer because we prefer a smooth ACK clocking.
+  Setup:
 
-While blamed commit was a step in the good direction, it was not
-generic enough.
+    # cd /root
+    # mkdir test ; cd test ; mkdir lower upper work merged
+    # cp `which cat` lower
+    # mount -t overlay overlay -olowerdir=lower,upperdir=upper,workdir=work merged
+    # perf record --buildid-mmap -e intel_pt//u --filter 'filter * @ /root/test/merged/cat' -- /root/test/merged/cat /proc/self/maps
+    ...
+    55d61d246000-55d61d2e1000 r-xp 00018000 00:1a 3418                       /root/test/merged/cat
+    ...
+    [ perf record: Woken up 1 times to write data ]
+    [ perf record: Captured and wrote 0.015 MB perf.data ]
+    # perf buildid-cache --add /root/test/merged/cat
 
-Another patch fixing TCP_TX_DELAY for established flows
-will be proposed when net-next reopens.
+  Before:
 
-Fixes: 50c8339e9299 ("tcp: tso: restore IW10 after TSO autosizing")
-Reported-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Tested-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20251011115742.1245771-1-edumazet@google.com
-[pabeni@redhat.com: fixed whitespace issue]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    Address filter does not match so there are no control flow packets
+
+    # perf script --itrace=e
+    # perf script --itrace=b | wc -l
+    0
+    # perf script -D | grep 'TIP.PGE' | wc -l
+    0
+    #
+
+  After:
+
+    Address filter does match so there are control flow packets
+
+    # perf script --itrace=e
+    # perf script --itrace=b | wc -l
+    235
+    # perf script -D | grep 'TIP.PGE' | wc -l
+    57
+    #
+
+With respect to stable kernels, overlayfs mmap function ovl_mmap() was
+added in v4.19 but file_user_inode() was not added until v6.8 and never
+back-ported to stable kernels.  FMODE_BACKING that it depends on was added
+in v6.5.  This issue has gone largely unnoticed, so back-porting before
+v6.8 is probably not worth it, so put 6.8 as the stable kernel prerequisite
+version, although in practice the next long term kernel is 6.12.
+
+Closes: https://lore.kernel.org/linux-perf-users/aBCwoq7w8ohBRQCh@fremen.lan
+Reported-by: Edd Barrett <edd@theunixzoo.co.uk>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Amir Goldstein <amir73il@gmail.com>
+Cc: stable@vger.kernel.org # 6.8
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_output.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ kernel/events/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index caf11920a8786..16251d8e1b592 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2219,7 +2219,8 @@ static bool tcp_tso_should_defer(struct sock *sk, struct sk_buff *skb,
- 				 u32 max_segs)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
--	u32 send_win, cong_win, limit, in_flight;
-+	u32 send_win, cong_win, limit, in_flight, threshold;
-+	u64 srtt_in_ns, expected_ack, how_far_is_the_ack;
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct sk_buff *head;
- 	int win_divisor;
-@@ -2281,9 +2282,19 @@ static bool tcp_tso_should_defer(struct sock *sk, struct sk_buff *skb,
- 	head = tcp_rtx_queue_head(sk);
- 	if (!head)
- 		goto send_now;
--	delta = tp->tcp_clock_cache - head->tstamp;
--	/* If next ACK is likely to come too late (half srtt), do not defer */
--	if ((s64)(delta - (u64)NSEC_PER_USEC * (tp->srtt_us >> 4)) < 0)
-+
-+	srtt_in_ns = (u64)(NSEC_PER_USEC >> 3) * tp->srtt_us;
-+	/* When is the ACK expected ? */
-+	expected_ack = head->tstamp + srtt_in_ns;
-+	/* How far from now is the ACK expected ? */
-+	how_far_is_the_ack = expected_ack - tp->tcp_clock_cache;
-+
-+	/* If next ACK is likely to come too late,
-+	 * ie in more than min(1ms, half srtt), do not defer.
-+	 */
-+	threshold = min(srtt_in_ns >> 1, NSEC_PER_MSEC);
-+
-+	if ((s64)(how_far_is_the_ack - threshold) > 0)
- 		goto send_now;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9479,7 +9479,7 @@ static bool perf_addr_filter_match(struc
+ 	if (!filter->path.dentry)
+ 		return false;
  
- 	/* Ok, it looks like it is advisable to defer.
--- 
-2.51.0
-
+-	if (d_inode(filter->path.dentry) != file_inode(file))
++	if (d_inode(filter->path.dentry) != file_user_inode(file))
+ 		return false;
+ 
+ 	if (filter->offset > offset + size)
 
 
