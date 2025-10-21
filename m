@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF75526F292;
-	Tue, 21 Oct 2025 19:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6D527381E;
+	Tue, 21 Oct 2025 19:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076520; cv=none; b=q7oN9aDseNer2cRo1qpX+KPi+jFl2IHnbtI4RrYejLIyIJaLkSYx3Hf4/ERYTDk/EkrdBb6NKGqeg1Wz0V2Xh1zELa53u0oOUlkCgBqqPK20e6hhviV1HDAK4+c/uRoBdOhaJWbb2iJ2UkqywyZ4jnf3qRmCb3rqeshon3y4L9E=
+	t=1761076524; cv=none; b=SKUeLn/cU3ZGsvHpK2uVlI4HLabktLMksDi8RM1a7K3qg5fZ4shDasedYAV/Cbx+rn5/idZMRqoqXC5cjX9BMPq2Gq3vws/D/jfmxbWDd5Ks4ete0CdvLcgEiS8S2sxsrO5SdmJy0xMytFJ7uKni0EzhtUqOUJdwxIw0MQ0/ltk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076520; c=relaxed/simple;
-	bh=MGjgbC/jFgk9C0CytzjcP/3fSHkPcCb8AjITugdUEUU=;
+	s=arc-20240116; t=1761076524; c=relaxed/simple;
+	bh=Hi1epSTKvEogTwbFkI4ogsZaDU5OfQsxfaxKS95hvOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNEOfmwzBQoqlEwCLsj7y/ZAZvdiD0a4VeJSuElz8YGDeAnRiPyWw/bsSE6RPa7MpC6Pl7L1GSJDk8do1ko6cWxYY6m2mlqFYV+JY3EM/mi314+3t9Jo8B+vCn8LyzJ8nSwSX9AouJ+/Ok1Kf9xfYXLRmfdkyTmQ4RZIwjy1x3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kzf2NVVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LZE7ay8+72RkbnVTVpVSEYpJr37ge/WkmzesWg7NP1W3TtJvzwzuTjskpfHI6cP9UYtRX86eT4NeookYH2bnBLT2Kn74wfzHJeF4k6yma4xQ8TX6GkHvOMW/+5tYLj8rKWJhD71yf6D8bSogMcZ7xxgUXnyqNJJxU0bGitWzFfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjt+CUey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kzf2NVVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC46C4CEF1;
-	Tue, 21 Oct 2025 19:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjt+CUey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAED1C4CEF5;
+	Tue, 21 Oct 2025 19:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076520;
-	bh=MGjgbC/jFgk9C0CytzjcP/3fSHkPcCb8AjITugdUEUU=;
+	s=korg; t=1761076524;
+	bh=Hi1epSTKvEogTwbFkI4ogsZaDU5OfQsxfaxKS95hvOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kzf2NVVUC0GSe4rFH6KWgX2puuqIQMuz9Kijixf/U3qDjiaIpxY4uCRqzyRwE+DG6
-	 QF7H/0T0b3eHI/0fNpN2PvSBJjtrxBeZmxPh2426fxo75lqKy7cbwqgaleApIa4f8U
-	 UE/DMP7L6cgzjAed0+B6u3v+yD06LUFK9eEgaRRY=
+	b=kjt+CUeyw7q2rEbM7+fmCNkSea6kRbVt9NX+1MerzXKZVJJMP2XlqHXX1vwLWqI2Y
+	 HZtW6KC5TugCaPohzlrGOreHmjKv4IPlsY8uyofoYhJfC/+BKKnxqtuuw2f1fzLEKU
+	 XM1DlpLuu8uNeukciaSV+6YRtcw1QHdHnJt8ArQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 005/105] jbd2: ensure that all ongoing I/O complete before freeing blocks
-Date: Tue, 21 Oct 2025 21:50:14 +0200
-Message-ID: <20251021195021.621764081@linuxfoundation.org>
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 054/105] drm/bridge: lt9211: Drop check for last nibble of version register
+Date: Tue, 21 Oct 2025 21:51:03 +0200
+Message-ID: <20251021195022.962479389@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,85 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Marek Vasut <marek.vasut@mailbox.org>
 
-commit 3c652c3a71de1d30d72dc82c3bead8deb48eb749 upstream.
+[ Upstream commit db74b04edce1bc86b9a5acc724c7ca06f427ab60 ]
 
-When releasing file system metadata blocks in jbd2_journal_forget(), if
-this buffer has not yet been checkpointed, it may have already been
-written back, currently be in the process of being written back, or has
-not yet written back.  jbd2_journal_forget() calls
-jbd2_journal_try_remove_checkpoint() to check the buffer's status and
-add it to the current transaction if it has not been written back. This
-buffer can only be reallocated after the transaction is committed.
+There is now a new LT9211 rev. U5, which reports chip ID 0x18 0x01 0xe4 .
+The previous LT9211 reported chip ID 0x18 0x01 0xe3 , which is what the
+driver checks for right now. Since there is a possibility there will be
+yet another revision of the LT9211 in the future, drop the last version
+nibble check to allow all future revisions of the chip to work with this
+driver.
 
-jbd2_journal_try_remove_checkpoint() attempts to lock the buffer and
-check its dirty status while holding the buffer lock. If the buffer has
-already been written back, everything proceeds normally. However, there
-are two issues. First, the function returns immediately if the buffer is
-locked by the write-back process. It does not wait for the write-back to
-complete. Consequently, until the current transaction is committed and
-the block is reallocated, there is no guarantee that the I/O will
-complete. This means that ongoing I/O could write stale metadata to the
-newly allocated block, potentially corrupting data. Second, the function
-unlocks the buffer as soon as it detects that the buffer is still dirty.
-If a concurrent write-back occurs immediately after this unlocking and
-before clear_buffer_dirty() is called in jbd2_journal_forget(), data
-corruption can theoretically still occur.
+This fix makes LT9211 rev. U5 work with this driver.
 
-Although these two issues are unlikely to occur in practice since the
-undergoing metadata writeback I/O does not take this long to complete,
-it's better to explicitly ensure that all ongoing I/O operations are
-completed.
-
-Fixes: 597599268e3b ("jbd2: discard dirty data when forgetting an un-journalled buffer")
-Cc: stable@kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20250916093337.3161016-2-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8ce4129e3de4 ("drm/bridge: lt9211: Add Lontium LT9211 bridge driver")
+Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251011110017.12521-1-marek.vasut@mailbox.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9211.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1649,6 +1649,7 @@ int jbd2_journal_forget(handle_t *handle
- 	int drop_reserve = 0;
- 	int err = 0;
- 	int was_modified = 0;
-+	int wait_for_writeback = 0;
- 
- 	if (is_handle_aborted(handle))
- 		return -EROFS;
-@@ -1772,18 +1773,22 @@ int jbd2_journal_forget(handle_t *handle
- 		}
- 
- 		/*
--		 * The buffer is still not written to disk, we should
--		 * attach this buffer to current transaction so that the
--		 * buffer can be checkpointed only after the current
--		 * transaction commits.
-+		 * The buffer has not yet been written to disk. We should
-+		 * either clear the buffer or ensure that the ongoing I/O
-+		 * is completed, and attach this buffer to current
-+		 * transaction so that the buffer can be checkpointed only
-+		 * after the current transaction commits.
- 		 */
- 		clear_buffer_dirty(bh);
-+		wait_for_writeback = 1;
- 		__jbd2_journal_file_buffer(jh, transaction, BJ_Forget);
- 		spin_unlock(&journal->j_list_lock);
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9211.c b/drivers/gpu/drm/bridge/lontium-lt9211.c
+index 4d404f5ef87eb..ea192c90b543e 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9211.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9211.c
+@@ -120,8 +120,7 @@ static int lt9211_read_chipid(struct lt9211 *ctx)
  	}
- drop:
- 	__brelse(bh);
- 	spin_unlock(&jh->b_state_lock);
-+	if (wait_for_writeback)
-+		wait_on_buffer(bh);
- 	jbd2_journal_put_journal_head(jh);
- 	if (drop_reserve) {
- 		/* no need to reserve log space for this block -bzzz */
+ 
+ 	/* Test for known Chip ID. */
+-	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE ||
+-	    chipid[2] != REG_CHIPID2_VALUE) {
++	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE) {
+ 		dev_err(ctx->dev, "Unknown Chip ID: 0x%02x 0x%02x 0x%02x\n",
+ 			chipid[0], chipid[1], chipid[2]);
+ 		return -EINVAL;
+-- 
+2.51.0
+
 
 
