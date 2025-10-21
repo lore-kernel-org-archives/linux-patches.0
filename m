@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B66279798;
-	Tue, 21 Oct 2025 20:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A91A350A07;
+	Tue, 21 Oct 2025 20:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077547; cv=none; b=Jinhv/3+cvriS1XPhK3Y3lhcoCfWLtAYL2Y3jiQCKZ5jX4W1fkK07HFzcKti7ohH+jYUXOVJR2rZYegUsnws8XtRBzaPMmy9+OyBpg4MdOQ/WQH8ydiI+viDJAwYFEa8Aa2uu2VkyA5vCiahUkOyJmJdHx3aTvMN8R8b/x/mt7o=
+	t=1761077550; cv=none; b=OkpPDdpXHU0Z00z1y9RTh9TnzWzXZHpOA8JuXVSNyN8Gu+n1hYUb5lRC+gisPU2CGcROMC8qHzzPHDyYnZB3tR7X7IIO2CGj6p++yoc9khDauq6Vge06x9ChFxBkip64LID7+FvAoBARCqRGX/DP1l6tXbhGm0NQAIaJqAsa6iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077547; c=relaxed/simple;
-	bh=ELv9SNmbFgrD+oLpYUMIgIgGdAEAetoMZEVSff5EK6A=;
+	s=arc-20240116; t=1761077550; c=relaxed/simple;
+	bh=xIXFJjXYRN1awfXORHePPqo2lBrOqvGEyeBK2zqP/Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGIHGgljFoswFjkf/rgJQMqmhiy9C8PWUnuBCVy4HPM/HZrz3TawdJmRcfWRgPSl2cE8PhrJ7Mc5KX/Uzgm06rWfP+4OxWhyaUdDywZJOZa2cW8dIaYzNppPPZZcK5ViD3jogrSDPTOmnwPC1vFNf//X4W407M12/biD3pawb3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcsTmx0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYoPnQ5o4SDckK7fR7yvFCKSoR13UIYRAvPgtQ2JMpJHtngDqq5/EQt4MubUw4dOWqPmbbYAJ6JoecWIcanqovXmd31aB1I5q6SDf5o6OgwJG/Ht4Iy1p6KmnSvNtXVZymUlW+xaBmjHyrG8aA/MNhU/AG9JLkiClh3qliU4jM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiKSuqkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcsTmx0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88844C4CEF1;
-	Tue, 21 Oct 2025 20:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiKSuqkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C42C4CEF1;
+	Tue, 21 Oct 2025 20:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077547;
-	bh=ELv9SNmbFgrD+oLpYUMIgIgGdAEAetoMZEVSff5EK6A=;
+	s=korg; t=1761077549;
+	bh=xIXFJjXYRN1awfXORHePPqo2lBrOqvGEyeBK2zqP/Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcsTmx0ynpF8tdwg+RgMpAcYx0Nw8fNOC5Zt/V9cteQTvBG6Q0Emy4xI8xQI7RFSJ
-	 dx+NAHjXq2f5ukQDft0ISHhYYpDtX94LHJO1KuASrUc9bYIyVwlcdf1az4TZm23TDw
-	 uRK/ZLr92GwYehyrvb4bUlrRBz9s3t77I53Yb+Ro=
+	b=fiKSuqkDFmygS0oyzN6AjqBkpSJ5RaP/Cgx18zFEbN6bV82sAttfrFLjsXfpL2kfs
+	 m795I5PPlizDLqyPBTm92I8VOucefNweV1Qdd5lcXLXSJLGw4+JtGsdikjAewQ3v16
+	 /+VnGBrBI3wrpxcpacrBu2kT1y8XX2aA4ioHq3VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Jann Horn <jannh@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 095/159] drm/bridge: lt9211: Drop check for last nibble of version register
-Date: Tue, 21 Oct 2025 21:51:12 +0200
-Message-ID: <20251021195045.469903398@linuxfoundation.org>
+Subject: [PATCH 6.17 086/159] tls: wait for async encrypt in case of error during latter iterations of sendmsg
+Date: Tue, 21 Oct 2025 21:51:03 +0200
+Message-ID: <20251021195045.258313753@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,43 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit db74b04edce1bc86b9a5acc724c7ca06f427ab60 ]
+[ Upstream commit b014a4e066c555185b7c367efacdc33f16695495 ]
 
-There is now a new LT9211 rev. U5, which reports chip ID 0x18 0x01 0xe4 .
-The previous LT9211 reported chip ID 0x18 0x01 0xe3 , which is what the
-driver checks for right now. Since there is a possibility there will be
-yet another revision of the LT9211 in the future, drop the last version
-nibble check to allow all future revisions of the chip to work with this
-driver.
+If we hit an error during the main loop of tls_sw_sendmsg_locked (eg
+failed allocation), we jump to send_end and immediately
+return. Previous iterations may have queued async encryption requests
+that are still pending. We should wait for those before returning, as
+we could otherwise be reading from memory that userspace believes
+we're not using anymore, which would be a sort of use-after-free.
 
-This fix makes LT9211 rev. U5 work with this driver.
+This is similar to what tls_sw_recvmsg already does: failures during
+the main loop jump to the "wait for async" code, not straight to the
+unlock/return.
 
-Fixes: 8ce4129e3de4 ("drm/bridge: lt9211: Add Lontium LT9211 bridge driver")
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251011110017.12521-1-marek.vasut@mailbox.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/c793efe9673b87f808d84fdefc0f732217030c52.1760432043.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9211.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/tls/tls_sw.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9211.c b/drivers/gpu/drm/bridge/lontium-lt9211.c
-index 399fa7eebd49c..03fc8fd10f20a 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9211.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9211.c
-@@ -121,8 +121,7 @@ static int lt9211_read_chipid(struct lt9211 *ctx)
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 36ca3011ab876..1478d515badc8 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1054,7 +1054,7 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 			if (ret == -EINPROGRESS)
+ 				num_async++;
+ 			else if (ret != -EAGAIN)
+-				goto send_end;
++				goto end;
+ 		}
  	}
  
- 	/* Test for known Chip ID. */
--	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE ||
--	    chipid[2] != REG_CHIPID2_VALUE) {
-+	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE) {
- 		dev_err(ctx->dev, "Unknown Chip ID: 0x%02x 0x%02x 0x%02x\n",
- 			chipid[0], chipid[1], chipid[2]);
- 		return -EINVAL;
+@@ -1226,8 +1226,9 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 			goto alloc_encrypted;
+ 	}
+ 
++send_end:
+ 	if (!num_async) {
+-		goto send_end;
++		goto end;
+ 	} else if (num_zc || eor) {
+ 		int err;
+ 
+@@ -1245,7 +1246,7 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 		tls_tx_records(sk, msg->msg_flags);
+ 	}
+ 
+-send_end:
++end:
+ 	ret = sk_stream_error(sk, msg->msg_flags, ret);
+ 	return copied > 0 ? copied : ret;
+ }
 -- 
 2.51.0
 
