@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C4A272E7C;
-	Tue, 21 Oct 2025 19:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C5926738B;
+	Tue, 21 Oct 2025 19:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076443; cv=none; b=mOjcCL5/M3MMgUODrPIccsiHA7emEJkjBa/yGUh2soIrKucBbu4hG8thnnq3nxgJuL9GYmSKiDSO4eNVKbpZ8PZnD6tttMt2EjE4yjMTsVTDAea6yV1iwdwdpXmreFPgN+YSXYhVRogBfKxebaDX+yg6wbajXcNVulZLWtSZP5k=
+	t=1761076447; cv=none; b=c4NVpSosDfuP7TKzgNLpKLsVLP+l5PeWgwYPTTMDaY8ZfMtfwBt8NL0SjRIfLLsEvzrVokV8Lma8P4T2krfZaVMglF6zxo7kijY7a4OYsVjBW//+SbrtOEE3xaEXUeMoqzTcXFIe7AbxhaNkdxdm4b4AAguEnIYHJczYgox+LZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076443; c=relaxed/simple;
-	bh=REbb3oDmQUByAepH++HGUCoNKM6QK4G8L5mXdQv/DOM=;
+	s=arc-20240116; t=1761076447; c=relaxed/simple;
+	bh=WFdroiBYogNRKrHRAnfAZAuGWaijCZKzJof47kXhMC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZulSUIQp8j0NCDWWlydOsaFsMxfP7LS/fg/qWrMLRXcmZdzb1OAb1q/3VomTCTGwG++R8FmxE6bnyij54w3tgbkgXfJwwAkPsr4k1q+iIrCxEd0qd79Tp/2crKW7HBk1CGgJp3clS2UcCGIU+gfUSCV5lZIhREt5p7REs0mzBRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs2sjphP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+uIc0/BxFNkoP7ezZRBeM0Ofm9bKJD4d+MVG+2+2syOg5NuYtr2YvyKFlFPLOLkALSdAC0qzfWd5Pw4k1HuAC+UOUNGuqQPEdGGqOORWzVYFMLZylRMvWW/U1ilu23c1H8fAHeONOlPt4JqV8OLFmCPjVggmNTKUvZOAl4DXno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNIW2093; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs2sjphP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E568C4CEF5;
-	Tue, 21 Oct 2025 19:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNIW2093"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD9C4CEF7;
+	Tue, 21 Oct 2025 19:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076440;
-	bh=REbb3oDmQUByAepH++HGUCoNKM6QK4G8L5mXdQv/DOM=;
+	s=korg; t=1761076447;
+	bh=WFdroiBYogNRKrHRAnfAZAuGWaijCZKzJof47kXhMC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fs2sjphPPrm0aS34GlcKNwAwYTihZs/tnhxXGcoYbtbIl9Ps5pfNqAAlS7PBmnq+X
-	 TPkC6Zba7a4HIjCO8ponkK4N/Fyq95b/CHpwgPv78FbpRcLUMJ8gNvVuB75VU+MW8z
-	 p//XSKlV5B6nFOhRlR4WrbJCjMRU1tM5J0i+dhns=
+	b=YNIW2093MPCAXL9XJLIgM4/US2gdOQ5exTwABkVjx9hfR54Sk/GmmG1NyKC3pcxhY
+	 QA30H3uH4+XHCsGpYhxc492xyjl1gRjBRvCXLl5k6X40RuGNIg9+PR6ftpYqDbzVW1
+	 6uQSa9bR5fpCDQsa4jnnpwsTV55IfshPX9joARKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 008/105] btrfs: fix clearing of BTRFS_FS_RELOC_RUNNING if relocation already running
-Date: Tue, 21 Oct 2025 21:50:17 +0200
-Message-ID: <20251021195021.689783065@linuxfoundation.org>
+	Patrik Flykt <patrik.flykt@linux.intel.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 036/105] can: m_can: m_can_plat_remove(): add missing pm_runtime_disable()
+Date: Tue, 21 Oct 2025 21:50:45 +0200
+Message-ID: <20251021195022.550879315@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -53,93 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 7e5a5983edda664e8e4bb20af17b80f5135c655c upstream.
+[ Upstream commit ba569fb07a7e9e9b71e9282e27e993ba859295c2 ]
 
-When starting relocation, at reloc_chunk_start(), if we happen to find
-the flag BTRFS_FS_RELOC_RUNNING is already set we return an error
-(-EINPROGRESS) to the callers, however the callers call reloc_chunk_end()
-which will clear the flag BTRFS_FS_RELOC_RUNNING, which is wrong since
-relocation was started by another task and still running.
+Commit 227619c3ff7c ("can: m_can: move runtime PM enable/disable to
+m_can_platform") moved the PM runtime enable from the m_can core
+driver into the m_can_platform.
 
-Finding the BTRFS_FS_RELOC_RUNNING flag already set is an unexpected
-scenario, but still our current behaviour is not correct.
+That patch forgot to move the pm_runtime_disable() to
+m_can_plat_remove(), so that unloading the m_can_platform driver
+causes an "Unbalanced pm_runtime_enable!" error message.
 
-Fix this by never calling reloc_chunk_end() if reloc_chunk_start() has
-returned an error, which is what logically makes sense, since the general
-widespread pattern is to have end functions called only if the counterpart
-start functions succeeded. This requires changing reloc_chunk_start() to
-clear BTRFS_FS_RELOC_RUNNING if there's a pending cancel request.
+Add the missing pm_runtime_disable() to m_can_plat_remove() to fix the
+problem.
 
-Fixes: 907d2710d727 ("btrfs: add cancellable chunk relocation support")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Patrik Flykt <patrik.flykt@linux.intel.com>
+Fixes: 227619c3ff7c ("can: m_can: move runtime PM enable/disable to m_can_platform")
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://patch.msgid.link/20250929-m_can-fix-state-handling-v4-1-682b49b49d9a@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/can/m_can/m_can_platform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -3877,6 +3877,7 @@ out:
- /*
-  * Mark start of chunk relocation that is cancellable. Check if the cancellation
-  * has been requested meanwhile and don't start in that case.
-+ * NOTE: if this returns an error, reloc_chunk_end() must not be called.
-  *
-  * Return:
-  *   0             success
-@@ -3893,10 +3894,8 @@ static int reloc_chunk_start(struct btrf
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index cdb28d6a092c6..e5477775992e6 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -183,7 +183,7 @@ static void m_can_plat_remove(struct platform_device *pdev)
+ 	struct m_can_classdev *mcan_class = &priv->cdev;
  
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0) {
- 		btrfs_info(fs_info, "chunk relocation canceled on start");
--		/*
--		 * On cancel, clear all requests but let the caller mark
--		 * the end after cleanup operations.
--		 */
-+		/* On cancel, clear all requests. */
-+		clear_and_wake_up_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags);
- 		atomic_set(&fs_info->reloc_cancel_req, 0);
- 		return -ECANCELED;
- 	}
-@@ -3905,9 +3904,11 @@ static int reloc_chunk_start(struct btrf
- 
- /*
-  * Mark end of chunk relocation that is cancellable and wake any waiters.
-+ * NOTE: call only if a previous call to reloc_chunk_start() succeeded.
-  */
- static void reloc_chunk_end(struct btrfs_fs_info *fs_info)
- {
-+	ASSERT(test_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags));
- 	/* Requested after start, clear bit first so any waiters can continue */
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0)
- 		btrfs_info(fs_info, "chunk relocation canceled during operation");
-@@ -4119,9 +4120,9 @@ out:
- 	if (err && rw)
- 		btrfs_dec_block_group_ro(rc->block_group);
- 	iput(rc->data_inode);
-+	reloc_chunk_end(fs_info);
- out_put_bg:
- 	btrfs_put_block_group(bg);
--	reloc_chunk_end(fs_info);
- 	free_reloc_control(rc);
- 	return err;
+ 	m_can_class_unregister(mcan_class);
+-
++	pm_runtime_disable(mcan_class->dev);
+ 	m_can_class_free_dev(mcan_class->net);
  }
-@@ -4311,8 +4312,8 @@ out_clean:
- 		err = ret;
- out_unset:
- 	unset_reloc_control(rc);
--out_end:
- 	reloc_chunk_end(fs_info);
-+out_end:
- 	free_reloc_control(rc);
- out:
- 	free_reloc_roots(&reloc_roots);
+ 
+-- 
+2.51.0
+
 
 
