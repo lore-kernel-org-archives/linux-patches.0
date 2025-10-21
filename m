@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929A82773F4;
-	Tue, 21 Oct 2025 20:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5DD2773F4;
+	Tue, 21 Oct 2025 20:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077497; cv=none; b=jW6Z8KbP5Le2zXRtBOn2fM82c0HFC7vyMiZqCR/TvEvVmFO1qqVYLYt2XUZX3NaLXrIBZ7/Y1oIHMODJxBUCUCbYOAiz/Ld1DDSM/fSZZsXbv/e3aQydl4496S/onamVRKkytvOOR91RZoItYr0PlQM/7Ati7oNxiCiNCVjlL9o=
+	t=1761077501; cv=none; b=lkxQQnUR8MxOqIAi/YqED9f6U4rK9W9Z+dPmuLU6fgVeJX4LgmZo1y4wwm24txQBBrqwEEBv6r5bIahkYz1ckstQ7pBJ8mdXSRI7ss9DRMS8D8ISIFYT0hW2Of1W5aIg5DHeMJPPO/Edcia59VHE3BQpWjkmR3JsizKhUogxdkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077497; c=relaxed/simple;
-	bh=DSoZoE3mCwUPkPg+d2UA/+B/whXQpF2R22NW0TGSWmA=;
+	s=arc-20240116; t=1761077501; c=relaxed/simple;
+	bh=Xy+S0Inu2jn8a0kJ+ETs/X6UGJ8js9PhMhvHIAurSjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOUF9bbJbDUU7zDnuouRGsqrkNEK0bvzZ5x6NUTvfc34OIh0qnaYPBEnU8KDPxXHJwVK+c/G9hx4Fv7evGUOE61zatg2NV4nc4fs1Q5vhuBgfIB+i27DTDurlyoDcNPd2Kv1pJai09KDJ1AniTn8ZuwlZADYUSbBCSUxkhKvWSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjVQ9TU7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shxTSFfAY7ubnTdP6z9aZKK6LVlKXaT6I5Dc5PAq561kefho++Sv+xTGbBqSBtWcUpSUKr+M3yvGIILTaYkhDtMaROkjcpFJeWQcHddMk1pu5NN1biUy3jwHaXXKaE9N7LD/EiMCK43IX0vpLlF48l7s0SVglaAM02LKUl1XDgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJwehy+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjVQ9TU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFB9C4CEF7;
-	Tue, 21 Oct 2025 20:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJwehy+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98BCC4CEF1;
+	Tue, 21 Oct 2025 20:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077497;
-	bh=DSoZoE3mCwUPkPg+d2UA/+B/whXQpF2R22NW0TGSWmA=;
+	s=korg; t=1761077501;
+	bh=Xy+S0Inu2jn8a0kJ+ETs/X6UGJ8js9PhMhvHIAurSjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjVQ9TU7OfGX6I9SH8xo2zjNC067q+bXEScHiXYLqvnpfe2z81XHkubN9Sg32NlEr
-	 R33p1FZnL1xUfq/7M6YGouecVM3yjTc+XlKyf51iRNBoybGrZUqC0rTqtFNKM8lBhm
-	 RpQRAEoaaNw20jzZgF5d3jAffbRl/vzduO++GtF8=
+	b=WJwehy+L+7kaJVlC5ebtQrUoPMx5XyzPkUY2IMX/y35K9+Qco52T0jLelXcjTP9oP
+	 OmoR2yA2zQf8N5Nla93QBfCSOfxAiUajo8Vw6t25M5J86SeV7RjNlXgyH+YHG1aPMY
+	 xdESqBJI4FHUHegyViHIbWVcYujf2qH/+kXNVIck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
+	Martin George <marting@netapp.com>,
+	Prashanth Adurthi <prashana@netapp.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 123/159] accel/qaic: Synchronize access to DBC request queue head & tail pointer
-Date: Tue, 21 Oct 2025 21:51:40 +0200
-Message-ID: <20251021195046.114565555@linuxfoundation.org>
+Subject: [PATCH 6.17 124/159] nvme-auth: update sc_c in host response
+Date: Tue, 21 Oct 2025 21:51:41 +0200
+Message-ID: <20251021195046.137031807@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -53,103 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+From: Martin George <martinus.gpy@gmail.com>
 
-[ Upstream commit 52e59f7740ba23bbb664914967df9a00208ca10c ]
+[ Upstream commit 7e091add9c433bab6912228799bf508e2414acc3 ]
 
-Two threads of the same process can potential read and write parallelly to
-head and tail pointers of the same DBC request queue. This could lead to a
-race condition and corrupt the DBC request queue.
+The sc_c field is currently not updated in the host response to the
+controller challenge leading to failures while attempting secure
+channel concatenation. Fix this by adding a new sc_c variable to the
+dhchap queue context structure which is appropriately set during
+negotiate and then used in the host response.
 
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
-[jhugo: Add fixes tag]
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251007061837.206132-1-youssef.abdulrahman@oss.qualcomm.com
+Fixes: e88a7595b57f ("nvme-tcp: request secure channel concatenation")
+Signed-off-by: Martin George <marting@netapp.com>
+Signed-off-by: Prashanth Adurthi <prashana@netapp.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic.h      |  2 ++
- drivers/accel/qaic/qaic_data.c | 12 ++++++++++--
- drivers/accel/qaic/qaic_drv.c  |  3 +++
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/nvme/host/auth.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index c31081e42cee0..820d133236dd1 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -97,6 +97,8 @@ struct dma_bridge_chan {
- 	 * response queue's head and tail pointer of this DBC.
- 	 */
- 	void __iomem		*dbc_base;
-+	/* Synchronizes access to Request queue's head and tail pointer */
-+	struct mutex		req_lock;
- 	/* Head of list where each node is a memory handle queued in request queue */
- 	struct list_head	xfer_list;
- 	/* Synchronizes DBC readers during cleanup */
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 797289e9d7806..c4f117edb266e 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1356,13 +1356,17 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 		goto release_ch_rcu;
- 	}
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 012fcfc79a73b..a01178caf15bb 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -36,6 +36,7 @@ struct nvme_dhchap_queue_context {
+ 	u8 status;
+ 	u8 dhgroup_id;
+ 	u8 hash_id;
++	u8 sc_c;
+ 	size_t hash_len;
+ 	u8 c1[64];
+ 	u8 c2[64];
+@@ -154,6 +155,8 @@ static int nvme_auth_set_dhchap_negotiate_data(struct nvme_ctrl *ctrl,
+ 	data->auth_protocol[0].dhchap.idlist[34] = NVME_AUTH_DHGROUP_6144;
+ 	data->auth_protocol[0].dhchap.idlist[35] = NVME_AUTH_DHGROUP_8192;
  
-+	ret = mutex_lock_interruptible(&dbc->req_lock);
-+	if (ret)
-+		goto release_ch_rcu;
++	chap->sc_c = data->sc_c;
 +
- 	head = readl(dbc->dbc_base + REQHP_OFF);
- 	tail = readl(dbc->dbc_base + REQTP_OFF);
+ 	return size;
+ }
  
- 	if (head == U32_MAX || tail == U32_MAX) {
- 		/* PCI link error */
- 		ret = -ENODEV;
--		goto release_ch_rcu;
-+		goto unlock_req_lock;
- 	}
- 
- 	queue_level = head <= tail ? tail - head : dbc->nelem - (head - tail);
-@@ -1370,11 +1374,12 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	ret = send_bo_list_to_device(qdev, file_priv, exec, args->hdr.count, is_partial, dbc,
- 				     head, &tail);
+@@ -489,7 +492,7 @@ static int nvme_auth_dhchap_setup_host_response(struct nvme_ctrl *ctrl,
+ 	ret = crypto_shash_update(shash, buf, 2);
  	if (ret)
--		goto release_ch_rcu;
-+		goto unlock_req_lock;
- 
- 	/* Finalize commit to hardware */
- 	submit_ts = ktime_get_ns();
- 	writel(tail, dbc->dbc_base + REQTP_OFF);
-+	mutex_unlock(&dbc->req_lock);
- 
- 	update_profiling_data(file_priv, exec, args->hdr.count, is_partial, received_ts,
- 			      submit_ts, queue_level);
-@@ -1382,6 +1387,9 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	if (datapath_polling)
- 		schedule_work(&dbc->poll_work);
- 
-+unlock_req_lock:
-+	if (ret)
-+		mutex_unlock(&dbc->req_lock);
- release_ch_rcu:
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
- unlock_dev_srcu:
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index e31bcb0ecfc94..e162f4b8a262a 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -454,6 +454,9 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev,
- 			return NULL;
- 		init_waitqueue_head(&qdev->dbc[i].dbc_release);
- 		INIT_LIST_HEAD(&qdev->dbc[i].bo_lists);
-+		ret = drmm_mutex_init(drm, &qdev->dbc[i].req_lock);
-+		if (ret)
-+			return NULL;
- 	}
- 
- 	return qdev;
+ 		goto out;
+-	memset(buf, 0, sizeof(buf));
++	*buf = chap->sc_c;
+ 	ret = crypto_shash_update(shash, buf, 1);
+ 	if (ret)
+ 		goto out;
+@@ -500,6 +503,7 @@ static int nvme_auth_dhchap_setup_host_response(struct nvme_ctrl *ctrl,
+ 				  strlen(ctrl->opts->host->nqn));
+ 	if (ret)
+ 		goto out;
++	memset(buf, 0, sizeof(buf));
+ 	ret = crypto_shash_update(shash, buf, 1);
+ 	if (ret)
+ 		goto out;
 -- 
 2.51.0
 
