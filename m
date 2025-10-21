@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC10350A0D;
-	Tue, 21 Oct 2025 20:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03042350A0D;
+	Tue, 21 Oct 2025 20:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077208; cv=none; b=dwjhez/K3HBKfgJHx6GEwcxW+ntTOAHzjUGGpN4vyp+7wwI0gH08GT5CM5kw+tEfnoOgZw1SmSzER5nRnytFr9ayKdgRsQWggEejbklZtqRlhDTjD7IgK7nFBWHLwhKnsZDF3HfE9miB1UstBGZYKcPLWoUxYhv/MXALZbu04tQ=
+	t=1761077212; cv=none; b=C0NJVVCyo3s12W3+V1mKjeYtkyBQrgHd8jFElVsg4o99OYOZyd4FXrQqyDHG1VFwx5yAeIFQ+Kw7NSLQUILJrgBPjwoSgRy5FUevpzwGLBsZQ7GtRM03LOzpaJRvrdMyMzZ9dYTUzi4BVwhpR4hzHEeXQOsI3HWM+FmdUNyY0SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077208; c=relaxed/simple;
-	bh=RZN3jkHreAjNjR71eVkk/lc29vP/vPnMwu6lgxE/SYc=;
+	s=arc-20240116; t=1761077212; c=relaxed/simple;
+	bh=ZOz032bR4CMoMXOdjkjwYTsmcDBHpJMsfilyRtNicPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEdQPeipoO0uoOTPXpHYKQKXDGV4C5PqE9nLBFWFFrdQe+0IoNQjYHYuwMp3Ypeoi+XIFLElYdQG/wpXwf/zU9u1V6faT1fbnzhv0J2TrUQZwGVV8VK+zHX5L4A5T36VBaULBRiCnhv1WrHsq0fZUof98apTH6qhDW5J2EetPWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guQlKu5U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwvKU6aumNOa/VISecvqIAB7tgyIbf6es4yvYZyHL5YwpnrfJrqOGyt/cJUym0YZ4lT2JMaHFbpofIcHOdo76iO+NlwoM1TpQteIV3gc6+gL5aUuEL+ZLKuo/OvIujdaUDEFRR4vdkia7RtHeiW9OVyGIjXoBd59OtsZrQ1LdK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUMW1dqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guQlKu5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A706C4CEF1;
-	Tue, 21 Oct 2025 20:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUMW1dqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E08C4CEF1;
+	Tue, 21 Oct 2025 20:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077208;
-	bh=RZN3jkHreAjNjR71eVkk/lc29vP/vPnMwu6lgxE/SYc=;
+	s=korg; t=1761077211;
+	bh=ZOz032bR4CMoMXOdjkjwYTsmcDBHpJMsfilyRtNicPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guQlKu5UJx8d5NGs02MWIhLANipjw7x2uC7QIcC/s/SuEJNqsf5PSBQaqJA6zduFJ
-	 A9GB19xBlHtj0EbW1BSNghOWbDDZXCtbcmfauZDpenHWCo2+xyX0s5k0+PQ2VVQ+sg
-	 Uio1dD/bANMVzi/6O78EJUsfC/RyL9j/ciM+yfBI=
+	b=sUMW1dqQRwgcp1Tnb1S7r56HCrbYeBS7HGhHzt/zoYnDK9ZEVlCKhgydz2frjfsbx
+	 lyYnnTICndL2tKCc0Dklx1bqn3fd/oAKsmoe2gZEz3RqJKQVvkD05s+VFW1my1jOzH
+	 LDtmJ6v0R0r2t/X/aHbAJKf27HscjXPiw/UDRkxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runcheng Lu <runcheng.lu@hpmicro.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Celeste Liu <uwu@coelacanthus.name>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.17 032/159] can: gs_usb: increase max interface to U8_MAX
-Date: Tue, 21 Oct 2025 21:50:09 +0200
-Message-ID: <20251021195043.970154893@linuxfoundation.org>
+	Eugene Korenevsky <ekorenevsky@aliyun.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.17 033/159] cifs: parse_dfs_referrals: prevent oob on malformed input
+Date: Tue, 21 Oct 2025 21:50:10 +0200
+Message-ID: <20251021195043.994576943@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,118 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Celeste Liu <uwu@coelacanthus.name>
+From: Eugene Korenevsky <ekorenevsky@aliyun.com>
 
-commit 2a27f6a8fb5722223d526843040f747e9b0e8060 upstream.
+commit 6447b0e355562a1ff748c4a2ffb89aae7e84d2c9 upstream.
 
-This issue was found by Runcheng Lu when develop HSCanT USB to CAN FD
-converter[1]. The original developers may have only 3 interfaces
-device to test so they write 3 here and wait for future change.
+Malicious SMB server can send invalid reply to FSCTL_DFS_GET_REFERRALS
 
-During the HSCanT development, we actually used 4 interfaces, so the
-limitation of 3 is not enough now. But just increase one is not
-future-proofed. Since the channel index type in gs_host_frame is u8,
-just make canch[] become a flexible array with a u8 index, so it
-naturally constraint by U8_MAX and avoid statically allocate 256
-pointer for every gs_usb device.
+- reply smaller than sizeof(struct get_dfs_referral_rsp)
+- reply with number of referrals smaller than NumberOfReferrals in the
+header
 
-[1]: https://github.com/cherry-embedded/HSCanT-hardware
+Processing of such replies will cause oob.
 
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Reported-by: Runcheng Lu <runcheng.lu@hpmicro.com>
+Return -EINVAL error on such replies to prevent oob-s.
+
+Signed-off-by: Eugene Korenevsky <ekorenevsky@aliyun.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Signed-off-by: Celeste Liu <uwu@coelacanthus.name>
-Link: https://patch.msgid.link/20250930-gs-usb-max-if-v5-1-863330bf6666@coelacanthus.name
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ fs/smb/client/misc.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -289,11 +289,6 @@ struct gs_host_frame {
- #define GS_MAX_RX_URBS 30
- #define GS_NAPI_WEIGHT 32
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -916,6 +916,14 @@ parse_dfs_referrals(struct get_dfs_refer
+ 	char *data_end;
+ 	struct dfs_referral_level_3 *ref;
  
--/* Maximum number of interfaces the driver supports per device.
-- * Current hardware only supports 3 interfaces. The future may vary.
-- */
--#define GS_MAX_INTF 3
--
- struct gs_tx_context {
- 	struct gs_can *dev;
- 	unsigned int echo_id;
-@@ -324,7 +319,6 @@ struct gs_can {
- 
- /* usb interface struct */
- struct gs_usb {
--	struct gs_can *canch[GS_MAX_INTF];
- 	struct usb_anchor rx_submitted;
- 	struct usb_device *udev;
- 
-@@ -336,9 +330,11 @@ struct gs_usb {
- 
- 	unsigned int hf_size_rx;
- 	u8 active_channels;
-+	u8 channel_cnt;
- 
- 	unsigned int pipe_in;
- 	unsigned int pipe_out;
-+	struct gs_can *canch[] __counted_by(channel_cnt);
- };
- 
- /* 'allocate' a tx context.
-@@ -599,7 +595,7 @@ static void gs_usb_receive_bulk_callback
- 	}
- 
- 	/* device reports out of range channel id */
--	if (hf->channel >= GS_MAX_INTF)
-+	if (hf->channel >= parent->channel_cnt)
- 		goto device_detach;
- 
- 	dev = parent->canch[hf->channel];
-@@ -699,7 +695,7 @@ resubmit_urb:
- 	/* USB failure take down all interfaces */
- 	if (rc == -ENODEV) {
- device_detach:
--		for (rc = 0; rc < GS_MAX_INTF; rc++) {
-+		for (rc = 0; rc < parent->channel_cnt; rc++) {
- 			if (parent->canch[rc])
- 				netif_device_detach(parent->canch[rc]->netdev);
- 		}
-@@ -1461,17 +1457,19 @@ static int gs_usb_probe(struct usb_inter
- 	icount = dconf.icount + 1;
- 	dev_info(&intf->dev, "Configuring for %u interfaces\n", icount);
- 
--	if (icount > GS_MAX_INTF) {
-+	if (icount > type_max(parent->channel_cnt)) {
- 		dev_err(&intf->dev,
- 			"Driver cannot handle more that %u CAN interfaces\n",
--			GS_MAX_INTF);
-+			type_max(parent->channel_cnt));
- 		return -EINVAL;
- 	}
- 
--	parent = kzalloc(sizeof(*parent), GFP_KERNEL);
-+	parent = kzalloc(struct_size(parent, canch, icount), GFP_KERNEL);
- 	if (!parent)
- 		return -ENOMEM;
- 
-+	parent->channel_cnt = icount;
++	if (rsp_size < sizeof(*rsp)) {
++		cifs_dbg(VFS | ONCE,
++			 "%s: header is malformed (size is %u, must be %zu)\n",
++			 __func__, rsp_size, sizeof(*rsp));
++		rc = -EINVAL;
++		goto parse_DFS_referrals_exit;
++	}
 +
- 	init_usb_anchor(&parent->rx_submitted);
+ 	*num_of_nodes = le16_to_cpu(rsp->NumberOfReferrals);
  
- 	usb_set_intfdata(intf, parent);
-@@ -1532,7 +1530,7 @@ static void gs_usb_disconnect(struct usb
- 		return;
+ 	if (*num_of_nodes < 1) {
+@@ -925,6 +933,15 @@ parse_dfs_referrals(struct get_dfs_refer
+ 		goto parse_DFS_referrals_exit;
  	}
  
--	for (i = 0; i < GS_MAX_INTF; i++)
-+	for (i = 0; i < parent->channel_cnt; i++)
- 		if (parent->canch[i])
- 			gs_destroy_candev(parent->canch[i]);
- 
++	if (sizeof(*rsp) + *num_of_nodes * sizeof(REFERRAL3) > rsp_size) {
++		cifs_dbg(VFS | ONCE,
++			 "%s: malformed buffer (size is %u, must be at least %zu)\n",
++			 __func__, rsp_size,
++			 sizeof(*rsp) + *num_of_nodes * sizeof(REFERRAL3));
++		rc = -EINVAL;
++		goto parse_DFS_referrals_exit;
++	}
++
+ 	ref = (struct dfs_referral_level_3 *) &(rsp->referrals);
+ 	if (ref->VersionNumber != cpu_to_le16(3)) {
+ 		cifs_dbg(VFS, "Referrals of V%d version are not supported, should be V3\n",
 
 
