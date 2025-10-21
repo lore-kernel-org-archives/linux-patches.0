@@ -1,112 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113B327FB28;
-	Tue, 21 Oct 2025 20:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACDC23815B;
+	Tue, 21 Oct 2025 21:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077638; cv=none; b=HGUYDad5Rgn9klpS+eTXxQ+9jwR8gT2a9FbNQIcv7sMX64HO/FBawCvT/il3XzLa2VMVX5azvt76lsfPv+lclRLDTr+QTEXha4k+Wi/dpYUc4KaZJ+Dqo4c0nonez4GOl0zToPOhzS90StIPe+6W079HjsJlhyA5pZi2Rpr3NQg=
+	t=1761082410; cv=none; b=fYuZxDa/GOTNFiC5JgCftUB6CG+eYqCEKqEgM0TM6Aq/ZvR/FMcuoxrNRjMFOEtL+fsxlTPcNNzNgizJPW6hsM/dGasI8Oze3xd6CRhGDw6QZ0KuacXV+jPsflM7C29wssA7x8UpDW4JLMP4mgu1PklIzv5xYLgXDJjYmpMsqiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077638; c=relaxed/simple;
-	bh=j8f8olhIExITD6nCBcHUXC9b510caFhkWKIMLc7if/k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vo7PU2Tz6wZzUOgGQeLdojmXJuhz4gqt4f2s9w66iUYcNHjm3r3ESPcupOfnQCd07P6rSrMylIjTBiBC2rKJE8rZiaCLPsrqGhQ1cB2QgC3ozszvv/8oE5iAwSNBqZQMinMxjZNfF12YUtC9ymL4O6JNxIUIWizY/z9AOMTq3Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KwzSb5f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761082410; c=relaxed/simple;
+	bh=JxJu9aSbuyJBtrZBnq83MTJiGQEotCp3nnab7l5cnRg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bQpbXk+PtFnrAIFJ3uVc6D1+4pGswjBo9Kx/dGy/advXE/RUBxi6uX80tFWBO8ThZ499LMm0dBXwF/PmubjIXPMvvEmjMA7fj1pRZ60Da7ULWutfUBqCK1RSg/6A6OxIyoUu7UpqmnCb1oQhFNs4vs8vuzu8Rkk3/D9oCxvrPvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lPYJGJ2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KwzSb5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BD6C4CEF1;
-	Tue, 21 Oct 2025 20:13:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077637;
-	bh=j8f8olhIExITD6nCBcHUXC9b510caFhkWKIMLc7if/k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1KwzSb5ftshBY9rSq07tUM5EnudRvyN9H3YDXcsTHewaoq7XgpiQs9o7wWBXYY/vR
-	 zYqm3qIWYZYiZhGblJtsOdh2jyKc5tYjD7SErP4dhR2hARyx/PyVsODKNntc+fdUOE
-	 ZJE+YljPKztOqLBPGgLi3P8PbAP2AoeRxAFiJZ0Q=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 133/159] drm/xe/evict: drop bogus assert
-Date: Tue, 21 Oct 2025 21:51:50 +0200
-Message-ID: <20251021195046.346542743@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
-References: <20251021195043.182511864@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lPYJGJ2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AFEC4CEF1;
+	Tue, 21 Oct 2025 21:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761082410;
+	bh=JxJu9aSbuyJBtrZBnq83MTJiGQEotCp3nnab7l5cnRg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lPYJGJ2xYz/4D6sOZrDDy+Fu7o4a8I1OwYNJDn8QtwBOWhSRNzzcszINwrDhmsZs/
+	 Z+YBAPP4e5OCj8jHHcXyQepHcsWNZUIXp0mrPr5IYWqmhnCJGkboVekRtppWDoQoUJ
+	 LEplqn4iG+tAuffh8Ano1CNo8pDnvFIusHQi7+5yXJDaBCc1948RBdc6erDDGvAsyD
+	 1EI911RsXkROPNUubiy+DPwQN3xjVN33+yKIV4PVo3udSJcvL2K0Xi4p5J6hVEd6NI
+	 qtRJPF+w+/K8TX/xl2SxAP8RjCKspzhVRbXn4XjtHsCXzos74/YiLc4gQhQLOKq1Aa
+	 o/IJD9alpPAew==
+Message-ID: <b7c17e91-cae7-46ef-bfc8-a9014d11346a@kernel.org>
+Date: Tue, 21 Oct 2025 16:33:26 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.17 000/159] 6.17.5-rc1 review
+To: =?UTF-8?Q?Holger_Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+References: <20251021195043.182511864@linuxfoundation.org>
+ <fc400181-7c76-6344-c6ea-a4e48d722f55@applied-asynchrony.com>
+Content-Language: en-US
+From: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
+In-Reply-To: <fc400181-7c76-6344-c6ea-a4e48d722f55@applied-asynchrony.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Matthew Auld <matthew.auld@intel.com>
-
-[ Upstream commit 225bc03d85427e7e3821d6f99f4f2d4a09350dda ]
-
-This assert can trigger here with non pin_map users that select
-LATE_RESTORE, since the vmap is allowed to be NULL given that
-save/restore can now use the blitter instead. The check here doesn't
-seem to have much value anymore given that we no longer move pinned
-memory, so any existing vmap is left well alone, and doesn't need to be
-recreated upon restore, so just drop the assert here.
-
-Fixes: 86f69c26113c ("drm/xe: use backup object for pinned save/restore")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6213
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://lore.kernel.org/r/20251010152457.177884-2-matthew.auld@intel.com
-(cherry picked from commit a10b4a69c7f8f596d2c5218fbe84430734fab3b2)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/xe/xe_bo_evict.c | 8 --------
- 1 file changed, 8 deletions(-)
-
-diff --git a/drivers/gpu/drm/xe/xe_bo_evict.c b/drivers/gpu/drm/xe/xe_bo_evict.c
-index d5dbc51e8612d..bc5b4c5fab812 100644
---- a/drivers/gpu/drm/xe/xe_bo_evict.c
-+++ b/drivers/gpu/drm/xe/xe_bo_evict.c
-@@ -182,7 +182,6 @@ int xe_bo_evict_all(struct xe_device *xe)
- 
- static int xe_bo_restore_and_map_ggtt(struct xe_bo *bo)
- {
--	struct xe_device *xe = xe_bo_device(bo);
- 	int ret;
- 
- 	ret = xe_bo_restore_pinned(bo);
-@@ -201,13 +200,6 @@ static int xe_bo_restore_and_map_ggtt(struct xe_bo *bo)
- 		}
- 	}
- 
--	/*
--	 * We expect validate to trigger a move VRAM and our move code
--	 * should setup the iosys map.
--	 */
--	xe_assert(xe, !(bo->flags & XE_BO_FLAG_PINNED_LATE_RESTORE) ||
--		  !iosys_map_is_null(&bo->vmap));
--
- 	return 0;
- }
- 
--- 
-2.51.0
 
 
+On 10/21/2025 4:30 PM, Holger Hoffstätte wrote:
+> On 2025-10-21 21:49, Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 6.17.5 release.
+> 
+> Hmm:
+> 
+> *  LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+> *  MODPOST Module.symvers
+> *ERROR: modpost: "pm_hibernation_mode_is_suspend" [drivers/gpu/drm/amd/ 
+> amdgpu/amdgpu.ko] undefined!
+> 
+> Caused by drm-amd-fix-hybrid-sleep.patch
+> 
+> I have CONFIG_SUSPEND enabled, exactly same config as 6.17.4.
+> 
+> Looking at mainline it seems we also need parts of:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ 
+> commit/?id=495c8d35035edb66e3284113bef01f3b1b843832
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ 
+> commit/?id=bbfe987c5a2854705393ad79813074e5eadcbde6
+> 
+> cheers
+> Holger
+
+Can you please share your kconfig?
+
+Specifically interesting are CONFIG_SUSPEND, CONFIG_HIBERNATION, 
+CONFIG_HIBERNATE_CALLBACKS.
 
