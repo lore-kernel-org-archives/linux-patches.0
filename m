@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B52627510E;
-	Tue, 21 Oct 2025 19:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE52274B44;
+	Tue, 21 Oct 2025 19:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076616; cv=none; b=nrgfP7qxQICteVlPGBvAl9i0EhowVnBgzFkLfs/h8ONEJ9UXFHgBoCXQ2XSQGYGrNwe0aoPKsJFJq3p/KImVR1Ef8wiqii6AQfgAWJ9zcBXSCC/qAQnasKe21rLwx/16cDckPcvQw9pOTjIHw2CkcV8JcoLaUBc/Wtrpr8XCiFk=
+	t=1761076620; cv=none; b=hs+qtxZjpWC81lk/5K8JJ1pFLlsFV6sVG3uWg02F0k0MI/BJRaUoYIHO2knHOEm6g/ulPCNg5ZtEN+xgGevzpwLKdCK3I+iaM3AbIu1V8VTvtHt0Mv9sNwMbtcslXLSX8bVBLd9RWKYu4DZEcvCxETA1YqZYA9VaMw3RhHAKnMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076616; c=relaxed/simple;
-	bh=yfyCr2X1B0t/3IPllAdNhv989yuTIBSND82+OV4sti4=;
+	s=arc-20240116; t=1761076620; c=relaxed/simple;
+	bh=J+1+dF1tVLBbd/2NGWukJ0ppl2bDYHx1uo0xGmAZZdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B86RKptAkOr+rtrbqQcvHR2uhlGmyXyYFO6xbTKdKEf7AUJhruHXwXn77/6hy0WNEIUIcOT714/+JI7RRym9PRbtzDbbE8LV/Y+gx/f8YB6stN7SP8asbEYUVZxLlP4YIxoGfuXoTgW+vUY85P4QBafehhs644m3gV0O4euX7uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myk+QXEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uRCCtd0Ns59eHU2MaYKTNQy4KOjIuT41n8H2NCJQcUALllC7K8571cOaE0uLNHdhfVsPn/xN/BQVnyktSoEq4y6TChLhLav5GxZPP9VwRiW4nE/+rDYw4MkB4XdZL+z3vHxce52nHpBE9PSPbdJjQpbdKQfXyUwWf+tRcSjFUVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/YhfQbV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myk+QXEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CBBC4CEF1;
-	Tue, 21 Oct 2025 19:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/YhfQbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B59C4CEF1;
+	Tue, 21 Oct 2025 19:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076616;
-	bh=yfyCr2X1B0t/3IPllAdNhv989yuTIBSND82+OV4sti4=;
+	s=korg; t=1761076619;
+	bh=J+1+dF1tVLBbd/2NGWukJ0ppl2bDYHx1uo0xGmAZZdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=myk+QXEhtDraGyDHMWylEWQ88WyBRwqdmrg048C+UhnQ27mUDwCsdjNrTL9p769Vn
-	 1YdY7uJTCjg7GUbKfDvX0gT6cc+oAIRrIm1hq6nsv7uo8wyX19ZHJwdVCQyi7rqjIf
-	 EQMDdvU/rj29BU8IY+F3qYOw9JDeCwFafMEKP40c=
+	b=V/YhfQbVlrnXvYuHRwCJ1HsNrE2YM4gmtRBpgi7rT2JCEq1ktjJNkzemVMCkJlGx+
+	 tpRNdgokROFqnwIBzYzbGUetR7XM77pOthh0p9mCe8gpnyBKTqflxtw/pK0l5Wtb+s
+	 DmPMTdYIPpCETLETvyCau6JeDbH16CBF5a6FOtUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Shashank A P <shashank.ap@samsung.com>,
 	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/105] quota: remove unneeded return value of register_quota_format
-Date: Tue, 21 Oct 2025 21:51:38 +0200
-Message-ID: <20251021195023.764462957@linuxfoundation.org>
+Subject: [PATCH 6.6 090/105] fs: quota: create dedicated workqueue for quota_release_work
+Date: Tue, 21 Oct 2025 21:51:39 +0200
+Message-ID: <20251021195023.787915016@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,129 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Shashank A P <shashank.ap@samsung.com>
 
-[ Upstream commit a838e5dca63d1dc701e63b2b1176943c57485c45 ]
+[ Upstream commit 72b7ceca857f38a8ca7c5629feffc63769638974 ]
 
-The register_quota_format always returns 0, simply remove unneeded return
-value.
+There is a kernel panic due to WARN_ONCE when panic_on_warn is set.
 
-Link: https://patch.msgid.link/20240715130534.2112678-3-shikemeng@huaweicloud.com
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+This issue occurs when writeback is triggered due to sync call for an
+opened file(ie, writeback reason is WB_REASON_SYNC). When f2fs balance
+is needed at sync path, flush for quota_release_work is triggered.
+By default quota_release_work is queued to "events_unbound" queue which
+does not have WQ_MEM_RECLAIM flag. During f2fs balance "writeback"
+workqueue tries to flush quota_release_work causing kernel panic due to
+MEM_RECLAIM flag mismatch errors.
+
+This patch creates dedicated workqueue with WQ_MEM_RECLAIM flag
+for work quota_release_work.
+
+------------[ cut here ]------------
+WARNING: CPU: 4 PID: 14867 at kernel/workqueue.c:3721 check_flush_dependency+0x13c/0x148
+Call trace:
+ check_flush_dependency+0x13c/0x148
+ __flush_work+0xd0/0x398
+ flush_delayed_work+0x44/0x5c
+ dquot_writeback_dquots+0x54/0x318
+ f2fs_do_quota_sync+0xb8/0x1a8
+ f2fs_write_checkpoint+0x3cc/0x99c
+ f2fs_gc+0x190/0x750
+ f2fs_balance_fs+0x110/0x168
+ f2fs_write_single_data_page+0x474/0x7dc
+ f2fs_write_data_pages+0x7d0/0xd0c
+ do_writepages+0xe0/0x2f4
+ __writeback_single_inode+0x44/0x4ac
+ writeback_sb_inodes+0x30c/0x538
+ wb_writeback+0xf4/0x440
+ wb_workfn+0x128/0x5d4
+ process_scheduled_works+0x1c4/0x45c
+ worker_thread+0x32c/0x3e8
+ kthread+0x11c/0x1b0
+ ret_from_fork+0x10/0x20
+Kernel panic - not syncing: kernel: panic_on_warn set ...
+
+Fixes: ac6f420291b3 ("quota: flush quota_release_work upon quota writeback")
+CC: stable@vger.kernel.org
+Signed-off-by: Shashank A P <shashank.ap@samsung.com>
+Link: https://patch.msgid.link/20250901092905.2115-1-shashank.ap@samsung.com
 Signed-off-by: Jan Kara <jack@suse.cz>
-Stable-dep-of: 72b7ceca857f ("fs: quota: create dedicated workqueue for quota_release_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/super.c      |    6 ++----
- fs/quota/dquot.c      |    3 +--
- fs/quota/quota_v1.c   |    3 ++-
- fs/quota/quota_v2.c   |    9 +++------
- include/linux/quota.h |    2 +-
- mm/shmem.c            |    7 +------
- 6 files changed, 10 insertions(+), 20 deletions(-)
+ fs/quota/dquot.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1571,15 +1571,13 @@ static int __init ocfs2_init(void)
- 
- 	ocfs2_set_locking_protocol();
- 
--	status = register_quota_format(&ocfs2_quota_format);
--	if (status < 0)
--		goto out3;
-+	register_quota_format(&ocfs2_quota_format);
-+
- 	status = register_filesystem(&ocfs2_fs_type);
- 	if (!status)
- 		return 0;
- 
- 	unregister_quota_format(&ocfs2_quota_format);
--out3:
- 	debugfs_remove(ocfs2_debugfs_root);
- 	ocfs2_free_mem_caches();
- out2:
 --- a/fs/quota/dquot.c
 +++ b/fs/quota/dquot.c
-@@ -163,13 +163,12 @@ static struct quota_module_name module_n
+@@ -163,6 +163,9 @@ static struct quota_module_name module_n
  /* SLAB cache for dquot structures */
  static struct kmem_cache *dquot_cachep;
  
--int register_quota_format(struct quota_format_type *fmt)
-+void register_quota_format(struct quota_format_type *fmt)
++/* workqueue for work quota_release_work*/
++static struct workqueue_struct *quota_unbound_wq;
++
+ void register_quota_format(struct quota_format_type *fmt)
  {
  	spin_lock(&dq_list_lock);
- 	fmt->qf_next = quota_formats;
- 	quota_formats = fmt;
+@@ -891,7 +894,7 @@ void dqput(struct dquot *dquot)
+ 	put_releasing_dquots(dquot);
+ 	atomic_dec(&dquot->dq_count);
  	spin_unlock(&dq_list_lock);
--	return 0;
+-	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
++	queue_delayed_work(quota_unbound_wq, &quota_release_work, 1);
  }
- EXPORT_SYMBOL(register_quota_format);
+ EXPORT_SYMBOL(dqput);
  
---- a/fs/quota/quota_v1.c
-+++ b/fs/quota/quota_v1.c
-@@ -229,7 +229,8 @@ static struct quota_format_type v1_quota
+@@ -3046,6 +3049,11 @@ static int __init dquot_init(void)
+ 	if (register_shrinker(&dqcache_shrinker, "dquota-cache"))
+ 		panic("Cannot register dquot shrinker");
  
- static int __init init_v1_quota_format(void)
- {
--        return register_quota_format(&v1_quota_format);
-+	register_quota_format(&v1_quota_format);
-+	return 0;
++	quota_unbound_wq = alloc_workqueue("quota_events_unbound",
++					   WQ_UNBOUND | WQ_MEM_RECLAIM, WQ_MAX_ACTIVE);
++	if (!quota_unbound_wq)
++		panic("Cannot create quota_unbound_wq\n");
++
+ 	return 0;
  }
- 
- static void __exit exit_v1_quota_format(void)
---- a/fs/quota/quota_v2.c
-+++ b/fs/quota/quota_v2.c
-@@ -422,12 +422,9 @@ static struct quota_format_type v2r1_quo
- 
- static int __init init_v2_quota_format(void)
- {
--	int ret;
--
--	ret = register_quota_format(&v2r0_quota_format);
--	if (ret)
--		return ret;
--	return register_quota_format(&v2r1_quota_format);
-+	register_quota_format(&v2r0_quota_format);
-+	register_quota_format(&v2r1_quota_format);
-+	return 0;
- }
- 
- static void __exit exit_v2_quota_format(void)
---- a/include/linux/quota.h
-+++ b/include/linux/quota.h
-@@ -526,7 +526,7 @@ struct quota_info {
- 	const struct quota_format_ops *ops[MAXQUOTAS];	/* Operations for each type */
- };
- 
--int register_quota_format(struct quota_format_type *fmt);
-+void register_quota_format(struct quota_format_type *fmt);
- void unregister_quota_format(struct quota_format_type *fmt);
- 
- struct quota_module_name {
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -4617,11 +4617,7 @@ void __init shmem_init(void)
- 	shmem_init_inodecache();
- 
- #ifdef CONFIG_TMPFS_QUOTA
--	error = register_quota_format(&shmem_quota_format);
--	if (error < 0) {
--		pr_err("Could not register quota format\n");
--		goto out3;
--	}
-+	register_quota_format(&shmem_quota_format);
- #endif
- 
- 	error = register_filesystem(&shmem_fs_type);
-@@ -4650,7 +4646,6 @@ out1:
- out2:
- #ifdef CONFIG_TMPFS_QUOTA
- 	unregister_quota_format(&shmem_quota_format);
--out3:
- #endif
- 	shmem_destroy_inodecache();
- 	shm_mnt = ERR_PTR(error);
+ fs_initcall(dquot_init);
 
 
