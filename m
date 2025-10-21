@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F06E2750ED;
-	Tue, 21 Oct 2025 19:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DC726738B;
+	Tue, 21 Oct 2025 19:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076466; cv=none; b=PBPwVyIMoGS/J2FwhqwXzOT83U2ukyMrAu0J6D50lqYQvniSa7cj1kMekUlhpmW56RyDbLbRhObC8dXSye/MBfimXk2DGiNZeRIX+WBWLY+s5+ZHupImJZOF46aDmORwWSuBf0Ia9JHTKxocIKHvWNJrvKM1mN0xDfbo72Vh4OA=
+	t=1761076470; cv=none; b=lTXz4WQHDt/j7g/o1f6YfPIDFNMp3Co2+uyqXlKSVaNweEvPqrQ60qVEXoBNSyj8ZKmNQ5PFambMF3vIRtuX9znv0om442l+HRt1KYkiF7gl9JNbj4C5Ynb0XIBerpzKA5fTKwRSPkx8c9J4KNu01x0MoVLDh+Ch+u91yn+sGu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076466; c=relaxed/simple;
-	bh=DDg2pije/B49j3M70BEOk3rMdiAdFt6uhLLjpE1BTcg=;
+	s=arc-20240116; t=1761076470; c=relaxed/simple;
+	bh=c/0/qfj6895Er1fntTzrZf6xQmKMCtqoeC87S8URPYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bq59AnYz0RIVpNy2D+v7WateS0JnfsK15OWyKAKdvKhgBVLVG68506olOikiyXpzY+3fvGqKmhOgVu5RTEfuZYCmpZSK20Ud2r0rae+AOj4fPjdCHkgAaN1RW+SAv6IrhNnzqgBBrmvw1ITCeCOZTkGUaivX3wmB+aWzLoTRUM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WY8r4/NF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9P9IitMn69yqefUHFUAvDJddBJkdmlmuw0CVPizWsEpHBNm+hUW1RgPtjzo7YQovwykfg2fDUA3oMKwBUPuGpVWXDq5pMD6HM+4dtiZyPCYLcpYUa/2U6xeDAlodXc0zoeIThP9faEabT2V8PHBrTzuolFEwu4/0qtLMrOVsCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqzNmI/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WY8r4/NF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DE4C116C6;
-	Tue, 21 Oct 2025 19:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqzNmI/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB79AC4CEF1;
+	Tue, 21 Oct 2025 19:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076466;
-	bh=DDg2pije/B49j3M70BEOk3rMdiAdFt6uhLLjpE1BTcg=;
+	s=korg; t=1761076470;
+	bh=c/0/qfj6895Er1fntTzrZf6xQmKMCtqoeC87S8URPYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WY8r4/NFZqTc5N+A32KfvoHXVuFh86VZ8QzyB9tDEIw5dp2WjOa5wHO9hG9GJPIpM
-	 dnl1JOlzaR7Yiwkju6CEMfrh7qRGQPao9us92Cl9fdDHf3rSe+rbJF9aDA2/2Hc4gG
-	 moxXr2DFoQ7d9gmiP/c0XKKCbran4SXoMgKJJXwU=
+	b=HqzNmI/IAhp2YwIfT/ZboNGpZBWMjjQPSx2QfIZOwOpK39QZD1cZleBT0wmXyZXud
+	 t0lAGnLzlmQd7+z8VNInURjtJTpOg0xh9y3sD6R9Woy0AQXfRT2X0e2fAUjXxjbJ1d
+	 dZFEZUEQK0XqL37Q7D+8Dy5GMjMK0M4PaYUmsHDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexandr Sapozhnikov <alsp705@gmail.com>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/105] tcp: fix tcp_tso_should_defer() vs large RTT
-Date: Tue, 21 Oct 2025 21:50:51 +0200
-Message-ID: <20251021195022.687709521@linuxfoundation.org>
+Subject: [PATCH 6.6 043/105] tg3: prevent use of uninitialized remote_adv and local_adv variables
+Date: Tue, 21 Oct 2025 21:50:52 +0200
+Message-ID: <20251021195022.709639178@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,84 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit 295ce1eb36ae47dc862d6c8a1012618a25516208 ]
+[ Upstream commit 0c3f2e62815a43628e748b1e4ad97a1c46cce703 ]
 
-Neal reported that using neper tcp_stream with TCP_TX_DELAY
-set to 50ms would often lead to flows stuck in a small cwnd mode,
-regardless of the congestion control.
+Some execution paths that jump to the fiber_setup_done label
+could leave the remote_adv and local_adv variables uninitialized
+and then use it.
 
-While tcp_stream sets TCP_TX_DELAY too late after the connect(),
-it highlighted two kernel bugs.
+Initialize this variables at the point of definition to avoid this.
 
-The following heuristic in tcp_tso_should_defer() seems wrong
-for large RTT:
-
-delta = tp->tcp_clock_cache - head->tstamp;
-/* If next ACK is likely to come too late (half srtt), do not defer */
-if ((s64)(delta - (u64)NSEC_PER_USEC * (tp->srtt_us >> 4)) < 0)
-      goto send_now;
-
-If next ACK is expected to come in more than 1 ms, we should
-not defer because we prefer a smooth ACK clocking.
-
-While blamed commit was a step in the good direction, it was not
-generic enough.
-
-Another patch fixing TCP_TX_DELAY for established flows
-will be proposed when net-next reopens.
-
-Fixes: 50c8339e9299 ("tcp: tso: restore IW10 after TSO autosizing")
-Reported-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Tested-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20251011115742.1245771-1-edumazet@google.com
-[pabeni@redhat.com: fixed whitespace issue]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 85730a631f0c ("tg3: Add SGMII phy support for 5719/5718 serdes")
+Co-developed-by: Alexandr Sapozhnikov <alsp705@gmail.com>
+Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20251014164736.5890-1-bigalex934@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 560273e7f7736..88551db62ca29 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2189,7 +2189,8 @@ static bool tcp_tso_should_defer(struct sock *sk, struct sk_buff *skb,
- 				 u32 max_segs)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
--	u32 send_win, cong_win, limit, in_flight;
-+	u32 send_win, cong_win, limit, in_flight, threshold;
-+	u64 srtt_in_ns, expected_ack, how_far_is_the_ack;
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct sk_buff *head;
- 	int win_divisor;
-@@ -2251,9 +2252,19 @@ static bool tcp_tso_should_defer(struct sock *sk, struct sk_buff *skb,
- 	head = tcp_rtx_queue_head(sk);
- 	if (!head)
- 		goto send_now;
--	delta = tp->tcp_clock_cache - head->tstamp;
--	/* If next ACK is likely to come too late (half srtt), do not defer */
--	if ((s64)(delta - (u64)NSEC_PER_USEC * (tp->srtt_us >> 4)) < 0)
-+
-+	srtt_in_ns = (u64)(NSEC_PER_USEC >> 3) * tp->srtt_us;
-+	/* When is the ACK expected ? */
-+	expected_ack = head->tstamp + srtt_in_ns;
-+	/* How far from now is the ACK expected ? */
-+	how_far_is_the_ack = expected_ack - tp->tcp_clock_cache;
-+
-+	/* If next ACK is likely to come too late,
-+	 * ie in more than min(1ms, half srtt), do not defer.
-+	 */
-+	threshold = min(srtt_in_ns >> 1, NSEC_PER_MSEC);
-+
-+	if ((s64)(how_far_is_the_ack - threshold) > 0)
- 		goto send_now;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index b3878975bd9c0..ea4973096aa28 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -5814,7 +5814,7 @@ static int tg3_setup_fiber_mii_phy(struct tg3 *tp, bool force_reset)
+ 	u32 current_speed = SPEED_UNKNOWN;
+ 	u8 current_duplex = DUPLEX_UNKNOWN;
+ 	bool current_link_up = false;
+-	u32 local_adv, remote_adv, sgsr;
++	u32 local_adv = 0, remote_adv = 0, sgsr;
  
- 	/* Ok, it looks like it is advisable to defer.
+ 	if ((tg3_asic_rev(tp) == ASIC_REV_5719 ||
+ 	     tg3_asic_rev(tp) == ASIC_REV_5720) &&
+@@ -5955,9 +5955,6 @@ static int tg3_setup_fiber_mii_phy(struct tg3 *tp, bool force_reset)
+ 		else
+ 			current_duplex = DUPLEX_HALF;
+ 
+-		local_adv = 0;
+-		remote_adv = 0;
+-
+ 		if (bmcr & BMCR_ANENABLE) {
+ 			u32 common;
+ 
 -- 
 2.51.0
 
