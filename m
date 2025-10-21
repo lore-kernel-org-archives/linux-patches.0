@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBD21A3029;
-	Tue, 21 Oct 2025 20:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE24C1A3029;
+	Tue, 21 Oct 2025 20:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077540; cv=none; b=RHcXn/TTnw84Ic2xjhKuM9P+AELUjKffvUE9qw/MNvpIoIAqhaZi4UTpra/VLC4//5hZDHM4JARcWR+HQnpm3Uu9lQ7czfdkSz6nHyARJ1JWawUGoD9xBitzq0KGgs16kmzrGyNbaELkeSG9je0FKHS38f0RCUCIjft9TULP0o0=
+	t=1761077543; cv=none; b=kI5eZIpbllNkOYfYplt4AU6wc+7aB+WLeajr/DKTrvTQoBJAqeNgkED/JtiGciM3/Q3aEFl8ytsRYUUyxwThK0hiFrWX6hNU/4qqO2rKDqKz5w2jt+2U93BCN+noKeUCcQavDst3Ut00J/YMwigkgRyz60zcv3jZqlnSjk9XUQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077540; c=relaxed/simple;
-	bh=sEeCvCTC7jrF/5HJ+H2UrF8oFzl0LLy5TMyENHQWBAE=;
+	s=arc-20240116; t=1761077543; c=relaxed/simple;
+	bh=/c7piBehl6FpLRrLhpRcLDtqHiGW3O1ts9ubDb8GcIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9P4KQ5QREvcTaQzg/YjgYHRGcS8MtXOih3J+SMrl9X3/IvfCmUX2fV18xUTY9JKnOz184xUcc0fSUVX+dMVgUC6yk0wC1d9pmkMrNtaMGxVT6zyLEWGfyUx2GgJoZnLJf7GfR/vhu5ptfRr+UK3uOE3oNz+SzFzat7Vj68Wjbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRZZa3/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tXnTK/7hYcSg5KE1AsOv2sf6bTPxkN8VPCD2nmQ6b2e0Jx5N/pLz3OO7y1fOg4VLmwhZfRAYyhFUeJPUnUUJ228JfG485y+y295UT9CAO4MPnfTBgw3SsFIW8oonXl231SQzH2wWJnZnmMsvAfzfzoyQd6EHj714ykJuKZAv3N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJoe9sVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRZZa3/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C842C4CEF1;
-	Tue, 21 Oct 2025 20:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJoe9sVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FA2C4CEF1;
+	Tue, 21 Oct 2025 20:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077540;
-	bh=sEeCvCTC7jrF/5HJ+H2UrF8oFzl0LLy5TMyENHQWBAE=;
+	s=korg; t=1761077543;
+	bh=/c7piBehl6FpLRrLhpRcLDtqHiGW3O1ts9ubDb8GcIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRZZa3/gCjjtPS5b+0K6rJlCn2QkQAQNl4L/+ES8hPlVavbvo5JsIFR0UAhJDOcSU
-	 SmCw1wPRhYRZii41mv26QGILGrE18TpYRCoHvN/f8DtzcblTFQRgfxbPfRmh6gLoci
-	 A0KVGP10fzEc3ofJsyd78bImibKzy+Azd/qz7bVs=
+	b=VJoe9sVkasUqoAjslabvJqWTGglQjIfGoQNAIZ5paScTsOT6Tlmg7k0fFsKOd/6kT
+	 0mgfV76glaZC9W2SmeKqdcTzqmDgEFqRnoc+Ez3mVZqt2CTrjQl9T7SmlhrGmmYhe7
+	 A/lwtYMnFlx7W82dI8IDEUAeOfKyuLyqrma4H3PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Chaudhary <achaudhary@purestorage.com>,
-	Randy Jennings <randyj@purestorage.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Fabian Vogt <fvogt@suse.de>,
+	Marvin Friedrich <marvin.friedrich@suse.com>,
+	Guo Ren <guoren@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 093/159] nvme-multipath: Skip nr_active increments in RETRY disposition
-Date: Tue, 21 Oct 2025 21:51:10 +0200
-Message-ID: <20251021195045.422479779@linuxfoundation.org>
+Subject: [PATCH 6.17 094/159] riscv: kprobes: Fix probe address validation
+Date: Tue, 21 Oct 2025 21:51:11 +0200
+Message-ID: <20251021195045.446412368@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,58 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Chaudhary <achaudhary@purestorage.com>
+From: Fabian Vogt <fvogt@suse.de>
 
-[ Upstream commit bb642e2d300ee27dcede65cda7ffc47a7047bd69 ]
+[ Upstream commit 9e68bd803fac49274fde914466fd3b07c4d602c8 ]
 
-For queue-depth I/O policy, this patch fixes unbalanced I/Os across
-nvme multipaths.
+When adding a kprobe such as "p:probe/tcp_sendmsg _text+15392192",
+arch_check_kprobe would start iterating all instructions starting from
+_text until the probed address. Not only is this very inefficient, but
+literal values in there (e.g. left by function patching) are
+misinterpreted in a way that causes a desync.
 
-Issue Description:
+Fix this by doing it like x86: start the iteration at the closest
+preceding symbol instead of the given starting point.
 
-The RETRY disposition incorrectly increments ns->ctrl->nr_active
-counter and reinitializes iostat start-time. In such cases nr_active
-counter never goes back to zero until that path disconnects and
-reconnects.
-
-Such a path is not chosen for new I/Os if multiple RETRY cases on a given
-a path cause its queue-depth counter to be artificially higher compared
-to other paths. This leads to unbalanced I/Os across paths.
-
-The patch skips incrementing nr_active if NVME_MPATH_CNT_ACTIVE is already
-set. And it skips restarting io stats if NVME_MPATH_IO_STATS is already set.
-
-base-commit: e989a3da2d371a4b6597ee8dee5c72e407b4db7a
-Fixes: d4d957b53d91eeb ("nvme-multipath: support io stats on the mpath device")
-Signed-off-by: Amit Chaudhary <achaudhary@purestorage.com>
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 87f48c7ccc73 ("riscv: kprobe: Fixup kernel panic when probing an illegal position")
+Signed-off-by: Fabian Vogt <fvogt@suse.de>
+Signed-off-by: Marvin Friedrich <marvin.friedrich@suse.com>
+Acked-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/6191817.lOV4Wx5bFT@fvogt-thinkpad
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/probes/kprobes.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 3da980dc60d91..543e17aead12b 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -182,12 +182,14 @@ void nvme_mpath_start_request(struct request *rq)
- 	struct nvme_ns *ns = rq->q->queuedata;
- 	struct gendisk *disk = ns->head->disk;
+diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
+index c0738d6c6498a..8723390c7cad5 100644
+--- a/arch/riscv/kernel/probes/kprobes.c
++++ b/arch/riscv/kernel/probes/kprobes.c
+@@ -49,10 +49,15 @@ static void __kprobes arch_simulate_insn(struct kprobe *p, struct pt_regs *regs)
+ 	post_kprobe_handler(p, kcb, regs);
+ }
  
--	if (READ_ONCE(ns->head->subsys->iopolicy) == NVME_IOPOLICY_QD) {
-+	if ((READ_ONCE(ns->head->subsys->iopolicy) == NVME_IOPOLICY_QD) &&
-+	    !(nvme_req(rq)->flags & NVME_MPATH_CNT_ACTIVE)) {
- 		atomic_inc(&ns->ctrl->nr_active);
- 		nvme_req(rq)->flags |= NVME_MPATH_CNT_ACTIVE;
- 	}
+-static bool __kprobes arch_check_kprobe(struct kprobe *p)
++static bool __kprobes arch_check_kprobe(unsigned long addr)
+ {
+-	unsigned long tmp  = (unsigned long)p->addr - p->offset;
+-	unsigned long addr = (unsigned long)p->addr;
++	unsigned long tmp, offset;
++
++	/* start iterating at the closest preceding symbol */
++	if (!kallsyms_lookup_size_offset(addr, NULL, &offset))
++		return false;
++
++	tmp = addr - offset;
  
--	if (!blk_queue_io_stat(disk->queue) || blk_rq_is_passthrough(rq))
-+	if (!blk_queue_io_stat(disk->queue) || blk_rq_is_passthrough(rq) ||
-+	    (nvme_req(rq)->flags & NVME_MPATH_IO_STATS))
- 		return;
+ 	while (tmp <= addr) {
+ 		if (tmp == addr)
+@@ -71,7 +76,7 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
+ 	if ((unsigned long)insn & 0x1)
+ 		return -EILSEQ;
  
- 	nvme_req(rq)->flags |= NVME_MPATH_IO_STATS;
+-	if (!arch_check_kprobe(p))
++	if (!arch_check_kprobe((unsigned long)p->addr))
+ 		return -EILSEQ;
+ 
+ 	/* copy instruction */
 -- 
 2.51.0
 
