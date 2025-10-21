@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEFF1A3029;
-	Tue, 21 Oct 2025 20:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FFB278143;
+	Tue, 21 Oct 2025 20:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077523; cv=none; b=kKBLEKZtFuDtIdb6AuXEb8GZf1Wp+KWSutJCrp8DLwUDaAqbt4cwWo9wQhfizPcJciUhaI28F4uO0kjF7rvCJeuoKF1+bW41BS8xKLcyq6VN1CbId1GxtFquXwDIbLmLvCZp6H0Ob+V/39OLDsYpHHBk5JB3gZIb9Lu92mPYyTk=
+	t=1761077526; cv=none; b=Mq1uahlw8n6CKkHW8INX4bTuqxp0IGNWFYKZl5yQRuCrgTOmVcT3ka2DGUgjgrTVJjgLCnJBy4tILwTlJFiGie4nthEDuMhjKoG8WI5+B3aQuxlc37FkBywOY8uJ6rU4+4Gbx2kgs0txxAIr5f1XWtB2qSQRBZTwXEonHYKaegY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077523; c=relaxed/simple;
-	bh=T9OfQkoUV+PE7qNdO2gJdgL6aV9Cqtzr7INuR52sCrE=;
+	s=arc-20240116; t=1761077526; c=relaxed/simple;
+	bh=NoIaLyWhafcUtGaI0tgHtG74THFK8I5+MQl/0cmMnb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VWPS8jFnw1bV7V32drm+l2aYsC6s0RZg6WfBKF9CVG0mNwT7I/G1qHWSDHosFJEq+Cjbefmt/r3EErcdz+6GNdeYUKF5RncKV2Otys+h+1wu8czYAg78NksU3BTsGjvcrF+wAkI9EXU7BexaC2+k8XHROjeNb7uvagcrLY8bA6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrAhl0ML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HClw/qpuOJpGY57NqQsqTlZ4OK5AHcLfq7tKkNASv9nlA2B98jM45JGgtDR8fIoOh4H8PLS7k57wzF/sZ2Xxs6K1FlE9e7rW9CfXuPX9DP3TFJyOB/HO3T/uP84M92HbH7Esw1RBb1uZCPj21u5uiuz+iKyK7KvdT7C6j/tUP0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k6Fs0Bz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrAhl0ML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C7FC4CEF1;
-	Tue, 21 Oct 2025 20:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k6Fs0Bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5F4C4CEF1;
+	Tue, 21 Oct 2025 20:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077523;
-	bh=T9OfQkoUV+PE7qNdO2gJdgL6aV9Cqtzr7INuR52sCrE=;
+	s=korg; t=1761077526;
+	bh=NoIaLyWhafcUtGaI0tgHtG74THFK8I5+MQl/0cmMnb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrAhl0MLQMDFEa5Mw0uQplDK7vqyrBMpuKDS8el/TBtLQwWRUL7MsmTGJG4jPh6Gb
-	 nkECZ3GdOEQtpJLIMPBXcSF6BKidkBifWSKQjrQg93V54qI6Mh/qYVyxXsZo8A2OW3
-	 HoUatsGFXCGYfELo73qDpau90b0pmkcdkSx7i8VU=
+	b=2k6Fs0BznbiEmwb/ynkzIpDnSP/xn4740GOqLpAzR3ziyg9dJztHbwc0ntK3e1lkr
+	 3Crxk0WUkvt++PNdminxoAvcu6i5/SRNj2cLfDhUo2PWOSdHGKswV7TSb8RXviqc1E
+	 ZVPgaBtTjKc3HLwNEhe/G3lMlXGfpz6SPq8otDMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E5=8D=A2=E5=9B=BD=E5=AE=8F?= <luguohong@xiaomi.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 130/159] HID: hid-input: only ignore 0 battery events for digitizers
-Date: Tue, 21 Oct 2025 21:51:47 +0200
-Message-ID: <20251021195046.276675894@linuxfoundation.org>
+Subject: [PATCH 6.17 131/159] HID: multitouch: fix name of Stylus input devices
+Date: Tue, 21 Oct 2025 21:51:48 +0200
+Message-ID: <20251021195046.300765850@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -46,55 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 0187c08058da3e7f11b356ac27e0c427d36f33f2 ]
+[ Upstream commit aa4daea418ee4215dca5c8636090660c545cb233 ]
 
-Commit 581c4484769e ("HID: input: map digitizer battery usage") added
-handling of battery events for digitizers (typically for batteries
-presented in stylii). Digitizers typically report correct battery levels
-only when stylus is actively touching the surface, and in other cases
-they may report battery level of 0. To avoid confusing consumers of the
-battery information the code was added to filer out reports with 0
-battery levels.
+HID_DG_PEN devices should have a suffix of "Stylus", as pointed out by
+commit c0ee1d571626 ("HID: hid-input: Add suffix also for HID_DG_PEN").
+However, on multitouch devices, these suffixes may be overridden. Before
+that commit, HID_DG_PEN devices would get the "Stylus" suffix, but after
+that, multitouch would override them to have an "UNKNOWN" suffix. Just add
+HID_DG_PEN to the list of non-overriden suffixes in multitouch.
 
-However there exist other kinds of devices that may legitimately report
-0 battery levels. Fix this by filtering out 0-level reports only for
-digitizer usages, and continue reporting them for other kinds of devices
-(Smart Batteries, etc).
+Before this fix:
 
-Reported-by: 卢国宏 <luguohong@xiaomi.com>
-Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[    0.470981] input: ELAN9008:00 04F3:2E14 UNKNOWN as /devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-16/i2c-ELAN9008:00/0018:04F3:2E14.0001/input/input8
+ELAN9008:00 04F3:2E14 UNKNOWN
+
+After this fix:
+
+[    0.474332] input: ELAN9008:00 04F3:2E14 Stylus as /devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-16/i2c-ELAN9008:00/0018:04F3:2E14.0001/input/input8
+
+ELAN9008:00 04F3:2E14 Stylus
+
+Fixes: c0ee1d571626 ("HID: hid-input: Add suffix also for HID_DG_PEN")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index f45f856a127fe..2c743e35c1d33 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -622,7 +622,10 @@ static void hidinput_update_battery(struct hid_device *dev, unsigned int usage,
- 		return;
- 	}
- 
--	if (value == 0 || value < dev->battery_min || value > dev->battery_max)
-+	if ((usage & HID_USAGE_PAGE) == HID_UP_DIGITIZER && value == 0)
-+		return;
-+
-+	if (value < dev->battery_min || value > dev->battery_max)
- 		return;
- 
- 	capacity = hidinput_scale_battery_capacity(dev, value);
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 7587a7748a82d..a9ff84f0bd9bb 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1711,6 +1711,7 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
+ 	case HID_CP_CONSUMER_CONTROL:
+ 	case HID_GD_WIRELESS_RADIO_CTLS:
+ 	case HID_GD_SYSTEM_MULTIAXIS:
++	case HID_DG_PEN:
+ 		/* already handled by hid core */
+ 		break;
+ 	case HID_DG_TOUCHSCREEN:
 -- 
 2.51.0
 
