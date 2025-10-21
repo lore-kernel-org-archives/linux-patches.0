@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45DD2798E5;
-	Tue, 21 Oct 2025 20:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C28D27990B;
+	Tue, 21 Oct 2025 20:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077591; cv=none; b=H8OR3d31FfTZGoEoP3eokwuVJGqhz1JT3OPJA5UFT6DvUeJHy+7pG1QNxZS/f1ijwM/BobGTIGLKE57Q1v80jByv7/X3LMu8cktUZ8av5FhV6U2E7Fh6yfsEmERHmh9asGPTIjxGJAzQ8kmpZt/IMiA1Tr9I8sumyiKckYm4+O4=
+	t=1761077594; cv=none; b=rThNAeemlEEfUFuBl+CUMQcr6OMLr5muKoQ1auEJEDO6+l7yDyOGv9nMAKc/g6KUZJKVX4N9ZU9w9RYBN/61vqJmUGEpsSMj4q64zPR4KN2RrH2TLr/YMjWZaQwwax3FZg7Vwqkl11pJRyBHgkSurXw90l2aDK4b6wVbU7JaPEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077591; c=relaxed/simple;
-	bh=zFXm7b16MmHwOesib5t4eOAiv1axvZrn0jP0gz9tjHs=;
+	s=arc-20240116; t=1761077594; c=relaxed/simple;
+	bh=uE1aU0+1VPetahuZRPnrEz7OQIR7p4vXoEPViVCe8D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liYBfPCtscuVdKo2Kb6XoJixBG/iKvnmxv0HnvS6TDI7lqfF1IMZEBFYHqTkIIdPFLCNOKloNDzzCOYdgjsbbRjexcgZPlsWKON4SHD/JymNuruR1rR4bbiPyub9Ivecu3Q29DOCJrXUgCnK0EzklBJxcQRQEIDLLjNQKCPW3iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDGvDxeC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LTaaJXTwUrRo/5HaUkec1bOM2+2iDCep9IrZd5Ybd/gY/9k9NOMQH23ZLmfChBE9mTWzMuvlbjxXb8K1iK3/IpRQwXJQJjTUpGwU2dTCaMcl6RDk/kBiEZKuON4cVdVL5309kIeShhw7m7p/XO0c00dZ1P+r4y0q4dXCdoCX1F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shTbIcrG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDGvDxeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BA6C4CEF1;
-	Tue, 21 Oct 2025 20:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shTbIcrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC40C4CEF1;
+	Tue, 21 Oct 2025 20:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077591;
-	bh=zFXm7b16MmHwOesib5t4eOAiv1axvZrn0jP0gz9tjHs=;
+	s=korg; t=1761077594;
+	bh=uE1aU0+1VPetahuZRPnrEz7OQIR7p4vXoEPViVCe8D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDGvDxeCQWJHBwt6sgkaiwS00qEMx6inNScSGbnopwYbf3YDLrgGs8wNJx/PGh+kD
-	 Sphaxw7rxAqQnDodNMmo3ts5vY8PumAY0xROFg0uRQVFBU70kbvBKkjHyLMj5ZOroY
-	 /gi6GyyWAUBTEbDkoesaV7+hXeW7Zmmvmkztl2mY=
+	b=shTbIcrGgNft/yaehwjHQwu2XqLz85G+eyazPT21wTIG7tsWCwBfs+va4Ze64Z14Q
+	 aunjzbNQmWcoIEWoxsO7F2QHNQv/IYU6dHX47Dju4JBPTTZ61gQOlnuvW74AHJqWuE
+	 222kfqiuDAdKrin63ngTQfRR8boz3qwtvyMfTfZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 153/159] phy: cadence: cdns-dphy: Update calibration wait time for startup state machine
-Date: Tue, 21 Oct 2025 21:52:10 +0200
-Message-ID: <20251021195046.855516196@linuxfoundation.org>
+Subject: [PATCH 6.17 154/159] drm/xe: Use devm_ioremap_wc for VRAM mapping and drop manual unmap
+Date: Tue, 21 Oct 2025 21:52:11 +0200
+Message-ID: <20251021195046.878812650@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -47,61 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devarsh Thakkar <devarsht@ti.com>
+From: Piotr Piórkowski <piotr.piorkowski@intel.com>
 
-[ Upstream commit 2c27aaee934a1b5229152fe33a14f1fdf50da143 ]
+[ Upstream commit 922ae875230be91c7f05f2aa90d176b6693e2601 ]
 
-Do read-modify-write so that we re-use the characterized reset value as
-specified in TRM [1] to program calibration wait time which defines number
-of cycles to wait for after startup state machine is in bandgap enable
-state.
+Let's replace the manual call to ioremap_wc function with devm_ioremap_wc
+function, ensuring that VRAM mappings are automatically released when
+the driver is detached.
+Since devm_ioremap_wc registers the mapping with the device's managed
+resources, the explicit iounmap call in vram_fini is no longer needed,
+so let's remove it.
 
-This fixes PLL lock timeout error faced while using RPi DSI Panel on TI's
-AM62L and J721E SoC since earlier calibration wait time was getting
-overwritten to zero value thus failing the PLL to lockup and causing
-timeout.
-
-[1] AM62P TRM (Section 14.8.6.3.2.1.1 DPHY_TX_DPHYTX_CMN0_CMN_DIG_TBIT2):
-Link: https://www.ti.com/lit/pdf/spruj83
-
-Cc: stable@vger.kernel.org
-Fixes: 7a343c8bf4b5 ("phy: Add Cadence D-PHY support")
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-Tested-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250704125915.1224738-3-devarsht@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Acked-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250714184818.89201-2-piotr.piorkowski@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: d30203739be7 ("drm/xe: Move rebar to be done earlier")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/cadence/cdns-dphy.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vram.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -30,6 +30,7 @@
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -156,7 +156,8 @@ static int determine_lmem_bar_size(struc
+ 	xe->mem.vram.dpa_base = 0;
  
- #define DPHY_CMN_SSM			DPHY_PMA_CMN(0x20)
- #define DPHY_CMN_SSM_EN			BIT(0)
-+#define DPHY_CMN_SSM_CAL_WAIT_TIME	GENMASK(8, 1)
- #define DPHY_CMN_TX_MODE_EN		BIT(9)
+ 	/* set up a map to the total memory area. */
+-	xe->mem.vram.mapping = ioremap_wc(xe->mem.vram.io_start, xe->mem.vram.io_size);
++	xe->mem.vram.mapping = devm_ioremap_wc(&pdev->dev, xe->mem.vram.io_start,
++					       xe->mem.vram.io_size);
  
- #define DPHY_CMN_PWM			DPHY_PMA_CMN(0x40)
-@@ -421,7 +422,8 @@ static int cdns_dphy_power_on(struct phy
- 	writel(reg, dphy->regs + DPHY_BAND_CFG);
+ 	return 0;
+ }
+@@ -278,9 +279,6 @@ static void vram_fini(void *arg)
+ 	struct xe_tile *tile;
+ 	int id;
  
- 	/* Start TX state machine. */
--	writel(DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
-+	reg = readl(dphy->regs + DPHY_CMN_SSM);
-+	writel((reg & DPHY_CMN_SSM_CAL_WAIT_TIME) | DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
- 	       dphy->regs + DPHY_CMN_SSM);
+-	if (xe->mem.vram.mapping)
+-		iounmap(xe->mem.vram.mapping);
+-
+ 	xe->mem.vram.mapping = NULL;
  
- 	ret = cdns_dphy_wait_for_pll_lock(dphy);
+ 	for_each_tile(tile, xe, id)
 
 
