@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68DB258EDF;
-	Tue, 21 Oct 2025 20:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81641E1E04;
+	Tue, 21 Oct 2025 20:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076964; cv=none; b=Ll/yfhgFSRT4Qt6jpv8g4CuDmKQ7zUeiWaIH6lhfhhsCyUI/ITUNrZMpKozlNbFhqxhYPrFAjX8iYv4b2O0YqlWsjBa0Bi4TyIFid8+peDNKMIWt0L7TW+VKzSNr4mgOLm1Kkk+1Z2OODy2UIyEjMypqDav1QVHhR42sm75wKVA=
+	t=1761076968; cv=none; b=KHYfgdUYuwTe+ZzJr7QSPf12K4pw/OQQLmMN4bRbvI0g1R2tpUu9eFUGZU112o4ZMLHGpe6wQryIEttuxv+/QrvzRkIhc87ij1kHKHJN3pKxLL/p/zzK32ok0BftC6KcErtEHndzUjBkm59KTi0Pm/0lAT7XuVg1J1YW9mzQv/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076964; c=relaxed/simple;
-	bh=1J7tHA0audNBqoIWuKM9YIoOVt+s5DUN2BG2vLfUeG4=;
+	s=arc-20240116; t=1761076968; c=relaxed/simple;
+	bh=s7TWBiKa/64WhbzcCQI+02XbWeYB/HwvmuCXVhP/IZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aG3feW+kBek1U6TCRMBZh0JBGEcc5CJ48tiQ+ZRIvnuhlrqtj6qANrnVrlLPrXwXIiiJoX7JU4iqoAMRAmWuNVnaz0baQtvqmZtklJnayp2g1e/rFJ6k/hfIHzY4Qm4jLv6oms7bnWEbUBCBpdxTWo3K2mVvMgGuDP1iB0prRgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XUL74UX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iG50Z/WxQ4jpBiu6/mkmnTJFD6Wh1RhLACTqt+tTP+XoZ3TtMHbniYEZRzNImm96Dzg6qd8t46S0HzuNuMXjNdkKOoxTdO5Xn1wQ0dxn8nASBHxAen2XMAjCRW9mXC0CXZPsW9gCxTSNUYvuFtF9OaQDkKn23271XA+seXFosK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBkwbO2V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XUL74UX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0C3C4CEF1;
-	Tue, 21 Oct 2025 20:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBkwbO2V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7487BC4CEF1;
+	Tue, 21 Oct 2025 20:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076964;
-	bh=1J7tHA0audNBqoIWuKM9YIoOVt+s5DUN2BG2vLfUeG4=;
+	s=korg; t=1761076967;
+	bh=s7TWBiKa/64WhbzcCQI+02XbWeYB/HwvmuCXVhP/IZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0XUL74UX6ZuSa+Zu9Jwud0kZjA0Hk1dS0uLUVyNuZ40CuMcWHS2qdjW6QLMzVi9om
-	 8s3o2JJgJBXrjdUHe3g3r60LRnBOi0vNKvasRR+M6K2snpao6499fjG2LfeLMOvEU1
-	 Csfsu3biqYesMjQm9++ElmBn6AFzYe+vkLLBbrk8=
+	b=EBkwbO2VUnu2dAlqaDWWzJUVGJqYf3dXpKJD4QCiLe7kXhkKnF+p98gN7rF30oypF
+	 hXT5VLhcT/nQEeawGswjRbIqsdq2tDN0ypq9d38aMnG/OxpNZGintIaUICLwKJbtk6
+	 a6/kaKo97t+Ssk3pObk4SrSr70SqrSQGsBYcM5gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/136] ASoC: amd/sdw_utils: avoid NULL deref when devm_kasprintf() fails
-Date: Tue, 21 Oct 2025 21:51:19 +0200
-Message-ID: <20251021195038.149302892@linuxfoundation.org>
+Subject: [PATCH 6.12 049/136] can: m_can: call deinit/init callback when going into suspend/resume
+Date: Tue, 21 Oct 2025 21:50:37 +0200
+Message-ID: <20251021195037.164124087@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,39 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit 5726b68473f7153a7f6294185e5998b7e2a230a2 ]
+[ Upstream commit ad1ddb3bfb0c9193eb19d4788192904350c7e51a ]
 
-devm_kasprintf() may return NULL on memory allocation failure,
-but the debug message prints cpus->dai_name before checking it.
-Move the dev_dbg() call after the NULL check to prevent potential
-NULL pointer dereference.
+m_can user like the tcan4x5x device, can go into standby mode.
+Low power RX mode is enabled to allow wake on can.
 
-Fixes: cb8ea62e64020 ("ASoC: amd/sdw_utils: add sof based soundwire generic machine driver")
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Link: https://patch.msgid.link/20251015075530.146851-1-liqiang01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20241122-tcan-standby-v3-3-90bafaf5eccd@geanix.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: a9e30a22d6f2 ("can: m_can: fix CAN state in system PM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-sof-mach.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-index 99a244f495bd3..876f0b7fcd3de 100644
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -216,9 +216,9 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 			cpus->dai_name = devm_kasprintf(dev, GFP_KERNEL,
- 							"SDW%d Pin%d",
- 							link_num, cpu_pin_id);
--			dev_dbg(dev, "cpu->dai_name:%s\n", cpus->dai_name);
- 			if (!cpus->dai_name)
- 				return -ENOMEM;
-+			dev_dbg(dev, "cpu->dai_name:%s\n", cpus->dai_name);
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index 249263fca748d..bf7996c302426 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -2485,6 +2485,7 @@ int m_can_class_suspend(struct device *dev)
+ {
+ 	struct m_can_classdev *cdev = dev_get_drvdata(dev);
+ 	struct net_device *ndev = cdev->net;
++	int ret = 0;
  
- 			codec_maps[j].cpu = 0;
- 			codec_maps[j].codec = j;
+ 	if (netif_running(ndev)) {
+ 		netif_stop_queue(ndev);
+@@ -2497,6 +2498,9 @@ int m_can_class_suspend(struct device *dev)
+ 		if (cdev->pm_wake_source) {
+ 			hrtimer_cancel(&cdev->hrtimer);
+ 			m_can_write(cdev, M_CAN_IE, IR_RF0N);
++
++			if (cdev->ops->deinit)
++				ret = cdev->ops->deinit(cdev);
+ 		} else {
+ 			m_can_stop(ndev);
+ 		}
+@@ -2508,7 +2512,7 @@ int m_can_class_suspend(struct device *dev)
+ 
+ 	cdev->can.state = CAN_STATE_SLEEPING;
+ 
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(m_can_class_suspend);
+ 
+@@ -2516,14 +2520,13 @@ int m_can_class_resume(struct device *dev)
+ {
+ 	struct m_can_classdev *cdev = dev_get_drvdata(dev);
+ 	struct net_device *ndev = cdev->net;
++	int ret = 0;
+ 
+ 	pinctrl_pm_select_default_state(dev);
+ 
+ 	cdev->can.state = CAN_STATE_ERROR_ACTIVE;
+ 
+ 	if (netif_running(ndev)) {
+-		int ret;
+-
+ 		ret = m_can_clk_start(cdev);
+ 		if (ret)
+ 			return ret;
+@@ -2536,6 +2539,10 @@ int m_can_class_resume(struct device *dev)
+ 			 * again.
+ 			 */
+ 			cdev->active_interrupts |= IR_RF0N | IR_TEFN;
++
++			if (cdev->ops->init)
++				ret = cdev->ops->init(cdev);
++
+ 			m_can_write(cdev, M_CAN_IE, cdev->active_interrupts);
+ 		} else {
+ 			ret  = m_can_start(ndev);
+@@ -2549,7 +2556,7 @@ int m_can_class_resume(struct device *dev)
+ 		netif_start_queue(ndev);
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(m_can_class_resume);
+ 
 -- 
 2.51.0
 
