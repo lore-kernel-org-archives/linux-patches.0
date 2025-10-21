@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEF627B331;
-	Tue, 21 Oct 2025 20:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BAB25A355;
+	Tue, 21 Oct 2025 20:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077059; cv=none; b=TzaydxGsoecgYglmmrqjuZF3WJjDlysD2OjiAc/rwNHUefxuzZ5wcWRuVPHY/qH89i78qD52NVFPmtVHuTVrDWYnM/WNmtjoKfrvFfO3EnyiRLLLnH31YW++le6tyaXAvpGygzE/+4T95RQQ4wOcR1FADCSBgtM/n0jIGayRHr8=
+	t=1761077063; cv=none; b=mVIrwu1QiwqX3qlbXhPQmVEXQvyOcYwRCynzcWuLM1kL+OY1velIQgAHKsztz+8UdLF3qyfMJEYINtwNO5O+Fa9z7p3OI+i+2W2M9b2+ppe6e691MRY8/4tExQxIXx1VdhDxk+vgfQvTlCrJ+tXf7PYRa+PIrRqFG9m5wgjixxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077059; c=relaxed/simple;
-	bh=HjyS+sIDj+XQyYL08Mi7xj0k+DsoHlUf83i+X+vTxjw=;
+	s=arc-20240116; t=1761077063; c=relaxed/simple;
+	bh=Btp7ahj1Xy+IonypYtGKXDX9s3zlk1NUsdDIvihZo0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhEb96F2bRws/w8kQ7Nr1rRIGm93wUHp55JTcgANyg7oCpNMHd167FDIGJ9/C+uaPAFSvI/gaXXVolWLo336LD5LWrh+1umD2QEwQ5MAaNdBz3X6M7YGpDel57opOUVYY+VUcVO0xbIG9SnXIrodd9Nn5IgnpmalQUdNtsDgzcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYnxvHTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFZdHhUuq1/Pv9OebxT/+LVHZsVL7TW6eFIn5wZ/RGpchS4DSGpSPT1pF5zAIjcE906JKDwzpQ7diBWff6l95O8KPSuWbFh3KKngQaSGbpEyetjiyhDUuKIuOw7LSdXbbwKsUIGrvUsK8S9pwudSfax5pORjX78tkkny33IWPGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DooWuGTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYnxvHTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD88BC4CEF1;
-	Tue, 21 Oct 2025 20:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DooWuGTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327B6C4CEF1;
+	Tue, 21 Oct 2025 20:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077059;
-	bh=HjyS+sIDj+XQyYL08Mi7xj0k+DsoHlUf83i+X+vTxjw=;
+	s=korg; t=1761077062;
+	bh=Btp7ahj1Xy+IonypYtGKXDX9s3zlk1NUsdDIvihZo0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYnxvHTCW+R6yQDYrC6G7HuWE8eakKZgZaB4eVrgKYvj9EVpc3UnCXxV/G9PHIfVJ
-	 mo75vPHq7xInQ11C5mz2y/KbqHK6BE9afxw5hkKEusVrfymq/V9972OURLm8oWfexb
-	 EnNJlvtrRjC/cbsVxbJtCD6sqFLJKF4jgHo1YmxY=
+	b=DooWuGTkPCWkCjtK0azfwQ39imLGSyoEvim2uqXSuC8Q+bGbRGvLGkP5am5uEyKtF
+	 8lK0zSnHcl7E89XO7QsuWg3V0GEQg+D59iIKZ90EH5PNKzIHTjItIdXZwHGqW821MO
+	 0hH1zPVuNfnaWg+jxOuaiZAIyziyQqPyRoyQMg7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/136] ixgbevf: fix mailbox API compatibility by negotiating supported features
-Date: Tue, 21 Oct 2025 21:51:50 +0200
-Message-ID: <20251021195038.914359604@linuxfoundation.org>
+Subject: [PATCH 6.12 123/136] tcp: convert to dev_net_rcu()
+Date: Tue, 21 Oct 2025 21:51:51 +0200
+Message-ID: <20251021195038.939285293@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -55,324 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a7075f501bd33c93570af759b6f4302ef0175168 ]
+[ Upstream commit e7b9ecce562ca6a1de32c56c597fa45e08c44ec0 ]
 
-There was backward compatibility in the terms of mailbox API. Various
-drivers from various OSes supporting 10G adapters from Intel portfolio
-could easily negotiate mailbox API.
+TCP uses of dev_net() are under RCU protection, change them
+to dev_net_rcu() to get LOCKDEP support.
 
-This convention has been broken since introducing API 1.4.
-Commit 0062e7cc955e ("ixgbevf: add VF IPsec offload code") added support
-for IPSec which is specific only for the kernel ixgbe driver. None of the
-rest of the Intel 10G PF/VF drivers supports it. And actually lack of
-support was not included in the IPSec implementation - there were no such
-code paths. No possibility to negotiate support for the feature was
-introduced along with introduction of the feature itself.
-
-Commit 339f28964147 ("ixgbevf: Add support for new mailbox communication
-between PF and VF") increasing API version to 1.5 did the same - it
-introduced code supported specifically by the PF ESX driver. It altered API
-version for the VF driver in the same time not touching the version
-defined for the PF ixgbe driver. It led to additional discrepancies,
-as the code provided within API 1.6 cannot be supported for Linux ixgbe
-driver as it causes crashes.
-
-The issue was noticed some time ago and mitigated by Jake within the commit
-d0725312adf5 ("ixgbevf: stop attempting IPSEC offload on Mailbox API 1.5").
-As a result we have regression for IPsec support and after increasing API
-to version 1.6 ixgbevf driver stopped to support ESX MBX.
-
-To fix this mess add new mailbox op asking PF driver about supported
-features. Basing on a response determine whether to set support for IPSec
-and ESX-specific enhanced mailbox.
-
-New mailbox op, for compatibility purposes, must be added within new API
-revision, as API version of OOT PF & VF drivers is already increased to
-1.6 and doesn't incorporate features negotiate op.
-
-Features negotiation mechanism gives possibility to be extended with new
-features when needed in the future.
-
-Reported-by: Jacob Keller <jacob.e.keller@intel.com>
-Closes: https://lore.kernel.org/intel-wired-lan/20241101-jk-ixgbevf-mailbox-v1-5-fixes-v1-0-f556dc9a66ed@intel.com/
-Fixes: 0062e7cc955e ("ixgbevf: add VF IPsec offload code")
-Fixes: 339f28964147 ("ixgbevf: Add support for new mailbox communication between PF and VF")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251009-jk-iwl-net-2025-10-01-v3-4-ef32a425b92a@intel.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250301201424.2046477-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 833d4313bc1e ("mptcp: reset blackhole on success with non-loopback ifaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ipsec.c        |   10 ++++
- drivers/net/ethernet/intel/ixgbevf/ixgbevf.h      |    7 +++
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |   32 ++++++++++++++-
- drivers/net/ethernet/intel/ixgbevf/mbx.h          |    4 +
- drivers/net/ethernet/intel/ixgbevf/vf.c           |   45 +++++++++++++++++++++-
- drivers/net/ethernet/intel/ixgbevf/vf.h           |    1 
- 6 files changed, 96 insertions(+), 3 deletions(-)
+ include/net/inet6_hashtables.h |    2 +-
+ include/net/inet_hashtables.h  |    2 +-
+ net/ipv4/tcp_ipv4.c            |   12 ++++++------
+ net/ipv4/tcp_metrics.c         |    6 +++---
+ net/ipv6/tcp_ipv6.c            |   22 +++++++++++-----------
+ 5 files changed, 22 insertions(+), 22 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/ipsec.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ipsec.c
-@@ -271,6 +271,9 @@ static int ixgbevf_ipsec_add_sa(struct x
- 	adapter = netdev_priv(dev);
- 	ipsec = adapter->ipsec;
- 
-+	if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+		return -EOPNOTSUPP;
-+
- 	if (xs->id.proto != IPPROTO_ESP && xs->id.proto != IPPROTO_AH) {
- 		NL_SET_ERR_MSG_MOD(extack, "Unsupported protocol for IPsec offload");
- 		return -EINVAL;
-@@ -400,6 +403,9 @@ static void ixgbevf_ipsec_del_sa(struct
- 	adapter = netdev_priv(dev);
- 	ipsec = adapter->ipsec;
- 
-+	if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+		return;
-+
- 	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN) {
- 		sa_idx = xs->xso.offload_handle - IXGBE_IPSEC_BASE_RX_INDEX;
- 
-@@ -628,6 +634,10 @@ void ixgbevf_init_ipsec_offload(struct i
- 	size_t size;
- 
- 	switch (adapter->hw.api_version) {
-+	case ixgbe_mbox_api_17:
-+		if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+			return;
-+		break;
- 	case ixgbe_mbox_api_14:
- 		break;
- 	default:
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf.h
-@@ -366,6 +366,13 @@ struct ixgbevf_adapter {
- 	/* Interrupt Throttle Rate */
- 	u32 eitr_param;
- 
-+	u32 pf_features;
-+#define IXGBEVF_PF_SUP_IPSEC		BIT(0)
-+#define IXGBEVF_PF_SUP_ESX_MBX		BIT(1)
-+
-+#define IXGBEVF_SUPPORTED_FEATURES	(IXGBEVF_PF_SUP_IPSEC | \
-+					IXGBEVF_PF_SUP_ESX_MBX)
-+
- 	struct ixgbevf_hw_stats stats;
- 
- 	unsigned long state;
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -2274,10 +2274,35 @@ static void ixgbevf_init_last_counter_st
- 	adapter->stats.base_vfmprc = adapter->stats.last_vfmprc;
- }
- 
-+/**
-+ * ixgbevf_set_features - Set features supported by PF
-+ * @adapter: pointer to the adapter struct
-+ *
-+ * Negotiate with PF supported features and then set pf_features accordingly.
-+ */
-+static void ixgbevf_set_features(struct ixgbevf_adapter *adapter)
-+{
-+	u32 *pf_features = &adapter->pf_features;
-+	struct ixgbe_hw *hw = &adapter->hw;
-+	int err;
-+
-+	err = hw->mac.ops.negotiate_features(hw, pf_features);
-+	if (err && err != -EOPNOTSUPP)
-+		netdev_dbg(adapter->netdev,
-+			   "PF feature negotiation failed.\n");
-+
-+	/* Address also pre API 1.7 cases */
-+	if (hw->api_version == ixgbe_mbox_api_14)
-+		*pf_features |= IXGBEVF_PF_SUP_IPSEC;
-+	else if (hw->api_version == ixgbe_mbox_api_15)
-+		*pf_features |= IXGBEVF_PF_SUP_ESX_MBX;
-+}
-+
- static void ixgbevf_negotiate_api(struct ixgbevf_adapter *adapter)
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -150,7 +150,7 @@ static inline struct sock *__inet6_looku
+ 					      int iif, int sdif,
+ 					      bool *refcounted)
  {
- 	struct ixgbe_hw *hw = &adapter->hw;
- 	static const int api[] = {
-+		ixgbe_mbox_api_17,
- 		ixgbe_mbox_api_16,
- 		ixgbe_mbox_api_15,
- 		ixgbe_mbox_api_14,
-@@ -2298,8 +2323,9 @@ static void ixgbevf_negotiate_api(struct
- 		idx++;
+-	struct net *net = dev_net(skb_dst(skb)->dev);
++	struct net *net = dev_net_rcu(skb_dst(skb)->dev);
+ 	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct sock *sk;
+ 
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -492,7 +492,7 @@ static inline struct sock *__inet_lookup
+ 					     const int sdif,
+ 					     bool *refcounted)
+ {
+-	struct net *net = dev_net(skb_dst(skb)->dev);
++	struct net *net = dev_net_rcu(skb_dst(skb)->dev);
+ 	const struct iphdr *iph = ip_hdr(skb);
+ 	struct sock *sk;
+ 
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -494,14 +494,14 @@ int tcp_v4_err(struct sk_buff *skb, u32
+ {
+ 	const struct iphdr *iph = (const struct iphdr *)skb->data;
+ 	struct tcphdr *th = (struct tcphdr *)(skb->data + (iph->ihl << 2));
+-	struct tcp_sock *tp;
++	struct net *net = dev_net_rcu(skb->dev);
+ 	const int type = icmp_hdr(skb)->type;
+ 	const int code = icmp_hdr(skb)->code;
+-	struct sock *sk;
+ 	struct request_sock *fastopen;
++	struct tcp_sock *tp;
+ 	u32 seq, snd_una;
++	struct sock *sk;
+ 	int err;
+-	struct net *net = dev_net(skb->dev);
+ 
+ 	sk = __inet_lookup_established(net, net->ipv4.tcp_death_row.hashinfo,
+ 				       iph->daddr, th->dest, iph->saddr,
+@@ -786,7 +786,7 @@ static void tcp_v4_send_reset(const stru
+ 	arg.iov[0].iov_base = (unsigned char *)&rep;
+ 	arg.iov[0].iov_len  = sizeof(rep.th);
+ 
+-	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ 
+ 	/* Invalid TCP option size or twice included auth */
+ 	if (tcp_parse_auth_options(tcp_hdr(skb), &md5_hash_location, &aoh))
+@@ -1965,7 +1965,7 @@ EXPORT_SYMBOL(tcp_v4_do_rcv);
+ 
+ int tcp_v4_early_demux(struct sk_buff *skb)
+ {
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	const struct iphdr *iph;
+ 	const struct tcphdr *th;
+ 	struct sock *sk;
+@@ -2176,7 +2176,7 @@ static void tcp_v4_fill_cb(struct sk_buf
+ 
+ int tcp_v4_rcv(struct sk_buff *skb)
+ {
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	enum skb_drop_reason drop_reason;
+ 	int sdif = inet_sdif(skb);
+ 	int dif = inet_iif(skb);
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -170,7 +170,7 @@ static struct tcp_metrics_block *tcpm_ne
+ 	bool reclaim = false;
+ 
+ 	spin_lock_bh(&tcp_metrics_lock);
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 
+ 	/* While waiting for the spin-lock the cache might have been populated
+ 	 * with this entry and so we have to check again.
+@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_g
+ 		return NULL;
  	}
  
--	/* Following is not supported by API 1.6, it is specific for 1.5 */
--	if (hw->api_version == ixgbe_mbox_api_15) {
-+	ixgbevf_set_features(adapter);
-+
-+	if (adapter->pf_features & IXGBEVF_PF_SUP_ESX_MBX) {
- 		hw->mbx.ops.init_params(hw);
- 		memcpy(&hw->mbx.ops, &ixgbevf_mbx_ops,
- 		       sizeof(struct ixgbe_mbx_operations));
-@@ -2657,6 +2683,7 @@ static void ixgbevf_set_num_queues(struc
- 		case ixgbe_mbox_api_14:
- 		case ixgbe_mbox_api_15:
- 		case ixgbe_mbox_api_16:
-+		case ixgbe_mbox_api_17:
- 			if (adapter->xdp_prog &&
- 			    hw->mac.max_tx_queues == rss)
- 				rss = rss > 3 ? 2 : 1;
-@@ -4652,6 +4679,7 @@ static int ixgbevf_probe(struct pci_dev
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		netdev->max_mtu = IXGBE_MAX_JUMBO_FRAME_SIZE -
- 				  (ETH_HLEN + ETH_FCS_LEN);
- 		break;
---- a/drivers/net/ethernet/intel/ixgbevf/mbx.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/mbx.h
-@@ -67,6 +67,7 @@ enum ixgbe_pfvf_api_rev {
- 	ixgbe_mbox_api_14,	/* API version 1.4, linux/freebsd VF driver */
- 	ixgbe_mbox_api_15,	/* API version 1.5, linux/freebsd VF driver */
- 	ixgbe_mbox_api_16,      /* API version 1.6, linux/freebsd VF driver */
-+	ixgbe_mbox_api_17,	/* API version 1.7, linux/freebsd VF driver */
- 	/* This value should always be last */
- 	ixgbe_mbox_api_unknown,	/* indicates that API version is not known */
- };
-@@ -106,6 +107,9 @@ enum ixgbe_pfvf_api_rev {
- /* mailbox API, version 1.6 VF requests */
- #define IXGBE_VF_GET_PF_LINK_STATE	0x11 /* request PF to send link info */
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
  
-+/* mailbox API, version 1.7 VF requests */
-+#define IXGBE_VF_FEATURES_NEGOTIATE	0x12 /* get features supported by PF*/
-+
- /* length of permanent address message returned from PF */
- #define IXGBE_VF_PERMADDR_MSG_LEN	4
- /* word in permanent address message with the current multicast type */
---- a/drivers/net/ethernet/intel/ixgbevf/vf.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
-@@ -313,6 +313,7 @@ int ixgbevf_get_reta_locked(struct ixgbe
- 	 * is not supported for this device type.
- 	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
- 	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
-@@ -383,6 +384,7 @@ int ixgbevf_get_rss_key_locked(struct ix
- 	 * or if the operation is not supported for this device type.
- 	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
- 	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
-@@ -555,6 +557,7 @@ static s32 ixgbevf_update_xcast_mode(str
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -646,6 +649,7 @@ static int ixgbevf_get_pf_link_state(str
+@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get
+ 	else
+ 		return NULL;
  
- 	switch (hw->api_version) {
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -670,6 +674,42 @@ static int ixgbevf_get_pf_link_state(str
- }
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
  
- /**
-+ * ixgbevf_negotiate_features_vf - negotiate supported features with PF driver
-+ * @hw: pointer to the HW structure
-+ * @pf_features: bitmask of features supported by PF
-+ *
-+ * Return: IXGBE_ERR_MBX in the  case of mailbox error,
-+ * -EOPNOTSUPP if the op is not supported or 0 on success.
-+ */
-+static int ixgbevf_negotiate_features_vf(struct ixgbe_hw *hw, u32 *pf_features)
-+{
-+	u32 msgbuf[2] = {};
-+	int err;
-+
-+	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	msgbuf[0] = IXGBE_VF_FEATURES_NEGOTIATE;
-+	msgbuf[1] = IXGBEVF_SUPPORTED_FEATURES;
-+
-+	err = ixgbevf_write_msg_read_ack(hw, msgbuf, msgbuf,
-+					 ARRAY_SIZE(msgbuf));
-+
-+	if (err || (msgbuf[0] & IXGBE_VT_MSGTYPE_FAILURE)) {
-+		err = IXGBE_ERR_MBX;
-+		*pf_features = 0x0;
-+	} else {
-+		*pf_features = msgbuf[1];
-+	}
-+
-+	return err;
-+}
-+
-+/**
-  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
-  *  @hw: pointer to the HW structure
-  *  @vlan: 12 bit VLAN ID
-@@ -799,6 +839,7 @@ static s32 ixgbevf_check_mac_link_vf(str
- 				     bool *link_up,
- 				     bool autoneg_wait_to_complete)
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -376,7 +376,7 @@ static int tcp_v6_err(struct sk_buff *sk
  {
-+	struct ixgbevf_adapter *adapter = hw->back;
- 	struct ixgbe_mbx_info *mbx = &hw->mbx;
- 	struct ixgbe_mac_info *mac = &hw->mac;
- 	s32 ret_val = 0;
-@@ -825,7 +866,7 @@ static s32 ixgbevf_check_mac_link_vf(str
- 	 * until we are called again and don't report an error
- 	 */
- 	if (mbx->ops.read(hw, &in_msg, 1)) {
--		if (hw->api_version >= ixgbe_mbox_api_15)
-+		if (adapter->pf_features & IXGBEVF_PF_SUP_ESX_MBX)
- 			mac->get_link_status = false;
- 		goto out;
- 	}
-@@ -1026,6 +1067,7 @@ int ixgbevf_get_queues(struct ixgbe_hw *
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return 0;
-@@ -1080,6 +1122,7 @@ static const struct ixgbe_mac_operations
- 	.setup_link		= ixgbevf_setup_mac_link_vf,
- 	.check_link		= ixgbevf_check_mac_link_vf,
- 	.negotiate_api_version	= ixgbevf_negotiate_api_version_vf,
-+	.negotiate_features	= ixgbevf_negotiate_features_vf,
- 	.set_rar		= ixgbevf_set_rar_vf,
- 	.update_mc_addr_list	= ixgbevf_update_mc_addr_list_vf,
- 	.update_xcast_mode	= ixgbevf_update_xcast_mode,
---- a/drivers/net/ethernet/intel/ixgbevf/vf.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.h
-@@ -26,6 +26,7 @@ struct ixgbe_mac_operations {
- 	s32 (*stop_adapter)(struct ixgbe_hw *);
- 	s32 (*get_bus_info)(struct ixgbe_hw *);
- 	s32 (*negotiate_api_version)(struct ixgbe_hw *hw, int api);
-+	int (*negotiate_features)(struct ixgbe_hw *hw, u32 *pf_features);
+ 	const struct ipv6hdr *hdr = (const struct ipv6hdr *)skb->data;
+ 	const struct tcphdr *th = (struct tcphdr *)(skb->data+offset);
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	struct request_sock *fastopen;
+ 	struct ipv6_pinfo *np;
+ 	struct tcp_sock *tp;
+@@ -864,16 +864,16 @@ static void tcp_v6_send_response(const s
+ 				 int oif, int rst, u8 tclass, __be32 label,
+ 				 u32 priority, u32 txhash, struct tcp_key *key)
+ {
+-	const struct tcphdr *th = tcp_hdr(skb);
+-	struct tcphdr *t1;
+-	struct sk_buff *buff;
+-	struct flowi6 fl6;
+-	struct net *net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
+-	struct sock *ctl_sk = net->ipv6.tcp_sk;
++	struct net *net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ 	unsigned int tot_len = sizeof(struct tcphdr);
++	struct sock *ctl_sk = net->ipv6.tcp_sk;
++	const struct tcphdr *th = tcp_hdr(skb);
+ 	__be32 mrst = 0, *topt;
+ 	struct dst_entry *dst;
+-	__u32 mark = 0;
++	struct sk_buff *buff;
++	struct tcphdr *t1;
++	struct flowi6 fl6;
++	u32 mark = 0;
  
- 	/* Link */
- 	s32 (*setup_link)(struct ixgbe_hw *, ixgbe_link_speed, bool, bool);
+ 	if (tsecr)
+ 		tot_len += TCPOLEN_TSTAMP_ALIGNED;
+@@ -1036,7 +1036,7 @@ static void tcp_v6_send_reset(const stru
+ 	if (!sk && !ipv6_unicast_destination(skb))
+ 		return;
+ 
+-	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ 	/* Invalid TCP option size or twice included auth */
+ 	if (tcp_parse_auth_options(th, &md5_hash_location, &aoh))
+ 		return;
+@@ -1739,6 +1739,7 @@ static void tcp_v6_fill_cb(struct sk_buf
+ 
+ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
+ {
++	struct net *net = dev_net_rcu(skb->dev);
+ 	enum skb_drop_reason drop_reason;
+ 	int sdif = inet6_sdif(skb);
+ 	int dif = inet6_iif(skb);
+@@ -1748,7 +1749,6 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(s
+ 	bool refcounted;
+ 	int ret;
+ 	u32 isn;
+-	struct net *net = dev_net(skb->dev);
+ 
+ 	drop_reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	if (skb->pkt_type != PACKET_HOST)
+@@ -1999,7 +1999,7 @@ do_time_wait:
+ 
+ void tcp_v6_early_demux(struct sk_buff *skb)
+ {
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	const struct ipv6hdr *hdr;
+ 	const struct tcphdr *th;
+ 	struct sock *sk;
 
 
