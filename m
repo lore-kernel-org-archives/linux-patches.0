@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B4B24A047;
-	Tue, 21 Oct 2025 20:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882941A3029;
+	Tue, 21 Oct 2025 20:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077161; cv=none; b=prNbUxkUjwQryXQQcoXDuony0yDD4EoCO0ZcJS+rQj2Vxbz0K77jI70y26GMrrTGxYO+HlWiPQC+mdJ38+tUWkEH+E8XHsiSy/jaJPNHgCRcRcMao4ZgRu958qRF1oow3O43bxoAIt17pm1c79GJsR6xevB1OQKxQ7+XIDdDr8Y=
+	t=1761077164; cv=none; b=IfkDC/B0geO6NzGQ60r2zBbrdp2P1HE6DCkupQ3M0Pfgn3nUPu5fut1gG6D16v/wZo416APU5BKiiLHgcUeqdUbiVLroj5WAyA5ZFe7zPLtzJpYcGLDgotCH8tGDgU8ftZxYPndsUjaqPPq2CcuNHgCZ5BTAXl2JqQoJfRj5XrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077161; c=relaxed/simple;
-	bh=f4Zr7FeIm2c0siCCGP8SCLaAlC5HLIukXa9PnCiqUM4=;
+	s=arc-20240116; t=1761077164; c=relaxed/simple;
+	bh=h/VbPAvq1GeJ1X8j6wOe1oGh1r/P1NJauQxKsz+99Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prx3GBNHkNtwA/GXhHvWDDBXURI7gzGQ6SFEyBI5J1jNDk3HnSHaCzUszSsVQQrPprIUXC+yQp0RLAfOZP/RkMqt1XwRn6Fug64HtqVUCosbTskZX7LF1z1muDI28rrbmfQ1zhbt15NUs+m9NNbTRTkT/3CaPuB0vFeKY0Y6cFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDqm0JER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRazg95DUpFnn6wo7OwxWeL9QHeXgySHj58BEyudDNDVzNZ9bP4mTb3mQbMbprHQ7Hv4tE2KKw11B4tMkch0aDi79q7R20yRJCVy5q5GKOvS35hArwxLznpClH4Wji9jJsNtSDwfOWQ8MhZbW40fuaEyuIH/y6zixRtbpsJ/NN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pba0+XIU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDqm0JER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB023C4CEF1;
-	Tue, 21 Oct 2025 20:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pba0+XIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18318C4CEF1;
+	Tue, 21 Oct 2025 20:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077161;
-	bh=f4Zr7FeIm2c0siCCGP8SCLaAlC5HLIukXa9PnCiqUM4=;
+	s=korg; t=1761077164;
+	bh=h/VbPAvq1GeJ1X8j6wOe1oGh1r/P1NJauQxKsz+99Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDqm0JERzXiaJy3yVF2r745WuVsIOsZudWpSuF92LFJsc3nn1Wx4AS9xRF1svkLEk
-	 pvmZ8qT54M/R8/eDBvE4ytmL2IcxehCV0ngGFRLbWkaqfvvc6Gu7aXpf+YSItFcodQ
-	 0tBgjJ6BLDORdI+2FnTF7quL6G19yyoT4+QxVrMI=
+	b=Pba0+XIU6Vwrhtngrl5qR1QL8WsrkRZCsC0iwFh0RyRTurs4PRhwr9d/a2Ziq+lwT
+	 47rclGzUGB5Qjmrhf0mkwH7VeM8vqqs33mbDm5179eNmTvXc2G3iysw7L1JtFn9YKr
+	 p0xjkhs9P1Y+In5eZZf+nG8f7/RngU7b/hsFQLWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.17 019/159] KVM: arm64: Prevent access to vCPU events before init
-Date: Tue, 21 Oct 2025 21:49:56 +0200
-Message-ID: <20251021195043.648609618@linuxfoundation.org>
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.17 002/159] Revert "fs: make vfs_fileattr_[get|set] return -EOPNOTSUPP"
+Date: Tue, 21 Oct 2025 21:49:39 +0200
+Message-ID: <20251021195043.243572726@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -50,86 +50,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Andrey Albershteyn <aalbersh@redhat.com>
 
-commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 upstream.
+commit 4dd5b5ac089bb6ea719b7ffb748707ac9cbce4e4 upstream.
 
-Another day, another syzkaller bug. KVM erroneously allows userspace to
-pend vCPU events for a vCPU that hasn't been initialized yet, leading to
-KVM interpreting a bunch of uninitialized garbage for routing /
-injecting the exception.
+This reverts commit 474b155adf3927d2c944423045757b54aa1ca4de.
 
-In one case the injection code and the hyp disagree on whether the vCPU
-has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
-tripping the BUG() in exception_target_el() during the next injection:
+This patch caused regression in ioctl_setflags(). Underlying filesystems
+use EOPNOTSUPP to indicate that flag is not supported. This error is
+also gets converted in ioctl_setflags(). Therefore, for unsupported
+flags error changed from EOPNOSUPP to ENOIOCTLCMD.
 
-  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
-  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : exception_target_el+0x88/0x8c
-  lr : pend_serror_exception+0x18/0x13c
-  sp : ffff800082f03a10
-  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
-  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
-  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
-  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
-  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
-  Call trace:
-   exception_target_el+0x88/0x8c (P)
-   kvm_inject_serror_esr+0x40/0x3b4
-   __kvm_arm_vcpu_set_events+0xf0/0x100
-   kvm_arch_vcpu_ioctl+0x180/0x9d4
-   kvm_vcpu_ioctl+0x60c/0x9f4
-   __arm64_sys_ioctl+0xac/0x104
-   invoke_syscall+0x48/0x110
-   el0_svc_common.constprop.0+0x40/0xe0
-   do_el0_svc+0x1c/0x28
-   el0_svc+0x34/0xf0
-   el0t_64_sync_handler+0xa0/0xe4
-   el0t_64_sync+0x198/0x19c
-  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
-
-Reject the ioctls outright as no sane VMM would call these before
-KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
-thrown away by the eventual reset of the vCPU's state.
-
-Cc: stable@vger.kernel.org # 6.17
-Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/linux-xfs/a622643f-1585-40b0-9441-cf7ece176e83@kernel.org/
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/file_attr.c         | 12 ++----------
+ fs/fuse/ioctl.c        |  4 ----
+ fs/overlayfs/copy_up.c |  2 +-
+ fs/overlayfs/inode.c   |  5 ++++-
+ 4 files changed, 7 insertions(+), 16 deletions(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1789,6 +1789,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 	case KVM_GET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
+diff --git a/fs/file_attr.c b/fs/file_attr.c
+index 12424d4945d0..460b2dd21a85 100644
+--- a/fs/file_attr.c
++++ b/fs/file_attr.c
+@@ -84,7 +84,7 @@ int vfs_fileattr_get(struct dentry *dentry, struct file_kattr *fa)
+ 	int error;
  
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
-+
- 		if (kvm_arm_vcpu_get_events(vcpu, &events))
- 			return -EINVAL;
+ 	if (!inode->i_op->fileattr_get)
+-		return -EOPNOTSUPP;
++		return -ENOIOCTLCMD;
  
-@@ -1800,6 +1803,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 	case KVM_SET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
+ 	error = security_inode_file_getattr(dentry, fa);
+ 	if (error)
+@@ -270,7 +270,7 @@ int vfs_fileattr_set(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	int err;
  
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
-+
- 		if (copy_from_user(&events, argp, sizeof(events)))
- 			return -EFAULT;
+ 	if (!inode->i_op->fileattr_set)
+-		return -EOPNOTSUPP;
++		return -ENOIOCTLCMD;
  
+ 	if (!inode_owner_or_capable(idmap, inode))
+ 		return -EPERM;
+@@ -312,8 +312,6 @@ int ioctl_getflags(struct file *file, unsigned int __user *argp)
+ 	int err;
+ 
+ 	err = vfs_fileattr_get(file->f_path.dentry, &fa);
+-	if (err == -EOPNOTSUPP)
+-		err = -ENOIOCTLCMD;
+ 	if (!err)
+ 		err = put_user(fa.flags, argp);
+ 	return err;
+@@ -335,8 +333,6 @@ int ioctl_setflags(struct file *file, unsigned int __user *argp)
+ 			fileattr_fill_flags(&fa, flags);
+ 			err = vfs_fileattr_set(idmap, dentry, &fa);
+ 			mnt_drop_write_file(file);
+-			if (err == -EOPNOTSUPP)
+-				err = -ENOIOCTLCMD;
+ 		}
+ 	}
+ 	return err;
+@@ -349,8 +345,6 @@ int ioctl_fsgetxattr(struct file *file, void __user *argp)
+ 	int err;
+ 
+ 	err = vfs_fileattr_get(file->f_path.dentry, &fa);
+-	if (err == -EOPNOTSUPP)
+-		err = -ENOIOCTLCMD;
+ 	if (!err)
+ 		err = copy_fsxattr_to_user(&fa, argp);
+ 
+@@ -371,8 +365,6 @@ int ioctl_fssetxattr(struct file *file, void __user *argp)
+ 		if (!err) {
+ 			err = vfs_fileattr_set(idmap, dentry, &fa);
+ 			mnt_drop_write_file(file);
+-			if (err == -EOPNOTSUPP)
+-				err = -ENOIOCTLCMD;
+ 		}
+ 	}
+ 	return err;
+diff --git a/fs/fuse/ioctl.c b/fs/fuse/ioctl.c
+index 57032eadca6c..fdc175e93f74 100644
+--- a/fs/fuse/ioctl.c
++++ b/fs/fuse/ioctl.c
+@@ -536,8 +536,6 @@ int fuse_fileattr_get(struct dentry *dentry, struct file_kattr *fa)
+ cleanup:
+ 	fuse_priv_ioctl_cleanup(inode, ff);
+ 
+-	if (err == -ENOTTY)
+-		err = -EOPNOTSUPP;
+ 	return err;
+ }
+ 
+@@ -574,7 +572,5 @@ int fuse_fileattr_set(struct mnt_idmap *idmap,
+ cleanup:
+ 	fuse_priv_ioctl_cleanup(inode, ff);
+ 
+-	if (err == -ENOTTY)
+-		err = -EOPNOTSUPP;
+ 	return err;
+ }
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index aac7e34f56c1..604a82acd164 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -178,7 +178,7 @@ static int ovl_copy_fileattr(struct inode *inode, const struct path *old,
+ 	err = ovl_real_fileattr_get(old, &oldfa);
+ 	if (err) {
+ 		/* Ntfs-3g returns -EINVAL for "no fileattr support" */
+-		if (err == -EOPNOTSUPP || err == -EINVAL)
++		if (err == -ENOTTY || err == -EINVAL)
+ 			return 0;
+ 		pr_warn("failed to retrieve lower fileattr (%pd2, err=%i)\n",
+ 			old->dentry, err);
+diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
+index aaa4cf579561..e11f310ce092 100644
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -720,7 +720,10 @@ int ovl_real_fileattr_get(const struct path *realpath, struct file_kattr *fa)
+ 	if (err)
+ 		return err;
+ 
+-	return vfs_fileattr_get(realpath->dentry, fa);
++	err = vfs_fileattr_get(realpath->dentry, fa);
++	if (err == -ENOIOCTLCMD)
++		err = -ENOTTY;
++	return err;
+ }
+ 
+ int ovl_fileattr_get(struct dentry *dentry, struct file_kattr *fa)
+-- 
+2.51.1.dirty
+
 
 
