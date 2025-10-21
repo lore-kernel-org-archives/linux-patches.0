@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF98246798;
-	Tue, 21 Oct 2025 19:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640BB350A2A;
+	Tue, 21 Oct 2025 19:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076722; cv=none; b=kuSZcQZduPi+XGqaej7wBshKKC/MYP1uAmsqdOHbqCEHE4i8O9F/XWb+UKtTwR41IkC5iofuMMmsMARoDaep3Kjmm194NY1XKQ6uA+5+8Dd60KINXltcFwIHEanOq1dbkK7i0gTzsgib8DNcbRd0THLiF/rc9ZWPVZ8g7Bjopvg=
+	t=1761076725; cv=none; b=WLqh0ZMi4PE+V0hNJpcMX4dtBKOEtEJU9BfiA27o0X3P2fITmpM3SEqD7PO61u3RZwxwdSviEkAdXzhyDBrouEDExe6Rq4TVm2uxrIFcJs3nu945ZSOpq90RWWJorGFD1lcgVfe/L5BUiIm9KzVhvuOKQlA3nQkXjzqNVnsf6lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076722; c=relaxed/simple;
-	bh=W4iJNIzwg2zailRI9LlwlYvc4v/qpI4O3ML2UG28XWY=;
+	s=arc-20240116; t=1761076725; c=relaxed/simple;
+	bh=lgF9mJJEjPvWE+fRFBluqkbkZbVvQUs0Bu4RIwgbDsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/RfT0LIoZ36JniHLcgceLRLWCfW6wBYiiPh4QZs7+O1d2g5Ry5BTKJgNtZFMxZIVsPoH+T9mKxM04BZ8wAkFUChY5yAkkpmmi1kokT8Ul2Jg8Z7Zvw3p/mcF56LM8KVTc4RF3ecMuHCTciGbbLGgRQVuWMij5tDtwuI+zXNXxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik1awKbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OqbRlj5Y5A+6uNMLZdbNSNPKeR6z2HZjMa2VN6/T0uaP5jXa6bNqv+ace2JG691Klkvtqu5YN91CoP5YJHJavegmh6B7Fh1oHN8Kh30Dynzk+ILp8XIGb1jObIOv+BhHODpAwkhvMZMwGJ0z4auR8xbtH6mi6qcqzVcBKpfRI64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/B94UaS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik1awKbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5FBC4CEF1;
-	Tue, 21 Oct 2025 19:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/B94UaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B96EC4CEF1;
+	Tue, 21 Oct 2025 19:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076721;
-	bh=W4iJNIzwg2zailRI9LlwlYvc4v/qpI4O3ML2UG28XWY=;
+	s=korg; t=1761076725;
+	bh=lgF9mJJEjPvWE+fRFBluqkbkZbVvQUs0Bu4RIwgbDsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ik1awKbVc+HMKnXaPNSpr4ljhG50yG6cVtVrz8MRQWKsYsfQe8FMeSG6fxTiVIrxt
-	 KgaNOIipy1ZCAfpFlwrwJ1kyqqsYka+vovm6jYgtSAzpZ0Wn/pZP+krqH+K+NQG5AY
-	 jmygQWPDd7tr4eq2xtI+ufUyah6Ng24S3IqQSFYo=
+	b=N/B94UaSeef7HF7/3/2UPrfRKAxXKWdodBcYewIYkGDA4nUNlOHVpzVzkS/5S1fM7
+	 Rb1bszSYcLpYQ1wNzX7PDkqqWt0H9sezWpnNT8muDk6xinhWCar9TlDtBmtVyKyDst
+	 gQwiB1ACGl3WwEEvnsAr7nLIrlc5HwspYGvQ2E74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Korenevsky <ekorenevsky@aliyun.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 018/136] cifs: parse_dfs_referrals: prevent oob on malformed input
-Date: Tue, 21 Oct 2025 21:50:06 +0200
-Message-ID: <20251021195036.406937686@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.12 019/136] drm/sched: Fix potential double free in drm_sched_job_add_resv_dependencies
+Date: Tue, 21 Oct 2025 21:50:07 +0200
+Message-ID: <20251021195036.432183305@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -46,68 +52,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eugene Korenevsky <ekorenevsky@aliyun.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-commit 6447b0e355562a1ff748c4a2ffb89aae7e84d2c9 upstream.
+commit 5801e65206b065b0b2af032f7f1eef222aa2fd83 upstream.
 
-Malicious SMB server can send invalid reply to FSCTL_DFS_GET_REFERRALS
+When adding dependencies with drm_sched_job_add_dependency(), that
+function consumes the fence reference both on success and failure, so in
+the latter case the dma_fence_put() on the error path (xarray failed to
+expand) is a double free.
 
-- reply smaller than sizeof(struct get_dfs_referral_rsp)
-- reply with number of referrals smaller than NumberOfReferrals in the
-header
+Interestingly this bug appears to have been present ever since
+commit ebd5f74255b9 ("drm/sched: Add dependency tracking"), since the code
+back then looked like this:
 
-Processing of such replies will cause oob.
+drm_sched_job_add_implicit_dependencies():
+...
+       for (i = 0; i < fence_count; i++) {
+               ret = drm_sched_job_add_dependency(job, fences[i]);
+               if (ret)
+                       break;
+       }
 
-Return -EINVAL error on such replies to prevent oob-s.
+       for (; i < fence_count; i++)
+               dma_fence_put(fences[i]);
 
-Signed-off-by: Eugene Korenevsky <ekorenevsky@aliyun.com>
-Cc: stable@vger.kernel.org
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Which means for the failing 'i' the dma_fence_put was already a double
+free. Possibly there were no users at that time, or the test cases were
+insufficient to hit it.
+
+The bug was then only noticed and fixed after
+commit 9c2ba265352a ("drm/scheduler: use new iterator in drm_sched_job_add_implicit_dependencies v2")
+landed, with its fixup of
+commit 4eaf02d6076c ("drm/scheduler: fix drm_sched_job_add_implicit_dependencies").
+
+At that point it was a slightly different flavour of a double free, which
+commit 963d0b356935 ("drm/scheduler: fix drm_sched_job_add_implicit_dependencies harder")
+noticed and attempted to fix.
+
+But it only moved the double free from happening inside the
+drm_sched_job_add_dependency(), when releasing the reference not yet
+obtained, to the caller, when releasing the reference already released by
+the former in the failure case.
+
+As such it is not easy to identify the right target for the fixes tag so
+lets keep it simple and just continue the chain.
+
+While fixing we also improve the comment and explain the reason for taking
+the reference and not dropping it.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: 963d0b356935 ("drm/scheduler: fix drm_sched_job_add_implicit_dependencies harder")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/dri-devel/aNFbXq8OeYl3QSdm@stanley.mountain/
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Philipp Stanner <phasta@kernel.org>
+Cc: Christian König <ckoenig.leichtzumerken@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: stable@vger.kernel.org # v5.16+
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://lore.kernel.org/r/20251015084015.6273-1-tvrtko.ursulin@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/misc.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/scheduler/sched_main.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -913,6 +913,14 @@ parse_dfs_referrals(struct get_dfs_refer
- 	char *data_end;
- 	struct dfs_referral_level_3 *ref;
+--- a/drivers/gpu/drm/scheduler/sched_main.c
++++ b/drivers/gpu/drm/scheduler/sched_main.c
+@@ -952,13 +952,14 @@ int drm_sched_job_add_resv_dependencies(
+ 	dma_resv_assert_held(resv);
  
-+	if (rsp_size < sizeof(*rsp)) {
-+		cifs_dbg(VFS | ONCE,
-+			 "%s: header is malformed (size is %u, must be %zu)\n",
-+			 __func__, rsp_size, sizeof(*rsp));
-+		rc = -EINVAL;
-+		goto parse_DFS_referrals_exit;
-+	}
-+
- 	*num_of_nodes = le16_to_cpu(rsp->NumberOfReferrals);
- 
- 	if (*num_of_nodes < 1) {
-@@ -921,6 +929,15 @@ parse_dfs_referrals(struct get_dfs_refer
- 		rc = -EINVAL;
- 		goto parse_DFS_referrals_exit;
+ 	dma_resv_for_each_fence(&cursor, resv, usage, fence) {
+-		/* Make sure to grab an additional ref on the added fence */
+-		dma_fence_get(fence);
+-		ret = drm_sched_job_add_dependency(job, fence);
+-		if (ret) {
+-			dma_fence_put(fence);
++		/*
++		 * As drm_sched_job_add_dependency always consumes the fence
++		 * reference (even when it fails), and dma_resv_for_each_fence
++		 * is not obtaining one, we need to grab one before calling.
++		 */
++		ret = drm_sched_job_add_dependency(job, dma_fence_get(fence));
++		if (ret)
+ 			return ret;
+-		}
  	}
-+
-+	if (sizeof(*rsp) + *num_of_nodes * sizeof(REFERRAL3) > rsp_size) {
-+		cifs_dbg(VFS | ONCE,
-+			 "%s: malformed buffer (size is %u, must be at least %zu)\n",
-+			 __func__, rsp_size,
-+			 sizeof(*rsp) + *num_of_nodes * sizeof(REFERRAL3));
-+		rc = -EINVAL;
-+		goto parse_DFS_referrals_exit;
-+	}
- 
- 	ref = (struct dfs_referral_level_3 *) &(rsp->referrals);
- 	if (ref->VersionNumber != cpu_to_le16(3)) {
+ 	return 0;
+ }
 
 
