@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E0F1A00CE;
-	Tue, 21 Oct 2025 20:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543781A00CE;
+	Tue, 21 Oct 2025 20:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077135; cv=none; b=kurnYrbAlRkJLMZEYS9jpRbQo9m61xecv50gllYKT7J2uaGOJ2LVANTaXGgL0vwcEFh6xdc7UJU4inL34ls59iQ2Jwe3fzQTyI/2q96ZDnuBn7BJGOuPz63YWcKLiBZmGpalqwycgrpp+U8Sj8DQnMqDDMYm71pQtaRu7CRWjQg=
+	t=1761077139; cv=none; b=YPs/o7CtKL0ZCbDQmRDTE2XwhsGCtz26B8fARC541aM8do2yCFh5VW1eiRXkMNrfK+obnc9LfqKu1AQdgJczjAJcMF/sU/570Qm6dDn9USiIjhqN+pBfJZpNW4VVJy2IzxijEElO/YgFIkLu5XSnqwGXyDHfW8AC3wX6N0qKW5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077135; c=relaxed/simple;
-	bh=ZdYtQ/48npZv70BlWvEucvNDJxTZxRiiPnHUYSosHE8=;
+	s=arc-20240116; t=1761077139; c=relaxed/simple;
+	bh=JSpZ2LgfnqNhK8doxqza0A7czdKvp/kM7Uw8h4MwmT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxjH2bzxSLf7nn5cjL2MI2DZnmi+CAN3owQgIDyHDM9nHWZO1JrERGDU5hDz4jIYYgscWj0yqFBNPby/uCrgpL3R04QkpB+zD0ZXvScrWpiFBsxTVfobkvrMU9mD8YLH/m0W4kJ6iVqxKaUEcr9KKzBUplUfJNQCrtIyi0VgrE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPkdOz8C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdVbJiJACyP6rxsVpWr0wy7DaFJjORYcpypYdkLVIDQpKRrf6ZgCBFMiyVDxMDoc/0iZvybPN4gFFigfHEMCMO1mpsuOIZ3U6MHoq16k0Zvt9oKCUnaO8eKvEE1CmlxNiDUy10Fo5xkUwji+TPNfZNHsPPWbeUgHAr+55t1OFEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gk2fXIZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPkdOz8C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F3AC4CEF1;
-	Tue, 21 Oct 2025 20:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gk2fXIZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69CCC4CEF1;
+	Tue, 21 Oct 2025 20:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077135;
-	bh=ZdYtQ/48npZv70BlWvEucvNDJxTZxRiiPnHUYSosHE8=;
+	s=korg; t=1761077139;
+	bh=JSpZ2LgfnqNhK8doxqza0A7czdKvp/kM7Uw8h4MwmT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPkdOz8C1Nuurnq8az7NNe+3+ijMfzUFyWz79dpGRca/ANJrJXKmDghd+0U78x5ct
-	 g40OizRr9Lzk0evJo1l+0qize0f08M2uE4Ca13JeYaaYiyE/3nG+Php2ABpIzpG9R2
-	 h/s1M229ChuoU/oiVF42wVzVClnNxzGFxUA65Ufc=
+	b=gk2fXIZU9/pzu8Ih5o3KEmho0pssrBJ4DfX41CeuvVONKVesZXZut4/UPw2v7SkBt
+	 9Dz+gy9zlhqXL3uPM5P5yFd911m1as1xzynEk0s5C24OwUqAnnU186xzRwjwQtxxaG
+	 nrAItIsgojDQn59u7PM9mu8UlSGcVKs9nQ5LaBYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhao Fu <sfual@cse.ust.hk>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.17 011/159] smb: client: Fix refcount leak for cifs_sb_tlink
-Date: Tue, 21 Oct 2025 21:49:48 +0200
-Message-ID: <20251021195043.455255829@linuxfoundation.org>
+	Rong Zhang <i@rong.moe>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.17 012/159] x86/CPU/AMD: Prevent reset reasons from being retained across reboot
+Date: Tue, 21 Oct 2025 21:49:49 +0200
+Message-ID: <20251021195043.479090565@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -50,80 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Rong Zhang <i@rong.moe>
 
-commit c2b77f42205ef485a647f62082c442c1cd69d3fc upstream.
+commit e6416c2dfe23c9a6fec881fda22ebb9ae486cfc5 upstream.
 
-Fix three refcount inconsistency issues related to `cifs_sb_tlink`.
+The S5_RESET_STATUS register is parsed on boot and printed to kmsg.
+However, this could sometimes be misleading and lead to users wasting a
+lot of time on meaningless debugging for two reasons:
 
-Comments for `cifs_sb_tlink` state that `cifs_put_tlink()` needs to be
-called after successful calls to `cifs_sb_tlink()`. Three calls fail to
-update refcount accordingly, leading to possible resource leaks.
+* Some bits are never cleared by hardware. It's the software's
+responsibility to clear them as per the Processor Programming Reference
+(see [1]).
 
-Fixes: 8ceb98437946 ("CIFS: Move rename to ops struct")
-Fixes: 2f1afe25997f ("cifs: Use smb 2 - 3 and cifsacl mount options getacl functions")
-Fixes: 366ed846df60 ("cifs: Use smb 2 - 3 and cifsacl mount options setacl function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+* Some rare hardware-initiated platform resets do not update the
+register at all.
+
+In both cases, a previous reboot could leave its trace in the register,
+resulting in users seeing unrelated reboot reasons while debugging random
+reboots afterward.
+
+Write the read value back to the register in order to clear all reason bits
+since they are write-1-to-clear while the others must be preserved.
+
+  [1]: https://bugzilla.kernel.org/show_bug.cgi?id=206537#attach_303991
+
+  [ bp: Massage commit message. ]
+
+Fixes: ab8131028710 ("x86/CPU/AMD: Print the reason for the last reset")
+Signed-off-by: Rong Zhang <i@rong.moe>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/all/20250913144245.23237-1-i@rong.moe/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c   |    6 ++++--
- fs/smb/client/smb2ops.c |    8 ++++----
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/amd.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2431,8 +2431,10 @@ cifs_do_rename(const unsigned int xid, s
- 	tcon = tlink_tcon(tlink);
- 	server = tcon->ses->server;
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1338,11 +1338,23 @@ static __init int print_s5_reset_status_
+ 		return 0;
  
--	if (!server->ops->rename)
--		return -ENOSYS;
-+	if (!server->ops->rename) {
-+		rc = -ENOSYS;
-+		goto do_rename_exit;
+ 	value = ioread32(addr);
+-	iounmap(addr);
+ 
+ 	/* Value with "all bits set" is an error response and should be ignored. */
+-	if (value == U32_MAX)
++	if (value == U32_MAX) {
++		iounmap(addr);
+ 		return 0;
 +	}
++
++	/*
++	 * Clear all reason bits so they won't be retained if the next reset
++	 * does not update the register. Besides, some bits are never cleared by
++	 * hardware so it's software's responsibility to clear them.
++	 *
++	 * Writing the value back effectively clears all reason bits as they are
++	 * write-1-to-clear.
++	 */
++	iowrite32(value, addr);
++	iounmap(addr);
  
- 	/* try path-based rename first */
- 	rc = server->ops->rename(xid, tcon, from_dentry,
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3129,8 +3129,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
- 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
- 	if (!utf16_path) {
- 		rc = -ENOMEM;
--		free_xid(xid);
--		return ERR_PTR(rc);
-+		goto put_tlink;
- 	}
- 
- 	oparms = (struct cifs_open_parms) {
-@@ -3162,6 +3161,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
- 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
- 	}
- 
-+put_tlink:
- 	cifs_put_tlink(tlink);
- 	free_xid(xid);
- 
-@@ -3202,8 +3202,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
- 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
- 	if (!utf16_path) {
- 		rc = -ENOMEM;
--		free_xid(xid);
--		return rc;
-+		goto put_tlink;
- 	}
- 
- 	oparms = (struct cifs_open_parms) {
-@@ -3224,6 +3223,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
- 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
- 	}
- 
-+put_tlink:
- 	cifs_put_tlink(tlink);
- 	free_xid(xid);
- 	return rc;
+ 	for (i = 0; i < ARRAY_SIZE(s5_reset_reason_txt); i++) {
+ 		if (!(value & BIT(i)))
 
 
