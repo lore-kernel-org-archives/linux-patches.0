@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBB31A00CE;
-	Tue, 21 Oct 2025 20:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C384B134AC;
+	Tue, 21 Oct 2025 20:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077012; cv=none; b=EIUSzYFyhdx+TKIiSxJRXSVGkQmdxAV6Q1ESUaTTa9rOb0seQGT/CFqT2FTRlSisw4/5rrr/IW+l2Lwnz7EWKwJfk/5ZugMSx3+RpjTGMMGxQb+AXPPJkplFkFC0JyPdM0XAXne8S0v+WPDK9HD0JYiC1f6OfZe1SLsOpoMJtwM=
+	t=1761077015; cv=none; b=tXrfNHBYmjHf/dy8KcY8e0Tvu5msjJG1rJvbmLfVb4WjWaivV6qo7V54e0Hg1/j65i0AHe7lsSxY+02Ad3+SM5PlsSqIcvUXp2d7+jn13x1E2QTj7WcyfbrPDbWcSg0Ap4nbWctnmIQZ7RQjg4X2vvq38YzDF6kSNK3acEJPk/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077012; c=relaxed/simple;
-	bh=oAurukdgGVYCJa1SQ9siVCICgkQGXVFzAB8SRKUPPzM=;
+	s=arc-20240116; t=1761077015; c=relaxed/simple;
+	bh=pTVfSLxQyJj6MKM0ZKEX2Bj9kopSSx92QHZzVTb3vHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFihn6HUml1Vv0OnB/gYIarichZoZLKDU5+eTjrLypZJbZzsqLBmliwj9PM/Tyei4fQ194Qo1Y2D6ZS9GRJJ86dCpTcKD0b16vDGTkKB9F8AQKAthS5stziDh5WMbFz6aHK8Ly+CFTh14SeF1cM1kYSaJaZixWZc2EkaTZxGJtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5LgWeLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOnkwa6yt3+LNJPtfpA9e+4LyWvwIQBSKhlfxi6OOTtb/PazAc++aiaTREYY97fwVAHPb6Th1uXDzWhnvwwMU0k6hLwrvWM2HTDBEiex5wEWyTpeGyLhv86VPA4tGl8ZcgGNJv/MmZVELhkxmiIffPZ5/rtfV76RCCvefvZaElo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLlY2we/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5LgWeLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B78C4CEF1;
-	Tue, 21 Oct 2025 20:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLlY2we/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F434C4CEF1;
+	Tue, 21 Oct 2025 20:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077012;
-	bh=oAurukdgGVYCJa1SQ9siVCICgkQGXVFzAB8SRKUPPzM=;
+	s=korg; t=1761077015;
+	bh=pTVfSLxQyJj6MKM0ZKEX2Bj9kopSSx92QHZzVTb3vHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5LgWeLwyDgG1MUgmozSZzKI31QH9llbu/ZuWfvuCLF3V/MoyLjjCOb3KySZbek8l
-	 BADQ7c3fI5z3aNCrSrAHTiQqXdyhKBMyzhIdm16eMT7k+9lRWfKNtD+Jdrz/9av5eA
-	 KU9yga72FSUuGQAAg/N3jmGwTLIAy+5kFI33Hz7g=
+	b=SLlY2we/JbW0XuF5GH1lLrfFk2JkxmGOaTPn2sNx9AoA66f6Wd4re7mAUwo94cwKk
+	 QuqOTxAAaZBjuRi6zY7utmx22Rou+fTaSS6mD5I4sXOetK5LZkfz7OGQhL5c4scv4n
+	 WzQF9gHvW5xrak1bAZABEymoKqXriB2geaMSuMq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/136] xfs: use deferred intent items for reaping crosslinked blocks
-Date: Tue, 21 Oct 2025 21:51:37 +0200
-Message-ID: <20251021195038.585668364@linuxfoundation.org>
+Subject: [PATCH 6.12 110/136] padata: Reset next CPU when reorder sequence wraps around
+Date: Tue, 21 Oct 2025 21:51:38 +0200
+Message-ID: <20251021195038.610513580@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-[ Upstream commit cd32a0c0dcdf634f2e0e71f41c272e19dece6264 ]
+[ Upstream commit 501302d5cee0d8e8ec2c4a5919c37e0df9abc99b ]
 
-When we're removing rmap records for crosslinked blocks, use deferred
-intent items so that we can try to free/unmap as many of the old data
-structure's blocks as we can in the same transaction as the commit.
+When seq_nr wraps around, the next reorder job with seq 0 is hashed to
+the first CPU in padata_do_serial(). Correspondingly, need reset pd->cpu
+to the first one when pd->processed wraps around. Otherwise, if the
+number of used CPUs is not a power of 2, padata_find_next() will be
+checking a wrong list, hence deadlock.
 
-Cc: <stable@vger.kernel.org> # v6.6
-Fixes: 1c7ce115e52106 ("xfs: reap large AG metadata extents when possible")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-[ adapted xfs_refcount_free_cow_extent() and xfs_rmap_free_extent() ]
+Fixes: 6fc4dbcf0276 ("padata: Replace delayed timer with immediate workqueue in padata_reorder")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ relocated fix to padata_find_next() using pd->processed and pd->cpu structure fields ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/reap.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/padata.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -409,8 +409,6 @@ xreap_agextent_iter(
- 	if (crosslinked) {
- 		trace_xreap_dispose_unmap_extent(sc->sa.pag, agbno, *aglenp);
- 
--		rs->force_roll = true;
--
- 		if (rs->oinfo == &XFS_RMAP_OINFO_COW) {
- 			/*
- 			 * If we're unmapping CoW staging extents, remove the
-@@ -418,11 +416,14 @@ xreap_agextent_iter(
- 			 * rmap record as well.
- 			 */
- 			xfs_refcount_free_cow_extent(sc->tp, fsbno, *aglenp);
-+			rs->force_roll = true;
- 			return 0;
- 		}
- 
--		return xfs_rmap_free(sc->tp, sc->sa.agf_bp, sc->sa.pag, agbno,
--				*aglenp, rs->oinfo);
-+		xfs_rmap_free_extent(sc->tp, sc->sa.pag->pag_agno, agbno,
-+				*aglenp, rs->oinfo->oi_owner);
-+		rs->deferred++;
-+		return 0;
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -290,7 +290,11 @@ static struct padata_priv *padata_find_n
+ 	if (remove_object) {
+ 		list_del_init(&padata->list);
+ 		++pd->processed;
+-		pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		/* When sequence wraps around, reset to the first CPU. */
++		if (unlikely(pd->processed == 0))
++			pd->cpu = cpumask_first(pd->cpumask.pcpu);
++		else
++			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
  	}
  
- 	trace_xreap_dispose_free_extent(sc->sa.pag, agbno, *aglenp);
+ 	spin_unlock(&reorder->lock);
 
 
