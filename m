@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93214350A29;
-	Tue, 21 Oct 2025 20:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BDD145A1F;
+	Tue, 21 Oct 2025 20:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076887; cv=none; b=mH2aH2m+/7XkEEhEZ+IDRR+dRGAjJEdWlV2+u2CQhmYfmrf4uPy7QO3+ovIw6FXUa6Fhwm1mDA3T4R+FzYGSJnEYjd4w9qnO9k+CBn3qHeqDeNt09LXMIo+wkxNCjIaG48qRXj15ypdCAfrF/O178YYqbceYOy+QS29xfQrKkMM=
+	t=1761076891; cv=none; b=sbb0IKRg2eDE2It+vO8t0RxNA4XOjnkLDJDnhS/1f1BUESMHdwZ/GyC+ShKdzHKt+XQ9JdK6z8WeHOKpZ026QtqopB3bYxZky0WRNBHq5COuwP39MLz5Zim3MilBMhdN48jv9CfnPg90unVgZ633b1jym7Qr4l56srGmV6+QmT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076887; c=relaxed/simple;
-	bh=6tQhZsAt38I9AhSNH8C6Ek3jxo1o5acU/BZINzyd9bE=;
+	s=arc-20240116; t=1761076891; c=relaxed/simple;
+	bh=9Du5nKseZ0nlPkg53gHpxnx9o6gcchmHqUXkFC7ce48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx070gDn81yJqxqeWLc7P+CiZ4rrmliqyFHXCsCQsV0YnS/oFFXKL+jXVjBbz+FnvVDF1tci3fkVZ9A9ZponBzOmB7aAVwyMc80sXDsK1FH53A2NCe3egYrAAnKfhYiZQFu2b8HQL9oBXxUuKCrF2od7s0RLPn1oVCjY8bjcvkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdVyDqbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iS3ynbllaIYmjP9isjNkEfXkc1Eel3CVR/PPCqrygWOqldDu8MMPBi81+/6h1X1j+UAU9KeLpa9G5WeNUc5iHAzHQwxPSWiz+PL6jgYcreS8WApkFwQc4/OpXf47AyAhw6P/6i6XQ3wpEXr79Pbg0/u0qlputDshuaumY4E1OSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSMuSBSU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdVyDqbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DC8C4CEF1;
-	Tue, 21 Oct 2025 20:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSMuSBSU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3841C4CEF1;
+	Tue, 21 Oct 2025 20:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076887;
-	bh=6tQhZsAt38I9AhSNH8C6Ek3jxo1o5acU/BZINzyd9bE=;
+	s=korg; t=1761076891;
+	bh=9Du5nKseZ0nlPkg53gHpxnx9o6gcchmHqUXkFC7ce48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdVyDqbSOsc5qh7aY86cXQs+nIVm6wdB5RZ5zR6meCsYym+8qsXnxMugw0EklVt9o
-	 d6K2lfPSi71NZV7WzlVzaO47FtuRfz0qr1bJt+bZdw5DVcg93EuvI7Fq+RP9N5EhCq
-	 WLEAx5FAbEBnDS0jth/9Zz37W+1NijHU3dQ5BBfs=
+	b=sSMuSBSUbNOYB3ATt1ntSjkRglPGS/6hvP5oFhrbvUnwpjdyO2pgSk2H+Lk0s4wv8
+	 Dqwpt6XCcnPTLE7h3vsV9ainOE5Wiy+OerXKTALHmCipBftg/47IYVmFQV5fEQAxCe
+	 rfg6MoxkcANQ9uIQKdUIhu1zORm1S5WXl67VFVyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabian Vogt <fvogt@suse.de>,
-	Marvin Friedrich <marvin.friedrich@suse.com>,
-	Guo Ren <guoren@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/136] riscv: kprobes: Fix probe address validation
-Date: Tue, 21 Oct 2025 21:50:57 +0200
-Message-ID: <20251021195037.634110509@linuxfoundation.org>
+Subject: [PATCH 6.12 070/136] drm/bridge: lt9211: Drop check for last nibble of version register
+Date: Tue, 21 Oct 2025 21:50:58 +0200
+Message-ID: <20251021195037.656942401@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -53,62 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabian Vogt <fvogt@suse.de>
+From: Marek Vasut <marek.vasut@mailbox.org>
 
-[ Upstream commit 9e68bd803fac49274fde914466fd3b07c4d602c8 ]
+[ Upstream commit db74b04edce1bc86b9a5acc724c7ca06f427ab60 ]
 
-When adding a kprobe such as "p:probe/tcp_sendmsg _text+15392192",
-arch_check_kprobe would start iterating all instructions starting from
-_text until the probed address. Not only is this very inefficient, but
-literal values in there (e.g. left by function patching) are
-misinterpreted in a way that causes a desync.
+There is now a new LT9211 rev. U5, which reports chip ID 0x18 0x01 0xe4 .
+The previous LT9211 reported chip ID 0x18 0x01 0xe3 , which is what the
+driver checks for right now. Since there is a possibility there will be
+yet another revision of the LT9211 in the future, drop the last version
+nibble check to allow all future revisions of the chip to work with this
+driver.
 
-Fix this by doing it like x86: start the iteration at the closest
-preceding symbol instead of the given starting point.
+This fix makes LT9211 rev. U5 work with this driver.
 
-Fixes: 87f48c7ccc73 ("riscv: kprobe: Fixup kernel panic when probing an illegal position")
-Signed-off-by: Fabian Vogt <fvogt@suse.de>
-Signed-off-by: Marvin Friedrich <marvin.friedrich@suse.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/6191817.lOV4Wx5bFT@fvogt-thinkpad
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 8ce4129e3de4 ("drm/bridge: lt9211: Add Lontium LT9211 bridge driver")
+Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251011110017.12521-1-marek.vasut@mailbox.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/kprobes.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9211.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
-index d2dacea1aedd9..0daba93c1a81e 100644
---- a/arch/riscv/kernel/probes/kprobes.c
-+++ b/arch/riscv/kernel/probes/kprobes.c
-@@ -49,10 +49,15 @@ static void __kprobes arch_simulate_insn(struct kprobe *p, struct pt_regs *regs)
- 	post_kprobe_handler(p, kcb, regs);
- }
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9211.c b/drivers/gpu/drm/bridge/lontium-lt9211.c
+index c8881796fba4c..4014375f06ea1 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9211.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9211.c
+@@ -120,8 +120,7 @@ static int lt9211_read_chipid(struct lt9211 *ctx)
+ 	}
  
--static bool __kprobes arch_check_kprobe(struct kprobe *p)
-+static bool __kprobes arch_check_kprobe(unsigned long addr)
- {
--	unsigned long tmp  = (unsigned long)p->addr - p->offset;
--	unsigned long addr = (unsigned long)p->addr;
-+	unsigned long tmp, offset;
-+
-+	/* start iterating at the closest preceding symbol */
-+	if (!kallsyms_lookup_size_offset(addr, NULL, &offset))
-+		return false;
-+
-+	tmp = addr - offset;
- 
- 	while (tmp <= addr) {
- 		if (tmp == addr)
-@@ -71,7 +76,7 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
- 	if ((unsigned long)insn & 0x1)
- 		return -EILSEQ;
- 
--	if (!arch_check_kprobe(p))
-+	if (!arch_check_kprobe((unsigned long)p->addr))
- 		return -EILSEQ;
- 
- 	/* copy instruction */
+ 	/* Test for known Chip ID. */
+-	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE ||
+-	    chipid[2] != REG_CHIPID2_VALUE) {
++	if (chipid[0] != REG_CHIPID0_VALUE || chipid[1] != REG_CHIPID1_VALUE) {
+ 		dev_err(ctx->dev, "Unknown Chip ID: 0x%02x 0x%02x 0x%02x\n",
+ 			chipid[0], chipid[1], chipid[2]);
+ 		return -EINVAL;
 -- 
 2.51.0
 
