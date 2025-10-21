@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3452741A6;
-	Tue, 21 Oct 2025 19:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFECA273D9F;
+	Tue, 21 Oct 2025 19:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076587; cv=none; b=CvF3RbMB1A0dBOyRrXDsfCdQ99TfQOnauPyi9of7ger1BgDb36L4maaUgumgevDGk+lVpkFKzguOrJOycKxhP6TIKzFoMmt9n2VAoxY5rh6MtUNfVEe24SORGu40o1Av/mCrQARTNzoe5og2W/fkOhw1NHOjesXHw7rnFXfVloM=
+	t=1761076590; cv=none; b=DN7HJEfzBqjD1guB6gh72spYGIuJsxqIm7T7jLP6udBmBaqrho1a0z1tyOpNtlaj45kRTyu31jfY+OMfbwDJf6w//W2rjZomHzT6y7Xw/1DiWTs/1Al0SJXu5KFlIrDWuvDCBohH9CS/t+egQJAne4kjS4iJDWzwJbmrmVLtk4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076587; c=relaxed/simple;
-	bh=Ia8VmxPaWnYi7A1iuWJBzcsfdh4Wo4z8CUmo2I5BGDs=;
+	s=arc-20240116; t=1761076590; c=relaxed/simple;
+	bh=zs5GG8w4VfzdxWN+mKUA0DbbSrtn/NlJh97GW67oRwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k66Qj3PQKEaDddKpuaWsnLlor3UGvEWMeorndkUpZkkPnYawqxgooYnW3lQcicskXYrmVMfKUec7DA5yTrnPPgDr//WYR+9oCUZgshSFDo3NXJU96zZOYMRSNfs56dcrO3hn0GsLcnS6LejtGWELTuWlfhgiEzEFXgskKs/jCQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJcF8K7n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPoZQKyTNqviAgGWkNOyjlOqarkArrX6BGMwya78dOWq3X9bpy9p44RcY2WuLbTIzIfhAf/e9qfOxef2SG9Hb+oAvQ3zAASGwtyjLp8hCUNPzjtkbq6QJJZ7z50vACLj6rZw4CTf1f8yEoYNnt9yjdfxwAON+yFP6YmFZF5pVEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7fHkaP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJcF8K7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F12FC4CEF1;
-	Tue, 21 Oct 2025 19:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7fHkaP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28641C4CEF1;
+	Tue, 21 Oct 2025 19:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076587;
-	bh=Ia8VmxPaWnYi7A1iuWJBzcsfdh4Wo4z8CUmo2I5BGDs=;
+	s=korg; t=1761076590;
+	bh=zs5GG8w4VfzdxWN+mKUA0DbbSrtn/NlJh97GW67oRwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJcF8K7nmpgFXfpaMyh9MY5vJN+fuxLBPwSn/V4JehP6hFb3yySIoA6x+2ZdUypTI
-	 lDHzmR5pqIJLZUlRo8i73qj1QNyP8R7AO5l0GZcIph+UupujsbS3FB44dUy0mYmyHY
-	 sjkkG5kDMAOG1lXO6+9a/UVY0D/TiHPehgMPD/Aw=
+	b=z7fHkaP2aVC6XnYyz1His3MjlOidjW5KLfTIqwd0Ly5DR79SPnlJKMRsSwCEbWOgj
+	 uiLkhddOr165LakaMiVQG37Y9Oe3LhCdQZ3A3WUXBpZrSGdUFB6JaKXjqm4onbZfe5
+	 WS8voCudtGaRHv2R13VdnGxnXu5dsAS7UKMsHrF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/105] PM: runtime: Add new devm functions
-Date: Tue, 21 Oct 2025 21:51:30 +0200
-Message-ID: <20251021195023.572948664@linuxfoundation.org>
+Subject: [PATCH 6.6 082/105] iio: imu: inv_icm42600: Simplify pm_runtime setup
+Date: Tue, 21 Oct 2025 21:51:31 +0200
+Message-ID: <20251021195023.596481655@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -45,113 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
+[ Upstream commit 0792c1984a45ccd7a296d6b8cb78088bc99a212e ]
 
-Add `devm_pm_runtime_set_active_enabled()` and
-`devm_pm_runtime_get_noresume()` for simplifying
-common cases in drivers.
+Rework the power management in inv_icm42600_core_probe() to use
+devm_pm_runtime_set_active_enabled(), which simplifies the runtime PM
+setup by handling activation and enabling in one step.
+Remove the separate inv_icm42600_disable_pm callback, as it's no longer
+needed with the devm-managed approach.
+Using devm_pm_runtime_enable() also fixes the missing disable of
+autosuspend.
+Update inv_icm42600_disable_vddio_reg() to only disable the regulator if
+the device is not suspended i.e. powered-down, preventing unbalanced
+disables.
+Also remove redundant error msg on regulator_disable(), the regulator
+framework already emits an error message when regulator_disable() fails.
 
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
+This simplifies the PM setup and avoids manipulating the usage counter
+unnecessarily.
+
+Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250901-icm42pmreg-v3-1-ef1336246960@geanix.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
- include/linux/pm_runtime.h   |    4 +++
- 2 files changed, 48 insertions(+)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   24 ++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1552,6 +1552,32 @@ out:
- }
- EXPORT_SYMBOL_GPL(pm_runtime_enable);
- 
-+static void pm_runtime_set_suspended_action(void *data)
-+{
-+	pm_runtime_set_suspended(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_set_active_enabled(struct device *dev)
-+{
-+	int err;
-+
-+	err = pm_runtime_set_active(dev);
-+	if (err)
-+		return err;
-+
-+	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
-+	if (err)
-+		return err;
-+
-+	return devm_pm_runtime_enable(dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
-+
- static void pm_runtime_disable_action(void *data)
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -567,20 +567,12 @@ static void inv_icm42600_disable_vdd_reg
+ static void inv_icm42600_disable_vddio_reg(void *_data)
  {
- 	pm_runtime_dont_use_autosuspend(data);
-@@ -1574,6 +1600,24 @@ int devm_pm_runtime_enable(struct device
+ 	struct inv_icm42600_state *st = _data;
+-	const struct device *dev = regmap_get_device(st->map);
+-	int ret;
+-
+-	ret = regulator_disable(st->vddio_supply);
+-	if (ret)
+-		dev_err(dev, "failed to disable vddio error %d\n", ret);
+-}
++	struct device *dev = regmap_get_device(st->map);
+ 
+-static void inv_icm42600_disable_pm(void *_data)
+-{
+-	struct device *dev = _data;
++	if (pm_runtime_status_suspended(dev))
++		return;
+ 
+-	pm_runtime_put_sync(dev);
+-	pm_runtime_disable(dev);
++	regulator_disable(st->vddio_supply);
  }
- EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
  
-+static void pm_runtime_put_noidle_action(void *data)
-+{
-+	pm_runtime_put_noidle(data);
-+}
+ int inv_icm42600_core_probe(struct regmap *regmap, int chip, int irq,
+@@ -677,16 +669,14 @@ int inv_icm42600_core_probe(struct regma
+ 		return ret;
+ 
+ 	/* setup runtime power management */
+-	ret = pm_runtime_set_active(dev);
++	ret = devm_pm_runtime_set_active_enabled(dev);
+ 	if (ret)
+ 		return ret;
+-	pm_runtime_get_noresume(dev);
+-	pm_runtime_enable(dev);
 +
-+/**
-+ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_get_noresume(struct device *dev)
-+{
-+	pm_runtime_get_noresume(dev);
-+
-+	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
-+
- /**
-  * pm_runtime_forbid - Block runtime PM of a device.
-  * @dev: Device to handle.
---- a/include/linux/pm_runtime.h
-+++ b/include/linux/pm_runtime.h
-@@ -94,7 +94,9 @@ extern void pm_runtime_new_link(struct d
- extern void pm_runtime_drop_link(struct device_link *link);
- extern void pm_runtime_release_supplier(struct device_link *link);
+ 	pm_runtime_set_autosuspend_delay(dev, INV_ICM42600_SUSPEND_DELAY_MS);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_put(dev);
  
-+int devm_pm_runtime_set_active_enabled(struct device *dev);
- extern int devm_pm_runtime_enable(struct device *dev);
-+int devm_pm_runtime_get_noresume(struct device *dev);
+-	return devm_add_action_or_reset(dev, inv_icm42600_disable_pm, dev);
++	return ret;
+ }
+ EXPORT_SYMBOL_NS_GPL(inv_icm42600_core_probe, IIO_ICM42600);
  
- /**
-  * pm_suspend_ignore_children - Set runtime PM behavior regarding children.
-@@ -278,7 +280,9 @@ static inline void __pm_runtime_disable(
- static inline void pm_runtime_allow(struct device *dev) {}
- static inline void pm_runtime_forbid(struct device *dev) {}
- 
-+static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
- static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-+static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
- 
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
- static inline void pm_runtime_get_noresume(struct device *dev) {}
 
 
