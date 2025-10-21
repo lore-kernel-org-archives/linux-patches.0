@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7101273D66;
-	Tue, 21 Oct 2025 19:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9E0274B5A;
+	Tue, 21 Oct 2025 19:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076648; cv=none; b=ZQ0PQx7DArImto10LQvrgvNIAOE+5VAA++s+hn6gk8Fpl8em/63HbGKe22tRgg+jA9B/O8QMIcn6DwuFGsEztXQOOZoTiILG6fzV5JvH7nGsYUtdJ7pmUMFE+XCRTTGehzoy+A52HxCGdSNHCCd6DmH0lhjnyR4zCtSu+yDYt64=
+	t=1761076651; cv=none; b=c0eYgWzvB5iQEHuJrAsGCikgNyctyHx+Zh2X9Byel2lMSYf3iMAAaS3dezBtcx9OupJpJZVcV6iwGo1fXyyjy8e2NKI+cCKTlTWoCqIc2cP6XuB2OHiHUS2uCkeQnKJem56mfdqkjf+ebiTARJBl6RJPaimoEiMJSwvdCReP5cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076648; c=relaxed/simple;
-	bh=ccArKI4vDiM3kIOQNDl8mYQLd8jXiOzHVosU/krkD7s=;
+	s=arc-20240116; t=1761076651; c=relaxed/simple;
+	bh=OMj3fNQrVmPR8TXwp7WjccDf6jNXr+vYu2xPYq6HHps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8qoasG2THEooSzff/hHXlpNvMuZEZGwv2XSd8lEPp5mt8CN8MmzCjOHdaOX90ReuIl/BMO2FabYdW2paOaRgTfEMMe7oxfDUXSGEykj7Ri8xqmZdplIAyOAWHvh3FG6hOnHpKk3/EVtC2ZSUJYWjWBbiUEGLYyFLr5DR6MyGxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gr0zRJNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oau77fsSGW/6eFAklehs8dZC8JUKCjZbQVe9P/rJ3uJyG1533OQn9v1eT6uWAWOHVamQpYc+ymhMe/9UQepEUFZ7Fw7Wl+M1hODKlTtYqo7Eu0OanYOdvCC5BhanaZEY0VV3iyIcCqKcn3afa4NgOiqatNjKUSKZiZiSifCpd98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zw+x3iHq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gr0zRJNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7647AC4CEF1;
-	Tue, 21 Oct 2025 19:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zw+x3iHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BF1C4CEF5;
+	Tue, 21 Oct 2025 19:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076647;
-	bh=ccArKI4vDiM3kIOQNDl8mYQLd8jXiOzHVosU/krkD7s=;
+	s=korg; t=1761076651;
+	bh=OMj3fNQrVmPR8TXwp7WjccDf6jNXr+vYu2xPYq6HHps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gr0zRJNinR1KA9a5F24gkxRlLpoo1ImivRhJgKdpeopu6eK9j31cMNSKnNU9lh0/F
-	 S/TIcxtE1HbKhHi9i1cIL3zYAhdpu8mYby5PdYC9/yCes8DFybQcTAyt7oO83QA8fP
-	 LY39SDc8jEF9eoByKrAd7TbEvPGLaYfcF7vPshBc=
+	b=Zw+x3iHqEn+H6Doe1yPAU8c+qiel+xh4EHwJ6HIqB4dSngtJoHifagMqKhJ60PEGj
+	 Ela7Qee5uaSCmVKsamdv5Beg/mn7WDs4LHXMH9FbUhdOusEbglevNeFPs37I3PfwA6
+	 qGp0vfSa6RqiYjTf63x3c3+rIsxhLvYiEkq1DTMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/105] ixgbevf: fix mailbox API compatibility by negotiating supported features
-Date: Tue, 21 Oct 2025 21:51:47 +0200
-Message-ID: <20251021195023.980240234@linuxfoundation.org>
+Subject: [PATCH 6.6 058/105] ASoC: nau8821: Add DMI quirk to bypass jack debounce circuit
+Date: Tue, 21 Oct 2025 21:51:07 +0200
+Message-ID: <20251021195023.055296432@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -55,324 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit a7075f501bd33c93570af759b6f4302ef0175168 ]
+[ Upstream commit 2b4eda7bf7d8a4e2f7575a98f55d8336dec0f302 ]
 
-There was backward compatibility in the terms of mailbox API. Various
-drivers from various OSes supporting 10G adapters from Intel portfolio
-could easily negotiate mailbox API.
+Stress testing the audio jack hotplug handling on a few Steam Deck units
+revealed that the debounce circuit is responsible for having a negative
+impact on the detection reliability, e.g. in some cases the ejection
+interrupt is not fired, while in other instances it goes into a kind of
+invalid state and generates a flood of misleading interrupts.
 
-This convention has been broken since introducing API 1.4.
-Commit 0062e7cc955e ("ixgbevf: add VF IPsec offload code") added support
-for IPSec which is specific only for the kernel ixgbe driver. None of the
-rest of the Intel 10G PF/VF drivers supports it. And actually lack of
-support was not included in the IPSec implementation - there were no such
-code paths. No possibility to negotiate support for the feature was
-introduced along with introduction of the feature itself.
+Add new entries to the DMI table introduced via commit 1bc40efdaf4a
+("ASoC: nau8821: Add DMI quirk mechanism for active-high jack-detect")
+and extend the quirk logic to allow bypassing the debounce circuit used
+for jack detection on Valve Steam Deck LCD and OLED models.
 
-Commit 339f28964147 ("ixgbevf: Add support for new mailbox communication
-between PF and VF") increasing API version to 1.5 did the same - it
-introduced code supported specifically by the PF ESX driver. It altered API
-version for the VF driver in the same time not touching the version
-defined for the PF ixgbe driver. It led to additional discrepancies,
-as the code provided within API 1.6 cannot be supported for Linux ixgbe
-driver as it causes crashes.
+While at it, rename existing NAU8821_JD_ACTIVE_HIGH quirk bitfield to
+NAU8821_QUIRK_JD_ACTIVE_HIGH.  This should help improve code readability
+by differentiating from similarly named register bits.
 
-The issue was noticed some time ago and mitigated by Jake within the commit
-d0725312adf5 ("ixgbevf: stop attempting IPSEC offload on Mailbox API 1.5").
-As a result we have regression for IPsec support and after increasing API
-to version 1.6 ixgbevf driver stopped to support ESX MBX.
-
-To fix this mess add new mailbox op asking PF driver about supported
-features. Basing on a response determine whether to set support for IPSec
-and ESX-specific enhanced mailbox.
-
-New mailbox op, for compatibility purposes, must be added within new API
-revision, as API version of OOT PF & VF drivers is already increased to
-1.6 and doesn't incorporate features negotiate op.
-
-Features negotiation mechanism gives possibility to be extended with new
-features when needed in the future.
-
-Reported-by: Jacob Keller <jacob.e.keller@intel.com>
-Closes: https://lore.kernel.org/intel-wired-lan/20241101-jk-ixgbevf-mailbox-v1-5-fixes-v1-0-f556dc9a66ed@intel.com/
-Fixes: 0062e7cc955e ("ixgbevf: add VF IPsec offload code")
-Fixes: 339f28964147 ("ixgbevf: Add support for new mailbox communication between PF and VF")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251009-jk-iwl-net-2025-10-01-v3-4-ef32a425b92a@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-4-f7b0e2543f09@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ipsec.c        |   10 ++++
- drivers/net/ethernet/intel/ixgbevf/ixgbevf.h      |    7 +++
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |   32 ++++++++++++++-
- drivers/net/ethernet/intel/ixgbevf/mbx.h          |    4 +
- drivers/net/ethernet/intel/ixgbevf/vf.c           |   45 +++++++++++++++++++++-
- drivers/net/ethernet/intel/ixgbevf/vf.h           |    1 
- 6 files changed, 96 insertions(+), 3 deletions(-)
+ sound/soc/codecs/nau8821.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/ipsec.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ipsec.c
-@@ -271,6 +271,9 @@ static int ixgbevf_ipsec_add_sa(struct x
- 	adapter = netdev_priv(dev);
- 	ipsec = adapter->ipsec;
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index 432b47340dbc7..48ed75c3a7db2 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -26,7 +26,8 @@
+ #include <sound/tlv.h>
+ #include "nau8821.h"
  
-+	if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+		return -EOPNOTSUPP;
-+
- 	if (xs->id.proto != IPPROTO_ESP && xs->id.proto != IPPROTO_AH) {
- 		NL_SET_ERR_MSG_MOD(extack, "Unsupported protocol for IPsec offload");
- 		return -EINVAL;
-@@ -400,6 +403,9 @@ static void ixgbevf_ipsec_del_sa(struct
- 	adapter = netdev_priv(dev);
- 	ipsec = adapter->ipsec;
+-#define NAU8821_JD_ACTIVE_HIGH			BIT(0)
++#define NAU8821_QUIRK_JD_ACTIVE_HIGH			BIT(0)
++#define NAU8821_QUIRK_JD_DB_BYPASS			BIT(1)
  
-+	if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+		return;
-+
- 	if (xs->xso.dir == XFRM_DEV_OFFLOAD_IN) {
- 		sa_idx = xs->xso.offload_handle - IXGBE_IPSEC_BASE_RX_INDEX;
+ static int nau8821_quirk;
+ static int quirk_override = -1;
+@@ -1171,9 +1172,10 @@ static void nau8821_setup_inserted_irq(struct nau8821 *nau8821)
+ 	regmap_update_bits(regmap, NAU8821_R1D_I2S_PCM_CTRL2,
+ 		NAU8821_I2S_MS_MASK, NAU8821_I2S_MS_SLAVE);
  
-@@ -628,6 +634,10 @@ void ixgbevf_init_ipsec_offload(struct i
- 	size_t size;
+-	/* Not bypass de-bounce circuit */
+-	regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
+-		NAU8821_JACK_DET_DB_BYPASS, 0);
++	/* Do not bypass de-bounce circuit */
++	if (!(nau8821_quirk & NAU8821_QUIRK_JD_DB_BYPASS))
++		regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
++				   NAU8821_JACK_DET_DB_BYPASS, 0);
  
- 	switch (adapter->hw.api_version) {
-+	case ixgbe_mbox_api_17:
-+		if (!(adapter->pf_features & IXGBEVF_PF_SUP_IPSEC))
-+			return;
-+		break;
- 	case ixgbe_mbox_api_14:
- 		break;
- 	default:
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf.h
-@@ -366,6 +366,13 @@ struct ixgbevf_adapter {
- 	/* Interrupt Throttle Rate */
- 	u32 eitr_param;
- 
-+	u32 pf_features;
-+#define IXGBEVF_PF_SUP_IPSEC		BIT(0)
-+#define IXGBEVF_PF_SUP_ESX_MBX		BIT(1)
-+
-+#define IXGBEVF_SUPPORTED_FEATURES	(IXGBEVF_PF_SUP_IPSEC | \
-+					IXGBEVF_PF_SUP_ESX_MBX)
-+
- 	struct ixgbevf_hw_stats stats;
- 
- 	unsigned long state;
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -2275,10 +2275,35 @@ static void ixgbevf_init_last_counter_st
- 	adapter->stats.base_vfmprc = adapter->stats.last_vfmprc;
- }
- 
-+/**
-+ * ixgbevf_set_features - Set features supported by PF
-+ * @adapter: pointer to the adapter struct
-+ *
-+ * Negotiate with PF supported features and then set pf_features accordingly.
-+ */
-+static void ixgbevf_set_features(struct ixgbevf_adapter *adapter)
-+{
-+	u32 *pf_features = &adapter->pf_features;
-+	struct ixgbe_hw *hw = &adapter->hw;
-+	int err;
-+
-+	err = hw->mac.ops.negotiate_features(hw, pf_features);
-+	if (err && err != -EOPNOTSUPP)
-+		netdev_dbg(adapter->netdev,
-+			   "PF feature negotiation failed.\n");
-+
-+	/* Address also pre API 1.7 cases */
-+	if (hw->api_version == ixgbe_mbox_api_14)
-+		*pf_features |= IXGBEVF_PF_SUP_IPSEC;
-+	else if (hw->api_version == ixgbe_mbox_api_15)
-+		*pf_features |= IXGBEVF_PF_SUP_ESX_MBX;
-+}
-+
- static void ixgbevf_negotiate_api(struct ixgbevf_adapter *adapter)
- {
- 	struct ixgbe_hw *hw = &adapter->hw;
- 	static const int api[] = {
-+		ixgbe_mbox_api_17,
- 		ixgbe_mbox_api_16,
- 		ixgbe_mbox_api_15,
- 		ixgbe_mbox_api_14,
-@@ -2299,8 +2324,9 @@ static void ixgbevf_negotiate_api(struct
- 		idx++;
- 	}
- 
--	/* Following is not supported by API 1.6, it is specific for 1.5 */
--	if (hw->api_version == ixgbe_mbox_api_15) {
-+	ixgbevf_set_features(adapter);
-+
-+	if (adapter->pf_features & IXGBEVF_PF_SUP_ESX_MBX) {
- 		hw->mbx.ops.init_params(hw);
- 		memcpy(&hw->mbx.ops, &ixgbevf_mbx_ops,
- 		       sizeof(struct ixgbe_mbx_operations));
-@@ -2658,6 +2684,7 @@ static void ixgbevf_set_num_queues(struc
- 		case ixgbe_mbox_api_14:
- 		case ixgbe_mbox_api_15:
- 		case ixgbe_mbox_api_16:
-+		case ixgbe_mbox_api_17:
- 			if (adapter->xdp_prog &&
- 			    hw->mac.max_tx_queues == rss)
- 				rss = rss > 3 ? 2 : 1;
-@@ -4653,6 +4680,7 @@ static int ixgbevf_probe(struct pci_dev
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		netdev->max_mtu = IXGBE_MAX_JUMBO_FRAME_SIZE -
- 				  (ETH_HLEN + ETH_FCS_LEN);
- 		break;
---- a/drivers/net/ethernet/intel/ixgbevf/mbx.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/mbx.h
-@@ -67,6 +67,7 @@ enum ixgbe_pfvf_api_rev {
- 	ixgbe_mbox_api_14,	/* API version 1.4, linux/freebsd VF driver */
- 	ixgbe_mbox_api_15,	/* API version 1.5, linux/freebsd VF driver */
- 	ixgbe_mbox_api_16,      /* API version 1.6, linux/freebsd VF driver */
-+	ixgbe_mbox_api_17,	/* API version 1.7, linux/freebsd VF driver */
- 	/* This value should always be last */
- 	ixgbe_mbox_api_unknown,	/* indicates that API version is not known */
+ 	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
+ 		NAU8821_IRQ_EJECT_EN, 0);
+@@ -1854,7 +1856,23 @@ static const struct dmi_system_id nau8821_quirk_table[] = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
+ 			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P-V2"),
+ 		},
+-		.driver_data = (void *)(NAU8821_JD_ACTIVE_HIGH),
++		.driver_data = (void *)(NAU8821_QUIRK_JD_ACTIVE_HIGH),
++	},
++	{
++		/* Valve Steam Deck LCD */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Jupiter"),
++		},
++		.driver_data = (void *)(NAU8821_QUIRK_JD_DB_BYPASS),
++	},
++	{
++		/* Valve Steam Deck OLED */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
++		},
++		.driver_data = (void *)(NAU8821_QUIRK_JD_DB_BYPASS),
+ 	},
+ 	{}
  };
-@@ -106,6 +107,9 @@ enum ixgbe_pfvf_api_rev {
- /* mailbox API, version 1.6 VF requests */
- #define IXGBE_VF_GET_PF_LINK_STATE	0x11 /* request PF to send link info */
+@@ -1896,9 +1914,12 @@ static int nau8821_i2c_probe(struct i2c_client *i2c)
  
-+/* mailbox API, version 1.7 VF requests */
-+#define IXGBE_VF_FEATURES_NEGOTIATE	0x12 /* get features supported by PF*/
-+
- /* length of permanent address message returned from PF */
- #define IXGBE_VF_PERMADDR_MSG_LEN	4
- /* word in permanent address message with the current multicast type */
---- a/drivers/net/ethernet/intel/ixgbevf/vf.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
-@@ -313,6 +313,7 @@ int ixgbevf_get_reta_locked(struct ixgbe
- 	 * is not supported for this device type.
- 	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
- 	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
-@@ -383,6 +384,7 @@ int ixgbevf_get_rss_key_locked(struct ix
- 	 * or if the operation is not supported for this device type.
- 	 */
- 	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
- 	case ixgbe_mbox_api_16:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_14:
-@@ -555,6 +557,7 @@ static s32 ixgbevf_update_xcast_mode(str
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -646,6 +649,7 @@ static int ixgbevf_get_pf_link_state(str
+ 	nau8821_check_quirks();
  
- 	switch (hw->api_version) {
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -670,6 +674,42 @@ static int ixgbevf_get_pf_link_state(str
- }
+-	if (nau8821_quirk & NAU8821_JD_ACTIVE_HIGH)
++	if (nau8821_quirk & NAU8821_QUIRK_JD_ACTIVE_HIGH)
+ 		nau8821->jkdet_polarity = 0;
  
- /**
-+ * ixgbevf_negotiate_features_vf - negotiate supported features with PF driver
-+ * @hw: pointer to the HW structure
-+ * @pf_features: bitmask of features supported by PF
-+ *
-+ * Return: IXGBE_ERR_MBX in the  case of mailbox error,
-+ * -EOPNOTSUPP if the op is not supported or 0 on success.
-+ */
-+static int ixgbevf_negotiate_features_vf(struct ixgbe_hw *hw, u32 *pf_features)
-+{
-+	u32 msgbuf[2] = {};
-+	int err;
++	if (nau8821_quirk & NAU8821_QUIRK_JD_DB_BYPASS)
++		dev_dbg(dev, "Force bypassing jack detection debounce circuit\n");
 +
-+	switch (hw->api_version) {
-+	case ixgbe_mbox_api_17:
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	msgbuf[0] = IXGBE_VF_FEATURES_NEGOTIATE;
-+	msgbuf[1] = IXGBEVF_SUPPORTED_FEATURES;
-+
-+	err = ixgbevf_write_msg_read_ack(hw, msgbuf, msgbuf,
-+					 ARRAY_SIZE(msgbuf));
-+
-+	if (err || (msgbuf[0] & IXGBE_VT_MSGTYPE_FAILURE)) {
-+		err = IXGBE_ERR_MBX;
-+		*pf_features = 0x0;
-+	} else {
-+		*pf_features = msgbuf[1];
-+	}
-+
-+	return err;
-+}
-+
-+/**
-  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
-  *  @hw: pointer to the HW structure
-  *  @vlan: 12 bit VLAN ID
-@@ -799,6 +839,7 @@ static s32 ixgbevf_check_mac_link_vf(str
- 				     bool *link_up,
- 				     bool autoneg_wait_to_complete)
- {
-+	struct ixgbevf_adapter *adapter = hw->back;
- 	struct ixgbe_mbx_info *mbx = &hw->mbx;
- 	struct ixgbe_mac_info *mac = &hw->mac;
- 	s32 ret_val = 0;
-@@ -825,7 +866,7 @@ static s32 ixgbevf_check_mac_link_vf(str
- 	 * until we are called again and don't report an error
- 	 */
- 	if (mbx->ops.read(hw, &in_msg, 1)) {
--		if (hw->api_version >= ixgbe_mbox_api_15)
-+		if (adapter->pf_features & IXGBEVF_PF_SUP_ESX_MBX)
- 			mac->get_link_status = false;
- 		goto out;
- 	}
-@@ -1026,6 +1067,7 @@ int ixgbevf_get_queues(struct ixgbe_hw *
- 	case ixgbe_mbox_api_14:
- 	case ixgbe_mbox_api_15:
- 	case ixgbe_mbox_api_16:
-+	case ixgbe_mbox_api_17:
- 		break;
- 	default:
- 		return 0;
-@@ -1080,6 +1122,7 @@ static const struct ixgbe_mac_operations
- 	.setup_link		= ixgbevf_setup_mac_link_vf,
- 	.check_link		= ixgbevf_check_mac_link_vf,
- 	.negotiate_api_version	= ixgbevf_negotiate_api_version_vf,
-+	.negotiate_features	= ixgbevf_negotiate_features_vf,
- 	.set_rar		= ixgbevf_set_rar_vf,
- 	.update_mc_addr_list	= ixgbevf_update_mc_addr_list_vf,
- 	.update_xcast_mode	= ixgbevf_update_xcast_mode,
---- a/drivers/net/ethernet/intel/ixgbevf/vf.h
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.h
-@@ -26,6 +26,7 @@ struct ixgbe_mac_operations {
- 	s32 (*stop_adapter)(struct ixgbe_hw *);
- 	s32 (*get_bus_info)(struct ixgbe_hw *);
- 	s32 (*negotiate_api_version)(struct ixgbe_hw *hw, int api);
-+	int (*negotiate_features)(struct ixgbe_hw *hw, u32 *pf_features);
+ 	nau8821_print_device_properties(nau8821);
  
- 	/* Link */
- 	s32 (*setup_link)(struct ixgbe_hw *, ixgbe_link_speed, bool, bool);
+ 	nau8821_reset_chip(nau8821->regmap);
+-- 
+2.51.0
+
 
 
