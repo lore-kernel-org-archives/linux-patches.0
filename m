@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE205350A2A;
-	Tue, 21 Oct 2025 19:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13161274652;
+	Tue, 21 Oct 2025 19:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076748; cv=none; b=po0M6daIOx923QN96iO7Z3L3NWDt8tGq4AslHUJ5+6V4obnMCK1K+BiM7mxjPKCNl6lCGKL1ippyTkznnOA/C4Wvc/Dh1SkSevkANYE0g6GfdN7JOiptFZKt39mhcgzaQLoDox4o6pB1pDgf4d/qJEk5gVyl5LrDSol34oU51+4=
+	t=1761076751; cv=none; b=cM2kKUUdQ0GbwmXic3pifqNQylla1qds2ERCMCXh5fCy+zZOmCou6LgColU4ETHFCiGotdyJmJrY/qGJro0w96i/25xfmzYoG5dOQzETbc+xddoOguwRjWfPa0+1NsRxUn70fbBMFTi9CGIoVd7Iz0Qa4kZ6RKURSsUV4PC6FAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076748; c=relaxed/simple;
-	bh=toVv56p8Ueg7D1zf4osCvITCaZicFvgmxVYRcG7uzI4=;
+	s=arc-20240116; t=1761076751; c=relaxed/simple;
+	bh=a9nXNNSeRoqS8OLH0Ow2TVGw4pforG2OWKOZFdwFI/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWtj/G6Oks9pAg/xJyl+nOjuR8ApUB3R0M23KHlysMmewrWzy2e+oKN74bzg8vIhr4IHrKmzusN4aqzrtb8UNCBHT59w0P5cG6z9ForuAdIJ0kFLmDVV/W+UC4tAKKp1Fjb4ig6GTDNe+KVtZb3UmuXPNkxE5JNcLoRUmijah5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2ehkBtd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N1ALA3RVTh45Xfq7g8nEbta6VzWvI2LAFjlt0vTR9hbNyNHxFq204WWBUd0+8bDM3eeBEVLiAEGWMQUoFgOUlTOaddGu8kTs7Ix+Yyaj0hPfKLhbEqi5tQGhh9L7btJZGL4ofJ+otSpwG7XAbU7AVr+cJCNnU9nk+2ojfBlzEQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+T40p2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2ehkBtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4789EC4CEF1;
-	Tue, 21 Oct 2025 19:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+T40p2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AAAC4AF09;
+	Tue, 21 Oct 2025 19:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076747;
-	bh=toVv56p8Ueg7D1zf4osCvITCaZicFvgmxVYRcG7uzI4=;
+	s=korg; t=1761076750;
+	bh=a9nXNNSeRoqS8OLH0Ow2TVGw4pforG2OWKOZFdwFI/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2ehkBtd1S5zo/6RI0qgmgS4UcKxsz+kEJy8qtobLSbfvDO0MrkYrtfYFmIrSqeP3
-	 1byZGQbwiAv8P7zGATpch90IVKsTBpuZiUl14Ag1jBfopLsZKDh701WbIQBqewx2nk
-	 y0ytaLwME2cB5RZ53CtEmLSyFnEOoFB9nbDHnS8o=
+	b=k+T40p2LbLryz0lg+Tvnzyrh0E4BJf2GBXqxVi8xZGCC4vCujLaVUWCAGzRZ1ZJvK
+	 +uMRr1QFgM8WTDwqUCKhn04RCc+FbQU+y9rkW/MwSB/4pLJ0GRrlckZzqaKoG3weWO
+	 0DpwGHcSw8MjEM/1EKTY8Ojy43gGdPqfSuqHYyF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 025/136] perf/core: Fix MMAP2 event device with backing files
-Date: Tue, 21 Oct 2025 21:50:13 +0200
-Message-ID: <20251021195036.581007903@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Adrian Yip <adrian.ytw@gmail.com>
+Subject: [PATCH 6.12 026/136] drm/amd: Check whether secure display TA loaded successfully
+Date: Tue, 21 Oct 2025 21:50:14 +0200
+Message-ID: <20251021195036.605136873@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -51,96 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit fa4f4bae893fbce8a3edfff1ab7ece0c01dc1328 upstream.
+commit c760bcda83571e07b72c10d9da175db5051ed971 upstream.
 
-Some file systems like FUSE-based ones or overlayfs may record the backing
-file in struct vm_area_struct vm_file, instead of the user file that the
-user mmapped.
+[Why]
+Not all renoir hardware supports secure display.  If the TA is present
+but the feature isn't supported it will fail to load or send commands.
+This shows ERR messages to the user that make it seems like there is
+a problem.
 
-That causes perf to misreport the device major/minor numbers of the file
-system of the file, and the generation of the file, and potentially other
-inode details.  There is an existing helper file_user_inode() for that
-situation.
+[How]
+Check the resp_status of the context to see if there was an error
+before trying to send any secure display commands.
 
-Use file_user_inode() instead of file_inode() to get the inode for MMAP2
-events.
-
-Example:
-
-  Setup:
-
-    # cd /root
-    # mkdir test ; cd test ; mkdir lower upper work merged
-    # cp `which cat` lower
-    # mount -t overlay overlay -olowerdir=lower,upperdir=upper,workdir=work merged
-    # perf record -e cycles:u -- /root/test/merged/cat /proc/self/maps
-    ...
-    55b2c91d0000-55b2c926b000 r-xp 00018000 00:1a 3419                       /root/test/merged/cat
-    ...
-    [ perf record: Woken up 1 times to write data ]
-    [ perf record: Captured and wrote 0.004 MB perf.data (5 samples) ]
-    #
-    # stat /root/test/merged/cat
-      File: /root/test/merged/cat
-      Size: 1127792         Blocks: 2208       IO Block: 4096   regular file
-    Device: 0,26    Inode: 3419        Links: 1
-    Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-    Access: 2025-09-08 12:23:59.453309624 +0000
-    Modify: 2025-09-08 12:23:59.454309624 +0000
-    Change: 2025-09-08 12:23:59.454309624 +0000
-     Birth: 2025-09-08 12:23:59.453309624 +0000
-
-  Before:
-
-    Device reported 00:02 differs from stat output and /proc/self/maps
-
-    # perf script --show-mmap-events | grep /root/test/merged/cat
-             cat     377 [-01]   243.078558: PERF_RECORD_MMAP2 377/377: [0x55b2c91d0000(0x9b000) @ 0x18000 00:02 3419 2068525940]: r-xp /root/test/merged/cat
-
-  After:
-
-    Device reported 00:1a is the same as stat output and /proc/self/maps
-
-    # perf script --show-mmap-events | grep /root/test/merged/cat
-             cat     362 [-01]   127.755167: PERF_RECORD_MMAP2 362/362: [0x55ba6e781000(0x9b000) @ 0x18000 00:1a 3419 0]: r-xp /root/test/merged/cat
-
-With respect to stable kernels, overlayfs mmap function ovl_mmap() was
-added in v4.19 but file_user_inode() was not added until v6.8 and never
-back-ported to stable kernels.  FMODE_BACKING that it depends on was added
-in v6.5.  This issue has gone largely unnoticed, so back-porting before
-v6.8 is probably not worth it, so put 6.8 as the stable kernel prerequisite
-version, although in practice the next long term kernel is 6.12.
-
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Amir Goldstein <amir73il@gmail.com>
-Cc: stable@vger.kernel.org # 6.8
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1415
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Adrian Yip <adrian.ytw@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -8997,7 +8997,7 @@ static void perf_event_mmap_event(struct
- 		flags |= MAP_HUGETLB;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -2171,7 +2171,7 @@ static int psp_securedisplay_initialize(
+ 	}
  
- 	if (file) {
--		struct inode *inode;
-+		const struct inode *inode;
- 		dev_t dev;
- 
- 		buf = kmalloc(PATH_MAX, GFP_KERNEL);
-@@ -9015,7 +9015,7 @@ static void perf_event_mmap_event(struct
- 			name = "//toolong";
- 			goto cpy_name;
- 		}
--		inode = file_inode(vma->vm_file);
-+		inode = file_user_inode(vma->vm_file);
- 		dev = inode->i_sb->s_dev;
- 		ino = inode->i_ino;
- 		gen = inode->i_generation;
+ 	ret = psp_ta_load(psp, &psp->securedisplay_context.context);
+-	if (!ret) {
++	if (!ret && !psp->securedisplay_context.context.resp_status) {
+ 		psp->securedisplay_context.context.initialized = true;
+ 		mutex_init(&psp->securedisplay_context.mutex);
+ 	} else
 
 
