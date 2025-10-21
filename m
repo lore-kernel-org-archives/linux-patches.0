@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2096E1A3029;
-	Tue, 21 Oct 2025 20:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7091C1A3029;
+	Tue, 21 Oct 2025 20:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077466; cv=none; b=isZk/VR8H4/iCCP3KNP9kvOASbVA/XNMntQZi7RatcykCxoPFr9RUyttpeymFa4LQhQREgMluhyeNJh/YJlfcxk7yMsJpQcYrzx2xp9b+YdG+J4IcJmBK8hHLRjm0Y41tuAzmyXFWXTn0iaRvCll2HvHaRw0Fg7UVYvCDlDf8ig=
+	t=1761077469; cv=none; b=G1wzgbTsX3gC1/u/1UeGLGKF4vVLDjAD1CnG7GSdu1C9npvh1/CSDRt8yFcNxUrY9F3kRpvASD71UJ29glYrFNB4B6stmOvPoyP0HCwGMD9kA1sSUCqITWJ3+FWJiwwC8sgHBXiBOmzVimdTQDz864WHu9vU+vtu8e1siUD2MtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077466; c=relaxed/simple;
-	bh=ygQJTd/pgYKCcrsFKhjc2Ls45jlGSmxLa7OsR0yUcgY=;
+	s=arc-20240116; t=1761077469; c=relaxed/simple;
+	bh=gMBOjfOfImX9avRnguzDaqtX+ltBx9Lvj+usLNW3vZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ij2F+2ka8yYx1jJEkjJa70zDi8aNjbX8cCIiWR/DrVXSbqrxnOzawr5nQKAVn0hucCx1ifjWSNr13NAhnsg4l2TKyybkuchaFiLl14lKQaLHiemKMYEJrOhXk2Uo5AkOvmTMVfiF6OqCA92UacpLUYTbsrOrVtHbvuM1IK44IdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvEivlB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSCwoNTIanSgicIq9SDQnhQKMWpvApsQ+l1ZopXxDEX8diu08pa/23LvxsTWgjoeOsHlgS5rEDzpyl2I2CjNYBSRB9Qwg7rG3AyvAP2+w9T6vcyYd31dYOmVCLaRwgXKIwPx1pq1ElOVXu9uM6H9Dbpbb39m4CuEpOeU2+punwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF9r0BG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvEivlB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DE0C4CEF1;
-	Tue, 21 Oct 2025 20:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF9r0BG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA64EC4CEF1;
+	Tue, 21 Oct 2025 20:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077466;
-	bh=ygQJTd/pgYKCcrsFKhjc2Ls45jlGSmxLa7OsR0yUcgY=;
+	s=korg; t=1761077469;
+	bh=gMBOjfOfImX9avRnguzDaqtX+ltBx9Lvj+usLNW3vZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvEivlB/RgpRwA8B1G9hgTwdIjPZexbsayrcszxs30q6pjxxFdTgV2TIqjb2V/r4d
-	 CPEW+4+ZEOr9rbruEBNPXh9yz3pnj+tkW7+jpBKaGmzuBohIXR3qlLNk1p7LfY2xKF
-	 BH7lQBOx/9mvHnp4oPLI1qIc9KD67d7Tt3mQZEBs=
+	b=qF9r0BG8o9HpKZ87jfqeGiYZ6mEBaGMu51kX1o8TAQqb7QKUzNpQLizM6hb3FpPmt
+	 sIqJB3SdUWNrY1P76TkUvz2tTSe/V2QsCeH0cu7hvnxLv2K/RvUobnCvEXqyB7EfWb
+	 rY2XFmnVrhCyd3JY1iCGfDgE+yPrprfXNqRdJU4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Dolan <sdolan@janestreet.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Francesco Valla <francesco@valla.it>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 114/159] x86/mm: Fix SMP ordering in switch_mm_irqs_off()
-Date: Tue, 21 Oct 2025 21:51:31 +0200
-Message-ID: <20251021195045.906577011@linuxfoundation.org>
+Subject: [PATCH 6.17 115/159] drm/draw: fix color truncation in drm_draw_fill24
+Date: Tue, 21 Oct 2025 21:51:32 +0200
+Message-ID: <20251021195045.929881730@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -53,67 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: Francesco Valla <francesco@valla.it>
 
-[ Upstream commit 83b0177a6c4889b3a6e865da5e21b2c9d97d0551 ]
+[ Upstream commit 095232711f23179053ca26bcf046ca121a91a465 ]
 
-Stephen noted that it is possible to not have an smp_mb() between
-the loaded_mm store and the tlb_gen load in switch_mm(), meaning the
-ordering against flush_tlb_mm_range() goes out the window, and it
-becomes possible for switch_mm() to not observe a recent tlb_gen
-update and fail to flush the TLBs.
+The color parameter passed to drm_draw_fill24() was truncated to 16
+bits, leading to an incorrect color drawn to the target iosys_map.
+Fix this behavior, widening the parameter to 32 bits.
 
-[ dhansen: merge conflict fixed by Ingo ]
+Fixes: 31fa2c1ca0b2 ("drm/panic: Move drawing functions to drm_draw")
 
-Fixes: 209954cbc7d0 ("x86/mm/tlb: Update mm_cpumask lazily")
-Reported-by: Stephen Dolan <sdolan@janestreet.com>
-Closes: https://lore.kernel.org/all/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Francesco Valla <francesco@valla.it>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20251003-drm_draw_fill24_fix-v1-1-8fb7c1c2a893@valla.it
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/tlb.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_draw.c          | 2 +-
+ drivers/gpu/drm/drm_draw_internal.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
-index 39f80111e6f17..5d221709353e0 100644
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -911,11 +911,31 @@ void switch_mm_irqs_off(struct mm_struct *unused, struct mm_struct *next,
- 		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
- 		 */
- 		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
--		barrier();
+diff --git a/drivers/gpu/drm/drm_draw.c b/drivers/gpu/drm/drm_draw.c
+index 9dc0408fbbead..5b956229c82fb 100644
+--- a/drivers/gpu/drm/drm_draw.c
++++ b/drivers/gpu/drm/drm_draw.c
+@@ -127,7 +127,7 @@ EXPORT_SYMBOL(drm_draw_fill16);
  
--		/* Start receiving IPIs and then read tlb_gen (and LAM below) */
-+		/*
-+		 * Make sure this CPU is set in mm_cpumask() such that we'll
-+		 * receive invalidation IPIs.
-+		 *
-+		 * Rely on the smp_mb() implied by cpumask_set_cpu()'s atomic
-+		 * operation, or explicitly provide one. Such that:
-+		 *
-+		 * switch_mm_irqs_off()				flush_tlb_mm_range()
-+		 *   smp_store_release(loaded_mm, SWITCHING);     atomic64_inc_return(tlb_gen)
-+		 *   smp_mb(); // here                            // smp_mb() implied
-+		 *   atomic64_read(tlb_gen);                      this_cpu_read(loaded_mm);
-+		 *
-+		 * we properly order against flush_tlb_mm_range(), where the
-+		 * loaded_mm load can happen in mative_flush_tlb_multi() ->
-+		 * should_flush_tlb().
-+		 *
-+		 * This way switch_mm() must see the new tlb_gen or
-+		 * flush_tlb_mm_range() must see the new loaded_mm, or both.
-+		 */
- 		if (next != &init_mm && !cpumask_test_cpu(cpu, mm_cpumask(next)))
- 			cpumask_set_cpu(cpu, mm_cpumask(next));
-+		else
-+			smp_mb();
-+
- 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
+ void drm_draw_fill24(struct iosys_map *dmap, unsigned int dpitch,
+ 		     unsigned int height, unsigned int width,
+-		     u16 color)
++		     u32 color)
+ {
+ 	unsigned int y, x;
  
- 		ns = choose_new_asid(next, next_tlb_gen);
+diff --git a/drivers/gpu/drm/drm_draw_internal.h b/drivers/gpu/drm/drm_draw_internal.h
+index f121ee7339dc1..20cb404e23ea6 100644
+--- a/drivers/gpu/drm/drm_draw_internal.h
++++ b/drivers/gpu/drm/drm_draw_internal.h
+@@ -47,7 +47,7 @@ void drm_draw_fill16(struct iosys_map *dmap, unsigned int dpitch,
+ 
+ void drm_draw_fill24(struct iosys_map *dmap, unsigned int dpitch,
+ 		     unsigned int height, unsigned int width,
+-		     u16 color);
++		     u32 color);
+ 
+ void drm_draw_fill32(struct iosys_map *dmap, unsigned int dpitch,
+ 		     unsigned int height, unsigned int width,
 -- 
 2.51.0
 
