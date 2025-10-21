@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A16D270EC1;
-	Tue, 21 Oct 2025 19:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4644C350A04;
+	Tue, 21 Oct 2025 19:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076356; cv=none; b=jiZe/9L/PY/w1Shlg31VP/R+PBTpnTWYrPaa7zbBdzAnMtFg23ZnS7K59cgTkrxbza+zwuarlfp7CmUoVBZ1YCug+LJq6qec0fHAMHUzlJrXV3VBDfUM2oHMW5ty2oaTLo9FWylJJQ0ek1mmOg3H9+bbTHPuCxOpmjANDEeAuR4=
+	t=1761076360; cv=none; b=b5awWNVvAfE+3Km6kXQ1Cv9aFaiRDxL0zJGIHRY/xsCEIi1OMYFQAFkblswZmXYQOSRSjUNriI8ttvec6z632mW+02eX4xufEVXIb3xq21giFR8z/L0VEIXtcn2KR+M3Hsci7yo1X+1BNNAwCc+bAeMXoTARwunkkiX4d0wRKdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076356; c=relaxed/simple;
-	bh=pfLrxdpJ8gN+syGKgLz7HlqpeMg3FImPk8OuGGMT+10=;
+	s=arc-20240116; t=1761076360; c=relaxed/simple;
+	bh=rUjII1AsVsBh7I5cOyQdBoKFwL2hhVNY8xY+cSHasVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d++d1TpmVNWWZNOYCw6ogAg3UznUEoOL+gcK8UwwoBFnkoMWrbYv3bhXtkiBDvRN1/w4v6ZiQYlAuD9L3kEgLbkKlVifAqIA1gYAPLIccFmtXQmcPD/kB+13LfcbuIO/DcE4HQn6Sp2d1Dhn3J8zgx9Xb8BO3Ae5LopHb9ldlTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHsaCH5q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHMCQRVHjXZcqR03N40l/8Ci4QYFCyr+yGCFHh8CswxdskW8cRwnrBhpqc2uq+r1Rl3Iw6SXXR7NJPiNDKrmQB3XGaFbxLZzkjKB2yO+OVVW7JKU/poC9vadSJ4QMr/4ui4A/jws60f4nhto8pZX95pr6Dk7vBZf4uGY58dvSbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVofXK+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHsaCH5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B639C4CEF1;
-	Tue, 21 Oct 2025 19:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVofXK+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508DBC4CEF1;
+	Tue, 21 Oct 2025 19:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076356;
-	bh=pfLrxdpJ8gN+syGKgLz7HlqpeMg3FImPk8OuGGMT+10=;
+	s=korg; t=1761076360;
+	bh=rUjII1AsVsBh7I5cOyQdBoKFwL2hhVNY8xY+cSHasVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHsaCH5qaSKacgZv6723znvBJkWoMkaA91e9qQTofUS8uoSdqGKUCHgAakll5gbJa
-	 Q8O2Zn61qwpehThvnoHTL3TJLiPNCnVCR2jtakNbtnXnJ9utqW7kYtCZzoQw009Lav
-	 LtntnMK1yV4AEo3qgnFECrDi/qm/A7USP63pQ2JU=
+	b=VVofXK+TUECwJSbKN3SOv5JVWb0hdDzMvfbgw9Zh7mAyofN3ci806BelpPUd40Jjm
+	 SXoQtOqBLcoj9XQIJhOhVH8/w5h4QvZYhjyl4+qCjUhUYYuZPdEyPDoB3IMM1tx/8L
+	 dOZgoqm0gg0cH60EpgYKaJFfWCXVSdZIp3DWUWzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Cong <yicong@kylinos.cn>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 002/105] r8152: add error handling in rtl8152_driver_init
-Date: Tue, 21 Oct 2025 21:50:11 +0200
-Message-ID: <20251021195021.553803037@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 003/105] KVM: arm64: Prevent access to vCPU events before init
+Date: Tue, 21 Oct 2025 21:50:12 +0200
+Message-ID: <20251021195021.576913624@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -51,41 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Cong <yicong@kylinos.cn>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit 75527d61d60d493d1eb064f335071a20ca581f54 upstream.
+commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 upstream.
 
-rtl8152_driver_init() is missing the error handling.
-When rtl8152_driver registration fails, rtl8152_cfgselector_driver
-should be deregistered.
+Another day, another syzkaller bug. KVM erroneously allows userspace to
+pend vCPU events for a vCPU that hasn't been initialized yet, leading to
+KVM interpreting a bunch of uninitialized garbage for routing /
+injecting the exception.
 
-Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yi Cong <yicong@kylinos.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251011082415.580740-1-yicongsrfy@163.com
-[pabeni@redhat.com: clarified the commit message]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In one case the injection code and the hyp disagree on whether the vCPU
+has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
+tripping the BUG() in exception_target_el() during the next injection:
+
+  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
+  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
+  Hardware name: linux,dummy-virt (DT)
+  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : exception_target_el+0x88/0x8c
+  lr : pend_serror_exception+0x18/0x13c
+  sp : ffff800082f03a10
+  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
+  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
+  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
+  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
+  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
+  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
+  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
+  Call trace:
+   exception_target_el+0x88/0x8c (P)
+   kvm_inject_serror_esr+0x40/0x3b4
+   __kvm_arm_vcpu_set_events+0xf0/0x100
+   kvm_arch_vcpu_ioctl+0x180/0x9d4
+   kvm_vcpu_ioctl+0x60c/0x9f4
+   __arm64_sys_ioctl+0xac/0x104
+   invoke_syscall+0x48/0x110
+   el0_svc_common.constprop.0+0x40/0xe0
+   do_el0_svc+0x1c/0x28
+   el0_svc+0x34/0xf0
+   el0t_64_sync_handler+0xa0/0xe4
+   el0t_64_sync+0x198/0x19c
+  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
+
+Reject the ioctls outright as no sane VMM would call these before
+KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
+thrown away by the eventual reset of the vCPU's state.
+
+Cc: stable@vger.kernel.org # 6.17
+Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/r8152.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -10104,7 +10104,12 @@ static int __init rtl8152_driver_init(vo
- 	ret = usb_register_device_driver(&rtl8152_cfgselector_driver, THIS_MODULE);
- 	if (ret)
- 		return ret;
--	return usb_register(&rtl8152_driver);
-+
-+	ret = usb_register(&rtl8152_driver);
-+	if (ret)
-+		usb_deregister_device_driver(&rtl8152_cfgselector_driver);
-+
-+	return ret;
- }
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1492,6 +1492,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 	case KVM_GET_VCPU_EVENTS: {
+ 		struct kvm_vcpu_events events;
  
- static void __exit rtl8152_driver_exit(void)
++		if (!kvm_vcpu_initialized(vcpu))
++			return -ENOEXEC;
++
+ 		if (kvm_arm_vcpu_get_events(vcpu, &events))
+ 			return -EINVAL;
+ 
+@@ -1503,6 +1506,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 	case KVM_SET_VCPU_EVENTS: {
+ 		struct kvm_vcpu_events events;
+ 
++		if (!kvm_vcpu_initialized(vcpu))
++			return -ENOEXEC;
++
+ 		if (copy_from_user(&events, argp, sizeof(events)))
+ 			return -EFAULT;
+ 
 
 
