@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7091C1A3029;
-	Tue, 21 Oct 2025 20:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529CD1A3029;
+	Tue, 21 Oct 2025 20:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077469; cv=none; b=G1wzgbTsX3gC1/u/1UeGLGKF4vVLDjAD1CnG7GSdu1C9npvh1/CSDRt8yFcNxUrY9F3kRpvASD71UJ29glYrFNB4B6stmOvPoyP0HCwGMD9kA1sSUCqITWJ3+FWJiwwC8sgHBXiBOmzVimdTQDz864WHu9vU+vtu8e1siUD2MtI=
+	t=1761077472; cv=none; b=f3rpCN6CG1ge6qJYvnTkIpJkeuO4B6DtJRmJY6GrhnDVtO+vjYBd6l2pMIZu5xuRSGU9F2/MicYDCFHvGaUqwS2wnF3s3gescB5xKEISaWLTJ6NmhEe3n/2TQ8yFo+W6M4dDxCp4HhvmzDBjRLPnTQoCduYDpYmtrRlAVICC9eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077469; c=relaxed/simple;
-	bh=gMBOjfOfImX9avRnguzDaqtX+ltBx9Lvj+usLNW3vZA=;
+	s=arc-20240116; t=1761077472; c=relaxed/simple;
+	bh=Zs5+HwIj5iUXilbLa9M+3MGLBJeaV2xyUTUvOH0g/RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSCwoNTIanSgicIq9SDQnhQKMWpvApsQ+l1ZopXxDEX8diu08pa/23LvxsTWgjoeOsHlgS5rEDzpyl2I2CjNYBSRB9Qwg7rG3AyvAP2+w9T6vcyYd31dYOmVCLaRwgXKIwPx1pq1ElOVXu9uM6H9Dbpbb39m4CuEpOeU2+punwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF9r0BG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISJfXbRVkeil4+wyEemJiKQ8CU+8/f3DWol5WgKbjZTLIYT1SQpnLT3HeN9tXSXKdXG3AG5+805hs9S9FU6ZHrvkWZ1BGAIjpElIdxDiQJ0wOx2iOBT31q6d4yJj/FWhBm/rCE9Vzo1jp6MH732u7MRW84vaTcbUGuohcPopHlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vs+/BZmL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF9r0BG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA64EC4CEF1;
-	Tue, 21 Oct 2025 20:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vs+/BZmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF14CC4CEF5;
+	Tue, 21 Oct 2025 20:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077469;
-	bh=gMBOjfOfImX9avRnguzDaqtX+ltBx9Lvj+usLNW3vZA=;
+	s=korg; t=1761077472;
+	bh=Zs5+HwIj5iUXilbLa9M+3MGLBJeaV2xyUTUvOH0g/RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qF9r0BG8o9HpKZ87jfqeGiYZ6mEBaGMu51kX1o8TAQqb7QKUzNpQLizM6hb3FpPmt
-	 sIqJB3SdUWNrY1P76TkUvz2tTSe/V2QsCeH0cu7hvnxLv2K/RvUobnCvEXqyB7EfWb
-	 rY2XFmnVrhCyd3JY1iCGfDgE+yPrprfXNqRdJU4w=
+	b=Vs+/BZmL7UamNPgYanmsHjY9U7hZZmlgp1abYgxspuMfEbHmotQ8z5d86QoU7HV68
+	 tUB6WbBOPWaPtqrKzH0nuAw5BaCb3OEy3LJat3ODsoqpTnNxe/lPenLM9x/zMlUL4/
+	 Kf+hKNP/IzXmL6T0ocyj1DuwcopnqQzO7kyqU7II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Valla <francesco@valla.it>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 115/159] drm/draw: fix color truncation in drm_draw_fill24
-Date: Tue, 21 Oct 2025 21:51:32 +0200
-Message-ID: <20251021195045.929881730@linuxfoundation.org>
+Subject: [PATCH 6.17 089/159] tls: dont rely on tx_work during send()
+Date: Tue, 21 Oct 2025 21:51:06 +0200
+Message-ID: <20251021195045.328687795@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,52 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Valla <francesco@valla.it>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 095232711f23179053ca26bcf046ca121a91a465 ]
+[ Upstream commit 7f846c65ca11e63d2409868ff039081f80e42ae4 ]
 
-The color parameter passed to drm_draw_fill24() was truncated to 16
-bits, leading to an incorrect color drawn to the target iosys_map.
-Fix this behavior, widening the parameter to 32 bits.
+With async crypto, we rely on tx_work to actually transmit records
+once encryption completes. But while send() is running, both the
+tx_lock and socket lock are held, so tx_work_handler cannot process
+the queue of encrypted records, and simply reschedules itself. During
+a large send(), this could last a long time, and use a lot of memory.
 
-Fixes: 31fa2c1ca0b2 ("drm/panic: Move drawing functions to drm_draw")
+Transmit any pending encrypted records before restarting the main
+loop of tls_sw_sendmsg_locked.
 
-Signed-off-by: Francesco Valla <francesco@valla.it>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20251003-drm_draw_fill24_fix-v1-1-8fb7c1c2a893@valla.it
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/8396631478f70454b44afb98352237d33f48d34d.1760432043.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_draw.c          | 2 +-
- drivers/gpu/drm/drm_draw_internal.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_draw.c b/drivers/gpu/drm/drm_draw.c
-index 9dc0408fbbead..5b956229c82fb 100644
---- a/drivers/gpu/drm/drm_draw.c
-+++ b/drivers/gpu/drm/drm_draw.c
-@@ -127,7 +127,7 @@ EXPORT_SYMBOL(drm_draw_fill16);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index e3d852091e7a4..d171353699800 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1152,6 +1152,13 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 				} else if (ret != -EAGAIN)
+ 					goto send_end;
+ 			}
++
++			/* Transmit if any encryptions have completed */
++			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++				cancel_delayed_work(&ctx->tx_work.work);
++				tls_tx_records(sk, msg->msg_flags);
++			}
++
+ 			continue;
+ rollback_iter:
+ 			copied -= try_to_copy;
+@@ -1207,6 +1214,12 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 					goto send_end;
+ 				}
+ 			}
++
++			/* Transmit if any encryptions have completed */
++			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++				cancel_delayed_work(&ctx->tx_work.work);
++				tls_tx_records(sk, msg->msg_flags);
++			}
+ 		}
  
- void drm_draw_fill24(struct iosys_map *dmap, unsigned int dpitch,
- 		     unsigned int height, unsigned int width,
--		     u16 color)
-+		     u32 color)
- {
- 	unsigned int y, x;
- 
-diff --git a/drivers/gpu/drm/drm_draw_internal.h b/drivers/gpu/drm/drm_draw_internal.h
-index f121ee7339dc1..20cb404e23ea6 100644
---- a/drivers/gpu/drm/drm_draw_internal.h
-+++ b/drivers/gpu/drm/drm_draw_internal.h
-@@ -47,7 +47,7 @@ void drm_draw_fill16(struct iosys_map *dmap, unsigned int dpitch,
- 
- void drm_draw_fill24(struct iosys_map *dmap, unsigned int dpitch,
- 		     unsigned int height, unsigned int width,
--		     u16 color);
-+		     u32 color);
- 
- void drm_draw_fill32(struct iosys_map *dmap, unsigned int dpitch,
- 		     unsigned int height, unsigned int width,
+ 		continue;
 -- 
 2.51.0
 
