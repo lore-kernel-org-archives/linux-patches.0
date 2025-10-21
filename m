@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EC7350A0D;
-	Tue, 21 Oct 2025 20:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B4B24A047;
+	Tue, 21 Oct 2025 20:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077157; cv=none; b=SzQzowvt3D17bqiDqCtUdYocasNbu2VR0yr3qXL93QoJN0XI8wlJ0VNKwcWGbuDZpY3MpE3nSyYnOyKzT+DTvYPLI2V6PbI6srww+nP620eK3v2v2bWc4eqybpI6XOTSH3JCIH/mQ4yR/4hJ12iVbieRruF3yJxz02sQOa9dgMY=
+	t=1761077161; cv=none; b=prNbUxkUjwQryXQQcoXDuony0yDD4EoCO0ZcJS+rQj2Vxbz0K77jI70y26GMrrTGxYO+HlWiPQC+mdJ38+tUWkEH+E8XHsiSy/jaJPNHgCRcRcMao4ZgRu958qRF1oow3O43bxoAIt17pm1c79GJsR6xevB1OQKxQ7+XIDdDr8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077157; c=relaxed/simple;
-	bh=IEL86cIiwjT8wLyAsMTKcacOLRcekKgDRc+pjkli5Sw=;
+	s=arc-20240116; t=1761077161; c=relaxed/simple;
+	bh=f4Zr7FeIm2c0siCCGP8SCLaAlC5HLIukXa9PnCiqUM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puwEjrKZ+F4DRg0VQEkfS+1AJhPYZqMOuoeeSzvspi1J7M8ZaQJsGwvDVtGAuKyK3wmEyl3N40FNCF/J0+Qw2LGMFY6NqM95pCSWUJWQo+VHBlo3i6hIWJ4YfUezVfsL85WtO33jxketON+hzEB15qJ8WzWYauD2fRixzMMuuzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oUm07dw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prx3GBNHkNtwA/GXhHvWDDBXURI7gzGQ6SFEyBI5J1jNDk3HnSHaCzUszSsVQQrPprIUXC+yQp0RLAfOZP/RkMqt1XwRn6Fug64HtqVUCosbTskZX7LF1z1muDI28rrbmfQ1zhbt15NUs+m9NNbTRTkT/3CaPuB0vFeKY0Y6cFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDqm0JER; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oUm07dw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29A6C4CEF1;
-	Tue, 21 Oct 2025 20:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDqm0JER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB023C4CEF1;
+	Tue, 21 Oct 2025 20:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077157;
-	bh=IEL86cIiwjT8wLyAsMTKcacOLRcekKgDRc+pjkli5Sw=;
+	s=korg; t=1761077161;
+	bh=f4Zr7FeIm2c0siCCGP8SCLaAlC5HLIukXa9PnCiqUM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oUm07dwcZB+XM2GSYAXHusSfm0HmfGHbS9QwBfF28E/yagUE+6uv6Dg2PiZaoFy6
-	 UkdV3NXHabYvzq0wDo9BIvnFOGuWSwVz1tvjC3069WM4Uv7aFra1UfgzdkuOsbPp2m
-	 seyHrPU8r9TxiT1JlUPe2sH6VBz7QyOZTW14stHs=
+	b=gDqm0JERzXiaJy3yVF2r745WuVsIOsZudWpSuF92LFJsc3nn1Wx4AS9xRF1svkLEk
+	 pvmZ8qT54M/R8/eDBvE4ytmL2IcxehCV0ngGFRLbWkaqfvvc6Gu7aXpf+YSItFcodQ
+	 0tBgjJ6BLDORdI+2FnTF7quL6G19yyoT4+QxVrMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.17 018/159] net: usb: lan78xx: Fix lost EEPROM write timeout error(-ETIMEDOUT) in lan78xx_write_raw_eeprom
-Date: Tue, 21 Oct 2025 21:49:55 +0200
-Message-ID: <20251021195043.625192667@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.17 019/159] KVM: arm64: Prevent access to vCPU events before init
+Date: Tue, 21 Oct 2025 21:49:56 +0200
+Message-ID: <20251021195043.648609618@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,54 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit d5d790ba1558dbb8d179054f514476e2ee970b8e upstream.
+commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 upstream.
 
-The function lan78xx_write_raw_eeprom failed to properly propagate EEPROM
-write timeout errors (-ETIMEDOUT). In the timeout  fallthrough path, it first
-attempted to restore the pin configuration for LED outputs and then
-returned only the status of that restore operation, discarding the
-original timeout error saved in ret.
+Another day, another syzkaller bug. KVM erroneously allows userspace to
+pend vCPU events for a vCPU that hasn't been initialized yet, leading to
+KVM interpreting a bunch of uninitialized garbage for routing /
+injecting the exception.
 
-As a result, callers could mistakenly treat EEPROM write operation as
-successful even though the EEPROM write had actually timed out with no
-or partial data write.
+In one case the injection code and the hyp disagree on whether the vCPU
+has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
+tripping the BUG() in exception_target_el() during the next injection:
 
-To fix this, handle errors in restoring the LED pin configuration separately.
-If the restore succeeds, return any prior EEPROM write timeout error saved
-in ret to the caller.
+  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
+  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
+  Hardware name: linux,dummy-virt (DT)
+  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : exception_target_el+0x88/0x8c
+  lr : pend_serror_exception+0x18/0x13c
+  sp : ffff800082f03a10
+  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
+  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
+  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
+  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
+  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
+  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
+  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
+  Call trace:
+   exception_target_el+0x88/0x8c (P)
+   kvm_inject_serror_esr+0x40/0x3b4
+   __kvm_arm_vcpu_set_events+0xf0/0x100
+   kvm_arch_vcpu_ioctl+0x180/0x9d4
+   kvm_vcpu_ioctl+0x60c/0x9f4
+   __arm64_sys_ioctl+0xac/0x104
+   invoke_syscall+0x48/0x110
+   el0_svc_common.constprop.0+0x40/0xe0
+   do_el0_svc+0x1c/0x28
+   el0_svc+0x34/0xf0
+   el0t_64_sync_handler+0xa0/0xe4
+   el0t_64_sync+0x198/0x19c
+  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
 
-Suggested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Fixes: 8b1b2ca83b20 ("net: usb: lan78xx: Improve error handling in EEPROM and OTP operations")
-cc: stable@vger.kernel.org
-Signed-off-by: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reject the ioctls outright as no sane VMM would call these before
+KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
+thrown away by the eventual reset of the vCPU's state.
+
+Cc: stable@vger.kernel.org # 6.17
+Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/arm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1174,10 +1174,13 @@ static int lan78xx_write_raw_eeprom(stru
- 	}
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1789,6 +1789,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 	case KVM_GET_VCPU_EVENTS: {
+ 		struct kvm_vcpu_events events;
  
- write_raw_eeprom_done:
--	if (dev->chipid == ID_REV_CHIP_ID_7800_)
--		return lan78xx_write_reg(dev, HW_CFG, saved);
--
--	return 0;
-+	if (dev->chipid == ID_REV_CHIP_ID_7800_) {
-+		int rc = lan78xx_write_reg(dev, HW_CFG, saved);
-+		/* If USB fails, there is nothing to do */
-+		if (rc < 0)
-+			return rc;
-+	}
-+	return ret;
- }
++		if (!kvm_vcpu_initialized(vcpu))
++			return -ENOEXEC;
++
+ 		if (kvm_arm_vcpu_get_events(vcpu, &events))
+ 			return -EINVAL;
  
- static int lan78xx_read_raw_otp(struct lan78xx_net *dev, u32 offset,
+@@ -1800,6 +1803,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 	case KVM_SET_VCPU_EVENTS: {
+ 		struct kvm_vcpu_events events;
+ 
++		if (!kvm_vcpu_initialized(vcpu))
++			return -ENOEXEC;
++
+ 		if (copy_from_user(&events, argp, sizeof(events)))
+ 			return -EFAULT;
+ 
 
 
