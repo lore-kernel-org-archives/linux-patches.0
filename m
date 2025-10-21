@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529CD1A3029;
-	Tue, 21 Oct 2025 20:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FB22773DA;
+	Tue, 21 Oct 2025 20:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077472; cv=none; b=f3rpCN6CG1ge6qJYvnTkIpJkeuO4B6DtJRmJY6GrhnDVtO+vjYBd6l2pMIZu5xuRSGU9F2/MicYDCFHvGaUqwS2wnF3s3gescB5xKEISaWLTJ6NmhEe3n/2TQ8yFo+W6M4dDxCp4HhvmzDBjRLPnTQoCduYDpYmtrRlAVICC9eU=
+	t=1761077476; cv=none; b=knybDHSla38gV9WrSd/euN0HL7lkij5jh2IAWfm3+HcyBxuX6SJr18jq39VpCntiwTbzbDAvSGeYJ54YgcUoZJJgCWJg9H6hRlLppA/A/mGuAhkj69DLmCX10bc3ZlGlUuMwtycFbZZNf7PaIaLACL9aoC+Q9Lbo3CIPw4Y1xQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077472; c=relaxed/simple;
-	bh=Zs5+HwIj5iUXilbLa9M+3MGLBJeaV2xyUTUvOH0g/RI=;
+	s=arc-20240116; t=1761077476; c=relaxed/simple;
+	bh=RSqLpOVdIBc1CF6vdtKA0RS3Uxdlmdk+5RYieTfUTEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISJfXbRVkeil4+wyEemJiKQ8CU+8/f3DWol5WgKbjZTLIYT1SQpnLT3HeN9tXSXKdXG3AG5+805hs9S9FU6ZHrvkWZ1BGAIjpElIdxDiQJ0wOx2iOBT31q6d4yJj/FWhBm/rCE9Vzo1jp6MH732u7MRW84vaTcbUGuohcPopHlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vs+/BZmL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwHmBTFLot6R1euYc7wduqHGKWot5ykIPkxJDFMVUde9GfLQCxURO2fmOrn7Bg3YGQuGovgk8K1TSs/faccgJzEbXOm8OFILRBErgDfO1lZ9tQlYf6qKCak5sVDvXAxMISV97DC6Ilf9Lk3eVP71h3TLZ/TOonZN7c2iuYqMBr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCxDpmKV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vs+/BZmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF14CC4CEF5;
-	Tue, 21 Oct 2025 20:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCxDpmKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413DFC4CEF1;
+	Tue, 21 Oct 2025 20:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077472;
-	bh=Zs5+HwIj5iUXilbLa9M+3MGLBJeaV2xyUTUvOH0g/RI=;
+	s=korg; t=1761077475;
+	bh=RSqLpOVdIBc1CF6vdtKA0RS3Uxdlmdk+5RYieTfUTEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vs+/BZmL7UamNPgYanmsHjY9U7hZZmlgp1abYgxspuMfEbHmotQ8z5d86QoU7HV68
-	 tUB6WbBOPWaPtqrKzH0nuAw5BaCb3OEy3LJat3ODsoqpTnNxe/lPenLM9x/zMlUL4/
-	 Kf+hKNP/IzXmL6T0ocyj1DuwcopnqQzO7kyqU7II=
+	b=ZCxDpmKVhgKGo/SOwaMpJImePZFFviA0s4zJWiHPkOZndbwOJUNCIbKYl30T3B0/g
+	 qD2/NKsCHsS0lI5orF4MBRgIOaa9GTs7u/YeWu9QRXM+5Dr8+XvDALPpOtNmsbmW7t
+	 o3qJJdQ2bjRjFN0IhSdYV4DnyEGeGr3HuGWaWDNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 089/159] tls: dont rely on tx_work during send()
-Date: Tue, 21 Oct 2025 21:51:06 +0200
-Message-ID: <20251021195045.328687795@linuxfoundation.org>
+Subject: [PATCH 6.17 116/159] drm/rockchip: vop2: use correct destination rectangle height check
+Date: Tue, 21 Oct 2025 21:51:33 +0200
+Message-ID: <20251021195045.953315121@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,60 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 7f846c65ca11e63d2409868ff039081f80e42ae4 ]
+[ Upstream commit 7f38a1487555604bc4e210fa7cc9b1bce981c40e ]
 
-With async crypto, we rely on tx_work to actually transmit records
-once encryption completes. But while send() is running, both the
-tx_lock and socket lock are held, so tx_work_handler cannot process
-the queue of encrypted records, and simply reschedules itself. During
-a large send(), this could last a long time, and use a lot of memory.
+The vop2_plane_atomic_check() function incorrectly checks
+drm_rect_width(dest) twice instead of verifying both width and height.
+Fix the second condition to use drm_rect_height(dest) so that invalid
+destination rectangles with height < 4 are correctly rejected.
 
-Transmit any pending encrypted records before restarting the main
-loop of tls_sw_sendmsg_locked.
-
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/8396631478f70454b44afb98352237d33f48d34d.1760432043.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20251012142005.660727-1-alok.a.tiwari@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index e3d852091e7a4..d171353699800 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1152,6 +1152,13 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
- 				} else if (ret != -EAGAIN)
- 					goto send_end;
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
-+
- 			continue;
- rollback_iter:
- 			copied -= try_to_copy;
-@@ -1207,6 +1214,12 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
- 					goto send_end;
- 				}
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
- 		}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index b50927a824b40..7ec7bea5e38e6 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1031,7 +1031,7 @@ static int vop2_plane_atomic_check(struct drm_plane *plane,
+ 		return format;
  
- 		continue;
+ 	if (drm_rect_width(src) >> 16 < 4 || drm_rect_height(src) >> 16 < 4 ||
+-	    drm_rect_width(dest) < 4 || drm_rect_width(dest) < 4) {
++	    drm_rect_width(dest) < 4 || drm_rect_height(dest) < 4) {
+ 		drm_err(vop2->drm, "Invalid size: %dx%d->%dx%d, min size is 4x4\n",
+ 			drm_rect_width(src) >> 16, drm_rect_height(src) >> 16,
+ 			drm_rect_width(dest), drm_rect_height(dest));
 -- 
 2.51.0
 
