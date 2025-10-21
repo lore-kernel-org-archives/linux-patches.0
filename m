@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2962737E7;
-	Tue, 21 Oct 2025 19:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621FE272E7C;
+	Tue, 21 Oct 2025 19:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076527; cv=none; b=Lxgj3gchB2+mxKMMzDUS25qgsZ30/vWgz3Ow5vzjl5EouWR0G0Ex/p7/pdCHadiUnw4bLI1I7wPxG4IWiayljn2ad1Z2BszobGrniv1J/p5ypZlL/hgK+JW7Orj2S+5hZLhRjy6HZc24TwT6lbLg8qorT8J+8KShVy9KnrxYz6g=
+	t=1761076530; cv=none; b=nB9Kg/tfxdwkrjUXOlTj91+i70z1R9LsPqIJHNFdGH0VQlQTeVrHFEhNivMNVqPEtZK4jU/cxHwsgmqOUSVDknSMbS8rSeAQnvVXtlqHkqQRsSpLHe9QIWVlvlZHKLfaNeRd3uJYjcJRfUPK7BBAz8TvB9XKWpaIje/LgZZaYvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076527; c=relaxed/simple;
-	bh=Qck5tU6vRhpGgfQyEP1g75413NdbiWvS9SlOzL5cqpY=;
+	s=arc-20240116; t=1761076530; c=relaxed/simple;
+	bh=Q/YylmwiiBytdigT3QfTyn9ORvPnCDNc4xEtErrMIUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvAGl8JeatNDOnkiLL9GaB9SZAsgi5DLWMhdZw8rlLX7oDmixvVNP6G6hFcLOGH4evkrAaISVxLAZ5p4Ae+2P7ptqmjwaN7IrUgzw/TfNMWSHghbeZyG7FOR+7RZBHnIfz35FDwXU/LIdmpDcfs8fP4qTZQit99aheZjvO2m0Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbByn0LZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y36w4zfajqvJcJfcjbHSf39R/sR7lGjvj+17//6pnyF26k+z++eyaQC3p2PkIM1wf+228YMIA2N1VN1WdRhcYyX9NhsggkKJYd63J3P9D4bWgj1x0clcPyse2h0e99acoVdNIcWnQ9uMXYK1fcO0OQ02SwLuR73eYRMxkbEMEIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzK7lt09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbByn0LZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F101C4CEF1;
-	Tue, 21 Oct 2025 19:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzK7lt09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB21C4CEF7;
+	Tue, 21 Oct 2025 19:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076527;
-	bh=Qck5tU6vRhpGgfQyEP1g75413NdbiWvS9SlOzL5cqpY=;
+	s=korg; t=1761076530;
+	bh=Q/YylmwiiBytdigT3QfTyn9ORvPnCDNc4xEtErrMIUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbByn0LZ6DNqapT2mwPIM+B72eIkIu5IR49ulbPzdsaunW0czPeMP4/SvxL8JCjLb
-	 HCQpvUwz7AvzSWaCW2PnMWtt5JgN2H/GXYEFUxJEjWzlmJ/EQ5N/6Eh1PlYeSHrys1
-	 hy8wRkvl/WoUNM/utNz0LE9RBr4G3nkIMErNmDxk=
+	b=DzK7lt09ccAmzKSINw7hXsYEls4Zi1EUH1FEOZZlMzLTOzyGf32VS7L/O4tAfS3qS
+	 CMKIoIZJWPfXg2NfVFrWvMNtcP17iS3DjCUOZLNihpit0Vs/l7eMpcaPZVO6capmRK
+	 yALNIxVcS4tphGafvThDXGaF+t7Lyrx1+vQFmUzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/105] sched/fair: Fix pelt lost idle time detection
-Date: Tue, 21 Oct 2025 21:51:12 +0200
-Message-ID: <20251021195023.166709232@linuxfoundation.org>
+Subject: [PATCH 6.6 064/105] ALSA: firewire: amdtp-stream: fix enum kernel-doc warnings
+Date: Tue, 21 Oct 2025 21:51:13 +0200
+Message-ID: <20251021195023.189607641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -51,65 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 17e3e88ed0b6318fde0d1c14df1a804711cab1b5 ]
+[ Upstream commit d41f68dff783d181a8fd462e612bda0fbab7f735 ]
 
-The check for some lost idle pelt time should be always done when
-pick_next_task_fair() fails to pick a task and not only when we call it
-from the fair fast-path.
+Fix spelling of CIP_NO_HEADER to prevent a kernel-doc warning.
 
-The case happens when the last running task on rq is a RT or DL task. When
-the latter goes to sleep and the /Sum of util_sum of the rq is at the max
-value, we don't account the lost of idle time whereas we should.
+Warning: amdtp-stream.h:57 Enum value 'CIP_NO_HEADER' not described in enum 'cip_flags'
+Warning: amdtp-stream.h:57 Excess enum value '%CIP_NO_HEADERS' description in 'cip_flags'
 
-Fixes: 67692435c411 ("sched: Rework pick_next_task() slow-path")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 3b196c394dd9f ("ALSA: firewire-lib: add no-header packet processing")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ sound/firewire/amdtp-stream.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 84d5caf6230f6..58231999d929e 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8528,21 +8528,21 @@ done: __maybe_unused;
- 	return p;
- 
- idle:
--	if (!rf)
--		return NULL;
--
--	new_tasks = sched_balance_newidle(rq, rf);
-+	if (rf) {
-+		new_tasks = sched_balance_newidle(rq, rf);
- 
--	/*
--	 * Because sched_balance_newidle() releases (and re-acquires) rq->lock, it is
--	 * possible for any higher priority task to appear. In that case we
--	 * must re-start the pick_next_entity() loop.
--	 */
--	if (new_tasks < 0)
--		return RETRY_TASK;
-+		/*
-+		 * Because sched_balance_newidle() releases (and re-acquires)
-+		 * rq->lock, it is possible for any higher priority task to
-+		 * appear. In that case we must re-start the pick_next_entity()
-+		 * loop.
-+		 */
-+		if (new_tasks < 0)
-+			return RETRY_TASK;
- 
--	if (new_tasks > 0)
--		goto again;
-+		if (new_tasks > 0)
-+			goto again;
-+	}
- 
- 	/*
- 	 * rq is about to be idle, check if we need to update the
+diff --git a/sound/firewire/amdtp-stream.h b/sound/firewire/amdtp-stream.h
+index 775db3fc4959f..ec10270c2cce3 100644
+--- a/sound/firewire/amdtp-stream.h
++++ b/sound/firewire/amdtp-stream.h
+@@ -32,7 +32,7 @@
+  *	allows 5 times as large as IEC 61883-6 defines.
+  * @CIP_HEADER_WITHOUT_EOH: Only for in-stream. CIP Header doesn't include
+  *	valid EOH.
+- * @CIP_NO_HEADERS: a lack of headers in packets
++ * @CIP_NO_HEADER: a lack of headers in packets
+  * @CIP_UNALIGHED_DBC: Only for in-stream. The value of dbc is not alighed to
+  *	the value of current SYT_INTERVAL; e.g. initial value is not zero.
+  * @CIP_UNAWARE_SYT: For outgoing packet, the value in SYT field of CIP is 0xffff.
 -- 
 2.51.0
 
