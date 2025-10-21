@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABCF145A1F;
-	Tue, 21 Oct 2025 20:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E336314286;
+	Tue, 21 Oct 2025 20:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076882; cv=none; b=QF9lF7t4j76gD05et4v3lJ3UGvQIOe+9W0Ic1fDwW2fq0AQjfcF6S5r351KwABACfbmUThBfyZ1KTqm2Yp5nBfwSiUS2+ksokGDZtuHZrHNZH5KIlxizu5pky17iPA3yRcZfZDslgY2NNyi3aMQRFXwZrwCzSmNUXfq/afLOFiY=
+	t=1761076885; cv=none; b=RCUIjeVX1hYELwgatag5zZn07W2zMoClqsLCsZegslST6/yzTeDuq3gR1xkl3C8XasFZN+0YHckjKDsET2Sc9DBWxV5iOjYTSlK7pBlQrJHjZg5pG3O9O2TDhqfi1Gw75Es5rHoWY9leECEW7215m0TejsFiY9L4v0QgqSYRGXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076882; c=relaxed/simple;
-	bh=F4CXBQlZannanc7D5G6j3BhgoqehzJhV6OLz1cf441A=;
+	s=arc-20240116; t=1761076885; c=relaxed/simple;
+	bh=zdEC9/J8AORlWAdHvApR8Z8uQbT8RlYGz8U23BAdet8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sj66hR2cfNQbCIyEGWhVIC0gEbeUagpd69bJsVgD5cdxxAuTIvNrE3OVNHsAHJDnrmqX5EhZRcqVacPYu8trq8AtZMvCZYiT0Ana9lCIVgbuniVLoT2WlDWk1WrM4+iTKmU3tklhfYy5kM7Xm21nBRMmGhuSZ9KncIs0TccYsOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZWLqLyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDT21PvIBBFpS0dTygktwlB/jUyBLLxJvJ2mNstCDh5nOMe39PnmhWP0eVOFmDzgoMMGXJsuL89WSD+OQD3UWodY87lCB2+o0oO0Fe8JoRx8TMkfYrOeuyArmI8sX0bmmbYekyck7caNSgOc9URlJ3MB2LN4WlyAMX5//jV3C3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9kvDqCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZWLqLyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7708C4CEF1;
-	Tue, 21 Oct 2025 20:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9kvDqCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7424FC4CEF1;
+	Tue, 21 Oct 2025 20:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076882;
-	bh=F4CXBQlZannanc7D5G6j3BhgoqehzJhV6OLz1cf441A=;
+	s=korg; t=1761076884;
+	bh=zdEC9/J8AORlWAdHvApR8Z8uQbT8RlYGz8U23BAdet8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZWLqLyvOfkBxgl+BCQPpGAYQriptyf1Eh62hOGhz/GeHFpBjD6VF17rUPQK9NlHN
-	 aorb9lo2s/O5pKjCrvG6AoOe08+UWelv/JxhRl230VToIpfKYGDgqmc1V69jj4tfHl
-	 0Uzw+FjDzPELpak9sIFP46ysFYUwlHBgT5fZURsM=
+	b=h9kvDqCRXLTxoL+UZv0noiRLnpn86XJm+eSs//oCFu9orpCDAXxcG6jTHFyfFaouz
+	 C3YcUUZE/BczW87tHNZEJhNEoqdIJNpmDciqqsKyYwDVO7A7B8MQVw91ywTDo/47Rj
+	 0PqmVnXhkcglDZ9M80n4vpjusKQV3alSyyWvZVls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ketil Johnsen <ketil.johnsen@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Amit Chaudhary <achaudhary@purestorage.com>,
+	Randy Jennings <randyj@purestorage.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/136] drm/panthor: Ensure MCU is disabled on suspend
-Date: Tue, 21 Oct 2025 21:50:55 +0200
-Message-ID: <20251021195037.586464770@linuxfoundation.org>
+Subject: [PATCH 6.12 068/136] nvme-multipath: Skip nr_active increments in RETRY disposition
+Date: Tue, 21 Oct 2025 21:50:56 +0200
+Message-ID: <20251021195037.610661268@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -52,47 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ketil Johnsen <ketil.johnsen@arm.com>
+From: Amit Chaudhary <achaudhary@purestorage.com>
 
-[ Upstream commit e07e10ae83bdf429f59c8c149173a8c4f29c481e ]
+[ Upstream commit bb642e2d300ee27dcede65cda7ffc47a7047bd69 ]
 
-Currently the Panthor driver needs the GPU to be powered down
-between suspend and resume. If this is not done, then the
-MCU_CONTROL register will be preserved as AUTO, which again will
-cause a premature FW boot on resume. The FW will go directly into
-fatal state in this case.
+For queue-depth I/O policy, this patch fixes unbalanced I/Os across
+nvme multipaths.
 
-This case needs to be handled as there is no guarantee that the
-GPU will be powered down after the suspend callback on all platforms.
+Issue Description:
 
-The fix is to call panthor_fw_stop() in "pre-reset" path to ensure
-the MCU_CONTROL register is cleared (set DISABLE). This matches
-well with the already existing call to panthor_fw_start() from the
-"post-reset" path.
+The RETRY disposition incorrectly increments ns->ctrl->nr_active
+counter and reinitializes iostat start-time. In such cases nr_active
+counter never goes back to zero until that path disconnects and
+reconnects.
 
-Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
-Acked-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20251008105112.4077015-1-ketil.johnsen@arm.com
+Such a path is not chosen for new I/Os if multiple RETRY cases on a given
+a path cause its queue-depth counter to be artificially higher compared
+to other paths. This leads to unbalanced I/Os across paths.
+
+The patch skips incrementing nr_active if NVME_MPATH_CNT_ACTIVE is already
+set. And it skips restarting io stats if NVME_MPATH_IO_STATS is already set.
+
+base-commit: e989a3da2d371a4b6597ee8dee5c72e407b4db7a
+Fixes: d4d957b53d91eeb ("nvme-multipath: support io stats on the mpath device")
+Signed-off-by: Amit Chaudhary <achaudhary@purestorage.com>
+Reviewed-by: Randy Jennings <randyj@purestorage.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/multipath.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_fw.c b/drivers/gpu/drm/panthor/panthor_fw.c
-index 4e2d3a02ea068..cdd6e1c08cebd 100644
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -1057,6 +1057,7 @@ void panthor_fw_pre_reset(struct panthor_device *ptdev, bool on_hang)
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 561dd08022c06..24cff8b044923 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -131,12 +131,14 @@ void nvme_mpath_start_request(struct request *rq)
+ 	struct nvme_ns *ns = rq->q->queuedata;
+ 	struct gendisk *disk = ns->head->disk;
+ 
+-	if (READ_ONCE(ns->head->subsys->iopolicy) == NVME_IOPOLICY_QD) {
++	if ((READ_ONCE(ns->head->subsys->iopolicy) == NVME_IOPOLICY_QD) &&
++	    !(nvme_req(rq)->flags & NVME_MPATH_CNT_ACTIVE)) {
+ 		atomic_inc(&ns->ctrl->nr_active);
+ 		nvme_req(rq)->flags |= NVME_MPATH_CNT_ACTIVE;
  	}
  
- 	panthor_job_irq_suspend(&ptdev->fw->irq);
-+	panthor_fw_stop(ptdev);
- }
+-	if (!blk_queue_io_stat(disk->queue) || blk_rq_is_passthrough(rq))
++	if (!blk_queue_io_stat(disk->queue) || blk_rq_is_passthrough(rq) ||
++	    (nvme_req(rq)->flags & NVME_MPATH_IO_STATS))
+ 		return;
  
- /**
+ 	nvme_req(rq)->flags |= NVME_MPATH_IO_STATS;
 -- 
 2.51.0
 
