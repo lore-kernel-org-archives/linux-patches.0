@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89BB2773DA;
-	Tue, 21 Oct 2025 20:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB9B1A3029;
+	Tue, 21 Oct 2025 20:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077186; cv=none; b=rfJ4stiTZz5nPnV9Gh1Nc87O3ZBxkgfLwa9rip1rUSMT4wb+yxgANWJKv1y5+QwRMKF31Eb76KayqbfKsi4aBUkkHhD0KFfcTdyVwHnbLN3jGmsYvsUJJFys9DAinkdcP8FHGuRfZBvawtqg8wIe7jeLG416gGiF3S60u3N51ps=
+	t=1761077189; cv=none; b=Sp5Q9omC53V5X42LPxW1GPPVyJhRSEEj9A8IYf10kaFLsvjcdfxefEYN2Fr3mZob1OWR43z8+E3VSWuzOYDEQBkq+htRVWEoqzm/wLvCQQZiAegAqF1chjBFvex6L8/xCFcqKq+Jdnk3uKUQjzxGMDhZ4Fk/x3Q4VWwPzh29mBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077186; c=relaxed/simple;
-	bh=z5wP9VpqJdhpHDNuB0gNbANEBL27/Judkoo2W0YLFk0=;
+	s=arc-20240116; t=1761077189; c=relaxed/simple;
+	bh=rop5WgaV7bzGoY8OtPYKMzfnPuukmB+Db/3LFvvSr8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g7jw+/fk+yZ4/FHINxthGS8EOpn+6rYywPG3GOm/3cGc8CfDVT5dU8d1YYqwSzdd2R69BJvBbkO5IzLYot2gNJkXsqyckOpYTlIQgDa41oIHVmIGDJJiCSQv/4fowoq5GIBysUpJ1ZDj1XjzqqjJqZZB+uRmDMyvDwMEDD/fuq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4N6LiHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDKD4mNjvAShF6OCdxPy979tYB4xtjmMLz0ym2LkBiEZphvGJa0vCX0rYxTCgrx+SiVb7FHH98zT4LXRqzbLI/QtfAhfUAhr0YF5xyWVO5HkOs3gMt1wdtnov/VyeXHW+PtRnVguVGe3BCRrh3y2ejboEGgZrZXUcmaRmwg3N3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smHZ1qEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4N6LiHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55270C4CEF1;
-	Tue, 21 Oct 2025 20:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smHZ1qEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FA7C4CEF1;
+	Tue, 21 Oct 2025 20:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077186;
-	bh=z5wP9VpqJdhpHDNuB0gNbANEBL27/Judkoo2W0YLFk0=;
+	s=korg; t=1761077189;
+	bh=rop5WgaV7bzGoY8OtPYKMzfnPuukmB+Db/3LFvvSr8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4N6LiHoa7iDI5JJ4s/j9NhX3+dE+Tn713BzIUOlPirb1YBnb2ZBN+5P5IQ3XtOfc
-	 knuOL4JEYoCAFjyf5cDsXh2Jq79rSW4x7YjyjBpMU1R5GtAct0zVFxhEbK/YNZwZia
-	 RYfrXEPtbpkPSSgefUJq57KQYl3WYniDJu3AP14U=
+	b=smHZ1qEaeiDfM/W3JtQkDhKwv5wGdCQdp5yNytK5X5dIPWuCuy/AxhL1Z5Ql9UOZv
+	 AY+Vs4HV6p+V20dqEfi4iKRvUq/4YYK2flsE8hN7ZCG3ffxMgoK/36FA1XAdveCvB0
+	 RgGWJ4KuLlAUfO+ESTquzssNNxWe18m86TycQIY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mssola@mssola.com>,
+	HAN Yuwei <hrx@bupt.moe>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.17 026/159] btrfs: fix memory leak on duplicated memory in the qgroup assign ioctl
-Date: Tue, 21 Oct 2025 21:50:03 +0200
-Message-ID: <20251021195043.819613343@linuxfoundation.org>
+Subject: [PATCH 6.17 027/159] btrfs: only set the device specific options after devices are opened
+Date: Tue, 21 Oct 2025 21:50:04 +0200
+Message-ID: <20251021195043.846009495@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -46,47 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Sabaté Solà <mssola@mssola.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 53a4acbfc1de85fa637521ffab4f4e2ee03cbeeb upstream.
+commit b7fdfd29a136a17c5c8ad9e9bbf89c48919c3d19 upstream.
 
-On 'btrfs_ioctl_qgroup_assign' we first duplicate the argument as
-provided by the user, which is kfree'd in the end. But this was not the
-case when allocating memory for 'prealloc'. In this case, if it somehow
-failed, then the previous code would go directly into calling
-'mnt_drop_write_file', without freeing the string duplicated from the
-user space.
+[BUG]
+With v6.17-rc kernels, btrfs will always set 'ssd' mount option even if
+the block device is not a rotating one:
 
-Fixes: 4addc1ffd67a ("btrfs: qgroup: preallocate memory before adding a relation")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Miquel Sabaté Solà <mssola@mssola.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+  # cat /sys/block/sdd/queue/rotational
+  1
+  # cat /etc/fstab:
+  LABEL=DATA2     /data2  btrfs rw,relatime,space_cache=v2,subvolid=5,subvol=/,nofail,nosuid,nodev      0 0
+
+  # mount
+  [...]
+  /dev/sdd on /data2 type btrfs (rw,nosuid,nodev,relatime,ssd,space_cache=v2,subvolid=5,subvol=/)
+
+[CAUSE]
+The 'ssd' mount option is set by set_device_specific_options(), and it
+expects that if there is any rotating device in the btrfs, it will set
+fs_devices::rotating.
+
+However after commit bddf57a70781 ("btrfs: delay btrfs_open_devices()
+until super block is created"), the device opening is delayed until the
+super block is created.
+
+But the timing of set_device_specific_options() is still left as is,
+this makes the function be called without any device opened.
+
+Since no device is opened, thus fs_devices::rotating will never be set,
+making btrfs incorrectly set 'ssd' mount option.
+
+[FIX]
+Only call set_device_specific_options() after btrfs_open_devices().
+
+Also only call set_device_specific_options() after a new mount, if we're
+mounting a mounted btrfs, there is no need to set the device specific
+mount options again.
+
+Reported-by: HAN Yuwei <hrx@bupt.moe>
+Link: https://lore.kernel.org/linux-btrfs/C8FF75669DFFC3C5+5f93bf8a-80a0-48a6-81bf-4ec890abc99a@bupt.moe/
+Fixes: bddf57a70781 ("btrfs: delay btrfs_open_devices() until super block is created")
+CC: stable@vger.kernel.org # 6.17
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/super.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3740,7 +3740,7 @@ static long btrfs_ioctl_qgroup_assign(st
- 		prealloc = kzalloc(sizeof(*prealloc), GFP_KERNEL);
- 		if (!prealloc) {
- 			ret = -ENOMEM;
--			goto drop_write;
-+			goto out;
- 		}
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1902,8 +1902,6 @@ static int btrfs_get_tree_super(struct f
+ 		return PTR_ERR(sb);
  	}
  
+-	set_device_specific_options(fs_info);
+-
+ 	if (sb->s_root) {
+ 		/*
+ 		 * Not the first mount of the fs thus got an existing super block.
+@@ -1948,6 +1946,7 @@ static int btrfs_get_tree_super(struct f
+ 			deactivate_locked_super(sb);
+ 			return -EACCES;
+ 		}
++		set_device_specific_options(fs_info);
+ 		bdev = fs_devices->latest_dev->bdev;
+ 		snprintf(sb->s_id, sizeof(sb->s_id), "%pg", bdev);
+ 		shrinker_debugfs_rename(sb->s_shrink, "sb-btrfs:%s", sb->s_id);
 
 
