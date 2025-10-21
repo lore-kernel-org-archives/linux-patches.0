@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22550350A2A;
-	Tue, 21 Oct 2025 19:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56657274B5C;
+	Tue, 21 Oct 2025 19:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076674; cv=none; b=qT73ZpA/t8PwMA5vLAM4tRxFvQwkTFcLa7l683PDpOa+qRqcstQMC4ZA6gOhS7RJ0iUDOKMBoJpGrEcjDjLIwp5QOYiAi/l6GiLEjTC679XpUvR26daYBF95xsl0BeZallxEaQwuiI5Te6skzn2Js4FMa+oi5nzjSf3GpXsiQWk=
+	t=1761076677; cv=none; b=Qv2CuvKK1NPWR9kRIJlCBqJhMYdUA8Q7N1TsF1IUuG/ZVIJwv2xkckhYDK327gNOSrDoG9Nsj5fihisxnDTL47SnUjgNT/iZ2iSFKMm4qeFS8aGNkyb6gEw+rZfI9ugsmsbKYdEw7ywSk3xTQfVYhMrs/5rlc8Gl7EJY5Y16e3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076674; c=relaxed/simple;
-	bh=rb2ivUJL7VvOdZVHT8ercZy4PiQXejAG5lRUJ46B49M=;
+	s=arc-20240116; t=1761076677; c=relaxed/simple;
+	bh=PNKaXs+Ridf2VLuSVok9h34aLLukT9DdXCBYTMKtVwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otQMQaIIfb3eR9w9uxOCK6RTAMijgGGTkM7arMfuT0j6QsIFHbBOqAMO1yRcLmO3ZRF31zMyyQawtQ7BlD3yAcKFojQtN7rJPqg02RH8H1zwJ33MttTq23+DNmR0w1gEXQRehd19WekJb5215EAIDUfjngyAkfiUov6Ijxk8+JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwHe5ibX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fs5KuceacP+t+b2N7WLC/f7TbNtqWiggVdvi365WoCK+XifQcQvkkjQJjyP7LKMddiAlZk4n3GzmiMa5UxkvhnIrITq86JXVvFVkkTSZMUrY3sZA8d9DP6uG+hAgNt8aeYvKdEjn9e9RBWRJcJkS8a/DbZ5FqZ3cUhZBKl/Hmg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qp9Xhvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwHe5ibX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BF8C4CEF1;
-	Tue, 21 Oct 2025 19:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qp9Xhvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6623C4CEF1;
+	Tue, 21 Oct 2025 19:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076674;
-	bh=rb2ivUJL7VvOdZVHT8ercZy4PiQXejAG5lRUJ46B49M=;
+	s=korg; t=1761076677;
+	bh=PNKaXs+Ridf2VLuSVok9h34aLLukT9DdXCBYTMKtVwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwHe5ibXt9Kk6gz37LBC1Fuxqr7M6+gNvbT9TcK5FBmKpRS4rCe+kDurqeSM89iE/
-	 E2qdOGoSNHYx4FY+4NdvK3a2s44kodDIjhO482O8EPDFreCedwu+8daWGVgmUdpMw+
-	 aUtCUhhCfca5ETPiWA6/zaQIwZ+kQcz0ueLFvxig=
+	b=2qp9XhvpcGsEIJ2HfqsMOQtRz9GtqIHswTDiVzm9BVgxdrYaI85h22tpEfv+iEuKO
+	 i/byy8e5RR2LYmJ8IlwnUVjXM86q48U4qWIjshu0WwbpCQUHE1uY0wE5nP0YVIyf2W
+	 LhB9u4bLJlzbNc+Dtg8MRs2oGWPZWl0KoktfxQ7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 101/105] ksmbd: browse interfaces list on FSCTL_QUERY_INTERFACE_INFO IOCTL
-Date: Tue, 21 Oct 2025 21:51:50 +0200
-Message-ID: <20251021195024.053953223@linuxfoundation.org>
+	Jakub Acs <acsjakub@amazon.de>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	SeongJae Park <sj@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 102/105] mm/ksm: fix flag-dropping behavior in ksm_madvise
+Date: Tue, 21 Oct 2025 21:51:51 +0200
+Message-ID: <20251021195024.076805825@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -50,193 +58,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jakub Acs <acsjakub@amazon.de>
 
-commit b2d99376c5d61eb60ffdb6c503e4b6c8f9712ddd upstream.
+commit f04aad36a07cc17b7a5d5b9a2d386ce6fae63e93 upstream.
 
-ksmbd.mount will give each interfaces list and bind_interfaces_only flags
-to ksmbd server. Previously, the interfaces list was sent only
-when bind_interfaces_only was enabled.
-ksmbd server browse only interfaces list given from ksmbd.conf on
-FSCTL_QUERY_INTERFACE_INFO IOCTL.
+syzkaller discovered the following crash: (kernel BUG)
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[   44.607039] ------------[ cut here ]------------
+[   44.607422] kernel BUG at mm/userfaultfd.c:2067!
+[   44.608148] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
+[   44.608814] CPU: 1 UID: 0 PID: 2475 Comm: reproducer Not tainted 6.16.0-rc6 #1 PREEMPT(none)
+[   44.609635] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   44.610695] RIP: 0010:userfaultfd_release_all+0x3a8/0x460
+
+<snip other registers, drop unreliable trace>
+
+[   44.617726] Call Trace:
+[   44.617926]  <TASK>
+[   44.619284]  userfaultfd_release+0xef/0x1b0
+[   44.620976]  __fput+0x3f9/0xb60
+[   44.621240]  fput_close_sync+0x110/0x210
+[   44.622222]  __x64_sys_close+0x8f/0x120
+[   44.622530]  do_syscall_64+0x5b/0x2f0
+[   44.622840]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   44.623244] RIP: 0033:0x7f365bb3f227
+
+Kernel panics because it detects UFFD inconsistency during
+userfaultfd_release_all().  Specifically, a VMA which has a valid pointer
+to vma->vm_userfaultfd_ctx, but no UFFD flags in vma->vm_flags.
+
+The inconsistency is caused in ksm_madvise(): when user calls madvise()
+with MADV_UNMEARGEABLE on a VMA that is registered for UFFD in MINOR mode,
+it accidentally clears all flags stored in the upper 32 bits of
+vma->vm_flags.
+
+Assuming x86_64 kernel build, unsigned long is 64-bit and unsigned int and
+int are 32-bit wide.  This setup causes the following mishap during the &=
+~VM_MERGEABLE assignment.
+
+VM_MERGEABLE is a 32-bit constant of type unsigned int, 0x8000'0000.
+After ~ is applied, it becomes 0x7fff'ffff unsigned int, which is then
+promoted to unsigned long before the & operation.  This promotion fills
+upper 32 bits with leading 0s, as we're doing unsigned conversion (and
+even for a signed conversion, this wouldn't help as the leading bit is 0).
+& operation thus ends up AND-ing vm_flags with 0x0000'0000'7fff'ffff
+instead of intended 0xffff'ffff'7fff'ffff and hence accidentally clears
+the upper 32-bits of its value.
+
+Fix it by changing `VM_MERGEABLE` constant to unsigned long, using the
+BIT() macro.
+
+Note: other VM_* flags are not affected: This only happens to the
+VM_MERGEABLE flag, as the other VM_* flags are all constants of type int
+and after ~ operation, they end up with leading 1 and are thus converted
+to unsigned long with leading 1s.
+
+Note 2:
+After commit 31defc3b01d9 ("userfaultfd: remove (VM_)BUG_ON()s"), this is
+no longer a kernel BUG, but a WARNING at the same place:
+
+[   45.595973] WARNING: CPU: 1 PID: 2474 at mm/userfaultfd.c:2067
+
+but the root-cause (flag-drop) remains the same.
+
+[akpm@linux-foundation.org: rust bindgen wasn't able to handle BIT(), from Miguel]
+  Link: https://lore.kernel.org/oe-kbuild-all/202510030449.VfSaAjvd-lkp@intel.com/
+Link: https://lkml.kernel.org/r/20251001090353.57523-2-acsjakub@amazon.de
+Fixes: 7677f7fd8be7 ("userfaultfd: add minor fault registration mode")
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: SeongJae Park <sj@kernel.org>
+Tested-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Xu Xin <xu.xin16@zte.com.cn>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[acsjakub@amazon.de: adapt rust bindgen const to older versions]
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/ksmbd_netlink.h |    3 +
- fs/smb/server/server.h        |    1 
- fs/smb/server/smb2pdu.c       |    4 ++
- fs/smb/server/transport_ipc.c |    1 
- fs/smb/server/transport_tcp.c |   67 +++++++++++++++++++-----------------------
- fs/smb/server/transport_tcp.h |    1 
- 6 files changed, 40 insertions(+), 37 deletions(-)
+ include/linux/mm.h              |    2 +-
+ rust/bindings/bindings_helper.h |    2 ++
+ rust/bindings/lib.rs            |    1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/ksmbd_netlink.h
-+++ b/fs/smb/server/ksmbd_netlink.h
-@@ -108,8 +108,9 @@ struct ksmbd_startup_request {
- 	__u32	smb2_max_credits;	/* MAX credits */
- 	__u32	smbd_max_io_size;	/* smbd read write size */
- 	__u32	max_connections;	/* Number of maximum simultaneous connections */
-+	__s8	bind_interfaces_only;
- 	__u32	max_ip_connections;	/* Number of maximum connection per ip address */
--	__u32	reserved[125];		/* Reserved room */
-+	__s8	reserved[499];		/* Reserved room */
- 	__u32	ifc_list_sz;		/* interfaces list size */
- 	__s8	____payload[];
- } __packed;
---- a/fs/smb/server/server.h
-+++ b/fs/smb/server/server.h
-@@ -46,6 +46,7 @@ struct ksmbd_server_config {
- 	unsigned int		max_ip_connections;
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -315,7 +315,7 @@ extern unsigned int kobjsize(const void
+ #define VM_MIXEDMAP	0x10000000	/* Can contain "struct page" and pure PFN pages */
+ #define VM_HUGEPAGE	0x20000000	/* MADV_HUGEPAGE marked this vma */
+ #define VM_NOHUGEPAGE	0x40000000	/* MADV_NOHUGEPAGE marked this vma */
+-#define VM_MERGEABLE	0x80000000	/* KSM may merge identical pages */
++#define VM_MERGEABLE	BIT(31)		/* KSM may merge identical pages */
  
- 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
-+	bool			bind_interfaces_only;
- };
+ #ifdef CONFIG_ARCH_USES_HIGH_VMA_FLAGS
+ #define VM_HIGH_ARCH_BIT_0	32	/* bit only usable on 64-bit architectures */
+--- a/rust/bindings/bindings_helper.h
++++ b/rust/bindings/bindings_helper.h
+@@ -12,8 +12,10 @@
+ #include <linux/refcount.h>
+ #include <linux/wait.h>
+ #include <linux/sched.h>
++#include <linux/mm.h>
  
- extern struct ksmbd_server_config server_conf;
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -38,6 +38,7 @@
- #include "mgmt/user_session.h"
- #include "mgmt/ksmbd_ida.h"
- #include "ndr.h"
-+#include "transport_tcp.h"
+ /* `bindgen` gets confused at certain things. */
+ const size_t BINDINGS_ARCH_SLAB_MINALIGN = ARCH_SLAB_MINALIGN;
+ const gfp_t BINDINGS_GFP_KERNEL = GFP_KERNEL;
+ const gfp_t BINDINGS___GFP_ZERO = __GFP_ZERO;
++const vm_flags_t BINDINGS_VM_MERGEABLE = VM_MERGEABLE;
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -51,3 +51,4 @@ pub use bindings_raw::*;
  
- static void __wbuf(struct ksmbd_work *work, void **req, void **rsp)
- {
-@@ -7790,6 +7791,9 @@ static int fsctl_query_iface_info_ioctl(
- 		if (netdev->type == ARPHRD_LOOPBACK)
- 			continue;
- 
-+		if (!ksmbd_find_netdev_name_iface_list(netdev->name))
-+			continue;
-+
- 		flags = dev_get_flags(netdev);
- 		if (!(flags & IFF_RUNNING))
- 			continue;
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -327,6 +327,7 @@ static int ipc_server_config_on_startup(
- 	ret = ksmbd_set_netbios_name(req->netbios_name);
- 	ret |= ksmbd_set_server_string(req->server_string);
- 	ret |= ksmbd_set_work_group(req->work_group);
-+	server_conf.bind_interfaces_only = req->bind_interfaces_only;
- 	ret |= ksmbd_tcp_set_interfaces(KSMBD_STARTUP_CONFIG_INTERFACES(req),
- 					req->ifc_list_sz);
- out:
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -551,30 +551,37 @@ out_clear:
- 	return ret;
- }
- 
-+struct interface *ksmbd_find_netdev_name_iface_list(char *netdev_name)
-+{
-+	struct interface *iface;
-+
-+	list_for_each_entry(iface, &iface_list, entry)
-+		if (!strcmp(iface->name, netdev_name))
-+			return iface;
-+	return NULL;
-+}
-+
- static int ksmbd_netdev_event(struct notifier_block *nb, unsigned long event,
- 			      void *ptr)
- {
- 	struct net_device *netdev = netdev_notifier_info_to_dev(ptr);
- 	struct interface *iface;
--	int ret, found = 0;
-+	int ret;
- 
- 	switch (event) {
- 	case NETDEV_UP:
- 		if (netif_is_bridge_port(netdev))
- 			return NOTIFY_OK;
- 
--		list_for_each_entry(iface, &iface_list, entry) {
--			if (!strcmp(iface->name, netdev->name)) {
--				found = 1;
--				if (iface->state != IFACE_STATE_DOWN)
--					break;
--				ret = create_socket(iface);
--				if (ret)
--					return NOTIFY_OK;
--				break;
--			}
-+		iface = ksmbd_find_netdev_name_iface_list(netdev->name);
-+		if (iface && iface->state == IFACE_STATE_DOWN) {
-+			ksmbd_debug(CONN, "netdev-up event: netdev(%s) is going up\n",
-+					iface->name);
-+			ret = create_socket(iface);
-+			if (ret)
-+				return NOTIFY_OK;
- 		}
--		if (!found && bind_additional_ifaces) {
-+		if (!iface && bind_additional_ifaces) {
- 			iface = alloc_iface(kstrdup(netdev->name, GFP_KERNEL));
- 			if (!iface)
- 				return NOTIFY_OK;
-@@ -584,19 +591,19 @@ static int ksmbd_netdev_event(struct not
- 		}
- 		break;
- 	case NETDEV_DOWN:
--		list_for_each_entry(iface, &iface_list, entry) {
--			if (!strcmp(iface->name, netdev->name) &&
--			    iface->state == IFACE_STATE_CONFIGURED) {
--				tcp_stop_kthread(iface->ksmbd_kthread);
--				iface->ksmbd_kthread = NULL;
--				mutex_lock(&iface->sock_release_lock);
--				tcp_destroy_socket(iface->ksmbd_socket);
--				iface->ksmbd_socket = NULL;
--				mutex_unlock(&iface->sock_release_lock);
-+		iface = ksmbd_find_netdev_name_iface_list(netdev->name);
-+		if (iface && iface->state == IFACE_STATE_CONFIGURED) {
-+			ksmbd_debug(CONN, "netdev-down event: netdev(%s) is going down\n",
-+					iface->name);
-+			tcp_stop_kthread(iface->ksmbd_kthread);
-+			iface->ksmbd_kthread = NULL;
-+			mutex_lock(&iface->sock_release_lock);
-+			tcp_destroy_socket(iface->ksmbd_socket);
-+			iface->ksmbd_socket = NULL;
-+			mutex_unlock(&iface->sock_release_lock);
- 
--				iface->state = IFACE_STATE_DOWN;
--				break;
--			}
-+			iface->state = IFACE_STATE_DOWN;
-+			break;
- 		}
- 		break;
- 	}
-@@ -665,18 +672,6 @@ int ksmbd_tcp_set_interfaces(char *ifc_l
- 	int sz = 0;
- 
- 	if (!ifc_list_sz) {
--		struct net_device *netdev;
--
--		rtnl_lock();
--		for_each_netdev(&init_net, netdev) {
--			if (netif_is_bridge_port(netdev))
--				continue;
--			if (!alloc_iface(kstrdup(netdev->name, GFP_KERNEL))) {
--				rtnl_unlock();
--				return -ENOMEM;
--			}
--		}
--		rtnl_unlock();
- 		bind_additional_ifaces = 1;
- 		return 0;
- 	}
---- a/fs/smb/server/transport_tcp.h
-+++ b/fs/smb/server/transport_tcp.h
-@@ -8,6 +8,7 @@
- 
- int ksmbd_tcp_set_interfaces(char *ifc_list, int ifc_list_sz);
- void ksmbd_free_transport(struct ksmbd_transport *kt);
-+struct interface *ksmbd_find_netdev_name_iface_list(char *netdev_name);
- int ksmbd_tcp_init(void);
- void ksmbd_tcp_destroy(void);
- 
+ pub const GFP_KERNEL: gfp_t = BINDINGS_GFP_KERNEL;
+ pub const __GFP_ZERO: gfp_t = BINDINGS___GFP_ZERO;
++pub const VM_MERGEABLE: vm_flags_t = BINDINGS_VM_MERGEABLE;
 
 
