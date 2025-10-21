@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A840350A0D;
-	Tue, 21 Oct 2025 20:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F4D25A355;
+	Tue, 21 Oct 2025 20:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077114; cv=none; b=pJ5hp5rwAr6WWWI7jymw8198YzPIVyqZoAgXwveR0p9OU/Eg2XdJHxgsvtupkxi1DEmW0TVXetl7ThXpZuxYtE6LJXk1+hTwOs73dJfu1n3sv7cbP/EhT7tMPvDVTfvq8W1YTJqqwoDenI1Am7dYhSoCWdy885lZrHy++4+/Stk=
+	t=1761077117; cv=none; b=AX+aKSuNwSOxXc+OEkpjLGQG08EyTOSeBcUf2VQbC9gp6PDcM6w9xjE9XbsXC9ifGOjfCLtf7fuMzqpeKb/TrLN4GYRmZv7as9inRbaOJz1h2PXsDvzZIJ1jf4aHcVDKmpcql1+VFUocfXMgPFOYYMlhzjB0xMr9kaspqFTPRsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077114; c=relaxed/simple;
-	bh=fFEhD7cUFh0uzIyISO/cbox2TNQeBwZ3IxQ2EM9QMzU=;
+	s=arc-20240116; t=1761077117; c=relaxed/simple;
+	bh=gvFJta8F18294KGGjvTHZ1MOq4y9WoQLuT9yUflxjFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oH0lC/jb68ojYoTNiWsaL/5+Bf8nGt1PQOYHAYPx7dSqcgRPReNncoVa7Ckiri/YqFnS7a878QqFGqgksmoFPxMX52PehM8GqVvd5m31ZdjM4P7F1rSS9wcAFpHg+QmhVfRuMNrMphYVQrptFhpjya+vZXv82nPgk5MLTgGsxoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUasU3UQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BjOmQbpw0oyi++MniZklWIop4bBurJ84J3wOgPkHh15u+yHg174DUvD/uigEeeerf6C0FmlHBmFV/mXeH96rmp+zYNtdaKWzzqA23LL59xNTyZ3uXSv9wdpiLZ4wSqNy/9MFWqDXd7bieuUWJvmR/DKTbS16GTNMr52s0ALHSps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjYeHXbk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUasU3UQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779E6C4CEF1;
-	Tue, 21 Oct 2025 20:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjYeHXbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C26AC4CEF1;
+	Tue, 21 Oct 2025 20:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077114;
-	bh=fFEhD7cUFh0uzIyISO/cbox2TNQeBwZ3IxQ2EM9QMzU=;
+	s=korg; t=1761077116;
+	bh=gvFJta8F18294KGGjvTHZ1MOq4y9WoQLuT9yUflxjFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUasU3UQ3ld1k8kpWdS4RQC89mbNE80KZvmr/aI0U7MRKo5vvhf8oLSqsXpflBRMo
-	 HsPQ9E+SYfXeWBUA+5r6escaWA1JB8P4NV/t6iZX2sDkvkZiDmuCPOQviL35eVQrfn
-	 zTDGs4lIETjJWEabJUpJzaQuh1BIsm8pZyqqWqE0=
+	b=BjYeHXbkGNYAiS0Vme178mTdzGrP6nGwPNgMOdqFsRG6jjHWnjuMD73ztkpijnE5T
+	 olD0D/6ymR4ZJT5F/OQlHt68eqSrin69ahpV+A5ajY8sxdcRzwD9c9qnK/bhw6LQZl
+	 LAn/81b45P6F4vMKCDSUp5s1eC1yhLODTNI67MCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/136] phy: cadence: cdns-dphy: Fix PLL lock and O_CMN_READY polling
-Date: Tue, 21 Oct 2025 21:51:26 +0200
-Message-ID: <20251021195038.316414393@linuxfoundation.org>
+Subject: [PATCH 6.12 099/136] PM: runtime: Add new devm functions
+Date: Tue, 21 Oct 2025 21:51:27 +0200
+Message-ID: <20251021195038.340284737@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -47,268 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devarsh Thakkar <devarsht@ti.com>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-[ Upstream commit 284fb19a3ffb1083c3ad9c00d29749d09dddb99c ]
+[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
 
-PLL lockup and O_CMN_READY assertion can only happen after common state
-machine gets enabled by programming DPHY_CMN_SSM register, but driver was
-polling them before the common state machine was enabled which is
-incorrect.  This is as per the DPHY initialization sequence as mentioned in
-J721E TRM [1] at section "12.7.2.4.1.2.1 Start-up Sequence Timing Diagram".
-It shows O_CMN_READY polling at the end after common configuration pin
-setup where the common configuration pin setup step enables state machine
-as referenced in "Table 12-1533. Common Configuration-Related Setup
-mentions state machine"
+Add `devm_pm_runtime_set_active_enabled()` and
+`devm_pm_runtime_get_noresume()` for simplifying
+common cases in drivers.
 
-To fix this :
-- Add new function callbacks for polling on PLL lock and O_CMN_READY
-  assertion.
-- As state machine and clocks get enabled in power_on callback only, move
-  the clock related programming part from configure callback to power_on
-callback and poll for the PLL lockup and O_CMN_READY assertion after state
-machine gets enabled.
-- The configure callback only saves the PLL configuration received from the
-  client driver which will be applied later on in power_on callback.
-- Add checks to ensure configure is called before power_on and state
-  machine is in disabled state before power_on callback is called.
-- Disable state machine in power_off so that client driver can re-configure
-  the PLL by following up a power_off, configure, power_on sequence.
-
-[1]: https://www.ti.com/lit/zip/spruil1
-
-Cc: stable@vger.kernel.org
-Fixes: 7a343c8bf4b5 ("phy: Add Cadence D-PHY support")
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-Tested-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250704125915.1224738-2-devarsht@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/cadence/cdns-dphy.c |  124 +++++++++++++++++++++++++++++-----------
- 1 file changed, 92 insertions(+), 32 deletions(-)
+ drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/pm_runtime.h   |    4 +++
+ 2 files changed, 48 insertions(+)
 
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -100,6 +100,8 @@ struct cdns_dphy_ops {
- 	void (*set_pll_cfg)(struct cdns_dphy *dphy,
- 			    const struct cdns_dphy_cfg *cfg);
- 	unsigned long (*get_wakeup_time_ns)(struct cdns_dphy *dphy);
-+	int (*wait_for_pll_lock)(struct cdns_dphy *dphy);
-+	int (*wait_for_cmn_ready)(struct cdns_dphy *dphy);
- };
- 
- struct cdns_dphy {
-@@ -109,6 +111,8 @@ struct cdns_dphy {
- 	struct clk *pll_ref_clk;
- 	const struct cdns_dphy_ops *ops;
- 	struct phy *phy;
-+	bool is_configured;
-+	bool is_powered;
- };
- 
- /* Order of bands is important since the index is the band number. */
-@@ -195,6 +199,16 @@ static unsigned long cdns_dphy_get_wakeu
- 	return dphy->ops->get_wakeup_time_ns(dphy);
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1554,6 +1554,32 @@ out:
  }
+ EXPORT_SYMBOL_GPL(pm_runtime_enable);
  
-+static int cdns_dphy_wait_for_pll_lock(struct cdns_dphy *dphy)
++static void pm_runtime_set_suspended_action(void *data)
 +{
-+	return dphy->ops->wait_for_pll_lock ? dphy->ops->wait_for_pll_lock(dphy) : 0;
++	pm_runtime_set_suspended(data);
 +}
 +
-+static int cdns_dphy_wait_for_cmn_ready(struct cdns_dphy *dphy)
++/**
++ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_set_active_enabled(struct device *dev)
 +{
-+	return  dphy->ops->wait_for_cmn_ready ? dphy->ops->wait_for_cmn_ready(dphy) : 0;
-+}
++	int err;
 +
- static unsigned long cdns_dphy_ref_get_wakeup_time_ns(struct cdns_dphy *dphy)
++	err = pm_runtime_set_active(dev);
++	if (err)
++		return err;
++
++	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
++	if (err)
++		return err;
++
++	return devm_pm_runtime_enable(dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
++
+ static void pm_runtime_disable_action(void *data)
  {
- 	/* Default wakeup time is 800 ns (in a simulated environment). */
-@@ -236,7 +250,6 @@ static unsigned long cdns_dphy_j721e_get
- static void cdns_dphy_j721e_set_pll_cfg(struct cdns_dphy *dphy,
- 					const struct cdns_dphy_cfg *cfg)
- {
--	u32 status;
- 
- 	/*
- 	 * set the PWM and PLL Byteclk divider settings to recommended values
-@@ -253,13 +266,6 @@ static void cdns_dphy_j721e_set_pll_cfg(
- 
- 	writel(DPHY_TX_J721E_WIZ_LANE_RSTB,
- 	       dphy->regs + DPHY_TX_J721E_WIZ_RST_CTRL);
--
--	readl_poll_timeout(dphy->regs + DPHY_TX_J721E_WIZ_PLL_CTRL, status,
--			   (status & DPHY_TX_WIZ_PLL_LOCK), 0, POLL_TIMEOUT_US);
--
--	readl_poll_timeout(dphy->regs + DPHY_TX_J721E_WIZ_STATUS, status,
--			   (status & DPHY_TX_WIZ_O_CMN_READY), 0,
--			   POLL_TIMEOUT_US);
+ 	pm_runtime_dont_use_autosuspend(data);
+@@ -1576,6 +1602,24 @@ int devm_pm_runtime_enable(struct device
  }
+ EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
  
- static void cdns_dphy_j721e_set_psm_div(struct cdns_dphy *dphy, u8 div)
-@@ -267,6 +273,23 @@ static void cdns_dphy_j721e_set_psm_div(
- 	writel(div, dphy->regs + DPHY_TX_J721E_WIZ_PSM_FREQ);
- }
- 
-+static int cdns_dphy_j721e_wait_for_pll_lock(struct cdns_dphy *dphy)
++static void pm_runtime_put_noidle_action(void *data)
 +{
-+	u32 status;
-+
-+	return readl_poll_timeout(dphy->regs + DPHY_TX_J721E_WIZ_PLL_CTRL, status,
-+			       status & DPHY_TX_WIZ_PLL_LOCK, 0, POLL_TIMEOUT_US);
++	pm_runtime_put_noidle(data);
 +}
 +
-+static int cdns_dphy_j721e_wait_for_cmn_ready(struct cdns_dphy *dphy)
++/**
++ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_get_noresume(struct device *dev)
 +{
-+	u32 status;
++	pm_runtime_get_noresume(dev);
 +
-+	return readl_poll_timeout(dphy->regs + DPHY_TX_J721E_WIZ_STATUS, status,
-+			       status & DPHY_TX_WIZ_O_CMN_READY, 0,
-+			       POLL_TIMEOUT_US);
++	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
 +}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
 +
- /*
-  * This is the reference implementation of DPHY hooks. Specific integration of
-  * this IP may have to re-implement some of them depending on how they decided
-@@ -282,6 +305,8 @@ static const struct cdns_dphy_ops j721e_
- 	.get_wakeup_time_ns = cdns_dphy_j721e_get_wakeup_time_ns,
- 	.set_pll_cfg = cdns_dphy_j721e_set_pll_cfg,
- 	.set_psm_div = cdns_dphy_j721e_set_psm_div,
-+	.wait_for_pll_lock = cdns_dphy_j721e_wait_for_pll_lock,
-+	.wait_for_cmn_ready = cdns_dphy_j721e_wait_for_cmn_ready,
- };
+ /**
+  * pm_runtime_forbid - Block runtime PM of a device.
+  * @dev: Device to handle.
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -94,7 +94,9 @@ extern void pm_runtime_new_link(struct d
+ extern void pm_runtime_drop_link(struct device_link *link);
+ extern void pm_runtime_release_supplier(struct device_link *link);
  
- static int cdns_dphy_config_from_opts(struct phy *phy,
-@@ -339,21 +364,36 @@ static int cdns_dphy_validate(struct phy
- static int cdns_dphy_configure(struct phy *phy, union phy_configure_opts *opts)
- {
- 	struct cdns_dphy *dphy = phy_get_drvdata(phy);
--	struct cdns_dphy_cfg cfg = { 0 };
--	int ret, band_ctrl;
--	unsigned int reg;
-+	int ret;
++int devm_pm_runtime_set_active_enabled(struct device *dev);
+ extern int devm_pm_runtime_enable(struct device *dev);
++int devm_pm_runtime_get_noresume(struct device *dev);
  
--	ret = cdns_dphy_config_from_opts(phy, &opts->mipi_dphy, &cfg);
--	if (ret)
--		return ret;
-+	ret = cdns_dphy_config_from_opts(phy, &opts->mipi_dphy, &dphy->cfg);
-+	if (!ret)
-+		dphy->is_configured = true;
-+
-+	return ret;
-+}
-+
-+static int cdns_dphy_power_on(struct phy *phy)
-+{
-+	struct cdns_dphy *dphy = phy_get_drvdata(phy);
-+	int ret;
-+	u32 reg;
-+
-+	if (!dphy->is_configured || dphy->is_powered)
-+		return -EINVAL;
-+
-+	clk_prepare_enable(dphy->psm_clk);
-+	clk_prepare_enable(dphy->pll_ref_clk);
+ /**
+  * pm_suspend_ignore_children - Set runtime PM behavior regarding children.
+@@ -278,7 +280,9 @@ static inline void __pm_runtime_disable(
+ static inline void pm_runtime_allow(struct device *dev) {}
+ static inline void pm_runtime_forbid(struct device *dev) {}
  
- 	/*
- 	 * Configure the internal PSM clk divider so that the DPHY has a
- 	 * 1MHz clk (or something close).
- 	 */
- 	ret = cdns_dphy_setup_psm(dphy);
--	if (ret)
--		return ret;
-+	if (ret) {
-+		dev_err(&dphy->phy->dev, "Failed to setup PSM with error %d\n", ret);
-+		goto err_power_on;
-+	}
++static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
+ static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
++static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
  
- 	/*
- 	 * Configure attach clk lanes to data lanes: the DPHY has 2 clk lanes
-@@ -368,40 +408,60 @@ static int cdns_dphy_configure(struct ph
- 	 * Configure the DPHY PLL that will be used to generate the TX byte
- 	 * clk.
- 	 */
--	cdns_dphy_set_pll_cfg(dphy, &cfg);
-+	cdns_dphy_set_pll_cfg(dphy, &dphy->cfg);
- 
--	band_ctrl = cdns_dphy_tx_get_band_ctrl(opts->mipi_dphy.hs_clk_rate);
--	if (band_ctrl < 0)
--		return band_ctrl;
-+	ret = cdns_dphy_tx_get_band_ctrl(dphy->cfg.hs_clk_rate);
-+	if (ret < 0) {
-+		dev_err(&dphy->phy->dev, "Failed to get band control value with error %d\n", ret);
-+		goto err_power_on;
-+	}
- 
--	reg = FIELD_PREP(DPHY_BAND_CFG_LEFT_BAND, band_ctrl) |
--	      FIELD_PREP(DPHY_BAND_CFG_RIGHT_BAND, band_ctrl);
-+	reg = FIELD_PREP(DPHY_BAND_CFG_LEFT_BAND, ret) |
-+	      FIELD_PREP(DPHY_BAND_CFG_RIGHT_BAND, ret);
- 	writel(reg, dphy->regs + DPHY_BAND_CFG);
- 
--	return 0;
--}
--
--static int cdns_dphy_power_on(struct phy *phy)
--{
--	struct cdns_dphy *dphy = phy_get_drvdata(phy);
--
--	clk_prepare_enable(dphy->psm_clk);
--	clk_prepare_enable(dphy->pll_ref_clk);
--
- 	/* Start TX state machine. */
- 	writel(DPHY_CMN_SSM_EN | DPHY_CMN_TX_MODE_EN,
- 	       dphy->regs + DPHY_CMN_SSM);
- 
-+	ret = cdns_dphy_wait_for_pll_lock(dphy);
-+	if (ret) {
-+		dev_err(&dphy->phy->dev, "Failed to lock PLL with error %d\n", ret);
-+		goto err_power_on;
-+	}
-+
-+	ret = cdns_dphy_wait_for_cmn_ready(dphy);
-+	if (ret) {
-+		dev_err(&dphy->phy->dev, "O_CMN_READY signal failed to assert with error %d\n",
-+			ret);
-+		goto err_power_on;
-+	}
-+
-+	dphy->is_powered = true;
-+
- 	return 0;
-+
-+err_power_on:
-+	clk_disable_unprepare(dphy->pll_ref_clk);
-+	clk_disable_unprepare(dphy->psm_clk);
-+
-+	return ret;
- }
- 
- static int cdns_dphy_power_off(struct phy *phy)
- {
- 	struct cdns_dphy *dphy = phy_get_drvdata(phy);
-+	u32 reg;
- 
- 	clk_disable_unprepare(dphy->pll_ref_clk);
- 	clk_disable_unprepare(dphy->psm_clk);
- 
-+	/* Stop TX state machine. */
-+	reg = readl(dphy->regs + DPHY_CMN_SSM);
-+	writel(reg & ~DPHY_CMN_SSM_EN, dphy->regs + DPHY_CMN_SSM);
-+
-+	dphy->is_powered = false;
-+
- 	return 0;
- }
- 
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+ static inline void pm_runtime_get_noresume(struct device *dev) {}
 
 
