@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA82277035;
-	Tue, 21 Oct 2025 20:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C01274FDF;
+	Tue, 21 Oct 2025 20:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076805; cv=none; b=N/ze8BH4M/o0lOBQiKRTUAEo0oZ+1vWGbUS5aCkWKxwEdXGZG3UmSrtjzExpVRX2M62isrW9pPZGUBGVMuyOajqXtiMKIuMyJBYPR6/BFwQEzZJnN9f15V78f2dADr7Url86XIxys4j3qoXj2/9nEWkxAMPM5529/ghpXz4ZsPE=
+	t=1761076808; cv=none; b=ruL87u8aaz9yJMqSUMBzh3idkM5iPJRnSRY5wdiJfXNhHNngqyw44qSFsNPBSysPRd93CrqenYdupO+0QKZsD8/mHBpRDiCzDu644IONMCNYocflavIDW85Zd3NnaqFUACSrE5RsgVFyshMVixMbLIGW1+P1V+Sohva1jaqE0K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076805; c=relaxed/simple;
-	bh=cOH8q8wvTchTWVA21vLSSciHPLkhE7YSrZCJvSTknck=;
+	s=arc-20240116; t=1761076808; c=relaxed/simple;
+	bh=VBqGgWzHcwvvi+gl99MtaLLE0EHb+p0wPER/PwAd3kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1FUrY8fNsWxSbTTvRiW9VF266IDf2+Gcdn/+9+v4tD4UmTDcwyqPMt2roHu0VMc82Vvvtv51aDONDQx6fo9mMRr0sg7HlMZFTKtuXLVdfEZuWQ7OQ+5OKAE8PGGF9G9fG/FT6ViB3KQrQ4HXjvY+lQBYwrLRzcX3xmjLnY8YZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVmcz6+k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQ9dYW0YTYqwycDjQOA1HkV9AaSy+tE7f79Gh+IVGVYXZAc7AXDc678v51bfvBR7/4LJxtu9szzJYa1EIGKAqMBM670naM+1QF2jOM2+IPkSGSkqCwkXZRmdSxCaKXT4ugttM9RbzQp2BONcu9QvQQPcbjBtqQ+/h5hq628dYLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDNNQEtM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVmcz6+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DAEC4CEF1;
-	Tue, 21 Oct 2025 20:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDNNQEtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25192C4CEF1;
+	Tue, 21 Oct 2025 20:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076804;
-	bh=cOH8q8wvTchTWVA21vLSSciHPLkhE7YSrZCJvSTknck=;
+	s=korg; t=1761076808;
+	bh=VBqGgWzHcwvvi+gl99MtaLLE0EHb+p0wPER/PwAd3kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVmcz6+k1XCPHLejr6SItyRQjtODQYWCoR5l09xtEB9eDkNZPbcoOrcmrq5EAR7HB
-	 SngLV7Z0BxUTG8GRuO++E1kVz4lULrxILI98i8X/alL6LAk6mjkmMs762rZWeq9KCf
-	 l0r92FNKS9ghyU6bbGb3UWSbGPdLuizz9CQF6Xgo=
+	b=VDNNQEtMZ7no3EBcOLJ0V+8MPew1usOswm186ujBRhhDsWWylzSl0VaNKv/XSoL1O
+	 Rok+iOBgveY3N0pBd+1nOojmbrQDSqRMAde16sHacm9mpTR1wzVi+nQQ4lbaL4vIKS
+	 T+AYnnbl/aQmXG8YwZQmP+UMKlyiXFhJiXF7s/xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/136] cpufreq: CPPC: Avoid using CPUFREQ_ETERNAL as transition delay
-Date: Tue, 21 Oct 2025 21:50:29 +0200
-Message-ID: <20251021195036.968440290@linuxfoundation.org>
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Kevin Lumik <kevin@xf.ee>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 042/136] Revert "io_uring/rw: drop -EOPNOTSUPP check in __io_complete_rw_common()"
+Date: Tue, 21 Oct 2025 21:50:30 +0200
+Message-ID: <20251021195036.995832476@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -54,66 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f965d111e68f4a993cc44d487d416e3d954eea11 ]
+Commit 927069c4ac2cd1a37efa468596fb5b8f86db9df0 upstream.
 
-If cppc_get_transition_latency() returns CPUFREQ_ETERNAL to indicate a
-failure to retrieve the transition latency value from the platform
-firmware, the CPPC cpufreq driver will use that value (converted to
-microseconds) as the policy transition delay, but it is way too large
-for any practical use.
+This reverts commit 90bfb28d5fa8127a113a140c9791ea0b40ab156a.
 
-Address this by making the driver use the cpufreq's default
-transition latency value (in microseconds) as the transition delay
-if CPUFREQ_ETERNAL is returned by cppc_get_transition_latency().
+Kevin reports that this commit causes an issue for him with LVM
+snapshots, most likely because of turning off NOWAIT support while a
+snapshot is being created. This makes -EOPNOTSUPP bubble back through
+the completion handler, where io_uring read/write handling should just
+retry it.
 
-Fixes: d4f3388afd48 ("cpufreq / CPPC: Set platform specific transition_delay_us")
-Cc: 5.19+ <stable@vger.kernel.org> # 5.19
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reinstate the previous check removed by the referenced commit.
+
+Cc: stable@vger.kernel.org
+Fixes: 90bfb28d5fa8 ("io_uring/rw: drop -EOPNOTSUPP check in __io_complete_rw_common()")
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Reported-by: Kevin Lumik <kevin@xf.ee>
+Link: https://lore.kernel.org/io-uring/cceb723c-051b-4de2-9a4c-4aa82e1619ee@kernel.dk/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/rw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -339,6 +339,16 @@ static int cppc_verify_policy(struct cpu
- 	return 0;
- }
- 
-+static unsigned int __cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
-+{
-+	unsigned int transition_latency_ns = cppc_get_transition_latency(cpu);
-+
-+	if (transition_latency_ns == CPUFREQ_ETERNAL)
-+		return CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS / NSEC_PER_USEC;
-+
-+	return transition_latency_ns / NSEC_PER_USEC;
-+}
-+
- /*
-  * The PCC subspace describes the rate at which platform can accept commands
-  * on the shared PCC channel (including READs which do not count towards freq
-@@ -361,12 +371,12 @@ static unsigned int cppc_cpufreq_get_tra
- 			return 10000;
- 		}
- 	}
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
- }
- #else
- static unsigned int cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -477,7 +477,7 @@ static void io_req_io_end(struct io_kioc
+ static bool __io_complete_rw_common(struct io_kiocb *req, long res)
  {
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
- }
- #endif
- 
+ 	if (unlikely(res != req->cqe.res)) {
+-		if (res == -EAGAIN && io_rw_should_reissue(req)) {
++		if ((res == -EOPNOTSUPP || res == -EAGAIN) && io_rw_should_reissue(req)) {
+ 			/*
+ 			 * Reissue will start accounting again, finish the
+ 			 * current cycle.
 
 
