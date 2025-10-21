@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFECA273D9F;
-	Tue, 21 Oct 2025 19:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D272749CF;
+	Tue, 21 Oct 2025 19:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076590; cv=none; b=DN7HJEfzBqjD1guB6gh72spYGIuJsxqIm7T7jLP6udBmBaqrho1a0z1tyOpNtlaj45kRTyu31jfY+OMfbwDJf6w//W2rjZomHzT6y7Xw/1DiWTs/1Al0SJXu5KFlIrDWuvDCBohH9CS/t+egQJAne4kjS4iJDWzwJbmrmVLtk4Q=
+	t=1761076594; cv=none; b=up1ePf8HGNV9rsRLrIaBktmY8MFwgJfqvMkBg8hEgj+kZCg8wzbW1W7nI6BaJHpg6SVZR0LOG4SFSmbkH+gxaSRb+BB7aTBkEfbtJUqNYo+/AHfRZBYb2q8davfo+IukJrprhY3jydoBc3nRkOy5KDr75Z+DK6bnBQQtKpQQng4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076590; c=relaxed/simple;
-	bh=zs5GG8w4VfzdxWN+mKUA0DbbSrtn/NlJh97GW67oRwU=;
+	s=arc-20240116; t=1761076594; c=relaxed/simple;
+	bh=IC+l51huAlRtgCdvkLvKhMxLeMfybySEq/CYTlh/wUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPoZQKyTNqviAgGWkNOyjlOqarkArrX6BGMwya78dOWq3X9bpy9p44RcY2WuLbTIzIfhAf/e9qfOxef2SG9Hb+oAvQ3zAASGwtyjLp8hCUNPzjtkbq6QJJZ7z50vACLj6rZw4CTf1f8yEoYNnt9yjdfxwAON+yFP6YmFZF5pVEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7fHkaP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BS7MIh7uDGUnPf2sHuj5XfL3kWr395jg8G2VYqH2bd4grAWUTaVcWgqgUKhsqboZg2u/xtUBPhPcvo6NYg5mbAQUXQT35SbBcN1IBHWEWIedUFAun8LTuJXhtbF91/mWg1wsm2yPRuzjfsL+6FiwyM4PL9LF0fhF17TGalT3JjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdPiuPu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7fHkaP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28641C4CEF1;
-	Tue, 21 Oct 2025 19:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdPiuPu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC713C4CEF1;
+	Tue, 21 Oct 2025 19:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076590;
-	bh=zs5GG8w4VfzdxWN+mKUA0DbbSrtn/NlJh97GW67oRwU=;
+	s=korg; t=1761076594;
+	bh=IC+l51huAlRtgCdvkLvKhMxLeMfybySEq/CYTlh/wUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7fHkaP2aVC6XnYyz1His3MjlOidjW5KLfTIqwd0Ly5DR79SPnlJKMRsSwCEbWOgj
-	 uiLkhddOr165LakaMiVQG37Y9Oe3LhCdQZ3A3WUXBpZrSGdUFB6JaKXjqm4onbZfe5
-	 WS8voCudtGaRHv2R13VdnGxnXu5dsAS7UKMsHrF8=
+	b=VdPiuPu6Gh1Pw+MqavLSwYpnYEVHks/1mpoSmUTF2lyVKbZMAegzjQ2XGfkuTm4Nw
+	 cVBlD2bht1GQBB4WB6WKGXU+j4kmllWIIywtAXGUhTwmmf70RQNX9FuwX9FeFwrro5
+	 PAwMIVZm7CqxFAh3c6kRh0tj6RSFJ3xFFxQs8wFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/105] iio: imu: inv_icm42600: Simplify pm_runtime setup
-Date: Tue, 21 Oct 2025 21:51:31 +0200
-Message-ID: <20251021195023.596481655@linuxfoundation.org>
+Subject: [PATCH 6.6 056/105] ASoC: nau8821: Cancel jdet_work before handling jack ejection
+Date: Tue, 21 Oct 2025 21:51:05 +0200
+Message-ID: <20251021195023.008336348@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -52,83 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 0792c1984a45ccd7a296d6b8cb78088bc99a212e ]
+[ Upstream commit 6e54919cb541fdf1063b16f3254c28d01bc9e5ff ]
 
-Rework the power management in inv_icm42600_core_probe() to use
-devm_pm_runtime_set_active_enabled(), which simplifies the runtime PM
-setup by handling activation and enabling in one step.
-Remove the separate inv_icm42600_disable_pm callback, as it's no longer
-needed with the devm-managed approach.
-Using devm_pm_runtime_enable() also fixes the missing disable of
-autosuspend.
-Update inv_icm42600_disable_vddio_reg() to only disable the regulator if
-the device is not suspended i.e. powered-down, preventing unbalanced
-disables.
-Also remove redundant error msg on regulator_disable(), the regulator
-framework already emits an error message when regulator_disable() fails.
+The microphone detection work scheduled by a prior jack insertion
+interrupt may still be in a pending state or under execution when a jack
+ejection interrupt has been fired.
 
-This simplifies the PM setup and avoids manipulating the usage counter
-unnecessarily.
+This might lead to a racing condition or nau8821_jdet_work() completing
+after nau8821_eject_jack(), which will override the currently
+disconnected state of the jack and incorrectly report the headphone or
+the headset as being connected.
 
-Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250901-icm42pmreg-v3-1-ef1336246960@geanix.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cancel any pending jdet_work or wait for its execution to finish before
+attempting to handle the ejection interrupt.
+
+Proceed similarly before launching the eject handler as a consequence of
+detecting an invalid insert interrupt.
+
+Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-1-f7b0e2543f09@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   24 ++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ sound/soc/codecs/nau8821.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -567,20 +567,12 @@ static void inv_icm42600_disable_vdd_reg
- static void inv_icm42600_disable_vddio_reg(void *_data)
- {
- 	struct inv_icm42600_state *st = _data;
--	const struct device *dev = regmap_get_device(st->map);
--	int ret;
--
--	ret = regulator_disable(st->vddio_supply);
--	if (ret)
--		dev_err(dev, "failed to disable vddio error %d\n", ret);
--}
-+	struct device *dev = regmap_get_device(st->map);
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index f307374834b55..ee65707a7827e 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -1191,6 +1191,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
  
--static void inv_icm42600_disable_pm(void *_data)
--{
--	struct device *dev = _data;
-+	if (pm_runtime_status_suspended(dev))
-+		return;
- 
--	pm_runtime_put_sync(dev);
--	pm_runtime_disable(dev);
-+	regulator_disable(st->vddio_supply);
- }
- 
- int inv_icm42600_core_probe(struct regmap *regmap, int chip, int irq,
-@@ -677,16 +669,14 @@ int inv_icm42600_core_probe(struct regma
- 		return ret;
- 
- 	/* setup runtime power management */
--	ret = pm_runtime_set_active(dev);
-+	ret = devm_pm_runtime_set_active_enabled(dev);
- 	if (ret)
- 		return ret;
--	pm_runtime_get_noresume(dev);
--	pm_runtime_enable(dev);
-+
- 	pm_runtime_set_autosuspend_delay(dev, INV_ICM42600_SUSPEND_DELAY_MS);
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_put(dev);
- 
--	return devm_add_action_or_reset(dev, inv_icm42600_disable_pm, dev);
-+	return ret;
- }
- EXPORT_SYMBOL_NS_GPL(inv_icm42600_core_probe, IIO_ICM42600);
- 
+ 	if ((active_irq & NAU8821_JACK_EJECT_IRQ_MASK) ==
+ 		NAU8821_JACK_EJECT_DETECTED) {
++		cancel_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_DIS);
+ 		nau8821_eject_jack(nau8821);
+@@ -1205,11 +1206,11 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 		clear_irq = NAU8821_KEY_RELEASE_IRQ;
+ 	} else if ((active_irq & NAU8821_JACK_INSERT_IRQ_MASK) ==
+ 		NAU8821_JACK_INSERT_DETECTED) {
++		cancel_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_EN);
+ 		if (nau8821_is_jack_inserted(regmap)) {
+ 			/* detect microphone and jack type */
+-			cancel_work_sync(&nau8821->jdet_work);
+ 			schedule_work(&nau8821->jdet_work);
+ 			/* Turn off insertion interruption at manual mode */
+ 			regmap_update_bits(regmap,
+-- 
+2.51.0
+
 
 
