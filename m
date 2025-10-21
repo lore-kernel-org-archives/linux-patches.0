@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77140273D9A;
-	Tue, 21 Oct 2025 19:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C772C350A39;
+	Tue, 21 Oct 2025 19:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076569; cv=none; b=WV64DLv+6ulubNdvQ/Gj0aslc68HHM8yOBlZMrVpWY3uB0xE5aAiuk4yiu/+784g++Lmy8NQwO/MILyXv0CG6uNfTNaRFe8AIYBhRgWm7nCJPvdI2zYTYmh4T/msiRg2vYxUVRGKQK8R/mUdhX50nlD7cH7Zc6dSqQu5l659KRk=
+	t=1761076571; cv=none; b=jX9NEvlgr2detp955hBCbnNhEq0m8qN8l5e9HDNvjzTCYe42Per0+JIQP1kFJ6AlqdMO1ilibO3LrZn/UhHZ43AW77n8ON8h54Otlh9r1C4Corsrvo/CHtFq0lI7+V1LrlapZ5S0jAQvYhB0IA9ijRSaXGKYKw6Uw7oyqKjz1Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076569; c=relaxed/simple;
-	bh=Urn2mIWtIepZa1EMWXkhAISoumLFKyv2avl0g9LL0Kc=;
+	s=arc-20240116; t=1761076571; c=relaxed/simple;
+	bh=EBTZEyxZtdfT+enb7z9h52xSjP5KarKYLWR2EKzO18g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E067936m45zknnQEif11ddXPrOFlW3jWwfxCt0fDbh6xWJuPDCAYLS8utFMgG+Ck/v7dCK402fhzEaMDQpGaYYZhIHpJ9IyJPShcIXRJ0wxGjlHtRlLucErYQ/SMO0dxRudE6q1sr6iWM58VZ5dY77/TKXUo+5Sva0HgEoBL270=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVZ1L3MG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7fqsAVePY0Z3XR8WzcdFigL0Wdun+QsAES4LnPeRlDILeHgp8hQhtMj9V55aSvnUa7bNGwBoa+lHWmqdGmeUdhZBUDNSMkE0cwGM2V5jXBAdj4fuweGBCywG4nOovkhboqyHZy0oeGp0jPCOEkxqAOFHaGIwaOquFoHCCGyf90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxlAM/ch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVZ1L3MG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71020C4CEF7;
-	Tue, 21 Oct 2025 19:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxlAM/ch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EB1C4CEF1;
+	Tue, 21 Oct 2025 19:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076568;
-	bh=Urn2mIWtIepZa1EMWXkhAISoumLFKyv2avl0g9LL0Kc=;
+	s=korg; t=1761076571;
+	bh=EBTZEyxZtdfT+enb7z9h52xSjP5KarKYLWR2EKzO18g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVZ1L3MGYKpbVmEIr5eiNd5c5oz4YLuuXEdfLREtz9LPv0eV4tBA5X7Q5W0FAuKeU
-	 BwoTF1v7cSiGConp+7hhX9rcv3ZYcuM2NuUZ0xwqP+2L8EMIvCmpJuw3pPWhGT4pLN
-	 lu1cIZ1TirfG4Zj5hq8MvkevzCyN/aQ+M5w/FFLM=
+	b=MxlAM/chr+CuejqAIGfVOXReO54TGT2wcFms/tZVzKPcycRlLSXCrLGV4RVOvmCw5
+	 BKXIpP6c06sKd/RavrxXypLbgz08pJNs93u+DG9QTVxKPooGz9EBsdzOYrzPqNrCmV
+	 ejgJ8K38uScv0qf5v8mEzFGGOG/gYUb1/5qjNzpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+00f7f5b884b117ee6773@syzkaller.appspotmail.com,
-	syzbot+f30591e72bfc24d4715b@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mahmoud Adam <mngyadam@amazon.de>
-Subject: [PATCH 6.6 075/105] nilfs2: fix deadlock warnings caused by lock dependency in init_nilfs()
-Date: Tue, 21 Oct 2025 21:51:24 +0200
-Message-ID: <20251021195023.435485008@linuxfoundation.org>
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 076/105] NFSD: Rework encoding and decoding of nfsd4_deviceid
+Date: Tue, 21 Oct 2025 21:51:25 +0200
+Message-ID: <20251021195023.458195492@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -53,68 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-commit fb881cd7604536b17a1927fb0533f9a6982ffcc5 upstream.
+[ Upstream commit 832738e4b325b742940761e10487403f9aad13e8 ]
 
-After commit c0e473a0d226 ("block: fix race between set_blocksize and read
-paths") was merged, set_blocksize() called by sb_set_blocksize() now locks
-the inode of the backing device file.  As a result of this change, syzbot
-started reporting deadlock warnings due to a circular dependency involving
-the semaphore "ns_sem" of the nilfs object, the inode lock of the backing
-device file, and the locks that this inode lock is transitively dependent
-on.
+Compilers may optimize the layout of C structures, so we should not rely
+on sizeof struct and memcpy to encode and decode XDR structures. The byte
+order of the fields should also be taken into account.
 
-This is caused by a new lock dependency added by the above change, since
-init_nilfs() calls sb_set_blocksize() in the lock section of "ns_sem".
-However, these warnings are false positives because init_nilfs() is called
-in the early stage of the mount operation and the filesystem has not yet
-started.
+This patch adds the correct functions to handle the deviceid4 structure
+and removes the pad field, which is currently not used by NFSD, from the
+runtime state. The server's byte order is preserved because the deviceid4
+blob on the wire is only used as a cookie by the client.
 
-The reason why "ns_sem" is locked in init_nilfs() was to avoid a race
-condition in nilfs_fill_super() caused by sharing a nilfs object among
-multiple filesystem instances (super block structures) in the early
-implementation.  However, nilfs objects and super block structures have
-long ago become one-to-one, and there is no longer any need to use the
-semaphore there.
-
-So, fix this issue by removing the use of the semaphore "ns_sem" in
-init_nilfs().
-
-Link: https://lkml.kernel.org/r/20250503053327.12294-1-konishi.ryusuke@gmail.com
-Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+00f7f5b884b117ee6773@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=00f7f5b884b117ee6773
-Tested-by: syzbot+00f7f5b884b117ee6773@syzkaller.appspotmail.com
-Reported-by: syzbot+f30591e72bfc24d4715b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f30591e72bfc24d4715b
-Tested-by: syzbot+f30591e72bfc24d4715b@syzkaller.appspotmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Mahmoud Adam <mngyadam@amazon.de>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: d68886bae76a ("NFSD: Fix last write offset handling in layoutcommit")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/the_nilfs.c |    3 ---
- 1 file changed, 3 deletions(-)
+ fs/nfsd/blocklayoutxdr.c    |    7 ++-----
+ fs/nfsd/flexfilelayoutxdr.c |    3 +--
+ fs/nfsd/nfs4layouts.c       |    1 -
+ fs/nfsd/nfs4xdr.c           |   14 +-------------
+ fs/nfsd/xdr4.h              |   36 +++++++++++++++++++++++++++++++++++-
+ 5 files changed, 39 insertions(+), 22 deletions(-)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -680,8 +680,6 @@ int init_nilfs(struct the_nilfs *nilfs,
- 	int blocksize;
- 	int err;
+--- a/fs/nfsd/blocklayoutxdr.c
++++ b/fs/nfsd/blocklayoutxdr.c
+@@ -29,8 +29,7 @@ nfsd4_block_encode_layoutget(struct xdr_
+ 	*p++ = cpu_to_be32(len);
+ 	*p++ = cpu_to_be32(1);		/* we always return a single extent */
  
--	down_write(&nilfs->ns_sem);
+-	p = xdr_encode_opaque_fixed(p, &b->vol_id,
+-			sizeof(struct nfsd4_deviceid));
++	p = svcxdr_encode_deviceid4(p, &b->vol_id);
+ 	p = xdr_encode_hyper(p, b->foff);
+ 	p = xdr_encode_hyper(p, b->len);
+ 	p = xdr_encode_hyper(p, b->soff);
+@@ -145,9 +144,7 @@ nfsd4_block_decode_layoutupdate(__be32 *
+ 	for (i = 0; i < nr_iomaps; i++) {
+ 		struct pnfs_block_extent bex;
+ 
+-		memcpy(&bex.vol_id, p, sizeof(struct nfsd4_deviceid));
+-		p += XDR_QUADLEN(sizeof(struct nfsd4_deviceid));
 -
- 	blocksize = sb_min_blocksize(sb, NILFS_MIN_BLOCK_SIZE);
- 	if (!blocksize) {
- 		nilfs_err(sb, "unable to set blocksize");
-@@ -757,7 +755,6 @@ int init_nilfs(struct the_nilfs *nilfs,
- 	set_nilfs_init(nilfs);
- 	err = 0;
-  out:
--	up_write(&nilfs->ns_sem);
- 	return err;
++		p = svcxdr_decode_deviceid4(p, &bex.vol_id);
+ 		p = xdr_decode_hyper(p, &bex.foff);
+ 		if (bex.foff & (block_size - 1)) {
+ 			dprintk("%s: unaligned offset 0x%llx\n",
+--- a/fs/nfsd/flexfilelayoutxdr.c
++++ b/fs/nfsd/flexfilelayoutxdr.c
+@@ -54,8 +54,7 @@ nfsd4_ff_encode_layoutget(struct xdr_str
+ 	*p++ = cpu_to_be32(1);			/* single mirror */
+ 	*p++ = cpu_to_be32(1);			/* single data server */
  
-  failed_sbh:
+-	p = xdr_encode_opaque_fixed(p, &fl->deviceid,
+-			sizeof(struct nfsd4_deviceid));
++	p = svcxdr_encode_deviceid4(p, &fl->deviceid);
+ 
+ 	*p++ = cpu_to_be32(1);			/* efficiency */
+ 
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -120,7 +120,6 @@ nfsd4_set_deviceid(struct nfsd4_deviceid
+ 
+ 	id->fsid_idx = fhp->fh_export->ex_devid_map->idx;
+ 	id->generation = device_generation;
+-	id->pad = 0;
+ 	return 0;
+ }
+ 
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -566,18 +566,6 @@ nfsd4_decode_state_owner4(struct nfsd4_c
+ }
+ 
+ #ifdef CONFIG_NFSD_PNFS
+-static __be32
+-nfsd4_decode_deviceid4(struct nfsd4_compoundargs *argp,
+-		       struct nfsd4_deviceid *devid)
+-{
+-	__be32 *p;
+-
+-	p = xdr_inline_decode(argp->xdr, NFS4_DEVICEID4_SIZE);
+-	if (!p)
+-		return nfserr_bad_xdr;
+-	memcpy(devid, p, sizeof(*devid));
+-	return nfs_ok;
+-}
+ 
+ static __be32
+ nfsd4_decode_layoutupdate4(struct nfsd4_compoundargs *argp,
+@@ -1733,7 +1721,7 @@ nfsd4_decode_getdeviceinfo(struct nfsd4_
+ 	__be32 status;
+ 
+ 	memset(gdev, 0, sizeof(*gdev));
+-	status = nfsd4_decode_deviceid4(argp, &gdev->gd_devid);
++	status = nfsd4_decode_deviceid4(argp->xdr, &gdev->gd_devid);
+ 	if (status)
+ 		return status;
+ 	if (xdr_stream_decode_u32(argp->xdr, &gdev->gd_layout_type) < 0)
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -459,9 +459,43 @@ struct nfsd4_reclaim_complete {
+ struct nfsd4_deviceid {
+ 	u64			fsid_idx;
+ 	u32			generation;
+-	u32			pad;
+ };
+ 
++static inline __be32 *
++svcxdr_encode_deviceid4(__be32 *p, const struct nfsd4_deviceid *devid)
++{
++	__be64 *q = (__be64 *)p;
++
++	*q = (__force __be64)devid->fsid_idx;
++	p += 2;
++	*p++ = (__force __be32)devid->generation;
++	*p++ = xdr_zero;
++	return p;
++}
++
++static inline __be32 *
++svcxdr_decode_deviceid4(__be32 *p, struct nfsd4_deviceid *devid)
++{
++	__be64 *q = (__be64 *)p;
++
++	devid->fsid_idx = (__force u64)(*q);
++	p += 2;
++	devid->generation = (__force u32)(*p++);
++	p++; /* NFSD does not use the remaining octets */
++	return p;
++}
++
++static inline __be32
++nfsd4_decode_deviceid4(struct xdr_stream *xdr, struct nfsd4_deviceid *devid)
++{
++	__be32 *p = xdr_inline_decode(xdr, NFS4_DEVICEID4_SIZE);
++
++	if (unlikely(!p))
++		return nfserr_bad_xdr;
++	svcxdr_decode_deviceid4(p, devid);
++	return nfs_ok;
++}
++
+ struct nfsd4_layout_seg {
+ 	u32			iomode;
+ 	u64			offset;
 
 
