@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB01E1E04;
-	Tue, 21 Oct 2025 20:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD48D1E1E04;
+	Tue, 21 Oct 2025 20:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076952; cv=none; b=Gx9OsAfi0XTC6mnSLNb92wiVv4fxXSXzN1fM9jyxGFWWhe4IaLsWMxoMtGI+ntvKCAcz6tDTSR3CX1CfD/gQ4yspbrk4sFJdFEljwW/3TPtY11YskD7ATagmPTNghLYQYxVwZm6pN2pi4/PbkNY2QzNvO3WWay9bS3TtIYKylFs=
+	t=1761076955; cv=none; b=QA5bARuGfkSjsmL/5UJfVblQgXNNx1cikjwqjUJsO0RmvZ1T0u8GqAIIZVc+oX3Z5TeXyRVEWBAqF1gZvI83knqvvi5VxO6ku2m7+fe6IhWC53PsgcQv7n6CrC0z0VKdb7ZIhLJ+qwKGIxj09DhkzC1cW6xAEcMmh4qGzIY5GGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076952; c=relaxed/simple;
-	bh=wBK2YXyvRoPAaI+HLEDvkyr/5zA9RhCSwvzF5BwZZxY=;
+	s=arc-20240116; t=1761076955; c=relaxed/simple;
+	bh=MVlwPOadfulU0D4MQGgTLSAZOTfR1xqpziCWriNZJ88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npiNr46Nx693FU2ET+IyPnJLQLvDSINwIDogycRU0VjgQbW4HItjkFtIaTfhWalvwOdBtNq6DYYQzViXaoeFJUzRznX5q1vQocc3VWGZy8bv7j9QWK21GdfGSgMuw5szK12mQJ8eq8umBJCTiQonK5WkyCwpoWWYmvcsyLwLdds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZtP8uZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+yLBzBrsK1HWmlWqMLcaf7vuXTcw8ow506ZiMWWdJuHVvaTvTKGv2fjPcK5O3iGFxJ2l2X2rAwnbhUSW7Ift6AzrzZjOUJ4BwcbGUF6hE+0Djg6GpnGV3wHsg2wW25GpeNKtuVJKeMOCclFASMHlN2jpAkumH+cY0Ub5nuTz6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isQUq5L4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZtP8uZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFCBC4CEF1;
-	Tue, 21 Oct 2025 20:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isQUq5L4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E308BC4CEF1;
+	Tue, 21 Oct 2025 20:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076952;
-	bh=wBK2YXyvRoPAaI+HLEDvkyr/5zA9RhCSwvzF5BwZZxY=;
+	s=korg; t=1761076955;
+	bh=MVlwPOadfulU0D4MQGgTLSAZOTfR1xqpziCWriNZJ88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZtP8uZGhul99jch4Gd+Gn4JsMMaFvcEHf+5ZbryivUAjVGWn4vWZD+INSpEqCAiI
-	 t9p/B/ODnSzm1hfPT+/UQQX+l6vvisxkxbBodvY2oMYOg57+f++RFdVYgYT0HZ/WoU
-	 fQklaPvs4lc+z7ZYUuVJGhUn5m6uCqFvfHyPGbXs=
+	b=isQUq5L4QZMhCTwoOVvLvHCM5GuvUOEwCJlkXAoH5S2704iIH2iPXXBdqT7h0aYOv
+	 c1PFrD9qc9opw6pE136IEsF5j6hWm5PSJ+75+eGLgN6bCqXXWTHS7bQ7wRJ+uMh7qt
+	 BegvGeFYrM68bhD8D18OWZdz4W3IeWoXuCpoxbVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/136] selftests/bpf: make arg_parsing.c more robust to crashes
-Date: Tue, 21 Oct 2025 21:51:15 +0200
-Message-ID: <20251021195038.056552252@linuxfoundation.org>
+Subject: [PATCH 6.12 088/136] ALSA: usb-audio: Fix NULL pointer deference in try_to_register_card
+Date: Tue, 21 Oct 2025 21:51:16 +0200
+Message-ID: <20251021195038.079959034@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -52,61 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit e603a342cf7ecd64ef8f36207dfe1caacb9e2583 ]
+[ Upstream commit 28412b489b088fb88dff488305fd4e56bd47f6e4 ]
 
-We started getting a crash in BPF CI, which seems to originate from
-test_parse_test_list_file() test and is happening at this line:
+In try_to_register_card(), the return value of usb_ifnum_to_if() is
+passed directly to usb_interface_claimed() without a NULL check, which
+will lead to a NULL pointer dereference when creating an invalid
+USB audio device. Fix this by adding a check to ensure the interface
+pointer is valid before passing it to usb_interface_claimed().
 
-  ASSERT_OK(strcmp("test_with_spaces", set.tests[0].name), "test 0 name");
-
-One way we can crash there is if set.cnt zero, which is checked for with
-ASSERT_EQ() above, but we proceed after this regardless of the outcome.
-Instead of crashing, we should bail out with test failure early.
-
-Similarly, if parse_test_list_file() fails, we shouldn't be even looking
-at set, so bail even earlier if ASSERT_OK() fails.
-
-Fixes: 64276f01dce8 ("selftests/bpf: Test_progs can read test lists from file")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20251014202037.72922-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 39efc9c8a973 ("ALSA: usb-audio: Fix last interface check for registration")
+Closes: https://lore.kernel.org/all/CANypQFYtQxHL5ghREs-BujZG413RPJGnO5TH=xjFBKpPts33tA@mail.gmail.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/arg_parsing.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/usb/card.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-index bb143de68875c..fbf0d9c2f58b3 100644
---- a/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-+++ b/tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-@@ -146,9 +146,12 @@ static void test_parse_test_list_file(void)
- 
- 	init_test_filter_set(&set);
- 
--	ASSERT_OK(parse_test_list_file(tmpfile, &set, true), "parse file");
-+	if (!ASSERT_OK(parse_test_list_file(tmpfile, &set, true), "parse file"))
-+		goto out_fclose;
+diff --git a/sound/usb/card.c b/sound/usb/card.c
+index 9c411b82a218d..d0a42859208aa 100644
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -760,10 +760,16 @@ get_alias_quirk(struct usb_device *dev, unsigned int id)
+  */
+ static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
+ {
++	struct usb_interface *iface;
 +
-+	if (!ASSERT_EQ(set.cnt, 4, "test  count"))
-+		goto out_free_set;
+ 	if (check_delayed_register_option(chip) == ifnum ||
+-	    chip->last_iface == ifnum ||
+-	    usb_interface_claimed(usb_ifnum_to_if(chip->dev, chip->last_iface)))
++	    chip->last_iface == ifnum)
++		return snd_card_register(chip->card);
++
++	iface = usb_ifnum_to_if(chip->dev, chip->last_iface);
++	if (iface && usb_interface_claimed(iface))
+ 		return snd_card_register(chip->card);
++
+ 	return 0;
+ }
  
--	ASSERT_EQ(set.cnt, 4, "test  count");
- 	ASSERT_OK(strcmp("test_with_spaces", set.tests[0].name), "test 0 name");
- 	ASSERT_EQ(set.tests[0].subtest_cnt, 0, "test 0 subtest count");
- 	ASSERT_OK(strcmp("testA", set.tests[1].name), "test 1 name");
-@@ -158,8 +161,8 @@ static void test_parse_test_list_file(void)
- 	ASSERT_OK(strcmp("testB", set.tests[2].name), "test 2 name");
- 	ASSERT_OK(strcmp("testC_no_eof_newline", set.tests[3].name), "test 3 name");
- 
-+out_free_set:
- 	free_test_filter_set(&set);
--
- out_fclose:
- 	fclose(fp);
- out_remove:
 -- 
 2.51.0
 
