@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF53350A29;
-	Tue, 21 Oct 2025 20:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455A4350A29;
+	Tue, 21 Oct 2025 20:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076872; cv=none; b=JfQ/3c9UxoYxNqsVaM+w6QqZ1/agTRUZcf955JpZZ6mNVtUJUFAr59yWyvNvfLS9EzNniHqcDDXdv2H4jg2fsln2gTzuHp2TzkI4JZgNi7Da7vGcrnKij/3NxFEHXp4fI0eDdLyqW/NQlXt2VNAMATQwqbzl1kfwdXQllOIweYI=
+	t=1761076875; cv=none; b=oNlv7pIGFFX+hUq72fpJqX1MFOsYvZA2seqyeZvLMP34vvdmudlTZkC6O/6CeHJ81SvDW7IEdqDgpdTSCF8Za0MXp6o4RLjgmIJszwsIsozovyeBbQEFEoRwWKGX9uH4swb6n8FMNU8ByXiO+uDBZfD6xxjTrwHrem/TaYxWT2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076872; c=relaxed/simple;
-	bh=hYMSDM61USZ7lPt5Z+CZxzbz1K8P7aUbPYpaNhjisbo=;
+	s=arc-20240116; t=1761076875; c=relaxed/simple;
+	bh=m8XWEkcmLMBs5WGo/RriksV1ryZLsy9AoTbIcAp50Ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWIqbMcEumL+sigl6a2JeRxywfcEtnw3LMrh+kJnvR5eux9CMa9vUso9KvUtzywGgj4XJ0Z5pZ7U9Ho2qvIsNlRRozcPZ9BAw7TTTU1CwvBxLWgDmzXajqGmy/ZbBBnTVP6YV+6TTWgzJrWqzh29uvPC+GUzWRBYWhAq2v3iB/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHzZtlRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6uTnMzKQyTjWbv4UCKyj9Y4e+B4go1IUsZlkHgxkdaftWS5ToXJuHptwp0foP8ebY0BMtcsVBTfXFkjBdarmJB4JKkkjBJQTBK6/v0stFoJM+T652kENKKvC4Th6sWKNECskWewUq2Tme16S8h4ZZCiR/yN0UO54W8ZILRp8qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCDTHx4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHzZtlRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE39C4CEF1;
-	Tue, 21 Oct 2025 20:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCDTHx4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6ACAC4CEF1;
+	Tue, 21 Oct 2025 20:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076872;
-	bh=hYMSDM61USZ7lPt5Z+CZxzbz1K8P7aUbPYpaNhjisbo=;
+	s=korg; t=1761076875;
+	bh=m8XWEkcmLMBs5WGo/RriksV1ryZLsy9AoTbIcAp50Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHzZtlRWoSNrW6vStIulcbxRZi0y9/LkSpKefPZs/xJVD1v+MWfLkn//vNuzCEAM2
-	 FW1yXmhD1/Favt1oYIuKat0N5hGrImPAQOXjsOAq3laUrX9vv3PIro8dzqeTPKBEYp
-	 bTaYUFAsa/priIUe5xZ9lNv06VB7blgY2eQtUrSU=
+	b=iCDTHx4rtZycRlk//EAn9oou75LmdeebAKdZeev6mmNJegJRqD2gfwBB3owcfLWDH
+	 TbhexKwDU/S7qqHsGAGmH77dJunzOZriTM9xRMmnAgJHp3AZpG437gYHyaD/6vM/ad
+	 69oQO4l4erV+nvvy16z/c1kKPYZ4px7b9lAkxxQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/136] netdevsim: set the carrier when the device goes up
-Date: Tue, 21 Oct 2025 21:50:52 +0200
-Message-ID: <20251021195037.514829854@linuxfoundation.org>
+Subject: [PATCH 6.12 065/136] net: usb: lan78xx: Add error handling to lan78xx_init_mac_address
+Date: Tue, 21 Oct 2025 21:50:53 +0200
+Message-ID: <20251021195037.538461810@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -52,54 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 1a8fed52f7be14e45785e8e54d0d0b50fc17dbd8 ]
+[ Upstream commit 6f31135894ec96481e2bda93a1da70712f5e57c1 ]
 
-Bringing a linked netdevsim device down and then up causes communication
-failure because both interfaces lack carrier. Basically a ifdown/ifup on
-the interface make the link broken.
+Convert `lan78xx_init_mac_address` to return error codes and handle
+failures in register read and write operations. Update `lan78xx_reset`
+to check for errors during MAC address initialization and propagate them
+appropriately.
 
-Commit 3762ec05a9fbda ("netdevsim: add NAPI support") added supported
-for NAPI, calling netif_carrier_off() in nsim_stop(). This patch
-re-enables the carrier symmetrically on nsim_open(), in case the device
-is linked and the peer is up.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: 3762ec05a9fbda ("netdevsim: add NAPI support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251014-netdevsim_fix-v2-1-53b40590dae1@debian.org
+Link: https://patch.msgid.link/20241209130751.703182-3-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8d93ff40d49d ("net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdev.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/usb/lan78xx.c | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
-index ee2a7b2f6268d..e2d92295ad33b 100644
---- a/drivers/net/netdevsim/netdev.c
-+++ b/drivers/net/netdevsim/netdev.c
-@@ -433,6 +433,7 @@ static void nsim_enable_napi(struct netdevsim *ns)
- static int nsim_open(struct net_device *dev)
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 2f8637224b69e..6babe909036cf 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1920,13 +1920,19 @@ static const struct ethtool_ops lan78xx_ethtool_ops = {
+ 	.get_regs	= lan78xx_get_regs,
+ };
+ 
+-static void lan78xx_init_mac_address(struct lan78xx_net *dev)
++static int lan78xx_init_mac_address(struct lan78xx_net *dev)
  {
- 	struct netdevsim *ns = netdev_priv(dev);
-+	struct netdevsim *peer;
- 	int err;
- 
- 	err = nsim_init_napi(ns);
-@@ -441,6 +442,12 @@ static int nsim_open(struct net_device *dev)
- 
- 	nsim_enable_napi(ns);
- 
-+	peer = rtnl_dereference(ns->peer);
-+	if (peer && netif_running(peer->netdev)) {
-+		netif_carrier_on(dev);
-+		netif_carrier_on(peer->netdev);
-+	}
+ 	u32 addr_lo, addr_hi;
+ 	u8 addr[6];
++	int ret;
 +
- 	return 0;
++	ret = lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
++	if (ret < 0)
++		return ret;
+ 
+-	lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
+-	lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
++	ret = lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
++	if (ret < 0)
++		return ret;
+ 
+ 	addr[0] = addr_lo & 0xFF;
+ 	addr[1] = (addr_lo >> 8) & 0xFF;
+@@ -1959,14 +1965,26 @@ static void lan78xx_init_mac_address(struct lan78xx_net *dev)
+ 			  (addr[2] << 16) | (addr[3] << 24);
+ 		addr_hi = addr[4] | (addr[5] << 8);
+ 
+-		lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
+-		lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
++		ret = lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
++		if (ret < 0)
++			return ret;
++
++		ret = lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+-	lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
+-	lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
++	ret = lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
++	if (ret < 0)
++		return ret;
++
++	ret = lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
++	if (ret < 0)
++		return ret;
+ 
+ 	eth_hw_addr_set(dev->net, addr);
++
++	return 0;
  }
  
+ /* MDIO read and write wrappers for phylib */
+@@ -2905,7 +2923,9 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 		}
+ 	} while (buf & HW_CFG_LRST_);
+ 
+-	lan78xx_init_mac_address(dev);
++	ret = lan78xx_init_mac_address(dev);
++	if (ret < 0)
++		return ret;
+ 
+ 	/* save DEVID for later usage */
+ 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
 -- 
 2.51.0
 
