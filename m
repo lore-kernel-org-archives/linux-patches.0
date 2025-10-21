@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461B6350A0D;
-	Tue, 21 Oct 2025 20:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047E7350A0D;
+	Tue, 21 Oct 2025 20:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077412; cv=none; b=Q8Sai6JCaUJvqXSpTmsiscdiF0M3Av7F4wydwLD7lYbA7dxpClaMF2cDUpvtd1EQfWFs66xXrJVIGpU6AYLdNAt9/eXGirauAxO33ncfGhjgMXM3oA5g7EggB1MRYOAQx274a0DiPFuJPKDx647NXI484pliwM1ERK6j3WbXs68=
+	t=1761077415; cv=none; b=sKqZB/0kq+t091s/ea6wZW5r1jo+8wrnQU0i1NBQSxaMDp6NwOAk+MmFakjq09G4+ZOm7U0MldcmZe6LNzuouEOIXnPYhBKv+60slHcCr/DEWu7tyGKHoM1ba53tml7iHGiCHLaqYT4xtZus8+k0XxUn9PPkCqCW0z1Vd3YBB1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077412; c=relaxed/simple;
-	bh=y9bDKodxjS1cbFJJFxu5v+UrxcKcTbeG20yZy5qybno=;
+	s=arc-20240116; t=1761077415; c=relaxed/simple;
+	bh=5VDA7uYH340JmvJ8aPZ9Y5OlAf/czBSbPSFl2WpV+LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1bSusco2A7r50EEbsCMu/qXr1Cgmc2gdmxj27KQMXvqQMtNjrtsdFF4h9qMDHSPze4K3ih9ABSR0nD3fgo1zahDLlwPH2SchE7ojkZnwBfviQRv6pui08L3eLGRR1BASimVBlSZDZ2YSWsuENQV+WEaEwNAdTOZTj+dR0+tf5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVrg8PxQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eqhp7e7bsa+dll+Ek7KyqRbduEKsD7KNJgVT5rAJd9cGxBMwQdAvXkYmcLaOLinZeuymcuPtpNeeW2dWhtbzjin5v8icenXsx3wjTCg0Wi2GdAY9xLkShe9ex3E5JlspJdDggQpbiIJw232q24F9FfI75oWlFttoht1iJifb8jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrKHAUlU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVrg8PxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF27C4CEF1;
-	Tue, 21 Oct 2025 20:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrKHAUlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E667C4CEF1;
+	Tue, 21 Oct 2025 20:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077412;
-	bh=y9bDKodxjS1cbFJJFxu5v+UrxcKcTbeG20yZy5qybno=;
+	s=korg; t=1761077414;
+	bh=5VDA7uYH340JmvJ8aPZ9Y5OlAf/czBSbPSFl2WpV+LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVrg8PxQFQ0tJuQb1aQA7T0UagxMCZ2my2lIech8q3Q+bP7zeSxt2CM8Y1PTAIdmi
-	 arNIH6CuxKNMa2lhtG9RJghwYEMP1G+nEruue/tbnh/aLK3aFk9bo2WrWJwuEnm98I
-	 tU1mQa24SXOeE8UgnriiknjUxLM/9sNzDL+eKaIM=
+	b=zrKHAUlUVZeRP+Hd9izbVo4TyyWZnpJS9JykQwR81d5uPXO/KKkgXKw8D/Dfb8lWw
+	 NigsRdVfjUjuiBmhepsHdwJNLWykoEbEp0SL9c44ga71tkEVsYWQ+AgDA3OZwixdjn
+	 ER3APkov6x8yUF55Rn3QgFiBYveJ/5fC6dh398AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 098/159] ASoC: nau8821: Cancel jdet_work before handling jack ejection
-Date: Tue, 21 Oct 2025 21:51:15 +0200
-Message-ID: <20251021195045.538663104@linuxfoundation.org>
+Subject: [PATCH 6.17 099/159] ASoC: nau8821: Generalize helper to clear IRQ status
+Date: Tue, 21 Oct 2025 21:51:16 +0200
+Message-ID: <20251021195045.565569335@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -53,57 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 6e54919cb541fdf1063b16f3254c28d01bc9e5ff ]
+[ Upstream commit 9273aa85b35cc02d0953a1ba3b7bd694e5a2c10e ]
 
-The microphone detection work scheduled by a prior jack insertion
-interrupt may still be in a pending state or under execution when a jack
-ejection interrupt has been fired.
+Instead of adding yet another utility function for dealing with the
+interrupt clearing register, generalize nau8821_int_status_clear_all()
+by renaming it to nau8821_irq_status_clear(), whilst introducing a
+second parameter to allow restricting the operation scope to a single
+interrupt instead of the whole range of active IRQs.
 
-This might lead to a racing condition or nau8821_jdet_work() completing
-after nau8821_eject_jack(), which will override the currently
-disconnected state of the jack and incorrectly report the headphone or
-the headset as being connected.
+While at it, also fix a spelling typo in the comment block.
 
-Cancel any pending jdet_work or wait for its execution to finish before
-attempting to handle the ejection interrupt.
-
-Proceed similarly before launching the eject handler as a consequence of
-detecting an invalid insert interrupt.
+Note this is mainly a prerequisite for subsequent patches aiming to
+address some deficiencies in the implementation of the interrupt
+handler.  Thus the presence of the Fixes tag below is intentional, to
+facilitate backporting.
 
 Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-1-f7b0e2543f09@collabora.com
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-2-f7b0e2543f09@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/nau8821.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index edb95f869a4a6..fed5d51fa5c3b 100644
+index fed5d51fa5c3b..cefce97893123 100644
 --- a/sound/soc/codecs/nau8821.c
 +++ b/sound/soc/codecs/nau8821.c
-@@ -1185,6 +1185,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+@@ -1021,12 +1021,17 @@ static bool nau8821_is_jack_inserted(struct regmap *regmap)
+ 	return active_high == is_high;
+ }
  
- 	if ((active_irq & NAU8821_JACK_EJECT_IRQ_MASK) ==
- 		NAU8821_JACK_EJECT_DETECTED) {
-+		cancel_work_sync(&nau8821->jdet_work);
- 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
- 			NAU8821_MICDET_MASK, NAU8821_MICDET_DIS);
- 		nau8821_eject_jack(nau8821);
-@@ -1199,11 +1200,11 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
- 		clear_irq = NAU8821_KEY_RELEASE_IRQ;
- 	} else if ((active_irq & NAU8821_JACK_INSERT_IRQ_MASK) ==
- 		NAU8821_JACK_INSERT_DETECTED) {
-+		cancel_work_sync(&nau8821->jdet_work);
- 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
- 			NAU8821_MICDET_MASK, NAU8821_MICDET_EN);
- 		if (nau8821_is_jack_inserted(regmap)) {
- 			/* detect microphone and jack type */
--			cancel_work_sync(&nau8821->jdet_work);
- 			schedule_work(&nau8821->jdet_work);
- 			/* Turn off insertion interruption at manual mode */
- 			regmap_update_bits(regmap,
+-static void nau8821_int_status_clear_all(struct regmap *regmap)
++static void nau8821_irq_status_clear(struct regmap *regmap, int active_irq)
+ {
+-	int active_irq, clear_irq, i;
++	int clear_irq, i;
+ 
+-	/* Reset the intrruption status from rightmost bit if the corres-
+-	 * ponding irq event occurs.
++	if (active_irq) {
++		regmap_write(regmap, NAU8821_R11_INT_CLR_KEY_STATUS, active_irq);
++		return;
++	}
++
++	/* Reset the interruption status from rightmost bit if the
++	 * corresponding irq event occurs.
+ 	 */
+ 	regmap_read(regmap, NAU8821_R10_IRQ_STATUS, &active_irq);
+ 	for (i = 0; i < NAU8821_REG_DATA_LEN; i++) {
+@@ -1053,7 +1058,7 @@ static void nau8821_eject_jack(struct nau8821 *nau8821)
+ 	snd_soc_dapm_sync(dapm);
+ 
+ 	/* Clear all interruption status */
+-	nau8821_int_status_clear_all(regmap);
++	nau8821_irq_status_clear(regmap, 0);
+ 
+ 	/* Enable the insertion interruption, disable the ejection inter-
+ 	 * ruption, and then bypass de-bounce circuit.
+@@ -1522,7 +1527,7 @@ static int nau8821_resume_setup(struct nau8821 *nau8821)
+ 	nau8821_configure_sysclk(nau8821, NAU8821_CLK_DIS, 0);
+ 	if (nau8821->irq) {
+ 		/* Clear all interruption status */
+-		nau8821_int_status_clear_all(regmap);
++		nau8821_irq_status_clear(regmap, 0);
+ 
+ 		/* Enable both insertion and ejection interruptions, and then
+ 		 * bypass de-bounce circuit.
 -- 
 2.51.0
 
