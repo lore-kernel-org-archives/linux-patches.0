@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF56275861;
-	Tue, 21 Oct 2025 20:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9122274B44;
+	Tue, 21 Oct 2025 20:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077504; cv=none; b=tCKvMAPcZ/ZT9XRQMfwc8lwrzmsBT9vdRkeKDGtSwXF2b/DvMmFzEeYwtU46bTUASCgZqK+U6R2HwI6+9B3vFDDyQLcQ5HFMUBQk1v/4yzQGdlVca81YWPQObinqkg7/g0aKD4Juy+TfStdbh78zdZRUFqMkgzkMU2PQDRVgybE=
+	t=1761077506; cv=none; b=LUNdEYUuIaOEhG8yekhAKFhwW4NlxNEQTUyZbCpKNda5ZX3cqeMWFcMYDHduhZiloLnCNDxLZdvE1AcK6f521fFDFVeNDSwGlIPJuCgudux25sRu463x8T9XjqmRRYr0iSIGU8ezyN3ypaCb1GHrN6duPxE4Gdqvjx7yekejDI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077504; c=relaxed/simple;
-	bh=ehTC5FnRHcDRgRyr9kEhpLB9MhTbEmExB2CH9zQdMTU=;
+	s=arc-20240116; t=1761077506; c=relaxed/simple;
+	bh=LUloi/L0xDmEf3kFEVSqQVTb8Ymx3QszCvR2urXV7eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYk4DH7XqlDsBQIJEXnJknnsGT5ZLhBqvzzR3PoJNx8CE3g7EA6LDG/OyIC6liejL4fPwUPtlr92YGXB9xQ3UsHPllqNgM+I4rEim1zDjvOx2AEI705hMeN2q/5hH3Y5O/V8UOxiH9wDZy2vbnUQUWrMKe883zLafx2E4hWamJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UE4Iqy6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IR2nXk5uVRfR11tmUO57/JtAAgPybpHWU4CLSeoMr5uiSXQ4u/MrufBsxHkiXe1Imdhp2pla31C+ENy720fz82VwUpQlKRaL76GhSdT8rtDdjqzWYfTU8o24ethZBDyClBqJGRziGEKfmGgKErOLY1ZI7FzlfxTeM28mmNJuzVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqNfBYAl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UE4Iqy6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E59AC4CEF1;
-	Tue, 21 Oct 2025 20:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqNfBYAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450FFC4CEF1;
+	Tue, 21 Oct 2025 20:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077503;
-	bh=ehTC5FnRHcDRgRyr9kEhpLB9MhTbEmExB2CH9zQdMTU=;
+	s=korg; t=1761077506;
+	bh=LUloi/L0xDmEf3kFEVSqQVTb8Ymx3QszCvR2urXV7eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UE4Iqy6R+31LfFGr2YvQBqj7hfA1IBX/RDRdOcVCe8s9y3E0BGvfSpUFArN7jacIm
-	 a1vznefnYo2tD9O7PeZxPM537lZbLeXo1czpmPVkjdO+HvGTOYW5YwA+bdxY9+kxSm
-	 ABFg0fhpCZXeAHSFsSayKuzhZ1SxyExsuiaBQKd0=
+	b=ZqNfBYAlAevlIPljHkwgUudgysrAWvZq7GFKL/9Cj8px/jPiPRaTzEmwmj6mKVMEH
+	 +OFJ1VYJIUniHH3pCfNE0i+0WIGvjUDCrflB7iAaR1Jy9EJp6cuSQfv6Sv3hkihY4f
+	 iVwpeXnDHOMJBFreGiLvDAnpA1bBrzjOV3y1e90A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 125/159] cxl/trace: Subtract to find an hpa_alias0 in cxl_poison events
-Date: Tue, 21 Oct 2025 21:51:42 +0200
-Message-ID: <20251021195046.160350492@linuxfoundation.org>
+Subject: [PATCH 6.17 090/159] netdevsim: set the carrier when the device goes up
+Date: Tue, 21 Oct 2025 21:51:07 +0200
+Message-ID: <20251021195045.352400541@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -51,38 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit a4bbb493a3247ef32f6191fd8b2a0657139f8e08 ]
+[ Upstream commit 1a8fed52f7be14e45785e8e54d0d0b50fc17dbd8 ]
 
-Traces of cxl_poison events include an hpa_alias0 field if the poison
-address is in a region configured with an ELC, Extended Linear Cache.
+Bringing a linked netdevsim device down and then up causes communication
+failure because both interfaces lack carrier. Basically a ifdown/ifup on
+the interface make the link broken.
 
-Since the ELC always comes first in the region, the calculation needs
-to subtract the ELC size from the calculated HPA address.
+Commit 3762ec05a9fbda ("netdevsim: add NAPI support") added supported
+for NAPI, calling netif_carrier_off() in nsim_stop(). This patch
+re-enables the carrier symmetrically on nsim_open(), in case the device
+is linked and the peer is up.
 
-Fixes: 8c520c5f1e76 ("cxl: Add extended linear cache address alias emission for cxl events")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: 3762ec05a9fbda ("netdevsim: add NAPI support")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251014-netdevsim_fix-v2-1-53b40590dae1@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/netdevsim/netdev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
-index a53ec4798b12f..a972e4ef19368 100644
---- a/drivers/cxl/core/trace.h
-+++ b/drivers/cxl/core/trace.h
-@@ -1068,7 +1068,7 @@ TRACE_EVENT(cxl_poison,
- 			__entry->hpa = cxl_dpa_to_hpa(cxlr, cxlmd,
- 						      __entry->dpa);
- 			if (__entry->hpa != ULLONG_MAX && cxlr->params.cache_size)
--				__entry->hpa_alias0 = __entry->hpa +
-+				__entry->hpa_alias0 = __entry->hpa -
- 						      cxlr->params.cache_size;
- 			else
- 				__entry->hpa_alias0 = ULLONG_MAX;
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 0178219f0db53..d7938e11f24de 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -528,6 +528,7 @@ static void nsim_enable_napi(struct netdevsim *ns)
+ static int nsim_open(struct net_device *dev)
+ {
+ 	struct netdevsim *ns = netdev_priv(dev);
++	struct netdevsim *peer;
+ 	int err;
+ 
+ 	netdev_assert_locked(dev);
+@@ -538,6 +539,12 @@ static int nsim_open(struct net_device *dev)
+ 
+ 	nsim_enable_napi(ns);
+ 
++	peer = rtnl_dereference(ns->peer);
++	if (peer && netif_running(peer->netdev)) {
++		netif_carrier_on(dev);
++		netif_carrier_on(peer->netdev);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
