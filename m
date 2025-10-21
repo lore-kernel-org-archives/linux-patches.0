@@ -1,165 +1,233 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010049.outbound.protection.outlook.com [40.93.198.49])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC16334C20;
-	Mon, 20 Oct 2025 22:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761001193; cv=fail; b=I55UcsE8H72dL4HhsXcargCB8VnUk35XBUMn1nBSHnKUQ5iAdl7sp4Pz5YvpC1x5ezxW9YDrj0mZ69dh7kNc31P3HWYbf6DVItQTY71DevBc4Yi6RHynt0sfLYfJRdw91xFa3pE/JxQlQbsIFFg1lEAea5u7vMOSi5DrIaWlHek=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761001193; c=relaxed/simple;
-	bh=p46Q+CXY4oKFsygDQURbPB0C1NTxUPAOadYT+oDjRrY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=KpDqTpMnEoylyI9z9QUbMip261d3Hz/TztBuU/kCqWsSpsbEfBz4ppTLmwkYFP2UA2PqF1oGeA8E2xWxoVcdnYzhB8lgXOIRT5NuJFtKZ/qvQ275MKfx3inhirEam6uqcutbwXurpink1RFKq67qboxVwyv6OwlGzPFpjS8eDhA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Cw/S+zHP; arc=fail smtp.client-ip=40.93.198.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAE82F49E3;
+	Tue, 21 Oct 2025 13:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761051946; cv=none; b=f88tqZV8ZzDQATP139FGexUBFz4mdzWYL+YvnzHhspRfzwhxLiSl+syqI7y6QbLKlMeVPHAU43UQRvS9Unuts2iDCjQ2bgvxwliuuX2xhMv6JBHpnQeJmiOj2vF7d0L/vmkBljKm7Pn79uYh7k4sTE4hApFdbR+NSDrZZvfHqhs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761051946; c=relaxed/simple;
+	bh=2j2nO3EgyZKblgDRpc+2rhG8AcAKEEabgVHZG2MOf3o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q7dpufJTOk4UOWTY2JF2WS2za+Mh87kBTMnXb/ng9fcTVz81Tuyxt6hPfywLLIOKAtbjg8y9hqZXGO4Whqhnos70l2YXJgK68cuLvEjwFsjySwkHgzFbwuvIVvw66Je8S2fStuBjdqGEM3lB8gjZS9wGxgC/gZGsVxzsesHTveo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TmVm6iiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Cw/S+zHP"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wJ7g1CCboR+5xR426CCglye4ipK0OcZfqdMXbVW9QC/ZLmp+2rv1BL1JSHdVTS0nhqa94CgLMOFe2vzF5dIPuyDjovEciF/9X7EsjKJlmPhjod382rdUM9gIFTyAOksv24EZNmih4gm4O+e4AHAWEGGo7LDtaNC7j18vh3df+lXY5GiPZ8CHDbBpEIOyIrEAsJtpB3tKZ2tdU91I4gqwIoR4fFv5x1W3l+YBIYVDqQ3B8Nh1NkczjR+ExeeGGHzMkwkUh0RLwqGO48eyZra97piI7RgAHV811EUeqo069r7bRStxAZtLhN5LqGW9xgWEyvLIgYxoBxOJ/PZ/LEZ+3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Me13+JgrqoWkKgJ2HE2OHADlOrB5wjQFqa6jogBevCw=;
- b=BILw//VmMesjw6XGuyLOr2goQ9JmUcM3dKuB+zOdxCZgvsL7kikS3BBE+UpuqXvIOpwlSawfMxOgwNU0z9vRyjaNjlIkhm3/iLiK8MRL4wnAWjO9fUlEXVg/HPVwdM4NjGLpWVnSjIpMd/FS+3vzdk+HLh+czUVc+Pw1s5HGk3wCYeJDzJYNTBF+7o6L3pzDA28/sd1Nca3wFStUKQuGDLq4QuP33BDMu3Yp7pU5LpVwT18Lj8ITSPJkSyC3OLHDrhAZxeMb444GQr9+lWqgoDhPuI4Ywp8jLri3HwfxeptgsktzEDu78zwnAXNYitNx61wb5mUt/UjtCM4kzNztqw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Me13+JgrqoWkKgJ2HE2OHADlOrB5wjQFqa6jogBevCw=;
- b=Cw/S+zHPwg9TySeUPMuB4oCgFPG1JKjwW/byST9yH5u8uH82J0z1ePGIYi1TqI7r0S1/1Cqp/Zdld0bGL46g5c5WCYfEYn6abwftI1O5/baoTTamb7qu6mvKqH79b0X50EUEVAGBhIEFsKcX+VgKWU3tv/vaBL7bm7MfM+qsTVUlKQHqhKdGLEjZDoIZdxJEHulzmi09Z2TZ+MGXoqGMPsfuyOTgSzFmEQCFsoTQfSxEb+T8egmJlGeiXoyCyUAZfGmt0Y8DHKtLMoiq3f01ZEnRG+7MB+mZHTpQeJgM/2uro/YVeKWXpRdD7nwlcjOeipsyNURbb420J6QuR3gACg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
- by SA3PR12MB9180.namprd12.prod.outlook.com (2603:10b6:806:39b::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Mon, 20 Oct
- 2025 22:59:50 +0000
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9228.015; Mon, 20 Oct 2025
- 22:59:50 +0000
-Date: Mon, 20 Oct 2025 19:59:47 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
-	Joao Martins <joao.m.martins@oracle.com>, patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com,
-	Yishai Hadas <yishaih@nvidia.com>
-Subject: Re: [PATCH rc] iommufd: Don't overflow during division for dirty
- tracking
-Message-ID: <20251020225947.GA644827@nvidia.com>
-References: <0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com>
-X-ClientProxiedBy: DM5PR07CA0057.namprd07.prod.outlook.com
- (2603:10b6:4:ad::22) To MN2PR12MB3613.namprd12.prod.outlook.com
- (2603:10b6:208:c1::17)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TmVm6iiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDC7C4CEF1;
+	Tue, 21 Oct 2025 13:05:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761051945;
+	bh=2j2nO3EgyZKblgDRpc+2rhG8AcAKEEabgVHZG2MOf3o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TmVm6iiFaz6anEm3kd0My8ZIfUCldrigV+ZcegItWYdxZrA9XcebcFYT1MscZ+Bfk
+	 VEdyNailQh9YtaHUbFy98sCS778OwbHwgxhCuVIyUlL+RnCqrZV+wlUXkxus8vkmmH
+	 wTfZRmnd8ZoxO8NFhXD2KkWxbPWgLkHE43O/4dn2DzKF/G6XO5nLBrRIOLmsOs063A
+	 aVdE8UKPA/mxr3ZwMDkZNOeVf35jw4VyuWcbrzlcnDe5R/JkHHiQSUHe90cjFoE6KX
+	 A+IPfDmrVlX+aH3+RJDyQNAHVobVFUrcgzbB98Z/822kUNM/+WUfAraNn3ZSsrvcz2
+	 tJXHoYFb+417g==
+Date: Tue, 21 Oct 2025 15:05:35 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Askar Safin <safinaskar@gmail.com>, 
+	Christoph Hellwig <hch@infradead.org>
+Cc: linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Al Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, Christoph Hellwig <hch@lst.de>, 
+	Jens Axboe <axboe@kernel.dk>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
+	Aleksa Sarai <cyphar@cyphar.com>, 
+	Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, Julian Stecklina <julian.stecklina@cyberus-technology.de>, 
+	Gao Xiang <hsiangkao@linux.alibaba.com>, Art Nikpal <email2tema@gmail.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, Alexander Graf <graf@amazon.com>, Rob Landley <rob@landley.net>, 
+	Lennart Poettering <mzxreary@0pointer.de>, linux-arch@vger.kernel.org, linux-block@vger.kernel.org, 
+	initramfs@vger.kernel.org, linux-api@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Michal Simek <monstr@monstr.eu>, Luis Chamberlain <mcgrof@kernel.org>, 
+	Kees Cook <kees@kernel.org>, Thorsten Blum <thorsten.blum@linux.dev>, 
+	Heiko Carstens <hca@linux.ibm.com>, Arnd Bergmann <arnd@arndb.de>, Dave Young <dyoung@redhat.com>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Borislav Petkov <bp@alien8.de>, Jessica Clarke <jrtc27@jrtc27.com>, 
+	Nicolas Schichan <nschichan@freebox.fr>, David Disseldorp <ddiss@suse.de>, patches@lists.linux.dev
+Subject: Re: [PATCH v3 0/3] initrd: remove half of classic initrd support
+Message-ID: <20251021-bannmeile-arkaden-ae2ea9264b85@brauner>
+References: <20251017060956.1151347-1-safinaskar@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SA3PR12MB9180:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37a4b8bc-8451-43c4-88a8-08de102c5f09
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dhnPpX1IcpQxr41JTq6vAx2WtHyGbqcwuOGdhZUWdsoVY+FMaY+L7S1EuT9d?=
- =?us-ascii?Q?0o78tH/H20WUGn3dNUjllSXj9SLrMyxHpPnE0FjvSk7N9fmwyWqueSxMBHSj?=
- =?us-ascii?Q?511zra1PF3hWaKjVbE53/6ZmqZVSJARy99sb951e6/6Z9+UjD/JO759NUGUc?=
- =?us-ascii?Q?BWWSdk2t98sEbm1G2KrCjvAMokM37vmGU7wEQea6OUjeaL0iRrZsRiVIxI2C?=
- =?us-ascii?Q?YoVaDDcADuBwESUhgTQaCKhe/JeMb/J8NyGgmT+oQYOit2VksljOrC3up3Dg?=
- =?us-ascii?Q?gzZb/11DfDuTQEqwDL9Wm9EKz8LeJqfNxjWghg6Zg2J3PH1km1cIhQ0I4Bjd?=
- =?us-ascii?Q?oK8TnFNw/PCABYG6iJMJy9jKRAttpyaRzfNA4i4USrSUDFU64QTdJpQiw8V8?=
- =?us-ascii?Q?vZfNq9P15wsZi2SHEEFvLUIxxXiQPfrb5BkQA0b/eSAdmKrIht2/TZwBUVgX?=
- =?us-ascii?Q?R9iclSHcv/A4Z1LRzGG10DGs3+TbuBRW3V63YlpdZbzd1q+HBAgjXE0m3wu6?=
- =?us-ascii?Q?UV8O7fgnUr3MpvmGVCISB4DQR64YdcyYj0Vt5c3U9v3eIIZ6RrIz1mqX3ijB?=
- =?us-ascii?Q?YSlzRl4Ph7Pw7gf0mx+ftY5/yPB9DsFOJHcGYyQoAimtLjjICg2VhDJs/cBL?=
- =?us-ascii?Q?ag8Il28390XjKFVSBvcJXC5Vty6bb/JsEmJe8hq2ZUXILFupYE5ULIBZZ8XB?=
- =?us-ascii?Q?9aJFuJAkaUe2JqD8G4ieMWFM/KV3IEKEFmJN0jhXhV5UTWS+4MxScFApV+mF?=
- =?us-ascii?Q?7Mlnv6qm13RPaP7SWNcSzy/5s7OBYzuXz/hqHvoKLVXM7VnQP47iwDC+TwgJ?=
- =?us-ascii?Q?uEVEQTmrbcduOzeq7JbfUu8qymKDS1kUds9eb4yQwJkIIXN/G5tidyEC3jYI?=
- =?us-ascii?Q?MUsErpGWxyL+u6ldLsRsN5u96Xey2WVIQSt50BhbuvLY52w8azzAG5UrTSgF?=
- =?us-ascii?Q?NW7LHrQgiRRant2C9rdVrDLBgWlv2vipkL/B+BDhEY2Rg3ylSmr2A/lv6iOw?=
- =?us-ascii?Q?d/5IoFCKmlax4KrxfvdA9gYkYL3h/w5Sx5/8oQuNLG1diu3T1yvSq9lG4mMU?=
- =?us-ascii?Q?1nT7/pes7MlL829j0oGEHf6xTyqielSV/f0gDno2gBF+rT7xA7OyMReZHxZ8?=
- =?us-ascii?Q?Jg9mlDW4Ne5WkNvlKhygwk9PgSGpzt3HhgJuG9iVAzzNB9hItG8yDmkpPxZJ?=
- =?us-ascii?Q?wJBS2e2gHxjQnFu29uTQ/y+txvYFPxb1PZVOQ+PD23U5FcJB2TTgGuOfPuSP?=
- =?us-ascii?Q?7M2POEBb+0I6mUfMZSJfLfaiGfTuuqiXMDgMrixxROjItknvidrUdcoILS1P?=
- =?us-ascii?Q?H0bESagimQWEyZKyygf4mmibodKkKEiG+rdKBvpvDQYWkAVHIlPs24Xq1/jv?=
- =?us-ascii?Q?6K73+3E8MdORzGGg0V/ix6YKrrGJwEc8jElFVbrwgeLhI9sbSTE0ZKKarfY9?=
- =?us-ascii?Q?DgKcg2ssuut0a51ZgZLIoSGOx8sNX1p3?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AjvgJkzD6rejGTckQZYIUslkzELbqrlgU0FZw7f01afPxxd5tuSvOdjWH6nn?=
- =?us-ascii?Q?iuiBCdoP9mSKP6TdUFSP6SbxPvYwTnTn8RGeL5LKJrZVF5r6/fQ6vHdnLop8?=
- =?us-ascii?Q?WmBdzl4/Cu1zGo0JP5zer+NyDpSMJm8UWliGgJXLILj2zYqzQsvp810ZAzxW?=
- =?us-ascii?Q?qkaMqv+bjfVtfSxOioEfkZ0uyRuYyn054dvxgFABJR+3zN9HBkf7ulBkrjM1?=
- =?us-ascii?Q?IpU60D8t6uObFBPkiGCm+NySSqEIWk0umjenBAXPtKGzGQRodruO71SulvRb?=
- =?us-ascii?Q?mEdXfix/5Ve+OsEjHcYUYoTFL0YlL0qb6pE2XyqNKdmX83TzjLRM3AdfnBI8?=
- =?us-ascii?Q?UqZVi+2aMnnT2Tc1kgiEXZk9PdN81WW8/HDTU8Zr++BnVjGPVoKLjDTm3T9g?=
- =?us-ascii?Q?yRCMHyyUj28mwBgW87VUUweuprvsoJhB02kITYex3JacMCxrj2mjEfrJMuwj?=
- =?us-ascii?Q?4bUtASke4uWW7gG/PMZgCNj353aWzDlMHHK/CeOmi6MycyV7OKsSCdSCZKUP?=
- =?us-ascii?Q?YVDrqtRZu5YTX79VPl6vUw7E92jAhK1kxB6GdVAvErfTyQLVUPzBBmt59H8X?=
- =?us-ascii?Q?wcY8zP6pmfNXRLJe0pfF464/37qxBkFLljqAdyIz5lazyjINdxzXlQZmWM04?=
- =?us-ascii?Q?+daa2MlLY0HJ+yaULNkdc6p1bVUWCF9v3j9kr7e0fgRRy4qdGnDIXPbeSfXw?=
- =?us-ascii?Q?AYrQoBSJnNC5XjT0mMVcGz9Rz0DVfQRycACZWAKRkZ6sfWf8gro7cH3V1i69?=
- =?us-ascii?Q?v7/Glemi2yNuFuKMGDC1Sqzd3IB4Zd28NCIO/txvQM5iVAkGEt38C9YAZ6Ff?=
- =?us-ascii?Q?F9oyhcWYeIpjf5J4begEaJJN6KB4FfDffooqM+Ypwf4qCIFBHeap+i5g/oCM?=
- =?us-ascii?Q?VlRfXz4CcWrntYEknK7KQkcFyJMhAPYug9dY1eJVLyTLwSVYzRUnoNnVQC4R?=
- =?us-ascii?Q?TjMSTyZfsQizWq419AQ+T3tKJta++Cx09n1xovF2SNLPTa17OvUSYl0keE0+?=
- =?us-ascii?Q?yZ2QyJY0syWcWL0JgsAzWUTgu2tRHIwHqoxE5BzufvgJUZ7aMm/1Five+KNr?=
- =?us-ascii?Q?T3qv7Lgnt5BQdS0+aN7N13IQUScoMCX5adLfzMZyFS2r2+p9BcLoFxOzCgBl?=
- =?us-ascii?Q?jrm7DVySSsy9uIvjSWIbM4K+jSsOhjcY0foXag+pUoqDA+dPYEN+Mlum6BTA?=
- =?us-ascii?Q?wcC33qUmuo53r65l2mnCPDM29Ub8trzEZIuXHkVhWa57YDu1VMlBPfa+zc9a?=
- =?us-ascii?Q?tDsm+nyfCIeY+6MkoOWZmTyw1Al2emFB0rWbDcrOEZfOPI7EPuAnIEb3FZ0K?=
- =?us-ascii?Q?ISBC5UvEk8HzuNalJZlgznD43vOggrmbEwb4TwNR4FlwzRbZIiPRKA+VbTc6?=
- =?us-ascii?Q?fMAe0Q1ySKRwttISLItljV4U76tyuvLfMVjhsHm7AOO9G0Gk5wdd+g6L8e8d?=
- =?us-ascii?Q?nHOkN8tuDb3vbnyLeuMYRvMpyH7S/1IkLxqA7I/f8//S+HOg4LdZVQO1888Q?=
- =?us-ascii?Q?w0rIwho5bTzTVczGU5SUqo0tITiulYPvqRK0cI1WwKeiUm+Br+dLU4NSb4/z?=
- =?us-ascii?Q?030cFY1+/33sHPonyKcYe23H2MSPDsll76cRt+QX?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37a4b8bc-8451-43c4-88a8-08de102c5f09
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 22:59:49.9594
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VoGTOU1syhuolgwkWO1eYCb2SaMohwo909mxDyqV6YieU9NfH1mHDFFqFN+GyYPy
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9180
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251017060956.1151347-1-safinaskar@gmail.com>
 
-On Wed, Oct 08, 2025 at 03:17:18PM -0300, Jason Gunthorpe wrote:
-> If pgshift is 63 then BITS_PER_TYPE(*bitmap->bitmap) * pgsize will overflow
-> to 0 and this triggers divide by 0.
+On Fri, Oct 17, 2025 at 06:09:53AM +0000, Askar Safin wrote:
+> Intro
+> ====
+> This patchset removes half of classic initrd (initial RAM disk) support,
+> i. e. linuxrc code path, which was deprecated in 2020.
+> Initramfs still stays, RAM disk itself (brd) still stays.
+> And other half of initrd stays, too.
+> init/do_mounts* are listed in VFS entry in
+> MAINTAINERS, so I think this patchset should go through VFS tree.
+> I tested the patchset on 8 (!!!) archs in Qemu (see details below).
+> If you still use initrd, see below for workaround.
 > 
-> In this case the index should just be 0, so reorganize things to divide
-> by shift and avoid hitting any overflows.
+> In 2020 deprecation notice was put to linuxrc initrd code path.
+> In v1 I tried to remove initrd
+> fully, but Nicolas Schichan reported that he still uses
+> other code path (root=/dev/ram0 one) on million devices [4].
+> root=/dev/ram0 code path did not contain deprecation notice.
+
+Without Acks or buy-in from other maintainers this is not a change we
+can just do given that a few people already piped up and expressed
+reservations that this would be doable for them.
+
+@Christoph, you marked this as deprecated years ago.
+What's your take on this?
+
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-> Reported-by: syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=093a8a8b859472e6c257
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/iommufd/iova_bitmap.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-
-Applied to for-rc
-
-Thanks,
-Jason
+> So, in this version of patchset I remove deprecated code path,
+> i. e. linuxrc one, while keeping other, i. e. root=/dev/ram0 one.
+> 
+> Also I put deprecation notice to remaining code path, i. e. to
+> root=/dev/ram0 one. I plan to send patches for full removal
+> of initrd after one year, i. e. in September 2026 (of course,
+> initramfs will still work).
+> 
+> Also, I tried to make this patchset small to make sure it
+> can be reverted easily. I plan to send cleanups later.
+> 
+> Details
+> ====
+> Other user-visible changes:
+> 
+> - Removed kernel command line parameters "load_ramdisk" and
+> "prompt_ramdisk", which did nothing and were deprecated
+> - Removed /proc/sys/kernel/real-root-dev . It was used
+> for initrd only
+> - Command line parameters "noinitrd" and "ramdisk_start=" are deprecated
+> 
+> This patchset is based on v6.18-rc1.
+> 
+> Testing
+> ====
+> I tested my patchset on many architectures in Qemu using my Rust
+> program, heavily based on mkroot [1].
+> 
+> I used the following cross-compilers:
+> 
+> aarch64-linux-musleabi
+> armv4l-linux-musleabihf
+> armv5l-linux-musleabihf
+> armv7l-linux-musleabihf
+> i486-linux-musl
+> i686-linux-musl
+> mips-linux-musl
+> mips64-linux-musl
+> mipsel-linux-musl
+> powerpc-linux-musl
+> powerpc64-linux-musl
+> powerpc64le-linux-musl
+> riscv32-linux-musl
+> riscv64-linux-musl
+> s390x-linux-musl
+> sh4-linux-musl
+> sh4eb-linux-musl
+> x86_64-linux-musl
+> 
+> taken from this directory [2].
+> 
+> So, as you can see, there are 18 triplets, which correspond to 8 subdirs in arch/.
+> 
+> For every triplet I tested that:
+> - Initramfs still works (both builtin and external)
+> - Direct boot from disk still works
+> - Remaining initrd code path (root=/dev/ram0) still works
+> 
+> Workaround
+> ====
+> If "retain_initrd" is passed to kernel, then initramfs/initrd,
+> passed by bootloader, is retained and becomes available after boot
+> as read-only magic file /sys/firmware/initrd [3].
+> 
+> No copies are involved. I. e. /sys/firmware/initrd is simply
+> a reference to original blob passed by bootloader.
+> 
+> This works even if initrd/initramfs is not recognized by kernel
+> in any way, i. e. even if it is not valid cpio archive, nor
+> a fs image supported by classic initrd.
+> 
+> This works both with my patchset and without it.
+> 
+> This means that you can emulate classic initrd so:
+> link builtin initramfs to kernel; in /init in this initramfs
+> copy /sys/firmware/initrd to some file in / and loop-mount it.
+> 
+> This is even better than classic initrd, because:
+> - You can use fs not supported by classic initrd, for example erofs
+> - One copy is involved (from /sys/firmware/initrd to some file in /)
+> as opposed to two when using classic initrd
+> 
+> Still, I don't recommend using this workaround, because
+> I want everyone to migrate to proper modern initramfs.
+> But still you can use this workaround if you want.
+> 
+> Also: it is not possible to directly loop-mount
+> /sys/firmware/initrd . Theoretically kernel can be changed
+> to allow this (and/or to make it writable), but I think nobody needs this.
+> And I don't want to implement this.
+> 
+> On Qemu's -initrd and GRUB's initrd
+> ====
+> Don't panic, this patchset doesn't remove initramfs
+> (which is used by nearly all Linux distros). And I don't
+> have plans to remove it.
+> 
+> Qemu's -initrd option and GRUB's initrd command refer
+> to initrd bootloader mechanism, which is used to
+> load both initrd and (external) initramfs.
+> 
+> So, if you use Qemu's -initrd or GRUB's initrd,
+> then you likely use them to pass initramfs, and thus
+> you are safe.
+> 
+> v1: https://lore.kernel.org/lkml/20250913003842.41944-1-safinaskar@gmail.com/
+> 
+> v1 -> v2 changes:
+> - A lot. I removed most patches, see cover letter for details
+> 
+> v2: https://lore.kernel.org/lkml/20251010094047.3111495-1-safinaskar@gmail.com/
+> 
+> v2 -> v3 changes:
+> - Commit messages
+> - Expanded docs for "noinitrd"
+> - Added link to /sys/firmware/initrd workaround to pr_warn
+> 
+> [1] https://github.com/landley/toybox/tree/master/mkroot
+> [2] https://landley.net/toybox/downloads/binaries/toolchains/latest
+> [3] https://lore.kernel.org/all/20231207235654.16622-1-graf@amazon.com/
+> [4] https://lore.kernel.org/lkml/20250918152830.438554-1-nschichan@freebox.fr/
+> 
+> Askar Safin (3):
+>   init: remove deprecated "load_ramdisk" and "prompt_ramdisk" command
+>     line parameters
+>   initrd: remove deprecated code path (linuxrc)
+>   init: remove /proc/sys/kernel/real-root-dev
+> 
+>  .../admin-guide/kernel-parameters.txt         |  12 +-
+>  Documentation/admin-guide/sysctl/kernel.rst   |   6 -
+>  arch/arm/configs/neponset_defconfig           |   2 +-
+>  fs/init.c                                     |  14 ---
+>  include/linux/init_syscalls.h                 |   1 -
+>  include/linux/initrd.h                        |   2 -
+>  include/uapi/linux/sysctl.h                   |   1 -
+>  init/do_mounts.c                              |  11 +-
+>  init/do_mounts.h                              |  18 +--
+>  init/do_mounts_initrd.c                       | 107 ++----------------
+>  init/do_mounts_rd.c                           |  24 +---
+>  11 files changed, 23 insertions(+), 175 deletions(-)
+> 
+> 
+> base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+> -- 
+> 2.47.3
+> 
