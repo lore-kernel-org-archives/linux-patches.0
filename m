@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737A02737E7;
-	Tue, 21 Oct 2025 19:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD859274B2A;
+	Tue, 21 Oct 2025 19:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076386; cv=none; b=oC9xYEC6RmD45Til5oS0YcVAqHREQauPuM9w9EPj9Qf+Bwk7vof4L9+ZFQ1eYKnbuY8+QmZTyEUd1rctD3aZzK5eCqMbIDYDb2UQ6VBO3ITEB1gAkXKuGKGZEKXZBGg0Zo/ImVfOco61/T3/KeaOA5C3MMTLBsRrEiGFdXzOdxs=
+	t=1761076386; cv=none; b=oUu3eNxTL2l2XaG6UyTZpJi8idU9qCcdsEsSsEn6Y+WTE/wmc4cbP2hLMT0UlfPPku6sJ3u+GvGwd0Kqbec8xgiKBzMkDJ0KmS1jIljViw7eITW8PQDN3kN0VKmQJaXiWSwTE+nxamlWcHvrmQASsXyg5/F1CxFOi2xPG1wdtoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761076386; c=relaxed/simple;
-	bh=oSbWMEAej/lce0E2ZCxHHg0Gs4I2PYms8DmJwzKnsr4=;
+	bh=ALMSmygY5WLndd/HytDf7LXS/kgVfHOKdcY4NsWlpwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0o1k2w79ChogBYTZ3i0M2vCMHvzBQs9HIFq25xHTj4J2tDkTmAuwzY66PSc56+Uffcgsy+PqmM+CIKHn3/JuOn9Qw9abhC04P96/II4BVi1ltL/24n26IZSJAnDGVRTf2QXXUgARFirfZTWR43+ttX6QepVShxZ78+/4Uk7iBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsg718IK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+hf/GzVZtLXB4f7jzQE5VPHg8neAtNrGmPiLFSQ40Hn6HYde8dKGhNvUD1pV23kWLonaulW9PkIerdrgRjUVoRZfYgfUH2rp1EvX30VgaBx0YteT5zlmELkWiZ//8c4+rMThzgXgvLlSqSwEImSzlSWTTZoMThjzp+qhemv3c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqI2hGU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsg718IK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E377C113D0;
-	Tue, 21 Oct 2025 19:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqI2hGU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1407FC4CEF5;
+	Tue, 21 Oct 2025 19:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076382;
-	bh=oSbWMEAej/lce0E2ZCxHHg0Gs4I2PYms8DmJwzKnsr4=;
+	s=korg; t=1761076386;
+	bh=ALMSmygY5WLndd/HytDf7LXS/kgVfHOKdcY4NsWlpwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tsg718IKLcPW2ZPz7+dZJZNOMp5QaiPQKHiyN4yqzajd8fOkcOpRGaasfZ/rfSgbm
-	 oQN7Bab0xxbkS9jG6D+aSLp1Al2CwNM8FUWkO3BN0JRPbIP9ZXjiG7icDhpLKFd7EK
-	 xF3bQ+XfXw6NX+MPfZmQv8vXKvM2VQ01KAePuEhA=
+	b=KqI2hGU1yXWdw6rPFs4wlK9WC+usWBUzih0BX6KQ00xotQFIkV4gi10JEBMxF/+oY
+	 6vqCZ2spVQ9UCC+z7Fysd0kSUmIA7sPMdE/of/By2vj1d4FOOXBURzXcofgLOTnsoB
+	 /wKbwADPbf0QHtYoj38BwvwJDWPxgKR9Lz90u92k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 018/105] Bluetooth: btusb: Add USB ID 2001:332a for D-Link AX9U rev. A1
-Date: Tue, 21 Oct 2025 21:50:27 +0200
-Message-ID: <20251021195021.926301466@linuxfoundation.org>
+	Huang Xiaojia <huangxiaojia2@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 019/105] epoll: Remove ep_scan_ready_list() in comments
+Date: Tue, 21 Oct 2025 21:50:28 +0200
+Message-ID: <20251021195021.949558008@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -51,79 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Huang Xiaojia <huangxiaojia2@huawei.com>
 
-commit 34ecb8760190606472f71ebf4ca2817928ce5d40 upstream.
+[ Upstream commit e6f7958042a7b1dc9a4dfc19fca74217bc0c4865 ]
 
-Add USB ID 2001:332a for D-Link AX9U rev. A1 which is based on a Realtek
-RTL8851BU chip.
+Since commit 443f1a042233 ("lift the calls of ep_send_events_proc()
+into the callers"), ep_scan_ready_list() has been removed.
+But there are still several in comments. All of them should
+be replaced with other caller functions.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2001 ProdID=332a Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=802.11ax WLAN Adapter
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtw89_8851bu_git
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Cc: stable@vger.kernel.org # 6.12.x
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Huang Xiaojia <huangxiaojia2@huawei.com>
+Link: https://lore.kernel.org/r/20240206014353.4191262-1-huangxiaojia2@huawei.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 0c43094f8cc9 ("eventpoll: Replace rwlock with spinlock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/eventpoll.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -511,6 +511,8 @@ static const struct usb_device_id quirks
- 	/* Realtek 8851BU Bluetooth devices */
- 	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2001, 0x332a), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -206,7 +206,7 @@ struct eventpoll {
+ 	 */
+ 	struct epitem *ovflist;
  
- 	/* Realtek 8852AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
+-	/* wakeup_source used when ep_scan_ready_list is running */
++	/* wakeup_source used when ep_send_events or __ep_eventpoll_poll is running */
+ 	struct wakeup_source *ws;
+ 
+ 	/* The user that created the eventpoll descriptor */
+@@ -1190,7 +1190,7 @@ static inline bool chain_epi_lockless(st
+  * This callback takes a read lock in order not to contend with concurrent
+  * events from another file descriptor, thus all modifications to ->rdllist
+  * or ->ovflist are lockless.  Read lock is paired with the write lock from
+- * ep_scan_ready_list(), which stops all list modifications and guarantees
++ * ep_start/done_scan(), which stops all list modifications and guarantees
+  * that lists state is seen correctly.
+  *
+  * Another thing worth to mention is that ep_poll_callback() can be called
+@@ -1792,7 +1792,7 @@ static int ep_send_events(struct eventpo
+ 			 * availability. At this point, no one can insert
+ 			 * into ep->rdllist besides us. The epoll_ctl()
+ 			 * callers are locked out by
+-			 * ep_scan_ready_list() holding "mtx" and the
++			 * ep_send_events() holding "mtx" and the
+ 			 * poll callback will queue them in ep->ovflist.
+ 			 */
+ 			list_add_tail(&epi->rdllink, &ep->rdllist);
+@@ -1945,7 +1945,7 @@ static int ep_poll(struct eventpoll *ep,
+ 		__set_current_state(TASK_INTERRUPTIBLE);
+ 
+ 		/*
+-		 * Do the final check under the lock. ep_scan_ready_list()
++		 * Do the final check under the lock. ep_start/done_scan()
+ 		 * plays with two lists (->rdllist and ->ovflist) and there
+ 		 * is always a race when both lists are empty for short
+ 		 * period of time although events are pending, so lock is
 
 
