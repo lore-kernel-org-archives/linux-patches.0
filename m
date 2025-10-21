@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4644C350A04;
-	Tue, 21 Oct 2025 19:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552CC2737F6;
+	Tue, 21 Oct 2025 19:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076360; cv=none; b=b5awWNVvAfE+3Km6kXQ1Cv9aFaiRDxL0zJGIHRY/xsCEIi1OMYFQAFkblswZmXYQOSRSjUNriI8ttvec6z632mW+02eX4xufEVXIb3xq21giFR8z/L0VEIXtcn2KR+M3Hsci7yo1X+1BNNAwCc+bAeMXoTARwunkkiX4d0wRKdY=
+	t=1761076363; cv=none; b=HDaEksIviAStjaXexqZEjUM0vB81HXAwv4WVV3R2+zmep/NGLjTnZp+Nai3qVOy+e9vnEoKJid0oeTWlsVcW6i6E9N5S9wnyhGtCWEH646+SVm0YYtw+cB1p85yrFoFdNrlfj35xvmjWtALXm5wCb4NqBIFMCvLc3Ezavx2j2cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076360; c=relaxed/simple;
-	bh=rUjII1AsVsBh7I5cOyQdBoKFwL2hhVNY8xY+cSHasVw=;
+	s=arc-20240116; t=1761076363; c=relaxed/simple;
+	bh=Yi9sScQaH9IgdnVwrHuvGabhCvC33aaIUQlT/MaERkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHMCQRVHjXZcqR03N40l/8Ci4QYFCyr+yGCFHh8CswxdskW8cRwnrBhpqc2uq+r1Rl3Iw6SXXR7NJPiNDKrmQB3XGaFbxLZzkjKB2yO+OVVW7JKU/poC9vadSJ4QMr/4ui4A/jws60f4nhto8pZX95pr6Dk7vBZf4uGY58dvSbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVofXK+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/RwBbkfmm64lmCZkXgauUUwxWak2w0pyuil5n+fKH4dljXG3IuTHm4tDcejJ5Qu8MtigHpSEBv/EWrwskgV6TQjRo6pa/gXyMEhMqCdSULCRb1GlUiA0N26mwIOiSYwwkyqdHZuj/8y/PclE4V0edvcXObZZPRTsFQwqkxHzAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPc4nNRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVofXK+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508DBC4CEF1;
-	Tue, 21 Oct 2025 19:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPc4nNRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A09EC4CEF1;
+	Tue, 21 Oct 2025 19:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076360;
-	bh=rUjII1AsVsBh7I5cOyQdBoKFwL2hhVNY8xY+cSHasVw=;
+	s=korg; t=1761076363;
+	bh=Yi9sScQaH9IgdnVwrHuvGabhCvC33aaIUQlT/MaERkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVofXK+TUECwJSbKN3SOv5JVWb0hdDzMvfbgw9Zh7mAyofN3ci806BelpPUd40Jjm
-	 SXoQtOqBLcoj9XQIJhOhVH8/w5h4QvZYhjyl4+qCjUhUYYuZPdEyPDoB3IMM1tx/8L
-	 dOZgoqm0gg0cH60EpgYKaJFfWCXVSdZIp3DWUWzg=
+	b=bPc4nNRvMQCKtdYrNoS7h/69D5can707pNpHTOs1/HG4V+QhGN175UYeFQJZWs9/S
+	 iWImyMjpu1V/9OG5gxXyhIiiBFsTc5qf4RWYCHqYFuKbixLog3GjPdKZkmu0Vbu05X
+	 p3u5xqgRDl0VBxewnqE9uxQsfkzXRlaG+CxD3eGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 003/105] KVM: arm64: Prevent access to vCPU events before init
-Date: Tue, 21 Oct 2025 21:50:12 +0200
-Message-ID: <20251021195021.576913624@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 004/105] f2fs: fix wrong block mapping for multi-devices
+Date: Tue, 21 Oct 2025 21:50:13 +0200
+Message-ID: <20251021195021.599570699@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -50,86 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 upstream.
+commit 9d5c4f5c7a2c7677e1b3942772122b032c265aae upstream.
 
-Another day, another syzkaller bug. KVM erroneously allows userspace to
-pend vCPU events for a vCPU that hasn't been initialized yet, leading to
-KVM interpreting a bunch of uninitialized garbage for routing /
-injecting the exception.
+Assuming the disk layout as below,
 
-In one case the injection code and the hyp disagree on whether the vCPU
-has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
-tripping the BUG() in exception_target_el() during the next injection:
+disk0: 0            --- 0x00035abfff
+disk1: 0x00035ac000 --- 0x00037abfff
+disk2: 0x00037ac000 --- 0x00037ebfff
 
-  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
-  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : exception_target_el+0x88/0x8c
-  lr : pend_serror_exception+0x18/0x13c
-  sp : ffff800082f03a10
-  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
-  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
-  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
-  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
-  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
-  Call trace:
-   exception_target_el+0x88/0x8c (P)
-   kvm_inject_serror_esr+0x40/0x3b4
-   __kvm_arm_vcpu_set_events+0xf0/0x100
-   kvm_arch_vcpu_ioctl+0x180/0x9d4
-   kvm_vcpu_ioctl+0x60c/0x9f4
-   __arm64_sys_ioctl+0xac/0x104
-   invoke_syscall+0x48/0x110
-   el0_svc_common.constprop.0+0x40/0xe0
-   do_el0_svc+0x1c/0x28
-   el0_svc+0x34/0xf0
-   el0t_64_sync_handler+0xa0/0xe4
-   el0t_64_sync+0x198/0x19c
-  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
+and we want to read data from offset=13568 having len=128 across the block
+devices, we can illustrate the block addresses like below.
 
-Reject the ioctls outright as no sane VMM would call these before
-KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
-thrown away by the eventual reset of the vCPU's state.
+0 .. 0x00037ac000 ------------------- 0x00037ebfff, 0x00037ec000 -------
+          |          ^            ^                                ^
+          |   fofs   0            13568                            13568+128
+          |       ------------------------------------------------------
+          |   LBA    0x37e8aa9    0x37ebfa9                        0x37ec029
+          --- map    0x3caa9      0x3ffa9
 
-Cc: stable@vger.kernel.org # 6.17
-Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+In this example, we should give the relative map of the target block device
+ranging from 0x3caa9 to 0x3ffa9 where the length should be calculated by
+0x37ebfff + 1 - 0x37ebfa9.
+
+In the below equation, however, map->m_pblk was supposed to be the original
+address instead of the one from the target block address.
+
+ - map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
+
+Cc: stable@vger.kernel.org
+Fixes: 71f2c8206202 ("f2fs: multidevice: support direct IO")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/f2fs/data.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1492,6 +1492,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 	case KVM_GET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1506,8 +1506,8 @@ static bool f2fs_map_blocks_cached(struc
+ 		struct f2fs_dev_info *dev = &sbi->devs[bidx];
  
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
-+
- 		if (kvm_arm_vcpu_get_events(vcpu, &events))
- 			return -EINVAL;
- 
-@@ -1503,6 +1506,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 	case KVM_SET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
- 
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
-+
- 		if (copy_from_user(&events, argp, sizeof(events)))
- 			return -EFAULT;
- 
+ 		map->m_bdev = dev->bdev;
+-		map->m_pblk -= dev->start_blk;
+ 		map->m_len = min(map->m_len, dev->end_blk + 1 - map->m_pblk);
++		map->m_pblk -= dev->start_blk;
+ 	} else {
+ 		map->m_bdev = inode->i_sb->s_bdev;
+ 	}
 
 
