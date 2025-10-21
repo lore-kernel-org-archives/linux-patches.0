@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279527815E;
-	Tue, 21 Oct 2025 20:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BF1279798;
+	Tue, 21 Oct 2025 20:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077082; cv=none; b=fsSHLPj4apHu7F0BwSbzaRtJeEfq2rFbPTNTmPzJnWPYqZbotqm8icRqZtU+sILNRFV7X0KmMDD7EHaoxwafdifRwT3m0lJPbpUXKgbk/uN3P8o+LjAD6GxLj00SxmDG2nrIa9i+rCrbRoAioLzz23Ldb8yPM5wACrrJoXTpj08=
+	t=1761077085; cv=none; b=pTaIkQNcBL/HKkGSh6V7sF3YGT9w7uO0j0iaa0VyFuihCNXiqR7/u09DYHW8JmEA/p6MPDtCVNjT1oU9qkIaNf2p104rURokoBonSKfs5woBUk2QRJz3VlNvM+Ih7cVHwy0mI6nW8s+3FgxWxnPI31XI//TAZ3aAmdaQo5pHqY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077082; c=relaxed/simple;
-	bh=6YEDFmJNQayL1TWBo39454LEvHaX5RuB68yz+X8sBAI=;
+	s=arc-20240116; t=1761077085; c=relaxed/simple;
+	bh=CnWiFk1hWaUMVb39rN87bwGECgIn1iUwBwNH7/7tL3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcswqRV3N0k3RWWUJ7wlSvRhpErIBpPFB0V/Uur4nD5yLjLXVQ5qrvm75ACpOoxTx2YWNwX/RlTQPcpTfP6TAeC1meJTORCrd2oUAs8zbVdSgLDEj/EX+aJw0fiOA0PG3dnSQ8hSy/+O8xvBK45rU821VXTbgZlQlad4Ff7hQhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1ABVvj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPSwSW/JRPKrhwh8ZrbDhlaMBZVh90NV48i3TcgX54u6PEU+M81ToUJ9B0t3wKFVEkh1h1ILHS0HttOlAmOEiY7qnK7jojMWXYF9ahAiDWV0/d4ulREnLLKY26EaTrbVNYZ0JgG5FBDPc+vM6WwFqgvuk4FP3hPK4LWZQrKvebQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZBNlYZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1ABVvj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9ADC4CEF1;
-	Tue, 21 Oct 2025 20:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZBNlYZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48180C4CEF1;
+	Tue, 21 Oct 2025 20:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077081;
-	bh=6YEDFmJNQayL1TWBo39454LEvHaX5RuB68yz+X8sBAI=;
+	s=korg; t=1761077084;
+	bh=CnWiFk1hWaUMVb39rN87bwGECgIn1iUwBwNH7/7tL3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1ABVvj6bRdY2ecIyZTcLnRHPodHKLFFusVXppFmqNhSLdpnR1bnUVo70fhzCW2Fo
-	 d0QB/2VD65xGXKaxsR3VX1Z7vuUMPBMX/oaFb9B0m2/XDF/6S6YlGWf8Z9QwSZh3p9
-	 plhpwfDbVEYLlSB7ChTx+pGm/G3S9PZRlc+E38+w=
+	b=aZBNlYZBc2EeW1/1MSgeNMZbLcqX2fn3ETLDa2qeGvC9P3azuSqsNxw3kJal2W7eR
+	 0w4nNRk4ebyM2/Ra1vhHgv1CahK6xFRz3iuwJxcET95uqEy1zta7QiXz0EusdApH2V
+	 TkU2qqhkejWwqhdq+uheoIef8jtfHRkaFK7yJMAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/136] mptcp: Use __sk_dst_get() and dst_dev_rcu() in mptcp_active_enable().
-Date: Tue, 21 Oct 2025 21:51:57 +0200
-Message-ID: <20251021195039.088834210@linuxfoundation.org>
+Subject: [PATCH 6.12 130/136] mptcp: reset blackhole on success with non-loopback ifaces
+Date: Tue, 21 Oct 2025 21:51:58 +0200
+Message-ID: <20251021195039.113858824@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -53,52 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 893c49a78d9f85e4b8081b908fb7c407d018106a ]
+[ Upstream commit 833d4313bc1e9e194814917d23e8874d6b651649 ]
 
-mptcp_active_enable() is called from subflow_finish_connect(),
-which is icsk->icsk_af_ops->sk_rx_dst_set() and it's not always
-under RCU.
+When a first MPTCP connection gets successfully established after a
+blackhole period, 'active_disable_times' was supposed to be reset when
+this connection was done via any non-loopback interfaces.
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+Unfortunately, the opposite condition was checked: only reset when the
+connection was established via a loopback interface. Fixing this by
+simply looking at the opposite.
 
-Let's use __sk_dst_get() and dst_dev_rcu().
+This is similar to what is done with TCP FastOpen, see
+tcp_fastopen_active_disable_ofo_check().
+
+This patch is a follow-up of a previous discussion linked to commit
+893c49a78d9f ("mptcp: Use __sk_dst_get() and dst_dev_rcu() in
+mptcp_active_enable()."), see [1].
 
 Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-8-kuniyu@google.com
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/4209a283-8822-47bd-95b7-87e96d9b7ea3@kernel.org [1]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250918-net-next-mptcp-blackhole-reset-loopback-v1-1-bf5818326639@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 833d4313bc1e ("mptcp: reset blackhole on success with non-loopback ifaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/ctrl.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/mptcp/ctrl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/mptcp/ctrl.c
 +++ b/net/mptcp/ctrl.c
-@@ -381,12 +381,15 @@ void mptcp_active_enable(struct sock *sk
- 	struct mptcp_pernet *pernet = mptcp_get_pernet(sock_net(sk));
- 
- 	if (atomic_read(&pernet->active_disable_times)) {
--		struct dst_entry *dst = sk_dst_get(sk);
-+		struct net_device *dev;
-+		struct dst_entry *dst;
- 
--		if (dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK))
-+		rcu_read_lock();
-+		dst = __sk_dst_get(sk);
-+		dev = dst ? dst_dev_rcu(dst) : NULL;
-+		if (dev && (dev->flags & IFF_LOOPBACK))
+@@ -387,7 +387,7 @@ void mptcp_active_enable(struct sock *sk
+ 		rcu_read_lock();
+ 		dst = __sk_dst_get(sk);
+ 		dev = dst ? dst_dev_rcu(dst) : NULL;
+-		if (dev && (dev->flags & IFF_LOOPBACK))
++		if (!(dev && (dev->flags & IFF_LOOPBACK)))
  			atomic_set(&pernet->active_disable_times, 0);
--
--		dst_release(dst);
-+		rcu_read_unlock();
+ 		rcu_read_unlock();
  	}
- }
- 
 
 
