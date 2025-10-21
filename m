@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A33527381E;
-	Tue, 21 Oct 2025 19:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F13273D9A;
+	Tue, 21 Oct 2025 19:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076406; cv=none; b=KPszn2KlWBpe4DnMGTlvsQxLfKNWM0oJiZoSqLBqJk+ktQ2TvQYhe2uJBhyFVZ5Z57xg+Ca3h9+fR1+E1czSCi2i2SsVJHt/U2vouw/RiuogeKg3Ur3ruL/l5626GdINbk/krxyCVkZs5cuJC26yQNx+xSIQx4QXAgbiNnvh81k=
+	t=1761076409; cv=none; b=mIwGuRK3QSku9S8wJWDWcc/xdC6NIws6WSjAiBI6ApJkQotuQdl+eocFFLtge2aYnP2bAJBrl2auZaLgVwJ8a3/Lgve2d+j8tnOfIFNu8XbCObqCsaIVhWNzSgSvT5xG9WE0FrHHCmM5dKQn03kxzgI1m4Te9O0s9xw5bN4PEVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076406; c=relaxed/simple;
-	bh=8DngvvKSHryUiQZzTbAjAHpdsJcYW51oF2GicyMOQ98=;
+	s=arc-20240116; t=1761076409; c=relaxed/simple;
+	bh=Hx7ABR0y5wTlKw02KoVhS9CBqNc+umyMQ/5En07uDDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUa+9nDru/XH96nrKt5gBwW75BzW0qr8xNol/nY/tTunqsEjadJ0fq9IumneXIlZDkfUdtK/pB3rOqdezQb97gWn7CPSKtgy4s13wbMxsp0cu6QUeMfeMVO6tpCTBnfeX0XcMZhERZGCaBBAOUGJZ45UNL6QdIl4CYvYHJscDKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjE9BLZf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSfUSs2u9M2Jj4KCRaTEg7xDZO8FmI22HVu6DTZbKmmFu/3EbKm3X3odh2VSy7M+911Ykk2RNlbO73y3tRB0SBBVAaTG7MDnpm4wuiHHjWlMmmxRpe9DNowf2AXyKnMFoCc6ydf820vG5Xk0D1RgI0o3QtvuF3hoRq/WerU/GIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCngF8BW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjE9BLZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479B9C113D0;
-	Tue, 21 Oct 2025 19:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCngF8BW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A27CC4CEF1;
+	Tue, 21 Oct 2025 19:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076405;
-	bh=8DngvvKSHryUiQZzTbAjAHpdsJcYW51oF2GicyMOQ98=;
+	s=korg; t=1761076409;
+	bh=Hx7ABR0y5wTlKw02KoVhS9CBqNc+umyMQ/5En07uDDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjE9BLZfzByUi7Dm/NTWGZrYpQ8L89c/ElxbY2URsaTj8PBY4c3bs7jH6xGKxakbA
-	 dQnrn+WFyLL7rt6ThnMtgvQ1l0JmiIM9bUj/xY4Ud0E5YauUpKTNKDR81m+arNs1lS
-	 BWtSJpq6P11dYViKHVpkl5eWHVG5PcvtngypyG1Y=
+	b=ZCngF8BW5tDvXJSw2/w9AKDIdQREQAjxWBnMu888xUDfzYrQagHck2Kt2OaXX6anD
+	 WnenPjlb0U7WvN3BSNwzQ86pOHTRAj582AeCqbjqrRH9oru3jP5+UCZ6TZ1hK5lSDw
+	 Ubpx/a2HjR6sCD0YcoIHD4erjaMkAsL4fbEiKmjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 007/105] ext4: detect invalid INLINE_DATA + EXTENTS flag combination
-Date: Tue, 21 Oct 2025 21:50:16 +0200
-Message-ID: <20251021195021.666291341@linuxfoundation.org>
+	Inki Dae <inki.dae@samsung.com>,
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 025/105] drm/exynos: exynos7_drm_decon: remove ctx->suspended
+Date: Tue, 21 Oct 2025 21:50:34 +0200
+Message-ID: <20251021195022.296204143@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
 References: <20251021195021.492915002@linuxfoundation.org>
@@ -53,63 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
 
-commit 1d3ad183943b38eec2acf72a0ae98e635dc8456b upstream.
+[ Upstream commit e1361a4f1be9cb69a662c6d7b5ce218007d6e82b ]
 
-syzbot reported a BUG_ON in ext4_es_cache_extent() when opening a verity
-file on a corrupted ext4 filesystem mounted without a journal.
+Condition guards are found to be redundant, as the call flow is properly
+managed now, as also observed in the Exynos5433 DECON driver. Since
+state checking is no longer necessary, remove it.
 
-The issue is that the filesystem has an inode with both the INLINE_DATA
-and EXTENTS flags set:
+This also fixes an issue which prevented decon_commit() from
+decon_atomic_enable() due to an incorrect state change setting.
 
-    EXT4-fs error (device loop0): ext4_cache_extents:545: inode #15:
-    comm syz.0.17: corrupted extent tree: lblk 0 < prev 66
-
-Investigation revealed that the inode has both flags set:
-    DEBUG: inode 15 - flag=1, i_inline_off=164, has_inline=1, extents_flag=1
-
-This is an invalid combination since an inode should have either:
-- INLINE_DATA: data stored directly in the inode
-- EXTENTS: data stored in extent-mapped blocks
-
-Having both flags causes ext4_has_inline_data() to return true, skipping
-extent tree validation in __ext4_iget(). The unvalidated out-of-order
-extents then trigger a BUG_ON in ext4_es_cache_extent() due to integer
-underflow when calculating hole sizes.
-
-Fix this by detecting this invalid flag combination early in ext4_iget()
-and rejecting the corrupted inode.
-
-Cc: stable@kernel.org
-Reported-and-tested-by: syzbot+038b7bf43423e132b308@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=038b7bf43423e132b308
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Message-ID: <20250930112810.315095-1-kartikey406@gmail.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
+Cc: stable@vger.kernel.org
+Suggested-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c |   36 -----------------------------
+ 1 file changed, 36 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4944,6 +4944,14 @@ struct inode *__ext4_iget(struct super_b
- 	}
- 	ei->i_flags = le32_to_cpu(raw_inode->i_flags);
- 	ext4_set_inode_flags(inode, true);
-+	/* Detect invalid flag combination - can't have both inline data and extents */
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_INLINE_DATA) &&
-+	    ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)) {
-+		ext4_error_inode(inode, function, line, 0,
-+			"inode has both inline data and extents flags");
-+		ret = -EFSCORRUPTED;
-+		goto bad_inode;
-+	}
- 	inode->i_blocks = ext4_inode_blocks(raw_inode, ei);
- 	ei->i_file_acl = le32_to_cpu(raw_inode->i_file_acl_lo);
- 	if (ext4_has_feature_64bit(sb))
+--- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+@@ -51,7 +51,6 @@ struct decon_context {
+ 	void __iomem			*regs;
+ 	unsigned long			irq_flags;
+ 	bool				i80_if;
+-	bool				suspended;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 
+@@ -105,9 +104,6 @@ static void decon_shadow_protect_win(str
+ 
+ static void decon_wait_for_vblank(struct decon_context *ctx)
+ {
+-	if (ctx->suspended)
+-		return;
+-
+ 	atomic_set(&ctx->wait_vsync_event, 1);
+ 
+ 	/*
+@@ -183,9 +179,6 @@ static void decon_commit(struct exynos_d
+ 	struct drm_display_mode *mode = &crtc->base.state->adjusted_mode;
+ 	u32 val, clkdiv;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/* nothing to do if we haven't set the mode yet */
+ 	if (mode->htotal == 0 || mode->vtotal == 0)
+ 		return;
+@@ -247,9 +240,6 @@ static int decon_enable_vblank(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return -EPERM;
+-
+ 	if (!test_and_set_bit(0, &ctx->irq_flags)) {
+ 		val = readl(ctx->regs + VIDINTCON0);
+ 
+@@ -272,9 +262,6 @@ static void decon_disable_vblank(struct
+ 	struct decon_context *ctx = crtc->ctx;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	if (test_and_clear_bit(0, &ctx->irq_flags)) {
+ 		val = readl(ctx->regs + VIDINTCON0);
+ 
+@@ -376,9 +363,6 @@ static void decon_atomic_begin(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	for (i = 0; i < WINDOWS_NR; i++)
+ 		decon_shadow_protect_win(ctx, i, true);
+ }
+@@ -398,9 +382,6 @@ static void decon_update_plane(struct ex
+ 	unsigned int cpp = fb->format->cpp[0];
+ 	unsigned int pitch = fb->pitches[0];
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/*
+ 	 * SHADOWCON/PRTCON register is used for enabling timing.
+ 	 *
+@@ -488,9 +469,6 @@ static void decon_disable_plane(struct e
+ 	unsigned int win = plane->index;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/* protect windows */
+ 	decon_shadow_protect_win(ctx, win, true);
+ 
+@@ -509,9 +487,6 @@ static void decon_atomic_flush(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	for (i = 0; i < WINDOWS_NR; i++)
+ 		decon_shadow_protect_win(ctx, i, false);
+ 	exynos_crtc_handle_event(crtc);
+@@ -539,9 +514,6 @@ static void decon_atomic_enable(struct e
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int ret;
+ 
+-	if (!ctx->suspended)
+-		return;
+-
+ 	ret = pm_runtime_resume_and_get(ctx->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(ctx->dev, "failed to enable DECON device.\n");
+@@ -555,8 +527,6 @@ static void decon_atomic_enable(struct e
+ 		decon_enable_vblank(ctx->crtc);
+ 
+ 	decon_commit(ctx->crtc);
+-
+-	ctx->suspended = false;
+ }
+ 
+ static void decon_atomic_disable(struct exynos_drm_crtc *crtc)
+@@ -564,9 +534,6 @@ static void decon_atomic_disable(struct
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/*
+ 	 * We need to make sure that all windows are disabled before we
+ 	 * suspend that connector. Otherwise we might try to scan from
+@@ -576,8 +543,6 @@ static void decon_atomic_disable(struct
+ 		decon_disable_plane(crtc, &ctx->planes[i]);
+ 
+ 	pm_runtime_put_sync(ctx->dev);
+-
+-	ctx->suspended = true;
+ }
+ 
+ static const struct exynos_drm_crtc_ops decon_crtc_ops = {
+@@ -698,7 +663,6 @@ static int decon_probe(struct platform_d
+ 		return -ENOMEM;
+ 
+ 	ctx->dev = dev;
+-	ctx->suspended = true;
+ 
+ 	i80_if_timings = of_get_child_by_name(dev->of_node, "i80-if-timings");
+ 	if (i80_if_timings)
 
 
