@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E64D24A047;
-	Tue, 21 Oct 2025 20:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E0F1A00CE;
+	Tue, 21 Oct 2025 20:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761077132; cv=none; b=RMfC8owvmnb/Bt64uP7mY7joiFH68Z5ROTcQuo5J008SXdPZf0vIye0DxTG0f61ULFwbFzHDsnZjpwDdiwYvg7hLIF4XT94TbfVuxoT2grBHMUaCfu61n+WG23wAUbrPMTATbLj/VS6bg+h043K3e3IwmnsFSBf/BMjxl0hcnD8=
+	t=1761077135; cv=none; b=kurnYrbAlRkJLMZEYS9jpRbQo9m61xecv50gllYKT7J2uaGOJ2LVANTaXGgL0vwcEFh6xdc7UJU4inL34ls59iQ2Jwe3fzQTyI/2q96ZDnuBn7BJGOuPz63YWcKLiBZmGpalqwycgrpp+U8Sj8DQnMqDDMYm71pQtaRu7CRWjQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761077132; c=relaxed/simple;
-	bh=MfvkSTQoSAfM8NAZm3meqnM5yZ2+n4elhjWdS+Cq5jI=;
+	s=arc-20240116; t=1761077135; c=relaxed/simple;
+	bh=ZdYtQ/48npZv70BlWvEucvNDJxTZxRiiPnHUYSosHE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gkj+ivzI2gbbruJ6ngZ/nrWsFnQFlblwK/0tuql2E65wxvNb50FcF4chSpsQRNNKZ6/VnCyAWRFtdFo+LYN6Mb97++gHae1ZWD/Z4hDjAi18JSn2NubstYdW49NhbA0IFO4fRrjaeC1fF8mLG/1eH4+8+pFbO5b7m/s+1GcHnWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H80X/Ph+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxjH2bzxSLf7nn5cjL2MI2DZnmi+CAN3owQgIDyHDM9nHWZO1JrERGDU5hDz4jIYYgscWj0yqFBNPby/uCrgpL3R04QkpB+zD0ZXvScrWpiFBsxTVfobkvrMU9mD8YLH/m0W4kJ6iVqxKaUEcr9KKzBUplUfJNQCrtIyi0VgrE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPkdOz8C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H80X/Ph+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07E1C4CEF7;
-	Tue, 21 Oct 2025 20:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPkdOz8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F3AC4CEF1;
+	Tue, 21 Oct 2025 20:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761077132;
-	bh=MfvkSTQoSAfM8NAZm3meqnM5yZ2+n4elhjWdS+Cq5jI=;
+	s=korg; t=1761077135;
+	bh=ZdYtQ/48npZv70BlWvEucvNDJxTZxRiiPnHUYSosHE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H80X/Ph++gzJ6LDM4rh8a8XL1seHQzrde+m6/x83SKUgYLBlfiFxwEXP5YbDaEwng
-	 xH1gqHdvDC0N7dRDcyjgQzawhh8k68y7QjFPPkF6eUIKE5I6+N8L5kZOwOtEtnKTGY
-	 eUeZfL28LIQIi3FMkAe8r33Giu+/QluW09xiwaFM=
+	b=xPkdOz8C1Nuurnq8az7NNe+3+ijMfzUFyWz79dpGRca/ANJrJXKmDghd+0U78x5ct
+	 g40OizRr9Lzk0evJo1l+0qize0f08M2uE4Ca13JeYaaYiyE/3nG+Php2ABpIzpG9R2
+	 h/s1M229ChuoU/oiVF42wVzVClnNxzGFxUA65Ufc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.17 010/159] rust: cfi: only 64-bit arm and x86 support CFI_CLANG
-Date: Tue, 21 Oct 2025 21:49:47 +0200
-Message-ID: <20251021195043.432068280@linuxfoundation.org>
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.17 011/159] smb: client: Fix refcount leak for cifs_sb_tlink
+Date: Tue, 21 Oct 2025 21:49:48 +0200
+Message-ID: <20251021195043.455255829@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
 References: <20251021195043.182511864@linuxfoundation.org>
@@ -52,50 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-commit 812258ff4166bcd41c7d44707e0591f9ae32ac8c upstream.
+commit c2b77f42205ef485a647f62082c442c1cd69d3fc upstream.
 
-The kernel uses the standard rustc targets for non-x86 targets, and out
-of those only 64-bit arm's target has kcfi support enabled. For x86, the
-custom 64-bit target enables kcfi.
+Fix three refcount inconsistency issues related to `cifs_sb_tlink`.
 
-The HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC config option that allows
-CFI_CLANG to be used in combination with RUST does not check whether the
-rustc target supports kcfi. This breaks the build on riscv (and
-presumably 32-bit arm) when CFI_CLANG and RUST are enabled at the same
-time.
+Comments for `cifs_sb_tlink` state that `cifs_put_tlink()` needs to be
+called after successful calls to `cifs_sb_tlink()`. Three calls fail to
+update refcount accordingly, leading to possible resource leaks.
 
-Ordinarily, a rustc-option check would be used to detect target support
-but unfortunately rustc-option filters out the target for reasons given
-in commit 46e24a545cdb4 ("rust: kasan/kbuild: fix missing flags on first
-build"). As a result, if the host supports kcfi but the target does not,
-e.g. when building for riscv on x86_64, the build would remain broken.
-
-Instead, make HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC depend on the only
-two architectures where the target used supports it to fix the build.
-
-CC: stable@vger.kernel.org
-Fixes: ca627e636551e ("rust: cfi: add support for CFI_CLANG with Rust")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250908-distill-lint-1ae78bcf777c@spud
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 8ceb98437946 ("CIFS: Move rename to ops struct")
+Fixes: 2f1afe25997f ("cifs: Use smb 2 - 3 and cifsacl mount options getacl functions")
+Fixes: 366ed846df60 ("cifs: Use smb 2 - 3 and cifsacl mount options setacl function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/inode.c   |    6 ++++--
+ fs/smb/client/smb2ops.c |    8 ++++----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -917,6 +917,7 @@ config HAVE_CFI_ICALL_NORMALIZE_INTEGERS
- 	def_bool y
- 	depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
- 	depends on RUSTC_VERSION >= 107900
-+	depends on ARM64 || X86_64
- 	# With GCOV/KASAN we need this fix: https://github.com/rust-lang/rust/pull/129373
- 	depends on (RUSTC_LLVM_VERSION >= 190103 && RUSTC_VERSION >= 108200) || \
- 		(!GCOV_KERNEL && !KASAN_GENERIC && !KASAN_SW_TAGS)
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -2431,8 +2431,10 @@ cifs_do_rename(const unsigned int xid, s
+ 	tcon = tlink_tcon(tlink);
+ 	server = tcon->ses->server;
+ 
+-	if (!server->ops->rename)
+-		return -ENOSYS;
++	if (!server->ops->rename) {
++		rc = -ENOSYS;
++		goto do_rename_exit;
++	}
+ 
+ 	/* try path-based rename first */
+ 	rc = server->ops->rename(xid, tcon, from_dentry,
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3129,8 +3129,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
+ 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
+ 	if (!utf16_path) {
+ 		rc = -ENOMEM;
+-		free_xid(xid);
+-		return ERR_PTR(rc);
++		goto put_tlink;
+ 	}
+ 
+ 	oparms = (struct cifs_open_parms) {
+@@ -3162,6 +3161,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
+ 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
+ 	}
+ 
++put_tlink:
+ 	cifs_put_tlink(tlink);
+ 	free_xid(xid);
+ 
+@@ -3202,8 +3202,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
+ 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
+ 	if (!utf16_path) {
+ 		rc = -ENOMEM;
+-		free_xid(xid);
+-		return rc;
++		goto put_tlink;
+ 	}
+ 
+ 	oparms = (struct cifs_open_parms) {
+@@ -3224,6 +3223,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
+ 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
+ 	}
+ 
++put_tlink:
+ 	cifs_put_tlink(tlink);
+ 	free_xid(xid);
+ 	return rc;
 
 
