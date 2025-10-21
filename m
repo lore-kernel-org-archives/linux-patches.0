@@ -1,110 +1,129 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5DB34D90E;
-	Tue, 21 Oct 2025 18:39:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2C261B8D;
+	Tue, 21 Oct 2025 19:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761071985; cv=none; b=ippX5d42x2ULOtArS7XduM2xv6yhe8UZsR2nVSPmN7Szrm1nqX0exEfogONq40BPwxrK5Ohrny8VUZrMO/a1shlM8LA8u3ZD3oZHU8C9xNui+x0dC6I/tlJU6cEvPTBNXWNKIBu0Ct01LOxpoJnM+hU3OyHhppS6gzS/RjnEcQ0=
+	t=1761076353; cv=none; b=RYlEFaz5cBB7P6amZ5EkMqxbcneGrBrx2WsQW43jzMaeHeBprS3VLbjbiG+FKP1zJhw9ojE+JyaXDk3UX0PN7IEfU6nAzup/wY7GeDzYmcOBe0pAojj1uvjuRji1WCynG1GMdFEZqDQRVXWcc39kOX2aH4NJTqGzbQVZhzGEgJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761071985; c=relaxed/simple;
-	bh=tLuIYVR/oNVncCUmdWuUFkdC1hMwOk7CK2U+1G+bMKc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=n7sLkmR+SG2sizQ1O2lWUGiwJ6cY02odcIv+e2dZTBSoTZ3KghLgbdmnKTE+SFj3NLd2JJK9cvb6Qp8lV8tAJH12bMG+kJ8u7IhX4JqjUsMleEraRfDMvdOdwiWVmp3pH6gt7/aDON/C9JTLTh6MWC/nR7QVJygtLvwE7IoS3CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vBGh2-000o0t-28;
-	Tue, 21 Oct 2025 18:02:44 +0000
-Received: from ben by deadeye with local (Exim 4.98.2)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vBGh0-00000003O7g-2tKl;
-	Tue, 21 Oct 2025 20:02:42 +0200
-Message-ID: <92fe5b00bb5a4298d1a48c4c220e15a761e22a45.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 013/122] compiler.h: drop fallback overflow checkers
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
- Nick Desaulniers <ndesaulniers@google.com>, Kees Cook
- <keescook@chromium.org>, Nathan Chancellor <nathan@kernel.org>,  Linus
- Torvalds <torvalds@linux-foundation.org>, Eliav Farber <farbere@amazon.com>
-Date: Tue, 21 Oct 2025 20:02:36 +0200
-In-Reply-To: <20250930143823.531610305@linuxfoundation.org>
-References: <20250930143822.939301999@linuxfoundation.org>
-	 <20250930143823.531610305@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-yr5KOxO6GopMo2Ugrb04"
-User-Agent: Evolution 3.56.2-5 
+	s=arc-20240116; t=1761076353; c=relaxed/simple;
+	bh=c+vIpMsE0HVc90BT5CiJ86M2OZp1Opwnn3I/uZPqQts=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dSfoEsecvs2XsseuvwcarHFtnOxBEpcuFa+xk1ZlF6Qw0EaRJ8/24lJivoUt66f33IalDAx0l2KChtGf4XU6asXxcBK5trBE+YvcTIZSGEN7arWvddVh9XVOedMGGsgSX/AqLjSNs0xPHy6NbqPN7PdwXsvllt8Htc9UQ9/t5dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFwQ3L7A; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFwQ3L7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8188BC4CEF5;
+	Tue, 21 Oct 2025 19:52:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761076352;
+	bh=c+vIpMsE0HVc90BT5CiJ86M2OZp1Opwnn3I/uZPqQts=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fFwQ3L7A8FJgNyEf0RXwUBjAnfIMswUmtZcsA8g/6hLp00ujlP5YYsvaCmDVTov5r
+	 acc7PgMu2FzKd+gD8hXcJXmbwK91zXMwOucZuTXHbeWDr/xu5JHmm9oGkG14k7xrrp
+	 QDEpckTFk9unRK+OKkhffC9wLYzHhRTVVIj6/YpA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 001/105] smb: client: Fix refcount leak for cifs_sb_tlink
+Date: Tue, 21 Oct 2025 21:50:10 +0200
+Message-ID: <20251021195021.530455975@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251021195021.492915002@linuxfoundation.org>
+References: <20251021195021.492915002@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Transfer-Encoding: 8bit
+
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Shuhao Fu <sfual@cse.ust.hk>
+
+commit c2b77f42205ef485a647f62082c442c1cd69d3fc upstream.
+
+Fix three refcount inconsistency issues related to `cifs_sb_tlink`.
+
+Comments for `cifs_sb_tlink` state that `cifs_put_tlink()` needs to be
+called after successful calls to `cifs_sb_tlink()`. Three calls fail to
+update refcount accordingly, leading to possible resource leaks.
+
+Fixes: 8ceb98437946 ("CIFS: Move rename to ops struct")
+Fixes: 2f1afe25997f ("cifs: Use smb 2 - 3 and cifsacl mount options getacl functions")
+Fixes: 366ed846df60 ("cifs: Use smb 2 - 3 and cifsacl mount options setacl function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/smb/client/inode.c   |    6 ++++--
+ fs/smb/client/smb2ops.c |    8 ++++----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -2319,8 +2319,10 @@ cifs_do_rename(const unsigned int xid, s
+ 	tcon = tlink_tcon(tlink);
+ 	server = tcon->ses->server;
+ 
+-	if (!server->ops->rename)
+-		return -ENOSYS;
++	if (!server->ops->rename) {
++		rc = -ENOSYS;
++		goto do_rename_exit;
++	}
+ 
+ 	/* try path-based rename first */
+ 	rc = server->ops->rename(xid, tcon, from_dentry,
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3072,8 +3072,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
+ 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
+ 	if (!utf16_path) {
+ 		rc = -ENOMEM;
+-		free_xid(xid);
+-		return ERR_PTR(rc);
++		goto put_tlink;
+ 	}
+ 
+ 	oparms = (struct cifs_open_parms) {
+@@ -3105,6 +3104,7 @@ get_smb2_acl_by_path(struct cifs_sb_info
+ 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
+ 	}
+ 
++put_tlink:
+ 	cifs_put_tlink(tlink);
+ 	free_xid(xid);
+ 
+@@ -3145,8 +3145,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
+ 	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
+ 	if (!utf16_path) {
+ 		rc = -ENOMEM;
+-		free_xid(xid);
+-		return rc;
++		goto put_tlink;
+ 	}
+ 
+ 	oparms = (struct cifs_open_parms) {
+@@ -3167,6 +3166,7 @@ set_smb2_acl(struct smb_ntsd *pnntsd, __
+ 		SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
+ 	}
+ 
++put_tlink:
+ 	cifs_put_tlink(tlink);
+ 	free_xid(xid);
+ 	return rc;
 
 
---=-yr5KOxO6GopMo2Ugrb04
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 2025-09-30 at 16:45 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Nick Desaulniers <ndesaulniers@google.com>
->=20
-> [ Upstream commit 4eb6bd55cfb22ffc20652732340c4962f3ac9a91 ]
->=20
-> Once upgrading the minimum supported version of GCC to 5.1, we can drop
-> the fallback code for !COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW.
-[...]
-
-Well, that only happened in 5.15.  So either 5.10 should also have:
-
-commit 76ae847497bc5207c479de5e2ac487270008b19b
-Author: Nick Desaulniers <ndesaulniers@google.com>
-Date:   Fri Sep 10 16:40:38 2021 -0700
-=20
-    Documentation: raise minimum supported version of GCC to 5.1
-
-or this should be reverted.  (I don't care about such ancient versions,
-but I do want this to be a clear decision and not an accidental change.)
-
-Ben.
-
---=20
-Ben Hutchings
-Editing code like this is akin to sticking plasters on the bleeding
-stump of a severed limb. - me, 29 June 1999
-
---=-yr5KOxO6GopMo2Ugrb04
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmj3yrwACgkQ57/I7JWG
-EQnrJw/+JXGbvD0wZL+b39EptdFuaX+WhrRMa78BVSz65N/Fuca2g+kzCnGlR2/r
-4IvEIMwMRfwx0ENFTmdD7xBSiZ+fjxILE64iYLBADXhYN76k4vh16ATpy4hHqvoa
-LEU4pzqsG+MC6Lzwz2rS+wWZzjIWoMPsFqVZkPRxMWvGemywcAQcio92aLSeuIIM
-+heeX9SUBw5DM9rHJ3NhGt+wFQUYgJmTXUTz1c0eSUL34wdqDQgqgf+RJsKRwG98
-fJaLLFrhcFGrdxD9vgxBMhQOSsPvAxCt6OhoWwkD655fflyI06t0Dks894GuN0jb
-y5x9BTAybTcO1WOpvitzpYSVxMxeV1wpp8OUQOxnajyIwYOQs0cwytvFYC3txUOU
-SG1th5569pWoWzCdFtbC0WIcVVCJW9sJ2f2nTRZWXttExD7W5GXEdxrB/XKpcdZx
-nMEWweo5j4bufToaCIqrORhgZj6cefn/ZoOHMaBpvirNUo9453A5QHRoMCaJierf
-QqS19EssCq7L448caJow5zB6thUkhnumQuJNh4DpwAYFr4IneXwVLy3tQvCTMiaa
-adScr5NXVPV0h96GcO9rl1BxJoG82JiMjGmxK3l/g7DiNx1Dw61JHv4hQEOqvlcQ
-YyI4GLN48Kep8dGPmW96OQbnd2++5TqylmGIRXSkaujr5bpgupo=
-=JCeg
------END PGP SIGNATURE-----
-
---=-yr5KOxO6GopMo2Ugrb04--
