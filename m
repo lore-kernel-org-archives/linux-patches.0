@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE7A350A07;
-	Tue, 21 Oct 2025 20:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D8E350A07;
+	Tue, 21 Oct 2025 20:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761076861; cv=none; b=N3jTyTT60kmzSLSxNJJWgNvkgFPit7fDTOvdhIeLk9e0r+c7v8lju6mtXaqvCH4otkzf1v1epcLcprVYLia8lkgMEvaOl13U2AY8wIYov5Qf3I6getyrHX7JLVk4+RasDetu6pLL7gwZ/WEEj4UuWtW6jFfKPfIcxPZQHnAeIhw=
+	t=1761076862; cv=none; b=g+8KwsTxAWDUapGIrfFulgVRXkhCwUn0AgjNY+OA5+135UEOjC4RKs9VysQxFnapMK2vzqcGQA2sV/XVB8DYJzIqY73gTQfYVwx9tpkjKxWGUAf6J313iQ4CSyD0yIo4TEQinZjqxirmDNtl3EZ+jsW+/bRMoAjXRHjxSQ6kGMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761076861; c=relaxed/simple;
-	bh=3/KOt74qayBq2ioE/1Enlk16UEQuUSk32hWDUOW+8AE=;
+	s=arc-20240116; t=1761076862; c=relaxed/simple;
+	bh=0Iet2tfbbS6B+nQDQLwjWRyEz1Ar55+2j/Fvgl2MAQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQvs31wi1UmXf3vjSmJMjyJGXoLjyQlZ9jQ+/BR5mInBzOYARAl74+6ngbyIo9S98jfnm7uHfw9tymozG9XtnrLXpaWJKT0h9r1QeJHz8wqVPsN/Yov39xylgn+6WpbJgkoqnUIxZF6tlIGU6RaduYe3Mg/hMIGEWeVBSErLeHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXdWLTDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=inbbSKuwXToKbPPgfzImajLa6RYOZQuGqA0nXpMZR0tYilNargMSp+IcqVXSgbGTMtb9UD1wDqig/HRlKtzOlmjA4y88qcCjeLc8rTWjb0sK8ic9SHQ6pntjjzM8hfjfLC3ogoCSmQEyKXuhHPRiIwAQiMvA5GYwYxCROP8x35c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0OvuULy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXdWLTDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F847C4CEF1;
-	Tue, 21 Oct 2025 20:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0OvuULy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0188AC4CEF1;
+	Tue, 21 Oct 2025 20:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761076859;
-	bh=3/KOt74qayBq2ioE/1Enlk16UEQuUSk32hWDUOW+8AE=;
+	s=korg; t=1761076862;
+	bh=0Iet2tfbbS6B+nQDQLwjWRyEz1Ar55+2j/Fvgl2MAQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXdWLTDhNqSvjbKhbowLze6iu0YAsyrZyO2tihjAg0aq3nM4Ay6Lrjx7Uf4MDC4mX
-	 TudprOwuuA95ihqKJiMQdRg1Ll/PzHH4hBJpUklojnIsy0+T2XevxU4hjzXGPYwHbU
-	 uMXdLJWzy4u76ljFma2nmXfFzvKzU+eGaretAVtc=
+	b=T0OvuULyCQs5eFbrNUWWUZ8Wkw5O0xg5vynHUgh0GuP15n/NCWbxr4bWz5/T+OwhF
+	 +S6bQlSx09XSEUrNFyJQa/NBCECN1OsVqFex8Xd610IoYAb1cjFQ62xcTRrkshJP4Y
+	 F2gmJB3+QjA0WuPQ/jb45SfCLIfhcLchWDwc/nbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/136] tls: always set record_type in tls_process_cmsg
-Date: Tue, 21 Oct 2025 21:50:49 +0200
-Message-ID: <20251021195037.444792252@linuxfoundation.org>
+Subject: [PATCH 6.12 062/136] tls: wait for pending async decryptions if tls_strp_msg_hold fails
+Date: Tue, 21 Oct 2025 21:50:50 +0200
+Message-ID: <20251021195037.468716927@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021195035.953989698@linuxfoundation.org>
 References: <20251021195035.953989698@linuxfoundation.org>
@@ -54,54 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit b6fe4c29bb51cf239ecf48eacf72b924565cb619 ]
+[ Upstream commit b8a6ff84abbcbbc445463de58704686011edc8e1 ]
 
-When userspace wants to send a non-DATA record (via the
-TLS_SET_RECORD_TYPE cmsg), we need to send any pending data from a
-previous MSG_MORE send() as a separate DATA record. If that DATA record
-is encrypted asynchronously, tls_handle_open_record will return
--EINPROGRESS. This is currently treated as an error by
-tls_process_cmsg, and it will skip setting record_type to the correct
-value, but the caller (tls_sw_sendmsg_locked) handles that return
-value correctly and proceeds with sending the new message with an
-incorrect record_type (DATA instead of whatever was requested in the
-cmsg).
+Async decryption calls tls_strp_msg_hold to create a clone of the
+input skb to hold references to the memory it uses. If we fail to
+allocate that clone, proceeding with async decryption can lead to
+various issues (UAF on the skb, writing into userspace memory after
+the recv() call has returned).
 
-Always set record_type before handling the open record. If
-tls_handle_open_record returns an error, record_type will be
-ignored. If it succeeds, whether with synchronous crypto (returning 0)
-or asynchronous (returning -EINPROGRESS), the caller will proceed
-correctly.
+In this case, wait for all pending decryption requests.
 
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
 Reported-by: Jann Horn <jannh@google.com>
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/0457252e578a10a94e40c72ba6288b3a64f31662.1760432043.git.sd@queasysnail.net
+Link: https://patch.msgid.link/b9fe61dcc07dab15da9b35cf4c7d86382a98caf2.1760432043.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/tls/tls_sw.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 0acf313deb01f..e52e4c91c9091 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -255,12 +255,9 @@ int tls_process_cmsg(struct sock *sk, struct msghdr *msg,
- 			if (msg->msg_flags & MSG_MORE)
- 				return -EINVAL;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index dc5a7e24d7b77..bebf0dd3b95fa 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1637,8 +1637,10 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
  
--			rc = tls_handle_open_record(sk, msg->msg_flags);
--			if (rc)
--				return rc;
--
- 			*record_type = *(unsigned char *)CMSG_DATA(cmsg);
--			rc = 0;
-+
-+			rc = tls_handle_open_record(sk, msg->msg_flags);
- 			break;
- 		default:
- 			return -EINVAL;
+ 	if (unlikely(darg->async)) {
+ 		err = tls_strp_msg_hold(&ctx->strp, &ctx->async_hold);
+-		if (err)
+-			__skb_queue_tail(&ctx->async_hold, darg->skb);
++		if (err) {
++			err = tls_decrypt_async_wait(ctx);
++			darg->async = false;
++		}
+ 		return err;
+ 	}
+ 
 -- 
 2.51.0
 
