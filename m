@@ -1,270 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AA33054E9;
-	Wed, 22 Oct 2025 12:29:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EA43491C3
+	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 13:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761136160; cv=none; b=cWvEsCA/maz7jAaD7vuqmuHeuUzfh5BD3kqpzIsw+8aBW6neJSMK2qwQ3ITtPRabGxSKO8C7lBFBTf7Fkcj91SQZLxdhT5uzMEKGe0V8wAawZSACF8I54t9ympN5C66v5IMDrLNhe5c1SwR+TqD/mf+ZEMonZPxZGndfUpecrk4=
+	t=1761138453; cv=none; b=pB9aiFddXubx2XQtWIPFr4culOkheFV0izP0N7S6joE55MzdCHvj94nx8fBqCrCIVcSoIZqdnBh91A5kFCYmsc3ZIn92lHg6FPSOqSkAoWgJv8dleoef3fx8nQ02is4ym9eA1DhHTQJBz/BDSjXYfmls6Aqt7gfKYAqHXdqbDWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761136160; c=relaxed/simple;
-	bh=PdoyPpVLI0h36WkddFGDMhxDoR224/S0wzMk/e+s7EQ=;
+	s=arc-20240116; t=1761138453; c=relaxed/simple;
+	bh=5l4YIxzcsZkjlPhKWCLqtRWElD9XS4GZuoGPn/+2o+w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XcgsOWnRKgz4x/mEDlMT35dL0JdV3Uw03DQUrx5FZbLGxlgKxAkvygrjjIta8E5t6UdhUI5oByOcZ9qoLVescTXXyLr+HEPuHwV67VThzOmtvfsq1SY2ISnYmtH443Y33jfyWtPWuNamsskDxLUZfATANaIckVVx7a2EaDENZ7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2gE3e0j; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=q3Sg3f3qCI9rkxEtDFStWGhOZR/118cDTIPbs15SEIv4tCmWRRRTYoXtD6YSF7slLMqV9pEYZ3AqJ0CySH5+rjP7HTWjy70b/YFbyIXxwvoe8PzBrkSE+dcVBSHGmttBDNCEa8qKHeJ7aQwDu+N4cp4OqmjlQeZerBtMOY9ldBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=HH17g4vu; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2gE3e0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8241BC4CEE7;
-	Wed, 22 Oct 2025 12:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761136160;
-	bh=PdoyPpVLI0h36WkddFGDMhxDoR224/S0wzMk/e+s7EQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D2gE3e0jDJkOv+h3Rf5E8+Qk2ZZi1A/tuoc43i0LgWk5BoSoxLFzdQuBVE+0EFnjt
-	 5Re9EPThjolOuOTVvwRQbkL06C4UdWwErLbRHUQOvXTbxnKZJpocP5k95uCXhnsesz
-	 k+9U8USGyfq3V4Npp+4Qg2RvNfwDrLMvFIf1yF4E=
-Date: Wed, 22 Oct 2025 14:29:17 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Niko Mauno <niko.mauno@vaisala.com>
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="HH17g4vu"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C9CCB1038C10E;
+	Wed, 22 Oct 2025 15:07:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1761138442; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=u7FD/pekiqcAC48IXTFp78ySVwMcroarl0d1MdlzkpI=;
+	b=HH17g4vubYuTQhiD2pnGhHiHuNTBNF4p7LxRuMCJT/ROKalH8XOldLHSbCk2dNXuVy4L1O
+	mHrPxSAB+MJY5BVS8KADoOiQwCwVzoZA1Kkm0aDSMUYh1sEhI5iMwr6wC8p1VslAAMXmvs
+	wB40ib7GV+xxQMsXgbYGXApV1Gf5BJibpNUpIDByndQgKZDP5wIh4YNJhy+BfyEUUmmqbG
+	Ydp8WA/kTqa3FXfyZPK9X9PyeUzG/p5zuRrIFwvQxF6WXS+9Op2/O/nPkDoWG1aKTP788L
+	agUqTIKEHitzKcT/d6KGAwMQ0tgftd87WihNa4j/W8+w8zpPceDtaMlWee9dAw==
+Date: Wed, 22 Oct 2025 15:07:16 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Howard Chu <howardchu95@gmail.com>, Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>, Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 136/276] perf test: Dont leak workload gopipe in
- PERF_RECORD_*
-Message-ID: <2025102206-mauve-wizard-d875@gregkh>
-References: <20251017145142.382145055@linuxfoundation.org>
- <20251017145147.447011793@linuxfoundation.org>
- <8c1c66c4-62dc-416a-b52e-314ce98fe474@vaisala.com>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+Subject: Re: [PATCH 6.12 000/135] 6.12.55-rc2 review
+Message-ID: <aPjXBPcehgzTNLu5@duo.ucw.cz>
+References: <20251022060141.370358070@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="K+R5SPhWy/4AQ6XK"
+Content-Disposition: inline
+In-Reply-To: <20251022060141.370358070@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
+
+
+--K+R5SPhWy/4AQ6XK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8c1c66c4-62dc-416a-b52e-314ce98fe474@vaisala.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 22, 2025 at 03:08:36PM +0300, Niko Mauno wrote:
-> On 10/17/25 17:53, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Ian Rogers <irogers@google.com>
-> > 
-> > [ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
-> > 
-> > The test starts a workload and then opens events. If the events fail
-> > to open, for example because of perf_event_paranoid, the gopipe of the
-> > workload is leaked and the file descriptor leak check fails when the
-> > test exits. To avoid this cancel the workload when opening the events
-> > fails.
-> > 
-> > Before:
-> > ```
-> > $ perf test -vv 7
-> >    7: PERF_RECORD_* events & perf_sample fields:
-> >   --- start ---
-> > test child forked, pid 1189568
-> > Using CPUID GenuineIntel-6-B7-1
-> >   ------------------------------------------------------------
-> > perf_event_attr:
-> >    type                    	   0 (PERF_TYPE_HARDWARE)
-> >    config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-> >    disabled                	   1
-> >   ------------------------------------------------------------
-> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-> > sys_perf_event_open failed, error -13
-> >   ------------------------------------------------------------
-> > perf_event_attr:
-> >    type                             0 (PERF_TYPE_HARDWARE)
-> >    config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
-> >    disabled                         1
-> >    exclude_kernel                   1
-> >   ------------------------------------------------------------
-> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-> >   ------------------------------------------------------------
-> > perf_event_attr:
-> >    type                             0 (PERF_TYPE_HARDWARE)
-> >    config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-> >    disabled                         1
-> >   ------------------------------------------------------------
-> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
-> > sys_perf_event_open failed, error -13
-> >   ------------------------------------------------------------
-> > perf_event_attr:
-> >    type                             0 (PERF_TYPE_HARDWARE)
-> >    config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
-> >    disabled                         1
-> >    exclude_kernel                   1
-> >   ------------------------------------------------------------
-> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
-> > Attempt to add: software/cpu-clock/
-> > ..after resolving event: software/config=0/
-> > cpu-clock -> software/cpu-clock/
-> >   ------------------------------------------------------------
-> > perf_event_attr:
-> >    type                             1 (PERF_TYPE_SOFTWARE)
-> >    size                             136
-> >    config                           0x9 (PERF_COUNT_SW_DUMMY)
-> >    sample_type                      IP|TID|TIME|CPU
-> >    read_format                      ID|LOST
-> >    disabled                         1
-> >    inherit                          1
-> >    mmap                             1
-> >    comm                             1
-> >    enable_on_exec                   1
-> >    task                             1
-> >    sample_id_all                    1
-> >    mmap2                            1
-> >    comm_exec                        1
-> >    ksymbol                          1
-> >    bpf_event                        1
-> >    { wakeup_events, wakeup_watermark } 1
-> >   ------------------------------------------------------------
-> > sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
-> > sys_perf_event_open failed, error -13
-> > perf_evlist__open: Permission denied
-> >   ---- end(-2) ----
-> > Leak of file descriptor 6 that opened: 'pipe:[14200347]'
-> >   ---- unexpected signal (6) ----
-> > iFailed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> > Failed to read build ID for //anon
-> >      #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
-> >      #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
-> >      #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
-> >      #3 0x7f29ce849cc2 in raise raise.c:27
-> >      #4 0x7f29ce8324ac in abort abort.c:81
-> >      #5 0x565358f662d4 in check_leaks builtin-test.c:226
-> >      #6 0x565358f6682e in run_test_child builtin-test.c:344
-> >      #7 0x565358ef7121 in start_command run-command.c:128
-> >      #8 0x565358f67273 in start_test builtin-test.c:545
-> >      #9 0x565358f6771d in __cmd_test builtin-test.c:647
-> >      #10 0x565358f682bd in cmd_test builtin-test.c:849
-> >      #11 0x565358ee5ded in run_builtin perf.c:349
-> >      #12 0x565358ee6085 in handle_internal_command perf.c:401
-> >      #13 0x565358ee61de in run_argv perf.c:448
-> >      #14 0x565358ee6527 in main perf.c:555
-> >      #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
-> >      #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-> >      #17 0x565358e391c1 in _start perf[851c1]
-> >    7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
-> > ```
-> > 
-> > After:
-> > ```
-> > $ perf test 7
-> >    7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-> > ```
-> > 
-> > Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
-> > Signed-off-by: Ian Rogers <irogers@google.com>
-> > Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> > Cc: Adrian Hunter <adrian.hunter@intel.com>
-> > Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-> > Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-> > Cc: Chun-Tse Shao <ctshao@google.com>
-> > Cc: Howard Chu <howardchu95@gmail.com>
-> > Cc: Ingo Molnar <mingo@redhat.com>
-> > Cc: James Clark <james.clark@linaro.org>
-> > Cc: Jiri Olsa <jolsa@kernel.org>
-> > Cc: Kan Liang <kan.liang@linux.intel.com>
-> > Cc: Mark Rutland <mark.rutland@arm.com>
-> > Cc: Namhyung Kim <namhyung@kernel.org>
-> > Cc: Peter Zijlstra <peterz@infradead.org>
-> > Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >   tools/perf/tests/perf-record.c | 4 ++++
-> >   1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
-> > index 0df471bf1590e..b215e89b65f7d 100644
-> > --- a/tools/perf/tests/perf-record.c
-> > +++ b/tools/perf/tests/perf-record.c
-> > @@ -115,6 +115,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
-> >   	if (err < 0) {
-> >   		pr_debug("sched__get_first_possible_cpu: %s\n",
-> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
-> > +		evlist__cancel_workload(evlist);
-> >   		goto out_delete_evlist;
-> >   	}
-> > @@ -126,6 +127,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
-> >   	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
-> >   		pr_debug("sched_setaffinity: %s\n",
-> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
-> > +		evlist__cancel_workload(evlist);
-> >   		goto out_delete_evlist;
-> >   	}
-> > @@ -137,6 +139,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
-> >   	if (err < 0) {
-> >   		pr_debug("perf_evlist__open: %s\n",
-> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
-> > +		evlist__cancel_workload(evlist);
-> >   		goto out_delete_evlist;
-> >   	}
-> > @@ -149,6 +152,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
-> >   	if (err < 0) {
-> >   		pr_debug("evlist__mmap: %s\n",
-> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
-> > +		evlist__cancel_workload(evlist);
-> >   		goto out_delete_evlist;
-> >   	}
-> 
-> it seems that this commit breaks building perf followingly with v5.15.195:
-> 
->   | /usr/bin/ld: perf-in.o: in function `test__PERF_RECORD':
->   | /home/username/src/vaisala-linux-stable/tools/perf/tests/perf-record.c:142: undefined reference to `evlist__cancel_workload'
->   | /usr/bin/ld: /home/username/src/vaisala-linux-stable/tools/perf/tests/perf-record.c:130: undefined reference to `evlist__cancel_workload'
-> 
-> The 'evlist__cancel_workload' seems to be introduced in commit e880a70f8046 ("perf stat: Close cork_fd when create_perf_stat_counter() failed") which is currently not included in the 5.15.y stable series.
-> 
-> BR, Niko Mauno
+Hi!
 
-Can you send a revert for this?
+> This is the start of the stable review cycle for the 6.12.55 release.
+> There are 135 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-thanks,
+CIP testing did not find any problems here:
 
-greg k-h
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.12.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
+Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--K+R5SPhWy/4AQ6XK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaPjXBAAKCRAw5/Bqldv6
+8p0OAJwJx1Byzh8oNOYf5/ljhW8m96v3PwCfSb1kliLtHZodZZrj3uMqdVU6LC8=
+=3ir4
+-----END PGP SIGNATURE-----
+
+--K+R5SPhWy/4AQ6XK--
