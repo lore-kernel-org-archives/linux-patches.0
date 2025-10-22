@@ -1,87 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706602EA164;
-	Wed, 22 Oct 2025 05:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8BF2EC0BD;
+	Wed, 22 Oct 2025 05:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761110934; cv=none; b=ZJumkD2y/U41KOagd1uRvJNwZdU2YiZRmyqIDlRQNlKFYjulWWbJE2JMHI43RCUUN/K/FiVsghTqp21ZumW1PLA2SeT6eLxj0IhLYFflu1xL3Eqo3uJWmdN1xJEWWkZ5QEOOjD5aBxugDXyoM2fIRkNs0FhBrbHREFNn9M2mC4Q=
+	t=1761111172; cv=none; b=W8MdZn19j26tYpMS76qAknaibzMafc8sfPXjJxK13p9xW37oubmsoXjB9aYdwjQWZHqGvmlkkpeefRxMm+0JW3EeDVIxZcHHjIJFolLci/e9x9eErPj4kYAU3t3wMoWF/n3Kx+2MlbWd7xnJKFhFqiXrMiYOB6fYOOK6Drzcsjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761110934; c=relaxed/simple;
-	bh=3Ff1ASD4+Th70oO4lsVjO5rTjRYPN1ABVSR9uE5fR7g=;
+	s=arc-20240116; t=1761111172; c=relaxed/simple;
+	bh=+VI8strPvG91hJdErc+XwoQ1a+WncizfTTCaBYO8JjA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lvkI8+vSmN//1upA8qrYekaaOqwbq2DmBk6XTPE9Qn0acHparb/zl/8vxBqbDB5lz58DOYR+R2wqJ7D6T250cASaF7mHe9I0pqYl9n0rPxDbqJ9tyz0C8ebvHW/ghcpru0NBmWl+vslmrhypN50HQlByZPMYc+MS7n2HFxDgMqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM14vIVZ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QUwrYIY1iM8790ezxAbK2R3hFfW8DWuxmWimTWn2rcQBz1mZpWz9a24qIj4gaY7YVqOyaHxNVxWsy2yER24O6kjCGuTTdi5HqPYHtNQumGdO3sp7fxcZZnlwgNuUDanbInc8LvLETpqIWlhexqdSFNDXhzRE5P6s2DbKGmCAvf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/vT6Yaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM14vIVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0A7C4CEE7;
-	Wed, 22 Oct 2025 05:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/vT6Yaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71B4C4CEF5;
+	Wed, 22 Oct 2025 05:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761110933;
-	bh=3Ff1ASD4+Th70oO4lsVjO5rTjRYPN1ABVSR9uE5fR7g=;
+	s=korg; t=1761111172;
+	bh=+VI8strPvG91hJdErc+XwoQ1a+WncizfTTCaBYO8JjA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FM14vIVZxOjSYglNeWLtEEHC/JxTP6WKADZiXeEpooRHBfSgLL7xWxg3sOb153DAq
-	 2pZWBHKtdv9BrP51l3fR4tZ1vO+Uln8WBZL+cRDwi9j43/9iL+LN4DoRCxeXHEQ8Td
-	 m9xJk81/wmEAOKIg9POnRuKi5sA0uGkVQlCKJfzA=
-Date: Wed, 22 Oct 2025 07:28:50 +0200
+	b=M/vT6YawW2GXUrYumPRdX8cAghlwLIMIYv/L9k4D2naDkkHXkRXJyYco9rZJKJ1Sg
+	 mzL/FRqYu7siA6BBb79tiwBZIL2RT+AGMIevn9F2vB+/lRn0T8lHA62Da/GxD2ygD0
+	 yiWehzZtYLGbdwG6tRlGJEvBOtIi0c+5NDGw6J4M=
+Date: Wed, 22 Oct 2025 07:32:49 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Thorsten Leemhuis <regressions@leemhuis.info>
+To: Holger =?iso-8859-1?Q?Hoffst=E4tte?= <holger@applied-asynchrony.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Nick Bowler <nbowler@draconx.ca>,
-	Douglas Anderson <dianders@chromium.org>,
-	Dave Airlie <airlied@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 6.17 040/159] drm/ast: Blank with VGACR17 sync enable,
- always clear VGACRB6 sync off
-Message-ID: <2025102235-pediatric-sandlot-f2de@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>
+Subject: Re: [PATCH 6.17 000/159] 6.17.5-rc1 review
+Message-ID: <2025102239-commuting-roaming-eae0@gregkh>
 References: <20251021195043.182511864@linuxfoundation.org>
- <20251021195044.163217433@linuxfoundation.org>
- <499eb508-5f24-4ef4-a2a3-f3d76d89db66@leemhuis.info>
+ <fc400181-7c76-6344-c6ea-a4e48d722f55@applied-asynchrony.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <499eb508-5f24-4ef4-a2a3-f3d76d89db66@leemhuis.info>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fc400181-7c76-6344-c6ea-a4e48d722f55@applied-asynchrony.com>
 
-On Wed, Oct 22, 2025 at 06:49:21AM +0200, Thorsten Leemhuis wrote:
-> On 10/21/25 21:50, Greg Kroah-Hartman wrote:
-> > 6.17-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Thomas Zimmermann <tzimmermann@suse.de>
-> > 
-> > commit 6f719373b943a955fee6fc2012aed207b65e2854 upstream.
-> > 
-> > Blank the display by disabling sync pulses with VGACR17<7>. Unblank
-> > by reenabling them. This VGA setting should be supported by all Aspeed
-> > hardware.
+On Tue, Oct 21, 2025 at 11:30:26PM +0200, Holger Hoffstätte wrote:
+> On 2025-10-21 21:49, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.17.5 release.
 > 
-> TWIMC, a regression report about 6.18-rc2 that was bisected to this
-> commit just came in:
+> Hmm:
 > 
-> https://lore.kernel.org/all/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+> *  LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+> *  MODPOST Module.symvers
+> *ERROR: modpost: "pm_hibernation_mode_is_suspend" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
 > 
-> To quote:
+> Caused by drm-amd-fix-hybrid-sleep.patch
 > 
-> """
-> I have encountered a serious (for me) regression with 6.18-rc2 on my
-> 2-socket Ivy Bridge Xeon E5-2697 v2 server. After
-> booting, my console screen goes blank and stays blank. 6.18-rc1 was
-> still fine.
+> I have CONFIG_SUSPEND enabled, exactly same config as 6.17.4.
 > 
-> [...]
-> 
-> When I revert this from 6.18-rc2, the issue goes away and my console
-> screen works again.
-> """
+> Looking at mainline it seems we also need parts of:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=495c8d35035edb66e3284113bef01f3b1b843832
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bbfe987c5a2854705393ad79813074e5eadcbde6
 
-Thanks, I'll go drop this patch from the stable queues for now.
+Thanks, let me go fix this up and push out a -rc2.
 
 greg k-h
