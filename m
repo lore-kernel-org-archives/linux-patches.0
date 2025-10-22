@@ -1,82 +1,108 @@
-Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ADD30EF7D
-	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 09:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A27280318
+	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 10:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761124586; cv=none; b=tjKhF9M3tYbzKkpiMbHmBkSHID3EeYKdFHb5Qf5oj1y7zplFHLlyT9ihtCtsLxlgSGwr/jjPoUOYFnh4ga3H97ZTuuPFDuiLJTI/oU3T/QCYtdOPe85p0CL/crnHgPdnQwaagMKfi7Kmub3EDz9dIGfl8ay6tLet/fY0PrWtFZ0=
+	t=1761128625; cv=none; b=MmfntLuz/rT1jF1HYHEFVaTYWur6d1ESYQmWnvRTeUUaynGWXZ/0sMDVkK3e28Vci0gZ8AiKKHdIXN3C3EHdEYsLLN8Ft8EwtuhIU4CPsrTtrfMTIhBzu+ypDgvbWX+DjxvdMz4XyPqaariHPSQqx4S+G2Z6e0mk9FKW8NlPmiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761124586; c=relaxed/simple;
-	bh=lvFw5Nk+qH+yvB6NQFEi2D6wt9AdFQ4KBlgZ5RunyW0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=USBMYvn1bEC/JjFlMJ3oKSHzmGQ46Q6Yf7/Yc0UQZimHB3kkTXixQs+GsRT1T34fGPlXWAenemdpa2OeOIRahBngply4+irOKV/COk9R6Zz7viyB8XVZv6v6HYcbY6JZS37mM0YHR7K8ilzkq5kxNkqgeFXzJPYArqAB82kQQdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=UTSMm5h3; arc=none smtp.client-ip=95.215.58.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1761128625; c=relaxed/simple;
+	bh=YMRyZre+kBbFoPiHrqjDWIN+c5UsSggZobEPZ5cklR4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lG9EDnoaA27Pj+KYwyANp6na6PGpacYOSuncpQI2VKf0SPED4LONGWKPeocScI1TQgSNySc7pKMIHTwjuAYFsGGCdxI6Gq8x62OrI4EqVENoYX0Pq5MWbcWZKjMdtuUtPRl428z3Fjv0K5OaPhUcmMQYYsPtbsns+79z2aNsGo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=MRYmpfoT; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="UTSMm5h3"
-Date: Wed, 22 Oct 2025 02:15:33 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1761124569;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VCr2v8NiGCG3OxJPegbScRx7+QI9iQUtCm6vrXFxJv4=;
-	b=UTSMm5h37kNKIcefL/GrgyqwwYY3qvZFp+9X/VsGTruaCqg1eKxjKIv1AUpmp/5dxC40SF
-	PFf785to9H+mNsOrT8zN4vvS3BxHkioHnMjTjKhhPMnRE+01kaTRMjqgB8MzKcEfODNHBd
-	1s55RS46i/dDUc/1uLEoelkF9+E7baY=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Oliver Upton <oliver.upton@linux.dev>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 6.12 006/136] KVM: arm64: Prevent access to vCPU events
- before init
-Message-ID: <aPigtSKzinCqc8R6@linux.dev>
-References: <20251021195035.953989698@linuxfoundation.org>
- <20251021195036.111716876@linuxfoundation.org>
- <aPiVtgLCCbQ9igWp@linux.dev>
- <2025102247-delighted-cycling-61c4@gregkh>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="MRYmpfoT"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-42420c7de22so3171965f8f.1
+        for <patches@lists.linux.dev>; Wed, 22 Oct 2025 03:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1761128622; x=1761733422; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=14Z/Egm0ib+pyI7E20I7AQcOKcoL8J1lei7NXkr+nVY=;
+        b=MRYmpfoTb5rAdMhRE/Ku8yLHUhbgOKiMpOaIJLAz5VhZLz6QsR6HXq+6nRXT4RjiT2
+         ymoh0IZ/trTyw641mDRvW2VE2uhm1fQU1ATqipDQIQpwk4BpE+WSgG+IemSXEXFxb5WO
+         TErDCj7P5Lg6F+AH6DIQGxHo7YiKOCUw+AUFnrv6C8WXEoTE3d1QNwCImxY4W9dkf2Ya
+         mvNgyCCfMOpvCz+nuBKXn9SJ71moNfIZ02sV7D3yKbSK8xWpw40wsMdq5VABtRtzcupw
+         29+PTBm5vUyxHc8KswWInc/3VwRZDG76KepSK/FRgowVp94LIn77cmUtvCdNwR2stJwz
+         g73Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761128622; x=1761733422;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=14Z/Egm0ib+pyI7E20I7AQcOKcoL8J1lei7NXkr+nVY=;
+        b=GrSxisRlQGow6/Yzdy9fSFNuyotaCkQcGZ3wpLGGAjw/cwGBaalIQHcxOWXxWGnxMF
+         5TX5cfttNGzOfY4bFVnhT4zx2SoIgrsf8Em2RTlQFBiFet5qyVijy7SbY6yyZ/PhgRbJ
+         waz7YR0vZfG5xelFA7spFEYldqDlr26Knhfir1lyBpjvH3N+3jvaLkQ2E09ir+KTPfhD
+         DXGQm0UgCbs+HUv9T9wWYzq5u2jdAxiRQBnmZO5D7cWr9BrRICRP0K7QbHp1ncmX+3GL
+         rVovxSWM2iotjrsHE4ThmJLPKYJ4GPtgwDKrNeiB46QkCUlYpb+SwLZRkrErI70v6yRb
+         op5g==
+X-Gm-Message-State: AOJu0Yz0e08DaBRGkXs5iVSodGZ7/WyCppOiZGhUJYIPno5F8NtQhLcR
+	DWzO7Uzc/FRbP663jfQn2ZcGM7XeAftDezyYqSets42rWJj7jOSvhtxcovcZ
+X-Gm-Gg: ASbGncvwE/UJd0JSEvnmlyavtmHgJoIweikf9ufWoOSRD/7VgcdHawZm9zlGQMnopu/
+	kJNQMYlGDtcd3YoiMW/yyaCJ24BT1MXKjKtEr4IbELdfOaXrumAzTndTBhCe/V9QOdRogCtBUEp
+	dpJZAMs9m/z6cmeb2G+g5iJJMKBg/gCoYY+PRJRyFTjim/Sl29Huba/hGraBcaTfy6L89mlj9oh
+	oravNE6pyVr6tobOo8+AM4P+QqNmsHD6pWxYG9GgGkIQYErAjI2PZ66JHdpA0zRDfJbajENFHiT
+	222n30HaEl1Xrlqsoly8CbJkN96gc5C9MbSqaNfhJCxGY1ILiLSrQzqr5jKfl7x6pzoPujVpKfm
+	7DnKAEpR6e9lHlK3nlZxC9250oRv0K+2wWZ9iKAyf55Otl7jtuM747iWrYnZJ8R7y3yjYISsgJA
+	N/YWuS+o3NTr8ECpeOClU2QY2Kk/mJRaq/xN3vxhMx1sjkM1Is4dQ=
+X-Google-Smtp-Source: AGHT+IHC3YeUejmKrYXNkUxhYAL7YEasRTosBZae2wnCLum1tuqcSZ/3cUYt2n/DhFVyS/dLVqcNaA==
+X-Received: by 2002:a5d:5c89:0:b0:427:241:cb86 with SMTP id ffacd0b85a97d-42704d1461bmr10607226f8f.7.1761128622241;
+        Wed, 22 Oct 2025 03:23:42 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057850.dip0.t-ipconnect.de. [91.5.120.80])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42855c2fb92sm2193439f8f.46.2025.10.22.03.23.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 03:23:41 -0700 (PDT)
+Message-ID: <36369902-7be0-4517-833b-71a69ed870c1@googlemail.com>
+Date: Wed, 22 Oct 2025 12:23:41 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025102247-delighted-cycling-61c4@gregkh>
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.12 000/135] 6.12.55-rc2 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+References: <20251022060141.370358070@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251022060141.370358070@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 22, 2025 at 11:03:28AM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Oct 22, 2025 at 01:28:38AM -0700, Oliver Upton wrote:
-> > Hey,
-> > 
-> > Can you please drop this patch from all but 6.17?
-> > 
-> > On Tue, Oct 21, 2025 at 09:49:54PM +0200, Greg Kroah-Hartman wrote:
-> > 
-> > [...]
-> > 
-> > > Cc: stable@vger.kernel.org # 6.17
-> > 
-> > FWIW, I called this out here.
-> > 
-> > Thanks,
-> > Oliver
-> > 
-> > > Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
-> 
-> Ok, but note that this Fixes: tag references a much much older kernel
-> release, hence my confusion as to where this should be backported to :)
+Am 22.10.2025 um 10:19 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.12.55 release.
+> There are 135 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Yeah, this is a bit confusing. The blame is correct, 6.17 added some
-(correct) fireworks to the situation.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No more screen problems, no dmesg oddities or 
+regressions found.
 
-> I'll go drop it from older queues now, thanks.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Appreciated!
+
+Beste Grüße,
+Peter Schneider
 
 -- 
-Oliver
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
