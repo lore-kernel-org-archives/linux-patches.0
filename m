@@ -1,108 +1,270 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512DC3431EC
-	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 12:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AA33054E9;
+	Wed, 22 Oct 2025 12:29:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761136088; cv=none; b=GCP1fxIUKLiPhQ841ErAfePfEHcg5L8q2w5jm7sztOVK2jQpiMvS2Z8+D94zYPQLKHj6xUJj0SlJK3FtmvlAlHxoEqcMW/1Gh2pd+5csAbchrKXqzUj5bNbnm+WxxDgI+3IZLNK6ZTYfAcPDNQnrC8CZaGpqAZLaZ995aDzcrkw=
+	t=1761136160; cv=none; b=cWvEsCA/maz7jAaD7vuqmuHeuUzfh5BD3kqpzIsw+8aBW6neJSMK2qwQ3ITtPRabGxSKO8C7lBFBTf7Fkcj91SQZLxdhT5uzMEKGe0V8wAawZSACF8I54t9ympN5C66v5IMDrLNhe5c1SwR+TqD/mf+ZEMonZPxZGndfUpecrk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761136088; c=relaxed/simple;
-	bh=Iejn0pWjNdBJA/skFH2+V/JvIaDlDJ3P1ZCkLVxJQvY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ExtWyG5YOM1eIatjXBNlIcZ3J7yd6CV/EciU7ek/f3dpuqCpKdJ7tiSiMEhwotmtAuf6PnoyLxOlPEulu5IgMnEU4ob7TIivrhkwRVp0dPKf3+TxTZEIlt8so1AEDyz3Ijuqp1QoDqCfHSDojJnzTTS2o5p4tR0Vx3O/otloR1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=IBqVDvHF; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1761136160; c=relaxed/simple;
+	bh=PdoyPpVLI0h36WkddFGDMhxDoR224/S0wzMk/e+s7EQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XcgsOWnRKgz4x/mEDlMT35dL0JdV3Uw03DQUrx5FZbLGxlgKxAkvygrjjIta8E5t6UdhUI5oByOcZ9qoLVescTXXyLr+HEPuHwV67VThzOmtvfsq1SY2ISnYmtH443Y33jfyWtPWuNamsskDxLUZfATANaIckVVx7a2EaDENZ7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2gE3e0j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IBqVDvHF"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-427091cd4fdso3339321f8f.1
-        for <patches@lists.linux.dev>; Wed, 22 Oct 2025 05:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1761136083; x=1761740883; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WFbuSQX+6YT+HVJbPcsJSl2m1jB0KH5oX7eFGxAFFNQ=;
-        b=IBqVDvHFc/QfwIJiuhgO68ol/ilo5y/7oxXqoEPtKdItJWMXz70qI59wMJ70v9X5N/
-         xKJ6K3wUIc5Ij7HrXuipy1YsRlgGWDQkgFjugLVp7ev9qGvf9KSvqhCOj7hfqH/TWT3r
-         VvOawUF88iW+QIBD0cX7uDemwrHEO+5HkGMCfZzc8qXOMwcmpIREzPP2Jn8ux309WIzN
-         FrfVn31U13Zn8qvBel3sz+hwaEuvjB/b7jo/3K9Q22vtuYMj2pNuSbgbYBlpBGd/LMDz
-         gBPDBQcXJhs89Y8Hxn4o85w1VijvbDSqM8wi20HMcLLS5HQGxp4giddgE2LywoV0rR9F
-         xgJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761136083; x=1761740883;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WFbuSQX+6YT+HVJbPcsJSl2m1jB0KH5oX7eFGxAFFNQ=;
-        b=tuKBVzhrr0P23leuh5efwi3lBeKDbtIWcWvvA/578VfSDLzEqsdQN00jXPhDW2BVhH
-         Y09Nu9qXkW7hS+cT0sRt6T9NopiI+RjkZfH30Fjvxn+vCXWXoG8KNCXGt5KvaYRh3UZU
-         ydHRQcWzNgeiGHYQRPyRy1KiDGin02sIipoJFeoUWBemaxgf8XBWlHxdH1ZKXVXaLJix
-         fgiSG1ARRCIhQpqbcHu9CZOS1i5b6N4AM9T8UpGYD8tiM900S9f22rxlDE9w6/VaJ0go
-         R8AzaKCjFhwyA9gsO5WRFPbzazKw4sw58eCd+mjArjpA+8fDUrqvdxvGww4wz1PBsP/R
-         qqnw==
-X-Gm-Message-State: AOJu0YzWJSKX+OtgGGfZl+N1r/GiQRyxm6kF2Vri59Su+7XKBYY/z4iw
-	ec2Is19UI42jbf2S2Zt5O9rkaWTPJ38CN18zhSGO58PrdbwhXLdojaY=
-X-Gm-Gg: ASbGncvsx2ofufvY3XL7TmxSb+efnHCNi9lFXhCNwagRwg4aYvLhs8+mBiLtxfAN1Yu
-	gwQrO4rj7mZ6IRdj5q4lEmlaWa1IlQe23zWhdMnnvaKMyPSUPITFAJ4UfGtQ4SO6s7wFHmEsekn
-	MqfxEgW3khIfc+V+884yzA5MDp10/NczWUO7GCQllX9E1lyQH081GKcppmabgecG60No9jfEG7O
-	a29AcidON4JlRFlUTucLSozMBluSGP8bJcBYeeAxbapbsfQ35qNjUfg0new15d8xE0XGWUscsvZ
-	yGtr0ibpFnI0K1X9E6jyQzYSZ2cDlPQE3Yq0ZtnRusY00t1hkRIF21Qw+UF/HnM2ZSbJbkpP1xI
-	bCOc+v5TcEFCbFy76J2TfoEY4GIPXS1YXnetCLGszqcjIkJ0S0gtYbqiaaFE0Z9WU63V6IBehzo
-	tc/LNgCp4rPwxpsb4DLq2b7EQDk+oIetNkDKfP7MA0zTv2Z/SlfmRsBsvQyJdqQg==
-X-Google-Smtp-Source: AGHT+IFzalpz4I7N4GW5iAQvE1IHT4hcwYoMkH4rdlEMLAfJYgGKj+R8HqkyYQFmUVrdcF3vsI9GFg==
-X-Received: by 2002:a05:6000:220c:b0:426:fd63:bbc0 with SMTP id ffacd0b85a97d-42704d786c2mr16326022f8f.27.1761136083310;
-        Wed, 22 Oct 2025 05:28:03 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057850.dip0.t-ipconnect.de. [91.5.120.80])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00ce3aesm25354082f8f.48.2025.10.22.05.28.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 05:28:02 -0700 (PDT)
-Message-ID: <7965a547-2267-4f09-af62-0b81a2d8dae7@googlemail.com>
-Date: Wed, 22 Oct 2025 14:28:02 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2gE3e0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8241BC4CEE7;
+	Wed, 22 Oct 2025 12:29:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761136160;
+	bh=PdoyPpVLI0h36WkddFGDMhxDoR224/S0wzMk/e+s7EQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=D2gE3e0jDJkOv+h3Rf5E8+Qk2ZZi1A/tuoc43i0LgWk5BoSoxLFzdQuBVE+0EFnjt
+	 5Re9EPThjolOuOTVvwRQbkL06C4UdWwErLbRHUQOvXTbxnKZJpocP5k95uCXhnsesz
+	 k+9U8USGyfq3V4Npp+4Qg2RvNfwDrLMvFIf1yF4E=
+Date: Wed, 22 Oct 2025 14:29:17 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Niko Mauno <niko.mauno@vaisala.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Chun-Tse Shao <ctshao@google.com>,
+	Howard Chu <howardchu95@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>, Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 136/276] perf test: Dont leak workload gopipe in
+ PERF_RECORD_*
+Message-ID: <2025102206-mauve-wizard-d875@gregkh>
+References: <20251017145142.382145055@linuxfoundation.org>
+ <20251017145147.447011793@linuxfoundation.org>
+ <8c1c66c4-62dc-416a-b52e-314ce98fe474@vaisala.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.17 000/160] 6.17.5-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-References: <20251022053328.623411246@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20251022053328.623411246@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8c1c66c4-62dc-416a-b52e-314ce98fe474@vaisala.com>
 
-Am 22.10.2025 um 07:34 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.17.5 release.
-> There are 160 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Oct 22, 2025 at 03:08:36PM +0300, Niko Mauno wrote:
+> On 10/17/25 17:53, Greg Kroah-Hartman wrote:
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Ian Rogers <irogers@google.com>
+> > 
+> > [ Upstream commit 48918cacefd226af44373e914e63304927c0e7dc ]
+> > 
+> > The test starts a workload and then opens events. If the events fail
+> > to open, for example because of perf_event_paranoid, the gopipe of the
+> > workload is leaked and the file descriptor leak check fails when the
+> > test exits. To avoid this cancel the workload when opening the events
+> > fails.
+> > 
+> > Before:
+> > ```
+> > $ perf test -vv 7
+> >    7: PERF_RECORD_* events & perf_sample fields:
+> >   --- start ---
+> > test child forked, pid 1189568
+> > Using CPUID GenuineIntel-6-B7-1
+> >   ------------------------------------------------------------
+> > perf_event_attr:
+> >    type                    	   0 (PERF_TYPE_HARDWARE)
+> >    config                  	   0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
+> >    disabled                	   1
+> >   ------------------------------------------------------------
+> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
+> > sys_perf_event_open failed, error -13
+> >   ------------------------------------------------------------
+> > perf_event_attr:
+> >    type                             0 (PERF_TYPE_HARDWARE)
+> >    config                           0xa00000000 (cpu_atom/PERF_COUNT_HW_CPU_CYCLES/)
+> >    disabled                         1
+> >    exclude_kernel                   1
+> >   ------------------------------------------------------------
+> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
+> >   ------------------------------------------------------------
+> > perf_event_attr:
+> >    type                             0 (PERF_TYPE_HARDWARE)
+> >    config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
+> >    disabled                         1
+> >   ------------------------------------------------------------
+> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8
+> > sys_perf_event_open failed, error -13
+> >   ------------------------------------------------------------
+> > perf_event_attr:
+> >    type                             0 (PERF_TYPE_HARDWARE)
+> >    config                           0x400000000 (cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
+> >    disabled                         1
+> >    exclude_kernel                   1
+> >   ------------------------------------------------------------
+> > sys_perf_event_open: pid 0  cpu -1  group_fd -1  flags 0x8 = 3
+> > Attempt to add: software/cpu-clock/
+> > ..after resolving event: software/config=0/
+> > cpu-clock -> software/cpu-clock/
+> >   ------------------------------------------------------------
+> > perf_event_attr:
+> >    type                             1 (PERF_TYPE_SOFTWARE)
+> >    size                             136
+> >    config                           0x9 (PERF_COUNT_SW_DUMMY)
+> >    sample_type                      IP|TID|TIME|CPU
+> >    read_format                      ID|LOST
+> >    disabled                         1
+> >    inherit                          1
+> >    mmap                             1
+> >    comm                             1
+> >    enable_on_exec                   1
+> >    task                             1
+> >    sample_id_all                    1
+> >    mmap2                            1
+> >    comm_exec                        1
+> >    ksymbol                          1
+> >    bpf_event                        1
+> >    { wakeup_events, wakeup_watermark } 1
+> >   ------------------------------------------------------------
+> > sys_perf_event_open: pid 1189569  cpu 0  group_fd -1  flags 0x8
+> > sys_perf_event_open failed, error -13
+> > perf_evlist__open: Permission denied
+> >   ---- end(-2) ----
+> > Leak of file descriptor 6 that opened: 'pipe:[14200347]'
+> >   ---- unexpected signal (6) ----
+> > iFailed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> > Failed to read build ID for //anon
+> >      #0 0x565358f6666e in child_test_sig_handler builtin-test.c:311
+> >      #1 0x7f29ce849df0 in __restore_rt libc_sigaction.c:0
+> >      #2 0x7f29ce89e95c in __pthread_kill_implementation pthread_kill.c:44
+> >      #3 0x7f29ce849cc2 in raise raise.c:27
+> >      #4 0x7f29ce8324ac in abort abort.c:81
+> >      #5 0x565358f662d4 in check_leaks builtin-test.c:226
+> >      #6 0x565358f6682e in run_test_child builtin-test.c:344
+> >      #7 0x565358ef7121 in start_command run-command.c:128
+> >      #8 0x565358f67273 in start_test builtin-test.c:545
+> >      #9 0x565358f6771d in __cmd_test builtin-test.c:647
+> >      #10 0x565358f682bd in cmd_test builtin-test.c:849
+> >      #11 0x565358ee5ded in run_builtin perf.c:349
+> >      #12 0x565358ee6085 in handle_internal_command perf.c:401
+> >      #13 0x565358ee61de in run_argv perf.c:448
+> >      #14 0x565358ee6527 in main perf.c:555
+> >      #15 0x7f29ce833ca8 in __libc_start_call_main libc_start_call_main.h:74
+> >      #16 0x7f29ce833d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
+> >      #17 0x565358e391c1 in _start perf[851c1]
+> >    7: PERF_RECORD_* events & perf_sample fields                       : FAILED!
+> > ```
+> > 
+> > After:
+> > ```
+> > $ perf test 7
+> >    7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
+> > ```
+> > 
+> > Fixes: 16d00fee703866c6 ("perf tests: Move test__PERF_RECORD into separate object")
+> > Signed-off-by: Ian Rogers <irogers@google.com>
+> > Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+> > Cc: Adrian Hunter <adrian.hunter@intel.com>
+> > Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+> > Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+> > Cc: Chun-Tse Shao <ctshao@google.com>
+> > Cc: Howard Chu <howardchu95@gmail.com>
+> > Cc: Ingo Molnar <mingo@redhat.com>
+> > Cc: James Clark <james.clark@linaro.org>
+> > Cc: Jiri Olsa <jolsa@kernel.org>
+> > Cc: Kan Liang <kan.liang@linux.intel.com>
+> > Cc: Mark Rutland <mark.rutland@arm.com>
+> > Cc: Namhyung Kim <namhyung@kernel.org>
+> > Cc: Peter Zijlstra <peterz@infradead.org>
+> > Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >   tools/perf/tests/perf-record.c | 4 ++++
+> >   1 file changed, 4 insertions(+)
+> > 
+> > diff --git a/tools/perf/tests/perf-record.c b/tools/perf/tests/perf-record.c
+> > index 0df471bf1590e..b215e89b65f7d 100644
+> > --- a/tools/perf/tests/perf-record.c
+> > +++ b/tools/perf/tests/perf-record.c
+> > @@ -115,6 +115,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
+> >   	if (err < 0) {
+> >   		pr_debug("sched__get_first_possible_cpu: %s\n",
+> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
+> > +		evlist__cancel_workload(evlist);
+> >   		goto out_delete_evlist;
+> >   	}
+> > @@ -126,6 +127,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
+> >   	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
+> >   		pr_debug("sched_setaffinity: %s\n",
+> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
+> > +		evlist__cancel_workload(evlist);
+> >   		goto out_delete_evlist;
+> >   	}
+> > @@ -137,6 +139,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
+> >   	if (err < 0) {
+> >   		pr_debug("perf_evlist__open: %s\n",
+> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
+> > +		evlist__cancel_workload(evlist);
+> >   		goto out_delete_evlist;
+> >   	}
+> > @@ -149,6 +152,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
+> >   	if (err < 0) {
+> >   		pr_debug("evlist__mmap: %s\n",
+> >   			 str_error_r(errno, sbuf, sizeof(sbuf)));
+> > +		evlist__cancel_workload(evlist);
+> >   		goto out_delete_evlist;
+> >   	}
+> 
+> it seems that this commit breaks building perf followingly with v5.15.195:
+> 
+>   | /usr/bin/ld: perf-in.o: in function `test__PERF_RECORD':
+>   | /home/username/src/vaisala-linux-stable/tools/perf/tests/perf-record.c:142: undefined reference to `evlist__cancel_workload'
+>   | /usr/bin/ld: /home/username/src/vaisala-linux-stable/tools/perf/tests/perf-record.c:130: undefined reference to `evlist__cancel_workload'
+> 
+> The 'evlist__cancel_workload' seems to be introduced in commit e880a70f8046 ("perf stat: Close cork_fd when create_perf_stat_counter() failed") which is currently not included in the 5.15.y stable series.
+> 
+> BR, Niko Mauno
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No more screen problems, no dmesg oddities or 
-regressions found.
+Can you send a revert for this?
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+thanks,
 
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+greg k-h
