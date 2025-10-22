@@ -1,65 +1,87 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 102A72E7F29
-	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 05:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706602EA164;
+	Wed, 22 Oct 2025 05:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761110511; cv=none; b=ULmI5NNthhcSJkfvvbum73gXI1PlypJWHxjrCNkuelahZC/gk/9LY0eL3+pv18n8x5oJHpxSORbdkWEJwOjYm/AurposygE9QHTwcS8yu2YAXpnCrEvB2UjCL0EAUiYDCgW0eloWzPI4hfgFGUv4SBPnAK5HDtvXj7WIYdTXaOA=
+	t=1761110934; cv=none; b=ZJumkD2y/U41KOagd1uRvJNwZdU2YiZRmyqIDlRQNlKFYjulWWbJE2JMHI43RCUUN/K/FiVsghTqp21ZumW1PLA2SeT6eLxj0IhLYFflu1xL3Eqo3uJWmdN1xJEWWkZ5QEOOjD5aBxugDXyoM2fIRkNs0FhBrbHREFNn9M2mC4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761110511; c=relaxed/simple;
-	bh=Hbdjo5anlP4pxWMDK2Rv0ky3pCNOEjcoiePYV7ol/7w=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=fqb2d0b2D+ettThgEj5QgbhPEktdgJ5AvvN8NH7nltsA0KzX3v3pvgkm5/xEgP5+y/CzJuTQuiqrUmbELJxEu5V5o7SNqbevPUuWOg3+IrzT0heMuevHmPCF/y1c9y3vBMN40Riy7cSIpX5GXpjhthF2COuHT8TvBywrKzj6q70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=LzVVTDBZ; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1761110934; c=relaxed/simple;
+	bh=3Ff1ASD4+Th70oO4lsVjO5rTjRYPN1ABVSR9uE5fR7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lvkI8+vSmN//1upA8qrYekaaOqwbq2DmBk6XTPE9Qn0acHparb/zl/8vxBqbDB5lz58DOYR+R2wqJ7D6T250cASaF7mHe9I0pqYl9n0rPxDbqJ9tyz0C8ebvHW/ghcpru0NBmWl+vslmrhypN50HQlByZPMYc+MS7n2HFxDgMqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM14vIVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="LzVVTDBZ"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id 9BB2F201DAF2; Tue, 21 Oct 2025 22:21:49 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9BB2F201DAF2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1761110509;
-	bh=Hbdjo5anlP4pxWMDK2Rv0ky3pCNOEjcoiePYV7ol/7w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzVVTDBZ5gqnaN1QyFQj12dsih5VhWgSZPXRfrc0TN/GjlhgewG5AsVtX/FHPQxnY
-	 a0NmDQ4ZLQQ0ttfvURFxGdS7LyB8ASoZiW5wMyBmq+ZahawWF+dzSl4GgKv8NCWcoJ
-	 N2ON7zBCcAXHZbGfLto6ofB9rvoCMZEsPi/abmcA=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.17 000/159] 6.17.5-rc1 review
-Date: Tue, 21 Oct 2025 22:21:49 -0700
-Message-Id: <1761110509-25984-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20251021195043.182511864@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM14vIVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0A7C4CEE7;
+	Wed, 22 Oct 2025 05:28:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761110933;
+	bh=3Ff1ASD4+Th70oO4lsVjO5rTjRYPN1ABVSR9uE5fR7g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FM14vIVZxOjSYglNeWLtEEHC/JxTP6WKADZiXeEpooRHBfSgLL7xWxg3sOb153DAq
+	 2pZWBHKtdv9BrP51l3fR4tZ1vO+Uln8WBZL+cRDwi9j43/9iL+LN4DoRCxeXHEQ8Td
+	 m9xJk81/wmEAOKIg9POnRuKi5sA0uGkVQlCKJfzA=
+Date: Wed, 22 Oct 2025 07:28:50 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dave Airlie <airlied@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 6.17 040/159] drm/ast: Blank with VGACR17 sync enable,
+ always clear VGACRB6 sync off
+Message-ID: <2025102235-pediatric-sandlot-f2de@gregkh>
 References: <20251021195043.182511864@linuxfoundation.org>
+ <20251021195044.163217433@linuxfoundation.org>
+ <499eb508-5f24-4ef4-a2a3-f3d76d89db66@leemhuis.info>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <499eb508-5f24-4ef4-a2a3-f3d76d89db66@leemhuis.info>
 
-The kernel, bpf tool, perf tool, and kselftest builds fine for v6.17.5-rc1 on x86 and arm64 Azure VM.
+On Wed, Oct 22, 2025 at 06:49:21AM +0200, Thorsten Leemhuis wrote:
+> On 10/21/25 21:50, Greg Kroah-Hartman wrote:
+> > 6.17-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Thomas Zimmermann <tzimmermann@suse.de>
+> > 
+> > commit 6f719373b943a955fee6fc2012aed207b65e2854 upstream.
+> > 
+> > Blank the display by disabling sync pulses with VGACR17<7>. Unblank
+> > by reenabling them. This VGA setting should be supported by all Aspeed
+> > hardware.
+> 
+> TWIMC, a regression report about 6.18-rc2 that was bisected to this
+> commit just came in:
+> 
+> https://lore.kernel.org/all/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+> 
+> To quote:
+> 
+> """
+> I have encountered a serious (for me) regression with 6.18-rc2 on my
+> 2-socket Ivy Bridge Xeon E5-2697 v2 server. After
+> booting, my console screen goes blank and stays blank. 6.18-rc1 was
+> still fine.
+> 
+> [...]
+> 
+> When I revert this from 6.18-rc2, the issue goes away and my console
+> screen works again.
+> """
 
+Thanks, I'll go drop this patch from the stable queues for now.
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
-
-
-Thanks,
-Hardik
+greg k-h
