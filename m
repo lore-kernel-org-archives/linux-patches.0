@@ -1,124 +1,86 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB6E303C9C
-	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 08:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698442F25FE;
+	Wed, 22 Oct 2025 08:07:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761120398; cv=none; b=uR/B5NrTIU8yDenGSAKiWLXxO1K+tFQScIxoyDjjrxZQBDv21cE+yxrFV04tJuyjZebUoSXYTfv4kNs9PeINe6AXgbS7uP9ywmb/Sox2chClqUmvrUkacJ5fpmVIg0Nxk7AxP0Ga/XRWwZo0jhQ+w4ItS+tQknQW1FoRXY+0z+4=
+	t=1761120422; cv=none; b=OxbJMH2+w3D8vhMftsdh1lhAxgyrTy2/bO3RVQSAUQtNdYnfcjcAdUuAgLsa0RDws8hkGOxPMXrvoi0k37j31XAlhpqHSMXXaW6v66ESTgj15uTu6aqpFqOrilAek7GW/q7Y5IxE3Yc5YxoSXL1o+2AXhuX20k8h5vzVWV/NOZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761120398; c=relaxed/simple;
-	bh=eyBdO2wWOgqsPzs2lpBJ9/L31r8e4dCSgvgCYmxIx6k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QF+eOX2Te49NTbhe+bUrxh15xCcrcw9zz0TBaOpYtLc0We1fbTwgyZMMzbtK6XysROmX3TQb2h77OuMx1irwc0Q+V1gINak2RkyVgELGfpMr/8min4OlvPdc6siiFMTdfFEgWY6fSSIFThBTeoH8p33iZFcNEBThl+KNRZ2jTTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T9tgEKdQ; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761120422; c=relaxed/simple;
+	bh=OM7CPTJLKR05vVdLWJGBng1LQi8Ec980nsTIXgOThVg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X2Q105mW5b+V3QGUzywH/0hOvivsqr6FJ1huAnCMGzaOIb6frNeMIwg2Zg2+G/iOI84qbE70EzVE0a8/Yn6Jqzm3iqQYnpGAPPzd33yOTZ7zSBfWIwPG2Z4sSnAwyCQ9rkLsmKdKzRqn7EeseJghd7YiZxDcsGiFuX8dF7YcQ7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoPa0HH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9tgEKdQ"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-63e0cec110eso2195726a12.2
-        for <patches@lists.linux.dev>; Wed, 22 Oct 2025 01:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761120394; x=1761725194; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=toHlnWQqNYbfD0u6quHogsDi3+miz5wiSuRT4/A88gI=;
-        b=T9tgEKdQEDl73PqOHgWj5XmSnwkRQQE7OuRTOI7TX69d+LMmcwZ3IfRozilVCag6pP
-         cLLBcqC7IXN83qXmExqEmR6Ej1pZyf4IDK/SSeB9XsTivn1gjDw09WVIcUfO4kHJP9s8
-         JYqnpVHPujxsFKbwWYA/IqjnYWmZN/JP8DvvaQwajT6CnauPkjdJigPqjaFD2zI8fvMZ
-         elDdV7jTYvJnE0Q5RKyDhk8OvbWIsBJ4hPbqrPlrP2ilWc8UF2GGYSfNghjjn45FdJx7
-         1OwJyrIWZ3H22ffbvie+uPlZbfny7wGZkIM9T+Q1p7VRO3O7YojwMy6IVa0Q4GEWl3xi
-         gQvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761120394; x=1761725194;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=toHlnWQqNYbfD0u6quHogsDi3+miz5wiSuRT4/A88gI=;
-        b=vxCdPRsUHW2/2u2ExYYmEUcqTYNItpa/7uhZHI6tx1ikswbigyUObzzfqPKDxoZnD8
-         g5WJo5ZMqg/wFlNVjEI8clIXSIBZbqzeBqLYSPAdrsLm3YZku5itZUljiAAPIYhdCD/l
-         p4Rhfsz18B9WYrPLp6mVLNBtHQrVwvp6/x7+gRePulA+OSb2kVIx375lCl76qKu3QaL9
-         nVf7NQapX15oZdCgrVZBt1sv8rC00i9CXiJhtmS37WshNjt9dyiaBqy8zYynVTqSdlQw
-         FhgMPwIQmlUhypDRZvJ46QM1SGh6eiGqxXJuLMmVlcjhmD7mtuBVCNaSAZ/itro8TuIc
-         DhpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXJfynK6dBU9JYRyaUrmMqfmp8SLj3QmhoVFkUEVwHj8KpaxaUlEYafNjuj8HoEWmzLeGPLkhdd@lists.linux.dev
-X-Gm-Message-State: AOJu0YzroFyDTqR6Su66DhC7vm5K1oPkGsqFjnLWbTpZFzSWom2y8JiQ
-	8Ne/MXdU1KY6BU7s4x6UPOtmzP/EcCshm4dvXqgAkii2RJrrsdqeS5VV
-X-Gm-Gg: ASbGncsEMi1EL0waI4hvLP30Pqa63/zCbe9r6fcN0s4D/M3HsQTZEOauEkoxFvU/ZcV
-	pAE4UurF91jQxv4HeD6VQkX2kNWkVQG/W9TKesg1/Ld2r+BWuvnHzWSHODwIZHb1R4h8PJ01EON
-	Ho3J1VcZEitVUyitk9kSGWLKWwxnoezUQdkqfED1fV/0Uh6vfZGpZIn+FThg5ixfvu5nOlaCub0
-	5IZan+y98mtvXl7MEixLfXMkD8WYQpf6QILySPtc8U21+02pHv9VrSfPXOBKvgsGcTRVNbFrNZl
-	1f7RZ9BQti9gDG68MqZEjRF1ojvqAHIqoHirncyh0Ub+w8dMpes6TX+bXZaI6MXPFSwHSbxG36e
-	X8zkwWcTDlFZpzQEXMhAQnO3sCwD/2Og+D+OCbKQxdcrg9LrChOXAuyOL+XBto6EGJADjNGmPjr
-	hX
-X-Google-Smtp-Source: AGHT+IFKMamBOdEkXZztW4+a96FX3cVQPwKK7mU8xvsOl5ZRh1X2aHXQdNoBVmqwPChAhbEjv7M9Xg==
-X-Received: by 2002:a05:6402:2791:b0:63e:23c0:c33e with SMTP id 4fb4d7f45d1cf-63e23c0c43amr1116868a12.27.1761120394218;
-        Wed, 22 Oct 2025 01:06:34 -0700 (PDT)
-Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id 4fb4d7f45d1cf-63c4945ef49sm11192106a12.29.2025.10.22.01.06.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 01:06:33 -0700 (PDT)
-From: Askar Safin <safinaskar@gmail.com>
-To: bagasdotme@gmail.com
-Cc: akpm@linux-foundation.org,
-	andy.shevchenko@gmail.com,
-	arnd@arndb.de,
-	axboe@kernel.dk,
-	bp@alien8.de,
-	brauner@kernel.org,
-	christophe.leroy@csgroup.eu,
-	cyphar@cyphar.com,
-	ddiss@suse.de,
-	dyoung@redhat.com,
-	email2tema@gmail.com,
-	graf@amazon.com,
-	gregkh@linuxfoundation.org,
-	hca@linux.ibm.com,
-	hch@lst.de,
-	hsiangkao@linux.alibaba.com,
-	initramfs@vger.kernel.org,
-	jack@suse.cz,
-	jrtc27@jrtc27.com,
-	julian.stecklina@cyberus-technology.de,
-	kees@kernel.org,
-	krzk@kernel.org,
-	linux-api@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	mcgrof@kernel.org,
-	monstr@monstr.eu,
-	mzxreary@0pointer.de,
-	nschichan@freebox.fr,
-	patches@lists.linux.dev,
-	rob@landley.net,
-	safinaskar@gmail.com,
-	thomas.weissschuh@linutronix.de,
-	thorsten.blum@linux.dev,
-	torvalds@linux-foundation.org,
-	viro@zeniv.linux.org.uk
-Subject: Re: [PATCH v3 2/3] initrd: remove deprecated code path (linuxrc)
-Date: Wed, 22 Oct 2025 11:06:25 +0300
-Message-ID: <20251022080626.24446-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <aPg-YF2pcyI-HusN@archie.me>
-References: <aPg-YF2pcyI-HusN@archie.me>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoPa0HH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86DDC4CEE7;
+	Wed, 22 Oct 2025 08:07:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761120422;
+	bh=OM7CPTJLKR05vVdLWJGBng1LQi8Ec980nsTIXgOThVg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hoPa0HH38I0XgcPJskGVNUka9z1xuWPw0amhNjj2b5FhHeoMlEY8f639peDYUamwm
+	 rZVuso1tEje2Jivw64JRokIAr8Rtvi7ieCs0WjdnjWtdUURs2vkd8JN2rT0ZLCiRtL
+	 3dvvat+rsbbMxXyWwD6gjUCt0AvvhKfKuX+sa0bE=
+Date: Wed, 22 Oct 2025 10:06:59 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Jack Wang <jinpu.wang@ionos.com>
+Cc: stable@vger.kernel.org, axboe@kernel.dk, hare@suse.de,
+	john.g.garry@oracle.com, patches@lists.linux.dev, sashal@kernel.org,
+	yukuai3@huawei.com
+Subject: Re: [PATCH 6.12 111/136] md/raid0: Handle bio_split() errors
+Message-ID: <2025102240-zesty-unveiling-4f99@gregkh>
+References: <20251021195035.953989698@linuxfoundation.org>
+ <20251021195038.635577649@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251021195038.635577649@linuxfoundation.org>
 
-Bagas Sanjaya <bagasdotme@gmail.com>:
-> Do you mean that initrd support will be removed in LTS kernel release of 2026?
+On Wed, Oct 22, 2025 at 09:53:07AM +0200, Jack Wang wrote:
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> 
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: John Garry <john.g.garry@oracle.com>
+> 
+> [ Upstream commit 74538fdac3e85aae55eb4ed786478ed2384cb85d ]
+> 
+> Add proper bio_split() error handling. For any error, set bi_status, end
+> the bio, and return.
+> 
+> Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+> Reviewed-by: Hannes Reinecke <hare@suse.de>
+> Signed-off-by: John Garry <john.g.garry@oracle.com>
+> Link: https://lore.kernel.org/r/20241111112150.3756529-5-john.g.garry@oracle.com
+> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> Stable-dep-of: 22f166218f73 ("md: fix mssing blktrace bio split events")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> --- a/drivers/md/raid0.c
+> +++ b/drivers/md/raid0.c
+> @@ -464,6 +464,12 @@ static void raid0_handle_discard(struct
+>  		struct bio *split = bio_split(bio,
+>  			zone->zone_end - bio->bi_iter.bi_sector, GFP_NOIO,
+>  			&mddev->bio_set);
+> +
+> +		if (IS_ERR(split)) {
+> +			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
+> +			bio_endio(bio);
+> +			return;
+> +		}
+> 
+> The version of bio_split return NULL or valid pointer, so we need adapt the
+> check to if (IS_ERR_OR_NULL(split)) for all the 3 commits about Handle
+> bio_split() errors for md/raidx.
+> 
 
-I meant September 2026. But okay, if there is v4, then I will change this to
-"after LTS release in the end of 2026".
-
--- 
-Askar Safin
+Sorry, I do not understand the request here, is this not ok as-is?
