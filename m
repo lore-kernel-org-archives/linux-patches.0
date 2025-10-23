@@ -1,25 +1,25 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74B6A3016F4;
-	Thu, 23 Oct 2025 11:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE8582EC568;
+	Thu, 23 Oct 2025 12:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761218657; cv=none; b=k+sfGHcjXJiZA6g3fycQytWNOuTfCj3032YDeEr9ynd5KkfhFUHJWXukE5jfaJw43qX45Q+SMS3cRKII1uCnOmH2AcIeNIb8IGNLAOxAD8zMap2KGaqTbrg+7mnXcWhEJdNVldDT9NuZBdzsA3RYej8xSLh9XBr0aCJhcdDu3VY=
+	t=1761222871; cv=none; b=Cebw1Pv8U5FCQ08QaD8HveZz/5VqCX1DAYddKcxIeen1lih+NKk/4+GWd5olhUhy4aZgPpdlBtQeDEid6h2Y+lHkGJ1FN1SvUYNG1mey01CN0WvmpHdaHt+NV13efv+0Lmd5Q8WsX7b4fgf8yBavnDZP6t/0L67Y/ocaXZ7QTPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761218657; c=relaxed/simple;
-	bh=a3aNs6vrR4psypDkWMqYmRy2IIe82SusVNMrEZ3tF3g=;
+	s=arc-20240116; t=1761222871; c=relaxed/simple;
+	bh=Q5hOvbRir9Pxa5UGWpGXYz016Pe0dJulkOyLZ3IDyLI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TB2MNpPHCctM/RzB5I+vA/oX6L6FS1StQQItmKSnvtzHszQrI1qPaIWhd7ITDRO5Np8PqkaEJ/FdhH2Xtvnh73iUjp00WTNSZz6U6CZjrr8mVI0xMT7iNHbgQPdBlPn4XaX7qnr97MRStB3KgX+3ycokPmwdntnal5lEI3bBXbY=
+	 In-Reply-To:Content-Type; b=aocbqpea3OkhpchoXbyIdgLQRIR8+B474ctZM+xGO/8d11aa1IkYQDu4VcAPjokpImJoLYLMpRdg7bWw0DHBClF1pVlBXjHWXSDntSZWjphguj+OVNHDQ5vLzyonVrhZXU8AwzEB6j49Bjs941yxHjCTv8eqlWwQiHpu+pLHVsc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BDFE31516;
-	Thu, 23 Oct 2025 04:23:59 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 397E11516;
+	Thu, 23 Oct 2025 05:34:19 -0700 (PDT)
 Received: from [10.57.36.157] (unknown [10.57.36.157])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 30F673F63F;
-	Thu, 23 Oct 2025 04:24:04 -0700 (PDT)
-Message-ID: <d594cdf2-5aab-4539-8d44-f7e57770df72@arm.com>
-Date: Thu, 23 Oct 2025 12:24:01 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D67773F59E;
+	Thu, 23 Oct 2025 05:34:23 -0700 (PDT)
+Message-ID: <579bdc4e-ab71-4120-8991-34400d4bbf8d@arm.com>
+Date: Thu, 23 Oct 2025 13:34:21 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -27,8 +27,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] iommu: Allow drivers to say if they use
- report_iommu_fault()
+Subject: Re: [PATCH 2/3] iommu/amd: Don't call report_iommu_fault()
 To: Jason Gunthorpe <jgg@nvidia.com>,
  AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
  Christian Benvenuti <benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>,
@@ -44,189 +43,73 @@ To: Jason Gunthorpe <jgg@nvidia.com>,
  Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
  Yong Wu <yong.wu@mediatek.com>
 Cc: patches@lists.linux.dev
-References: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+References: <2-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
 From: Robin Murphy <robin.murphy@arm.com>
 Content-Language: en-GB
-In-Reply-To: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+In-Reply-To: <2-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 2025-10-22 6:12 pm, Jason Gunthorpe wrote:
-> report_iommu_fault() is an older API that has been superseded by
-> iommu_report_device_fault() which is capable to support PRI.
-> 
-> Only two external drivers consume this, drivers/remoteproc and
-> drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
-> now protect against accidentally mix and matching the wrong components.
-> 
-> The iommu drivers support either the old iommu_set_fault_handler() via the
-> driver calling report_iommu_fault(), or they are newer server focused
-> drivers that call iommu_report_device_fault().
-> 
-> Include a flag in the domain_ops if it calls report_iommu_fault() and
-> block iommu_set_fault_handler() on iommu's that can't support it.
+> This old style API is only used by drivers/gpu/drm/msm and
+> drivers/remoteproc, neither are used on x86 HW. Remove the dead code to
+> discourage new users.
 
-This isn't a domain operation though; depending on how you look at it, 
-supporting a legacy fault_handler is either a capability of the IOMMU 
-driver (that would be reachable via domain->owner->capable) or a 
-property of the iommu_domain itself that the drivers can set at 
-allocation time (basically this same patch just with the lines in 
-slightly different places).
+I'd be almost certain there's somebody somewhere using remoteproc on x86 
+with some FPGA/bespoke PCI device/on-board MCU/etc. - whether they're 
+doing it on AMD *and* care about its fault reporting mechanism is really 
+the question.
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/amd/iommu.c | 24 ------------------------
+>   1 file changed, 24 deletions(-)
+> 
+> diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+> index 2e1865daa1cee8..072c80bb2c2b3a 100644
+> --- a/drivers/iommu/amd/iommu.c
+> +++ b/drivers/iommu/amd/iommu.c
+> @@ -840,29 +840,6 @@ static void amd_iommu_report_page_fault(struct amd_iommu *iommu,
+>   		dev_data = dev_iommu_priv_get(&pdev->dev);
+>   
+>   	if (dev_data) {
+> -		/*
+> -		 * If this is a DMA fault (for which the I(nterrupt)
+> -		 * bit will be unset), allow report_iommu_fault() to
+> -		 * prevent logging it.
+> -		 */
+> -		if (IS_IOMMU_MEM_TRANSACTION(flags)) {
+> -			/* Device not attached to domain properly */
+> -			if (dev_data->domain == NULL) {
+> -				pr_err_ratelimited("Event logged [Device not attached to domain properly]\n");
+> -				pr_err_ratelimited("  device=%04x:%02x:%02x.%x domain=0x%04x\n",
+> -						   iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+> -						   PCI_FUNC(devid), domain_id);
+> -				goto out;
+> -			}
+This part is unrelated to the report_iommu_fault() call - in fact it was 
+specifically added even more recently.
 
 Thanks,
 Robin.
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu.c   | 1 +
->   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 1 +
->   drivers/iommu/iommu.c                   | 6 +++++-
->   drivers/iommu/ipmmu-vmsa.c              | 1 +
->   drivers/iommu/mtk_iommu.c               | 1 +
->   drivers/iommu/mtk_iommu_v1.c            | 1 +
->   drivers/iommu/omap-iommu.c              | 1 +
->   drivers/iommu/rockchip-iommu.c          | 1 +
->   drivers/iommu/sun50i-iommu.c            | 1 +
->   include/linux/iommu.h                   | 3 +++
->   10 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 4ced4b5bee4df3..5ce8f82ddb534b 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -1644,6 +1644,7 @@ static const struct iommu_ops arm_smmu_ops = {
->   	.def_domain_type	= arm_smmu_def_domain_type,
->   	.owner			= THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev		= arm_smmu_attach_dev,
->   		.map_pages		= arm_smmu_map_pages,
->   		.unmap_pages		= arm_smmu_unmap_pages,
-> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> index c5be95e560317e..3163a23fcbaa4f 100644
-> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> @@ -598,6 +598,7 @@ static const struct iommu_ops qcom_iommu_ops = {
->   	.device_group	= generic_device_group,
->   	.of_xlate	= qcom_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= qcom_iommu_attach_dev,
->   		.map_pages	= qcom_iommu_map,
->   		.unmap_pages	= qcom_iommu_unmap,
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 59244c744eabd2..34546a70fb5279 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -2005,6 +2005,9 @@ EXPORT_SYMBOL_GPL(iommu_group_has_isolated_msi);
->    * This function should be used by IOMMU users which want to be notified
->    * whenever an IOMMU fault happens.
->    *
-> + * This is a legacy API not supported by all drivers. New users should look
-> + * to using domain->iopf_handler for the modern API.
-> + *
->    * The fault handler itself should return 0 on success, and an appropriate
->    * error code otherwise.
->    */
-> @@ -2012,7 +2015,8 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
->   					iommu_fault_handler_t handler,
->   					void *token)
->   {
-> -	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE))
-> +	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE ||
-> +		    !domain->ops->report_iommu_fault_supported))
->   		return;
+
+> -
+> -			if (!report_iommu_fault(&dev_data->domain->domain,
+> -						&pdev->dev, address,
+> -						IS_WRITE_REQUEST(flags) ?
+> -							IOMMU_FAULT_WRITE :
+> -							IOMMU_FAULT_READ))
+> -				goto out;
+> -		}
+> -
+>   		if (__ratelimit(&dev_data->rs)) {
+>   			pci_err(pdev, "Event logged [IO_PAGE_FAULT domain=0x%04x address=0x%llx flags=0x%04x]\n",
+>   				domain_id, address, flags);
+> @@ -873,7 +850,6 @@ static void amd_iommu_report_page_fault(struct amd_iommu *iommu,
+>   			domain_id, address, flags);
+>   	}
 >   
->   	domain->cookie_type = IOMMU_COOKIE_FAULT_HANDLER;
-> diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-> index ffa892f6571406..770fa248e30477 100644
-> --- a/drivers/iommu/ipmmu-vmsa.c
-> +++ b/drivers/iommu/ipmmu-vmsa.c
-> @@ -885,6 +885,7 @@ static const struct iommu_ops ipmmu_ops = {
->   			? generic_device_group : generic_single_device_group,
->   	.of_xlate = ipmmu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= ipmmu_attach_device,
->   		.map_pages	= ipmmu_map,
->   		.unmap_pages	= ipmmu_unmap,
-> diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-> index 0e0285348d2b8e..0f44993eaadce3 100644
-> --- a/drivers/iommu/mtk_iommu.c
-> +++ b/drivers/iommu/mtk_iommu.c
-> @@ -1019,6 +1019,7 @@ static const struct iommu_ops mtk_iommu_ops = {
->   	.get_resv_regions = mtk_iommu_get_resv_regions,
->   	.owner		= THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= mtk_iommu_attach_device,
->   		.map_pages	= mtk_iommu_map,
->   		.unmap_pages	= mtk_iommu_unmap,
-> diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-> index 10cc0b1197e801..279e7acfd5c6d3 100644
-> --- a/drivers/iommu/mtk_iommu_v1.c
-> +++ b/drivers/iommu/mtk_iommu_v1.c
-> @@ -582,6 +582,7 @@ static const struct iommu_ops mtk_iommu_v1_ops = {
->   	.device_group	= generic_device_group,
->   	.owner          = THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= mtk_iommu_v1_attach_device,
->   		.map_pages	= mtk_iommu_v1_map,
->   		.unmap_pages	= mtk_iommu_v1_unmap,
-> diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
-> index 5c6f5943f44b1f..3f3193de3ecd86 100644
-> --- a/drivers/iommu/omap-iommu.c
-> +++ b/drivers/iommu/omap-iommu.c
-> @@ -1724,6 +1724,7 @@ static const struct iommu_ops omap_iommu_ops = {
->   	.device_group	= generic_single_device_group,
->   	.of_xlate	= omap_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= omap_iommu_attach_dev,
->   		.map_pages	= omap_iommu_map,
->   		.unmap_pages	= omap_iommu_unmap,
-> diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-> index 0861dd469bd866..0053f5aa2cb781 100644
-> --- a/drivers/iommu/rockchip-iommu.c
-> +++ b/drivers/iommu/rockchip-iommu.c
-> @@ -1174,6 +1174,7 @@ static const struct iommu_ops rk_iommu_ops = {
->   	.device_group = generic_single_device_group,
->   	.of_xlate = rk_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= rk_iommu_attach_device,
->   		.map_pages	= rk_iommu_map,
->   		.unmap_pages	= rk_iommu_unmap,
-> diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> index de10b569d9a940..29b230050906a2 100644
-> --- a/drivers/iommu/sun50i-iommu.c
-> +++ b/drivers/iommu/sun50i-iommu.c
-> @@ -849,6 +849,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
->   	.of_xlate	= sun50i_iommu_of_xlate,
->   	.probe_device	= sun50i_iommu_probe_device,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= sun50i_iommu_attach_device,
->   		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
->   		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index c30d12e16473df..e2bf7885287fac 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -714,6 +714,8 @@ struct iommu_ops {
->   
->   /**
->    * struct iommu_domain_ops - domain specific operations
-> + * @report_iommu_fault_supported: True if the domain supports
-> + *                                iommu_set_fault_handler()
->    * @attach_dev: attach an iommu domain to a device
->    *  Return:
->    * * 0		- success
-> @@ -751,6 +753,7 @@ struct iommu_ops {
->    * @free: Release the domain after use.
->    */
->   struct iommu_domain_ops {
-> +	bool report_iommu_fault_supported : 1;
->   	int (*attach_dev)(struct iommu_domain *domain, struct device *dev);
->   	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
->   			     ioasid_t pasid, struct iommu_domain *old);
+> -out:
+>   	if (pdev)
+>   		pci_dev_put(pdev);
+>   }
+
