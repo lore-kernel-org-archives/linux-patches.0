@@ -1,87 +1,105 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3AC2FF17B
-	for <patches@lists.linux.dev>; Wed, 22 Oct 2025 20:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED0B3B2BA
+	for <patches@lists.linux.dev>; Thu, 23 Oct 2025 01:20:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761165933; cv=none; b=SPDIsRNfxQLKstcwcuN2Jm1IElIuSNSQXrYccjkbBoaxh5O1p5PjKQIe1LIkZ9wLlMg80/V3YBUh74vRexQnVXBdCBXFrZvQiccUdN5eENNGBVKM1EoBbPnsRCgvIvVkUA5gntm/XBEndhqZo/kT9JorBIra0G/s1pXQY2MUm20=
+	t=1761182432; cv=none; b=TmQBPlZ7Myp5lDkBASbPX0pVNVaeQ0bRlraTOvbjM52m4bhMvF58xOHiWIrC4XvhBy2UHFWf33zRALAGW5nEjqjdftT4wKZJ2UbFWd5rAL/eTliJiOO05vd3dTo7Py/X9KAQMzAs5BkJ38RUny838vRMz6MX3YT0BxAajjlPBY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761165933; c=relaxed/simple;
-	bh=YWlHyzihnVjS1Y22x469698+jpX/0sqFDbsHjYf3Hto=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U0g5oeASJ+AxJDBY0g0M+x/i4JkrQ2mR/w+F7oLpoWzHNSZb0zHJV4YVJ2rd1mz3Iue0dnVGLYQNnqqdu7LxJ2lITg0/eeb3jCF8fp6VWVfdgwfNMbaYWGjsZtbOzmlvq640AiwSDN+jdl5UkMsBwoWc+85pvmcFvYekiZ+Tew4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MquQ7tU7; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1761182432; c=relaxed/simple;
+	bh=HWeVzs4HkP0W/Y6HvJDuWMbx8SneTc7qsQZMtj9yvMk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mrAsJMvBOgixZt5ZUqMxHutw+RV6AQHBgN0s8XH9d+kiOXoClnCorS53BW4YsFG5KygvEZqR0MNRQiI3NVw7etcUAxs8rA7fSbkERR+s/6EUsUBxWAEvlMs2T5F5LmP+2ditgmHsE7J4bEZKzsQamKhJwZsZsOV6QPde3nRvBEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=Sudk1bRo; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MquQ7tU7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761165930; x=1792701930;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=YWlHyzihnVjS1Y22x469698+jpX/0sqFDbsHjYf3Hto=;
-  b=MquQ7tU7ShCd0CHlKGp3JaC4CoLAIt5VH9NETr1jg+I4BEKNxqNgOwGP
-   KRlymK/Y0GQxrfVvCeKNxMhyOeKbUD6FrVzd7ZPJdIu+G9IaADRaxA+xj
-   pAV9W5qr2JFcHVywMfDR/hK4gn4JFDRXPsenfEkGcpZM1wdQdq197DMM6
-   olr01kHjJdE1IttShxcyanmDkNQsLfUPujtxGLz2ZKPlDUvTt6mYNkOvf
-   Lu0ex2nc6OsirG3vybNiyqdimorMo4qToa5aIcvedEOvVhzYVvoVJL09P
-   iW/5z4LlSO6AlWAjVhfXXSFlBUauI4ZLRnqYdOvPxRjwiB/ouKewiw5K2
-   w==;
-X-CSE-ConnectionGUID: 85Yt/5hwTqO6FAPdM3Bc5Q==
-X-CSE-MsgGUID: oJC1uGjSQhKHapMu8UaaLQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="73932464"
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="73932464"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 13:45:30 -0700
-X-CSE-ConnectionGUID: crn79BJiR3O4ihpirT+QTQ==
-X-CSE-MsgGUID: DAXSrVtpSCGKonvPjrHizQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="189096027"
-Received: from aschofie-mobl2.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.80])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 13:45:30 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Cc: linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] ACPI: MRRM: Check revision of MRRM table
-Date: Wed, 22 Oct 2025 13:45:23 -0700
-Message-ID: <20251022204523.10752-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="Sudk1bRo"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2698384978dso1542525ad.0
+        for <patches@lists.linux.dev>; Wed, 22 Oct 2025 18:20:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1761182429; x=1761787229; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8ijG+3nszibgNynLBA4c1V0LvvFa9+rH6/8ywIqIspo=;
+        b=Sudk1bRo5AkLTPCNPK4LvYw3/O5CH/g+wzfE4VBrUFTXdDNaPLlwTK153nPtlzMnby
+         D3GRA8PM/vlRt9Kn15HKrn4r5gLGrhJXVq13cLqMn61LRYC/8iRYYC0Du5kKBAJGWBbm
+         /CIDIDVXTgvEF7z652qE2AwZHg0SYKhTkoAEQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761182429; x=1761787229;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8ijG+3nszibgNynLBA4c1V0LvvFa9+rH6/8ywIqIspo=;
+        b=OtpuANwtfIMAnNXB71S19nfNxxE+do9VnKiIeA+F6KfLozPmngANNwu+pvwh9sedQ7
+         ls0B7r0sTFfIBCwysbGeBs91RWYorMuijO2K5xu9x8ny6zct3zGTTCgjIZN3UOgqxqg/
+         UU6wdcmHifNFoxk0O/9Knfmp1UWfO4dtfuBjd7d4eSVnHdINa+bz8n5l6CYYyLqlFB7M
+         3ib52c48dIHuWPfmxhKyAVs3DvmykAP048EFZ/HNuvWJdrEGhrvvnxh1XnO9LVHd207R
+         EqgzH8oFjPWSWj8TDR3BhV6pYNfg33AgRNWUIkgBd2LdPwBmfB49Lo2ZSbahg8H7+X+Q
+         yV5g==
+X-Forwarded-Encrypted: i=1; AJvYcCWs5ID8hQemM80q7wsUiHxjILjBw/nnV1u4GDfez03AYBKVBid2PgCq2r1YiVrUE2RowPD7rtWN@lists.linux.dev
+X-Gm-Message-State: AOJu0YyvvAb7K7bKzIqOMuYWyt+xvPu9EQCvwZ19xb1bBzatnf0nODxn
+	rE9xD7TpOFXBlZG8NVGkaLzYUhjfkAVnqDtDUftDu39e4NCdiiVwA2LGrhH5MjA91g==
+X-Gm-Gg: ASbGncu/ZVUL4PNVV15UdEIHyYPAQyz6QktWfoOrkruhta+LYE/unzWXW9odjTGTgDM
+	ZhsyQblSFGEDvM1YMFb1NnH5GkksMiSN2siCZL1LQbGFF9rerAct3yKJLaESgwphtA/DFaTru20
+	BTwuIlsUom7vOmD1ggM/P2UPr7Otqx0Mz22Z7aKBfwWvJzmzTeCF3TJ3HRUkFEjp19gOSTJv7yX
+	1LVk2Jb20zLiqGjNq4sQEloRLyA607EnwJbuf0N0Wp8/DNfCLvHdbl0UPNgoCsy7zQB4LksBfMd
+	H11YizmpRG3+fWYsZ6ev+e+3f9om8lILQOH2hkAfwv0d8Ob+h6EA6+4a+ZxAqbu9p2xR99Pcu0K
+	QpN1fhG5TV6RzbKsgXGAjMxMPIUqcxX466KexHuQ6iA6wUb+DiJ25HbvGnl0iwi3no000EdBqtE
+	oophjhBDPDcbChnG4tPN3h9m9wzApoXVc=
+X-Google-Smtp-Source: AGHT+IGqlsv2gN808APRt6SB8St16ScWc42axG4K0bEhdfrp2ymJT8G4ZPKTSW9b6iTHmmaAgcxKNA==
+X-Received: by 2002:a17:902:d2c6:b0:290:c0d7:237e with SMTP id d9443c01a7336-290caf831cdmr329156695ad.39.1761182429389;
+        Wed, 22 Oct 2025 18:20:29 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([216.147.124.76])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6cf4e4303dsm378640a12.37.2025.10.22.18.20.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 18:20:28 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Wed, 22 Oct 2025 19:20:25 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+Subject: Re: [PATCH 6.17 000/160] 6.17.5-rc2 review
+Message-ID: <aPmC2fnwdvffkc_B@fedora64.linuxtx.org>
+References: <20251022053328.623411246@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251022053328.623411246@linuxfoundation.org>
 
-Before trying to parse the MRRM table, check that the table revision
-is the one that is expected.
+On Wed, Oct 22, 2025 at 07:34:14AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.17.5 release.
+> There are 160 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 24 Oct 2025 05:33:10 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.5-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- drivers/acpi/acpi_mrrm.c | 3 +++
- 1 file changed, 3 insertions(+)
+Tested rc2 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-diff --git a/drivers/acpi/acpi_mrrm.c b/drivers/acpi/acpi_mrrm.c
-index 47ea3ccc2142..a6dbf623e557 100644
---- a/drivers/acpi/acpi_mrrm.c
-+++ b/drivers/acpi/acpi_mrrm.c
-@@ -63,6 +63,9 @@ static __init int acpi_parse_mrrm(struct acpi_table_header *table)
- 	if (!mrrm)
- 		return -ENODEV;
- 
-+	if (mrrm->header.revision != 1)
-+		return -EINVAL;
-+
- 	if (mrrm->flags & ACPI_MRRM_FLAGS_REGION_ASSIGNMENT_OS)
- 		return -EOPNOTSUPP;
- 
--- 
-2.51.0
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
