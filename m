@@ -1,46 +1,47 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010035.outbound.protection.outlook.com [52.101.46.35])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010055.outbound.protection.outlook.com [52.101.56.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9FE2D2384;
-	Thu, 23 Oct 2025 23:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AB42D3A75;
+	Thu, 23 Oct 2025 23:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761260995; cv=fail; b=G2w7X0sW3Jv7L7XcuIAYQRsPkhdM11/nEeaOIq6DyZCtJ51RDGOfwXtYqApImUquJE0huiy586A0y2LdOvewjolb5/Bim9o/2OYvo4egrM/TnYiNeUN5WTe/Dk1VrR1eFYzEkcL+zDBM3jE1PMGRawXGmqC1WWO4UvcuDoyVF2U=
+	t=1761260996; cv=fail; b=JJS2RpAdJNSqdkjypO06/Wrd4S3Q3H7wAstfqCIqlXySqGueOr2hZvimhT8cIhtpmPXSSuTkrTL9kBCeIsUK0JPbVel/iKNhGohppIwcKTZcbEy7Xw1PBd/vlaifNvNhKLhW0n0JWtJhTJbbKdFYRpvdy4YOEN+8GchcZP4F8aE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761260995; c=relaxed/simple;
-	bh=Wmqu3YRD5+Ff59lDHqH2QWwnVWqEw8ISEaquH9wP8kw=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=FEihkohEnVNBDBmN8SprYYgVS6IB624Y8jwpkMaRsDVzOzoazMvS1nJwSiUm/fmYcAO6TfufzeK5V6GYs6wZw0qpqOKpHD8s9FSb/xYkmjx2roefK9R5WMJkPZF8BlgS7qU2OyKaFDxOAaKAtP6DGwe8mrhmFZOW00hNGbPKPNg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LMc1qbh9; arc=fail smtp.client-ip=52.101.46.35
+	s=arc-20240116; t=1761260996; c=relaxed/simple;
+	bh=8PdYWbb+H19Jb2dxWwOVZOXthuqSF7TtCQ6ASmva05U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=MwsaPNUA3GRByqRHPUfrfbyA49zFraEVlyVNOgN8oCwmHJc+AcFRr3UMEp/XOKn6aBmMgzDYhWXiji8+TFxfa23yH7uNa1nzU1O20FZGZbxtgEy2eQz/VoTzyBkAOPzTCWeWkvxaLGyQUnvlghuKUSOsoGi48OYOTT7SpPQosy4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=J3m7iA2g; arc=fail smtp.client-ip=52.101.56.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LMc1qbh9"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="J3m7iA2g"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sGEnkULzLdjVjpUwF/2Qkwi1UAe88RX0s9lkjl5Xf6GSERFIxJDkzM4TxqhUBMU3LADqhz/drwskUdgtuy3Izk4Z7n+kBsHch1FL/lo19ym9H309+NsjI1DZBpQOmZMlVf7zCKnSaIbpQKbHw7DWAX3a6kXAFwd+QyawK5tsnedJETeQ1LKay8xgoDzhwZ/adAX9/cVDBlpB2Gtg5MA3F0DzxG7NAi7ZKnATZqir7qbyozq/zbGQRhcJzhz6ovQS2sFXCA0oJb0lS/6XQTG31EzViXVrV/oKfGWZsI510OwZ5g7h1rU3/5c4NptYuMG0lgJMfOPJx8YFv9JNo8tlSw==
+ b=FDEySIP8t4amomqAJusCHu5Llfq0zZdzBGZu43dyb4qRyOM/YqCta3QkcC9pgBdIRvatocW8i1+wMDJAXlo3uQbs2JQ2tRCvCz4XpsqxKGxFkhKRHuHwdhK+PnrR+bo1Xx73kXM+lyCVmtYEyMjMGXCtvOAafE7CgbzjGcQ0sdXVw9R5ldXYbu0R/p7XSqBGvhWcQymIYU+Sps+ZZZug57nAm1UO4/oE8hlLhGeUM8ak4DhUgGTz2mTjo6hZCOFD0V4DDlqlr1nhCzdp2NcZSyF/JGgDapf/25OAdjbhBzAQTCrB+DG8R1OSkMcOcYXtz6ft/Ca/ZkjgTp0yUosfVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UXsrjPLvZWHxtOZq/LSmrbxapzUipJGoJCMMC0J+61Q=;
- b=IHoPLhmrVJkt5FrhRHet5i/cawqF9ooDnkNTSU23Isqrom1a3hGoEyozZoWiswItOF/CAamdXKvE+gHn/fhreT0Di7bZtabhIAddbfgJdqZG99PQ4F+7uvZG6RRX4w/cCh+9ArXl3nvplt/NoZo1rqWw1hVa2L5etPwHBMlJfcR21n6W6bo1PjjrvmWYp+5/Zh6msEoCvKJ5kMGnCKaMt6GHrsgkBeZr1Y7aBrTRWLt2MGenv4pYz9ty9jvg48NoibhJSVAx8ezhUvWntWhDiIfoi/GfMtDDEv7tKkeqkW5C7oJ88dIPE689DCSmBdlhzKqI/gP4EYFVF2UfhEHvgw==
+ bh=TPhBVupTrtWP871ZBN/hZgHzB4kO+fu0JOpNwq73jlE=;
+ b=VnW8aPywgzvhQbXgMqOAbdA5wnwEHTZV7l17B8zmzJw4A0rEdUmCO5Z1SJNYkILc/fnQE+3kW0ywnePWzwxl5zxAlOgnbKRDANorVw9nYCZKZzy45az8lWJ3eVNU6kDj/gMx6dlfs+YCZe9+oWC8Fkz1B4URkIyIC2bwy2+EFXj4qep4Zx37v8ysvm5hycS24S61rCefJOAyKgTcVNB745Tij4HWxuKAGru8rvawporYdoXJTR11g5ABRf1/666bvz0JGARukaQV+qO1uDU64wZq41LYBA/c6gQAsH6jC+nNW93FitWHWgAJJg6TR7OJl/xS5I+TcgDWYT62+iFZMg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UXsrjPLvZWHxtOZq/LSmrbxapzUipJGoJCMMC0J+61Q=;
- b=LMc1qbh9tuALSgaGPr7oAtKbEardZ4iRJA64M2Wfwxc+jVoVbLPPh+uQMe3sg0jgozROKWTHMm6rj454CsS+NN0b+Mn/+qS/DymWHLJRLI+28qiqSCV8F6NB1lyBB7DsdcdGpxl56E03RbnhTAuQARarhaHPlpBcvvLEm+0faktkSPNQpYYWKFs6whm1j1wuI7vuljCfBsEnVwSDJfFsAmvTjWUQiwM6BoTU2XvFdimBwIzXTs3BhjiNztHKqswiC1ZxP36CNRWFigTZvzRxmjp5jBPPATsB52Mo4i700JwFotBvtCiIpT+G/129tiaFBsupHfh68Zdk3yj29KTcZQ==
+ bh=TPhBVupTrtWP871ZBN/hZgHzB4kO+fu0JOpNwq73jlE=;
+ b=J3m7iA2g+6kCTbbzJx7e+H6vjKRc1ntBtG1MjZyhm5Ik/pouGfXPb0o2qFIlBkhXmShIPGy6T/tofz6fCLC1KGkz0nwdCf9DlQOJrlwcuH8OkzkA1pQQmH13S3I3RoTnlHOdTkP52M5q9nbn+JChYU4wMvfscUEKuCbC9IVHeozVMMpg7KxKDzY3kT0HzuinZKvqcKxa/CRX0nenbWGfiXSQP5IlmlQKEuwUXF6P+VJSC6tXz7UeJf9Tsw0/sfxswY+AebU7CqQ0v1jNW/w48v9SSm8Tk5FFw+7lahzGbO+nzEC8hcvgTMB3iSOKTWs8M+tMfM3bQZAEdSO8jDBU/g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
  by SJ2PR12MB9138.namprd12.prod.outlook.com (2603:10b6:a03:565::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.13; Thu, 23 Oct
- 2025 23:09:45 +0000
+ 2025 23:09:46 +0000
 Received: from MN2PR12MB3613.namprd12.prod.outlook.com
  ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
  ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9253.011; Thu, 23 Oct 2025
- 23:09:45 +0000
+ 23:09:46 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Alexander Gordeev <agordeev@linux.ibm.com>,
 	David Airlie <airlied@gmail.com>,
@@ -81,13 +82,15 @@ To: Alexander Gordeev <agordeev@linux.ibm.com>,
 	Zhenyu Wang <zhenyuw.linux@gmail.com>,
 	Zhi Wang <zhi.wang.linux@gmail.com>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 00/22] vfio: Give VFIO_DEVICE_GET_REGION_INFO its own op
-Date: Thu, 23 Oct 2025 20:09:14 -0300
-Message-ID: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+Subject: [PATCH 20/22] vfio/platform: Convert to get_region_info_caps
+Date: Thu, 23 Oct 2025 20:09:34 -0300
+Message-ID: <20-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+In-Reply-To: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BY5PR17CA0036.namprd17.prod.outlook.com
- (2603:10b6:a03:1b8::49) To MN2PR12MB3613.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR13CA0169.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::24) To MN2PR12MB3613.namprd12.prod.outlook.com
  (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -97,150 +100,173 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SJ2PR12MB9138:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6fcb4de7-7969-4140-2fb1-08de12893fe8
+X-MS-Office365-Filtering-Correlation-Id: 9db62dc7-f02e-4f69-a9ef-08de128940f0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?+ZgqWJBF28ap01s/uhon6y7ya5nkraO4UXn1dUtmG0WXxGUWr7XWhyHbpGfM?=
- =?us-ascii?Q?0/56SMSeu3roOt5slsIV2qbl/bC8nGzhu2I5eYHPmwZk3TEL6OU47B4qSw7V?=
- =?us-ascii?Q?KLJv3Z6qBNRzQzjYuI5mtiaPW+HNTArI16GsPT8dT3InyM0u+rSn4vq4q8AY?=
- =?us-ascii?Q?ti4/9t+fWBlVz9MAFpQ38k8sDlrr1Gm35BkcEwNc73r+M8d96OQNzV728PBA?=
- =?us-ascii?Q?paQIZoxq4YQ7wgBBGlnNjQc73UO18m42BxxWrENlG/LmGhJgetiNgfkl5xx5?=
- =?us-ascii?Q?GqjmxVGqB1Mv8gA2EQNg6a94uNDHfpJfR2vKprKlV3Sd5KyevJXrploWyErp?=
- =?us-ascii?Q?Ej5QH0ueTwMGiMbXUSJKrsHmnqvYgIu+3I8IDRjIhvBF7yn4aOZS+XhrVqeK?=
- =?us-ascii?Q?JRcJ54NxHJSqKuopZyaAo5TzNMfOTQ41hYPv0PD2MYnAeRYwy/IyxsIO8pm4?=
- =?us-ascii?Q?5B953la4K2guMLV+ao1/3sKdR46b9D5NuQRgTtLRpmxdWvkWdHh7cqfzkPfW?=
- =?us-ascii?Q?DPh1T8+gjKK85HB+M0ltlUyUM2MzHziNca78gIs3yw2PELlb/MTvgqIqAqN3?=
- =?us-ascii?Q?gU/UREVoO5gn2Nc2oiXG0fCm9I/5ztEqRUigJePDoFFn8uC9G51GErh0KpsQ?=
- =?us-ascii?Q?qJabUSp+eAJO0rBkPtff9djPtWSaDiBB8gcipEEP0xm6CuqTpE/fjtxQw6bo?=
- =?us-ascii?Q?K7guF8Ijccj5cTwijSVvoS9C638SX7j7jcJy9q32WpVP2Ffbfu3sADf5bVMs?=
- =?us-ascii?Q?WDxb5UQ4TUyQyaEZmwGqSmnDJdVpzq2kdFQ4wdd0TOO6vkFFNyq5FCudrLX1?=
- =?us-ascii?Q?fZ8VInLyxDEAyPcdLtiREByA1m8VmEzJuRvaJjY8ACHqZXVxD6Ye6Llghkm4?=
- =?us-ascii?Q?75ZpG8fXmmJ0XVrMJe/UKK46iDN6QlENhdBUnRBTi4GgbU2tlxvc9JKEWVuY?=
- =?us-ascii?Q?bpXrX0fxcRRrG0UQUHExRr8V/b31XOgz8y+WKuhqwPpE6sr4kHeiEFyRUXsM?=
- =?us-ascii?Q?Ues3E2K+UlZAwRnZ/ekcWRvbg3sw64quEbg01rFSRn3DKk1WQaJmcRrFJ01J?=
- =?us-ascii?Q?ATG5eDuZVTexEGp/xrYO4ztA9vDdIdr2sMGqCua8AOH8A9JXXwQ9T9q3Ll3A?=
- =?us-ascii?Q?StuKi/hwNecE5BppHNxlrKcoHkWhUERD5rbq7aKIuJAMQZUFyNHqMhFtVpa5?=
- =?us-ascii?Q?nM9eUOsyPyXvlpAAkvcifa4k7cDDB8YVNRyO9GCejtdY2fFUAJUveP0UtWVx?=
- =?us-ascii?Q?8NIrr2eHZngyCSLt8LHxGxa1C7I12/PIyDgdGDSKHKHZY0qUeD++5cUuYQND?=
- =?us-ascii?Q?fWBl7to0gmbz0uxE+RuCxecduSgP3ajJmggTOLsWVxdVYgb99J1W7IrMfa61?=
- =?us-ascii?Q?33FeOue4GExsZFevi6bjYS14Rf0aga8cIOX/yCeVIUg596b09Yw7wRRuir42?=
- =?us-ascii?Q?LVa4c9xQgnVdHe7a7XPAEqGDQHpX9gvDM82QuSt8GuS7m0HqE4pKfiRVHjZ0?=
- =?us-ascii?Q?+AKN04K/QA7/CUg=3D?=
+	=?us-ascii?Q?tbe5OZbHndV7w0bZgt91ukUG5AZ+fCZBcMgn2pnJ4qw08dI5bK3p1IqgPr2p?=
+ =?us-ascii?Q?oRfzgVa4eaHo0+o9J6rSsKeOuaguidYNltUJpn1vLknAry7LJukbyuUG9sE8?=
+ =?us-ascii?Q?VAZgzEreunxzwr8Y5uOgc+9liVVXHPkJiK5NlvLu+bp4aguwLnMO6orWxbh1?=
+ =?us-ascii?Q?aL0afZrpiIxJ1vNhG1coGjMUT8E+B7NiAn4gHdoyHT8I7jAiHFgm+Y5NtvD5?=
+ =?us-ascii?Q?U91L90CYgrFoeftrRSgRtdfW/Z+oSquaizpk9TPemShHC9IR/U4U6HMJ2BLH?=
+ =?us-ascii?Q?GtIM8vw92srNEKys4d80y0SqXfXCxmCy71iYyiCOE7+ogLjB2r8DM+pIP9+9?=
+ =?us-ascii?Q?8qaZM/Tup3h/YviFjaJvJmxxe/3+NYB8NwJLoMeFsYy8mgYGWoUYGook0C+Y?=
+ =?us-ascii?Q?mHkmS7+wHdav4HT4aq7oUBOZKtVooxyXWo3EbzFpTcFCPbz47wgDte6q5o2J?=
+ =?us-ascii?Q?UwHcmDn58aMBD9NDOt042qsPgPWOBNSZTnLYafesgYk8+hHmlqwtldnYXKyl?=
+ =?us-ascii?Q?cT9Ae3g8baG6NV7lawE4SgBUyucVtM6iYgdhE48V0oTIYl46vRqE0syVZngD?=
+ =?us-ascii?Q?FVZF+SZEPKNu5qZZV+LLaHtkws0nZTtJpanmG9xKwW7ehw2wk0Vsh8d6Eb9h?=
+ =?us-ascii?Q?aAwmpt1Q0fyIayh7uI3l1MkYYnU/R1QTw6GwN7w0wlQ7OkodJtTRoKT76nzi?=
+ =?us-ascii?Q?ZgOAoo2twFqgdfrNW9Lfz6zckdcVfLa8LXNxth9Kf/ih1TuHUpj/5+c1OTrA?=
+ =?us-ascii?Q?PWfnDLL6XC70nDzoiQvy1Dlr8zbw12q0pQjSktczfRVxhSgQtoRIoTbnhUOr?=
+ =?us-ascii?Q?wYTWO7H787KBWqmneWNXozo0gP1mBufRv3ukeRLe69JxWbjYd9nfEERcBlhI?=
+ =?us-ascii?Q?DGFSxGq+ZBSW8/DYFoowBM0QYVxQ1nkMBjMZ1FfX3eEyHSEJGS+LS8wxZ0pH?=
+ =?us-ascii?Q?fJxdUk8U04gQbfCV/VjpvENd0pNPV3sj9qBZjLgvfN/6jfZ+APlGQQmX5my0?=
+ =?us-ascii?Q?wHtg8Y5GoVyfH7Rcv7NoIj+ef/q9U+Mk+IIdf155+df1Ek6EzwLIWj3KILca?=
+ =?us-ascii?Q?y4JYGxeeeLnMjtxg6b57a1+D5LWU4jHs5pu8CFQWccUAnYh+PFQLgZ/IJDc3?=
+ =?us-ascii?Q?MEXnFxEzF3JYPMXtKZajDUk2tqFFKka6glPkSXccjc0V0J6N6CHD8BBPgyYv?=
+ =?us-ascii?Q?6xpkuyK7o8OIiRaWDF3v7/fRoe3/E89/K9oXuzqv9qNtYWUPWT2pWB3mwh9E?=
+ =?us-ascii?Q?6pzT1zAK0Bqb5NSl5hFDs3Y5l7VqlLat4DjHdsmvJigeZc0WvR4CpGImg3wv?=
+ =?us-ascii?Q?UMOSWWZU3/4FgtoqK63Z7f6NZeCseCquYYwSmIIFj/N2y729iIfxN9Z72Dz4?=
+ =?us-ascii?Q?orqC7zoE7DcFm/F/A3UE86qOKJhEjn+6F1zT9paxB/6zzivhNB3O/14dMcb1?=
+ =?us-ascii?Q?JXm7R/wJ4fqUhBTi6qWdXNeoWSsaQ9JmTFHxP+f4mJ59cWsf4kcEyh32GjJF?=
+ =?us-ascii?Q?bXkpq06WKhq8ayI=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?TjwtkCNm91ZjJQ4Brrx4FF+6Vc4ZYa6doJZlQkh/L2XyOfQSmL0i67jg/c/N?=
- =?us-ascii?Q?/l5aHsugyuhJ7oQ0nntLL+GdWUZfLuJaG9aOqFJ46tSESAaDtljPbno1KhqB?=
- =?us-ascii?Q?ukmq52krRf6lEyZNe/DxH4WB7q+5Nj47ccQmL+QPLid2+GdT33EqKI4OsqHK?=
- =?us-ascii?Q?w6JM7LUy1MQ5GYDrWSL5U9vQiO8bPZVPuBcYBnAzLmzxxHgrvMj9+Dnueifi?=
- =?us-ascii?Q?FZbG79mbeVjyrTMrfeOuQ+2atkIzxtdkbamEVVGrePpzVfdxtd8q+Tr4ZQR0?=
- =?us-ascii?Q?+fhDc/YxjT1iMX1EdWdtBALCJl2HobD5nLy4qN02mrUE1R3jgjJQMA7V3uDr?=
- =?us-ascii?Q?sv+JPcGLU1awfU6Bf+/YJnWBnMCVA68UD0+aESseTeGuQ11DxProion6Fl21?=
- =?us-ascii?Q?VxTUVEeQ1J1vFSzvLqau79QUzmRMOcyMyKgvVn5YXxNiTXHP9rCQjLNRP8Eo?=
- =?us-ascii?Q?/EUrYRPQD5mr4xabSp0QbAG5/RtbYlwFTHTVhovnfWAkIcqH83DypgTiwOgN?=
- =?us-ascii?Q?u2Y4Veyc1NoF5ZHe85qeNB0Tu/wbVNIrvQM7YVKi16ESdaH9Wq63o4RdSFtg?=
- =?us-ascii?Q?DoJZBnzJWpAXBVbXFvqCcHjsbzuXaUrxgGXku9Boik6GllaglSLXe/lJWvHe?=
- =?us-ascii?Q?PXnQI6J96c8Iu+HWGFDanESKovfwzt2W5GTEB5TH6C0LJjcLeG5kwMVpxFge?=
- =?us-ascii?Q?r/6/KdPsDYwUjSPa2IbO89uJC0SN7JcqZCegToZh+ZHgxtWHfy2Uf/qdPVLh?=
- =?us-ascii?Q?2yp5qEqL95Q74s4ClDZUGc0sjPJsmmrr9fCSU0r1ki40S1BOiJPYxJv8G/EV?=
- =?us-ascii?Q?vuCt8x2IFDs1hIq+heHRZwElogBj0aSPSFAoUreCwpc9nVrq/KUElQFnBUTm?=
- =?us-ascii?Q?Q8/1E47uwq4p+eo0RokFVyMLkRnFbGGed3YPRTrzvBeaX7AfPeA8yMxFc7nW?=
- =?us-ascii?Q?tdjHMCxeFTRnXjOqLMTQ7XNUlKvyD4fMIgobX7Cl3o+vLNBGis2o6rRS2QnB?=
- =?us-ascii?Q?oWLsr6DDnDAE5IrGX3U2oQTBkpgtTpNcJ/h8I30oX1PqioL5ASk7iwFNILIU?=
- =?us-ascii?Q?L41zuGPbB2Ut5Um46brxQuU/kMXS2OcMw73wA/TlPrB11kTJnLq/x73iyfAT?=
- =?us-ascii?Q?m+AGJey+53BBMtx1+ZUm/iernAUpQ9I6jlT6Fz3tBElUhKyLUp0yeVPgUcgX?=
- =?us-ascii?Q?NU0pJbRPLX+2UZeKKQIOgBbD1SVSLrzFknwnJdGyCvWPGhyP7bbivC4bq8Cb?=
- =?us-ascii?Q?n/4Sn4RyB1Z5RXQyczSeCvklgxnwhUvYfHzr6eJ1kquzOEdQpokoKJNpcIGu?=
- =?us-ascii?Q?Ajlv3CuunthuRjkLgj940G7y/eNDLvyTukKK69HahKOPsIIKMBmuMJRALE3s?=
- =?us-ascii?Q?VFR9MGAEDX+JgO5b4sVEUK3dSro65HxWIEfeUM3r5NVIJdg5suR+G6IbyEs+?=
- =?us-ascii?Q?DreeedJJg0t8LJo3YziNA8QDUB79Z2kjX5kYEbhupvlijEcopJLmAHCXV1BX?=
- =?us-ascii?Q?jJBBhLf85FuiBINJGMAKcIhAb5iby5qgcfnZUBseZHEN/cx92kIed/jBoxgE?=
- =?us-ascii?Q?PJPPXAL3L/6b8hLe0CQxSHClReI2K7wemWwQjosC?=
+	=?us-ascii?Q?88eerABZCJdtiuBbBnuYpjVoP5STlM7e8ESC6ADwz2Lgm43u51C9Emx+zfjb?=
+ =?us-ascii?Q?if6Yd1D1kpEOP/Z7p5rRtpusQ2UmXHHe6gPcqRXudmCC682z7xLT0ynApDV1?=
+ =?us-ascii?Q?BajvhOuBKPmhugMzhNNr+cFUhiyHMJs8TH3uWKVNGGN3aUtX0mBZua1ReOxq?=
+ =?us-ascii?Q?IcXcmg6jJIYZmTHHPNeDHYJwydc8SOp78Y0tyv5AQ6PnaXys/+hfcNVcOe6E?=
+ =?us-ascii?Q?u9UWqFiwV/DYbk7l/hyk47w35czYUxuO6/4A7KkOOQrsDB4WRgigusLq5WRR?=
+ =?us-ascii?Q?0q4bRcsV+RR7oJawKORXFsjuDwefbtNP1ieKhm/ouvduTeBq/GRCS4x48xND?=
+ =?us-ascii?Q?MQhYZCj/astoJaejopTkZemcRwAqdqcbZ809KJbEsuN/2ffGcRO3jxkisDYe?=
+ =?us-ascii?Q?oe+/ITbjuSjxzSN2qrhF/HgToYmklSPRTvvVeDbGX59IqN6q7OYhdsfASuIU?=
+ =?us-ascii?Q?YtBIJXlJsB8/QwxzNdJbAxRdWt9H6NYdjzI3fgZo76+INAo3t9KwqTmYMoDk?=
+ =?us-ascii?Q?ya1GrVExfIK2TYvQ/u8sJTd7WOSpP6oXeMXXF1j9yZiYNXvqeLCROLeDV5l7?=
+ =?us-ascii?Q?ol8GpuO2lZn8Np0JmwsmN8WQ6WMuMuBeliRv/3DvtTmVankQ+xkAmrePXEw8?=
+ =?us-ascii?Q?pEAL8rRjAGcdSWsIlK/xgGteTmFN6zq6aO+8+e7ZJn3ALjqfqyiJ+PcZNsaX?=
+ =?us-ascii?Q?cfoOu3Oj9N2cE2BJUTOuJhCOtGcm0Bo/fO+UqW+UizIGAv0Pocw/B8lG0DnC?=
+ =?us-ascii?Q?NvOjkYyVGCcMBiKxfqJRcKSLlIBq9SI+I4hnWqgQNEtsrO0UA4hpu6mzVDOJ?=
+ =?us-ascii?Q?DTkFmlC74JRizHz6rRXnucWc60KbYsJ5ShSZkHFW16GjZRrzZdOSQ59GIzIs?=
+ =?us-ascii?Q?ZLANmKLjpe3Ll0hoZNfDWIOzkaNzehcDFS5lXgiKNBEE0AUnuSwTGdpIvwyg?=
+ =?us-ascii?Q?SLjTuHrfksE/g+QHx2cwLXTI2t48tnhQhY0/peG+jYEXPmf5Sg9beew8jhs0?=
+ =?us-ascii?Q?Nlji6J+qNZbCdwA07IprD0raL1Q1yAC1iOBoIyIM/+cGmoCfsNHUHSfI11c6?=
+ =?us-ascii?Q?7EolMZRSchlF6ehUCrsWOuqYczJsvDD6LM7B6DeK7JSoOaSNn5PKHrRWPEUX?=
+ =?us-ascii?Q?6abNuS69U4ONJGkcbC9VRQPQ45kEmjOcKtlEz9HisAxb4DFlrurUYmk7bvQ4?=
+ =?us-ascii?Q?+kcWwJnWrZmDkfCEs13RcVHNrlWg0+NYoa+Fxp1I6IAUCHyWgMoMHIs+xpEQ?=
+ =?us-ascii?Q?HSgME+mbDNJ2Yp6Do45zTToeeWWfKz7iXQhNNyrjY7wTVK2gbfUogZuj7IDb?=
+ =?us-ascii?Q?67WveMFpHWfepsdkF6ehMCIUvx//1xeTrmbygbRQQPULndwD/LjYWnpCwIyo?=
+ =?us-ascii?Q?0BCA8Q7JY7OJUCc/o/1XhbBLgZApTiLTE9T8rnXmkZBn0pLWoIZSadDniEtg?=
+ =?us-ascii?Q?SO6W7YXYtmgZ2f8Pr3oXBUloKTxhrirdBhVeDFq0ZpTV77SsVPZmLD+0Lca+?=
+ =?us-ascii?Q?4n+P0PaRJlBwhPzOBFPyeQdTzu7rsOy12uni8kQL6t9DaRhO/zY8mLrixXq0?=
+ =?us-ascii?Q?KM6tG6nc7tlEzBWIIJWkP0+9WGJKBGloxGXHuPro?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6fcb4de7-7969-4140-2fb1-08de12893fe8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9db62dc7-f02e-4f69-a9ef-08de128940f0
 X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2025 23:09:42.7333
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2025 23:09:44.4028
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /OsV3UXLWE/xVfC7yfPB15bzGg2lqhjSMgEX/BDnLFCU38RDyU82Q1+gpj9UejXp
+X-MS-Exchange-CrossTenant-UserPrincipalName: OIp/Leivc2fjcFnKYxwBMsBpSKh2HXqZfxUmC8D5UTUMSxcbCZwkG4LodT20bdWO
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9138
 
-There is alot of duplicated code in the drivers for processing
-VFIO_DEVICE_GET_REGION_INFO. Introduce a new op get_region_info_caps()
-which provides a struct vfio_info_cap and handles the cap chain logic
-to write the caps back to userspace and remove all of this duplication
-from drivers.
+Remove the duplicate code and change info to a pointer. caps are not used.
 
-This is done in two steps, the first is a largely mechanical introduction
-of the get_region_info(). These patches are best viewed with the diff
-option to ignore whitespace (-b) as most of the lines are re-indending
-things.
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/vfio/platform/vfio_amba.c             |  2 +-
+ drivers/vfio/platform/vfio_platform.c         |  2 +-
+ drivers/vfio/platform/vfio_platform_common.c  | 24 ++++++-------------
+ drivers/vfio/platform/vfio_platform_private.h |  3 ++-
+ 4 files changed, 11 insertions(+), 20 deletions(-)
 
-Then drivers are updated to remove the duplicate cap related code. Some
-drivers are converted to use vfio_info_add_capability() instead of open
-coding a version of it.
-
-This is on github: https://github.com/jgunthorpe/linux/commits/vfio_get_region_info_op
-
-Jason Gunthorpe (22):
-  vfio: Provide a get_region_info op
-  vfio/hisi: Convert to the get_region_info op
-  vfio/virtio: Convert to the get_region_info op
-  vfio/nvgrace: Convert to the get_region_info op
-  vfio/pci: Fill in the missing get_region_info ops
-  vfio/mtty: Provide a get_region_info op
-  vfio/mdpy: Provide a get_region_info op
-  vfio/mbochs: Provide a get_region_info op
-  vfio/platform: Provide a get_region_info op
-  vfio/fsl: Provide a get_region_info op
-  vfio/cdx: Provide a get_region_info op
-  vfio/ccw: Provide a get_region_info op
-  vfio/gvt: Provide a get_region_info op
-  vfio: Require drivers to implement get_region_info
-  vfio: Add get_region_info_caps op
-  vfio/mbochs: Convert mbochs to use vfio_info_add_capability()
-  vfio/gvt: Convert to get_region_info_caps
-  vfio/ccw: Convert to get_region_info_caps
-  vfio/pci: Convert all PCI drivers to get_region_info_caps
-  vfio/platform: Convert to get_region_info_caps
-  vfio: Move the remaining drivers to get_region_info_caps
-  vfio: Remove the get_region_info op
-
- drivers/gpu/drm/i915/gvt/kvmgt.c              | 272 ++++++++----------
- drivers/s390/cio/vfio_ccw_ops.c               |  45 +--
- drivers/vfio/cdx/main.c                       |  29 +-
- drivers/vfio/fsl-mc/vfio_fsl_mc.c             |  43 ++-
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    |  54 ++--
- drivers/vfio/pci/mlx5/main.c                  |   1 +
- drivers/vfio/pci/nvgrace-gpu/main.c           |  53 +---
- drivers/vfio/pci/pds/vfio_dev.c               |   1 +
- drivers/vfio/pci/qat/main.c                   |   1 +
- drivers/vfio/pci/vfio_pci.c                   |   1 +
- drivers/vfio/pci/vfio_pci_core.c              | 110 +++----
- drivers/vfio/pci/virtio/common.h              |   5 +-
- drivers/vfio/pci/virtio/legacy_io.c           |  38 +--
- drivers/vfio/pci/virtio/main.c                |   5 +-
- drivers/vfio/platform/vfio_amba.c             |   1 +
- drivers/vfio/platform/vfio_platform.c         |   1 +
- drivers/vfio/platform/vfio_platform_common.c  |  40 ++-
- drivers/vfio/platform/vfio_platform_private.h |   3 +
- drivers/vfio/vfio_main.c                      |  45 +++
- include/linux/vfio.h                          |   4 +
- include/linux/vfio_pci_core.h                 |   3 +
- samples/vfio-mdev/mbochs.c                    |  71 ++---
- samples/vfio-mdev/mdpy.c                      |  34 +--
- samples/vfio-mdev/mtty.c                      |  33 +--
- 24 files changed, 363 insertions(+), 530 deletions(-)
-
-
-base-commit: 211ddde0823f1442e4ad052a2f30f050145ccada
+diff --git a/drivers/vfio/platform/vfio_amba.c b/drivers/vfio/platform/vfio_amba.c
+index d600deaf23b6d7..fa754f203b2dfc 100644
+--- a/drivers/vfio/platform/vfio_amba.c
++++ b/drivers/vfio/platform/vfio_amba.c
+@@ -115,7 +115,7 @@ static const struct vfio_device_ops vfio_amba_ops = {
+ 	.open_device	= vfio_platform_open_device,
+ 	.close_device	= vfio_platform_close_device,
+ 	.ioctl		= vfio_platform_ioctl,
+-	.get_region_info = vfio_platform_ioctl_get_region_info,
++	.get_region_info_caps = vfio_platform_ioctl_get_region_info,
+ 	.read		= vfio_platform_read,
+ 	.write		= vfio_platform_write,
+ 	.mmap		= vfio_platform_mmap,
+diff --git a/drivers/vfio/platform/vfio_platform.c b/drivers/vfio/platform/vfio_platform.c
+index 0e85c914b65105..a4d3ace3e02dda 100644
+--- a/drivers/vfio/platform/vfio_platform.c
++++ b/drivers/vfio/platform/vfio_platform.c
+@@ -101,7 +101,7 @@ static const struct vfio_device_ops vfio_platform_ops = {
+ 	.open_device	= vfio_platform_open_device,
+ 	.close_device	= vfio_platform_close_device,
+ 	.ioctl		= vfio_platform_ioctl,
+-	.get_region_info = vfio_platform_ioctl_get_region_info,
++	.get_region_info_caps = vfio_platform_ioctl_get_region_info,
+ 	.read		= vfio_platform_read,
+ 	.write		= vfio_platform_write,
+ 	.mmap		= vfio_platform_mmap,
+diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
+index 3ebd50fb78fbb7..c2990b7e900fa5 100644
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -273,30 +273,20 @@ int vfio_platform_open_device(struct vfio_device *core_vdev)
+ EXPORT_SYMBOL_GPL(vfio_platform_open_device);
+ 
+ int vfio_platform_ioctl_get_region_info(struct vfio_device *core_vdev,
+-					struct vfio_region_info __user *arg)
++					struct vfio_region_info *info,
++					struct vfio_info_cap *caps)
+ {
+ 	struct vfio_platform_device *vdev =
+ 		container_of(core_vdev, struct vfio_platform_device, vdev);
+-	struct vfio_region_info info;
+-	unsigned long minsz;
+ 
+-	minsz = offsetofend(struct vfio_region_info, offset);
+-
+-	if (copy_from_user(&info, arg, minsz))
+-		return -EFAULT;
+-
+-	if (info.argsz < minsz)
+-		return -EINVAL;
+-
+-	if (info.index >= vdev->num_regions)
++	if (info->index >= vdev->num_regions)
+ 		return -EINVAL;
+ 
+ 	/* map offset to the physical address  */
+-	info.offset = VFIO_PLATFORM_INDEX_TO_OFFSET(info.index);
+-	info.size = vdev->regions[info.index].size;
+-	info.flags = vdev->regions[info.index].flags;
+-
+-	return copy_to_user(arg, &info, minsz) ? -EFAULT : 0;
++	info->offset = VFIO_PLATFORM_INDEX_TO_OFFSET(info->index);
++	info->size = vdev->regions[info->index].size;
++	info->flags = vdev->regions[info->index].flags;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(vfio_platform_ioctl_get_region_info);
+ 
+diff --git a/drivers/vfio/platform/vfio_platform_private.h b/drivers/vfio/platform/vfio_platform_private.h
+index a6008320e77bae..05084212a76eb6 100644
+--- a/drivers/vfio/platform/vfio_platform_private.h
++++ b/drivers/vfio/platform/vfio_platform_private.h
+@@ -86,7 +86,8 @@ void vfio_platform_close_device(struct vfio_device *core_vdev);
+ long vfio_platform_ioctl(struct vfio_device *core_vdev,
+ 			 unsigned int cmd, unsigned long arg);
+ int vfio_platform_ioctl_get_region_info(struct vfio_device *core_vdev,
+-					struct vfio_region_info __user *arg);
++					struct vfio_region_info *info,
++					struct vfio_info_cap *caps);
+ ssize_t vfio_platform_read(struct vfio_device *core_vdev,
+ 			   char __user *buf, size_t count,
+ 			   loff_t *ppos);
 -- 
 2.43.0
 
