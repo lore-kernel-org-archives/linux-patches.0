@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51205261B8C;
-	Thu, 23 Oct 2025 05:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA6B261B8C;
+	Thu, 23 Oct 2025 05:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761195990; cv=none; b=dJYG+Esps+u5k5eeTepwOrvZ7tay4NbFDHj85gI2sIWHEGvXL9dJ+YeXPTSRjnKkqoaECe0HQYCh2doCb5uyZHRDTv0kFuSLiGmqhig9Ef014nbJNTwjlkEDK6qZDgb32khJuXkM8/pxRJAlaVg8qgE3lJbPdgW2NwN8Dk6qMZk=
+	t=1761196255; cv=none; b=ldfpv4V20kZ8aSfa5xFWQ/abLNq/3SMCQxSMOjobOOGuo/mVYxx+HQenpomKNMqUt7acBVcSRdcO+iJ/tsCN+w3Udd0mILMZqgrXJIMe6LxOk6d25ETwsQgOIvEAGNQZsgHJOYDEf1jdyOiU/jncDIcEFgMwO9h1e+ki+TYpRD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761195990; c=relaxed/simple;
-	bh=DCH/vfaxQEKOGMRXQjGl+NsvW2ShKX9ZTs4inc52yPY=;
+	s=arc-20240116; t=1761196255; c=relaxed/simple;
+	bh=aKhXAgLHi9hmESNfGrTuSyyU3uGYkrJW93/qzCuJl3Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q8ipRylfCjq7U4B1vgXk8/629P8wb5EB69jaoG2Ts1HH2MEmxdZUYoMcLx9zEM44DFXIUS6Rx6bejrenDMKVNbeS91tY54OOGpXzJQ3aN40pIwMrQ1Vqp7WWFrL0U5FRm0ZfWSX6TerdNchPXmK8nc8JuScHFSmDKUOkOZD0pPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ahr+73b/; arc=none smtp.client-ip=198.175.65.15
+	 In-Reply-To:Content-Type; b=QWQ4F8hbLDPAKEvcsOjVd5mDmG0NspSyQZqmsYh6n9jaxeJTxw1YgEyc+hiBnyfQ9lvEU+e0h1GAzrnZerU1GMUlhU0TvG3d7AqcfRaFDSAaaqSRzdi9gBjmIuL5/fnm2MIbDryRAbOtRldRSI1U3VFHxwUrqYS6PGwCHf378Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cI3E5xq9; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ahr+73b/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cI3E5xq9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761195988; x=1792731988;
+  t=1761196252; x=1792732252;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=DCH/vfaxQEKOGMRXQjGl+NsvW2ShKX9ZTs4inc52yPY=;
-  b=Ahr+73b/YzqUnaD0Ia363n9M+8yT10rPqiTp5eHPlhBgRSpuDtgewbTF
-   Pha7K8fSoroUhzHpq0pnaZUuiqUKAiu2vpil+v1jxRsQiSUwkiLM5GUeB
-   lNRpVMGMem28a3AILeiE+23828ASOqna5y3svPjfnoOmVL+ennyfNXluK
-   4FajSm4BPdQh7QkhCysXBOLGnAK1e0uCFIjbfAQSBvjx8zwz/MxhdB0ud
-   IwlTFeJZsZBPie758bh/AKFy0iC6k+H7Md1svGB194D8Te3V50YMRIj5L
-   HkzX5iEzzszD7teimem5HpvUpu/MBJGrAZsjEbJUjB+02xPau+T3jYALW
-   g==;
-X-CSE-ConnectionGUID: 8F2XoEDXR66AVXEj5JVr6A==
-X-CSE-MsgGUID: ZqcHkSDbSK+SJRmtTXcP2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="66999888"
+  bh=aKhXAgLHi9hmESNfGrTuSyyU3uGYkrJW93/qzCuJl3Y=;
+  b=cI3E5xq9YVzHxpiUfle5500mgRwE3k645t9R66NHVZjd70kCaC0yHDqI
+   y1jeAWx3JwQJPpYuxFOz/CmLUo34LDHVnrTNN0tC5vNDF4PRqfti+aQLD
+   62CSD+Dmny/zUCIRrpl6+OUkvpvPPZwHah8s91d3DKr/8sQv9D/7V6az4
+   30KmaXle4UP+cECN/aDlur+nsioRFvfjGIfVclctru3hF9jF9KZrS0JHW
+   KxIgMIm3eMxUmhbIOVbOLlNM1Y/liqhVU7bTGvM8GHRlr4afHwl75GHmc
+   U+cnfeIDGJh0smZpPYDX5s7erxHwDJQHRHH/43kqSRvmV08CbqIL8MtUo
+   w==;
+X-CSE-ConnectionGUID: g2g1B6PXR8ezqydpmibI7g==
+X-CSE-MsgGUID: UdyddruqSpyoFJdYk6EXtw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="73645430"
 X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="66999888"
+   d="scan'208";a="73645430"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:06:27 -0700
-X-CSE-ConnectionGUID: LwzQDDKwSZeu79Q3nOvXQA==
-X-CSE-MsgGUID: YHvnnbziRNqwuyb2sZq+xw==
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:10:52 -0700
+X-CSE-ConnectionGUID: Z+VhdaUHRuSq6XPL/6mgHA==
+X-CSE-MsgGUID: PVLbJFWUT5qWiIesV7OmAg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="214987777"
+   d="scan'208";a="214988427"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:06:22 -0700
-Message-ID: <a2ec4e64-329f-40a5-87d8-610dd4e91904@linux.intel.com>
-Date: Thu, 23 Oct 2025 13:02:29 +0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:10:47 -0700
+Message-ID: <9292db0f-74cd-4ce5-8797-cc2a88449768@linux.intel.com>
+Date: Thu, 23 Oct 2025 13:06:53 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] RDMA/usnic: Remove iommu_set_fault_handler()
+Subject: Re: [PATCH 3/3] iommu: Allow drivers to say if they use
+ report_iommu_fault()
 To: Jason Gunthorpe <jgg@nvidia.com>,
  AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
  Christian Benvenuti <benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>,
@@ -69,22 +70,40 @@ To: Jason Gunthorpe <jgg@nvidia.com>,
  Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
  Yong Wu <yong.wu@mediatek.com>
 Cc: patches@lists.linux.dev
-References: <1-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+References: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <1-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+In-Reply-To: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 10/23/25 01:12, Jason Gunthorpe wrote:
-> The handler in usnic just prints a fault report message, the iommu drivers
-> all do a better job of that these days. Just remove the use of this old
-> API.
+> report_iommu_fault() is an older API that has been superseded by
+> iommu_report_device_fault() which is capable to support PRI.
 > 
-> Acked-by: Jason Gunthorpe<jgg@nvidia.com>
+> Only two external drivers consume this, drivers/remoteproc and
+> drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
+> now protect against accidentally mix and matching the wrong components.
+> 
+> The iommu drivers support either the old iommu_set_fault_handler() via the
+> driver calling report_iommu_fault(), or they are newer server focused
+> drivers that call iommu_report_device_fault().
+> 
+> Include a flag in the domain_ops if it calls report_iommu_fault() and
+> block iommu_set_fault_handler() on iommu's that can't support it.
+> 
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   drivers/infiniband/hw/usnic/usnic_uiom.c | 13 -------------
->   1 file changed, 13 deletions(-)
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c   | 1 +
+>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 1 +
+>   drivers/iommu/iommu.c                   | 6 +++++-
+>   drivers/iommu/ipmmu-vmsa.c              | 1 +
+>   drivers/iommu/mtk_iommu.c               | 1 +
+>   drivers/iommu/mtk_iommu_v1.c            | 1 +
+>   drivers/iommu/omap-iommu.c              | 1 +
+>   drivers/iommu/rockchip-iommu.c          | 1 +
+>   drivers/iommu/sun50i-iommu.c            | 1 +
+>   include/linux/iommu.h                   | 3 +++
+>   10 files changed, 16 insertions(+), 1 deletion(-)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
