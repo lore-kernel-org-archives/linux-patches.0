@@ -1,44 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC45D302CD6;
-	Sat, 25 Oct 2025 16:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3DE205AB6;
+	Sat, 25 Oct 2025 16:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408574; cv=none; b=O6C6Ru2Z+hukhrdxegcUpbTEdSTasGDpAYXwJO17BWJL+gO9+L0Xr2ufTKDe3qqSbGJhSOZnn7NxAqR3Rqi0EZJ+OaCpAnfeINnlGOtuEjb66dhd21PNxa+vuw7k7xXC7Knuc7M5RY2VSaPKP3TCMPeRqGVQcFyz10Jb0YIXNaw=
+	t=1761408574; cv=none; b=RSJZkc8wkt1ImmwPw6A0hFmeLlgqSkmwQtWU7rUQPIxhnWGyi5wwXIzWmJHrEp763QzeZqL/sq1nS8lsGVEH/CwSsTCz3/crRPNlKFUlGnNIN7NlcGkjVh52HJe2MyyPzmOcSE3JhCJM38NwTqCkd/4xIy/cZux5aO10vyjEHX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408574; c=relaxed/simple;
-	bh=l2p8ytWrsCQMp25+omQ8DepULd7IcPVXRE79VUYC7ak=;
+	bh=GlLpGMADaZvuf4+FJmhokAYc5ZoXqan5EcarXq450wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MI4xjDp2dIheZ2pCkQYhVo+lMPcUVJUKDJOFgvTIs13fiSOH+YRqNbN319jzFqmFVQs4xlSAmJVMyqaTKKR1Q3mQV+EBiBC0ljSuAqpZiGu18EKI8EDSLAJA5Idc9djdj6auvyEyfsY2XwvPIGUBegSflmYjEA0HuNJITHlrl9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i4lEsNUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nQmSUyBjSQCJ+lcDa3aaN2It0BixrThR7e3iGi4pIvOHdfmFNwpxmVCoeu41GbfjVUZZCPqdXO2FjU4q/3l32tbUw2kclEcc3QRkq0TooaqI2hBcEh3OfavC9oDLinwciy0fekXr9BD/seGCQHCBzfJq7xZEbJOJtMQLtEZk0Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RRqtLvNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i4lEsNUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B015C4CEF5;
-	Sat, 25 Oct 2025 16:09:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RRqtLvNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15947C4CEFB;
+	Sat, 25 Oct 2025 16:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408573;
-	bh=l2p8ytWrsCQMp25+omQ8DepULd7IcPVXRE79VUYC7ak=;
+	s=k20201202; t=1761408571;
+	bh=GlLpGMADaZvuf4+FJmhokAYc5ZoXqan5EcarXq450wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4lEsNUqjBPucKKBhvir4obMU3Cc8mAZrYUT/PRmEapvawVMtKIo88hVSuFjfRfby
-	 jYZOfVw9AlnVX963s4l49S3nKos7DEgOg8zVS3LzWTeTWJl3NTOYqvgI227F6e4LZ0
-	 uIkBVzwGZy5iQ3Naa92uOHIp8AOONRw2ps+ZUMi+Y9YNI7exCGEsnPKgQ3AYIaZ/To
-	 EI8FSiAs25fqSoOWG6g7jq18XgsbfJMex6TF804An+OML8GzedaNemLCRIuWIGWQC1
-	 i13iLYkmdoQOBBl6YzVpVgrFvH3PW6PH6DOmLHDhyuSZtDYn9MnHPPnnA1WfYDzZyb
-	 duZ2utQPKmOlw==
+	b=RRqtLvNnC++mhTCvWPhsXy/KhixZOq9Gzbe3a8YqgQhYEqsoZtzMJACHtHCZq1uWn
+	 4MDDJMeaxAEpfjOFLlO2ol/9ggwizlVC5wAap08tL9edt4ghd7GQ1rdiP6Dtqe+Ibr
+	 57cDRVl39jInULbms11lPEwAn0DaY28oprYsk2c2oX7gHYguSmeTT5PC/84EGCB3Ad
+	 Kboz/dQ8g5IFg0wza7MMKZb67ov6DXlBtWvLcQdcXy51HBAH99G0UBcPqxPAp0xMs1
+	 RIBXZJG/1ZhGVMNLUfH1+EoVwvYxllYYI4O4zaY7P15vRHOb5KX1UHvqhi91GjvHgu
+	 hCOvWZuLHdMmQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brahmajit Das <listout@listout.xyz>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+Cc: Ostrowski Rafal <rostrows@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	przemyslaw.kitszel@intel.com,
-	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 6.17-5.4] net: intel: fm10k: Fix parameter idx set but not used
-Date: Sat, 25 Oct 2025 11:54:01 -0400
-Message-ID: <20251025160905.3857885-10-sashal@kernel.org>
+	Alvin.Lee2@amd.com,
+	nicholas.kazlauskas@amd.com,
+	dillon.varone@amd.com,
+	alex.hung@amd.com,
+	okuzhyln@amd.com,
+	leo.chen@amd.com,
+	alexandre.f.demers@gmail.com,
+	Ovidiu.Bunea@amd.com,
+	peterson.guo@amd.com,
+	joshua.aberback@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amd/display: Update tiled to tiled copy command
+Date: Sat, 25 Oct 2025 11:54:00 -0400
+Message-ID: <20251025160905.3857885-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,118 +63,107 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Ostrowski Rafal <rostrows@amd.com>
 
-[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
+[ Upstream commit 19f76f2390be5abe8d5ed986780b73564ba2baca ]
 
-Variable idx is set in the loop, but is never used resulting in dead
-code. Building with GCC 16, which enables
--Werror=unused-but-set-parameter= by default results in build error.
-This patch removes the idx parameter, since all the callers of the
-fm10k_unbind_hw_stats_q as 0 as idx anyways.
+[Why & How]
+Tiled command rect dimensions is 1 based, do rect_x/y - 1 internally
 
-Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Ostrowski Rafal <rostrows@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – dropping the unused `idx` argument fixes a real build break while
-leaving runtime behaviour unchanged.
+YES
 
-- `fm10k_unbind_hw_stats_q` now only walks the passed queue array and
-  clears the cached indices
-  (`drivers/net/ethernet/intel/fm10k/fm10k_common.c:455`), so the dead
-  `idx++` expression that triggered GCC 16’s default `-Werror=unused-
-  but-set-parameter` is gone; this restores the ability to build the
-  driver with upcoming toolchains.
-- The header signature is updated accordingly
-  (`drivers/net/ethernet/intel/fm10k/fm10k_common.h:43-46`), and the
-  only in-tree callers—PF/VF rebind paths—are adjusted to match
-  (`drivers/net/ethernet/intel/fm10k/fm10k_pf.c:1392`,
-  `drivers/net/ethernet/intel/fm10k/fm10k_vf.c:468`); all of them
-  already passed `0`, so no logic changes.
-- `fm10k_hw_stats_q` only carries the `rx_stats_idx`/`tx_stats_idx`
-  fields that this helper zeros
-  (`drivers/net/ethernet/intel/fm10k/fm10k_type.h:419-426`); no other
-  state depends on the removed parameter, and no additional callers
-  exist (confirmed by tree-wide search).
-- The patch is tiny, self-contained, and purely defensive: it keeps
-  released stable kernels buildable with newer GCC without touching live
-  datapaths, so regression risk is minimal and it meets the stable
-  backport guidelines for important build fixes.
+Explanation
 
- drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
- drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+- What changed
+  - In `drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c`, function
+    `dmub_lsdma_send_tiled_to_tiled_copy_command`, the fields `rect_x`
+    and `rect_y` are now encoded as `params.rect_x - 1` and
+    `params.rect_y - 1` instead of passing the values through
+    unmodified.
+  - The rest of the command payload remains unchanged, including the
+    existing “minus-one” encoding for dimensions:
+    - `src_width = params.src_width - 1`
+    - `dst_width = params.dst_width - 1`
+    - `src_height = params.src_height - 1`
+    - `dst_height = params.dst_height - 1`
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-index f51a63fca513e..1f919a50c7653 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- /**
-  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
-  *  @q: pointer to the ring of hardware statistics queue
-- *  @idx: index pointing to the start of the ring iteration
-  *  @count: number of queues to iterate over
-  *
-  *  Function invalidates the index values for the queues so any updates that
-  *  may have happened are ignored and the base for the queue stats is reset.
-  **/
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
- {
- 	u32 i;
- 
--	for (i = 0; i < count; i++, idx++, q++) {
-+	for (i = 0; i < count; i++, q++) {
- 		q->rx_stats_idx = 0;
- 		q->tx_stats_idx = 0;
- 	}
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-index 4c48fb73b3e78..13fca6a91a01b 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
- void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- 			     u32 idx, u32 count);
- #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
- s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
- #endif /* _FM10K_COMMON_H_ */
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-index b9dd7b7198324..3394645a18fe8 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-@@ -1389,7 +1389,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
- 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
- 
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_pf(hw, stats);
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-index 7fb1961f29210..6861a0bdc14e1 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
- 				     struct fm10k_hw_stats *stats)
- {
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_vf(hw, stats);
+- Why it matters
+  - The commit message explicitly states that the “tiled command rect
+    dimensions is 1 based,” so the command fields must be encoded as N-1
+    before being sent to the LSDMA controller. Prior to this change,
+    `rect_x`/`rect_y` were not adjusted, creating an off-by-one error
+    relative to the hardware’s expected encoding.
+  - This bug would cause the copied rectangle to be shifted by one unit
+    (tile/element) in both X and Y, leading to incorrect or corrupted
+    copies. Near edges, it could also risk out-of-bounds accesses by the
+    DMA engine (a correctness and potential stability issue).
+  - The fix makes `rect_x`/`rect_y` consistent with the already-correct
+    “minus-one” encoding used for width and height fields in the same
+    command packet, aligning all rectangle-related fields with the LSDMA
+    protocol.
+
+- Scope and risk
+  - Change is minimal and fully localized to two assignments in a single
+    function that builds the DMUB LSDMA “tiled-to-tiled copy” command.
+  - No architectural changes, no new features, and no behavior changes
+    outside this specific command payload.
+  - The driver-side `params.rect_x/rect_y` are documented/assumed as
+    1-based in this path (consistent with the commit message);
+    subtracting 1 before writing the command field is the correct, low-
+    risk fix.
+  - Potential regression risk is low: the only hazard would be if any
+    caller had incorrectly pre-applied the minus-one encoding already,
+    which is unlikely given the commit rationale and the inconsistency
+    that previously existed only for rect_x/rect_y (while width/height
+    were already encoded as -1).
+
+- Stable backport considerations
+  - Fixes a real, user-visible bug (off-by-one in copy origin) that can
+    cause display corruption and possibly out-of-bounds DMA on edge
+    cases.
+  - The patch is simple, small, and self-contained with minimal
+    regression risk.
+  - No API or ABI changes; no dependencies on other changes.
+  - Although the commit message lacks a “Fixes:” or “Cc: stable” tag, it
+    squarely fits stable criteria.
+  - Practical applicability: Only relevant for stable branches that
+    already include `dmub_lsdma_send_tiled_to_tiled_copy_command` and
+    use the LSDMA tiled-to-tiled copy path. For branches without this
+    code path, the patch is not applicable.
+
+- Conclusion
+  - This is a straightforward, correctness fix for an off-by-one error
+    in the DMUB LSDMA tiled-to-tiled copy command encoding. It should be
+    backported to all stable kernels that contain this functionality.
+
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index f5ef1a07078e5..714c468c010d3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -2072,8 +2072,8 @@ bool dmub_lsdma_send_tiled_to_tiled_copy_command(
+ 	lsdma_data->u.tiled_copy_data.dst_swizzle_mode = params.swizzle_mode;
+ 	lsdma_data->u.tiled_copy_data.src_element_size = params.element_size;
+ 	lsdma_data->u.tiled_copy_data.dst_element_size = params.element_size;
+-	lsdma_data->u.tiled_copy_data.rect_x           = params.rect_x;
+-	lsdma_data->u.tiled_copy_data.rect_y           = params.rect_y;
++	lsdma_data->u.tiled_copy_data.rect_x           = params.rect_x - 1;
++	lsdma_data->u.tiled_copy_data.rect_y           = params.rect_y - 1;
+ 	lsdma_data->u.tiled_copy_data.dcc              = params.dcc;
+ 	lsdma_data->u.tiled_copy_data.tmz              = params.tmz;
+ 	lsdma_data->u.tiled_copy_data.read_compress    = params.read_compress;
 -- 
 2.51.0
 
