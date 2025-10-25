@@ -1,47 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D343093C1;
-	Sat, 25 Oct 2025 16:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5033093C1;
+	Sat, 25 Oct 2025 16:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409743; cv=none; b=YtKy+c1UmYncBU6CBjqbs7fb1Ca8GMI08dR5+kQ1uXA2WKzeQbikLR+VSP3SOm6M1teDexviomAo7HYbhy66NNHgI87HbP4uWCFKE0UdaA9zfYoqj6RP5ia5/ya4UPwxVCXwHa2jHcpMpjQ4jNbkNRgwWvjLA/wys+jya/ndKQM=
+	t=1761409746; cv=none; b=IU2J3Fg7DdVRUj5xOPXnnCjRSewDi0cUByUcS7oGxAGME6ecP1oiWoGSxN6neLL0V9N7i1FtJlLBxigX3H94ipPjZnBC9BdTjg9ZO9mx4yPojnMI9h5INpKkYY21weNy7fLm7I3AKDx3ef9q9GvV6XLT/tkYGuJHSuXovlJgXBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409743; c=relaxed/simple;
-	bh=gtB4My9xNPJe49k+2kiGNFIt+E+DTr869ijIgZM1dvo=;
+	s=arc-20240116; t=1761409746; c=relaxed/simple;
+	bh=BeezYbCEOBmnB79C4JVmST8jP0WZOGRDAnHrCYYKSbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uTWIQXyX5D4EwGH3F1IU1+bJMOiRtge91rNSIWwwNb5bAKCbh11kc5VEPSNZoB6kQDoJC5+FP0p2a8C0RMM3FBXUxwIZ1lGklz2VI/WEUZ3ab2/qY4vPqKbI/iVEGDPMg3Ld+0XU0B6yUE4Y62sQv8GNYydeGHicoqHTQIjEmiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1sot9w4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D6yfjFLtpE7GGmXfSIITTAn51AbWeDvma/LxOcA6s4J5pI9reed/qoPr2WXel3scoYqHTt6/FtI0/pR8tqBk4V2yjhXgaMajXw8BgbDquNPoCMRYwBId4qgjN0pn8fngPllLOkcDU4rbWEWUTRFX1t3GzPh8s4ZQ+XHkNNBul+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKzDFzRw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1sot9w4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CCAC4CEF5;
-	Sat, 25 Oct 2025 16:29:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKzDFzRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D59C4CEFB;
+	Sat, 25 Oct 2025 16:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409741;
-	bh=gtB4My9xNPJe49k+2kiGNFIt+E+DTr869ijIgZM1dvo=;
+	s=k20201202; t=1761409746;
+	bh=BeezYbCEOBmnB79C4JVmST8jP0WZOGRDAnHrCYYKSbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1sot9w45aNf8GJ9FlEAUq/o8Va4kJfrKvcgKYLZMTN0zFqiTRWv0umgblMQClsD/
-	 IYXogTpgXPCiTmuvHZCtlkop6353C72ZgN2IvzTrerI0iKx6ANY6Edyom7+JqVV93H
-	 fnxzXYqUs5CPYPkLlSQZ41Gk3lNaF9SN3EktVvhyzyK92RLPsevEMkOFch9khSTqT4
-	 BcvNnuT7MglucIK27WfVkvSNWTerdWo5YhcHqPCqp73hTF8A1pnHWbu7tZZW1GxAcC
-	 g0nP9judjMtAMjfSBfEG/fTzeP7vQncotD1ru3CmWdveXtNNFCtsuq9kfTyP/FanBu
-	 Tz4z7XzMwDe4Q==
+	b=VKzDFzRwss08oOjJgk3e0eQX1ooJ/7N2kTBl7/SCYJuKY9Fb9mdRMlsesJ7T9WFpP
+	 ZKFltIAbv8hZh4zWcEY0Ka0imwA98JLxcKO4lM2FqGAHlf+PvP4CIAprG/DTGj7Re/
+	 hGWi63LrWlBau50rytJEgvhAV+LCULQF0Oj24YmOtS+H01uGJFCmkTQc0SbqZ+5psc
+	 T9WGEXnAM8j7nwtNqlk7KTic7Qr+OS6qPG358hQIrldLWVxUkWjxLOg8K6z7+vMPqH
+	 ceC9jz0137iUbX35ECdoJ1ylFEOmxVq6T92AEJnc0h6AKOeZlpcycC3EZP1NWxeMoQ
+	 tr/2P6TfSE7hQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Harrison <John.C.Harrison@Intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	michal.wajdeczko@intel.com,
+	donald.hunter@gmail.com,
+	jacob.e.keller@intel.com,
+	pabeni@redhat.com,
 	alexandre.f.demers@gmail.com,
 	alexander.deucher@amd.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe/guc: Add more GuC load error status codes
-Date: Sat, 25 Oct 2025 12:01:16 -0400
-Message-ID: <20251025160905.3857885-445-sashal@kernel.org>
+	dw@davidwei.uk,
+	matttbe@kernel.org,
+	sdf@fomichev.me
+Subject: [PATCH AUTOSEL 6.17] tools: ynl-gen: validate nested arrays
+Date: Sat, 25 Oct 2025 12:01:17 -0400
+Message-ID: <20251025160905.3857885-446-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,206 +52,173 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 45fbb51050e72723c2bdcedc1ce32305256c70ed ]
+[ Upstream commit 1d99aa4ed707c5630a7a7f067c8818e19167e3a1 ]
 
-The GuC load process will abort if certain status codes (which are
-indicative of a fatal error) are reported. Otherwise, it keeps waiting
-until the 'success' code is returned. New error codes have been added
-in recent GuC releases, so add support for aborting on those as well.
+In nested arrays don't require that the intermediate attribute
+type should be a valid attribute type, it might just be zero
+or an incrementing index, it is often not even used.
 
-v2: Shuffle HWCONFIG_START to the front of the switch to keep the
-ordering as per the enum define for clarity (review feedback by
-Jonathan). Also add a description for the basic 'invalid init data'
-code which was missing.
+See include/net/netlink.h about NLA_NESTED_ARRAY:
+> The difference to NLA_NESTED is the structure:
+> NLA_NESTED has the nested attributes directly inside
+> while an array has the nested attributes at another
+> level down and the attribute types directly in the
+> nesting don't matter.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://lore.kernel.org/r/20250726024337.4056272-1-John.C.Harrison@Intel.com
+Example based on include/uapi/linux/wireguard.h:
+ > WGDEVICE_A_PEERS: NLA_NESTED
+ >   0: NLA_NESTED
+ >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+ >     [..]
+ >   0: NLA_NESTED
+ >     ...
+ >   ...
+
+Previous the check required that the nested type was valid
+in the parent attribute set, which in this case resolves to
+WGDEVICE_A_UNSPEC, which is YNL_PT_REJECT, and it took the
+early exit and returned YNL_PARSE_CB_ERROR.
+
+This patch renames the old nl_attr_validate() to
+__nl_attr_validate(), and creates a new inline function
+nl_attr_validate() to mimic the old one.
+
+The new __nl_attr_validate() takes the attribute type as an
+argument, so we can use it to validate attributes of a
+nested attribute, in the context of the parents attribute
+type, which in the above case is generated as:
+[WGDEVICE_A_PEERS] = {
+  .name = "peers",
+  .type = YNL_PT_NEST,
+  .nest = &wireguard_wgpeer_nest,
+},
+
+__nl_attr_validate() only checks if the attribute length
+is plausible for a given attribute type, so the .nest in
+the above example is not used.
+
+As the new inline function needs to be defined after
+ynl_attr_type(), then the definitions are moved down,
+so we avoid a forward declaration of ynl_attr_type().
+
+Some other examples are NL80211_BAND_ATTR_FREQS (nest) and
+NL80211_ATTR_SUPPORTED_COMMANDS (u32) both in nl80211-user.c
+$ make -C tools/net/ynl/generated nl80211-user.c
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20250915144301.725949-7-ast@fiberby.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- The previous validator assumed each nested element’s `nla_type` was
+  meaningful, so arrays such as `WGDEVICE_A_PEERS` hit the
+  `YNL_PT_REJECT` guard and aborted with `YNL_PARSE_CB_ERROR`. The new
+  helper in `tools/net/ynl/lib/ynl.c:363` keeps the existing length
+  checks but lets callers supply the policy index explicitly, avoiding
+  that false rejection.
+- To preserve every current caller, `tools/net/ynl/lib/ynl-
+  priv.h:473-477` adds an inline wrapper that still derives the type
+  from the attribute, so there is no behavioural change outside the one
+  new call site.
+- The generator now feeds the parent attribute’s type into the validator
+  when iterating array members
+  (`tools/net/ynl/pyynl/ynl_gen_c.py:833-838`), using the index captured
+  earlier in the loop (`tools/net/ynl/pyynl/ynl_gen_c.py:2177`). That
+  matches the documented `NLA_NESTED_ARRAY` semantics where the per-
+  element type value is irrelevant, yet still enforces the payload
+  length (u32, nest, etc.) dictated by the policy.
 
-Why this is a good stable backport
-- Fixes real-world hangs/timeouts: New GuC firmware versions can report
-  additional fatal load status codes. Without this patch, the Xe driver
-  may continue waiting until the generic timeout, causing long delays
-  and poorer diagnostics. Recognizing these as terminal failures is a
-  correctness and robustness fix, not a feature.
-- Small and contained: Changes are limited to two Xe files, only
-  touching enums and switch cases that read GuC status. No architectural
-  changes, no API/UAPI changes, no behavior change unless the new error
-  codes are actually returned.
-- Forward-compatibility with newer GuC: Distros often update GuC via
-  linux-firmware independently of the kernel. This patch keeps older
-  kernels robust when paired with newer GuC blobs.
-- Low regression risk: Older GuC won’t emit the new codes, so behavior
-  is unchanged there. New codes are explicitly fatal, so aborting
-  earlier is the correct action. Additional logging improves triage.
+This is a clear bug fix: without it, any generated YNL client fails to
+consume nested-array replies (WireGuard peers, NL80211 command lists,
+etc.), which is a real regression for users of the new nested-array
+support. The change is small, fully contained in `tools/net/ynl/`,
+introduces no ABI shifts, and keeps existing helpers intact, so
+regression risk is minimal. Stable trees that already carry the nested-
+array support patches should pick this up; no additional dependencies
+beyond that series are required. If you want extra assurance, you can
+regenerate one of the affected users (`make -C tools/net/ynl/generated
+nl80211-user.c`) after applying the patch.
 
-What changes and why they matter
-- Add new GuC load error codes in the ABI header
-  - drivers/gpu/drm/xe/abi/guc_errors_abi.h:49 defines `enum
-    xe_guc_load_status`. This patch adds:
-    - `XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH = 0x08` (fatal)
-    - `XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR = 0x75` (fatal)
-    - `XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG = 0x76` (fatal)
-  - In current tree, the relevant region is at
-    drivers/gpu/drm/xe/abi/guc_errors_abi.h:49–72. Adding these entries
-    fills previously unused values (0x08, 0x75, 0x76) and keeps them in
-    the “invalid init data” range where appropriate, preserving ordering
-    and ABI clarity.
+ tools/net/ynl/lib/ynl-priv.h     | 10 +++++++++-
+ tools/net/ynl/lib/ynl.c          |  6 +++---
+ tools/net/ynl/pyynl/ynl_gen_c.py |  2 +-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-- Treat the new codes as terminal failures in the load state machine
-  - drivers/gpu/drm/xe/xe_guc.c:517 `guc_load_done()` is the terminal-
-    state detector for the load loop.
-  - Existing fatal cases are in the switch at
-    drivers/gpu/drm/xe/xe_guc.c:526–535.
-  - The patch adds the new codes to this fatal set, so `guc_load_done()`
-    returns -1 immediately instead of waiting for a timeout. This
-    prevents long waits and aligns behavior with the intended semantics
-    of these GuC codes.
-
-- Improve diagnostics for new failure modes during load
-  - drivers/gpu/drm/xe/xe_guc.c:593 `guc_wait_ucode()` logs the reason
-    for failure.
-  - New message cases are added to the `ukernel` switch (today at
-    drivers/gpu/drm/xe/xe_guc.c:672–685):
-    - A logging case for `HWCONFIG_START` was reordered to the front for
-      clarity (still “still extracting hwconfig table.”)
-    - New diagnostics for:
-      - `INIT_DATA_INVALID`: “illegal init/ADS data”
-      - `KLV_WORKAROUND_INIT_ERROR`: “illegal workaround KLV data”
-      - `INVALID_FTR_FLAG`: “illegal feature flag specified”
-  - These improve visibility into what went wrong without altering
-    control flow beyond early abort on fatal codes.
-
-Cross-check with i915 (parity and precedent)
-- i915 already handles one of these newer codes:
-  - `INTEL_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR` is defined and
-    handled in i915 (drivers/gpu/drm/i915/gt/uc/abi/guc_errors_abi.h:24
-    and :39; drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c:118, 245),
-    confirming this class of additions is standard and low risk.
-- Bringing Xe up to parity on load error handling is consistent with
-  upstream direction and improves stability for GuC firmware evolution.
-
-Stable criteria assessment
-- Bug fix that affects users: Yes — avoids long waits and wedges with
-  clearer diagnostics when GuC reports new fatal statuses.
-- Minimal and contained: Yes — a handful of enum entries and switch
-  cases in two Xe files.
-- No architectural changes: Correct — only error-code recognition and
-  messaging.
-- Critical subsystem: It’s a GPU driver; impact is localized to GuC
-  bring-up, not core kernel.
-- Explicit stable tags: Not present, but the change is a standard, low-
-  risk, forward-compat fix consistent with stable rules.
-- Dependencies: None apparent; the new constants are self-contained.
-  Note: in some branches the header’s response enum is named
-  `xe_guc_response_status` (drivers/gpu/drm/xe/abi/guc_errors_abi.h:9),
-  not `xe_guc_response` as in the posted diff context. This patch does
-  not alter that enum and the backport simply adds entries to
-  `xe_guc_load_status`, so this naming difference does not block the
-  backport.
-
-Potential risks and why they’re acceptable
-- Earlier abort on these statuses vs. timing out: That is intended;
-  these codes are designated fatal by GuC. For older GuC which never
-  emit them, behavior is unchanged.
-- No ABI or userspace exposure: The enums are internal to the
-  driver/firmware interface.
-
-Conclusion
-- This is a targeted robustness fix for GuC load error handling,
-  consistent with established patterns in i915, with minimal risk and
-  clear user benefit. It should be backported to stable.
-
- drivers/gpu/drm/xe/abi/guc_errors_abi.h |  3 +++
- drivers/gpu/drm/xe/xe_guc.c             | 19 +++++++++++++++++--
- 2 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/xe/abi/guc_errors_abi.h b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-index ecf748fd87df3..ad76b4baf42e9 100644
---- a/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-+++ b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-@@ -63,6 +63,7 @@ enum xe_guc_load_status {
- 	XE_GUC_LOAD_STATUS_HWCONFIG_START                   = 0x05,
- 	XE_GUC_LOAD_STATUS_HWCONFIG_DONE                    = 0x06,
- 	XE_GUC_LOAD_STATUS_HWCONFIG_ERROR                   = 0x07,
-+	XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH         = 0x08,
- 	XE_GUC_LOAD_STATUS_GDT_DONE                         = 0x10,
- 	XE_GUC_LOAD_STATUS_IDT_DONE                         = 0x20,
- 	XE_GUC_LOAD_STATUS_LAPIC_DONE                       = 0x30,
-@@ -75,6 +76,8 @@ enum xe_guc_load_status {
- 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_START,
- 	XE_GUC_LOAD_STATUS_MPU_DATA_INVALID                 = 0x73,
- 	XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID   = 0x74,
-+	XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR        = 0x75,
-+	XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG                 = 0x76,
- 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_END,
+diff --git a/tools/net/ynl/lib/ynl-priv.h b/tools/net/ynl/lib/ynl-priv.h
+index 824777d7e05ea..29481989ea766 100644
+--- a/tools/net/ynl/lib/ynl-priv.h
++++ b/tools/net/ynl/lib/ynl-priv.h
+@@ -106,7 +106,6 @@ ynl_gemsg_start_req(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version);
+ struct nlmsghdr *
+ ynl_gemsg_start_dump(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version);
  
- 	XE_GUC_LOAD_STATUS_READY                            = 0xF0,
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index 270fc37924936..9e0ed8fabcd54 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -990,11 +990,14 @@ static int guc_load_done(u32 status)
- 	case XE_GUC_LOAD_STATUS_GUC_PREPROD_BUILD_MISMATCH:
- 	case XE_GUC_LOAD_STATUS_ERROR_DEVID_INVALID_GUCTYPE:
- 	case XE_GUC_LOAD_STATUS_HWCONFIG_ERROR:
-+	case XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH:
- 	case XE_GUC_LOAD_STATUS_DPC_ERROR:
- 	case XE_GUC_LOAD_STATUS_EXCEPTION:
- 	case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
- 	case XE_GUC_LOAD_STATUS_MPU_DATA_INVALID:
- 	case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
-+	case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
-+	case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
- 		return -1;
- 	}
+-int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr);
+ int ynl_submsg_failed(struct ynl_parse_arg *yarg, const char *field_name,
+ 		      const char *sel_name);
  
-@@ -1134,17 +1137,29 @@ static void guc_wait_ucode(struct xe_guc *guc)
- 		}
- 
- 		switch (ukernel) {
-+		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
-+			xe_gt_err(gt, "still extracting hwconfig table.\n");
-+			break;
+@@ -467,4 +466,13 @@ ynl_attr_put_sint(struct nlmsghdr *nlh, __u16 type, __s64 data)
+ 	else
+ 		ynl_attr_put_s64(nlh, type, data);
+ }
 +
- 		case XE_GUC_LOAD_STATUS_EXCEPTION:
- 			xe_gt_err(gt, "firmware exception. EIP: %#x\n",
- 				  xe_mmio_read32(mmio, SOFT_SCRATCH(13)));
- 			break;
- 
-+		case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
-+			xe_gt_err(gt, "illegal init/ADS data\n");
-+			break;
++int __ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr,
++			unsigned int type);
 +
- 		case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
- 			xe_gt_err(gt, "illegal register in save/restore workaround list\n");
- 			break;
++static inline int ynl_attr_validate(struct ynl_parse_arg *yarg,
++				    const struct nlattr *attr)
++{
++	return __ynl_attr_validate(yarg, attr, ynl_attr_type(attr));
++}
+ #endif
+diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
+index 2a169c3c07979..2bcd781111d74 100644
+--- a/tools/net/ynl/lib/ynl.c
++++ b/tools/net/ynl/lib/ynl.c
+@@ -360,15 +360,15 @@ static int ynl_cb_done(const struct nlmsghdr *nlh, struct ynl_parse_arg *yarg)
  
--		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
--			xe_gt_err(gt, "still extracting hwconfig table.\n");
-+		case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
-+			xe_gt_err(gt, "illegal workaround KLV data\n");
-+			break;
-+
-+		case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
-+			xe_gt_err(gt, "illegal feature flag specified\n");
- 			break;
- 		}
+ /* Attribute validation */
  
+-int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
++int __ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr,
++			unsigned int type)
+ {
+ 	const struct ynl_policy_attr *policy;
+-	unsigned int type, len;
+ 	unsigned char *data;
++	unsigned int len;
+ 
+ 	data = ynl_attr_data(attr);
+ 	len = ynl_attr_data_len(attr);
+-	type = ynl_attr_type(attr);
+ 	if (type > yarg->rsp_policy->max_attr) {
+ 		yerr(yarg->ys, YNL_ERROR_INTERNAL,
+ 		     "Internal error, validating unknown attribute");
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index eb295756c3bf7..6e3e52a5caaff 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -828,7 +828,7 @@ class TypeArrayNest(Type):
+         local_vars = ['const struct nlattr *attr2;']
+         get_lines = [f'attr_{self.c_name} = attr;',
+                      'ynl_attr_for_each_nested(attr2, attr) {',
+-                     '\tif (ynl_attr_validate(yarg, attr2))',
++                     '\tif (__ynl_attr_validate(yarg, attr2, type))',
+                      '\t\treturn YNL_PARSE_CB_ERROR;',
+                      f'\tn_{self.c_name}++;',
+                      '}']
 -- 
 2.51.0
 
