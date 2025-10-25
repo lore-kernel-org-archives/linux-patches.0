@@ -1,55 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBC33043D4;
-	Sat, 25 Oct 2025 16:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2674730CD8F;
+	Sat, 25 Oct 2025 16:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409141; cv=none; b=i5HR2x83YZK1fK0kg9Fn71wpDJb4zu/dKZDOBO5GyYycGokn8G9lr3wZjWeAM5Whi+LUvfCER1vpLd9zky823O+huG/4sjdbb3rF2ssgqgYWUCaEHxWSdOgOtPBrGDgyhDq6QzerjpWUlgOHeBI4PmWjI+0A/T/7cdQEDJMzgZA=
+	t=1761409145; cv=none; b=q8T6ABDXI+jnmOHjqiNEim5hSHU/e3k+dI13rQOYZg8/0B4yV0RCxUiftjP7C/4yGwpqmeVmvzOw8N6ygSw+v2MMRZoM+gkhzflFfN3pvi/6a1ZbTGjJSZY241xaDSNzCvRu+X/9BnfnT1EIu5eGhb7SqFkmrxEpqeWpyATDx4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409141; c=relaxed/simple;
-	bh=ed28bBdQA5ykm/RPiIaaitqo0+JNP8JIrkeHbGhDazY=;
+	s=arc-20240116; t=1761409145; c=relaxed/simple;
+	bh=Z04x+cVUsZbf7V30Zmdq+MQzTJKo7XzvMh7nhLk3OYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lVXvF37adG9PIDn3mgxOOOIoA+DQhzW2SWy5mNd6AYWGdazxcWtYyXcmu1jmP50vfoRUbh5OKROP9seZQn6QwZlzB8fro9cqXiw2bkhfRprcQFePMUXrEOxOeKNJOVJ4qK7ZxVKLlR2X2xNTDzWBaw1CNQ/5SpR8D6P+PQm286k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZJ1/uYDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IE2vcXcOJQCHvSDBoNPLAymfIS9MOcOXHZNkg8GhyhsTv5/5Bv9NZsVUxK9f1xfTV3S/K6/MbHtfoavdsgrfK/l9NExKxtBGASMnG4bUwpOgAm/0QbqWSx1EbNPNnBHv0yhz7I85QnkBmCoatIKYj7AADmbypaOe2pJqFssQxiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cy+rGiUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZJ1/uYDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A0FC4CEF5;
-	Sat, 25 Oct 2025 16:18:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cy+rGiUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE63C4CEFB;
+	Sat, 25 Oct 2025 16:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409141;
-	bh=ed28bBdQA5ykm/RPiIaaitqo0+JNP8JIrkeHbGhDazY=;
+	s=k20201202; t=1761409145;
+	bh=Z04x+cVUsZbf7V30Zmdq+MQzTJKo7XzvMh7nhLk3OYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJ1/uYDUPFngu/aVK6/hg3nv4yGQp5KDTS5vS+WyewH1x1d4RR6ZsLDfXcYnl1X5/
-	 jelBaruVU8rpnHnUlAdvsJtp+R3FXQ/NPn5K0PXDlDj4rMC9oLm4WO8Rry9EhxgdbJ
-	 I72NlW+H1wM8FU1n31vdf1lBeA03kDsy7g50cWwbXH5veK/FN43DiGVb/O0WenbtWF
-	 KJ75e985e0mgDpGIij/aOuHDqPC3F1f/YcZ9CrpitGjT1VX+oCF4wxBvqj3/2VKH6i
-	 nTv8Fnt+f3JqQq68fDZlVdF59drdkdY3ln7265tPBmjXALHFDjEk6jmcCFUU1uPOV5
-	 AbBdC2+VLIuRQ==
+	b=Cy+rGiUiguvvCtrdPu7qodJZyO6Q+96I/gjpCVlNWNWQiWtaP18x+eyA+z+Tv1Vb4
+	 NlYNrFzTVc7NlrBdpPKp2nmfGZak99Lj17HtjRU/zT8HSi1BGh9C6xqZF9VwQGUhhX
+	 Qo9oUgPAtbtnLhW1p5ArF4bZaYi/LxQb8E8kH2xa9yZ4MKrgGghg5nuaQik7MSx2rN
+	 Ve8HoMWEq4ETR2dsKo1vo+T/mtUMV5CcGtJUdWlE98uAnCmniLt8hz0GkGp6uVeDDP
+	 MU1QgJ0Vh2okk9valvhKPxe4yE12F0xF9sr07mHTCjQXgbX/2G+5Hm8XUWrJGq2w81
+	 goLRKA6x4e6gA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	avri.altman@sandisk.com,
-	beanhuo@micron.com,
+	mani@kernel.org,
+	quic_vpernami@quicinc.com,
+	krishna.chundru@oss.qualcomm.com,
+	johan+linaro@kernel.org,
+	dnlplm@gmail.com,
 	alexandre.f.demers@gmail.com,
-	adrian.hunter@intel.com,
-	quic_cang@quicinc.com,
-	ebiggers@kernel.org,
-	quic_nitirawa@quicinc.com,
-	neil.armstrong@linaro.org,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] scsi: ufs: host: mediatek: Enhance recovery on hibernation exit failure
-Date: Sat, 25 Oct 2025 11:57:25 -0400
-Message-ID: <20251025160905.3857885-214-sashal@kernel.org>
+	tglx@linutronix.de,
+	quic_skananth@quicinc.com
+Subject: [PATCH AUTOSEL 6.17] bus: mhi: host: pci_generic: Add support for all Foxconn T99W696 SKU variants
+Date: Sat, 25 Oct 2025 11:57:26 -0400
+Message-ID: <20251025160905.3857885-215-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -65,18 +58,18 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-[ Upstream commit faac32d4ece30609f1a0930ca0ae951cf6dc1786 ]
+[ Upstream commit 376358bb9770e5313d22d8784511497096cdb75f ]
 
-Improve the recovery process for hibernation exit failures. Trigger the
-error handler and break the suspend operation to ensure effective
-recovery from hibernation errors. Activate the error handling mechanism
-by ufshcd_force_error_recovery and scheduling the error handler work.
+Since there are too many variants available for Foxconn T99W696 modem, and
+they all share the same configuration, use PCI_ANY_ID as the subsystem
+device ID to match each possible SKUs and support all of them.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+[mani: reworded subject/description and dropped the fixes tag]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250819020013.122162-1-slark_xiao@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -84,137 +77,99 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug that affects users: previously, a failure to exit
-  hibernation (H8) during suspend was only warned about and suspend
-  continued, risking a stuck/broken UFS link and subsequent I/O hangs.
-  The patch turns this into a recoverable path by triggering the error
-  handler and aborting suspend.
-- Small, contained change with clear intent:
-  - Makes the core helper available to host drivers by de-static’ing and
-    exporting `ufshcd_force_error_recovery()` and declaring it in the
-    UFS header:
-    - `drivers/ufs/core/ufshcd.c:6471` acquires `host_lock`, sets
-      `hba->force_reset = true`, invokes `ufshcd_schedule_eh_work()`,
-      and is exported via
-      `EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery)`.
-    - `include/ufs/ufshcd.h:1489` adds `void
-      ufshcd_force_error_recovery(struct ufs_hba *hba);`
-  - Uses that helper in the MediaTek host driver to recover from H8 exit
-    failures and to abort suspend:
-    - `drivers/ufs/host/ufs-mediatek.c:1436` changes
-      `ufs_mtk_auto_hibern8_disable()` to return `int` and to return an
-      error on failure.
-    - `drivers/ufs/host/ufs-mediatek.c:1454` calls
-      `ufshcd_force_error_recovery(hba)` when
-      `ufs_mtk_wait_link_state(..., VS_LINK_UP, ...)` fails, then sets
-      `ret = -EBUSY` to break suspend.
-    - `drivers/ufs/host/ufs-mediatek.c:1750` propagates the PRE_CHANGE
-      failure by `return ufs_mtk_auto_hibern8_disable(hba);` in
-      `ufs_mtk_suspend()`.
-- Correct integration with the core suspend flow: the UFS core checks
-  vendor PRE_CHANGE return and aborts on error:
-  - `drivers/ufs/core/ufshcd.c:9899` calls `ufshcd_vops_suspend(hba,
-    pm_op, PRE_CHANGE)` and if `ret` is non-zero it aborts the suspend
-    path, re-enables scaling, and unwinds cleanly.
-- Error handling sequencing is robust:
-  - `drivers/ufs/core/ufshcd.c:6456` `ufshcd_schedule_eh_work()` sets
-    `ufshcd_state` to `UFSHCD_STATE_EH_SCHEDULED_FATAL` if `force_reset`
-    or fatal conditions are detected and queues `eh_work`, ensuring the
-    error handler runs promptly.
+- What changed: The PCI ID table in `drivers/bus/mhi/host/pci_generic.c`
+  broadens Foxconn T99W696 matching by replacing several hardcoded
+  subsystem device IDs with a single entry that uses `PCI_ANY_ID` for
+  the subsystem device:
+  - New entry: `drivers/bus/mhi/host/pci_generic.c:929`
+    - `{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308,
+      PCI_VENDOR_ID_FOXCONN, PCI_ANY_ID), .driver_data =
+      (kernel_ulong_t) &mhi_foxconn_t99w696_info },`
+  - This consolidates prior SKU-specific entries (e.g., `0xe142`,
+    `0xe143`, `0xe144`, `0xe145`, `0xe146`) into one match-all line for
+    the same device family. The result is that all Foxconn T99W696
+    variants with QCOM vendor `0x0308` and subsystem vendor `FOXCONN`
+    will match the correct device data.
+
+- Why this matters for users: All those SKUs use the same MHI
+  configuration data, `mhi_foxconn_t99w696_info`:
+  - `drivers/bus/mhi/host/pci_generic.c:655` defines
+    `mhi_foxconn_t99w696_info` which points to
+    `modem_foxconn_sdx61_config` and includes the expected channels
+    (including NMEA) and event config appropriate for these modems.
+  - Without the change, unlisted T99W696 SKUs can fall back to the
+    generic SDX65 entry directly below
+    (`drivers/bus/mhi/host/pci_generic.c:931`), mapping to
+    `mhi_qcom_sdx65_info` (`drivers/bus/mhi/host/pci_generic.c:403`),
+    which may not expose the Foxconn-specific channel layout (e.g.,
+    NMEA), leading to reduced functionality or improper operation.
+
 - Scope and risk:
-  - No architectural changes; it’s a targeted behavioral fix in the
-    MediaTek UFS suspend path plus a symbol export in the UFS core for
-    in-tree drivers.
-  - Only triggers additional actions on an existing error path (H8 exit
-    failure). Normal suspend paths are unchanged.
-  - Storage reliability fix in a critical subsystem, but contained to
-    UFS/Mediatek host and UFS core error handling.
-- Stable tree criteria alignment:
-  - Fixes an important reliability bug (avoids continuing suspend with a
-    broken link and prevents I/O hang).
-  - Minimal, surgical changes, no new features.
-  - No broad side effects; the exported helper is internal API used by
-    in-tree code.
-  - No major refactoring or dependency churn.
+  - Small and contained: It only adjusts one entry in the ID table; no
+    logic, APIs, or structures change. The probe path remains identical;
+    `mhi_pci_probe()` consumes `id->driver_data` to select the
+    controller config (`drivers/bus/mhi/host/pci_generic.c:1298`), and
+    `mhi_pci_driver.id_table` uses this table
+    (`drivers/bus/mhi/host/pci_generic.c:1700`).
+  - Constrained matching: The broadened match still requires
+    `(vendor=QCOM, device=0x0308, subsystem_vendor=FOXCONN)`. It does
+    not affect other vendors or non-Foxconn subsystems. It simply
+    captures additional T99W696 SKUs that share the same configuration.
+  - Ordering is correct: The Foxconn-specific match precedes the generic
+    `PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308)` entry
+    (`drivers/bus/mhi/host/pci_generic.c:931`), ensuring Foxconn SKUs
+    bind to the correct `mhi_foxconn_t99w696_info` rather than the
+    generic SDX65 config.
+  - Regression risk is minimal: This is a classic ID-table-only
+    enablement that widens support for hardware already handled by the
+    driver with identical configuration; it neither introduces new
+    features nor changes driver behavior for existing matched devices.
 
-Given the above, this is a strong candidate for stable backporting.
+- Stable criteria assessment:
+  - Fixes a user-visible issue: Ensures more T99W696 SKUs bind to the
+    correct configuration instead of a generic one.
+  - Minimal and localized: One table entry; no architectural or
+    behavioral changes beyond matching.
+  - No side effects beyond fixing the match coverage for a confined
+    subsystem (MHI PCI host).
+  - While there is no explicit “Cc: stable@” tag, this kind of ID-table
+    expansion to enable existing hardware is standard and low-risk for
+    stable backports.
 
- drivers/ufs/core/ufshcd.c       |  3 ++-
- drivers/ufs/host/ufs-mediatek.c | 14 +++++++++++---
- include/ufs/ufshcd.h            |  1 +
- 3 files changed, 14 insertions(+), 4 deletions(-)
+Conclusion: This is a low-risk, ID-only match fix that improves hardware
+support for users with additional Foxconn T99W696 SKUs. It should be
+backported.
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 465e66dbe08e8..78d3f0ee16d84 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6462,13 +6462,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
- 	}
- }
- 
--static void ufshcd_force_error_recovery(struct ufs_hba *hba)
-+void ufshcd_force_error_recovery(struct ufs_hba *hba)
- {
- 	spin_lock_irq(hba->host->host_lock);
- 	hba->force_reset = true;
- 	ufshcd_schedule_eh_work(hba);
- 	spin_unlock_irq(hba->host->host_lock);
- }
-+EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery);
- 
- static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
- {
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 055b24758ca3d..6bdbbee1f0708 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1646,7 +1646,7 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
- 	}
- }
- 
--static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
-+static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- {
- 	int ret;
- 
-@@ -1657,8 +1657,16 @@ static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- 	ufs_mtk_wait_idle_state(hba, 5);
- 
- 	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
--	if (ret)
-+	if (ret) {
- 		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
-+
-+		ufshcd_force_error_recovery(hba);
-+
-+		/* trigger error handler and break suspend */
-+		ret = -EBUSY;
-+	}
-+
-+	return ret;
- }
- 
- static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-@@ -1669,7 +1677,7 @@ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- 
- 	if (status == PRE_CHANGE) {
- 		if (ufshcd_is_auto_hibern8_supported(hba))
--			ufs_mtk_auto_hibern8_disable(hba);
-+			return ufs_mtk_auto_hibern8_disable(hba);
- 		return 0;
- 	}
- 
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index a3fa98540d184..a4eb5bde46e88 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1511,5 +1511,6 @@ int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask);
- int ufshcd_write_ee_control(struct ufs_hba *hba);
- int ufshcd_update_ee_control(struct ufs_hba *hba, u16 *mask,
- 			     const u16 *other_mask, u16 set, u16 clr);
-+void ufshcd_force_error_recovery(struct ufs_hba *hba);
- 
- #endif /* End of Header */
+ drivers/bus/mhi/host/pci_generic.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 4edb5bb476baf..4564e2528775e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -917,20 +917,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FE990A */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
+-	/* Foxconn T99W696.01, Lenovo Generic SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe142),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.02, Lenovo X1 Carbon SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe143),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.03, Lenovo X1 2in1 SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe144),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.04, Lenovo PRC SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe145),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.00, Foxconn SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
++	/* Foxconn T99W696, all variants */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, PCI_ANY_ID),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
 -- 
 2.51.0
 
