@@ -1,44 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A104322C7B;
-	Sat, 25 Oct 2025 16:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250B4324B35;
+	Sat, 25 Oct 2025 16:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409749; cv=none; b=A7WxaiTAqZecE0tzx0CBSVE0ZdA7AY/dXV6WOITAbgwv5co+1gvYVNfA4oZfuWN9R2eiZgYfEi6q14kacGyhOAfzS7tYJt5Jni76dQIfU8mBRR01az9A5lZI+xBGexMIG509Q2yvSBM6/WtCw9PhZo7HbChvFBUqxrY4e3qCK1E=
+	t=1761409753; cv=none; b=WNcuelM0UgODNIhxRdACjx5ig7mB+ULwPsBn8ycHUajo3urApYbyJG5zHofvvSVcNXjnpg5uS7B+oCJsVMcBMsq+j8g5z6dinR1o6X6PU9zSiME9/CMBFkqvX8cfNd2l7kvZQCAghNDD9n+7LEY1I7ChqKTMqb3pdvf6gUkW604=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409749; c=relaxed/simple;
-	bh=Vu+wD33d1YlGxDkl7HpSd6DylFyUTaEPLabn+LJ72NU=;
+	s=arc-20240116; t=1761409753; c=relaxed/simple;
+	bh=wY1Q/ZJPMTtUIlSEH+LYwjixN+Y4GOXQI6AykOM0EOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LyrWF1ay4DsmxiVZpNS4iIOTcaaYArc3UIV1oJhBioI44uAfXpVEoDxQb3J2FzwvqY6O4xzTXvWIkXPN0UWETeZKqEPnRKznltu5IWYHTWGQCaSMNz7p6LN7S6Vr+yvxv26gLhkGFvp19PbCQPE1ZYZbJ8ez1oPKnTDUJf+i/ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pwh/i1eT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NH367trQoIbpW2qXjqCQkKVcT2SQ7yG/X72nWCg38CVnj7kdjLkvgjnX6TcslaKKVktPYYM9zqEXy9gPQ4+SfRzfjQ+fReNEPqEvkZLnKoLVKaMIOrZbNXfbwoc4cdgpbmwWbKu76iJVjHVdkn4xrQV0zAZhgw9R4sEWSiVmtNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nZwVhVXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pwh/i1eT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A27EC4CEFB;
-	Sat, 25 Oct 2025 16:29:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nZwVhVXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B3FC4CEFB;
+	Sat, 25 Oct 2025 16:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409749;
-	bh=Vu+wD33d1YlGxDkl7HpSd6DylFyUTaEPLabn+LJ72NU=;
+	s=k20201202; t=1761409753;
+	bh=wY1Q/ZJPMTtUIlSEH+LYwjixN+Y4GOXQI6AykOM0EOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pwh/i1eTLQ2buPI7odlOaTHqCi9yQKKKawWBsuBvN4k8iVTqukd7XIqXzwr4gB6nq
-	 6+I5gzvxOBkStpYe1MEBS4FGIR7X+jRrVXIICMzDY+3yZ5l39a9yPhufNO5LlWnAuc
-	 JsMVrTzqxSm0QIOm0oB9v4nzCG+rTiD9NvlcGoQ5tCzUgJjOdQlYXArCARr9Ss3K2Q
-	 OFfaOVfEfODzW/rudnUaWbo3JsVDy1Bnc+9aiIkDQIA+glj31bym+1AEHC5dZ8DviB
-	 q6QikycSaWtmHjPI94Qg2nL+crY1rFv8zunuEuQcU25kdrGjk9t06OSui2oR/nP2qc
-	 dyV+mhwjzS4/w==
+	b=nZwVhVXJLHxTC62fZ2qb5rwA6sK5tJti7Vh98jqp6O+36inow2Mi+hxqDUgpkb5f0
+	 Pa3AgFPshcz3lta3n51gYRxutWKTG/XhevFXd65H0DmFDMPN4puipbxhnfAiWpClEn
+	 SdytR823gF91Uf4izycqMdfyOjhLk5bdYCmUMZMZ0nFfH/VfAnW10Uf7TGsi8MS+df
+	 Z1QILH8JrO+gBYItLbO66wHWYVZzYmZDkqlQjtK9mY7Vy94Sc9EuiiHLaWYcMgF3Vm
+	 45Uaplr0qMWa4KDKshH7JuXG81CIvymORtc2TGhSry3/Wz00sxQMawzbBsoBDzKN6l
+	 1EJzvOAN72ohA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qingfang Deng <dqfext@gmail.com>,
-	syzbot+5fd749c74105b0e1b302@syzkaller.appspotmail.com,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Danny Wang <Danny.Wang@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ajk@comnets.uni-bremen.de,
-	linux-hams@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] 6pack: drop redundant locking and refcounting
-Date: Sat, 25 Oct 2025 12:01:19 -0400
-Message-ID: <20251025160905.3857885-448-sashal@kernel.org>
+	Wayne.Lin@amd.com,
+	roman.li@amd.com,
+	alvin.lee2@amd.com,
+	alex.hung@amd.com,
+	PeiChen.Huang@amd.com,
+	Dillon.Varone@amd.com,
+	Sung.Lee@amd.com,
+	Charlene.Liu@amd.com,
+	alexandre.f.demers@gmail.com,
+	Richard.Chiang@amd.com,
+	ryanseto@amd.com,
+	linux@treblig.org,
+	mario.limonciello@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Reset apply_eamless_boot_optimization when dpms_off
+Date: Sat, 25 Oct 2025 12:01:20 -0400
+Message-ID: <20251025160905.3857885-449-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -48,207 +60,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Danny Wang <Danny.Wang@amd.com>
 
-[ Upstream commit 38b04ed7072e54086102eae2d05d03ffcdb4b695 ]
+[ Upstream commit ad335b5fc9ed1cdeb33fbe97d2969b3a2eedaf3e ]
 
-The TTY layer already serializes line discipline operations with
-tty->ldisc_sem, so the extra disc_data_lock and refcnt in 6pack
-are unnecessary.
+[WHY&HOW]
+The user closed the lid while the system was powering on and opened it
+again before the “apply_seamless_boot_optimization” was set to false,
+resulting in the eDP remaining blank.
+Reset the “apply_seamless_boot_optimization” to false when dpms off.
 
-Removing them simplifies the code and also resolves a lockdep warning
-reported by syzbot. The warning did not indicate a real deadlock, since
-the write-side lock was only taken in process context with hardirqs
-disabled.
-
-Reported-by: syzbot+5fd749c74105b0e1b302@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68c858b0.050a0220.3c6139.0d1c.GAE@google.com/
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250925051059.26876-1-dqfext@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Danny Wang <Danny.Wang@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The patch only touches the 6pack line discipline: it drops the private
-  rwlock/refcount machinery from `drivers/net/hamradio/6pack.c` (see the
-  struct changes at lines 101-118 and the updated consumers at 358-379,
-  390-415, 600-683). Those sites now read `tty->disc_data` directly, but
-  every entry point already executes under the TTY core’s
-  `tty->ldisc_sem` read lock—`tty_port_default_receive_buf()` grabs it
-  via `tty_ldisc_ref()` (`drivers/tty/tty_port.c:23-41`), `tty_wakeup()`
-  does the same before calling `write_wakeup`
-  (`drivers/tty/tty_io.c:507-517`), and `tty_ioctl()` surrounds
-  `ld->ops->ioctl` with `tty_ldisc_ref_wait()`/`tty_ldisc_deref()`
-  (`drivers/tty/tty_io.c:2796-2805`).
-- `sixpack_close()` is invoked with the write side of that semaphore
-  held (`drivers/tty/tty_ldisc.c:449-455`), so removing the
-  refcount/`completion` still guarantees all in-flight readers finish
-  before the netdev teardown in `sixpack_close()`
-  (`drivers/net/hamradio/6pack.c:600-624`). Timers continue to be shut
-  down with `timer_delete_sync()`, so there are no other async users
-  left racing with the free.
-- This is a pure locking cleanup that fixes a syzbot lockdep warning
-  without changing behaviour or adding dependencies. Stable kernels
-  already provide the same `tty_ldisc_*` lifetime rules, so the backport
-  is mechanically straightforward and low risk.
-- I looked through the remaining call sites and found no paths that
-  access `tty->disc_data` without the TTY helpers, so the behavioural
-  surface is unchanged aside from the warning disappearing.
 
- drivers/net/hamradio/6pack.c | 57 ++++--------------------------------
- 1 file changed, 5 insertions(+), 52 deletions(-)
+- What it fixes: On some laptops with eDP, closing the lid during boot
+  and reopening before the first flip leaves the panel blank. Root
+  cause: the per‑stream flag `apply_seamless_boot_optimization` stays
+  true if no flip occurs, so on DPMS resume the driver skips
+  reprogramming the link and other enablement, leaving the panel dark.
+- Current behavior: The seamless-boot flag is only cleared after the
+  first flip. In this tree, `update_seamless_boot_flags()` only clears
+  it when there is a plane update:
+  drivers/gpu/drm/amd/display/dc/core/dc.c:3393. If the only event is
+  DPMS off, the flag remains set.
+- Why that blanks eDP: On DPMS on, the link enable path explicitly bails
+  out early when `apply_seamless_boot_optimization` is true and “does
+  not touch link,” only doing limited work for DP external displays. See
+  drivers/gpu/drm/amd/display/dc/link/link_dpms.c:2520. For eDP, this
+  means re-enabling doesn’t retrain/reprogram the link, so the screen
+  can stay blank.
+- How the patch fixes it: The change adds `|| stream->dpms_off` to the
+  condition in `update_seamless_boot_flags()`, so the flag is cleared
+  not only on first flip but also when DPMS is turned off. The stream’s
+  DPMS state is already updated earlier in the same commit path
+  (drivers/gpu/drm/amd/display/dc/core/dc.c:3279), and the DPMS off/on
+  programming is handled shortly after
+  (drivers/gpu/drm/amd/display/dc/core/dc.c:3672). With the flag cleared
+  on DPMS off, a subsequent DPMS on will no longer hit the early return
+  in link_dpms.c, so the link gets fully reprogrammed, avoiding the
+  blank screen.
+- Containment and risk: The change is a one-line conditional broadening
+  in a helper (no API or structural changes) and only affects the
+  seamless‑boot window. It is gated by
+  `get_seamless_boot_stream_count(context) > 0`, so it only acts when
+  seamless‑boot optimization is active. Clearing the optimization when
+  the panel is already being powered down is low risk and makes the
+  DPMS-on path behave like a normal enable rather than a seamless
+  resume.
+- Interactions: This aligns with prior fixes that avoid toggling DPMS
+  during seamless boot (e.g., “Don’t set dpms_off for seamless boot”);
+  it closes a different corner case where DPMS is requested before the
+  first flip. It also ensures `dc_post_update_surfaces_to_stream` isn’t
+  indefinitely deferred by `get_seamless_boot_stream_count(context) > 0`
+  during/after DPMS off (drivers/gpu/drm/amd/display/dc/core/dc.c:2526).
+- Stable backport fit:
+  - Fixes a real user-visible bug (blank eDP after lid cycle during
+    boot).
+  - Minimal, self-contained change in AMDGPU DC.
+  - No new features or architectural changes.
+  - Uses existing fields and code paths present in stable trees.
+  - Reviewed/acknowledged/tested in the commit message, increasing
+    confidence.
 
-diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index c5e5423e18633..885992951e8a6 100644
---- a/drivers/net/hamradio/6pack.c
-+++ b/drivers/net/hamradio/6pack.c
-@@ -115,8 +115,6 @@ struct sixpack {
- 
- 	struct timer_list	tx_t;
- 	struct timer_list	resync_t;
--	refcount_t		refcnt;
--	struct completion	dead;
- 	spinlock_t		lock;
- };
- 
-@@ -353,42 +351,13 @@ static void sp_bump(struct sixpack *sp, char cmd)
- 
- /* ----------------------------------------------------------------------- */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data, because the tty
-- * layer provides no locking at all - thus one cpu could be running
-- * sixpack_receive_buf while another calls sixpack_close, which zeroes
-- * tty->disc_data and frees the memory that sixpack_receive_buf is using.  The
-- * best way to fix this is to use a rwlock in the tty struct, but for now we
-- * use a single global rwlock for all ttys in ppp line discipline.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--                                                                                
--static struct sixpack *sp_get(struct tty_struct *tty)
--{
--	struct sixpack *sp;
--
--	read_lock(&disc_data_lock);
--	sp = tty->disc_data;
--	if (sp)
--		refcount_inc(&sp->refcnt);
--	read_unlock(&disc_data_lock);
--
--	return sp;
--}
--
--static void sp_put(struct sixpack *sp)
--{
--	if (refcount_dec_and_test(&sp->refcnt))
--		complete(&sp->dead);
--}
--
- /*
-  * Called by the TTY driver when there's room for more data.  If we have
-  * more packets to send, we send them here.
-  */
- static void sixpack_write_wakeup(struct tty_struct *tty)
+Conclusion: This is a small, targeted bug fix with clear rationale and
+minimal regression risk, and should be backported to stable.
+
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index bc364792d9d31..2d2f4c4bdc97e 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3404,7 +3404,7 @@ static void update_seamless_boot_flags(struct dc *dc,
+ 		int surface_count,
+ 		struct dc_stream_state *stream)
  {
--	struct sixpack *sp = sp_get(tty);
-+	struct sixpack *sp = tty->disc_data;
- 	int actual;
- 
- 	if (!sp)
-@@ -400,7 +369,7 @@ static void sixpack_write_wakeup(struct tty_struct *tty)
- 		clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 		sp->tx_enable = 0;
- 		netif_wake_queue(sp->dev);
--		goto out;
-+		return;
- 	}
- 
- 	if (sp->tx_enable) {
-@@ -408,9 +377,6 @@ static void sixpack_write_wakeup(struct tty_struct *tty)
- 		sp->xleft -= actual;
- 		sp->xhead += actual;
- 	}
--
--out:
--	sp_put(sp);
- }
- 
- /* ----------------------------------------------------------------------- */
-@@ -430,7 +396,7 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
- 	if (!count)
- 		return;
- 
--	sp = sp_get(tty);
-+	sp = tty->disc_data;
- 	if (!sp)
- 		return;
- 
-@@ -446,7 +412,6 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
- 	}
- 	sixpack_decode(sp, cp, count1);
- 
--	sp_put(sp);
- 	tty_unthrottle(tty);
- }
- 
-@@ -561,8 +526,6 @@ static int sixpack_open(struct tty_struct *tty)
- 
- 	spin_lock_init(&sp->lock);
- 	spin_lock_init(&sp->rxlock);
--	refcount_set(&sp->refcnt, 1);
--	init_completion(&sp->dead);
- 
- 	/* !!! length of the buffers. MTU is IP MTU, not PACLEN!  */
- 
-@@ -638,19 +601,11 @@ static void sixpack_close(struct tty_struct *tty)
- {
- 	struct sixpack *sp;
- 
--	write_lock_irq(&disc_data_lock);
- 	sp = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!sp)
- 		return;
- 
--	/*
--	 * We have now ensured that nobody can start using ap from now on, but
--	 * we have to wait for all existing users to finish.
--	 */
--	if (!refcount_dec_and_test(&sp->refcnt))
--		wait_for_completion(&sp->dead);
-+	tty->disc_data = NULL;
- 
- 	/* We must stop the queue to avoid potentially scribbling
- 	 * on the free buffers. The sp->dead completion is not sufficient
-@@ -673,7 +628,7 @@ static void sixpack_close(struct tty_struct *tty)
- static int sixpack_ioctl(struct tty_struct *tty, unsigned int cmd,
- 		unsigned long arg)
- {
--	struct sixpack *sp = sp_get(tty);
-+	struct sixpack *sp = tty->disc_data;
- 	struct net_device *dev;
- 	unsigned int tmp, err;
- 
-@@ -725,8 +680,6 @@ static int sixpack_ioctl(struct tty_struct *tty, unsigned int cmd,
- 		err = tty_mode_ioctl(tty, cmd, arg);
- 	}
- 
--	sp_put(sp);
--
- 	return err;
- }
- 
+-	if (get_seamless_boot_stream_count(context) > 0 && surface_count > 0) {
++	if (get_seamless_boot_stream_count(context) > 0 && (surface_count > 0 || stream->dpms_off)) {
+ 		/* Optimize seamless boot flag keeps clocks and watermarks high until
+ 		 * first flip. After first flip, optimization is required to lower
+ 		 * bandwidth. Important to note that it is expected UEFI will
 -- 
 2.51.0
 
