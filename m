@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EC8308F36;
-	Sat, 25 Oct 2025 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3150D1F12F8;
+	Sat, 25 Oct 2025 16:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408935; cv=none; b=AKXjXVcKZq8F6s3OZhSH8tQSXfbvQMP34FdLW6X3EmJcfZ9J1r40GCuZ1Xw1l441tQw7jXMnQ+EKcc1egbtELs3M0rNEDpXPzjYioU2BCJJgJG492zA02I+F1IS1yPd8Teg+7AXJvJQuaWS7/AeQquzl8w9mJihFOAcSxYr+52g=
+	t=1761408937; cv=none; b=ZByokkoIT/6xGfOZc6IpIkGdUrYaYxSyLpTDyr90Sjg+SCfITtBfBZuZwM3W00OHGA8UyCAymPDg+bEgJZN8reuAfaBU5JkkL6sY7IGNKNhdREzWkxN4iPl4mkkoJknmfVVvz6Ft+da38bpYuar6rmGSeVd6YjXG/vwW8KKIOTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408935; c=relaxed/simple;
-	bh=GAaRdhjLbKcn9UBDw2uagmBAExBiN/VBCRLC1HffS5Q=;
+	s=arc-20240116; t=1761408937; c=relaxed/simple;
+	bh=4FdEqkgIw2ja8qYOelOp6m1us7ZJTTKkOMzOaCdIfQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XiFP8Sz9CnaYQ5SZ+Jn6kodL/haVC7vip0MBD71zLKi1RoTICEbSMtYx12BHhVJ5vgGSJWRTZ4NuDBeZ3/6DYnGxvF3Ydi4+5uJPR4Vxowm70GWd009YGn16GviCnYMMV8u7POnYlzOpf3UQN40HB6TQ8nGXaTuKbSWZDO8OWmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kKJxoybF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SHC7UI7KPnKdR7awWObCJY1Req0NZxIh3c7/ylgZilBhDuWYVqrks6gWKb+r2UdsQ6vxAW+KgcjnPI8aIOIcI5fdrCiO4JRAAT2VdU9gnaVoS3K9s9sP+jzJegnSCbhBahqR7kbwd9HutTsjuZMFaS8F33ylDnHDfb0zUwm8Ui8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsE8yVaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kKJxoybF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D8BC4CEFB;
-	Sat, 25 Oct 2025 16:15:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsE8yVaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDA7C4CEFB;
+	Sat, 25 Oct 2025 16:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408935;
-	bh=GAaRdhjLbKcn9UBDw2uagmBAExBiN/VBCRLC1HffS5Q=;
+	s=k20201202; t=1761408937;
+	bh=4FdEqkgIw2ja8qYOelOp6m1us7ZJTTKkOMzOaCdIfQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKJxoybFQY6v+nX/LgX8aVlemaaI3R0bTQsX2DYYG8ZGCZTfEIKGuCVnnx6shbmGp
-	 3/mOS7ByHmkjeG3i3H8lrf44lWN7Jx4PPVx8fOQNo8A1TRrBSCWjLflROfji7QO9LA
-	 oV1zn4k/4jjdCAoi2j9tOivPyMW4U3JJUhfK84BPJa2tKiLyWHAOPHc2tpAEec5tKv
-	 wyGr/T2OxnjOf1apTtIfRenvvlIbTSZLMSNfYPLiAbVa6V0nH/6IcNvdSVZE6kINGN
-	 3skYUm3tymnc5GxjVbAmvOBVATr8d3wGSO7/M+iH3mUqF6OzKJQrCW5hENftzeX9ja
-	 goGdz8HLdFt5w==
+	b=SsE8yVawlaJtqeZIT1QlplLZ4272B6PCP5v0cEs/p96tuQjdogpuZ9uunLMvUpm4M
+	 Wh6/+6RGRaVxGrmAa9VdlUzjhc8AJ0+ffwenSUNCxjaCfIjQGWlozPQrTG1fDscVRT
+	 +lQK2i/hO4kKBgzwSh5SBYQaLFgmbs3ULx+9U2qGM05egZWQwe6/Oo1PbPdE5yvda6
+	 Ue/CWbzei/W9wvbvQCJFD1VZ5kGmyDdUepAhIHZF61Yv5wLn2ciAnjqLyPPjF8YLkE
+	 /zNcCDWY6SzXYSP0Ep6RxbjmkX0psnD6k69zXnyeobvGdKanOuXhsaOJGD7iLehN9p
+	 /Mw+Ug39UaXlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
-	Matt Atwood <matthew.s.atwood@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+Cc: chenmiao <chenmiao.ku@gmail.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe: Extend Wa_22021007897 to Xe3 platforms
-Date: Sat, 25 Oct 2025 11:56:10 -0400
-Message-ID: <20251025160905.3857885-139-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.12] openrisc: Add R_OR1K_32_PCREL relocation type module support
+Date: Sat, 25 Oct 2025 11:56:11 -0400
+Message-ID: <20251025160905.3857885-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,21 +52,18 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+From: chenmiao <chenmiao.ku@gmail.com>
 
-[ Upstream commit 8d6f16f1f082881aa50ea7ae537b604dec647ed6 ]
+[ Upstream commit 9d0cb6d00be891586261a35da7f8c3c956825c39 ]
 
-WA 22021007897 should also be applied to Graphics Versions 30.00, 30.01
-and 30.03. To make it simple, simply use the range [3000, 3003] that
-should be ok as there isn't a 3002 and if it's added, the WA list would
-need to be revisited anyway.
+To ensure the proper functioning of the jump_label test module, this patch
+adds support for the R_OR1K_32_PCREL relocation type for any modules. The
+implementation calculates the PC-relative offset by subtracting the
+instruction location from the target value and stores the result at the
+specified location.
 
-Cc: Matt Atwood <matthew.s.atwood@intel.com>
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://lore.kernel.org/r/20250827-wa-22021007897-v1-1-96922eb52af4@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: chenmiao <chenmiao.ku@gmail.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,73 +71,85 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- The change extends an existing hardware workaround (WA 22021007897) to
-  Xe3 platforms by adding a single, gated entry to the LRC workaround
-  table. Specifically, it adds a new rule to set
-  `COMMON_SLICE_CHICKEN4:SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE` for render
-  engines on graphics versions 30.00–30.03:
-  - New entry: `drivers/gpu/drm/xe/xe_wa.c:915` (name "22021007897")
-  - Rule gating: `drivers/gpu/drm/xe/xe_wa.c:916` uses
-    `GRAPHICS_VERSION_RANGE(3000, 3003)` with `ENGINE_CLASS(RENDER)`
-  - Action: `drivers/gpu/drm/xe/xe_wa.c:917` sets
-    `SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE` in `COMMON_SLICE_CHICKEN4`
-- This mirrors the already-present use of the same WA on Xe2 (graphics
-  versions 2001–2002), demonstrating consistency across generations:
-  - Existing Xe2 entry: `drivers/gpu/drm/xe/xe_wa.c:895` (name
-    "22021007897")
-  - Rule gating: `drivers/gpu/drm/xe/xe_wa.c:896` with
-    `GRAPHICS_VERSION_RANGE(2001, 2002)` and `ENGINE_CLASS(RENDER)`
-  - Action: `drivers/gpu/drm/xe/xe_wa.c:897` sets the same bit
-- The register and bit are well-defined in-tree, ensuring build safety
-  and clarity of intent:
-  - `drivers/gpu/drm/xe/regs/xe_gt_regs.h:158` defines
-    `COMMON_SLICE_CHICKEN4`
-  - `drivers/gpu/drm/xe/regs/xe_gt_regs.h:159` defines
-    `SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE` (bit 12)
-- The WA is applied at context-restore time via the LRC path, which is
-  the correct, minimal-impact location for such state programming:
-  - LRC table processing call site: `drivers/gpu/drm/xe/xe_gt.c:329`
-    calls `xe_wa_process_lrc(hwe)`
-- Scope and risk assessment:
-  - Minimal and contained: a single new table entry; no API or
-    architectural change; no behavior change outside Xe3 render engines.
-  - Gated by hardware version and engine class, so it has no effect on
-    other platforms.
-  - Safe even with the version range approach: there is no 3002 today,
-    and if a new graphics version appears, WA lists are regularly
-    revisited as noted in the commit message.
-- User impact:
-  - Workarounds address known hardware issues; enabling this WA on Xe3
-    likely prevents rendering corruption or instability on affected
-    hardware. Without it, Xe3 users may encounter functional bugs.
-- While the commit message does not include an explicit “Cc: stable”,
-  the change aligns with stable policy:
-  - It is a small, targeted fix to ensure correct operation on supported
-    hardware.
-  - It carries low regression risk and is confined to the DRM xe
-    driver’s WA tables.
+- What it fixes
+  - Adds missing relocation handling for OpenRISC modules:
+    `R_OR1K_32_PCREL` now computes a proper PC-relative value, enabling
+    modules that use this relocation (e.g., the jump_label test module)
+    to load and run correctly.
+  - Before this change, such relocations fell into the default case and
+    were left un-applied while only logging an error, which risks
+    loading a broken module without failing the load explicitly (see
+    `arch/openrisc/kernel/module.c:72` and the unconditional `return 0`
+    at `arch/openrisc/kernel/module.c:79`).
 
-Given the above, this is a good, low-risk bugfix candidate for
-backporting to stable trees that support the Xe driver and Xe3 hardware.
+- Change details
+  - New case computes S + A − P for 32-bit PC-relative relocations and
+    writes the result directly:
+    - `arch/openrisc/kernel/module.c:58`: `case R_OR1K_32_PCREL:`
+    - `arch/openrisc/kernel/module.c:59`: `value -= (uint32_t)location;`
+    - `arch/openrisc/kernel/module.c:60`: `*location = value;`
+  - This mirrors established semantics for 32-bit PC-relative
+    relocations, consistent with other architectures’ module loaders
+    (e.g., `arch/hexagon/kernel/module.c:132` uses `*location = value -
+    (uint32_t)location;`).
+  - It fits alongside existing relocation handling already present for
+    OpenRISC:
+    - Absolute 32-bit relocations written directly
+      (`arch/openrisc/kernel/module.c:42`).
+    - Branch-style PC-relative relocations (`R_OR1K_INSN_REL_26`) that
+      subtract P, then encode into a 26-bit field
+      (`arch/openrisc/kernel/module.c:51`–`56`).
+    - Other recently added relocations such as `R_OR1K_AHI16` and
+      `R_OR1K_SLO16` (`arch/openrisc/kernel/module.c:62`–`71`).
 
- drivers/gpu/drm/xe/xe_wa.c | 4 ++++
+- Impact and scope
+  - The change is small and contained to a single switch case in the
+    OpenRISC module loader (`arch/openrisc/kernel/module.c`).
+  - It only affects module relocation handling, which is invoked during
+    module loading via the generic path in `kernel/module/main.c:1617`
+    (SHT_RELA → `apply_relocate_add`).
+  - No API or architectural changes; no effect on other subsystems or
+    architectures.
+
+- Risk assessment
+  - Very low risk:
+    - The operation is a straightforward, canonical PC-relative
+      computation (S + A − P).
+    - It aligns with existing patterns for other architectures and with
+      OpenRISC’s own existing PC-relative branch relocation handling.
+  - High user value for OpenRISC users:
+    - Fixes module load-time correctness for modules emitting
+      `R_OR1K_32_PCREL`, including the jump_label test module.
+
+- Backport considerations
+  - Suitable for stable: it’s a clear bug fix, minimal, and
+    architecture-local.
+  - If older stable trees predate `R_OR1K_*` relocation renaming, the
+    backport may need to map to the legacy names; otherwise the change
+    is mechanically the addition of this single case.
+
+Conclusion: This is a small, targeted, correctness fix to the OpenRISC
+module loader that prevents silently broken module loads and aligns with
+standard relocation semantics. It should be backported.
+
+ arch/openrisc/kernel/module.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 535067e7fb0c9..f14bdaac674bb 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -879,6 +879,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 			     DIS_PARTIAL_AUTOSTRIP |
- 			     DIS_AUTOSTRIP))
- 	},
-+	{ XE_RTP_NAME("22021007897"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3003), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE))
-+	},
- };
- 
- static __maybe_unused const struct xe_rtp_entry oob_was[] = {
+diff --git a/arch/openrisc/kernel/module.c b/arch/openrisc/kernel/module.c
+index c9ff4c4a0b29b..4ac4fbaa827c1 100644
+--- a/arch/openrisc/kernel/module.c
++++ b/arch/openrisc/kernel/module.c
+@@ -55,6 +55,10 @@ int apply_relocate_add(Elf32_Shdr *sechdrs,
+ 			value |= *location & 0xfc000000;
+ 			*location = value;
+ 			break;
++		case R_OR1K_32_PCREL:
++			value -= (uint32_t)location;
++			*location = value;
++			break;
+ 		case R_OR1K_AHI16:
+ 			/* Adjust the operand to match with a signed LO16.  */
+ 			value += 0x8000;
 -- 
 2.51.0
 
