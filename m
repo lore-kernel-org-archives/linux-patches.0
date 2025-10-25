@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C132153D2;
-	Sat, 25 Oct 2025 16:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A7F2153D2;
+	Sat, 25 Oct 2025 16:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409046; cv=none; b=gsdobtLkN19k7SQ32uHMm7MvPZDzOo+jAwapIEd/ruYlHRyYzRnzOAQzzLlTFnWGFHmJOyufUspk1M/DL0UJfbWM7TBv9T3FJ23ZKiRblt07NC2jYSlrtwuqrIx5WGcKz9wrDfayCN8QU7ZR8qHPNWmxecs/06ZtLSDNi+kF8Ik=
+	t=1761409048; cv=none; b=CkILsUTGD9/6fu5IdcYA6GFASL8VVEs6M6GfAjEvLrfeq18DY46d9s9xJJzhdBamFOqUScUSMlAP3o4NAG4fA4vTr5PzLT9cG5cZt/uTYb2cEFYnps/dJT9BOZfj8p6cgPqgJzo14wN3TSGwc6YcnxEscNDYoLZkeCSkR5kW3RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409046; c=relaxed/simple;
-	bh=pEsF0uFZavTEih5HOyMhLFtNWeMgC3Luz2do/MeGJOM=;
+	s=arc-20240116; t=1761409048; c=relaxed/simple;
+	bh=gNrYfGhr1PB9OFojKEeS0gQsJGs1J0/XerhtBYX4ouQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jvQE+38RoBJH4Nq+vrbXCTIXq+zantazVFopBo5XfBoUp9KJ+H6HpuMEBYDk64IYeh/x8AZnOCg9sUtmwiiHr+j+/Arl/+PSqQa8RrB9tMQXtNFchKDkHyBA3Tl9qsqmh6XsRiasZN7blo6E6g9Je8I9SS20LsSQCxbLxtqqnGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtFl7MrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sCoAMHCUE8tks48qqka5KuT1Ul+bywcP4xnc6Qoegq843NCuLJMIupVCf+9BY/OzUppjEyUHjQb/n0WfXEHobhONGEHgUTCm220fc16Yf2tKq5fi90XB6eFnLloIyPC0rogSf/3VLkqIgHhgJmsFG+E7CG2n4fMnzU5CRZ9mHmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hhoa+GXf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtFl7MrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D33FC4CEF5;
-	Sat, 25 Oct 2025 16:17:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hhoa+GXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701AAC4CEF5;
+	Sat, 25 Oct 2025 16:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409045;
-	bh=pEsF0uFZavTEih5HOyMhLFtNWeMgC3Luz2do/MeGJOM=;
+	s=k20201202; t=1761409048;
+	bh=gNrYfGhr1PB9OFojKEeS0gQsJGs1J0/XerhtBYX4ouQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtFl7MrAO8Gj9B7uf/HMMfT7MvOlq9kMzYAkP0wS2Mx7ZQTzJd5NvIVcuoVgpXaNC
-	 rDKPHbqsrhzT0qLHzLtQ42nezMnBxg78uRWMxwOcB9kdu4A44siO223yWJ8DpBKnlk
-	 dFDUnP0IpmqqgmpMxmr4tF/9x1GQqgbWYHG5V/1fUwvt7YMZTG//F4baP4Jh29EvGY
-	 noaLw1jeChiW6GmgVIzRL9FeqPHNVtmovVi3TjCpRml19egPVjfDPvUvyRHHbEl3tx
-	 pjLZOOqlGfSdyBQiB5pAaXSeO+SbhUftXvJiCfpg4OU6+6zKHVBrdb7JZfTYYX/TPF
-	 4peBheAh9nl1A==
+	b=hhoa+GXfWyrCG2rjfV4LseHbbTHJpahc1E0fJcjsGfzpwz7Teeo5xcI0coweoWw+D
+	 8PGPZRgE3LG/TmSvBUqyKD/7NGtz/U4tDEyytpLN4kjlkdtPJNF1peRDjKxLerdFwY
+	 F9rQJiU8fxXoXDtMiY08COFzwC4spNGKYa1L+vqKgPk/G7IsCi/6Omb8blaJxhommi
+	 qyzWg7my2UIth4JMf7h9XNSLoG/cbb7aolzx2aJ+s5OnDOahvZ269Q/G5YBlNLi8Nu
+	 WdYhAcUySUSZlef741WHoSSx/x1zh4YWRQOFFisG/QsebpgTTewttVnrMCBy1RDj5q
+	 lRRskojyhq5OA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Stanley.Yang" <Stanley.Yang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: raub camaioni <raubcameo@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sathishkumar.sundararaju@amd.com,
-	leo.liu@amd.com,
-	Mangesh.Gadre@amd.com,
-	lijo.lazar@amd.com,
+	alexander.deucher@amd.com,
 	alexandre.f.demers@gmail.com,
-	FangSheng.Huang@amd.com,
-	sonny.jiang@amd.com,
-	Boyuan.Zhang@amd.com,
-	Jesse.Zhang@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Fix vcn v5.0.1 poison irq call trace
-Date: Sat, 25 Oct 2025 11:56:52 -0400
-Message-ID: <20251025160905.3857885-181-sashal@kernel.org>
+	krzysztof.kozlowski@linaro.org,
+	namcao@linutronix.de,
+	khtsai@google.com
+Subject: [PATCH AUTOSEL 6.17-5.4] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
+Date: Sat, 25 Oct 2025 11:56:53 -0400
+Message-ID: <20251025160905.3857885-182-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,36 +55,28 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Stanley.Yang" <Stanley.Yang@amd.com>
+From: raub camaioni <raubcameo@gmail.com>
 
-[ Upstream commit b1b29aa88f5367d0367c8eeef643635bc6009a9a ]
+[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
 
-Why:
-    [13014.890792] Call Trace:
-    [13014.890793]  <TASK>
-    [13014.890795]  ? show_trace_log_lvl+0x1d6/0x2ea
-    [13014.890799]  ? show_trace_log_lvl+0x1d6/0x2ea
-    [13014.890800]  ? vcn_v5_0_1_hw_fini+0xe9/0x110 [amdgpu]
-    [13014.890872]  ? show_regs.part.0+0x23/0x29
-    [13014.890873]  ? show_regs.cold+0x8/0xd
-    [13014.890874]  ? amdgpu_irq_put+0xc6/0xe0 [amdgpu]
-    [13014.890934]  ? __warn+0x8c/0x100
-    [13014.890936]  ? amdgpu_irq_put+0xc6/0xe0 [amdgpu]
-    [13014.890995]  ? report_bug+0xa4/0xd0
-    [13014.890999]  ? handle_bug+0x39/0x90
-    [13014.891001]  ? exc_invalid_op+0x19/0x70
-    [13014.891003]  ? asm_exc_invalid_op+0x1b/0x20
-    [13014.891005]  ? amdgpu_irq_put+0xc6/0xe0 [amdgpu]
-    [13014.891065]  ? amdgpu_irq_put+0x63/0xe0 [amdgpu]
-    [13014.891124]  vcn_v5_0_1_hw_fini+0xe9/0x110 [amdgpu]
-    [13014.891189]  amdgpu_ip_block_hw_fini+0x3b/0x78 [amdgpu]
-    [13014.891309]  amdgpu_device_fini_hw+0x3c1/0x479 [amdgpu]
-How:
-    Add omitted vcn poison irq get call.
+This fix is already present in f_ecm.c and was never
+propagated to f_ncm.c
 
-Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+When creating multiple NCM ethernet devices
+on a composite usb gadget device
+each MAC address on the HOST side will be identical.
+Having the same MAC on different network interfaces is bad.
+
+This fix updates the MAC address inside the
+ncm_strings_defs global during the ncm_bind call.
+This ensures each device has a unique MAC.
+In f_ecm.c ecm_string_defs is updated in the same way.
+
+The defunct MAC assignment in ncm_alloc has been removed.
+
+Signed-off-by: raub camaioni <raubcameo@gmail.com>
+Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -97,128 +84,105 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Root cause and symptom:
-  - vcn_v5_0_1 enables the VCN poison IRQ source in sw_init via
-    `amdgpu_irq_add_id()` (drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:100),
-    and disables it in hw_fini via `amdgpu_irq_put()`
-    (drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:288). However, it never
-    enables the IRQ at init time (i.e., no `amdgpu_irq_get()`), so the
-    `amdgpu_irq_put()` in hw_fini hits the WARN in `amdgpu_irq_put()`
-    when the IRQ wasn’t enabled, matching the call trace in the commit
-    message (invalid op from WARN_ON in IRQ put).
-  - The WARN is explicitly emitted by `amdgpu_irq_put()` when the IRQ
-    isn’t enabled: drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:619.
+Explanation
 
-- What the patch does:
-  - VCN: Adds the missing `amdgpu_irq_get()` for the poison IRQ in
-    `vcn_v5_0_1_ras_late_init()` so the later `amdgpu_irq_put()` in
-    `vcn_v5_0_1_hw_fini()` is balanced.
-    - Before: `vcn_v5_0_1_ras_late_init()` only called
-      `amdgpu_ras_bind_aca()` and returned
-      (drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:1593).
-    - After (per patch): if RAS is supported and `ras_poison_irq.funcs`
-      is set, call `amdgpu_irq_get(adev,
-      &adev->vcn.inst->ras_poison_irq, 0)`. This mirrors the established
-      pattern in the generic helper `amdgpu_vcn_ras_late_init()`
-      (drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c:1214), which performs the
-      `amdgpu_irq_get()` per instance. vcn_v5_0_1 overrides the generic
-      ras_late_init and had omitted this step; the patch restores this
-      missing piece.
-  - JPEG: Reorders operations in `jpeg_v5_0_1_ras_late_init()` to bind
-    ACA before enabling the poison IRQ. While that JPEG v5.0.1 file may
-    not exist on all branches, the change is a benign ordering fix that
-    keeps RAS/ACA setup consistent before enabling the IRQ.
+- Problem fixed
+  - Multiple NCM functions in a composite gadget end up advertising the
+    same host-side MAC address because `f_ncm` writes the global string
+    table once during allocation, not per-instance at bind time. In
+    current code, `ncm_alloc()` sets the global string entry to the
+    instance’s MAC: `drivers/usb/gadget/function/f_ncm.c:1738`. This
+    global pointer is then reused for subsequent functions and can be
+    overwritten before each function binds, causing duplicate MAC
+    strings on the host for multiple NCM interfaces.
 
-- Why this is a correct and minimal fix:
-  - The call trace shows a WARN in `amdgpu_irq_put()` due to an
-    unbalanced put; adding a matching `amdgpu_irq_get()` in
-    ras_late_init is the smallest correct change to restore balance.
-  - The guard `amdgpu_ras_is_supported(adev, ras_block->block) &&
-    adev->vcn.inst->ras_poison_irq.funcs` ensures the get only occurs
-    when RAS is supported and the IRQ source is correctly set up,
-    minimizing risk.
-  - Other VCN versions rely on the generic `amdgpu_vcn_ras_late_init()`
-    which already does an `amdgpu_irq_get()`; this change simply brings
-    vcn_v5_0_1 in line with the established pattern and with its own
-    `hw_fini` which unconditionally calls `amdgpu_irq_put()` when RAS is
-    supported (drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:288).
+- What the patch changes
+  - Moves MAC string assignment into bind:
+    - Adds `ncm_string_defs[1].s = ncm->ethaddr;` immediately before the
+      per-function call to `usb_gstrings_attach()` (i.e., just before
+      `drivers/usb/gadget/function/f_ncm.c:1475`). That ensures each
+      function instance updates the global strings to its own MAC right
+      before string IDs are assigned.
+  - Removes the early (and unsafe) assignment from allocation:
+    - Deletes `ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;` from
+      `ncm_alloc()` (currently at
+      `drivers/usb/gadget/function/f_ncm.c:1738`).
+  - The string ID is then bound to that instance via
+    `ecm_desc.iMACAddress = us[STRING_MAC_IDX].id;`
+    (`drivers/usb/gadget/function/f_ncm.c:1484`).
 
-- Backport suitability:
-  - Fixes a real user-visible bug (WARN/trace on shutdown/suspend/reset
-    paths), confirmed by the provided stack trace.
-  - Small, self-contained, and localized to the AMDGPU VCN/JPEG RAS init
-    path.
-  - No API/ABI or architectural changes; no feature additions.
-  - Aligns behavior with other IP blocks and the generic RAS late init
-    code path.
-  - Low regression risk: only enables an IRQ that is already registered
-    and later disabled; gated by RAS support and presence of IRQ funcs.
+- Why this works (and matches ECM)
+  - `usb_gstrings_attach()` assigns IDs for the string table entries at
+    bind time and ties them into the composite device’s string tables.
+    Updating the MAC string just before that call ensures each NCM
+    function’s `iMACAddress` points to a unique string for that
+    instance.
+  - `f_ecm` has used this pattern since 2018: it assigns the MAC string
+    in `ecm_bind()` right before `usb_gstrings_attach()`
+    (`drivers/usb/gadget/function/f_ecm.c:715`), avoiding exactly this
+    issue. This patch makes `f_ncm` consistent with the proven ECM
+    approach.
 
-- Specific code references to support the analysis:
-  - Missing get in vcn v5.0.1:
-    drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:1593
-  - Unbalanced put causing WARN:
-    drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:288
-  - WARN in `amdgpu_irq_put()` when IRQ not enabled:
-    drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:619
-  - Correct generic pattern (does get in late init):
-    drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c:1214
-  - VCN poison IRQ registered in sw_init (needs get to enable):
-    drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:119
+- Impact and risk assessment
+  - Bug fix scope is small and contained to `f_ncm` string handling: one
+    added assignment in `ncm_bind()` and removal of the old one in
+    `ncm_alloc()`. No API or structural changes.
+  - Side effects are minimal: the per-function MAC string is set at the
+    correct time; no change to descriptors other than ensuring the
+    correct, unique `iMACAddress`.
+  - Concurrency/regression risk is low: configfs binds functions
+    sequentially; `ncm->ethaddr` is computed during allocation and is
+    stable by bind; no timing-sensitive changes.
+  - Subsystem is the USB gadget function driver (not a critical core
+    subsystem); change mirrors an established, stable pattern in ECM.
 
-Given the above, this commit is an important, minimal-risk bugfix and
-should be backported to stable trees that contain VCN/JPEG 5.0.1.
+- Stable backport criteria
+  - Fixes a real user-visible bug (duplicate MAC addresses on host for
+    multiple NCM functions), which can break networking and cause ARP/ND
+    confusion.
+  - Small, surgical change, no new features or architectural shifts.
+  - Mirrors an existing fix in `f_ecm`, reducing risk.
+  - Signed-off-by from Greg Kroah-Hartman indicates appropriateness for
+    stable. The commit message is clear, with rationale and minimal
+    scope.
 
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 10 +++++-----
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c  |  7 +++++++
- 2 files changed, 12 insertions(+), 5 deletions(-)
+- Backport notes
+  - In some trees, the code around `ncm_bind()` may differ slightly
+    (e.g., presence/absence of `max_segment_size`/MTU handling), but the
+    core fix is independent: set `ncm_string_defs[STRING_MAC_IDX].s =
+    ncm->ethaddr;` immediately before `usb_gstrings_attach()`, and
+    remove the assignment from `ncm_alloc()`.
+  - Index usage (`STRING_MAC_IDX` vs `[1]`) is equivalent in current
+    kernels; prefer the macro where available for clarity.
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-index 54523dc1f7026..03ec4b741d194 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-@@ -1058,6 +1058,11 @@ static int jpeg_v5_0_1_ras_late_init(struct amdgpu_device *adev, struct ras_comm
- 	if (r)
- 		return r;
+Overall, this is a straightforward, low-risk bug fix that prevents
+duplicate MAC addresses across multiple NCM functions and aligns `f_ncm`
+with the established `f_ecm` practice. Backporting is advisable.
+
+ drivers/usb/gadget/function/f_ncm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
+index 0148d60926dcf..0e38330271d5a 100644
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1465,6 +1465,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
  
-+	r = amdgpu_ras_bind_aca(adev, AMDGPU_RAS_BLOCK__JPEG,
-+				&jpeg_v5_0_1_aca_info, NULL);
-+	if (r)
-+		goto late_fini;
+ 	ncm_opts->bound = true;
+ 
++	ncm_string_defs[1].s = ncm->ethaddr;
 +
- 	if (amdgpu_ras_is_supported(adev, ras_block->block) &&
- 		adev->jpeg.inst->ras_poison_irq.funcs) {
- 		r = amdgpu_irq_get(adev, &adev->jpeg.inst->ras_poison_irq, 0);
-@@ -1065,11 +1070,6 @@ static int jpeg_v5_0_1_ras_late_init(struct amdgpu_device *adev, struct ras_comm
- 			goto late_fini;
+ 	us = usb_gstrings_attach(cdev, ncm_strings,
+ 				 ARRAY_SIZE(ncm_string_defs));
+ 	if (IS_ERR(us))
+@@ -1759,7 +1761,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
+ 		mutex_unlock(&opts->lock);
+ 		return ERR_PTR(-EINVAL);
  	}
+-	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
  
--	r = amdgpu_ras_bind_aca(adev, AMDGPU_RAS_BLOCK__JPEG,
--				&jpeg_v5_0_1_aca_info, NULL);
--	if (r)
--		goto late_fini;
--
- 	return 0;
- 
- late_fini:
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-index d8bbb93767318..cb560d64da08c 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-@@ -1608,6 +1608,13 @@ static int vcn_v5_0_1_ras_late_init(struct amdgpu_device *adev, struct ras_commo
- 	if (r)
- 		goto late_fini;
- 
-+	if (amdgpu_ras_is_supported(adev, ras_block->block) &&
-+		adev->vcn.inst->ras_poison_irq.funcs) {
-+		r = amdgpu_irq_get(adev, &adev->vcn.inst->ras_poison_irq, 0);
-+		if (r)
-+			goto late_fini;
-+	}
-+
- 	return 0;
- 
- late_fini:
+ 	spin_lock_init(&ncm->lock);
+ 	ncm_reset_values(ncm);
 -- 
 2.51.0
 
