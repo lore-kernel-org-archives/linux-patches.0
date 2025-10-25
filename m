@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFFE3043B7;
-	Sat, 25 Oct 2025 16:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8803130596A;
+	Sat, 25 Oct 2025 16:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408838; cv=none; b=Qbv4/i4MNPpBgZ4+fiIhaalY3oiO6s7e8VsP8WG1+QS9KdP9dFSufa2LETR9Z5G3i+dYWZkZV3JS++OTKsVDdNc0WEq8gwqDQiEG/tKtQnE5kth8k6Sy/II7Y29L+wEMrvKFCeBfmDaBvu91ZCNdrzgDtLJGXIqHfe0AX/fo7TE=
+	t=1761408839; cv=none; b=oQUxzKYDZQ5plwr2ueOXk1FnXZZdVjL+0HuLJlOyrTbV7xpV6cZH4NxrxsMAgW2dGHAB9QgkfLZa768LkgbJbZFRM4MrDh5y8ZvDLpjZ8W9335UcwJKyGtjcKOwrO7nVyIg42yyycruw5D/yzaOquJcbpveZCkTpDakChdoYn2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408838; c=relaxed/simple;
-	bh=nrapjmA7M3Dr/9BWfufzxZxVh8c9KYj9lkcmoQHrBw0=;
+	s=arc-20240116; t=1761408839; c=relaxed/simple;
+	bh=TB5Z+F1tILjc2GPJwMgpGIeudcSpbtWIlR6TLGmC/Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cpQAJaWh/mQpNES7vQCS5iovX6QnfEbusTZZBTxfUgYRk5b2FuCagkoLs/4+8G/KQam42CFcB9XMbzG8SkN8MALZNavzykC4Yq6BXon02nf7efmTq+y6q3m20tNTbU/PnjqPo749cXBfE2YMfLMkLIW97yqX6TCRWGoPF6Fa1y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzFRGq/T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pGGl5P+Yw4ux56eQGwS+6hoPIoQpvVIf4GQCRZsjw8kpG2lVNNCKjfZsBttRNFQbcW4JkCo/Dci5nhhTI6Ky1V6Hb5YDyugSgqeYUo67ZlXbVmreQBSkyJboML1WscVhvTmiw9VM55tTXKA4aX98dG7f8OkMpe3MSjPaOKgFTKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=au0INgSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzFRGq/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2C7C4CEFF;
-	Sat, 25 Oct 2025 16:13:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="au0INgSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377E6C4CEF5;
+	Sat, 25 Oct 2025 16:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408837;
-	bh=nrapjmA7M3Dr/9BWfufzxZxVh8c9KYj9lkcmoQHrBw0=;
+	s=k20201202; t=1761408839;
+	bh=TB5Z+F1tILjc2GPJwMgpGIeudcSpbtWIlR6TLGmC/Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzFRGq/Tr1H3s08LF1m1inPVf2nwC6MXXQqPHfZr2sieg+NmfYuUS/HOk0l+UdNaq
-	 vhtfF484Otv9Pp8GhthbDzasYLcsGV0fz8e5edkQa0wkHHm6ZMD4IjkMxBpDjSK2RZ
-	 I4ToS/Tej9+royjA9hF/WHuuRGOO5tH8Te5e7IG9dx11HVEWuISgAI7Hc0u4KFVPFT
-	 ZEZnDXsl0IZaHseAOpxGVslb1Add4QOk+qDSwHdYUiG/lMYS+vKMxtMKK1S9cw46wF
-	 xIm1C87RXrDiF7RTbghP+ejl/fx48r1qO8yNKirjHjBSH4iGnQ026aMoWXUtybzqzi
-	 U+oelv535Ilqg==
+	b=au0INgSAeZ6/UnXj5AxdTu+ZbfRVQuA05x6tvgzyTXkTTet77d+H27fav1TvyYqCK
+	 kis+XJrgvnjuZUmK/dnURkGU/UposFqQvt8jVc7meqXWNW3nCkfns4zNDR1LFopA+N
+	 2htR+NGv0f/iq7KMRumLd5TojEF4fyYY3yxaPHbi2ystDkbDwlX4JblYp3IOSnGv2c
+	 mYTHiVjErQxrVW9HgQCNHkYsDSr9SbsHR2eBYetrEZWWTEMJPeMMeo/7hDvt+BdQqN
+	 qN/FuKuzmWxUDbwb6AwbTqo8qgU7Ps1lyylMEOxzEmArpsRwBpDYv8doGNZQGxnPN/
+	 KxbUA0AgP7Qdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mike Marshall <hubcap@omnibond.com>,
-	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
+Cc: Christoph Paasch <cpaasch@openai.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	devel@lists.orangefs.org
-Subject: [PATCH AUTOSEL 6.17-5.4] orangefs: fix xattr related buffer overflow...
-Date: Sat, 25 Oct 2025 11:55:24 -0400
-Message-ID: <20251025160905.3857885-93-sashal@kernel.org>
+	davem@davemloft.net,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] net: When removing nexthops, don't call synchronize_net if it is not necessary
+Date: Sat, 25 Oct 2025 11:55:25 -0400
+Message-ID: <20251025160905.3857885-94-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,115 +56,179 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Christoph Paasch <cpaasch@openai.com>
 
-[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
+[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
 
-Willy Tarreau <w@1wt.eu> forwarded me a message from
-Disclosure <disclosure@aisle.com> with the following
-warning:
+When removing a nexthop, commit
+90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
+call to synchronize_rcu() (later changed to _net()) to make sure
+everyone sees the new nexthop-group before the rtnl-lock is released.
 
-> The helper `xattr_key()` uses the pointer variable in the loop condition
-> rather than dereferencing it. As `key` is incremented, it remains non-NULL
-> (until it runs into unmapped memory), so the loop does not terminate on
-> valid C strings and will walk memory indefinitely, consuming CPU or hanging
-> the thread.
+When one wants to delete a large number of groups and nexthops, it is
+fastest to first flush the groups (ip nexthop flush groups) and then
+flush the nexthops themselves (ip -6 nexthop flush). As that way the
+groups don't need to be rebalanced.
 
-I easily reproduced this with setfattr and getfattr, causing a kernel
-oops, hung user processes and corrupted orangefs files. Disclosure
-sent along a diff (not a patch) with a suggested fix, which I based
-this patch on.
+However, `ip -6 nexthop flush` will still take a long time if there is
+a very large number of nexthops because of the call to
+synchronize_net(). Now, if there are no more groups, there is no point
+in calling synchronize_net(). So, let's skip that entirely by checking
+if nh->grp_list is empty.
 
-After xattr_key started working right, xfstest generic/069 exposed an
-xattr related memory leak that lead to OOM. xattr_key returns
-a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
-used hash_add, a kernel hashing macro. hash_add also hashes the key using
-hash_log which resulted in additions to the xattr cache going to the wrong
-hash bucket. generic/069 tortures a single file and orangefs does a
-getattr for the xattr "security.capability" every time. Orangefs
-negative caches on xattrs which includes a kmalloc. Since adds to the
-xattr cache were going to the wrong bucket, every getattr for
-"security.capability" resulted in another kmalloc, none of which were
-ever freed.
+This gives us a nice speedup:
 
-I changed the two uses of hash_add to hlist_add_head instead
-and the memory leak ceased and generic/069 quit throwing furniture.
+BEFORE:
+=======
 
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
-Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	1m45.345s
+user	0m0.001s
+sys	0m0.005s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	3m10.430s
+user	0m0.002s
+sys	0m0.004s
+
+AFTER:
+======
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	0m17.545s
+user	0m0.003s
+sys	0m0.003s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	0m35.823s
+user	0m0.002s
+sys	0m0.004s
+
+Signed-off-by: Christoph Paasch <cpaasch@openai.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- Fix makes `xattr_key()` terminate on the terminating NUL
-  (`fs/orangefs/xattr.c:54-61`); the old `while (key)` loop never ended,
-  so any user who ran `setfattr`/`getfattr` hit an infinite scan,
-  leading to faults, hangs, and reported OrangeFS corruption. That is a
-  serious, user-triggerable bug worth fixing in stable.
-- Added NULL guard in the same helper (`fs/orangefs/xattr.c:57-58`)
-  keeps the cache code from hashing bogus pointers; this is defensive,
-  tightly scoped, and carries no observable side effects for valid
-  callers.
-- Entries now go straight into the bucket chosen by `xattr_key()` via
-  `hlist_add_head()` (`fs/orangefs/xattr.c:180-181` and
-  `fs/orangefs/xattr.c:234-235`). Previously `hash_add()` rehashed the
-  already-reduced key, so `find_cached_xattr()`’s bucket walk
-  (`fs/orangefs/xattr.c:71-82`) never located cached/negative entries,
-  leaking a `kmalloc()` on every lookup until OOM (seen in xfstest
-  generic/069). The new storage method matches the existing
-  lookup/removal logic and the cleanup walk in `hash_for_each_safe()`
-  (`fs/orangefs/super.c:115-131`), so it simply restores the intended
-  caching behaviour.
-- Change set stays within `fs/orangefs/xattr.c`, doesn’t alter
-  interfaces, and directly resolves the regression; without it OrangeFS
-  remains trivially DoS-able and leaky. With it, functionality is
-  restored and risk is low, making this a strong stable backport
-  candidate.
 
-Suggested next step: rerun xfstest generic/069 on the target stable
-branch to confirm the leak is gone.
+Why this is a good stable backport
+- Fixes a real, user-facing regression in large-scale environments:
+  deleting many nexthops pays an O(N) cost from an unnecessary RCU grace
+  period per nexthop. The commit message shows dramatic runtime
+  reductions (minutes → seconds) for “ip -6 nexthop flush” on millions
+  of nexthops. This is an operational pain point, not a micro-
+  optimization.
+- Minimal, localized change with no functional/architectural impact: it
+  only short-circuits a barrier when there is provably nothing to
+  synchronize. No API changes, no behavior changes when cleanup is
+  actually needed.
+- Preserves correctness: the synchronize call was introduced to
+  serialize readers after updating a published group array (commit
+  90f33bffa382). Skipping it is safe when there were no group updates.
 
- fs/orangefs/xattr.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+Specific code and history analysis
+- Barrier origin and purpose:
+  - 90f33bffa382 added a post-update grace period to “make sure all see
+    the newly published array before releasing RTNL” by calling
+    `synchronize_rcu()` (later became `synchronize_net()`).
+  - See 90f33bffa382: net/ipv4/nexthop.c: the barrier was added after
+    removing a nexthop from groups.
+- Current code path (pre-patch):
+  - `remove_nexthop_from_groups()` iterates `nh->grp_list`, potentially
+    updating group arrays via `remove_nh_grp_entry()`, then
+    unconditionally calls `synchronize_net()`; net/ipv4/nexthop.c:2085
+    and net/ipv4/nexthop.c:2094.
+  - This function runs for non-group nexthops during deletion; see call
+    site in `__remove_nexthop()`: net/ipv4/nexthop.c:2166. The RTNL lock
+    is held across deletion (rtnl lock in `rtm_del_nexthop()`);
+    net/ipv4/nexthop.c:3310.
+- The patch’s exact change:
+  - Adds an early return when there is nothing to remove:
+    - New check: `if (list_empty(&nh->grp_list)) return;`
+    - This prevents the unconditional `synchronize_net()` when `nh`
+      belongs to no groups.
+  - The loop and the barrier still run when there are entries to remove,
+    preserving the original safety guarantee.
+- Why the early return is safe:
+  - If `&nh->grp_list` is empty, no group arrays are modified; there is
+    nothing to “publish” and thus no readers to wait out. The barrier is
+    purely to serialize readers after `rcu_assign_pointer()` of a new
+    group array (e.g., in `remove_nh_grp_entry()` which calls
+    `rcu_assign_pointer(nhp->nh_grp, newg)`; net/ipv4/nexthop.c:around
+    2020). With no modifications, the barrier is a no-op, only adding
+    latency.
+  - Concurrency context is correct: group membership modifications
+    happen under RTNL, and `remove_nexthop_from_groups()` is called
+    under RTNL; `list_empty()` on `nh->grp_list` is consistent. The list
+    head is always initialized (`INIT_LIST_HEAD(&nh->grp_list)`;
+    net/ipv4/nexthop.c:542).
+  - Other RCU barriers in the file that protect real publications remain
+    intact (e.g., in group replacement, `synchronize_net()` remains;
+    net/ipv4/nexthop.c:2291).
 
-diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
-index 74ef75586f384..eee3c5ed1bbbb 100644
---- a/fs/orangefs/xattr.c
-+++ b/fs/orangefs/xattr.c
-@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
- static unsigned int xattr_key(const char *key)
+Stable policy considerations
+- Scope is tiny and self-contained (one function, one early return); no
+  cross-subsystem impact.
+- Not a feature; it is a performance fix for a behavior introduced by an
+  earlier change (90f33bffa382) that added unconditional grace periods
+  even when nothing changed.
+- Risk of regression is very low: previously, the barrier was sometimes
+  unnecessary. Now it remains when necessary and is skipped when
+  provably unneeded. No change to notifier behavior or group update
+  logic.
+
+Practical backport notes
+- Older stable trees may have `synchronize_rcu()` instead of
+  `synchronize_net()` at the end of `remove_nexthop_from_groups()`. The
+  early return remains valid and safe regardless; adapt the barrier name
+  to the tree’s version if needed.
+- The infrastructure used by the check (`nh->grp_list`) and usage
+  context (RTNL held) are long-standing and present in stable kernels
+  that have nexthop groups.
+
+Conclusion
+- This change is a classic stable backport candidate: important user-
+  visible improvement, minimal risk, no semantics change, and tightly
+  scoped to the nexthop cleanup path.
+
+ net/ipv4/nexthop.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 34137768e7f9a..15acfb74fd238 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2087,6 +2087,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
  {
- 	unsigned int i = 0;
--	while (key)
-+	if (!key)
-+		return 0;
-+	while (*key)
- 		i += *key++;
- 	return i % 16;
- }
-@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 				cx->length = -1;
- 				cx->timeout = jiffies +
- 				    orangefs_getattr_timeout_msecs*HZ/1000;
--				hash_add(orangefs_inode->xattr_cache, &cx->node,
--				    xattr_key(cx->key));
-+				hlist_add_head( &cx->node,
-+                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 			}
- 		}
- 		goto out_release_op;
-@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 			memcpy(cx->val, buffer, length);
- 			cx->length = length;
- 			cx->timeout = jiffies + HZ;
--			hash_add(orangefs_inode->xattr_cache, &cx->node,
--			    xattr_key(cx->key));
-+			hlist_add_head(&cx->node,
-+				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 		}
- 	}
+ 	struct nh_grp_entry *nhge, *tmp;
+ 
++	/* If there is nothing to do, let's avoid the costly call to
++	 * synchronize_net()
++	 */
++	if (list_empty(&nh->grp_list))
++		return;
++
+ 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
+ 		remove_nh_grp_entry(net, nhge, nlinfo);
  
 -- 
 2.51.0
