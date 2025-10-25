@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC9630B528;
-	Sat, 25 Oct 2025 16:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B03308F27;
+	Sat, 25 Oct 2025 16:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409310; cv=none; b=OhkOlbmBWj72vfoBsnQbOLPGh4OgcUkFipj0btmIoo4TSU7hyPGDm2m2/1QRhS415mMMS3tEZguJ8SHSHsronObmxZN0cqSG2aTlKnJgw44iEYqq0vmEfQlP4tzcfdg3QjtbqKmnx3Yk7A5GZZ9HX/BBLOEvfo67gkwnPlwdD/g=
+	t=1761409314; cv=none; b=JZ2RenxXALbmLzoJJ7yyirvnpjMYlGv316G0fOB78Upr2ubQiS2+uKj8r6dWBZp+O5RvteRonj9scEM5P4KeMPXoVb+isDRIB7pq3K8M2jrIQR46VZNisenyk9YeC+COdLNqV5EQpS/k8h6Ae0+gE//PGblEptFZyvV9LGzrO8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409310; c=relaxed/simple;
-	bh=q2fq+mYozaXNTRsK8CMvFPDO9/5mWPWxJu5FpQgEXMA=;
+	s=arc-20240116; t=1761409314; c=relaxed/simple;
+	bh=NE+chiJ+DrSu7bpV+Hsj3R4BnVPtwZey5lZIHT8tdSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wfmf1Q74Ji/RxA4mviy6Uh5FMYBmHgpDHsDFbVvcow8mmG4W3b2NeJ8RVut6o35nH5P2e+WXz5oQJs1e9TXKHEa65eY+b7Kgq6eXweuhLiKD+9fiHTBRkl6jFIGPjrARFUZSPDN/vHHHQJJdKtQwQS/HjpN1lQDFkzPTn/AFJqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6/joj23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q7rK2Mve1YKGPpdphqDhqqkI6IF8N1+l+OPHKiJN7quzaa6yUzxhg1KOi3p7V+qH+TjA6lbudilJT4hZVVa5rKtipLxDcckAmwFJPn3t4V8MY3UqcBpvc5jFq0gq1ehDLwgaZ0OWUZDcQ2urlL4WihkIYsp/U8dKS77mNO/UZd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ipu0yPq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6/joj23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30597C2BCB5;
-	Sat, 25 Oct 2025 16:21:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ipu0yPq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA736C2BC9E;
+	Sat, 25 Oct 2025 16:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409310;
-	bh=q2fq+mYozaXNTRsK8CMvFPDO9/5mWPWxJu5FpQgEXMA=;
+	s=k20201202; t=1761409314;
+	bh=NE+chiJ+DrSu7bpV+Hsj3R4BnVPtwZey5lZIHT8tdSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6/joj23equ8n95INHks2A5+xH5P3cJN4SYpdhgVV531RLQwFy0hz7FRix1zgHxIg
-	 63iCHwzn6gsBassK/no8pjD08HwjGS6E+6F0uyc9kEkztIbKzJRUxkQadzBoJ4hcew
-	 wMsl5gFaLNBg2sgTUhoTMWu7tP9uRbXRIqN2P7T0R6KlS/efM32mX4jF5FxOPq7Xe8
-	 BI7oZjXxhzadb1j/66kos/lWIJifhjnYS/HEdzynsMlgrgAAN2BbhluMWXfs0BBf+O
-	 E4rWnNhSPztTGOzS4cj40Si666Btsowo98AdzPINvbyYEomCimB+NRSiH/mR8lhKj4
-	 Pk0orl281k6WQ==
+	b=ipu0yPq3T8UdjHHYdFXqSKjcywvIWlUtEg634jEIalpz6TKHOsdSvXMBoCbzX9sbD
+	 CLcGS3X3OK7d/IiILNxYVxbpOzgt4rEERq16BVwmECOTBUTyRKoLQBqk3Qk+O88sSl
+	 Vl2nCDCMSUVZOZT2gmwJDpWOZWy0m5J2mYS0d6L9pXI/sRLnjSsO2+sWOTCLdQqFJ7
+	 5qrHg1l3nc92tEwrOG7Urg83zRkmBbYeOYbxFWPQUQu/lgzk0ObN54AJxLvN50pcNm
+	 bBA6N15ZnUrVc0EXbMDMqeRqRW5S9ELymIlltFyGsMFo5rwUIqF2FGD79+dAeYNkDb
+	 qZEyEUSHHgB8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	awalls@md.metrocast.net,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] media: pci: ivtv: Don't create fake v4l2_fh
-Date: Sat, 25 Oct 2025 11:58:26 -0400
-Message-ID: <20251025160905.3857885-275-sashal@kernel.org>
+	olivier.moysan@foss.st.com,
+	andy.yan@rock-chips.com,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com,
+	stefan.ekenberg@axis.com,
+	dianders@chromium.org,
+	biju.das.jz@bp.renesas.com,
+	luca.ceresoli@bootlin.com,
+	tommaso.merciai.xr@bp.renesas.com
+Subject: [PATCH AUTOSEL 6.17] drm/bridge: write full Audio InfoFrame
+Date: Sat, 25 Oct 2025 11:58:27 -0400
+Message-ID: <20251025160905.3857885-276-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,30 +59,19 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit cc6e8d1ccea792d8550428e0831e3a35b0ccfddc ]
+[ Upstream commit f0e7f358e72b10b01361787134ebcbd9e9aa72d9 ]
 
-The ivtv driver has a structure named ivtv_open_id that models an open
-file handle for the device. It embeds a v4l2_fh instance for file
-handles that correspond to a V4L2 video device, and stores a pointer to
-that v4l2_fh in struct ivtv_stream to identify which open file handle
-owns a particular stream.
+Instead of writing the first byte of the infoframe (and hoping that the
+rest is default / zeroes), hook Audio InfoFrame support into the
+write_infoframe / clear_infoframes callbacks and use
+drm_atomic_helper_connector_hdmi_update_audio_infoframe() to write the
+frame.
 
-In addition to video devices, streams can be owned by ALSA PCM devices.
-Those devices do not make use of the v4l2_fh instance for obvious
-reasons, but the snd_ivtv_pcm_capture_open() function still initializes
-a "fake" v4l2_fh for the sole purpose of using it as an open file handle
-identifier. The v4l2_fh is not properly destroyed when the ALSA PCM
-device is closed, leading to possible resource leaks.
-
-Fortunately, the v4l2_fh instance pointed to by ivtv_stream is not
-accessed, only the pointer value is used for comparison. Replace it with
-a pointer to the ivtv_open_id structure that embeds the v4l2_fh, and
-don't initialize the v4l2_fh for ALSA PCM devices.
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20250903-adv7511-audio-infoframe-v1-2-05b24459b9a4@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -83,257 +79,186 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a good stable backport
-- Fixes a real bug: ALSA PCM open in ivtv initialized a fake v4l2_fh
-  that was never properly destroyed on success or on “already streaming”
-  early return, causing a kernel memory leak across repeated open/close
-  cycles.
-- Small, contained change: confines to ivtv driver internals (media:
-  pci: ivtv), with no API/ABI changes to V4L2/ALSA frameworks.
-- Behavior-preserving: the driver used the v4l2_fh pointer solely as an
-  opaque owner identifier (pointer equality/non-NULL), never
-  dereferencing it. Switching to an ivtv_open_id pointer preserves
-  semantics without allocating any v4l2_fh resources.
-- Low regression risk: only owner-tracking logic and ALSA open path are
-  touched; no architectural changes; no critical core subsystems
-  affected.
-- User impact: prevents kernel memory leakage reachable by regular users
-  via the ALSA PCM device node.
+- Fixes real user-visible bug: Previously, the driver only poked a
+  single byte in the Audio InfoFrame and relied on default/zero values
+  for the rest, which can lead to incorrect or incomplete Audio
+  InfoFrame content (e.g., channel count/allocation, coding type, sample
+  size/rate). This can break or degrade HDMI audio on some sinks. The
+  change switches to generating and writing the full, correct Audio
+  InfoFrame.
 
-What the patch changes (with code evidence)
-- Stop creating a fake v4l2_fh for ALSA PCM open:
-  - Removes `v4l2_fh_init(&item.fh, &s->vdev)` in ALSA open, avoiding
-    allocation that was never exited in the success/streaming path.
-  - Evidence: drivers/media/pci/ivtv/ivtv-alsa-pcm.c:151
-- Switch stream owner tracking from v4l2_fh* to ivtv_open_id*:
-  - Struct change: `struct ivtv_stream` replaces `struct v4l2_fh *fh;`
-    with `struct ivtv_open_id *id;`
-  - Evidence: drivers/media/pci/ivtv/ivtv-driver.h:334
-  - Adds forward decl for `struct ivtv_open_id;` so the pointer type can
-    be used earlier in the header (part of the change).
-- Update owner comparisons and checks accordingly:
-  - ivtv_claim_stream now compares `s->id == id` instead of `s->fh ==
-    &id->fh`, assigns `s->id = id`, and handles VBI special-case the
-    same way.
-  - Evidence: drivers/media/pci/ivtv/ivtv-fileops.c:42, 46–51, 59
-  - ivtv_release_stream clears `s->id = NULL` (was `s->fh = NULL`) and
-    uses `s_vbi->id` for “still claimed” checks.
-  - Evidence: drivers/media/pci/ivtv/ivtv-fileops.c:97, 129
-  - ivtv_read initialization check uses `s->id == NULL` instead of
-    `s->fh == NULL`.
-  - Evidence: drivers/media/pci/ivtv/ivtv-fileops.c:362
-  - ivtv_stop_capture VBI-internal use case sets `s->id = NULL` instead
-    of `s->fh = NULL`.
-  - Evidence: drivers/media/pci/ivtv/ivtv-fileops.c:834
-  - ivtv_v4l2_close compares `s->id != id` instead of `s->fh != &id->fh`
-    to detect ownership.
-  - Evidence: drivers/media/pci/ivtv/ivtv-fileops.c:918
-  - ivtv-irq VBI data handling checks `s->id == NULL` (was `s->fh ==
-    NULL`) to decide whether to free buffers if no owner, and uses
-    `s->id` for wakeups.
-  - Evidence: drivers/media/pci/ivtv/ivtv-irq.c:301–312 (check), 333–334
-    (wake_up)
-- Remove the now-unneeded v4l2_fh exit on the ALSA open fail path:
-  - Since we no longer init a fake fh, there’s nothing to exit on
-    -EBUSY.
-  - Evidence: drivers/media/pci/ivtv/ivtv-alsa-pcm.c:151 (removal
-    implies corresponding exit removal)
+What changed and why it’s correct
+- Uses the generic helper to generate and program the full Audio
+  InfoFrame:
+  - `adv7511_hdmi_audio_prepare()` now calls
+    `drm_atomic_helper_connector_hdmi_update_audio_infoframe(connector,
+    &hparms->cea)` to write a complete frame built from ALSA parameters,
+    instead of writing a single payload byte (old hack) in the device
+    registers. See `drivers/gpu/drm/bridge/adv7511/adv7511_audio.c:160`.
+  - Required header is included:
+    `drivers/gpu/drm/bridge/adv7511/adv7511_audio.c:15`.
+  - The helper’s implementation exists and writes through the
+    connector’s infoframe pipeline, with locking and proper callback
+    routing: `drivers/gpu/drm/display/drm_hdmi_state_helper.c:1062`
+    (update) and `drivers/gpu/drm/display/drm_hdmi_state_helper.c:1098`
+    (clear).
+- Implements proper program/enable path for the Audio InfoFrame in the
+  bridge callbacks:
+  - `.hdmi_write_infoframe` handles `HDMI_INFOFRAME_TYPE_AUDIO` by
+    gating updates (bit 5), bulk-writing the header
+    (version/length/checksum) and payload (skipping the non-configurable
+    type byte), then enabling the packet. See:
+    - Gate updates:
+      `drivers/gpu/drm/bridge/adv7511/adv7511_drv.c:925-926`
+    - Bulk write full frame (skip type):
+      `drivers/gpu/drm/bridge/adv7511/adv7511_drv.c:929-930`
+    - Ungate + enable:
+      `drivers/gpu/drm/bridge/adv7511/adv7511_drv.c:933-936`
+  - `.hdmi_clear_infoframe` now supports Audio and disables the
+    corresponding packet:
+    `drivers/gpu/drm/bridge/adv7511/adv7511_drv.c:896-898`.
+- Cleans up on shutdown:
+  - Calls the helper to stop sending the Audio InfoFrame:
+    `drivers/gpu/drm/bridge/adv7511/adv7511_audio.c:205`.
+- Startup keeps audio packet/N/CTS setup unchanged and avoids enabling
+  Audio InfoFrame before valid contents are written:
+  - N/CTS and sample packets enabling retained:
+    `drivers/gpu/drm/bridge/adv7511/adv7511_audio.c:175-180`.
+  - Audio InfoFrame enabling is now tied to having a fully written frame
+    (safer ordering).
 
-Why this fixes the leak
-- Before: `snd_ivtv_pcm_capture_open()` created `item.fh` via
-  `v4l2_fh_init` and then:
-  - On successful claim and subsequent returns (including the “already
-    streaming” fast path), there was no matching `v4l2_fh_exit`, leaking
-    internal resources of `v4l2_fh`. See initialization at
-    drivers/media/pci/ivtv/ivtv-alsa-pcm.c:151 and early return in the
-    streaming case just after claim.
-- After: There is no `v4l2_fh_init` for ALSA opens; the driver tracks
-  ownership with a raw `ivtv_open_id *` pointer whose address is used
-  only as a token (never dereferenced), eliminating the need for any
-  initialization or teardown on the ALSA path.
+Scope, risk, and compatibility
+- Small, contained change limited to the ADV7511 HDMI bridge driver and
+  the standard DRM HDMI infoframe path:
+  - Files touched: `drivers/gpu/drm/bridge/adv7511/adv7511_audio.c`,
+    `drivers/gpu/drm/bridge/adv7511/adv7511_drv.c`.
+  - No architectural changes; uses existing DRM HDMI state helper APIs
+    that are already in-tree (see
+    `drivers/gpu/drm/display/drm_hdmi_state_helper.c:1062`,
+    `drivers/gpu/drm/display/drm_hdmi_state_helper.c:1098`).
+- Behavior improves correctness without broad side effects:
+  - Moves from writing a single payload byte to programming the full
+    spec-compliant Audio InfoFrame.
+  - Ensures the Audio InfoFrame is only enabled after valid data is
+    written.
+  - Adds proper teardown to stop sending the Audio InfoFrame on
+    shutdown.
+- Pattern aligns with other bridge drivers that already use the same
+  helper, reducing risk:
+  - Examples of usage in other drivers: `drivers/gpu/drm/bridge/lontium-
+    lt9611.c:974`, `drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c:476`.
 
-Risk and side effects
-- Preserved semantics: s->fh was never dereferenced; it was used only
-  for pointer equality and non-NULL checks. Replacing with s->id keeps
-  those semantics while removing the artificial fh lifecycle.
-- Internal-only: Changes are contained within ivtv; no external APIs
-  affected. Struct layout changed only internally to the driver.
-- Concurrency/logic continuity: The VBI special-case claim/release and
-  wakeup conditions are updated consistently to use s->id; read path and
-  IRQ paths keep identical logic, just different pointer type.
+Stable backport criteria
+- Fixes a real bug affecting users (incorrect Audio InfoFrame content
+  leading to HDMI audio issues).
+- Change is small, localized, and uses existing subsystem helpers.
+- No new features or architectural refactors.
+- Low regression risk; order of operations is safer (write then enable).
+- Touches a non-core subsystem (DRM bridge) and is standard-compliant.
 
-Stable criteria check
-- Important bugfix: addresses a user-visible kernel memory leak.
-- Minimal, localized change: touches only ivtv, no cross-subsystem
-  churn.
-- No new features or architectural changes.
-- Low regression risk, with clear correctness rationale.
-- No explicit “Cc: stable” tag in the message, but it meets the stable
-  rules for critical bug fixes with minimal risk.
+Notes
+- This backport assumes the target stable series has the HDMI infoframe
+  helper APIs and the bridge
+  `.hdmi_write_infoframe`/`.hdmi_clear_infoframe` integration; for
+  series lacking these, additional prerequisite backports would be
+  required.
 
-Backport notes
-- Ensure all s->fh uses in ivtv are converted to s->id. In the current
-  tree, these occur at:
-  - drivers/media/pci/ivtv/ivtv-fileops.c:42, 46–51, 59, 97, 129, 362,
-    834, 918
-  - drivers/media/pci/ivtv/ivtv-irq.c:308, 333
-  - drivers/media/pci/ivtv/ivtv-driver.h:334 (field)
-- No other ivtv files refer to s->fh; remaining fh usage is via id->fh
-  for V4L2 event/poll mechanisms and is unchanged.
-- The forward declaration `struct ivtv_open_id;` must be added before
-  `struct ivtv_stream` in ivtv-driver.h to avoid compile errors.
+ .../gpu/drm/bridge/adv7511/adv7511_audio.c    | 23 +++++--------------
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c  | 18 +++++++++++++++
+ 2 files changed, 24 insertions(+), 17 deletions(-)
 
-Conclusion
-- This commit fixes a resource leak in a safe, contained way without
-  changing behavior, and is suitable for backporting to stable kernel
-  trees.
-
- drivers/media/pci/ivtv/ivtv-alsa-pcm.c |  2 --
- drivers/media/pci/ivtv/ivtv-driver.h   |  3 ++-
- drivers/media/pci/ivtv/ivtv-fileops.c  | 18 +++++++++---------
- drivers/media/pci/ivtv/ivtv-irq.c      |  4 ++--
- 4 files changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-index 8f346d7da9c8d..269a799ec046c 100644
---- a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-+++ b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-@@ -148,14 +148,12 @@ static int snd_ivtv_pcm_capture_open(struct snd_pcm_substream *substream)
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+index 766b1c96bc887..87e7e820810a8 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+@@ -12,6 +12,8 @@
+ #include <sound/soc.h>
+ #include <linux/of_graph.h>
  
- 	s = &itv->streams[IVTV_ENC_STREAM_TYPE_PCM];
++#include <drm/display/drm_hdmi_state_helper.h>
++
+ #include "adv7511.h"
  
--	v4l2_fh_init(&item.fh, &s->vdev);
- 	item.itv = itv;
- 	item.type = s->type;
+ static void adv7511_calc_cts_n(unsigned int f_tmds, unsigned int fs,
+@@ -155,17 +157,8 @@ int adv7511_hdmi_audio_prepare(struct drm_bridge *bridge,
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
+ 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
  
- 	/* See if the stream is available */
- 	if (ivtv_claim_stream(&item, item.type)) {
- 		/* No, it's already in use */
--		v4l2_fh_exit(&item.fh);
- 		snd_ivtv_unlock(itvsc);
- 		return -EBUSY;
- 	}
-diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
-index a6ffa99e16bc6..83818048f7fe4 100644
---- a/drivers/media/pci/ivtv/ivtv-driver.h
-+++ b/drivers/media/pci/ivtv/ivtv-driver.h
-@@ -322,6 +322,7 @@ struct ivtv_queue {
- };
- 
- struct ivtv;				/* forward reference */
-+struct ivtv_open_id;
- 
- struct ivtv_stream {
- 	/* These first four fields are always set, even if the stream
-@@ -331,7 +332,7 @@ struct ivtv_stream {
- 	const char *name;		/* name of the stream */
- 	int type;			/* stream type */
- 
--	struct v4l2_fh *fh;		/* pointer to the streaming filehandle */
-+	struct ivtv_open_id *id;	/* pointer to the streaming ivtv_open_id */
- 	spinlock_t qlock;		/* locks access to the queues */
- 	unsigned long s_flags;		/* status flags, see above */
- 	int dma;			/* can be PCI_DMA_TODEVICE, PCI_DMA_FROMDEVICE or PCI_DMA_NONE */
-diff --git a/drivers/media/pci/ivtv/ivtv-fileops.c b/drivers/media/pci/ivtv/ivtv-fileops.c
-index cfa28d0355863..1ac8d691df5cd 100644
---- a/drivers/media/pci/ivtv/ivtv-fileops.c
-+++ b/drivers/media/pci/ivtv/ivtv-fileops.c
-@@ -39,16 +39,16 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 
- 	if (test_and_set_bit(IVTV_F_S_CLAIMED, &s->s_flags)) {
- 		/* someone already claimed this stream */
--		if (s->fh == &id->fh) {
-+		if (s->id == id) {
- 			/* yes, this file descriptor did. So that's OK. */
- 			return 0;
- 		}
--		if (s->fh == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
-+		if (s->id == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
- 					 type == IVTV_ENC_STREAM_TYPE_VBI)) {
- 			/* VBI is handled already internally, now also assign
- 			   the file descriptor to this stream for external
- 			   reading of the stream. */
--			s->fh = &id->fh;
-+			s->id = id;
- 			IVTV_DEBUG_INFO("Start Read VBI\n");
- 			return 0;
- 		}
-@@ -56,7 +56,7 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 		IVTV_DEBUG_INFO("Stream %d is busy\n", type);
- 		return -EBUSY;
- 	}
--	s->fh = &id->fh;
-+	s->id = id;
- 	if (type == IVTV_DEC_STREAM_TYPE_VBI) {
- 		/* Enable reinsertion interrupt */
- 		ivtv_clear_irq_mask(itv, IVTV_IRQ_DEC_VBI_RE_INSERT);
-@@ -94,7 +94,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 	struct ivtv *itv = s->itv;
- 	struct ivtv_stream *s_vbi;
- 
--	s->fh = NULL;
-+	s->id = NULL;
- 	if ((s->type == IVTV_DEC_STREAM_TYPE_VBI || s->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 		/* this stream is still in use internally */
-@@ -126,7 +126,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 		/* was already cleared */
- 		return;
- 	}
--	if (s_vbi->fh) {
-+	if (s_vbi->id) {
- 		/* VBI stream still claimed by a file descriptor */
- 		return;
- 	}
-@@ -359,7 +359,7 @@ static ssize_t ivtv_read(struct ivtv_stream *s, char __user *ubuf, size_t tot_co
- 	size_t tot_written = 0;
- 	int single_frame = 0;
- 
--	if (atomic_read(&itv->capturing) == 0 && s->fh == NULL) {
-+	if (atomic_read(&itv->capturing) == 0 && s->id == NULL) {
- 		/* shouldn't happen */
- 		IVTV_DEBUG_WARN("Stream %s not initialized before read\n", s->name);
- 		return -EIO;
-@@ -831,7 +831,7 @@ void ivtv_stop_capture(struct ivtv_open_id *id, int gop_end)
- 		     id->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		    test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 			/* Also used internally, don't stop capturing */
--			s->fh = NULL;
-+			s->id = NULL;
- 		}
- 		else {
- 			ivtv_stop_v4l2_encode_stream(s, gop_end);
-@@ -915,7 +915,7 @@ int ivtv_v4l2_close(struct file *filp)
- 	v4l2_fh_exit(fh);
- 
- 	/* Easy case first: this stream was never claimed by us */
--	if (s->fh != &id->fh)
-+	if (s->id != id)
- 		goto close_done;
- 
- 	/* 'Unclaim' this stream */
-diff --git a/drivers/media/pci/ivtv/ivtv-irq.c b/drivers/media/pci/ivtv/ivtv-irq.c
-index 4d63daa01eed2..078d9cd77c710 100644
---- a/drivers/media/pci/ivtv/ivtv-irq.c
-+++ b/drivers/media/pci/ivtv/ivtv-irq.c
-@@ -305,7 +305,7 @@ static void dma_post(struct ivtv_stream *s)
- 			ivtv_process_vbi_data(itv, buf, 0, s->type);
- 			s->q_dma.bytesused += buf->bytesused;
- 		}
--		if (s->fh == NULL) {
-+		if (s->id == NULL) {
- 			ivtv_queue_move(s, &s->q_dma, NULL, &s->q_free, 0);
- 			return;
- 		}
-@@ -330,7 +330,7 @@ static void dma_post(struct ivtv_stream *s)
- 		set_bit(IVTV_F_I_HAVE_WORK, &itv->i_flags);
- 	}
- 
--	if (s->fh)
-+	if (s->id)
- 		wake_up(&s->waitq);
+-	/* send current Audio infoframe values while updating */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
+-			   BIT(5), BIT(5));
+-
+-	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
+-
+-	/* use Audio infoframe updated info */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
+-			   BIT(5), 0);
+-
+-	return 0;
++	return drm_atomic_helper_connector_hdmi_update_audio_infoframe(connector,
++								       &hparms->cea);
  }
  
+ int adv7511_hdmi_audio_startup(struct drm_bridge *bridge,
+@@ -188,15 +181,9 @@ int adv7511_hdmi_audio_startup(struct drm_bridge *bridge,
+ 	/* not copyrighted */
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CFG1,
+ 				BIT(5), BIT(5));
+-	/* enable audio infoframes */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_PACKET_ENABLE1,
+-				BIT(3), BIT(3));
+ 	/* AV mute disable */
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
+ 				BIT(7) | BIT(6), BIT(7));
+-	/* use Audio infoframe updated info */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
+-				BIT(5), 0);
+ 
+ 	/* enable SPDIF receiver */
+ 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
+@@ -214,4 +201,6 @@ void adv7511_hdmi_audio_shutdown(struct drm_bridge *bridge,
+ 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
+ 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
+ 				   BIT(7), 0);
++
++	drm_atomic_helper_connector_hdmi_clear_audio_infoframe(connector);
+ }
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+index 00d6417c177b4..9081c09fc136b 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -886,6 +886,9 @@ static int adv7511_bridge_hdmi_clear_infoframe(struct drm_bridge *bridge,
+ 	struct adv7511 *adv7511 = bridge_to_adv7511(bridge);
+ 
+ 	switch (type) {
++	case HDMI_INFOFRAME_TYPE_AUDIO:
++		adv7511_packet_disable(adv7511, ADV7511_PACKET_ENABLE_AUDIO_INFOFRAME);
++		break;
+ 	case HDMI_INFOFRAME_TYPE_AVI:
+ 		adv7511_packet_disable(adv7511, ADV7511_PACKET_ENABLE_AVI_INFOFRAME);
+ 		break;
+@@ -906,6 +909,21 @@ static int adv7511_bridge_hdmi_write_infoframe(struct drm_bridge *bridge,
+ 	adv7511_bridge_hdmi_clear_infoframe(bridge, type);
+ 
+ 	switch (type) {
++	case HDMI_INFOFRAME_TYPE_AUDIO:
++		/* send current Audio infoframe values while updating */
++		regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++				   BIT(5), BIT(5));
++
++		/* The Audio infoframe id is not configurable */
++		regmap_bulk_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME_VERSION,
++				  buffer + 1, len - 1);
++
++		/* use Audio infoframe updated info */
++		regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++				   BIT(5), 0);
++
++		adv7511_packet_enable(adv7511, ADV7511_PACKET_ENABLE_AUDIO_INFOFRAME);
++		break;
+ 	case HDMI_INFOFRAME_TYPE_AVI:
+ 		/* The AVI infoframe id is not configurable */
+ 		regmap_bulk_write(adv7511->regmap, ADV7511_REG_AVI_INFOFRAME_VERSION,
 -- 
 2.51.0
 
