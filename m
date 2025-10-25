@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8313009C3;
-	Sat, 25 Oct 2025 16:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CB12045B7;
+	Sat, 25 Oct 2025 16:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408550; cv=none; b=l1Icu4b5txEph6EC5ExVZYrZcKKtXdBuyg8d9pyWU92VsIW3xS8zhmMs8y/+lU6MQFD6lzw5pSmUaDCxuJn4gidXnV1U0Tmgauhbm9dIGcIsPT1BCJRmt3mLls/L6kz9oOEjDtX5wNjMuZBpsOubDo6wJ9A/zOwl1g12iMdx3Hs=
+	t=1761408552; cv=none; b=JzvG9n6TU65xQGyk92FYgOBGWSLIwtXjHqFXgWrO9668knVrYIL7FlW1kV+/qVDW494wiveaJdSnq4AMDESNk3kZdj2jK6xD4ggGg+gxmo3ue2q44xIsgZSFAyVpSztrNIa1l4R4riUaPD6CPicBCYh35lamgwx2F9jtM5tSfCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408550; c=relaxed/simple;
-	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o4J+/AvZnSj45c0m4O2z+C2eQq3tBwdRZs30/u8Rb7HMVeEVOpbjNVwODJYTUA18dgqOeZxFvEu74pVhl2vCyIodhpZ+g9J95INa0coK4pdvr62qrQqz37xbcq+At8SLEPL+fpB7OLiXmAsbDst3dJSEOkLICydhrR9Ak5puayw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bGJQys4J; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761408552; c=relaxed/simple;
+	bh=LwDxuiNSRrtBtV/0YrLTHRROukhsm97JHLR6dwLRW4E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CGufiTwvLIQBXUFwqoUrgLzKCU9G0yochYM60UanIfRu3I0IEkPr9lIhJezzO6bHzIkUTYXozINkClLSrsufOkq1QfVnBalALt7hA9V1rCCcVysEpNx58tnlw1JppC240gYGcdrq/eJTRpmgcM5nRe2p2UlrHln2pCRW85H+5GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UF1ZPyhL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bGJQys4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E29C4CEF5;
-	Sat, 25 Oct 2025 16:09:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UF1ZPyhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9CCC4CEFB;
+	Sat, 25 Oct 2025 16:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408548;
-	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bGJQys4JyGxqEjKjYdgfAUrC8+WVGVxrDQqBKEXkpC0sgVlMw1kk6Orb5mZZmgaDO
-	 vbkFCEWA0e7QjlL1vFgVg1CrTFa7WMH73SKDKQbV/3yemc7mF2hjooYoZpU1H/jUuV
-	 JtEi62ucvqAt+VEMKm+CBqtuy3sFXNoc6GHT6YTX7qgai4jrW7zVMyQIXQ4mbviCq5
-	 p8KKLEneGAnTZyvEUMvkdFFJevu7c4h40Bd6aJr8RD2k00UsqqNtFK3QI/BPmsIiky
-	 P5yqcSSD08ssUQHyAw0SXWUaoKbV8jD1OmRmGYL4E3NzswBLCyanHiiYfujQZ7Cwgv
-	 jlBYGhZx55l3A==
+	s=k20201202; t=1761408551;
+	bh=LwDxuiNSRrtBtV/0YrLTHRROukhsm97JHLR6dwLRW4E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UF1ZPyhL+gKY0ZxSdbd/HbKqNbcIRrY2nZQdFamS9QAM0+o/bKbM38E6Sub1hVzeE
+	 PpFX/1sXdqd1swP+nXmNIiy2IKGg9NC6XQZMTKzipaeLygyf83DXJN3c+3kfUU+xpW
+	 b2PamVUGJXD1n/xCFAktrwRDGyXqd4/MlMwan5bYcFMoGEo0HGFFsXS+RNjMWQw9ld
+	 edjrvpfZQ1H9UuRJZYjwUl51V6hN2mA9y4jedTcx6SAINOx6vkITNfQ29XWCN/gH3Y
+	 Y3EptkqmImESknVsG/Mtg08hLaf/gP3+S5/pLSIpvOveQOIR8TDwZpPB0FJfJRHFRS
+	 uL6E5UyIro9pA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_ptalari@quicinc.com,
-	bryan.odonoghue@linaro.org,
-	quic_zongjian@quicinc.com,
-	krzysztof.kozlowski@linaro.org,
-	quic_jseerapu@quicinc.com,
-	alexandre.f.demers@gmail.com,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] serial: qcom-geni: Add DFS clock mode support to GENI UART driver
-Date: Sat, 25 Oct 2025 11:53:52 -0400
-Message-ID: <20251025160905.3857885-1-sashal@kernel.org>
+	andrew@lunn.ch,
+	olteanv@gmail.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] net: phy: fixed_phy: let fixed_phy_unregister free the phy_device
+Date: Sat, 25 Oct 2025 11:53:54 -0400
+Message-ID: <20251025160905.3857885-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
+References: <20251025160905.3857885-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,27 +54,21 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit fc6a5b540c02d1ec624e4599f45a17f2941a5c00 ]
+[ Upstream commit a0f849c1cc6df0db9083b4c81c05a5456b1ed0fb ]
 
-GENI UART driver currently supports only non-DFS (Dynamic Frequency
-Scaling) mode for source frequency selection. However, to operate correctly
-in DFS mode, the GENI SCLK register must be programmed with the appropriate
-DFS index. Failing to do so can result in incorrect frequency selection
+fixed_phy_register() creates and registers the phy_device. To be
+symmetric, we should not only unregister, but also free the phy_device
+in fixed_phy_unregister(). This allows to simplify code in users.
 
-Add support for Dynamic Frequency Scaling (DFS) mode in the GENI UART
-driver by configuring the GENI_CLK_SEL register with the appropriate DFS
-index. This ensures correct frequency selection when operating in DFS mode.
+Note wrt of_phy_deregister_fixed_link():
+put_device(&phydev->mdio.dev) and phy_device_free(phydev) are identical.
 
-Replace the UART driver-specific logic for clock selection with the GENI
-common driver function to obtain the desired frequency and corresponding
-clock index. This improves maintainability and consistency across
-GENI-based drivers.
-
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250903063136.3015237-1-viken.dadhaniya@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/ad8dda9a-10ed-4060-916b-3f13bdbb899d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -82,204 +76,108 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug in DFS mode: The UART driver previously never
-  programmed the GENI DFS clock selection register, so on platforms
-  where the GENI core clock runs in Dynamic Frequency Scaling (DFS)
-  mode, UART could pick the wrong source clock and thus the wrong baud.
-  This change explicitly programs the DFS index so the selected source
-  frequency matches the computed divider.
-  - New write of the DFS index to the hardware register:
-    drivers/tty/serial/qcom_geni_serial.c:1306
-  - DFS clock select register and mask exist in the common header:
-    include/linux/soc/qcom/geni-se.h:85, include/linux/soc/qcom/geni-
-    se.h:145
+- Fix rationale and scope
+  - The change fixes an API asymmetry and a potential memory leak:
+    `fixed_phy_register()` allocates and registers a `phy_device`, but
+    pre‑patch `fixed_phy_unregister()` only removed it without freeing.
+    The commit makes `fixed_phy_unregister()` also free the
+    `phy_device`, preventing leaks and simplifying callers.
+  - The change is small and localized to fixed PHY/MDIO code; it does
+    not alter uAPI or architecture.
 
-- Uses the common GENI clock-matching helper instead of ad‑hoc logic:
-  The patch replaces driver-local clock rounding/tolerance code with the
-  GENI core’s frequency matching routine, ensuring consistent clock
-  selection across GENI-based drivers and improving maintainability.
-  - New source frequency selection via common helper:
-    drivers/tty/serial/qcom_geni_serial.c:1270
-  - Common helper is present and exported in the GENI core:
-    drivers/soc/qcom/qcom-geni-se.c:720
+- Core change
+  - `drivers/net/phy/fixed_phy.c:230` now frees the `phy_device` after
+    removal:
+    - Calls `phy_device_remove(phy)`, `of_node_put(...)`,
+      `fixed_phy_del(...)`, and then `phy_device_free(phy)` to drop the
+      device reference and free when the refcount reaches zero.
+  - `phy_device_free()` is just a `put_device(&phydev->mdio.dev)`:
+    - `drivers/net/phy/phy_device.c:212` confirms that
+      `phy_device_free()` equals a `put_device`, matching the commit
+      note about identical behavior.
 
-- Maintains existing divisor programming and adds a safety check: The
-  driver still computes and programs the serial clock divider, now with
-  a guard to avoid overflow of the divider field.
-  - Divider computation and range check:
-    drivers/tty/serial/qcom_geni_serial.c:1277,
-    drivers/tty/serial/qcom_geni_serial.c:1279
-  - Divider write to both M/S clock cfg registers remains as before:
-    drivers/tty/serial/qcom_geni_serial.c:1303,
-    drivers/tty/serial/qcom_geni_serial.c:1304
+- Callers adjusted to avoid double-free
+  - `drivers/net/dsa/dsa_loop.c:398` removes the explicit
+    `phy_device_free(phydevs[i])` after
+    `fixed_phy_unregister(phydevs[i])`.
+  - `drivers/net/mdio/of_mdio.c:475` now calls only
+    `fixed_phy_unregister(phydev)` followed by
+    `put_device(&phydev->mdio.dev)` at `drivers/net/mdio/of_mdio.c:477`,
+    which correctly drops the extra reference obtained by
+    `of_phy_find_device(np)` (see `drivers/net/mdio/of_mdio.c:471`).
+    This is safe because `fixed_phy_unregister()`’s `phy_device_free()`
+    and the extra `put_device()` account for two separate refs (the
+    device’s own and the one grabbed by `of_phy_find_device()`).
 
-- Consistency with other GENI drivers already using DFS index
-  programming: Other GENI protocol drivers (e.g., SPI) already program
-  `SE_GENI_CLK_SEL` with the index returned by the common helper, so
-  this change aligns UART with established practice and reduces risk.
-  - SPI uses the same pattern: drivers/spi/spi-geni-qcom.c:383,
-    drivers/spi/spi-geni-qcom.c:385–386
+- Other in-tree users remain correct and benefit
+  - Callers which already did not free explicitly remain correct and now
+    won’t leak:
+    - Example: `drivers/net/ethernet/faraday/ftgmac100.c:1763` calls
+      `fixed_phy_unregister(phydev)` (after `phy_disconnect()`), and
+      does not call `phy_device_free()`.
+    - `drivers/net/ethernet/hisilicon/hibmcge/hbg_mdio.c:236` similarly
+      calls only `fixed_phy_unregister((struct phy_device *)data)`.
+  - We searched for all in-tree callers of `fixed_phy_unregister()` and
+    `of_phy_deregister_fixed_link()` and found no remaining explicit
+    frees which would cause a double free.
 
-- Small, contained, and low-risk:
-  - Touches a single driver file with a localized change in clock setup.
-  - No ABI or architectural changes; relies on existing GENI core
-    helpers and headers.
-  - Additional register write is standard and used by other GENI
-    drivers; masks index with `CLK_SEL_MSK`
-    (include/linux/soc/qcom/geni-se.h:145) for safety.
-  - Includes defensive error handling if no matching clock level is
-    found and a divider overflow guard
-    (drivers/tty/serial/qcom_geni_serial.c:1271–1275,
-    drivers/tty/serial/qcom_geni_serial.c:1279–1281).
+- Risk and stable suitability
+  - Minimal regression risk: change is contained, behavior is well-
+    defined, and in‑tree callers are updated or already compatible. No
+    architectural changes; no uAPI impact.
+  - Positive impact: fixes a likely leak for paths that didn’t free
+    after unregister (e.g., NCSI fixed PHY path in `ftgmac100`).
+  - Meets stable criteria: it’s a bug fix (memory management), small and
+    self-contained, with low risk of regression.
 
-- User impact: Without this, UART on DFS-enabled platforms can run at an
-  incorrect baud, causing broken serial communication (including
-  console). The fix directly addresses that functional issue.
+ drivers/net/dsa/dsa_loop.c  | 9 +++------
+ drivers/net/mdio/of_mdio.c  | 1 -
+ drivers/net/phy/fixed_phy.c | 1 +
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
-- Stable backport criteria:
-  - Fixes an important, user-visible bug (incorrect baud under DFS).
-  - Minimal and self-contained change, no new features or interfaces.
-  - Leverages existing, widely used GENI core APIs already present in
-    stable series.
-
-Note: One minor nit in the debug print includes an extra newline before
-`clk_idx`, but it’s harmless and does not affect functionality
-(drivers/tty/serial/qcom_geni_serial.c:1284).
-
- drivers/tty/serial/qcom_geni_serial.c | 92 ++++++---------------------
- 1 file changed, 21 insertions(+), 71 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 81f385d900d06..ff401e331f1bb 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1,5 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
--// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+/*
-+ * Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
+diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
+index d8a35f25a4c82..ad907287a853a 100644
+--- a/drivers/net/dsa/dsa_loop.c
++++ b/drivers/net/dsa/dsa_loop.c
+@@ -386,13 +386,10 @@ static struct mdio_driver dsa_loop_drv = {
  
- /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
- #define __DISABLE_TRACE_MMIO__
-@@ -1253,75 +1256,15 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 	return 0;
- }
- 
--static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
--			unsigned int *clk_div, unsigned int percent_tol)
--{
--	unsigned long freq;
--	unsigned long div, maxdiv;
--	u64 mult;
--	unsigned long offset, abs_tol, achieved;
--
--	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
--	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
--	div = 1;
--	while (div <= maxdiv) {
--		mult = (u64)div * desired_clk;
--		if (mult != (unsigned long)mult)
--			break;
--
--		offset = div * abs_tol;
--		freq = clk_round_rate(clk, mult - offset);
--
--		/* Can only get lower if we're done */
--		if (freq < mult - offset)
--			break;
--
--		/*
--		 * Re-calculate div in case rounding skipped rates but we
--		 * ended up at a good one, then check for a match.
--		 */
--		div = DIV_ROUND_CLOSEST(freq, desired_clk);
--		achieved = DIV_ROUND_CLOSEST(freq, div);
--		if (achieved <= desired_clk + abs_tol &&
--		    achieved >= desired_clk - abs_tol) {
--			*clk_div = div;
--			return freq;
--		}
--
--		div = DIV_ROUND_UP(freq, desired_clk);
--	}
--
--	return 0;
--}
--
--static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
--			unsigned int sampling_rate, unsigned int *clk_div)
--{
--	unsigned long ser_clk;
--	unsigned long desired_clk;
--
--	desired_clk = baud * sampling_rate;
--	if (!desired_clk)
--		return 0;
--
--	/*
--	 * try to find a clock rate within 2% tolerance, then within 5%
--	 */
--	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
--	if (!ser_clk)
--		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
--
--	return ser_clk;
--}
--
- static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ static void dsa_loop_phydevs_unregister(void)
  {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	unsigned long clk_rate;
--	unsigned int avg_bw_core;
-+	unsigned int avg_bw_core, clk_idx;
- 	unsigned int clk_div;
- 	u32 ver, sampling_rate;
- 	u32 ser_clk_cfg;
-+	int ret;
- 
- 	sampling_rate = UART_OVERSAMPLING;
- 	/* Sampling rate is halved for IP versions >= 2.5 */
-@@ -1329,17 +1272,22 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
- 	if (ver >= QUP_SE_VERSION_2_5)
- 		sampling_rate /= 2;
- 
--	clk_rate = get_clk_div_rate(port->se.clk, baud,
--		sampling_rate, &clk_div);
--	if (!clk_rate) {
--		dev_err(port->se.dev,
--			"Couldn't find suitable clock rate for %u\n",
--			baud * sampling_rate);
-+	ret = geni_se_clk_freq_match(&port->se, baud * sampling_rate, &clk_idx, &clk_rate, false);
-+	if (ret) {
-+		dev_err(port->se.dev, "Failed to find src clk for baud rate: %d ret: %d\n",
-+			baud, ret);
-+		return ret;
+-	unsigned int i;
+-
+-	for (i = 0; i < NUM_FIXED_PHYS; i++)
+-		if (!IS_ERR(phydevs[i])) {
++	for (int i = 0; i < NUM_FIXED_PHYS; i++) {
++		if (!IS_ERR(phydevs[i]))
+ 			fixed_phy_unregister(phydevs[i]);
+-			phy_device_free(phydevs[i]);
+-		}
 +	}
-+
-+	clk_div = DIV_ROUND_UP(clk_rate, baud * sampling_rate);
-+	/* Check if calculated divider exceeds maximum allowed value */
-+	if (clk_div > (CLK_DIV_MSK >> CLK_DIV_SHFT)) {
-+		dev_err(port->se.dev, "Calculated clock divider %u exceeds maximum\n", clk_div);
- 		return -EINVAL;
- 	}
- 
--	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
--			baud * sampling_rate, clk_rate, clk_div);
-+	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n, clk_idx = %u\n",
-+		baud * sampling_rate, clk_rate, clk_div, clk_idx);
- 
- 	uport->uartclk = clk_rate;
- 	port->clk_rate = clk_rate;
-@@ -1359,6 +1307,8 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
- 
- 	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
- 	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
-+	/* Configure clock selection register with the selected clock index */
-+	writel(clk_idx & CLK_SEL_MSK, uport->membase + SE_GENI_CLK_SEL);
- 	return 0;
  }
+ 
+ static int __init dsa_loop_init(void)
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index 98f667b121f7d..d8ca63ed87194 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -473,6 +473,5 @@ void of_phy_deregister_fixed_link(struct device_node *np)
+ 	fixed_phy_unregister(phydev);
+ 
+ 	put_device(&phydev->mdio.dev);	/* of_phy_find_device() */
+-	phy_device_free(phydev);	/* fixed_phy_register() */
+ }
+ EXPORT_SYMBOL(of_phy_deregister_fixed_link);
+diff --git a/drivers/net/phy/fixed_phy.c b/drivers/net/phy/fixed_phy.c
+index 033656d574b89..b8bec7600ef8e 100644
+--- a/drivers/net/phy/fixed_phy.c
++++ b/drivers/net/phy/fixed_phy.c
+@@ -309,6 +309,7 @@ void fixed_phy_unregister(struct phy_device *phy)
+ 	phy_device_remove(phy);
+ 	of_node_put(phy->mdio.dev.of_node);
+ 	fixed_phy_del(phy->mdio.addr);
++	phy_device_free(phy);
+ }
+ EXPORT_SYMBOL_GPL(fixed_phy_unregister);
  
 -- 
 2.51.0
