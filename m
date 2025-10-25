@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA93301701;
-	Sat, 25 Oct 2025 16:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307030AAC7;
+	Sat, 25 Oct 2025 16:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409420; cv=none; b=Qedt2p8A7DOM9g4gPKUFm0pXJa6WtCFchC+J1v4N9CiTXIK8KUPKJMXswrPCqyDj9EU7ORlxVViYUY7Zjw3QnKEkZVfGxKmAxCJs7Y1PSnEZ2UG0d+9/RxDU+kw3aSw6cTb+RUXcJp6gmXq10n24GWRSyJq4HV6eBQEaHahsyvU=
+	t=1761409421; cv=none; b=BSkB/Ye7ltVjZjkItChfYqz7cRDoM0ZJF3e125FVwihZO4gwiPBpLib3y96F5vCDT4aTbVUuB3LT2IiPCYwng9nfT75JXS7tlyk9NDt1pdqA3QrGjbNyKa2p+aj6AH//IT3vvgonU4rGnHeaRU943NKEVnxKx5C69F8E6+rxOGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409420; c=relaxed/simple;
-	bh=6kxn7BdwEMMDC2EWcp2m7UI6yGQ+VpOpXsUKaM6G13g=;
+	s=arc-20240116; t=1761409421; c=relaxed/simple;
+	bh=z10t3tUUlPF6mTtW0oTS0T6Brg0Lk6xgAcgBNsRe9W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HM0Njnh1Z/luEtrxiL5gjkSsfCUcRVGFlmTHQ6V1DLAOJimC80SL7r8nQsJXYMVOIngU0mmib9sIxti2OMV9O3rbKIy+i7vty2dq9jatcRK+6AcepoHXwnWsjr55PX508A25jaIdcGiQ8pjIuxUAohq9QR6VHbq+JRmdvE76/44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cfbryb7k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W1aCcQoA5Jpllv6HAGcsJN38442j89prJ7+4Yy167k3xyqA8eWSjR+5nzSimU9VrThqEce+Z3nYAH47rYFSVXJWDE3O18OoVMbSz1WYxkqZOTYyRhuxa1roIpmQNfr3RVoNmFRnflUS8TJus0muFDcGlCfUilcsp16UIGcyhTdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPuYHemx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cfbryb7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F668C4CEF5;
-	Sat, 25 Oct 2025 16:23:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPuYHemx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF446C4CEFF;
+	Sat, 25 Oct 2025 16:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409420;
-	bh=6kxn7BdwEMMDC2EWcp2m7UI6yGQ+VpOpXsUKaM6G13g=;
+	s=k20201202; t=1761409421;
+	bh=z10t3tUUlPF6mTtW0oTS0T6Brg0Lk6xgAcgBNsRe9W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cfbryb7kVKhMmn4lk+2Y1hr6D3HTvGD9G8JZLnto9p/sLnAw+qJ6PVNsynPOQUiOs
-	 gbzFS3NaGq37PTK+3mG9LNuzm4EyCp7wesWW3noIvDjLuS49+AxAkuAQW6BbjALuZ+
-	 RoKPoIUio5g47VS82rKtcRczOD6Tbnhm3r81umePRGyN4Xc3/A4JEvVvxaZppx+SNy
-	 w9+sRoDMTSGvCMkUmJyYwgkdTDZUguKG8x38Haf8txhAuCfy0LixEVvfk4Dj0Gx6dI
-	 3tNpS8MNevjxuAUqduZYvhRVIX8+cLzUWb1E+a9gQVLLNR9fSgBmDhdTW309VtQsY8
-	 wB8dV/wZHbWjg==
+	b=JPuYHemxAb0rYe9vDxfm0sAwsvI1jLI4Pk1ZqHsu7a3dTKleab9B8kY6vecn5jZSH
+	 CKZWDMZvalwj0gGVv7Mm2dCAgTD3LaR09ayCyFP27mO+iyAKTIarTPRSMQXR9FnLrO
+	 I0+aKiUAwhQcCno38cNM0Y2P16v4U1T/ML75SP2K+rJlmOm9015d8mi89exakoBQ6p
+	 03Ib+ofs/Mh1WPEOsuEBKtaVdgW5HC43WPJr68wkpyeQVgX82nK4w4Lb10UbElx9iR
+	 Kr9Mk8FLjw9Z0BsTuC6vhvJMgG9x2sMlxtLxG4dCnNi2wTnyLVWBXkz2FZOwJtu4zj
+	 0cwHhqwUUCJVg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amir Goldstein <amir73il@gmail.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Neil Brown <neil@brown.name>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miklos@szeredi.hu,
-	linux-unionfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] ovl: make sure that ovl_create_real() returns a hashed dentry
-Date: Sat, 25 Oct 2025 11:59:08 -0400
-Message-ID: <20251025160905.3857885-317-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] wifi: cfg80211: update the time stamps in hidden ssid
+Date: Sat, 25 Oct 2025 11:59:09 -0400
+Message-ID: <20251025160905.3857885-318-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -47,114 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit ad1423922781e6552f18d055a5742b1cff018cdc ]
+[ Upstream commit 185cc2352cb1ef2178fe4e9a220a73c94007b8bb ]
 
-e8bd877fb76bb9f3 ("ovl: fix possible double unlink") added a sanity
-check of !d_unhashed(child) to try to verify that child dentry was not
-unlinked while parent dir was unlocked.
+In hidden SSID we have separate BSS entries for the beacon and for the
+probe response(s).
+The BSS entry time stamps represent the age of the BSS;
+when was the last time we heard the BSS.
+When we receive a beacon of a hidden SSID it means that we heard that
+BSS, so it makes sense to indicate that in the probe response entries.
+Do that.
 
-This "was not unlink" check has a false positive result in the case of
-casefolded parent dir, because in that case, ovl_create_temp() returns
-an unhashed dentry after ovl_create_real() gets an unhashed dentry from
-ovl_lookup_upper() and makes it positive.
-
-To avoid returning unhashed dentry from ovl_create_temp(), let
-ovl_create_real() lookup again after making the newdentry positive,
-so it always returns a hashed positive dentry (or an error).
-
-This fixes the error in ovl_parent_lock() in ovl_check_rename_whiteout()
-after ovl_create_temp() and allows mount of overlayfs with casefolding
-enabled layers.
-
-Reported-by: André Almeida <andrealmeid@igalia.com>
-Closes: https://lore.kernel.org/r/18704e8c-c734-43f3-bc7c-b8be345e1bf5@igalia.com/
-Suggested-by: Neil Brown <neil@brown.name>
-Reviewed-by: Neil Brown <neil@brown.name>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250907115135.712745e498c0.I38186abf5d20dec6f6f2d42d2e1cdb50c6bfea25@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `ovl_parent_lock()` now fails whenever the child dentry is unhashed
-  (fs/overlayfs/util.c:1552-1560), which is exactly what happens for
-  casefolded workdirs: `ovl_create_temp()` returns the unhashed dentry
-  to `ovl_check_rename_whiteout()`, the sanity check at
-  `ovl_parent_lock(workdir, temp)` (fs/overlayfs/super.c:575-584) hits
-  `-EINVAL`, and overlayfs refuses to mount. That is a major user-
-  visible regression caused by the earlier sanity check addition.
-- The patch guarantees that `ovl_create_real()` only hands back hashed
-  dentries: after the existing error gate (fs/overlayfs/dir.c:215), the
-  new block detects `d_unhashed(newdentry)` and re-issues
-  `ovl_lookup_upper()` while the parent lock is still held, replacing
-  the unhashed instance with a freshly looked-up, hashed, positive
-  dentry (fs/overlayfs/dir.c:218-237). This removes the false positive
-  from `ovl_parent_lock()` and lets casefolded overlays mount again.
-- The extra lookup only runs in the rare unhashed case, uses existing
-  helpers, and preserves the previous cleanup path via `dput(newdentry)`
-  and error propagation (fs/overlayfs/dir.c:234-239). All direct users
-  of `ovl_create_real()`—temp/workdir setup (fs/overlayfs/dir.c:251,
-  fs/overlayfs/copy_up.c:550, fs/overlayfs/dir.c:414) and generic upper
-  creation (fs/overlayfs/dir.c:362)—benefit without behavioural changes
-  elsewhere.
-- Scope is limited to overlayfs; no ABI or architectural changes; the
-  fix addresses a regression introduced by e8bd877fb76b and restores a
-  broken workflow. That is exactly the sort of targeted bug fix we want
-  in stable.
 
-Given the severity (overlayfs + casefold mount broken) and the
-contained, low-risk fix, this should be backported.
+Explanation
+- Fixes a real bug: For hidden SSIDs cfg80211 keeps separate BSS entries
+  for the beacon and probe response(s) (see doc comment in
+  net/wireless/scan.c:39). Previously, when only a beacon was received,
+  the probe-response BSS entries’ timestamps were not refreshed, making
+  them appear stale/expired despite the AP being heard.
+- Precise change: When updating a hidden-SSID group due to a beacon, the
+  patch propagates the current time to all sub-entries:
+  - net/wireless/scan.c:1820 sets `bss->ts = known->ts`
+  - net/wireless/scan.c:1821 sets `bss->pub.ts_boottime =
+    known->pub.ts_boottime`
+- Correct update ordering: Timestamps for the “known” BSS are updated at
+  the start of the update function so the propagated values are current
+  and also updated even if an early-return path is taken:
+  - net/wireless/scan.c:1889 updates `known->ts`
+  - net/wireless/scan.c:1890 updates `known->pub.ts_boottime`
+  - Early-return case (hidden/beacon confusion) occurs at
+    net/wireless/scan.c:1912 and can now still benefit from timestamp
+    refresh.
+- Why it matters to users: Expiration and selection logic uses `ts`;
+  stale `ts` causes hidden SSID probe-response entries to be treated as
+  expired:
+  - Expire processing uses `ts` (net/wireless/scan.c:479)
+  - get_bss filters out expired entries with `ts +
+    IEEE80211_SCAN_RESULT_EXPIRE` (net/wireless/scan.c:1634)
+  - Userspace also consumes `ts_boottime` via
+    NL80211_BSS_LAST_SEEN_BOOTTIME (net/wireless/nl80211.c:11573), so
+    keeping it accurate improves reporting.
+- Small and contained: The patch touches only net/wireless/scan.c and
+  adds 7 lines + minor reordering; no API or architectural changes.
+- Behaviorally safe: The new behavior aligns with the documented hidden-
+  SSID grouping, i.e., hearing any frame (beacon) from the AP indicates
+  the BSS is alive for the grouped probe-response entries
+  (net/wireless/scan.c:39). If beacons stop, timestamps still age and
+  entries expire as before.
+- Minimal regression risk: Only timestamp bookkeeping is affected. No
+  changes to element parsing, channel handling, or RCU lifetimes;
+  updates occur under `bss_lock` and mirror existing direct-field
+  updates elsewhere in scan.c.
+- Stable criteria fit:
+  - Important bugfix: avoids hidden SSID entries being incorrectly aged
+    out, impacting discoverability/connectivity.
+  - Small, localized change with clear intent and low risk.
+  - No new features or architectural changes.
+  - Applies to a common subsystem (cfg80211) with wide user impact.
 
- fs/overlayfs/dir.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+Conclusion: This is a straightforward correctness fix for hidden-SSID
+handling and should be backported to stable.
 
-diff --git a/fs/overlayfs/dir.c b/fs/overlayfs/dir.c
-index dbd63a74df4b1..039e829aa7dee 100644
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -205,12 +205,32 @@ struct dentry *ovl_create_real(struct ovl_fs *ofs, struct dentry *parent,
- 			err = -EPERM;
- 		}
- 	}
--	if (!err && WARN_ON(!newdentry->d_inode)) {
-+	if (err)
-+		goto out;
+ net/wireless/scan.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 6c7b7c3828a41..90a9187a6b135 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1816,6 +1816,9 @@ static void cfg80211_update_hidden_bsses(struct cfg80211_internal_bss *known,
+ 		WARN_ON(ies != old_ies);
+ 
+ 		rcu_assign_pointer(bss->pub.beacon_ies, new_ies);
 +
-+	if (WARN_ON(!newdentry->d_inode)) {
- 		/*
- 		 * Not quite sure if non-instantiated dentry is legal or not.
- 		 * VFS doesn't seem to care so check and warn here.
- 		 */
- 		err = -EIO;
-+	} else if (d_unhashed(newdentry)) {
-+		struct dentry *d;
-+		/*
-+		 * Some filesystems (i.e. casefolded) may return an unhashed
-+		 * negative dentry from the ovl_lookup_upper() call before
-+		 * ovl_create_real().
-+		 * In that case, lookup again after making the newdentry
-+		 * positive, so ovl_create_upper() always returns a hashed
-+		 * positive dentry.
-+		 */
-+		d = ovl_lookup_upper(ofs, newdentry->d_name.name, parent,
-+				     newdentry->d_name.len);
-+		dput(newdentry);
-+		if (IS_ERR_OR_NULL(d))
-+			err = d ? PTR_ERR(d) : -ENOENT;
-+		else
-+			return d;
++		bss->ts = known->ts;
++		bss->pub.ts_boottime = known->pub.ts_boottime;
  	}
- out:
- 	if (err) {
+ }
+ 
+@@ -1882,6 +1885,10 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ {
+ 	lockdep_assert_held(&rdev->bss_lock);
+ 
++	/* Update time stamps */
++	known->ts = new->ts;
++	known->pub.ts_boottime = new->pub.ts_boottime;
++
+ 	/* Update IEs */
+ 	if (rcu_access_pointer(new->pub.proberesp_ies)) {
+ 		const struct cfg80211_bss_ies *old;
+@@ -1945,8 +1952,6 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 	if (signal_valid)
+ 		known->pub.signal = new->pub.signal;
+ 	known->pub.capability = new->pub.capability;
+-	known->ts = new->ts;
+-	known->pub.ts_boottime = new->pub.ts_boottime;
+ 	known->parent_tsf = new->parent_tsf;
+ 	known->pub.chains = new->pub.chains;
+ 	memcpy(known->pub.chain_signal, new->pub.chain_signal,
 -- 
 2.51.0
 
