@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D863074B2;
-	Sat, 25 Oct 2025 16:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F0C2FC893;
+	Sat, 25 Oct 2025 16:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408972; cv=none; b=H8YRkyvXTSR0xR3lAmyIbucAOs33plkdaZDAJdulG1gKgrvGEJEOkXoJec3kCvjK2laVqbEdu/Gs6qJahNYDry01y9X5dlEWd7F7KBkXUxcm6DwR+qNYqVuSbHsDNLUbLtYJY0PRcMQTSN5ddiA1sytRA5A1ux5t7zBxvg8nb7Q=
+	t=1761408976; cv=none; b=DGJEmBvUtg9wm6lX9G6fxvLCsKj1J7TUfjBu0gW/Gn2lF1xnk+0Ooap7N5I+ZiK/m027xa6WEQJ8X9v5kaLrU8gapcFsa3gyKmYdQNOmi+qLROsHwT9b2qtrNfpcHcwxcGAn+Z4wrAYNi6bZxx4YECykwSAJ1zqs1EYRbWv30nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408972; c=relaxed/simple;
-	bh=3d+JS98l1QcouAqEyCnc0lMFvnZjQzclVdjFf/OvsIk=;
+	s=arc-20240116; t=1761408976; c=relaxed/simple;
+	bh=2SdthvlkodHN4wo5h7iHStMzcgbvHBnyJ+7+se77QiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uNqinuYbQ7VQZ1wQJMu8kw3fggF+ps9lKdinQPyIKTd+IgfSYapVJKC3bPsTV+ltg1cYV6vxFTTcIlb3A/8y5a1I+htF8miQ7Q0VbHXphf5aoOCKL8pFNJTKNnWGZDqfqZOeR2K2qyGmNSOxLRToboRxtDijrFmHalI4pUKQ09E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NRmzNg9x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WeK1f1FnCbwBxoUfDttyEm30BcnEBYyIgh4xpvY3jj2ojhoEIuENi9Xhg3Jang0Kn9wYjsRf8vHedQKCEt0py7grS0dms1yO/45PcFX2OPYUPcw7WDorAdCECCdFdT1cWo2aHUo+J66fJjONxp9I+ldgN134njcNruFOV8FQ1NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bh7FrtNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NRmzNg9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AE1C4CEFF;
-	Sat, 25 Oct 2025 16:16:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bh7FrtNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF4FC4CEFB;
+	Sat, 25 Oct 2025 16:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408972;
-	bh=3d+JS98l1QcouAqEyCnc0lMFvnZjQzclVdjFf/OvsIk=;
+	s=k20201202; t=1761408976;
+	bh=2SdthvlkodHN4wo5h7iHStMzcgbvHBnyJ+7+se77QiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRmzNg9xyfYGyYgmmgcLPfblSy0KD3ja79ooXmRhwDmwejwDYYP8yFb+c16TcBMR6
-	 rj1UCUsL7pVl+gyPpPlgf14jFLoPseSxaRa7PjGdx3dDaEQuHPgNPyO7HqnajZwWBo
-	 hwrOii8Tfw2tks53abAervpyP7d1wWhIrWSIxaJLRY9KfhT8oa7wGLOFJfTUFAoJ0O
-	 6xU9DBNJ83of0+2ZBzWoKeXTiktg0oUEvKZyQdmEdyQNtdbtjAI/H9c4RxUd9Ly0g8
-	 F6YPMyT2eHcA0ZcVJMQC0fQyadAV/SVydrR/wzmlD97GwJRDKFsqjj2VPFVEvtFr9b
-	 Lr1RaaMOd301Q==
+	b=bh7FrtNTlGeo+inz+sjRJ0iiWFuCuRFmnTUPehnN94VMKwrZygmuCWjY+cM3ED+c+
+	 UpjZJtUGoJjlBrXuR/0yc3368vegnk/F5R0NRfTzG35J5336vaDzlLBoGA4bPaYxRv
+	 jAWJfupeCbMEP4UYjSbFx8/QXfVLgvN2bll2v3utVeJgkx++QMAo/CIqNJ6O05ALfa
+	 zfqnm21RJi1q31XpYhGino77RPgqzJuoFPjCuntt3HHVZwvFT+O9rgus8NVG5JTbv+
+	 cUZ/7fS7t6xT/yaG4xAKC1ptb9gDaVYkxqJ9/UNIOtsbrKMJpEd6UHqsp8JTNomZ3M
+	 NuaUFwSsamAMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	bridge@lists.linux.dev,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] net: bridge: Install FDB for bridge MAC on VLAN 0
-Date: Sat, 25 Oct 2025 11:56:30 -0400
-Message-ID: <20251025160905.3857885-159-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.12] Fix access to video_is_primary_device() when compiled without CONFIG_VIDEO
+Date: Sat, 25 Oct 2025 11:56:31 -0400
+Message-ID: <20251025160905.3857885-160-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,109 +53,138 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Machata <petrm@nvidia.com>
+From: "Mario Limonciello (AMD)" <superm1@kernel.org>
 
-[ Upstream commit cd9a9562b2559973aa1b68c3af63021a2c5fd022 ]
+[ Upstream commit 6e490dea61b88aac9762c9f79a54aad4ea2e6cd1 ]
 
-Currently, after the bridge is created, the FDB does not hold an FDB entry
-for the bridge MAC on VLAN 0:
+When compiled without CONFIG_VIDEO the architecture specific
+implementations of video_is_primary_device() include prototypes and
+assume that video-common.c will be linked. Guard against this so that the
+fallback inline implementation that returns false will be used when
+compiled without CONFIG_VIDEO.
 
- # ip link add name br up type bridge
- # ip -br link show dev br
- br               UNKNOWN        92:19:8c:4e:01:ed <BROADCAST,MULTICAST,UP,LOWER_UP>
- # bridge fdb show | grep 92:19:8c:4e:01:ed
- 92:19:8c:4e:01:ed dev br vlan 1 master br permanent
-
-Later when the bridge MAC is changed, or in fact when the address is given
-during netdevice creation, the entry appears:
-
- # ip link add name br up address 00:11:22:33:44:55 type bridge
- # bridge fdb show | grep 00:11:22:33:44:55
- 00:11:22:33:44:55 dev br vlan 1 master br permanent
- 00:11:22:33:44:55 dev br master br permanent
-
-However when the bridge address is set by the user to the current bridge
-address before the first port is enslaved, none of the address handlers
-gets invoked, because the address is not actually changed. The address is
-however marked as NET_ADDR_SET. Then when a port is enslaved, the address
-is not changed, because it is NET_ADDR_SET. Thus the VLAN 0 entry is not
-added, and it has not been added previously either:
-
- # ip link add name br up type bridge
- # ip -br link show dev br
- br               UNKNOWN        7e:f0:a8:1a:be:c2 <BROADCAST,MULTICAST,UP,LOWER_UP>
- # ip link set dev br addr 7e:f0:a8:1a:be:c2
- # ip link add name v up type veth
- # ip link set dev v master br
- # ip -br link show dev br
- br               UNKNOWN        7e:f0:a8:1a:be:c2 <BROADCAST,MULTICAST,UP,LOWER_UP>
- # bridge fdb | grep 7e:f0:a8:1a:be:c2
- 7e:f0:a8:1a:be:c2 dev br vlan 1 master br permanent
-
-Then when the bridge MAC is used as DMAC, and br_handle_frame_finish()
-looks up an FDB entry with VLAN=0, it doesn't find any, and floods the
-traffic instead of passing it up.
-
-Fix this by simply adding the VLAN 0 FDB entry for the bridge itself always
-on netdevice creation. This also makes the behavior consistent with how
-ports are treated: ports always have an FDB entry for each member VLAN as
-well as VLAN 0.
-
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/415202b2d1b9b0899479a502bbe2ba188678f192.1758550408.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506221312.49Fy1aNA-lkp@intel.com/
+Link: https://lore.kernel.org/r/20250811162606.587759-2-superm1@kernel.org
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `net/bridge/br.c:39-55` now invokes `br_fdb_change_mac_address(br,
-  dev->dev_addr)` during the bridge master’s `NETDEV_REGISTER` notifier,
-  immediately installing the bridge’s own MAC into the FDB for VLAN 0.
-  Without this early call, a user who sets the bridge MAC to its current
-  value before enslaving any port leaves `addr_assign_type` at
-  `NET_ADDR_SET`, so later events never repopulate the missing VLAN‑0
-  entry.
-- When that entry is absent, `br_handle_frame_finish()`
-  (`net/bridge/br_input.c:204-235`) fails to resolve a local destination
-  for frames addressed to the bridge on VLAN 0, falls into the
-  `br_flood()` path, and never calls `br_pass_frame_up()`, so traffic to
-  the bridge itself is effectively dropped in exactly the scenario
-  described.
-- The added call simply reuses the existing, well-tested helper in
-  `net/bridge/br_fdb.c:501-536`, making bridge setup match the behavior
-  already applied whenever the MAC really changes; it keeps bridge and
-  port FDB handling consistent and generates the same notifications user
-  space would see after a later MAC change.
-- Risk is minimal: the new work executes under RTNL alongside existing
-  registration bookkeeping, adds no new data structures or semantics,
-  and on allocation failure merely falls back to the prior state. In
-  contrast, the bug is user-visible and causes incorrect flooding
-  instead of local delivery, so this qualifies as a focused, important
-  fix suitable for stable backporting.
 
- net/bridge/br.c | 5 +++++
- 1 file changed, 5 insertions(+)
+- What it fixes: When CONFIG_VIDEO=n, several arch headers still declare
+  and “reserve” video_is_primary_device(), which suppresses the generic
+  fallback in include/asm-generic/video.h and assumes an out-of-line
+  implementation is linked. This causes either build/link fragility or
+  wrong semantics in non-VIDEO builds. The patch ensures the generic
+  inline fallback (returns false) is used when CONFIG_VIDEO=n.
+- Generic fallback location: include/asm-generic/video.h:27-34 defines
+  the inline default and its guard:
+  - It only provides the fallback if the macro alias is not already
+    defined.
+  - The fallback returns false, which is the safe default for non-VIDEO
+    builds.
 
-diff --git a/net/bridge/br.c b/net/bridge/br.c
-index c683baa3847f1..74706cb9283a2 100644
---- a/net/bridge/br.c
-+++ b/net/bridge/br.c
-@@ -37,6 +37,11 @@ static int br_device_event(struct notifier_block *unused, unsigned long event, v
- 	int err;
+- Specific header fixes:
+  - arch/parisc/include/asm/video.h:9-13 changes the guard to require
+    CONFIG_STI_CORE && CONFIG_VIDEO before declaring the prototype and
+    alias. This prevents suppressing the generic fallback when
+    CONFIG_VIDEO=n.
+  - arch/sparc/include/asm/video.h:19-23 wraps the prototype and alias
+    in #ifdef CONFIG_VIDEO, allowing the generic fallback when
+    CONFIG_VIDEO=n.
+  - arch/x86/include/asm/video.h:17-21 wraps the prototype and alias in
+    #ifdef CONFIG_VIDEO, same effect.
+
+- Why this matters in practice:
+  - Call sites exist outside strict VIDEO configurations and expect a
+    safe default:
+    - drivers/gpu/drm/drm_sysfs.c:534 checks video_is_primary_device()
+      to decide visibility of a sysfs attribute. With CONFIG_VIDEO=n,
+      the fallback false avoids exposing the “boot_display” attribute
+      inappropriately.
+    - drivers/video/fbdev/core/fbcon.c:2945 uses it in primary
+      selection; with CONFIG_VIDEO=n, fallback false avoids unintended
+      remapping.
+  - Previously, arch headers could suppress the fallback and force
+    linkage to out-of-line variants (e.g., arch/x86/video/video-
+    common.c, arch/sparc/video/video-common.c, arch/parisc/video/video-
+    sti.c) even in non-VIDEO builds, leading to:
+    - Build/link brittleness if the out-of-line object is not built in a
+      given config.
+    - Inconsistent behavior when CONFIG_VIDEO=n (e.g., reporting a
+      primary display device) instead of the intended always-false
+      fallback.
+
+- Scope and risk:
+  - The change is minimal and contained to three arch headers.
+  - No runtime behavior change when CONFIG_VIDEO=y; only affects non-
+    VIDEO builds by allowing the existing generic fallback.
+  - No architectural changes, ABI shifts, or behavioral changes in
+    normal VIDEO-enabled configs.
+  - Addresses a real build/behavior issue reported by kernel test robot
+    (Reported-by in commit message).
+
+- Stable backport criteria:
+  - Fixes a build/semantics bug that can affect users and CI in valid
+    configs.
+  - Small, straightforward, and low risk.
+  - Not a new feature; purely a correctness/guard fix aligning with
+    generic header’s design.
+
+Given the above, this is a good candidate for stable backport.
+
+ arch/parisc/include/asm/video.h | 2 +-
+ arch/sparc/include/asm/video.h  | 2 ++
+ arch/x86/include/asm/video.h    | 2 ++
+ 3 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/arch/parisc/include/asm/video.h b/arch/parisc/include/asm/video.h
+index c5dff3223194a..a9d50ebd6e769 100644
+--- a/arch/parisc/include/asm/video.h
++++ b/arch/parisc/include/asm/video.h
+@@ -6,7 +6,7 @@
  
- 	if (netif_is_bridge_master(dev)) {
-+		struct net_bridge *br = netdev_priv(dev);
-+
-+		if (event == NETDEV_REGISTER)
-+			br_fdb_change_mac_address(br, dev->dev_addr);
-+
- 		err = br_vlan_bridge_event(dev, event, ptr);
- 		if (err)
- 			return notifier_from_errno(err);
+ struct device;
+ 
+-#if defined(CONFIG_STI_CORE)
++#if defined(CONFIG_STI_CORE) && defined(CONFIG_VIDEO)
+ bool video_is_primary_device(struct device *dev);
+ #define video_is_primary_device video_is_primary_device
+ #endif
+diff --git a/arch/sparc/include/asm/video.h b/arch/sparc/include/asm/video.h
+index a6f48f52db584..773717b6d4914 100644
+--- a/arch/sparc/include/asm/video.h
++++ b/arch/sparc/include/asm/video.h
+@@ -19,8 +19,10 @@ static inline pgprot_t pgprot_framebuffer(pgprot_t prot,
+ #define pgprot_framebuffer pgprot_framebuffer
+ #endif
+ 
++#ifdef CONFIG_VIDEO
+ bool video_is_primary_device(struct device *dev);
+ #define video_is_primary_device video_is_primary_device
++#endif
+ 
+ static inline void fb_memcpy_fromio(void *to, const volatile void __iomem *from, size_t n)
+ {
+diff --git a/arch/x86/include/asm/video.h b/arch/x86/include/asm/video.h
+index 0950c9535fae9..08ec328203ef8 100644
+--- a/arch/x86/include/asm/video.h
++++ b/arch/x86/include/asm/video.h
+@@ -13,8 +13,10 @@ pgprot_t pgprot_framebuffer(pgprot_t prot,
+ 			    unsigned long offset);
+ #define pgprot_framebuffer pgprot_framebuffer
+ 
++#ifdef CONFIG_VIDEO
+ bool video_is_primary_device(struct device *dev);
+ #define video_is_primary_device video_is_primary_device
++#endif
+ 
+ #include <asm-generic/video.h>
+ 
 -- 
 2.51.0
 
