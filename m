@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4393054F9;
-	Sat, 25 Oct 2025 16:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4F3054F9;
+	Sat, 25 Oct 2025 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408874; cv=none; b=L/3t1E9PuXkpHUrdf0NqvddCCpTjh/J8NMgGnhqmD0zrmZY8Qc/E7nnEbNWOfNwRF3EgxQBEDzfsVbbakGm8S0yO65sX2jB5AVMw1aF0QObFSXY6Wmam7YmF2gAgwSPup9/zEYzKBm1vndyzNwP1EPyua2UyAsYdR80oAli4WDc=
+	t=1761408876; cv=none; b=i1NRSFqt4/U/YsO7hx5A6N0ZUqfxrPOQ7rQPwpUNblRUgTXd8pffGXSBbV4NUVKBE5IWc763j4b+lnchbsu/YqLyXrBNPyDZgXi9UhBCi/JjfkWnZehFS/mJEpPIUKtU+8BFaqrdaiElqJ93cm35MtboYihV+qzZ2jCDL+Yt9HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408874; c=relaxed/simple;
-	bh=XIUsn205KYvbu+syWynGleYgKDITpx5ud7Vz9H7cH8o=;
+	s=arc-20240116; t=1761408876; c=relaxed/simple;
+	bh=W5QiCdh96TWlhg/ayjzSoL3QDHsdhCmpuocEhXHpLsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J0+kT0+h5LKDWHRG43rfwWqM7W3qZwZeg+ZHVPiQV+gALcmBtTPHS6W+jjtM080GPBZMMo1T/ZWhMfmMcJ6sf32s2lt0I/XCcMdZKGDyYHXFHS9uDEiJT71oOTry4c1N9jlEKogUvcnf0Kxw4WaAM9UCpyuN3gb38A2MwBFoiGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r59yxKR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hk+Y2DdD1kROS/lu+xYbIrsc2hDNeEWxbbub+Xnu8PJ6HM5lP4Xy5BjHdpM/PYUjkooab2fgEF2YeUQ98Zmlnde//u4yYRA49eOBIcj8Bwx9hwTFNefb2XpUzP1EFxVnCGLvjbS9Z28CtN+OYYYWSNsLxh8VpGQAfYQ0e3mTJmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n98rt97V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r59yxKR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3EDC113D0;
-	Sat, 25 Oct 2025 16:14:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n98rt97V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D80C4CEFF;
+	Sat, 25 Oct 2025 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408874;
-	bh=XIUsn205KYvbu+syWynGleYgKDITpx5ud7Vz9H7cH8o=;
+	s=k20201202; t=1761408875;
+	bh=W5QiCdh96TWlhg/ayjzSoL3QDHsdhCmpuocEhXHpLsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r59yxKR+J+SNog6kHNoYey3nNPLx+u63PF/WIdkkxwPGkMPUPgLJgLJtUf96okNv9
-	 5nAoG8u/gQkEo77BEWhXXkTguJBzlg1XpjvkmAommuxDkEFU3rukCRJWND3+7kNUt7
-	 uqdIQbNoBt3L3u4gDxKHyMSamWBj/hJyXopzod9gGRja+d6JbtvvFJeQ4heGJUzftB
-	 PR1xhwFAl0xVrUHNV4kjVFk4pbPkl9yxk9fgJ4XwKOHXRfJrn/y5edIBj4rrEjRSBO
-	 +TMAy3K5Qyf7y0hA+RUHRDP4Jvfddc4C6jGPleBv8AsrMcBsqMUCcpLgFCW20hU5tI
-	 CL0gQEXprNJKQ==
+	b=n98rt97VWxm4bgbTrg4dCCUwKN250CmTneuopBSk3/lS1N/4IH+fFhjZay1DAYbN1
+	 Prfh7YaybOAfUHkaBzzcwZxQzw6zY0wUYYgikIu86jZaSLnU2FxvRsQxn/hEhOVxMz
+	 fafYTV4bYYwORkabTvD4M+yQd9U5bAFx97b2gGcQQ9qLCj1iaPq/39fzKpBMfoypR1
+	 28pP4ykRfoqAAOy+JpXQftJgPLAEB4pLBWhhSX7VCpVvs7cbP/eXrGlH9bYEsMTZJY
+	 LVn6YkWcbpMTb9i5JhxJ4xGqhvtfVun/SCUmV/9PgFidXuiGmDjOdErwVJkr2zYQ7H
+	 VRCB9NIO/Iy5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shruti Parab <shruti.parab@broadcom.com>,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pavan.chebbi@broadcom.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] bnxt_en: Add fw log trace support for 5731X/5741X chips
-Date: Sat, 25 Oct 2025 11:55:41 -0400
-Message-ID: <20251025160905.3857885-110-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] wifi: mac80211: Fix 6 GHz Band capabilities element advertisement in lower bands
+Date: Sat, 25 Oct 2025 11:55:42 -0400
+Message-ID: <20251025160905.3857885-111-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,146 +53,114 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
 
-[ Upstream commit ba1aefee2e9835fe6e07b86cb7020bd2550a81ee ]
+[ Upstream commit e53f8b12a21c2974b66fa8c706090182da06fff3 ]
 
-These older chips now support the fw log traces via backing store
-qcaps_v2. No other backing store memory types are supported besides
-the fw trace types.
+Currently, when adding the 6 GHz Band Capabilities element, the channel
+list of the wiphy is checked to determine if 6 GHz is supported for a given
+virtual interface. However, in a multi-radio wiphy (e.g., one that has
+both lower bands and 6 GHz combined), the wiphy advertises support for
+all bands. As a result, the 6 GHz Band Capabilities element is incorrectly
+included in mesh beacon and station's association request frames of
+interfaces operating in lower bands, without verifying whether the
+interface is actually operating in a 6 GHz channel.
 
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250917040839.1924698-6-michael.chan@broadcom.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by verifying if the interface operates on 6 GHz channel
+before adding the element. Note that this check cannot be placed
+directly in ieee80211_put_he_6ghz_cap() as the same function is used to
+add probe request elements while initiating scan in which case the
+interface may not be operating in any band's channel.
+
+Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250606104436.326654-1-rameshkumar.sundaram@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – this needs to go to stable.
-- `drivers/net/ethernet/broadcom/bnxt/bnxt.c:9314-9423` now bails out of
-  the RDMA/backing-store setup on non‑P5 hardware; with new firmware,
-  5731X/5741X devices advertise backing_store_v2 but still report zero
-  `entry_size`/`pg_info`. Without the guard, `bnxt_setup_ctxm_pg_tbls()`
-  (drivers/net/ethernet/broadcom/bnxt/bnxt.c:9063-9087) returns
-  `-EINVAL`, propagating out of `bnxt_hwrm_func_qcaps()` and preventing
-  the NIC from initialising. This change keeps legacy chips working once
-  the new firmware is deployed.
-- The added `BNXT_CTX_KONG` mappings (`bnxt.c:256-268`,
-  `bnxt.h:1960-1976`, `bnxt_coredump.c:18-40`, `bnxt_coredump.h:94-106`)
-  let the driver recognise the new AFM KONG firmware trace type exposed
-  by that firmware, so the trace buffer and coredump code no longer skip
-  it.
-These updates are confined to the bnxt driver, correct a firmware-
-induced regression, and carry low risk, so they fit stable policy well.
+YES
 
- drivers/net/ethernet/broadcom/bnxt/bnxt.c          | 9 +++++++--
- drivers/net/ethernet/broadcom/bnxt/bnxt.h          | 3 ++-
- drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c | 3 ++-
- drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h | 1 +
- 4 files changed, 12 insertions(+), 4 deletions(-)
+- What it fixes: On multi-radio wiphys, mac80211 could incorrectly
+  include the HE 6 GHz Band Capabilities element in frames while the
+  interface operates on 2.4/5 GHz. This misadvertises capabilities and
+  can cause interop issues (e.g., peers misinterpreting the association
+  or mesh beacon content).
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 0f3cc21ab0320..60e20b7642174 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -265,6 +265,7 @@ const u16 bnxt_bstore_to_trace[] = {
- 	[BNXT_CTX_CA1]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA1_TRACE,
- 	[BNXT_CTX_CA2]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA2_TRACE,
- 	[BNXT_CTX_RIGP1]	= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP1_TRACE,
-+	[BNXT_CTX_KONG]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE,
- };
+- Station assoc request gating (mlme.c): The call to add the HE 6 GHz
+  Band Capabilities IE is now correctly gated to only when the
+  association channel is 6 GHz. This uses the per-link association
+  channel to derive `sband` and checks the band before adding the IE:
+  - `sband` selection tied to the AP’s channel: net/mac80211/mlme.c:1768
+  - Gate before adding the IE: net/mac80211/mlme.c:1862
+  - Only add if 6 GHz: net/mac80211/mlme.c:1863
+
+- Mesh beacon gating (mesh.c): The mesh beacon builder now adds the HE 6
+  GHz Band Capabilities element only when the mesh interface operates on
+  a 6 GHz channel, not merely if the wiphy supports 6 GHz:
+  - Get current sband, error if missing: net/mac80211/mesh.c:623
+  - Early return if not 6 GHz: net/mac80211/mesh.c:627
+  - Only then add the IE: net/mac80211/mesh.c:636
+  - This function is used when composing the mesh beacon tail:
+    net/mac80211/mesh.c:1119
+
+- Why not move the check into ieee80211_put_he_6ghz_cap(): That helper
+  is intentionally band-agnostic and is also used in probe requests
+  during scan, where the interface may not be operating on a specific
+  band. Probe requests still (correctly) include the 6 GHz capability if
+  the device supports it:
+  - Probe request builder unconditionally uses the helper:
+    net/mac80211/util.c:1368
+  - The helper itself checks 6 GHz device/wiphy support, not current
+    operating band: net/mac80211/util.c:2585, net/mac80211/util.c:2590
+
+- Risk and scope: The change is small, local, and surgical. It only adds
+  band checks at the two call sites that build management frames tied to
+  a specific operating channel (association requests and mesh beacons).
+  No data structures or driver interfaces change. On 6 GHz operation the
+  behavior is unchanged; on lower bands the incorrect element is no
+  longer advertised. This reduces interop failures and aligns with
+  802.11 requirements.
+
+- Stable suitability: This is a correctness/interop bugfix, not a
+  feature; it is minimal and contained to mac80211 management IE
+  composition. It follows stable backport guidelines (important bug fix,
+  low regression risk, no architectural changes).
+
+ net/mac80211/mesh.c | 3 +++
+ net/mac80211/mlme.c | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index a4a715f6f1c32..f37068a533f4e 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -624,6 +624,9 @@ int mesh_add_he_6ghz_cap_ie(struct ieee80211_sub_if_data *sdata,
+ 	if (!sband)
+ 		return -EINVAL;
  
- static struct workqueue_struct *bnxt_pf_wq;
-@@ -9155,7 +9156,7 @@ static int bnxt_backing_store_cfg_v2(struct bnxt *bp, u32 ena)
- 	int rc = 0;
- 	u16 type;
- 
--	for (type = BNXT_CTX_SRT; type <= BNXT_CTX_RIGP1; type++) {
-+	for (type = BNXT_CTX_SRT; type <= BNXT_CTX_KONG; type++) {
- 		ctxm = &ctx->ctx_arr[type];
- 		if (!bnxt_bs_trace_avail(bp, type))
- 			continue;
-@@ -9305,6 +9306,10 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
- 	if (!ctx || (ctx->flags & BNXT_CTX_FLAG_INITED))
- 		return 0;
- 
-+	ena = 0;
-+	if (!(bp->flags & BNXT_FLAG_CHIP_P5_PLUS))
-+		goto skip_legacy;
++	if (sband->band != NL80211_BAND_6GHZ)
++		return 0;
 +
- 	ctxm = &ctx->ctx_arr[BNXT_CTX_QP];
- 	l2_qps = ctxm->qp_l2_entries;
- 	qp1_qps = ctxm->qp_qp1_entries;
-@@ -9313,7 +9318,6 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
- 	ctxm = &ctx->ctx_arr[BNXT_CTX_SRQ];
- 	srqs = ctxm->srq_l2_entries;
- 	max_srqs = ctxm->max_entries;
--	ena = 0;
- 	if ((bp->flags & BNXT_FLAG_ROCE_CAP) && !is_kdump_kernel()) {
- 		pg_lvl = 2;
- 		if (BNXT_SW_RES_LMT(bp)) {
-@@ -9407,6 +9411,7 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
- 		ena |= FUNC_BACKING_STORE_CFG_REQ_ENABLES_TQM_SP << i;
- 	ena |= FUNC_BACKING_STORE_CFG_REQ_DFLT_ENABLES;
+ 	iftd = ieee80211_get_sband_iftype_data(sband,
+ 					       NL80211_IFTYPE_MESH_POINT);
+ 	/* The device doesn't support HE in mesh mode or at all */
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index b0575604ce71c..0f2d2fec05426 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1850,7 +1850,8 @@ ieee80211_add_link_elems(struct ieee80211_sub_if_data *sdata,
+ 		ieee80211_put_he_cap(skb, sdata, sband,
+ 				     &assoc_data->link[link_id].conn);
+ 		ADD_PRESENT_EXT_ELEM(WLAN_EID_EXT_HE_CAPABILITY);
+-		ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
++		if (sband->band == NL80211_BAND_6GHZ)
++			ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
+ 	}
  
-+skip_legacy:
- 	if (bp->fw_cap & BNXT_FW_CAP_BACKING_STORE_V2)
- 		rc = bnxt_backing_store_cfg_v2(bp, ena);
- 	else
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 119d4ef6ef660..2317172166c7d 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1968,10 +1968,11 @@ struct bnxt_ctx_mem_type {
- #define BNXT_CTX_CA1	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA1_TRACE
- #define BNXT_CTX_CA2	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA2_TRACE
- #define BNXT_CTX_RIGP1	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_RIGP1_TRACE
-+#define BNXT_CTX_KONG	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE
- 
- #define BNXT_CTX_MAX	(BNXT_CTX_TIM + 1)
- #define BNXT_CTX_L2_MAX	(BNXT_CTX_FTQM + 1)
--#define BNXT_CTX_V2_MAX	(BNXT_CTX_RIGP1 + 1)
-+#define BNXT_CTX_V2_MAX	(BNXT_CTX_KONG + 1)
- #define BNXT_CTX_INV	((u16)-1)
- 
- struct bnxt_ctx_mem_info {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-index 18d6c94d5cb82..a0a37216efb3b 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-@@ -36,6 +36,7 @@ static const u16 bnxt_bstore_to_seg_id[] = {
- 	[BNXT_CTX_CA1]			= BNXT_CTX_MEM_SEG_CA1,
- 	[BNXT_CTX_CA2]			= BNXT_CTX_MEM_SEG_CA2,
- 	[BNXT_CTX_RIGP1]		= BNXT_CTX_MEM_SEG_RIGP1,
-+	[BNXT_CTX_KONG]			= BNXT_CTX_MEM_SEG_KONG,
- };
- 
- static int bnxt_dbg_hwrm_log_buffer_flush(struct bnxt *bp, u16 type, u32 flags,
-@@ -359,7 +360,7 @@ static u32 bnxt_get_ctx_coredump(struct bnxt *bp, void *buf, u32 offset,
- 
- 	if (buf)
- 		buf += offset;
--	for (type = 0 ; type <= BNXT_CTX_RIGP1; type++) {
-+	for (type = 0; type <= BNXT_CTX_KONG; type++) {
- 		struct bnxt_ctx_mem_type *ctxm = &ctx->ctx_arr[type];
- 		bool trace = bnxt_bs_trace_avail(bp, type);
- 		u32 seg_id = bnxt_bstore_to_seg_id[type];
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
-index d1cd6387f3ab4..8d0f58c74cc32 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
-@@ -102,6 +102,7 @@ struct bnxt_driver_segment_record {
- #define BNXT_CTX_MEM_SEG_CA1	0x9
- #define BNXT_CTX_MEM_SEG_CA2	0xa
- #define BNXT_CTX_MEM_SEG_RIGP1	0xb
-+#define BNXT_CTX_MEM_SEG_KONG	0xd
- 
- #define BNXT_CRASH_DUMP_LEN	(8 << 20)
- 
+ 	/*
 -- 
 2.51.0
 
