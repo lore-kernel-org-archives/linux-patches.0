@@ -1,52 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAB9301022;
-	Sat, 25 Oct 2025 16:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E383304BB8;
+	Sat, 25 Oct 2025 16:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409115; cv=none; b=uaQbRS+A9H3djFAYP4oTL32rLmUvnVwkcUWYPW/DqMDiRSLlhn5yCtFB5r54m+4jwWRoPnLA6/6evNxfpuCiqHsS+iPK59KIDbb0wH6DxIzTLntjwKI+xVT0TbKhxZVFvAdO8C+caDiQdnfQaK+ZrsydQh+yMz4p3cf7FV/opKA=
+	t=1761409117; cv=none; b=smSkMJ/dGzJnqe+1uS7ATBaC/QBXhYF8I2rs90jrXnnQpzbWSjwpP7LYkBEmjNG42XYX2jrh0Rh6Q7yuoU32CyRNCVe2XRGNwtNhAITk+C+e4NvlgJsVJK/XHQBPaFYjTl8RpHB8o8HUuCousjCHeDgfBZFGrXQSXZJ+L45YXGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409115; c=relaxed/simple;
-	bh=jcfeNa3Lv5n/fUsc80GUXPu6/riZaxFyuE/HINiZp8g=;
+	s=arc-20240116; t=1761409117; c=relaxed/simple;
+	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gBXMrVCC40eXq51cdMY6pFBhPQT4tOrvZqmy1W7152cKYQiRAJM08Jgvt6ORXm3D+YkQ/E9Z5KC9qYt5OK+Me6BVgE/dyqmdatyoXuGYcf6L1EdSRubHteUaBVuRRYYNdCjn/5wZ0YbvGT/paNIqjdW29CAp6rR+kmSM78ABjiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TyOUPOuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n90mTiVhZm6kkG+ETbT0vPKJwflIz7yxewyo+EvsPYvcQWpsb9h8cqvL6mJV5P8WVhFSkwE7ylNAog6SlmhZr1YfwYj+WrEDOLVXKkQx3CtABjtZ6uoE9zhvaM5D3Xp5h9q8fUSBHhGiIiXdm/RslGEoV84gyptKIoWorbHrkCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eiv/itaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TyOUPOuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B548C4CEF5;
-	Sat, 25 Oct 2025 16:18:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eiv/itaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB5C4CEF5;
+	Sat, 25 Oct 2025 16:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409115;
-	bh=jcfeNa3Lv5n/fUsc80GUXPu6/riZaxFyuE/HINiZp8g=;
+	s=k20201202; t=1761409117;
+	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TyOUPOuAw2hrOR5fv1P8q2Kevn/mUPxlaH80Ma+CmotYzbC5SI5hUo0/3xVvtFfYo
-	 Ff88EZcFP2HcR1aw2ZD+dFx8uAsPDbgfrz1lI42p3c2Tr5NadqsdPh16KeSibePXjT
-	 7lIQ+RCMcHjs1BROKSDiFqZ+AnSalfWgaOmGiJ1dBOS2+x+MWLhnvsneDWfTUjErxg
-	 dbcrKLOIlDYTyMMGdMlX652WtQ0dIAk7/wi4/apGAfHwnicoAcyI9wd39ABeVRqrMS
-	 +xkhPZanSdOWTAiav/1xNhcc/pGheyg/tfqwXt/tot+xcQrFg1Bhg3XoOea61vcgfL
-	 HIZEgWC+41Akg==
+	b=Eiv/itaAJz4Z24KXEuDNoVqMeDLruzhZEDGOz90JGYBoDVW5ULH5W23kcwcK+SK4A
+	 nreaZsjdwvz/5o0mgVYeDC956spgFGMqFL4QsxzCWbPyUmHCXnlGTWUNA34KRdxmRQ
+	 n/VWA1+i98TO3F0/1Fqn1loXyiouIfli+yfgSLDQhYvCD34YTlKhb8qgZlXNfAZlof
+	 qiJ6xIA6VwSM1sIPSO4ijfrkI3+UrBAU8A2QMod3zkrhZIWJtnFkkoZWp1GTI/PCok
+	 rpdEUoGb9tlqJONxiTPyQGSnLWNghvu0NHSSk0o1t+UVIw1c9LtnoFPS+Dsdu4CsSJ
+	 FG7OwXmRhUTDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+Cc: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alvin.lee2@amd.com,
-	alex.hung@amd.com,
-	chiahsuan.chung@amd.com,
-	PeiChen.Huang@amd.com,
-	chris.park@amd.com,
-	karthi.kandasamy@amd.com,
-	dillon.varone@amd.com,
-	alexandre.f.demers@gmail.com,
-	rvojvodi@amd.com,
-	martin.leung@amd.com,
-	Syed.Hassan@amd.com,
-	Wayne.Lin@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.1] drm/amd/display: add more cyan skillfish devices
-Date: Sat, 25 Oct 2025 11:57:15 -0400
-Message-ID: <20251025160905.3857885-204-sashal@kernel.org>
+	srini@kernel.org,
+	p.zabel@pengutronix.de,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] ASoC: codecs: wsa883x: Handle shared reset GPIO for WSA883x speakers
+Date: Sat, 25 Oct 2025 11:57:16 -0400
+Message-ID: <20251025160905.3857885-205-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -62,15 +59,22 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-[ Upstream commit 3cf06bd4cf2512d564fdb451b07de0cebe7b138d ]
+[ Upstream commit cf65182247761f7993737b710afe8c781699356b ]
 
-Add PCI IDs to support display probe for cyan skillfish
-family of SOCs.
+On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
+WSA8830/WSA8835 speaker amplifiers share a common reset (shutdown) GPIO.
 
-Acked-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To handle such scenario, use the reset controller framework and its
+"reset-gpio" driver to handle such case. This allows proper handling
+of all WSA883x speaker amplifiers on QCS6490-RB3Gen2 board.
+
+Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250815172353.2430981-3-mohammad.rafi.shaik@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,108 +82,194 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it changes
-  - Adds additional Cyan Skillfish PCI IDs in
-    `drivers/gpu/drm/amd/display/include/dal_asic_id.h` next to the
-    existing ones: currently only `DEVICE_ID_NV_13FE` and
-    `DEVICE_ID_NV_143F` exist at
-    drivers/gpu/drm/amd/display/include/dal_asic_id.h:214-215; the
-    commit introduces `DEVICE_ID_NV_13F9`, `DEVICE_ID_NV_13FA`,
-    `DEVICE_ID_NV_13FB`, `DEVICE_ID_NV_13FC`, and `DEVICE_ID_NV_13DB`.
-  - Extends the NV-family DC version mapping in
-    `drivers/gpu/drm/amd/display/dc/core/dc_resource.c` so that these
-    new IDs are treated as DCN 2.01 devices. Today, NV defaults to DCN
-    2.0 and only switches to DCN 2.01 for `13FE` and `143F`
-    (drivers/gpu/drm/amd/display/dc/core/dc_resource.c:166-171). The
-    patch adds the new IDs to that conditional.
+- What it fixes
+  - Addresses real functional issues on platforms where multiple WSA883x
+    amplifiers share a single shutdown/reset line (e.g.,
+    QCS6490-RB3Gen2). Using a plain GPIO per-device does not coordinate
+    shared users; one instance toggling the line can inadvertently reset
+    others. The patch switches to the reset controller framework with
+    the reset‑gpio backend to handle shared lines correctly.
 
-- Why it matters
-  - DC’s internal behavior depends on the detected `dce_version`. There
-    are explicit code paths for DCN 2.01 that differ from DCN 2.0:
-    - Clock manager constructs a DCN 2.01-specific manager when
-      `ctx->dce_version == DCN_VERSION_2_01`
-      (drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c:270-275).
-    - GPIO factory initialization distinguishes DCN 2.01 from 2.0
-      (drivers/gpu/drm/amd/display/dc/gpio/hw_factory.c:92-98).
-    - BIOS command table helper includes DCN 2.01 handling (drivers/gpu/
-      drm/amd/display/dc/bios/command_table_helper2.c:70-76).
-    - DCN 2.01 has special bandwidth/cstate behavior
-      (drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c:1231-1234).
-  - Without mapping these new Cyan Skillfish device IDs to DCN 2.01,
-    display probe and initialization may follow the wrong DC path (DCN
-    2.0 default in `FAMILY_NV`) and fail or misconfigure the hardware.
-    The commit message explicitly states it’s needed “to support display
-    probe for cyan skillfish family of SOCs.”
+- Scope and minimality
+  - Single-file, localized change in `sound/soc/codecs/wsa883x.c`.
+  - No ABI or architectural changes; strictly startup/shutdown control
+    path in probe.
+  - Optional feature: falls back to existing `powerdown-gpios` behavior
+    if no reset controller is provided, keeping backward compatibility.
 
-- Scope and risk
-  - Small, contained change: adds five ID macros and extends a single
-    conditional check. No architectural refactors; no ABI or uAPI
-    changes.
-  - Regression risk is minimal: the new condition only triggers for the
-    newly added PCI IDs; existing devices and code paths remain
-    unchanged.
-  - Security impact: none; this is purely device-ID-based
-    enablement/mapping.
+- Specific code changes and rationale
+  - Adds reset framework usage
+    - Include added: `#include <linux/reset.h>` in
+      `sound/soc/codecs/wsa883x.c`.
+    - Private data gains an optional reset handle: `struct reset_control
+      *sd_reset;` alongside the existing `sd_n` GPIO
+      (sound/soc/codecs/wsa883x.c:462).
+  - Centralized assert/deassert helpers
+    - New helpers `wsa883x_reset_assert()` and
+      `wsa883x_reset_deassert()` switch between
+      `reset_control_assert/deassert()` and
+      `gpiod_direction_output(sd_n, 1/0)` depending on whether a reset
+      control is present.
+  - Robust resource acquisition with graceful fallback
+    - New `wsa883x_get_reset()` first tries
+      `devm_reset_control_get_optional_shared(dev, NULL)` and, if none,
+      falls back to the existing `devm_gpiod_get_optional(dev,
+      "powerdown", ...)` path. This keeps old DTs working while enabling
+      shared-reset handling when “resets”/“reset-gpios” is used.
+  - Safer cleanup on errors/unbind
+    - In `wsa883x_probe()`, instead of manually asserting the GPIO only
+      on regmap-init failure (previous code:
+      `gpiod_direction_output(wsa883x->sd_n, 1)` in the error path at
+      sound/soc/codecs/wsa883x.c:1579–1585), the patch calls
+      `wsa883x_reset_deassert(wsa883x)` to bring the device out of
+      reset, then registers `devm_add_action_or_reset(dev,
+      wsa883x_reset_assert, wsa883x)`. This guarantees the reset is
+      asserted on any probe failure or device removal, mirroring the
+      established pattern used in other codecs.
+  - Probe flow changes (localized, low risk)
+    - Replaces the hardwired GPIO bring-up:
+      - Old: acquire `powerdown-gpios` then
+        `gpiod_direction_output(sd_n, 0)` to deassert
+        (sound/soc/codecs/wsa883x.c:1572–1575, 1561–1568).
+      - New: `wsa883x_get_reset()` and `wsa883x_reset_deassert()` with
+        `devm_add_action_or_reset` to ensure deterministic cleanup.
+        Functionally equivalent for non-shared setups, but robust for
+        shared lines.
 
-- Stable backport considerations
-  - This is a targeted fix enabling correct display bring-up on
-    additional SKUs of an already supported SOC family; it does not
-    introduce features beyond enabling hardware that should have worked.
-  - There is no “Cc: stable” or “Fixes:” tag, but DRM/amdgpu routinely
-    backports safe device-ID additions.
-  - Dependency note: For this to have practical effect, the
-    corresponding PCI IDs must be present in the amdgpu PCI device table
-    (see existing entries for Cyan Skillfish at
-    drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2174-2176). If those new IDs
-    are not yet present in the target stable branch, this change is
-    inert but harmless; ideally backport together with the PCI table
-    additions.
+- Precedent and consistency
+  - The WSA884x codec already uses the same reset-controller-with-
+    fallback pattern (e.g., `sound/soc/codecs/wsa884x.c:1999–2060`),
+    demonstrating the approach is accepted upstream and low risk. This
+    change brings WSA883x in line with WSA884x.
 
-- Conclusion
-  - It fixes a real user-visible issue (display probe on additional Cyan
-    Skillfish variants) with minimal, low-risk changes confined to the
-    AMD display subsystem. This is an appropriate and safe candidate for
-    stable backport.
+- Backport risk assessment
+  - Small, contained, and backwards compatible: if no reset controller,
+    code behaves as before with the `powerdown-gpios` line.
+  - No behavioral change to runtime PM/audio paths; only reset/powerdown
+    handling in probe/cleanup is touched.
+  - No dependencies beyond standard reset framework and `reset-gpio`,
+    both present in stable series; the driver already builds with reset
+    APIs (used elsewhere in tree).
+  - Documentation note: current 6.17 binding for WSA883x
+    (`Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml`) lists
+    `powerdown-gpios`, not `reset-gpios`/`resets`. Functionally this is
+    fine (fallback keeps working), but if boards want to use shared
+    reset via reset-gpio, a binding backport (to allow `reset-gpios` or
+    `resets`) may be desirable to avoid dtbs_check warnings. This is
+    documentation-only and does not affect runtime.
 
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 8 +++++++-
- drivers/gpu/drm/amd/display/include/dal_asic_id.h | 5 +++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+- Stable criteria
+  - Fixes a real platform issue (shared reset handling) affecting users.
+  - No new features to the audio path; no architectural refactor.
+  - Very low regression risk, self-contained, and aligns with existing
+    patterns in sibling drivers.
+  - While there is no explicit “Fixes:” or “Cc: stable”, the change
+    clearly improves correctness on affected hardware with minimal
+    impact elsewhere, making it a good stable candidate.
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 4d6181e7c612b..d712548b1927d 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -165,7 +165,13 @@ enum dce_version resource_parse_asic_id(struct hw_asic_id asic_id)
+ sound/soc/codecs/wsa883x.c | 57 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 8 deletions(-)
+
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 188363b03b937..ca4520ade79aa 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -14,6 +14,7 @@
+ #include <linux/printk.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/soundwire/sdw.h>
+ #include <linux/soundwire/sdw_registers.h>
+@@ -468,6 +469,7 @@ struct wsa883x_priv {
+ 	struct sdw_stream_runtime *sruntime;
+ 	struct sdw_port_config port_config[WSA883X_MAX_SWR_PORTS];
+ 	struct gpio_desc *sd_n;
++	struct reset_control *sd_reset;
+ 	bool port_prepared[WSA883X_MAX_SWR_PORTS];
+ 	bool port_enable[WSA883X_MAX_SWR_PORTS];
+ 	int active_ports;
+@@ -1546,6 +1548,46 @@ static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
+ 	.info	= wsa883x_hwmon_info,
+ };
  
- 	case FAMILY_NV:
- 		dc_version = DCN_VERSION_2_0;
--		if (asic_id.chip_id == DEVICE_ID_NV_13FE || asic_id.chip_id == DEVICE_ID_NV_143F) {
-+		if (asic_id.chip_id == DEVICE_ID_NV_13FE ||
-+		    asic_id.chip_id == DEVICE_ID_NV_143F ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13F9 ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FA ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FB ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FC ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13DB) {
- 			dc_version = DCN_VERSION_2_01;
- 			break;
- 		}
-diff --git a/drivers/gpu/drm/amd/display/include/dal_asic_id.h b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-index 5fc29164e4b45..8aea50aa95330 100644
---- a/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-+++ b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-@@ -213,6 +213,11 @@ enum {
- #endif
- #define DEVICE_ID_NV_13FE 0x13FE  // CYAN_SKILLFISH
- #define DEVICE_ID_NV_143F 0x143F
-+#define DEVICE_ID_NV_13F9 0x13F9
-+#define DEVICE_ID_NV_13FA 0x13FA
-+#define DEVICE_ID_NV_13FB 0x13FB
-+#define DEVICE_ID_NV_13FC 0x13FC
-+#define DEVICE_ID_NV_13DB 0x13DB
- #define FAMILY_VGH 144
- #define DEVICE_ID_VGH_163F 0x163F
- #define DEVICE_ID_VGH_1435 0x1435
++static void wsa883x_reset_assert(void *data)
++{
++	struct wsa883x_priv *wsa883x = data;
++
++	if (wsa883x->sd_reset)
++		reset_control_assert(wsa883x->sd_reset);
++	else
++		gpiod_direction_output(wsa883x->sd_n, 1);
++}
++
++static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
++{
++	if (wsa883x->sd_reset)
++		reset_control_deassert(wsa883x->sd_reset);
++	else
++		gpiod_direction_output(wsa883x->sd_n, 0);
++}
++
++static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *wsa883x)
++{
++	wsa883x->sd_reset = devm_reset_control_get_optional_shared(dev, NULL);
++	if (IS_ERR(wsa883x->sd_reset))
++		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_reset),
++				     "Failed to get reset\n");
++	/*
++	 * if sd_reset: NULL, so use the backwards compatible way for powerdown-gpios,
++	 * which does not handle sharing GPIO properly.
++	 */
++	if (!wsa883x->sd_reset) {
++		wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
++							GPIOD_FLAGS_BIT_NONEXCLUSIVE |
++							GPIOD_OUT_HIGH);
++		if (IS_ERR(wsa883x->sd_n))
++			return dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
++					     "Shutdown Control GPIO not found\n");
++	}
++
++	return 0;
++}
++
+ static int wsa883x_probe(struct sdw_slave *pdev,
+ 			 const struct sdw_device_id *id)
+ {
+@@ -1566,13 +1608,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
+ 
+-	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
+-						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
+-	if (IS_ERR(wsa883x->sd_n)) {
+-		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
+-				    "Shutdown Control GPIO not found\n");
++	ret = wsa883x_get_reset(dev, wsa883x);
++	if (ret)
+ 		goto err;
+-	}
+ 
+ 	dev_set_drvdata(dev, wsa883x);
+ 	wsa883x->slave = pdev;
+@@ -1595,11 +1633,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	pdev->prop.simple_clk_stop_capable = true;
+ 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+-	gpiod_direction_output(wsa883x->sd_n, 0);
++
++	wsa883x_reset_deassert(wsa883x);
++	ret = devm_add_action_or_reset(dev, wsa883x_reset_assert, wsa883x);
++	if (ret)
++		return ret;
+ 
+ 	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
+ 	if (IS_ERR(wsa883x->regmap)) {
+-		gpiod_direction_output(wsa883x->sd_n, 1);
+ 		ret = dev_err_probe(dev, PTR_ERR(wsa883x->regmap),
+ 				    "regmap_init failed\n");
+ 		goto err;
 -- 
 2.51.0
 
