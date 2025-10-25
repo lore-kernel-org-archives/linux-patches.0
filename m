@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A31314B87;
-	Sat, 25 Oct 2025 16:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7ED30E0C0;
+	Sat, 25 Oct 2025 16:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409426; cv=none; b=sssD9kLuIaZNUrAnvzbuAjCGRrqUcD0gRHNPj5V3M7XMIT+XH+yEwcpp1rHE1T/a1bP1N2XiERNP/IhY+/nynHWgroXNWh2FcRFHWLmlpf+K12tBGljVLahHfSZVKHl7yjmZ6k8NSOAKKwmK4jdU5NdPsj28/nRcV85amIpYyS4=
+	t=1761409429; cv=none; b=HGXOKibKTVZJdI2XCRLELy6RH9Fqpk8rgJXopCoO4IfforkgENfnTjpva8fTxqeDHqYB4qPXNrerxVBEy87rGw59WGp97J/sWAPrvnp+vXEoj89EHr3ADwMjhKfImvEzRGV7jBHI8NHQ3dpCQjxZIWak/gU/9eEvQjZxI5hJepQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409426; c=relaxed/simple;
-	bh=yXpQY07Tafmj/Pdwexa/B6VXHHHJCtffvKSXKK8lIeU=;
+	s=arc-20240116; t=1761409429; c=relaxed/simple;
+	bh=HAtfav786qfTN4ra92Tf4OsGlerwhsllvxUx0UfRuuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rF5PyCmRSRQC0Gwvawc6FTpT6EPWQhWMELyxuhSnks4uDDyefy4xLX//nQUh8F49k/0vH0/1/8lx0UVpj75NibAgVw4Q9n8XKLgiGSodKpKiN828BzJiFHNwZP8vjoBk4JFxI6QJbHxw/gtiND3mv83t8wBn68EszmTbyXYfwpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u4wgKOdE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P54JpWxdnXoX/sYvgELSJBv901cns6B62KSzRdSf2nSYpRIFu6fVSB70rV317uApwhZK9aiOzDMPy8giZvma6e5MonsDWxnHhB8jEBkjBMCeYyilX3jaw090Vl8PZ9zOBH385KwpSmx3O0SD7phMCfCNa/dSn6TTLS+sUH0xUnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=it0rmmut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u4wgKOdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564D3C4CEFB;
-	Sat, 25 Oct 2025 16:23:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="it0rmmut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391C4C4CEFB;
+	Sat, 25 Oct 2025 16:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409426;
-	bh=yXpQY07Tafmj/Pdwexa/B6VXHHHJCtffvKSXKK8lIeU=;
+	s=k20201202; t=1761409429;
+	bh=HAtfav786qfTN4ra92Tf4OsGlerwhsllvxUx0UfRuuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4wgKOdEeCF1+oL+4NyTzPLihvVNURyWdbtdYm4gSnjINiXls/7xyyKu9FiNkP3BH
-	 G0mUxPd9T0B+r8z0L1nUVERdVgJdQrJ+YKxUBZ4XinPXlsSFmq0Mi/N50U/lLlRaHy
-	 VOHIWGsenKNz+queFyoaYOKBXoHkRKCXluUFfuCeTCQUG9ByYH+SQfX8QY9POvF+7c
-	 h36th0tIiUHmZDmQKL5TzYKURVFk+NcQKm8wtgUqKrWKQHXOnH6F6gZMn36CFuMflT
-	 qMmZOcFRO5C8WSphN/seAfEKl1+1NRhlpH3+lc8cNKwEpWvj7l8skiP2I+ta7cwEfs
-	 O5uaM6vEY+ZSw==
+	b=it0rmmut8PvdNXSYLvb9RoNAbavNlzc42ZeMN/pTbDJ/lVPAP3/0n/or6DFIuv8Hf
+	 i6Y+kL+Vg/bEoK16gGDgrdCHj3KEX+v9YiHeoXApxLDzusabnqtS+DGiNzALShEkdI
+	 OD4Bu0M1JGr5hKID9dcDlH7dmXYmB8ESlkBxLTRtnImqp5RMW7WVCGkRAtiEljpK0S
+	 JztCTURrGCblcKD/uf1pQAm5j79AuccqACaFjVMrzXSTb1IXLZ04CkX7bY1MHtV7rR
+	 7zB5BkSTILJv5neprs2xPhaQb7l2tygrbzHe/LM7Gh3GS79spLrgRDlx02vuz6BjMo
+	 mIJ0kAfghB3Ig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Tao Zhou <tao.zhou1@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] selftests: traceroute: Use require_command()
-Date: Sat, 25 Oct 2025 11:59:12 -0400
-Message-ID: <20251025160905.3857885-321-sashal@kernel.org>
+	ganglxie@amd.com,
+	lijo.lazar@amd.com,
+	candice.li@amd.com,
+	victor.skvortsov@amd.com,
+	alexandre.f.demers@gmail.com,
+	cesun102@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdgpu: add range check for RAS bad page address
+Date: Sat, 25 Oct 2025 11:59:13 -0400
+Message-ID: <20251025160905.3857885-322-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,33 +57,15 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Tao Zhou <tao.zhou1@amd.com>
 
-[ Upstream commit 47efbac9b768553331b9459743a29861e0acd797 ]
+[ Upstream commit 2b17c240e8cd9ac61d3c82277fbed27edad7f002 ]
 
-Use require_command() so that the test will return SKIP (4) when a
-required command is not present.
+Exclude invalid bad pages.
 
-Before:
-
- # ./traceroute.sh
- SKIP: Could not run IPV6 test without traceroute6
- SKIP: Could not run IPV4 test without traceroute
- $ echo $?
- 0
-
-After:
-
- # ./traceroute.sh
- TEST: traceroute6 not installed                                    [SKIP]
- $ echo $?
- 4
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-6-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Tao Zhou <tao.zhou1@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -90,104 +73,227 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug in selftests reporting: when traceroute binaries are
-  missing, the script previously exited 0 (PASS) after printing a manual
-  “SKIP” message, which hides missing test coverage from harnesses and
-  CI. The change standardizes behavior to return the kselftest skip code
-  (4), matching framework expectations.
-- Small, contained change limited to selftests; no kernel code touched,
-  no ABI or API impact, no architectural changes.
+- What it fixes
+  - Centralizes and strengthens address validation for RAS bad pages so
+    invalid addresses are rejected early and consistently, and invalid
+    EEPROM entries are excluded. Previously, validity checks were
+    duplicated at some call sites and missing in others.
+  - Prevents invalid “bad pages” from being considered/processed (e.g.,
+    loaded from EEPROM or used in injection), which could lead to
+    incorrect reservations or error injection behavior.
 
-Specifics in the code:
-- The script sources the common helpers, so `require_command()` is
-  available: tools/testing/selftests/net/traceroute.sh:7.
-- Inline, ad hoc checks are removed from the test bodies:
-  - run_traceroute6(): drops the `command -v traceroute6` guard and
-    manual “SKIP” echo shown in the diff.
-  - run_traceroute(): drops the `command -v traceroute` guard and manual
-    “SKIP” echo shown in the diff.
-  This eliminates duplicate logic and prevents returning success on
-missing deps.
-- Centralized, framework-compliant dependency checks are added before
-  running tests:
-  - tools/testing/selftests/net/traceroute.sh:463 `require_command
-    traceroute6`
-  - tools/testing/selftests/net/traceroute.sh:464 `require_command
-    traceroute`
-- The helper `require_command()` is defined in the shared library:
-  - tools/testing/selftests/net/lib.sh:537 `require_command()` calls
-    `check_command`, which logs a SKIP via `log_test_skip` and then
-    exits with `EXIT_STATUS`.
-  - The kselftest constants define skip as 4:
-    tools/testing/selftests/net/lib.sh:22 `ksft_skip=4`.
-  Consequently, when the command is missing, the script prints “TEST:
-<cmd> not installed [SKIP]” and exits 4, exactly as described in the
-commit message.
+- Key code changes
+  - Return type change and range check
+    - Changes `amdgpu_ras_check_bad_page_unlock()` and
+      `amdgpu_ras_check_bad_page()` from `bool` to `int` and adds an
+      explicit address range check. Now returns:
+      - `-EINVAL` for invalid addresses
+      - `1` if the page is already bad
+      - `0` otherwise
+    - In your tree, the current declarations are `bool`
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:137,
+      drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:139) and definitions are
+      `bool` with no range check
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:2777,
+      drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:2796).
+    - The added range check uses `adev->gmc.mc_vram_size` and
+      `RAS_UMC_INJECT_ADDR_LIMIT` (already defined in your tree at
+      drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:110), so it is aligned
+      with existing constraints elsewhere in the file.
 
-Risk and compatibility:
-- Effect is limited to how the test reports missing prerequisites. This
-  aligns traceroute.sh with many other selftests already using
-  `require_command` (e.g.,
-  tools/testing/selftests/net/rtnetlink_notification.sh:108), improving
-  consistency across the selftests suite.
-- One behavioral change: if either `traceroute6` or `traceroute` is
-  missing, the entire script will SKIP early rather than partially
-  running the remaining tests. This is a reasonable and common selftests
-  convention, and it avoids false PASS outcomes. It does not affect
-  kernel behavior.
+  - Reserve page path
+    - `amdgpu_reserve_page_direct()` currently performs its own invalid
+      address check and separately checks whether the page was already
+      marked bad (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:164–189). The
+      patch replaces these ad hoc checks by calling the updated
+      `amdgpu_ras_check_bad_page()` once and branching on its return
+      value. Behaviorally equivalent for valid/invalid, but more robust
+      and less error-prone.
 
-Stable backport criteria:
-- Addresses test correctness and CI signal integrity (important for
-  users running selftests).
-- Minimal, localized change with very low regression risk.
-- No features or architectural shifts; purely a selftest reliability
-  fix.
-- Consistent with established kselftest patterns and constants.
+  - Debugfs inject path
+    - In `amdgpu_ras_debugfs_ctrl_write()` “case 2” (inject), your tree
+      rejects invalid addresses for all blocks
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:508–518) and then
+      prohibits UMC injection into already-bad pages
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:522–528).
+    - The patch refines this:
+      - Only UMC injections are gated by address range validity (via the
+        updated `amdgpu_ras_check_bad_page()`), which is correct since
+        the address field is meaningful for UMC but not necessarily used
+        for other blocks.
+      - If `amdgpu_ras_check_bad_page()` returns `-EINVAL`, warns about
+        invalid input; if it returns `1`, warns about already-bad page.
+        This prevents false “invalid address” rejections for non-UMC
+        blocks and preserves correct UMC validations.
 
-Given these points, this is a safe and beneficial selftest fix
-appropriate for stable trees.
+  - Excluding invalid entries when loading/saving bad pages
+    - `amdgpu_ras_add_bad_pages()` uses
+      `amdgpu_ras_check_bad_page_unlock()` to skip duplicates
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:2660–2704). With the new
+      semantics, a return of `-EINVAL` is nonzero and thus treated as
+      “skip,” effectively filtering out invalid entries sourced from
+      EEPROM. This matches the commit message “Exclude invalid bad
+      pages.”
 
- tools/testing/selftests/net/traceroute.sh | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+- Why this is a good stable backport
+  - Small, self-contained change in a single file (`amdgpu_ras.c`), with
+    no architectural changes.
+  - Fixes real-world correctness/safety issues:
+    - Invalid addresses are consistently rejected, avoiding possible
+      incorrect reservations or injections.
+    - Invalid EEPROM-stored entries are ignored instead of processed.
+    - Non-UMC injection no longer gets spuriously blocked by a VRAM
+      address check that is irrelevant for those blocks.
+  - All modified functions are `static` and localized, minimizing
+    regression risk.
+  - The semantics of debugfs (not a stable ABI) are improved in a way
+    that reduces surprising failures, and core RAS boot-time behavior
+    improves by excluding bad invalid entries.
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index 282f14760940d..b50e52afa4f49 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -203,11 +203,6 @@ setup_traceroute6()
+- Dependencies and backport notes
+  - The upstream context in your diff shows a newer signature for
+    `amdgpu_ras_add_bad_pages()` (an extra boolean) than in your tree
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:2665). This commit itself
+    does not depend on that signature change; it can be adapted
+    trivially by:
+    - Changing the two `bool` declarations/definitions to `int` and
+      adding the range check in `amdgpu_ras_check_bad_page_unlock()`.
+    - Updating the callers to handle `-EINVAL` vs `1` vs `0` as shown in
+      the diff, while keeping your existing `amdgpu_ras_add_bad_pages()`
+      signature.
+  - No impact beyond AMDGPU RAS paths; no user ABI changes.
+
+- Risk assessment
+  - Low: Types change from `bool` to `int` on `static` functions;
+    existing call sites in this file are updated; other uses that test
+    in a boolean context will still treat `-EINVAL` as true (nonzero),
+    which is intentionally leveraged to skip invalid entries when
+    loading bad pages.
+  - Improves robustness and reduces incorrect behavior; unlikely to
+    cause regressions in supported stable trees.
+
+Given the above, this is a clear bugfix with minimal risk and targeted
+scope, and it improves correctness and safety. It meets stable criteria
+and should be backported.
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 58 ++++++++++++-------------
+ 1 file changed, 28 insertions(+), 30 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 540817e296da6..c88123302a071 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -136,9 +136,9 @@ enum amdgpu_ras_retire_page_reservation {
  
- run_traceroute6()
- {
--	if [ ! -x "$(command -v traceroute6)" ]; then
--		echo "SKIP: Could not run IPV6 test without traceroute6"
--		return
--	fi
+ atomic_t amdgpu_ras_in_intr = ATOMIC_INIT(0);
+ 
+-static bool amdgpu_ras_check_bad_page_unlock(struct amdgpu_ras *con,
++static int amdgpu_ras_check_bad_page_unlock(struct amdgpu_ras *con,
+ 				uint64_t addr);
+-static bool amdgpu_ras_check_bad_page(struct amdgpu_device *adev,
++static int amdgpu_ras_check_bad_page(struct amdgpu_device *adev,
+ 				uint64_t addr);
+ #ifdef CONFIG_X86_MCE_AMD
+ static void amdgpu_register_bad_pages_mca_notifier(struct amdgpu_device *adev);
+@@ -169,18 +169,16 @@ static int amdgpu_reserve_page_direct(struct amdgpu_device *adev, uint64_t addre
+ 	struct eeprom_table_record err_rec;
+ 	int ret;
+ 
+-	if ((address >= adev->gmc.mc_vram_size) ||
+-	    (address >= RAS_UMC_INJECT_ADDR_LIMIT)) {
++	ret = amdgpu_ras_check_bad_page(adev, address);
++	if (ret == -EINVAL) {
+ 		dev_warn(adev->dev,
+-		         "RAS WARN: input address 0x%llx is invalid.\n",
+-		         address);
++			"RAS WARN: input address 0x%llx is invalid.\n",
++			address);
+ 		return -EINVAL;
+-	}
 -
- 	setup_traceroute6
+-	if (amdgpu_ras_check_bad_page(adev, address)) {
++	} else if (ret == 1) {
+ 		dev_warn(adev->dev,
+-			 "RAS WARN: 0x%llx has already been marked as bad page!\n",
+-			 address);
++			"RAS WARN: 0x%llx has already been marked as bad page!\n",
++			address);
+ 		return 0;
+ 	}
  
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
-@@ -268,11 +263,6 @@ setup_traceroute()
- 
- run_traceroute()
- {
--	if [ ! -x "$(command -v traceroute)" ]; then
--		echo "SKIP: Could not run IPV4 test without traceroute"
--		return
--	fi
+@@ -513,22 +511,16 @@ static ssize_t amdgpu_ras_debugfs_ctrl_write(struct file *f,
+ 		ret = amdgpu_ras_feature_enable(adev, &data.head, 1);
+ 		break;
+ 	case 2:
+-		if ((data.inject.address >= adev->gmc.mc_vram_size &&
+-		    adev->gmc.mc_vram_size) ||
+-		    (data.inject.address >= RAS_UMC_INJECT_ADDR_LIMIT)) {
+-			dev_warn(adev->dev, "RAS WARN: input address "
+-					"0x%llx is invalid.",
++		/* umc ce/ue error injection for a bad page is not allowed */
++		if (data.head.block == AMDGPU_RAS_BLOCK__UMC)
++			ret = amdgpu_ras_check_bad_page(adev, data.inject.address);
++		if (ret == -EINVAL) {
++			dev_warn(adev->dev, "RAS WARN: input address 0x%llx is invalid.",
+ 					data.inject.address);
+-			ret = -EINVAL;
+ 			break;
+-		}
 -
- 	setup_traceroute
+-		/* umc ce/ue error injection for a bad page is not allowed */
+-		if ((data.head.block == AMDGPU_RAS_BLOCK__UMC) &&
+-		    amdgpu_ras_check_bad_page(adev, data.inject.address)) {
+-			dev_warn(adev->dev, "RAS WARN: inject: 0x%llx has "
+-				 "already been marked as bad!\n",
+-				 data.inject.address);
++		} else if (ret == 1) {
++			dev_warn(adev->dev, "RAS WARN: inject: 0x%llx has already been marked as bad!\n",
++					data.inject.address);
+ 			break;
+ 		}
  
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
-@@ -306,6 +296,9 @@ do
- 	esac
- done
+@@ -3134,18 +3126,24 @@ static int amdgpu_ras_load_bad_pages(struct amdgpu_device *adev)
+ 	return ret;
+ }
  
-+require_command traceroute6
-+require_command traceroute
+-static bool amdgpu_ras_check_bad_page_unlock(struct amdgpu_ras *con,
++static int amdgpu_ras_check_bad_page_unlock(struct amdgpu_ras *con,
+ 				uint64_t addr)
+ {
+ 	struct ras_err_handler_data *data = con->eh_data;
++	struct amdgpu_device *adev = con->adev;
+ 	int i;
+ 
++	if ((addr >= adev->gmc.mc_vram_size &&
++	    adev->gmc.mc_vram_size) ||
++	    (addr >= RAS_UMC_INJECT_ADDR_LIMIT))
++		return -EINVAL;
 +
- run_tests
+ 	addr >>= AMDGPU_GPU_PAGE_SHIFT;
+ 	for (i = 0; i < data->count; i++)
+ 		if (addr == data->bps[i].retired_page)
+-			return true;
++			return 1;
  
- printf "\nTests passed: %3d\n" ${nsuccess}
+-	return false;
++	return 0;
+ }
+ 
+ /*
+@@ -3153,11 +3151,11 @@ static bool amdgpu_ras_check_bad_page_unlock(struct amdgpu_ras *con,
+  *
+  * Note: this check is only for umc block
+  */
+-static bool amdgpu_ras_check_bad_page(struct amdgpu_device *adev,
++static int amdgpu_ras_check_bad_page(struct amdgpu_device *adev,
+ 				uint64_t addr)
+ {
+ 	struct amdgpu_ras *con = amdgpu_ras_get_context(adev);
+-	bool ret = false;
++	int ret = 0;
+ 
+ 	if (!con || !con->eh_data)
+ 		return ret;
 -- 
 2.51.0
 
