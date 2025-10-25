@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B51305053;
-	Sat, 25 Oct 2025 16:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B23304BCD;
+	Sat, 25 Oct 2025 16:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409082; cv=none; b=XZHXGNqU3iYJkfwRPIWj89yWO5I3ZWd2nvUTmIoB0XMU3/M+PihkPMLVcU2KAKN94gtfQKvzY18TEgEt5nSeDgCirWxRWGsBeWeHA9gdlQerCQROXMf15Mwc6Crarr0JmlzIj3A6VEhbuHihQniKYH/uqCMMCB+Ydn7wSgC5iYM=
+	t=1761409083; cv=none; b=hHIIQIuyhu4CH+J0s7hUlUDazB24h8zfqgmi9qkCnvK3pVPTIMm+KDqOIjgkO5Y6gHsWjhLk8UNw28ye7xzgyauPnqPYif4wtZTwOqs1X0dJOab64ux1h4co6zsdELk+9ps+CXWBMRrEoC0XLKTKUPIA1XHTXe+8ed/NIcYVmwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409082; c=relaxed/simple;
-	bh=Jml9uvd05nACuQWqNyHadMfowCjE73TRBnUi4iABmQ8=;
+	s=arc-20240116; t=1761409083; c=relaxed/simple;
+	bh=AyNy1tlQLGAKwjtMvADfL8C+bUqQfeWSjDArGuoYiRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U+8pshmHckrfcgYuFkfO7KpTuyH0KmnwzrJBqbICUikpbzE77p1nKY6mstG/egjD/eSBlQT+ZP+ksXqFPbnWAUh3PKvIXqhidlQkx7sCxwsClUn3qdFzPbNS8gW68LWpeFRVcF5m7NrUnAkoX6+/0cDSiLVIcfUYvVeN+MYrxmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLLZMvJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YZrobiZJZU+LRdG3+TkE7vhnXFmz0FCwdgzBjdOlfuVMACIxsywHlttjzGlPyzdL587exSvUTpgkho99UtVgg5SGBQBnSiYHqPlRD+Q018OadTovqc9aaKTRTXZsdX74GpM9RdHFtdo4c1v6eITmBrEpFCQz7eBZEsxt38/ZH3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOc05IUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLLZMvJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CE1C4CEF5;
-	Sat, 25 Oct 2025 16:17:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOc05IUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19A1C4CEFF;
+	Sat, 25 Oct 2025 16:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409079;
-	bh=Jml9uvd05nACuQWqNyHadMfowCjE73TRBnUi4iABmQ8=;
+	s=k20201202; t=1761409083;
+	bh=AyNy1tlQLGAKwjtMvADfL8C+bUqQfeWSjDArGuoYiRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLLZMvJTfBxdPTLgWmv1cCXuC396fpwhY8UIhmDGj4U3njD2Fm5RBOFYaUOl7dMQG
-	 Zoog5T3TSpR11mr3/B1K8L9or8TiGGA72UW/8YxGtfcOpZ7GxqbsqfYKDfUDNtOvXS
-	 yl72CV5wezFpmXRtxvh2aeV6wE8wY9e2EAyuZpOIPYkVJzIv5NoW7dV1Xvf1yZ2wmX
-	 5Sz0FLivFVe77UpvVMU6BJJRfYr8O73rWNHl3yurGvLdzCi7rQCCeYTwbTJNx98LZZ
-	 GSZiefutb7gSH4XA1WuKVh3t5TBFF0p++NHwjZTcc6KmSER3ld+qcOYnQMj41C6ciy
-	 WG27ILUcoDhgg==
+	b=FOc05IUi88N9CSd0dVsY1BamktuGF4oBisvZ0ZzudnvWSK9Msdw65ka0Z54FrF1OS
+	 LhIPS7QpVwQlvIH5T64RXTKsoyUS+mEujW5LjsH4zJ5GVdI8HaaANkLALUgE0JwneR
+	 LTNS11ZTu0z35QnKD0CicP+VI1N90kWfP7q7nfTaerrkD2qGzs+ofi82h3iw4gEyJi
+	 TJ2VcK8makDy3xKapXypgY2PL8VHlZR97TGFw7a5nVp7JK1sRyTV3OVlUsJsHAknGk
+	 yBgETYhsU5l0cL9On5kSYIs+9il0kIRUv1GQxCTbU31pIB5Eo9UNqOanzYd9Jl2jO2
+	 uxIem9iAE4gxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ching-Te Ku <ku920601@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: coex: Limit Wi-Fi scan slot cost to avoid A2DP glitch
-Date: Sat, 25 Oct 2025 11:57:05 -0400
-Message-ID: <20251025160905.3857885-194-sashal@kernel.org>
+	kwilczynski@kernel.org,
+	Frank.Li@nxp.com,
+	jiangwang@kylinos.cn,
+	khalfella@gmail.com,
+	alexandre.f.demers@gmail.com,
+	dlemoal@kernel.org,
+	shinichiro.kawasaki@wdc.com
+Subject: [PATCH AUTOSEL 6.17-6.12] PCI: endpoint: pci-epf-test: Limit PCIe BAR size for fixed BARs
+Date: Sat, 25 Oct 2025 11:57:06 -0400
+Message-ID: <20251025160905.3857885-195-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,193 +59,127 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ching-Te Ku <ku920601@realtek.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit ebea22c7f1b2f06f4ff0719d76bd19830cf25c9f ]
+[ Upstream commit d5f6bd3ee3f5048f272182dc91675c082773999e ]
 
-When Wi-Fi is scanning at 2.4GHz, PTA will abort almost all the BT request.
-Once the Wi-Fi slot stay too long, BT audio device can not get enough data,
-audio glitch will happened. This patch limit 2.4Ghz Wi-Fi slot to 80ms
-while Wi-Fi is scanning to avoid audio glitch.
+Currently, the test allocates BAR sizes according to fixed table bar_size.
+This does not work with controllers which have fixed size BARs that are
+smaller than the requested BAR size. One such controller is Renesas R-Car
+V4H PCIe controller, which has BAR4 size limited to 256 bytes, which is
+much less than one of the BAR size, 131072 currently requested by this
+test. A lot of controllers drivers in-tree have fixed size BARs, and they
+do work perfectly fine, but it is only because their fixed size is larger
+than the size requested by pci-epf-test.c
 
-Signed-off-by: Ching-Te Ku <ku920601@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250819034428.26307-5-pkshih@realtek.com
+Adjust the test such that in case a fixed size BAR is detected, the fixed
+BAR size is used, as that is the only possible option.
+
+This helps with test failures reported as follows:
+
+  pci_epf_test pci_epf_test.0: requested BAR size is larger than fixed size
+  pci_epf_test pci_epf_test.0: Failed to allocate space for BAR4
+
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+[mani: reworded description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20250905184240.144431-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough analysis of this commit, I can now provide my
-recommendation:
+YES
 
-## BACKPORT RECOMMENDATION
+Explanation
+- Fixes a real test failure. The test function previously requested
+  hard-coded BAR sizes from `bar_size[]`, e.g., `BAR_4` = 131072 bytes
+  (128 KiB) in `drivers/pci/endpoint/functions/pci-epf-test.c:105`. On
+  controllers with smaller fixed-size BARs (e.g., Renesas R-Car V4H BAR4
+  = 256 bytes), `pci_epf_alloc_space()` rejected the request and the
+  test failed with:
+  - "requested BAR size is larger than fixed size"
+  - "Failed to allocate space for BAR4"
+  These messages originate from the fixed-size enforcement in
+`pci_epf_alloc_space()` (drivers/pci/endpoint/pci-epf-core.c:267 and
+error at drivers/pci/endpoint/pci-epf-core.c:282).
 
-**YES**
+- Minimal, targeted change in the EPF test. The patch adjusts the
+  allocation loop so that for each non-register BAR it first checks if
+  the EPC declares the BAR as fixed-size and, if so, requests that exact
+  size instead of the hard-coded test size:
+  - Added fixed-size check and selection:
+    drivers/pci/endpoint/functions/pci-epf-test.c:1070
+  - Uses `fixed_size` for fixed BARs; otherwise falls back to
+    `bar_size[]`: drivers/pci/endpoint/functions/pci-epf-test.c:1071 and
+    drivers/pci/endpoint/functions/pci-epf-test.c:1073
+  - Passes the selected size into `pci_epf_alloc_space()`:
+    drivers/pci/endpoint/functions/pci-epf-test.c:1075
 
-## DETAILED ANALYSIS
+- Aligns with existing EPC semantics. `pci_epf_alloc_space()` already
+  enforces fixed-size BARs by returning NULL when a request exceeds the
+  fixed size and coerces accepted requests to the hardware’s fixed size
+  (drivers/pci/endpoint/pci-epf-core.c:267 and drivers/pci/endpoint/pci-
+  epf-core.c:282). The change avoids over-sized requests up front,
+  preventing spurious failures, and is consistent with what
+  `pci_epf_alloc_space()` would have done anyway.
 
-### What the Commit Changes
+- Does not alter critical behavior for the register BAR. The test still
+  computes the register BAR size as register space + optional MSI-X
+  table + PBA and allocates that for the chosen `test_reg_bar`
+  (drivers/pci/endpoint/functions/pci-epf-test.c:1046–1055). If a
+  controller’s register BAR itself is fixed and too small to hold the
+  required registers/MSI-X structures, failing is correct because the
+  test cannot run on such hardware.
 
-The commit makes two types of modifications to the Wi-Fi/Bluetooth
-coexistence (coex) subsystem in the rtw89 driver:
+- Low regression risk:
+  - Scope-limited to a test EPF driver (`pci-epf-test`). No UAPI or ABI
+    changes.
+  - For controllers whose fixed size is larger than the test’s
+    `bar_size[]`, this change merely allocates the larger, correct fixed
+    size that hardware requires (previously `pci_epf_alloc_space()`
+    would coerce the result to fixed size anyway).
+  - If `fixed_size` is reported as zero (misconfigured or unsupported
+    case), `pci_epf_alloc_space()` still falls back to a minimum sane
+    allocation (128 bytes), preserving prior behavior.
 
-1. **CXST_ENULL Slot Configuration Change**
-   (drivers/net/wireless/realtek/rtw89/coex.c:96):
-   - **Before**: `CXST_ENULL = (5ms, 0xaaaaaaaa, SLOT_ISO)`
-   - **After**: `CXST_ENULL = (5ms, 0x55555555, SLOT_MIX)`
-   - **Impact**: Changes the slot from SLOT_ISO (isolates Wi-Fi, rejects
-     BT low-priority requests) to SLOT_MIX (allows mixing, accepts BT
-     low-priority requests). The PTA control bitmask changes from
-     0xaaaaaaaa to 0x55555555 (inverse bit pattern).
+- Clear user impact: It addresses real-world failures on controllers
+  with smaller fixed BARs (e.g., Renesas R-Car Gen4 endpoints specify
+  fixed-size BARs such as BAR4=256 bytes:
+  drivers/pci/controller/dwc/pcie-rcar-gen4.c:426), allowing the EPF
+  test to run without allocation errors.
 
-2. **Duration Limiting for CXST_EBT Slot**
-   (drivers/net/wireless/realtek/rtw89/coex.c:4156, 4166, 4175):
-   - Adds `_slot_set_dur(btc, CXST_EBT, dur_2)` to three coexistence
-     policy cases:
-     - `BTC_CXP_OFFE_DEF` - Default off-extended policy
-     - `BTC_CXP_OFFE_DEF2` - Alternative default policy
-     - `BTC_CXP_OFFE_2GBWMIXB` - 2.4GHz bandwidth mixed-BT policy
-   - `dur_2` is set to `dm->e2g_slot_limit` which equals
-     `BTC_E2G_LIMIT_DEF` (80ms)
+- Meets stable backport criteria:
+  - Bug fix, not a feature.
+  - Small and contained.
+  - Minimal risk and no architectural changes.
+  - Confined to PCI endpoint test function code.
 
-### Problem Being Solved
+Given the above, this is a solid candidate for stable backporting.
 
-This commit addresses a **real user-facing bug** affecting Bluetooth
-A2DP audio quality:
+ drivers/pci/endpoint/functions/pci-epf-test.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-- When Wi-Fi is scanning at 2.4GHz, the PTA (Packet Traffic Arbitration)
-  mechanism aborts almost all BT requests
-- If the Wi-Fi slot duration exceeds reasonable limits, BT audio devices
-  cannot receive enough data in time
-- This causes **audible audio glitches and stuttering** during Wi-Fi
-  scanning operations
-- The issue affects users with Bluetooth headphones/speakers while their
-  device scans for Wi-Fi networks
-
-### Technical Merit
-
-**Why This Fix Works:**
-
-1. **Slot Type Change (SLOT_ISO → SLOT_MIX)**: Makes the CXST_ENULL slot
-   more cooperative with Bluetooth by accepting BT low-priority
-   transmission/reception requests, giving BT more opportunities to
-   transmit audio data.
-
-2. **Duration Limiting (80ms)**: Caps the Wi-Fi slot duration at 80ms to
-   ensure BT gets regular opportunities to transmit. The 80ms limit is
-   already defined and used consistently throughout the driver
-   (`BTC_E2G_LIMIT_DEF`).
-
-3. **Targeted Scope**: The changes only affect specific coexistence
-   policies that are active during 2.4GHz Wi-Fi scanning, not normal
-   operation.
-
-### Safety and Risk Assessment
-
-**Low Risk for the following reasons:**
-
-1. **No Reverts or Follow-up Fixes**: Extensive git history search shows
-   no reverts, fixes, or related issues after this commit (checked all
-   commits since 2025-08-19).
-
-2. **Small and Contained**: Only 5 lines changed in a single file, all
-   within the coexistence policy subsystem.
-
-3. **Well-Understood Pattern**: The 80ms slot limit is already used
-   elsewhere in the driver and is a known-good value.
-
-4. **Subsystem-Specific**: Changes are isolated to the rtw89 driver's
-   coexistence mechanism, affecting only Realtek RTL8852x/RTL8922x
-   series Wi-Fi chips.
-
-5. **No Architectural Changes**: This is a configuration tuning, not a
-   structural change.
-
-6. **Tested by Vendor**: Comes from Realtek engineers who develop and
-   test this hardware.
-
-### Affected Hardware
-
-The rtw89 driver supports:
-- RTL8852A, RTL8852B, RTL8852C, RTL8852BT
-- RTL8922A
-
-These are recent Realtek Wi-Fi 6/6E/7 chipsets commonly found in laptops
-and PCIe cards.
-
-### Backporting Criteria Assessment
-
-| Criterion | Assessment | Notes |
-|-----------|------------|-------|
-| Fixes user-facing bug? | ✅ YES | A2DP audio glitches during Wi-Fi
-scanning |
-| Small and contained? | ✅ YES | 5-line change in single file |
-| Clear side effects? | ✅ NO | No unexpected side effects |
-| Architectural changes? | ✅ NO | Configuration tuning only |
-| Critical subsystem? | ⚠️ MODERATE | Coex is important but isolated |
-| Stable tree mention? | ❌ NO | No explicit Cc: stable tag |
-| Minimal regression risk? | ✅ YES | No reverts or fixes found |
-| Subsystem-confined? | ✅ YES | rtw89 driver only |
-
-### Recommendation Rationale
-
-This commit **should be backported** because:
-
-1. **Important User Experience Fix**: Audio glitches are highly
-   noticeable and frustrating to users
-2. **Low Risk**: Small, targeted change with no known issues
-3. **Vendor-Tested**: Comes from hardware vendor with domain expertise
-4. **Mature Subsystem**: The coex mechanism is well-established with
-   clear patterns
-5. **No Dependencies**: Standalone fix requiring no other patches
-6. **Stable Track Record**: No problems reported in upstream since
-   August 2025
-
-The lack of an explicit `Cc: stable@vger.kernel.org` tag appears to be
-an oversight rather than intentional exclusion. The commit clearly meets
-the stable tree criteria for important bug fixes with minimal risk.
-
- drivers/net/wireless/realtek/rtw89/coex.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
-index e4e6daf51a1ba..0f7ae572ef915 100644
---- a/drivers/net/wireless/realtek/rtw89/coex.c
-+++ b/drivers/net/wireless/realtek/rtw89/coex.c
-@@ -93,7 +93,7 @@ static const struct rtw89_btc_fbtc_slot s_def[] = {
- 	[CXST_E2G]	= __DEF_FBTC_SLOT(5,   0xea5a5a5a, SLOT_MIX),
- 	[CXST_E5G]	= __DEF_FBTC_SLOT(5,   0xffffffff, SLOT_ISO),
- 	[CXST_EBT]	= __DEF_FBTC_SLOT(5,   0xe5555555, SLOT_MIX),
--	[CXST_ENULL]	= __DEF_FBTC_SLOT(5,   0xaaaaaaaa, SLOT_ISO),
-+	[CXST_ENULL]	= __DEF_FBTC_SLOT(5,   0x55555555, SLOT_MIX),
- 	[CXST_WLK]	= __DEF_FBTC_SLOT(250, 0xea5a5a5a, SLOT_MIX),
- 	[CXST_W1FDD]	= __DEF_FBTC_SLOT(50,  0xffffffff, SLOT_ISO),
- 	[CXST_B1FDD]	= __DEF_FBTC_SLOT(50,  0xffffdfff, SLOT_ISO),
-@@ -4153,6 +4153,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
- 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
- 			_slot_set_le(btc, CXST_ENULL, s_def[CXST_ENULL].dur,
- 				     s_def[CXST_ENULL].cxtbl, s_def[CXST_ENULL].cxtype);
-+			_slot_set_dur(btc, CXST_EBT, dur_2);
- 			break;
- 		case BTC_CXP_OFFE_DEF2:
- 			_slot_set(btc, CXST_E2G, 20, cxtbl[1], SLOT_ISO);
-@@ -4162,6 +4163,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
- 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
- 			_slot_set_le(btc, CXST_ENULL, s_def[CXST_ENULL].dur,
- 				     s_def[CXST_ENULL].cxtbl, s_def[CXST_ENULL].cxtype);
-+			_slot_set_dur(btc, CXST_EBT, dur_2);
- 			break;
- 		case BTC_CXP_OFFE_2GBWMIXB:
- 			if (a2dp->exist)
-@@ -4170,6 +4172,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
- 				_slot_set(btc, CXST_E2G, 5, tbl_w1, SLOT_MIX);
- 			_slot_set_le(btc, CXST_EBT, cpu_to_le16(40),
- 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
-+			_slot_set_dur(btc, CXST_EBT, dur_2);
- 			break;
- 		case BTC_CXP_OFFE_WL: /* for 4-way */
- 			_slot_set(btc, CXST_E2G, 5, cxtbl[1], SLOT_MIX);
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index 044f5ea0716d1..31617772ad516 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -1067,7 +1067,12 @@ static int pci_epf_test_alloc_space(struct pci_epf *epf)
+ 		if (bar == test_reg_bar)
+ 			continue;
+ 
+-		base = pci_epf_alloc_space(epf, bar_size[bar], bar,
++		if (epc_features->bar[bar].type == BAR_FIXED)
++			test_reg_size = epc_features->bar[bar].fixed_size;
++		else
++			test_reg_size = bar_size[bar];
++
++		base = pci_epf_alloc_space(epf, test_reg_size, bar,
+ 					   epc_features, PRIMARY_INTERFACE);
+ 		if (!base)
+ 			dev_err(dev, "Failed to allocate space for BAR%d\n",
 -- 
 2.51.0
 
