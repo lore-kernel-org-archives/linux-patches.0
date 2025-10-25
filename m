@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9332FC893;
-	Sat, 25 Oct 2025 16:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3B7307ACA;
+	Sat, 25 Oct 2025 16:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409194; cv=none; b=IfgnuPsBWRjI93VWAIVuNJGoYmzIN0wz0AMGD+aChBG0mHX9ZthcMimdU4E1iWgwz0WWr/Rcio5u6Iv8RmqdRqZW9L4knoEK7cFEvIC2+XnzC684skK0voakFYLNtReF6WPjAhPAz5bTqA34Plo28NeOoEuKEcHNMNUgPGlWTk8=
+	t=1761409196; cv=none; b=N0Sen4tXTJ9XJgsFvT/zVv88RXNtBP3TBbLCkqLXauQ5/I1CHYmnP83oyyQhOmZkRMK2tKyCUCCcU/xpQwq/rE1tw54zi/YCsvF/9q6ECRFqwUTqIx1hDHyn632WpFSChBIRYSs7ELion0lXCEV+p/tlnM4rkLJC8D2XWs11yUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409194; c=relaxed/simple;
-	bh=s3GKYIJHrlJpj1mV4IUVk/qjjyOc0d/+RjSIR7hOTmQ=;
+	s=arc-20240116; t=1761409196; c=relaxed/simple;
+	bh=801gx182FAvGt5ByVBL+5SMT1XgfvkwP9xzhTqQFJcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XSozU2Y89lypjWUPmfTfVBKUmk8CA1MNxp6Xpxm4QhfC1lKfwr6jyHNwf9oFc+EI+IinbZUCL3QK5egpntXmD7keMVWYnfN+lj18NR4/tk6cdyqZ4xEJ5aHGtKUsPL/k/Zx8jyhDuJURhrOePoCkCV8dB2D9h/Kfxn4QYFyFD80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X/GAyk1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GtNwRqGJOO8tTZ9XdMq71yp05SUKAtw8rtDjvzxxSlNq6YXCxK8qUdiknXbC6KBW7dUSh+inHZTOUhpp5ukSYpEEx2HZbkXz5eQt/hfZwWJ5QOoaENUKvYYJwXrqCs6uIzqSID/gZc4DrzCO7KMjYxA5+wRMrcAuo6DM0nsMSms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOseBbtq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X/GAyk1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E69FC4CEFB;
-	Sat, 25 Oct 2025 16:19:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOseBbtq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FE0C4CEFB;
+	Sat, 25 Oct 2025 16:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409194;
-	bh=s3GKYIJHrlJpj1mV4IUVk/qjjyOc0d/+RjSIR7hOTmQ=;
+	s=k20201202; t=1761409196;
+	bh=801gx182FAvGt5ByVBL+5SMT1XgfvkwP9xzhTqQFJcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/GAyk1MfsIuQrbTJDhATYRlmn9GuD0diKaQE/RtgmUqGb0F6N9RigkGzy+8fsvIQ
-	 05yX5/sM4SbsGMXeZ6CJby3GU+fofBTgqRdIHVBh5fhsZ4vfV/8NYe7Xf7s30e4G3J
-	 a3mG8SBYHtQIdyw0OUZR/COdWaP64EELaPuShEyrQ16iEyiy7tVg91PaIDk9EDHY+Y
-	 dUFxn5IULZ+960iNMFckzFGfQ1I91zGk1mqcZ7ecapgCnR2CmIhhUYrZf8zpn7speg
-	 dRsPyOQ1eI8d80bqqBvFE0OsA03EiNqrDMzNL0i9IKDHwf3/rfzGECtXAYPrbyAU8t
-	 2X/misGQtw2AA==
+	b=QOseBbtqOypEpqS8XVS2chuBKlNZIr6aR1/DqMeHWGULtshYYolu9A3rYqWUpvaS9
+	 ZaHTrEuntvQZ6DRcQIwx0mREEmXel7WXJjqe0QLVwQXHmksSoZ339YE3bJddIhPYVl
+	 BZuTa2caOQc7iSWqYNgtPe2bwIUVhYF4PjhIlWRJ3dE+JDP+g4ymuJEbnyW+nhpRnp
+	 0eSwwu0gm8onUf5/gsI5XvLp+t3NrOSGvCanJRICMwgEp/6M95SOs0ytOwwINdvXzT
+	 KKZm2fg0L+8lkDLKQwj63WfwKCLzbGMCt0g4m/sxzPu62oUTa8Eqsi1uLUGjUmnc9z
+	 v9PnTLvL+o3yg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Ramu R <ramu.r@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+Cc: =?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	przemyslaw.kitszel@intel.com,
-	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 6.17] idpf: link NAPIs to queues
-Date: Sat, 25 Oct 2025 11:57:49 -0400
-Message-ID: <20251025160905.3857885-238-sashal@kernel.org>
+	lucas.demarchi@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/xe/pf: Program LMTT directory pointer on all GTs within a tile
+Date: Sat, 25 Oct 2025 11:57:50 -0400
+Message-ID: <20251025160905.3857885-239-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -48,37 +50,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Piotr Piórkowski <piotr.piorkowski@intel.com>
 
-[ Upstream commit bd74a86bc75d35adefbebcec7c3a743d02c06230 ]
+[ Upstream commit ad69d62588cd6bf8cddaff5e3e2eb1b8dd876d35 ]
 
-Add the missing linking of NAPIs to netdev queues when enabling
-interrupt vectors in order to support NAPI configuration and
-interfaces requiring get_rx_queue()->napi to be set (like XSk
-busy polling).
+Previously, the LMTT directory pointer was only programmed for primary GT
+within a tile. However, to ensure correct Local Memory access by VFs,
+the LMTT configuration must be programmed on all GTs within the tile.
+Lets program the LMTT directory pointer on every GT of the tile
+to guarantee proper LMEM access across all GTs on VFs.
 
-As currently, idpf_vport_{start,stop}() is called from several flows
-with inconsistent RTNL locking, we need to synchronize them to avoid
-runtime assertions. Notably:
-
-* idpf_{open,stop}() -- regular NDOs, RTNL is always taken;
-* idpf_initiate_soft_reset() -- usually called under RTNL;
-* idpf_init_task -- called from the init work, needs RTNL;
-* idpf_vport_dealloc -- called without RTNL taken, needs it.
-
-Expand common idpf_vport_{start,stop}() to take an additional bool
-telling whether we need to manually take the RTNL lock.
-
-Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # helper
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Ramu R <ramu.r@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+HSD: 18042797646
+Bspec: 67468
+Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Michał Winiarski <michal.winiarski@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://lore.kernel.org/r/20250805091850.1508240-1-piotr.piorkowski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -86,280 +81,115 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a bug-fix
-- The driver was missing the association between netdev queues and their
-  NAPI instances. This breaks NAPI-aware configuration and features that
-  require queue->napi to be set, e.g., AF_XDP busy polling. The patch
-  adds the missing linkage and corresponding unlinkage, which is clearly
-  a functional fix rather than a feature.
+- What it fixes
+  - The current code only programs the LMTT directory pointer for the
+    primary GT of a tile, leaving any additional GTs (e.g., media GT)
+    unconfigured. In this tree, that single write is at
+    drivers/gpu/drm/xe/xe_lmtt.c:202 where it calls
+    xe_mmio_write32(tile->primary_gt, ...).
+  - Since LMTT governs LMEM access for VFs, failing to program
+    LMEM_CFG/LMTT_DIR_PTR for all GTs can break VF access to LMEM on
+    non-primary GTs. The commit message aligns with this: “to ensure
+    correct Local Memory access by VFs, the LMTT configuration must be
+    programmed on all GTs within the tile.”
 
-What changed
-- Link/unlink netdev queues to the NAPI of each q_vector:
-  - Adds `idpf_q_vector_set_napi()` and uses it to associate both RX and
-    TX queues with the q_vector’s `napi`:
-    - Link on IRQ request:
-      drivers/net/ethernet/intel/idpf/idpf_txrx.c:4043
-    - Unlink on IRQ free:
-      drivers/net/ethernet/intel/idpf/idpf_txrx.c:3852
-  - Helper implementation:
-    drivers/net/ethernet/intel/idpf/idpf_txrx.c:3818
+- Why the current behavior is insufficient
+  - LMTT_DIR_PTR and LMEM_EN are defined in GT register space
+    (drivers/gpu/drm/xe/regs/xe_gt_regs.h:429–431), and the comment in
+    that header explains the GSI range is replicated for the media GT.
+    Writing the LMEM_CFG pointer for only the primary GT does not
+    automatically configure the same register instance for the media GT.
+  - xe_lmtt_init_hw() is only invoked from the primary (non-media) GT
+    init path (drivers/gpu/drm/xe/xe_gt.c:531). With the current single
+    write in lmtt_setup_dir_ptr(), the media GT’s instance of LMEM_CFG
+    remains unprogrammed.
 
-- Ensure correct locking for netif_queue_set_napi:
-  - `netif_queue_set_napi()` asserts RTNL or invisibility
-    (net/core/dev.c:7167), so the patch adds an `rtnl` parameter to the
-    vport bring-up/tear-down paths and acquires RTNL where it previously
-    wasn’t guaranteed:
-    - `idpf_vport_open(struct idpf_vport *vport, bool rtnl)` acquires
-      RTNL when `rtnl=true`
-      (drivers/net/ethernet/intel/idpf/idpf_lib.c:1397–1400), and
-      releases on both success and error paths (1528–1531).
-    - `idpf_vport_stop(struct idpf_vport *vport, bool rtnl)` does the
-      same for teardown (900–927).
-  - Callers updated according to their RTNL context, avoiding double-
-    lock or missing-lock situations:
-    - NDO stop: passes `false` (called under RTNL):
-      drivers/net/ethernet/intel/idpf/idpf_lib.c:951
-    - NDO open: passes `false` (called under RTNL):
-      drivers/net/ethernet/intel/idpf/idpf_lib.c:2275
-    - init work (not under RTNL): `idpf_init_task()` passes `true`:
-      drivers/net/ethernet/intel/idpf/idpf_lib.c:1607
-    - vport dealloc (not under RTNL): passes `true`:
-      drivers/net/ethernet/intel/idpf/idpf_lib.c:1044
-    - soft reset (usually under RTNL via ndo contexts): passes `false`:
-      drivers/net/ethernet/intel/idpf/idpf_lib.c:1997 and reopen at
-      2027, 2037
+- What the change does
+  - The patch replaces the single write with a loop to program
+    LMEM_CFG/LMTT_DIR_PTR for every GT on the tile, ensuring both
+    primary and media GTs are configured. In older codebases (as in your
+    tree), this maps to performing the same write for `tile->primary_gt`
+    and, if present, also for `tile->media_gt`. In newer codebases it
+    shows up as for_each_gt_on_tile(...) followed by
+    xe_mmio_write32(&gt->mmio, ...).
 
-- Order of operations remains sane:
-  - Add NAPI and map vectors, then request IRQs, then link queues to
-    NAPI, then enable NAPI/IRQs
-    (drivers/net/ethernet/intel/idpf/idpf_txrx.c:4598–4607, 4043,
-    4619–4621).
-  - On teardown disable interrupts/NAPI, delete NAPI, unlink queues,
-    free IRQs (drivers/net/ethernet/intel/idpf/idpf_txrx.c:4119–4125,
-    3852).
+- Containment and risk
+  - Scope is a single helper: lmtt_setup_dir_ptr(). No ABI/UAPI changes,
+    no architectural refactoring.
+  - The write is guarded by sanity checks (VRAM BO, 64K alignment) and
+    performed during PF GT initialization after reset
+    (xe_lmtt_init_hw()), i.e., early and in a controlled sequence.
+  - Side effects are limited to programming the same register on
+    additional GTs. On single-GT tiles, the loop degenerates to one
+    write.
+  - The register selection already handles platform differences
+    (GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG) within the same
+    helper (drivers/gpu/drm/xe/xe_lmtt.c:203–204), so no new platform-
+    specific branches are introduced.
 
-Impact and risk
-- User-visible bug fixed: AF_XDP busy-polling and other NAPI-aware paths
-  can now retrieve the correct NAPI via get_rx_queue()->napi.
-- Change is tightly scoped to the idpf driver; no UAPI or architectural
-  changes.
-- Locking adjustments are minimal and consistent with net core
-  expectations for `netif_queue_set_napi()`.
-- Similar pattern exists in other drivers (e.g., ice, igb, igc) that use
-  `netif_queue_set_napi`, which supports the approach’s correctness.
-- Note: In the rare request_irq failure unwind, the code frees any
-  requested IRQs but doesn’t explicitly clear queue->napi for
-  previously-linked vectors; however, `napi_del()` runs and the
-  q_vector/napi storage remains valid, and normal teardown does clear
-  associations. This is a minor edge and does not outweigh the benefit
-  of the fix.
+- User impact and severity
+  - Misprogramming LMTT on multi-GT tiles can break LMEM access for VFs
+    using media engines, resulting in functional failures or GPU faults
+    in SR-IOV scenarios. This is a practical, user-visible bug in
+    virtualization setups, not a feature change.
 
-Stable backport suitability
-- Meets stable criteria: fixes a real functional bug, small and self-
-  contained, limited to a single driver, low regression risk, and
-  conforms to net core locking rules.
-- Dependency: requires `netif_queue_set_napi()` (present in this branch,
-  net/core/dev.c:7159). For older stable series lacking this API, a
-  backport would need equivalent infrastructure or adaptation.
+- Backport considerations
+  - Applicable stable series: Only those that include the Xe driver and
+    SR-IOV PF LMTT support (e.g., v6.8.y and v6.9.y). The XE driver (and
+    xe_lmtt.c) is not present in v6.6.y or older, so those are out of
+    scope.
+  - Minimal adaptation: Older trees (like v6.8/v6.9) do not have
+    for_each_gt_on_tile(). The equivalent stable backport is to perform
+    the existing write for `tile->primary_gt` and additionally, if non-
+    NULL, for `tile->media_gt`. The existing code already uses
+    xe_mmio_write32(gt, ...), so the change is straightforward and
+    localized.
+  - Invocation context: xe_lmtt_init_hw() is called from the primary GT
+    init only (drivers/gpu/drm/xe/xe_gt.c:531), so programming all GTs
+    inside lmtt_setup_dir_ptr() is the correct place to ensure media GT
+    gets configured too.
 
-Conclusion
-- This is a clear, necessary bug fix enabling expected NAPI-aware
-  behavior in idpf. It is safe and appropriate to backport.
+- Stable rules fit
+  - Important bugfix affecting real users (SR-IOV VFs on multi-GT
+    tiles).
+  - Small and contained patch touching only the Xe PF LMTT
+    initialization routine.
+  - No new features, no ABI changes, and minimal regression risk.
+  - Clear intent and references in the commit message (HSD: 18042797646,
+    Bspec: 67468), plus Reviewed-by and lore link.
 
- drivers/net/ethernet/intel/idpf/idpf_lib.c  | 38 +++++++++++++++------
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 17 +++++++++
- 2 files changed, 45 insertions(+), 10 deletions(-)
+Conclusion: This is a solid, low-risk bugfix that should be backported
+to stable kernels that have the Xe driver and SR-IOV PF LMTT code (e.g.,
+6.8.y and 6.9.y).
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index e327950c93d8e..f4b89d222610f 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -884,14 +884,18 @@ static void idpf_remove_features(struct idpf_vport *vport)
- /**
-  * idpf_vport_stop - Disable a vport
-  * @vport: vport to disable
-+ * @rtnl: whether to take RTNL lock
-  */
--static void idpf_vport_stop(struct idpf_vport *vport)
-+static void idpf_vport_stop(struct idpf_vport *vport, bool rtnl)
- {
- 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ drivers/gpu/drm/xe/xe_lmtt.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_lmtt.c b/drivers/gpu/drm/xe/xe_lmtt.c
+index a2000307d5bf9..a78c9d474a6ef 100644
+--- a/drivers/gpu/drm/xe/xe_lmtt.c
++++ b/drivers/gpu/drm/xe/xe_lmtt.c
+@@ -195,14 +195,17 @@ static void lmtt_setup_dir_ptr(struct xe_lmtt *lmtt)
+ 	struct xe_tile *tile = lmtt_to_tile(lmtt);
+ 	struct xe_device *xe = tile_to_xe(tile);
+ 	dma_addr_t offset = xe_bo_main_addr(lmtt->pd->bo, XE_PAGE_SIZE);
++	struct xe_gt *gt;
++	u8 id;
  
- 	if (np->state <= __IDPF_VPORT_DOWN)
- 		return;
+ 	lmtt_debug(lmtt, "DIR offset %pad\n", &offset);
+ 	lmtt_assert(lmtt, xe_bo_is_vram(lmtt->pd->bo));
+ 	lmtt_assert(lmtt, IS_ALIGNED(offset, SZ_64K));
  
-+	if (rtnl)
-+		rtnl_lock();
-+
- 	netif_carrier_off(vport->netdev);
- 	netif_tx_disable(vport->netdev);
- 
-@@ -913,6 +917,9 @@ static void idpf_vport_stop(struct idpf_vport *vport)
- 	idpf_vport_queues_rel(vport);
- 	idpf_vport_intr_rel(vport);
- 	np->state = __IDPF_VPORT_DOWN;
-+
-+	if (rtnl)
-+		rtnl_unlock();
+-	xe_mmio_write32(&tile->mmio,
+-			GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
+-			LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
++	for_each_gt_on_tile(gt, tile, id)
++		xe_mmio_write32(&gt->mmio,
++				GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
++				LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
  }
  
  /**
-@@ -936,7 +943,7 @@ static int idpf_stop(struct net_device *netdev)
- 	idpf_vport_ctrl_lock(netdev);
- 	vport = idpf_netdev_to_vport(netdev);
- 
--	idpf_vport_stop(vport);
-+	idpf_vport_stop(vport, false);
- 
- 	idpf_vport_ctrl_unlock(netdev);
- 
-@@ -1029,7 +1036,7 @@ static void idpf_vport_dealloc(struct idpf_vport *vport)
- 	idpf_idc_deinit_vport_aux_device(vport->vdev_info);
- 
- 	idpf_deinit_mac_addr(vport);
--	idpf_vport_stop(vport);
-+	idpf_vport_stop(vport, true);
- 
- 	if (!test_bit(IDPF_HR_RESET_IN_PROG, adapter->flags))
- 		idpf_decfg_netdev(vport);
-@@ -1370,8 +1377,9 @@ static void idpf_rx_init_buf_tail(struct idpf_vport *vport)
- /**
-  * idpf_vport_open - Bring up a vport
-  * @vport: vport to bring up
-+ * @rtnl: whether to take RTNL lock
-  */
--static int idpf_vport_open(struct idpf_vport *vport)
-+static int idpf_vport_open(struct idpf_vport *vport, bool rtnl)
- {
- 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
- 	struct idpf_adapter *adapter = vport->adapter;
-@@ -1381,6 +1389,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 	if (np->state != __IDPF_VPORT_DOWN)
- 		return -EBUSY;
- 
-+	if (rtnl)
-+		rtnl_lock();
-+
- 	/* we do not allow interface up just yet */
- 	netif_carrier_off(vport->netdev);
- 
-@@ -1388,7 +1399,7 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 	if (err) {
- 		dev_err(&adapter->pdev->dev, "Failed to allocate interrupts for vport %u: %d\n",
- 			vport->vport_id, err);
--		return err;
-+		goto err_rtnl_unlock;
- 	}
- 
- 	err = idpf_vport_queues_alloc(vport);
-@@ -1475,6 +1486,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 		goto deinit_rss;
- 	}
- 
-+	if (rtnl)
-+		rtnl_unlock();
-+
- 	return 0;
- 
- deinit_rss:
-@@ -1492,6 +1506,10 @@ static int idpf_vport_open(struct idpf_vport *vport)
- intr_rel:
- 	idpf_vport_intr_rel(vport);
- 
-+err_rtnl_unlock:
-+	if (rtnl)
-+		rtnl_unlock();
-+
- 	return err;
- }
- 
-@@ -1572,7 +1590,7 @@ void idpf_init_task(struct work_struct *work)
- 	np = netdev_priv(vport->netdev);
- 	np->state = __IDPF_VPORT_DOWN;
- 	if (test_and_clear_bit(IDPF_VPORT_UP_REQUESTED, vport_config->flags))
--		idpf_vport_open(vport);
-+		idpf_vport_open(vport, true);
- 
- 	/* Spawn and return 'idpf_init_task' work queue until all the
- 	 * default vports are created
-@@ -1962,7 +1980,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 		idpf_send_delete_queues_msg(vport);
- 	} else {
- 		set_bit(IDPF_VPORT_DEL_QUEUES, vport->flags);
--		idpf_vport_stop(vport);
-+		idpf_vport_stop(vport, false);
- 	}
- 
- 	idpf_deinit_rss(vport);
-@@ -1992,7 +2010,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 		goto err_open;
- 
- 	if (current_state == __IDPF_VPORT_UP)
--		err = idpf_vport_open(vport);
-+		err = idpf_vport_open(vport, false);
- 
- 	goto free_vport;
- 
-@@ -2002,7 +2020,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 
- err_open:
- 	if (current_state == __IDPF_VPORT_UP)
--		idpf_vport_open(vport);
-+		idpf_vport_open(vport, false);
- 
- free_vport:
- 	kfree(new_vport);
-@@ -2240,7 +2258,7 @@ static int idpf_open(struct net_device *netdev)
- 	if (err)
- 		goto unlock;
- 
--	err = idpf_vport_open(vport);
-+	err = idpf_vport_open(vport, false);
- 
- unlock:
- 	idpf_vport_ctrl_unlock(netdev);
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index e75a94d7ac2ac..92634c4bb369a 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3430,6 +3430,20 @@ void idpf_vport_intr_rel(struct idpf_vport *vport)
- 	vport->q_vectors = NULL;
- }
- 
-+static void idpf_q_vector_set_napi(struct idpf_q_vector *q_vector, bool link)
-+{
-+	struct napi_struct *napi = link ? &q_vector->napi : NULL;
-+	struct net_device *dev = q_vector->vport->netdev;
-+
-+	for (u32 i = 0; i < q_vector->num_rxq; i++)
-+		netif_queue_set_napi(dev, q_vector->rx[i]->idx,
-+				     NETDEV_QUEUE_TYPE_RX, napi);
-+
-+	for (u32 i = 0; i < q_vector->num_txq; i++)
-+		netif_queue_set_napi(dev, q_vector->tx[i]->idx,
-+				     NETDEV_QUEUE_TYPE_TX, napi);
-+}
-+
- /**
-  * idpf_vport_intr_rel_irq - Free the IRQ association with the OS
-  * @vport: main vport structure
-@@ -3450,6 +3464,7 @@ static void idpf_vport_intr_rel_irq(struct idpf_vport *vport)
- 		vidx = vport->q_vector_idxs[vector];
- 		irq_num = adapter->msix_entries[vidx].vector;
- 
-+		idpf_q_vector_set_napi(q_vector, false);
- 		kfree(free_irq(irq_num, q_vector));
- 	}
- }
-@@ -3637,6 +3652,8 @@ static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
- 				   "Request_irq failed, error: %d\n", err);
- 			goto free_q_irqs;
- 		}
-+
-+		idpf_q_vector_set_napi(q_vector, true);
- 	}
- 
- 	return 0;
 -- 
 2.51.0
 
