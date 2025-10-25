@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1D230C609;
-	Sat, 25 Oct 2025 16:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C726D30C60C;
+	Sat, 25 Oct 2025 16:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409737; cv=none; b=JA5rFwi8776Z43DMUf0Sj4cSiKULnFoOZFaq9+ce3MOA/0PiKERUj+DJiMhn1Wx8T6jmvuOZ3vWnZNNLMcHaUqYGbQnoGxCrpfhWXCzA3c8B/77AODvEWA59GFOd2Wga9srHAc1UGAjiqws5U0GzS2WUBcZhjyWc8DUNuZRu9II=
+	t=1761409738; cv=none; b=O0sZxKGRNvWuWoWRtOHnarUgxUZKN1SKIy4T+0yILbV2a6osKf+3mgOoyi4UoQjnrEppYABoFVnMTNXS1dWVRPFYJ/q7cznJnPgeEDVA84bV0dvQ5LBEPD/z9eTSJqJD2F+n39ojyvMawuS3sq+IPFxk0HDWXtSbsjr2qyHI92E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409737; c=relaxed/simple;
-	bh=NBzBBqfdDX3ER7q56c+eTh28BN4lKPjJ15k8LfFyso8=;
+	s=arc-20240116; t=1761409738; c=relaxed/simple;
+	bh=KuN0rYE5WO21s3BjY46USG2Aw+kKSQV2IfxwexUpeGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W0YrXUvVSqMPyp8jag5dUJ2mErKYljf9i+i2nC6QVRzyGxV9uaaTd3A/YmjbZL+GJSekDNv3S5Z2Hdf3Z5RnYaZUx5jgEQjzQFZ9c/UYMeOzB77M3xurbAPEIHf9AOCAalnWJqY+FC9dgcgQjd5XdZ6XS0porGXpboOAXIW0wgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Erabh20A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MYssNjvp46SvQpshp/T98NGe7PnIOfOZt3NW73canOk4G7J3iltxpHLffSwq6yp68U7LEKBFIkZ2kIvcDeekNNP6QhsdmYjLpUuvVtn6FrnOP1HRzSLaw0p/yPyYhhJVhl/aL+88Br6l7Akh9co72r0qcol1sKqDtVx1BKrrEHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1Gw/umw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Erabh20A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613FFC4CEFB;
-	Sat, 25 Oct 2025 16:28:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1Gw/umw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6F1C4CEF5;
+	Sat, 25 Oct 2025 16:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409737;
-	bh=NBzBBqfdDX3ER7q56c+eTh28BN4lKPjJ15k8LfFyso8=;
+	s=k20201202; t=1761409738;
+	bh=KuN0rYE5WO21s3BjY46USG2Aw+kKSQV2IfxwexUpeGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Erabh20AyiTZfse63dZH3/58b6Fcow3KU2QleCF5REb6+qoR1fFl7+VAO1k4hLB85
-	 hjYjt21oF8Qsg9g9H6LI9kd5kfiAnhJRZF2XopUYv7ZxGUtXGCtYkuZngvg4qlf0vl
-	 IfP23/HVz1ZdYzvYAovxCNP6PpaHOk9uJ5YL/4C78vIad2FykA0POjRnCPYE5v79rT
-	 9wBjv8pIwBDnEejEr2Y9ezXKZ0pgqOfWQvBubc7IjW+Txky56MRX1Cxhm9lFiSJWQe
-	 bhePpepM/1qAWeh81N+6htyVdkcUg970Lk9q9+yyOxzX7MTo1btsmkOPK6cb+tkG1m
-	 d9G30zOUOypHA==
+	b=m1Gw/umwIA1AqNSS8IRN9eAucPutiopAe1sDcY11HeLxsxIbSKE9vFF1vgevtrKET
+	 qYrT0GSD1mbdzidocEbCHGBpZpUpAvi8dVCkQJMsY2s36SFfR6CgRSahg/IP5dOs8J
+	 XovMZfeoiMA2+w1xmYahJGOUQ8pV9xp5hUeKVzkT5ivzCPHbJNze4p2qaOKMFpkDEE
+	 xk/OXXdLWo9ZSIYf3OK238UuOIf0eSgEoKtlkiIP2r0t0e8DSriEoawepTD6sD0ksa
+	 Ho+DIjlPbrefmTsGxx43nanr7ru20Eji4SuWnYjOA/ITQBJd3Kd4OJYtnwM+zj3Cdr
+	 KoVbTS2lqbudA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] move_mount(2): take sanity checks in 'beneath' case into do_lock_mount()
-Date: Sat, 25 Oct 2025 12:01:14 -0400
-Message-ID: <20251025160905.3857885-443-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-scsi@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] scsi: ufs: host: mediatek: Correct system PM flow
+Date: Sat, 25 Oct 2025 12:01:15 -0400
+Message-ID: <20251025160905.3857885-444-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,20 +56,16 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit d29da1a8f119130e6fc7d5d71029d402dabe2cb0 ]
+[ Upstream commit 77b96ef70b6ba46e3473e5e3a66095c4bc0e93a4 ]
 
-We want to mount beneath the given location.  For that operation to
-make sense, location must be the root of some mount that has something
-under it.  Currently we let it proceed if those requirements are not met,
-with rather meaningless results, and have that bogosity caught further
-down the road; let's fail early instead - do_lock_mount() doesn't make
-sense unless those conditions hold, and checking them there makes
-things simpler.
+Refine the system power management (PM) flow by skipping low power mode
+(LPM) and MTCMOS settings if runtime PM is already applied. Prevent
+redundant operations to ensure a more efficient PM process.
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,104 +73,106 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Prevents nonsensical MOVE_MOUNT_BENEATH operations from proceeding
-    when the destination is not a mount root or when the topmost mount
-    has no parent (i.e., namespace root). Previously this could “proceed
-    with meaningless results” and fail later; now it fails early with
-    -EINVAL as intended.
+- Fixes a real PM logic bug. Without this change, the Mediatek UFS
+  driver forces VSx/regulators out of LPM and re-enables MTCMOS during
+  system resume even if the device is runtime-suspended, which violates
+  the runtime PM state and can wake hardware spuriously (extra power
+  draw or mis-ordered bring-up). The core UFS system PM paths already
+  skip work if the device is runtime-suspended; the Mediatek vendor code
+  must mirror that behavior.
+- Aligns vendor flow with core UFS PM semantics. Core checks
+  `pm_runtime_suspended(hba->dev)` and bails from system PM work in both
+  suspend and resume (drivers/ufs/core/ufshcd.c:10284,
+  drivers/ufs/core/ufshcd.c:10311). This patch adds the same guards to
+  the Mediatek hooks so vendor-specific toggles are not performed on a
+  runtime-suspended device.
+- Corrects ordering on resume. It powers the MTCMOS domain before
+  changing device regulator LPM, matching the already-correct runtime PM
+  path and avoiding SMC/PM operations while the domain is off.
 
-- Key changes
-  - Early validation in do_lock_mount():
-    - Adds `if (unlikely(beneath) && !path_mounted(path)) return
-      -EINVAL;` so non-mount-root targets are rejected immediately
-      (fs/namespace.c:do_lock_mount()).
-    - Adds a parent check under `mount_lock` in the ‘beneath’ path: `if
-      (unlikely(!mnt_has_parent(m))) { ... return -EINVAL; }` to reject
-      attempts beneath a namespace root before proceeding
-      (fs/namespace.c:do_lock_mount()).
-  - De-duplication: Removes the equivalent checks from
-    can_move_mount_beneath(), centralizing them where the mountpoint and
-    parent are actually determined
-    (fs/namespace.c:can_move_mount_beneath()).
+Key code changes and impact:
+- Add guard in system suspend to skip vendor LPM/MTCMOS when runtime-
+  suspended:
+  - `if (pm_runtime_suspended(hba->dev)) goto out;`
+    drivers/ufs/host/ufs-mediatek.c:2380
+  - Prevents redundant `ufs_mtk_dev_vreg_set_lpm(hba, true)` and
+    `ufs_mtk_mtcmos_ctrl(false, ...)` calls when runtime PM already put
+    the device in low power (drivers/ufs/host/ufs-mediatek.c:2383,
+    drivers/ufs/host/ufs-mediatek.c:2386).
+- Add guard in system resume to preserve runtime-suspended state:
+  - `if (pm_runtime_suspended(hba->dev)) goto out;`
+    drivers/ufs/host/ufs-mediatek.c:2398
+  - Avoids powering on MTCMOS and clearing LPM when device should remain
+    runtime-suspended.
+- Fix resume sequencing to match runtime resume:
+  - Enable MTCMOS before clearing LPM: `ufs_mtk_mtcmos_ctrl(true, ...)`
+    then `ufs_mtk_dev_vreg_set_lpm(hba, false)` (drivers/ufs/host/ufs-
+    mediatek.c:2401, drivers/ufs/host/ufs-mediatek.c:2404).
+  - Mirrors the runtime path order (drivers/ufs/host/ufs-
+    mediatek.c:2442, drivers/ufs/host/ufs-mediatek.c:2448).
+- Always invoke core system resume for tracing/consistency
+  (drivers/ufs/host/ufs-mediatek.c:2406).
 
-- Context in current tree
-  - The tree already performs an early `beneath && !path_mounted(path)`
-    rejection in do_lock_mount (see `fs/namespace.c:2732`), so
-    moving/keeping this check in do_lock_mount is aligned with the
-    patch’s intent.
-  - The explicit `mnt_has_parent()` guard is not currently enforced at
-    lock acquisition time in do_lock_mount; adding it there (while
-    holding `mount_lock`) closes a race and ensures the operation only
-    proceeds when a real parent exists.
-  - can_move_mount_beneath in this tree already focuses on
-    propagation/relationship checks and does not contain those
-    path/parent assertions (see around `fs/namespace.c:3417`), so
-    consolidating sanity checks into do_lock_mount is consistent and low
-    risk.
+Why it fits stable:
+- Small, contained fix limited to Mediatek UFS host.
+- No API changes; just conditionalizing existing operations and
+  correcting order.
+- Prevents incorrect power-state transitions and redundant SMC/PM ops;
+  low regression risk.
+- Aligns with core driver’s established PM behavior, reducing divergence
+  and surprises.
 
-- Why it’s a good stable candidate
-  - Bug fix: Enforces semantic preconditions for MOVE_MOUNT_BENEATH,
-    avoiding misleading or late failures.
-  - Small and contained: Changes are limited to fs/namespace.c, mostly
-    simple condition checks and code movement.
-  - No feature or architectural change: Just earlier, clearer
-    validation; the end result remains a failure for invalid usage.
-  - Concurrency-safe: Parent check is done while holding `mount_lock`,
-    reducing race windows between `mount_lock` and `namespace_sem`.
+Given these factors, this is an important behavioral fix with minimal
+risk and should be backported.
 
-- Regression risk
-  - Low. Users attempting invalid MOVE_MOUNT_BENEATH operations will now
-    get -EINVAL earlier rather than later. Valid usages are unaffected.
+ drivers/ufs/host/ufs-mediatek.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
- fs/namespace.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
-
-diff --git a/fs/namespace.c b/fs/namespace.c
-index c8c2376bb2424..fa7c034ac4a69 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2785,12 +2785,19 @@ static int do_lock_mount(struct path *path, struct pinned_mountpoint *pinned, bo
- 	struct path under = {};
- 	int err = -ENOENT;
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 6bdbbee1f0708..91081d2aabe44 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -2264,27 +2264,38 @@ static int ufs_mtk_system_suspend(struct device *dev)
  
-+	if (unlikely(beneath) && !path_mounted(path))
-+		return -EINVAL;
+ 	ret = ufshcd_system_suspend(dev);
+ 	if (ret)
+-		return ret;
++		goto out;
 +
- 	for (;;) {
- 		struct mount *m = real_mount(mnt);
++	if (pm_runtime_suspended(hba->dev))
++		goto out;
  
- 		if (beneath) {
- 			path_put(&under);
- 			read_seqlock_excl(&mount_lock);
-+			if (unlikely(!mnt_has_parent(m))) {
-+				read_sequnlock_excl(&mount_lock);
-+				return -EINVAL;
-+			}
- 			under.mnt = mntget(&m->mnt_parent->mnt);
- 			under.dentry = dget(m->mnt_mountpoint);
- 			read_sequnlock_excl(&mount_lock);
-@@ -3462,8 +3469,6 @@ static bool mount_is_ancestor(const struct mount *p1, const struct mount *p2)
-  * @to:   mount under which to mount
-  * @mp:   mountpoint of @to
-  *
-- * - Make sure that @to->dentry is actually the root of a mount under
-- *   which we can mount another mount.
-  * - Make sure that nothing can be mounted beneath the caller's current
-  *   root or the rootfs of the namespace.
-  * - Make sure that the caller can unmount the topmost mount ensuring
-@@ -3485,12 +3490,6 @@ static int can_move_mount_beneath(const struct path *from,
- 		     *mnt_to = real_mount(to->mnt),
- 		     *parent_mnt_to = mnt_to->mnt_parent;
+ 	ufs_mtk_dev_vreg_set_lpm(hba, true);
  
--	if (!mnt_has_parent(mnt_to))
--		return -EINVAL;
--
--	if (!path_mounted(to))
--		return -EINVAL;
--
- 	if (IS_MNT_LOCKED(mnt_to))
- 		return -EINVAL;
+ 	if (ufs_mtk_is_rtff_mtcmos(hba))
+ 		ufs_mtk_mtcmos_ctrl(false, res);
+ 
+-	return 0;
++out:
++	return ret;
+ }
+ 
+ static int ufs_mtk_system_resume(struct device *dev)
+ {
++	int ret = 0;
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct arm_smccc_res res;
+ 
++	if (pm_runtime_suspended(hba->dev))
++		goto out;
++
+ 	ufs_mtk_dev_vreg_set_lpm(hba, false);
+ 
+ 	if (ufs_mtk_is_rtff_mtcmos(hba))
+ 		ufs_mtk_mtcmos_ctrl(true, res);
+ 
+-	return ufshcd_system_resume(dev);
++out:
++	ret = ufshcd_system_resume(dev);
++
++	return ret;
+ }
+ #endif
  
 -- 
 2.51.0
