@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3825C30DD36;
-	Sat, 25 Oct 2025 16:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711A3090CB;
+	Sat, 25 Oct 2025 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409441; cv=none; b=hBFCafLu+ha3ADlE5HTtuI3VT807Y4Dt4EijeApB6oKgjCyFgwxQiIIGrrygHkdZMo7Dj0a4lGYbGljlbjRH7jgODN7YWuvdvVxrUnS/FPDbXk2HlCpYaCy3issMfczPN2ur6Wn1OoHpkUlclpMoZFrGJuuxU0ukzX9f9qBhRPY=
+	t=1761409445; cv=none; b=bEIP5RopOswToi+a8NwbgLmce607aeUbaT8CkoincyPH0EdkDmuFYOfvdk2G2KFxUzCiEBoMeTdWw9HEV7qMpFYMFKIfC787RlNM0Uy1j0PmSb46l9YfNB532wDmgewRGthpifCXW01aDi1fKBDA7BFVbPXFtHD7503xxDXbMHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409441; c=relaxed/simple;
-	bh=e3Ams2jiJHk4xSiHYOXE6jS58LCiDT3q49LTvoyBlJk=;
+	s=arc-20240116; t=1761409445; c=relaxed/simple;
+	bh=mIzmgwyZLuHoMCkfF8ACP+1cuYslvilvOq7youLoTu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BMhMErf2j3SQZTZ5sWUPmWTBKhHwoT0KJssIztU9KBb3ZdTnAqkuaMh18+OH6GdVxKGsZoW4aaQUyfbvrDXfBisznZZHeMLZEz2m7vpQWmhoG4k23Hq4viTwv8+W0Og563XblP8CavS/ePtwAnVEbK9ggCfC63yRCO4lSBfF7vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plBem8Gj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UFkrIDJfLIj88cyTrlcQhefUhPH6KXLlaL3GTlwC5DxsllgpmDkOkur33HIYO2aqEVBh7puLRvUZcaSMJtGsSLkhNmlkkcRhHzV58s+BDEc40VqEagTENwBD7coRimPSXmBTftUL8eyNtcwgtzS3fT0phJ7cP+nYmdCduzM7HmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sKZNpQP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plBem8Gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629A6C4CEFF;
-	Sat, 25 Oct 2025 16:24:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sKZNpQP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD9BC113D0;
+	Sat, 25 Oct 2025 16:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409441;
-	bh=e3Ams2jiJHk4xSiHYOXE6jS58LCiDT3q49LTvoyBlJk=;
+	s=k20201202; t=1761409445;
+	bh=mIzmgwyZLuHoMCkfF8ACP+1cuYslvilvOq7youLoTu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plBem8Gj33Nj8YKMAr7VJSc+9CzViTnl+Om2+fUHUkSV7idVnH2PHg1nM1VATiZIq
-	 MKFDfoRcXwOdncR+md+Gc9yk9yAXUI5kRLd37UfPqvfiCy+/RiYVZuQYOvmL0DtJ08
-	 fgCenjmhQRuwU7wjFhqdVerQBRY9MyAm+lYeWFPiF7Kh1s1BzzL2kXZapFBNcFybyB
-	 Pb2VlgCzfhLEVzr8QujIQtPHnEJNQj2GMVlwMzb99lpYmnJ4K7oVsEUmcA0K+Srw1Z
-	 +J4OEbDvDy+lYxafvfSk7t+7Y/CFp4gD6pvcJ4h9GoCtXsBIOXNEmyIZVwyrdS8yjc
-	 TkbJgATF+Icaw==
+	b=sKZNpQP1GelEK2viat3FtrtVpCWnkBJVQLkLJhKZvVfqYL3dPQzS9idz2DnWNe5ED
+	 ObPgiajVNwMpz04c75V6uQN3ECF6+EbRYoZsdEGOweKvtbNG3ez0J21FmamvwwzCaD
+	 ZbFtfTv08ahryxyFjc/COf3J0xdqv1msQBss6vKvGvKQyko1FbZKkx5nSbfosvc6z2
+	 BzXTSyM8uYf7kkUGMZUPP3b8bWrusqXMVJFN/KUepN/WXDBK0h5Jn3+V6IwQ+WRUPI
+	 aZLax2DCxr7gTUEP+4fbDFymbf9Vx1Eml9NpMNduH+aTMohNhdhs1xJ3+Mkr6zgjIC
+	 JWwSNvZqRkUtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
+Cc: Kai Huang <kai.huang@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Farrah Chen <farrah.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] wifi: rtw89: print just once for unknown C2H events
-Date: Sat, 25 Oct 2025 11:59:18 -0400
-Message-ID: <20251025160905.3857885-327-sashal@kernel.org>
+	kas@kernel.org,
+	isaku.yamahata@intel.com,
+	alexandre.f.demers@gmail.com,
+	thuth@redhat.com,
+	vannapurve@google.com,
+	adrian.hunter@intel.com,
+	x86@kernel.org,
+	linux-coco@lists.linux.dev,
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] x86/virt/tdx: Mark memory cache state incoherent when making SEAMCALL
+Date: Sat, 25 Oct 2025 11:59:19 -0400
+Message-ID: <20251025160905.3857885-328-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,23 +63,51 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Kai Huang <kai.huang@intel.com>
 
-[ Upstream commit 7e1c44fe4c2e1e01fa47d9490893d95309a99687 ]
+[ Upstream commit 10df8607bf1a22249d21859f56eeb61e9a033313 ]
 
-When driver receives new or unknown C2H events, it print out messages
-repeatedly once events are received, like
+On TDX platforms, dirty cacheline aliases with and without encryption
+bits can coexist, and the cpu can flush them back to memory in random
+order.  During kexec, the caches must be flushed before jumping to the
+new kernel otherwise the dirty cachelines could silently corrupt the
+memory used by the new kernel due to different encryption property.
 
-  rtw89_8922ae 0000:81:00.0: PHY c2h class 2 not support
+A percpu boolean is used to mark whether the cache of a given CPU may be
+in an incoherent state, and the kexec performs WBINVD on the CPUs with
+that boolean turned on.
 
-To avoid the thousands of messages, use rtw89_info_once() instead. Also,
-print out class/func for unknown (undefined) class.
+For TDX, only the TDX module or the TDX guests can generate dirty
+cachelines of TDX private memory, i.e., they are only generated when the
+kernel does a SEAMCALL.
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Closes: https://lore.kernel.org/linux-wireless/20250729204437.164320-1-sean.anderson@linux.dev/
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250804012234.8913-2-pkshih@realtek.com
+Set that boolean when the kernel does SEAMCALL so that kexec can flush
+the cache correctly.
+
+The kernel provides both the __seamcall*() assembly functions and the
+seamcall*() wrapper ones which additionally handle running out of
+entropy error in a loop.  Most of the SEAMCALLs are called using the
+seamcall*(), except TDH.VP.ENTER and TDH.PHYMEM.PAGE.RDMD which are
+called using __seamcall*() variant directly.
+
+To cover the two special cases, add a new __seamcall_dirty_cache()
+helper which only sets the percpu boolean and calls the __seamcall*(),
+and change the special cases to use the new helper.  To cover all other
+SEAMCALLs, change seamcall*() to call the new helper.
+
+For the SEAMCALLs invoked via seamcall*(), they can be made from both
+task context and IRQ disabled context.  Given SEAMCALL is just a lengthy
+instruction (e.g., thousands of cycles) from kernel's point of view and
+preempt_{disable|enable}() is cheap compared to it, just unconditionally
+disable preemption during setting the boolean and making SEAMCALL.
+
+Signed-off-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Link: https://lore.kernel.org/all/20250901160930.1785244-4-pbonzini%40redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,142 +115,146 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a good stable backport
-- Fixes real user pain (log flooding): The current rtw89 driver logs an
-  info message for every unknown/unhandled C2H event, leading to
-  “thousands of messages” per the commit message. In-tree code shows
-  exactly this behavior:
-  - `drivers/net/wireless/realtek/rtw89/mac.c:5535` prints “MAC c2h
-    class %d not support” and returns for every unknown class;
-    `drivers/net/wireless/realtek/rtw89/mac.c:5539` prints “MAC c2h
-    class %d func %d not support”.
-  - `drivers/net/wireless/realtek/rtw89/phy.c:3128` prints “PHY c2h
-    class %d not support”;
-    `drivers/net/wireless/realtek/rtw89/phy.c:3132` prints “PHY c2h
-    class %d func %d not support”.
-  This can flood dmesg/syslog when firmware repeatedly sends such
-events, crowding out important logs and consuming resources. Reducing
-this to a single print per callsite is a tangible bugfix for system
-reliability and observability.
-- Minimal and contained change:
-  - Adds a single helper macro mapping to a long‑standing kernel
-    facility: `rtw89_info_once` → `dev_info_once` in
-    `drivers/net/wireless/realtek/rtw89/debug.h` near `rtw89_info` (see
-    `drivers/net/wireless/realtek/rtw89/debug.h:58`). `dev_info_once` is
-    widely available (see `include/linux/dev_printk.h:204`), so no
-    portability concerns across stable series.
-  - In both handlers, shifts unknown/unsupported printing into the
-    common “no handler” path and uses `rtw89_info_once`:
-    - For MAC: stops logging in the switch `default:` and instead logs
-      once when `handler == NULL` with class/func, then returns.
-      Behavior remains identical (unknowns are dropped), but message
-      prints once instead of per-event.
-    - For PHY: same pattern—remove per-event `default:` logging and
-      replace the final “no handler” print with `rtw89_info_once`
-      showing class/func.
-  - No data path, timing, locking, or ABI changes; only logging behavior
-    is touched.
-- Low regression risk:
-  - Control flow remains the same for unknown events: they are ignored
-    after a single informational notice. Previously an unknown class
-    returned early after printing; now it falls through and returns at
-    the `!handler` check. Since `handler` is `NULL` for unknowns, the
-    net effect is the same.
-  - `dev_info_once` is per callsite, preventing floods while still
-    signaling the condition once.
-- Aligns with stable policy: This is a focused, risk‑free improvement
-  that prevents severe kernel log spam, a class of fixes commonly
-  accepted into stable when the noise can degrade system usability or
-  mask other issues. It is confined to the rtw89 driver and does not
-  introduce features or architectural changes.
-- Reported and reviewed: The patch addresses a real report
-  (Closes/Reported-by in the message), with a clear rationale and
-  review, indicating practical relevance.
+Why this fixes a real bug
+- TDX can leave dirty cachelines for private memory with different
+  encryption attributes (C-bit aliases). If kexec interrupts a CPU
+  during a SEAMCALL, its dirty private cachelines can later be flushed
+  in the wrong order and silently corrupt the new kernel’s memory.
+  Marking the CPU’s cache state as “incoherent” before executing
+  SEAMCALL ensures kexec will WBINVD on that CPU and avoid corruption.
 
-Notes for backporting
-- Context differences: Some older branches (e.g.,
-  `drivers/net/wireless/realtek/rtw89/phy.c:3123-3126`) have a special-
-  case return for `RTW89_PHY_C2H_CLASS_DM` with
-  `RTW89_PHY_C2H_DM_FUNC_LOWRT_RTY`. The logging adjustment is still
-  trivial: remove per-event prints in the switch `default:` and convert
-  the final `!handler` print to `rtw89_info_once` with class/func. No
-  functional behavior needs to change.
-- No external dependencies: `dev_info_once` is present in the tree
-  (`include/linux/dev_printk.h:204`), so introducing `rtw89_info_once`
-  in `debug.h` is safe across stable series.
+What changed (key points with code references)
+- New helper marks per-CPU cache incoherent before any SEAMCALL:
+  - arch/x86/include/asm/tdx.h:111 sets
+    `this_cpu_write(cache_state_incoherent, true)` in
+    `__seamcall_dirty_cache()` and asserts preemption is disabled (lines
+    111–128).
+- Wrap all `seamcall*()` paths with preemption-disabled critical
+  section:
+  - arch/x86/include/asm/tdx.h:130–147 uses
+    `preempt_disable()/preempt_enable()` in `sc_retry()` so the same CPU
+    that sets the flag executes the SEAMCALL, avoiding migration races.
+- Convert special direct callers to use the new helper:
+  - arch/x86/virt/vmx/tdx/tdx.c:1271 changes `paddr_is_tdx_private()` to
+    call `__seamcall_dirty_cache(__seamcall_ret, TDH_PHYMEM_PAGE_RDMD,
+    ...)`.
+  - arch/x86/virt/vmx/tdx/tdx.c:1522 changes `tdh_vp_enter()` to call
+    `__seamcall_dirty_cache(__seamcall_saved_ret, TDH_VP_ENTER, ...)`.
+- Consumers of the per-CPU flag during kexec/CPU stop:
+  - arch/x86/kernel/process.c:99 defines `cache_state_incoherent` and
+    uses it in `stop_this_cpu()` to WBINVD if set
+    (arch/x86/kernel/process.c:840).
+  - arch/x86/kernel/machine_kexec_64.c:449 sets
+    `RELOC_KERNEL_CACHE_INCOHERENT` when the per-CPU flag is set so
+    `relocate_kernel_64.S` executes WBINVD (relocate path).
+  - The TDX-specific flush routine will WBINVD and clear the flag if
+    needed (arch/x86/virt/vmx/tdx/tdx.c:1872–1887).
 
-Summary of changes that matter
-- Add `#define rtw89_info_once(rtwdev, a...)
-  dev_info_once((rtwdev)->dev, ##a)` next to `rtw89_info`
-  (drivers/net/wireless/realtek/rtw89/debug.h:58).
-- In `rtw89_mac_c2h_handle`, stop printing in the `default:` and instead
-  log once in the `if (!handler)` block with class/func and return
-  (drivers/net/wireless/realtek/rtw89/mac.c:5535, 5539).
-- In `rtw89_phy_c2h_handle`, same pattern: remove per-event `default:`
-  log and use `rtw89_info_once` with class/func in the `!handler` block
-  (drivers/net/wireless/realtek/rtw89/phy.c:3128, 3132).
+Why it’s safe to backport
+- Scope-limited: touches only TDX host paths and the seamcall wrappers;
+  no ABI or architectural changes.
+- Minimal risk: setting a per-CPU boolean and wrapping SEAMCALLs with
+  preempt disable. SEAMCALLs are long; added preemption control is
+  negligible overhead and avoids CPU migration races.
+- Correctness across contexts: SEAMCALLs can happen with IRQs disabled;
+  the helper asserts preemption is off, and the wrappers explicitly
+  ensure it. The two special direct-call sites run in contexts where
+  IRQs are off or preemption is already disabled.
+- Aligns with existing kexec logic: Stable trees already check
+  `cache_state_incoherent` during CPU stop and relocation
+  (arch/x86/kernel/process.c:840,
+  arch/x86/kernel/machine_kexec_64.c:449).
 
-Given the concrete reduction of harmful log spam, tiny and contained
-code deltas, and zero behavioral risk, this is a solid candidate for
-stable backport.
+Dependencies/assumptions for stable trees
+- Requires the per-CPU `cache_state_incoherent` infrastructure and kexec
+  consumers:
+  - Declaration: arch/x86/include/asm/processor.h:734
+  - Definition/usage: arch/x86/kernel/process.c:99,
+    arch/x86/kernel/process.c:840
+  - Kexec integration: arch/x86/kernel/machine_kexec_64.c:449 and
+    arch/x86/kernel/relocate_kernel_64.S (WBINVD when
+    `RELOC_KERNEL_CACHE_INCOHERENT` set)
 
- drivers/net/wireless/realtek/rtw89/debug.h | 1 +
- drivers/net/wireless/realtek/rtw89/mac.c   | 7 +++----
- drivers/net/wireless/realtek/rtw89/phy.c   | 7 +++----
- 3 files changed, 7 insertions(+), 8 deletions(-)
+Summary
+- This is a focused, low-risk bugfix preventing silent memory corruption
+  on TDX hosts during kexec by correctly marking and subsequently
+  flushing CPUs that might have generated dirty private cachelines
+  during SEAMCALLs. It satisfies stable backport criteria (user-visible
+  correctness fix, minimal change, localized impact).
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.h b/drivers/net/wireless/realtek/rtw89/debug.h
-index fc690f7c55dc7..a364e7adb0798 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.h
-+++ b/drivers/net/wireless/realtek/rtw89/debug.h
-@@ -56,6 +56,7 @@ static inline void rtw89_debugfs_deinit(struct rtw89_dev *rtwdev) {}
- #endif
+ arch/x86/include/asm/tdx.h  | 25 ++++++++++++++++++++++++-
+ arch/x86/virt/vmx/tdx/tdx.c |  4 ++--
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/arch/x86/include/asm/tdx.h b/arch/x86/include/asm/tdx.h
+index 7ddef3a698668..0922265c6bdcb 100644
+--- a/arch/x86/include/asm/tdx.h
++++ b/arch/x86/include/asm/tdx.h
+@@ -102,10 +102,31 @@ u64 __seamcall_ret(u64 fn, struct tdx_module_args *args);
+ u64 __seamcall_saved_ret(u64 fn, struct tdx_module_args *args);
+ void tdx_init(void);
  
- #define rtw89_info(rtwdev, a...) dev_info((rtwdev)->dev, ##a)
-+#define rtw89_info_once(rtwdev, a...) dev_info_once((rtwdev)->dev, ##a)
- #define rtw89_warn(rtwdev, a...) dev_warn((rtwdev)->dev, ##a)
- #define rtw89_err(rtwdev, a...) dev_err((rtwdev)->dev, ##a)
++#include <linux/preempt.h>
+ #include <asm/archrandom.h>
++#include <asm/processor.h>
  
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 5a5da9d9c0c5b..ef17a307b7702 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5813,12 +5813,11 @@ void rtw89_mac_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 	case RTW89_MAC_C2H_CLASS_ROLE:
- 		return;
- 	default:
--		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
--		return;
-+		break;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "MAC c2h class %d func %d not support\n",
-+				class, func);
- 		return;
- 	}
- 	handler(rtwdev, skb, len);
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index d607577b353c6..01a03d2de3ffb 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3626,12 +3626,11 @@ void rtw89_phy_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 			handler = rtw89_phy_c2h_dm_handler[func];
- 		break;
- 	default:
--		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
--		return;
-+		break;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "PHY c2h class %d func %d not support\n",
-+				class, func);
- 		return;
- 	}
- 	handler(rtwdev, skb, len);
+ typedef u64 (*sc_func_t)(u64 fn, struct tdx_module_args *args);
+ 
++static __always_inline u64 __seamcall_dirty_cache(sc_func_t func, u64 fn,
++						  struct tdx_module_args *args)
++{
++	lockdep_assert_preemption_disabled();
++
++	/*
++	 * SEAMCALLs are made to the TDX module and can generate dirty
++	 * cachelines of TDX private memory.  Mark cache state incoherent
++	 * so that the cache can be flushed during kexec.
++	 *
++	 * This needs to be done before actually making the SEAMCALL,
++	 * because kexec-ing CPU could send NMI to stop remote CPUs,
++	 * in which case even disabling IRQ won't help here.
++	 */
++	this_cpu_write(cache_state_incoherent, true);
++
++	return func(fn, args);
++}
++
+ static __always_inline u64 sc_retry(sc_func_t func, u64 fn,
+ 			   struct tdx_module_args *args)
+ {
+@@ -113,7 +134,9 @@ static __always_inline u64 sc_retry(sc_func_t func, u64 fn,
+ 	u64 ret;
+ 
+ 	do {
+-		ret = func(fn, args);
++		preempt_disable();
++		ret = __seamcall_dirty_cache(func, fn, args);
++		preempt_enable();
+ 	} while (ret == TDX_RND_NO_ENTROPY && --retry);
+ 
+ 	return ret;
+diff --git a/arch/x86/virt/vmx/tdx/tdx.c b/arch/x86/virt/vmx/tdx/tdx.c
+index c7a9a087ccaf5..3ea6f587c81a3 100644
+--- a/arch/x86/virt/vmx/tdx/tdx.c
++++ b/arch/x86/virt/vmx/tdx/tdx.c
+@@ -1266,7 +1266,7 @@ static bool paddr_is_tdx_private(unsigned long phys)
+ 		return false;
+ 
+ 	/* Get page type from the TDX module */
+-	sret = __seamcall_ret(TDH_PHYMEM_PAGE_RDMD, &args);
++	sret = __seamcall_dirty_cache(__seamcall_ret, TDH_PHYMEM_PAGE_RDMD, &args);
+ 
+ 	/*
+ 	 * The SEAMCALL will not return success unless there is a
+@@ -1522,7 +1522,7 @@ noinstr __flatten u64 tdh_vp_enter(struct tdx_vp *td, struct tdx_module_args *ar
+ {
+ 	args->rcx = tdx_tdvpr_pa(td);
+ 
+-	return __seamcall_saved_ret(TDH_VP_ENTER, args);
++	return __seamcall_dirty_cache(__seamcall_saved_ret, TDH_VP_ENTER, args);
+ }
+ EXPORT_SYMBOL_GPL(tdh_vp_enter);
+ 
 -- 
 2.51.0
 
