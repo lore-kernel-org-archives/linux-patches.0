@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6F03090F7;
-	Sat, 25 Oct 2025 16:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494753043D4;
+	Sat, 25 Oct 2025 16:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409129; cv=none; b=jqwj1bavP6nmTImPPWnL4qYDOnC4fodOtCxd+t4bhH6vRTCB2K7CPpNsOJyEXvhZJrw+tesYxsg8B6LoKdiNlXyNoUFeWSkkfS18hq8FDTYr3oXHkCsL2OOcpcSK1VNPXnoGcnKthM90Sq0n5bT377aHgOvTgzXV2kNw4BBC9L8=
+	t=1761409133; cv=none; b=MkdnmHVOlflvV5EihY6JOINBambAYk7jYXRBKG8dIFVphb4Xlg8jvxf8Q6Ludrpm+X/lpjf06tfoAuYH4hZjdXCS8M43fgJivxhrZRMv+uEJ9n//bXGWFvJUzft3i+J8jk8qVz0APVOkFrKF1cUTUqND5edc2R53ITGC+nmfMzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409129; c=relaxed/simple;
-	bh=eZtBbOBL0b4kmGXZubuxk4FnOOlr3qqqWwl+rHIVSro=;
+	s=arc-20240116; t=1761409133; c=relaxed/simple;
+	bh=Yq+4z6HuVvhYk55wT49mSp8aKdDxY5/CmTo7RIp7nVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b7zKYrLM0si9oOIz4++F2kTJtm3zkM14kQpHeZUb4wpr+WS4oTAksEWKYraAbnrDtqialg0SHcsgPtbCuhSdsr7fj7/fuRucHG7HWWO+/xvQS3MjQevC/DukpEFlI2zCiYO10vPFtw8jfARJcyhqIYcRZPrnPp8z7Ene3vYR06I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uDvbFg6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jzwgg6cKg681OjN773d7SNBWOPct8CFT8kCkfm1gfZfu3/CrU+CY4GXXN+1jVYfYNOB1R88g9/skUYKeNrkCmbOantGq9pBJTEn0/+3YyneukYZ+XGwrY1ZNwL9XQdMqP6udsCCe6lyb9JQs9u2kBH2RdLPpXJbnjXD3K3FB56s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWuUgYy/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uDvbFg6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3E9C4CEF5;
-	Sat, 25 Oct 2025 16:18:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWuUgYy/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50C6C4CEF5;
+	Sat, 25 Oct 2025 16:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409128;
-	bh=eZtBbOBL0b4kmGXZubuxk4FnOOlr3qqqWwl+rHIVSro=;
+	s=k20201202; t=1761409133;
+	bh=Yq+4z6HuVvhYk55wT49mSp8aKdDxY5/CmTo7RIp7nVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDvbFg6kj/dEgBVtdECVcBJlj1aZgL1NDSfj2VU8aimp1Ik42GU9p2ylg+uFvPaGA
-	 GHZAx/64OrfpbTKZYbG5qlj5CMpnE1/6v5s1UKHm7C6eWMz9RFl9l52TYwRsLuVg7q
-	 0rsjtRAGbvIpcmC3luGgrhXOoh9g3BZ6BycmImfA0HmRjVAJBHQKDe+GEIG5YJh2rd
-	 jfxrLxsPyk4CLcwkvlLSN0C8gt8bmogtZSCJJzmQT8vnFUlESYoVWbVkSKUrdfMP+l
-	 1X0YlRhwtqd2fF+A/8YnRgv0ravhhOwBBAo10D1PTiwEAZ1CV6JZ6Oym97Gqu8b1Pg
-	 9A8zhNjhQ4BUQ==
+	b=uWuUgYy/DCBzdi2xj4DGoTIm9t6ruJ7L9d7OZ8rMVSA8Ls5zHY9CP2ZOURhrF5hxz
+	 49g8QXuB7uhcRYYqu6anASTgXq+mIDZfWezksSY9H1h/3+HwTcMePaCjt1QNXr580X
+	 wWuYDzRDVJRF3TbEIwtUJVUxQgZyV4iwthnMpyso9kEUI3zpJfFJDPibkJfT9szmCj
+	 LoL0+/mobQKBmt3YWeYwXUNN2aQcKgB4P9e018GkpYV5wijpkWq2vd2SzG9SjVoM2o
+	 0o1VxyyabnmZbMLqNQSIah6zxhJNz/574LL6k/U7h1YSlZxKE6ooUPxwGPFQragV5T
+	 R7X5kMjvvFG9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Relja Vojvodic <rvojvodi@amd.com>,
+	Chris Park <chris.park@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] wifi: rtw89: fix BSSID comparison for non-transmitted BSSID
-Date: Sat, 25 Oct 2025 11:57:22 -0400
-Message-ID: <20251025160905.3857885-211-sashal@kernel.org>
+	Austin.Zheng@amd.com,
+	Dillon.Varone@amd.com,
+	alvin.lee2@amd.com,
+	colin.i.king@gmail.com,
+	Yihan.Zhu@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Increase minimum clock for TMDS 420 with pipe splitting
+Date: Sat, 25 Oct 2025 11:57:23 -0400
+Message-ID: <20251025160905.3857885-212-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,16 +59,22 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Relja Vojvodic <rvojvodi@amd.com>
 
-[ Upstream commit c4c16c88e78417424b4e3f33177e84baf0bc9a99 ]
+[ Upstream commit 002a612023c8b105bd3829d81862dee04368d6de ]
 
-For non-transmitted connections, beacons are received from the
-transmitted BSSID. Fix this to avoid missing beacon statistics.
+[Why]
+-Pipe splitting allows for clocks to be reduced, but when using TMDS 420,
+reduced clocks lead to missed clocks cycles on clock resyncing
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250811123950.15697-1-pkshih@realtek.com
+[How]
+-Impose a minimum clock when using TMDS 420
+
+Reviewed-by: Chris Park <chris.park@amd.com>
+Signed-off-by: Relja Vojvodic <rvojvodi@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -68,103 +82,126 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
-
 - What it fixes
-  - In rtw89, beacon frames are filtered per-VIF by comparing the frame
-    BSSID (`iter_data->bssid`) to `bss_conf->bssid`. Today that check is
-    unconditional, so when associated to a nontransmitted BSSID in an
-    MBSSID set, beacons sent by the transmitter BSSID never match and
-    the driver drops out before updating beacon-related stats. See the
-    unconditional check at
-    drivers/net/wireless/realtek/rtw89/core.c:2276.
-  - As a result, the driver silently misses key updates triggered only
-    for beacons: TSF sync, RSSI EWMA for beacons, beacon bandwidth
-    index, beacon-rate sampling and the beacon counter. These are all
-    under the beacon-handling block starting at
-    drivers/net/wireless/realtek/rtw89/core.c:2284 (e.g.,
-    `rtw89_vif_sync_bcn_tsf`, `rtw89_fw_h2c_rssi_offload`,
-    `ewma_rssi_add`, `pkt_stat->beacon_nr++`).
-  - The commit teaches the driver to, for beacon frames only, compare
-    against `bss_conf->transmitter_bssid` when
-    `bss_conf->nontransmitted` is true; otherwise fall back to
-    `bss_conf->bssid`. This matches 802.11 MBSSID behavior where the
-    TxBSSID transmits the beacon for nontransmitted profiles. The new
-    `target_bssid` logic is inserted next to `const u8 *bssid =
-    iter_data->bssid;` at drivers/net/wireless/realtek/rtw89/core.c:2254
-    and replaces the unconditional comparison at
-    drivers/net/wireless/realtek/rtw89/core.c:2276.
+  - Prevents missed clock cycles during clock resync when using HDMI
+    TMDS with YCbCr 4:2:0 and ODM pipe splitting (commit message
+    explicitly cites user-visible failures). This is a correctness fix,
+    not a feature.
 
-- Why it’s correct
-  - mac80211 already models MBSSID with `bss_conf->nontransmitted` and
-    `bss_conf->transmitter_bssid` (include/net/mac80211.h:812,
-    include/net/mac80211.h:814). Using the transmitter BSSID only for
-    beacons when on a nontransmitted BSSID is the correct interpretation
-    of the spec and consistent with how other drivers behave.
-  - Cross-driver precedent: ath12k selects `transmitter_bssid` when
-    `nontransmitted` for station links
-    (drivers/net/wireless/ath/ath12k/mac.c:633), reinforcing that this
-    pattern is standard.
+- What changed (code-level)
+  - `CalculateRequiredDispclk` now takes `isTMDS420` and clamps the
+    required display clock to a minimum of `PixelClock / 2.0` when TMDS
+    4:2:0 is used:
+    - Function signature adds the flag: drivers/gpu/drm/amd/display/dc/d
+      ml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c:1239
+    - The ODM-scaling branches are unchanged (e.g., 4:1 → `PixelClock /
+      4.0` at 1247), but a new clamp is applied:
+      - TMDS-420 check: 1256
+      - Clamp: `DispClk = math_max2(DispClk, PixelClock / 2.0);` at 1258
+  - `CalculateODMMode` detects TMDS 4:2:0 and passes the new flag to all
+    `CalculateRequiredDispclk` calls:
+    - TMDS-420 detection: `(OutFormat == dml2_420 && Output ==
+      dml2_hdmi)` at 4134
+    - Updated calls: 4136, 4137, 4138, 4139
 
-- Scope and risk
-  - Change is small and self-contained: one extra `const u8
-    *target_bssid` and a conditional selection for the comparison in a
-    single function (`rtw89_vif_rx_stats_iter`).
-  - It only affects handling of beacon frames and only when
-    `nontransmitted` is true. All other frames and the general
-    comparison path remain unchanged, minimizing regression risk.
-  - No API/ABI or architectural changes; it uses existing mac80211
-    fields present in 6.17 (include/net/mac80211.h:812,
-    include/net/mac80211.h:814).
+- Why it’s needed
+  - ODM combine modes lower pipe clocks (e.g., 3:1 → `PixelClock/3`, 4:1
+    → `PixelClock/4`). For HDMI TMDS 4:2:0 (two pixels per TMDS clock),
+    letting DISPCLK drop below `PixelClock/2` can cause resync to miss
+    clock cycles. The clamp ensures DISPCLK never falls below the
+    effective minimum for TMDS 420, avoiding those failures.
 
-- User impact
-  - Without this, associated stations on nontransmitted BSSIDs miss
-    beacon-derived stats (TSF sync, RSSI EWMA, beacon counters/rates),
-    which can degrade link monitoring, roaming decisions, and power
-    behavior.
-  - With this fix, rtw89 correctly accounts beacons for such
-    connections, restoring expected functionality.
+- Scope and side effects
+  - Scope is tightly limited to DML2.1 DCN4 calculations for AMD
+    display, and only when:
+    - Output is HDMI and the output format is 4:2:0 (line 4134).
+    - ODM pipe splitting is being considered (the affected DISPCLK
+      computations at 4136–4139).
+  - No architectural changes; static function signature change is local
+    to the file, with all callers updated.
+  - Potential behavioral change: ODM 3:1 or 4:1 modes may no longer be
+    selected if the clamped DISPCLK would exceed the device’s
+    `MaxDispclk`. That trades an unstable configuration (missed clocks)
+    for a safe one (bypass or 2:1), which is appropriate for stable.
+
+- Risk assessment
+  - Small, localized change; clearly guarded by `isTMDS420`. No API,
+    ABI, or cross-subsystem impact.
+  - Aligns with existing math for TMDS 4:2:0 behavior elsewhere (e.g.,
+    other code also treats 4:2:0 as 2 pixels per clock).
+  - The worst case is a slightly higher required DISPCLK or a different
+    ODM choice, which avoids the reported failure mode.
 
 - Stable backport criteria
-  - Important bugfix with user-visible impact: YES.
-  - Small and contained change: YES (one function, a few lines).
-  - No new features or interface changes: YES.
-  - Minimal regression risk: YES.
-  - Confined to a driver subsystem: YES (rtw89 only).
-  - Explicit stable tag not present, but the nature of the fix fits
-    stable policy.
+  - Fixes a real user-visible bug (missed clock cycles/resync issues).
+  - Minimal and contained to one source file in AMD display’s DML2.1
+    path.
+  - No new features or architectural changes.
+  - Touches a GPU driver (not a core kernel subsystem), limiting
+    regression blast radius.
+  - Even without a Fixes: tag, the change is a clear bugfix with strong
+    rationale.
 
 Given the above, this is a good candidate for backporting to stable
-trees that have rtw89 and MBSSID support (e.g., 6.17.x and other
-maintained series with these fields and code paths).
+trees that include the DML2.1 DCN4 code path.
 
- drivers/net/wireless/realtek/rtw89/core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../src/dml2_core/dml2_core_dcn4_calcs.c      | 28 +++++++++++++------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 5dd05b296e71c..0f7a467671ca8 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2246,6 +2246,7 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
- 	struct ieee80211_bss_conf *bss_conf;
- 	struct rtw89_vif_link *rtwvif_link;
- 	const u8 *bssid = iter_data->bssid;
-+	const u8 *target_bssid;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+index b9cff21985110..bf62d42b3f78b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+@@ -1238,18 +1238,27 @@ static void CalculateDETBufferSize(
  
- 	if (rtwdev->scanning &&
- 	    (ieee80211_is_beacon(hdr->frame_control) ||
-@@ -2267,7 +2268,10 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
- 		goto out;
+ static double CalculateRequiredDispclk(
+ 	enum dml2_odm_mode ODMMode,
+-	double PixelClock)
++	double PixelClock,
++	bool isTMDS420)
+ {
++	double DispClk;
+ 
+ 	if (ODMMode == dml2_odm_mode_combine_4to1) {
+-		return PixelClock / 4.0;
++		DispClk = PixelClock / 4.0;
+ 	} else if (ODMMode == dml2_odm_mode_combine_3to1) {
+-		return PixelClock / 3.0;
++		DispClk = PixelClock / 3.0;
+ 	} else if (ODMMode == dml2_odm_mode_combine_2to1) {
+-		return PixelClock / 2.0;
++		DispClk = PixelClock / 2.0;
+ 	} else {
+-		return PixelClock;
++		DispClk = PixelClock;
++	}
++
++	if (isTMDS420) {
++		double TMDS420MinPixClock = PixelClock / 2.0;
++		DispClk = math_max2(DispClk, TMDS420MinPixClock);
  	}
++
++	return DispClk;
+ }
  
--	if (!ether_addr_equal(bss_conf->bssid, bssid))
-+	target_bssid = ieee80211_is_beacon(hdr->frame_control) &&
-+		       bss_conf->nontransmitted ?
-+		       bss_conf->transmitter_bssid : bss_conf->bssid;
-+	if (!ether_addr_equal(target_bssid, bssid))
- 		goto out;
+ static double TruncToValidBPP(
+@@ -4122,11 +4131,12 @@ static noinline_for_stack void CalculateODMMode(
+ 	bool success;
+ 	bool UseDSC = DSCEnable && (NumberOfDSCSlices > 0);
+ 	enum dml2_odm_mode DecidedODMMode;
++	bool isTMDS420 = (OutFormat == dml2_420 && Output == dml2_hdmi);
  
- 	if (is_mld) {
+-	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock);
+-	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock);
+-	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock);
+-	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock);
++	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock, isTMDS420);
++	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock, isTMDS420);
++	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock, isTMDS420);
++	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock, isTMDS420);
+ #ifdef __DML_VBA_DEBUG__
+ 	DML_LOG_VERBOSE("DML::%s: ODMUse = %d\n", __func__, ODMUse);
+ 	DML_LOG_VERBOSE("DML::%s: Output = %d\n", __func__, Output);
 -- 
 2.51.0
 
