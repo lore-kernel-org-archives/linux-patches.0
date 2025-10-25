@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4E4305976;
-	Sat, 25 Oct 2025 16:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86D330597B;
+	Sat, 25 Oct 2025 16:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408895; cv=none; b=G6FZ4laYzzhIxddHXH3Y0HggXDgxOvWmHjlW3DIeg3274rHOVqHQ/m+gM/fash2Ecy23c1OEAQ9+Tu4Tvi0Ormk9wufZXbNRkROkhDzny75WwU2M+UU5CBLausirtSAg06pNZjBLjWgz/NtCeZzf+G6nc4UWqpFa2PMwWrksjwc=
+	t=1761408896; cv=none; b=Loak8ldaCa3K6sMKiNO133WPmTIBDAnp/YOoApEMGHvxdRvVWvV4X1f26Wn4amgcV+bDFXzwmjcTnRygfPB3GLzZFpPTQEW8BneUYRHJSL+pGOqGRYnnl8yuGWp1M6erX6AWBzMULgY8mhew+L9KCR3H7jCBya1Zr95r2YqexgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408895; c=relaxed/simple;
-	bh=tcamB+9hatZ3BmRnUV96afch00ZCkk8rlOOhM3ZXNxU=;
+	s=arc-20240116; t=1761408896; c=relaxed/simple;
+	bh=SJ2tykIRrO3VfuRAjf9XZkC0hbketZ/+M4J680sx3J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fywIg8rYE3JRpOcLUycxqTiPmk7U+OWX+WvwcEtCSoPpQopjUjF0C6Nr5UNSA1FkZZwdCm2zw5wBvPXc8ALStptstE8jzWguNwqyVkiNHWxQjRQl6cEqV9Dmf6uNPJACQK65Bhi2Yo6bjoxeVCeXBcXKis633jiKGBoxzGW0vcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pCHcA7QC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QBPEW9disJ0F0t8TLCVw3BxSUtrerPtkItlJiznSXJfBmxuUslwrcNS8s0go4yOFYgPHFig6sT0jgdAlJO9Gm8rYDvecpQEilbwrFWAbGlYNMyOsjDagP2yxEQxQK+VXYFrW5JaeATN9RKCudz4kqErIIVMkZrSKBqzQhXLYGYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TPL0zfV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCHcA7QC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7011CC4CEF5;
-	Sat, 25 Oct 2025 16:14:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TPL0zfV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33F4C4CEFB;
+	Sat, 25 Oct 2025 16:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408895;
-	bh=tcamB+9hatZ3BmRnUV96afch00ZCkk8rlOOhM3ZXNxU=;
+	s=k20201202; t=1761408896;
+	bh=SJ2tykIRrO3VfuRAjf9XZkC0hbketZ/+M4J680sx3J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCHcA7QC+gp8bSpjXrus9WkOzZhG8/EnQETYqQqSmnynbPRlVvDL+K6CbPRpMW03a
-	 HPijPD2jMd0ypvqTzZHyfFeBTTfjwefDvL24qo57yBTSF33k9AGeCE5FAOa8U1I8Ql
-	 /TuStSl1NhDft1A8WbXiEgBzyajX4rC4XdexolGX4K3xd+qlap1ArDwLkRwFCe9z0D
-	 9/6ilexuVtVfIYg5WUmuQ0lBDcnRXy06S5YZ6Ncc9xLkUeMoMOARwg6lHTICmx8RvK
-	 vMdgqlJhstJ9ABMZZa9+bKSEP/00zDJNy69rawK7Sm/oP8TuQvEPXKP3M9qU/qXws4
-	 dLuYnf4K6XegA==
+	b=TPL0zfV2Qwbq7utETjxjgS+g/9Oug8xwJHPFr5pgf0ghb3/CEdCbOTb2V7bRdmqkL
+	 YcZK1VMqIGgjJHdZAhOkF4WfM5aGjw7cBiY7zUEpQ6USaLvxBTagLo5RLMNOYcUC+h
+	 VcetzaIYiclIk9bLp5V+w0WFNx2oBB+LXVoOzN/EsuJ5ThQWxMggwUP2+OpqVe9jat
+	 hKdR3hqhDG3cAJGJwC/PYBZTEXnGq3AD5xklZPE1iZvMb76tatdISAgZsBGMBTgTsk
+	 Mrr56Ui90MZTn2g2xCLFSXXMedM6dQln3/Ev9tBSHWSzaeXq/UzTQnpY00TlD3iZae
+	 XnbzuBLPAH4Ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+Cc: Ping-Ke Shih <pkshih@realtek.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
 	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe/configfs: Enforce canonical device names
-Date: Sat, 25 Oct 2025 11:55:50 -0400
-Message-ID: <20251025160905.3857885-119-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: add dummy C2H handlers for BCN resend and update done
+Date: Sat, 25 Oct 2025 11:55:51 -0400
+Message-ID: <20251025160905.3857885-120-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -47,41 +46,29 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 400a6da1e967c4f117e4757412df06dcfaea0e6a ]
+[ Upstream commit 04a2de8cfc95076d6c65d4d6d06d0f9d964a2105 ]
 
-While we expect config directory names to match PCI device name,
-currently we are only scanning provided names for domain, bus,
-device and function numbers, without checking their format.
-This would pass slightly broken entries like:
+Two C2H events are not listed, and driver throws
 
-  /sys/kernel/config/xe/
-  ├── 0000:00:02.0000000000000
-  │   └── ...
-  ├── 0000:00:02.0x
-  │   └── ...
-  ├──  0: 0: 2. 0
-  │   └── ...
-  └── 0:0:2.0
-      └── ...
+  MAC c2h class 0 func 6 not support
+  MAC c2h class 1 func 3 not support
 
-To avoid such mistakes, check if the name provided exactly matches
-the canonical PCI device address format, which we recreated from
-the parsed BDF data. Also simplify scanf format as it can't really
-catch all formatting errors.
+Since the implementation in vendor driver does nothing, add two dummy
+functions for them.
 
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250722141059.30707-3-michal.wajdeczko@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reported-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/d2d62793-046c-4b55-93ed-1d1f43cff7f2@gmail.com/
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250804012234.8913-3-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -89,95 +76,142 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**Why It’s A Bug**
-- Current code accepts any string that scans into
-  domain/bus/slot/function, even if not in canonical PCI BDF format. See
-  parsing in drivers/gpu/drm/xe/xe_configfs.c:264.
-- The driver later looks up the configfs group by constructing the
-  canonical BDF name, so a misnamed directory cannot be found and
-  settings silently don’t apply. See lookup formatting in
-  drivers/gpu/drm/xe/xe_configfs.c:310-311.
-- The in-file docs already prescribe canonical names (for example
-  0000:03:00.0), reinforcing that non-canonical input is unintended; see
-  example path in drivers/gpu/drm/xe/xe_configfs.c:41.
+- User-visible issue: firmware sends two valid C2H events which the
+  driver doesn’t list/handle, producing noisy logs:
+  - “MAC c2h class 0 func 6 not support” (INFO class, func 6)
+  - “MAC c2h class 1 func 3 not support” (OFLD class, func 3)
+  - Current dispatcher prints this whenever a handler is missing:
+    drivers/net/wireless/realtek/rtw89/mac.c:5539.
 
-**Fix Details**
-- Parsing is relaxed to read numbers generically, then the code
-  synthesizes the canonical BDF string and requires an exact match:
-  - Replace strict-width `sscanf(name, "%04x:%02x:%02x.%x", ...)` with
-    `sscanf(name, "%x:%x:%x.%x", ...)` to get the values.
-  - Build the canonical name and enforce exact equality via
-    `scnprintf(canonical, ..., "%04x:%02x:%02x.%d", ...)` and
-    `strcmp(name, canonical) == 0`. Returns `-EINVAL` if it differs.
-- The canonical composition uses `PCI_SLOT(PCI_DEVFN(slot, function))`
-  and `PCI_FUNC(...)`, implicitly constraining slot/function to valid
-  bit widths and preventing odd encodings from slipping through.
-- The change is localized to group creation in
-  drivers/gpu/drm/xe/xe_configfs.c:256 (the function where the new
-  `canonical` buffer, `scnprintf`, and `strcmp` checks are added).
+- Root cause in current trees:
+  - OFLD class has `RTW89_MAC_C2H_FUNC_BCN_RESEND` but its slot is
+    `NULL` in the handler table, so it logs as unsupported:
+    drivers/net/wireless/realtek/rtw89/mac.c:5410 and
+    drivers/net/wireless/realtek/rtw89/mac.h:390.
+  - INFO class has no enumerant for BCN update-done, so func 6 is out-
+    of-range and also logs unsupported:
+    drivers/net/wireless/realtek/rtw89/mac.h:398..403 and
+    drivers/net/wireless/realtek/rtw89/mac.c:5418.
 
-**User Impact Fixed**
-- Prevents creating “broken” directories like 0000:00:02.0000000000000,
-  0000:00:02.0x, 0:0:2.0, or with spaces/uppercase hex. Previously these
-  were accepted, but the driver’s later lookup (by canonical name) would
-  not find them, so configfs settings were ignored.
-- With this patch, such inputs fail fast with `-EINVAL` instead of
-  failing silently later.
+- What this patch changes (small and contained):
+  - Adds two no-op handlers:
+    - `rtw89_mac_c2h_bcn_resend(...)` in `mac.c` and wires it into
+      `[RTW89_MAC_C2H_FUNC_BCN_RESEND]` in
+      `rtw89_mac_c2h_ofld_handler[]`.
+    - `rtw89_mac_c2h_bcn_upd_done(...)` in `mac.c` and wires it into
+      `[RTW89_MAC_C2H_FUNC_BCN_UPD_DONE]` in
+      `rtw89_mac_c2h_info_handler[]`.
+  - Extends the INFO function enum with `RTW89_MAC_C2H_FUNC_BCN_UPD_DONE
+    = 0x06`, which bumps `RTW89_MAC_C2H_FUNC_INFO_MAX` accordingly so
+    func 6 becomes in-range: drivers/net/wireless/realtek/rtw89/mac.h
+    (new enumerant before `RTW89_MAC_C2H_FUNC_INFO_MAX`).
 
-**Risk and Scope**
-- Small, contained change to a single function in the Xe configfs code;
-  no architectural changes or core subsystem impact.
-- Maintains existing error behavior for non-existent devices (`-ENODEV`
-  remains).
-- Behavior change is strictly tighter validation; correct canonical
-  names continue to work. Scripts relying on non-canonical names would
-  not have worked reliably anyway (lookups failed), so rejecting them is
-  safer.
+- Behavioral effect:
+  - These two events are now recognized and consumed without logging
+    “not support,” matching vendor driver behavior (“implementation in
+    vendor driver does nothing”).
+  - No functional change to MAC/PHY state; only eliminates spurious logs
+    for valid firmware events.
 
-**Stable Backport Considerations**
-- Meets stable criteria: fixes a real user-visible misbehavior (silent
-  no-op config), minimal patch size, confined to the Xe driver’s
-  configfs path, no API/ABI changes.
-- No dependency on other features; headers used (`string.h`, PCI macros)
-  are already present. Applies cleanly around
-  drivers/gpu/drm/xe/xe_configfs.c:256-266.
-- Applicable to stable series that include Xe configfs (the file and
-  functions present in this tree: drivers/gpu/drm/xe/xe_configfs.c:256
-  and drivers/gpu/drm/xe/xe_configfs.c:310).
+- Risk assessment:
+  - Minimal: adds two static no-op functions and table entries; no
+    locking or state changes.
+  - `INFO_MAX` increases to include 0x06, and the handler table
+    explicitly sets index 6, preventing out-of-bounds. Indices 4–5
+    remain NULL (and still log “not support” if ever seen), maintaining
+    current behavior for other undefined funcs.
+  - No ABI/API changes; touches only
+    `drivers/net/wireless/realtek/rtw89/`.
 
-In summary, this is a low-risk input validation fix that prevents silent
-misconfiguration and aligns behavior with documented usage. It is
-suitable for backporting to stable kernels that ship the Xe configfs
-interface.
+- Impacted subsystems:
+  - Confined to rtw89 MAC C2H handling; does not touch core
+    networking/mac80211 subsystems.
 
- drivers/gpu/drm/xe/xe_configfs.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+- Stable criteria fit:
+  - Fixes an end-user visible annoyance (log spam/false “unsupported”)
+    triggered by normal firmware behavior.
+  - Very small, localized, and low-risk; no new features or
+    architectural changes.
+  - Reviewed-by present; linked to user report and discussion.
 
-diff --git a/drivers/gpu/drm/xe/xe_configfs.c b/drivers/gpu/drm/xe/xe_configfs.c
-index 58c1f397c68c9..797508cc6eb17 100644
---- a/drivers/gpu/drm/xe/xe_configfs.c
-+++ b/drivers/gpu/drm/xe/xe_configfs.c
-@@ -259,12 +259,19 @@ static struct config_group *xe_config_make_device_group(struct config_group *gro
- 	unsigned int domain, bus, slot, function;
- 	struct xe_config_device *dev;
- 	struct pci_dev *pdev;
-+	char canonical[16];
- 	int ret;
+- Cross-version applicability:
+  - The OFLD BCN_RESEND enumerant is present with a NULL handler in
+    older trees (e.g., v6.1: mac.c:3928..3952 shows NULL; mac.h:303..330
+    lists BCN_RESEND), so wiring a no-op handler backports cleanly.
+  - INFO func 6 is currently out-of-range; adding
+    `RTW89_MAC_C2H_FUNC_BCN_UPD_DONE = 0x06` and the matching handler
+    table entry brings parity with firmware without altering other
+    values.
+
+- Security considerations:
+  - None; pure handling/no-op of already-received control indications.
+
+- Conclusion:
+  - This is an ideal stable backport: it resolves a real annoyance with
+    negligible regression risk and no functional downside, aligning
+    mainline behavior with vendor expectations.
+
+ drivers/net/wireless/realtek/rtw89/mac.c | 13 ++++++++++++-
+ drivers/net/wireless/realtek/rtw89/mac.h |  1 +
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index ef17a307b7702..33a7dd9d6f0e6 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -5235,6 +5235,11 @@ rtw89_mac_c2h_bcn_cnt(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
+ {
+ }
  
--	ret = sscanf(name, "%04x:%02x:%02x.%x", &domain, &bus, &slot, &function);
-+	ret = sscanf(name, "%x:%x:%x.%x", &domain, &bus, &slot, &function);
- 	if (ret != 4)
- 		return ERR_PTR(-EINVAL);
- 
-+	ret = scnprintf(canonical, sizeof(canonical), "%04x:%02x:%02x.%d", domain, bus,
-+			PCI_SLOT(PCI_DEVFN(slot, function)),
-+			PCI_FUNC(PCI_DEVFN(slot, function)));
-+	if (ret != 12 || strcmp(name, canonical))
-+		return ERR_PTR(-EINVAL);
++static void
++rtw89_mac_c2h_bcn_upd_done(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
++{
++}
 +
- 	pdev = pci_get_domain_bus_and_slot(domain, bus, PCI_DEVFN(slot, function));
- 	if (!pdev)
- 		return ERR_PTR(-ENODEV);
+ static void
+ rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
+ 			   u32 len)
+@@ -5257,6 +5262,11 @@ rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
+ 	rtw89_complete_cond(wait, cond, &data);
+ }
+ 
++static void
++rtw89_mac_c2h_bcn_resend(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
++{
++}
++
+ static void
+ rtw89_mac_c2h_tx_duty_rpt(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h, u32 len)
+ {
+@@ -5646,7 +5656,7 @@ void (* const rtw89_mac_c2h_ofld_handler[])(struct rtw89_dev *rtwdev,
+ 	[RTW89_MAC_C2H_FUNC_EFUSE_DUMP] = NULL,
+ 	[RTW89_MAC_C2H_FUNC_READ_RSP] = NULL,
+ 	[RTW89_MAC_C2H_FUNC_PKT_OFLD_RSP] = rtw89_mac_c2h_pkt_ofld_rsp,
+-	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = NULL,
++	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = rtw89_mac_c2h_bcn_resend,
+ 	[RTW89_MAC_C2H_FUNC_MACID_PAUSE] = rtw89_mac_c2h_macid_pause,
+ 	[RTW89_MAC_C2H_FUNC_SCANOFLD_RSP] = rtw89_mac_c2h_scanofld_rsp,
+ 	[RTW89_MAC_C2H_FUNC_TX_DUTY_RPT] = rtw89_mac_c2h_tx_duty_rpt,
+@@ -5661,6 +5671,7 @@ void (* const rtw89_mac_c2h_info_handler[])(struct rtw89_dev *rtwdev,
+ 	[RTW89_MAC_C2H_FUNC_DONE_ACK] = rtw89_mac_c2h_done_ack,
+ 	[RTW89_MAC_C2H_FUNC_C2H_LOG] = rtw89_mac_c2h_log,
+ 	[RTW89_MAC_C2H_FUNC_BCN_CNT] = rtw89_mac_c2h_bcn_cnt,
++	[RTW89_MAC_C2H_FUNC_BCN_UPD_DONE] = rtw89_mac_c2h_bcn_upd_done,
+ };
+ 
+ static
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index 241e89983c4ad..25fe5e5c8a979 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -419,6 +419,7 @@ enum rtw89_mac_c2h_info_func {
+ 	RTW89_MAC_C2H_FUNC_DONE_ACK,
+ 	RTW89_MAC_C2H_FUNC_C2H_LOG,
+ 	RTW89_MAC_C2H_FUNC_BCN_CNT,
++	RTW89_MAC_C2H_FUNC_BCN_UPD_DONE = 0x06,
+ 	RTW89_MAC_C2H_FUNC_INFO_MAX,
+ };
+ 
 -- 
 2.51.0
 
