@@ -1,48 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362973054D1;
-	Sat, 25 Oct 2025 16:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECD830BF59;
+	Sat, 25 Oct 2025 16:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409323; cv=none; b=Yi3tQJ41peLDE+/i46JS6xrjJLLp4PZ1t3IJZG2uTE0ItWRPJDn5vgCPTfTj8EW3WHktnd6oB82MAsGq3q+o2scNNhgZIj0awwPiLXNDCaYN/AMO+83mEE7yLgRFJR4OQfB5AQ3UwKYvGa2AndZWdYtFX9GlvRxhufymYw8TURY=
+	t=1761409323; cv=none; b=UEEEZXM9W2zMunYRobNGfS/APKkvp9tuOUVamDaR9XFJoidgOn0lZkzZTS10sXaWRp4TNgS0UbbOGc0seTozD2zV8cTlEu3bHMeqkXUR59HJbO8KyPregheZdsa6rnLMaqbv81LPKK3g7/VojtPgtBEYPuYmZa8/qkBeq+CYyVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761409323; c=relaxed/simple;
-	bh=BymGNPj82NaSFZQ2tSGRk2+TuheCQrfQdfZVGqDguuY=;
+	bh=o2HNRES2Vt0e3qtSh7DFbwHRFuz1FTiaWtNCnqi58JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2ybpPUV8ByqUZrbOMyvn3Wvnn8MlzZ92oerYa458eBv44FSo/ku2QTjJB0K8DONN9cwsH8pZuqPdDDcEpoweLBeZDKH7MFkqIVTQFtcvhvfWUSEvcpOH/zzHSqwnTqUunO+l0IXkuWmtCi+01xAOIn7TfS68ehne5+tOVtXAx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ccVn/F8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qj3ssvVImzbxlNj0HIt5t2gayfq2pkTtF4ar4bmop8o5nhArKE9GSX9BeE1AVVOO1mkhkHfjW8d/RI8+Uoac1M3kOITDghyDZz3gQ+4a0XwVDoPhZbwFnqxC06ZhL9MmN3UPOzL7mMpoU68JIo4l40xeQH7QHyCZLC2sZvG+Wgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sw8MF0Jp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ccVn/F8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB71C2BCB8;
-	Sat, 25 Oct 2025 16:22:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sw8MF0Jp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246E4C2BCB5;
+	Sat, 25 Oct 2025 16:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409323;
-	bh=BymGNPj82NaSFZQ2tSGRk2+TuheCQrfQdfZVGqDguuY=;
+	s=k20201202; t=1761409321;
+	bh=o2HNRES2Vt0e3qtSh7DFbwHRFuz1FTiaWtNCnqi58JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccVn/F8PQLXJIvD5+umydTKp462BojBiCWfuj2KMaBBhsMIbRrNJDvSPsuTAhQZu/
-	 W0pmwom++rKoQxgeBWQIdx8FWBr6EyQMlb190mN4WgsHAJ8ogI13cE4n6cZZpcB/S0
-	 3Fx6UY2/aKpOVCvQCyEQ1St9XTu2ePzQ2laXthyPZc3A2i5HkkqGVZ5DMe2EkY2YSo
-	 yOXiDN9vRMm04fEH1X6+Xl5yPrAAiO1U7J7T8T3UvDnJ1WT8kjCBczKnWwWHwl+40C
-	 RYDR0CvLtrS9chl7DWIb/RcmSad7VWr1mz9ICqLY+5l7iRJl24qZkSwG8WNxj6wDjt
-	 ArfXXI+S8IE1A==
+	b=sw8MF0JpqSKI0C4Dhbrb51NMvIo9diCn+NoQEPNxwrjdo76YXahsRbvAlf00lGXA6
+	 pxuz+v/qJXul22DroN/2OpdKkLuNGaET0Ay9xyUoYCN9qEM/tvdlOfzGRIsCIGjkH5
+	 GoQnlsI84wvXADCgr78amZljjwt3hqT7/nkBzrJkVTQfxljyqMPH78sIRRQRoIEaZ2
+	 gzpafsemecs4SL3CjQrUdCYG7AHtJNjSjbm6vN3MmcRIs4kBq7r29CJrPWLQVFPaSD
+	 Ah01xsnVnMgiNz52P0qrpVfvpwk6Xz+rwEp152YqSHaOt2HvBmZ+gUoRJPMkaE3AzV
+	 pCBha9k/PCvWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Dillon Varone <Dillon.Varone@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	saeedm@nvidia.com,
-	mbloch@nvidia.com,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] net/mlx5e: Prevent entering switchdev mode with inconsistent netns
-Date: Sat, 25 Oct 2025 11:58:30 -0400
-Message-ID: <20251025160905.3857885-279-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	alex.hung@amd.com,
+	Wayne.Lin@amd.com,
+	chiahsuan.chung@amd.com,
+	alexandre.f.demers@gmail.com,
+	sunpeng.li@amd.com,
+	hamzamahfooz@linux.microsoft.com,
+	harry.wentland@amd.com,
+	mdaenzer@redhat.com,
+	kenneth.feng@amd.com,
+	mwen@igalia.com,
+	Jerry.Zuo@amd.com,
+	timur.kristof@gmail.com
+Subject: [PATCH AUTOSEL 6.17] drm/amd/display: Add missing post flip calls
+Date: Sat, 25 Oct 2025 11:58:29 -0400
+Message-ID: <20251025160905.3857885-278-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -58,129 +66,98 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Dillon Varone <Dillon.Varone@amd.com>
 
-[ Upstream commit 06fdc45f16c392dc3394c67e7c17ae63935715d3 ]
+[ Upstream commit 54980f3c63ed3e5cca3d251416581193c90eae76 ]
 
-When a PF enters switchdev mode, its netdevice becomes the uplink
-representor but remains in its current network namespace. All other
-representors (VFs, SFs) are created in the netns of the devlink
-instance.
+[WHY&HOW]
+dc_post_update_surfaces_to_stream needs to be called after a full update
+completes in order to optimize clocks and watermarks for power. Add
+missing calls before idle entry is requested to ensure optimal power.
 
-If the PF's netns has been moved and differs from the devlink's netns,
-enabling switchdev mode would create a state where the OVS control
-plane (ovs-vsctl) cannot manage the switch because the PF uplink
-representor and the other representors are split across different
-namespaces.
-
-To prevent this inconsistent configuration, block the request to enter
-switchdev mode if the PF netdevice's netns does not match the netns of
-its devlink instance.
-
-As part of this change, the PF's netns is first marked as immutable.
-This prevents race conditions where the netns could be changed after
-the check is performed but before the mode transition is complete, and
-it aligns the PF's behavior with that of the final uplink representor.
-
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1759094723-843774-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-**Why Backport**
-- Rejects switchdev activation when the PF netdev sits in a different
-  netns than the devlink instance, avoiding the broken state where OVS
-  loses control of the split representors (`drivers/net/ethernet/mellano
-  x/mlx5/core/eswitch_offloads.c:3842-3847`).
-- New helper grabs the uplink netdev safely via the existing ref-counted
-  accessor and sets `netns_immutable` under RTNL so the PF behaves like
-  the eventual uplink representor, while immediately detecting namespace
-  divergence (`drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.
-  c:3777-3797`;
-  `drivers/net/ethernet/mellanox/mlx5/core/lib/mlx5.h:48-64`).
-- If the mode change later fails, the helper rolls the flag back to keep
-  legacy behavior untouched; successful transitions keep the flag set,
-  matching switchdev guidance to freeze port namespaces (`drivers/net/et
-  hernet/mellanox/mlx5/core/eswitch_offloads.c:3867-3869`;
-  `Documentation/networking/switchdev.rst:130-143`).
-- Locking the namespace leverages the core check that rejects moves of
-  immutable interfaces (`net/core/dev.c:12352-12355`), eliminating the
-  race window the commit message highlights without touching data-path
-  code.
-- The change is tightly scoped to the mode-set path, has no dependencies
-  on new infrastructure, and fixes a long-standing, user-visible bug
-  with minimal regression risk—strong fit for stable kernels that ship
-  mlx5 switchdev support.
+YES — ensures AMD DC runs the pending post-flip optimization step after
+full updates so idle power isn’t stuck at high clocks.
 
- .../mellanox/mlx5/core/eswitch_offloads.c     | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+- **Bug Fix**: `update_planes_and_stream_adapter()` now always calls
+  `dc_post_update_surfaces_to_stream()`
+  (`drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c:421`). That helper
+  clears `dc->optimized_required`, disables unused pipes, and re-
+  optimizes clocks/watermarks
+  (`drivers/gpu/drm/amd/display/dc/core/dc.c:2546-2579`), which
+  otherwise stay elevated and even block DRR timing adjustments while
+  the flag remains set
+  (`drivers/gpu/drm/amd/display/dc/core/dc.c:463-468`).
+- **Idle Paths**: The idle and vblank workers invoke the same hook
+  before allowing idle entry
+  (`drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c:221-223` and
+  `:278-280`), guaranteeing that power-saving transitions don’t occur
+  while bandwidth optimizations are still pending.
+- **Scope & Risk**: Only adds calls to an existing guard-checked helper;
+  when no optimization is required it returns immediately, so the change
+  is contained, architecture-neutral, and low risk.
+- **Backport Fit**: Fixes a user-visible power regression (excess clocks
+  after full flips/PSR), touches only AMD display code, and stays well
+  within stable backport guidelines.
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index f358e8fe432cf..59a1a3a5fc8b5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3739,6 +3739,29 @@ void mlx5_eswitch_unblock_mode(struct mlx5_core_dev *dev)
- 	up_write(&esw->mode_lock);
- }
+Next step: 1) Verify on target hardware that idle clocks drop after
+full-screen updates or PSR transitions.
+
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      | 3 +--
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 8 ++++++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 57b46572fba27..d66c9609efd8d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -427,8 +427,7 @@ static inline bool update_planes_and_stream_adapter(struct dc *dc,
+ 	/*
+ 	 * Previous frame finished and HW is ready for optimization.
+ 	 */
+-	if (update_type == UPDATE_TYPE_FAST)
+-		dc_post_update_surfaces_to_stream(dc);
++	dc_post_update_surfaces_to_stream(dc);
  
-+/* Returns false only when uplink netdev exists and its netns is different from
-+ * devlink's netns. True for all others so entering switchdev mode is allowed.
-+ */
-+static bool mlx5_devlink_netdev_netns_immutable_set(struct devlink *devlink,
-+						    bool immutable)
-+{
-+	struct mlx5_core_dev *mdev = devlink_priv(devlink);
-+	struct net_device *netdev;
-+	bool ret;
-+
-+	netdev = mlx5_uplink_netdev_get(mdev);
-+	if (!netdev)
-+		return true;
-+
-+	rtnl_lock();
-+	netdev->netns_immutable = immutable;
-+	ret = net_eq(dev_net(netdev), devlink_net(devlink));
-+	rtnl_unlock();
-+
-+	mlx5_uplink_netdev_put(mdev, netdev);
-+	return ret;
-+}
-+
- int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 				  struct netlink_ext_ack *extack)
- {
-@@ -3781,6 +3804,14 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 	esw->eswitch_operation_in_progress = true;
- 	up_write(&esw->mode_lock);
+ 	return dc_update_planes_and_stream(dc,
+ 					   array_of_surface_update,
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+index 466dccb355d7b..1ec9d03ad7474 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -218,8 +218,10 @@ static void amdgpu_dm_idle_worker(struct work_struct *work)
+ 			break;
+ 		}
  
-+	if (mode == DEVLINK_ESWITCH_MODE_SWITCHDEV &&
-+	    !mlx5_devlink_netdev_netns_immutable_set(devlink, true)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Can't change E-Switch mode to switchdev when netdev net namespace has diverged from the devlink's.");
-+		err = -EINVAL;
-+		goto skip;
-+	}
-+
- 	if (mode == DEVLINK_ESWITCH_MODE_LEGACY)
- 		esw->dev->priv.flags |= MLX5_PRIV_FLAGS_SWITCH_LEGACY;
- 	mlx5_eswitch_disable_locked(esw);
-@@ -3799,6 +3830,8 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
+-		if (idle_work->enable)
++		if (idle_work->enable) {
++			dc_post_update_surfaces_to_stream(idle_work->dm->dc);
+ 			dc_allow_idle_optimizations(idle_work->dm->dc, true);
++		}
+ 		mutex_unlock(&idle_work->dm->dc_lock);
+ 	}
+ 	idle_work->dm->idle_workqueue->running = false;
+@@ -273,8 +275,10 @@ static void amdgpu_dm_crtc_vblank_control_worker(struct work_struct *work)
+ 			vblank_work->acrtc->dm_irq_params.allow_sr_entry);
  	}
  
- skip:
-+	if (mode == DEVLINK_ESWITCH_MODE_SWITCHDEV && err)
-+		mlx5_devlink_netdev_netns_immutable_set(devlink, false);
- 	down_write(&esw->mode_lock);
- 	esw->eswitch_operation_in_progress = false;
- unlock:
+-	if (dm->active_vblank_irq_count == 0)
++	if (dm->active_vblank_irq_count == 0) {
++		dc_post_update_surfaces_to_stream(dm->dc);
+ 		dc_allow_idle_optimizations(dm->dc, true);
++	}
+ 
+ 	mutex_unlock(&dm->dc_lock);
+ 
 -- 
 2.51.0
 
