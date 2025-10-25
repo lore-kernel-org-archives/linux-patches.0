@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9613054E4;
-	Sat, 25 Oct 2025 16:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0A3090F7;
+	Sat, 25 Oct 2025 16:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408956; cv=none; b=EtQFSZk1jtdXhgoBMLxFfXIsvx1HqEduLzpwNOqCybQALTKK5GpwShS6oBUzk/UPQo1XB8LEuDaxjqk2iHsLW0Nx9B+tKLJmzr8Ho5ln+ADAU9BvSifWJz8gqdKCh9jQgOXwYS+pQeE1Ovb0iqgkX5r+XN2mcKZC2eNbozvwGjw=
+	t=1761408958; cv=none; b=AWMEgGWo722+KldlXwuiqKXlFnGZnb92hvYPjZXG3RlwY7AHaRF5OVoYJvWrdsHCb6UOUwtQ8l+LeSWzwPy4pjeePJskZ3l6s3LbeD+B/4gvRbeInJk9sVSTJY+PoL/59QgdsLdGvZ3z+imcxp+LpxIlZUuhZS40SOmlBgJpoyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408956; c=relaxed/simple;
-	bh=sDveZVjGmF+hFWzrw2cClUD8xKZBCyZ7F/vmzkMigQg=;
+	s=arc-20240116; t=1761408958; c=relaxed/simple;
+	bh=MmWCn+a9rvnlVuGi+Ff6hilOGPA6cq70LX1d0Blxq8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dOakJbLzX5QMtQ1djMT96R3gaqF/fJh3Nb4UjsNA8s+yo7djS66uqadUkB9lgOmG2IrjfyKH+wDF+GYhufdWiCwLXfE13yqHKwbsoj3tn4hs8f7FouMEA1jPaexCDBD8VEmptqK1DgHpC6n24crbqtEiP4a460yIfkOUdZZcJ0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWAvGlPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FJNDpG/QeEDpv8DTR8O1AeymKwGoKPaYxXxbtY/Un8WeQQwEq/BPKftnKOwS7TgP4yNL0aKvn8ZsnK7PK7U16vUNZOhOKEGAw5NE5rqfuksnJAadGegaDDawOQFFcdWIezEEvjVm8UQtNUtekyaTMK0npMWVHAwP0dccJ5Yjmjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=junmb6Ab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWAvGlPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51377C4CEFB;
-	Sat, 25 Oct 2025 16:15:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="junmb6Ab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C6BC4CEFB;
+	Sat, 25 Oct 2025 16:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408956;
-	bh=sDveZVjGmF+hFWzrw2cClUD8xKZBCyZ7F/vmzkMigQg=;
+	s=k20201202; t=1761408957;
+	bh=MmWCn+a9rvnlVuGi+Ff6hilOGPA6cq70LX1d0Blxq8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWAvGlPwzPUXPm/DUT91D3C+te0LDlemo88W+BdX4pw6WHNnT9RL9/M++sDVzbHAX
-	 U163x5pBH2GWKkpChGx9dhHc5/HsiPQnJcFihaQWiqgjiujRiWGGnX6IQqKxUdORhx
-	 0tgOs+pGV/HMW4QrmDZ9RVIUO9PNhf4R8TPVK7iQWfryaD4qEzccle38oHYnlX9IiB
-	 03CX2ZEgCveAmsQi2Hu34BN0UouRqALztBQiLcdl3vmHA0wRM56rOhdzXjv2m+D+rv
-	 vQtsGg3Vhwrcw4OqUKIdlrRdcopFXOmW4LO6YuZzHGqEBbYyYhIPQw6fpf/j/3cmQC
-	 9MRQ4HSeuGpCg==
+	b=junmb6AbxhpbuQ6c+Ud6Im+Ez3/61c6UDXJhpNS9jltZ86god4r4AlNEFsV/TnJuB
+	 SG3kx6T/ZOzsSC7CLqpKL+n3/JSYbFn9iFEPmK5iNqT4kHS1dfb/FBUue4tX4fRzd4
+	 t3oFKNicPZgpngio2KkNrDe8cOYkCy7eWyNScmVhc+hemU0nA2rzNgcovuPA1ZbKNt
+	 NU21GNChQScl5hKyk+pFEi0UfqiuRyr6wRAr3bcDkFcBfQDFdrezazbqvcfDLo77Uq
+	 bdR+8hmCracrJSLUWkYRdB1bf8wUsc6W3OysvYyrX+QiWNgPCam9RBLuWVUt/kCPbu
+	 zb9yz/wAs5+qg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] scsi: ufs: host: mediatek: Disable auto-hibern8 during power mode changes
-Date: Sat, 25 Oct 2025 11:56:21 -0400
-Message-ID: <20251025160905.3857885-150-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] PCI/PM: Skip resuming to D0 if device is disconnected
+Date: Sat, 25 Oct 2025 11:56:22 -0400
+Message-ID: <20251025160905.3857885-151-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -50,198 +48,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit f5ca8d0c7a6388abd5d8023cc682e1543728cc73 ]
+[ Upstream commit 299fad4133677b845ce962f78c9cf75bded63f61 ]
 
-Disable auto-hibern8 during power mode transitions to prevent unintended
-entry into auto-hibern8. Restore the original auto-hibern8 timer value
-after completing the power mode change to maintain system stability and
-prevent potential issues during power state transitions.
+When a device is surprise-removed (e.g., due to a dock unplug), the PCI
+core unconfigures all downstream devices and sets their error state to
+pci_channel_io_perm_failure. This marks them as disconnected via
+pci_dev_is_disconnected().
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+During device removal, the runtime PM framework may attempt to resume the
+device to D0 via pm_runtime_get_sync(), which calls into pci_power_up().
+Since the device is already disconnected, this resume attempt is
+unnecessary and results in a predictable errors like this, typically when
+undocking from a TBT3 or USB4 dock with PCIe tunneling:
+
+  pci 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+
+Avoid powering up disconnected devices by checking their status early in
+pci_power_up() and returning -EIO.
+
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: add typical message]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://patch.msgid.link/20250909031916.4143121-1-superm1@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- The new guard in `drivers/pci/pci.c:1321-1324` checks
+  `pci_dev_is_disconnected()` before touching PCI PM registers, so
+  surprise-removed devices short-circuit with `-EIO` while keeping
+  `current_state = PCI_D3cold`. This prevents the guaranteed `"Unable to
+  change power state..."` error emitted when `pci_read_config_word()`
+  hits a vanished device (see `drivers/pci/pci.c:1326-1331`), which
+  currently spams logs whenever users undock TBT3/USB4 systems.
+- Callers already expect a negative return in this scenario—the pre-
+  change path hit the same `-EIO` branch after the failing config
+  read—so observable behaviour stays the same aside from eliminating the
+  noisy and misleading error message. `pci_set_full_power_state()` and
+  runtime PM resume paths therefore retain their semantics but avoid
+  futile config accesses.
+- The fix is narrowly scoped to PCI PM, introduces no architectural
+  churn, and relies only on long-standing helpers present in supported
+  stables (confirmed `pci_dev_is_disconnected()` in tags like `p-6.6`).
+  It neither alters power-state transitions for healthy devices nor
+  affects platforms lacking PM caps because the new check comes after
+  the existing `!dev->pm_cap` fallback.
+- Avoiding config transactions on removed hardware reduces the chance of
+  host controller complaints and matches other PCI core code that tests
+  `pci_dev_is_disconnected()` before issuing requests, making this a
+  low-risk, high-signal bug fix well suited for stable backporting.
 
-Summary
-- The change disables Auto-Hibern8 (AH8) around UFS power mode
-  transitions and restores the prior timer afterward. This prevents
-  unintended AH8 entry while the link is being reconfigured, which can
-  cause timeouts or recovery events during transitions. The fix is
-  small, self-contained, and limited to the Mediatek UFS host driver.
+Natural next step: 1) Queue the patch for the targeted stable series
+after double-checking those trees already expose
+`pci_dev_is_disconnected()` in `include/linux/pci.h`.
 
-What the patch does
-- Saves current AH8 timer and disables AH8 in PRE_CHANGE:
-  - drivers/ufs/host/ufs-mediatek.c:1472–1476
-    - Reads `REG_AUTO_HIBERNATE_IDLE_TIMER` into a static `reg` and
-      calls `ufs_mtk_auto_hibern8_disable(hba)`.
-- Disables AH8 in a helper and ensures the link is up before proceeding:
-  - drivers/ufs/host/ufs-mediatek.c:1436–1461
-    - Writes 0 to `REG_AUTO_HIBERNATE_IDLE_TIMER` (disables AH8), waits
-      for the host idle state, then waits for `VS_LINK_UP`. On failure,
-      warns and triggers `ufshcd_force_error_recovery(hba)` and returns
-      `-EBUSY`.
-- Restores the previous AH8 timer in POST_CHANGE:
-  - drivers/ufs/host/ufs-mediatek.c:1480–1483
+ drivers/pci/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Why this fixes a bug
-- Power mode transitions involve DME configuration and link parameter
-  changes (see setup/adaptation in `ufs_mtk_pre_pwr_change()`:
-  drivers/ufs/host/ufs-mediatek.c:1405–1434). If the link enters AH8
-  mid-transition, the controller and device can deadlock or time out,
-  requiring error recovery. Temporarily disabling AH8 ensures the link
-  stays in the expected state while power mode changes occur and
-  restores normal power-saving afterwards.
-- The helper already used in suspend PRE_CHANGE (drivers/ufs/host/ufs-
-  mediatek.c:1748–1751) shows the driver’s established pattern to
-  disable AH8 before low-power transitions; extending this to power mode
-  changes closes a similar race.
-
-Scope and risk
-- Scope: One driver file; no UFS core changes; no architectural shifts.
-  Uses existing helpers (`ufshcd_is_auto_hibern8_supported`,
-  `ufshcd_readl/writel`, `ufs_mtk_wait_*`,
-  `ufshcd_force_error_recovery`).
-- Regression risk: Low. Behavior change is to temporarily disable AH8
-  only during power mode changes and then restore the previous timer.
-  - Note: `ufs_mtk_pwr_change_notify()` stores the old AH8 timer in a
-    function-scope static (`reg`) (drivers/ufs/host/ufs-
-    mediatek.c:1469). While typical Mediatek systems have a single UFS
-    host and power mode changes are serialized, a static variable is
-    theoretically shared if multiple controllers triggered this
-    concurrently. In practice, impact is negligible on common
-    configurations.
-  - Note: The PRE_CHANGE path does not propagate the return of
-    `ufs_mtk_auto_hibern8_disable()` (drivers/ufs/host/ufs-
-    mediatek.c:1473–1478). The helper triggers error recovery internally
-    and returns `-EBUSY`, so recovery still occurs, but the immediate
-    PRE_CHANGE return value won’t reflect the failure. A tiny follow-up
-    improvement would propagate this error directly (as done later in-
-    tree).
-
-Evidence of established pattern
-- Other vendor drivers also manage AH8 around sensitive transitions,
-  supporting this approach:
-  - Hisilicon disables/adjusts AH8 during link setup:
-    drivers/ufs/host/ufs-hisi.c:234–237
-  - Spreadtrum disables AH8 during suspend PRE_CHANGE:
-    drivers/ufs/host/ufs-sprd.c:185–190
-
-Stable backport criteria
-- Fixes a real operational bug (unintended AH8 mid-transition),
-  observable as timeouts or recovery during power mode changes.
-- Small, targeted change in a single vendor driver; minimal risk to
-  other subsystems.
-- No new features or architectural changes; follows established patterns
-  in UFS vendor drivers.
-- While the commit message lacks an explicit Fixes/Stable tag, the
-  change aligns well with stable policy as a platform-specific
-  reliability fix.
-
-Recommendation
-- Backport to stable: YES.
-- Optional but advisable: include the small follow-up that returns an
-  error immediately on idle wait timeout (to propagate the PRE_CHANGE
-  failure) to match the improved error handling now seen in-tree.
-
- drivers/ufs/host/ufs-mediatek.c | 53 +++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 91081d2aabe44..3defb5f135e33 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1400,19 +1400,49 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
- 	return ret;
- }
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index b0f4d98036cdd..036511f5b2625 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1374,6 +1374,11 @@ int pci_power_up(struct pci_dev *dev)
+ 		return -EIO;
+ 	}
  
-+static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
-+{
-+	int ret;
-+
-+	/* disable auto-hibern8 */
-+	ufshcd_writel(hba, 0, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+
-+	/* wait host return to idle state when auto-hibern8 off */
-+	ufs_mtk_wait_idle_state(hba, 5);
-+
-+	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
-+	if (ret) {
-+		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
-+
-+		ufshcd_force_error_recovery(hba);
-+
-+		/* trigger error handler and break suspend */
-+		ret = -EBUSY;
++	if (pci_dev_is_disconnected(dev)) {
++		dev->current_state = PCI_D3cold;
++		return -EIO;
 +	}
 +
-+	return ret;
-+}
-+
- static int ufs_mtk_pwr_change_notify(struct ufs_hba *hba,
- 				enum ufs_notify_change_status stage,
- 				const struct ufs_pa_layer_attr *dev_max_params,
- 				struct ufs_pa_layer_attr *dev_req_params)
- {
- 	int ret = 0;
-+	static u32 reg;
- 
- 	switch (stage) {
- 	case PRE_CHANGE:
-+		if (ufshcd_is_auto_hibern8_supported(hba)) {
-+			reg = ufshcd_readl(hba, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+			ufs_mtk_auto_hibern8_disable(hba);
-+		}
- 		ret = ufs_mtk_pre_pwr_change(hba, dev_max_params,
- 					     dev_req_params);
- 		break;
- 	case POST_CHANGE:
-+		if (ufshcd_is_auto_hibern8_supported(hba))
-+			ufshcd_writel(hba, reg, REG_AUTO_HIBERNATE_IDLE_TIMER);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -1646,29 +1676,6 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
- 	}
- }
- 
--static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
--{
--	int ret;
--
--	/* disable auto-hibern8 */
--	ufshcd_writel(hba, 0, REG_AUTO_HIBERNATE_IDLE_TIMER);
--
--	/* wait host return to idle state when auto-hibern8 off */
--	ufs_mtk_wait_idle_state(hba, 5);
--
--	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
--	if (ret) {
--		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
--
--		ufshcd_force_error_recovery(hba);
--
--		/* trigger error handler and break suspend */
--		ret = -EBUSY;
--	}
--
--	return ret;
--}
--
- static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- 	enum ufs_notify_change_status status)
- {
+ 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
+ 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
+ 		pci_err(dev, "Unable to change power state from %s to D0, device inaccessible\n",
 -- 
 2.51.0
 
