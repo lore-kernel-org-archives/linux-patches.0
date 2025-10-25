@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270E3307AF4;
-	Sat, 25 Oct 2025 16:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A38C30F925;
+	Sat, 25 Oct 2025 16:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409216; cv=none; b=pmW/DNy7lwq6xqebLCP59kh9W3gpcBtcCu0qKGGphJQJR2v7jc5pkyA3JLvSA7BeOVREZWQP5+ayvFsvd92N+MJ7D2olvwlUUQo2aj3QE8g1Xj647jozG2J/TawObV2kTJFWT4X3vD6wZqDhH2B9CDdSJpJksVdW/3+z+vxEfvE=
+	t=1761409217; cv=none; b=AsiOUUCh1tHzdjDyLQuy10cL+zuV7FPhSqsobdw1nGhwGE+PDRQXwQ31kUqmLb4mvV0kyESXS9O5GdZvkK8Burm8HMXum4gZIJ6aukP5iD34uhCwmYRCKpCVWHVJO9Ao3fqwU8vQD7NDRK9A/NspnMcugZ0mORUe2m2sjtPboHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409216; c=relaxed/simple;
-	bh=dFOZ/g7NVQFO7jKXZtBK3uxcbbOqAQ2mxYtgxvk6JSI=;
+	s=arc-20240116; t=1761409217; c=relaxed/simple;
+	bh=ANpXLZ4bPgXvS0qIQAcVZBHmnKkHZlT5fX0rP1o9R8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tZsUThdsKAUI8aurxPMQLFV5JNftklAJuV4qtbIQRu/IfJHORKXhVZlb7yy3TRB5hdiV1IPw40ie9ELwqWJUZsC4S62AJVwLyHxJAv596zT9m3vHcUo1NtAGJGgPSEO3KlcEX8I4lgy6TfELOmEdfe7sqV6jUJk1QfnGgqgs8ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rfd23nvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G3lKK1Sbr989cJt+wgCChJmJFJnYiSj8c/rhPh5a0zFPcUS/HQhw14pugyukMgmu5f4HKF7ckur/z0S5zEsOdEeVgvAZ4+IJ6GT7w4Z+JpNxukm9BI25CGv63Q2OejXmWMADo53bh93y+7NtEPXDthzyWdThG00N7PtkdNwfEWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WoR++aH5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rfd23nvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1733C4CEF5;
-	Sat, 25 Oct 2025 16:20:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WoR++aH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A727C4AF0C;
+	Sat, 25 Oct 2025 16:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409216;
-	bh=dFOZ/g7NVQFO7jKXZtBK3uxcbbOqAQ2mxYtgxvk6JSI=;
+	s=k20201202; t=1761409217;
+	bh=ANpXLZ4bPgXvS0qIQAcVZBHmnKkHZlT5fX0rP1o9R8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rfd23nvcXaVgZ9bfzYL51nxTh4a+V0ykMa34qhCrdoUHe5SVn33KwYs+c2yLUeAF2
-	 Ai66GVHEZsj517zimR3ElvFF4QixSRJ+nt2XTLt3smBeyBJY92UDyNxLWcOQgZFsXR
-	 b3qZujrdfxq2lKzKrrRXOitpn2wzVSr1xpTX/jiZhP8cGq+/a2qf512uCfyFpfLAH7
-	 HNOImdQ9m4kasCVGtwyHquTjrjAPgexQiNf3uAtFkA9E1SbakGtyd74m9olDy9g39L
-	 934S+diw6cvQjGUSmN4vH1m1LWTiRGFD51ZGve6Z8YQs8QRDN6axmK3l4Rjfgkd1Lz
-	 BUbcqWjFATmcQ==
+	b=WoR++aH5WVmyuXNOy9N+QG3rxupOXPRunXLHY11lR0+dY/oyzjYjO8ruwgz47spxD
+	 kI4t30xIPXsh6pOhd51BeiLuVDkyG4DyPlzyqARF5zUvS8wRRrMPGp6XTWA1GNqbAw
+	 KwRq8rFkPcHJd3n3gv74CwTR/dlriGzwxDJo33XIY5cjJbyVCVTFVAtIiWxcXhR/Xy
+	 ai3+Etw8Adnazme9qX8mbVgjsZ0w/ptpo4SI2jYEyZgbD4yQheznSz0uhABO6WCOGn
+	 +8Spoee7T9EmEhFT0rq6Tx4auO+UXYBMxyiKJ4+G2EM1P1kkSF8uftXNZ2QAUeSedP
+	 8SS85es09ChwQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charalampos Mitrodimas <charmitro@posteo.net>,
-	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] net: ipv6: fix field-spanning memcpy warning in AH output
-Date: Sat, 25 Oct 2025 11:57:56 -0400
-Message-ID: <20251025160905.3857885-245-sashal@kernel.org>
+	hare@suse.de,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] scsi: libfc: Fix potential buffer overflow in fc_ct_ms_fill()
+Date: Sat, 25 Oct 2025 11:57:57 -0400
+Message-ID: <20251025160905.3857885-246-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -48,222 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
+[ Upstream commit 072fdd4b0be9b9051bdf75f36d0227aa705074ba ]
 
-Fix field-spanning memcpy warnings in ah6_output() and
-ah6_output_done() where extension headers are copied to/from IPv6
-address fields, triggering fortify-string warnings about writes beyond
-the 16-byte address fields.
+The fc_ct_ms_fill() helper currently formats the OS name and version
+into entry->value using "%s v%s". Since init_utsname()->sysname and
+->release are unbounded strings, snprintf() may attempt to write more
+than FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN bytes, triggering a
+-Wformat-truncation warning with W=1.
 
-  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
-  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
+In file included from drivers/scsi/libfc/fc_elsct.c:18:
+drivers/scsi/libfc/fc_encode.h: In function ‘fc_ct_ms_fill.constprop’:
+drivers/scsi/libfc/fc_encode.h:359:30: error: ‘%s’ directive output may
+be truncated writing up to 64 bytes into a region of size between 62
+and 126 [-Werror=format-truncation=]
+  359 |                         "%s v%s",
+      |                              ^~
+  360 |                         init_utsname()->sysname,
+  361 |                         init_utsname()->release);
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~
+drivers/scsi/libfc/fc_encode.h:357:17: note: ‘snprintf’ output between
+3 and 131 bytes into a destination of size 128
+  357 |                 snprintf((char *)&entry->value,
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  358 |                         FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN,
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  359 |                         "%s v%s",
+      |                         ~~~~~~~~~
+  360 |                         init_utsname()->sysname,
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~
+  361 |                         init_utsname()->release);
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The warnings are false positives as the extension headers are
-intentionally placed after the IPv6 header in memory. Fix by properly
-copying addresses and extension headers separately, and introduce
-helper functions to avoid code duplication.
+Fix this by using "%.62s v%.62s", which ensures sysname and release are
+truncated to fit within the 128-byte field defined by
+FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN.
 
-Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+[mkp: clarified commit description]
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- The updated format string in `drivers/scsi/libfc/fc_encode.h:356` caps
+  both `init_utsname()->sysname` and `init_utsname()->release` at 62
+  characters, keeping the composed `"OS vversion"` entry within the
+  128-byte field defined for `FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN` at
+  `include/scsi/fc/fc_ms.h:92`. This directly prevents the -Wformat-
+  truncation build failure reported when compiling with `make W=1`, so
+  it resolves a real build bug without changing any control flow.
+- Runtime impact is limited to at most two characters of each component
+  being truncated, which is already acceptable for this management
+  payload and smaller than the silent truncation that happened
+  previously when both strings were long.
+- The patch is tiny, self-contained in libfc’s FDMI attribute formatting
+  helper, and introduces no dependency or architectural change, so
+  regression risk is negligible while restoring clean W=1 builds for
+  stable users who enable those checks.
 
-Why this needs backport
-- Fixes real runtime WARNINGS from FORTIFY_SOURCE that can escalate to
-  kernel panics on systems with panic_on_warn. The warning cited by
-  syzbot shows a cross-field memcpy detected at runtime in AH output
-  paths.
-- Impacts users of IPv6 IPsec AH (xfrm). Even if AH is less common than
-  ESP, false-positive warnings in networking code are undesirable and
-  can disrupt CI/fuzzing or production systems with strict warn
-  handling.
+ drivers/scsi/libfc/fc_encode.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-What is wrong in current stable code
-- In AH output, the code intentionally copies the saved addresses plus
-  the extension headers by writing past the 16-byte IPv6 address field
-  into the memory directly following the base IPv6 header. This is
-  semantically correct for the packet layout but trips FORTIFY’s “field-
-  spanning write” checks.
-- Problematic restores in output paths (write beyond `in6_addr` field):
-  - net/ipv6/ah6.c:304–310 writes `extlen` bytes into `&top_iph->saddr`
-    or `&top_iph->daddr`, which FORTIFY sees as overflowing a single
-    field.
-  - net/ipv6/ah6.c:437–443 repeats the same pattern after synchronous
-    hash calculation.
-- Symmetric “save” path copies from a field address:
-  - net/ipv6/ah6.c:383–386 copies from
-    `&top_iph->saddr`/`&top_iph->daddr` into the temporary buffer. While
-    reads don’t trigger the runtime write check, the pattern mirrors the
-    flawed restore approach.
-
-What the patch changes
-- Introduces helpers to separate copying of addresses from copying of
-  extension headers, eliminating cross-field writes:
-  - ah6_save_hdrs(): saves `saddr` (when CONFIG_IPV6_MIP6) and `daddr`,
-    then copies extension headers from `top_iph + 1` into the temporary
-    buffer’s `hdrs[]`.
-  - ah6_restore_hdrs(): restores `saddr` (when CONFIG_IPV6_MIP6) and
-    `daddr`, then copies extension headers into `top_iph + 1`.
-- Replaces the field-spanning memcpy sites with these helpers:
-  - In ah6_output_done(), instead of writing `extlen` bytes into
-    `&top_iph->saddr`/`&top_iph->daddr` (net/ipv6/ah6.c:304–310), it
-    calls ah6_restore_hdrs() to:
-    - write addresses field-by-field, then
-    - write extension headers starting at `top_iph + 1`, i.e.,
-      immediately after the IPv6 base header, avoiding cross-field
-      writes.
-  - In ah6_output(), instead of saving `extlen` bytes starting from
-    `&top_iph->saddr`/`&top_iph->daddr` into the temp buffer
-    (net/ipv6/ah6.c:383–386), it calls ah6_save_hdrs() to:
-    - read addresses field-by-field, then
-    - copy extension headers from `top_iph + 1`.
-- Extent calculation is preserved. `extlen` is unchanged and still
-  includes `sizeof(*iph_ext)` when there are IPv6 extension headers; the
-  helpers correctly use `extlen - sizeof(*iph_ext)` to copy only the
-  extension headers into/out of `hdrs[]`.
-
-Why it’s safe
-- No functional semantics change: the same data (addresses + extension
-  headers) are preserved/restored, just via safe destinations/sources
-  (`top_iph + 1` for headers, explicit fields for addresses) instead of
-  a single field pointer spanning into adjacent memory.
-- Scope is small and entirely contained to net/ipv6/ah6.c; only
-  ah6_output() and ah6_output_done() are touched plus two local static
-  inline helpers.
-- Config guards are preserved: when CONFIG_IPV6_MIP6 is enabled, `saddr`
-  is saved/restored explicitly; otherwise only `daddr` is handled,
-  matching prior behavior.
-- Interactions with ipv6_clear_mutable_options() are unchanged; data is
-  saved before zeroing mutable options and restored afterward as before.
-- No ABI/API changes; only internal copying strategy is refactored to
-  avoid FORTIFY warnings.
-
-Stable tree criteria
-- Bugfix that affects users: Prevents runtime WARN splats (and possible
-  panic_on_warn) in IPv6 AH output paths. The commit references a syzbot
-  report, indicating real-world triggerability.
-- Minimal risk: Localized refactor with straightforward memcpy
-  target/source changes.
-- No new features or architectural changes.
-- Touches a networking security subsystem (xfrm/AH) but in a very
-  controlled way.
-
-Version/dependency considerations
-- The runtime “cross-field memcpy” WARN was introduced by fortify
-  changes (e.g., commit akin to “fortify: Add run-time WARN for cross-
-  field memcpy()”). All stable kernels that include these FORTIFY
-  runtime checks and the current AH layout will benefit.
-- The code structure in this branch matches the pre-fix pattern; the
-  helpers should apply cleanly around existing sites at
-  net/ipv6/ah6.c:304–310, 383–386, 437–443.
-- No external dependencies; helpers are file-local.
-
-Conclusion
-- This is a targeted, correctness/safety fix that removes disruptive
-  false-positive warnings with negligible regression risk. It should be
-  backported to stable kernels that carry FORTIFY cross-field memcpy
-  checks and the current AH implementation.
-
- net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
-
-diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
-index eb474f0987ae0..95372e0f1d216 100644
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -46,6 +46,34 @@ struct ah_skb_cb {
+diff --git a/drivers/scsi/libfc/fc_encode.h b/drivers/scsi/libfc/fc_encode.h
+index 02e31db31d68e..e046091a549ae 100644
+--- a/drivers/scsi/libfc/fc_encode.h
++++ b/drivers/scsi/libfc/fc_encode.h
+@@ -356,7 +356,7 @@ static inline int fc_ct_ms_fill(struct fc_lport *lport,
+ 		put_unaligned_be16(len, &entry->len);
+ 		snprintf((char *)&entry->value,
+ 			FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN,
+-			"%s v%s",
++			"%.62s v%.62s",
+ 			init_utsname()->sysname,
+ 			init_utsname()->release);
  
- #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
- 
-+/* Helper to save IPv6 addresses and extension headers to temporary storage */
-+static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
-+				 struct ipv6hdr *top_iph, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	iph_ext->saddr = top_iph->saddr;
-+#endif
-+	iph_ext->daddr = top_iph->daddr;
-+	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
-+}
-+
-+/* Helper to restore IPv6 addresses and extension headers from temporary storage */
-+static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
-+				    struct tmp_ext *iph_ext, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	top_iph->saddr = iph_ext->saddr;
-+#endif
-+	top_iph->daddr = iph_ext->daddr;
-+	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
-+}
-+
- static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
- 			  unsigned int size)
- {
-@@ -301,13 +329,7 @@ static void ah6_output_done(void *data, int err)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- 	kfree(AH_SKB_CB(skb)->tmp);
- 	xfrm_output_resume(skb->sk, skb, err);
-@@ -378,12 +400,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	 */
- 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
- 
-+	ah6_save_hdrs(iph_ext, top_iph, extlen);
- 	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(iph_ext, &top_iph->saddr, extlen);
--#else
--		memcpy(iph_ext, &top_iph->daddr, extlen);
--#endif
- 		err = ipv6_clear_mutable_options(top_iph,
- 						 extlen - sizeof(*iph_ext) +
- 						 sizeof(*top_iph),
-@@ -434,13 +452,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- out_free:
- 	kfree(iph_base);
 -- 
 2.51.0
 
