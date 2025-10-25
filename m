@@ -1,41 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A8D2F7ADB;
-	Sat, 25 Oct 2025 16:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9882F7ADB;
+	Sat, 25 Oct 2025 16:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409353; cv=none; b=egTp4+Qbb51QrFnrgIBSiLxHlD+QFMcZNlbMuSt840MRn/nZAgg+0VHJE/oKLGFWLC32PiSrfhuVkGywpZpZ9gEJG0u+PN0RoB3Cu0MOql1UWGHm11LeptPH7+LMe38h13yBK4LNIVCcSWmcknBtgBL1BC7gjNbCjwjfdTULAVg=
+	t=1761409356; cv=none; b=D36BNAUYSqu0zAaTUZy451G0o1EJNOwKfX24XhJ2rI5Fq7ZcY+3szgC98Gqf2EU/BWQxtBYmQvYw4ZT+FcT/ctEJxxP+O7hBCKwWdNKG7G4ij/MFtmNCc8wt1UP6auBVmE8/wSOPGWPJg9LGarbTJsLhMWN60/2bbLcdNh26Zgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409353; c=relaxed/simple;
-	bh=+m2yLu5QtoYtTsD1302q9cvyH3RpYi8eSON4BZhwQBQ=;
+	s=arc-20240116; t=1761409356; c=relaxed/simple;
+	bh=Scyd5qEDWJqJQEzt5obIOadjeCJCp5CBwuOwu4LwHsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7Gi6/2F49TPbDshfpY9dZv7piG0EMtKD6KDBnnNvl/yCIDPfKYs6kQ1kAbPpWQKTOrT4cg8NJaQ0Q5bPcPsLu3xDHWQ9bv3J5vLogOjjdzJM6EZlTzGIxtidt/R/xL7lf1hrbk8z6o/uY2JdtI7vtp68LAgQywOlIEsO354Hos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rp+q5j4H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NcW7sY4tTc2chMN7H+2q0GhmV7RrxGq7+nuQ+70XUawwusararwkRX/JjZGmRK33lyQw+cC1uH2YNgyt2+O669Aw9KwbiIb4sCNb/CEoavGYhUOkdoeT4BIXHk5MRMAGffoqugRIJ3pnvoLVyhanHExx1CAKokodr+rPh+C6Y68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UirOREv9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rp+q5j4H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8DFC4CEF5;
-	Sat, 25 Oct 2025 16:22:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UirOREv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F706C4CEFB;
+	Sat, 25 Oct 2025 16:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409353;
-	bh=+m2yLu5QtoYtTsD1302q9cvyH3RpYi8eSON4BZhwQBQ=;
+	s=k20201202; t=1761409356;
+	bh=Scyd5qEDWJqJQEzt5obIOadjeCJCp5CBwuOwu4LwHsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rp+q5j4HW4TIMn5LwzZYnxDsQ7+p1+liIQy0FXNjSLDF97ukpYCZOqz2NlUgMM3DF
-	 PBHD0mqHX6Gqw5t/4lx5aZBuYu/hyjqp7PxTAKFdQUl+M/UR1adMs8cWfOKq1m7jgn
-	 XP+GSTQNsPGLkQJlbflQVXCH6SMMKI9zQdDmFNypq1LeC252F97c1hXUgnSrOLDCL+
-	 z8EuS/b7jiT7/NMYwwS/1r8kEQ87aqv0vKKH8O9s30VC0bQ83GGTTmfwfllf2yYnL3
-	 6O4coLq84b/bwoCzorxIm86c9QThi/R3cGmsGSAKOsDVfTA+4WiLskRP3e2VFyxAq7
-	 Nb7/lELR5NkBA==
+	b=UirOREv9sYR8FYy4at1GfAVYjMzSo5NJOhpIzdhF0yOhFCzQVn5hQO5QRKZgai+Tx
+	 qWDFi4xJsYnwAdptGQFnPKlhNiXZmXfZ6HYOHIX/isfX8ECymfyN02d5OhNC4rZ3tR
+	 OZ4D36dXf9ogcmLbUZvfvV/XnerBfEIP4oWOVHVXTL96dLfYawmt6Qj3s7hEHpGLD7
+	 2IJCVidxoVTnnCGnbynDeRN/65wpJZ9bh7gvFEtwcZVSHVabpr1p5I7YRwTAc2jYuG
+	 JbBuaffdmOY0qwBMDxrZPMMk4zh/BGldwLGooti+QaXFYikX/qLlql2m7U0patgZGK
+	 3wol22IpvaeTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Kai Huang <kai.huang@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Farrah Chen <farrah.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17] drm/amd/pm: Increase SMC timeout on SI and warn (v3)
-Date: Sat, 25 Oct 2025 11:58:38 -0400
-Message-ID: <20251025160905.3857885-287-sashal@kernel.org>
+	kas@kernel.org,
+	dwmw@amazon.co.uk,
+	mingo@kernel.org,
+	bp@alien8.de,
+	alexandre.f.demers@gmail.com,
+	coxu@redhat.com,
+	peterz@infradead.org,
+	x86@kernel.org,
+	linux-coco@lists.linux.dev,
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] x86/kexec: Disable kexec/kdump on platforms with TDX partial write erratum
+Date: Sat, 25 Oct 2025 11:58:39 -0400
+Message-ID: <20251025160905.3857885-288-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -45,51 +58,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Kai Huang <kai.huang@intel.com>
 
-[ Upstream commit 813d13524a3bdcc5f0253e06542440ca74c2653a ]
+[ Upstream commit b18651f70ce0e45d52b9e66d9065b831b3f30784 ]
 
-The SMC can take an excessive amount of time to process some
-messages under some conditions.
+Some early TDX-capable platforms have an erratum: A kernel partial
+write (a write transaction of less than cacheline lands at memory
+controller) to TDX private memory poisons that memory, and a subsequent
+read triggers a machine check.
 
-Background:
-Sending a message to the SMC works by writing the message into
-the mmSMC_MESSAGE_0 register and its optional parameter into
-the mmSMC_SCRATCH0, and then polling mmSMC_RESP_0. Previously
-the timeout was AMDGPU_MAX_USEC_TIMEOUT, ie. 100 ms.
+On those platforms, the old kernel must reset TDX private memory before
+jumping to the new kernel, otherwise the new kernel may see unexpected
+machine check.  Currently the kernel doesn't track which page is a TDX
+private page.  For simplicity just fail kexec/kdump for those platforms.
 
-Increase the timeout to 200 ms for all messages and to 1 sec for
-a few messages which I've observed to be especially slow:
-PPSMC_MSG_NoForcedLevel
-PPSMC_MSG_SetEnabledLevels
-PPSMC_MSG_SetForcedLevels
-PPSMC_MSG_DisableULV
-PPSMC_MSG_SwitchToSwState
+Leverage the existing machine_kexec_prepare() to fail kexec/kdump by
+adding the check of the presence of the TDX erratum (which is only
+checked for if the kernel is built with TDX host support).  This rejects
+kexec/kdump when the kernel is loading the kexec/kdump kernel image.
 
-This fixes the following problems on Tahiti when switching
-from a lower clock power state to a higher clock state, such
-as when DC turns on a display which was previously turned off.
+The alternative is to reject kexec/kdump when the kernel is jumping to
+the new kernel.  But for kexec this requires adding a new check (e.g.,
+arch_kexec_allowed()) in the common code to fail kernel_kexec() at early
+stage.  Kdump (crash_kexec()) needs similar check, but it's hard to
+justify because crash_kexec() is not supposed to abort.
 
-* si_restrict_performance_levels_before_switch would fail
-  (if the user previously forced high clocks using sysfs)
-* si_set_sw_state would fail (always)
+It's feasible to further relax this limitation, i.e., only fail kexec
+when TDX is actually enabled by the kernel.  But this is still a half
+measure compared to resetting TDX private memory so just do the simplest
+thing for now.
 
-It turns out that both of those failures were SMC timeouts and
-that the SMC actually didn't fail or hang, just needs more time
-to process those.
+The impact to userspace is the users will get an error when loading the
+kexec/kdump kernel image:
 
-Add a warning when there is an SMC timeout to make it easier to
-identify this type of problem in the future.
+  kexec_load failed: Operation not supported
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This might be confusing to the users, thus also print the reason in the
+dmesg:
+
+  [..] kexec: Not allowed on platform with tdx_pw_mce bug.
+
+Signed-off-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Link: https://lore.kernel.org/all/20250901160930.1785244-5-pbonzini%40redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -97,115 +118,101 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**Change Details**
-- Increases SMC message polling timeout in `amdgpu_si_send_msg_to_smc`
-  from the device default to longer, message-specific intervals:
-  - Adds local `usec_timeout` and selects 1s for slow messages and 200ms
-    for others in `drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:175` and
-    cases at `drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:179`.
-  - Applies the new timeout in the poll loop `for (i = 0; i <
-    usec_timeout; i++)` at `drivers/gpu/drm/amd/pm/legacy-
-    dpm/si_smc.c:196`.
-  - Emits a warning on timeout to aid debugging at
-    `drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:203`.
-- The messages given extended timeout are specifically the ones observed
-  to be slow: `PPSMC_MSG_NoForcedLevel`, `PPSMC_MSG_SetEnabledLevels`,
-  `PPSMC_MSG_SetForcedLevels`, `PPSMC_MSG_DisableULV`,
-  `PPSMC_MSG_SwitchToSwState` (see switch at
-  `drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:179`; message IDs defined
-  under `drivers/gpu/drm/amd/pm/legacy-dpm/ppsmc.h:79`,
-  `drivers/gpu/drm/amd/pm/legacy-dpm/ppsmc.h:81`,
-  `drivers/gpu/drm/amd/pm/legacy-dpm/ppsmc.h:99`,
-  `drivers/gpu/drm/amd/pm/legacy-dpm/ppsmc.h:106`,
-  `drivers/gpu/drm/amd/pm/legacy-dpm/ppsmc.h:107`).
-- Prior behavior used the device default timeout `adev->usec_timeout`
-  (100 ms) for all messages; that default is defined as
-  `AMDGPU_MAX_USEC_TIMEOUT` at `drivers/gpu/drm/amd/amdgpu/amdgpu.h:280`
-  and initialized in `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:4414`.
+**Why This Fix Matters**
+- Prevents machine checks during kexec/kdump on early TDX-capable
+  platforms with the “partial write to TDX private memory” erratum.
+  Without this, the new kernel may hit an MCE after the old kernel
+  jumps, which is a hard failure affecting users.
 
-**Backport Assessment**
-- Fixes a user-visible bug: On SI (e.g., Tahiti), switching from lower
-  to higher clocks timed out spuriously, causing failures in:
-  - `si_restrict_performance_levels_before_switch` which sends
-    `PPSMC_MSG_NoForcedLevel` and `PPSMC_MSG_SetEnabledLevels`
-    (`drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c:3899` and following).
-  - `si_set_sw_state`, which sends `PPSMC_MSG_SwitchToSwState`
-    (`drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c:3949`).
-- Scope is small and contained: one function in the SI legacy DPM SMC
-  path only (`drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c`); no API/ABI
-  changes; no architectural changes.
-- Risk is minimal and bounded:
-  - Only increases timeouts when sending SMC messages; does not alter
-    state-machine logic.
-  - Longest busy-wait increases from 100 ms to 1 s, but only for a
-    narrow set of transitions; these are not hot paths and the long
-    latency is needed for hardware that legitimately responds slowly.
-  - Still finite (no indefinite waits) and adds `drm_warn` for
-    diagnostics (`drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:203`).
-- Constrained impact: Applies only to amdgpu’s SI legacy DPM; other
-  ASICs and paths unaffected. Other SMC waits (e.g.,
-  `amdgpu_si_wait_for_smc_inactive`) still use the driver default
-  timeout (`drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c:221`).
-- Aligns with stable rules: important reliability fix without new
-  features or architectural churn; low regression risk; confined to a
-  subsystem.
+**What Changed**
+- Adds an early guard in the kexec image load path to reject kexec/kdump
+  if the CPU bug is present:
+  - `arch/x86/kernel/machine_kexec_64.c:361`: `if
+    (boot_cpu_has_bug(X86_BUG_TDX_PW_MCE)) { ... return -EOPNOTSUPP; }`
+  - `arch/x86/kernel/machine_kexec_64.c:362`: Prints a one-time reason:
+    “Not allowed on platform with tdx_pw_mce bug”
+  - The check runs before page table setup and other preparation,
+    minimizing side effects.
 
-Given the clear user impact, narrow scope, and low risk, this is a
-strong candidate for stable backport in trees that include SI legacy
-DPM.
+**Where the Bug Flag Comes From**
+- Bug flag definition: `arch/x86/include/asm/cpufeatures.h:543` defines
+  `X86_BUG_TDX_PW_MCE`.
+- Detection/enablement on TDX host platforms:
+  - `arch/x86/kernel/cpu/common.c:2124`: Calls `tdx_init()` during boot
+    CPU identification.
+  - `arch/x86/virt/vmx/tdx/tdx.c:1465`: `tdx_init()` calls
+    `check_tdx_erratum()`.
+  - `arch/x86/virt/vmx/tdx/tdx.c:1396`: `check_tdx_erratum()` sets the
+    bug via `setup_force_cpu_bug(X86_BUG_TDX_PW_MCE)` for affected
+    models (`:1407`).
+- If TDX host support is not built, `tdx_init()` is a stub and the bug
+  bit is never set (guard becomes a no-op). This scopes the behavior to
+  kernels configured with TDX host support as intended.
 
- drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c | 26 ++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+**Effect on Callers**
+- kexec fast-fails when loading the image:
+  - `kernel/kexec.c:142`: `ret = machine_kexec_prepare(image);`
+  - `kernel/kexec_file.c:416`: `ret = machine_kexec_prepare(image);`
+- Userspace sees `EOPNOTSUPP` and dmesg logs the rationale, avoiding a
+  crash later at handoff.
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-index 4e65ab9e931c9..281a5e377aee4 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-@@ -172,20 +172,42 @@ PPSMC_Result amdgpu_si_send_msg_to_smc(struct amdgpu_device *adev,
- {
- 	u32 tmp;
- 	int i;
-+	int usec_timeout;
-+
-+	/* SMC seems to process some messages exceptionally slowly. */
-+	switch (msg) {
-+	case PPSMC_MSG_NoForcedLevel:
-+	case PPSMC_MSG_SetEnabledLevels:
-+	case PPSMC_MSG_SetForcedLevels:
-+	case PPSMC_MSG_DisableULV:
-+	case PPSMC_MSG_SwitchToSwState:
-+		usec_timeout = 1000000; /* 1 sec */
-+		break;
-+	default:
-+		usec_timeout = 200000; /* 200 ms */
-+		break;
-+	}
+**Scope and Risk**
+- Small, localized change; no architectural refactor.
+- Only affects x86-64 kexec/kdump on systems where the bug flag is set;
+  no behavioral change for others.
+- Conservative by design: disallows kexec/kdump to prevent hard machine
+  checks.
+- Reuse of existing CPU-bug infrastructure ensures correctness and
+  stability.
+
+**Dependencies/Backport Notes**
+- Requires `X86_BUG_TDX_PW_MCE` to exist and be set on affected hardware
+  (see cpufeatures and TDX init paths). If a target stable branch lacks
+  this bug flag or `tdx_init()` path, the guard must be adapted or
+  prerequisite patches included.
+
+**Stable Criteria**
+- Fixes a real user-visible reliability issue (hard MCE on reboot-to-
+  crash kernel).
+- Minimal and contained change with low regression risk.
+- No new features or architectural changes; limited to x86 kexec path.
+- Behavior matches stable policy: prefer preventing fatal errors over
+  risky runtime mitigation.
+
+Given the above, this is a good candidate for backporting to stable
+trees that include TDX host infrastructure and the corresponding bug
+flag.
+
+ arch/x86/kernel/machine_kexec_64.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/x86/kernel/machine_kexec_64.c b/arch/x86/kernel/machine_kexec_64.c
+index 697fb99406e6b..754e95285b910 100644
+--- a/arch/x86/kernel/machine_kexec_64.c
++++ b/arch/x86/kernel/machine_kexec_64.c
+@@ -346,6 +346,22 @@ int machine_kexec_prepare(struct kimage *image)
+ 	unsigned long reloc_end = (unsigned long)__relocate_kernel_end;
+ 	int result;
  
- 	if (!amdgpu_si_is_smc_running(adev))
- 		return PPSMC_Result_Failed;
- 
- 	WREG32(mmSMC_MESSAGE_0, msg);
- 
--	for (i = 0; i < adev->usec_timeout; i++) {
-+	for (i = 0; i < usec_timeout; i++) {
- 		tmp = RREG32(mmSMC_RESP_0);
- 		if (tmp != 0)
- 			break;
- 		udelay(1);
- 	}
- 
--	return (PPSMC_Result)RREG32(mmSMC_RESP_0);
-+	tmp = RREG32(mmSMC_RESP_0);
-+	if (tmp == 0) {
-+		drm_warn(adev_to_drm(adev),
-+			"%s timeout on message: %x (SMC_SCRATCH0: %x)\n",
-+			__func__, msg, RREG32(mmSMC_SCRATCH0));
++	/*
++	 * Some early TDX-capable platforms have an erratum.  A kernel
++	 * partial write (a write transaction of less than cacheline
++	 * lands at memory controller) to TDX private memory poisons that
++	 * memory, and a subsequent read triggers a machine check.
++	 *
++	 * On those platforms the old kernel must reset TDX private
++	 * memory before jumping to the new kernel otherwise the new
++	 * kernel may see unexpected machine check.  For simplicity
++	 * just fail kexec/kdump on those platforms.
++	 */
++	if (boot_cpu_has_bug(X86_BUG_TDX_PW_MCE)) {
++		pr_info_once("Not allowed on platform with tdx_pw_mce bug\n");
++		return -EOPNOTSUPP;
 +	}
 +
-+	return (PPSMC_Result)tmp;
- }
- 
- PPSMC_Result amdgpu_si_wait_for_smc_inactive(struct amdgpu_device *adev)
+ 	/* Setup the identity mapped 64bit page table */
+ 	result = init_pgtable(image, __pa(control_page));
+ 	if (result)
 -- 
 2.51.0
 
