@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9997D30F950;
-	Sat, 25 Oct 2025 16:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A333164C7;
+	Sat, 25 Oct 2025 16:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409566; cv=none; b=UtjdEh4eUbsVZmOifXi2iDMOO+FUglKQrSoxXRRlCx72HmwFS8kxcauhEKTayvH8oi7c2YpfF2rTQB7GadUMibrFwzPIKRV7TMWQP1rdgADhHQZSyrsRaH/21X8RHHcbOb7aVojys8YPVxC1EeSAby2sTGiOWTWX7OXymjUTQeI=
+	t=1761409567; cv=none; b=Bx8cxYXu9q3NzUHQ5NpAcv6xKgSCswFpcb7QwwX+I5L2+m/DT2WJLckfxgeAWkx8zwKQUyckO4GvGOr5FoCV3cvDHW+s5pbe3H9BeKOl6x/QesDjJxHwyato8/68tRRFg0ieP7CloPgMj9SooxBXLA+g9P5zASycCeJNjrq/PrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409566; c=relaxed/simple;
-	bh=T+P8aP/MJDLtAYuz4yzvFBJwLE3cCjZgG34WXLuja3s=;
+	s=arc-20240116; t=1761409567; c=relaxed/simple;
+	bh=fg9xU9MkRdWjXARbYA25O47bgzYDbgXcg3MEtfG4mJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MdyTpoHRp6hL9pSdTNxTjDi6vY0mSK+L3UN+Rz0klvUtyEB04mrNGVM+XG8ThbfwA200OOAaJtr10KKJHphxLcnUInOWf+pyB7+C0FhsNw64+PpXsY/ejZDxoIHgoFyPIb9b+HeXRJiw8Ck4su5R7OU1xIG4bnWxj9KwxVwYF18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dj4l3Loy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sx/5ZnU6ZKoE1IOkRFUBFMM6ka9lXi9PpKX6YwFOgg2kcrMd0lWn+qHKA0K/GzCc4BtnC/TvUdxKvYRtVjoTJ6uIIFgqpfw7WVusMaQ7VUtLeF8HbEkf7d3AUyR6dIb6fF1UkPBaU0VdL6BRnYNRob8v2p2sMuJ2mIsscLvuGIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mLGd3odE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dj4l3Loy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4DCC113D0;
-	Sat, 25 Oct 2025 16:26:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mLGd3odE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E64C4CEFB;
+	Sat, 25 Oct 2025 16:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409566;
-	bh=T+P8aP/MJDLtAYuz4yzvFBJwLE3cCjZgG34WXLuja3s=;
+	s=k20201202; t=1761409565;
+	bh=fg9xU9MkRdWjXARbYA25O47bgzYDbgXcg3MEtfG4mJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dj4l3Loy/hRT9QEvMWJnlsDkX2nZQtEWijE/x6zlD47OEYtlVP/fDKLecwzj/vtmj
-	 zwW4FfGI1jMQwexufJQDME+ugLL7JflDCDo6bKzc5gIOJpi1uH6jWgfuguw8zcD80b
-	 MHMTMdRQ1WeQ15E/ADFOIaDASjVfX4KP1mazafjPqCgeWmhYijzj4gZnOB/uoRwnsU
-	 UALI8cf1LDO4dFeCwth6ynJJtpMw2LqXcFoitYBqem6BUCZ0JpjdAfzVNmh9ngBhZe
-	 vGQb41r/lMw6HL71DU1UOCBXmnuvLMgsfuipvS01StS3RZIkE0aSJMhb7cXsViWly4
-	 A7iR4tYAn0N/Q==
+	b=mLGd3odEYpopEfv3acWnb7MEoVi7DuWXU41pJbH0oZSuLyR4vYhQUAoyjsHDwZkNh
+	 rxutlpYPVdG2H0ObZv28CKl4VVBn/79DBQ4PhGSAqaDDWqVfc7UUCn4+dRBThOG7kJ
+	 SU2O8Q8ij3SgG/hcgMa4e5ySiSfAnS2T4cm4EaHro/gfScnCqg8l/JlaVyMC7iZFeI
+	 vv7+8vhrdk986JWPhBO8mRcCRjJySjgKpV83XXkopFjteYeNKoiBa6OApmCV2GZwQh
+	 qAycSuWiVqlMrf50qqxLKtBFdCTpAxlhg2I8sLloxsVKFbqlzrQbB1oQ6PV5O9rc/0
+	 sg0m7kUnayMGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Alexander Usyskin <alexander.usyskin@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ming.qian@nxp.com,
-	eagle.zhou@nxp.com,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] media: amphion: Delete v4l2_fh synchronously in .release()
-Date: Sat, 25 Oct 2025 12:00:01 -0400
-Message-ID: <20251025160905.3857885-370-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] mei: make a local copy of client uuid in connect
+Date: Sat, 25 Oct 2025 12:00:00 -0400
+Message-ID: <20251025160905.3857885-369-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,187 +48,113 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-[ Upstream commit 19fb9c5b815f70eb90d5b545f65b83bc9c490ecd ]
+[ Upstream commit bb29fc32ae56393269d8fe775159fd59e45682d1 ]
 
-The v4l2_fh initialized and added in vpu_v4l2_open() is delete and
-cleaned up when the last reference to the vpu_inst is released. This may
-happen later than at vpu_v4l2_close() time.
+Connect ioctl has the same memory for in and out parameters.
+Copy in parameter (client uuid) to the local stack to avoid it be
+overwritten by out parameters fill.
 
-Not deleting and cleaning up the v4l2_fh when closing the file handle to
-the video device is not ideal, as the v4l2_fh will still be present in
-the video device's fh_list, and will store a copy of events queued to
-the video device. There may also be other side effects of keeping alive
-an object that represents an open file handle after the file handle is
-closed.
-
-The v4l2_fh instance is embedded in the vpu_inst structure, and is
-accessed in two different ways:
-
-- in vpu_notify_eos() and vpu_notify_source_change(), to queue V4L2
-  events to the file handle ; and
-
-- through the driver to access the v4l2_fh.m2m_ctx pointer.
-
-The v4l2_fh.m2m_ctx pointer is not touched by v4l2_fh_del() and
-v4l2_fh_exit(). It is set to NULL by the driver when closing the file
-handle, in vpu_v4l2_close().
-
-The vpu_notify_eos() and vpu_notify_source_change() functions are called
-in vpu_set_last_buffer_dequeued() and vdec_handle_resolution_change()
-respectively, only if the v4l2_fh.m2m_ctx pointer is not NULL. There is
-therefore a guarantee that no new event will be queued to the v4l2_fh
-after vpu_v4l2_close() destroys the m2m_ctx.
-
-The vpu_notify_eos() function is also called from vpu_vb2_buf_finish(),
-which is guaranteed to be called for all queued buffers when
-vpu_v4l2_close() calls v4l2_m2m_ctx_release(), and will not be called
-later.
-
-It is therefore safe to assume that the driver will not touch the
-v4l2_fh, except to check the m2m_ctx pointer, after vpu_v4l2_close()
-destroys the m2m_ctx. We can safely delete and cleanup the v4l2_fh
-synchronously in vpu_v4l2_close().
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250918130435.3327400-3-alexander.usyskin@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- `struct mei_connect_client_data` and `_vtag` overlay input and output
+  fields in a union (`include/uapi/linux/mei.h:44`,
+  `include/uapi/linux/mei.h:90`), so once the driver fills
+  `out_client_properties` the original UUID bytes are lost.
+- `mei_ioctl_connect_client()` reuses the saved UUID pointer in its
+  retry loop at `drivers/misc/mei/main.c:426` while the same call path
+  overwrites the union with output data at
+  `drivers/misc/mei/main.c:452`, so during the second iteration
+  `mei_me_cl_by_uuid()` sees garbage and the ioctl fails with `-ENOTTY`.
+- The patch copies the UUID into a stack variable
+  (`drivers/misc/mei/main.c:672`, `drivers/misc/mei/main.c:700`) and
+  passes a pointer to that stable copy (`drivers/misc/mei/main.c:708`,
+  `drivers/misc/mei/main.c:750`), ensuring the retry logic added for
+  D3cold link-reset recovery actually succeeds.
+- Without this fix, user space cannot reconnect to the firmware client
+  after a link reset triggered by powering a discrete card back up, so
+  the bug is user-visible and regresses the very scenario the previous
+  retry change was meant to solve.
+- Risk is minimal: it is a self-contained stack copy with no API
+  changes. When backporting, pair it with the `mei: retry connect if
+  interrupted by link reset` commit so the recovery flow on stable
+  kernels works end-to-end.
 
-- What it fixes
-  - Today the driver deletes the `v4l2_fh` only when the last reference
-    to the instance is put, not when the file is closed. In current
-    code, `v4l2_fh_del()` and `v4l2_fh_exit()` are called from the
-    instance release path `vpu_v4l2_release()`
-    (drivers/media/platform/amphion/vpu_v4l2.c:712-713), not from the
-    file `.release()` (close) path
-    (drivers/media/platform/amphion/vpu_v4l2.c:786-804).
-  - That means after a user closes the device file, the `v4l2_fh` object
-    still remains on the `video_device`’s `fh_list` and can accumulate
-    device events until the last kref is dropped. This is undesirable
-    (stale file-handle state, latent memory consumption and confusing
-    semantics), and it also diverges from how most V4L2 mem2mem drivers
-    behave and from the documented expectation that `v4l2_fh_del/exit`
-    are called in the v4l2 file `.release()`.
+ drivers/misc/mei/main.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-- What changes and why it’s safe
-  - The patch moves `v4l2_fh_del()`/`v4l2_fh_exit()` out of the instance
-    release path and into the file `.release()` (`vpu_v4l2_close()`),
-    and also adds them to the open error path:
-    - Remove from instance release: currently called in
-      `vpu_v4l2_release()` at
-      drivers/media/platform/amphion/vpu_v4l2.c:712-713.
-    - Add to close path: after the driver releases the mem2mem context
-      in `vpu_v4l2_close()`
-      (drivers/media/platform/amphion/vpu_v4l2.c:793-799), it will now
-      call `v4l2_fh_del()`/`v4l2_fh_exit()` and only then proceed to
-      unregister and put the instance.
-    - Add to the open error label: currently the `error:` path lacks
-      `v4l2_fh_del/exit`
-      (drivers/media/platform/amphion/vpu_v4l2.c:781-783); the patch
-      adds them there to avoid leaving an fh briefly on the device list
-      after a failed open.
-  - Safety argument (from code):
-    - After close, `vpu_v4l2_close()` already destroys the mem2mem
-      context (`v4l2_m2m_ctx_release`) before anything else of interest
-      (drivers/media/platform/amphion/vpu_v4l2.c:793-799). This is
-      critical: it ensures the driver no longer queues new events to the
-      `v4l2_fh`.
-    - Calls that queue events check `m2m_ctx` first:
-      - `vpu_set_last_buffer_dequeued()` returns if `inst->fh.m2m_ctx ==
-        NULL` (drivers/media/platform/amphion/vpu_v4l2.c:110).
-      - The decoder’s resolution-change path
-        (`vdec_handle_resolution_change()`) also returns early if
-        `inst->fh.m2m_ctx == NULL`
-        (drivers/media/platform/amphion/vdec.c:357-366) before calling
-        `vpu_notify_source_change()`.
-      - `vpu_vb2_buf_finish()` may call `vpu_notify_eos(inst)`, but
-        buffer-finish callbacks are guaranteed to flush during
-        `v4l2_m2m_ctx_release()` and not after it returns, so there are
-        no post-close event queues to an already exited `fh`.
-    - With `m2m_ctx` destroyed first, no code path will call
-      `v4l2_event_queue_fh()` after `v4l2_fh_exit()` sets `fh->vdev =
-      NULL`. This avoids the risk of dereferencing a NULL `fh->vdev` in
-      the core event code (see
-      drivers/media/v4l2-core/v4l2-event.c:173-179 and
-      drivers/media/v4l2-core/v4l2-fh.c:87-114).
-
-- Why this is a good stable backport
-  - Bug fix that affects users: prevents stale `fh` objects from staying
-    on the device’s `fh_list` after close, which can accumulate events
-    and resources and misrepresent the state of “open” file handles.
-  - Small and contained: only changes
-    `drivers/media/platform/amphion/vpu_v4l2.c`, moving two calls and
-    adding them to an error path. No API or architectural changes.
-  - Aligns with V4L2 expectations and common driver practice: many V4L2
-    mem2mem drivers delete and exit the `v4l2_fh` in their file
-    `.release()`; the V4L2 API documentation for `v4l2_fh_del/exit`
-    indicates they should be called in the `.release()` handler (see
-    include/media/v4l2-fh.h).
-  - Low regression risk: the mem2mem context is released at close time
-    already (drivers/media/platform/amphion/vpu_v4l2.c:793-799), and all
-    event-queuing paths are guarded by `m2m_ctx != NULL`, ensuring no
-    events are queued after `fh` is deleted/exited.
-  - Extra robustness: adding `v4l2_fh_del/exit` to the open error path
-    ensures no transient fhs linger on the device list if open fails
-    after `v4l2_fh_add`.
-
-- Preconditions for backporting
-  - Ensure the target stable branch matches the current behavior where
-    `vpu_v4l2_close()` releases `inst->fh.m2m_ctx`
-    (drivers/media/platform/amphion/vpu_v4l2.c:793-799). Earlier
-    versions temporarily released `m2m_ctx` in the instance release
-    path; this patch’s safety relies on doing it in `.close()`. If the
-    branch still releases `m2m_ctx` in the instance release routine,
-    this patch should be combined with or preceded by the change that
-    moves `m2m_ctx` release into `.close()`.
-
-Given the above, this change is a clear, minimal correctness fix with
-low risk and should be backported.
-
- drivers/media/platform/amphion/vpu_v4l2.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index 74668fa362e24..1c3740baf6942 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -718,8 +718,6 @@ static int vpu_v4l2_release(struct vpu_inst *inst)
+diff --git a/drivers/misc/mei/main.c b/drivers/misc/mei/main.c
+index 8a149a15b8610..77e7b641b8e97 100644
+--- a/drivers/misc/mei/main.c
++++ b/drivers/misc/mei/main.c
+@@ -641,7 +641,7 @@ static long mei_ioctl(struct file *file, unsigned int cmd, unsigned long data)
+ 	struct mei_cl *cl = file->private_data;
+ 	struct mei_connect_client_data conn;
+ 	struct mei_connect_client_data_vtag conn_vtag;
+-	const uuid_le *cl_uuid;
++	uuid_le cl_uuid;
+ 	struct mei_client *props;
+ 	u8 vtag;
+ 	u32 notify_get, notify_req;
+@@ -669,18 +669,18 @@ static long mei_ioctl(struct file *file, unsigned int cmd, unsigned long data)
+ 			rets = -EFAULT;
+ 			goto out;
+ 		}
+-		cl_uuid = &conn.in_client_uuid;
++		cl_uuid = conn.in_client_uuid;
+ 		props = &conn.out_client_properties;
+ 		vtag = 0;
  
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
- 	mutex_destroy(&inst->lock);
--	v4l2_fh_del(&inst->fh);
--	v4l2_fh_exit(&inst->fh);
+-		rets = mei_vt_support_check(dev, cl_uuid);
++		rets = mei_vt_support_check(dev, &cl_uuid);
+ 		if (rets == -ENOTTY)
+ 			goto out;
+ 		if (!rets)
+-			rets = mei_ioctl_connect_vtag(file, cl_uuid, props,
++			rets = mei_ioctl_connect_vtag(file, &cl_uuid, props,
+ 						      vtag);
+ 		else
+-			rets = mei_ioctl_connect_client(file, cl_uuid, props);
++			rets = mei_ioctl_connect_client(file, &cl_uuid, props);
+ 		if (rets)
+ 			goto out;
  
- 	call_void_vop(inst, cleanup);
+@@ -702,14 +702,14 @@ static long mei_ioctl(struct file *file, unsigned int cmd, unsigned long data)
+ 			goto out;
+ 		}
  
-@@ -788,6 +786,8 @@ int vpu_v4l2_open(struct file *file, struct vpu_inst *inst)
+-		cl_uuid = &conn_vtag.connect.in_client_uuid;
++		cl_uuid = conn_vtag.connect.in_client_uuid;
+ 		props = &conn_vtag.out_client_properties;
+ 		vtag = conn_vtag.connect.vtag;
  
- 	return 0;
- error:
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
- 	vpu_inst_put(inst);
- 	return ret;
- }
-@@ -807,6 +807,9 @@ int vpu_v4l2_close(struct file *file)
- 	call_void_vop(inst, release);
- 	vpu_inst_unlock(inst);
+-		rets = mei_vt_support_check(dev, cl_uuid);
++		rets = mei_vt_support_check(dev, &cl_uuid);
+ 		if (rets == -EOPNOTSUPP)
+ 			cl_dbg(dev, cl, "FW Client %pUl does not support vtags\n",
+-				cl_uuid);
++				&cl_uuid);
+ 		if (rets)
+ 			goto out;
  
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
-+
- 	vpu_inst_unregister(inst);
- 	vpu_inst_put(inst);
+@@ -719,7 +719,7 @@ static long mei_ioctl(struct file *file, unsigned int cmd, unsigned long data)
+ 			goto out;
+ 		}
+ 
+-		rets = mei_ioctl_connect_vtag(file, cl_uuid, props, vtag);
++		rets = mei_ioctl_connect_vtag(file, &cl_uuid, props, vtag);
+ 		if (rets)
+ 			goto out;
  
 -- 
 2.51.0
