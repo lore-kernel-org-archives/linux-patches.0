@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F08F303A1E;
-	Sat, 25 Oct 2025 16:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314FC303A1E;
+	Sat, 25 Oct 2025 16:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409562; cv=none; b=TmUjxySngiaplkzUsi7twDrCEWwQVSxjv2/UqGXdJe1Nrwa+QAl0tXN09USVVcAlg2I7f6AiWARty9rbfcHyeXrLrAbwOLyPd69X3lSDeYR/4Mp+MVyzf35Ta4DzRwkHtmUl3hCt7G+rFl4Gu5XPDuOyKbGUmaj7ARtvj6clOo4=
+	t=1761409566; cv=none; b=jrtBGg94ATmGGWTLMjvVvlx+SYIQpRlFcJSs6bsLGpwVSNH1tCGrbQuxFh/e2rsqTxJXbuWQwrJjgUOcpTWKklHmcMMofxiInNVeP49yI/XbF7BJE4vT4M7dsmv+mBkw4rj8WzurZSl0Ie6+dNVIf2wF4dzuA5isA+AZj4QMGaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409562; c=relaxed/simple;
-	bh=+4nRBMjzRvhju8F56vVrgQsretnLSSG21867TLrJj8c=;
+	s=arc-20240116; t=1761409566; c=relaxed/simple;
+	bh=KdCwY02XAI2rWBJxdnCMdyzWYd4+LCpAMiSnoQoCINQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IPS2S37DVhfGIWMofFp0bvQytgvNmb9XeMJbVex6Q1Hc9I9TLovbbdMWX0480aFu1nEtU5UF+s14IoV4ae1WHVFkYYeAWetOTQOEhu26b+LXVHRdBEBi/e/mcH0qiaEU1MSoxSH90V4ui0zyZr5s1o5wu0o4fMJ+j6SpB7A5xFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OBGfeDcn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IPj3Q8BO1eofbEYzSebaXvY3kDiURNNBTc1ENorJdlPTi6dPGQ09e3fs2dPF2gHBeRARBqpU2gW4bJKfXZy5x9sU5zVrJ8QueWkt/CMg6whiBQmzQS2T0r69SLM4eilgowOl2eaBgGOgf3tXq9C1lBI+FhR1BaZpzaX3dg/Ci0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=auytd7Bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OBGfeDcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A11C4CEFB;
-	Sat, 25 Oct 2025 16:26:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="auytd7Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9ED6C4CEF5;
+	Sat, 25 Oct 2025 16:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409562;
-	bh=+4nRBMjzRvhju8F56vVrgQsretnLSSG21867TLrJj8c=;
+	s=k20201202; t=1761409563;
+	bh=KdCwY02XAI2rWBJxdnCMdyzWYd4+LCpAMiSnoQoCINQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OBGfeDcnNrU/AzZmjEzIlVQyBWEeuqQ/RiU+e4gulaSNNzvrCw0jfJZ38oYtV0V4U
-	 +nqZPg3yv3ot6x6DrRN813Vr4F8IqdUc5ANN0X+hpDpPr8DN71rzbzx2sUF9Tg1Rs5
-	 mN7EP5m7JEp2XEvYBFdR9eZ34+stAAuQhtpIhXvIb9y/q0BeAU60nRIC3zW8XX3aNy
-	 rnsMV7sORH613eAZGIl8dFRPX1xtI28a+f5VkvvnJMYL2F5nlfY1ljfBR39wh1C3wY
-	 rE9NJhJ64cq99UrOSbtPDGvLatJ4WxmBg3oqbKrRcunh0K+I0hBEaUvl+pkrRVXgbO
-	 4ndlqqfqx2VlA==
+	b=auytd7Bge3hpP+ORabjZPpLV9tZCpqYLM5AlyRGNTameIS6m8L6TN/7anJQ2+9DFs
+	 4+yh1Dp2vo7ubULz2FDVF/n96QMl8zUhmicEIFa378+0PozPxvweyAIgQCcSSx3MKw
+	 QRhV9F2inngc4bNs0DmeYQulApTpBDWB+b0Pyei01h77bwgnkOCJAlH0vHQBVUZuED
+	 H+LAbQIxG48Kuc2jElpS605AviEMmWVUnZKRvyfaE14LSWbuOJv4vVXs8OiSMylbui
+	 yQAK548JYS918tCSJWIDAx1UNGfPGV8Vyl3rK18qdEH7HzZexmrlvi5Dp8lDzTDEBd
+	 iRI/C1+z7CDyQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Olga Kornievskaia <okorniev@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] media: i2c: og01a1b: Specify monochrome media bus format instead of Bayer
-Date: Sat, 25 Oct 2025 11:59:58 -0400
-Message-ID: <20251025160905.3857885-367-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] NFSv4: handle ERR_GRACE on delegation recalls
+Date: Sat, 25 Oct 2025 11:59:59 -0400
+Message-ID: <20251025160905.3857885-368-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,96 +53,62 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit bfbd5aa5347fbd11ade188b316b800bfb27d9e22 ]
+[ Upstream commit be390f95242785adbf37d7b8a5101dd2f2ba891b ]
 
-The OmniVision OG01A1B image sensor is a monochrome sensor, it supports
-8-bit and 10-bit RAW output formats only.
+RFC7530 states that clients should be prepared for the return of
+NFS4ERR_GRACE errors for non-reclaim lock and I/O requests.
 
-That said the planar greyscale Y8/Y10 media formats are more appropriate
-for the sensor instead of the originally and arbitrary selected SGRBG one,
-since there is no red, green or blue color components.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+**Key Points**
+- The change at `fs/nfs/nfs4proc.c:7876-7880` extends the recall retry
+  loop so that `-NFS4ERR_GRACE` is treated exactly like
+  `-NFS4ERR_DELAY`, matching RFC 7530’s requirement that non-reclaim
+  requests retry during the server’s grace period; without it we
+  prematurely exit the loop.
+- When the old code bailed out on `-NFS4ERR_GRACE`, control returned up
+  the stack, causing `nfs_delegation_claim_locks()` to propagate
+  `-EAGAIN` (`fs/nfs/delegation.c:176-178`), which in turn made
+  `nfs_end_delegation_return()` fall into the client-recovery path or
+  abort the delegation (`fs/nfs/delegation.c:584-596`), disrupting
+  otherwise healthy delegations after a server restart.
+- Other lock paths already retry on `-NFS4ERR_GRACE` (see
+  `fs/nfs/nfs4proc.c:7594-7604`), so this patch simply aligns the
+  delegation-recall path with existing, well-tested behaviour and
+  prevents unnecessary recovery storms.
+- The fix is tiny, localized to the NFS client delegation logic, and
+  carries minimal regression risk while addressing a real-world failure
+  mode observed during grace periods; it is an ideal candidate for
+  stable backporting.
 
-- Problem fixed: The sensor is monochrome, but the driver advertised a
-  Bayer RAW10 bus code. This is incorrect and can cause wrong pipeline
-  negotiation and processing (e.g., debayering on a non-CFA stream).
-- Precise fix: Three small, contained changes switch the media bus code
-  from Bayer to monochrome:
-  - Default pad format: `fmt->code = MEDIA_BUS_FMT_Y10_1X10;` in
-    `og01a1b_update_pad_format` (drivers/media/i2c/og01a1b.c:685).
-  - Advertised code enumeration: `code->code = MEDIA_BUS_FMT_Y10_1X10;`
-    in `og01a1b_enum_mbus_code` (drivers/media/i2c/og01a1b.c:827).
-  - Frame-size enumeration input check: `fse->code !=
-    MEDIA_BUS_FMT_Y10_1X10` (drivers/media/i2c/og01a1b.c:839).
-- Scope and risk: The changes are limited to format reporting in this
-  sensor subdev; no register programming, timing, or streaming logic is
-  touched. The on-wire MIPI CSI-2 data type remains RAW10; this is a
-  representational fix, not a hardware/protocol change.
-- User impact: Correctly reporting monochrome Y10 avoids erroneous color
-  processing and enables proper link validation with components that
-  expect grayscale formats. Many bridge/ISP drivers already support
-  `MEDIA_BUS_FMT_Y10_1X10`, minimizing regression risk.
-- Compatibility: The driver’s single supported mode is 10-bit, and the
-  code already reflects 10-bit depth, so Y10 is consistent with current
-  capabilities. There’s no API/ABI change visible to V4L2 capture nodes;
-  this is subdev pad-format metadata.
-- Stable criteria alignment:
-  - Important bug fix (wrong format reported for a monochrome sensor).
-  - Small, surgical change (three lines).
-  - No architectural or cross-subsystem churn.
-  - Low regression risk; aligns with established handling of monochrome
-    sensors.
-  - Confined to one i2c/media driver file
-    (`drivers/media/i2c/og01a1b.c`).
+ fs/nfs/nfs4proc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Given the correctness improvement, minimal scope, and low risk, this is
-a good candidate for stable backport.
-
- drivers/media/i2c/og01a1b.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
-index 78d5d406e4b72..b7d0b677975d5 100644
---- a/drivers/media/i2c/og01a1b.c
-+++ b/drivers/media/i2c/og01a1b.c
-@@ -682,7 +682,7 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
- {
- 	fmt->width = mode->width;
- 	fmt->height = mode->height;
--	fmt->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	fmt->code = MEDIA_BUS_FMT_Y10_1X10;
- 	fmt->field = V4L2_FIELD_NONE;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 611e6283c194f..4de3e4bd724b7 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7872,10 +7872,10 @@ int nfs4_lock_delegation_recall(struct file_lock *fl, struct nfs4_state *state,
+ 		return err;
+ 	do {
+ 		err = _nfs4_do_setlk(state, F_SETLK, fl, NFS_LOCK_NEW);
+-		if (err != -NFS4ERR_DELAY)
++		if (err != -NFS4ERR_DELAY && err != -NFS4ERR_GRACE)
+ 			break;
+ 		ssleep(1);
+-	} while (err == -NFS4ERR_DELAY);
++	} while (err == -NFS4ERR_DELAY || err == -NFSERR_GRACE);
+ 	return nfs4_handle_delegation_recall_error(server, state, stateid, fl, err);
  }
  
-@@ -828,7 +828,7 @@ static int og01a1b_enum_mbus_code(struct v4l2_subdev *sd,
- 	if (code->index > 0)
- 		return -EINVAL;
- 
--	code->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	code->code = MEDIA_BUS_FMT_Y10_1X10;
- 
- 	return 0;
- }
-@@ -840,7 +840,7 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
- 	if (fse->index >= ARRAY_SIZE(supported_modes))
- 		return -EINVAL;
- 
--	if (fse->code != MEDIA_BUS_FMT_SGRBG10_1X10)
-+	if (fse->code != MEDIA_BUS_FMT_Y10_1X10)
- 		return -EINVAL;
- 
- 	fse->min_width = supported_modes[fse->index].width;
 -- 
 2.51.0
 
