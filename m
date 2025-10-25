@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A98306490;
-	Sat, 25 Oct 2025 16:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E191030BB81;
+	Sat, 25 Oct 2025 16:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409638; cv=none; b=c8P2hCZsKMHTe6p1xY6GO5esYiD2ilTRpHdlPdl4+NrftMZTSBTHKDLjS3WR740YKMWhkD3I1m8iHJsAksvFzHcKSjKX+bov2W9f3tGqiKabX0EUpWqyGGQDLIH/4XTHKk4cwpBjySuSB7ivJCHaI40+Hh7k2JH5fL6gBXnnHgQ=
+	t=1761409640; cv=none; b=Opz502L/Egd+JFvT2zeqX3YvQef2f0MMVl5fZYn0JYJKxT/q+wjf+r5QJdaqiMyElafvSTWbVze34YOWG+07CfovaZSpPcWbP7jF+uzRD8qZPXRQH7OSTWK5n9cTivsMOBefj5qckKzWJuegREzyOZ2eqFHeGulK4GZ3agoP7fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409638; c=relaxed/simple;
-	bh=674ScUfL2y2OnNZx6hSiuHRi3Sb7Jh74ZzdnAu96/C0=;
+	s=arc-20240116; t=1761409640; c=relaxed/simple;
+	bh=BzK5MSbnikKVMVBl3CpIZyvVtiwzDtnUwx3iJLWc4o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5L5f/4/jjgwyVG6hTdKt8tC6q6O3LxVCd5p/ZrcM0iQdwQDENT07CPc3HNs2efa9e11bL/DKiBTUsrqs60gJHrYMwUAH+MifVZnixEWuDJtAUaHizbJ+yUPjH+9KxCoTxP2fWC34SOMGbAhiJ2uC9Vndb/zPmtI7m/oK9zplBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FB9FP3Ze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNTL7/T+0dIFVa7eJXmxyvBf19n5Ue3n1i6BI69DZIMu+rxYG4vT3U+D1gTlnPVepULZ9k9/VTuw8v8ff1ADABdvIQptAf/VlHkn2Y5dGD0fM0SNXoMls+nARFXLyTASyU0yUW3JgDcT2WML4Jjulg77hPzp4B6epRDlB32El0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/s+Eoq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FB9FP3Ze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2534C4CEFB;
-	Sat, 25 Oct 2025 16:27:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/s+Eoq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F71DC4CEF5;
+	Sat, 25 Oct 2025 16:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409637;
-	bh=674ScUfL2y2OnNZx6hSiuHRi3Sb7Jh74ZzdnAu96/C0=;
+	s=k20201202; t=1761409639;
+	bh=BzK5MSbnikKVMVBl3CpIZyvVtiwzDtnUwx3iJLWc4o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FB9FP3Ze/ksaLxYh9WIvnqxymo4lIUHCrh/1Xv4GFd7ZsJHLX9y0g5COqwLvWsS5/
-	 +WBF/gMDBMXSlJd9vIeKEQX3mtuzEcRXC0Bn8yF7SZ+9lNw68IlbiEEejLHEMjs2QY
-	 nX90j8buf54dEEahRT3cKu1stpEuKLtJFd3CRg+WfhcW3r+JLgSqgJJyQJwQO9Rcjy
-	 7+wmnUjht5zIOQ0CRAVb6xfU0Q5FrxwsIusqQPkvlojc6/JkSwuqOrvqC5n2vWVmWq
-	 hSL3h3FCL/yLkKlC4jtoApVyd27fc+Kg77x8a+ZkU5O2bkY7a3Dv04rfvL3HdMWLHA
-	 fkRjcaxoollzw==
+	b=I/s+Eoq0aUEnsoC1dltYqTaorPiJ3wHMwXlfCvn4iqtOpwxndV1LFibP2BcrQi1Gg
+	 YkE5cKanwGd/tH6Eym2ofnfDbwopaZ78rMJcQSYJwz2jqI1ne5bc3xAx1SEP5nW0aZ
+	 dEhEcDVqkxIjxo/YPm69YcYXBsbPAcbK11yPIQlWhFLTN5n8iyiSNMsChqIxel7Y3F
+	 u3abog3uOyvnTDNGnEIOEW3UUnxhevnZGOF6p4HQq9NzYF59X2m+pIdUz2IDhOs3HS
+	 OKLUA2wpaB5rsFx7id4RKMbzEHE01VM3+lEtAqG2ogUaB4h/7orqtZhwcwlvv3Ny9F
+	 sGHxgzNqYzTdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Sunil V L <sunilvl@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.1] scsi: ufs: host: mediatek: Enhance recovery on resume failure
-Date: Sat, 25 Oct 2025 12:00:31 -0400
-Message-ID: <20251025160905.3857885-400-sashal@kernel.org>
+	rafael@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	linux-acpi@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] ACPI: scan: Update honor list for RPMI System MSI
+Date: Sat, 25 Oct 2025 12:00:32 -0400
+Message-ID: <20251025160905.3857885-401-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,119 +59,86 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-[ Upstream commit 15ef3f5aa822f32524cba1463422a2c9372443f0 ]
+[ Upstream commit 4215d1cf59e4b272755f4277a05cd5967935a704 ]
 
-Improve the recovery process for failed resume operations. Log the
-device's power status and return 0 if both resume and recovery fail to
-prevent I/O hang.
+The RPMI System MSI interrupt controller (just like PLIC and APLIC)
+needs to probed prior to devices like GED which use interrupts provided
+by it. Also, it has dependency on the SBI MPXY mailbox device.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Add HIDs of RPMI System MSI and SBI MPXY mailbox devices to the honor
+list so that those dependencies are handled.
+
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Acked-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://lore.kernel.org/r/20250818040920.272664-17-apatel@ventanamicro.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+**Why**
+- The patch extends the `_DEP` honor list in
+  `drivers/acpi/scan.c:856-866` so that ACPI dependencies pointing at
+  the SBI MPXY mailbox (`RSCV0005`) and RPMI System MSI controller
+  (`RSCV0006`) are actually enforced. Without these entries,
+  `acpi_scan_add_dep()` never sets `dep->honor_dep` for those HIDs
+  (`drivers/acpi/scan.c:2034-2049`), leaving `device->flags.honor_deps`
+  clear and allowing consumers to enumerate even when their IRQ
+  provider/mailbox is missing, because
+  `acpi_dev_ready_for_enumeration()` only blocks devices when both
+  `honor_deps` and `dep_unmet` are set
+  (`drivers/acpi/scan.c:2481-2486`).
+- On RISC-V ACPI systems the arch helper builds implicit dependencies
+  between devices and their interrupt controllers
+  (`drivers/acpi/riscv/irq.c:340-404`). GED and other consumers
+  therefore get `_DEP` entries that reference the RPMI System MSI node.
+  If the honor flag is missing, GED can probe before the MSI domain
+  exists, causing its interrupt setup to fail.
+- The RPMI System MSI driver itself requires the MPXY mailbox to be
+  ready; it immediately requests a mailbox channel in probe
+  (`drivers/irqchip/irq-riscv-rpmi-sysmsi.c:223-233`). A premature probe
+  hits `-EPROBE_DEFER`, and without the dependency being honored the
+  driver keeps churning instead of waiting for the mailbox to finish.
+- Both suppliers call `acpi_dev_clear_dependencies()` once they succeed
+  (`drivers/irqchip/irq-riscv-rpmi-sysmsi.c:298-303`,
+  `drivers/mailbox/riscv-sbi-mpxy-mbox.c:974-979`), so honoring their
+  `_DEP`s restores the intended sequencing with no behavioral change
+  elsewhere.
+- Change risk is minimal: it only adds two strings, matching the
+  precedent already in place for other RISC-V interrupt controllers. It
+  fixes a user-visible failure (missing interrupts / repeated probe
+  defers) on ACPI RISC-V platforms that already shipped the new RPMI +
+  MPXY support.
 
-Explanation
-- What changed (drivers/ufs/host/ufs-mediatek.c: fail path in
-  `ufs_mtk_resume()`):
-  - Old behavior: on resume failure, jump to `fail:` and return
-    `ufshcd_link_recovery(hba)` (propagate error).
-  - New behavior: at `fail:` call `ufshcd_link_recovery(hba)` and log
-    runtime PM status if it fails; then unconditionally `return 0 /*
-    Cannot return a failure, otherwise, the I/O will hang. */`.
-  - Code reference: drivers/ufs/host/ufs-mediatek.c:1814 (call to
-    `ufshcd_link_recovery(hba)`), followed by the new `dev_err()` that
-    prints `hba->dev->power.request`, `runtime_status`, `runtime_error`,
-    and the unconditional `return 0`.
+**Next Step**
+- Boot-test on an ACPI RISC-V platform using RPMI/MPXY to confirm GED
+  and dependent devices enumerate cleanly once the MSI controller and
+  mailbox load.
 
-- Why this fixes a real bug affecting users (I/O hang):
-  - The UFS core resume path calls the vendor resume first and bails out
-    immediately if the vops `resume()` returns an error, skipping core
-    recovery steps like hibern8 exit or full reset/restore:
-    - Code reference: drivers/ufs/core/ufshcd.c:10011 (`ret =
-      ufshcd_vops_resume(hba, pm_op); if (ret) goto out;`).
-    - If the Mediatek variant previously returned an error from
-      `ufs_mtk_resume()`, the core code would not attempt
-      `ufshcd_uic_hibern8_exit()` or `ufshcd_reset_and_restore()`,
-      leaving the link/device in a bad state and causing I/O to hang.
-  - With this patch, the Mediatek driver tries `ufshcd_link_recovery()`
-    locally and returns 0, allowing the core resume sequence to proceed:
-    - If the link is in Hibern8, the core performs
-      `ufshcd_uic_hibern8_exit()` (drivers/ufs/core/ufshcd.c:10025) and
-      sets the link active.
-    - If the link is off, the core performs `ufshcd_reset_and_restore()`
-      (drivers/ufs/core/ufshcd.c:10034).
-  - Hence, even if the vendor-specific parts hit an error, the core
-    still executes its well-tested recovery and bring-up, which avoids
-    the I/O hang scenario the commit message calls out.
+ drivers/acpi/scan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-- Localized change, minimal risk:
-  - The change is confined to one function in the Mediatek UFS host
-    driver; no interface or architectural changes.
-  - `ufshcd_link_recovery()` is the standard core recovery path for UFS
-    (drivers/ufs/core/ufshcd.c:4467), which resets the device and host
-    and is safe to invoke on failures.
-  - Logging uses existing runtime PM fields for debugging and has no
-    functional side effects.
-
-- Side effects considered:
-  - Masking the error return from `ufshcd_link_recovery()` at the
-    variant level does not hide failures overall: subsequent core steps
-    will still return errors if the link/device is not brought back
-    correctly, and the resume wrapper will report failure
-    (drivers/ufs/core/ufshcd.c:10011+ path).
-  - This approach improves robustness by ensuring core recovery always
-    runs, which is preferable to aborting early and risking an
-    unrecovered link and stuck I/O.
-
-- Stable backport criteria:
-  - Fixes a user-visible bug (I/O hang after resume failures).
-  - Patch is small, self-contained, and limited to Mediatek UFS host
-    driver.
-  - No new features or API changes; follows existing error-handling
-    patterns (attempt recovery, proceed to core recovery, log details).
-  - Low regression risk relative to the severity of the hang it
-    prevents.
-
-Conclusion: This is a targeted bug fix that prevents I/O hangs by
-ensuring the core resume/recovery sequence runs even if the vendor
-resume fails. It is suitable for backporting to stable.
-
- drivers/ufs/host/ufs-mediatek.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index bb0be6bed1bca..188f90e468c41 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1727,8 +1727,21 @@ static int ufs_mtk_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	}
- 
- 	return 0;
-+
- fail:
--	return ufshcd_link_recovery(hba);
-+	/*
-+	 * Check if the platform (parent) device has resumed, and ensure that
-+	 * power, clock, and MTCMOS are all turned on.
-+	 */
-+	err = ufshcd_link_recovery(hba);
-+	if (err) {
-+		dev_err(hba->dev, "Device PM: req=%d, status:%d, err:%d\n",
-+			hba->dev->power.request,
-+			hba->dev->power.runtime_status,
-+			hba->dev->power.runtime_error);
-+	}
-+
-+	return 0; /* Cannot return a failure, otherwise, the I/O will hang. */
- }
- 
- static void ufs_mtk_dbg_register_dump(struct ufs_hba *hba)
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index fb1fe9f3b1a36..54181b03b345b 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -858,6 +858,8 @@ static const char * const acpi_honor_dep_ids[] = {
+ 	"INTC10CF", /* IVSC (MTL) driver must be loaded to allow i2c access to camera sensors */
+ 	"RSCV0001", /* RISC-V PLIC */
+ 	"RSCV0002", /* RISC-V APLIC */
++	"RSCV0005", /* RISC-V SBI MPXY MBOX */
++	"RSCV0006", /* RISC-V RPMI SYSMSI */
+ 	"PNP0C0F",  /* PCI Link Device */
+ 	NULL
+ };
 -- 
 2.51.0
 
