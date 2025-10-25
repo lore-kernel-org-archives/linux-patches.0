@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DA63002A4;
-	Sat, 25 Oct 2025 16:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090BE27280E;
+	Sat, 25 Oct 2025 16:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408645; cv=none; b=l2lwRBhFZKgxBix303bheKY5vCInY4xzvgrC017IXJa8V2DwaS8S+r/3t+5mNNKdOD19MnZJe8ERb9pP7jgFoxGZtKo4l7A3zqpT3h/3ruaCiFSBJwZJRRjI84FVQYDifphDVmgD92KBSbxn3O92gUBjzubXfVh2mIjqWC69I1s=
+	t=1761408646; cv=none; b=XOk/3nHSllSknhS6CdB0lDtGaek0sHqCeZ4wJsmx6sgs7gOkr1xg6w0LxBmNng1tFJsE97hodJmI4A1Am+VbUp18sJK76+pUxJycRKS4HkZwQe1rmdx4Svjh8Lx+lp/88mQZhd7+H9gbbFIWqABfWU2PIlRMBL4PY2oD1hs13ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408645; c=relaxed/simple;
-	bh=HLeSJR12eRzbvIFyMp0kBxCnXjMD+Gmbwq7QeQCt7Iw=;
+	s=arc-20240116; t=1761408646; c=relaxed/simple;
+	bh=Vx7I584o4VZRioawcIh4LGiXCbJ4/nJrnpjZePfmpcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TmtI5cUknAYeEDKudtQ+pHzo2GPGpqUL2Cmo80ISA3Yhudwv2eJd3D5/D+u9Dj5tCeJa1qEdsqjR1/0muIDHReMmlNjiEYALVMuX6QtgYmqZqHn4XpFSKujylVBAb5/lIzUSy4f8eC3qSySemcTvU8WIPIxiOghzHeZmshO0zJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXkY576w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QCZgarajLjxtdikF/d4vC2eUPyPtVz6l1NdBDjqUF+QJqBRqw+bioqwIp4gZt4hSU5gnvOdm1PPUsvMeAoAhw32L9DudqOkdGVVE/sx2Zgo+nssT3rtZQfh7XYCi56xux2a1vxlmfwXE4DI5vB5cjKXo0zpPqC6hnGXvnyd4coo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ATPLP2ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXkY576w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27062C4CEFB;
-	Sat, 25 Oct 2025 16:10:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ATPLP2ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED529C4CEFF;
+	Sat, 25 Oct 2025 16:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408644;
-	bh=HLeSJR12eRzbvIFyMp0kBxCnXjMD+Gmbwq7QeQCt7Iw=;
+	s=k20201202; t=1761408645;
+	bh=Vx7I584o4VZRioawcIh4LGiXCbJ4/nJrnpjZePfmpcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXkY576wyDp5LRm6WpmocnSRB8ytWOPB+iUh4hxRFzpd2soevegkAm+noZMMGoJF6
-	 tNWVWkN0zGxaEm50NBLI1JGcOK7DIiWpACpqD/bFaBbxh2fuzyyudH2IqQHRAaOjtk
-	 VXqzB8cFFBBgAgDn7GXRFakJuJp2oJrpk7tlzG1ohFdTWg+apvBeUXACO58Ny7Tffk
-	 2Xy6ynxmGU/uTccbYJ8yNmgYoY35SjFw3uqOmCAINLrfsbLwSAhUZmkuChcNE4gUWJ
-	 Dc0GhJdQnd3hOPLBFebtGKRbmir3c0erun+wqMwwx9Fq2rMR++MouypwvmfEvj4Li2
-	 skZftXlbaK8Rg==
+	b=ATPLP2iaegTEbL3Vh+qlTQqJ+LkWNs7XyRBzrdsl0g2gqh6m5YJj2sq7g+T+eyHZC
+	 Yj9Wb0iGgtbajw30e3q7ow0BNdhI1kooGWqx4mK+hGr9nOdQ0iX1RsY2XCfVFeO4uY
+	 fiC0HTbuZKDmqvTIdk0RyvgRmIyEIMw9EmjzqcZA6K0Uj9Hcu5RWAYMOvldCniqit+
+	 4u/qxI+0hY4BD+3Fkjq/B4aqRz6f0CaAEyH5uCQdmP2OQDrquqLbWu5Vs5vsnzwVSX
+	 8B4LGlUsrkH6EFEHuO67PeVim+yLLZ/gK0ljkm3nNGpGqMnjBQ7XNV9VhKkO/kr9OB
+	 eEb1g/Yk4VtzQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+Cc: Palash Kambar <quic_pkambar@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alvin.lee2@amd.com,
-	mario.limonciello@amd.com,
-	alexandre.f.demers@gmail.com,
-	dillon.varone@amd.com,
-	yan.li@amd.com,
-	ryanseto@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amd/display: Keep PLL0 running on DCE 6.0 and 6.4
-Date: Sat, 25 Oct 2025 11:54:21 -0400
-Message-ID: <20251025160905.3857885-30-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] scsi: ufs: ufs-qcom: Disable lane clocks during phy hibern8
+Date: Sat, 25 Oct 2025 11:54:22 -0400
+Message-ID: <20251025160905.3857885-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,263 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Palash Kambar <quic_pkambar@quicinc.com>
 
-[ Upstream commit 0449726b58ea64ec96b95f95944f0a3650204059 ]
+[ Upstream commit c1553fc105dff28f79bef90fab207235f5f2d977 ]
 
-DC can turn off the display clock when no displays are connected
-or when all displays are off, for reference see:
-- dce*_validate_bandwidth
+Currently, the UFS lane clocks remain enabled even after the link enters
+the Hibern8 state and are only disabled during runtime/system
+suspend.This patch modifies the behavior to disable the lane clocks
+during ufs_qcom_setup_clocks(), which is invoked shortly after the link
+enters Hibern8 via gate work.
 
-DC also assumes that the DP clock is always on and never powers
-it down, for reference see:
-- dce110_clock_source_power_down
+While hibern8_notify() offers immediate control, toggling clocks on
+every transition isn't ideal due to varied contexts like clock scaling.
+Since setup_clocks() manages PHY/controller resources and is invoked
+soon after Hibern8 entry, it serves as a central and stable point for
+clock gating.
 
-In case of DCE 6.0 and 6.4, PLL0 is the clock source for both
-the engine clock and DP clock, for reference see:
-- radeon_atom_pick_pll
-- atombios_crtc_set_disp_eng_pll
-
-Therefore, PLL0 should be always kept running on DCE 6.0 and 6.4.
-This commit achieves that by ensuring that by setting the display
-clock to the corresponding value in low power state instead of
-zero.
-
-This fixes a page flip timeout on SI with DC which happens when
-all connected displays are blanked.
-
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Message-ID: <20250909055149.2068737-1-quic_pkambar@quicinc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Recommendation: **YES**
+YES – the change fixes a real power-management bug with minimal, well-
+scoped risk.
 
-After conducting an exhaustive analysis of this commit, I strongly
-recommend backporting it to stable kernel trees. Here is my
-comprehensive analysis:
+- `drivers/ufs/host/ufs-qcom.c:1226` now shuts the lane clocks off when
+  `ufshcd_setup_clocks(hba, false)` runs while the link is in Hibern8.
+  Without this, the lane clocks stayed on after the gate work forced
+  Hibern8 (see `drivers/ufs/core/ufshcd.c:2038-2054`), so clock gating
+  never delivered the expected idle power savings—lane clocks previously
+  only dropped during the much rarer runtime/system suspend path
+  (`drivers/ufs/host/ufs-qcom.c:739`).
+- `drivers/ufs/host/ufs-qcom.c:1192-1200` symmetrically re-enable the
+  lane clocks before the controller leaves Hibern8, so existing
+  resume/ungate flows remain intact. The helper already handles errors
+  in the same way other call sites (e.g., resume) do, so the added
+  `dev_err(...)` path doesn’t introduce new behavior beyond propagating
+  a genuine enabling failure.
+- The patch touches only the Qualcomm variant, relies on helpers already
+  present in stable branches (older trees use the per-lane helpers but
+  the hook points are identical), and doesn’t alter any interfaces or
+  broader subsystem behavior. Backporting just requires adding the same
+  on/off checks in the older `ufs_qcom_setup_clocks()` body.
 
----
+Given that it restores the intended low-power behavior for idle gating
+on Qualcomm UFS hosts and stays tightly contained, it’s a good candidate
+for stable. Suggested follow-up after backport: exercise runtime PM or
+idle-gating tests to confirm the link enters/leaves Hibern8 cleanly.
 
-## Technical Analysis
+ drivers/ufs/host/ufs-qcom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-### The Problem
-
-On AMD Display Core Engine (DCE) versions 6.0 and 6.4, which are found
-in Southern Islands (SI) GPUs (TAHITI, VERDE, PITCAIRN, OLAND, HAINAN
-from ~2012-2013), **PLL0 serves a dual purpose**:
-
-1. It provides the **display engine clock** (dispclk)
-2. It provides the **DP (DisplayPort) clock**
-
-This architectural constraint is unique to DCE 6.0 and 6.4. The commit
-message references the old radeon driver functions
-`radeon_atom_pick_pll` and `atombios_crtc_set_disp_eng_pll` which
-document this hardware design.
-
-The DC (Display Core) driver has two conflicting assumptions:
-- DC can turn off the display clock when no displays are
-  connected/active (see `dce*_validate_bandwidth`)
-- DC assumes the DP clock is always powered on (see
-  `dce110_clock_source_power_down`)
-
-On DCE 6.0/6.4, these assumptions conflict because **turning off dispclk
-also turns off PLL0, which breaks the DP clock**, causing page flip
-timeouts when all displays are blanked.
-
-### The Fix
-
-The fix is minimal and surgical (lines 864-876 in `dce60_resource.c`):
-
-**Before:**
-```c
-} else {
-    context->bw_ctx.bw.dce.dispclk_khz = 0;  // Turns off PLL0!
-    context->bw_ctx.bw.dce.yclk_khz = 0;
-}
-```
-
-**After:**
-```c
-} else {
-    /* On DCE 6.0 and 6.4 the PLL0 is both the display engine clock and
-     - the DP clock, and shouldn't be turned off. Just select the
-       display
-     - clock value from its low power mode.
-     */
-    if (dc->ctx->dce_version == DCE_VERSION_6_0 ||
-        dc->ctx->dce_version == DCE_VERSION_6_4)
-        context->bw_ctx.bw.dce.dispclk_khz = 352000;  // Low power mode
-    else
-        context->bw_ctx.bw.dce.dispclk_khz = 0;
-
-    context->bw_ctx.bw.dce.yclk_khz = 0;
-}
-```
-
-The fix **keeps PLL0 running at 352kHz (low power state)** instead of
-turning it off completely when no displays are active, solving the
-conflict while maintaining power efficiency.
-
----
-
-## Backporting Criteria Evaluation
-
-### ✅ **Fixes User-Visible Bug**
-- **Symptom**: Page flip timeout when all displays are blanked on SI
-  GPUs with DC
-- **Impact**: Users experience system hangs/freezes when screens turn
-  off
-- **Hardware affected**: Southern Islands GPUs (older but still in use)
-
-### ✅ **Small and Contained**
-- **Total change**: 9 lines added (including comments)
-- **Single function modified**: `dce60_validate_bandwidth` in
-  `dce60_resource.c`
-- **Scope**: Only DCE 6.0 and 6.4 hardware
-- **No API changes**: Internal bandwidth validation logic only
-
-### ✅ **Minimal Risk of Regression**
-- **Conservative approach**: Sets clock to low power mode (352kHz)
-  instead of 0
-- **Hardware-specific**: Only affects DCE 6.0/6.4 (old hardware,
-  isolated impact)
-- **Version checks**: Explicit version checks prevent affecting other
-  DCE versions
-- **Well-reviewed**: Reviewed-by tags from Alex Deucher and Alex Hung
-  (AMD maintainers)
-- **No reverts found**: No subsequent fixes or reverts in commit history
-
-### ✅ **Related Stable Commit**
-This commit is part of a DCE 6.0/6.4 PLL fix series:
-- **Commit 1c8dc3e088e09** (July 22, 2025): "Fix DCE 6.0 and 6.4 PLL
-  programming" - **Already marked `Cc: stable@vger.kernel.org`**
-- **Commit 0449726b58ea6** (Aug 25, 2025): This commit - Keeps PLL0
-  running ← **Under review**
-
-The earlier commit fixes PLL initialization, this commit fixes PLL
-runtime power management. They are complementary fixes for the same
-architectural issue.
-
-### ✅ **Preserved in Refactoring**
-- Commit ee352f6c56e17 (Sept 24, 2025) later refactored the code by
-  moving `dce60_validate_bandwidth` to `dce100_resource.c` and making it
-  shared
-- **The PLL0 fix was preserved** in the refactoring, confirming its
-  correctness
-- Current code at `dce100_resource.c:865-873` contains the exact same
-  logic
-
----
-
-## Code Reference Analysis
-
-Looking at `dce100_resource.c:865-873` (current shared implementation):
-```c
-} else {
-    /* On DCE 6.0 and 6.4 the PLL0 is both the display engine clock and
-     - the DP clock, and shouldn't be turned off. Just select the
-       display
-     - clock value from its low power mode.
-     */
-    if (dc->ctx->dce_version == DCE_VERSION_6_0 ||
-        dc->ctx->dce_version == DCE_VERSION_6_4)
-        context->bw_ctx.bw.dce.dispclk_khz = 352000;
-    else
-        context->bw_ctx.bw.dce.dispclk_khz = 0;
-```
-
-The fix is now used by DCE 6.0, 6.4, 8.0, 8.1, and 10.0, demonstrating
-its importance and stability.
-
----
-
-## Dependency Analysis
-
-**Requires commit 1c8dc3e088e09** ("Fix DCE 6.0 and 6.4 PLL
-programming"):
-- That commit ensures PLL0 is initialized correctly and used for DP
-- This commit ensures PLL0 stays running during operation
-- Together they provide a complete fix for DCE 6.0/6.4 PLL management
-- Since 1c8dc3e088e09 is already marked for stable, this commit should
-  follow it
-
----
-
-## Risk Assessment: **VERY LOW**
-
-**No concerns identified:**
-- No follow-up fixes or reverts found in commit history
-- No regression reports in subsequent DCE 6 commits
-- Change is isolated to old hardware (limited user base = limited blast
-  radius)
-- Logic is straightforward and well-commented
-- Maintains backward compatibility (other DCE versions still set clock
-  to 0)
-
-**Power consumption impact**: Negligible - 352kHz clock in idle vs
-complete off
-
----
-
-## Recommendation Summary
-
-**YES - This commit SHOULD be backported to stable kernel trees.**
-
-**Rationale:**
-1. **Fixes real user issue**: Page flip timeout affecting SI GPU users
-2. **Minimal, surgical fix**: 9 lines, single function, well-scoped
-3. **Part of stable series**: Related commit already tagged for stable
-4. **Low regression risk**: Hardware-specific, conservative approach
-5. **Validated by refactoring**: Fix preserved when code was later
-   reorganized
-6. **Maintainer-approved**: Reviewed by AMD display maintainers
-
-**Stable tree selection:**
-- Should be backported to all stable kernels that include DCE 6.0/6.4 DC
-  support
-- Particularly important for stable kernels that received commit
-  1c8dc3e088e09
-
-This is a textbook example of a good stable kernel backport candidate:
-small, targeted, fixes real user issues, minimal risk, and addresses a
-specific hardware quirk.
-
- .../amd/display/dc/resource/dce60/dce60_resource.c    | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-index f887d59da7c6f..33c1b9b24bb9c 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-@@ -881,7 +881,16 @@ static enum dc_status dce60_validate_bandwidth(
- 		context->bw_ctx.bw.dce.dispclk_khz = 681000;
- 		context->bw_ctx.bw.dce.yclk_khz = 250000 * MEMORY_TYPE_MULTIPLIER_CZ;
- 	} else {
--		context->bw_ctx.bw.dce.dispclk_khz = 0;
-+		/* On DCE 6.0 and 6.4 the PLL0 is both the display engine clock and
-+		 * the DP clock, and shouldn't be turned off. Just select the display
-+		 * clock value from its low power mode.
-+		 */
-+		if (dc->ctx->dce_version == DCE_VERSION_6_0 ||
-+			dc->ctx->dce_version == DCE_VERSION_6_4)
-+			context->bw_ctx.bw.dce.dispclk_khz = 352000;
-+		else
-+			context->bw_ctx.bw.dce.dispclk_khz = 0;
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 3ea6b08d2b526..2b6eb377eec07 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1183,6 +1183,13 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 	case PRE_CHANGE:
+ 		if (on) {
+ 			ufs_qcom_icc_update_bw(host);
++			if (ufs_qcom_is_link_hibern8(hba)) {
++				err = ufs_qcom_enable_lane_clks(host);
++				if (err) {
++					dev_err(hba->dev, "enable lane clks failed, ret=%d\n", err);
++					return err;
++				}
++			}
+ 		} else {
+ 			if (!ufs_qcom_is_link_active(hba)) {
+ 				/* disable device ref_clk */
+@@ -1208,6 +1215,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 			if (ufshcd_is_hs_mode(&hba->pwr_info))
+ 				ufs_qcom_dev_ref_clk_ctrl(host, true);
+ 		} else {
++			if (ufs_qcom_is_link_hibern8(hba))
++				ufs_qcom_disable_lane_clks(host);
 +
- 		context->bw_ctx.bw.dce.yclk_khz = 0;
- 	}
- 
+ 			ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MIN][0][0].mem_bw,
+ 					    ufs_qcom_bw_table[MODE_MIN][0][0].cfg_bw);
+ 		}
 -- 
 2.51.0
 
