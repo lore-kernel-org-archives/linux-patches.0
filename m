@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530AF1F1306;
-	Sat, 25 Oct 2025 16:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F632F5B;
+	Sat, 25 Oct 2025 16:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408670; cv=none; b=Vkx9ObphSVSEri/JgWhnMWdrOvPBJd/uRIiVZtV5WqvqbZZWSmxaf2BgNkjzYPbXudhmI/7aeQqKaNEH2qjX2ktiEfkQQFqvIgWWEvwadspeTAamP12l4PiQj5ZmhSkW8tcMWFwOrAouspXMfNA4JU/1LtG+PVX1oyDW81vNKgA=
+	t=1761408671; cv=none; b=k3qFWPobMpP+1l2ZOwF3ZEf+g911UH7WzYyVgRtKkp+cWDNuwhikfDJfl5Kj1XS8+VUV+BFAl6bGeBwkRXMiW99uLgyR8p6jXYVKcgY+1R5/Re2mzIqh/POjgIg+S6ReT8pk0upeeX19Ha9vIRoZM3LvwNaEE870RQrCs3T3JpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408670; c=relaxed/simple;
-	bh=7RPJS+YYBdHHkSkPg7nJLRvxjYkQoNcT5qFRStkQwPM=;
+	s=arc-20240116; t=1761408671; c=relaxed/simple;
+	bh=rALhKopiYWtHnleB6VpyBTdJO5JhkyCn+Qu3tZTmoYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XjbhQYhibFK8YAkOIAw63fgSRTbdLEDaC+bD+4B+HeRILK6jsauJmWYVVU0tTm/7mcoqCOfq5s1fsl6AJuHYLQXwfow87yoKjVtErHHArI72iv1tk64iisV258UQMixgqBU7qI4MhN/MNrPxZlwRXsnFYGmMaVbT7s0LVWtPe5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RbIO3vVa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q85zNryV5FfTcQMfEfoosj/7LKidBhx/psZ6m2qGlkQihlmIaj7HjOrY9HT0dqKf+1nO1VH8wtsy4TrkRgcLClCJJJ0oufKU2cdVWe5juEVlsNzObCxeeCGA528ZP+9ZftrRBMiDt34tknXuhjcaTCeKG6pe5x3muWQy99f0q3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8qcLsol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbIO3vVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50FAC4CEFB;
-	Sat, 25 Oct 2025 16:11:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8qcLsol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF24C4CEFF;
+	Sat, 25 Oct 2025 16:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408669;
-	bh=7RPJS+YYBdHHkSkPg7nJLRvxjYkQoNcT5qFRStkQwPM=;
+	s=k20201202; t=1761408671;
+	bh=rALhKopiYWtHnleB6VpyBTdJO5JhkyCn+Qu3tZTmoYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbIO3vVaZRGtvaTtmlLj0YCRABRwwCmvFM3WFsB1GBjl5hrN0xiNUDjLFjgduP+9+
-	 zWlMOKUguLU7XyqzYU4n69AWlWeRMt7n5/9PRgBTiQyih8Vy4vJBaTnApn9nOlD+UR
-	 SWBOWLDcoOA7wiWkuVzFJySulz0dEg0nj52gmKrPOeG7NCCIfTxzUpE2QWcsc24cHU
-	 DtaG9glLoprAxsbAMilBj8iZrCneF9TjMQ4zjJ8P1YYVTQRZ2Kf55CZfbWXSGIh6FS
-	 5kvgK8zFHBoJ538BntW9Fw8rSUfz1IbregtX6YD0CEFIkVbp6sYzKvcBWhJURMJNS0
-	 EI50HoqjujPAw==
+	b=L8qcLsolmX+VnJU1EZ7d/GeHj6II+TeJV87WWbTaATyfw4wB51GKX5Wz6IRnLKZLJ
+	 YTyK3dVlqR/WZkVz9DkW1LXuIhOfWgkWNGBR7b50mrRwgW/4MbPx60WgYxq+hxswqX
+	 ssxuS07oCzk/zcytGkzcofbrdFlrsPxYmHqG2u+i36hRfaRM45N4N3kkwMbCxCO/if
+	 sqEVFVf8USG/E06TwIpp+cHykYPKba+PPwK6KbmRvjzc6U3TzTa/W/wtW/Mho1+zrJ
+	 XjUEXzad3Oq2eQs1VF+o2wNOhjO0fm6qAsQDtrxh1j4QHq0fGT5oZPJTui6L6ouccA
+	 AfwqgE6OeScxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Nick Nielsen <nick.kainielsen@free.fr>,
-	grm1 <grm1@mailbox.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] usb: xhci-pci: add support for hosts with zero USB3 ports
-Date: Sat, 25 Oct 2025 11:54:27 -0400
-Message-ID: <20251025160905.3857885-36-sashal@kernel.org>
+	davem@davemloft.net,
+	willemdebruijn.kernel@gmail.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] ipv6: np->rxpmtu race annotation
+Date: Sat, 25 Oct 2025 11:54:28 -0400
+Message-ID: <20251025160905.3857885-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,134 +57,83 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 719de070f764e079cdcb4ddeeb5b19b3ddddf9c1 ]
+[ Upstream commit 9fba1eb39e2f74d2002c5cbcf1d4435d37a4f752 ]
 
-Add xhci support for PCI hosts that have zero USB3 ports.
-Avoid creating a shared Host Controller Driver (HCD) when there is only
-one root hub. Additionally, all references to 'xhci->shared_hcd' are now
-checked before use.
+Add READ_ONCE() annotations because np->rxpmtu can be changed
+while udpv6_recvmsg() and rawv6_recvmsg() read it.
 
-Only xhci-pci.c requires modification to accommodate this change, as the
-xhci core already supports configurations with zero USB3 ports. This
-capability was introduced when xHCI Platform and MediaTek added support
-for zero USB3 ports.
+Since this is a very rarely used feature, and that udpv6_recvmsg()
+and rawv6_recvmsg() read np->rxopt anyway, change the test order
+so that np->rxpmtu does not need to be in a hot cache line.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220181
-Tested-by: Nick Nielsen <nick.kainielsen@free.fr>
-Tested-by: grm1 <grm1@mailbox.org>
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250917210726.97100-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250916160951.541279-4-edumazet@google.com
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES — this change is a focused bugfix that lets PCI xHCI controllers
-with only a single root hub enumerate correctly, matching support
-already present in the core and other host adapters.
+YES
+- `udpv6_recvmsg()` and `rawv6_recvmsg()` both dereference `np->rxpmtu`
+  without synchronization even though writers update it via
+  `xchg(&np->rxpmtu, skb)` in `ipv6_local_rxpmtu()`
+  (`net/ipv6/datagram.c:415`) and clear it in other contexts; that
+  unsupervised read is undefined behaviour under the kernel memory model
+  and is caught by KCSAN. Annotating the load with `READ_ONCE()` at
+  `net/ipv6/udp.c:483` and `net/ipv6/raw.c:448` guarantees an atomic,
+  non-reordered fetch, eliminating the data race.
+- The branch order swap (`np->rxopt.bits.rxpmtu` first) keeps the hot-
+  path behaviour identical—both functions already consult
+  `np->rxopt`—while avoiding an unnecessary cache-line touch of
+  `np->rxpmtu` unless the option is enabled, so the risk of regression
+  is negligible.
+- Older stable kernels share this lockless pattern and therefore the
+  same latent race, while the fix is self-contained (no new APIs, no
+  dependency churn). Delivering accurate IPV6_PATHMTU notifications to
+  user space is observable behaviour, so backporting this minimal
+  annotation is justified for correctness on stable branches.
 
-- `drivers/usb/host/xhci-pci.c:640` now sets `xhci->allow_single_roothub
-  = 1`, allowing the existing `xhci_has_one_roothub()` helper to
-  recognize hosts that genuinely provide only USB2 or only USB3 ports.
-  For such hardware the new branch at `drivers/usb/host/xhci-
-  pci.c:641-659` skips creating the secondary HCD and still runs
-  `xhci_ext_cap_init()`, preventing the allocation/registration of a
-  useless SuperSpeed root hub that currently causes probe failures on
-  the systems reported in bug 220181.
-- Stream capability handling switches to `xhci_get_usb3_hcd()` at
-  `drivers/usb/host/xhci-pci.c:662-664`, so the code safely handles both
-  the traditional dual-root-hub case and the new single-root-hub case
-  without dereferencing a NULL `shared_hcd`.
-- The xHCI core has supported “single-roothub” controllers since commit
-  873f323618c2 (see the helper definitions in
-  `drivers/usb/host/xhci.h:1659-1737`), and platform drivers already
-  rely on the same pattern (`drivers/usb/host/xhci-plat.c:207` and
-  `drivers/usb/host/xhci-mtk.c:629-655`). This patch simply brings the
-  PCI glue in line with that infrastructure, so it has no architectural
-  side effects.
-- Scope is limited to the PCI front-end; it doesn’t alter shared data
-  structures or other subsystems. Tested-by tags and the fact that the
-  alternative drivers have run this logic for multiple release cycles
-  further reduce regression risk. Backporters only need to ensure the
-  target stable branch already contains the earlier
-  “allow_single_roothub” support (present in 6.1+). If that prerequisite
-  is met, the change is small, self-contained, and fixes real hardware
-  breakage.
+Natural next step: consider running an IPv6 UDP/RAW recv regression or
+KCSAN sanity check once merged into stable to confirm the race no longer
+fires.
 
-Natural next steps: 1) cherry-pick (plus prerequisite check) into the
-relevant stable trees; 2) rerun basic USB enumeration on affected
-hardware to confirm the controller now probes successfully.
+ net/ipv6/raw.c | 2 +-
+ net/ipv6/udp.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- drivers/usb/host/xhci-pci.c | 42 +++++++++++++++++++++----------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
-
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 00fac8b233d2a..5c8ab519f497d 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -610,7 +610,7 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
- {
- 	int retval;
- 	struct xhci_hcd *xhci;
--	struct usb_hcd *hcd;
-+	struct usb_hcd *hcd, *usb3_hcd;
- 	struct reset_control *reset;
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index 4c3f8245c40f1..eceef8af1355f 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -445,7 +445,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (flags & MSG_ERRQUEUE)
+ 		return ipv6_recv_error(sk, msg, len, addr_len);
  
- 	reset = devm_reset_control_get_optional_exclusive(&dev->dev, NULL);
-@@ -636,26 +636,32 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	hcd = dev_get_drvdata(&dev->dev);
- 	xhci = hcd_to_xhci(hcd);
- 	xhci->reset = reset;
--	xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
--						 pci_name(dev), hcd);
--	if (!xhci->shared_hcd) {
--		retval = -ENOMEM;
--		goto dealloc_usb2_hcd;
--	}
+-	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
++	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
+ 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
  
--	retval = xhci_ext_cap_init(xhci);
--	if (retval)
--		goto put_usb3_hcd;
-+	xhci->allow_single_roothub = 1;
-+	if (!xhci_has_one_roothub(xhci)) {
-+		xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
-+							 pci_name(dev), hcd);
-+		if (!xhci->shared_hcd) {
-+			retval = -ENOMEM;
-+			goto dealloc_usb2_hcd;
-+		}
+ 	skb = skb_recv_datagram(sk, flags, &err);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 6a68f77da44b5..7f53fcc82a9ec 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -479,7 +479,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (flags & MSG_ERRQUEUE)
+ 		return ipv6_recv_error(sk, msg, len, addr_len);
  
--	retval = usb_add_hcd(xhci->shared_hcd, dev->irq,
--			IRQF_SHARED);
--	if (retval)
--		goto put_usb3_hcd;
--	/* Roothub already marked as USB 3.0 speed */
-+		retval = xhci_ext_cap_init(xhci);
-+		if (retval)
-+			goto put_usb3_hcd;
-+
-+		retval = usb_add_hcd(xhci->shared_hcd, dev->irq, IRQF_SHARED);
-+		if (retval)
-+			goto put_usb3_hcd;
-+	} else {
-+		retval = xhci_ext_cap_init(xhci);
-+		if (retval)
-+			goto dealloc_usb2_hcd;
-+	}
+-	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
++	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
+ 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
  
--	if (!(xhci->quirks & XHCI_BROKEN_STREAMS) &&
--			HCC_MAX_PSA(xhci->hcc_params) >= 4)
--		xhci->shared_hcd->can_do_streams = 1;
-+	usb3_hcd = xhci_get_usb3_hcd(xhci);
-+	if (usb3_hcd && !(xhci->quirks & XHCI_BROKEN_STREAMS) && HCC_MAX_PSA(xhci->hcc_params) >= 4)
-+		usb3_hcd->can_do_streams = 1;
- 
- 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
- 	pm_runtime_put_noidle(&dev->dev);
+ try_again:
 -- 
 2.51.0
 
