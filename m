@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3367A2FF168;
-	Sat, 25 Oct 2025 16:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A98303CBF;
+	Sat, 25 Oct 2025 16:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408738; cv=none; b=q+GYhbJjmm+uALsNAdcfvrh+fwuyPe3qj+b8T8J1ZHBHrxXo1sobyZmDVVIltM4/LMtzglwO0uPqt0nAZ0tsoQks1rSjLqEZ/TXRd7D1ceqd8G1LyP8fisYIRS3SK0L9CXry0UdCNHsMK1ZGtS3MsyXXYRdzTF3291GD/jxTbLs=
+	t=1761408741; cv=none; b=k+tVxdOnf4N1iZtWnl59WpIvq9xEnGxbbJ9i1TyE0U0mPKEfhWjkah86IWVWBHg9ghEtkELjzWDqt9vGE8j/DGm2Cb8Cbi9bqyRZwjnuzmiQX8RYfOojenoR0IxUC546FGHw3Hh6Edjmai/J/LuVFO9ZWSpihRVdwNBsobb/9bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408738; c=relaxed/simple;
-	bh=aWDaGaTRuyFu3Od/KCOqSO23J2HYkd4D6NIISeiIrBY=;
+	s=arc-20240116; t=1761408741; c=relaxed/simple;
+	bh=pMl37ApY9q1oEO6GNHOOwSnbQfDdDTupMqIbpjuHO4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRbSe+/xbgbh+AYUiIMN4b3CL8oHafEXvovGOr+bdCRGFQXl25MIrLSo+oYYfwg9RNZsC+VP7lPIDhGvOGcaCvbqrcf5l6KiarBu4kq2u0cpBp/ztfKGJn81281P3QchsLEgQoVtXtSc6Jk4bMkVGyccRoMkAWS0CHo1pAFX1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VdK+eXzA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jGR4CCxzfjuJNn3oDo5+wO8nF7zpzqWgGYLN158Fs5xzN3SIr/Ra+3r39G4s51b0tfGvrnm+85/06qG7g+Cbc7MNzMPEdQZ2djEoldYP6vIq0o7mNtmPv9mrupCduM7AoTOUxzyJhWLO0jE/NAKO5RsJBTOb53RZiQrbDPKI0Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=byyL3RE9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VdK+eXzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91F8C4CEFB;
-	Sat, 25 Oct 2025 16:12:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="byyL3RE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124C3C4CEFB;
+	Sat, 25 Oct 2025 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408738;
-	bh=aWDaGaTRuyFu3Od/KCOqSO23J2HYkd4D6NIISeiIrBY=;
+	s=k20201202; t=1761408740;
+	bh=pMl37ApY9q1oEO6GNHOOwSnbQfDdDTupMqIbpjuHO4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdK+eXzA1LKIUWGKUwW6bewK7gjEJelioRKcrsM+8Vr2HhqQ5aaJz0J8zCMhDKo/B
-	 nmtO/oxjbdkIv5LBk7hcodPEnwh0JwgBWGb/sSuobwQF7hYc7/My1AQrNDXz8ZrYNC
-	 dNUSg/FdUvLpA/5rtRMScJUy806Ru+fyEP8hBX/rIYM5QfRX/r8Qvpm/WkCskdBkuC
-	 UYe3GY6a/dWbEfjGVe62OMP5HfviRE/C5If2Wb9KKzLWq1XspCuALQ7Rvzh6q6KgJb
-	 H0Xri+pyjOW1bz+OVNekcRXAZjbYNzPw9xg0teD7MMzaaGogT+A/F2YQmg57YI6FLO
-	 zCQD11Uyfvqqg==
+	b=byyL3RE9L3uonpmfM2JzTZiZph8Dx0+gMnRELwXKSUqgD8Xzl13j1hX2SUE8r3gP6
+	 Nt2pqA7tcBsdsC1ZWYCMBZVLhpm2y1b6Bol5lmHOly8wl3yoyqgsErmgmQz3hHVs8J
+	 doPBJ92fL9sqf7ADKqwhvdwxSQ/FDvY0gPEBFvfT1mlS3Zxk/dgXMHNuJNovPihddE
+	 eJaagDLRKjidJe83QikjSI5UR31UvPGWipN0ADe1rAI7Te0A2Fx+hljIFWOEoqo2/0
+	 gAMO6xuQ/2nu/kE3uZ7XxsilflLWrwx3N3IsYSGf/Iky9GRGT67e6l56YsWDQJ+67L
+	 3Ldqvk5SiMEjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wake Liu <wakel@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Takashi Iwai <tiwai@suse.de>,
+	syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	nathan@kernel.org,
-	netdev@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17-5.4] selftests/net: Replace non-standard __WORDSIZE with sizeof(long) * 8
-Date: Sat, 25 Oct 2025 11:54:50 -0400
-Message-ID: <20251025160905.3857885-59-sashal@kernel.org>
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com
+Subject: [PATCH AUTOSEL 6.17-5.15] ALSA: seq: Fix KCSAN data-race warning at snd_seq_fifo_poll_wait()
+Date: Sat, 25 Oct 2025 11:54:51 -0400
+Message-ID: <20251025160905.3857885-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,116 +49,71 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wake Liu <wakel@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c36748e8733ef9c5f4cd1d7c4327994e5b88b8df ]
+[ Upstream commit 1f9fc89cbbe8a7a8648ea2f827f7d8590e62e52c ]
 
-The `__WORDSIZE` macro, defined in the non-standard `<bits/wordsize.h>`
-header, is a GNU extension and not universally available with all
-toolchains, such as Clang when used with musl libc.
+snd_seq_fifo_poll_wait() evaluates f->cells without locking after
+poll_wait(), and KCSAN doesn't like it as it appears to be a
+data-race.  Although this doesn't matter much in practice as the value
+is volatile, it's still better to address it for the mind piece.
 
-This can lead to build failures in environments where this header is
-missing.
+Wrap it with f->lock spinlock for avoiding the potential data race.
 
-The intention of the code is to determine the bit width of a C `long`.
-Replace the non-portable `__WORDSIZE` with the standard and portable
-`sizeof(long) * 8` expression to achieve the same result.
-
-This change also removes the inclusion of the now-unused
-`<bits/wordsize.h>` header.
-
-Signed-off-by: Wake Liu <wakel@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=c3dbc239259940ededba
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- The only runtime change wraps the `f->cells` check in
+  `snd_seq_fifo_poll_wait()` with `guard(spinlock_irq)(&f->lock)`
+  (`sound/core/seq/seq_fifo.c:213`), aligning this reader with every
+  writer of `f->cells`, each of which already holds `f->lock` via
+  `scoped_guard(spinlock_irqsave)` or explicit `spin_lock_irqsave`
+  (`sound/core/seq/seq_fifo.c:125`, `sound/core/seq/seq_fifo.c:183`).
+  That removes the unlocked load which KCSAN flagged as a real data race
+  on the non-atomic `int` counter.
+- This race is user-visible: if `snd_seq_fifo_poll_wait()` races with a
+  concurrent producer/consumer, the poll mask built in `snd_seq_poll()`
+  (`sound/core/seq/seq_clientmgr.c:1092-1106`) can sporadically omit
+  `EPOLLIN`, leaving sequencer clients to sleep despite queued events.
+  On weakly ordered architectures that behavior is not just theoretical;
+  racing non-atomic accesses are undefined in the kernel memory model
+  and trigger syzbot reports.
+- The fix is minimal, self-contained, and mirrors existing guard usage
+  in this file, so it has negligible regression risk: the lock is
+  already part of the FIFO hot path, RAII unlock occurs immediately on
+  return, and there are no new dependencies or API changes.
+- Because the bug allows incorrect poll readiness and trips KCSAN, it
+  meets stable criteria (user-visible correctness plus sanitizer
+  warning) and applies cleanly to older trees that already contain the
+  guard helpers used elsewhere in this file.
 
-- What it fixes
-  - Fixes selftest build failures on toolchains without GNU
-    `<bits/wordsize.h>` (e.g., Clang with musl). The current code
-    directly includes a GNU-internal header and uses a GNU extension
-    macro.
-  - Evidence: direct inclusion at
-    `tools/testing/selftests/net/psock_tpacket.c:36` and use of
-    `__WORDSIZE` at `tools/testing/selftests/net/psock_tpacket.c:788`.
+Suggested next step: run the targeted ALSA sequencer poll tests (or
+reproducer from the linked syzbot report) on the backport branch to
+confirm the warning disappears.
 
-- Change details
-  - Removes non-standard header include: `#include <bits/wordsize.h>`
-    (tools/testing/selftests/net/psock_tpacket.c:36).
-  - Replaces non-portable `__WORDSIZE` with the portable and standard-
-    compliant `sizeof(long) * 8` inside `test_user_bit_width()`
-    (tools/testing/selftests/net/psock_tpacket.c:788 → now returns
-    `sizeof(long) * 8`).
-  - No other functional changes; all behavior, interfaces, and test
-    logic remain intact.
+ sound/core/seq/seq_fifo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-- Behavioral impact
-  - The intent of `test_user_bit_width()` is to report the userspace
-    “word” width as used by the test to decide whether to skip
-    TPACKET_V1 when user/kernel bit widths differ (see its use in
-    `test_tpacket()` adjacent to
-    tools/testing/selftests/net/psock_tpacket.c:811).
-  - On Linux ABIs, `__WORDSIZE` effectively matches the bit width of
-    `long`. Using `sizeof(long) * 8` is semantically equivalent across
-    LP64 and ILP32, including x86_64 ILP32 (x32), where it returns 32
-    and properly triggers the intended skip path when comparing to the
-    kernel’s 64-bit width parsed from `/proc/kallsyms`.
-  - Therefore, no functional change to test behavior, only improved
-    portability.
-
-- Scope and risk
-  - Selftests-only change (single file), no kernel code touched.
-  - Very small and contained: removal of one include and a one-line
-    return expression change.
-  - No architectural changes; no side effects beyond enabling builds on
-    non-glibc toolchains.
-  - Aligns with existing tools-side practice:
-    `tools/include/linux/bitops.h` already falls back to a portable
-    definition of `__WORDSIZE` via `__SIZEOF_LONG__ * 8`, reinforcing
-    that using the C type width is the right approach.
-
-- Stable backport criteria
-  - Addresses a real user-facing bug: selftests fail to build on
-    legitimate toolchains (Clang + musl).
-  - Minimal risk and fully contained to a test; no runtime kernel
-    impact.
-  - Not a new feature; purely a portability/build fix.
-  - Touches a non-critical subtree (selftests), commonly accepted for
-    stable when it fixes build or test breakages.
-
-Conclusion: This is a low-risk, portability/build fix for selftests with
-no kernel runtime impact and should be backported to stable.
-
- tools/testing/selftests/net/psock_tpacket.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 221270cee3eaa..0dd909e325d93 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -33,7 +33,6 @@
- #include <ctype.h>
- #include <fcntl.h>
- #include <unistd.h>
--#include <bits/wordsize.h>
- #include <net/ethernet.h>
- #include <netinet/ip.h>
- #include <arpa/inet.h>
-@@ -785,7 +784,7 @@ static int test_kernel_bit_width(void)
- 
- static int test_user_bit_width(void)
+diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
+index 3a10b081f129c..7dc2bd94cefc3 100644
+--- a/sound/core/seq/seq_fifo.c
++++ b/sound/core/seq/seq_fifo.c
+@@ -213,6 +213,7 @@ int snd_seq_fifo_poll_wait(struct snd_seq_fifo *f, struct file *file,
+ 			   poll_table *wait)
  {
--	return __WORDSIZE;
-+	return sizeof(long) * 8;
+ 	poll_wait(file, &f->input_sleep, wait);
++	guard(spinlock_irq)(&f->lock);
+ 	return (f->cells > 0);
  }
  
- static const char *tpacket_str[] = {
 -- 
 2.51.0
 
