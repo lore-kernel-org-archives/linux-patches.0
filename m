@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E7A303A0E;
-	Sat, 25 Oct 2025 16:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB44302170;
+	Sat, 25 Oct 2025 16:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409467; cv=none; b=tuqIX7HbygYD2LDpuL3JuTBZWjOoUM4ZDsePoDVt3FmHBDZARgVU2rANnS2maGV0xnW3VStNjyK7wAYFAxAyyTYa3NQMD6LnPAZ+uXv/qDGVevMrdL5epl5YGhd33k60ekJZIqiZrkA7nyc16a7IPGi0YMzjZN0xgiQA3kogK78=
+	t=1761409473; cv=none; b=QGPyDZLktSJ40maA9iquKPdRSPqQaIndQvsXnSf3oSHtB6biFuMpfdNFuNiqqWwTJ6eF1M2neDj7Xxv1E2dxi8ZKH0XFh6gLMFjwEr6bMgIiCu30vC2X3mbGLy/uzAuZe21i1sPET03pMesIHso+VZyqmHcKHr5RnRsuTlkvZww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409467; c=relaxed/simple;
-	bh=nZm99LY08ZQ5cWO1fFS+iC554LzXs37PpS89mgApbt4=;
+	s=arc-20240116; t=1761409473; c=relaxed/simple;
+	bh=COAKrwwrLIsKHqF7EzLXX7dpHzLrYjDVUDaPo5tIwKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aVoTdMBQBCGz73UODwQ2OxPR7mT9Fi0rRZxG/RGz5hXWYTWAyZuXG0ZFQClkkjDXnsGD3Bu/2u7QsJ/OKJ7EYFDd19czrJ3UlTwukUBpqHJxMOKErcRJeaIP2mvWetmt74iEITxfgvfjSU9r74b4vk0PqqrTULj46E0TBqWj0xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AoT9gPh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F1qUQopacC3g3f3XYyd9x/NNyiMr1j1kMIT7uQVxhFJqFdYChjZ4DEwGGwAJ/lIG14c7bBJI57BjNqmQ0DgRVwk5avB67qz+y9iFjcpKK94lo6nm00psMlFuNfoIgwnEgZPyL8b2JvLpbd5Kz8McMq3oMaCBaWLwCrD/86p2DyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2tBY2ba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AoT9gPh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B7BC4CEF5;
-	Sat, 25 Oct 2025 16:24:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2tBY2ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92551C4CEF5;
+	Sat, 25 Oct 2025 16:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409466;
-	bh=nZm99LY08ZQ5cWO1fFS+iC554LzXs37PpS89mgApbt4=;
+	s=k20201202; t=1761409473;
+	bh=COAKrwwrLIsKHqF7EzLXX7dpHzLrYjDVUDaPo5tIwKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoT9gPh2+Ngv5FwIRL9mp5IBo22G70Rm+1VTnKAQrAPubAQXj9XJYcyshQMwU0uU8
-	 pd+pCoOKxliF+rPCuN3D1nfumsiTZJIWjkrt8eaASshOKR1b4dWep8AwwCoNTH/o8x
-	 oVz2xKX+s5+zjsLlX1HogkfuLJORoLLSNgUWynVL5bCbNWxa+uLpPhJhMOCRpAPWBT
-	 C6mNDdxoGEDw3/Hm++dgLIge8YTHnobxjMAwyH+oVYREYXiljpFAuvYF+DUQcKnuRV
-	 jLuI0eQoUYROHfJTA8pWUppTWylpvy9DxQteOsfeDLyhAxI7XW0XiZGK+FxhB+/J90
-	 m6KEHIRAaf3sg==
+	b=l2tBY2baKFNoxPjstjquDfNIn8qPN8dE6P4Oc4L67SMxDjUgYYY7ryAGwiYocXHRH
+	 Iduscw7ZOVOrL2WRhdy9jE5/TXdCrVIHMiDzhltiL86mcIkUSsx4lf0Nulhl5q2JuW
+	 EiNsRWWSqtjaHgZWGAgocI7D5EydUpy2Djf1Vx3NeZ7qonVy7jSvhd+AXvh0eS2nlZ
+	 lDwkt3+XsRlDs2ZMxDX42Y7lt2YOQtHCd+w63ZEllN2o7+EX+7eLIXheo+GUicIrBj
+	 Rgdhc6seMJP8KF0FtGy3av9M3cve940JGxUAhu+8fTnKx8gledl/N9g24VPN2br2jq
+	 m2tm8i+6oyXUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+Cc: Mangesh Gadre <Mangesh.Gadre@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] extcon: adc-jack: Fix wakeup source leaks on device unbind
-Date: Sat, 25 Oct 2025 11:59:27 -0400
-Message-ID: <20251025160905.3857885-336-sashal@kernel.org>
+	leo.liu@amd.com,
+	Boyuan.Zhang@amd.com,
+	sonny.jiang@amd.com,
+	lijo.lazar@amd.com,
+	Jesse.Zhang@amd.com,
+	sathishkumar.sundararaju@amd.com,
+	alexandre.f.demers@gmail.com,
+	FangSheng.Huang@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdgpu: Avoid vcn v5.0.1 poison irq call trace on sriov guest
+Date: Sat, 25 Oct 2025 11:59:28 -0400
+Message-ID: <20251025160905.3857885-337-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,263 +59,82 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Mangesh Gadre <Mangesh.Gadre@amd.com>
 
-[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
+[ Upstream commit 37551277dfed796b6749e4fa52bdb62403cfdb42 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.  Do not use devm interface, because it would change the order of
-cleanup.
+Sriov guest side doesn't init ras feature hence the poison irq shouldn't
+be put during hw fini
 
-Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me compile my comprehensive analysis:
+YES
 
-## **BACKPORT RECOMMENDATION: YES (with critical caveat)**
+- What it fixes: Prevents a WARN_ON call trace during VCN v5.0.1
+  hardware fini on SR-IOV guests by avoiding an unmatched
+  amdgpu_irq_put() for the VCN poison IRQ that was never enabled on the
+  guest. The WARN arises because amdgpu_irq_put() checks that the IRQ
+  was enabled and emits a warning if not.
+- Precise change: Adds an SR-IOV VF guard to the RAS poison IRQ “put” in
+  the VCN v5.0.1 fini path:
+  - drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:352
+    - Before: if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN))
+      amdgpu_irq_put(...)
+    - After:  if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN)
+      && !amdgpu_sriov_vf(adev)) amdgpu_irq_put(...)
+- Why the call trace happens: amdgpu_irq_put() warns if the interrupt
+  type wasn’t previously enabled (no prior amdgpu_irq_get()):
+  - drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:639
+    - if (WARN_ON(!amdgpu_irq_enabled(adev, src, type))) return -EINVAL;
+- Why SR-IOV VF should skip put: The SR-IOV guest doesn’t initialize VCN
+  RAS poison IRQ (no amdgpu_irq_get()), so calling amdgpu_irq_put() on
+  fini is an unmatched “put” that triggers the WARN_ON. The RAS “get”
+  for VCN v5.0.1 is only attempted when RAS is supported and the handler
+  is present:
+  - drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:1702
+    - if (amdgpu_ras_is_supported(adev, ras_block->block) &&
+      adev->vcn.inst->ras_poison_irq.funcs) amdgpu_irq_get(...)
+- Consistency with adjacent code: Other blocks already avoid the “put”
+  on VF, demonstrating a known-good pattern:
+  - VCN v4.0.3 fini: drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c:391
+    - if (amdgpu_ras_is_supported(...) && !amdgpu_sriov_vf(adev))
+      amdgpu_irq_put(...)
+  - JPEG v5.0.1 fini: drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:318
+    - if (amdgpu_ras_is_supported(...) && !amdgpu_sriov_vf(adev))
+      amdgpu_irq_put(...)
+- Scope and risk:
+  - Small, contained, and localized to VCN v5.0.1 fini.
+  - No functional change for bare metal or PF; only suppresses an
+    invalid “put” on VF where the IRQ was never enabled.
+  - No architectural changes; pure bug fix in a driver subsystem.
+- Stable criteria:
+  - Fixes a user-visible bug (call trace on SR-IOV guests) during
+    suspend/shutdown or module teardown paths.
+  - Minimal risk; follows existing patterns in related IP blocks.
+  - No new features; clear, targeted fix suitable for stable backport.
 
-### **Executive Summary**
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This commit **SHOULD be backported** to stable kernel trees, **BUT it
-MUST be backported together with its follow-up fix commit
-92bac7d4de9c0** ("extcon: adc-jack: Cleanup wakeup source only if it was
-enabled"). Backporting commit 78b6a991eb6c6 alone would fix a memory
-leak but introduce a subtle correctness bug.
-
----
-
-### **Detailed Technical Analysis**
-
-#### **1. Nature of the Bug**
-
-The commit fixes a **memory leak of wakeup_source structures** that
-occurs when the adc-jack device is unbound:
-
-**Root Cause:**
-- In `adc_jack_probe()` (drivers/extcon/extcon-adc-jack.c:156-157), when
-  `data->wakeup_source` is true, the driver calls
-  `device_init_wakeup(&pdev->dev, 1)`
-- This allocates a `wakeup_source` structure involving:
-  - `kzalloc()` for the structure itself
-  - `kstrdup_const()` for the name string
-  - `ida_alloc()` for ID allocation
-  - Registration in the global wakeup_sources list
-
-**The Leak:**
-- The original `adc_jack_remove()` function has NO corresponding cleanup
-  call
-- Without `device_init_wakeup(&pdev->dev, false)`, the allocated
-  wakeup_source is never freed
-- This memory leaks every time the device is unbound (manual unbind via
-  sysfs, driver removal, module unload)
-
-#### **2. The Fix (Commit 78b6a991eb6c6)**
-
-**Code Change:**
-```c
-static void adc_jack_remove(struct platform_device *pdev)
-{
-    struct adc_jack_data *data = platform_get_drvdata(pdev);
-
-+   device_init_wakeup(&pdev->dev, false);  // ← Added this line
-    free_irq(data->irq, data);
-    cancel_work_sync(&data->handler.work);
-}
-```
-
-**What device_init_wakeup(dev, false) does:**
-1. Calls `device_wakeup_disable(dev)` which:
-   - Detaches the wakeup_source from the device
-   - Calls `wakeup_source_unregister()` to remove it from the list
-   - Calls `wakeup_source_destroy()` to free all allocated memory
-
-2. Calls `device_set_wakeup_capable(dev, false)` to clear the capability
-   flag
-
-#### **3. Critical Issue: The Follow-up Fix is Required**
-
-**Problem with 78b6a991eb6c6 alone:**
-- The fix unconditionally calls `device_init_wakeup(&pdev->dev, false)`
-- But probe only calls `device_init_wakeup(&pdev->dev, 1)` when
-  `data->wakeup_source` is true
-- Calling `device_init_wakeup(false)` when it was never initialized
-  could:
-  - Call `device_wakeup_disable()` on a NULL or uninitialized
-    wakeup_source
-  - While this might not crash (the function checks for NULL), it's
-    technically incorrect behavior
-
-**The Follow-up Fix (92bac7d4de9c0):**
-Adds the conditional check that mirrors the probe logic:
-```c
-static void adc_jack_remove(struct platform_device *pdev)
-{
-    struct adc_jack_data *data = platform_get_drvdata(pdev);
-
-- device_init_wakeup(&pdev->dev, false);
-+   if (data->wakeup_source)
-+       device_init_wakeup(&pdev->dev, false);
-    free_irq(data->irq, data);
-    cancel_work_sync(&data->handler.work);
-}
-```
-
-This was reported by Christophe JAILLET 8 days after the original fix
-(May 1 → May 9, 2025).
-
-#### **4. Why Not Use devm_device_init_wakeup()?**
-
-Other drivers in the same patch series (extcon-qcom-spmi-misc, extcon-
-fsa9480) used the devm (device-managed) approach, which automatically
-cleans up. However, adc-jack explicitly avoids this approach.
-
-**Reason (from commit message):** "Do not use devm interface, because it
-would change the order of cleanup."
-
-**Cleanup Order Analysis:**
-```
-Current (with manual cleanup):
-1. device_init_wakeup(false) - disable wakeup source
-2. free_irq() - free interrupt
-3. cancel_work_sync() - cancel pending work
-4. (later) devm cleanup runs for other resources
-
-With devm_device_init_wakeup:
-1. free_irq() - free interrupt
-2. cancel_work_sync() - cancel pending work
-3. (later) devm cleanup runs, including wakeup disable
-
-Problem: IRQ and work might still reference wakeup_source during cleanup
-```
-
-The manual approach ensures the wakeup source is disabled before other
-related resources are freed, maintaining proper cleanup ordering.
-
-#### **5. Pattern Analysis: Systematic Cleanup**
-
-This is part of a **systematic cleanup series** by Krzysztof Kozlowski
-(Linaro) fixing the same class of bug across multiple subsystems:
-
-**Same Author, Same Pattern (partial list):**
-- extcon: adc-jack, qcom-spmi-misc, fsa9480, axp288
-- mfd: sprd-sc27xx, rt5033, max8925, max77705, max77541, max14577,
-  as3722, 88pm886
-- Bluetooth: btmtksdio, btmrvl_sdio
-- iio: st_lsm6dsx, qcom-spmi-iadc, fxls8962af
-- usb typec: tipd, tcpci
-- power supply: gpio-charger, collie
-- watchdog: stm32
-
-This indicates a **project-wide audit** for this specific resource leak
-pattern, lending credibility to the importance of the fix.
-
-#### **6. Impact Assessment**
-
-**Severity: Medium**
-- Resource leak, but only triggered on device unbind
-- Device unbind is relatively uncommon (manual unbind, rmmod, shutdown)
-- Leak is small per occurrence (one wakeup_source structure ~100-200
-  bytes)
-- **But**: repeated bind/unbind cycles accumulate leaks
-- **More important**: This is incorrect resource management that
-  violates kernel coding practices
-
-**Affected Users:**
-- Users with ADC-based jack detection hardware (primarily Samsung
-  devices)
-- Systems that dynamically load/unload extcon modules
-- Embedded systems with power management requirements
-- kexec/kdump scenarios where driver cleanup matters
-
-**Regression Risk: Very Low**
-- Minimal, contained change (1-2 lines)
-- Only affects remove path
-- Mirrors the probe logic symmetrically
-- Has been in mainline with no reported issues
-
-#### **7. Stable Tree Backporting Criteria Analysis**
-
-✅ **Fixes an important bug:** Resource leak violating kernel resource
-management rules
-
-✅ **Small and contained:** 1-line fix + 1-line follow-up (total 2 lines
-across 2 commits)
-
-✅ **Low regression risk:** Remove path only, symmetric to probe, minimal
-code change
-
-✅ **No architectural changes:** Pure resource management fix
-
-✅ **Confined to subsystem:** Only affects extcon adc-jack driver
-
-✅ **Clear and obvious fix:** The fix is straightforward and correct
-
-⚠️ **Requires follow-up commit:** Must include 92bac7d4de9c0 for
-correctness
-
-❌ **No explicit stable tag:** Commit message lacks "Cc:
-stable@vger.kernel.org" tag
-
-#### **8. Comparison with Stable Tree Precedents**
-
-Looking at similar commits in this cleanup series, many include explicit
-stable tags. However, the absence of a stable tag doesn't preclude
-backporting when the fix meets other criteria.
-
-**Similar fixes that were backported (based on pattern):**
-- Memory leaks on device unbind are consistently considered backport-
-  worthy
-- Resource management fixes are high priority for stable trees
-- Small, contained fixes with clear benefits are typically backported
-
----
-
-### **RECOMMENDATION**
-
-**YES - This commit should be backported to stable kernel trees.**
-
-**Critical Requirements:**
-1. **MUST backport both commits together:**
-   - 78b6a991eb6c6 ("extcon: adc-jack: Fix wakeup source leaks on device
-     unbind")
-   - 92bac7d4de9c0 ("extcon: adc-jack: Cleanup wakeup source only if it
-     was enabled")
-
-2. **Suggested stable trees:** All active stable trees where the adc-
-   jack driver exists with wakeup_source support
-
-3. **Rationale Summary:**
-   - Fixes genuine resource leak
-   - Part of systematic kernel-wide cleanup
-   - Low risk, high correctness value
-   - Minimal code change
-   - Both commits required for complete, correct fix
-
-**Implementation Note:** When submitting to stable, reference both
-commits and explain that 92bac7d4de9c0 is a necessary correction to
-78b6a991eb6c6.
-
- drivers/extcon/extcon-adc-jack.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
-index 46c40d85c2ac8..557930394abd2 100644
---- a/drivers/extcon/extcon-adc-jack.c
-+++ b/drivers/extcon/extcon-adc-jack.c
-@@ -164,6 +164,7 @@ static void adc_jack_remove(struct platform_device *pdev)
- {
- 	struct adc_jack_data *data = platform_get_drvdata(pdev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
+index cb560d64da08c..8ef4a8b2fae99 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
+@@ -284,7 +284,7 @@ static int vcn_v5_0_1_hw_fini(struct amdgpu_ip_block *ip_block)
+ 			vinst->set_pg_state(vinst, AMD_PG_STATE_GATE);
+ 	}
  
-+	device_init_wakeup(&pdev->dev, false);
- 	free_irq(data->irq, data);
- 	cancel_work_sync(&data->handler.work);
- }
+-	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN))
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN) && !amdgpu_sriov_vf(adev))
+ 		amdgpu_irq_put(adev, &adev->vcn.inst->ras_poison_irq, 0);
+ 
+ 	return 0;
 -- 
 2.51.0
 
