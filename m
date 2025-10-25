@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F632F5B;
-	Sat, 25 Oct 2025 16:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D82302756;
+	Sat, 25 Oct 2025 16:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408671; cv=none; b=k3qFWPobMpP+1l2ZOwF3ZEf+g911UH7WzYyVgRtKkp+cWDNuwhikfDJfl5Kj1XS8+VUV+BFAl6bGeBwkRXMiW99uLgyR8p6jXYVKcgY+1R5/Re2mzIqh/POjgIg+S6ReT8pk0upeeX19Ha9vIRoZM3LvwNaEE870RQrCs3T3JpQ=
+	t=1761408673; cv=none; b=O8tmOgeck+kzpJAc9D3dm08xvpweTR4lidqIWVNKybHWwZuGlKaqFICNki7XWsS9yIuJXSwF9YAIcf8kg7/8DL2hAUFpO54aJQUBPZz//lGc2edjLBM9Y0GL6ChOl7Oty1t8l4TqT8OsWcRUtUSxc75B8LgpN+DkxngGpR3bbaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408671; c=relaxed/simple;
-	bh=rALhKopiYWtHnleB6VpyBTdJO5JhkyCn+Qu3tZTmoYE=;
+	s=arc-20240116; t=1761408673; c=relaxed/simple;
+	bh=hMlWPjIszmAb/MPeUXQqD3XjgKIF7LxpDjvm1UzIS9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q85zNryV5FfTcQMfEfoosj/7LKidBhx/psZ6m2qGlkQihlmIaj7HjOrY9HT0dqKf+1nO1VH8wtsy4TrkRgcLClCJJJ0oufKU2cdVWe5juEVlsNzObCxeeCGA528ZP+9ZftrRBMiDt34tknXuhjcaTCeKG6pe5x3muWQy99f0q3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8qcLsol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TYY68EpD4nV4LeC6gOZs9lrWPcDvpmJDQLKoxx6Q/nVL6YKLOry0N/Kl+6lT1P2DoBG6XzWCTd5EfIxr5xyCK7J+huknJC3av119VMDCrBic7iYqsli/MM3FnntMokPfhYSjhql08Ej/n7Q1hrdXwDw19lKjBgo4B+AW+oI67Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MtrolAhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8qcLsol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF24C4CEFF;
-	Sat, 25 Oct 2025 16:11:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MtrolAhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29611C4CEFF;
+	Sat, 25 Oct 2025 16:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408671;
-	bh=rALhKopiYWtHnleB6VpyBTdJO5JhkyCn+Qu3tZTmoYE=;
+	s=k20201202; t=1761408673;
+	bh=hMlWPjIszmAb/MPeUXQqD3XjgKIF7LxpDjvm1UzIS9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8qcLsolmX+VnJU1EZ7d/GeHj6II+TeJV87WWbTaATyfw4wB51GKX5Wz6IRnLKZLJ
-	 YTyK3dVlqR/WZkVz9DkW1LXuIhOfWgkWNGBR7b50mrRwgW/4MbPx60WgYxq+hxswqX
-	 ssxuS07oCzk/zcytGkzcofbrdFlrsPxYmHqG2u+i36hRfaRM45N4N3kkwMbCxCO/if
-	 sqEVFVf8USG/E06TwIpp+cHykYPKba+PPwK6KbmRvjzc6U3TzTa/W/wtW/Mho1+zrJ
-	 XjUEXzad3Oq2eQs1VF+o2wNOhjO0fm6qAsQDtrxh1j4QHq0fGT5oZPJTui6L6ouccA
-	 AfwqgE6OeScxg==
+	b=MtrolAhzUcSE2+mIUmq9uZp3c7JhOgmNxOAyD1pQg/5rbNQacFjhDtEK5GDC7KNH8
+	 xVQD253ghsPVh1uWxobyynMioMkTl1zblqet0P4Qh18wvShPcuPkVtWMmrrliKVo7p
+	 RaFvtfMFFxP7psoR062IYflf1C0+gW95u1H6xjdXOUD5MWaYQvlhLCSbS7LICIKcTZ
+	 Q7N6KqvldSgJ3Bfx/PqendryDHSTvs5fjKgGt6RE7CJ7yly+hePyHPn+/Ry3UFti3D
+	 uIbEvoBAdeG0c1l4lxTCVRFxgE4ylEsfePVLYEA6SEbnKDeKw6rgQh2dFwrRYV6BjN
+	 mRP1SykYpofJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Christian Bruel <christian.bruel@foss.st.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	willemdebruijn.kernel@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] ipv6: np->rxpmtu race annotation
-Date: Sat, 25 Oct 2025 11:54:28 -0400
-Message-ID: <20251025160905.3857885-37-sashal@kernel.org>
+	kwilczynski@kernel.org,
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] selftests: pci_endpoint: Skip IRQ test if IRQ is out of range.
+Date: Sat, 25 Oct 2025 11:54:29 -0400
+Message-ID: <20251025160905.3857885-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -57,83 +52,104 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christian Bruel <christian.bruel@foss.st.com>
 
-[ Upstream commit 9fba1eb39e2f74d2002c5cbcf1d4435d37a4f752 ]
+[ Upstream commit 106fc08b30a2ece49a251b053165a83d41d50fd0 ]
 
-Add READ_ONCE() annotations because np->rxpmtu can be changed
-while udpv6_recvmsg() and rawv6_recvmsg() read it.
+The pci_endpoint_test tests the entire MSI/MSI-X range, which generates
+false errors on platforms that do not support the whole range.
 
-Since this is a very rarely used feature, and that udpv6_recvmsg()
-and rawv6_recvmsg() read np->rxopt anyway, change the test order
-so that np->rxpmtu does not need to be in a hot cache line.
+Skip the test in such cases and report accordingly.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250916160951.541279-4-edumazet@google.com
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
+[mani: reworded description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20250804170916.3212221-4-christian.bruel@foss.st.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `udpv6_recvmsg()` and `rawv6_recvmsg()` both dereference `np->rxpmtu`
-  without synchronization even though writers update it via
-  `xchg(&np->rxpmtu, skb)` in `ipv6_local_rxpmtu()`
-  (`net/ipv6/datagram.c:415`) and clear it in other contexts; that
-  unsupervised read is undefined behaviour under the kernel memory model
-  and is caught by KCSAN. Annotating the load with `READ_ONCE()` at
-  `net/ipv6/udp.c:483` and `net/ipv6/raw.c:448` guarantees an atomic,
-  non-reordered fetch, eliminating the data race.
-- The branch order swap (`np->rxopt.bits.rxpmtu` first) keeps the hot-
-  path behaviour identical—both functions already consult
-  `np->rxopt`—while avoiding an unnecessary cache-line touch of
-  `np->rxpmtu` unless the option is enabled, so the risk of regression
-  is negligible.
-- Older stable kernels share this lockless pattern and therefore the
-  same latent race, while the fix is self-contained (no new APIs, no
-  dependency churn). Delivering accurate IPV6_PATHMTU notifications to
-  user space is observable behaviour, so backporting this minimal
-  annotation is justified for correctness on stable branches.
 
-Natural next step: consider running an IPv6 UDP/RAW recv regression or
-KCSAN sanity check once merged into stable to confirm the race no longer
-fires.
+**Why This Fix Matters**
+- Prevents false test failures: The tests iterate full MSI/MSI-X ranges
+  regardless of what was actually allocated on the device. When a vector
+  index is out of range, the kernel returns -EINVAL, which the old test
+  treated as a failure.
+- Skips unsupported cases correctly: The new checks treat out-of-range
+  vectors as “not applicable” and mark the test as skipped, which
+  accurately reflects platform capability instead of reporting an error.
 
- net/ipv6/raw.c | 2 +-
- net/ipv6/udp.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+**What Changed (Selftests Only)**
+- In `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:122` and
+  `:140`, after triggering an IRQ:
+  - MSI loop: `pci_ep_ioctl(PCITEST_MSI, i);` then `if (ret == -EINVAL)
+    SKIP(return, "MSI%d is disabled", i);` (`tools/testing/selftests/pci
+    _endpoint/pci_endpoint_test.c:123`–`:126`)
+  - MSI-X loop: `pci_ep_ioctl(PCITEST_MSIX, i);` then `if (ret ==
+    -EINVAL) SKIP(return, "MSI-X%d is disabled", i);` (`tools/testing/se
+    lftests/pci_endpoint/pci_endpoint_test.c:141`–`:144`)
+- Uses existing kselftest skip mechanism (`SKIP(...)`) which is well-
+  established in the harness
+  (`tools/testing/selftests/kselftest_harness.h:110`–`:134`).
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index 4c3f8245c40f1..eceef8af1355f 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -445,7 +445,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
+**Why -EINVAL Means “Out of Range” Here**
+- The endpoint test driver queries the Linux IRQ number for a given
+  vector via `pci_irq_vector(pdev, msi_num - 1)`, and immediately
+  returns that error when negative
+  (`drivers/misc/pci_endpoint_test.c:441`–`:443`).
+- `pci_irq_vector()` returns -EINVAL precisely when the vector index is
+  out of range/not allocated for the device
+  (`drivers/pci/msi/api.c:311`–`:324`), which happens when the device
+  supports fewer MSI/MSI-X vectors than the upper bound tested (MSI up
+  to 32, MSI-X up to 2048).
+
+**Scope and Risk**
+- Small, contained change; affects only kselftests (no runtime kernel
+  code).
+- No API or architectural changes; just improves test correctness by
+  skipping unsupported cases.
+- Mirrors existing skip behavior already used in the same test suite
+  (e.g., BAR test skips when disabled,
+  `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:67`–`:70`).
+- No security impact.
+
+**Stable Backport Criteria**
+- Fixes a real issue that affects users of stable kernels running
+  selftests (false negatives on platforms with limited MSI/MSI-X
+  vectors).
+- Minimal risk and fully confined to `tools/testing/selftests`.
+- Does not introduce new features; aligns with stable policy for test
+  fixes.
+
+Given the above, this is a good candidate for stable backport.
+
+ tools/testing/selftests/pci_endpoint/pci_endpoint_test.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+index da0db0e7c9693..cd9075444c32a 100644
+--- a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
++++ b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+@@ -121,6 +121,8 @@ TEST_F(pci_ep_basic, MSI_TEST)
  
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
+ 	for (i = 1; i <= 32; i++) {
+ 		pci_ep_ioctl(PCITEST_MSI, i);
++		if (ret == -EINVAL)
++			SKIP(return, "MSI%d is disabled", i);
+ 		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI%d", i);
+ 	}
+ }
+@@ -137,6 +139,8 @@ TEST_F(pci_ep_basic, MSIX_TEST)
  
- 	skb = skb_recv_datagram(sk, flags, &err);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 6a68f77da44b5..7f53fcc82a9ec 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -479,7 +479,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
- 
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
- 
- try_again:
+ 	for (i = 1; i <= 2048; i++) {
+ 		pci_ep_ioctl(PCITEST_MSIX, i);
++		if (ret == -EINVAL)
++			SKIP(return, "MSI-X%d is disabled", i);
+ 		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI-X%d", i);
+ 	}
+ }
 -- 
 2.51.0
 
