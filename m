@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6C930AD1B;
-	Sat, 25 Oct 2025 16:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195FC30171D;
+	Sat, 25 Oct 2025 16:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409027; cv=none; b=WZK7yymgoxQ/kdfolbpmeJsiBoVR+P5gfJKZaVOHKaf/ynfvhkjB8z8wEDTxZzN7URF4ugCwqG7/ywfpcAcBiUYemOYnwmSuxBidLwkKVjeadN64UTQv1hhcwmVR+NE3/w3g0Kpatn/kANivPdie0vI9i4i4U8n5kH41iU/cLRs=
+	t=1761409029; cv=none; b=YndKo9O4NTlmogsGHpZPrmQc415BaqG++xr5+OszrCFYUHrnCpjk+iaNsLApyYGD435bOeQAi1OV90BstnpcVo4EmVHoFtv27neZR6UCnfMLHzvsCT4VcGSwNVWJamoK7ZTB4WxeDhsWixoLyDNVK6hCHMi0bI2YlA3oX4v73wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409027; c=relaxed/simple;
-	bh=MoH9ZlRMO15EnPBy7/XmWAPMoa9PryAQgktoC1TqlJc=;
+	s=arc-20240116; t=1761409029; c=relaxed/simple;
+	bh=7k3v/DaDCG2/zDCymQG5MnzL+6f2oZRTaDFIdf7yPEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WIK/Is1+3Ajj6ZIXuFMEgPbGrMBWGr0fMSkRRPPxuxzrliGeTRc2E1l1LfV0VOM4Iw8Ez42hikp5lHMuOsIpZdxyOeBCHTNoLJ9VgqfGzzr/fES5v1v4Jil/m732a2/dL99wcGz6bD3exV8tWD2rvtdOg73mhgAFDHlPcw13Qac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mz3r5xtU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XNu0tq4fV6c1as/yvzpUFuPA69AOF00t40uGP4GuC9sxv17m/w28p7Je6/NPpQPgC9gS/vYhbGlNseEVJ38wzDWe5veIvOFGooA5jY1k5cediJQIwKFGY9rEMV2fcjJ6HBtL8vfyUTG3oIVBBKDbx3RROiUF3eeXcn3pEfnPbJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ATsb0VnH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mz3r5xtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4107FC4CEFF;
-	Sat, 25 Oct 2025 16:17:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ATsb0VnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B982C4CEF5;
+	Sat, 25 Oct 2025 16:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409026;
-	bh=MoH9ZlRMO15EnPBy7/XmWAPMoa9PryAQgktoC1TqlJc=;
+	s=k20201202; t=1761409027;
+	bh=7k3v/DaDCG2/zDCymQG5MnzL+6f2oZRTaDFIdf7yPEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mz3r5xtUlcUw9loTUCqqeGTuJAbfsJMbpzlCbDOzWaY17T6+lkpOBH34CP9sr5zUx
-	 l5j9I40sA0oGzbhZwhB/dT05qMisMjRM0ZUfm2FCkDVrSFTT7CNdzEacruZWgfh47l
-	 8Il82iLCRDCj8DpyZmAOg4aOqiLaLF4HfIZGs09fkJgouJkvs/Y90w2FwP9UphsIC9
-	 j1PvWb/kXygZY5Ga5P5j4aGiOuTn6EmmJz5Uvg1l5GdResRkq9YF2Fukrypn0B4pGH
-	 IxFnMph2zlXWpnptc1tnEI1HAnamLIoU81S7VDM/ARw0iRp7BWmRmD0S1PYSnjtVQI
-	 2y1GWPj5Y9S+A==
+	b=ATsb0VnHidwGki5g81o/KSf23EiqscGwWtSd/iSCBciO5ukmetNEkgTM17+H0mlh6
+	 71QEfW8iNq/AUg21bqESP0VDW+YG4drnQNc3+BIrkQDs4Dt+lDjXDYv9mIxFxFDnR2
+	 uSv2rIefpEaKOPBRmWAXwWOI0cYe2A31pxfr9VhZ174C4J/tEXes2B4UDzWYZht29v
+	 TNvQargZpZRFUj686VRQU336kNoUzDkGymuUKp9iDYr/7G67VdVk//gfoQKLrQEgOb
+	 VIkztsps3SJT/+XhUjhVFLMdB1/pGzqVcHDzTii62l30KRwl6KdPl7STdB4674VGux
+	 vV6kSd6hs0SQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xi Ruoyao <xry111@xry111.site>,
-	Asiacn <710187964@qq.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Oleg Makarenko <oleg@makarenk.ooo>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Austin.Zheng@amd.com,
-	aurabindo.pillai@amd.com,
-	ray.wu@amd.com,
-	chenhuacai@kernel.org,
-	dillon.varone@amd.com,
-	rostrows@amd.com,
-	alexandre.f.demers@gmail.com,
-	karthi.kandasamy@amd.com,
-	wenjing.liu@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display/dml2: Guard dml21_map_dc_state_into_dml_display_cfg with DC_FP_START
-Date: Sat, 25 Oct 2025 11:56:45 -0400
-Message-ID: <20251025160905.3857885-174-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] HID: pidff: Use direction fix only for conditional effects
+Date: Sat, 25 Oct 2025 11:56:46 -0400
+Message-ID: <20251025160905.3857885-175-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,252 +49,221 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit c97a7dccb3ed680031011cfc1457506e6de49c9a ]
+[ Upstream commit f345a4798dab800159b09d088e7bdae0f16076c3 ]
 
-dml21_map_dc_state_into_dml_display_cfg calls (the call is usually
-inlined by the compiler) populate_dml21_surface_config_from_plane_state
-and populate_dml21_plane_config_from_plane_state which may use FPU.  In
-a x86-64 build:
+The already fixed bug in SDL only affected conditional effects. This
+should fix FFB in Forza Horizion 4/5 on Moza Devices as Forza Horizon
+flips the constant force direction instead of using negative magnitude
+values.
 
-    $ objdump --disassemble=dml21_map_dc_state_into_dml_display_cfg \
-    > drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.o |
-    > grep %xmm -c
-    63
+Changing the direction in the effect directly in pidff_upload_effect()
+would affect it's value in further operations like comparing to the old
+effect and/or just reading the effect values in the user application.
 
-Thus it needs to be guarded with DC_FP_START.  But we must note that the
-current code quality of the in-kernel FPU use in AMD dml2 is very much
-problematic: we are actually calling DC_FP_START in dml21_wrapper.c
-here, and this translation unit is built with CC_FLAGS_FPU.  Strictly
-speaking this does not make any sense: with CC_FLAGS_FPU the compiler is
-allowed to generate FPU uses anywhere in the translated code, perhaps
-out of the DC_FP_START guard.  This problematic pattern also occurs in
-at least dml2_wrapper.c, dcn35_fpu.c, and dcn351_fpu.c.  Thus we really
-need a careful audit and refactor for the in-kernel FPU uses, and this
-patch is simply whacking a mole.  However per the reporter, whacking
-this mole is enough to make a 9060XT "just work."
+This, in turn, would lead to constant PID_SET_EFFECT spam as the effect
+direction would constantly not match the value that's set by the
+application.
 
-Reported-by: Asiacn <710187964@qq.com>
-Closes: https://github.com/loongson-community/discussions/issues/102
-Tested-by: Asiacn <710187964@qq.com>
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This way, it's still transparent to any software/API.
+
+Only affects conditional effects now so it's better for it to explicitly
+state that in the name. If any HW ever needs fixed direction for other
+effects, we'll add more quirks.
+
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Oleg Makarenko <oleg@makarenk.ooo>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit, I can now provide my
-backporting recommendation.
+YES
 
-## **BACKPORT DECISION: YES**
+- What it fixes
+  - The earlier quirk forced a fixed direction (0x4000) for all effect
+    types on specific wheelbases to work around mis-set PID directions
+    in some user stacks (dinput → wine → SDL). That broad forcing breaks
+    games that legitimately use the direction field for non-conditional
+    effects (e.g., Forza Horizon 4/5 uses direction flips for constant
+    force instead of negative magnitudes). This patch narrows the quirk
+    to conditional effects only (spring, damper, inertia, friction),
+    matching where the SDL-side bug actually applied.
 
-This commit **SHOULD be backported** to stable kernel trees.
+- How it changes behavior
+  - Adds a helper to detect conditional effects and a wrapper to set the
+    direction only when appropriate:
+    - New logic: pidff_is_effect_conditional() and
+      pidff_set_effect_direction() in drivers/hid/usbhid/hid-pidff.c
+      (replaces unconditional forcing in Set Effect).
+    - Set Effect now calls the helper instead of unconditionally forcing
+      direction for all effects.
+  - Renames the quirk to reflect scope:
+    HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION →
+    HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION, still using the same bit
+    (BIT(3)).
+  - Updates device ID table entries to use the new quirk name for Moza
+    devices in drivers/hid/hid-universal-pidff.c.
 
----
+- Why it’s appropriate for stable
+  - User-visible bug/regression: Fixes incorrect or missing FFB in Forza
+    Horizon 4/5 on Moza devices when the kernel overrode constant-force
+    directions. The message explicitly states this resolves that case.
+  - Small and contained: Limited to HID PID force-feedback code and
+    quirk tables; no architectural changes.
+  - Minimal risk: Only affects devices already marked with the quirk
+    bit. Behavior is narrowed (less intrusive) by applying the fixed
+    direction only to conditional effects; other effect types now honor
+    the application-provided direction as intended.
+  - No side effects on unrelated subsystems: Touches only HID FFB code
+    paths.
+  - Clear lineage: It logically corrects the earlier
+    “FIX_WHEEL_DIRECTION” quirk (drivers/hid/usbhid/hid-pidff.c:397)
+    that forced direction for all effect types.
 
-## **DETAILED ANALYSIS AND JUSTIFICATION**
+- Specific code references
+  - Current unconditional forcing (to be replaced by helper call):
+    drivers/hid/usbhid/hid-pidff.c:397
+  - Quirk bit definition that’s renamed but remains BIT(3):
+    drivers/hid/usbhid/hid-pidff.h:20
+  - Fixed direction constant (still used, but now applied
+    conditionally): drivers/hid/usbhid/hid-pidff.c:151
+  - Device entries using the quirk (updated to new name):
+    drivers/hid/hid-universal-pidff.c:6
 
-### **1. NATURE OF THE BUG**
+- Additional considerations
+  - The commit avoids mutating effect->direction in
+    pidff_upload_effect(), preventing mismatches with the application’s
+    state and avoiding needless PID_SET_EFFECT churn. It keeps behavior
+    transparent to user space.
+  - If any future hardware requires fixed direction for non-conditional
+    effects, the commit message notes that more targeted quirks will be
+    added, which further limits regression risk.
 
-The commit fixes **unprotected FPU (Floating Point Unit) usage** in the
-AMD display driver. The function
-`dml21_map_dc_state_into_dml_display_cfg()` contains floating-point
-operations but was being called without proper kernel FPU protection
-guards.
+Given it’s a targeted regression fix for a real-world breakage, small in
+scope, and reduces the quirk’s blast radius, it’s a strong candidate for
+stable backport (especially on branches that already carry the earlier
+FIX_WHEEL_DIRECTION quirk).
 
-**Evidence from the code:**
-- The commit message shows `objdump` analysis revealing **63 uses of
-  %xmm registers** (SSE/FPU instructions) in the compiled function
-- In the source code at `drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21
-  _translation_helper.c:779-987`, I found the actual FPU operations:
-  ```c
-  surface->dcc.informative.dcc_rate_plane0 = 1.0;  // Line 791
-  surface->dcc.informative.dcc_rate_plane1 = 1.0;  // Line 792
+ drivers/hid/hid-universal-pidff.c | 20 ++++++++++----------
+ drivers/hid/usbhid/hid-pidff.c    | 28 +++++++++++++++++++++++-----
+ drivers/hid/usbhid/hid-pidff.h    |  2 +-
+ 3 files changed, 34 insertions(+), 16 deletions(-)
 
-  plane->composition.scaler_info.plane0.h_ratio =
-  (double)scaler_data->ratios.horz.value / (1ULL << 32);  // Line 903
-  plane->composition.scaler_info.plane0.v_ratio =
-  (double)scaler_data->ratios.vert.value / (1ULL << 32);  // Line 904
-  plane->composition.scaler_info.plane1.h_ratio =
-  (double)scaler_data->ratios.horz_c.value / (1ULL << 32);  // Line 905
-  plane->composition.scaler_info.plane1.v_ratio =
-  (double)scaler_data->ratios.vert_c.value / (1ULL << 32);  // Line 906
-  ```
-
-### **2. ROOT CAUSE AND REGRESSION TIMELINE**
-
-Through my investigation, I discovered this is a **regression fix**:
-
-- **v6.15**: Commit `366e77cd4923c` ("Protect FPU in
-  dml2_validate()/dml21_validate()") added DC_FP_START/END around the
-  entire `dml21_validate()` function - **WORKING**
-  - This commit had `Cc: stable@vger.kernel.org` tag
-  - It fixed "do_fpu invoked from kernel context" crashes on LoongArch
-
-- **v6.16**: Commit `fe3250f10819b` ("Call FP Protect Before Mode
-  Programming/Mode Support") refactored the code and moved FP protection
-  to individual calls
-  - It protected `dml2_build_mode_programming()` and
-    `dml2_check_mode_supported()`
-  - **BUT IT MISSED `dml21_map_dc_state_into_dml_display_cfg()`** -
-    **BROKEN**
-
-- **v6.18-rc1**: Current commit `c97a7dccb3ed6` adds the missing
-  protection - **FIXED**
-
-**Affected kernel versions:** v6.16 and v6.17 (including all stable
-releases) have the regression.
-
-### **3. THE FIX**
-
-The fix is **minimal and surgical**:
-
-```diff
-@@ -224,7 +224,9 @@ static bool dml21_mode_check_and_programming(...)
-        /* Populate stream, plane mappings and other fields in display
-config. */
-+       DC_FP_START();
-        result = dml21_map_dc_state_into_dml_display_cfg(in_dc, context,
-dml_ctx);
-+       DC_FP_END();
-        if (!result)
-                return false;
-
-@@ -279,7 +281,9 @@ static bool dml21_check_mode_support(...)
-        mode_support->dml2_instance = dml_init->dml2_instance;
-+       DC_FP_START();
-        dml21_map_dc_state_into_dml_display_cfg(in_dc, context,
-dml_ctx);
-+       DC_FP_END();
-```
-
-**Total change: 4 lines added** (2 × DC_FP_START, 2 × DC_FP_END)
-
-The `DC_FP_START()` and `DC_FP_END()` macros call `kernel_fpu_begin()`
-and `kernel_fpu_end()` which:
-1. Disable preemption
-2. Save current FPU state
-3. Allow safe FPU usage in kernel context
-4. Restore FPU state afterward
-
-### **4. USER-VISIBLE IMPACT**
-
-**Severity:** Hardware doesn't work or kernel crashes
-
-**Affected users:**
-- AMD Radeon GPU users on LoongArch systems (confirmed: makes 9060XT
-  "just work")
-- Potentially affects other architectures with strict FPU handling
-
-**Evidence:**
-- `Reported-by: Asiacn <710187964@qq.com>`
-- `Closes: https://github.com/loongson-community/discussions/issues/102`
-- `Tested-by: Asiacn <710187964@qq.com>` - Confirms it works
-- Similar to commit 366e77cd4923c which showed kernel crashes with stack
-  traces
-
-### **5. BACKPORTING CRITERIA ASSESSMENT**
-
-| Criterion | Status | Evidence |
-|-----------|--------|----------|
-| **Fixes important bug** | ✅ YES | Kernel crashes, hardware not working
-|
-| **Small and contained** | ✅ YES | Only 4 lines, 1 file changed |
-| **Minimal regression risk** | ✅ YES | Only adds protection guards
-around existing code |
-| **Confined to subsystem** | ✅ YES | AMD display driver only |
-| **Tested** | ✅ YES | Has Tested-by tag |
-| **Reviewed** | ✅ YES | Reviewed by Loongson and AMD engineers |
-| **Clear root cause** | ✅ YES | Detailed commit message with objdump
-evidence |
-
-### **6. CODE QUALITY OBSERVATIONS**
-
-The commit message honestly acknowledges broader architectural issues:
-> "the current code quality of the in-kernel FPU use in AMD dml2 is very
-much problematic... this patch is simply whacking a mole"
-
-However, it also states:
-> "whacking this mole is enough to make a 9060XT 'just work.'"
-
-This pragmatic fix is **necessary and correct** even if larger
-refactoring is needed long-term.
-
-### **7. MISSING STABLE TAGS (Should Have)**
-
-❌ No `Fixes:` tag (should be: `Fixes: fe3250f10819b`)
-❌ No `Cc: stable@vger.kernel.org`
-
-**This appears to be an oversight**, not a deliberate exclusion,
-because:
-- The earlier related commit 366e77cd4923c had `Cc:
-  stable@vger.kernel.org`
-- This is part of the same ongoing FPU protection effort
-- It fixes a clear regression with user-visible impact
-
-### **8. RISK ANALYSIS**
-
-**Risk of backporting:** **VERY LOW**
-- Change is minimal (only adds guards)
-- Guards are well-established pattern used throughout the codebase
-- No logic changes, no new features
-- Matches pattern of already-backported commit 366e77cd4923c
-
-**Risk of NOT backporting:** **HIGH**
-- Users with AMD GPUs on LoongArch cannot use their hardware
-- Potential kernel crashes and FPU state corruption
-- v6.16 and v6.17 remain broken
-
----
-
-## **CONCLUSION**
-
-This is a **clear-cut backport candidate** that fixes a regression
-introduced in v6.16, has been tested, is minimal in scope, and has very
-low risk. The lack of stable tags appears to be an oversight rather than
-intentional exclusion.
-
-**Recommended for backport to:**
-- v6.17.x stable (actively maintained)
-- v6.16.x stable (if still maintained)
-
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-index 03de3cf06ae59..059ede6ff2561 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -224,7 +224,9 @@ static bool dml21_mode_check_and_programming(const struct dc *in_dc, struct dc_s
- 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 554a6559aeb73..70fce0f88e825 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -144,25 +144,25 @@ static int universal_pidff_input_configured(struct hid_device *hdev,
  
- 	/* Populate stream, plane mappings and other fields in display config. */
-+	DC_FP_START();
- 	result = dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
-+	DC_FP_END();
- 	if (!result)
- 		return false;
+ static const struct hid_device_id universal_pidff_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C5) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C12) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_DFP),
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 614a20b620231..c6b4f61e535d5 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -205,6 +205,14 @@ struct pidff_device {
+ 	u8 effect_count;
+ };
  
-@@ -279,7 +281,9 @@ static bool dml21_check_mode_support(const struct dc *in_dc, struct dc_state *co
- 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
++static int pidff_is_effect_conditional(struct ff_effect *effect)
++{
++	return effect->type == FF_SPRING  ||
++	       effect->type == FF_DAMPER  ||
++	       effect->type == FF_INERTIA ||
++	       effect->type == FF_FRICTION;
++}
++
+ /*
+  * Clamp value for a given field
+  */
+@@ -294,6 +302,20 @@ static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
+ 	pidff_set_time(usage, duration);
+ }
  
- 	mode_support->dml2_instance = dml_init->dml2_instance;
-+	DC_FP_START();
- 	dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
-+	DC_FP_END();
- 	dml_ctx->v21.mode_programming.dml2_instance->scratch.build_mode_programming_locals.mode_programming_params.programming = dml_ctx->v21.mode_programming.programming;
- 	DC_FP_START();
- 	is_supported = dml2_check_mode_supported(mode_support);
++static void pidff_set_effect_direction(struct pidff_device *pidff,
++				       struct ff_effect *effect)
++{
++	u16 direction = effect->direction;
++
++	/* Use fixed direction if needed */
++	if (pidff->quirks & HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION &&
++	    pidff_is_effect_conditional(effect))
++		direction = PIDFF_FIXED_WHEEL_DIRECTION;
++
++	pidff->effect_direction->value[0] =
++		pidff_rescale(direction, U16_MAX, pidff->effect_direction);
++}
++
+ /*
+  * Send envelope report to the device
+  */
+@@ -395,11 +417,7 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 		pidff->set_effect[PID_GAIN].field->logical_maximum;
+ 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
+ 
+-	/* Use fixed direction if needed */
+-	pidff->effect_direction->value[0] = pidff_rescale(
+-		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
+-		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
+-		U16_MAX, pidff->effect_direction);
++	pidff_set_effect_direction(pidff, effect);
+ 
+ 	/* Omit setting delay field if it's missing */
+ 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
+diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
+index a53a8b436baa6..f321f675e1318 100644
+--- a/drivers/hid/usbhid/hid-pidff.h
++++ b/drivers/hid/usbhid/hid-pidff.h
+@@ -16,7 +16,7 @@
+ #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
+ 
+ /* Use fixed 0x4000 direction during SET_EFFECT report upload */
+-#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
++#define HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION	BIT(3)
+ 
+ /* Force all periodic effects to be uploaded as SINE */
+ #define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
 -- 
 2.51.0
 
