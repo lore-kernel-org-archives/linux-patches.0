@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E192FF168;
-	Sat, 25 Oct 2025 16:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C56303A0E;
+	Sat, 25 Oct 2025 16:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408725; cv=none; b=Ce77XRH9FBoSXHB0diqyv1YW9CrKeFHK/KoVPhmi2s9H1aDCuMzjwTkJ5bx2JngPDM4eF/LLdL3EIi7IOgrPWZBGs/a2lyq1Q3eXhC94iSs25/3Uu3Wi7PjAdKuVu5iMDyou2ySyewP4I3iCGxkMVtOYo7YPHGQCR5cq/w1iEiI=
+	t=1761408725; cv=none; b=Nu3THEsgqhLB70mEm1Hl0XiB3TwQEjlruAY6qm+2hwjuhp7Kj93Bdpk+ATL+F1q9W93igNJCYZ/VfdyT0qC1LRzG4y1kN19a2nfHN1bhMyk86mwpLdGlatHpPdSLU06bCtDxAn8mVE9Yo9qEaYBaYveDnqOHrAFSVknfsll+VqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408725; c=relaxed/simple;
-	bh=JlEQJWHGmaGrcwOo1WVQA5/NAEd98onIIlKymUC1R80=;
+	bh=+lzY6IZ4hCXTAaFY7hPCx3VNSpeh5RjUQpRnATfLobs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zeb8muLjuYrLMET1Fr8ZTQBH2deDa1TrcU/VoRxhmMPiUJ6hhMS17JgYF7U5TcimM0+z4udSnlRnY3AAoCooGtGK+DOBl6W4SJvU58+1W/zIHO0cP8cnumujmxlL4IgNL9x7BoX2GtQ/FJuzl1GMuUZYMOfse2O76OFaJQGh9y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imxlmeIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XJlWgfrxnNSYN21ZGLaHVB/HiIbrwTwrC8c7uw07YOF6L//e48lCE488QISMnS+9TWF7CM08rNujpd0pPwiUEpfIkMZ4Y9y+ADZw3A3ZUV4NBesVaLVe5beqy6enowICjvDy0ApjNO9J1E97xQfmM+60tqbcZKViKC42zQltItM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KFK1zEg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imxlmeIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473B2C4CEF5;
-	Sat, 25 Oct 2025 16:12:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KFK1zEg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0CCC4CEFB;
+	Sat, 25 Oct 2025 16:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408725;
-	bh=JlEQJWHGmaGrcwOo1WVQA5/NAEd98onIIlKymUC1R80=;
+	s=k20201202; t=1761408723;
+	bh=+lzY6IZ4hCXTAaFY7hPCx3VNSpeh5RjUQpRnATfLobs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imxlmeIkL2s8eZIc2of2iJxRZtThpuU012lCeR4v1ZDGibA3NwTTgcf/1g2RkRCyX
-	 ioGYdXF5rQm78feD4YhUqL4IqzM0qq7Owh98G784eU3mCf/oi9ljvRxpN971UbCAgm
-	 JF5LLNaPbuIYrRLpfbP6LoszuhO4sm54fqpClbexNtxUPZKDPV2T4J+pSu72kb1zr4
-	 D9hCbZoDsu0q8bPDQer9HO301nWDBVKpxoF4RViHO0MwZ20qrp+6hEcO3HHik7MA+v
-	 hWOGn+cjcGLoEx1JYJfyfBbFeFUmiqrTNYRCDxD+6JZyP5YBbXXEZZCioJdse6NN0/
-	 MphLrqZyn0ItA==
+	b=KFK1zEg9M2AU7GrAN5515ZbHAjv7IVPCA3HgTMhtpzuIqN08DHPAIqXXd7saUrz3J
+	 CNDtRZIL4rvVnMdq6TorJVKAubcptoXHEhAcDTOeDrgGWNqAD72TfKIaRU+d8mrSEI
+	 avGHlbhLEmgBcBXrYH5l/LVnKnn6IJFZDshm/0pLPpq1eacNvEgwXsR23UAcWo/xr2
+	 d5abmaWxp5ShnDnm3QRia8Q37Viv1yjfQD7FUwePh9Sn9aCdzAcn3Dz5Zc8+SBcrS4
+	 kx+L4qnjrt9rhYT5vsbeITrdDCMXV4fWs0KGEHgBgJeBNwdY0Jj9yeSaiDy3VPmsGZ
+	 NaQE/XMAIsabw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] media: adv7180: Only validate format in querystd
-Date: Sat, 25 Oct 2025 11:54:46 -0400
-Message-ID: <20251025160905.3857885-55-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.4] mips: lantiq: danube: add missing device_type in pci node
+Date: Sat, 25 Oct 2025 11:54:45 -0400
+Message-ID: <20251025160905.3857885-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -46,28 +46,22 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
+[ Upstream commit d66949a1875352d2ddd52b144333288952a9e36f ]
 
-The .querystd callback should not program the device with the detected
-standard, it should only report the standard to user-space. User-space
-may then use .s_std to set the standard, if it wants to use it.
+This fixes the following warning:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: pci@e105400 (lantiq,pci-xway): 'device_type' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml#
 
-All that is required of .querystd is to setup the auto detection of
-standards and report its findings.
-
-While at it add some documentation on why this can't happen while
-streaming and improve the error handling using a scoped guard.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,128 +69,75 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Removes unintended device reprogramming in `.querystd`: Previously,
-    after enabling autodetection and sampling, the code reprogrammed the
-    decoder using the configured `curr_norm` instead of leaving hardware
-    untouched. If userspace had never called `.s_std`, `curr_norm`
-    defaults to NTSC (drivers/media/i2c/adv7180.c:1463), so a simple
-    `.querystd` could force NTSC regardless of the detected standard.
-    The new code stops doing that and only reports the detected
-    standard.
-  - Aligns with V4L2 semantics: `.querystd` should detect and report,
-    not change the active standard. Userspace can call `.s_std` to set
-    it.
+- What changed: The patch adds `device_type = "pci";` to the PCI host
+  bridge node `pci@e105400` in
+  `arch/mips/boot/dts/lantiq/danube.dtsi:108`. The node already had
+  proper `#address-cells = <3>`, `#size-cells = <2>`, `#interrupt-cells
+  = <1>`, `compatible = "lantiq,pci-xway"`, `bus-range`, `ranges` (with
+  both memory and IO windows), and `reg` (see
+  arch/mips/boot/dts/lantiq/danube.dtsi:97-106). The only missing piece
+  was the `device_type` property.
 
-- Key code changes
-  - adv7180_querystd only sets autodetect, waits, and reports the
-    detected standard:
-    - Sets autodetect: drivers/media/i2c/adv7180.c:388
-    - Returns detection result directly: drivers/media/i2c/adv7180.c:388
-    - Adds clear rationale comment about not running during streaming
-      since it touches VID_SEL: drivers/media/i2c/adv7180.c:388
-  - Removes the reprogramming step via
-    `v4l2_std_to_adv7180(state->curr_norm)` and the second
-    `adv7180_set_video_standard(...)` (these were in the old body and
-    are now gone), eliminating side effects of `.querystd`.
-  - Improves error handling and robustness by using a scoped guard for
-    the mutex (auto-unlock on all paths) and by returning the result of
-    `__adv7180_status()` instead of ignoring it
-    (drivers/media/i2c/adv7180.c:388).
+- Why it matters (binding/spec): The PCI bus binding requires
+  `device_type = "pci"` on PCI bus nodes (commit message cites the DT
+  schema error), so this is a correctness fix to match devicetree
+  bindings.
 
-- Why it’s safe and minimal
-  - Localized change: confined to `adv7180_querystd` only
-    (drivers/media/i2c/adv7180.c:388).
-  - No ABI or architectural changes; just corrects behavior to be read-
-    only.
-  - Streaming safety preserved: returns `-EBUSY` while streaming to
-    avoid touching VID_SEL mid-capture
-    (drivers/media/i2c/adv7180.c:388).
-  - Consistent control flow: `.s_std` now only validates and stores the
-    intended standard in `curr_norm` (drivers/media/i2c/adv7180.c:463),
-    and actual programming is done at stream start via
-    `adv7180_program_std()` (drivers/media/i2c/adv7180.c:449) called by
-    initialization/streaming code paths. Leaving the device in
-    autodetect after `.querystd` does not affect users because streaming
-    is off (enforced by `-EBUSY`) and streaming will reprogram from
-    `curr_norm` anyway.
+- Why it matters (runtime): Linux uses the `device_type` property to
+  recognize PCI bus nodes and select the PCI bus translator in the OF
+  address translation code. Specifically:
+  - The bus matcher for PCI requires `device_type = "pci"` (or `pciex`,
+    or a node name “pcie”) to identify the node as a PCI bus
+    (drivers/of/address.c: of_bus_pci_match).
+  - If `device_type` is missing on a node named “pci@…”, the generic
+    “default-flags” bus is selected instead of the PCI bus. That leads
+    to incorrect parsing of the `ranges` flags.
+  - MIPS PCI host setup for Lantiq calls
+    `pci_load_of_ranges(&pci_controller, pdev->dev.of_node)`
+    (arch/mips/pci/pci-lantiq.c:219), which iterates
+    `for_each_of_pci_range` and switches on `range.flags &
+    IORESOURCE_TYPE_BITS` to configure the I/O and MEM windows
+    (arch/mips/pci/pci-legacy.c:145-177). Without the PCI bus
+    translator, those flags are not decoded as
+    `IORESOURCE_IO`/`IORESOURCE_MEM`, so ranges may be skipped or
+    misclassified, breaking I/O space mapping and potentially PCI host
+    initialization.
 
-- User-visible impact addressed
-  - Prevents `.querystd` from changing hardware state (e.g., enforcing
-    NTSC because `curr_norm` defaults to NTSC at probe:
-    drivers/media/i2c/adv7180.c:1463), which could break subsequent
-    expectations if userspace hasn’t explicitly called `.s_std`.
+- Scope and risk: The change is a single-line DTS fix, confined to the
+  Lantiq Danube SoC. It does not introduce new features or architectural
+  changes. It aligns with many other MIPS PCI DTs that already set
+  `device_type = "pci"`, and it brings the node into compliance with the
+  binding and the kernel’s OF bus matching logic. Regression risk is
+  minimal; the intended behavior is precisely to have this node
+  recognized as a PCI bus.
 
-- Backport considerations
-  - The `guard(mutex)` scoped guard may not exist in older stable
-    series. That’s trivial to adapt to explicit
-    `mutex_lock_interruptible()`/`mutex_unlock()` with identical
-    behavior. No other dependencies or refactors are required.
+- Stable criteria:
+  - Fixes a real defect (schema error and likely functional mis-parsing
+    of PCI ranges on this platform).
+  - Small and self-contained (one DTS line).
+  - No architectural churn; no cross-subsystem impact.
+  - Touches a platform DTS; DT ABI impact is corrective and consistent
+    with binding requirements.
 
-- Subsystem and risk profile
-  - Touches a single V4L2 i2c decoder driver; small, self-contained
-    change with clear behavioral bugfix and minimal regression risk.
-  - Follows stable rules: bugfix, no new features, no architectural
-    churn, and limited scope.
+Given the above, backporting this fix will eliminate binding violations
+and prevent incorrect PCI resource setup on Lantiq Danube systems.
 
-Given these points, this is a good candidate for stable backporting.
+ arch/mips/boot/dts/lantiq/danube.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
- drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 8100fe6b0f1d4..5accf3020e076 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -357,32 +357,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
- static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
- {
- 	struct adv7180_state *state = to_state(sd);
--	int err = mutex_lock_interruptible(&state->mutex);
--	if (err)
--		return err;
--
--	if (state->streaming) {
--		err = -EBUSY;
--		goto unlock;
--	}
-+	int ret;
- 
--	err = adv7180_set_video_standard(state,
--			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
--	if (err)
--		goto unlock;
-+	guard(mutex)(&state->mutex);
- 
--	msleep(100);
--	__adv7180_status(state, NULL, std);
-+	/*
-+	 * We can't sample the standard if the device is streaming as that would
-+	 * interfere with the capture session as the VID_SEL reg is touched.
-+	 */
-+	if (state->streaming)
-+		return -EBUSY;
- 
--	err = v4l2_std_to_adv7180(state->curr_norm);
--	if (err < 0)
--		goto unlock;
-+	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
-+	ret = adv7180_set_video_standard(state,
-+					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
-+	if (ret)
-+		return ret;
- 
--	err = adv7180_set_video_standard(state, err);
-+	/* Allow some time for the autodetection to run. */
-+	msleep(100);
- 
--unlock:
--	mutex_unlock(&state->mutex);
--	return err;
-+	return __adv7180_status(state, NULL, std);
- }
- 
- static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
+diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
+index 0a942bc091436..650400bd5725f 100644
+--- a/arch/mips/boot/dts/lantiq/danube.dtsi
++++ b/arch/mips/boot/dts/lantiq/danube.dtsi
+@@ -104,6 +104,8 @@ pci0: pci@e105400 {
+ 				  0x1000000 0 0x00000000 0xae00000 0 0x200000>; /* io space */
+ 			reg = <0x7000000 0x8000		/* config space */
+ 				0xe105400 0x400>;	/* pci bridge */
++
++			device_type = "pci";
+ 		};
+ 	};
+ };
 -- 
 2.51.0
 
