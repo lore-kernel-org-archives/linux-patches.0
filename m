@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3B7307ACA;
-	Sat, 25 Oct 2025 16:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BF92FC893;
+	Sat, 25 Oct 2025 16:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409196; cv=none; b=N0Sen4tXTJ9XJgsFvT/zVv88RXNtBP3TBbLCkqLXauQ5/I1CHYmnP83oyyQhOmZkRMK2tKyCUCCcU/xpQwq/rE1tw54zi/YCsvF/9q6ECRFqwUTqIx1hDHyn632WpFSChBIRYSs7ELion0lXCEV+p/tlnM4rkLJC8D2XWs11yUE=
+	t=1761409197; cv=none; b=g/YOgUiFinJ7pq3ijT4RrAsQI1hm2UfECZrre785b1uZlJwDCR+u1m+Okk4dcZdYeGdR5sue75mVZxxBqNluhEbTsS20sr1EZGiPy06W2hKfVh2nOtotgWDsmEoFPMNRhZc49FcbnvTApgSxUufu6I1wNwoync/+M6tHZQ3HpQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409196; c=relaxed/simple;
-	bh=801gx182FAvGt5ByVBL+5SMT1XgfvkwP9xzhTqQFJcY=;
+	s=arc-20240116; t=1761409197; c=relaxed/simple;
+	bh=ZKYECfmuP/gazJZqAd0Bg4txl0khCpg3PaWDHbZ4OGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GtNwRqGJOO8tTZ9XdMq71yp05SUKAtw8rtDjvzxxSlNq6YXCxK8qUdiknXbC6KBW7dUSh+inHZTOUhpp5ukSYpEEx2HZbkXz5eQt/hfZwWJ5QOoaENUKvYYJwXrqCs6uIzqSID/gZc4DrzCO7KMjYxA5+wRMrcAuo6DM0nsMSms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOseBbtq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GuH2lm/Qw1qyv4t1m2j0UyQyfQlMsEYMAe6D16lu6lWImIMEJ8OahBto60JdHumHgV/isZRTTGigI2Z2PjX3fyQIpskCngFMoXd9BHBv2YqcK60qHOronTV/nV06GphPWE3No3YhFYnsXV3rr9oGcvCI5+OcXbW6l3dlFc9xZdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sh/gFYhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOseBbtq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FE0C4CEFB;
-	Sat, 25 Oct 2025 16:19:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sh/gFYhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F75C4CEFB;
+	Sat, 25 Oct 2025 16:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409196;
-	bh=801gx182FAvGt5ByVBL+5SMT1XgfvkwP9xzhTqQFJcY=;
+	s=k20201202; t=1761409197;
+	bh=ZKYECfmuP/gazJZqAd0Bg4txl0khCpg3PaWDHbZ4OGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOseBbtqOypEpqS8XVS2chuBKlNZIr6aR1/DqMeHWGULtshYYolu9A3rYqWUpvaS9
-	 ZaHTrEuntvQZ6DRcQIwx0mREEmXel7WXJjqe0QLVwQXHmksSoZ339YE3bJddIhPYVl
-	 BZuTa2caOQc7iSWqYNgtPe2bwIUVhYF4PjhIlWRJ3dE+JDP+g4ymuJEbnyW+nhpRnp
-	 0eSwwu0gm8onUf5/gsI5XvLp+t3NrOSGvCanJRICMwgEp/6M95SOs0ytOwwINdvXzT
-	 KKZm2fg0L+8lkDLKQwj63WfwKCLzbGMCt0g4m/sxzPu62oUTa8Eqsi1uLUGjUmnc9z
-	 v9PnTLvL+o3yg==
+	b=sh/gFYhGqoWcTP4W1+trLjisB33oeJ+3MwAoZYG+kBPEdZgsyf3FuR0WO2TsmWyfM
+	 sERUJzqyW/18flawVSsFOFDc6pcyFTGqLaZe3Y6DZ/iB3efn9STcU1s2b9xBhenDzn
+	 9kd96aI71IeaQNZJkOIYRMY4kCtoBFIJK3gUF5g12wiT/sl5jbG2VKkjTpDJE1Eeuk
+	 E3D0GUtC7zA8TmLGeBox2kfZk4GfRfcUgqW6QovIgbyQuoh/kTAeiQRX/cVMdtlw3T
+	 vbkFLC+bAPi2UdooTWvh+VxUyNGb5rdZTs4CAl7jMezOrJsbAhOLlRPp3K7CCpjEKz
+	 SxGH859rqfwxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+Cc: Chia-I Wu <olvaffe@gmail.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe/pf: Program LMTT directory pointer on all GTs within a tile
-Date: Sat, 25 Oct 2025 11:57:50 -0400
-Message-ID: <20251025160905.3857885-239-sashal@kernel.org>
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/panthor: check bo offset alignment in vm bind
+Date: Sat, 25 Oct 2025 11:57:51 -0400
+Message-ID: <20251025160905.3857885-240-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -50,30 +47,25 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piotr Piórkowski <piotr.piorkowski@intel.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit ad69d62588cd6bf8cddaff5e3e2eb1b8dd876d35 ]
+[ Upstream commit 5afa9d2a9bb1410f816e0123846047288b16e4b9 ]
 
-Previously, the LMTT directory pointer was only programmed for primary GT
-within a tile. However, to ensure correct Local Memory access by VFs,
-the LMTT configuration must be programmed on all GTs within the tile.
-Lets program the LMTT directory pointer on every GT of the tile
-to guarantee proper LMEM access across all GTs on VFs.
+Fail early from panthor_vm_bind_prepare_op_ctx instead of late from
+ops->map_pages.
 
-HSD: 18042797646
-Bspec: 67468
-Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Michał Winiarski <michal.winiarski@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://lore.kernel.org/r/20250805091850.1508240-1-piotr.piorkowski@intel.com
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250828200116.3532255-1-olvaffe@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -81,115 +73,88 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The current code only programs the LMTT directory pointer for the
-    primary GT of a tile, leaving any additional GTs (e.g., media GT)
-    unconfigured. In this tree, that single write is at
-    drivers/gpu/drm/xe/xe_lmtt.c:202 where it calls
-    xe_mmio_write32(tile->primary_gt, ...).
-  - Since LMTT governs LMEM access for VFs, failing to program
-    LMEM_CFG/LMTT_DIR_PTR for all GTs can break VF access to LMEM on
-    non-primary GTs. The commit message aligns with this: “to ensure
-    correct Local Memory access by VFs, the LMTT configuration must be
-    programmed on all GTs within the tile.”
+- What changed
+  - Adds page-size alignment validation for `op->bo_offset` alongside
+    `op->va` and `op->size` in `panthor_vm_bind_prepare_op_ctx`, causing
+    early `-EINVAL` if any are misaligned
+    (drivers/gpu/drm/panthor/panthor_mmu.c:2450).
+  - Clarifies `panthor_vm_prepare_map_op_ctx` by updating the comment to
+    reflect it only checks in-bounds, not alignment
+    (drivers/gpu/drm/panthor/panthor_mmu.c:1225).
 
-- Why the current behavior is insufficient
-  - LMTT_DIR_PTR and LMEM_EN are defined in GT register space
-    (drivers/gpu/drm/xe/regs/xe_gt_regs.h:429–431), and the comment in
-    that header explains the GSI range is replicated for the media GT.
-    Writing the LMEM_CFG pointer for only the primary GT does not
-    automatically configure the same register instance for the media GT.
-  - xe_lmtt_init_hw() is only invoked from the primary (non-media) GT
-    init path (drivers/gpu/drm/xe/xe_gt.c:531). With the current single
-    write in lmtt_setup_dir_ptr(), the media GT’s instance of LMEM_CFG
-    remains unprogrammed.
+- Why it matters
+  - Previously, only `va` and `size` were checked for alignment at bind-
+    prepare time; an unaligned `bo_offset` would be detected later
+    during page-table mapping via `ops->map_pages`, i.e., deeper in the
+    map path (drivers/gpu/drm/panthor/panthor_mmu.c:917). This late
+    failure wastes work (page pinning, SGT fetching, VM BO handling, PT
+    prealloc) before unwinding.
+  - The new check fails fast at the UAPI entry point for both async and
+    sync VM_BIND flows:
+    - Async: `panthor_vm_bind_job_create` calls prepare and now rejects
+      invalid input immediately
+      (drivers/gpu/drm/panthor/panthor_mmu.c:2514).
+    - Sync: `panthor_vm_bind_exec_sync_op` likewise rejects before any
+      mapping work (drivers/gpu/drm/panthor/panthor_mmu.c:2683).
+  - Behavior for invalid inputs does not change (still returns
+    `-EINVAL`), but error is returned sooner and more predictably. There
+    is no change for valid inputs.
 
-- What the change does
-  - The patch replaces the single write with a loop to program
-    LMEM_CFG/LMTT_DIR_PTR for every GT on the tile, ensuring both
-    primary and media GTs are configured. In older codebases (as in your
-    tree), this maps to performing the same write for `tile->primary_gt`
-    and, if present, also for `tile->media_gt`. In newer codebases it
-    shows up as for_each_gt_on_tile(...) followed by
-    xe_mmio_write32(&gt->mmio, ...).
+- Correctness and consistency
+  - Alignment to the VM page size is consistent with existing checks: VA
+    and size are enforced to page alignment in various paths, and the
+    VM’s page size is derived from the IOMMU page-table configuration
+    (drivers/gpu/drm/panthor/panthor_mmu.c:848).
+  - Mapping uses the physical address `paddr = sg_dma_address(sgl) +
+    offset`; an unaligned `offset` directly misaligns `paddr`, which can
+    cause `ops->map_pages` to fail or fall back suboptimally. Catching
+    this in the ioctl path avoids deeper IOMMU/map failures
+    (drivers/gpu/drm/panthor/panthor_mmu.c:917).
 
-- Containment and risk
-  - Scope is a single helper: lmtt_setup_dir_ptr(). No ABI/UAPI changes,
-    no architectural refactoring.
-  - The write is guarded by sanity checks (VRAM BO, 64K alignment) and
-    performed during PF GT initialization after reset
-    (xe_lmtt_init_hw()), i.e., early and in a controlled sequence.
-  - Side effects are limited to programming the same register on
-    additional GTs. On single-GT tiles, the loop degenerates to one
-    write.
-  - The register selection already handles platform differences
-    (GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG) within the same
-    helper (drivers/gpu/drm/xe/xe_lmtt.c:203–204), so no new platform-
-    specific branches are introduced.
+- Risk assessment
+  - Small, contained validation change with no API or architectural
+    changes; affects only the panthor driver.
+  - Reduces resource churn on error paths (pin/unpin, PT prealloc, etc.)
+    and avoids late failures; cleanup paths already exist and remain
+    unchanged.
+  - No change to success paths; only earlier rejection for inputs that
+    would fail later anyway.
 
-- User impact and severity
-  - Misprogramming LMTT on multi-GT tiles can break LMEM access for VFs
-    using media engines, resulting in functional failures or GPU faults
-    in SR-IOV scenarios. This is a practical, user-visible bug in
-    virtualization setups, not a feature change.
+- Stable backport criteria
+  - Fixes a real (though not catastrophic) bug: missing parameter
+    validation leading to late errors and unnecessary work.
+  - Minimal regression risk and confined to a single subsystem file.
+  - Improves robustness and user-visible behavior (fail early,
+    consistent `-EINVAL`), aligning with stable policy for small, low-
+    risk fixes.
 
-- Backport considerations
-  - Applicable stable series: Only those that include the Xe driver and
-    SR-IOV PF LMTT support (e.g., v6.8.y and v6.9.y). The XE driver (and
-    xe_lmtt.c) is not present in v6.6.y or older, so those are out of
-    scope.
-  - Minimal adaptation: Older trees (like v6.8/v6.9) do not have
-    for_each_gt_on_tile(). The equivalent stable backport is to perform
-    the existing write for `tile->primary_gt` and additionally, if non-
-    NULL, for `tile->media_gt`. The existing code already uses
-    xe_mmio_write32(gt, ...), so the change is straightforward and
-    localized.
-  - Invocation context: xe_lmtt_init_hw() is called from the primary GT
-    init only (drivers/gpu/drm/xe/xe_gt.c:531), so programming all GTs
-    inside lmtt_setup_dir_ptr() is the correct place to ensure media GT
-    gets configured too.
+Given the above, this is a good candidate for stable backport.
 
-- Stable rules fit
-  - Important bugfix affecting real users (SR-IOV VFs on multi-GT
-    tiles).
-  - Small and contained patch touching only the Xe PF LMTT
-    initialization routine.
-  - No new features, no ABI changes, and minimal regression risk.
-  - Clear intent and references in the commit message (HSD: 18042797646,
-    Bspec: 67468), plus Reviewed-by and lore link.
+ drivers/gpu/drm/panthor/panthor_mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Conclusion: This is a solid, low-risk bugfix that should be backported
-to stable kernels that have the Xe driver and SR-IOV PF LMTT code (e.g.,
-6.8.y and 6.9.y).
-
- drivers/gpu/drm/xe/xe_lmtt.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/xe/xe_lmtt.c b/drivers/gpu/drm/xe/xe_lmtt.c
-index a2000307d5bf9..a78c9d474a6ef 100644
---- a/drivers/gpu/drm/xe/xe_lmtt.c
-+++ b/drivers/gpu/drm/xe/xe_lmtt.c
-@@ -195,14 +195,17 @@ static void lmtt_setup_dir_ptr(struct xe_lmtt *lmtt)
- 	struct xe_tile *tile = lmtt_to_tile(lmtt);
- 	struct xe_device *xe = tile_to_xe(tile);
- 	dma_addr_t offset = xe_bo_main_addr(lmtt->pd->bo, XE_PAGE_SIZE);
-+	struct xe_gt *gt;
-+	u8 id;
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 4140f697ba5af..d18c832d8ae9a 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1194,7 +1194,7 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
+ 	    (flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) != DRM_PANTHOR_VM_BIND_OP_TYPE_MAP)
+ 		return -EINVAL;
  
- 	lmtt_debug(lmtt, "DIR offset %pad\n", &offset);
- 	lmtt_assert(lmtt, xe_bo_is_vram(lmtt->pd->bo));
- 	lmtt_assert(lmtt, IS_ALIGNED(offset, SZ_64K));
+-	/* Make sure the VA and size are aligned and in-bounds. */
++	/* Make sure the VA and size are in-bounds. */
+ 	if (size > bo->base.base.size || offset > bo->base.base.size - size)
+ 		return -EINVAL;
  
--	xe_mmio_write32(&tile->mmio,
--			GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
--			LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
-+	for_each_gt_on_tile(gt, tile, id)
-+		xe_mmio_write32(&gt->mmio,
-+				GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
-+				LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
- }
+@@ -2411,7 +2411,7 @@ panthor_vm_bind_prepare_op_ctx(struct drm_file *file,
+ 	int ret;
  
- /**
+ 	/* Aligned on page size. */
+-	if (!IS_ALIGNED(op->va | op->size, vm_pgsz))
++	if (!IS_ALIGNED(op->va | op->size | op->bo_offset, vm_pgsz))
+ 		return -EINVAL;
+ 
+ 	switch (op->flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) {
 -- 
 2.51.0
 
