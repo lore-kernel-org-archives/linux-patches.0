@@ -1,46 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61272F5A2D;
-	Sat, 25 Oct 2025 16:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071C52FC893;
+	Sat, 25 Oct 2025 16:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409173; cv=none; b=N9RSm4FRBbVx5wtiujo9fOSCW/DjomuyMCoMQZM5q0NibKalYFro/S4xhCrnXB52V6F+sLp+4U7kfaI+8gkYbl4rGirc0frdzGtbJBAyCeclrG7irz/FW++fgecr9oS7b4dQrPgpxMxbXzZ0/Du8AvJnjZw0oa1/YFWNSRN2LKA=
+	t=1761409182; cv=none; b=bNf/0KG5Q49EqWeoOUt8RRJyjOV/zcf90fCkSk53ns2EaeRYG1QU8zcxD+/ES8n/u6ZlaLdg8SKX5K1A7VdEfUWfgvKhdW5GYl4OdYYltQr9DxRJoPRPt2XpN4rLIBhfT9y4NaPHhNuX47hy0G1JuWG1rULDnKrNo84ZWbPo8tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409173; c=relaxed/simple;
-	bh=9HkRSYhRyPFwC+Ebch60U0eOkF+niXbkC6onf51bdM4=;
+	s=arc-20240116; t=1761409182; c=relaxed/simple;
+	bh=afWHb3gFsT0vDh4zieSFw/sUmsJjUwN4HXbzjwzZjfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sHZE2rG0UUVZnLhtrbPqQyEgC8nc1kueuas8flsAdO8V72dwIhNEpaQuhrc3+o4+2RsG5UGjelm3KyaFSAjbTsynvo4bzyotpjyU7XIoZrU31znZ1tdQKmQz+HJTxwkdAQUN+Ew7qRTVgHuUgqxinRLkN05HsiXs624We8962Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKl1YArx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JsjJv1usvEX7Hs7eg7vgfVXJArBvlAeESUH/aJVFosOkAHPAsX6XGfCY6e8Di1flckiRIhyDboZZYMo8hyJGWnPtYc4x1n68/Ux7Qp+3DWz8DQYcWqCvm1IRpHWuFnaGb2pVHh92F8+gRbWowGAYPh5NSiWp8ZWL4rLsz95ClWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hCxNJVdE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKl1YArx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57969C4CEFB;
-	Sat, 25 Oct 2025 16:19:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hCxNJVdE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39EDC4CEF5;
+	Sat, 25 Oct 2025 16:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409173;
-	bh=9HkRSYhRyPFwC+Ebch60U0eOkF+niXbkC6onf51bdM4=;
+	s=k20201202; t=1761409181;
+	bh=afWHb3gFsT0vDh4zieSFw/sUmsJjUwN4HXbzjwzZjfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKl1YArxQnIvCurA5cukZnrwpGSRwJ6hqDT/lT40+Okk8pS/RvkQ4Gu8CrGRVNiKr
-	 qgTSo4DU1MaNj2i6/V/ANQXHAZ8x7vLXQJCVpbLAFPRbnOQRQ2oia5h6cn84DZynSI
-	 uU54CXAn2JIOHxx4njL8mUwfuNhmS1Sr0cyyFIhItr1zbwF5PO7n00ClH22nD3+QJY
-	 8E17Oj816ia6ivtstsKd0IUO3CK+oNDyyLwNJApUPoAGrGf13ubI3gb59jM+OGLgD0
-	 pTBe4S6lhITezZdtZxjI9LBk8RqrKOsjkVv4+27Xitc4XpzPrCc5yiFqg9RQ6zOIhZ
-	 Z5O0jeOYVT5Zw==
+	b=hCxNJVdE2/tZnEP+d9OpVyehdRxSDUkiMkcv/Q8QG8jfeG1xb/vcCI8U4Eo5Dt2bV
+	 MWVrIwi3bp53/OKMR8EBrS58lmJOhjNvpiS1ngWOsm4iCwz9NKjg30tFAdMYQnuGVR
+	 Y9Sj16kb0RFBQ9LpUA16J6oB+kIehp0pJNqU7ZdPILMLJxY3mvyK/gFuUTciEBvGHP
+	 fo2rJilzGeU2zUarTjYwrz/Rpk09s9dFAzzwNc6FKmarx64o09vGFQw1PeXU2hc1ra
+	 V4mPGT9uzkf0myAPEA3wJzYgaVmvXxCaq3BJjXah2RbmlJJraoCPAOnZcNYSu73GVl
+	 zgVKgXj7+B0xA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li RongQing <lirongqing@baidu.com>,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+Cc: Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	miklos@szeredi.hu,
-	vgoyal@redhat.com,
-	linux-fsdevel@vger.kernel.org,
-	virtualization@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17] virtio_fs: fix the hash table using in virtio_fs_enqueue_req()
-Date: Sat, 25 Oct 2025 11:57:41 -0400
-Message-ID: <20251025160905.3857885-230-sashal@kernel.org>
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	rmk+kernel@armlinux.org.uk,
+	maxime.chevallier@bootlin.com,
+	jacob.e.keller@intel.com,
+	hayashi.kunihiko@socionext.com,
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com,
+	alexis.lothore@bootlin.com,
+	netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] net: stmmac: est: Drop frames causing HLBS error
+Date: Sat, 25 Oct 2025 11:57:42 -0400
+Message-ID: <20251025160905.3857885-231-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,126 +64,116 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Rohan G Thomas <rohan.g.thomas@altera.com>
 
-[ Upstream commit 7dbe6442487743ad492d9143f1f404c1f4a05e0e ]
+[ Upstream commit 7ce48d497475d7222bd8258c5c055eb7d928793c ]
 
-The original commit be2ff42c5d6e ("fuse: Use hash table to link
-processing request") converted fuse_pqueue->processing to a hash table,
-but virtio_fs_enqueue_req() was not updated to use it correctly.
-So use fuse_pqueue->processing as a hash table, this make the code
-more coherent
+Drop those frames causing Head-of-Line Blocking due to Scheduling
+(HLBS) error to avoid HLBS interrupt flooding and netdev watchdog
+timeouts due to blocked packets. Tx queues can be configured to drop
+those blocked packets by setting Drop Frames causing Scheduling Error
+(DFBS) bit of EST_CONTROL register.
 
-Co-developed-by: Fushuai Wang <wangfushuai@baidu.com>
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Also, add per queue HLBS drop count.
+
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Reviewed-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/20250925-hlbs_2-v3-1-3b39472776c2@altera.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- Enabling EST currently leaves blocked frames in the Tx queue when a
+  Head-of-Line Blocking due to Scheduling (HLBS) fault happens, so the
+  scheduler keeps retrying the same frame and continuously raises HLBS
+  interrupts, which ends in watchdog timeouts. The fix explicitly sets
+  the hardware “Drop Frames causing Scheduling error” bit when EST is
+  enabled (`drivers/net/ethernet/stmicro/stmmac/stmmac_est.c:66`
+  together with the new definition in `stmmac_est.h:19`), so those
+  unschedulable frames are discarded by the MAC instead of wedging the
+  queue.
+- The change is tightly scoped to the EST path: when EST is disabled
+  nothing changes (`stmmac_est.c:65-68`), so non-TSN users of stmmac are
+  unaffected. The additional per-queue accounting merely increments a
+  counter when HLBS drops occur (`stmmac_est.c:110-114` with storage
+  added in `common.h:231`); it does not alter behaviour and has no UAPI
+  impact.
+- This solves a real, user-visible failure (interrupt storms and `netdev
+  watchdog` fires) that exists in all builds with EST support since it
+  was introduced, while the code delta is minimal and self-contained.
+  There are no prerequisite refactors beyond what is already in stable,
+  and there is no evidence of regressions from setting this documented
+  control bit.
 
-**Why This Is A Bugfix**
-- The earlier change “fuse: Use hash table to link processing request”
-  (be2ff42c5d6e) converted `fuse_pqueue->processing` from a single list
-  to a hash table. You can see the hash table parameters and the data
-  structure:
-  - `FUSE_PQ_HASH_BITS` and `FUSE_PQ_HASH_SIZE`: fs/fuse/fuse_i.h:546
-  - `struct fuse_pqueue { struct list_head *processing; }`:
-    fs/fuse/fuse_i.h:556
-  - Allocation as an array of `list_head` buckets: fs/fuse/inode.c:1622
-- Responses are looked up by hashing the request ID and searching only
-  that bucket:
-  - `fuse_request_find()` iterates `&fpq->processing[hash]`:
-    fs/fuse/dev.c:2131
-- Before this fix, `virtio_fs_enqueue_req()` added every request to the
-  list head pointer (effectively bucket 0) instead of the hashed bucket.
-  That makes replies unfindable for non-zero buckets, leading to -ENOENT
-  on reply processing and stuck/hung requests.
+ drivers/net/ethernet/stmicro/stmmac/common.h     | 1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_est.c | 9 ++++++---
+ drivers/net/ethernet/stmicro/stmmac/stmmac_est.h | 1 +
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
-**What The Patch Changes**
-- Export the hash function so virtio-fs can use it:
-  - `fuse_req_hash()` now exported: fs/fuse/dev.c:321
-- Ensure virtio-fs adds requests to the correct bucket:
-  - Include FUSE device internals: fs/fuse/virtio_fs.c:23
-  - Compute the bucket: `hash = fuse_req_hash(req->in.h.unique);`:
-    fs/fuse/virtio_fs.c:1445
-  - Enqueue into the correct bucket: `list_add_tail(&req->list,
-    &fpq->processing[hash]);`: fs/fuse/virtio_fs.c:1447
-  - Function definition location for context: fs/fuse/virtio_fs.c:1370
-
-**Impact and Risk**
-- User-visible bugfix: Without this, replies cannot be matched to
-  requests (except those hashing to bucket 0), causing request
-  completion failures and potential hangs in virtio-fs workloads.
-- Small and contained: Two files touched; logic change is limited to
-  correctly hashing and inserting into the right bucket, plus exporting
-  a helper symbol.
-- No architectural changes: Keeps the existing hash-table design; simply
-  uses it correctly.
-- Stable-friendly: Minimal risk of regression, no new features, fixes
-  incorrect behavior.
-
-**Backport Conditions**
-- This should be backported to any stable series that already includes
-  the conversion of `processing` to a hash table (be2ff42c5d6e). If a
-  stable series predates that change (i.e., `processing` is still a
-  single list), this patch is not applicable.
-- The export `EXPORT_SYMBOL_GPL(fuse_req_hash)` (fs/fuse/dev.c:321) is
-  required so `virtio_fs` can link against it. This is an internal, GPL-
-  only symbol used by in-tree code and is appropriate for stable.
-
- fs/fuse/dev.c       | 1 +
- fs/fuse/virtio_fs.c | 6 ++++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index dbf53c7bc8535..612d4da6d7d91 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -322,6 +322,7 @@ unsigned int fuse_req_hash(u64 unique)
- {
- 	return hash_long(unique & ~FUSE_INT_REQ_BIT, FUSE_PQ_HASH_BITS);
- }
-+EXPORT_SYMBOL_GPL(fuse_req_hash);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+index cbffccb3b9af0..450a51a994b92 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -228,6 +228,7 @@ struct stmmac_extra_stats {
+ 	unsigned long mtl_est_btrlm;
+ 	unsigned long max_sdu_txq_drop[MTL_MAX_TX_QUEUES];
+ 	unsigned long mtl_est_txq_hlbf[MTL_MAX_TX_QUEUES];
++	unsigned long mtl_est_txq_hlbs[MTL_MAX_TX_QUEUES];
+ 	/* per queue statistics */
+ 	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
+ 	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
+index ac6f2e3a3fcd2..4b513d27a9889 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
+@@ -63,7 +63,7 @@ static int est_configure(struct stmmac_priv *priv, struct stmmac_est *cfg,
+ 			 EST_GMAC5_PTOV_SHIFT;
+ 	}
+ 	if (cfg->enable)
+-		ctrl |= EST_EEST | EST_SSWL;
++		ctrl |= EST_EEST | EST_SSWL | EST_DFBS;
+ 	else
+ 		ctrl &= ~EST_EEST;
  
- /*
-  * A new request is available, wake fiq->waitq
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index 76c8fd0bfc75d..1751cd6e3d42b 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -20,6 +20,7 @@
- #include <linux/cleanup.h>
- #include <linux/uio.h>
- #include "fuse_i.h"
-+#include "fuse_dev_i.h"
+@@ -109,6 +109,10 @@ static void est_irq_status(struct stmmac_priv *priv, struct net_device *dev,
  
- /* Used to help calculate the FUSE connection's max_pages limit for a request's
-  * size. Parts of the struct fuse_req are sliced into scattergather lists in
-@@ -1384,7 +1385,7 @@ static int virtio_fs_enqueue_req(struct virtio_fs_vq *fsvq,
- 	unsigned int out_sgs = 0;
- 	unsigned int in_sgs = 0;
- 	unsigned int total_sgs;
--	unsigned int i;
-+	unsigned int i, hash;
- 	int ret;
- 	bool notify;
- 	struct fuse_pqueue *fpq;
-@@ -1444,8 +1445,9 @@ static int virtio_fs_enqueue_req(struct virtio_fs_vq *fsvq,
+ 		x->mtl_est_hlbs++;
  
- 	/* Request successfully sent. */
- 	fpq = &fsvq->fud->pq;
-+	hash = fuse_req_hash(req->in.h.unique);
- 	spin_lock(&fpq->lock);
--	list_add_tail(&req->list, fpq->processing);
-+	list_add_tail(&req->list, &fpq->processing[hash]);
- 	spin_unlock(&fpq->lock);
- 	set_bit(FR_SENT, &req->flags);
- 	/* matches barrier in request_wait_answer() */
++		for (i = 0; i < txqcnt; i++)
++			if (value & BIT(i))
++				x->mtl_est_txq_hlbs[i]++;
++
+ 		/* Clear Interrupt */
+ 		writel(value, est_addr + EST_SCH_ERR);
+ 
+@@ -131,10 +135,9 @@ static void est_irq_status(struct stmmac_priv *priv, struct net_device *dev,
+ 
+ 		x->mtl_est_hlbf++;
+ 
+-		for (i = 0; i < txqcnt; i++) {
++		for (i = 0; i < txqcnt; i++)
+ 			if (feqn & BIT(i))
+ 				x->mtl_est_txq_hlbf[i]++;
+-		}
+ 
+ 		/* Clear Interrupt */
+ 		writel(feqn, est_addr + EST_FRM_SZ_ERR);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.h
+index d247fa383a6e4..f70221c9c84af 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.h
+@@ -16,6 +16,7 @@
+ #define EST_XGMAC_PTOV_MUL		9
+ #define EST_SSWL			BIT(1)
+ #define EST_EEST			BIT(0)
++#define EST_DFBS			BIT(5)
+ 
+ #define EST_STATUS			0x00000008
+ #define EST_GMAC5_BTRL			GENMASK(11, 8)
 -- 
 2.51.0
 
