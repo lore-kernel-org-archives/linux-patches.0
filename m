@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB17B3043C3;
-	Sat, 25 Oct 2025 16:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3A6306498;
+	Sat, 25 Oct 2025 16:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409618; cv=none; b=o/6gv+J6K+u6Bk6paF3r0+HG2dDUTSfcXJYX7XBQxdG8Lf6ShiM5Jboo+5PeJ63qmfebEkksGsoRJEss8rEu2+gst7aI4eDX2n0E+S+2/iN7oiJZjg+eeIASDFL0byV4yzd/iHJFsyrVOB5asMYgUBXaC5GqQximjc2uWdmmvYQ=
+	t=1761409621; cv=none; b=CYd8lFKPxxsSSE5+QmipVk7dgxacqHP+csTKOuVg4LvOvMUnnkKBCVNdQhSjEmHBkL7X/NfKTS3tOVOacfBnWrZrL3TVOlpVqwDfCJ4KDM+3Tf7/odKCAvopjfbUsiwxCl/s6gYgRKdzdcweBaznnE25pHQaFUweK4B/yyqdJEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409618; c=relaxed/simple;
-	bh=3n8BZpDOXA+ibPk71eu3NoE5G7aCdVBnhyq9AX2N74o=;
+	s=arc-20240116; t=1761409621; c=relaxed/simple;
+	bh=EV4V0aToZ75vj9kD31WLFR0fiNf2p961IW8sUVl4/d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mrxGQ6hyKx4IaS/jaY7FRsehgd+CSk8KvHxwIv433sbiFChJvft1w5GRlqQjYdMEZSj5Flq/QF/DIFcqBpvrDcm9rU/j3HMshoJiOYEWpwSnSq1IgVO4IG3pOTpEPaCkPLWwadyMoOG6LDWmPFFmZe7Egb3tvmvNPS3AsrPR4Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i56wBvcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ijmst2t0rUbVGRdT9Gy3sZciGa1HnSA14CD8Un9WG3T/UGNoy3GmnNhC2H/iXnH6RfsoabCWyhmtEqJSISlqXDPeMTcPQMQ8hOMDg6yN7eN0uwE4hGx4jBME2iL2jn3D+gbZsm3ZpWsP7PKzcS5krGC1WNkh2K1XbE9RWM6r1C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMV8anQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i56wBvcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1681C4CEFF;
-	Sat, 25 Oct 2025 16:26:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMV8anQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F07C4CEFB;
+	Sat, 25 Oct 2025 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409617;
-	bh=3n8BZpDOXA+ibPk71eu3NoE5G7aCdVBnhyq9AX2N74o=;
+	s=k20201202; t=1761409620;
+	bh=EV4V0aToZ75vj9kD31WLFR0fiNf2p961IW8sUVl4/d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i56wBvcwAc0WyobevUeeFEBvvnhU1Yc/CKUm/p1NrrdTLmuakDlApDIY5TLMkyMD5
-	 e0M3PL6COejtMIYtoA5tO4IQvetc8pRAPD8oiog2KVxQg5h3Z3pL13YWItVqGRzi8T
-	 UoZQFD9WCOrcO0XLzJVk5wIaiHlKTqezo/hFJ/hc1geHHpvW6/X240+8fxywKMP/hu
-	 KLt9Sh5FqKRM9dMKRvy5gQItSK0+JUUbyhm1ULzvWXgL3ZpSK6XfF8GTc1i6pPHfqx
-	 WD9O3zDBZiwIGP+aVNiUQ3Vr7jE0Q45kvDfE6Gg2jukK88frLjCiMsHaVXkM5xi2h2
-	 aYfrjLwm0Y/6w==
+	b=CMV8anQuNyFfPS/it7TZ8rApThqQ+jg7Dd6dkkln+kDwppdWJLIgQkUZcxyFLLu3J
+	 yS//fLsMBqw4tOg0iS9QuNqVuWE+02q5tCMPmIt4Uin8TKxzurOoYj76QWnnnoNXlY
+	 kn+tumOzPCNKtAyqJMgoNpQVgCzZNQGEhAXnq9iXU3MGykzGP6UV8ow+DXF2x27e57
+	 Zd5XAZQbSUbLjXwRMYUAFymmsQDGF6IZ3b1xm7JLYj8BQffQyZHOXVgTbTHkjLrVIz
+	 fKM/gebMKo29dlGPdOkPg4EmOg9G29Ky2heItcg//VncRpoZ746oPvkj3/n5pVNhKy
+	 3wOVEJLgn1Ahw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hkallweit1@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] net: phy: clear EEE runtime state in PHY_HALTED/PHY_ERROR
-Date: Sat, 25 Oct 2025 12:00:26 -0400
-Message-ID: <20251025160905.3857885-395-sashal@kernel.org>
+	linux-rdma@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] RDMA/irdma: Update Kconfig
+Date: Sat, 25 Oct 2025 12:00:28 -0400
+Message-ID: <20251025160905.3857885-397-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,362 +52,63 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit 0915cb22452723407ca9606b7e5cc3fe6ce767d5 ]
+[ Upstream commit 060842fed53f77a73824c9147f51dc6746c1267a ]
 
-Clear EEE runtime flags when the PHY transitions to HALTED or ERROR
-and the state machine drops the link. This avoids stale EEE state being
-reported via ethtool after the PHY is stopped or hits an error.
+Update Kconfig to add dependency on idpf module and
+add IPU E2000 to the list of supported devices.
 
-This change intentionally only clears software runtime flags and avoids
-MDIO accesses in HALTED/ERROR. A follow-up patch will address other
-link state variables.
-
-Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20250912132000.1598234-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Link: https://patch.msgid.link/20250827152545.2056-17-tatyana.e.nikolova@intel.com
+Tested-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis: net: phy: clear EEE runtime state in
-PHY_HALTED/PHY_ERROR
-
-**ANSWER: YES**
-
-This commit should be backported to stable kernel trees. Below is my
-comprehensive analysis based on extensive research.
-
----
-
-## Executive Summary
-
-This is a **2-line bugfix** that prevents stale Energy Efficient
-Ethernet (EEE) state from being reported to users via ethtool after a
-PHY is administratively stopped (`ip link set down`) or encounters an
-error. The fix is **extremely safe**, has **minimal regression risk**,
-and addresses a **user-visible inconsistency** in network interface
-state reporting.
-
----
-
-## Detailed Technical Analysis
-
-### 1. The Bug: Asymmetric State Clearing
-
-The Linux PHY state machine clears EEE runtime flags in **two different
-code paths**:
-
-**Path 1: Normal link down (PHY_RUNNING → PHY_NOLINK)** -
-drivers/net/phy/phy.c:1025-1030
-```c
-} else if (!phydev->link && phydev->state != PHY_NOLINK) {
-    phydev->state = PHY_NOLINK;
-    phydev->eee_active = false;      // ✓ Cleared correctly
-    phydev->enable_tx_lpi = false;   // ✓ Cleared correctly
-    phy_link_down(phydev);
-}
-```
-
-**Path 2: Administrative/error shutdown (PHY_HALTED/PHY_ERROR)** -
-Before this patch:
-```c
-case PHY_HALTED:
-case PHY_ERROR:
-    if (phydev->link) {
-        phydev->link = 0;
-        // ✗ eee_active NOT cleared - BUG!
-        // ✗ enable_tx_lpi NOT cleared - BUG!
-        phy_link_down(phydev);
-    }
-```
-
-This **asymmetry is a bug**. Both code paths drop the link
-(`phydev->link = 0`), but only the PHY_NOLINK path was clearing EEE
-state.
-
-### 2. How the Bug Manifests
-
-**Reproduction steps:**
-1. Bring up an Ethernet link with EEE successfully negotiated
-2. Run `ethtool --show-eee eth0` → Shows "EEE status: enabled - active"
-3. Run `ip link set dev eth0 down` → Triggers PHY_HALTED state
-4. Run `ethtool --show-eee eth0` → **Still shows "EEE status: enabled -
-   active"** ← WRONG!
-
-**Why it happens:**
-- `ethtool --show-eee` calls `phy_ethtool_get_eee()`
-  (drivers/net/phy/phy.c:1909)
-- Which calls `genphy_c45_ethtool_get_eee()`
-  (drivers/net/phy/phy-c45.c:1508)
-- Line 1517 sets: `data->eee_active = phydev->eee_active`
-- Since `phydev->eee_active` was never cleared in PHY_HALTED, it still
-  contains the stale value `true`
-
-**User impact:**
-- Misleading diagnostic information from ethtool
-- Network management tools may make incorrect decisions based on stale
-  EEE state
-- Confusing for users debugging network issues
-
-### 3. Historical Context: How These Fields Were Introduced
-
-My research revealed this bug was **inadvertently introduced** when the
-EEE state tracking fields were added:
-
-**`enable_tx_lpi` field (v6.10, commit e3b6876ab850):**
-- Introduced March 2024 by Andrew Lunn
-- Purpose: Tell MAC drivers whether to send Low Power Indications
-- Correctly cleared in PHY_NOLINK, but **forgot to clear in
-  PHY_HALTED/ERROR**
-
-**`eee_active` field (v6.13, commit e2668c34b7e1a):**
-- Introduced November 2024 by Russell King (Oracle)
-- Purpose: Track whether EEE was actually **negotiated** (not just
-  configured)
-- Fixes: 3e43b903da04 ("net: phy: Immediately call adjust_link if only
-  tx_lpi_enabled changes")
-- Also correctly cleared in PHY_NOLINK, but **forgot to clear in
-  PHY_HALTED/ERROR**
-
-When I examined commit e2668c34b7e1a (which introduced `eee_active`), I
-found it only modified the PHY_NOLINK path and **did not touch
-PHY_HALTED/ERROR**. This created an **inconsistent state machine**.
-
-### 4. The Fix: Symmetry Restoration
-
-This commit adds the two missing lines to
-drivers/net/phy/phy.c:1567-1568:
-
-```c
-case PHY_HALTED:
-case PHY_ERROR:
-    if (phydev->link) {
-        phydev->link = 0;
-        phydev->eee_active = false;      // ✓ NEW: Now cleared
-        phydev->enable_tx_lpi = false;   // ✓ NEW: Now cleared
-        phy_link_down(phydev);
-    }
-```
-
-This makes the PHY_HALTED/ERROR handler **symmetric** with the
-PHY_NOLINK handler, ensuring EEE state is cleared consistently whenever
-the link drops.
-
-**Important design decision noted in commit message:**
-> "This change intentionally only clears software runtime flags and
-avoids MDIO accesses in HALTED/ERROR."
-
-This is **critical for safety**: the fix only modifies software state,
-with **zero hardware interaction**. This eliminates risk of hardware
-lockups or MDIO bus errors during error conditions.
-
-### 5. Part of a Larger Cleanup Effort
-
-This commit is part of an ongoing effort by Oleksij Rempel to fix stale
-state issues in the PHY layer:
-
-1. **This commit (0915cb2245272)**: Clears EEE runtime state
-2. **Follow-up commit (60f887b1290b4)**: Clears other link parameters
-   (speed, duplex, master_slave_state, mdix, lp_advertising) in
-   PHY_HALTED
-
-Both commits address the **same root cause**: the PHY_HALTED/ERROR
-handler was not clearing link-related state, leading to stale values in
-ethtool output.
-
-From the mailing list discussion, Russell King (Oracle) **suggested this
-fix**, and both Andrew Lunn and Russell King **reviewed and approved**
-it. This indicates strong maintainer consensus.
-
----
-
-## Backporting Risk Assessment
-
-### Risk Level: **MINIMAL**
-
-**Why this is safe:**
-
-✅ **Only 2 lines added** - Trivial change size minimizes regression risk
-
-✅ **Software-only change** - No MDIO/hardware access, no timing
-dependencies
-
-✅ **Follows existing pattern** - Identical to PHY_NOLINK handler (lines
-1027-1028)
-
-✅ **Boolean assignments only** - No complex logic, control flow, or
-error handling
-
-✅ **Maintainer-approved** - Suggested by Russell King, reviewed by
-Andrew Lunn + Russell King
-
-✅ **No reported regressions** - In mainline since v6.18-rc1 with no
-fixes
-
-✅ **Self-contained** - No dependencies on uncommitted code or future
-patches
-
-**Potential risks (none identified):**
-
-- Could theoretically affect drivers that read these flags
-  asynchronously without locking
-  - **Mitigated**: All readers use `phydev->lock` mutex (line 1916 in
-    phy_ethtool_get_eee)
-
-- Could break drivers that expect stale values in HALTED state
-  - **Unlikely**: No legitimate use case for reading stale EEE state
-
-- Could interact poorly with concurrent state transitions
-  - **Mitigated**: PHY state machine runs under lock protection
-
----
-
-## Stable Tree Criteria Compliance
-
-| Criterion | Status | Evidence |
-|-----------|--------|----------|
-| **Fixes user-visible bug** | ✅ YES | Incorrect ethtool output after
-`ip link down` |
-| **Small and contained** | ✅ YES | Only 2 lines in a single function |
-| **No architectural changes** | ✅ YES | Simple state cleanup, no design
-changes |
-| **Minimal regression risk** | ✅ YES | Software-only, follows existing
-pattern |
-| **Affects real users** | ✅ YES | Any user running ethtool on EEE-
-capable PHYs |
-| **Important enough** | ✅ YES | Fixes data integrity in user-facing API
-|
-| **No Cc: stable tag** | ⚠️ NO | Not marked for stable, but should be
-considered |
-
----
-
-## Dependency Analysis
-
-**Required commits for proper backport:**
-
-1. **For v6.13+ stable trees:**
-   - Needs commit **e2668c34b7e1a** (introduces `eee_active` field)
-   - This commit is already in v6.13+
-
-2. **For v6.10-v6.12 stable trees:**
-   - Needs commit **e3b6876ab850** (introduces `enable_tx_lpi` field)
-   - This commit is already in v6.10+
-   - Could backport with only the `enable_tx_lpi` line if `eee_active`
-     doesn't exist
-
-3. **For v6.9 and older:**
-   - Not applicable - neither field exists
-
-**Recommendation**: Backport to **v6.13+ stable** trees (full fix), and
-consider backporting to **v6.10-v6.12** (partial fix for `enable_tx_lpi`
-only).
-
----
-
-## Code-Specific Analysis
-
-### Changed Location: drivers/net/phy/phy.c:1567-1568
-
-The modification is in `_phy_state_machine()`, the core PHY state
-machine function. This function is called from:
-- `phy_state_machine()` - The delayed work handler
-- Triggered by link state changes, timer expiry, or explicit requests
-
-The PHY_HALTED state is entered when:
-1. User runs `ip link set dev ethX down`
-2. Driver calls `phy_stop()` during interface shutdown
-3. Cable test fails and transitions to HALTED
-
-The PHY_ERROR state is entered when:
-1. MDIO bus errors occur
-2. PHY driver operations return errors
-3. `phy_error()` is called due to hardware failures
-
-In both cases, clearing EEE state is **correct behavior** - the link is
-down and EEE is no longer active.
-
-### Interaction with ethtool
-
-The `net/ethtool/eee.c` code shows that `ETHTOOL_A_EEE_ACTIVE` is
-reported directly from these cleared fields (line 98):
-
-```c
-if (nla_put_u8(skb, ETHTOOL_A_EEE_ACTIVE, eee->eee_active) || ...)
-```
-
-This means the fix **directly improves ethtool accuracy**.
-
----
-
-## Related Work and Context
-
-From my research, I found:
-
-1. **Linux Plumbers Conference 2024** had a presentation noting EEE
-   "looks broken" in various ways
-2. This commit is part of the **community response** to identified EEE
-   state management issues
-3. **No CVEs** associated with this specific issue (it's a data
-   reporting bug, not a security issue)
-4. The broader EEE subsystem underwent significant refactoring in
-   v6.9-v6.13 timeframe
-
----
-
-## Maintainer Intent
-
-The commit message states:
-> "A follow-up patch will address other link state variables."
-
-This was fulfilled by commit **60f887b1290b4** which clears speed,
-duplex, master_slave_state, mdix, and lp_advertising in PHY_HALTED.
-
-Both commits are part of a **deliberate cleanup campaign** to ensure PHY
-state is accurately reported to userspace.
-
----
-
-## Conclusion
-
-**This commit SHOULD be backported** because:
-
-1. ✅ Fixes a **real user-visible bug** (stale ethtool data)
-2. ✅ **Extremely small** (2 lines) and **safe** (software-only)
-3. ✅ **Zero regression risk** - follows established pattern
-4. ✅ **Maintainer consensus** - suggested and reviewed by PHY experts
-5. ✅ Improves **data integrity** in kernel→userspace API
-6. ✅ Part of **broader effort** to fix PHY state reporting
-7. ✅ Already in mainline with **no reported issues**
-
-**Recommended stable trees:** v6.13+ (full fix), v6.10-v6.12 (consider
-partial fix)
-
-The commit exemplifies an **ideal stable tree candidate**: small, safe,
-fixes a real bug, and has strong maintainer support.
-
- drivers/net/phy/phy.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index c02da57a4da5e..e046dd858f151 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -1551,6 +1551,8 @@ static enum phy_state_work _phy_state_machine(struct phy_device *phydev)
- 	case PHY_ERROR:
- 		if (phydev->link) {
- 			phydev->link = 0;
-+			phydev->eee_active = false;
-+			phydev->enable_tx_lpi = false;
- 			phy_link_down(phydev);
- 		}
- 		state_work = PHY_STATE_WORK_SUSPEND;
+YES – the new dependency avoids a real build break that appears as soon
+as the GEN3/IDPF support series lands while keeping risk negligible.
+
+- `drivers/infiniband/hw/irdma/ig3rdma_if.c` calls several IDPF-exported
+  helpers (`idpf_idc_rdma_vc_send_sync`, `idpf_idc_request_reset`,
+  `idpf_idc_vport_dev_ctrl`) unconditionally at lines 25, 73, and 188
+  (`drivers/infiniband/hw/irdma/ig3rdma_if.c:25`, `:73`, `:188`). If
+  `CONFIG_INFINIBAND_IRDMA` is enabled without `CONFIG_IDPF`, modpost
+  reports unresolved symbols and the build fails.
+- The patch adds the missing `depends on IDPF` requirement to the
+  Kconfig entry (`drivers/infiniband/hw/irdma/Kconfig:6`), so broken
+  configurations are filtered out at menuconfig time instead of failing
+  late in the build.
+- The help text tweak (`drivers/infiniband/hw/irdma/Kconfig:10-11`) is
+  purely informational and carries no risk.
+- No functional behavior changes or architectural upheaval are involved;
+  it is a small, self-contained dependency fix squarely in stable’s
+  remit.
+
+ drivers/infiniband/hw/irdma/Kconfig | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/infiniband/hw/irdma/Kconfig b/drivers/infiniband/hw/irdma/Kconfig
+index 5f49a58590ed7..0bd7e3fca1fbb 100644
+--- a/drivers/infiniband/hw/irdma/Kconfig
++++ b/drivers/infiniband/hw/irdma/Kconfig
+@@ -4,10 +4,11 @@ config INFINIBAND_IRDMA
+ 	depends on INET
+ 	depends on IPV6 || !IPV6
+ 	depends on PCI
+-	depends on ICE && I40E
++	depends on IDPF && ICE && I40E
+ 	select GENERIC_ALLOCATOR
+ 	select AUXILIARY_BUS
+ 	select CRC32
+ 	help
+-	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
+-	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.
++	  This is an Intel(R) Ethernet Protocol Driver for RDMA that
++	  supports IPU E2000 (RoCEv2), E810 (iWARP/RoCEv2) and X722 (iWARP)
++	  network devices.
 -- 
 2.51.0
 
