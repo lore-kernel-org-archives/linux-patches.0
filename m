@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5311B3002A4;
-	Sat, 25 Oct 2025 16:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530AF1F1306;
+	Sat, 25 Oct 2025 16:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408670; cv=none; b=VGTjQUV/tTQ+N2goLxfWISGgmIEZN+a3YVsNdcZiHClfQz/T4t5HO0eIOs2j9rvzlw7IXaCQS2g5zEZ7jfl4EqWMNB1W2H2NtzJlT0XpD/6uKIKiB4NjoEy2ze+BQOBPP5SQSu22/e1lRWI2OTI+9lNC0E/hPuy5qiKxlNMLFOo=
+	t=1761408670; cv=none; b=Vkx9ObphSVSEri/JgWhnMWdrOvPBJd/uRIiVZtV5WqvqbZZWSmxaf2BgNkjzYPbXudhmI/7aeQqKaNEH2qjX2ktiEfkQQFqvIgWWEvwadspeTAamP12l4PiQj5ZmhSkW8tcMWFwOrAouspXMfNA4JU/1LtG+PVX1oyDW81vNKgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408670; c=relaxed/simple;
-	bh=Uw/qqjBLX5Cwc3c617aNFdkLX8uxq+a/W+TRSRaK1MM=;
+	bh=7RPJS+YYBdHHkSkPg7nJLRvxjYkQoNcT5qFRStkQwPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lZbZyWwFxygSt/QOG9saVu5Xqo3QLg5wJ9eMpiebBX1rKu9ljmoTMrWqXwmMgqjGxszgUDibWWCFw3MPTcvi8kJKx3AWL7QvA76eH71ZpeMx4qks4EIkiN/M5LIkSqOj7YS5oCBB2Rt9ryULqIXfRtOFRva7/veUBLe/MYan4qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iX/rvna1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XjbhQYhibFK8YAkOIAw63fgSRTbdLEDaC+bD+4B+HeRILK6jsauJmWYVVU0tTm/7mcoqCOfq5s1fsl6AJuHYLQXwfow87yoKjVtErHHArI72iv1tk64iisV258UQMixgqBU7qI4MhN/MNrPxZlwRXsnFYGmMaVbT7s0LVWtPe5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RbIO3vVa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iX/rvna1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A60C4CEF5;
-	Sat, 25 Oct 2025 16:11:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbIO3vVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50FAC4CEFB;
+	Sat, 25 Oct 2025 16:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408668;
-	bh=Uw/qqjBLX5Cwc3c617aNFdkLX8uxq+a/W+TRSRaK1MM=;
+	s=k20201202; t=1761408669;
+	bh=7RPJS+YYBdHHkSkPg7nJLRvxjYkQoNcT5qFRStkQwPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX/rvna1yKhmH8g5K8JesUXdfKKHE/gb7fJDf/vtMjCVf8g3gIzgX0hEWYEBgrJSS
-	 Q/hA2nuhFnxrET1qo0wX2/xFwN3KObGAkRUZ4q0tvwNw/oGgY0dxLLPQFmqZg+sqyb
-	 pH4O0OD/0KAHnNXd5LXoVZJzFk228pqAaNguO5UollBJ41mOA+gKPhNeExAE/nyoKF
-	 nozxxNUeTLdMWRp2Itug5LulA9CvkYxuNjpOEF4dTzA/01VeWAv+czT7QXDLRabeMP
-	 lKQM/MwNDHyVGxW/USIQnVlldk/azPQjbeywn5ikqjpwPTrsV80UOpA1OmAbp5z58c
-	 SB77Y1UD2lEAg==
+	b=RbIO3vVaZRGtvaTtmlLj0YCRABRwwCmvFM3WFsB1GBjl5hrN0xiNUDjLFjgduP+9+
+	 zWlMOKUguLU7XyqzYU4n69AWlWeRMt7n5/9PRgBTiQyih8Vy4vJBaTnApn9nOlD+UR
+	 SWBOWLDcoOA7wiWkuVzFJySulz0dEg0nj52gmKrPOeG7NCCIfTxzUpE2QWcsc24cHU
+	 DtaG9glLoprAxsbAMilBj8iZrCneF9TjMQ4zjJ8P1YYVTQRZ2Kf55CZfbWXSGIh6FS
+	 5kvgK8zFHBoJ538BntW9Fw8rSUfz1IbregtX6YD0CEFIkVbp6sYzKvcBWhJURMJNS0
+	 EI50HoqjujPAw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shimrra Shai <shimrrashai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Nick Nielsen <nick.kainielsen@free.fr>,
+	grm1 <grm1@mailbox.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com,
-	u.kleine-koenig@baylibre.com
-Subject: [PATCH AUTOSEL 6.17] ASoC: es8323: remove DAC enablement write from es8323_probe
-Date: Sat, 25 Oct 2025 11:54:26 -0400
-Message-ID: <20251025160905.3857885-35-sashal@kernel.org>
+	mathias.nyman@intel.com,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] usb: xhci-pci: add support for hosts with zero USB3 ports
+Date: Sat, 25 Oct 2025 11:54:27 -0400
+Message-ID: <20251025160905.3857885-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,89 +55,134 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shimrra Shai <shimrrashai@gmail.com>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 33bc29123d26f7caa7d11f139e153e39104afc6c ]
+[ Upstream commit 719de070f764e079cdcb4ddeeb5b19b3ddddf9c1 ]
 
-Remove initialization of the DAC and mixer enablement bits from the
-es8323_probe routine. This really should be handled by the DAPM
-subsystem.
+Add xhci support for PCI hosts that have zero USB3 ports.
+Avoid creating a shared Host Controller Driver (HCD) when there is only
+one root hub. Additionally, all references to 'xhci->shared_hcd' are now
+checked before use.
 
-Signed-off-by: Shimrra Shai <shimrrashai@gmail.com>
-Link: https://patch.msgid.link/20250815042023.115485-2-shimrrashai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Only xhci-pci.c requires modification to accommodate this change, as the
+xhci core already supports configurations with zero USB3 ports. This
+capability was introduced when xHCI Platform and MediaTek added support
+for zero USB3 ports.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220181
+Tested-by: Nick Nielsen <nick.kainielsen@free.fr>
+Tested-by: grm1 <grm1@mailbox.org>
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250917210726.97100-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES — this change is a focused bugfix that lets PCI xHCI controllers
+with only a single root hub enumerate correctly, matching support
+already present in the core and other host adapters.
 
-- What changed
-  - The unconditional write in `es8323_probe()` that sets
-    `ES8323_DACCONTROL17` was removed:
-    `snd_soc_component_write(component, ES8323_DACCONTROL17, 0xB8)`
-    (sound/soc/codecs/es8323.c). This register holds the per‑path mixer
-    gate and level bits for the DAC/mixer.
-  - The rest of probe remains the same (clock fetch/enable, sane
-    defaults via `ES8323_CONTROL2` and `ES8323_CHIPPOWER` writes).
+- `drivers/usb/host/xhci-pci.c:640` now sets `xhci->allow_single_roothub
+  = 1`, allowing the existing `xhci_has_one_roothub()` helper to
+  recognize hosts that genuinely provide only USB2 or only USB3 ports.
+  For such hardware the new branch at `drivers/usb/host/xhci-
+  pci.c:641-659` skips creating the secondary HCD and still runs
+  `xhci_ext_cap_init()`, preventing the allocation/registration of a
+  useless SuperSpeed root hub that currently causes probe failures on
+  the systems reported in bug 220181.
+- Stream capability handling switches to `xhci_get_usb3_hcd()` at
+  `drivers/usb/host/xhci-pci.c:662-664`, so the code safely handles both
+  the traditional dual-root-hub case and the new single-root-hub case
+  without dereferencing a NULL `shared_hcd`.
+- The xHCI core has supported “single-roothub” controllers since commit
+  873f323618c2 (see the helper definitions in
+  `drivers/usb/host/xhci.h:1659-1737`), and platform drivers already
+  rely on the same pattern (`drivers/usb/host/xhci-plat.c:207` and
+  `drivers/usb/host/xhci-mtk.c:629-655`). This patch simply brings the
+  PCI glue in line with that infrastructure, so it has no architectural
+  side effects.
+- Scope is limited to the PCI front-end; it doesn’t alter shared data
+  structures or other subsystems. Tested-by tags and the fact that the
+  alternative drivers have run this logic for multiple release cycles
+  further reduce regression risk. Backporters only need to ensure the
+  target stable branch already contains the earlier
+  “allow_single_roothub” support (present in 6.1+). If that prerequisite
+  is met, the change is small, self-contained, and fixes real hardware
+  breakage.
 
-- Why this is a bug fix
-  - `ES8323_DACCONTROL17` includes the mixer enable bit (bit 7) and
-    bypass volume field (bits 5:3). Writing `0xB8` in probe forces the
-    left mixer gate on and sets the bypass level to its maximum,
-    independent of any active audio route.
-  - In ASoC, DAPM owns codec power/mixer gates. Hard‑enabling a mixer at
-    probe bypasses DAPM, leading to:
-    - Always‑on or prematurely‑on audio paths (increased idle power,
-      potential clicks/pops at boot/resume).
-    - Mismatched DAPM state vs. hardware state, undermining DAPM’s power
-      sequencing and pop‑suppression.
-  - The commit message explicitly states this should be handled by DAPM,
-    which matches standard ASoC practice (compare the analogous ES8328
-    driver where DAPM controls `DACCONTROL17` via DAPM mixer widgets).
+Natural next steps: 1) cherry-pick (plus prerequisite check) into the
+relevant stable trees; 2) rerun basic USB enumeration on affected
+hardware to confirm the controller now probes successfully.
 
-- Scope and risk assessment
-  - Change is minimal and localized to `sound/soc/codecs/es8323.c` in
-    `es8323_probe()`; no ABI or architectural changes.
-  - It removes an unconditional register poke and defers control to
-    existing DAPM routing, which is already the intended mechanism (the
-    driver’s bias management and DAPM paths handle DAC/mixer power in
-    normal operation).
-  - Potential regression risk is low: only boards that implicitly relied
-    on the incorrect “pre‑enabled” mixer/DAC at probe would notice a
-    behavior change; correct machine drivers should rely on DAPM to
-    enable paths when a stream is active.
+ drivers/usb/host/xhci-pci.c | 42 +++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
-- Stable criteria
-  - Fixes a real, user‑visible issue (unnecessary power draw, audio
-    artifacts, and DAPM miscoordination).
-  - Small, self‑contained change with minimal regression risk.
-  - No new features and no architectural churn; confined to the codec
-    driver.
-  - While there’s no explicit “Cc: stable” tag, this matches typical
-    stable‑worthy ASoC fixes (removing stray probe‑time enables in favor
-    of DAPM).
-
-Conclusion: This is a safe, corrective change that aligns the driver
-with ASoC/DAPM design and should be backported to any stable trees that
-contain the ES8323 driver and its DAPM graph.
-
- sound/soc/codecs/es8323.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/sound/soc/codecs/es8323.c b/sound/soc/codecs/es8323.c
-index 70d348ff3b437..4c15fffda733c 100644
---- a/sound/soc/codecs/es8323.c
-+++ b/sound/soc/codecs/es8323.c
-@@ -632,7 +632,6 @@ static int es8323_probe(struct snd_soc_component *component)
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 00fac8b233d2a..5c8ab519f497d 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -610,7 +610,7 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ {
+ 	int retval;
+ 	struct xhci_hcd *xhci;
+-	struct usb_hcd *hcd;
++	struct usb_hcd *hcd, *usb3_hcd;
+ 	struct reset_control *reset;
  
- 	snd_soc_component_write(component, ES8323_CONTROL2, 0x60);
- 	snd_soc_component_write(component, ES8323_CHIPPOWER, 0x00);
--	snd_soc_component_write(component, ES8323_DACCONTROL17, 0xB8);
+ 	reset = devm_reset_control_get_optional_exclusive(&dev->dev, NULL);
+@@ -636,26 +636,32 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	hcd = dev_get_drvdata(&dev->dev);
+ 	xhci = hcd_to_xhci(hcd);
+ 	xhci->reset = reset;
+-	xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
+-						 pci_name(dev), hcd);
+-	if (!xhci->shared_hcd) {
+-		retval = -ENOMEM;
+-		goto dealloc_usb2_hcd;
+-	}
  
- 	return 0;
- }
+-	retval = xhci_ext_cap_init(xhci);
+-	if (retval)
+-		goto put_usb3_hcd;
++	xhci->allow_single_roothub = 1;
++	if (!xhci_has_one_roothub(xhci)) {
++		xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
++							 pci_name(dev), hcd);
++		if (!xhci->shared_hcd) {
++			retval = -ENOMEM;
++			goto dealloc_usb2_hcd;
++		}
+ 
+-	retval = usb_add_hcd(xhci->shared_hcd, dev->irq,
+-			IRQF_SHARED);
+-	if (retval)
+-		goto put_usb3_hcd;
+-	/* Roothub already marked as USB 3.0 speed */
++		retval = xhci_ext_cap_init(xhci);
++		if (retval)
++			goto put_usb3_hcd;
++
++		retval = usb_add_hcd(xhci->shared_hcd, dev->irq, IRQF_SHARED);
++		if (retval)
++			goto put_usb3_hcd;
++	} else {
++		retval = xhci_ext_cap_init(xhci);
++		if (retval)
++			goto dealloc_usb2_hcd;
++	}
+ 
+-	if (!(xhci->quirks & XHCI_BROKEN_STREAMS) &&
+-			HCC_MAX_PSA(xhci->hcc_params) >= 4)
+-		xhci->shared_hcd->can_do_streams = 1;
++	usb3_hcd = xhci_get_usb3_hcd(xhci);
++	if (usb3_hcd && !(xhci->quirks & XHCI_BROKEN_STREAMS) && HCC_MAX_PSA(xhci->hcc_params) >= 4)
++		usb3_hcd->can_do_streams = 1;
+ 
+ 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
+ 	pm_runtime_put_noidle(&dev->dev);
 -- 
 2.51.0
 
