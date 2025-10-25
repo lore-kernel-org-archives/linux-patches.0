@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E191030BB81;
-	Sat, 25 Oct 2025 16:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC22306490;
+	Sat, 25 Oct 2025 16:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409640; cv=none; b=Opz502L/Egd+JFvT2zeqX3YvQef2f0MMVl5fZYn0JYJKxT/q+wjf+r5QJdaqiMyElafvSTWbVze34YOWG+07CfovaZSpPcWbP7jF+uzRD8qZPXRQH7OSTWK5n9cTivsMOBefj5qckKzWJuegREzyOZ2eqFHeGulK4GZ3agoP7fs=
+	t=1761409641; cv=none; b=JgKl9VLnwdAF5xgslHjVAydw+BTknua7r13UvuLA7wXSirBVDXf0gyuPZMNL+XNKmG3XccxUvXaTuInmozjW+Rlu15MqIgqN4xjMy/Xih2jC8qoqvwcapxobmeswSG305bgKF6AmbPO+knnse0DmUhVV9GedSeKehZGRJWV0AMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409640; c=relaxed/simple;
-	bh=BzK5MSbnikKVMVBl3CpIZyvVtiwzDtnUwx3iJLWc4o8=;
+	s=arc-20240116; t=1761409641; c=relaxed/simple;
+	bh=qIMw9ZuxqOW9de6zo3ajgmujFKYvixLItCVGd2KiffY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNTL7/T+0dIFVa7eJXmxyvBf19n5Ue3n1i6BI69DZIMu+rxYG4vT3U+D1gTlnPVepULZ9k9/VTuw8v8ff1ADABdvIQptAf/VlHkn2Y5dGD0fM0SNXoMls+nARFXLyTASyU0yUW3JgDcT2WML4Jjulg77hPzp4B6epRDlB32El0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/s+Eoq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4POXgYgDtcKAqjx6Ier+wI+jZpbArdKMt57hghSH0oVqZg1iXjvfA0nFESew/bF2bX0nzRGTlVSQ6Zn/EApBQtA5usdZc/zc2EKI6wMfU5TF43Tgx9ZXetgRywBpZNlI0wns7/H08cKiwtsaSNxx697nHcHfXvi5itooSzLahA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTLpcCTS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/s+Eoq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F71DC4CEF5;
-	Sat, 25 Oct 2025 16:27:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTLpcCTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0DFC4CEF5;
+	Sat, 25 Oct 2025 16:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409639;
-	bh=BzK5MSbnikKVMVBl3CpIZyvVtiwzDtnUwx3iJLWc4o8=;
+	s=k20201202; t=1761409641;
+	bh=qIMw9ZuxqOW9de6zo3ajgmujFKYvixLItCVGd2KiffY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/s+Eoq0aUEnsoC1dltYqTaorPiJ3wHMwXlfCvn4iqtOpwxndV1LFibP2BcrQi1Gg
-	 YkE5cKanwGd/tH6Eym2ofnfDbwopaZ78rMJcQSYJwz2jqI1ne5bc3xAx1SEP5nW0aZ
-	 dEhEcDVqkxIjxo/YPm69YcYXBsbPAcbK11yPIQlWhFLTN5n8iyiSNMsChqIxel7Y3F
-	 u3abog3uOyvnTDNGnEIOEW3UUnxhevnZGOF6p4HQq9NzYF59X2m+pIdUz2IDhOs3HS
-	 OKLUA2wpaB5rsFx7id4RKMbzEHE01VM3+lEtAqG2ogUaB4h/7orqtZhwcwlvv3Ny9F
-	 sGHxgzNqYzTdw==
+	b=jTLpcCTSsUHVgOkkrbYONgGAfWlb2zcUYhqgLVb6n1Ve55w3VjpF0P9NFt8unVnCz
+	 DxqVCDExM8SOv/wRQQfeqDW7fW7dRvk8fF4au8hD93aCTPtLtVhLJrvOxH63R0t4yN
+	 5/Gbyw5aG3mUiNq/ffyJAQRKk775rtBxOHLg0IE2uiPs32/ir3KMIdaOLKIhcLP3ET
+	 RYoaO3SC3eTN8zCNMsl+NybY79sAVbTPDsbuZ0ZZB4x0s4hnsSxtTQDRPKtpoG1UYT
+	 vX30RVjFkPqK8Z9QKR6QhtYPiNAzUnPdq/uGl8aGUBQ0UM4lfUTpUeGo/0t3uj/imc
+	 F2GC0UPoSmBlg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sunil V L <sunilvl@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Fiona Ebner <f.ebner@proxmox.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	linux-acpi@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.12] ACPI: scan: Update honor list for RPMI System MSI
-Date: Sat, 25 Oct 2025 12:00:32 -0400
-Message-ID: <20251025160905.3857885-401-sashal@kernel.org>
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.17-6.1] smb: client: transport: avoid reconnects triggered by pending task work
+Date: Sat, 25 Oct 2025 12:00:33 -0400
+Message-ID: <20251025160905.3857885-402-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -59,86 +52,107 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
 Content-Transfer-Encoding: 8bit
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-[ Upstream commit 4215d1cf59e4b272755f4277a05cd5967935a704 ]
+[ Upstream commit 00be6f26a2a7c671f1402d74c4d3c30a5844660a ]
 
-The RPMI System MSI interrupt controller (just like PLIC and APLIC)
-needs to probed prior to devices like GED which use interrupts provided
-by it. Also, it has dependency on the SBI MPXY mailbox device.
+When io_uring is used in the same task as CIFS, there might be
+unnecessary reconnects, causing issues in user-space applications
+like QEMU with a log like:
 
-Add HIDs of RPMI System MSI and SBI MPXY mailbox devices to the honor
-list so that those dependencies are handled.
+> CIFS: VFS: \\10.10.100.81 Error -512 sending data on socket to server
 
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Acked-by: Jassi Brar <jassisinghbrar@gmail.com>
-Link: https://lore.kernel.org/r/20250818040920.272664-17-apatel@ventanamicro.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Certain io_uring completions might be added to task_work with
+notify_method being TWA_SIGNAL and thus TIF_NOTIFY_SIGNAL is set for
+the task.
+
+In __smb_send_rqst(), signals are masked before calling
+smb_send_kvec(), but the masking does not apply to TIF_NOTIFY_SIGNAL.
+
+If sk_stream_wait_memory() is reached via sock_sendmsg() while
+TIF_NOTIFY_SIGNAL is set, signal_pending(current) will evaluate to
+true there, and -EINTR will be propagated all the way from
+sk_stream_wait_memory() to sock_sendmsg() in smb_send_kvec().
+Afterwards, __smb_send_rqst() will see that not everything was written
+and reconnect.
+
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-**Why**
-- The patch extends the `_DEP` honor list in
-  `drivers/acpi/scan.c:856-866` so that ACPI dependencies pointing at
-  the SBI MPXY mailbox (`RSCV0005`) and RPMI System MSI controller
-  (`RSCV0006`) are actually enforced. Without these entries,
-  `acpi_scan_add_dep()` never sets `dep->honor_dep` for those HIDs
-  (`drivers/acpi/scan.c:2034-2049`), leaving `device->flags.honor_deps`
-  clear and allowing consumers to enumerate even when their IRQ
-  provider/mailbox is missing, because
-  `acpi_dev_ready_for_enumeration()` only blocks devices when both
-  `honor_deps` and `dep_unmet` are set
-  (`drivers/acpi/scan.c:2481-2486`).
-- On RISC-V ACPI systems the arch helper builds implicit dependencies
-  between devices and their interrupt controllers
-  (`drivers/acpi/riscv/irq.c:340-404`). GED and other consumers
-  therefore get `_DEP` entries that reference the RPMI System MSI node.
-  If the honor flag is missing, GED can probe before the MSI domain
-  exists, causing its interrupt setup to fail.
-- The RPMI System MSI driver itself requires the MPXY mailbox to be
-  ready; it immediately requests a mailbox channel in probe
-  (`drivers/irqchip/irq-riscv-rpmi-sysmsi.c:223-233`). A premature probe
-  hits `-EPROBE_DEFER`, and without the dependency being honored the
-  driver keeps churning instead of waiting for the mailbox to finish.
-- Both suppliers call `acpi_dev_clear_dependencies()` once they succeed
-  (`drivers/irqchip/irq-riscv-rpmi-sysmsi.c:298-303`,
-  `drivers/mailbox/riscv-sbi-mpxy-mbox.c:974-979`), so honoring their
-  `_DEP`s restores the intended sequencing with no behavioral change
-  elsewhere.
-- Change risk is minimal: it only adds two strings, matching the
-  precedent already in place for other RISC-V interrupt controllers. It
-  fixes a user-visible failure (missing interrupts / repeated probe
-  defers) on ACPI RISC-V platforms that already shipped the new RPMI +
-  MPXY support.
+- **Bug addressed:** When `sk_stream_wait_memory()` sees
+  `signal_pending(current)` it returns `-EINTR`
+  (net/core/stream.c:141-185). In CIFS, `__smb_send_rqst()` masks
+  regular signals but not `TIF_NOTIFY_SIGNAL`, so that `-EINTR` flows
+  back, hits the reconnect path (`rc = -ERESTARTSYS` plus
+  `cifs_signal_cifsd_for_reconnect()`) and forces unnecessary
+  disconnects with errors like `-512`
+  (fs/smb/client/transport.c:350-379).
+- **Why it happens in practice:** io_uring queues task_work with
+  `notify_method = TWA_SIGNAL` (io_uring/io_uring.c:3844-3847), which
+  sets `TIF_NOTIFY_SIGNAL` and trips `signal_pending()` even though the
+  task only has task_work pending. CIFS previously treated this
+  indistinguishably from a real signal, so combining io_uring with SMB
+  writes caused spurious reconnects observed by users (commit message
+  symptom).
+- **Fix mechanics:** The patch adds `<linux/task_work.h>`
+  (fs/smb/client/transport.c:25) and treats `-EINTR` as a transient
+  condition only when `task_work_pending(current)` reports queued task
+  work (fs/smb/client/transport.c:186-195). This keeps the existing
+  retry/backoff logic but prevents the reconnect machinery from running
+  on synthetic task-work signals. The comment at
+  fs/smb/client/transport.c:178-183 documents the scenario.
+- **Safety:** Fatal or user-requested interrupts still break out because
+  `fatal_signal_pending(current)` is checked up front
+  (fs/smb/client/transport.c:268-272) and the new clause only fires when
+  both `rc == -EINTR` and task work is pending. If the condition
+  persists, the existing retry limit still returns `-EAGAIN`, so there
+  is no risk of livelock. `task_work_pending()` has been part of the API
+  since v5.18 (include/linux/task_work.h:24-27), so the helper is
+  available on active stable lines, and no other subsystems are touched.
+- **Backport outlook:** The change is tiny, self-contained, and directly
+  fixes a user-visible regression without altering protocol semantics.
+  It should be safe to backport as-is; running the usual CIFS
+  regression/balance-of-tree network write tests would be the natural
+  follow-up.
 
-**Next Step**
-- Boot-test on an ACPI RISC-V platform using RPMI/MPXY to confirm GED
-  and dependent devices enumerate cleanly once the MSI controller and
-  mailbox load.
+ fs/smb/client/transport.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
- drivers/acpi/scan.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index fb1fe9f3b1a36..54181b03b345b 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -858,6 +858,8 @@ static const char * const acpi_honor_dep_ids[] = {
- 	"INTC10CF", /* IVSC (MTL) driver must be loaded to allow i2c access to camera sensors */
- 	"RSCV0001", /* RISC-V PLIC */
- 	"RSCV0002", /* RISC-V APLIC */
-+	"RSCV0005", /* RISC-V SBI MPXY MBOX */
-+	"RSCV0006", /* RISC-V RPMI SYSMSI */
- 	"PNP0C0F",  /* PCI Link Device */
- 	NULL
- };
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index a61ba7f3fb86b..940e901071343 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -22,6 +22,7 @@
+ #include <linux/mempool.h>
+ #include <linux/sched/signal.h>
+ #include <linux/task_io_accounting_ops.h>
++#include <linux/task_work.h>
+ #include "cifspdu.h"
+ #include "cifsglob.h"
+ #include "cifsproto.h"
+@@ -173,9 +174,16 @@ smb_send_kvec(struct TCP_Server_Info *server, struct msghdr *smb_msg,
+ 		 * send a packet.  In most cases if we fail to send
+ 		 * after the retries we will kill the socket and
+ 		 * reconnect which may clear the network problem.
++		 *
++		 * Even if regular signals are masked, EINTR might be
++		 * propagated from sk_stream_wait_memory() to here when
++		 * TIF_NOTIFY_SIGNAL is used for task work. For example,
++		 * certain io_uring completions will use that. Treat
++		 * having EINTR with pending task work the same as EAGAIN
++		 * to avoid unnecessary reconnects.
+ 		 */
+ 		rc = sock_sendmsg(ssocket, smb_msg);
+-		if (rc == -EAGAIN) {
++		if (rc == -EAGAIN || unlikely(rc == -EINTR && task_work_pending(current))) {
+ 			retries++;
+ 			if (retries >= 14 ||
+ 			    (!server->noblocksnd && (retries > 2))) {
 -- 
 2.51.0
 
