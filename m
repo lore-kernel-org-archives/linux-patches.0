@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D63304BAB;
-	Sat, 25 Oct 2025 16:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF883043D4;
+	Sat, 25 Oct 2025 16:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408954; cv=none; b=qeNRqD7J9uDi9o00relNQ4nAD0DFR1f2XAUDbcc6FdPHIB1QlxDhaGnGhD6LmdbYceihcBh2WFp2FP+dEPsLnJbzZQCW/rVI+bqmGwQb0QyNlOl9P6xiNlpOitMFpXrkUp96tWUI9huLus+DG+fjUFhWotUWji/kW0lOl1CIc2s=
+	t=1761408955; cv=none; b=Zy9ZNpj3cz9BUUVbLiepE199idgKx9b2QR9BN5eyIkUJa/NmUgNahKIlwWEDpAql5hcf9Ak2pcKs2r38/YfB2Lw0UaV/OebdFuEMMGc/VUHQCulQKtxJMuYxlo8+FuPxJwmXMw+kMGO29/a8MhQAZxtQixVpcJG9gSNZPg9zHMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408954; c=relaxed/simple;
-	bh=KXhsnXvw3Sx+Qz3VLmdET5o+E32VLl8korQqFFqzJ+Y=;
+	s=arc-20240116; t=1761408955; c=relaxed/simple;
+	bh=i3A51i6kEV+oroiLNKRB/JhjhBRzQv0vm4A/QpygqoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DieSWvu+2o7Og6jCl2BYb6KAxYHJUDJIsDReC4oA3DT2lCMYX23lQm0ggEFzQ773yN6oS2AXnBTvM+cULLwdr90mY1/2rr1I4cGifXjLTgtPAa48GfYl8pps3abt3gDE4kraAvzG0cte90ve/pnZSlu91pYcOS4Bjb3yXnZtxTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SIwvFc4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lwMgvagbnOLzrb8+ec0R336RAYTQ65MsQFPiFomQGVDMVYiOc5e4f/6wJtH683qi/s6Ab4fdlH5euExATG2aeCqqSmuiO+hd0lQpdUCLOEmhc6MMGbmn7CrtSwBo2rBNy27T61zgve8gLhmGN/YS5YKKrDM+JbholY3lBFNptNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8IbOn+a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SIwvFc4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCB9C4CEFF;
-	Sat, 25 Oct 2025 16:15:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8IbOn+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5A1C116B1;
+	Sat, 25 Oct 2025 16:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408953;
-	bh=KXhsnXvw3Sx+Qz3VLmdET5o+E32VLl8korQqFFqzJ+Y=;
+	s=k20201202; t=1761408954;
+	bh=i3A51i6kEV+oroiLNKRB/JhjhBRzQv0vm4A/QpygqoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIwvFc4kxRlXMdkwXwTAXIIiiKyuFEAiIOglkXwmBezDvIT8EKNPjAVvMQUDM0Xei
-	 cq1Xaq52szgXgKyJkBXaIDPhPHCq2EdlIRxCCS2/1i88WKw268+gLrld2KZqL6oUYT
-	 /OHivVhuMIt4e0Iq0q8m9ow7j2rPFojsmN1Pxt99BrJprfok46OnU/NqpOxtlHRy/O
-	 VWL6XgGDu3pvXe1L2J6UcJg3pcTf4kj608PktDbdG8pWa07NOhVk0mXPP04Eeb9/8g
-	 2FslRd+5jpW7Rhj4vplYeNvVcZxrFgJgi+nuwt4r83PPThups0uJgMG6CG6LHXojkP
-	 qtI9PCrGDo2bA==
+	b=L8IbOn+aH6aLHtOVBl/Yerqzvg6gxnStEErBC/REawh+62QH6Sy05OCsFKnGTSkSL
+	 zUkC5bHF2Kxp6AoPX2HFgenWRQ3G0ntP7SW1vqfPapp9O62tADH3FrSKzZMzYV1lW7
+	 Cz+RuafGLX0xKXDAy15bVBRNyWFmMKS0d3iiFtMAIZVxr1F4TKNkKq86FJYFjcaUol
+	 yJ0xRlNL3BX1PaWE6AkpDMwICGke5QMVsR2W55DFCK/WhLmfuT9MmeTigbmA72oLd3
+	 Way1M0zafTT7NZNVo8Ry/Xf24MeIqHqUxQc6J4kS8wtIxBbNJIBKtNu5klR/KGU7Kb
+	 72BDkaBylSZ+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Marcos Del Sol Vives <marcos@orca.pet>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	quic_abhinavk@quicinc.com,
-	bmasney@redhat.com,
-	konrad.dybcio@oss.qualcomm.com,
-	quic_amakhija@quicinc.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-5.15] drm/msm/dsi/phy: Toggle back buffer resync after preparing PLL
-Date: Sat, 25 Oct 2025 11:56:19 -0400
-Message-ID: <20251025160905.3857885-148-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] PCI: Disable MSI on RDC PCI to PCIe bridges
+Date: Sat, 25 Oct 2025 11:56:20 -0400
+Message-ID: <20251025160905.3857885-149-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,22 +51,20 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Marcos Del Sol Vives <marcos@orca.pet>
 
-[ Upstream commit b63f008f395ca5f6bc89123db97440bdc19981c4 ]
+[ Upstream commit ebc7086b39e5e4f3d3ca82caaea20538c9b62d42 ]
 
-According to Hardware Programming Guide for DSI PHY, the retime buffer
-resync should be done after PLL clock users (byte_clk and intf_byte_clk)
-are enabled.  Downstream also does it as part of configuring the PLL.
+RDC PCI to PCIe bridges, present on Vortex86DX3 and Vortex86EX2 SoCs, do
+not support MSIs. If enabled, interrupts generated by PCIe devices never
+reach the processor.
 
-Driver was only turning off the resync FIFO buffer, but never bringing it
-on again.
+I have contacted the manufacturer (DM&P) and they confirmed that PCI MSIs
+need to be disabled for them.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657823/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Marcos Del Sol Vives <marcos@orca.pet>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250705233209.721507-1-marcos@orca.pet
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,80 +72,83 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The 7nm DSI PHY driver turns off the retime/resync buffer early in
-    bring-up but never turns it back on. See the existing “turn off
-    resync FIFO” write in
-    `drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:1105` where it writes
-    `0x00` to `REG_DSI_7nm_PHY_CMN_RBUF_CTRL`. Without re-enabling, the
-    data path can be misaligned after PLL enable, which can cause link
-    bring-up glitches or unstable output. The commit aligns with the
-    Hardware Programming Guide: resync must be toggled after enabling
-    the PLL clock users.
+Reasons this is a good stable backport candidate
 
-- What the change does
-  - Adds enabling of the resync buffer immediately after enabling the
-    global clock in the VCO prepare path:
-    - `drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:534` writes `0x1` to
-      `REG_DSI_7nm_PHY_CMN_RBUF_CTRL` for the master PHY.
-    - `drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:536` does the same for
-      the bonded slave PHY.
-  - This pairs correctly with:
-    - The earlier “off” write in init
-      (`drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:1105`) and
-    - The disable path write to `0` in `dsi_pll_disable_sub()`
-      (`drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:544`).
-  - The enable occurs after global clock enable in
-    `dsi_pll_7nm_vco_prepare()` where `dsi_pll_enable_global_clk()` is
-    called (visible in the same function), matching the prescribed
-    sequence “after PLL clock users are enabled.”
+- Fixes a real hardware bug: The commit message states RDC PCI→PCIe
+  bridges “do not support MSIs” and that when enabled, “interrupts
+  generated by PCIe devices never reach the processor.” That is a
+  functional breakage for devices behind these bridges, not a feature
+  change.
 
-- Evidence of correctness and low risk
-  - The 10nm PHY already follows this exact pattern: enable RBUF after
-    enabling global clock, disable it on unprepare. See:
-    - Enable: `drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:373` and
-      `:375`
-    - Disable: `drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:383`
-    - This parity strongly suggests the 7nm omission was a bug rather
-      than an intentional difference.
-  - The change is minimal, localized to the 7nm PHY VCO prepare path. No
-    API or architectural changes; only two writes added and perfectly
-    mirrored by existing disable writes.
-  - The sequence is safe: it enables the resync only after clocks are
-    enabled, matching the hardware programming guide and downstream
-    practice; it also handles bonded PHY (slave) consistently.
+- Minimal, targeted change: The patch adds a single quirk line to
+  disable MSI only behind the affected bridge:
+  - Adds: DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RDC, 0x1031,
+    quirk_disable_msi);
+    in drivers/pci/quirks.c next to other vendor-specific MSI-disable
+    quirks such as AMD/VIA/ATI (drivers/pci/quirks.c:2717-2719).
+  - The quirk uses existing helper quirk_disable_msi()
+    (drivers/pci/quirks.c:2710), which only sets a flag on the
+    subordinate bus if the device is a bridge:
+    - Sets bus flag: dev->subordinate->bus_flags |=
+      PCI_BUS_FLAGS_NO_MSI;
+    - The function is compiled under CONFIG_PCI_MSI
+      (drivers/pci/quirks.c:2686), so it is inert if MSI is not enabled.
 
-- Stable backport criteria
-  - Fixes a real, user-visible bug (display instability or bring-up
-    issues on affected Qualcomm 7nm DSI PHYs).
-  - Small and contained change with minimal regression risk.
-  - No new features or architectural churn; confined to the msm DRM DSI
-    PHY subsystem.
-  - Mirrors a proven sequence present in the 10nm driver, improving
-    confidence.
+- Correct mechanism and stage:
+  - Bus-level gating is the standard way to suppress MSI/MSI-X behind a
+    broken bridge. The MSI core checks this flag up the bus hierarchy
+    and refuses to enable MSI/MSI-X when set (drivers/pci/msi/msi.c:62).
+  - The flag used is the canonical one (include/linux/pci.h:259), and
+    the vendor macro is already present (include/linux/pci_ids.h:2412).
+  - Uses DECLARE_PCI_FIXUP_FINAL(), consistent with other similar quirks
+    (drivers/pci/quirks.c:2717-2719), so it runs late enough to have a
+    subordinate bus to mark and before drivers enable MSI.
 
-Given the above, this is a solid bug fix with low risk and clear benefit
-and should be backported to stable trees that include the 7nm DSI PHY
-driver.
+- Scope-limited and precedent:
+  - Only affects devices with vendor RDC and device ID 0x1031, and only
+    if they are bridges (quirk_disable_msi() early-exits otherwise;
+    drivers/pci/quirks.c:2712).
+  - Mirrors long-standing patterns for known-broken bridges (e.g., AMD
+    8131, VIA, ATI entries at drivers/pci/quirks.c:2717-2719).
 
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+- Risk assessment:
+  - Primary effect is that devices behind the affected bridge will use
+    INTx instead of MSI/MSI-X. That may reduce performance but restores
+    correctness (avoids lost interrupts). If a device strictly requires
+    MSI/MSI-X, it could not have worked reliably on this hardware
+    anyway, so the quirk does not introduce a new regression in
+    practice.
+  - No architectural changes, no API changes, no cross-subsystem impact;
+    single-file quirk addition under an existing guard.
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 8c98f91a5930c..6b765f3fd529a 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -491,6 +491,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
- 	if (pll_7nm->slave)
- 		dsi_pll_enable_global_clk(pll_7nm->slave);
+- Stable policy fit:
+  - Hardware workarounds that fix real user-visible bugs are routinely
+    backported.
+  - The change is small, well-scoped, and follows existing patterns.
+  - While there is no explicit “Cc: stable” in the provided message,
+    this class of PCI quirks is commonly accepted for stable.
+
+Conclusion
+
+- Backport Status: YES. This one-line quirk reliably prevents MSI/MSI-X
+  enablement behind RDC bridges known to drop MSI interrupts, restoring
+  device functionality with minimal risk.
+
+ drivers/pci/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index d97335a401930..6eb3d20386e95 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -2717,6 +2717,7 @@ static void quirk_disable_msi(struct pci_dev *dev)
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_8131_BRIDGE, quirk_disable_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_VIA, 0xa238, quirk_disable_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x5a3f, quirk_disable_msi);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RDC, 0x1031, quirk_disable_msi);
  
-+	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+	if (pll_7nm->slave)
-+		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+
- error:
- 	return rc;
- }
+ /*
+  * The APC bridge device in AMD 780 family northbridges has some random
 -- 
 2.51.0
 
