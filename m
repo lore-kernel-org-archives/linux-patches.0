@@ -1,51 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195CD303A19;
-	Sat, 25 Oct 2025 16:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D56430504A;
+	Sat, 25 Oct 2025 16:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408816; cv=none; b=mirykSO7B4M6kKjs3BM4XKAvsEBDGeXFIrvVDNF1Nz6D8A7xK36jsoAK9LvjphPkt13e/7uNK7oTgr7L3Z8p8jq41hZ/8YdRLZOwJynJj3RBt2PFBqpaUcgsz71mDuqoSgy54sH7cUXxyqv50wAyPD3hwUm8KZdNghlZE50YJQw=
+	t=1761408820; cv=none; b=Xt8K2gIhwWUbMlsHnLLJJulfDAIwprvZL8ID5KZGJKPnSjlLiBojqeXLY++8bVinDxV97SrgSTGeNAeWSFbWTUPvyE2lpmTJDzi4uCRBA0UZ4JvKNSKE1N+OfHdwj+kBIGNbdJOIxopxSrunq/m+pjkjM3U/B1jET+vAdzfRP48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408816; c=relaxed/simple;
-	bh=U74QStwuzw9HOceeq2rfHXTHQ1ZQu49WLwXbaUOaCrU=;
+	s=arc-20240116; t=1761408820; c=relaxed/simple;
+	bh=ykKpstcD/nFFD4tx9FG9wgDXP6IoofyoYUuh6BLPYos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KKVCrSrCKe4O4CpzTJmD+U4L10waoB6Xuw4fb9LoN7tZai+Zjh3QpCgVmGrA88pSORq3S6eCRKwc/34PN9x/F/IEt0EiA8N+RVMG4aRJlP9cOl+aHjg+0NnCYHV11vR7jkaFc+dbPBd9CdmK8ieB2VCc7p5EUEyx1CUgwiH2Hl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KdfrHnx3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e/MyZwbr9MTZNgHdGJ8uYEwnFQ9nn3gQQP3YJrYnkG6lMJOhOjLkal0avWILhxhvIKkBt09HLsY1UyKqg1z7tjcwXt/fQVaN50GWsvk6pVq7CW1taqQViaYMCYzevr0T1MjVGYmayDusTupBUP/9eVIw0IX76q8c5iSd5exkXy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Art3gyvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KdfrHnx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5176CC4CEF5;
-	Sat, 25 Oct 2025 16:13:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Art3gyvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611DDC116B1;
+	Sat, 25 Oct 2025 16:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408816;
-	bh=U74QStwuzw9HOceeq2rfHXTHQ1ZQu49WLwXbaUOaCrU=;
+	s=k20201202; t=1761408817;
+	bh=ykKpstcD/nFFD4tx9FG9wgDXP6IoofyoYUuh6BLPYos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdfrHnx3w5f5I99J358RH1akapK9vD8OOBlzjWxcPUBM/ZBl/BzF4SLzb9RcwFveH
-	 RCa6PKpknn5aoenaNhsLl67fly5ELq4frQMYT1P/ooqQY8BQJdhGE6lgAAzB6QORul
-	 VJl0nlxdkPfSZUQ+LIcmDfw2GDoiICuKxclUNBhThD4KE3Q9jEoGz6w81E7rDonpyU
-	 KPuSiA2sXWJMXnlJZSWS4MJSN6i7C95YY2etlAfyfYH5IH5chTtFQTfSPGarolS3e6
-	 EgHcnoWfjWm+8KXTAc+f4bXDpqnC7ezswFrbOoMXvwBTy8wh443vvvTOMnU2vQAni3
-	 H1Wf3+pJl6vYQ==
+	b=Art3gyvDW7YsLgQ5MxH+GlcxwIzMPREX21vtGRhHmDvVZQ726tFnJwKu9xbWSffg0
+	 n9k2ivCgkAoXufNNPf667R/D2HEGklyhCxdXzaTf34cVaMwRC9gGtwbA51NPEyfGmF
+	 tQOL7dfb4svQH8NOI4FfEbvVxSYE3QtitM7jFCAV6B55twSUHxJ/ixZ7jCyeaIhFKd
+	 T7OVkS1Q7hV7kQAhAeMs7OLBnJFuYEWLmQtzrjWRVvBx51I13GW/XOMwWE6UxQd4QY
+	 BWGsjhVG80hC4JPz6H8WbbsN23jSqTU+skGN4y+YTdkARwUNvcADNCSwxYCIrN46/F
+	 IKLBa5XHnSv/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Primoz Fiser <primoz.fiser@norik.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	shayne.chen@mediatek.com,
-	rex.lu@mediatek.com,
-	howard-yh.hsu@mediatek.com,
-	chui-hao.chiu@mediatek.com,
-	alexandre.f.demers@gmail.com,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] wifi: mt76: mt7996: Temporarily disable EPCS
-Date: Sat, 25 Oct 2025 11:55:12 -0400
-Message-ID: <20251025160905.3857885-81-sashal@kernel.org>
+	shawnguo@kernel.org,
+	linux-iio@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.6] iio: adc: imx93_adc: load calibrated values even calibration failed
+Date: Sat, 25 Oct 2025 11:55:13 -0400
+Message-ID: <20251025160905.3857885-82-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -61,236 +56,145 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit e6291bb7a5935b2f1d337fd7a58eab7ada6678ad ]
+[ Upstream commit 12c9b09e981ab14ebec8e4eefa946cbd26dd306b ]
 
-EPCS is not yet ready, so do not claim to support it.
+ADC calibration might fail because of the noise on reference voltage.
+To avoid calibration fail, need to meet the following requirement:
+    ADC reference voltage Noise < 1.8V * 1/2^ENOB
 
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Co-developed-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250904-mt7996-mlo-more-fixes-v1-4-89d8fed67f20@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+For the case which the ADC reference voltage on board do not meet
+the requirement, still load the calibrated values, so ADC can also
+work but maybe not that accurate.
+
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Primoz Fiser <primoz.fiser@norik.com>
+Link: https://patch.msgid.link/20250812-adc-v2-2-0260833f13b8@nxp.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: **YES**
+YES
 
-## COMPREHENSIVE ANALYSIS
+Explanation
+- Problem addressed: On some boards the i.MX93 ADC calibration fails due
+  to reference voltage noise (commit message). In the current code, a
+  calibration failure aborts driver probe, leaving the ADC unusable for
+  users.
+- Current failure path: `imx93_adc_calibration()` returns `-EAGAIN` on
+  calibration failure, explicitly powering down the ADC and aborting
+  probe:
+  - Failure check/return: drivers/iio/adc/imx93_adc.c:181 (checks
+    `IMX93_ADC_MSR_CALFAIL_MASK`) and drivers/iio/adc/imx93_adc.c:185
+    (returns `-EAGAIN`).
+  - Probe abort on error: drivers/iio/adc/imx93_adc.c:367 (calibration
+    call) and drivers/iio/adc/imx93_adc.c:368–396 (error unwinding).
+- What the patch changes:
+  - Adds `IMX93_ADC_CALCFG0` (0x3A0) and `IMX93_ADC_CALCFG0_LDFAIL_MASK`
+    (BIT(4)) so the driver can instruct hardware to load calibrated
+    values even if calibration “fails”.
+  - In `imx93_adc_calibration()` (drivers/iio/adc/imx93_adc.c:146),
+    before starting calibration, it writes
+    `IMX93_ADC_CALCFG0_LDFAIL_MASK` to `IMX93_ADC_CALCFG0` to enable
+    “load-on-fail”.
+  - It changes the failure handling on `CALFAIL`: instead of returning
+    `-EAGAIN`, it logs a warning and continues, allowing the driver to
+    register and the ADC to function, albeit with potentially reduced
+    accuracy.
+  - The timeout path remains unchanged and still returns an error if
+    calibration never completes (drivers/iio/adc/imx93_adc.c:171–178),
+    preserving safety for a hard failure.
+- User impact: This is a practical fix for real boards where Vref noise
+  is above the stated threshold; without it, the ADC never comes up.
+  With it, the ADC works (possibly with lower accuracy), which is
+  typically preferable to complete unavailability.
+- Scope and risk:
+  - Small, contained change in a single driver
+    (`drivers/iio/adc/imx93_adc.c`) with no ABI or framework changes.
+  - No architectural refactoring; only adds a register define and a
+    single bit write plus relaxed error handling.
+  - Timeout/hard-error behavior is unchanged; only soft failure
+    (CALFAIL) behavior is relaxed.
+  - The driver matches only `nxp,imx93-adc`
+    (drivers/iio/adc/imx93_adc.c:465–469), so the change is isolated to
+    this hardware.
+- Stable criteria:
+  - Fixes a user-visible bug (driver failing to probe on noisy Vref
+    boards).
+  - Minimal and low risk; confined to probe/calibration logic.
+  - No new features; behavior change is a robustness fix with guarded
+    warning.
+  - No broader side effects beyond this ADC device.
 
-### Executive Summary
+Given these points, this is a solid candidate for backporting to any
+stable trees that contain the i.MX93 ADC driver and its current fail-
+hard calibration path.
 
-This commit **MUST be backported** to stable kernel trees v6.15.x,
-v6.16.x, and v6.17.x. It fixes a critical bug where the mt7996 WiFi
-driver advertises support for EPCS (Enhanced Protected Coordination
-Service), a WiFi 7 feature, but doesn't actually implement it. This
-mismatch between advertised capabilities and actual functionality can
-cause connection failures, MLO operational issues, and incorrect QoS
-parameter handling.
+ drivers/iio/adc/imx93_adc.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-### What is EPCS?
-
-EPCS (Enhanced Protected Coordination Service) is a WiFi 7 (IEEE
-802.11be / EHT) feature defined in the standard that provides:
-- Priority channel access for critical communications (emergency
-  services)
-- QoS parameter negotiation through protected action frames
-- Multi-Link Operation (MLO) coordination across multiple links
-- Requires AAA server integration for authorization
-
-### Historical Context and Timeline
-
-**Critical Discovery:** Through extensive git history analysis, I found:
-
-1. **January 31, 2023** (commit `348533eb968dcc`): mt7996 driver first
-   added EHT capability initialization, including
-   `IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS` flag in
-   `drivers/net/wireless/mediatek/mt76/mt7996/init.c:1304`
-
-2. **February 5, 2025** (commit `de86c5f60839d`): mac80211 subsystem
-   added full EPCS configuration support, including:
-   - EPCS enable/disable state machine
-   - Action frame exchange (enable request/response, teardown)
-   - QoS parameter application across all MLD links
-   - Check at `net/mac80211/mlme.c:5484-5486` that sets
-     `bss_conf->epcs_support` based on capability flag
-
-3. **September 4, 2025** (commit `e6291bb7a5935` - **the commit under
-   review**): mt7996 driver removes EPCS capability advertisement
-
-**Impact Timeline:**
-- **Kernels v6.14 and earlier**: mt7996 advertised EPCS but mac80211 had
-  no EPCS support → **No impact** (harmless)
-- **Kernels v6.15 through v6.17**: mt7996 advertises EPCS AND mac80211
-  tries to use it → **BUG EXISTS**
-- **Kernel v6.18-rc1 and later**: mt7996 doesn't advertise EPCS → **Bug
-  fixed**
-
-### Code Analysis
-
-The fix is a simple one-line removal from
-`drivers/net/wireless/mediatek/mt76/mt7996/init.c:1321`:
-
-```c
-eht_cap_elem->mac_cap_info[0] =
-- IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
-  IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
-  u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
-  IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
-```
-
-**Function context**: This change is in `mt7996_init_eht_caps()` which
-initializes EHT (WiFi 7) capabilities for the mt7996 chipset. The
-function is called at driver initialization for all supported interface
-types (AP, MESH_POINT) on all bands (2.4GHz, 5GHz, 6GHz).
-
-**Impact**: When the driver advertises EPCS support via this capability
-flag, mac80211 will:
-1. Enable `bss_conf->epcs_support` for the link
-2. Potentially send EPCS enable request action frames to the AP
-3. Expect to receive EPCS enable response frames
-4. Apply special QoS parameters across all MLD links when EPCS is active
-5. Disable normal WMM parameter tracking from beacons when EPCS is
-   enabled
-
-Since the mt7996 driver/firmware doesn't actually support these
-operations, this creates a capability mismatch that can cause
-operational failures.
-
-### Evidence from Other Drivers
-
-**ath12k driver** (Qualcomm): Also explicitly removes EPCS support in
-`drivers/net/wireless/ath/ath12k/mac.c:8057` for mesh interfaces with
-the comment: "Capabilities which requires infrastructure setup with a
-main STA(AP) controlling operations are not needed for mesh."
-
-**mt7925 driver** (MediaTek): Still advertises EPCS support, suggesting
-newer MediaTek hardware may support it, but mt7996 does not.
-
-**mac80211_hwsim**: The simulation driver advertises EPCS for testing
-purposes.
-
-### Risks of NOT Backporting
-
-**High severity issues that could occur:**
-
-1. **Connection Failures**: When a mt7996 device connects to an AP that
-   wants to use EPCS, the negotiation may fail
-
-2. **MLO Operational Issues**: EPCS is tightly integrated with Multi-
-   Link Operation. The code at `net/mac80211/mlme.c:5488-5494` shows
-   EPCS teardown logic when links don't support it, suggesting
-   operational conflicts
-
-3. **Incorrect QoS Handling**: When EPCS is enabled, mac80211 disables
-   normal WMM tracking (`net/mac80211/mlme.c:7254`), potentially causing
-   QoS parameter mismatches
-
-4. **Emergency Services Impact**: EPCS is designed for priority access
-   for emergency services. Incorrect implementation could impact E911
-   and similar critical services
-
-5. **Standards Compliance**: WiFi Alliance certification could fail due
-   to advertising unsupported capabilities
-
-### Benefits of Backporting
-
-**Strong reasons to backport:**
-
-1. **Fixes Real Bug**: Corrects false capability advertisement that
-   causes actual operational issues
-
-2. **Small, Contained Change**: One-line removal with no side effects
-
-3. **No Regressions Possible**: Removing an unsupported feature cannot
-   break existing functionality
-
-4. **Targets Specific Kernels**: Only affects v6.15+ where mac80211 EPCS
-   support exists
-
-5. **Clear Intent**: Commit message explicitly states "EPCS is not yet
-   ready, so do not claim to support it"
-
-6. **Part of MLO Fix Series**: Patch series titled "mt7996-mlo-more-
-   fixes" includes other critical MLO stability fixes
-
-### Backporting Risk Assessment
-
-**Risk Level: VERY LOW**
-
-- **Change size**: Single line removal
-- **Change type**: Removing unsupported capability (conservative fix)
-- **Test coverage**: Feature is tested in mac80211 test suite
-- **Dependencies**: None - standalone fix
-- **Regression potential**: Near zero - can't break what wasn't working
-- **Conflicts**: No conflicts expected - capability initialization code
-  is stable
-
-### Stable Tree Criteria Analysis
-
-✅ **Important bugfix**: Fixes false capability advertisement
-✅ **Minimal risk**: One-line removal, no side effects
-✅ **Small and contained**: Limited to single driver
-✅ **Fixes user-affecting issue**: Connection and MLO operation problems
-✅ **No architectural changes**: Simple capability flag removal
-❌ **Cc: stable tag**: Not present in commit message (but should be
-backported anyway)
-✅ **Obvious correctness**: Clearly correct - don't advertise unsupported
-features
-
-### Recommended Target Kernels
-
-**MUST backport to:**
-- v6.15.x (first kernel with mac80211 EPCS support)
-- v6.16.x
-- v6.17.x
-
-**DO NOT backport to:**
-- v6.14.x and earlier (mac80211 doesn't have EPCS support yet, so
-  harmless)
-
-### Related Commits to Consider
-
-From the same patch series ("mt7996-mlo-more-fixes-v1"):
-- `7ef0c7ad735b0`: "wifi: mt76: mt7996: Implement MLD address
-  translation for EAPOL"
-- `9aa03d182343e`: "wifi: mt76: mt7996: Add all active links to poll
-  list in mt7996_mac_tx_free()"
-- `a3ea1c309bf32`: "wifi: mt76: mt7996: Fix
-  mt7996_reverse_frag0_hdr_trans for MLO"
-
-These related commits should also be evaluated for backporting as they
-address other MLO stability issues.
-
-### Conclusion
-
-This is a textbook example of a commit that should be backported to
-stable kernels. It fixes a real bug (false capability advertisement)
-with a minimal, safe change (one-line removal) that has zero regression
-risk and addresses user-affecting issues. The bug only exists in kernels
-v6.15-v6.17, making the backport target clear and well-defined.
-
-**Final Recommendation: YES - Backport to v6.15.x, v6.16.x, and v6.17.x
-stable trees immediately.**
-
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 84015ab24af62..5a77771e3e6d6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1330,7 +1330,6 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 	eht_cap->has_eht = true;
+diff --git a/drivers/iio/adc/imx93_adc.c b/drivers/iio/adc/imx93_adc.c
+index 7feaafd2316f2..9f1546c3d39d5 100644
+--- a/drivers/iio/adc/imx93_adc.c
++++ b/drivers/iio/adc/imx93_adc.c
+@@ -38,6 +38,7 @@
+ #define IMX93_ADC_PCDR6		0x118
+ #define IMX93_ADC_PCDR7		0x11c
+ #define IMX93_ADC_CALSTAT	0x39C
++#define IMX93_ADC_CALCFG0	0x3A0
  
- 	eht_cap_elem->mac_cap_info[0] =
--		IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
- 		IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
- 		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
- 			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
+ /* ADC bit shift */
+ #define IMX93_ADC_MCR_MODE_MASK			BIT(29)
+@@ -58,6 +59,8 @@
+ #define IMX93_ADC_IMR_ECH_MASK			BIT(0)
+ #define IMX93_ADC_PCDR_CDATA_MASK		GENMASK(11, 0)
+ 
++#define IMX93_ADC_CALCFG0_LDFAIL_MASK		BIT(4)
++
+ /* ADC status */
+ #define IMX93_ADC_MSR_ADCSTATUS_IDLE			0
+ #define IMX93_ADC_MSR_ADCSTATUS_POWER_DOWN		1
+@@ -145,7 +148,7 @@ static void imx93_adc_config_ad_clk(struct imx93_adc *adc)
+ 
+ static int imx93_adc_calibration(struct imx93_adc *adc)
+ {
+-	u32 mcr, msr;
++	u32 mcr, msr, calcfg;
+ 	int ret;
+ 
+ 	/* make sure ADC in power down mode */
+@@ -158,6 +161,11 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
+ 
+ 	imx93_adc_power_up(adc);
+ 
++	/* Enable loading of calibrated values even in fail condition */
++	calcfg = readl(adc->regs + IMX93_ADC_CALCFG0);
++	calcfg |= IMX93_ADC_CALCFG0_LDFAIL_MASK;
++	writel(calcfg, adc->regs + IMX93_ADC_CALCFG0);
++
+ 	/*
+ 	 * TODO: we use the default TSAMP/NRSMPL/AVGEN in MCR,
+ 	 * can add the setting of these bit if need in future.
+@@ -180,9 +188,13 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
+ 	/* check whether calbration is success or not */
+ 	msr = readl(adc->regs + IMX93_ADC_MSR);
+ 	if (msr & IMX93_ADC_MSR_CALFAIL_MASK) {
++		/*
++		 * Only give warning here, this means the noise of the
++		 * reference voltage do not meet the requirement:
++		 *     ADC reference voltage Noise < 1.8V * 1/2^ENOB
++		 * And the resault of ADC is not that accurate.
++		 */
+ 		dev_warn(adc->dev, "ADC calibration failed!\n");
+-		imx93_adc_power_down(adc);
+-		return -EAGAIN;
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
