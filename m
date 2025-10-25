@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0BD2FB99A;
-	Sat, 25 Oct 2025 16:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FBA30BBBA;
+	Sat, 25 Oct 2025 16:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409654; cv=none; b=NU3b3ykYat5GgFeZx+RJMmd3f6wT45VsiNaFHBeLXmllKercP+ZDKx1I5N7GzL8iV+TZsJFctvmxk2mWRR71MVnjwixaDI5KMNIDTe0sIBNxAiDxVY7AD1gOD0bAOFGRz+rJFf9xRDCiTMxMdltNE19BbpgHhAxETWtmQ9GQcTo=
+	t=1761409656; cv=none; b=BHasFRG7ryhl7hkUcoa57UW538DBgXBRlPQq0XIjBCfWFSgjcqKnUZ/pJcRDWXiQa9eD4/YXJOFXVPNFK31TRkWLO6iVUY58ivIqJeq1M5ZxW0vPxefdbxAtfRj/XCKrCmo/0qf9ZczqyWzpu7O8uCMGVIshCE/At4obuF42+Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409654; c=relaxed/simple;
-	bh=LGTWECTp9Sr1VtKfiq6kQy/0KDcz9C8xFM34r9ANKFg=;
+	s=arc-20240116; t=1761409656; c=relaxed/simple;
+	bh=5If4RKkdBtzkAl5b5AKRrIkgrNLj7g4EhyojiPv7HD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=prFnJ7yElnVnyd3gAqO+QcpmONEfPORv0TaV+avGZqxKQxGRMtsBn8l1JsBAk+RIJ2jvhzjltRqDYDYOip9cW4QoqLnYHKDJxCVP9yMAhTwec9PSQ9mWn92L7GLyTxBmUKEiE2l1+ikUnsaGRsMit8YZ2nzMpT1xuCma0LKKPn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZpZ9uuy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l6DzFtAFW6oPbWFqz8yJquwRJLPvtaNAGjUvRsKJUY9VCWg5ReSTroJVv3RvwNQ+ucNOyNBe6AiioS+0k1FDiwSgytQ5bc19EQ0z4bnmhISbdoUu+b9SkwQzfkm97bqQPXKl4mD9wD+MVIyM/tgPGgJgfKLn9VY8Sl+gWvdM1sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R1aEFZAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZpZ9uuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADBEC4CEFB;
-	Sat, 25 Oct 2025 16:27:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R1aEFZAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027DEC4CEFF;
+	Sat, 25 Oct 2025 16:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409654;
-	bh=LGTWECTp9Sr1VtKfiq6kQy/0KDcz9C8xFM34r9ANKFg=;
+	s=k20201202; t=1761409655;
+	bh=5If4RKkdBtzkAl5b5AKRrIkgrNLj7g4EhyojiPv7HD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZpZ9uuyV/XlBxPKJ850UNKZkmpHnuWKKtsPe+aX7n1HG3EN2NGlYH7NFJpwAeIiv
-	 icdIzBZ1BZf9KHNt+tGIzlnUnVHJkIHzOu3nq3GGb8aVfZaHlwCKFTUZrrQ6OZ+LIj
-	 j1mi3Y4y3cgFcCoRpypYAUCJBW7XFUySLBDj965q3LhhDqf5arkDUJ3z+dTigQG48d
-	 fVWWS9+PiqW4idJ5IA0ePabZTBEOIx6ZChmYfK6Max8+lNuSwXg4sb7N1NZyvx0ix4
-	 5+UJK5h+k2evd7DT8EoYKszzcgRbecWd8N3WFvjQdnFVC+/LxQJMPgLxgoCG85yDwh
-	 NKVy+Ob7czTTg==
+	b=R1aEFZAwlpMAaWjwEcA7IzYGUUW7icAllZtPovQPugVOYbDA/6dQvcokq+R5oodLV
+	 ybMEH+goXmrsYmcQuBGgiHGJytwvtwxMSp0YFXwq5e5GfpoLGg+AFFgnixj+bGTpel
+	 ipz7psHSyVN6kLEXufkhzYB4HvYoxMHbN8eXdrG5uUNMHo5s+TLCaO0hSpqtQs2ROE
+	 rqddCljY4GT4x2bhZpcNyTl4ZmlAv6aodF1/iETWfyveMUxAD8nTxLr5mPrRp3mCwI
+	 UQmrNhm1ngDKxRz2O3+ZoiGubFGC3nTZMuMARbUb1nH5qc0aVLjYd7S7VlmsV8W4Jl
+	 v8oq2+2kfhvTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Harikrishna Shenoy <h-shenoy@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Amber Lin <Amber.Lin@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tomi.valkeinen@ideasonboard.com,
-	aradhya.bhatia@linux.dev,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-5.4] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
-Date: Sat, 25 Oct 2025 12:00:38 -0400
-Message-ID: <20251025160905.3857885-407-sashal@kernel.org>
+	Felix.Kuehling@amd.com,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-5.4] drm/amdkfd: Tie UNMAP_LATENCY to queue_preemption
+Date: Sat, 25 Oct 2025 12:00:39 -0400
+Message-ID: <20251025160905.3857885-408-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,22 +53,21 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harikrishna Shenoy <h-shenoy@ti.com>
+From: Amber Lin <Amber.Lin@amd.com>
 
-[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
+[ Upstream commit f3820e9d356132e18405cd7606e22dc87ccfa6d1 ]
 
-Enable support for data lane rates between 80-160 Mbps cdns dphy
-as mentioned in TRM [0] by setting the pll_opdiv field to 16.
-This change enables lower resolutions like 640x480 at 60Hz.
+When KFD asks CP to preempt queues, other than preempt CP queues, CP
+also requests SDMA to preempt SDMA queues with UNMAP_LATENCY timeout.
+Currently queue_preemption_timeout_ms is 9000 ms by default but can be
+configured via module parameter. KFD_UNMAP_LATENCY_MS is hard coded as
+4000 ms though. This patch ties KFD_UNMAP_LATENCY_MS to
+queue_preemption_timeout_ms so in a slow system such as emulator, both
+CP and SDMA slowness are taken into account.
 
-[0]: https://www.ti.com/lit/zip/spruil1
-(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
-
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,99 +75,90 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The driver rejected valid MIPI D‑PHY HS lane rates between 80–160
-    Mbps, preventing low‑resolution modes (e.g., 640x480@60) from
-    working on Cadence D‑PHY based platforms, despite both the MIPI
-    D‑PHY spec and the SoC TRM allowing them. This commit corrects that
-    oversight by:
-    - Lowering the minimum accepted data lane rate from 160 Mbps to 80
-      Mbps in `cdns_dphy_get_pll_cfg()` at `drivers/phy/cadence/cdns-
-      dphy.c:139`.
-    - Selecting a valid PLL output divider for that range (`pll_opdiv =
-      16`) at `drivers/phy/cadence/cdns-dphy.c:149-150`.
-  - The rest of the driver already assumes support starting at 80 Mbps:
-    `cdns_dphy_tx_get_band_ctrl()` uses `tx_bands[]` that includes 80 as
-    the first entry (`drivers/phy/cadence/cdns-dphy.c:112-116`), so the
-    prior 160 Mbps lower bound was internally inconsistent and caused
-    configuration to fail early in `cdns_dphy_get_pll_cfg()` even when
-    band selection supported 80.
+- What changed
+  - Replaces hard-coded `KFD_UNMAP_LATENCY_MS (4000)` with a value
+    derived from the existing module parameter
+    `queue_preemption_timeout_ms`: `((queue_preemption_timeout_ms -
+    queue_preemption_timeout_ms / 10) >> 1)` in
+    `drivers/gpu/drm/amd/amdkfd/kfd_priv.h:120`. This budgets ~45% of
+    the total preemption timeout for each of the two SDMA engines,
+    leaving ~10% for CP overhead, per the new comment in
+    `drivers/gpu/drm/amd/amdkfd/kfd_priv.h:114`.
+  - `queue_preemption_timeout_ms` is already a public module parameter
+    with default 9000 ms in
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:833`, documented at
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:835`, and declared for KFD
+    use at `drivers/gpu/drm/amd/amdkfd/kfd_priv.h:195`.
 
-- Change details and correctness
-  - Input validation: `dlane_bps` lower bound is relaxed to `80000000UL`
-    at `drivers/phy/cadence/cdns-dphy.c:139` to align with MIPI D‑PHY
-    minimum rates and the TI TRM reference.
-  - Divider selection: A new branch assigns `pll_opdiv = 16` for `80–160
-    Mbps` at `drivers/phy/cadence/cdns-dphy.c:149-150`. Existing
-    branches for higher rates remain unchanged, so behavior above 160
-    Mbps is unaffected.
-  - Register programming paths accept the new divider without format
-    changes:
-    - Reference IP path writes `OPDIV` directly via
-      `DPHY_CMN_OPDIV(cfg->pll_opdiv)` at `drivers/phy/cadence/cdns-
-      dphy.c:220-223`.
-    - TI J721e path writes `OPDIV` via
-      `FIELD_PREP(DPHY_TX_J721E_WIZ_OPDIV, cfg->pll_opdiv)` at
-      `drivers/phy/cadence/cdns-dphy.c:256-259`. The field width
-      supports values >= 16, so `16` encodes safely.
-  - Feedback/rounding: The computed `pll_fbdiv` remains within `u16`
-    range and the effective `hs_clk_rate` is returned back to the
-    framework (`drivers/phy/cadence/cdns-dphy.c:152-158`), preserving
-    existing rounding behavior.
+- Why it matters (bug and impact)
+  - When KFD asks CP to preempt queues, CP also requests SDMA to preempt
+    SDMA queues with an UNMAP latency. The driver waits for the CP fence
+    using `queue_preemption_timeout_ms` (see
+    `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c:2402`), but
+    previously SDMA’s UNMAP latency was fixed at 4000 ms. This mismatch
+    can cause spurious preemption timeouts on slow systems (e.g.,
+    emulators) or when users tune the module parameter, leading to
+    preempt failures and potential error paths like “The cp might be in
+    an unrecoverable state due to an unsuccessful queues preemption.”
+  - By tying `KFD_UNMAP_LATENCY_MS` to `queue_preemption_timeout_ms`,
+    the SDMA preemption budget scales consistently with the CP fence
+    wait, avoiding premature timeouts and improving reliability.
 
-- Why this is a good stable candidate
-  - User‑visible bug fix: Without this change, valid and common
-    low‑bandwidth display modes fail with `-EINVAL` during PHY
-    configuration, even though the platform and spec support them.
-  - Small, contained change: A few lines in one function in a single
-    driver. No architectural rework.
-  - Low regression risk:
-    - No impact to configurations ≥160 Mbps.
-    - The new range is guarded by the same band table already present
-      and validated (`drivers/phy/cadence/cdns-dphy.c:327-343`), and
-      global MIPI D‑PHY validation still runs before driver‑specific
-      logic (`drivers/phy/cadence/cdns-dphy.c:313-321` and
-      drivers/phy/phy-core-mipi-dphy.c).
-    - Both register programming paths simply consume the new `pll_opdiv`
-      value with no changes in encoding.
-  - Spec and TRM alignment: Matches MIPI D‑PHY minimum data rate and the
-    referenced TI TRM guidance to use `OPDIV=16` for 80–160 Mbps.
+- Where the new value is used
+  - Programmed into MES/PM4 packets (units of 100 ms):
+    `packet->bitfields2.unmap_latency = KFD_UNMAP_LATENCY_MS / 100;` in
+    `drivers/gpu/drm/amd/amdkfd/kfd_packet_manager_vi.c:129` and
+    `drivers/gpu/drm/amd/amdkfd/kfd_packet_manager_v9.c:205`.
+  - Passed as the timeout when destroying MQDs (preempt/unmap paths):
+    calls to `mqd_mgr->destroy_mqd(..., KFD_UNMAP_LATENCY_MS, ...)` in
+    `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c:884`,
+    `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c:996`, and
+    `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c:1175`.
+  - Used for resetting hung queues via `hqd_reset(...,
+    KFD_UNMAP_LATENCY_MS)` in
+    `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c:2230`.
 
-- Stable policy fit
-  - Fixes an important functional gap (inability to drive valid low‑rate
-    modes).
-  - Minimal and localized changes with clear intent and references.
-  - No new features or ABI changes; just enabling spec‑compliant
-    operation previously blocked by the driver.
+- Stable criteria assessment
+  - Fixes a real-world reliability issue (timeouts/mismatched budgets)
+    that affects users, especially on slow systems and when
+    `queue_preemption_timeout_ms` is tuned.
+  - Change is small, contained to a single macro in one header
+    (`kfd_priv.h`) with clear rationale and no architectural
+    refactoring.
+  - Side effects are minimal: default behavior remains effectively
+    unchanged (for 9000 ms, `KFD_UNMAP_LATENCY_MS` becomes ~4050 ms;
+    when quantized to 100 ms units it still programs 40), while non-
+    default configurations become consistent and safer.
+  - Touches KFD/amdgpu preemption logic but only adjusts a timeout
+    parameter already designed to be user-configurable; no new features
+    introduced.
 
-Given the above, this is an appropriate and low‑risk backport to stable
-kernel trees.
+Given the above, this is a low-risk, correctness-improving timeout
+alignment and a good candidate for backporting to stable.
 
- drivers/phy/cadence/cdns-dphy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
-index de5389374d79d..1bd986cba8f7f 100644
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -145,7 +145,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 67694bcd94646..d01ef5ac07666 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -111,7 +111,14 @@
  
- 	dlane_bps = opts->hs_clk_rate;
+ #define KFD_KERNEL_QUEUE_SIZE 2048
  
--	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
-+	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
- 		return -EINVAL;
- 	else if (dlane_bps >= 1250000000)
- 		cfg->pll_opdiv = 1;
-@@ -155,6 +155,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
- 		cfg->pll_opdiv = 4;
- 	else if (dlane_bps >= 160000000)
- 		cfg->pll_opdiv = 8;
-+	else if (dlane_bps >= 80000000)
-+		cfg->pll_opdiv = 16;
+-#define KFD_UNMAP_LATENCY_MS	(4000)
++/*  KFD_UNMAP_LATENCY_MS is the timeout CP waiting for SDMA preemption. One XCC
++ *  can be associated to 2 SDMA engines. queue_preemption_timeout_ms is the time
++ *  driver waiting for CP returning the UNMAP_QUEUE fence. Thus the math is
++ *  queue_preemption_timeout_ms = sdma_preemption_time * 2 + cp workload
++ *  The format here makes CP workload 10% of total timeout
++ */
++#define KFD_UNMAP_LATENCY_MS	\
++	((queue_preemption_timeout_ms - queue_preemption_timeout_ms / 10) >> 1)
  
- 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
- 					  cfg->pll_ipdiv,
+ #define KFD_MAX_SDMA_QUEUES	128
+ 
 -- 
 2.51.0
 
