@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F048530AAD6;
-	Sat, 25 Oct 2025 16:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC0330CDBF;
+	Sat, 25 Oct 2025 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409406; cv=none; b=Dd2ECbu/LV0Hhvfx2nVb/2CRMW04zXzudqrvNROxtq+Z5VL0ziaNehJB4nUlbIMkRsH1EuVF0aIVMRLIohomLGOOoNPAjGsX50+dV7T66Oq0vkMVclVXnHryPU9BEjk66kKKgH8tUYBJIQKxQOEDi2FKSUNv2ZtdGPK6XPIjIbc=
+	t=1761409407; cv=none; b=YYfmD8ruDyOtXlF5Y9kKV53MGTdvJ+P7+tG1gqnRTpxzg1ZEZeuOr09VvQbHNv0v9Z/QUs2flq6zhBPdXGk0sR2R1zVZWDTt1qHGjXnvj2QvN3HOdhONhNVE0VthnB6jFdswP3QobZjZVDFTVZpOpO1OpRWkHjxhdcSADLPkcI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409406; c=relaxed/simple;
-	bh=tqD7wQXMOM5PwsngKwg1xLbplDqYzrJdEa4gjMqbcw8=;
+	s=arc-20240116; t=1761409407; c=relaxed/simple;
+	bh=+JWPeq66ZgliSKi8RN7Ifwh0FIgoMR4yXPN39vlrryw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TeR3Cy/gJ33+ce2PThlon0nQMEZO2fULWhnKe1je2dCCmPIuyc61reRpc+AUpD1Li7syMj093uoPa1x2UZOKp5q+97wGW57I8xcTyyc0ATiewB4W47xqc53QwQEsL1LSd8fnuiEYL8l2robxW1FnnjJlUR1nlf3y0WVFoLKcvKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWaKgXST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ccUz1FtM3Pigh7Sjlg8FppnG7He7TRlOAHB7c5HnDGscGcjtle8ZM0WsT4pnF6iF7YxtZ/6ljzDgSR0arqWNdSERSDLBdI9WgFS+kEK1dmxZfueqw9+ZxXT696l/Q6lATATsWghyZtzVZwgLJJRhncAHfQlDS1JO2rUfw6Z/L6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TVDOCQy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWaKgXST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BD9C4CEF5;
-	Sat, 25 Oct 2025 16:23:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TVDOCQy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C2BC4CEF5;
+	Sat, 25 Oct 2025 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409405;
-	bh=tqD7wQXMOM5PwsngKwg1xLbplDqYzrJdEa4gjMqbcw8=;
+	s=k20201202; t=1761409407;
+	bh=+JWPeq66ZgliSKi8RN7Ifwh0FIgoMR4yXPN39vlrryw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWaKgXSTFKlZa0PzxF0ijFdywcxZRnktqbFZb60xBPB+gzh/2iWHnjWNFeP7MNWUW
-	 gPXf97cygtyTor6io5DJeXO397ByBHHWMqkwxKf/HKisSdS2Vrqlj1zkNT+ixK6XDO
-	 e5lnHt2JpYsaCBs3WBDVwWZ+FEBzhESln7S3RPQ8a4SvbUgUO5HIWfMFEZg8a6pG3e
-	 ctmo6U103jeEN2f62eAJ8FCBl0XIHw94ocwYE5yk5WJpY/wkF9asJGtDNlRwUbwR1Z
-	 HaNKW5DpxP1Ho91FBOEnlHjGF+zpXoU24nxZnaNZLBz5zV7xBNh1Ov8kaFlcYqj3eo
-	 3qweErNtC0nTw==
+	b=TVDOCQy+Y/kUuVpTkgLHLPPkrBLCY+IpK/4KHdIL9XdkELgeG/GS4NOOdL0KPz+s8
+	 ooZZ4yAgiHeMBPhfFywL8M6yysW0oAksvQEIDe4RmYqDwwvSeye1wf8jouK89FkzxJ
+	 blzZ817KrFr734zCQ540dLZTSTo1/hs+3CHk+eC4H2JCN8i5QahiSfdX1S7m64PW9/
+	 UtT9tG/5Q2tFBCSamnz2IY6b3v+IPxk6MWOWB7tNURUIv7ZgZ45cWsrxEg6VnfOeWb
+	 A3uOkgOFzcXmT38t37JS8pBsPS/JL+n/GrVV5FlJeryx4cFR4Hqd1Mzav0x71dmNHe
+	 OwSjnF9//E6WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sridevi Arvindekar <sarvinde@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Dillon.Varone@amd.com,
-	alex.hung@amd.com,
-	ray.wu@amd.com,
-	mwen@igalia.com,
-	Ausef.Yousof@amd.com,
-	alexandre.f.demers@gmail.com,
-	rostrows@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Fix for test crash due to power gating
-Date: Sat, 25 Oct 2025 11:58:59 -0400
-Message-ID: <20251025160905.3857885-308-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] selftests: net: lib.sh: Don't defer failed commands
+Date: Sat, 25 Oct 2025 11:59:00 -0400
+Message-ID: <20251025160905.3857885-309-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,66 +55,178 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sridevi Arvindekar <sarvinde@amd.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 0bf6b216d4783cb51f9af05a49d3cce4fc22dc24 ]
+[ Upstream commit fa57032941d4b451c7264ebf3ad595bc98e3a9a9 ]
 
-[Why/How]
-Call power gating routine only if it is defined.
+Usually the autodefer helpers in lib.sh are expected to be run in context
+where success is the expected outcome. However when using them for feature
+detection, failure can legitimately occur. But the failed command still
+schedules a cleanup, which will likely fail again.
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Sridevi Arvindekar <sarvinde@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Instead, only schedule deferred cleanup when the positive command succeeds.
+
+This way of organizing the cleanup has the added benefit that now the
+return code from these functions reflects whether the command passed.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/af10a5bb82ea11ead978cf903550089e006d7e70.1757004393.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – Adding the NULL guard in `dcn20_fpga_init_hw` keeps the FPGA init
-path from dereferencing a deliberately cleared power‑gating hook on
-Navi12.
+YES
 
-- Root cause is that Navi12 forces
-  `dc->hwseq->funcs.enable_power_gating_plane = NULL` to avoid the
-  unwanted register programming (`drivers/gpu/drm/amd/display/dc/resourc
-  e/dcn20/dcn20_resource.c:2728`), so the unguarded call in the FPGA
-  init routine dereferenced a NULL function pointer and crashed the test
-  path (`drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c:3132`
-  before this fix).
-- The patch simply checks the pointer before calling, matching the
-  pattern already used in other init flows such as `dcn10_init_hw` and
-  newer DCN generations, so functional behaviour is unchanged when the
-  hook exists and we correctly skip it when it is absent.
-- Impacted hardware (Navi12/DCN2.0) ships in currently supported stable
-  kernels, and the unfixed bug is an outright NULL dereference, so users
-  running the FPGA/diagnostic init sequence still hit a crash today.
-- Change is localized, does not pull in other dependencies, and aligns
-  with existing defensive guards elsewhere in the display stack, making
-  regression risk very low.
+- What it fixes
+  - In tools/testing/selftests/net/lib.sh: wrapper helpers schedule
+    deferred cleanups even when the “positive” command fails, and they
+    unintentionally mask failures because the last executed command
+    (defer) returns success. This leads to confusing follow-up errors
+    and unreliable feature-detection logic.
+  - The change makes deferred cleanup conditional on success and
+    preserves the original command’s exit status, so failures are
+    detected and reported correctly.
 
-Suggested follow-up: 1) Run the relevant FPGA/Navi12 display init test
-(or the scenario that originally crashed) on the target stable branch to
-confirm the NULL dereference is gone.
+- Specific code changes
+  - ip_link_add(): from running defer unconditionally to chaining with
+    success, i.e. `ip link add ... && defer ip link del dev "$name"`
+    (tools/testing/selftests/net/lib.sh).
+  - ip_link_set_master(): `ip link set dev "$member" master "$master" &&
+    defer ip link set dev "$member" nomaster`.
+  - ip_link_set_addr(): captures `old_addr=$(mac_get "$name")` and only
+    schedules rollback if setting the new address succeeds: `... &&
+    defer ip link set dev "$name" address "$old_addr"`.
+  - ip_link_set_up()/ip_link_set_down(): only schedule the opposite
+    action if the set operation actually succeeded, e.g. `... && defer
+    ip link set dev "$name" down/up`.
+  - ip_addr_add(): `ip addr add dev "$name" "$@" && defer ip addr del
+    dev "$name" "$@"`.
+  - ip_route_add(): `ip route add "$@" && defer ip route del "$@"`.
+  - bridge_vlan_add(): `bridge vlan add "$@" && defer bridge vlan del
+    "$@"`.
+  - Net effect: cleanup commands are deferred only after successful
+    state changes; failure paths do not schedule doomed cleanups.
 
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+- Why it’s a good stable backport
+  - User impact: Fixes real test flakiness and misleading pass/fail
+    reporting in widely used net selftests. Feature detection can
+    legitimately fail; previously that failure both scheduled a failing
+    cleanup and could be hidden by a succeeding defer, making debugging
+    hard.
+  - Scope and size: Small, contained changes to a single selftests shell
+    library file; no kernel/runtime code affected.
+  - Risk profile: Minimal. The helpers now return the true result of the
+    underlying ip/bridge command and don’t enqueue impossible cleanups.
+    Tests that “passed” due to masked errors will start failing earlier
+    and more clearly, which is the correct behavior.
+  - Architecture/ABI: No architectural changes, no new features;
+    strictly test reliability and correctness improvement.
+  - Stable policy fit: Important bugfix for selftests that improves
+    determinism and correctness with minimal risk.
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index 9d3946065620a..f7b72b24b7509 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -3129,7 +3129,8 @@ void dcn20_fpga_init_hw(struct dc *dc)
- 		res_pool->dccg->funcs->dccg_init(res_pool->dccg);
+- Side effects considered
+  - Return codes of these helpers now reflect the command outcome. Any
+    test inadvertently relying on the old, incorrect “always succeed”
+    behavior may fail earlier, but that exposes pre-existing issues
+    rather than introducing regressions.
+  - Cleanup behavior in failure paths becomes a no-op (correct),
+    avoiding secondary errors and noise.
+
+Given the correctness fix, limited scope, and low risk, this commit is
+well-suited for stable backporting.
+
+ tools/testing/selftests/net/lib.sh | 32 +++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
+index c7add0dc4c605..80cf1a75136cf 100644
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -547,8 +547,8 @@ ip_link_add()
+ {
+ 	local name=$1; shift
  
- 	//Enable ability to power gate / don't force power on permanently
--	hws->funcs.enable_power_gating_plane(hws, true);
-+	if (hws->funcs.enable_power_gating_plane)
-+		hws->funcs.enable_power_gating_plane(hws, true);
+-	ip link add name "$name" "$@"
+-	defer ip link del dev "$name"
++	ip link add name "$name" "$@" && \
++		defer ip link del dev "$name"
+ }
  
- 	// Specific to FPGA dccg and registers
- 	REG_WRITE(RBBMIF_TIMEOUT_DIS, 0xFFFFFFFF);
+ ip_link_set_master()
+@@ -556,8 +556,8 @@ ip_link_set_master()
+ 	local member=$1; shift
+ 	local master=$1; shift
+ 
+-	ip link set dev "$member" master "$master"
+-	defer ip link set dev "$member" nomaster
++	ip link set dev "$member" master "$master" && \
++		defer ip link set dev "$member" nomaster
+ }
+ 
+ ip_link_set_addr()
+@@ -566,8 +566,8 @@ ip_link_set_addr()
+ 	local addr=$1; shift
+ 
+ 	local old_addr=$(mac_get "$name")
+-	ip link set dev "$name" address "$addr"
+-	defer ip link set dev "$name" address "$old_addr"
++	ip link set dev "$name" address "$addr" && \
++		defer ip link set dev "$name" address "$old_addr"
+ }
+ 
+ ip_link_has_flag()
+@@ -590,8 +590,8 @@ ip_link_set_up()
+ 	local name=$1; shift
+ 
+ 	if ! ip_link_is_up "$name"; then
+-		ip link set dev "$name" up
+-		defer ip link set dev "$name" down
++		ip link set dev "$name" up && \
++			defer ip link set dev "$name" down
+ 	fi
+ }
+ 
+@@ -600,8 +600,8 @@ ip_link_set_down()
+ 	local name=$1; shift
+ 
+ 	if ip_link_is_up "$name"; then
+-		ip link set dev "$name" down
+-		defer ip link set dev "$name" up
++		ip link set dev "$name" down && \
++			defer ip link set dev "$name" up
+ 	fi
+ }
+ 
+@@ -609,20 +609,20 @@ ip_addr_add()
+ {
+ 	local name=$1; shift
+ 
+-	ip addr add dev "$name" "$@"
+-	defer ip addr del dev "$name" "$@"
++	ip addr add dev "$name" "$@" && \
++		defer ip addr del dev "$name" "$@"
+ }
+ 
+ ip_route_add()
+ {
+-	ip route add "$@"
+-	defer ip route del "$@"
++	ip route add "$@" && \
++		defer ip route del "$@"
+ }
+ 
+ bridge_vlan_add()
+ {
+-	bridge vlan add "$@"
+-	defer bridge vlan del "$@"
++	bridge vlan add "$@" && \
++		defer bridge vlan del "$@"
+ }
+ 
+ wait_local_port_listen()
 -- 
 2.51.0
 
