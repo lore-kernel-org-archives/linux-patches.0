@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6325C2F5B;
-	Sat, 25 Oct 2025 16:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870402F5B;
+	Sat, 25 Oct 2025 16:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409299; cv=none; b=Lp3b52wLwqoPg/hPD8i5ZAh/HhEHL8B0CfcHAsV0XVFJL+OyWwB4C/ooNGdCuySCsll3A3cktJG3YVmuquG8ex4Z5nsep7iKtG+qCB/3PBiN5T6YmFc7P3e16pahkAmIJuHT1kp78QJkE47A/PN27pkhcLXIds4JOPXCU1JmNmY=
+	t=1761409300; cv=none; b=K7CpHwke4SneXxEXF5im6sDiZpYufMVI1RadyJaVjZTPTWLsTo2rW+Q4/tkAkpYXi9orC7y2u0Yoz5bRrnKEP7f38dEvKsjoGNBQncE+gg93kS8j5z8jPyAnDIGjJIHRuGCOmlhgPwW8H8xJ7nF2KXb9+y+0abLYFRICpuzGiZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409299; c=relaxed/simple;
-	bh=kthK9UGGB/QE0ZUKdh2beRy3IOwxGuSQSP/tYEDl5TM=;
+	s=arc-20240116; t=1761409300; c=relaxed/simple;
+	bh=Yf28+GELE5a4yFvMiNeRAsehsu8e7C/tvg7G40Uaafw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aN9WALQKNZC3czH3/51ewZg+73lnf7uKbd16RRpEWvgFWshgXn9FQUrWmz20EMj/B/tYWQWboFrq9BoIJ8MxiUFVojW1+u0HkF66F8C0FTOgEYEbk6fpc1wFIyX5+OjIfv/l5xI8HSfvWhehuWoJwZpQvUjsdlnBpVGOIP0pUF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UBbWfNEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IM87egb3SHYhHvX+5ise6m46saFkWOjwSxfVF4pDsRcVLCEPrnC7lytfEkt9ZZF/BcH69s85/GyLhbRAtBkYw3I8lRRwIC2p9QNOpL0uqbN/izYmJ/rTSTgFQrORAvef9/+sNpbZ2mqpXtZf78ZhVKJ25LyNvXGOu4XNzh+XJLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XR2I8cXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UBbWfNEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9760DC2BC9E;
-	Sat, 25 Oct 2025 16:21:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XR2I8cXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67977C2BCB4;
+	Sat, 25 Oct 2025 16:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409299;
-	bh=kthK9UGGB/QE0ZUKdh2beRy3IOwxGuSQSP/tYEDl5TM=;
+	s=k20201202; t=1761409300;
+	bh=Yf28+GELE5a4yFvMiNeRAsehsu8e7C/tvg7G40Uaafw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBbWfNEzYP9rH9mBvMmH4o9glkeGu3OfpHI3U6gltt1bxvOf8orlL+PSTFX5bKmk5
-	 lS/RojnxEO73YaHX+o52C54aLA5tx9ZQdCyvYiUqDn3M06KPolHj7zxMVOROVdwtY7
-	 QxstKAb0YNAD0OswVfqi/uoIk+R/brCU1ODD49dqSzmKd6KZUhYFNGOoOyqdBuIT1d
-	 wo/tP3l8lxM+vs8vkZ4Z/Gz5J8cX/TAJVBvIX+mhp4IgL5ZSQb0FDcxYhhyfNPGiuJ
-	 w7K9wWJ3DCLTEYCIi+3R4ZLYfemDvs+iaz5EFGZAlyzNVdIbzV9NWRBnz4nc6tqZKc
-	 4It4IpOG3dWaw==
+	b=XR2I8cXh8Yr8QO0iyoXv6iE5d6LC5PYoDMHGrcKmUTWXbtZhBQ0dpx1UgzmjohNcx
+	 VwJDm/l0K8c3CZzouS2VG3WAMCcDrZSv04+bhSiCyjnbD1en9THZEAVPLSyDVIrPam
+	 vmwEi0QPgYPN9y3/zeY0/CZjRYTtXTefCaIMMLPpuDRPeHsY1HUoviWsIuvw4+Vj/2
+	 bzvf/TA7aEn+hLXMmITm7Zcyb12hCaAKqVBl8SPiGXvxujwT0MdkppEImdSS3EHp62
+	 hwfDqF4PTSeaq0eXN08FiXtw47rWBnrcX0XgVE4QqA762wNYwQwPHylQ9Fd++ZaEzS
+	 u4iOr6bPkRjug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Bastien Curutchet <bastien.curutchet@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	hansg@kernel.org,
-	laurent.pinchart@ideasonboard.com,
-	vladimir.zapolskiy@linaro.org,
-	git@apitzsch.eu,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.1] media: i2c: Kconfig: Ensure a dependency on HAVE_CLK for VIDEO_CAMERA_SENSOR
-Date: Sat, 25 Oct 2025 11:58:18 -0400
-Message-ID: <20251025160905.3857885-267-sashal@kernel.org>
+	woojung.huh@microchip.com,
+	UNGLinuxDriver@microchip.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] net: dsa: microchip: Set SPI as bus interface during reset for KSZ8463
+Date: Sat, 25 Oct 2025 11:58:19 -0400
+Message-ID: <20251025160905.3857885-268-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -58,95 +54,136 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mehdi Djait <mehdi.djait@linux.intel.com>
+From: Bastien Curutchet <bastien.curutchet@bootlin.com>
 
-[ Upstream commit 2d240b124cc9df62ccccee6054bc3d1d19018758 ]
+[ Upstream commit a0b977a3d19368b235f2a6c06e800fb25452029b ]
 
-Both ACPI and DT-based systems are required to obtain the external
-camera sensor clock using the new devm_v4l2_sensor_clk_get() helper
-function.
+At reset, the KSZ8463 uses a strap-based configuration to set SPI as
+bus interface. SPI is the only bus supported by the driver. If the
+required pull-ups/pull-downs are missing (by mistake or by design to
+save power) the pins may float and the configuration can go wrong
+preventing any communication with the switch.
 
-Ensure a dependency on HAVE_CLK when config VIDEO_CAMERA_SENSOR is
-enabled.
+Introduce a ksz8463_configure_straps_spi() function called during the
+device reset. It relies on the 'straps-rxd-gpios' OF property and the
+'reset' pinmux configuration to enforce SPI as bus interface.
 
-Signed-off-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Link: https://patch.msgid.link/20250918-ksz-strap-pins-v3-3-16662e881728@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES: This change is a small, self‑contained bug fix that protects
+KSZ8463 boards from booting with the wrong host interface when the
+hardware strap resistors are missing or weak.
 
-- What changed: The patch adds a single dependency to gate the entire
-  camera sensor menu on the clock framework by changing the line in
-  drivers/media/i2c/Kconfig:30 from “depends on MEDIA_CAMERA_SUPPORT &&
-  I2C” to “depends on MEDIA_CAMERA_SUPPORT && I2C && HAVE_CLK”. This
-  confines all options under “if VIDEO_CAMERA_SENSOR” to builds where
-  the clk API is available.
+- `drivers/net/dsa/microchip/ksz_common.c:5355` introduces
+  `ksz8463_configure_straps_spi()`, which momentarily drives the
+  `straps-rxd` GPIOs (if present) to the required low/high levels before
+  reset, guaranteeing the switch samples “SPI” on the bus-strap pins.
+  Without this, floating pins can leave the device in a non-SPI mode and
+  make the switch unreachable.
+- The new code path is gated tightly: it runs only for
+  `microchip,ksz8463` devices that already provide a `reset-gpios` line,
+  and it bails out harmlessly when the optional strap GPIOs aren’t
+  described, so existing DTs keep working unchanged.
+- After toggling reset, `drivers/net/dsa/microchip/ksz_common.c:5408`
+  calls `ksz8463_release_straps_spi()` to restore the default pinctrl
+  state; `pinctrl_select_default_state()` safely no-ops when no pinctrl
+  data exist (`drivers/pinctrl/core.c:1637`), so there’s no regression
+  risk for existing boards.
+- The fix relies only on long-standing GPIO/pinctrl helpers, adds no
+  architectural churn, and doesn’t touch other chips or subsystems; it
+  simply lets boards that already wire the strap pins to GPIOs recover
+  from a real hardware failure mode.
 
-- Why it’s needed: The commit message states camera sensors now must
-  obtain their external sensor clock via the new
-  devm_v4l2_sensor_clk_get() helper. That implies the clk consumer API
-  must be present. In the kernel, devm_clk_get() and friends are only
-  built when HAVE_CLK=y (drivers/clk/Makefile:1 “obj-$(CONFIG_HAVE_CLK)
-  += clk-devres.o”), and while include/linux/clk.h provides stubs when
-  !CONFIG_HAVE_CLK, those stubs return NULL/0 and no-op, which can mask
-  build issues but lead to misconfiguration or malfunction at runtime
-  when sensors require an actual MCLK. Many i2c camera sensors already
-  rely on clk APIs:
-  - drivers/media/i2c/imx219.c:1158 (devm_clk_get(dev, NULL))
-  - drivers/media/i2c/ov5640.c:3901 (devm_clk_get(dev, "xclk"))
-  - drivers/media/i2c/ov7670.c:1868 (devm_clk_get_optional(&client->dev,
-    "xclk"))
-  This shows the practical requirement for clk support across the group.
-  Additionally, some media i2c drivers already enforce clk dependencies
-individually (e.g., drivers/media/i2c/ccs/Kconfig:2 “depends on
-HAVE_CLK”), and this change lifts that correctness to the menu-level.
+Given the user-visible failure it resolves and its low risk profile,
+this commit is a good candidate for the stable series. Recommend
+backporting alongside the corresponding DT binding update so board
+descriptions can supply the new strap GPIOs and “reset” pinmux state
+when needed.
 
-- Bug fixed: Prevents invalid configurations where VIDEO_CAMERA_SENSOR
-  can be enabled on platforms without clock support, which either:
-  - fail at runtime when an external sensor clock is required, or
-  - depend on stubs returning NULL/0 (include/linux/clk.h:1040+) that
-    “appear to work” but do not actually provide a sensor clock, causing
-    probe failures or subtle malfunctions.
+ drivers/net/dsa/microchip/ksz_common.c | 45 ++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-- Scope and risk: The change is one-line, Kconfig-only, subsystem-local,
-  and introduces no runtime code changes. It reduces misconfigurations
-  and does not add features or architectural shifts. On platforms that
-  legitimately use these drivers, HAVE_CLK is already set; on platforms
-  without clocks, these drivers are not meaningful. This is minimal risk
-  and aligns with stable tree policy.
-
-- Stable backport considerations: While the commit lacks an explicit
-  “Cc: stable” tag, it is a classic dependency fix that:
-  - is small and contained,
-  - prevents user-visible failures on misconfigured builds,
-  - aligns the menu with the new clock helper’s requirements,
-  - matches existing per-driver patterns.
-  If earlier stable series do not yet include the
-devm_v4l2_sensor_clk_get() conversions, the change is still harmless (it
-only hides options on platforms without clk support), and improves
-configuration correctness.
-
- drivers/media/i2c/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
-index 6237fe804a5c8..1f5a3082ead9c 100644
---- a/drivers/media/i2c/Kconfig
-+++ b/drivers/media/i2c/Kconfig
-@@ -27,7 +27,7 @@ config VIDEO_IR_I2C
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 9568cc391fe3e..a962055bfdbd8 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -23,6 +23,7 @@
+ #include <linux/of_mdio.h>
+ #include <linux/of_net.h>
+ #include <linux/micrel_phy.h>
++#include <linux/pinctrl/consumer.h>
+ #include <net/dsa.h>
+ #include <net/ieee8021q.h>
+ #include <net/pkt_cls.h>
+@@ -5345,6 +5346,38 @@ static int ksz_parse_drive_strength(struct ksz_device *dev)
+ 	return 0;
+ }
  
- menuconfig VIDEO_CAMERA_SENSOR
- 	bool "Camera sensor devices"
--	depends on MEDIA_CAMERA_SUPPORT && I2C
-+	depends on MEDIA_CAMERA_SUPPORT && I2C && HAVE_CLK
- 	select MEDIA_CONTROLLER
- 	select V4L2_FWNODE
- 	select VIDEO_V4L2_SUBDEV_API
++static int ksz8463_configure_straps_spi(struct ksz_device *dev)
++{
++	struct pinctrl *pinctrl;
++	struct gpio_desc *rxd0;
++	struct gpio_desc *rxd1;
++
++	rxd0 = devm_gpiod_get_index_optional(dev->dev, "straps-rxd", 0, GPIOD_OUT_LOW);
++	if (IS_ERR(rxd0))
++		return PTR_ERR(rxd0);
++
++	rxd1 = devm_gpiod_get_index_optional(dev->dev, "straps-rxd", 1, GPIOD_OUT_HIGH);
++	if (IS_ERR(rxd1))
++		return PTR_ERR(rxd1);
++
++	if (!rxd0 && !rxd1)
++		return 0;
++
++	if ((rxd0 && !rxd1) || (rxd1 && !rxd0))
++		return -EINVAL;
++
++	pinctrl = devm_pinctrl_get_select(dev->dev, "reset");
++	if (IS_ERR(pinctrl))
++		return PTR_ERR(pinctrl);
++
++	return 0;
++}
++
++static int ksz8463_release_straps_spi(struct ksz_device *dev)
++{
++	return pinctrl_select_default_state(dev->dev);
++}
++
+ int ksz_switch_register(struct ksz_device *dev)
+ {
+ 	const struct ksz_chip_data *info;
+@@ -5360,10 +5393,22 @@ int ksz_switch_register(struct ksz_device *dev)
+ 		return PTR_ERR(dev->reset_gpio);
+ 
+ 	if (dev->reset_gpio) {
++		if (of_device_is_compatible(dev->dev->of_node, "microchip,ksz8463")) {
++			ret = ksz8463_configure_straps_spi(dev);
++			if (ret)
++				return ret;
++		}
++
+ 		gpiod_set_value_cansleep(dev->reset_gpio, 1);
+ 		usleep_range(10000, 12000);
+ 		gpiod_set_value_cansleep(dev->reset_gpio, 0);
+ 		msleep(100);
++
++		if (of_device_is_compatible(dev->dev->of_node, "microchip,ksz8463")) {
++			ret = ksz8463_release_straps_spi(dev);
++			if (ret)
++				return ret;
++		}
+ 	}
+ 
+ 	mutex_init(&dev->dev_mutex);
 -- 
 2.51.0
 
