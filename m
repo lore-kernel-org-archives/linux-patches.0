@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18AFE329C45;
-	Sat, 25 Oct 2025 16:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7526309EE8;
+	Sat, 25 Oct 2025 16:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409769; cv=none; b=YdxWpb+GK2qddQSrnOpxhlN1vFUfX4o0kDDyWKUY+R0oqzQbotNWaf3bn3GRUO/6Ce9+f0kJR6334FyD47ysDwuPgweXXgxG6EraPRQfZyvDaumOAcyYTi0oPSE/pQ2Y2d47WSe2hDzqjMKQYdEM4BUZtrcPrJIFdKgXUI+HUyY=
+	t=1761409770; cv=none; b=rroGItP4Rc6ioAJAefO7/mGH56jZe0HgS9pnLfguddoZ8pJTrYJrWMUR62x5pUGxDofxGcjzc5SG3QaJPLaw/ZRzF9a26dIRBNa5Ic183Jzt25STtcQ+kP7ubmVH+45gzprXmX3dToETsxHpp1bIt7/ygLAG2QIvpWdhRGJqgAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409769; c=relaxed/simple;
-	bh=0+BJRNm6FUXKSQUw/J/BOoKZfZsQt3lj8ysUEga8zH8=;
+	s=arc-20240116; t=1761409770; c=relaxed/simple;
+	bh=vokghphZFN7cPlJYGHUkiv2cttRvCZNnrb6NHwYUJ1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GCH5vJ77aBRZXHAuDi6AkMkCiJSm/5L+wH9PL/WCsYB+kydaCwUsRP+SjTe8SEwq2ONpKH4Lz1R1869pnp6WI79qtVtoMLestLPvDwhcXDbmhFWUQnBOgXwbZQ6tWlcGge9+1ethIteE1eAvEVum4oM4pJrK5F/v9Z8IwlPFC9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fa+pZ3Qz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bkqg32M7PuEVIi2PdV0OYgX7Dzz0HrELUkN/w8fwV42zCdgw4xBrgMxWf+SriXbT0Bknt5hH3rqXI0Gvy8SLuTflwPFdDhR46WbwWp72a8Ibco/F+TNJ5U9D7dS8xnZfwvwWicNruwQCTPMyDIhEV60Gw6edMIK3lLAh3FUgzTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAotVmFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fa+pZ3Qz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D27C113D0;
-	Sat, 25 Oct 2025 16:29:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAotVmFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEB8C4CEFB;
+	Sat, 25 Oct 2025 16:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409768;
-	bh=0+BJRNm6FUXKSQUw/J/BOoKZfZsQt3lj8ysUEga8zH8=;
+	s=k20201202; t=1761409770;
+	bh=vokghphZFN7cPlJYGHUkiv2cttRvCZNnrb6NHwYUJ1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fa+pZ3QzDnXWBxUEhilmvwyl3cmzwFWhn78L+LYmDIA1BL0RROtYm3XqERssMyzff
-	 +kRQ22x3diJGTDBAGwdEaS6Kf6PDMEtCgnLieXfwRCd+2W4fYDBNvkNPZOLYzoSKkY
-	 dZ75/Mofcu27HYqhjs/wc0uPX3hoLRg/X5NZA7rtPn7GFBplbWrU8HEz1bble7v91F
-	 KDlJa7kSOMzL/qpVOVNYsLXHtUHoGpgaMfPmGzL1ZUaxkN/QnVjgD2l58Ywx8HJTF/
-	 g6C1JxZ2+5xP3VRBywxpM1fbQIt16MJuS17GiUnI+JDAexmmTj29ZhhOs7w1Lc6rng
-	 a5wOEe6/H4IMA==
+	b=eAotVmFVX3zIEdvLhVQcYGs4HTZaSQD/73eLPX5z3+wnypPAZu/Y5u2RNkYAKyP3N
+	 mEoZMk5U04Re2ezGSm6b5ljxhrLtP/3RhUFhnqkj+ptiaOGIiBFK+tBe0Kb3F7i+rs
+	 cfCovJBZjwwEa5pkZDr3k09sCdxFYsAfdImxoTj1g/9VaX8fLEC/1w5HZnNDtL84Xl
+	 rE36pm1aaNJrULBo/ZBYTHgvgm+ATfuDfpugM9pIvf60TA4l5mXfxTGJapjiN8e0w6
+	 OLuaAWhaU//XCEcC3q1uAlqPgOVcU0qk0KaVZHkl4UGIIocMoIaz52oaLVO8b/Tsw/
+	 g8jCkiqmEvqPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	Mina Almasry <almasrymina@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: 8851b: rfk: update IQK TIA setting
-Date: Sat, 25 Oct 2025 12:01:28 -0400
-Message-ID: <20251025160905.3857885-457-sashal@kernel.org>
+	hawk@kernel.org,
+	ilias.apalodimas@linaro.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.15] page_pool: always add GFP_NOWARN for ATOMIC allocations
+Date: Sat, 25 Oct 2025 12:01:29 -0400
+Message-ID: <20251025160905.3857885-458-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,298 +58,218 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b521685da35ebf091e51f9ea9ad2896a4ddb6e98 ]
+[ Upstream commit f3b52167a0cb23b27414452fbc1278da2ee884fc ]
 
-With the new TIA setting of RX IQK, unstable RX throughput can
-be avoided, especially in medium-high attenuation environments.
+Driver authors often forget to add GFP_NOWARN for page allocation
+from the datapath. This is annoying to users as OOMs are a fact
+of life, and we pretty much expect network Rx to hit page allocation
+failures during OOM. Make page pool add GFP_NOWARN for ATOMIC allocations
+by default.
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250811123744.15361-5-pkshih@realtek.com
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250912161703.361272-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my extensive research and analysis of this commit, here is my
+determination:
 
-Summary
-- This is a targeted RF calibration/tuning fix for rtw89 8851B that
-  avoids unstable RX throughput under medium-high attenuation, i.e., a
-  user-visible bug/performance regression. It is small, self-contained
-  to one file, and affects only the 8851B device in RX IQK flows.
+## **BACKPORT RECOMMENDATION: YES**
 
-What the change does
-- Expands 5 GHz RXK group coverage from 2 to 4 and calibrates all
-  groups:
-  - Changes `#define RTW8851B_RXK_GROUP_IDX_NR` from 2 to 4
-    (drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:20).
-  - Extends 5G-specific arrays to 4 entries to match, e.g.:
-    - `a_idxrxgain` → `{0x10C, 0x112, 0x28c, 0x292}`
-      (drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:117)
-    - `a_idxattc2` → all 0xf
-      (drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:118)
-    - `a_idxrxagc` → `{0x4, 0x5, 0x6, 0x7}`
-      (drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:119)
-  - Removes the helper that restricted selection to groups 0 and 2,
-    ensuring all four 5 GHz groups are calibrated and better matched to
-    varying attenuation scenarios (previously at
-    drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:142).
-- Programs TIA-related settings during RX IQK:
-  - In `_rxk_5g_group_sel()`, before the per-group loop, writes a
-    sequence to the RF LUT (RR_LUTWE/WA/WD0) and sets/clears RR_RXA2 bit
-    0x20 to enable the new TIA behavior during calibration; restores
-    everything after the loop (the loop originally starts at
-    drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:913).
-  - Mirrors the same pattern in `_iqk_5g_nbrxk()`, applying TIA
-    programming and restoration around the group-2 run (function starts
-    at drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:977).
-- Improves failure handling by clearing RXCFIR bits on failure, aligning
-  8851B behavior with other rtw89 chips:
-  - Adds `rtw89_phy_write32_mask(rtwdev, R_IQK_RES..., B_IQK_RES_RXCFIR,
-    0x0)` on failure in 5G RXK paths, similar to existing patterns in
-    8852 series (see e.g., rtw8852b_rfk.c uses `R_IQK_RES` and
-    `B_IQK_RES_RXCFIR`).
-- Fine-tunes RX clock table for 960M by adjusting `ck960_8851b` last
-  value from 0x93 to 0x92, a small, contained calibration tweak
-  (baseline array is at
-  drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:199).
-- Drops an unnecessary initialization write in `_iqk_init()` (removing a
-  `R_IQKINF` clear), which is benign and reduces redundant writes.
+## Detailed Analysis
 
-Why it’s a good stable backport
-- Fixes a real-world user problem: The commit explicitly addresses
-  unstable RX throughput in certain environments (medium-high
-  attenuation), which is a functional/performance correctness issue, not
-  a feature.
-- Contained scope and minimal risk:
-  - Single file change (rtw8851b_rfk.c), 8851B-only paths, and affects
-    RX IQK calibrations.
-  - No architectural or API/ABI changes; only calibration logic and RF
-    register programming sequences.
-- Dependencies are already present in stable:
-  - 6.17 contains the preceding updates this depends on (e.g., IQK v0x14
-    and DPK v0x11 are already in place, as seen from the constants in
-    drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c:22 and :15).
-  - All macros/registers used exist in stable branches (RR_LUTWE/WA/WD0,
-    RR_MOD_MASK, RR_RXA2, R_IQK_RES, B_IQK_RES_RXCFIR).
-- Consistent with existing practices in rtw89:
-  - The addition of RXCFIR reset on failure mirrors patterns already
-    used by other chips (e.g., rtw8852b), reducing risk and improving
-    robustness.
+### What This Commit Does
 
-Risk assessment
-- Changes touch calibration-only flows (`_rxk_5g_group_sel`,
-  `_iqk_5g_nbrxk`), with state saved/restored around TIA writes,
-  limiting side effects.
-- The broader constants and macros are stable and used elsewhere in the
-  driver.
-- No cross-subsystem impact; limited to rtw89/8851B RFK.
+This commit adds the `__GFP_NOWARN` flag to GFP_ATOMIC allocations in
+the page_pool subsystem by modifying the
+`__page_pool_alloc_netmems_slow()` function in `net/core/page_pool.c`.
+The change is minimal (6 lines) and specifically targets atomic
+allocations that occur during network packet reception in NAPI context.
 
-Conclusion
-- This is a targeted, low-risk fix that addresses a user-visible
-  throughput stability issue without introducing features or
-  architectural changes. It applies cleanly on stable trees that already
-  have the 8851B support and related RFK updates. Backporting is
-  recommended.
+**Code change at net/core/page_pool.c:554-558:**
+```c
++   /* Unconditionally set NOWARN if allocating from NAPI.
++    * Drivers forget to set it, and OOM reports on packet Rx are
+useless.
++    */
++   if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
++       gfp |= __GFP_NOWARN;
+```
 
- .../net/wireless/realtek/rtw89/rtw8851b_rfk.c | 85 ++++++++++++-------
- 1 file changed, 54 insertions(+), 31 deletions(-)
+This modification affects both bulk page allocations (via
+`alloc_pages_bulk_node`) and high-order page allocations (via
+`__page_pool_alloc_page_order`).
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-index 7a319a6c838af..a7867b0e083ac 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-@@ -17,7 +17,7 @@
- #define DPK_RF_REG_NUM_8851B 4
- #define DPK_KSET_NUM 4
- #define RTW8851B_RXK_GROUP_NR 4
--#define RTW8851B_RXK_GROUP_IDX_NR 2
-+#define RTW8851B_RXK_GROUP_IDX_NR 4
- #define RTW8851B_TXK_GROUP_NR 1
- #define RTW8851B_IQK_VER 0x14
- #define RTW8851B_IQK_SS 1
-@@ -114,9 +114,9 @@ static const u32 _tssi_de_mcs_10m[RF_PATH_NUM_8851B] = {0x5830};
- static const u32 g_idxrxgain[RTW8851B_RXK_GROUP_NR] = {0x10e, 0x116, 0x28e, 0x296};
- static const u32 g_idxattc2[RTW8851B_RXK_GROUP_NR] = {0x0, 0xf, 0x0, 0xf};
- static const u32 g_idxrxagc[RTW8851B_RXK_GROUP_NR] = {0x0, 0x1, 0x2, 0x3};
--static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x28c};
--static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf};
--static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x6};
-+static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x112, 0x28c, 0x292};
-+static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf, 0xf, 0xf};
-+static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x5, 0x6, 0x7};
- static const u32 a_power_range[RTW8851B_TXK_GROUP_NR] = {0x0};
- static const u32 a_track_range[RTW8851B_TXK_GROUP_NR] = {0x6};
- static const u32 a_gain_bb[RTW8851B_TXK_GROUP_NR] = {0x0a};
-@@ -139,17 +139,6 @@ static const u32 dpk_rf_reg[DPK_RF_REG_NUM_8851B] = {0xde, 0x8f, 0x5, 0x10005};
+### Historical Context and Broader Pattern
+
+Through extensive git history analysis, I discovered this is part of a
+**systematic effort by Jakub Kicinski** to address OOM warnings in the
+network stack:
+
+1. **March 2024** (commit 6e9b01909a811): Modified `napi_alloc_skb()` to
+   hardcode `GFP_ATOMIC | __GFP_NOWARN`
+   - Commit message stated: *"the resulting OOM warning is the top
+     networking warning in our fleet"* (Meta's production environment)
+   - Rationale: *"allocation failures in atomic context will happen, and
+     printing warnings in logs, effectively for a packet drop, is both
+     too much and very likely non-actionable"*
+
+2. **August 2024** (commit c89cca307b209): Added `__GFP_NOWARN` to
+   skbuff ingress allocations
+   - Similar rationale: *"build_skb() and frag allocations done with
+     GFP_ATOMIC will fail in real life, when system is under memory
+     pressure, and there's nothing we can do about that. So no point
+     printing warnings."*
+
+3. **September 2025** (this commit): Extends the same principle to
+   page_pool allocations
+
+### Existing Precedent Validates This Approach
+
+My code research revealed:
+
+**Helper function already uses this pattern**
+(include/net/page_pool/helpers.h:92-96):
+```c
+static inline struct page *page_pool_dev_alloc_pages(struct page_pool
+*pool)
+{
+    gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
+    return page_pool_alloc_pages(pool, gfp);
+}
+```
+
+**Drivers manually adding NOWARN since 2022**:
+- `drivers/net/ethernet/mediatek/mtk_eth_soc.c:1916` - Added in July
+  2022 (commit 23233e577ef973)
+- `drivers/net/vmxnet3/vmxnet3_drv.c:1425` - Also includes manual NOWARN
+
+This demonstrates driver authors were already aware of the need for
+`__GFP_NOWARN` with page_pool allocations, validating the approach.
+
+### Why This Should Be Backported
+
+**1. Fixes Real User-Visible Issue**
+- OOM warnings during network Rx are non-actionable and create log spam
+- Confirmed as "top networking warning" at large-scale deployments
+  (Meta)
+- OOM during memory pressure is expected behavior, not an error
+  condition
+- Warnings provide no value but clutter logs and may trigger false
+  alarms
+
+**2. Minimal Risk**
+- Only 6 lines of code added to a single function
+- Only suppresses warning messages, doesn't change allocation behavior
+- Allocation failures are still detected and properly handled by drivers
+- Network stack provides proper statistics via qstats (rx-alloc-fail
+  counter)
+- No change to actual page allocation logic or error handling paths
+
+**3. No Regressions Found**
+- No subsequent commits fixing or reverting this change
+- No Fixes: tags referencing this commit
+- Commit has been in mainline since September 2025 with no reported
+  issues
+- Subsequent commit (a1b501a8c6a87) is unrelated (pool size clamping)
+
+**4. Makes Behavior Consistent**
+- Aligns with existing helper function behavior
+- Removes burden from driver authors who often forget this flag
+- Prevents inconsistency where some drivers add NOWARN and others don't
+- Follows established pattern from napi_alloc_skb() and skbuff
+  allocations
+
+**5. Meets Stable Kernel Criteria**
+- ✅ Fixes a real bug that bothers people (log spam annoys users and
+  operators)
+- ✅ Obviously correct (trivial change, well-understood semantics)
+- ✅ Small and self-contained (6 lines, single file)
+- ✅ No regression risk (only suppresses warnings)
+- ✅ No API changes (internal implementation detail)
+
+### Technical Correctness
+
+**GFP_ATOMIC context** (from include/linux/gfp_types.h:316-318):
+> "GFP_ATOMIC users can not sleep and need the allocation to succeed. A
+lower watermark is applied to allow access to 'atomic reserves'."
+
+**__GFP_NOWARN semantics** (from include/linux/gfp_types.h:274):
+> "__GFP_NOWARN suppresses allocation failure reports."
+
+The change is semantically correct: When page_pool allocates pages in
+atomic context (NAPI), allocation failures are expected during OOM and
+warnings serve no purpose. The allocation failure is still detected and
+handled - only the noisy warning is suppressed.
+
+### Why Not Explicitly Tagged for Stable
+
+While the commit lacks a `Cc: stable` tag, this doesn't necessarily mean
+it shouldn't be backported. Examining similar commits:
+- Neither the napi_alloc_skb nor skbuff NOWARN commits had explicit
+  stable tags
+- Quality-of-life improvements often aren't tagged by authors but are
+  valuable for stable trees
+- Stable backport decisions should be based on technical merit and user
+  benefit
+
+### Potential Concerns Addressed
+
+**"Does this hide real bugs?"**
+No - drivers still detect and handle allocation failures. The difference
+is only in logging.
+
+**"Could this affect debugging?"**
+Minimal impact - allocation failures are tracked via qstats. OOM
+warnings during memory pressure are expected, not diagnostic.
+
+**"Is this actually a bug fix?"**
+Yes - it fixes the "bug" of annoying, non-actionable log spam that
+affects production deployments at scale.
+
+### Conclusion
+
+This commit should be backported because it:
+1. Solves a real, annoying user-visible problem (confirmed at production
+   scale)
+2. Has essentially zero risk (only suppresses warnings)
+3. Is part of a well-vetted, systematic improvement
+4. Makes the page_pool behavior consistent with established patterns
+5. Reduces operational burden and log noise
+
+While this is more of a quality-of-life improvement than a critical
+functional fix, the combination of high user benefit, zero risk, and
+strong technical justification makes it a good candidate for stable
+backporting.
+
+**Final Answer: YES** - This commit should be backported to stable
+kernel trees.
+
+ net/core/page_pool.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 19c92aa04e549..e224d2145eed9 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -596,6 +596,12 @@ static noinline netmem_ref __page_pool_alloc_netmems_slow(struct page_pool *pool
+ 	netmem_ref netmem;
+ 	int i, nr_pages;
  
- static void _set_ch(struct rtw89_dev *rtwdev, u32 val);
- 
--static u8 _rxk_5ghz_group_from_idx(u8 idx)
--{
--	/* There are four RXK groups (RTW8851B_RXK_GROUP_NR), but only group 0
--	 * and 2 are used in 5 GHz band, so reduce elements to 2.
--	 */
--	if (idx < RTW8851B_RXK_GROUP_IDX_NR)
--		return idx * 2;
--
--	return 0;
--}
--
- static u8 _kpath(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx)
- {
- 	return RF_A;
-@@ -196,7 +185,7 @@ static void _txck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
- static void _rxck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
- 			bool force, enum adc_ck ck)
- {
--	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x93};
-+	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x92};
- 	static const u32 ck1920_8851b[] = {0x9, 0x0, 0x0, 0x3, 0xf, 0xa, 0x49};
- 	const u32 *data;
- 
-@@ -905,18 +894,27 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 	bool kfail = false;
- 	bool notready;
- 	u32 rf_0;
--	u8 idx;
-+	u32 val;
- 	u8 gp;
- 
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
- 
--	for (idx = 0; idx < RTW8851B_RXK_GROUP_IDX_NR; idx++) {
--		gp = _rxk_5ghz_group_from_idx(idx);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
- 
-+	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
++	/* Unconditionally set NOWARN if allocating from NAPI.
++	 * Drivers forget to set it, and OOM reports on packet Rx are useless.
++	 */
++	if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
++		gfp |= __GFP_NOWARN;
 +
-+	for (gp = 0; gp < RTW8851B_RXK_GROUP_IDX_NR; gp++) {
- 		rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
- 
--		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
--		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
- 
- 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
- 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
-@@ -926,7 +924,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		fsleep(100);
- 		rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
- 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
--		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
- 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
- 		notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
- 
-@@ -959,6 +957,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		_iqk_sram(rtwdev, path);
- 
- 	if (kfail) {
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RES, B_IQK_RES_RXCFIR, 0x0);
- 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8), MASKDWORD,
- 				       iqk_info->nb_rxcfir[path] | 0x2);
- 		iqk_info->is_wb_txiqk[path] = false;
-@@ -968,6 +967,14 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		iqk_info->is_wb_txiqk[path] = true;
- 	}
- 
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
- 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
- 		    1 << path, iqk_info->nb_rxcfir[path]);
-@@ -980,17 +987,26 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
- 	bool kfail = false;
- 	bool notready;
--	u8 idx = 0x1;
-+	u8 gp = 2;
- 	u32 rf_0;
--	u8 gp;
--
--	gp = _rxk_5ghz_group_from_idx(idx);
-+	u32 val;
- 
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
- 
--	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
--	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
-+	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
-+
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
- 
- 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
- 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
-@@ -1000,7 +1016,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 	fsleep(100);
- 	rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
- 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
--	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
-+	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
- 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
- 	notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
- 
-@@ -1026,6 +1042,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 		kfail = !!rtw89_phy_read32_mask(rtwdev, R_NCTL_RPT, B_NCTL_RPT_FLG);
- 
- 	if (kfail) {
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RES + (path << 8), 0xf, 0x0);
- 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8),
- 				       MASKDWORD, 0x40000002);
- 		iqk_info->is_wb_rxiqk[path] = false;
-@@ -1033,6 +1050,14 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 		iqk_info->is_wb_rxiqk[path] = false;
- 	}
- 
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
- 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
- 		    1 << path, iqk_info->nb_rxcfir[path]);
-@@ -1664,8 +1689,6 @@ static void _iqk_init(struct rtw89_dev *rtwdev)
- 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
- 	u8 idx, path;
- 
--	rtw89_phy_write32_mask(rtwdev, R_IQKINF, MASKDWORD, 0x0);
--
- 	if (iqk_info->is_iqk_init)
- 		return;
- 
+ 	/* Don't support bulk alloc for high-order pages */
+ 	if (unlikely(pp_order))
+ 		return page_to_netmem(__page_pool_alloc_page_order(pool, gfp));
 -- 
 2.51.0
 
