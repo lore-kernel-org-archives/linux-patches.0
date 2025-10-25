@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D82302756;
-	Sat, 25 Oct 2025 16:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5659E27280E;
+	Sat, 25 Oct 2025 16:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408673; cv=none; b=O8tmOgeck+kzpJAc9D3dm08xvpweTR4lidqIWVNKybHWwZuGlKaqFICNki7XWsS9yIuJXSwF9YAIcf8kg7/8DL2hAUFpO54aJQUBPZz//lGc2edjLBM9Y0GL6ChOl7Oty1t8l4TqT8OsWcRUtUSxc75B8LgpN+DkxngGpR3bbaE=
+	t=1761408680; cv=none; b=kL46j1hyDcExoaoAl2yDkbtNJ3HX0uChCz7IipYx5QhDZ6pqEcM7fFD9e9QmxkPTgN/FtncC2GvlFJTVnHBibgN+CwD16Fib3+GXSC7z+EF36vXtTnaQVfolax6ehzzmGym8uA0Fng5aUasFoafEMJZ8ngrKDHJwx20lE1ybZCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408673; c=relaxed/simple;
-	bh=hMlWPjIszmAb/MPeUXQqD3XjgKIF7LxpDjvm1UzIS9w=;
+	s=arc-20240116; t=1761408680; c=relaxed/simple;
+	bh=4+I2SgbV66gYdnHhZDym/lRBWMyijSK0LO6evPJk2A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TYY68EpD4nV4LeC6gOZs9lrWPcDvpmJDQLKoxx6Q/nVL6YKLOry0N/Kl+6lT1P2DoBG6XzWCTd5EfIxr5xyCK7J+huknJC3av119VMDCrBic7iYqsli/MM3FnntMokPfhYSjhql08Ej/n7Q1hrdXwDw19lKjBgo4B+AW+oI67Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MtrolAhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o8x/5E4HF3YhUBgQsFdZA8nKG3qp4C3TD2v71tC5/Eja9U/H3ICTwNBB+hI655mjYhC7t3ea3Ky11IGMhj/a3YXpmi/nNAnHcuN3SBojB60f6IluvL41slH2m0HZzifhVEJA5P6yH0FuPxrrWYDpLY51JD8xr5Lulo/MhLgXDH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgtVWsMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MtrolAhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29611C4CEFF;
-	Sat, 25 Oct 2025 16:11:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgtVWsMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAD4C4CEF5;
+	Sat, 25 Oct 2025 16:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408673;
-	bh=hMlWPjIszmAb/MPeUXQqD3XjgKIF7LxpDjvm1UzIS9w=;
+	s=k20201202; t=1761408680;
+	bh=4+I2SgbV66gYdnHhZDym/lRBWMyijSK0LO6evPJk2A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtrolAhzUcSE2+mIUmq9uZp3c7JhOgmNxOAyD1pQg/5rbNQacFjhDtEK5GDC7KNH8
-	 xVQD253ghsPVh1uWxobyynMioMkTl1zblqet0P4Qh18wvShPcuPkVtWMmrrliKVo7p
-	 RaFvtfMFFxP7psoR062IYflf1C0+gW95u1H6xjdXOUD5MWaYQvlhLCSbS7LICIKcTZ
-	 Q7N6KqvldSgJ3Bfx/PqendryDHSTvs5fjKgGt6RE7CJ7yly+hePyHPn+/Ry3UFti3D
-	 uIbEvoBAdeG0c1l4lxTCVRFxgE4ylEsfePVLYEA6SEbnKDeKw6rgQh2dFwrRYV6BjN
-	 mRP1SykYpofJg==
+	b=LgtVWsMHQukA/hyW4G4tIpgXEN48B0pWpa21P4QAqF+7EtMsekvxyRgtY+riW6wF+
+	 1FVdVJns774nn2XERt1E0I+HiHLAkH1yBO2iuj1fyk97IACDXviPK78XXmRNCNHMZB
+	 p4GidzCTzYhnVOfkH3E1hkxXv5VR4UqkCO2asrf5VyjK/BdT/Ox9JAXw21YWwShEby
+	 hVBNTwAlJoEo1IKD5VkcBu4kyi/Orr+/BrXdPO2zqk8X6uYbJyFezpEhofFMKRhv0I
+	 08I1ngiwX8JtnsauONtT7Trgu+qGH4n/OVi9s0KhLEFgZuUtuS8F/5r4G7WJtGDh/x
+	 E5qdWr9wY8sxA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christian Bruel <christian.bruel@foss.st.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+Cc: Xiang Liu <xiang.liu@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kwilczynski@kernel.org,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] selftests: pci_endpoint: Skip IRQ test if IRQ is out of range.
-Date: Sat, 25 Oct 2025 11:54:29 -0400
-Message-ID: <20251025160905.3857885-38-sashal@kernel.org>
+	tao.zhou1@amd.com,
+	kevinyang.wang@amd.com,
+	alexandre.f.demers@gmail.com,
+	victor.skvortsov@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Correct info field of bad page threshold exceed CPER
+Date: Sat, 25 Oct 2025 11:54:30 -0400
+Message-ID: <20251025160905.3857885-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,19 +55,16 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Bruel <christian.bruel@foss.st.com>
+From: Xiang Liu <xiang.liu@amd.com>
 
-[ Upstream commit 106fc08b30a2ece49a251b053165a83d41d50fd0 ]
+[ Upstream commit f320ed01cf5f2259e2035a56900952cb3cc77e7a ]
 
-The pci_endpoint_test tests the entire MSI/MSI-X range, which generates
-false errors on platforms that do not support the whole range.
+Correct valid_bits and ms_chk_bits of section info field for bad page
+threshold exceed CPER to match OOB's behavior.
 
-Skip the test in such cases and report accordingly.
-
-Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20250804170916.3212221-4-christian.bruel@foss.st.com
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,84 +72,86 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**Why This Fix Matters**
-- Prevents false test failures: The tests iterate full MSI/MSI-X ranges
-  regardless of what was actually allocated on the device. When a vector
-  index is out of range, the kernel returns -EINVAL, which the old test
-  treated as a failure.
-- Skips unsupported cases correctly: The new checks treat out-of-range
-  vectors as “not applicable” and mark the test as skipped, which
-  accurately reflects platform capability instead of reporting an error.
+- Fixes incorrect CPER section info for “bad page threshold exceeded”
+  events by explicitly marking the MS_CHECK subfield valid and setting
+  the key status bits:
+  - Sets `valid_bits.ms_chk = 1` so MS_CHECK content is defined for
+    consumers: drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:222
+  - Marks error type presence and value: `ms_chk_bits.err_type_valid =
+    1` and `ms_chk_bits.err_type = 1`:
+    drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:223-224
+  - Marks processor context corrupted: `ms_chk_bits.pcc = 1`:
+    drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:225
+  - Without these, decoders can treat MS_CHECK as invalid/unknown,
+    leading to misclassification or ignoring of the event.
 
-**What Changed (Selftests Only)**
-- In `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:122` and
-  `:140`, after triggering an IRQ:
-  - MSI loop: `pci_ep_ioctl(PCITEST_MSI, i);` then `if (ret == -EINVAL)
-    SKIP(return, "MSI%d is disabled", i);` (`tools/testing/selftests/pci
-    _endpoint/pci_endpoint_test.c:123`–`:126`)
-  - MSI-X loop: `pci_ep_ioctl(PCITEST_MSIX, i);` then `if (ret ==
-    -EINVAL) SKIP(return, "MSI-X%d is disabled", i);` (`tools/testing/se
-    lftests/pci_endpoint/pci_endpoint_test.c:141`–`:144`)
-- Uses existing kselftest skip mechanism (`SKIP(...)`) which is well-
-  established in the harness
-  (`tools/testing/selftests/kselftest_harness.h:110`–`:134`).
+- Corrects CPER header validity flags by removing an invalid assertion
+  that a reserved field is present:
+  - Drops `hdr->valid_bits.partition_id = 1` (the field is reserved in
+    this format), preventing consumers from assuming a valid partition
+    ID when none is provided:
+    drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:70-71 (absence of the old
+    assignment)
+  - The header explicitly documents `partition_id` as reserved:
+    drivers/gpu/drm/amd/include/amd_cper.h:118
 
-**Why -EINVAL Means “Out of Range” Here**
-- The endpoint test driver queries the Linux IRQ number for a given
-  vector via `pci_irq_vector(pdev, msi_num - 1)`, and immediately
-  returns that error when negative
-  (`drivers/misc/pci_endpoint_test.c:441`–`:443`).
-- `pci_irq_vector()` returns -EINVAL precisely when the vector index is
-  out of range/not allocated for the device
-  (`drivers/pci/msi/api.c:311`–`:324`), which happens when the device
-  supports fewer MSI/MSI-X vectors than the upper bound tested (MSI up
-  to 32, MSI-X up to 2048).
+- Scope and risk:
+  - Small, contained change in one driver file:
+    drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c.
+  - No API/ABI or architectural changes; only corrects record formatting
+    bits.
+  - Runtime behavior of the GPU or the kernel isn’t affected; this only
+    alters metadata in generated CPER records written to the AMDGPU CPER
+    ring.
+  - Extremely low regression risk; improves compatibility with OOB
+    tooling by matching expected CPER semantics.
 
-**Scope and Risk**
-- Small, contained change; affects only kselftests (no runtime kernel
-  code).
-- No API or architectural changes; just improves test correctness by
-  skipping unsupported cases.
-- Mirrors existing skip behavior already used in the same test suite
-  (e.g., BAR test skips when disabled,
-  `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:67`–`:70`).
-- No security impact.
+- User impact:
+  - Fixes a real correctness bug in error reporting: previously,
+    MS_CHECK data was not flagged valid and key semantics (error type,
+    PCC) were not asserted for the bad-page-threshold CPER, causing
+    potential misinterpretation by diagnostics/management tools.
+  - Aligns driver-generated records with out-of-band behavior as stated
+    in the commit message.
 
-**Stable Backport Criteria**
-- Fixes a real issue that affects users of stable kernels running
-  selftests (false negatives on platforms with limited MSI/MSI-X
-  vectors).
-- Minimal risk and fully confined to `tools/testing/selftests`.
-- Does not introduce new features; aligns with stable policy for test
-  fixes.
+- Stable criteria:
+  - Important bugfix in a confined subsystem (AMDGPU RAS/CPER
+    formatting).
+  - Minimal change set, no feature additions, no cross-subsystem
+    fallout.
+  - Suitable for all stable trees that include AMDGPU CPER generation
+    (e.g., where `amdgpu_cper_generate_bp_threshold_record()` is
+    present: drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:323-341).
 
-Given the above, this is a good candidate for stable backport.
+Given the above, this is a low-risk correctness fix that improves error
+record fidelity and should be backported.
 
- tools/testing/selftests/pci_endpoint/pci_endpoint_test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-index da0db0e7c9693..cd9075444c32a 100644
---- a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-+++ b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-@@ -121,6 +121,8 @@ TEST_F(pci_ep_basic, MSI_TEST)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
+index 6c266f18c5981..12710496adae5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
+@@ -68,7 +68,6 @@ void amdgpu_cper_entry_fill_hdr(struct amdgpu_device *adev,
+ 	hdr->error_severity		= sev;
  
- 	for (i = 1; i <= 32; i++) {
- 		pci_ep_ioctl(PCITEST_MSI, i);
-+		if (ret == -EINVAL)
-+			SKIP(return, "MSI%d is disabled", i);
- 		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI%d", i);
- 	}
- }
-@@ -137,6 +139,8 @@ TEST_F(pci_ep_basic, MSIX_TEST)
+ 	hdr->valid_bits.platform_id	= 1;
+-	hdr->valid_bits.partition_id	= 1;
+ 	hdr->valid_bits.timestamp	= 1;
  
- 	for (i = 1; i <= 2048; i++) {
- 		pci_ep_ioctl(PCITEST_MSIX, i);
-+		if (ret == -EINVAL)
-+			SKIP(return, "MSI-X%d is disabled", i);
- 		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI-X%d", i);
- 	}
- }
+ 	amdgpu_cper_get_timestamp(&hdr->timestamp);
+@@ -220,7 +219,10 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
+ 	section->hdr.valid_bits.err_context_cnt = 1;
+ 
+ 	section->info.error_type = RUNTIME;
++	section->info.valid_bits.ms_chk = 1;
+ 	section->info.ms_chk_bits.err_type_valid = 1;
++	section->info.ms_chk_bits.err_type = 1;
++	section->info.ms_chk_bits.pcc = 1;
+ 	section->ctx.reg_ctx_type = CPER_CTX_TYPE_CRASH;
+ 	section->ctx.reg_arr_size = sizeof(section->ctx.reg_dump);
+ 
 -- 
 2.51.0
 
