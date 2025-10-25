@@ -1,59 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5D81F1306;
-	Sat, 25 Oct 2025 16:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFFE3043B7;
+	Sat, 25 Oct 2025 16:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408836; cv=none; b=mnkZ0SXdj69bD1a3YthcaHa5BlbM81h+yWubCPKGHt97Rg52olSDYw82dzlxChitciWDEkZaSTSyRLQNqZLguAIMsa4cJBUhpQRNba+NJpJMVdfls6FbsEvLg50HRtIsJRtsWmFW64rHqInRgB4w+o3B0Ozr2gXyS9NXQo5Jw0w=
+	t=1761408838; cv=none; b=Qbv4/i4MNPpBgZ4+fiIhaalY3oiO6s7e8VsP8WG1+QS9KdP9dFSufa2LETR9Z5G3i+dYWZkZV3JS++OTKsVDdNc0WEq8gwqDQiEG/tKtQnE5kth8k6Sy/II7Y29L+wEMrvKFCeBfmDaBvu91ZCNdrzgDtLJGXIqHfe0AX/fo7TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408836; c=relaxed/simple;
-	bh=zVtHnfPXG4ioxX+DlgXGFZiXd2qgpVY5VuTt9jhmCqU=;
+	s=arc-20240116; t=1761408838; c=relaxed/simple;
+	bh=nrapjmA7M3Dr/9BWfufzxZxVh8c9KYj9lkcmoQHrBw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HcOpiB0urtiQuHfK+tH7ekraGX/IodfXARwUEKxWev/IJ0VblGC1Q3ee5PEN1m+M53pxp+kFRrgVc0NIgKHpgf4dbYS3/JbpN2zy3LuYKtRlNZFKwMbib6Uw5QOcSbarFnUoRdw9vfUMEBve6x5qvXoh2n5mHfs8JstIZWD8FNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YbOwP7Qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cpQAJaWh/mQpNES7vQCS5iovX6QnfEbusTZZBTxfUgYRk5b2FuCagkoLs/4+8G/KQam42CFcB9XMbzG8SkN8MALZNavzykC4Yq6BXon02nf7efmTq+y6q3m20tNTbU/PnjqPo749cXBfE2YMfLMkLIW97yqX6TCRWGoPF6Fa1y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzFRGq/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YbOwP7Qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A725C4CEFB;
-	Sat, 25 Oct 2025 16:13:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzFRGq/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2C7C4CEFF;
+	Sat, 25 Oct 2025 16:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408836;
-	bh=zVtHnfPXG4ioxX+DlgXGFZiXd2qgpVY5VuTt9jhmCqU=;
+	s=k20201202; t=1761408837;
+	bh=nrapjmA7M3Dr/9BWfufzxZxVh8c9KYj9lkcmoQHrBw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbOwP7QwePA8fGDUTJWGSWAG7qbQ1Iym1GQkBEuSZcjDOtyFwXLLTprPB2z13gMJM
-	 nBnlmHniVN1aJvGMFeRh3UT8qbkgKCxsx8ada608Nz+5iLP7wSWFCBAssFvR5TljkR
-	 YYvyVCNrGcYYRXe+rT0a/9DjZfyTzKXpZ1iPYDPviIDbnHBboyH4eSAHWKLBWoLHs8
-	 AbnFTd6zcAq0ZacrZ1Zx8nfxPdF9tPVIh55xCyWResVNxGyTdPIRz4gaa5+iBQ1CWz
-	 bLnvj2TjO8emxcKsclWYcJAyZl59wZ2qCb+Ib5qEFPt7nxe8eXz3UJ0E7/IF4OdWqb
-	 y0nmfRe2pT/Cg==
+	b=tzFRGq/Tr1H3s08LF1m1inPVf2nwC6MXXQqPHfZr2sieg+NmfYuUS/HOk0l+UdNaq
+	 vhtfF484Otv9Pp8GhthbDzasYLcsGV0fz8e5edkQa0wkHHm6ZMD4IjkMxBpDjSK2RZ
+	 I4ToS/Tej9+royjA9hF/WHuuRGOO5tH8Te5e7IG9dx11HVEWuISgAI7Hc0u4KFVPFT
+	 ZEZnDXsl0IZaHseAOpxGVslb1Add4QOk+qDSwHdYUiG/lMYS+vKMxtMKK1S9cw46wF
+	 xIm1C87RXrDiF7RTbghP+ejl/fx48r1qO8yNKirjHjBSH4iGnQ026aMoWXUtybzqzi
+	 U+oelv535Ilqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Mike Marshall <hubcap@omnibond.com>,
+	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	mani@kernel.org,
-	alim.akhtar@samsung.com,
-	chenyuan0y@gmail.com,
-	ping.gao@samsung.com,
-	alok.a.tiwari@oracle.com,
-	alexandre.f.demers@gmail.com,
-	avri.altman@sandisk.com,
-	beanhuo@micron.com,
-	adrian.hunter@intel.com,
-	quic_cang@quicinc.com,
-	quic_nitirawa@quicinc.com,
-	neil.armstrong@linaro.org,
-	linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17] scsi: ufs: core: Change MCQ interrupt enable flow
-Date: Sat, 25 Oct 2025 11:55:23 -0400
-Message-ID: <20251025160905.3857885-92-sashal@kernel.org>
+	devel@lists.orangefs.org
+Subject: [PATCH AUTOSEL 6.17-5.4] orangefs: fix xattr related buffer overflow...
+Date: Sat, 25 Oct 2025 11:55:24 -0400
+Message-ID: <20251025160905.3857885-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -69,141 +51,116 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit 253757797973c54ea967f8fd8f40d16e4a78e6d4 ]
+[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
 
-Move the MCQ interrupt enable process to
-ufshcd_mcq_make_queues_operational() to ensure that interrupts are set
-correctly when making queues operational, similar to
-ufshcd_make_hba_operational(). This change addresses the issue where
-ufshcd_mcq_make_queues_operational() was not fully operational due to
-missing interrupt enablement.
+Willy Tarreau <w@1wt.eu> forwarded me a message from
+Disclosure <disclosure@aisle.com> with the following
+warning:
 
-This change only affects host drivers that call
-ufshcd_mcq_make_queues_operational(), i.e. ufs-mediatek.
+> The helper `xattr_key()` uses the pointer variable in the loop condition
+> rather than dereferencing it. As `key` is incremented, it remains non-NULL
+> (until it runs into unmapped memory), so the loop does not terminate on
+> valid C strings and will walk memory indefinitely, consuming CPU or hanging
+> the thread.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+I easily reproduced this with setfattr and getfattr, causing a kernel
+oops, hung user processes and corrupted orangefs files. Disclosure
+sent along a diff (not a patch) with a suggested fix, which I based
+this patch on.
+
+After xattr_key started working right, xfstest generic/069 exposed an
+xattr related memory leak that lead to OOM. xattr_key returns
+a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
+used hash_add, a kernel hashing macro. hash_add also hashes the key using
+hash_log which resulted in additions to the xattr cache going to the wrong
+hash bucket. generic/069 tortures a single file and orangefs does a
+getattr for the xattr "security.capability" every time. Orangefs
+negative caches on xattrs which includes a kmalloc. Since adds to the
+xattr cache were going to the wrong bucket, every getattr for
+"security.capability" resulted in another kmalloc, none of which were
+ever freed.
+
+I changed the two uses of hash_add to hlist_add_head instead
+and the memory leak ceased and generic/069 quit throwing furniture.
+
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `ufs-mediatek` is the only host driver that calls
-  `ufshcd_mcq_make_queues_operational()` directly
-  (`drivers/ufs/host/ufs-mediatek.c:1654`). Without this patch, that
-  path never enables the MCQ-specific interrupt bits, so after MCQ
-  reconfiguration the controller cannot receive queue completion
-  interrupts and I/O stalls.
-- The fix moves the interrupt enable step into
-  `ufshcd_mcq_make_queues_operational()` itself (`drivers/ufs/core/ufs-
-  mcq.c:355`), so every caller—both the core flow and the MediaTek
-  vops—now enables `UFSHCD_ENABLE_MCQ_INTRS`, while still honoring
-  `UFSHCD_QUIRK_MCQ_BROKEN_INTR`.
-- To make that call possible from `ufs-mcq.c`, the patch simply exports
-  `ufshcd_enable_intr()` and its prototype
-  (`drivers/ufs/core/ufshcd.c:336`, `include/ufs/ufshcd.h:1310`). This
-  does not alter behavior for existing callers; it just exposes the
-  already-used helper.
-- The change is small, self-contained, and limited to MCQ bring-up. It
-  fixes a real functional regression introduced when MCQ support landed
-  for MediaTek platforms, with no architectural churn and minimal
-  regression risk.
+- Fix makes `xattr_key()` terminate on the terminating NUL
+  (`fs/orangefs/xattr.c:54-61`); the old `while (key)` loop never ended,
+  so any user who ran `setfattr`/`getfattr` hit an infinite scan,
+  leading to faults, hangs, and reported OrangeFS corruption. That is a
+  serious, user-triggerable bug worth fixing in stable.
+- Added NULL guard in the same helper (`fs/orangefs/xattr.c:57-58`)
+  keeps the cache code from hashing bogus pointers; this is defensive,
+  tightly scoped, and carries no observable side effects for valid
+  callers.
+- Entries now go straight into the bucket chosen by `xattr_key()` via
+  `hlist_add_head()` (`fs/orangefs/xattr.c:180-181` and
+  `fs/orangefs/xattr.c:234-235`). Previously `hash_add()` rehashed the
+  already-reduced key, so `find_cached_xattr()`’s bucket walk
+  (`fs/orangefs/xattr.c:71-82`) never located cached/negative entries,
+  leaking a `kmalloc()` on every lookup until OOM (seen in xfstest
+  generic/069). The new storage method matches the existing
+  lookup/removal logic and the cleanup walk in `hash_for_each_safe()`
+  (`fs/orangefs/super.c:115-131`), so it simply restores the intended
+  caching behaviour.
+- Change set stays within `fs/orangefs/xattr.c`, doesn’t alter
+  interfaces, and directly resolves the regression; without it OrangeFS
+  remains trivially DoS-able and leaky. With it, functionality is
+  restored and risk is low, making this a strong stable backport
+  candidate.
 
- drivers/ufs/core/ufs-mcq.c | 11 +++++++++++
- drivers/ufs/core/ufshcd.c  | 12 +-----------
- include/ufs/ufshcd.h       |  1 +
- 3 files changed, 13 insertions(+), 11 deletions(-)
+Suggested next step: rerun xfstest generic/069 on the target stable
+branch to confirm the leak is gone.
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index cc88aaa106da3..c9bdd4140fd04 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -29,6 +29,10 @@
- #define MCQ_ENTRY_SIZE_IN_DWORD	8
- #define CQE_UCD_BA GENMASK_ULL(63, 7)
- 
-+#define UFSHCD_ENABLE_MCQ_INTRS	(UTP_TASK_REQ_COMPL |\
-+				 UFSHCD_ERROR_MASK |\
-+				 MCQ_CQ_EVENT_STATUS)
-+
- /* Max mcq register polling time in microseconds */
- #define MCQ_POLL_US 500000
- 
-@@ -355,9 +359,16 @@ EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_lock);
- void ufshcd_mcq_make_queues_operational(struct ufs_hba *hba)
+ fs/orangefs/xattr.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
+index 74ef75586f384..eee3c5ed1bbbb 100644
+--- a/fs/orangefs/xattr.c
++++ b/fs/orangefs/xattr.c
+@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
+ static unsigned int xattr_key(const char *key)
  {
- 	struct ufs_hw_queue *hwq;
-+	u32 intrs;
- 	u16 qsize;
- 	int i;
+ 	unsigned int i = 0;
+-	while (key)
++	if (!key)
++		return 0;
++	while (*key)
+ 		i += *key++;
+ 	return i % 16;
+ }
+@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 				cx->length = -1;
+ 				cx->timeout = jiffies +
+ 				    orangefs_getattr_timeout_msecs*HZ/1000;
+-				hash_add(orangefs_inode->xattr_cache, &cx->node,
+-				    xattr_key(cx->key));
++				hlist_add_head( &cx->node,
++                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 			}
+ 		}
+ 		goto out_release_op;
+@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 			memcpy(cx->val, buffer, length);
+ 			cx->length = length;
+ 			cx->timeout = jiffies + HZ;
+-			hash_add(orangefs_inode->xattr_cache, &cx->node,
+-			    xattr_key(cx->key));
++			hlist_add_head(&cx->node,
++				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 		}
+ 	}
  
-+	/* Enable required interrupts */
-+	intrs = UFSHCD_ENABLE_MCQ_INTRS;
-+	if (hba->quirks & UFSHCD_QUIRK_MCQ_BROKEN_INTR)
-+		intrs &= ~MCQ_CQ_EVENT_STATUS;
-+	ufshcd_enable_intr(hba, intrs);
-+
- 	for (i = 0; i < hba->nr_hw_queues; i++) {
- 		hwq = &hba->uhq[i];
- 		hwq->id = i;
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 1907c0f6eda0e..85d5e3938891a 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -45,11 +45,6 @@
- 				 UTP_TASK_REQ_COMPL |\
- 				 UFSHCD_ERROR_MASK)
- 
--#define UFSHCD_ENABLE_MCQ_INTRS	(UTP_TASK_REQ_COMPL |\
--				 UFSHCD_ERROR_MASK |\
--				 MCQ_CQ_EVENT_STATUS)
--
--
- /* UIC command timeout, unit: ms */
- enum {
- 	UIC_CMD_TIMEOUT_DEFAULT	= 500,
-@@ -372,7 +367,7 @@ EXPORT_SYMBOL_GPL(ufshcd_disable_irq);
-  * @hba: per adapter instance
-  * @intrs: interrupt bits
-  */
--static void ufshcd_enable_intr(struct ufs_hba *hba, u32 intrs)
-+void ufshcd_enable_intr(struct ufs_hba *hba, u32 intrs)
- {
- 	u32 old_val = ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
- 	u32 new_val = old_val | intrs;
-@@ -8925,16 +8920,11 @@ static int ufshcd_alloc_mcq(struct ufs_hba *hba)
- static void ufshcd_config_mcq(struct ufs_hba *hba)
- {
- 	int ret;
--	u32 intrs;
- 
- 	ret = ufshcd_mcq_vops_config_esi(hba);
- 	hba->mcq_esi_enabled = !ret;
- 	dev_info(hba->dev, "ESI %sconfigured\n", ret ? "is not " : "");
- 
--	intrs = UFSHCD_ENABLE_MCQ_INTRS;
--	if (hba->quirks & UFSHCD_QUIRK_MCQ_BROKEN_INTR)
--		intrs &= ~MCQ_CQ_EVENT_STATUS;
--	ufshcd_enable_intr(hba, intrs);
- 	ufshcd_mcq_make_queues_operational(hba);
- 	ufshcd_mcq_config_mac(hba, hba->nutrs);
- 
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index a4eb5bde46e88..a060fa71b2b1b 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1321,6 +1321,7 @@ static inline void ufshcd_rmwl(struct ufs_hba *hba, u32 mask, u32 val, u32 reg)
- 
- void ufshcd_enable_irq(struct ufs_hba *hba);
- void ufshcd_disable_irq(struct ufs_hba *hba);
-+void ufshcd_enable_intr(struct ufs_hba *hba, u32 intrs);
- int ufshcd_alloc_host(struct device *, struct ufs_hba **);
- int ufshcd_hba_enable(struct ufs_hba *hba);
- int ufshcd_init(struct ufs_hba *, void __iomem *, unsigned int);
 -- 
 2.51.0
 
