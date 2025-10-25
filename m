@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F510304BB9;
-	Sat, 25 Oct 2025 16:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAC305044;
+	Sat, 25 Oct 2025 16:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409069; cv=none; b=K57NjhyEC4Bbuk5z/q+mh+pQ8Ji8jTJs/S5vwXCIMFTlYbYaJqPihUhzwYPCyJfXRz20UqPN6bGI6pNlPDq7TqtkJLElUGyRp7Fe4aku31bLLShsuadyppkSsKGUDzAKWklhuw3paRo/5bm/nAIJpXNDcb3na5mAiB4ZYXHPk/s=
+	t=1761409071; cv=none; b=EROmKMXbq3jZW6mjA6cXJVQM2W/ACrd+9G90J0WJzX1Wo9eqit6pTks2AJzXtM4dVI0gPm3w1WCydoyw287w5+K49EJMHJ11kZOHIQyN71LV4IQhkGyvPHEWiB8T57kPZm8p9qcYoV2JEdMfnpedWaI50WKxMTyjhzamdlM7MPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409069; c=relaxed/simple;
-	bh=JpirMs34FD6wy+fvqw/cHdEWdsr7PCRgy41lr9iA4G8=;
+	s=arc-20240116; t=1761409071; c=relaxed/simple;
+	bh=oi0FjETQX+W7dZXME9M5RtKaF9y51UgpKRa6LGQ2e20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F1RlUcxNkVWEkA+H2N8ahR6lNuQP1gFl8EPQ13FqHLE8FgpBcWna4Hp4zw8tq0vqEPj1peN3+N3iZb/+zgDUQvHgvjV0EzwP7QdZXy/QFKPbb9RAfGRYFRVV7R/cnFU5S2uY/wbR3KP2zoJDGmSads11cqDrzz+EprtqWAdFqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLeiNM7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dvXhpKIy/003g6IvmZGLXF6UVwvw15cLWsWlB8oA4pEiasUn4syiO4MVgphD8XleU1vz6hFxghr9VTtCE26rX0AiJEPQrsV9UMn7r1xSboK2x0LC+p0lYGN+tAfjRsgpZR5TnxMpHVskGUV8TXw9cZX/AxTKETcwsy7MrPl7rDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SRIuMW8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLeiNM7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A2EC4CEF5;
-	Sat, 25 Oct 2025 16:17:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SRIuMW8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51DAC4CEFF;
+	Sat, 25 Oct 2025 16:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409069;
-	bh=JpirMs34FD6wy+fvqw/cHdEWdsr7PCRgy41lr9iA4G8=;
+	s=k20201202; t=1761409070;
+	bh=oi0FjETQX+W7dZXME9M5RtKaF9y51UgpKRa6LGQ2e20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLeiNM7JtOEEGxKIbtaFpWABGbb94wEcDH4Dzk1Vh9wpdz0LS5fVC+t3Z9tlxI3BU
-	 csncu2ZzkLXYGCApGF1pAje24V/naayPy+9wza1p+WKGNI967WOqm4CCUHkfG4iiHq
-	 kdK7Rqr0HYmRKRaGQWbmH+UNcXM1XeSKDNehuk0kFFh0K8HEJZ5aCvuINxQFQJnQiI
-	 TWG7C9nEpJWhKY1zjkfSIj4F6nN3UqEpe4RM7F4lKwAvCv9V1+UIKQQDF8kmrQg3Pw
-	 Ef4tx3haPTUi2sDFtlQVQt+JCxSMw2u7AY7FG/Rg2Th/2D4CgbKDJ/XgPtlUFEPDv2
-	 yaVVeZwO6NAtQ==
+	b=SRIuMW8wOi3LJI3MqIWkQMkFU/UdFLS+ZXn5uGwCDlJUHuG28W4sUtkRMG1LSfBZ+
+	 LbJgTdHUpl2iAVaypHoQ/5TF7hCi3xvbFSML/S6+dGdKPGfaX7ha6oxZn7R0owf7xN
+	 1h1KsVvN/k/61Qr5cb01fZUCRsDRsUyFeObI3LnWT7lce651uclIsS1n6qf1C7mrRp
+	 5x6+lwEUt7qh53mpq+L5zmim8/hBf4rQXtCTSSwlxCOMX5ysTi1zuu/D5Cgl4rAASE
+	 nYypphyOh1zhJrjBXmZZFm0Ro0fCLjvawDIMYCXWEAvpOig8agXFpOMje8eCNwkA1o
+	 /M2WCJCUt2IjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vlad Dumitrescu <vdumitrescu@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tariqt@nvidia.com,
-	kuba@kernel.org,
-	cjubran@nvidia.com,
-	cratiu@nvidia.com,
-	mbloch@nvidia.com,
-	gal@nvidia.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.12] IB/ipoib: Ignore L3 master device
-Date: Sat, 25 Oct 2025 11:57:01 -0400
-Message-ID: <20251025160905.3857885-190-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] selftests: Disable dad for ipv6 in fcnal-test.sh
+Date: Sat, 25 Oct 2025 11:57:02 -0400
+Message-ID: <20251025160905.3857885-191-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -59,127 +55,100 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit 42f993d3439827c4959ea77e60620d7ebfb3a477 ]
+[ Upstream commit 53d591730ea34f97a82f7ec6e7c987ca6e34dc21 ]
 
-Currently, all master upper netdevices (e.g., bond, VRF) are treated
-equally.
+Constrained test environment; duplicate address detection is not needed
+and causes races so disable it.
 
-When a VRF netdevice is used over an IPoIB netdevice, the expected
-netdev resolution is on the lower IPoIB device which has the IP address
-assigned to it and not the VRF device.
-
-The rdma_cm module (CMA) tries to match incoming requests to a
-particular netdevice. When successful, it also validates that the return
-path points to the same device by performing a routing table lookup.
-Currently, the former would resolve to the VRF netdevice, while the
-latter to the correct lower IPoIB netdevice, leading to failure in
-rdma_cm.
-
-Improve this by ignoring the VRF master netdevice, if it exists, and
-instead return the lower IPoIB device.
-
-Signed-off-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20250916111103.84069-5-edwards@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250910025828.38900-1-dsahern@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – this change fixes a real regression for VRF users with almost no
-risk.
+YES
 
-- `ipoib_get_master_net_dev()` now skips L3 masters and returns the
-  underlying IPoIB device
-  (`drivers/infiniband/ulp/ipoib/ipoib_main.c:361-374`). Without this,
-  the helper hands `rdma_cm` the VRF device when matching by pkey/GID;
-  the follow-up route validation in `validate_net_dev()` insists on the
-  same device that the fib lookup returns
-  (`drivers/infiniband/core/cma.c:1589-1616`), so requests fail today.
-- With the new `netif_is_l3_master()` guard we still return true L2
-  masters such as bonds, so existing bonding setups stay intact while
-  VRF stacks finally resolve to the only device that actually carries
-  the IP address (same file, same lines).
-- This helper is static and only called via
-  `ipoib_match_gid_pkey_addr()`
-  (`drivers/infiniband/ulp/ipoib/ipoib_main.c:500-505`), so the fix is
-  tightly scoped; the extra comment edits
-  (`drivers/infiniband/ulp/ipoib/ipoib_main.c:526-541`) are
-  clarifications only.
-- The buggy behavior has been present since IPoIB added the connection-
-  parameter matching helper (`ddde896e561a5`), so all maintained stable
-  kernels inherit the failure. The fix relies only on long-existing
-  helpers and keeps the same refcounting pattern, making the backport
-  straightforward.
+**Rationale**
+- Fixes real test flakiness: IPv6 Duplicate Address Detection (DAD) in
+  constrained netns-based selftests can leave addresses “tentative” and
+  create timing races. Disabling DAD makes IPv6 addresses usable
+  immediately, eliminating nondeterministic failures the commit message
+  calls out.
+- Small, surgical change: Adds two `sysctl` writes in the namespace
+  setup function to disable DAD; no broader logic changes.
+- Consistent with existing practice: Many net selftests already disable
+  DAD to stabilize execution, so this aligns `fcnal-test.sh` with the
+  rest of the suite.
 
-Next step: 1) Validate with an RDMA connection over an IPoIB device
-enslaved to a VRF to confirm the CMA path succeeds after backport.
+**Scope and Risk**
+- Test-only change under `tools/testing/selftests/`; no impact on kernel
+  runtime or userspace APIs.
+- No architectural changes; confined to `create_ns()` namespace
+  initialization.
+- Low regression risk: `fcnal-test.sh` does not validate DAD behavior
+  and already uses `nodad` where needed and even sleeps for DAD in
+  places, indicating this is purely to avoid races, not to test DAD.
 
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+**Code References**
+- New sysctls added to `create_ns()` disable DAD for both existing and
+  future interfaces in the ns:
+  - `tools/testing/selftests/net/fcnal-test.sh:427`: `ip netns exec
+    ${ns} sysctl -qw net.ipv6.conf.default.accept_dad=0`
+  - `tools/testing/selftests/net/fcnal-test.sh:428`: `ip netns exec
+    ${ns} sysctl -qw net.ipv6.conf.all.accept_dad=0`
+- Context shows this is part of standard IPv6 netns setup already
+  setting related sysctls:
+  - `tools/testing/selftests/net/fcnal-test.sh:424`:
+    `net.ipv6.conf.all.keep_addr_on_down=1`
+  - `tools/testing/selftests/net/fcnal-test.sh:425`:
+    `net.ipv6.conf.all.forwarding=1`
+  - `tools/testing/selftests/net/fcnal-test.sh:426`:
+    `net.ipv6.conf.default.forwarding=1`
+- The script already works around DAD in specific places (underscoring
+  the race):
+  - `tools/testing/selftests/net/fcnal-test.sh:4084`: `sleep 5 # DAD`
+  - Multiple address additions use `nodad` (e.g.,
+    `tools/testing/selftests/net/fcnal-test.sh:393`, `3324`, `3602`,
+    `4076`, `4125`, `4129`).
+- Precedent across other net selftests (common pattern to disable DAD):
+  - `tools/testing/selftests/net/traceroute.sh:65`:
+    `net.ipv6.conf.default.accept_dad=0`
+  - `tools/testing/selftests/net/fib_nexthops.sh:168`:
+    `net.ipv6.conf.all.accept_dad=0`
+  - `tools/testing/selftests/net/fib_nexthops.sh:169`:
+    `net.ipv6.conf.default.accept_dad=0`
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index 7acafc5c0e09a..5b4d76e97437d 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -351,26 +351,27 @@ static bool ipoib_is_dev_match_addr_rcu(const struct sockaddr *addr,
+**Stable Criteria**
+- Fixes important flakiness affecting users of stable selftests.
+- Minimal, contained change with negligible risk.
+- No features or architectural shifts; strictly improves test
+  determinism.
+- Touches only selftests; safe for all stable series carrying this test.
+
+Given the above, this is a good candidate for stable backport to keep
+the selftests reliable and deterministic.
+
+ tools/testing/selftests/net/fcnal-test.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index f0fb114764b24..cf535c23a959a 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -424,6 +424,8 @@ create_ns()
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.keep_addr_on_down=1
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.forwarding=1
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.forwarding=1
++	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.accept_dad=0
++	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.accept_dad=0
  }
  
- /*
-- * Find the master net_device on top of the given net_device.
-+ * Find the L2 master net_device on top of the given net_device.
-  * @dev: base IPoIB net_device
-  *
-- * Returns the master net_device with a reference held, or the same net_device
-- * if no master exists.
-+ * Returns the L2 master net_device with reference held if the L2 master
-+ * exists (such as bond netdevice), or returns same netdev with reference
-+ * held when master does not exist or when L3 master (such as VRF netdev).
-  */
- static struct net_device *ipoib_get_master_net_dev(struct net_device *dev)
- {
- 	struct net_device *master;
- 
- 	rcu_read_lock();
-+
- 	master = netdev_master_upper_dev_get_rcu(dev);
-+	if (!master || netif_is_l3_master(master))
-+		master = dev;
-+
- 	dev_hold(master);
- 	rcu_read_unlock();
- 
--	if (master)
--		return master;
--
--	dev_hold(dev);
--	return dev;
-+	return master;
- }
- 
- struct ipoib_walk_data {
-@@ -522,7 +523,7 @@ static struct net_device *ipoib_get_net_dev_by_params(
- 	if (ret)
- 		return NULL;
- 
--	/* See if we can find a unique device matching the L2 parameters */
-+	/* See if we can find a unique device matching the pkey and GID */
- 	matches = __ipoib_get_net_dev_by_params(dev_list, port, pkey_index,
- 						gid, NULL, &net_dev);
- 
-@@ -535,7 +536,7 @@ static struct net_device *ipoib_get_net_dev_by_params(
- 
- 	dev_put(net_dev);
- 
--	/* Couldn't find a unique device with L2 parameters only. Use L3
-+	/* Couldn't find a unique device with pkey and GID only. Use L3
- 	 * address to uniquely match the net device */
- 	matches = __ipoib_get_net_dev_by_params(dev_list, port, pkey_index,
- 						gid, addr, &net_dev);
+ # create veth pair to connect namespaces and apply addresses.
 -- 
 2.51.0
 
