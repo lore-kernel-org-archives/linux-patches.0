@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB3F305957;
-	Sat, 25 Oct 2025 16:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBD530ACE8;
+	Sat, 25 Oct 2025 16:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408998; cv=none; b=lAOWPmWsp7xvSN6WmRx88TsqkIYXkzd67wDQsDZvpfvH1zXkLjVnnIwYRZQX1aRAC/ZEFv8DqKGFbT+tFpSJtxwAVvQSK3xF75FzMqG1XEVxhWpzLmyZilyRWGMgrkjx7VFeT0XBh9lotkg3ud1Ny87nPsg1qOeLtuSbmdP90Bg=
+	t=1761409000; cv=none; b=b5MQn6+eFS3UTbqRmxZVA4ktPmtQ8yK98YyIcIcBsjHjBW6qgrEVXhpaC3US+vURUbOVBN5ydy2uRa2raZceASBYt7YUNKPFS2vH1QtqpaNaCyS3Dh578hNpkRbxqM6kRM/BcBEB9G/CpZKys+3EOF/8e4RzHE/6pu5OD1358fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408998; c=relaxed/simple;
-	bh=D66r0THAaqiaUxNKszvcN3SewIVNQzg5lzzpO44zkuk=;
+	s=arc-20240116; t=1761409000; c=relaxed/simple;
+	bh=BJNj1AKX4x8khA3V2BuAeQsKGL0gnc5G62vc3d98SzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l+3+yYZB5UDm9HgFtPzJC/sxm/Xc+Cg1QBR0ulTnnSypS8GyNHP+JX3dYxkjDTjXoXTnGiam8ZAFK+1yGV40aHIAqHwEUAALAZPOIB359lM54TScV/1CSYDrMaDLooFzWj7LiJJkI1TKu0CvVn0YzelEAWcd+7EChVKtGshuug0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AWGPpGUB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NfTRud16jVMB+BLB3iwhQpbcA06Gw2miSJq9DbDcanEJmTlXEagZiE6y6eyfZ8I20lIa4iVtzGRVJ/N5nir2H187M7MHksW1TIARNvk5hcqvse1+SFEbMcfZPFCypwjsgGDGyZKnCR67/YT20+FEtbCSEasJyDbFOsfGWuTqWsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CPIYGQit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AWGPpGUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D00C113D0;
-	Sat, 25 Oct 2025 16:16:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CPIYGQit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB9AC4CEFB;
+	Sat, 25 Oct 2025 16:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408998;
-	bh=D66r0THAaqiaUxNKszvcN3SewIVNQzg5lzzpO44zkuk=;
+	s=k20201202; t=1761409000;
+	bh=BJNj1AKX4x8khA3V2BuAeQsKGL0gnc5G62vc3d98SzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWGPpGUBYGywV680OOKUnH3cDSL8LLF8n1pvb1G2fwFE6Iz29OZiITbKvPASj2llS
-	 aCblOlGA3/aaR64OONwQnhV52CmUejZbv8BeyVzbIJ1vjhpCkrkL7eLNGM5OoaIP4N
-	 /ZHba4e49u4yMnwg/5ppl4tBq+sANfmlF1avipI9ITJE/yWTCK310CRUQ55hdYc/dl
-	 ELp1nWHPA7U/yeW7yMllQ7l1u1aA/LlwN6LSZyvhjev2FI2LYS/vupH3f8JD3sfrzc
-	 m7dmHonsksxviiSeuQKRGbUGR3GlBZsibhpJVIUBaX06/FkXz4Wjo8130N0zZlg23x
-	 4NWQDfO/bPsQg==
+	b=CPIYGQitIuGVOHLExI6hVPNjCjoZxtNmL067vCxYnarugMoytfXI2cTRALvaAG3Yd
+	 w12SYStShAxlvt0WeIlPhhFmowsu3/b8WsSLG+IEUjibgU44RnhrfLXtumemy9PMtN
+	 n9AW0cP4ExuXYrYPAsNBiUVmh3n1xD2T0o2X25GqpFogkvK9OyguXYGfTjSistyawa
+	 8hALd0rcZEi2gRhZdaqVroO6F9e6XGmc8p+ZClKLVw0EVTVE7RW4i1CGOVpr63ZSww
+	 2BYDz83IWHUBGlIt5Jzb7qNvmCI33qv9v9KWfmeZDxjXbZ4HDpArL7v9TeFk6b9ckN
+	 EzGH4o7tC2aRw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alessandro Zanni <alessandro.zanni87@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] selftest: net: Fix error message if empty variable
-Date: Sat, 25 Oct 2025 11:56:39 -0400
-Message-ID: <20251025160905.3857885-168-sashal@kernel.org>
+	rmfrfs@gmail.com,
+	shawnguo@kernel.org,
+	linux-media@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17] media: imx-mipi-csis: Only set clock rate when specified in DT
+Date: Sat, 25 Oct 2025 11:56:40 -0400
+Message-ID: <20251025160905.3857885-169-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,66 +56,150 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Zanni <alessandro.zanni87@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 81dcfdd21dbd7067068c7c341ee448c3f0d6f115 ]
+[ Upstream commit 65673c6e33cf46f220cc5774166b373b3c087739 ]
 
-Fix to avoid cases where the `res` shell variable is
-empty in script comparisons.
-The comparison has been modified into string comparison to
-handle other possible values the variable could assume.
+The imx-mipi-csis driver sets the rate of the wrap clock to the value
+specified in the device tree's "clock-frequency" property, and defaults
+to 166 MHz otherwise. This is a historical mistake, as clock rate
+selection should have been left to the assigned-clock-rates property.
 
-The issue can be reproduced with the command:
-make kselftest TARGETS=net
+Honouring the clock-frequency property can't be removed without breaking
+backwards compatibility, and the corresponding code isn't very
+intrusive. The 166 MHz default, on the other hand, prevents
+configuration of the clock rate through assigned-clock-rates, as the
+driver immediately overwrites the rate. This behaviour is confusing and
+has cost debugging time.
 
-It solves the error:
-./tfo_passive.sh: line 98: [: -eq: unary operator expected
+There is little value in a 166 MHz default. All mainline device tree
+sources that enable the CSIS specify a clock-frequency explicitly, and
+the default wrap clock configuration on supported platforms is at least
+as high as 166 MHz. Drop the default, and only set the clock rate
+manually when the clock-frequency property is specified.
 
-Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250925132832.9828-1-alessandro.zanni87@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20250822002734.23516-10-laurent.pinchart@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `tools/testing/selftests/net/tfo_passive.sh:95-101` now quotes `res`
-  and switches to a string comparison, eliminating the `[: -eq: unary
-  operator expected` error that surfaces when the output file is empty
-  during `make kselftest TARGETS=net`; without the fix the harness stops
-  before it can report the real problem.
-- The test still fails only when the passive TFO socket actually returns
-  an invalid NAPI ID, because the server helper continues to emit the
-  decimal string produced in `tools/testing/selftests/net/tfo.c:80-85`,
-  so legitimate `"0"` results are caught exactly as before while other
-  values (including blanks) no longer crash the script.
-- This is a one-line, self-contained shell fix with no kernel-side
-  impact and no new feature work; once commit `137e7b5cceda2` (which
-  introduced the test) exists in a stable tree, backporting is trivial
-  and restores the test’s usefulness.
-- Risk of regression is essentially nil: the change follows standard
-  shell best practices (quoting and string equality) and only affects
-  the selftest infrastructure, improving reliability without touching
-  runtime behaviour.
 
- tools/testing/selftests/net/tfo_passive.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Why this is a bug fix
+- The driver unconditionally forced the wrap clock to 166 MHz when the
+  DT lacked a clock-frequency property, which overrides DT-assigned
+  clock rates. That breaks the expected DT model where `assigned-clock-
+  rates` controls rates, leading to misconfiguration and hard-to-debug
+  behavior.
+- This change stops overriding the clock unless the DT explicitly
+  requests it, restoring correct DT semantics.
 
-diff --git a/tools/testing/selftests/net/tfo_passive.sh b/tools/testing/selftests/net/tfo_passive.sh
-index 80bf11fdc0462..a4550511830a9 100755
---- a/tools/testing/selftests/net/tfo_passive.sh
-+++ b/tools/testing/selftests/net/tfo_passive.sh
-@@ -95,7 +95,7 @@ wait
- res=$(cat $out_file)
- rm $out_file
+What changed (code references)
+- Set rate only when explicitly requested:
+  - `drivers/media/platform/nxp/imx-mipi-csis.c:744` now guards
+    `clk_set_rate()` with `if (csis->clk_frequency) { ... }`, meaning
+    the driver only sets the rate when the DT provided `clock-
+    frequency`.
+- Drop the 166 MHz fallback:
+  - `drivers/media/platform/nxp/imx-mipi-csis.c:1483` now reads `clock-
+    frequency` without assigning a default if the property is absent,
+    removing the prior implicit 166 MHz default.
+- The removal of the default macro and fallback behavior eliminates the
+  unconditional override while preserving backward compatibility for DTs
+  that do specify `clock-frequency`.
+
+Why it matters (user impact)
+- Systems using `assigned-clock-rates` in DT were previously ignored by
+  the driver due to the unconditional 166 MHz set, causing unexpected
+  clock rates and potential functional issues.
+- With this patch, DT-provided assigned rates take effect unless a
+  legacy DT explicitly uses `clock-frequency`, which is retained for
+  compatibility.
+
+Risk and compatibility
+- Scope is small and contained to one driver; no core or architectural
+  changes.
+- Backward compatibility is preserved for legacy DTs that specify
+  `clock-frequency` (the driver still sets the rate in that case).
+- For DTs without `clock-frequency`, the driver no longer forces 166 MHz
+  and leaves the rate to the clock framework/DT assignments. The commit
+  rationale notes that all mainline DTs enabling CSIS already specify
+  `clock-frequency`, and default platform wrap clock configurations are
+  at least as high as 166 MHz, reducing regression risk.
+- The only functional behavior change is the removal of an incorrect
+  default that masked DT configuration.
+
+Stable criteria assessment
+- Fixes a real misbehavior that affects users (DT `assigned-clock-rates`
+  ignored).
+- Minimal, well-contained change in a single driver file.
+- No new features or architectural changes.
+- Low regression risk with explicit consideration for legacy DT
+  compatibility.
+- No explicit “Cc: stable” or “Fixes” tag, but technically aligns with
+  stable policy as a correctness fix that removes a problematic default
+  override.
+
+Conclusion
+- This is a clear, low-risk bug fix that restores proper DT semantics
+  and prevents the driver from clobbering assigned clock rates. It
+  should be backported to stable.
+
+ drivers/media/platform/nxp/imx-mipi-csis.c | 23 +++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
+index 2beb5f43c2c01..cea017a2b14ec 100644
+--- a/drivers/media/platform/nxp/imx-mipi-csis.c
++++ b/drivers/media/platform/nxp/imx-mipi-csis.c
+@@ -228,8 +228,6 @@
+ #define MIPI_CSIS_PKTDATA_EVEN			0x3000
+ #define MIPI_CSIS_PKTDATA_SIZE			SZ_4K
  
--if [ $res -eq 0 ]; then
-+if [ "$res" = "0" ]; then
- 	echo "got invalid NAPI ID from passive TFO socket"
- 	cleanup_ns
- 	exit 1
+-#define DEFAULT_SCLK_CSIS_FREQ			166000000UL
+-
+ struct mipi_csis_event {
+ 	bool debug;
+ 	u32 mask;
+@@ -704,12 +702,17 @@ static int mipi_csis_clk_get(struct mipi_csis_device *csis)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	/* Set clock rate */
+-	ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
+-			   csis->clk_frequency);
+-	if (ret < 0)
+-		dev_err(csis->dev, "set rate=%d failed: %d\n",
+-			csis->clk_frequency, ret);
++	if (csis->clk_frequency) {
++		/*
++		 * Set the clock rate. This is deprecated, for backward
++		 * compatibility with old device trees.
++		 */
++		ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
++				   csis->clk_frequency);
++		if (ret < 0)
++			dev_err(csis->dev, "set rate=%d failed: %d\n",
++				csis->clk_frequency, ret);
++	}
+ 
+ 	return ret;
+ }
+@@ -1413,9 +1416,7 @@ static int mipi_csis_parse_dt(struct mipi_csis_device *csis)
+ {
+ 	struct device_node *node = csis->dev->of_node;
+ 
+-	if (of_property_read_u32(node, "clock-frequency",
+-				 &csis->clk_frequency))
+-		csis->clk_frequency = DEFAULT_SCLK_CSIS_FREQ;
++	of_property_read_u32(node, "clock-frequency", &csis->clk_frequency);
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
