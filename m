@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A346030ACE8;
-	Sat, 25 Oct 2025 16:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC42330ACE8;
+	Sat, 25 Oct 2025 16:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409001; cv=none; b=DGzLzlx2JIv9lz+pYxkRiIxASKNgJms7sOTXwo5drFOKqrklzodbuGBntYW4X73fDAC1s/uNBHkN8furzQn0WW7gDWvta0pAF/uN3v2U2MLKjsqGrE4asmRmZmBmqyawfUpqsEIOhC/SiYhr1md9Lc99ApWocZXe5WeoLbuChjE=
+	t=1761409003; cv=none; b=KnIpegO5Vmb5inDA5RruM8yIMm+sIM4vw/ZdB9Xs08d+eIp0B/TAI7a60j3tzdVSCBEr8fN7ZwK4iy+qBqX7KhOqs+CzUCgx8vo504S893ktBC84GGWv6C9YZrzW2/2yHLIcbs8/GdomdP9kiMXz7O6on19Bke1LGSiOlNqHNek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409001; c=relaxed/simple;
-	bh=0DiN0DSS30aJOKfK0GaeAJCDUFPsH0AHzAp/5NqMP8w=;
+	s=arc-20240116; t=1761409003; c=relaxed/simple;
+	bh=Gesk0ASuyTAfunuOvLuCRzKYyT5uQPadnmuiy0zAXeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g9O1mj9vfaNfMyIQ2fuYpK+uSjGeje1prUQvnNkSWnBIOlPf1ANnP3irLgOipjArfawzpw0/YPy/A+Zz4arGHOmo9Wy5oReABeNzTjg5UtlQ5b2IZGLNCgDmxWmKjadLlvPjp93rHr3xrsyG6oRt+bHG/5545K3q/e64iTE4QlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iujTM3QP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=spm2fXrt2c1wxB0INjLU0Egazswi1QHR6fG4ASIdstVadzSoWilRFJ3AMuLt4hrNTEh+YFLLaU1cSaP8FGnZ7rlBKJtFUt5PwNfVSWkByrrdeDhWv6bOrNJvbw3C/YlCitO/A0Y5SGLwzfxPQz6dzxjSpJlb9STPd5YySxenb60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cYlCPxD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iujTM3QP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6FDC4CEF5;
-	Sat, 25 Oct 2025 16:16:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cYlCPxD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A99C4CEFB;
+	Sat, 25 Oct 2025 16:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409001;
-	bh=0DiN0DSS30aJOKfK0GaeAJCDUFPsH0AHzAp/5NqMP8w=;
+	s=k20201202; t=1761409003;
+	bh=Gesk0ASuyTAfunuOvLuCRzKYyT5uQPadnmuiy0zAXeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iujTM3QPzkS7WgjVo3gElK55HEO19K8NDNZKddEkb3cmhhnoMO/oI2ADblnkWGQZE
-	 ZOpfTUZyc23VbIR69fa3IsPdGGJQECZFWCAyhNNwFWu8xOhIN0P0OWdtXe778bho2v
-	 CGmxSDWxMmmuSjdJHpv36giKH+LksFIcDT7jrNqdSIhNTVULCZEl47Ci/H5sCnDrIR
-	 +FUzkTU7JJzhb8O2bSwwNBFXBlE7HpqtoJyqAsyoTZQo38EeibnGbfbdJzmCotRkpK
-	 Dx5yTRHyQfpGnP85QDGkXaaYC/Xvub5dVQJqPhG15M8Dxc8tf8rBWUXNf2plWwIrHo
-	 hLZWn+BToUZTg==
+	b=cYlCPxD3+PmidwiYDUKiPKKtm/sOmZMC+56DQBahavtoaeDsLbsUuItZuISSmdG0L
+	 yTKVdq90S5NJoA1L9xi4T52CXYSkBuH5SgqQYPb7vHa2lUzyXR/g0ITs0VY+E9Z3qu
+	 YQB06cxsfU04/1TYXmVcLWaDUaS5FkFuYkNws8J1Q8bl17VQTe9CzGjOFs9hzmw51i
+	 gQYenZ6jDVlCyFsdsBR+FWbPEF2Sk35F3XEnaRNX6XENUu++XLSREP2gqy+R1p9W/r
+	 D/uk4dR4igWQt4bZGO+ChPw4QJERvY5h0r/aQHRItpDybbsAF4mzdnPfHR3SLEJVYe
+	 AW79vb0OO8fdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Palash Kambar <quic_pkambar@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] scsi: ufs: ufs-qcom: Align programming sequence of Shared ICE for UFS controller v5
-Date: Sat, 25 Oct 2025 11:56:41 -0400
-Message-ID: <20251025160905.3857885-170-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.4] mips: lantiq: danube: add missing properties to cpu node
+Date: Sat, 25 Oct 2025 11:56:42 -0400
+Message-ID: <20251025160905.3857885-171-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,26 +52,20 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Palash Kambar <quic_pkambar@quicinc.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 3126b5fd02270380cce833d06f973a3ffb33a69b ]
+[ Upstream commit e8dee66c37085dc9858eb8608bc783c2900e50e7 ]
 
-Disabling the AES core in Shared ICE is not supported during power
-collapse for UFS Host Controller v5.0, which may lead to data errors
-after Hibern8 exit. To comply with hardware programming guidelines and
-avoid this issue, issue a sync reset to ICE upon power collapse exit.
+This fixes the following warnings:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpus: '#address-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/cpus.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpus: '#size-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/cpus.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpu@0 (mips,mips24Kc): 'reg' is a required property
+	from schema $id: http://devicetree.org/schemas/mips/cpus.yaml#
 
-Hence follow below steps to reset the ICE upon exiting power collapse
-and align with Hw programming guide.
-
-a. Assert the ICE sync reset by setting both SYNC_RST_SEL and
-   SYNC_RST_SW bits in UFS_MEM_ICE_CFG
-
-b. Deassert the reset by clearing SYNC_RST_SW in  UFS_MEM_ICE_CFG
-
-Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,133 +73,63 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Reasoning and code-specific analysis:
-- Fixes real data errors: The commit addresses data corruption “after
-  Hibern8 exit” on Qualcomm UFS Host Controller v5.0 when the Shared ICE
-  (Inline Crypto Engine) AES core state isn’t supported across power
-  collapse. This is a user-visible, serious bug that directly affects
-  storage reliability.
-- Small, localized change: The patch only touches the QCOM UFS variant
-  and adds a precise reset sequence in the resume path, tightly scoped
-  to the problematic hardware revision.
+- What it fixes
+  - Adds required properties to the CPU description so the DT validates
+    cleanly against schemas, eliminating build-time errors/warnings:
+    - Adds `#address-cells = <1>` and `#size-cells = <0>` to the `cpus`
+      node (arch/mips/boot/dts/lantiq/danube.dtsi:8–9), matching
+      `cpus.yaml` requirements.
+    - Adds `reg = <0>` to `cpu@0`
+      (arch/mips/boot/dts/lantiq/danube.dtsi:13), matching
+      `mips/cpus.yaml` requirements.
+  - Directly addresses the warnings listed in the commit message,
+    improving DT correctness and preventing build/CI failures in
+    environments treating schema violations as errors.
 
-What changed
-- New hardware register and bit definitions:
-  - Adds `UFS_MEM_ICE_CFG` (0x2600) to the QCOM vendor register map:
-    drivers/ufs/host/ufs-qcom.h:85
-  - Adds ICE sync reset bit definitions local to the source:
-    - `UFS_ICE_SYNC_RST_SEL` and `UFS_ICE_SYNC_RST_SW`:
-      drivers/ufs/host/ufs-qcom.c:41-42
-- Reset sequence on resume for UFS v5.0.0:
-  - After enabling lane clocks (drivers/ufs/host/ufs-qcom.c:755-757), if
-    the link is not active and the controller version is exactly 5.0.0,
-    issue an ICE sync reset:
-    - Assert reset by setting both `UFS_ICE_SYNC_RST_SEL |
-      UFS_ICE_SYNC_RST_SW` into `UFS_MEM_ICE_CFG`: drivers/ufs/host/ufs-
-      qcom.c:759-764
-    - Read back, clear both bits, sleep 50–100 µs to allow flops to
-      settle, write back, and read again: drivers/ufs/host/ufs-
-      qcom.c:764-773
-  - The gating condition confines the behavior to the exact affected
-    hardware: `host->hw_ver.major == 5 && host->hw_ver.minor == 0 &&
-    host->hw_ver.step == 0` and only when the link is not active:
-    drivers/ufs/host/ufs-qcom.c:759-763
-- Correct ordering with ICE reinit:
-  - The reset happens before `ufs_qcom_ice_resume(host)`
-    (drivers/ufs/host/ufs-qcom.c:776), and `ufs_qcom_ice_resume()` calls
-    `qcom_ice_resume()` which reinitializes HWKM and waits for BIST
-    (drivers/soc/qcom/ice.c:274-287). This ensures a clean reinit after
-    the reset.
+- Scope and risk
+  - Device Tree only; no driver or core code changes. The change is
+    minimal and contained to a single DTSI file:
+    `arch/mips/boot/dts/lantiq/danube.dtsi`.
+  - The new properties are long-established, standard DT fields for CPU
+    nodes. `reg = <0>` is the canonical single-CPU index and does not
+    alter runtime semantics for this platform.
+  - No architectural changes and no functional behavior changes are
+    introduced; this is metadata correctness for DT schema compliance.
 
-Why this is safe for stable
-- Minimal risk, bounded scope:
-  - The behavior only triggers for a specific hardware revision (v5.0.0)
-    and only on a particular PM transition condition (link not active),
-    minimizing regression risk to other platforms.
-  - The register access is vendor-specific and does not affect other
-    subsystems.
-  - The added delay is tiny (50–100 µs), and the change is otherwise a
-    single MMIO reset sequence.
-- Clearly a bug fix, not a feature:
-  - No new capabilities or architectural changes. It aligns with the
-    hardware programming guide to prevent data errors.
-- Maintains correct init sequence:
-  - Reset is performed before ICE resume and HWKM init, ensuring keys
-    and state are reprogrammed after reset. The resume path remains
-    coherent.
+- Impact and side effects
+  - Positive: removes DT validation warnings, improves tooling and
+    cross-tree consistency, and avoids potential build failures in
+    strict pipelines.
+  - Neutral at runtime: kernel CPU enumeration for a single-core MIPS
+    system remains unchanged; these properties are consumed by standard
+    DT parsing code and other MIPS DTS files already follow this
+    pattern.
 
-Stable tree criteria
-- Important bugfix: Prevents data corruption on affected hardware.
-- Small and contained: Limited to `drivers/ufs/host/ufs-qcom.c` and
-  `drivers/ufs/host/ufs-qcom.h`.
-- No broad side effects: Strict hardware version gating with link state
-  check.
-- No API/ABI changes or architectural refactors.
+- Stable backport criteria
+  - Fixes a real (schema) bug affecting users/projects relying on DT
+    validation, with a clear and minimal change.
+  - No new features; no API changes; extremely low regression risk;
+    confined to the MIPS Lantiq Danube DT.
 
-Conclusion
-- This is a strong backport candidate that fixes a real, user-impacting
-  bug with minimal and well-scoped changes.
+ arch/mips/boot/dts/lantiq/danube.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h |  2 +-
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 9574fdc2bb0fd..3ea6b08d2b526 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -38,6 +38,9 @@
- #define DEEMPHASIS_3_5_dB	0x04
- #define NO_DEEMPHASIS		0x0
+diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
+index 7a7ba66aa5349..0a942bc091436 100644
+--- a/arch/mips/boot/dts/lantiq/danube.dtsi
++++ b/arch/mips/boot/dts/lantiq/danube.dtsi
+@@ -5,8 +5,12 @@ / {
+ 	compatible = "lantiq,xway", "lantiq,danube";
  
-+#define UFS_ICE_SYNC_RST_SEL	BIT(3)
-+#define UFS_ICE_SYNC_RST_SW	BIT(4)
+ 	cpus {
++		#address-cells = <1>;
++		#size-cells = <0>;
 +
- enum {
- 	TSTBUS_UAWM,
- 	TSTBUS_UARM,
-@@ -751,11 +754,29 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	int err;
-+	u32 reg_val;
- 
- 	err = ufs_qcom_enable_lane_clks(host);
- 	if (err)
- 		return err;
- 
-+	if ((!ufs_qcom_is_link_active(hba)) &&
-+	    host->hw_ver.major == 5 &&
-+	    host->hw_ver.minor == 0 &&
-+	    host->hw_ver.step == 0) {
-+		ufshcd_writel(hba, UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW, UFS_MEM_ICE_CFG);
-+		reg_val = ufshcd_readl(hba, UFS_MEM_ICE_CFG);
-+		reg_val &= ~(UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW);
-+		/*
-+		 * HW documentation doesn't recommend any delay between the
-+		 * reset set and clear. But we are enforcing an arbitrary delay
-+		 * to give flops enough time to settle in.
-+		 */
-+		usleep_range(50, 100);
-+		ufshcd_writel(hba, reg_val, UFS_MEM_ICE_CFG);
-+		ufshcd_readl(hba, UFS_MEM_ICE_CFG);
-+	}
-+
- 	return ufs_qcom_ice_resume(host);
- }
- 
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index e0e129af7c16b..88e2f322d37d8 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -60,7 +60,7 @@ enum {
- 	UFS_AH8_CFG				= 0xFC,
- 
- 	UFS_RD_REG_MCQ				= 0xD00,
--
-+	UFS_MEM_ICE_CFG				= 0x2600,
- 	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
- 	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
+ 		cpu@0 {
+ 			compatible = "mips,mips24Kc";
++			reg = <0>;
+ 		};
+ 	};
  
 -- 
 2.51.0
