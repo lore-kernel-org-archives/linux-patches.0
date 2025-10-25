@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C2031D39A;
-	Sat, 25 Oct 2025 16:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1653112AD;
+	Sat, 25 Oct 2025 16:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409700; cv=none; b=I9aF82a8LYYJEb7cDgEMgMH96BtQnTIoRPOWdCZ3Qx/I8ZGvyAs9xNxFzluBoo+/Xqt42NwqdgyH7KFbdxH+8nPkUfzAdVByHG325L7elcX70FMKAkOdXeq8++lXSqCtZVTvags2Dth61TzWkLeBjWgZW42FES+td9nj/IQGLWU=
+	t=1761409704; cv=none; b=RzxO57RvRHoma1ujfIj5oL0s8c4mtkts++IFhuj9TC/f1qDvQ3s5cMm9r0DHcIrsWYot/eLlhCzcpDvQ0Kwxb511e67bxE0Qy63L1MYi9F1gtVAj2RJeDTuu+YdtEhGwV9ZQL504Wfpl5CZSbtZWdgRcFYfNDnc/s3MEyufIqhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409700; c=relaxed/simple;
-	bh=hhVmO8Q3TJXMPMBlG9yOr4wrre1e8Mf+8pKaavnKWGQ=;
+	s=arc-20240116; t=1761409704; c=relaxed/simple;
+	bh=hUP2nf8nrPQPADEcx5EXZpaXsVUTOU8KNJl+oUapSe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q9+HG1SxlEizvlK0q/L2BUev6K5/eiKMp36zXeTImivrstwh6vXv7C+2zSpRrxabnvQc8ZZmwH2ySwdmrrCSUoXWq0hoGg2LN/aWGS/BUaaoqmacMry3B7zNhbqAY5oKiI7Y7o5dDEy1gW2Y2zFEhWk5meozvUAAGyDxg1RgojI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B6sEz8x8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V9QiHhCIgNgqtGAMNmgQvvzoW1Ia28//JY2Xv+JlwDpwp/BF/i9Q7ar9v9Sjw/Q5tckch+XufN6P4EpFOXdcqytpkejhe36dDe+FSM1n39cmYOkFn5kI5gdRHOq2vKfSsqPD3V8awIcI/bpDb/GYbFxmEMKcApq8/NlPs2fCKkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZqXTMpqF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B6sEz8x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFF1C4CEFB;
-	Sat, 25 Oct 2025 16:28:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZqXTMpqF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5662BC4CEF5;
+	Sat, 25 Oct 2025 16:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409700;
-	bh=hhVmO8Q3TJXMPMBlG9yOr4wrre1e8Mf+8pKaavnKWGQ=;
+	s=k20201202; t=1761409703;
+	bh=hUP2nf8nrPQPADEcx5EXZpaXsVUTOU8KNJl+oUapSe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6sEz8x8nVe1gy7Cg2Xzdx0vjDROwXi7PN8vh7dJwgjb/JPwpDXwNIFiOqTxeBpGY
-	 WtKk0UbE9y0VdH38SewDOXuLTCO8k8HyNRx+mBf9LhKEItIbRwTSD5pz5yIRxM3PGy
-	 1dlMpzVSytZhei5WWsb86aNfjmWHwXlW7k5cWVCBZamXC1ZUzVkGLFeBpdfVagCahq
-	 7N5z8Yl8SinNLhN5dqVzwvPlG96iJfZVBQ9TLr/9FqsQ/sJO3oiAavvmxDYDWk4UQg
-	 xA0SQ+FufAxJ7jdzkAhl8ZmajV6ukW2p7TvpyuzAPDB9v3F37RTlhd9Halnpag8xdv
-	 +/eVu2t8P6qmw==
+	b=ZqXTMpqFg0VkghAUDdS1vAg4NzLuhetYXYvMl+X5yQYLRvOj9CuOUzD9sSc1olDe3
+	 Cv++v+y6suTBEXYMbrMpZ9B6nxq2ET06pzJGHx3mwwYH203X2Oea5273oYLXcq5gZU
+	 k9fq5+pO7ECu2+jJ8ExAbnmbjPxk4vgJSszVYzpM27xeg19uZY41WgprOba2xbgIC1
+	 qzdCfvcbJhh2LMhYXqqY/agUXp8UNOO6mZ4S+A/JKfBoJDuyBDQe8TV3OOEOrp1b9J
+	 zGlpwslr1FVJcIatYJMw7wKWCkHKpr4/IKLWjdYIFD9idx4qwkjHmy08zp2jURHfdn
+	 hyyn1bBZmQ+Sg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <hansg@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] platform/x86: x86-android-tablets: Stop using EPROBE_DEFER
-Date: Sat, 25 Oct 2025 12:00:57 -0400
-Message-ID: <20251025160905.3857885-426-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	christian.koenig@amd.com,
+	lijo.lazar@amd.com,
+	Prike.Liang@amd.com,
+	alexandre.f.demers@gmail.com,
+	vitaly.prosyak@amd.com,
+	arnd@arndb.de
+Subject: [PATCH AUTOSEL 6.17-5.15] drm/amd: add more cyan skillfish PCI ids
+Date: Sat, 25 Oct 2025 12:00:58 -0400
+Message-ID: <20251025160905.3857885-427-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -47,104 +50,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hansg@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 01fd7cf3534aa107797d130f461ba7bcad30414d ]
+[ Upstream commit 1e18746381793bef7c715fc5ec5611a422a75c4c ]
 
-Since the x86-android-tablets code uses platform_create_bundle() it cannot
-use EPROBE_DEFER and the driver-core will translate EPROBE_DEFER to ENXIO.
+Add additional PCI IDs to the cyan skillfish family.
 
-Stop using EPROBE_DEFER instead log an error and return ENODEV, or for
-non-fatal cases log a warning and return 0.
-
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250920200713.20193-21-hansg@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `__platform_driver_probe()` sets `drv->prevent_deferred_probe = true`
-  and `platform_probe()` converts any `-EPROBE_DEFER` into `-ENXIO` with
-  only a warning (drivers/base/platform.c:935,1408-1410). The
-  x86-android-tablets driver is created through
-  `platform_create_bundle()` (core.c:523-530), so any deferral request
-  from this code path is doomed to a permanent failure of the bundle.
-- Before this commit `get_serdev_controller_by_pci_parent()` returned
-  `ERR_PTR(-EPROBE_DEFER)` when the PCI parent was missing, which
-  immediately tripped the `prevent_deferred_probe` guard and killed the
-  whole probe with an opaque `-ENXIO`. The patch replaces that with an
-  explicit error message and `-ENODEV` (core.c:276-282), aligning the
-  driver with the documented restriction in `x86_android_tablet_probe()`
-  that “it cannot use -EPROBE_DEFER” (core.c:411-416). This removes the
-  bogus deferral while keeping the failure visible to users and
-  diagnostic logs intact.
-- The more severe issue was in `vexia_edu_atla10_9v_init()`: if the
-  expected SDIO PCI function was absent, the code returned
-  `-EPROBE_DEFER`, which, once translated to `-ENXIO`, caused
-  `x86_android_tablet_probe()` to unwind and prevented every board quirk
-  (touchscreen, sensors, etc.) from being instantiated. The fix
-  downgrades this path to a warning and success return
-  (other.c:701-716), allowing the tablet support driver to finish
-  probing even when that optional Wi-Fi controller is missing or late to
-  appear.
-- No behaviour changes occur on the success paths; only error-handling
-  logic is touched, so the regression risk is very low. The change is
-  self-contained, affects just two helper functions, and has no
-  dependency on the rest of the series. Given that the preexisting code
-  can leave entire tablet models without platform devices because of an
-  impossible deferral, this is an important bugfix that fits stable
-  backport criteria.
 
- drivers/platform/x86/x86-android-tablets/core.c  | 6 ++++--
- drivers/platform/x86/x86-android-tablets/other.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+- What changed: Adds five new CYAN_SKILLFISH PCI device IDs to the
+  amdgpu match table, all flagged as APU: 0x13DB, 0x13F9, 0x13FA,
+  0x13FB, 0x13FC. See `drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2175`–`dr
+  ivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2181`. The existing IDs 0x13FE
+  and 0x143F remain. No logic changes beyond the match table.
+- Fix/user impact: Without explicit entries, these boards may only match
+  the generic AMD vendor+class fallback entries (e.g.,
+  `CHIP_IP_DISCOVERY`) that do not carry the `AMD_IS_APU` flag. Early
+  initialization relies on that flag:
+  - `amdgpu_device_init_apu_flags()` returns immediately if `AMD_IS_APU`
+    is not set, so APU-specific sub-flags (e.g., CSF2 detection) would
+    never be set in that path (call site:
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:4488`; early return and
+    APU case handling at `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:205
+    1`–`drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:2090`).
+  - Firmware load selection uses both `CHIP_CYAN_SKILLFISH` and APU sub-
+    flags (e.g., CSF2) to choose the correct path (see
+    `amdgpu_ucode_get_load_type()` handling for `CHIP_CYAN_SKILLFISH` in
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c:560`–`drivers/gpu/drm/amd
+    /amdgpu/amdgpu_ucode.c:586`). Ensuring `AMD_IS_APU` is set at match
+    time avoids incorrect early behavior.
+- Containment and risk: The change is a small, table-only extension
+  confined to the AMDGPU driver’s PCI ID list. It does not alter core or
+  architectural code. For existing devices, behavior is unchanged. For
+  these additional devices, it enables already-existing code paths for
+  `CHIP_CYAN_SKILLFISH|AMD_IS_APU`. The CSF2 sub-flag remains restricted
+  to known IDs (0x13FE, 0x143F) as per `drivers/gpu/drm/amd/amdgpu/amdgp
+  u_device.c:2065`–`drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:2088`, so
+  the new IDs won’t be misclassified.
+- Cross-component consistency: The display stack already lists these
+  device IDs (e.g., `drivers/gpu/drm/amd/display/include/dal_asic_id.h:2
+  06`–`drivers/gpu/drm/amd/display/include/dal_asic_id.h:227`),
+  indicating broader support is in place and minimizing integration
+  risk.
+- Stable policy fit: This is a classic “add device IDs” enablement: it
+  fixes real user-visible issues (proper binding and early APU handling
+  for new boards), is narrowly scoped, low risk, and does not introduce
+  features or architectural changes.
 
-diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
-index 2a9c471785050..8c8f10983f289 100644
---- a/drivers/platform/x86/x86-android-tablets/core.c
-+++ b/drivers/platform/x86/x86-android-tablets/core.c
-@@ -277,8 +277,10 @@ get_serdev_controller_by_pci_parent(const struct x86_serdev_info *info)
- 	struct pci_dev *pdev;
+Given the above, this is a suitable and low-risk backport candidate to
+stable trees.
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 5e81ff3ffdc3f..e60043ac9841e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2172,6 +2172,11 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x7410, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_ALDEBARAN},
  
- 	pdev = pci_get_domain_bus_and_slot(0, 0, info->ctrl.pci.devfn);
--	if (!pdev)
--		return ERR_PTR(-EPROBE_DEFER);
-+	if (!pdev) {
-+		pr_err("error could not get PCI serdev at devfn 0x%02x\n", info->ctrl.pci.devfn);
-+		return ERR_PTR(-ENODEV);
-+	}
+ 	/* CYAN_SKILLFISH */
++	{0x1002, 0x13DB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13F9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FA, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FC, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
+ 	{0x1002, 0x13FE, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
+ 	{0x1002, 0x143F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
  
- 	/* This puts our reference on pdev and returns a ref on the ctrl */
- 	return get_serdev_controller_from_parent(&pdev->dev, 0, info->ctrl_devname);
-diff --git a/drivers/platform/x86/x86-android-tablets/other.c b/drivers/platform/x86/x86-android-tablets/other.c
-index f7bd9f863c85e..aa4f8810974d5 100644
---- a/drivers/platform/x86/x86-android-tablets/other.c
-+++ b/drivers/platform/x86/x86-android-tablets/other.c
-@@ -809,8 +809,10 @@ static int __init vexia_edu_atla10_9v_init(struct device *dev)
- 
- 	/* Reprobe the SDIO controller to enumerate the now enabled Wifi module */
- 	pdev = pci_get_domain_bus_and_slot(0, 0, PCI_DEVFN(0x11, 0));
--	if (!pdev)
--		return -EPROBE_DEFER;
-+	if (!pdev) {
-+		pr_warn("Could not get PCI SDIO at devfn 0x%02x\n", PCI_DEVFN(0x11, 0));
-+		return 0;
-+	}
- 
- 	ret = device_reprobe(&pdev->dev);
- 	if (ret)
 -- 
 2.51.0
 
