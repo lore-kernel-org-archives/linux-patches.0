@@ -1,52 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED6E2F5B;
-	Sat, 25 Oct 2025 16:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183952F5B;
+	Sat, 25 Oct 2025 16:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408772; cv=none; b=s2QVae2r5qxW4TxydEEZFfBdFz7Oh7bme3hrrp2BFa3bjgJdUx1Bjfw3XgmQYUK5TG/o+T0Kof9o78GNiaKCRmborVaH++fxcub5oxPO6pWasnAHcsOyvdXzidZOXp6F8tqw/iHN2tJB+MXmdDT7TlqGrQL8kAxhJwMcHSLdx2Y=
+	t=1761408776; cv=none; b=uibokFeQYAOtEkkE00RWolw0ylsOHTd5UDuksHkjioM0CrVdQEYkrhzC/yYBdvA8m+zUxfnM0Bkoyz6I39lvBEHK1OVTelNgb2CvQqjWjFTTdJd5hzSvBqYIxBgwtSmtGm5p1GLtyUgwzNbXGjE9GlrELHgRet3qMDy6x0qhOXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408772; c=relaxed/simple;
-	bh=urn2WeO975c1UiyO3/5DKndRBTtTAN36cfg8QLLSjq0=;
+	s=arc-20240116; t=1761408776; c=relaxed/simple;
+	bh=lQP2wYT1hsHH43gq+DZzG3vBY0LhtN1Ub/HdZD/NUIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FRCvVgoSomFf9V0LRx7Epl5UvuXcVreqieahB6g+g48k7YaQaBw1A0qTso7iPft3SgJA66sBFj7WtulJxN7G9e/MUlMOLzRHmC5tXrYNzPJp02RuFDyRJkNzO1LNQwRDqU2SGwKlCw/+WhfR+IHRhu7itUKfZ8pu5OBto8Wczko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utuNb0BD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KvCsmz5nWtxillaYIzfx5jCz1JYP3VPpBjsZ0J7X2HNSKabV9IZBaIY5G1eWQBJeHQ3EnH5oh7OUQo1wCfdgiwQG+gRNqgwJrS+SQLynqdrMv21i+G/c5S9AQju7AFJdtYa5jLrGrWX5qjgmhPP9OJ7MEatpuUiIIyXJRfozuRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+7h3jbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utuNb0BD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0758BC4CEFB;
-	Sat, 25 Oct 2025 16:12:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+7h3jbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60188C4CEF5;
+	Sat, 25 Oct 2025 16:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408771;
-	bh=urn2WeO975c1UiyO3/5DKndRBTtTAN36cfg8QLLSjq0=;
+	s=k20201202; t=1761408775;
+	bh=lQP2wYT1hsHH43gq+DZzG3vBY0LhtN1Ub/HdZD/NUIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utuNb0BDmWS2qHLLV8mrSDeFxg0bGR7lC7rUH/q8HNhr7FPl0RnL5h9Exz+ukqhle
-	 BZ1uNLOMy6tLgq+/n8PshoVfWpUqmQ3CzQuQNCUNEdh5rZ0WHMJRCu7dPYRwIGf5AE
-	 jZNo8l+Tn2H9SahHDoUO/zeGBozR0yuX68zyMriLNycE8Nrly7uQcTGBzSB6wYzZ/X
-	 0wSOI7dskFBOkh4fJvlba4/hyA3AJXazMkKC0V9qjU9D3jD2Gol3LoER6C3SyTCBEp
-	 V+FlqR7XYlKPsWLI3S3/pbzISiZXu9LMFe7dsFKxkQIZhNOEiGI+RRzZ5nRBMU1/ZV
-	 dBMp228ofzx9A==
+	b=k+7h3jbL/d1p2B34Fmc9wQxtjCBIRHnC6yFeXWLqlzv8TdIA0ph/OUQNtrYqLTfj1
+	 yFbftAvq1OfCV8FZnvuQ/d98ukZbAwTpszg0YiTaNwLkaHE5Y1Sz+ovGH/dfAEnXDj
+	 eHrEvmOxdc0tWZwo+5vZCYUBrKKW5X7lEMjIvRvByjy84ml809uaMrEuLq1a3DbuaG
+	 Xf6/FLSWM7vYLrwlllYlxDf8cRyCgcAG2hTc2Cwjj+E8Uq25MxJFqGFFWqLf1DYeEV
+	 WZ5IyEKOcFVXjt0WlkovOwalwg6B1Ap9IY7RTepTldAqsvhNPj6YgO0ghe6ZFwJch/
+	 mgOqyXTI9tjiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Joe Damato <joe@dama.to>,
+Cc: Sk Anirban <sk.anirban@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pabeni@redhat.com,
-	willemb@google.com,
-	daniel.zahka@gmail.com,
-	leitao@debian.org,
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	John.C.Harrison@Intel.com,
+	badal.nilawar@intel.com,
+	nitin.r.gote@intel.com,
 	alexandre.f.demers@gmail.com,
-	cjubran@nvidia.com,
-	mohsin.bashr@gmail.com,
-	petrm@nvidia.com,
-	sumanth.gavini@yahoo.com,
-	alexander.deucher@amd.com,
-	gal@nvidia.com,
-	sdf@fomichev.me
-Subject: [PATCH AUTOSEL 6.17] selftests: drv-net: wait for carrier
-Date: Sat, 25 Oct 2025 11:54:56 -0400
-Message-ID: <20251025160905.3857885-65-sashal@kernel.org>
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/xe/ptl: Apply Wa_16026007364
+Date: Sat, 25 Oct 2025 11:54:57 -0400
+Message-ID: <20251025160905.3857885-66-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -62,23 +58,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sk Anirban <sk.anirban@intel.com>
 
-[ Upstream commit f09fc24dd9a5ec989dfdde7090624924ede6ddc7 ]
+[ Upstream commit d72779c29d82c6e371cea8b427550bd6923c2577 ]
 
-On fast machines the tests run in quick succession so even
-when tests clean up after themselves the carrier may need
-some time to come back.
+As part of this WA GuC will save and restore value of two XE3_Media
+control registers that were not included in the HW power context.
 
-Specifically in NIPA when ping.py runs right after netpoll_basic.py
-the first ping command fails.
-
-Since the context manager callbacks are now common NetDrvEpEnv
-gets an ip link up call as well.
-
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20250812142054.750282-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sk Anirban <sk.anirban@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://lore.kernel.org/r/20250716101622.3421480-2-sk.anirban@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -86,205 +76,158 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Rationale
-- Fixes real flakiness in selftests: The commit addresses a race where
-  subsequent tests (e.g., `ping.py`) run immediately after
-  `netpoll_basic.py` and the first ping fails because carrier has not
-  come back yet. This is a correctness fix for the test suite, improving
-  determinism and reliability, not a feature.
-- Small, contained change in selftests only: All changes are confined to
-  the Python selftests support code under `tools/testing/selftests/`,
-  with no impact on kernel runtime or ABIs. Risk of regression to kernel
-  behavior is essentially zero.
-- Concrete synchronization mechanism:
-  - Adds `wait_file()` utility to poll a file until a condition is met,
-    with timeout, avoiding hangs and tight loops. File:
-    tools/testing/selftests/net/lib/py/utils.py:235.
-  - Uses `wait_file()` to wait for `/sys/class/net/<ifname>/carrier` to
-    become “1” (link up) after setting the device up. This directly
-    addresses transient carrier state issues that cause intermittent
-    test failures. File:
-    tools/testing/selftests/drivers/net/lib/py/env.py:1 (imports) and
-    env base class `__enter__` addition around the top of the file.
-- Unifies context manager behavior across environments:
-  - Moves the context manager setup (`__enter__/__exit__`) into the
-    common base class (`NetDrvEnvBase`), so both `NetDrvEnv` and
-    `NetDrvEpEnv` now ensure the interface is up and carrier is ready
-    when entering a test. File:
-    tools/testing/selftests/drivers/net/lib/py/env.py:1 (new
-    `NetDrvEnvBase.__enter__`); removal of per-class
-    `__enter__/__exit__` in `NetDrvEnv` and `NetDrvEpEnv`.
-  - This directly ensures `NetDrvEpEnv` (used by `ping.py` and
-    `netpoll_basic.py`) will “ip link up” and wait for carrier as the
-    commit message highlights.
-- Proper symbol exposure:
-  - Re-exports `wait_file` through the local shim so existing `from
-    lib.py import ...` imports continue to work. File:
-    tools/testing/selftests/drivers/net/lib/py/__init__.py:1 (adds
-    `wait_file` to the import list from `net.lib.py`).
+- What changed (files and specifics)
+  - drivers/gpu/drm/xe/abi/guc_klvs_abi.h: Adds a new GuC WA KLV key
+    enum, `GUC_WA_KLV_RESTORE_UNSAVED_MEDIA_CONTROL_REG = 0x900c` (near
+    existing WA keys at drivers/gpu/drm/xe/abi/guc_klvs_abi.h:350). This
+    is a pure additive identifier so existing paths are unaffected.
+  - drivers/gpu/drm/xe/xe_guc_ads.c: Introduces
+    `guc_waklv_enable_two_word(...)`, a helper to emit a KLV with LEN=2
+    and two 32‑bit payload values, mirroring the existing one‑word and
+    simple (LEN=0) helpers (see the existing one‑word helper at
+    drivers/gpu/drm/xe/xe_guc_ads.c:288 and `guc_waklv_init` at
+    drivers/gpu/drm/xe/xe_guc_ads.c:338).
+    - In `guc_waklv_init`, it conditionally emits the new WA KLV only
+      when both conditions hold:
+      - GuC firmware release version is >= `MAKE_GUC_VER(70, 47, 0)`.
+      - Platform WA bit `XE_WA(gt, 16026007364)` is set.
+    - The KLV is sent with two dwords `0x0` and `0xF`, via
+      `guc_waklv_enable_two_word(...)`, and appended into the existing
+      ADS WA KLV buffer using the same offset/remain logic and
+      `xe_map_memcpy_to(...)` used by other KLV helpers; on insufficient
+      space it only `drm_warn(...)`, matching style already used for
+      other entries.
+  - drivers/gpu/drm/xe/xe_wa_oob.rules: Adds WA rule `16026007364
+    MEDIA_VERSION(3000)`, causing the build to generate
+    `XE_WA_OOB_16026007364` for Xe3 Media in `<generated/xe_wa_oob.h>`,
+    which then makes `XE_WA(gt, 16026007364)` true on the intended
+    hardware.
 
-Risk and dependencies
-- Behavior change is localized to selftests and limited to environment
-  setup:
-  - The only externally observable change is a short wait (up to 5s)
-    during test setup if carrier is not immediately present; this
-    reduces false failures and timeouts are enforced (`TimeoutError`)
-    rather than hanging. File:
-    tools/testing/selftests/net/lib/py/utils.py:235 (`deadline=5`
-    defval).
-- Dependencies align with existing tree layout:
-  - The underlying `tools/testing/selftests/net/lib/py` library is
-    present and already re-exported through
-    `drivers/.../lib/py/__init__.py`, so adding `wait_file` and
-    importing it in `env.py` is consistent with the existing import
-    patterns.
-- Potential side effects are positive:
-  - `NetDrvEpEnv` now also ensures the link is up on entry, which is
-    typically what these tests assume. Tests that need link-down can
-    still change link state after entering the context.
+- Why it matters (bug impact)
+  - Commit message: “As part of this WA GuC will save and restore value
+    of two XE3_Media control registers that were not included in the HW
+    power context.” That means state for two critical media control
+    registers is lost across power context save/restore without this WA.
+    On affected Xe3 Media platforms, this can cause functional issues on
+    power transitions (e.g., RC6 exit, power-gating), impacting users
+    running media workloads.
 
-Stable backport criteria
-- Important bug fix: Resolves intermittent failures in widely used
-  driver selftests (affects users running CI or developers verifying
-  backports).
-- Minimal risk and scope: Python-only selftest changes; no architectural
-  kernel changes; no feature additions.
-- No broader side effects: Only test execution behavior
-  (synchronization) is adjusted.
-- Even without explicit “Cc: stable”, this kind of selftest-stability
-  fix is appropriate for stable to keep selftests reliable across
-  branches.
+- Scope and risk
+  - Small and contained: One enum addition, one helper function, one
+    gated call in `guc_waklv_init`, and one WA rule line. No
+    architectural changes; no ABI/uAPI changes.
+  - Proper gating minimizes regression risk:
+    - Firmware gating: The KLV is only sent when
+      `GUC_FIRMWARE_VER(&gt->uc.guc) >= MAKE_GUC_VER(70, 47, 0)`, so
+      older GuC releases won’t see unknown keys.
+    - Hardware gating: The WA is enabled only when `XE_WA(gt,
+      16026007364)` is set by the generated OOB WA database for
+      `MEDIA_VERSION(3000)`. Other platforms remain untouched.
+  - Buffering safety: The WA KLV blob is sized to a full page
+    (`guc_ads_waklv_size` returns `SZ_4K`), and the helper checks
+    `remain` before writing; failure cases only warn and do not corrupt
+    data.
+  - Consistency: The new two‑word helper mirrors existing
+    one‑word/simple KLV emission patterns
+    (drivers/gpu/drm/xe/xe_guc_ads.c:288, 315), and the KLV header
+    fields (`GUC_KLV_0_KEY`, `GUC_KLV_0_LEN`) are used consistently with
+    other KLV users across the driver.
 
-Conclusion
-- This commit is a good candidate for stable backports: it fixes real
-  flakiness with a small, targeted change to selftests, carries minimal
-  regression risk, and improves consistency by centralizing the carrier
-  wait in the common environment setup.
+- Stable backport criteria
+  - Fixes a real, user‑visible hardware/firmware interaction bug (lost
+    register state on Xe3 Media power transitions).
+  - Minimal, localized change within DRM/Xe; no core kernel or
+    cross‑subsystem impact.
+  - No new features; it only enables a firmware WA when present and
+    applicable.
+  - Low regression risk due to strict firmware and platform gating.
+  - Even if the deployed firmware is older than 70.47.0, the change is
+    inert (the KLV is not sent), so it cannot regress those systems and
+    transparently benefits systems once they pick up newer GuC firmware.
 
- .../selftests/drivers/net/lib/py/__init__.py  |  2 +-
- .../selftests/drivers/net/lib/py/env.py       | 41 +++++++++----------
- tools/testing/selftests/net/lib/py/utils.py   | 18 ++++++++
- 3 files changed, 39 insertions(+), 22 deletions(-)
+Given the above, this is a good candidate for stable backport to improve
+reliability on affected Xe3 Media platforms with appropriate GuC
+firmware.
 
-diff --git a/tools/testing/selftests/drivers/net/lib/py/__init__.py b/tools/testing/selftests/drivers/net/lib/py/__init__.py
-index 8711c67ad658a..a07b56a75c8a6 100644
---- a/tools/testing/selftests/drivers/net/lib/py/__init__.py
-+++ b/tools/testing/selftests/drivers/net/lib/py/__init__.py
-@@ -15,7 +15,7 @@ try:
-         NlError, RtnlFamily, DevlinkFamily
-     from net.lib.py import CmdExitFailure
-     from net.lib.py import bkg, cmd, bpftool, bpftrace, defer, ethtool, \
--        fd_read_timeout, ip, rand_port, tool, wait_port_listen
-+        fd_read_timeout, ip, rand_port, tool, wait_port_listen, wait_file
-     from net.lib.py import fd_read_timeout
-     from net.lib.py import KsftSkipEx, KsftFailEx, KsftXfailEx
-     from net.lib.py import ksft_disruptive, ksft_exit, ksft_pr, ksft_run, \
-diff --git a/tools/testing/selftests/drivers/net/lib/py/env.py b/tools/testing/selftests/drivers/net/lib/py/env.py
-index 1b8bd648048f7..c1f3b608c6d8f 100644
---- a/tools/testing/selftests/drivers/net/lib/py/env.py
-+++ b/tools/testing/selftests/drivers/net/lib/py/env.py
-@@ -4,7 +4,7 @@ import os
- import time
- from pathlib import Path
- from lib.py import KsftSkipEx, KsftXfailEx
--from lib.py import ksft_setup
-+from lib.py import ksft_setup, wait_file
- from lib.py import cmd, ethtool, ip, CmdExitFailure
- from lib.py import NetNS, NetdevSimDev
- from .remote import Remote
-@@ -25,6 +25,9 @@ class NetDrvEnvBase:
+ drivers/gpu/drm/xe/abi/guc_klvs_abi.h |  1 +
+ drivers/gpu/drm/xe/xe_guc_ads.c       | 35 +++++++++++++++++++++++++++
+ drivers/gpu/drm/xe/xe_wa_oob.rules    |  1 +
+ 3 files changed, 37 insertions(+)
+
+diff --git a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
+index d7719d0e36ca7..45a321d0099f1 100644
+--- a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
++++ b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
+@@ -421,6 +421,7 @@ enum xe_guc_klv_ids {
+ 	GUC_WORKAROUND_KLV_ID_BACK_TO_BACK_RCS_ENGINE_RESET				= 0x9009,
+ 	GUC_WA_KLV_WAKE_POWER_DOMAINS_FOR_OUTBOUND_MMIO					= 0x900a,
+ 	GUC_WA_KLV_RESET_BB_STACK_PTR_ON_VF_SWITCH					= 0x900b,
++	GUC_WA_KLV_RESTORE_UNSAVED_MEDIA_CONTROL_REG					= 0x900c,
+ };
  
-         self.env = self._load_env_file()
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
+index 131cfc56be00a..8ff8626227ae4 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.c
++++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+@@ -284,6 +284,35 @@ static size_t calculate_golden_lrc_size(struct xe_guc_ads *ads)
+ 	return total_size;
+ }
  
-+        # Following attrs must be set be inheriting classes
-+        self.dev = None
++static void guc_waklv_enable_two_word(struct xe_guc_ads *ads,
++				      enum xe_guc_klv_ids klv_id,
++				      u32 value1,
++				      u32 value2,
++				      u32 *offset, u32 *remain)
++{
++	u32 size;
++	u32 klv_entry[] = {
++			/* 16:16 key/length */
++			FIELD_PREP(GUC_KLV_0_KEY, klv_id) |
++			FIELD_PREP(GUC_KLV_0_LEN, 2),
++			value1,
++			value2,
++			/* 2 dword data */
++	};
 +
-     def _load_env_file(self):
-         env = os.environ.copy()
++	size = sizeof(klv_entry);
++
++	if (*remain < size) {
++		drm_warn(&ads_to_xe(ads)->drm,
++			 "w/a klv buffer too small to add klv id %d\n", klv_id);
++	} else {
++		xe_map_memcpy_to(ads_to_xe(ads), ads_to_map(ads), *offset,
++				 klv_entry, size);
++		*offset += size;
++		*remain -= size;
++	}
++}
++
+ static void guc_waklv_enable_one_word(struct xe_guc_ads *ads,
+ 				      enum xe_guc_klv_ids klv_id,
+ 				      u32 value,
+@@ -381,6 +410,12 @@ static void guc_waklv_init(struct xe_guc_ads *ads)
+ 		guc_waklv_enable_simple(ads,
+ 					GUC_WA_KLV_RESET_BB_STACK_PTR_ON_VF_SWITCH,
+ 					&offset, &remain);
++	if (GUC_FIRMWARE_VER(&gt->uc.guc) >= MAKE_GUC_VER(70, 47, 0) && XE_WA(gt, 16026007364))
++		guc_waklv_enable_two_word(ads,
++					  GUC_WA_KLV_RESTORE_UNSAVED_MEDIA_CONTROL_REG,
++					  0x0,
++					  0xF,
++					  &offset, &remain);
  
-@@ -48,6 +51,22 @@ class NetDrvEnvBase:
-                 env[pair[0]] = pair[1]
-         return ksft_setup(env)
+ 	size = guc_ads_waklv_size(ads) - remain;
+ 	if (!size)
+diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
+index 710f4423726c9..48c7a42e2fcad 100644
+--- a/drivers/gpu/drm/xe/xe_wa_oob.rules
++++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
+@@ -73,3 +73,4 @@ no_media_l3	MEDIA_VERSION(3000)
+ 14022085890	GRAPHICS_VERSION(2001)
  
-+    def __del__(self):
-+        pass
-+
-+    def __enter__(self):
-+        ip(f"link set dev {self.dev['ifname']} up")
-+        wait_file(f"/sys/class/net/{self.dev['ifname']}/carrier",
-+                  lambda x: x.strip() == "1")
-+
-+        return self
-+
-+    def __exit__(self, ex_type, ex_value, ex_tb):
-+        """
-+        __exit__ gets called at the end of a "with" block.
-+        """
-+        self.__del__()
-+
- 
- class NetDrvEnv(NetDrvEnvBase):
-     """
-@@ -72,17 +91,6 @@ class NetDrvEnv(NetDrvEnvBase):
-         self.ifname = self.dev['ifname']
-         self.ifindex = self.dev['ifindex']
- 
--    def __enter__(self):
--        ip(f"link set dev {self.dev['ifname']} up")
--
--        return self
--
--    def __exit__(self, ex_type, ex_value, ex_tb):
--        """
--        __exit__ gets called at the end of a "with" block.
--        """
--        self.__del__()
--
-     def __del__(self):
-         if self._ns:
-             self._ns.remove()
-@@ -219,15 +227,6 @@ class NetDrvEpEnv(NetDrvEnvBase):
-             raise Exception("Can't resolve remote interface name, multiple interfaces match")
-         return v6[0]["ifname"] if v6 else v4[0]["ifname"]
- 
--    def __enter__(self):
--        return self
--
--    def __exit__(self, ex_type, ex_value, ex_tb):
--        """
--        __exit__ gets called at the end of a "with" block.
--        """
--        self.__del__()
--
-     def __del__(self):
-         if self._ns:
-             self._ns.remove()
-diff --git a/tools/testing/selftests/net/lib/py/utils.py b/tools/testing/selftests/net/lib/py/utils.py
-index f395c90fb0f19..c42bffea0d879 100644
---- a/tools/testing/selftests/net/lib/py/utils.py
-+++ b/tools/testing/selftests/net/lib/py/utils.py
-@@ -249,3 +249,21 @@ def wait_port_listen(port, proto="tcp", ns=None, host=None, sleep=0.005, deadlin
-         if time.monotonic() > end:
-             raise Exception("Waiting for port listen timed out")
-         time.sleep(sleep)
-+
-+
-+def wait_file(fname, test_fn, sleep=0.005, deadline=5, encoding='utf-8'):
-+    """
-+    Wait for file contents on the local system to satisfy a condition.
-+    test_fn() should take one argument (file contents) and return whether
-+    condition is met.
-+    """
-+    end = time.monotonic() + deadline
-+
-+    with open(fname, "r", encoding=encoding) as fp:
-+        while True:
-+            if test_fn(fp.read()):
-+                break
-+            fp.seek(0)
-+            if time.monotonic() > end:
-+                raise TimeoutError("Wait for file contents failed", fname)
-+            time.sleep(sleep)
+ 15015404425_disable	PLATFORM(PANTHERLAKE), MEDIA_STEP(B0, FOREVER)
++16026007364    MEDIA_VERSION(3000)
 -- 
 2.51.0
 
