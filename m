@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492A113AD3F;
-	Sat, 25 Oct 2025 16:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A087278165;
+	Sat, 25 Oct 2025 16:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409291; cv=none; b=S1ys2nK3Zd6dq3hcpCknIbADtFqWYv6GYsPpU1YiQM+lhd1M2oU3X0KTUXEaM/SPaWGUEVNasjFlFqu0Zeuz4+DG+KiodK5gCtKx5JHAm+0w9jsTrDE5J2HlNh+f0HFtv6zO33smTQ/sylia6sKx1UkcnPIcppL3ynTpui1vvjY=
+	t=1761409292; cv=none; b=WDpZxObSWhag9sVgKlo46RCcclHVsoIP+bn/kJPWHtBhldvpJQhaJT0Zmvj22dK1YdCpq63SgD7oN6t7XP9Uc+tBGHNA/t0YSmXfdJS9uGiJnJPxRSUAsawlfjvtywAxTb+ZVVRyaQuepr6try0jOBUr2Z7g0VR2ugGHOK+YGAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409291; c=relaxed/simple;
-	bh=/7yW/7ABDtGd2JvoNcs5fYGhavF3L5m8oxiPXgDUZPQ=;
+	s=arc-20240116; t=1761409292; c=relaxed/simple;
+	bh=A+4ql5Hfcsty8pn7TphhOYuosXBMtNh1B3DEM40cS7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NLru+qjV6d+TP5qYDuWcHFkWvwqP8c5bCB/pJlALxqV52Fi74svmOcmtcIIWComYJtH0CvcESMmt3EDZL0UBbWYlyX51gTCzUEW7P5dn3ilKCKe5h8B5580DaHU4ACgChq1SOvUgCVrst4Z7/jNIlW7XI+L/j5MvVTJd1Jw0h60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eSbM8DW3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=beIxwrKxguTZTX2DJrvaavJrRHsvKFhn03CG41QhpNBmR+fOyl2USHg2EQRyLO/sS/1xld46sQZl8s4LFNDDS+yCS8QKMmaV7yv9q+z7ylfG7xt0DcNM2kXLtkJlP9hIDD2zb5/F2GbbiVvH2h4JGTixLmYV9tH/StHd3XDpWJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+bodoc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eSbM8DW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B6DC19422;
-	Sat, 25 Oct 2025 16:21:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+bodoc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88617C19422;
+	Sat, 25 Oct 2025 16:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409291;
-	bh=/7yW/7ABDtGd2JvoNcs5fYGhavF3L5m8oxiPXgDUZPQ=;
+	s=k20201202; t=1761409292;
+	bh=A+4ql5Hfcsty8pn7TphhOYuosXBMtNh1B3DEM40cS7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSbM8DW3uvp0KkjMHzFHKvQAGGszzzO8+2xoTnkNeTLh2bjbVI48O37TWBTmzDsLZ
-	 YlqLPw0sbxUh5n5bwpgdve/QMhoPLLWk//DmJpouqMxrnwo9FdrEfhS2CV0boNlLG4
-	 JubTAExb3lrYkTyEYjyI1/m/C6p0Er6+TI04Q+wNS60JUCTiQMSd3CwXtHk4rpLKDI
-	 q6e3XaTvJoyiFakJBnNYh+z4gQaqiaWK68x0ThDc99DkZL0vkAZNXKtHN0D4pfkzrP
-	 hHU6bgCaoE59eFXRgWHuTTxlSSHDojhNU2ibMtXGdKlFLAJhQhWtQGyFz4kcXe5ejY
-	 Z2cawOPwrWJ2w==
+	b=m+bodoc6nP5H+XUxHW16dljrl8rnEtWnv5PMvOgYmNxVYzpzDlPBvzradDqV+OtBh
+	 /rEauBS9BLRBPkzkEDOybfyT+r9qf7OGqZ8ZglCK67kNPAjOLRPe7TG56kGNuA2fqO
+	 0DoBtvwOVkYX6Pc7HJT8TpC+w0vdgWK2Cfl58wNBde3oLp4xdACe6fNMnCgM4gUi96
+	 RXKBu16zsOPCm56GJiqz2ukSq+C3JBk10/eR6RyRtaRqzB1xLP3nkx692zTX9oFf7X
+	 nneG/fbNT7Htv5PO4W2Wj1gV5No0dUfcYb04IEwZD9khXL9eW2DRUc1AWjhvHSwrYe
+	 gNyhtTK1mWRxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	Mina Almasry <almasrymina@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+Cc: Christian Bruel <christian.bruel@foss.st.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	willemb@google.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17] selftests: drv-net: devmem: flip the direction of Tx tests
-Date: Sat, 25 Oct 2025 11:58:14 -0400
-Message-ID: <20251025160905.3857885-263-sashal@kernel.org>
+	kwilczynski@kernel.org,
+	gregkh@linuxfoundation.org,
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] misc: pci_endpoint_test: Skip IRQ tests if irq is out of range
+Date: Sat, 25 Oct 2025 11:58:15 -0400
+Message-ID: <20251025160905.3857885-264-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,22 +53,21 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Christian Bruel <christian.bruel@foss.st.com>
 
-[ Upstream commit c378c497f3fe8dc8f08b487fce49c3d96e4cada8 ]
+[ Upstream commit cc8e391067164f45f89b6132a5aaa18c33a0e32b ]
 
-The Device Under Test should always be the local system.
-While the Rx test gets this right the Tx test is sending
-from remote to local. So Tx of DMABUF memory happens on remote.
+The pci_endpoint_test tests the 32-bit MSI range. However, the device might
+not have all vectors configured. For example, if msi_interrupts is 8 in the
+ep function space or if the MSI Multiple Message Capable value is
+configured as 4 (maximum 16 vectors).
 
-These tests never run in NIPA since we don't have a compatible
-device so we haven't caught this.
+In this case, do not attempt to run the test to avoid timeouts and directly
+return the error value.
 
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250811231334.561137-6-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20250804170916.3212221-2-christian.bruel@foss.st.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,109 +75,95 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
+Explanation:
+- What it fixes: The endpoint host test currently tries every MSI/MSI-X
+  vector in the nominal 32/2048 range even when the device only enabled
+  fewer vectors. For disabled/out-of-range vectors, no interrupt ever
+  arrives from the endpoint side, so the host side waits 1 second and
+  fails with a timeout (-ETIMEDOUT) per attempt. This is both slow and
+  semantically wrong: the error is “invalid vector” rather than
+  “timeout”.
+- Core change: The patch adds an early range check using
+  `pci_irq_vector()` before attempting to trigger an interrupt. If the
+  requested vector is not valid for the device, it returns immediately
+  with the error from `pci_irq_vector()` (typically -EINVAL), skipping
+  the test and avoiding a 1s timeout.
+  - Early check added: drivers/misc/pci_endpoint_test.c:441-444
+    - `irq = pci_irq_vector(pdev, msi_num - 1);`
+    - `if (irq < 0) return irq;`
+  - Trigger and wait unchanged otherwise:
+    drivers/misc/pci_endpoint_test.c:445-456
+  - Post-wait verification now uses the pre-fetched `irq` value:
+    drivers/misc/pci_endpoint_test.c:457-460
+- Previous behavior (pre-patch): The test wrote the registers and waited
+  up to 1s for completion, then only after success called
+  `pci_irq_vector()` to compare the vector number. If the vector was
+  actually invalid, the wait timed out first and the function returned
+  -ETIMEDOUT, masking the real reason and wasting time.
+- Alignment with selftests: Kselftests iterate through the full
+  MSI/MSI-X ranges and expect -EINVAL for disabled vectors in order to
+  SKIP them rather than fail:
+  - MSI test expects -EINVAL to SKIP:
+    tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:122-127
+  - MSI-X test expects -EINVAL to SKIP:
+    tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:140-145
+  This change makes the driver return -EINVAL for out-of-range vectors,
+matching selftests and preventing spurious failures/timeouts.
+- Scope and risk:
+  - Small, contained change in a single helper:
+    drivers/misc/pci_endpoint_test.c:434-461.
+  - No architectural changes; only the order of operations and error
+    path are adjusted.
+  - `pci_irq_vector()` has well-defined semantics and returns -EINVAL
+    for out-of-range vectors (drivers/pci/msi/api.c:309-320).
+  - Functional behavior for valid vectors is unchanged; the post-wait
+    check still verifies the exact IRQ delivered (`irq ==
+    test->last_irq`).
+  - The only user-visible change is the error code for invalid vectors
+    (-EINVAL instead of -ETIMEDOUT), which aligns with the intended API
+    usage and the selftests.
+- Backport criteria:
+  - Fixes a real user-visible issue (spurious timeouts and failing tests
+    when not all vectors are configured).
+  - Minimal and low risk; confined to the pci_endpoint_test driver.
+  - No new features; no impact on core PCI or IRQ subsystems.
+  - Improves test reliability and reduces needless delays.
 
-- Fixes a real test bug
-  - The commit corrects the Tx direction so the Device Under Test (DUT)
-    is always the local system, matching the stated intent. Previously,
-    the Tx path was exercised on the remote host, defeating the purpose
-    of the test.
+Given these points, this is a good candidate for stable backport.
 
-- Precise changes and their effect
-  - tools/testing/selftests/drivers/net/hw/devmem.py: check_tx
-    - Before: local ran the listener; remote invoked the devmem binary
-      (Tx ran on remote)
-      - `with bkg(listen_cmd) as socat:`
-      - `wait_port_listen(port)`
-      - `cmd(... {cfg.bin_remote} -f {cfg.ifname} -s {cfg.addr} -p
-        {port}, host=cfg.remote, ...)`
-    - After: remote runs the listener; local invokes the devmem binary
-      (Tx runs on local)
-      - `with bkg(listen_cmd, host=cfg.remote, exit_wait=True) as socat`
-      - `wait_port_listen(port, host=cfg.remote)`
-      - `cmd(... {cfg.bin_local} -f {cfg.ifname} -s {cfg.remote_addr} -p
-        {port}, ...)`
-    - Key corrections:
-      - Move the listener to the remote host via `host=cfg.remote`,
-        aligning with how Rx is validated (DUT local, peer remote).
-      - Run the devmem-capable sender locally by switching
-        `{cfg.bin_remote}` → `{cfg.bin_local}`.
-      - Fix the server IP argument from `{cfg.addr}` (local) →
-        `{cfg.remote_addr}` (remote).
-      - Add `exit_wait=True` to ensure proper capture of remote `socat`
-        output for assertion.
-  - tools/testing/selftests/drivers/net/hw/devmem.py: check_tx_chunks
-    - Applies the same direction flip as `check_tx`, and keeps the
-      chunking parameter (`-z 3`) intact:
-      - Listener moved to remote: `with bkg(listen_cmd, host=cfg.remote,
-        exit_wait=True) ...`
-      - Sender is local: `{cfg.bin_local} -f {cfg.ifname} -s
-        {cfg.remote_addr} -p {port} -z 3`
-  - tools/testing/selftests/drivers/net/hw/devmem.py: check_rx
-    - Unchanged; already had the DUT local, running `ncdevmem -l` and
-      receiving data from remote via `socat`, consistent with the
-      intended direction.
-
-- Why this fits stable rules
-  - Important test fix: Corrects which system is being tested for Tx,
-    preventing false confidence and misattribution of
-    failures/successes.
-  - Small and contained: Touches a single selftest file and only flips
-    host roles and parameters; no kernel code changes.
-  - Minimal regression risk: Uses established helpers (`bkg(...,
-    host=cfg.remote, exit_wait=True)`, `wait_port_listen(...,
-    host=cfg.remote)`) already used elsewhere (e.g.,
-    `tools/testing/selftests/drivers/net/ping.py`) and preserves the
-    test assertions (`ksft_eq(socat.stdout.strip(), "hello\nworld")`).
-  - No features or architectural changes: Pure test orchestration fix.
-  - Broader impact: Improves reliability of selftests for
-    NET_DEVMEM/DMABUF Tx validation.
-
-- Dependencies and applicability
-  - Assumes the selftest suite already contains `devmem.py` and a
-    version of the `ncdevmem` tool that supports the usage invoked here
-    (client-side send without `-l`). Branches lacking this test or the
-    necessary `ncdevmem` capabilities do not need this backport.
-  - For branches where `devmem.py` exists with the original bug, this
-    change is directly applicable and beneficial.
-
-Given it is a minimal, clearly correct selftest-only bugfix that aligns
-the Tx test with stated DUT semantics, it is suitable for stable
-backporting where the test exists.
-
- tools/testing/selftests/drivers/net/hw/devmem.py | 12 ++++++------
+ drivers/misc/pci_endpoint_test.c | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/devmem.py b/tools/testing/selftests/drivers/net/hw/devmem.py
-index 0a2533a3d6d60..45c2d49d55b61 100755
---- a/tools/testing/selftests/drivers/net/hw/devmem.py
-+++ b/tools/testing/selftests/drivers/net/hw/devmem.py
-@@ -42,9 +42,9 @@ def check_tx(cfg) -> None:
-     port = rand_port()
-     listen_cmd = f"socat -U - TCP{cfg.addr_ipver}-LISTEN:{port}"
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index f935175d8bf55..506a2847e5d22 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -436,7 +436,11 @@ static int pci_endpoint_test_msi_irq(struct pci_endpoint_test *test,
+ {
+ 	struct pci_dev *pdev = test->pdev;
+ 	u32 val;
+-	int ret;
++	int irq;
++
++	irq = pci_irq_vector(pdev, msi_num - 1);
++	if (irq < 0)
++		return irq;
  
--    with bkg(listen_cmd) as socat:
--        wait_port_listen(port)
--        cmd(f"echo -e \"hello\\nworld\"| {cfg.bin_remote} -f {cfg.ifname} -s {cfg.addr} -p {port}", host=cfg.remote, shell=True)
-+    with bkg(listen_cmd, host=cfg.remote, exit_wait=True) as socat:
-+        wait_port_listen(port, host=cfg.remote)
-+        cmd(f"echo -e \"hello\\nworld\"| {cfg.bin_local} -f {cfg.ifname} -s {cfg.remote_addr} -p {port}", shell=True)
+ 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_IRQ_TYPE,
+ 				 msix ? PCITEST_IRQ_TYPE_MSIX :
+@@ -450,11 +454,7 @@ static int pci_endpoint_test_msi_irq(struct pci_endpoint_test *test,
+ 	if (!val)
+ 		return -ETIMEDOUT;
  
-     ksft_eq(socat.stdout.strip(), "hello\nworld")
+-	ret = pci_irq_vector(pdev, msi_num - 1);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (ret != test->last_irq)
++	if (irq != test->last_irq)
+ 		return -EIO;
  
-@@ -56,9 +56,9 @@ def check_tx_chunks(cfg) -> None:
-     port = rand_port()
-     listen_cmd = f"socat -U - TCP{cfg.addr_ipver}-LISTEN:{port}"
- 
--    with bkg(listen_cmd, exit_wait=True) as socat:
--        wait_port_listen(port)
--        cmd(f"echo -e \"hello\\nworld\"| {cfg.bin_remote} -f {cfg.ifname} -s {cfg.addr} -p {port} -z 3", host=cfg.remote, shell=True)
-+    with bkg(listen_cmd, host=cfg.remote, exit_wait=True) as socat:
-+        wait_port_listen(port, host=cfg.remote)
-+        cmd(f"echo -e \"hello\\nworld\"| {cfg.bin_local} -f {cfg.ifname} -s {cfg.remote_addr} -p {port} -z 3", shell=True)
- 
-     ksft_eq(socat.stdout.strip(), "hello\nworld")
- 
+ 	return 0;
 -- 
 2.51.0
 
