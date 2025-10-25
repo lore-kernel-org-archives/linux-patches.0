@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB5C30C368;
-	Sat, 25 Oct 2025 16:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A2630C600;
+	Sat, 25 Oct 2025 16:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409125; cv=none; b=Kywe8XvL7aWExdcvGEtSH0RzNBZD//S8SZSFNMSjnPDBQUrXSK1LZq6IzdXaFMgfzKZHbMCqSt3rNJRAo+oIWU/Us5sSie3V6E30MC2jtIv39DELUzT14YdTCUIzxGzZ4uKTKQ566+eLj96caJgCMMUSZtG2/hSmG33IliEYA+Q=
+	t=1761409127; cv=none; b=H3JnbX2plt+1MGQkY+D6WrWRTTTE7lA8YuQQi5WK8NdZ9xMWVPPF0RBS5iJ2Nq3OAt70+LeBftjpbxyohVYAtzpthqVUhxr5k1s2EeK8jE/ibyh57eZTSIDElHd+ehntEKZSeg20+hEA/9udOx/xuTF9Wztddfmza85Va24mLAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409125; c=relaxed/simple;
-	bh=jjD1PPvWPe3Vv0Xp6VI8aKAVwDabIOOJKED3onR5kdA=;
+	s=arc-20240116; t=1761409127; c=relaxed/simple;
+	bh=Jl6ovmIwm65hPQvIzWGCapklVGiACBg6nsvpFOJihQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fHWxFiWPKvtuY31bOQKgfHIxWh7apFD62byeENCgxDv89JC9Az2eURusyI28VNDVEJxGOxxmPNy3OVhUpZSUVyZ++hf2zMMwboYCLW4oTxs/Yqioj/RUYLvp4abk8S5OmmGPv5Uf77wLvjgPc6bCLBQ6YFdzzN4Z3buj5J64oE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HULn7hNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kX5O0uYvBxRlTQJ+RSZ06WLHyPc8bDGIFmxd27qjr4P2T/GNMY+EeWcA4nQwU2DH6UC7/s1RIY8oMVXIFxNwj5CmdnaUiRKYxtkfGg2So+dYovz23CKN1OWSCsNh2gwAW1q7LSiQT1A8XOlg5ycaQpGRDIOOhqXLTIx/qdw/EX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olGikDgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HULn7hNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10D1C4CEFB;
-	Sat, 25 Oct 2025 16:18:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olGikDgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409D3C4CEFF;
+	Sat, 25 Oct 2025 16:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409125;
-	bh=jjD1PPvWPe3Vv0Xp6VI8aKAVwDabIOOJKED3onR5kdA=;
+	s=k20201202; t=1761409127;
+	bh=Jl6ovmIwm65hPQvIzWGCapklVGiACBg6nsvpFOJihQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HULn7hNqNhjx8QADCBfF/R6dweCyh1ylt7B4XEAwD8rgTgECZdFAV4SUxa9WULJvj
-	 kj3yV3BETAZKkZFmFU+LHus6BoDaKzT58vJVT1jjXuJHbpq7hLldYQ0RGNjy4C+Lit
-	 oxc/ieQt6mb77pE4A4kMIjfTNBwFT0bV/pJt5mfnAN3qfWw5CJu88tJ4P+1EOJARyR
-	 g1LvlcnvuLre8XCJOsPmUAMkvYebARMo9W6sDVxC/QJepPvdGutfUOyoFL3yTSg8oz
-	 6nr4WzdySW3ofcLjvAz1chjJxFlYd7ZR3Ax79s9bi5kmCcViMizKh77BWZgkbwDAbh
-	 eHK8pflO/QXnw==
+	b=olGikDgv3AYR1CGybJMAPG59DkrXclCeS2y1N5u6cx4taAOLJTwaGPcUo4DqqlAfC
+	 cnW/YuIefoUIlEHssGcSB44Y+Yw40aOJlExLcx+fh2hyw6T0Rv5gm27eIqZKQTCGRw
+	 RC4eZi6HXiSadsl6hehM/KhIbEIMWiSr+M5hfSBfMaYY9OiP8Xma6mosRSJfXe6z3s
+	 rCQxpHnPWQvVnuiNSlrrc0QY0Qp1LQvxIF5s7RauTq68AphcqnX1GmNPTEJiM33GeZ
+	 tKsVPoRzi6eU5e0zqsPYHDVJ5BRz93FughkvlXByFCJXliYPeVTjBpTvfWMkDgHrfi
+	 cyReMjCIPI54g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	lucas.demarchi@intel.com,
 	thomas.hellstrom@linux.intel.com,
 	rodrigo.vivi@intel.com,
 	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe/wcl: Extend L3bank mask workaround
-Date: Sat, 25 Oct 2025 11:57:20 -0400
-Message-ID: <20251025160905.3857885-209-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe/guc: Set upper limit of H2G retries over CTB
+Date: Sat, 25 Oct 2025 11:57:21 -0400
+Message-ID: <20251025160905.3857885-210-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,20 +57,36 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit d738e1be2b2b4364403babc43ae7343d45e99d41 ]
+[ Upstream commit 2506af5f8109a387a5e8e9e3d7c498480b8033db ]
 
-The commit 9ab440a9d042 ("drm/xe/ptl: L3bank mask is not
-available on the media GT") added a workaround to ignore
-the fuse register that L3 bank availability as it did not
-contain valid values. Same is true for WCL therefore extend
-the workaround to cover it.
+The GuC communication protocol allows GuC to send NO_RESPONSE_RETRY
+reply message to indicate that due to some interim condition it can
+not handle incoming H2G request and the host shall resend it.
 
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-Link: https://lore.kernel.org/r/20250822002512.1129144-1-chaitanya.kumar.borah@intel.com
-Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+But in some cases, due to errors, this unsatisfied condition might
+be final and this could lead to endless retries as it was recently
+seen on the CI:
+
+ [drm] GT0: PF: VF1 FLR didn't finish in 5000 ms (-ETIMEDOUT)
+ [drm] GT0: PF: VF1 resource sanitizing failed (-ETIMEDOUT)
+ [drm] GT0: PF: VF1 FLR failed!
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+
+To avoid such dangerous loops allow only limited number of retries
+(for now 50) and add some delays (n * 5ms) to slow down the rate of
+resending this repeated request.
+
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://lore.kernel.org/r/20250903223330.6408-1-michal.wajdeczko@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,78 +94,117 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed
-  - The single-line rule in `drivers/gpu/drm/xe/xe_wa_oob.rules` is
-    widened from `MEDIA_VERSION(3000)` to `MEDIA_VERSION_RANGE(3000,
-    3002)` for the `no_media_l3` workaround. This extends the existing
-    workaround to WCL media GT variants in the same Xe3 generation, not
-    just the initial 3000 stepping.
+**Why Backport**
+- Prevents infinite retry loops on GuC “NO_RESPONSE_RETRY” replies that
+  can occur when the underlying condition never clears (e.g., VF FLR
+  stuck), which was observed in CI. This is a real-world hang/DoS bug
+  impacting system stability and recoverability.
+- Change is small, self-contained to the Xe GuC CT H2G/G2H send/recv
+  path, and does not alter UAPI or broader architecture.
+- Returns a clear error after bounded retries instead of looping
+  forever; adds linear backoff to reduce busy looping.
 
-- What it fixes
-  - Prior work (commit 9ab440a9d042 cited in the message) established
-    that the L3 bank-availability fuse register on the media GT can
-    return invalid data; the fix was to ignore/suppress using that
-    information on the affected platform. The new change says WCL shares
-    the same problem and applies the same workaround there.
-  - The Xe driver already treats L3 bank mask reporting on media GT as
-    optional when it cannot be trusted: see the guard used in topology
-    reporting (“L3bank mask may not be available for some GTs”) in
-    `drivers/gpu/drm/xe/xe_query.c:480`, and the policy to omit media GT
-    L3 mask on Xe3+ in `drivers/gpu/drm/xe/xe_gt_topology.c:126`
-    (function comments explaining no known userspace needs the media L3
-    mask and that hardware reports bogus values on some platforms) and
-    the early return gating in the L3 loader path at
-    `drivers/gpu/drm/xe/xe_gt_topology.c:148`. Extending the rule
-    ensures the workaround applies consistently across all relevant Xe3
-    media GT steppings (3000–3002), eliminating cases where bogus L3
-    bank masks could leak to userspace or influence internal logic.
+**What Changes**
+- Introduces bounded retries and backoff for GuC “retry” responses
+  within the blocking send/receive helper:
+  - Adds retry budget and delay constants: `GUC_SEND_RETRY_LIMIT` = 50
+    and `GUC_SEND_RETRY_MSLEEP` = 5 ms
+    (drivers/gpu/drm/xe/xe_guc_ct.c:1081,
+    drivers/gpu/drm/xe/xe_guc_ct.c:1082).
+  - Tracks the number of retries in `guc_ct_send_recv()` and applies
+    increasing sleep before re-sending
+    (drivers/gpu/drm/xe/xe_guc_ct.c:1084).
+  - On each retry indication from GuC (`g2h_fence.retry`), after
+    unlocking the mutex, either:
+    - Sleep for n*5ms and retry; or
+    - If the retry count exceeds the limit, log an error and return
+      `-ELOOP` (drivers/gpu/drm/xe/xe_guc_ct.c:1151,
+      drivers/gpu/drm/xe/xe_guc_ct.c:1154,
+      drivers/gpu/drm/xe/xe_guc_ct.c:1156,
+      drivers/gpu/drm/xe/xe_guc_ct.c:1159).
 
-- Risk assessment
-  - Scope: One rule-file condition change; no code paths, interfaces, or
-    architectures are altered. Constrained to the Xe DRM driver’s WA
-    matching.
-  - Behavior: Only broadens an existing workaround to additional but
-    closely-related hardware versions. On those versions, it suppresses
-    using a known-bogus register; otherwise behavior is unchanged.
-  - Userspace compatibility: Comments explicitly note no known userspace
-    depends on media GT L3 bank mask being present on these platforms
-    (`drivers/gpu/drm/xe/xe_gt_topology.c:126`). Hiding it avoids
-    reporting incorrect data and is preferable to exposing a wrong mask
-    (`drivers/gpu/drm/xe/xe_query.c:480`).
+**Key Code References**
+- Retry limit and delay constants:
+  - drivers/gpu/drm/xe/xe_guc_ct.c:1081
+  - drivers/gpu/drm/xe/xe_guc_ct.c:1082
+- Core change in `guc_ct_send_recv()` (retry handling/backoff/limit):
+  - Function start: drivers/gpu/drm/xe/xe_guc_ct.c:1084
+  - Retry debug log: drivers/gpu/drm/xe/xe_guc_ct.c:1151
+  - Limit check and `-ELOOP`: drivers/gpu/drm/xe/xe_guc_ct.c:1154
+  - Error log on limit reached: drivers/gpu/drm/xe/xe_guc_ct.c:1155
+  - Backoff sleep: drivers/gpu/drm/xe/xe_guc_ct.c:1159
 
-- Stable backport criteria
-  - Bug fix that affects users: Yes—prevents invalid L3 bank mask data
-    on additional media GT steppings.
-  - Small and contained: Yes—one-line rule adjustment in
-    `drivers/gpu/drm/xe/xe_wa_oob.rules`.
-  - Architectural change: No.
-  - Critical subsystem risk: Low; isolated to the Xe driver’s WA
-    selection.
-  - Side effects: Minimal; only suppresses untrustworthy data reporting
-    on the affected versions.
-  - Commit message clarity: References the prior fix and clearly states
-    extension to WCL.
+**Safety and Regression Risk**
+- Concurrency correctness: The code explicitly unlocks `ct->lock` before
+  sleeping, avoiding sleeping under a mutex
+  (drivers/gpu/drm/xe/xe_guc_ct.c:1151).
+- Blocking contract preserved: This helper is the blocking path; sleep
+  is expected. The G2H-handler special path uses
+  `xe_guc_ct_send_g2h_handler()` and does not call the blocking
+  `send_recv()` (drivers/gpu/drm/xe/xe_guc_ct.h:63).
+- Error propagation consistent: Callers already treat negative returns
+  as failures and log/abort appropriately. For example:
+  - `xe_guc_ct_send_block()` is a thin wrapper over
+    `xe_guc_ct_send_recv()` (drivers/gpu/drm/xe/xe_guc_ct.h:57), and
+    many users propagate errors directly (e.g.,
+    drivers/gpu/drm/xe/xe_guc.c:303).
+  - Relay path logs negative errors via `ERR_PTR(ret)` and returns
+    failure (drivers/gpu/drm/xe/xe_guc_relay.c:298).
+- Scope limited to Xe driver’s GuC CT path; no cross-subsystem impact,
+  no API/ABI changes.
+- The new `-ELOOP` code is a standard error value; replacing an
+  unbounded loop with a bounded error is safer and more diagnosable. The
+  linear backoff caps total added sleep to roughly 6.375 seconds in the
+  worst case, which is acceptable for a blocking control path and
+  reduces log spam/CPU waste.
 
-Given the minimal, targeted nature of the change and its role in
-preventing incorrect hardware information from being used/reported, this
-is a strong candidate for stable backport.
+**Stable Criteria Assessment**
+- Fixes an important bug that can hang the driver and spam logs
+  indefinitely (user-visible stability issue).
+- Small, localized change with clear intent and minimal risk.
+- No architectural changes or new features.
+- Aligns with stable rules: a defensive fix that prevents system-harming
+  behavior.
 
- drivers/gpu/drm/xe/xe_wa_oob.rules | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Given the above, this is a strong candidate for backporting to stable
+trees that ship the Xe driver and GuC CT infrastructure.
 
-diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
-index 48c7a42e2fcad..382719ac4a779 100644
---- a/drivers/gpu/drm/xe/xe_wa_oob.rules
-+++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
-@@ -47,7 +47,7 @@
- 16023588340	GRAPHICS_VERSION(2001), FUNC(xe_rtp_match_not_sriov_vf)
- 14019789679	GRAPHICS_VERSION(1255)
- 		GRAPHICS_VERSION_RANGE(1270, 2004)
--no_media_l3	MEDIA_VERSION(3000)
-+no_media_l3	MEDIA_VERSION_RANGE(3000, 3002)
- 14022866841	GRAPHICS_VERSION(3000), GRAPHICS_STEP(A0, B0)
- 		MEDIA_VERSION(3000), MEDIA_STEP(A0, B0)
- 16021333562	GRAPHICS_VERSION_RANGE(1200, 1274)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 6d70dd1c106d4..ff622628d823f 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -1079,11 +1079,15 @@ static bool retry_failure(struct xe_guc_ct *ct, int ret)
+ 	return true;
+ }
+ 
++#define GUC_SEND_RETRY_LIMIT	50
++#define GUC_SEND_RETRY_MSLEEP	5
++
+ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 			    u32 *response_buffer, bool no_fail)
+ {
+ 	struct xe_gt *gt = ct_to_gt(ct);
+ 	struct g2h_fence g2h_fence;
++	unsigned int retries = 0;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -1148,6 +1152,12 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 		xe_gt_dbg(gt, "H2G action %#x retrying: reason %#x\n",
+ 			  action[0], g2h_fence.reason);
+ 		mutex_unlock(&ct->lock);
++		if (++retries > GUC_SEND_RETRY_LIMIT) {
++			xe_gt_err(gt, "H2G action %#x reached retry limit=%u, aborting\n",
++				  action[0], GUC_SEND_RETRY_LIMIT);
++			return -ELOOP;
++		}
++		msleep(GUC_SEND_RETRY_MSLEEP * retries);
+ 		goto retry;
+ 	}
+ 	if (g2h_fence.fail) {
 -- 
 2.51.0
 
