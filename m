@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C672F3043D9;
-	Sat, 25 Oct 2025 16:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E7A303A0E;
+	Sat, 25 Oct 2025 16:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409465; cv=none; b=KM+6NqxDIZRY5uH/Wlwfl+BsPqXzabfeV0hPeJB5BhH/Ab4/dyQ88kUwd3aEGoAPjMy//9edcxtoLQ23fsFKToM58Zf2PGTAOc17f8jRxkaDXkurZ9zfgO3N1G5Esw+a4Wm46J2mQ5KegXPLdpx0p2ryXRjyz/t6pZ4QhYe3944=
+	t=1761409467; cv=none; b=tuqIX7HbygYD2LDpuL3JuTBZWjOoUM4ZDsePoDVt3FmHBDZARgVU2rANnS2maGV0xnW3VStNjyK7wAYFAxAyyTYa3NQMD6LnPAZ+uXv/qDGVevMrdL5epl5YGhd33k60ekJZIqiZrkA7nyc16a7IPGi0YMzjZN0xgiQA3kogK78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409465; c=relaxed/simple;
-	bh=QWS6EzDT2VpePfOZdQaXxCQ1f50mqfURE6SMppQM4OI=;
+	s=arc-20240116; t=1761409467; c=relaxed/simple;
+	bh=nZm99LY08ZQ5cWO1fFS+iC554LzXs37PpS89mgApbt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ekeUWmzAPUygQc5jXBxJacVGwsmOMa54TAOK3DIMV/LaeXvIXIqbMr6gao6fCLsccwpZXIZmS8AroUVRiSMF51yJdKDgBX/mOZIiXUWJCWx5aG3LlgyaFFZ2qlvtJjN3cDxcvQrEvBhAIgwvXweGrUa4g9bqC/rp8gQVqxA7Aw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L1vKuryB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aVoTdMBQBCGz73UODwQ2OxPR7mT9Fi0rRZxG/RGz5hXWYTWAyZuXG0ZFQClkkjDXnsGD3Bu/2u7QsJ/OKJ7EYFDd19czrJ3UlTwukUBpqHJxMOKErcRJeaIP2mvWetmt74iEITxfgvfjSU9r74b4vk0PqqrTULj46E0TBqWj0xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AoT9gPh2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L1vKuryB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9E7C4CEFB;
-	Sat, 25 Oct 2025 16:24:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AoT9gPh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B7BC4CEF5;
+	Sat, 25 Oct 2025 16:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409465;
-	bh=QWS6EzDT2VpePfOZdQaXxCQ1f50mqfURE6SMppQM4OI=;
+	s=k20201202; t=1761409466;
+	bh=nZm99LY08ZQ5cWO1fFS+iC554LzXs37PpS89mgApbt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1vKuryBI5PPhoDj+b7jV9tg8G3FP+WAbWRjWtwLYq++RmXoyTKU9KunK27fyqLjZ
-	 c+25m9DT5ybSLSzwvfqAJE02AfHvmzo3qc7gXnl2fvxTy7uiAslEubii/lEpwbWD7s
-	 yQdo1ZX2NIYZfDsJTs6H4hvSPaub1tVwjcCChgAzi7MTn5/9tLQdomUwqQOh9lkSiQ
-	 uUCYsBk7Fk4nPnkZq/hC0t9+PooIIZmcUR3bNUQtvWsUaS05POpvWVEx/CQ39+yhlz
-	 oMIOO0EKOUEBcGlL/hTrtKjcybZRGlBhxJWE4Mx14qjbCKbTdEj087RNYqyy4Z0dy0
-	 RfcXEYDouPOWA==
+	b=AoT9gPh2+Ngv5FwIRL9mp5IBo22G70Rm+1VTnKAQrAPubAQXj9XJYcyshQMwU0uU8
+	 pd+pCoOKxliF+rPCuN3D1nfumsiTZJIWjkrt8eaASshOKR1b4dWep8AwwCoNTH/o8x
+	 oVz2xKX+s5+zjsLlX1HogkfuLJORoLLSNgUWynVL5bCbNWxa+uLpPhJhMOCRpAPWBT
+	 C6mNDdxoGEDw3/Hm++dgLIge8YTHnobxjMAwyH+oVYREYXiljpFAuvYF+DUQcKnuRV
+	 jLuI0eQoUYROHfJTA8pWUppTWylpvy9DxQteOsfeDLyhAxI7XW0XiZGK+FxhB+/J90
+	 m6KEHIRAaf3sg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Cruise.Hung@amd.com,
-	wenjing.liu@amd.com,
-	wayne.lin@amd.com,
-	PeiChen.Huang@amd.com,
-	alexandre.f.demers@gmail.com,
-	aurabindo.pillai@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.6] drm/amd/display: Fix DVI-D/HDMI adapters
-Date: Sat, 25 Oct 2025 11:59:26 -0400
-Message-ID: <20251025160905.3857885-335-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] extcon: adc-jack: Fix wakeup source leaks on device unbind
+Date: Sat, 25 Oct 2025 11:59:27 -0400
+Message-ID: <20251025160905.3857885-336-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,242 +46,269 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 489f0f600ce2c0dae640df9035e1d82677d2580f ]
+[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
 
-When the EDID has the HDMI bit, we should simply select
-the HDMI signal type even on DVI ports.
+Device can be unbound, so driver must also release memory for the wakeup
+source.  Do not use devm interface, because it would change the order of
+cleanup.
 
-For reference see, the legacy amdgpu display code:
-amdgpu_atombios_encoder_get_encoder_mode
-which selects ATOM_ENCODER_MODE_HDMI for the same case.
-
-This commit fixes DVI connectors to work with DVI-D/HDMI
-adapters so that they can now produce output over these
-connectors for HDMI monitors with higher bandwidth modes.
-With this change, even HDMI audio works through DVI.
-
-For testing, I used a CAA-DMDHFD3 DVI-D/HDMI adapter
-with the following GPUs:
-
-Tahiti (DCE 6) - DC can now output 4K 30 Hz over DVI
-Polaris 10 (DCE 11.2) - DC can now output 4K 60 Hz over DVI
-
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: **YES**
+Now let me compile my comprehensive analysis:
 
-After conducting an extensive and thorough analysis of commit
-489f0f600ce2c ("drm/amd/display: Fix DVI-D/HDMI adapters"), I recommend
-this commit **SHOULD be backported** to stable kernel trees.
+## **BACKPORT RECOMMENDATION: YES (with critical caveat)**
+
+### **Executive Summary**
+
+This commit **SHOULD be backported** to stable kernel trees, **BUT it
+MUST be backported together with its follow-up fix commit
+92bac7d4de9c0** ("extcon: adc-jack: Cleanup wakeup source only if it was
+enabled"). Backporting commit 78b6a991eb6c6 alone would fix a memory
+leak but introduce a subtle correctness bug.
 
 ---
 
-## DETAILED ANALYSIS
+### **Detailed Technical Analysis**
 
-### What This Commit Does
+#### **1. Nature of the Bug**
 
-The commit adds 4 lines of code to
-`drivers/gpu/drm/amd/display/dc/link/link_detection.c:1143-1146`:
+The commit fixes a **memory leak of wakeup_source structures** that
+occurs when the adc-jack device is unbound:
 
+**Root Cause:**
+- In `adc_jack_probe()` (drivers/extcon/extcon-adc-jack.c:156-157), when
+  `data->wakeup_source` is true, the driver calls
+  `device_init_wakeup(&pdev->dev, 1)`
+- This allocates a `wakeup_source` structure involving:
+  - `kzalloc()` for the structure itself
+  - `kstrdup_const()` for the name string
+  - `ida_alloc()` for ID allocation
+  - Registration in the global wakeup_sources list
+
+**The Leak:**
+- The original `adc_jack_remove()` function has NO corresponding cleanup
+  call
+- Without `device_init_wakeup(&pdev->dev, false)`, the allocated
+  wakeup_source is never freed
+- This memory leaks every time the device is unbound (manual unbind via
+  sysfs, driver removal, module unload)
+
+#### **2. The Fix (Commit 78b6a991eb6c6)**
+
+**Code Change:**
 ```c
-else if (dc_is_dvi_signal(sink->sink_signal) &&
-         aud_support->hdmi_audio_native &&
-         sink->edid_caps.edid_hdmi)
-    sink->sink_signal = SIGNAL_TYPE_HDMI_TYPE_A;
+static void adc_jack_remove(struct platform_device *pdev)
+{
+    struct adc_jack_data *data = platform_get_drvdata(pdev);
+
++   device_init_wakeup(&pdev->dev, false);  // ← Added this line
+    free_irq(data->irq, data);
+    cancel_work_sync(&data->handler.work);
+}
 ```
 
-This code converts the signal type from DVI to HDMI when:
-1. The physical connector signal is DVI (single or dual link) - verified
-   by `dc_is_dvi_signal()`
-2. The hardware supports native HDMI audio - checked via
-   `aud_support->hdmi_audio_native`
-3. The monitor's EDID indicates HDMI support - confirmed by
-   `sink->edid_caps.edid_hdmi`
+**What device_init_wakeup(dev, false) does:**
+1. Calls `device_wakeup_disable(dev)` which:
+   - Detaches the wakeup_source from the device
+   - Calls `wakeup_source_unregister()` to remove it from the list
+   - Calls `wakeup_source_destroy()` to free all allocated memory
 
-### The Problem Being Fixed
+2. Calls `device_set_wakeup_capable(dev, false)` to clear the capability
+   flag
 
-**User Impact:** DVI connectors with DVI-D/HDMI adapters were completely
-non-functional. Users could not:
-- Get any display output to HDMI monitors connected via DVI-D/HDMI
-  adapters
-- Use higher bandwidth modes (4K @ 30Hz on DCE 6, 4K @ 60Hz on DCE 11.2)
-- Utilize HDMI audio through DVI ports
+#### **3. Critical Issue: The Follow-up Fix is Required**
 
-This is a **significant functional regression** affecting real-world
-hardware configurations.
+**Problem with 78b6a991eb6c6 alone:**
+- The fix unconditionally calls `device_init_wakeup(&pdev->dev, false)`
+- But probe only calls `device_init_wakeup(&pdev->dev, 1)` when
+  `data->wakeup_source` is true
+- Calling `device_init_wakeup(false)` when it was never initialized
+  could:
+  - Call `device_wakeup_disable()` on a NULL or uninitialized
+    wakeup_source
+  - While this might not crash (the function checks for NULL), it's
+    technically incorrect behavior
 
-### Code Analysis - Safety and Correctness
-
-#### 1. **Pointer Safety** (lines 1143-1146 in link_detection.c)
-- `sink`: Created at line 1044 via `dc_sink_create()` and null-checked
-  at lines 1045-1050. By the time execution reaches line 1143, `sink` is
-  guaranteed non-null.
-- `aud_support`: Obtained from `&link->dc->res_pool->audio_support` at
-  line 875. This is a stable structure embedded in the resource pool,
-  not a pointer that could be null.
-- `sink->edid_caps.edid_hdmi`: Populated by
-  `dm_helpers_read_local_edid()` at line 1058. The same field is already
-  used safely in the existing code at line 1141.
-
-#### 2. **Logic Correctness**
-The commit explicitly references the legacy amdgpu display code
-(`amdgpu_atombios_encoder_get_encoder_mode` in
-`drivers/gpu/drm/amd/amdgpu/atombios_encoders.c:482-495`), which has
-implemented identical logic for years:
-
+**The Follow-up Fix (92bac7d4de9c0):**
+Adds the conditional check that mirrors the probe logic:
 ```c
-case DRM_MODE_CONNECTOR_DVID:
-case DRM_MODE_CONNECTOR_HDMIA:
-default:
-    if (amdgpu_audio != 0) {
-        if (amdgpu_connector->audio == AMDGPU_AUDIO_ENABLE)
-            return ATOM_ENCODER_MODE_HDMI;
-        else if (connector->display_info.is_hdmi &&
-                 (amdgpu_connector->audio == AMDGPU_AUDIO_AUTO))
-            return ATOM_ENCODER_MODE_HDMI;
+static void adc_jack_remove(struct platform_device *pdev)
+{
+    struct adc_jack_data *data = platform_get_drvdata(pdev);
+
+- device_init_wakeup(&pdev->dev, false);
++   if (data->wakeup_source)
++       device_init_wakeup(&pdev->dev, false);
+    free_irq(data->irq, data);
+    cancel_work_sync(&data->handler.work);
+}
 ```
 
-The DC code now implements the **same logic** for DVI connectors,
-bringing it to parity with the proven legacy implementation.
+This was reported by Christophe JAILLET 8 days after the original fix
+(May 1 → May 9, 2025).
 
-#### 3. **Signal Type Handling**
-The change is placed in the correct location within the existing "HDMI-
-DVI Dongle" detection logic (lines 1139-1146). It forms a proper if-else
-chain:
-- First branch (line 1140-1142): Converts HDMI to DVI if EDID doesn't
-  indicate HDMI
-- Second branch (line 1143-1146): Converts DVI to HDMI if EDID indicates
-  HDMI **[NEW]**
+#### **4. Why Not Use devm_device_init_wakeup()?**
 
-This is symmetric and logically sound.
+Other drivers in the same patch series (extcon-qcom-spmi-misc, extcon-
+fsa9480) used the devm (device-managed) approach, which automatically
+cleans up. However, adc-jack explicitly avoids this approach.
 
-### Risk Assessment
+**Reason (from commit message):** "Do not use devm interface, because it
+would change the order of cleanup."
 
-#### **Regression Risk: LOW**
+**Cleanup Order Analysis:**
+```
+Current (with manual cleanup):
+1. device_init_wakeup(false) - disable wakeup source
+2. free_irq() - free interrupt
+3. cancel_work_sync() - cancel pending work
+4. (later) devm cleanup runs for other resources
 
-**Why:**
-1. **Targeted Change:** Only affects DVI connectors when specific
-   conditions are met (hardware audio support + HDMI EDID)
-2. **Existing Patterns:** The code uses the same `edid_caps.edid_hdmi`
-   field that's already checked at line 1141
-3. **Tested Hardware:** Explicitly tested on two GPU generations:
-   - Tahiti (DCE 6) - older hardware
-   - Polaris 10 (DCE 11.2) - newer hardware
-4. **No Follow-up Fixes:** No reverts or fixes related to this commit in
-   the month+ since it was merged (commit date: Sept 15, 2025; today:
-   Oct 18, 2025)
+With devm_device_init_wakeup:
+1. free_irq() - free interrupt
+2. cancel_work_sync() - cancel pending work
+3. (later) devm cleanup runs, including wakeup disable
 
-#### **Edge Cases Considered:**
+Problem: IRQ and work might still reference wakeup_source during cleanup
+```
 
-1. **Malformed EDID:** If a display incorrectly sets the HDMI bit, the
-   worst case is that DVI would be treated as HDMI. However:
-   - The same EDID data is already used for HDMI→DVI conversion at line
-     1141
-   - The `aud_support->hdmi_audio_native` check provides hardware-level
-     validation
-   - This matches proven legacy code behavior
+The manual approach ensures the wakeup source is disabled before other
+related resources are freed, maintaining proper cleanup ordering.
 
-2. **Audio Support Detection:** The `hdmi_audio_native` flag is set
-   during hardware initialization based on chipset capabilities (see
-   `drivers/gpu/drm/amd/display/dc/core/dc_resource.c:376-386`),
-   providing reliable hardware-level validation.
+#### **5. Pattern Analysis: Systematic Cleanup**
 
-### Dependencies
+This is part of a **systematic cleanup series** by Krzysztof Kozlowski
+(Linaro) fixing the same class of bug across multiple subsystems:
 
-**No external dependencies identified:**
-- Uses existing structures: `struct audio_support` (defined since at
-  least 2023)
-- Uses existing field: `edid_caps.edid_hdmi` (populated by existing EDID
-  parsing code)
-- Uses existing function: `dc_is_dvi_signal()` (inline function in
-  `signal_types.h`)
+**Same Author, Same Pattern (partial list):**
+- extcon: adc-jack, qcom-spmi-misc, fsa9480, axp288
+- mfd: sprd-sc27xx, rt5033, max8925, max77705, max77541, max14577,
+  as3722, 88pm886
+- Bluetooth: btmtksdio, btmrvl_sdio
+- iio: st_lsm6dsx, qcom-spmi-iadc, fxls8962af
+- usb typec: tipd, tcpci
+- power supply: gpio-charger, collie
+- watchdog: stm32
 
-The code is self-contained and doesn't depend on any recent commits.
+This indicates a **project-wide audit** for this specific resource leak
+pattern, lending credibility to the importance of the fix.
 
-### Backporting Criteria Evaluation
+#### **6. Impact Assessment**
 
-| Criterion | Assessment | Details |
-|-----------|------------|---------|
-| **Fixes user-affecting bug** | ✅ YES | Hardware completely non-
-functional without this fix |
-| **Small and contained** | ✅ YES | 4 lines in one file |
-| **Clear side effects** | ✅ NO | Only affects DVI + HDMI adapter
-scenario |
-| **Architectural changes** | ✅ NO | Simple signal type adjustment |
-| **Critical subsystem** | ⚠️ PARTIAL | Display driver, but localized
-change |
-| **Explicit stable tag** | ❌ NO | No Cc: stable in original commit |
-| **Follows stable rules** | ✅ YES | Important bugfix, minimal risk,
-well-tested |
+**Severity: Medium**
+- Resource leak, but only triggered on device unbind
+- Device unbind is relatively uncommon (manual unbind, rmmod, shutdown)
+- Leak is small per occurrence (one wakeup_source structure ~100-200
+  bytes)
+- **But**: repeated bind/unbind cycles accumulate leaks
+- **More important**: This is incorrect resource management that
+  violates kernel coding practices
 
-### Additional Evidence Supporting Backporting
+**Affected Users:**
+- Users with ADC-based jack detection hardware (primarily Samsung
+  devices)
+- Systems that dynamically load/unload extcon modules
+- Embedded systems with power management requirements
+- kexec/kdump scenarios where driver cleanup matters
 
-1. **Author Credibility:** Timur Kristóf has contributed numerous DCE6
-   fixes showing deep understanding of AMD display hardware (100+
-   commits visible in git history)
+**Regression Risk: Very Low**
+- Minimal, contained change (1-2 lines)
+- Only affects remove path
+- Mirrors the probe logic symmetrically
+- Has been in mainline with no reported issues
 
-2. **Maintainer Approval:**
-   - Acked-by: Alex Deucher (AMD maintainer)
-   - Reviewed-by: Alex Hung (AMD reviewer)
-   - Signed-off-by: Alex Deucher (merged by maintainer)
+#### **7. Stable Tree Backporting Criteria Analysis**
 
-3. **Real-World Testing:** Commit message documents specific testing
-   with:
-   - CAA-DMDHFD3 DVI-D/HDMI adapter (commercial hardware)
-   - Multiple GPU generations verified working
+✅ **Fixes an important bug:** Resource leak violating kernel resource
+management rules
 
-4. **Code Maturity:** The link_detection.c file has been stable since
-   its creation in January 2023 (refactored from dc_link.c)
+✅ **Small and contained:** 1-line fix + 1-line follow-up (total 2 lines
+across 2 commits)
 
-### Conclusion
+✅ **Low regression risk:** Remove path only, symmetric to probe, minimal
+code change
 
-This is a **textbook stable backport candidate**:
-- Fixes broken hardware with minimal code change
-- Low regression risk due to targeted logic and hardware validation
-- Implements proven pattern from legacy code
-- Well-tested on multiple platforms
-- Stable in mainline for 30+ days with no issues
+✅ **No architectural changes:** Pure resource management fix
 
-**RECOMMENDATION: YES - This commit should be backported to stable
-kernel trees.**
+✅ **Confined to subsystem:** Only affects extcon adc-jack driver
 
-The lack of an explicit Cc: stable tag is the only minor concern, but
-this is often added during the backport process by stable maintainers.
-The technical merits strongly support backporting.
+✅ **Clear and obvious fix:** The fix is straightforward and correct
 
- drivers/gpu/drm/amd/display/dc/link/link_detection.c | 4 ++++
- 1 file changed, 4 insertions(+)
+⚠️ **Requires follow-up commit:** Must include 92bac7d4de9c0 for
+correctness
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_detection.c b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-index 827b630daf49a..18d0ef40f23fb 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -1140,6 +1140,10 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 		if (sink->sink_signal == SIGNAL_TYPE_HDMI_TYPE_A &&
- 		    !sink->edid_caps.edid_hdmi)
- 			sink->sink_signal = SIGNAL_TYPE_DVI_SINGLE_LINK;
-+		else if (dc_is_dvi_signal(sink->sink_signal) &&
-+			 aud_support->hdmi_audio_native &&
-+			 sink->edid_caps.edid_hdmi)
-+			sink->sink_signal = SIGNAL_TYPE_HDMI_TYPE_A;
+❌ **No explicit stable tag:** Commit message lacks "Cc:
+stable@vger.kernel.org" tag
+
+#### **8. Comparison with Stable Tree Precedents**
+
+Looking at similar commits in this cleanup series, many include explicit
+stable tags. However, the absence of a stable tag doesn't preclude
+backporting when the fix meets other criteria.
+
+**Similar fixes that were backported (based on pattern):**
+- Memory leaks on device unbind are consistently considered backport-
+  worthy
+- Resource management fixes are high priority for stable trees
+- Small, contained fixes with clear benefits are typically backported
+
+---
+
+### **RECOMMENDATION**
+
+**YES - This commit should be backported to stable kernel trees.**
+
+**Critical Requirements:**
+1. **MUST backport both commits together:**
+   - 78b6a991eb6c6 ("extcon: adc-jack: Fix wakeup source leaks on device
+     unbind")
+   - 92bac7d4de9c0 ("extcon: adc-jack: Cleanup wakeup source only if it
+     was enabled")
+
+2. **Suggested stable trees:** All active stable trees where the adc-
+   jack driver exists with wakeup_source support
+
+3. **Rationale Summary:**
+   - Fixes genuine resource leak
+   - Part of systematic kernel-wide cleanup
+   - Low risk, high correctness value
+   - Minimal code change
+   - Both commits required for complete, correct fix
+
+**Implementation Note:** When submitting to stable, reference both
+commits and explain that 92bac7d4de9c0 is a necessary correction to
+78b6a991eb6c6.
+
+ drivers/extcon/extcon-adc-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
+index 46c40d85c2ac8..557930394abd2 100644
+--- a/drivers/extcon/extcon-adc-jack.c
++++ b/drivers/extcon/extcon-adc-jack.c
+@@ -164,6 +164,7 @@ static void adc_jack_remove(struct platform_device *pdev)
+ {
+ 	struct adc_jack_data *data = platform_get_drvdata(pdev);
  
- 		if (link->local_sink && dc_is_dp_signal(sink_caps.signal))
- 			dp_trace_init(link);
++	device_init_wakeup(&pdev->dev, false);
+ 	free_irq(data->irq, data);
+ 	cancel_work_sync(&data->handler.work);
+ }
 -- 
 2.51.0
 
