@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288FD3090CB;
-	Sat, 25 Oct 2025 16:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA03306D48;
+	Sat, 25 Oct 2025 16:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409460; cv=none; b=X88/pLtxNhywmNM85m3qLxcgrPNB1xO9qm8i4tfk9V78OHhDiBcS+Puuxslb3RHeVdbhmbaiT3orhtxeWt7u9SgRiOMRlI0+nQPJwlfkTHwUp+nD+N7p1rvAR8FTNDzWcpelcrssAaqe52vLeJ38nxNx3Xvi3kmy5IFb3QuvqQw=
+	t=1761409463; cv=none; b=skr7jQJDejhVcoGLK/aznQmoAPxYOC1RjufI/LNZPyRuXNV90+Of+YTuwh25rhkVTLm3gYDBLG8YDhKvR6BzYNNAknMFHGeM0SFU5rh9brQC1yh0gDeUnmjg9yEOGhcUsLAY9mCozjW046B0p1V2susY62dEVYHgfr4g1YLXMvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409460; c=relaxed/simple;
-	bh=DYbrjcg5nN5LP1aVaXSLPlizbR0Zl9bPOrw0viyuofE=;
+	s=arc-20240116; t=1761409463; c=relaxed/simple;
+	bh=tI/7aqj47B16z66xDv71+nKQxdSuVDZF0CYVx8bwMDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3dABrcxfnqO1zZ5f+k1OPEZDhi2ixW8M2ftUji90MnzN2P4X2nvNxU/dSgfNBFflcNnZUDQuv4KCDeLke6ZU33bROwbK4PDA4zqjF8RYJPQpZpApIQNIKc+bJuWg31WLe2qmoZIVFS/LCQKxlq4bzPLXNxpbN2vEMcOag+5zBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j2CF3LXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IYfJfi1ivE0kdyCmw/gldCM1uZKp3oIxDeoVCNQjJjCpWWNQjE0pHQrtglmU7d2rn2IZgvIqBfyw+zj2XfzcyCF0JDSaqO3uOr4ZsdSgAiR65hIekE1WbJ3Diiz2xzApqO8nyceYT6x7zjRWMPSNTLVaBPF5igMmffAvajF6llY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeJSN5OT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j2CF3LXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5471C4CEF5;
-	Sat, 25 Oct 2025 16:24:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeJSN5OT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EF8C4CEF5;
+	Sat, 25 Oct 2025 16:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409460;
-	bh=DYbrjcg5nN5LP1aVaXSLPlizbR0Zl9bPOrw0viyuofE=;
+	s=k20201202; t=1761409462;
+	bh=tI/7aqj47B16z66xDv71+nKQxdSuVDZF0CYVx8bwMDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2CF3LXQTMb/633g0nhWqGAcTpwcYNloGgpFx+swkR6yM2DpVA8OWJUJHHJWktVNe
-	 RFjXBKS0m2ifMVc+I8uh6VLD4IMTjVNRQHkCkowu4w5RimqykhvNjna1YTFfQVKX6Q
-	 xheRA4jEwghWOpN92BcpEFrjYZ2ukap5zpzhR/KzzH3f8to5/5bzF9HmMCscce772N
-	 091ixFGrnLSYCZsIBAh4MgCHwpIdEhY21M5Ukvj+OIxa3/BXDnEHZKuVvJRMrNP0ae
-	 EKXpPXh1G5Yc7+yCQ0UJ8BtF+DBeEiAv5ABQZ9+GI7fprTTulVPuOXaW43TGbVAcHp
-	 Fq5IA4zBpWVMg==
+	b=WeJSN5OTORk8z5B9F5LYP7xlw/MG1gTs7Tu9lpWj6L482Sfpimusj7us4ZsRo2IPE
+	 DZu2+MGeXSKFc+mKWAfmmAIiPoGO/4stqtREyqeCmvJBLpbDjqCC25pL0kcPvwyO8P
+	 DwA+AJIorPHBFnQp3Vif8S5jG/sNgWKoMoQ+rr49Zq1N2tSGCiG96vK0bqX+9sAa68
+	 SVSg9v3WMF5lU+CWnZRK3ZCJ1NFBVOBv3ipU6bto8LawUKsXh6qGdxvX1ETkDKXBsp
+	 MXqLf62Cfff3dZPoRBAruuRRujJ38dHBNWvEZca3siMAlpTh6qAFU267tia3MIyyCT
+	 /FGp1eRFvUYLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ce Sun <cesun102@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: William Wu <william.wu@rock-chips.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	xiang.liu@amd.com,
-	tao.zhou1@amd.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdgpu: Correct the counts of nr_banks and nr_errors
-Date: Sat, 25 Oct 2025 11:59:24 -0400
-Message-ID: <20251025160905.3857885-333-sashal@kernel.org>
+	mhklinux@outlook.com,
+	peter@korsgaard.com,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com,
+	danisjiang@gmail.com,
+	linuxhid@cosmicgizmosystems.com,
+	hoff.benjamin.k@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.4] usb: gadget: f_hid: Fix zero length packet transfer
+Date: Sat, 25 Oct 2025 11:59:25 -0400
+Message-ID: <20251025160905.3857885-334-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,18 +54,21 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ce Sun <cesun102@amd.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit 907813e5d7cadfeafab12467d748705a5309efb0 ]
+[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
 
-Correct the counts of nr_banks and nr_errors
+Set the hid req->zero flag of ep0/in_ep to true by default,
+then the UDC drivers can transfer a zero length packet at
+the end if the hid transfer with size divisible to EPs max
+packet size according to the USB 2.0 spec.
 
-Signed-off-by: Ce Sun <cesun102@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,71 +76,100 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fix scope: Corrects internal counters in AMDGPU ACA error accounting;
-  minimal, localized change confined to
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c`.
-- Bug 1 (nr_banks undercount after free): `aca_banks_release()` now
-  decrements `nr_banks` as it removes/frees each node, keeping the count
-  consistent with the list length; see
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:79`. Without this, after
-  freeing the list the `nr_banks` field could remain stale (non-zero),
-  misleading any subsequent logic that inspects the struct after release
-  (even if current users mostly recreate the struct).
-- Bug 2 (nr_errors negative/miscount): `new_bank_error()` now increments
-  `aerr->nr_errors` when a new error is appended to the list, matching
-  the existing decrement in `aca_bank_error_remove()`; see
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:242` (increment) and
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:276` (decrement). Previously,
-  errors would be removed and counted down without ever counting up,
-  driving `nr_errors` negative and breaking basic accounting.
-- Concurrency correctness: Both the increment and decrement of
-  `nr_errors` are performed while holding `aerr->lock` (add/remove paths
-  already take the mutex), so the fix is thread-safe and consistent with
-  existing synchronization.
-- Call flow correctness: The ACA error cache is drained in
-  `aca_log_aca_error()` which removes each entry (and thus decrements
-  the counter) under the same lock; see
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:540-556`. With the fix,
-  `nr_errors` returns to zero after logging, as intended.
-- User-visible impact: Prevents incorrect/negative error counts in ACA
-  error accounting and avoids stale bank counts after release. This
-  improves reliability of error reporting/diagnostics (including CPER-
-  related reporting that relies on bank collections; e.g., the deferred
-  UE path passes `de_banks.nr_banks` to CPER generation at
-  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:445`).
-- Risk assessment: Very low. No API/ABI changes, no architectural
-  changes, only adjusts counters to mirror existing list mutations.
-  Logic paths remain the same; locking is preserved.
-- Stable criteria fit: This is a small, targeted bug fix correcting
-  internal state; no features added; low regression risk; affects
-  correctness of error accounting in a driver subsystem.
+Explanation:
+- What changed
+  - For HID gadget IN transfers, `f_hidg_write()` now sets `req->zero =
+    1` so the UDC may append a zero-length packet (ZLP) when the
+    transfer length is an exact multiple of the endpoint max packet
+    size: drivers/usb/gadget/function/f_hid.c:514.
+  - For control responses on EP0, the HID function now sets `req->zero =
+    1` before queuing the reply, enabling a ZLP at end of the data stage
+    when appropriate: drivers/usb/gadget/function/f_hid.c:970.
 
-Given the above, this commit is a good candidate for backporting to
-stable trees.
+- Why it matters
+  - USB 2.0 requires that IN transfers be terminated by a short packet;
+    when app data length is divisible by the endpoint’s max packet size,
+    a ZLP is the mechanism to indicate end-of-transfer. Without this,
+    controllers or hosts may wait for more data, causing stalls or
+    timeouts in some configurations.
+  - Many UDCs explicitly consult `req->zero` to decide whether to send a
+    trailing ZLP, so this flag is the standard way for gadget functions
+    to request it. Examples:
+    - drivers/usb/dwc2/gadget.c:1133
+    - drivers/usb/chipidea/udc.c:515
+    - drivers/usb/mtu3/mtu3_qmu.c:270
+  - Other gadget functions already set `req->zero` in similar
+    situations, either unconditionally or conditionally, showing clear
+    precedent:
+    - drivers/usb/gadget/function/f_printer.c:650
+    - drivers/usb/gadget/function/f_phonet.c:243
+    - drivers/usb/gadget/function/u_ether.c:565, u_ether.c:571
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c | 2 ++
- 1 file changed, 2 insertions(+)
+- Scope and risk
+  - Minimal, two small changes isolated to `f_hid.c`:
+    - IN endpoint write path: drivers/usb/gadget/function/f_hid.c:514
+    - EP0 respond path: drivers/usb/gadget/function/f_hid.c:970
+  - No API or architectural changes. No impact to other gadget functions
+    or host-side drivers. Only affects the HID gadget function’s queuing
+    behavior.
+  - Low regression risk:
+    - The host initiates IN transactions; setting `req->zero` only
+      enables the device to respond with a ZLP if the host issues
+      another IN token and a ZLP is needed. If not needed (e.g., host
+      requested exactly the bytes provided), no extra transaction
+      occurs.
+    - For EP0 control transfers, UDCs commonly decide ZLP behavior based
+      on both `req->zero` and the requested length; sending a ZLP when
+      the last packet is full-sized is spec-compliant and commonly
+      handled.
+    - UDCs that don’t support ZLPs typically advertise quirks (see
+      include/linux/usb/gadget.h:407) and ignore the flag safely.
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-index d1e431818212d..9b31804491500 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-@@ -76,6 +76,7 @@ static void aca_banks_release(struct aca_banks *banks)
- 	list_for_each_entry_safe(node, tmp, &banks->list, node) {
- 		list_del(&node->node);
- 		kvfree(node);
-+		banks->nr_banks--;
+- Stable backport criteria
+  - Fixes a real, standards-compliance bug that can lead to incomplete
+    termination and observable hangs with some UDCs/hosts when HID
+    reports are maxpacket-aligned.
+  - Extremely small and contained (two assignments), no behavior changes
+    outside HID gadget transfers.
+  - No features added; purely correctness per USB 2.0 spec.
+  - Touches a non-critical subsystem (USB gadget HID function).
+
+- Additional context
+  - The GET_REPORT workqueue path still sets `req->zero = 0`
+    intentionally (drivers/usb/gadget/function/f_hid.c:575). This patch
+    does not alter that path, focusing only on the normal IN write and
+    EP0 respond flows, which are the typical places where ZLP needs to
+    be enabled by default.
+
+Given the above, this is a safe, low-risk bug fix that improves
+standards compliance and interoperability for HID gadget transfers and
+should be backported.
+
+ drivers/usb/gadget/function/f_hid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 8e1d1e8840503..307ea563af95e 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -511,7 +511,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
  	}
- }
  
-@@ -238,6 +239,7 @@ static struct aca_bank_error *new_bank_error(struct aca_error *aerr, struct aca_
+ 	req->status   = 0;
+-	req->zero     = 0;
++	req->zero     = 1;
+ 	req->length   = count;
+ 	req->complete = f_hidg_req_complete;
+ 	req->context  = hidg;
+@@ -967,7 +967,7 @@ static int hidg_setup(struct usb_function *f,
+ 	return -EOPNOTSUPP;
  
- 	mutex_lock(&aerr->lock);
- 	list_add_tail(&bank_error->node, &aerr->list);
-+	aerr->nr_errors++;
- 	mutex_unlock(&aerr->lock);
- 
- 	return bank_error;
+ respond:
+-	req->zero = 0;
++	req->zero = 1;
+ 	req->length = length;
+ 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+ 	if (status < 0)
 -- 
 2.51.0
 
