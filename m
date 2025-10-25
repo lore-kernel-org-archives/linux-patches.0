@@ -1,46 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3108930ACE8;
-	Sat, 25 Oct 2025 16:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6C930AD1B;
+	Sat, 25 Oct 2025 16:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409026; cv=none; b=EFNCmRmNmGhGMSOLB4eAQ8h/MPQ9nraWkJ+58hvJ7/8Wz/2QPynkw1l3Tx6UZ8guYG9XNmpOmDq7uXRck5jty56bDzZfBylbIuX7ZdI7e8wOSRt99S/l47GnHV+kQeUuAFXeOlt6VYXOkcq7+6RA9RANYj0v1l1tPEBJDHezP/I=
+	t=1761409027; cv=none; b=WZK7yymgoxQ/kdfolbpmeJsiBoVR+P5gfJKZaVOHKaf/ynfvhkjB8z8wEDTxZzN7URF4ugCwqG7/ywfpcAcBiUYemOYnwmSuxBidLwkKVjeadN64UTQv1hhcwmVR+NE3/w3g0Kpatn/kANivPdie0vI9i4i4U8n5kH41iU/cLRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409026; c=relaxed/simple;
-	bh=4YwdClfFl8clTWtetgAnqdWoVkEyNgqQ8FVXlCG38b0=;
+	s=arc-20240116; t=1761409027; c=relaxed/simple;
+	bh=MoH9ZlRMO15EnPBy7/XmWAPMoa9PryAQgktoC1TqlJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KQ7Cgr9/9LbSKYsfdvP4QL5muiQMwkRlSt3cXmkrWHRoAPpNKYd2sWckfXvV38hCcEvkkQDknuL3z/FdZhHklDTfDqO6VMhMjyboAfQ1boreEt5GjU9+xxLvJ8PP8ktEXohbBzf2ojKc93b5/IlGLFKCrXERz95NEMUZvKeTd/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5yQ0B0Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WIK/Is1+3Ajj6ZIXuFMEgPbGrMBWGr0fMSkRRPPxuxzrliGeTRc2E1l1LfV0VOM4Iw8Ez42hikp5lHMuOsIpZdxyOeBCHTNoLJ9VgqfGzzr/fES5v1v4Jil/m732a2/dL99wcGz6bD3exV8tWD2rvtdOg73mhgAFDHlPcw13Qac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mz3r5xtU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5yQ0B0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F62BC4CEF5;
-	Sat, 25 Oct 2025 16:17:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mz3r5xtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4107FC4CEFF;
+	Sat, 25 Oct 2025 16:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409022;
-	bh=4YwdClfFl8clTWtetgAnqdWoVkEyNgqQ8FVXlCG38b0=;
+	s=k20201202; t=1761409026;
+	bh=MoH9ZlRMO15EnPBy7/XmWAPMoa9PryAQgktoC1TqlJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5yQ0B0QX094pL1gdAV3UaMHyddG+9PW0sPj5ZTxVLU+crbd+rYGnkdkrQR1FfkrE
-	 0yA3C6gkvZm2mjkCnxywDmeJM6mxDGQzoPuoQl54bxr74YQWT3tdODZq+NVIWfAsui
-	 WYV+oolT4REAAG4Edy9JOZRFyX9+QtPjuVGezxyQVg+UO+k3++i8g0GwuSFHBGLlcR
-	 e1+UskMmbq6ruSfuJF94+WKEzHMojQ4ksYrA/dDljo2mU5+nAIMZqQVzn/fl6pWbfy
-	 Bet4KE3P+yKZ1vAUjuEUDMH7kBj8W4HTfUJIuFjxmCzbH9Vuso1HbZB80NlyYdO9ie
-	 82gl8bxIhCh7w==
+	b=Mz3r5xtUlcUw9loTUCqqeGTuJAbfsJMbpzlCbDOzWaY17T6+lkpOBH34CP9sr5zUx
+	 l5j9I40sA0oGzbhZwhB/dT05qMisMjRM0ZUfm2FCkDVrSFTT7CNdzEacruZWgfh47l
+	 8Il82iLCRDCj8DpyZmAOg4aOqiLaLF4HfIZGs09fkJgouJkvs/Y90w2FwP9UphsIC9
+	 j1PvWb/kXygZY5Ga5P5j4aGiOuTn6EmmJz5Uvg1l5GdResRkq9YF2Fukrypn0B4pGH
+	 IxFnMph2zlXWpnptc1tnEI1HAnamLIoU81S7VDM/ARw0iRp7BWmRmD0S1PYSnjtVQI
+	 2y1GWPj5Y9S+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ce Sun <cesun102@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
+Cc: Xi Ruoyao <xry111@xry111.site>,
+	Asiacn <710187964@qq.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lijo.lazar@amd.com,
-	christian.koenig@amd.com,
-	Hawking.Zhang@amd.com,
-	mario.limonciello@amd.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Effective health check before reset
-Date: Sat, 25 Oct 2025 11:56:44 -0400
-Message-ID: <20251025160905.3857885-173-sashal@kernel.org>
+	Austin.Zheng@amd.com,
+	aurabindo.pillai@amd.com,
+	ray.wu@amd.com,
+	chenhuacai@kernel.org,
+	dillon.varone@amd.com,
+	rostrows@amd.com,
+	alexandre.f.demers@gmail.com,
+	karthi.kandasamy@amd.com,
+	wenjing.liu@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display/dml2: Guard dml21_map_dc_state_into_dml_display_cfg with DC_FP_START
+Date: Sat, 25 Oct 2025 11:56:45 -0400
+Message-ID: <20251025160905.3857885-174-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,184 +62,246 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ce Sun <cesun102@amd.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit da467352296f8e50c7ab7057ead44a1df1c81496 ]
+[ Upstream commit c97a7dccb3ed680031011cfc1457506e6de49c9a ]
 
-Move amdgpu_device_health_check into amdgpu_device_gpu_recover to
-ensure that if the device is present can be checked before reset
+dml21_map_dc_state_into_dml_display_cfg calls (the call is usually
+inlined by the compiler) populate_dml21_surface_config_from_plane_state
+and populate_dml21_plane_config_from_plane_state which may use FPU.  In
+a x86-64 build:
 
-The reason is:
-1.During the dpc event, the device where the dpc event occurs is not
-present on the bus
-2.When both dpc event and ATHUB event occur simultaneously,the dpc thread
-holds the reset domain lock when detecting error,and the gpu recover thread
-acquires the hive lock.The device is simultaneously in the states of
-amdgpu_ras_in_recovery and occurs_dpc,so gpu recover thread will not go to
-amdgpu_device_health_check.It waits for the reset domain lock held by the
-dpc thread, but dpc thread has not released the reset domain lock.In the dpc
-callback slot_reset,to obtain the hive lock, the hive lock is held by the
-gpu recover thread at this time.So a deadlock occurred
+    $ objdump --disassemble=dml21_map_dc_state_into_dml_display_cfg \
+    > drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.o |
+    > grep %xmm -c
+    63
 
-Signed-off-by: Ce Sun <cesun102@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Thus it needs to be guarded with DC_FP_START.  But we must note that the
+current code quality of the in-kernel FPU use in AMD dml2 is very much
+problematic: we are actually calling DC_FP_START in dml21_wrapper.c
+here, and this translation unit is built with CC_FLAGS_FPU.  Strictly
+speaking this does not make any sense: with CC_FLAGS_FPU the compiler is
+allowed to generate FPU uses anywhere in the translated code, perhaps
+out of the DC_FP_START guard.  This problematic pattern also occurs in
+at least dml2_wrapper.c, dcn35_fpu.c, and dcn351_fpu.c.  Thus we really
+need a careful audit and refactor for the in-kernel FPU uses, and this
+patch is simply whacking a mole.  However per the reporter, whacking
+this mole is enough to make a 9060XT "just work."
+
+Reported-by: Asiacn <710187964@qq.com>
+Closes: https://github.com/loongson-community/discussions/issues/102
+Tested-by: Asiacn <710187964@qq.com>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my comprehensive analysis of this commit, I can now provide my
+backporting recommendation.
 
-- What it fixes
-  - Prevents a real-world deadlock between the GPU recovery path and
-    PCIe DPC error handling when an ATHUB error and a DPC event occur
-    concurrently in an XGMI hive. Today, the GPU recovery thread takes
-    the hive lock first and then waits for the reset-domain lock, while
-    the DPC path already holds the reset-domain lock and later needs the
-    hive lock, leading to a lock inversion and a hang.
-  - The deadlock arises because the health check is currently skipped
-    during DPC (gated by `occurs_dpc`), so the GPU recovery path
-    proceeds far enough to try to take the reset lock rather than
-    bailing out early when the device is no longer present on the bus.
+## **BACKPORT DECISION: YES**
 
-- Current behavior in this tree
-  - Health check implementation:
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6123` (uses
-    `amdgpu_device_bus_status_check`, which reads PCI config via
-    `amdgpu_device_bus_status_check` in
-    `drivers/gpu/drm/amd/amdgpu/amdgpu.h:1774`).
-  - Health check is called from `amdgpu_device_recovery_prepare()` and
-    is skipped during DPC: see call at
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6162` guarded by `if
-    (!adev->pcie_reset_ctx.occurs_dpc)`.
-  - GPU recovery lock order: hive lock is taken before attempting reset
-    lock; reset lock acquired here:
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6464`.
-  - DPC path takes the reset lock early (in error_detected) and later
-    needs the hive lock: reset lock taken in error_detected at
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6911`, and hive lock is
-    taken again in `amdgpu_pci_slot_reset()`.
+This commit **SHOULD be backported** to stable kernel trees.
 
-- What this commit changes
-  - Moves the health check out of `amdgpu_device_recovery_prepare()`
-    (and drops its return value) so `amdgpu_device_recovery_prepare()`
-    only builds the reset device list. This eliminates the `occurs_dpc`
-    gate there.
-  - Calls `amdgpu_device_health_check()` in
-    `amdgpu_device_gpu_recover()` immediately after building the device
-    list and before attempting to take the reset-domain lock. This
-    ensures that when DPC has occurred (device lost from the bus), the
-    check returns `-ENODEV` and the recovery path bails out early,
-    releasing the hive lock and avoiding the lock inversion with the DPC
-    thread.
-  - Net effect: on DPC, GPU recovery no longer tries to contend for the
-    reset-domain lock; it exits cleanly because the health check fails,
-    allowing the DPC thread to proceed.
+---
 
-- Why this prevents the deadlock
-  - Before: GPU recovery holds hive lock, skips health check due to
-    `occurs_dpc`, then blocks on reset-domain lock; DPC holds reset-
-    domain lock and later blocks on hive lock → deadlock.
-  - After: GPU recovery holds hive lock, runs health check
-    unconditionally for non-VF, sees device lost (DPC), returns early
-    and releases hive lock; DPC can then obtain hive lock and complete.
+## **DETAILED ANALYSIS AND JUSTIFICATION**
 
-- Risk and scope
-  - Scope: Single file change; no architectural refactor. The change
-    restores the earlier, safer placement/semantics (health check before
-    lock acquisition) and removes the special-case gating for DPC.
-  - Callers: `amdgpu_device_recovery_prepare()`’s signature change is
-    localized within the same file; its only callers are updated
-    accordingly. No interfaces exposed outside the driver are changed.
-  - Behavior under SR-IOV VF remains unchanged (health check is still
-    skipped for VFs).
-  - Note: The diff also shows removal of the “skip slot reset during RAS
-    recovery” early-return in `amdgpu_pci_slot_reset`
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6969). That widens when
-    slot reset proceeds during RAS. While unrelated to the deadlock fix,
-    it keeps error handling consistent and avoids suppressing the DPC
-    recovery path; the main deadlock is eliminated by the earlier
-    health-check bail-out. This is the only part that slightly increases
-    behavioral surface area, but it remains confined to AMDGPU’s AER
-    recovery.
+### **1. NATURE OF THE BUG**
 
-- Stable backport fit
-  - Fixes an important deadlock affecting users under real error
-    conditions (DPC + ATHUB).
-  - Small, contained, revert of a fragile conditional (the `occurs_dpc`
-    gate) and call placement tweak.
-  - No new features, minimal regression risk, limited to the AMDGPU
-    reset/AER code paths.
+The commit fixes **unprotected FPU (Floating Point Unit) usage** in the
+AMD display driver. The function
+`dml21_map_dc_state_into_dml_display_cfg()` contains floating-point
+operations but was being called without proper kernel FPU protection
+guards.
 
-Given the bug severity (deadlock/hang) and contained nature of the fix,
-this is a good candidate for stable backport.
+**Evidence from the code:**
+- The commit message shows `objdump` analysis revealing **63 uses of
+  %xmm registers** (SSE/FPU instructions) in the compiled function
+- In the source code at `drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21
+  _translation_helper.c:779-987`, I found the actual FPU operations:
+  ```c
+  surface->dcc.informative.dcc_rate_plane0 = 1.0;  // Line 791
+  surface->dcc.informative.dcc_rate_plane1 = 1.0;  // Line 792
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 26 +++++++---------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+  plane->composition.scaler_info.plane0.h_ratio =
+  (double)scaler_data->ratios.horz.value / (1ULL << 32);  // Line 903
+  plane->composition.scaler_info.plane0.v_ratio =
+  (double)scaler_data->ratios.vert.value / (1ULL << 32);  // Line 904
+  plane->composition.scaler_info.plane1.h_ratio =
+  (double)scaler_data->ratios.horz_c.value / (1ULL << 32);  // Line 905
+  plane->composition.scaler_info.plane1.v_ratio =
+  (double)scaler_data->ratios.vert_c.value / (1ULL << 32);  // Line 906
+  ```
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index c8459337fcb89..dfa68cb411966 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -6132,12 +6132,11 @@ static int amdgpu_device_health_check(struct list_head *device_list_handle)
- 	return ret;
- }
+### **2. ROOT CAUSE AND REGRESSION TIMELINE**
+
+Through my investigation, I discovered this is a **regression fix**:
+
+- **v6.15**: Commit `366e77cd4923c` ("Protect FPU in
+  dml2_validate()/dml21_validate()") added DC_FP_START/END around the
+  entire `dml21_validate()` function - **WORKING**
+  - This commit had `Cc: stable@vger.kernel.org` tag
+  - It fixed "do_fpu invoked from kernel context" crashes on LoongArch
+
+- **v6.16**: Commit `fe3250f10819b` ("Call FP Protect Before Mode
+  Programming/Mode Support") refactored the code and moved FP protection
+  to individual calls
+  - It protected `dml2_build_mode_programming()` and
+    `dml2_check_mode_supported()`
+  - **BUT IT MISSED `dml21_map_dc_state_into_dml_display_cfg()`** -
+    **BROKEN**
+
+- **v6.18-rc1**: Current commit `c97a7dccb3ed6` adds the missing
+  protection - **FIXED**
+
+**Affected kernel versions:** v6.16 and v6.17 (including all stable
+releases) have the regression.
+
+### **3. THE FIX**
+
+The fix is **minimal and surgical**:
+
+```diff
+@@ -224,7 +224,9 @@ static bool dml21_mode_check_and_programming(...)
+        /* Populate stream, plane mappings and other fields in display
+config. */
++       DC_FP_START();
+        result = dml21_map_dc_state_into_dml_display_cfg(in_dc, context,
+dml_ctx);
++       DC_FP_END();
+        if (!result)
+                return false;
+
+@@ -279,7 +281,9 @@ static bool dml21_check_mode_support(...)
+        mode_support->dml2_instance = dml_init->dml2_instance;
++       DC_FP_START();
+        dml21_map_dc_state_into_dml_display_cfg(in_dc, context,
+dml_ctx);
++       DC_FP_END();
+```
+
+**Total change: 4 lines added** (2 × DC_FP_START, 2 × DC_FP_END)
+
+The `DC_FP_START()` and `DC_FP_END()` macros call `kernel_fpu_begin()`
+and `kernel_fpu_end()` which:
+1. Disable preemption
+2. Save current FPU state
+3. Allow safe FPU usage in kernel context
+4. Restore FPU state afterward
+
+### **4. USER-VISIBLE IMPACT**
+
+**Severity:** Hardware doesn't work or kernel crashes
+
+**Affected users:**
+- AMD Radeon GPU users on LoongArch systems (confirmed: makes 9060XT
+  "just work")
+- Potentially affects other architectures with strict FPU handling
+
+**Evidence:**
+- `Reported-by: Asiacn <710187964@qq.com>`
+- `Closes: https://github.com/loongson-community/discussions/issues/102`
+- `Tested-by: Asiacn <710187964@qq.com>` - Confirms it works
+- Similar to commit 366e77cd4923c which showed kernel crashes with stack
+  traces
+
+### **5. BACKPORTING CRITERIA ASSESSMENT**
+
+| Criterion | Status | Evidence |
+|-----------|--------|----------|
+| **Fixes important bug** | ✅ YES | Kernel crashes, hardware not working
+|
+| **Small and contained** | ✅ YES | Only 4 lines, 1 file changed |
+| **Minimal regression risk** | ✅ YES | Only adds protection guards
+around existing code |
+| **Confined to subsystem** | ✅ YES | AMD display driver only |
+| **Tested** | ✅ YES | Has Tested-by tag |
+| **Reviewed** | ✅ YES | Reviewed by Loongson and AMD engineers |
+| **Clear root cause** | ✅ YES | Detailed commit message with objdump
+evidence |
+
+### **6. CODE QUALITY OBSERVATIONS**
+
+The commit message honestly acknowledges broader architectural issues:
+> "the current code quality of the in-kernel FPU use in AMD dml2 is very
+much problematic... this patch is simply whacking a mole"
+
+However, it also states:
+> "whacking this mole is enough to make a 9060XT 'just work.'"
+
+This pragmatic fix is **necessary and correct** even if larger
+refactoring is needed long-term.
+
+### **7. MISSING STABLE TAGS (Should Have)**
+
+❌ No `Fixes:` tag (should be: `Fixes: fe3250f10819b`)
+❌ No `Cc: stable@vger.kernel.org`
+
+**This appears to be an oversight**, not a deliberate exclusion,
+because:
+- The earlier related commit 366e77cd4923c had `Cc:
+  stable@vger.kernel.org`
+- This is part of the same ongoing FPU protection effort
+- It fixes a clear regression with user-visible impact
+
+### **8. RISK ANALYSIS**
+
+**Risk of backporting:** **VERY LOW**
+- Change is minimal (only adds guards)
+- Guards are well-established pattern used throughout the codebase
+- No logic changes, no new features
+- Matches pattern of already-backported commit 366e77cd4923c
+
+**Risk of NOT backporting:** **HIGH**
+- Users with AMD GPUs on LoongArch cannot use their hardware
+- Potential kernel crashes and FPU state corruption
+- v6.16 and v6.17 remain broken
+
+---
+
+## **CONCLUSION**
+
+This is a **clear-cut backport candidate** that fixes a regression
+introduced in v6.16, has been tested, is minimal in scope, and has very
+low risk. The lack of stable tags appears to be an oversight rather than
+intentional exclusion.
+
+**Recommended for backport to:**
+- v6.17.x stable (actively maintained)
+- v6.16.x stable (if still maintained)
+
+ drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+index 03de3cf06ae59..059ede6ff2561 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+@@ -224,7 +224,9 @@ static bool dml21_mode_check_and_programming(const struct dc *in_dc, struct dc_s
+ 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
  
--static int amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
-+static void amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
- 					  struct list_head *device_list,
- 					  struct amdgpu_hive_info *hive)
- {
- 	struct amdgpu_device *tmp_adev = NULL;
--	int r;
+ 	/* Populate stream, plane mappings and other fields in display config. */
++	DC_FP_START();
+ 	result = dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
++	DC_FP_END();
+ 	if (!result)
+ 		return false;
  
- 	/*
- 	 * Build list of devices to reset.
-@@ -6157,14 +6156,6 @@ static int amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
- 	} else {
- 		list_add_tail(&adev->reset_list, device_list);
- 	}
--
--	if (!amdgpu_sriov_vf(adev) && (!adev->pcie_reset_ctx.occurs_dpc)) {
--		r = amdgpu_device_health_check(device_list);
--		if (r)
--			return r;
--	}
--
--	return 0;
- }
+@@ -279,7 +281,9 @@ static bool dml21_check_mode_support(const struct dc *in_dc, struct dc_state *co
+ 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
  
- static void amdgpu_device_recovery_get_reset_lock(struct amdgpu_device *adev,
-@@ -6457,8 +6448,13 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	reset_context->hive = hive;
- 	INIT_LIST_HEAD(&device_list);
- 
--	if (amdgpu_device_recovery_prepare(adev, &device_list, hive))
--		goto end_reset;
-+	amdgpu_device_recovery_prepare(adev, &device_list, hive);
-+
-+	if (!amdgpu_sriov_vf(adev)) {
-+		r = amdgpu_device_health_check(&device_list);
-+		if (r)
-+			goto end_reset;
-+	}
- 
- 	/* We need to lock reset domain only once both for XGMI and single device */
- 	amdgpu_device_recovery_get_reset_lock(adev, &device_list);
-@@ -6965,12 +6961,6 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
- 	int r = 0, i;
- 	u32 memsize;
- 
--	/* PCI error slot reset should be skipped During RAS recovery */
--	if ((amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) ||
--	    amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 4)) &&
--	    amdgpu_ras_in_recovery(adev))
--		return PCI_ERS_RESULT_RECOVERED;
--
- 	dev_info(adev->dev, "PCI error: slot reset callback!!\n");
- 
- 	memset(&reset_context, 0, sizeof(reset_context));
+ 	mode_support->dml2_instance = dml_init->dml2_instance;
++	DC_FP_START();
+ 	dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
++	DC_FP_END();
+ 	dml_ctx->v21.mode_programming.dml2_instance->scratch.build_mode_programming_locals.mode_programming_params.programming = dml_ctx->v21.mode_programming.programming;
+ 	DC_FP_START();
+ 	is_supported = dml2_check_mode_supported(mode_support);
 -- 
 2.51.0
 
