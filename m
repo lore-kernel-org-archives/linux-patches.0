@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8D4309F14;
-	Sat, 25 Oct 2025 16:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAD43074BE;
+	Sat, 25 Oct 2025 16:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409414; cv=none; b=cxH2uPWB5s1QDtRTqhU+J636WPBCT+x58+v7z4DxRxVhHtFJwtkp5tcwbQhBCMHoWt1qqI0NWtW6qwcLo1dt3j7A4VXita95KXhjewwFJU/17a+CXbyl4oIcbBhoktT7gUTmZwYxKQa4qizLgM6hEi/ZY+WgFYJOIJPAQMf9LB8=
+	t=1761409415; cv=none; b=EEMoRnMb2XomjbY47SGSBcXBAiqgHoYEYk5XvKm2X43NZzCi8vUlyRg27pacv3Ur0LG871fnNuW8wKEnk6AIHtnS3GXmsrk1yu+gM60Ib2NsT7wIYvpjyL1HjFgYiCBBCyO5182kty07FkZ1t/Xqnlb0RsdWesPZcoFp1kyZh6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409414; c=relaxed/simple;
-	bh=mM0EykjC/LGpqCHiluc0tn7P9aVGNkhW/8wTR3iWL88=;
+	s=arc-20240116; t=1761409415; c=relaxed/simple;
+	bh=Uo0Xxl9p51/nswKQFjAhaOwx7o/XDgnL+oPo5dwsqt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oVMrAStJTl2DQypgpRkW9eq/28XTYv+4/WpvO8LFGqWKXlHlJDtFDeeNK+10PSr0ZCpzSu74UWzhVmEGWiZblX+lh1vMFU88VfnP0lJnJtMDM803RxwabCVapt7m11YR3GGda/SyWxO2pKex71jBDzFajxehV+vNMc01mSu3HAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIvvAotu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IKUa6QSiJKezMSdDdYY8yZgh+OMP2k+n9Kz/V94odlI2N9edNBKI0oi9EJrDRcqEKlJ7zov4qojqrN2a305ILt6MVnLA6HJVw+0f99du66ZOcju/vQyiyl5LmLIk7Q+PhLkaeVucM/rAVjJYadzxg47hk4PO7nuDY3D7EU9TEys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5MThyjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIvvAotu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78F1C4CEFB;
-	Sat, 25 Oct 2025 16:23:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5MThyjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C97C19421;
+	Sat, 25 Oct 2025 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409413;
-	bh=mM0EykjC/LGpqCHiluc0tn7P9aVGNkhW/8wTR3iWL88=;
+	s=k20201202; t=1761409415;
+	bh=Uo0Xxl9p51/nswKQFjAhaOwx7o/XDgnL+oPo5dwsqt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIvvAotu7AmjQ6CVyJeQ9n6smt3wh/NPZwKUeWQp1CGel1uWwCwfVGg/NQj3FE4m+
-	 GrsT9lrFIV3OUwdwNRCpgslUseR7MUM5V8zyRp8wwNO9DA7KfDacZ75qGx18X3T7To
-	 q9X1q7SqWM3jfSEdB3MuudZtIBhdJlnhcQT3AcAkAZJQZxNliIpFue2HBQFd2FQstO
-	 3cDcvIaPY7d37duSlfTTX5dPeXM6U+gSMO2L5CuSEXdi1Q9af+yyjv2zpOMoO/QEYA
-	 5GSV/0qtpkZL+1MEjU0QimZyI3fBYTLa9er/i6zT23bpeOlyJT0mkqDGhcgfnI40ie
-	 KoYNLEG1N5L6Q==
+	b=S5MThyjWATbNIFw22b/yDP+UdTya5CWGt7+l7stctKMteCbp162U97nyMuYtnBbg6
+	 U+ngDApt5VkY0+PsxMMzQZFmUQlDlCTh/GdhAkFrbykFJ4UHBprYLFLZkCpout8ayb
+	 S4az2s/WchcpG5WLy3acDnVK0OMYLdGuvjr3ukLEchqcn/0hWCtDnR5X9cEgCYb+5w
+	 ixzH4YTyZnc0GsXIkh4nxUR1Q6aI2A9akYgAxH1X+8MzZ8aaBEtAptgznUR1/HI9SH
+	 CqhCa4wkDwuaEtSPfxPV67p5hlLEdpT1GN6T8XUSDMxqZW0IxHNirT+NmDjvtmVWXk
+	 xDuKosj1ic46Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paul Kocialkowski <paulk@sys-base.io>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Lizhi Hou <lizhi.hou@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	benjamin.gaignard@collabora.com,
-	p.zabel@pengutronix.de,
-	linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.1] media: verisilicon: Explicitly disable selection api ioctls for decoders
-Date: Sat, 25 Oct 2025 11:59:03 -0400
-Message-ID: <20251025160905.3857885-312-sashal@kernel.org>
+	mamin506@gmail.com,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] accel/amdxdna: Unify pm and rpm suspend and resume callbacks
+Date: Sat, 25 Oct 2025 11:59:04 -0400
+Message-ID: <20251025160905.3857885-313-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,18 +53,18 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
+[ Upstream commit d2b48f2b30f25997a1ae1ad0cefac68c25f8c330 ]
 
-Call the dedicated v4l2_disable_ioctl helper instead of manually
-checking whether the current context is an encoder for the selection
-api ioctls.
+The suspend and resume callbacks for pm and runtime pm should be same.
+During suspending, it needs to stop all hardware contexts first. And
+the hardware contexts will be restarted after the device is resumed.
 
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://lore.kernel.org/r/20250803191450.1568851-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,110 +72,470 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-**Why This Fix Matters**
-- Correctly hides unsupported ioctls on decoder nodes: Previously, the
-  driver exposed `VIDIOC_G_SELECTION`/`VIDIOC_S_SELECTION` to decoders
-  but rejected them at runtime with `-EINVAL`. This incorrectly
-  advertised capability and confused userspace and core heuristics. With
-  this change, those ioctls are explicitly disabled and return
-  `-ENOTTY`, which is the correct “not supported” error and matches V4L2
-  expectations (drivers/media/v4l2-core/v4l2-ioctl.c:3073, 3111).
-- Avoids misleading legacy crop exposure: V4L2 core auto-enables legacy
-  crop ioctls if selection is available. Disabling selection for
-  decoders prevents the core from enabling `VIDIOC_G_CROP/CROPCAP` on
-  decoder nodes (drivers/media/v4l2-core/v4l2-dev.c:657,
-  drivers/media/v4l2-core/v4l2-dev.c:659,
-  drivers/media/v4l2-core/v4l2-dev.c:662,
-  drivers/media/v4l2-core/v4l2-dev.c:663,
-  drivers/media/v4l2-core/v4l2-dev.c:664,
-  drivers/media/v4l2-core/v4l2-dev.c:665). This fixes a user-visible API
-  correctness issue.
+Why this matters
+- The previous runtime PM (RPM) suspend/resume paths did not
+  stop/restart hardware contexts, while system PM did. This mismatch
+  risks leaving DRM scheduler jobs and firmware/mailbox state out of
+  sync during RPM autosuspend, leading to command aborts, fence
+  timeouts, or wedged contexts after resume.
 
-**Change Details**
-- Disables selection ioctls for decoder device nodes using the standard
-  helper, before registration:
-  - `v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);`
-  - `v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);`
-  - Location: drivers/media/platform/verisilicon/hantro_drv.c:918,
-    drivers/media/platform/verisilicon/hantro_drv.c:919
-  - Called before `video_register_device`, as required
-    (drivers/media/platform/verisilicon/hantro_drv.c:924).
-- Simplifies selection handlers to only enforce buffer type, removing
-  runtime checks on context role:
-  - Dropped `!ctx->is_encoder` checks; now only `sel->type !=
-    V4L2_BUF_TYPE_VIDEO_OUTPUT` is validated.
-  - `vidioc_g_selection`:
-    drivers/media/platform/verisilicon/hantro_v4l2.c:666–667
-  - `vidioc_s_selection`:
-    drivers/media/platform/verisilicon/hantro_v4l2.c:698–699
-  - Effect: No functional change for encoders (where `ctx->is_encoder`
-    is always true), and decoders won’t reach these handlers since the
-    ioctls are disabled.
+Evidence of the bug in current code
+- System PM suspend stops per-client HW contexts before stopping the
+  hardware: drivers/accel/amdxdna/amdxdna_pci_drv.c:367 calls
+  `amdxdna_hwctx_suspend(client)` in a loop before suspending the
+  device.
+- Runtime PM suspend does not stop HW contexts; it only suspends the
+  device: drivers/accel/amdxdna/amdxdna_pci_drv.c:400–407.
+- System PM resume restarts the device then restarts HW contexts:
+  drivers/accel/amdxdna/amdxdna_pci_drv.c:383–395.
+- Runtime PM resume does not restart HW contexts; it only resumes the
+  device: drivers/accel/amdxdna/amdxdna_pci_drv.c:418–423.
 
-**Risk and Side Effects**
-- Behavior change is limited to decoders for selection ioctls: return
-  code changes from `-EINVAL` to `-ENOTTY` via core gating
-  (`is_valid_ioctl()` fails, `ret` remains `-ENOTTY`,
-  drivers/media/v4l2-core/v4l2-ioctl.c:3073, 3111–3113). This is the
-  correct semantics for “unsupported ioctl” and improves userspace
-  detection.
-- No architectural changes; confined to the Verisilicon Hantro driver.
-  Encoder behavior is unchanged.
-- Very small, contained patch; unlikely to introduce regressions. Aligns
-  with common media driver practice of disabling non-applicable ioctls
-  for a given node.
+What the patch does
+- Unifies PM and RPM flows so both stop contexts before hardware suspend
+  and restart them after hardware resume.
+  - New device-level suspend/resume ops:
+    - `aie2_hw_suspend()` iterates clients and suspends all HW contexts,
+      then calls `aie2_hw_stop()`.
+    - `aie2_hw_resume()` calls `aie2_hw_start()`, then iterates clients
+      and resumes all HW contexts.
+    - Implemented in drivers/accel/amdxdna/aie2_pci.c (added functions
+      referenced by `.suspend`/`.resume`).
+- Moves per-client HW context stop/restart into the AIE2 layer:
+  - `aie2_hwctx_suspend(struct amdxdna_client *client)` and
+    `aie2_hwctx_resume(struct amdxdna_client *client)` iterate a
+    client’s contexts:
+    - Wait up to 2s for idle via an output fence, stop DRM scheduler,
+      destroy context, save/restore status, then recreate and
+      reconfigure CUs and restart scheduler.
+    - Implemented in drivers/accel/amdxdna/aie2_ctx.c (replacing the
+      previous per-hwctx API).
+  - Helper functions `aie2_hwctx_status_shift_stop()` and
+    `aie2_hwctx_status_restore()` make status transitions explicit.
+- Drops the generic wrappers
+  `amdxdna_hwctx_suspend()`/`amdxdna_hwctx_resume()` and their dev_ops
+  hooks, avoiding layering divergence:
+  - Removal in drivers/accel/amdxdna/amdxdna_ctx.c (previous wrappers)
+    and drivers/accel/amdxdna/amdxdna_ctx.h.
+  - `aie2_ops` no longer exposes `.hwctx_suspend`/`.hwctx_resume`;
+    instead, `.suspend`/`.resume` do the full device+contexts sequence:
+    drivers/accel/amdxdna/aie2_pci.c:905.
+- Unifies RPM with system PM:
+  - `RUNTIME_PM_OPS` now points to the same suspend/resume callbacks as
+    system sleep, not separate RPM handlers:
+    drivers/accel/amdxdna/amdxdna_pci_drv.c (RUNTIME_PM_OPS now uses
+    `amdxdna_pmops_suspend`/`amdxdna_pmops_resume`).
+- Returns errors from suspend/resume:
+  - `struct amdxdna_dev_ops`’s `.suspend` now returns `int` (was
+    `void`), allowing pm core to see failures:
+    drivers/accel/amdxdna/amdxdna_pci_drv.h.
+  - `amdxdna_pmops_suspend()`/`amdxdna_pmops_resume()` now forward
+    errors to the PM core instead of swallowing them:
+    drivers/accel/amdxdna/amdxdna_pci_drv.c.
 
-**Stable Backport Fit**
-- Fixes a user-visible API bug (misadvertised capability and wrong
-  errno) with minimal, localized changes.
-- No new features or interfaces; follows stable rules for correctness
-  fixes.
-- Touches a non-core subsystem (media, platform driver), minimizing
-  cross-subsystem risk.
+Why this is a good stable backport
+- Fixes a real user-visible bug: RPM autosuspend could stop
+  firmware/mailbox without quiescing or tearing down contexts, causing
+  subsequent failures when resuming or when commands are still pending.
+- Minimal and contained: All changes are local to the amdxdna driver; no
+  uAPI changes; no kernel core changes; no architectural overhaul.
+- Behavior parity: Aligns RPM behavior with system suspend, reducing
+  divergence and subtle bugs.
+- Safe sequencing: The new flow preserves the established order (stop
+  all contexts → stop device; start device → restore contexts), but
+  applies it consistently for both PM and RPM. It also maintains locking
+  discipline using dev_lock and client hwctx locks.
+- Error handling improved: The new `.suspend` returns an error code so
+  PM core can act if device resume/suspend fails.
 
-Given the above, this commit is a good candidate for stable backporting.
+Specific code references
+- Divergence in current RPM/system PM handling:
+  - drivers/accel/amdxdna/amdxdna_pci_drv.c:367
+  - drivers/accel/amdxdna/amdxdna_pci_drv.c:371
+  - drivers/accel/amdxdna/amdxdna_pci_drv.c:400
+  - drivers/accel/amdxdna/amdxdna_pci_drv.c:418
+- Previous AIE2 per-hwctx suspend/resume that system PM used:
+  - drivers/accel/amdxdna/aie2_ctx.c:144
+  - drivers/accel/amdxdna/aie2_ctx.c:160
+- New unified ops: `aie2_ops` switches to device-level suspend/resume:
+  - drivers/accel/amdxdna/aie2_pci.c:905
+- Struct change to allow suspend to report errors:
+  - drivers/accel/amdxdna/amdxdna_pci_drv.h:49
 
- drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
- drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Risk and regressions
+- Slightly larger refactor within the driver (removal of wrappers and
+  function signature change) but entirely local to amdxdna.
+- RPM will now do context teardown/recreation, which takes some time;
+  however, this mirrors the safer system PM behavior and prevents
+  inconsistent state.
+- Uses `guard(mutex)` (present in modern kernels); if an older stable
+  branch lacks it, the backport can trivially use explicit
+  `mutex_lock()`/`mutex_unlock()`.
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index fa972effd4a2c..9d5e50fedae1f 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -917,6 +917,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
- 		vpu->decoder = func;
- 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
- 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
-+		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
-+		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
- 	}
+Conclusion
+- This is a targeted correctness fix that unifies PM flows, prevents
+  context/firmware desynchronization under runtime PM, and follows
+  stable rules (important bugfix, low regression risk, driver-scoped).
+  Backporting is recommended.
+
+ drivers/accel/amdxdna/aie2_ctx.c        | 59 ++++++++++----------
+ drivers/accel/amdxdna/aie2_pci.c        | 37 +++++++++++--
+ drivers/accel/amdxdna/aie2_pci.h        |  5 +-
+ drivers/accel/amdxdna/amdxdna_ctx.c     | 26 ---------
+ drivers/accel/amdxdna/amdxdna_ctx.h     |  2 -
+ drivers/accel/amdxdna/amdxdna_pci_drv.c | 74 +++----------------------
+ drivers/accel/amdxdna/amdxdna_pci_drv.h |  4 +-
+ 7 files changed, 73 insertions(+), 134 deletions(-)
+
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index cda964ba33cd7..6f77d1794e483 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -46,6 +46,17 @@ static void aie2_job_put(struct amdxdna_sched_job *job)
+ 	kref_put(&job->refcnt, aie2_job_release);
+ }
  
- 	video_set_drvdata(vfd, vpu);
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index 7c3515cf7d64a..4598f9b4bd21c 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -663,8 +663,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
- 	struct hantro_ctx *ctx = fh_to_ctx(priv);
++static void aie2_hwctx_status_shift_stop(struct amdxdna_hwctx *hwctx)
++{
++	 hwctx->old_status = hwctx->status;
++	 hwctx->status = HWCTX_STAT_STOP;
++}
++
++static void aie2_hwctx_status_restore(struct amdxdna_hwctx *hwctx)
++{
++	hwctx->status = hwctx->old_status;
++}
++
+ /* The bad_job is used in aie2_sched_job_timedout, otherwise, set it to NULL */
+ static void aie2_hwctx_stop(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx,
+ 			    struct drm_sched_job *bad_job)
+@@ -89,25 +100,6 @@ static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hw
+ 	return ret;
+ }
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
+-void aie2_restart_ctx(struct amdxdna_client *client)
+-{
+-	struct amdxdna_dev *xdna = client->xdna;
+-	struct amdxdna_hwctx *hwctx;
+-	unsigned long hwctx_id;
+-
+-	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
+-	mutex_lock(&client->hwctx_lock);
+-	amdxdna_for_each_hwctx(client, hwctx_id, hwctx) {
+-		if (hwctx->status != HWCTX_STAT_STOP)
+-			continue;
+-
+-		hwctx->status = hwctx->old_status;
+-		XDNA_DBG(xdna, "Resetting %s", hwctx->name);
+-		aie2_hwctx_restart(xdna, hwctx);
+-	}
+-	mutex_unlock(&client->hwctx_lock);
+-}
+-
+ static struct dma_fence *aie2_cmd_get_out_fence(struct amdxdna_hwctx *hwctx, u64 seq)
+ {
+ 	struct dma_fence *fence, *out_fence = NULL;
+@@ -141,9 +133,11 @@ static void aie2_hwctx_wait_for_idle(struct amdxdna_hwctx *hwctx)
+ 	dma_fence_put(fence);
+ }
  
- 	switch (sel->target) {
-@@ -696,8 +695,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
- 	struct vb2_queue *vq;
+-void aie2_hwctx_suspend(struct amdxdna_hwctx *hwctx)
++void aie2_hwctx_suspend(struct amdxdna_client *client)
+ {
+-	struct amdxdna_dev *xdna = hwctx->client->xdna;
++	struct amdxdna_dev *xdna = client->xdna;
++	struct amdxdna_hwctx *hwctx;
++	unsigned long hwctx_id;
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
+ 	/*
+ 	 * Command timeout is unlikely. But if it happens, it doesn't
+@@ -151,15 +145,19 @@ void aie2_hwctx_suspend(struct amdxdna_hwctx *hwctx)
+ 	 * and abort all commands.
+ 	 */
+ 	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
+-	aie2_hwctx_wait_for_idle(hwctx);
+-	aie2_hwctx_stop(xdna, hwctx, NULL);
+-	hwctx->old_status = hwctx->status;
+-	hwctx->status = HWCTX_STAT_STOP;
++	guard(mutex)(&client->hwctx_lock);
++	amdxdna_for_each_hwctx(client, hwctx_id, hwctx) {
++		aie2_hwctx_wait_for_idle(hwctx);
++		aie2_hwctx_stop(xdna, hwctx, NULL);
++		aie2_hwctx_status_shift_stop(hwctx);
++	}
+ }
  
- 	/* Change not allowed if the queue is streaming. */
+-void aie2_hwctx_resume(struct amdxdna_hwctx *hwctx)
++void aie2_hwctx_resume(struct amdxdna_client *client)
+ {
+-	struct amdxdna_dev *xdna = hwctx->client->xdna;
++	struct amdxdna_dev *xdna = client->xdna;
++	struct amdxdna_hwctx *hwctx;
++	unsigned long hwctx_id;
+ 
+ 	/*
+ 	 * The resume path cannot guarantee that mailbox channel can be
+@@ -167,8 +165,11 @@ void aie2_hwctx_resume(struct amdxdna_hwctx *hwctx)
+ 	 * mailbox channel, error will return.
+ 	 */
+ 	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
+-	hwctx->status = hwctx->old_status;
+-	aie2_hwctx_restart(xdna, hwctx);
++	guard(mutex)(&client->hwctx_lock);
++	amdxdna_for_each_hwctx(client, hwctx_id, hwctx) {
++		aie2_hwctx_status_restore(hwctx);
++		aie2_hwctx_restart(xdna, hwctx);
++	}
+ }
+ 
+ static void
+diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
+index c6cf7068d23c0..272c919d6d4fd 100644
+--- a/drivers/accel/amdxdna/aie2_pci.c
++++ b/drivers/accel/amdxdna/aie2_pci.c
+@@ -440,6 +440,37 @@ static int aie2_hw_start(struct amdxdna_dev *xdna)
+ 	return ret;
+ }
+ 
++static int aie2_hw_suspend(struct amdxdna_dev *xdna)
++{
++	struct amdxdna_client *client;
++
++	guard(mutex)(&xdna->dev_lock);
++	list_for_each_entry(client, &xdna->client_list, node)
++		aie2_hwctx_suspend(client);
++
++	aie2_hw_stop(xdna);
++
++	return 0;
++}
++
++static int aie2_hw_resume(struct amdxdna_dev *xdna)
++{
++	struct amdxdna_client *client;
++	int ret;
++
++	guard(mutex)(&xdna->dev_lock);
++	ret = aie2_hw_start(xdna);
++	if (ret) {
++		XDNA_ERR(xdna, "Start hardware failed, %d", ret);
++		return ret;
++	}
++
++	list_for_each_entry(client, &xdna->client_list, node)
++		aie2_hwctx_resume(client);
++
++	return ret;
++}
++
+ static int aie2_init(struct amdxdna_dev *xdna)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(xdna->ddev.dev);
+@@ -905,8 +936,8 @@ static int aie2_set_state(struct amdxdna_client *client,
+ const struct amdxdna_dev_ops aie2_ops = {
+ 	.init           = aie2_init,
+ 	.fini           = aie2_fini,
+-	.resume         = aie2_hw_start,
+-	.suspend        = aie2_hw_stop,
++	.resume         = aie2_hw_resume,
++	.suspend        = aie2_hw_suspend,
+ 	.get_aie_info   = aie2_get_info,
+ 	.set_aie_state	= aie2_set_state,
+ 	.hwctx_init     = aie2_hwctx_init,
+@@ -914,6 +945,4 @@ const struct amdxdna_dev_ops aie2_ops = {
+ 	.hwctx_config   = aie2_hwctx_config,
+ 	.cmd_submit     = aie2_cmd_submit,
+ 	.hmm_invalidate = aie2_hmm_invalidate,
+-	.hwctx_suspend  = aie2_hwctx_suspend,
+-	.hwctx_resume   = aie2_hwctx_resume,
+ };
+diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
+index 385914840eaa6..488d8ee568eb1 100644
+--- a/drivers/accel/amdxdna/aie2_pci.h
++++ b/drivers/accel/amdxdna/aie2_pci.h
+@@ -288,10 +288,9 @@ int aie2_sync_bo(struct amdxdna_hwctx *hwctx, struct amdxdna_sched_job *job,
+ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx);
+ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx);
+ int aie2_hwctx_config(struct amdxdna_hwctx *hwctx, u32 type, u64 value, void *buf, u32 size);
+-void aie2_hwctx_suspend(struct amdxdna_hwctx *hwctx);
+-void aie2_hwctx_resume(struct amdxdna_hwctx *hwctx);
++void aie2_hwctx_suspend(struct amdxdna_client *client);
++void aie2_hwctx_resume(struct amdxdna_client *client);
+ int aie2_cmd_submit(struct amdxdna_hwctx *hwctx, struct amdxdna_sched_job *job, u64 *seq);
+ void aie2_hmm_invalidate(struct amdxdna_gem_obj *abo, unsigned long cur_seq);
+-void aie2_restart_ctx(struct amdxdna_client *client);
+ 
+ #endif /* _AIE2_PCI_H_ */
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index be073224bd693..b47a7f8e90170 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -60,32 +60,6 @@ static struct dma_fence *amdxdna_fence_create(struct amdxdna_hwctx *hwctx)
+ 	return &fence->base;
+ }
+ 
+-void amdxdna_hwctx_suspend(struct amdxdna_client *client)
+-{
+-	struct amdxdna_dev *xdna = client->xdna;
+-	struct amdxdna_hwctx *hwctx;
+-	unsigned long hwctx_id;
+-
+-	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
+-	mutex_lock(&client->hwctx_lock);
+-	amdxdna_for_each_hwctx(client, hwctx_id, hwctx)
+-		xdna->dev_info->ops->hwctx_suspend(hwctx);
+-	mutex_unlock(&client->hwctx_lock);
+-}
+-
+-void amdxdna_hwctx_resume(struct amdxdna_client *client)
+-{
+-	struct amdxdna_dev *xdna = client->xdna;
+-	struct amdxdna_hwctx *hwctx;
+-	unsigned long hwctx_id;
+-
+-	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
+-	mutex_lock(&client->hwctx_lock);
+-	amdxdna_for_each_hwctx(client, hwctx_id, hwctx)
+-		xdna->dev_info->ops->hwctx_resume(hwctx);
+-	mutex_unlock(&client->hwctx_lock);
+-}
+-
+ static void amdxdna_hwctx_destroy_rcu(struct amdxdna_hwctx *hwctx,
+ 				      struct srcu_struct *ss)
+ {
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
+index f0a4a8586d858..c652229547a3c 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.h
++++ b/drivers/accel/amdxdna/amdxdna_ctx.h
+@@ -147,8 +147,6 @@ static inline u32 amdxdna_hwctx_col_map(struct amdxdna_hwctx *hwctx)
+ 
+ void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job);
+ void amdxdna_hwctx_remove_all(struct amdxdna_client *client);
+-void amdxdna_hwctx_suspend(struct amdxdna_client *client);
+-void amdxdna_hwctx_resume(struct amdxdna_client *client);
+ 
+ int amdxdna_cmd_submit(struct amdxdna_client *client,
+ 		       u32 cmd_bo_hdls, u32 *arg_bo_hdls, u32 arg_bo_cnt,
+diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.c b/drivers/accel/amdxdna/amdxdna_pci_drv.c
+index f2bf1d374cc70..fbca94183f963 100644
+--- a/drivers/accel/amdxdna/amdxdna_pci_drv.c
++++ b/drivers/accel/amdxdna/amdxdna_pci_drv.c
+@@ -343,89 +343,29 @@ static void amdxdna_remove(struct pci_dev *pdev)
+ 	mutex_unlock(&xdna->dev_lock);
+ }
+ 
+-static int amdxdna_dev_suspend_nolock(struct amdxdna_dev *xdna)
+-{
+-	if (xdna->dev_info->ops->suspend)
+-		xdna->dev_info->ops->suspend(xdna);
+-
+-	return 0;
+-}
+-
+-static int amdxdna_dev_resume_nolock(struct amdxdna_dev *xdna)
+-{
+-	if (xdna->dev_info->ops->resume)
+-		return xdna->dev_info->ops->resume(xdna);
+-
+-	return 0;
+-}
+-
+ static int amdxdna_pmops_suspend(struct device *dev)
+ {
+ 	struct amdxdna_dev *xdna = pci_get_drvdata(to_pci_dev(dev));
+-	struct amdxdna_client *client;
+-
+-	mutex_lock(&xdna->dev_lock);
+-	list_for_each_entry(client, &xdna->client_list, node)
+-		amdxdna_hwctx_suspend(client);
+ 
+-	amdxdna_dev_suspend_nolock(xdna);
+-	mutex_unlock(&xdna->dev_lock);
++	if (!xdna->dev_info->ops->suspend)
++		return -EOPNOTSUPP;
+ 
+-	return 0;
++	return xdna->dev_info->ops->suspend(xdna);
+ }
+ 
+ static int amdxdna_pmops_resume(struct device *dev)
+ {
+ 	struct amdxdna_dev *xdna = pci_get_drvdata(to_pci_dev(dev));
+-	struct amdxdna_client *client;
+-	int ret;
+-
+-	XDNA_INFO(xdna, "firmware resuming...");
+-	mutex_lock(&xdna->dev_lock);
+-	ret = amdxdna_dev_resume_nolock(xdna);
+-	if (ret) {
+-		XDNA_ERR(xdna, "resume NPU firmware failed");
+-		mutex_unlock(&xdna->dev_lock);
+-		return ret;
+-	}
+ 
+-	XDNA_INFO(xdna, "hardware context resuming...");
+-	list_for_each_entry(client, &xdna->client_list, node)
+-		amdxdna_hwctx_resume(client);
+-	mutex_unlock(&xdna->dev_lock);
+-
+-	return 0;
+-}
+-
+-static int amdxdna_rpmops_suspend(struct device *dev)
+-{
+-	struct amdxdna_dev *xdna = pci_get_drvdata(to_pci_dev(dev));
+-	int ret;
+-
+-	mutex_lock(&xdna->dev_lock);
+-	ret = amdxdna_dev_suspend_nolock(xdna);
+-	mutex_unlock(&xdna->dev_lock);
+-
+-	XDNA_DBG(xdna, "Runtime suspend done ret: %d", ret);
+-	return ret;
+-}
+-
+-static int amdxdna_rpmops_resume(struct device *dev)
+-{
+-	struct amdxdna_dev *xdna = pci_get_drvdata(to_pci_dev(dev));
+-	int ret;
+-
+-	mutex_lock(&xdna->dev_lock);
+-	ret = amdxdna_dev_resume_nolock(xdna);
+-	mutex_unlock(&xdna->dev_lock);
++	if (!xdna->dev_info->ops->resume)
++		return -EOPNOTSUPP;
+ 
+-	XDNA_DBG(xdna, "Runtime resume done ret: %d", ret);
+-	return ret;
++	return xdna->dev_info->ops->resume(xdna);
+ }
+ 
+ static const struct dev_pm_ops amdxdna_pm_ops = {
+ 	SYSTEM_SLEEP_PM_OPS(amdxdna_pmops_suspend, amdxdna_pmops_resume)
+-	RUNTIME_PM_OPS(amdxdna_rpmops_suspend, amdxdna_rpmops_resume, NULL)
++	RUNTIME_PM_OPS(amdxdna_pmops_suspend, amdxdna_pmops_resume, NULL)
+ };
+ 
+ static struct pci_driver amdxdna_pci_driver = {
+diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.h b/drivers/accel/amdxdna/amdxdna_pci_drv.h
+index ab79600911aaa..40bbb3c063203 100644
+--- a/drivers/accel/amdxdna/amdxdna_pci_drv.h
++++ b/drivers/accel/amdxdna/amdxdna_pci_drv.h
+@@ -50,13 +50,11 @@ struct amdxdna_dev_ops {
+ 	int (*init)(struct amdxdna_dev *xdna);
+ 	void (*fini)(struct amdxdna_dev *xdna);
+ 	int (*resume)(struct amdxdna_dev *xdna);
+-	void (*suspend)(struct amdxdna_dev *xdna);
++	int (*suspend)(struct amdxdna_dev *xdna);
+ 	int (*hwctx_init)(struct amdxdna_hwctx *hwctx);
+ 	void (*hwctx_fini)(struct amdxdna_hwctx *hwctx);
+ 	int (*hwctx_config)(struct amdxdna_hwctx *hwctx, u32 type, u64 value, void *buf, u32 size);
+ 	void (*hmm_invalidate)(struct amdxdna_gem_obj *abo, unsigned long cur_seq);
+-	void (*hwctx_suspend)(struct amdxdna_hwctx *hwctx);
+-	void (*hwctx_resume)(struct amdxdna_hwctx *hwctx);
+ 	int (*cmd_submit)(struct amdxdna_hwctx *hwctx, struct amdxdna_sched_job *job, u64 *seq);
+ 	int (*get_aie_info)(struct amdxdna_client *client, struct amdxdna_drm_get_info *args);
+ 	int (*set_aie_state)(struct amdxdna_client *client, struct amdxdna_drm_set_state *args);
 -- 
 2.51.0
 
