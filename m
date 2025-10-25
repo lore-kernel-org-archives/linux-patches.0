@@ -1,131 +1,286 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179A302CDE
-	for <patches@lists.linux.dev>; Sat, 25 Oct 2025 15:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8313009C3;
+	Sat, 25 Oct 2025 16:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761406844; cv=none; b=nih365M30QZSU7Mi23oojwCDavW2Gxzw4E04UkG9iKzeFsD6n5dw302km5Qpw6G/FbFwjeBlQwxnuIfxE/3aQDD7raKsRWikf+yhzCWm2MNxjCNP7bF6T53opwKx4o2HpkvqgsdMOyFtQcu6ZCi7u3A2li1e/NN9mGRL4o3jaGc=
+	t=1761408550; cv=none; b=l1Icu4b5txEph6EC5ExVZYrZcKKtXdBuyg8d9pyWU92VsIW3xS8zhmMs8y/+lU6MQFD6lzw5pSmUaDCxuJn4gidXnV1U0Tmgauhbm9dIGcIsPT1BCJRmt3mLls/L6kz9oOEjDtX5wNjMuZBpsOubDo6wJ9A/zOwl1g12iMdx3Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761406844; c=relaxed/simple;
-	bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=E2S/LYoP+ZA8Pvk8JiOLn8QbDYL23UTIU6kQpbySaqpcqRu2rphQRbMsiuCMSx4JLcRAuzkYb9iexKtYcwiMF9t3kxQR5XbMPiaYcZZPCVFwzDxeDezNXoO35X8cKCtMVIIBa+zCwhyTvAAE849SJrms8pvG5HRnXlHQ4BQGPgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=soleen.com; spf=pass smtp.mailfrom=soleen.com; dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b=Er46V1n6; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=soleen.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=soleen.com
+	s=arc-20240116; t=1761408550; c=relaxed/simple;
+	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o4J+/AvZnSj45c0m4O2z+C2eQq3tBwdRZs30/u8Rb7HMVeEVOpbjNVwODJYTUA18dgqOeZxFvEu74pVhl2vCyIodhpZ+g9J95INa0coK4pdvr62qrQqz37xbcq+At8SLEPL+fpB7OLiXmAsbDst3dJSEOkLICydhrR9Ak5puayw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bGJQys4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b="Er46V1n6"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-63c0c9a408aso5056489a12.3
-        for <patches@lists.linux.dev>; Sat, 25 Oct 2025 08:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=soleen.com; s=google; t=1761406841; x=1762011641; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
-        b=Er46V1n6Fw6/BPk9iMgnmBgWni2LuJKZB2sAPWxSTGpy86AZ1P1+iLSbSP9CDq4i3O
-         4YiHrUj4/+P1ZceZA8X0Wd4TF2PZ/cBT4myv2/ZjLaUVEs6G9mVjdua3KZML+k8v7UTw
-         ck+XQQ4VOlX5t8C2Xhere1g2ZL2IfATPRj9k0VlKmdj2gHSHpJcmTxrJj9dUNADzsqxM
-         /OneHyvqQKx7uWMTAdLdXVxC89WMfhhuiBhR5i61dUT2+0uPq8D5cDU9jjPD1V6nRP6s
-         x+YSYAnWWmUOwsESA8prd3L/kPqVzNP7bZek0gVAgZ+scO/y6aZRH/3+Pu5cvOi20Q8/
-         1v0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761406841; x=1762011641;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
-        b=ovTnl2T4CAVOq6GkAUwDbNSnL2MoSj8CA0OGau4C0yxbl+nXSe+GRUiCYCHmHPty+g
-         XyCiC1sh5CR2idNZkQIF90GWlSS3SLcq0M02aUbpuc+w/CcUsFfKesZ0jyMXyv+7j0IC
-         GmoSNt5qY9DsLkv71w4F6wMZ5loSZUYcqZ5Qug+z29OC292JbjZ6Uz0UbovkIMMjkNs5
-         NnHyHWxy2V/Co2A3YW0rTJ8bkLbuU2UPvP6RpbABKmAnZsQbK3lszf7jWvyLRpx4QFec
-         r6PqFx6o78mHfBkxopdmLol7msSOLzy94rcdW3+uH89FmJfwSafwuM5coTfWmYWoefuH
-         xgaA==
-X-Forwarded-Encrypted: i=1; AJvYcCUvepvsuNBLw0F2LiRgkYjjtoD0Un1TckKtJk3tAmAd8i8ueMvVLY/hblNv21WbTNI2iDa4bqRt@lists.linux.dev
-X-Gm-Message-State: AOJu0YwPQeww72m7ijkNZnA6uRM99Y9h475XJxRvrjYtGWaOPVffH7UI
-	6tMQ9H6pOJSQRvHlPBlHVzrHU0G1XPjXTtBd1uWXUnHbYuISuCowm73baX7gMEYYy3L/MomE9Sk
-	zSMRab2C4/LyS0hL8pNquGbACZ2L29lCTRSwhLRdOvA==
-X-Gm-Gg: ASbGncsGeTjR5uA+GiYuyFLbtYP36s+dhH/hYEnZFoSJkr4ltvwA4FQPnHZw91YNqDP
-	08ST7ZrqSgWg2QWLjmYgDiZr8dAZqgB4/lAwofkwv3q286WA3AkOz6Wg4PxaDfUeH6qJ1rTpihS
-	/y0Pn4lsIVjOZBIGg6ilR+53ZWFkKjJYPOirrtqaPCRx8NdehIal3Xjn6T3WuO0i8xg3Z8xciJW
-	kgaYIVo+tPGr/AkIMYCe1IQbu0rVrgvVR+kSR/vOBIyTjcLt3U+ctz8Hyrf2mR4Un7NKS8nnGSU
-	2lZXGPkcvxb6+f994A==
-X-Google-Smtp-Source: AGHT+IHusR3pR0UReEeTXHeTWS5omMas6c+gaYiIEsLmjRg06Miw4AMQcuQX3fi9PVgOyyAmpc1NpRtLuc0jLuFpHKE=
-X-Received: by 2002:a05:6402:4504:b0:63c:103b:e1cf with SMTP id
- 4fb4d7f45d1cf-63c1f584283mr30192670a12.0.1761406840700; Sat, 25 Oct 2025
- 08:40:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bGJQys4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E29C4CEF5;
+	Sat, 25 Oct 2025 16:09:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761408548;
+	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bGJQys4JyGxqEjKjYdgfAUrC8+WVGVxrDQqBKEXkpC0sgVlMw1kk6Orb5mZZmgaDO
+	 vbkFCEWA0e7QjlL1vFgVg1CrTFa7WMH73SKDKQbV/3yemc7mF2hjooYoZpU1H/jUuV
+	 JtEi62ucvqAt+VEMKm+CBqtuy3sFXNoc6GHT6YTX7qgai4jrW7zVMyQIXQ4mbviCq5
+	 p8KKLEneGAnTZyvEUMvkdFFJevu7c4h40Bd6aJr8RD2k00UsqqNtFK3QI/BPmsIiky
+	 P5yqcSSD08ssUQHyAw0SXWUaoKbV8jD1OmRmGYL4E3NzswBLCyanHiiYfujQZ7Cwgv
+	 jlBYGhZx55l3A==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	quic_ptalari@quicinc.com,
+	bryan.odonoghue@linaro.org,
+	quic_zongjian@quicinc.com,
+	krzysztof.kozlowski@linaro.org,
+	quic_jseerapu@quicinc.com,
+	alexandre.f.demers@gmail.com,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] serial: qcom-geni: Add DFS clock mode support to GENI UART driver
+Date: Sat, 25 Oct 2025 11:53:52 -0400
+Message-ID: <20251025160905.3857885-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com> <6-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
-In-Reply-To: <6-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
-From: Pasha Tatashin <pasha.tatashin@soleen.com>
-Date: Sat, 25 Oct 2025 11:40:04 -0400
-X-Gm-Features: AWmQ_bmCjfexrZLPPfdt56XAonJ2DbSa1CpJkmBpIfIxbAsyN_ouXa6sCMuBecc
-Message-ID: <CA+CK2bDZ1RX9o80x2+HTshix0zxLcruzDfW--NMS8CjWo1PfUg@mail.gmail.com>
-Subject: Re: [PATCH v7 06/15] iommupt: Add unmap_pages op
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev, 
-	Joerg Roedel <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org, 
-	linux-kselftest@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	llvm@lists.linux.dev, Bill Wendling <morbo@google.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
-	Miguel Ojeda <ojeda@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, 
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>, Will Deacon <will@kernel.org>, 
-	Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
-	James Gowans <jgowans@amazon.com>, Kevin Tian <kevin.tian@intel.com>, 
-	Michael Roth <michael.roth@amd.com>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 23, 2025 at 2:20=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> unmap_pages removes mappings and any fully contained interior tables from
-> the given range. This follows the now-standard iommu_domain API definitio=
-n
-> where it does not split up larger page sizes into smaller. The caller mus=
-t
-> perform unmap only on ranges created by map or it must have somehow
-> otherwise determined safe cut points (eg iommufd/vfio use iova_to_phys to
-> scan for them)
->
-> A future work will provide 'cut' which explicitly does the page size spli=
-t
-> if the HW can support it.
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-Are there plans to add "free" when a table becomes empty on an unmap?
-Not sure what would be an efficient implementation for that, maybe a
-refcnt for # entries in table?
+[ Upstream commit fc6a5b540c02d1ec624e4599f45a17f2941a5c00 ]
 
-> unmap is implemented with a recursive descent of the tree. If the caller
-> provides a VA range that spans an entire table item then the table memory
-> can be freed as well.
->
-> If an entire table item can be freed then this version will also check th=
-e
-> leaf-only level of the tree to ensure that all entries are present to
-> generate -EINVAL. Many of the existing drivers don't do this extra check.
->
-> This version sits under the iommu_domain_ops as unmap_pages() but does no=
-t
-> require the external page size calculation. The implementation is actuall=
-y
-> unmap_range() and can do arbitrary ranges, internally handling all the
-> validation and supporting any arrangment of page sizes. A future series
-> can optimize __iommu_unmap() to take advantage of this.
->
-> Freed page table memory is batched up in the gather and will be freed in
-> the driver's iotlb_sync() callback after the IOTLB flush completes.
->
-> Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+GENI UART driver currently supports only non-DFS (Dynamic Frequency
+Scaling) mode for source frequency selection. However, to operate correctly
+in DFS mode, the GENI SCLK register must be programmed with the appropriate
+DFS index. Failing to do so can result in incorrect frequency selection
 
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Add support for Dynamic Frequency Scaling (DFS) mode in the GENI UART
+driver by configuring the GENI_CLK_SEL register with the appropriate DFS
+index. This ensures correct frequency selection when operating in DFS mode.
+
+Replace the UART driver-specific logic for clock selection with the GENI
+common driver function to obtain the desired frequency and corresponding
+clock index. This improves maintainability and consistency across
+GENI-based drivers.
+
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250903063136.3015237-1-viken.dadhaniya@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+YES
+
+- Fixes a real bug in DFS mode: The UART driver previously never
+  programmed the GENI DFS clock selection register, so on platforms
+  where the GENI core clock runs in Dynamic Frequency Scaling (DFS)
+  mode, UART could pick the wrong source clock and thus the wrong baud.
+  This change explicitly programs the DFS index so the selected source
+  frequency matches the computed divider.
+  - New write of the DFS index to the hardware register:
+    drivers/tty/serial/qcom_geni_serial.c:1306
+  - DFS clock select register and mask exist in the common header:
+    include/linux/soc/qcom/geni-se.h:85, include/linux/soc/qcom/geni-
+    se.h:145
+
+- Uses the common GENI clock-matching helper instead of ad‑hoc logic:
+  The patch replaces driver-local clock rounding/tolerance code with the
+  GENI core’s frequency matching routine, ensuring consistent clock
+  selection across GENI-based drivers and improving maintainability.
+  - New source frequency selection via common helper:
+    drivers/tty/serial/qcom_geni_serial.c:1270
+  - Common helper is present and exported in the GENI core:
+    drivers/soc/qcom/qcom-geni-se.c:720
+
+- Maintains existing divisor programming and adds a safety check: The
+  driver still computes and programs the serial clock divider, now with
+  a guard to avoid overflow of the divider field.
+  - Divider computation and range check:
+    drivers/tty/serial/qcom_geni_serial.c:1277,
+    drivers/tty/serial/qcom_geni_serial.c:1279
+  - Divider write to both M/S clock cfg registers remains as before:
+    drivers/tty/serial/qcom_geni_serial.c:1303,
+    drivers/tty/serial/qcom_geni_serial.c:1304
+
+- Consistency with other GENI drivers already using DFS index
+  programming: Other GENI protocol drivers (e.g., SPI) already program
+  `SE_GENI_CLK_SEL` with the index returned by the common helper, so
+  this change aligns UART with established practice and reduces risk.
+  - SPI uses the same pattern: drivers/spi/spi-geni-qcom.c:383,
+    drivers/spi/spi-geni-qcom.c:385–386
+
+- Small, contained, and low-risk:
+  - Touches a single driver file with a localized change in clock setup.
+  - No ABI or architectural changes; relies on existing GENI core
+    helpers and headers.
+  - Additional register write is standard and used by other GENI
+    drivers; masks index with `CLK_SEL_MSK`
+    (include/linux/soc/qcom/geni-se.h:145) for safety.
+  - Includes defensive error handling if no matching clock level is
+    found and a divider overflow guard
+    (drivers/tty/serial/qcom_geni_serial.c:1271–1275,
+    drivers/tty/serial/qcom_geni_serial.c:1279–1281).
+
+- User impact: Without this, UART on DFS-enabled platforms can run at an
+  incorrect baud, causing broken serial communication (including
+  console). The fix directly addresses that functional issue.
+
+- Stable backport criteria:
+  - Fixes an important, user-visible bug (incorrect baud under DFS).
+  - Minimal and self-contained change, no new features or interfaces.
+  - Leverages existing, widely used GENI core APIs already present in
+    stable series.
+
+Note: One minor nit in the debug print includes an extra newline before
+`clk_idx`, but it’s harmless and does not affect functionality
+(drivers/tty/serial/qcom_geni_serial.c:1284).
+
+ drivers/tty/serial/qcom_geni_serial.c | 92 ++++++---------------------
+ 1 file changed, 21 insertions(+), 71 deletions(-)
+
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 81f385d900d06..ff401e331f1bb 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1,5 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+-// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
++/*
++ * Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
+ 
+ /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
+ #define __DISABLE_TRACE_MMIO__
+@@ -1253,75 +1256,15 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
+ 
+-static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
+-			unsigned int *clk_div, unsigned int percent_tol)
+-{
+-	unsigned long freq;
+-	unsigned long div, maxdiv;
+-	u64 mult;
+-	unsigned long offset, abs_tol, achieved;
+-
+-	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
+-	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+-	div = 1;
+-	while (div <= maxdiv) {
+-		mult = (u64)div * desired_clk;
+-		if (mult != (unsigned long)mult)
+-			break;
+-
+-		offset = div * abs_tol;
+-		freq = clk_round_rate(clk, mult - offset);
+-
+-		/* Can only get lower if we're done */
+-		if (freq < mult - offset)
+-			break;
+-
+-		/*
+-		 * Re-calculate div in case rounding skipped rates but we
+-		 * ended up at a good one, then check for a match.
+-		 */
+-		div = DIV_ROUND_CLOSEST(freq, desired_clk);
+-		achieved = DIV_ROUND_CLOSEST(freq, div);
+-		if (achieved <= desired_clk + abs_tol &&
+-		    achieved >= desired_clk - abs_tol) {
+-			*clk_div = div;
+-			return freq;
+-		}
+-
+-		div = DIV_ROUND_UP(freq, desired_clk);
+-	}
+-
+-	return 0;
+-}
+-
+-static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+-			unsigned int sampling_rate, unsigned int *clk_div)
+-{
+-	unsigned long ser_clk;
+-	unsigned long desired_clk;
+-
+-	desired_clk = baud * sampling_rate;
+-	if (!desired_clk)
+-		return 0;
+-
+-	/*
+-	 * try to find a clock rate within 2% tolerance, then within 5%
+-	 */
+-	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
+-	if (!ser_clk)
+-		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
+-
+-	return ser_clk;
+-}
+-
+ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	unsigned long clk_rate;
+-	unsigned int avg_bw_core;
++	unsigned int avg_bw_core, clk_idx;
+ 	unsigned int clk_div;
+ 	u32 ver, sampling_rate;
+ 	u32 ser_clk_cfg;
++	int ret;
+ 
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+@@ -1329,17 +1272,22 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ 	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+-	clk_rate = get_clk_div_rate(port->se.clk, baud,
+-		sampling_rate, &clk_div);
+-	if (!clk_rate) {
+-		dev_err(port->se.dev,
+-			"Couldn't find suitable clock rate for %u\n",
+-			baud * sampling_rate);
++	ret = geni_se_clk_freq_match(&port->se, baud * sampling_rate, &clk_idx, &clk_rate, false);
++	if (ret) {
++		dev_err(port->se.dev, "Failed to find src clk for baud rate: %d ret: %d\n",
++			baud, ret);
++		return ret;
++	}
++
++	clk_div = DIV_ROUND_UP(clk_rate, baud * sampling_rate);
++	/* Check if calculated divider exceeds maximum allowed value */
++	if (clk_div > (CLK_DIV_MSK >> CLK_DIV_SHFT)) {
++		dev_err(port->se.dev, "Calculated clock divider %u exceeds maximum\n", clk_div);
+ 		return -EINVAL;
+ 	}
+ 
+-	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
+-			baud * sampling_rate, clk_rate, clk_div);
++	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n, clk_idx = %u\n",
++		baud * sampling_rate, clk_rate, clk_div, clk_idx);
+ 
+ 	uport->uartclk = clk_rate;
+ 	port->clk_rate = clk_rate;
+@@ -1359,6 +1307,8 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ 
+ 	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
+ 	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
++	/* Configure clock selection register with the selected clock index */
++	writel(clk_idx & CLK_SEL_MSK, uport->membase + SE_GENI_CLK_SEL);
+ 	return 0;
+ }
+ 
+-- 
+2.51.0
+
