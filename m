@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E488F30595B;
-	Sat, 25 Oct 2025 16:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6DF304963;
+	Sat, 25 Oct 2025 16:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408893; cv=none; b=TPwb9OsRT/7ypwcR0kftLn4jFiZpwsZKXAKi1Dw4ZGfWvS1a2kxv6i782OJui/IgkZJPr1Sev5VHQFFoYGnkW2oMQZ65kMrLB+DY69YM1m0y9Bw9fiplvD3jCQLT48evaUTMKeqvDKN/T8BkF+CHa5+r9eey23uON2XBKpVoyWU=
+	t=1761408894; cv=none; b=MHeWf5WiM8J7C01j0sd3x0VpADbotA0byNAk+fn2LttiUpz2qBi0m8R6Xol5+vOGzOO6/jRczWWjSPzdhnuzPAG8YwVGoASP368KAx/RGbOAM4EuoxMyOonTLeDpckCjDyUjP+ovLnO1378sqX2bOjuT/Im0bJroBlFlKRMLyGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408893; c=relaxed/simple;
-	bh=Sa72g+/+++YpryrxfPg5VslBUSQzfQ/CjzT1VO5oNow=;
+	s=arc-20240116; t=1761408894; c=relaxed/simple;
+	bh=Q14Kb12jbMwWRLMErDN4yu+E8BEZvnucMPRiscpAUjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A9wC/i5JKSXYkECpK0LCxV6Dhg+18cHQMWw71zsLUworglhZkNKwFc9gmo6KlD3dPH7EvulXw05EmOcUqfOo64f8Pug9EWYFp8wKhL3AOBbO10TTkbzmvu9lmo/WHL71qdiw1XDyvAzI3ilYAXhqDRnjzCpULS+19DnnzOIUXsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t6QfyUlm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AD8SiELFgeheLlY6AYRZWN8i8ijikI8Uxd38c/I+I1b54QZwYHnuUheA8KMAG3psVoBF5dz4Vwy1InjvohgLirEd5cvTj8VJRO1G/pEl/PH43B6Svvx0KSFjYUttikscW63VNyj6QCt00xbG7pUO+Vm49gM5yR3fJg41ytSZNFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T1QSACSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t6QfyUlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781EBC4CEF5;
-	Sat, 25 Oct 2025 16:14:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T1QSACSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6A6C4CEFB;
+	Sat, 25 Oct 2025 16:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408892;
-	bh=Sa72g+/+++YpryrxfPg5VslBUSQzfQ/CjzT1VO5oNow=;
+	s=k20201202; t=1761408894;
+	bh=Q14Kb12jbMwWRLMErDN4yu+E8BEZvnucMPRiscpAUjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6QfyUlmi3CziC/eYEjkKrNH3w6oci60IOBZ/2dqysgcrHEoUI/TnBCo6cBhK2rh1
-	 SzO143ePWkHbj3dcUhXaIc+/0pnYdHdFXKQFWZ3Ls7aYSjnmmZY9bYB/IVMNFyuH3T
-	 IBvDPkDmwCSF+yhx40sAexUOKhq4iU0FCBBbMu1fWeBL/tqWqFWWl8H1svcLdiNopP
-	 GJZa3r+a1lIfM4zCyZM+px1wAJxGnhvJtVKEusi4MXP/YBFNvHG7tVP0yAkviwcF70
-	 2PfnlpBj10Hs8GEbl+bufwW4Kl2l7ZNeumD+L4M7cFv/cxNBTyKNE+1HPIHlbGX36U
-	 awnwC3VOnrnzg==
+	b=T1QSACSEh/M90p4Y50YEQNZAmLJtJmye7D3UnP99rTIdGkw/6L1QJDfDxM6La057Y
+	 eNRSomVmZt483w0uOGRLQNE8mfyXX4QhFSJRf+yXK4xZQygoN5FLG4wZSSdpPNFPgf
+	 0CkUQRqefKUQ35Fo7jHjIV7iewXy5yRGgS4X98LWO146kOjG7vDEGZpgkNC7nC7piE
+	 R1HbyWecqPXJ9Ifr/hPEKUUFlbikrh5TtQ0H3UxGNF9R5nbjvXDU3te9KFfxRA6w6e
+	 b3MxrV5L9CtkmBFQy6qjRCP3CMmz7cuVsfoCKd4w6k20AnJY3u3THpoL8plMh29WxV
+	 IILWGrp6p+MVA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gerald.schaefer@linux.ibm.com,
-	linux-s390@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] s390/pci: Use pci_uevent_ers() in PCI recovery
-Date: Sat, 25 Oct 2025 11:55:48 -0400
-Message-ID: <20251025160905.3857885-117-sashal@kernel.org>
+	mchehab@kernel.org,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-media@vger.kernel.org,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] media: em28xx: add special case for legacy gpiolib interface
+Date: Sat, 25 Oct 2025 11:55:49 -0400
+Message-ID: <20251025160905.3857885-118-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,17 +55,19 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit dab32f2576a39d5f54f3dbbbc718d92fa5109ce9 ]
+[ Upstream commit d5d299e7e7f6b4ead31383d4abffca34e4296df0 ]
 
-Issue uevents on s390 during PCI recovery using pci_uevent_ers() as done by
-EEH and AER PCIe recovery routines.
+The em28xx driver uses the old-style gpio_request_one() interface to
+switch the lna on the PCTV 290E card.
 
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-2-adf85b0620b0@linux.ibm.com
+This interface is becoming optional and should no longer be called by
+portable drivers. As I could not figure out an obvious replacement,
+select the new GPIOLIB_LEGACY symbol as a workaround.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,140 +75,95 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
-- What it changes
-  - arch/s390/pci/pci_event.c: Adds uevent notifications to the s390 PCI
-    error recovery path, mirroring existing AER/EEH behavior:
-    - After driver’s error_detected() returns, emit a recovery-begin
-      uevent: the patch inserts pci_uevent_ers(pdev, ers_res) in
-      zpci_event_notify_error_detected() (arch/s390/pci/pci_event.c:85).
-    - On recovery failure, emit FAILED_RECOVERY: the patch calls
-      pci_uevent_ers(pdev, PCI_ERS_RESULT_DISCONNECT) in
-      zpci_event_attempt_error_recovery()
-      (arch/s390/pci/pci_event.c:178).
-    - On recovery success, emit SUCCESSFUL_RECOVERY: the patch calls
-      pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED) after an optional
-      resume() in zpci_event_attempt_error_recovery()
-      (arch/s390/pci/pci_event.c:178).
-  - drivers/pci/pci-driver.c: Makes pci_uevent_ers() available when
-    building for s390 by expanding the ifdef to include CONFIG_S390
-    (drivers/pci/pci-driver.c:1591).
-  - include/linux/pci.h: Similarly expands the prototype guard to
-    include CONFIG_S390 so arch/s390 code can call it
-    (include/linux/pci.h:2768).
+- What it fixes: Prevents build breakage when `GPIOLIB=y` but the legacy
+  GPIO consumer API is disabled. `gpio_request_one()` is only declared
+  when `CONFIG_GPIOLIB_LEGACY` is enabled (see
+  `include/linux/gpio.h:88`), so compiling code guarded only by
+  `CONFIG_GPIOLIB` fails if legacy support is off.
 
-- Why it matters (user-visible impact)
-  - Brings s390 PCI recovery uevents to parity with AER and PowerPC EEH:
-    - pci_uevent_ers() already emits ERROR_EVENT=BEGIN_RECOVERY /
-      SUCCESSFUL_RECOVERY / FAILED_RECOVERY and DEVICE_ONLINE=0/1 to
-      userspace (drivers/pci/pci-driver.c:1591).
-    - AER and EEH already use these notifications; s390 previously did
-      not. This omission prevents userspace from reacting consistently
-      to PCI recovery events on s390 systems.
-  - The change enables standard userspace tooling (udev rules,
-    monitoring scripts) to receive the same recovery lifecycle events on
-    s390 that they already get elsewhere, which can help automate
-    remediation or logging. It’s a clear correctness/observability
-    improvement, not a feature addition that changes kernel behavior.
+- Code changes (small and contained):
+  - Guards updated to match the actual availability of
+    `gpio_request_one()`:
+    - `drivers/media/usb/em28xx/em28xx-dvb.c:730` switches `#ifdef
+      CONFIG_GPIOLIB` to `#ifdef CONFIG_GPIOLIB_LEGACY` in
+      `em28xx_pctv_290e_set_lna()`, so the legacy-only API is used only
+      when the legacy interface is present.
+    - `drivers/media/usb/em28xx/em28xx-dvb.c:1708` does the same in
+      `em28xx_dvb_init()` where the LNA is enabled on init for the PCTV
+      290E.
+  - Kconfig ensures the legacy API is pulled in when this driver
+    configuration requires it:
+    - `drivers/media/usb/em28xx/Kconfig:71` adds `select GPIOLIB_LEGACY
+      if GPIOLIB && DVB_CXD2820R`.
 
-- Scope and risk assessment
-  - Small, contained change:
-    - Adds three calls to pci_uevent_ers() in the s390 recovery path; no
-      core recovery logic changed.
-    - Only adjusts preprocessor guards to build pci_uevent_ers() for
-      s390. No behavior change on non-s390.
-  - Consistent with established patterns:
-    - AER calls pci_uevent_ers() after error_detected() and on
-      resume/failure; this patch mirrors that sequencing for s390.
-  - Low regression risk:
-    - Only additional KOBJ_CHANGE uevents are emitted during rare error
-      recovery flows.
-    - Calls occur under the same locking pattern used in AER (s390 uses
-      pci_dev_lock/pci_dev_unlock, which wraps device_lock, consistent
-      with AER’s device_lock usage), so no new locking hazards.
-    - No ABI change; only adds uevents that other architectures already
-      emit.
+- Behavior and scope:
+  - If `GPIOLIB_LEGACY` is available, functionality is unchanged: the
+    driver still toggles the LNA via `gpio_request_one()` and frees it.
+  - If `GPIOLIB=y` but `GPIOLIB_LEGACY=n`, the code now cleanly compiles
+    and falls back to a warning and no-op in
+    `em28xx_pctv_290e_set_lna()` (see `drivers/media/usb/em28xx/em28xx-
+    dvb.c:750`), avoiding a build error.
+  - The Kconfig `select` line actively keeps legacy enabled for this
+    combo, preserving LNA control where it mattered before.
 
-- Stable backport considerations
-  - Dependencies: pci_uevent_ers() exists and is implemented in pci-
-    driver.c (drivers/pci/pci-driver.c:1591) with a prototype in
-    include/linux/pci.h (include/linux/pci.h:2768). Older stable series
-    where pci_uevent_ers() lived in different guards may need the guard
-    expansions this patch includes. For supported long-term series
-    (4.19+, 5.4+, 5.10+, 5.15+, 6.1+), pci_uevent_ers() is already
-    present; just ensure to add CONFIG_S390 to both the definition and
-    the prototype guards as in this patch.
-  - No major architectural changes; change is limited to s390 PCI
-    recovery and one generic helper being compiled for s390.
-  - While the commit message does not include Fixes:/Cc: stable tags,
-    this is a correctness/behavior-parity fix affecting real userspace
-    observability and is minimal risk, making it suitable for stable.
+- Risk assessment:
+  - No architectural changes; purely Kconfig and preprocessor guards.
+  - Touches only the em28xx media USB driver and its Kconfig.
+  - Aligns with the tree-wide pattern where `gpio_request_one()` and
+    friends are guarded by `CONFIG_GPIOLIB_LEGACY` (e.g.,
+    `include/linux/gpio.h:88`, multiple existing users throughout the
+    tree).
+  - Minimal regression risk; at worst, adds the tiny legacy gpiolib-
+    legacy code when selected by Kconfig.
 
-- Conclusion
-  - This patch fixes a real behavioral gap on s390 by emitting standard
-    PCI recovery uevents that already exist on other platforms. It is
-    small, self-contained, and low risk, with clear user benefit. It
-    should be backported to stable.
+- Stable criteria fit:
+  - Fixes a real user-facing problem (build failure in valid configs).
+  - Small, targeted, and low risk.
+  - No new features; purely compatibility/build fix.
 
- arch/s390/pci/pci_event.c | 3 +++
- drivers/pci/pci-driver.c  | 2 +-
- include/linux/pci.h       | 2 +-
- 3 files changed, 5 insertions(+), 2 deletions(-)
+Note: Backport is relevant for stable series where
+`CONFIG_GPIOLIB_LEGACY` exists and can be disabled. Older stable series
+lacking this symbol won’t need (or may not accept) the Kconfig/guard
+changes.
 
-diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
-index d930416d4c903..b95376041501f 100644
---- a/arch/s390/pci/pci_event.c
-+++ b/arch/s390/pci/pci_event.c
-@@ -88,6 +88,7 @@ static pci_ers_result_t zpci_event_notify_error_detected(struct pci_dev *pdev,
- 	pci_ers_result_t ers_res = PCI_ERS_RESULT_DISCONNECT;
+ drivers/media/usb/em28xx/Kconfig      | 1 +
+ drivers/media/usb/em28xx/em28xx-dvb.c | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/usb/em28xx/Kconfig b/drivers/media/usb/em28xx/Kconfig
+index cb61fd6cc6c61..3122d4bdfc596 100644
+--- a/drivers/media/usb/em28xx/Kconfig
++++ b/drivers/media/usb/em28xx/Kconfig
+@@ -68,6 +68,7 @@ config VIDEO_EM28XX_DVB
+ 	select MEDIA_TUNER_XC5000 if MEDIA_SUBDRV_AUTOSELECT
+ 	select MEDIA_TUNER_MT2060 if MEDIA_SUBDRV_AUTOSELECT
+ 	select DVB_MXL692 if MEDIA_SUBDRV_AUTOSELECT
++	select GPIOLIB_LEGACY if GPIOLIB && DVB_CXD2820R
+ 	help
+ 	  This adds support for DVB cards based on the
+ 	  Empiatech em28xx chips.
+diff --git a/drivers/media/usb/em28xx/em28xx-dvb.c b/drivers/media/usb/em28xx/em28xx-dvb.c
+index 9fce59979e3bd..b94f5c70ab750 100644
+--- a/drivers/media/usb/em28xx/em28xx-dvb.c
++++ b/drivers/media/usb/em28xx/em28xx-dvb.c
+@@ -727,7 +727,7 @@ static int em28xx_pctv_290e_set_lna(struct dvb_frontend *fe)
+ 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
+ 	struct em28xx_i2c_bus *i2c_bus = fe->dvb->priv;
+ 	struct em28xx *dev = i2c_bus->dev;
+-#ifdef CONFIG_GPIOLIB
++#ifdef CONFIG_GPIOLIB_LEGACY
+ 	struct em28xx_dvb *dvb = dev->dvb;
+ 	int ret;
+ 	unsigned long flags;
+@@ -1705,7 +1705,7 @@ static int em28xx_dvb_init(struct em28xx *dev)
+ 				goto out_free;
+ 			}
  
- 	ers_res = driver->err_handler->error_detected(pdev,  pdev->error_state);
-+	pci_uevent_ers(pdev, ers_res);
- 	if (ers_result_indicates_abort(ers_res))
- 		pr_info("%s: Automatic recovery failed after initial reporting\n", pci_name(pdev));
- 	else if (ers_res == PCI_ERS_RESULT_NEED_RESET)
-@@ -244,6 +245,7 @@ static pci_ers_result_t zpci_event_attempt_error_recovery(struct pci_dev *pdev)
- 		ers_res = PCI_ERS_RESULT_RECOVERED;
- 
- 	if (ers_res != PCI_ERS_RESULT_RECOVERED) {
-+		pci_uevent_ers(pdev, PCI_ERS_RESULT_DISCONNECT);
- 		pr_err("%s: Automatic recovery failed; operator intervention is required\n",
- 		       pci_name(pdev));
- 		status_str = "failed (driver can't recover)";
-@@ -253,6 +255,7 @@ static pci_ers_result_t zpci_event_attempt_error_recovery(struct pci_dev *pdev)
- 	pr_info("%s: The device is ready to resume operations\n", pci_name(pdev));
- 	if (driver->err_handler->resume)
- 		driver->err_handler->resume(pdev);
-+	pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED);
- out_unlock:
- 	pci_dev_unlock(pdev);
- 	zpci_report_status(zdev, "recovery", status_str);
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 6405acdb5d0f3..302d61783f6c0 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -1582,7 +1582,7 @@ static int pci_uevent(const struct device *dev, struct kobj_uevent_env *env)
- 	return 0;
- }
- 
--#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH)
-+#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH) || defined(CONFIG_S390)
- /**
-  * pci_uevent_ers - emit a uevent during recovery path of PCI device
-  * @pdev: PCI device undergoing error recovery
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 59876de13860d..7735acf6f3490 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -2764,7 +2764,7 @@ static inline bool pci_is_thunderbolt_attached(struct pci_dev *pdev)
- 	return false;
- }
- 
--#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH)
-+#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH) || defined(CONFIG_S390)
- void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
- #endif
- 
+-#ifdef CONFIG_GPIOLIB
++#ifdef CONFIG_GPIOLIB_LEGACY
+ 			/* enable LNA for DVB-T, DVB-T2 and DVB-C */
+ 			result = gpio_request_one(dvb->lna_gpio,
+ 						  GPIOF_OUT_INIT_LOW, NULL);
 -- 
 2.51.0
 
