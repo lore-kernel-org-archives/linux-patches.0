@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BFF30ACE1;
-	Sat, 25 Oct 2025 16:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4DB2FC893;
+	Sat, 25 Oct 2025 16:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409191; cv=none; b=kReWB7Cado4TklH3buK4Dbr3i1yLomLoXWQrr1RQQQzYIzYpCSJzgEn0ul4EG0th4qRrD2k+Rdo1+ggtD8XuauCLr+tvI/kLwyxVPy20Nw6/mcJdgqXGI/GlqjYhrmf0AXqmpUfA/80Ot+3pKAtQ7LuOLQuTw2C5KbOj+nf4kyA=
+	t=1761409193; cv=none; b=pwEIhbDKNycxB0F5jGLQyYJsv3iFIpPCuKoeNYAihG3jNjR4Q/3aauxQoBm+ivYxaM87KZhWBbyFIydHpnSjIf8RJd8kjxb/35gsPaVJCo2+U4PuarWPrrT4RUf6neiMRoNaGTVRSN4P1QB5elsWH9nPTfL33ZmZi61tTTKfJrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409191; c=relaxed/simple;
-	bh=xLEtVHn1p3rV5+E0tr6l1dRZ759RXBHDgi3Lg9BFAHE=;
+	s=arc-20240116; t=1761409193; c=relaxed/simple;
+	bh=DSgj7znKqFNXPi5aWGyyUsGmRujf5oyPa4uzTCW+9TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qnu4Dg/eu3EI2s/0XU41MEflxRX6WZu0bG+i/TdXCS5U1Ns6dKpi0N3wDMf/pPZoAXpPLhNBRnAZpzi+rrJIiH5u1AHmHVQq08DO6AnMfpom57Sp2GHih31+QiadzNPOhXNWcLfpD0/Z67BXN6ZyixGh7Z9ctHzijO/sVo9NLQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/xlfYPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tryDbXJfYRbzaXTomf6vh2i4y7mFirsoKQ6kNTow5yb/7d/PLWL1oxravK3YUYmxfm8oZMMPgkwNCGKHYYgk6ThCaTukL6/cpcgFbFZQl7AjJf5Wt1B7r0LMFL4kY51tOsrLgnamO0DJLh9GXmMJ4Eergowmn1sv1dHd66k7GHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVSdwaj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/xlfYPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B353DC4CEFF;
-	Sat, 25 Oct 2025 16:19:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVSdwaj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050F2C113D0;
+	Sat, 25 Oct 2025 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409191;
-	bh=xLEtVHn1p3rV5+E0tr6l1dRZ759RXBHDgi3Lg9BFAHE=;
+	s=k20201202; t=1761409192;
+	bh=DSgj7znKqFNXPi5aWGyyUsGmRujf5oyPa4uzTCW+9TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/xlfYPxAGyWZ4W6QgGpQx9jcSk5p3ivoo+x24AFpMbnkqt+GeY9pFF3+ob7I+j3n
-	 x79YapJznR3lBudr8h0HgzAUnHMofbvSFEfxh4vVYQTS/JxNe6yjgU2ZT+iD8Hjdpo
-	 gAKGEKA0jWMpamT3jIRWdRERdVPP6E1LGk82SsbGGsheSW+3/RYQWP+XyJTb3F+O0g
-	 NdWV+Puvo4ETy9FBFhkI/izWWOTYN1haSIA1mFP2Sl34flU2AkEZIpDEHsG4efKa52
-	 0KBirCUKmr3dDAfxNGg5szsr22qtqX9rWmeK8aGph8PlXBpNs+gOPTgwlMiKhgDwLf
-	 GuDR4nSxxJNUA==
+	b=jVSdwaj5YvO6tLCmEKJVuVbkxXsdEAAupFBPMLv8OhXLV9CvzEqjbg28jBXeh0dYj
+	 2P7q6f9LC/TrnhxYGoDWsklnswnR12SNWWTN2XkyZ49Zf86vkc8MbL3Q1Tq1oajCWs
+	 IlbjMQXp1Otb9jOH8HIAJ6BJ4S/BHqLynCVBOo+Z+8M8T0gx0tShApXMKnGjohG6NE
+	 e3FfZ61+dpx/ZmsjUdmHenCzZdcAofZbl8NvxHH6Q2Xj6JEYB/+9yb1TvsQe9c314Z
+	 U+UM9J9LlQi2WeGiXQaUpGwFSRzJBh1AQUy4LMOKBySr2yQJSfQ/M91twKtbQ9eT0D
+	 9TRWdCwN2+iUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michael Dege <michael.dege@renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.6] phy: renesas: r8a779f0-ether-serdes: add new step added to latest datasheet
-Date: Sat, 25 Oct 2025 11:57:47 -0400
-Message-ID: <20251025160905.3857885-236-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] wifi: mac80211: count reg connection element in the size
+Date: Sat, 25 Oct 2025 11:57:48 -0400
+Message-ID: <20251025160905.3857885-237-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,16 +52,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Dege <michael.dege@renesas.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit e4a8db93b5ec9bca1cc66b295544899e3afd5e86 ]
+[ Upstream commit 1373f94148a5adac2f42c8ba9771105624fe4af0 ]
 
-R-Car S4-8 datasheet Rev.1.20 describes some additional register
-settings at the end of the initialization.
+We currently don't count the reg connection length in the per-link
+capability length. Fix it.
 
-Signed-off-by: Michael Dege <michael.dege@renesas.com>
-Link: https://lore.kernel.org/r/20250703-renesas-serdes-update-v4-2-1db5629cac2b@renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250826202512.b14fc82f736b.I03442382e8a07f6f9836bcdac2e22ce8afbe6a21@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -69,121 +70,77 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed and where
-  - Adds a safe read helper for banked registers:
-    `r8a779f0_eth_serdes_read32()` to mirror the existing writer
-    (drivers/phy/renesas/r8a779f0-ether-serdes.c:52).
-  - Extends the late init sequence to perform two datasheet‑mandated
-    strobes with explicit completion waits:
-    - Pulse BIT(8) in `0x00c0` (bank `0x180`), then wait for status
-      `0x0100` BIT(0) to assert and deassert
-      (drivers/phy/renesas/r8a779f0-ether-serdes.c:343,
-      drivers/phy/renesas/r8a779f0-ether-serdes.c:345,
-      drivers/phy/renesas/r8a779f0-ether-serdes.c:349).
-    - Pulse BIT(4) in `0x0144` (bank `0x180`), then wait for status
-      `0x0180` BIT(0) to assert and deassert
-      (drivers/phy/renesas/r8a779f0-ether-serdes.c:353,
-      drivers/phy/renesas/r8a779f0-ether-serdes.c:355,
-      drivers/phy/renesas/r8a779f0-ether-serdes.c:359).
-  - These additions are contained to
-    `r8a779f0_eth_serdes_hw_init_late()` which is invoked by `.power_on`
-    (drivers/phy/renesas/r8a779f0-ether-serdes.c:366,
-    drivers/phy/renesas/r8a779f0-ether-serdes.c:370).
+- What the change fixes: The size estimator for per-link capability
+  elements in association/ML frames failed to account for the 6 GHz
+  “regulatory connectivity” element. The patch adds 4 bytes for this
+  element when operating on 6 GHz, ensuring the pre-allocation size
+  matches what is actually written.
+  - Change site: net/mac80211/mlme.c:2125 adds the missing size
+    accounting in `ieee80211_link_common_elems_size(...)`, specifically:
+    - Adds `size += 2 + 1 + sizeof(struct ieee80211_he_6ghz_capa);` and
+      now also
+    - Adds `size += 4; /* reg connection */` for 6 GHz
+      (net/mac80211/mlme.c:2125–2129).
+- Why it matters: The element is always emitted for non-AP STAs on 6 GHz
+  and has a fixed size of 4 bytes, so not counting it underestimates the
+  SKB size and can lead to tailroom underruns.
+  - The element writer `ieee80211_put_reg_conn(...)` emits exactly 4
+    bytes (Extension IE header + ext ID + 1-octet value):
+    net/mac80211/util.c:2569–2573.
+  - This writer is called for 6 GHz links in
+    `ieee80211_add_link_elems(...)`: net/mac80211/mlme.c:1876–1880.
+- Where the size is used: The total buffer for management frames is
+  precomputed and passed to `alloc_skb(size, GFP_KERNEL)`.
+  Underestimation here risks overrun when later appending IEs.
+  - Association request path: `ieee80211_send_assoc(...)` sums
+    `ieee80211_link_common_elems_size(...)` into `size` before
+    `alloc_skb(size, GFP_KERNEL)` (net/mac80211/mlme.c:2167–2184,
+    2217–2219).
+  - ML reconfiguration frames also use this helper for their per-link
+    STA profiles (net/mac80211/mlme.c:10481–10485).
+- User impact: On 6 GHz connections (HE/EHT, especially with MLO), the
+  missing 4 bytes can cause:
+  - Buffer tailroom underrun during frame construction (possible
+    KASAN/BUG/WARN or memory corruption).
+  - Malformed frames leading to association or ML reconfiguration
+    failures.
+- Scope and risk:
+  - Small, self-contained fix in mac80211 mgmt path; no API/ABI change;
+    no feature addition.
+  - Only affects 6 GHz cases where the element is actually sent; over-
+    allocation by 4 bytes in other contexts does not occur.
+  - Very low regression risk; it corrects a precise accounting bug to
+    match already-emitted bytes.
 
-- Why this is a bug fix
-  - The commit implements “additional register settings at the end of
-    the initialization” per R‑Car S4‑8 datasheet Rev.1.20. Omitting
-    datasheet‑required init steps is a correctness issue that can
-    manifest as unreliable bring‑up, failed calibration/training, or
-    intermittent link.
-  - The second strobe uses register `0x0144`, already used by the driver
-    as a link “restart” control (drivers/phy/renesas/r8a779f0-ether-
-    serdes.c:253 to drivers/phy/renesas/r8a779f0-ether-serdes.c:255),
-    reinforcing that this affects required control sequencing rather
-    than adding a feature.
+Stable backport criteria:
+- Fixes a real bug that can affect users on 6 GHz.
+- Minimal, targeted change; no architectural changes.
+- Low risk of regressions; strictly improves size correctness.
 
-- Risk and containment
-  - Scope is limited to the Renesas R‑Car S4‑8 Ethernet SERDES PHY
-    driver; no core or ABI changes; no DT changes.
-  - Waits use `readl_poll_timeout_atomic()` with a bounded timeout
-    (`R8A779F0_ETH_SERDES_TIMEOUT_US` = 100ms) preventing hangs
-    (drivers/phy/renesas/r8a779f0-ether-serdes.c:20,
-    drivers/phy/renesas/r8a779f0-ether-serdes.c:59 to
-    drivers/phy/renesas/r8a779f0-ether-serdes.c:77).
-  - The registers being toggled are already part of this IP’s register
-    space; `0x0144` is pre‑existing in the code path. Worst case is a
-    small increase in init time; best case fixes real bring‑up issues.
+Conclusion: This should be backported to all stable kernels that include
+`ieee80211_put_reg_conn()` and use `ieee80211_link_common_elems_size()`
+for SKB sizing in association/ML frames.
 
-- Stable policy alignment
-  - Fixes a hardware initialization deficiency per the vendor datasheet;
-    small, self‑contained change; minimal regression risk; confined to a
-    single driver file of a specific SoC family.
-  - No architectural changes, no new features, no API surface
-    modifications. This matches stable backport guidelines for important
-    bug fixes with low risk.
+ net/mac80211/mlme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-- Recommendation
-  - Backport to stable trees that include this driver (i.e., where
-    `drivers/phy/renesas/r8a779f0-ether-serdes.c` exists). It improves
-    reliability of SERDES initialization for R‑Car S4‑8 platforms
-    without broader impact.
-
- drivers/phy/renesas/r8a779f0-ether-serdes.c | 28 +++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/drivers/phy/renesas/r8a779f0-ether-serdes.c b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-index 3b2d8cef75e52..4d12d091b0ab0 100644
---- a/drivers/phy/renesas/r8a779f0-ether-serdes.c
-+++ b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-@@ -49,6 +49,13 @@ static void r8a779f0_eth_serdes_write32(void __iomem *addr, u32 offs, u32 bank,
- 	iowrite32(data, addr + offs);
- }
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index dd650a127a317..f38881b927d17 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -2112,8 +2112,11 @@ ieee80211_link_common_elems_size(struct ieee80211_sub_if_data *sdata,
+ 		sizeof(struct ieee80211_he_mcs_nss_supp) +
+ 		IEEE80211_HE_PPE_THRES_MAX_LEN;
  
-+static u32 r8a779f0_eth_serdes_read32(void __iomem *addr, u32 offs,  u32 bank)
-+{
-+	iowrite32(bank, addr + R8A779F0_ETH_SERDES_BANK_SELECT);
-+
-+	return ioread32(addr + offs);
-+}
-+
- static int
- r8a779f0_eth_serdes_reg_wait(struct r8a779f0_eth_serdes_channel *channel,
- 			     u32 offs, u32 bank, u32 mask, u32 expected)
-@@ -274,6 +281,7 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
- *channel)
- {
- 	int ret;
-+	u32 val;
+-	if (sband->band == NL80211_BAND_6GHZ)
++	if (sband->band == NL80211_BAND_6GHZ) {
+ 		size += 2 + 1 + sizeof(struct ieee80211_he_6ghz_capa);
++		/* reg connection */
++		size += 4;
++	}
  
- 	ret = r8a779f0_eth_serdes_chan_setting(channel);
- 	if (ret)
-@@ -287,6 +295,26 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
- 
- 	r8a779f0_eth_serdes_write32(channel->addr, 0x03d0, 0x380, 0x0000);
- 
-+	val = r8a779f0_eth_serdes_read32(channel->addr, 0x00c0, 0x180);
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val | BIT(8));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 1);
-+	if (ret)
-+		return ret;
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val & ~BIT(8));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 0);
-+	if (ret)
-+		return ret;
-+
-+	val = r8a779f0_eth_serdes_read32(channel->addr, 0x0144, 0x180);
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val | BIT(4));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 1);
-+	if (ret)
-+		return ret;
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val & ~BIT(4));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 0);
-+	if (ret)
-+		return ret;
-+
- 	return r8a779f0_eth_serdes_monitor_linkup(channel);
- }
- 
+ 	size += 2 + 1 + sizeof(struct ieee80211_eht_cap_elem) +
+ 		sizeof(struct ieee80211_eht_mcs_nss_supp) +
 -- 
 2.51.0
 
