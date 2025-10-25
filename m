@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307030AAC7;
-	Sat, 25 Oct 2025 16:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551930DD36;
+	Sat, 25 Oct 2025 16:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409421; cv=none; b=BSkB/Ye7ltVjZjkItChfYqz7cRDoM0ZJF3e125FVwihZO4gwiPBpLib3y96F5vCDT4aTbVUuB3LT2IiPCYwng9nfT75JXS7tlyk9NDt1pdqA3QrGjbNyKa2p+aj6AH//IT3vvgonU4rGnHeaRU943NKEVnxKx5C69F8E6+rxOGQ=
+	t=1761409423; cv=none; b=TUWGwPdRqNxxxMcIv4cfe4V3xtIJmZM90Cjqm4vaEYdiILznVBdb5B4V/o4+U5mA/vuMc2C6AZ/USL9v9WHJ7cK2bLS2pm6tC7+vRW1O3SdHOoVpPibkrS+DDtmHOVtVBsjApmj0uViwtUAzULvKfA02RAbHkcolsPS/OpNKKLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409421; c=relaxed/simple;
-	bh=z10t3tUUlPF6mTtW0oTS0T6Brg0Lk6xgAcgBNsRe9W4=;
+	s=arc-20240116; t=1761409423; c=relaxed/simple;
+	bh=dVIj/Jzrg38NOB9dFskUPH1WhSVl2WkINUH0kBi6Y3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W1aCcQoA5Jpllv6HAGcsJN38442j89prJ7+4Yy167k3xyqA8eWSjR+5nzSimU9VrThqEce+Z3nYAH47rYFSVXJWDE3O18OoVMbSz1WYxkqZOTYyRhuxa1roIpmQNfr3RVoNmFRnflUS8TJus0muFDcGlCfUilcsp16UIGcyhTdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPuYHemx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gzuwLs2FiHTh9Oa3aZTgRjcsBf27h12w013LvLzjhSwXqUByZjZSFUyLvG1rtXKi0QQgtJSxBpN/OJJBcmzNHDARLjbDEb27qIAiWOHsKMUsIOogQhciQp16fuDb2NSmIEHO8gcQAxKO/pKSVN4nI0XEx45jCOk3HvpiBQH6mJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WPfveNjS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPuYHemx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF446C4CEFF;
-	Sat, 25 Oct 2025 16:23:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WPfveNjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E82C4CEF5;
+	Sat, 25 Oct 2025 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409421;
-	bh=z10t3tUUlPF6mTtW0oTS0T6Brg0Lk6xgAcgBNsRe9W4=;
+	s=k20201202; t=1761409423;
+	bh=dVIj/Jzrg38NOB9dFskUPH1WhSVl2WkINUH0kBi6Y3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JPuYHemxAb0rYe9vDxfm0sAwsvI1jLI4Pk1ZqHsu7a3dTKleab9B8kY6vecn5jZSH
-	 CKZWDMZvalwj0gGVv7Mm2dCAgTD3LaR09ayCyFP27mO+iyAKTIarTPRSMQXR9FnLrO
-	 I0+aKiUAwhQcCno38cNM0Y2P16v4U1T/ML75SP2K+rJlmOm9015d8mi89exakoBQ6p
-	 03Ib+ofs/Mh1WPEOsuEBKtaVdgW5HC43WPJr68wkpyeQVgX82nK4w4Lb10UbElx9iR
-	 Kr9Mk8FLjw9Z0BsTuC6vhvJMgG9x2sMlxtLxG4dCnNi2wTnyLVWBXkz2FZOwJtu4zj
-	 0cwHhqwUUCJVg==
+	b=WPfveNjSBueBaWFb0OLfhNDzpMHerAtTft0y+fRqYuasOMXg9V0MD5/vZokyl0HfU
+	 8adtY/6GsHJ5UGnzsgbV/pBF/0BmD3J3mrjRynIiSEt6LIecBP8BO2GVS/l3UTOm5+
+	 serPM50Z2W79xa0WvdbZM8b1+Ru0D7plRcAmROi78kIs+ivZF9Uokabegs0wt0yS3i
+	 flHWHDYfOY3fmUD1/GfsoPeWO3mstSKmLn6YSyTfWa3Or5dofutze+X3Ch3cYjWy3+
+	 V02V8tC4A4Dm8HvZaoLCwghNfYLOjd5q40POafBzDkr/F32EEdm9NB93y0rYy0w9DU
+	 Nn/ti6AXkMqQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: cfg80211: update the time stamps in hidden ssid
-Date: Sat, 25 Oct 2025 11:59:09 -0400
-Message-ID: <20251025160905.3857885-318-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17] Bluetooth: btusb: Add new VID/PID 13d3/3627 for MT7925
+Date: Sat, 25 Oct 2025 11:59:10 -0400
+Message-ID: <20251025160905.3857885-319-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,115 +58,103 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 185cc2352cb1ef2178fe4e9a220a73c94007b8bb ]
+[ Upstream commit 576952cf981b7d2b7d3227b246b4326e5548a133 ]
 
-In hidden SSID we have separate BSS entries for the beacon and for the
-probe response(s).
-The BSS entry time stamps represent the age of the BSS;
-when was the last time we heard the BSS.
-When we receive a beacon of a hidden SSID it means that we heard that
-BSS, so it makes sense to indicate that in the probe response entries.
-Do that.
+Add VID 13d3 & PID 3627 for MediaTek MT7922 USB Bluetooth chip.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250907115135.712745e498c0.I38186abf5d20dec6f6f2d42d2e1cdb50c6bfea25@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
+
+T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3627 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES – adding the new 13d3:3627 USB ID simply lets existing MT7925
+hardware bind to the driver and reuses already‑shipped logic without
+introducing risk.
 
-Explanation
-- Fixes a real bug: For hidden SSIDs cfg80211 keeps separate BSS entries
-  for the beacon and probe response(s) (see doc comment in
-  net/wireless/scan.c:39). Previously, when only a beacon was received,
-  the probe-response BSS entries’ timestamps were not refreshed, making
-  them appear stale/expired despite the AP being heard.
-- Precise change: When updating a hidden-SSID group due to a beacon, the
-  patch propagates the current time to all sub-entries:
-  - net/wireless/scan.c:1820 sets `bss->ts = known->ts`
-  - net/wireless/scan.c:1821 sets `bss->pub.ts_boottime =
-    known->pub.ts_boottime`
-- Correct update ordering: Timestamps for the “known” BSS are updated at
-  the start of the update function so the propagated values are current
-  and also updated even if an early-return path is taken:
-  - net/wireless/scan.c:1889 updates `known->ts`
-  - net/wireless/scan.c:1890 updates `known->pub.ts_boottime`
-  - Early-return case (hidden/beacon confusion) occurs at
-    net/wireless/scan.c:1912 and can now still benefit from timestamp
-    refresh.
-- Why it matters to users: Expiration and selection logic uses `ts`;
-  stale `ts` causes hidden SSID probe-response entries to be treated as
-  expired:
-  - Expire processing uses `ts` (net/wireless/scan.c:479)
-  - get_bss filters out expired entries with `ts +
-    IEEE80211_SCAN_RESULT_EXPIRE` (net/wireless/scan.c:1634)
-  - Userspace also consumes `ts_boottime` via
-    NL80211_BSS_LAST_SEEN_BOOTTIME (net/wireless/nl80211.c:11573), so
-    keeping it accurate improves reporting.
-- Small and contained: The patch touches only net/wireless/scan.c and
-  adds 7 lines + minor reordering; no API or architectural changes.
-- Behaviorally safe: The new behavior aligns with the documented hidden-
-  SSID grouping, i.e., hearing any frame (beacon) from the AP indicates
-  the BSS is alive for the grouped probe-response entries
-  (net/wireless/scan.c:39). If beacons stop, timestamps still age and
-  entries expire as before.
-- Minimal regression risk: Only timestamp bookkeeping is affected. No
-  changes to element parsing, channel handling, or RCU lifetimes;
-  updates occur under `bss_lock` and mirror existing direct-field
-  updates elsewhere in scan.c.
-- Stable criteria fit:
-  - Important bugfix: avoids hidden SSID entries being incorrectly aged
-    out, impacting discoverability/connectivity.
-  - Small, localized change with clear intent and low risk.
-  - No new features or architectural changes.
-  - Applies to a common subsystem (cfg80211) with wide user impact.
+**Key Points**
+- The change only inserts one more MediaTek MT7925 entry in the btusb
+  quirks table (`drivers/bluetooth/btusb.c:740`), matching the flags
+  used for every other MT7925 board ID right above it
+  (`drivers/bluetooth/btusb.c:730-744`). This is a classic stable-
+  friendly hardware enablement fix: without it the adapter enumerates
+  but never loads the btusb driver, so end users have a non‑functional
+  Bluetooth stack.
+- The added ID inherits the well-tested BTUSB_MEDIATEK and
+  BTUSB_WIDEBAND_SPEECH flow; the probe path for those flags (e.g.
+  `drivers/bluetooth/btusb.c:4053-4168`) already handles MT7925
+  variants, so no new code paths or quirk differences are introduced.
+- Prior commits in this area repeatedly add individual VID/PID pairs for
+  the same chipset with no regressions, confirming this is a routine,
+  low-risk extension of the table rather than new functionality.
 
-Conclusion: This is a straightforward correctness fix for hidden-SSID
-handling and should be backported to stable.
+Given the user-visible failure it resolves, the contained nature of the
+change, and the absence of architectural churn, this commit meets the
+stable backport criteria. Plugging the device on a stable kernel with
+the backport should be the only validation needed.
 
- net/wireless/scan.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 6c7b7c3828a41..90a9187a6b135 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1816,6 +1816,9 @@ static void cfg80211_update_hidden_bsses(struct cfg80211_internal_bss *known,
- 		WARN_ON(ies != old_ies);
- 
- 		rcu_assign_pointer(bss->pub.beacon_ies, new_ies);
-+
-+		bss->ts = known->ts;
-+		bss->pub.ts_boottime = known->pub.ts_boottime;
- 	}
- }
- 
-@@ -1882,6 +1885,10 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- {
- 	lockdep_assert_held(&rdev->bss_lock);
- 
-+	/* Update time stamps */
-+	known->ts = new->ts;
-+	known->pub.ts_boottime = new->pub.ts_boottime;
-+
- 	/* Update IEs */
- 	if (rcu_access_pointer(new->pub.proberesp_ies)) {
- 		const struct cfg80211_bss_ies *old;
-@@ -1945,8 +1952,6 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 	if (signal_valid)
- 		known->pub.signal = new->pub.signal;
- 	known->pub.capability = new->pub.capability;
--	known->ts = new->ts;
--	known->pub.ts_boottime = new->pub.ts_boottime;
- 	known->parent_tsf = new->parent_tsf;
- 	known->pub.chains = new->pub.chains;
- 	memcpy(known->pub.chain_signal, new->pub.chain_signal,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 3595a8bad6bdf..30679a572095c 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -734,6 +734,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3613), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3627), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3628), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3630), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.51.0
 
