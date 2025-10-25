@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55558308F3B;
-	Sat, 25 Oct 2025 16:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2106308F3B;
+	Sat, 25 Oct 2025 16:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409694; cv=none; b=C38Qn70nkAFiIdEFd1GJQ4XhpiYjG2f21f624rxpJKqZW5BOKXC2TxNbJbtXaDSzYbSUs3+gIcq9ynr/yMXBQUK1D1PDccN19JTuLlvbARi55dz5fl+zTCUu0np2guMJWFtBt9qgMGZlHSDZLumIMsXWY04gffAQ8+LTYPwSKEg=
+	t=1761409697; cv=none; b=uybRy82ASijZu4sbysQGbwdEE7uDr7sTcLJxtUIjLyknW8pYsaITkItHa5K0wMoMXwX17/lnshcqskEvyp+X7G8lhY4MnCbLNdW3xuejH78Uvvm6uGQJ8biOpawwBkkrOLoJlMAGNtOALQBCN8DOzgM8lZ3BXfPo+O96SwxACC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409694; c=relaxed/simple;
-	bh=gZxkSvZJ9V3UEqMCsEpcS4aIsFIbNceZgBs8ifVJj8E=;
+	s=arc-20240116; t=1761409697; c=relaxed/simple;
+	bh=Xugtb/EcZpXhNKGuCSeIotDcPpkDEuPmbHbkUfTCnB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CJRB2RDxYwgStThOd0KfVsyMi6HO34+Oy+MtB3skx2YiekK5ZsJgp9fCajfyZvsBabsXD6uXdzGDfNJCm9YQ8oxaUcZyofk8q4kp931GjgW1YnnQ/fW6b9aCOTBwR9b0ol9hDLqSq4S41FVvVkTUwHgham7rt9v+ttHTwm+oFyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFVDcdTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KOC+fNNHjBVAsxNqBw3LabvJHyIA9fjl7c9sIFOI3TU5SKdDBlu8mnWTX/HqdhYiQPFNUlZCjYQRK3vxjvV+I+Ffsb8hmjGu31hFdOBra9rhHh5hJ+7czHzpEn+uhOudWz2l7D+lfkJcplZjyjVFzl3+2uowBuo3ix60nfALE+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ezzhGSCf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFVDcdTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49083C4CEFB;
-	Sat, 25 Oct 2025 16:28:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ezzhGSCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951EEC4CEF5;
+	Sat, 25 Oct 2025 16:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409694;
-	bh=gZxkSvZJ9V3UEqMCsEpcS4aIsFIbNceZgBs8ifVJj8E=;
+	s=k20201202; t=1761409696;
+	bh=Xugtb/EcZpXhNKGuCSeIotDcPpkDEuPmbHbkUfTCnB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFVDcdTrTeFuiRojcgps2IBc+rnnAPqsyXoK14X3NNRwXDBFhp66DB9rrCyeKEHaO
-	 KAi7ygcpW+/Li7Oqu5ywJGKHjtwr61upRt8cgjKB5Y86/QKpeyZ0Yf9+6lCCTrnYSx
-	 XeN+0OOmlNgfI65N+0iXLcf89CjxnQ+dBPIh4Jvpe5hlOtgK16tSJDib39lBJWIH0V
-	 FH4XqHNugYFB69vOHuPdy6NusvkZbjjlC82ITOexY+xbpurEFd+zEtP3j2zHHq3RM4
-	 YFeN3SsZ1Dc2iU5GsB57LIQkVlGH2hKWeaAvjxEVWkSzlHHmuz/9ugdwwHV2nZMq7r
-	 QfnAi6yWBZVKw==
+	b=ezzhGSCfqI7gZbdot8WpFnYqihmL2V/EwNbBNdVy47tb1gn6xh0WIBqzhl8nrAMHB
+	 hD6iOOiAfbsF0UmScdq9z8DS+QExBVvVw5sc24FYHRh+fJDUr7sweq+5BQ4+0byGxq
+	 YXAv2yIFKTUeoCnWfCEFDvx5sSsSWBz3h8PTxMJo+zsEDkij/uUC/aoU3wbBqrjyHx
+	 z3vyeIorpVCdcaqy7zlnrHwNgvUadM/8Nk/poPH51DLZki2qv6+PnRjMF6ATpnfvX4
+	 wjawFyapvQMYqFyN5vg/uG+kTrq234PKhqZiZfjzbVlVVVBxQblf8jHtdAIHqzJFpX
+	 lF+x0ZIb+fbRw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
+Cc: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] selftests: net: make the dump test less sensitive to mem accounting
-Date: Sat, 25 Oct 2025 12:00:53 -0400
-Message-ID: <20251025160905.3857885-422-sashal@kernel.org>
+	cryolitia@uniontech.com,
+	pav@iki.fi,
+	hulianqin@vivo.com,
+	alexandre.f.demers@gmail.com,
+	dan.carpenter@linaro.org,
+	bsevens@google.com
+Subject: [PATCH AUTOSEL 6.17] ALSA: usb-audio: don't apply interface quirk to Presonus S1824c
+Date: Sat, 25 Oct 2025 12:00:54 -0400
+Message-ID: <20251025160905.3857885-423-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,192 +56,75 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-[ Upstream commit 27bc5eaf004c437309dee1b9af24806262631d57 ]
+[ Upstream commit d1d6ad7f6686e208aba06b7af3feef7a7cba61cf ]
 
-Recent changes to make netlink socket memory accounting must
-have broken the implicit assumption of the netlink-dump test
-that we can fit exactly 64 dumps into the socket. Handle the
-failure mode properly, and increase the dump count to 80
-to make sure we still run into the error condition if
-the default buffer size increases in the future.
+Testing with a Presonus STUDIO 1824c together with
+a Behringer ultragain digital ADAT device shows that
+using all 3 altno settings works fine.
 
-Link: https://patch.msgid.link/20250906211351.3192412-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When selecting sample rate, the driver sets the interface
+to the correct altno setting and the correct number of
+channels is set.
+
+Selecting the correct altno setting via Ardour, Reaper or
+whatever other way to set the sample rate is more convenient
+than re-loading the driver module with device_setup to
+set altno.
+
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES – Removing the 1824c entry from the interface-quirk table fixes a
+real regression while keeping risk low.
 
-Rationale
-- Fixes a real selftest failure mode caused by recent netlink socket
-  memory accounting changes. The original test assumed exactly 64 dumps
-  would fit in the socket; this is no longer reliable and leads to false
-  failures.
-- The change is confined to selftests and does not affect kernel
-  behavior or ABI, making regression risk extremely low while restoring
-  test correctness.
+- `s1810c_skip_setting_quirk()` in `sound/usb/quirks.c:1554` only lets
+  one alternate setting survive unless the user reloads the module with
+  a `device_setup` override; because the 1824c reuse of this helper
+  (added in 080564558eb1373c) defaults `chip->setup` to 0, capture alt 1
+  (8 ADAT channels) and alt 3 (high-rate analog) are always filtered
+  out, so normal sample-rate changes cannot expose the full I/O set.
+- By deleting the 1824c `USB_ID(0x194f, 0x010d)` case in
+  `sound/usb/quirks.c:1599`, the driver now falls back to the generic
+  path that enumerates every alternate setting, letting the UAC2 core
+  pick the mode that matches the requested rate, just as it does for
+  other compliant interfaces.
+- That generic path is exercised from `snd_usb_parse_audio_interface()`
+  (`sound/usb/stream.c:1165`), so the change immediately restores
+  behaviour for any PCM open without touching unrelated devices; the
+  1810c keeps its quirked handling.
+- The existing rate filter shared by 1810c/1824c
+  (`sound/usb/format.c:387-394`) still guards against the invalid
+  combinations that originally justified the quirk, ensuring the auto-
+  selected alternates map to valid channel/rate sets.
+- Impact is user-visible (ADAT channels and high-rate modes require
+  module reload today), the fix is a three-line removal with confirmed
+  hardware testing in the changelog, and it has no architectural
+  fallout; stable trees that already picked up 080564558eb1373c should
+  take this to restore expected functionality.
 
-Key Changes
-- Robust extack parsing:
-  - Introduces explicit return semantics for control messages via `enum
-    get_ea_ret` to distinguish done, error, and extack cases
-    (`tools/testing/selftests/net/netlink-dumps.c:34`).
-  - `nl_get_extack()` now treats both `NLMSG_ERROR` and `NLMSG_DONE` as
-    control messages and returns either the base result or
-    `FOUND_EXTACK` if TLVs are present
-    (`tools/testing/selftests/net/netlink-dumps.c:42`,
-    `tools/testing/selftests/net/netlink-dumps.c:55`,
-    `tools/testing/selftests/net/netlink-dumps.c:57`,
-    `tools/testing/selftests/net/netlink-dumps.c:64`,
-    `tools/testing/selftests/net/netlink-dumps.c:84`,
-    `tools/testing/selftests/net/netlink-dumps.c:87`).
-- Handle realistic error sequencing during dump pressure:
-  - After intentionally overfilling the socket, the test explicitly
-    tolerates one `ENOBUFS` and subsequent `EBUSY` responses before the
-    final DONE+extack, matching current kernel behavior under memory
-    pressure (`tools/testing/selftests/net/netlink-dumps.c:141`,
-    `tools/testing/selftests/net/netlink-dumps.c:156`,
-    `tools/testing/selftests/net/netlink-dumps.c:161`,
-    `tools/testing/selftests/net/netlink-dumps.c:168`).
-- Maintain correctness checks for the intended validation error:
-  - Still asserts the extack must carry `EINVAL` and a valid attribute
-    offset when the invalid attribute is parsed
-    (`tools/testing/selftests/net/netlink-dumps.c:164`,
-    `tools/testing/selftests/net/netlink-dumps.c:165`).
-- Future-proofing the buffer fill:
-  - Increases the dump count from 64 to 80 to ensure the test continues
-    to trigger the pressure condition if default buffer sizes grow
-    (`tools/testing/selftests/net/netlink-dumps.c:133`).
+ sound/usb/quirks.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Why It Fits Stable Criteria
-- Important bugfix: Prevents false failures and flakiness in selftests
-  caused by legitimate kernel changes to memory accounting.
-- Small and contained: Touches a single selftest file with clear,
-  localized changes.
-- No features or architecture changes: Strictly test logic and
-  robustness improvements.
-- Minimal regression risk: Only affects testing; improves compatibility
-  across kernels that may return `ENOBUFS` and/or `EBUSY` under dump
-  pressure; still verifies the original `EINVAL` extack path when
-  applicable.
-- Helps keep stable trees’ selftests reliable as netlink memory
-  accounting changes are commonly backported.
-
-Conclusion
-- This is a low-risk, clearly beneficial selftest robustness fix that
-  addresses real test failures. It should be backported to stable trees
-  to keep networking selftests passing and meaningful.
-
- tools/testing/selftests/net/netlink-dumps.c | 43 ++++++++++++++++-----
- 1 file changed, 33 insertions(+), 10 deletions(-)
-
-diff --git a/tools/testing/selftests/net/netlink-dumps.c b/tools/testing/selftests/net/netlink-dumps.c
-index 07423f256f963..7618ebe528a4c 100644
---- a/tools/testing/selftests/net/netlink-dumps.c
-+++ b/tools/testing/selftests/net/netlink-dumps.c
-@@ -31,9 +31,18 @@ struct ext_ack {
- 	const char *str;
- };
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 766db7d00cbc9..4a35f962527e9 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1599,9 +1599,6 @@ int snd_usb_apply_interface_quirk(struct snd_usb_audio *chip,
+ 	/* presonus studio 1810c: skip altsets incompatible with device_setup */
+ 	if (chip->usb_id == USB_ID(0x194f, 0x010c))
+ 		return s1810c_skip_setting_quirk(chip, iface, altno);
+-	/* presonus studio 1824c: skip altsets incompatible with device_setup */
+-	if (chip->usb_id == USB_ID(0x194f, 0x010d))
+-		return s1810c_skip_setting_quirk(chip, iface, altno);
  
--/* 0: no done, 1: done found, 2: extack found, -1: error */
--static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
-+enum get_ea_ret {
-+	ERROR = -1,
-+	NO_CTRL = 0,
-+	FOUND_DONE,
-+	FOUND_ERR,
-+	FOUND_EXTACK,
-+};
-+
-+static enum get_ea_ret
-+nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- {
-+	enum get_ea_ret ret = NO_CTRL;
- 	const struct nlmsghdr *nlh;
- 	const struct nlattr *attr;
- 	ssize_t rem;
-@@ -41,15 +50,19 @@ static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- 	for (rem = n; rem > 0; NLMSG_NEXT(nlh, rem)) {
- 		nlh = (struct nlmsghdr *)&buf[n - rem];
- 		if (!NLMSG_OK(nlh, rem))
--			return -1;
-+			return ERROR;
- 
--		if (nlh->nlmsg_type != NLMSG_DONE)
-+		if (nlh->nlmsg_type == NLMSG_ERROR)
-+			ret = FOUND_ERR;
-+		else if (nlh->nlmsg_type == NLMSG_DONE)
-+			ret = FOUND_DONE;
-+		else
- 			continue;
- 
- 		ea->err = -*(int *)NLMSG_DATA(nlh);
- 
- 		if (!(nlh->nlmsg_flags & NLM_F_ACK_TLVS))
--			return 1;
-+			return ret;
- 
- 		ynl_attr_for_each(attr, nlh, sizeof(int)) {
- 			switch (ynl_attr_type(attr)) {
-@@ -68,10 +81,10 @@ static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- 			}
- 		}
- 
--		return 2;
-+		return FOUND_EXTACK;
- 	}
- 
--	return 0;
-+	return ret;
+ 	return 0;
  }
- 
- static const struct {
-@@ -99,9 +112,9 @@ static const struct {
- TEST(dump_extack)
- {
- 	int netlink_sock;
-+	int i, cnt, ret;
- 	char buf[8192];
- 	int one = 1;
--	int i, cnt;
- 	ssize_t n;
- 
- 	netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
-@@ -118,7 +131,7 @@ TEST(dump_extack)
- 	ASSERT_EQ(n, 0);
- 
- 	/* Dump so many times we fill up the buffer */
--	cnt = 64;
-+	cnt = 80;
- 	for (i = 0; i < cnt; i++) {
- 		n = send(netlink_sock, &dump_neigh_bad,
- 			 sizeof(dump_neigh_bad), 0);
-@@ -140,10 +153,20 @@ TEST(dump_extack)
- 		}
- 		ASSERT_GE(n, (ssize_t)sizeof(struct nlmsghdr));
- 
--		EXPECT_EQ(nl_get_extack(buf, n, &ea), 2);
-+		ret = nl_get_extack(buf, n, &ea);
-+		/* Once we fill the buffer we'll see one ENOBUFS followed
-+		 * by a number of EBUSYs. Then the last recv() will finally
-+		 * trigger and complete the dump.
-+		 */
-+		if (ret == FOUND_ERR && (ea.err == ENOBUFS || ea.err == EBUSY))
-+			continue;
-+		EXPECT_EQ(ret, FOUND_EXTACK);
-+		EXPECT_EQ(ea.err, EINVAL);
- 		EXPECT_EQ(ea.attr_offs,
- 			  sizeof(struct nlmsghdr) + sizeof(struct ndmsg));
- 	}
-+	/* Make sure last message was a full DONE+extack */
-+	EXPECT_EQ(ret, FOUND_EXTACK);
- }
- 
- static const struct {
 -- 
 2.51.0
 
