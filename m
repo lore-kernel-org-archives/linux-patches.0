@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E1B2FF17F;
-	Sat, 25 Oct 2025 16:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D43130276A;
+	Sat, 25 Oct 2025 16:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408993; cv=none; b=vBG7G4PIyQYLDr/iNX/lypH1fJ/+nG4+Xv4IDUcjGUxQDEA4vUsgNk8HucphxzdxJGWivwlfxKA2aTQXsMMHctYXu+dkLIr/ZMFP6s2Nf4tnIPFohxoWkFWPQZH0AFJGO/bDqtALdtOE1XHUneYybaQ0qsBshKB6htkstWCRwK0=
+	t=1761408996; cv=none; b=LnQABPdGnRlL2HNOUHobsgFpZkZsBe9bEC4zILfkT3pY09g7mthtgtyDlauKuE55w0bDIF/obL8SbdWAk0Fy0WA2L4yp7uZ8wFnzcB2GZ+cocL9OkXOKCXII7H6JBTM1CZ2kg94Sh6axA+8ff3GhYc9Gh3aqB5GRNbx9NAFjb3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408993; c=relaxed/simple;
-	bh=BQCsZ/euEk4mk5VUcdP0eXtTQrwVCGsm/RVd3a4cC88=;
+	s=arc-20240116; t=1761408996; c=relaxed/simple;
+	bh=umXtaanC07W+/f1xMp/3t+DD06xxZYzZ425K8Hl9Z1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dah+nxBSdLGm1V7LS70NZnqLTskS60S+JMDmHGBrngCJqjUwuW+Ikathk9Ey+42pGTX/G4CfOgUkpGvrmMAzEKTeinAp2d42Y4o0KaX2qTXLkLZyya7k5SSWBtT33zacNjVGvydfgpijCIX8ICDQcuaz3p4ye3j2sR0WDdAn2ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOKdqBlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=INFLO16Qv+fcsAc0dMUYvHDZjbicOx69Kp2md5P+YaS+YKUWAWpsBiKycxSzyiRjJRAgySItRHygEZCLobso7qz1MOenqmuA6CV69ywXG3CkMGjA+AWsAHgrJC6rIAfdSL6d4N0B4Te9fLUE7pbABagjK0RenfXFc92R8EwXez8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wr8ru0me; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOKdqBlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6837C4CEF5;
-	Sat, 25 Oct 2025 16:16:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wr8ru0me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAC5C4CEFB;
+	Sat, 25 Oct 2025 16:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408993;
-	bh=BQCsZ/euEk4mk5VUcdP0eXtTQrwVCGsm/RVd3a4cC88=;
+	s=k20201202; t=1761408995;
+	bh=umXtaanC07W+/f1xMp/3t+DD06xxZYzZ425K8Hl9Z1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOKdqBlR9FFYsgnsFC1LukI2Y8SYz2ClwfOib+nLEsGEwLyKMR0pEY+5GwzlEHZrP
-	 1IfhyD2mRZ6tAzlE1NucZ/DSJ9OHllARaE0qOWLCjcpqVHC3chn+p949nIEkylA13f
-	 zSndit+NJ2n3c1oZ3zBVpgomLTHWRqpnEkXhmz/URAB/NbwKnRnB5NfzAIfGnFsmSV
-	 THpemKd1qIc6m5PUmurKVZGlLbD6DFfg0t7x6Oo+xvvxU0DrFRkd4+dOOKyIkBKuSJ
-	 msWNr34/MXo5RDX6HZEKsoc9Fq++1TnzVU5UmYKeqaPqcA7Sh5I4E5fzRU7R7jBFKD
-	 g35idBgcTUw/A==
+	b=Wr8ru0meiNQ9ZF36z7gNSNsmFhRQeYQVgXFTSqodsEVYqqJtDFeUwMIVp5zEFJMde
+	 ipPsw+SInEpDM9+liZqdpjmjgtj2bgjU7mcT2Zn0DOkd/ulpenr8hJFcd4OtJEH/6U
+	 ggbTQxPm4DREKgBEN/8YOqq18DMoYZSU11vz3cGQM2HR8xSL5RbPzkBXbNnzyr41Pu
+	 CTebd4Po1ZOM+E64H9d9pw/P5GObPgexPCwaSsoVDWj8y5gWoCEjn/OdBNZM1lbCQt
+	 69CyG337Dz2gl32oUCL3XZZkgmF/YEfqElmVex0e9X46mM51GVUKma1lKwZUdD6nrl
+	 TU313FibI7aaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Seyediman Seyedarab <imandevel@gmail.com>,
+	Seyediman Seyedarab <ImanDevel@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kenneth.feng@amd.com,
-	kevinyang.wang@amd.com,
-	boyuan.zhang@amd.com,
-	siqueira@igalia.com,
-	arefev@swemel.ru,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-5.10] drm/amd/pm: Use cached metrics data on arcturus
-Date: Sat, 25 Oct 2025 11:56:36 -0400
-Message-ID: <20251025160905.3857885-165-sashal@kernel.org>
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com
+Subject: [PATCH AUTOSEL 6.17-5.4] drm/nouveau: replace snprintf() with scnprintf() in nvkm_snprintbf()
+Date: Sat, 25 Oct 2025 11:56:37 -0400
+Message-ID: <20251025160905.3857885-166-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -57,17 +53,21 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit 2f3b1ccf83be83a3330e38194ddfd1a91fec69be ]
+[ Upstream commit 6510b62fe9303aaf48ff136ff69186bcfc32172d ]
 
-Cached metrics data validity is 1ms on arcturus. It's not reasonable for
-any client to query gpu_metrics at a faster rate and constantly
-interrupt PMFW.
+snprintf() returns the number of characters that *would* have been
+written, which can overestimate how much you actually wrote to the
+buffer in case of truncation. That leads to 'data += this' advancing
+the pointer past the end of the buffer and size going negative.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Switching to scnprintf() prevents potential buffer overflows and ensures
+consistent behavior when building the output string.
+
+Signed-off-by: Seyediman Seyedarab <ImanDevel@gmail.com>
+Link: https://lore.kernel.org/r/20250724195913.60742-1-ImanDevel@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,83 +75,106 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed
-  - In `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:2327`,
-    `arcturus_get_gpu_metrics()` currently calls
-    `smu_cmn_get_metrics_table(smu, &metrics, true);`, i.e., it always
-    bypasses the cache and forces a PMFW interaction. The commit flips
-    the third argument to `false`, switching to the existing 1 ms cache.
-  - The callee’s API explicitly defines the third parameter as
-    `bypass_cache` (see `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h:122`),
-    so `false` means “use cached metrics.”
-  - The common metrics helper implements a 1 ms cache window (see
-    `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c:1013-1041`), only fetching
-    fresh data if either explicitly bypassed or the last fetch is older
-    than 1 ms. The per-ASIC table initialization sets `metrics_time =
-    0`, ensuring the first call still fetches fresh metrics (see
-    `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:274`).
+Summary
+- Replaces snprintf with scnprintf in nvkm_snprintbf to prevent pointer
+  over-advancement and out-of-bounds NUL writes on truncation.
+- Small, contained, behavior-preserving fix across widely used
+  debug/interrupt logging paths in Nouveau.
 
-- Why it matters (bug-like behavior and user impact)
-  - The current arcturus path always bypasses the cache on every
-    `gpu_metrics` query (see `arcturus_ppt.c:2327-2329`), needlessly
-    interrupting PMFW for callers that poll frequently. The commit
-    message states cache validity is 1 ms on arcturus and that frequent
-    queries “constantly interrupt PMFW,” which is undesirable and can
-    degrade performance or reliability.
-  - Using the cache still guarantees data freshness within 1 ms and
-    avoids spamming PMFW when clients poll faster than that. From user
-    space, the only observable difference is that very high-rate queries
-    (>1 kHz) won’t force a new PMFW read each time; metrics can be up to
-    1 ms old. This aligns with the existing caching design and does not
-    change the ABI or data layout returned by `gpu_metrics` (the rest of
-    the function remains unchanged; e.g., field population and
-    `system_clock_counter` at
-    `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:2373`).
+Technical Analysis
+- Problematic code path:
+  - In nvkm_snprintbf, the loop builds a space-separated list of bit
+    names: drivers/gpu/drm/nouveau/nvkm/core/enum.c:45–55.
+  - It uses snprintf to append:
+    drivers/gpu/drm/nouveau/nvkm/core/enum.c:47–50.
+  - After each append, it advances the pointer by the return value and
+    reduces size: drivers/gpu/drm/nouveau/nvkm/core/enum.c:49–50.
+  - On exit, it writes a trailing NUL at the current pointer:
+    drivers/gpu/drm/nouveau/nvkm/core/enum.c:55.
+- Bug mechanism:
+  - snprintf returns the number of characters that would have been
+    written (excluding NUL) even when truncated.
+  - If the buffer is near full (e.g., size == 1), snprintf returns a
+    value > 0, causing size to go negative and data to advance past the
+    end of the buffer, so the final data[0] = '\0' writes out-of-bounds
+    (drivers/gpu/drm/nouveau/nvkm/core/enum.c:55).
+- Fix rationale:
+  - scnprintf returns the number of characters actually written into the
+    buffer, bounded by size-1 and always consistent with the
+    pointer/data movement.
+  - Replacing snprintf with scnprintf at
+    drivers/gpu/drm/nouveau/nvkm/core/enum.c:47 guarantees that size
+    tracking and pointer advancement remain in-bounds and that the final
+    NUL write is safe.
+- API availability:
+  - scnprintf is a long-standing kernel helper declared in
+    include/linux/sprintf.h:15, so it exists across stable series.
 
-- Scope and risk assessment
-  - Change is one boolean flip in a single ASIC-specific path, no
-    architectural changes, no cross-subsystem effects.
-  - It leverages existing, well-tested caching in
-    `smu_cmn_get_metrics_table()`; behavior falls back to the exact
-    update path after at most 1 ms (`smu_cmn.c:1022-1035`).
-  - Initial fetch correctness is preserved because `metrics_time` starts
-    at zero (`arcturus_ppt.c:274`), so the first call is always fresh.
-  - Potential side effects are minimal: clients polling at sub-
-    millisecond rates may see identical metrics across calls within a 1
-    ms window, which is explicitly intended by the caching policy and
-    called out in the commit rationale.
+Impact and Usage Context
+- nvkm_snprintbf is used widely to format error/interrupt bitfields into
+  human-readable strings (numerous call sites):
+  - Example: drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c:1239 (char
+    error[128];) and subsequent use of nvkm_snprintbf(error,
+    sizeof(error), ...) to log errors.
+  - Other examples include:
+    drivers/gpu/drm/nouveau/nvkm/engine/gr/nv50.c:272,
+    drivers/gpu/drm/nouveau/nvkm/engine/gr/nv40.c:271–273,
+    drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gf100.c:103,
+    drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gm107.c:82.
+- While buffers are typically 64–128 bytes, concatenating multiple bit
+  names can still reach truncation boundaries. The current code can then
+  over-advance and perform an OOB NUL write. This is memory corruption
+  (albeit a single byte) on the kernel stack and should be fixed.
 
-- Stable backport criteria
-  - Fixes a real, user-facing problem: unnecessary PMFW interruptions
-    from high-frequency polling, which can affect performance and system
-    behavior.
-  - The change is small, contained, and low risk (one-argument change).
-  - No new features or ABI changes; it aligns arcturus with the existing
-    1 ms caching policy implemented in common code.
-  - No major architectural changes or complex dependencies; the function
-    signature and caching logic already exist in stable trees.
+Risk/Regression Assessment
+- Change scope is a one-line replacement local to the function; no
+  API/ABI change.
+- scnprintf semantics match the intended logic of “advance by what we
+  wrote,” preventing negative size and pointer overflow.
+- Behavior under truncation improves: instead of corrupting memory, the
+  function simply yields a properly NUL-terminated string with as much
+  content as fits.
+- No architectural changes; only string formatting mechanics inside a
+  helper used for logging and diagnostics.
 
-Given the minimal, targeted nature of the change, its alignment with
-existing caching semantics, and the clear benefit of reducing PMFW
-interruptions without altering user-visible interfaces, this is a good
-candidate for stable backporting.
+Stable Backport Criteria
+- Fixes a real bug that can corrupt memory (stack OOB write) in common
+  code paths.
+- Minimal, self-contained, and low-risk change.
+- Not a feature addition; purely correctness/safety.
+- Touches only the Nouveau driver helper; broad benefit across many call
+  sites without side effects.
+- No special dependencies; scnprintf is present across stable kernels.
 
- drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 2 +-
+Backport Notes
+- Function prototype remains unchanged:
+  drivers/gpu/drm/nouveau/include/nvkm/core/enum.h:21.
+- Ensure include paths bring in scnprintf (declared in
+  include/linux/sprintf.h:15). Nouveau’s headers already include
+  standard Linux headers via drivers/gpu/drm/nouveau/include/nvif/os.h
+  which pulls core kernel headers, so no additional includes are needed.
+
+Conclusion
+- This is a classic correctness/safety fix that prevents a subtle but
+  real OOB write. It is small, contained, and aligns with stable policy.
+  Backporting is recommended.
+
+ drivers/gpu/drm/nouveau/nvkm/core/enum.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-index 9ad46f545d15c..599eddb5a67d5 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -1897,7 +1897,7 @@ static ssize_t arcturus_get_gpu_metrics(struct smu_context *smu,
- 
- 	ret = smu_cmn_get_metrics_table(smu,
- 					&metrics,
--					true);
-+					false);
- 	if (ret)
- 		return ret;
- 
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/enum.c b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+index b9581feb24ccb..a23b40b27b81b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/enum.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+@@ -44,7 +44,7 @@ nvkm_snprintbf(char *data, int size, const struct nvkm_bitfield *bf, u32 value)
+ 	bool space = false;
+ 	while (size >= 1 && bf->name) {
+ 		if (value & bf->mask) {
+-			int this = snprintf(data, size, "%s%s",
++			int this = scnprintf(data, size, "%s%s",
+ 					    space ? " " : "", bf->name);
+ 			size -= this;
+ 			data += this;
 -- 
 2.51.0
 
