@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC4279918;
-	Sat, 25 Oct 2025 16:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D501E47CA;
+	Sat, 25 Oct 2025 16:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408924; cv=none; b=bbPbiQpLEzCsRkhCrs7ABdbdYP2BilDLPGxeKJ+zJX36OwZuKSDuVoeVyqvl+fZTn257dX+2U42eDHI/es7kg2zZr6cbJb+rqaYEqAYhilBy+OrD4X456ZuZV3Etu12MiKxYk6NpiHhb2cMZH1W0GjVFLm93ALuobQWznTksQH8=
+	t=1761408927; cv=none; b=r5GL5qJwgHh7cqIBnr/WG46tNBZTRc1gasr3OPr4iljCaAKn61E6nlipalxs/FCUg7GHoHdgIPd806rGvuqWq+NaQePYuFQcJTIZjpzN5N7crQW9erc7/HxnHS7NUo/5+W/545J22nPbgu2JrKZM4KQZc8FrV+ZLN2YcSGy7xxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408924; c=relaxed/simple;
-	bh=2MjjwEisNt9tsNebqWRatjA6eLUSviJHcSJU/w6Mi/w=;
+	s=arc-20240116; t=1761408927; c=relaxed/simple;
+	bh=9CHm00zvlHDD+BHxHedZ5Ksq8ayuZoCoLxiNYauIfBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mx8xctP5s5YHVa0fBpGYMmP5+BgHg8MhAtf1cil6aY/k2O8w4do4GYKioj6KLPrOkPtIPr6Q5rOFypyY1uSI6Nipwy6ndhCqKZkDco7U/D0k5N3ZCFHPhLo4GE/jTBKPM5f5QJ/IQ5qg1dGTgT6/ctYh7vfsr21H8iFDlbjVlRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hc/nu6eR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IyjIwK21VeTfxoFiYt5NxMZqC0FUN0OxBYyQE3KP8SR0YSuWypdxe8Cbm5YbNkFKYmjpGvpdx6bhyqZEZAmu+6ADu33ooes8RVIig6u8aZ7+peZ5LurWauEHUmNeVJnoXbTDOTw0qzG8vDbURFqrSTAHkj9ehpEGqX06qKCvX2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGgKNgc+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hc/nu6eR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2F9C4CEFF;
-	Sat, 25 Oct 2025 16:15:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGgKNgc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEE7C4CEFB;
+	Sat, 25 Oct 2025 16:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408924;
-	bh=2MjjwEisNt9tsNebqWRatjA6eLUSviJHcSJU/w6Mi/w=;
+	s=k20201202; t=1761408927;
+	bh=9CHm00zvlHDD+BHxHedZ5Ksq8ayuZoCoLxiNYauIfBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hc/nu6eR8MchB0TzE6mpWZ1k3wHCZ++n4iMGn/o7D/Aq8R+OIuUYCI3q25DQEhsN0
-	 yJd4WijUyQjlMk8yLy4tC1jdJjrFuWUVQWNystiL1BwqAVvzF9dmT32M0g7yvb7RED
-	 xdK7QpVnsKh06YSvNG7qI8tatpZQ3iiXKpFd8/jFPmkAd1XbW1oP9J7cWg1xxRvU4G
-	 dedQd1McuCqr+f0fWH6F6pShYx2uXwre6hV5hKljHv/UBx4t0pOvpLLhbtuyjhOFgH
-	 K+q6l9GlwYZn0rH1AdcKVhn57BKl73DLA2f/ot703RVUo3+CsT/xrUJ5aYm9dZYE7l
-	 RaetdwPLdla9Q==
+	b=DGgKNgc+kMJGySVX2WSA42L14TX9SYWuQ6SEvcWDhEkJuK5A0QCIRC4IC6ja1zjf/
+	 3vhkUb/fXuBDBAEYBoRLRUF8ZtLzu4c1hR0p7IDbxsr525L5ve4s0MiUWjw3daG37e
+	 Yxetg0IZ1oKprNEP7YtGd2mrucWSw7IZcTQXlfrWRH3NafjmcwiYD45Jt9qSWesfiI
+	 1L+tb7kwGiMuwF52Gy317Av/0+Azf0T27Uhruva95mAhxDDmSUPRTYlcx93EYdFR27
+	 CmzL98hWFcgJpBJASQfrEvC3fxq6wFHvja66Mie/RPZ5yi30V+aZTx8tFgqe4yyEiV
+	 XiBDJ7ziCafRg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Mina Almasry <almasrymina@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	quic_abhinavk@quicinc.com,
-	konrad.dybcio@oss.qualcomm.com,
-	quic_amakhija@quicinc.com,
-	alexandre.f.demers@gmail.com,
-	bmasney@redhat.com
-Subject: [PATCH AUTOSEL 6.17-5.15] drm/msm/dsi/phy_7nm: Fix missing initial VCO rate
-Date: Sat, 25 Oct 2025 11:56:05 -0400
-Message-ID: <20251025160905.3857885-134-sashal@kernel.org>
+	willemb@google.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17] selftests: drv-net: devmem: add / correct the IPv6 support
+Date: Sat, 25 Oct 2025 11:56:06 -0400
+Message-ID: <20251025160905.3857885-135-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,30 +54,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 5ddcb0cb9d10e6e70a68e0cb8f0b8e3a7eb8ccaf ]
+[ Upstream commit 424e96de30230aac2061f941961be645cf0070d5 ]
 
-Driver unconditionally saves current state on first init in
-dsi_pll_7nm_init(), but does not save the VCO rate, only some of the
-divider registers.  The state is then restored during probe/enable via
-msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
-dsi_7nm_pll_restore_state().
+We need to use bracketed IPv6 addresses for socat.
 
-Restoring calls dsi_pll_7nm_vco_set_rate() with
-pll_7nm->vco_current_rate=0, which basically overwrites existing rate of
-VCO and messes with clock hierarchy, by setting frequency to 0 to clock
-tree.  This makes anyway little sense - VCO rate was not saved, so
-should not be restored.
-
-If PLL was not configured configure it to minimum rate to avoid glitches
-and configuring entire in clock hierarchy to 0 Hz.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657827/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-9-ee633e3ddbff@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250811231334.561137-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -87,89 +72,68 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Bug fixed: On first init the driver saves PLL state but not the VCO
-  rate, so the subsequent restore path programs the VCO to 0 Hz,
-  breaking the clock tree and potentially blanking display. This is
-  evident because the init path unconditionally saves state without
-  setting `vco_current_rate`
-  (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:890), while the restore
-  path uses `pll_7nm->vco_current_rate` to reprogram the VCO
-  (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:677), and the VCO
-  programming logic computes dividers from `pll->vco_current_rate`
-  (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:129).
-- Root cause in code:
-  - Init: `msm_dsi_phy_pll_save_state(phy)` is called but no VCO rate is
-    captured (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:890).
-  - Restore: `dsi_7nm_pll_restore_state()` writes cached mux/dividers
-    and then calls `dsi_pll_7nm_vco_set_rate(…,
-    pll_7nm->vco_current_rate, …)`
-    (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:677), which assumes
-    `vco_current_rate` is valid.
-  - Divider calc uses `pll->vco_current_rate` directly
-    (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:129), so a zero value
-    yields dec/frac=0, propagating 0 Hz into the clock tree.
-  - Restore is actually invoked during enable: `msm_dsi_phy_enable()`
-    calls `msm_dsi_phy_pll_restore_state()` via the ops hook
-    (drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:774), so the bad
-    `vco_current_rate` directly impacts runtime bring-up/handover.
-- The fix: Initialize `vco_current_rate` at init by reading the current
-  hardware rate; if it can’t be determined, fall back to the minimum
-  safe PLL rate to avoid 0 Hz:
-  - Added in `dsi_pll_7nm_init()`:
-    - `if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw,
-      VCO_REF_CLK_RATE)) pll_7nm->vco_current_rate =
-      pll_7nm->phy->cfg->min_pll_rate;`
-      (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:893).
-- Why this is correct and low risk:
-  - `dsi_pll_7nm_vco_recalc_rate()` reads current PLL dec/frac and
-    updates/returns the actual VCO rate
-    (drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:572), so subsequent
-    restore reprograms the VCO to its real, pre-existing frequency,
-    enabling clean handover from bootloader firmware.
-  - If hardware isn’t configured (recalc returns 0), falling back to
-    `min_pll_rate` avoids the destructive 0 Hz program while still
-    keeping a safe, bounded frequency using SoC-provided limits (e.g.,
-    `min_pll_rate` in the 7nm cfgs at
-    drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:1289, 1309, 1332, 1350…).
-  - This mirrors established practice in other MSM DSI PHY generations,
-    e.g. the 10nm PHY already does the same recalc/fallback in its init
-    path (drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c:709), and the 14nm
-    PHY also guards against a 0 rate on startup
-    (drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c:546).
-  - The change is localized to a single function in one driver, does not
-    alter interfaces, and only affects first-init/handover behavior. It
-    reduces, rather than increases, the chance of glitches by avoiding a
-    0 Hz restore.
-- Backport criteria:
-  - Important user-facing bug fix (prevents display/clock tree breakage
-    on bring-up/handover).
-  - Small and self-contained (one file, a few lines).
-  - No new features or architectural changes; consistent with other PHY
-    drivers’ behavior.
-  - Low regression risk with clear, safe fallback behavior.
+- What it fixes: socat requires bracketed IPv6 literals; without
+  brackets, IPv6 addresses containing colons are parsed incorrectly,
+  causing the devmem selftest RX path to fail on IPv6 setups.
+- Exact change: In
+  `tools/testing/selftests/drivers/net/hw/devmem.py:27`, the destination
+  and bind addresses in the socat pipeline switch from
+  `cfg.addr`/`cfg.remote_addr` to `cfg.baddr`/`cfg.remote_baddr`, i.e.:
+  - From: `TCP{cfg.addr_ipver}:{cfg.addr}:{port},bind={cfg.remote_addr}:
+    {port}`
+  - To: `TCP{cfg.addr_ipver}:{cfg.baddr}:{port},bind={cfg.remote_baddr}:
+    {port}`
+- Why this is correct: The environment already provides bracketed-
+  address variants specifically for commands that need `[]` around IPv6:
+  - `tools/testing/selftests/drivers/net/lib/py/env.py:154-156` defines
+    `cfg.baddr` and `cfg.remote_baddr` as `[v6]` when IPv6 is
+    configured, or plain v4 otherwise.
+- Consistency with other selftests: Other net selftests already use
+  bracketed forms with socat (e.g.,
+  `tools/testing/selftests/drivers/net/ping.py:42` and
+  `tools/testing/selftests/drivers/net/ping.py:50`).
+- Minimal scope: Single-line functional change in a selftest only; no
+  kernel code or interfaces are touched.
+- No architectural changes: The testing flow and ncdevmem invocation
+  remain unchanged; only socat’s address formatting is corrected.
+- IPv4 unaffected: For IPv4-only environments, `cfg.baddr` resolves to
+  the plain IPv4 address, preserving existing behavior.
+- Correct handling for ncdevmem: The ncdevmem tool parses unbracketed
+  literals with `inet_pton` and remains passed unbracketed strings in
+  `listen_cmd` (e.g., `devmem.py:28`), which is required (see
+  `tools/testing/selftests/drivers/net/hw/ncdevmem.c:~560`
+  parse_address()).
+- User impact: Fixes IPv6 test failures and false negatives in the
+  devmem RX test, improving test reliability for stable trees.
+- Regression risk: Very low. The change aligns with established patterns
+  in the same selftest suite, doesn’t alter APIs, and is gated by
+  existing cfg fields already present in stable.
+- Stable policy fit: This is a small, contained test fix, not a feature;
+  it improves correctness and is safe to backport even late in the
+  cycle.
+- No mention of stable Cc is not blocking: Selftest fixes are commonly
+  backported when they fix real failures.
 
-Given the above, this is a strong candidate for stable backport.
+Conclusion: This is a straightforward, low-risk correctness fix for the
+selftests that resolves IPv6 misparsing in socat. It should be
+backported.
 
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/drivers/net/hw/devmem.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 6b765f3fd529a..5c8a3394c3da0 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -843,6 +843,12 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
+diff --git a/tools/testing/selftests/drivers/net/hw/devmem.py b/tools/testing/selftests/drivers/net/hw/devmem.py
+index baa2f24240ba5..0a2533a3d6d60 100755
+--- a/tools/testing/selftests/drivers/net/hw/devmem.py
++++ b/tools/testing/selftests/drivers/net/hw/devmem.py
+@@ -24,7 +24,7 @@ def check_rx(cfg) -> None:
+     require_devmem(cfg)
  
- 	/* TODO: Remove this when we have proper display handover support */
- 	msm_dsi_phy_pll_save_state(phy);
-+	/*
-+	 * Store also proper vco_current_rate, because its value will be used in
-+	 * dsi_7nm_pll_restore_state().
-+	 */
-+	if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw, VCO_REF_CLK_RATE))
-+		pll_7nm->vco_current_rate = pll_7nm->phy->cfg->min_pll_rate;
+     port = rand_port()
+-    socat = f"socat -u - TCP{cfg.addr_ipver}:{cfg.addr}:{port},bind={cfg.remote_addr}:{port}"
++    socat = f"socat -u - TCP{cfg.addr_ipver}:{cfg.baddr}:{port},bind={cfg.remote_baddr}:{port}"
+     listen_cmd = f"{cfg.bin_local} -l -f {cfg.ifname} -s {cfg.addr} -p {port} -c {cfg.remote_addr} -v 7"
  
- 	return 0;
- }
+     with bkg(listen_cmd, exit_wait=True) as ncdevmem:
 -- 
 2.51.0
 
