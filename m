@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7F3315D37;
-	Sat, 25 Oct 2025 16:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDACA3043BE;
+	Sat, 25 Oct 2025 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409475; cv=none; b=b4Yn/otV6t1oy1f8xSvE/2FCEQDarZl2y2AagCgc2jWlP2KucmVNHrGzIUFHfm9QkLwQZU0b5sgfw3z2FeL7ZuVgM9cVvA3PMHFI8sBWQfQsj2HoQK/jCqjzNbqo2LzL0nOYMm93TkvQDf/0Per3TcaUJ0dTlTA1Pdx1AAkNzjI=
+	t=1761409477; cv=none; b=hNUC4kTqeji33Nr/x82B3xpmoi1hnwDVz9vCA+Py0jfefJer0Jmi1RJzUTy/8lKBhlDYK7Fje4SGDUS4IQbK9Px9r82W7SKzzUn0baEI3RXpXGI/TUijJDNmhyI60moqlkrK/ajEAm/xkw01RLxyK8gLPTdBUCRWuIwVNa7O56E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409475; c=relaxed/simple;
-	bh=OvQd+VHiY14MAkhNDRN8bAjRF+Z9dCF5NNSFzETJ+KE=;
+	s=arc-20240116; t=1761409477; c=relaxed/simple;
+	bh=JhfTnhLiMzYvs81BeHSBK+8cAnH6/mIbHjpSeDXsAUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FY6S8fBjBiGQYgh6b5h/elu71R210fPWDmjZF4kNYcWARlWBz8U/WnEnFKZggAvre9jCWqDo1bSu7UWOagA9JB8jX/l6FiChnlUTM6OkaqF46MmbhXdd4dpXa2Dd8jKiIQbL0MKGCVqNlHqQ7mOLxEDtqQe2csTX6IqsVa/TIQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CcwaTDMP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=urWEnJT0AwHdXO3P98xQImn0dyiJnjQt7U0M6yfa7u8CHyLxaFPmYVfrEblqYxwsFyvOwdsWSkIpMU5CntYGE8DcdK2jn4JmAHwPBiwi+N+OPGbLzIxAigCvY4xPX3ZpM/cztFgEHHQeVAPt5z5YOIK6ZMJKrKaY1ACHzLoVZRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JwbVIbkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CcwaTDMP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8979C4CEFB;
-	Sat, 25 Oct 2025 16:24:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JwbVIbkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A74C4CEF5;
+	Sat, 25 Oct 2025 16:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409475;
-	bh=OvQd+VHiY14MAkhNDRN8bAjRF+Z9dCF5NNSFzETJ+KE=;
+	s=k20201202; t=1761409476;
+	bh=JhfTnhLiMzYvs81BeHSBK+8cAnH6/mIbHjpSeDXsAUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcwaTDMPtC42PaG7dvom76UH2jUWYNh+319yvvBtWRiY78+oVxDCZ0xZ4v8GxlNZi
-	 uRSUDGeUHnWXVFewVkwW9Ff800Qr73rUsLKGdTRj8ScRzc0A2S9PIAlXPz5Y0qYpHN
-	 rwbLPrlenIidvP+ujT8cBlU0GJqAsl7LWwpON6xV1Y+PM4fLRQJx2baVtDxD36ObM8
-	 Bert2G3JH9jXJH3LjlDi2q7PXnWrklam+GMmtMdhGz2b8FgqawLknsUqgCLrTwymSj
-	 v/KLKpZ8BBnZ3Ck4lg95VlMFPui1gdvNP4LtM0yqYXsrbo/D0FdHa22FFHBGiojwYQ
-	 4f4cgVeIo05Jg==
+	b=JwbVIbkUy0DOQrUF+sRB8305cxpSQrcABiqPfY7p3Ag51XK2StdimaoIFqDp5vd8Q
+	 P1dv/UIOYZi08gM/ClRskWQ76whsbJPf7JBnpobGtYVgoAmInUPjpJa6MunoinXMnR
+	 FXsICynDef1wTCtS4ihwKDELUJTjLzIkR4TBr7JKJk8yVH9DzlGsyV6/0LFgTrlemg
+	 m7QvtLrxx+m7lHDsDWofaMLyZQ9hAv4ecHbFoD5cekcnKL7dBEi09LAqOLgVg2Rmmu
+	 9HehW09+lnNKKJGPpJqgwy/TfvG+tYHtc/RglSPaFSFpSLONQU6f9h88dPejHzrkeC
+	 mx3NFJpCAhLZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: John Harrison <John.C.Harrison@Intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: Add USB ID 2001:332a for D-Link AX9U rev. A1
-Date: Sat, 25 Oct 2025 11:59:30 -0400
-Message-ID: <20251025160905.3857885-339-sashal@kernel.org>
+	lucas.demarchi@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe/guc: Return an error code if the GuC load fails
+Date: Sat, 25 Oct 2025 11:59:31 -0400
+Message-ID: <20251025160905.3857885-340-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,84 +54,125 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 2ffc73cdb8247dc09b6534c4018681a126c1d5f5 ]
+[ Upstream commit 3b09b11805bfee32d5a0000f5ede42c07237a6c4 ]
 
-Add USB ID 2001:332a for D-Link AX9U rev. A1 which is a RTL8851BU-based
-Wi-Fi adapter.
+Due to multiple explosion issues in the early days of the Xe driver,
+the GuC load was hacked to never return a failure. That prevented
+kernel panics and such initially, but now all it achieves is creating
+more confusing errors when the driver tries to submit commands to a
+GuC it already knows is not there. So fix that up.
 
-Only managed mode and AP mode are tested and it works in both.
+As a stop-gap and to help with debug of load failures due to invalid
+GuC init params, a wedge call had been added to the inner GuC load
+function. The reason being that it leaves the GuC log accessible via
+debugfs. However, for an end user, simply aborting the module load is
+much cleaner than wedging and trying to continue. The wedge blocks
+user submissions but it seems that various bits of the driver itself
+still try to submit to a dead GuC and lots of subsequent errors occur.
+And with regards to developers debugging why their particular code
+change is being rejected by the GuC, it is trivial to either add the
+wedge back in and hack the return code to zero again or to just do a
+GuC log dump to dmesg.
 
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250902035755.1969530-1-zenmchen@gmail.com
+v2: Add support for error injection testing and drop the now redundant
+wedge call.
+
+CC: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
+Link: https://lore.kernel.org/r/20250909224132.536320-1-John.C.Harrison@Intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES – this is a pure bug-fix that should go to stable.
 
-- Scope of change: Adds a single USB device ID for a new RTL8851BU-based
-  adapter; no logic changes. In
-  `drivers/net/wireless/realtek/rtw89/rtw8851bu.c:19-21`, the new entry
-  `USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332a, 0xff, 0xff, 0xff)` is
-  added with `.driver_info = (kernel_ulong_t)&rtw89_8851bu_info`,
-  matching the existing pattern used for other 8851BU dongles (e.g.,
-  `0x3625:0x010b` and `0x7392:0xe611` in the same table at
-  `drivers/net/wireless/realtek/rtw89/rtw8851bu.c:22-27`).
-- Containment: The id table is used only for device matching via the
-  driver’s `usb_driver` definition (`.id_table = rtw_8851bu_id_table` at
-  `drivers/net/wireless/realtek/rtw89/rtw8851bu.c:32-36`).
-  Probe/disconnect paths remain unchanged and continue to call the
-  existing generic handlers `rtw89_usb_probe`/`rtw89_usb_disconnect`.
-- Risk assessment: Extremely low. It only expands the alias table so the
-  driver binds to a device already supported by the RTL8851B/USB code
-  path. The interface match uses `USB_DEVICE_AND_INTERFACE_INFO(...,
-  0xff, 0xff, 0xff)`, consistent with other entries, limiting binding to
-  the intended vendor-specific interface and avoiding unintended grabs.
-- User impact: High practical value. Without the ID, the D-Link AX9U
-  rev. A1 (VID:PID 2001:332a) will not bind to the driver, leaving users
-  without Wi‑Fi. Adding the ID “fixes” a real-world non-working device
-  scenario common to stable policy.
-- Architectural impact: None. No new features or behavior changes; no
-  changes to `rtw89_usb_probe` implementation or the rtw89 core. The
-  probe path remains the same
-  (`drivers/net/wireless/realtek/rtw89/usb.c:932` onward).
-- Cross-subsystem consistency: The same VID:PID is already recognized on
-  the Bluetooth side (`drivers/bluetooth/btusb.c:526` shows
-  `USB_DEVICE(0x2001, 0x332a)` under 8851BU Realtek BT), which is
-  typical for combo devices. The Wi‑Fi ID addition aligns Wi‑Fi binding
-  with the already-supported BT interface.
-- Stable criteria fit: This is a minimal, contained enablement/fix with
-  negligible regression risk, no architectural changes, and clear user
-  benefit. While the commit message has no explicit “Cc: stable”, device
-  ID additions like this are routinely accepted for stable when the
-  driver exists in the target tree.
+- `guc_wait_ucode()` now returns `-EPROTO` when the firmware never
+  reaches the “done” state and stops calling
+  `xe_device_declare_wedged()` (`drivers/gpu/drm/xe/xe_guc.c:1058` and
+  `drivers/gpu/drm/xe/xe_guc.c:1165`). Combined with
+  `ALLOW_ERROR_INJECTION(guc_wait_ucode, ERRNO)`
+  (`drivers/gpu/drm/xe/xe_guc.c:1180`), the driver can finally detect
+  and test the failure path instead of pretending the load succeeded.
+- `__xe_guc_upload()` propagates that failure
+  (`drivers/gpu/drm/xe/xe_guc.c:1211` and
+  `drivers/gpu/drm/xe/xe_guc.c:1221`), so both the early init
+  (`drivers/gpu/drm/xe/xe_uc.c:81`) and the regular load/reset flow
+  (`drivers/gpu/drm/xe/xe_uc.c:195`) bail out immediately when
+  authentication fails. Previously the hard-coded `return 0 /* FIXME */`
+  let probe continue, leaving the module “wedged” while still trying to
+  talk to a GuC that never booted—exactly the noisy, misleading
+  behaviour the commit message describes.
+- The change is tightly scoped to the Xe GuC bring-up path; no ABI or
+  architectural behaviour changes elsewhere. Failing a GuC load already
+  leaves the GPU unusable, so probing failure instead of a half-alive
+  wedged device is the safer outcome for end users.
+- Dependencies are limited to the existing GuC timing/logging helpers
+  that have been in mainline since mid-2024, so current stable trees
+  that carry Xe already have the required context.
 
-Note: Backport applicability depends on the target stable branch having
-the rtw89 RTL8851BU driver (`rtw8851bu.c`) and RTL8851B support already
-present. If absent, the change is N/A for that branch.
+The only observable difference for users is that a fatal firmware load
+failure now aborts driver probe instead of letting the system thrash a
+dead GuC, which matches expectations and avoids secondary errors.
 
- drivers/net/wireless/realtek/rtw89/rtw8851bu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_guc.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-index c3722547c6b09..04e1ab13b7535 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-@@ -16,6 +16,9 @@ static const struct rtw89_driver_info rtw89_8851bu_info = {
- static const struct usb_device_id rtw_8851bu_id_table[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0bda, 0xb851, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
-+	/* D-Link AX9U rev. A1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332a, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
- 	/* TP-Link Archer TX10UB Nano */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3625, 0x010b, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index 62c76760fd26f..ab5b69cee3bff 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -1056,7 +1056,7 @@ static s32 guc_pc_get_cur_freq(struct xe_guc_pc *guc_pc)
+ #endif
+ #define GUC_LOAD_TIME_WARN_MS      200
+ 
+-static void guc_wait_ucode(struct xe_guc *guc)
++static int guc_wait_ucode(struct xe_guc *guc)
+ {
+ 	struct xe_gt *gt = guc_to_gt(guc);
+ 	struct xe_mmio *mmio = &gt->mmio;
+@@ -1163,7 +1163,7 @@ static void guc_wait_ucode(struct xe_guc *guc)
+ 			break;
+ 		}
+ 
+-		xe_device_declare_wedged(gt_to_xe(gt));
++		return -EPROTO;
+ 	} else if (delta_ms > GUC_LOAD_TIME_WARN_MS) {
+ 		xe_gt_warn(gt, "excessive init time: %lldms! [status = 0x%08X, timeouts = %d]\n",
+ 			   delta_ms, status, count);
+@@ -1175,7 +1175,10 @@ static void guc_wait_ucode(struct xe_guc *guc)
+ 			  delta_ms, xe_guc_pc_get_act_freq(guc_pc), guc_pc_get_cur_freq(guc_pc),
+ 			  before_freq, status, count);
+ 	}
++
++	return 0;
+ }
++ALLOW_ERROR_INJECTION(guc_wait_ucode, ERRNO);
+ 
+ static int __xe_guc_upload(struct xe_guc *guc)
+ {
+@@ -1207,14 +1210,16 @@ static int __xe_guc_upload(struct xe_guc *guc)
+ 		goto out;
+ 
+ 	/* Wait for authentication */
+-	guc_wait_ucode(guc);
++	ret = guc_wait_ucode(guc);
++	if (ret)
++		goto out;
+ 
+ 	xe_uc_fw_change_status(&guc->fw, XE_UC_FIRMWARE_RUNNING);
+ 	return 0;
+ 
+ out:
+ 	xe_uc_fw_change_status(&guc->fw, XE_UC_FIRMWARE_LOAD_FAIL);
+-	return 0	/* FIXME: ret, don't want to stop load currently */;
++	return ret;
+ }
+ 
+ static int vf_guc_min_load_for_hwconfig(struct xe_guc *guc)
 -- 
 2.51.0
 
