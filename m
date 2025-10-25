@@ -1,42 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03E32580F2;
-	Sat, 25 Oct 2025 16:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0051C302747;
+	Sat, 25 Oct 2025 16:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408910; cv=none; b=Opkghyu0cm/TqbrMKk0uJ1CN0SfZdOVyqZOK154ed+5V9RpDLIa0SU/0Vyd3Ll58XcqOAbOTr8zjPXqkp8Vr+8kMXXIoisB59KlbSjxZRAFOE1f3WSyPVp/ReSoN+skTNdJY5jSV6yxCfU2KaxZgvGjzfTbKw0RbpDwb6LflQp8=
+	t=1761408911; cv=none; b=tFzwAna+bzPEbynTZ5QQn8TRn6h0hkglF7SP6hQrQHgLa5C9Fz5xvSENfpkHVReYxRvtNNwbc0JJLeTptqjxbG5wJ0MYZJiRvl+lyVMvoXXiGE61UOWXStsbAIWjjM+RQOlFYsW9zQquH/b2tmFrn6o8FLcrac4ScWvuJR/HGy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408910; c=relaxed/simple;
-	bh=6nNQtbJ5vYXMplOb3xudC63qPL/Z0j1vsdKDxh0ykmI=;
+	s=arc-20240116; t=1761408911; c=relaxed/simple;
+	bh=j8yD5cqajyt8oHsVEUEfkhY+VtYIKmDymUlcKZ/9bbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VXsCdsa5co9AnaMP5qCkrwdFGy0BKR5davOrWAtsnZGtCjh3+wBOER3P33nf53ec2s1u1wRkCz4jU3IlmU5rAGuMjIUFsV0Dt0X9pUBXPmLiRWEYhklLbqRs4eFl4NBC+zP6S7+tl1JcX6E2KJtNdgy3adJbasb09//10oVJVzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVpE3HMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WmKc2mSf6U8WkY+Z6Qzsa8seZLe6oNLlWjvjO0ft2+uIpgkXYrRAxkawA9YaxhV095p2TreOmteTFa0FHcuXiXA2oKeG+cLqFToYUO9fw8+ICSkCAz9tVE8hkZ9V0ySRPLm2Zs3Sm9G9H06hC5a0U2VqdSaUKU7BqRDfX+NF6Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8XXAM6h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVpE3HMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EA4C113D0;
-	Sat, 25 Oct 2025 16:15:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8XXAM6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503F2C4CEF5;
+	Sat, 25 Oct 2025 16:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408910;
-	bh=6nNQtbJ5vYXMplOb3xudC63qPL/Z0j1vsdKDxh0ykmI=;
+	s=k20201202; t=1761408909;
+	bh=j8yD5cqajyt8oHsVEUEfkhY+VtYIKmDymUlcKZ/9bbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVpE3HMsBNtVoDyN5elVlBzhgonN9hKKkTKL0YVB/LkHrL+G1Tyna49lcx3DI9Rey
-	 tJVCzmSUlTy2stJj0wRqSsoCPiHwiOC5KtRTCI+3xCPmYMYJe5TxhLj2osVaM6BTm+
-	 mOvHIyyFWqQp0o5Mq4I7W82XSbs/n7TTSPmPNRsqt4mCTVw3dYb2Ec5Be2do0zLEfa
-	 fJIPe6ID4+mKcO9zkAT3cb9m6rAnBrGGYDTB77WeEBLkpXVE/eE2bPsWoImsYCNEcn
-	 5kDH/7+RUH6QJS5jflRhcx9QDhym7T+BQbplpxSeNkaKoRxLH8kh6yCDrVpDFyggXM
-	 t2S+9mQyWvpNQ==
+	b=p8XXAM6hQ3hyQDByu7JgA4tX3JixhjA5IJAyf9nfs3ZHDEGcOQ96pqPoYRdwoDPSM
+	 5nfb1sDlSQQf1mVJvpKpfrPG/03MbzPTbAhjfxq1PhueBtARHGdohqC3Jf1paKF95N
+	 TToGZscEdZ0S8FJyht6qHrLbjghfmeErCwgE8v286ATG8qECQTRaNDjfGV3QvakxaV
+	 //wj9xV/vNsm32xFTJem8Eqmc1pyPUUa1Qy54VWzATdKC8mYwHoYPqnZikxftvbQEd
+	 q8h0i0SuT9O84+eV6w8b0vzd3WZAvjA9BUviH+BrPnNUrQDyc4yy6ETx8KxAvlbGmL
+	 6k8g6b4hfsXCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Ausef Yousof <Ausef.Yousof@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17-5.15] ntfs3: pretend $Extend records as regular files
-Date: Sat, 25 Oct 2025 11:55:56 -0400
-Message-ID: <20251025160905.3857885-125-sashal@kernel.org>
+	Wayne.Lin@amd.com,
+	roman.li@amd.com,
+	alex.hung@amd.com,
+	ray.wu@amd.com,
+	PeiChen.Huang@amd.com,
+	Dillon.Varone@amd.com,
+	Charlene.Liu@amd.com,
+	Sung.Lee@amd.com,
+	alexandre.f.demers@gmail.com,
+	Richard.Chiang@amd.com,
+	ryanseto@amd.com,
+	linux@treblig.org,
+	mario.limonciello@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amd/display: dont wait for pipe update during medupdate/highirq
+Date: Sat, 25 Oct 2025 11:55:55 -0400
+Message-ID: <20251025160905.3857885-124-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,18 +66,20 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Ausef Yousof <Ausef.Yousof@amd.com>
 
-[ Upstream commit 4e8011ffec79717e5fdac43a7e79faf811a384b7 ]
+[ Upstream commit 895b61395eefd28376250778a741f11e12715a39 ]
 
-Since commit af153bb63a33 ("vfs: catch invalid modes in may_open()")
-requires any inode be one of S_IFDIR/S_IFLNK/S_IFREG/S_IFCHR/S_IFBLK/
-S_IFIFO/S_IFSOCK type, use S_IFREG for $Extend records.
+[why&how]
+control flag for the wait during pipe update wait for vupdate should
+be set if update type is not fast or med to prevent an invalid sleep
+operation
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,65 +87,79 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug triggered by VFS invariants: After vfs change
-  af153bb63a33 (“vfs: catch invalid modes in may_open()”), inodes must
-  have a valid S_IFMT type. ntfs3 could leave $Extend records with an
-  invalid/zero mode, causing may_open() to reject or warn on opens. The
-  patch makes these records appear as regular files, satisfying the VFS
-  type check.
-- Small, local, and low-risk change: Only one code path is touched in a
-  single file, with a one-line assignment in a narrow case.
-  - In the $Extend-specific branch in `ntfs_read_mft()`, the code now
-    sets a valid file type: `mode = S_IFREG;` immediately after
-    identifying an $Extend record and setting inode ops
-    (fs/ntfs3/inode.c:470-474).
-  - The mode is then stored into the inode as usual (`inode->i_mode =
-    mode;`, fs/ntfs3/inode.c:488), ensuring the inode passes VFS type
-    checks.
-- Constrained to special metadata records: The branch only triggers when
-  the filename references the $Extend MFT record (`fname->home.low ==
-  cpu_to_le32(MFT_REC_EXTEND)` and `fname->home.seq ==
-  cpu_to_le16(MFT_REC_EXTEND)`, fs/ntfs3/inode.c:470-471). Regular
-  files/dirs/symlinks/special devices remain unaffected.
-- Preserves ntfs3 behavior while satisfying VFS: The $Extend branch
-  still sets only `i_op = &ntfs_file_inode_operations`
-  (fs/ntfs3/inode.c:473), unlike the normal regular-file branch which
-  also sets `i_fop` and `a_ops` (fs/ntfs3/inode.c:456-465). So $Extend
-  records won’t gain full file operations; they simply have a valid
-  S_IFMT for VFS. This minimizes behavioral change while fixing the bug.
-- No architectural changes or cross-subsystem impact: The patch does not
-  alter VFS or broader kernel APIs; it’s contained within ntfs3’s inode
-  setup logic.
-- Aligns with stable rules:
-  - Important bugfix reported by syzbot (Closes: the linked syzkaller
-    bug).
-  - Minimal change and clear rationale.
-  - Low regression risk and limited scope (ntfs3 only).
-- Forward/backward compatibility: Even on trees without the may_open()
-  enforcement, setting a valid type for these metadata inodes is
-  harmless and arguably improves correctness. On trees with
-  af153bb63a33, it avoids spurious failures/warnings.
+- What it fixes: Prevents sleeping in interrupt/atomic context during
+  medium (MED) updates by avoiding a vupdate wait when the update is not
+  FULL. This addresses “invalid sleep” risks during medupdate/highirq
+  paths.
 
-Conclusion: This is a targeted bugfix to comply with VFS invariants and
-prevent failures when interacting with $Extend records. It’s safe and
-appropriate to backport to stable kernels that include ntfs3 and the
-may_open() invariant check.
+- Change summary: The wait decision flag passed to the hardware
+  sequencer changes from only FAST to FAST or MED:
+  - `drivers/gpu/drm/amd/display/dc/core/dc.c:4173` now passes
+    `update_type < UPDATE_TYPE_FULL` instead of `update_type ==
+    UPDATE_TYPE_FAST`.
 
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+- Why this matters: The wait routine will sleep via `fsleep()` when it
+  decides to wait. Sleeping is not allowed at high IRQ levels or atomic
+  contexts. MED updates are documented as ISR‑safe (i.e., they can occur
+  in interrupt context), so they must not trigger sleeps.
+  - Update type semantics: `drivers/gpu/drm/amd/display/dc/dc.h:453`
+    (FAST “safe to execute in isr”),
+    `drivers/gpu/drm/amd/display/dc/dc.h:454` (MED “ISR safe”),
+    `drivers/gpu/drm/amd/display/dc/dc.h:455` (FULL “cannot be done at
+    ISR level”).
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 37cbbee7fa580..b08b009121653 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -471,6 +471,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		   fname->home.seq == cpu_to_le16(MFT_REC_EXTEND)) {
- 		/* Records in $Extend are not a files or general directories. */
- 		inode->i_op = &ntfs_file_inode_operations;
-+		mode = S_IFREG;
- 	} else {
- 		err = -EINVAL;
- 		goto out;
+- Actual wait behavior: The wait function only sleeps when it’s safe;
+  the third argument tells it to skip the sleep for ISR‑safe paths:
+  - Function definition:
+    `drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:101`
+  - Core logic: If `is_surface_update_only` is true and the computed
+    wait is long, it returns early without sleeping, deferring the wait:
+    - Early return guard:
+      `drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:157`
+    - Sleep call (which we avoid in ISR context):
+      `drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:163`
+
+- Correctness and safety: For FULL updates, the code still treats the
+  path as non‑ISR and uses the wait normally. Example full‑update path
+  calls the wait with “false”:
+  - `drivers/gpu/drm/amd/display/dc/core/dc.c:2146`
+  - FULL updates explicitly set up the “wait required” state later when
+    appropriate:
+  - `drivers/gpu/drm/amd/display/dc/core/dc.c:4326`
+
+- Side‑effects and risk: Minimal. This is a one‑line, scoped change
+  that:
+  - Avoids an invalid sleep during MED updates while preserving FULL
+    update behavior.
+  - Defers waiting by keeping `pipe_ctx->wait_is_required` set when
+    skipping, so the wait happens later in a safe context (per
+    `drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:159`).
+
+- Scope: Confined to AMD display DC commit path; no architectural/API
+  changes.
+
+- Stable backport criteria: Satisfies important bugfix (avoids sleeping
+  in IRQ), small and contained change, low regression risk, no new
+  features, and limited to a driver subsystem.
+
+Given the above, this is a solid candidate for stable backport.
+
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 2d2f4c4bdc97e..74efd50b7c23a 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -4163,7 +4163,7 @@ static void commit_planes_for_stream(struct dc *dc,
+ 	}
+ 
+ 	if (dc->hwseq->funcs.wait_for_pipe_update_if_needed)
+-		dc->hwseq->funcs.wait_for_pipe_update_if_needed(dc, top_pipe_to_program, update_type == UPDATE_TYPE_FAST);
++		dc->hwseq->funcs.wait_for_pipe_update_if_needed(dc, top_pipe_to_program, update_type < UPDATE_TYPE_FULL);
+ 
+ 	if (should_lock_all_pipes && dc->hwss.interdependent_update_lock) {
+ 		if (dc->hwss.subvp_pipe_control_lock)
 -- 
 2.51.0
 
