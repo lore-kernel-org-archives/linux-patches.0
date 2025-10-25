@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F7430B527;
-	Sat, 25 Oct 2025 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4203305E10;
+	Sat, 25 Oct 2025 16:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409034; cv=none; b=TojiKiE5pWlIlvCY+TSXz4V+PoFVeeDR1VPkGzJ+KPZMgs1xknITZQ1bd7h75JI70uPS7WR2ynUXtAl82bcRfDpUWsr/ctLCCRZ/kgoYN2YVPV/VN+ORRyp+T7xt5WGlQfOU33o4QOcqFNMoC31I8xCWWp6e31aYhqtWIoW3rxw=
+	t=1761409036; cv=none; b=J20Dk8LyWFolC/YvLGZ3CcBZCHhhUIR2pHrMJaUCw/lIMPRj+L7yCsvBZD6yOnq5EaCMquKM/2r3KPMexgTlXqs7bla6Rhn35fY0BKoQ7rlzcE8cL/XAebnRjxZd4Cpaj8sDmZw7LicrKZQSVlFltFQiPd7Wt2Kd4bzjusLWnJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409034; c=relaxed/simple;
-	bh=+Q4I3s1hMoccXGt3od3BjlqiRClbKs+el/X4XfZ2330=;
+	s=arc-20240116; t=1761409036; c=relaxed/simple;
+	bh=pvN19703bNvkmA0yQvWz2S+zOJr0Tt1lfGN5/ZdHBPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qldg8RdpDdXgC4qmSeMNBqzzISEhvFmfDNZs5fJlLPKLExnpfAHNc5wNPjlqa4WAoZcTuPvH0FILXtlZsc1IGxg7E4B2EkY4INh8obc9Y55eJf3RUGORMgIa4OLuEXKVgD/uzJjbWn+LXGp/tOp90TCJDLfDvl8ekq3HTGQG3oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dKq2cwbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CGCqJzEdIonNx2YjEGVZRhqd0K7pL6AzgkDunRGydAioQUKDcPTjMVs9mG6xL9DV2YCGaaNztFXmT9HXre0kRYApJmBtZQvZ/Y7c3LS+rmtcd/EfL0N0V0cOB+8VfT7m56giOlhix7xne0xFUW6gS1gDulYfXgLEnR3BGWkCd4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5eUkcqO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dKq2cwbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0238CC4CEFB;
-	Sat, 25 Oct 2025 16:17:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5eUkcqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74575C4CEF5;
+	Sat, 25 Oct 2025 16:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409034;
-	bh=+Q4I3s1hMoccXGt3od3BjlqiRClbKs+el/X4XfZ2330=;
+	s=k20201202; t=1761409035;
+	bh=pvN19703bNvkmA0yQvWz2S+zOJr0Tt1lfGN5/ZdHBPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKq2cwbQYmXFqruCATCCVZPEB3G/jvysdtmNj6TpNQu1R5mwNeQyo9VoGsfo2E5hY
-	 KVmzsP+0Mojna+KYeTCXc4CSJVHps5qbakPOIzEc8+kKS8IvqMd6Z/Q1roobUk/WL6
-	 fRy2UTGvVYEKqyoxdzxuMpXCj40Y2UEXP9y4ZWINVulgNwPoMWub5XQmxgyXTj4+LH
-	 hGU8GKbmrMmCHUEIhepoqPTWO8UjeJk5E5mB4K+5Rvxgk28FqklqGApRh/qSOnDlJi
-	 TlI+Cair3fPwp54i1rrkwzkESoMPtl6la4AQWKXXZjGigQ4EUsqUD2zvSoEKlLMwbm
-	 OSjsg0JPAopQw==
+	b=k5eUkcqOs/3XDs1pYskfSo7k+Px8k70hWub9kB3118Z8HDzfJpSkTdcYGVTxTwfMI
+	 xG64YqpKAdzr9W6M0sJhsweH1wa0wvPENofbGuL45zFjzAFbqo7NvdAMAAdLhnGxbz
+	 wnbJF9cuEfi+3Bjeb/gzPpP+1pNa6MpuxX1wnLFnsf2o4xm7qbtp0aJhwTL0VVqR1I
+	 gCNKh3ei5sCGg73o3nHCu2N66RG152rBlfFjw+PC2XRhOeJXkYBahzGV32pc8hx5SV
+	 baN2JOP20iKstOTctjVFIQoXCangCXqoFJ7gxesbM+fHuXZAkniQbRDu2Xkx4eAqsc
+	 wVMtW7ZtFudlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Primoz Fiser <primoz.fiser@norik.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Ilan Peer <ilan.peer@intel.com>,
+	Andrei Otcheretianski <andrei.otcheretianski@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shenghao-ding@ti.com,
-	kevin-lu@ti.com,
-	baojun.xu@ti.com,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] ASoC: tlv320aic3x: Fix class-D initialization for tlv320aic3007
-Date: Sat, 25 Oct 2025 11:56:50 -0400
-Message-ID: <20251025160905.3857885-179-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] wifi: mac80211: Get the correct interface for non-netdev skb status
+Date: Sat, 25 Oct 2025 11:56:51 -0400
+Message-ID: <20251025160905.3857885-180-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,126 +54,166 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Primoz Fiser <primoz.fiser@norik.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 733a763dd8b3ac2858dd238a91bb3a2fdff4739e ]
+[ Upstream commit c7b5355b37a59c927b2374e9f783acd004d00960 ]
 
-The problem of having class-D initialization sequence in probe using
-regmap_register_patch() is that it will do hardware register writes
-immediately after being called as it bypasses regcache. Afterwards, in
-aic3x_init() we also perform codec soft reset, rendering class-D init
-sequence pointless. This issue is even more apparent when using reset
-GPIO line, since in that case class-D amplifier initialization fails
-with "Failed to init class D: -5" message as codec is already held in
-reset state after requesting the reset GPIO and hence hardware I/O
-fails with -EIO errno.
+The function ieee80211_sdata_from_skb() always returned the P2P Device
+interface in case the skb was not associated with a netdev and didn't
+consider the possibility that an NAN Device interface is also enabled.
 
-Thus move class-D amplifier initialization sequence from probe function
-to aic3x_set_power() just before the usual regcache sync. Use bypassed
-regmap_multi_reg_write_bypassed() function to make sure, class-D init
-sequence is performed in proper order as described in the datasheet.
+To support configurations where both P2P Device and a NAN Device
+interface are active, extend the function to match the correct
+interface based on address 2 in the 802.11 MAC header.
 
-Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
-Link: https://patch.msgid.link/20250925085929.2581749-1-primoz.fiser@norik.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since the 'p2p_sdata' field in struct ieee80211_local is no longer
+needed, remove it.
+
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250908140015.5252d2579a49.Id4576531c6b2ad83c9498b708dc0ade6b0214fa8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-- Moving the class‑D init to the power‑on path ensures the sequence
-  actually programs the codec after reset:
-  `regmap_multi_reg_write_bypassed()` now runs immediately after
-  regulators are enabled and the reset GPIO is deasserted
-  (`sound/soc/codecs/tlv320aic3x.c:1394-1408`), so the class‑D block on
-  tlv320aic3007 finally comes out of reset with the datasheet‑mandated
-  ordering retained (`drivers/base/regmap/regmap.c:2649-2684`).
-- The prior implementation wrote the same register sequence during probe
-  while the chip was still (or about to be) reset
-  (`sound/soc/codecs/tlv320aic3x.c:1553-1559`,
-  `sound/soc/codecs/tlv320aic3x.c:1794-1815`), yielding -EIO failures
-  and undoing the configuration; removing that probe-time call
-  (`sound/soc/codecs/tlv320aic3x.c:1782-1828`) eliminates the window
-  where the codec couldn’t be addressed.
-- Change scope is tight: the new sequence is guarded by `aic3x->model ==
-  AIC3X_MODEL_3007` and only affects the existing power/bias flow, so
-  other aic3x variants and runtime paths remain untouched.
-- This clearly fixes a user-visible regression (class‑D amp never
-  enables on systems using the reset GPIO), introduces no new APIs, and
-  aligns with stable rules for targeted bug fixes.
+YES – this fixes a real mac80211 bug that breaks NAN status reporting
+when a P2P device is also present.
 
-Suggested next step: 1) Validate audio output on hardware carrying
-tlv320aic3007 with reset GPIO asserted to confirm the class‑D amplifier
-now powers up correctly.
+- **Correct interface lookup**: non-netdev TX status frames now walk the
+  interface list and only accept P2P or started NAN vifs whose MAC
+  matches `addr2` (net/mac80211/status.c:572-605). This replaces the
+  hard-wired `local->p2p_sdata` pointer so NAN frames are associated
+  with their own interface rather than the P2P device.
+- **User-visible impact**: the status path feeds cfg80211 callbacks such
+  as `cfg80211_control_port_tx_status()` and
+  `cfg80211_mgmt_tx_status_ext()` (net/mac80211/status.c:624-666).
+  Without the fix, NAN transmissions delivered through these hooks are
+  reported on the wrong wdev, so user space never sees acknowledgements
+  for NAN operations when P2P is enabled—causing functional failures.
+- **Safe cleanup**: removing the now-unused `p2p_sdata` field from
+  `struct ieee80211_local` eliminates stale pointer handling
+  (net/mac80211/ieee80211_i.h:1675-1680), and the monitor bookkeeping
+  that used to live in the same switch is preserved by moving the list
+  insertion into the monitor case (net/mac80211/iface.c:1405-1414). No
+  driver interfaces or data layouts change.
+- **Risk assessment**: the new logic still runs under the existing RCU
+  read-side locks, touches only status-path book-keeping, and degrades
+  gracefully by returning NULL when no match is found. It has no
+  prerequisites beyond current stable code, so it is a low-risk, self-
+  contained bug fix suitable for stable backporting.
 
- sound/soc/codecs/tlv320aic3x.c | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+You may want to run a quick P2P+NAN tx-status test to confirm the
+corrected reporting path after backporting.
 
-diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
-index f1649df197389..eea8ca285f8e0 100644
---- a/sound/soc/codecs/tlv320aic3x.c
-+++ b/sound/soc/codecs/tlv320aic3x.c
-@@ -121,6 +121,16 @@ static const struct reg_default aic3x_reg[] = {
- 	{ 108, 0x00 }, { 109, 0x00 },
- };
+ net/mac80211/ieee80211_i.h |  2 --
+ net/mac80211/iface.c       | 16 +---------------
+ net/mac80211/status.c      | 21 +++++++++++++++++++--
+ 3 files changed, 20 insertions(+), 19 deletions(-)
+
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 8afa2404eaa8e..140dc7e32d4aa 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1665,8 +1665,6 @@ struct ieee80211_local {
+ 	struct idr ack_status_frames;
+ 	spinlock_t ack_status_lock;
  
-+static const struct reg_sequence aic3007_class_d[] = {
-+	/* Class-D speaker driver init; datasheet p. 46 */
-+	{ AIC3X_PAGE_SELECT, 0x0D },
-+	{ 0xD, 0x0D },
-+	{ 0x8, 0x5C },
-+	{ 0x8, 0x5D },
-+	{ 0x8, 0x5C },
-+	{ AIC3X_PAGE_SELECT, 0x00 },
-+};
-+
- static bool aic3x_volatile_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-@@ -1393,6 +1403,10 @@ static int aic3x_set_power(struct snd_soc_component *component, int power)
- 			gpiod_set_value(aic3x->gpio_reset, 0);
- 		}
+-	struct ieee80211_sub_if_data __rcu *p2p_sdata;
+-
+ 	/* virtual monitor interface */
+ 	struct ieee80211_sub_if_data __rcu *monitor_sdata;
+ 	struct ieee80211_chan_req monitor_chanreq;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 07ba68f7cd817..abc8cca54f4e1 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -611,10 +611,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
  
-+		if (aic3x->model == AIC3X_MODEL_3007)
-+			regmap_multi_reg_write_bypassed(aic3x->regmap, aic3007_class_d,
-+							ARRAY_SIZE(aic3007_class_d));
-+
- 		/* Sync reg_cache with the hardware */
- 		regcache_cache_only(aic3x->regmap, false);
- 		regcache_sync(aic3x->regmap);
-@@ -1723,17 +1737,6 @@ static void aic3x_configure_ocmv(struct device *dev, struct aic3x_priv *aic3x)
+ 		spin_unlock_bh(&sdata->u.nan.func_lock);
+ 		break;
+-	case NL80211_IFTYPE_P2P_DEVICE:
+-		/* relies on synchronize_rcu() below */
+-		RCU_INIT_POINTER(local->p2p_sdata, NULL);
+-		fallthrough;
+ 	default:
+ 		wiphy_work_cancel(sdata->local->hw.wiphy, &sdata->work);
+ 		/*
+@@ -1405,6 +1401,7 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+ 		ieee80211_recalc_idle(local);
+ 
+ 		netif_carrier_on(dev);
++		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
+ 		break;
+ 	default:
+ 		if (coming_up) {
+@@ -1468,17 +1465,6 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+ 			sdata->vif.type != NL80211_IFTYPE_STATION);
  	}
- }
  
--
--static const struct reg_sequence aic3007_class_d[] = {
--	/* Class-D speaker driver init; datasheet p. 46 */
--	{ AIC3X_PAGE_SELECT, 0x0D },
--	{ 0xD, 0x0D },
--	{ 0x8, 0x5C },
--	{ 0x8, 0x5D },
--	{ 0x8, 0x5C },
--	{ AIC3X_PAGE_SELECT, 0x00 },
--};
--
- int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver_data)
- {
- 	struct aic3x_priv *aic3x;
-@@ -1823,13 +1826,6 @@ int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver
- 
- 	aic3x_configure_ocmv(dev, aic3x);
- 
--	if (aic3x->model == AIC3X_MODEL_3007) {
--		ret = regmap_register_patch(aic3x->regmap, aic3007_class_d,
--					    ARRAY_SIZE(aic3007_class_d));
--		if (ret != 0)
--			dev_err(dev, "Failed to init class D: %d\n", ret);
+-	switch (sdata->vif.type) {
+-	case NL80211_IFTYPE_P2P_DEVICE:
+-		rcu_assign_pointer(local->p2p_sdata, sdata);
+-		break;
+-	case NL80211_IFTYPE_MONITOR:
+-		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
+-		break;
+-	default:
+-		break;
 -	}
 -
- 	ret = devm_snd_soc_register_component(dev, &soc_component_dev_aic3x, &aic3x_dai, 1);
- 	if (ret)
- 		return ret;
+ 	/*
+ 	 * set_multicast_list will be invoked by the networking core
+ 	 * which will check whether any increments here were done in
+diff --git a/net/mac80211/status.c b/net/mac80211/status.c
+index a362254b310cd..4b38aa0e902a8 100644
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2008-2010	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+- * Copyright 2021-2024  Intel Corporation
++ * Copyright 2021-2025  Intel Corporation
+  */
+ 
+ #include <linux/export.h>
+@@ -572,6 +572,7 @@ static struct ieee80211_sub_if_data *
+ ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
+ {
+ 	struct ieee80211_sub_if_data *sdata;
++	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 
+ 	if (skb->dev) {
+ 		list_for_each_entry_rcu(sdata, &local->interfaces, list) {
+@@ -585,7 +586,23 @@ ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
+ 		return NULL;
+ 	}
+ 
+-	return rcu_dereference(local->p2p_sdata);
++	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
++		switch (sdata->vif.type) {
++		case NL80211_IFTYPE_P2P_DEVICE:
++			break;
++		case NL80211_IFTYPE_NAN:
++			if (sdata->u.nan.started)
++				break;
++			fallthrough;
++		default:
++			continue;
++		}
++
++		if (ether_addr_equal(sdata->vif.addr, hdr->addr2))
++			return sdata;
++	}
++
++	return NULL;
+ }
+ 
+ static void ieee80211_report_ack_skb(struct ieee80211_local *local,
 -- 
 2.51.0
 
