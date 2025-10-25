@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B89303A1A;
-	Sat, 25 Oct 2025 16:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61272F5A2D;
+	Sat, 25 Oct 2025 16:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409172; cv=none; b=DCFFEphJjiu/PrgpDMTUqZLSwx1qeOdFdZRKn1TNpO/7MUpC85Q9MxmRkU3FUZMFK3jqckKIbGbEHCh3Zcz74PTt+M01zxEX+TehcV+Epn4i7x2xvNZp8cd2L1quXhQ1rYwAVAlJECk4+2HKEU2jM1yrkWSFN0pA+5CWrt7H8Go=
+	t=1761409173; cv=none; b=N9RSm4FRBbVx5wtiujo9fOSCW/DjomuyMCoMQZM5q0NibKalYFro/S4xhCrnXB52V6F+sLp+4U7kfaI+8gkYbl4rGirc0frdzGtbJBAyCeclrG7irz/FW++fgecr9oS7b4dQrPgpxMxbXzZ0/Du8AvJnjZw0oa1/YFWNSRN2LKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409172; c=relaxed/simple;
-	bh=bhjmNycavTx9SKMSjN5+rFGtU28kgwO7XO7XDfPh2eA=;
+	s=arc-20240116; t=1761409173; c=relaxed/simple;
+	bh=9HkRSYhRyPFwC+Ebch60U0eOkF+niXbkC6onf51bdM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XFhYl+tA5tCh1CLufMej+NZTn4owaApeHXu6R1ZPfEBaIfmq9i1gAN/7IWnEr4NYYQp84AXGK9FR+6pSndAQEfzkhsxvDn6ou8OokJmV9bqA6p0Teyk/O0mDZ/ksTGobG4QIe8eIz6EFRU0XlKSaVv6fFTKn6ZiQZBh1343w0b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NoLuJ5Mb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sHZE2rG0UUVZnLhtrbPqQyEgC8nc1kueuas8flsAdO8V72dwIhNEpaQuhrc3+o4+2RsG5UGjelm3KyaFSAjbTsynvo4bzyotpjyU7XIoZrU31znZ1tdQKmQz+HJTxwkdAQUN+Ew7qRTVgHuUgqxinRLkN05HsiXs624We8962Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKl1YArx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NoLuJ5Mb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC18C4CEFB;
-	Sat, 25 Oct 2025 16:19:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKl1YArx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57969C4CEFB;
+	Sat, 25 Oct 2025 16:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409171;
-	bh=bhjmNycavTx9SKMSjN5+rFGtU28kgwO7XO7XDfPh2eA=;
+	s=k20201202; t=1761409173;
+	bh=9HkRSYhRyPFwC+Ebch60U0eOkF+niXbkC6onf51bdM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoLuJ5MbDlqn+mnQfvcn1iYO/Qw5ruJEZl/+tTdUnVV3ojstDDic7G4mOku25uTnc
-	 +wKVm8WQKJgteWFRMszFTKAcsEuptHPXd/27o0UI5un96ds18n6eDHBEDyBezjO4AJ
-	 dU/t3CTCYoMhtkITgHPSPVy3QBG4k2BQtForQMfZ4H2DYGEiuFmDVDGQcKr/JodB6L
-	 VH3ANxCpctdQwBXJdJc4hQCSwjP/viE6rI8xwH1chNTW2WBLTW+cOKn6biAByMrVpc
-	 J3XuHE4nEr+HhvY0bHJNBo4p0wlMkJcze+Cnv/8ETVzmmNYJNRlPsLc4b2aKhVgWN2
-	 1cYYXnNf8cKHw==
+	b=gKl1YArxQnIvCurA5cukZnrwpGSRwJ6hqDT/lT40+Okk8pS/RvkQ4Gu8CrGRVNiKr
+	 qgTSo4DU1MaNj2i6/V/ANQXHAZ8x7vLXQJCVpbLAFPRbnOQRQ2oia5h6cn84DZynSI
+	 uU54CXAn2JIOHxx4njL8mUwfuNhmS1Sr0cyyFIhItr1zbwF5PO7n00ClH22nD3+QJY
+	 8E17Oj816ia6ivtstsKd0IUO3CK+oNDyyLwNJApUPoAGrGf13ubI3gb59jM+OGLgD0
+	 pTBe4S6lhITezZdtZxjI9LBk8RqrKOsjkVv4+27Xitc4XpzPrCc5yiFqg9RQ6zOIhZ
+	 Z5O0jeOYVT5Zw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Li RongQing <lirongqing@baidu.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	siqueira@igalia.com,
-	Hawking.Zhang@amd.com,
-	alexandre.f.demers@gmail.com,
-	linux@treblig.org
-Subject: [PATCH AUTOSEL 6.17-5.15] drm/amd/pm: Use cached metrics data on aldebaran
-Date: Sat, 25 Oct 2025 11:57:40 -0400
-Message-ID: <20251025160905.3857885-229-sashal@kernel.org>
+	miklos@szeredi.hu,
+	vgoyal@redhat.com,
+	linux-fsdevel@vger.kernel.org,
+	virtualization@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17] virtio_fs: fix the hash table using in virtio_fs_enqueue_req()
+Date: Sat, 25 Oct 2025 11:57:41 -0400
+Message-ID: <20251025160905.3857885-230-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,17 +56,21 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit e87577ef6daa0cfb10ca139c720f0c57bd894174 ]
+[ Upstream commit 7dbe6442487743ad492d9143f1f404c1f4a05e0e ]
 
-Cached metrics data validity is 1ms on aldebaran. It's not reasonable
-for any client to query gpu_metrics at a faster rate and constantly
-interrupt PMFW.
+The original commit be2ff42c5d6e ("fuse: Use hash table to link
+processing request") converted fuse_pqueue->processing to a hash table,
+but virtio_fs_enqueue_req() was not updated to use it correctly.
+So use fuse_pqueue->processing as a hash table, this make the code
+more coherent
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Co-developed-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -73,72 +78,104 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Rationale
-- What changed: In
-  `drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:1717`, the call
-  `smu_cmn_get_metrics_table(smu, &metrics, true)` is switched to `...
-  false`. This flips the `bypass_cache` flag so Aldebaran’s
-  `aldebaran_get_gpu_metrics()` uses the cached metrics instead of
-  forcing a fresh PMFW query every time.
-- Cache semantics: `smu_cmn_get_metrics_table()` caches SMU metrics for
-  1 ms and refreshes only if the cache is older or bypassed. See
-  `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c:1023` (1 ms validity),
-  `...:1034` (updates and timestamps cache).
-- Consistency with existing Aldebaran paths: Other Aldebaran helpers
-  already use the cached path, e.g. `aldebaran_get_smu_metrics_data()`
-  calls `smu_cmn_get_metrics_table(smu, NULL, false)` to reuse cached
-  metrics (drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:618). This
-  change makes `get_gpu_metrics` consistent with those helpers.
-- Why it matters: Forcing fresh metrics on every `gpu_metrics` read
-  causes frequent SMU/PMFW interactions. On Aldebaran, cached metrics
-  are valid for 1 ms (as the commit message notes). Using the cache
-  avoids needless PMFW interrupts when clients poll faster than 1 kHz,
-  improving firmware responsiveness and reducing overhead. The returned
-  data can at most be 1 ms old, which is within the defined validity
-  window.
+**Why This Is A Bugfix**
+- The earlier change “fuse: Use hash table to link processing request”
+  (be2ff42c5d6e) converted `fuse_pqueue->processing` from a single list
+  to a hash table. You can see the hash table parameters and the data
+  structure:
+  - `FUSE_PQ_HASH_BITS` and `FUSE_PQ_HASH_SIZE`: fs/fuse/fuse_i.h:546
+  - `struct fuse_pqueue { struct list_head *processing; }`:
+    fs/fuse/fuse_i.h:556
+  - Allocation as an array of `list_head` buckets: fs/fuse/inode.c:1622
+- Responses are looked up by hashing the request ID and searching only
+  that bucket:
+  - `fuse_request_find()` iterates `&fpq->processing[hash]`:
+    fs/fuse/dev.c:2131
+- Before this fix, `virtio_fs_enqueue_req()` added every request to the
+  list head pointer (effectively bucket 0) instead of the hashed bucket.
+  That makes replies unfindable for non-zero buckets, leading to -ENOENT
+  on reply processing and stuck/hung requests.
 
-Risk and scope
-- Minimal change, localized to Aldebaran: One boolean flip in an
-  Aldebaran-specific function; no architectural or API changes; no
-  cross-subsystem impact.
-- Behavior impact is bounded: Only affects callers that poll faster than
-  1 ms; they now see properly cached values (up to 1 ms old) rather than
-  forcing a fresh read. This matches the established 1 ms cache policy
-  in `smu_cmn_get_metrics_table`.
-- Safe initialization: Metrics cache is initialized to 0 so the first
-  fetch always refreshes
-  (drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:250).
-- No security or correctness regressions: Reading slightly-cached
-  telemetry is expected and already used elsewhere; avoids performance
-  pitfalls from excessive PMFW interrupts.
+**What The Patch Changes**
+- Export the hash function so virtio-fs can use it:
+  - `fuse_req_hash()` now exported: fs/fuse/dev.c:321
+- Ensure virtio-fs adds requests to the correct bucket:
+  - Include FUSE device internals: fs/fuse/virtio_fs.c:23
+  - Compute the bucket: `hash = fuse_req_hash(req->in.h.unique);`:
+    fs/fuse/virtio_fs.c:1445
+  - Enqueue into the correct bucket: `list_add_tail(&req->list,
+    &fpq->processing[hash]);`: fs/fuse/virtio_fs.c:1447
+  - Function definition location for context: fs/fuse/virtio_fs.c:1370
 
-Stable backport criteria
-- Fixes a real-world issue (excessive PMFW interrupts / overhead under
-  high-frequency polling) that can affect users.
-- Small, contained change with low regression risk.
-- No new features or ABI changes; aligns behavior with existing cache
-  policy and other Aldebaran code paths.
-- Touches a single driver component without architectural refactoring.
+**Impact and Risk**
+- User-visible bugfix: Without this, replies cannot be matched to
+  requests (except those hashing to bucket 0), causing request
+  completion failures and potential hangs in virtio-fs workloads.
+- Small and contained: Two files touched; logic change is limited to
+  correctly hashing and inserting into the right bucket, plus exporting
+  a helper symbol.
+- No architectural changes: Keeps the existing hash-table design; simply
+  uses it correctly.
+- Stable-friendly: Minimal risk of regression, no new features, fixes
+  incorrect behavior.
 
-Given the narrow scope, clear benefit, and low risk, this is a good
-candidate for stable backport.
+**Backport Conditions**
+- This should be backported to any stable series that already includes
+  the conversion of `processing` to a hash table (be2ff42c5d6e). If a
+  stable series predates that change (i.e., `processing` is still a
+  single list), this patch is not applicable.
+- The export `EXPORT_SYMBOL_GPL(fuse_req_hash)` (fs/fuse/dev.c:321) is
+  required so `virtio_fs` can link against it. This is an internal, GPL-
+  only symbol used by in-tree code and is appropriate for stable.
 
- drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/dev.c       | 1 +
+ fs/fuse/virtio_fs.c | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-index c63d2e28954d0..b067147b7c41f 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -1781,7 +1781,7 @@ static ssize_t aldebaran_get_gpu_metrics(struct smu_context *smu,
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index dbf53c7bc8535..612d4da6d7d91 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -322,6 +322,7 @@ unsigned int fuse_req_hash(u64 unique)
+ {
+ 	return hash_long(unique & ~FUSE_INT_REQ_BIT, FUSE_PQ_HASH_BITS);
+ }
++EXPORT_SYMBOL_GPL(fuse_req_hash);
  
- 	ret = smu_cmn_get_metrics_table(smu,
- 					&metrics,
--					true);
-+					false);
- 	if (ret)
- 		return ret;
+ /*
+  * A new request is available, wake fiq->waitq
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index 76c8fd0bfc75d..1751cd6e3d42b 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -20,6 +20,7 @@
+ #include <linux/cleanup.h>
+ #include <linux/uio.h>
+ #include "fuse_i.h"
++#include "fuse_dev_i.h"
  
+ /* Used to help calculate the FUSE connection's max_pages limit for a request's
+  * size. Parts of the struct fuse_req are sliced into scattergather lists in
+@@ -1384,7 +1385,7 @@ static int virtio_fs_enqueue_req(struct virtio_fs_vq *fsvq,
+ 	unsigned int out_sgs = 0;
+ 	unsigned int in_sgs = 0;
+ 	unsigned int total_sgs;
+-	unsigned int i;
++	unsigned int i, hash;
+ 	int ret;
+ 	bool notify;
+ 	struct fuse_pqueue *fpq;
+@@ -1444,8 +1445,9 @@ static int virtio_fs_enqueue_req(struct virtio_fs_vq *fsvq,
+ 
+ 	/* Request successfully sent. */
+ 	fpq = &fsvq->fud->pq;
++	hash = fuse_req_hash(req->in.h.unique);
+ 	spin_lock(&fpq->lock);
+-	list_add_tail(&req->list, fpq->processing);
++	list_add_tail(&req->list, &fpq->processing[hash]);
+ 	spin_unlock(&fpq->lock);
+ 	set_bit(FR_SENT, &req->flags);
+ 	/* matches barrier in request_wait_answer() */
 -- 
 2.51.0
 
