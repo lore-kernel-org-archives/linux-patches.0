@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A74303CA2;
-	Sat, 25 Oct 2025 16:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA25A3064A4;
+	Sat, 25 Oct 2025 16:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408853; cv=none; b=pMOKGEoNUPppCqX97yXJPK7ydLoPHfLmjbnxDEzgAXy5+5WULoS1Rnbkp8Fv3fJYtkhcovvIH7ESp9sJz6XMPB8XHOFJuBNIVRUkTybrkoOpYr0k6XJbdkXfqYwHdTv2gdhs2H8Y5KV+WrkWJ3CqAw3ig5FWhuqZHpqoXmiXQfQ=
+	t=1761408854; cv=none; b=QdxipdBfs4MBJOSrutX7HzeM8QpvWfLH1931Jdl4v9eLTscnnh9JvFpBIdJp+pV/7W/eqYlvvpmmu966nSOH2fI3119pbicLwiYBpL+nbv1Rqy4p8Uict91+4XKN7/+2JledAOW/37JThvo6jBRjbS1Dfh8PWEvxekuzCkm+i7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408853; c=relaxed/simple;
-	bh=QorErh9yORnjHmKK8rfLqSYNYmxvjnmyWw6S/K7/wcI=;
+	s=arc-20240116; t=1761408854; c=relaxed/simple;
+	bh=KI6+OsymNLyRak3/YPRgd2J+zh87z+gfsf2MC6/X6t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a0chkcWuWS5gEwjzQUj526/9cqoE8JUUliDwpjWgsIEud3Aibe0HiVFYVxT5F578f522V4qhpWcDW4m+l4ih27v6nJOQf4J1IXmyF+UYR6JYOF476/vWNgPAf/R/IL1+4hB99fGv2/lADfW188FjxqB5GSdLWSZ1+j/8y3tNmhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvbCeHk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mcCv5/02SWOV2dJHm/OL4YWJy+8UWxYG8/NvXO0PTfs54JWvoc7CkSQHu+uNBC6Rt93e5lr4RbHiCfeA+XDbU4UKkQ+X4JOnjHUWl4PIkOsX+Baf6SrvnePw2hHjMSzi6PTyTcwY8NqX/qhZmk/vuQhxZnv71ISqhGnKNY+uOME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i04IP3Hd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvbCeHk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A164C4CEFF;
-	Sat, 25 Oct 2025 16:14:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i04IP3Hd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63BDC4CEFB;
+	Sat, 25 Oct 2025 16:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408853;
-	bh=QorErh9yORnjHmKK8rfLqSYNYmxvjnmyWw6S/K7/wcI=;
+	s=k20201202; t=1761408854;
+	bh=KI6+OsymNLyRak3/YPRgd2J+zh87z+gfsf2MC6/X6t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvbCeHk2+7WwwWJm3WZBOiuvQ0k57Al9crKUiL3oNM5Uoelh4GsEeRSyg12KIAIph
-	 grTKw+qXaAcXwT8HL4Ec36uIh9vXtXrb1TE+nH9nYw+DY5DIBa4h/OaWT6jgfO9B49
-	 CTUXsRvuitwYTMpMz7vQpHwYF0IipGNjgRDLLJo3XFsqh7t/ALQ82tEk1gRtQ5TNR2
-	 jSNYzuJM3vhe7AKAcBOMXCkqF0Z4Linft6WqaZAhE3bg20sa0j177psYSOzC5DCR1J
-	 hQtwa6ve7M62RXen9EbzdVw0ZL2wwsSS1wsLLMV47CnOaqa/gdaFX18vr3mCGi+fmF
-	 epGuWfhur6Aew==
+	b=i04IP3HdTbN02UF79PsjWsLP0IRhHmasp78Ov2yFybtduRbtUpYIzMCngvzMFKEwv
+	 Zj6vUexx8GOd6VsrR6BfuOss2wKk7dUgceD3X9kMvwRuO/v9C9QmUeUtMqkxkirNg5
+	 HVvOrGltmibOUgvciK4n/DPHp1PSJpztXGpYpYNNgE4H4YDI5bNA1iWoct8MdwakT7
+	 LM9uJmGg4rRljEk+KnAd6b5sMq9R0rEdpFguqJL30AGABhvqc0GpYoFPUl842sJfEG
+	 ZCYtOBjPGa1q70p3BgARvR+BpQpbZMAGmbXSnmk5GEpq+tPHeATNH1ERZcNPZPfKhU
+	 GBoDyUyDE5iNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] wifi: ath12k: Increase DP_REO_CMD_RING_SIZE to 256
-Date: Sat, 25 Oct 2025 11:55:31 -0400
-Message-ID: <20251025160905.3857885-100-sashal@kernel.org>
+	paul.ely@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] scsi: lpfc: Check return status of lpfc_reset_flush_io_context during TGT_RESET
+Date: Sat, 25 Oct 2025 11:55:32 -0400
+Message-ID: <20251025160905.3857885-101-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,75 +52,90 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 82993345aef6987a916337ebd2fca3ff4a6250a7 ]
+[ Upstream commit f408dde2468b3957e92b25e7438f74c8e9fb9e73 ]
 
-Increase DP_REO_CMD_RING_SIZE from 128 to 256 to avoid
-queuing failures observed during stress test scenarios.
+If lpfc_reset_flush_io_context fails to execute, then the wrong return
+status code may be passed back to upper layers when issuing a target
+reset TMF command.  Fix by checking the return status from
+lpfc_reset_flush_io_context() first in order to properly return FAILED
+or FAST_IO_FAIL.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250806111750.3214584-2-nithyanantham.paramasivam@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-7-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-- Bumping `DP_REO_CMD_RING_SIZE` to 256 in
-  `drivers/net/wireless/ath/ath12k/dp.h:187` directly enlarges the REO
-  command SRNG that `ath12k_dp_srng_setup()` provisions in
-  `drivers/net/wireless/ath/ath12k/dp.c:555-563`, so the host can queue
-  twice as many HAL_REO commands (peer/TID deletes, cache flushes, stats
-  reads) before the hardware must drain them.
-- Under the current 128-entry limit, heavy peer churn makes
-  `ath12k_hal_reo_cmd_send()` fall off the ring and return `-ENOBUFS`
-  (`drivers/net/wireless/ath/ath12k/hal_rx.c:223-236`), which propagates
-  straight back to callers via `ath12k_dp_reo_cmd_send()`
-  (`drivers/net/wireless/ath/ath12k/dp_rx.c:650-667`) and leaves TID
-  teardown paths dropping the descriptor while firmware still references
-  it—exactly the “queuing failures” and memory corruption observed
-  during stress.
-- Ath11k has already shipped with the same 256-entry setting
-  (`drivers/net/wireless/ath/ath11k/dp.h:218`), so the larger ring size
-  is a proven, firmware-compatible configuration for this hardware
-  family rather than a new feature.
-- The cost of doubling this DMA ring is only ~6 KiB (256 × 48-byte
-  entries), and the SRNG limits in `hal.c/hal.h` leave ample headroom,
-  so the change is low risk and entirely contained to ath12k datapath
-  setup.
-- Because it prevents a real-world failure that can take the device
-  down, while touching only one constant, the patch squarely fits the
-  stable rules (important bugfix, minimal surface area, no architectural
-  churn).
+YES - returning FAIL/Fast-IO correctly from target reset avoids trapping
+lpfc in a half-reset state.
 
-Natural follow-up for stable maintainers:
-1. Consider also backporting the subsequent ath12k retry fix for REO RX
-   queue updates to cover any residual overflow scenarios that might
-   still appear beyond the expanded ring capacity.
+- drivers/scsi/lpfc/lpfc_scsi.c:6112-6119 now propagates the status from
+  lpfc_reset_flush_io_context(), so a flush failure surfaces as FAILED
+  instead of always falling through to FAST_IO_FAIL; previously
+  FAST_IO_FAIL was reported even when cnt != 0, leaving orphaned
+  contexts behind.
+- In the SCSI EH core, FAST_IO_FAIL is treated as a completed reset
+  (drivers/scsi/scsi_error.c:1680-1694), so the old code caused the
+  error handler to stop escalation while the adapter still had
+  outstanding I/O—users would see hung commands after a target reset
+  TMF.
+- A FAILED return triggers the midlayer to keep escalating (bus/host
+  reset), which is the only safe recovery once
+  lpfc_reset_flush_io_context() reports 0x2003 (see its failure path at
+  drivers/scsi/lpfc/lpfc_scsi.c:5969-5975); the fix therefore prevents
+  long-lived I/O leaks and recovery deadlocks.
+- Remaining changes are cosmetic (typo fix at
+  drivers/scsi/lpfc/lpfc_scsi.c:5938 and cleaned log text at
+  drivers/scsi/lpfc/lpfc_scsi.c:6210) and pose no regression risk.
+- Patch is small, self-contained in lpfc, and has no dependencies—ideal
+  for stable backporting.
 
- drivers/net/wireless/ath/ath12k/dp.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_scsi.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 7baa48b86f7ad..10093b4515882 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -184,7 +184,7 @@ struct ath12k_pdev_dp {
- #define DP_REO_REINJECT_RING_SIZE	32
- #define DP_RX_RELEASE_RING_SIZE		1024
- #define DP_REO_EXCEPTION_RING_SIZE	128
--#define DP_REO_CMD_RING_SIZE		128
-+#define DP_REO_CMD_RING_SIZE		256
- #define DP_REO_STATUS_RING_SIZE		2048
- #define DP_RXDMA_BUF_RING_SIZE		4096
- #define DP_RX_MAC_BUF_RING_SIZE		2048
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 508ceeecf2d95..6d9d8c196936a 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -5935,7 +5935,7 @@ lpfc_chk_tgt_mapped(struct lpfc_vport *vport, struct fc_rport *rport)
+ /**
+  * lpfc_reset_flush_io_context -
+  * @vport: The virtual port (scsi_host) for the flush context
+- * @tgt_id: If aborting by Target contect - specifies the target id
++ * @tgt_id: If aborting by Target context - specifies the target id
+  * @lun_id: If aborting by Lun context - specifies the lun id
+  * @context: specifies the context level to flush at.
+  *
+@@ -6109,8 +6109,14 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
+ 			pnode->nlp_fcp_info &= ~NLP_FCP_2_DEVICE;
+ 			spin_unlock_irqrestore(&pnode->lock, flags);
+ 		}
+-		lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
+-					  LPFC_CTX_TGT);
++		status = lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
++						     LPFC_CTX_TGT);
++		if (status != SUCCESS) {
++			lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
++					 "0726 Target Reset flush status x%x\n",
++					 status);
++			return status;
++		}
+ 		return FAST_IO_FAIL;
+ 	}
+ 
+@@ -6202,7 +6208,7 @@ lpfc_host_reset_handler(struct scsi_cmnd *cmnd)
+ 	int rc, ret = SUCCESS;
+ 
+ 	lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
+-			 "3172 SCSI layer issued Host Reset Data:\n");
++			 "3172 SCSI layer issued Host Reset\n");
+ 
+ 	lpfc_offline_prep(phba, LPFC_MBX_WAIT);
+ 	lpfc_offline(phba);
 -- 
 2.51.0
 
