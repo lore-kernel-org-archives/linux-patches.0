@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635193101A5;
-	Sat, 25 Oct 2025 16:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31C231064B;
+	Sat, 25 Oct 2025 16:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409338; cv=none; b=VhDrsQDV8Q0aci4ysy0A8gx9iCZNsWo8kgrUhkBbmAkCk5mzGXlSJXrcRL1LAC6CZVNEBPwx/IYa2Xa5iHWJm+ivXUEuDKfW/FKDbKhACC1hzgrdL9+CeQKRrvQpmescEkx0oAme8CrkSqhz1sECKM/7fFFIRiHK1ZYSOOTIzuU=
+	t=1761409340; cv=none; b=SN6OhUJGNiCX/7di58IyPpbHan39rWT6Ftvjv2uRHKuMBx99Lmq9gbV8NZHKXpdrQ21QQhg/AQxGg66YEBvMg6oipJP5fQasBXxAvXmPfcLNUZMr75Z/K3OCRdHs1Zbdu9PU7lgR9dxtzLqK1GpXgL6DG5XZYm7h7eZcZ1eOZv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409338; c=relaxed/simple;
-	bh=46XHurAKjgje/048WK9Re7AEwOLB5L4vKF0Lm4eSVzQ=;
+	s=arc-20240116; t=1761409340; c=relaxed/simple;
+	bh=9OTVpVCF5DtNbGlQFrrxYxz6PfUX+wljjRCRcsw6P4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MXCa8Kv/vR80G5oRrTt0TP9AKRO7FWGWJ6cu75tCCTjUGVuDUH9Dw/xtEHVGtgwV0MJKI3tpdmtK7sqJgGUEj1DUqT6bV5QhviahDlOvqO+SNF0GjKOfiuATaik3DC8oz/z1/wY2/jLbfdOOIdi/sc71yDOyEgvpTJsRr1vqAlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4zu9v1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eIuQFJpE0XHOHhyPHa3+v0YqJypUm39j4MDgqg8/VmFddxs3Z+UGRf6DWBwv1qnQLb++EKIcz2i+rD5qKsZkAq8U0oAgxHmJPs52k+cyqGtSJSNeyfTYe+EuCbA0ZsowMCzw1vKG7ZS0heSbSeAWS6I4dX9Hp/REB9MmMmn7/eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S2aayUqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4zu9v1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67897C4CEF5;
-	Sat, 25 Oct 2025 16:22:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S2aayUqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D938C4CEF5;
+	Sat, 25 Oct 2025 16:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409338;
-	bh=46XHurAKjgje/048WK9Re7AEwOLB5L4vKF0Lm4eSVzQ=;
+	s=k20201202; t=1761409339;
+	bh=9OTVpVCF5DtNbGlQFrrxYxz6PfUX+wljjRCRcsw6P4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4zu9v1jwKdBRs6/PgGmvy2KZK+Gqj7GN5w2D29M8xx2m380noeDgt52xmdR94hKD
-	 k97jdrsH8nEE/e93zDV8S81FFT7ppW9S9JYNgymM+FmcixaA14OHQ5SkJLPEmphnFN
-	 eqArVDX/x+gDtUQmPHHBYlrICTYL8qaGPOFCbVuYQ1Odn2tlylKICDxqbzUzFEe05q
-	 PQ1h4dHjmXlFA7EexxnStZ9cd9c5BkaFPi/Pl7dq/8Wngc0D22i1YhRJtizI52cquZ
-	 U4ifkjQ3KcZl4iKBshiatoxhM/b4uLwyF4/GAo8aCu/ywUZSKKoeSinz7L6a1OkNG2
-	 DhjzH3HbwN7Pg==
+	b=S2aayUqanR4cWZU0O4+hJyJR0CIwKqrfrBF8qsbm53SBoKvG30mPmRKlWbo7N6ZsN
+	 nnS1NeQG3dr1pj7jvdTuWecZnvpsTqcczWjcxKSFHePdcRDj95yiBG4/uOD+uuSKKm
+	 bzmE4UMOc7RXZdvTsIsB3c1mBqL3H4YZLExaM+hxL6SPIKBt1rnxXBkLoiTghnsk09
+	 yV0ijf2VXDL1hD6bhIOrkz77JOiq2Lkvw4bKQGG1mYp1Xv3KP4PXtKsW0+kcbmDD9G
+	 E150yzDW5u4tZEn0QLsa6wmq/oP1y7cl+f8gVIpkXHGZD33ZZFMoldOqgFopoe0FXP
+	 JNUr++mC093vA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] usb: xhci: plat: Facilitate using autosuspend for xhci plat devices
-Date: Sat, 25 Oct 2025 11:58:35 -0400
-Message-ID: <20251025160905.3857885-284-sashal@kernel.org>
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] microchip: lan865x: add ndo_eth_ioctl handler to enable PHY ioctl support
+Date: Sat, 25 Oct 2025 11:58:36 -0400
+Message-ID: <20251025160905.3857885-285-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,60 +52,98 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
 
-[ Upstream commit 41cf11946b9076383a2222bbf1ef57d64d033f66 ]
+[ Upstream commit 34c21e91192aa1ff66f9d6cef8132717840d04e6 ]
 
-Allow autosuspend to be used by xhci plat device. For Qualcomm SoCs,
-when in host mode, it is intended that the controller goes to suspend
-state to save power and wait for interrupts from connected peripheral
-to wake it up. This is particularly used in cases where a HID or Audio
-device is connected. In such scenarios, the usb controller can enter
-auto suspend and resume action after getting interrupts from the
-connected device.
+Introduce support for standard MII ioctl operations in the LAN865x
+Ethernet driver by implementing the .ndo_eth_ioctl callback. This allows
+PHY-related ioctl commands to be handled via phy_do_ioctl_running() and
+enables support for ethtool and other user-space tools that rely on ioctl
+interface to perform PHY register access using commands like SIOCGMIIREG
+and SIOCSMIIREG.
 
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250916120436.3617598-1-krishna.kurapati@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This feature enables improved diagnostics and PHY configuration
+capabilities from userspace.
+
+Signed-off-by: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250828114549.46116-1-parthiban.veerasooran@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES. Adding `pm_runtime_use_autosuspend(&pdev->dev);` in
-`xhci_plat_probe()` (`drivers/usb/host/xhci-plat.c:185`) finally lets
-platform xHCI hosts honour runtime PM autosuspend, so boards that set
-`power/control=auto` (such as the Qualcomm configurations called out in
-the commit message) can actually drop the controller into low-power idle
-instead of burning power indefinitely. The rest of the driver already
-implements full runtime suspend/resume support (`drivers/usb/host/xhci-
-plat.c:500-573`) and wraps probe/remove paths with the usual runtime-PM
-bookkeeping (`drivers/usb/host/xhci-plat.c:355-390`,
-`drivers/usb/host/xhci-plat.c:463-548`), so this line simply flips on an
-otherwise wired-up capability. Risk is very low: runtime PM remains opt-
-in because `pm_runtime_forbid()` keeps the default “on” policy
-(`drivers/usb/host/xhci-plat.c:358-362`), and other SoC-specific xHCI
-drivers have long invoked the same helper (for example
-`drivers/usb/host/xhci-mtk.c:573` and `drivers/usb/host/xhci-
-tegra.c:1943`). No dependent changes are required and there are no
-follow-up fixes, so this targeted fix for a real power-management
-regression is a good candidate for stable backporting.
+YES
 
- drivers/usb/host/xhci-plat.c | 1 +
+Rationale
+- What changed: The driver adds a single netdev op in
+  drivers/net/ethernet/microchip/lan865x/lan865x.c to forward Ethernet
+  ioctls to the PHY layer:
+  - drivers/net/ethernet/microchip/lan865x/lan865x.c:330 sets
+    `.ndo_eth_ioctl = phy_do_ioctl_running,` alongside existing ops such
+    as `.ndo_open`, `.ndo_stop`, and `.ndo_set_mac_address`.
+- Behavior enabled: With `.ndo_eth_ioctl` wired to
+  `phy_do_ioctl_running`, standard MII ioctls are handled by the PHY
+  core’s generic handler, enabling tools to read/write PHY registers:
+  - `phy_do_ioctl_running()` checks the device is up (`netif_running`)
+    and defers to `phy_do_ioctl()` (drivers/net/phy/phy.c:456).
+  - `phy_do_ioctl()` dispatches to `phy_mii_ioctl()`, which implements
+    SIOCGMIIPHY/SIOCGMIIREG/SIOCSMIIREG and hwtstamp handling
+    (drivers/net/phy/phy.c:310, 322, 326, 345, 407).
+- Preconditions are satisfied in this driver: The LAN865x stack actually
+  attaches a PHY to the netdev via the OA-TC6 framework, so
+  `dev->phydev` is valid:
+  - `phy_connect_direct(tc6->netdev, tc6->phydev, ...)` in
+    drivers/net/ethernet/oa_tc6.c:565 ensures the PHY is registered and
+    attached, making the generic PHY ioctl path applicable.
+- User impact fixed: Without this hook, standard userspace
+  diagnostics/configuration via ioctl (mii-tool, legacy ethtool ioctl
+  paths, register access) fail against this device. Enabling
+  `.ndo_eth_ioctl` restores expected, widely used functionality for PHY
+  access (SIOCGMIIREG/SIOCSMIIREG).
+- Small, low-risk change:
+  - Single-line addition in the driver’s `net_device_ops`, no
+    architectural changes, no behavioral changes in normal TX/RX paths.
+  - The chosen helper is the conservative variant:
+    `phy_do_ioctl_running()` returns `-ENODEV` if the interface is down
+    (drivers/net/phy/phy.c:456), reducing risk.
+  - This pattern is standard across many Ethernet drivers (e.g.,
+    drivers/net/usb/lan78xx.c:4600,
+    drivers/net/ethernet/ti/cpsw_new.c:1135), indicating established
+    practice and low regression potential.
+- Stable criteria fit:
+  - Fixes a user-visible deficiency (inability to use standard PHY
+    ioctls) with a minimal, contained change.
+  - No new kernel ABI; it wires the driver into existing, generic PHY
+    ioctl support.
+  - Touches only one driver; no core subsystem churn.
+  - Although the commit message frames it as “introduce support,”
+    functionally it corrects missing standard behavior expected by
+    tooling, which is commonly accepted as a fix.
+
+Recommendation
+- Backport to stable series that include both the LAN865x driver and the
+  `ndo_eth_ioctl`/`phy_do_ioctl_running` API (for older series lacking
+  `ndo_eth_ioctl`, the analogous `.ndo_do_ioctl = phy_do_ioctl_running`
+  pattern may be necessary).
+
+ drivers/net/ethernet/microchip/lan865x/lan865x.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index 5eb51797de326..dd57ffedcaa2f 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -171,6 +171,7 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
- 		return ret;
+diff --git a/drivers/net/ethernet/microchip/lan865x/lan865x.c b/drivers/net/ethernet/microchip/lan865x/lan865x.c
+index 79b800d2b72c2..b428ad6516c5e 100644
+--- a/drivers/net/ethernet/microchip/lan865x/lan865x.c
++++ b/drivers/net/ethernet/microchip/lan865x/lan865x.c
+@@ -326,6 +326,7 @@ static const struct net_device_ops lan865x_netdev_ops = {
+ 	.ndo_start_xmit		= lan865x_send_packet,
+ 	.ndo_set_rx_mode	= lan865x_set_multicast_list,
+ 	.ndo_set_mac_address	= lan865x_set_mac_address,
++	.ndo_eth_ioctl          = phy_do_ioctl_running,
+ };
  
- 	pm_runtime_set_active(&pdev->dev);
-+	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_get_noresume(&pdev->dev);
- 
+ static int lan865x_probe(struct spi_device *spi)
 -- 
 2.51.0
 
