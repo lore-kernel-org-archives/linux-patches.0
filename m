@@ -1,65 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D905205AB6;
-	Sat, 25 Oct 2025 16:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC45D302CD6;
+	Sat, 25 Oct 2025 16:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408568; cv=none; b=NGwpreO5rxgPvhpIuVCC4AWIDVrqdaFuWia/h3Ztk70MyoZKKQ4GYYUCsL6MBwVENexaNScrwfIcvVPSVmlyVrhOstkY2fKdArwl/2OJJ2aKiQ97K+DlZ2mwyEGL+zUCLb1FuV3c5CeCFgdLyZ/6oXWQkluAhqxq6wkOdDpOf+g=
+	t=1761408574; cv=none; b=O6C6Ru2Z+hukhrdxegcUpbTEdSTasGDpAYXwJO17BWJL+gO9+L0Xr2ufTKDe3qqSbGJhSOZnn7NxAqR3Rqi0EZJ+OaCpAnfeINnlGOtuEjb66dhd21PNxa+vuw7k7xXC7Knuc7M5RY2VSaPKP3TCMPeRqGVQcFyz10Jb0YIXNaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408568; c=relaxed/simple;
-	bh=2d7hUEiGhg9UfEShfuwiWA5RNuIZNt9wq3EFNmRce8k=;
+	s=arc-20240116; t=1761408574; c=relaxed/simple;
+	bh=l2p8ytWrsCQMp25+omQ8DepULd7IcPVXRE79VUYC7ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ao68ov1Dj8MFkX0N52H3+PXHklLOJZYxXQEJhHNqm42LD3Gm3f2OW5k9VGYeiOkRoOYvzHYQggXVJwLNBibAksfbNVxQeRNULKM5kted7R1IwcBTJmYJbaGCYDOJ7OuLRr9vx+E25Jldm+enOCOZCR0LW2neW8pf5+TgpPJH7WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eP6GeIMg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MI4xjDp2dIheZ2pCkQYhVo+lMPcUVJUKDJOFgvTIs13fiSOH+YRqNbN319jzFqmFVQs4xlSAmJVMyqaTKKR1Q3mQV+EBiBC0ljSuAqpZiGu18EKI8EDSLAJA5Idc9djdj6auvyEyfsY2XwvPIGUBegSflmYjEA0HuNJITHlrl9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i4lEsNUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eP6GeIMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6C7C4AF09;
-	Sat, 25 Oct 2025 16:09:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i4lEsNUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B015C4CEF5;
+	Sat, 25 Oct 2025 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408567;
-	bh=2d7hUEiGhg9UfEShfuwiWA5RNuIZNt9wq3EFNmRce8k=;
+	s=k20201202; t=1761408573;
+	bh=l2p8ytWrsCQMp25+omQ8DepULd7IcPVXRE79VUYC7ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eP6GeIMg3ssMpqmoGnpAQltBurH994gSf5jBUoukHAiS+INja8zNrBTsnApw9iqTn
-	 KxfzIIZDIVRK/ms9g6AVzfsOBePfajM1Ik5o9ft/Azoi2Q9C7DSQNhXFEOYuAOPODG
-	 eccrOoEcce4D5sZYrzk8cvMifJ3J6qdW8ed5pOMTJTiWq0r33KxQCZa0lmB3mC9yyg
-	 J0WhvrzeL9OCv8phiLEZk+cTk72LGB9wFRSV3iYN2LFqaqSHoRpDe0LFC25mMzFlk6
-	 rQyg/9m9zEVZ3uJR+gZ0AdIN0u9EyZlqr8QZZHEOGJKoloGn64C99D0Z68HbXXow83
-	 ExtD8jGIhc/qw==
+	b=i4lEsNUqjBPucKKBhvir4obMU3Cc8mAZrYUT/PRmEapvawVMtKIo88hVSuFjfRfby
+	 jYZOfVw9AlnVX963s4l49S3nKos7DEgOg8zVS3LzWTeTWJl3NTOYqvgI227F6e4LZ0
+	 uIkBVzwGZy5iQ3Naa92uOHIp8AOONRw2ps+ZUMi+Y9YNI7exCGEsnPKgQ3AYIaZ/To
+	 EI8FSiAs25fqSoOWG6g7jq18XgsbfJMex6TF804An+OML8GzedaNemLCRIuWIGWQC1
+	 i13iLYkmdoQOBBl6YzVpVgrFvH3PW6PH6DOmLHDhyuSZtDYn9MnHPPnnA1WfYDzZyb
+	 duZ2utQPKmOlw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Karthi Kandasamy <karthi.kandasamy@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Brahmajit Das <listout@listout.xyz>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Wayne.Lin@amd.com,
-	roman.li@amd.com,
-	alvin.lee2@amd.com,
-	ray.wu@amd.com,
-	Dillon.Varone@amd.com,
-	PeiChen.Huang@amd.com,
-	Charlene.Liu@amd.com,
-	Sung.Lee@amd.com,
-	alexandre.f.demers@gmail.com,
-	Richard.Chiang@amd.com,
-	ryanseto@amd.com,
-	linux@treblig.org,
-	mario.limonciello@amd.com,
-	alex.hung@amd.com,
-	chiahsuan.chung@amd.com,
-	harry.wentland@amd.com,
-	chris.park@amd.com,
-	make24@iscas.ac.cn,
-	rvojvodi@amd.com,
-	haoping.liu@amd.com,
-	siqueira@igalia.com,
-	mwen@igalia.com
-Subject: [PATCH AUTOSEL 6.17-6.6] drm/amd/display: Add AVI infoframe copy in copy_stream_update_to_stream
-Date: Sat, 25 Oct 2025 11:53:59 -0400
-Message-ID: <20251025160905.3857885-8-sashal@kernel.org>
+	przemyslaw.kitszel@intel.com,
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 6.17-5.4] net: intel: fm10k: Fix parameter idx set but not used
+Date: Sat, 25 Oct 2025 11:54:01 -0400
+Message-ID: <20251025160905.3857885-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -75,135 +54,118 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karthi Kandasamy <karthi.kandasamy@amd.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit c8bedab2d9a1a0daa49ac20f9928a943f7205582 ]
+[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
 
-[WHY]
-Ensure AVI infoframe updates from stream updates are applied to the active
-stream so OS overrides are not lost.
+Variable idx is set in the loop, but is never used resulting in dead
+code. Building with GCC 16, which enables
+-Werror=unused-but-set-parameter= by default results in build error.
+This patch removes the idx parameter, since all the callers of the
+fm10k_unbind_hw_stats_q as 0 as idx anyways.
 
-[HOW]
-Copy avi_infopacket to stream when valid flag is set.
-Follow existing infopacket copy pattern and perform a basic validity check before assignment.
-
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Karthi Kandasamy <karthi.kandasamy@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES. This change plugs a real bug: when userspace/OS pushes an AVI
-infoframe override through `dc_stream_update`, the override was never
-persisted into the active `dc_stream_state`, so the next
-`resource_build_info_frame()` rebuilt the packet from defaults and
-silently threw the override away. The fix mirrors the existing handling
-for other info packets: it copies the provided AVI packet into the
-stream state (`drivers/gpu/drm/amd/display/dc/core/dc.c:3313`) and adds
-storage for it in the stream/update structs
-(`drivers/gpu/drm/amd/display/dc/dc_stream.h:206` and
-`drivers/gpu/drm/amd/display/dc/dc_stream.h:339`). Once stored,
-`set_avi_info_frame()` now reuses the cached packet whenever it’s marked
-valid (`drivers/gpu/drm/amd/display/dc/core/dc_resource.c:4413`), so
-overrides survive later updates. The patch also hooks the new field into
-the existing update machinery—triggering info-frame reprogramming
-(`drivers/gpu/drm/amd/display/dc/core/dc.c:3611`) and forcing a full
-update when necessary
-(`drivers/gpu/drm/amd/display/dc/core/dc.c:5083`)—again matching the
-pattern used by the other infoframes.
+YES – dropping the unused `idx` argument fixes a real build break while
+leaving runtime behaviour unchanged.
 
-The change is tightly scoped to AMD DC, introduces no behavioural change
-unless an override is actually provided, and the new fields are zeroed
-via the existing `kzalloc`/`memset` initialisation paths
-(`drivers/gpu/drm/amd/display/dc/core/dc_stream.c:172` and e.g.
-`drivers/gpu/drm/amd/display/dc/link/link_dpms.c:144`), so there’s
-little regression risk. Given that losing AVI overrides breaks colour-
-space/format configuration for affected HDMI users, this is an
-appropriate, low-risk candidate for stable backport. Natural next step:
-queue it for the AMD display stable picks that cover HDMI infoframe
-fixes.
+- `fm10k_unbind_hw_stats_q` now only walks the passed queue array and
+  clears the cached indices
+  (`drivers/net/ethernet/intel/fm10k/fm10k_common.c:455`), so the dead
+  `idx++` expression that triggered GCC 16’s default `-Werror=unused-
+  but-set-parameter` is gone; this restores the ability to build the
+  driver with upcoming toolchains.
+- The header signature is updated accordingly
+  (`drivers/net/ethernet/intel/fm10k/fm10k_common.h:43-46`), and the
+  only in-tree callers—PF/VF rebind paths—are adjusted to match
+  (`drivers/net/ethernet/intel/fm10k/fm10k_pf.c:1392`,
+  `drivers/net/ethernet/intel/fm10k/fm10k_vf.c:468`); all of them
+  already passed `0`, so no logic changes.
+- `fm10k_hw_stats_q` only carries the `rx_stats_idx`/`tx_stats_idx`
+  fields that this helper zeros
+  (`drivers/net/ethernet/intel/fm10k/fm10k_type.h:419-426`); no other
+  state depends on the removed parameter, and no additional callers
+  exist (confirmed by tree-wide search).
+- The patch is tiny, self-contained, and purely defensive: it keeps
+  released stable kernels buildable with newer GCC without touching live
+  datapaths, so regression risk is minimal and it meets the stable
+  backport guidelines for important build fixes.
 
- drivers/gpu/drm/amd/display/dc/core/dc.c          | 7 ++++++-
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 6 ++++++
- drivers/gpu/drm/amd/display/dc/dc_stream.h        | 3 +++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 74efd50b7c23a..77a842cf84e08 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3307,6 +3307,9 @@ static void copy_stream_update_to_stream(struct dc *dc,
- 	if (update->adaptive_sync_infopacket)
- 		stream->adaptive_sync_infopacket = *update->adaptive_sync_infopacket;
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+index f51a63fca513e..1f919a50c7653 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ /**
+  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
+  *  @q: pointer to the ring of hardware statistics queue
+- *  @idx: index pointing to the start of the ring iteration
+  *  @count: number of queues to iterate over
+  *
+  *  Function invalidates the index values for the queues so any updates that
+  *  may have happened are ignored and the base for the queue stats is reset.
+  **/
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
+ {
+ 	u32 i;
  
-+	if (update->avi_infopacket)
-+		stream->avi_infopacket = *update->avi_infopacket;
-+
- 	if (update->dither_option)
- 		stream->dither_option = *update->dither_option;
+-	for (i = 0; i < count; i++, idx++, q++) {
++	for (i = 0; i < count; i++, q++) {
+ 		q->rx_stats_idx = 0;
+ 		q->tx_stats_idx = 0;
+ 	}
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+index 4c48fb73b3e78..13fca6a91a01b 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
+ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ 			     u32 idx, u32 count);
+ #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
+ s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
+ #endif /* _FM10K_COMMON_H_ */
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+index b9dd7b7198324..3394645a18fe8 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+@@ -1389,7 +1389,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
+ 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
  
-@@ -3601,7 +3604,8 @@ static void commit_planes_do_stream_update(struct dc *dc,
- 					stream_update->vsp_infopacket ||
- 					stream_update->hfvsif_infopacket ||
- 					stream_update->adaptive_sync_infopacket ||
--					stream_update->vtem_infopacket) {
-+					stream_update->vtem_infopacket ||
-+					stream_update->avi_infopacket) {
- 				resource_build_info_frame(pipe_ctx);
- 				dc->hwss.update_info_frame(pipe_ctx);
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
  
-@@ -5073,6 +5077,7 @@ static bool full_update_required(struct dc *dc,
- 			stream_update->hfvsif_infopacket ||
- 			stream_update->vtem_infopacket ||
- 			stream_update->adaptive_sync_infopacket ||
-+			stream_update->avi_infopacket ||
- 			stream_update->dpms_off ||
- 			stream_update->allow_freesync ||
- 			stream_update->vrr_active_variable ||
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index d712548b1927d..d37fc14e27dbf 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -4417,8 +4417,14 @@ static void set_avi_info_frame(
- 	unsigned int fr_ind = pipe_ctx->stream->timing.fr_index;
- 	enum dc_timing_3d_format format;
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_pf(hw, stats);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+index 7fb1961f29210..6861a0bdc14e1 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
+ 				     struct fm10k_hw_stats *stats)
+ {
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
  
-+	if (stream->avi_infopacket.valid) {
-+		*info_packet = stream->avi_infopacket;
-+		return;
-+	}
-+
- 	memset(&hdmi_info, 0, sizeof(union hdmi_info_packet));
- 
-+
- 	color_space = pipe_ctx->stream->output_color_space;
- 	if (color_space == COLOR_SPACE_UNKNOWN)
- 		color_space = (stream->timing.pixel_encoding == PIXEL_ENCODING_RGB) ?
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-index 5fc6fea211de3..76cf9fdedab0e 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-@@ -203,6 +203,7 @@ struct dc_stream_state {
- 	struct dc_info_packet hfvsif_infopacket;
- 	struct dc_info_packet vtem_infopacket;
- 	struct dc_info_packet adaptive_sync_infopacket;
-+	struct dc_info_packet avi_infopacket;
- 	uint8_t dsc_packed_pps[128];
- 	struct rect src; /* composition area */
- 	struct rect dst; /* stream addressable area */
-@@ -335,6 +336,8 @@ struct dc_stream_update {
- 	struct dc_info_packet *hfvsif_infopacket;
- 	struct dc_info_packet *vtem_infopacket;
- 	struct dc_info_packet *adaptive_sync_infopacket;
-+	struct dc_info_packet *avi_infopacket;
-+
- 	bool *dpms_off;
- 	bool integer_scaling_update;
- 	bool *allow_freesync;
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_vf(hw, stats);
 -- 
 2.51.0
 
