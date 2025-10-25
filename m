@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB6D2586E8;
-	Sat, 25 Oct 2025 16:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A764E2580F2;
+	Sat, 25 Oct 2025 16:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409030; cv=none; b=RyRCOGrjaEgkBwBjhXkGe+VMEANpLK8BBZh39bQ90sRpqW6/qq5AU2s+y4D38DolkeR5wGv4KpZwHldCzl0w0c0RQKO77Ogq3KcdZ0qAwVEVYnuqAckqW7KybZ68E3EEN87hbyAy94EoPgbyLpb2IItCNCSlbPtZCcosOUavti8=
+	t=1761409031; cv=none; b=jxLYrFTKcshRdbJKf569jOvCHl/DGuN19ZfwjgQnh7ArJgxjfWCr1sH01KCTa+VHqfO2wRIl94ht/EREhXBxihtF3HbAC2R91ts0noxylayrQRe1w8SQT4YmA8Y448No0D7GPn5hNnnq99IVNkSztN/AbHtTtZEZfBDvQ64AeoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409030; c=relaxed/simple;
-	bh=dbR48RiKov+Hu0FSI18WV78rq4kh+PZpv1m7s70OZpM=;
+	s=arc-20240116; t=1761409031; c=relaxed/simple;
+	bh=bsvbG9dLqg+qAvdA5HwP2X+E8jus+zRuRiICPdAvgd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jlOkZMuksrd+uGAfEr7e23PdmGL89AKzdtc+8RDIRk+MvuV+BGbYIQ0SfBR8JmQWgEJy/bZeolbA+pm8aneGHTK7NqJqcFKHI6GZMsjo9rcURp/XpdLo3qIlzzixjLj1a/ZPABvIW+0WkLZN2SH+Q6a7r+5UZcggIIBAOqXcXhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgSRjqtU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PeYM++fcx84SzR/6b8omh/5EGMLeCT2wu5xqUv1vKsV0cXzuBC1qqBvs7ycDdjEqODoP6P39zXGxTtHzoWjbEox+Oo0maZ32cxGqSYH32hnhCR+bdv6G000ERvVui/RWgdBK7CQLnlzxpMxqRHxXfr9LLOnX59FkRQqI3kAVlUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jpSj6+xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgSRjqtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15BDC4CEFB;
-	Sat, 25 Oct 2025 16:17:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jpSj6+xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F087C4CEF5;
+	Sat, 25 Oct 2025 16:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409029;
-	bh=dbR48RiKov+Hu0FSI18WV78rq4kh+PZpv1m7s70OZpM=;
+	s=k20201202; t=1761409031;
+	bh=bsvbG9dLqg+qAvdA5HwP2X+E8jus+zRuRiICPdAvgd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgSRjqtU9JPnRSAobbur/XUjRo/PxubF2NY8ALMP2de8iBOhnMtiKnrVJXl9hxFto
-	 rSx01odurYtbVIZTGgSPkw9BwBMFRqFn09emkv66wsbyr5eEIJ2eCrpTn8HoyugqTQ
-	 nfLjVvIvWRiE67XvfvYWAOCoEUSCFd/gi3MKCS1zz3A7i1xiTKUttHicBtZ1x6fN6f
-	 sCf5RVp1S1/3UdknDjSzvEA0B1c1G8xsPDqJ/j26PhNl3IwuqiFmRML0Qcqu6HzczQ
-	 ZZaaXJmoyA3TsYVHO8U8SKpPBAIQrhOHj2zavUOg4jF0tSdfVGJBvs4IqNar0bVgh3
-	 GZtlhPuOq37LA==
+	b=jpSj6+xeLhK1VfY3RWyr5yQyTw8TcQoDXnMoCmuZRQzNLgqMWvOb/LLQFdMVISWzn
+	 DOnLPEA2dwZ6n5coTzVT/bpgk82G9l1eVz3npCf/Sg/mn08YSxlWZRbrSi9cA1o9b8
+	 bxxdp2HX33UEN1Qfa/EpLVg3OvBEe1qx0gGVs0FZH2Lgde+FHJJYqzlBpftrnIf7Bq
+	 VopMYixGXKI+HC37sMaOIXQ6UpQ8pIIA+K5FwFfF9S+Eb4vsHSJbNDUkADb9jUszKq
+	 o2O8gbRglK/MHwXvSRmKnWiqrkPJgcy7ftG3SZgWc09m0rnbh0kKW867WOjQLPf9mI
+	 A1X8pabXTlgfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shimrra Shai <shimrrashai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	u.kleine-koenig@baylibre.com,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com
-Subject: [PATCH AUTOSEL 6.17] ASoC: es8323: add proper left/right mixer controls via DAPM
-Date: Sat, 25 Oct 2025 11:56:47 -0400
-Message-ID: <20251025160905.3857885-176-sashal@kernel.org>
+	agk@redhat.com,
+	snitzer@kernel.org,
+	dm-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-6.12] dm error: mark as DM_TARGET_PASSES_INTEGRITY
+Date: Sat, 25 Oct 2025 11:56:48 -0400
+Message-ID: <20251025160905.3857885-177-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,16 +53,20 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shimrra Shai <shimrrashai@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 7e39ca4056d11fef6b90aedd9eeeb3e070d3ce9f ]
+[ Upstream commit 499cbe0f2fb0641cf07a1a8ac9f7317674295fea ]
 
-Add proper DAC and mixer controls to DAPM; no initialization in
-es8323_probe.
+Mark dm error as DM_TARGET_PASSES_INTEGRITY so that it can be stacked on
+top of PI capable devices.  The claim is strictly speaking as lie as dm
+error fails all I/O and doesn't pass anything on, but doing the same for
+integrity I/O work just fine :)
 
-Signed-off-by: Shimrra Shai <shimrrashai@gmail.com>
-Link: https://patch.msgid.link/20250815042023.115485-3-shimrrashai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This helps to make about two dozen xfstests test cases pass on PI capable
+devices.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,92 +74,90 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The DAPM mixer inputs for the DAC paths are not wired to hardware,
-    so user-visible “Playback Switch” controls don’t actually program
-    the codec. In current code, both controls use `SND_SOC_NOPM`,
-    meaning they only affect DAPM topology but never touch the
-    registers:
-    - `sound/soc/codecs/es8323.c:185` Left: `SOC_DAPM_SINGLE("Left
-      Playback Switch", SND_SOC_NOPM, 7, 1, 1)`
-    - `sound/soc/codecs/es8323.c:191` Right: `SOC_DAPM_SINGLE("Right
-      Playback Switch", SND_SOC_NOPM, 6, 1, 1)`
-  - The driver also forces the left playback mixer path on during probe
-    by writing `ES8323_DACCONTROL17 = 0xB8`:
-    - `sound/soc/codecs/es8323.c:635`
-      `snd_soc_component_write(component, ES8323_DACCONTROL17, 0xB8);`
-  - Together these cause a mismatch between DAPM state and hardware:
-    - Left DAC→Mixer path is forced on at boot (ignoring user control
-      and DAPM).
-    - Right DAC→Mixer path starts off and cannot be enabled by the
-      “Right Playback Switch” control (since it’s NOPM), leading to
-      channel imbalance or silence on the right.
+- What changes: The patch adds `DM_TARGET_PASSES_INTEGRITY` to the error
+  target’s feature bits, so the `error` target advertises that it
+  “passes integrity” (even though it kills all I/O). In the upstream
+  diff this is the sole functional change: `drivers/md/dm-target.c`
+  updates `.features` to include `DM_TARGET_PASSES_INTEGRITY` alongside
+  existing flags.
+  - Upstream change site: drivers/md/dm-target.c (error target
+    `.features` line).
+  - In stable trees like v5.4, the analogous site is `drivers/md/dm-
+    target.c:150`, where `.features = DM_TARGET_WILDCARD` currently
+    lacks the integrity pass-through bit.
 
-- What the change does
-  - Wires mixer switches to the correct hardware bits so DAPM and user
-    controls actually program the codec:
-    - Left mixer control is changed to `ES8323_DACCONTROL17` bit 7 with
-      normal polarity (was NOPM): “Left Playback Switch”,
-      `ES8323_DACCONTROL17`, bit 7, invert 0.
-    - Right mixer control is changed to `ES8323_DACCONTROL20` bit 7 with
-      normal polarity (was NOPM): “Right Playback Switch”,
-      `ES8323_DACCONTROL20`, bit 7, invert 0.
-  - Removes ad‑hoc forced initialization in `es8323_probe`, i.e. no
-    manual mixer enabling at probe time, as stated in the commit message
-    (“no initialization in es8323_probe”). This addresses the forced-on
-    left path (see current write at `sound/soc/codecs/es8323.c:635`),
-    allowing DAPM to control power and routing coherently.
+- Why it matters: Device-mapper only allows integrity-enabled I/O to be
+  cloned/mapped through a target if it either implements integrity
+  itself or passes integrity through:
+  - Clone-path gate: drivers/md/dm.c:1369–1376. If a bio has integrity
+    and the target does not have `DM_TARGET_INTEGRITY` or
+    `DM_TARGET_PASSES_INTEGRITY`, `clone_bio()` returns `-EIO`, failing
+    the I/O.
+  - Table registration gate: drivers/md/dm-table.c:1207 requires all
+    targets in the table to pass integrity for the DM device to register
+    an integrity profile; otherwise integrity stacking is disabled for
+    the mapped device.
+  - As a result, today stacking `dm-error` atop a PI-capable device can
+    fail or silently disable integrity, which breaks real workloads and,
+    as the commit notes, about two dozen xfstests on PI devices.
 
-- Why it’s a stable-quality bug fix
-  - User-visible functional bug: Right channel playback switch can’t
-    enable hardware; left path is wrongly forced on. The fix makes the
-    controls effective and restores proper DAPM/hardware coherence.
-  - Small, self-contained change in a codec driver; no API/ABI changes,
-    no architectural refactors.
-  - Aligns es8323 behavior with similar Everest codecs (e.g., es8328
-    maps playback switches to DACCONTROLx bit 7 with non-inverted
-    semantics), reducing surprise and improving power management.
-  - Expected to reduce power/leakage and unintended audio mixing by not
-    forcing left mixer active at probe.
-  - Likely “Fixes:” the original addition of the driver:
-    - Fixes: b97391a604b9e ("ASoC: codecs: Add support for ES8323")
+- Correctness and safety: Marking the `error` target as “passes
+  integrity” unblocks the two integrity gates above without changing the
+  target’s behavior for data:
+  - `io_err_map()` still returns `DM_MAPIO_KILL` (drivers/md/dm-
+    target.c), so the request never reaches lower devices.
+  - When integrity is present, the DM core will clone the integrity
+    payload (drivers/md/dm.c:1369–1398) and then, because the target
+    kills the I/O, `free_tio()` will `bio_put()` the clone, freeing the
+    integrity payload (drivers/md/dm.c:633–647). No leaks, no functional
+    change in outcomes (I/O still fails with error), only removal of
+    spurious integrity gating.
+  - Other simple pass-through targets already set this flag (e.g., `dm-
+    linear`, `dm-mpath`, `dm-stripe`, `dm-delay`): drivers/md/dm-
+    linear.c:220, drivers/md/dm-mpath.c:2009, drivers/md/dm-
+    stripe.c:490, drivers/md/dm-delay.c:362. Aligning `dm-error`
+    improves consistency.
 
-- Risk/side effects
-  - The default-on left mixer path enabled in probe is removed; default
-    becomes hardware-driven and off until DAPM/user enables the switch.
-    This is the correct behavior and matches DAPM design. Existing
-    machine drivers and userspace will gain working, persistent
-    controls; DAPM will correctly power the path when in use.
-  - Change is limited to `sound/soc/codecs/es8323.c`.
+- Scope and risk:
+  - Minimal, single-bit feature change, confined to the `dm-error`
+    target.
+  - No architectural changes; no user-visible behavior change except
+    allowing integrity-enabled stacking where it previously errored or
+    disabled integrity.
+  - Security neutral; performance impact negligible (a short-lived
+    integrity clone that is immediately freed on kill).
 
-- Applicability to stable trees
-  - Backport to stable series that already contain the ES8323 driver
-    (introduced in b97391a604b9e). It’s an important functional fix with
-    minimal regression risk and no feature additions.
+- Backport notes:
+  - The feature bit `DM_TARGET_PASSES_INTEGRITY` exists in stable series
+    (include/linux/device-mapper.h:241–242), and the `error` target
+    currently lacks it (drivers/md/dm-target.c:150 in v5.4).
+  - Upstream diff also shows a `.version` bump and additional callbacks
+    in newer kernels; for stable backports you can keep the version as-
+    is and only add the feature bit. The functional fix is just the
+    feature addition.
+  - No dependencies on other recent changes.
 
- sound/soc/codecs/es8323.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Given it fixes real failures with PI-capable devices, is tiny and self-
+contained, and aligns `dm-error` with other DM targets’ integrity
+behavior, this is a good candidate for stable backport.
 
-diff --git a/sound/soc/codecs/es8323.c b/sound/soc/codecs/es8323.c
-index 4c15fffda733c..eb85b71e87f39 100644
---- a/sound/soc/codecs/es8323.c
-+++ b/sound/soc/codecs/es8323.c
-@@ -182,13 +182,13 @@ static const struct snd_kcontrol_new es8323_mono_adc_mux_controls =
- 
- /* Left Mixer */
- static const struct snd_kcontrol_new es8323_left_mixer_controls[] = {
--	SOC_DAPM_SINGLE("Left Playback Switch", SND_SOC_NOPM, 7, 1, 1),
-+	SOC_DAPM_SINGLE("Left Playback Switch", ES8323_DACCONTROL17, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8323_DACCONTROL17, 6, 1, 0),
- };
- 
- /* Right Mixer */
- static const struct snd_kcontrol_new es8323_right_mixer_controls[] = {
--	SOC_DAPM_SINGLE("Right Playback Switch", SND_SOC_NOPM, 6, 1, 1),
-+	SOC_DAPM_SINGLE("Right Playback Switch", ES8323_DACCONTROL20, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8323_DACCONTROL20, 6, 1, 0),
- };
- 
+ drivers/md/dm-target.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
+index 2af5a9514c05e..8fede41adec00 100644
+--- a/drivers/md/dm-target.c
++++ b/drivers/md/dm-target.c
+@@ -263,7 +263,8 @@ static long io_err_dax_direct_access(struct dm_target *ti, pgoff_t pgoff,
+ static struct target_type error_target = {
+ 	.name = "error",
+ 	.version = {1, 7, 0},
+-	.features = DM_TARGET_WILDCARD | DM_TARGET_ZONED_HM,
++	.features = DM_TARGET_WILDCARD | DM_TARGET_ZONED_HM |
++		DM_TARGET_PASSES_INTEGRITY,
+ 	.ctr  = io_err_ctr,
+ 	.dtr  = io_err_dtr,
+ 	.map  = io_err_map,
 -- 
 2.51.0
 
