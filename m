@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6287A303A19;
-	Sat, 25 Oct 2025 16:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCD5306D48;
+	Sat, 25 Oct 2025 16:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408866; cv=none; b=GcDCo7ap41vivcjy8tNT4Mv6gGQ0ey3F/DzSDhWMVV57Q8fepf3rEyIu9yACYAWgqmxnz+90de4W1pTo/7kNc0o+BlFnj4hrXrkv0U/g8A/nH08ZBbdzNJsbrGCcIht/mT6/SVSOInBKFyYo++86l+UTfM2DwpppuDfwS8R6jeI=
+	t=1761408868; cv=none; b=UXCPqpWed1I/rlI/sDLX2l2VXI46rSupW/QMj4VR9SDp8vZOg4r5qSB8UWdZCE3YKDLwrJx7B4yevBJfvITb4oSNqmnbIEZSunFhl8QghFt/t+keQKIF1Tfe7GNNTN8ZJYJpTWrbGwfX25ZExEkuEOre4xGQFHbPrDyPAKD01zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408866; c=relaxed/simple;
-	bh=m/k3aiC9ytv1r6Mmlz3YHjyTPrD8qpfCAq05TIxMDeA=;
+	s=arc-20240116; t=1761408868; c=relaxed/simple;
+	bh=P1gyEeiylqh/OZ2bOjUOKTj6deI6dCpDKMJw4ri6lQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cXM7u/ZHla45UdEFao5IQvoT+9WQUAbBpdsb11wHzJsmwKHJQsKSIsj7nLjGx0nwGI/JfNZLgJaSCpEaTMKRDmp/hCCBxVGmew9Er8Cy0v+lWGyc9PBMwhlx5HJ6si7SiRqx8RFPnd77bNOpW9zIQI0bvC6WGZUJAXBE5HHnb8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6HgkXkS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=euosfMxCumHENBPwn6fXIsWGjFgxPigUQwFiGcPjSdUwPgDAo8dcQnhCSyq8kmbt2K8ymTgAe3RnNBQhKO6I0OEFxPG+3ePU6a32AZH4I/vTLWLJXMSiThHgzLf0j1ZF2AnYSjR4gG7skiwfer+d7l+T9AuK8HK3tDP+RqJ/WDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAKpuxAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6HgkXkS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23922C4CEF5;
-	Sat, 25 Oct 2025 16:14:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAKpuxAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C224C113D0;
+	Sat, 25 Oct 2025 16:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408866;
-	bh=m/k3aiC9ytv1r6Mmlz3YHjyTPrD8qpfCAq05TIxMDeA=;
+	s=k20201202; t=1761408867;
+	bh=P1gyEeiylqh/OZ2bOjUOKTj6deI6dCpDKMJw4ri6lQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f6HgkXkSOKckr3uRgRDnc1qnd2JbEU+CyCdDz5FMDP8HE3SEHEduIkALN/AFRBS4a
-	 X+LAWG4bo9l3e4HaDMWhPB0Xo9XZlhrX2pXxyokDLloLuifHWMb0ocFTDBVORoriMX
-	 CymveiZEHpQKlZBcUR03GaRq+UajSlY++QJUdrbFDgjY/yqJfE4fX9jI7e/W27f2bt
-	 lplhrnhfrcHqEYarV2Dv6NViKdYjOVpy4BvT1Lxl6UHG2VvAfkgtlOE8NPOVph7zy9
-	 WqtQ1OU27WoREeg5N/BNFQ4KiTpIXnHoYQRXEECO/iavB9mqt8loEbQiOgMOKk2C6w
-	 cWE4pqNXHQIrw==
+	b=iAKpuxAo2KPuoWW6EujXwYsM22ikGP0KHBAKzjSJfX4KGdIx5Irt4CBRBWRJ/kJnR
+	 s3H6mUribonJo9V0tlMGdGElK0g+4YkMO13a2r/h+WXwsd7cblph+/d+/dSFos0tyW
+	 OyjAW4Jf9RTiOkOQNIG6MM2n13ECGPukmDp0OBoZQs19+UsscpHprWrDZW0P24G5am
+	 bJI4C3BpPyGtropWpMLgWmYeHs5932z8/siPKNfnyRcqrS+wZ8uPAy6MzbaYhbrdEO
+	 tJEoTBEJzZIj5wFgwan4uSOE/Z4UZfviUYOC/UWtJkmohFkUcF7jOkmLsY4ehAKYfP
+	 Mef2b70ZSxd2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Alice Chao <alice.chao@mediatek.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	niklas.soderlund@ragnatech.se,
-	netdev@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] net: sh_eth: Disable WoL if system can not suspend
-Date: Sat, 25 Oct 2025 11:55:38 -0400
-Message-ID: <20251025160905.3857885-107-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-scsi@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.1] scsi: ufs: host: mediatek: Fix invalid access in vccqx handling
+Date: Sat, 25 Oct 2025 11:55:39 -0400
+Message-ID: <20251025160905.3857885-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,24 +51,26 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit 9c02ea544ac35a9def5827d30594406947ccd81a ]
+[ Upstream commit 5863638598f5e4f64d2f85b03f376383ca1f2ab7 ]
 
-The MAC can't facilitate WoL if the system can't go to sleep. Gate the
-WoL support callbacks in ethtool at compile time using CONFIG_PM_SLEEP.
+Add a NULL check before accessing the 'vccqx' pointer to prevent invalid
+memory access. This ensures that the function safely handles cases where
+'vccq' and 'vccq2' are not initialized, improving the robustness of the
+power management code.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250909085849.3808169-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-11-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,91 +78,68 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it does
-  - Gates the ethtool WoL callbacks behind `CONFIG_PM_SLEEP`, so WoL is
-    only reported/configurable when the system can actually suspend.
-  - Specifically wraps `sh_eth_get_wol()` and `sh_eth_set_wol()` with
-    `#ifdef CONFIG_PM_SLEEP` and only sets the corresponding ethtool ops
-    when sleep support is enabled.
+Rationale
+- The patch adds a defensive NULL guard in `ufs_mtk_vccqx_set_lpm()` so
+  it immediately returns if both `vccq` and `vccq2` are absent. This
+  prevents a NULL dereference on `vccqx->reg` when neither rail is
+  defined in DT or has been released earlier.
+- Specifically, the change adds: `if (!hba->vreg_info.vccq &&
+  !hba->vreg_info.vccq2) return;` before dereferencing `vccqx` in
+  `drivers/ufs/host/ufs-mediatek.c:1506`.
+- Without this guard, the function selects `vccqx` from
+  `hba->vreg_info.vccq` or `...vccq2` and unconditionally does
+  `regulator_set_mode(vccqx->reg, ...)` (drivers/ufs/host/ufs-
+  mediatek.c:1515), which is unsafe if both are NULL.
+- The UFS core explicitly allows these supplies to be optional, meaning
+  NULL is a valid state when a supply is not provided in DT: parsing
+  populates `vccq`/`vccq2` optionally (drivers/ufs/host/ufshcd-
+  pltfrm.c:168).
+- The Mediatek driver also clears the pointer to NULL when it
+  deliberately disables a VCCQx rail (e.g., after freeing the vreg in
+  `ufs_mtk_vreg_fix_vccqx()`, drivers/ufs/host/ufs-mediatek.c:1072).
+  That makes the callee’s NULL-robustness important.
 
-- Code references
-  - Function definitions are compiled only if sleep is enabled:
-    drivers/net/ethernet/renesas/sh_eth.c:2363 and
-    drivers/net/ethernet/renesas/sh_eth.c:2390
-  - Etwttool ops pointers are likewise conditioned:
-    drivers/net/ethernet/renesas/sh_eth.c:2406 and
-    drivers/net/ethernet/renesas/sh_eth.c:2409
-  - The driver’s suspend/resume path that actually uses WoL state
-    (`mdp->wol_enabled`) is part of PM sleep handling:
-    - `sh_eth_suspend()` checks `mdp->wol_enabled` to set up Magic
-      Packet WoL: drivers/net/ethernet/renesas/sh_eth.c:3500
-    - `sh_eth_resume()` mirrors that to restore state:
-      drivers/net/ethernet/renesas/sh_eth.c:3519
-  - The driver already declares PM sleep ops via `pm_sleep_ptr`, so
-    suspend/resume are only active when `CONFIG_PM_SLEEP` is enabled,
-    making the ethtool gating consistent:
-    drivers/net/ethernet/renesas/sh_eth.c:3553
+Why this matters despite caller checks
+- Today, `ufs_mtk_dev_vreg_set_lpm()` computes `skip_vccqx` and only
+  calls `ufs_mtk_vccqx_set_lpm()` when appropriate
+  (drivers/ufs/host/ufs-mediatek.c:1537, 1555, 1560). However, this is a
+  single call site and relies on all future call paths being equally
+  careful.
+- The new guard makes `ufs_mtk_vccqx_set_lpm()` itself robust,
+  eliminating a class of NULL deref crashes if it is ever called without
+  prior checks, or if future refactors change the call sites.
 
-- Why this is a bug fix
-  - Without system sleep support, the suspend/resume hooks that actually
-    arm/disarm WoL are not used, so advertising WoL to userspace
-    (`ethtool`) is misleading and non-functional. The patch prevents
-    reporting/configuring WoL when it cannot work in practice.
-  - This aligns the reported capability with the runtime behavior and
-    avoids users enabling a feature that can’t take effect.
+Stable backport criteria
+- Bug fix that prevents kernel NULL deref (user-visible reliability
+  issue).
+- Change is minimal, localized, and has no architectural impact.
+- No functional side effects when supplies exist; when both are absent,
+  early return is the correct behavior (nothing to configure).
+- Touches a specific host driver (MediaTek UFS), keeping risk of
+  regression low and scope confined.
 
-- Scope and risk
-  - Change is small, compile-time only, and limited to `sh_eth` ethtool
-    ops and two static helpers.
-  - No data path changes; no architectural changes; only affects builds
-    with `CONFIG_PM_SLEEP=n`.
-  - When `CONFIG_PM_SLEEP=y`, behavior is unchanged.
+Conclusion
+- This is a safe, targeted fix to avoid invalid memory access in a power
+  management path. It improves robustness with negligible risk and
+  should be backported to stable.
 
-- Stable backport criteria
-  - Fixes a real user-visible correctness issue (capability
-    misreporting).
-  - Minimal and self-contained to a single driver file.
-  - No new features or API changes; low regression risk.
-  - Consistent with existing PM gating (`pm_sleep_ptr`) in the same
-    driver.
+ drivers/ufs/host/ufs-mediatek.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Given the above, this is an appropriate, low-risk correctness fix to
-backport.
-
- drivers/net/ethernet/renesas/sh_eth.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
-index 5fc8027c92c7c..695fa3592c9a2 100644
---- a/drivers/net/ethernet/renesas/sh_eth.c
-+++ b/drivers/net/ethernet/renesas/sh_eth.c
-@@ -2360,6 +2360,7 @@ static int sh_eth_set_ringparam(struct net_device *ndev,
- 	return 0;
- }
- 
-+#ifdef CONFIG_PM_SLEEP
- static void sh_eth_get_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 82160da8ec71b..bb0be6bed1bca 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1589,6 +1589,9 @@ static void ufs_mtk_vccqx_set_lpm(struct ufs_hba *hba, bool lpm)
  {
- 	struct sh_eth_private *mdp = netdev_priv(ndev);
-@@ -2386,6 +2387,7 @@ static int sh_eth_set_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
+ 	struct ufs_vreg *vccqx = NULL;
  
- 	return 0;
- }
-+#endif
- 
- static const struct ethtool_ops sh_eth_ethtool_ops = {
- 	.get_regs_len	= sh_eth_get_regs_len,
-@@ -2401,8 +2403,10 @@ static const struct ethtool_ops sh_eth_ethtool_ops = {
- 	.set_ringparam	= sh_eth_set_ringparam,
- 	.get_link_ksettings = phy_ethtool_get_link_ksettings,
- 	.set_link_ksettings = phy_ethtool_set_link_ksettings,
-+#ifdef CONFIG_PM_SLEEP
- 	.get_wol	= sh_eth_get_wol,
- 	.set_wol	= sh_eth_set_wol,
-+#endif
- };
- 
- /* network device open function */
++	if (!hba->vreg_info.vccq && !hba->vreg_info.vccq2)
++		return;
++
+ 	if (hba->vreg_info.vccq)
+ 		vccqx = hba->vreg_info.vccq;
+ 	else
 -- 
 2.51.0
 
