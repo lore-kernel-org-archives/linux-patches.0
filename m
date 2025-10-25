@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBE12F5A2D;
-	Sat, 25 Oct 2025 16:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4912E3043B4;
+	Sat, 25 Oct 2025 16:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408783; cv=none; b=Znz/0vHESiNKnhXId1p0JKLfd6xll4Idz3pAyt5OJ0gGPHIq6Axd1sTT1jEtvx+vep8bOCme+ywSt4LmOzHQ6OV/XS3LCmWdreVTNNSiNzDGKJ968p57A2gnItPKf586vzGgTm4cyeviYtN0ip5AwtTMWAuHGU2auMmvVB9zy6U=
+	t=1761408785; cv=none; b=jJnUVXlgr5SRqEQfOvNxAirYoFwtoZES1j6QFEb7yN8CnYxq6GSLt99tDlKgPZDgx6/l3hHtrqS6vqB8OSc+tufELUf0FJahNcv12J5ktAdQxyjaItIG013pt9IGYjJGkG0hBEfa37PljRh9GAXkUAyz+/9d0H/0+kFv/TGFa+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408783; c=relaxed/simple;
-	bh=iLJTnyyX2C4zRSWEbIvqNlqLS0GvRfxHjoXGQ+vcNSc=;
+	s=arc-20240116; t=1761408785; c=relaxed/simple;
+	bh=5SzTLdKlW/im13PYmd9glXPYlnj0ulJWHw2nvQB0mLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MCmupDG7pFAruQiNDhTcdSL5sWvA9fdOTIXdMzDvWcvGcjpLrQWR8/Dvr6SQQAhAhELbZSmHEqM6yfb/lVoxnlDgCHsC5bNlmMZ5EFQaDi42oa+HaVUsHnhNn8d6bpsTu4F7QLxIcIGAOANwqI5iVQYMnXqXXDWHXEktXOGU7CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CIxnKjJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EPbr7bV/QW3HLd694sSwutLeKhZaxL6L0x6C2AcwLntJrG9aXah5xH2zvsaCGavTcEqCYTYiv/s7OUL7DMB7+aQx4/tgWdUGdqkOEY85shz0PG8Hpbed25twxBNi5YbDS32Ft7F3kf1gfCdz9QYOL7D6CDPWQxLJvIZVUyeAQmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HrFLzfm8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIxnKjJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0487DC4CEFB;
-	Sat, 25 Oct 2025 16:13:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HrFLzfm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2161C4CEFF;
+	Sat, 25 Oct 2025 16:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408783;
-	bh=iLJTnyyX2C4zRSWEbIvqNlqLS0GvRfxHjoXGQ+vcNSc=;
+	s=k20201202; t=1761408785;
+	bh=5SzTLdKlW/im13PYmd9glXPYlnj0ulJWHw2nvQB0mLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIxnKjJRzfAzYqsI64tmos3Vo5QdStHfv7SnVlrGRnfdqAhLLq3Ch42ZEIwj76kh4
-	 UbnTUhLTqqKQ5B7IQka7mMp+w+nSXDPNnkoSQGpfgfnaDt08+TKcGNdlJTR7Cn88/E
-	 +Dtq9Bz4URo1I1E4rG5X9gIVX3DuNrKatDgQZkA6i7MliYbhYjemWPE+r7rbf8nJV1
-	 5sDIu2tDCPz9XVujhZBzlmfLQKmWTgYywmxjplEe7WdLMe1G2ZY6kUjSo5rW1FEDt0
-	 WJYyRNlymHcqvJSkcc6WMcv+2ky+3g9ajNsBUkYUcEEc3BxKFOksCuxLV5Rs+AOEgA
-	 CBgZuY87xsQtg==
+	b=HrFLzfm8pVzue40gEq8fagiPGa/tXRtMlmWFRCKzmO1LXcIh05KgAVKuRDqTXKx9u
+	 Eq5x++fuWPRM33oW2Iu5ZYgaFNKSLqu9RW6SsIcVRCXWPGag0XKpJIvt+orN7drSGL
+	 WTu/cuTls00+dPluhuV0QUQ9TUmTM5krCodO+3GrdUCPfNWsByzBz3SO/26VuRA/6U
+	 XBIoNx0aJbj5vNiUpto+tErSWn8xgCNZliXsy99E2b7omRvTqKG6LAXBn7mw/wIytX
+	 ykDZ9EB3EIrngvE4B0W4168Ue9kMIDKMqAkcmaflbDO41WHoNXJZ1msJrMQ8K3BZ+N
+	 eNyDix14Sngag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Meng Li <li.meng@amd.com>,
-	Jiang Liu <gerry@linux.alibaba.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+Cc: Hao Yao <hao.yao@intel.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Hawking.Zhang@amd.com,
-	asad.kamal@amd.com,
-	Likun.Gao@amd.com,
-	cesun102@amd.com,
-	alexandre.f.demers@gmail.com,
-	tvrtko.ursulin@igalia.com,
-	andrealmeid@igalia.com,
-	christian.koenig@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/amdgpu: Release xcp drm memory after unplug
-Date: Sat, 25 Oct 2025 11:54:58 -0400
-Message-ID: <20251025160905.3857885-67-sashal@kernel.org>
+	jason.z.chen@intel.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] media: ov08x40: Fix the horizontal flip control
+Date: Sat, 25 Oct 2025 11:54:59 -0400
+Message-ID: <20251025160905.3857885-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,19 +55,19 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Meng Li <li.meng@amd.com>
+From: Hao Yao <hao.yao@intel.com>
 
-[ Upstream commit e6c2b0f23221ed43c4cc6f636e9ab7862954d562 ]
+[ Upstream commit c7df6f339af94689fdc433887f9fbb480bf8a4ed ]
 
-Add a new API amdgpu_xcp_drm_dev_free().
-After unplug xcp device, need to release xcp drm memory etc.
+The datasheet of ov08x40 doesn't match the hardware behavior.
+0x3821[2] == 1 is the original state and 0 the horizontal flip enabled.
 
-Co-developed-by: Jiang Liu <gerry@linux.alibaba.com>
-Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
-Signed-off-by: Meng Li <li.meng@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hao Yao <hao.yao@intel.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Tested-by: Hans de Goede <hansg@kernel.org> # ThinkPad X1 Carbon Gen 12 & Gen 13
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,217 +75,63 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Releases per-partition DRM/platform-device resources that remain
-    allocated after device unplug, preventing leaks and rebind/reprobe
-    issues. In current trees, `amdgpu_xcp_dev_unplug()` only calls
-    `drm_dev_unplug()` and restores a few saved pointers, but does not
-    free the devres-managed DRM device or its platform device, leaving
-    resources alive until module exit. See
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c:367` (loop at lines
-    375–385) where xcp partition devices are unplugged without freeing
-    them.
-  - The new API `amdgpu_xcp_drm_dev_free()` provides a targeted free for
-    a single xcp DRM device, enabling correct cleanup on unplug without
-    waiting for global teardown.
+- What it fixes: The horizontal flip (HFLIP) control polarity was wrong
+  for the OV08X40 sensor. Hardware enables H-mirror when bit 2 of
+  register 0x3821 is cleared, but the driver treated setting the bit as
+  “flip on”. The fix inverts this polarity so V4L2_CID_HFLIP now matches
+  actual hardware behavior.
+- Precise change: In `ov08x40_set_ctrl_hflip()`, the write toggling
+  `OV08X40_REG_MIRROR` bit 2 is flipped:
+  - Before: `ctrl_val ? val | BIT(2) : val & ~BIT(2)`
+  - After: `ctrl_val ? val & ~BIT(2) : val | BIT(2)`
+  - Location: drivers/media/i2c/ov08x40.c:1651
+- Scope and containment:
+  - Only one line in a single driver file is changed:
+    `drivers/media/i2c/ov08x40.c`.
+  - The function reads the current register value first and only changes
+    bit 2, preserving other bits (drivers/media/i2c/ov08x40.c:1646,
+    1651).
+  - Vertical flip handling remains unchanged and continues to set bit 2
+    of 0x3820 when enabled (drivers/media/i2c/ov08x40.c:1666), showing
+    the change is isolated to HFLIP.
+  - The HFLIP control is wired through the standard control path
+    (`ov08x40_set_ctrl()` case V4L2_CID_HFLIP →
+    `ov08x40_set_ctrl_hflip()`, drivers/media/i2c/ov08x40.c:1735) and
+    HFLIP is created as a standard V4L2 control
+    (drivers/media/i2c/ov08x40.c:2153).
+- User impact: Without this fix, user-space sees inverted behavior for
+  HFLIP (enabling the control does not produce the expected mirror),
+  which is a clear functional bug affecting image orientation and any
+  applications relying on correct orientation metadata/control.
+- Risk assessment:
+  - Minimal risk: a single-bit polarity correction in a register write,
+    no ABI/API change, no architectural changes, and constrained to the
+    ov08x40 driver.
+  - Safe behavior: other bits are preserved; change is applied only when
+    the device is powered/streaming via existing PM checks.
+  - Real-world validation: Reviewed and Tested-by are present, including
+    testing on ThinkPad X1 Carbon Gen 12/13, which reduces regression
+    risk.
 
-- Scope of change
-  - Adds a small, self-contained API and uses it in the unplug path:
-    - `drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c:379` gains
-      `amdgpu_xcp_drm_dev_free(p_ddev);` after `drm_dev_unplug()` and
-      before returning, so the xcp DRM/platform-device resources are
-      actually released.
-    - New helper and synchronization in
-      `drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c`:
-      - Introduces `static DEFINE_MUTEX(xcp_mutex);` and wraps
-        alloc/free/release with `guard(mutex)(&xcp_mutex);` to serialize
-        access to the global `xcp_dev[]`/`pdev_num` state (addresses
-        races between concurrent alloc/free).
-      - `amdgpu_xcp_drm_dev_alloc()` is updated to pick the first free
-        slot in `xcp_dev[]` rather than relying solely on a
-        monotonically increasing index, preventing exhaustion after
-        partial frees and allowing reuse of holes (safe, bounded
-        change).
-      - Adds `amdgpu_xcp_drm_dev_free(struct drm_device *ddev)` which
-        finds and frees the corresponding platform device/devres group
-        for a single xcp device and decrements the global count;
-        exported for use by `amdgpu_xcp.c`.
-      - Refactors release into `free_xcp_dev()` and updates
-        `amdgpu_xcp_drv_release()` to free all remaining devices by
-        scanning `xcp_dev[]` while `pdev_num != 0`.
-    - Header updated to declare the new free API:
-      `drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h`.
+This is a small, targeted, and user-visible bugfix that aligns with
+stable backporting rules and should be backported.
 
-- Why it’s a good stable backport
-  - User-visible bug: Fixes resource/memory leaks after
-    unplug/halt/remove, which can lead to:
-    - Stale platform devices (name collisions on reload/hotplug) and
-      devres lingering until module exit.
-    - Inability to reuse xcp device slots on re-probe, hitting limits
-      prematurely (MAX_XCP_PLATFORM_DEVICE = 64).
-  - Small and contained: Only touches AMDGPU XCP code paths:
-    - `amdgpu_xcp.c` unplug path (drm/amd/amdgpu), and the XCP platform-
-      device helper (drm/amd/amdxcp).
-    - No UAPI/ABI changes and no cross-subsystem effects.
-  - Low regression risk:
-    - Alloc/free remain devres-managed and paired with platform device
-      unregister, now simply exposed as a per-device free that the
-      unplug path can call at the correct time.
-    - Locking (`xcp_mutex`) protects `xcp_dev[]`/`pdev_num` against
-      races; used only in alloc/free/release, so minimal behavioral
-      impact.
-    - The unplug flow still calls `drm_dev_unplug()` first, then
-      restores the saved pointers before free, maintaining the existing
-      detach ordering.
-  - Architecture unchanged: No design or feature additions; strictly a
-    cleanup and correctness fix.
-  - Stable applicability:
-    - Affects kernels that already have XCP support (e.g., v6.6+,
-      v6.10+, v6.12+). In these, `amdgpu_xcp_dev_unplug()` exists and
-      does not free xcp devices.
-    - For older stable series without XCP, not applicable.
-    - For older XCP revisions (e.g., v6.6), minor context adjustments
-      may be needed (device naming and `pdev_num` type), but the core
-      addition (new free API + unplug call + mutex-guarded slot
-      management) remains straightforward.
+ drivers/media/i2c/ov08x40.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-- Code references
-  - Unplug path without freeing devices:
-    drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c:367
-  - Existing alloc that creates platform/devres-managed DRM devices:
-    drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c:240 and
-    drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c:49
-  - Global XCP platform device state:
-    drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c:46–47
-
-Conclusion: This is a targeted bugfix for resource leaks on unplug with
-minimal risk and clear user impact in hotplug/reload scenarios. It
-should be backported to stable kernels that include AMD XCP support.
-
- drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c     |  1 +
- drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c | 56 +++++++++++++++++----
- drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h |  1 +
- 3 files changed, 49 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-index c417f86892207..699acc1b46b59 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-@@ -406,6 +406,7 @@ void amdgpu_xcp_dev_unplug(struct amdgpu_device *adev)
- 		p_ddev->primary->dev = adev->xcp_mgr->xcp[i].pdev;
- 		p_ddev->driver =  adev->xcp_mgr->xcp[i].driver;
- 		p_ddev->vma_offset_manager = adev->xcp_mgr->xcp[i].vma_offset_manager;
-+		amdgpu_xcp_drm_dev_free(p_ddev);
- 	}
+diff --git a/drivers/media/i2c/ov08x40.c b/drivers/media/i2c/ov08x40.c
+index e0094305ca2ab..90887fc54fb0e 100644
+--- a/drivers/media/i2c/ov08x40.c
++++ b/drivers/media/i2c/ov08x40.c
+@@ -1648,7 +1648,7 @@ static int ov08x40_set_ctrl_hflip(struct ov08x40 *ov08x, u32 ctrl_val)
+ 
+ 	return ov08x40_write_reg(ov08x, OV08X40_REG_MIRROR,
+ 				 OV08X40_REG_VALUE_08BIT,
+-				 ctrl_val ? val | BIT(2) : val & ~BIT(2));
++				 ctrl_val ? val & ~BIT(2) : val | BIT(2));
  }
  
-diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-index 8bc36f04b1b71..44009aa8216ed 100644
---- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-+++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-@@ -46,18 +46,29 @@ static const struct drm_driver amdgpu_xcp_driver = {
- 
- static int8_t pdev_num;
- static struct xcp_device *xcp_dev[MAX_XCP_PLATFORM_DEVICE];
-+static DEFINE_MUTEX(xcp_mutex);
- 
- int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- {
- 	struct platform_device *pdev;
- 	struct xcp_device *pxcp_dev;
- 	char dev_name[20];
--	int ret;
-+	int ret, i;
-+
-+	guard(mutex)(&xcp_mutex);
- 
- 	if (pdev_num >= MAX_XCP_PLATFORM_DEVICE)
- 		return -ENODEV;
- 
--	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", pdev_num);
-+	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		if (!xcp_dev[i])
-+			break;
-+	}
-+
-+	if (i >= MAX_XCP_PLATFORM_DEVICE)
-+		return -ENODEV;
-+
-+	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", i);
- 	pdev = platform_device_register_simple(dev_name, -1, NULL, 0);
- 	if (IS_ERR(pdev))
- 		return PTR_ERR(pdev);
-@@ -73,8 +84,8 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- 		goto out_devres;
- 	}
- 
--	xcp_dev[pdev_num] = pxcp_dev;
--	xcp_dev[pdev_num]->pdev = pdev;
-+	xcp_dev[i] = pxcp_dev;
-+	xcp_dev[i]->pdev = pdev;
- 	*ddev = &pxcp_dev->drm;
- 	pdev_num++;
- 
-@@ -89,16 +100,43 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- }
- EXPORT_SYMBOL(amdgpu_xcp_drm_dev_alloc);
- 
--void amdgpu_xcp_drv_release(void)
-+static void free_xcp_dev(int8_t index)
- {
--	for (--pdev_num; pdev_num >= 0; --pdev_num) {
--		struct platform_device *pdev = xcp_dev[pdev_num]->pdev;
-+	if ((index < MAX_XCP_PLATFORM_DEVICE) && (xcp_dev[index])) {
-+		struct platform_device *pdev = xcp_dev[index]->pdev;
- 
- 		devres_release_group(&pdev->dev, NULL);
- 		platform_device_unregister(pdev);
--		xcp_dev[pdev_num] = NULL;
-+
-+		xcp_dev[index] = NULL;
-+		pdev_num--;
-+	}
-+}
-+
-+void amdgpu_xcp_drm_dev_free(struct drm_device *ddev)
-+{
-+	int8_t i;
-+
-+	guard(mutex)(&xcp_mutex);
-+
-+	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		if ((xcp_dev[i]) && (&xcp_dev[i]->drm == ddev)) {
-+			free_xcp_dev(i);
-+			break;
-+		}
-+	}
-+}
-+EXPORT_SYMBOL(amdgpu_xcp_drm_dev_free);
-+
-+void amdgpu_xcp_drv_release(void)
-+{
-+	int8_t i;
-+
-+	guard(mutex)(&xcp_mutex);
-+
-+	for (i = 0; pdev_num && i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		free_xcp_dev(i);
- 	}
--	pdev_num = 0;
- }
- EXPORT_SYMBOL(amdgpu_xcp_drv_release);
- 
-diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-index c1c4b679bf95c..580a1602c8e36 100644
---- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-+++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-@@ -25,5 +25,6 @@
- #define _AMDGPU_XCP_DRV_H_
- 
- int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev);
-+void amdgpu_xcp_drm_dev_free(struct drm_device *ddev);
- void amdgpu_xcp_drv_release(void);
- #endif /* _AMDGPU_XCP_DRV_H_ */
+ static int ov08x40_set_ctrl_vflip(struct ov08x40 *ov08x, u32 ctrl_val)
 -- 
 2.51.0
 
