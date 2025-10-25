@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B331A07F;
-	Sat, 25 Oct 2025 16:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A00A3043D7;
+	Sat, 25 Oct 2025 16:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409606; cv=none; b=ZAY3CoxZ2zbfvt+00vtVep08GraInDQWKPZwIe0Ne9buGYuIM7U83dqQZ69378jkP5897vPtIxjvRfXh1hHxw0+WtvTyps5hWDmaARLb34jrsMpf0mWnNdAQ/traQqyFfsHeTw8OluEPY76EE2H8jLfCXDP2ffFbmd7xTaF+psE=
+	t=1761409608; cv=none; b=A1neEzvc/9tceP97U6C84SEsync+HDmdC6r5nLxKxM3+5zmJwRkFox/aTBHCHTaKSxMQyPy5L7oEkiVTnzNIhV0TARaH4kJuHymFTdre4pviGCoEHxzaf0tPOeMLKYe+8Z0NuB09aNgXhlGbkYf/LCjTsBgnmaKD/3QLGvLmfrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409606; c=relaxed/simple;
-	bh=0OZHReyP13vsx4ci+6B/OmcZCKP/5tUOKvKDRHGfo+s=;
+	s=arc-20240116; t=1761409608; c=relaxed/simple;
+	bh=cvWUBD/FCgrQNuYv0W7OchRUtrorq/v9H+SVgEfr2tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Le4gBo2C2Vy8JB2cGYZtx3OBB79FTg7IO9fzOqujVxHcHePURNGNYbRPs2sqxpq6uGpyp4Q+uDPmK7AmrrIBDlHNVMPvx5f6F0/UHgS/EbCsQe9pXvVACveogtB6JzygS18WWWUPH7vfpSLAUHan/OVNwWOczzGQk/+t4r3kHJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILoUSIvy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aqoBaDcY2FWnKnqvvb4GZ50NHy731rxXQ0WyCbfTqak7X1NRmc3F15aWDnHcEEGk0SomqiS9TrKGS9GgKlZas9KhXJFx9SY+yhwLd8GOplVUNpvuUM2tUxzuRqMIdp1vVZ1j102zP0CnNCWSB2OLNFdQKnpGRnKW+3HO2RMVwg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N3QOaGde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILoUSIvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1971C4CEFB;
-	Sat, 25 Oct 2025 16:26:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N3QOaGde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAFAC4CEF5;
+	Sat, 25 Oct 2025 16:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409606;
-	bh=0OZHReyP13vsx4ci+6B/OmcZCKP/5tUOKvKDRHGfo+s=;
+	s=k20201202; t=1761409608;
+	bh=cvWUBD/FCgrQNuYv0W7OchRUtrorq/v9H+SVgEfr2tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILoUSIvyc2xBZnNhDRWvrmK78iTJVrol3s8XafbbSVUADbBW5N1s/WZkl+eZU/1CB
-	 6EW5SvCl0vp6M8dgS35oAZhN7cE5BKeCWwEJ5xXqD1LrZDCr7UMDr7xpRbyD/4zLQ1
-	 Zq2ld8J/nu590IUNhiYZWgNiBpq3xMsCt4lWiwZy0/3VC1nW7FUa2+SFe0uPHS89Yd
-	 L2sQ9OPKnRBTGg9y+AM9ksfL8zfTMhxHDCanytKLKjIHrJxZZyUdGv0fnSMzVxca78
-	 GxzZWcZZQRjCgPLpKUnEAoBU3bygEx6qMMW7r9Ljp0xnak5opU0MRZLxTQBa5cphyX
-	 GOISd/HcJDLSg==
+	b=N3QOaGdeaghICJXujgECPSkl5AwLqkbNX/06ZhFba2XzK9mK733rZ1nz1zSSQgrvL
+	 BYJtYmLnwIy4TJ3YmraHlZ3HWwykcrE4RLuhCA5yLOnKbeQiPFJpZG+rNQfaPirGnl
+	 9InQr6cu5xvUCi9UYqlrD8qv2Vnzj5EhbdPg3F3Y1RST3K9J/zvqxKAPP6K1vYwpYY
+	 nRb3iX+scyo3+VnmGtQkbxqyXOqyCvVesTONB8+2VwriTepWT++6A6g9EfKxA6Vyt7
+	 eAwOE75OjbKruDa91uw/vzN5j6+pWf9+ViXJWWdAI/6IRFk2fqtKqmSvjUjTpuwf5y
+	 WzU5SkWTkDe8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Connor Abbott <cwabbott0@gmail.com>,
+Cc: Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/msm: Fix 32b size truncation
-Date: Sat, 25 Oct 2025 12:00:20 -0400
-Message-ID: <20251025160905.3857885-389-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-scsi@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] scsi: ufs: host: mediatek: Fix unbalanced IRQ enable issue
+Date: Sat, 25 Oct 2025 12:00:21 -0400
+Message-ID: <20251025160905.3857885-390-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,17 +56,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 6d6a29a19b232e29b61a14d58b71fefc2e003fa4 ]
+[ Upstream commit 91cad911edd1612ed28f5cfb2d4c53a8824951a5 ]
 
-Somehow we never noticed this when arm64 became a thing, many years ago.
+Resolve the issue of unbalanced IRQ enablement by setting the
+'is_mcq_intr_enabled' flag after the first successful IRQ enablement.
+Ensure proper tracking of the IRQ state and prevent potential mismatches
+in IRQ handling.
 
-v2: also fix npages
-
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Tested-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/669785/
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -73,198 +75,84 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Prevents 32-bit truncation of buffer sizes passed from userspace and
-    via dma-buf import on 64-bit systems. The MSM UAPI uses a 64-bit
-    size field (`__u64 size`) for GEM allocation requests
-    (include/uapi/drm/msm_drm.h:168), but prior code funneled this
-    through `uint32_t`, silently truncating >4GiB sizes.
-  - This can lead to incorrect object sizing, wrong page counts and
-    scatterlist handling, and partial mappings/imports on arm64.
-    Symptoms range from allocation failures to subtle correctness bugs
-    when buffers exceed 4GiB.
+  - Prevents unbalanced IRQ enable calls in the Mediatek UFS MCQ path by
+    ensuring the driver’s internal state flag matches the real IRQ state
+    immediately after the IRQs are requested (and thus enabled by
+    default). Without this, subsequent enable paths may re-enable
+    already-enabled IRQs, triggering “unbalanced enable” warnings and
+    mismatched IRQ depth accounting.
 
-- Key changes (type-widening to eliminate truncation)
-  - Function parameters and locals changed from 32-bit to native
-    `size_t`:
-    - `msm_gem_new_handle()` size argument widened to `size_t`
-      (drivers/gpu/drm/msm/msm_gem.h:286,
-      drivers/gpu/drm/msm/msm_gem.c:1150). This directly fixes the UAPI
-      path where `__u64 size` from `DRM_IOCTL_MSM_GEM_NEW`
-      (drivers/gpu/drm/msm/msm_drv.c:344,
-      include/uapi/drm/msm_drm.h:168) was previously implicitly
-      truncated to 32-bit.
-    - `msm_gem_new()` size argument widened to `size_t`
-      (drivers/gpu/drm/msm/msm_gem.h:288,
-      drivers/gpu/drm/msm/msm_gem.c:1220). Ensures internal object init
-      uses full 64-bit size.
-    - `msm_gem_kernel_new()` size argument widened to `size_t`
-      (drivers/gpu/drm/msm/msm_gem.h:289,
-      drivers/gpu/drm/msm/msm_gem.c:1356). Fixes internal kernel
-      allocations exceeding 4GiB.
-    - `npages` variables derived from object sizes converted to
-      `size_t`:
-      - `get_pages()` uses `size_t npages = obj->size >> PAGE_SHIFT;`
-        (drivers/gpu/drm/msm/msm_gem.c:188) instead of `int npages`.
-      - `msm_gem_import()` uses `size_t size, npages;`
-        (drivers/gpu/drm/msm/msm_gem.c:1300), preventing truncation when
-        importing large dma-bufs.
-      - `msm_gem_prime_get_sg_table()` uses `size_t npages = obj->size
-        >> PAGE_SHIFT;` (drivers/gpu/drm/msm/msm_gem_prime.c:15).
-  - Removes an unused `size` parameter from the internal
-    `msm_gem_new_impl()` to avoid perpetuating 32-bit type usage
-    (drivers/gpu/drm/msm/msm_gem.c:1217, 1267, 1312). This is an
-    internal/static helper; the change is mechanical and risk-free.
+- Precise change
+  - Adds `host->is_mcq_intr_enabled = true;` at the end of
+    `ufs_mtk_config_mcq_irq()` after all IRQ handlers have been
+    successfully registered with `devm_request_irq()`
+    (drivers/ufs/host/ufs-mediatek.c:2193).
+    - This reflects that IRQs are enabled as a result of `request_irq()`
+      and aligns the state flag with reality.
 
-- Why this meets stable rules
-  - Important bugfix: Correctly honors 64-bit sizes throughout the MSM
-    GEM allocation and import paths. Without it, large buffers on 64-bit
-    systems are mishandled.
-  - Minimal and contained: All changes are confined to the MSM DRM
-    driver and its internal header. No UAPI changes, no architectural
-    refactors.
-  - Low regression risk:
-    - On 32-bit kernels, `size_t` remains 32-bit, so behavior is
-      unchanged.
-    - The widened types align driver internals with existing DRM core
-      and UAPI expectations. Callers within the MSM driver already pass
-      native-sized values (e.g., a6xx GMU alloc uses `size_t size`;
-      drivers/gpu/drm/msm/adreno/a6xx_gmu.c:1338).
-    - Passing `size_t npages` into helpers like
-      `drm_prime_pages_to_sg()` (which take an `unsigned int`) is
-      harmless in practice; page counts at which truncation would occur
-      are not realistic.
-  - No new features or behavioral changes beyond fixing size handling.
-    No locking, lifetime, or resource management changes.
+- Why it’s correct
+  - `devm_request_irq()` attaches the handler and leaves the IRQ enabled
+    by default. If the state flag remains false, the first call into the
+    driver’s “enable MCQ IRQs” helper will re-enable an already-enabled
+    IRQ, causing an unbalanced enable.
+  - The driver already guards enable/disable with this flag:
+    - Disable path: sets the flag false after disabling
+      (drivers/ufs/host/ufs-mediatek.c:741).
+    - Enable path: bails out if already enabled and sets the flag true
+      only after enabling (drivers/ufs/host/ufs-mediatek.c:755 and
+      drivers/ufs/host/ufs-mediatek.c:762).
+  - With the new line in `ufs_mtk_config_mcq_irq()`
+    (drivers/ufs/host/ufs-mediatek.c:2193), the initial state is
+    correct, so `ufs_mtk_mcq_enable_irq()` will correctly no-op on the
+    first enable attempt when IRQs are already enabled.
 
-- Concrete impact examples
-  - Userspace `DRM_IOCTL_MSM_GEM_NEW` submits `__u64 size`; now
-    `msm_ioctl_gem_new()` forwards the size without truncation to
-    `msm_gem_new_handle()` and `msm_gem_new()`
-    (drivers/gpu/drm/msm/msm_drv.c:344,
-    drivers/gpu/drm/msm/msm_gem.c:1150, 1220).
-  - Import path: `msm_gem_import()` correctly derives `size` from
-    `dmabuf->size` as `size_t` and computes `npages` as `size_t` before
-    allocating the page array and initializing the object
-    (drivers/gpu/drm/msm/msm_gem.c:1300–1320). Previously, `uint32_t
-    size` and `int npages` could undercount for large imports.
+- How the bug manifested
+  - `ufs_mtk_setup_clocks()`’s POST_CHANGE flow calls
+    `ufs_mtk_mcq_enable_irq()` (drivers/ufs/host/ufs-mediatek.c:817).
+    Before this patch, after `devm_request_irq()` the IRQs were already
+    enabled but `is_mcq_intr_enabled` was still false, so the enable
+    path would call `enable_irq()` again, risking “unbalanced IRQ
+    enable” warnings.
+  - The disable path is already consistent: `ufs_mtk_mcq_disable_irq()`
+    uses the list of IRQs and flips the flag to false
+    (drivers/ufs/host/ufs-mediatek.c:741), so subsequent enables are
+    properly balanced.
 
-Given this is a clear, localized bugfix preventing real truncation on
-64-bit systems with negligible regression risk, this commit is a good
-candidate for stable backport.
+- Scope and risk
+  - Change is a single-line state fix in one driver function, confined
+    to the Mediatek UFS host driver.
+  - No API, ABI, or architectural changes; no behavioral changes beyond
+    preventing an incorrect extra `enable_irq()`.
+  - The flag is set only after all IRQ requests succeed; if any
+    `devm_request_irq()` fails, the function returns early and does not
+    set the flag, preserving prior behavior.
 
- drivers/gpu/drm/msm/msm_gem.c       | 21 ++++++++++-----------
- drivers/gpu/drm/msm/msm_gem.h       |  6 +++---
- drivers/gpu/drm/msm/msm_gem_prime.c |  2 +-
- 3 files changed, 14 insertions(+), 15 deletions(-)
+- Stable backport criteria
+  - Fixes a real correctness issue that can lead to warnings and IRQ
+    depth mismatches.
+  - Small, contained, and low risk.
+  - No feature addition; clear bug fix in a specific subsystem (SCSI UFS
+    Mediatek host).
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index e7631f4ef5309..07d8cdd6bb2ee 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -191,7 +191,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
- 	if (!msm_obj->pages) {
- 		struct drm_device *dev = obj->dev;
- 		struct page **p;
--		int npages = obj->size >> PAGE_SHIFT;
-+		size_t npages = obj->size >> PAGE_SHIFT;
+Given the above, this is a good candidate for stable backporting
+wherever the Mediatek UFS MCQ driver and `is_mcq_intr_enabled` field
+exist.
+
+ drivers/ufs/host/ufs-mediatek.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 188f90e468c41..055b24758ca3d 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -2111,6 +2111,7 @@ static int ufs_mtk_config_mcq_irq(struct ufs_hba *hba)
+ 			return ret;
+ 		}
+ 	}
++	host->is_mcq_intr_enabled = true;
  
- 		p = drm_gem_get_pages(obj);
- 
-@@ -1148,7 +1148,7 @@ static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
- 
- /* convenience method to construct a GEM buffer object, and userspace handle */
- int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
--		uint32_t size, uint32_t flags, uint32_t *handle,
-+		size_t size, uint32_t flags, uint32_t *handle,
- 		char *name)
- {
- 	struct drm_gem_object *obj;
-@@ -1214,9 +1214,8 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
- 	.vm_ops = &vm_ops,
- };
- 
--static int msm_gem_new_impl(struct drm_device *dev,
--		uint32_t size, uint32_t flags,
--		struct drm_gem_object **obj)
-+static int msm_gem_new_impl(struct drm_device *dev, uint32_t flags,
-+			    struct drm_gem_object **obj)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_gem_object *msm_obj;
-@@ -1250,7 +1249,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
  	return 0;
  }
- 
--struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32_t flags)
-+struct drm_gem_object *msm_gem_new(struct drm_device *dev, size_t size, uint32_t flags)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_gem_object *msm_obj;
-@@ -1265,7 +1264,7 @@ struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32
- 	if (size == 0)
- 		return ERR_PTR(-EINVAL);
- 
--	ret = msm_gem_new_impl(dev, size, flags, &obj);
-+	ret = msm_gem_new_impl(dev, flags, &obj);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-@@ -1305,12 +1304,12 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_gem_object *msm_obj;
- 	struct drm_gem_object *obj;
--	uint32_t size;
--	int ret, npages;
-+	size_t size, npages;
-+	int ret;
- 
- 	size = PAGE_ALIGN(dmabuf->size);
- 
--	ret = msm_gem_new_impl(dev, size, MSM_BO_WC, &obj);
-+	ret = msm_gem_new_impl(dev, MSM_BO_WC, &obj);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-@@ -1353,7 +1352,7 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
- 	return ERR_PTR(ret);
- }
- 
--void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
-+void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
- 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
- 			 uint64_t *iova)
- {
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 751c3b4965bcd..a4cf31853c500 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -297,10 +297,10 @@ bool msm_gem_active(struct drm_gem_object *obj);
- int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
- int msm_gem_cpu_fini(struct drm_gem_object *obj);
- int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
--		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
-+		size_t size, uint32_t flags, uint32_t *handle, char *name);
- struct drm_gem_object *msm_gem_new(struct drm_device *dev,
--		uint32_t size, uint32_t flags);
--void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
-+		size_t size, uint32_t flags);
-+void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
- 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
- 			 uint64_t *iova);
- void msm_gem_kernel_put(struct drm_gem_object *bo, struct drm_gpuvm *vm);
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index c0a33ac839cb6..036d34c674d9a 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -15,7 +15,7 @@
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
--	int npages = obj->size >> PAGE_SHIFT;
-+	size_t npages = obj->size >> PAGE_SHIFT;
- 
- 	if (msm_obj->flags & MSM_BO_NO_SHARE)
- 		return ERR_PTR(-EINVAL);
 -- 
 2.51.0
 
