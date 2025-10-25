@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF48306498;
-	Sat, 25 Oct 2025 16:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B51305053;
+	Sat, 25 Oct 2025 16:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409078; cv=none; b=MuKRGyLSjdIY8lQGCptLbkDax6sf80TcsADkfQeWqT8I/7C9ZjMf6ZY6lEED3zZF/fqzxy/16drA7HNhzZcgrQEaG8nci2Rh1XeaBRc+genngQcCpCGuEwqA6qt4bDqJMrou+AD7jWWkPAccLbH8qWn2lLsozf5wf7SssnkWoY8=
+	t=1761409082; cv=none; b=XZHXGNqU3iYJkfwRPIWj89yWO5I3ZWd2nvUTmIoB0XMU3/M+PihkPMLVcU2KAKN94gtfQKvzY18TEgEt5nSeDgCirWxRWGsBeWeHA9gdlQerCQROXMf15Mwc6Crarr0JmlzIj3A6VEhbuHihQniKYH/uqCMMCB+Ydn7wSgC5iYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409078; c=relaxed/simple;
-	bh=SlFMHbG3IUa6AzlLmrtJS+LPhgeeFmQdhudk9AS2AsM=;
+	s=arc-20240116; t=1761409082; c=relaxed/simple;
+	bh=Jml9uvd05nACuQWqNyHadMfowCjE73TRBnUi4iABmQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ya1yxOij4G5ivyqPlFAm7TUR/ucLxVeKCRTx1MU3H2y2cjFjT1DwxlfIoh2dRJ3AGT/HUXTwD26Uw9qOUCxLK04AzkVDciKQpFSjwKmIc3igmMKgio+MTLKzWXJIJDz2aTEfCxme92005rMHzoTsUYT6rq0hkcF4sXIVrRjyf6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bdfZ5Ez8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U+8pshmHckrfcgYuFkfO7KpTuyH0KmnwzrJBqbICUikpbzE77p1nKY6mstG/egjD/eSBlQT+ZP+ksXqFPbnWAUh3PKvIXqhidlQkx7sCxwsClUn3qdFzPbNS8gW68LWpeFRVcF5m7NrUnAkoX6+/0cDSiLVIcfUYvVeN+MYrxmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLLZMvJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bdfZ5Ez8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DEDC4CEF5;
-	Sat, 25 Oct 2025 16:17:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLLZMvJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CE1C4CEF5;
+	Sat, 25 Oct 2025 16:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409078;
-	bh=SlFMHbG3IUa6AzlLmrtJS+LPhgeeFmQdhudk9AS2AsM=;
+	s=k20201202; t=1761409079;
+	bh=Jml9uvd05nACuQWqNyHadMfowCjE73TRBnUi4iABmQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdfZ5Ez839LsjqIO83ZpuWnonI7qy8CDdyMYh7e3n1kJCXCXzIKOP7q0O2DUWfbOq
-	 m+Hy1kBKXk6TXDPjKnjO/UbpPAoD71WZ8Ro+vz44+CIK8oyiq/el4/p/GKI9F355WO
-	 pj+ngmQymZ6thXj0QaaqHYal+FI2PyYGvjAf48Tdu7JgvRL5m6lSng8snkjFyYvFoI
-	 gN/IyGVTiQDP+h7pkW1ejA5DfXqs4uiVCtLBZeqfDaKQpwRh33QCQQGHuFYrpl1X+f
-	 ARyoLwCji5/19drTFg+3yjxXf9YjqTWprjQLjrAfkV93B5g11e5sp5aV8erLfDLlzw
-	 cTdkff7E0Hsaw==
+	b=YLLZMvJTfBxdPTLgWmv1cCXuC396fpwhY8UIhmDGj4U3njD2Fm5RBOFYaUOl7dMQG
+	 Zoog5T3TSpR11mr3/B1K8L9or8TiGGA72UW/8YxGtfcOpZ7GxqbsqfYKDfUDNtOvXS
+	 yl72CV5wezFpmXRtxvh2aeV6wE8wY9e2EAyuZpOIPYkVJzIv5NoW7dV1Xvf1yZ2wmX
+	 5Sz0FLivFVe77UpvVMU6BJJRfYr8O73rWNHl3yurGvLdzCi7rQCCeYTwbTJNx98LZZ
+	 GSZiefutb7gSH4XA1WuKVh3t5TBFF0p++NHwjZTcc6KmSER3ld+qcOYnQMj41C6ciy
+	 WG27ILUcoDhgg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: TungYu Lu <tungyu.lu@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Ching-Te Ku <ku920601@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	charlene.liu@amd.com,
-	alex.hung@amd.com,
-	aric.cyr@amd.com,
-	christophe.jaillet@wanadoo.fr,
-	Josip.Pavic@amd.com,
-	alexandre.f.demers@gmail.com,
-	dmytro.laktyushkin@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Wait until OTG enable state is cleared
-Date: Sat, 25 Oct 2025 11:57:04 -0400
-Message-ID: <20251025160905.3857885-193-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: coex: Limit Wi-Fi scan slot cost to avoid A2DP glitch
+Date: Sat, 25 Oct 2025 11:57:05 -0400
+Message-ID: <20251025160905.3857885-194-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,127 +51,193 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: TungYu Lu <tungyu.lu@amd.com>
+From: Ching-Te Ku <ku920601@realtek.com>
 
-[ Upstream commit e7496c15d830689cc4fc666b976c845ed2c5ed28 ]
+[ Upstream commit ebea22c7f1b2f06f4ff0719d76bd19830cf25c9f ]
 
-[Why]
-Customer reported an issue that OS starts and stops device multiple times
-during driver installation. Frequently disabling and enabling OTG may
-prevent OTG from being safely disabled and cause incorrect configuration
-upon the next enablement.
+When Wi-Fi is scanning at 2.4GHz, PTA will abort almost all the BT request.
+Once the Wi-Fi slot stay too long, BT audio device can not get enough data,
+audio glitch will happened. This patch limit 2.4Ghz Wi-Fi slot to 80ms
+while Wi-Fi is scanning to avoid audio glitch.
 
-[How]
-Add a wait until OTG_CURRENT_MASTER_EN_STATE is cleared as a short term
-solution.
-
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: TungYu Lu <tungyu.lu@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ching-Te Ku <ku920601@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250819034428.26307-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my thorough analysis of this commit, I can now provide my
+recommendation:
 
-- What it fixes: The change addresses a real, user-visible race during
-  rapid start/stop sequences where disabling and then quickly re-
-  enabling the OTG can leave the hardware in a partially enabled state,
-  leading to incorrect configuration on the next enable. The commit
-  explicitly frames this as a customer-reported problem during driver
-  installation.
+## BACKPORT RECOMMENDATION
 
-- What changes: A single wait is added to the DCN401 OTG disable path to
-  ensure the hardware has actually cleared the enable state before
-  proceeding.
-  - In `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:223`
-    the code disables OTG via `REG_UPDATE(OTG_CONTROL, OTG_MASTER_EN,
-    0);`.
-  - In
-    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:226-227`
-    it disables VTG via `REG_UPDATE(CONTROL, VTG0_ENABLE, 0);`.
-  - The patch adds immediately after those writes a poll for the status
-    bit to clear:
-    - `REG_WAIT(OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE, 0, 10,
-      15000);` (inserted between the VTG disable and the existing
-      clock/idle wait).
-  - The existing wait for the OTG to go idle remains:
-    - `REG_WAIT(OTG_CLOCK_CONTROL, OTG_BUSY, 0, 1, 150000);` at `drivers
-      /gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:230-232`.
+**YES**
 
-- Rationale and precedent: Waiting for `OTG_CURRENT_MASTER_EN_STATE` to
-  assert/deassert is already a known-safe pattern in older DCN code
-  paths:
-  - See `drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c:274-279`
-    (wait for 0 after disable) and
-    `drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c:351-353`
-    (wait for 1 after enable). This demonstrates that using
-    `OTG_CURRENT_MASTER_EN_STATE` for synchronization is standard
-    practice in the display code.
+## DETAILED ANALYSIS
 
-- Scope and risk:
-  - Small, contained change in one function of one file:
-    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c`.
-  - No interfaces or architectural changes; purely a
-    sequencing/synchronization fix.
-  - The added wait is bounded (10 µs interval, 15000 tries ≈ 150 ms
-    worst case), consistent with existing waits in the same path
-    (`OTG_BUSY` wait is already up to ~150 ms). Given this occurs during
-    CRTC disable, the latency impact is acceptable and low-risk.
-  - Security impact: none.
+### What the Commit Changes
 
-- Dependencies to verify when backporting:
-  - Ensure the register field mapping for `OTG_CURRENT_MASTER_EN_STATE`
-    is wired for DCN401 so the wait checks the correct bit. The bit is
-    defined for DCN 4.1 in
-    `drivers/gpu/drm/amd/include/asic_reg/dcn/dcn_4_1_0_sh_mask.h:26946,
-    26953`.
-  - In this tree, the DCN common TG field set includes
-    `OTG_CURRENT_MASTER_EN_STATE` (see
-    `drivers/gpu/drm/amd/display/dc/optc/dcn10/dcn10_optc.h:242, 404`),
-    but DCN401’s mask/shift list is curated in
-    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.h`. If the
-    target stable branch’s `OPTC_COMMON_MASK_SH_LIST_DCN401` does not
-    include `SF(OTG0_OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE,
-    mask_sh)`, add it; otherwise the new wait may degenerate into a no-
-    op due to an unset mask/shift.
+The commit makes two types of modifications to the Wi-Fi/Bluetooth
+coexistence (coex) subsystem in the rtw89 driver:
 
-- Stable criteria:
-  - Fixes a real, user-facing bug (incorrect OTG reconfiguration under
-    rapid toggling).
-  - Minimal and localized change (one added wait).
-  - No new features or architectural rework.
-  - Low regression risk; follows established synchronization patterns
-    used in other DCN generations.
+1. **CXST_ENULL Slot Configuration Change**
+   (drivers/net/wireless/realtek/rtw89/coex.c:96):
+   - **Before**: `CXST_ENULL = (5ms, 0xaaaaaaaa, SLOT_ISO)`
+   - **After**: `CXST_ENULL = (5ms, 0x55555555, SLOT_MIX)`
+   - **Impact**: Changes the slot from SLOT_ISO (isolates Wi-Fi, rejects
+     BT low-priority requests) to SLOT_MIX (allows mixing, accepts BT
+     low-priority requests). The PTA control bitmask changes from
+     0xaaaaaaaa to 0x55555555 (inverse bit pattern).
 
-Conclusion: This is a good candidate for stable backporting. It’s a
-narrowly scoped hardware sequencing fix with clear user impact,
-implemented using a standard wait on an existing status bit. Ensure the
-DCN401 mask/shift mapping includes `OTG_CURRENT_MASTER_EN_STATE` in the
-target stable branch so the wait is effective.
+2. **Duration Limiting for CXST_EBT Slot**
+   (drivers/net/wireless/realtek/rtw89/coex.c:4156, 4166, 4175):
+   - Adds `_slot_set_dur(btc, CXST_EBT, dur_2)` to three coexistence
+     policy cases:
+     - `BTC_CXP_OFFE_DEF` - Default off-extended policy
+     - `BTC_CXP_OFFE_DEF2` - Alternative default policy
+     - `BTC_CXP_OFFE_2GBWMIXB` - 2.4GHz bandwidth mixed-BT policy
+   - `dur_2` is set to `dm->e2g_slot_limit` which equals
+     `BTC_E2G_LIMIT_DEF` (80ms)
 
- drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+### Problem Being Solved
 
-diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-index ff79c38287df1..5af13706e6014 100644
---- a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-@@ -226,6 +226,11 @@ bool optc401_disable_crtc(struct timing_generator *optc)
- 	REG_UPDATE(CONTROL,
- 			VTG0_ENABLE, 0);
- 
-+	// wait until CRTC_CURRENT_MASTER_EN_STATE == 0
-+	REG_WAIT(OTG_CONTROL,
-+			 OTG_CURRENT_MASTER_EN_STATE,
-+			 0, 10, 15000);
-+
- 	/* CRTC disabled, so disable  clock. */
- 	REG_WAIT(OTG_CLOCK_CONTROL,
- 			OTG_BUSY, 0,
+This commit addresses a **real user-facing bug** affecting Bluetooth
+A2DP audio quality:
+
+- When Wi-Fi is scanning at 2.4GHz, the PTA (Packet Traffic Arbitration)
+  mechanism aborts almost all BT requests
+- If the Wi-Fi slot duration exceeds reasonable limits, BT audio devices
+  cannot receive enough data in time
+- This causes **audible audio glitches and stuttering** during Wi-Fi
+  scanning operations
+- The issue affects users with Bluetooth headphones/speakers while their
+  device scans for Wi-Fi networks
+
+### Technical Merit
+
+**Why This Fix Works:**
+
+1. **Slot Type Change (SLOT_ISO → SLOT_MIX)**: Makes the CXST_ENULL slot
+   more cooperative with Bluetooth by accepting BT low-priority
+   transmission/reception requests, giving BT more opportunities to
+   transmit audio data.
+
+2. **Duration Limiting (80ms)**: Caps the Wi-Fi slot duration at 80ms to
+   ensure BT gets regular opportunities to transmit. The 80ms limit is
+   already defined and used consistently throughout the driver
+   (`BTC_E2G_LIMIT_DEF`).
+
+3. **Targeted Scope**: The changes only affect specific coexistence
+   policies that are active during 2.4GHz Wi-Fi scanning, not normal
+   operation.
+
+### Safety and Risk Assessment
+
+**Low Risk for the following reasons:**
+
+1. **No Reverts or Follow-up Fixes**: Extensive git history search shows
+   no reverts, fixes, or related issues after this commit (checked all
+   commits since 2025-08-19).
+
+2. **Small and Contained**: Only 5 lines changed in a single file, all
+   within the coexistence policy subsystem.
+
+3. **Well-Understood Pattern**: The 80ms slot limit is already used
+   elsewhere in the driver and is a known-good value.
+
+4. **Subsystem-Specific**: Changes are isolated to the rtw89 driver's
+   coexistence mechanism, affecting only Realtek RTL8852x/RTL8922x
+   series Wi-Fi chips.
+
+5. **No Architectural Changes**: This is a configuration tuning, not a
+   structural change.
+
+6. **Tested by Vendor**: Comes from Realtek engineers who develop and
+   test this hardware.
+
+### Affected Hardware
+
+The rtw89 driver supports:
+- RTL8852A, RTL8852B, RTL8852C, RTL8852BT
+- RTL8922A
+
+These are recent Realtek Wi-Fi 6/6E/7 chipsets commonly found in laptops
+and PCIe cards.
+
+### Backporting Criteria Assessment
+
+| Criterion | Assessment | Notes |
+|-----------|------------|-------|
+| Fixes user-facing bug? | ✅ YES | A2DP audio glitches during Wi-Fi
+scanning |
+| Small and contained? | ✅ YES | 5-line change in single file |
+| Clear side effects? | ✅ NO | No unexpected side effects |
+| Architectural changes? | ✅ NO | Configuration tuning only |
+| Critical subsystem? | ⚠️ MODERATE | Coex is important but isolated |
+| Stable tree mention? | ❌ NO | No explicit Cc: stable tag |
+| Minimal regression risk? | ✅ YES | No reverts or fixes found |
+| Subsystem-confined? | ✅ YES | rtw89 driver only |
+
+### Recommendation Rationale
+
+This commit **should be backported** because:
+
+1. **Important User Experience Fix**: Audio glitches are highly
+   noticeable and frustrating to users
+2. **Low Risk**: Small, targeted change with no known issues
+3. **Vendor-Tested**: Comes from hardware vendor with domain expertise
+4. **Mature Subsystem**: The coex mechanism is well-established with
+   clear patterns
+5. **No Dependencies**: Standalone fix requiring no other patches
+6. **Stable Track Record**: No problems reported in upstream since
+   August 2025
+
+The lack of an explicit `Cc: stable@vger.kernel.org` tag appears to be
+an oversight rather than intentional exclusion. The commit clearly meets
+the stable tree criteria for important bug fixes with minimal risk.
+
+ drivers/net/wireless/realtek/rtw89/coex.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
+index e4e6daf51a1ba..0f7ae572ef915 100644
+--- a/drivers/net/wireless/realtek/rtw89/coex.c
++++ b/drivers/net/wireless/realtek/rtw89/coex.c
+@@ -93,7 +93,7 @@ static const struct rtw89_btc_fbtc_slot s_def[] = {
+ 	[CXST_E2G]	= __DEF_FBTC_SLOT(5,   0xea5a5a5a, SLOT_MIX),
+ 	[CXST_E5G]	= __DEF_FBTC_SLOT(5,   0xffffffff, SLOT_ISO),
+ 	[CXST_EBT]	= __DEF_FBTC_SLOT(5,   0xe5555555, SLOT_MIX),
+-	[CXST_ENULL]	= __DEF_FBTC_SLOT(5,   0xaaaaaaaa, SLOT_ISO),
++	[CXST_ENULL]	= __DEF_FBTC_SLOT(5,   0x55555555, SLOT_MIX),
+ 	[CXST_WLK]	= __DEF_FBTC_SLOT(250, 0xea5a5a5a, SLOT_MIX),
+ 	[CXST_W1FDD]	= __DEF_FBTC_SLOT(50,  0xffffffff, SLOT_ISO),
+ 	[CXST_B1FDD]	= __DEF_FBTC_SLOT(50,  0xffffdfff, SLOT_ISO),
+@@ -4153,6 +4153,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
+ 			_slot_set_le(btc, CXST_ENULL, s_def[CXST_ENULL].dur,
+ 				     s_def[CXST_ENULL].cxtbl, s_def[CXST_ENULL].cxtype);
++			_slot_set_dur(btc, CXST_EBT, dur_2);
+ 			break;
+ 		case BTC_CXP_OFFE_DEF2:
+ 			_slot_set(btc, CXST_E2G, 20, cxtbl[1], SLOT_ISO);
+@@ -4162,6 +4163,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
+ 			_slot_set_le(btc, CXST_ENULL, s_def[CXST_ENULL].dur,
+ 				     s_def[CXST_ENULL].cxtbl, s_def[CXST_ENULL].cxtype);
++			_slot_set_dur(btc, CXST_EBT, dur_2);
+ 			break;
+ 		case BTC_CXP_OFFE_2GBWMIXB:
+ 			if (a2dp->exist)
+@@ -4170,6 +4172,7 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
+ 				_slot_set(btc, CXST_E2G, 5, tbl_w1, SLOT_MIX);
+ 			_slot_set_le(btc, CXST_EBT, cpu_to_le16(40),
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
++			_slot_set_dur(btc, CXST_EBT, dur_2);
+ 			break;
+ 		case BTC_CXP_OFFE_WL: /* for 4-way */
+ 			_slot_set(btc, CXST_E2G, 5, cxtbl[1], SLOT_MIX);
 -- 
 2.51.0
 
