@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851C23043D9;
-	Sat, 25 Oct 2025 16:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288FD3090CB;
+	Sat, 25 Oct 2025 16:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409457; cv=none; b=ttDRgzLFHwVx4VJilcAojyFNdsBbELeoLv1c9kPe3T/IlfBkeVyO0MttbscCBn162f5aHJHSWc7jRl0jp9v/jrRRetv4ZBVrZ1Iay4bABNcbs/J/7j6AwrSRjWRFwwMJ0xDChRqr5o0jCMmhllayAVDjSPJfdkh6b6Xgg1V4eUI=
+	t=1761409460; cv=none; b=X88/pLtxNhywmNM85m3qLxcgrPNB1xO9qm8i4tfk9V78OHhDiBcS+Puuxslb3RHeVdbhmbaiT3orhtxeWt7u9SgRiOMRlI0+nQPJwlfkTHwUp+nD+N7p1rvAR8FTNDzWcpelcrssAaqe52vLeJ38nxNx3Xvi3kmy5IFb3QuvqQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409457; c=relaxed/simple;
-	bh=f2mXaMdRp5tDwnL9/a/EtwaLIu81gOvYcVwx5gGo0Mo=;
+	s=arc-20240116; t=1761409460; c=relaxed/simple;
+	bh=DYbrjcg5nN5LP1aVaXSLPlizbR0Zl9bPOrw0viyuofE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IOByyjNvPE51MHaxYfybMbf7L0F/Cq+TUCS148RVNwJu1khaWnZwfoG0PuTj0oobgFdM8GilTMzTkRsrH6BOyrhsGCy7ZzbkENRmHsJx31PiE0iz5YnDAp31UEAm5EJ0G0t/3n2Fs9cYjbl9r/wdhXs3CMg7z8A/Kw/vDsP8V0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOcKMjis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D3dABrcxfnqO1zZ5f+k1OPEZDhi2ixW8M2ftUji90MnzN2P4X2nvNxU/dSgfNBFflcNnZUDQuv4KCDeLke6ZU33bROwbK4PDA4zqjF8RYJPQpZpApIQNIKc+bJuWg31WLe2qmoZIVFS/LCQKxlq4bzPLXNxpbN2vEMcOag+5zBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j2CF3LXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOcKMjis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BB2C4CEFB;
-	Sat, 25 Oct 2025 16:24:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j2CF3LXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5471C4CEF5;
+	Sat, 25 Oct 2025 16:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409457;
-	bh=f2mXaMdRp5tDwnL9/a/EtwaLIu81gOvYcVwx5gGo0Mo=;
+	s=k20201202; t=1761409460;
+	bh=DYbrjcg5nN5LP1aVaXSLPlizbR0Zl9bPOrw0viyuofE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOcKMjisDr8RTnjytlIPfw7mDluky3udoGpenqUk8Anmwni24QNA1Keiy4sMHClhE
-	 dWG7irViRQBVX0H7gHVfCODhjLllbcgu2xgGMcnVhGIELC0fopRfVPvALHLB4wO2/u
-	 vDmie2J6nSqoSiqmTMJN1BaimgbcMgyxAYX5QZxxThOZUSnqrmHnmWeVFtbXR/9oPj
-	 7sTfXnInLkHugtih2CgHEzGGbKCN3sZ66Pp8L3+eSdNgzVWyiEXTD3UU04VqWT9F5R
-	 8I4l6gQhZYXLMBArFDKaFpcWmNQ5F93mpeld9XhlTcw9/KDt0xxPvKb+aTaf3kskbL
-	 vVd6z9tE7HfXA==
+	b=j2CF3LXQTMb/633g0nhWqGAcTpwcYNloGgpFx+swkR6yM2DpVA8OWJUJHHJWktVNe
+	 RFjXBKS0m2ifMVc+I8uh6VLD4IMTjVNRQHkCkowu4w5RimqykhvNjna1YTFfQVKX6Q
+	 xheRA4jEwghWOpN92BcpEFrjYZ2ukap5zpzhR/KzzH3f8to5/5bzF9HmMCscce772N
+	 091ixFGrnLSYCZsIBAh4MgCHwpIdEhY21M5Ukvj+OIxa3/BXDnEHZKuVvJRMrNP0ae
+	 EKXpPXh1G5Yc7+yCQ0UJ8BtF+DBeEiAv5ABQZ9+GI7fprTTulVPuOXaW43TGbVAcHp
+	 Fq5IA4zBpWVMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Wang <unicorn_wang@outlook.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+Cc: Ce Sun <cesun102@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	s-vadapalli@ti.com,
-	bhelgaas@google.com,
-	alexander.deucher@amd.com,
-	kishon@kernel.org,
-	18255117159@163.com,
-	alexandre.f.demers@gmail.com,
-	bwawrzyn@cisco.com,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] PCI: cadence: Check for the existence of cdns_pcie::ops before using it
-Date: Sat, 25 Oct 2025 11:59:23 -0400
-Message-ID: <20251025160905.3857885-332-sashal@kernel.org>
+	xiang.liu@amd.com,
+	tao.zhou1@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdgpu: Correct the counts of nr_banks and nr_errors
+Date: Sat, 25 Oct 2025 11:59:24 -0400
+Message-ID: <20251025160905.3857885-333-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,129 +52,90 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Wang <unicorn_wang@outlook.com>
+From: Ce Sun <cesun102@amd.com>
 
-[ Upstream commit 49a6c160ad4812476f8ae1a8f4ed6d15adfa6c09 ]
+[ Upstream commit 907813e5d7cadfeafab12467d748705a5309efb0 ]
 
-cdns_pcie::ops might not be populated by all the Cadence glue drivers. This
-is going to be true for the upcoming Sophgo platform which doesn't set the
-ops.
+Correct the counts of nr_banks and nr_errors
 
-Hence, add a check to prevent NULL pointer dereference.
-
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-[mani: reworded subject and description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/35182ee1d972dfcd093a964e11205efcebbdc044.1757643388.git.unicorn_wang@outlook.com
+Signed-off-by: Ce Sun <cesun102@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-**Why Backport**
-- The shared Cadence core dereferences `pcie->ops` unconditionally in
-  several hot paths (`drivers/pci/controller/cadence/pcie-cadence-
-  host.c:534`, `pcie-cadence.c:109` and `:140`, `pcie-cadence.h:497`,
-  `505`, `511`). If a glue driver legitimately leaves `ops` unset, the
-  host setup oopses during probe.
-- The new in-tree Sophgo driver (`drivers/pci/controller/cadence/pcie-
-  sg2042.c:35-69`) deliberately does not populate `pcie->ops`; without
-  this fix `cdns_pcie_host_setup()` trips the NULL dereference in
-  `cdns_pcie_host_init_address_translation()` immediately, so the
-  controller cannot even enumerate.
-- The patch simply wraps each dereference with `pcie->ops &&
-  pcie->ops->...`, meaning existing platforms that register callbacks
-  keep identical behaviour, while platforms that do not provide optional
-  hooks now fall back to the previously implied defaults — avoiding the
-  fatal crash.
 
-**Risk**
-- Change is entirely in guard logic, no register programming altered
-  when `ops` is present. For platforms that rely on
-  `cpu_addr_fixup`/link callbacks, the functions still run because the
-  pointer remains non-NULL.
-- For platforms without callbacks, the driver already relied on the
-  default behaviour implied by the inline helpers; the patch just
-  matches that expectation. Regression risk is therefore minimal.
+- Fix scope: Corrects internal counters in AMDGPU ACA error accounting;
+  minimal, localized change confined to
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c`.
+- Bug 1 (nr_banks undercount after free): `aca_banks_release()` now
+  decrements `nr_banks` as it removes/frees each node, keeping the count
+  consistent with the list length; see
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:79`. Without this, after
+  freeing the list the `nr_banks` field could remain stale (non-zero),
+  misleading any subsequent logic that inspects the struct after release
+  (even if current users mostly recreate the struct).
+- Bug 2 (nr_errors negative/miscount): `new_bank_error()` now increments
+  `aerr->nr_errors` when a new error is appended to the list, matching
+  the existing decrement in `aca_bank_error_remove()`; see
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:242` (increment) and
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:276` (decrement). Previously,
+  errors would be removed and counted down without ever counting up,
+  driving `nr_errors` negative and breaking basic accounting.
+- Concurrency correctness: Both the increment and decrement of
+  `nr_errors` are performed while holding `aerr->lock` (add/remove paths
+  already take the mutex), so the fix is thread-safe and consistent with
+  existing synchronization.
+- Call flow correctness: The ACA error cache is drained in
+  `aca_log_aca_error()` which removes each entry (and thus decrements
+  the counter) under the same lock; see
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:540-556`. With the fix,
+  `nr_errors` returns to zero after logging, as intended.
+- User-visible impact: Prevents incorrect/negative error counts in ACA
+  error accounting and avoids stale bank counts after release. This
+  improves reliability of error reporting/diagnostics (including CPER-
+  related reporting that relies on bank collections; e.g., the deferred
+  UE path passes `de_banks.nr_banks` to CPER generation at
+  `drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:445`).
+- Risk assessment: Very low. No API/ABI changes, no architectural
+  changes, only adjusts counters to mirror existing list mutations.
+  Logic paths remain the same; locking is preserved.
+- Stable criteria fit: This is a small, targeted bug fix correcting
+  internal state; no features added; low regression risk; affects
+  correctness of error accounting in a driver subsystem.
 
-**Next Steps**
-- 1) Smoke/boot-test on at least one Cadence RC platform (e.g. TI J721E)
-  plus the Sophgo SG2042 host once both patches are staged, to confirm
-  link bring-up stays healthy.
+Given the above, this commit is a good candidate for backporting to
+stable trees.
 
- drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
- drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
- drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index 59a4631de79fe..fffd63d6665e8 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -531,7 +531,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
- 
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-index 70a19573440ee..61806bbd8aa32 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence.c
-@@ -92,7 +92,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
-@@ -123,7 +123,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+index d1e431818212d..9b31804491500 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+@@ -76,6 +76,7 @@ static void aca_banks_release(struct aca_banks *banks)
+ 	list_for_each_entry_safe(node, tmp, &banks->list, node) {
+ 		list_del(&node->node);
+ 		kvfree(node);
++		banks->nr_banks--;
  	}
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index 1d81c4bf6c6db..2f07ba661bda7 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -468,7 +468,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
- 
- static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->start_link)
-+	if (pcie->ops && pcie->ops->start_link)
- 		return pcie->ops->start_link(pcie);
- 
- 	return 0;
-@@ -476,13 +476,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- 
- static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->stop_link)
-+	if (pcie->ops && pcie->ops->stop_link)
- 		pcie->ops->stop_link(pcie);
  }
  
- static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->link_up)
-+	if (pcie->ops && pcie->ops->link_up)
- 		return pcie->ops->link_up(pcie);
+@@ -238,6 +239,7 @@ static struct aca_bank_error *new_bank_error(struct aca_error *aerr, struct aca_
  
- 	return true;
+ 	mutex_lock(&aerr->lock);
+ 	list_add_tail(&bank_error->node, &aerr->list);
++	aerr->nr_errors++;
+ 	mutex_unlock(&aerr->lock);
+ 
+ 	return bank_error;
 -- 
 2.51.0
 
