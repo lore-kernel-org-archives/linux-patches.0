@@ -1,157 +1,144 @@
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F653074BB
-	for <patches@lists.linux.dev>; Sat, 25 Oct 2025 16:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B89303A1A;
+	Sat, 25 Oct 2025 16:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409171; cv=none; b=Bel+3vOgUwOYMiar9uOqB/rxZ57abTtUg0Tr6fu4o07d3DS6rsdycL9w6v5dKsN6owSezxaxsiGUmtyXloA3iWVe1xVzh7UG3kfz38RgKvWppC+945rCCWrG77hkazki/iAT12Bl6H/vxn3PiNJDqdEW1Ux/K/+0Ur0KUThA2Vg=
+	t=1761409172; cv=none; b=DCFFEphJjiu/PrgpDMTUqZLSwx1qeOdFdZRKn1TNpO/7MUpC85Q9MxmRkU3FUZMFK3jqckKIbGbEHCh3Zcz74PTt+M01zxEX+TehcV+Epn4i7x2xvNZp8cd2L1quXhQ1rYwAVAlJECk4+2HKEU2jM1yrkWSFN0pA+5CWrt7H8Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409171; c=relaxed/simple;
-	bh=1UAhRNMwiY8e1loSbd3FnzSqcx+pE0AoZQ5cdLLzwYw=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=DGMKZvZ2iFlA/rvy43S0zGKWpxWwjC7QlYrn5YAJlXM4VPyLWhJpP/Q5jPVujECLtEOVg41IeKaK2pjPLscmDa30WBq5Az3sGrmVDGKqA3YLlbUOk/xU6Px7ZHsDqK/qlHvXVTMRTp9Y6mWmKPcWzt/M06yWzEsTGZqwgfBiXgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-430d789ee5aso40933265ab.2
-        for <patches@lists.linux.dev>; Sat, 25 Oct 2025 09:19:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761409168; x=1762013968;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:in-reply-to
-         :date:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xDL5qUn8r7zj0sFG8H7qyEhZdijB3u/BoMNxYA4F7hU=;
-        b=d86wq/ymBi/8y4YA5YUnNz+cWz/Yanx/S20DqtxqHyeg57K5isEieDk1boOCw0dYwz
-         TfY798vuTpy+3gsRPlg7mS6D9rGHHAotjw2ucI3PU94FVIuIyzbW8PJ6fx8M92JQXuOC
-         Yttu7mBUyNqqRidAiH7QCq/kpbcHDn4eHuCQSWOzFGEl93LGn9PFmMhkZXqFZ40Es6li
-         BO83fgmEz2Dz2IUNCMfk8QYG0EExTRN6BX8LpPNHQN2vTDe3fqtCKI4eM12D3TEZq095
-         Zox5g7VP8R0lEUA0oEXe953WjyMqJaTA5oU56vseWP0OJtPGvYzwAKQmenkq4gfFg0Y4
-         65MQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWM1o8IoQVS676Jtk8m+FLkATXZc+1hMYY9wr6Dp3HiarFX+mByuMM65+Ygvx0lwCa0V7mCPV6X@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxo/v0LuhjPHMbhhHgVlrrFoY0PZJsX0Luq0WP5dm0qReWqeSeZ
-	DnKsWT7rYTE5NflJxxZ1q+Oqt4WrVFS9f4elq+XGpQEtrPYZllUXvLaCHZH8waoWiUI+27a+TU9
-	rNKWZYBoaqaTrh55VyFMVKYZpNhRc4MyJmYp7o4k3OIkCtMAAZCIpvp8pxjc=
-X-Google-Smtp-Source: AGHT+IHyDU/FUDHCCq350lspC6NErVthfk4ehnVafDPOWHBjDawZElv4u2ug0d6cNWNJu99xYN/guv5PQJiajp22dXZ/SBHCYA4i
+	s=arc-20240116; t=1761409172; c=relaxed/simple;
+	bh=bhjmNycavTx9SKMSjN5+rFGtU28kgwO7XO7XDfPh2eA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XFhYl+tA5tCh1CLufMej+NZTn4owaApeHXu6R1ZPfEBaIfmq9i1gAN/7IWnEr4NYYQp84AXGK9FR+6pSndAQEfzkhsxvDn6ou8OokJmV9bqA6p0Teyk/O0mDZ/ksTGobG4QIe8eIz6EFRU0XlKSaVv6fFTKn6ZiQZBh1343w0b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NoLuJ5Mb; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NoLuJ5Mb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC18C4CEFB;
+	Sat, 25 Oct 2025 16:19:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761409171;
+	bh=bhjmNycavTx9SKMSjN5+rFGtU28kgwO7XO7XDfPh2eA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NoLuJ5MbDlqn+mnQfvcn1iYO/Qw5ruJEZl/+tTdUnVV3ojstDDic7G4mOku25uTnc
+	 +wKVm8WQKJgteWFRMszFTKAcsEuptHPXd/27o0UI5un96ds18n6eDHBEDyBezjO4AJ
+	 dU/t3CTCYoMhtkITgHPSPVy3QBG4k2BQtForQMfZ4H2DYGEiuFmDVDGQcKr/JodB6L
+	 VH3ANxCpctdQwBXJdJc4hQCSwjP/viE6rI8xwH1chNTW2WBLTW+cOKn6biAByMrVpc
+	 J3XuHE4nEr+HhvY0bHJNBo4p0wlMkJcze+Cnv/8ETVzmmNYJNRlPsLc4b2aKhVgWN2
+	 1cYYXnNf8cKHw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	siqueira@igalia.com,
+	Hawking.Zhang@amd.com,
+	alexandre.f.demers@gmail.com,
+	linux@treblig.org
+Subject: [PATCH AUTOSEL 6.17-5.15] drm/amd/pm: Use cached metrics data on aldebaran
+Date: Sat, 25 Oct 2025 11:57:40 -0400
+Message-ID: <20251025160905.3857885-229-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
+References: <20251025160905.3857885-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:2307:b0:42f:a60a:8538 with SMTP id
- e9e14a558f8ab-430c52b5afemr394804655ab.16.1761409168407; Sat, 25 Oct 2025
- 09:19:28 -0700 (PDT)
-Date: Sat, 25 Oct 2025 09:19:28 -0700
-In-Reply-To: <20251025160905.3857885-227-sashal@kernel.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <68fcf890.a70a0220.12011.0001.GAE@google.com>
-Subject: Re: [PATCH AUTOSEL 6.17-5.4] jfs: fix uninitialized waitqueue in
- transaction manager
-From: syzbot <syzbot@syzkaller.appspotmail.com>
-To: sashal@kernel.org
-Cc: alexander.deucher@amd.com, alexandre.f.demers@gmail.com, 
-	dave.kleikamp@oracle.com, jfs-discussion@lists.sourceforge.net, 
-	patches@lists.linux.dev, sashal@kernel.org, shaggy@kernel.org, 
-	ssrane_b23@ee.vjti.ac.in, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
->
-> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
->
-> The transaction manager initialization in txInit() was not properly
-> initializing TxBlock[0].waitor waitqueue, causing a crash when
-> txEnd(0) is called on read-only filesystems.
->
-> When a filesystem is mounted read-only, txBegin() returns tid=3D0 to
-> indicate no transaction. However, txEnd(0) still gets called and
-> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-> waitqueue was never initialized because the initialization loop
-> started at index 1 instead of 0.
->
-> This causes a 'non-static key' lockdep warning and system crash:
->   INFO: trying to register non-static key in txEnd
->
-> Fix by ensuring all transaction blocks including TxBlock[0] have
-> their waitqueues properly initialized during txInit().
->
-> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
->
-> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> LLM Generated explanations, may be completely bogus:
->
-> YES
-> - `txInit()` previously skipped index 0 when priming the `tblock` wait
->   queues, so `TxBlock[0].waitor` stayed uninitialized
->   (`fs/jfs/jfs_txnmgr.c:270-284` before the patch). When the filesystem
->   is mounted read-only, `txBegin()` legitimately returns `tid =3D=3D 0`
->   (`fs/jfs/jfs_txnmgr.c:348-354`), yet every caller still executes
->   `txEnd(tid)`. `txEnd()` immediately calls `TXN_WAKEUP(&tblk->waitor)`
->   on that reserved entry (`fs/jfs/jfs_txnmgr.c:500-506`), which trips
->   lockdep (=E2=80=9Ctrying to register non-static key=E2=80=9D) and can p=
-anic the
->   system, exactly as reported by syzbot.
-> - The fix ensures both `waitor` and `gcwait` are initialized for all
->   `tblock`s, including the reserved slot 0, by running a dedicated loop
->   from 0..nTxBlock-1 before wiring up the freelist
->   (`fs/jfs/jfs_txnmgr.c:275-283`). No other behaviour changes occur: the
->   freelist population for indices =E2=89=A51 remains identical, and slot =
-0 is
->   still excluded from allocation.
-> - The bug was introduced when `txBegin()` started returning 0 for read-
->   only mounts (commit 95e2b352c03b0a86, already in 6.6+ stable). Thus
->   every supported stable tree that contains that change is susceptible
->   to an immediate kernel crash whenever `txEnd(0)` executes=E2=80=94trigg=
-erable
->   by routine metadata operations on a read-only JFS volume.
-> - The patch is tiny, localized to initialization, and carries negligible
->   regression risk: initializing a waitqueue head twice is safe, and no
->   concurrent activity exists during `txInit()`. There are no
->   prerequisite dependencies.
-> - Because this resolves a real, user-visible crash introduced in
->   currently-supported stable releases and does so with a minimal, well-
->   scoped change, it squarely meets the stable backport criteria.
->
->  fs/jfs/jfs_txnmgr.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-> index be17e3c43582f..7840a03e5bcb7 100644
-> --- a/fs/jfs/jfs_txnmgr.c
-> +++ b/fs/jfs/jfs_txnmgr.c
-> @@ -272,14 +272,15 @@ int txInit(void)
->  	if (TxBlock =3D=3D NULL)
->  		return -ENOMEM;
-> =20
-> -	for (k =3D 1; k < nTxBlock - 1; k++) {
-> -		TxBlock[k].next =3D k + 1;
-> +	for (k =3D 0; k < nTxBlock; k++) {
->  		init_waitqueue_head(&TxBlock[k].gcwait);
->  		init_waitqueue_head(&TxBlock[k].waitor);
->  	}
-> +
-> +	for (k =3D 1; k < nTxBlock - 1; k++) {
-> +		TxBlock[k].next =3D k + 1;
-> +	}
->  	TxBlock[k].next =3D 0;
-> -	init_waitqueue_head(&TxBlock[k].gcwait);
-> -	init_waitqueue_head(&TxBlock[k].waitor);
-> =20
->  	TxAnchor.freetid =3D 1;
->  	init_waitqueue_head(&TxAnchor.freewait);
-> --=20
-> 2.51.0
->
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+[ Upstream commit e87577ef6daa0cfb10ca139c720f0c57bd894174 ]
+
+Cached metrics data validity is 1ms on aldebaran. It's not reasonable
+for any client to query gpu_metrics at a faster rate and constantly
+interrupt PMFW.
+
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+YES
+
+Rationale
+- What changed: In
+  `drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:1717`, the call
+  `smu_cmn_get_metrics_table(smu, &metrics, true)` is switched to `...
+  false`. This flips the `bypass_cache` flag so Aldebaran’s
+  `aldebaran_get_gpu_metrics()` uses the cached metrics instead of
+  forcing a fresh PMFW query every time.
+- Cache semantics: `smu_cmn_get_metrics_table()` caches SMU metrics for
+  1 ms and refreshes only if the cache is older or bypassed. See
+  `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c:1023` (1 ms validity),
+  `...:1034` (updates and timestamps cache).
+- Consistency with existing Aldebaran paths: Other Aldebaran helpers
+  already use the cached path, e.g. `aldebaran_get_smu_metrics_data()`
+  calls `smu_cmn_get_metrics_table(smu, NULL, false)` to reuse cached
+  metrics (drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:618). This
+  change makes `get_gpu_metrics` consistent with those helpers.
+- Why it matters: Forcing fresh metrics on every `gpu_metrics` read
+  causes frequent SMU/PMFW interactions. On Aldebaran, cached metrics
+  are valid for 1 ms (as the commit message notes). Using the cache
+  avoids needless PMFW interrupts when clients poll faster than 1 kHz,
+  improving firmware responsiveness and reducing overhead. The returned
+  data can at most be 1 ms old, which is within the defined validity
+  window.
+
+Risk and scope
+- Minimal change, localized to Aldebaran: One boolean flip in an
+  Aldebaran-specific function; no architectural or API changes; no
+  cross-subsystem impact.
+- Behavior impact is bounded: Only affects callers that poll faster than
+  1 ms; they now see properly cached values (up to 1 ms old) rather than
+  forcing a fresh read. This matches the established 1 ms cache policy
+  in `smu_cmn_get_metrics_table`.
+- Safe initialization: Metrics cache is initialized to 0 so the first
+  fetch always refreshes
+  (drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c:250).
+- No security or correctness regressions: Reading slightly-cached
+  telemetry is expected and already used elsewhere; avoids performance
+  pitfalls from excessive PMFW interrupts.
+
+Stable backport criteria
+- Fixes a real-world issue (excessive PMFW interrupts / overhead under
+  high-frequency polling) that can affect users.
+- Small, contained change with low regression risk.
+- No new features or ABI changes; aligns behavior with existing cache
+  policy and other Aldebaran code paths.
+- Touches a single driver component without architectural refactoring.
+
+Given the narrow scope, clear benefit, and low risk, this is a good
+candidate for stable backport.
+
+ drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+index c63d2e28954d0..b067147b7c41f 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -1781,7 +1781,7 @@ static ssize_t aldebaran_get_gpu_metrics(struct smu_context *smu,
+ 
+ 	ret = smu_cmn_get_metrics_table(smu,
+ 					&metrics,
+-					true);
++					false);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.51.0
 
