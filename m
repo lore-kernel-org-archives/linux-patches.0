@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146312FB99A;
-	Sat, 25 Oct 2025 16:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0BD2FB99A;
+	Sat, 25 Oct 2025 16:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409652; cv=none; b=eGqdc2NlLcVVT8MJIVcT4mmbnRkU/kbeElFXwRB1BIEK+Uq5rDRQvMgQOWA/WyCHXUQXhRReZex7TEHZJSn/mTLv3ldgVOUPS6ruDce4E4q2S+iOZkupvLAJgdGUXVtMyYZgE5xn+AYnXnCZOTKkVgsCFllKx1gN2pbQxK2KT7k=
+	t=1761409654; cv=none; b=NU3b3ykYat5GgFeZx+RJMmd3f6wT45VsiNaFHBeLXmllKercP+ZDKx1I5N7GzL8iV+TZsJFctvmxk2mWRR71MVnjwixaDI5KMNIDTe0sIBNxAiDxVY7AD1gOD0bAOFGRz+rJFf9xRDCiTMxMdltNE19BbpgHhAxETWtmQ9GQcTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409652; c=relaxed/simple;
-	bh=sXUlsAQeX/AuROKLwiNRZ/qwBlXG+ys5hiXEbZAOnQs=;
+	s=arc-20240116; t=1761409654; c=relaxed/simple;
+	bh=LGTWECTp9Sr1VtKfiq6kQy/0KDcz9C8xFM34r9ANKFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I17HLK0a4nneSA/V7fQypctvMU6nvhoFFFNl+51ljoitzz6y050JrAGNHM7smcD26FBL+akUKlpxKzgiW8jdTad5Ug7by8554fF8e+aPPNAivqmbMLKBcUgeMNpNoXEu86YkVmvnDIhaM89QaQg/MPOjeUFXWoS+GFVLsK+lrPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rEaD5dxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=prFnJ7yElnVnyd3gAqO+QcpmONEfPORv0TaV+avGZqxKQxGRMtsBn8l1JsBAk+RIJ2jvhzjltRqDYDYOip9cW4QoqLnYHKDJxCVP9yMAhTwec9PSQ9mWn92L7GLyTxBmUKEiE2l1+ikUnsaGRsMit8YZ2nzMpT1xuCma0LKKPn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZpZ9uuy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rEaD5dxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6A7C4CEF5;
-	Sat, 25 Oct 2025 16:27:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZpZ9uuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADBEC4CEFB;
+	Sat, 25 Oct 2025 16:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409652;
-	bh=sXUlsAQeX/AuROKLwiNRZ/qwBlXG+ys5hiXEbZAOnQs=;
+	s=k20201202; t=1761409654;
+	bh=LGTWECTp9Sr1VtKfiq6kQy/0KDcz9C8xFM34r9ANKFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEaD5dxrRRwAaS4gq7rTPuo5l1COV81V2I/M0Tu8DrmWW+97kQ9koYMXXpqDsV8qp
-	 nAuHBfSjiSP9v6yG/cFgCE6oZ8dYbalIh1+S+mpT482pyvIEV42sWSsBw9IeNApGsZ
-	 WUu8dtNBEBfCxRAxOAHrhys92ED9ZrDqG19e03OQaAo4nHt0ml/ZaxsRoqVlk8xKac
-	 t6FXOGs5CWMAtIfONi8UBA7Atwi7a7DEQY2cSGQfEdo8Amu0KlQk7OLjTLCTjYHbf+
-	 5Bbzm8mUL6ZiEImzxJ6YYhe9JNtrTcrt8f/CBXiVIyWObmDxPSgWKhPXo5h2G+eVYx
-	 zUI9No02DhK0A==
+	b=rZpZ9uuyV/XlBxPKJ850UNKZkmpHnuWKKtsPe+aX7n1HG3EN2NGlYH7NFJpwAeIiv
+	 icdIzBZ1BZf9KHNt+tGIzlnUnVHJkIHzOu3nq3GGb8aVfZaHlwCKFTUZrrQ6OZ+LIj
+	 j1mi3Y4y3cgFcCoRpypYAUCJBW7XFUySLBDj965q3LhhDqf5arkDUJ3z+dTigQG48d
+	 fVWWS9+PiqW4idJ5IA0ePabZTBEOIx6ZChmYfK6Max8+lNuSwXg4sb7N1NZyvx0ix4
+	 5+UJK5h+k2evd7DT8EoYKszzcgRbecWd8N3WFvjQdnFVC+/LxQJMPgLxgoCG85yDwh
+	 NKVy+Ob7czTTg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Harikrishna Shenoy <h-shenoy@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	ethan@ethancedwards.com,
-	alexandre.f.demers@gmail.com,
-	sakari.ailus@linux.intel.com
-Subject: [PATCH AUTOSEL 6.17] ASoC: Intel: avs: Do not share the name pointer between components
-Date: Sat, 25 Oct 2025 12:00:37 -0400
-Message-ID: <20251025160905.3857885-406-sashal@kernel.org>
+	tomi.valkeinen@ideasonboard.com,
+	aradhya.bhatia@linux.dev,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.4] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
+Date: Sat, 25 Oct 2025 12:00:38 -0400
+Message-ID: <20251025160905.3857885-407-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,28 +49,28 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Harikrishna Shenoy <h-shenoy@ti.com>
 
-[ Upstream commit 4dee5c1cc439b0d5ef87f741518268ad6a95b23d ]
+[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
 
-By sharing 'name' directly, tearing down components may lead to
-use-after-free errors. Duplicate the name to avoid that.
+Enable support for data lane rates between 80-160 Mbps cdns dphy
+as mentioned in TRM [0] by setting the pll_opdiv field to 16.
+This change enables lower resolutions like 640x480 at 60Hz.
 
-At the same time, update the order of operations - since commit
-cee28113db17 ("ASoC: dmaengine_pcm: Allow passing component name via
-config") the framework does not override component->name if set before
-invoking the initializer.
+[0]: https://www.ti.com/lit/zip/spruil1
+(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
 
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250818104126.526442-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
+Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,90 +78,99 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Rationale
-- Fixes a real bug (use-after-free) by eliminating shared ownership of
-  the component name. The new code duplicates the string so each
-  component owns its copy: `acomp->base.name = devm_kstrdup(dev, name,
-  GFP_KERNEL);` in `sound/soc/intel/avs/pcm.c`. This prevents dangling
-  references when one component tears down while another still
-  references the shared pointer.
-- Correctly updates initialization order to align with current ASoC core
-  behavior: the name is set before
-  `snd_soc_component_initialize(&acomp->base, drv, dev);`. Since commit
-  cee28113db17 (“ASoC: dmaengine_pcm: Allow passing component name via
-  config”), the core respects a pre-set `component->name` instead of
-  overwriting it. Upstream change in sound core (sound/soc/soc-core.c)
-  made `snd_soc_component_initialize()` only allocate a name if
-  `component->name` is NULL, ensuring the driver-provided name persists.
-- Removes the old post-init override `acomp->base.name = name;`, which
-  was both unsafe (shared pointer) and no longer needed given the core’s
-  updated semantics.
-- Minimal and localized change: affects only Intel AVS registration path
-  (`avs_soc_component_register()` in `sound/soc/intel/avs/pcm.c`), not
-  runtime PCM/DMA paths, scheduling, or broader ASoC architecture.
-  Regression risk is low.
-- User impact: prevents crashes/corruption during component
-  teardown/unbind or when multiple components shared the same `name`
-  source. This is a classic stable-worthy bug fix (memory safety).
+- What it fixes
+  - The driver rejected valid MIPI D‑PHY HS lane rates between 80–160
+    Mbps, preventing low‑resolution modes (e.g., 640x480@60) from
+    working on Cadence D‑PHY based platforms, despite both the MIPI
+    D‑PHY spec and the SoC TRM allowing them. This commit corrects that
+    oversight by:
+    - Lowering the minimum accepted data lane rate from 160 Mbps to 80
+      Mbps in `cdns_dphy_get_pll_cfg()` at `drivers/phy/cadence/cdns-
+      dphy.c:139`.
+    - Selecting a valid PLL output divider for that range (`pll_opdiv =
+      16`) at `drivers/phy/cadence/cdns-dphy.c:149-150`.
+  - The rest of the driver already assumes support starting at 80 Mbps:
+    `cdns_dphy_tx_get_band_ctrl()` uses `tx_bands[]` that includes 80 as
+    the first entry (`drivers/phy/cadence/cdns-dphy.c:112-116`), so the
+    prior 160 Mbps lower bound was internally inconsistent and caused
+    configuration to fail early in `cdns_dphy_get_pll_cfg()` even when
+    band selection supported 80.
 
-Dependencies / Backport Notes
-- Depends on core behavior introduced by cee28113db17 (ASoC core no
-  longer overwrites `component->name` if set prior to initialization).
-  For stable trees lacking that change, this patch would need
-  adaptation:
-  - Either keep setting the duplicated name after
-    `snd_soc_component_initialize()` or backport the core behavior
-    first.
-- Name lifetime/cleanup in the ASoC core: newer kernels that allow
-  externally provided names must not unconditionally
-  `kfree(component->name)` on component cleanup. Ensure your target
-  stable tree’s `snd_soc_component_cleanup()` matches modern ownership
-  semantics (many trees now treat `component->name` as externally
-  provided or use safe-free patterns). If not, prefer `kstrdup()` (non-
-  devm) here and rely on the core’s kfree to avoid double-free, or
-  backport the corresponding core cleanup change alongside.
-- API drift: newer trees use the `snd_soc_add_component()`/component-
-  init flow shown in this patch; older trees may have different
-  signatures. If your stable branch differs, the change remains
-  conceptually the same but needs trivial mechanical adjustment.
+- Change details and correctness
+  - Input validation: `dlane_bps` lower bound is relaxed to `80000000UL`
+    at `drivers/phy/cadence/cdns-dphy.c:139` to align with MIPI D‑PHY
+    minimum rates and the TI TRM reference.
+  - Divider selection: A new branch assigns `pll_opdiv = 16` for `80–160
+    Mbps` at `drivers/phy/cadence/cdns-dphy.c:149-150`. Existing
+    branches for higher rates remain unchanged, so behavior above 160
+    Mbps is unaffected.
+  - Register programming paths accept the new divider without format
+    changes:
+    - Reference IP path writes `OPDIV` directly via
+      `DPHY_CMN_OPDIV(cfg->pll_opdiv)` at `drivers/phy/cadence/cdns-
+      dphy.c:220-223`.
+    - TI J721e path writes `OPDIV` via
+      `FIELD_PREP(DPHY_TX_J721E_WIZ_OPDIV, cfg->pll_opdiv)` at
+      `drivers/phy/cadence/cdns-dphy.c:256-259`. The field width
+      supports values >= 16, so `16` encodes safely.
+  - Feedback/rounding: The computed `pll_fbdiv` remains within `u16`
+    range and the effective `hs_clk_rate` is returned back to the
+    framework (`drivers/phy/cadence/cdns-dphy.c:152-158`), preserving
+    existing rounding behavior.
 
-Summary
-- This is a targeted memory-safety fix with minimal scope and clear user
-  impact. It meets stable criteria when applied to branches that have
-  the updated ASoC core behavior (or with a small, well-understood
-  adaptation).
+- Why this is a good stable candidate
+  - User‑visible bug fix: Without this change, valid and common
+    low‑bandwidth display modes fail with `-EINVAL` during PHY
+    configuration, even though the platform and spec support them.
+  - Small, contained change: A few lines in one function in a single
+    driver. No architectural rework.
+  - Low regression risk:
+    - No impact to configurations ≥160 Mbps.
+    - The new range is guarded by the same band table already present
+      and validated (`drivers/phy/cadence/cdns-dphy.c:327-343`), and
+      global MIPI D‑PHY validation still runs before driver‑specific
+      logic (`drivers/phy/cadence/cdns-dphy.c:313-321` and
+      drivers/phy/phy-core-mipi-dphy.c).
+    - Both register programming paths simply consume the new `pll_opdiv`
+      value with no changes in encoding.
+  - Spec and TRM alignment: Matches MIPI D‑PHY minimum data rate and the
+    referenced TI TRM guidance to use `OPDIV=16` for 80–160 Mbps.
 
- sound/soc/intel/avs/pcm.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+- Stable policy fit
+  - Fixes an important functional gap (inability to drive valid low‑rate
+    modes).
+  - Minimal and localized changes with clear intent and references.
+  - No new features or ABI changes; just enabling spec‑compliant
+    operation previously blocked by the driver.
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 67ce6675eea75..e738deb2d314c 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -1390,16 +1390,18 @@ int avs_soc_component_register(struct device *dev, const char *name,
- 	if (!acomp)
- 		return -ENOMEM;
+Given the above, this is an appropriate and low‑risk backport to stable
+kernel trees.
+
+ drivers/phy/cadence/cdns-dphy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
+index de5389374d79d..1bd986cba8f7f 100644
+--- a/drivers/phy/cadence/cdns-dphy.c
++++ b/drivers/phy/cadence/cdns-dphy.c
+@@ -145,7 +145,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
  
--	ret = snd_soc_component_initialize(&acomp->base, drv, dev);
--	if (ret < 0)
--		return ret;
-+	acomp->base.name = devm_kstrdup(dev, name, GFP_KERNEL);
-+	if (!acomp->base.name)
-+		return -ENOMEM;
+ 	dlane_bps = opts->hs_clk_rate;
  
--	/* force name change after ASoC is done with its init */
--	acomp->base.name = name;
- 	INIT_LIST_HEAD(&acomp->node);
+-	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
++	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
+ 		return -EINVAL;
+ 	else if (dlane_bps >= 1250000000)
+ 		cfg->pll_opdiv = 1;
+@@ -155,6 +155,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+ 		cfg->pll_opdiv = 4;
+ 	else if (dlane_bps >= 160000000)
+ 		cfg->pll_opdiv = 8;
++	else if (dlane_bps >= 80000000)
++		cfg->pll_opdiv = 16;
  
- 	drv->use_dai_pcm_id = !obsolete_card_names;
- 
-+	ret = snd_soc_component_initialize(&acomp->base, drv, dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	return snd_soc_add_component(&acomp->base, cpu_dais, num_cpu_dais);
- }
- 
+ 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
+ 					  cfg->pll_ipdiv,
 -- 
 2.51.0
 
