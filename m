@@ -1,71 +1,80 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+Received: from relay.hostedemail.com (smtprelay0010.hostedemail.com [216.40.44.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C448B18E1F;
-	Sat, 25 Oct 2025 18:36:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5961821A447
+	for <patches@lists.linux.dev>; Sat, 25 Oct 2025 19:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761417376; cv=none; b=smHt/fMr+/HdVMnu96NEftM/f4VTNybyquKV+SySjE0eexpqIwzluakiAGF3Dn/6dTS/SsW2IXfGJW90SFxHt//jpEKNpTHqeiA6iY6gF3pNQMs/AgR4vPJUSTaZkkxz1bebTS1c7eLQMwnsnkVJpwg4wr4X/urOxQsgIZW1r/o=
+	t=1761420358; cv=none; b=FzvPZahZEgeIkCUDsFJ0yNILZ8HMRYxNKPxUyka0vaFGY7I93ZFyLe9ODPeJixz07e6wyqgq5cPBp269OUQDhXopeLBXw1w56Kdi8+BSGmnDHcs61hU4cmY7Lf/O2pimLXmpOToGeaaR1EwTXoEMbyMYWPsCfGroag22ZmC+K9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761417376; c=relaxed/simple;
-	bh=KODcySrExIg6wn2VGbfIskPdYJpjyaZmt8a+ivqWlFs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=AMiFJ3sAZeFl6EI74IpzIFf6gis9tSt0oixaKRr4S+jiHm7TOEcF0FGcrhkh2UmFX+LQRSJ501oCuAloSwEmXfflGeY5JDWEYPj5ybvo5CLbB5Aq4O/c9FnAErjxQ8gB3uPMN6tPDMWrFZONUrnziWYdSpeP9orc5+yuWBjF50Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=mAg6/cV5; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="mAg6/cV5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=KODcySrExIg6wn2VGbfIskPdYJpjyaZmt8a+ivqWlFs=;
-	t=1761417374; x=1762626974; b=mAg6/cV5VaAtt+euND5YrR05qJoILWMNkYoITYfkZWQ2ZqZ
-	na866l+lrjVHGCSfQXwsiJPMGsC3eRhSoa8hhbBk8I/CXLLlY0trv4RpDwTuLjidVpcGVuMsnLy/2
-	VViCiAwNHjzMOIh07grHx9205Ftfanbf5wWh087z/qA5C2YKaBpt4oNHrFN08G1ohSEHABN10s09M
-	aahasaXaosLnsau7HbNTKHLxmXCSryajvVxxl4iQhUvOMP8pfUZ9PNZjb6cq8IXdM982ATHAtcKrt
-	r9fp2XA4D/ALRSzf3CTa/M9tsKAGN8lcyi9DepGM6mcJqKrmOad5PPSH4TRHMTUA==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.98.2)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1vCj7V-00000005omn-3R2n;
-	Sat, 25 Oct 2025 20:36:06 +0200
-Message-ID: <72966d6ccecfcf51f741ca8243e446a0aaa9b5c1.camel@sipsolutions.net>
-Subject: Re: [PATCH AUTOSEL 6.17-6.12] wifi: mac80211: support parsing S1G
- TIM PVB
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev, 
-	stable@vger.kernel.org
-Cc: Lachlan Hodges <lachlan.hodges@morsemicro.com>, Arien Judge	
- <arien.judge@morsemicro.com>, chunkeey@googlemail.com, pkshih@realtek.com, 
-	alexander.deucher@amd.com, alexandre.f.demers@gmail.com,
- tglx@linutronix.de, 	namcao@linutronix.de, bhelgaas@google.com,
- linux-wireless@vger.kernel.org
-Date: Sat, 25 Oct 2025 20:36:04 +0200
-In-Reply-To: <20251025160905.3857885-99-sashal@kernel.org>
+	s=arc-20240116; t=1761420358; c=relaxed/simple;
+	bh=XMqi7Bh1BNLZKfN+KZrTPFp8zjrMA4E+wj7kNBhSdh8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=C0qiTV40rHTQl7u4sSxzx9s0OMzQbO8MwQi2f85irQP+1XdYYMM3hsvJtVsTt5WPQe1aEZEqTVW8ledrVtOg/rkEZJRUoXf/aS29P8+LfofWxVi6yuZmcDEFKk0NhAQsGw3OOLmCAS7asSqn2hgbsnk4/9CO+bRgtwWEYSMmhhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf16.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay06.hostedemail.com (Postfix) with ESMTP id ACD0B129347;
+	Sat, 25 Oct 2025 19:25:48 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf16.hostedemail.com (Postfix) with ESMTPA id 7F4FC2000D;
+	Sat, 25 Oct 2025 19:25:46 +0000 (UTC)
+Date: Sat, 25 Oct 2025 15:25:45 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, Vladimir Riabchun
+ <ferr.lambarginio@gmail.com>, mhiramat@kernel.org,
+ linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.17-6.1] ftrace: Fix softlockup in
+ ftrace_module_enable
+Message-ID: <20251025152545.534cb450@batman.local.home>
+In-Reply-To: <20251025160905.3857885-385-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
-	 <20251025160905.3857885-99-sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+	<20251025160905.3857885-385-sashal@kernel.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: rspamout08
+X-Rspamd-Queue-Id: 7F4FC2000D
+X-Stat-Signature: 6yzqks5de9frsbsiwds9bwsbas7hfgd9
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19Xb9xl1QfjMzJ0FPDKue1X1sp4w9TAnjA=
+X-HE-Tag: 1761420346-248664
+X-HE-Meta: U2FsdGVkX18ELnPSb5L3NDlysnvw/R0s3/WOQlBy9kZTIosIrZ+9IV6rFjTPeDLJMTGvk5Y5PtiMLyuk1RFcckxgwX9jPYHWZ2Ybi13GKOwUpkQRYGORVb/WWVh4W0I7veCeBx188jIZqTU8qmUhWKRk0qPWi/TcHx6YtRfIcyOmMcYAAx5ELsUjxdM/QOnet7d+jdDa6Mh7+Fe09PXtSU4+yUa+peHpMQ8mlY0heTarLu4bX5IA71KcRe6z9yCRpEC4v8WYX4/rJJ0+w0/Kr5qTC8BFK4hpAoctCKWVtg4nwVRJ8eXWoocFK+elYX1wdpzFg0jWhQDwIbaPPLa+BLDsGdZHWFW8
 
-On Sat, 2025-10-25 at 11:55 -0400, Sasha Levin wrote:
->=20
-> LLM Generated explanations, may be completely bogus:
->=20
-> YES
->=20
-> - Fixes a real functional gap for S1G (802.11ah):
+On Sat, 25 Oct 2025 12:00:16 -0400
+Sasha Levin <sashal@kernel.org> wrote:
 
-I guess, but ... there's no real driver for this, only hwsim, so there
-isn't really all that much point.
+> - The change inserts `cond_resched()` inside the inner iteration over
+>   every ftrace record (`kernel/trace/ftrace.c:7538`). That loop holds
+>   the ftrace mutex and, for each record, invokes heavy helpers like
+>   `test_for_valid_rec()` which in turn calls `kallsyms_lookup()`
+>   (`kernel/trace/ftrace.c:4289`). On huge modules (e.g. amdgpu) this can
+>   run for tens of milliseconds with preemption disabled, triggering the
 
-johannes
+It got the "preemption disabled" wrong. Well maybe when running
+PREEMPT_NONE it is, but the description doesn't imply that.
+
+-- Steve
+
+
+>   documented soft lockup/panic during module load.
+> - `ftrace_module_enable()` runs only in process context via
+>   `prepare_coming_module()` (`kernel/module/main.c:3279`), so adding a
+>   voluntary reschedule point is safe; the same pattern already exists in
+>   other long-running ftrace loops (see commits d0b24b4e91fc and
+>   42ea22e754ba), so this brings consistency without changing control
+>   flow or semantics.
+> - No data structures or interfaces change, and the code still executes
+>   under the same locking (`ftrace_lock`, `text_mutex` when the arch
+>   overrides `ftrace_arch_code_modify_prepare()`), so the risk of
+>   regression is minimal: the new call simply yields CPU if needed while
+>   keeping the locks held, preventing watchdog-induced crashes but
+>   otherwise behaving identically.
+
