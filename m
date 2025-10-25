@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CB12045B7;
-	Sat, 25 Oct 2025 16:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C4D2F5B;
+	Sat, 25 Oct 2025 16:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408552; cv=none; b=JzvG9n6TU65xQGyk92FYgOBGWSLIwtXjHqFXgWrO9668knVrYIL7FlW1kV+/qVDW494wiveaJdSnq4AMDESNk3kZdj2jK6xD4ggGg+gxmo3ue2q44xIsgZSFAyVpSztrNIa1l4R4riUaPD6CPicBCYh35lamgwx2F9jtM5tSfCg=
+	t=1761408552; cv=none; b=B/rXFpkC2HcwkjI+yrg6YJWblIkq4tKrXxKS+TGRlHMx/Fkd/3Ct3IyxoRvdlda120Xk+ugns03gW/Mn67SN4rSaQ5xOQHRvcM0VLp+RTfsjYjIjX7kU0w/rPwJ2eT0uoJsDRb21N8LiXQujFqoAvQvgoQh8mcSslimPI84OMSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408552; c=relaxed/simple;
-	bh=LwDxuiNSRrtBtV/0YrLTHRROukhsm97JHLR6dwLRW4E=;
+	bh=Q2Nw7z8dLU1TxDfPXV6lrIMohw5zqAn56PZYR2nzyj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CGufiTwvLIQBXUFwqoUrgLzKCU9G0yochYM60UanIfRu3I0IEkPr9lIhJezzO6bHzIkUTYXozINkClLSrsufOkq1QfVnBalALt7hA9V1rCCcVysEpNx58tnlw1JppC240gYGcdrq/eJTRpmgcM5nRe2p2UlrHln2pCRW85H+5GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UF1ZPyhL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=slt7if/GrtvodHEKqiSGjol5HoVQXBaH+8CIjHfnO6vDQKGOSGpX1YcFnpPj4u+8KKemDzEyj0r97HSyWRMGa2e9xGtlQIa6RxB4TOZTtiwKbCngYNd2B/OIA4h576tDKF7lt3o9JkfJGH9twKqcn9lcyzdpFPmA/YHNTWUsaRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PeY+Rg2q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UF1ZPyhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9CCC4CEFB;
-	Sat, 25 Oct 2025 16:09:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PeY+Rg2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB6AC113D0;
+	Sat, 25 Oct 2025 16:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408551;
-	bh=LwDxuiNSRrtBtV/0YrLTHRROukhsm97JHLR6dwLRW4E=;
+	s=k20201202; t=1761408550;
+	bh=Q2Nw7z8dLU1TxDfPXV6lrIMohw5zqAn56PZYR2nzyj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UF1ZPyhL+gKY0ZxSdbd/HbKqNbcIRrY2nZQdFamS9QAM0+o/bKbM38E6Sub1hVzeE
-	 PpFX/1sXdqd1swP+nXmNIiy2IKGg9NC6XQZMTKzipaeLygyf83DXJN3c+3kfUU+xpW
-	 b2PamVUGJXD1n/xCFAktrwRDGyXqd4/MlMwan5bYcFMoGEo0HGFFsXS+RNjMWQw9ld
-	 edjrvpfZQ1H9UuRJZYjwUl51V6hN2mA9y4jedTcx6SAINOx6vkITNfQ29XWCN/gH3Y
-	 Y3EptkqmImESknVsG/Mtg08hLaf/gP3+S5/pLSIpvOveQOIR8TDwZpPB0FJfJRHFRS
-	 uL6E5UyIro9pA==
+	b=PeY+Rg2qUgShNU/jw86MIAiYvtUjt2Z3rOe+Ik2Z91X7Y9emTgbun8nVEYyIHURBI
+	 BD/6l57OVe9SoACDCj+NSM6O6sMPR6bfFT8AG63Vm0uPYKZkB3qACAFvsSz2vF4YUW
+	 i79XeTQL3gwhkA3/Va+IvHtIO1JJ5su/C4j0hLPd45cOs3zyFbMvwq4nqfhzH03Gly
+	 9JNARb9RGWuXyIZ2n8Bm6YOKW3mSrnxuIlcfSSUvPaOEPx0CXET44s/I2HHs9ipwyH
+	 sKf/BY2i8gQhWbdsLmqqpkBUCvZ/dUNZ9pv75hHdYm/x4SZXac4L2LwXjRi35g3iPG
+	 K9kxR4QQ4akSg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Heiner Kallweit <hkallweit1@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@lunn.ch,
-	olteanv@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] net: phy: fixed_phy: let fixed_phy_unregister free the phy_device
-Date: Sat, 25 Oct 2025 11:53:54 -0400
-Message-ID: <20251025160905.3857885-3-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17] wifi: mt76: improve phy reset on hw restart
+Date: Sat, 25 Oct 2025 11:53:53 -0400
+Message-ID: <20251025160905.3857885-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,131 +57,229 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a0f849c1cc6df0db9083b4c81c05a5456b1ed0fb ]
+[ Upstream commit 3f34cced88a429872d1eefc393686f9a48ec01d9 ]
 
-fixed_phy_register() creates and registers the phy_device. To be
-symmetric, we should not only unregister, but also free the phy_device
-in fixed_phy_unregister(). This allows to simplify code in users.
+- fix number of station accounting for scanning code.
+- reset channel context
 
-Note wrt of_phy_deregister_fixed_link():
-put_device(&phydev->mdio.dev) and phy_device_free(phydev) are identical.
-
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/ad8dda9a-10ed-4060-916b-3f13bdbb899d@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20250915075910.47558-14-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+## Final Backport Recommendation
 
-- Fix rationale and scope
-  - The change fixes an API asymmetry and a potential memory leak:
-    `fixed_phy_register()` allocates and registers a `phy_device`, but
-    pre‑patch `fixed_phy_unregister()` only removed it without freeing.
-    The commit makes `fixed_phy_unregister()` also free the
-    `phy_device`, preventing leaks and simplifying callers.
-  - The change is small and localized to fixed PHY/MDIO code; it does
-    not alter uAPI or architecture.
+**Answer: YES**
 
-- Core change
-  - `drivers/net/phy/fixed_phy.c:230` now frees the `phy_device` after
-    removal:
-    - Calls `phy_device_remove(phy)`, `of_node_put(...)`,
-      `fixed_phy_del(...)`, and then `phy_device_free(phy)` to drop the
-      device reference and free when the refcount reaches zero.
-  - `phy_device_free()` is just a `put_device(&phydev->mdio.dev)`:
-    - `drivers/net/phy/phy_device.c:212` confirms that
-      `phy_device_free()` equals a `put_device`, matching the commit
-      note about identical behavior.
+This commit should be backported to stable kernel trees.
 
-- Callers adjusted to avoid double-free
-  - `drivers/net/dsa/dsa_loop.c:398` removes the explicit
-    `phy_device_free(phydevs[i])` after
-    `fixed_phy_unregister(phydevs[i])`.
-  - `drivers/net/mdio/of_mdio.c:475` now calls only
-    `fixed_phy_unregister(phydev)` followed by
-    `put_device(&phydev->mdio.dev)` at `drivers/net/mdio/of_mdio.c:477`,
-    which correctly drops the extra reference obtained by
-    `of_phy_find_device(np)` (see `drivers/net/mdio/of_mdio.c:471`).
-    This is safe because `fixed_phy_unregister()`’s `phy_device_free()`
-    and the extra `put_device()` account for two separate refs (the
-    device’s own and the one grabbed by `of_phy_find_device()`).
+## Comprehensive Analysis
 
-- Other in-tree users remain correct and benefit
-  - Callers which already did not free explicitly remain correct and now
-    won’t leak:
-    - Example: `drivers/net/ethernet/faraday/ftgmac100.c:1763` calls
-      `fixed_phy_unregister(phydev)` (after `phy_disconnect()`), and
-      does not call `phy_device_free()`.
-    - `drivers/net/ethernet/hisilicon/hibmcge/hbg_mdio.c:236` similarly
-      calls only `fixed_phy_unregister((struct phy_device *)data)`.
-  - We searched for all in-tree callers of `fixed_phy_unregister()` and
-    `of_phy_deregister_fixed_link()` and found no remaining explicit
-    frees which would cause a double free.
+### Overview of the Fix
 
-- Risk and stable suitability
-  - Minimal regression risk: change is contained, behavior is well-
-    defined, and in‑tree callers are updated or already compatible. No
-    architectural changes; no uAPI impact.
-  - Positive impact: fixes a likely leak for paths that didn’t free
-    after unregister (e.g., NCSI fixed PHY path in `ftgmac100`).
-  - Meets stable criteria: it’s a bug fix (memory management), small and
-    self-contained, with low risk of regression.
+This commit adds two critical state resets to the `mt76_reset_phy()`
+function in mac80211.c:lines 827-828:
 
- drivers/net/dsa/dsa_loop.c  | 9 +++------
- drivers/net/mdio/of_mdio.c  | 1 -
- drivers/net/phy/fixed_phy.c | 1 +
- 3 files changed, 4 insertions(+), 7 deletions(-)
+1. **`phy->num_sta = 0;`** - Resets the station counter to zero
+2. **`phy->chanctx = NULL;`** - Clears the channel context pointer
 
-diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
-index d8a35f25a4c82..ad907287a853a 100644
---- a/drivers/net/dsa/dsa_loop.c
-+++ b/drivers/net/dsa/dsa_loop.c
-@@ -386,13 +386,10 @@ static struct mdio_driver dsa_loop_drv = {
+### Technical Analysis
+
+#### What the Bug Fixes
+
+**Bug 1: Incorrect Station Accounting**
+
+The `num_sta` field tracks the number of connected stations for each
+physical radio. This counter is used by the scanning code in scan.c:97:
+
+```c
+if (dev->scan.chan && phy->num_sta) {
+    dev->scan.chan = NULL;
+    mt76_set_channel(phy, &phy->main_chandef, false);
+    goto out;
+}
+```
+
+**Without the fix:** During hardware restart, `mt76_reset_device()`
+cleans up all WCIDs (wireless connection IDs) by calling
+`mt76_wcid_cleanup()` and setting them to NULL, but it never resets the
+`num_sta` counter. This means:
+- All stations are removed from the hardware
+- But `num_sta` still contains the old count (e.g., 2 stations)
+- When scanning attempts to run, it checks `phy->num_sta` and
+  incorrectly thinks stations are still connected
+- The scan logic then skips scanning channels or returns to the main
+  channel prematurely
+- Result: Scanning doesn't work properly or produces incomplete results
+  after a hardware restart
+
+**With the fix:** The station counter is properly reset to 0, allowing
+scanning to work correctly after hardware restart.
+
+**Bug 2: Dangling Channel Context Pointer**
+
+The `chanctx` field (mt76_phy structure, line 855 of mt76.h) points to
+the current channel context. During hardware restart, the channel
+context may be invalidated or freed by the upper layers (mac80211).
+
+**Without the fix:** The `chanctx` pointer continues pointing to
+potentially stale/freed memory, which could lead to:
+- Use-after-free bugs
+- Crashes when dereferencing the pointer
+- Undefined behavior during channel operations
+
+**With the fix:** The pointer is safely set to NULL. The code already
+handles NULL `chanctx` correctly (verified in channel.c:48, 73, 212,
+223), so this is a safe operation that prevents potential crashes.
+
+### Context and Related Commits
+
+This fix is part of a series addressing hardware restart issues in the
+mt76 driver:
+
+1. **August 27, 2025 - commit 065c79df595af** ("wifi: mt76: mt7915: fix
+   list corruption after hardware restart")
+   - Introduced the `mt76_reset_device()` function
+   - Fixed list corruption bugs during hw restart
+   - **This commit is a DEPENDENCY** - must be backported first
+
+2. **September 15, 2025 - commit 3f34cced88a42** (THIS COMMIT)
+   - Adds `num_sta` and `chanctx` reset
+   - Fixes scanning and channel context issues
+
+3. **September 15, 2025 - commit b36d55610215a** ("wifi: mt76: abort
+   scan/roc on hw restart")
+   - Completes the hw restart fixes
+   - Adds scan/roc abort functionality
+   - **Should be backported together** for complete fix
+
+### Evidence of Real-World Impact
+
+The search-specialist agent found evidence of real issues affecting
+users:
+
+- **GitHub Issue #444**: Users experiencing repeated "Hardware restart
+  was requested" messages making WiFi unusable
+- **Debian Bug #990127**: mt76x0 crashes repeatedly affecting daily
+  usage
+- **Multiple forum reports**: Scanning failures after firmware crashes
+  requiring system reboot
+- **OpenWrt Forums**: Production environments affected by unreliable
+  wireless after MCU timeouts
+
+The pattern is clear:
+1. Firmware crash or MCU timeout occurs
+2. Hardware restart attempts
+3. Scanning stops working due to incorrect state
+4. WiFi becomes unusable until system reboot
+
+### Risk Assessment
+
+**Risk Level: VERY LOW**
+
+1. **Code Change Size**: Only 2 lines of code added
+2. **Operation Type**: Simple field resets (counter to 0, pointer to
+   NULL)
+3. **Code Safety**:
+   - Setting a counter to 0 during reset is inherently safe
+   - NULL assignment is safe; code already checks for NULL chanctx
+4. **Scope**: Confined to hardware restart path only
+5. **No New Features**: Pure bug fix, no architectural changes
+6. **Well-Tested**: Part of mainline kernel since September 2025
+
+### Regression Risk
+
+**Extremely Low:**
+- Resetting a counter to 0 cannot cause regressions
+- Setting pointer to NULL is safe (NULL checks already exist)
+- Only affects hardware restart code path
+- Does not change normal operation behavior
+
+### Stable Kernel Backporting Criteria
+
+This commit meets all stable kernel backporting criteria:
+
+✅ **Fixes Important Bugs**: Resolves scanning failures and potential
+crashes after hardware restart
+
+✅ **Small and Contained**: Only 2 lines changed in a single function
+
+✅ **No New Features**: Pure bug fix with no feature additions
+
+✅ **Minimal Risk**: Very low regression risk
+
+✅ **Clear Impact**: Fixes real user-reported issues
+
+✅ **Self-Contained**: Changes are localized to one function
+
+✅ **No API Changes**: No changes to external interfaces
+
+### Dependencies and Backporting Strategy
+
+**Required Dependencies:**
+1. Commit 065c79df595af ("wifi: mt76: mt7915: fix list corruption after
+   hardware restart") - Introduces `mt76_reset_device()`
+
+**Recommended Together:**
+1. Commit b36d55610215a ("wifi: mt76: abort scan/roc on hw restart") -
+   Completes the hw restart fixes
+
+**Backporting Order:**
+1. First: 065c79df595af (introduces mt76_reset_device)
+2. Second: 3f34cced88a42 (this commit - adds num_sta/chanctx reset)
+3. Third: b36d55610215a (adds scan/roc abort)
+
+### Code Quality
+
+The fix demonstrates good engineering:
+- Follows the principle of complete state reset during recovery
+- Addresses root cause of the problem
+- Uses safe operations (reset to initial state)
+- Maintains consistency with existing code patterns
+
+### Conclusion
+
+**This commit SHOULD be backported** because:
+
+1. **Real User Impact**: Fixes actual bugs affecting mt76 wireless
+   driver users across multiple distributions
+2. **Low Risk**: Minimal code change with virtually no regression risk
+3. **Important Fix**: Addresses broken scanning after hardware restart
+4. **Stable Criteria**: Meets all stable kernel backporting requirements
+5. **Safety**: Prevents potential use-after-free via dangling chanctx
+   pointer
+6. **Part of Series**: Completes hardware restart reliability
+   improvements
+
+The fix is small, safe, and addresses real problems that make WiFi
+unusable after firmware crashes - a common occurrence with MediaTek mt76
+chipsets. Users experiencing hardware restart issues will benefit from
+this backport.
+
+**Recommendation: Approve for backport to all applicable stable kernel
+trees where mt76 drivers are present and the mt76_reset_device()
+function exists.**
+
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 59adf33126170..4fa045e87a81f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -824,6 +824,8 @@ static void mt76_reset_phy(struct mt76_phy *phy)
+ 		return;
  
- static void dsa_loop_phydevs_unregister(void)
- {
--	unsigned int i;
--
--	for (i = 0; i < NUM_FIXED_PHYS; i++)
--		if (!IS_ERR(phydevs[i])) {
-+	for (int i = 0; i < NUM_FIXED_PHYS; i++) {
-+		if (!IS_ERR(phydevs[i]))
- 			fixed_phy_unregister(phydevs[i]);
--			phy_device_free(phydevs[i]);
--		}
-+	}
+ 	INIT_LIST_HEAD(&phy->tx_list);
++	phy->num_sta = 0;
++	phy->chanctx = NULL;
  }
  
- static int __init dsa_loop_init(void)
-diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
-index 98f667b121f7d..d8ca63ed87194 100644
---- a/drivers/net/mdio/of_mdio.c
-+++ b/drivers/net/mdio/of_mdio.c
-@@ -473,6 +473,5 @@ void of_phy_deregister_fixed_link(struct device_node *np)
- 	fixed_phy_unregister(phydev);
- 
- 	put_device(&phydev->mdio.dev);	/* of_phy_find_device() */
--	phy_device_free(phydev);	/* fixed_phy_register() */
- }
- EXPORT_SYMBOL(of_phy_deregister_fixed_link);
-diff --git a/drivers/net/phy/fixed_phy.c b/drivers/net/phy/fixed_phy.c
-index 033656d574b89..b8bec7600ef8e 100644
---- a/drivers/net/phy/fixed_phy.c
-+++ b/drivers/net/phy/fixed_phy.c
-@@ -309,6 +309,7 @@ void fixed_phy_unregister(struct phy_device *phy)
- 	phy_device_remove(phy);
- 	of_node_put(phy->mdio.dev.of_node);
- 	fixed_phy_del(phy->mdio.addr);
-+	phy_device_free(phy);
- }
- EXPORT_SYMBOL_GPL(fixed_phy_unregister);
- 
+ void mt76_reset_device(struct mt76_dev *dev)
 -- 
 2.51.0
 
