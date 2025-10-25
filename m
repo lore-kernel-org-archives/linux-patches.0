@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047C830748D;
-	Sat, 25 Oct 2025 16:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DF03054E8;
+	Sat, 25 Oct 2025 16:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409385; cv=none; b=QuBbpTUSqNqdIaTep5FFARwrGchEllfHbG5sy8VHLft9KWeAQ7ZQe5rd9SnS3XG2WN+I0AjK3k62PXrmiHbJnsr8o9j0IsXPoH6Y43ch+4+avfcNOLaJRB+7ymOvWbxWBIzuKT9ENYghX3fOqPt9YeKoS+GFulk8g8TJsYzRok4=
+	t=1761409388; cv=none; b=BtlCI/LtFjqvQVQ9HoPH6RjNAnjg+HJeSv58tPpNmGaLA179f44eK3u6eQcdvC3mqM7ozLMf367P/pEmJ8EslrQ0Agoalx4W74sUiWfKFhjgBW2dtk4z8roGik4xI8puMbnLiAV+U2SGs9eSe7COIIeiPjbnBPIug5I3jXfQeNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409385; c=relaxed/simple;
-	bh=h5wu0F/GDcGy7Kk3KFaZYd8l3/8csZ5h7fH9LksjW2k=;
+	s=arc-20240116; t=1761409388; c=relaxed/simple;
+	bh=yeTLH9FKHFlRz+2nh/sQscPakwnjGVZRsx1ude9S/Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uHEBy14MX3Ac1iib9h+2FE0P6ENOeLkqMfsOw6gd5ZgzHzMPHfMtcxuUMwjRqTODib9P09M8YKL/1e1nrog7NozzdyWc0zZIqypXYzp1nLLAZjBi6Yypl5w/pS3ZNRNVH+xIeRP92OzfqnozQerRZzsQchl0ilGMPBHy4mUE47w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E0UHd1GN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H3ThKXcraCtwOd1wTzEW7/YaAKXXjUrAqwQUk/SnHJ5O8/or2gpUglLQDtd+QeLxHfmH9c8WeuJexABPiV2lb9E3Ow46HuT2i8rw4EUPQycVX6O7EP8hWo9l0UMwOygHhKOBp10AOCY4NFc7raFKxRJVP1LRKCK4iHhquTFNHmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xk5OFrG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E0UHd1GN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80E5C4CEF5;
-	Sat, 25 Oct 2025 16:23:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xk5OFrG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23722C4CEF5;
+	Sat, 25 Oct 2025 16:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409384;
-	bh=h5wu0F/GDcGy7Kk3KFaZYd8l3/8csZ5h7fH9LksjW2k=;
+	s=k20201202; t=1761409386;
+	bh=yeTLH9FKHFlRz+2nh/sQscPakwnjGVZRsx1ude9S/Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0UHd1GNdPO2fxcEPeuW0rTCjeRx1sWuzDdxI0DjqywH/ZzWGDYRE7zH//hgxQljq
-	 RZ+EPv0LXIAeDeydRPEVHWBRN7gJ91VxBaTmdgK682soKS6oTHtFC4c3qhBd+KvHfX
-	 Ujp/cBwM6tiycDPBzBDMO9mliboZWWrg++sOBSYwoiyCwM6FO7UyNZzt++rWTfVtaz
-	 WjvbmOWTLO1zz92FhQJczCqzrxKo4aZefB/likqlrGcVbiSVl7z2ib80pct/ufpmBw
-	 /vzTRctGmEQsPi+M1xdktmVulh10O29xVCb2J1CdRY2Mi9TpxIoXklCnu0CK+0awi4
-	 8va4Dry98CDUg==
+	b=Xk5OFrG6EGGMpwq3PUViIeeuTZjZSW+60GjWRG/UIm+AwSrXGL52FXxbQydrdimEX
+	 a9mcrRsY4Aa6Iag5lL0PhlFaw5DdSuV4tf26xWFTHCAIo+pZRjIz0OXmBGVwMf9FCB
+	 evJEh9FQUtbaam3U2pXbbz9mcgGVfsecsy1GpZOOa0AHk/C7Cl7ZDP4iqLAHKQFu3l
+	 +DD06Yexo1+KKEFVu51E5tAMXJ+/YnibYoFQLsuNWhSDUXw7LPG/b5gdbmnbL9DE4U
+	 cIClYsR83LIKnFUnU8Nxk2y7rz8Q+FDTNkccrSeDUSaKlS1KCJm4AT6VMwjcwTNgla
+	 osJwNT7LAnC4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe/pf: Don't resume device from restart worker
-Date: Sat, 25 Oct 2025 11:58:50 -0400
-Message-ID: <20251025160905.3857885-299-sashal@kernel.org>
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.1] sparc64: fix prototypes of reads[bwl]()
+Date: Sat, 25 Oct 2025 11:58:51 -0400
+Message-ID: <20251025160905.3857885-300-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,163 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 9fd9f221440024b7451678898facfb34af054310 ]
+[ Upstream commit 7205ef77dfe167df1b83aea28cf00fc02d662990 ]
 
-The PF's restart worker shouldn't attempt to resume the device on
-its own, since its goal is to finish PF and VFs reprovisioning on
-the recently reset GuC. Take extra RPM reference while scheduling
-a work and release it from the worker or when we cancel a work.
+Conventions for readsl() are the same as for readl() - any __iomem
+pointer is acceptable, both const and volatile ones being OK.  Same
+for readsb() and readsw().
 
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250801142822.180530-4-michal.wajdeczko@intel.com
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com> # Making sparc64 subject prefix
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- `arch/sparc/include/asm/io_64.h:253`, `:259`, `:265` now declare
+  `readsb/readsw/readsl` with `const volatile void __iomem *` so callers
+  keep their `const`/`volatile` qualifiers. Without this, every sparc
+  build that uses the standard helpers via `ioread{8,16,32}_rep()` (see
+  `arch/sparc/include/asm/io_64.h:289-291`) forces a qualifier drop,
+  which becomes a hard build failure whenever `CONFIG_WERROR` or `make
+  W=1` is enabled.
+- The rest of the kernel already advertises these helpers as taking
+  const-qualified pointers (for example `lib/iomap.c:360-372` and the
+  asm-generic helpers), so sparc was the outlier. Aligning the
+  prototypes removes that API mismatch and stops downstream drivers from
+  needing casts/workarounds when built for sparc64.
+- Risk is negligible: the bodies still just hand the pointer to
+  `ins[blw]()` after an `unsigned long __force` cast, so runtime
+  behavior is unchanged while the compiler interface is fixed.
+Given it repairs a real build breakage for standard warning-as-error
+configurations with effectively zero regression surface, it’s a good
+stable backport candidate.
 
-- Bug fixed: Prevents the PF SR-IOV restart worker from forcing a
-  runtime PM resume, which can violate PM expectations, cause unwanted
-  wakeups, and race with suspend/resume. The worker’s role is to finish
-  PF/VF reprovisioning after a GuC reset, not to wake the device.
+ arch/sparc/include/asm/io_64.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-- Core change: Move the runtime PM ref from the worker body to the
-  queueing point.
-  - Before: Worker resumes device via `xe_pm_runtime_get(xe)` and later
-    `xe_pm_runtime_put(xe)` in `pf_restart()`
-    (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:229).
-  - After: `pf_queue_restart()` takes a non-resuming RPM reference via
-    `xe_pm_runtime_get_noresume(xe)` before `queue_work()`, and only
-    drops it either in the worker on completion or if the work is
-    canceled/disabled.
-    - New get: `pf_queue_restart()` adds
-      `xe_pm_runtime_get_noresume(xe)` and if `queue_work()` returns
-      false (already queued), it immediately `xe_pm_runtime_put(xe)` to
-      avoid leaks (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:244).
-    - New put on cancel/disable: If `cancel_work_sync()` or
-      `disable_work_sync()` returns true, drop the worker’s RPM ref
-      (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:206,
-      drivers/gpu/drm/xe/xe_gt_sriov_pf.c:55).
-    - Worker body: `pf_restart()` no longer resumes; it asserts device
-      is not suspended and only does the final `xe_pm_runtime_put(xe)`
-      to drop the ref held “on its behalf”
-      (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:229).
-
-- Correct PM lifetime: This pattern matches established XE usage for
-  async work (e.g., `xe_vm.c:1751`, `xe_sched_job.c:149`,
-  `xe_mocs.c:785`, `xe_pci_sriov.c:171`), where async paths use
-  `xe_pm_runtime_get_noresume()` to keep the device from autosuspending
-  without performing a resume from the inner worker.
-
-- Rationale and safety:
-  - `gt_reset()` already holds a runtime PM ref across reset and restart
-    scheduling (`drivers/gpu/drm/xe/xe_gt.c:822` get,
-    `drivers/gpu/drm/xe/xe_gt.c:857` put). Taking an additional
-    `get_noresume()` before queuing guarantees the device won’t
-    autosuspend before the worker executes, but crucially avoids an
-    unsolicited resume from the worker itself.
-  - The assert in `pf_restart()` (`!xe_pm_runtime_suspended(xe)`) is a
-    correctness guard ensuring the worker only runs with the device
-    awake; the RPM ref taken at queue time enforces this in practice.
-  - The cancellation/disable paths now correctly drop the worker’s PM
-    ref, preventing leaks when a pending restart is canceled because a
-    subsequent reset is about to happen (synergizes with the already
-    backported reset-cancellation change in this file).
-
-- Scope and risk:
-  - Change is small, self-contained, and limited to SR-IOV PF code in
-    `drivers/gpu/drm/xe/xe_gt_sriov_pf.c`.
-  - No API/ABI or architectural change; just corrects RPM reference
-    placement and balances puts on cancel/disable.
-  - Reduces risk of unintended device resumes and PM races; aligns with
-    driver PM policy.
-
-- Stable backport fit:
-  - Fixes a real PM semantics bug affecting SR-IOV PF restart handling
-    after GT resets.
-  - Minimal, contained, and follows existing patterns; low regression
-    risk.
-  - Depends only on existing helpers (e.g.,
-    `xe_pm_runtime_get_noresume`, `xe_pm_runtime_suspended`), which are
-    present in stable branches already carrying the async restart worker
-    (see prior “Move VFs reprovisioning to worker” backport).
-
-Given the above, this is a good candidate for stable backport.
-
- drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-index bdbd15f3afe38..c4dda87b47cc8 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-@@ -55,7 +55,12 @@ static void pf_init_workers(struct xe_gt *gt)
- static void pf_fini_workers(struct xe_gt *gt)
+diff --git a/arch/sparc/include/asm/io_64.h b/arch/sparc/include/asm/io_64.h
+index c9528e4719cd2..d8ed296624afd 100644
+--- a/arch/sparc/include/asm/io_64.h
++++ b/arch/sparc/include/asm/io_64.h
+@@ -250,19 +250,19 @@ void insl(unsigned long, void *, unsigned long);
+ #define insw insw
+ #define insl insl
+ 
+-static inline void readsb(void __iomem *port, void *buf, unsigned long count)
++static inline void readsb(const volatile void __iomem *port, void *buf, unsigned long count)
  {
- 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
--	disable_work_sync(&gt->sriov.pf.workers.restart);
-+
-+	if (disable_work_sync(&gt->sriov.pf.workers.restart)) {
-+		xe_gt_sriov_dbg_verbose(gt, "pending restart disabled!\n");
-+		/* release an rpm reference taken on the worker's behalf */
-+		xe_pm_runtime_put(gt_to_xe(gt));
-+	}
+ 	insb((unsigned long __force)port, buf, count);
  }
+ #define readsb readsb
  
- /**
-@@ -207,8 +212,11 @@ static void pf_cancel_restart(struct xe_gt *gt)
+-static inline void readsw(void __iomem *port, void *buf, unsigned long count)
++static inline void readsw(const volatile void __iomem *port, void *buf, unsigned long count)
  {
- 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
- 
--	if (cancel_work_sync(&gt->sriov.pf.workers.restart))
-+	if (cancel_work_sync(&gt->sriov.pf.workers.restart)) {
- 		xe_gt_sriov_dbg_verbose(gt, "pending restart canceled!\n");
-+		/* release an rpm reference taken on the worker's behalf */
-+		xe_pm_runtime_put(gt_to_xe(gt));
-+	}
+ 	insw((unsigned long __force)port, buf, count);
  }
+ #define readsw readsw
  
- /**
-@@ -226,9 +234,12 @@ static void pf_restart(struct xe_gt *gt)
+-static inline void readsl(void __iomem *port, void *buf, unsigned long count)
++static inline void readsl(const volatile void __iomem *port, void *buf, unsigned long count)
  {
- 	struct xe_device *xe = gt_to_xe(gt);
- 
--	xe_pm_runtime_get(xe);
-+	xe_gt_assert(gt, !xe_pm_runtime_suspended(xe));
-+
- 	xe_gt_sriov_pf_config_restart(gt);
- 	xe_gt_sriov_pf_control_restart(gt);
-+
-+	/* release an rpm reference taken on our behalf */
- 	xe_pm_runtime_put(xe);
- 
- 	xe_gt_sriov_dbg(gt, "restart completed\n");
-@@ -247,8 +258,13 @@ static void pf_queue_restart(struct xe_gt *gt)
- 
- 	xe_gt_assert(gt, IS_SRIOV_PF(xe));
- 
--	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart))
-+	/* take an rpm reference on behalf of the worker */
-+	xe_pm_runtime_get_noresume(xe);
-+
-+	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart)) {
- 		xe_gt_sriov_dbg(gt, "restart already in queue!\n");
-+		xe_pm_runtime_put(xe);
-+	}
+ 	insl((unsigned long __force)port, buf, count);
  }
- 
- /**
 -- 
 2.51.0
 
