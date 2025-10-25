@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3A6306498;
-	Sat, 25 Oct 2025 16:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A32C306496;
+	Sat, 25 Oct 2025 16:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409621; cv=none; b=CYd8lFKPxxsSSE5+QmipVk7dgxacqHP+csTKOuVg4LvOvMUnnkKBCVNdQhSjEmHBkL7X/NfKTS3tOVOacfBnWrZrL3TVOlpVqwDfCJ4KDM+3Tf7/odKCAvopjfbUsiwxCl/s6gYgRKdzdcweBaznnE25pHQaFUweK4B/yyqdJEU=
+	t=1761409621; cv=none; b=sG4ZPgZct39q87TgaDnuxnUp+1d/2DCZW0Rg8FjQISkR5JqcuhO8ddU1n6S6X2tjMK0bc7x9hIjeuwJuv3P9UsY9dGaRC9B/PRDRY3m6KnCSLPfU2eWSl4Bdca0stopdeAvVeHDHNPYSNNsvT82dZdfgt3wW26CaZYwUUaoJAmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761409621; c=relaxed/simple;
-	bh=EV4V0aToZ75vj9kD31WLFR0fiNf2p961IW8sUVl4/d4=;
+	bh=lHXmSwpImaguJhdytnV4YsY9kThpja29e6/NdiB7iMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ijmst2t0rUbVGRdT9Gy3sZciGa1HnSA14CD8Un9WG3T/UGNoy3GmnNhC2H/iXnH6RfsoabCWyhmtEqJSISlqXDPeMTcPQMQ8hOMDg6yN7eN0uwE4hGx4jBME2iL2jn3D+gbZsm3ZpWsP7PKzcS5krGC1WNkh2K1XbE9RWM6r1C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMV8anQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MpipLN6Mx2pE4QAXiUcTPdwzNEWunXfKSU2pUYPQ6xsZLhOmdO6woGogPCmuJWrvBc2Am3lKmlgX7RKvbihOxcJ6jMGRLmf9H26UpI6BdrPT2HNWf3foFX8svlyg6EkBIhRmnDBujPAG40ANGB8kYUXg9yfIdeduxbhLvPoV8fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUasmcCT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMV8anQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F07C4CEFB;
-	Sat, 25 Oct 2025 16:26:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUasmcCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECAFC116D0;
+	Sat, 25 Oct 2025 16:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409620;
-	bh=EV4V0aToZ75vj9kD31WLFR0fiNf2p961IW8sUVl4/d4=;
+	s=k20201202; t=1761409619;
+	bh=lHXmSwpImaguJhdytnV4YsY9kThpja29e6/NdiB7iMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMV8anQuNyFfPS/it7TZ8rApThqQ+jg7Dd6dkkln+kDwppdWJLIgQkUZcxyFLLu3J
-	 yS//fLsMBqw4tOg0iS9QuNqVuWE+02q5tCMPmIt4Uin8TKxzurOoYj76QWnnnoNXlY
-	 kn+tumOzPCNKtAyqJMgoNpQVgCzZNQGEhAXnq9iXU3MGykzGP6UV8ow+DXF2x27e57
-	 Zd5XAZQbSUbLjXwRMYUAFymmsQDGF6IZ3b1xm7JLYj8BQffQyZHOXVgTbTHkjLrVIz
-	 fKM/gebMKo29dlGPdOkPg4EmOg9G29Ky2heItcg//VncRpoZ746oPvkj3/n5pVNhKy
-	 3wOVEJLgn1Ahw==
+	b=ZUasmcCTXbIjeng+GBJyJ6uUiRjCpO8nbxm/mJsqTge0QDj2AFHmmgzNG6f/dQ0YL
+	 kr2ZpWnNRQwraeeeYleD4FaNzoJNVN5JfYAAPK8vNap5rl4GnQqMQWgOfb4E7WSFIh
+	 40WlsR57EggAL7csOK91Eb/J8IXcfukb5ZwgGfUpo9BxXmXghx562+Tnh0G6ZoUW22
+	 42KbxXV7lTBByQezDPdX/wxbizQspKAV2T3imEjQdF+/rFKSm9mtqjPsWY5NDbiCRM
+	 Dwt9ssXw4tgl5ur5D085hMXGeTIUY5ZvCISmBYAJ+1v6Yx1cwsgjKeU+9K0rftGeT6
+	 Vc+tXd1OdBhBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] RDMA/irdma: Update Kconfig
-Date: Sat, 25 Oct 2025 12:00:28 -0400
-Message-ID: <20251025160905.3857885-397-sashal@kernel.org>
+	martineau@kernel.org,
+	netdev@vger.kernel.org,
+	mptcp@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-6.12] selftests: mptcp: join: allow more time to send ADD_ADDR
+Date: Sat, 25 Oct 2025 12:00:27 -0400
+Message-ID: <20251025160905.3857885-396-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,63 +54,110 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 060842fed53f77a73824c9147f51dc6746c1267a ]
+[ Upstream commit e2cda6343bfe459c3331db5afcd675ab333112dd ]
 
-Update Kconfig to add dependency on idpf module and
-add IPU E2000 to the list of supported devices.
+When many ADD_ADDR need to be sent, it can take some time to send each
+of them, and create new subflows. Some CIs seem to occasionally have
+issues with these tests, especially with "debug" kernels.
 
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20250827152545.2056-17-tatyana.e.nikolova@intel.com
-Tested-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Two subtests will now run for a slightly longer time: the last two where
+3 or more ADD_ADDR are sent during the test.
+
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250907-net-next-mptcp-add_addr-retrans-adapt-v1-3-824cc805772b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – the new dependency avoids a real build break that appears as soon
-as the GEN3/IDPF support series lands while keeping risk negligible.
+YES
 
-- `drivers/infiniband/hw/irdma/ig3rdma_if.c` calls several IDPF-exported
-  helpers (`idpf_idc_rdma_vc_send_sync`, `idpf_idc_request_reset`,
-  `idpf_idc_vport_dev_ctrl`) unconditionally at lines 25, 73, and 188
-  (`drivers/infiniband/hw/irdma/ig3rdma_if.c:25`, `:73`, `:188`). If
-  `CONFIG_INFINIBAND_IRDMA` is enabled without `CONFIG_IDPF`, modpost
-  reports unresolved symbols and the build fails.
-- The patch adds the missing `depends on IDPF` requirement to the
-  Kconfig entry (`drivers/infiniband/hw/irdma/Kconfig:6`), so broken
-  configurations are filtered out at menuconfig time instead of failing
-  late in the build.
-- The help text tweak (`drivers/infiniband/hw/irdma/Kconfig:10-11`) is
-  purely informational and carries no risk.
-- No functional behavior changes or architectural upheaval are involved;
-  it is a small, self-contained dependency fix squarely in stable’s
-  remit.
+- What changed: The patch slows two MPTCP selftests that signal three
+  addresses to reduce flakiness. It injects `speed=slow` for the “signal
+  addresses” and “signal invalid addresses” subtests so `run_tests` runs
+  in slow mode:
+  - tools/testing/selftests/net/mptcp/mptcp_join.sh:2271-2272 sets
+    `speed=slow` before `run_tests` in the “signal addresses” block.
+  - tools/testing/selftests/net/mptcp/mptcp_join.sh:2284-2285 sets
+    `speed=slow` before `run_tests` in the “signal invalid addresses”
+    block.
 
- drivers/infiniband/hw/irdma/Kconfig | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+- How it works: `speed=slow` is consumed by `do_transfer()` which maps
+  it to `-r 50` for `mptcp_connect`:
+  - Default/dispatch:
+    tools/testing/selftests/net/mptcp/mptcp_join.sh:953 defines `local
+    speed=${speed:-"fast"}` and at 967-972 maps `fast`→`-j`, `slow`→`-r
+    50`, or numeric speed→`-r <num>`.
+  - mptcp_connect semantics: the `-r` option enables “slow mode,
+    limiting each write to num bytes,” giving the protocol time to
+    exchange ADD_ADDR and create subflows
+    (tools/testing/selftests/net/mptcp/mptcp_connect.c:132, parsed in
+    1426 and handled in the ‘r’ case 1444-1450).
 
-diff --git a/drivers/infiniband/hw/irdma/Kconfig b/drivers/infiniband/hw/irdma/Kconfig
-index 5f49a58590ed7..0bd7e3fca1fbb 100644
---- a/drivers/infiniband/hw/irdma/Kconfig
-+++ b/drivers/infiniband/hw/irdma/Kconfig
-@@ -4,10 +4,11 @@ config INFINIBAND_IRDMA
- 	depends on INET
- 	depends on IPV6 || !IPV6
- 	depends on PCI
--	depends on ICE && I40E
-+	depends on IDPF && ICE && I40E
- 	select GENERIC_ALLOCATOR
- 	select AUXILIARY_BUS
- 	select CRC32
- 	help
--	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
--	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.
-+	  This is an Intel(R) Ethernet Protocol Driver for RDMA that
-+	  supports IPU E2000 (RoCEv2), E810 (iWARP/RoCEv2) and X722 (iWARP)
-+	  network devices.
+- Why it’s needed: With three or more ADD_ADDR to send, debug kernels
+  and slower CI runners can time out or not complete subflow setup
+  before data transfer finishes. Slowing writes increases the window for
+  address signaling and subflow establishment, improving determinism.
+  This aligns with existing practice elsewhere in the script where many
+  subtests already run with `speed=slow` for similar reasons (e.g.,
+  numerous `speed=slow` calls throughout the file).
+
+- Scope and risk:
+  - Test-only: Changes are confined to
+    `tools/testing/selftests/net/mptcp/mptcp_join.sh` and do not touch
+    kernel code paths or ABIs.
+  - Minimal and contained: Two call sites adjusted; no logic or
+    expectations changed, only pacing.
+  - Low regression risk: Only increases runtime slightly for two
+    subtests; expected counts remain the same (e.g., still `chk_join_nr
+    3 3 3` and `chk_add_nr 3 3` in
+    tools/testing/selftests/net/mptcp/mptcp_join.sh:2273-2274; and
+    unchanged checks after the invalid addresses case at 2286-2288).
+
+- Stable-policy fit:
+  - Fixes test flakiness affecting CI/users running stable selftests
+    (practical impact for validation).
+  - No new features or architectural changes; very small diff; conforms
+    to stable rules for low-risk test fixes.
+  - No “Cc: stable” tag, but the change is a clear reliability fix for
+    selftests, which stable trees commonly accept to keep test suites
+    meaningful.
+
+Given it’s a tiny, isolated selftest reliability improvement with no
+kernel-side risk and tangible benefit for CI stability, it is suitable
+for backporting.
+
+ tools/testing/selftests/net/mptcp/mptcp_join.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index 8e92dfead43bf..fed14a281a6d9 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2151,7 +2151,8 @@ signal_address_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.4.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1
++		speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
+ 		chk_join_nr 3 3 3
+ 		chk_add_nr 3 3
+ 	fi
+@@ -2163,7 +2164,8 @@ signal_address_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1
++		speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
+ 		join_syn_tx=3 \
+ 			chk_join_nr 1 1 1
+ 		chk_add_nr 3 3
 -- 
 2.51.0
 
