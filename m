@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F51303A1E;
-	Sat, 25 Oct 2025 16:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F901305960;
+	Sat, 25 Oct 2025 16:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409555; cv=none; b=XBKZaQMjC3G5rlv0mEjzNmsahdABjr1VRIFm9UiCQ7VHC0QpB8dk5/VHy+DHrMihIzB/kej8+NXlcYueIlxloBWH1xbxjAHgTUVUljMP7CYTPRmbGXUNNM47XjUFfRHofdcb/oDnL8FhWAlLbRPV6ms+Jg3/cMYbWMwGdGG7/14=
+	t=1761409556; cv=none; b=oEdokBuqz4JvOGPX7C7m0geNyRaULfuP8L0lbb3puNQfkSjeQUmiQM++C/PMLjaLjhL6DF88m6oTBwcMnLHQn04BvYR8DnWhUOQCjWqBmgU32Q/bBJYtUOvFldNYcaeA+HjvvEUkY+sIqdjtUVOw9b/QTqVJCPIo6xd1CPVx6pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409555; c=relaxed/simple;
-	bh=CKo2WsZ+wTgGk/i5OdedRgcgAJo8XtXMgrnGzM6TyTg=;
+	s=arc-20240116; t=1761409556; c=relaxed/simple;
+	bh=dulCYm1PbxKSibR4bEJrQmC5RZs08G9Vd7f6mLSA1jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MPLL1xSRzGGimXyjHCa4csiI0vdGBDJnUT0t4lhVzHcu6oq58AreP7rsA7RbQ/OiLjf/9mWIKG4SwV9AoGb9YeqeZY0eHkmp0uFAh/3w60TEf6GFAQyB9xMdRIoyoUCCY5Ydr1RNlWWNtWF7PCNnXAzILhts3+A910ToR2HhTyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FjkR5T1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jclO1DlfPCr/LHjUq3XtZmfusZU3kQWlG8j9CyCVyQOiMoCeT0Dxvj70J7ahlfxTqsfCza3qjqFLMLSo/sKADKI7xh4BSf7W0afdzDFXOof6S5Ksrwj7XYDExWe6uFusiPpZr2Kc89gVhzbjQrwOS7N23KT9NLrZVW5zsrsbkQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSOyGfof; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FjkR5T1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760A8C4CEFF;
-	Sat, 25 Oct 2025 16:25:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSOyGfof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E76C4CEF5;
+	Sat, 25 Oct 2025 16:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409554;
-	bh=CKo2WsZ+wTgGk/i5OdedRgcgAJo8XtXMgrnGzM6TyTg=;
+	s=k20201202; t=1761409556;
+	bh=dulCYm1PbxKSibR4bEJrQmC5RZs08G9Vd7f6mLSA1jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjkR5T1bfX1d4D9ALnjRJqu/ieAKuUvcYCqg//4QNFRpXtREuMDbBdSRXorv34rk/
-	 QRyuRJVPUi+IH4d3K+chabMjf/A1k9WzLxK2AuF80YLI9aAasPH71ic+5ZHbuDoJRo
-	 YP8W/5amqAdxEj+KXJTmCFgsuLtGvDez8I8r6BIJkJv+RxDLTSjOmZXaba25jR4hm8
-	 cvqJk1US7V+E+IRUsW4QnygKQG5xhmVgiv2c0YVKhnbttcU3Avg3O4IM/BK1CL+xDq
-	 g8r6F55KebR7n9kgyFpCp5sTqFwESgRPJPEEvjMFUMEs2qIPzq4FkHWHfQPbWBCcL9
-	 HsOz2L43DtyKQ==
+	b=YSOyGfof1Z0cLB1rvoF3BWg3tvaVBFeZXMaHpMsAdzsH0OvnrDLwMy+e+dd63qapc
+	 XPb1+yb7sZPP+PcIRH0fQCUoVH2LAcrLyRlYXM9eTKGvcnlZlQT+Y3M7aPfGZdmXQe
+	 CDSrSJ9JvCavE/QHrDBlDSZi80790W3bXCT86PYdP+nCXRgigPpMnVhW19qEOQcpsO
+	 qOLJkz+8+3z1bmHnTWdoXWJkyRkyFO+Gy8JM8XN5GUN298nm0B4fx0uIpwXkufkrle
+	 LL9dVzLJkNNat9elbXqAoZK8EBfY9hmpkorduG+TGkZFSDvySSfrEYStXyuWHd7UH0
+	 ZhLlUcozV7O0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Timothy Pearson <tpearson@raptorengineering.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alex@shazbot.org,
-	kevin.tian@intel.com,
-	bhelgaas@google.com,
-	pstanner@redhat.com,
-	seanjc@google.com,
-	zhao.xichao@vivo.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.12] vfio/pci: Fix INTx handling on legacy non-PCI 2.3 devices
-Date: Sat, 25 Oct 2025 11:59:53 -0400
-Message-ID: <20251025160905.3857885-362-sashal@kernel.org>
+	bingbu.cao@intel.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] media: ipu6: isys: Set embedded data type correctly for metadata formats
+Date: Sat, 25 Oct 2025 11:59:54 -0400
+Message-ID: <20251025160905.3857885-363-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -57,105 +52,185 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 8b9f128947dd72e0fcf256088a673abac9b720bf ]
+[ Upstream commit f5a2826cd50c6fd1af803812d1d910a64ae8e0a1 ]
 
-PCI devices prior to PCI 2.3 both use level interrupts and do not support
-interrupt masking, leading to a failure when passed through to a KVM guest on
-at least the ppc64 platform. This failure manifests as receiving and
-acknowledging a single interrupt in the guest, while the device continues to
-assert the level interrupt indicating a need for further servicing.
+The IPU6 ISYS driver supported metadata formats but was missing correct
+embedded data type in the receiver configuration. Add it now.
 
-When lazy IRQ masking is used on DisINTx- (non-PCI 2.3) hardware, the following
-sequence occurs:
-
- * Level IRQ assertion on device
- * IRQ marked disabled in kernel
- * Host interrupt handler exits without clearing the interrupt on the device
- * Eventfd is delivered to userspace
- * Guest processes IRQ and clears device interrupt
- * Device de-asserts INTx, then re-asserts INTx while the interrupt is masked
- * Newly asserted interrupt acknowledged by kernel VMM without being handled
- * Software mask removed by VFIO driver
- * Device INTx still asserted, host controller does not see new edge after EOI
-
-The behavior is now platform-dependent.  Some platforms (amd64) will continue
-to spew IRQs for as long as the INTX line remains asserted, therefore the IRQ
-will be handled by the host as soon as the mask is dropped.  Others (ppc64) will
-only send the one request, and if it is not handled no further interrupts will
-be sent.  The former behavior theoretically leaves the system vulnerable to
-interrupt storm, and the latter will result in the device stalling after
-receiving exactly one interrupt in the guest.
-
-Work around this by disabling lazy IRQ masking for DisINTx- INTx devices.
-
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-Link: https://lore.kernel.org/r/333803015.1744464.1758647073336.JavaMail.zimbra@raptorengineeringinc.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – the change makes VFIO’s INTx masking work correctly on legacy
-devices that lack PCI 2.3 masking support, eliminating a real guest-
-visible interrupt loss.
+## **BACKPORT RECOMMENDATION: YES**
 
-- The handler already relies on `disable_irq_nosync()` when `pci_2_3` is
-  false (`drivers/vfio/pci/vfio_pci_intrs.c:232-235`), but without this
-  patch the disable stays “lazy,” so a level-triggered device that
-  reasserts while masked never generates another host interrupt on
-  platforms such as ppc64. The new call to `irq_set_status_flags(...,
-  IRQ_DISABLE_UNLAZY)` for those devices
-  (`drivers/vfio/pci/vfio_pci_intrs.c:307-309`) forces the core to
-  perform an immediate hardware disable, exactly as recommended in the
-  IRQ core (`kernel/irq/chip.c:380-408`), preventing the lost-interrupt
-  stall described in the commit message.
-- Cleanup paths clear the flag both on request failure and normal
-  teardown (`drivers/vfio/pci/vfio_pci_intrs.c:312-314` and
-  `drivers/vfio/pci/vfio_pci_intrs.c:360-361`), so the change is tightly
-  contained and doesn’t leak settings after the device is released.
-- The fix is small, self-contained, and only touches the legacy INTx
-  path, leaving MSI/MSI-X and modern PCI 2.3 devices untouched. It uses
-  long-standing IRQ APIs with no new dependencies.
+After conducting an exhaustive analysis of this commit, I strongly
+recommend backporting it to stable kernel trees (v6.10+).
 
-Given the user-visible failure (guest stops receiving interrupts or
-risks storms) and the minimal, well-scoped fix, this is a good candidate
-for stable backporting. Suggested next step: backport to supported
-stable branches that ship the current VFIO INTx logic.
+---
 
- drivers/vfio/pci/vfio_pci_intrs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+## **DETAILED ANALYSIS**
 
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 123298a4dc8f5..61d29f6b3730c 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -304,9 +304,14 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
- 
- 	vdev->irq_type = VFIO_PCI_INTX_IRQ_INDEX;
- 
-+	if (!vdev->pci_2_3)
-+		irq_set_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
-+
- 	ret = request_irq(pdev->irq, vfio_intx_handler,
- 			  irqflags, ctx->name, ctx);
- 	if (ret) {
-+		if (!vdev->pci_2_3)
-+			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
- 		vdev->irq_type = VFIO_PCI_NUM_IRQS;
- 		kfree(name);
- 		vfio_irq_ctx_free(vdev, ctx, 0);
-@@ -352,6 +357,8 @@ static void vfio_intx_disable(struct vfio_pci_core_device *vdev)
- 		vfio_virqfd_disable(&ctx->unmask);
- 		vfio_virqfd_disable(&ctx->mask);
- 		free_irq(pdev->irq, ctx);
-+		if (!vdev->pci_2_3)
-+			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
- 		if (ctx->trigger)
- 			eventfd_ctx_put(ctx->trigger);
- 		kfree(ctx->name);
+### **The Bug Identified**
+
+This commit fixes a **genuine implementation bug** in the IPU6 ISYS
+driver's metadata format support:
+
+1. **Incomplete Feature Implementation**: Commit `d3bd039cd2a00`
+   (January 31, 2024) added "line-based metadata capture support" to the
+   IPU6 driver in v6.10. However, the implementation was incomplete:
+   - The function `ipu6_isys_mbus_code_to_bpp()` at lines 19-52
+     correctly handles metadata formats (META_8, META_10, META_12,
+     META_16, META_24)
+   - The function `ipu6_isys_mbus_code_to_mipi()` at lines 54-89 **does
+     not** handle metadata formats
+
+2. **Consequences of the Bug**:
+   - When metadata formats are used, `ipu6_isys_mbus_code_to_mipi()`
+     falls through to the default case (line 84-87)
+   - This triggers `WARN_ON(1)` causing kernel warning messages in dmesg
+   - Returns 0x3f (an invalid MIPI data type) instead of the correct
+     `MIPI_CSI2_DT_EMBEDDED_8B` (0x12)
+   - The invalid data type gets propagated to firmware at
+     `drivers/media/pci/intel/ipu6/ipu6-isys-video.c:477` where
+     `input_pin->dt = av->dt`
+   - Result: **Metadata capture doesn't work correctly** and hardware is
+     misconfigured
+
+3. **Evidence of the Bug**:
+   - The driver advertises support for metadata formats in CSI2 receiver
+     (`ipu6-isys-csi2.c:45-49`)
+   - Maps metadata formats to V4L2 pixel formats (`ipu6-isys-
+     video.c:88-95`)
+   - But fails to provide correct MIPI data type conversion for these
+     formats
+
+### **The Fix Evaluation**
+
+**Technical Correctness:**
+- Adds 6 case statements for `MEDIA_BUS_FMT_META_*` formats
+- Returns `MIPI_CSI2_DT_EMBEDDED_8B` (0x12), which is the **correct MIPI
+  CSI-2 data type** per the MIPI CSI-2 specification
+  (`include/media/mipi-csi2.h:21`)
+- Aligns with standard V4L2/media subsystem conventions for embedded
+  data
+
+**Code Changes Analysis:**
+```c
+// Added lines 85-90:
+case MEDIA_BUS_FMT_META_8:
+case MEDIA_BUS_FMT_META_10:
+case MEDIA_BUS_FMT_META_12:
+case MEDIA_BUS_FMT_META_16:
+case MEDIA_BUS_FMT_META_24:
+    return MIPI_CSI2_DT_EMBEDDED_8B;
+```
+
+**Risk Assessment: VERY LOW**
+1. **Minimal Scope**: Only 6 lines added to a switch statement
+2. **No Regression Risk**: Only affects formats that were **completely
+   broken** before (triggering WARN_ON and returning invalid data type)
+3. **Self-Contained**: No dependencies, no side effects on existing
+   working formats (RGB, YUV, Bayer patterns)
+4. **Trivial to Verify**: Basic functional testing would immediately
+   confirm correctness
+
+### **Stable Tree Rules Compliance**
+
+Evaluating against Documentation/process/stable-kernel-rules.rst:
+
+✅ **Fixes an important bug**: Metadata capture is advertised but doesn't
+work
+✅ **Small and obviously correct**: 6 lines, trivial logic
+✅ **No complex dependencies**: Self-contained change
+✅ **Not theoretical**: Real bug with observable symptoms (WARN_ON,
+hardware misconfiguration)
+✅ **Affects stable kernels**: Bug present since v6.10
+
+### **Impact Assessment**
+
+**Who is Affected:**
+- Users of Intel IPU6 hardware (Tiger Lake, Alder Lake, and newer
+  platforms)
+- Applications requiring metadata capture (e.g., camera statistics,
+  embedded data from sensors)
+- Professional camera software and development tools
+
+**Why Low User Reports:**
+- **Specialized Feature**: Metadata capture is a niche feature used
+  mainly by professional camera applications
+- **Recent Addition**: Feature added in v6.10 (2024), relatively new
+- **Hardware Availability**: IPU6 hardware is in newer Intel platforms
+- **Professional Users**: May have workarounds or simply disabled
+  metadata capture
+
+**Note**: Absence of user bug reports does **NOT** mean the bug should
+be ignored. The driver claims to support a feature that is fundamentally
+broken.
+
+### **Research Findings**
+
+Using the search-specialist agent, I found:
+- **No specific user bug reports** for this WARN_ON issue
+- **No CVE or security implications**
+- **No related fixes or reverts** in the codebase
+- The code clearly shows the bug exists and the fix is correct
+
+### **Comparison with Similar Commits**
+
+This commit is similar to other stable-worthy commits that:
+- Fix incomplete driver implementations
+- Have minimal code changes
+- Fix bugs in specialized features
+- Prevent kernel warnings (WARN_ON)
+- Correct hardware configuration issues
+
+---
+
+## **FINAL RECOMMENDATION**
+
+**YES - This commit SHOULD be backported to stable kernel trees
+(v6.10+)**
+
+**Justification:**
+1. Fixes a **real, verifiable bug** with observable symptoms
+2. Extremely **low risk** - only affects broken functionality
+3. **Simple and contained** - 6 lines in a switch statement
+4. Provides **correct hardware configuration** per MIPI CSI-2
+   specification
+5. Eliminates **kernel warnings** (WARN_ON)
+6. Completes the metadata format support that was partially implemented
+7. No known side effects or regression risks
+
+The fix is so simple, correct, and low-risk that there is no compelling
+reason NOT to backport it. Even if metadata capture is a specialized
+feature with few current users, having broken functionality in the
+kernel is unacceptable when the fix is this straightforward.
+
+ drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
+index 0a06de5c739c7..463a0adf9e131 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
+@@ -81,6 +81,12 @@ unsigned int ipu6_isys_mbus_code_to_mipi(u32 code)
+ 	case MEDIA_BUS_FMT_SGRBG8_1X8:
+ 	case MEDIA_BUS_FMT_SRGGB8_1X8:
+ 		return MIPI_CSI2_DT_RAW8;
++	case MEDIA_BUS_FMT_META_8:
++	case MEDIA_BUS_FMT_META_10:
++	case MEDIA_BUS_FMT_META_12:
++	case MEDIA_BUS_FMT_META_16:
++	case MEDIA_BUS_FMT_META_24:
++		return MIPI_CSI2_DT_EMBEDDED_8B;
+ 	default:
+ 		/* return unavailable MIPI data type - 0x3f */
+ 		WARN_ON(1);
 -- 
 2.51.0
 
