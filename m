@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02151E47CA;
-	Sat, 25 Oct 2025 16:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B753064A1;
+	Sat, 25 Oct 2025 16:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408928; cv=none; b=tFp6IdwPZFDS2pyuHnexItcnVRFpdE408qg/uafML6QSpIiwAtnfDzMP1/mMEjt4XU9Ly/vTXFbuaFYJ69G3no2vEcC7YH6nBK1BzLCTQqUwexczOs+IroKFYl4TjstmFCirYR/PuyA68P+YwsC6FAPREZNeANUhQuHcihHZ5lM=
+	t=1761408931; cv=none; b=Oae4czvG3N6GwZqFC4FzPSCDhEKRBVADY1WC3pzymcGCjhk/6rOWlskR90ufwaIEOzo4RFXi0D9cR+AZqneezWx0Wb7RkF3hPqQdaIMZtlvrD+fuQ35Ii5m0NBpAE0o5SPPAGcvUGM/ugSxr9pC8nlS5EXt9WLRjWPESUWhV6OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408928; c=relaxed/simple;
-	bh=mYtsRBf8jVQvcN8NSOYsYIIBlBDdPZN43e/VwT+I5Js=;
+	s=arc-20240116; t=1761408931; c=relaxed/simple;
+	bh=9MZF9AswfuKOW+F/Bi84Zd75DMjYPY7l6W4DWEBpRJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ecsFJjviKxcL+OgpL9H1k1kEzZoOm546pwk3l0Ste118IvR+T3Dwa73gbu3MVvPKr6cm01RjqQAv++EhX9S4Nb+5ki2EXpckC9khIzO4EQybZsAWzQdeOenZ88lrTCIFNDTau8p3hxGlVYlfDLghzCCJvj537OUuxY3gO4DrIxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6f1nCRT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W6jTgCVAyiCdrdDCrZWfudGUf6ZLnX//yoWibMI47ozf5zd/4WjF1GPhu97Zh8GogGMqmSKsbmj9Kq9NbdVo0skL+3hEdbsytSyGOTD+bV8kKAJg7YxbF25jcbvoKIV2tke51fSUgi8/kag8hKMVyl2Qoa9oNWFtcDCQSuw8ENM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uTHgfCVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6f1nCRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B15C113D0;
-	Sat, 25 Oct 2025 16:15:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uTHgfCVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197CAC4CEFB;
+	Sat, 25 Oct 2025 16:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408928;
-	bh=mYtsRBf8jVQvcN8NSOYsYIIBlBDdPZN43e/VwT+I5Js=;
+	s=k20201202; t=1761408931;
+	bh=9MZF9AswfuKOW+F/Bi84Zd75DMjYPY7l6W4DWEBpRJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6f1nCRT0LYJDyGAYXtKIcR0KVCB28hUGNS6IKVfLskViuX1qiOnWf4XKdp29dEnX
-	 G8sh3BAGhIHy5U4ptLRi6W5dCL/u3G/w/ks/lKQePDMWUuEYVW/r1HIaVNHrVejcYE
-	 kL6h94hNCaBoUAM578VCP+t8wB7HlEkOLCSP/gEWErObFD/x8OgnusTftbhbebyFvQ
-	 NvssuZX7rJO9OklfXqT4ok3fUfRYVSsBdUx5RXA4sTezrdAHBLOgNcFrAaWVfTCkH6
-	 VtlslLqlMNMPx7Qplc1GLQReQco/Ty90VRqhEWx0MpgM3WLwh9GvFxXLxFAW+3ltDf
-	 VDzdn/KORmSmQ==
+	b=uTHgfCVXwnfYJPXmyAZxDc4kZhiQr1g/+mDjoiXENRfcHJwn1vjNrQqXFhx41hZo1
+	 vBTE2YZd2gau4F9ubWBSl0kQiir3dt7PIIoFIjMmqwK65Yk419iQF6yakosPbdpllJ
+	 yB7P+4pqsz9m0ndg0OD9kt9Lv3OHW2ovnUjM6+rzWAnyWdtmoTKP01h5I7oOdwU07/
+	 B/R0hzhr+CLGYx5BEPm6iDl+WmUg3ZWfMgqfZTzpblERgvN8BeyymhgmkAnkZaCwFZ
+	 bmro5VkUrCHMUqNG+2LWL5OuYz/hh7/C8J5Ta2vWxzBGQftH8OQawr25HzGnCjr+09
+	 svuywP+FyoePQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Xichao Zhao <zhao.xichao@vivo.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.1] scsi: ufs: host: mediatek: Change reset sequence for improved stability
-Date: Sat, 25 Oct 2025 11:56:07 -0400
-Message-ID: <20251025160905.3857885-136-sashal@kernel.org>
+	olivia@selenic.com,
+	tglx@linutronix.de,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com,
+	namcao@linutronix.de,
+	u.kleine-koenig@baylibre.com,
+	linux-crypto@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] hwrng: timeriomem - Use us_to_ktime() where appropriate
+Date: Sat, 25 Oct 2025 11:56:08 -0400
+Message-ID: <20251025160905.3857885-137-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,17 +57,15 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Xichao Zhao <zhao.xichao@vivo.com>
 
-[ Upstream commit 878ed88c50bfb14d972dd3b86a1c8188c58de4e5 ]
+[ Upstream commit 817fcdbd4ca29834014a5dadbe8e11efeb12800c ]
 
-Modify the reset sequence to ensure that the device reset pin is set low
-before the host is disabled. This change enhances the stability of the
-reset process by ensuring the correct order of operations.
+It is better to replace ns_to_ktime() with us_to_ktime(),
+which can make the code clearer.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250811131423.3444014-10-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,88 +73,74 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed: In `drivers/ufs/host/ufs-mediatek.c:1257`, the reset
-  sequence in `ufs_mtk_device_reset()` currently disables the HBA before
-  asserting the device reset pin low:
-  - Calls `ufshcd_hba_stop(hba)` first (drivers/ufs/host/ufs-
-    mediatek.c:1261–1262).
-  - Then asserts reset low via `ufs_mtk_device_reset_ctrl(0, res)`
-    (drivers/ufs/host/ufs-mediatek.c:1264).
-  - Holds low for ≥10µs (drivers/ufs/host/ufs-mediatek.c:1273).
-  - Deasserts reset high (drivers/ufs/host/ufs-mediatek.c:1275) and
-    waits 10–15ms for device settle (drivers/ufs/host/ufs-
-    mediatek.c:1277–1278).
-  The new commit swaps the first two steps (assert reset low first, then
-`ufshcd_hba_stop(hba)`), explicitly noting “disable hba in middle of
-device reset”.
-
-- Why it matters: This is a precise order-of-operations fix to a
-  hardware reset sequence. Asserting the device’s reset (RST_n active
-  low) before disabling the host controller avoids a race/ordering
-  hazard during reset, which can manifest as sporadic reset instability.
-  The risk window between asserting low and disabling the HBA is tiny
-  (immediately followed by `ufshcd_hba_stop()` and a 10–15µs hold), and
-  the device is already in reset during that window.
-
-- Consistency within the driver: The driver already asserts reset
-  independently of HBA disable in other flows, e.g., on suspend when the
-  link is off it calls `ufs_mtk_device_reset_ctrl(0, res)` without a
-  preceding `ufshcd_hba_stop()` (drivers/ufs/host/ufs-
-  mediatek.c:1445–1449). The new ordering in `ufs_mtk_device_reset()`
-  makes the device-reset behavior consistent within the driver.
-
+- What changed: The probe assigns `priv->period` using
+  `us_to_ktime(period)` instead of `ns_to_ktime(period *
+  NSEC_PER_USEC)`, i.e. a unit conversion moved inside a dedicated
+  helper. See `drivers/char/hw_random/timeriomem-rng.c:155` (old code
+  shown) and the diff replacing it with `us_to_ktime(period)`.
+- Code context shows `period` is specified in microseconds:
+  - Read from DT as a 32-bit value “period” and stored into local `int
+    period` (microseconds): `drivers/char/hw_random/timeriomem-
+    rng.c:137`.
+  - Printed as microseconds: `drivers/char/hw_random/timeriomem-
+    rng.c:178` (“@ %dus”).
+  - The driver later converts `priv->period` back to microseconds to
+    sleep between reads: `drivers/char/hw_random/timeriomem-rng.c:50`.
+- Why this matters: The old expression performs the multiplication in C
+  before passing to `ns_to_ktime`. On 32-bit architectures,
+  `NSEC_PER_USEC` is `1000L` (32-bit long), so `period * NSEC_PER_USEC`
+  is computed in 32-bit and can overflow when `period > LONG_MAX/1000 ≈
+  2,147,483us (~2.147s)`. See `include/vdso/time64.h:8`. That overflow
+  would yield an incorrect `priv->period`, which then:
+  - Produces a wrong `period_us = ktime_to_us(priv->period)` used in
+    `usleep_range()` (timing skew): `drivers/char/hw_random/timeriomem-
+    rng.c:50` and `drivers/char/hw_random/timeriomem-rng.c:70-72`.
+  - Forwards the hrtimer by a wrong amount via
+    `hrtimer_forward_now(&priv->timer, priv->period)`:
+    `drivers/char/hw_random/timeriomem-rng.c:86`.
+- Why the new helper is safer: `us_to_ktime(u64 us)` multiplies in
+  64-bit, avoiding the 32-bit intermediate overflow (see
+  `include/linux/ktime.h:225`). Passing the `int period` argument
+  promotes it to `u64` before multiplication, making this robust on
+  32-bit systems as well.
 - Scope and risk:
-  - Change is small and contained to a single function
-    (`ufs_mtk_device_reset()`), no API or structural changes.
-  - No new features; it purely reorders two existing calls and updates a
-    comment.
-  - The function is invoked through the variant op hook
-    `vops->device_reset` (drivers/ufs/host/ufs-mediatek.c:1792–1803), so
-    the behavior change is localized to Mediatek platforms only.
-  - `ufshcd_hba_stop()` (drivers/ufs/core/ufshcd.c:4842–4854) simply
-    disables the controller and waits for it to quiesce; performing it
-    after the device is already in reset is benign and avoids mid-reset
-    interactions.
+  - Single-line change in a contained driver
+    (`drivers/char/hw_random/timeriomem-rng.c`), no interface/ABI
+    changes, no architectural churn.
+  - Behavior is unchanged for typical periods (1us–1s), but correctness
+    improves for larger microsecond values by eliminating potential
+    overflow on 32-bit.
+  - No dependency on newer APIs; `us_to_ktime()` exists alongside
+    `ns_to_ktime()` in stable trees (`include/linux/ktime.h:225`).
+- History/context sanity check: The driver explicitly handles a wide
+  range of periods and uses that period both to schedule an hrtimer and
+  to compute sleeps, so a wrong `ktime_t` directly affects observable
+  timing. Prior fixes to this driver have targeted timing behavior
+  (e.g., cooldown tolerance), underscoring that timing correctness
+  matters here.
 
-- User impact: Improves reset stability on Mediatek UFS hosts, which
-  affects error recovery and some power management transitions (device
-  reset is used by `ufshcd_device_reset()` in error handling;
-  drivers/ufs/core/ufshcd.c:726–742). This is a real-world reliability
-  fix rather than a feature.
+Given the minimal, self-contained nature of the change, its alignment
+with existing helper usage elsewhere in the kernel, and its elimination
+of a plausible 32-bit overflow hazard, this is a low-risk improvement
+with tangible correctness benefits. It is suitable for stable
+backporting.
 
-- Stable criteria:
-  - Fixes a practical bug (unstable/fragile reset behavior) that can
-    affect users.
-  - Minimal, self-contained change with low regression risk.
-  - No architectural churn; confined to UFS Mediatek host driver.
-  - Although the commit message lacks “Fixes:”/“Cc: stable”, the change
-    meets stable rules as a targeted reliability fix in a vendor driver.
+ drivers/char/hw_random/timeriomem-rng.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Given the above, this is a good candidate for backporting to stable
-trees that ship the Mediatek UFS host driver.
-
- drivers/ufs/host/ufs-mediatek.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index ada21360aa270..82160da8ec71b 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1503,11 +1503,11 @@ static int ufs_mtk_device_reset(struct ufs_hba *hba)
- {
- 	struct arm_smccc_res res;
+diff --git a/drivers/char/hw_random/timeriomem-rng.c b/drivers/char/hw_random/timeriomem-rng.c
+index b95f6d0f17ede..e61f063932090 100644
+--- a/drivers/char/hw_random/timeriomem-rng.c
++++ b/drivers/char/hw_random/timeriomem-rng.c
+@@ -150,7 +150,7 @@ static int timeriomem_rng_probe(struct platform_device *pdev)
+ 		priv->rng_ops.quality = pdata->quality;
+ 	}
  
--	/* disable hba before device reset */
--	ufshcd_hba_stop(hba);
--
- 	ufs_mtk_device_reset_ctrl(0, res);
+-	priv->period = ns_to_ktime(period * NSEC_PER_USEC);
++	priv->period = us_to_ktime(period);
+ 	init_completion(&priv->completion);
+ 	hrtimer_setup(&priv->timer, timeriomem_rng_trigger, CLOCK_MONOTONIC, HRTIMER_MODE_ABS);
  
-+	/* disable hba in middle of device reset */
-+	ufshcd_hba_stop(hba);
-+
- 	/*
- 	 * The reset signal is active low. UFS devices shall detect
- 	 * more than or equal to 1us of positive or negative RST_n
 -- 
 2.51.0
 
