@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B54216132F;
-	Sat, 25 Oct 2025 16:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4732741DA;
+	Sat, 25 Oct 2025 16:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408917; cv=none; b=CujHRfdFEk8M+95LCua9hdlTQkERSCqZGbYjBmSKzpbTP3wI56xAbeBb8Mm3pCQenScbuo5O9kz0EhVyNWyNDcyKcFb4r2D9NUctqpBLfj2buszeHFHuI/7BrnyHvZ9JG4feDMyQ5U09Z1h9xL3c94AsCZkxJxhJ6iMxvoOwt/g=
+	t=1761408918; cv=none; b=mz9XtXYdM3HlWUDclkxCsiK3J91ELw0l98zP7Z4XYdt2B5luU7nlQqP3NbJ4C2K67mxXK2TLWjT19x5t9fPYm2iamHKCfsZilL7DY/8mcBMGqKuo6bfHQj6teRLa9wbsiOmVzKxN0JoIZ0LxMiDVS+4zJRfEXgaVhJimnpKi14c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408917; c=relaxed/simple;
-	bh=7icf260TH1IAOojXz4oeHWOxBrQ1Dszrfs+Mac3MNK4=;
+	s=arc-20240116; t=1761408918; c=relaxed/simple;
+	bh=7LlleGvQTKPFRUPTQ4TnmBZHLhxAptbV69fH3thPF8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iBVl8N6syf8OW//9UHAfux4lKsW6tlLLMu+foM9GjIpHmWqgXuHMM1wSe6AnL651ggHa8jIymHEwgWzZGt8He0UnTufPc8cwV+eNvxA77x2g7tKfcjAgLhNrZT/R35RTHJ+Ybm/56rdkqn3kCQlM92/xPm23uM8gxy/xvmv9LvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQnITyHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MMhv5W14BX9pvoMZvQjdOppsgDCVDWQhH0IJcCJIYfnaPsXrosdRErKLDexEjFSjzgHhXXWwywzxFIamgDNdLqrSskBZ4tmtkfC76mgmgY61DylFgeMy7Gsdtr9dgigbdglOSZyPp1nmXLpY+9GPsENGF21Juof9h0iQP25Kbgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gq6oZuQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQnITyHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9EBC116B1;
-	Sat, 25 Oct 2025 16:15:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gq6oZuQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD16BC4CEFB;
+	Sat, 25 Oct 2025 16:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408917;
-	bh=7icf260TH1IAOojXz4oeHWOxBrQ1Dszrfs+Mac3MNK4=;
+	s=k20201202; t=1761408918;
+	bh=7LlleGvQTKPFRUPTQ4TnmBZHLhxAptbV69fH3thPF8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQnITyHDcJw+mivB9dl35H3w7yvPwGn0T9PPEeGmi1ZOlh3MlDDkw+uAPNYhsRTlv
-	 KSllhwBROOmr/FWPv5r69kM4z808s1SqkSG8ToCJZjjDjzmrC42k3qYCUYiji2wSsT
-	 K65ZQ4mJ28LlXXv/Z7LLMxDiuV1meIYGlq2DYSECuRP151MW/duXOc1oLh2h1F4tlH
-	 h8sCz0MqiNSCNnwheCuXuQorQkEAGsEVdGLx8HE7WyRAuL41SGLjUin7qXT3wl3UsF
-	 yxdYh+5ljC5PsZOwiJuemtZedTKSCcqzZdW12PlCFtKisYCw6Nl2R/BzWC4TxFh4NH
-	 V2+jfMAfyKSDg==
+	b=Gq6oZuQbf4i3rLcXJdwu9YpqvITnKP6eV8pDf45bzAS8eFpFOIs36xKq91LhrOnGp
+	 swFs2q48Efspilihq70k5N0SJUxg/PQ3U/gCQbOCrGbVhU47DYtuZlcsuy+Fox0/CI
+	 1NOk/pnBs8hGyHgMy/kyD3UOoasbAm715NJHGg8Fbp7YG8BL6lPN28XyYL/BVGtUEi
+	 ggM57AVwwx4fIR2L9lZDNtKGHoc/Gzgqbv7Q3BQI+N0BkJccJYf+ge2tzn1bePbtTK
+	 +q6Q4PH/N9FNOp6Dq4eQL5z2x3jCc4qGYZdcKt5kkUvZDKZsPR+mlMV5CWM9WDH5A2
+	 lB3fTQSLyM4TQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li RongQing <lirongqing@baidu.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Wangyang Guo <wangyang.guo@intel.com>,
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Kean Ren <kean0048@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pbonzini@redhat.com,
-	kvm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] x86/kvm: Prefer native qspinlock for dedicated vCPUs irrespective of PV_UNHALT
-Date: Sat, 25 Oct 2025 11:56:01 -0400
-Message-ID: <20251025160905.3857885-130-sashal@kernel.org>
+	derekjohn.clark@gmail.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] platform/x86: think-lmi: Add extra TC BIOS error messages
+Date: Sat, 25 Oct 2025 11:56:02 -0400
+Message-ID: <20251025160905.3857885-131-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -47,41 +47,23 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 960550503965094b0babd7e8c83ec66c8a763b0b ]
+[ Upstream commit a0d6959c345d89d811288a718e3f6b145dcadc8c ]
 
-The commit b2798ba0b876 ("KVM: X86: Choose qspinlock when dedicated
-physical CPUs are available") states that when PV_DEDICATED=1
-(vCPU has dedicated pCPU), qspinlock should be preferred regardless of
-PV_UNHALT.  However, the current implementation doesn't reflect this: when
-PV_UNHALT=0, we still use virt_spin_lock() even with dedicated pCPUs.
+Add extra error messages that are used by ThinkCenter platforms.
 
-This is suboptimal because:
-1. Native qspinlocks should outperform virt_spin_lock() for dedicated
-   vCPUs irrespective of HALT exiting
-2. virt_spin_lock() should only be preferred when vCPUs may be preempted
-   (non-dedicated case)
-
-So reorder the PV spinlock checks to:
-1. First handle dedicated pCPU case (disable virt_spin_lock_key)
-2. Second check single CPU, and nopvspin configuration
-3. Only then check PV_UNHALT support
-
-This ensures we always use native qspinlock for dedicated vCPUs, delivering
-pretty performance gains at high contention levels.
-
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Wangyang Guo <wangyang.guo@intel.com>
-Link: https://lore.kernel.org/r/20250722110005.4988-1-lirongqing@baidu.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Kean Ren <kean0048@gmail.com>
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20250903173824.1472244-4-mpearson-lenovo@squebb.ca
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -90,122 +72,93 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Aligns behavior with the earlier policy “Choose qspinlock when
-    dedicated physical CPUs are available” (commit b2798ba0b876):
-    dedicated vCPUs should prefer native qspinlock regardless of
-    PV_UNHALT support. Previously, if the host lacked
-    `KVM_FEATURE_PV_UNHALT`, `kvm_spinlock_init()` returned early and
-    never disabled the `virt_spin_lock()` hijack, leaving guests with
-    the TAS fallback even on dedicated pCPUs, which is suboptimal for
-    performance under contention.
+  - On ThinkCentre systems, BIOS WMI calls for certificate operations
+    can return TC‑specific strings that this driver did not recognize.
+    Unknown strings fall back to -EPERM, so a successful operation could
+    be reported as failure, and real failures would be collapsed into a
+    generic error. This creates real user-facing breakage for sysfs
+    writes that manage BIOS certificates.
 
-- Key code changes and their effect
-  - Reorders checks in `kvm_spinlock_init()` so the “dedicated pCPUs”
-    path is handled before testing for `KVM_FEATURE_PV_UNHALT`:
-    - Dedicated vCPU: `if (kvm_para_has_hint(KVM_HINTS_REALTIME)) { ...
-      goto out; }` now runs first, followed by single-CPU and `nopvspin`
-      checks; only then does it test
-      `!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)`
-      (arch/x86/kernel/kvm.c:1095–1135).
-    - The `out:` label disables `virt_spin_lock_key` with
-      `static_branch_disable(&virt_spin_lock_key);`
-      (arch/x86/kernel/kvm.c:1135). This forces native qspinlock instead
-      of the virt TAS path.
-  - Why this matters:
-    - In guests, `native_pv_lock_init()` enables the
-      `virt_spin_lock_key` when running under a hypervisor
-      (arch/x86/kernel/paravirt.c:60). If `kvm_spinlock_init()` bails
-      out early on “no PV_UNHALT”, the key remains enabled and
-      `virt_spin_lock()` gets used.
-    - `virt_spin_lock()` is gated by the key; when enabled it uses a
-      Test-and-Set fallback for hypervisors without PV spinlock support
-      (arch/x86/include/asm/qspinlock.h:88–110). For dedicated vCPUs,
-      this fallback is slower than native qspinlock and unnecessary.
-    - After this change, dedicated vCPUs always hit `goto out;` →
-      `static_branch_disable(&virt_spin_lock_key);`, so
-      `virt_spin_lock()` immediately returns false
-      (arch/x86/include/asm/qspinlock.h:92), and the native qspinlock
-      path is used, matching the intended behavior.
+- Where the bug is
+  - Error mapping logic: `tlmi_errstr_to_err()` maps BIOS strings to
+    errno by scanning `tlmi_errs[]`, and returns -EPERM on no match:
+    drivers/platform/x86/lenovo/think-lmi.c:247–257.
+  - All BIOS WMI method wrappers use this path via `tlmi_simple_call()`:
+    drivers/platform/x86/lenovo/think-lmi.c:273–300. Any non-zero
+    mapping is propagated as the sysfs write result.
 
-- Scope and containment
-  - Single function change in `arch/x86/kernel/kvm.c`; no ABI or
-    architectural changes.
-  - Behavior when `KVM_FEATURE_PV_UNHALT` is present remains unchanged;
-    the fix only corrects the corner case when PV_UNHALT is absent.
-  - Also harmonizes single-CPU and `nopvspin` behavior in the no-
-    PV_UNHALT case by ensuring the static key is disabled via the same
-    `goto out` path, which is consistent with the printed messages and
-    expected semantics.
+- What changed
+  - Added ThinkCentre-specific strings to the mapping table
+    `tlmi_errs[]`:
+    - Success string: `"Set Certificate operation was successful."` →
+      `0`
+    - Specific failure strings: invalid parameter/type/password, retry
+      exceeded, password invalid, operation aborted, no free slots,
+      certificate not found, internal error, certificate too large →
+      appropriate `-EINVAL`, `-EACCES`, `-EBUSY`, `-ENOSPC`, `-EEXIST`,
+      `-EFAULT`, `-EFBIG`
+    - Location: drivers/platform/x86/lenovo/think-lmi.c:207–224
+  - This ensures ThinkCentre BIOS responses are properly interpreted
+    instead of defaulting to -EPERM.
 
-- Risk assessment
-  - Low risk: selection between native qspinlock and virt TAS fallback
-    is internal and controlled by KVM hints; the change makes behavior
-    consistent across PV_UNHALT presence/absence.
-  - The only behavior change is for guests on hosts without
-    `KVM_FEATURE_PV_UNHALT` that advertise `KVM_HINTS_REALTIME`: they
-    now get native qspinlock (preferred) instead of TAS fallback. This
-    mirrors what already happens on hosts with PV_UNHALT support, so it
-    does not introduce a new class of risk.
+- Why it matters in practice
+  - Certificate operations in this driver (e.g., install/update/clear
+    certificate, cert→password) call `tlmi_simple_call()` with
+    ThinkCentre certificate GUIDs (see call sites in
+    `certificate_store()` and `cert_to_password_store()`):
+    drivers/platform/x86/lenovo/think-lmi.c:841, 895–906, 795. With the
+    old table, a genuine success response like `"Set Certificate
+    operation was successful."` would be treated as an error (-EPERM),
+    causing sysfs writes such as `.../authentication/*/certificate` to
+    fail even though the BIOS accepted the operation.
+  - The new entries also surface more precise errno for failures,
+    improving diagnostics for userspace tools and admins.
 
-- Stable backport rationale
-  - Small, self-contained change; no API/ABI changes.
-  - Corrects a logic mismatch with an earlier change’s documented intent
-    (dedicated vCPU → native qspinlock), yielding concrete performance
-    benefits under contention.
-  - Fits stable criteria as a low-risk correctness/performance fix
-    rather than a new feature.
+- Risk and scope
+  - Minimal: a localized addition to a string→errno table; no control
+    flow or architectural changes.
+  - Affects only Lenovo think-lmi driver behavior on ThinkCentre
+    platforms when handling certificate-related WMI responses.
+  - No user-visible API changes beyond correcting erroneous return
+    codes; improves correctness and debuggability.
 
-Code references:
-- arch/x86/kernel/kvm.c:1095 (KVM_HINTS_REALTIME → goto out), :1101
-  (single CPU → goto out), :1107 (`nopvspin` → goto out), :1120–1126
-  (PV_UNHALT check now after the above), :1135
-  (`static_branch_disable(&virt_spin_lock_key);`).
-- arch/x86/include/asm/qspinlock.h:88–110 (`virt_spin_lock()` gated by
-  `virt_spin_lock_key`, uses TAS fallback when enabled).
-- arch/x86/kernel/paravirt.c:60 (`native_pv_lock_init()` enables
-  `virt_spin_lock_key` for guests).
+- Stable backport fit
+  - Fixes a real user-impacting bug (false -EPERM on success, ambiguous
+    errors).
+  - Small, self-contained, and low-risk.
+  - Confined to platform/x86/lenovo/think-lmi.
 
- arch/x86/kernel/kvm.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Given the above, this is a good candidate for stable backporting.
 
-diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-index 57379698015ed..2ecb2ec06aebc 100644
---- a/arch/x86/kernel/kvm.c
-+++ b/arch/x86/kernel/kvm.c
-@@ -1089,16 +1089,6 @@ static void kvm_wait(u8 *ptr, u8 val)
-  */
- void __init kvm_spinlock_init(void)
- {
--	/*
--	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
--	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
--	 * preferred over native qspinlock when vCPU is preempted.
--	 */
--	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
--		pr_info("PV spinlocks disabled, no host support\n");
--		return;
--	}
--
- 	/*
- 	 * Disable PV spinlocks and use native qspinlock when dedicated pCPUs
- 	 * are available.
-@@ -1118,6 +1108,16 @@ void __init kvm_spinlock_init(void)
- 		goto out;
- 	}
+ drivers/platform/x86/lenovo/think-lmi.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/drivers/platform/x86/lenovo/think-lmi.c b/drivers/platform/x86/lenovo/think-lmi.c
+index 0992b41b6221d..e6a2c8e94cfdc 100644
+--- a/drivers/platform/x86/lenovo/think-lmi.c
++++ b/drivers/platform/x86/lenovo/think-lmi.c
+@@ -179,10 +179,21 @@ MODULE_PARM_DESC(debug_support, "Enable debug command support");
  
-+	/*
-+	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
-+	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
-+	 * preferred over native qspinlock when vCPU is preempted.
-+	 */
-+	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
-+		pr_info("PV spinlocks disabled, no host support\n");
-+		return;
-+	}
-+
- 	pr_info("PV spinlocks enabled\n");
+ static const struct tlmi_err_codes tlmi_errs[] = {
+ 	{"Success", 0},
++	{"Set Certificate operation was successful.", 0},
+ 	{"Not Supported", -EOPNOTSUPP},
+ 	{"Invalid Parameter", -EINVAL},
+ 	{"Access Denied", -EACCES},
+ 	{"System Busy", -EBUSY},
++	{"Set Certificate operation failed with status:Invalid Parameter.", -EINVAL},
++	{"Set Certificate operation failed with status:Invalid certificate type.", -EINVAL},
++	{"Set Certificate operation failed with status:Invalid password format.", -EINVAL},
++	{"Set Certificate operation failed with status:Password retry count exceeded.", -EACCES},
++	{"Set Certificate operation failed with status:Password Invalid.", -EACCES},
++	{"Set Certificate operation failed with status:Operation aborted.", -EBUSY},
++	{"Set Certificate operation failed with status:No free slots to write.", -ENOSPC},
++	{"Set Certificate operation failed with status:Certificate not found.", -EEXIST},
++	{"Set Certificate operation failed with status:Internal error.", -EFAULT},
++	{"Set Certificate operation failed with status:Certificate too large.", -EFBIG},
+ };
  
- 	__pv_init_lock_hash();
+ static const char * const encoding_options[] = {
 -- 
 2.51.0
 
