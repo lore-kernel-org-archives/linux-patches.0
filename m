@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C01301701;
-	Sat, 25 Oct 2025 16:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C86306D50;
+	Sat, 25 Oct 2025 16:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408967; cv=none; b=jqiw7GZTlFVWbbclbEXTetMgkslANdEDzU3OACzwiSmkjjwxyCuhoKKd6ZopfU2pnm17fTyvBQkskpgibw82j3/x/V7DSK6hkRDjdnn9bu7jAsY4jNSOyzfy0ZEuYElrJgO8MtihAycftd4+6sOkQ8hCr6lZDgcf+Jfw3Hp9JcE=
+	t=1761408967; cv=none; b=EZP3remUQ6mnkZ1KuH6rDPfMJotbbOjCjfr29x/52bsxTC7NgOZaObhlbNdY3GLSJ1PvOAuMe11XBbtIDfXUDNjbpAu/fGcmGCdkQxoUw6LH2Rx/pJahhWJ4IRP0u5ilnggbLeDhNwUFxsUQXkB5Ccu9RUT0E/85ESSBn5VJtds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408967; c=relaxed/simple;
-	bh=QwO0iTE43pGFIY/hJQqlLOWK3XWSU6LqZkqpYUjdzOQ=;
+	bh=lyJh3iMHKiH1eHeVXb+VzrOsb7MZtUAcEgdXBjvlnZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oyPtJMNeCSUyMJl7CSnOeuaQFbq+A/2Upcbak5LWg4AyK/C03jc3azkjIXVrWhuEYXF2vKo3u1S2rXDHZOJhVhH5feSCDSZS0e2zSZYvJFHYgZp5ti0SyAkZeJ5q6IsSouEIYs5lT1vDxmzO+p2M8loEI2w7MgFBpxFV/Slks0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pD+rQOS9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d4RKqR4lNcpvs60Pup4detRHj8CeN+VSmHPlJc6+O0MDL5ZiylZtsDwngxorXW70N0l6uSOIUq5uuL9y967n+z1LUi9SBQqppuFzwb+gdV2WKIYc991lZnRVJIsQHU25reQIP7hOPWe+aHDajTdf0GL5madxHntbYcT4PyNLqt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3j1aXHg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pD+rQOS9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32865C4CEFB;
-	Sat, 25 Oct 2025 16:16:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3j1aXHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2703C116B1;
+	Sat, 25 Oct 2025 16:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408966;
-	bh=QwO0iTE43pGFIY/hJQqlLOWK3XWSU6LqZkqpYUjdzOQ=;
+	s=k20201202; t=1761408964;
+	bh=lyJh3iMHKiH1eHeVXb+VzrOsb7MZtUAcEgdXBjvlnZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD+rQOS98ZIH6hyWS5FfnxwFB+lCHluS7lRzqKCsYr/e13EH1XgI5rlLImwCvn7uN
-	 UdLm8/YXx3c9GoF5Wxl73+GwKON0ZqPIw67XR46iGWr5Eojyf+Sm69NGVztFT5joLi
-	 o/KfyyzUt35SsRcZYCT/Y85QKIGi+RY22NUY+udXtwO0JRgLCfCHzXAWuAYU8dfXnE
-	 cm53nO/h+hWXZDBNEaD5i88N2re8mgtsutMYUe4iBF6M9mkMCkExH6Wu2rYK+vEQ+m
-	 9vYk+Owxf0czMEK3VomEPhWFlL2R8cuQgo8PACGbwjcYbVqZWQ+1rcoAy1uR6wRSkd
-	 y36vqvJqQeB3A==
+	b=b3j1aXHgf+dL4LbJI182kSSrNLDw5cizDOVSCsW0XPz+LudSb9ft6mARRDbJ6WyAa
+	 Wz9qwUvLBdkvn/zaG47IYXL7SwCJI3o7R+Ol2V+P+TvwhK2sFscdCuVBNG1kJKXVev
+	 9IW8hMgYH5ji0QxcIwFD+n8MbG4TUEAHnbhOdKcR62NZaulAt1+evYpBEW91+roIxV
+	 Ai8YA9V4Ld8Moz7Z284epSt7DaBoF9XsfjomGaLSAZt+pr7xQ+n5vANnugNibsX5JL
+	 tWADoYXctbW5TP8iyE5D0fwydEwT8ncOi+eQShuML3jJAYpq97S1EyWsEbGXyQdx7A
+	 yE9aSAUp2YakQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] Bluetooth: btintel_pcie: Define hdev->wakeup() callback
-Date: Sat, 25 Oct 2025 11:56:27 -0400
-Message-ID: <20251025160905.3857885-156-sashal@kernel.org>
+	paul.ely@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] scsi: lpfc: Clean up allocated queues when queue setup mbox commands fail
+Date: Sat, 25 Oct 2025 11:56:26 -0400
+Message-ID: <20251025160905.3857885-155-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,83 +52,69 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 3e94262921990e2884ff7a49064c12fb6d3a0733 ]
+[ Upstream commit 803dfd83df33b7565f23aef597d5dd036adfa792 ]
 
-Implement hdev->wakeup() callback to support Wake On BT feature.
+lpfc_sli4_queue_setup() does not allocate memory and is used for
+submitting CREATE_QUEUE mailbox commands.  Thus, if such mailbox
+commands fail we should clean up by also freeing the memory allocated
+for the queues with lpfc_sli4_queue_destroy().  Change the intended
+clean up label for the lpfc_sli4_queue_setup() error case to
+out_destroy_queue.
 
-Test steps:
-1. echo enabled > /sys/bus/pci/devices/0000:00:14.7/power/wakeup
-2. connect bluetooth hid device
-3. put the system to suspend - rtcwake -m mem -s 300
-4. press any key on hid to wake up the system
-
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-4-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `drivers/bluetooth/btintel_pcie.c:2350` introduces
-  `btintel_pcie_wakeup()`, which just calls
-  `device_may_wakeup(&data->pdev->dev)`; this mirrors the existing
-  pattern in other Bluetooth transports (for example
-  `drivers/bluetooth/btusb.c:3758`) and safely queries whether userspace
-  enabled PCIe wakeups for the device that is already stored at
-  `drivers/bluetooth/btintel_pcie.c:2411`.
-- Hooking that helper via `hdev->wakeup = btintel_pcie_wakeup;` at
-  `drivers/bluetooth/btintel_pcie.c:2382` lets the HCI core mark the
-  controller as remote‑wakeup capable (`net/bluetooth/hci_core.c:2661`)
-  and, during system suspend, actually run the wake-capable
-  configuration instead of bailing out early
-  (`net/bluetooth/hci_sync.c:6214`). Without this patch, the Intel PCIe
-  controller never programs accept lists/event masks for wake-on-
-  Bluetooth even when `/sys/bus/pci/.../power/wakeup` is set to
-  `enabled`, so Bluetooth HID devices cannot wake the machine—an obvious
-  user-visible regression for WoBT capable hardware.
-- The change is self-contained: it neither alters suspend/resume
-  sequencing nor touches shared subsystems beyond wiring the standard
-  callback, and it relies only on long-standing primitives
-  (`device_may_wakeup`, `hci_get_drvdata`) already present in stable
-  releases beginning with v6.10 where `btintel_pcie` first appeared.
-- Because it fixes a real functionality gap with minimal, well-
-  understood code and matches existing drivers’ behaviour, the risk of
-  regression is low while the benefit (restoring Wake-on-BT support) is
-  high, making this patch a strong candidate for stable backporting.
+- The failure path after `lpfc_sli4_queue_setup()` now jumps to
+  `out_destroy_queue` (`drivers/scsi/lpfc/lpfc_sli.c:8820`),
+  guaranteeing that any queues allocated by `lpfc_sli4_queue_create()`
+  are torn down before we bail out.
+- Those queues hold DMAable pages allocated in large batches
+  (`drivers/scsi/lpfc/lpfc_init.c:10420`), so skipping
+  `lpfc_sli4_queue_destroy()` leaked real memory whenever the mailbox
+  CREATE_QUEUE commands failed—precisely the scenario this fix covers.
+- `out_destroy_queue` already performs the paired cleanup
+  (`drivers/scsi/lpfc/lpfc_sli.c:9104`), invoking
+  `lpfc_sli4_queue_destroy()` which handles partial setups and releases
+  every queue resource (`drivers/scsi/lpfc/lpfc_init.c:10862`); we
+  simply make sure the queue-setup error uses the same, already-tested
+  path.
+- The change is tiny (one goto target), touches only the error path, and
+  aligns this branch with other existing failures that already call
+  `out_destroy_queue`, so regression risk is minimal while preventing a
+  concrete resource leak on failed probe/recovery attempts.
 
- drivers/bluetooth/btintel_pcie.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/lpfc/lpfc_sli.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 58cff211ec2c1..a91e768c0c4c0 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -2341,6 +2341,13 @@ static void btintel_pcie_hw_error(struct hci_dev *hdev, u8 code)
- 	btintel_pcie_reset(hdev);
- }
- 
-+static bool btintel_pcie_wakeup(struct hci_dev *hdev)
-+{
-+	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
-+
-+	return device_may_wakeup(&data->pdev->dev);
-+}
-+
- static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- {
- 	int err;
-@@ -2366,6 +2373,7 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- 	hdev->set_diag = btintel_set_diag;
- 	hdev->set_bdaddr = btintel_set_bdaddr;
- 	hdev->reset = btintel_pcie_reset;
-+	hdev->wakeup = btintel_pcie_wakeup;
- 
- 	err = hci_register_dev(hdev);
- 	if (err < 0) {
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index a8fbdf7119d88..d82ea9df098b8 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -8820,7 +8820,7 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
+ 	if (unlikely(rc)) {
+ 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
+ 				"0381 Error %d during queue setup.\n", rc);
+-		goto out_stop_timers;
++		goto out_destroy_queue;
+ 	}
+ 	/* Initialize the driver internal SLI layer lists. */
+ 	lpfc_sli4_setup(phba);
+@@ -9103,7 +9103,6 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
+ 	lpfc_free_iocb_list(phba);
+ out_destroy_queue:
+ 	lpfc_sli4_queue_destroy(phba);
+-out_stop_timers:
+ 	lpfc_stop_hba_timers(phba);
+ out_free_mbox:
+ 	mempool_free(mboxq, phba->mbox_mem_pool);
 -- 
 2.51.0
 
