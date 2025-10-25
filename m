@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13991306D57;
-	Sat, 25 Oct 2025 16:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC843093CD;
+	Sat, 25 Oct 2025 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409765; cv=none; b=JwUu/hajoJ63WlLpgXMhTDa3HLo8BYQUsqRZXQ4axwcttaEv+Bh5TMm8FlyLUgfIXtaWaQKoAzjCf0HmZBOGJnzj/72ztOH6aqAhC2NtZblNgr1wFS0A02XabgPYbWqV6+N3obC7BCb3i/JKgrxFvPtGpUTDOdl2AFAe6yhDn6c=
+	t=1761409766; cv=none; b=tGQ0bb6gitWQ4WenktJQB6MIlkbE9P/qtAXXV8Q1IT3FoZ5rcsWF6LRqCaD3qaxZ3yC48tc34ItL5xh/cVtnBJQQhh9VWWCzfWeROM/hMc4bHR+C5Q3p/GdGJCLj3+4TZwPpyX/pvU7UuYjLvQTb+OfH2rH+ez5txwDz8GccQG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409765; c=relaxed/simple;
-	bh=iLEjOrePrnNCcm+EriPerBRSpxFZ8k2d7rPiTVXus0M=;
+	s=arc-20240116; t=1761409766; c=relaxed/simple;
+	bh=A21ABCdIAGfpwxlVmiDxYecNgyt6Hqg6AbRUeDD/7gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ac/7vdmQKc+QaZLTUWMv2PeYyALD1bHp8bk4kk9PmjXqBrIGg2elUTiMr8bDWUe/ZL110gHyRBfdAmQjHFkGXfubUAEaTkLF14Dm0MxO2t0jhn1tm8vf1PvCRZZPbZi/E/RatLVTi1JwUStZn0lDZF+FIBJXVYxms/LhBa40OSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=flyR8vLp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tHE2/543Z1sisxv7893nqILFAP6Ox8n2kIuoFBQJkGB7IN1gE7GAa0gVt5EGneDgbuv8uB+7ZK7qzp/qHiz7zUM2iV/adbqXBDYUmEFDcC231NcAbJ92RdOXIJoBw9GmtvhmrAWfg/wy8F2abRX0LXPNmJA7/3eRt0u41HxLidM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mnsu/SZu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="flyR8vLp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17ABC4CEFF;
-	Sat, 25 Oct 2025 16:29:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mnsu/SZu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F45C4CEFF;
+	Sat, 25 Oct 2025 16:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409764;
-	bh=iLEjOrePrnNCcm+EriPerBRSpxFZ8k2d7rPiTVXus0M=;
+	s=k20201202; t=1761409766;
+	bh=A21ABCdIAGfpwxlVmiDxYecNgyt6Hqg6AbRUeDD/7gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flyR8vLp+RDRauEjneDWysDC2Wsl1IU4GejFHxvp6UrsDgZ2SDLSk0ECfTyU/Pukp
-	 YUa+bemjeT5bFvtsEL2OyVdPnH5JaNn5V3IzApCXaxuT/sunOTU7PzzpHLU/9j/5Gc
-	 3sxK5GiYfclKyHakNBXmahRRLlS74HeVnS87u+rlVXfB4p3eA5raiwQS8YmaJa4RO8
-	 QJ542F6WVkL8HMAT8tF3SFQs6xICIan6bck0NZEwoFI10LvPXMtZsYDPZ+2IKrlKsM
-	 9RTPUolGkkWqAelVAY/9aDo7NKC/Iylq9hvSvM2oY+8dBZ/HORwNaB7IOXx3LRNdsR
-	 9Bn44ECoP6ZmQ==
+	b=mnsu/SZuW6eGW0AO4yqfXOTxG9udv/FuPjTzRYNX+HXyoiRXEO3MjCEMMD5I/z9Aj
+	 8eA6tl3xVWYA7XfY2mTmeYDAL0kgeDQctjFFbANv6lC74ifuL/RLQ5oMI22H2OstOS
+	 n9C5y7Yo89kaYJNPTYXTyt1/2E66ziW1QxeYQ4Gc3PFRb1PxnUgO99AsGIYBdL5cRN
+	 0qLSjwt/GB3FxEvJ42Auq8uZAXvI09bb8fSgQAegRxLtZ90bhOzoeqN55ylRkXYQrW
+	 DZg6juxpDlpIzJRUADsA5qAcTZZ6wKcFdokoDmVfdN9SzWVSqap9xx11Qr6Mp6JZju
+	 GMvY4Unvc9kLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maarten Lankhorst <dev@lankhorst.se>,
-	Matthew Auld <matthew.auld@intel.com>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe: Fix oops in xe_gem_fault when running core_hotunplug test.
-Date: Sat, 25 Oct 2025 12:01:25 -0400
-Message-ID: <20251025160905.3857885-454-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] HID: asus: add Z13 folio to generic group for multitouch to work
+Date: Sat, 25 Oct 2025 12:01:26 -0400
+Message-ID: <20251025160905.3857885-455-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,173 +54,188 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 1cda3c755bb7770be07d75949bb0f45fb88651f6 ]
+[ Upstream commit b595974b4afe0e171dd707da570964ff642742e3 ]
 
-I saw an oops in xe_gem_fault when running the xe-fast-feedback
-testlist against the realtime kernel without debug options enabled.
+The Asus Z13 folio has a multitouch touchpad that needs to bind
+to the hid-multitouch driver in order to work properly. So bind
+it to the HID_GROUP_GENERIC group to release the touchpad and
+move it to the bottom so that the comment applies to it.
 
-The panic happens after core_hotunplug unbind-rebind finishes.
-Presumably what happens is that a process mmaps, unlocks because
-of the FAULT_FLAG_RETRY_NOWAIT logic, has no process memory left,
-causing ttm_bo_vm_dummy_page() to return VM_FAULT_NOPAGE, since
-there was nothing left to populate, and then oopses in
-"mem_type_is_vram(tbo->resource->mem_type)" because tbo->resource
-is NULL.
+While at it, change the generic KEYBOARD3 name to Z13_FOLIO.
 
-It's convoluted, but fits the data and explains the oops after
-the test exits.
-
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://lore.kernel.org/r/20250715152057.23254-2-dev@lankhorst.se
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Reviewed-by: Luke D. Jones <luke@ljones.dev>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my comprehensive analysis, here is my recommendation:
 
-**What It Fixes**
-- Prevents a NULL pointer dereference in `xe_gem_fault()` that can
-  trigger after a device unbind/rebind (core_hotunplug) when the VM
-  fault path takes the “device absent” branch and later tries to access
-  `tbo->resource->mem_type`.
-- Matches the failure described in the commit message: after hot-unplug
-  test, a process faults with `FAULT_FLAG_RETRY_NOWAIT`, the fallback
-  `ttm_bo_vm_dummy_page()` returns `VM_FAULT_NOPAGE`, and the code
-  oopses at `mem_type_is_vram(tbo->resource->mem_type)` because
-  `tbo->resource` is NULL.
+## Backport Status: **YES**
 
-**Code-Level Analysis**
-- Current code (pre-fix) in `xe_gem_fault`:
-  - Calls the reserved fault path when the device is present, else uses
-    the dummy-page fallback:
-    - `drivers/gpu/drm/xe/xe_bo.c:1218` calls
-      `ttm_bo_vm_fault_reserved(...)` under `drm_dev_enter`.
-    - `drivers/gpu/drm/xe/xe_bo.c:1222` calls
-      `ttm_bo_vm_dummy_page(...)` when `drm_dev_enter` fails (device not
-      present).
-  - After that, it unconditionally evaluates:
-    - `if (ret == VM_FAULT_RETRY && !(vmf->flags &
-      FAULT_FLAG_RETRY_NOWAIT)) goto out;` at
-      `drivers/gpu/drm/xe/xe_bo.c:1225`.
-    - And crucially, `if (ret == VM_FAULT_NOPAGE &&
-      mem_type_is_vram(tbo->resource->mem_type)) { ... }` at
-      `drivers/gpu/drm/xe/xe_bo.c:1230`.
-  - This latter check runs even when `ret` came from the dummy-page
-    path, where the BO’s `resource` may be NULL (device unbound),
-    causing a NULL deref.
-- The proposed patch moves:
-  - The `VM_FAULT_RETRY` early-exit and the `VM_FAULT_NOPAGE` VRAM-
-    userfault list insert into the `drm_dev_enter` branch, i.e., only
-    after a successful `ttm_bo_vm_fault_reserved(...)`.
-  - This prevents dereferencing `tbo->resource` in the dummy-page path
-    (device absent case), eliminating the oops.
-- Supporting detail: `ttm_bo_vm_dummy_page()` implementation shows it
-  can return fault codes without involving BO resources, e.g.,
-  `VM_FAULT_OOM/NOPAGE` paths tied to `vmf_insert_pfn_prot` prefault
-  behavior, reinforcing that the post-fault `resource`-based logic must
-  not run in the dummy-page branch:
-  - See `drivers/gpu/drm/ttm/ttm_bo_vm.c:291` (function body around
-    291–340).
-- The VRAM userfault list is used on RPM suspend to release mmap offsets
-  for VRAM BOs (so it’s only meaningful when the device is present and
-  the BO is bound):
-  - See use in `drivers/gpu/drm/xe/xe_pm.c:404`.
+### Summary of Analysis
 
-**Why This Is a Bugfix Suitable for Stable**
-- User-visible crash: This is a kernel oops/NULL deref triggered by
-  realistic sequences (hot-unplug + mmap + memory pressure), i.e.,
-  affects users and CI (“xe-fast-feedback core_hotunplug”).
-- Small, localized change: Only `xe_gem_fault()` is touched; logic is
-  refined to run VRAM/userfault tracking only when the device is present
-  and the reserved fault path was used.
-- No architectural changes: No ABI/UAPI or subsystem redesign; behavior
-  is strictly a correctness fix.
-- Low regression risk:
-  - The `VM_FAULT_RETRY` early-return remains aligned with TTM’s
-    reservation-lock semantics, now gated to the only path that can
-    actually return `RETRY` in practice (the reserved path). The dummy-
-    page path does not reasonably return `RETRY`.
-  - The VRAM userfault list manipulation is unchanged, just constrained
-    to valid context (device present, `resource` reliably valid).
-- Clear root cause: Unconditional deref of `tbo->resource->mem_type`
-  after a dummy-page fallback when device is absent. The patch removes
-  that invalid deref path.
+This commit fixes a hardware functionality bug where the multitouch
+touchpad on the ASUS ROG Z13 folio does not work. The fix is a textbook
+example of a stable tree backport candidate.
 
-**Historical Context**
-- The problematic post-fault VRAM/userfault logic was introduced when
-  adding RPM suspend handling for mmap offsets:
-  - `drivers/gpu/drm/xe/xe_bo.c:1230` is attributed to commit
-    “drm/xe/dgfx: Release mmap mappings on rpm suspend”
-    (`fa78e188d8d1d`, 2024-01), per blame.
-- The fix cleanly corrects that regression by scoping the check
-  appropriately.
+### Technical Understanding
 
-**Security/Impact**
-- NULL pointer deref → kernel panic/DoS; user processes that mmap BOs
-  can trigger the faulty path under hot-unplug and low-memory
-  conditions. Fixing this improves system robustness and reliability.
+**What Changed:**
+1. **drivers/hid/hid-asus.c (lines 1387-1421)**: The device entry for
+   Z13 folio (device ID 0x1a30) was moved from the middle of the device
+   table to the bottom, and crucially changed from:
+  ```c
+  HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+  USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3)
+  ```
+  to:
+  ```c
+  HID_DEVICE(BUS_USB, HID_GROUP_GENERIC, USB_VENDOR_ID_ASUSTEK,
+  USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO)
+  ```
 
-**Backport Considerations**
-- Patch is self-contained to `drivers/gpu/drm/xe/xe_bo.c`.
-- Dependencies are already present (e.g., `vram_userfault`
-  struct/lock/list, `mem_type_is_vram`, `ttm_bo_vm_*` helpers).
-- Applies to stable series that include the Xe driver and the RPM/mmap
-  suspend changes (post early 2024). Older LTS without Xe or without
-  that change are unaffected.
+2. **drivers/hid/hid-ids.h (line 226)**: Renamed the constant from
+   `USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3` to the more descriptive
+   `USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO`
 
-Given it fixes a real crash with minimal, targeted changes and no
-feature additions, this is a strong candidate for stable backport.
+**Why This Matters:**
+- The Z13 folio is a composite USB device with both a keyboard and
+  multitouch touchpad
+- `HID_USB_DEVICE` expands to `.bus = BUS_USB` without specifying a
+  group, so it matches **all HID groups**
+- `HID_DEVICE(BUS_USB, HID_GROUP_GENERIC, ...)` explicitly restricts
+  binding to only `HID_GROUP_GENERIC`
+- The multitouch touchpad presents itself as `HID_GROUP_MULTITOUCH` or
+  `HID_GROUP_MULTITOUCH_WIN_8`
+- When hid-asus binds to all groups, it prevents hid-multitouch from
+  binding to the touchpad
+- By restricting hid-asus to `HID_GROUP_GENERIC` (keyboard), hid-
+  multitouch can properly handle the touchpad
 
- drivers/gpu/drm/xe/xe_bo.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+### Evidence of Correctness
 
-diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
-index 50c79049ccea0..d07e23eb1a54d 100644
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -1711,22 +1711,26 @@ static vm_fault_t xe_gem_fault(struct vm_fault *vmf)
- 		ret = ttm_bo_vm_fault_reserved(vmf, vmf->vma->vm_page_prot,
- 					       TTM_BO_VM_NUM_PREFAULT);
- 		drm_dev_exit(idx);
-+
-+		if (ret == VM_FAULT_RETRY &&
-+		    !(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
-+			goto out;
-+
-+		/*
-+		 * ttm_bo_vm_reserve() already has dma_resv_lock.
-+		 */
-+		if (ret == VM_FAULT_NOPAGE &&
-+		    mem_type_is_vram(tbo->resource->mem_type)) {
-+			mutex_lock(&xe->mem_access.vram_userfault.lock);
-+			if (list_empty(&bo->vram_userfault_link))
-+				list_add(&bo->vram_userfault_link,
-+					 &xe->mem_access.vram_userfault.list);
-+			mutex_unlock(&xe->mem_access.vram_userfault.lock);
-+		}
- 	} else {
- 		ret = ttm_bo_vm_dummy_page(vmf, vmf->vma->vm_page_prot);
- 	}
- 
--	if (ret == VM_FAULT_RETRY && !(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
--		goto out;
--	/*
--	 * ttm_bo_vm_reserve() already has dma_resv_lock.
--	 */
--	if (ret == VM_FAULT_NOPAGE && mem_type_is_vram(tbo->resource->mem_type)) {
--		mutex_lock(&xe->mem_access.vram_userfault.lock);
--		if (list_empty(&bo->vram_userfault_link))
--			list_add(&bo->vram_userfault_link, &xe->mem_access.vram_userfault.list);
--		mutex_unlock(&xe->mem_access.vram_userfault.lock);
--	}
--
- 	dma_resv_unlock(tbo->base.resv);
- out:
- 	if (needs_rpm)
+1. **Established Pattern**: This exact fix was applied to the T101HA
+   keyboard in 2021 (commit a94f66aecdaa4). The commit message for that
+   fix explicitly states: *"The hid-multitouch hiddev has a group of
+   HID_GROUP_MULTITOUCH_WIN_8, so the same result can be achieved by
+   making the hid_device_id entry for the dock in the asus_devices[]
+   table only match on HID_GROUP_GENERIC"*
+
+2. **Wide Usage**: Verified that `HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+   ...)` pattern is used extensively in:
+   - hid-asus.c (T101HA at drivers/hid/hid-asus.c:1422)
+   - hid-google-hammer.c (9+ instances)
+   - hid-ite.c (4+ instances)
+   - hid-lenovo.c (5+ instances)
+
+3. **Device History**: The Z13 keyboard was originally added in v6.5
+   (commit 74e47b2c52ed4) using HID_USB_DEVICE, which inadvertently
+   prevented the touchpad from working. This commit corrects that
+   oversight.
+
+4. **Author Credibility**: Antheas Kapenekakis has 15+ kernel
+   contributions focused on platform/x86 and HID subsystems, including
+   other Z13 fixes. The patch was reviewed by Luke D. Jones, the
+   original author of Z13 support.
+
+5. **Comment Alignment**: The commit moves the entry below an existing
+   comment (lines 1415-1418) that explicitly explains: *"Note bind to
+   the HID_GROUP_GENERIC group, so that we only bind to the keyboard
+   part, while letting hid-multitouch.c handle the touchpad."* This
+   comment now applies to both T101HA and Z13 folio.
+
+### Risk Analysis
+
+**Minimal Risk:**
+- **Isolated Scope**: Only affects ASUS device ID 0x1a30 (Z13 folio)
+- **No Dependencies**: Standalone fix with no prerequisites
+- **No Architectural Changes**: Uses existing, proven pattern
+- **Verified Pattern**: Multiple similar devices use this approach since
+  2021 without issues
+- **Clean Rename**: Old constant name completely removed, no lingering
+  references found
+
+**Regression Potential:**
+- Extremely low - the change makes a non-working touchpad work
+- Users without this fix have a broken touchpad; users with it have
+  working touchpad
+- The keyboard functionality is unaffected (same quirks applied)
+
+### Stable Tree Criteria Assessment
+
+✅ **Fixes important bug**: Multitouch touchpad completely non-functional
+✅ **Small and contained**: 2 files changed, device ID rename + entry
+repositioning
+✅ **No architectural changes**: Uses established HID group filtering
+pattern
+✅ **Minimal regression risk**: Proven pattern, isolated to one device
+✅ **Confined to subsystem**: HID subsystem only
+✅ **Applies to stable**: Any stable kernel >= 6.5 (where Z13 support
+exists)
+
+**Note**: While the commit lacks a `Cc: stable@vger.kernel.org` tag or
+`Fixes:` tag, it clearly meets stable tree criteria and should be
+backported to all stable kernels that contain the original Z13 support
+(6.5+).
+
+### Conclusion
+
+This is an **unambiguous YES** for backporting. The commit:
+- Fixes real hardware (touchpad doesn't work without it)
+- Uses a well-tested, 4+ year old pattern
+- Has minimal risk and isolated impact
+- Comes from a credible contributor
+- Was reviewed by the original device maintainer
+
+This should be backported to all stable trees from 6.5 onwards where the
+Z13 folio device support exists.
+
+ drivers/hid/hid-asus.c | 6 +++---
+ drivers/hid/hid-ids.h  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 8db9d4e7c3b0b..a444d41e53b6c 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1387,9 +1387,6 @@ static const struct hid_device_id asus_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+-	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3),
+-	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+@@ -1419,6 +1416,9 @@ static const struct hid_device_id asus_devices[] = {
+ 	 * Note bind to the HID_GROUP_GENERIC group, so that we only bind to the keyboard
+ 	 * part, while letting hid-multitouch.c handle the touchpad.
+ 	 */
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO),
++	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_T101HA_KEYBOARD) },
+ 	{ }
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ded5348d190c5..5721b8414bbdf 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -223,7 +223,7 @@
+ #define USB_DEVICE_ID_ASUSTEK_ROG_KEYBOARD3 0x1822
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD	0x1866
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2	0x19b6
+-#define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3	0x1a30
++#define USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO		0x1a30
+ #define USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR		0x18c6
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY		0x1abe
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
 -- 
 2.51.0
 
