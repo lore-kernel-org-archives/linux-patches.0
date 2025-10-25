@@ -1,50 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6083F306490;
-	Sat, 25 Oct 2025 16:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7069305053;
+	Sat, 25 Oct 2025 16:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409632; cv=none; b=hjTdT44PylSo300RdVwD7GRPwYTwnHtpl3W5xU51GAr07zQTQhi5aAbVuqQUbeCqC1U5Qj7wS1LnUQZ09czzb0fZjhRg0nahFhcF+CzDMrMqmS9kaFzesNXTeqHd4xQvwlC4x7J+Gttl1eILqM30FkLBlAS5Pf8ltD3l5VZomGY=
+	t=1761409636; cv=none; b=RvYjgCa+gIkLrOfsnAQpKuv3Tg9CuHieVaxuvUrSRPTj1lO8oOcQcg3gZE7UYnE26MfXzmGVm11S+c4Zvce66lY6GpX1iX6dGYS8FfBOfBzj51D1KSOmFn45PwTxUbhTvRx6gtFc6Vn9l19Q1z97vr/IAsX1lRJaylBDvcGvsoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409632; c=relaxed/simple;
-	bh=2xB4C/lDc29H6nQywY+9Qio3H83VJ8xbPa21DmkNVoI=;
+	s=arc-20240116; t=1761409636; c=relaxed/simple;
+	bh=tm0Mdd7IQZCUXGPh6rBlD8ChZvnNbKC3q4hohYCI1UU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N8fc0WjgzbmWuudvyZzczrYeBm6rL/I6qczf/kJhnfqyBfRwaSDo+rIVGmlooAq2db+hbsmLGwoMEYQfdYBlmCM50Q25dCgOcwKkuWv1+fE6Zq1d3pDBuiEVGRsWvP35F3fXKcbyceRefipdrx0FPo5ZHGfOgnHSPmlU+NraCYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDf8tfkx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tp51uKE80IImP4q+wkZZ7KiDB5447CJE3iFdcBWQqUI9Dua5O1fDbJfsxWckkN6dq6eFqn4rj732ZsFO4kwxfNKMnYCVx/DDYS7CpCB598Btd0JgSbVNZK9lergtJwxCMZJ2orK3P7i8kRcZPaXrNyvXNHMu6BNtub9SuclOXfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DuU1pnXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDf8tfkx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5679AC4CEF5;
-	Sat, 25 Oct 2025 16:27:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DuU1pnXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D50C4CEF5;
+	Sat, 25 Oct 2025 16:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409630;
-	bh=2xB4C/lDc29H6nQywY+9Qio3H83VJ8xbPa21DmkNVoI=;
+	s=k20201202; t=1761409636;
+	bh=tm0Mdd7IQZCUXGPh6rBlD8ChZvnNbKC3q4hohYCI1UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDf8tfkxJ/BhLLWZTNJTMv5iMhhZoWfAgsZR7bUREVa7gK77ac3e+Yz7ZStrSZq1Z
-	 lKVROdKZGOjI5vtyEuzA2+iE5ucA+LLGq61PZxgGjLhrpZSea6VXCfKLOXScnJkfq+
-	 GiH0YK6+PuhMy2VtL7fPf0/Bqh56KSjhqtfLYbN5QMVG1DO39kBeK3TJHIq1KtU0fL
-	 M6FTBrj2vsglVuG8BLgGdU7cxGPqsGxwZ+O8GIrgZZC8T6GtJQHZK2Ke5uq3zfXtRM
-	 qi+oT7ZhAPEzFMBwwyo4V+AiQpkKfLC0pxloC7Id6rABDYQbGPQk0OVGXbBZOUH66G
-	 qYNntvQ91bYtQ==
+	b=DuU1pnXn2sslsgsJLsQsWrMe88tkTlqACmIix22aHqIHga5q7hKOZezmgzUjJsagC
+	 VIgJjhuAE+V/ZhNYHfX5RDwkiOpQIOpJI0mmTDsekIh4awu/Fmbimi09h5LjXEuAaq
+	 CI7Oodp7gzMF20ORvdFgHCkBcmpILstXdD932NcEWn2TU7YFrqnIFq1rT+xih+WrVJ
+	 ore0wyT0lbGgLw6+ZX5Hza1Ffc7cjE6XY9pLjVNdSbyPXgXZ7+UCUmnFpJwjD208Hf
+	 so6wj7RjTVnEHt0rmyZi91228geju4zb1UDsWA5Su2EsKD8lxDWEPfMbI7MI6WkRf7
+	 QOGeUpr/ID8Eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ce Sun <cesun102@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tao.zhou1@amd.com,
-	ganglxie@amd.com,
-	lijo.lazar@amd.com,
-	victor.skvortsov@amd.com,
-	candice.li@amd.com,
+	vadim.fedorenko@linux.dev,
+	horatiu.vultur@microchip.com,
 	alexandre.f.demers@gmail.com,
-	Stanley.Yang@amd.com,
-	YiPeng.Chai@amd.com,
-	xiang.liu@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Correct the loss of aca bank reg info
-Date: Sat, 25 Oct 2025 12:00:29 -0400
-Message-ID: <20251025160905.3857885-398-sashal@kernel.org>
+	andrew@lunn.ch,
+	rosenp@gmail.com,
+	hkallweit1@gmail.com,
+	christophe.jaillet@wanadoo.fr
+Subject: [PATCH AUTOSEL 6.17] net: phy: mscc: report and configure in-band auto-negotiation for SGMII/QSGMII
+Date: Sat, 25 Oct 2025 12:00:30 -0400
+Message-ID: <20251025160905.3857885-399-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,27 +58,37 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ce Sun <cesun102@amd.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit d8442bcad0764c5613e9f8b2356f3e0a48327e20 ]
+[ Upstream commit df979273bd716a93ca9ffa8f84aeb205c9bf2ab6 ]
 
-By polling, poll ACA bank count to ensure that valid
-ACA bank reg info can be obtained
+The following Vitesse/Microsemi/Microchip PHYs, among those supported by
+this driver, have the host interface configurable as SGMII or QSGMII:
+- VSC8504
+- VSC8514
+- VSC8552
+- VSC8562
+- VSC8572
+- VSC8574
+- VSC8575
+- VSC8582
+- VSC8584
 
-v2: add corresponding delay before send msg to SMU to query mca bank info
-(Stanley)
+All these PHYs are documented to have bit 7 of "MAC SerDes PCS Control"
+as "MAC SerDes ANEG enable".
 
-v3: the loop cannot exit. (Thomas)
+Out of these, I could test the VSC8514 quad PHY in QSGMII. This works
+both with the in-band autoneg on and off, on the NXP LS1028A-RDB and
+T1040-RDB boards.
 
-v4: remove amdgpu_aca_clear_bank_count. (Kevin)
+Notably, the bit is sticky (survives soft resets), so giving Linux the
+tools to read and modify this settings makes it robust to changes made
+to it by previous boot layers (U-Boot).
 
-v5: continuously inject ce. If a creation interruption
-occurs at this time, bank reg info will be lost. (Thomas)
-v5: each cycle is delayed by 100ms. (Tao)
-
-Signed-off-by: Ce Sun <cesun102@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20250813074454.63224-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -88,266 +96,223 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
-- Fixes real bug: Prevents loss of ACA/MCA bank register info when
-  poison consumption interrupts poison creation, which can drop error
-  records and delay/skip bad-page retirement. The change adds explicit
-  coordination between “creation” and “consumption” paths.
-- Scoped and minimal: Changes are confined to amdgpu RAS/UMC v12 logic;
-  no uAPI changes or architectural rewrites.
-- Bounded behavior: Polling now has a clear, short timeout (about 1
-  second) to avoid hangs while ensuring valid ACA/MCA bank data is
-  captured.
+- What it fixes
+  - Ensures Linux can explicitly read/configure the PHY-side in-band
+    autonegotiation state for SGMII/QSGMII links on MSCC/Microchip PHYs,
+    avoiding mismatches with MAC-side PCS configuration and bootloader
+    “sticky” settings. Without this, phylink may configure in-band usage
+    on the MAC/PCS side but the PHY side can remain in an incompatible
+    state, causing link bring-up problems or incorrect link reporting
+    after soft resets.
+  - The commit message notes the “MAC SerDes ANEG enable” bit is sticky
+    across soft resets, and adds the knobs Linux needs to set it
+    predictably, which is a practical bugfix in real deployments.
 
-Key technical changes
-- Add explicit creation/consumption counters to gate polling completion:
-  - New fields to track state:
-    - `struct ras_ecc_log_info`: `de_queried_count`,
-      `consumption_q_count`
-      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h:495,
-      drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h:496).
-    - `struct amdgpu_ras`: `atomic_t poison_consumption_count`
-      (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h:568).
-- Creation path now waits until both sides are observed (or timeout):
-  - `amdgpu_ras_poison_creation_handler()` resets both counters each
-    cycle, polls via `amdgpu_ras_query_error_status_with_event()`, and
-    exits early when both `de_queried_count` and `consumption_q_count`
-    are non-zero; otherwise sleeps 100ms, up to 10 cycles
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3405,
-    drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3423,
-    drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3424,
-    drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3426).
-  - If any DEs were actually found (`de_queried_count`), schedule page-
-    retirement work promptly
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3432).
-  - Defines the polling budget as 10 cycles, each 100ms, by changing
-    `MAX_UMC_POISON_POLLING_TIME_ASYNC` to 10
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:125) and using
-    `msleep(100)`.
-- Consumption path signals promptly:
-  - When queuing poison consumption messages, increment
-    `poison_consumption_count` to indicate pending consumption
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c:255).
-  - For UMC v12 bank scans, if the IP decode indicates it is a SMU
-    consumption query (i.e., not UMC HWID/MCATYPE), increment
-    `consumption_q_count` so the creation loop knows consumption was
-    observed (drivers/gpu/drm/amd/amdgpu/umc_v12_0.c:541).
-- Thread sequencing and reset hygiene:
-  - The page retirement thread now processes the creation loop while
-    there are creation requests and stops early if a consumption event
-    is pending (`!atomic_read(&con->poison_consumption_count)`)
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3531).
-  - On GPU reset conditions, clear both `poison_creation_count` and
-    `poison_consumption_count`, and flush/clear the FIFO, ensuring clean
-    state and avoiding lost bank info across resets
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3548,
-    drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3573).
-  - Initialize `poison_consumption_count` on recovery init
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3680).
+- Scope and change details
+  - New register definitions for the PHY SerDes PCS control:
+    - Adds `MSCC_PHY_SERDES_PCS_CTRL` and `MSCC_PHY_SERDES_ANEG` under
+      “Extended Page 3 Registers” in `drivers/net/phy/mscc/mscc.h` (near
+      the other Extended Page 3 counters, e.g.,
+      `MSCC_PHY_SERDES_TX_VALID_CNT`; see
+      drivers/net/phy/mscc/mscc.h:132 for the page constant already used
+      in-tree).
+  - Adds PHY driver hooks to surface capability and perform the
+    configuration:
+    - `vsc85xx_inband_caps()` advertises that in SGMII/QSGMII modes, the
+      PHY supports both disabling and enabling in-band signalling
+      (returns `LINK_INBAND_DISABLE | LINK_INBAND_ENABLE`). Inserted
+      next to the AN state helpers (commit context shows around
+      drivers/net/phy/mscc/mscc_main.c:2185).
+    - `vsc85xx_config_inband()` programs the PHY SerDes PCS Control bit
+      via a paged write on Extended Page 3, reg 16, bit 7:
+      `phy_modify_paged(…, MSCC_PHY_PAGE_EXTENDED_3,
+      MSCC_PHY_SERDES_PCS_CTRL, MSCC_PHY_SERDES_ANEG, reg_val)`. This
+      sets or clears “MAC SerDes ANEG enable” in one place with minimal
+      risk (drivers/net/phy/mscc/mscc_main.c:2185).
+  - Wires these into the `struct phy_driver` entries for the
+    SGMII/QSGMII-capable parts (VSC8504, VSC8514, VSC8552, VSC856X,
+    VSC8572/74/75, VSC8582/84) by adding `.inband_caps =
+    vsc85xx_inband_caps` and `.config_inband = vsc85xx_config_inband`
+    (see the vsc85xx driver array entries around
+    drivers/net/phy/mscc/mscc_main.c:2394, :2419, :2538, :2562, :2584,
+    :2610, :2636, :2660, :2684). Non‑SGMII/QSGMII parts remain
+    unchanged.
 
-Why it meets stable criteria
-- Important bugfix: Prevents loss of RAS bank register info, ensuring
-  accurate ECC error logging and timely bad-page retirement on affected
-  AMD GPUs.
-- Low risk of regression: Changes are local to RAS/UMC v12 error
-  handling, use bounded waits, add simple counters, and don’t alter
-  external interfaces.
-- No architectural churn: Purely corrective synchronization and
-  sequencing; no redesign or feature addition.
-- Performance impact is negligible: Only affects rare error paths, with
-  short bounded waits.
+- Fits existing core APIs and policies
+  - Integrates with the in-band signalling negotiation framework already
+    in stable: `phy_inband_caps()` and `phy_config_inband()`
+    (include/linux/phy.h:957, include/linux/phy.h:967;
+    drivers/net/phy/phy.c:1046, drivers/net/phy/phy.c:1066).
+  - phylink consults PHY/PCS in-band capabilities and configures them
+    during major reconfig: `phylink_pcs_neg_mode()` resolves the desired
+    mode and then calls `phy_config_inband()` when needed
+    (drivers/net/phy/phylink.c:1098, drivers/net/phy/phylink.c:1331).
+    Without PHY support, phylink can’t force the PHY-side mode; with
+    this commit it can, eliminating bootloader-induced mismatches.
+  - Precedent: other PHYs already implement these hooks (e.g., Marvell’s
+    m88e1111: drivers/net/phy/marvell.c:720 and
+    drivers/net/phy/marvell.c:734), so this is an incremental, driver-
+    local completion for MSCC parts.
 
-Notes for backport
-- Target stable series that include ACA/UMC v12 poison handling; the
-  patch relies on existing ACA/MCA decoding paths and
-  `amdgpu_ras_query_error_status_with_event()`.
-- No userspace ABI impact; struct layout changes are internal to the
-  driver.
+- Risk assessment
+  - Small and contained: one new register define and a single-bit write
+    on a well-documented PHY register; driver tables updated to expose
+    the capability/config callbacks only on models with SGMII/QSGMII
+    host interfaces.
+  - No architectural changes or user-visible API changes.
+  - Only affects configurations where phylink selects in-band/out-of-
+    band; otherwise inert.
+  - Clear positive functional impact: makes link mode negotiation robust
+    across soft resets and boot-loader configurations.
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 50 +++++++++++--------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h |  5 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c |  1 +
- drivers/gpu/drm/amd/amdgpu/umc_v12_0.c  |  5 ++-
- 4 files changed, 29 insertions(+), 32 deletions(-)
+- Backport considerations
+  - Depends on the in-band signalling framework added in late 2024
+    (phy_inband_caps/config_inband and phylink negotiation of in-band).
+    This is present in this stable series (e.g., 6.17; see
+    drivers/net/phy/phylink.c:1098, include/linux/phy.h:957).
+  - For older stable trees lacking these core hooks, this patch does not
+    apply cleanly and would require backporting that infrastructure
+    first.
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-index 54909bcf181f3..893cae9813fbb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -122,7 +122,7 @@ const char *get_ras_block_str(struct ras_common_if *ras_block)
- /* typical ECC bad page rate is 1 bad page per 100MB VRAM */
- #define RAS_BAD_PAGE_COVER              (100 * 1024 * 1024ULL)
+Conclusion: This is an important, low-risk correctness fix enabling
+Linux to control the PHY-side in-band AN state for MSCC SGMII/QSGMII
+PHYs, aligning with existing phylink behavior and preventing subtle link
+issues caused by sticky bootloader settings. It is suitable for
+backporting to stable kernels that already include the in-band
+negotiation framework.
+
+ drivers/net/phy/mscc/mscc.h      |  3 +++
+ drivers/net/phy/mscc/mscc_main.c | 40 ++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+)
+
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index 2bfe314ef881c..2d8eca54c40a2 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -196,6 +196,9 @@ enum rgmii_clock_delay {
+ #define MSCC_PHY_EXTENDED_INT_MS_EGR	  BIT(9)
  
--#define MAX_UMC_POISON_POLLING_TIME_ASYNC  300  //ms
-+#define MAX_UMC_POISON_POLLING_TIME_ASYNC  10
- 
- #define AMDGPU_RAS_RETIRE_PAGE_INTERVAL 100  //ms
- 
-@@ -3239,7 +3239,7 @@ static void amdgpu_ras_ecc_log_init(struct ras_ecc_log_info *ecc_log)
- 
- 	INIT_RADIX_TREE(&ecc_log->de_page_tree, GFP_KERNEL);
- 	ecc_log->de_queried_count = 0;
--	ecc_log->prev_de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
+ /* Extended Page 3 Registers */
++#define MSCC_PHY_SERDES_PCS_CTRL	  16
++#define MSCC_PHY_SERDES_ANEG		  BIT(7)
++
+ #define MSCC_PHY_SERDES_TX_VALID_CNT	  21
+ #define MSCC_PHY_SERDES_TX_CRC_ERR_CNT	  22
+ #define MSCC_PHY_SERDES_RX_VALID_CNT	  28
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 24c75903f5354..ef0ef1570d392 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2202,6 +2202,28 @@ static int vsc85xx_read_status(struct phy_device *phydev)
+ 	return genphy_read_status(phydev);
  }
  
- static void amdgpu_ras_ecc_log_fini(struct ras_ecc_log_info *ecc_log)
-@@ -3259,7 +3259,7 @@ static void amdgpu_ras_ecc_log_fini(struct ras_ecc_log_info *ecc_log)
- 
- 	mutex_destroy(&ecc_log->lock);
- 	ecc_log->de_queried_count = 0;
--	ecc_log->prev_de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
++static unsigned int vsc85xx_inband_caps(struct phy_device *phydev,
++					phy_interface_t interface)
++{
++	if (interface != PHY_INTERFACE_MODE_SGMII &&
++	    interface != PHY_INTERFACE_MODE_QSGMII)
++		return 0;
++
++	return LINK_INBAND_DISABLE | LINK_INBAND_ENABLE;
++}
++
++static int vsc85xx_config_inband(struct phy_device *phydev, unsigned int modes)
++{
++	u16 reg_val = 0;
++
++	if (modes == LINK_INBAND_ENABLE)
++		reg_val = MSCC_PHY_SERDES_ANEG;
++
++	return phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_3,
++				MSCC_PHY_SERDES_PCS_CTRL, MSCC_PHY_SERDES_ANEG,
++				reg_val);
++}
++
+ static int vsc8514_probe(struct phy_device *phydev)
+ {
+ 	struct vsc8531_private *vsc8531;
+@@ -2414,6 +2436,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8514,
+@@ -2437,6 +2461,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8530,
+@@ -2557,6 +2583,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC856X,
+@@ -2579,6 +2607,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8572,
+@@ -2605,6 +2635,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8574,
+@@ -2631,6 +2663,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8575,
+@@ -2655,6 +2689,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8582,
+@@ -2679,6 +2715,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_sset_count = &vsc85xx_get_sset_count,
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
+ },
+ {
+ 	.phy_id		= PHY_ID_VSC8584,
+@@ -2704,6 +2742,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_strings    = &vsc85xx_get_strings,
+ 	.get_stats      = &vsc85xx_get_stats,
+ 	.link_change_notify = &vsc85xx_link_change_notify,
++	.inband_caps    = vsc85xx_inband_caps,
++	.config_inband  = vsc85xx_config_inband,
  }
  
- static bool amdgpu_ras_schedule_retirement_dwork(struct amdgpu_ras *con,
-@@ -3309,47 +3309,34 @@ static int amdgpu_ras_poison_creation_handler(struct amdgpu_device *adev,
- 	int ret = 0;
- 	struct ras_ecc_log_info *ecc_log;
- 	struct ras_query_if info;
--	uint32_t timeout = 0;
-+	u32 timeout = MAX_UMC_POISON_POLLING_TIME_ASYNC;
- 	struct amdgpu_ras *ras = amdgpu_ras_get_context(adev);
--	uint64_t de_queried_count;
--	uint32_t new_detect_count, total_detect_count;
--	uint32_t need_query_count = poison_creation_count;
-+	u64 de_queried_count;
-+	u64 consumption_q_count;
- 	enum ras_event_type type = RAS_EVENT_TYPE_POISON_CREATION;
- 
- 	memset(&info, 0, sizeof(info));
- 	info.head.block = AMDGPU_RAS_BLOCK__UMC;
- 
- 	ecc_log = &ras->umc_ecc_log;
--	total_detect_count = 0;
-+	ecc_log->de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
-+
- 	do {
- 		ret = amdgpu_ras_query_error_status_with_event(adev, &info, type);
- 		if (ret)
- 			return ret;
- 
- 		de_queried_count = ecc_log->de_queried_count;
--		if (de_queried_count > ecc_log->prev_de_queried_count) {
--			new_detect_count = de_queried_count - ecc_log->prev_de_queried_count;
--			ecc_log->prev_de_queried_count = de_queried_count;
--			timeout = 0;
--		} else {
--			new_detect_count = 0;
--		}
-+		consumption_q_count = ecc_log->consumption_q_count;
- 
--		if (new_detect_count) {
--			total_detect_count += new_detect_count;
--		} else {
--			if (!timeout && need_query_count)
--				timeout = MAX_UMC_POISON_POLLING_TIME_ASYNC;
-+		if (de_queried_count && consumption_q_count)
-+			break;
- 
--			if (timeout) {
--				if (!--timeout)
--					break;
--				msleep(1);
--			}
--		}
--	} while (total_detect_count < need_query_count);
-+		msleep(100);
-+	} while (--timeout);
- 
--	if (total_detect_count)
-+	if (de_queried_count)
- 		schedule_delayed_work(&ras->page_retirement_dwork, 0);
- 
- 	if (amdgpu_ras_is_rma(adev) && atomic_cmpxchg(&ras->rma_in_recovery, 0, 1) == 0)
-@@ -3446,7 +3433,8 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 				atomic_sub(poison_creation_count, &con->poison_creation_count);
- 				atomic_sub(poison_creation_count, &con->page_retirement_req_cnt);
- 			}
--		} while (atomic_read(&con->poison_creation_count));
-+		} while (atomic_read(&con->poison_creation_count) &&
-+			!atomic_read(&con->poison_consumption_count));
- 
- 		if (ret != -EIO) {
- 			msg_count = kfifo_len(&con->poison_fifo);
-@@ -3463,6 +3451,7 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 			/* gpu mode-1 reset is ongoing or just completed ras mode-1 reset */
- 			/* Clear poison creation request */
- 			atomic_set(&con->poison_creation_count, 0);
-+			atomic_set(&con->poison_consumption_count, 0);
- 
- 			/* Clear poison fifo */
- 			amdgpu_ras_clear_poison_fifo(adev);
-@@ -3487,6 +3476,8 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 				atomic_sub(msg_count, &con->page_retirement_req_cnt);
- 			}
- 
-+			atomic_set(&con->poison_consumption_count, 0);
-+
- 			/* Wake up work to save bad pages to eeprom */
- 			schedule_delayed_work(&con->page_retirement_dwork, 0);
- 		}
-@@ -3590,6 +3581,7 @@ int amdgpu_ras_recovery_init(struct amdgpu_device *adev, bool init_bp_info)
- 	init_waitqueue_head(&con->page_retirement_wq);
- 	atomic_set(&con->page_retirement_req_cnt, 0);
- 	atomic_set(&con->poison_creation_count, 0);
-+	atomic_set(&con->poison_consumption_count, 0);
- 	con->page_retirement_thread =
- 		kthread_run(amdgpu_ras_page_retirement_thread, adev, "umc_page_retirement");
- 	if (IS_ERR(con->page_retirement_thread)) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-index 699953c02649f..96cb62a44a35b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-@@ -492,8 +492,8 @@ struct ras_ecc_err {
- struct ras_ecc_log_info {
- 	struct mutex lock;
- 	struct radix_tree_root de_page_tree;
--	uint64_t	de_queried_count;
--	uint64_t	prev_de_queried_count;
-+	uint64_t de_queried_count;
-+	uint64_t consumption_q_count;
  };
- 
- struct amdgpu_ras {
-@@ -558,6 +558,7 @@ struct amdgpu_ras {
- 	struct mutex page_retirement_lock;
- 	atomic_t page_retirement_req_cnt;
- 	atomic_t poison_creation_count;
-+	atomic_t poison_consumption_count;
- 	struct mutex page_rsv_lock;
- 	DECLARE_KFIFO(poison_fifo, struct ras_poison_msg, 128);
- 	struct ras_ecc_log_info  umc_ecc_log;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-index c92b8794aa73d..2e039fb778ea8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-@@ -252,6 +252,7 @@ int amdgpu_umc_pasid_poison_handler(struct amdgpu_device *adev,
- 				block, pasid, pasid_fn, data, reset);
- 			if (!ret) {
- 				atomic_inc(&con->page_retirement_req_cnt);
-+				atomic_inc(&con->poison_consumption_count);
- 				wake_up(&con->page_retirement_wq);
- 			}
- 		}
-diff --git a/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c b/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-index e590cbdd8de96..8dc32787d6250 100644
---- a/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-@@ -536,8 +536,11 @@ static int umc_v12_0_update_ecc_status(struct amdgpu_device *adev,
- 	hwid = REG_GET_FIELD(ipid, MCMP1_IPIDT0, HardwareID);
- 	mcatype = REG_GET_FIELD(ipid, MCMP1_IPIDT0, McaType);
- 
--	if ((hwid != MCA_UMC_HWID_V12_0) || (mcatype != MCA_UMC_MCATYPE_V12_0))
-+	/* The IP block decode of consumption is SMU */
-+	if (hwid != MCA_UMC_HWID_V12_0 || mcatype != MCA_UMC_MCATYPE_V12_0) {
-+		con->umc_ecc_log.consumption_q_count++;
- 		return 0;
-+	}
- 
- 	if (!status)
- 		return 0;
 -- 
 2.51.0
 
