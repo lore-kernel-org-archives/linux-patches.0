@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2604652F88;
-	Sat, 25 Oct 2025 16:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856B02777FC;
+	Sat, 25 Oct 2025 16:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408810; cv=none; b=Na/tLh1Ea/k0Ay2bOhO3DANDjG9jka6ND1J0G+HKJ/+Skk4s15nkE4Eea0I264ERBBg/1A/qBHAF0LtzRYaqEs2kJKV29idsnkg5nm/QIXMfx9fR0yc65xDFTPYfBuKQ3HWeyw3QOoNkZeURW21oSWLHr+DcKG/ZGtAtcIj33bc=
+	t=1761408811; cv=none; b=Rxwu3l2s9QVMCOy/h3CkhVzlXzsl86CaHWwg61rizpPzsgNJMRKwlxZUUVf5T+Q1XO8VVOCDq6M1Yx+r5ZU+oJev0Q1gPb3DoIKbn1n5yMZdZj9Efh6AQ3uSO0aJl1mp2gRV4B3ZmuUPtNMrRh+LlmEnQn59qAGNV7tLLn7CY/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408810; c=relaxed/simple;
-	bh=BbdPKyoALXBBFw090ux1IWCknNoIk1TKUHThzaMOe9I=;
+	s=arc-20240116; t=1761408811; c=relaxed/simple;
+	bh=UVH1gtVLWpsrqgQIkk/TLC40r/51v3Q83pL2lOrp1lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iNyn8lTvkQ4tzUP8TingJ7qCxhFY3zz6QAjG6aFP/Kxk/NluaZ4J+mVErXDvyyVlhSzkhpt7e2sKPe89ycdEapgX3njuJCt1oNtlv3kJtiu/KRQXJADsouF+n+JOVEOHt6dYnDti866iV77fOrOJOj9/WvIgs6kJDT/ZnM5UvjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tUnnaUkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ApwOrQJbuHbiQ08MRNPyCTrtH77WrhSb4nsruURdyE+DCR1scJa7l4pk7ZmzuLA56TjaJvb/xZqhRCdzxy873czbdEDTl6a6Eu0b1P+ROu90vrck3i++ZZ/BOLwB9h36mLaU2l2L+GSMGuZae9irk2KPAzrHDnt1hHYUuqY1njg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HV1WKp7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tUnnaUkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EC7C4CEF5;
-	Sat, 25 Oct 2025 16:13:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HV1WKp7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6755EC4CEFB;
+	Sat, 25 Oct 2025 16:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408810;
-	bh=BbdPKyoALXBBFw090ux1IWCknNoIk1TKUHThzaMOe9I=;
+	s=k20201202; t=1761408811;
+	bh=UVH1gtVLWpsrqgQIkk/TLC40r/51v3Q83pL2lOrp1lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUnnaUkk3Hc3701sh+DfvuZlhNcekQanPu84lrP3Cl8SZFxW7WfflpquDlGZgGYCK
-	 fjzjvCwE0jFv056XWaclDqCv8fPaUHOCzMpBVuQYZWVCq98ozVeZerAPcE3A5JmxVp
-	 xgdGLFGyY77Tr0HjlnZE68utzDbT4OgmXOZr5ynnKdz+Njfl6ZbYJm8JJ80vQ7GOjD
-	 Vfp/yMwdmaZ6IaEEDor92wfBUXLPlI4F4PWgd7tp81i9D0otbXvb2jWG5favHd96v+
-	 xxK+jDzd7cd8nUiUigNUFePkpyndiMC/NNjLDrdyT0gGd1oCL0XL0viNxRYXuVSs4z
-	 5mLOB3WALts8g==
+	b=HV1WKp7AAqDCW+/nDqcKBEiI5IoMdv+qH6/Q0IhHPsC4WVaUbAVwYOYGYkPJf3O5M
+	 l8eUSlwMXhzqcUs+dMjq0erc6Ni/Y2E6pYps8sMFjVWTtkKcF88ghS+v6r2hs2wvUU
+	 2KfsVdK0RsEIzVA8ABFhqGPHrftjzz7IWs4kMTb8ieo8rz/ay58CPBWMnkblm2OfxY
+	 i8eLzoPejwLqC8R5LaqmjaQwQlZF/9B7HYd6HDEy//3U0ddKXCz+t9b/DHFyjVNt94
+	 ixwShvIjncahk8l8D6s76PPRZmdnglbz+wgtWK5CSdj3WhwdGqiR707oP6IOoohc7N
+	 I1gpzYe0muW2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ausef Yousof <Ausef.Yousof@amd.com>,
-	Leo Chen <leo.chen@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Wake Liu <wakel@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	austin.zheng@amd.com,
-	jun.lei@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: fix dml ms order of operations
-Date: Sat, 25 Oct 2025 11:55:09 -0400
-Message-ID: <20251025160905.3857885-78-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] selftests/net: Ensure assert() triggers in psock_tpacket.c
+Date: Sat, 25 Oct 2025 11:55:10 -0400
+Message-ID: <20251025160905.3857885-79-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,245 +54,100 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ausef Yousof <Ausef.Yousof@amd.com>
+From: Wake Liu <wakel@google.com>
 
-[ Upstream commit 02a6c2e4b28ff31f7a904c196a99fb2efe81e2cf ]
+[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
 
-[why&how]
-small error in order of operations in immediateflipbytes
-calculation on dml ms side that can result in dml ms
-and mp mismatch immediateflip support for a given pipe
-and thus an invalid hw state, correct the order to align
-with mp.
+The get_next_frame() function in psock_tpacket.c was missing a return
+statement in its default switch case, leading to a compiler warning.
 
-Reviewed-by: Leo Chen <leo.chen@amd.com>
-Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This was caused by a `bug_on(1)` call, which is defined as an
+`assert()`, being compiled out because NDEBUG is defined during the
+build.
+
+Instead of adding a `return NULL;` which would silently hide the error
+and could lead to crashes later, this change restores the original
+author's intent. By adding `#undef NDEBUG` before including <assert.h>,
+we ensure the assertion is active and will cause the test to abort if
+this unreachable code is ever executed.
+
+Signed-off-by: Wake Liu <wakel@google.com>
+Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis Complete
+YES
 
-Based on my comprehensive investigation of this commit, here is my
-determination:
+- What changed
+  - Adds `#undef NDEBUG` before including `assert.h` in
+    tools/testing/selftests/net/psock_tpacket.c:24 so that `assert()`
+    (and the local `bug_on()` wrapper) are active during kselftest
+    builds.
 
-**Backport Status: YES**
+- Why it matters
+  - The function `get_next_frame()` lacks a return in the `default`
+    switch case (tools/testing/selftests/net/psock_tpacket.c:365). That
+    case currently only calls `bug_on(1);` which is defined as
+    `assert(!(cond))`. If `NDEBUG` is defined, `assert()` compiles to a
+    no-op, leaving the function without a return statement on that path,
+    triggering a compiler warning (and theoretically undefined behavior
+    if ever executed).
+  - Other functions that use `bug_on(1)` already append a dummy `return
+    0;` for the `NDEBUG` case, e.g.
+    tools/testing/selftests/net/psock_tpacket.c:203 and
+    tools/testing/selftests/net/psock_tpacket.c:322. `get_next_frame()`
+    is the outlier.
 
----
+- Correctness and intent
+  - With `#undef NDEBUG`, `bug_on(1)` expands to an `assert(false)`
+    which calls a `noreturn` failure path, so the compiler no longer
+    warns about a missing return. More importantly, the test will abort
+    if unreachable code is ever hit, matching the original author’s
+    fail-fast intent rather than silently proceeding.
+  - This is a common kselftest pattern; several selftests explicitly
+    `#undef NDEBUG` to ensure assertions fire (for example,
+    tools/testing/selftests/proc/read.c:22).
 
-## Executive Summary
+- Scope and risk
+  - Selftests-only change; no in-kernel code or ABI touched.
+  - Very small, localized change with no architectural implications.
+  - Improves test reliability and eliminates a build warning that can be
+    promoted to an error in stricter build environments.
+  - No behavioral change in normal paths: `ring->version` is set to one
+    of TPACKET_V1/V2/V3, so the `default` path should never be taken. If
+    it is, failing loudly is desirable for a test.
 
-This commit fixes a critical order of operations bug in the AMD display
-driver's DML2 (Display Mode Library 2) bandwidth calculation code that
-has existed since DML2 was introduced in kernel v6.7. The fix is a
-single-line change that adds parentheses to correct the calculation of
-total immediate flip bytes, preventing potential hardware state
-mismatches that can lead to display corruption or system instability.
+- Stable backport criteria
+  - Fixes a real issue for users of the stable kselftest suite
+    (warning/possible -Werror build failure and loss of assert
+    coverage).
+  - Minimal risk and fully contained to
+    `tools/testing/selftests/net/psock_tpacket.c`.
+  - Does not introduce features or architectural changes; purely a test
+    robustness fix.
 
----
+Given the above, this is a low-risk, test-only fix that improves
+correctness and build reliability, and is appropriate for stable
+backporting.
 
-## Detailed Technical Analysis
+ tools/testing/selftests/net/psock_tpacket.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-### The Bug (display_mode_core.c:6532)
-
-**Before:**
-```c
-mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes
-+
-    mode_lib->ms.NoOfDPP[j][k] *
-mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] +
-    mode_lib->ms.MetaRowBytes[j][k];
-```
-
-**After:**
-```c
-mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes
-+
-    mode_lib->ms.NoOfDPP[j][k] *
-(mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] +
-    mode_lib->ms.MetaRowBytes[j][k]);
-```
-
-### What Changed
-
-Due to C operator precedence, the original code evaluated as:
-```
-Total += (NoOfDPP * PDEAndMetaPTEBytesPerFrame) + MetaRowBytes
-```
-
-The corrected code properly evaluates as:
-```
-Total += NoOfDPP * (PDEAndMetaPTEBytesPerFrame + MetaRowBytes)
-```
-
-### Impact Analysis
-
-1. **Calculation Error**: When `NoOfDPP[j][k] > 1` (multiple display
-   pipes active), the code underestimated `TotImmediateFlipBytes` by:
-  ```
-  (NoOfDPP[j][k] - 1) * MetaRowBytes[j][k]
-  ```
-
-2. **Downstream Effects**:
-   - `TotImmediateFlipBytes` is passed to `CalculateFlipSchedule()` at
-     line 6555
-   - Used to calculate `ImmediateFlipBW` bandwidth allocation
-   - Underestimated total → overestimated per-pipe bandwidth
-   - Can incorrectly determine immediate flip is supported when it
-     shouldn't be
-   - Results in "dml ms and mp mismatch" (display mode vs mode
-     programming)
-   - Leads to **invalid hardware state** (per commit message)
-
-3. **User-Visible Symptoms**: Potential display corruption, flickering,
-   hangs, or crashes on AMD GPUs using DML2
-
-### Verification Against Reference Implementation
-
-I verified this fix aligns with the **existing correct implementation**
-in DCN30 DML
-(drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c):
-
-```c
-v->TotImmediateFlipBytes = v->TotImmediateFlipBytes +
-    v->NoOfDPP[i][j][k] * (v->PDEAndMetaPTEBytesPerFrame[i][j][k] +
-                           v->MetaRowBytes[i][j][k] +
-                           v->DPTEBytesPerRow[i][j][k]);
-```
-
-The DCN30 code correctly multiplies `NoOfDPP` by the sum of all byte
-components, confirming this fix is correct.
-
-### Historical Context
-
-- **Bug introduced**: Commit 7966f319c66d9 (October 9, 2023) -
-  "Introduce DML2"
-- **Bug duration**: ~23 months (Oct 2023 → Sep 2025)
-- **First fixed in**: v6.18-rc1
-- **Affected kernels**: All versions 6.7 through 6.17 contain the bug
-- **Total affected stable releases**: 100+ stable point releases across
-  11 major kernel versions
-
----
-
-## Backporting Criteria Assessment
-
-### ✅ Criteria Met
-
-1. **Fixes important bug**: YES
-   - Hardware correctness issue affecting display functionality
-   - Can cause "invalid hw state" per commit message
-   - Affects all DML2 users (AMD GPUs on kernels 6.7+)
-
-2. **Small and contained**: YES
-   - Single line change
-   - Only adds parentheses to fix operator precedence
-   - No functional changes beyond fixing the calculation
-
-3. **Clear side effects**: NO unwanted side effects
-   - Only corrects a mathematical calculation
-   - Aligns with reference implementation
-   - No API changes, no behavioral changes beyond the bugfix
-
-4. **No architectural changes**: YES
-   - Pure bugfix with no design changes
-   - Maintains existing code structure
-
-5. **Minimal regression risk**: YES
-   - Extremely low risk - only corrects arithmetic
-   - Has proper review (Reviewed-by: Leo Chen)
-   - Has testing (Tested-by: Daniel Wheeler)
-   - No follow-up fixes or reverts found
-
-6. **Confined to subsystem**: YES
-   - Confined to AMD display driver DML2 module
-   - Function: `dml_prefetch_check()` in display_mode_core.c
-
-7. **Stable tree mention**: NO
-   - No explicit Cc: stable tag in commit message
-   - However, this is a clear bugfix that qualifies under stable rules
-
-### Context Stability
-
-I verified the surrounding code context is **identical** in:
-- v6.7 (first version with DML2)
-- v6.12 (middle of affected range)
-- v6.17 (current)
-
-The patch will apply **cleanly** to all affected stable kernels without
-modification.
-
----
-
-## Similar Patterns in Stable Tree
-
-This commit has similar characteristics to accepted stable backports:
-- Small calculation fixes in hardware drivers
-- Order of operations corrections
-- Hardware state correctness fixes
-- Single-line parenthesis additions for precedence fixes
-
----
-
-## Risk Assessment
-
-**Backport Risk: MINIMAL**
-
-- **Code change complexity**: Trivial (adding parentheses)
-- **Testing coverage**: Commit has Tested-by tag
-- **Review coverage**: Commit has Reviewed-by tag
-- **Dependencies**: None identified
-- **Regression potential**: Extremely low
-- **Apply cleanly**: Yes, verified across kernel versions
-
-**Not Backporting Risk: MODERATE-HIGH**
-
-- Users continue experiencing incorrect hardware state
-- Potential display corruption/flickering/hangs remain unfixed
-- Bug affects 100+ stable releases
-- Fix is safe and trivial
-
----
-
-## Recommendation
-
-**YES - This commit SHOULD be backported to stable kernel trees.**
-
-**Target Kernels**: All stable trees from 6.7.y through 6.17.y
-
-**Justification**:
-1. Fixes important hardware correctness bug
-2. Trivial, surgical change with minimal risk
-3. Affects wide range of users (all AMD DML2 GPUs)
-4. Clean application to all affected kernels
-5. Properly reviewed and tested
-6. Aligns with existing correct implementation
-7. No dependencies or prerequisites
-
-This is a textbook example of an excellent stable backport candidate: a
-small, well-understood fix for a clear bug that affects hardware
-correctness with minimal regression risk.
-
- drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-index 715f9019a33e2..4b9b2e84d3811 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-@@ -6529,7 +6529,7 @@ static noinline_for_stack void dml_prefetch_check(struct display_mode_lib_st *mo
- 				mode_lib->ms.TotImmediateFlipBytes = 0;
- 				for (k = 0; k <= mode_lib->ms.num_active_planes - 1; k++) {
- 					if (!(mode_lib->ms.policy.ImmediateFlipRequirement[k] == dml_immediate_flip_not_required)) {
--						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k];
-+						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k]);
- 						if (mode_lib->ms.use_one_row_for_frame_flip[j][k]) {
- 							mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (2 * mode_lib->ms.DPTEBytesPerRow[j][k]);
- 						} else {
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 0dd909e325d93..2938045c5cf97 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -22,6 +22,7 @@
+  *   - TPACKET_V3: RX_RING
+  */
+ 
++#undef NDEBUG
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <sys/types.h>
 -- 
 2.51.0
 
